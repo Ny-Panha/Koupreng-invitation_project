@@ -50,9 +50,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private static final String SWAGGER_CONTENT_SECURITY_POLICY = "default-src 'self'; "
-            + "script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; "
-            + "font-src 'self'; connect-src 'self'; object-src 'none'; "
+    private static final String API_DOCS_CONTENT_SECURITY_POLICY = "default-src 'self'; "
+            + "script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; "
+            + "img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; "
+            + "worker-src 'self' blob:; object-src 'none'; "
             + "frame-ancestors 'none'; base-uri 'none'; form-action 'none'";
 
     @Bean
@@ -63,8 +64,8 @@ public class SecurityConfig {
     ) throws Exception {
         http
                 .securityMatcher(
-                        "/swagger-ui/**",
-                        "/swagger-ui.html",
+                        "/docs",
+                        "/docs/**",
                         "/v3/api-docs",
                         "/v3/api-docs/**",
                         "/v3/api-docs.yaml"
@@ -73,7 +74,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .headers(headers -> headers
-                        .contentSecurityPolicy(csp -> csp.policyDirectives(SWAGGER_CONTENT_SECURITY_POLICY))
+                        .contentSecurityPolicy(csp -> csp.policyDirectives(API_DOCS_CONTENT_SECURITY_POLICY))
                         .frameOptions(frame -> frame.deny())
                         .referrerPolicy(referrer -> referrer.policy(
                                 ReferrerPolicyHeaderWriter.ReferrerPolicy.NO_REFERRER))

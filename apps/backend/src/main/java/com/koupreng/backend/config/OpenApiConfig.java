@@ -4,8 +4,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.koupreng.backend.dev.DevSampleData;
+
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.examples.Example;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 
@@ -70,7 +75,7 @@ public class OpenApiConfig {
                                 .scheme("bearer")
                                 .bearerFormat("JWT")
                                 .description("Paste the accessToken returned by POST /api/auth/login. "
-                                        + "Swagger UI adds the Bearer prefix automatically.")
+                                        + "Scalar adds the Bearer prefix automatically; do not type it twice.")
                 ));
     }
 
@@ -99,6 +104,73 @@ public class OpenApiConfig {
                         controllerResource(handlerMethod.getBeanType().getSimpleName())));
             }
             return operation;
+        };
+    }
+
+    /**
+     * Attach whole request examples after Springdoc has derived the real schema
+     * and validation constraints from each handler method. Keeping this logic
+     * centralized avoids large JSON annotations across the controllers.
+     */
+    @Bean
+    public OperationCustomizer requestExampleCustomizer(ObjectMapper objectMapper) {
+        return (operation, handlerMethod) -> {
+            for (org.springframework.core.MethodParameter methodParameter
+                    : handlerMethod.getMethodParameters()) {
+                if (!methodParameter.hasParameterAnnotation(
+                        org.springframework.web.bind.annotation.RequestBody.class)) {
+                    continue;
+                }
+                List<OpenApiExamples.NamedExample> examples = OpenApiExamples.forRequestType(
+                        methodParameter.getParameterType());
+                if (examples.isEmpty() || operation.getRequestBody() == null
+                        || operation.getRequestBody().getContent() == null) {
+                    continue;
+                }
+                operation.getRequestBody().getContent().values().forEach(mediaType -> {
+                    for (OpenApiExamples.NamedExample namedExample : examples) {
+                        mediaType.addExamples(namedExample.name(), new Example()
+                                .summary(namedExample.summary())
+                                .value(readJson(objectMapper, namedExample.json())));
+                    }
+                });
+            }
+
+            if (operation.getParameters() != null) {
+                operation.getParameters().forEach(parameter -> {
+                    Object example = parameterExample(parameter.getName());
+                    if (example != null && parameter.getExample() == null) {
+                        parameter.setExample(example);
+                    }
+                });
+            }
+            return operation;
+        };
+    }
+
+    private static Object readJson(ObjectMapper objectMapper, String json) {
+        try {
+            return objectMapper.readValue(json, Object.class);
+        } catch (JsonProcessingException exception) {
+            throw new IllegalStateException("Invalid built-in OpenAPI request example", exception);
+        }
+    }
+
+    private static Object parameterExample(String name) {
+        return switch (name) {
+            case "slug" -> DevSampleData.INVITATION_SLUG;
+            case "inviteToken", "token" -> DevSampleData.ATTENDING_GUEST_TOKEN;
+            case "accessToken" -> DevSampleData.INVITATION_ACCESS_TOKEN;
+            case "id", "itemId", "rsvpId", "invitationId", "guestId", "tableId",
+                    "assignmentId", "organizationId",
+                    "memberId", "templateId", "packageId", "userId", "notificationId",
+                    "giftId", "budgetItemId", "eventId" -> 1;
+            case "page" -> 0;
+            case "size" -> 20;
+            case "lang", "language" -> "km";
+            case "keyword", "query" -> "wedding";
+            case "orderCode" -> "<pending-order-code>";
+            default -> null;
         };
     }
 

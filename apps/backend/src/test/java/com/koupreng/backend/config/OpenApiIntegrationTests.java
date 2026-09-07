@@ -3,6 +3,7 @@ package com.koupreng.backend.config;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -13,6 +14,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -38,7 +41,9 @@ import org.springframework.test.web.servlet.MockMvc;
         "app.payment.admin-secret=openapi-test-secret",
         "app.waf.max-requests-per-minute=1000",
         "springdoc.api-docs.enabled=true",
-        "springdoc.swagger-ui.enabled=true"
+        "scalar.enabled=true",
+        "scalar.path=/docs",
+        "scalar.url=/v3/api-docs"
 })
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
@@ -107,17 +112,89 @@ class OpenApiIntegrationTests {
     }
 
     @Test
-    void swaggerUiUsesScopedCspWhileNormalApiKeepsStrictCsp() throws Exception {
-        mockMvc.perform(get("/swagger-ui/index.html"))
+    void scalarUsesScopedCspWhileNormalApiKeepsStrictCsp() throws Exception {
+        mockMvc.perform(get("/docs"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
+                .andExpect(content().string(containsString("Koupreng E-Invitation API")))
                 .andExpect(header().string("Content-Security-Policy", containsString("default-src 'self'")))
-                .andExpect(header().string("Content-Security-Policy", containsString("script-src 'self'")))
+                .andExpect(header().string(
+                        "Content-Security-Policy",
+                        containsString("script-src 'self' 'unsafe-inline'")))
                 .andExpect(header().string("Content-Security-Policy", containsString("connect-src 'self'")));
+
+        mockMvc.perform(get("/docs/scalar.js"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(not("")));
 
         mockMvc.perform(get("/api/health"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Security-Policy", STRICT_API_CSP));
+    }
+
+    @Test
+    void obsoleteSwaggerUiIsNotPubliclyExposed() throws Exception {
+        mockMvc.perform(get("/swagger-ui/index.html"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void importantRequestsHaveCompleteNamedExamples() throws Exception {
+        mockMvc.perform(get("/v3/api-docs"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.paths['/api/auth/login'].post.requestBody.content['application/json']"
+                        + ".examples.demoUser.value.identifier").value("demo@koupreng.local"))
+                .andExpect(jsonPath("$.paths['/api/auth/login'].post.requestBody.content['application/json']"
+                        + ".examples.demoUser.value.password").value("DemoPass123!"))
+                .andExpect(jsonPath("$.paths['/api/auth/register'].post.requestBody.content['application/json']"
+                        + ".examples.newUser.value.fullName").value("Koupreng Demo User"))
+                .andExpect(jsonPath("$.paths['/api/v1/invitations'].post.requestBody.content['application/json']"
+                        + ".examples.khmerWedding.value.eventType").value("WEDDING"))
+                .andExpect(jsonPath("$.paths['/api/v1/invitations'].post.requestBody.content['application/json']"
+                        + ".examples.khmerWedding.value.languageMode").value("BILINGUAL"))
+                .andExpect(jsonPath("$.paths['/api/v1/invitations'].post.requestBody.content['application/json']"
+                        + ".examples.khmerWedding.value.rsvpDeadline").value("2035-02-10"))
+                .andExpect(jsonPath("$.paths['/api/v1/invitations/{invitationId}/guests'].post.requestBody"
+                        + ".content['application/json'].examples.familyGuest.value.seatCount").value(4))
+                .andExpect(jsonPath("$.paths['/api/v1/public/invitations/{slug}/rsvp'].post.requestBody"
+                        + ".content['application/json'].examples.attending.value.responseStatus")
+                        .value("ATTENDING"))
+                .andExpect(jsonPath("$.paths['/api/v1/invitations/{invitationId}/check-in/scan'].post.requestBody"
+                        + ".content['application/json'].examples.fixtureGuest.value.token")
+                        .value("demo-guest-attending-token"));
+    }
+
+    @Test
+    void stableFixtureParametersArePreFilled() throws Exception {
+        mockMvc.perform(get("/v3/api-docs"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.paths['/api/v1/public/invitations/{slug}'].get.parameters[0].example")
+                        .value("demo-wedding"))
+                .andExpect(jsonPath("$.paths['/api/v1/public/invitations/{slug}/guests/{inviteToken}/rsvp']"
+                        + ".post.parameters[1].example").value("demo-guest-attending-token"));
+    }
+
+    @Test
+    void everyInteractiveJsonRequestHasAnExample() throws Exception {
+        String document = mockMvc.perform(get("/v3/api-docs"))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        JsonNode paths = objectMapper.readTree(document).path("paths");
+        Set<String> httpMethods = Set.of("get", "post", "put", "patch", "delete");
+        List<String> missingExamples = new ArrayList<>();
+        paths.properties().forEach(path -> path.getValue().properties().stream()
+                .filter(operation -> httpMethods.contains(operation.getKey()))
+                .filter(operation -> !"/api/v1/payway/callback".equals(path.getKey()))
+                .forEach(operation -> {
+                    JsonNode jsonBody = operation.getValue().path("requestBody").path("content")
+                            .path("application/json");
+                    if (!jsonBody.isMissingNode() && jsonBody.path("examples").isEmpty()) {
+                        missingExamples.add(operation.getKey().toUpperCase() + " " + path.getKey());
+                    }
+                }));
+
+        assertTrue(missingExamples.isEmpty(), () -> "Missing request examples: " + missingExamples);
     }
 
     @Test

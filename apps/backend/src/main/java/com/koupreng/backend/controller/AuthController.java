@@ -76,7 +76,7 @@ public class AuthController {
     }
 
     @Operation(summary = "Log in with email or phone",
-            description = "Return the accessToken used with Swagger Authorize. Paste only the JWT; Swagger adds Bearer automatically.")
+            description = "Return the accessToken used with Scalar bearerAuth. Paste only the JWT; Scalar adds Bearer automatically.")
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Malformed or invalid request",
                     content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))),

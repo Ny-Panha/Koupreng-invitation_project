@@ -5,7 +5,7 @@ import java.time.Instant;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public record AuthResponse(
-        @Schema(description = "JWT used with Swagger Authorize and the Authorization header.",
+        @Schema(description = "JWT used with Scalar bearerAuth and the Authorization header.",
                 accessMode = Schema.AccessMode.READ_ONLY)
         String accessToken,
         @Schema(example = "Bearer", accessMode = Schema.AccessMode.READ_ONLY) String tokenType,
