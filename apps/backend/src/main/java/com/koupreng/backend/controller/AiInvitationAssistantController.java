@@ -1,5 +1,7 @@
 package com.koupreng.backend.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
 import com.koupreng.backend.dto.ai.AiInvitationDraftRequest;
 import com.koupreng.backend.dto.ai.AiInvitationDraftResponse;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Validated
 @RequestMapping("/api/v1/ai")
+@Tag(name = "AI Invitation Assistant", description = "Authenticated invitation copy, story, translation, and timeline suggestions.")
+@SecurityRequirement(name = "bearerAuth")
 public class AiInvitationAssistantController {
 
     private final AiInvitationAssistantService assistantService;

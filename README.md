@@ -71,6 +71,26 @@ Default local URLs:
 - Admin frontend: `http://localhost:5174`
 - Telegram service: `http://localhost:8000`
 
+## API documentation
+
+With the backend running in the default development configuration:
+
+- Swagger UI: `http://localhost:8080/swagger-ui/index.html`
+- OpenAPI JSON: `http://localhost:8080/v3/api-docs`
+
+To test an authenticated operation, call `POST /api/auth/login`, copy the returned
+`accessToken`, click **Authorize** in Swagger UI, and paste the JWT only. Swagger UI
+adds the `Bearer` prefix. Bearer authentication is the intended Swagger workflow;
+the optional HttpOnly auth cookie and the application's existing CSRF behavior are
+not changed for documentation. If CSRF is enabled in a deployment, cookie-authenticated
+mutating requests must also satisfy that deployment's CSRF requirements.
+
+`OPENAPI_ENABLED`, `SWAGGER_UI_ENABLED`, and `SWAGGER_UI_PERSIST_AUTHORIZATION`
+control generation, the interactive UI, and local authorization persistence. The
+first two default to `true` for development and explicitly default to `false` in the
+`prod` profile. Sensitive `/api/v1/internal/**` service endpoints are not included in
+the generated contract.
+
 ## Verification
 
 ```bash

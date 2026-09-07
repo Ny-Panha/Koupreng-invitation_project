@@ -1,5 +1,7 @@
 package com.koupreng.backend.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
 import com.koupreng.backend.dto.admin.AdminInvitationModerationRequest;
 import com.koupreng.backend.dto.admin.AdminReportResponse;
@@ -40,6 +42,8 @@ import java.util.List;
 @Validated
 @PreAuthorize("hasRole('ADMIN')")
 @RequestMapping("/api/v1/admin")
+@Tag(name = "Administration", description = "ADMIN-only user, template, invitation, reporting, package, payment, and audit operations.")
+@SecurityRequirement(name = "bearerAuth")
 public class AdminManagementController {
 
     private final AdminManagementService adminManagementService;

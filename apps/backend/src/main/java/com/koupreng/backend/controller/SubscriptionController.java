@@ -1,5 +1,7 @@
 package com.koupreng.backend.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
 import com.koupreng.backend.dto.subscription.SubscriptionPackageResponse;
 import com.koupreng.backend.dto.subscription.SubscriptionPurchaseRequest;
@@ -21,6 +23,8 @@ import java.util.List;
 @RestController
 @Validated
 @RequestMapping("/api/v1")
+@Tag(name = "Subscriptions", description = "Authenticated package catalog, subscription history, and purchase creation.")
+@SecurityRequirement(name = "bearerAuth")
 public class SubscriptionController {
 
     private final SubscriptionService subscriptionService;

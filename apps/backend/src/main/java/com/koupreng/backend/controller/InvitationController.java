@@ -1,5 +1,8 @@
 package com.koupreng.backend.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
 import com.koupreng.backend.dto.invitation.InvitationCustomizationRequest;
 import com.koupreng.backend.dto.invitation.InvitationCustomizationResponse;
@@ -32,6 +35,8 @@ import java.util.List;
 @RestController
 @Validated
 @RequestMapping("/api/v1")
+@Tag(name = "Invitations", description = "Invitation-owner lifecycle and public published-invitation access.")
+@SecurityRequirement(name = "bearerAuth")
 public class InvitationController {
 
     private final InvitationService invitationService;
@@ -171,6 +176,8 @@ public class InvitationController {
         ));
     }
 
+    @Operation(summary = "Retrieve a public invitation",
+            description = "Return a published invitation after applying its visibility and access-token rules.")
     @GetMapping("/public/invitations/{slug}")
     public ResponseEntity<ApiResponse<PublicInvitationResponse>> publicInvitation(
             @PathVariable String slug,
@@ -183,6 +190,8 @@ public class InvitationController {
         ));
     }
 
+    @Operation(summary = "Retrieve a personalized guest invitation",
+            description = "Return the safe personalized invitation view for an opaque guest invite token.")
     @GetMapping("/public/invitations/{slug}/guest-view")
     public ResponseEntity<ApiResponse<com.koupreng.backend.dto.invitation.GuestInvitationViewResponse>> publicGuestInvitationView(
             @PathVariable String slug,
@@ -194,6 +203,8 @@ public class InvitationController {
         ));
     }
 
+    @Operation(summary = "Verify public invitation access",
+            description = "Validate a passcode or invitation token without exposing stored access credentials.")
     @PostMapping("/public/invitations/{slug}/access/verify")
     public ResponseEntity<ApiResponse<InvitationAccessVerifyResponse>> verifyPublicAccess(
             @PathVariable String slug,

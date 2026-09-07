@@ -1,5 +1,7 @@
 package com.koupreng.backend.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
 import com.koupreng.backend.dto.guest.GuestGroupResponse;
 import com.koupreng.backend.dto.guest.GuestImportFileResultResponse;
@@ -31,6 +33,8 @@ import java.util.List;
 @RestController
 @Validated
 @RequestMapping("/api/v1/invitations/{invitationId}/guests")
+@Tag(name = "Guests", description = "Invitation-owner guest records, grouping, import, search, send lists, and exports.")
+@SecurityRequirement(name = "bearerAuth")
 public class GuestController {
 
     private final GuestService guestService;

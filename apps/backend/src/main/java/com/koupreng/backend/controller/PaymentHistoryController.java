@@ -1,5 +1,7 @@
 package com.koupreng.backend.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
 import com.koupreng.backend.dto.payments.PaymentHistoryResponse;
 import com.koupreng.backend.dto.payments.PaymentReceiptResponse;
@@ -17,6 +19,8 @@ import java.util.List;
 @RestController
 @Validated
 @RequestMapping("/api/v1/me/payments")
+@Tag(name = "Payment History", description = "Current-user payment orders and receipts with ownership enforcement.")
+@SecurityRequirement(name = "bearerAuth")
 public class PaymentHistoryController {
 
     private final PaymentHistoryService paymentHistoryService;

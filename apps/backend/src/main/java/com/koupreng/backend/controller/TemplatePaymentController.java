@@ -1,5 +1,9 @@
 package com.koupreng.backend.controller;
 
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
 import com.koupreng.backend.dto.payment.ConfirmTemplatePaymentRequest;
 import com.koupreng.backend.dto.payment.CreateTemplatePaymentRequest;
@@ -32,6 +36,8 @@ import java.util.Map;
 @RestController
 @Validated
 @RequestMapping("/api/v1")
+@Tag(name = "Payments", description = "Authenticated template payments, public PayWay redirects/callback, and ADMIN-only confirmation.")
+@SecurityRequirement(name = "bearerAuth")
 public class TemplatePaymentController {
 
     private static final String PAYWAY_SIGNATURE_HEADER = "X-PAYWAY-HMAC-SHA512";
@@ -42,6 +48,7 @@ public class TemplatePaymentController {
         this.templatePaymentService = templatePaymentService;
     }
 
+    @Operation(summary = "Create a PayWay template checkout")
     @PostMapping("/template-payments/payway/create")
     public ResponseEntity<ApiResponse<CreateTemplatePaymentResponse>> createPaywayCheckout(
             Authentication authentication,
@@ -52,6 +59,7 @@ public class TemplatePaymentController {
                 .body(ApiResponse.success("PayWay QR payment created successfully", response));
     }
 
+    @Operation(summary = "Create a static ABA template payment")
     @PostMapping("/template-payments/create")
     public ResponseEntity<ApiResponse<CreateTemplatePaymentResponse>> createStaticPayment(
             Authentication authentication,
@@ -62,6 +70,7 @@ public class TemplatePaymentController {
                 .body(ApiResponse.success("Static ABA payment order created successfully", response));
     }
 
+    @Operation(summary = "Create a static ABA payment order")
     @PostMapping("/template-payments/static/create")
     public ResponseEntity<ApiResponse<CreateTemplatePaymentResponse>> createStaticPaymentOrder(
             Authentication authentication,
@@ -72,6 +81,7 @@ public class TemplatePaymentController {
                 .body(ApiResponse.success("Static ABA payment order created successfully", response));
     }
 
+    @Operation(summary = "Get an owned template payment order")
     @GetMapping("/template-payments/{orderCode}")
     public ResponseEntity<ApiResponse<TemplatePaymentStatusResponse>> getOrder(
             Authentication authentication,
@@ -83,6 +93,7 @@ public class TemplatePaymentController {
         ));
     }
 
+    @Operation(summary = "List templates paid for by the current user")
     @GetMapping("/me/templates/paid")
     public ResponseEntity<ApiResponse<List<UserTemplateAccessResponse>>> paidTemplates(Authentication authentication) {
         return ResponseEntity.ok(ApiResponse.success(
@@ -91,6 +102,7 @@ public class TemplatePaymentController {
         ));
     }
 
+    @Operation(summary = "Check the current user's template access")
     @GetMapping("/me/templates/{templateId}/access")
     public ResponseEntity<ApiResponse<TemplateAccessCheckResponse>> templateAccess(
             Authentication authentication,
@@ -102,6 +114,8 @@ public class TemplatePaymentController {
         ));
     }
 
+    @Operation(summary = "Receive a PayWay payment callback",
+            description = "Provider-facing callback. The backend validates the PayWay signature and transaction before changing access.")
     @PostMapping("/payway/callback")
     public ResponseEntity<ApiResponse<PayWayCallbackResponse>> paywayCallback(
             @RequestBody Map<String, Object> payload,
@@ -114,6 +128,7 @@ public class TemplatePaymentController {
         return ResponseEntity.ok(ApiResponse.success("PayWay callback processed", response));
     }
 
+    @Operation(summary = "Handle the public PayWay return redirect")
     @GetMapping("/payway/return")
     public ResponseEntity<ApiResponse<Map<String, String>>> paywayReturn() {
         return ResponseEntity.ok(ApiResponse.success(
@@ -122,6 +137,7 @@ public class TemplatePaymentController {
         ));
     }
 
+    @Operation(summary = "Handle the public PayWay cancellation redirect")
     @GetMapping("/payway/cancel")
     public ResponseEntity<ApiResponse<Map<String, String>>> paywayCancel() {
         return ResponseEntity.ok(ApiResponse.success(
@@ -131,6 +147,8 @@ public class TemplatePaymentController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "List template payment orders",
+            description = "Requires a bearer JWT for a user with the ADMIN role.")
     @GetMapping("/admin/template-payments")
     public ResponseEntity<ApiResponse<List<TemplatePaymentStatusResponse>>> adminOrders() {
         return ResponseEntity.ok(ApiResponse.success(
@@ -141,6 +159,8 @@ public class TemplatePaymentController {
 
     @PostMapping("/admin/template-payments/confirm")
     @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Confirm a template payment manually",
+            description = "Requires a bearer JWT for a user with the ADMIN role.")
     public ResponseEntity<ApiResponse<PaymentConfirmResponse>> confirmManualPayment(
             @Valid @RequestBody ConfirmTemplatePaymentRequest request
     ) {
@@ -150,6 +170,8 @@ public class TemplatePaymentController {
 
     @PostMapping("/admin/template-payments/telegram-detect")
     @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Review Telegram-detected payment data",
+            description = "Requires a bearer JWT for a user with the ADMIN role.")
     public ResponseEntity<ApiResponse<PaymentConfirmResponse>> detectTelegramPayment(
             @Valid @RequestBody TelegramDetectPaymentRequest request
     ) {
@@ -157,6 +179,7 @@ public class TemplatePaymentController {
         return ResponseEntity.ok(ApiResponse.success("Telegram payment detection processed", response));
     }
 
+    @Hidden
     @PostMapping("/internal/template-payments/confirm")
     public ResponseEntity<ApiResponse<PaymentConfirmResponse>> confirmInternalPayment(
             @Valid @RequestBody ConfirmTemplatePaymentRequest request
@@ -165,6 +188,7 @@ public class TemplatePaymentController {
         return ResponseEntity.ok(ApiResponse.success("Template payment confirmed successfully", response));
     }
 
+    @Hidden
     @PostMapping("/internal/template-payments/telegram-detect")
     public ResponseEntity<ApiResponse<PaymentConfirmResponse>> detectInternalTelegramPayment(
             @Valid @RequestBody TelegramDetectPaymentRequest request

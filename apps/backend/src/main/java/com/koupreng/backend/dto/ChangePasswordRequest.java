@@ -1,16 +1,23 @@
 package com.koupreng.backend.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Size;
 
 public record ChangePasswordRequest(
+        @Schema(format = "password", accessMode = Schema.AccessMode.WRITE_ONLY,
+                description = "Current password; legacy alias of currentPassword.")
         @Size(max = 100)
         String oldPassword,
 
+        @Schema(format = "password", accessMode = Schema.AccessMode.WRITE_ONLY,
+                description = "Current password; preferred request field.")
         @Size(max = 100)
         String currentPassword,
 
+        @Schema(format = "password", accessMode = Schema.AccessMode.WRITE_ONLY,
+                example = "NewExamplePass123!")
         @NotBlank
         @Size(min = 8, max = 100)
         String newPassword

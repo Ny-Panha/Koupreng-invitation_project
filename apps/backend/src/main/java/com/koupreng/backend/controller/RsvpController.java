@@ -1,5 +1,6 @@
 package com.koupreng.backend.controller;
 
+import com.koupreng.backend.common.ApiErrorResponse;
 import com.koupreng.backend.dto.ApiResponse;
 import com.koupreng.backend.dto.rsvp.RsvpRequest;
 import com.koupreng.backend.dto.rsvp.RsvpResponse;
@@ -7,6 +8,12 @@ import com.koupreng.backend.dto.rsvp.RsvpSummaryResponse;
 import com.koupreng.backend.dto.rsvp.RsvpUpdateRequest;
 import com.koupreng.backend.dto.rsvp.WishResponse;
 import com.koupreng.backend.service.RsvpService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +34,8 @@ import java.util.List;
 @RestController
 @Validated
 @RequestMapping("/api/v1")
+@Tag(name = "RSVP", description = "Rate-limited public RSVP submission and invitation-owner RSVP management.")
+@SecurityRequirement(name = "bearerAuth")
 public class RsvpController {
 
     private final RsvpService rsvpService;
@@ -35,6 +44,15 @@ public class RsvpController {
         this.rsvpService = rsvpService;
     }
 
+    @Operation(summary = "Submit a public RSVP",
+            description = "Create or update a public RSVP after invitation access and deadline validation.")
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "RSVP accepted"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid RSVP or closed deadline",
+                    content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "429", description = "Public RSVP rate limit exceeded",
+                    content = @Content(schema = @Schema(implementation = ApiErrorResponse.class)))
+    })
     @PostMapping("/public/invitations/{slug}/rsvp")
     public ResponseEntity<ApiResponse<RsvpResponse>> publicRsvp(
             @PathVariable String slug,
@@ -48,6 +66,8 @@ public class RsvpController {
                 ));
     }
 
+    @Operation(summary = "Submit a personalized guest RSVP",
+            description = "Create or update the RSVP associated with an opaque guest invitation token.")
     @PostMapping("/public/invitations/{slug}/guests/{inviteToken}/rsvp")
     public ResponseEntity<ApiResponse<RsvpResponse>> publicTokenRsvp(
             @PathVariable String slug,
@@ -61,6 +81,7 @@ public class RsvpController {
                 ));
     }
 
+    @Operation(summary = "Get the public RSVP summary")
     @GetMapping("/public/invitations/{slug}/rsvp-summary-public")
     public ResponseEntity<ApiResponse<RsvpSummaryResponse>> publicSummary(
             @PathVariable String slug,
@@ -73,6 +94,8 @@ public class RsvpController {
         ));
     }
 
+    @Operation(summary = "List public guest wishes",
+            description = "Return approved wishes for an accessible published invitation.")
     @GetMapping("/public/invitations/{slug}/wishes")
     public ResponseEntity<ApiResponse<List<WishResponse>>> publicWishes(
             @PathVariable String slug,

@@ -1,5 +1,7 @@
 package com.koupreng.backend.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
 import com.koupreng.backend.dto.EventRequest;
 import com.koupreng.backend.dto.EventResponse;
@@ -17,6 +19,8 @@ import java.util.List;
 @RequestMapping("/api/v1/events")
 @RequiredArgsConstructor
 @PreAuthorize("hasRole('ADMIN')")
+@Tag(name = "Events", description = "ADMIN-only lifecycle operations for the legacy event model.")
+@SecurityRequirement(name = "bearerAuth")
 public class EventController {
 
     private final EventService eventService;

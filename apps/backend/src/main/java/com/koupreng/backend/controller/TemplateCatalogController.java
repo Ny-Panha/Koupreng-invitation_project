@@ -1,5 +1,6 @@
 package com.koupreng.backend.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
 import com.koupreng.backend.dto.template.PublicTemplateResponse;
 import com.koupreng.backend.service.TemplateCatalogService;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/templates")
+@Tag(name = "Templates", description = "Public active invitation template catalog.")
 public class TemplateCatalogController {
 
     private final TemplateCatalogService templateCatalogService;

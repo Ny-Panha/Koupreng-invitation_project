@@ -1,5 +1,7 @@
 package com.koupreng.backend.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
 import com.koupreng.backend.dto.checkin.CheckInResponse;
 import com.koupreng.backend.dto.checkin.CheckInScanRequest;
@@ -22,6 +24,8 @@ import java.util.List;
 @RestController
 @Validated
 @RequestMapping("/api/v1")
+@Tag(name = "Check-In", description = "Invitation-owner guest check-in by QR token or manual selection.")
+@SecurityRequirement(name = "bearerAuth")
 public class CheckInController {
 
     private final CheckInService checkInService;

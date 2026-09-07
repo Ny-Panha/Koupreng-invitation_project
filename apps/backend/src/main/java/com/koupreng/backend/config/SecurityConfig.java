@@ -22,6 +22,7 @@ import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -49,8 +50,56 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableMethodSecurity
 public class SecurityConfig {
 
+    private static final String SWAGGER_CONTENT_SECURITY_POLICY = "default-src 'self'; "
+            + "script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; "
+            + "font-src 'self'; connect-src 'self'; object-src 'none'; "
+            + "frame-ancestors 'none'; base-uri 'none'; form-action 'none'";
+
     @Bean
-    public SecurityFilterChain securityFilterChain(
+    @Order(1)
+    public SecurityFilterChain openApiSecurityFilterChain(
+            HttpSecurity http,
+            ApiSecurityProperties apiSecurityProperties
+    ) throws Exception {
+        http
+                .securityMatcher(
+                        "/swagger-ui/**",
+                        "/swagger-ui.html",
+                        "/v3/api-docs",
+                        "/v3/api-docs/**",
+                        "/v3/api-docs.yaml"
+                )
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .headers(headers -> headers
+                        .contentSecurityPolicy(csp -> csp.policyDirectives(SWAGGER_CONTENT_SECURITY_POLICY))
+                        .frameOptions(frame -> frame.deny())
+                        .referrerPolicy(referrer -> referrer.policy(
+                                ReferrerPolicyHeaderWriter.ReferrerPolicy.NO_REFERRER))
+                        .httpStrictTransportSecurity(hsts -> {
+                            if (apiSecurityProperties.getHttps().isHstsEnabled()) {
+                                hsts.includeSubDomains(true)
+                                        .maxAgeInSeconds(apiSecurityProperties.getHttps().getHstsMaxAgeSeconds());
+                            } else {
+                                hsts.disable();
+                            }
+                        })
+                )
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
+                .formLogin(form -> form.disable())
+                .httpBasic(httpBasic -> httpBasic.disable());
+
+        if (apiSecurityProperties.getHttps().isRequired()) {
+            http.redirectToHttps(https -> https.requestMatchers(AnyRequestMatcher.INSTANCE));
+        }
+
+        return http.build();
+    }
+
+    @Bean
+    @Order(2)
+    public SecurityFilterChain applicationSecurityFilterChain(
             HttpSecurity http,
             AppJwtAuthenticationConverter jwtAuthenticationConverter,
             WafProperties wafProperties,

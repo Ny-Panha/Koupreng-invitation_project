@@ -1,5 +1,7 @@
 package com.koupreng.backend.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
 import com.koupreng.backend.dto.organization.OrganizationMemberRequest;
 import com.koupreng.backend.dto.organization.OrganizationMemberResponse;
@@ -25,6 +27,8 @@ import java.util.List;
 @RestController
 @Validated
 @RequestMapping("/api/v1/organizations")
+@Tag(name = "Organizations", description = "Authenticated organization membership and owner-managed member access.")
+@SecurityRequirement(name = "bearerAuth")
 public class OrganizationController {
 
     private final OrganizationService organizationService;

@@ -1,5 +1,7 @@
 package com.koupreng.backend.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
 import com.koupreng.backend.dto.seating.EventTableRequest;
 import com.koupreng.backend.dto.seating.EventTableResponse;
@@ -27,6 +29,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Validated
 @RequestMapping("/api/v1/invitations/{invitationId}")
+@Tag(name = "Seating", description = "Invitation-owner tables, seat assignments, summaries, and exports.")
+@SecurityRequirement(name = "bearerAuth")
 public class SeatingController {
 
     private final SeatingService seatingService;

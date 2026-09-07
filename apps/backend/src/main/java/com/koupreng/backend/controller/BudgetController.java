@@ -1,5 +1,8 @@
 package com.koupreng.backend.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
 import com.koupreng.backend.dto.budget.BudgetItemRequest;
 import com.koupreng.backend.dto.budget.BudgetItemResponse;
@@ -31,6 +34,8 @@ import java.util.List;
 @RestController
 @Validated
 @RequestMapping("/api/v1")
+@Tag(name = "Budget", description = "Invitation-owner budget planning, line items, summaries, and exports.")
+@SecurityRequirement(name = "bearerAuth")
 public class BudgetController {
 
     private final BudgetService budgetService;
@@ -117,6 +122,8 @@ public class BudgetController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Retrieve any invitation budget as an administrator",
+            description = "Requires a bearer JWT for a user with the ADMIN role.")
     @GetMapping("/admin/invitations/{invitationId}/budget")
     public ResponseEntity<ApiResponse<BudgetResponse>> adminBudget(
             Authentication authentication,

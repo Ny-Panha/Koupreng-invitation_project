@@ -1,6 +1,7 @@
 package com.koupreng.backend.dto.invitation;
 
 import com.koupreng.backend.entity.invitation.EventType;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -40,6 +41,9 @@ public class InvitationRequest {
     @Size(max = 10000)
     private String layoutSettings;
     private String visibility;
+    @Schema(format = "password", accessMode = Schema.AccessMode.WRITE_ONLY,
+            description = "Optional passcode for password-protected public invitations.",
+            example = "invitation-passcode-placeholder")
     private String accessPassword;
     private LocalDate rsvpDeadline;
 

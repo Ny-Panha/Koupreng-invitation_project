@@ -1,5 +1,7 @@
 package com.koupreng.backend.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
 import com.koupreng.backend.dto.notification.CreateNotificationRequest;
 import com.koupreng.backend.dto.notification.NotificationResponse;
@@ -32,6 +34,8 @@ import java.util.Map;
 @Validated
 @PreAuthorize("hasRole('ADMIN')")
 @RequestMapping("/api/v1/admin/notifications")
+@Tag(name = "Administration", description = "ADMIN-only notification creation, delivery status, and audit operations.")
+@SecurityRequirement(name = "bearerAuth")
 public class AdminNotificationController {
 
     private final NotificationService notificationService;

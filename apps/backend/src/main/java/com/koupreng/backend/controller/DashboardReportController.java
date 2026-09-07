@@ -1,5 +1,8 @@
 package com.koupreng.backend.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
 import com.koupreng.backend.dto.dashboard.AdminDashboardSummaryResponse;
 import com.koupreng.backend.dto.dashboard.GuestStatusReportResponse;
@@ -21,6 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Validated
 @RequestMapping("/api/v1")
+@Tag(name = "Reports", description = "Authenticated dashboards, invitation-owner reports, and CSV exports.")
+@SecurityRequirement(name = "bearerAuth")
 public class DashboardReportController {
 
     private final DashboardReportService dashboardReportService;
@@ -89,6 +94,8 @@ public class DashboardReportController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Retrieve the administration dashboard",
+            description = "Requires a bearer JWT for a user with the ADMIN role.")
     @GetMapping("/admin/dashboard/summary")
     public ResponseEntity<ApiResponse<AdminDashboardSummaryResponse>> adminDashboard(Authentication authentication) {
         return ResponseEntity.ok(ApiResponse.success(

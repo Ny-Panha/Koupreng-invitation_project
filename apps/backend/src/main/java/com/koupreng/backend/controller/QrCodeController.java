@@ -1,5 +1,7 @@
 package com.koupreng.backend.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
 import com.koupreng.backend.dto.qr.QrCodeResponse;
 import com.koupreng.backend.service.QrCodeService;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Validated
 @RequestMapping("/api/v1")
+@Tag(name = "QR Codes", description = "Invitation-owner invitation and personalized guest QR payload generation.")
+@SecurityRequirement(name = "bearerAuth")
 public class QrCodeController {
 
     private final QrCodeService qrCodeService;

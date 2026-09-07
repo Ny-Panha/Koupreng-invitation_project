@@ -1,5 +1,8 @@
 package com.koupreng.backend.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
 import com.koupreng.backend.dto.media.MediaListResponse;
 import com.koupreng.backend.dto.media.MediaResponse;
@@ -25,6 +28,8 @@ import java.util.List;
 @RestController
 @Validated
 @RequestMapping("/api/v1")
+@Tag(name = "Media", description = "Validated invitation-owner uploads and public published-invitation media reads.")
+@SecurityRequirement(name = "bearerAuth")
 public class MediaController {
 
     private final MediaService mediaService;
@@ -97,6 +102,8 @@ public class MediaController {
         ));
     }
 
+    @Operation(summary = "List public invitation media",
+            description = "Return media that belongs to an accessible published invitation.")
     @GetMapping("/public/invitations/{slug}/media")
     public ResponseEntity<ApiResponse<MediaListResponse>> publicMedia(
             @PathVariable String slug,

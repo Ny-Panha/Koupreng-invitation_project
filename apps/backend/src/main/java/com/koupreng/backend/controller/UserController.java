@@ -1,5 +1,7 @@
 package com.koupreng.backend.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 import com.koupreng.backend.dto.ChangePasswordRequest;
@@ -29,6 +31,8 @@ import com.koupreng.backend.service.storage.StorageUploadResult;
 @RestController
 @Validated
 @RequestMapping("/api/users/me")
+@Tag(name = "Users", description = "Current-user profile, password, and validated profile-image operations.")
+@SecurityRequirement(name = "bearerAuth")
 public class UserController {
 
     private final UserService userService;

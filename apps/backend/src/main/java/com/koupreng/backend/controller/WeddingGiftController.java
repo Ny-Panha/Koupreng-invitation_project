@@ -1,5 +1,7 @@
 package com.koupreng.backend.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
 import com.koupreng.backend.dto.gift.WeddingGiftRequest;
 import com.koupreng.backend.dto.gift.WeddingGiftResponse;
@@ -23,6 +25,8 @@ import java.util.List;
 @RestController
 @Validated
 @RequestMapping("/api/v1/invitations/{invitationId}/gifts")
+@Tag(name = "Wedding Gifts", description = "Invitation-owner wedding gift records and contribution amounts.")
+@SecurityRequirement(name = "bearerAuth")
 public class WeddingGiftController {
 
     private final WeddingGiftService weddingGiftService;

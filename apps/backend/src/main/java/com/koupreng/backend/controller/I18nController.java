@@ -1,5 +1,7 @@
 package com.koupreng.backend.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.common.ApiException;
 import com.koupreng.backend.dto.ApiResponse;
 import com.koupreng.backend.service.MessageService;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@Tag(name = "Internationalization", description = "Public localized message bundles used by the clients.")
 public class I18nController {
 
     private final MessageService msg;
@@ -411,7 +414,8 @@ public class I18nController {
         }
     }
 
-
+    @Operation(summary = "Get localized UI messages",
+            description = "Return the supported messages for one known client namespace in the active locale.")
     @GetMapping("/api/v1/i18n/messages")
     public ResponseEntity<ApiResponse<Map<String, Object>>> messages(
             @RequestParam(defaultValue = "dashboard") String namespace,
