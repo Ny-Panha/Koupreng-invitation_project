@@ -1,6 +1,5 @@
 package com.koupreng.backend.dto.template;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.koupreng.backend.entity.invitation.InvitationTemplate;
 import com.koupreng.backend.entity.invitation.TemplateCategory;
 import lombok.AllArgsConstructor;

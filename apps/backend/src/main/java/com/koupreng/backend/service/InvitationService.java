@@ -650,11 +650,10 @@ public class InvitationService {
                 "wedding"
         );
         String cleanBase = slugify(base);
-        if ("wedding".equals(cleanBase) || "invitation".equals(cleanBase)) {
-            if (invitation.getId() != null) {
-                invitation.setSlug(String.valueOf(invitation.getId()));
-                return;
-            }
+        if (("wedding".equals(cleanBase) || "invitation".equals(cleanBase))
+                && invitation.getId() != null) {
+            invitation.setSlug(String.valueOf(invitation.getId()));
+            return;
         }
         invitation.setSlug(uniqueSlug(cleanBase, invitation.getId()));
     }

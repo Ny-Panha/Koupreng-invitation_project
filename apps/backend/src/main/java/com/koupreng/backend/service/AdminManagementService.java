@@ -660,19 +660,6 @@ public class AdminManagementService {
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Template not found"));
     }
 
-    private void enforceSingleTemplate(InvitationTemplate template) {
-        if (template.getCode() != null && !KEEP_TEMPLATE_CODE.equalsIgnoreCase(template.getCode())) {
-            throw new ApiException(HttpStatus.BAD_REQUEST, "Only the Garden Royal Khmer Wedding template can be edited");
-        }
-        template.setCode(KEEP_TEMPLATE_CODE);
-        template.setStatus(TEMPLATE_STATUS_ACTIVE);
-        template.setPremium(false);
-        template.setPrice(BigDecimal.ZERO);
-        if (template.getCurrency() == null || template.getCurrency().isBlank()) {
-            template.setCurrency("USD");
-        }
-    }
-
     private UserInvitation requireInvitation(Long invitationId) {
         return invitationRepository.findByIdAndDeletedFalse(invitationId)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Invitation not found"));

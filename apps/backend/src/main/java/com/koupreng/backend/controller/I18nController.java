@@ -2,11 +2,9 @@ package com.koupreng.backend.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import com.koupreng.backend.common.ApiException;
 import com.koupreng.backend.dto.ApiResponse;
 import com.koupreng.backend.service.MessageService;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
