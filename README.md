@@ -73,10 +73,11 @@ Default local URLs:
 
 ## API documentation
 
-The development API portal uses Springdoc's first-class Scalar integration with the
-Moon theme and Modern layout:
+The development API portal provides both Springdoc Swagger UI and a first-class
+Scalar integration with the Moon theme and Modern layout:
 
 - Scalar API Reference: `http://localhost:8080/docs`
+- Swagger UI: `http://localhost:8080/swagger-ui/index.html`
 - OpenAPI JSON: `http://localhost:8080/v3/api-docs`
 - OpenAPI YAML: `http://localhost:8080/v3/api-docs.yaml`
 

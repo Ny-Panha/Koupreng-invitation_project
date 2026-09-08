@@ -41,6 +41,8 @@ import org.springframework.test.web.servlet.MockMvc;
         "app.payment.admin-secret=openapi-test-secret",
         "app.waf.max-requests-per-minute=1000",
         "springdoc.api-docs.enabled=true",
+        "springdoc.swagger-ui.enabled=true",
+        "springdoc.swagger-ui.path=/swagger-ui.html",
         "scalar.enabled=true",
         "scalar.path=/docs",
         "scalar.url=/v3/api-docs"
@@ -133,9 +135,11 @@ class OpenApiIntegrationTests {
     }
 
     @Test
-    void obsoleteSwaggerUiIsNotPubliclyExposed() throws Exception {
+    void swaggerUiIsPubliclyExposed() throws Exception {
         mockMvc.perform(get("/swagger-ui/index.html"))
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
+                .andExpect(content().string(containsString("Swagger UI")));
     }
 
     @Test

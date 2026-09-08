@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
         "app.payment.admin-secret=openapi-disabled-test-secret",
         "app.waf.max-requests-per-minute=1000",
         "springdoc.api-docs.enabled=false",
+        "springdoc.swagger-ui.enabled=false",
         "scalar.enabled=false",
         "scalar.path=/docs"
 })
@@ -33,6 +34,9 @@ class OpenApiDisabledIntegrationTests {
                 .andExpect(status().isNotFound());
 
         mockMvc.perform(get("/docs/scalar.js"))
+                .andExpect(status().isNotFound());
+
+        mockMvc.perform(get("/swagger-ui/index.html"))
                 .andExpect(status().isNotFound());
     }
 }

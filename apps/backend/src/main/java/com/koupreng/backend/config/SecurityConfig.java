@@ -66,6 +66,9 @@ public class SecurityConfig {
                 .securityMatcher(
                         "/docs",
                         "/docs/**",
+                        "/swagger-ui.html",
+                        "/swagger-ui/**",
+                        "/webjars/swagger-ui/**",
                         "/v3/api-docs",
                         "/v3/api-docs/**",
                         "/v3/api-docs.yaml"
