@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Koupreng - Undo Last Git Push (Linux)
-# Reverts the last commit locally + force-updates remote
+# Koupreng - Undo Last Git Push (Linux / macOS)
+# Reverts the last commit locally + force-updates remote safely
 # ==============================================================================
 
 set -eo pipefail
@@ -13,17 +13,17 @@ RED='\033[0;31m'
 BOLD='\033[1m'
 NC='\033[0m'
 
-BRANCH=$(git branch --show-current)
-LAST_COMMIT=$(git log -1 --oneline)
+BRANCH=$(git branch --show-current 2>/dev/null || echo "")
+LAST_COMMIT=$(git log -1 --oneline 2>/dev/null || echo "")
 
 echo -e "${BOLD}${CYAN}======================================================${NC}"
 echo -e "${BOLD}${RED}   ⚠️  KOUPRENG - UNDO LAST PUSH${NC}"
 echo -e "${BOLD}${CYAN}======================================================${NC}"
-echo -e "  Branch: ${GREEN}${BRANCH}${NC}"
-echo -e "  Last commit: ${YELLOW}${LAST_COMMIT}${NC}"
-echo ""
+echo -e "  📍 Branch: ${GREEN}${BRANCH}${NC}"
+echo -e "  📌 Last commit: ${YELLOW}${LAST_COMMIT}${NC}\n"
 
-read -p "$(echo -e ${RED}តើ Nha ចង់ undo commit នេះមែនទេ? [y/N]: ${NC})" CONFIRM
+echo -ne "${RED}តើ Nha ចង់ undo commit នេះមែនទេ? [y/N]: ${NC}"
+read -r CONFIRM
 if [[ "$CONFIRM" != "y" && "$CONFIRM" != "Y" ]]; then
   echo -e "  ${CYAN}Cancelled. Nothing changed.${NC}"
   exit 0
@@ -36,7 +36,8 @@ echo -e "  ${GREEN}✓ Commit undone — code changes still in staging${NC}"
 
 # Step 2: Force update remote
 echo ""
-read -p "$(echo -e ${YELLOW}ចង់ update remote ដែរទេ? (force push) [y/N]: ${NC})" FORCE
+echo -ne "${YELLOW}ចង់ update remote ដែរទេ? [force push] [y/N]: ${NC}"
+read -r FORCE
 if [[ "$FORCE" == "y" || "$FORCE" == "Y" ]]; then
   echo -e "\n${BOLD}[2/2] Force-updating remote...${NC}"
   git push --force-with-lease origin "$BRANCH"
@@ -51,4 +52,4 @@ echo -e "${BOLD}${GREEN}   ✅ UNDO COMPLETED!${NC}"
 echo -e "${BOLD}${GREEN}======================================================${NC}"
 echo -e "  ${CYAN}Your code changes are safe in staging area.${NC}"
 echo -e "  ${CYAN}Run 'git status' to see them.${NC}"
-echo -e "======================================================\n"
+echo -e "${BOLD}${GREEN}======================================================${NC}\n"
