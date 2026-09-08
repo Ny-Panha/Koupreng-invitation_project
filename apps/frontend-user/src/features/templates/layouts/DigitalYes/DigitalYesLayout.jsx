@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import {
   Heart,
@@ -17,8 +17,10 @@ import defaultMusicUrl from "@/assets/music/Instrumental Wedding Music (VioSound
 import { normalizeTemplateViewModel } from "../../services/templateService";
 import FallingPetals from "./components/FallingPetals";
 import WaxSealEnvelope from "./components/WaxSealEnvelope";
+import TemplateOpeningGate from "../../experience/components/sections/TemplateOpeningGate";
 import DigitalYesSchedule from "./components/DigitalYesSchedule";
 import DigitalYesRsvpModal from "./components/DigitalYesRsvpModal";
+import "../../experience/template-experience.css";
 import "./digital-yes.css";
 
 export default function DigitalYesLayout({
@@ -31,7 +33,10 @@ export default function DigitalYesLayout({
   useTemplateLink,
   children,
 }) {
-  const tpl = normalizeTemplateViewModel(tplProp, contentProp);
+  const [liveData, setLiveData] = useState(null);
+  const tpl = useMemo(() => {
+    return normalizeTemplateViewModel(tplProp, { ...contentProp, ...liveData });
+  }, [tplProp, contentProp, liveData]);
 
   // Envelope Opening States
   const [isFlapOpen, setIsFlapOpen] = useState(false);
@@ -49,6 +54,9 @@ export default function DigitalYesLayout({
   // Live Countdown State
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
+  const gateStyle = tpl.gateStyle || tpl.openingStyle || tpl.design?.openingStyle || "envelope-3d";
+  const isCustomGate = Boolean(gateStyle && gateStyle !== "envelope-3d" && gateStyle !== "WAX_ENVELOPE");
+
   // Sync postMessage with Admin Studio
   useEffect(() => {
     const handleMessage = (event) => {
@@ -63,6 +71,9 @@ export default function DigitalYesLayout({
           setIsCardEmerging(false);
           setIsFlapOpen(false);
         }
+      }
+      if (event.data?.type === "LIVE_PREVIEW_SYNC" && event.data.data) {
+        setLiveData(event.data.data);
       }
     };
     window.addEventListener("message", handleMessage);
@@ -194,8 +205,42 @@ export default function DigitalYesLayout({
         </div>
       </div>
 
-      {/* STATE 1: 3D ENVELOPE OPENING STAGE */}
-      {!isFullView && (
+      {/* STATE 1: DYNAMIC GATE OR 3D ENVELOPE OPENING STAGE */}
+      {!isFullView && isCustomGate && (
+        <div
+          className="tx-root tx-root--preview"
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 300,
+            overflow: "hidden",
+            backgroundColor: "#150306",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <TemplateOpeningGate
+            content={{
+              ...tpl,
+              groom: tpl.groom,
+              bride: tpl.bride,
+              dateText: tpl.dateText,
+              design: {
+                ...tpl.design,
+                openingStyle: gateStyle,
+                primaryColor: tpl.primaryColor || "#991b1b",
+                secondaryColor: tpl.secondaryColor || "#d4af37",
+              },
+            }}
+            lockDocumentScroll={false}
+            onOpen={handleOpenEnvelope}
+            state={isFullView ? "opened" : "closed"}
+          />
+        </div>
+      )}
+
+      {!isFullView && !isCustomGate && (
         <WaxSealEnvelope
           tpl={tpl}
           isFlapOpen={isFlapOpen}

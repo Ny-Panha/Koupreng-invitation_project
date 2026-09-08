@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import {
   Sparkles,
@@ -12,10 +12,12 @@ import {
 import defaultMusicUrl from "@/assets/music/ថ្ងៃដែលរង់ចាំ.mp3";
 import { normalizeTemplateViewModel } from "../../services/templateService";
 import PalaceGateOpening from "./components/PalaceGateOpening";
+import TemplateOpeningGate from "../../experience/components/sections/TemplateOpeningGate";
 import ParentsHonorSection from "./components/ParentsHonorSection";
 import KhmerCeremonySequence from "./components/KhmerCeremonySequence";
 import GalleryGrid from "../../shared/Gallery/GalleryGrid";
 import RsvpContainer from "../../shared/RSVP/RsvpContainer";
+import "../../experience/template-experience.css";
 import "./royal-khmer.css";
 
 export default function RoyalKhmerLayout({
@@ -28,7 +30,10 @@ export default function RoyalKhmerLayout({
   useTemplateLink,
   children,
 }) {
-  const tpl = normalizeTemplateViewModel(tplProp, contentProp);
+  const [liveData, setLiveData] = useState(null);
+  const tpl = useMemo(() => {
+    return normalizeTemplateViewModel(tplProp, { ...contentProp, ...liveData });
+  }, [tplProp, contentProp, liveData]);
 
   const groom = tpl.groom || "វណ្ណដា";
   const bride = tpl.bride || "ស្រីពេជ្រ";
@@ -41,7 +46,8 @@ export default function RoyalKhmerLayout({
   const musicUrl = tpl.music || defaultMusicUrl;
 
   // Gate state
-  const [opened, setOpened] = useState(false);
+  const [gateState, setGateState] = useState("closed");
+  const opened = gateState === "opened";
 
   // Audio Control
   const audioRef = useRef(null);
@@ -60,21 +66,37 @@ export default function RoyalKhmerLayout({
     }
   };
 
+  const gateStyle = tpl.gateStyle || tpl.openingStyle || tpl.design?.openingStyle || "khmer-royal";
+  const isCustomGate = Boolean(gateStyle && gateStyle !== "khmer-royal" && gateStyle !== "KHMER_ROYAL");
+
   const handleOpenGate = () => {
-    setOpened(true);
+    setGateState("opening");
     if (!preview && audioRef.current) {
       audioRef.current
         .play()
         .then(() => setIsPlaying(true))
         .catch(() => setIsPlaying(false));
     }
+    let duration = 500;
+    if (gateStyle === "curtain" || gateStyle === "CURTAIN") duration = 1300;
+    else if (gateStyle === "envelope-3d" || gateStyle === "WAX_ENVELOPE") duration = 1600;
+    else if (gateStyle === "magical-gate") duration = 1300;
+    else if (gateStyle === "ribbon-untie" || gateStyle === "RIBBON_UNTIE") duration = 400;
+    else if (gateStyle === "cinematic-video" || gateStyle === "CINEMATIC_VIDEO") duration = 400;
+
+    setTimeout(() => {
+      setGateState("opened");
+    }, duration);
   };
 
   useEffect(() => {
     const handleMessage = (e) => {
       if (e.data?.type === "TOGGLE_GATE") {
         const shouldOpen = Boolean(e.data.open ?? e.data.isOpen);
-        setOpened(shouldOpen);
+        setGateState(shouldOpen ? "opened" : "closed");
+      }
+      if (e.data?.type === "LIVE_PREVIEW_SYNC" && e.data.data) {
+        setLiveData(e.data.data);
       }
     };
     window.addEventListener("message", handleMessage);
@@ -82,7 +104,16 @@ export default function RoyalKhmerLayout({
   }, []);
 
   return (
-    <div className="rkh-container">
+    <div
+      className={`rkh-container${tpl.cardMotion ? ` tx-motion--${String(tpl.cardMotion).toLowerCase().replace(/_/g, "-")}` : ""}`}
+      style={{
+        "--rkh-crimson": tpl.primaryColor || "#731320",
+        "--rkh-crimson-dark": tpl.primaryColor ? `${tpl.primaryColor}ee` : "#4a0a14",
+        "--rkh-gold": tpl.secondaryColor || "#c49a45",
+        "--rkh-gold-light": tpl.secondaryColor ? `${tpl.secondaryColor}dd` : "#f3d790",
+        fontFamily: tpl.fontKhmer ? `${tpl.fontKhmer}, "Kantumruy Pro", system-ui, sans-serif` : undefined,
+      }}
+    >
       <audio ref={audioRef} src={musicUrl} loop preload="none" />
 
       {/* Floating Audio Control */}
@@ -111,13 +142,50 @@ export default function RoyalKhmerLayout({
         {isPlaying ? <Music className="w-5 h-5 animate-spin" /> : <VolumeX className="w-5 h-5" />}
       </button>
 
-      {/* Golden Temple Gate Overlay */}
-      <PalaceGateOpening
-        opened={opened}
-        onOpenGate={handleOpenGate}
-        groom={groom}
-        bride={bride}
-      />
+      {/* Dynamic Animated Gate Overlay (The Digital Yes 3D Styles) */}
+      {isCustomGate && gateState !== "opened" && (
+        <div
+          className="tx-root tx-root--preview"
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 300,
+            overflow: "hidden",
+            backgroundColor: "#120306",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <TemplateOpeningGate
+            content={{
+              ...tpl,
+              groom,
+              bride,
+              dateText,
+              design: {
+                ...tpl.design,
+                openingStyle: gateStyle,
+                primaryColor: tpl.primaryColor || "#8B1E2D",
+                secondaryColor: tpl.secondaryColor || "#D4AF37",
+              },
+            }}
+            lockDocumentScroll={false}
+            onOpen={handleOpenGate}
+            state={gateState}
+          />
+        </div>
+      )}
+
+      {/* Classic Palace Gate Overlay (when khmer-royal is selected) */}
+      {!isCustomGate && (
+        <PalaceGateOpening
+          opened={opened}
+          onOpenGate={handleOpenGate}
+          groom={groom}
+          bride={bride}
+        />
+      )}
 
       {/* Top Breadcrumb & Replay Bar */}
       <div style={{ maxWidth: "1000px", margin: "1rem auto 0", padding: "0 1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>

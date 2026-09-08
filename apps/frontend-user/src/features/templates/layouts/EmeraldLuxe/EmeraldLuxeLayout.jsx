@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import {
   Sparkles,
@@ -10,9 +10,11 @@ import {
 import defaultMusicUrl from "@/assets/music/Instrumental Wedding Music (VioSounds Cover).m4a";
 import { normalizeTemplateViewModel } from "../../services/templateService";
 import VelvetCurtainOpening from "./components/VelvetCurtainOpening";
+import TemplateOpeningGate from "../../experience/components/sections/TemplateOpeningGate";
 import Card3DFlip from "./components/Card3DFlip";
 import GalleryGrid from "../../shared/Gallery/GalleryGrid";
 import RsvpContainer from "../../shared/RSVP/RsvpContainer";
+import "../../experience/template-experience.css";
 import "./emerald-luxe.css";
 
 export default function EmeraldLuxeLayout({
@@ -25,7 +27,10 @@ export default function EmeraldLuxeLayout({
   useTemplateLink,
   children,
 }) {
-  const tpl = normalizeTemplateViewModel(tplProp, contentProp);
+  const [liveData, setLiveData] = useState(null);
+  const tpl = useMemo(() => {
+    return normalizeTemplateViewModel(tplProp, { ...contentProp, ...liveData });
+  }, [tplProp, contentProp, liveData]);
 
   const groom = tpl.groom || "វណ្ណដា";
   const bride = tpl.bride || "ស្រីពេជ្រ";
@@ -62,6 +67,9 @@ export default function EmeraldLuxeLayout({
     }
   };
 
+  const gateStyle = tpl.gateStyle || tpl.openingStyle || tpl.design?.openingStyle || "curtain";
+  const isCustomGate = Boolean(gateStyle && gateStyle !== "curtain" && gateStyle !== "CURTAIN");
+
   // Sync postMessage with Admin Studio
   useEffect(() => {
     const handleMessage = (e) => {
@@ -69,13 +77,23 @@ export default function EmeraldLuxeLayout({
         const shouldOpen = Boolean(e.data.open ?? e.data.isOpen);
         setOpened(shouldOpen);
       }
+      if (e.data?.type === "LIVE_PREVIEW_SYNC" && e.data.data) {
+        setLiveData(e.data.data);
+      }
     };
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
   }, []);
 
   return (
-    <div className="el-container">
+    <div
+      className={`el-container${tpl.cardMotion ? ` tx-motion--${String(tpl.cardMotion).toLowerCase().replace(/_/g, "-")}` : ""}`}
+      style={{
+        "--el-bg-deep": tpl.backgroundColor || "#061510",
+        "--el-gold-primary": tpl.secondaryColor || "#d4af37",
+        fontFamily: tpl.fontKhmer ? `${tpl.fontKhmer}, "Kantumruy Pro", system-ui, sans-serif` : undefined,
+      }}
+    >
       <audio ref={audioRef} src={musicUrl} loop preload="none" />
 
       {/* Floating Audio Button */}
@@ -104,13 +122,50 @@ export default function EmeraldLuxeLayout({
         {isPlaying ? <Music className="w-5 h-5 animate-spin" /> : <VolumeX className="w-5 h-5" />}
       </button>
 
-      {/* Velvet Theatre Curtain Opening Gate */}
-      <VelvetCurtainOpening
-        opened={opened}
-        onOpenCurtain={handleOpenCurtain}
-        groom={groom}
-        bride={bride}
-      />
+      {/* Dynamic Animated Gate Overlay */}
+      {isCustomGate && !opened && (
+        <div
+          className="tx-root tx-root--preview"
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 300,
+            overflow: "hidden",
+            backgroundColor: "#061510",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <TemplateOpeningGate
+            content={{
+              ...tpl,
+              groom,
+              bride,
+              dateText: tpl.dateText,
+              design: {
+                ...tpl.design,
+                openingStyle: gateStyle,
+                primaryColor: tpl.primaryColor || "#0F4C3A",
+                secondaryColor: tpl.secondaryColor || "#D4AF37",
+              },
+            }}
+            lockDocumentScroll={false}
+            onOpen={handleOpenCurtain}
+            state={opened ? "opened" : "closed"}
+          />
+        </div>
+      )}
+
+      {/* Velvet Theatre Curtain Opening Gate (when curtain is selected) */}
+      {!isCustomGate && (
+        <VelvetCurtainOpening
+          opened={opened}
+          onOpenCurtain={handleOpenCurtain}
+          groom={groom}
+          bride={bride}
+        />
+      )}
 
       {/* Top Bar for Back / Replay */}
       <div style={{ maxWidth: "600px", margin: "1rem auto 0", padding: "0 1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
