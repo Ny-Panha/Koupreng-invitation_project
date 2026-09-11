@@ -202,14 +202,7 @@
 .auth-socials {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 10px;
-}
-
-.auth-socials > .auth-social-btn,
-.auth-socials > .auth-google-wrap,
-.auth-socials > .auth-social-widget-tg {
-    width: min(100%, 400px);
 }
 
 /* Base button — full-width, 44 px tall */
@@ -220,13 +213,13 @@
     gap: 10px;
     width: 100%;
     height: 44px;
-    border-radius: 4px;
-    border: 1px solid #747775;
+    border-radius: 12px;
+    border: none;
     cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    font-family: Roboto, Arial, sans-serif;
-    transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s, opacity 0.15s, transform 0.1s;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    transition: box-shadow 0.2s, opacity 0.15s, transform 0.1s;
     white-space: nowrap;
     text-decoration: none;
     box-sizing: border-box;
@@ -239,27 +232,25 @@
 /* Google */
 .auth-social-btn.google {
     background: #ffffff;
-    color: #1f1f1f;
-    box-shadow: none;
+    color: #202124;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+    border: 1px solid rgba(66, 133, 244, 0.22);
 }
 
 .auth-social-btn.google:hover:not(:disabled) {
-    background: #f8faff;
-    border-color: #5f6368;
-    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.2);
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.13);
 }
 
 /* Telegram */
 .auth-social-btn.telegram {
-    background: #ffffff;
-    color: #1f1f1f;
-    box-shadow: none;
+    background: linear-gradient(135deg, #0088cc 0%, #006fa3 100%);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 136, 204, 0.3);
 }
 
 .auth-social-btn.telegram:hover:not(:disabled) {
-    background: #f8faff;
-    border-color: #5f6368;
-    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.2);
+    box-shadow: 0 4px 14px rgba(0, 136, 204, 0.4);
+    opacity: 0.95;
 }
 
 .auth-social-btn:disabled {
@@ -307,7 +298,7 @@
     position: relative;
     width: 100%;
     min-height: 44px;
-    border-radius: 4px;
+    border-radius: 12px;
     overflow: visible;
     display: flex;
     align-items: center;
