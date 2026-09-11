@@ -260,37 +260,38 @@
 }
 
 /* ── Google GSI wrapper ──────────────────────────────────────
-   The real (invisible) GSI button lives in .auth-gsi-host so
-   Google's credential callback fires. Our styled button sits
-   on top and programmatically clicks the hidden one.
+   The visible, interactive button is rendered by Google's SDK.
 ──────────────────────────────────────────────────────────── */
 .auth-google-wrap {
     position: relative;
     width: 100%;
+    min-height: 44px;
 }
 
 .auth-gsi-host {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
+    width: 100%;
+    min-height: 44px;
     overflow: hidden;
-    border-radius: 12px;
-    opacity: 0;
-    pointer-events: auto;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
 }
 
 .auth-gsi-host iframe,
 .auth-gsi-host>div {
     width: 100% !important;
+    max-width: 400px !important;
     height: 44px !important;
-    border: none !important;
 }
 
-.auth-google-wrap .auth-social-btn.google {
-    position: relative;
-    z-index: 1;
-    width: 100%;
+.auth-google-wrap.is-busy .auth-gsi-host {
     pointer-events: none;
+    opacity: 0.55;
+}
+
+.auth-google-wrap > .auth-social-btn.google {
+    position: absolute;
+    inset: 0;
 }
 
 .auth-social-widget-tg {
