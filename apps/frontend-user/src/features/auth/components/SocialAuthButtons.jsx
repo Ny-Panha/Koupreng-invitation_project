@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import authService from "@/features/auth/api/authApi";
+import { buildTelegramOAuthUrl, TELEGRAM_OAUTH_ORIGIN } from "./telegramOAuth";
 
 const isDev = import.meta.env.DEV;
 
@@ -82,9 +83,9 @@ function GoogleIcon() {
 
 function TelegramIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <circle cx="12" cy="12" r="12" fill="white" />
-      <path d="M17.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.07-.18c-.08-.05-.19-.02-.27 0-.11.03-1.84 1.18-5.2 3.45-.49.34-.94.5-1.35.49-.45-.01-1.32-.26-1.96-.47-.79-.26-1.42-.39-1.37-.83.03-.22.33-.44.91-.68 3.56-1.55 5.94-2.58 7.12-3.07 3.39-1.41 4.1-1.65 4.56-1.66.1 0 .32.02.46.12.12.09.15.22.16.32.01.07.02.16.02.24z" fill="#0088cc" />
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="12" fill="#229ED9" />
+      <path d="M17.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.07-.18c-.08-.05-.19-.02-.27 0-.11.03-1.84 1.18-5.2 3.45-.49.34-.94.5-1.35.49-.45-.01-1.32-.26-1.96-.47-.79-.26-1.42-.39-1.37-.83.03-.22.33-.44.91-.68 3.56-1.55 5.94-2.58 7.12-3.07 3.39-1.41 4.1-1.65 4.56-1.66.1 0 .32.02.46.12.12.09.15.22.16.32.01.07.02.16.02.24z" fill="white" />
     </svg>
   );
 }
@@ -246,7 +247,106 @@ function telegramAuthResult(data) {
   return { error: "Telegram did not return usable login data." };
 }
 
-function openTelegramLogin(clientId, onResult, onError) {
+function isTelegramInAppBrowser() {
+  return Boolean(
+    window.TelegramWebviewProxy
+    || window.TelegramWebviewProxyProto
+    || window.TelegramGameProxy,
+  );
+}
+
+function openTelegramBrowserLogin(clientId, onResult, onError) {
+  const authUrl = buildTelegramOAuthUrl(clientId);
+  debugSocialAuth("opening Telegram browser login", {
+    clientIdConfigured: Boolean(clientId),
+    origin: authUrl.searchParams.get("origin"),
+    redirectUri: authUrl.searchParams.get("redirect_uri"),
+  });
+
+  const width = 550;
+  const height = 650;
+  const left = Math.max(0, (window.screen.width - width) / 2) + (window.screen.availLeft || 0);
+  const top = Math.max(0, (window.screen.height - height) / 2) + (window.screen.availTop || 0);
+  const features = [
+    `width=${width}`,
+    `height=${height}`,
+    `left=${left}`,
+    `top=${top}`,
+    "status=0",
+    "location=0",
+    "menubar=0",
+    "toolbar=0",
+  ].join(",");
+
+  let popup = null;
+  let finished = false;
+  let closeTimer = null;
+
+  const cleanup = () => {
+    window.removeEventListener("message", handleMessage);
+    if (closeTimer) {
+      window.clearTimeout(closeTimer);
+      closeTimer = null;
+    }
+  };
+
+  const finish = (handler) => {
+    if (finished) return;
+    finished = true;
+    cleanup();
+    handler();
+  };
+
+  const checkClose = () => {
+    if (!popup || popup.closed) {
+      finish(() => onError(new Error("Telegram login popup was closed.")));
+      return;
+    }
+    closeTimer = window.setTimeout(checkClose, 200);
+  };
+
+  function handleMessage(event) {
+    if (event.origin !== TELEGRAM_OAUTH_ORIGIN || event.source !== popup) {
+      return;
+    }
+
+    let data = event.data;
+    if (typeof data === "string") {
+      try {
+        data = JSON.parse(data);
+      } catch {
+        return;
+      }
+    }
+
+    if (data?.event !== "auth_result") {
+      return;
+    }
+
+    const result = telegramAuthResult(data);
+    if (result?.error) {
+      finish(() => onError(new Error(result.error)));
+      return;
+    }
+
+    finish(() => onResult(result));
+  }
+
+  try {
+    window.addEventListener("message", handleMessage);
+    popup = window.open(authUrl.toString(), "telegram_oidc_login", features);
+    if (!popup) {
+      finish(() => onError(new Error("Telegram login popup was blocked.")));
+      return;
+    }
+    popup.focus();
+    checkClose();
+  } catch (error) {
+    finish(() => onError(error));
+  }
+}
+
+function openTelegramSdkLogin(clientId, onResult, onError) {
   if (!window.Telegram?.Login?.auth) {
     onError(new Error("Telegram login script is not ready."));
     return;
@@ -273,6 +373,15 @@ function openTelegramLogin(clientId, onResult, onError) {
   }
 }
 
+function openTelegramLogin(clientId, onResult, onError) {
+  if (isTelegramInAppBrowser()) {
+    openTelegramSdkLogin(clientId, onResult, onError);
+    return;
+  }
+
+  openTelegramBrowserLogin(clientId, onResult, onError);
+}
+
 /* ─── Main component ─────────────────────────────────────── */
 export default function SocialAuthButtons({ redirectTo = "/dashboard" }) {
   const navigate = useNavigate();
@@ -280,16 +389,18 @@ export default function SocialAuthButtons({ redirectTo = "/dashboard" }) {
 
   const [busy, setBusy] = useState("");
   const [error, setError] = useState("");
-  const [telegramReady, setTelegramReady] = useState(!hasTelegramClientId);
+  const [telegramReady, setTelegramReady] = useState(
+    !hasTelegramClientId || !isTelegramInAppBrowser(),
+  );
   const telegramMode = hasTelegramClientId ? "oidc" : hasTelegramBot ? "widget" : "none";
 
   // Telegram widget iframe (legacy — needs BotFather /setdomain)
   const widgetHostRef = useRef(null);
 
-  /* ── Preload Telegram's current Login SDK so its popup opens directly
-     from the user's click gesture instead of being blocked by the browser. ── */
+  /* ── Telegram's in-app browser needs its SDK. Regular browsers use the
+     explicit-origin popup above because the SDK currently omits origin. ── */
   useEffect(() => {
-    if (telegramMode !== "oidc") return undefined;
+    if (telegramMode !== "oidc" || !isTelegramInAppBrowser()) return undefined;
 
     let cancelled = false;
     loadTelegramLoginScript()
@@ -521,6 +632,7 @@ function GoogleSignInButton({ clientId, onSuccess, onError, busy, onBusyChange }
       window.google.accounts.id.renderButton(containerRef.current, {
         type: "standard", theme: "outline", size: "large",
         text: "continue_with", shape: "rectangular", logo_alignment: "left",
+        locale: "km",
         width: Math.min(400, Math.max(200, containerRef.current.offsetWidth || 320)),
       });
       if (!cancelled) setReady(true);
