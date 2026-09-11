@@ -133,7 +133,7 @@ PIDS+=($!)
 
 echo -e "  ${CYAN}Waiting for Backend to initialize...${NC}"
 for i in {1..30}; do
-  if nc -z 127.0.0.1 8080 2>/dev/null || curl -s http://127.0.0.1:8080/api/v1/templates >/dev/null 2>&1; then
+  if curl -fsS http://127.0.0.1:8080/actuator/health/readiness >/dev/null 2>&1; then
     echo -e "  ${GREEN}✓ Backend is READY at http://localhost:8080${NC}"
     break
   fi
@@ -149,6 +149,15 @@ if [ "$RUN_USER" = true ]; then
     npm run dev -- --host --port 5173
   ) &
   PIDS+=($!)
+
+  echo -e "  ${CYAN}Waiting for Frontend User to initialize...${NC}"
+  for i in {1..30}; do
+    if curl -fsS http://127.0.0.1:5173/login >/dev/null 2>&1; then
+      echo -e "  ${GREEN}✓ Frontend User is READY at http://localhost:5173${NC}"
+      break
+    fi
+    sleep 1
+  done
 fi
 
 # 4. Start Frontend Admin (:5174)

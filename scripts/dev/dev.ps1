@@ -94,7 +94,7 @@ $jobs += $backendJob
 Write-Host "  Waiting for Backend to initialize..." -ForegroundColor Cyan
 for ($i = 1; $i -le 30; $i++) {
     try {
-        $null = Invoke-WebRequest -Uri "http://localhost:8080/actuator/health" -TimeoutSec 2 -ErrorAction Stop
+        $null = Invoke-WebRequest -Uri "http://localhost:8080/actuator/health/readiness" -TimeoutSec 2 -ErrorAction Stop
         Write-Host "  Backend is READY at http://localhost:8080" -ForegroundColor Green
         break
     } catch {
@@ -112,6 +112,17 @@ if (-not $AdminOnly) {
         & npm run dev -- --host --port 5173 2>&1
     } -ArgumentList "$RootDir\apps\frontend-user"
     $jobs += $userJob
+
+    Write-Host "  Waiting for Frontend User to initialize..." -ForegroundColor Cyan
+    for ($i = 1; $i -le 30; $i++) {
+        try {
+            $null = Invoke-WebRequest -Uri "http://localhost:5173/login" -TimeoutSec 2 -ErrorAction Stop
+            Write-Host "  Frontend User is READY at http://localhost:5173" -ForegroundColor Green
+            break
+        } catch {
+            Start-Sleep -Seconds 1
+        }
+    }
 }
 
 # 4. Start Frontend Admin (:5174)
