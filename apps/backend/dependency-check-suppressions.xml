@@ -7,7 +7,7 @@
 			org.springframework.boot:spring-boot-devtools Maven artifact as affected.
 			Keep this suppression version-scoped so a dependency upgrade requires review.
 		]]></notes>
-		<packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring-boot-devtools@4\.0\.7$</packageUrl>
+		<packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring-boot-devtools@4\.0\.8$</packageUrl>
 		<cve>CVE-2022-31691</cve>
 	</suppress>
 </suppressions>
