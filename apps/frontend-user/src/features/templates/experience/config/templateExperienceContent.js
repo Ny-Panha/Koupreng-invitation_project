@@ -23,6 +23,7 @@ import {
     normalizeOpeningDesign,
     resolveOpeningVideo,
 } from "./openingConfig";
+import defaultMusicUrl from "@/assets/music/Instrumental Wedding Music (VioSounds Cover).m4a";
 
 const DEMO_GALLERY = [
     { src: "/facebook/all/01-card/01-01.jpg", span: "tall" },
@@ -627,7 +628,7 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         footerThanksEn: copy.footerThanksEn,
         design,
         opening,
-        music: typeof tpl.music === "string" ? tpl.music : tpl.music?.url,
+        music: (typeof tpl.music === "string" && tpl.music) ? tpl.music : (tpl.music?.url || defaultMusicUrl),
         openingVideo: resolveOpeningVideo({
             mediaVideo: tpl.openingVideo,
             configuredVideo: design.openingVideoUrl,

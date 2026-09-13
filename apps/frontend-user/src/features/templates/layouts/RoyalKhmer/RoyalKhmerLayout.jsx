@@ -71,7 +71,7 @@ export default function RoyalKhmerLayout({
 
   const handleOpenGate = () => {
     setGateState("opening");
-    if (!preview && audioRef.current) {
+    if (audioRef.current) {
       audioRef.current
         .play()
         .then(() => setIsPlaying(true))

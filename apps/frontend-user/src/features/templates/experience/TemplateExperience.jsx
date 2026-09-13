@@ -192,6 +192,7 @@ export default function TemplateExperience({
                     description: s.desc || s.description || "",
                 }))
                 : baseContent.schedule,
+            music: liveData.musicUrl || liveData.music || baseContent.music,
         };
     }, [baseContent, liveData]);
 
@@ -259,7 +260,7 @@ export default function TemplateExperience({
         if (openingInFlightRef.current || gateState !== "closed") return;
         openingInFlightRef.current = true;
         setGateState("opening");
-        if (!preview) void musicController.play();
+        void musicController.play();
 
         let duration = 460;
         if (openingStyle === "curtain" || openingStyle === "CURTAIN") duration = 1300;
@@ -418,7 +419,7 @@ export default function TemplateExperience({
                 </div>
             )}
 
-            {content.music && <audio ref={musicAudioRef} src={content.music} loop preload="none" />}
+            {content.music && <audio ref={musicAudioRef} src={content.music} loop preload="auto" />}
             {gateOpen && <TemplateMusicControl controller={musicController} />}
             {gateOpen && content.enableFloatingBar !== false && (
                 <FloatingActionBar

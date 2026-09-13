@@ -104,7 +104,7 @@ export default function DigitalYesLayout({
 
     setIsFlapOpen(true);
 
-    if (audioRef.current && !preview) {
+    if (audioRef.current) {
       audioRef.current.play().then(() => {
         setIsPlayingMusic(true);
       }).catch(() => {});
@@ -177,7 +177,7 @@ export default function DigitalYesLayout({
       <FallingPetals />
 
       {/* Audio Element */}
-      <audio ref={audioRef} src={tpl.music || defaultMusicUrl} loop preload="none" />
+      <audio ref={audioRef} src={tpl.music || defaultMusicUrl} loop preload="auto" />
 
       {/* Floating Header Toolbar */}
       <div className="fixed top-4 inset-x-4 z-40 flex items-center justify-between pointer-events-auto max-w-2xl mx-auto">

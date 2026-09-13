@@ -59,7 +59,7 @@ export default function EmeraldLuxeLayout({
 
   const handleOpenCurtain = () => {
     setOpened(true);
-    if (!preview && audioRef.current) {
+    if (audioRef.current) {
       audioRef.current
         .play()
         .then(() => setIsPlaying(true))
