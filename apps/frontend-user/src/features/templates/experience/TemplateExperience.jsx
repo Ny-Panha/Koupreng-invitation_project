@@ -135,6 +135,17 @@ export default function TemplateExperience({
                 accountName: liveData.bankAccountName || baseContent.bankAccount?.accountName || "VANDA & SREYPICH Official",
                 qrUrl: liveData.qrGiftUrl || baseContent.bankAccount?.qrUrl,
             },
+            gift: (liveData.qrGiftUrl || liveData.bankName || liveData.bankAccountNumber || liveData.bankAccountName) ? [
+                {
+                    id: "gift-live",
+                    bank: liveData.bankName || "ABA Bank",
+                    account: liveData.bankAccountName || "VANDA & SREYPICH Official",
+                    number: liveData.bankAccountNumber || "000 123 456",
+                    note: liveData.bankName ? `${liveData.bankName} PAY` : "ABA PAY",
+                    qrImage: liveData.qrGiftUrl || "",
+                    qrValue: liveData.qrGiftUrl ? "" : [liveData.bankName || "ABA Bank", liveData.bankAccountName || "", liveData.bankAccountNumber || ""].filter(Boolean).join(" | "),
+                }
+            ] : baseContent.gift,
             enableFloatingBar: liveData.enableFloatingBar !== false,
             enabledSections: liveData.enabledSections ? {
                 ...baseContent.enabledSections,
@@ -147,6 +158,26 @@ export default function TemplateExperience({
                 genericGuestText: liveData.guestName || baseContent.opening?.genericGuestText,
             },
             guestName: liveData.guestName || baseContent.guestName,
+            dressCode: {
+                name: liveData.dressCodeName || baseContent.dressCode?.name || "ពណ៌សម្លៀកបំពាក់ (Dress Code)",
+                style: liveData.dressCodeStyle || baseContent.dressCode?.style || "ខ្មែរប្រពៃណី / សម័យ",
+                description: liveData.dressCodeDesc || baseContent.dressCode?.description || "សូមស្លៀកសម្លៀកបំពាក់ពណ៌តាមប្រធានបទ ឬពណ៌សមរម្យ",
+                colors: (liveData.dressColors && liveData.dressColors.length)
+                    ? liveData.dressColors
+                    : (baseContent.dressCode?.colors || [
+                        { hex: "#8B1E2D", name: "ក្រហមទុំ" },
+                        { hex: "#D4AF37", name: "មាស" },
+                        { hex: "#FFFDF7", name: "ស" },
+                        { hex: "#4A151C", name: "ក្រហមចាស់" },
+                    ]),
+            },
+            faq: (liveData.faq && liveData.faq.length)
+                ? liveData.faq
+                : (baseContent.faq && baseContent.faq.length ? baseContent.faq : [
+                    { id: "f1", q: "តើមានចំណតរថយន្តដែរឬទេ?", a: "បាទ/ចាស មានចំណតរថយន្តធំទូលាយដោយឥតគិតថ្លៃសម្រាប់ភ្ញៀវកិត្តិយសទាំងអស់។" },
+                    { id: "f2", q: "តើអាចនាំកុមារតូចៗមកបានទេ?", a: "យើងខ្ញុំស្វាគមន៍វត្តមានកុមារតូចៗទាំងអស់ក្នុងពិធីមង្គលការ។" },
+                    { id: "f3", q: "តើកម្មវិធីចាប់ផ្ដើម និងបញ្ចប់នៅម៉ោងប៉ុន្មាន?", a: "កម្មវិធីទទួលភ្ញៀវចាប់ផ្ដើមពីម៉ោង ០៥:០០ ល្ងាច តទៅ។" },
+                ]),
             gallery: (liveData.galleryImages && liveData.galleryImages.length)
                 ? liveData.galleryImages.map((src, i) => ({ src, span: ["tall", "wide", "small", "small"][i % 4] }))
                 : baseContent.gallery,
@@ -328,7 +359,7 @@ export default function TemplateExperience({
             <AnimatePresence mode="wait">
                 {gateState !== "opened" ? (
                     <TemplateOpeningGate
-                        key="opening-gate"
+                        key={`opening-gate-${content.design?.openingStyle || "gate"}`}
                         content={content}
                         lockDocumentScroll={!preview}
                         onOpen={handleOpen}
@@ -336,7 +367,7 @@ export default function TemplateExperience({
                     />
                 ) : (
                     <motion.div
-                        key="invitation-content"
+                        key={`invitation-content-${content.cardMotion || "motion"}`}
                         className={`tx-experience${content.cardMotion ? ` tx-motion--${String(content.cardMotion).toLowerCase().replace(/_/g, "-")}` : ""}`}
                         ref={setContentNode}
                         tabIndex={-1}

@@ -85,6 +85,21 @@ export default function EmeraldLuxeLayout({
     return () => window.removeEventListener("message", handleMessage);
   }, []);
 
+  const isEnabled = (key) => tpl.enabledSections?.[key] !== false;
+  const dressColors = Array.isArray(tpl.dressCode)
+    ? tpl.dressCode
+    : (Array.isArray(tpl.dressCode?.colors) ? tpl.dressCode.colors : (tpl.dressColors || [
+        { hex: "#0F4C3A", name: "បៃតងចាស់" },
+        { hex: "#2D8A6E", name: "បៃតងមរកត" },
+        { hex: "#D4AF37", name: "មាស" },
+        { hex: "#FFFDF7", name: "ស" },
+      ]));
+  const faqList = Array.isArray(tpl.faq) && tpl.faq.length > 0 ? tpl.faq : [
+    { id: "f1", q: "តើមានចំណតរថយន្តដែរឬទេ?", a: "បាទ/ចាស មានចំណតរថយន្តធំទូលាយដោយឥតគិតថ្លៃសម្រាប់ភ្ញៀវកិត្តិយសទាំងអស់។" },
+    { id: "f2", q: "តើអាចនាំកុមារតូចៗមកបានទេ?", a: "យើងខ្ញុំស្វាគមន៍វត្តមានកុមារតូចៗទាំងអស់ក្នុងពិធីមង្គលការ។" },
+    { id: "f3", q: "តើកម្មវិធីចាប់ផ្ដើម និងបញ្ចប់នៅម៉ោងប៉ុន្មាន?", a: "កម្មវិធីទទួលភ្ញៀវចាប់ផ្ដើមពីម៉ោង ០៥:០០ ល្ងាច តទៅ។" },
+  ];
+
   return (
     <div
       className={`el-container${tpl.cardMotion ? ` tx-motion--${String(tpl.cardMotion).toLowerCase().replace(/_/g, "-")}` : ""}`}
@@ -200,8 +215,44 @@ export default function EmeraldLuxeLayout({
         tpl={tpl}
       />
 
+      {/* Dress Code Section */}
+      {isEnabled("dressCode") && dressColors.length > 0 && (
+        <section style={{ maxWidth: "560px", margin: "2.5rem auto 0", padding: "0 1.5rem", textAlign: "center" }}>
+          <div style={{ background: "rgba(13, 38, 30, 0.75)", border: "1px solid var(--el-border-gold)", borderRadius: "16px", padding: "1.5rem", backdropFilter: "blur(10px)" }}>
+            <h3 style={{ fontFamily: "Cinzel, serif", color: "var(--el-gold-light)", fontSize: "1.1rem", margin: "0 0 0.5rem" }}>
+              {tpl.dressCode?.name || "DRESS CODE PALETTE"}
+            </h3>
+            <p style={{ fontSize: "0.8rem", color: "var(--el-text-muted)", margin: "0 0 1rem" }}>
+              ពណ៌សម្លៀកបំពាក់ភ្ញៀវកិត្តិយស
+            </p>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
+              {dressColors.map((c, i) => (
+                <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
+                  <span
+                    style={{
+                      width: "36px",
+                      height: "36px",
+                      borderRadius: "50%",
+                      backgroundColor: c.hex,
+                      border: "2px solid rgba(212, 175, 55, 0.6)",
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
+                    }}
+                  />
+                  <span style={{ fontSize: "0.75rem", color: "var(--el-gold-light)" }}>{c.name}</span>
+                </div>
+              ))}
+            </div>
+            {tpl.dressCode?.description && (
+              <p style={{ fontSize: "0.8rem", color: "var(--el-text-muted)", marginTop: "0.75rem" }}>
+                {tpl.dressCode.description}
+              </p>
+            )}
+          </div>
+        </section>
+      )}
+
       {/* Photo Gallery Grid */}
-      {tpl.gallery && tpl.gallery.length > 0 && (
+      {isEnabled("gallery") && tpl.gallery && tpl.gallery.length > 0 && (
         <section style={{ maxWidth: "560px", margin: "3rem auto 0", padding: "0 1.5rem" }}>
           <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
             <h3 style={{ fontFamily: "Cinzel, serif", color: "var(--el-gold-light)", fontSize: "1.25rem", margin: 0 }}>
@@ -215,21 +266,57 @@ export default function EmeraldLuxeLayout({
         </section>
       )}
 
-      {/* RSVP Section */}
-      <div style={{ maxWidth: "560px", margin: "3rem auto 5rem", padding: "0 1.5rem" }}>
-        <div style={{ background: "rgba(13, 38, 30, 0.75)", border: "1px solid var(--el-border-gold)", borderRadius: "16px", padding: "2rem", backdropFilter: "blur(10px)" }}>
-          <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
-            <Sparkles className="w-6 h-6 mx-auto mb-2 text-amber-300" />
-            <h3 style={{ fontFamily: "Cinzel, serif", fontSize: "1.25rem", color: "var(--el-gold-light)", margin: 0 }}>
-              RSVP CONFIRMATION
+      {/* FAQ Section */}
+      {isEnabled("faq") && faqList.length > 0 && (
+        <section style={{ maxWidth: "560px", margin: "3rem auto 0", padding: "0 1.5rem" }}>
+          <div style={{ background: "rgba(13, 38, 30, 0.75)", border: "1px solid var(--el-border-gold)", borderRadius: "16px", padding: "1.5rem", backdropFilter: "blur(10px)" }}>
+            <h3 style={{ fontFamily: "Cinzel, serif", color: "var(--el-gold-light)", fontSize: "1.1rem", margin: "0 0 0.5rem", textAlign: "center" }}>
+              FREQUENTLY ASKED QUESTIONS
             </h3>
-            <p style={{ fontSize: "0.85rem", color: "var(--el-text-muted)", margin: "4px 0 0" }}>
-              សូមបញ្ជាក់ការចូលរួមពិធីមង្គលការ
+            <p style={{ fontSize: "0.8rem", color: "var(--el-text-muted)", margin: "0 0 1rem", textAlign: "center" }}>
+              សំណួរដែលសួរញឹកញាប់
             </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+              {faqList.map((item) => (
+                <details
+                  key={item.id || item.q}
+                  style={{
+                    background: "rgba(6, 21, 16, 0.6)",
+                    border: "1px solid rgba(212, 175, 55, 0.2)",
+                    borderRadius: "10px",
+                    padding: "0.75rem 1rem",
+                    color: "var(--el-gold-light)",
+                    fontSize: "0.85rem",
+                  }}
+                >
+                  <summary style={{ cursor: "pointer", fontWeight: "600" }}>{item.q}</summary>
+                  <p style={{ marginTop: "0.5rem", fontSize: "0.8rem", color: "var(--el-text-muted)", borderTop: "1px solid rgba(212,175,55,0.15)", paddingTop: "0.5rem" }}>
+                    {item.a}
+                  </p>
+                </details>
+              ))}
+            </div>
           </div>
-          <RsvpContainer children={children} />
+        </section>
+      )}
+
+      {/* RSVP Section */}
+      {isEnabled("rsvp") && (
+        <div style={{ maxWidth: "560px", margin: "3rem auto 5rem", padding: "0 1.5rem" }}>
+          <div style={{ background: "rgba(13, 38, 30, 0.75)", border: "1px solid var(--el-border-gold)", borderRadius: "16px", padding: "2rem", backdropFilter: "blur(10px)" }}>
+            <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
+              <Sparkles className="w-6 h-6 mx-auto mb-2 text-amber-300" />
+              <h3 style={{ fontFamily: "Cinzel, serif", fontSize: "1.25rem", color: "var(--el-gold-light)", margin: 0 }}>
+                RSVP CONFIRMATION
+              </h3>
+              <p style={{ fontSize: "0.85rem", color: "var(--el-text-muted)", margin: "4px 0 0" }}>
+                សូមបញ្ជាក់ការចូលរួមពិធីមង្គលការ
+              </p>
+            </div>
+            <RsvpContainer children={children} />
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Bottom Sticky Action */}
       {!preview && useTemplateLink && (

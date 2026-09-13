@@ -14,8 +14,31 @@ import {
 import { templateCatalogService } from "@/features/templates/api/templateCatalogApi";
 import { paymentService } from "@/features/payments/paymentService";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
-import { SkeletonTable } from "@/shared/ui";
-import "./BrowseTemplatesPage.css";
+function formatTemplateDescription(description) {
+  if (!description) return "";
+  const str = String(description).trim();
+  if (str.startsWith("{") && str.endsWith("}")) {
+    try {
+      const parsed = JSON.parse(str);
+      if (parsed.blessingMessage && typeof parsed.blessingMessage === "string" && parsed.blessingMessage.trim()) {
+        return parsed.blessingMessage.trim();
+      }
+      if (parsed.invitationTitle && typeof parsed.invitationTitle === "string" && parsed.invitationTitle.trim()) {
+        return `${parsed.invitationTitle} — គំរូធៀបការឌីជីថលបែបប្រណិត`;
+      }
+      if (parsed.groomName && parsed.brideName) {
+        return `គំរូធៀបការមង្គលការ ${parsed.groomName} & ${parsed.brideName}`;
+      }
+      if (parsed.description && typeof parsed.description === "string" && parsed.description.trim()) {
+        return parsed.description.trim();
+      }
+      return "គំរូធៀបការមង្គលការបែបប្រពៃណីខ្មែរ រចនាបទស្រស់ស្អាតនិងទំនើប";
+    } catch {
+      return str;
+    }
+  }
+  return str;
+}
 
 export default function BrowseTemplatesFeature() {
   const { lang, text: t } = useBackendMessages("templates");
@@ -105,7 +128,7 @@ export default function BrowseTemplatesFeature() {
       if (searchQuery.trim()) {
         const query = searchQuery.toLowerCase();
         const nameMatch = String(tpl.name || "").toLowerCase().includes(query);
-        const descMatch = String(tpl.description || "").toLowerCase().includes(query);
+        const descMatch = String(formatTemplateDescription(tpl.description) || "").toLowerCase().includes(query);
         const catMatch = String(tpl.category || "").toLowerCase().includes(query);
         if (!nameMatch && !descMatch && !catMatch) return false;
       }
@@ -255,7 +278,7 @@ export default function BrowseTemplatesFeature() {
               <div className="tb-card-body">
                 <h3 className="tb-card-title">{template.name}</h3>
                 {template.description && (
-                  <p className="tb-card-desc">{template.description}</p>
+                  <p className="tb-card-desc">{formatTemplateDescription(template.description)}</p>
                 )}
 
                 {/* Actions */}

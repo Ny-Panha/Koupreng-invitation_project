@@ -2,24 +2,13 @@ import { useState, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import AdminSidebar from "../components/navigation/AdminSidebar";
 import TopMenu from "../components/navigation/TopMenu";
-
-const PAGE_TITLES = {
-  "/dashboard": "ផ្ទាំងគ្រប់គ្រងទូទៅ",
-  "/users": "គ្រប់គ្រងអ្នកប្រើប្រាស់",
-  "/events": "គ្រប់គ្រងព្រឹត្តិការណ៍",
-  "/invitations": "គ្រប់គ្រងធៀបការ & RSVP",
-  "/templates": "គ្រប់គ្រងគំរូធៀបការ",
-  "/packages": "គ្រប់គ្រងកញ្ចប់សេវាកម្ម",
-  "/payments": "របាយការណ៍ការទូទាត់ (KHQR)",
-  "/notifications": "គ្រប់គ្រងការជូនដំណឹង",
-  "/system-logs": "កំណត់ហេតុប្រព័ន្ធ",
-  "/reports": "របាយការណ៍សង្ខេប & Analytics",
-};
+import { useAdminLanguage } from "../app/providers/AdminLanguageProvider";
 
 export default function AdminLayout() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isPinned, setIsPinned] = useState(true);
   const location = useLocation();
+  const { t } = useAdminLanguage();
 
   const [isDark, setIsDark] = useState(() => {
     if (typeof window !== "undefined") {
@@ -49,9 +38,8 @@ export default function AdminLayout() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const title =
-    PAGE_TITLES[Object.keys(PAGE_TITLES).find((key) => location.pathname.startsWith(key))] ||
-    "ផ្ទាំងរដ្ឋបាលគូព្រេង";
+  const routeKey = ["/dashboard", "/users", "/events", "/invitations", "/templates", "/packages", "/payments", "/notifications", "/system-logs", "/reports"].find((key) => location.pathname.startsWith(key));
+  const title = routeKey ? t(`pageTitles.${routeKey}`) : t("pageTitles.fallback", "ផ្ទាំងរដ្ឋបាលគូព្រេង");
 
   const isExpanded = isMobileOpen || isPinned;
   const sidebarPadding = isExpanded ? "lg:pl-[260px]" : "lg:pl-[72px]";

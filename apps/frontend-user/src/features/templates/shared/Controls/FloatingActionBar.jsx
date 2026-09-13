@@ -41,8 +41,30 @@ export default function FloatingActionBar({
     }
   };
 
-  const handleCopyAccount = () => {
-    navigator.clipboard?.writeText?.(bankAccount.accountNumber || "");
+  const handleCopyAccount = async () => {
+    const text = bankAccount.accountNumber || "";
+    let success = false;
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+        success = true;
+      }
+    } catch {}
+    if (!success) {
+      try {
+        const input = document.createElement("textarea");
+        input.value = text;
+        input.setAttribute("readonly", "");
+        input.style.position = "fixed";
+        input.style.opacity = "0";
+        input.style.left = "-9999px";
+        document.body.appendChild(input);
+        input.focus();
+        input.select();
+        document.execCommand("copy");
+        input.remove();
+      } catch {}
+    }
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -123,14 +145,8 @@ export default function FloatingActionBar({
 
       {/* Gift QR Modal */}
       {showQrModal && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in"
-          onClick={() => setShowQrModal(false)}
-        >
-          <div
-            className="relative w-full max-w-xs rounded-3xl bg-zinc-900 border border-amber-500/40 p-6 text-center shadow-2xl text-zinc-100"
-            onClick={(e) => e.stopPropagation()}
-          >
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in" onClick={() => setShowQrModal(false)}>
+          <div className="relative w-full max-w-xs rounded-3xl bg-zinc-950 border border-amber-500/30 p-6 text-center shadow-2xl" onClick={(e) => e.stopPropagation()}>
             <button
               type="button"
               onClick={() => setShowQrModal(false)}
@@ -139,7 +155,7 @@ export default function FloatingActionBar({
               <X className="w-5 h-5" />
             </button>
 
-            <div className="h-10 w-10 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center mx-auto mb-2">
+            <div className="h-10 w-10 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center mx-auto mb-3">
               <QrCode className="h-5 w-5" />
             </div>
 
@@ -150,13 +166,17 @@ export default function FloatingActionBar({
               ស្កេនដើម្បីជូនពរ និងចងដៃដល់គូស្វាមីភរិយា
             </p>
 
-            <div className="relative mx-auto w-40 h-40 rounded-2xl bg-white p-3 shadow-inner flex items-center justify-center mb-4">
-              <div className="w-full h-full border-2 border-zinc-800 rounded-xl flex flex-col items-center justify-center p-2 text-slate-950 text-center">
-                <span className="text-[10px] font-bold text-red-600 tracking-wider">KHQR</span>
-                <span className="text-[9px] font-semibold text-zinc-800 mt-1">{bankAccount.accountName}</span>
-                <span className="text-[8px] text-zinc-500 mt-0.5 font-mono">{bankAccount.accountNumber}</span>
-                <div className="mt-2 text-xl">📱💳</div>
-              </div>
+            <div className="relative mx-auto w-40 h-40 rounded-2xl bg-white p-3 shadow-inner flex items-center justify-center mb-4 overflow-hidden">
+              {bankAccount.qrUrl ? (
+                <img src={bankAccount.qrUrl} alt="QR Code" className="w-full h-full object-contain rounded-xl" />
+              ) : (
+                <div className="w-full h-full border-2 border-zinc-800 rounded-xl flex flex-col items-center justify-center p-2 text-slate-950 text-center">
+                  <span className="text-[10px] font-bold text-red-600 tracking-wider">KHQR</span>
+                  <span className="text-[9px] font-semibold text-zinc-800 mt-1">{bankAccount.accountName}</span>
+                  <span className="text-[8px] text-zinc-500 mt-0.5 font-mono">{bankAccount.accountNumber}</span>
+                  <div className="mt-2 text-xl">📱💳</div>
+                </div>
+              )}
             </div>
 
             <div className="space-y-1 mb-4 text-xs">

@@ -802,43 +802,61 @@
 }
 
 .tx-countdown__cell {
-    background: var(--tpl-surface);
-    border: 1px solid var(--tpl-border);
-    border-radius: var(--tpl-radius);
-    padding: clamp(0.9rem, 3vw, 1.6rem) 0.4rem;
+    background: var(--tpl-surface, #ffffff);
+    border: 1px solid var(--tpl-border, rgba(201, 154, 61, 0.35));
+    border-radius: var(--tpl-radius, 14px);
+    padding: clamp(0.9rem, 3vw, 1.5rem) 0.4rem;
     text-align: center;
-    box-shadow: var(--tpl-shadow-sm);
+    box-shadow: 0 8px 24px rgba(75, 45, 20, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.85);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .tx-countdown__cell strong {
     display: block;
-    font-family: var(--tpl-heading-font);
-    font-size: clamp(1.6rem, 7vw, 3rem);
-    line-height: 1;
-    color: var(--tpl-accent-dark);
+    font-family: var(--tpl-heading-font, var(--font-khmer-title));
+    font-size: clamp(1.6rem, 7vw, 2.75rem);
+    line-height: 1.1;
+    color: var(--tpl-accent-dark, #5c3912);
+    font-weight: 800;
     font-variant-numeric: tabular-nums;
 }
 
 .tx-countdown__cell span {
     display: block;
-    margin-top: 0.5rem;
-    font-size: clamp(0.7rem, 2.2vw, 0.85rem);
-    color: var(--tpl-muted);
-    letter-spacing: 0.06em;
+    margin-top: 0.45rem;
+    font-size: clamp(0.75rem, 2.2vw, 0.9rem);
+    font-family: var(--font-kh-body, var(--tpl-body-font));
+    color: var(--tpl-accent-dark, #8a6324);
+    font-weight: 700;
+    letter-spacing: 0.04em;
 }
 
 .tx-countdown__fallback {
     text-align: center;
     font-family: var(--tpl-heading-font);
     font-size: clamp(1.1rem, 3.5vw, 1.5rem);
-    color: var(--tpl-accent-dark);
+    color: var(--tpl-accent-dark, #5c3912);
 }
 
 .tx-countdown__date {
     text-align: center;
     margin-top: 1.6rem;
-    color: var(--tpl-muted);
+    color: var(--tpl-muted, #7a6241);
     letter-spacing: 0.04em;
+}
+
+.tx-countdown__past-note {
+    text-align: center;
+    margin-top: 1.25rem;
+    color: #78350f;
+    background: rgba(254, 243, 199, 0.85);
+    border: 1px solid rgba(217, 119, 6, 0.35);
+    padding: 0.5rem 1.25rem;
+    border-radius: 9999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-block;
+    max-width: 100%;
 }
 
 /* ============================================================
@@ -1443,21 +1461,22 @@
     font-size: 0.95rem;
 }
 
-/* ============================================================
-   RSVP
-   ============================================================ */
+.tx-rsvp {
+    padding-bottom: clamp(4.5rem, 10vw, 7.5rem);
+}
+
 .tx-rsvp__card {
     background: var(--tpl-surface);
     border: 1px solid var(--tpl-border);
-    border-radius: var(--radius-xl, 20px);
+    border-radius: var(--radius-xl, 22px);
     padding: clamp(1.5rem, 5vw, 2.75rem);
-    box-shadow: var(--tpl-shadow);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
 }
 
 .tx-rsvp__form {
     display: flex;
     flex-direction: column;
-    gap: 1.1rem;
+    gap: 1.15rem;
 }
 
 .tx-rsvp__row {
@@ -1469,11 +1488,11 @@
 .tx-rsvp__field {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.45rem;
 }
 
 .tx-rsvp__field label {
-    font-size: 0.82rem;
+    font-size: 0.86rem;
     font-weight: 600;
     color: var(--tpl-accent-dark);
     letter-spacing: 0.02em;
@@ -1484,26 +1503,27 @@
 .tx-rsvp__field textarea {
     width: 100%;
     min-height: 48px;
-    padding: 0.7rem 0.9rem;
+    padding: 0.75rem 1rem;
     border: 1px solid var(--tpl-border);
-    border-radius: var(--radius-sm, 6px);
+    border-radius: var(--radius-md, 10px);
     background: var(--tpl-bg);
     color: var(--tpl-text);
     font-family: var(--tpl-body-font);
     font-size: 0.95rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .tx-rsvp__field textarea {
     resize: vertical;
-    min-height: 88px;
+    min-height: 92px;
 }
 
 .tx-rsvp__field input:focus-visible,
 .tx-rsvp__field select:focus-visible,
 .tx-rsvp__field textarea:focus-visible {
-    outline: 2px solid var(--tpl-accent);
-    outline-offset: 1px;
+    outline: none;
     border-color: var(--tpl-accent);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.22);
 }
 
 .tx-rsvp__demo-note {
@@ -1514,8 +1534,53 @@
 }
 
 .tx-rsvp__submit {
-    width: 100%;
-    margin-top: 0.25rem;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.7rem !important;
+    width: 100% !important;
+    min-height: 52px !important;
+    margin-top: 0.85rem !important;
+    padding: 0.95rem 2rem !important;
+    border-radius: 9999px !important;
+    font-family: var(--font-kh-body, var(--font-ui, sans-serif)) !important;
+    font-size: 1.05rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em !important;
+    line-height: 1.4 !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+    background: linear-gradient(135deg, #f7df94 0%, #d8b35d 40%, #aa7c11 100%) !important;
+    color: #241604 !important;
+    border: 1px solid rgba(255, 245, 210, 0.85) !important;
+    box-shadow: 0 10px 28px rgba(170, 124, 17, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.75) !important;
+    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.tx-rsvp__submit:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 14px 36px rgba(170, 124, 17, 0.48), inset 0 1px 2px rgba(255, 255, 255, 0.9) !important;
+    filter: brightness(1.05) !important;
+}
+
+.tx-rsvp__submit:active {
+    transform: translateY(0) scale(0.98) !important;
+    box-shadow: 0 4px 14px rgba(170, 124, 17, 0.28) !important;
+}
+
+.tx-rsvp__submit .tx-rsvp__submit-icon,
+.tx-rsvp__submit > svg {
+    font-size: 1.3rem !important;
+    color: #dc2626 !important;
+    filter: drop-shadow(0 1px 2px rgba(220, 38, 38, 0.35)) !important;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+.tx-rsvp__submit:hover .tx-rsvp__submit-icon,
+.tx-rsvp__submit:hover > svg {
+    transform: scale(1.28) !important;
 }
 
 .tx-children {
@@ -3232,43 +3297,44 @@
 
 /* ── Countdown — keep 4 cells inside the frame with crisp high contrast ─────────────── */
 .tx-root--preview .tx-countdown .tx-section__title {
-    color: #1e293b !important;
-    font-weight: 700;
+    color: #3b2614 !important;
+    font-weight: 700 !important;
 }
 
 .tx-root--preview .tx-countdown .tx-kicker {
-    color: #b45309 !important;
-    font-weight: 600;
-    letter-spacing: 0.1em;
+    color: #8a6324 !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.1em !important;
 }
 
 .tx-root--preview .tx-countdown .tx-section__subtitle {
-    color: #64748b !important;
+    color: #7a6241 !important;
+    font-weight: 600 !important;
 }
 
 .tx-root--preview .tx-countdown__grid {
-    gap: clamp(0.4rem, 2.5cqw, 0.75rem);
+    gap: clamp(0.4rem, 2.5cqw, 0.75rem) !important;
 }
 
 .tx-root--preview .tx-countdown__cell {
     background: #ffffff !important;
-    border: 1.5px solid #e8d5b5 !important;
-    border-radius: 12px;
-    padding: clamp(0.7rem, 4cqw, 1.2rem) 0.25rem;
-    box-shadow: 0 4px 14px rgba(180, 83, 9, 0.08) !important;
+    border: 1.5px solid rgba(201, 154, 61, 0.42) !important;
+    border-radius: 12px !important;
+    padding: clamp(0.7rem, 4cqw, 1.2rem) 0.25rem !important;
+    box-shadow: 0 6px 16px rgba(75, 45, 20, 0.08) !important;
 }
 
 .tx-root--preview .tx-countdown__cell strong {
-    font-size: clamp(1.4rem, 9cqw, 2.25rem);
-    color: #78350f !important;
-    font-weight: 700;
+    font-size: clamp(1.4rem, 9cqw, 2.25rem) !important;
+    color: #5c3912 !important;
+    font-weight: 800 !important;
 }
 
 .tx-root--preview .tx-countdown__cell span {
-    font-size: clamp(0.65rem, 3cqw, 0.8rem);
-    color: #92400e !important;
-    font-weight: 600;
-    letter-spacing: 0.04em;
+    font-size: clamp(0.65rem, 3cqw, 0.82rem) !important;
+    color: #8a6324 !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.04em !important;
 }
 
 /* ── Couple / names / titles ───────────────────────────────── */
@@ -3653,10 +3719,11 @@
 
 .template-experience--garden-royal-khmer-wedding .tx-btn--solid,
 .template-experience--garden-royal-khmer-wedding .inv-primary-btn {
-    border: 1px solid rgba(255, 250, 240, 0.42);
-    background: linear-gradient(135deg, #d8b35d, #9a6c20);
-    color: #fffaf0;
-    box-shadow: 0 12px 28px rgba(92, 57, 18, 0.24);
+    border: 1px solid rgba(255, 245, 210, 0.75);
+    background: linear-gradient(135deg, #f5d77f 0%, #d8b35d 40%, #9a6c20 100%);
+    color: #241604;
+    font-weight: 700;
+    box-shadow: 0 12px 28px rgba(154, 108, 32, 0.32), inset 0 1px 1px rgba(255, 255, 255, 0.7);
 }
 
 .template-experience--garden-royal-khmer-wedding .tx-btn--ghost {
@@ -4043,27 +4110,32 @@
 }
 
 .template-experience--garden-royal-khmer-wedding .tx-countdown {
-    background:
-        linear-gradient(rgba(111, 125, 85, 0.88), rgba(71, 80, 54, 0.92)),
-        url("../../../assets/invitations/garden-royal/paper-texture.svg");
-    color: #fffaf0;
+    color: var(--tx-text, #3b2614);
 }
 
-.template-experience--garden-royal-khmer-wedding .tx-countdown .tx-section__title,
-.template-experience--garden-royal-khmer-wedding .tx-countdown .tx-kicker,
+.template-experience--garden-royal-khmer-wedding .tx-countdown .tx-section__title {
+    color: #3b2614;
+}
+
+.template-experience--garden-royal-khmer-wedding .tx-countdown .tx-kicker {
+    color: #8a6324;
+}
+
 .template-experience--garden-royal-khmer-wedding .tx-countdown .tx-section__subtitle,
 .template-experience--garden-royal-khmer-wedding .tx-countdown__date {
-    color: #fffaf0;
+    color: #7a6241;
 }
 
 .template-experience--garden-royal-khmer-wedding .tx-countdown .tx-section__icon {
-    background: rgba(255, 250, 240, 0.14);
-    color: #ead6aa;
+    border-color: rgba(201, 154, 61, 0.58);
+    color: #8a6324;
+    background: radial-gradient(circle, #fffaf0 54%, #ead6aa 55% 57%, #fffaf0 58%);
 }
 
 .template-experience--garden-royal-khmer-wedding .tx-countdown__cell {
-    border-color: rgba(234, 214, 170, 0.5);
-    box-shadow: 0 14px 30px rgba(35, 38, 25, 0.2);
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(201, 154, 61, 0.42);
+    box-shadow: 0 8px 24px rgba(75, 45, 20, 0.08);
 }
 
 /* Venue and social actions */
@@ -4633,10 +4705,11 @@
 }
 
 .template-experience--garden-royal-khmer-wedding .tx-btn {
-    min-height: 46px;
-    border-radius: 6px;
-    font-family: var(--font-ui);
-    font-size: 0.86rem;
+    min-height: 48px;
+    border-radius: 9999px;
+    font-family: var(--font-kh-body, var(--font-ui));
+    font-size: 0.95rem;
+    font-weight: 600;
     letter-spacing: 0;
 }
 
@@ -4938,43 +5011,32 @@
     letter-spacing: 0;
 }
 
-.template-experience--garden-royal-khmer-wedding .tx-countdown {
-    color: #fffaf0;
-    background:
-        linear-gradient(rgba(75, 88, 57, 0.94), rgba(63, 75, 48, 0.96)),
-        url("../../../assets/invitations/garden-royal/paper-texture.svg");
-}
-
 .template-experience--garden-royal-khmer-wedding .tx-countdown__grid {
-    gap: 0;
-    border-top: 1px solid rgba(234, 214, 170, 0.42);
-    border-bottom: 1px solid rgba(234, 214, 170, 0.42);
+    gap: clamp(0.5rem, 2.5vw, 1rem);
+    border: 0;
 }
 
 .template-experience--garden-royal-khmer-wedding .tx-countdown__cell {
-    padding: 1rem 0.15rem;
-    border: 0;
-    border-right: 1px solid rgba(234, 214, 170, 0.28);
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-}
-
-.template-experience--garden-royal-khmer-wedding .tx-countdown__cell:last-child {
-    border-right: 0;
+    padding: clamp(0.9rem, 3.5vw, 1.4rem) 0.35rem;
+    border: 1px solid rgba(201, 154, 61, 0.42);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 8px 24px rgba(75, 45, 20, 0.08);
 }
 
 .template-experience--garden-royal-khmer-wedding .tx-countdown__cell strong {
-    color: var(--gr-paper);
-    font-family: var(--font-en-romantic);
-    font-size: 1.9rem;
+    color: #5c3912;
+    font-family: var(--tpl-heading-font, var(--font-en-romantic, sans-serif));
+    font-size: clamp(1.6rem, 6.5vw, 2.3rem);
+    font-weight: 800;
 }
 
 .template-experience--garden-royal-khmer-wedding .tx-countdown__cell span,
 .template-experience--garden-royal-khmer-wedding .tx-countdown__date {
-    color: rgba(255, 250, 240, 0.78);
-    font-family: var(--font-ui);
-    font-size: 0.7rem;
+    color: #8a6324;
+    font-family: var(--font-kh-body, var(--font-ui));
+    font-size: 0.82rem;
+    font-weight: 700;
     letter-spacing: 0;
 }
 
@@ -5306,11 +5368,11 @@
 .template-experience--garden-royal-khmer-wedding .pub-rsvp-done,
 .template-experience--garden-royal-khmer-wedding .tx-rsvp__card {
     margin: 0;
-    padding: 1.25rem;
-    border: 1px solid rgba(201, 154, 61, 0.48);
-    border-radius: 4px;
-    background: rgba(255, 250, 240, 0.82);
-    box-shadow: none;
+    padding: clamp(1.5rem, 5vw, 2.25rem);
+    border: 1px solid rgba(201, 154, 61, 0.45);
+    border-radius: 20px;
+    background: rgba(255, 250, 240, 0.94);
+    box-shadow: 0 14px 38px rgba(47, 37, 24, 0.08);
 }
 
 .template-experience--garden-royal-khmer-wedding .pub-rsvp-form input,
@@ -5319,9 +5381,10 @@
 .template-experience--garden-royal-khmer-wedding .tx-rsvp__field input,
 .template-experience--garden-royal-khmer-wedding .tx-rsvp__field select,
 .template-experience--garden-royal-khmer-wedding .tx-rsvp__field textarea {
-    border-radius: 4px;
-    background: rgba(255, 250, 240, 0.9);
-    font-family: var(--font-ui);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(201, 154, 61, 0.35);
+    font-family: var(--font-kh-body, var(--font-ui));
 }
 
 .template-experience--garden-royal-khmer-wedding .tx-wish__card {
@@ -6861,29 +6924,67 @@
 }
 
 /* ============================================================
-   MODULAR CARD MOTION STYLES (3D Flip, Vertical Reel, Book Spread)
+   MODULAR CARD MOTION STYLES (3D Flip, Vertical Reel, Book Spread, Standard Scroll)
    ============================================================ */
-.tx-experience.tx-motion--vertical-reel {
+.tx-experience.tx-motion--vertical-reel,
+.rkh-container.tx-motion--vertical-reel,
+.el-container.tx-motion--vertical-reel {
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
+    overflow-y: auto;
 }
 
 .tx-experience.tx-motion--vertical-reel > section,
-.tx-experience.tx-motion--vertical-reel > div[data-tx-section] {
+.tx-experience.tx-motion--vertical-reel > div[data-tx-section],
+.rkh-container.tx-motion--vertical-reel section,
+.el-container.tx-motion--vertical-reel section {
     scroll-snap-align: start;
     scroll-snap-stop: always;
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
 }
 
-.tx-experience.tx-motion--3d-flip {
-    perspective: 1200px;
+.tx-experience.tx-motion--3d-flip,
+.rkh-container.tx-motion--3d-flip,
+.el-container.tx-motion--3d-flip {
+    perspective: 1400px;
 }
 
-.tx-experience.tx-motion--3d-flip > section {
+.tx-experience.tx-motion--3d-flip > section,
+.rkh-container.tx-motion--3d-flip section,
+.el-container.tx-motion--3d-flip section {
     transform-style: preserve-3d;
-    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
+    border-radius: 24px;
 }
 
-.tx-experience.tx-motion--book-spread {
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+.tx-experience.tx-motion--3d-flip > section:hover,
+.rkh-container.tx-motion--3d-flip section:hover,
+.el-container.tx-motion--3d-flip section:hover {
+    transform: translateY(-4px) rotateX(1.5deg) scale(1.008);
+    box-shadow: 0 20px 45px rgba(212, 175, 55, 0.16);
+}
+
+.tx-experience.tx-motion--book-spread,
+.rkh-container.tx-motion--book-spread,
+.el-container.tx-motion--book-spread {
+    position: relative;
+    max-width: 640px;
+    margin: 0 auto;
+    border-left: 4px solid var(--tx-gate-accent, #d4af37);
+    border-right: 4px solid var(--tx-gate-accent, #d4af37);
+    box-shadow: 0 15px 60px rgba(0, 0, 0, 0.25), inset 0 0 50px rgba(0, 0, 0, 0.05);
+    background: linear-gradient(90deg, rgba(212, 175, 55, 0.03) 0%, transparent 8%, transparent 92%, rgba(212, 175, 55, 0.03) 100%);
+    border-radius: 12px;
+}
+
+.tx-experience.tx-motion--standard-scroll,
+.rkh-container.tx-motion--standard-scroll,
+.el-container.tx-motion--standard-scroll {
+    scroll-behavior: smooth;
 }
 

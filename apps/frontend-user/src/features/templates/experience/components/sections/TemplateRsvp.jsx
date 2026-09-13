@@ -62,13 +62,13 @@ const TemplateRsvp = forwardRef(function TemplateRsvp({ useTemplateLink }, ref) 
 
                         {useTemplateLink ? (
                             <Link to={useTemplateLink} className="tx-btn tx-btn--solid tx-rsvp__submit">
-                                <IoHeart aria-hidden="true" />
-                                ផ្ញើការឆ្លើយតប
+                                <IoHeart className="tx-rsvp__submit-icon" aria-hidden="true" />
+                                <span>ផ្ញើការឆ្លើយតប</span>
                             </Link>
                         ) : (
                             <button type="submit" className="tx-btn tx-btn--solid tx-rsvp__submit">
-                                <IoHeart aria-hidden="true" />
-                                ផ្ញើការឆ្លើយតប
+                                <IoHeart className="tx-rsvp__submit-icon" aria-hidden="true" />
+                                <span>ផ្ញើការឆ្លើយតប</span>
                             </button>
                         )}
                     </form>

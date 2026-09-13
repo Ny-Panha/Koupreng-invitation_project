@@ -48,6 +48,32 @@ const EMPTY_TEMPLATE = {
   description: "",
 };
 
+export function formatTemplateDescription(description) {
+  if (!description) return "គំរូធៀបការមង្គលការបែបប្រពៃណីខ្មែរ រចនាបទស្រស់ស្អាតនិងទំនើប";
+  const str = String(description).trim();
+  if (str.startsWith("{") && str.endsWith("}")) {
+    try {
+      const parsed = JSON.parse(str);
+      if (parsed.blessingMessage && typeof parsed.blessingMessage === "string" && parsed.blessingMessage.trim()) {
+        return parsed.blessingMessage.trim();
+      }
+      if (parsed.invitationTitle && typeof parsed.invitationTitle === "string" && parsed.invitationTitle.trim()) {
+        return `${parsed.invitationTitle} — គំរូធៀបការឌីជីថលបែបប្រណិត`;
+      }
+      if (parsed.groomName && parsed.brideName) {
+        return `គំរូធៀបការមង្គលការ ${parsed.groomName} & ${parsed.brideName}`;
+      }
+      if (parsed.description && typeof parsed.description === "string" && parsed.description.trim()) {
+        return parsed.description.trim();
+      }
+      return "គំរូធៀបការមង្គលការបែបប្រពៃណីខ្មែរ រចនាបទស្រស់ស្អាតនិងទំនើប";
+    } catch {
+      return str;
+    }
+  }
+  return str;
+}
+
 // Component: Reliable Template Thumbnail with Graceful Fallback
 function TemplateThumbnail({ src, alt, category }) {
   const [failed, setFailed] = useState(false);
@@ -134,7 +160,7 @@ export default function AdminTemplatesPage() {
 
       // Text search
       if (!q) return true;
-      return [t.name, t.category, t.slug, t.status, String(t.id)]
+      return [t.name, t.category, t.slug, t.status, String(t.id), formatTemplateDescription(t.description)]
         .filter(Boolean)
         .some((val) => String(val).toLowerCase().includes(q));
     });
@@ -519,7 +545,7 @@ export default function AdminTemplatesPage() {
                   </h3>
 
                   <p className="text-xs text-slate-500 dark:text-zinc-400 mt-1 line-clamp-2 leading-relaxed flex-1">
-                    {template.description || "គំរូធៀបការមង្គលការបែបប្រពៃណីខ្មែរ រចនាបទស្រស់ស្អាតនិងទំនើប"}
+                    {formatTemplateDescription(template.description)}
                   </p>
 
                   <div className="mt-3 pt-3 border-t border-slate-100 dark:border-zinc-800/80 flex items-center justify-between text-[11px] text-slate-400 dark:text-zinc-500">

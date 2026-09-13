@@ -52,7 +52,7 @@ export default function TemplateCountdown({ content }) {
                             ))}
                         </TemplateReveal>
                         {isPast && (
-                            <p style={{ textAlign: "center", marginTop: "1rem", color: "#b45309", fontSize: "0.85rem", fontWeight: 600 }}>
+                            <p className="tx-countdown__past-note">
                                 🎉 កាលបរិច្ឆេទនៃថ្ងៃសិរីសួស្តីអាពាហ៍ពិពាហ៍
                             </p>
                         )}

@@ -314,7 +314,46 @@ function CanvaKhmerCountdown({ targetDate }) {
     );
 }
 
-function CanvaKhmerInvitationDetails({ content, sectionRef, showCountdown }) {
+function CanvaKhmerDressCode({ content }) {
+    const dress = content.dressCode;
+    const colors = dress?.colors || content.dressColors || [
+        { hex: "#FFFDF7", name: "ivory" },
+        { hex: "#C99A3D", name: "មាស" },
+        { hex: "#E9D0A2", name: "champagne" },
+        { hex: "#4B2F1A", name: "ត្នោត" },
+    ];
+    if (!colors.length) return null;
+
+    return (
+        <div className="ck-dress-code" style={{ marginTop: "1.5rem", textAlign: "center" }}>
+            <h4 style={{ fontSize: "0.85rem", color: "#854d0e", fontWeight: "700", marginBottom: "0.5rem" }}>
+                {dress?.name || "ពណ៌សម្លៀកបំពាក់ (Dress Code)"}
+            </h4>
+            <div style={{ display: "flex", justifyContent: "center", gap: "0.75rem", flexWrap: "wrap", margin: "0.5rem 0" }}>
+                {colors.map((c, idx) => (
+                    <div key={idx} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
+                        <span
+                            style={{
+                                width: "32px",
+                                height: "32px",
+                                borderRadius: "50%",
+                                backgroundColor: c.hex,
+                                border: "2px solid #fff",
+                                boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+                            }}
+                        />
+                        <span style={{ fontSize: "0.75rem", color: "#78350f", fontWeight: "600" }}>{c.name}</span>
+                    </div>
+                ))}
+            </div>
+            {dress?.description && (
+                <p style={{ fontSize: "0.75rem", color: "#854d0e", marginTop: "0.5rem" }}>{dress.description}</p>
+            )}
+        </div>
+    );
+}
+
+function CanvaKhmerInvitationDetails({ content, sectionRef, showCountdown, showDressCode }) {
     const parents = [
         ["មាតាបិតាកូនកំលោះ", content.couple?.groomParents],
         ["មាតាបិតាកូនក្រមុំ", content.couple?.brideParents],
@@ -339,6 +378,7 @@ function CanvaKhmerInvitationDetails({ content, sectionRef, showCountdown }) {
                     {content.venue?.name && <p><IoLocationOutline />{content.venue.name}</p>}
                 </div>
                 {showCountdown && <CanvaKhmerCountdown targetDate={content.targetDate} />}
+                {showDressCode && <CanvaKhmerDressCode content={content} />}
             </div>
         </section>
     );
@@ -625,7 +665,13 @@ function CanvaKhmerDemoRsvp({ useTemplateLink }) {
 }
 
 function CanvaKhmerFaq({ items = [] }) {
-    const visibleItems = items
+    const defaultFaq = [
+        { id: "f1", q: "តើមានចំណតរថយន្តដែរឬទេ?", a: "បាទ/ចាស មានចំណតរថយន្តធំទូលាយដោយឥតគិតថ្លៃសម្រាប់ភ្ញៀវកិត្តិយសទាំងអស់។" },
+        { id: "f2", q: "តើអាចនាំកុមារតូចៗមកបានទេ?", a: "យើងខ្ញុំស្វាគមន៍វត្តមានកុមារតូចៗទាំងអស់ក្នុងពិធីមង្គលការ។" },
+        { id: "f3", q: "តើកម្មវិធីចាប់ផ្ដើម និងបញ្ចប់នៅម៉ោងប៉ុន្មាន?", a: "កម្មវិធីទទួលភ្ញៀវចាប់ផ្ដើមពីម៉ោង ០៥:០០ ល្ងាច តទៅ។" },
+    ];
+    const sourceItems = items && items.length > 0 ? items : defaultFaq;
+    const visibleItems = sourceItems
         .map((item, index) => ({
             id: item?.id || `faq-${index}`,
             question: cleanText(item?.q || item?.question || item?.title),
@@ -637,7 +683,7 @@ function CanvaKhmerFaq({ items = [] }) {
 
     return (
         <div className="ck-faq">
-            <h3>សំណួរញឹកញាប់</h3>
+            <h3>សំណួរញឹកញាប់ (FAQ)</h3>
             {visibleItems.map((item) => (
                 <details key={item.id}>
                     <summary>{item.question}</summary>
@@ -760,7 +806,12 @@ export default function CanvaKhmerWeddingTemplate({
                     ) : (
                         <motion.main key="invitation" className="ck-invitation" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                             <CanvaKhmerGardenHero content={content} sectionRef={heroRef} onDetails={() => detailRef.current?.scrollIntoView({ behavior: "smooth" })} />
-                            <CanvaKhmerInvitationDetails content={content} sectionRef={detailRef} showCountdown={sectionEnabled("countdown")} />
+                            <CanvaKhmerInvitationDetails
+                                content={content}
+                                sectionRef={detailRef}
+                                showCountdown={sectionEnabled("countdown")}
+                                showDressCode={sectionEnabled("dressCode")}
+                            />
                             {sectionEnabled("schedule") && <CanvaKhmerProgram content={content} />}
                             {(sectionEnabled("map") || sectionEnabled("story")) && (
                                 <CanvaKhmerLocation content={content} showLocation={sectionEnabled("map")} showStory={sectionEnabled("story")} />

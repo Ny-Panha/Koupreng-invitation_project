@@ -139,8 +139,30 @@ export default function DigitalYesLayout({
     }
   };
 
-  const handleCopyAccount = () => {
-    navigator.clipboard?.writeText?.(tpl.bankAccount?.accountNumber || "");
+  const handleCopyAccount = async () => {
+    const text = tpl.bankAccount?.accountNumber || "";
+    let success = false;
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+        success = true;
+      }
+    } catch {}
+    if (!success) {
+      try {
+        const input = document.createElement("textarea");
+        input.value = text;
+        input.setAttribute("readonly", "");
+        input.style.position = "fixed";
+        input.style.opacity = "0";
+        input.style.left = "-9999px";
+        document.body.appendChild(input);
+        input.focus();
+        input.select();
+        document.execCommand("copy");
+        input.remove();
+      } catch {}
+    }
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -331,73 +353,77 @@ export default function DigitalYesLayout({
             </div>
 
             {/* Live Countdown Grid */}
-            <div className="my-6 p-4 rounded-2xl bg-black/40 border border-amber-500/25">
-              <span className="text-[10px] uppercase tracking-[0.25em] text-amber-300/80 block mb-3 font-serif">
-                រាប់ថយក្រោយដល់ថ្ងៃពិសេស
-              </span>
-              <div className="grid grid-cols-4 gap-2">
-                <div className="bg-black/40 rounded-xl p-2.5 border border-amber-500/20">
-                  <span className="block text-xl sm:text-2xl font-bold text-amber-300 font-mono">
-                    {String(timeLeft.days).padStart(2, "0")}
-                  </span>
-                  <span className="text-[10px] text-amber-200/60 uppercase tracking-wider">ថ្ងៃ</span>
-                </div>
-                <div className="bg-black/40 rounded-xl p-2.5 border border-amber-500/20">
-                  <span className="block text-xl sm:text-2xl font-bold text-amber-300 font-mono">
-                    {String(timeLeft.hours).padStart(2, "0")}
-                  </span>
-                  <span className="text-[10px] text-amber-200/60 uppercase tracking-wider">ម៉ោង</span>
-                </div>
-                <div className="bg-black/40 rounded-xl p-2.5 border border-amber-500/20">
-                  <span className="block text-xl sm:text-2xl font-bold text-amber-300 font-mono">
-                    {String(timeLeft.minutes).padStart(2, "0")}
-                  </span>
-                  <span className="text-[10px] text-amber-200/60 uppercase tracking-wider">នាទី</span>
-                </div>
-                <div className="bg-black/40 rounded-xl p-2.5 border border-amber-500/20">
-                  <span className="block text-xl sm:text-2xl font-bold text-amber-300 font-mono">
-                    {String(timeLeft.seconds).padStart(2, "0")}
-                  </span>
-                  <span className="text-[10px] text-amber-200/60 uppercase tracking-wider">វិនាទី</span>
+            {isEnabled("countdown") && (
+              <div className="my-6 p-4 rounded-2xl bg-black/40 border border-amber-500/25">
+                <span className="text-[10px] uppercase tracking-[0.25em] text-amber-300/80 block mb-3 font-serif">
+                  រាប់ថយក្រោយដល់ថ្ងៃពិសេស
+                </span>
+                <div className="grid grid-cols-4 gap-2">
+                  <div className="bg-black/40 rounded-xl p-2.5 border border-amber-500/20">
+                    <span className="block text-xl sm:text-2xl font-bold text-amber-300 font-mono">
+                      {String(timeLeft.days).padStart(2, "0")}
+                    </span>
+                    <span className="text-[10px] text-amber-200/60 uppercase tracking-wider">ថ្ងៃ</span>
+                  </div>
+                  <div className="bg-black/40 rounded-xl p-2.5 border border-amber-500/20">
+                    <span className="block text-xl sm:text-2xl font-bold text-amber-300 font-mono">
+                      {String(timeLeft.hours).padStart(2, "0")}
+                    </span>
+                    <span className="text-[10px] text-amber-200/60 uppercase tracking-wider">ម៉ោង</span>
+                  </div>
+                  <div className="bg-black/40 rounded-xl p-2.5 border border-amber-500/20">
+                    <span className="block text-xl sm:text-2xl font-bold text-amber-300 font-mono">
+                      {String(timeLeft.minutes).padStart(2, "0")}
+                    </span>
+                    <span className="text-[10px] text-amber-200/60 uppercase tracking-wider">នាទី</span>
+                  </div>
+                  <div className="bg-black/40 rounded-xl p-2.5 border border-amber-500/20">
+                    <span className="block text-xl sm:text-2xl font-bold text-amber-300 font-mono">
+                      {String(timeLeft.seconds).padStart(2, "0")}
+                    </span>
+                    <span className="text-[10px] text-amber-200/60 uppercase tracking-wider">វិនាទី</span>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
             {/* Schedule Section */}
-            <DigitalYesSchedule schedule={tpl.schedule} />
+            {isEnabled("schedule") && <DigitalYesSchedule schedule={tpl.schedule} />}
 
             {/* Venue Section */}
-            <div className="rounded-2xl bg-gradient-to-b from-amber-500/15 to-transparent border border-amber-500/30 p-5 my-6 text-center">
-              <div className="inline-flex p-3 rounded-full bg-amber-500/20 text-amber-400 mb-2">
-                <MapPin className="h-6 w-6" />
-              </div>
-              <h4 className="text-lg font-bold text-white mb-1 font-serif">{tpl.venueName}</h4>
-              <p className="text-xs text-amber-300 font-medium">{tpl.venueHall}</p>
-              <p className="text-xs text-amber-100/70 mt-1 max-w-xs mx-auto leading-relaxed">
-                {tpl.venueAddress}
-              </p>
+            {isEnabled("map") && (
+              <div className="rounded-2xl bg-gradient-to-b from-amber-500/15 to-transparent border border-amber-500/30 p-5 my-6 text-center">
+                <div className="inline-flex p-3 rounded-full bg-amber-500/20 text-amber-400 mb-2">
+                  <MapPin className="h-6 w-6" />
+                </div>
+                <h4 className="text-lg font-bold text-white mb-1 font-serif">{tpl.venueName}</h4>
+                <p className="text-xs text-amber-300 font-medium">{tpl.venueHall}</p>
+                <p className="text-xs text-amber-100/70 mt-1 max-w-xs mx-auto leading-relaxed">
+                  {tpl.venueAddress}
+                </p>
 
-              {tpl.googleMapsUrl && (
-                <a
-                  href={tpl.googleMapsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold uppercase tracking-wider shadow-lg transition transform hover:scale-105"
-                >
-                  <span>មើលទីតាំងលើ Google Maps</span>
-                  <ExternalLink className="h-3.5 w-3.5" />
-                </a>
-              )}
-            </div>
+                {tpl.googleMapsUrl && (
+                  <a
+                    href={tpl.googleMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold uppercase tracking-wider shadow-lg transition transform hover:scale-105"
+                  >
+                    <span>មើលទីតាំងលើ Google Maps</span>
+                    <ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                )}
+              </div>
+            )}
 
             {/* Dress Code Recommendation */}
-            {tpl.dressCode && tpl.dressCode.length > 0 && (
+            {isEnabled("dressCode") && dressColors.length > 0 && (
               <div className="my-8">
                 <h4 className="text-xs uppercase tracking-[0.2em] text-amber-400 font-semibold mb-3 font-serif">
-                  ពណ៌សម្លៀកបំពាក់ (Dress Code)
+                  {tpl.dressCode?.name || "ពណ៌សម្លៀកបំពាក់ (Dress Code)"}
                 </h4>
-                <div className="flex items-center justify-center gap-4">
-                  {tpl.dressCode.map((c, i) => (
+                <div className="flex items-center justify-center gap-4 flex-wrap">
+                  {dressColors.map((c, i) => (
                     <div key={i} className="flex flex-col items-center gap-1.5">
                       <div
                         className="w-10 h-10 rounded-full border-2 border-white/40 shadow-md"
@@ -407,11 +433,14 @@ export default function DigitalYesLayout({
                     </div>
                   ))}
                 </div>
+                {tpl.dressCode?.description && (
+                  <p className="text-[11px] text-amber-200/70 mt-3">{tpl.dressCode.description}</p>
+                )}
               </div>
             )}
 
             {/* Photo Gallery Grid */}
-            {tpl.gallery && tpl.gallery.length > 0 && (
+            {isEnabled("gallery") && tpl.gallery && tpl.gallery.length > 0 && (
               <div className="my-8">
                 <h4 className="text-xs uppercase tracking-[0.2em] text-amber-400 font-semibold mb-4 font-serif">
                   កម្រងរូបភាពអនុស្សាវរីយ៍
@@ -433,27 +462,60 @@ export default function DigitalYesLayout({
               </div>
             )}
 
-            {/* Action Row: RSVP & Gift Button */}
-            <div className="grid grid-cols-2 gap-3 my-6">
-              <a
-                href="#rsvp-section"
-                className="flex items-center justify-center gap-1.5 py-3 px-4 rounded-xl bg-gradient-to-r from-amber-600 to-amber-500 text-slate-950 font-bold text-xs shadow-lg hover:brightness-110 transition"
-              >
-                <Send className="h-4 w-4" />
-                <span>ឆ្លើយតប RSVP</span>
-              </a>
+            {/* FAQ Accordion Section */}
+            {isEnabled("faq") && faqList.length > 0 && (
+              <div className="my-8 text-left">
+                <h4 className="text-xs uppercase tracking-[0.2em] text-amber-400 font-semibold mb-3 font-serif text-center">
+                  សំណួរដែលសួរញឹកញាប់ (FAQ)
+                </h4>
+                <div className="space-y-2">
+                  {faqList.map((item) => (
+                    <details
+                      key={item.id || item.q}
+                      className="group rounded-xl border border-amber-500/20 bg-black/40 p-3 text-xs text-amber-100/90 transition"
+                    >
+                      <summary className="cursor-pointer font-semibold text-amber-200 list-none flex items-center justify-between">
+                        <span>{item.q}</span>
+                        <span className="text-amber-400 text-[10px]">▼</span>
+                      </summary>
+                      <p className="mt-2 text-amber-100/70 leading-relaxed text-[11px] pt-2 border-t border-amber-500/10">
+                        {item.a}
+                      </p>
+                    </details>
+                  ))}
+                </div>
+              </div>
+            )}
 
-              <button
-                onClick={() => setShowQrModal(true)}
-                className="flex items-center justify-center gap-1.5 py-3 px-4 rounded-xl bg-white/10 border border-amber-400/40 text-amber-200 font-bold text-xs hover:bg-white/20 transition shadow-lg cursor-pointer"
-              >
-                <QrCode className="h-4 w-4 text-amber-400" />
-                <span>ចងដៃតាម QR</span>
-              </button>
-            </div>
+            {/* Action Row: RSVP & Gift Button */}
+            {(isEnabled("rsvp") || isEnabled("gift")) && (
+              <div className="grid grid-cols-2 gap-3 my-6">
+                {isEnabled("rsvp") && (
+                  <a
+                    href="#rsvp-section"
+                    className="flex items-center justify-center gap-1.5 py-3 px-4 rounded-xl bg-gradient-to-r from-amber-600 to-amber-500 text-slate-950 font-bold text-xs shadow-lg hover:brightness-110 transition"
+                  >
+                    <Send className="h-4 w-4" />
+                    <span>ឆ្លើយតប RSVP</span>
+                  </a>
+                )}
+
+                {isEnabled("gift") && (
+                  <button
+                    onClick={() => setShowQrModal(true)}
+                    className={`flex items-center justify-center gap-1.5 py-3 px-4 rounded-xl bg-white/10 border border-amber-400/40 text-amber-200 font-bold text-xs hover:bg-white/20 transition shadow-lg cursor-pointer ${
+                      !isEnabled("rsvp") ? "col-span-2" : ""
+                    }`}
+                  >
+                    <QrCode className="h-4 w-4 text-amber-400" />
+                    <span>ចងដៃតាម QR</span>
+                  </button>
+                )}
+              </div>
+            )}
 
             {/* RSVP Modal / Section */}
-            <DigitalYesRsvpModal children={children} />
+            {isEnabled("rsvp") && <DigitalYesRsvpModal children={children} />}
 
             {/* Footer Closing */}
             <div className="mt-12 pt-6 border-t border-amber-500/20 text-center">
@@ -489,13 +551,17 @@ export default function DigitalYesLayout({
               ស្កេនដើម្បីជូនពរ និងចងដៃដល់គូស្វាមីភរិយា
             </p>
 
-            <div className="relative mx-auto w-44 h-44 rounded-2xl bg-white p-3 shadow-inner flex items-center justify-center mb-4">
-              <div className="w-full h-full border-2 border-stone-800 rounded-xl flex flex-col items-center justify-center p-2 text-slate-950 text-center">
-                <span className="text-[10px] font-bold text-red-600 tracking-wider">KHQR</span>
-                <span className="text-[9px] font-semibold text-slate-800 mt-1">{tpl.bankAccount?.accountName}</span>
-                <span className="text-[8px] text-slate-500 mt-0.5 font-mono">{tpl.bankAccount?.accountNumber}</span>
-                <div className="mt-2 text-[18px]">📱💳</div>
-              </div>
+            <div className="relative mx-auto w-44 h-44 rounded-2xl bg-white p-3 shadow-inner flex items-center justify-center mb-4 overflow-hidden">
+              {tpl.bankAccount?.qrUrl ? (
+                <img src={tpl.bankAccount.qrUrl} alt="QR Code" className="w-full h-full object-contain rounded-xl" />
+              ) : (
+                <div className="w-full h-full border-2 border-stone-800 rounded-xl flex flex-col items-center justify-center p-2 text-slate-950 text-center">
+                  <span className="text-[10px] font-bold text-red-600 tracking-wider">KHQR</span>
+                  <span className="text-[9px] font-semibold text-slate-800 mt-1">{tpl.bankAccount?.accountName}</span>
+                  <span className="text-[8px] text-slate-500 mt-0.5 font-mono">{tpl.bankAccount?.accountNumber}</span>
+                  <div className="mt-2 text-[18px]">📱💳</div>
+                </div>
+              )}
             </div>
 
             <div className="space-y-1 mb-4 text-xs">

@@ -98,7 +98,23 @@ const KHMER_GOLDEN_DEMO_SCHEDULE = [
 const DEMO_WISH =
     "សូមឱ្យសេចក្ដីស្រឡាញ់របស់យើងកាន់តែរីកចម្រើន និងពោរពេញដោយសុភមង្គល។ យើងខ្ញុំរីករាយទទួលពាក្យជូនពរពីលោកអ្នកក្នុងថ្ងៃដ៏មានន័យនេះ។";
 
-const DEMO_FAQ = [];
+const DEMO_FAQ = [
+    {
+        id: "faq-parking",
+        q: "តើមានចំណតរថយន្ត និងម៉ូតូដែរឬទេ?",
+        a: "បាទ/ចាស មានចំណតរថយន្ត និងម៉ូតូធំទូលាយដោយឥតគិតថ្លៃសម្រាប់ភ្ញៀវកិត្តិយសទាំងអស់នៅទីតាំងកម្មវិធី។",
+    },
+    {
+        id: "faq-kids",
+        q: "តើអាចនាំកុមារតូចៗមកចូលរួមបានទេ?",
+        a: "យើងខ្ញុំស្វាគមន៍វត្តមានកុមារតូចៗ និងក្រុមគ្រួសារទាំងអស់ក្នុងការចូលរួមពិធីមង្គលការ។",
+    },
+    {
+        id: "faq-time",
+        q: "តើកម្មវិធីចាប់ផ្ដើម និងបញ្ចប់នៅម៉ោងប៉ុន្មាន?",
+        a: "ពិធីសិរីមង្គលពេលព្រឹកចាប់ផ្ដើមពីម៉ោង ០៧:០០ ព្រឹក ហើយពិធីជប់លៀងពេលល្ងាចចាប់ផ្ដើមពីម៉ោង ០៥:០០ ល្ងាច តទៅ។",
+    },
+];
 
 /**
  * Single-template copy. The experience engine still accepts a variant arg, but
@@ -399,14 +415,22 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         ? `https://www.google.com/maps?q=${encodeURIComponent(mapSearch)}&output=embed`
         : null;
 
-    const dressCode = tpl.dressCode && Array.isArray(tpl.dressCode.colors) && tpl.dressCode.colors.length
-        ? {
-            name: tpl.dressCode.name || copy.dressName,
-            description: tpl.dressCode.description || copy.dressNote,
-            style: tpl.dressCode.style || copy.dressStyle,
-            colors: tpl.dressCode.colors,
-        }
-        : null;
+    const themeDressColors = theme?.dressColors || [
+        { hex: "#8B1E2D", name: "ក្រហមទុំ" },
+        { hex: "#D4AF37", name: "មាស" },
+        { hex: "#FFFDF7", name: "ស" },
+        { hex: "#4A151C", name: "ក្រហមចាស់" },
+    ];
+    const dressCode = {
+        name: tpl.dressCode?.name || copy.dressName || "ពណ៌សម្លៀកបំពាក់ (Dress Code)",
+        description: tpl.dressCode?.description || copy.dressNote || "សូមស្លៀកសម្លៀកបំពាក់ពណ៌តាមប្រធានបទ ឬពណ៌សមរម្យ",
+        style: tpl.dressCode?.style || copy.dressStyle || "ខ្មែរប្រពៃណី / សម័យ",
+        colors: (tpl.dressCode && Array.isArray(tpl.dressCode.colors) && tpl.dressCode.colors.length)
+            ? tpl.dressCode.colors
+            : (Array.isArray(tpl.dressColors) && tpl.dressColors.length)
+                ? tpl.dressColors
+                : themeDressColors,
+    };
 
     const coverImage = nonBlank(tpl.customMainImage)
         || nonBlank(tpl.coverImage)
