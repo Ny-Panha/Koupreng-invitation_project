@@ -586,7 +586,7 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         thankYouText: nonBlank(tpl.thankYouText || host.thankYouText || host.wishMessage),
         dateText: tpl.dateText || "ថ្ងៃពុធ ២៨ មករា ២០២៦",
         eventTime: nonBlank(tpl.eventTime || host.eventTime || tpl.ceremonyTime),
-        targetDate: tpl.targetDate,
+        targetDate: tpl.targetDate || "2026-11-28T17:00:00+07:00",
         ceremonyTime: tpl.ceremonyTime || "០៧:០០",
         receptionTime: tpl.receptionTime || "១៧:០០",
         coverImage,

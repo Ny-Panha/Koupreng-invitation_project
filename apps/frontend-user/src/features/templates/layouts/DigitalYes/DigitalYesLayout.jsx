@@ -82,9 +82,16 @@ export default function DigitalYesLayout({
 
   // Countdown timer calculation
   useEffect(() => {
-    const target = new Date(tpl.targetDate || "2026-11-28T17:00:00").getTime();
-    const interval = setInterval(() => {
-      const now = new Date().getTime();
+    let target = new Date(tpl.targetDate || "2026-11-28T17:00:00").getTime();
+    if (Number.isNaN(target) || target <= Date.now()) {
+      target = new Date("2026-11-28T17:00:00").getTime();
+      if (target <= Date.now()) {
+        target = Date.now() + 75 * 86400000 + 4 * 3600000 + 30 * 60000;
+      }
+    }
+
+    const updateCountdown = () => {
+      const now = Date.now();
       const diff = Math.max(0, target - now);
 
       setTimeLeft({
@@ -93,7 +100,10 @@ export default function DigitalYesLayout({
         minutes: Math.floor((diff / 1000 / 60) % 60),
         seconds: Math.floor((diff / 1000) % 60),
       });
-    }, 1000);
+    };
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
 
     return () => clearInterval(interval);
   }, [tpl.targetDate]);

@@ -192,6 +192,8 @@ export default function TemplateExperience({
                     description: s.desc || s.description || "",
                 }))
                 : baseContent.schedule,
+            targetDate: liveData.targetDate || liveData.eventDate || baseContent.targetDate,
+            dateText: liveData.eventDateText || liveData.dateText || baseContent.dateText,
             music: liveData.musicUrl || liveData.music || baseContent.music,
         };
     }, [baseContent, liveData]);
