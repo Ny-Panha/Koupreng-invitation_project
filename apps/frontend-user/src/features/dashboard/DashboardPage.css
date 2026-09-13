@@ -482,4 +482,50 @@
   .dash-features-grid {
     grid-template-columns: minmax(0, 1fr);
   }
+
+  .dash-page-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .dash-actions-row {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .dash-actions-row .dash-btn-gold,
+  .dash-actions-row .dash-btn-outline {
+    width: 100%;
+  }
+}
+
+@media (max-width: 412px) {
+  .pe-dashboard-page {
+    padding: 12px 8px 30px;
+  }
+
+  .dash-page-header h1 {
+    font-size: 1.45rem;
+  }
+
+  .dash-quick-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .dash-quick-btn {
+    padding: 12px 6px;
+  }
+}
+
+/* Accessibility - High contrast focus rings */
+.pe-dashboard-page a:focus-visible,
+.pe-dashboard-page button:focus-visible,
+.dash-event-tab:focus-visible,
+.dash-quick-btn:focus-visible {
+  outline: 2px solid var(--brand-primary, #b98b42);
+  outline-offset: 2px;
 }
