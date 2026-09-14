@@ -321,12 +321,12 @@ describe("TemplateExperience opening gate", () => {
         expect(screen.getByText("តើអាចនាំកុមារតូចៗមកបានទេ?")).toBeInTheDocument();
     });
 
-    it("keeps preview gates inside the phone flow without locking the parent document or starting sound", async () => {
+    it("keeps preview gates inside the phone flow without locking the parent document", async () => {
         const play = vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
         renderExperience({ preview: true });
         expect(document.body.style.overflow).toBe("");
         await openInvitation();
-        expect(play).not.toHaveBeenCalled();
+        expect(play).toHaveBeenCalledTimes(1);
         expect(screen.getByRole("button", { name: "បើកគម្របម្តងទៀត" })).toBeVisible();
     });
 });

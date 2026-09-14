@@ -64,6 +64,21 @@ export default function BlissEditorialLayout({
     "/facebook/all/03-card/03-03.jpg",
   ];
 
+  const isEnabled = (key) => content.enabledSections?.[key] !== false;
+  const dressColors = Array.isArray(content.dressCode)
+    ? content.dressCode
+    : (Array.isArray(content.dressCode?.colors) ? content.dressCode.colors : (content.dressColors || [
+        { hex: "#2C2C2C", name: "Charcoal" },
+        { hex: "#8E8279", name: "Taupe" },
+        { hex: "#D6CFC7", name: "Cream" },
+        { hex: "#FFFFFF", name: "White" },
+      ]));
+  const faqList = Array.isArray(content.faq) && content.faq.length > 0 ? content.faq : [
+    { id: "f1", q: "តើមានចំណតរថយន្តដែរឬទេ?", a: "បាទ/ចាស មានចំណតរថយន្តធំទូលាយដោយឥតគិតថ្លៃសម្រាប់ភ្ញៀវកិត្តិយសទាំងអស់។" },
+    { id: "f2", q: "តើអាចនាំកុមារតូចៗមកបានទេ?", a: "យើងខ្ញុំស្វាគមន៍វត្តមានកុមារតូចៗទាំងអស់ក្នុងពិធីមង្គលការ។" },
+    { id: "f3", q: "តើកម្មវិធីចាប់ផ្ដើម និងបញ្ចប់នៅម៉ោងប៉ុន្មាន?", a: "កម្មវិធីទទួលភ្ញៀវចាប់ផ្ដើមពីម៉ោង ០៥:០០ ល្ងាច តទៅ។" },
+  ];
+
   return (
     <div className="bliss-container">
       <audio ref={audioRef} src={musicUrl} loop />
@@ -100,11 +115,16 @@ export default function BlissEditorialLayout({
         </div>
         <nav className="bliss-header-nav">
           <a href="#editorial-hero" className="bliss-header-link">សេចក្តីផ្តើម</a>
-          <a href="#editorial-program" className="bliss-header-link">កម្មវិធី</a>
-          <a href="#editorial-spread" className="bliss-header-link">កម្រងរូបភាព</a>
-          <button type="button" className="bliss-rsvp-trigger" onClick={() => setDrawerOpen(true)}>
-            RSVP
-          </button>
+          {isEnabled("schedule") && <a href="#editorial-program" className="bliss-header-link">កម្មវិធី</a>}
+          {isEnabled("gallery") && <a href="#editorial-spread" className="bliss-header-link">កម្រងរូបភាព</a>}
+          {isEnabled("dressCode") && <a href="#editorial-dress" className="bliss-header-link">Dress Code</a>}
+          {isEnabled("map") && <a href="#editorial-venue" className="bliss-header-link">ទីតាំង</a>}
+          {isEnabled("faq") && <a href="#editorial-faq" className="bliss-header-link">FAQ</a>}
+          {isEnabled("rsvp") && (
+            <button type="button" className="bliss-rsvp-trigger" onClick={() => setDrawerOpen(true)}>
+              RSVP
+            </button>
+          )}
           {showBack && (
             <Link to={backTo} className="bliss-header-link" style={{ opacity: 0.7 }}>
               ← {backLabel}
@@ -128,102 +148,168 @@ export default function BlissEditorialLayout({
           <blockquote className="bliss-quote">
             "សេចក្តីស្រឡាញ់ពិតមិនមែនជាការសម្លឹងមើលមុខគ្នានោះទេ ប៉ុន្តែជាការសម្លឹងទៅកាន់ទិសដៅតែមួយរួមគ្នាជាមួយមនុស្សជាទីស្រឡាញ់។"
           </blockquote>
-          <div>
-            <button type="button" className="bliss-rsvp-trigger" onClick={() => setDrawerOpen(true)}>
-              សូមបញ្ជាក់ការចូលរួម • RSVP NOW
-            </button>
-          </div>
+          {isEnabled("rsvp") && (
+            <div>
+              <button type="button" className="bliss-rsvp-trigger" onClick={() => setDrawerOpen(true)}>
+                សូមបញ្ជាក់ការចូលរួម • RSVP NOW
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
       {/* Editorial Program Section */}
-      <section id="editorial-program" className="bliss-section">
-        <div className="bliss-section-heading">
-          <p className="bliss-kicker">Order of Events</p>
-          <h2 className="bliss-title">កាលវិភាគពិធីមង្គលការ</h2>
-        </div>
-
-        <div className="bliss-program-list">
-          <div className="bliss-program-row">
-            <span className="bliss-program-time">07:00 AM</span>
-            <div>
-              <h3 className="bliss-program-title">ពិធីសូត្រមន្តចម្រើនព្រះបរិត្ត</h3>
-              <p className="bliss-program-desc">
-                ពិធីសាសនាបែបព្រះពុទ្ធសាសនា និមន្តព្រះសង្ឃសូត្រមន្តប្រសិទ្ធពរជ័យសិរីសួស្តី ជ័យមង្គលវិបុលសុខដល់គូស្វាមីភរិយាថ្មី។
-              </p>
-            </div>
+      {isEnabled("schedule") && (
+        <section id="editorial-program" className="bliss-section">
+          <div className="bliss-section-heading">
+            <p className="bliss-kicker">Order of Events</p>
+            <h2 className="bliss-title">កាលវិភាគពិធីមង្គលការ</h2>
           </div>
 
-          <div className="bliss-program-row">
-            <span className="bliss-program-time">08:30 AM</span>
-            <div>
-              <h3 className="bliss-program-title">ពិធីកាត់សក់បង្កក់សិរី &amp; សំពះផ្ទឹម</h3>
-              <p className="bliss-program-desc">
-                ពិធីប្រពៃណីខ្មែរដ៏ពិសិដ្ឋ កាត់សក់ជម្រះនូវឧបទ្រពចង្រៃ និងសំពះផ្ទឹមចងដៃប្រសិទ្ធពរជ័យពីសំណាក់មាតាបិតា និងចាស់ទុំទាំងសងខាង។
-              </p>
+          <div className="bliss-program-list">
+            <div className="bliss-program-row">
+              <span className="bliss-program-time">07:00 AM</span>
+              <div>
+                <h3 className="bliss-program-title">ពិធីសូត្រមន្តចម្រើនព្រះបរិត្ត</h3>
+                <p className="bliss-program-desc">
+                  ពិធីសាសនាបែបព្រះពុទ្ធសាសនា និមន្តព្រះសង្ឃសូត្រមន្តប្រសិទ្ធពរជ័យសិរីសួស្តី ជ័យមង្គលវិបុលសុខដល់គូស្វាមីភរិយាថ្មី។
+                </p>
+              </div>
             </div>
-          </div>
 
-          <div className="bliss-program-row">
-            <span className="bliss-program-time">05:00 PM</span>
-            <div>
-              <h3 className="bliss-program-title">ពិធីទទួលបដិសណ្ឋារកិច្ច &amp; ពិសាភោជនាហារ</h3>
-              <p className="bliss-program-desc">
-                ស្វាគមន៍ភ្ញៀវកិត្តិយស ពិសាអាហារពេលល្ងាច និងរាំកម្សាន្តនៅ {venue.name} ({venue.hall})។
-              </p>
+            <div className="bliss-program-row">
+              <span className="bliss-program-time">08:30 AM</span>
+              <div>
+                <h3 className="bliss-program-title">ពិធីកាត់សក់បង្កក់សិរី &amp; សំពះផ្ទឹម</h3>
+                <p className="bliss-program-desc">
+                  ពិធីប្រពៃណីខ្មែរដ៏ពិសិដ្ឋ កាត់សក់ជម្រះនូវឧបទ្រពចង្រៃ និងសំពះផ្ទឹមចងដៃប្រសិទ្ធពរជ័យពីសំណាក់មាតាបិតា និងចាស់ទុំទាំងសងខាង។
+                </p>
+              </div>
+            </div>
+
+            <div className="bliss-program-row">
+              <span className="bliss-program-time">05:00 PM</span>
+              <div>
+                <h3 className="bliss-program-title">ពិធីទទួលបដិសណ្ឋារកិច្ច &amp; ពិសាភោជនាហារ</h3>
+                <p className="bliss-program-desc">
+                  ស្វាគមន៍ភ្ញៀវកិត្តិយស ពិសាអាហារពេលល្ងាច និងរាំកម្សាន្តនៅ {venue.name} ({venue.hall})។
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
+
+      {/* Dress Code Section */}
+      {isEnabled("dressCode") && dressColors.length > 0 && (
+        <section id="editorial-dress" className="bliss-section" style={{ textAlign: "center", borderTop: "1px solid var(--bliss-border)" }}>
+          <p className="bliss-kicker">Palette &amp; Attire</p>
+          <h2 className="bliss-title" style={{ marginBottom: "1.5rem" }}>{content.dressCode?.name || "ពណ៌សម្លៀកបំពាក់ (Dress Code)"}</h2>
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1.5rem", flexWrap: "wrap", maxWidth: "600px", margin: "0 auto" }}>
+            {dressColors.map((c, i) => (
+              <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px" }}>
+                <span
+                  style={{
+                    width: "42px",
+                    height: "42px",
+                    borderRadius: "50%",
+                    backgroundColor: c.hex,
+                    border: "1px solid var(--bliss-border)",
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                  }}
+                />
+                <span style={{ fontSize: "0.8rem", letterSpacing: "0.05em", color: "var(--bliss-charcoal)", textTransform: "uppercase" }}>{c.name}</span>
+              </div>
+            ))}
+          </div>
+          {content.dressCode?.description && (
+            <p style={{ color: "var(--bliss-taupe)", maxWidth: "500px", margin: "1.5rem auto 0", lineHeight: "1.7", fontSize: "0.85rem" }}>
+              {content.dressCode.description}
+            </p>
+          )}
+        </section>
+      )}
 
       {/* Asymmetrical Gallery Spread */}
-      <section id="editorial-spread" className="bliss-section" style={{ borderTop: "1px solid var(--bliss-border)" }}>
-        <div className="bliss-section-heading">
-          <p className="bliss-kicker">Visual Editorial</p>
-          <h2 className="bliss-title">កម្រងអនុស្សាវរីយ៍</h2>
-        </div>
+      {isEnabled("gallery") && (
+        <section id="editorial-spread" className="bliss-section" style={{ borderTop: "1px solid var(--bliss-border)" }}>
+          <div className="bliss-section-heading">
+            <p className="bliss-kicker">Visual Editorial</p>
+            <h2 className="bliss-title">កម្រងអនុស្សាវរីយ៍</h2>
+          </div>
 
-        <div className="bliss-gallery-spread">
-          <div className="bliss-gallery-col-1 bliss-gallery-frame">
-            <img src={galleryImages[0]} alt="Spread 1" loading="lazy" />
+          <div className="bliss-gallery-spread">
+            <div className="bliss-gallery-col-1 bliss-gallery-frame">
+              <img src={galleryImages[0]} alt="Spread 1" loading="lazy" />
+            </div>
+            <div className="bliss-gallery-col-2 bliss-gallery-frame">
+              <img src={galleryImages[1]} alt="Spread 2" loading="lazy" />
+            </div>
+            <div className="bliss-gallery-col-3 bliss-gallery-frame">
+              <img src={galleryImages[2]} alt="Spread 3" loading="lazy" />
+            </div>
+            <div className="bliss-gallery-col-4 bliss-gallery-frame">
+              <img src={galleryImages[3]} alt="Spread 4" loading="lazy" />
+            </div>
           </div>
-          <div className="bliss-gallery-col-2 bliss-gallery-frame">
-            <img src={galleryImages[1]} alt="Spread 2" loading="lazy" />
-          </div>
-          <div className="bliss-gallery-col-3 bliss-gallery-frame">
-            <img src={galleryImages[2]} alt="Spread 3" loading="lazy" />
-          </div>
-          <div className="bliss-gallery-col-4 bliss-gallery-frame">
-            <img src={galleryImages[3]} alt="Spread 4" loading="lazy" />
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Venue Information */}
-      <section className="bliss-section" style={{ textAlign: "center", borderTop: "1px solid var(--bliss-border)" }}>
-        <p className="bliss-kicker">The Destination</p>
-        <h2 className="bliss-title" style={{ marginBottom: "1rem" }}>{venue.name}</h2>
-        <p style={{ color: "var(--bliss-taupe)", maxWidth: "500px", margin: "0 auto 2rem", lineHeight: "1.7" }}>
-          {venue.address}
-        </p>
-        <a
-          href={`https://maps.google.com/?q=${encodeURIComponent(venue.name + " " + venue.address)}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            display: "inline-block",
-            fontSize: "0.8rem",
-            letterSpacing: "0.2em",
-            textTransform: "uppercase",
-            color: "var(--bliss-charcoal)",
-            borderBottom: "1px solid var(--bliss-charcoal)",
-            paddingBottom: "4px",
-            textDecoration: "none",
-          }}
-        >
-          View on Google Maps →
-        </a>
-      </section>
+      {isEnabled("map") && (
+        <section id="editorial-venue" className="bliss-section" style={{ textAlign: "center", borderTop: "1px solid var(--bliss-border)" }}>
+          <p className="bliss-kicker">The Destination</p>
+          <h2 className="bliss-title" style={{ marginBottom: "1rem" }}>{venue.name}</h2>
+          <p style={{ color: "var(--bliss-taupe)", maxWidth: "500px", margin: "0 auto 2rem", lineHeight: "1.7" }}>
+            {venue.address}
+          </p>
+          <a
+            href={`https://maps.google.com/?q=${encodeURIComponent(venue.name + " " + venue.address)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "inline-block",
+              fontSize: "0.8rem",
+              letterSpacing: "0.2em",
+              textTransform: "uppercase",
+              color: "var(--bliss-charcoal)",
+              borderBottom: "1px solid var(--bliss-charcoal)",
+              paddingBottom: "4px",
+              textDecoration: "none",
+            }}
+          >
+            View on Google Maps →
+          </a>
+        </section>
+      )}
+
+      {/* FAQ Section */}
+      {isEnabled("faq") && faqList.length > 0 && (
+        <section id="editorial-faq" className="bliss-section" style={{ borderTop: "1px solid var(--bliss-border)" }}>
+          <div className="bliss-section-heading">
+            <p className="bliss-kicker">Q &amp; A</p>
+            <h2 className="bliss-title">សំណួរដែលសួរញឹកញាប់</h2>
+          </div>
+          <div style={{ maxWidth: "650px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "1rem" }}>
+            {faqList.map((item) => (
+              <details
+                key={item.id || item.q}
+                style={{
+                  borderBottom: "1px solid var(--bliss-border)",
+                  paddingBottom: "1rem",
+                }}
+              >
+                <summary style={{ fontWeight: "600", color: "var(--bliss-charcoal)", cursor: "pointer", fontSize: "0.95rem" }}>
+                  {item.q}
+                </summary>
+                <p style={{ marginTop: "0.75rem", fontSize: "0.85rem", color: "var(--bliss-taupe)", lineHeight: "1.7" }}>
+                  {item.a}
+                </p>
+              </details>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Footer */}
       <footer style={{ padding: "4rem 2rem", textAlign: "center", borderTop: "1px solid var(--bliss-border)" }}>

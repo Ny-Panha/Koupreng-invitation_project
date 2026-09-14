@@ -61,8 +61,9 @@ export function normalizeTemplateViewModel(tpl = {}, content = {}) {
   const rawGift = Array.isArray(merged.gift) ? merged.gift[0] : (merged.gift || {});
   const bankAccount = {
     bank: rawGift.bank || merged.bankName || "ABA Bank",
-    accountNumber: rawGift.number || merged.accountNumber || "000 123 456",
-    accountName: rawGift.account || merged.accountName || `${groom} & ${bride}`,
+    accountNumber: rawGift.number || merged.bankAccountNumber || merged.accountNumber || "000 123 456",
+    accountName: rawGift.account || merged.bankAccountName || merged.accountName || `${groom} & ${bride}`,
+    qrUrl: rawGift.qrImage || rawGift.qrUrl || merged.qrGiftUrl || merged.qrUrl || "",
     qrValue: rawGift.qrValue || merged.qrValue || `ABA Bank | ${groom} & ${bride} | 000 123 456`,
   };
 

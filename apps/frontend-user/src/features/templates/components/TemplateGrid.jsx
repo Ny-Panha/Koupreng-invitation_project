@@ -51,8 +51,32 @@ function getUseTemplatePath(templateId, isAuthenticated) {
     return getCreatePath(`/create/wedding?template=${templateId}`, isAuthenticated);
 }
 
+function formatTemplateDesc(description, fallback) {
+    if (!description) return fallback || "គំរូសន្លឹកការដែលរួចរាល់សម្រាប់បង្ហាញ និង RSVP";
+    const str = String(description).trim();
+    if (str.startsWith("{") && str.endsWith("}")) {
+        try {
+            const parsed = JSON.parse(str);
+            if (parsed.blessingMessage && typeof parsed.blessingMessage === "string" && parsed.blessingMessage.trim()) {
+                return parsed.blessingMessage.trim();
+            }
+            if (parsed.invitationTitle && typeof parsed.invitationTitle === "string" && parsed.invitationTitle.trim()) {
+                return `${parsed.invitationTitle} — គំរូធៀបការឌីជីថលបែបប្រណិត`;
+            }
+            if (parsed.description && typeof parsed.description === "string" && parsed.description.trim()) {
+                return parsed.description.trim();
+            }
+            return fallback || "គំរូសន្លឹកការដែលរួចរាល់សម្រាប់បង្ហាញ និង RSVP";
+        } catch {
+            return str;
+        }
+    }
+    return str;
+}
+
 function getTemplateBenefit(template, t) {
-    return template.description?.split("។")[0] || t("templateBenefit") || "គំរូសន្លឹកការដែលរួចរាល់សម្រាប់បង្ហាញ និង RSVP";
+    const desc = formatTemplateDesc(template.description, t("templateBenefit"));
+    return desc?.split("។")[0] || t("templateBenefit") || "គំរូសន្លឹកការដែលរួចរាល់សម្រាប់បង្ហាញ និង RSVP";
 }
 
 /**
@@ -99,7 +123,7 @@ export default function TemplateGrid() {
                 category: categoryKey,
                 popular: Boolean(apiTpl.isPremium || apiTpl.premium || localMatch?.popular),
                 image: apiTpl.thumbnailUrl || TEMPLATE_CARD_COVER[code] || localMatch?.image || "/facebook/all/03-card/cover-card.jpg",
-                description: apiTpl.description || localMatch?.description || "គំរូសន្លឹកការដែលរួចរាល់សម្រាប់បង្ហាញ និង RSVP",
+                description: formatTemplateDesc(apiTpl.description, localMatch?.description || "គំរូសន្លឹកការដែលរួចរាល់សម្រាប់បង្ហាញ និង RSVP"),
                 isPremium: Boolean(apiTpl.isPremium || apiTpl.premium),
                 price: apiTpl.price,
             };

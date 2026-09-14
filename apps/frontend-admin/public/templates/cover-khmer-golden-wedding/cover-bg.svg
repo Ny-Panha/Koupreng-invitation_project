@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920" role="img" aria-label="Ivory and gold Khmer wedding floral background">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="34%" r="64%">
+      <stop offset="0%" stop-color="#fffdf7"/>
+      <stop offset="42%" stop-color="#fff4d9"/>
+      <stop offset="100%" stop-color="#f2d99e"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#fff0aa"/>
+      <stop offset="38%" stop-color="#c7902b"/>
+      <stop offset="62%" stop-color="#8a5a20"/>
+      <stop offset="100%" stop-color="#e5bf62"/>
+    </linearGradient>
+    <pattern id="paper" width="80" height="80" patternUnits="userSpaceOnUse">
+      <rect width="80" height="80" fill="transparent"/>
+      <circle cx="16" cy="14" r="1.1" fill="#b88626" opacity=".12"/>
+      <circle cx="62" cy="38" r=".9" fill="#6b4218" opacity=".09"/>
+      <circle cx="34" cy="70" r=".75" fill="#ffffff" opacity=".38"/>
+      <path d="M0 40H80M40 0V80" stroke="#8a5a20" stroke-opacity=".035" stroke-width="1"/>
+    </pattern>
+    <g id="flower">
+      <circle cx="0" cy="0" r="18" fill="#fff7ec"/>
+      <ellipse cx="0" cy="-34" rx="18" ry="34" fill="#fff5e7"/>
+      <ellipse cx="0" cy="34" rx="18" ry="34" fill="#fff5e7"/>
+      <ellipse cx="-34" cy="0" rx="34" ry="18" fill="#fff1df"/>
+      <ellipse cx="34" cy="0" rx="34" ry="18" fill="#fff1df"/>
+      <circle cx="0" cy="0" r="9" fill="#d5a646"/>
+    </g>
+    <g id="corner">
+      <path d="M0 155C8 82 82 8 155 0" fill="none" stroke="url(#gold)" stroke-width="5" stroke-linecap="round"/>
+      <path d="M23 143C32 96 96 32 143 23" fill="none" stroke="url(#gold)" stroke-width="2.5" stroke-linecap="round" opacity=".72"/>
+      <path d="M8 112C42 116 61 96 58 63C91 67 113 45 112 8" fill="none" stroke="url(#gold)" stroke-width="3" stroke-linecap="round"/>
+      <path d="M52 138C58 111 75 94 101 88C96 116 80 133 52 138Z" fill="#d9ad51" opacity=".7"/>
+      <path d="M88 101C94 75 111 58 138 52C133 80 116 96 88 101Z" fill="#f0d17b" opacity=".76"/>
+    </g>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#glow)"/>
+  <rect width="1080" height="1920" fill="url(#paper)"/>
+  <ellipse cx="540" cy="600" rx="390" ry="520" fill="#fffdf7" opacity=".34"/>
+  <ellipse cx="540" cy="1170" rx="430" ry="560" fill="#fff3d7" opacity=".25"/>
+  <g opacity=".42">
+    <use href="#flower" x="105" y="170" transform="rotate(-22 105 170) scale(1.18)"/>
+    <use href="#flower" x="975" y="220" transform="rotate(28 975 220) scale(1.06)"/>
+    <use href="#flower" x="110" y="1710" transform="rotate(18 110 1710) scale(1.25)"/>
+    <use href="#flower" x="965" y="1660" transform="rotate(-26 965 1660) scale(1.15)"/>
+  </g>
+  <g opacity=".48">
+    <use href="#corner" x="60" y="70"/>
+    <use href="#corner" x="1020" y="70" transform="scale(-1 1)"/>
+    <use href="#corner" x="1020" y="1850" transform="scale(-1 -1)"/>
+    <use href="#corner" x="60" y="1850" transform="scale(1 -1)"/>
+  </g>
+  <rect x="64" y="74" width="952" height="1772" rx="300" fill="none" stroke="#b9872b" stroke-width="2.2" opacity=".5"/>
+  <rect x="92" y="104" width="896" height="1712" rx="276" fill="none" stroke="#e6c66c" stroke-width="1.4" opacity=".58"/>
+  <g fill="#c99738" opacity=".36">
+    <circle cx="235" cy="430" r="4"/>
+    <circle cx="840" cy="500" r="3"/>
+    <circle cx="778" cy="910" r="2.5"/>
+    <circle cx="284" cy="1030" r="3.5"/>
+    <circle cx="864" cy="1370" r="4"/>
+    <circle cx="210" cy="1460" r="2.6"/>
+  </g>
+</svg>

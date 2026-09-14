@@ -20,25 +20,37 @@ export default function TemplateGift({ content }) {
 
     const copyAccount = async (account, key) => {
         if (!account) return;
+        let success = false;
         try {
             if (navigator.clipboard?.writeText) {
                 await navigator.clipboard.writeText(account);
-            } else {
+                success = true;
+            }
+        } catch {
+            success = false;
+        }
+
+        if (!success) {
+            try {
                 const input = document.createElement("textarea");
                 input.value = account;
                 input.setAttribute("readonly", "");
                 input.style.position = "fixed";
                 input.style.opacity = "0";
+                input.style.left = "-9999px";
                 document.body.appendChild(input);
+                input.focus();
                 input.select();
-                document.execCommand("copy");
+                const res = document.execCommand("copy");
                 input.remove();
+                if (res) success = true;
+            } catch {
+                success = false;
             }
-            setCopiedId(key);
-            window.setTimeout(() => setCopiedId(""), 1800);
-        } catch {
-            setCopiedId("");
         }
+
+        setCopiedId(key);
+        window.setTimeout(() => setCopiedId(""), 2000);
     };
 
     return (

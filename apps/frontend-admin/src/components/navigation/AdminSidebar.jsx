@@ -15,53 +15,55 @@ import {
   Sparkles
 } from "lucide-react";
 import { useAuth } from "../../app/providers/AdminAuthProvider";
-
-const NAV_SECTIONS = [
-  {
-    key: "overview",
-    label: "ទិដ្ឋភាពទូទៅ",
-    items: [
-      { to: "/dashboard", icon: LayoutDashboard, label: "ផ្ទាំងគ្រប់គ្រង", exact: true },
-    ],
-  },
-  {
-    key: "management",
-    label: "ការគ្រប់គ្រងទូទៅ",
-    items: [
-      { to: "/users", icon: Users, label: "អ្នកប្រើប្រាស់" },
-      { to: "/events", icon: CalendarDays, label: "ព្រឹត្តិការណ៍" },
-      { to: "/invitations", icon: Mail, label: "ធៀបការ & RSVP" },
-    ],
-  },
-  {
-    key: "catalog",
-    label: "គំរូ & កញ្ចប់សេវា",
-    items: [
-      { to: "/templates", icon: Palette, label: "គំរូធៀបការ" },
-      { to: "/packages", icon: Layers, label: "កញ្ចប់សេវាកម្ម" },
-    ],
-  },
-  {
-    key: "finance",
-    label: "ហិរញ្ញវត្ថុ & របាយការណ៍",
-    items: [
-      { to: "/payments", icon: CreditCard, label: "ការទូទាត់ (KHQR)" },
-      { to: "/reports", icon: LineChart, label: "របាយការណ៍" },
-    ],
-  },
-  {
-    key: "system",
-    label: "ប្រព័ន្ធ & សុវត្ថិភាព",
-    items: [
-      { to: "/notifications", icon: Bell, label: "ការជូនដំណឹង" },
-      { to: "/system-logs", icon: Activity, label: "កំណត់ហេតុប្រព័ន្ធ" },
-    ],
-  },
-];
+import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 
 export default function AdminSidebar({ isMobileOpen, isExpanded, onToggle, onNavigate }) {
   const { user } = useAuth();
+  const { lang, t } = useAdminLanguage();
   const displayName = user?.fullName || user?.email || "Admin";
+
+  const navSections = [
+    {
+      key: "overview",
+      label: t("nav.overview", "ទិដ្ឋភាពទូទៅ"),
+      items: [
+        { to: "/dashboard", icon: LayoutDashboard, label: t("nav.dashboard", "ផ្ទាំងគ្រប់គ្រង"), exact: true },
+      ],
+    },
+    {
+      key: "management",
+      label: t("nav.management", "ការគ្រប់គ្រងទូទៅ"),
+      items: [
+        { to: "/users", icon: Users, label: t("nav.users", "អ្នកប្រើប្រាស់") },
+        { to: "/events", icon: CalendarDays, label: t("nav.events", "ព្រឹត្តិការណ៍") },
+        { to: "/invitations", icon: Mail, label: t("nav.invitations", "ធៀបការ & RSVP") },
+      ],
+    },
+    {
+      key: "catalog",
+      label: t("nav.catalog", "គំរូ & កញ្ចប់សេវា"),
+      items: [
+        { to: "/templates", icon: Palette, label: t("nav.templates", "គំរូធៀបការ") },
+        { to: "/packages", icon: Layers, label: t("nav.packages", "កញ្ចប់សេវាកម្ម") },
+      ],
+    },
+    {
+      key: "finance",
+      label: t("nav.finance", "ហិរញ្ញវត្ថុ & របាយការណ៍"),
+      items: [
+        { to: "/payments", icon: CreditCard, label: t("nav.payments", "ការទូទាត់ (KHQR)") },
+        { to: "/reports", icon: LineChart, label: t("nav.reports", "របាយការណ៍") },
+      ],
+    },
+    {
+      key: "system",
+      label: t("nav.system", "ប្រព័ន្ធ & សុវត្ថិភាព"),
+      items: [
+        { to: "/notifications", icon: Bell, label: t("nav.notifications", "ការជូនដំណឹង") },
+        { to: "/system-logs", icon: Activity, label: t("nav.systemLogs", "កំណត់ហេតុប្រព័ន្ធ") },
+      ],
+    },
+  ];
 
   const navLinkClass = ({ isActive }) =>
     `${
@@ -92,10 +94,10 @@ export default function AdminSidebar({ isMobileOpen, isExpanded, onToggle, onNav
             }`}
           >
             <h1 className="truncate text-sm font-bold tracking-tight text-slate-900 dark:text-zinc-100 font-moul">
-              គូព្រេង KOUPRENG
+              {t("brandName", "គូព្រេង KOUPRENG")}
             </h1>
             <p className="text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
-              ប្រព័ន្ធគ្រប់គ្រងគូព្រេង
+              {t("brandSub", "ប្រព័ន្ធគ្រប់គ្រងគូព្រេង")}
             </p>
           </div>
         </div>
@@ -106,10 +108,10 @@ export default function AdminSidebar({ isMobileOpen, isExpanded, onToggle, onNav
         <button
           type="button"
           onClick={onToggle}
-          className={`group relative flex h-9 w-full items-center rounded-lg transition-colors px-2.5 outline-none focus:outline-none text-slate-500 hover:bg-slate-100 hover:text-slate-800 dark:text-zinc-400 dark:hover:bg-zinc-800/50 dark:hover:text-zinc-200 font-medium ${
+          className={`group relative flex h-9 w-full items-center rounded-lg transition-colors px-2.5 outline-none focus:outline-none text-slate-500 hover:bg-slate-100 hover:text-slate-800 dark:text-zinc-400 dark:hover:bg-zinc-800/50 dark:hover:text-zinc-200 font-medium cursor-pointer ${
             !isExpanded ? "justify-center" : ""
           }`}
-          title={isExpanded ? "បង្រួម Menu" : "ពង្រីក Menu"}
+          title={isExpanded ? (lang === "en" ? "Collapse Menu" : "បង្រួម Menu") : (lang === "en" ? "Expand Menu" : "ពង្រីក Menu")}
         >
           {isExpanded ? (
             <PanelLeftClose className="h-4 w-4 shrink-0" />
@@ -121,11 +123,11 @@ export default function AdminSidebar({ isMobileOpen, isExpanded, onToggle, onNav
               isExpanded ? "opacity-100" : "opacity-0 hidden"
             }`}
           >
-            {isExpanded ? "បង្រួម Menu" : ""}
+            {isExpanded ? (lang === "en" ? "Collapse Menu" : "បង្រួម Menu") : ""}
           </span>
           {!isExpanded && (
             <div className="fixed left-[72px] hidden whitespace-nowrap rounded-md bg-slate-900 px-2.5 py-1.5 text-xs font-semibold text-white opacity-0 shadow-lg transition-opacity group-hover:block group-hover:opacity-100 z-[100] dark:bg-white dark:text-slate-900">
-              ពង្រីក Menu
+              {lang === "en" ? "Expand Menu" : "ពង្រីក Menu"}
             </div>
           )}
         </button>
@@ -133,7 +135,7 @@ export default function AdminSidebar({ isMobileOpen, isExpanded, onToggle, onNav
 
       {/* Navigation Sections */}
       <nav className="sidebar-scroll flex-1 space-y-1.5 overflow-y-auto px-3 py-3 flex flex-col">
-        {NAV_SECTIONS.map((section) => (
+        {navSections.map((section) => (
           <div key={section.key} className="mb-2">
             {isExpanded && (
               <p className="px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-zinc-500">

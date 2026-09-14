@@ -71,7 +71,7 @@ export default function RoyalKhmerLayout({
 
   const handleOpenGate = () => {
     setGateState("opening");
-    if (!preview && audioRef.current) {
+    if (audioRef.current) {
       audioRef.current
         .play()
         .then(() => setIsPlaying(true))
@@ -102,6 +102,21 @@ export default function RoyalKhmerLayout({
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
   }, []);
+
+  const isEnabled = (key) => tpl.enabledSections?.[key] !== false;
+  const dressColors = Array.isArray(tpl.dressCode)
+    ? tpl.dressCode
+    : (Array.isArray(tpl.dressCode?.colors) ? tpl.dressCode.colors : (tpl.dressColors || [
+        { hex: "#8B1E2D", name: "ក្រហមទុំ" },
+        { hex: "#D4AF37", name: "មាស" },
+        { hex: "#FFFDF7", name: "ស" },
+        { hex: "#4A151C", name: "ក្រហមចាស់" },
+      ]));
+  const faqList = Array.isArray(tpl.faq) && tpl.faq.length > 0 ? tpl.faq : [
+    { id: "f1", q: "តើមានចំណតរថយន្តដែរឬទេ?", a: "បាទ/ចាស មានចំណតរថយន្តធំទូលាយដោយឥតគិតថ្លៃសម្រាប់ភ្ញៀវកិត្តិយសទាំងអស់។" },
+    { id: "f2", q: "តើអាចនាំកុមារតូចៗមកបានទេ?", a: "យើងខ្ញុំស្វាគមន៍វត្តមានកុមារតូចៗទាំងអស់ក្នុងពិធីមង្គលការ។" },
+    { id: "f3", q: "តើកម្មវិធីចាប់ផ្ដើម និងបញ្ចប់នៅម៉ោងប៉ុន្មាន?", a: "កម្មវិធីទទួលភ្ញៀវចាប់ផ្ដើមពីម៉ោង ០៥:០០ ល្ងាច តទៅ។" },
+  ];
 
   return (
     <div
@@ -259,51 +274,91 @@ export default function RoyalKhmerLayout({
       </section>
 
       {/* 8-Step Traditional Program Sequence */}
-      <KhmerCeremonySequence schedule={tpl.schedule} />
+      {isEnabled("schedule") && <KhmerCeremonySequence schedule={tpl.schedule} />}
 
       {/* Venue Information */}
-      <section style={{ background: "var(--rkh-paper)", padding: "3.5rem 1.5rem", borderTop: "2px dashed var(--rkh-gold)", borderBottom: "2px dashed var(--rkh-gold)" }}>
-        <div style={{ maxWidth: "700px", margin: "0 auto", textAlign: "center" }}>
-          <div style={{ display: "inline-flex", padding: "0.8rem", borderRadius: "50%", background: "var(--rkh-gold-soft)", color: "var(--rkh-crimson)", marginBottom: "1rem" }}>
-            <MapPin className="w-8 h-8" />
+      {isEnabled("map") && (
+        <section style={{ background: "var(--rkh-paper)", padding: "3.5rem 1.5rem", borderTop: "2px dashed var(--rkh-gold)", borderBottom: "2px dashed var(--rkh-gold)" }}>
+          <div style={{ maxWidth: "700px", margin: "0 auto", textAlign: "center" }}>
+            <div style={{ display: "inline-flex", padding: "0.8rem", borderRadius: "50%", background: "var(--rkh-gold-soft)", color: "var(--rkh-crimson)", marginBottom: "1rem" }}>
+              <MapPin className="w-8 h-8" />
+            </div>
+            <h2 style={{ fontFamily: "Moul, serif", fontSize: "1.6rem", color: "var(--rkh-crimson)", marginBottom: "0.5rem" }}>
+              {venue.name}
+            </h2>
+            <p style={{ color: "var(--rkh-gold)", fontWeight: "700", fontSize: "1rem", marginBottom: "0.5rem" }}>
+              {venue.hall}
+            </p>
+            <p style={{ color: "#475569", fontSize: "0.95rem", lineHeight: "1.6", maxWidth: "500px", margin: "0 auto 1.5rem" }}>
+              {venue.address}
+            </p>
+            {tpl.googleMapsUrl && (
+              <a
+                href={tpl.googleMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  backgroundColor: "var(--rkh-crimson)",
+                  color: "#fff",
+                  padding: "0.75rem 1.75rem",
+                  borderRadius: "8px",
+                  textDecoration: "none",
+                  fontWeight: "600",
+                  fontSize: "0.9rem",
+                  boxShadow: "0 4px 12px rgba(139,30,45,0.25)",
+                }}
+              >
+                <span>មើលទីតាំងលើ Google Maps</span>
+                <ExternalLink className="w-4 h-4" />
+              </a>
+            )}
           </div>
-          <h2 style={{ fontFamily: "Moul, serif", fontSize: "1.6rem", color: "var(--rkh-crimson)", marginBottom: "0.5rem" }}>
-            {venue.name}
-          </h2>
-          <p style={{ color: "var(--rkh-gold)", fontWeight: "700", fontSize: "1rem", marginBottom: "0.5rem" }}>
-            {venue.hall}
-          </p>
-          <p style={{ color: "#475569", fontSize: "0.95rem", lineHeight: "1.6", maxWidth: "500px", margin: "0 auto 1.5rem" }}>
-            {venue.address}
-          </p>
-          {tpl.googleMapsUrl && (
-            <a
-              href={tpl.googleMapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                backgroundColor: "var(--rkh-crimson)",
-                color: "#fff",
-                padding: "0.75rem 1.75rem",
-                borderRadius: "8px",
-                textDecoration: "none",
-                fontWeight: "600",
-                fontSize: "0.9rem",
-                boxShadow: "0 4px 12px rgba(139,30,45,0.25)",
-              }}
-            >
-              <span>មើលទីតាំងលើ Google Maps</span>
-              <ExternalLink className="w-4 h-4" />
-            </a>
+        </section>
+      )}
+
+      {/* Dress Code Section */}
+      {isEnabled("dressCode") && dressColors.length > 0 && (
+        <section style={{ padding: "3.5rem 1.5rem", maxWidth: "700px", margin: "0 auto", textAlign: "center" }}>
+          <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
+            <h2 style={{ fontFamily: "Moul, serif", fontSize: "1.5rem", color: "var(--rkh-crimson)" }}>
+              {tpl.dressCode?.name || "ពណ៌សម្លៀកបំពាក់ (Dress Code)"}
+            </h2>
+            <p style={{ fontSize: "0.85rem", color: "var(--rkh-gold)", fontWeight: "700", marginTop: "4px" }}>
+              DRESS CODE PALETTE
+            </p>
+          </div>
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1.25rem", flexWrap: "wrap", margin: "1.5rem 0" }}>
+            {dressColors.map((color, idx) => (
+              <div key={idx} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px" }}>
+                <span
+                  style={{
+                    width: "44px",
+                    height: "44px",
+                    borderRadius: "50%",
+                    background: color.hex,
+                    border: "2px solid var(--rkh-gold)",
+                    boxShadow: "0 4px 10px rgba(0,0,0,0.12)",
+                  }}
+                />
+                <span style={{ fontSize: "0.85rem", color: "var(--rkh-crimson)", fontWeight: "600" }}>
+                  {color.name}
+                </span>
+              </div>
+            ))}
+          </div>
+          {tpl.dressCode?.description && (
+            <p style={{ color: "#475569", fontSize: "0.9rem", maxWidth: "500px", margin: "0 auto" }}>
+              {tpl.dressCode.description}
+            </p>
           )}
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Gallery Section */}
-      {tpl.gallery && tpl.gallery.length > 0 && (
+      {isEnabled("gallery") && tpl.gallery && tpl.gallery.length > 0 && (
         <section style={{ padding: "3.5rem 1.5rem", maxWidth: "1000px", margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: "2rem" }}>
             <h2 style={{ fontFamily: "Moul, serif", fontSize: "1.6rem", color: "var(--rkh-crimson)" }}>
@@ -314,46 +369,89 @@ export default function RoyalKhmerLayout({
         </section>
       )}
 
+      {/* FAQ Accordion Section */}
+      {isEnabled("faq") && faqList.length > 0 && (
+        <section style={{ padding: "3.5rem 1.5rem", maxWidth: "700px", margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
+            <h2 style={{ fontFamily: "Moul, serif", fontSize: "1.5rem", color: "var(--rkh-crimson)" }}>
+              សំណួរដែលសួរញឹកញាប់ (FAQ)
+            </h2>
+            <p style={{ fontSize: "0.85rem", color: "#64748b", marginTop: "4px" }}>
+              ព័ត៌មានលម្អិតបន្ថែមសម្រាប់ភ្ញៀវកិត្តិយស
+            </p>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+            {faqList.map((item) => (
+              <details
+                key={item.id || item.q}
+                style={{
+                  background: "var(--rkh-paper)",
+                  border: "1px solid var(--rkh-gold)",
+                  borderRadius: "12px",
+                  padding: "1rem 1.25rem",
+                  textAlign: "left",
+                }}
+              >
+                <summary style={{ fontWeight: "700", color: "var(--rkh-crimson)", cursor: "pointer", fontSize: "0.95rem" }}>
+                  {item.q}
+                </summary>
+                <p style={{ marginTop: "0.75rem", fontSize: "0.875rem", color: "#475569", lineHeight: "1.6", borderTop: "1px solid rgba(212,175,55,0.3)", paddingTop: "0.5rem" }}>
+                  {item.a}
+                </p>
+              </details>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* RSVP Section */}
-      <section style={{ padding: "3rem 1.5rem", maxWidth: "650px", margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
-          <h2 style={{ fontFamily: "Moul, serif", fontSize: "1.5rem", color: "var(--rkh-crimson)" }}>
-            សូមបញ្ជាក់ការចូលរួម (RSVP)
-          </h2>
-          <p style={{ fontSize: "0.9rem", color: "#64748b", marginTop: "4px" }}>
-            សូមផ្តល់ដំណឹងជូនម្ចាស់កម្មវិធីដើម្បីងាយស្រួលរៀបចំទទួលបដិសណ្ឋារកិច្ច
-          </p>
-        </div>
-        <div style={{ background: "var(--rkh-paper)", padding: "2rem", borderRadius: "16px", border: "1px solid var(--rkh-gold)" }}>
-          <RsvpContainer children={children} />
-        </div>
-      </section>
+      {isEnabled("rsvp") && (
+        <section style={{ padding: "3rem 1.5rem", maxWidth: "650px", margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
+            <h2 style={{ fontFamily: "Moul, serif", fontSize: "1.5rem", color: "var(--rkh-crimson)" }}>
+              សូមបញ្ជាក់ការចូលរួម (RSVP)
+            </h2>
+            <p style={{ fontSize: "0.9rem", color: "#64748b", marginTop: "4px" }}>
+              សូមផ្តល់ដំណឹងជូនម្ចាស់កម្មវិធីដើម្បីងាយស្រួលរៀបចំទទួលបដិសណ្ឋារកិច្ច
+            </p>
+          </div>
+          <div style={{ background: "var(--rkh-paper)", padding: "2rem", borderRadius: "16px", border: "1px solid var(--rkh-gold)" }}>
+            <RsvpContainer children={children} />
+          </div>
+        </section>
+      )}
 
       {/* ABA KHQR Gift Section */}
-      <section style={{ padding: "3rem 1.5rem 6rem", maxWidth: "500px", margin: "0 auto", textAlign: "center" }}>
-        <div style={{ background: "var(--rkh-paper)", border: "2px solid var(--rkh-gold)", borderRadius: "16px", padding: "2rem", boxShadow: "0 10px 25px rgba(0,0,0,0.05)" }}>
-          <QrCode className="w-10 h-10 mx-auto text-amber-700 mb-2" />
-          <h3 style={{ fontFamily: "Moul, serif", fontSize: "1.2rem", color: "var(--rkh-crimson)", marginBottom: "0.5rem" }}>
-            ចងដៃតាមប្រព័ន្ធធនាគារ KHQR
-          </h3>
-          <p style={{ color: "#64748b", fontSize: "0.85rem", marginBottom: "1.5rem" }}>
-            សូមថ្លែងអំណរគុណយ៉ាងជ្រាលជ្រៅចំពោះទឹកចិត្ត និងពរជ័យ
-          </p>
+      {isEnabled("gift") && (
+        <section style={{ padding: "3rem 1.5rem 6rem", maxWidth: "500px", margin: "0 auto", textAlign: "center" }}>
+          <div style={{ background: "var(--rkh-paper)", border: "2px solid var(--rkh-gold)", borderRadius: "16px", padding: "2rem", boxShadow: "0 10px 25px rgba(0,0,0,0.05)" }}>
+            <QrCode className="w-10 h-10 mx-auto text-amber-700 mb-2" />
+            <h3 style={{ fontFamily: "Moul, serif", fontSize: "1.2rem", color: "var(--rkh-crimson)", marginBottom: "0.5rem" }}>
+              ចងដៃតាមប្រព័ន្ធធនាគារ KHQR
+            </h3>
+            <p style={{ color: "#64748b", fontSize: "0.85rem", marginBottom: "1.5rem" }}>
+              សូមថ្លែងអំណរគុណយ៉ាងជ្រាលជ្រៅចំពោះទឹកចិត្ត និងពរជ័យ
+            </p>
 
-          <div style={{ width: "160px", height: "160px", margin: "0 auto 1.5rem", background: "#fff", border: "1px solid #cbd5e1", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", padding: "8px" }}>
-            <div style={{ textAlign: "center", color: "#0f172a" }}>
-              <p style={{ fontSize: "0.8rem", fontWeight: "700", color: "#dc2626" }}>KHQR</p>
-              <p style={{ fontSize: "0.75rem", fontWeight: "600", marginTop: "4px" }}>{tpl.bankAccount?.accountName}</p>
-              <p style={{ fontSize: "0.75rem", color: "#64748b", fontFamily: "monospace" }}>{tpl.bankAccount?.accountNumber}</p>
+            <div style={{ width: "160px", height: "160px", margin: "0 auto 1.5rem", background: "#fff", border: "1px solid #cbd5e1", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", padding: "8px", overflow: "hidden" }}>
+              {tpl.bankAccount?.qrUrl ? (
+                <img src={tpl.bankAccount.qrUrl} alt="QR Code" style={{ width: "100%", height: "100%", objectFit: "contain", borderRadius: "4px" }} />
+              ) : (
+                <div style={{ textAlign: "center", color: "#0f172a" }}>
+                  <p style={{ fontSize: "0.8rem", fontWeight: "700", color: "#dc2626" }}>KHQR</p>
+                  <p style={{ fontSize: "0.75rem", fontWeight: "600", marginTop: "4px" }}>{tpl.bankAccount?.accountName}</p>
+                  <p style={{ fontSize: "0.75rem", color: "#64748b", fontFamily: "monospace" }}>{tpl.bankAccount?.accountNumber}</p>
+                </div>
+              )}
+            </div>
+
+            <div style={{ background: "var(--rkh-gold-soft)", padding: "0.75rem", borderRadius: "8px", fontSize: "0.85rem", color: "var(--rkh-crimson)", fontWeight: "600" }}>
+              <span>{tpl.bankAccount?.bank} : </span>
+              <span style={{ fontFamily: "monospace", fontSize: "0.95rem" }}>{tpl.bankAccount?.accountNumber}</span>
             </div>
           </div>
-
-          <div style={{ background: "var(--rkh-gold-soft)", padding: "0.75rem", borderRadius: "8px", fontSize: "0.85rem", color: "var(--rkh-crimson)", fontWeight: "600" }}>
-            <span>{tpl.bankAccount?.bank} : </span>
-            <span style={{ fontFamily: "monospace", fontSize: "0.95rem" }}>{tpl.bankAccount?.accountNumber}</span>
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Bottom Floating Bar */}
       {!preview && useTemplateLink && (
