@@ -333,6 +333,27 @@
   }
 }
 
+@media (max-width: 360px) {
+  .tb-header h1 {
+    font-size: 1.35rem;
+  }
+
+  .tb-category-chip {
+    padding: 5px 10px;
+    font-size: 0.7rem;
+  }
+
+  .tb-card-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .tb-btn-select,
+  .tb-btn-preview {
+    width: 100%;
+  }
+}
+
 /* Accessibility Focus Rings */
 .tb-category-chip:focus-visible,
 .tb-btn-select:focus-visible,

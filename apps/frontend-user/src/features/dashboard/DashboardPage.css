@@ -521,6 +521,25 @@
   }
 }
 
+@media (max-width: 360px) {
+  .dash-page-header h1 {
+    font-size: 1.3rem;
+  }
+
+  .dash-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .dash-stat-kpi {
+    font-size: 1.4rem;
+  }
+
+  .dash-quick-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Accessibility - High contrast focus rings */
 .pe-dashboard-page a:focus-visible,
 .pe-dashboard-page button:focus-visible,
