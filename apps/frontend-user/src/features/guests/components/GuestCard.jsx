@@ -5,7 +5,7 @@ import {
   IoTrashOutline,
 } from "react-icons/io5";
 import { StatusBadge } from "@/shared/ui";
-import { buildShareMessage, guestInviteUrl, initials } from "../model/guestMappers";
+import { buildShareMessage, guestInviteUrl } from "../model/guestMappers";
 
 export default function GuestCard({
   guest,
@@ -23,7 +23,6 @@ export default function GuestCard({
   return (
     <article className="pe-guest-card">
       <div className="pe-card-top">
-        <span className="pe-avatar">{initials(guest.name)}</span>
         <div style={{ flex: 1 }}>
           <h4 style={{ margin: 0, fontSize: "1rem" }}>{guest.name}</h4>
           {guest.companionName && (
@@ -33,12 +32,29 @@ export default function GuestCard({
           )}
         </div>
         <div className="pe-guest-statuses">
-          <StatusBadge status={guest.sendStatus} />
+          {guest.checkedIn && (
+            <StatusBadge
+              status="CHECKED_IN"
+              label={t ? t("checkedIn") : "បានចូលរួម"}
+              variant="success"
+            />
+          )}
           {guest.rsvpStatus && (
             <StatusBadge
               status={guest.rsvpStatus}
               label={`RSVP: ${guest.rsvpStatus.replaceAll("_", " ")}`}
             />
+          )}
+          {!guest.checkedIn && !guest.rsvpStatus && (
+            <StatusBadge status={guest.sendStatus} />
+          )}
+          {(guest.checkedIn || guest.rsvpStatus) &&
+          guest.sendStatus &&
+          guest.sendStatus !== "មិនទាន់ផ្ញើ" &&
+          guest.sendStatus !== "PENDING" &&
+          guest.sendStatus !== "បានឆ្លើយតប" &&
+          guest.sendStatus !== "RESPONDED" && (
+            <StatusBadge status={guest.sendStatus} />
           )}
         </div>
       </div>
@@ -71,7 +87,7 @@ export default function GuestCard({
         <button
           type="button"
           className="pe-icon-btn"
-          onClick={() => onCopyLink(shareMessage || inviteUrl)}
+          onClick={() => onCopyLink(shareMessage || inviteUrl, guest)}
           title={t ? t("copyMessage") : "ចម្លងសារអញ្ជើញ"}
           aria-label={t ? t("copyMessage") : "ចម្លងសារអញ្ជើញ"}
         >

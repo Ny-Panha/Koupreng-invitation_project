@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { guestService } from "@/features/guests/api/guestApi";
 import { invitationService } from "@/features/invitations/api/invitationApi";
 import { toast } from "../../shared/ui/toast";
+import QrCameraScanner from "./components/QrCameraScanner";
 import "./InvitationPages.css";
 
 function SummaryCard({ label, value }) {
@@ -15,8 +16,14 @@ function SummaryCard({ label, value }) {
 }
 
 export default function InvitationCheckInPage() {
-    const { invitationId } = useParams();
+    const { invitationId: rawInvitationId } = useParams();
     const navigate = useNavigate();
+
+    const invitationId = useMemo(() => {
+        if (!rawInvitationId) return "";
+        return rawInvitationId.replace(/^inv-/, "");
+    }, [rawInvitationId]);
+
     const [invitation, setInvitation] = useState(null);
     const [guests, setGuests] = useState([]);
     const [summary, setSummary] = useState(null);
@@ -30,6 +37,8 @@ export default function InvitationCheckInPage() {
 
     const load = useCallback(() => {
         let active = true;
+        if (!invitationId) return;
+
         Promise.all([
             invitationService.get(invitationId),
             guestService.listByInvitation(invitationId),
@@ -44,7 +53,21 @@ export default function InvitationCheckInPage() {
                 setCheckIns(checkInData || []);
                 setError("");
             })
-            .catch((err) => {
+            .catch(async (err) => {
+                if (!active) return;
+                // Auto-recovery: if 404, look up user's active invitations and redirect
+                try {
+                    const mine = await invitationService.listMine();
+                    const list = Array.isArray(mine) ? mine : mine?.data || [];
+                    const first = list[0];
+                    const realId = first?.id || first?.invitationId;
+                    if (realId && String(realId) !== String(invitationId) && active) {
+                        navigate(`/dashboard/invitations/${realId}/check-in`, { replace: true });
+                        return;
+                    }
+                } catch {
+                    // ignore fallback failure
+                }
                 if (active) setError(err.message || "Could not load check-in data");
             })
             .finally(() => {
@@ -53,7 +76,7 @@ export default function InvitationCheckInPage() {
         return () => {
             active = false;
         };
-    }, [invitationId]);
+    }, [invitationId, navigate]);
 
     useEffect(() => load(), [load]);
 
@@ -82,6 +105,21 @@ export default function InvitationCheckInPage() {
             setSaving(false);
         }
     };
+
+    const handleCameraScan = useCallback(async (scannedToken) => {
+        if (!scannedToken || saving) return;
+        setSaving(true);
+        setError("");
+        try {
+            const result = await guestService.scanCheckIn(invitationId, scannedToken, note);
+            toast(result.alreadyCheckedIn ? "Guest was already checked in" : "Guest checked in successfully! 🎉");
+            await refreshCheckIns();
+        } catch (err) {
+            setError(err.message || "Could not check in guest");
+        } finally {
+            setSaving(false);
+        }
+    }, [invitationId, note, saving, refreshCheckIns]);
 
     const manual = async (guest) => {
         setSaving(true);
@@ -134,6 +172,8 @@ export default function InvitationCheckInPage() {
 
             {error && <div className="inv-error">{error}</div>}
 
+            <QrCameraScanner onScan={handleCameraScan} disabled={saving} />
+
             <section className="checkin-layout">
                 <form className="guest-form" onSubmit={scan}>
                     <h2>Scan token</h2>
@@ -182,12 +222,17 @@ export default function InvitationCheckInPage() {
                                             <td>{guest.guestName}</td>
                                             <td>
                                                 <span>{guest.phone || "No phone"}</span>
-                                                <small>{guest.email || "No email"}</small>
+                                                {guest.email ? <small>{guest.email}</small> : null}
                                             </td>
                                             <td>{checked ? "Checked in" : "Waiting"}</td>
                                             <td>
-                                                <button className="inv-secondary-btn" type="button" disabled={saving || checked} onClick={() => manual(guest)}>
-                                                    Check in
+                                                <button
+                                                    className={`inv-secondary-btn ${checked ? "is-checked" : ""}`}
+                                                    type="button"
+                                                    disabled={saving || checked}
+                                                    onClick={() => manual(guest)}
+                                                >
+                                                    {checked ? "✓ Checked in" : "Check in"}
                                                 </button>
                                             </td>
                                         </tr>

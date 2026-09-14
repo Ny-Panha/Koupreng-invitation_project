@@ -39,19 +39,46 @@ export function useRsvpDashboard(invitationId) {
 
   const filteredRsvps = useMemo(() => {
     return rsvps.filter((item) => {
-      const statusMatch = statusFilter === "ALL" || (item.status || "").toUpperCase() === statusFilter;
+      const itemStatus = String(item.responseStatus || item.status || "").toUpperCase();
+      const statusMatch =
+        statusFilter === "ALL" ||
+        itemStatus === statusFilter ||
+        (statusFilter === "DECLINED" && itemStatus === "NOT_ATTENDING") ||
+        (statusFilter === "NOT_ATTENDING" && itemStatus === "DECLINED");
       const searchKey = search.trim().toLowerCase();
-      const nameMatch = !searchKey || (item.guestName || item.name || "").toLowerCase().includes(searchKey)
-        || (item.wish || item.message || "").toLowerCase().includes(searchKey);
+      const nameMatch =
+        !searchKey ||
+        (item.guestName || item.name || "").toLowerCase().includes(searchKey) ||
+        (item.wish || item.message || "").toLowerCase().includes(searchKey);
       return statusMatch && nameMatch;
     });
   }, [rsvps, statusFilter, search]);
 
-  const wishesList = useMemo(() => rsvps.filter((r) => Boolean((r.wish || r.message || "").trim())), [rsvps]);
+  const wishesList = useMemo(
+    () => rsvps.filter((r) => Boolean((r.wish || r.message || "").trim())),
+    [rsvps]
+  );
 
-  const attendingCount = summary?.attending ?? summary?.accepted ?? rsvps.filter((r) => r.status === "ATTENDING" || r.status === "ACCEPTED").length;
-  const declinedCount = summary?.declined ?? rsvps.filter((r) => r.status === "DECLINED").length;
-  const pendingCount = summary?.pending ?? rsvps.filter((r) => r.status === "PENDING").length;
+  const attendingCount =
+    summary?.attending ??
+    summary?.accepted ??
+    rsvps.filter((r) => {
+      const s = String(r.responseStatus || r.status || "").toUpperCase();
+      return s === "ATTENDING" || s === "ACCEPTED";
+    }).length;
+  const declinedCount =
+    summary?.notAttending ??
+    summary?.declined ??
+    rsvps.filter((r) => {
+      const s = String(r.responseStatus || r.status || "").toUpperCase();
+      return s === "NOT_ATTENDING" || s === "DECLINED";
+    }).length;
+  const pendingCount =
+    summary?.pending ??
+    rsvps.filter((r) => {
+      const s = String(r.responseStatus || r.status || "").toUpperCase();
+      return s === "PENDING";
+    }).length;
 
   return {
     invitation,

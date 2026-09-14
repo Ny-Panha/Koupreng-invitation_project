@@ -196,32 +196,6 @@ export default function TemplateGrid() {
                             </div>
                         );
                     })}
-
-                    <div className="tp-card tp-custom-card">
-                        <Link to={getCreatePath("/create/wedding", isAuthenticated)} className="tp-image-box tp-custom-box">
-                            <div className="tp-custom-mark" aria-hidden="true">
-                                <span></span>
-                                <span></span>
-                            </div>
-                            <div className="tp-custom-preview" aria-hidden="true">
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                            </div>
-                            <div className="tp-overlay">
-                                <span className="tp-view-btn">{t("startCreate") || "ចាប់ផ្តើមបង្កើត"}</span>
-                            </div>
-                        </Link>
-
-                        <div className="tp-card-content">
-                            <h3 className="tp-card-name">{t("createCustom") || "បង្កើតផ្ទាល់ខ្លួន"}</h3>
-                            <span className="tp-style-name">{t("customDesc") || "Custom Wedding Card"}</span>
-                            <p className="tp-card-benefit">{t("customBenefit") || "ចាប់ផ្តើមពីសន្លឹកទទេ ហើយកែតម្រូវព័ត៌មានតាមតម្រូវការ"}</p>
-                            <Link to={getCreatePath("/create/wedding", isAuthenticated)} className="tp-action-btn tp-custom-action">
-                                {t("useCustom") || "ប្រើការរចនាផ្ទាល់ខ្លួន"}
-                            </Link>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

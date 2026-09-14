@@ -28,8 +28,22 @@ export default defineConfig(({ mode }) => {
   const shouldUseSecureHmr = hmrHost && hmrHost !== 'localhost' && hmrHost !== '127.0.0.1'
   const shouldDisableTunnelHmr = !hmrHost && /\.ngrok-free\.(app|dev)$/.test(publicAppHost)
 
+  const dynamicOgMetaPlugin = () => ({
+    name: 'dynamic-og-meta',
+    transformIndexHtml(html, ctx) {
+      if (ctx?.req?.headers?.host) {
+        const proto = ctx.req.headers['x-forwarded-proto'] || (ctx.req.connection?.encrypted ? 'https' : 'http');
+        const origin = `${proto}://${ctx.req.headers.host}`;
+        return html
+          .replaceAll('http://localhost:5173', origin)
+          .replaceAll('%VITE_PUBLIC_APP_URL%', origin);
+      }
+      return html;
+    },
+  });
+
   return {
-    plugins: [react(), tailwindcss()],
+    plugins: [react(), tailwindcss(), dynamicOgMetaPlugin()],
     envDir,
     resolve: {
       alias: {

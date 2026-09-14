@@ -34,18 +34,18 @@ export default function WeddingBuilderFeature() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const templateIdParam = searchParams.get("templateId") || searchParams.get("template");
+  const isCustom = !templateIdParam || templateIdParam === "custom";
   const fileInputRef = useRef(null);
 
   const [form, setForm] = useState(() => {
-    const tplId = templateIdParam || "garden-royal-khmer-wedding";
-    const tpl = getTemplateById(tplId);
-    const initialCover = tpl?.phoneCoverImage || tpl?.mainImage || "/facebook/all/03-card/cover-card.jpg";
-    const initialTitle = tpl?.name || "សួនរាជហង្សខ្មែរ";
-    const initialGroom = tpl?.groom || "វណ្ណដា";
-    const initialBride = tpl?.bride || "ស្រីពេជ្រ";
-    const initialDate = tpl?.targetDate ? tpl.targetDate.split("T")[0] : "2026-01-28";
+    const tpl = !isCustom ? getTemplateById(templateIdParam) : null;
+    const initialCover = tpl?.phoneCoverImage || tpl?.mainImage || "";
+    const initialTitle = tpl?.name || "";
+    const initialGroom = tpl?.groom || "";
+    const initialBride = tpl?.bride || "";
+    const initialDate = tpl?.targetDate ? tpl.targetDate.split("T")[0] : "";
     const initialTime = tpl?.receptionTime || "17:00";
-    const initialVenue = tpl?.venueName || "The Premier Center Sen Sok";
+    const initialVenue = tpl?.venueName || "";
     const initialDesc = tpl?.message || tpl?.description || "";
 
     return {
@@ -59,14 +59,13 @@ export default function WeddingBuilderFeature() {
       description: initialDesc,
       coverImage: initialCover,
       quality: true,
-      templateId: tplId,
+      templateId: templateIdParam || "garden-royal-khmer-wedding",
     };
   });
 
   // Multi-day Nested Agenda State matching PlanEssential
   const [agendaDays, setAgendaDays] = useState(() => {
-    const tplId = templateIdParam || "garden-royal-khmer-wedding";
-    const tpl = getTemplateById(tplId);
+    const tpl = !isCustom ? getTemplateById(templateIdParam) : null;
     if (tpl?.schedule && tpl.schedule.length > 0) {
       return [
         {
@@ -286,7 +285,9 @@ export default function WeddingBuilderFeature() {
   return (
     <div className="pe-create-page-wrapper">
       <div className="pe-create-card">
-        <h1 className="pe-create-card-title">បង្កើតកម្មវិធីថ្មី</h1>
+        <h1 className="pe-create-card-title">
+          {isCustom ? "បង្កើតកម្មវិធីផ្ទាល់ខ្លួន (Custom Wedding Card)" : "បង្កើតកម្មវិធីថ្មី"}
+        </h1>
 
         <form onSubmit={handleSubmit}>
           {/* 1. Cover Image / Link Preview */}

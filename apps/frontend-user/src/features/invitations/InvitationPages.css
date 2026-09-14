@@ -80,6 +80,16 @@
     transform: none;
 }
 
+.inv-secondary-btn.is-checked,
+.inv-secondary-btn.is-checked:disabled {
+    background: #ecfdf5;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+    font-weight: 600;
+    opacity: 1;
+    cursor: default;
+}
+
 .inv-filter-row {
     display: flex;
     flex-wrap: wrap;

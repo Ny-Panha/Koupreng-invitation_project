@@ -43,8 +43,8 @@ export function normalizeBackendGuest(guest) {
     count: Math.max(1, Number(guest.seatCount) || 1),
     seat: guest.tableNumber || "",
     note: guest.note || "",
-    inviteToken: guest.inviteToken || "",
-    qrCodeUrl: guest.qrCodeUrl || "",
+    inviteToken: guest.inviteToken || guest.invite_token || guest.token || guest.raw?.inviteToken || guest.raw?.token || "",
+    qrCodeUrl: guest.qrCodeUrl || guest.qr_code_url || "",
     source: "backend",
   };
 }
@@ -69,22 +69,43 @@ export function normalizeBackendRsvp(entry) {
   };
 }
 
-export function mergeBackendGuestsWithRsvps(guests = [], rsvps = []) {
+export function mergeBackendGuestsWithRsvps(guests = [], rsvps = [], checkIns = []) {
   const rsvpByGuestId = new Map(
     rsvps
       .filter((rsvp) => rsvp?.guestId != null)
       .map((rsvp) => [String(rsvp.guestId), rsvp])
   );
+  const checkInByGuestId = new Map(
+    checkIns
+      .filter((ci) => ci?.guestId != null)
+      .map((ci) => [String(ci.guestId), ci])
+  );
 
   return guests.map((guest) => {
-    const rsvp = rsvpByGuestId.get(String(guest.backendId ?? guest.id));
-    if (!rsvp) return guest;
+    const guestKey = String(guest.backendId ?? guest.id);
+    const rsvp = rsvpByGuestId.get(guestKey);
+    const checkIn = checkInByGuestId.get(guestKey);
+
+    const hasRsvp = Boolean(rsvp?.rsvpStatus);
+    const isCheckedIn = Boolean(checkIn);
+
+    let sendStatus = guest.sendStatus;
+    if (
+      (hasRsvp || isCheckedIn) &&
+      (!sendStatus || sendStatus === SEND_STATUS.pending || sendStatus === "PENDING")
+    ) {
+      sendStatus = SEND_STATUS.responded;
+    }
 
     return {
       ...guest,
-      rsvpStatus: rsvp.rsvpStatus,
-      rsvpAttendeeCount: rsvp.count,
-      rsvpRespondedAt: rsvp.respondedAt,
+      sendStatus,
+      rsvpStatus: rsvp ? rsvp.rsvpStatus : guest.rsvpStatus,
+      rsvpAttendeeCount: rsvp ? rsvp.count : guest.rsvpAttendeeCount,
+      rsvpRespondedAt: rsvp ? rsvp.respondedAt : guest.rsvpRespondedAt,
+      checkedIn: isCheckedIn || Boolean(guest.checkedIn),
+      checkedInAt: checkIn?.checkedInAt || guest.checkedInAt || null,
+      checkInSource: checkIn?.source || guest.checkInSource || null,
     };
   });
 }
@@ -131,15 +152,40 @@ export function initials(name) {
   );
 }
 
-export function guestInviteUrl(draft, guest, publicInvitation) {
+export function guestInviteUrl(draftOrGuest, guestOrDraft, publicInvitation) {
   const base = typeof window === "undefined" ? "" : window.location.origin;
-  const candidateSlug = publicInvitation?.slug || draft?.slug;
+
+  // Flexible argument handling if called as (guest, draft) or (draft, guest, publicInvitation)
+  const isFirstGuest = draftOrGuest && (draftOrGuest.name || draftOrGuest.guestName || draftOrGuest.inviteToken);
+  const guest = isFirstGuest ? draftOrGuest : guestOrDraft;
+  const draft = isFirstGuest ? (guestOrDraft?.slug ? guestOrDraft : null) : draftOrGuest;
+
+  const candidateSlug = publicInvitation?.slug || draft?.slug || guest?.invitationSlug;
   const isCleanSlug = candidateSlug && /^[a-zA-Z0-9_-]+$/.test(candidateSlug);
   const cleanPath = isCleanSlug
     ? candidateSlug
     : (publicInvitation?.id || draft?.backendInvitationId || draft?.id || "invitation");
 
-  return `${base}/w/${cleanPath}`;
+  let token =
+    guest?.inviteToken ||
+    guest?.token ||
+    guest?.invite_token ||
+    guest?.raw?.inviteToken ||
+    guest?.raw?.invite_token ||
+    guest?.raw?.token;
+
+  if (!token && guest?.qrCodeUrl && guest.qrCodeUrl.includes("token=")) {
+    try {
+      const parsed = new URL(guest.qrCodeUrl, "http://dummy");
+      token = parsed.searchParams.get("token");
+    } catch {
+      const match = guest.qrCodeUrl.match(/[?&]token=([^&]+)/);
+      if (match) token = decodeURIComponent(match[1]);
+    }
+  }
+
+  const url = `${base}/w/${cleanPath}`;
+  return token ? `${url}?token=${encodeURIComponent(token)}` : url;
 }
 
 

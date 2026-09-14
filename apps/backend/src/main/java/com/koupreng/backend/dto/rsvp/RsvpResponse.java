@@ -20,6 +20,8 @@ public class RsvpResponse {
     private Long invitationId;
     private Long guestId;
     private String guestName;
+    private String inviteToken;
+    private String qrCodeUrl;
     private RsvpStatus responseStatus;
     private Integer attendeeCount;
     private String message;
@@ -32,6 +34,8 @@ public class RsvpResponse {
                 .invitationId(rsvp.getInvitation() == null ? null : rsvp.getInvitation().getId())
                 .guestId(guest == null ? null : guest.getId())
                 .guestName(guest == null ? null : guest.getGuestName())
+                .inviteToken(guest == null ? null : guest.getInviteToken())
+                .qrCodeUrl(guest == null ? null : guest.getQrCodeUrl())
                 .responseStatus(rsvp.getResponseStatus())
                 .attendeeCount(rsvp.getAttendeeCount())
                 .message(rsvp.getMessage())

@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, cleanup } from "@testing-library/react";
 import { MemoryRouter, Route, Routes, useLocation } from "react-router-dom";
 import { beforeEach, describe, expect, it } from "vitest";
 
@@ -32,7 +32,10 @@ function renderProtected() {
 }
 
 describe("RequireAdmin", () => {
-  beforeEach(() => window.sessionStorage.clear());
+  beforeEach(() => {
+    cleanup();
+    window.sessionStorage.clear();
+  });
 
   it("redirects an anonymous user and preserves the intended URL", () => {
     renderProtected();
@@ -43,6 +46,15 @@ describe("RequireAdmin", () => {
     window.sessionStorage.setItem("koupreng.admin.auth", JSON.stringify({
       accessToken: futureTestToken(),
       user: { role: "ADMIN" },
+    }));
+    renderProtected();
+    expect(screen.getByRole("heading", { name: "Admin users" })).toBeInTheDocument();
+  });
+
+  it("allows role with lowercase admin or SUPER_ADMIN", () => {
+    window.sessionStorage.setItem("koupreng.admin.auth", JSON.stringify({
+      accessToken: futureTestToken(),
+      user: { role: "admin" },
     }));
     renderProtected();
     expect(screen.getByRole("heading", { name: "Admin users" })).toBeInTheDocument();

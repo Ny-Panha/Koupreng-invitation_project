@@ -331,9 +331,9 @@ public class I18nController {
                         "pricing.subtitle", "pricing.titlePlan", "pricing.titlePerfect", "pricing.recommended",
                         "pricing.btnStartNow", "pricing.btnSelectGold", "pricing.btnContactSales",
                         "pricing.planBasicName", "pricing.planBasicPrice", "pricing.planBasicDesc",
-                        "pricing.planBasicFeat1", "pricing.planBasicFeat2", "pricing.planBasicFeat3", "pricing.planBasicFeat4",
-                        "pricing.planProName", "pricing.planProDesc",
-                        "pricing.planProFeat1", "pricing.planProFeat2", "pricing.planProFeat3", "pricing.planProFeat4", "pricing.planProFeat5",
+                        "pricing.planBasicFeat1", "pricing.planBasicFeat2", "pricing.planBasicFeat3", "pricing.planBasicFeat4", "pricing.planBasicFeat5",
+                        "pricing.planProName", "pricing.planProPrice", "pricing.planProDesc",
+                        "pricing.planProFeat1", "pricing.planProFeat2", "pricing.planProFeat3", "pricing.planProFeat4", "pricing.planProFeat5", "pricing.planProFeat6",
                         "pricing.planEntName", "pricing.planEntPrice", "pricing.planEntDesc",
                         "pricing.planEntFeat1", "pricing.planEntFeat2", "pricing.planEntFeat3", "pricing.planEntFeat4", "pricing.planEntFeat5"
                 );

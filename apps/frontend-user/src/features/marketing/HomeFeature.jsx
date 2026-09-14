@@ -23,7 +23,7 @@ const getPlans = (t) => [
   {
     id: "pro",
     name: t("planProName") || "កញ្ចប់ប្រូ",
-    price: "$169",
+    price: "$19",
     desc: t("planProDesc") || "ពេញនិយមបំផុតសម្រាប់គូស្វាមីភរិយា",
     features: [
       t("planProFeat1") || "ផែនការមិនដែនកំណត់",

@@ -1699,20 +1699,22 @@
    ============================================================ */
 .tx-music {
     position: fixed;
-    right: clamp(1rem, 4vw, 1.75rem);
-    bottom: calc(var(--safe-bottom, 0px) + 1.25rem);
+    top: max(16px, env(safe-area-inset-top));
+    right: max(16px, env(safe-area-inset-right));
+    bottom: auto;
     z-index: var(--z-overlay, 100);
-    width: 52px;
-    height: 52px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     border: 1px solid var(--tpl-border);
-    background: var(--tpl-surface);
+    background: color-mix(in srgb, var(--tpl-surface) 92%, transparent);
     color: var(--tpl-accent-dark);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: var(--tpl-shadow-sm);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(8px);
     transition: transform var(--motion-base, 200ms) ease;
 }
 
@@ -1749,10 +1751,12 @@
     }
 }
 
-/* On mobile, lift the music button above the sticky CTA bar */
+/* On mobile, keep music button accessible at top-right without covering content */
 @media (max-width: 768px) {
     .tx-music {
-        bottom: calc(var(--safe-bottom, 0px) + 84px);
+        top: max(14px, env(safe-area-inset-top));
+        right: max(14px, env(safe-area-inset-right));
+        bottom: auto;
     }
 }
 
@@ -3399,10 +3403,12 @@
 /* ── Music control — sized down; stays pinned to the phone frame
    (position:fixed anchors to .wb-phone-frame via its transform). ──── */
 .tx-root--preview .tx-music {
-    right: 0.9rem;
-    bottom: 0.9rem;
-    width: 42px;
-    height: 42px;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    bottom: auto;
+    width: 40px;
+    height: 40px;
 }
 
 .tx-root--preview .tx-music__icon {
@@ -4499,10 +4505,6 @@
 }
 
 @media (max-width: 768px) {
-    .tx-music {
-        bottom: calc(var(--safe-bottom, 0px) + 84px);
-    }
-
     .tx-footer {
         padding-bottom: calc(clamp(3.5rem, 9vw, 6rem) + var(--safe-bottom, 0px) + 72px);
     }
@@ -5476,8 +5478,9 @@
 }
 
 .template-experience--garden-royal-khmer-wedding .tx-music {
+    top: max(16px, env(safe-area-inset-top));
     right: max(calc((100vw - 460px) / 2 + 14px), 14px);
-    bottom: 86px;
+    bottom: auto;
     width: 48px;
     height: 48px;
 }
@@ -5498,8 +5501,10 @@
 }
 
 .tx-root--preview.template-experience--garden-royal-khmer-wedding .tx-music {
+    position: absolute;
+    top: 12px;
     right: 0.7rem;
-    bottom: 82px;
+    bottom: auto;
 }
 
 @media (max-width: 520px) {

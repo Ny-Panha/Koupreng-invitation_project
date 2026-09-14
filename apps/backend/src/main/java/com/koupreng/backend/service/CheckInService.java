@@ -126,6 +126,10 @@ public class CheckInService {
                             "Guest checked in",
                             java.util.Map.of("invitationId", invitation.getId(), "source", source)
                     );
+                    if (guest.getSendStatus() == null || "PENDING".equalsIgnoreCase(guest.getSendStatus()) || "NOT_READY".equalsIgnoreCase(guest.getSendStatus())) {
+                        guest.setSendStatus("RESPONDED");
+                        guestRepository.save(guest);
+                    }
                     return CheckInResponse.from(saved, false);
                 });
     }
