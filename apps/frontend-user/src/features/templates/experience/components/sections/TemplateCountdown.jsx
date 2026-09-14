@@ -1,4 +1,5 @@
 import useCountdown from "@/features/wedding-site/hooks/useCountdown";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 import TemplateReveal from "../shared/TemplateReveal";
 import TemplateSectionHeader from "../shared/TemplateSectionHeader";
@@ -10,13 +11,19 @@ import { templateIcons } from "../../config/templateIcons";
  * valid wedding date exists (never crashes).
  */
 export default function TemplateCountdown({ content }) {
+    const lang = useLanguageStore((state) => state.lang);
     const hasValidDate =
         content.targetDate != null &&
         !Number.isNaN(new Date(content.targetDate).getTime());
 
     const countdown = useCountdown(hasValidDate ? content.targetDate : undefined);
 
-    const cells = [
+    const cells = lang === "en" ? [
+        ["DAYS", countdown.d],
+        ["HOURS", countdown.h],
+        ["MINS", countdown.m],
+        ["SECS", countdown.s],
+    ] : [
         ["ថ្ងៃ", countdown.d],
         ["ម៉ោង", countdown.h],
         ["នាទី", countdown.m],
@@ -36,14 +43,14 @@ export default function TemplateCountdown({ content }) {
                 <TemplateSectionHeader
                     id="tx-countdown-title"
                     icon={templateIcons.countdown}
-                    kicker="រាប់ថយក្រោយ"
-                    title="រង់ចាំថ្ងៃពិសេស"
-                    subtitle="COUNTING DOWN TO FOREVER"
+                    kicker={lang === "en" ? "COUNTDOWN" : "រាប់ថយក្រោយ"}
+                    title={lang === "en" ? "Counting Down to Forever" : "រង់ចាំថ្ងៃពិសេស"}
+                    subtitle={lang === "en" ? "OUR WEDDING CELEBRATION" : "COUNTING DOWN TO FOREVER"}
                 />
 
                 {hasValidDate ? (
                     <>
-                        <TemplateReveal className="tx-countdown__grid" aria-label="រាប់ថយក្រោយ">
+                        <TemplateReveal className="tx-countdown__grid" aria-label={lang === "en" ? "Countdown timer" : "រាប់ថយក្រោយ"}>
                             {cells.map(([label, value]) => (
                                 <div className="tx-countdown__cell" key={label}>
                                     <strong>{value}</strong>
@@ -53,14 +60,14 @@ export default function TemplateCountdown({ content }) {
                         </TemplateReveal>
                         {isPast && (
                             <p className="tx-countdown__past-note">
-                                🎉 កាលបរិច្ឆេទនៃថ្ងៃសិរីសួស្តីអាពាហ៍ពិពាហ៍
+                                {lang === "en" ? "🎉 The Wedding Celebration Day Has Arrived!" : "🎉 កាលបរិច្ឆេទនៃថ្ងៃសិរីសួស្តីអាពាហ៍ពិពាហ៍"}
                             </p>
                         )}
                     </>
                 ) : (
                     <TemplateReveal>
                         <p className="tx-countdown__fallback">
-                            កាលបរិច្ឆេទនឹងត្រូវប្រកាសក្នុងពេលឆាប់ៗនេះ
+                            {lang === "en" ? "The wedding date will be announced soon" : "កាលបរិច្ឆេទនឹងត្រូវប្រកាសក្នុងពេលឆាប់ៗនេះ"}
                         </p>
                     </TemplateReveal>
                 )}

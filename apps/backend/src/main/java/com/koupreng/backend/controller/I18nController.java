@@ -419,6 +419,17 @@ public class I18nController {
             @RequestParam(defaultValue = "dashboard") String namespace,
             @RequestParam(required = false) String lang
     ) {
+        java.util.Locale targetLocale;
+        if (lang != null && !lang.trim().isEmpty()) {
+            String clean = lang.trim().toLowerCase();
+            targetLocale = clean.startsWith("en") ? java.util.Locale.ENGLISH : java.util.Locale.forLanguageTag("km");
+        } else {
+            targetLocale = LocaleContextHolder.getLocale();
+            if (targetLocale == null || "und".equals(targetLocale.toLanguageTag())) {
+                targetLocale = java.util.Locale.forLanguageTag("km");
+            }
+        }
+
         List<String> keys = getNamespaceKeys(namespace);
         if (keys == null) {
             keys = List.of();
@@ -427,11 +438,11 @@ public class I18nController {
         Map<String, String> messages = new LinkedHashMap<>();
         String prefix = namespace + ".";
         for (String key : keys) {
-            messages.put(key.substring(prefix.length()), msg.get(key));
+            messages.put(key.substring(prefix.length()), msg.get(key, targetLocale));
         }
 
         Map<String, Object> data = new LinkedHashMap<>();
-        data.put("locale", LocaleContextHolder.getLocale().toLanguageTag());
+        data.put("locale", targetLocale.toLanguageTag());
         data.put("namespace", namespace);
         data.put("messages", messages);
         return ResponseEntity.ok(ApiResponse.success("Messages fetched successfully", data));

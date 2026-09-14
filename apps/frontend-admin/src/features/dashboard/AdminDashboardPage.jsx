@@ -10,6 +10,7 @@ import {
 } from "../../shared/ui/AdminUI";
 import { useResource } from "../../hooks/useResource";
 import { formatMoney, formatDateTime } from "../../lib/format";
+import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 import dashboardService from "./dashboardService";
 import {
   Users,
@@ -26,6 +27,7 @@ import {
 } from "lucide-react";
 
 export default function AdminDashboardPage() {
+  const { lang, t } = useAdminLanguage();
   const { data, loading, error, reload } = useResource(dashboardService.summary);
   const [analytics, setAnalytics] = useState({});
 
@@ -58,20 +60,29 @@ export default function AdminDashboardPage() {
     };
   }, []);
 
-  if (loading) return <LoadingState label="កំពុងទាញយកទិន្នន័យផ្ផ្ទាំងគ្រប់គ្រង..." />;
-  if (error || !data) return <ErrorStateView message="មិនអាចទាញយកទិន្នន័យ Dashboard បានទេ" onRetry={reload} />;
+  if (loading) {
+    return <LoadingState label={t("dashboard.loading", "កំពុងទាញយកទិន្នន័យផ្ទាំងគ្រប់គ្រង...")} />;
+  }
+  if (error || !data) {
+    return (
+      <ErrorStateView
+        message={t("dashboard.error", "មិនអាចទាញយកទិន្នន័យ Dashboard បានទេ")}
+        onRetry={reload}
+      />
+    );
+  }
 
   return (
     <div className="space-y-6">
       {/* Page Header */}
       <AdminPageHeader
-        eyebrow="ទិដ្ឋភាពទូទៅនៃប្រព័ន្ធ"
-        title="ផ្ទាំងគ្រប់គ្រង"
-        subtitle="ការវិភាគទិន្នន័យទូទៅ សកម្មភាពអ្នកប្រើប្រាស់ និងសុខភាពប្រព័ន្ធ"
+        eyebrow={t("dashboard.eyebrow", "ទិដ្ឋភាពទូទៅនៃប្រព័ន្ធ")}
+        title={t("dashboard.title", "ផ្ទាំងគ្រប់គ្រង")}
+        subtitle={t("dashboard.subtitle", "ការវិភាគទិន្នន័យទូទៅ សកម្មភាពអ្នកប្រើប្រាស់ និងសុខភាពប្រព័ន្ធ")}
         actions={
           <ActionButton variant="ghost" size="sm" onClick={reload}>
             <RefreshCw className="h-3.5 w-3.5" />
-            <span>ផ្ទុកឡើងវិញ</span>
+            <span>{t("dashboard.reload", "ផ្ទុកឡើងវិញ")}</span>
           </ActionButton>
         }
       />
@@ -79,44 +90,56 @@ export default function AdminDashboardPage() {
       {/* Main Stats Grid */}
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
         <StatCard
-          label="អ្នកប្រើសរុប"
+          label={t("dashboard.totalUsers", "អ្នកប្រើសរុប")}
           value={data.totalUsers}
-          note={`${data.activeUsers ?? 0} គណនី Active`}
+          note={
+            lang === "en"
+              ? `${data.activeUsers ?? 0} Active Accounts`
+              : `${data.activeUsers ?? 0} គណនី Active`
+          }
           icon={Users}
           tone="cyan"
         />
         <StatCard
-          label="គំរូធៀបការ"
+          label={t("dashboard.totalTemplates", "គំរូធៀបការ")}
           value={data.totalTemplates}
           note={`${data.premiumTemplates ?? 0} Premium`}
           icon={Palette}
           tone="purple"
         />
         <StatCard
-          label="ធៀបការសរុប"
+          label={t("dashboard.totalInvitations", "ធៀបការសរុប")}
           value={data.totalInvitations}
-          note={`${data.publishedInvitations ?? 0} បានផ្សាយ`}
+          note={
+            lang === "en"
+              ? `${data.publishedInvitations ?? 0} Published`
+              : `${data.publishedInvitations ?? 0} បានផ្សាយ`
+          }
           icon={Mail}
           tone="amber"
         />
         <StatCard
-          label="ភ្ញៀវសរុប (Guests)"
+          label={t("dashboard.totalGuests", "ភ្ញៀវសរុប (Guests)")}
           value={data.totalGuests}
-          note="ភ្ញៀវក្នុងធៀបការទាំងអស់"
+          note={t("dashboard.allGuestsNote", "ភ្ញៀវក្នុងធៀបការទាំងអស់")}
           icon={UserCheck}
           tone="emerald"
         />
         <StatCard
-          label="ការទូទាត់សរុប"
+          label={t("dashboard.totalPayments", "ការទូទាត់សរុប")}
           value={data.totalPayments}
-          note={`${data.failedPayments ?? 0} បរាជ័យ`}
+          note={
+            lang === "en"
+              ? `${data.failedPayments ?? 0} Failed`
+              : `${data.failedPayments ?? 0} បរាជ័យ`
+          }
           icon={CreditCard}
           tone="rose"
         />
         <StatCard
-          label="ចំណូលសរុប"
+          label={t("dashboard.totalRevenue", "ចំណូលសរុប")}
           value={formatMoney(data.totalRevenue)}
-          note={data.systemHealthSummary || "ដំណើរការធម្មតា"}
+          note={data.systemHealthSummary || t("dashboard.normalOperation", "ដំណើរការធម្មតា")}
           icon={TrendingUp}
           tone="amber"
         />
@@ -125,28 +148,36 @@ export default function AdminDashboardPage() {
       {/* Secondary Analytics Cards */}
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
-          label="RSVP Conversion"
+          label={t("dashboard.rsvpConversion", "RSVP Conversion")}
           value={percent(analytics.overview?.summary?.rsvpConversion)}
-          note="អត្រាឆ្លើយតបធៀបនឹងចំនួនភ្ញៀវ"
+          note={t("dashboard.rsvpRateNote", "អត្រាឆ្លើយតបធៀបនឹងចំនួនភ្ញៀវ")}
           icon={Mail}
           tone="cyan"
         />
         <StatCard
-          label="Check-in Rate"
+          label={t("dashboard.checkInRate", "Check-in Rate")}
           value={percent(analytics.checkIn?.summary?.checkInRate)}
-          note={`${analytics.checkIn?.summary?.checkedIn || 0} ភ្ញៀវបាន Check-in`}
+          note={
+            lang === "en"
+              ? `${analytics.checkIn?.summary?.checkedIn || 0} Checked-in`
+              : `${analytics.checkIn?.summary?.checkedIn || 0} ភ្ញៀវបាន Check-in`
+          }
           icon={QrCode}
           tone="emerald"
         />
         <StatCard
-          label="Telegram Delivery"
+          label={t("dashboard.telegramDelivery", "Telegram Delivery")}
           value={analytics.delivery?.summary?.opened ?? "—"}
-          note={`${analytics.delivery?.summary?.failed || 0} ផ្ញើមិនបានសម្រេច`}
+          note={
+            lang === "en"
+              ? `${analytics.delivery?.summary?.failed || 0} Failed`
+              : `${analytics.delivery?.summary?.failed || 0} ផ្ញើមិនបានសម្រេច`
+          }
           icon={SendHorizontal}
           tone="purple"
         />
         <StatCard
-          label="សុខភាពប្រព័ន្ធ"
+          label={t("dashboard.systemHealth", "សុខភាពប្រព័ន្ធ")}
           value={analytics.health?.summary?.status || "OK"}
           note={`${analytics.health?.summary?.failedNotifications || 0} alerts`}
           icon={ShieldCheck}
@@ -161,17 +192,17 @@ export default function AdminDashboardPage() {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="text-sm font-bold text-slate-900 dark:text-zinc-100">
-                អ្នកប្រើប្រាស់ថ្មីៗ (Recent Users)
+                {t("dashboard.recentUsers", "អ្នកប្រើប្រាស់ថ្មីៗ (Recent Users)")}
               </h3>
               <p className="text-xs text-slate-500 dark:text-zinc-400">
-                គណនីដែលបានចុះឈ្មោះចុងក្រោយ
+                {t("dashboard.recentUsersSub", "គណនីដែលបានចុះឈ្មោះចុងក្រោយ")}
               </p>
             </div>
             <Link
               to="/users"
               className="inline-flex items-center gap-1 text-xs font-semibold text-amber-600 hover:text-amber-700 dark:text-amber-400"
             >
-              <span>មើលទាំងអស់</span>
+              <span>{t("common.viewAll", "មើលទាំងអស់")}</span>
               <ArrowUpRight className="h-3.5 w-3.5" />
             </Link>
           </div>
@@ -180,10 +211,18 @@ export default function AdminDashboardPage() {
             <table className="w-full text-left text-xs">
               <thead className="border-b border-slate-100 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/50">
                 <tr>
-                  <th className="px-3 py-2.5 font-bold text-slate-500 dark:text-zinc-400">ឈ្មោះ</th>
-                  <th className="px-3 py-2.5 font-bold text-slate-500 dark:text-zinc-400">អ៊ីមែល</th>
-                  <th className="px-3 py-2.5 font-bold text-slate-500 dark:text-zinc-400">តួនាទី</th>
-                  <th className="px-3 py-2.5 font-bold text-slate-500 dark:text-zinc-400">ស្ថានភាព</th>
+                  <th className="px-3 py-2.5 font-bold text-slate-500 dark:text-zinc-400">
+                    {t("dashboard.colName", "ឈ្មោះ")}
+                  </th>
+                  <th className="px-3 py-2.5 font-bold text-slate-500 dark:text-zinc-400">
+                    {t("dashboard.colEmail", "អ៊ីមែល")}
+                  </th>
+                  <th className="px-3 py-2.5 font-bold text-slate-500 dark:text-zinc-400">
+                    {t("dashboard.colRole", "តួនាទី")}
+                  </th>
+                  <th className="px-3 py-2.5 font-bold text-slate-500 dark:text-zinc-400">
+                    {t("dashboard.colStatus", "ស្ថានភាព")}
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-zinc-800/60">
@@ -204,7 +243,7 @@ export default function AdminDashboardPage() {
                 {!(data.recentUsers?.length) && (
                   <tr>
                     <td colSpan={4} className="px-3 py-4 text-center text-slate-400">
-                      មិនទាន់មានទិន្នន័យ
+                      {t("dashboard.noUsersData", "មិនទាន់មានទិន្នន័យ")}
                     </td>
                   </tr>
                 )}
@@ -218,17 +257,17 @@ export default function AdminDashboardPage() {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="text-sm font-bold text-slate-900 dark:text-zinc-100">
-                ការទូទាត់ថ្មីៗ (Recent Payments)
+                {t("dashboard.recentPayments", "ការទូទាត់ថ្មីៗ (Recent Payments)")}
               </h3>
               <p className="text-xs text-slate-500 dark:text-zinc-400">
-                ប្រតិបត្តិការទូទាត់ចុងក្រោយក្នុងប្រព័ន្ធ
+                {t("dashboard.recentPaymentsSub", "ប្រតិបត្តិការទូទាត់ចុងក្រោយក្នុងប្រព័ន្ធ")}
               </p>
             </div>
             <Link
               to="/payments"
               className="inline-flex items-center gap-1 text-xs font-semibold text-amber-600 hover:text-amber-700 dark:text-amber-400"
             >
-              <span>មើលទាំងអស់</span>
+              <span>{t("common.viewAll", "មើលទាំងអស់")}</span>
               <ArrowUpRight className="h-3.5 w-3.5" />
             </Link>
           </div>
@@ -237,10 +276,18 @@ export default function AdminDashboardPage() {
             <table className="w-full text-left text-xs">
               <thead className="border-b border-slate-100 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/50">
                 <tr>
-                  <th className="px-3 py-2.5 font-bold text-slate-500 dark:text-zinc-400">Order Code</th>
-                  <th className="px-3 py-2.5 font-bold text-slate-500 dark:text-zinc-400">ស្ថានភាព</th>
-                  <th className="px-3 py-2.5 font-bold text-slate-500 dark:text-zinc-400">ចំនួនទឹកប្រាក់</th>
-                  <th className="px-3 py-2.5 font-bold text-slate-500 dark:text-zinc-400">កាលបរិច្ឆេទ</th>
+                  <th className="px-3 py-2.5 font-bold text-slate-500 dark:text-zinc-400">
+                    {t("dashboard.colOrderCode", "Order Code")}
+                  </th>
+                  <th className="px-3 py-2.5 font-bold text-slate-500 dark:text-zinc-400">
+                    {t("dashboard.colStatus", "ស្ថានភាព")}
+                  </th>
+                  <th className="px-3 py-2.5 font-bold text-slate-500 dark:text-zinc-400">
+                    {t("dashboard.colAmount", "ចំនួនទឹកប្រាក់")}
+                  </th>
+                  <th className="px-3 py-2.5 font-bold text-slate-500 dark:text-zinc-400">
+                    {t("dashboard.colDate", "កាលបរិច្ឆេទ")}
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-zinc-800/60">
@@ -263,7 +310,7 @@ export default function AdminDashboardPage() {
                 {!(data.recentPayments?.length) && (
                   <tr>
                     <td colSpan={4} className="px-3 py-4 text-center text-slate-400">
-                      មិនទាន់មានទិន្នន័យទូទាត់ទេ
+                      {t("dashboard.noPaymentsData", "មិនទាន់មានទិន្នន័យទូទាត់ទេ")}
                     </td>
                   </tr>
                 )}

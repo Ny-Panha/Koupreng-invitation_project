@@ -25,8 +25,18 @@ public class MessageService {
         return messageSource.getMessage(key, null, key, LocaleContextHolder.getLocale());
     }
 
+    /** Resolve a key with an explicit locale and no parameters. */
+    public String get(String key, java.util.Locale locale) {
+        return messageSource.getMessage(key, null, key, locale != null ? locale : LocaleContextHolder.getLocale());
+    }
+
     /** Resolve a key with positional parameters (used with {0}, {1} placeholders). */
     public String get(String key, Object... args) {
         return messageSource.getMessage(key, args, key, LocaleContextHolder.getLocale());
+    }
+
+    /** Resolve a key with an explicit locale and positional parameters. */
+    public String get(String key, java.util.Locale locale, Object... args) {
+        return messageSource.getMessage(key, args, key, locale != null ? locale : LocaleContextHolder.getLocale());
     }
 }

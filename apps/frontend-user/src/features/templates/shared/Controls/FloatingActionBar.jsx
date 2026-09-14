@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { Music, VolumeX, MapPin, QrCode, Send, Copy, X } from "lucide-react";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 /**
  * FloatingActionBar — Quick Actions Dock (Reels & TikTok Style)
@@ -17,6 +18,7 @@ export default function FloatingActionBar({
   onRsvpClick,
   className = "",
 }) {
+  const lang = useLanguageStore((state) => state.lang);
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showQrModal, setShowQrModal] = useState(false);
@@ -93,7 +95,7 @@ export default function FloatingActionBar({
           <button
             type="button"
             onClick={toggleMusic}
-            title={isPlayingMusic ? "បិទភ្លេង" : "ចាក់ភ្លេង"}
+            title={isPlayingMusic ? (lang === "en" ? "Mute Music" : "បិទភ្លេង") : (lang === "en" ? "Play Music" : "ចាក់ភ្លេង")}
             className={`relative w-10 h-10 rounded-full flex items-center justify-center transition-all cursor-pointer ${
               isPlayingMusic
                 ? "bg-gradient-to-tr from-amber-500 to-amber-300 text-slate-950 shadow-[0_0_15px_rgba(212,175,55,0.5)]"
@@ -114,7 +116,7 @@ export default function FloatingActionBar({
             href={googleMapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            title="មើលទីតាំងលើ Google Maps"
+            title={lang === "en" ? "View on Google Maps" : "មើលទីតាំងលើ Google Maps"}
             className="w-10 h-10 rounded-full bg-white/10 text-amber-300 hover:bg-white/20 flex items-center justify-center transition cursor-pointer"
           >
             <MapPin className="w-4 h-4" />
@@ -125,7 +127,7 @@ export default function FloatingActionBar({
         <button
           type="button"
           onClick={() => setShowQrModal(true)}
-          title="ចងដៃតាម ABA KHQR"
+          title={lang === "en" ? "Send Gift (KHQR)" : "ចងដៃតាម ABA KHQR"}
           className="w-10 h-10 rounded-full bg-white/10 text-amber-300 hover:bg-white/20 flex items-center justify-center transition cursor-pointer"
         >
           <QrCode className="w-4 h-4" />
@@ -135,7 +137,7 @@ export default function FloatingActionBar({
         <button
           type="button"
           onClick={scrollToRsvp}
-          title="ឆ្លើយតបការចូលរួម (RSVP)"
+          title={lang === "en" ? "RSVP Attend" : "ឆ្លើយតបការចូលរួម (RSVP)"}
           className="flex items-center gap-1.5 px-3.5 h-10 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold text-xs shadow-md transition hover:brightness-110 cursor-pointer"
         >
           <Send className="w-3.5 h-3.5" />
@@ -160,10 +162,10 @@ export default function FloatingActionBar({
             </div>
 
             <h4 className="text-base font-serif font-bold text-amber-200">
-              ចងដៃតាម {bankAccount.bank || "KHQR"}
+              {lang === "en" ? `Wedding Gift (${bankAccount.bank || "KHQR"})` : `ចងដៃតាម ${bankAccount.bank || "KHQR"}`}
             </h4>
             <p className="text-xs text-zinc-400 mb-4">
-              ស្កេនដើម្បីជូនពរ និងចងដៃដល់គូស្វាមីភរិយា
+              {lang === "en" ? "Scan QR to send your love and wedding gift" : "ស្កេនដើម្បីជូនពរ និងចងដៃដល់គូស្វាមីភរិយា"}
             </p>
 
             <div className="relative mx-auto w-40 h-40 rounded-2xl bg-white p-3 shadow-inner flex items-center justify-center mb-4 overflow-hidden">
@@ -187,12 +189,16 @@ export default function FloatingActionBar({
                   type="button"
                   onClick={handleCopyAccount}
                   className="p-1 rounded hover:bg-white/10 text-zinc-400 hover:text-white transition"
-                  title="ចម្លងលេខគណនី"
+                  title={lang === "en" ? "Copy Account Number" : "ចម្លងលេខគណនី"}
                 >
                   <Copy className="h-3.5 w-3.5" />
                 </button>
               </div>
-              {copied && <p className="text-[10px] text-emerald-400">បានចម្លងរួចរាល់!</p>}
+              {copied && (
+                <p className="text-[10px] text-emerald-400">
+                  {lang === "en" ? "Copied to clipboard!" : "បានចម្លងរួចរាល់!"}
+                </p>
+              )}
             </div>
 
             <button
@@ -200,7 +206,7 @@ export default function FloatingActionBar({
               onClick={() => setShowQrModal(false)}
               className="w-full py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 text-xs font-semibold text-zinc-200 transition"
             >
-              បិទផ្ទាំង
+              {lang === "en" ? "Close" : "បិទផ្ទាំង"}
             </button>
           </div>
         </div>

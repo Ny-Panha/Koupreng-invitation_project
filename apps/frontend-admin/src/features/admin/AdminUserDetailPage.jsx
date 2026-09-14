@@ -3,10 +3,12 @@ import { Link, useParams } from "react-router-dom";
 import { Loading, ErrorState, Empty } from "../../components/States";
 import { useResource } from "../../hooks/useResource";
 import { formatDate } from "../../lib/format";
+import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 import adminManagementService from "./adminManagementService";
 import "./AdminFeature.css";
 
 export default function AdminUserDetailPage() {
+  const { t } = useAdminLanguage();
   const { userId } = useParams();
   const load = useCallback(async () => {
     const [user, invitations] = await Promise.all([
@@ -27,28 +29,36 @@ export default function AdminUserDetailPage() {
       <div className="page-head">
         <div>
           <h2 className="page-title">{user.fullName || user.email || `User #${user.id}`}</h2>
-          <p className="page-subtitle">User detail and owned invitations</p>
+          <p className="page-subtitle">{t("users.detailSubtitle", "User detail and owned invitations")}</p>
         </div>
-        <Link className="btn btn-ghost" to="/admin/users">Back</Link>
+        <Link className="btn btn-ghost" to="/admin/users">{t("users.back", "Back")}</Link>
       </div>
 
       <section className="card" style={{ marginBottom: 18 }}>
         <div className="admin-detail-grid">
-          <Cell label="Email" value={user.email} />
-          <Cell label="Phone" value={user.phone} />
-          <Cell label="Role" value={user.role} />
-          <Cell label="Status" value={user.status} />
-          <Cell label="Created" value={formatDate(user.createdAt)} />
-          <Cell label="Updated" value={formatDate(user.updatedAt)} />
+          <Cell label={t("users.colEmail", "Email")} value={user.email} />
+          <Cell label={t("users.colPhone", "Phone")} value={user.phone} />
+          <Cell label={t("users.colRole", "Role")} value={user.role} />
+          <Cell label={t("users.colStatus", "Status")} value={user.status} />
+          <Cell label={t("users.colCreated", "Created")} value={formatDate(user.createdAt)} />
+          <Cell label={t("users.colUpdated", "Updated")} value={formatDate(user.updatedAt)} />
         </div>
       </section>
 
       <section className="card">
-        <h3 className="page-title" style={{ fontSize: 16, marginBottom: 14 }}>Invitations</h3>
-        {!invitations?.length ? <Empty label="No invitations" /> : (
+        <h3 className="page-title" style={{ fontSize: 16, marginBottom: 14 }}>{t("users.invitationsTitle", "Invitations")}</h3>
+        {!invitations?.length ? <Empty label={t("users.noInvitations", "No invitations")} /> : (
           <div className="table-wrap">
             <table className="data">
-              <thead><tr><th>ID</th><th>Title</th><th>Status</th><th>Event date</th><th>Moderation</th></tr></thead>
+              <thead>
+                <tr>
+                  <th>{t("invitations.colId", "ID")}</th>
+                  <th>{t("invitations.colTitle", "Title")}</th>
+                  <th>{t("invitations.colStatus", "Status")}</th>
+                  <th>{t("invitations.colEvent", "Event date")}</th>
+                  <th>{t("invitations.colModeration", "Moderation")}</th>
+                </tr>
+              </thead>
               <tbody>
                 {invitations.map((invitation) => (
                   <tr key={invitation.id}>
@@ -76,3 +86,4 @@ function Cell({ label, value }) {
     </div>
   );
 }
+

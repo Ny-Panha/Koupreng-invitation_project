@@ -3,6 +3,7 @@ import { Loading, ErrorState, Empty } from "../../components/States";
 import Toast from "../../components/Toast";
 import { useResource } from "../../hooks/useResource";
 import { useToast } from "../../hooks/useToast";
+import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 import adminManagementService from "./adminManagementService";
 import "./AdminFeature.css";
 
@@ -66,6 +67,7 @@ function toPayload(form) {
 }
 
 export default function AdminPackagesPage() {
+  const { lang, t } = useAdminLanguage();
   const { data, setData, loading, error, reload } = useResource(adminManagementService.packages);
   const [form, setForm] = useState(EMPTY_FORM);
   const [editingId, setEditingId] = useState(null);
@@ -95,10 +97,10 @@ export default function AdminPackagesPage() {
           ? rows.map((item) => (item.id === saved.id ? saved : item))
           : [saved, ...rows];
       });
-      show("Package saved successfully");
+      show(lang === "en" ? "Package saved successfully" : "កញ្ចប់ត្រូវបានរក្សាទុកជោគជ័យ");
       resetForm();
     } catch (err) {
-      show(err?.message || "Package save failed", "error");
+      show(err?.message || (lang === "en" ? "Package save failed" : "ការរក្សាទុកកញ្ចប់បរាជ័យ"), "error");
     } finally {
       setBusyId(null);
     }
@@ -111,9 +113,9 @@ export default function AdminPackagesPage() {
         ? await adminManagementService.deactivatePackage(plan.id)
         : await adminManagementService.activatePackage(plan.id);
       setData((current) => (current || []).map((item) => (item.id === saved.id ? saved : item)));
-      show("Package status updated");
+      show(lang === "en" ? "Package status updated" : "ស្ថានភាពកញ្ចប់ត្រូវបានកែប្រែ");
     } catch (err) {
-      show(err?.message || "Package action failed", "error");
+      show(err?.message || (lang === "en" ? "Package action failed" : "ប្រតិបត្តិការបរាជ័យ"), "error");
     } finally {
       setBusyId(null);
     }
@@ -123,25 +125,57 @@ export default function AdminPackagesPage() {
     <div>
       <div className="page-head">
         <div>
-          <h2 className="page-title">Packages</h2>
-          <p className="page-subtitle">Manage subscription packages exposed to users.</p>
+          <h2 className="page-title">{t("packages.title", "Packages")}</h2>
+          <p className="page-subtitle">{t("packages.subtitle", "Manage subscription packages exposed to users.")}</p>
         </div>
-        <button type="button" className="btn btn-ghost" onClick={reload}>Refresh</button>
+        <button type="button" className="btn btn-ghost" onClick={reload}>
+          {t("common.refresh", "Refresh")}
+        </button>
       </div>
 
       <section className="card" style={{ marginBottom: 18 }}>
         <form onSubmit={save}>
           <div className="admin-form-grid">
-            <label>Package name<input className="text-input" value={form.packageName} onChange={(event) => setField("packageName", event.target.value)} required /></label>
-            <label>Code<input className="text-input" value={form.code} onChange={(event) => setField("code", event.target.value.toUpperCase())} required /></label>
-            <label>Price<input className="text-input" type="number" step="0.01" value={form.price} onChange={(event) => setField("price", event.target.value)} /></label>
-            <label>Currency<input className="text-input" value={form.currency} onChange={(event) => setField("currency", event.target.value.toUpperCase())} /></label>
-            <label>Billing interval<input className="text-input" value={form.billingInterval} onChange={(event) => setField("billingInterval", event.target.value.toUpperCase())} /></label>
-            <label>Duration days<input className="text-input" type="number" value={form.durationDays} onChange={(event) => setField("durationDays", event.target.value)} /></label>
-            <label>Max invitations<input className="text-input" type="number" value={form.maxInvitations} onChange={(event) => setField("maxInvitations", event.target.value)} /></label>
-            <label>Max guests<input className="text-input" type="number" value={form.maxGuests} onChange={(event) => setField("maxGuests", event.target.value)} /></label>
-            <label>Sort order<input className="text-input" type="number" value={form.sortOrder} onChange={(event) => setField("sortOrder", event.target.value)} /></label>
-            <label>Description<textarea className="text-input" value={form.description || ""} onChange={(event) => setField("description", event.target.value)} /></label>
+            <label>
+              {t("packages.colName", "Package Name")}
+              <input className="text-input" value={form.packageName} onChange={(event) => setField("packageName", event.target.value)} required />
+            </label>
+            <label>
+              {t("packages.colCode", "Code")}
+              <input className="text-input" value={form.code} onChange={(event) => setField("code", event.target.value.toUpperCase())} required />
+            </label>
+            <label>
+              {t("packages.colPrice", "Price")}
+              <input className="text-input" type="number" step="0.01" value={form.price} onChange={(event) => setField("price", event.target.value)} />
+            </label>
+            <label>
+              Currency
+              <input className="text-input" value={form.currency} onChange={(event) => setField("currency", event.target.value.toUpperCase())} />
+            </label>
+            <label>
+              Billing interval
+              <input className="text-input" value={form.billingInterval} onChange={(event) => setField("billingInterval", event.target.value.toUpperCase())} />
+            </label>
+            <label>
+              Duration days
+              <input className="text-input" type="number" value={form.durationDays} onChange={(event) => setField("durationDays", event.target.value)} />
+            </label>
+            <label>
+              Max invitations
+              <input className="text-input" type="number" value={form.maxInvitations} onChange={(event) => setField("maxInvitations", event.target.value)} />
+            </label>
+            <label>
+              Max guests
+              <input className="text-input" type="number" value={form.maxGuests} onChange={(event) => setField("maxGuests", event.target.value)} />
+            </label>
+            <label>
+              Sort order
+              <input className="text-input" type="number" value={form.sortOrder} onChange={(event) => setField("sortOrder", event.target.value)} />
+            </label>
+            <label>
+              Description
+              <textarea className="text-input" value={form.description || ""} onChange={(event) => setField("description", event.target.value)} />
+            </label>
           </div>
           <div className="admin-tabs">
             {[
@@ -160,17 +194,38 @@ export default function AdminPackagesPage() {
             ))}
           </div>
           <div className="row-actions">
-            <button type="submit" className="btn btn-primary" disabled={busyId === (editingId || "new")}>{editingId ? "Update package" : "Create package"}</button>
-            {editingId && <button type="button" className="btn btn-ghost" onClick={resetForm}>Cancel</button>}
+            <button type="submit" className="btn btn-primary" disabled={busyId === (editingId || "new")}>
+              {editingId ? (lang === "en" ? "Update package" : "កែប្រែកញ្ចប់") : (lang === "en" ? "Create package" : "បង្កើតកញ្ចប់")}
+            </button>
+            {editingId && (
+              <button type="button" className="btn btn-ghost" onClick={resetForm}>
+                {t("common.cancel", "Cancel")}
+              </button>
+            )}
           </div>
         </form>
       </section>
 
       <section className="card">
-        {loading ? <Loading /> : error ? <ErrorState onRetry={reload} /> : packages.length === 0 ? <Empty /> : (
+        {loading ? (
+          <Loading />
+        ) : error ? (
+          <ErrorState onRetry={reload} />
+        ) : packages.length === 0 ? (
+          <Empty />
+        ) : (
           <div className="table-wrap">
             <table className="data">
-              <thead><tr><th>Code</th><th>Name</th><th>Price</th><th>Limits</th><th>Status</th><th>Actions</th></tr></thead>
+              <thead>
+                <tr>
+                  <th>{t("packages.colCode", "Code")}</th>
+                  <th>{t("packages.colName", "Name")}</th>
+                  <th>{t("packages.colPrice", "Price")}</th>
+                  <th>{lang === "en" ? "Limits" : "ដែនកំណត់"}</th>
+                  <th>{t("packages.colStatus", "Status")}</th>
+                  <th>{t("packages.colActions", "Actions")}</th>
+                </tr>
+              </thead>
               <tbody>
                 {packages.map((plan) => (
                   <tr key={plan.id}>
@@ -181,9 +236,11 @@ export default function AdminPackagesPage() {
                     <td><span className={`badge ${plan.active ? "badge-green" : "badge-gray"}`}>{plan.active ? "ACTIVE" : "INACTIVE"}</span></td>
                     <td>
                       <div className="row-actions">
-                        <button type="button" className="btn btn-ghost btn-sm" onClick={() => { setEditingId(plan.id); setForm(toForm(plan)); }}>Edit</button>
+                        <button type="button" className="btn btn-ghost btn-sm" onClick={() => { setEditingId(plan.id); setForm(toForm(plan)); }}>
+                          {t("common.edit", "Edit")}
+                        </button>
                         <button type="button" className={plan.active ? "btn btn-danger btn-sm" : "btn btn-primary btn-sm"} disabled={busyId === plan.id} onClick={() => toggleActive(plan)}>
-                          {plan.active ? "Deactivate" : "Activate"}
+                          {plan.active ? (lang === "en" ? "Deactivate" : "បិទ") : (lang === "en" ? "Activate" : "បើក")}
                         </button>
                       </div>
                     </td>

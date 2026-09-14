@@ -4,10 +4,12 @@ import Toast from "../../components/Toast";
 import { Loading, ErrorState } from "../../components/States";
 import { useToast } from "../../hooks/useToast";
 import { formatDate } from "../../lib/format";
+import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 import adminManagementService from "./adminManagementService";
 import "./AdminFeature.css";
 
 export default function AdminInvitationDetailPage() {
+  const { t } = useAdminLanguage();
   const { invitationId } = useParams();
   const [invitation, setInvitation] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -47,13 +49,14 @@ export default function AdminInvitationDetailPage() {
   }, [invitationId]);
 
   const moderate = async (status) => {
-    if (!window.confirm(`Set moderation status to ${status}?`)) return;
+    const confirmPrompt = t("invitations.confirmModerate", `Set moderation status to {status}?`, { status });
+    if (!window.confirm(confirmPrompt)) return;
     setBusy(true);
     try {
       setInvitation(await adminManagementService.moderateInvitation(invitationId, { status }));
-      show("Moderation updated");
+      show(t("invitations.toastSuccess", "Moderation updated"));
     } catch (err) {
-      show(err?.message || "Moderation failed", "error");
+      show(err?.message || t("invitations.toastFail", "Moderation failed"), "error");
     } finally {
       setBusy(false);
     }
@@ -67,26 +70,26 @@ export default function AdminInvitationDetailPage() {
       <div className="page-head">
         <div>
           <h2 className="page-title">{invitation.title || invitation.slug || `Invitation #${invitation.id}`}</h2>
-          <p className="page-subtitle">Invitation detail, publication state, and moderation controls.</p>
+          <p className="page-subtitle">{t("invitations.detailSubtitle", "Invitation detail, publication state, and moderation controls.")}</p>
         </div>
-        <Link className="btn btn-ghost" to="/admin/invitations">Back</Link>
+        <Link className="btn btn-ghost" to="/admin/invitations">{t("invitations.back", "Back")}</Link>
       </div>
 
       <section className="card" style={{ marginBottom: 18 }}>
         <div className="admin-detail-grid">
-          <Cell label="Owner" value={invitation.ownerName} />
-          <Cell label="Slug" value={invitation.slug} />
-          <Cell label="Status" value={invitation.status} />
-          <Cell label="Moderation" value={invitation.moderationStatus || "ACTIVE"} />
-          <Cell label="Template" value={invitation.templateName} />
-          <Cell label="Event date" value={formatDate(invitation.eventDate)} />
-          <Cell label="Venue" value={invitation.venueName} />
-          <Cell label="Visibility" value={invitation.visibility} />
+          <Cell label={t("invitations.colOwner", "Owner")} value={invitation.ownerName} />
+          <Cell label={t("invitations.colSlug", "Slug")} value={invitation.slug} />
+          <Cell label={t("invitations.colStatus", "Status")} value={invitation.status} />
+          <Cell label={t("invitations.colModeration", "Moderation")} value={invitation.moderationStatus || "ACTIVE"} />
+          <Cell label={t("invitations.colTemplate", "Template")} value={invitation.templateName} />
+          <Cell label={t("invitations.colEvent", "Event date")} value={formatDate(invitation.eventDate)} />
+          <Cell label={t("invitations.colVenue", "Venue")} value={invitation.venueName} />
+          <Cell label={t("invitations.colVisibility", "Visibility")} value={invitation.visibility} />
         </div>
       </section>
 
       <section className="card">
-        <h3 className="page-title" style={{ fontSize: 16, marginBottom: 14 }}>Moderation</h3>
+        <h3 className="page-title" style={{ fontSize: 16, marginBottom: 14 }}>{t("invitations.colModeration", "Moderation")}</h3>
         <div className="row-actions">
           {["ACTIVE", "HIDDEN", "REPORTED", "SUSPENDED"].map((status) => (
             <button key={status} type="button" className="btn btn-ghost" disabled={busy} onClick={() => moderate(status)}>
@@ -108,3 +111,4 @@ function Cell({ label, value }) {
     </div>
   );
 }
+
