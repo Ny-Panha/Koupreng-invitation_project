@@ -588,6 +588,20 @@ input:checked + .pe-slider:before {
   }
 }
 
+@media (max-width: 360px) {
+  .pe-create-card-title {
+    font-size: 1.15rem;
+  }
+
+  .pe-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .pe-create-card {
+    padding: 12px 8px;
+  }
+}
+
 /* Accessibility Focus Rings */
 .pe-input:focus-visible,
 .pe-select:focus-visible,
