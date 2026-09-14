@@ -281,3 +281,63 @@
   background: var(--brand-surface);
   color: var(--brand-text-muted);
 }
+
+/* Mobile Responsiveness (360px, 390px, 412px) */
+@media (max-width: 640px) {
+  .pe-templates-browse-page {
+    padding: 16px 12px 36px;
+    gap: 16px;
+  }
+
+  .tb-toolbar {
+    padding: 12px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .tb-categories {
+    flex: 1 1 100%;
+    width: 100%;
+    scrollbar-width: none;
+  }
+
+  .tb-categories::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tb-search-wrap {
+    min-width: 100%;
+    width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .tb-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 412px) {
+  .pe-templates-browse-page {
+    padding: 12px 8px 30px;
+  }
+
+  .tb-category-chip {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+  }
+
+  .tb-card-body {
+    padding: 14px;
+  }
+}
+
+/* Accessibility Focus Rings */
+.tb-category-chip:focus-visible,
+.tb-btn-select:focus-visible,
+.tb-btn-preview:focus-visible,
+.tb-search-input:focus-visible {
+  outline: 2px solid var(--brand-primary, #b98b42);
+  outline-offset: 2px;
+}

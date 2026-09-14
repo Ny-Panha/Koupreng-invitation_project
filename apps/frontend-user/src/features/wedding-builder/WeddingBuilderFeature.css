@@ -390,6 +390,29 @@ input:checked + .pe-slider:before {
   }
 }
 
+@media (max-width: 480px) {
+  .pe-subitem-row {
+    grid-template-columns: 1fr 36px;
+    grid-template-areas:
+      "title delete"
+      "time time";
+    gap: 8px;
+  }
+
+  .pe-subitem-row > div:first-child {
+    grid-area: title;
+  }
+
+  .pe-subitem-row > div:nth-child(2) {
+    grid-area: time;
+  }
+
+  .pe-subitem-del-wrap {
+    grid-area: delete;
+    height: auto;
+  }
+}
+
 .pe-subitem-del-wrap {
   display: flex;
   align-items: center;
@@ -518,4 +541,62 @@ input:checked + .pe-slider:before {
 .pe-btn-submit:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+/* Responsive enhancements for mobile widths (360px, 390px, 412px) */
+@media (max-width: 640px) {
+  .pe-create-page-wrapper {
+    padding: 20px 12px 60px;
+  }
+
+  .pe-create-card {
+    padding: 20px 16px;
+  }
+
+  .pe-cover-image-box {
+    height: 180px;
+  }
+}
+
+@media (max-width: 412px) {
+  .pe-create-page-wrapper {
+    padding: 12px 8px 50px;
+  }
+
+  .pe-create-card {
+    padding: 16px 12px;
+    border-radius: 12px;
+  }
+
+  .pe-create-card-title {
+    font-size: 1.25rem;
+    margin-bottom: 18px;
+  }
+
+  .pe-day-card {
+    padding: 14px 12px;
+  }
+
+  .pe-create-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .pe-btn-back,
+  .pe-btn-submit {
+    width: 100%;
+  }
+}
+
+/* Accessibility Focus Rings */
+.pe-input:focus-visible,
+.pe-select:focus-visible,
+.pe-textarea:focus-visible,
+.pe-upload-btn:focus-visible,
+.pe-create-agenda-btn:focus-visible,
+.pe-add-day-btn:focus-visible,
+.pe-btn-back:focus-visible,
+.pe-btn-submit:focus-visible {
+  outline: 2px solid #b98b42;
+  outline-offset: 2px;
 }
