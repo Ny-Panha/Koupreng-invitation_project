@@ -5,12 +5,14 @@ export default function RequireAdmin({ children }) {
     const { isAuthenticated, user } = useAuth();
     const location = useLocation();
 
-    const role = String(user?.role || "").toUpperCase();
+    const normalizeRole = (r) => String(r || "").toUpperCase().replace(/^ROLE_/, "");
+    const userRole = normalizeRole(user?.role);
+    const userRoles = Array.isArray(user?.roles) ? user.roles.map(normalizeRole) : [];
     const isAdmin =
-        role === "ADMIN" ||
-        role === "SUPER_ADMIN" ||
-        role === "ADMIN_MANAGER" ||
-        (Array.isArray(user?.roles) && user.roles.some((r) => String(r).toUpperCase() === "ADMIN"));
+        userRole === "ADMIN" ||
+        userRole === "SUPER_ADMIN" ||
+        userRole === "ADMIN_MANAGER" ||
+        userRoles.some((r) => r === "ADMIN" || r === "SUPER_ADMIN" || r === "ADMIN_MANAGER");
 
     if (isAuthenticated && isAdmin) {
         return children;
