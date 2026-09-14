@@ -155,20 +155,62 @@ export default function DashboardFeature() {
   const stats = useMemo(() => {
     const inv = state.selectedInvitation;
     const guestTotal = state.guests.reduce((sum, g) => sum + (Number(g.count) || 1), 0);
-    const rsvpYes = state.rsvps.reduce(
-      (sum, r) =>
-        r.status === "ACCEPTED" || r.attending || r.responseStatus === "ACCEPTED"
-          ? sum + (Number(r.count) || 1)
-          : sum,
-      0
-    );
-    const rsvpNo = state.rsvps.reduce(
-      (sum, r) =>
-        r.status === "DECLINED" || r.responseStatus === "DECLINED"
-          ? sum + (Number(r.count) || 1)
-          : sum,
-      0
-    );
+    const totalGuestsCount = Math.max(guestTotal, state.guests.length);
+
+    // 1. Check summary from backend API (matching /dashboard/invitations/:id/rsvp)
+    const summaryAttending =
+      typeof state.rsvpSummary?.attending === "number"
+        ? state.rsvpSummary.attending
+        : typeof state.rsvpSummary?.accepted === "number"
+          ? state.rsvpSummary.accepted
+          : null;
+
+    const summaryDeclined =
+      typeof state.rsvpSummary?.notAttending === "number"
+        ? state.rsvpSummary.notAttending
+        : typeof state.rsvpSummary?.declined === "number"
+          ? state.rsvpSummary.declined
+          : null;
+
+    const summaryPending =
+      typeof state.rsvpSummary?.pending === "number"
+        ? state.rsvpSummary.pending
+        : null;
+
+    // 2. Fallback calculate from rsvps list
+    const rsvpsYes = state.rsvps.reduce((sum, r) => {
+      const s = String(r.responseStatus || r.status || "").toUpperCase();
+      return s === "ATTENDING" || s === "ACCEPTED" || r.attending === true
+        ? sum + (Number(r.attendeeCount) || Number(r.count) || 1)
+        : sum;
+    }, 0);
+
+    const guestsYes = state.guests.reduce((sum, g) => {
+      const s = String(g.rsvpStatus || g.status || "").toUpperCase();
+      return s === "ATTENDING" || s === "ACCEPTED"
+        ? sum + (Number(g.count) || 1)
+        : sum;
+    }, 0);
+
+    const rsvpsNo = state.rsvps.reduce((sum, r) => {
+      const s = String(r.responseStatus || r.status || "").toUpperCase();
+      return s === "NOT_ATTENDING" || s === "DECLINED"
+        ? sum + (Number(r.attendeeCount) || Number(r.count) || 1)
+        : sum;
+    }, 0);
+
+    const guestsNo = state.guests.reduce((sum, g) => {
+      const s = String(g.rsvpStatus || g.status || "").toUpperCase();
+      return s === "NOT_ATTENDING" || s === "DECLINED"
+        ? sum + (Number(g.count) || 1)
+        : sum;
+    }, 0);
+
+    const rsvpYes = summaryAttending !== null ? summaryAttending : Math.max(rsvpsYes, guestsYes);
+    const rsvpNo = summaryDeclined !== null ? summaryDeclined : Math.max(rsvpsNo, guestsNo);
+    const rsvpPending = summaryPending !== null
+      ? summaryPending
+      : Math.max(0, totalGuestsCount - rsvpYes - rsvpNo);
 
     const totalBudget = state.budgetItems.reduce(
       (sum, b) => sum + (Number(b.budget) || Number(b.estimatedCost) || Number(b.amount) || 0),
@@ -188,7 +230,7 @@ export default function DashboardFeature() {
       state.guests.filter((g) => g.checkedIn).length ||
       0;
 
-    const rsvpRate = guestTotal > 0 ? Math.min(100, Math.round((rsvpYes / guestTotal) * 100)) : 0;
+    const rsvpRate = totalGuestsCount > 0 ? Math.min(100, Math.round((rsvpYes / totalGuestsCount) * 100)) : 0;
     const budgetRate = totalBudget > 0 ? Math.min(100, Math.round((actualExpense / totalBudget) * 100)) : 0;
 
     return {
@@ -204,10 +246,10 @@ export default function DashboardFeature() {
       slug: inv?.slug || "",
       status: inv?.status || (inv?.published ? "PUBLISHED" : "DRAFT"),
       id: inv?.id || inv?.invitationId,
-      guestTotal: Math.max(guestTotal, state.guests.length),
+      guestTotal: totalGuestsCount,
       rsvpYes,
       rsvpNo,
-      rsvpPending: Math.max(0, guestTotal - rsvpYes - rsvpNo),
+      rsvpPending,
       rsvpRate,
       checkedInCount,
       totalBudget,
@@ -218,6 +260,15 @@ export default function DashboardFeature() {
       giftCount: state.gifts.length,
     };
   }, [state]);
+
+  const completedSteps = useMemo(() => {
+    return [
+      Boolean(stats.id),
+      stats.guestTotal > 0,
+      stats.rsvpYes > 0 || stats.rsvpNo > 0,
+      stats.totalBudget > 0 || stats.actualExpense > 0,
+    ].filter(Boolean).length;
+  }, [stats]);
 
   // Live Countdown Effect
   useEffect(() => {
@@ -555,11 +606,21 @@ export default function DashboardFeature() {
 
               {/* Readiness Checklist */}
               <div className="dash-card">
-                <div className="dash-card-header">
+                <div className="dash-card-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <h3>
                     <IoCheckmarkCircle style={{ color: "#0f766e", fontSize: "1.25rem" }} />
                     <span>{text("checklistTitle")}</span>
                   </h3>
+                  <span style={{
+                    fontSize: "0.75rem",
+                    fontWeight: 800,
+                    color: "#0f766e",
+                    background: "rgba(15, 118, 110, 0.1)",
+                    padding: "3px 10px",
+                    borderRadius: "999px"
+                  }}>
+                    {completedSteps}/4 {lang === "km" ? "រួចរាល់" : "Done"}
+                  </span>
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
@@ -588,7 +649,7 @@ export default function DashboardFeature() {
                         <IoPeopleOutline style={{ fontSize: "1.4rem", color: "var(--brand-primary)", flexShrink: 0 }} />
                       )}
                       <div>
-                        <div style={{ fontSize: "0.875rem", fontWeight: 800, color: "var(--brand-text)" }}>{text("checkStep2Title", { count: stats.guestTotal })}</div>
+                        <div style={{ fontSize: "0.875rem", fontWeight: 800, color: "var(--brand-text)" }}>{text("checkStep2Title")}</div>
                         <div style={{ fontSize: "0.75rem", color: "var(--brand-text-muted)" }}>{text("checkStep2Desc")}</div>
                       </div>
                     </div>
@@ -606,7 +667,7 @@ export default function DashboardFeature() {
                         <IoCheckmarkCircleOutline style={{ fontSize: "1.4rem", color: "#0f766e", flexShrink: 0 }} />
                       )}
                       <div>
-                        <div style={{ fontSize: "0.875rem", fontWeight: 800, color: "var(--brand-text)" }}>{text("checkStep3Title", { rate: stats.rsvpRate })}</div>
+                        <div style={{ fontSize: "0.875rem", fontWeight: 800, color: "var(--brand-text)" }}>{text("checkStep3Title")}</div>
                         <div style={{ fontSize: "0.75rem", color: "var(--brand-text-muted)" }}>{text("checkStep3Desc")}</div>
                       </div>
                     </div>
@@ -624,7 +685,7 @@ export default function DashboardFeature() {
                         <IoWalletOutline style={{ fontSize: "1.4rem", color: "#e11d48", flexShrink: 0 }} />
                       )}
                       <div>
-                        <div style={{ fontSize: "0.875rem", fontWeight: 800, color: "var(--brand-text)" }}>{text("checkStep4Title", { amount: stats.actualExpense.toLocaleString() })}</div>
+                        <div style={{ fontSize: "0.875rem", fontWeight: 800, color: "var(--brand-text)" }}>{text("checkStep4Title")}</div>
                         <div style={{ fontSize: "0.75rem", color: "var(--brand-text-muted)" }}>{text("checkStep4Desc")}</div>
                       </div>
                     </div>

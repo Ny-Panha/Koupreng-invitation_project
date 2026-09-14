@@ -60,6 +60,10 @@ export const invitationService = {
     api
       .get(`/v1/public/invitations/${encodeURIComponent(slug)}${toQuery(publicParams(params))}`, { skipAuth: true })
       .then(unwrap),
+  publicGuestView: (slug, params) =>
+    api
+      .get(`/v1/public/invitations/${encodeURIComponent(slug)}/guest-view${toQuery(publicParams(params))}`, { skipAuth: true })
+      .then(unwrap),
   verifyPublicAccess: (slug, data) =>
     api.post(`/v1/public/invitations/${encodeURIComponent(slug)}/access/verify`, data, { skipAuth: true }).then(unwrap),
 };

@@ -79,6 +79,7 @@ export function useGuests() {
   );
   const [backendGuests, setBackendGuests] = useState([]);
   const [rsvpGuests, setRsvpGuests] = useState([]);
+  const [checkIns, setCheckIns] = useState([]);
   const [publicInvitation, setPublicInvitation] = useState(null);
   const [backendInvitation, setBackendInvitation] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -106,6 +107,7 @@ export function useGuests() {
         setPublicInvitation(null);
         setBackendGuests([]);
         setRsvpGuests([]);
+        setCheckIns([]);
         setError("Invitation not found or you do not have permission to manage its guests");
         return;
       }
@@ -118,18 +120,24 @@ export function useGuests() {
 
       if (backendIdToUse) {
         try {
-          const [rawGuests, rawRsvps] = await Promise.all([
+          const [rawGuests, rawRsvps, rawCheckIns] = await Promise.all([
             guestService.listByInvitation(backendIdToUse),
             rsvpService.listByInvitation(backendIdToUse),
+            typeof guestService.checkInList === "function"
+              ? guestService.checkInList(backendIdToUse).catch(() => [])
+              : Promise.resolve([]),
           ]);
           fetchedBackendGuests = (rawGuests || []).map(normalizeBackendGuest);
           setRsvpGuests((rawRsvps || []).map(normalizeBackendRsvp));
+          setCheckIns(rawCheckIns || []);
         } catch (err) {
           setError(err?.message || "Could not fetch backend guest records");
           setRsvpGuests([]);
+          setCheckIns([]);
         }
       } else {
         setRsvpGuests([]);
+        setCheckIns([]);
       }
 
       setBackendGuests(fetchedBackendGuests);
@@ -146,13 +154,13 @@ export function useGuests() {
 
   const allGuests = useMemo(() => {
     if (backendInvitation) {
-      return mergeBackendGuestsWithRsvps(backendGuests, rsvpGuests);
+      return mergeBackendGuestsWithRsvps(backendGuests, rsvpGuests, checkIns);
     }
     if (requestedInvitationId) {
       return [];
     }
     return manualGuests;
-  }, [backendGuests, backendInvitation, manualGuests, requestedInvitationId, rsvpGuests]);
+  }, [backendGuests, backendInvitation, checkIns, manualGuests, requestedInvitationId, rsvpGuests]);
 
   return {
     eventId,

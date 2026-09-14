@@ -1,4 +1,5 @@
-import { IoAdd, IoCloudUploadOutline, IoSettingsOutline } from "react-icons/io5";
+import { Link } from "react-router-dom";
+import { IoAdd, IoCloudUploadOutline, IoDownloadOutline, IoQrCodeOutline, IoSettingsOutline } from "react-icons/io5";
 import { SearchInput } from "@/shared/ui";
 
 export default function GuestFilters({
@@ -12,6 +13,7 @@ export default function GuestFilters({
   categories,
   onOpenCreate,
   onOpenImport,
+  onExportCsv,
   onOpenGroupManager,
   onOpenCategoryManager,
   t,
@@ -78,6 +80,24 @@ export default function GuestFilters({
       </div>
 
       <div className="pe-actions">
+        <Link
+          to="/dashboard/check-in"
+          className="pe-secondary-btn"
+          style={{ display: "inline-flex", alignItems: "center", gap: "6px", textDecoration: "none" }}
+          title="ស្កេន QR Code Check-in ភ្ញៀវពេលមកដល់"
+        >
+          <IoQrCodeOutline aria-hidden="true" />
+          <span>ស្កេន Check-in</span>
+        </Link>
+        <button
+          type="button"
+          className="pe-secondary-btn"
+          onClick={onExportCsv}
+          title={t ? t("exportBtn") : "ទាញយកបញ្ជីភ្ញៀវជា Excel/CSV"}
+        >
+          <IoDownloadOutline aria-hidden="true" />
+          <span>{t ? t("exportBtn") : "ទាញយក CSV"}</span>
+        </button>
         <button type="button" className="pe-secondary-btn" onClick={onOpenImport}>
           <IoCloudUploadOutline aria-hidden="true" />
           <span>{t ? t("importBtn") : "នាំចូល"}</span>

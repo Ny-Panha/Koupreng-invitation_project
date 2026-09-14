@@ -87,20 +87,24 @@ public class GuestService {
         return GuestResponse.from(guestRepository.save(guest));
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public List<GuestResponse> list(Authentication authentication, Long invitationId) {
-        invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        UserInvitation invitation = invitationService.requireOwnedInvitationEntity(authentication, invitationId);
         return guestRepository.findByInvitationIdOrderByCreatedAtDesc(invitationId).stream()
-                .map(GuestResponse::from)
+                .map(guest -> {
+                    ensureInvitationLink(invitation, guest);
+                    return GuestResponse.from(guest);
+                })
                 .toList();
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public List<GuestGroupResponse> groupedByCategory(Authentication authentication, Long invitationId) {
-        invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        UserInvitation invitation = invitationService.requireOwnedInvitationEntity(authentication, invitationId);
         List<Guest> guests = guestRepository.findByInvitationIdOrderByGuestGroupAscTableNumberAscGuestNameAsc(invitationId);
         Map<String, List<GuestResponse>> grouped = new LinkedHashMap<>();
         for (Guest guest : guests) {
+            ensureInvitationLink(invitation, guest);
             grouped.computeIfAbsent(category(guest), ignored -> new ArrayList<>())
                     .add(GuestResponse.from(guest));
         }

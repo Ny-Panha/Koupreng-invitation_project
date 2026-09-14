@@ -5,7 +5,7 @@ import {
   IoTrashOutline,
 } from "react-icons/io5";
 import { ResponsiveTable, StatusBadge } from "@/shared/ui";
-import { buildShareMessage, guestInviteUrl, initials } from "../model/guestMappers";
+import { buildShareMessage, guestInviteUrl } from "../model/guestMappers";
 
 export default function GuestTable({
   guests = [],
@@ -37,16 +37,13 @@ export default function GuestTable({
           return (
             <tr key={guest.id}>
               <td>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                  <span className="pe-avatar">{initials(guest.name)}</span>
-                  <div>
-                    <strong>{guest.name}</strong>
-                    {guest.companionName && (
-                      <small style={{ display: "block", color: "var(--brand-text-muted)" }}>
-                        + {guest.companionName}
-                      </small>
-                    )}
-                  </div>
+                <div>
+                  <strong>{guest.name}</strong>
+                  {guest.companionName && (
+                    <small style={{ display: "block", color: "var(--brand-text-muted)" }}>
+                      + {guest.companionName}
+                    </small>
+                  )}
                 </div>
               </td>
               <td>{guest.phone || "-"}</td>
@@ -55,12 +52,29 @@ export default function GuestTable({
               <td>{guest.count || 1}</td>
               <td>
                 <div className="pe-guest-statuses">
-                  <StatusBadge status={guest.sendStatus} />
+                  {guest.checkedIn && (
+                    <StatusBadge
+                      status="CHECKED_IN"
+                      label={t ? t("checkedIn") : "បានចូលរួម"}
+                      variant="success"
+                    />
+                  )}
                   {guest.rsvpStatus && (
                     <StatusBadge
                       status={guest.rsvpStatus}
                       label={`RSVP: ${guest.rsvpStatus.replaceAll("_", " ")}`}
                     />
+                  )}
+                  {!guest.checkedIn && !guest.rsvpStatus && (
+                    <StatusBadge status={guest.sendStatus} />
+                  )}
+                  {(guest.checkedIn || guest.rsvpStatus) &&
+                  guest.sendStatus &&
+                  guest.sendStatus !== "មិនទាន់ផ្ញើ" &&
+                  guest.sendStatus !== "PENDING" &&
+                  guest.sendStatus !== "បានឆ្លើយតប" &&
+                  guest.sendStatus !== "RESPONDED" && (
+                    <StatusBadge status={guest.sendStatus} />
                   )}
                 </div>
               </td>
@@ -78,7 +92,7 @@ export default function GuestTable({
                   <button
                     type="button"
                     className="pe-icon-btn"
-                    onClick={() => onCopyLink(shareMessage || inviteUrl)}
+                    onClick={() => onCopyLink(shareMessage || inviteUrl, guest)}
                     title={t ? t("copyMessage") : "ចម្លងសារអញ្ជើញ"}
                     aria-label={t ? t("copyMessage") : "ចម្លងសារអញ្ជើញ"}
                   >

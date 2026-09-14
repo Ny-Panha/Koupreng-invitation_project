@@ -412,7 +412,7 @@
 .ck-rsvp h2 { margin: 1px 0 4px; color: #fff; font-size: clamp(13px, 4cqw, 18px); }
 .ck-rsvp .inv-form-grid,
 .ck-demo-rsvp__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
-.ck-rsvp .inv-form-grid:first-of-type label:first-child,
+.ck-rsvp .inv-form-grid:first-of-type label,
 .ck-demo-rsvp__grid label:first-child { grid-column: 1 / -1; }
 .ck-rsvp label { display: grid; gap: 2px; color: rgba(255, 255, 255, 0.72); font-size: clamp(7px, 2.1cqw, 9px); }
 .ck-rsvp input,
@@ -469,8 +469,7 @@
 .ck-bottom-nav button { display: grid; min-width: 0; place-items: center; align-content: center; gap: 1px; padding: 2px; border: 0; border-radius: 13px; color: #48677f; font-size: 9px; background: transparent; cursor: pointer; }
 .ck-bottom-nav button:focus-visible,
 .ck-bottom-nav button:hover { color: var(--ck-navy); background: #deeff2; }
-.ck-bottom-nav svg { font-size: 17px; }
-.ck-music { position: fixed; z-index: 1002; right: max(calc((100vw - 430px) / 2 + 12px), 12px); bottom: 82px; display: grid; width: 42px; aspect-ratio: 1; place-items: center; border: 1px solid #d8a84f; border-radius: 50%; color: #fff; background: var(--ck-navy); box-shadow: 0 8px 24px rgba(3, 25, 42, 0.3); cursor: pointer; }
+.ck-music { position: fixed; z-index: 1002; top: max(16px, env(safe-area-inset-top)); right: max(calc((100vw - 430px) / 2 + 12px), 12px); bottom: auto; display: grid; width: 42px; aspect-ratio: 1; place-items: center; border: 1px solid #d8a84f; border-radius: 50%; color: #fff; background: var(--ck-navy); box-shadow: 0 8px 24px rgba(3, 25, 42, 0.3); cursor: pointer; }
 .ck-music > svg { position: relative; z-index: 1; font-size: 18px; }
 .ck-music > span { position: absolute; inset: -5px; border: 1px solid rgba(216, 168, 79, 0.54); border-radius: inherit; opacity: 0; }
 .ck-music.is-playing > span { animation: ck-music-pulse 1.8s ease-out infinite; }
@@ -494,7 +493,7 @@
 .ck-page--preview .ck-phone { width: 100%; min-height: 0; box-shadow: none; }
 .ck-page--preview .ck-invitation { padding-bottom: 0; }
 .ck-page--preview .ck-bottom-nav { display: none; }
-.ck-page--preview .ck-music { position: absolute; right: 10px; bottom: 12px; }
+.ck-page--preview .ck-music { position: absolute; top: 12px; right: 10px; bottom: auto; }
 
 @media (max-width: 480px) {
     .ck-page { padding: 0; }

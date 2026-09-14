@@ -135,7 +135,7 @@ export default function TemplateExperience({
                 accountName: liveData.bankAccountName || baseContent.bankAccount?.accountName || "VANDA & SREYPICH Official",
                 qrUrl: liveData.qrGiftUrl || baseContent.bankAccount?.qrUrl,
             },
-            enableFloatingBar: liveData.enableFloatingBar !== false,
+            enableFloatingBar: Boolean(liveData.enableFloatingBar),
             enabledSections: liveData.enabledSections ? {
                 ...baseContent.enabledSections,
                 ...liveData.enabledSections,
@@ -388,8 +388,10 @@ export default function TemplateExperience({
             )}
 
             {content.music && <audio ref={musicAudioRef} src={content.music} loop preload="none" />}
-            {gateOpen && <TemplateMusicControl controller={musicController} />}
-            {gateOpen && content.enableFloatingBar !== false && (
+            {gateOpen && (!content.enableFloatingBar || showStickyCta) && (
+                <TemplateMusicControl controller={musicController} />
+            )}
+            {gateOpen && content.enableFloatingBar && !showStickyCta && (
                 <FloatingActionBar
                     audioController={musicController}
                     googleMapsUrl={content.venue?.mapUrl || content.googleMapUrl}

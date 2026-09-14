@@ -293,7 +293,7 @@ export default function InvitationDeliveryManager() {
                   </td>
                   <td>
                     <span>{guest.phone || "No phone"}</span>
-                    <small>{guest.email || "No email"}</small>
+                    {guest.email ? <small>{guest.email}</small> : null}
                   </td>
                   <td>
                     <div

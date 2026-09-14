@@ -66,3 +66,8 @@ test-results/
 
 database.txt
 buildding.md
+
+# Personal AI Telegram Bot
+scripts/dev/telegram-ai-bot.mjs
+scripts/dev/telegram-ai*
+scripts/dev/.bot-state.json

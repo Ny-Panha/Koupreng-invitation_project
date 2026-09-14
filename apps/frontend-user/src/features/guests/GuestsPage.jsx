@@ -15,6 +15,7 @@ import GuestDeleteDialog from "./components/GuestDeleteDialog";
 import GuestQrModal from "./components/GuestQrModal";
 import GuestImportModal from "./components/GuestImportModal";
 import GroupCategoryModal from "./components/GroupCategoryModal";
+import { exportGuestsToCsv } from "./model/guestCsvUtils";
 import "./GuestsPage.css";
 
 function scopedKey(base, eventId) {
@@ -66,6 +67,7 @@ export default function GuestsPage() {
     saveGuest,
     deleteGuest,
     importGuests,
+    markGuestAsSent,
   } = useGuestMutations({
     eventId,
     backendInvitation,
@@ -141,10 +143,18 @@ export default function GuestsPage() {
     }
   };
 
-  const handleCopyLink = async (text) => {
+  const handleCopyLink = async (text, guest) => {
     const ok = await copyText(text);
     if (ok) {
       toast.success(t ? t("messageCopied") : "ចម្លងសារអញ្ជើញបានជោគជ័យ");
+      if (
+        guest &&
+        (guest.sendStatus === "មិនទាន់ផ្ញើ" ||
+          guest.sendStatus === "PENDING" ||
+          !guest.sendStatus)
+      ) {
+        markGuestAsSent(guest);
+      }
     } else {
       toast.error(t ? t("linkCopyFailed") : "មិនអាចចម្លងបានទេ");
     }
@@ -162,6 +172,18 @@ export default function GuestsPage() {
     writeList(scopedKey("koupreng.host.guestCategories", eventId), nextCategories);
     setCategoryModalOpen(false);
     toast.success(t ? t("toastUpdated") : "រក្សាទុកប្រភេទបានជោគជ័យ");
+  };
+
+  const handleExportCsv = () => {
+    if (!guests || !guests.length) {
+      toast.error(t ? t("noGuestsToExport") : "មិនមានទិន្នន័យភ្ញៀវសម្រាប់ទាញយកទេ");
+      return;
+    }
+    const eventTitle = backendInvitation?.title || draftMatch?.title || "wedding";
+    const success = exportGuestsToCsv(guests, eventTitle);
+    if (success) {
+      toast.success(t ? t("exportSuccess") : "បានទាញយកបញ្ជីភ្ញៀវដោយជោគជ័យ (CSV)");
+    }
   };
 
   return (
@@ -187,6 +209,7 @@ export default function GuestsPage() {
         categories={categories}
         onOpenCreate={handleOpenCreate}
         onOpenImport={() => setImportModalOpen(true)}
+        onExportCsv={handleExportCsv}
         onOpenGroupManager={() => setGroupModalOpen(true)}
         onOpenCategoryManager={() => setCategoryModalOpen(true)}
         t={t}
@@ -273,6 +296,7 @@ export default function GuestsPage() {
         onClose={() => setImportModalOpen(false)}
         saving={saving}
         onImport={importGuests}
+        error={mutationError}
         t={t}
       />
 

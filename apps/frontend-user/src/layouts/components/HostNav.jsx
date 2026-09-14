@@ -27,6 +27,7 @@ const NAV_LABELS = {
     guests: "បញ្ជីភ្ញៀវ",
     expenses: "គម្រោងថវិកា",
     gifts: "ចងដៃមង្គល",
+    packages: "កញ្ចប់សេវាកម្ម",
     browseTemplates: "ស្វែងរកគំរូ",
     myInvitation: "គម្រូធៀប",
   },
@@ -36,6 +37,7 @@ const NAV_LABELS = {
     guests: "Guests",
     expenses: "Budget",
     gifts: "Gifts",
+    packages: "Packages",
     browseTemplates: "Browse Templates",
     myInvitation: "Invitation Template",
   },
@@ -133,6 +135,7 @@ export default function HostNav() {
     { labelKey: "gifts", path: "/dashboard/gifts", Icon: IoGiftOutline },
     { labelKey: "myInvitation", path: myInvitationPath, Icon: IoColorPaletteOutline },
     { labelKey: "browseTemplates", path: "/templates/browse", Icon: IoColorPaletteOutline },
+    { labelKey: "packages", path: "/dashboard/packages", Icon: IoDiamondOutline },
   ];
 
   const isActive = (path) => {
@@ -777,6 +780,15 @@ export default function HostNav() {
                         ? navText("editProfile")
                         : navText("createProfile")}
                     </span>
+                  </Link>
+                  <Link
+                    to="/dashboard/packages"
+                    className="host-profile-menu-item"
+                    onClick={() => setProfileOpen(false)}
+                    role="menuitem"
+                  >
+                    <IoDiamondOutline aria-hidden="true" style={{ color: "#B0926A" }} />
+                    <span>{getNavLabel("packages")}</span>
                   </Link>
                   <Link
                     to="/dashboard/templates/paid"

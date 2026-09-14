@@ -1,6 +1,7 @@
-import { render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { cleanup, render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import {
+  guestInviteUrl,
   initials,
   mergeBackendGuestsWithRsvps,
   normalizeBackendGuest,
@@ -9,6 +10,10 @@ import {
 } from "./model/guestMappers";
 import GuestStats from "./components/GuestStats";
 import GuestTable from "./components/GuestTable";
+
+afterEach(() => {
+  cleanup();
+});
 
 describe("Guest Domain Module", () => {
   describe("guestMappers", () => {
@@ -22,6 +27,7 @@ describe("Guest Domain Module", () => {
         tableNumber: "T-01",
         seatCount: 2,
         sendStatus: "បានផ្ញើ",
+        inviteToken: "token-dara-123",
       };
 
       const result = normalizeBackendGuest(raw);
@@ -32,7 +38,16 @@ describe("Guest Domain Module", () => {
       expect(result.category).toBe("Friend");
       expect(result.seat).toBe("T-01");
       expect(result.count).toBe(2);
+      expect(result.inviteToken).toBe("token-dara-123");
       expect(result.source).toBe("backend");
+    });
+
+    it("generates unique guest invite URL with token (1 guest = 1 unique QR link)", () => {
+      const draft = { slug: "nha-pkay" };
+      const guest = { name: "Heng Thida", inviteToken: "token-thida-999" };
+      const url = guestInviteUrl(draft, guest);
+
+      expect(url).toContain("/w/nha-pkay?token=token-thida-999");
     });
 
     it("normalizes manual guest record correctly", () => {
@@ -130,6 +145,37 @@ describe("Guest Domain Module", () => {
       expect(screen.getByText("Groom Side")).toBeInTheDocument();
       expect(screen.getByText("Published")).toBeInTheDocument();
       expect(screen.getByText("RSVP: ATTENDING")).toBeInTheDocument();
+    });
+
+    it("suppresses pending status and shows checked-in and RSVP badges when guest has responded and checked in", () => {
+      const sampleGuests = [
+        {
+          id: 2,
+          name: "Eng Thida",
+          phone: "085221144",
+          group: "Family",
+          category: "Family",
+          count: 1,
+          sendStatus: "មិនទាន់ផ្ញើ",
+          rsvpStatus: "ATTENDING",
+          checkedIn: true,
+        },
+      ];
+
+      render(
+        <GuestTable
+          guests={sampleGuests}
+          onEdit={vi.fn()}
+          onDelete={vi.fn()}
+          onShowQr={vi.fn()}
+          onCopyLink={vi.fn()}
+        />
+      );
+
+      expect(screen.getByText("Eng Thida")).toBeInTheDocument();
+      expect(screen.getByText("បានចូលរួម")).toBeInTheDocument();
+      expect(screen.getByText("RSVP: ATTENDING")).toBeInTheDocument();
+      expect(screen.queryByText("មិនទាន់ផ្ញើ")).not.toBeInTheDocument();
     });
   });
 });

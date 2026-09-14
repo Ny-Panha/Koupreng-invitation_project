@@ -7,6 +7,7 @@ import {
   toBackendGuestPayload,
   toManualGuest,
 } from "../model/guestMappers";
+import { SEND_STATUS } from "../model/guestConstants";
 
 function invitationId(invitation) {
   return invitation?.id || invitation?.invitationId;
@@ -140,7 +141,48 @@ export function useGuestMutations({
     try {
       const backendIdToUse = backendInvitation ? invitationId(backendInvitation) : null;
       if (backendIdToUse) {
-        const payloadList = importedList.map(toBackendGuestPayload);
+        // Collect existing phones and emails to prevent 409 Conflict with already-saved guests
+        const existingPhones = new Set(
+          (backendGuests || [])
+            .map((g) => (g.phone ? String(g.phone).replace(/[^0-9]/g, "") : ""))
+            .filter(Boolean)
+        );
+        const existingEmails = new Set(
+          (backendGuests || [])
+            .map((g) => (g.email ? String(g.email).trim().toLowerCase() : ""))
+            .filter(Boolean)
+        );
+
+        const seenPhones = new Set(existingPhones);
+        const seenEmails = new Set(existingEmails);
+        const toImport = [];
+        let skippedCount = 0;
+
+        for (const guest of importedList) {
+          const rawPhone = guest.phone ? String(guest.phone).replace(/[^0-9]/g, "") : null;
+          const rawEmail = guest.email ? String(guest.email).trim().toLowerCase() : null;
+
+          const isDuplicate =
+            (rawPhone && seenPhones.has(rawPhone)) ||
+            (rawEmail && seenEmails.has(rawEmail));
+
+          if (isDuplicate) {
+            skippedCount++;
+            continue;
+          }
+
+          if (rawPhone) seenPhones.add(rawPhone);
+          if (rawEmail) seenEmails.add(rawEmail);
+          toImport.push(guest);
+        }
+
+        if (toImport.length === 0) {
+          const msg = "ភ្ញៀវទាំងអស់ក្នុង File នេះមានលេខទូរស័ព្ទ ឬ Email នៅក្នុងប្រព័ន្ធរួចរាល់ហើយ (ស្ទួន)";
+          setError(msg);
+          return false;
+        }
+
+        const payloadList = toImport.map(toBackendGuestPayload);
         await guestService.importForInvitation(backendIdToUse, payloadList);
       } else {
         const normalizedNew = importedList.map(normalizeManualGuest);
@@ -151,14 +193,51 @@ export function useGuestMutations({
         });
       }
 
-
       await refreshData();
       return true;
     } catch (err) {
-      setError(err?.message || "Could not import guests");
+      const is409 = err?.status === 409 || err?.data?.code === "GUEST_DUPLICATE";
+      const errorMsg = is409
+        ? "មានភ្ញៀវដែលមានលេខទូរស័ព្ទ ឬ Email ដូចគ្នានៅក្នុងប្រព័ន្ធរួចហើយ (Conflict 409)"
+        : err?.message || "Could not import guests";
+      setError(errorMsg);
       return false;
     } finally {
       setSaving(false);
+    }
+  };
+
+  const markGuestAsSent = async (guest) => {
+    if (!guest) return;
+    const nextStatus = SEND_STATUS.sent;
+
+    setBackendGuests((current) =>
+      current.map((g) =>
+        String(g.id) === String(guest.id) ? { ...g, sendStatus: nextStatus } : g
+      )
+    );
+    setManualGuests((current) => {
+      const next = current.map((g) =>
+        String(g.id) === String(guest.id) ? { ...g, sendStatus: nextStatus } : g
+      );
+      saveManualGuests(eventId, next);
+      return next;
+    });
+
+    const backendIdToUse = backendInvitation ? invitationId(backendInvitation) : null;
+    if (backendIdToUse && guest.source === "backend" && (guest.backendId || guest.id)) {
+      try {
+        await guestService.updateForInvitation(
+          backendIdToUse,
+          guest.backendId || guest.id,
+          {
+            ...toBackendGuestPayload(guest),
+            sendStatus: "SENT",
+          }
+        );
+      } catch (err) {
+        console.warn("Could not persist sent status to backend:", err);
+      }
     }
   };
 
@@ -169,5 +248,6 @@ export function useGuestMutations({
     saveGuest,
     deleteGuest,
     importGuests,
+    markGuestAsSent,
   };
 }

@@ -91,7 +91,7 @@ export function RsvpGuestTable({
                       </div>
                     </td>
                     <td>
-                      <StatusBadge status={(rsvp.status || "PENDING").toUpperCase()} />
+                      <StatusBadge status={(rsvp.responseStatus || rsvp.status || "PENDING").toUpperCase()} />
                     </td>
                     <td>
                       <span className="rsvp-party-badge">

@@ -63,6 +63,9 @@ public class RsvpService {
         validateDeadline(invitation);
         Guest guest = reusableGuest(invitation.getId(), request)
                 .orElseGet(() -> createPublicGuest(invitation, request));
+        guest.setInvitationViewedAt(Instant.now());
+        guest.setSendStatus("RESPONDED");
+        guestRepository.save(guest);
         Rsvp saved = upsertRsvp(invitation, guest, request);
         notifyRsvpRecorded(saved);
         return RsvpResponse.from(saved);
@@ -75,6 +78,8 @@ public class RsvpService {
         Guest guest = guestRepository.findByInvitationIdAndInviteToken(invitation.getId(), inviteToken)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Guest invitation link not found"));
         guest.setInvitationViewedAt(Instant.now());
+        guest.setSendStatus("RESPONDED");
+        guestRepository.save(guest);
         Rsvp saved = upsertRsvp(invitation, guest, request);
         notifyRsvpRecorded(saved);
         return RsvpResponse.from(saved);

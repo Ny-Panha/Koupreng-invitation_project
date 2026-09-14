@@ -186,7 +186,7 @@ export default function ContactFeature() {
                       }}
                     >
                       <option value="Enterprise (កញ្ចប់ពេជ្រ)">កញ្ចប់ពេជ្រ (Enterprise / Custom)</option>
-                      <option value="Pro (កញ្ចប់មាស)">កញ្ចប់មាស (Pro - $169)</option>
+                      <option value="Pro (កញ្ចប់មាស)">កញ្ចប់មាស (Pro - $19)</option>
                       <option value="Basic (កញ្ចប់មង្គល)">កញ្ចប់មង្គល (Basic - Free)</option>
                       <option value="Other">ផ្សេងៗ (Other Inquiry)</option>
                     </select>
