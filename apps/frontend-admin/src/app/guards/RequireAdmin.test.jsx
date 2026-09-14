@@ -59,4 +59,13 @@ describe("RequireAdmin", () => {
     renderProtected();
     expect(screen.getByRole("heading", { name: "Admin users" })).toBeInTheDocument();
   });
+
+  it("allows role with Spring Security ROLE_ADMIN or ADMIN_MANAGER in roles array", () => {
+    window.sessionStorage.setItem("koupreng.admin.auth", JSON.stringify({
+      accessToken: futureTestToken(),
+      user: { role: "ROLE_ADMIN", roles: ["ROLE_ADMIN_MANAGER"] },
+    }));
+    renderProtected();
+    expect(screen.getByRole("heading", { name: "Admin users" })).toBeInTheDocument();
+  });
 });
