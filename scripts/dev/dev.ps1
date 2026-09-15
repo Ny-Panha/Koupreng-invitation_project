@@ -150,7 +150,7 @@ if ($Bot) {
     $botJob = Start-Job -ScriptBlock {
         param($dir)
         Set-Location $dir
-        & python -m uvicorn app.main:app --port 8000 --reload 2>&1
+        & python -m uvicorn main:app --host 127.0.0.1 --port 8000 --reload 2>&1
     } -ArgumentList "$RootDir\apps\telegram-bot"
     $jobs += $botJob
 }
@@ -163,7 +163,7 @@ if (-not $AdminOnly) {
     Write-Host "  Frontend User:   http://localhost:5173" -ForegroundColor Cyan
 }
 if (-not $UserOnly) {
-    Write-Host "  Frontend Admin:  http://localhost:5174 (admin@koupreng.com / admin123)" -ForegroundColor Cyan
+    Write-Host "  Frontend Admin:  http://localhost:5174" -ForegroundColor Cyan
 }
 Write-Host "  Backend API:     http://localhost:8080" -ForegroundColor Cyan
 if ($Bot) { Write-Host "  Telegram Bot:    http://localhost:8000" -ForegroundColor Cyan }

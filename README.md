@@ -71,6 +71,18 @@ Default local URLs:
 - Admin frontend: `http://localhost:5174`
 - Telegram service: `http://localhost:8000`
 
+## Run with Docker Compose
+
+After copying `.env.example` to `.env` and replacing every secret placeholder:
+
+```bash
+docker compose config --quiet
+docker compose build --pull
+docker compose up -d
+```
+
+The default Compose gateway serves the user app at `http://localhost:8080` and the admin app at `http://admin.localhost:8080`. MySQL and Redis are not published to the host. See [Docker and reverse-proxy deployment](docs/deployment/DOCKER.md) for topology, TLS/proxy rules, volumes, and release checks.
+
 ## API documentation
 
 The development API portal provides both Springdoc Swagger UI and a first-class
@@ -122,7 +134,7 @@ is enabled, mutating requests must also satisfy the configured CSRF requirements
 cd apps/backend && ./mvnw clean verify
 cd apps/frontend-user && npm run lint && npm test && npm run analyze:knip && npm run analyze:deps && npm run build
 cd apps/frontend-admin && npm run lint && npm test && npm run analyze:knip && npm run analyze:deps && npm run build
-cd apps/telegram-bot && python -m pytest -q && python -m ruff check .
+cd apps/telegram-bot && python -m pytest -q && python -m ruff check . && python -m bandit -q -r main.py start.py
 ```
 
 Browser journeys run from `apps/frontend-user` with `npm run test:e2e`. The repository-wide CI workflow also runs secret scanning, dependency audits, fresh-MySQL Flyway migration, static analysis, build artifacts, and route smoke tests.

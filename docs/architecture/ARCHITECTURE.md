@@ -159,6 +159,8 @@ The user and admin applications keep independent routing, authorization UX, buil
 
 Nginx is the reverse proxy; Cloudflare owns edge TLS/WAF/DDoS concerns; Spring Security owns identity/authorization/validation and application abuse controls. Actuator provides health/info/Prometheus endpoints with restricted details. Logs use structured events and never include passwords, tokens, secrets, full provider credentials, or unnecessary personal data.
 
+The tracked Docker topology uses host-based routing so both existing React applications can preserve their root-relative routes: the public/host app owns the primary hostname and the admin app owns a separate hostname. Only the Nginx gateway publishes a host port; MySQL and Redis stay on an internal data network. See `docs/deployment/DOCKER.md` for the executable topology and operating constraints.
+
 ## Migration method
 
 For each domain:

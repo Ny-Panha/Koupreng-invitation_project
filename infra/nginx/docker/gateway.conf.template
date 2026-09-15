@@ -1,0 +1,120 @@
+map $http_x_forwarded_proto $koupreng_forwarded_proto {
+    default $http_x_forwarded_proto;
+    "" $scheme;
+}
+
+limit_req_zone $binary_remote_addr zone=public_api:10m rate=30r/s;
+
+upstream koupreng_backend {
+    server backend:8080;
+    keepalive 32;
+}
+
+upstream koupreng_user_web {
+    server frontend-user:8080;
+    keepalive 16;
+}
+
+upstream koupreng_admin_web {
+    server frontend-admin:8080;
+    keepalive 8;
+}
+
+upstream koupreng_telegram_bot {
+    server telegram-bot:8000;
+    keepalive 4;
+}
+
+server {
+    listen 8080 default_server;
+    server_name ${USER_SERVER_NAME};
+    client_max_body_size 60m;
+
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Permissions-Policy "camera=(), microphone=(), geolocation=(self)" always;
+
+    location /api/ {
+        limit_req zone=public_api burst=60 nodelay;
+        proxy_pass http://koupreng_backend;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $koupreng_forwarded_proto;
+        proxy_set_header X-Request-Id $request_id;
+        proxy_connect_timeout 5s;
+        proxy_read_timeout 60s;
+    }
+
+    location /uploads/ {
+        proxy_pass http://koupreng_backend;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $koupreng_forwarded_proto;
+        proxy_hide_header Set-Cookie;
+        add_header Cache-Control "public, max-age=604800, no-transform" always;
+        add_header X-Content-Type-Options "nosniff" always;
+        add_header Content-Security-Policy "default-src 'none'; style-src 'unsafe-inline'; sandbox" always;
+    }
+
+    location = /telegram/webhook {
+        limit_req zone=public_api burst=20 nodelay;
+        proxy_pass http://koupreng_telegram_bot;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $koupreng_forwarded_proto;
+        proxy_connect_timeout 5s;
+        proxy_read_timeout 20s;
+    }
+
+    location = /health {
+        access_log off;
+        proxy_pass http://koupreng_user_web/health;
+    }
+
+    location / {
+        proxy_pass http://koupreng_user_web;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $koupreng_forwarded_proto;
+    }
+}
+
+server {
+    listen 8080;
+    server_name ${ADMIN_SERVER_NAME};
+    client_max_body_size 10m;
+
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-Frame-Options "DENY" always;
+    add_header Referrer-Policy "no-referrer" always;
+
+    location /api/ {
+        limit_req zone=public_api burst=30 nodelay;
+        proxy_pass http://koupreng_backend;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $koupreng_forwarded_proto;
+        proxy_set_header X-Request-Id $request_id;
+        proxy_connect_timeout 5s;
+        proxy_read_timeout 60s;
+    }
+
+    location = /health {
+        access_log off;
+        proxy_pass http://koupreng_admin_web/health;
+    }
+
+    location / {
+        proxy_pass http://koupreng_admin_web;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $koupreng_forwarded_proto;
+    }
+}

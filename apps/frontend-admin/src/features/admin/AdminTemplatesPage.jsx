@@ -28,6 +28,7 @@ import adminManagementService from "./adminManagementService";
 import { AdminPageHeader, StatCard, StatusBadge, ActionButton } from "../../shared/ui/AdminUI";
 import Toast from "../../components/Toast";
 import { Loading, ErrorState } from "../../components/States";
+import { USER_APP_URL } from "../../shared/config/runtime";
 
 // Retained as the canonical category vocabulary for the pending filter control.
 // eslint-disable-next-line no-unused-vars
@@ -1143,7 +1144,7 @@ export default function AdminTemplatesPage() {
 
                 <div className="mt-4 text-center">
                   <p className="text-[11px] text-slate-400 dark:text-zinc-500">
-                    💡 រាល់ពេល Admin រក្សាទុក គំរូនេះនឹងបង្ហាញជូនភ្ញៀវ/User នៅលើ <code>http://localhost:5173/templates</code> ភ្លាមៗ។
+                    💡 រាល់ពេល Admin រក្សាទុក គំរូនេះនឹងបង្ហាញជូនភ្ញៀវ/User នៅលើ <code>{USER_APP_URL}/templates</code> ភ្លាមៗ។
                   </p>
                 </div>
               </div>
