@@ -1,7 +1,7 @@
-package com.koupreng.backend.service;
+package com.koupreng.backend.integration.ai.application;
 
-import com.koupreng.backend.dto.ai.AiInvitationDraftRequest;
-import com.koupreng.backend.dto.ai.AiInvitationDraftResponse;
+import com.koupreng.backend.integration.ai.api.dto.AiInvitationDraftRequest;
+import com.koupreng.backend.integration.ai.api.dto.AiInvitationDraftResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

@@ -1,11 +1,11 @@
-package com.koupreng.backend.controller;
+package com.koupreng.backend.integration.ai.api;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
-import com.koupreng.backend.dto.ai.AiInvitationDraftRequest;
-import com.koupreng.backend.dto.ai.AiInvitationDraftResponse;
-import com.koupreng.backend.service.AiInvitationAssistantService;
+import com.koupreng.backend.integration.ai.api.dto.AiInvitationDraftRequest;
+import com.koupreng.backend.integration.ai.api.dto.AiInvitationDraftResponse;
+import com.koupreng.backend.integration.ai.application.AiInvitationAssistantService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;

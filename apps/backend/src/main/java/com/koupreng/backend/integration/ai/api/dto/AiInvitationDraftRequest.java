@@ -1,4 +1,4 @@
-package com.koupreng.backend.dto.ai;
+package com.koupreng.backend.integration.ai.api.dto;
 
 import lombok.Data;
 
