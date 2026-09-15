@@ -1,4 +1,4 @@
-package com.koupreng.backend.dto.seating;
+package com.koupreng.backend.seating.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

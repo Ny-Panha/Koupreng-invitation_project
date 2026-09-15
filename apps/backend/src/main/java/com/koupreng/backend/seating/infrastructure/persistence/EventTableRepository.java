@@ -1,6 +1,6 @@
-package com.koupreng.backend.repository;
+package com.koupreng.backend.seating.infrastructure.persistence;
 
-import com.koupreng.backend.entity.invitation.EventTable;
+import com.koupreng.backend.seating.domain.EventTable;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;

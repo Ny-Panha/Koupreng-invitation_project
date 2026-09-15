@@ -1,6 +1,6 @@
-package com.koupreng.backend.dto.seating;
+package com.koupreng.backend.seating.api.dto;
 
-import com.koupreng.backend.entity.invitation.EventTable;
+import com.koupreng.backend.seating.domain.EventTable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

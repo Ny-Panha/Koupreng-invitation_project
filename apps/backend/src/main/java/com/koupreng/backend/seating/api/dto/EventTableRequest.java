@@ -1,4 +1,4 @@
-package com.koupreng.backend.dto.seating;
+package com.koupreng.backend.seating.api.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

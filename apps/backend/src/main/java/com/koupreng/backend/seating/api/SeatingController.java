@@ -1,15 +1,15 @@
-package com.koupreng.backend.controller;
+package com.koupreng.backend.seating.api;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
-import com.koupreng.backend.dto.seating.EventTableRequest;
-import com.koupreng.backend.dto.seating.EventTableResponse;
-import com.koupreng.backend.dto.seating.SeatAssignmentRequest;
-import com.koupreng.backend.dto.seating.SeatAssignmentResponse;
-import com.koupreng.backend.dto.seating.SeatingPlanResponse;
-import com.koupreng.backend.dto.seating.SeatingSummaryResponse;
-import com.koupreng.backend.service.SeatingService;
+import com.koupreng.backend.seating.api.dto.EventTableRequest;
+import com.koupreng.backend.seating.api.dto.EventTableResponse;
+import com.koupreng.backend.seating.api.dto.SeatAssignmentRequest;
+import com.koupreng.backend.seating.api.dto.SeatAssignmentResponse;
+import com.koupreng.backend.seating.api.dto.SeatingPlanResponse;
+import com.koupreng.backend.seating.api.dto.SeatingSummaryResponse;
+import com.koupreng.backend.seating.application.SeatingService;
 import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.http.HttpHeaders;

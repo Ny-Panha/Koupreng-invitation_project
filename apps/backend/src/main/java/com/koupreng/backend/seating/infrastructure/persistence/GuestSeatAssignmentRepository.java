@@ -1,6 +1,6 @@
-package com.koupreng.backend.repository;
+package com.koupreng.backend.seating.infrastructure.persistence;
 
-import com.koupreng.backend.entity.invitation.GuestSeatAssignment;
+import com.koupreng.backend.seating.domain.GuestSeatAssignment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

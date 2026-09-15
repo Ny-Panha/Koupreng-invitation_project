@@ -1,17 +1,17 @@
-package com.koupreng.backend.service;
+package com.koupreng.backend.seating.application;
 
 import com.koupreng.backend.user.application.CurrentUserService;
 
 import com.koupreng.backend.shared.exception.ApiException;
-import com.koupreng.backend.dto.seating.SeatAssignmentRequest;
-import com.koupreng.backend.entity.invitation.EventTable;
+import com.koupreng.backend.seating.api.dto.SeatAssignmentRequest;
+import com.koupreng.backend.seating.domain.EventTable;
 import com.koupreng.backend.guest.domain.Guest;
-import com.koupreng.backend.entity.invitation.GuestSeatAssignment;
+import com.koupreng.backend.seating.domain.GuestSeatAssignment;
 import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.user.domain.AppUser;
-import com.koupreng.backend.repository.EventTableRepository;
+import com.koupreng.backend.seating.infrastructure.persistence.EventTableRepository;
 import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
-import com.koupreng.backend.repository.GuestSeatAssignmentRepository;
+import com.koupreng.backend.seating.infrastructure.persistence.GuestSeatAssignmentRepository;
 import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -23,10 +23,27 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class SeatingServiceTests {
+
+    @Test
+    void planRejectsAccessByAnotherInvitationOwner() {
+        Fixture fixture = fixture();
+        AppUser otherUser = new AppUser();
+        otherUser.setId(2L);
+        when(fixture.currentUserService.currentUser(fixture.authentication)).thenReturn(otherUser);
+        when(fixture.authentication.getAuthorities()).thenReturn(List.of());
+
+        ApiException exception = assertThrows(ApiException.class,
+                () -> fixture.service.plan(fixture.authentication, 10L));
+
+        assertEquals(HttpStatus.FORBIDDEN, exception.getStatus());
+        verify(fixture.tableRepository, never()).findByInvitationIdOrderBySortOrderAscTableNameAsc(10L);
+        verify(fixture.assignmentRepository, never()).findByInvitationIdOrderByAssignedAtDesc(10L);
+    }
 
     @Test
     void assignmentLocksTableAndGuestBeforeCapacityCheck() {

@@ -1,23 +1,23 @@
-package com.koupreng.backend.service;
+package com.koupreng.backend.seating.application;
 
 import com.koupreng.backend.user.application.CurrentUserService;
 
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.guest.api.dto.GuestResponse;
-import com.koupreng.backend.dto.seating.EventTableRequest;
-import com.koupreng.backend.dto.seating.EventTableResponse;
-import com.koupreng.backend.dto.seating.SeatAssignmentRequest;
-import com.koupreng.backend.dto.seating.SeatAssignmentResponse;
-import com.koupreng.backend.dto.seating.SeatingPlanResponse;
-import com.koupreng.backend.dto.seating.SeatingSummaryResponse;
-import com.koupreng.backend.entity.invitation.EventTable;
+import com.koupreng.backend.seating.api.dto.EventTableRequest;
+import com.koupreng.backend.seating.api.dto.EventTableResponse;
+import com.koupreng.backend.seating.api.dto.SeatAssignmentRequest;
+import com.koupreng.backend.seating.api.dto.SeatAssignmentResponse;
+import com.koupreng.backend.seating.api.dto.SeatingPlanResponse;
+import com.koupreng.backend.seating.api.dto.SeatingSummaryResponse;
+import com.koupreng.backend.seating.domain.EventTable;
 import com.koupreng.backend.guest.domain.Guest;
-import com.koupreng.backend.entity.invitation.GuestSeatAssignment;
+import com.koupreng.backend.seating.domain.GuestSeatAssignment;
 import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.user.domain.AppUser;
-import com.koupreng.backend.repository.EventTableRepository;
+import com.koupreng.backend.seating.infrastructure.persistence.EventTableRepository;
 import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
-import com.koupreng.backend.repository.GuestSeatAssignmentRepository;
+import com.koupreng.backend.seating.infrastructure.persistence.GuestSeatAssignmentRepository;
 import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;

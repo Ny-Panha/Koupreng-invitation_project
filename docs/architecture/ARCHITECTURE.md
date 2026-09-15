@@ -53,7 +53,9 @@ com.koupreng.backend
   media/
   guest/
   rsvp/
-  planning/       budget, gifts, seating, check-in, delivery
+  checkin/
+  seating/
+  planning/       budget, gifts, delivery
   payment/
   subscription/
   notification/
