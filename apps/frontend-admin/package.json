@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "analyze:knip": "knip --include files,dependencies,unlisted,binaries",
+    "analyze:knip": "node ../../scripts/ci/run-knip.mjs --include files,dependencies,unlisted,binaries",
     "analyze:deps": "depcheck --ignores=tailwindcss,@types/*,depcheck,knip"
   },
   "dependencies": {
