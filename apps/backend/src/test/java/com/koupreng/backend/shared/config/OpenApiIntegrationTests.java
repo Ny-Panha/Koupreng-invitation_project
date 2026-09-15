@@ -3,6 +3,7 @@ package com.koupreng.backend.shared.config;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -14,6 +15,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.Instant;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -66,6 +70,30 @@ class OpenApiIntegrationTests {
 
     @MockitoBean
     private TemplateCatalogService templateCatalogService;
+
+    @Test
+    void checkedInOpenApiContractMatchesRuntimeDocument() throws Exception {
+        String generated = normalizeContract(mockMvc.perform(get("/v3/api-docs.yaml"))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString(StandardCharsets.UTF_8));
+        Path contract = Path.of("..", "..", "packages", "api-contracts", "openapi.yaml")
+                .toAbsolutePath()
+                .normalize();
+
+        if (Boolean.getBoolean("openapi.contract.update")) {
+            Files.writeString(contract, generated, StandardCharsets.UTF_8);
+        }
+
+        String checkedIn = normalizeContract(Files.readString(contract, StandardCharsets.UTF_8));
+        assertEquals(checkedIn, generated,
+                "OpenAPI drift detected. Run the documented contract update command and review the diff.");
+    }
+
+    private String normalizeContract(String contract) {
+        return contract.replace("\r\n", "\n").stripTrailing() + "\n";
+    }
 
     @Test
     void openApiIsPublicAndContainsJwtBearerScheme() throws Exception {

@@ -5,7 +5,7 @@ Last reviewed: 2026-09-15
 
 ## Authority and compatibility
 
-Runtime springdoc output from the backend is the machine-readable source of truth. `packages/api-contracts/openapi.yaml` is the checked-in review artifact; a later backend-contract slice must generate and diff it in CI.
+Runtime springdoc output from the backend is the machine-readable source of truth. `packages/api-contracts/openapi.yaml` is its checked-in review artifact. `OpenApiIntegrationTests` regenerates the runtime YAML in memory and fails backend verification when the reviewed snapshot drifts. The opt-in update command is documented beside the artifact.
 
 Payment confirmation and fulfillment semantics are documented in `docs/api/payments.md`.
 

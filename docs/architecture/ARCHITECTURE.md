@@ -35,7 +35,7 @@ flowchart TB
 | `apps/frontend-user` | marketing, host workflows, builder, public invitation presentation, client UX state | authorization, trusted payment confirmation, durable business state |
 | `apps/frontend-admin` | independent operational UI and guarded routes | final admin authority; the backend always enforces it |
 | `apps/telegram-bot` | Telegram update validation/parsing and backend adapter calls | payment state, entitlement, pricing, or order ownership |
-| `packages/api-contracts` | checked-in reviewable API artifact | hand-maintained truth that can diverge from runtime OpenAPI |
+| `packages/api-contracts` | generated, checked-in runtime OpenAPI snapshot | hand-maintained API definitions or unreviewed contract drift |
 
 ## Backend target modules
 
@@ -97,7 +97,7 @@ These rules are executable in `ArchitectureRulesTests`: REST controllers cannot 
 
 ## API contract
 
-The target canonical prefix is `/api/v1`. Authentication exposes `/api/v1/auth/**`, current-user operations expose `/api/v1/users/me/**`, and both retain their unversioned paths as compatibility aliases with the same policy. `/api/admin` remains a compatibility path until canonical routes exist and all consumers are migrated. Runtime springdoc output is the machine-readable source of truth. The checked-in `packages/api-contracts/openapi.yaml` is a review artifact and must eventually be generated/diffed in CI.
+The target canonical prefix is `/api/v1`. Authentication exposes `/api/v1/auth/**`, current-user operations expose `/api/v1/users/me/**`, and both retain their unversioned paths as compatibility aliases with the same policy. `/api/admin` remains a compatibility path until canonical routes exist and all consumers are migrated. Runtime springdoc output is the machine-readable source of truth. Backend verification diffs it against the generated, checked-in `packages/api-contracts/openapi.yaml` review artifact.
 
 Success responses may retain the current `ApiResponse<T>` envelope. Error responses use:
 
