@@ -15,7 +15,7 @@ import com.koupreng.backend.guest.domain.Guest;
 import com.koupreng.backend.entity.invitation.GuestCheckIn;
 import com.koupreng.backend.entity.invitation.GuestSeatAssignment;
 import com.koupreng.backend.template.domain.InvitationTemplate;
-import com.koupreng.backend.entity.invitation.Rsvp;
+import com.koupreng.backend.rsvp.domain.Rsvp;
 import com.koupreng.backend.template.domain.TemplateCategory;
 import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.entity.notification.Notification;
@@ -30,7 +30,7 @@ import com.koupreng.backend.invitation.domain.InvitationVisibility;
 import com.koupreng.backend.enums.NotificationChannel;
 import com.koupreng.backend.enums.NotificationStatus;
 import com.koupreng.backend.enums.NotificationType;
-import com.koupreng.backend.enums.RsvpStatus;
+import com.koupreng.backend.rsvp.domain.RsvpStatus;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;

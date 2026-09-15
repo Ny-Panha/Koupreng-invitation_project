@@ -13,7 +13,7 @@ import com.koupreng.backend.dto.admin.SystemAuditLogResponse;
 import com.koupreng.backend.dto.checkin.CheckInResponse;
 import com.koupreng.backend.invitation.api.dto.InvitationResponse;
 import com.koupreng.backend.dto.payment.TemplatePaymentStatusResponse;
-import com.koupreng.backend.dto.rsvp.RsvpResponse;
+import com.koupreng.backend.rsvp.api.dto.RsvpResponse;
 import com.koupreng.backend.entity.audit.SystemAuditLog;
 import com.koupreng.backend.entity.invitation.GuestCheckIn;
 import com.koupreng.backend.template.domain.InvitationTemplate;
@@ -31,7 +31,7 @@ import com.koupreng.backend.repository.GuestCheckInRepository;
 import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
 import com.koupreng.backend.template.infrastructure.persistence.InvitationTemplateRepository;
 import com.koupreng.backend.repository.NotificationRepository;
-import com.koupreng.backend.repository.RsvpRepository;
+import com.koupreng.backend.rsvp.infrastructure.persistence.RsvpRepository;
 import com.koupreng.backend.repository.SystemAuditLogRepository;
 import com.koupreng.backend.repository.TemplatePaymentOrderRepository;
 import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;
@@ -374,9 +374,9 @@ public class AdminManagementService {
                 .generatedAt(Instant.now())
                 .summary(Map.of(
                         "totalRsvps", rows.size(),
-                        "attending", rows.stream().filter(row -> row.getResponseStatus() == com.koupreng.backend.enums.RsvpStatus.ATTENDING).count(),
-                        "declined", rows.stream().filter(row -> row.getResponseStatus() == com.koupreng.backend.enums.RsvpStatus.NOT_ATTENDING).count(),
-                        "maybe", rows.stream().filter(row -> row.getResponseStatus() == com.koupreng.backend.enums.RsvpStatus.MAYBE).count()
+                        "attending", rows.stream().filter(row -> row.getResponseStatus() == com.koupreng.backend.rsvp.domain.RsvpStatus.ATTENDING).count(),
+                        "declined", rows.stream().filter(row -> row.getResponseStatus() == com.koupreng.backend.rsvp.domain.RsvpStatus.NOT_ATTENDING).count(),
+                        "maybe", rows.stream().filter(row -> row.getResponseStatus() == com.koupreng.backend.rsvp.domain.RsvpStatus.MAYBE).count()
                 ))
                 .rows(rows)
                 .build();
@@ -476,17 +476,17 @@ public class AdminManagementService {
                 .toList();
         long totalGuests = guestRepository.count();
         long attending = rows.stream()
-                .filter(row -> row.getResponseStatus() == com.koupreng.backend.enums.RsvpStatus.ATTENDING)
+                .filter(row -> row.getResponseStatus() == com.koupreng.backend.rsvp.domain.RsvpStatus.ATTENDING)
                 .count();
         Map<String, Object> summary = new LinkedHashMap<>();
         summary.put("totalGuests", totalGuests);
         summary.put("totalRsvps", rows.size());
         summary.put("attending", attending);
         summary.put("declined", rows.stream()
-                .filter(row -> row.getResponseStatus() == com.koupreng.backend.enums.RsvpStatus.NOT_ATTENDING)
+                .filter(row -> row.getResponseStatus() == com.koupreng.backend.rsvp.domain.RsvpStatus.NOT_ATTENDING)
                 .count());
         summary.put("maybe", rows.stream()
-                .filter(row -> row.getResponseStatus() == com.koupreng.backend.enums.RsvpStatus.MAYBE)
+                .filter(row -> row.getResponseStatus() == com.koupreng.backend.rsvp.domain.RsvpStatus.MAYBE)
                 .count());
         summary.put("rsvpConversion", totalGuests == 0 ? 0 : (double) rows.size() / totalGuests);
         summary.put("attendingRate", totalGuests == 0 ? 0 : (double) attending / totalGuests);

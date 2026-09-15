@@ -1,13 +1,13 @@
-package com.koupreng.backend.controller;
+package com.koupreng.backend.rsvp.api;
 
 import com.koupreng.backend.shared.response.ApiErrorResponse;
 import com.koupreng.backend.dto.ApiResponse;
-import com.koupreng.backend.dto.rsvp.RsvpRequest;
-import com.koupreng.backend.dto.rsvp.RsvpResponse;
-import com.koupreng.backend.dto.rsvp.RsvpSummaryResponse;
-import com.koupreng.backend.dto.rsvp.RsvpUpdateRequest;
-import com.koupreng.backend.dto.rsvp.WishResponse;
-import com.koupreng.backend.service.RsvpService;
+import com.koupreng.backend.rsvp.api.dto.RsvpRequest;
+import com.koupreng.backend.rsvp.api.dto.RsvpResponse;
+import com.koupreng.backend.rsvp.api.dto.RsvpSummaryResponse;
+import com.koupreng.backend.rsvp.api.dto.RsvpUpdateRequest;
+import com.koupreng.backend.rsvp.api.dto.WishResponse;
+import com.koupreng.backend.rsvp.application.RsvpService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

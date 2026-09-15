@@ -38,10 +38,10 @@ import com.koupreng.backend.guest.api.dto.GuestResponse;
 import com.koupreng.backend.guest.api.dto.GuestSendListItemResponse;
 import com.koupreng.backend.guest.api.dto.GuestSendListResponse;
 import com.koupreng.backend.guest.domain.Guest;
-import com.koupreng.backend.entity.invitation.Rsvp;
+import com.koupreng.backend.rsvp.domain.Rsvp;
 import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
-import com.koupreng.backend.repository.RsvpRepository;
+import com.koupreng.backend.rsvp.infrastructure.persistence.RsvpRepository;
 import com.koupreng.backend.util.CsvExportUtils;
 
 @Service

@@ -1,17 +1,18 @@
-package com.koupreng.backend.service;
+package com.koupreng.backend.rsvp.application;
 
 import com.koupreng.backend.invitation.application.InvitationService;
+import com.koupreng.backend.service.NotificationService;
 import com.koupreng.backend.shared.exception.ApiException;
-import com.koupreng.backend.dto.rsvp.RsvpRequest;
-import com.koupreng.backend.dto.rsvp.RsvpResponse;
-import com.koupreng.backend.dto.rsvp.RsvpSummaryResponse;
-import com.koupreng.backend.dto.rsvp.RsvpUpdateRequest;
+import com.koupreng.backend.rsvp.api.dto.RsvpRequest;
+import com.koupreng.backend.rsvp.api.dto.RsvpResponse;
+import com.koupreng.backend.rsvp.api.dto.RsvpSummaryResponse;
+import com.koupreng.backend.rsvp.api.dto.RsvpUpdateRequest;
 import com.koupreng.backend.guest.domain.Guest;
-import com.koupreng.backend.entity.invitation.Rsvp;
+import com.koupreng.backend.rsvp.domain.Rsvp;
 import com.koupreng.backend.invitation.domain.UserInvitation;
-import com.koupreng.backend.enums.RsvpStatus;
+import com.koupreng.backend.rsvp.domain.RsvpStatus;
 import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
-import com.koupreng.backend.repository.RsvpRepository;
+import com.koupreng.backend.rsvp.infrastructure.persistence.RsvpRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;

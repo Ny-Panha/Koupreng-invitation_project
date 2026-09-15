@@ -1,4 +1,4 @@
-package com.koupreng.backend.dto.rsvp;
+package com.koupreng.backend.rsvp.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

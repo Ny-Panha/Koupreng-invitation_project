@@ -1,6 +1,6 @@
-package com.koupreng.backend.dto.rsvp;
+package com.koupreng.backend.rsvp.api.dto;
 
-import com.koupreng.backend.enums.RsvpStatus;
+import com.koupreng.backend.rsvp.domain.RsvpStatus;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

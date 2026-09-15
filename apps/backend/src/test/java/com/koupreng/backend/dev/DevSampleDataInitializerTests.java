@@ -17,7 +17,7 @@ import com.koupreng.backend.template.infrastructure.persistence.InvitationTempla
 import com.koupreng.backend.repository.NotificationRepository;
 import com.koupreng.backend.repository.OrganizationMemberRepository;
 import com.koupreng.backend.repository.OrganizationRepository;
-import com.koupreng.backend.repository.RsvpRepository;
+import com.koupreng.backend.rsvp.infrastructure.persistence.RsvpRepository;
 import com.koupreng.backend.subscription.infrastructure.persistence.SubscriptionPackageRepository;
 import com.koupreng.backend.subscription.infrastructure.persistence.SubscriptionRepository;
 import com.koupreng.backend.repository.TemplatePaymentOrderRepository;

@@ -1,7 +1,7 @@
 package com.koupreng.backend.invitation.api.dto;
 
 import com.koupreng.backend.media.api.dto.MediaListResponse;
-import com.koupreng.backend.dto.rsvp.WishResponse;
+import com.koupreng.backend.rsvp.api.dto.WishResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

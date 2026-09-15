@@ -1,7 +1,7 @@
-package com.koupreng.backend.repository;
+package com.koupreng.backend.rsvp.infrastructure.persistence;
 
-import com.koupreng.backend.entity.invitation.Rsvp;
-import com.koupreng.backend.enums.RsvpStatus;
+import com.koupreng.backend.rsvp.domain.Rsvp;
+import com.koupreng.backend.rsvp.domain.RsvpStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

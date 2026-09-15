@@ -1,6 +1,5 @@
-package com.koupreng.backend.entity.invitation;
+package com.koupreng.backend.rsvp.domain;
 
-import com.koupreng.backend.enums.RsvpStatus;
 import com.koupreng.backend.guest.domain.Guest;
 import com.koupreng.backend.invitation.domain.UserInvitation;
 import jakarta.persistence.*;

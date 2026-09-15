@@ -14,7 +14,7 @@ import com.koupreng.backend.enums.NotificationType;
 import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;
 import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
 import com.koupreng.backend.repository.NotificationRepository;
-import com.koupreng.backend.repository.RsvpRepository;
+import com.koupreng.backend.rsvp.infrastructure.persistence.RsvpRepository;
 import com.koupreng.backend.repository.TemplatePaymentOrderRepository;
 import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;
 import org.junit.jupiter.api.Test;
