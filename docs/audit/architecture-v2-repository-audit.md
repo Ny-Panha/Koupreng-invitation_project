@@ -217,3 +217,10 @@ Verification: 208 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported n
 Follow-up user contract slice: canonical `/api/v1/users/me/**` aliases were added without removing `/api/users/me/**`. Both route families share controller methods and authorization. Integration tests cover authentication, cookie-mode CSRF behavior, and runtime OpenAPI publication for the canonical route. Verification: 212 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings.
 
 Follow-up user ownership slice: `AppUser`, `Role`, and `AuthProvider` now live in `user/domain`, while `AppUserRepository` lives in `user/infrastructure/persistence`. All backend and test callers migrated atomically; no legacy package bridge remains. JPA entity names, table/column mappings, repository queries, serialized enum values, and HTTP contracts are unchanged. Direct repository access from not-yet-migrated modules remains visible debt and will be replaced by narrow user application queries during those module slices. Verification: 212 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings.
+
+## Guest contact integrity slice decision record
+
+Problem: invitation-scoped duplicate email/phone checks occurred before writes and could race under concurrent requests.
+Implementation: append-only V17 adds generated normalized email/phone columns and named invitation-scoped unique constraints in one atomic `ALTER TABLE`. Existing application checks remain for early feedback; transaction-commit constraint violations map to `GUEST_DUPLICATE`, while unrelated integrity exceptions return a sanitized `DATA_CONFLICT`.
+Data policy: email normalization is lowercase plus outer trim; phone normalization is outer trim; blank contacts become `NULL`. No guest row is rewritten or deleted.
+Release gate: the documented read-only duplicate audit and a real-MySQL fresh/upgrade/concurrency run are required before production deployment. The local integration test remains skipped without the explicitly configured MySQL test environment. Verification: 215 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings.

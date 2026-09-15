@@ -10,6 +10,7 @@ import jakarta.validation.ConstraintViolationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -72,6 +73,15 @@ public class GlobalExceptionHandler {
         body.put("fields", fields);
         body.put("fieldErrors", fields);
         return ResponseEntity.badRequest().body(body);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Map<String, Object>> handleDataIntegrity(DataIntegrityViolationException exception) {
+        if (causedByConstraint(exception, "uk_guests_invitation_email_normalized")
+                || causedByConstraint(exception, "uk_guests_invitation_phone_normalized")) {
+            return error(HttpStatus.CONFLICT, "GUEST_DUPLICATE", msg.get("guest.duplicate"));
+        }
+        return error(HttpStatus.CONFLICT, "DATA_CONFLICT", msg.get("error.data-conflict"));
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
@@ -156,6 +166,19 @@ public class GlobalExceptionHandler {
             return attributes.getRequest().getRequestURI();
         }
         return "";
+    }
+
+    private boolean causedByConstraint(Throwable exception, String constraintName) {
+        Throwable current = exception;
+        while (current != null) {
+            String message = current.getMessage();
+            if (message != null && message.toLowerCase(java.util.Locale.ROOT)
+                    .contains(constraintName.toLowerCase(java.util.Locale.ROOT))) {
+                return true;
+            }
+            current = current.getCause();
+        }
+        return false;
     }
 
     private String defaultCode(HttpStatus status) {

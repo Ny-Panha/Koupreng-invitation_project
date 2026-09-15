@@ -89,7 +89,25 @@ Raw callback and Telegram text is sensitive operational metadata. V2 must define
 
 A guest belongs to exactly one invitation and may have one RSVP, one seat assignment, and one check-in. Every service/repository mutation must scope a child by both its child identifier/token and invitation identifier. Public guest tokens are opaque and do not substitute for an ownership check.
 
-Guest email/phone duplicate checks currently exist in application code. They are not concurrency-safe at the database layer. A future additive migration must first define normalization and blank/null semantics, audit existing duplicates, backfill normalized values, add invitation-scoped uniqueness, and translate constraint conflicts to `GUEST_DUPLICATE`.
+Guest email/phone duplicate checks remain as fast user feedback, while V17 adds the concurrency-safe authority in MySQL. Email identity is `LOWER(TRIM(email))`; phone identity is `TRIM(phone)`. Empty strings normalize to `NULL`, so multiple guests without a given contact field remain valid. Uniqueness is scoped to `invitation_id`, and either generated normalized value may be inspected when diagnosing conflicts. Database violations of these named constraints translate to the stable API code `GUEST_DUPLICATE` without exposing SQL details.
+
+Run this read-only preflight against every target database before deploying V17. Deployment must stop if either query returns rows; the invitation owner must decide which guest record to retain or correct before retrying.
+
+```sql
+SELECT invitation_id, LOWER(TRIM(email)) AS normalized_email, COUNT(*) AS duplicate_count
+FROM guests
+WHERE NULLIF(TRIM(email), '') IS NOT NULL
+GROUP BY invitation_id, LOWER(TRIM(email))
+HAVING COUNT(*) > 1;
+
+SELECT invitation_id, TRIM(phone) AS normalized_phone, COUNT(*) AS duplicate_count
+FROM guests
+WHERE NULLIF(TRIM(phone), '') IS NOT NULL
+GROUP BY invitation_id, TRIM(phone)
+HAVING COUNT(*) > 1;
+```
+
+V17 uses one atomic `ALTER TABLE`; it never deletes or rewrites guest data. If deployment fails, preserve the failed Flyway record and database diagnostics, repair duplicate source data, confirm that neither normalized column/constraint was partially installed, run `flyway repair` only under the deployment runbook, then reapply V17. Rollback is restore-from-backup or an explicitly reviewed forward migration that drops both named constraints and generated columns; do not edit V17.
 
 ## Migration rules
 
@@ -108,7 +126,7 @@ Guest email/phone duplicate checks currently exist in application code. They are
 
 | Priority | Change | Gate |
 | --- | --- | --- |
-| HIGH | guest normalized contact uniqueness | duplicate-data audit and real-MySQL concurrency tests |
+| HIGH | guest normalized contact uniqueness | V17 implemented; deployment preflight and real-MySQL concurrency test remain required |
 | HIGH | subscription order and idempotent activation relationship | approved business/payment contract |
 | MEDIUM | provider verification attempt/retention model | payment transaction-boundary design |
 | MEDIUM | pagination/index review | real query plans and stable API contract |

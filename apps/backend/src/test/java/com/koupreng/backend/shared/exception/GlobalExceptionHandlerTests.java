@@ -11,6 +11,7 @@ import com.koupreng.backend.shared.i18n.MessageService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -56,5 +57,33 @@ class GlobalExceptionHandlerTests {
 
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
         assertEquals("INTERNAL_ERROR", response.getBody().get("code"));
+    }
+
+    @Test
+    void guestUniqueConstraintReturnsStableDuplicateCode() {
+        when(messageService.get("guest.duplicate")).thenReturn("Guest already exists");
+        DataIntegrityViolationException exception = new DataIntegrityViolationException(
+                "Duplicate entry for key 'uk_guests_invitation_email_normalized'"
+        );
+
+        ResponseEntity<Map<String, Object>> response = handler.handleDataIntegrity(exception);
+
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+        assertEquals("GUEST_DUPLICATE", response.getBody().get("code"));
+        assertEquals("Guest already exists", response.getBody().get("message"));
+    }
+
+    @Test
+    void unrelatedIntegrityFailureDoesNotExposeDatabaseDetails() {
+        when(messageService.get("error.data-conflict")).thenReturn("Data conflict");
+        DataIntegrityViolationException exception = new DataIntegrityViolationException(
+                "Sensitive SQL and constraint details"
+        );
+
+        ResponseEntity<Map<String, Object>> response = handler.handleDataIntegrity(exception);
+
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+        assertEquals("DATA_CONFLICT", response.getBody().get("code"));
+        assertEquals("Data conflict", response.getBody().get("message"));
     }
 }
