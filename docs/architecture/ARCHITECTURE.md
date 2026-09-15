@@ -87,6 +87,8 @@ flowchart LR
 7. New code is created in a domain module. Existing global packages are legacy migration sources.
 8. A package move does not change the HTTP contract in the same step.
 
+These rules are executable in `ArchitectureRulesTests`: REST controllers cannot access repositories or depend on JPA/domain types directly, V2 domain packages cannot depend outward on API/application/infrastructure or legacy delivery/service/config packages, and REST controllers must live in an explicit controller/API package.
+
 ## API contract
 
 The target canonical prefix is `/api/v1`. Authentication exposes `/api/v1/auth/**`, current-user operations expose `/api/v1/users/me/**`, and both retain their unversioned paths as compatibility aliases with the same policy. `/api/admin` remains a compatibility path until canonical routes exist and all consumers are migrated. Runtime springdoc output is the machine-readable source of truth. The checked-in `packages/api-contracts/openapi.yaml` is a review artifact and must eventually be generated/diffed in CI.

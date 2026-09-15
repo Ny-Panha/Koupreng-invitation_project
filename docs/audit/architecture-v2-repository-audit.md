@@ -232,3 +232,7 @@ Implementation: a typed ADMIN-only `/api/v1/admin/payments/confirm` dispatcher u
 Concurrency: append-only V18 adds payment evidence fields plus a generated-key unique constraint allowing at most one active subscription per user. Constraint races return `SUBSCRIPTION_ACTIVATION_CONFLICT` without database details.
 Consumer: the admin payment page now supplies the history row's `itemType` to the unified endpoint; routes and presentation remain unchanged.
 Release gate: run the documented active-subscription duplicate query plus fresh-schema, upgrade, and concurrent-confirmation tests against credentialed MySQL before deployment. Automated provider fulfillment remains deferred until its signed callback/evidence contract is approved. Verification: 227 backend tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings. The admin consumer's 10 tests and production build also passed.
+
+## Architecture enforcement slice
+
+ArchUnit now turns the first V2 dependency rules into build-breaking tests: REST controllers cannot access repositories or depend directly on JPA/domain objects; V2 domain packages cannot depend on delivery, application, infrastructure, legacy service/repository, or configuration packages; and REST controllers must remain in explicit HTTP packages. The dependency is test-scoped and the selected release supports the repository's Java class-file level. Verification: 231 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings.
