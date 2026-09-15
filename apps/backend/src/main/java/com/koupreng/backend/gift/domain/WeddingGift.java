@@ -1,4 +1,4 @@
-package com.koupreng.backend.entity.gift;
+package com.koupreng.backend.gift.domain;
 
 import com.koupreng.backend.invitation.domain.UserInvitation;
 import jakarta.persistence.Column;

@@ -1,11 +1,11 @@
-package com.koupreng.backend.controller;
+package com.koupreng.backend.gift.api;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
-import com.koupreng.backend.dto.gift.WeddingGiftRequest;
-import com.koupreng.backend.dto.gift.WeddingGiftResponse;
-import com.koupreng.backend.service.WeddingGiftService;
+import com.koupreng.backend.gift.api.dto.WeddingGiftRequest;
+import com.koupreng.backend.gift.api.dto.WeddingGiftResponse;
+import com.koupreng.backend.gift.application.WeddingGiftService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.koupreng.backend.dto.gift;
+package com.koupreng.backend.gift.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;

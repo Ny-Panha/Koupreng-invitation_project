@@ -1,6 +1,6 @@
-package com.koupreng.backend.repository;
+package com.koupreng.backend.gift.infrastructure.persistence;
 
-import com.koupreng.backend.entity.gift.WeddingGift;
+import com.koupreng.backend.gift.domain.WeddingGift;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

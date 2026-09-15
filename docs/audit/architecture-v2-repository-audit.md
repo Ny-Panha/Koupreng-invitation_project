@@ -276,3 +276,7 @@ The invitation-delivery controller and action/event/guest/request/summary/share-
 ## Budget module ownership slice
 
 The budget controller and request/response/summary DTOs, application service, budget and line-item aggregates, and Spring Data repositories now live under `budget/api`, `budget/application`, `budget/domain`, and `budget/infrastructure/persistence`. Invitation cleanup and development fixtures migrated atomically; invitation ownership and audit logging remain explicit application dependencies. Existing `/api/v1/invitations/{invitationId}/budget/**` routes, request and response JSON, CSV export, financial calculations, validation, JPA/table mappings, and repository queries are unchanged. Verification: 243 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings.
+
+## Gift module ownership slice
+
+The wedding-gift controller and request/response DTOs, application service, aggregate, and Spring Data repository now live under `gift/api`, `gift/application`, `gift/domain`, and `gift/infrastructure/persistence`. Invitation cleanup and development fixtures migrated atomically; invitation ownership remains an explicit application dependency. Existing `/api/v1/invitations/{invitationId}/gifts/**` routes, request and response JSON, validation and monetary defaults, JPA/table mappings, and invitation-scoped repository queries are unchanged. Verification: 243 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings.

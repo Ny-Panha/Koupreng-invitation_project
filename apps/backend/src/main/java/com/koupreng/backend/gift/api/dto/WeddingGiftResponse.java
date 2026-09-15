@@ -1,6 +1,6 @@
-package com.koupreng.backend.dto.gift;
+package com.koupreng.backend.gift.api.dto;
 
-import com.koupreng.backend.entity.gift.WeddingGift;
+import com.koupreng.backend.gift.domain.WeddingGift;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

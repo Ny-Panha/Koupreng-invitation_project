@@ -57,7 +57,7 @@ com.koupreng.backend
   seating/
   delivery/
   budget/
-  planning/       gifts
+  gift/
   payment/
   subscription/
   notification/

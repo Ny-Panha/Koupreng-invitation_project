@@ -22,7 +22,7 @@ import com.koupreng.backend.subscription.infrastructure.persistence.Subscription
 import com.koupreng.backend.subscription.infrastructure.persistence.SubscriptionRepository;
 import com.koupreng.backend.repository.TemplatePaymentOrderRepository;
 import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;
-import com.koupreng.backend.repository.WeddingGiftRepository;
+import com.koupreng.backend.gift.infrastructure.persistence.WeddingGiftRepository;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

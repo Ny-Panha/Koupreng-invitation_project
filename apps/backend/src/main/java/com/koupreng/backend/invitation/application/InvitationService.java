@@ -83,7 +83,7 @@ public class InvitationService {
     private com.koupreng.backend.budget.infrastructure.persistence.BudgetItemRepository budgetItemRepository;
 
     @Autowired(required = false)
-    private com.koupreng.backend.repository.WeddingGiftRepository weddingGiftRepository;
+    private com.koupreng.backend.gift.infrastructure.persistence.WeddingGiftRepository weddingGiftRepository;
 
     @Autowired(required = false)
     private InvitationDeliveryEventRepository deliveryEventRepository;

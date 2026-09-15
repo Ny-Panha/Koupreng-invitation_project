@@ -1,12 +1,12 @@
-package com.koupreng.backend.service;
+package com.koupreng.backend.gift.application;
 
 import com.koupreng.backend.invitation.application.InvitationService;
 import com.koupreng.backend.shared.exception.ApiException;
-import com.koupreng.backend.dto.gift.WeddingGiftRequest;
-import com.koupreng.backend.dto.gift.WeddingGiftResponse;
-import com.koupreng.backend.entity.gift.WeddingGift;
+import com.koupreng.backend.gift.api.dto.WeddingGiftRequest;
+import com.koupreng.backend.gift.api.dto.WeddingGiftResponse;
+import com.koupreng.backend.gift.domain.WeddingGift;
 import com.koupreng.backend.invitation.domain.UserInvitation;
-import com.koupreng.backend.repository.WeddingGiftRepository;
+import com.koupreng.backend.gift.infrastructure.persistence.WeddingGiftRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
