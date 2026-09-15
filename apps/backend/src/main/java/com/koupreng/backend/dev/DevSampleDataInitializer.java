@@ -18,7 +18,7 @@ import com.koupreng.backend.template.domain.InvitationTemplate;
 import com.koupreng.backend.rsvp.domain.Rsvp;
 import com.koupreng.backend.template.domain.TemplateCategory;
 import com.koupreng.backend.invitation.domain.UserInvitation;
-import com.koupreng.backend.entity.notification.Notification;
+import com.koupreng.backend.notification.domain.Notification;
 import com.koupreng.backend.organization.domain.Organization;
 import com.koupreng.backend.organization.domain.OrganizationMember;
 import com.koupreng.backend.subscription.domain.SubscriptionPackage;

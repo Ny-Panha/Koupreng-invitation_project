@@ -1,16 +1,16 @@
-package com.koupreng.backend.controller;
+package com.koupreng.backend.notification.api;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
-import com.koupreng.backend.dto.notification.CreateNotificationRequest;
-import com.koupreng.backend.dto.notification.NotificationResponse;
-import com.koupreng.backend.dto.notification.NotificationStatusUpdateRequest;
+import com.koupreng.backend.notification.api.dto.CreateNotificationRequest;
+import com.koupreng.backend.notification.api.dto.NotificationResponse;
+import com.koupreng.backend.notification.api.dto.NotificationStatusUpdateRequest;
 import com.koupreng.backend.enums.NotificationChannel;
 import com.koupreng.backend.enums.NotificationStatus;
 import com.koupreng.backend.enums.NotificationType;
 import com.koupreng.backend.service.AuditLogService;
-import com.koupreng.backend.service.NotificationService;
+import com.koupreng.backend.notification.application.NotificationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

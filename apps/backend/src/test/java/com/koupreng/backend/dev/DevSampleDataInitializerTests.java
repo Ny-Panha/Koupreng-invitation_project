@@ -14,7 +14,7 @@ import com.koupreng.backend.checkin.infrastructure.persistence.GuestCheckInRepos
 import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
 import com.koupreng.backend.seating.infrastructure.persistence.GuestSeatAssignmentRepository;
 import com.koupreng.backend.template.infrastructure.persistence.InvitationTemplateRepository;
-import com.koupreng.backend.repository.NotificationRepository;
+import com.koupreng.backend.notification.infrastructure.persistence.NotificationRepository;
 import com.koupreng.backend.organization.infrastructure.persistence.OrganizationMemberRepository;
 import com.koupreng.backend.organization.infrastructure.persistence.OrganizationRepository;
 import com.koupreng.backend.rsvp.infrastructure.persistence.RsvpRepository;

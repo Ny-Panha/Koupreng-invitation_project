@@ -1,7 +1,7 @@
 package com.koupreng.backend.rsvp.application;
 
 import com.koupreng.backend.invitation.application.InvitationService;
-import com.koupreng.backend.service.NotificationService;
+import com.koupreng.backend.notification.application.NotificationService;
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.rsvp.api.dto.RsvpRequest;
 import com.koupreng.backend.rsvp.api.dto.RsvpResponse;

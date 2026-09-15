@@ -1,6 +1,6 @@
-package com.koupreng.backend.dto.notification;
+package com.koupreng.backend.notification.api.dto;
 
-import com.koupreng.backend.entity.notification.Notification;
+import com.koupreng.backend.notification.domain.Notification;
 import com.koupreng.backend.enums.NotificationChannel;
 import com.koupreng.backend.enums.NotificationStatus;
 import com.koupreng.backend.enums.NotificationType;

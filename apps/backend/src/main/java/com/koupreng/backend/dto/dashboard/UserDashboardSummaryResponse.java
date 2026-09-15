@@ -1,7 +1,7 @@
 package com.koupreng.backend.dto.dashboard;
 
 import com.koupreng.backend.invitation.api.dto.InvitationSummaryResponse;
-import com.koupreng.backend.dto.notification.NotificationResponse;
+import com.koupreng.backend.notification.api.dto.NotificationResponse;
 import com.koupreng.backend.rsvp.api.dto.RsvpResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

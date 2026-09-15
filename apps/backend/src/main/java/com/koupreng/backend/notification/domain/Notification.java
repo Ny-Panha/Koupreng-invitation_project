@@ -1,4 +1,4 @@
-package com.koupreng.backend.entity.notification;
+package com.koupreng.backend.notification.domain;
 
 import com.koupreng.backend.guest.domain.Guest;
 import com.koupreng.backend.rsvp.domain.Rsvp;

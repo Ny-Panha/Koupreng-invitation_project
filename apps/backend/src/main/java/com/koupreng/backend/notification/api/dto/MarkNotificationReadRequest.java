@@ -1,4 +1,4 @@
-package com.koupreng.backend.dto.notification;
+package com.koupreng.backend.notification.api.dto;
 
 import lombok.Data;
 

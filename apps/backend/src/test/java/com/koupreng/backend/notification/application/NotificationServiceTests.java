@@ -1,19 +1,19 @@
-package com.koupreng.backend.service;
+package com.koupreng.backend.notification.application;
 
 import com.koupreng.backend.user.application.CurrentUserService;
 
-import com.koupreng.backend.dto.notification.NotificationResponse;
-import com.koupreng.backend.dto.notification.NotificationSummaryResponse;
+import com.koupreng.backend.notification.api.dto.NotificationResponse;
+import com.koupreng.backend.notification.api.dto.NotificationSummaryResponse;
 import com.koupreng.backend.guest.domain.Guest;
 import com.koupreng.backend.invitation.domain.UserInvitation;
-import com.koupreng.backend.entity.notification.Notification;
+import com.koupreng.backend.notification.domain.Notification;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.enums.NotificationChannel;
 import com.koupreng.backend.enums.NotificationStatus;
 import com.koupreng.backend.enums.NotificationType;
 import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;
 import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
-import com.koupreng.backend.repository.NotificationRepository;
+import com.koupreng.backend.notification.infrastructure.persistence.NotificationRepository;
 import com.koupreng.backend.rsvp.infrastructure.persistence.RsvpRepository;
 import com.koupreng.backend.repository.TemplatePaymentOrderRepository;
 import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;

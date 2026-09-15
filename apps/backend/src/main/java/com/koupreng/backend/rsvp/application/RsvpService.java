@@ -13,7 +13,7 @@ import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.rsvp.domain.RsvpStatus;
 import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
 import com.koupreng.backend.rsvp.infrastructure.persistence.RsvpRepository;
-import com.koupreng.backend.service.NotificationService;
+import com.koupreng.backend.notification.application.NotificationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

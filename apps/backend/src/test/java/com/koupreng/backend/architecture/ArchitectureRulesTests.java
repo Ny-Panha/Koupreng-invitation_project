@@ -59,7 +59,8 @@ class ArchitectureRulesTests {
                     "com.koupreng.backend.delivery.domain..",
                     "com.koupreng.backend.budget.domain..",
                     "com.koupreng.backend.gift.domain..",
-                    "com.koupreng.backend.organization.domain.."
+                    "com.koupreng.backend.organization.domain..",
+                    "com.koupreng.backend.notification.domain.."
             )
             .should().dependOnClassesThat().resideInAnyPackage(
                     "com.koupreng.backend.controller..",

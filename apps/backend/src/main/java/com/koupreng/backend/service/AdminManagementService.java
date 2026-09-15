@@ -30,7 +30,7 @@ import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;
 import com.koupreng.backend.checkin.infrastructure.persistence.GuestCheckInRepository;
 import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
 import com.koupreng.backend.template.infrastructure.persistence.InvitationTemplateRepository;
-import com.koupreng.backend.repository.NotificationRepository;
+import com.koupreng.backend.notification.infrastructure.persistence.NotificationRepository;
 import com.koupreng.backend.rsvp.infrastructure.persistence.RsvpRepository;
 import com.koupreng.backend.repository.SystemAuditLogRepository;
 import com.koupreng.backend.repository.TemplatePaymentOrderRepository;

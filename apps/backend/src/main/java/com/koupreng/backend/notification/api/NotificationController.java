@@ -1,11 +1,11 @@
-package com.koupreng.backend.controller;
+package com.koupreng.backend.notification.api;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
-import com.koupreng.backend.dto.notification.NotificationResponse;
-import com.koupreng.backend.dto.notification.NotificationSummaryResponse;
-import com.koupreng.backend.service.NotificationService;
+import com.koupreng.backend.notification.api.dto.NotificationResponse;
+import com.koupreng.backend.notification.api.dto.NotificationSummaryResponse;
+import com.koupreng.backend.notification.application.NotificationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;

@@ -1,6 +1,6 @@
-package com.koupreng.backend.repository;
+package com.koupreng.backend.notification.infrastructure.persistence;
 
-import com.koupreng.backend.entity.notification.Notification;
+import com.koupreng.backend.notification.domain.Notification;
 import com.koupreng.backend.enums.NotificationStatus;
 import com.koupreng.backend.enums.NotificationType;
 import org.springframework.data.jpa.repository.JpaRepository;
