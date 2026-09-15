@@ -24,6 +24,11 @@ public interface TemplatePaymentOrderRepository extends JpaRepository<TemplatePa
 
     Optional<TemplatePaymentOrder> findByTransactionId(String transactionId);
 
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("select paymentOrder from TemplatePaymentOrder paymentOrder "
+            + "where paymentOrder.transactionId = :transactionId")
+    Optional<TemplatePaymentOrder> findForUpdateByTransactionId(@Param("transactionId") String transactionId);
+
     boolean existsByOrderCode(String orderCode);
 
     boolean existsByTransactionId(String transactionId);

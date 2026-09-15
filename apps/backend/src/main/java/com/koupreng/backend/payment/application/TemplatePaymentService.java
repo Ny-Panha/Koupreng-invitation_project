@@ -32,7 +32,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -44,6 +46,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -126,6 +129,7 @@ public class TemplatePaymentService {
     private final AbaPayWayService abaPayWayService;
     private final ObjectMapper objectMapper;
     private final AuditLogService auditLogService;
+    private final TransactionTemplate transactionTemplate;
     private final SecureRandom random = new SecureRandom();
 
     @org.springframework.beans.factory.annotation.Autowired
@@ -137,7 +141,8 @@ public class TemplatePaymentService {
             PaymentProperties paymentProperties,
             AbaPayWayService abaPayWayService,
             ObjectMapper objectMapper,
-            AuditLogService auditLogService
+            AuditLogService auditLogService,
+            PlatformTransactionManager transactionManager
     ) {
         this.orderRepository = orderRepository;
         this.accessRepository = accessRepository;
@@ -147,6 +152,7 @@ public class TemplatePaymentService {
         this.abaPayWayService = abaPayWayService;
         this.objectMapper = objectMapper;
         this.auditLogService = auditLogService;
+        this.transactionTemplate = new TransactionTemplate(transactionManager);
     }
 
     public TemplatePaymentService(
@@ -158,7 +164,15 @@ public class TemplatePaymentService {
             AbaPayWayService abaPayWayService,
             ObjectMapper objectMapper
     ) {
-        this(orderRepository, accessRepository, templateRepository, currentUserService, paymentProperties, abaPayWayService, objectMapper, null);
+        this.orderRepository = orderRepository;
+        this.accessRepository = accessRepository;
+        this.templateRepository = templateRepository;
+        this.currentUserService = currentUserService;
+        this.paymentProperties = paymentProperties;
+        this.abaPayWayService = abaPayWayService;
+        this.objectMapper = objectMapper;
+        this.auditLogService = null;
+        this.transactionTemplate = null;
     }
 
     @Transactional
@@ -251,7 +265,6 @@ public class TemplatePaymentService {
         return TemplatePaymentStatusResponse.from(markExpiredInMemory(order), statusMessage(order.getStatus()));
     }
 
-    @Transactional
     public PayWayCallbackResponse handlePaywayCallback(Map<String, Object> payload, String signatureHeader) {
         if (payload == null || payload.isEmpty()) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Invalid PayWay callback");
@@ -262,38 +275,71 @@ public class TemplatePaymentService {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Invalid PayWay callback");
         }
 
-        TemplatePaymentOrder order = orderRepository.findByTransactionId(transactionId)
-                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Order not found"));
-        order.setCallbackRawJson(toJson(payload));
-        order.setPaywayStatus(callbackText(payload, "status"));
-
         boolean hasCallbackSignature = hasCallbackSignature(payload, signatureHeader);
         if (hasCallbackSignature && !abaPayWayService.verifyCallbackSignature(payload, signatureHeader)) {
-            orderRepository.save(order);
             throw new ApiException(HttpStatus.UNAUTHORIZED, "Callback signature/hash verification failed");
         }
 
         PaymentStatus callbackStatus = mapCallbackStatus(payload.get("status"));
         if (callbackStatus != PaymentStatus.PAID) {
-            if (hasCallbackSignature
-                    && callbackStatus != PaymentStatus.QR_CREATED
-                    && callbackStatus != PaymentStatus.CHECKOUT_CREATED) {
-                order.setStatus(callbackStatus);
-            }
-            orderRepository.save(order);
+            return inCallbackTransaction(() -> recordNonPaidCallback(
+                    transactionId,
+                    payload,
+                    hasCallbackSignature,
+                    callbackStatus
+            ));
+        }
+
+        // Confirm the order locally before making a provider request. The subsequent
+        // remote verification deliberately happens without an open database transaction.
+        orderRepository.findByTransactionId(transactionId)
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Order not found"));
+        PayWayTransactionVerification verification = abaPayWayService.checkTransaction(transactionId);
+        return inCallbackTransaction(() -> completeVerifiedCallback(transactionId, payload, verification));
+    }
+
+    private PayWayCallbackResponse recordNonPaidCallback(
+            String transactionId,
+            Map<String, Object> payload,
+            boolean hasCallbackSignature,
+            PaymentStatus callbackStatus
+    ) {
+        TemplatePaymentOrder order = requireOrderForUpdateByTransactionId(transactionId);
+        order.setCallbackRawJson(toJson(payload));
+        order.setPaywayStatus(callbackText(payload, "status"));
+        if (hasCallbackSignature
+                && callbackStatus != PaymentStatus.QR_CREATED
+                && callbackStatus != PaymentStatus.CHECKOUT_CREATED) {
+            order.setStatus(callbackStatus);
+        }
+        orderRepository.save(order);
+        return PayWayCallbackResponse.builder()
+                .message(hasCallbackSignature
+                        ? "Payment callback received"
+                        : "Payment callback received. Waiting for PayWay verification.")
+                .orderCode(order.getOrderCode())
+                .status(order.getStatus())
+                .build();
+    }
+
+    private PayWayCallbackResponse completeVerifiedCallback(
+            String transactionId,
+            Map<String, Object> payload,
+            PayWayTransactionVerification verification
+    ) {
+        TemplatePaymentOrder order = requireOrderForUpdateByTransactionId(transactionId);
+        order.setCallbackRawJson(toJson(payload));
+        order.setPaywayResponseJson(verification.rawResponseJson());
+        order.setPaywayStatus(verification.paywayStatus());
+        order.setPaywayTransactionId(verification.paywayTransactionId());
+
+        if (order.getStatus() == PaymentStatus.PAID) {
             return PayWayCallbackResponse.builder()
-                    .message(hasCallbackSignature
-                            ? "Payment callback received"
-                            : "Payment callback received. Waiting for PayWay verification.")
+                    .message("Payment verified. Template unlocked.")
                     .orderCode(order.getOrderCode())
                     .status(order.getStatus())
                     .build();
         }
-
-        PayWayTransactionVerification verification = abaPayWayService.checkTransaction(order.getTransactionId());
-        order.setPaywayResponseJson(verification.rawResponseJson());
-        order.setPaywayStatus(verification.paywayStatus());
-        order.setPaywayTransactionId(verification.paywayTransactionId());
 
         if (!verification.approved()) {
             order.setStatus(verification.mappedStatus());
@@ -311,6 +357,13 @@ public class TemplatePaymentService {
                 .orderCode(order.getOrderCode())
                 .status(order.getStatus())
                 .build();
+    }
+
+    private <T> T inCallbackTransaction(Supplier<T> callback) {
+        if (transactionTemplate == null) {
+            return callback.get();
+        }
+        return transactionTemplate.execute(status -> callback.get());
     }
 
     public void markPaidAfterVerification(
@@ -637,6 +690,11 @@ public class TemplatePaymentService {
     private TemplatePaymentOrder requireOrderForUpdate(String orderCode) {
         String normalized = requireText(orderCode, "Order code is required").toUpperCase(Locale.ROOT);
         return orderRepository.findForUpdateByOrderCode(normalized)
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Order not found"));
+    }
+
+    private TemplatePaymentOrder requireOrderForUpdateByTransactionId(String transactionId) {
+        return orderRepository.findForUpdateByTransactionId(transactionId)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Order not found"));
     }
 

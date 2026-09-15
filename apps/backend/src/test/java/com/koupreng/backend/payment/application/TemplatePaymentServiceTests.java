@@ -342,6 +342,8 @@ class TemplatePaymentServiceTests {
         TemplatePaymentOrder order = order(fixture.owner, PaymentStatus.QR_CREATED, new BigDecimal("5.00"));
         Map<String, Object> payload = Map.of("tran_id", order.getTransactionId(), "status", "0", "apv", "123456");
         when(fixture.orderRepository.findByTransactionId(order.getTransactionId())).thenReturn(Optional.of(order));
+        when(fixture.orderRepository.findForUpdateByTransactionId(order.getTransactionId()))
+                .thenReturn(Optional.of(order));
         when(fixture.abaPayWayService.verifyCallbackSignature(payload, "sig")).thenReturn(true);
         when(fixture.abaPayWayService.checkTransaction(order.getTransactionId()))
                 .thenReturn(new PayWayTransactionVerification(
@@ -369,6 +371,8 @@ class TemplatePaymentServiceTests {
         TemplatePaymentOrder order = order(fixture.owner, PaymentStatus.QR_CREATED, new BigDecimal("5.00"));
         Map<String, Object> payload = Map.of("tran_id", order.getTransactionId(), "status", "0", "apv", "123456");
         when(fixture.orderRepository.findByTransactionId(order.getTransactionId())).thenReturn(Optional.of(order));
+        when(fixture.orderRepository.findForUpdateByTransactionId(order.getTransactionId()))
+                .thenReturn(Optional.of(order));
         when(fixture.abaPayWayService.checkTransaction(order.getTransactionId()))
                 .thenReturn(new PayWayTransactionVerification(
                         true,
@@ -412,6 +416,8 @@ class TemplatePaymentServiceTests {
         TemplatePaymentOrder order = order(fixture.owner, PaymentStatus.QR_CREATED, new BigDecimal("5.00"));
         Map<String, Object> payload = Map.of("tran_id", order.getTransactionId(), "status", "0");
         when(fixture.orderRepository.findByTransactionId(order.getTransactionId())).thenReturn(Optional.of(order));
+        when(fixture.orderRepository.findForUpdateByTransactionId(order.getTransactionId()))
+                .thenReturn(Optional.of(order));
         when(fixture.abaPayWayService.verifyCallbackSignature(payload, "sig")).thenReturn(true);
         when(fixture.abaPayWayService.checkTransaction(order.getTransactionId()))
                 .thenReturn(new PayWayTransactionVerification(

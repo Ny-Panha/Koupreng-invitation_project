@@ -21,6 +21,7 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.Locale;
 import java.util.UUID;
@@ -29,8 +30,12 @@ import java.util.UUID;
 @ConditionalOnProperty(name = "app.storage.provider", havingValue = "cloudinary")
 public class CloudinaryStorageService implements StorageService {
 
+    private static final Duration CONNECT_TIMEOUT = Duration.ofSeconds(15);
+    private static final Duration REQUEST_TIMEOUT = Duration.ofSeconds(60);
     private final StorageProperties.Cloudinary properties;
-    private final HttpClient httpClient = HttpClient.newHttpClient();
+    private final HttpClient httpClient = HttpClient.newBuilder()
+            .connectTimeout(CONNECT_TIMEOUT)
+            .build();
     private final ObjectMapper objectMapper;
 
     public CloudinaryStorageService(StorageProperties storageProperties, ObjectMapper objectMapper) {
@@ -59,6 +64,7 @@ public class CloudinaryStorageService implements StorageService {
                             properties.getCloudName(),
                             resourceType
                     )))
+                    .timeout(REQUEST_TIMEOUT)
                     .header("Content-Type", "multipart/form-data; boundary=" + boundary)
                     .POST(HttpRequest.BodyPublishers.ofByteArray(uploadBody(boundary, file, publicId, timestamp, signature)))
                     .build();
@@ -102,6 +108,7 @@ public class CloudinaryStorageService implements StorageService {
                         properties.getCloudName(),
                         resourceType
                 )))
+                .timeout(REQUEST_TIMEOUT)
                 .header("Content-Type", "multipart/form-data; boundary=" + boundary)
                 .POST(HttpRequest.BodyPublishers.ofByteArray(destroyBody(boundary, publicId, timestamp, signature)))
                 .build();
