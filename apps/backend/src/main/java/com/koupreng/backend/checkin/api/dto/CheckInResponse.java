@@ -1,7 +1,7 @@
-package com.koupreng.backend.dto.checkin;
+package com.koupreng.backend.checkin.api.dto;
 
 import com.koupreng.backend.guest.domain.Guest;
-import com.koupreng.backend.entity.invitation.GuestCheckIn;
+import com.koupreng.backend.checkin.domain.GuestCheckIn;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,14 +1,15 @@
-package com.koupreng.backend.service;
+package com.koupreng.backend.checkin.application;
 
+import com.koupreng.backend.service.AuditLogService;
 import com.koupreng.backend.user.application.CurrentUserService;
 
 import com.koupreng.backend.shared.exception.ApiException;
-import com.koupreng.backend.dto.checkin.CheckInResponse;
+import com.koupreng.backend.checkin.api.dto.CheckInResponse;
 import com.koupreng.backend.guest.domain.Guest;
-import com.koupreng.backend.entity.invitation.GuestCheckIn;
+import com.koupreng.backend.checkin.domain.GuestCheckIn;
 import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.user.domain.AppUser;
-import com.koupreng.backend.repository.GuestCheckInRepository;
+import com.koupreng.backend.checkin.infrastructure.persistence.GuestCheckInRepository;
 import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
 import com.koupreng.backend.rsvp.infrastructure.persistence.RsvpRepository;
 import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;

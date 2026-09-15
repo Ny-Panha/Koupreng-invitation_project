@@ -1,6 +1,6 @@
-package com.koupreng.backend.repository;
+package com.koupreng.backend.checkin.infrastructure.persistence;
 
-import com.koupreng.backend.entity.invitation.GuestCheckIn;
+import com.koupreng.backend.checkin.domain.GuestCheckIn;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

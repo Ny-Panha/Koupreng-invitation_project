@@ -12,7 +12,7 @@ import com.koupreng.backend.entity.gift.WeddingGift;
 import com.koupreng.backend.entity.invitation.EventTable;
 import com.koupreng.backend.invitation.domain.EventType;
 import com.koupreng.backend.guest.domain.Guest;
-import com.koupreng.backend.entity.invitation.GuestCheckIn;
+import com.koupreng.backend.checkin.domain.GuestCheckIn;
 import com.koupreng.backend.entity.invitation.GuestSeatAssignment;
 import com.koupreng.backend.template.domain.InvitationTemplate;
 import com.koupreng.backend.rsvp.domain.Rsvp;

@@ -1,4 +1,4 @@
-package com.koupreng.backend.dto.checkin;
+package com.koupreng.backend.checkin.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

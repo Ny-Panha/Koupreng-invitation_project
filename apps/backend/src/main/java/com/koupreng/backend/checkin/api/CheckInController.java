@@ -1,13 +1,13 @@
-package com.koupreng.backend.controller;
+package com.koupreng.backend.checkin.api;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
-import com.koupreng.backend.dto.checkin.CheckInResponse;
-import com.koupreng.backend.dto.checkin.CheckInScanRequest;
-import com.koupreng.backend.dto.checkin.CheckInSummaryResponse;
-import com.koupreng.backend.dto.checkin.ManualCheckInRequest;
-import com.koupreng.backend.service.CheckInService;
+import com.koupreng.backend.checkin.api.dto.CheckInResponse;
+import com.koupreng.backend.checkin.api.dto.CheckInScanRequest;
+import com.koupreng.backend.checkin.api.dto.CheckInSummaryResponse;
+import com.koupreng.backend.checkin.api.dto.ManualCheckInRequest;
+import com.koupreng.backend.checkin.application.CheckInService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;

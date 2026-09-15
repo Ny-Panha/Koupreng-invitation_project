@@ -53,7 +53,8 @@ class ArchitectureRulesTests {
                     "com.koupreng.backend.invitation.domain..",
                     "com.koupreng.backend.media.domain..",
                     "com.koupreng.backend.guest.domain..",
-                    "com.koupreng.backend.rsvp.domain.."
+                    "com.koupreng.backend.rsvp.domain..",
+                    "com.koupreng.backend.checkin.domain.."
             )
             .should().dependOnClassesThat().resideInAnyPackage(
                     "com.koupreng.backend.controller..",

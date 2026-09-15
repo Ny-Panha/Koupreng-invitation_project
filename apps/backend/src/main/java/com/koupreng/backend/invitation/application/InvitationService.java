@@ -30,7 +30,7 @@ import com.koupreng.backend.invitation.domain.InvitationVisibility;
 import com.koupreng.backend.repository.EventTableRepository;
 import com.koupreng.backend.template.infrastructure.persistence.InvitationTemplateRepository;
 import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
-import com.koupreng.backend.repository.GuestCheckInRepository;
+import com.koupreng.backend.checkin.infrastructure.persistence.GuestCheckInRepository;
 import com.koupreng.backend.repository.OrganizationMemberRepository;
 import com.koupreng.backend.repository.OrganizationRepository;
 import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;
