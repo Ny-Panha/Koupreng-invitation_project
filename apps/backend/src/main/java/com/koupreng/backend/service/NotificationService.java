@@ -1,6 +1,6 @@
 package com.koupreng.backend.service;
 
-import com.koupreng.backend.common.ApiException;
+import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.dto.notification.CreateNotificationRequest;
 import com.koupreng.backend.dto.notification.NotificationResponse;
 import com.koupreng.backend.dto.notification.NotificationStatusUpdateRequest;

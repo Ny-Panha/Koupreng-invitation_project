@@ -1,6 +1,6 @@
 package com.koupreng.backend.service;
 
-import com.koupreng.backend.common.ApiException;
+import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.dto.rsvp.RsvpRequest;
 import com.koupreng.backend.dto.rsvp.RsvpResponse;
 import com.koupreng.backend.dto.rsvp.RsvpSummaryResponse;

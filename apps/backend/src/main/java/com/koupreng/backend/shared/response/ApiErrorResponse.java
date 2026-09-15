@@ -1,4 +1,4 @@
-package com.koupreng.backend.common;
+package com.koupreng.backend.shared.response;
 
 import java.time.Instant;
 import java.util.Map;

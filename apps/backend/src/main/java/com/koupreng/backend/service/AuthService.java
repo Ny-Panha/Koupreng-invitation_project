@@ -5,7 +5,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 import java.util.Optional;
 
-import com.koupreng.backend.common.ApiException;
+import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.config.AppProperties;
 import com.koupreng.backend.dto.AuthResponse;
 import com.koupreng.backend.dto.GoogleLoginRequest;
@@ -16,6 +16,7 @@ import com.koupreng.backend.dto.UserResponse;
 import com.koupreng.backend.entity.user.AppUser;
 import com.koupreng.backend.entity.user.Role;
 import com.koupreng.backend.repository.AppUserRepository;
+import com.koupreng.backend.shared.i18n.MessageService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;

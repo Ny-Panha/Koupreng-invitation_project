@@ -1,6 +1,6 @@
 package com.koupreng.backend.service;
 
-import com.koupreng.backend.common.ApiException;
+import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.dto.organization.OrganizationMemberRequest;
 import com.koupreng.backend.entity.organization.Organization;
 import com.koupreng.backend.entity.organization.OrganizationMember;

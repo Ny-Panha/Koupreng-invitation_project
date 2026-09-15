@@ -1,6 +1,6 @@
 package com.koupreng.backend.service;
 
-import com.koupreng.backend.common.ApiException;
+import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.dto.delivery.DeliveryActionResponse;
 import com.koupreng.backend.dto.delivery.DeliveryEventResponse;
 import com.koupreng.backend.dto.delivery.DeliveryGuestResponse;

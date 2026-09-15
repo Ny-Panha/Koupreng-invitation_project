@@ -1,6 +1,6 @@
 package com.koupreng.backend.service.storage;
 
-import com.koupreng.backend.common.ApiException;
+import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.config.StorageProperties;
 import com.koupreng.backend.enums.MediaType;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

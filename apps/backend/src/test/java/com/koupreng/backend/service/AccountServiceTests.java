@@ -1,6 +1,6 @@
 package com.koupreng.backend.service;
 
-import com.koupreng.backend.common.ApiException;
+import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.dto.ChangePasswordRequest;
 import com.koupreng.backend.dto.ForgotPasswordRequest;
 import com.koupreng.backend.entity.user.AppUser;

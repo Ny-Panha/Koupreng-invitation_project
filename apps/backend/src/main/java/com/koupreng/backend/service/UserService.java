@@ -3,12 +3,13 @@ package com.koupreng.backend.service;
 import java.util.List;
 import java.util.Objects;
 
-import com.koupreng.backend.common.ApiException;
+import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.dto.UpdateProfileRequest;
 import com.koupreng.backend.dto.UserResponse;
 import com.koupreng.backend.entity.user.AppUser;
 import com.koupreng.backend.entity.user.Role;
 import com.koupreng.backend.repository.AppUserRepository;
+import com.koupreng.backend.shared.i18n.MessageService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;

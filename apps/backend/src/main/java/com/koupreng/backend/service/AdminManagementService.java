@@ -1,6 +1,6 @@
 package com.koupreng.backend.service;
 
-import com.koupreng.backend.common.ApiException;
+import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.dto.admin.AdminInvitationModerationRequest;
 import com.koupreng.backend.dto.admin.AdminReportResponse;
 import com.koupreng.backend.dto.admin.AdminTemplatePremiumRequest;

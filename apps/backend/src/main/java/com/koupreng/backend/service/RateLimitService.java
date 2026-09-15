@@ -6,7 +6,7 @@ import java.time.Instant;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.koupreng.backend.common.ApiException;
+import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.config.AppProperties;
 import com.koupreng.backend.config.AppProperties.RateLimit.Backend;
 

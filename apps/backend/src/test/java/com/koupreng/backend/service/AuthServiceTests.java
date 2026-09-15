@@ -18,6 +18,7 @@ import com.koupreng.backend.entity.user.AppUser;
 import com.koupreng.backend.entity.user.AuthProvider;
 import com.koupreng.backend.entity.user.Role;
 import com.koupreng.backend.repository.AppUserRepository;
+import com.koupreng.backend.shared.i18n.MessageService;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.Authentication;

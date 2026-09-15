@@ -87,6 +87,9 @@ public class ProductionSecurityValidator implements ApplicationRunner {
                 profiles = propertyProfile.split(",");
             }
         }
+        if (profiles.length == 0) {
+            profiles = environment.getDefaultProfiles();
+        }
         return Arrays.stream(profiles)
                 .map(String::trim)
                 .map(profile -> profile.toLowerCase(Locale.ROOT))

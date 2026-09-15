@@ -27,7 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.koupreng.backend.common.ApiException;
+import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.dto.guest.GuestGroupResponse;
 import com.koupreng.backend.dto.guest.GuestImportErrorResponse;
 import com.koupreng.backend.dto.guest.GuestImportFileResultResponse;

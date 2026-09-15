@@ -1,6 +1,6 @@
 package com.koupreng.backend.service;
 
-import com.koupreng.backend.common.ApiException;
+import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.dto.checkin.CheckInResponse;
 import com.koupreng.backend.dto.checkin.CheckInSummaryResponse;
 import com.koupreng.backend.entity.invitation.Guest;

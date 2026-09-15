@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import com.koupreng.backend.common.ApiException;
+import com.koupreng.backend.shared.exception.ApiException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;

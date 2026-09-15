@@ -21,7 +21,7 @@ scripts/
 tools/                 Postman collection and sample seed data
 ```
 
-The detailed ownership rules are in `docs/architecture/folder-structure.md`. Cleanup evidence is under `docs/qa/`.
+See the [Architecture V2 target](docs/architecture/ARCHITECTURE.md), [database ownership](docs/database/DATABASE.md), and [API compatibility contract](docs/api/API_CONTRACT.md). The detailed current folder ownership rules remain in `docs/architecture/folder-structure.md`, and cleanup evidence is under `docs/qa/`.
 
 ## Prerequisites
 

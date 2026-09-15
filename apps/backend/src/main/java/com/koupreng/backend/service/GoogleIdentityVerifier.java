@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import com.koupreng.backend.common.ApiException;
+import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.config.AppProperties;
 import com.koupreng.backend.entity.user.AuthProvider;
 

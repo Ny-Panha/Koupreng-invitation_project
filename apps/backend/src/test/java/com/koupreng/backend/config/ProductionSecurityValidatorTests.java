@@ -11,9 +11,25 @@ import com.koupreng.backend.security.ApiSecurityProperties;
 import com.koupreng.backend.waf.WafProperties;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.DefaultApplicationArguments;
 import org.springframework.mock.env.MockEnvironment;
 
 class ProductionSecurityValidatorTests {
+
+    @Test
+    void defaultDevProfileSkipsProductionValidation() {
+        MockEnvironment environment = new MockEnvironment();
+        environment.setDefaultProfiles("dev");
+        ProductionSecurityValidator validator = validator(
+                "weak-local-secret",
+                "jdbc:mysql://localhost:3306/koupreng_db?useSSL=false",
+                "change-me-local-only",
+                "static",
+                environment
+        );
+
+        assertDoesNotThrow(() -> validator.run(new DefaultApplicationArguments(new String[0])));
+    }
 
     @Test
     void acceptsSecureProductionConfiguration() {
@@ -116,6 +132,25 @@ class ProductionSecurityValidatorTests {
             String adminPaymentSecret,
             String providerMode
     ) {
+        return validator(
+                jwtSecret,
+                databaseUrl,
+                adminPaymentSecret,
+                providerMode,
+                new MockEnvironment()
+        );
+    }
+
+    private ProductionSecurityValidator validator(
+            String jwtSecret,
+            String databaseUrl,
+            String adminPaymentSecret,
+            String providerMode,
+            MockEnvironment environment
+    ) {
+        environment.withProperty("spring.datasource.url", databaseUrl)
+                .withProperty("spring.jpa.hibernate.ddl-auto", "none");
+
         AppProperties appProperties = new AppProperties();
         appProperties.getJwt().setIssuer("koupreng-backend");
         appProperties.getJwt().setSecret(jwtSecret);
@@ -137,10 +172,6 @@ class ProductionSecurityValidatorTests {
         paymentProperties.setAdminSecret(adminPaymentSecret);
         paymentProperties.setProviderMode(providerMode);
         paymentProperties.getAba().setStaticLink("https://link.payway.com.kh/ABAPAYrD450560q");
-
-        MockEnvironment environment = new MockEnvironment()
-                .withProperty("spring.datasource.url", databaseUrl)
-                .withProperty("spring.jpa.hibernate.ddl-auto", "none");
 
         return new ProductionSecurityValidator(
                 environment,

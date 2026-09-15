@@ -68,7 +68,7 @@ public class SubscriptionController {
             resolvedPackageId = request.getPackageId();
         }
         if (resolvedPackageId == null) {
-            throw new com.koupreng.backend.common.ApiException(HttpStatus.BAD_REQUEST, "Package ID is required");
+            throw new com.koupreng.backend.shared.exception.ApiException(HttpStatus.BAD_REQUEST, "Package ID is required");
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(
                 "Subscription purchase created successfully",

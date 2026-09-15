@@ -1,4 +1,4 @@
-package com.koupreng.backend.common;
+package com.koupreng.backend.shared.exception;
 
 import java.time.Instant;
 import java.util.Collections;
@@ -8,6 +8,8 @@ import java.util.Map;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -16,18 +18,18 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
-import org.springframework.web.multipart.MaxUploadSizeExceededException;
-import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.servlet.resource.NoResourceFoundException;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import com.koupreng.backend.service.MessageService;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.multipart.MultipartException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import com.koupreng.backend.shared.i18n.MessageService;
+
+/** Central, transport-level translation of exceptions into the stable API error contract. */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -49,8 +51,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidation(MethodArgumentNotValidException exception) {
         Map<String, String> fields = new LinkedHashMap<>();
-        for (FieldError fe : exception.getBindingResult().getFieldErrors()) {
-            fields.put(fe.getField(), fe.getDefaultMessage());
+        for (FieldError fieldError : exception.getBindingResult().getFieldErrors()) {
+            fields.put(fieldError.getField(), fieldError.getDefaultMessage());
         }
 
         Map<String, Object> body = errorBody(HttpStatus.BAD_REQUEST, msg.get("error.validation-failed"));
@@ -93,7 +95,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<Map<String, Object>> handleTypeMismatch(org.springframework.web.method.annotation.MethodArgumentTypeMismatchException exception) {
+    public ResponseEntity<Map<String, Object>> handleTypeMismatch(
+            org.springframework.web.method.annotation.MethodArgumentTypeMismatchException exception) {
         return error(HttpStatus.NOT_FOUND, msg.get("error.not-found"));
     }
 

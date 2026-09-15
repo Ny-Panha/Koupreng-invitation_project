@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.koupreng.backend.common.ApiException;
+import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.config.AppProperties;
 import com.koupreng.backend.dto.TelegramLoginRequest;
 import com.koupreng.backend.entity.user.AuthProvider;

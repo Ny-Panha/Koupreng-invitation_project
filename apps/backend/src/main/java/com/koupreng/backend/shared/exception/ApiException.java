@@ -1,7 +1,14 @@
-package com.koupreng.backend.common;
+package com.koupreng.backend.shared.exception;
 
 import org.springframework.http.HttpStatus;
 
+/**
+ * Base exception for failures that are safe to expose through the public API.
+ *
+ * <p>Domain modules should provide a stable machine-readable code whenever a
+ * client may need to distinguish the failure from other errors with the same
+ * HTTP status.</p>
+ */
 public class ApiException extends RuntimeException {
 
     private final HttpStatus status;
@@ -13,8 +20,8 @@ public class ApiException extends RuntimeException {
 
     public ApiException(HttpStatus status, String code, String message) {
         super(message);
-        this.status = status;
-        this.code = code == null || code.isBlank() ? defaultCode(status) : code;
+        this.status = status == null ? HttpStatus.INTERNAL_SERVER_ERROR : status;
+        this.code = code == null || code.isBlank() ? defaultCode(this.status) : code;
     }
 
     public HttpStatus getStatus() {
@@ -36,6 +43,7 @@ public class ApiException extends RuntimeException {
             case NOT_FOUND -> "RESOURCE_NOT_FOUND";
             case CONFLICT -> "RESOURCE_CONFLICT";
             case TOO_MANY_REQUESTS -> "RATE_LIMITED";
+            case INTERNAL_SERVER_ERROR -> "INTERNAL_ERROR";
             default -> "API_ERROR";
         };
     }

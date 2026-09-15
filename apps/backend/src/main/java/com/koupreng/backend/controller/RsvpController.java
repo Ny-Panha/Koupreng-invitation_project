@@ -1,6 +1,6 @@
 package com.koupreng.backend.controller;
 
-import com.koupreng.backend.common.ApiErrorResponse;
+import com.koupreng.backend.shared.response.ApiErrorResponse;
 import com.koupreng.backend.dto.ApiResponse;
 import com.koupreng.backend.dto.rsvp.RsvpRequest;
 import com.koupreng.backend.dto.rsvp.RsvpResponse;

@@ -1,6 +1,6 @@
 package com.koupreng.backend.service;
 
-import com.koupreng.backend.common.ApiException;
+import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.dto.gift.WeddingGiftRequest;
 import com.koupreng.backend.dto.gift.WeddingGiftResponse;
 import com.koupreng.backend.entity.gift.WeddingGift;

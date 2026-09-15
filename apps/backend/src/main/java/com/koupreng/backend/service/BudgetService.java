@@ -14,7 +14,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.koupreng.backend.common.ApiException;
+import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.dto.budget.BudgetItemRequest;
 import com.koupreng.backend.dto.budget.BudgetItemResponse;
 import com.koupreng.backend.dto.budget.BudgetResponse;

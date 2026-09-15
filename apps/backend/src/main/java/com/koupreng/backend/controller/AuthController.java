@@ -1,6 +1,6 @@
 package com.koupreng.backend.controller;
 
-import com.koupreng.backend.common.ApiErrorResponse;
+import com.koupreng.backend.shared.response.ApiErrorResponse;
 import jakarta.validation.Valid;
 
 import com.koupreng.backend.dto.AuthResponse;

@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 
-import com.koupreng.backend.common.ApiException;
+import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.dto.budget.BudgetResponse;
 import com.koupreng.backend.dto.budget.CreateBudgetItemRequest;
 import com.koupreng.backend.dto.budget.UpdateBudgetRequest;

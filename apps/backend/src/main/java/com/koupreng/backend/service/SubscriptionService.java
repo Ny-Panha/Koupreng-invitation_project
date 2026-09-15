@@ -1,6 +1,6 @@
 package com.koupreng.backend.service;
 
-import com.koupreng.backend.common.ApiException;
+import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.config.PaymentProperties;
 import com.koupreng.backend.dto.subscription.SubscriptionPackageResponse;
 import com.koupreng.backend.dto.subscription.SubscriptionPackageRequest;

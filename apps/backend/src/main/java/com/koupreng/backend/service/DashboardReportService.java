@@ -1,6 +1,6 @@
 package com.koupreng.backend.service;
 
-import com.koupreng.backend.common.ApiException;
+import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.dto.admin.AdminUserResponse;
 import com.koupreng.backend.dto.dashboard.AdminDashboardSummaryResponse;
 import com.koupreng.backend.dto.dashboard.GuestStatusReportResponse;
