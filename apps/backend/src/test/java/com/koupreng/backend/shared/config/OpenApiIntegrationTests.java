@@ -24,6 +24,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.koupreng.backend.auth.api.dto.AuthResponse;
 import com.koupreng.backend.auth.api.dto.LoginRequest;
 import com.koupreng.backend.template.application.TemplateCatalogService;
@@ -87,7 +88,8 @@ class OpenApiIntegrationTests {
         }
 
         String checkedIn = normalizeContract(Files.readString(contract, StandardCharsets.UTF_8));
-        assertEquals(checkedIn, generated,
+        ObjectMapper yamlObjectMapper = new ObjectMapper(new YAMLFactory());
+        assertEquals(yamlObjectMapper.readTree(checkedIn), yamlObjectMapper.readTree(generated),
                 "OpenAPI drift detected. Run the documented contract update command and review the diff.");
     }
 
