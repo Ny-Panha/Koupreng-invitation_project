@@ -1,6 +1,6 @@
 package com.koupreng.backend.entity.invitation;
 
-import com.koupreng.backend.entity.user.AppUser;
+import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.entity.organization.Organization;
 import com.koupreng.backend.enums.InvitationModerationStatus;
 import com.koupreng.backend.enums.InvitationStatus;

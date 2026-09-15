@@ -1,6 +1,6 @@
 package com.koupreng.backend.dto.admin;
 
-import com.koupreng.backend.entity.user.Role;
+import com.koupreng.backend.user.domain.Role;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 

@@ -7,7 +7,7 @@ import com.koupreng.backend.dto.guest.GuestResponse;
 import com.koupreng.backend.dto.guest.GuestSendListResponse;
 import com.koupreng.backend.entity.invitation.Guest;
 import com.koupreng.backend.entity.invitation.UserInvitation;
-import com.koupreng.backend.entity.user.AppUser;
+import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.repository.GuestRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.Authentication;

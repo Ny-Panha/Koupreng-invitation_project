@@ -23,7 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koupreng.backend.auth.api.dto.AuthResponse;
 import com.koupreng.backend.auth.api.dto.LoginRequest;
 import com.koupreng.backend.user.api.dto.UserResponse;
-import com.koupreng.backend.entity.user.Role;
+import com.koupreng.backend.user.domain.Role;
 import com.koupreng.backend.auth.application.AuthService;
 
 import org.junit.jupiter.api.Test;

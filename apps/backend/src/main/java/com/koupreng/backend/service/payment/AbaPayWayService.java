@@ -7,7 +7,7 @@ import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.config.payment.AbaPayWayProperties;
 import com.koupreng.backend.dto.payment.CreateTemplatePaymentRequest;
 import com.koupreng.backend.entity.payment.TemplatePaymentOrder;
-import com.koupreng.backend.entity.user.AppUser;
+import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.enums.PaymentStatus;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

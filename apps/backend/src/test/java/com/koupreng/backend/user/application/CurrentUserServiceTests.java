@@ -8,8 +8,8 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
-import com.koupreng.backend.entity.user.AppUser;
-import com.koupreng.backend.repository.AppUserRepository;
+import com.koupreng.backend.user.domain.AppUser;
+import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.security.authentication.BadCredentialsException;

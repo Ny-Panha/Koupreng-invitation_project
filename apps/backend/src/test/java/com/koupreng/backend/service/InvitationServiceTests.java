@@ -11,7 +11,7 @@ import com.koupreng.backend.entity.invitation.EventType;
 import com.koupreng.backend.entity.invitation.Guest;
 import com.koupreng.backend.entity.invitation.InvitationTemplate;
 import com.koupreng.backend.entity.invitation.UserInvitation;
-import com.koupreng.backend.entity.user.AppUser;
+import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.enums.InvitationStatus;
 import com.koupreng.backend.enums.InvitationVisibility;
 import com.koupreng.backend.repository.GuestRepository;

@@ -1,7 +1,7 @@
 package com.koupreng.backend.user.application;
 
-import com.koupreng.backend.entity.user.AppUser;
-import com.koupreng.backend.repository.AppUserRepository;
+import com.koupreng.backend.user.domain.AppUser;
+import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;

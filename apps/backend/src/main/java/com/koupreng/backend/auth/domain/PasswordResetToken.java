@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 
 import java.time.Instant;
 
-import com.koupreng.backend.entity.user.AppUser;
+import com.koupreng.backend.user.domain.AppUser;
 
 @Entity
 @Table(name = "password_reset_tokens")

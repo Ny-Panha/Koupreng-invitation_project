@@ -1,4 +1,4 @@
-package com.koupreng.backend.entity.user;
+package com.koupreng.backend.user.domain;
 
 import java.time.Instant;
 

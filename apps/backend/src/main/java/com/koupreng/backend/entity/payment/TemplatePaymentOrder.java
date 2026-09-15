@@ -1,6 +1,6 @@
 package com.koupreng.backend.entity.payment;
 
-import com.koupreng.backend.entity.user.AppUser;
+import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.enums.PaymentStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

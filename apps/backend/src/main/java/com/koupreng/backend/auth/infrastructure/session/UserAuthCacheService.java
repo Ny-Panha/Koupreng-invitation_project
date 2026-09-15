@@ -3,9 +3,9 @@ package com.koupreng.backend.auth.infrastructure.session;
 import java.time.Duration;
 import java.util.Optional;
 
-import com.koupreng.backend.entity.user.AppUser;
-import com.koupreng.backend.entity.user.Role;
-import com.koupreng.backend.repository.AppUserRepository;
+import com.koupreng.backend.user.domain.AppUser;
+import com.koupreng.backend.user.domain.Role;
+import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import org.slf4j.Logger;

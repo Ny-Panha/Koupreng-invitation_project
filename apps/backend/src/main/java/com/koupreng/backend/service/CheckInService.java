@@ -8,7 +8,7 @@ import com.koupreng.backend.dto.checkin.CheckInSummaryResponse;
 import com.koupreng.backend.entity.invitation.Guest;
 import com.koupreng.backend.entity.invitation.GuestCheckIn;
 import com.koupreng.backend.entity.invitation.UserInvitation;
-import com.koupreng.backend.entity.user.AppUser;
+import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.repository.GuestCheckInRepository;
 import com.koupreng.backend.repository.GuestRepository;
 import com.koupreng.backend.repository.UserInvitationRepository;

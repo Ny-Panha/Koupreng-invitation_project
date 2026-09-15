@@ -4,7 +4,7 @@ import com.koupreng.backend.user.application.CurrentUserService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koupreng.backend.entity.audit.SystemAuditLog;
-import com.koupreng.backend.entity.user.AppUser;
+import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.repository.SystemAuditLogRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;

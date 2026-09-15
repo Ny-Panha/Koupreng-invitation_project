@@ -1,6 +1,6 @@
 package com.koupreng.backend.entity.audit;
 
-import com.koupreng.backend.entity.user.AppUser;
+import com.koupreng.backend.user.domain.AppUser;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.Instant;

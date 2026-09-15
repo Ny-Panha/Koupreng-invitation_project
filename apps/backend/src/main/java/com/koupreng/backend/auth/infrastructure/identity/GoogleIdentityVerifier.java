@@ -7,7 +7,7 @@ import java.util.Set;
 import com.koupreng.backend.auth.domain.ExternalAuthIdentity;
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.config.AppProperties;
-import com.koupreng.backend.entity.user.AuthProvider;
+import com.koupreng.backend.user.domain.AuthProvider;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.jwt.Jwt;

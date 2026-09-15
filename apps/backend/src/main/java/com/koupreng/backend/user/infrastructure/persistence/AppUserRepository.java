@@ -1,10 +1,10 @@
-package com.koupreng.backend.repository;
+package com.koupreng.backend.user.infrastructure.persistence;
 
 import java.util.Optional;
 import java.util.List;
 
-import com.koupreng.backend.entity.user.AppUser;
-import com.koupreng.backend.entity.user.Role;
+import com.koupreng.backend.user.domain.AppUser;
+import com.koupreng.backend.user.domain.Role;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

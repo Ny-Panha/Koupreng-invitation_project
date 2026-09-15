@@ -1,7 +1,7 @@
 package com.koupreng.backend.dto.admin;
 
-import com.koupreng.backend.entity.user.AppUser;
-import com.koupreng.backend.entity.user.Role;
+import com.koupreng.backend.user.domain.AppUser;
+import com.koupreng.backend.user.domain.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

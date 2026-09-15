@@ -4,7 +4,7 @@ import com.koupreng.backend.entity.invitation.Guest;
 import com.koupreng.backend.entity.invitation.Rsvp;
 import com.koupreng.backend.entity.invitation.UserInvitation;
 import com.koupreng.backend.entity.payment.TemplatePaymentOrder;
-import com.koupreng.backend.entity.user.AppUser;
+import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.enums.NotificationChannel;
 import com.koupreng.backend.enums.NotificationStatus;
 import com.koupreng.backend.enums.NotificationType;

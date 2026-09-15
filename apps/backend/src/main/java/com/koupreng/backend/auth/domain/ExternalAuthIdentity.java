@@ -1,6 +1,6 @@
 package com.koupreng.backend.auth.domain;
 
-import com.koupreng.backend.entity.user.AuthProvider;
+import com.koupreng.backend.user.domain.AuthProvider;
 
 public record ExternalAuthIdentity(
         AuthProvider provider,

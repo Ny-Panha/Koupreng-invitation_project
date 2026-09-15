@@ -9,7 +9,7 @@ import com.koupreng.backend.dto.subscription.SubscriptionPackageRequest;
 import com.koupreng.backend.dto.subscription.SubscriptionResponse;
 import com.koupreng.backend.entity.subscription.Subscription;
 import com.koupreng.backend.entity.subscription.SubscriptionPackage;
-import com.koupreng.backend.entity.user.AppUser;
+import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.repository.SubscriptionPackageRepository;
 import com.koupreng.backend.repository.SubscriptionRepository;
 import org.springframework.http.HttpStatus;

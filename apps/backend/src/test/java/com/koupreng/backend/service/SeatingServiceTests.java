@@ -8,7 +8,7 @@ import com.koupreng.backend.entity.invitation.EventTable;
 import com.koupreng.backend.entity.invitation.Guest;
 import com.koupreng.backend.entity.invitation.GuestSeatAssignment;
 import com.koupreng.backend.entity.invitation.UserInvitation;
-import com.koupreng.backend.entity.user.AppUser;
+import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.repository.EventTableRepository;
 import com.koupreng.backend.repository.GuestRepository;
 import com.koupreng.backend.repository.GuestSeatAssignmentRepository;

@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.koupreng.backend.entity.user.Role;
-import com.koupreng.backend.repository.AppUserRepository;
+import com.koupreng.backend.user.domain.Role;
+import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;
 import com.koupreng.backend.repository.BudgetItemRepository;
 import com.koupreng.backend.repository.BudgetRepository;
 import com.koupreng.backend.repository.EventTableRepository;

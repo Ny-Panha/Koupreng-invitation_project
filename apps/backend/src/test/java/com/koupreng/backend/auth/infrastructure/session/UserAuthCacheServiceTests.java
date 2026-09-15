@@ -14,9 +14,9 @@ import java.time.Duration;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-import com.koupreng.backend.entity.user.AppUser;
-import com.koupreng.backend.entity.user.Role;
-import com.koupreng.backend.repository.AppUserRepository;
+import com.koupreng.backend.user.domain.AppUser;
+import com.koupreng.backend.user.domain.Role;
+import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;
 import com.koupreng.backend.auth.infrastructure.session.UserAuthCacheService.CachedAuthInfo;
 
 import io.micrometer.core.instrument.MeterRegistry;
