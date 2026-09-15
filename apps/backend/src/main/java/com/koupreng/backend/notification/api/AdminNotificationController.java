@@ -9,7 +9,7 @@ import com.koupreng.backend.notification.api.dto.NotificationStatusUpdateRequest
 import com.koupreng.backend.enums.NotificationChannel;
 import com.koupreng.backend.enums.NotificationStatus;
 import com.koupreng.backend.enums.NotificationType;
-import com.koupreng.backend.service.AuditLogService;
+import com.koupreng.backend.audit.application.AuditLogService;
 import com.koupreng.backend.notification.application.NotificationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;

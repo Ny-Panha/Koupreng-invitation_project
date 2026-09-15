@@ -1,6 +1,6 @@
 package com.koupreng.backend.checkin.application;
 
-import com.koupreng.backend.service.AuditLogService;
+import com.koupreng.backend.audit.application.AuditLogService;
 import com.koupreng.backend.user.application.CurrentUserService;
 
 import com.koupreng.backend.shared.exception.ApiException;

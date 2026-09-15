@@ -292,3 +292,7 @@ The user and admin notification controllers, request/response/summary DTOs, appl
 ## Reporting module ownership slice
 
 The dashboard/report controller, application service, and user/invitation/admin report DTOs now live under `reporting/api`, `reporting/application`, and `reporting/api/dto`. Existing `/api/v1/dashboard/**`, invitation dashboard/report/export, and admin dashboard routes, response JSON, CSV formats, ownership checks, and aggregate calculations are unchanged. Focused tests now prove foreign-owner report rejection and server-side admin enforcement before global data is read. Verification: 245 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings.
+
+## Audit module ownership slice
+
+The audit application service, system-audit response DTO, current and legacy audit aggregates, and Spring Data repository now live under `audit/application`, `audit/api/dto`, `audit/domain`, and `audit/infrastructure/persistence`. Authentication, invitation, subscription, organization, budget, check-in, notification, template-payment, and admin callers migrated atomically. Existing audit table mappings, metadata serialization fallback, trusted-proxy handling, actor attribution, and admin response JSON are unchanged. Verification: 245 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings.

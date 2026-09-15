@@ -29,7 +29,7 @@ import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.budget.infrastructure.persistence.BudgetItemRepository;
 import com.koupreng.backend.budget.infrastructure.persistence.BudgetRepository;
 import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;
-import com.koupreng.backend.service.AuditLogService;
+import com.koupreng.backend.audit.application.AuditLogService;
 import com.koupreng.backend.util.CsvExportUtils;
 
 @Service

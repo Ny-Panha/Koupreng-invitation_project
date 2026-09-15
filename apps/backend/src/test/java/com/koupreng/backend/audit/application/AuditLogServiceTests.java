@@ -1,11 +1,11 @@
-package com.koupreng.backend.service;
+package com.koupreng.backend.audit.application;
 
 import com.koupreng.backend.user.application.CurrentUserService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.koupreng.backend.entity.audit.SystemAuditLog;
+import com.koupreng.backend.audit.domain.SystemAuditLog;
 import com.koupreng.backend.user.domain.AppUser;
-import com.koupreng.backend.repository.SystemAuditLogRepository;
+import com.koupreng.backend.audit.infrastructure.persistence.SystemAuditLogRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.mock.web.MockHttpServletRequest;

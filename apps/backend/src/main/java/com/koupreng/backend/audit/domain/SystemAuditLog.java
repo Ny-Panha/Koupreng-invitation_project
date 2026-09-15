@@ -1,4 +1,4 @@
-package com.koupreng.backend.entity.audit;
+package com.koupreng.backend.audit.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

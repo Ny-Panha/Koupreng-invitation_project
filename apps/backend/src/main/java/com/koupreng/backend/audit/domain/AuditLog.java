@@ -1,4 +1,4 @@
-package com.koupreng.backend.entity.audit;
+package com.koupreng.backend.audit.domain;
 
 import com.koupreng.backend.user.domain.AppUser;
 import jakarta.persistence.*;

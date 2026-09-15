@@ -14,7 +14,7 @@ import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
 import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;
 import com.koupreng.backend.rsvp.infrastructure.persistence.RsvpRepository;
 import com.koupreng.backend.rsvp.domain.RsvpStatus;
-import com.koupreng.backend.service.AuditLogService;
+import com.koupreng.backend.audit.application.AuditLogService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

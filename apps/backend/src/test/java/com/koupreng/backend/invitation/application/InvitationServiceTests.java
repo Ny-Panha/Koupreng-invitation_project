@@ -1,6 +1,6 @@
 package com.koupreng.backend.invitation.application;
 
-import com.koupreng.backend.service.AuditLogService;
+import com.koupreng.backend.audit.application.AuditLogService;
 
 import com.koupreng.backend.user.application.CurrentUserService;
 

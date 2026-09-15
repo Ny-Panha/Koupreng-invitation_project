@@ -13,7 +13,7 @@ import com.koupreng.backend.config.PaymentProperties;
 import com.koupreng.backend.dto.payment.PaymentConfirmResponse;
 import com.koupreng.backend.enums.PaymentStatus;
 import com.koupreng.backend.payment.api.dto.ConfirmPaymentRequest;
-import com.koupreng.backend.service.AuditLogService;
+import com.koupreng.backend.audit.application.AuditLogService;
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.subscription.api.dto.SubscriptionPackageResponse;
 import com.koupreng.backend.subscription.api.dto.SubscriptionPackageRequest;

@@ -20,7 +20,7 @@ import com.koupreng.backend.user.api.dto.UserResponse;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.user.domain.Role;
 import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;
-import com.koupreng.backend.service.AuditLogService;
+import com.koupreng.backend.audit.application.AuditLogService;
 import com.koupreng.backend.shared.i18n.MessageService;
 
 import org.springframework.http.HttpStatus;

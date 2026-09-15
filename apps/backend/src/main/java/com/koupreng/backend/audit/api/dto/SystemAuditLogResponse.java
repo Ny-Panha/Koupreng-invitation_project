@@ -1,6 +1,6 @@
-package com.koupreng.backend.dto.admin;
+package com.koupreng.backend.audit.api.dto;
 
-import com.koupreng.backend.entity.audit.SystemAuditLog;
+import com.koupreng.backend.audit.domain.SystemAuditLog;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

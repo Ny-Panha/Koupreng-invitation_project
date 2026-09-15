@@ -12,7 +12,7 @@ import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;
 import com.koupreng.backend.organization.infrastructure.persistence.OrganizationMemberRepository;
 import com.koupreng.backend.organization.infrastructure.persistence.OrganizationRepository;
-import com.koupreng.backend.service.AuditLogService;
+import com.koupreng.backend.audit.application.AuditLogService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;

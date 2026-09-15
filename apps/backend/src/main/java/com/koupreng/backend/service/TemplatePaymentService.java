@@ -1,5 +1,7 @@
 package com.koupreng.backend.service;
 
+import com.koupreng.backend.audit.application.AuditLogService;
+
 import com.koupreng.backend.user.application.CurrentUserService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;

@@ -1,13 +1,13 @@
-package com.koupreng.backend.service;
+package com.koupreng.backend.audit.application;
 
 import com.koupreng.backend.user.application.CurrentUserService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.koupreng.backend.dto.admin.SystemAuditLogResponse;
-import com.koupreng.backend.entity.audit.SystemAuditLog;
+import com.koupreng.backend.audit.api.dto.SystemAuditLogResponse;
+import com.koupreng.backend.audit.domain.SystemAuditLog;
 import com.koupreng.backend.user.domain.AppUser;
-import com.koupreng.backend.repository.SystemAuditLogRepository;
+import com.koupreng.backend.audit.infrastructure.persistence.SystemAuditLogRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
