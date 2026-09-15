@@ -35,6 +35,14 @@ class ArchitectureRulesTests {
             .because("HTTP contracts must use DTOs instead of persistence or domain objects");
 
     @ArchTest
+    static final ArchRule controllers_do_not_call_infrastructure_ports_directly = noClasses()
+            .that().areAnnotatedWith(RestController.class)
+            .should().dependOnClassesThat().resideInAnyPackage(
+                    "com.koupreng.backend..application.port.."
+            )
+            .because("HTTP adapters must delegate business operations to application use cases");
+
+    @ArchTest
     static final ArchRule v2_domain_packages_do_not_depend_on_outer_layers = noClasses()
             .that().resideInAnyPackage(
                     "com.koupreng.backend.auth.domain..",
@@ -42,7 +50,8 @@ class ArchitectureRulesTests {
                     "com.koupreng.backend.payment.domain..",
                     "com.koupreng.backend.subscription.domain..",
                     "com.koupreng.backend.template.domain..",
-                    "com.koupreng.backend.invitation.domain.."
+                    "com.koupreng.backend.invitation.domain..",
+                    "com.koupreng.backend.media.domain.."
             )
             .should().dependOnClassesThat().resideInAnyPackage(
                     "com.koupreng.backend.controller..",

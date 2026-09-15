@@ -1,7 +1,7 @@
-package com.koupreng.backend.repository;
+package com.koupreng.backend.media.infrastructure.persistence;
 
-import com.koupreng.backend.entity.invitation.MediaFile;
-import com.koupreng.backend.enums.MediaType;
+import com.koupreng.backend.media.domain.MediaFile;
+import com.koupreng.backend.media.domain.MediaType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

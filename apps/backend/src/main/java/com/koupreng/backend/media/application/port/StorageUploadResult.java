@@ -1,4 +1,4 @@
-package com.koupreng.backend.service.storage;
+package com.koupreng.backend.media.application.port;
 
 public record StorageUploadResult(
         String fileUrl,

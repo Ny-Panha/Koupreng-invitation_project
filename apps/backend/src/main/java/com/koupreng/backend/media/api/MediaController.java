@@ -1,12 +1,12 @@
-package com.koupreng.backend.controller;
+package com.koupreng.backend.media.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
-import com.koupreng.backend.dto.media.MediaListResponse;
-import com.koupreng.backend.dto.media.MediaResponse;
-import com.koupreng.backend.service.MediaService;
+import com.koupreng.backend.media.api.dto.MediaListResponse;
+import com.koupreng.backend.media.api.dto.MediaResponse;
+import com.koupreng.backend.media.application.MediaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

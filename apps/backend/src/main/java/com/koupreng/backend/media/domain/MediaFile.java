@@ -1,6 +1,5 @@
-package com.koupreng.backend.entity.invitation;
+package com.koupreng.backend.media.domain;
 
-import com.koupreng.backend.enums.MediaType;
 import com.koupreng.backend.invitation.domain.UserInvitation;
 import jakarta.persistence.*;
 import lombok.Data;

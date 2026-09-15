@@ -1,7 +1,7 @@
-package com.koupreng.backend.dto.media;
+package com.koupreng.backend.media.api.dto;
 
-import com.koupreng.backend.entity.invitation.MediaFile;
-import com.koupreng.backend.enums.MediaType;
+import com.koupreng.backend.media.domain.MediaFile;
+import com.koupreng.backend.media.domain.MediaType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

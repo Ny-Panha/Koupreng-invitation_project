@@ -1,4 +1,4 @@
-package com.koupreng.backend.enums;
+package com.koupreng.backend.media.domain;
 
 public enum MediaType {
     COVER_IMAGE,

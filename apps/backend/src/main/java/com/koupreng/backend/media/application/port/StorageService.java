@@ -1,6 +1,6 @@
-package com.koupreng.backend.service.storage;
+package com.koupreng.backend.media.application.port;
 
-import com.koupreng.backend.enums.MediaType;
+import com.koupreng.backend.media.domain.MediaType;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface StorageService {

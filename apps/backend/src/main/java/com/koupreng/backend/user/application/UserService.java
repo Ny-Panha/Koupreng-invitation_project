@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.Objects;
 
 import com.koupreng.backend.auth.infrastructure.session.UserAuthCacheService;
+import com.koupreng.backend.media.application.port.StorageService;
+import com.koupreng.backend.media.application.port.StorageUploadResult;
+import com.koupreng.backend.media.domain.MediaType;
+import com.koupreng.backend.security.FileUploadValidator;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.user.domain.Role;
 import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;
@@ -16,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class UserService {
@@ -24,17 +29,23 @@ public class UserService {
     private final MessageService msg;
     private final UserAuthCacheService userAuthCacheService;
     private final CurrentUserService currentUserService;
+    private final StorageService storageService;
+    private final FileUploadValidator fileUploadValidator;
 
     public UserService(
             AppUserRepository userRepository,
             MessageService msg,
             UserAuthCacheService userAuthCacheService,
-            CurrentUserService currentUserService
+            CurrentUserService currentUserService,
+            StorageService storageService,
+            FileUploadValidator fileUploadValidator
     ) {
         this.userRepository = userRepository;
         this.msg = msg;
         this.userAuthCacheService = userAuthCacheService;
         this.currentUserService = currentUserService;
+        this.storageService = storageService;
+        this.fileUploadValidator = fileUploadValidator;
     }
 
     @Transactional(readOnly = true)
@@ -64,6 +75,12 @@ public class UserService {
         return userRepository.findAll().stream()
                 .map(UserResponse::from)
                 .toList();
+    }
+
+    public String uploadProfileImage(MultipartFile file) {
+        fileUploadValidator.requireImage(file);
+        StorageUploadResult result = storageService.upload(file, MediaType.PROFILE_IMAGE, 0L);
+        return result.fileUrl();
     }
 
     @Transactional

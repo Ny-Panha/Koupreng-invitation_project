@@ -4,9 +4,6 @@ import java.util.Map;
 
 import com.koupreng.backend.auth.api.dto.ChangePasswordRequest;
 import com.koupreng.backend.auth.application.AccountService;
-import com.koupreng.backend.security.FileUploadValidator;
-import com.koupreng.backend.service.storage.StorageService;
-import com.koupreng.backend.service.storage.StorageUploadResult;
 import com.koupreng.backend.user.api.dto.UpdateProfileRequest;
 import com.koupreng.backend.user.api.dto.UserResponse;
 import com.koupreng.backend.user.application.UserService;
@@ -36,19 +33,13 @@ public class UserController {
 
     private final UserService userService;
     private final AccountService accountService;
-    private final StorageService storageService;
-    private final FileUploadValidator fileUploadValidator;
 
     public UserController(
             UserService userService,
-            AccountService accountService,
-            StorageService storageService,
-            FileUploadValidator fileUploadValidator
+            AccountService accountService
     ) {
         this.userService = userService;
         this.accountService = accountService;
-        this.storageService = storageService;
-        this.fileUploadValidator = fileUploadValidator;
     }
 
     @GetMapping
@@ -78,10 +69,6 @@ public class UserController {
             Authentication authentication,
             @org.springframework.web.bind.annotation.RequestParam("file") MultipartFile file
     ) {
-        // Validate image at controller level as defense-in-depth
-        fileUploadValidator.requireImage(file);
-        // We use PROFILE_IMAGE media type and 0L for invitationId since it's a user profile image
-        StorageUploadResult result = storageService.upload(file, com.koupreng.backend.enums.MediaType.PROFILE_IMAGE, 0L);
-        return Map.of("url", result.fileUrl());
+        return Map.of("url", userService.uploadProfileImage(file));
     }
 }

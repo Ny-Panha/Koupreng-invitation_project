@@ -1,15 +1,15 @@
-package com.koupreng.backend.service;
+package com.koupreng.backend.media.application;
 
 import com.koupreng.backend.invitation.application.InvitationService;
 import com.koupreng.backend.shared.exception.ApiException;
-import com.koupreng.backend.dto.media.MediaListResponse;
-import com.koupreng.backend.dto.media.MediaResponse;
-import com.koupreng.backend.entity.invitation.MediaFile;
+import com.koupreng.backend.media.api.dto.MediaListResponse;
+import com.koupreng.backend.media.api.dto.MediaResponse;
+import com.koupreng.backend.media.domain.MediaFile;
 import com.koupreng.backend.invitation.domain.UserInvitation;
-import com.koupreng.backend.enums.MediaType;
-import com.koupreng.backend.repository.MediaFileRepository;
-import com.koupreng.backend.service.storage.StorageService;
-import com.koupreng.backend.service.storage.StorageUploadResult;
+import com.koupreng.backend.media.domain.MediaType;
+import com.koupreng.backend.media.infrastructure.persistence.MediaFileRepository;
+import com.koupreng.backend.media.application.port.StorageService;
+import com.koupreng.backend.media.application.port.StorageUploadResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

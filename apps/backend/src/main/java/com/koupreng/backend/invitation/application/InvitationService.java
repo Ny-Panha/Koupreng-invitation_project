@@ -14,7 +14,7 @@ import com.koupreng.backend.invitation.api.dto.InvitationCustomizationResponse;
 import com.koupreng.backend.invitation.api.dto.PublicInvitationResponse;
 import com.koupreng.backend.invitation.api.dto.GuestInvitationViewResponse;
 import com.koupreng.backend.dto.rsvp.WishResponse;
-import com.koupreng.backend.dto.media.MediaListResponse;
+import com.koupreng.backend.media.api.dto.MediaListResponse;
 import com.koupreng.backend.invitation.domain.EventType;
 import com.koupreng.backend.entity.invitation.Guest;
 import com.koupreng.backend.entity.invitation.GuestSeatAssignment;
@@ -37,7 +37,7 @@ import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitation
 import com.koupreng.backend.repository.UserTemplateAccessRepository;
 import com.koupreng.backend.repository.GuestSeatAssignmentRepository;
 import com.koupreng.backend.repository.InvitationDeliveryEventRepository;
-import com.koupreng.backend.repository.MediaFileRepository;
+import com.koupreng.backend.media.infrastructure.persistence.MediaFileRepository;
 import com.koupreng.backend.repository.NotificationRepository;
 import com.koupreng.backend.repository.RsvpRepository;
 import com.koupreng.backend.config.AppProperties;

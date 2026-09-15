@@ -7,10 +7,16 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.same;
 
 import java.util.Optional;
 
 import com.koupreng.backend.auth.infrastructure.session.UserAuthCacheService;
+import com.koupreng.backend.media.application.port.StorageService;
+import com.koupreng.backend.media.application.port.StorageUploadResult;
+import com.koupreng.backend.media.domain.MediaType;
+import com.koupreng.backend.security.FileUploadValidator;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.user.domain.Role;
 import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;
@@ -23,6 +29,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
+import org.springframework.mock.web.MockMultipartFile;
 
 class UserServiceTests {
 
@@ -30,12 +37,16 @@ class UserServiceTests {
     private final MessageService messageService = mock(MessageService.class);
     private final UserAuthCacheService userAuthCacheService = mock(UserAuthCacheService.class);
     private final CurrentUserService currentUserService = mock(CurrentUserService.class);
+    private final StorageService storageService = mock(StorageService.class);
+    private final FileUploadValidator fileUploadValidator = mock(FileUploadValidator.class);
     private final Authentication authentication = mock(Authentication.class);
     private final UserService service = new UserService(
             userRepository,
             messageService,
             userAuthCacheService,
-            currentUserService
+            currentUserService,
+            storageService,
+            fileUploadValidator
     );
 
     private AppUser user;
@@ -109,5 +120,23 @@ class UserServiceTests {
         assertEquals(Role.ADMIN, response.role());
         assertEquals(1, user.getTokenVersion());
         verify(userAuthCacheService).evict(7L);
+    }
+
+    @Test
+    void profileImageUploadValidatesAndDelegatesToStoragePort() {
+        MockMultipartFile file = new MockMultipartFile(
+                "file",
+                "profile.png",
+                "image/png",
+                new byte[] {1, 2, 3}
+        );
+        when(storageService.upload(same(file), same(MediaType.PROFILE_IMAGE), eq(0L)))
+                .thenReturn(new StorageUploadResult("/uploads/profile.png", "profile", "local"));
+
+        String url = service.uploadProfileImage(file);
+
+        assertEquals("/uploads/profile.png", url);
+        verify(fileUploadValidator).requireImage(file);
+        verify(storageService).upload(file, MediaType.PROFILE_IMAGE, 0L);
     }
 }

@@ -1,10 +1,12 @@
-package com.koupreng.backend.service.storage;
+package com.koupreng.backend.media.infrastructure.storage;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.config.StorageProperties;
-import com.koupreng.backend.enums.MediaType;
+import com.koupreng.backend.media.application.port.StorageService;
+import com.koupreng.backend.media.application.port.StorageUploadResult;
+import com.koupreng.backend.media.domain.MediaType;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
