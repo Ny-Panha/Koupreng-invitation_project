@@ -3,7 +3,7 @@ package com.koupreng.backend.security;
 import com.koupreng.backend.payment.api.dto.ConfirmTemplatePaymentRequest;
 import com.koupreng.backend.payment.api.dto.PaymentConfirmResponse;
 import com.koupreng.backend.payment.api.dto.TelegramDetectPaymentRequest;
-import com.koupreng.backend.enums.PaymentStatus;
+import com.koupreng.backend.payment.domain.PaymentStatus;
 import com.koupreng.backend.payment.application.TemplatePaymentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

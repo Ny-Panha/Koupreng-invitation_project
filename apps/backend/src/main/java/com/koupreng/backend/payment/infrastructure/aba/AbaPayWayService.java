@@ -8,7 +8,7 @@ import com.koupreng.backend.config.payment.AbaPayWayProperties;
 import com.koupreng.backend.payment.api.dto.CreateTemplatePaymentRequest;
 import com.koupreng.backend.payment.domain.TemplatePaymentOrder;
 import com.koupreng.backend.user.domain.AppUser;
-import com.koupreng.backend.enums.PaymentStatus;
+import com.koupreng.backend.payment.domain.PaymentStatus;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 

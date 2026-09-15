@@ -3,7 +3,7 @@ package com.koupreng.backend.budget.api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import com.koupreng.backend.dto.ApiResponse;
+import com.koupreng.backend.shared.response.ApiResponse;
 import com.koupreng.backend.budget.api.dto.BudgetItemRequest;
 import com.koupreng.backend.budget.api.dto.BudgetItemResponse;
 import com.koupreng.backend.budget.api.dto.BudgetResponse;

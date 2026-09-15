@@ -1,6 +1,6 @@
 package com.koupreng.backend.payment.api;
 
-import com.koupreng.backend.dto.ApiResponse;
+import com.koupreng.backend.shared.response.ApiResponse;
 import com.koupreng.backend.payment.api.dto.PaymentConfirmResponse;
 import com.koupreng.backend.payment.api.dto.ConfirmPaymentRequest;
 import com.koupreng.backend.payment.application.PaymentConfirmationService;

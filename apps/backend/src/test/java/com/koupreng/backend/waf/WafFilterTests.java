@@ -14,7 +14,7 @@ import jakarta.servlet.FilterChain;
 import com.koupreng.backend.config.AppProperties;
 import com.koupreng.backend.security.ApiSecurityProperties;
 import com.koupreng.backend.security.ClientAddressResolver;
-import com.koupreng.backend.service.RateLimitService;
+import com.koupreng.backend.shared.security.RateLimitService;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.ObjectProvider;

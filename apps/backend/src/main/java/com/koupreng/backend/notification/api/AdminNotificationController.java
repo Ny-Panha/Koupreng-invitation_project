@@ -2,13 +2,13 @@ package com.koupreng.backend.notification.api;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import com.koupreng.backend.dto.ApiResponse;
+import com.koupreng.backend.shared.response.ApiResponse;
 import com.koupreng.backend.notification.api.dto.CreateNotificationRequest;
 import com.koupreng.backend.notification.api.dto.NotificationResponse;
 import com.koupreng.backend.notification.api.dto.NotificationStatusUpdateRequest;
-import com.koupreng.backend.enums.NotificationChannel;
-import com.koupreng.backend.enums.NotificationStatus;
-import com.koupreng.backend.enums.NotificationType;
+import com.koupreng.backend.notification.domain.NotificationChannel;
+import com.koupreng.backend.notification.domain.NotificationStatus;
+import com.koupreng.backend.notification.domain.NotificationType;
 import com.koupreng.backend.audit.application.AuditLogService;
 import com.koupreng.backend.notification.application.NotificationService;
 import jakarta.servlet.http.HttpServletRequest;

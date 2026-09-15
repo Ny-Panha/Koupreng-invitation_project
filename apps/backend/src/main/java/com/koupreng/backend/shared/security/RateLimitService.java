@@ -1,4 +1,4 @@
-package com.koupreng.backend.service;
+package com.koupreng.backend.shared.security;
 
 import java.time.Clock;
 import java.time.Duration;

@@ -1,7 +1,7 @@
 package com.koupreng.backend.payment.api.dto;
 
 import com.koupreng.backend.payment.domain.TemplatePaymentOrder;
-import com.koupreng.backend.enums.PaymentStatus;
+import com.koupreng.backend.payment.domain.PaymentStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

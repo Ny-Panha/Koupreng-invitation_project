@@ -27,9 +27,9 @@ import com.koupreng.backend.user.domain.Role;
 import com.koupreng.backend.invitation.domain.InvitationModerationStatus;
 import com.koupreng.backend.invitation.domain.InvitationStatus;
 import com.koupreng.backend.invitation.domain.InvitationVisibility;
-import com.koupreng.backend.enums.NotificationChannel;
-import com.koupreng.backend.enums.NotificationStatus;
-import com.koupreng.backend.enums.NotificationType;
+import com.koupreng.backend.notification.domain.NotificationChannel;
+import com.koupreng.backend.notification.domain.NotificationStatus;
+import com.koupreng.backend.notification.domain.NotificationType;
 import com.koupreng.backend.rsvp.domain.RsvpStatus;
 
 import jakarta.persistence.EntityManager;

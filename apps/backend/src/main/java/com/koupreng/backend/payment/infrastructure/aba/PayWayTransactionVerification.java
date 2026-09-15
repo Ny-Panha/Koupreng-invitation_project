@@ -1,6 +1,6 @@
 package com.koupreng.backend.payment.infrastructure.aba;
 
-import com.koupreng.backend.enums.PaymentStatus;
+import com.koupreng.backend.payment.domain.PaymentStatus;
 
 import java.math.BigDecimal;
 

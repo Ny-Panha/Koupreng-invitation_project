@@ -1,4 +1,4 @@
-package com.koupreng.backend.controller;
+package com.koupreng.backend.shared.api;
 
 import java.util.Map;
 

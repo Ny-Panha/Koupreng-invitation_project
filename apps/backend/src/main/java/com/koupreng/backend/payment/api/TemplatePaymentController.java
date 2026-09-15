@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import com.koupreng.backend.dto.ApiResponse;
+import com.koupreng.backend.shared.response.ApiResponse;
 import com.koupreng.backend.payment.api.dto.ConfirmTemplatePaymentRequest;
 import com.koupreng.backend.payment.api.dto.CreateTemplatePaymentRequest;
 import com.koupreng.backend.payment.api.dto.CreateTemplatePaymentResponse;

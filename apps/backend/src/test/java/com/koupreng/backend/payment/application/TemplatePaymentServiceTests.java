@@ -14,7 +14,7 @@ import com.koupreng.backend.payment.domain.TemplatePaymentOrder;
 import com.koupreng.backend.payment.domain.UserTemplateAccess;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.user.domain.Role;
-import com.koupreng.backend.enums.PaymentStatus;
+import com.koupreng.backend.payment.domain.PaymentStatus;
 import com.koupreng.backend.template.infrastructure.persistence.InvitationTemplateRepository;
 import com.koupreng.backend.payment.infrastructure.persistence.TemplatePaymentOrderRepository;
 import com.koupreng.backend.payment.infrastructure.persistence.UserTemplateAccessRepository;

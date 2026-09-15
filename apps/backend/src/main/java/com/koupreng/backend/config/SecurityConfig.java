@@ -15,7 +15,7 @@ import com.koupreng.backend.security.ClientAddressResolver;
 import com.koupreng.backend.auth.infrastructure.security.CookieBearerTokenResolver;
 import com.koupreng.backend.security.PublicRsvpRateLimitFilter;
 import com.koupreng.backend.security.UploadSecurityFilter;
-import com.koupreng.backend.service.RateLimitService;
+import com.koupreng.backend.shared.security.RateLimitService;
 import com.koupreng.backend.waf.WafFilter;
 import com.koupreng.backend.waf.WafProperties;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;

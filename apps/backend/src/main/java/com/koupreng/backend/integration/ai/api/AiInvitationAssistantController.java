@@ -2,7 +2,7 @@ package com.koupreng.backend.integration.ai.api;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import com.koupreng.backend.dto.ApiResponse;
+import com.koupreng.backend.shared.response.ApiResponse;
 import com.koupreng.backend.integration.ai.api.dto.AiInvitationDraftRequest;
 import com.koupreng.backend.integration.ai.api.dto.AiInvitationDraftResponse;
 import com.koupreng.backend.integration.ai.application.AiInvitationAssistantService;

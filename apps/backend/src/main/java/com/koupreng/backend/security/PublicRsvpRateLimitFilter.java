@@ -2,7 +2,7 @@ package com.koupreng.backend.security;
 
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.config.AppProperties;
-import com.koupreng.backend.service.RateLimitService;
+import com.koupreng.backend.shared.security.RateLimitService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

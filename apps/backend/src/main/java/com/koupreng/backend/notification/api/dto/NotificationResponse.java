@@ -1,9 +1,9 @@
 package com.koupreng.backend.notification.api.dto;
 
 import com.koupreng.backend.notification.domain.Notification;
-import com.koupreng.backend.enums.NotificationChannel;
-import com.koupreng.backend.enums.NotificationStatus;
-import com.koupreng.backend.enums.NotificationType;
+import com.koupreng.backend.notification.domain.NotificationChannel;
+import com.koupreng.backend.notification.domain.NotificationStatus;
+import com.koupreng.backend.notification.domain.NotificationType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

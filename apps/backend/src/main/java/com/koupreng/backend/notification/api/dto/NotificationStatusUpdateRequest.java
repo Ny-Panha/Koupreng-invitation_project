@@ -1,6 +1,6 @@
 package com.koupreng.backend.notification.api.dto;
 
-import com.koupreng.backend.enums.NotificationStatus;
+import com.koupreng.backend.notification.domain.NotificationStatus;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 

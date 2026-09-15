@@ -1,7 +1,7 @@
 package com.koupreng.backend.rsvp.api;
 
 import com.koupreng.backend.shared.response.ApiErrorResponse;
-import com.koupreng.backend.dto.ApiResponse;
+import com.koupreng.backend.shared.response.ApiResponse;
 import com.koupreng.backend.rsvp.api.dto.RsvpRequest;
 import com.koupreng.backend.rsvp.api.dto.RsvpResponse;
 import com.koupreng.backend.rsvp.api.dto.RsvpSummaryResponse;

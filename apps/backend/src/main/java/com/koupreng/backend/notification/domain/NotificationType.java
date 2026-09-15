@@ -1,4 +1,4 @@
-package com.koupreng.backend.enums;
+package com.koupreng.backend.notification.domain;
 
 public enum NotificationType {
     INVITATION_SENT,

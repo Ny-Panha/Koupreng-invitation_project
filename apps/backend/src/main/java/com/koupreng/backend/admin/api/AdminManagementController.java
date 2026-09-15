@@ -2,7 +2,7 @@ package com.koupreng.backend.admin.api;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import com.koupreng.backend.dto.ApiResponse;
+import com.koupreng.backend.shared.response.ApiResponse;
 import com.koupreng.backend.admin.api.dto.AdminInvitationModerationRequest;
 import com.koupreng.backend.admin.api.dto.AdminReportResponse;
 import com.koupreng.backend.admin.api.dto.AdminTemplatePremiumRequest;

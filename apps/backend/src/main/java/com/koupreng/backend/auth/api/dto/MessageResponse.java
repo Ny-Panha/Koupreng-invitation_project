@@ -1,4 +1,4 @@
-package com.koupreng.backend.dto;
+package com.koupreng.backend.auth.api.dto;
 
 public record MessageResponse(String message) {
 }

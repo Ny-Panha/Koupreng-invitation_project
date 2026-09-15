@@ -17,7 +17,7 @@ import com.koupreng.backend.auth.api.dto.LoginRequest;
 import com.koupreng.backend.auth.application.AccountService;
 import com.koupreng.backend.auth.application.AuthService;
 import com.koupreng.backend.auth.infrastructure.security.AuthCookieService;
-import com.koupreng.backend.dto.MessageResponse;
+import com.koupreng.backend.auth.api.dto.MessageResponse;
 import com.koupreng.backend.user.api.dto.UserResponse;
 import com.koupreng.backend.user.domain.Role;
 import com.koupreng.backend.user.application.UserService;

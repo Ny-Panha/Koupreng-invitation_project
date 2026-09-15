@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 
 import com.koupreng.backend.payment.api.dto.ConfirmTemplatePaymentRequest;
 import com.koupreng.backend.payment.api.dto.PaymentConfirmResponse;
-import com.koupreng.backend.enums.PaymentStatus;
+import com.koupreng.backend.payment.domain.PaymentStatus;
 import com.koupreng.backend.payment.api.dto.ConfirmPaymentRequest;
 import com.koupreng.backend.subscription.application.SubscriptionService;
 import com.koupreng.backend.payment.application.TemplatePaymentService;

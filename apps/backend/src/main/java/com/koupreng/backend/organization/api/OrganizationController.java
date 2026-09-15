@@ -2,7 +2,7 @@ package com.koupreng.backend.organization.api;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import com.koupreng.backend.dto.ApiResponse;
+import com.koupreng.backend.shared.response.ApiResponse;
 import com.koupreng.backend.organization.api.dto.OrganizationMemberRequest;
 import com.koupreng.backend.organization.api.dto.OrganizationMemberResponse;
 import com.koupreng.backend.organization.api.dto.OrganizationMemberRoleRequest;

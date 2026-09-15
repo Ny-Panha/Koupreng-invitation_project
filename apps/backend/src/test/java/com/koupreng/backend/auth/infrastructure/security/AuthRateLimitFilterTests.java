@@ -10,7 +10,7 @@ import jakarta.servlet.FilterChain;
 
 import com.koupreng.backend.config.AppProperties;
 import com.koupreng.backend.security.ClientAddressResolver;
-import com.koupreng.backend.service.RateLimitService;
+import com.koupreng.backend.shared.security.RateLimitService;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

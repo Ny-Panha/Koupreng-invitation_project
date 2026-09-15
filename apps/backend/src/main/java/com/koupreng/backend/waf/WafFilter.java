@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.security.ClientAddressResolver;
-import com.koupreng.backend.service.RateLimitService;
+import com.koupreng.backend.shared.security.RateLimitService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

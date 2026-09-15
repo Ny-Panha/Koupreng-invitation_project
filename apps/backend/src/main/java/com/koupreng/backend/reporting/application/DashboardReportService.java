@@ -23,7 +23,7 @@ import com.koupreng.backend.payment.domain.TemplateOrder;
 import com.koupreng.backend.payment.domain.TemplatePaymentOrder;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.invitation.domain.InvitationStatus;
-import com.koupreng.backend.enums.PaymentStatus;
+import com.koupreng.backend.payment.domain.PaymentStatus;
 import com.koupreng.backend.rsvp.domain.RsvpStatus;
 import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;
 import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;

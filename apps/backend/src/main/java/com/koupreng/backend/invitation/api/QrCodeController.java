@@ -2,7 +2,7 @@ package com.koupreng.backend.invitation.api;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import com.koupreng.backend.dto.ApiResponse;
+import com.koupreng.backend.shared.response.ApiResponse;
 import com.koupreng.backend.invitation.api.dto.QrCodeResponse;
 import com.koupreng.backend.invitation.application.QrCodeService;
 import org.springframework.http.ResponseEntity;

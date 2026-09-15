@@ -15,7 +15,7 @@ import java.util.Optional;
 
 import com.koupreng.backend.config.PaymentProperties;
 import com.koupreng.backend.payment.api.dto.PaymentConfirmResponse;
-import com.koupreng.backend.enums.PaymentStatus;
+import com.koupreng.backend.payment.domain.PaymentStatus;
 import com.koupreng.backend.payment.api.dto.ConfirmPaymentRequest;
 import com.koupreng.backend.audit.application.AuditLogService;
 import com.koupreng.backend.shared.exception.ApiException;

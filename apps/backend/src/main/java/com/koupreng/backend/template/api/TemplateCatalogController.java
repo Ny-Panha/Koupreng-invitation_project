@@ -1,7 +1,7 @@
 package com.koupreng.backend.template.api;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import com.koupreng.backend.dto.ApiResponse;
+import com.koupreng.backend.shared.response.ApiResponse;
 import com.koupreng.backend.template.api.dto.PublicTemplateResponse;
 import com.koupreng.backend.template.application.TemplateCatalogService;
 import org.springframework.http.ResponseEntity;

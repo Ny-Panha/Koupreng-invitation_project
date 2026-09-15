@@ -1,7 +1,7 @@
 package com.koupreng.backend.payment.infrastructure.persistence;
 
 import com.koupreng.backend.payment.domain.TemplateOrder;
-import com.koupreng.backend.enums.PaymentStatus;
+import com.koupreng.backend.payment.domain.PaymentStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.Instant;

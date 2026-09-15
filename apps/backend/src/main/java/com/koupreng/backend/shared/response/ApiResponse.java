@@ -1,4 +1,4 @@
-package com.koupreng.backend.dto;
+package com.koupreng.backend.shared.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

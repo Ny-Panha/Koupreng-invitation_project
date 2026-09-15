@@ -13,7 +13,7 @@ import com.koupreng.backend.auth.application.AuthService;
 import com.koupreng.backend.auth.infrastructure.security.AuthCookieService;
 import jakarta.validation.Valid;
 
-import com.koupreng.backend.dto.MessageResponse;
+import com.koupreng.backend.auth.api.dto.MessageResponse;
 import com.koupreng.backend.user.api.dto.UpdateProfileRequest;
 import com.koupreng.backend.user.api.dto.UserResponse;
 import com.koupreng.backend.user.application.UserService;
