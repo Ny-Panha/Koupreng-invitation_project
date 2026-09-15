@@ -1,12 +1,14 @@
 <div align="center">
 
+<img src="apps/frontend-user/public/logo.png" alt="Koupreng Khmer wordmark" width="220">
+
 # 💌 Koupreng
 
-<p><strong>E-Invitation Platform</strong></p>
+<p><strong>Khmer-First Digital Invitation &amp; Event Experience</strong></p>
 
-**Create, share, and manage meaningful celebrations through a modern Khmer-first experience.**
+**Elegant digital invitations for guests. Practical event operations for hosts.**
 
-Koupreng brings invitation publishing, guest coordination, RSVP, templates, payments, and administration into one full-stack platform designed as a professional university capstone and portfolio project.
+Koupreng combines warm ceremonial presentation with the tools needed to publish invitations, welcome guests, collect RSVPs, and coordinate the event behind the scenes.
 
 <p>
   <img src="https://img.shields.io/badge/React-19.2-61DAFB?style=flat-square&logo=react&logoColor=white" alt="React 19.2">
@@ -19,11 +21,19 @@ Koupreng brings invitation publishing, guest coordination, RSVP, templates, paym
   <img src="https://img.shields.io/badge/Docker-Compose-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker Compose">
 </p>
 
-[Features](#features) · [Architecture](#architecture) · [Tech Stack](#tech-stack) · [Getting Started](#getting-started) · [API Docs](#api-documentation) · [Security](#security)
+[Showcase](#product-showcase) · [How It Works](#how-it-works) · [Features](#features) · [Architecture](#architecture) · [Getting Started](#getting-started) · [API Docs](#api-documentation)
 
 </div>
 
 ---
+
+<div align="center">
+
+<img src="apps/frontend-user/public/templates/canva-luxury/emerald-luxury.jpg" alt="Emerald and gold Koupreng invitation template" width="420">
+
+<p><sub>A real invitation design asset shipped with Koupreng—combining deep Khmer-inspired color, restrained gold detail, and a guest-first mobile canvas.</sub></p>
+
+</div>
 
 <a id="about"></a>
 
@@ -31,7 +41,58 @@ Koupreng brings invitation publishing, guest coordination, RSVP, templates, paym
 
 Koupreng is a Khmer-focused digital invitation platform composed of a public and host-facing React application, a separate React administration application, a Spring Boot REST API, and a Python service for Telegram-assisted payment detection.
 
-The platform supports invitation and guest management, RSVP workflows, reusable templates, payment-related flows, interactive API documentation, and a containerized deployment topology. It is built to demonstrate clear domain ownership, secure application boundaries, and practical full-stack engineering—not to overstate unfinished external integrations as production-complete.
+The platform supports invitation and guest management, RSVP workflows, seating, check-in, event finances, reusable templates, payment-related flows, interactive API documentation, and a containerized deployment topology. It is built to demonstrate clear domain ownership, secure application boundaries, and practical full-stack engineering—not to overstate unfinished external integrations as production-complete.
+
+<a id="why-koupreng"></a>
+
+## 🌟 Why Koupreng?
+
+Koupreng treats the invitation as an experience rather than a simple event link. Its visual direction favors warm ceremonial presentation, Khmer-safe typography, and responsive layouts that feel natural for guests opening an invitation on a phone.
+
+Behind that guest experience is a practical host workspace for guest lists, responses, seating, check-in, budgets, gifts, delivery, and event status. A separate administration surface keeps platform-level workflows distinct from invitation ownership.
+
+The project intentionally documents incomplete integrations and release gates. Its goal is a credible, culturally grounded full-stack product foundation with clear technical and security boundaries.
+
+<a id="product-showcase"></a>
+
+## 🖥️ Product Showcase
+
+These are authentic visual assets used by the current Koupreng user application—not fabricated dashboard screens. They show how a Khmer invitation can move from atmosphere to ceremony details and guest participation while preserving a consistent visual language.
+
+<table>
+  <tr>
+    <td width="33%" align="center">
+      <img src="apps/frontend-user/public/invitations/canva-khmer/sections/hero.webp" alt="Koupreng Khmer invitation opening scene" width="100%">
+      <br><strong>Invitation opening</strong><br>
+      <sub>A warm, music-ready first impression.</sub>
+    </td>
+    <td width="33%" align="center">
+      <img src="apps/frontend-user/public/invitations/canva-khmer/sections/program.webp" alt="Koupreng Khmer wedding ceremony program" width="100%">
+      <br><strong>Ceremony program</strong><br>
+      <sub>Khmer schedule and venue guidance.</sub>
+    </td>
+    <td width="33%" align="center">
+      <img src="apps/frontend-user/public/invitations/canva-khmer/sections/gift.webp" alt="Koupreng invitation gift experience with demonstration payment details" width="100%">
+      <br><strong>Guest participation</strong><br>
+      <sub>Gift presentation using demonstration details.</sub>
+    </td>
+  </tr>
+</table>
+
+<a id="how-it-works"></a>
+
+## 🔄 How Koupreng Works
+
+```mermaid
+flowchart LR
+    Template["Choose Template"] --> Customize["Customize Event"]
+    Customize --> Publish["Publish Invitation"]
+    Publish --> Share["Share With Guests"]
+    Share --> RSVP["Guest RSVP"]
+    RSVP --> Manage["Manage Guests"]
+    Manage --> Arrival["Seating & Check-In"]
+    Arrival --> Event["Event Day"]
+```
 
 <a id="features"></a>
 
@@ -40,14 +101,17 @@ The platform supports invitation and guest management, RSVP workflows, reusable 
 | Capability | What it provides |
 | --- | --- |
 | 💌 **Invitations** | Create, customize, publish, moderate, and share digital invitations. |
-| 👥 **Guest Management** | Organize guest lists, invitation delivery, seating, and check-in data. |
-| ✅ **RSVP** | Capture attendance responses, party details, and guest messages. |
 | 🎨 **Templates** | Browse and manage invitation templates, categories, and premium access. |
-| 💳 **Payments** | Support template and subscription payment workflows with confirmation evidence. |
-| 🤖 **Telegram Integration** | Detect configured payment messages and coordinate confirmations through a FastAPI service. |
-| 🛡️ **Authentication & Security** | Apply role-aware access, OAuth/JWT support, CSRF controls, validation, rate limits, and request filtering. |
-| 📊 **Administration** | Provide dedicated moderation, user, reporting, notification, template, and payment views. |
-| 📱 **Responsive Experience** | Deliver separate Vite-powered interfaces for invitees, hosts, and administrators. |
+| 👥 **Guests** | Import, organize, group, search, deliver to, and manage invitation guests. |
+| ✅ **RSVP** | Capture attendance responses, party details, deadlines, and guest messages. |
+| 🪑 **Seating** | Arrange tables and invitation-scoped guest seat assignments. |
+| 📍 **Check-In** | Support QR and manual arrival flows with event-day summaries. |
+| 💰 **Budget & Operations** | Track invitation-scoped budgets, items, delivery activity, and notifications. |
+| 🎁 **Gifts** | Record wedding gifts while preserving invitation ownership boundaries. |
+| 💳 **Payment Workflows** | Coordinate template and subscription payments with explicit confirmation evidence. |
+| 🤖 **Telegram Assistance** | Detect configured payment messages and coordinate confirmations through a FastAPI service. |
+| 📊 **Host Dashboard** | Summarize invitations, guests, responses, check-ins, gifts, budgets, and activity. |
+| 🛡️ **Administration & Security** | Separate moderation and platform controls with role-aware access and layered request protection. |
 | 🐳 **Deployment** | Package the applications behind an NGINX gateway with Docker Compose, MySQL, and Redis. |
 
 <a id="tech-stack"></a>
@@ -270,7 +334,6 @@ The CI workflow also covers secret scanning, dependency audits, fresh-MySQL Flyw
 | [Verification Results](docs/qa/verification-results.md) | Latest recorded validation evidence |
 | [Known Limitations](docs/qa/known-limitations.md) | Open release gates and environment constraints |
 | [Security Policy](SECURITY.md) | Vulnerability reporting and security expectations |
-| [Contributing](CONTRIBUTING.md) | Contribution workflow and repository standards |
 
 ---
 
