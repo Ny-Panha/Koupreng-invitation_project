@@ -1,6 +1,6 @@
-package com.koupreng.backend.dto.delivery;
+package com.koupreng.backend.delivery.api.dto;
 
-import com.koupreng.backend.entity.delivery.InvitationDeliveryEvent;
+import com.koupreng.backend.delivery.domain.InvitationDeliveryEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

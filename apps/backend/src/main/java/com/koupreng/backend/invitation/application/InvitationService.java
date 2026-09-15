@@ -36,7 +36,7 @@ import com.koupreng.backend.repository.OrganizationRepository;
 import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;
 import com.koupreng.backend.repository.UserTemplateAccessRepository;
 import com.koupreng.backend.seating.infrastructure.persistence.GuestSeatAssignmentRepository;
-import com.koupreng.backend.repository.InvitationDeliveryEventRepository;
+import com.koupreng.backend.delivery.infrastructure.persistence.InvitationDeliveryEventRepository;
 import com.koupreng.backend.media.infrastructure.persistence.MediaFileRepository;
 import com.koupreng.backend.repository.NotificationRepository;
 import com.koupreng.backend.rsvp.infrastructure.persistence.RsvpRepository;

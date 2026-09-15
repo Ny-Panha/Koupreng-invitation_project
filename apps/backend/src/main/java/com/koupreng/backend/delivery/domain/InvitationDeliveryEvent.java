@@ -1,4 +1,4 @@
-package com.koupreng.backend.entity.delivery;
+package com.koupreng.backend.delivery.domain;
 
 import com.koupreng.backend.guest.domain.Guest;
 import com.koupreng.backend.invitation.domain.UserInvitation;

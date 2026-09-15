@@ -1,4 +1,4 @@
-package com.koupreng.backend.dto.delivery;
+package com.koupreng.backend.delivery.api.dto;
 
 import com.koupreng.backend.guest.domain.Guest;
 import lombok.AllArgsConstructor;

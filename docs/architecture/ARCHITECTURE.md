@@ -55,7 +55,8 @@ com.koupreng.backend
   rsvp/
   checkin/
   seating/
-  planning/       budget, gifts, delivery
+  delivery/
+  planning/       budget, gifts
   payment/
   subscription/
   notification/

@@ -1,6 +1,6 @@
-package com.koupreng.backend.repository;
+package com.koupreng.backend.delivery.infrastructure.persistence;
 
-import com.koupreng.backend.entity.delivery.InvitationDeliveryEvent;
+import com.koupreng.backend.delivery.domain.InvitationDeliveryEvent;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
