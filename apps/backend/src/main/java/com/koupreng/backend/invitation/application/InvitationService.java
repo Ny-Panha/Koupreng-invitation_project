@@ -21,7 +21,8 @@ import com.koupreng.backend.seating.domain.GuestSeatAssignment;
 import com.koupreng.backend.template.domain.InvitationTemplate;
 import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.rsvp.domain.Rsvp;
-import com.koupreng.backend.entity.organization.Organization;
+import com.koupreng.backend.organization.domain.Organization;
+import com.koupreng.backend.organization.domain.OrganizationMember;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.user.domain.Role;
 import com.koupreng.backend.invitation.domain.InvitationModerationStatus;
@@ -31,8 +32,8 @@ import com.koupreng.backend.seating.infrastructure.persistence.EventTableReposit
 import com.koupreng.backend.template.infrastructure.persistence.InvitationTemplateRepository;
 import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
 import com.koupreng.backend.checkin.infrastructure.persistence.GuestCheckInRepository;
-import com.koupreng.backend.repository.OrganizationMemberRepository;
-import com.koupreng.backend.repository.OrganizationRepository;
+import com.koupreng.backend.organization.infrastructure.persistence.OrganizationMemberRepository;
+import com.koupreng.backend.organization.infrastructure.persistence.OrganizationRepository;
 import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;
 import com.koupreng.backend.repository.UserTemplateAccessRepository;
 import com.koupreng.backend.seating.infrastructure.persistence.GuestSeatAssignmentRepository;
@@ -583,7 +584,7 @@ public class InvitationService {
         boolean member = organizationMemberRepository.existsByOrganizationIdAndUserIdAndStatus(
                 organizationId,
                 user.getId(),
-                com.koupreng.backend.entity.organization.OrganizationMember.STATUS_ACTIVE
+                OrganizationMember.STATUS_ACTIVE
         );
         if (!owner && !member) {
             throw new ApiException(HttpStatus.FORBIDDEN, "Organization access is required");

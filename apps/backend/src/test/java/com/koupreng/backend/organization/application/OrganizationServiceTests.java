@@ -1,15 +1,16 @@
-package com.koupreng.backend.service;
+package com.koupreng.backend.organization.application;
 
 import com.koupreng.backend.user.application.CurrentUserService;
 
 import com.koupreng.backend.shared.exception.ApiException;
-import com.koupreng.backend.dto.organization.OrganizationMemberRequest;
-import com.koupreng.backend.entity.organization.Organization;
-import com.koupreng.backend.entity.organization.OrganizationMember;
+import com.koupreng.backend.organization.api.dto.OrganizationMemberRequest;
+import com.koupreng.backend.organization.domain.Organization;
+import com.koupreng.backend.organization.domain.OrganizationMember;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;
-import com.koupreng.backend.repository.OrganizationMemberRepository;
-import com.koupreng.backend.repository.OrganizationRepository;
+import com.koupreng.backend.organization.infrastructure.persistence.OrganizationMemberRepository;
+import com.koupreng.backend.organization.infrastructure.persistence.OrganizationRepository;
+import com.koupreng.backend.service.AuditLogService;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;

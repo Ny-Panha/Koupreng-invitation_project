@@ -1,6 +1,6 @@
-package com.koupreng.backend.repository;
+package com.koupreng.backend.organization.infrastructure.persistence;
 
-import com.koupreng.backend.entity.organization.Organization;
+import com.koupreng.backend.organization.domain.Organization;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

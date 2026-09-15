@@ -1,6 +1,6 @@
-package com.koupreng.backend.dto.organization;
+package com.koupreng.backend.organization.api.dto;
 
-import com.koupreng.backend.entity.organization.Organization;
+import com.koupreng.backend.organization.domain.Organization;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

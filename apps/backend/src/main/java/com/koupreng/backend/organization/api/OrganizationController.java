@@ -1,14 +1,14 @@
-package com.koupreng.backend.controller;
+package com.koupreng.backend.organization.api;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
-import com.koupreng.backend.dto.organization.OrganizationMemberRequest;
-import com.koupreng.backend.dto.organization.OrganizationMemberResponse;
-import com.koupreng.backend.dto.organization.OrganizationMemberRoleRequest;
-import com.koupreng.backend.dto.organization.OrganizationRequest;
-import com.koupreng.backend.dto.organization.OrganizationResponse;
-import com.koupreng.backend.service.OrganizationService;
+import com.koupreng.backend.organization.api.dto.OrganizationMemberRequest;
+import com.koupreng.backend.organization.api.dto.OrganizationMemberResponse;
+import com.koupreng.backend.organization.api.dto.OrganizationMemberRoleRequest;
+import com.koupreng.backend.organization.api.dto.OrganizationRequest;
+import com.koupreng.backend.organization.api.dto.OrganizationResponse;
+import com.koupreng.backend.organization.application.OrganizationService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

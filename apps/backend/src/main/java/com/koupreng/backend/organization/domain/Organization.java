@@ -1,4 +1,4 @@
-package com.koupreng.backend.entity.organization;
+package com.koupreng.backend.organization.domain;
 
 import com.koupreng.backend.user.domain.AppUser;
 import jakarta.persistence.Column;

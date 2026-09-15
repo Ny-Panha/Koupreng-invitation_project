@@ -1,4 +1,4 @@
-package com.koupreng.backend.dto.organization;
+package com.koupreng.backend.organization.api.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

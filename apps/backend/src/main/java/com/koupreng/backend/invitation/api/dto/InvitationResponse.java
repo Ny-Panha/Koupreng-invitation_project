@@ -3,7 +3,7 @@ package com.koupreng.backend.invitation.api.dto;
 import com.koupreng.backend.invitation.domain.EventType;
 import com.koupreng.backend.template.domain.InvitationTemplate;
 import com.koupreng.backend.invitation.domain.UserInvitation;
-import com.koupreng.backend.entity.organization.Organization;
+import com.koupreng.backend.organization.domain.Organization;
 import com.koupreng.backend.invitation.domain.InvitationModerationStatus;
 import com.koupreng.backend.invitation.domain.InvitationStatus;
 import com.koupreng.backend.invitation.domain.InvitationVisibility;
