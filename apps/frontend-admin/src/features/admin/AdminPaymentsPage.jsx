@@ -34,6 +34,7 @@ export default function AdminPaymentsPage() {
         orderCode: payment.orderCode,
         amount: payment.amount || 0.01,
         confirmedBy: "admin",
+        itemType: payment.itemType || "TEMPLATE",
       });
       setActionMessage(
         t("payments.confirmSuccess", `Order ${payment.orderCode} confirmed successfully!`, {

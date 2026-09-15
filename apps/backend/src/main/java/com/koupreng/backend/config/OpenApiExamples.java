@@ -307,6 +307,14 @@ final class OpenApiExamples {
             case "ConfirmTemplatePaymentRequest" -> one("adminReview", "Requires a real pending order and administrator authorization", """
                     {"orderCode":"<pending-order-code>","amount":0.01,"confirmedBy":"admin-demo"}
                     """);
+            case "ConfirmPaymentRequest" -> one("subscriptionReview", "Confirm a real server-priced order after administrator review", """
+                    {
+                      "orderCode": "<pending-order-code>",
+                      "amount": 19.00,
+                      "confirmedBy": "admin-demo",
+                      "itemType": "SUBSCRIPTION"
+                    }
+                    """);
             case "TelegramDetectPaymentRequest" -> one("adminReview", "Safe placeholder requiring administrator authorization", """
                     {
                       "rawMessage": "<verified-provider-message>",

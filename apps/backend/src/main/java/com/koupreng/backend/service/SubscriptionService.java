@@ -1,23 +1,7 @@
 package com.koupreng.backend.service;
 
-import com.koupreng.backend.user.application.CurrentUserService;
-
-import com.koupreng.backend.shared.exception.ApiException;
-import com.koupreng.backend.config.PaymentProperties;
-import com.koupreng.backend.dto.subscription.SubscriptionPackageResponse;
-import com.koupreng.backend.dto.subscription.SubscriptionPackageRequest;
-import com.koupreng.backend.dto.subscription.SubscriptionResponse;
-import com.koupreng.backend.entity.subscription.Subscription;
-import com.koupreng.backend.entity.subscription.SubscriptionPackage;
-import com.koupreng.backend.user.domain.AppUser;
-import com.koupreng.backend.repository.SubscriptionPackageRepository;
-import com.koupreng.backend.repository.SubscriptionRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.security.SecureRandom;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -25,9 +9,34 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 
+import com.koupreng.backend.config.PaymentProperties;
+import com.koupreng.backend.dto.payment.ConfirmPaymentRequest;
+import com.koupreng.backend.dto.payment.PaymentConfirmResponse;
+import com.koupreng.backend.dto.subscription.SubscriptionPackageResponse;
+import com.koupreng.backend.dto.subscription.SubscriptionPackageRequest;
+import com.koupreng.backend.dto.subscription.SubscriptionResponse;
+import com.koupreng.backend.entity.subscription.Subscription;
+import com.koupreng.backend.entity.subscription.SubscriptionPackage;
+import com.koupreng.backend.enums.PaymentStatus;
+import com.koupreng.backend.repository.SubscriptionPackageRepository;
+import com.koupreng.backend.repository.SubscriptionRepository;
+import com.koupreng.backend.shared.exception.ApiException;
+import com.koupreng.backend.user.application.CurrentUserService;
+import com.koupreng.backend.user.domain.AppUser;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 @Service
 public class SubscriptionService {
 
+    private static final String PAYMENT_STATUS_PAID = "PAID";
+    private static final String PAYMENT_STATUS_PENDING = "PENDING";
+    private static final String STATUS_ACTIVE = "ACTIVE";
+    private static final String STATUS_PENDING_PAYMENT = "PENDING_PAYMENT";
+    private static final String CONFIRM_SOURCE_MANUAL_ADMIN = "MANUAL_ADMIN";
     private static final ZoneId BUSINESS_ZONE = ZoneId.of("Asia/Phnom_Penh");
     private static final DateTimeFormatter ORDER_DATE_FORMAT = DateTimeFormatter.ofPattern("yyMMdd")
             .withZone(BUSINESS_ZONE);
@@ -105,8 +114,8 @@ public class SubscriptionService {
 
         Subscription subscription = baseSubscription(user, plan, price);
         subscription.setOrderCode(uniqueOrderCode());
-        subscription.setPaymentStatus("PENDING");
-        subscription.setStatus("PENDING_PAYMENT");
+        subscription.setPaymentStatus(PAYMENT_STATUS_PENDING);
+        subscription.setStatus(STATUS_PENDING_PAYMENT);
         subscription.setActive(false);
         subscription.setProvider("ABA_PAYWAY_STATIC_TELEGRAM");
         subscription.setPaymentLink(paymentProperties.getAba().getStaticLink());
@@ -131,10 +140,67 @@ public class SubscriptionService {
     }
 
     private void deactivateActiveSubscriptions(Long userId, Instant now) {
-        for (Subscription subscription : subscriptionRepository.findActiveForUser(userId, now)) {
+        List<Subscription> activeSubscriptions = subscriptionRepository.findActiveForUser(userId, now);
+        for (Subscription subscription : activeSubscriptions) {
             subscription.setActive(false);
             subscription.setStatus("REPLACED");
         }
+        if (!activeSubscriptions.isEmpty()) {
+            subscriptionRepository.flush();
+        }
+    }
+
+    @Transactional
+    public PaymentConfirmResponse confirmManualPayment(ConfirmPaymentRequest request) {
+        String orderCode = normalizeOrderCode(request.orderCode());
+        Subscription subscription = subscriptionRepository.findForUpdateByOrderCode(orderCode)
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Subscription payment order not found"));
+
+        if (PAYMENT_STATUS_PAID.equalsIgnoreCase(subscription.getPaymentStatus())) {
+            return confirmationResponse(subscription, "Subscription payment is already confirmed.");
+        }
+        if (!STATUS_PENDING_PAYMENT.equalsIgnoreCase(subscription.getStatus())
+                || !PAYMENT_STATUS_PENDING.equalsIgnoreCase(subscription.getPaymentStatus())) {
+            throw new ApiException(
+                    HttpStatus.CONFLICT,
+                    "SUBSCRIPTION_NOT_PENDING",
+                    "Subscription is not pending payment"
+            );
+        }
+
+        BigDecimal expectedAmount = money(subscription.getAmount(), subscription.getCurrency());
+        BigDecimal paidAmount = money(request.amount(), subscription.getCurrency());
+        if (expectedAmount.compareTo(paidAmount) != 0) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "PAYMENT_AMOUNT_MISMATCH", "Amount mismatch");
+        }
+
+        Instant now = Instant.now();
+        deactivateActiveSubscriptions(subscription.getUser().getId(), now);
+        subscription.setPaidAmount(paidAmount);
+        subscription.setPaymentStatus(PAYMENT_STATUS_PAID);
+        subscription.setPaidAt(now);
+        subscription.setConfirmSource(CONFIRM_SOURCE_MANUAL_ADMIN);
+        subscription.setConfirmedBy(requireText(request.confirmedBy(), "Confirmed by is required"));
+        subscription.setConfirmedAt(now);
+        subscription.setStartDate(now);
+        subscription.setEndDate(endDate(now, subscription.getSubscriptionPackage().getDurationDays()));
+        subscription.setStatus(STATUS_ACTIVE);
+        subscription.setActive(true);
+        subscriptionRepository.save(subscription);
+
+        if (auditLogService != null) {
+            auditLogService.logSystemEvent(
+                    "SUBSCRIPTION_PAYMENT_CONFIRMED",
+                    "SUBSCRIPTION",
+                    subscription.getId(),
+                    "Subscription payment confirmed manually",
+                    java.util.Map.of(
+                            "orderCode", subscription.getOrderCode(),
+                            "confirmedBy", subscription.getConfirmedBy()
+                    )
+            );
+        }
+        return confirmationResponse(subscription, "Subscription payment confirmed and package activated.");
     }
 
     private Instant endDate(Instant start, Integer durationDays) {
@@ -165,11 +231,42 @@ public class SubscriptionService {
         return normalized;
     }
 
+    private String normalizeOrderCode(String orderCode) {
+        return requireText(orderCode, "Order code is required").toUpperCase(Locale.ROOT);
+    }
+
+    private String requireText(String value, String message) {
+        if (value == null || value.isBlank()) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, message);
+        }
+        return value.trim();
+    }
+
+    private BigDecimal money(BigDecimal amount, String currency) {
+        if (amount == null) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Payment amount is required");
+        }
+        normalizeCurrency(currency);
+        try {
+            return amount.setScale(2, RoundingMode.UNNECESSARY);
+        } catch (ArithmeticException exception) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Payment amount must have at most two decimal places");
+        }
+    }
+
+    private PaymentConfirmResponse confirmationResponse(Subscription subscription, String message) {
+        return PaymentConfirmResponse.builder()
+                .message(message)
+                .orderCode(subscription.getOrderCode())
+                .status(PaymentStatus.PAID)
+                .build();
+    }
+
     private String statusMessage(Subscription subscription) {
         return switch (subscription.getStatus() == null ? "" : subscription.getStatus()) {
-            case "ACTIVE" -> "Subscription is active.";
+            case STATUS_ACTIVE -> "Subscription is active.";
             case "REPLACED" -> "Subscription was replaced by a newer package.";
-            case "PENDING_PAYMENT" -> "Waiting for payment confirmation.";
+            case STATUS_PENDING_PAYMENT -> "Waiting for payment confirmation.";
             default -> "Subscription status: " + subscription.getStatus();
         };
     }

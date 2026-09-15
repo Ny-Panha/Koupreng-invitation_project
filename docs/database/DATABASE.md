@@ -71,7 +71,7 @@ Exact names and column evolution remain in the migration files; this document ex
 
 ## Payment relationships and idempotency
 
-Template purchases currently use `template_payment_orders` as the active rich order record and create `user_template_access` during trusted completion. `template_orders` is an earlier overlapping order model. Guest gift payments use `payment_transactions` and related provider-log tables. These models must not be merged until active consumers and stored data are proven.
+Template purchases currently use `template_payment_orders` as the active rich order record and create `user_template_access` during trusted completion. Paid subscription orders remain in `subscriptions` and V18 adds their paid amount/time and confirmation source/actor/time evidence. `template_orders` is an earlier overlapping order model. Guest gift payments use `payment_transactions` and related provider-log tables. These models must not be merged until active consumers and stored data are proven.
 
 Paid transitions require:
 
@@ -84,6 +84,18 @@ Paid transitions require:
 7. a duplicate notification returning the existing outcome.
 
 Raw callback and Telegram text is sensitive operational metadata. V2 must define minimization, redaction, access control, and retention before expanding its use.
+
+V18 also adds a generated `active_user_id` that is the owning user only while `is_active` is true, with a unique constraint over that value. This makes concurrent activation attempts fail closed instead of leaving two active packages. Run the following read-only preflight before V18; any returned row requires an owner-approved correction before deployment:
+
+```sql
+SELECT user_id, COUNT(*) AS active_subscription_count
+FROM subscriptions
+WHERE is_active = TRUE
+GROUP BY user_id
+HAVING COUNT(*) > 1;
+```
+
+V18 is one atomic `ALTER TABLE` and does not synthesize payment evidence for historical rows. If it fails, retain diagnostics, resolve duplicate active state, verify that the columns and named constraint were not partially installed, and follow the controlled Flyway repair/reapply runbook. Rollback requires restore or a reviewed forward migration; V18 is immutable.
 
 ## Guest and RSVP relationships
 
@@ -127,7 +139,7 @@ V17 uses one atomic `ALTER TABLE`; it never deletes or rewrites guest data. If d
 | Priority | Change | Gate |
 | --- | --- | --- |
 | HIGH | guest normalized contact uniqueness | V17 implemented; deployment preflight and real-MySQL concurrency test remain required |
-| HIGH | subscription order and idempotent activation relationship | approved business/payment contract |
+| HIGH | subscription provider automation beyond manual admin fulfillment | approved provider callback contract and real-MySQL concurrency evidence |
 | MEDIUM | provider verification attempt/retention model | payment transaction-boundary design |
 | MEDIUM | pagination/index review | real query plans and stable API contract |
 | LOW | legacy payment/event/audit consolidation | zero-caller proof, data migration, compatibility window |

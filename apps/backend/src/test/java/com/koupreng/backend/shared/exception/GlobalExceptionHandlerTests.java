@@ -86,4 +86,19 @@ class GlobalExceptionHandlerTests {
         assertEquals("DATA_CONFLICT", response.getBody().get("code"));
         assertEquals("Data conflict", response.getBody().get("message"));
     }
+
+    @Test
+    void concurrentSubscriptionActivationReturnsStableConflict() {
+        when(messageService.get("subscription.activation-conflict"))
+                .thenReturn("Concurrent subscription activation");
+        DataIntegrityViolationException exception = new DataIntegrityViolationException(
+                "Duplicate entry for key 'uk_subscriptions_one_active_per_user'"
+        );
+
+        ResponseEntity<Map<String, Object>> response = handler.handleDataIntegrity(exception);
+
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+        assertEquals("SUBSCRIPTION_ACTIVATION_CONFLICT", response.getBody().get("code"));
+        assertEquals("Concurrent subscription activation", response.getBody().get("message"));
+    }
 }

@@ -135,7 +135,7 @@ sequenceDiagram
     Pay-->>UI: typed status for polling/history
 ```
 
-Telegram detection remains an adapter and defaults to pending review. A duplicate callback must return the existing result without granting a second entitlement. Template purchase and subscription purchase may share payment primitives but have separate fulfillment policies. Frontend success pages never mark an order paid.
+Telegram detection remains an adapter and defaults to pending review. A duplicate callback must return the existing result without granting a second entitlement. Template purchase and subscription purchase share the ADMIN-only `/api/v1/admin/payments/confirm` dispatch boundary but retain separate fulfillment policies and locked transitions. Subscription activation records confirmation evidence and is protected by a one-active-subscription-per-user database invariant. Frontend success pages never mark an order paid.
 
 ## Persistence and migrations
 

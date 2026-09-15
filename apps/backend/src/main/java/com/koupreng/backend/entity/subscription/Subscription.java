@@ -35,6 +35,9 @@ public class Subscription {
     @Column(precision = 10, scale = 2)
     private BigDecimal amount;
 
+    @Column(name = "paid_amount", precision = 10, scale = 2)
+    private BigDecimal paidAmount;
+
     @Column(nullable = false, length = 10)
     private String currency = "USD";
 
@@ -49,6 +52,18 @@ public class Subscription {
 
     @Column(name = "payment_status", length = 50)
     private String paymentStatus;
+
+    @Column(name = "paid_at")
+    private Instant paidAt;
+
+    @Column(name = "confirm_source", length = 50)
+    private String confirmSource;
+
+    @Column(name = "confirmed_by", length = 120)
+    private String confirmedBy;
+
+    @Column(name = "confirmed_at")
+    private Instant confirmedAt;
 
     @Column(length = 50, nullable = false)
     private String status = "PENDING_PAYMENT";

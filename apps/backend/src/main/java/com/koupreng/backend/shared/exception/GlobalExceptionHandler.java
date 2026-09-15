@@ -81,6 +81,13 @@ public class GlobalExceptionHandler {
                 || causedByConstraint(exception, "uk_guests_invitation_phone_normalized")) {
             return error(HttpStatus.CONFLICT, "GUEST_DUPLICATE", msg.get("guest.duplicate"));
         }
+        if (causedByConstraint(exception, "uk_subscriptions_one_active_per_user")) {
+            return error(
+                    HttpStatus.CONFLICT,
+                    "SUBSCRIPTION_ACTIVATION_CONFLICT",
+                    msg.get("subscription.activation-conflict")
+            );
+        }
         return error(HttpStatus.CONFLICT, "DATA_CONFLICT", msg.get("error.data-conflict"));
     }
 
