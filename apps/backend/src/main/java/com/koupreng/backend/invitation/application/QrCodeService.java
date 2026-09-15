@@ -6,7 +6,7 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.koupreng.backend.shared.exception.ApiException;
-import com.koupreng.backend.config.AppProperties;
+import com.koupreng.backend.shared.config.AppProperties;
 import com.koupreng.backend.invitation.api.dto.QrCodeResponse;
 import com.koupreng.backend.guest.domain.Guest;
 import com.koupreng.backend.invitation.domain.UserInvitation;

@@ -42,7 +42,7 @@ import com.koupreng.backend.rsvp.domain.Rsvp;
 import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
 import com.koupreng.backend.rsvp.infrastructure.persistence.RsvpRepository;
-import com.koupreng.backend.util.CsvExportUtils;
+import com.koupreng.backend.shared.export.CsvExportUtils;
 
 @Service
 public class GuestService {

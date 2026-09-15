@@ -12,8 +12,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import com.koupreng.backend.shared.exception.ApiException;
-import com.koupreng.backend.config.AppProperties;
-import com.koupreng.backend.security.ClientAddressResolver;
+import com.koupreng.backend.shared.config.AppProperties;
+import com.koupreng.backend.shared.security.ClientAddressResolver;
 import com.koupreng.backend.shared.security.RateLimitService;
 
 import org.springframework.http.MediaType;

@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-import com.koupreng.backend.config.PaymentProperties;
+import com.koupreng.backend.payment.infrastructure.config.PaymentProperties;
 import com.koupreng.backend.payment.api.dto.PaymentConfirmResponse;
 import com.koupreng.backend.payment.domain.PaymentStatus;
 import com.koupreng.backend.payment.api.dto.ConfirmPaymentRequest;

@@ -15,7 +15,7 @@ import com.koupreng.backend.auth.infrastructure.identity.GoogleIdentityVerifier;
 import com.koupreng.backend.auth.infrastructure.identity.TelegramIdentityVerifier;
 import com.koupreng.backend.auth.infrastructure.session.UserAuthCacheService;
 import com.koupreng.backend.shared.exception.ApiException;
-import com.koupreng.backend.config.AppProperties;
+import com.koupreng.backend.shared.config.AppProperties;
 import com.koupreng.backend.user.api.dto.UserResponse;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.user.domain.Role;

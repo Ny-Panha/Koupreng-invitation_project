@@ -8,8 +8,8 @@ import java.time.Duration;
 
 import jakarta.servlet.FilterChain;
 
-import com.koupreng.backend.config.AppProperties;
-import com.koupreng.backend.security.ClientAddressResolver;
+import com.koupreng.backend.shared.config.AppProperties;
+import com.koupreng.backend.shared.security.ClientAddressResolver;
 import com.koupreng.backend.shared.security.RateLimitService;
 
 import org.junit.jupiter.params.ParameterizedTest;

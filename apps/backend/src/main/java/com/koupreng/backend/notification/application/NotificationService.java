@@ -5,6 +5,9 @@ import com.koupreng.backend.user.application.CurrentUserService;
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.notification.api.dto.CreateNotificationRequest;
 import com.koupreng.backend.notification.api.dto.NotificationResponse;
+import com.koupreng.backend.notification.api.dto.NotificationChannelFilter;
+import com.koupreng.backend.notification.api.dto.NotificationStatusFilter;
+import com.koupreng.backend.notification.api.dto.NotificationTypeFilter;
 import com.koupreng.backend.notification.api.dto.NotificationStatusUpdateRequest;
 import com.koupreng.backend.notification.api.dto.NotificationSummaryResponse;
 import com.koupreng.backend.guest.domain.Guest;
@@ -262,14 +265,14 @@ public class NotificationService {
 
     @Transactional(readOnly = true)
     public List<NotificationResponse> listAllForAdmin(
-            NotificationStatus status,
-            NotificationType type,
-            NotificationChannel channel
+            NotificationStatusFilter status,
+            NotificationTypeFilter type,
+            NotificationChannelFilter channel
     ) {
         return notificationRepository.findAllByOrderByCreatedAtDesc().stream()
-                .filter(notification -> status == null || notification.getStatus() == status)
-                .filter(notification -> type == null || notification.getType() == type)
-                .filter(notification -> channel == null || notification.getChannel() == channel)
+                .filter(notification -> status == null || notification.getStatus().name().equals(status.name()))
+                .filter(notification -> type == null || notification.getType().name().equals(type.name()))
+                .filter(notification -> channel == null || notification.getChannel().name().equals(channel.name()))
                 .map(NotificationResponse::from)
                 .toList();
     }

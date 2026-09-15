@@ -3,7 +3,7 @@ package com.koupreng.backend.auth.infrastructure.security;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 
-import com.koupreng.backend.config.AppProperties;
+import com.koupreng.backend.shared.config.AppProperties;
 
 import org.springframework.security.oauth2.server.resource.web.BearerTokenResolver;
 import org.springframework.security.oauth2.server.resource.web.DefaultBearerTokenResolver;

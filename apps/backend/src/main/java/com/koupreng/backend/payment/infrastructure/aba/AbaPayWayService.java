@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koupreng.backend.shared.exception.ApiException;
-import com.koupreng.backend.config.payment.AbaPayWayProperties;
+import com.koupreng.backend.payment.infrastructure.config.AbaPayWayProperties;
 import com.koupreng.backend.payment.api.dto.CreateTemplatePaymentRequest;
 import com.koupreng.backend.payment.domain.TemplatePaymentOrder;
 import com.koupreng.backend.user.domain.AppUser;

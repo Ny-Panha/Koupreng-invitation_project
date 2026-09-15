@@ -5,7 +5,7 @@ import java.time.Instant;
 import java.util.Optional;
 
 import com.koupreng.backend.auth.api.dto.AuthResponse;
-import com.koupreng.backend.config.AppProperties;
+import com.koupreng.backend.shared.config.AppProperties;
 
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;

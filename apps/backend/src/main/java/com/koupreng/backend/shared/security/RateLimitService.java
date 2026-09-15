@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.koupreng.backend.shared.exception.ApiException;
-import com.koupreng.backend.config.AppProperties;
-import com.koupreng.backend.config.AppProperties.RateLimit.Backend;
+import com.koupreng.backend.shared.config.AppProperties;
+import com.koupreng.backend.shared.config.AppProperties.RateLimit.Backend;
 
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.data.redis.RedisConnectionFailureException;

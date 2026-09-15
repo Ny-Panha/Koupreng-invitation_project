@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import jakarta.servlet.http.Cookie;
 
-import com.koupreng.backend.config.AppProperties;
+import com.koupreng.backend.shared.config.AppProperties;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;

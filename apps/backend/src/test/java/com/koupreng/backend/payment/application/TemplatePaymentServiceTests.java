@@ -4,7 +4,7 @@ import com.koupreng.backend.user.application.CurrentUserService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koupreng.backend.shared.exception.ApiException;
-import com.koupreng.backend.config.PaymentProperties;
+import com.koupreng.backend.payment.infrastructure.config.PaymentProperties;
 import com.koupreng.backend.payment.api.dto.CreateTemplatePaymentRequest;
 import com.koupreng.backend.payment.api.dto.CreateTemplatePaymentResponse;
 import com.koupreng.backend.payment.api.dto.PayWayCallbackResponse;

@@ -11,7 +11,7 @@ import static org.mockito.Mockito.when;
 
 import java.time.Instant;
 
-import com.koupreng.backend.config.AppProperties;
+import com.koupreng.backend.shared.config.AppProperties;
 import com.koupreng.backend.auth.api.dto.AuthResponse;
 import com.koupreng.backend.auth.api.dto.LoginRequest;
 import com.koupreng.backend.auth.application.AccountService;

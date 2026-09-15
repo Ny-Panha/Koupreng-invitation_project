@@ -16,7 +16,7 @@ import com.koupreng.backend.auth.infrastructure.session.UserAuthCacheService;
 import com.koupreng.backend.media.application.port.StorageService;
 import com.koupreng.backend.media.application.port.StorageUploadResult;
 import com.koupreng.backend.media.domain.MediaType;
-import com.koupreng.backend.security.FileUploadValidator;
+import com.koupreng.backend.shared.security.FileUploadValidator;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.user.domain.Role;
 import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;

@@ -2,33 +2,33 @@
   "groups": [
     {
       "name": "app.jwt",
-      "type": "com.koupreng.backend.config.JwtProperties",
-      "sourceType": "com.koupreng.backend.config.JwtProperties"
+      "type": "com.koupreng.backend.shared.config.AppProperties$Jwt",
+      "sourceType": "com.koupreng.backend.shared.config.AppProperties"
     },
     {
       "name": "app.auth",
-      "type": "com.koupreng.backend.config.AuthProperties",
-      "sourceType": "com.koupreng.backend.config.AuthProperties"
+      "type": "com.koupreng.backend.shared.config.AppProperties$Auth",
+      "sourceType": "com.koupreng.backend.shared.config.AppProperties"
     },
     {
       "name": "app.oauth",
-      "type": "com.koupreng.backend.config.OAuthProperties",
-      "sourceType": "com.koupreng.backend.config.OAuthProperties"
+      "type": "com.koupreng.backend.shared.config.AppProperties$Oauth",
+      "sourceType": "com.koupreng.backend.shared.config.AppProperties"
     },
     {
       "name": "app.security",
-      "type": "com.koupreng.backend.config.SecurityProperties",
-      "sourceType": "com.koupreng.backend.config.SecurityProperties"
+      "type": "com.koupreng.backend.shared.security.ApiSecurityProperties",
+      "sourceType": "com.koupreng.backend.shared.security.ApiSecurityProperties"
     },
     {
       "name": "app.rate-limit",
-      "type": "com.koupreng.backend.config.RateLimitProperties",
-      "sourceType": "com.koupreng.backend.config.RateLimitProperties"
+      "type": "com.koupreng.backend.shared.config.AppProperties$RateLimit",
+      "sourceType": "com.koupreng.backend.shared.config.AppProperties"
     },
     {
       "name": "app.waf",
-      "type": "com.koupreng.backend.config.WafProperties",
-      "sourceType": "com.koupreng.backend.config.WafProperties"
+      "type": "com.koupreng.backend.shared.security.waf.WafProperties",
+      "sourceType": "com.koupreng.backend.shared.security.waf.WafProperties"
     }
   ],
   "properties": [

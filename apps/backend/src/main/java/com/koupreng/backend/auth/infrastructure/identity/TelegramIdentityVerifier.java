@@ -18,7 +18,7 @@ import javax.crypto.spec.SecretKeySpec;
 import com.koupreng.backend.auth.api.dto.TelegramLoginRequest;
 import com.koupreng.backend.auth.domain.ExternalAuthIdentity;
 import com.koupreng.backend.shared.exception.ApiException;
-import com.koupreng.backend.config.AppProperties;
+import com.koupreng.backend.shared.config.AppProperties;
 import com.koupreng.backend.user.domain.AuthProvider;
 
 import org.slf4j.Logger;

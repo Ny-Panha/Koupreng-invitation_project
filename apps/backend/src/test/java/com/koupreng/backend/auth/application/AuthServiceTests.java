@@ -9,7 +9,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
-import com.koupreng.backend.config.AppProperties;
+import com.koupreng.backend.shared.config.AppProperties;
 import com.koupreng.backend.auth.api.dto.AuthResponse;
 import com.koupreng.backend.auth.api.dto.GoogleLoginRequest;
 import com.koupreng.backend.auth.api.dto.LoginRequest;

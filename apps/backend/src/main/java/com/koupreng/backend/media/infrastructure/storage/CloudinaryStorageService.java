@@ -3,7 +3,7 @@ package com.koupreng.backend.media.infrastructure.storage;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koupreng.backend.shared.exception.ApiException;
-import com.koupreng.backend.config.StorageProperties;
+import com.koupreng.backend.media.infrastructure.config.StorageProperties;
 import com.koupreng.backend.media.application.port.StorageService;
 import com.koupreng.backend.media.application.port.StorageUploadResult;
 import com.koupreng.backend.media.domain.MediaType;

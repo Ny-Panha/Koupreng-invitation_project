@@ -41,7 +41,7 @@ import com.koupreng.backend.delivery.infrastructure.persistence.InvitationDelive
 import com.koupreng.backend.media.infrastructure.persistence.MediaFileRepository;
 import com.koupreng.backend.notification.infrastructure.persistence.NotificationRepository;
 import com.koupreng.backend.rsvp.infrastructure.persistence.RsvpRepository;
-import com.koupreng.backend.config.AppProperties;
+import com.koupreng.backend.shared.config.AppProperties;
 import com.koupreng.backend.audit.application.AuditLogService;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
