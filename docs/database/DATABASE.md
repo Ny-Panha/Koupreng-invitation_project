@@ -85,7 +85,7 @@ Paid transitions require:
 
 Raw callback and Telegram text is sensitive operational metadata. V2 must define minimization, redaction, access control, and retention before expanding its use.
 
-V18 also adds a generated `active_user_id` that is the owning user only while `is_active` is true, with a unique constraint over that value. This makes concurrent activation attempts fail closed instead of leaving two active packages. Run the following read-only preflight before V18; any returned row requires an owner-approved correction before deployment:
+V18 also adds a generated `active_slot` that is `1` only while `is_active` is true, with a unique constraint over `(user_id, active_slot)`. This makes concurrent activation attempts fail closed instead of leaving two active packages, while avoiding MySQL's restriction on generated columns derived from cascade-managed foreign-key columns. Run the following read-only preflight before V18; any returned row requires an owner-approved correction before deployment:
 
 ```sql
 SELECT user_id, COUNT(*) AS active_subscription_count

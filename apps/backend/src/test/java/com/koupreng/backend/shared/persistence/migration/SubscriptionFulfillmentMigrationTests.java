@@ -1,6 +1,7 @@
 package com.koupreng.backend.shared.persistence.migration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -26,7 +27,10 @@ class SubscriptionFulfillmentMigrationTests {
         assertTrue(sql.contains("confirm_source"));
         assertTrue(sql.contains("confirmed_by"));
         assertTrue(sql.contains("confirmed_at"));
-        assertTrue(sql.contains("GENERATED ALWAYS AS (IF(is_active, user_id, NULL))"));
+        assertTrue(sql.contains("active_slot"));
+        assertTrue(sql.contains("GENERATED ALWAYS AS (IF(is_active, 1, NULL))"));
+        assertTrue(sql.contains("UNIQUE (user_id, active_slot)"));
+        assertFalse(sql.contains("IF(is_active, user_id"));
         assertTrue(sql.contains("uk_subscriptions_one_active_per_user"));
     }
 
