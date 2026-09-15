@@ -12,6 +12,7 @@ Set these values in `.env`:
 
 ```env
 TELEGRAM_BOT_TOKEN=
+TELEGRAM_WEBHOOK_SECRET=
 TELEGRAM_ALLOWED_GROUP_IDS=
 TELEGRAM_ALLOWED_ADMIN_IDS=
 TELEGRAM_ALLOWED_PAYMENT_BOT_USERNAMES=PayWayByABA_bot
@@ -22,6 +23,8 @@ LOG_LEVEL=INFO
 ```
 
 `ADMIN_PAYMENT_SECRET` must match the Spring Boot `ADMIN_PAYMENT_SECRET`. The bot sends it as `X-ADMIN-PAYMENT-SECRET`.
+
+`TELEGRAM_WEBHOOK_SECRET` authenticates requests sent by Telegram. Generate a random value, configure the same value as Telegram's `secret_token` when registering the webhook, and require it in every non-local deployment.
 
 If `TELEGRAM_ALLOWED_PAYMENT_BOT_IDS` is set, ID matching is used for trusted payment bot checks. If IDs are not set, usernames from `TELEGRAM_ALLOWED_PAYMENT_BOT_USERNAMES` are matched case-insensitively. Do not trust normal user messages for auto-confirmation.
 
@@ -49,7 +52,7 @@ ngrok http 8000
 7. Set the Telegram webhook:
 
 ```text
-https://api.telegram.org/bot<TELEGRAM_BOT_TOKEN>/setWebhook?url=<PUBLIC_URL>/telegram/webhook
+https://api.telegram.org/bot<TELEGRAM_BOT_TOKEN>/setWebhook?url=<PUBLIC_URL>/telegram/webhook&secret_token=<TELEGRAM_WEBHOOK_SECRET>
 ```
 
 8. Get the group ID by sending this in the group:

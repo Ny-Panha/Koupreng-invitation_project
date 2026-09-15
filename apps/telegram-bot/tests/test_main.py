@@ -7,8 +7,9 @@ import main
 
 
 class FakeRequest:
-    def __init__(self, payload):
+    def __init__(self, payload, headers=None):
         self.payload = payload
+        self.headers = headers or {}
 
     async def json(self):
         return self.payload
@@ -43,6 +44,30 @@ def reset_bot_state(monkeypatch):
     monkeypatch.setattr(main, "TELEGRAM_ALLOWED_ADMIN_IDS", {"999"})
     monkeypatch.setattr(main, "TELEGRAM_ALLOWED_PAYMENT_BOT_IDS", set())
     monkeypatch.setattr(main, "TELEGRAM_ALLOWED_PAYMENT_BOT_USERNAMES", {"paywaybyaba_bot"})
+    monkeypatch.setattr(main, "TELEGRAM_WEBHOOK_SECRET", "")
+
+
+@pytest.mark.asyncio
+async def test_configured_webhook_secret_is_required(monkeypatch):
+    monkeypatch.setattr(main, "TELEGRAM_WEBHOOK_SECRET", "expected-secret")
+    request = FakeRequest(message_update(99, "/start", is_bot=False))
+
+    with pytest.raises(main.HTTPException) as error:
+        await main.telegram_webhook(request)
+
+    assert error.value.status_code == 403
+
+
+@pytest.mark.asyncio
+async def test_configured_webhook_secret_accepts_matching_header(monkeypatch):
+    monkeypatch.setattr(main, "TELEGRAM_WEBHOOK_SECRET", "expected-secret")
+    request = FakeRequest(
+        {"update_id": 98},
+        headers={"X-Telegram-Bot-Api-Secret-Token": "expected-secret"},
+    )
+
+    assert await main.telegram_webhook(request) == {"ok": True}
+    assert "98" in main.PROCESSED_UPDATE_IDS
 
 
 @pytest.mark.parametrize(

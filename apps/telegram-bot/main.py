@@ -1,6 +1,7 @@
 import logging
 import os
 import re
+import secrets
 from collections import OrderedDict
 from contextlib import asynccontextmanager
 from decimal import Decimal, InvalidOperation
@@ -8,7 +9,7 @@ from pathlib import Path
 
 import httpx
 from dotenv import load_dotenv
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, HTTPException, Request
 
 BOT_DIR = Path(__file__).resolve().parent
 load_dotenv(BOT_DIR / ".env")
@@ -17,6 +18,7 @@ TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
 SPRING_API_BASE_URL = os.getenv("SPRING_API_BASE_URL", "http://localhost:8080").rstrip("/")
 FRONTEND_BASE_URL = os.getenv("FRONTEND_BASE_URL", "http://localhost:5173").rstrip("/")
 ADMIN_PAYMENT_SECRET = os.getenv("ADMIN_PAYMENT_SECRET", "")
+TELEGRAM_WEBHOOK_SECRET = os.getenv("TELEGRAM_WEBHOOK_SECRET", "")
 WELCOME_PHOTO_FILE_ID = os.getenv("WELCOME_PHOTO_FILE_ID", "")
 TELEGRAM_ALLOWED_GROUP_IDS = {
     value
@@ -184,6 +186,12 @@ async def health():
 
 @app.post("/telegram/webhook")
 async def telegram_webhook(request: Request):
+    if TELEGRAM_WEBHOOK_SECRET:
+        supplied_secret = request.headers.get("X-Telegram-Bot-Api-Secret-Token", "")
+        if not secrets.compare_digest(supplied_secret, TELEGRAM_WEBHOOK_SECRET):
+            logger.warning("Rejected Telegram webhook request with an invalid secret")
+            raise HTTPException(status_code=403, detail="Invalid Telegram webhook secret")
+
     update = await request.json()
     if not isinstance(update, dict):
         logger.info("Ignoring Telegram update with a non-object payload")
