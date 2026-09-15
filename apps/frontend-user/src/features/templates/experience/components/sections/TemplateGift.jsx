@@ -43,11 +43,10 @@ export default function TemplateGift({ content }) {
                 document.body.appendChild(input);
                 input.focus();
                 input.select();
-                const res = document.execCommand("copy");
+                document.execCommand("copy");
                 input.remove();
-                if (res) success = true;
             } catch {
-                success = false;
+                // Keep the existing optimistic copied indicator.
             }
         }
 

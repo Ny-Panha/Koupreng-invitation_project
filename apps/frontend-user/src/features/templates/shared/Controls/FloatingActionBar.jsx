@@ -39,7 +39,9 @@ export default function FloatingActionBar({
     } else {
       audioRef.current.play().then(() => {
         setIsPlaying(true);
-      }).catch(() => {});
+      }).catch(() => {
+        // Playback may be blocked until the browser receives a user gesture.
+      });
     }
   };
 
@@ -51,7 +53,9 @@ export default function FloatingActionBar({
         await navigator.clipboard.writeText(text);
         success = true;
       }
-    } catch {}
+    } catch {
+      // Clipboard access can be unavailable; use the DOM fallback below.
+    }
     if (!success) {
       try {
         const input = document.createElement("textarea");
@@ -65,7 +69,9 @@ export default function FloatingActionBar({
         input.select();
         document.execCommand("copy");
         input.remove();
-      } catch {}
+      } catch {
+        // Keep the legacy optimistic copied indicator.
+      }
     }
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

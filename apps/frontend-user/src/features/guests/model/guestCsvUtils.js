@@ -108,7 +108,7 @@ export function parseGuestCsvText(text) {
   const results = [];
   for (let i = startIndex; i < lines.length; i++) {
     const rawLine = lines[i];
-    const regex = /(?:^|,)(\"(?:[^\"]+|\"\")*\"|[^,]*)/g;
+    const regex = /(?:^|,)("(?:[^"]+|"")*"|[^,]*)/g;
     const parts = [];
     let match;
     while ((match = regex.exec(rawLine)) !== null) {

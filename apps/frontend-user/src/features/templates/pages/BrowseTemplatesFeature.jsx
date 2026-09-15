@@ -14,6 +14,7 @@ import {
 import { templateCatalogService } from "@/features/templates/api/templateCatalogApi";
 import { paymentService } from "@/features/payments/paymentService";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
+import { SkeletonTable } from "@/shared/ui";
 function formatTemplateDescription(description) {
   if (!description) return "";
   const str = String(description).trim();

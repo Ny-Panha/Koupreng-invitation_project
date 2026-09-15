@@ -6,7 +6,6 @@ import {
     IoPeopleOutline,
     IoHourglassOutline,
     IoDownloadOutline,
-    IoArrowBackOutline,
     IoMapOutline,
     IoGridOutline,
 } from "react-icons/io5";

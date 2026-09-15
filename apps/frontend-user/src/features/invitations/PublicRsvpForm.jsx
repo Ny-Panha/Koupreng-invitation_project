@@ -119,7 +119,7 @@ export default function PublicRsvpForm({
                         if (storageKey) {
                             try {
                                 localStorage.setItem(storageKey, JSON.stringify(existingData));
-                            } catch (e) {
+                            } catch {
                                 // ignore storage error
                             }
                         }
@@ -138,7 +138,7 @@ export default function PublicRsvpForm({
                             if (cached && (cached.inviteToken === inviteToken || !cached.inviteToken)) {
                                 if (active) setSubmitted(cached);
                             }
-                        } catch (e) {
+                        } catch {
                             // ignore storage error
                         }
                     }
@@ -158,7 +158,7 @@ export default function PublicRsvpForm({
                         }
                     }
                 }
-            } catch (e) {
+            } catch {
                 // ignore storage error
             }
         }
@@ -201,7 +201,7 @@ export default function PublicRsvpForm({
                 const storageKey = `koupreng_guest_rsvp_${slug}`;
                 try {
                     localStorage.setItem(storageKey, JSON.stringify(submittedData));
-                } catch (e) {
+                } catch {
                     // ignore storage error
                 }
             }
@@ -213,7 +213,7 @@ export default function PublicRsvpForm({
                         currentUrl.searchParams.set("token", finalToken);
                         window.history.replaceState(null, "", currentUrl.toString());
                     }
-                } catch (e) {
+                } catch {
                     // ignore storage error
                 }
             }

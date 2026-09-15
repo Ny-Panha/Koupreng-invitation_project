@@ -4,9 +4,7 @@ import {
   Heart,
   VolumeX,
   Calendar,
-  Clock,
   MapPin,
-  Sparkles,
   Send,
   QrCode,
   Copy,
@@ -157,7 +155,9 @@ export default function DigitalYesLayout({
         await navigator.clipboard.writeText(text);
         success = true;
       }
-    } catch {}
+    } catch {
+      // Clipboard access can be unavailable; use the DOM fallback below.
+    }
     if (!success) {
       try {
         const input = document.createElement("textarea");
@@ -171,11 +171,19 @@ export default function DigitalYesLayout({
         input.select();
         document.execCommand("copy");
         input.remove();
-      } catch {}
+      } catch {
+        // The copied indicator is intentionally optimistic for legacy browsers.
+      }
     }
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  const isEnabled = (key) => tpl.enabledSections?.[key] !== false;
+  const dressColors = Array.isArray(tpl.dressCode)
+    ? tpl.dressCode
+    : (Array.isArray(tpl.dressCode?.colors) ? tpl.dressCode.colors : (tpl.dressColors || []));
+  const faqList = Array.isArray(tpl.faq) ? tpl.faq : [];
 
   return (
     <div className="relative min-h-screen bg-[#110508] text-amber-100 font-sans selection:bg-amber-700 selection:text-white overflow-x-hidden">

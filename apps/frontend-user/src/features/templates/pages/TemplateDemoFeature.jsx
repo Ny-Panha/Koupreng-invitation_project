@@ -17,7 +17,6 @@ export default function TemplateDemoPage() {
     const { id } = useParams();
     const aliasTargetId = VARIANT_ROUTE_ALIASES[id];
     const targetId = aliasTargetId || id;
-    const localTpl = useMemo(() => getTemplateById(targetId), [targetId]);
     const [remoteTpl, setRemoteTpl] = useState(null);
     const { isAuthenticated } = useAuth();
 

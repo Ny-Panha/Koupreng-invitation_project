@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import {
-  Sparkles,
   Music,
   VolumeX,
   MapPin,
@@ -212,7 +211,7 @@ export default function RoyalKhmerLayout({
         {opened && preview && (
           <button
             type="button"
-            onClick={() => setOpened(false)}
+            onClick={() => setGateState("closed")}
             style={{
               background: "var(--rkh-gold-soft)",
               border: "1px solid var(--rkh-gold)",

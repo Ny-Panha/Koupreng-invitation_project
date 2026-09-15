@@ -1,10 +1,11 @@
-import { useState, useRef, useEffect } from "react";
+import { useCallback, useState, useRef, useEffect } from "react";
 import { TimePickerDropdown } from "./TimePickerDropdown";
 import "./TimePicker.css";
 
 /**
  * Format "HH:mm" (24h) string into Khmer 12h display string (e.g. "05:00 ល្ងាច")
  */
+// eslint-disable-next-line react-refresh/only-export-components
 export function formatTime24toKhmer(val24) {
     if (!val24 || typeof val24 !== "string") return "";
     const clean = val24.trim();
@@ -30,7 +31,7 @@ export function TimePicker({ value, onChange, placeholder = "ជ្រើសម�
     const ref = useRef();
 
     // Parse incoming 24h or formatted value into local 12h state
-    const syncFromValue = (val) => {
+    const syncFromValue = useCallback((val) => {
         const v = val !== undefined ? val : value;
         if (!v || typeof v !== "string") {
             setHour("05");
@@ -56,11 +57,11 @@ export function TimePicker({ value, onChange, placeholder = "ជ្រើសម�
         setHour(String(h12).padStart(2, "0"));
         setMinute((mStr || "00").slice(0, 2).padStart(2, "0"));
         setPeriod(p);
-    };
+    }, [value]);
 
     useEffect(() => {
         syncFromValue(value);
-    }, [value]);
+    }, [value, syncFromValue]);
 
     useEffect(() => {
         const handler = (e) => {
@@ -71,7 +72,7 @@ export function TimePicker({ value, onChange, placeholder = "ជ្រើសម�
         };
         document.addEventListener("mousedown", handler);
         return () => document.removeEventListener("mousedown", handler);
-    }, [value]);
+    }, [value, syncFromValue]);
 
     const displayValue = formatTime24toKhmer(value);
 

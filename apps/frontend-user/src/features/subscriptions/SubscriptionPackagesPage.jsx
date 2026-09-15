@@ -4,8 +4,6 @@ import {
   CheckCircle2,
   Sparkles,
   Zap,
-  ShieldCheck,
-  CreditCard,
   QrCode,
   ArrowRight,
   Clock,

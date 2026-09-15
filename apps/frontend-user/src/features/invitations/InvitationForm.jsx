@@ -16,8 +16,6 @@ import {
     UploadCloud,
     Trash2,
     Plus,
-    Play,
-    Pause,
     Maximize2,
     FileText,
     User,
@@ -663,8 +661,6 @@ export default function InvitationForm({ invitation }) {
     const [leftPercent, setLeftPercent] = useState(52);
     const [isDragging, setIsDragging] = useState(false);
     const containerRef = useRef(null);
-    const [audioPlaying, setAudioPlaying] = useState(false);
-    const audioPreviewRef = useRef(null);
 
     // Draggable Resizer Handler
     const handleMouseDown = (e) => {
@@ -870,27 +866,6 @@ export default function InvitationForm({ invitation }) {
     const removePartyMember = (index) => {
         const nextParty = (form.party || []).filter((_, i) => i !== index);
         update("party", nextParty);
-    };
-
-    // Music Selector
-    const handleMusicSelect = (trackId) => {
-        const track = MUSIC_TRACKS.find((t) => t.id === trackId) || MUSIC_TRACKS[0];
-        update("musicTrackId", track.id);
-        update("musicUrl", track.url);
-        if (audioPreviewRef.current) {
-            audioPreviewRef.current.load();
-            setAudioPlaying(false);
-        }
-    };
-
-    const toggleAudioPreview = () => {
-        if (!audioPreviewRef.current) return;
-        if (audioPlaying) {
-            audioPreviewRef.current.pause();
-            setAudioPlaying(false);
-        } else {
-            audioPreviewRef.current.play().then(() => setAudioPlaying(true)).catch(() => setAudioPlaying(false));
-        }
     };
 
     // Save action
