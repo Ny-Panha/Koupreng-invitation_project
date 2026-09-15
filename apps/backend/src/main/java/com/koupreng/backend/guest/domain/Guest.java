@@ -1,4 +1,4 @@
-package com.koupreng.backend.entity.invitation;
+package com.koupreng.backend.guest.domain;
 
 import com.koupreng.backend.invitation.domain.UserInvitation;
 import jakarta.persistence.*;

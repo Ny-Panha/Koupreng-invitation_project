@@ -11,7 +11,7 @@ import com.koupreng.backend.entity.budget.BudgetItem;
 import com.koupreng.backend.entity.gift.WeddingGift;
 import com.koupreng.backend.entity.invitation.EventTable;
 import com.koupreng.backend.invitation.domain.EventType;
-import com.koupreng.backend.entity.invitation.Guest;
+import com.koupreng.backend.guest.domain.Guest;
 import com.koupreng.backend.entity.invitation.GuestCheckIn;
 import com.koupreng.backend.entity.invitation.GuestSeatAssignment;
 import com.koupreng.backend.template.domain.InvitationTemplate;

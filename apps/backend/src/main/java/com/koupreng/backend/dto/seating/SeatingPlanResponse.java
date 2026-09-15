@@ -1,6 +1,6 @@
 package com.koupreng.backend.dto.seating;
 
-import com.koupreng.backend.dto.guest.GuestResponse;
+import com.koupreng.backend.guest.api.dto.GuestResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

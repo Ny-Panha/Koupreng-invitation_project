@@ -1,6 +1,6 @@
-package com.koupreng.backend.repository;
+package com.koupreng.backend.guest.infrastructure.persistence;
 
-import com.koupreng.backend.entity.invitation.Guest;
+import com.koupreng.backend.guest.domain.Guest;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;

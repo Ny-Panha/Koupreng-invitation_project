@@ -1,6 +1,6 @@
 package com.koupreng.backend.dto.rsvp;
 
-import com.koupreng.backend.entity.invitation.Guest;
+import com.koupreng.backend.guest.domain.Guest;
 import com.koupreng.backend.entity.invitation.Rsvp;
 import com.koupreng.backend.enums.RsvpStatus;
 import lombok.AllArgsConstructor;

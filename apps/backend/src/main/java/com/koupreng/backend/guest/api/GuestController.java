@@ -1,15 +1,15 @@
-package com.koupreng.backend.controller;
+package com.koupreng.backend.guest.api;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
-import com.koupreng.backend.dto.guest.GuestGroupResponse;
-import com.koupreng.backend.dto.guest.GuestImportFileResultResponse;
-import com.koupreng.backend.dto.guest.GuestImportRequest;
-import com.koupreng.backend.dto.guest.GuestRequest;
-import com.koupreng.backend.dto.guest.GuestResponse;
-import com.koupreng.backend.dto.guest.GuestSendListResponse;
-import com.koupreng.backend.service.GuestService;
+import com.koupreng.backend.guest.api.dto.GuestGroupResponse;
+import com.koupreng.backend.guest.api.dto.GuestImportFileResultResponse;
+import com.koupreng.backend.guest.api.dto.GuestImportRequest;
+import com.koupreng.backend.guest.api.dto.GuestRequest;
+import com.koupreng.backend.guest.api.dto.GuestResponse;
+import com.koupreng.backend.guest.api.dto.GuestSendListResponse;
+import com.koupreng.backend.guest.application.GuestService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

@@ -1,5 +1,6 @@
 package com.koupreng.backend.entity.invitation;
 
+import com.koupreng.backend.guest.domain.Guest;
 import com.koupreng.backend.invitation.domain.UserInvitation;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

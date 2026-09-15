@@ -1,4 +1,4 @@
-package com.koupreng.backend.dto.guest;
+package com.koupreng.backend.guest.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,10 +11,9 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GuestImportFileResultResponse {
+public class GuestGroupResponse {
 
-    private int importedCount;
-    private int skippedCount;
-    private List<GuestImportErrorResponse> errorRows;
+    private String category;
+    private int totalGuests;
     private List<GuestResponse> guests;
 }

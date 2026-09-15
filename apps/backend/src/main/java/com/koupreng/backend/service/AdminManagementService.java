@@ -28,7 +28,7 @@ import com.koupreng.backend.enums.NotificationStatus;
 import com.koupreng.backend.enums.PaymentStatus;
 import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;
 import com.koupreng.backend.repository.GuestCheckInRepository;
-import com.koupreng.backend.repository.GuestRepository;
+import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
 import com.koupreng.backend.template.infrastructure.persistence.InvitationTemplateRepository;
 import com.koupreng.backend.repository.NotificationRepository;
 import com.koupreng.backend.repository.RsvpRepository;
@@ -453,7 +453,7 @@ public class AdminManagementService {
 
     @Transactional(readOnly = true)
     public AdminReportResponse analyticsDelivery() {
-        List<com.koupreng.backend.entity.invitation.Guest> guests = guestRepository.findAll();
+        List<com.koupreng.backend.guest.domain.Guest> guests = guestRepository.findAll();
         Map<String, Object> summary = new LinkedHashMap<>();
         summary.put("totalGuests", guests.size());
         summary.put("sent", guests.stream().filter(guest -> statusEquals(guest.getSendStatus(), "SENT")).count());

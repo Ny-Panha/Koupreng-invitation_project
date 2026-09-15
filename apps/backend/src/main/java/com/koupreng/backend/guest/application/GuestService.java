@@ -1,4 +1,4 @@
-package com.koupreng.backend.service;
+package com.koupreng.backend.guest.application;
 
 import com.koupreng.backend.invitation.application.InvitationService;
 import java.io.BufferedReader;
@@ -29,18 +29,18 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.koupreng.backend.shared.exception.ApiException;
-import com.koupreng.backend.dto.guest.GuestGroupResponse;
-import com.koupreng.backend.dto.guest.GuestImportErrorResponse;
-import com.koupreng.backend.dto.guest.GuestImportFileResultResponse;
-import com.koupreng.backend.dto.guest.GuestImportRequest;
-import com.koupreng.backend.dto.guest.GuestRequest;
-import com.koupreng.backend.dto.guest.GuestResponse;
-import com.koupreng.backend.dto.guest.GuestSendListItemResponse;
-import com.koupreng.backend.dto.guest.GuestSendListResponse;
-import com.koupreng.backend.entity.invitation.Guest;
+import com.koupreng.backend.guest.api.dto.GuestGroupResponse;
+import com.koupreng.backend.guest.api.dto.GuestImportErrorResponse;
+import com.koupreng.backend.guest.api.dto.GuestImportFileResultResponse;
+import com.koupreng.backend.guest.api.dto.GuestImportRequest;
+import com.koupreng.backend.guest.api.dto.GuestRequest;
+import com.koupreng.backend.guest.api.dto.GuestResponse;
+import com.koupreng.backend.guest.api.dto.GuestSendListItemResponse;
+import com.koupreng.backend.guest.api.dto.GuestSendListResponse;
+import com.koupreng.backend.guest.domain.Guest;
 import com.koupreng.backend.entity.invitation.Rsvp;
 import com.koupreng.backend.invitation.domain.UserInvitation;
-import com.koupreng.backend.repository.GuestRepository;
+import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
 import com.koupreng.backend.repository.RsvpRepository;
 import com.koupreng.backend.util.CsvExportUtils;
 

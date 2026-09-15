@@ -4,7 +4,7 @@ import com.koupreng.backend.user.application.CurrentUserService;
 
 import com.koupreng.backend.dto.notification.NotificationResponse;
 import com.koupreng.backend.dto.notification.NotificationSummaryResponse;
-import com.koupreng.backend.entity.invitation.Guest;
+import com.koupreng.backend.guest.domain.Guest;
 import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.entity.notification.Notification;
 import com.koupreng.backend.user.domain.AppUser;
@@ -12,7 +12,7 @@ import com.koupreng.backend.enums.NotificationChannel;
 import com.koupreng.backend.enums.NotificationStatus;
 import com.koupreng.backend.enums.NotificationType;
 import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;
-import com.koupreng.backend.repository.GuestRepository;
+import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
 import com.koupreng.backend.repository.NotificationRepository;
 import com.koupreng.backend.repository.RsvpRepository;
 import com.koupreng.backend.repository.TemplatePaymentOrderRepository;

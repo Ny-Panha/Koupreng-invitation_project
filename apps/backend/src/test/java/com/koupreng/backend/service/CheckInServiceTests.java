@@ -4,12 +4,12 @@ import com.koupreng.backend.user.application.CurrentUserService;
 
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.dto.checkin.CheckInResponse;
-import com.koupreng.backend.entity.invitation.Guest;
+import com.koupreng.backend.guest.domain.Guest;
 import com.koupreng.backend.entity.invitation.GuestCheckIn;
 import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.repository.GuestCheckInRepository;
-import com.koupreng.backend.repository.GuestRepository;
+import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
 import com.koupreng.backend.repository.RsvpRepository;
 import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;
 import org.junit.jupiter.api.Test;

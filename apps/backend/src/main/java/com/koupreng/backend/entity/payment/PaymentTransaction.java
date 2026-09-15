@@ -1,7 +1,7 @@
 package com.koupreng.backend.entity.payment;
 
 import com.koupreng.backend.invitation.domain.UserInvitation;
-import com.koupreng.backend.entity.invitation.Guest;
+import com.koupreng.backend.guest.domain.Guest;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.Instant;

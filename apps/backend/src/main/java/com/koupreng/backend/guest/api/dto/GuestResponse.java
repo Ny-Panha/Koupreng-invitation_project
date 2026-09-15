@@ -1,20 +1,22 @@
-package com.koupreng.backend.dto.guest;
+package com.koupreng.backend.guest.api.dto;
 
-import com.koupreng.backend.entity.invitation.Guest;
+import com.koupreng.backend.guest.domain.Guest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GuestSendListItemResponse {
+public class GuestResponse {
 
     private Long id;
+    private Long invitationId;
     private String guestName;
     private String phone;
     private String email;
@@ -22,15 +24,20 @@ public class GuestSendListItemResponse {
     private String sideType;
     private String tableNumber;
     private String inviteToken;
-    private String invitationUrl;
     private String qrCodeUrl;
     private String sendStatus;
-    private boolean sendable;
+    private Integer seatCount;
+    private String note;
+    private Instant lastSentAt;
     private Instant invitationViewedAt;
+    private String contributionStatus;
+    private BigDecimal totalContributed;
+    private Instant createdAt;
 
-    public static GuestSendListItemResponse from(Guest guest, String invitationUrl) {
-        return GuestSendListItemResponse.builder()
+    public static GuestResponse from(Guest guest) {
+        return GuestResponse.builder()
                 .id(guest.getId())
+                .invitationId(guest.getInvitation() == null ? null : guest.getInvitation().getId())
                 .guestName(guest.getGuestName())
                 .phone(guest.getPhone())
                 .email(guest.getEmail())
@@ -38,15 +45,15 @@ public class GuestSendListItemResponse {
                 .sideType(guest.getSideType())
                 .tableNumber(guest.getTableNumber())
                 .inviteToken(guest.getInviteToken())
-                .invitationUrl(invitationUrl)
                 .qrCodeUrl(guest.getQrCodeUrl())
                 .sendStatus(guest.getSendStatus())
-                .sendable(hasText(guest.getPhone()) || hasText(guest.getEmail()))
+                .seatCount(guest.getSeatCount())
+                .note(guest.getNote())
+                .lastSentAt(guest.getLastSentAt())
                 .invitationViewedAt(guest.getInvitationViewedAt())
+                .contributionStatus(guest.getContributionStatus())
+                .totalContributed(guest.getTotalContributed())
+                .createdAt(guest.getCreatedAt())
                 .build();
-    }
-
-    private static boolean hasText(String value) {
-        return value != null && !value.isBlank();
     }
 }

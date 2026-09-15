@@ -11,7 +11,7 @@ import com.koupreng.backend.repository.BudgetItemRepository;
 import com.koupreng.backend.repository.BudgetRepository;
 import com.koupreng.backend.repository.EventTableRepository;
 import com.koupreng.backend.repository.GuestCheckInRepository;
-import com.koupreng.backend.repository.GuestRepository;
+import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
 import com.koupreng.backend.repository.GuestSeatAssignmentRepository;
 import com.koupreng.backend.template.infrastructure.persistence.InvitationTemplateRepository;
 import com.koupreng.backend.repository.NotificationRepository;

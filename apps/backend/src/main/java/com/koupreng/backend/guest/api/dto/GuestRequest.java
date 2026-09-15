@@ -1,4 +1,4 @@
-package com.koupreng.backend.dto.guest;
+package com.koupreng.backend.guest.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.DecimalMin;

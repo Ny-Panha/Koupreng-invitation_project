@@ -1,6 +1,6 @@
 package com.koupreng.backend.dto.seating;
 
-import com.koupreng.backend.entity.invitation.Guest;
+import com.koupreng.backend.guest.domain.Guest;
 import com.koupreng.backend.entity.invitation.GuestSeatAssignment;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
