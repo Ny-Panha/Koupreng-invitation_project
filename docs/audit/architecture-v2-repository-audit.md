@@ -296,3 +296,7 @@ The dashboard/report controller, application service, and user/invitation/admin 
 ## Audit module ownership slice
 
 The audit application service, system-audit response DTO, current and legacy audit aggregates, and Spring Data repository now live under `audit/application`, `audit/api/dto`, `audit/domain`, and `audit/infrastructure/persistence`. Authentication, invitation, subscription, organization, budget, check-in, notification, template-payment, and admin callers migrated atomically. Existing audit table mappings, metadata serialization fallback, trusted-proxy handling, actor attribution, and admin response JSON are unchanged. Verification: 245 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings.
+
+## Admin module ownership slice
+
+The administration controller, application service, and user/template/moderation/report request and response DTOs now live under `admin/api`, `admin/application`, and `admin/api/dto`. Reporting consumers migrated atomically. Existing `/api/v1/admin/**` routes, request and response JSON, controller-level ADMIN enforcement, audit emission, user/template/invitation moderation behavior, analytics, alerts, package operations, and payment history delegation are unchanged. Verification: 245 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings.

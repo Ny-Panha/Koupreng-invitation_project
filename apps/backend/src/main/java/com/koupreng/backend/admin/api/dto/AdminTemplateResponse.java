@@ -1,4 +1,4 @@
-package com.koupreng.backend.dto.admin;
+package com.koupreng.backend.admin.api.dto;
 
 import com.koupreng.backend.template.domain.InvitationTemplate;
 import com.koupreng.backend.template.domain.TemplateCategory;

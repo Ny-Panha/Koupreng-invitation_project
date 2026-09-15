@@ -3,7 +3,7 @@ package com.koupreng.backend.reporting.application;
 import com.koupreng.backend.user.application.CurrentUserService;
 
 import com.koupreng.backend.shared.exception.ApiException;
-import com.koupreng.backend.dto.admin.AdminUserResponse;
+import com.koupreng.backend.admin.api.dto.AdminUserResponse;
 import com.koupreng.backend.reporting.api.dto.AdminDashboardSummaryResponse;
 import com.koupreng.backend.reporting.api.dto.GuestStatusReportResponse;
 import com.koupreng.backend.reporting.api.dto.InvitationDashboardResponse;

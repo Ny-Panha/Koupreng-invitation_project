@@ -1,4 +1,4 @@
-package com.koupreng.backend.dto.admin;
+package com.koupreng.backend.admin.api.dto;
 
 import lombok.Data;
 

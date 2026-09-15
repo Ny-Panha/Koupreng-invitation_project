@@ -1,14 +1,14 @@
-package com.koupreng.backend.service;
+package com.koupreng.backend.admin.application;
 
 import com.koupreng.backend.auth.infrastructure.session.UserAuthCacheService;
 
 import com.koupreng.backend.shared.exception.ApiException;
-import com.koupreng.backend.dto.admin.AdminInvitationModerationRequest;
-import com.koupreng.backend.dto.admin.AdminReportResponse;
-import com.koupreng.backend.dto.admin.AdminTemplatePremiumRequest;
-import com.koupreng.backend.dto.admin.AdminTemplateRequest;
-import com.koupreng.backend.dto.admin.AdminTemplateResponse;
-import com.koupreng.backend.dto.admin.AdminUserResponse;
+import com.koupreng.backend.admin.api.dto.AdminInvitationModerationRequest;
+import com.koupreng.backend.admin.api.dto.AdminReportResponse;
+import com.koupreng.backend.admin.api.dto.AdminTemplatePremiumRequest;
+import com.koupreng.backend.admin.api.dto.AdminTemplateRequest;
+import com.koupreng.backend.admin.api.dto.AdminTemplateResponse;
+import com.koupreng.backend.admin.api.dto.AdminUserResponse;
 import com.koupreng.backend.audit.api.dto.SystemAuditLogResponse;
 import com.koupreng.backend.checkin.api.dto.CheckInResponse;
 import com.koupreng.backend.invitation.api.dto.InvitationResponse;
