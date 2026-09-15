@@ -49,6 +49,7 @@ com.koupreng.backend
     api/ application/ domain/ infrastructure/
   organization/
   template/
+  event/
   invitation/
   media/
   guest/

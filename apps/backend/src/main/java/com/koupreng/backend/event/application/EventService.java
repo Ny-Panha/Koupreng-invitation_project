@@ -1,10 +1,10 @@
-package com.koupreng.backend.service;
+package com.koupreng.backend.event.application;
 
-import com.koupreng.backend.dto.EventRequest;
-import com.koupreng.backend.dto.EventResponse;
-import com.koupreng.backend.entity.invitation.Event;
-import com.koupreng.backend.enums.EventStatus;
-import com.koupreng.backend.repository.EventRepository;
+import com.koupreng.backend.event.api.dto.EventRequest;
+import com.koupreng.backend.event.api.dto.EventResponse;
+import com.koupreng.backend.event.domain.Event;
+import com.koupreng.backend.event.domain.EventStatus;
+import com.koupreng.backend.event.infrastructure.persistence.EventRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

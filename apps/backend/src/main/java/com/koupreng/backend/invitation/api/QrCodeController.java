@@ -1,10 +1,10 @@
-package com.koupreng.backend.controller;
+package com.koupreng.backend.invitation.api;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
-import com.koupreng.backend.dto.qr.QrCodeResponse;
-import com.koupreng.backend.service.QrCodeService;
+import com.koupreng.backend.invitation.api.dto.QrCodeResponse;
+import com.koupreng.backend.invitation.application.QrCodeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;

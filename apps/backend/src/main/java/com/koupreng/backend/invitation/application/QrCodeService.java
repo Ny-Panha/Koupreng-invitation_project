@@ -1,6 +1,5 @@
-package com.koupreng.backend.service;
+package com.koupreng.backend.invitation.application;
 
-import com.koupreng.backend.invitation.application.InvitationService;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
@@ -8,7 +7,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.config.AppProperties;
-import com.koupreng.backend.dto.qr.QrCodeResponse;
+import com.koupreng.backend.invitation.api.dto.QrCodeResponse;
 import com.koupreng.backend.guest.domain.Guest;
 import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.invitation.domain.InvitationVisibility;

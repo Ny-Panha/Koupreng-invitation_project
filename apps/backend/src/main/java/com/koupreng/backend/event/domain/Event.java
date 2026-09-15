@@ -1,7 +1,5 @@
-package com.koupreng.backend.entity.invitation;
+package com.koupreng.backend.event.domain;
 
-import com.koupreng.backend.enums.EventStatus;
-import com.koupreng.backend.enums.TemplateType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

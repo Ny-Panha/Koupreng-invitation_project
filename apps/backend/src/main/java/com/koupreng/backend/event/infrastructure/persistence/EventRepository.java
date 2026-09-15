@@ -1,7 +1,7 @@
-package com.koupreng.backend.repository;
+package com.koupreng.backend.event.infrastructure.persistence;
 
-import com.koupreng.backend.entity.invitation.Event;
-import com.koupreng.backend.enums.EventStatus;
+import com.koupreng.backend.event.domain.Event;
+import com.koupreng.backend.event.domain.EventStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

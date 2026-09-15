@@ -1,4 +1,4 @@
-package com.koupreng.backend.dto.qr;
+package com.koupreng.backend.invitation.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

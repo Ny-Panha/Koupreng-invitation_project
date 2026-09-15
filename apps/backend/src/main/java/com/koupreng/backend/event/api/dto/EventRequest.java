@@ -1,6 +1,6 @@
-package com.koupreng.backend.dto;
+package com.koupreng.backend.event.api.dto;
 
-import com.koupreng.backend.enums.TemplateType;
+import com.koupreng.backend.event.domain.TemplateType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -29,4 +29,3 @@ public class EventRequest {
     private String description;
     private String coverImageUrl;
 }
-

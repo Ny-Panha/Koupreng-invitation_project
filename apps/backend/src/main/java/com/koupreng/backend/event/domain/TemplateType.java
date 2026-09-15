@@ -1,4 +1,4 @@
-package com.koupreng.backend.enums;
+package com.koupreng.backend.event.domain;
 
 public enum TemplateType {
     WEDDING,

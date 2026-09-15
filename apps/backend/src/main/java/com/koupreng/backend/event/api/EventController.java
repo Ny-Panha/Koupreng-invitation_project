@@ -1,11 +1,11 @@
-package com.koupreng.backend.controller;
+package com.koupreng.backend.event.api;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
-import com.koupreng.backend.dto.EventRequest;
-import com.koupreng.backend.dto.EventResponse;
-import com.koupreng.backend.service.EventService;
+import com.koupreng.backend.event.api.dto.EventRequest;
+import com.koupreng.backend.event.api.dto.EventResponse;
+import com.koupreng.backend.event.application.EventService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;

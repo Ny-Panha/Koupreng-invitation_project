@@ -1,7 +1,7 @@
-package com.koupreng.backend.dto;
+package com.koupreng.backend.event.api.dto;
 
-import com.koupreng.backend.enums.EventStatus;
-import com.koupreng.backend.enums.TemplateType;
+import com.koupreng.backend.event.domain.EventStatus;
+import com.koupreng.backend.event.domain.TemplateType;
 import lombok.Builder;
 import lombok.Data;
 
