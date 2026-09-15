@@ -1,7 +1,7 @@
-package com.koupreng.backend.dto.budget;
+package com.koupreng.backend.budget.api.dto;
 
-import com.koupreng.backend.entity.budget.Budget;
-import com.koupreng.backend.entity.budget.BudgetItem;
+import com.koupreng.backend.budget.domain.Budget;
+import com.koupreng.backend.budget.domain.BudgetItem;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

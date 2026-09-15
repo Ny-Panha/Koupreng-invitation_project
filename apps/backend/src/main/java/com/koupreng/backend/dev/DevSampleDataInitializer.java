@@ -6,8 +6,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import com.koupreng.backend.entity.budget.Budget;
-import com.koupreng.backend.entity.budget.BudgetItem;
+import com.koupreng.backend.budget.domain.Budget;
+import com.koupreng.backend.budget.domain.BudgetItem;
 import com.koupreng.backend.entity.gift.WeddingGift;
 import com.koupreng.backend.seating.domain.EventTable;
 import com.koupreng.backend.invitation.domain.EventType;

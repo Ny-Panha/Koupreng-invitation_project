@@ -77,10 +77,10 @@ public class InvitationService {
     private final OrganizationMemberRepository organizationMemberRepository;
 
     @Autowired(required = false)
-    private com.koupreng.backend.repository.BudgetRepository budgetRepository;
+    private com.koupreng.backend.budget.infrastructure.persistence.BudgetRepository budgetRepository;
 
     @Autowired(required = false)
-    private com.koupreng.backend.repository.BudgetItemRepository budgetItemRepository;
+    private com.koupreng.backend.budget.infrastructure.persistence.BudgetItemRepository budgetItemRepository;
 
     @Autowired(required = false)
     private com.koupreng.backend.repository.WeddingGiftRepository weddingGiftRepository;

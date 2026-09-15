@@ -1,6 +1,6 @@
-package com.koupreng.backend.repository;
+package com.koupreng.backend.budget.infrastructure.persistence;
 
-import com.koupreng.backend.entity.budget.Budget;
+import com.koupreng.backend.budget.domain.Budget;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

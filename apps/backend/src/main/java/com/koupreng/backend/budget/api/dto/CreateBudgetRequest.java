@@ -1,4 +1,4 @@
-package com.koupreng.backend.dto.budget;
+package com.koupreng.backend.budget.api.dto;
 
 import jakarta.validation.constraints.DecimalMin;
 import lombok.Data;

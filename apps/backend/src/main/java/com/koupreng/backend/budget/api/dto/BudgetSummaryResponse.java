@@ -1,4 +1,4 @@
-package com.koupreng.backend.dto.budget;
+package com.koupreng.backend.budget.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

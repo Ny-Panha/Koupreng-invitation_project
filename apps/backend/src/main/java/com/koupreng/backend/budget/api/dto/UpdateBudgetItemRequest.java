@@ -1,17 +1,14 @@
-package com.koupreng.backend.dto.budget;
+package com.koupreng.backend.budget.api.dto;
 
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.math.BigDecimal;
 
 @Data
-public class CreateBudgetItemRequest {
+public class UpdateBudgetItemRequest {
 
     private String category;
-
-    @NotBlank(message = "Item name is required")
     private String itemName;
 
     @DecimalMin(value = "0.00", message = "Estimated cost must be zero or greater")

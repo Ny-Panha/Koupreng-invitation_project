@@ -1,28 +1,25 @@
-package com.koupreng.backend.dto.budget;
+package com.koupreng.backend.budget.api.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 @Data
-public class BudgetItemRequest {
-
-    @NotBlank(message = "Budget item name is required")
-    private String name;
+public class CreateBudgetItemRequest {
 
     private String category;
 
+    @NotBlank(message = "Item name is required")
+    private String itemName;
+
     @DecimalMin(value = "0.00", message = "Estimated cost must be zero or greater")
-    private BigDecimal budget;
+    private BigDecimal estimatedCost;
 
     @DecimalMin(value = "0.00", message = "Actual cost must be zero or greater")
-    private BigDecimal amount;
+    private BigDecimal actualCost;
 
-    private LocalDate date;
-    private String status;
     private String vendorName;
     private String notes;
 }

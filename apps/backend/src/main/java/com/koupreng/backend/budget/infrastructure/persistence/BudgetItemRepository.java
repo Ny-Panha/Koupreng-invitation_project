@@ -1,6 +1,6 @@
-package com.koupreng.backend.repository;
+package com.koupreng.backend.budget.infrastructure.persistence;
 
-import com.koupreng.backend.entity.budget.BudgetItem;
+import com.koupreng.backend.budget.domain.BudgetItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
