@@ -1,4 +1,4 @@
-package com.koupreng.backend.dto.payment;
+package com.koupreng.backend.payment.api.dto;
 
 import java.math.BigDecimal;
 

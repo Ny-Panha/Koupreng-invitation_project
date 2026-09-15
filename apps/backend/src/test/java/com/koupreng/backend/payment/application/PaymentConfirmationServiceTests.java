@@ -1,4 +1,4 @@
-package com.koupreng.backend.service;
+package com.koupreng.backend.payment.application;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -8,10 +8,12 @@ import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 
-import com.koupreng.backend.dto.payment.ConfirmPaymentRequest;
 import com.koupreng.backend.dto.payment.ConfirmTemplatePaymentRequest;
 import com.koupreng.backend.dto.payment.PaymentConfirmResponse;
 import com.koupreng.backend.enums.PaymentStatus;
+import com.koupreng.backend.payment.api.dto.ConfirmPaymentRequest;
+import com.koupreng.backend.service.SubscriptionService;
+import com.koupreng.backend.service.TemplatePaymentService;
 import com.koupreng.backend.shared.exception.ApiException;
 
 import org.junit.jupiter.api.Test;

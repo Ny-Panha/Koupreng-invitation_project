@@ -3,7 +3,7 @@ package com.koupreng.backend.security;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.koupreng.backend.service.PaymentConfirmationService;
+import com.koupreng.backend.payment.application.PaymentConfirmationService;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
