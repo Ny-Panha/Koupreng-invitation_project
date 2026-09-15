@@ -1,14 +1,14 @@
-package com.koupreng.backend.service;
+package com.koupreng.backend.reporting.application;
 
 import com.koupreng.backend.user.application.CurrentUserService;
 
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.dto.admin.AdminUserResponse;
-import com.koupreng.backend.dto.dashboard.AdminDashboardSummaryResponse;
-import com.koupreng.backend.dto.dashboard.GuestStatusReportResponse;
-import com.koupreng.backend.dto.dashboard.InvitationDashboardResponse;
-import com.koupreng.backend.dto.dashboard.RsvpReportResponse;
-import com.koupreng.backend.dto.dashboard.UserDashboardSummaryResponse;
+import com.koupreng.backend.reporting.api.dto.AdminDashboardSummaryResponse;
+import com.koupreng.backend.reporting.api.dto.GuestStatusReportResponse;
+import com.koupreng.backend.reporting.api.dto.InvitationDashboardResponse;
+import com.koupreng.backend.reporting.api.dto.RsvpReportResponse;
+import com.koupreng.backend.reporting.api.dto.UserDashboardSummaryResponse;
 import com.koupreng.backend.guest.api.dto.GuestResponse;
 import com.koupreng.backend.invitation.api.dto.InvitationResponse;
 import com.koupreng.backend.invitation.api.dto.InvitationSummaryResponse;

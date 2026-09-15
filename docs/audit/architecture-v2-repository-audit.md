@@ -288,3 +288,7 @@ The organization controller and organization/member request/response DTOs, appli
 ## Notification module ownership slice
 
 The user and admin notification controllers, request/response/summary DTOs, application service, aggregate, and Spring Data repository now live under `notification/api`, `notification/application`, `notification/domain`, and `notification/infrastructure/persistence`. RSVP emission, invitation cleanup, dashboard/reporting, administration, and development-fixture callers migrated atomically. Existing `/api/v1/notifications/**` and `/api/v1/admin/notifications/**` routes, request and response JSON, recipient and invitation ownership checks, delivery-state transitions, reminder deduplication, JPA/table mappings, and repository queries are unchanged. Provider-facing notification enum wire values remain stable. Verification: 243 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings.
+
+## Reporting module ownership slice
+
+The dashboard/report controller, application service, and user/invitation/admin report DTOs now live under `reporting/api`, `reporting/application`, and `reporting/api/dto`. Existing `/api/v1/dashboard/**`, invitation dashboard/report/export, and admin dashboard routes, response JSON, CSV formats, ownership checks, and aggregate calculations are unchanged. Focused tests now prove foreign-owner report rejection and server-side admin enforcement before global data is read. Verification: 245 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings.

@@ -1,15 +1,15 @@
-package com.koupreng.backend.controller;
+package com.koupreng.backend.reporting.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
-import com.koupreng.backend.dto.dashboard.AdminDashboardSummaryResponse;
-import com.koupreng.backend.dto.dashboard.GuestStatusReportResponse;
-import com.koupreng.backend.dto.dashboard.InvitationDashboardResponse;
-import com.koupreng.backend.dto.dashboard.RsvpReportResponse;
-import com.koupreng.backend.dto.dashboard.UserDashboardSummaryResponse;
-import com.koupreng.backend.service.DashboardReportService;
+import com.koupreng.backend.reporting.api.dto.AdminDashboardSummaryResponse;
+import com.koupreng.backend.reporting.api.dto.GuestStatusReportResponse;
+import com.koupreng.backend.reporting.api.dto.InvitationDashboardResponse;
+import com.koupreng.backend.reporting.api.dto.RsvpReportResponse;
+import com.koupreng.backend.reporting.api.dto.UserDashboardSummaryResponse;
+import com.koupreng.backend.reporting.application.DashboardReportService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

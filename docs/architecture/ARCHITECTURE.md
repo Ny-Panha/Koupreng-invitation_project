@@ -61,6 +61,7 @@ com.koupreng.backend
   payment/
   subscription/
   notification/
+  reporting/
   admin/
   audit/
   integration/    provider adapters only; optional AI boundary

@@ -1,4 +1,4 @@
-package com.koupreng.backend.dto.dashboard;
+package com.koupreng.backend.reporting.api.dto;
 
 import com.koupreng.backend.invitation.api.dto.InvitationSummaryResponse;
 import com.koupreng.backend.notification.api.dto.NotificationResponse;
