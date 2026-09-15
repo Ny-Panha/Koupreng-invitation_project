@@ -7,7 +7,7 @@ import com.koupreng.backend.auth.infrastructure.persistence.PasswordResetTokenRe
 import com.koupreng.backend.auth.infrastructure.session.UserAuthCacheService;
 import com.koupreng.backend.entity.user.AppUser;
 import com.koupreng.backend.repository.AppUserRepository;
-import com.koupreng.backend.service.CurrentUserService;
+import com.koupreng.backend.user.application.CurrentUserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.core.env.Environment;

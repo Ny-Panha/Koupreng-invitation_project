@@ -1,5 +1,7 @@
 package com.koupreng.backend.service;
 
+import com.koupreng.backend.user.application.CurrentUserService;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koupreng.backend.entity.audit.SystemAuditLog;
 import com.koupreng.backend.entity.user.AppUser;

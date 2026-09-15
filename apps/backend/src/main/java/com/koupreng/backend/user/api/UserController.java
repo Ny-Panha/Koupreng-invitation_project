@@ -1,17 +1,21 @@
-package com.koupreng.backend.controller;
+package com.koupreng.backend.user.api;
+
+import java.util.Map;
+
+import com.koupreng.backend.auth.api.dto.ChangePasswordRequest;
+import com.koupreng.backend.auth.application.AccountService;
+import com.koupreng.backend.security.FileUploadValidator;
+import com.koupreng.backend.service.storage.StorageService;
+import com.koupreng.backend.service.storage.StorageUploadResult;
+import com.koupreng.backend.user.api.dto.UpdateProfileRequest;
+import com.koupreng.backend.user.api.dto.UserResponse;
+import com.koupreng.backend.user.application.UserService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-
-import com.koupreng.backend.auth.api.dto.ChangePasswordRequest;
-import com.koupreng.backend.dto.UpdateProfileRequest;
-import com.koupreng.backend.dto.UserResponse;
-import com.koupreng.backend.security.FileUploadValidator;
-import com.koupreng.backend.auth.application.AccountService;
-import com.koupreng.backend.service.UserService;
-
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,12 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.Map;
-
-import org.springframework.http.MediaType;
 import org.springframework.web.multipart.MultipartFile;
-import com.koupreng.backend.service.storage.StorageService;
-import com.koupreng.backend.service.storage.StorageUploadResult;
 
 @RestController
 @Validated

@@ -10,7 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.koupreng.backend.auth.api.dto.ForgotPasswordRequest;
 import com.koupreng.backend.auth.application.AccountService;
 import com.koupreng.backend.auth.application.AuthService;
-import com.koupreng.backend.service.UserService;
+import com.koupreng.backend.user.application.UserService;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,7 +2,7 @@ package com.koupreng.backend.auth.api.dto;
 
 import java.time.Instant;
 
-import com.koupreng.backend.dto.UserResponse;
+import com.koupreng.backend.user.api.dto.UserResponse;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

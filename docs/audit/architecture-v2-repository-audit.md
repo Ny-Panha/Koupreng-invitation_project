@@ -204,3 +204,12 @@ Security evidence: cookie-mode integration tests cover missing and valid CSRF to
 Verification: 195 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings.
 
 Follow-up contract slice: canonical `/api/v1/auth/**` aliases were added without removing `/api/auth/**`. Both route families share controller methods, authorization, conditional CSRF exclusions, and rate-limit buckets. Runtime OpenAPI and integration tests cover the canonical public and protected paths. Verification: 200 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings.
+
+## User application slice decision record
+
+Current state: the current-user controller, profile DTOs, and user services lived in global technical packages, and profile operations duplicated authenticated-user lookup logic.
+Target state: the HTTP boundary and application use cases live under `user/api` and `user/application`; authentication lookup has one implementation in `CurrentUserService`.
+Implemented scope: move the controller, request/response DTOs, profile/role service, and current-user resolver; migrate every caller; remove the duplicate resolver and an obsolete password-encoder dependency from `UserService`.
+Compatibility: `/api/users/me/**`, request aliases, response JSON, persistence mappings, and transaction behavior are unchanged. The user JPA aggregate and repository remain in their legacy packages for a later atomic caller migration.
+Security evidence: focused tests cover numeric JWT subjects, the legacy email principal, unauthenticated access, profile normalization, duplicate phones, final-admin protection, and auth-cache eviction after role changes.
+Verification: 208 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings.

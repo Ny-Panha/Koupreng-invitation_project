@@ -1,5 +1,7 @@
 package com.koupreng.backend.service;
 
+import com.koupreng.backend.user.application.CurrentUserService;
+
 import com.koupreng.backend.dto.notification.NotificationResponse;
 import com.koupreng.backend.dto.notification.NotificationSummaryResponse;
 import com.koupreng.backend.entity.invitation.Guest;

@@ -1,5 +1,7 @@
 package com.koupreng.backend.service;
 
+import com.koupreng.backend.user.application.CurrentUserService;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koupreng.backend.shared.exception.ApiException;

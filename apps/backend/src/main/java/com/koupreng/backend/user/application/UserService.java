@@ -1,21 +1,19 @@
-package com.koupreng.backend.service;
+package com.koupreng.backend.user.application;
 
 import java.util.List;
 import java.util.Objects;
 
 import com.koupreng.backend.auth.infrastructure.session.UserAuthCacheService;
-import com.koupreng.backend.shared.exception.ApiException;
-import com.koupreng.backend.dto.UpdateProfileRequest;
-import com.koupreng.backend.dto.UserResponse;
 import com.koupreng.backend.entity.user.AppUser;
 import com.koupreng.backend.entity.user.Role;
 import com.koupreng.backend.repository.AppUserRepository;
+import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.shared.i18n.MessageService;
+import com.koupreng.backend.user.api.dto.UpdateProfileRequest;
+import com.koupreng.backend.user.api.dto.UserResponse;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,30 +21,30 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final AppUserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
     private final MessageService msg;
     private final UserAuthCacheService userAuthCacheService;
+    private final CurrentUserService currentUserService;
 
     public UserService(
             AppUserRepository userRepository,
-            PasswordEncoder passwordEncoder,
             MessageService msg,
-            UserAuthCacheService userAuthCacheService
+            UserAuthCacheService userAuthCacheService,
+            CurrentUserService currentUserService
     ) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
         this.msg = msg;
         this.userAuthCacheService = userAuthCacheService;
+        this.currentUserService = currentUserService;
     }
 
     @Transactional(readOnly = true)
     public UserResponse getProfile(Authentication authentication) {
-        return UserResponse.from(currentUser(authentication));
+        return UserResponse.from(currentUserService.currentUser(authentication));
     }
 
     @Transactional
     public UserResponse updateProfile(Authentication authentication, UpdateProfileRequest request) {
-        AppUser user = currentUser(authentication);
+        AppUser user = currentUserService.currentUser(authentication);
         user.setFullName(request.fullName().trim());
         String phone = normalizePhone(request.phone());
         if (!Objects.equals(user.getPhone(), phone)) {
@@ -83,20 +81,6 @@ public class UserService {
         user.incrementTokenVersion();
         userAuthCacheService.evict(userId);
         return UserResponse.from(user);
-    }
-
-    private AppUser currentUser(Authentication authentication) {
-        if (authentication == null || !authentication.isAuthenticated()) {
-            throw new BadCredentialsException("Authentication required");
-        }
-        String principal = authentication.getName();
-        try {
-            return userRepository.findById(Long.valueOf(principal))
-                    .orElseThrow(() -> new BadCredentialsException("Authentication required"));
-        } catch (NumberFormatException ex) {
-            return userRepository.findByEmailIgnoreCase(principal)
-                    .orElseThrow(() -> new BadCredentialsException("Authentication required"));
-        }
     }
 
     private String normalizePhone(String value) {

@@ -1,4 +1,4 @@
-package com.koupreng.backend.service;
+package com.koupreng.backend.user.application;
 
 import com.koupreng.backend.entity.user.AppUser;
 import com.koupreng.backend.repository.AppUserRepository;

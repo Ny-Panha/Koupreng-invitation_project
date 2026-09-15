@@ -18,9 +18,9 @@ import com.koupreng.backend.auth.application.AccountService;
 import com.koupreng.backend.auth.application.AuthService;
 import com.koupreng.backend.auth.infrastructure.security.AuthCookieService;
 import com.koupreng.backend.dto.MessageResponse;
-import com.koupreng.backend.dto.UserResponse;
+import com.koupreng.backend.user.api.dto.UserResponse;
 import com.koupreng.backend.entity.user.Role;
-import com.koupreng.backend.service.UserService;
+import com.koupreng.backend.user.application.UserService;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;

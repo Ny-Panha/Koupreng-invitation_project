@@ -46,6 +46,7 @@ com.koupreng.backend
   auth/
     api/ application/ domain/ infrastructure/
   user/
+    api/ application/ domain/ infrastructure/
   organization/
   template/
   invitation/
@@ -165,7 +166,7 @@ inventory callers and tables
   -> remove verified legacy code
 ```
 
-The first Phase 2 slice establishes `shared.exception`, `shared.response`, and `shared.i18n`, migrates every backend caller away from the former `common` package, and restricts root `.env` loading to the dev profile. The authentication slice now owns its HTTP DTOs/controller, application services, identity adapters, password-reset persistence, token-state cache, cookie support, rate limiter, and JWT authentication converter under `auth/api`, `auth/application`, `auth/domain`, and `auth/infrastructure`. Existing routes and JSON remain unchanged. Users and the remaining domains follow in dependency order.
+The first Phase 2 slice establishes `shared.exception`, `shared.response`, and `shared.i18n`, migrates every backend caller away from the former `common` package, and restricts root `.env` loading to the dev profile. The authentication slice now owns its HTTP DTOs/controller, application services, identity adapters, password-reset persistence, token-state cache, cookie support, rate limiter, and JWT authentication converter under `auth/api`, `auth/application`, `auth/domain`, and `auth/infrastructure`. The user slice owns the current-user HTTP boundary and profile application services under `user/api` and `user/application`; its JPA aggregate and repository remain explicit migration debt until callers are moved atomically. Existing user routes and JSON remain unchanged.
 
 Current application services still inject some concrete auth infrastructure and the legacy user/audit services. Those seams are recorded migration debt, not a reason to introduce speculative interfaces during a behavior-preserving package move. Ports will be extracted when a second implementation or a testable provider boundary requires one.
 

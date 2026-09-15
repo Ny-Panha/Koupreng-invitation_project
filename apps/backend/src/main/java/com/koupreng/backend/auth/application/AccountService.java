@@ -8,7 +8,7 @@ import com.koupreng.backend.auth.infrastructure.persistence.PasswordResetTokenRe
 import com.koupreng.backend.auth.infrastructure.session.UserAuthCacheService;
 import com.koupreng.backend.entity.user.AppUser;
 import com.koupreng.backend.repository.AppUserRepository;
-import com.koupreng.backend.service.CurrentUserService;
+import com.koupreng.backend.user.application.CurrentUserService;
 import com.koupreng.backend.shared.exception.ApiException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,5 +1,7 @@
 package com.koupreng.backend.service;
 
+import com.koupreng.backend.user.application.CurrentUserService;
+
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.dto.guest.GuestResponse;
 import com.koupreng.backend.dto.seating.EventTableRequest;

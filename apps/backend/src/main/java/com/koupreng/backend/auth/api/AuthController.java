@@ -14,9 +14,9 @@ import com.koupreng.backend.auth.infrastructure.security.AuthCookieService;
 import jakarta.validation.Valid;
 
 import com.koupreng.backend.dto.MessageResponse;
-import com.koupreng.backend.dto.UpdateProfileRequest;
-import com.koupreng.backend.dto.UserResponse;
-import com.koupreng.backend.service.UserService;
+import com.koupreng.backend.user.api.dto.UpdateProfileRequest;
+import com.koupreng.backend.user.api.dto.UserResponse;
+import com.koupreng.backend.user.application.UserService;
 import com.koupreng.backend.shared.response.ApiErrorResponse;
 
 import io.swagger.v3.oas.annotations.Operation;

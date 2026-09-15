@@ -1,4 +1,4 @@
-package com.koupreng.backend.dto;
+package com.koupreng.backend.user.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import jakarta.validation.constraints.NotBlank;
