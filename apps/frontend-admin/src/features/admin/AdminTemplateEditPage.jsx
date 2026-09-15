@@ -13,16 +13,11 @@ import {
   Heart,
   Calendar,
   MapPin,
-  Gift,
   Shirt,
   Layers,
   Crown,
   ExternalLink,
   Music,
-  Clock,
-  Copy,
-  Check,
-  CheckCircle2,
   Image as ImageIcon,
   Sliders,
   Eye,
@@ -352,10 +347,6 @@ export default function AdminTemplateEditPage() {
     }
   };
 
-  const handleToggleGate = () => {
-    handleSetGate(!previewGateOpen);
-  };
-
   // Load existing template data if editing
   useEffect(() => {
     if (isNew) return;
@@ -395,7 +386,7 @@ export default function AdminTemplateEditPage() {
     return () => {
       active = false;
     };
-  }, [isNew, templateId]);
+  }, [isNew, templateId, show]);
 
   const setField = (key, val) => setForm((prev) => ({ ...prev, [key]: val }));
 

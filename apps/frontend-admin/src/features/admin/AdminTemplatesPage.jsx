@@ -29,6 +29,8 @@ import { AdminPageHeader, StatCard, StatusBadge, ActionButton } from "../../shar
 import Toast from "../../components/Toast";
 import { Loading, ErrorState } from "../../components/States";
 
+// Retained as the canonical category vocabulary for the pending filter control.
+// eslint-disable-next-line no-unused-vars
 const CATEGORIES = [
   { value: "ALL", label: "គ្រប់ប្រភេទ (All Categories)" },
   { value: "TRADITIONAL", label: "ប្រពៃណីខ្មែរ (Traditional)" },
@@ -49,7 +51,7 @@ const EMPTY_TEMPLATE = {
   description: "",
 };
 
-export function formatTemplateDescription(description) {
+function formatTemplateDescription(description) {
   if (!description) return "គំរូធៀបការមង្គលការបែបប្រពៃណីខ្មែរ រចនាបទស្រស់ស្អាតនិងទំនើប";
   const str = String(description).trim();
   if (str.startsWith("{") && str.endsWith("}")) {

@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, useEffect, useMemo } from "react";
+/* eslint-disable react-refresh/only-export-components */
+import { createContext, useCallback, useContext, useState, useEffect, useMemo } from "react";
 
 const STORAGE_KEY = "koupreng.admin.lang";
 
@@ -566,7 +567,7 @@ export const ADMIN_DICTIONARY = {
 const AdminLanguageContext = createContext({
   lang: "km",
   setLang: () => {},
-  t: (path, fallback, replacements) => fallback || path,
+  t: (path, fallback) => fallback || path,
   messages: ADMIN_DICTIONARY.km,
 });
 
@@ -598,15 +599,15 @@ export function AdminLanguageProvider({ children }) {
     document.documentElement.lang = lang;
   }, [lang]);
 
-  const setLang = (nextLang) => {
+  const setLang = useCallback((nextLang) => {
     if (nextLang === "km" || nextLang === "en") {
       setLangState(nextLang);
     }
-  };
+  }, []);
 
   const messages = useMemo(() => ADMIN_DICTIONARY[lang] || ADMIN_DICTIONARY.km, [lang]);
 
-  const t = (path, fallback = "", replacements = null) => {
+  const t = useCallback((path, fallback = "", replacements = null) => {
     if (!path) return fallback;
     const parts = path.split(".");
     let current = messages;
@@ -620,9 +621,9 @@ export function AdminLanguageProvider({ children }) {
     }
     const val = typeof current === "string" ? current : fallback || path;
     return replacements ? formatTemplate(val, replacements) : val;
-  };
+  }, [messages]);
 
-  const value = useMemo(() => ({ lang, setLang, t, messages }), [lang, messages]);
+  const value = useMemo(() => ({ lang, setLang, t, messages }), [lang, messages, setLang, t]);
 
   return (
     <AdminLanguageContext.Provider value={value}>
