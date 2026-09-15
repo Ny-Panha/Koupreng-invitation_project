@@ -1,4 +1,4 @@
-package com.koupreng.backend.entity.subscription;
+package com.koupreng.backend.subscription.domain;
 
 import com.koupreng.backend.user.domain.AppUser;
 import jakarta.persistence.*;

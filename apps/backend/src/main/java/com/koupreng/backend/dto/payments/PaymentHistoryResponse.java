@@ -52,7 +52,7 @@ public class PaymentHistoryResponse {
                 .build();
     }
 
-    public static PaymentHistoryResponse from(com.koupreng.backend.entity.subscription.Subscription sub) {
+    public static PaymentHistoryResponse from(com.koupreng.backend.subscription.domain.Subscription sub) {
         PaymentStatus status = PaymentStatus.PENDING;
         if ("ACTIVE".equalsIgnoreCase(sub.getStatus()) || "COMPLETED".equalsIgnoreCase(sub.getStatus()) || "PAID".equalsIgnoreCase(sub.getStatus()) || sub.isActive()) {
             status = PaymentStatus.PAID;

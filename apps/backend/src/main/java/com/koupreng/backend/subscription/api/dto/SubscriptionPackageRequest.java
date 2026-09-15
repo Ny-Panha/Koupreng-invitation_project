@@ -1,4 +1,4 @@
-package com.koupreng.backend.dto.subscription;
+package com.koupreng.backend.subscription.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

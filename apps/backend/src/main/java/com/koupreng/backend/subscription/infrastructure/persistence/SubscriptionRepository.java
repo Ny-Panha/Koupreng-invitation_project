@@ -1,6 +1,6 @@
-package com.koupreng.backend.repository;
+package com.koupreng.backend.subscription.infrastructure.persistence;
 
-import com.koupreng.backend.entity.subscription.Subscription;
+import com.koupreng.backend.subscription.domain.Subscription;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;

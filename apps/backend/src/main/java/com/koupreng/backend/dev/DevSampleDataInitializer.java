@@ -21,7 +21,7 @@ import com.koupreng.backend.entity.invitation.UserInvitation;
 import com.koupreng.backend.entity.notification.Notification;
 import com.koupreng.backend.entity.organization.Organization;
 import com.koupreng.backend.entity.organization.OrganizationMember;
-import com.koupreng.backend.entity.subscription.SubscriptionPackage;
+import com.koupreng.backend.subscription.domain.SubscriptionPackage;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.user.domain.Role;
 import com.koupreng.backend.enums.InvitationModerationStatus;

@@ -236,3 +236,7 @@ Release gate: run the documented active-subscription duplicate query plus fresh-
 ## Architecture enforcement slice
 
 ArchUnit now turns the first V2 dependency rules into build-breaking tests: REST controllers cannot access repositories or depend directly on JPA/domain objects; V2 domain packages cannot depend on delivery, application, infrastructure, legacy service/repository, or configuration packages; and REST controllers must remain in explicit HTTP packages. The dependency is test-scoped and the selected release supports the repository's Java class-file level. Verification: 231 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings.
+
+## Subscription module ownership slice
+
+The subscription controller and HTTP DTOs, application service, package/subscription aggregates, and both Spring Data repositories now live under `subscription/api`, `subscription/application`, `subscription/domain`, and `subscription/infrastructure/persistence`. All callers migrated atomically with no internal compatibility bridge. Routes, serialized DTO fields, JPA entity/table mappings, and V18 fulfillment behavior are unchanged. Verification: 231 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings.

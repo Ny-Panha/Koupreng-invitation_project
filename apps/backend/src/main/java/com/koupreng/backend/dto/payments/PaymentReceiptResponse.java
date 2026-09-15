@@ -54,7 +54,7 @@ public class PaymentReceiptResponse {
                 .build();
     }
 
-    public static PaymentReceiptResponse from(com.koupreng.backend.entity.subscription.Subscription sub) {
+    public static PaymentReceiptResponse from(com.koupreng.backend.subscription.domain.Subscription sub) {
         AppUser user = sub.getUser();
         PaymentStatus status = PaymentStatus.PENDING;
         if ("ACTIVE".equalsIgnoreCase(sub.getStatus()) || "COMPLETED".equalsIgnoreCase(sub.getStatus()) || "PAID".equalsIgnoreCase(sub.getStatus()) || sub.isActive()) {

@@ -1,6 +1,6 @@
-package com.koupreng.backend.repository;
+package com.koupreng.backend.subscription.infrastructure.persistence;
 
-import com.koupreng.backend.entity.subscription.SubscriptionPackage;
+import com.koupreng.backend.subscription.domain.SubscriptionPackage;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

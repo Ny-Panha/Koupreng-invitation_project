@@ -1,4 +1,4 @@
-package com.koupreng.backend.service;
+package com.koupreng.backend.subscription.application;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -15,13 +15,14 @@ import java.util.Optional;
 
 import com.koupreng.backend.config.PaymentProperties;
 import com.koupreng.backend.dto.payment.PaymentConfirmResponse;
-import com.koupreng.backend.entity.subscription.Subscription;
-import com.koupreng.backend.entity.subscription.SubscriptionPackage;
 import com.koupreng.backend.enums.PaymentStatus;
 import com.koupreng.backend.payment.api.dto.ConfirmPaymentRequest;
-import com.koupreng.backend.repository.SubscriptionPackageRepository;
-import com.koupreng.backend.repository.SubscriptionRepository;
+import com.koupreng.backend.service.AuditLogService;
 import com.koupreng.backend.shared.exception.ApiException;
+import com.koupreng.backend.subscription.domain.Subscription;
+import com.koupreng.backend.subscription.domain.SubscriptionPackage;
+import com.koupreng.backend.subscription.infrastructure.persistence.SubscriptionPackageRepository;
+import com.koupreng.backend.subscription.infrastructure.persistence.SubscriptionRepository;
 import com.koupreng.backend.user.application.CurrentUserService;
 import com.koupreng.backend.user.domain.AppUser;
 

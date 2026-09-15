@@ -1,6 +1,6 @@
-package com.koupreng.backend.dto.subscription;
+package com.koupreng.backend.subscription.api.dto;
 
-import com.koupreng.backend.entity.subscription.Subscription;
+import com.koupreng.backend.subscription.domain.Subscription;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

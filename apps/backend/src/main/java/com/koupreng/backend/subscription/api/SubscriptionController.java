@@ -1,12 +1,12 @@
-package com.koupreng.backend.controller;
+package com.koupreng.backend.subscription.api;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
-import com.koupreng.backend.dto.subscription.SubscriptionPackageResponse;
-import com.koupreng.backend.dto.subscription.SubscriptionPurchaseRequest;
-import com.koupreng.backend.dto.subscription.SubscriptionResponse;
-import com.koupreng.backend.service.SubscriptionService;
+import com.koupreng.backend.subscription.api.dto.SubscriptionPackageResponse;
+import com.koupreng.backend.subscription.api.dto.SubscriptionPurchaseRequest;
+import com.koupreng.backend.subscription.api.dto.SubscriptionResponse;
+import com.koupreng.backend.subscription.application.SubscriptionService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
