@@ -88,7 +88,7 @@ flowchart LR
 
 ## API contract
 
-The target canonical prefix is `/api/v1`. Existing `/api/auth`, `/api/users/me`, and `/api/admin` paths remain compatibility adapters until all consumers are migrated. Runtime springdoc output is the machine-readable source of truth. The checked-in `packages/api-contracts/openapi.yaml` is a review artifact and must eventually be generated/diffed in CI.
+The target canonical prefix is `/api/v1`. Authentication now exposes `/api/v1/auth/**` and retains `/api/auth/**` as compatibility aliases with the same security and throttling policy. `/api/users/me` and `/api/admin` remain compatibility paths until canonical routes exist and all consumers are migrated. Runtime springdoc output is the machine-readable source of truth. The checked-in `packages/api-contracts/openapi.yaml` is a review artifact and must eventually be generated/diffed in CI.
 
 Success responses may retain the current `ApiResponse<T>` envelope. Error responses use:
 

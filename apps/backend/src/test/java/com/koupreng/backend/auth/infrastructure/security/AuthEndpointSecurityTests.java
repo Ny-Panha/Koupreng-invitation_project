@@ -53,6 +53,18 @@ class AuthEndpointSecurityTests {
     }
 
     @Test
+    void canonicalForgotPasswordRouteIsPublic() throws Exception {
+        mockMvc.perform(post("/api/v1/auth/forgot-password")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"email":"canonical@example.com"}
+                                """))
+                .andExpect(status().isOk());
+
+        verify(accountService).forgotPassword(any(ForgotPasswordRequest.class));
+    }
+
+    @Test
     void resetPasswordIsPublic() throws Exception {
         mockMvc.perform(post("/api/auth/reset-password")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -67,6 +79,12 @@ class AuthEndpointSecurityTests {
     @Test
     void meRequiresAuthentication() throws Exception {
         mockMvc.perform(get("/api/auth/me"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void canonicalMeRouteRequiresAuthentication() throws Exception {
+        mockMvc.perform(get("/api/v1/auth/me"))
                 .andExpect(status().isUnauthorized());
     }
 

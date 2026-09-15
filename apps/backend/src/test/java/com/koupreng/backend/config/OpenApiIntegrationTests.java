@@ -80,6 +80,7 @@ class OpenApiIntegrationTests {
         mockMvc.perform(get("/v3/api-docs"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.paths['/api/auth/login'].post.security").doesNotExist())
+                .andExpect(jsonPath("$.paths['/api/v1/auth/login'].post.security").doesNotExist())
                 .andExpect(jsonPath("$.paths['/api/v1/public/invitations/{slug}'].get.security").isEmpty())
                 .andExpect(jsonPath("$.paths['/api/v1/payway/callback'].post.security").isEmpty())
                 .andExpect(jsonPath("$.paths['/api/users/me'].get.security[0].bearerAuth").isArray())

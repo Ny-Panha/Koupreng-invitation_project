@@ -202,3 +202,5 @@ Implemented scope: auth/account controller and DTOs, login and account-recovery 
 Compatibility: `/api/auth/**`, request aliases, response JSON, Spring bean discovery, database mappings, and runtime OpenAPI are unchanged.
 Security evidence: cookie-mode integration tests cover missing and valid CSRF tokens, a disallowed origin, and an intentionally ignored public recovery endpoint. Browser token acquisition and consumer wiring remain deferred and cookie mode remains disabled by default.
 Verification: 195 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings.
+
+Follow-up contract slice: canonical `/api/v1/auth/**` aliases were added without removing `/api/auth/**`. Both route families share controller methods, authorization, conditional CSRF exclusions, and rate-limit buckets. Runtime OpenAPI and integration tests cover the canonical public and protected paths. Verification: 200 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings.

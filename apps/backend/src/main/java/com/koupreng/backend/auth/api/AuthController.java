@@ -39,7 +39,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Validated
-@RequestMapping("/api/auth")
+@RequestMapping({"/api/v1/auth", "/api/auth"})
 @Tag(name = "Authentication", description = "Registration, login, social identity, token invalidation, and account recovery.")
 public class AuthController {
 

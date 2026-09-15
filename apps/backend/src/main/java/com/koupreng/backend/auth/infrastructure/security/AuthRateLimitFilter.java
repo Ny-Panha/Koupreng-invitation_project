@@ -22,13 +22,19 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class AuthRateLimitFilter extends OncePerRequestFilter {
 
     private static final Duration WINDOW = Duration.ofMinutes(1);
-    private static final Map<String, AuthEndpoint> AUTH_ENDPOINTS = Map.of(
-            "/api/auth/login", AuthEndpoint.LOGIN,
-            "/api/auth/register", AuthEndpoint.REGISTER,
-            "/api/auth/google", AuthEndpoint.SOCIAL,
-            "/api/auth/telegram", AuthEndpoint.SOCIAL,
-            "/api/auth/forgot-password", AuthEndpoint.FORGOT_PASSWORD,
-            "/api/auth/reset-password", AuthEndpoint.RESET_PASSWORD
+    private static final Map<String, AuthEndpoint> AUTH_ENDPOINTS = Map.ofEntries(
+            Map.entry("/api/v1/auth/login", AuthEndpoint.LOGIN),
+            Map.entry("/api/v1/auth/register", AuthEndpoint.REGISTER),
+            Map.entry("/api/v1/auth/google", AuthEndpoint.SOCIAL),
+            Map.entry("/api/v1/auth/telegram", AuthEndpoint.SOCIAL),
+            Map.entry("/api/v1/auth/forgot-password", AuthEndpoint.FORGOT_PASSWORD),
+            Map.entry("/api/v1/auth/reset-password", AuthEndpoint.RESET_PASSWORD),
+            Map.entry("/api/auth/login", AuthEndpoint.LOGIN),
+            Map.entry("/api/auth/register", AuthEndpoint.REGISTER),
+            Map.entry("/api/auth/google", AuthEndpoint.SOCIAL),
+            Map.entry("/api/auth/telegram", AuthEndpoint.SOCIAL),
+            Map.entry("/api/auth/forgot-password", AuthEndpoint.FORGOT_PASSWORD),
+            Map.entry("/api/auth/reset-password", AuthEndpoint.RESET_PASSWORD)
     );
 
     private final AppProperties.Auth authProperties;

@@ -140,6 +140,9 @@ public class SecurityConfig {
                         csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                                 .csrfTokenRequestHandler(handler)
                                 .ignoringRequestMatchers(
+                                        "/api/v1/auth/login", "/api/v1/auth/register",
+                                        "/api/v1/auth/google", "/api/v1/auth/telegram",
+                                        "/api/v1/auth/forgot-password", "/api/v1/auth/reset-password",
                                         "/api/auth/login", "/api/auth/register",
                                         "/api/auth/google", "/api/auth/telegram",
                                         "/api/auth/forgot-password", "/api/auth/reset-password",
@@ -184,6 +187,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/login", "/api/auth/register",
                                 "/api/auth/google", "/api/auth/telegram",
                                 "/api/auth/forgot-password", "/api/auth/reset-password").permitAll()
+                        .requestMatchers("/api/v1/auth/login", "/api/v1/auth/register",
+                                "/api/v1/auth/google", "/api/v1/auth/telegram",
+                                "/api/v1/auth/forgot-password", "/api/v1/auth/reset-password").permitAll()
                         .requestMatchers("/api/invitations/templates",
                                 "/api/invitations/templates/**").permitAll()
                         .requestMatchers("/api/invitations/shared/**").permitAll()

@@ -87,4 +87,16 @@ class CookieCsrfSecurityTests {
 
         verify(accountService).forgotPassword(any(ForgotPasswordRequest.class));
     }
+
+    @Test
+    void canonicalRecoveryEndpointIsAlsoIgnoredByCsrf() throws Exception {
+        mockMvc.perform(post("/api/v1/auth/forgot-password")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"email":"canonical@example.com"}
+                                """))
+                .andExpect(status().isOk());
+
+        verify(accountService).forgotPassword(any(ForgotPasswordRequest.class));
+    }
 }
