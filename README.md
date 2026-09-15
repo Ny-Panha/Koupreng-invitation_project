@@ -1,61 +1,162 @@
-# Koupreng
+<div align="center">
 
-Koupreng is a Khmer invitation platform composed of a public/host React application, a separate React admin application, a Spring Boot API, and a Python Telegram payment-detection service.
+# 💌 Koupreng
 
-## Repository layout
+<p><strong>E-Invitation Platform</strong></p>
+
+**Create, share, and manage meaningful celebrations through a modern Khmer-first experience.**
+
+Koupreng brings invitation publishing, guest coordination, RSVP, templates, payments, and administration into one full-stack platform designed as a professional university capstone and portfolio project.
+
+<p>
+  <img src="https://img.shields.io/badge/React-19.2-61DAFB?style=flat-square&logo=react&logoColor=white" alt="React 19.2">
+  <img src="https://img.shields.io/badge/Spring_Boot-4.0-6DB33F?style=flat-square&logo=springboot&logoColor=white" alt="Spring Boot 4.0">
+  <img src="https://img.shields.io/badge/Java-25-ED8B00?style=flat-square&logo=openjdk&logoColor=white" alt="Java 25">
+  <img src="https://img.shields.io/badge/FastAPI-0.139-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI 0.139">
+  <img src="https://img.shields.io/badge/MySQL-8.0-4479A1?style=flat-square&logo=mysql&logoColor=white" alt="MySQL 8.0">
+  <img src="https://img.shields.io/badge/Redis-7.4-DC382D?style=flat-square&logo=redis&logoColor=white" alt="Redis 7.4">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-4.3-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" alt="Tailwind CSS 4.3">
+  <img src="https://img.shields.io/badge/Docker-Compose-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker Compose">
+</p>
+
+[Features](#features) · [Architecture](#architecture) · [Tech Stack](#tech-stack) · [Getting Started](#getting-started) · [API Docs](#api-documentation) · [Security](#security)
+
+</div>
+
+---
+
+<a id="about"></a>
+
+## ✨ About Koupreng
+
+Koupreng is a Khmer-focused digital invitation platform composed of a public and host-facing React application, a separate React administration application, a Spring Boot REST API, and a Python service for Telegram-assisted payment detection.
+
+The platform supports invitation and guest management, RSVP workflows, reusable templates, payment-related flows, interactive API documentation, and a containerized deployment topology. It is built to demonstrate clear domain ownership, secure application boundaries, and practical full-stack engineering—not to overstate unfinished external integrations as production-complete.
+
+<a id="features"></a>
+
+## 🚀 Key Features
+
+| Capability | What it provides |
+| --- | --- |
+| 💌 **Invitations** | Create, customize, publish, moderate, and share digital invitations. |
+| 👥 **Guest Management** | Organize guest lists, invitation delivery, seating, and check-in data. |
+| ✅ **RSVP** | Capture attendance responses, party details, and guest messages. |
+| 🎨 **Templates** | Browse and manage invitation templates, categories, and premium access. |
+| 💳 **Payments** | Support template and subscription payment workflows with confirmation evidence. |
+| 🤖 **Telegram Integration** | Detect configured payment messages and coordinate confirmations through a FastAPI service. |
+| 🛡️ **Authentication & Security** | Apply role-aware access, OAuth/JWT support, CSRF controls, validation, rate limits, and request filtering. |
+| 📊 **Administration** | Provide dedicated moderation, user, reporting, notification, template, and payment views. |
+| 📱 **Responsive Experience** | Deliver separate Vite-powered interfaces for invitees, hosts, and administrators. |
+| 🐳 **Deployment** | Package the applications behind an NGINX gateway with Docker Compose, MySQL, and Redis. |
+
+<a id="tech-stack"></a>
+
+## 🧰 Tech Stack
+
+| Area | Core technologies |
+| --- | --- |
+| **Frontend** | React, Vite, Tailwind CSS, Framer Motion, React Router, Axios, Zustand, Lucide, React Icons |
+| **Backend** | Java 25, Spring Boot, Spring Security, Spring Data JPA, Flyway, Maven |
+| **Data** | MySQL 8, Redis 7.4 |
+| **Payment & Services** | Python 3.13, FastAPI, HTTPX, Telegram integration |
+| **API & Documentation** | OpenAPI, Springdoc, Scalar, Swagger UI |
+| **Testing & Quality** | JUnit, ArchUnit, JaCoCo, SpotBugs, PMD, Vitest, Playwright, ESLint, Ruff, Bandit |
+| **DevOps** | Docker, Docker Compose, NGINX, GitHub Actions |
+
+<a id="architecture"></a>
+
+## 🏗️ System Architecture
+
+```mermaid
+flowchart TB
+    Guests["Guests & Invitees"] --> UserApp["React User App<br/>Public + Host Experience"]
+    Hosts["Hosts"] --> UserApp
+    Admins["Administrators"] --> AdminApp["React Admin App"]
+
+    UserApp --> API["Spring Boot REST API"]
+    AdminApp --> API
+    Telegram["Telegram"] --> Bot["FastAPI Payment Detection Service"]
+    Bot --> API
+
+    API --> MySQL[(MySQL)]
+    API --> Redis[(Redis)]
+
+    Gateway["NGINX Gateway<br/>Docker Compose"] -. routes .-> UserApp
+    Gateway -. routes .-> AdminApp
+    Gateway -. routes .-> API
+```
+
+The backend follows domain-oriented package boundaries with API, application, domain, and infrastructure responsibilities. See the [Architecture V2 guide](docs/architecture/ARCHITECTURE.md), [folder ownership rules](docs/architecture/folder-structure.md), and [database architecture](docs/database/DATABASE.md) for the detailed design.
+
+<a id="repository-structure"></a>
+
+## 📁 Repository Structure
 
 ```text
 apps/
-├── backend/           Spring Boot API, Flyway migrations, and tests
-├── frontend-admin/    administrator React/Vite application
-├── frontend-user/     public invitation and host React/Vite application
-└── telegram-bot/      FastAPI/Telegram integration and tests
-packages/
-└── api-contracts/     OpenAPI and Postman contracts
-docs/                  architecture, API, operations, and QA evidence
-infra/                 proxy, monitoring, database, backup, and firewall assets
-scripts/
-├── ci/                CI-only smoke automation
-├── dev/               local setup and stack launchers
-└── maintenance/       explicit Git maintenance helpers
-tools/                 Postman collection and sample seed data
+├── backend/          Spring Boot API, Flyway migrations, and tests
+├── frontend-user/    Public invitation and host React application
+├── frontend-admin/   Administration React application
+└── telegram-bot/     FastAPI and Telegram integration service
+packages/             Shared API contracts and collections
+docs/                 Architecture, API, operations, and QA guidance
+infra/                Reverse proxy, monitoring, database, and operations assets
+scripts/              Development, CI, and maintenance automation
+tools/                Sample data and development utilities
 ```
 
-See the [Architecture V2 target](docs/architecture/ARCHITECTURE.md), [database ownership](docs/database/DATABASE.md), and [API compatibility contract](docs/api/API_CONTRACT.md). The detailed current folder ownership rules remain in `docs/architecture/folder-structure.md`, and cleanup evidence is under `docs/qa/`.
+<a id="getting-started"></a>
 
-## Prerequisites
+## ⚡ Getting Started
+
+### 1. Prerequisites
 
 - JDK 25
 - Node.js 22 and npm
 - Python 3.13
 - MySQL 8
+- Docker and Docker Compose for the containerized option
 
-Copy `.env.example` to an untracked root `.env` and replace every placeholder. Never commit `.env`, tokens, private keys, database dumps, generated logs, build output, or dependency caches.
+### 2. Clone the repository
 
-## Setup
+```bash
+git clone https://github.com/Ny-Panha/Koupreng-invitation_project.git
+cd Koupreng-invitation_project
+```
 
-Linux/macOS:
+### 3. Configure the environment
+
+Copy the example environment file and replace every placeholder with a local value. The resulting `.env` file must remain untracked.
+
+```bash
+cp .env.example .env
+```
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Optional repository setup helpers:
 
 ```bash
 chmod +x scripts/dev/*.sh scripts/maintenance/*.sh
 ./scripts/dev/setup.sh
 ```
 
-Windows PowerShell:
-
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\dev\setup.ps1
 ```
 
-## Run locally
+### 4. Run locally
 
-The repository-specific all-service launcher is:
+Launch the repository-specific local stack on Windows:
 
 ```powershell
 .\run-local-stack.ps1
 ```
 
-Individual services:
+Or run each service independently:
 
 ```bash
 cd apps/backend && ./mvnw spring-boot:run
@@ -64,16 +165,9 @@ cd apps/frontend-admin && npm ci && npm run dev
 cd apps/telegram-bot && python -m pip install -r requirements.txt && python start.py
 ```
 
-Default local URLs:
+### 5. Run with Docker Compose
 
-- API: `http://localhost:8080`
-- User frontend: `http://localhost:5173`
-- Admin frontend: `http://localhost:5174`
-- Telegram service: `http://localhost:8000`
-
-## Run with Docker Compose
-
-After copying `.env.example` to `.env` and replacing every secret placeholder:
+After configuring `.env`:
 
 ```bash
 docker compose config --quiet
@@ -81,56 +175,61 @@ docker compose build --pull
 docker compose up -d
 ```
 
-The default Compose gateway serves the user app at `http://localhost:8080` and the admin app at `http://admin.localhost:8080`. MySQL and Redis are not published to the host. See [Docker and reverse-proxy deployment](docs/deployment/DOCKER.md) for topology, TLS/proxy rules, volumes, and release checks.
+The Compose gateway exposes the user application at `http://localhost:8080` and the admin application at `http://admin.localhost:8080`. MySQL and Redis remain private to the Compose network. See the [Docker deployment guide](docs/deployment/DOCKER.md) for topology, volumes, proxy rules, and release checks.
 
-## API documentation
+<a id="local-services"></a>
 
-The development API portal provides both Springdoc Swagger UI and a first-class
-Scalar integration with the Moon theme and Modern layout:
+## 🌐 Local Services
 
-- Scalar API Reference: `http://localhost:8080/docs`
-- Swagger UI: `http://localhost:8080/swagger-ui/index.html`
-- OpenAPI JSON: `http://localhost:8080/v3/api-docs`
-- OpenAPI YAML: `http://localhost:8080/v3/api-docs.yaml`
+| Service | Default URL | Purpose |
+| --- | --- | --- |
+| Backend API | `http://localhost:8080` | REST API, health endpoints, and API documentation |
+| User frontend | `http://localhost:5173` | Public invitation and host workflows |
+| Admin frontend | `http://localhost:5174` | Administrative workflows |
+| Telegram service | `http://localhost:8000` | FastAPI health and Telegram payment integration |
 
-Run the backend with the `dev` profile and `DEV_SAMPLE_DATA_ENABLED=true` to create the
-idempotent local fixture dataset. The checked-in `.env.example` is arranged for this
-local workflow. It supplies these fictional development accounts:
+These ports describe individually launched development services. Docker Compose exposes the platform through the gateway on port `8080`.
+
+<a id="api-documentation"></a>
+
+## 📚 API Documentation
+
+When the backend runs with development documentation enabled, the API is available through both Scalar and Swagger UI.
+
+| Resource | Local URL |
+| --- | --- |
+| Scalar API Reference | `http://localhost:8080/docs` |
+| Swagger UI | `http://localhost:8080/swagger-ui/index.html` |
+| OpenAPI JSON | `http://localhost:8080/v3/api-docs` |
+| OpenAPI YAML | `http://localhost:8080/v3/api-docs.yaml` |
+
+Bearer authentication is the intended interactive-documentation workflow. Sensitive `/api/v1/internal/**` service endpoints are excluded from the generated contract.
+
+<details>
+<summary><strong>View development fixtures and authentication details</strong></summary>
+
+Run the backend with the `dev` profile and `DEV_SAMPLE_DATA_ENABLED=true` to create the idempotent local fixture dataset configured by `.env.example`.
 
 | Account | Email | Password |
 | --- | --- | --- |
 | User | `demo@koupreng.local` | `DemoPass123!` |
 | Administrator | `admin.demo@koupreng.local` | `AdminDemoPass123!` |
 
-To test an authenticated operation, open **Authentication**, send the pre-filled
-`POST /api/auth/login` example, copy its `accessToken`, and set Scalar's `bearerAuth`
-credential to that token only. Scalar adds the `Bearer` prefix. Authorization can be
-persisted for local page refreshes with `SCALAR_PERSIST_AUTH=true`; no JWT is committed
-to the repository.
+In Scalar, open **Authentication**, send the pre-filled `POST /api/auth/login` example, copy the returned `accessToken`, and set the `bearerAuth` credential. Scalar adds the `Bearer` prefix. `SCALAR_PERSIST_AUTH=true` can preserve local authorization across page refreshes; no JWT is committed to the repository.
 
-The fixture also creates a published invitation with slug `demo-wedding`, organization
-`koupreng-demo-events`, three guests (attending, declined, and one with no RSVP yet),
-stable guest invite tokens, a table and assignment, one check-in, wishes in RSVP
-messages, budget items, a wedding gift, an in-app notification, and a free development
-package definition. It creates no subscription entitlement, payment transaction,
-external message, or verified ABA payment. Database IDs are intentionally generated by
-the database and are logged once the fixtures are ready; use list/create responses when
-working in a database where IDs are not `1`.
+The fixture creates a published `demo-wedding` invitation, organization, representative RSVP states, seating and check-in data, wishes, budget items, a wedding gift, an in-app notification, and a free development package definition. It does not create subscription entitlement, payment transactions, external messages, or verified ABA payments. Database identifiers are generated rather than assumed.
 
-`OPENAPI_ENABLED`, `SCALAR_ENABLED`, `SCALAR_PERSIST_AUTH`, and
-`DEV_SAMPLE_DATA_ENABLED` control the local developer experience. OpenAPI, Scalar, and
-sample data explicitly default to disabled in the `prod` profile. The initializer also
-requires the `dev` profile, so enabling its property alone in production does nothing.
-Sensitive `/api/v1/internal/**` service endpoints are excluded from the generated
-contract.
+`OPENAPI_ENABLED`, `SCALAR_ENABLED`, `SCALAR_PERSIST_AUTH`, and `DEV_SAMPLE_DATA_ENABLED` control the developer experience. OpenAPI, Scalar, and sample data default to disabled under the `prod` profile. Optional HttpOnly cookie authentication uses a readable CSRF cookie with a matching request token for protected mutations.
 
-Bearer authentication is the intended interactive-doc workflow. When optional HttpOnly
-cookie authentication is enabled, Spring Security issues a readable CSRF cookie and
-requires its matching request token for protected mutations. Public recovery/provider
-callbacks are explicitly scoped exceptions, and configured CORS origins remain
-authoritative.
+</details>
 
-## Verification
+For endpoint ownership and compatibility rules, read the [API contract](docs/api/API_CONTRACT.md).
+
+<a id="testing-quality"></a>
+
+## 🧪 Testing & Quality
+
+The repository combines backend verification, frontend unit and browser testing, dependency analysis, static analysis, and CI smoke checks.
 
 ```bash
 cd apps/backend && ./mvnw clean verify
@@ -139,14 +238,48 @@ cd apps/frontend-admin && npm run lint && npm test && npm run analyze:knip && np
 cd apps/telegram-bot && python -m pytest -q && python -m ruff check . && python -m bandit -q -r main.py start.py
 ```
 
-Browser journeys run from `apps/frontend-user` with `npm run test:e2e`. The repository-wide CI workflow also runs secret scanning, dependency audits, fresh-MySQL Flyway migration, static analysis, build artifacts, and route smoke tests.
+Run Playwright browser journeys from `apps/frontend-user`:
 
-Use the reproducible [Architecture V2 smoke test](docs/testing/SMOKE_TEST.md), then see `docs/qa/verification-results.md` for the last evidenced run and `docs/qa/known-limitations.md` before release. The generic container topology is deployment-ready at repository level; a provider-specific Railway claim still requires a Railway project binding, service topology, and deployment logs.
+```bash
+npm run test:e2e
+```
 
-## Security
+The CI workflow also covers secret scanning, dependency audits, fresh-MySQL Flyway migration, static analysis, build artifacts, and route smoke checks. Follow the reproducible [smoke-test guide](docs/testing/SMOKE_TEST.md), then review the latest [verification evidence](docs/qa/verification-results.md) and [known release gates](docs/qa/known-limitations.md).
 
-Read `SECURITY.md` before reporting a vulnerability. The credential incident discovered during the 2026-07-21 audit also requires external token rotation and a coordinated history rewrite; removing a value from the current tree does not revoke it or erase it from Git history.
+<a id="security"></a>
 
-## Invitation ownership rule
+## 🔐 Security
 
-Invitation child data is scoped by `invitationId`. Guests, budget items, gifts, RSVPs, media, delivery events, seating, and invitation notifications must never be queried or deleted across invitations. The backend verifies the authenticated owner or `ADMIN` for `DELETE /api/v1/invitations/{invitationId}`.
+- Keep `.env`, credentials, tokens, private keys, database dumps, generated logs, build output, and dependency caches out of Git.
+- Review [SECURITY.md](SECURITY.md) before reporting a vulnerability; security reports should follow its private disclosure process.
+- The credential incident recorded during the 2026-07-21 audit still requires external token rotation and a coordinated history rewrite. Removing a value from the current tree does not revoke it or erase it from Git history.
+- Invitation child data is scoped by `invitationId`. Guest, budget, gift, RSVP, media, delivery, seating, check-in, and notification operations must preserve authenticated invitation ownership or administrator authorization.
+
+<a id="documentation"></a>
+
+## 📖 Documentation
+
+| Guide | Description |
+| --- | --- |
+| [Architecture](docs/architecture/ARCHITECTURE.md) | System boundaries, modules, and target architecture |
+| [Folder Structure](docs/architecture/folder-structure.md) | Package and directory ownership rules |
+| [Database](docs/database/DATABASE.md) | Schema ownership, migrations, and persistence rules |
+| [API Contract](docs/api/API_CONTRACT.md) | Endpoint compatibility and API conventions |
+| [Docker Deployment](docs/deployment/DOCKER.md) | Container topology, gateway, volumes, and operations |
+| [Smoke Testing](docs/testing/SMOKE_TEST.md) | Reproducible local and release verification |
+| [Verification Results](docs/qa/verification-results.md) | Latest recorded validation evidence |
+| [Known Limitations](docs/qa/known-limitations.md) | Open release gates and environment constraints |
+| [Security Policy](SECURITY.md) | Vulnerability reporting and security expectations |
+| [Contributing](CONTRIBUTING.md) | Contribution workflow and repository standards |
+
+---
+
+<div align="center">
+
+<p><strong>💌 Koupreng</strong></p>
+
+**Modern digital invitations built for meaningful celebrations.**
+
+Made with ❤️ in Cambodia 🇰🇭
+
+</div>
