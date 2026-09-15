@@ -300,3 +300,7 @@ The audit application service, system-audit response DTO, current and legacy aud
 ## Admin module ownership slice
 
 The administration controller, application service, and user/template/moderation/report request and response DTOs now live under `admin/api`, `admin/application`, and `admin/api/dto`. Reporting consumers migrated atomically. Existing `/api/v1/admin/**` routes, request and response JSON, controller-level ADMIN enforcement, audit emission, user/template/invitation moderation behavior, analytics, alerts, package operations, and payment history delegation are unchanged. Verification: 245 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings.
+
+## Payment and template-purchase consolidation slice
+
+The template-payment and payment-history controllers and DTOs, purchase/history/confirmation application services, payment/order/access persistence models, Spring Data repositories, and ABA PayWay adapter types now share the `payment/api`, `payment/application`, `payment/domain`, `payment/infrastructure/persistence`, and `payment/infrastructure/aba` module boundary. Subscription fulfillment, notification, invitation entitlement, reporting, admin, fixtures, and security tests migrated atomically. Existing payment and purchase routes, request and response JSON, JPA/table mappings, provider payloads, transaction verification, idempotent confirmation, and entitlement behavior are unchanged. Verification: 245 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings.

@@ -1,10 +1,10 @@
 package com.koupreng.backend.security;
 
-import com.koupreng.backend.dto.payment.ConfirmTemplatePaymentRequest;
-import com.koupreng.backend.dto.payment.PaymentConfirmResponse;
-import com.koupreng.backend.dto.payment.TelegramDetectPaymentRequest;
+import com.koupreng.backend.payment.api.dto.ConfirmTemplatePaymentRequest;
+import com.koupreng.backend.payment.api.dto.PaymentConfirmResponse;
+import com.koupreng.backend.payment.api.dto.TelegramDetectPaymentRequest;
 import com.koupreng.backend.enums.PaymentStatus;
-import com.koupreng.backend.service.TemplatePaymentService;
+import com.koupreng.backend.payment.application.TemplatePaymentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

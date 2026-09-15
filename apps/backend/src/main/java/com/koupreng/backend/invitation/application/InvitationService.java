@@ -35,7 +35,7 @@ import com.koupreng.backend.checkin.infrastructure.persistence.GuestCheckInRepos
 import com.koupreng.backend.organization.infrastructure.persistence.OrganizationMemberRepository;
 import com.koupreng.backend.organization.infrastructure.persistence.OrganizationRepository;
 import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;
-import com.koupreng.backend.repository.UserTemplateAccessRepository;
+import com.koupreng.backend.payment.infrastructure.persistence.UserTemplateAccessRepository;
 import com.koupreng.backend.seating.infrastructure.persistence.GuestSeatAssignmentRepository;
 import com.koupreng.backend.delivery.infrastructure.persistence.InvitationDeliveryEventRepository;
 import com.koupreng.backend.media.infrastructure.persistence.MediaFileRepository;

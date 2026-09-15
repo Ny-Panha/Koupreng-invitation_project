@@ -20,7 +20,7 @@ import com.koupreng.backend.invitation.domain.InvitationVisibility;
 import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
 import com.koupreng.backend.template.infrastructure.persistence.InvitationTemplateRepository;
 import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;
-import com.koupreng.backend.repository.UserTemplateAccessRepository;
+import com.koupreng.backend.payment.infrastructure.persistence.UserTemplateAccessRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;

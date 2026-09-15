@@ -2,11 +2,10 @@ package com.koupreng.backend.payment.application;
 
 import java.util.Locale;
 
-import com.koupreng.backend.dto.payment.ConfirmTemplatePaymentRequest;
-import com.koupreng.backend.dto.payment.PaymentConfirmResponse;
+import com.koupreng.backend.payment.api.dto.ConfirmTemplatePaymentRequest;
+import com.koupreng.backend.payment.api.dto.PaymentConfirmResponse;
 import com.koupreng.backend.payment.api.dto.ConfirmPaymentRequest;
 import com.koupreng.backend.subscription.application.SubscriptionService;
-import com.koupreng.backend.service.TemplatePaymentService;
 import com.koupreng.backend.shared.exception.ApiException;
 
 import org.springframework.http.HttpStatus;

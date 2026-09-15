@@ -3,7 +3,7 @@ package com.koupreng.backend.notification.domain;
 import com.koupreng.backend.guest.domain.Guest;
 import com.koupreng.backend.rsvp.domain.Rsvp;
 import com.koupreng.backend.invitation.domain.UserInvitation;
-import com.koupreng.backend.entity.payment.TemplatePaymentOrder;
+import com.koupreng.backend.payment.domain.TemplatePaymentOrder;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.enums.NotificationChannel;
 import com.koupreng.backend.enums.NotificationStatus;

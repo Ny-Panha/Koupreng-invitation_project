@@ -20,7 +20,7 @@ import com.koupreng.backend.organization.infrastructure.persistence.Organization
 import com.koupreng.backend.rsvp.infrastructure.persistence.RsvpRepository;
 import com.koupreng.backend.subscription.infrastructure.persistence.SubscriptionPackageRepository;
 import com.koupreng.backend.subscription.infrastructure.persistence.SubscriptionRepository;
-import com.koupreng.backend.repository.TemplatePaymentOrderRepository;
+import com.koupreng.backend.payment.infrastructure.persistence.TemplatePaymentOrderRepository;
 import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;
 import com.koupreng.backend.gift.infrastructure.persistence.WeddingGiftRepository;
 

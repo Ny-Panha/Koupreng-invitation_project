@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Locale;
 
 import com.koupreng.backend.config.PaymentProperties;
-import com.koupreng.backend.dto.payment.PaymentConfirmResponse;
+import com.koupreng.backend.payment.api.dto.PaymentConfirmResponse;
 import com.koupreng.backend.enums.PaymentStatus;
 import com.koupreng.backend.payment.api.dto.ConfirmPaymentRequest;
 import com.koupreng.backend.audit.application.AuditLogService;
