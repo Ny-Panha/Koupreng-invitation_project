@@ -124,9 +124,11 @@ requires the `dev` profile, so enabling its property alone in production does no
 Sensitive `/api/v1/internal/**` service endpoints are excluded from the generated
 contract.
 
-Bearer authentication is the intended interactive-doc workflow. The optional HttpOnly
-auth cookie and the application's existing CSRF behavior are unchanged. If cookie auth
-is enabled, mutating requests must also satisfy the configured CSRF requirements.
+Bearer authentication is the intended interactive-doc workflow. When optional HttpOnly
+cookie authentication is enabled, Spring Security issues a readable CSRF cookie and
+requires its matching request token for protected mutations. Public recovery/provider
+callbacks are explicitly scoped exceptions, and configured CORS origins remain
+authoritative.
 
 ## Verification
 
@@ -139,7 +141,7 @@ cd apps/telegram-bot && python -m pytest -q && python -m ruff check . && python 
 
 Browser journeys run from `apps/frontend-user` with `npm run test:e2e`. The repository-wide CI workflow also runs secret scanning, dependency audits, fresh-MySQL Flyway migration, static analysis, build artifacts, and route smoke tests.
 
-See `docs/qa/verification-results.md` for the last evidenced run and `docs/qa/known-limitations.md` before release. The repository is not represented as Railway-ready until a Railway project binding, service topology, and deployment logs are supplied and verified.
+Use the reproducible [Architecture V2 smoke test](docs/testing/SMOKE_TEST.md), then see `docs/qa/verification-results.md` for the last evidenced run and `docs/qa/known-limitations.md` before release. The generic container topology is deployment-ready at repository level; a provider-specific Railway claim still requires a Railway project binding, service topology, and deployment logs.
 
 ## Security
 

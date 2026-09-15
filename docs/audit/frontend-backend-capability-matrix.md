@@ -1,5 +1,7 @@
 # Frontend to backend capability matrix
 
+> **Historical discovery snapshot (2026-08-10):** use this for migration provenance, not current release status. See `current-gap-status.md` and `../qa/verification-results.md`.
+
 **Evidence snapshot:** 2026-08-10
 **Scope:** user routes, admin routes, API clients, Spring controllers/services, and persistence authority
 

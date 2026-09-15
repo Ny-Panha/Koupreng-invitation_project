@@ -1,42 +1,56 @@
-# Verification Results
+# Architecture V2 Verification Results
 
-Evidence date: 2026-07-21. These results describe local execution on Windows unless the command explicitly names CI. No GitHub Actions or Railway result is claimed before the branch is pushed and those external systems run.
+Evidence date: 2026-09-15. Branch: `refactor/architecture-v2`.
+
+These results describe local Windows execution on the checked-out branch unless explicitly identified as a CI definition. No GitHub Actions, production, Railway, or live-provider success is claimed before those external systems run on the exact commit.
 
 ## Automated results
 
 | Area | Command/check | Result |
 | --- | --- | --- |
-| Backend full gate | `apps/backend/mvnw.cmd clean verify` | PASS: 128 tests, 0 failures/errors, 1 opt-in skip; JaCoCo report; SpotBugs High 0; PMD 0 |
-| Backend security focus | selected security/reset/logging tests | PASS: 6 tests |
-| Fresh database | `-Dtest=FreshDatabaseMigrationTests test` with a newly created MySQL 8 database | PASS: 15 Flyway migrations, Hibernate `ddl-auto=validate`, 1 test; temporary DB dropped |
-| Backend dependency use | `mvnw.cmd dependency:analyze` | PASS with documented Spring starter aggregation warnings |
-| Backend Java advisory feed | `mvnw.cmd -Pdependency-security -DskipTests verify` | INCOMPLETE: no report before 10-minute timeout; release blocker |
-| User frontend | lint, 3 Vitest tests, Knip, depcheck, Vite build | PASS; 724 modules; JS 988.81 kB/275.73 kB gzip; CSS 404.99 kB/73.13 kB gzip |
-| Admin frontend | lint, 3 Vitest tests, Knip, depcheck, Vite build | PASS; 125 modules; JS 335.49 kB/103.44 kB gzip; CSS 9.04 kB/2.55 kB gzip |
-| Browser E2E | Playwright desktop Chromium and Pixel 7 projects | PASS: 52 tests in 30.1s (8 critical journeys plus 44 route-smoke cases) |
-| Browser route smoke | `tests/e2e/route-smoke.spec.js` | PASS: all 22 user/admin route shells on desktop and mobile with controlled API/Telegram responses |
-| Telegram service | pytest, Ruff, Bandit, compileall | PASS: 24 tests and all static/compile gates |
-| Python vulnerability audit | `pip-audit -r requirements.txt` | PASS: no known vulnerabilities |
-| Node vulnerability audits | both `npm audit --audit-level=high` | PASS: 0 vulnerabilities |
-| Secret scan, current tree | Gitleaks 8.30.1 on a clean exported tree | PASS: 0 findings |
-| Secret scan, Git history | Gitleaks full-history diagnostic | FAIL/INCIDENT: 29 findings across 12 path/rule groups; remediation required |
-| Workflow syntax | PyYAML parse plus actionlint 1.7.12 | PASS: 10 jobs, no actionlint finding |
-| Script syntax | Bash `-n`, PowerShell parser, Node `--check` | PASS |
+| Backend full gate | `apps/backend/mvnw.cmd verify` | **PASS:** 246 tests discovered, 245 passed, 1 opt-in MySQL skip; executable JAR and JaCoCo report generated |
+| Backend static analysis | Maven verify SpotBugs/PMD executions | **PASS:** 0 High-threshold SpotBugs findings/errors; PMD clean |
+| Backend coverage | JaCoCo aggregate | 50.20% line and 34.91% branch; no minimum is configured |
+| Architecture/API drift | ArchUnit plus runtime OpenAPI snapshot test | **PASS:** module rules pass and generated OpenAPI is semantically equal to `packages/api-contracts/openapi.yaml` |
+| Fresh database | `FreshDatabaseMigrationTests` | **NOT RUN locally on this tree:** disposable MySQL variables unavailable; exactly 1 test skipped. CI has a mandatory MySQL 8 service job for this test |
+| Java dependency use | `mvnw.cmd dependency:analyze` | **PASS with warnings:** Spring starter aggregation produces expected used-undeclared/unused-declared warnings; no blind transitive rewrite made |
+| Java vulnerability feed | `mvnw.cmd -Pdependency-security -DskipTests verify` | **INCOMPLETE:** first local NVD sync reached 20,000/391,720 records and produced no report before the long no-key run was stopped; CI must complete it with cache/API key |
+| User frontend clean install | `npm ci --no-audit` | **PASS:** 385 packages installed from lockfile |
+| User frontend quality | lint, Vitest, Knip, depcheck, build | **PASS:** 33 test files / 124 tests; 2,664 modules built; no unused dependency/file findings |
+| User frontend bundle | Vite production build | **PASS with size warning:** JS 1,509.16 kB (412.56 kB gzip); CSS 569.37 kB (102.37 kB gzip) |
+| Admin frontend clean install | `npm ci --no-audit` | **PASS:** 331 packages installed from lockfile |
+| Admin frontend quality | lint, Vitest, Knip, depcheck, build | **PASS:** 3 test files / 10 tests; 1,917 modules built; no unused dependency/file findings |
+| Admin frontend bundle | Vite production build | **PASS with size warning:** JS 515.36 kB (142.40 kB gzip); CSS 95.77 kB (13.81 kB gzip) |
+| Node vulnerability audits | both `npm audit --audit-level=high` | **PASS:** 0 vulnerabilities in each lockfile |
+| Browser E2E | Playwright Chromium desktop and Pixel 7 projects | **PASS:** 12 critical journeys and 44 route-smoke cases (56 total) with controlled API/provider responses |
+| Telegram bot | Ruff, pytest, Bandit, compileall | **PASS:** 26 tests and all lint/static/compile gates |
+| Python vulnerability audit | `pip-audit -r requirements.txt` | **PASS:** no known vulnerabilities in declared runtime requirements |
+| Secret scan, tracked tree | checksum-verified Gitleaks 8.30.1 over `git archive HEAD` | **PASS:** 0 findings |
+| Secret scan, full history | Gitleaks 8.30.1 `git --log-opts=--all --redact` | **FAIL / INCIDENT:** 32 findings across 15 file/rule groups; output retained locally only in redacted form |
+| Compose topology | required-secret interpolation plus `docker compose config --quiet` | **PASS locally** |
+| Container images | Dockerfiles/base-image manifest checks | Definitions/tags validated; **actual image builds not run locally** because Docker Desktop was stopped. CI discovers and builds every tracked Dockerfile |
+| Configuration/script syntax | PyYAML, PowerShell parser, Node `--check` | **PASS:** workflow YAML, all tracked PowerShell scripts, and 3 Node scripts parse; Bash parsing is delegated to CI because Windows WSL has no `/bin/bash` distribution |
 
-## Coverage by critical flow
+The user test suite emits expected Happy DOM network/iframe diagnostics for deliberately unavailable local/external URLs; the assertions pass. Mockito also warns about future JDK restrictions on dynamic agent attachment. Neither warning was hidden.
 
-| Flow | Evidence present | What is not claimed |
+## Critical-flow evidence
+
+| Flow | Repository-controlled evidence | Not claimed |
 | --- | --- | --- |
-| Authentication/authorization | Backend auth/security tests; user/admin guard tests and redirect journeys | No live Google/Telegram OAuth provider session |
-| Public invitation | Route contract; controlled API success/error interception; desktop/mobile render journey | No production slug/database/provider journey |
-| User dashboard/builder | Protected-route contract, route smoke, production build; builder/custom media code preserved | No manual create/edit/publish transaction against a staging backend |
-| Admin | Admin route constants, guard/session unit tests, login redirect/browser form | No live admin moderation transaction |
-| Payment | Backend payment/security test suite and Telegram parsing tests | No live ABA payment/callback or real Telegram delivery |
-| Upload/media | Backend validation tests and frontend build/path evidence | No live Cloudinary/storage upload |
-| Database | Complete test suite plus fresh MySQL Flyway/Hibernate validation | No production clone, backup/restore, or provider migration |
+| Authentication/authorization | Auth, JWT, cookie/CSRF, CORS, ownership, internal-secret, admin, and hostile-origin tests; frontend route guards | Live Google/Telegram provider sessions |
+| Invitations/templates/media | Service validation and ownership tests, OpenAPI contract, frontend feature tests/build, controlled public route | Live create/edit/publish/upload against staging or Cloudinary |
+| Guests/RSVP/check-in/seating | Invitation-scoped tests, uniqueness migration, rate limiter, pessimistic locks, idempotency checks | Venue scanner load, approved staff/revoke policy |
+| Payment/purchase/subscription | Locked/idempotent state transitions, provider signature/check tests, admin/internal boundary tests, frontend payment routes | Real ABA charge/refund/callback, live Telegram delivery |
+| Admin/audit/reporting | Backend role enforcement and audit tests; admin unit/build/browser route coverage | Live moderation/reconciliation with representative production data |
+| Database | 17 append-only migrations tracked; Hibernate validation and opt-in fresh-MySQL test are implemented | Current-branch empty/upgrade MySQL execution outside CI; production clone/restore |
+| Deployment | Non-root multi-stage images, Compose networks/volumes/health checks, unprivileged Nginx routing, environment documentation | Local Docker image build, public DNS/TLS, provider deployment, backup restore |
 
-## Warnings retained as evidence
+## Required external gates
 
-- User production JavaScript remains above Vite's 500 kB chunk warning; code splitting is recommended but was not mixed into deletion work.
-- Flyway reports `outOfOrder` mode active because version `V1_1` sorts after the integer migrations. The fresh migration is reproducible in the tested repository state, but migration naming should be normalized only through an approved forward strategy.
-- Mockito/Byte Buddy warns that future JDKs will restrict dynamic agent attachment.
+- Complete CRITICAL-S01 credential revocation and history remediation with private owner evidence.
+- Obtain a successful OWASP Java dependency report for the exact release commit.
+- Pass the CI fresh-MySQL and Docker image jobs for the exact release commit.
+- Execute applicable manual/provider items in `docs/testing/SMOKE_TEST.md`.
+- Approve or replace retained assets and approve the organization/scanner permission designs before enabling those capabilities.
+
+Passing repository tests is necessary but does not make these external items green.

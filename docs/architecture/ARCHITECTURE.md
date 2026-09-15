@@ -1,6 +1,6 @@
 # Koupreng Architecture V2
 
-Status: migration in progress
+Status: repository migration complete; external release gates remain
 Last updated: 2026-09-15
 
 ## System context
@@ -90,7 +90,7 @@ flowchart LR
 4. A child resource lookup includes its owning aggregate identifier where applicable.
 5. Provider SDKs and payloads stay in infrastructure adapters.
 6. `shared` contains only cross-cutting code used by multiple modules; it is not a dumping ground.
-7. New code is created in a domain module. Existing global packages are legacy migration sources.
+7. New code is created in its owning domain module; reintroducing global technical-layer packages is prohibited.
 8. A package move does not change the HTTP contract in the same step.
 
 These rules are executable in `ArchitectureRulesTests`: REST controllers cannot access repositories or depend on JPA/domain types directly, V2 domain packages cannot depend outward on API/application/infrastructure or legacy delivery/service/config packages, and REST controllers must live in an explicit controller/API package.
@@ -119,7 +119,7 @@ Clients branch on `status`, `code`, and typed response fields, never on translat
 
 The backend hashes passwords, validates signed JWT issuer/expiry, reloads active-user/token-version state, and maps roles to Spring authorities. Google and Telegram login accept provider proof that is verified server-side. Public routes are allowlisted; everything else requires authentication. Admin operations require backend `ROLE_ADMIN` regardless of frontend visibility.
 
-Invitation children use ownership-aware lookups to prevent BOLA/IDOR. The organization module will publish an explicit action-to-role permission policy before organization members receive invitation permissions. Cookie authentication conditionally enables a cookie-backed CSRF token repository; it is not considered complete for production until token delivery, unsafe-method handling, hostile-origin behavior, and browser consumers are integration-tested.
+Invitation children use ownership-aware lookups to prevent BOLA/IDOR. The organization module will publish an explicit action-to-role permission policy before organization members receive invitation permissions. Cookie authentication conditionally enables a cookie-backed CSRF token repository; missing-token, valid-token, hostile-origin, recovery-route, and canonical/compatibility mutation behavior is integration-tested. Bearer-only mode remains stateless with CSRF disabled by design.
 
 ## Invitation and public access boundary
 
@@ -147,7 +147,7 @@ Telegram detection remains an adapter and defaults to pending review. A duplicat
 
 ## Persistence and migrations
 
-MySQL is authoritative. Flyway migrations are append-only. Production never uses `create`, `create-drop`, or `update`. Every schema change includes a new migration, entity mapping update, clean-database test, upgrade-path review, and rollback/forward-fix note. Existing V1 and V3-V16 history is immutable; V2 remains intentionally absent.
+MySQL is authoritative. Flyway migrations are append-only. Production never uses `create`, `create-drop`, or `update`. Every schema change includes a new migration, entity mapping update, clean-database test, upgrade-path review, and rollback/forward-fix note. Existing V1 and V3-V18 history is immutable; V2 remains intentionally absent.
 
 ## Frontend boundaries
 
@@ -161,7 +161,7 @@ Nginx is the reverse proxy; Cloudflare owns edge TLS/WAF/DDoS concerns; Spring S
 
 The tracked Docker topology uses host-based routing so both existing React applications can preserve their root-relative routes: the public/host app owns the primary hostname and the admin app owns a separate hostname. Only the Nginx gateway publishes a host port; MySQL and Redis stay on an internal data network. See `docs/deployment/DOCKER.md` for the executable topology and operating constraints.
 
-## Migration method
+## Migration record
 
 For each domain:
 
@@ -176,9 +176,7 @@ inventory callers and tables
   -> remove verified legacy code
 ```
 
-The first Phase 2 slice establishes `shared.exception`, `shared.response`, and `shared.i18n`, migrates every backend caller away from the former `common` package, and restricts root `.env` loading to the dev profile. Authentication owns its HTTP DTOs/controller, application services, identity adapters, password-reset persistence, token-state cache, cookie support, rate limiter, and JWT converter under `auth`. User owns its HTTP boundary, profile services, JPA aggregate, role/provider types, and repository under `user`. Template owns its public catalog API, response DTOs, catalog application service, aggregate/category, and repository under `template`. Invitation owns its HTTP contract, application service, aggregate/sections/status types, and repository under `invitation`. Guest owns its CRUD/import/export/group/send-list API, application service, aggregate, and repository under `guest`. RSVP owns its authenticated/public HTTP contracts, use cases, aggregate/status type, and repository under `rsvp`. Check-in owns scan/manual/list/summary HTTP contracts, application service, aggregate, and repository under `checkin`; delivery, seating, and planning remain separate capabilities. Media owns invitation-media HTTP contracts, upload/list/delete use cases, media aggregate/type and repository, a storage port, and local/Cloudinary adapters under `media`. Subscription owns its package/current/history/purchase API, fulfillment service, package/subscription aggregates, and repositories under `subscription`. Existing routes, JSON, and database mappings remain unchanged.
-
-Current application services still inject some concrete auth infrastructure, and several legacy modules access the user repository directly. Those seams are recorded migration debt, not a reason to introduce speculative interfaces during a behavior-preserving package move. Cross-module repository access will be replaced by narrow user application queries as each consuming module migrates; provider ports will be extracted when a second implementation or testable boundary requires one.
+All business modules listed above have completed the package migration. Compatibility routes, JSON fields, and database mappings were preserved while canonical v1 routes and semantic OpenAPI drift enforcement were added. Verified legacy packages and duplicate frontend implementations were removed only after focused and full gates passed. Provider ports were introduced where they isolate a genuine adapter or testable boundary; no speculative framework was added.
 
 ## Known decisions deferred by evidence
 

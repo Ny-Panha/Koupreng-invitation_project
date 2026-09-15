@@ -1,5 +1,7 @@
 # Backend architecture, security, and data-integrity audit
 
+> **Historical backend baseline (2026-08-10):** findings and test counts below describe the pre-Architecture-V2 snapshot. See `current-gap-status.md`, `security-followup.md`, and `../qa/verification-results.md` for current closure status and evidence.
+
 Audit date: 2026-08-10
 Scope: `apps/backend`, Flyway schema, frontend consumers, `apps/telegram-bot`, infrastructure/configuration, and existing security incident documentation.
 

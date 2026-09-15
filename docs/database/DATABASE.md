@@ -1,13 +1,13 @@
 # Koupreng Database Architecture
 
-Status: Architecture V2 baseline
+Status: Architecture V2 implemented schema
 Last reviewed: 2026-09-15
 
 ## Source of truth
 
-The schema is owned by Flyway migrations in `apps/backend/src/main/resources/db/migration`. Entity annotations describe mappings but do not replace migrations. Existing versioned files are immutable. The current history is V1 and V3-V16; V2 is intentionally absent and must not be introduced retroactively.
+The schema is owned by 17 Flyway migrations in `apps/backend/src/main/resources/db/migration`. Entity annotations describe mappings but do not replace migrations. Existing versioned files are immutable. The current history is V1 and V3-V18; V2 is intentionally absent and must not be introduced retroactively.
 
-Production must never use Hibernate `create`, `create-drop`, or `update`. V2 will move toward `validate` after clean-MySQL and current-schema validation prove exact mapping compatibility.
+Production must never use Hibernate `create`, `create-drop`, or `update`. The shared runtime defaults to `validate`; the production profile uses non-mutating `none` while Flyway owns migration/validation and CI exercises Hibernate validation against disposable MySQL.
 
 ## Table ownership
 
@@ -23,7 +23,7 @@ Production must never use Hibernate `create`, `create-drop`, or `update`. V2 wil
 | Planning | `budgets`, `budget_items`, `wedding_gifts` | one budget per invitation; items belong to budget; gifts belong to invitation |
 | Template payment | `template_orders`, `template_payment_orders` | server-created user/template orders; unique order/transaction identifiers |
 | Guest gift payment | `payment_configs`, `payment_transactions`, `payment_webhook_logs`, `telegram_notifications`, `organizer_payout_accounts` | invitation payment configuration and provider evidence |
-| Subscription | `packages`, `subscriptions` | subscription belongs to user/package; paid activation is incomplete |
+| Subscription | `packages`, `subscriptions` | subscription belongs to user/package; V18 records trusted paid activation evidence and enforces one active subscription per user |
 | Audit | `audit_logs`, `system_audit_logs` | actor/target/event metadata; secrets are prohibited |
 | Legacy event | `events` | separate generic event aggregate; relationship to invitations is unresolved |
 

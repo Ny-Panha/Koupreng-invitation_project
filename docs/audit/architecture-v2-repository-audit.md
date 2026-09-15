@@ -1,5 +1,7 @@
 # Architecture V2 Repository Audit
 
+> **Phase 0 baseline snapshot:** this file intentionally records the pre-migration state and original findings. Present-tense gaps below are not the final verdict. See `current-gap-status.md`, `../qa/verification-results.md`, and `../production_readiness_report.md` for the reconciled 2026-09-15 state.
+
 Audit date: 2026-09-15
 Branch: `refactor/architecture-v2`
 Scope: repository root, all applications, packages, Flyway history, security, API consumers, infrastructure, CI, tests, and existing audit material.

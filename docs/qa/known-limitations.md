@@ -1,38 +1,44 @@
-# Known Limitations and Release Blockers
+# Known Limitations and Release Gates
 
-## Release blockers
+Reviewed: 2026-09-15.
 
-1. **Credential rotation:** a Telegram token exposed in Git history must be revoked/rotated through BotFather, deployment secrets updated, and the old token verified dead.
-2. **History remediation:** full-history Gitleaks found 29 findings across 12 path/rule groups. Maintainers must triage each item, coordinate a `git filter-repo` rewrite, force-push, and require collaborators to re-clone. The safe procedure is in `docs/security/credential-incident-response.md`.
-3. **Java vulnerability report:** the local OWASP advisory database did not finish in ten minutes. A successful CI/provider scan is required; no zero-vulnerability claim is made for Maven dependencies.
-4. **Railway diagnosis:** no Railway CLI, authentication/binding environment, `railway.toml`/`railway.json`, Procfile, Dockerfile, project ID, service topology, deployment log, or verified deployment URL was available. The failed Railway deployment cannot be reproduced or corrected from repository evidence alone.
-5. **Asset rights:** redistribution/production rights for the retained music and Facebook gallery photos are not documented.
+## Blocker / critical
 
-## Required Railway evidence
+1. **Historical Telegram credential incident:** revoke and rotate the provider credential, prove the old value is dead, triage all 32 redacted Gitleaks history findings across 15 path/rule groups, and complete a coordinated all-ref history rewrite. Current-tree cleanup is complete but cannot close an external credential incident. Follow `docs/security/credential-incident-response.md`.
 
-Provide read access or sanitized outputs for:
+## High release gates
 
-```text
-railway status
-railway service
-railway variables --kv            # redact values before sharing
-railway logs --deployment <id>
-```
-
-Also identify which repository component maps to each Railway service, its root directory, build command, start command, health-check path, generated domain, database service, and migration policy. Do not add a guessed monorepo deployment manifest until that topology is confirmed.
+1. **Java advisory result:** the local OWASP Dependency-Check first sync without an NVD API key remained impractically slow and produced no report. CI must finish the CVSS ≥8 gate for the exact release commit. Java dependencies are not represented as zero-vulnerability.
+2. **Asset rights:** redistribution/production rights for retained music and gallery/photo assets must be recorded or the affected assets replaced.
+3. **Organization permissions, conditional:** team role labels are safe under current owner-only downstream enforcement, but team operations are not functionally complete. An approved role × action matrix and allow/deny/IDOR tests are required before marketing or enabling staff access.
+4. **Release-candidate environment:** mandatory CI fresh-MySQL migration and Docker image-build jobs must pass, followed by staging/provider smoke evidence. Local definition validation does not substitute for these jobs.
 
 ## External/manual validation still required
 
-- Live Google and Telegram authentication.
-- Live ABA checkout/callback reconciliation and Telegram payment detection.
-- SMTP/email delivery, Cloudinary or selected storage provider, public DNS/TLS, CORS/CSP, trusted proxy header behavior, rate-limit backend, monitoring, backup, and restore.
-- Full create/edit/publish/RSVP/admin workflows against a staging database with representative data.
-- Pixel-level comparison with the original Canva source, keyboard/screen-reader accessibility, focus order, reduced motion, and contrast review.
-- Performance budgets for the large user JS/CSS bundle, Canva SVG, gallery media, video, and music.
-- SpotBugs Medium baseline (104 findings), Flyway `outOfOrder` warning, and future-JDK Mockito agent warning.
+- Live Google and Telegram login with production-like redirect/domain configuration.
+- ABA sandbox checkout, server verification, callback replay/rejection, reconciliation, cancellation/refund policy, and real Telegram webhook delivery.
+- SMTP/email and Cloudinary or selected storage-provider operations, including timeout/failure behavior.
+- Public DNS/TLS, Cloudflare or chosen edge controls, Nginx trusted proxy headers, CORS/CSP/cookies/CSRF, production Redis fail-closed behavior, monitoring/alerts, and log redaction.
+- MySQL empty migration, representative upgrade, backup, restore, and rollback rehearsals on the exact release commit.
+- Full create/edit/publish/public RSVP/admin journeys against a staging database with representative non-sensitive data.
+- Pixel-level comparison with the original design source, keyboard/screen-reader review, focus order, reduced motion, contrast, and long Khmer content.
+- Provider-specific deployment proof. The repository now has a generic production container topology; Railway-specific readiness still requires project binding, service mapping, variables, logs, domains, database, and health-check evidence.
 
-## Environment constraints during this audit
+## Medium/low engineering backlog
 
-Docker CLI was unavailable and Docker Desktop was stopped, so Docker/Testcontainers validation was not applicable locally. The repository contains no Dockerfile; CI explicitly reports Docker build validation as not applicable unless a Dockerfile is later tracked. Local MySQL 8 was available and was used for the fresh-database test.
+- User bundle remains 1,509.16 kB minified JS and 569.37 kB CSS; admin JS is 515.36 kB. Add measured route/component splitting and performance budgets without destabilizing the retained UI.
+- Define raw Telegram payment-evidence retention/minimization and, if needed across untrusted networks, signed timestamp/nonce replay protection.
+- Approve check-in staff permission, revoke state/reason, and scanner-specific throttling.
+- Retire legacy API aliases only after usage telemetry, consumer migration, parity tests, and a versioned deprecation window.
+- Raise coverage strategically from the current 50.20% line / 34.91% branch baseline, prioritizing callback races, repositories, provider failures, and controllers rather than chasing percentage alone.
+- Review the diagnostic Medium-threshold SpotBugs baseline separately; the enforced High threshold is clean.
+- Plan for Mockito's future-JDK agent requirement and remove noisy expected Happy DOM network diagnostics where that can be done without hiding failures.
 
-The legacy standalone `scripts/ci/browser-smoke.mjs` uses serial Chrome `--dump-dom` processes and did not return within six minutes on this Windows Chrome installation. Its complete 22-route matrix is now enforced by `tests/e2e/route-smoke.spec.js`, which passed 44 desktop/mobile cases. Playwright's first Windows web-server readiness process also required reuse of already healthy preview servers; Ubuntu CI retains the standard self-managed server flow.
+## Local evidence constraints
+
+- Docker Desktop was stopped, so actual image builds were not executed locally; Compose interpolation/topology and image tag manifests were validated. CI is responsible for the clean Linux image builds.
+- Disposable MySQL credentials were intentionally unavailable locally, so `FreshDatabaseMigrationTests` was the single skipped backend test. CI provisions an isolated MySQL 8 service.
+- The workstation system drive had no free space, so Playwright and npm caches were redirected into ignored workspace `.cache/`; no user data was deleted.
+- Controlled Playwright tests validate routes/responses, not live providers or staging persistence.
+
+The release manager must not convert an environment-gated or provider-unverified item to PASS without sanitized evidence attached to the exact commit.

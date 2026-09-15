@@ -1,6 +1,6 @@
 # Architecture V2 API Contract
 
-Status: migration baseline
+Status: stabilized Architecture V2 contract
 Last reviewed: 2026-09-15
 
 ## Authority and compatibility
@@ -39,7 +39,7 @@ Validation errors temporarily include both `fieldErrors` and the legacy `fields`
 - An invitation child operation scopes the lookup by its owning invitation as well as the child identifier or opaque token.
 - Public RSVP and invitation endpoints expose only their intended public DTOs and remain rate-limited.
 - Internal Telegram/payment endpoints are excluded from public OpenAPI and require their server-to-server secret.
-- Cookie authentication activates the configured CSRF repository; bearer-header mode remains stateless with CSRF disabled. Both modes require contract-level security tests before production sign-off.
+- Cookie authentication activates the configured CSRF repository; bearer-header mode remains stateless with CSRF disabled. Missing/valid CSRF token, hostile-origin, recovery-route, and canonical/compatibility mutation behavior is covered by backend integration tests.
 
 ## Evolution checklist
 

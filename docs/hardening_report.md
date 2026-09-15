@@ -1,25 +1,33 @@
-# Hardening Report
+# Architecture V2 Hardening Report
 
-Audit date: 2026-07-21.
+Refreshed: 2026-09-15.
 
 ## Completed in the current tree
 
-- Removed a credential-bearing root artifact, tracked runtime logs, tracked frontend cache output, and a local database snapshot.
-- Replaced bot token examples with placeholders; removed token-bearing URL logging; validated callback identifiers and numeric amounts.
-- Removed reset-token/PII debug logging and disabled serialized request-body logging.
-- Added current-tree Gitleaks in CI, pinned bot dependencies, pytest/Ruff/Bandit/pip-audit, backend SpotBugs/PMD/JaCoCo, and frontend lint/unit/dead-code/browser gates.
-- Preserved backend authorization/security tests and verified the focused security set passes.
-- Added a real fresh-MySQL Flyway/Hibernate validation test.
+- Established domain-owned backend packages and ArchUnit boundaries while preserving the Spring Boot modular monolith.
+- Added canonical `/api/v1` contracts, semantic runtime OpenAPI drift enforcement, consistent safe response/errors, validation, and ownership checks.
+- Hardened JWT/cookie authentication, conditional cookie-mode CSRF, CORS/HTTPS/security headers, account/reset flows, upload validation, WAF/application rate boundaries, and trusted client-address handling.
+- Added database uniqueness and pessimistic locking at guest, RSVP/payment, seating, check-in, and entitlement invariant boundaries.
+- Made paid fulfillment server-owned, transactional, and idempotent; kept Telegram detection review-first; authenticated bot webhooks; moved PayWay verification outside database transactions.
+- Added explicit network deadlines for PayWay and Cloudinary and kept optional AI/provider code behind adapter/configuration boundaries.
+- Removed verified dead/duplicate frontend and legacy backend paths; centralized frontend HTTP/error/session handling without redesigning the retained UI.
+- Added multi-stage non-root containers, unprivileged Nginx routing, internal data services, health checks, named volumes, placeholder-only environment examples, and production configuration checks.
+- Expanded CI across tests, static analysis, coverage, OpenAPI drift, unused dependencies/files, Playwright, MySQL 8 migrations, Gitleaks, dependency audits, configuration, and Docker image builds.
 
-## Security incident status
+## Latest green evidence
 
-The exposed Telegram credential remains an incident until it is rotated and historical Git findings are rewritten after maintainer coordination. Current-tree removal alone is insufficient. Follow `security/credential-incident-response.md` and `../SECURITY.md`.
+- Backend 245/245 locally runnable tests pass; one disposable-MySQL test is intentionally skipped locally; SpotBugs High and PMD are clean.
+- Frontends pass 134 unit tests combined, clean lockfile installs, lint, Knip, depcheck, builds, and zero-advisory npm audits.
+- All 56 controlled browser cases pass.
+- Bot passes 26 tests, Ruff, Bandit, compileall, and pip-audit.
+- Current tracked tree passes Gitleaks with zero findings.
 
-## Evidence and open work
+## Still external or unresolved
 
-- Detailed results: `qa/verification-results.md`
-- Dependency/static analysis: `qa/dependency-audit.md`
-- Release blockers: `qa/known-limitations.md`
-- Operational controls: `security_hardening_ops.md`
+- The historical Telegram credential incident remains critical until provider revocation and all-ref history remediation are proven.
+- Java advisory status is unverified because the local no-key OWASP first sync did not complete; exact-commit CI must pass.
+- Live providers, image builds, fresh/upgrade MySQL, public deployment controls, monitoring, backup/restore, asset rights, and full staging journeys require owner evidence.
+- Organization staff permissions and scanner revoke/rate policy require product decisions before those capabilities are enabled.
+- Telegram evidence retention/replay and frontend performance remain documented improvement work.
 
-No claim is made that live payment, Telegram, email, storage, proxy, or deployment-provider controls were verified during this repository-only audit.
+See `audit/security-followup.md`, `qa/verification-results.md`, `qa/known-limitations.md`, and `testing/SMOKE_TEST.md`. Repository hardening does not itself close a provider credential incident or prove a production environment.
