@@ -1,6 +1,6 @@
 package com.koupreng.backend.entity.payment;
 
-import com.koupreng.backend.entity.invitation.UserInvitation;
+import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.entity.invitation.Guest;
 import jakarta.persistence.*;
 import lombok.Data;

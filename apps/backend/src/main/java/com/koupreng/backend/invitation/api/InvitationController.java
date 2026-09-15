@@ -1,19 +1,19 @@
-package com.koupreng.backend.controller;
+package com.koupreng.backend.invitation.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
-import com.koupreng.backend.dto.invitation.InvitationCustomizationRequest;
-import com.koupreng.backend.dto.invitation.InvitationCustomizationResponse;
-import com.koupreng.backend.dto.invitation.InvitationAccessVerifyRequest;
-import com.koupreng.backend.dto.invitation.InvitationAccessVerifyResponse;
-import com.koupreng.backend.dto.invitation.InvitationRequest;
-import com.koupreng.backend.dto.invitation.InvitationResponse;
-import com.koupreng.backend.dto.invitation.InvitationSummaryResponse;
-import com.koupreng.backend.dto.invitation.PublicInvitationResponse;
-import com.koupreng.backend.enums.InvitationStatus;
-import com.koupreng.backend.service.InvitationService;
+import com.koupreng.backend.invitation.api.dto.InvitationCustomizationRequest;
+import com.koupreng.backend.invitation.api.dto.InvitationCustomizationResponse;
+import com.koupreng.backend.invitation.api.dto.InvitationAccessVerifyRequest;
+import com.koupreng.backend.invitation.api.dto.InvitationAccessVerifyResponse;
+import com.koupreng.backend.invitation.api.dto.InvitationRequest;
+import com.koupreng.backend.invitation.api.dto.InvitationResponse;
+import com.koupreng.backend.invitation.api.dto.InvitationStatusFilter;
+import com.koupreng.backend.invitation.api.dto.InvitationSummaryResponse;
+import com.koupreng.backend.invitation.api.dto.PublicInvitationResponse;
+import com.koupreng.backend.invitation.application.InvitationService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,7 +58,7 @@ public class InvitationController {
     @GetMapping("/invitations/my")
     public ResponseEntity<ApiResponse<List<InvitationSummaryResponse>>> myInvitations(
             Authentication authentication,
-            @RequestParam(required = false) InvitationStatus status
+            @RequestParam(required = false) InvitationStatusFilter status
     ) {
         return ResponseEntity.ok(ApiResponse.success(
                 "Invitations fetched successfully",
@@ -69,7 +69,7 @@ public class InvitationController {
     @GetMapping("/invitations/my/status/{status}")
     public ResponseEntity<ApiResponse<List<InvitationSummaryResponse>>> myInvitationsByStatus(
             Authentication authentication,
-            @PathVariable InvitationStatus status
+            @PathVariable InvitationStatusFilter status
     ) {
         return ResponseEntity.ok(ApiResponse.success(
                 "Invitations fetched successfully",
@@ -193,7 +193,7 @@ public class InvitationController {
     @Operation(summary = "Retrieve a personalized guest invitation",
             description = "Return the safe personalized invitation view for an opaque guest invite token.")
     @GetMapping("/public/invitations/{slug}/guest-view")
-    public ResponseEntity<ApiResponse<com.koupreng.backend.dto.invitation.GuestInvitationViewResponse>> publicGuestInvitationView(
+    public ResponseEntity<ApiResponse<com.koupreng.backend.invitation.api.dto.GuestInvitationViewResponse>> publicGuestInvitationView(
             @PathVariable String slug,
             @RequestParam(required = false, name = "token") String inviteToken
     ) {

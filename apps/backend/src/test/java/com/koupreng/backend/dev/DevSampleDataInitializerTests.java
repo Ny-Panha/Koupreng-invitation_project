@@ -21,7 +21,7 @@ import com.koupreng.backend.repository.RsvpRepository;
 import com.koupreng.backend.subscription.infrastructure.persistence.SubscriptionPackageRepository;
 import com.koupreng.backend.subscription.infrastructure.persistence.SubscriptionRepository;
 import com.koupreng.backend.repository.TemplatePaymentOrderRepository;
-import com.koupreng.backend.repository.UserInvitationRepository;
+import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;
 import com.koupreng.backend.repository.WeddingGiftRepository;
 
 import org.junit.jupiter.api.Test;

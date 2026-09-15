@@ -1,10 +1,11 @@
 package com.koupreng.backend.service;
 
+import com.koupreng.backend.invitation.application.InvitationService;
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.dto.gift.WeddingGiftRequest;
 import com.koupreng.backend.dto.gift.WeddingGiftResponse;
 import com.koupreng.backend.entity.gift.WeddingGift;
-import com.koupreng.backend.entity.invitation.UserInvitation;
+import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.repository.WeddingGiftRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;

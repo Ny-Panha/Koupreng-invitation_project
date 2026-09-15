@@ -1,7 +1,7 @@
-package com.koupreng.backend.repository;
+package com.koupreng.backend.invitation.infrastructure.persistence;
 
-import com.koupreng.backend.entity.invitation.UserInvitation;
-import com.koupreng.backend.enums.InvitationStatus;
+import com.koupreng.backend.invitation.domain.InvitationStatus;
+import com.koupreng.backend.invitation.domain.UserInvitation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

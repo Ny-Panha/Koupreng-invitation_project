@@ -1,4 +1,4 @@
-package com.koupreng.backend.entity.invitation;
+package com.koupreng.backend.invitation.domain;
 
 public enum EventType {
     WEDDING,

@@ -1,6 +1,6 @@
 package com.koupreng.backend.dto.dashboard;
 
-import com.koupreng.backend.enums.InvitationStatus;
+import com.koupreng.backend.invitation.domain.InvitationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

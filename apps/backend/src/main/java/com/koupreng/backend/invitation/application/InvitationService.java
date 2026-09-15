@@ -1,38 +1,39 @@
-package com.koupreng.backend.service;
+package com.koupreng.backend.invitation.application;
 
 import com.koupreng.backend.user.application.CurrentUserService;
 
 import com.koupreng.backend.shared.exception.ApiException;
-import com.koupreng.backend.dto.invitation.InvitationRequest;
-import com.koupreng.backend.dto.invitation.InvitationResponse;
-import com.koupreng.backend.dto.invitation.InvitationSummaryResponse;
-import com.koupreng.backend.dto.invitation.InvitationAccessVerifyRequest;
-import com.koupreng.backend.dto.invitation.InvitationAccessVerifyResponse;
-import com.koupreng.backend.dto.invitation.InvitationCustomizationRequest;
-import com.koupreng.backend.dto.invitation.InvitationCustomizationResponse;
-import com.koupreng.backend.dto.invitation.PublicInvitationResponse;
-import com.koupreng.backend.dto.invitation.GuestInvitationViewResponse;
+import com.koupreng.backend.invitation.api.dto.InvitationRequest;
+import com.koupreng.backend.invitation.api.dto.InvitationResponse;
+import com.koupreng.backend.invitation.api.dto.InvitationStatusFilter;
+import com.koupreng.backend.invitation.api.dto.InvitationSummaryResponse;
+import com.koupreng.backend.invitation.api.dto.InvitationAccessVerifyRequest;
+import com.koupreng.backend.invitation.api.dto.InvitationAccessVerifyResponse;
+import com.koupreng.backend.invitation.api.dto.InvitationCustomizationRequest;
+import com.koupreng.backend.invitation.api.dto.InvitationCustomizationResponse;
+import com.koupreng.backend.invitation.api.dto.PublicInvitationResponse;
+import com.koupreng.backend.invitation.api.dto.GuestInvitationViewResponse;
 import com.koupreng.backend.dto.rsvp.WishResponse;
 import com.koupreng.backend.dto.media.MediaListResponse;
-import com.koupreng.backend.entity.invitation.EventType;
+import com.koupreng.backend.invitation.domain.EventType;
 import com.koupreng.backend.entity.invitation.Guest;
 import com.koupreng.backend.entity.invitation.GuestSeatAssignment;
 import com.koupreng.backend.template.domain.InvitationTemplate;
-import com.koupreng.backend.entity.invitation.UserInvitation;
+import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.entity.invitation.Rsvp;
 import com.koupreng.backend.entity.organization.Organization;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.user.domain.Role;
-import com.koupreng.backend.enums.InvitationModerationStatus;
-import com.koupreng.backend.enums.InvitationStatus;
-import com.koupreng.backend.enums.InvitationVisibility;
+import com.koupreng.backend.invitation.domain.InvitationModerationStatus;
+import com.koupreng.backend.invitation.domain.InvitationStatus;
+import com.koupreng.backend.invitation.domain.InvitationVisibility;
 import com.koupreng.backend.repository.EventTableRepository;
 import com.koupreng.backend.template.infrastructure.persistence.InvitationTemplateRepository;
 import com.koupreng.backend.repository.GuestRepository;
 import com.koupreng.backend.repository.GuestCheckInRepository;
 import com.koupreng.backend.repository.OrganizationMemberRepository;
 import com.koupreng.backend.repository.OrganizationRepository;
-import com.koupreng.backend.repository.UserInvitationRepository;
+import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;
 import com.koupreng.backend.repository.UserTemplateAccessRepository;
 import com.koupreng.backend.repository.GuestSeatAssignmentRepository;
 import com.koupreng.backend.repository.InvitationDeliveryEventRepository;
@@ -40,6 +41,7 @@ import com.koupreng.backend.repository.MediaFileRepository;
 import com.koupreng.backend.repository.NotificationRepository;
 import com.koupreng.backend.repository.RsvpRepository;
 import com.koupreng.backend.config.AppProperties;
+import com.koupreng.backend.service.AuditLogService;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -181,11 +183,17 @@ public class InvitationService {
     }
 
     @Transactional(readOnly = true)
-    public List<InvitationSummaryResponse> listMine(Authentication authentication, InvitationStatus status) {
+    public List<InvitationSummaryResponse> listMine(
+            Authentication authentication,
+            InvitationStatusFilter statusFilter
+    ) {
         AppUser user = currentUserService.currentUser(authentication);
-        List<UserInvitation> invitations = status == null
+        List<UserInvitation> invitations = statusFilter == null
                 ? invitationRepository.findAllByUserIdAndDeletedFalseOrderByCreatedAtDesc(user.getId())
-                : invitationRepository.findAllByUserIdAndStatusAndDeletedFalseOrderByCreatedAtDesc(user.getId(), status);
+                : invitationRepository.findAllByUserIdAndStatusAndDeletedFalseOrderByCreatedAtDesc(
+                        user.getId(),
+                        statusFilter.toDomain()
+                );
         return invitations.stream()
                 .map(InvitationSummaryResponse::from)
                 .toList();

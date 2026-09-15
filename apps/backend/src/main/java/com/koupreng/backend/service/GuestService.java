@@ -1,5 +1,6 @@
 package com.koupreng.backend.service;
 
+import com.koupreng.backend.invitation.application.InvitationService;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -38,7 +39,7 @@ import com.koupreng.backend.dto.guest.GuestSendListItemResponse;
 import com.koupreng.backend.dto.guest.GuestSendListResponse;
 import com.koupreng.backend.entity.invitation.Guest;
 import com.koupreng.backend.entity.invitation.Rsvp;
-import com.koupreng.backend.entity.invitation.UserInvitation;
+import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.repository.GuestRepository;
 import com.koupreng.backend.repository.RsvpRepository;
 import com.koupreng.backend.util.CsvExportUtils;

@@ -1,5 +1,6 @@
 package com.koupreng.backend.service;
 
+import com.koupreng.backend.invitation.application.InvitationService;
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.dto.delivery.DeliveryActionResponse;
 import com.koupreng.backend.dto.delivery.DeliveryEventResponse;
@@ -10,8 +11,8 @@ import com.koupreng.backend.dto.delivery.ShareMessageResponse;
 import com.koupreng.backend.entity.delivery.InvitationDeliveryEvent;
 import com.koupreng.backend.entity.invitation.Guest;
 import com.koupreng.backend.entity.invitation.Rsvp;
-import com.koupreng.backend.entity.invitation.UserInvitation;
-import com.koupreng.backend.enums.InvitationStatus;
+import com.koupreng.backend.invitation.domain.UserInvitation;
+import com.koupreng.backend.invitation.domain.InvitationStatus;
 import com.koupreng.backend.repository.GuestRepository;
 import com.koupreng.backend.repository.InvitationDeliveryEventRepository;
 import com.koupreng.backend.repository.RsvpRepository;

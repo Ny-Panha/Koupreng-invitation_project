@@ -1,7 +1,7 @@
 package com.koupreng.backend.entity.delivery;
 
 import com.koupreng.backend.entity.invitation.Guest;
-import com.koupreng.backend.entity.invitation.UserInvitation;
+import com.koupreng.backend.invitation.domain.UserInvitation;
 import jakarta.persistence.*;
 import lombok.Data;
 

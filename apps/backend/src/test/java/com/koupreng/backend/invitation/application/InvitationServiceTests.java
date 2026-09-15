@@ -1,22 +1,25 @@
-package com.koupreng.backend.service;
+package com.koupreng.backend.invitation.application;
+
+import com.koupreng.backend.service.AuditLogService;
 
 import com.koupreng.backend.user.application.CurrentUserService;
 
 import com.koupreng.backend.shared.exception.ApiException;
-import com.koupreng.backend.dto.invitation.InvitationRequest;
-import com.koupreng.backend.dto.invitation.InvitationResponse;
-import com.koupreng.backend.dto.invitation.PublicGuestResponse;
-import com.koupreng.backend.dto.invitation.PublicInvitationResponse;
-import com.koupreng.backend.entity.invitation.EventType;
+import com.koupreng.backend.invitation.api.dto.InvitationRequest;
+import com.koupreng.backend.invitation.api.dto.InvitationResponse;
+import com.koupreng.backend.invitation.api.dto.InvitationStatusFilter;
+import com.koupreng.backend.invitation.api.dto.PublicGuestResponse;
+import com.koupreng.backend.invitation.api.dto.PublicInvitationResponse;
+import com.koupreng.backend.invitation.domain.EventType;
 import com.koupreng.backend.entity.invitation.Guest;
 import com.koupreng.backend.template.domain.InvitationTemplate;
-import com.koupreng.backend.entity.invitation.UserInvitation;
+import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.user.domain.AppUser;
-import com.koupreng.backend.enums.InvitationStatus;
-import com.koupreng.backend.enums.InvitationVisibility;
+import com.koupreng.backend.invitation.domain.InvitationStatus;
+import com.koupreng.backend.invitation.domain.InvitationVisibility;
 import com.koupreng.backend.repository.GuestRepository;
 import com.koupreng.backend.template.infrastructure.persistence.InvitationTemplateRepository;
-import com.koupreng.backend.repository.UserInvitationRepository;
+import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;
 import com.koupreng.backend.repository.UserTemplateAccessRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -26,6 +29,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -40,6 +44,37 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class InvitationServiceTests {
+
+    @Test
+    void listMineWithoutFilterUsesOwnerScopedOrdering() {
+        Fixture fixture = fixture();
+        UserInvitation invitation = invitation(fixture.owner);
+        when(fixture.invitationRepository.findAllByUserIdAndDeletedFalseOrderByCreatedAtDesc(1L))
+                .thenReturn(List.of(invitation));
+
+        var result = fixture.service.listMine(fixture.authentication, null);
+
+        assertEquals(1, result.size());
+        assertEquals(10L, result.getFirst().getId());
+        verify(fixture.invitationRepository).findAllByUserIdAndDeletedFalseOrderByCreatedAtDesc(1L);
+    }
+
+    @Test
+    void listMineMapsApiStatusFilterToDomainQuery() {
+        Fixture fixture = fixture();
+        UserInvitation invitation = invitation(fixture.owner);
+        invitation.setStatus(InvitationStatus.PUBLISHED);
+        when(fixture.invitationRepository
+                .findAllByUserIdAndStatusAndDeletedFalseOrderByCreatedAtDesc(1L, InvitationStatus.PUBLISHED))
+                .thenReturn(List.of(invitation));
+
+        var result = fixture.service.listMine(fixture.authentication, InvitationStatusFilter.PUBLISHED);
+
+        assertEquals(1, result.size());
+        assertEquals(InvitationStatus.PUBLISHED, result.getFirst().getStatus());
+        verify(fixture.invitationRepository)
+                .findAllByUserIdAndStatusAndDeletedFalseOrderByCreatedAtDesc(1L, InvitationStatus.PUBLISHED);
+    }
 
     @Test
     void createDraftInvitationGeneratesSlug() {

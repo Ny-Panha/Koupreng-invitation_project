@@ -1,6 +1,6 @@
 package com.koupreng.backend.dto.admin;
 
-import com.koupreng.backend.enums.InvitationModerationStatus;
+import com.koupreng.backend.invitation.domain.InvitationModerationStatus;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 

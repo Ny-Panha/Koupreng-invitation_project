@@ -1,6 +1,6 @@
-package com.koupreng.backend.dto.invitation;
+package com.koupreng.backend.invitation.api.dto;
 
-import com.koupreng.backend.entity.invitation.EventType;
+import com.koupreng.backend.invitation.domain.EventType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

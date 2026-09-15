@@ -1,4 +1,4 @@
-package com.koupreng.backend.dto.invitation;
+package com.koupreng.backend.invitation.api.dto;
 
 import jakarta.validation.constraints.Size;
 

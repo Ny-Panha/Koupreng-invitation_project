@@ -1,7 +1,7 @@
 package com.koupreng.backend.dto.dashboard;
 
 import com.koupreng.backend.dto.admin.AdminUserResponse;
-import com.koupreng.backend.dto.invitation.InvitationResponse;
+import com.koupreng.backend.invitation.api.dto.InvitationResponse;
 import com.koupreng.backend.dto.payment.TemplatePaymentStatusResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

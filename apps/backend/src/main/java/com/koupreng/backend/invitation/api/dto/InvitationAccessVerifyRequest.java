@@ -1,4 +1,4 @@
-package com.koupreng.backend.dto.invitation;
+package com.koupreng.backend.invitation.api.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Size;

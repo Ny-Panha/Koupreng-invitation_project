@@ -1,12 +1,13 @@
 package com.koupreng.backend.service;
 
+import com.koupreng.backend.invitation.application.InvitationService;
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.dto.guest.GuestGroupResponse;
 import com.koupreng.backend.dto.guest.GuestRequest;
 import com.koupreng.backend.dto.guest.GuestResponse;
 import com.koupreng.backend.dto.guest.GuestSendListResponse;
 import com.koupreng.backend.entity.invitation.Guest;
-import com.koupreng.backend.entity.invitation.UserInvitation;
+import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.repository.GuestRepository;
 import org.junit.jupiter.api.Test;

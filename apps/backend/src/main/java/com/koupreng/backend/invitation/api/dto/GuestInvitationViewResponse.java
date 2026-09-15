@@ -1,4 +1,4 @@
-package com.koupreng.backend.dto.invitation;
+package com.koupreng.backend.invitation.api.dto;
 
 import com.koupreng.backend.dto.media.MediaListResponse;
 import com.koupreng.backend.dto.rsvp.WishResponse;

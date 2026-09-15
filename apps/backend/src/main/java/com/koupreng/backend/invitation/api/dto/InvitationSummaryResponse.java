@@ -1,8 +1,8 @@
-package com.koupreng.backend.dto.invitation;
+package com.koupreng.backend.invitation.api.dto;
 
-import com.koupreng.backend.entity.invitation.EventType;
-import com.koupreng.backend.entity.invitation.UserInvitation;
-import com.koupreng.backend.enums.InvitationStatus;
+import com.koupreng.backend.invitation.domain.EventType;
+import com.koupreng.backend.invitation.domain.UserInvitation;
+import com.koupreng.backend.invitation.domain.InvitationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

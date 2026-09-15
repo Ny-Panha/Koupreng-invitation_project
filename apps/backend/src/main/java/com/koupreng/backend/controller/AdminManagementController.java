@@ -11,7 +11,7 @@ import com.koupreng.backend.dto.admin.AdminTemplateResponse;
 import com.koupreng.backend.dto.admin.AdminUpdateUserRoleRequest;
 import com.koupreng.backend.dto.admin.AdminUserResponse;
 import com.koupreng.backend.dto.admin.SystemAuditLogResponse;
-import com.koupreng.backend.dto.invitation.InvitationResponse;
+import com.koupreng.backend.invitation.api.dto.InvitationResponse;
 import com.koupreng.backend.subscription.api.dto.SubscriptionPackageResponse;
 import com.koupreng.backend.subscription.api.dto.SubscriptionPackageRequest;
 import com.koupreng.backend.dto.payments.PaymentHistoryResponse;

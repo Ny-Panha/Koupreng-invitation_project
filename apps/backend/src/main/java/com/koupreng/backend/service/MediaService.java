@@ -1,10 +1,11 @@
 package com.koupreng.backend.service;
 
+import com.koupreng.backend.invitation.application.InvitationService;
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.dto.media.MediaListResponse;
 import com.koupreng.backend.dto.media.MediaResponse;
 import com.koupreng.backend.entity.invitation.MediaFile;
-import com.koupreng.backend.entity.invitation.UserInvitation;
+import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.enums.MediaType;
 import com.koupreng.backend.repository.MediaFileRepository;
 import com.koupreng.backend.service.storage.StorageService;

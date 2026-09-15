@@ -1,10 +1,7 @@
-package com.koupreng.backend.entity.invitation;
+package com.koupreng.backend.invitation.domain;
 
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.entity.organization.Organization;
-import com.koupreng.backend.enums.InvitationModerationStatus;
-import com.koupreng.backend.enums.InvitationStatus;
-import com.koupreng.backend.enums.InvitationVisibility;
 import com.koupreng.backend.template.domain.InvitationTemplate;
 import jakarta.persistence.*;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.koupreng.backend.enums;
+package com.koupreng.backend.invitation.domain;
 
 public enum InvitationModerationStatus {
     ACTIVE,

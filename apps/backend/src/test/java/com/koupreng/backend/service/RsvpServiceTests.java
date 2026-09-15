@@ -1,5 +1,6 @@
 package com.koupreng.backend.service;
 
+import com.koupreng.backend.invitation.application.InvitationService;
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.dto.rsvp.RsvpRequest;
 import com.koupreng.backend.dto.rsvp.RsvpResponse;
@@ -7,7 +8,7 @@ import com.koupreng.backend.dto.rsvp.RsvpSummaryResponse;
 import com.koupreng.backend.dto.rsvp.RsvpUpdateRequest;
 import com.koupreng.backend.entity.invitation.Guest;
 import com.koupreng.backend.entity.invitation.Rsvp;
-import com.koupreng.backend.entity.invitation.UserInvitation;
+import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.enums.RsvpStatus;
 import com.koupreng.backend.repository.GuestRepository;
 import com.koupreng.backend.repository.RsvpRepository;

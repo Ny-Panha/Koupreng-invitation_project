@@ -1,5 +1,6 @@
 package com.koupreng.backend.service;
 
+import com.koupreng.backend.invitation.application.InvitationService;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
@@ -24,10 +25,10 @@ import com.koupreng.backend.dto.budget.UpdateBudgetItemRequest;
 import com.koupreng.backend.dto.budget.UpdateBudgetRequest;
 import com.koupreng.backend.entity.budget.Budget;
 import com.koupreng.backend.entity.budget.BudgetItem;
-import com.koupreng.backend.entity.invitation.UserInvitation;
+import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.repository.BudgetItemRepository;
 import com.koupreng.backend.repository.BudgetRepository;
-import com.koupreng.backend.repository.UserInvitationRepository;
+import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;
 import com.koupreng.backend.util.CsvExportUtils;
 
 @Service
