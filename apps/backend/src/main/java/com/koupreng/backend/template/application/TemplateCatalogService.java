@@ -1,9 +1,9 @@
-package com.koupreng.backend.service;
+package com.koupreng.backend.template.application;
 
 import com.koupreng.backend.shared.exception.ApiException;
-import com.koupreng.backend.dto.template.PublicTemplateResponse;
-import com.koupreng.backend.dto.template.TemplateResponse;
-import com.koupreng.backend.repository.InvitationTemplateRepository;
+import com.koupreng.backend.template.api.dto.PublicTemplateResponse;
+import com.koupreng.backend.template.api.dto.TemplateResponse;
+import com.koupreng.backend.template.infrastructure.persistence.InvitationTemplateRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,8 +14,6 @@ import java.util.List;
 public class TemplateCatalogService {
 
     private static final String STATUS_ACTIVE = "ACTIVE";
-    private static final String KEEP_TEMPLATE_CODE = "garden-royal-khmer-wedding";
-
     private final InvitationTemplateRepository templateRepository;
 
     public TemplateCatalogService(InvitationTemplateRepository templateRepository) {

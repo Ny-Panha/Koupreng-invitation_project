@@ -1,9 +1,9 @@
-package com.koupreng.backend.controller;
+package com.koupreng.backend.template.api;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.dto.ApiResponse;
-import com.koupreng.backend.dto.template.PublicTemplateResponse;
-import com.koupreng.backend.service.TemplateCatalogService;
+import com.koupreng.backend.template.api.dto.PublicTemplateResponse;
+import com.koupreng.backend.template.application.TemplateCatalogService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

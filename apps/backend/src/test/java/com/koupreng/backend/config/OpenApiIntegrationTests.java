@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koupreng.backend.auth.api.dto.AuthResponse;
 import com.koupreng.backend.auth.api.dto.LoginRequest;
+import com.koupreng.backend.template.application.TemplateCatalogService;
 import com.koupreng.backend.user.api.dto.UserResponse;
 import com.koupreng.backend.user.domain.Role;
 import com.koupreng.backend.auth.application.AuthService;
@@ -63,6 +64,9 @@ class OpenApiIntegrationTests {
     @MockitoBean
     private AuthService authService;
 
+    @MockitoBean
+    private TemplateCatalogService templateCatalogService;
+
     @Test
     void openApiIsPublicAndContainsJwtBearerScheme() throws Exception {
         mockMvc.perform(get("/v3/api-docs"))
@@ -81,6 +85,7 @@ class OpenApiIntegrationTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.paths['/api/auth/login'].post.security").doesNotExist())
                 .andExpect(jsonPath("$.paths['/api/v1/auth/login'].post.security").doesNotExist())
+                .andExpect(jsonPath("$.paths['/api/v1/templates'].get.security").doesNotExist())
                 .andExpect(jsonPath("$.paths['/api/v1/public/invitations/{slug}'].get.security").isEmpty())
                 .andExpect(jsonPath("$.paths['/api/v1/payway/callback'].post.security").isEmpty())
                 .andExpect(jsonPath("$.paths['/api/users/me'].get.security[0].bearerAuth").isArray())
@@ -218,6 +223,16 @@ class OpenApiIntegrationTests {
 
         mockMvc.perform(get("/api/users/me"))
                 .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void templateCatalogRemainsPublic() throws Exception {
+        when(templateCatalogService.listActiveTemplates()).thenReturn(List.of());
+
+        mockMvc.perform(get("/api/v1/templates"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.data").isArray());
     }
 
     @Test

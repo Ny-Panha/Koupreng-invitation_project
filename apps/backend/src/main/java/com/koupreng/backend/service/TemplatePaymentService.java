@@ -20,7 +20,7 @@ import com.koupreng.backend.entity.payment.UserTemplateAccess;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.user.domain.Role;
 import com.koupreng.backend.enums.PaymentStatus;
-import com.koupreng.backend.repository.InvitationTemplateRepository;
+import com.koupreng.backend.template.infrastructure.persistence.InvitationTemplateRepository;
 import com.koupreng.backend.repository.TemplatePaymentOrderRepository;
 import com.koupreng.backend.repository.UserTemplateAccessRepository;
 import com.koupreng.backend.service.payment.AbaPayWayService;

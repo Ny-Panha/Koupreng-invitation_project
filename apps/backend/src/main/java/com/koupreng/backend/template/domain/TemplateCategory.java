@@ -1,4 +1,4 @@
-package com.koupreng.backend.entity.invitation;
+package com.koupreng.backend.template.domain;
 
 public enum TemplateCategory {
     MODERN,

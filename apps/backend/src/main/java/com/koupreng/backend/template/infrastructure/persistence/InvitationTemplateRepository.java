@@ -1,6 +1,6 @@
-package com.koupreng.backend.repository;
+package com.koupreng.backend.template.infrastructure.persistence;
 
-import com.koupreng.backend.entity.invitation.InvitationTemplate;
+import com.koupreng.backend.template.domain.InvitationTemplate;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

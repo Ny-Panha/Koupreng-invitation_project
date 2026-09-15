@@ -240,3 +240,7 @@ ArchUnit now turns the first V2 dependency rules into build-breaking tests: REST
 ## Subscription module ownership slice
 
 The subscription controller and HTTP DTOs, application service, package/subscription aggregates, and both Spring Data repositories now live under `subscription/api`, `subscription/application`, `subscription/domain`, and `subscription/infrastructure/persistence`. All callers migrated atomically with no internal compatibility bridge. Routes, serialized DTO fields, JPA entity/table mappings, and V18 fulfillment behavior are unchanged. Verification: 231 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings.
+
+## Template catalog ownership slice
+
+The canonical public template controller and response DTOs, catalog application service, template aggregate/category, and Spring Data repository now live under `template/api`, `template/application`, `template/domain`, and `template/infrastructure/persistence`. Invitation, payment, reporting, administration, and development-fixture callers migrated atomically with no internal compatibility bridge. `/api/v1/templates`, response JSON, JPA entity/table mappings, and repository query semantics are unchanged. Focused tests cover active-only ordered lookup, public DTO mapping, not-found behavior, code lookup, legacy internal mapping, unauthenticated catalog access, runtime OpenAPI, affected consumers, and architecture rules. Verification: 236 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings.

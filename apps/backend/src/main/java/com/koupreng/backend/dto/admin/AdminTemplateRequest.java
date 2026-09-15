@@ -1,6 +1,6 @@
 package com.koupreng.backend.dto.admin;
 
-import com.koupreng.backend.entity.invitation.TemplateCategory;
+import com.koupreng.backend.template.domain.TemplateCategory;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 

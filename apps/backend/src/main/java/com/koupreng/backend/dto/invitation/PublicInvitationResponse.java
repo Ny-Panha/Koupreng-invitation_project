@@ -3,7 +3,7 @@ package com.koupreng.backend.dto.invitation;
 import com.koupreng.backend.entity.invitation.EventType;
 import com.koupreng.backend.entity.invitation.Guest;
 import com.koupreng.backend.entity.invitation.GuestSeatAssignment;
-import com.koupreng.backend.entity.invitation.InvitationTemplate;
+import com.koupreng.backend.template.domain.InvitationTemplate;
 import com.koupreng.backend.entity.invitation.UserInvitation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

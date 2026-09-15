@@ -1,4 +1,4 @@
-package com.koupreng.backend.entity.invitation;
+package com.koupreng.backend.template.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;

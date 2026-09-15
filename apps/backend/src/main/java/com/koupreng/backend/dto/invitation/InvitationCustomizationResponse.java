@@ -1,6 +1,6 @@
 package com.koupreng.backend.dto.invitation;
 
-import com.koupreng.backend.entity.invitation.InvitationTemplate;
+import com.koupreng.backend.template.domain.InvitationTemplate;
 import com.koupreng.backend.entity.invitation.UserInvitation;
 import lombok.Builder;
 import lombok.Data;

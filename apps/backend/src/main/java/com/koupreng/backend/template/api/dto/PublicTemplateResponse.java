@@ -1,7 +1,7 @@
-package com.koupreng.backend.dto.template;
+package com.koupreng.backend.template.api.dto;
 
-import com.koupreng.backend.entity.invitation.InvitationTemplate;
-import com.koupreng.backend.entity.invitation.TemplateCategory;
+import com.koupreng.backend.template.domain.InvitationTemplate;
+import com.koupreng.backend.template.domain.TemplateCategory;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
