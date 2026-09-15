@@ -89,6 +89,18 @@ class AuthEndpointSecurityTests {
     }
 
     @Test
+    void compatibilityUserProfileRouteRequiresAuthentication() throws Exception {
+        mockMvc.perform(get("/api/users/me"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void canonicalUserProfileRouteRequiresAuthentication() throws Exception {
+        mockMvc.perform(get("/api/v1/users/me"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
     void changePasswordRequiresAuthentication() throws Exception {
         mockMvc.perform(post("/api/auth/change-password")
                         .contentType(MediaType.APPLICATION_JSON)

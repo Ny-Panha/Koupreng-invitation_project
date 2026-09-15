@@ -4,6 +4,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -98,5 +99,28 @@ class CookieCsrfSecurityTests {
                 .andExpect(status().isOk());
 
         verify(accountService).forgotPassword(any(ForgotPasswordRequest.class));
+    }
+
+    @Test
+    void canonicalProfileMutationRejectsMissingCsrfToken() throws Exception {
+        mockMvc.perform(patch("/api/v1/users/me")
+                        .with(user("user").roles("USER"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"fullName":"Updated User","phone":"012345678"}
+                                """))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void canonicalProfileMutationAcceptsValidCsrfToken() throws Exception {
+        mockMvc.perform(patch("/api/v1/users/me")
+                        .with(user("user").roles("USER"))
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"fullName":"Updated User","phone":"012345678"}
+                                """))
+                .andExpect(status().isOk());
     }
 }

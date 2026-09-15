@@ -7,7 +7,7 @@ Last reviewed: 2026-09-15
 
 Runtime springdoc output from the backend is the machine-readable source of truth. `packages/api-contracts/openapi.yaml` is the checked-in review artifact; a later backend-contract slice must generate and diff it in CI.
 
-The canonical prefix for versioned business endpoints is `/api/v1`. Authentication is available canonically at `/api/v1/auth/**`; existing `/api/auth/**` routes remain compatibility aliases. `/api/users/me` and `/api/admin` are still compatibility contracts, not examples for new modules. They remain until every user, admin, bot, and external caller has migrated and compatibility tests or telemetry provide removal evidence. The current-user compatibility contract is documented in `docs/api/users.md`.
+The canonical prefix for versioned business endpoints is `/api/v1`. Authentication is available canonically at `/api/v1/auth/**`, and current-user operations at `/api/v1/users/me/**`; existing `/api/auth/**` and `/api/users/me/**` routes remain compatibility aliases. `/api/admin` is still a compatibility contract, not an example for new modules. Compatibility routes remain until every user, admin, bot, and external caller has migrated and tests or telemetry provide removal evidence. The current-user contract is documented in `docs/api/users.md`.
 
 A package move must not also change an endpoint's method, path, authentication rule, status code, JSON field, or nullability. Contract changes require a separately reviewed compatibility plan.
 

@@ -84,6 +84,7 @@ class OpenApiIntegrationTests {
                 .andExpect(jsonPath("$.paths['/api/v1/public/invitations/{slug}'].get.security").isEmpty())
                 .andExpect(jsonPath("$.paths['/api/v1/payway/callback'].post.security").isEmpty())
                 .andExpect(jsonPath("$.paths['/api/users/me'].get.security[0].bearerAuth").isArray())
+                .andExpect(jsonPath("$.paths['/api/v1/users/me'].get.security[0].bearerAuth").isArray())
                 .andExpect(jsonPath("$.paths['/api/v1/admin/users'].get.security[0].bearerAuth").isArray())
                 .andExpect(content().string(not(containsString("/api/v1/internal/template-payments/"))));
     }

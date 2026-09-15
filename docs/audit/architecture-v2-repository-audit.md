@@ -213,3 +213,5 @@ Implemented scope: move the controller, request/response DTOs, profile/role serv
 Compatibility: `/api/users/me/**`, request aliases, response JSON, persistence mappings, and transaction behavior are unchanged. The user JPA aggregate and repository remain in their legacy packages for a later atomic caller migration.
 Security evidence: focused tests cover numeric JWT subjects, the legacy email principal, unauthenticated access, profile normalization, duplicate phones, final-admin protection, and auth-cache eviction after role changes.
 Verification: 208 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings.
+
+Follow-up user contract slice: canonical `/api/v1/users/me/**` aliases were added without removing `/api/users/me/**`. Both route families share controller methods and authorization. Integration tests cover authentication, cookie-mode CSRF behavior, and runtime OpenAPI publication for the canonical route. Verification: 212 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings.

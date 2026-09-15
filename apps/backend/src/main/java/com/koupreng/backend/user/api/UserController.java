@@ -29,7 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @Validated
-@RequestMapping("/api/users/me")
+@RequestMapping({"/api/v1/users/me", "/api/users/me"})
 @Tag(name = "Users", description = "Current-user profile, password, and validated profile-image operations.")
 @SecurityRequirement(name = "bearerAuth")
 public class UserController {
