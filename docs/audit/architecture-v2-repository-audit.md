@@ -193,3 +193,12 @@ Risks: duplicate advice beans, exception type not being caught, OpenAPI schema r
 - repository diff whitespace validation: passed.
 
 These frontend and bot observations are baseline findings, not regressions from the backend-only slice. A clean dependency install and the CI-defined Python environment are required before treating the local dependency/tooling failures as product defects.
+
+## Authentication slice decision record
+
+Current state: authentication code was split across global controller, DTO, service, entity, repository, security, and configuration packages.
+Target state: the cohesive authentication capability lives under `auth/api`, `auth/application`, `auth/domain`, and `auth/infrastructure` while user identity remains in the upcoming user module.
+Implemented scope: auth/account controller and DTOs, login and account-recovery services, Google and Telegram identity verification, password-reset token persistence, auth-state cache, cookie/token resolution, auth throttling, and the JWT authentication converter.
+Compatibility: `/api/auth/**`, request aliases, response JSON, Spring bean discovery, database mappings, and runtime OpenAPI are unchanged.
+Security evidence: cookie-mode integration tests cover missing and valid CSRF tokens, a disallowed origin, and an intentionally ignored public recovery endpoint. Browser token acquisition and consumer wiring remain deferred and cookie mode remains disabled by default.
+Verification: 195 tests passed, 0 failed, 1 skipped; SpotBugs and PMD reported no findings.

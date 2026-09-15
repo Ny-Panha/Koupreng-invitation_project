@@ -1,5 +1,7 @@
 package com.koupreng.backend.service;
 
+import com.koupreng.backend.auth.infrastructure.session.UserAuthCacheService;
+
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.dto.admin.AdminInvitationModerationRequest;
 import com.koupreng.backend.dto.admin.AdminReportResponse;

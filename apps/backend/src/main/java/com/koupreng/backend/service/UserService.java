@@ -3,6 +3,7 @@ package com.koupreng.backend.service;
 import java.util.List;
 import java.util.Objects;
 
+import com.koupreng.backend.auth.infrastructure.session.UserAuthCacheService;
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.dto.UpdateProfileRequest;
 import com.koupreng.backend.dto.UserResponse;

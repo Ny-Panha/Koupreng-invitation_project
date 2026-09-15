@@ -6,12 +6,13 @@ import java.util.List;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.koupreng.backend.security.AuthRateLimitFilter;
+import com.koupreng.backend.auth.infrastructure.security.AuthRateLimitFilter;
+import com.koupreng.backend.auth.infrastructure.security.AppJwtAuthenticationConverter;
 import com.koupreng.backend.security.AdminPaymentSecretFilter;
 import com.koupreng.backend.security.ApiRequestLoggingFilter;
 import com.koupreng.backend.security.ApiSecurityProperties;
 import com.koupreng.backend.security.ClientAddressResolver;
-import com.koupreng.backend.security.CookieBearerTokenResolver;
+import com.koupreng.backend.auth.infrastructure.security.CookieBearerTokenResolver;
 import com.koupreng.backend.security.PublicRsvpRateLimitFilter;
 import com.koupreng.backend.security.UploadSecurityFilter;
 import com.koupreng.backend.service.RateLimitService;
@@ -220,7 +221,7 @@ public class SecurityConfig {
 
     @Bean
     public AppJwtAuthenticationConverter jwtAuthenticationConverter(
-            com.koupreng.backend.service.UserAuthCacheService userAuthCacheService
+            com.koupreng.backend.auth.infrastructure.session.UserAuthCacheService userAuthCacheService
     ) {
         return new AppJwtAuthenticationConverter(userAuthCacheService);
     }

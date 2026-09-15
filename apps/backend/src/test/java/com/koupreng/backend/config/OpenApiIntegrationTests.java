@@ -20,11 +20,11 @@ import java.util.Set;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.koupreng.backend.dto.AuthResponse;
-import com.koupreng.backend.dto.LoginRequest;
+import com.koupreng.backend.auth.api.dto.AuthResponse;
+import com.koupreng.backend.auth.api.dto.LoginRequest;
 import com.koupreng.backend.dto.UserResponse;
 import com.koupreng.backend.entity.user.Role;
-import com.koupreng.backend.service.AuthService;
+import com.koupreng.backend.auth.application.AuthService;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

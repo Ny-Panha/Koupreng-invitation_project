@@ -4,11 +4,11 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
-import com.koupreng.backend.dto.ChangePasswordRequest;
+import com.koupreng.backend.auth.api.dto.ChangePasswordRequest;
 import com.koupreng.backend.dto.UpdateProfileRequest;
 import com.koupreng.backend.dto.UserResponse;
 import com.koupreng.backend.security.FileUploadValidator;
-import com.koupreng.backend.service.AccountService;
+import com.koupreng.backend.auth.application.AccountService;
 import com.koupreng.backend.service.UserService;
 
 import org.springframework.http.HttpStatus;
