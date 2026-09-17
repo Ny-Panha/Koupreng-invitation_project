@@ -5,7 +5,6 @@ import {
     IoRefreshOutline,
     IoCloseOutline,
     IoRestaurantOutline,
-    IoPeopleOutline,
     IoAddCircleOutline,
 } from "react-icons/io5";
 import "./SeatingFloorPlan.css";
@@ -66,6 +65,7 @@ function findNonOverlappingPosition(existingPositions = {}, totalTables = 0, tab
 }
 
 // Calculate clean, symmetrical banquet hall grid positions for Auto-Arrange (clean rows & columns)
+// eslint-disable-next-line react-refresh/only-export-components
 export function calculateAutoArrangePositions(tableList = [], venueLayout = {}) {
     if (!tableList || tableList.length === 0) return {};
 
@@ -90,13 +90,12 @@ export function calculateAutoArrangePositions(tableList = [], venueLayout = {}) 
         const half = Math.ceil(total / 2);
 
         // Determine number of columns per wing based on table count (supports up to 100+ tables)
-        let colsPerWing = 1;
-        if (half <= 3) colsPerWing = 1;
-        else if (half <= 10) colsPerWing = 2;
-        else if (half <= 18) colsPerWing = 3;
-        else if (half <= 32) colsPerWing = 4;
-        else if (half <= 55) colsPerWing = 5; // for 50 tables per wing = 100 tables total!
-        else colsPerWing = 6;
+        const colsPerWing = half <= 3 ? 1
+            : half <= 10 ? 2
+                : half <= 18 ? 3
+                    : half <= 32 ? 4
+                        : half <= 55 ? 5
+                            : 6;
 
         const rowsPerWing = Math.max(1, Math.ceil(half / colsPerWing));
 
@@ -311,10 +310,15 @@ export function SeatingFloorPlan({
 
     // Refs for buttery smooth dragging without re-attaching event listeners on every tick
     const positionsRef = useRef(positions);
-    positionsRef.current = positions;
-
     const tableScaleRef = useRef(tableScale);
-    tableScaleRef.current = tableScale;
+
+    useEffect(() => {
+        positionsRef.current = positions;
+    }, [positions]);
+
+    useEffect(() => {
+        tableScaleRef.current = tableScale;
+    }, [tableScale]);
 
     // Initialize positions on tables load
     useEffect(() => {
@@ -325,7 +329,7 @@ export function SeatingFloorPlan({
         });
         setPositions(init);
         setIsDirty(false);
-    }, [tables]);
+    }, [tables, venueLayout]);
 
     // Drag start for tables
     const handleStartDragTable = (e, tableId) => {

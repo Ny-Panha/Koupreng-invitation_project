@@ -1,5 +1,7 @@
 # Koupreng frontend engineering audit
 
+> **Historical discovery snapshot (2026-08-10):** this audit records the pre-migration frontend state. Current results are in `current-gap-status.md` and `../qa/verification-results.md`.
+
 **Audit date:** 2026-08-10
 
 **Baseline:** `main` at `83bfaed` plus the fixes recorded below

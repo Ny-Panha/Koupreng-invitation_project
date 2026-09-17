@@ -156,7 +156,6 @@ export function useGuestMutations({
         const seenPhones = new Set(existingPhones);
         const seenEmails = new Set(existingEmails);
         const toImport = [];
-        let skippedCount = 0;
 
         for (const guest of importedList) {
           const rawPhone = guest.phone ? String(guest.phone).replace(/[^0-9]/g, "") : null;
@@ -167,7 +166,6 @@ export function useGuestMutations({
             (rawEmail && seenEmails.has(rawEmail));
 
           if (isDuplicate) {
-            skippedCount++;
             continue;
           }
 

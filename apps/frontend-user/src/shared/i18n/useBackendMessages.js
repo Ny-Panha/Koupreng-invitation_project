@@ -17,7 +17,7 @@ export function useBackendMessages(namespace) {
     useEffect(() => {
         let active = true;
 
-        i18nService.messages(namespace)
+        i18nService.messages(namespace, lang)
             .then((response) => {
                 if (active) {
                     setMessages(response?.messages || {});
@@ -37,7 +37,7 @@ export function useBackendMessages(namespace) {
     const text = useCallback(
         (key, replacements) => {
             const serverVal = messages[key];
-            const localVal = LOCAL_MESSAGES[namespace]?.[lang]?.[key] || LOCAL_MESSAGES[namespace]?.["km"]?.[key];
+            const localVal = LOCAL_MESSAGES[namespace]?.[lang]?.[key] || LOCAL_MESSAGES[namespace]?.["en"]?.[key] || LOCAL_MESSAGES[namespace]?.["km"]?.[key];
             const isRawKey = typeof serverVal === "string" && (
                 serverVal === `${namespace}.${key}` ||
                 serverVal.toLowerCase() === `${namespace}.${key}`.toLowerCase() ||

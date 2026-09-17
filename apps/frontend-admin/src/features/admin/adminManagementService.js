@@ -39,10 +39,10 @@ export const adminManagementService = {
     if (code) {
       return api
         .post(`/v1/admin/payments/${encodeURIComponent(code)}/confirm`, payload)
-        .catch(() => api.post("/v1/admin/template-payments/confirm", payload))
+        .catch(() => api.post("/v1/admin/payments/confirm", payload))
         .then(unwrap);
     }
-    return api.post("/v1/admin/template-payments/confirm", payload).then(unwrap);
+    return api.post("/v1/admin/payments/confirm", payload).then(unwrap);
   },
 
   packages: () => api.get("/v1/admin/packages").then(unwrap),

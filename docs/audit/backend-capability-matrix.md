@@ -1,5 +1,7 @@
 # Backend capability matrix
 
+> **Historical discovery snapshot (2026-08-10):** this matrix supported migration planning. Current implementation/evidence is tracked in `current-gap-status.md` and `../qa/verification-results.md`.
+
 Audit date: 2026-08-10
 
 The Spring Boot application is the persistence and authorization authority. `apps/frontend-user`, `apps/frontend-admin`, and `apps/telegram-bot` are consumers; browser storage is not a source of business truth.

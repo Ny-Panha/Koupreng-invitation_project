@@ -1,4 +1,4 @@
-export function ReportTable({ data, reportType }) {
+export function ReportTable({ data }) {
   const rows = data?.rows || data?.items || [];
 
   if (!rows.length) {

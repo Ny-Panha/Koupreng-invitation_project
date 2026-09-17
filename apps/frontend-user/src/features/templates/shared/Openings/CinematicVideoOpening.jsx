@@ -15,7 +15,6 @@ export default function CinematicVideoOpening({
 }) {
   const videoRef = useRef(null);
   const [isMuted, setIsMuted] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
   const [isFadingOut, setIsFadingOut] = useState(false);
   const [isOpened, setIsOpened] = useState(state === "opened");
@@ -33,10 +32,8 @@ export default function CinematicVideoOpening({
   const handleStartPlay = () => {
     setHasStarted(true);
     if (videoRef.current) {
-      videoRef.current.play().then(() => {
-        setIsPlaying(true);
-      }).catch(() => {
-        setIsPlaying(false);
+      videoRef.current.play().catch(() => {
+        // The opening remains usable when autoplay is blocked.
       });
     }
   };

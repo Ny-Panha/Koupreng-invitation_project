@@ -96,15 +96,6 @@ else
   echo -e "  ${GREEN}✓ Database started${NC}"
 fi
 
-# Auto-seed Admin in DB
-DB_PASS="123456"
-if [ -f "${ROOT_DIR}/.env" ]; then
-  ENV_PASS=$(grep '^DB_PASSWORD=' "${ROOT_DIR}/.env" | cut -d '=' -f2- | tr -d '"' | tr -d "'")
-  if [ -n "$ENV_PASS" ]; then DB_PASS="$ENV_PASS"; fi
-fi
-
-mariadb -u root -p"${DB_PASS}" -e "USE koupreng_db; INSERT INTO users (full_name, email, phone, password_hash, role, status, token_version, created_at, updated_at) VALUES ('Admin Koupreng', 'admin@koupreng.com', '012345678', '\$2a\$10\$VYSoe48hAPodBefSWhXXo.R.LXRVTncX6B1tZiFIcMGAxUZcsgj8i', 'ADMIN', 'ACTIVE', 0, NOW(), NOW()) ON DUPLICATE KEY UPDATE role='ADMIN';" 2>/dev/null || true
-
 # Track child PIDs
 PIDS=()
 
@@ -178,7 +169,7 @@ if [ "$ENABLE_BOT" = true ] && [ -d "${ROOT_DIR}/apps/telegram-bot" ]; then
   (
     cd "${ROOT_DIR}/apps/telegram-bot"
     if [ -d ".venv" ]; then source .venv/bin/activate; fi
-    python3 -m uvicorn app.main:app --port 8000 --reload
+    python3 -m uvicorn main:app --host 127.0.0.1 --port 8000 --reload
   ) &
   PIDS+=($!)
 fi
@@ -200,7 +191,7 @@ if [ "$RUN_USER" = true ]; then
   echo -e "  🌐 ${BOLD}Frontend User:${NC}   ${CYAN}http://localhost:5173${NC}"
 fi
 if [ "$RUN_ADMIN" = true ]; then
-  echo -e "  👑 ${BOLD}Frontend Admin:${NC}  ${CYAN}http://localhost:5174${NC} ${YELLOW}(admin@koupreng.com / admin123)${NC}"
+  echo -e "  👑 ${BOLD}Frontend Admin:${NC}  ${CYAN}http://localhost:5174${NC}"
 fi
 echo -e "  ⚙️  ${BOLD}Backend API:${NC}     ${CYAN}http://localhost:8080${NC}"
 if [ "$ENABLE_BOT" = true ]; then

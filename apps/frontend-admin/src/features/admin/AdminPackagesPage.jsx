@@ -30,6 +30,7 @@ import { Loading, ErrorState, Empty } from "../../components/States";
 import Toast from "../../components/Toast";
 import { useResource } from "../../hooks/useResource";
 import { useToast } from "../../hooks/useToast";
+import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 import adminManagementService from "./adminManagementService";
 import "./AdminFeature.css";
 
@@ -313,6 +314,7 @@ function ToggleSwitch({ checked, onChange, label, sublabel, icon: Icon }) {
 }
 
 export default function AdminPackagesPage() {
+  const { lang, t } = useAdminLanguage();
   const { data, setData, loading, error, reload } = useResource(adminManagementService.packages);
   const [form, setForm] = useState(EMPTY_FORM);
   const [editingId, setEditingId] = useState(null);
@@ -422,10 +424,10 @@ export default function AdminPackagesPage() {
           ? rows.map((item) => (item.id === saved.id ? saved : item))
           : [saved, ...rows];
       });
-      show(editingId ? "បានកែប្រែកញ្ចប់សេវាជោគជ័យ ✓" : "បានបង្កើតកញ្ចប់សេវាថ្មីជោគជ័យ ✓");
+      show(editingId ? (lang === "en" ? "Package updated successfully ✓" : "បានកែប្រែកញ្ចប់សេវាជោគជ័យ ✓") : (lang === "en" ? "Package created successfully ✓" : "បានបង្កើតកញ្ចប់សេវាថ្មីជោគជ័យ ✓"));
       closeDrawer();
     } catch (err) {
-      show(err?.message || "បរាជ័យក្នុងការរក្សាទុកកញ្ចប់", "error");
+      show(err?.message || (lang === "en" ? "Package save failed" : "បរាជ័យក្នុងការរក្សាទុកកញ្ចប់"), "error");
     } finally {
       setBusyId(null);
     }
@@ -438,9 +440,9 @@ export default function AdminPackagesPage() {
         ? await adminManagementService.deactivatePackage(plan.id)
         : await adminManagementService.activatePackage(plan.id);
       setData((current) => (current || []).map((item) => (item.id === saved.id ? saved : item)));
-      show(plan.active ? "បានផ្អាកដំណើរការកញ្ចប់ ✓" : "បានបើកដំណើរការកញ្ចប់ឡើងវិញ ✓");
+      show(plan.active ? (lang === "en" ? "Package deactivated ✓" : "បានផ្អាកដំណើរការកញ្ចប់ ✓") : (lang === "en" ? "Package reactivated ✓" : "បានបើកដំណើរការកញ្ចប់ឡើងវិញ ✓"));
     } catch (err) {
-      show(err?.message || "ប្រតិបត្តិការបរាជ័យ", "error");
+      show(err?.message || (lang === "en" ? "Operation failed" : "ប្រតិបត្តិការបរាជ័យ"), "error");
     } finally {
       setBusyId(null);
     }
@@ -455,7 +457,6 @@ export default function AdminPackagesPage() {
     <div className="space-y-6">
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
           <div className="flex items-center gap-2.5">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/20">
               <Layers className="h-5 w-5" />
@@ -469,7 +470,6 @@ export default function AdminPackagesPage() {
               </p>
             </div>
           </div>
-        </div>
 
         <div className="flex items-center gap-2.5">
           <button
@@ -479,7 +479,7 @@ export default function AdminPackagesPage() {
             title="Refresh"
           >
             <RotateCw className="h-3.5 w-3.5" />
-            <span>ផ្ទុកឡើងវិញ</span>
+            <span>{lang === "en" ? "Refresh" : "ផ្ទុកឡើងវិញ"}</span>
           </button>
           <button
             type="button"
@@ -487,7 +487,7 @@ export default function AdminPackagesPage() {
             className="btn btn-primary h-9 px-4 text-xs shadow-md shadow-amber-500/20 font-bold"
           >
             <Plus className="h-4 w-4" />
-            <span>+ បង្កើតកញ្ចប់ថ្មី</span>
+            <span>{lang === "en" ? "+ New Package" : "+ បង្កើតកញ្ចប់ថ្មី"}</span>
           </button>
         </div>
       </div>
@@ -859,7 +859,7 @@ export default function AdminPackagesPage() {
                           onClick={() => openEditDrawer(plan)}
                         >
                           <Pencil className="h-3 w-3 text-amber-500" />
-                          <span>កែ</span>
+                          <span>{lang === "en" ? "Edit" : "កែ"}</span>
                         </button>
                         <button
                           type="button"
@@ -871,7 +871,7 @@ export default function AdminPackagesPage() {
                           disabled={busyId === plan.id}
                           onClick={() => toggleActive(plan)}
                         >
-                          {plan.active ? "បិទ" : "បើក"}
+                          {plan.active ? (lang === "en" ? "Deactivate" : "បិទ") : (lang === "en" ? "Activate" : "បើក")}
                         </button>
                       </div>
                     </td>

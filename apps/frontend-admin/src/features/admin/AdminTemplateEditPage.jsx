@@ -13,16 +13,11 @@ import {
   Heart,
   Calendar,
   MapPin,
-  Gift,
   Shirt,
   Layers,
   Crown,
   ExternalLink,
   Music,
-  Clock,
-  Copy,
-  Check,
-  CheckCircle2,
   Image as ImageIcon,
   Sliders,
   Eye,
@@ -32,6 +27,7 @@ import Toast from "../../components/Toast";
 import { useToast } from "../../hooks/useToast";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 import adminManagementService from "./adminManagementService";
+import { userTemplateUrl } from "../../shared/config/runtime";
 
 // Preset Theme Styles
 const THEME_PRESETS = [
@@ -352,10 +348,6 @@ export default function AdminTemplateEditPage() {
     }
   };
 
-  const handleToggleGate = () => {
-    handleSetGate(!previewGateOpen);
-  };
-
   // Load existing template data if editing
   useEffect(() => {
     if (isNew) return;
@@ -395,7 +387,7 @@ export default function AdminTemplateEditPage() {
     return () => {
       active = false;
     };
-  }, [isNew, templateId]);
+  }, [isNew, templateId, show]);
 
   const setField = (key, val) => setForm((prev) => ({ ...prev, [key]: val }));
 
@@ -709,7 +701,7 @@ export default function AdminTemplateEditPage() {
         {/* Actions */}
         <div className="flex items-center gap-3 shrink-0">
           <a
-            href={`http://localhost:5173/templates/${form.code || form.slug || form.presetId?.toLowerCase() || "the-digital-yes-wedding"}`}
+            href={userTemplateUrl(form.code || form.slug || form.presetId?.toLowerCase() || "the-digital-yes-wedding")}
             target="_blank"
             rel="noreferrer"
             className="flex h-9 items-center gap-1.5 rounded-xl border border-zinc-700 bg-zinc-800/80 px-3.5 text-xs font-semibold text-zinc-200 transition hover:bg-zinc-700"
@@ -2113,7 +2105,7 @@ export default function AdminTemplateEditPage() {
               <iframe
                 ref={iframeRef}
                 allow="clipboard-write; clipboard-read; autoplay"
-                src={`http://localhost:5173/templates/${
+                src={userTemplateUrl(`${
                   form.code ||
                   (form.presetId === "GARDEN_ROYAL"
                     ? "garden-royal-khmer-wedding"
@@ -2124,7 +2116,7 @@ export default function AdminTemplateEditPage() {
                     : form.presetId === "EMERALD_GREEN"
                     ? "emerald-canva-luxe-wedding"
                     : "the-digital-yes-wedding")
-                }/preview?embed=true`}
+                }/preview?embed=true`)}
                 className={`w-full h-full border-0 bg-zinc-950 ${
                   isDraggingDivider ? "pointer-events-none" : ""
                 }`}

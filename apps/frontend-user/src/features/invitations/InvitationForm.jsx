@@ -16,8 +16,6 @@ import {
     UploadCloud,
     Trash2,
     Plus,
-    Play,
-    Pause,
     Maximize2,
     FileText,
     User,
@@ -727,8 +725,6 @@ export default function InvitationForm({ invitation }) {
     const [leftPercent, setLeftPercent] = useState(52);
     const [isDragging, setIsDragging] = useState(false);
     const containerRef = useRef(null);
-    const [audioPlaying, setAudioPlaying] = useState(false);
-    const audioPreviewRef = useRef(null);
 
     // Draggable Resizer Handler
     const handleMouseDown = (e) => {
@@ -979,7 +975,6 @@ export default function InvitationForm({ invitation }) {
             : "https://www.google.com/maps";
         window.open(searchUrl, "_blank", "noopener,noreferrer");
     };
-
     // Save action
     const handleSave = async () => {
         setIsSaving(true);

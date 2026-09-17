@@ -88,9 +88,10 @@ export function SpotifyMusicPicker({ value, onChange }) {
 
     // Clean up audio on unmount
     useEffect(() => {
+        const audio = audioRef.current;
         return () => {
-            if (audioRef.current) {
-                audioRef.current.pause();
+            if (audio) {
+                audio.pause();
             }
         };
     }, []);

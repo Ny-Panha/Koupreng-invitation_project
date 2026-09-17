@@ -4,6 +4,7 @@ import Toast from "../../components/Toast";
 import { useResource } from "../../hooks/useResource";
 import { useToast } from "../../hooks/useToast";
 import { formatDateTime } from "../../lib/format";
+import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 import adminManagementService from "./adminManagementService";
 import "./AdminFeature.css";
 
@@ -17,6 +18,7 @@ const EMPTY_FORM = {
 };
 
 export default function AdminNotificationsPage() {
+  const { lang, t } = useAdminLanguage();
   const { data, setData, loading, error, reload } = useResource(adminManagementService.notifications);
   const [form, setForm] = useState(EMPTY_FORM);
   const [query, setQuery] = useState("");
@@ -46,9 +48,9 @@ export default function AdminNotificationsPage() {
       const created = await adminManagementService.createNotification(payload);
       setData((prev) => [created, ...(prev || [])]);
       setForm(EMPTY_FORM);
-      show("Notification created and sent successfully");
+      show(t("notifications.toastSuccess", "Notification created and sent successfully"));
     } catch (err) {
-      show(err?.message || "Could not send notification", "error");
+      show(err?.message || t("notifications.toastFail", "Could not send notification"), "error");
     } finally {
       setBusy(false);
     }
@@ -58,28 +60,32 @@ export default function AdminNotificationsPage() {
     <div>
       <div className="page-head">
         <div>
-          <h2 className="page-title">Notifications</h2>
-          <p className="page-subtitle">Send system notifications to users and view system notification delivery statuses.</p>
+          <h2 className="page-title">{t("notifications.title", "Notifications")}</h2>
+          <p className="page-subtitle">{t("notifications.subtitle", "Send system notifications to users and view system notification delivery statuses.")}</p>
         </div>
-        <button type="button" className="btn btn-ghost" onClick={reload}>Refresh</button>
+        <button type="button" className="btn btn-ghost" onClick={reload}>
+          {t("common.refresh", "Refresh")}
+        </button>
       </div>
 
       <section className="card" style={{ marginBottom: 18 }}>
-        <h3 className="page-title" style={{ fontSize: 16, marginBottom: 12 }}>Create System Notification</h3>
+        <h3 className="page-title" style={{ fontSize: 16, marginBottom: 12 }}>
+          {t("notifications.createTitle", "Create System Notification")}
+        </h3>
         <form onSubmit={sendNotification}>
           <div className="admin-form-grid">
             <label>
-              User ID (Leave empty for broadcast)
+              {t("notifications.userIdLabel", "User ID (Leave empty for broadcast)")}
               <input
                 className="text-input"
                 type="number"
                 value={form.recipientId}
                 onChange={(e) => setField("recipientId", e.target.value)}
-                placeholder="e.g. 101 or empty for all"
+                placeholder={t("notifications.userIdPlaceholder", "e.g. 101 or empty for all")}
               />
             </label>
             <label>
-              Type
+              {t("notifications.typeLabel", "Type")}
               <select className="select" value={form.type} onChange={(e) => setField("type", e.target.value)}>
                 <option value="SYSTEM_ALERT">SYSTEM_ALERT</option>
                 <option value="PAYMENT_CONFIRMATION">PAYMENT_CONFIRMATION</option>
@@ -89,7 +95,7 @@ export default function AdminNotificationsPage() {
               </select>
             </label>
             <label>
-              Channel
+              {t("notifications.channelLabel", "Channel")}
               <select className="select" value={form.channel} onChange={(e) => setField("channel", e.target.value)}>
                 <option value="IN_APP">IN_APP</option>
                 <option value="EMAIL">EMAIL</option>
@@ -97,39 +103,39 @@ export default function AdminNotificationsPage() {
               </select>
             </label>
             <label>
-              Title
+              {t("notifications.titleLabel", "Title")}
               <input
                 className="text-input"
                 value={form.title}
                 onChange={(e) => setField("title", e.target.value)}
                 required
-                placeholder="Notification Title"
+                placeholder={t("notifications.titlePlaceholder", "Notification Title")}
               />
             </label>
             <label>
-              Action URL (Optional)
+              {t("notifications.actionUrlLabel", "Action URL (Optional)")}
               <input
                 className="text-input"
                 value={form.actionUrl}
                 onChange={(e) => setField("actionUrl", e.target.value)}
-                placeholder="https://koupreng.app/..."
+                placeholder={t("notifications.actionUrlPlaceholder", "https://koupreng.app/...")}
               />
             </label>
             <label style={{ gridColumn: "1 / -1" }}>
-              Message
+              {t("notifications.messageLabel", "Message")}
               <textarea
                 className="text-input"
                 rows="3"
                 value={form.message}
                 onChange={(e) => setField("message", e.target.value)}
                 required
-                placeholder="Message body..."
+                placeholder={t("notifications.messagePlaceholder", "Message body...")}
               />
             </label>
           </div>
           <div style={{ marginTop: 12 }}>
             <button type="submit" className="btn btn-primary" disabled={busy}>
-              {busy ? "Sending..." : "Send Notification"}
+              {busy ? t("notifications.sending", "Sending...") : t("notifications.sendBtn", "Send Notification")}
             </button>
           </div>
         </form>
@@ -141,22 +147,28 @@ export default function AdminNotificationsPage() {
             className="text-input"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search notifications..."
+            placeholder={t("notifications.searchPlaceholder", "Search notifications...")}
           />
         </div>
 
-        {loading ? <Loading /> : error ? <ErrorState onRetry={reload} /> : notifications.length === 0 ? <Empty label="No notifications" /> : (
+        {loading ? (
+          <Loading />
+        ) : error ? (
+          <ErrorState onRetry={reload} />
+        ) : notifications.length === 0 ? (
+          <Empty label={lang === "en" ? "No notifications" : "មិនមានការជូនដំណឹងទេ"} />
+        ) : (
           <div className="table-wrap">
             <table className="data">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Type</th>
-                  <th>Channel</th>
-                  <th>Title</th>
-                  <th>Recipient</th>
-                  <th>Status</th>
-                  <th>Created</th>
+                  <th>{t("users.colId", "ID")}</th>
+                  <th>{t("notifications.colType", "Type")}</th>
+                  <th>{t("notifications.colChannel", "Channel")}</th>
+                  <th>{t("notifications.colTitle", "Title")}</th>
+                  <th>{t("notifications.colRecipient", "Recipient")}</th>
+                  <th>{t("notifications.colStatus", "Status")}</th>
+                  <th>{t("notifications.colSentAt", "Created")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -166,8 +178,12 @@ export default function AdminNotificationsPage() {
                     <td><span className="badge badge-gray">{item.type}</span></td>
                     <td>{item.channel}</td>
                     <td><strong>{item.title}</strong><br /><small>{item.message}</small></td>
-                    <td>{item.recipientEmail || item.recipientId || "All Users"}</td>
-                    <td><span className={`badge ${item.status === "DELIVERED" || item.status === "READ" ? "badge-green" : "badge-amber"}`}>{item.status}</span></td>
+                    <td>{item.recipientEmail || item.recipientId || (lang === "en" ? "All Users" : "អ្នកប្រើទាំងអស់")}</td>
+                    <td>
+                      <span className={`badge ${item.status === "DELIVERED" || item.status === "READ" ? "badge-green" : "badge-amber"}`}>
+                        {item.status}
+                      </span>
+                    </td>
                     <td>{formatDateTime(item.createdAt)}</td>
                   </tr>
                 ))}

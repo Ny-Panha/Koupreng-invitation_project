@@ -1,6 +1,6 @@
 # Folder Structure and Ownership
 
-This is the verified repository structure after the 2026-07-21 cleanup.
+This is the verified Architecture V2 repository structure as of 2026-09-15.
 
 | Path | Ownership and rule | Status |
 | --- | --- | --- |
@@ -14,7 +14,7 @@ This is the verified repository structure after the 2026-07-21 cleanup.
 | `docs/frontend` | Frontend-specific architecture and authoring guidance, outside production source trees. | KEEP |
 | `docs/qa` | Reproducible cleanup, asset, dependency, verification, and limitation evidence. | KEEP |
 | `docs/security` | Credential incident response and operational security checklists. | KEEP |
-| `infra` | MySQL/PostgreSQL backup references, least-privilege SQL, Nginx, Prometheus, firewall, and tunnel setup. Deployment-specific review remains required. | NEEDS HUMAN REVIEW |
+| `infra` | Docker/Nginx gateway configuration, MySQL/PostgreSQL backup references, least-privilege SQL, Prometheus, firewall, and tunnel setup. Provider-specific review remains required. | KEEP / CONFIGURE PER ENVIRONMENT |
 | `scripts/ci` | Non-interactive CI smoke checks only. | KEEP |
 | `scripts/dev` | Local setup and development launchers only. | KEEP |
 | `scripts/maintenance` | Explicit Git pull/push/sync helpers; never invoked by CI. | KEEP |
@@ -38,7 +38,7 @@ This is the verified repository structure after the 2026-07-21 cleanup.
 
 ## Backend boundaries
 
-The backend currently uses conventional global `controller`, `service`, `repository`, `entity`, `dto`, `config`, and integration packages. A future domain-module migration would be a broad architectural change and was not mixed into this cleanup. Flyway migrations are append-only once shared; repairs must be introduced as a new migration.
+The backend is a business-domain modular monolith. Modules such as `auth`, `user`, `template`, `invitation`, `media`, `guest`, `rsvp`, `payment`, and `admin` own their HTTP, application, domain, and infrastructure code as needed; simple modules may omit unnecessary layers. `shared` is restricted to cross-cutting configuration/security/errors/i18n/persistence concerns, while `integration` contains optional provider boundaries. Executable ArchUnit rules reject controllers that reach repositories/domain entities and prevent inward domain packages from depending on outward layers. Flyway migrations are append-only once shared; repairs require a new migration.
 
 ## Generated and local-only paths
 

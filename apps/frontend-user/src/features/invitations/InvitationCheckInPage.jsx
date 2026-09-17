@@ -80,14 +80,14 @@ export default function InvitationCheckInPage() {
 
     useEffect(() => load(), [load]);
 
-    const refreshCheckIns = async () => {
+    const refreshCheckIns = useCallback(async () => {
         const [summaryData, checkInData] = await Promise.all([
             guestService.checkInSummary(invitationId),
             guestService.checkInList(invitationId),
         ]);
         setSummary(summaryData);
         setCheckIns(checkInData || []);
-    };
+    }, [invitationId]);
 
     const scan = async (event) => {
         event.preventDefault();

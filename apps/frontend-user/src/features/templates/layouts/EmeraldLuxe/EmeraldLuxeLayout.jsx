@@ -4,8 +4,6 @@ import {
   Sparkles,
   Music,
   VolumeX,
-  MapPin,
-  Calendar,
 } from "lucide-react";
 import defaultMusicUrl from "@/assets/music/Instrumental Wedding Music (VioSounds Cover).m4a";
 import { normalizeTemplateViewModel } from "../../services/templateService";

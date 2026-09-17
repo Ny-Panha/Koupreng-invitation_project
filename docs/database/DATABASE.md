@@ -1,0 +1,145 @@
+# Koupreng Database Architecture
+
+Status: Architecture V2 implemented schema
+Last reviewed: 2026-09-15
+
+## Source of truth
+
+The schema is owned by 17 Flyway migrations in `apps/backend/src/main/resources/db/migration`. Entity annotations describe mappings but do not replace migrations. Existing versioned files are immutable. The current history is V1 and V3-V18; V2 is intentionally absent and must not be introduced retroactively.
+
+Production must never use Hibernate `create`, `create-drop`, or `update`. The shared runtime defaults to `validate`; the production profile uses non-mutating `none` while Flyway owns migration/validation and CI exercises Hibernate validation against disposable MySQL.
+
+## Table ownership
+
+| Module | Tables | Key ownership/relationship |
+| --- | --- | --- |
+| Auth/user | `users`, `password_reset_tokens` | reset token belongs to one user; email/phone are unique |
+| Organization | `organizations`, `organization_members` | organization has one owner; membership is unique by organization/email |
+| Template | `templates`, `user_template_access` | entitlement links user, template, and optional payment order |
+| Invitation | `invitations`, `invitation_sections` | invitation belongs to a user and optionally template/organization; sections belong to invitation |
+| Guest/RSVP | `guests`, `rsvps` | both belong to invitation; RSVP optionally belongs to a guest |
+| Media/delivery | `media_files`, `invitation_delivery_events`, `notifications` | scoped to invitation and optional guest/user/payment references |
+| Seating/check-in | `event_tables`, `guest_seat_assignments`, `guest_check_ins` | invitation-scoped; one assignment and one check-in per guest |
+| Planning | `budgets`, `budget_items`, `wedding_gifts` | one budget per invitation; items belong to budget; gifts belong to invitation |
+| Template payment | `template_orders`, `template_payment_orders` | server-created user/template orders; unique order/transaction identifiers |
+| Guest gift payment | `payment_configs`, `payment_transactions`, `payment_webhook_logs`, `telegram_notifications`, `organizer_payout_accounts` | invitation payment configuration and provider evidence |
+| Subscription | `packages`, `subscriptions` | subscription belongs to user/package; V18 records trusted paid activation evidence and enforces one active subscription per user |
+| Audit | `audit_logs`, `system_audit_logs` | actor/target/event metadata; secrets are prohibited |
+| Legacy event | `events` | separate generic event aggregate; relationship to invitations is unresolved |
+
+## Core relationships
+
+```mermaid
+erDiagram
+    USERS ||--o{ INVITATIONS : owns
+    USERS ||--o{ ORGANIZATIONS : owns
+    ORGANIZATIONS ||--o{ ORGANIZATION_MEMBERS : contains
+    USERS o|--o{ ORGANIZATION_MEMBERS : joins
+    ORGANIZATIONS o|--o{ INVITATIONS : groups
+    TEMPLATES o|--o{ INVITATIONS : renders
+    INVITATIONS ||--o{ INVITATION_SECTIONS : contains
+    INVITATIONS ||--o{ MEDIA_FILES : contains
+    INVITATIONS ||--o{ GUESTS : invites
+    INVITATIONS ||--o{ RSVPS : receives
+    GUESTS o|--o| RSVPS : responds
+    INVITATIONS ||--o{ EVENT_TABLES : defines
+    EVENT_TABLES ||--o{ GUEST_SEAT_ASSIGNMENTS : seats
+    GUESTS ||--o| GUEST_SEAT_ASSIGNMENTS : assigned
+    GUESTS ||--o| GUEST_CHECK_INS : checks_in
+    INVITATIONS ||--o| BUDGETS : plans
+    BUDGETS ||--o{ BUDGET_ITEMS : contains
+    INVITATIONS ||--o{ WEDDING_GIFTS : records
+    USERS ||--o{ TEMPLATE_PAYMENT_ORDERS : creates
+    TEMPLATE_PAYMENT_ORDERS o|--o| USER_TEMPLATE_ACCESS : fulfills
+    USERS ||--o{ USER_TEMPLATE_ACCESS : owns
+    TEMPLATES ||--o{ USER_TEMPLATE_ACCESS : unlocks
+    USERS ||--o{ SUBSCRIPTIONS : purchases
+    PACKAGES ||--o{ SUBSCRIPTIONS : defines
+```
+
+## Important constraints and indexes
+
+- `invitations.slug`, invitation access token, guest invite token, template code, organization slug, reset-token hash, order codes, and provider transaction identifiers are unique.
+- `budgets.invitation_id` enforces one budget per invitation.
+- `guest_seat_assignments.guest_id` and `guest_check_ins.guest_id` enforce one active record per guest.
+- organization membership is unique per organization/email.
+- user-template access is constrained/indexed to prevent duplicate entitlement for the same ownership tuple.
+- common invitation child queries are indexed by `invitation_id`; administrative/status queries have compound status/created indexes added by later migrations.
+- foreign keys cascade for true aggregate children and use `SET NULL` where historical records must survive deletion.
+
+Exact names and column evolution remain in the migration files; this document explains ownership rather than duplicating every DDL statement.
+
+## Payment relationships and idempotency
+
+Template purchases currently use `template_payment_orders` as the active rich order record and create `user_template_access` during trusted completion. Paid subscription orders remain in `subscriptions` and V18 adds their paid amount/time and confirmation source/actor/time evidence. `template_orders` is an earlier overlapping order model. Guest gift payments use `payment_transactions` and related provider-log tables. These models must not be merged until active consumers and stored data are proven.
+
+Paid transitions require:
+
+1. a server-generated unique order/reference;
+2. server-owned amount and currency;
+3. verified provider/internal evidence;
+4. a locked re-read of the order;
+5. an allowed state transition;
+6. entitlement/fulfillment in the same short transaction;
+7. a duplicate notification returning the existing outcome.
+
+Raw callback and Telegram text is sensitive operational metadata. V2 must define minimization, redaction, access control, and retention before expanding its use.
+
+V18 also adds a generated `active_slot` that is `1` only while `is_active` is true, with a unique constraint over `(user_id, active_slot)`. This makes concurrent activation attempts fail closed instead of leaving two active packages, while avoiding MySQL's restriction on generated columns derived from cascade-managed foreign-key columns. Run the following read-only preflight before V18; any returned row requires an owner-approved correction before deployment:
+
+```sql
+SELECT user_id, COUNT(*) AS active_subscription_count
+FROM subscriptions
+WHERE is_active = TRUE
+GROUP BY user_id
+HAVING COUNT(*) > 1;
+```
+
+V18 is one atomic `ALTER TABLE` and does not synthesize payment evidence for historical rows. If it fails, retain diagnostics, resolve duplicate active state, verify that the columns and named constraint were not partially installed, and follow the controlled Flyway repair/reapply runbook. Rollback requires restore or a reviewed forward migration; V18 is immutable.
+
+## Guest and RSVP relationships
+
+A guest belongs to exactly one invitation and may have one RSVP, one seat assignment, and one check-in. Every service/repository mutation must scope a child by both its child identifier/token and invitation identifier. Public guest tokens are opaque and do not substitute for an ownership check.
+
+Guest email/phone duplicate checks remain as fast user feedback, while V17 adds the concurrency-safe authority in MySQL. Email identity is `LOWER(TRIM(email))`; phone identity is `TRIM(phone)`. Empty strings normalize to `NULL`, so multiple guests without a given contact field remain valid. Uniqueness is scoped to `invitation_id`, and either generated normalized value may be inspected when diagnosing conflicts. Database violations of these named constraints translate to the stable API code `GUEST_DUPLICATE` without exposing SQL details.
+
+Run this read-only preflight against every target database before deploying V17. Deployment must stop if either query returns rows; the invitation owner must decide which guest record to retain or correct before retrying.
+
+```sql
+SELECT invitation_id, LOWER(TRIM(email)) AS normalized_email, COUNT(*) AS duplicate_count
+FROM guests
+WHERE NULLIF(TRIM(email), '') IS NOT NULL
+GROUP BY invitation_id, LOWER(TRIM(email))
+HAVING COUNT(*) > 1;
+
+SELECT invitation_id, TRIM(phone) AS normalized_phone, COUNT(*) AS duplicate_count
+FROM guests
+WHERE NULLIF(TRIM(phone), '') IS NOT NULL
+GROUP BY invitation_id, TRIM(phone)
+HAVING COUNT(*) > 1;
+```
+
+V17 uses one atomic `ALTER TABLE`; it never deletes or rewrites guest data. If deployment fails, preserve the failed Flyway record and database diagnostics, repair duplicate source data, confirm that neither normalized column/constraint was partially installed, run `flyway repair` only under the deployment runbook, then reapply V17. Rollback is restore-from-backup or an explicitly reviewed forward migration that drops both named constraints and generated columns; do not edit V17.
+
+## Migration rules
+
+1. Never edit an applied versioned migration.
+2. Add the next version only after checking the highest repository and deployed version.
+3. Make destructive changes in expand/migrate/contract stages.
+4. Add constraints only after data profiling and repair.
+5. Backfills must be deterministic, restartable where practical, and bounded for production data.
+6. Test an empty MySQL schema and an upgrade from the current supported version.
+7. Keep `ddl-auto` non-mutating in every non-test runtime.
+8. Explicitly disable out-of-order execution in production.
+9. Record rollback as restore/forward-fix steps; Flyway versioned migrations are not silently undone.
+10. Preserve money as decimal and timestamps with documented timezone semantics.
+
+## V2 database work queue
+
+| Priority | Change | Gate |
+| --- | --- | --- |
+| HIGH | guest normalized contact uniqueness | V17 implemented; deployment preflight and real-MySQL concurrency test remain required |
+| HIGH | subscription provider automation beyond manual admin fulfillment | approved provider callback contract and real-MySQL concurrency evidence |
+| MEDIUM | provider verification attempt/retention model | payment transaction-boundary design |
+| MEDIUM | pagination/index review | real query plans and stable API contract |
+| LOW | legacy payment/event/audit consolidation | zero-caller proof, data migration, compatibility window |

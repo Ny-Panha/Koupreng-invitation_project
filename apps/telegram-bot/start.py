@@ -72,13 +72,15 @@ def print_webhook_instructions() -> None:
     print("3. Register the webhook with Telegram:")
     print(
         "      curl \"https://api.telegram.org/bot"
-        f"{REDACTED_VALUE}/setWebhook?url=<NGROK_URL>/telegram/webhook\""
+        f"{REDACTED_VALUE}/setWebhook?url=<NGROK_URL>/telegram/webhook"
+        "&secret_token=<TELEGRAM_WEBHOOK_SECRET>\""
     )
     print()
     print("   Or open this URL in your browser after replacing placeholders:")
     print(
         "      https://api.telegram.org/bot"
         f"{REDACTED_VALUE}/setWebhook?url=<NGROK_URL>/telegram/webhook"
+        "&secret_token=<TELEGRAM_WEBHOOK_SECRET>"
     )
     print()
     print("4. Check webhook status:")

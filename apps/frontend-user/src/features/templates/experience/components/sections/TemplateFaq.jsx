@@ -1,7 +1,9 @@
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import TemplateSectionHeader from "../shared/TemplateSectionHeader";
 import { templateIcons } from "../../config/templateIcons";
 
 export default function TemplateFaq({ content }) {
+    const lang = useLanguageStore((state) => state.lang);
     if (!content.faq?.length) return null;
 
     return (
@@ -10,9 +12,9 @@ export default function TemplateFaq({ content }) {
                 <TemplateSectionHeader
                     id="tx-faq-title"
                     icon={templateIcons.invitation}
-                    kicker="ព័ត៌មានបន្ថែម"
-                    title="សំណួរញឹកញាប់"
-                    subtitle="Frequently Asked Questions"
+                    kicker={lang === "en" ? "INFORMATION" : "ព័ត៌មានបន្ថែម"}
+                    title={lang === "en" ? "Frequently Asked Questions" : "សំណួរញឹកញាប់"}
+                    subtitle="FAQ"
                 />
                 <div className="tx-faq__list">
                     {content.faq.map((item) => (

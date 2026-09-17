@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { IoQrCode } from "react-icons/io5";
 import { QRCode } from "react-qr-code";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 import TemplateImage from "../shared/TemplateImage";
 import TemplateReveal from "../shared/TemplateReveal";
@@ -12,6 +13,7 @@ import { templateIcons } from "../../config/templateIcons";
  * Demo placeholder cards for the template page only — no real account numbers.
  */
 export default function TemplateGift({ content }) {
+    const lang = useLanguageStore((state) => state.lang);
     const accounts = content.gift || [];
     const [copiedId, setCopiedId] = useState("");
     const CopyIcon = templateIcons.copy;
@@ -41,11 +43,10 @@ export default function TemplateGift({ content }) {
                 document.body.appendChild(input);
                 input.focus();
                 input.select();
-                const res = document.execCommand("copy");
+                document.execCommand("copy");
                 input.remove();
-                if (res) success = true;
             } catch {
-                success = false;
+                // Keep the existing optimistic copied indicator.
             }
         }
 
@@ -59,10 +60,15 @@ export default function TemplateGift({ content }) {
                 <TemplateSectionHeader
                     id="tx-gift-title"
                     icon={templateIcons.gift}
-                    kicker="អំណោយមង្គល"
-                    title="ចំណងដៃ"
-                    subtitle="GIFT"
-                    lead={content.giftNote || "វត្តមានរបស់អ្នកគឺជាអំណោយដ៏ល្អបំផុត។ ប្រសិនបើអ្នកចង់ចែករំលែកពរជ័យបន្ថែម"}
+                    kicker={lang === "en" ? "WEDDING GIFTS" : "អំណោយមង្គល"}
+                    title={lang === "en" ? "Gifts & Blessings" : "ចំណងដៃ"}
+                    subtitle={lang === "en" ? "WEDDING GIFT" : "GIFT"}
+                    lead={
+                        content.giftNote ||
+                        (lang === "en"
+                            ? "Your presence and blessings are our greatest gifts. For those wishing to send gifts, details are below."
+                            : "វត្តមានរបស់អ្នកគឺជាអំណោយដ៏ល្អបំផុត។ ប្រសិនបើអ្នកចង់ចែករំលែកពរជ័យបន្ថែម")
+                    }
                 />
 
                 <div className="tx-gift__grid">
@@ -76,7 +82,7 @@ export default function TemplateGift({ content }) {
                                 </div>
                                 <div className="tx-gift__qr">
                                     {acc.qrImage ? (
-                                        <TemplateImage src={acc.qrImage} alt={`QR ${acc.bank || "គណនី"}`} />
+                                        <TemplateImage src={acc.qrImage} alt={`QR ${acc.bank || (lang === "en" ? "Account" : "គណនី")}`} />
                                     ) : qrValue ? (
                                         <QRCode value={qrValue} size={78} level="M" />
                                     ) : (
@@ -99,7 +105,9 @@ export default function TemplateGift({ content }) {
                                         ) : (
                                             <CopyIcon aria-hidden="true" />
                                         )}
-                                        {copiedId === (acc.id || String(index)) ? "បានចម្លង" : "ចម្លងលេខគណនី"}
+                                        {copiedId === (acc.id || String(index))
+                                            ? (lang === "en" ? "Copied!" : "បានចម្លង")
+                                            : (lang === "en" ? "Copy Account Number" : "ចម្លងលេខគណនី")}
                                     </button>
                                 )}
                             </TemplateReveal>

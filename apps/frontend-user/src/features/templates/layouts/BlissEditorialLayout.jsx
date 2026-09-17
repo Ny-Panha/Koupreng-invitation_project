@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Music, VolumeX, X, Send, CheckCircle2, QrCode, MapPin } from "lucide-react";
+import { Music, VolumeX, X, CheckCircle2 } from "lucide-react";
 import defaultMusicUrl from "../../../assets/music/Instrumental Wedding Music (VioSounds Cover).m4a";
 import "./bliss-editorial.css";
 

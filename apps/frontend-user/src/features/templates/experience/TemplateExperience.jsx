@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
@@ -7,12 +7,8 @@ import { IoArrowBackOutline, IoSparkles } from "react-icons/io5";
 import { buildTemplateContent } from "./config/templateExperienceContent";
 import {
     getVariantTheme,
-    KHMER_GOLDEN_CANVA_INSPIRED_CODE,
-    THE_DIGITAL_YES_TEMPLATE_CODE,
     resolveVariant,
 } from "./config/templateExperienceThemes";
-import CanvaKhmerWeddingTemplate from "./components/canva-khmer/CanvaKhmerWeddingTemplate";
-import TheDigitalYesInvitation from "@/features/wedding-site/TheDigitalYesInvitation";
 import { getDedicatedTemplateComponent } from "../registry/templateRegistry";
 import TemplateOpeningGate from "./components/sections/TemplateOpeningGate";
 import TemplateHero from "./components/sections/TemplateHero";
@@ -103,7 +99,6 @@ export default function TemplateExperience({
             monogramText: liveData.groomName && liveData.brideName
                 ? `${liveData.groomName[0]} & ${liveData.brideName[0]}`
                 : baseContent.monogramText,
-            dateText: liveData.weddingDateText || liveData.weddingDate || baseContent.dateText,
             venue: liveData.venueName ? {
                 ...baseContent.venue,
                 name: liveData.venueName,
@@ -128,7 +123,6 @@ export default function TemplateExperience({
             },
             cardMotion: liveData.cardMotion || liveData.cardLayout || baseContent.cardMotion,
             videoUrl: liveData.videoUrl || baseContent.videoUrl,
-            music: liveData.bgMusicUrl || liveData.musicUrl || baseContent.music,
             googleMapUrl: liveData.googleMapUrl || baseContent.googleMapUrl,
             bankAccount: {
                 bank: liveData.bankName || baseContent.bankAccount?.bank || "ABA Bank",
@@ -201,16 +195,6 @@ export default function TemplateExperience({
 
     const reducedMotion = usePrefersReducedMotion();
     const [musicAudioRef, musicController] = useTemplateMusicController(content.music);
-    const isCanvaKhmerTemplate =
-        variant === KHMER_GOLDEN_CANVA_INSPIRED_CODE ||
-        tpl?.variant === KHMER_GOLDEN_CANVA_INSPIRED_CODE ||
-        tpl?.templateId === KHMER_GOLDEN_CANVA_INSPIRED_CODE ||
-        tpl?.id === KHMER_GOLDEN_CANVA_INSPIRED_CODE ||
-        tpl?.slug === KHMER_GOLDEN_CANVA_INSPIRED_CODE ||
-        tpl?.code === KHMER_GOLDEN_CANVA_INSPIRED_CODE ||
-        tpl?.templateCode === KHMER_GOLDEN_CANVA_INSPIRED_CODE ||
-        content?.variant === KHMER_GOLDEN_CANVA_INSPIRED_CODE;
-
     const crumbs = useMemo(
         () =>
             breadcrumbItems || [
@@ -275,7 +259,7 @@ export default function TemplateExperience({
         openingTimerRef.current = window.setTimeout(() => {
             setGateState("opened");
         }, reducedMotion ? 0 : duration);
-    }, [gateState, musicController, preview, reducedMotion, openingStyle]);
+    }, [gateState, musicController, reducedMotion, openingStyle]);
 
     useEffect(() => () => {
         if (openingTimerRef.current !== null) {
@@ -368,23 +352,19 @@ export default function TemplateExperience({
 
     const DedicatedComponent = getDedicatedTemplateComponent(tpl, variant);
     if (DedicatedComponent) {
-        return (
-            <DedicatedComponent
-                tpl={content}
-                content={content}
-                showBack={!preview && showBreadcrumb}
-                backTo={backLink}
-                backLabel={backLabel}
-                preview={preview}
-                useTemplateLink={useTemplateLink}
-                primaryCtaLabel={primaryCtaLabel}
-                showActions={showActions}
-                showStickyCta={showStickyCta}
-                isHostedInvitation={Boolean(tpl?.hostContent)}
-            >
-                {children}
-            </DedicatedComponent>
-        );
+        return createElement(DedicatedComponent, {
+            tpl: content,
+            content,
+            showBack: !preview && showBreadcrumb,
+            backTo: backLink,
+            backLabel,
+            preview,
+            useTemplateLink,
+            primaryCtaLabel,
+            showActions,
+            showStickyCta,
+            isHostedInvitation: Boolean(tpl?.hostContent),
+        }, children);
     }
 
     return (

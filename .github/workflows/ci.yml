@@ -350,7 +350,12 @@ jobs:
           from pathlib import Path
           import yaml
 
-          paths = [Path('.github/workflows/ci.yml'), Path('infra/monitoring/prometheus.yml'), Path('packages/api-contracts/openapi.yaml')]
+          paths = [
+              Path('.github/workflows/ci.yml'),
+              Path('docker-compose.yml'),
+              Path('infra/monitoring/prometheus.yml'),
+              Path('packages/api-contracts/openapi.yaml'),
+          ]
           for path in paths:
               with path.open(encoding='utf-8') as handle:
                   yaml.safe_load(handle)
@@ -364,9 +369,22 @@ jobs:
           while IFS= read -r script; do bash -n "$script"; done < <(git ls-files '*.sh')
           node --check scripts/ci/browser-smoke.mjs
           test -f .env.example
+          test -f docker-compose.yml
           test -f infra/nginx/koupreng-api.conf
+          test -f infra/nginx/docker/gateway.conf.template
           test -f infra/monitoring/prometheus.yml
           test -f infra/backup/mysql-backup.ps1
+
+      - name: Validate Compose interpolation and service topology
+        env:
+          DB_PASSWORD: ci_compose_database_password
+          MYSQL_ROOT_PASSWORD: ci_compose_root_password
+          JWT_SECRET: ci_compose_jwt_secret_with_more_than_sixty_four_characters_123456789
+          ADMIN_PAYMENT_SECRET: ci_compose_payment_secret
+          TELEGRAM_BOT_TOKEN: 000000000:ci-placeholder-token
+          TELEGRAM_WEBHOOK_SECRET: ci_compose_webhook_secret
+          ABA_PAYWAY_STATIC_LINK: https://example.invalid/khqr
+        run: docker compose config --quiet
 
       - name: Build tracked Dockerfiles when applicable
         shell: bash

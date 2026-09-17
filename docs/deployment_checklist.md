@@ -16,11 +16,12 @@ Do not deploy until `production_readiness_report.md` has no release blockers.
 - [ ] Each service has an explicit provider project/service ID, root directory, build command, start command, health path, and domain.
 - [ ] Database engine/version, connection policy, migration owner, backup, restore drill, and rollback owner are documented.
 - [ ] Runtime versions match JDK 25, Node 22, Python 3.13, and MySQL 8 expectations.
-- [ ] No guessed Railway manifest or Docker configuration is introduced without confirming the actual topology.
+- [ ] The tracked Compose topology passes `docker compose config`, all four application images build, and its hostnames/health checks match the selected provider topology.
 
 ## Secrets and external services
 
 - [ ] Telegram token is newly rotated; the old token is verified invalid.
+- [ ] Telegram webhook registration uses the rotated `TELEGRAM_WEBHOOK_SECRET` as `secret_token`, and requests without the matching header are rejected.
 - [ ] Database, JWT, admin-payment, OAuth, Telegram, email, storage, and provider credentials live only in the provider secret store.
 - [ ] Production CORS origins, TLS/HSTS, CSP, cookies, trusted proxy headers, WAF, and rate-limit backend are verified.
 - [ ] ABA callback source/secret behavior, Telegram delivery, SMTP, and storage uploads pass in staging.

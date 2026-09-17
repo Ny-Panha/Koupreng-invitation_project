@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Loading, ErrorState, Empty } from "../../components/States";
 import { useResource } from "../../hooks/useResource";
 import { formatDate } from "../../lib/format";
+import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 import adminManagementService from "./adminManagementService";
 import "./AdminFeature.css";
 
@@ -15,13 +16,19 @@ function money(amount, currency = "USD") {
 }
 
 export default function AdminPaymentsPage() {
+  const { lang, t } = useAdminLanguage();
   const { data, loading, error, reload } = useResource(adminManagementService.payments);
   const [query, setQuery] = useState("");
   const [confirmingCode, setConfirmingCode] = useState(null);
   const [actionMessage, setActionMessage] = useState("");
 
   const handleConfirm = async (payment) => {
-    if (!window.confirm(`តើអ្នកពិតជាចង់ Confirm Payment សម្រាប់ Order ${payment.orderCode} មែនទេ?`)) {
+    const confirmPrompt = t(
+      "payments.confirmPrompt",
+      `Are you sure you want to confirm payment for Order ${payment.orderCode}?`,
+      { code: payment.orderCode }
+    );
+    if (!window.confirm(confirmPrompt)) {
       return;
     }
     setConfirmingCode(payment.orderCode);
@@ -31,11 +38,16 @@ export default function AdminPaymentsPage() {
         orderCode: payment.orderCode,
         amount: payment.amount || 0.01,
         confirmedBy: "admin",
+        itemType: payment.itemType || "TEMPLATE",
       });
-      setActionMessage(`Order ${payment.orderCode} បាន Confirm ជោគជ័យ!`);
+      setActionMessage(
+        t("payments.confirmSuccess", `Order ${payment.orderCode} confirmed successfully!`, {
+          code: payment.orderCode,
+        })
+      );
       await reload();
     } catch (err) {
-      alert(err.message || "Failed to confirm payment");
+      alert(err.message || (lang === "en" ? "Failed to confirm payment" : "បរាជ័យក្នុងការបញ្ជាក់ការទូទាត់"));
     } finally {
       setConfirmingCode(null);
     }
@@ -70,8 +82,8 @@ export default function AdminPaymentsPage() {
     <div>
       <div className="page-head">
         <div>
-          <h2 className="page-title">Payments</h2>
-          <p className="page-subtitle">Template and subscription payment orders from the active admin API.</p>
+          <h2 className="page-title">{t("payments.title", "Payments")}</h2>
+          <p className="page-subtitle">{t("payments.subtitle", "Template and subscription payment orders from the active admin API.")}</p>
         </div>
         <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
           <a
@@ -83,7 +95,9 @@ export default function AdminPaymentsPage() {
           >
             <span>🔗 ABA Pay Link</span>
           </a>
-          <button type="button" className="btn btn-ghost" onClick={reload}>Refresh</button>
+          <button type="button" className="btn btn-ghost" onClick={reload}>
+            {t("common.refresh", "Refresh")}
+          </button>
         </div>
       </div>
 
@@ -94,31 +108,54 @@ export default function AdminPaymentsPage() {
       )}
 
       <section className="admin-feature-grid">
-        <article className="admin-feature-card"><span>Total</span><strong>{totals.total}</strong></article>
-        <article className="admin-feature-card"><span>Pending</span><strong>{totals.pending}</strong></article>
-        <article className="admin-feature-card"><span>Paid</span><strong>{totals.paid}</strong></article>
-        <article className="admin-feature-card"><span>Failed</span><strong>{totals.failed}</strong></article>
+        <article className="admin-feature-card">
+          <span>{t("payments.statTotal", "Total")}</span>
+          <strong>{totals.total}</strong>
+        </article>
+        <article className="admin-feature-card">
+          <span>{t("payments.statPending", "Pending")}</span>
+          <strong>{totals.pending}</strong>
+        </article>
+        <article className="admin-feature-card">
+          <span>{t("payments.statPaid", "Paid")}</span>
+          <strong>{totals.paid}</strong>
+        </article>
+        <article className="admin-feature-card">
+          <span>{t("payments.statFailed", "Failed")}</span>
+          <strong>{totals.failed}</strong>
+        </article>
       </section>
 
       <section className="card">
         <div className="toolbar">
-          <input className="text-input" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search payments..." />
+          <input
+            className="text-input"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder={t("payments.searchPlaceholder", "Search payments...")}
+          />
         </div>
 
-        {loading ? <Loading /> : error ? <ErrorState onRetry={reload} /> : payments.length === 0 ? <Empty label="រកមិនឃើញទិន្នន័យការទូទាត់ទេ" /> : (
+        {loading ? (
+          <Loading />
+        ) : error ? (
+          <ErrorState onRetry={reload} />
+        ) : payments.length === 0 ? (
+          <Empty label={t("payments.empty", "រកមិនឃើញទិន្នន័យការទូទាត់ទេ")} />
+        ) : (
           <div className="table-wrap">
             <table className="data">
               <thead>
                 <tr>
-                  <th>Order</th>
-                  <th>Item</th>
-                  <th>Type</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                  <th>Provider</th>
-                  <th>Created</th>
-                  <th>Paid</th>
-                  <th>Action</th>
+                  <th>{t("payments.colOrder", "Order")}</th>
+                  <th>{t("payments.colItem", "Item")}</th>
+                  <th>{t("payments.colType", "Type")}</th>
+                  <th>{t("payments.colAmount", "Amount")}</th>
+                  <th>{t("payments.colStatus", "Status")}</th>
+                  <th>{t("payments.colMethod", "Provider")}</th>
+                  <th>{lang === "en" ? "Created" : "បង្កើត"}</th>
+                  <th>{lang === "en" ? "Paid" : "ទូទាត់"}</th>
+                  <th>{t("payments.colActions", "Action")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -145,7 +182,7 @@ export default function AdminPaymentsPage() {
                           onClick={() => handleConfirm(payment)}
                           style={{ padding: "4px 10px", fontSize: "0.8rem", cursor: "pointer" }}
                         >
-                          {confirmingCode === payment.orderCode ? "..." : "Confirm"}
+                          {confirmingCode === payment.orderCode ? "..." : t("payments.confirmBtn", "Confirm")}
                         </button>
                       ) : (
                         <span style={{ color: "#888", fontSize: "0.8rem" }}>—</span>

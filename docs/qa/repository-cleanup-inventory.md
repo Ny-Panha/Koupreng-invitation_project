@@ -1,5 +1,7 @@
 # Repository Cleanup Inventory
 
+> **Architecture V2 addendum (2026-09-15):** the original cleanup inventory below remains provenance for baseline `2ba8578`. From the later `main` merge base `955f8d9`, Architecture V2 records 306 Git-detected package/file renames, 42 deletion-class paths (including three semantic relocations), and 48 additions before the final documentation commit. The repository now has domain-owned backend packages, four Dockerfiles plus Compose/Nginx topology, a 191-path OpenAPI contract, expanded CI, and the canonical smoke test. Exact new deletion accounting is appended to `deletion-manifest.md`; current verification is in `verification-results.md`.
+
 Audit date: 2026-07-21. Baseline: `2ba8578`. Branch: `chore/repository-cleanup-and-qa`.
 
 ## Method

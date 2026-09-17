@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import {
-  Sparkles,
   Music,
   VolumeX,
   MapPin,

@@ -2,7 +2,7 @@
 
 Audit baseline: commit `2ba8578`. Cleanup branch: `chore/repository-cleanup-and-qa`.
 
-This manifest accounts for all 188 paths recorded by Git as deletions between the baseline and the cleanup branch. A deletion was accepted only after the evidence named below was checked. Renames are listed separately and are not counted as deletions.
+This manifest accounts for the original 188 cleanup deletions and the Architecture V2 addendum below. A deletion was accepted only after the evidence named below was checked. Renames are listed separately and are not counted as deletions.
 
 ## Evidence vocabulary
 
@@ -221,3 +221,59 @@ This manifest accounts for all 188 paths recorded by Git as deletions between th
 ## Historical one-time script
 
 `scripts/fix_public_invitation_conflict.py` was already deleted by commit `585e8ba` on 2026-07-03 after its one-time repair had been incorporated. It was therefore reviewed but is not a deletion introduced by this cleanup branch.
+
+## Architecture V2 addendum (2026-09-15)
+
+From the `main` merge base `955f8d9` to the Architecture V2 branch, Git records 42 deletions and 306 detected renames. Three of the 42 are semantic relocations whose content changed enough not to be detected as renames:
+
+| Old path | Disposition / replacement | Evidence |
+| --- | --- | --- |
+| `apps/backend/src/main/java/com/koupreng/backend/entity/user/Role.java` | Relocated to `user/domain/Role.java` | backend compilation, 246-test suite, ArchUnit |
+| `apps/backend/src/main/java/com/koupreng/backend/service/MessageService.java` | Relocated to `shared/i18n/MessageService.java` | backend compilation, i18n/security integration tests |
+| `apps/backend/src/test/java/com/koupreng/backend/common/GlobalExceptionHandlerTests.java` | Replaced by shared exception/error contract tests | backend suite and semantic OpenAPI gate |
+| `apps/backend/src/main/java/com/koupreng/backend/dto/UpdateRoleRequest.java` | Unreferenced global DTO removed after admin API migration | `rg` caller audit, backend compilation/tests |
+| `apps/frontend-admin/src/components/AdminUI.jsx` | Duplicate removed; `src/shared/ui/AdminUI.jsx` remains canonical | admin imports, Knip, depcheck, tests/build |
+| `apps/frontend-admin/src/layouts/AdminSidebar.jsx` | Duplicate removed; `src/components/navigation/AdminSidebar.jsx` remains canonical | admin imports, Knip, depcheck, tests/build |
+
+The remaining 36 deletions are verified unreachable/superseded user-frontend implementations. Their exact paths are retained here for accountability:
+
+```text
+apps/frontend-user/src/features/check-in/CheckInPage.css
+apps/frontend-user/src/features/check-in/CheckInPage.jsx
+apps/frontend-user/src/features/check-in/components/CheckInList.jsx
+apps/frontend-user/src/features/check-in/components/CheckInScanner.jsx
+apps/frontend-user/src/features/check-in/components/CheckInSummary.jsx
+apps/frontend-user/src/features/delivery/DeliveryPage.css
+apps/frontend-user/src/features/delivery/DeliveryPage.jsx
+apps/frontend-user/src/features/delivery/components/DeliveryList.jsx
+apps/frontend-user/src/features/delivery/components/DeliveryStatusBadge.jsx
+apps/frontend-user/src/features/media/MediaPage.css
+apps/frontend-user/src/features/media/MediaPage.jsx
+apps/frontend-user/src/features/media/components/MediaGallery.jsx
+apps/frontend-user/src/features/media/components/MediaUploader.jsx
+apps/frontend-user/src/features/profile/ProfilePage.css
+apps/frontend-user/src/features/profile/ProfilePage.jsx
+apps/frontend-user/src/features/profile/components/AvatarUpload.jsx
+apps/frontend-user/src/features/profile/components/ProfileForm.jsx
+apps/frontend-user/src/features/seating/components/index.js
+apps/frontend-user/src/features/templates/experience/components/sections/TemplateWish.jsx
+apps/frontend-user/src/features/templates/layouts/EmeraldLuxeLayout.jsx
+apps/frontend-user/src/features/templates/layouts/RoyalKhmerHeritageLayout.jsx
+apps/frontend-user/src/features/templates/layouts/emerald-luxe.css
+apps/frontend-user/src/features/templates/layouts/royal-khmer-heritage.css
+apps/frontend-user/src/features/templates/layouts/shared/index.js
+apps/frontend-user/src/features/templates/pages/BrowseTemplatesPage.css
+apps/frontend-user/src/features/wedding-builder/utils/mediaValidation.js
+apps/frontend-user/src/features/wedding-site/RoyalInvitation.jsx
+apps/frontend-user/src/features/wedding-site/TheDigitalYesInvitation.jsx
+apps/frontend-user/src/features/wedding-site/thedigitalyes.css
+apps/frontend-user/src/shared/data/openingVideos.js
+apps/frontend-user/src/shared/ui/MusicPicker.css
+apps/frontend-user/src/shared/ui/MusicPicker.jsx
+apps/frontend-user/src/shared/ui/OpeningVideoPicker.css
+apps/frontend-user/src/shared/ui/OpeningVideoPicker.jsx
+apps/frontend-user/src/shared/ui/VenuePicker.css
+apps/frontend-user/src/shared/ui/VenuePicker.jsx
+```
+
+The canonical routed check-in, delivery, media, profile, template-experience, and builder implementations were retained. Validation after deletion: user ESLint, 124 Vitest tests, Knip, depcheck, Vite build, and all 56 controlled Playwright cases; admin ESLint, 10 tests, Knip, depcheck, and build; backend full verify/ArchUnit.

@@ -23,11 +23,15 @@ import {
 import { useResource } from "../../hooks/useResource";
 import { useToast } from "../../hooks/useToast";
 import { formatDate } from "../../lib/format";
+import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 import adminManagementService from "./adminManagementService";
 import { AdminPageHeader, StatCard, StatusBadge, ActionButton } from "../../shared/ui/AdminUI";
 import Toast from "../../components/Toast";
 import { Loading, ErrorState } from "../../components/States";
+import { USER_APP_URL } from "../../shared/config/runtime";
 
+// Retained as the canonical category vocabulary for the pending filter control.
+// eslint-disable-next-line no-unused-vars
 const CATEGORIES = [
   { value: "ALL", label: "គ្រប់ប្រភេទ (All Categories)" },
   { value: "TRADITIONAL", label: "ប្រពៃណីខ្មែរ (Traditional)" },
@@ -48,7 +52,7 @@ const EMPTY_TEMPLATE = {
   description: "",
 };
 
-export function formatTemplateDescription(description) {
+function formatTemplateDescription(description) {
   if (!description) return "គំរូធៀបការមង្គលការបែបប្រពៃណីខ្មែរ រចនាបទស្រស់ស្អាតនិងទំនើប";
   const str = String(description).trim();
   if (str.startsWith("{") && str.endsWith("}")) {
@@ -108,6 +112,7 @@ function TemplateThumbnail({ src, alt, category }) {
 }
 
 export default function AdminTemplatesPage() {
+  const { lang, t } = useAdminLanguage();
   const navigate = useNavigate();
   const { data, setData, loading, error, reload } = useResource(adminManagementService.templates);
   const { toast, show, clear } = useToast();
@@ -319,18 +324,22 @@ export default function AdminTemplatesPage() {
     <div className="space-y-6">
       {/* Header */}
       <AdminPageHeader
-        eyebrow="គំរូ & កាតាឡុក"
-        title="គំរូធៀបការ"
-        subtitle="គ្រប់គ្រងគំរូធៀបការឌីជីថល កំណត់កញ្ចប់សេវា និងស្ថានភាពបង្ហាញជូនអតិថិជន"
+        eyebrow={lang === "en" ? "Catalog & Templates" : "គំរូ & កាតាឡុក"}
+        title={t("nav.templates", "គំរូធៀបការ")}
+        subtitle={
+          lang === "en"
+            ? "Manage digital invitation templates, packages, and publishing statuses"
+            : "គ្រប់គ្រងគំរូធៀបការឌីជីថល កំណត់កញ្ចប់សេវា និងស្ថានភាពបង្ហាញជូនអតិថិជន"
+        }
         actions={
           <>
             <ActionButton variant="ghost" size="sm" onClick={reload}>
               <RefreshCw className="h-4 w-4" />
-              <span>ផ្ទុកឡើងវិញ</span>
+              <span>{t("common.refresh", "ផ្ទុកឡើងវិញ")}</span>
             </ActionButton>
             <ActionButton variant="primary" size="sm" onClick={handleOpenCreate}>
               <Plus className="h-4 w-4" />
-              <span>បង្កើតគំរូថ្មី</span>
+              <span>{lang === "en" ? "+ New Template" : "+ បង្កើតគំរូថ្មី"}</span>
             </ActionButton>
           </>
         }
@@ -339,30 +348,30 @@ export default function AdminTemplatesPage() {
       {/* 4 Stat Summary Cards */}
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
-          label="គំរូទាំងអស់"
+          label={lang === "en" ? "All Templates" : "គំរូទាំងអស់"}
           value={stats.total}
-          note="ចំនួនគំរូសរុបក្នុងប្រព័ន្ធ"
+          note={lang === "en" ? "Total templates in system" : "ចំនួនគំរូសរុបក្នុងប្រព័ន្ធ"}
           icon={Palette}
           tone="amber"
         />
         <StatCard
-          label="គំរូ PREMIUM"
+          label={lang === "en" ? "Premium Templates" : "គំរូ PREMIUM"}
           value={stats.premium}
-          note="សម្រាប់គណនីបង់ប្រាក់"
+          note={lang === "en" ? "For paid tier packages" : "សម្រាប់គណនីបង់ប្រាក់"}
           icon={Crown}
           tone="purple"
         />
         <StatCard
-          label="គំរូឥតគិតថ្លៃ (FREE)"
+          label={lang === "en" ? "Free Templates" : "គំរូឥតគិតថ្លៃ (FREE)"}
           value={stats.free}
-          note="សម្រាប់អតិថិជនទូទៅ"
+          note={lang === "en" ? "Available for all users" : "សម្រាប់អតិថិជនទូទៅ"}
           icon={Gift}
           tone="emerald"
         />
         <StatCard
-          label="កំពុងដំណើរការ (ACTIVE)"
+          label={lang === "en" ? "Active Templates" : "កំពុងដំណើរការ (ACTIVE)"}
           value={stats.active}
-          note="បង្ហាញលើគេហទំព័រ"
+          note={lang === "en" ? "Visible on public site" : "បង្ហាញលើគេហទំព័រ"}
           icon={CheckCircle2}
           tone="cyan"
         />
@@ -377,7 +386,7 @@ export default function AdminTemplatesPage() {
             <input
               type="text"
               className="w-full pl-9 pr-4 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 bg-slate-50 text-slate-900 placeholder-slate-400 focus:bg-white focus:border-amber-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-900/80 dark:text-zinc-100 dark:placeholder-zinc-500 dark:focus:border-amber-500 transition-colors"
-              placeholder="ស្វែងរកតាមឈ្មោះ, ប្រភេទ, ID..."
+              placeholder={lang === "en" ? "Search by name, category, ID..." : "ស្វែងរកតាមឈ្មោះ, ប្រភេទ, ID..."}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
@@ -391,11 +400,13 @@ export default function AdminTemplatesPage() {
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
             >
-              {CATEGORIES.map((c) => (
-                <option key={c.value} value={c.value}>
-                  {c.label}
-                </option>
-              ))}
+              <option value="ALL">{lang === "en" ? "All Categories" : "គ្រប់ប្រភេទ (All Categories)"}</option>
+              <option value="TRADITIONAL">{lang === "en" ? "Traditional Khmer" : "ប្រពៃណីខ្មែរ (Traditional)"}</option>
+              <option value="MODERN">{lang === "en" ? "Modern Minimal" : "សម័យទំនើប (Modern)"}</option>
+              <option value="LUXURY">{lang === "en" ? "Luxury Royal" : "ប្រណិត (Luxury Royal)"}</option>
+              <option value="MINIMALIST">{lang === "en" ? "Minimalist" : "សាមញ្ញ (Minimalist)"}</option>
+              <option value="FLORAL">{lang === "en" ? "Floral Garden" : "ផ្កាស្រស់ (Floral Garden)"}</option>
+              <option value="OTHER">{lang === "en" ? "Other" : "ផ្សេងៗ (Other)"}</option>
             </select>
 
             {/* Type Select (Free / Premium) */}
@@ -404,8 +415,8 @@ export default function AdminTemplatesPage() {
               value={typeFilter}
               onChange={(e) => setTypeFilter(e.target.value)}
             >
-              <option value="ALL">ប្រភេទតម្លៃទាំងអស់</option>
-              <option value="FREE">ឥតគិតថ្លៃ (Free)</option>
+              <option value="ALL">{lang === "en" ? "All Pricing Types" : "ប្រភេទតម្លៃទាំងអស់"}</option>
+              <option value="FREE">{lang === "en" ? "Free" : "ឥតគិតថ្លៃ (Free)"}</option>
               <option value="PREMIUM">Premium 👑</option>
             </select>
 
@@ -415,9 +426,9 @@ export default function AdminTemplatesPage() {
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
             >
-              <option value="ALL">ស្ថានភាពទាំងអស់</option>
-              <option value="ACTIVE">ដំណើរការ (Active)</option>
-              <option value="INACTIVE">បានបិទ (Inactive)</option>
+              <option value="ALL">{lang === "en" ? "All Statuses" : "ស្ថានភាពទាំងអស់"}</option>
+              <option value="ACTIVE">{lang === "en" ? "Active" : "ដំណើរការ (Active)"}</option>
+              <option value="INACTIVE">{lang === "en" ? "Inactive" : "បានបិទ (Inactive)"}</option>
             </select>
 
             {/* View Mode Toggle */}
@@ -430,7 +441,7 @@ export default function AdminTemplatesPage() {
                     ? "bg-white text-amber-600 shadow-xs dark:bg-zinc-800 dark:text-amber-400"
                     : "text-slate-500 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-zinc-200"
                 }`}
-                title="ទម្រង់ Grid Cards"
+                title={lang === "en" ? "Grid Cards View" : "ទម្រង់ Grid Cards"}
               >
                 <LayoutGrid className="h-4 w-4" />
               </button>
@@ -442,7 +453,7 @@ export default function AdminTemplatesPage() {
                     ? "bg-white text-amber-600 shadow-xs dark:bg-zinc-800 dark:text-amber-400"
                     : "text-slate-500 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-zinc-200"
                 }`}
-                title="ទម្រង់តារាង Table"
+                title={lang === "en" ? "Table View" : "ទម្រង់តារាង Table"}
               >
                 <List className="h-4 w-4" />
               </button>
@@ -1133,7 +1144,7 @@ export default function AdminTemplatesPage() {
 
                 <div className="mt-4 text-center">
                   <p className="text-[11px] text-slate-400 dark:text-zinc-500">
-                    💡 រាល់ពេល Admin រក្សាទុក គំរូនេះនឹងបង្ហាញជូនភ្ញៀវ/User នៅលើ <code>http://localhost:5173/templates</code> ភ្លាមៗ។
+                    💡 រាល់ពេល Admin រក្សាទុក គំរូនេះនឹងបង្ហាញជូនភ្ញៀវ/User នៅលើ <code>{USER_APP_URL}/templates</code> ភ្លាមៗ។
                   </p>
                 </div>
               </div>

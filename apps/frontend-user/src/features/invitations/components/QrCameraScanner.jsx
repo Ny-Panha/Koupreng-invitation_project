@@ -20,7 +20,7 @@ function playBeep() {
   }
 }
 
-export function extractTokenFromQr(text) {
+function extractTokenFromQr(text) {
   if (!text) return "";
   const trimmed = text.trim();
   try {

@@ -2,21 +2,15 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import {
   Heart,
-  Calendar,
   Clock,
   MapPin,
   Music,
   VolumeX,
-  Sparkles,
   Send,
   CheckCircle2,
   QrCode,
-  Copy,
   ExternalLink,
-  ChevronRight,
-  Camera,
   Gift,
-  Users,
 } from "lucide-react";
 import defaultMusicUrl from "../../../assets/music/ថ្ងៃដែលរង់ចាំ.mp3";
 import "./withjoy-portal.css";
