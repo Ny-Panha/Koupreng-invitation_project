@@ -12,34 +12,45 @@ export default function ConfirmDialog({
   confirmLabel = "Confirm",
   isDestructive = false,
   isLoading = false,
+  className = "",
 }) {
+  const cleanCancel = String(cancelLabel || "").replace(/^[✕xX]\s*/, "");
+  const cleanConfirm = String(confirmLabel || "").replace(/^[✓✔]\s*/, "");
+
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
       title={title}
       size="sm"
+      className={`k-confirm-dialog ${className}`.trim()}
       closeOnBackdropClick={!isLoading}
       closeOnEscape={!isLoading}
     >
       <div className="k-confirm-body">
-        <p className="k-confirm-message">{message}</p>
+        {message && <p className="k-confirm-message">{message}</p>}
         <div className="k-confirm-actions">
           <button
             type="button"
-            className="k-btn k-btn-secondary"
+            className="k-btn k-confirm-btn k-confirm-btn-cancel k-btn-secondary"
             onClick={onClose}
             disabled={isLoading}
           >
-            {cancelLabel}
+            <span className="k-confirm-icon" aria-hidden="true">✕</span>
+            <span>{cleanCancel}</span>
           </button>
           <LoadingButton
             type="button"
-            className={`k-btn ${isDestructive ? "k-btn-danger" : "k-btn-primary"}`}
+            className={`k-btn k-confirm-btn ${
+              isDestructive
+                ? "k-btn-danger k-confirm-btn-danger"
+                : "k-btn-primary k-confirm-btn-primary"
+            }`}
             onClick={onConfirm}
             isLoading={isLoading}
           >
-            {confirmLabel}
+            {!isLoading && <span className="k-confirm-icon" aria-hidden="true">✓</span>}
+            <span>{cleanConfirm}</span>
           </LoadingButton>
         </div>
       </div>

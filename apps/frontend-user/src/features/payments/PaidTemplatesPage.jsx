@@ -15,10 +15,12 @@ import {
 
 import { paymentService } from "./paymentService";
 import { getTemplateById, KEEP_TEMPLATE_CODE } from "../templates/data/templatesData";
+import { templateCatalogService } from "@/features/templates/api/templateCatalogApi";
 import "./PaymentPages.css";
 
 export default function PaidTemplatesPage() {
   const [templates, setTemplates] = useState([]);
+  const [catalog, setCatalog] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -42,6 +44,16 @@ export default function PaidTemplatesPage() {
           setLoading(false);
         }
       });
+
+    templateCatalogService
+      .list()
+      .then((items) => {
+        if (active && Array.isArray(items)) {
+          setCatalog(items);
+        }
+      })
+      .catch(() => {});
+
     return () => {
       active = false;
     };
@@ -101,20 +113,97 @@ export default function PaidTemplatesPage() {
           </div>
         )}
 
-        {/* Empty State */}
+        {/* Empty State with Suggested Templates */}
         {!loading && templates.length === 0 && (
-          <section className="paid-empty-state">
-            <div className="paid-empty-icon">
-              <IoColorPaletteOutline />
-            </div>
-            <h2 className="paid-empty-title">មិនទាន់មានគំរូដែលបានទិញនៅឡើយទេ</h2>
-            <p className="paid-empty-desc">
-              លោកអ្នកមិនទាន់បានទិញគំរូ Premium ណាមួយឡើយ។ សូមចូលទៅកាន់ទំព័រគំរូធៀបការ ដើម្បីជ្រើសរើស និងទិញគំរូប្រណិតៗបែបខ្មែរទំនើប។
-            </p>
-            <Link to="/templates/browse" className="paid-empty-btn">
-              <IoSparkles /> ស្វែងរកគំរូធៀបការ (Browse Templates)
-            </Link>
-          </section>
+          <div className="paid-empty-wrap">
+            <section className="paid-empty-state">
+              <div className="paid-empty-icon">
+                <IoColorPaletteOutline />
+              </div>
+              <h2 className="paid-empty-title">មិនទាន់មានគំរូដែលបានទិញនៅឡើយទេ</h2>
+              <p className="paid-empty-desc">
+                លោកអ្នកមិនទាន់មានគំរូ Premium ណាមួយឡើយ។ លោកអ្នកអាចជ្រើសរើស <strong>គំរូឥតគិតថ្លៃ (Free)</strong> ដើម្បីចាប់ផ្តើមបង្កើតធៀបការភ្លាមៗ ឬជ្រើសរើសទិញ <strong>គំរូ Premium</strong> ខាងក្រោម៖
+              </p>
+              <Link to="/templates/browse" className="paid-empty-btn">
+                <IoSparkles /> មើលគំរូទាំងអស់ក្នុង Catalog (Browse All)
+              </Link>
+            </section>
+
+            {/* Suggested Templates to Start Immediately */}
+            {catalog.length > 0 && (
+              <div style={{ marginTop: "36px" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px", flexWrap: "wrap", gap: "10px" }}>
+                  <div>
+                    <h3 style={{ margin: 0, fontSize: "1.15rem", fontWeight: 800, color: "var(--brand-text, #1e293b)" }}>
+                      ✨ គំរូធៀបការណែនាំសម្រាប់អ្នក (Suggested Templates)
+                    </h3>
+                    <p style={{ margin: "4px 0 0", fontSize: "0.8125rem", color: "var(--brand-text-muted, #7a8799)" }}>
+                      ជ្រើសរើសគំរូឥតគិតថ្លៃ (Free) ឬគំរូ Premium ដើម្បីចាប់ផ្តើម
+                    </p>
+                  </div>
+                  <Link to="/templates/browse" style={{ fontSize: "0.875rem", fontWeight: 700, color: "var(--brand-primary, #b98b42)", textDecoration: "none" }}>
+                    មើលទាំងអស់ក្នុង Catalog →
+                  </Link>
+                </div>
+
+                <div className="paid-grid">
+                  {catalog.slice(0, 4).map((item) => {
+                    const isPrem = Boolean(item.premium || item.isPremium || Number(item.price) > 0);
+                    return (
+                      <article className="paid-card-item" key={item.id}>
+                        <div className="paid-card-media">
+                          <img src={item.thumbnailUrl || "/facebook/all/03-card/cover-card.jpg"} alt={item.name} className="paid-card-img" />
+                          <div className="paid-card-badge-row">
+                            <span className={isPrem ? "paid-badge-type" : "paid-badge-unlocked"}>
+                              {isPrem ? "PREMIUM" : "FREE"}
+                            </span>
+                            {item.category && (
+                              <span className="paid-badge-type">{item.category}</span>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="paid-card-body">
+                          <span className="paid-card-cat">{item.category || "Wedding"}</span>
+                          <h3 className="paid-card-title">{item.name}</h3>
+
+                          <div className="paid-card-actions" style={{ marginTop: "auto", paddingTop: "12px" }}>
+                            {isPrem ? (
+                              <Link
+                                to={`/templates/${item.slug || item.id}/checkout`}
+                                className="paid-btn-use"
+                                style={{ background: "linear-gradient(135deg, #b98b42 0%, #8f6424 100%)" }}
+                              >
+                                <IoDiamondOutline />
+                                <span>ទិញគំរូ (${Number(item.price || 0.01).toFixed(2)})</span>
+                              </Link>
+                            ) : (
+                              <Link
+                                to={`/create/wedding?templateId=${item.id || item.slug || ""}`}
+                                className="paid-btn-use"
+                              >
+                                <IoSparkles />
+                                <span>ប្រើគំរូឥតគិតថ្លៃ (Free)</span>
+                              </Link>
+                            )}
+
+                            <Link
+                              to={`/templates/browse/${item.id || item.slug || ""}`}
+                              className="paid-btn-preview"
+                              title="មើលគំរូផ្ទាល់"
+                            >
+                              <IoEyeOutline />
+                              <span>មើល</span>
+                            </Link>
+                          </div>
+                        </div>
+                      </article>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
         )}
 
         {/* Grid of Unlocked Templates */}

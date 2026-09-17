@@ -28,6 +28,19 @@
   z-index: 250;
   display: flex;
   overflow: hidden;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.el-curtain-overlay.opened {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none !important;
+}
+
+.pe-canvas-wrapper .el-curtain-overlay,
+.tx-stage--preview .el-curtain-overlay,
+.tx-root--preview .el-curtain-overlay {
+  position: absolute !important;
 }
 
 .el-curtain-half {

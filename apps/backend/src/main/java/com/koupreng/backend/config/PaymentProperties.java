@@ -61,7 +61,7 @@ public class PaymentProperties {
     public static class Aba {
 
         @NotBlank
-        private String staticLink = "https://link.payway.com.kh/ABAPAYrD450560q";
+        private String staticLink = "https://pay.ababank.com/oRF8/vx2dp884";
 
         public String getStaticLink() {
             return staticLink;

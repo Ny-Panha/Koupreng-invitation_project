@@ -1,4 +1,5 @@
 import { templateService as apiService } from "../api/templateService";
+import { normalizeDressColors } from "../experience/config/templateExperienceContent";
 
 /**
  * Normalizes template, draft, or invitation data into a predictable view-model
@@ -31,7 +32,17 @@ export function normalizeTemplateViewModel(tpl = {}, content = {}) {
   const venueName = merged.venueName || venueObj.name || "The Premier Center Sen Sok";
   const venueHall = merged.venueHall || venueObj.hall || "Grand Ballroom";
   const venueAddress = merged.venueAddress || venueObj.address || "រាជធានីភ្នំពេញ";
-  const googleMapsUrl = merged.googleMapsUrl || venueObj.mapLink || venueObj.mapEmbedUrl || "";
+  const rawMap = merged.googleMapsUrl || merged.googleMapUrl || merged.mapQuery || venueObj.mapLink || venueObj.mapEmbedUrl || "";
+  let googleMapsUrl = "";
+  if (rawMap && typeof rawMap === "string" && rawMap.trim()) {
+    const trimmed = rawMap.trim();
+    googleMapsUrl = /^https?:\/\//i.test(trimmed)
+      ? trimmed
+      : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(trimmed)}`;
+  } else if (venueName) {
+    googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([venueName, venueAddress].filter(Boolean).join(" "))}`;
+  }
+  const sketchMapImage = merged.sketchMapImage || venueObj.sketchMapImage || null;
 
   // Gallery
   const rawGallery = merged.gallery || merged.galleryImages || [];
@@ -68,12 +79,43 @@ export function normalizeTemplateViewModel(tpl = {}, content = {}) {
   };
 
   // Dress code
-  const dressCode = merged.dressCode || [
-    { name: "មាសប្រណិត", hex: "#D4AF37" },
-    { name: "ក្រហមទុំ", hex: "#8B1E2D" },
-    { name: "សំបកពងមាន់", hex: "#F5ECD7" },
-    { name: "ខៀវចាស់", hex: "#1E293B" },
-  ];
+  const rawDressColors = (merged.dressCode && Array.isArray(merged.dressCode.colors) && merged.dressCode.colors.length)
+    ? merged.dressCode.colors
+    : (Array.isArray(merged.dressCode) && merged.dressCode.length)
+      ? merged.dressCode
+      : (Array.isArray(merged.dressColors) && merged.dressColors.length)
+        ? merged.dressColors
+        : (Array.isArray(merged.design?.dressColors) && merged.design.dressColors.length)
+          ? merged.design.dressColors
+          : null;
+
+  const normalizedColors = rawDressColors
+    ? normalizeDressColors(rawDressColors)
+    : [
+        { name: "មាសប្រណិត", hex: "#D4AF37" },
+        { name: "ក្រហមទុំ", hex: "#8B1E2D" },
+        { name: "សំបកពងមាន់", hex: "#F5ECD7" },
+        { name: "ខៀវចាស់", hex: "#1E293B" },
+      ];
+
+  const colorNames = normalizedColors.map((c) => c.name).filter(Boolean);
+  const dynamicDressName = colorNames.length > 0 ? colorNames.join(" ") : "DRESS CODE PALETTE";
+  const dynamicDressNote = dynamicDressName && dynamicDressName !== "DRESS CODE PALETTE"
+    ? `សូមជ្រើសរើសសម្លៀកបំពាក់ពណ៌ ${dynamicDressName} ដើម្បីសមនឹងបរិយាកាសនៃពិធីមង្គលការ។`
+    : "";
+
+  const dressCode = (merged.dressCode && typeof merged.dressCode === "object" && !Array.isArray(merged.dressCode))
+    ? {
+        ...merged.dressCode,
+        name: merged.dressCode.name || dynamicDressName,
+        description: merged.dressCode.description || dynamicDressNote,
+        colors: normalizedColors,
+      }
+    : {
+        name: dynamicDressName,
+        description: dynamicDressNote,
+        colors: normalizedColors,
+      };
 
   // Music
   const music = merged.music?.url || (typeof merged.music === "string" ? merged.music : null);
@@ -102,6 +144,7 @@ export function normalizeTemplateViewModel(tpl = {}, content = {}) {
     venueHall,
     venueAddress,
     googleMapsUrl,
+    sketchMapImage,
     gallery,
     schedule,
     bankAccount,

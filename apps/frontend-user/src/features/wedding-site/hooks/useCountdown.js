@@ -8,7 +8,9 @@ export default function useCountdown(target) {
     const [now, setNow] = useState(() => new Date());
 
     useEffect(() => {
-        const id = setInterval(() => setNow(new Date()), 1000);
+        const id = setInterval(() => {
+            if (typeof window !== "undefined") setNow(new Date());
+        }, 1000);
         return () => clearInterval(id);
     }, []);
 

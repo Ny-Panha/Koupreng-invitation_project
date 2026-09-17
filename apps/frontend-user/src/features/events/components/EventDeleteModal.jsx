@@ -1,34 +1,29 @@
+import { ConfirmDialog } from "@/shared/ui";
+
 export function EventDeleteModal({ draftToDelete, onCancel, onConfirm, isDeleting, t }) {
     if (!draftToDelete) return null;
 
+    const title = (t && t("deleteModalTitle")) || "លុបទិន្នន័យនេះ?";
+    const desc = (t && t("deleteModalDesc")) || "នេះនឹងលុបទិន្នន័យនេះជាអចិន្ត្រៃយ៍។";
+
+    const confirmLabel = isDeleting
+        ? ((t && t("deleting")) || "កំពុងលុប...")
+        : ((t && t("confirmBtn")) || "យល់ព្រម");
+
+    const cancelLabel = (t && t("cancelBtn")) || "បោះបង់";
+
     return (
-        <div className="event-delete-modal-backdrop" onClick={onCancel}>
-            <div className="event-delete-modal" onClick={(e) => e.stopPropagation()}>
-                <div className="event-delete-modal-icon">⚠️</div>
-                <h3 className="event-delete-modal-title">{t("deleteModalTitle") || "តើអ្នកពិតជាចង់លុបកម្មវិធីនេះមែនទេ?"}</h3>
-                <p className="event-delete-modal-desc">
-                    {t("deleteModalDesc") || "ការលុបកម្មវិធីនេះនឹងលុបភ្ញៀវ គម្រោងថវិកា និងចងដៃដែលពាក់ព័ន្ធទាំងអស់។"}
-                </p>
-                <div className="event-delete-modal-actions">
-                    <button
-                        type="button"
-                        className="event-delete-btn-cancel"
-                        onClick={onCancel}
-                        disabled={isDeleting}
-                    >
-                        {t("cancelBtn") || "បោះបង់"}
-                    </button>
-                    <button
-                        type="button"
-                        className="event-delete-btn-confirm"
-                        onClick={onConfirm}
-                        disabled={isDeleting}
-                    >
-                        {isDeleting ? (t("deleting") || "កំពុងលុប...") : (t("confirmDeleteBtn") || "លុបកម្មវិធី")}
-                    </button>
-                </div>
-            </div>
-        </div>
+        <ConfirmDialog
+            isOpen={Boolean(draftToDelete)}
+            onClose={onCancel}
+            onConfirm={onConfirm}
+            title={title}
+            message={desc}
+            confirmLabel={confirmLabel}
+            cancelLabel={cancelLabel}
+            isDestructive={true}
+            isLoading={isDeleting}
+        />
     );
 }
 

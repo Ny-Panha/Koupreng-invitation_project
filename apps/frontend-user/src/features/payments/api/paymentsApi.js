@@ -16,6 +16,8 @@ export const paymentsApi = {
   templateAccess: (templateId) =>
     api.get(`/v1/me/templates/${encodeURIComponent(templateId)}/access`).then(unwrap),
   listMyOrders: () => api.get("/v1/template-payments/mine").then(unwrap),
+  claimPayment: (orderCode, payload = {}) =>
+    api.post(`/v1/template-payments/${encodeURIComponent(orderCode)}/claim`, payload).then(unwrap),
   confirmInternalOrder: (payload) =>
     api.post("/v1/internal/template-payments/confirm", payload).then(unwrap),
   paymentHistory: () => api.get("/v1/me/payments").then(unwrap),

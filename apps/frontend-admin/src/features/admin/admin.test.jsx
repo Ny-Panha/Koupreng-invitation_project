@@ -2,7 +2,6 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { describe, expect, it, vi } from "vitest";
 import AdminUsersPage from "./AdminUsersPage";
-import AdminInvitationsPage from "./AdminInvitationsPage";
 import AdminPaymentsPage from "./AdminPaymentsPage";
 import AdminPackagesPage from "./AdminPackagesPage";
 import AdminNotificationsPage from "./AdminNotificationsPage";
@@ -44,19 +43,6 @@ describe("Admin Feature Pages", () => {
     });
   });
 
-  it("renders invitations management page with moderation controls", async () => {
-    render(
-      <MemoryRouter initialEntries={["/admin/invitations"]}>
-        <Routes>
-          <Route path="/admin/invitations" element={<AdminInvitationsPage />} />
-        </Routes>
-      </MemoryRouter>
-    );
-    await waitFor(() => {
-      expect(screen.getByText("Dara & Sophea Wedding")).toBeInTheDocument();
-      expect(screen.getByText("Dara")).toBeInTheDocument();
-    });
-  });
 
   it("renders payments management page with status counts", async () => {
     render(

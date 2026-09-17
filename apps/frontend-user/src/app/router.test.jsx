@@ -16,7 +16,7 @@ const EXPECTED_PATHS = [
   "/event/:draftId", "/preview/:draftId", "/payments/:orderCode/status",
   "/payments/success", "/payments/return", "/payments/cancel",
   "/w/:slug", "/i/:slug", "/", "/templates", "/templates/:templateId/checkout",
-  "/templates/:id", "/pricing", "/contact", "/venues", "/login", "/register",
+  "/pricing", "/contact", "/venues", "/templates/:id", "/login", "/register",
   "/forgot-password", "/reset-password", "/dashboard", "/dashboard/events",
   "/dashboard/invitations", "/dashboard/invitations/new", "/dashboard/invitations/design",
   "/dashboard/invitations/edit", "/dashboard/invitations/:id/edit",

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 import {
   IoAddCircle,
@@ -143,9 +143,12 @@ export default function DashboardFeature() {
     }
   };
 
+  const [searchParams] = useSearchParams();
+
   useEffect(() => {
-    loadData();
-  }, []);
+    const targetId = searchParams.get("id") || searchParams.get("invitationId");
+    loadData(targetId || null);
+  }, [searchParams]);
 
   const handleSelectInvitation = (id) => {
     setSelectedInvId(id);

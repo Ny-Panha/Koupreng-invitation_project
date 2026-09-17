@@ -13,6 +13,7 @@ export default function Modal({
   closeOnBackdropClick = true,
   closeOnEscape = true,
   ariaLabel,
+  className = "",
 }) {
   const modalRef = useRef(null);
 
@@ -51,7 +52,7 @@ export default function Modal({
       role="presentation"
     >
       <div
-        className={`k-modal-container k-modal-${size}`}
+        className={`k-modal-container k-modal-${size} ${className}`.trim()}
         ref={modalRef}
         role="dialog"
         aria-modal="true"

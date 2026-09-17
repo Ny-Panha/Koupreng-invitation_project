@@ -275,3 +275,11 @@
     right: -8px;
   }
 }
+
+/* Hide in Print / PDF Export */
+@media print {
+  .chatbot-wrapper {
+    display: none !important;
+  }
+}
+

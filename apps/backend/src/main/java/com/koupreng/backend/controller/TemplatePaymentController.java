@@ -93,6 +93,19 @@ public class TemplatePaymentController {
         ));
     }
 
+    @Operation(summary = "User confirms payment to unlock template immediately")
+    @PostMapping({"/template-payments/{orderCode}/claim", "/template-payments/orders/{orderCode}/claim"})
+    public ResponseEntity<ApiResponse<PaymentConfirmResponse>> claimPayment(
+            Authentication authentication,
+            @PathVariable String orderCode,
+            @RequestBody(required = false) Map<String, String> body
+    ) {
+        String reference = body != null ? body.get("reference") : null;
+        PaymentConfirmResponse response = templatePaymentService.claimOrderByUser(authentication, orderCode, reference);
+        return ResponseEntity.ok(ApiResponse.success("Template payment confirmed and template unlocked", response));
+    }
+
+
     @Operation(summary = "List templates paid for by the current user")
     @GetMapping("/me/templates/paid")
     public ResponseEntity<ApiResponse<List<UserTemplateAccessResponse>>> paidTemplates(Authentication authentication) {

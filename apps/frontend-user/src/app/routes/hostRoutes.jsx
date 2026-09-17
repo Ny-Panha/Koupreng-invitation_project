@@ -35,7 +35,8 @@ import InvitationScopedRedirect from "./InvitationScopedRedirect";
 
 export function hostRoutes() {
   return (
-    <Route
+    <>
+      <Route
       element={
         <RequireAuth>
           <HostShell />
@@ -91,7 +92,15 @@ export function hostRoutes() {
       <Route path="/gifts" element={<Navigate to="/dashboard/gifts" replace />} />
       <Route path="/profile" element={<Navigate to="/dashboard/profile" replace />} />
       <Route path="/templates/browse" element={<BrowseTemplatesPage />} />
-      <Route path="/templates/browse/:id" element={<HostTemplateDemoPage />} />
     </Route>
+    <Route
+      path="/templates/browse/:id"
+      element={
+        <RequireAuth>
+          <HostTemplateDemoPage />
+        </RequireAuth>
+      }
+    />
+  </>
   );
 }

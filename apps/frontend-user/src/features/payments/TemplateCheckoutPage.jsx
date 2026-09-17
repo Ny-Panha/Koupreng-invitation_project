@@ -18,7 +18,7 @@ import { paymentService } from "./paymentService";
 import heroBg from "../../assets/icons/background.png";
 import "./PaymentPages.css";
 
-const ABA_STATIC_LINK = "https://link.payway.com.kh/ABAPAYrD450560q";
+const ABA_STATIC_LINK = "https://pay.ababank.com/oRF8/vx2dp884";
 
 const INCLUDED_FEATURES = [
   "រចនាបែបប្រពៃណីខ្មែរប្រណិត (Royal Khmer Wedding Theme)",

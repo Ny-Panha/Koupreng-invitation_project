@@ -3,8 +3,6 @@ import { NavLink } from "react-router-dom";
 const links = [
     { to: "/dashboard", label: "ផ្ទាំងគ្រប់គ្រង", icon: "📊" },
     { to: "/users", label: "អ្នកប្រើប្រាស់", icon: "👥" },
-    { to: "/events", label: "ព្រឹត្តិការណ៍", icon: "🎉" },
-    { to: "/invitations", label: "ធៀបការ", icon: "💌" },
     { to: "/templates", label: "គំរូធៀបការ", icon: "🎨" },
     { to: "/packages", label: "កញ្ចប់សេវាកម្ម", icon: "📦" },
     { to: "/payments", label: "ការទូទាត់", icon: "💳" },

@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
@@ -14,11 +14,25 @@ import {
 } from "react-icons/io5";
 
 import { invitationService } from "@/features/invitations/api/invitationApi";
-import { getTemplateById } from "../templates/data/templatesData";
+import {
+  getTemplateById,
+  getTemplatePreset,
+  registerDynamicTemplates,
+  getAllTemplates,
+} from "../templates/data/templatesData";
+import { templateCatalogService } from "../templates/api/templateCatalogApi";
 import { saveDraft } from "@/shared/storage/weddingStorage";
 import { toast } from "@/shared/ui/toast";
 import { DatePicker } from "@/shared/ui/DatePicker";
 import { TimePicker } from "@/shared/ui/TimePicker";
+import {
+  Sparkles,
+  Layers,
+  Palette,
+  CheckCircle2,
+  Search,
+  X,
+} from "lucide-react";
 import "./WeddingBuilderFeature.css";
 
 const EVENT_TYPES = [
@@ -39,14 +53,15 @@ export default function WeddingBuilderFeature() {
 
   const [form, setForm] = useState(() => {
     const tpl = !isCustom ? getTemplateById(templateIdParam) : null;
-    const initialCover = tpl?.phoneCoverImage || tpl?.mainImage || "";
-    const initialTitle = tpl?.name || "";
-    const initialGroom = tpl?.groom || "";
-    const initialBride = tpl?.bride || "";
+    const preset = getTemplatePreset(tpl) || {};
+    const initialCover = tpl?.phoneCoverImage || tpl?.mainImage || preset.coverImage || "";
+    const initialTitle = tpl?.name || preset.title || "";
+    const initialGroom = tpl?.groom || preset.groom || "";
+    const initialBride = tpl?.bride || preset.bride || "";
     const initialDate = tpl?.targetDate ? tpl.targetDate.split("T")[0] : "";
     const initialTime = tpl?.receptionTime || "17:00";
-    const initialVenue = tpl?.venueName || "";
-    const initialDesc = tpl?.message || tpl?.description || "";
+    const initialVenue = tpl?.venueName || preset.venueName || "";
+    const initialDesc = tpl?.message || tpl?.description || preset.messageText || "";
 
     return {
       title: initialTitle,
@@ -60,8 +75,17 @@ export default function WeddingBuilderFeature() {
       coverImage: initialCover,
       quality: true,
       templateId: templateIdParam || "garden-royal-khmer-wedding",
+      presetId: preset.presetId || tpl?.presetId || "",
+      openingStyle: preset.openingStyle || "khmer-royal",
+      frontColor: preset.frontColor || "#D4AF37",
+      bottomColor: preset.bottomColor || "#F3E5AB",
     };
   });
+
+  const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
+  const [availableTemplates, setAvailableTemplates] = useState(() => getAllTemplates());
+  const [templateSearchQuery, setTemplateSearchQuery] = useState("");
+  const [templateCategoryFilter, setTemplateCategoryFilter] = useState("ALL");
 
   // Multi-day Nested Agenda State matching PlanEssential
   const [agendaDays, setAgendaDays] = useState(() => {
@@ -83,6 +107,96 @@ export default function WeddingBuilderFeature() {
   });
   const [isAgendaOpen, setIsAgendaOpen] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    templateCatalogService.list()
+      .then((items) => {
+        if (active && items && items.length > 0) {
+          registerDynamicTemplates(items);
+          setAvailableTemplates(getAllTemplates());
+          if (templateIdParam && !isCustom) {
+            const tpl = getTemplateById(templateIdParam);
+            const preset = getTemplatePreset(tpl) || {};
+            if (tpl) {
+              setForm((prev) => ({
+                ...prev,
+                title: prev.title || preset.title || tpl.name || "",
+                groomName: prev.groomName || preset.groom || tpl.groom || "",
+                brideName: prev.brideName || preset.bride || tpl.bride || "",
+                venueName: prev.venueName || preset.venueName || tpl.venueName || "",
+                coverImage: prev.coverImage || preset.coverImage || tpl.phoneCoverImage || tpl.mainImage || "",
+                description: prev.description || preset.messageText || tpl.message || "",
+                templateId: templateIdParam,
+                presetId: preset.presetId || tpl.presetId || "",
+                openingStyle: prev.openingStyle || preset.openingStyle || "khmer-royal",
+                frontColor: prev.frontColor || preset.frontColor || "#D4AF37",
+                bottomColor: prev.bottomColor || preset.bottomColor || "#F3E5AB",
+              }));
+              if (tpl.schedule && tpl.schedule.length > 0) {
+                setAgendaDays((prev) => (prev.length === 0 ? [{
+                  id: "day-1",
+                  title: "កម្មវិធីថ្ងៃទី ១",
+                  items: tpl.schedule.map((s, idx) => ({
+                    id: s.id || `item-${idx + 1}`,
+                    name: s.title || "កម្មវិធី",
+                    time: s.time || "07:00",
+                  })),
+                }] : prev));
+              }
+            }
+          }
+        }
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, [templateIdParam, isCustom]);
+
+  const handleSelectTemplate = (selectedTpl) => {
+    if (!selectedTpl) return;
+    const preset = getTemplatePreset(selectedTpl) || {};
+
+    setForm((prev) => {
+      const isPrevDefaultCover = !prev.coverImage || prev.coverImage.includes("/facebook/all/") || prev.coverImage.includes("cover-card.jpg");
+      const isPrevDefaultTitle = !prev.title || prev.title === "សួនរាជហង្សខ្មែរ" || prev.title === "Garden Royal Khmer Wedding";
+      const isPrevDefaultGroom = !prev.groomName || prev.groomName === "វណ្ណដា";
+      const isPrevDefaultBride = !prev.brideName || prev.brideName === "ស្រីពេជ្រ";
+      const isPrevDefaultVenue = !prev.venueName || prev.venueName === "The Premier Center Sen Sok";
+
+      return {
+        ...prev,
+        templateId: selectedTpl.id || selectedTpl.code || preset.templateId,
+        presetId: selectedTpl.presetId || preset.presetId || "",
+        openingStyle: preset.openingStyle || prev.openingStyle || "khmer-royal",
+        frontColor: preset.frontColor || prev.frontColor || "#D4AF37",
+        bottomColor: preset.bottomColor || prev.bottomColor || "#F3E5AB",
+        coverImage: isPrevDefaultCover ? (preset.coverImage || selectedTpl.phoneCoverImage || selectedTpl.mainImage || prev.coverImage) : prev.coverImage,
+        title: isPrevDefaultTitle ? (preset.title || selectedTpl.name || prev.title) : prev.title,
+        groomName: isPrevDefaultGroom ? (preset.groom || selectedTpl.groom || prev.groomName) : prev.groomName,
+        brideName: isPrevDefaultBride ? (preset.bride || selectedTpl.bride || prev.brideName) : prev.brideName,
+        venueName: isPrevDefaultVenue ? (preset.venueName || selectedTpl.venueName || prev.venueName) : prev.venueName,
+      };
+    });
+
+    if (selectedTpl.schedule && selectedTpl.schedule.length > 0 && agendaDays.length === 0) {
+      setAgendaDays([
+        {
+          id: "day-1",
+          title: "កម្មវិធីថ្ងៃទី ១",
+          items: selectedTpl.schedule.map((s, idx) => ({
+            id: s.id || `item-${idx + 1}`,
+            name: s.title || "កម្មវិធី",
+            time: s.time || "07:00",
+          })),
+        },
+      ]);
+    }
+
+    setIsTemplateModalOpen(false);
+    toast("បានជ្រើសរើសគំរូធៀបដោយជោគជ័យ");
+  };
 
   const handleFieldChange = (field, value) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -202,16 +316,23 @@ export default function WeddingBuilderFeature() {
         }))
       );
 
+      const selectedTpl = getTemplateById(form.templateId);
+      const preset = getTemplatePreset(selectedTpl) || {};
+
       const designPayload = {
-        coverImage: form.coverImage,
-        frontColor: "#f9af59",
-        bottomColor: "#B08E4F",
+        coverImage: form.coverImage || preset.coverImage || "/facebook/all/03-card/cover-card.jpg",
+        frontColor: form.frontColor || preset.frontColor || "#D4AF37",
+        bottomColor: form.bottomColor || preset.bottomColor || "#F3E5AB",
+        openingStyle: form.openingStyle || preset.openingStyle || "khmer-royal",
         hideNamesOnCover: false,
         templateId: form.templateId || "garden-royal-khmer-wedding",
+        presetId: preset.presetId || selectedTpl?.presetId || "",
       };
 
       const contentPayload = {
-        title: form.title,
+        templateId: form.templateId || "garden-royal-khmer-wedding",
+        presetId: preset.presetId || selectedTpl?.presetId || "",
+        title: form.title || preset.title || "សិរីមង្គលអាពាហ៍ពិពាហ៍",
         subtitle: "សូមគោរពអញ្ជើញ",
         groomName: form.groomName,
         brideName: form.brideName,
@@ -225,7 +346,7 @@ export default function WeddingBuilderFeature() {
       const numericTemplateId = Number(form.templateId);
 
       const payload = {
-        title: form.title,
+        title: form.title || preset.title || "សិរីមង្គលអាពាហ៍ពិពាហ៍",
         eventType: form.eventType,
         eventDate: form.eventDate || null,
         eventTime: form.eventTime || null,
@@ -255,20 +376,28 @@ export default function WeddingBuilderFeature() {
         id: invitationId,
         backendInvitationId: savedResult?.id || null,
         templateId: form.templateId || "garden-royal-khmer-wedding",
+        presetId: preset.presetId || selectedTpl?.presetId || "",
+        openingStyle: designPayload.openingStyle,
+        frontColor: designPayload.frontColor,
+        bottomColor: designPayload.bottomColor,
         couple: {
-          groom: form.groomName,
-          bride: form.brideName,
+          groom: form.groomName || preset.groom || "",
+          bride: form.brideName || preset.bride || "",
         },
+        groomName: form.groomName || preset.groom || "",
+        brideName: form.brideName || preset.bride || "",
         event: {
-          title: form.title,
+          title: form.title || preset.title || "",
           date: form.eventDate,
           receptionTime: form.eventTime,
-          venueName: form.venueName,
+          venueName: form.venueName || preset.venueName || "",
         },
-        coverImage: form.coverImage,
+        venueName: form.venueName || preset.venueName || "",
+        title: form.title || preset.title || "",
+        coverImage: designPayload.coverImage,
         schedule: flatSchedule,
         agendaDays: agendaDays,
-        message: form.description,
+        message: form.description || preset.messageText || "",
       });
 
       toast("បានបង្កើតកម្មវិធីដោយជោគជ័យ! (Event created successfully)");
@@ -290,6 +419,125 @@ export default function WeddingBuilderFeature() {
         </h1>
 
         <form onSubmit={handleSubmit}>
+          {/* 0. គំរូធៀប & រចនាប័ទ្ម (Template & Opening Theme) */}
+          <div className="pe-section-card pe-template-selector-card">
+            <div className="pe-tpl-card-top">
+              <div className="pe-tpl-card-info">
+                <h4 className="pe-section-heading" style={{ marginBottom: 4 }}>
+                  <span className="pe-sec-icon-badge">
+                    <Sparkles size={17} />
+                  </span>
+                  <span>គំរូធៀប & រចនាប័ទ្ម (Template & Theme)</span>
+                </h4>
+                <p className="pe-tpl-card-sub">
+                  គំរូបច្ចុប្បន្ន៖ <strong>{getTemplateById(form.templateId)?.name || "Garden Royal Khmer Wedding"}</strong>
+                </p>
+              </div>
+            </div>
+
+            {/* Opening Gate Style Selector */}
+            <div className="pe-form-group" style={{ marginTop: "16px" }}>
+              <label className="pe-field-label">
+                <span className="pe-label-icon" style={{ display: "inline-flex", verticalAlign: "middle", marginRight: 6 }}><Layers size={15} /></span>
+                រចនាបទផ្ទាំងបើកធៀប (Opening Gate Style)
+              </label>
+              <div className="pe-gate-options-grid">
+                {[
+                  { id: "curtain", label: "វាំងននប្រណិត (Velvet Curtain)", desc: "បើកវាំងននសងខាង" },
+                  { id: "envelope-3d", label: "ស្រោមសំបុត្រ 3D (Wax Envelope)", desc: "បកត្រា និងបើកស្រោមសំបុត្រ" },
+                  { id: "khmer-royal", label: "រាជវាំងខ្មែរ (Royal Khmer)", desc: "ក្បាច់ភ្ញីទេស និងវាំងននព្រះរាជវាំង" },
+                  { id: "magical-gate", label: "ទ្វារវេទមន្ត (Magical Portal)", desc: "ពន្លឺផ្កាយ និងទ្វារប្រណិត" },
+                ].map((gate) => (
+                  <button
+                    key={gate.id}
+                    type="button"
+                    className={`pe-gate-btn ${form.openingStyle === gate.id ? "is-selected" : ""}`}
+                    onClick={() => handleFieldChange("openingStyle", gate.id)}
+                  >
+                    <div className="pe-gate-btn-left">
+                      <span className="pe-gate-btn-title">{gate.label}</span>
+                      <span className="pe-gate-btn-desc">{gate.desc}</span>
+                    </div>
+                    {form.openingStyle === gate.id && <CheckCircle2 size={16} className="pe-gate-check" />}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Color Customization */}
+            <div className="pe-colors-row">
+              <div className="pe-form-group" style={{ flex: 1 }}>
+                <label className="pe-field-label">
+                  <span className="pe-label-icon" style={{ display: "inline-flex", verticalAlign: "middle", marginRight: 6 }}><Palette size={15} /></span>
+                  ពណ៌ចម្បង (Primary / Front Color)
+                </label>
+                <div className="pe-color-input-wrap">
+                  <input
+                    type="color"
+                    className="pe-color-picker"
+                    value={form.frontColor || "#D4AF37"}
+                    onChange={(e) => handleFieldChange("frontColor", e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    className="pe-input pe-color-text"
+                    value={form.frontColor || "#D4AF37"}
+                    onChange={(e) => handleFieldChange("frontColor", e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="pe-form-group" style={{ flex: 1 }}>
+                <label className="pe-field-label">
+                  <span className="pe-label-icon" style={{ display: "inline-flex", verticalAlign: "middle", marginRight: 6 }}><Palette size={15} /></span>
+                  ពណ៌រំលេច (Accent / Secondary Color)
+                </label>
+                <div className="pe-color-input-wrap">
+                  <input
+                    type="color"
+                    className="pe-color-picker"
+                    value={form.bottomColor || "#F3E5AB"}
+                    onChange={(e) => handleFieldChange("bottomColor", e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    className="pe-input pe-color-text"
+                    value={form.bottomColor || "#F3E5AB"}
+                    onChange={(e) => handleFieldChange("bottomColor", e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Palette Chips */}
+            <div className="pe-color-presets">
+              <span className="pe-color-preset-label">ក្ដារពណ៌រហ័ស (Quick Palettes):</span>
+              <div className="pe-color-presets-list">
+                {[
+                  { name: "ត្បូងមរកត (Emerald)", primary: "#0F4C3A", secondary: "#D4AF37" },
+                  { name: "រាជហង្ស (Royal Ruby)", primary: "#8B1E2D", secondary: "#D4AF37" },
+                  { name: "សួនរាជហង្ស (Garden Gold)", primary: "#f9af59", secondary: "#B08E4F" },
+                  { name: "សាំប៉ាញ (Champagne)", primary: "#C5A880", secondary: "#E8D8C8" },
+                  { name: "ទឹកប៊ិចរាជវង្ស (Royal Navy)", primary: "#1E3A8A", secondary: "#F59E0B" },
+                ].map((pal, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    className="pe-color-palette-chip"
+                    onClick={() => {
+                      handleFieldChange("frontColor", pal.primary);
+                      handleFieldChange("bottomColor", pal.secondary);
+                    }}
+                    title={pal.name}
+                  >
+                    <span className="pe-chip-dot" style={{ background: pal.primary }} />
+                    <span className="pe-chip-dot" style={{ background: pal.secondary }} />
+                    <span className="pe-chip-name">{pal.name}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
           {/* 1. Cover Image / Link Preview */}
           <section className="pe-cover-preview-section">
             <label className="pe-field-label">
@@ -627,6 +875,155 @@ export default function WeddingBuilderFeature() {
           </div>
         </form>
       </div>
+
+      {/* Template Selection Modal */}
+      {isTemplateModalOpen && (
+        <div className="pe-modal-overlay" onClick={() => setIsTemplateModalOpen(false)}>
+          <div className="pe-modal-card pe-tpl-modal-card" onClick={(e) => e.stopPropagation()}>
+            <div className="pe-modal-header">
+              <div>
+                <h3 className="pe-modal-title">
+                  <Sparkles size={18} style={{ color: "#d97706" }} /> ជ្រើសរើសគំរូធៀប (Select Template)
+                </h3>
+                <p className="pe-modal-subtitle">
+                  ជ្រើសរើសគំរូរចនាប័ទ្មដែលអ្នកពេញចិត្តសម្រាប់ធៀបការ
+                </p>
+              </div>
+              <button
+                type="button"
+                className="pe-modal-close-btn"
+                onClick={() => setIsTemplateModalOpen(false)}
+                title="បិទ"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Search and Filters */}
+            <div className="pe-modal-toolbar">
+              <div className="pe-modal-search-box">
+                <Search size={16} className="pe-modal-search-icon" />
+                <input
+                  type="text"
+                  className="pe-modal-search-input"
+                  placeholder="ស្វែងរកតាមឈ្មោះគំរូ..."
+                  value={templateSearchQuery}
+                  onChange={(e) => setTemplateSearchQuery(e.target.value)}
+                />
+                {templateSearchQuery && (
+                  <button
+                    type="button"
+                    className="pe-search-clear-btn"
+                    onClick={() => setTemplateSearchQuery("")}
+                  >
+                    <X size={14} />
+                  </button>
+                )}
+              </div>
+              <div className="pe-modal-filter-pills">
+                {[
+                  { id: "ALL", label: "ទាំងអស់" },
+                  { id: "ADMIN", label: "គំរូថ្មី Admin" },
+                  { id: "CURTAIN", label: "វាំងនន (Curtain)" },
+                  { id: "ENVELOPE", label: "ស្រោមសំបុត្រ 3D" },
+                  { id: "KHMER", label: "ប្រពៃណីខ្មែរ" },
+                ].map((cat) => (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    className={`pe-filter-pill ${templateCategoryFilter === cat.id ? "is-active" : ""}`}
+                    onClick={() => setTemplateCategoryFilter(cat.id)}
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Templates Grid */}
+            <div className="pe-tpl-grid-scroll">
+              <div className="pe-tpl-modal-grid">
+                {availableTemplates
+                  .filter((tpl) => {
+                    const query = templateSearchQuery.trim().toLowerCase();
+                    if (query) {
+                      const matchName = String(tpl.name || "").toLowerCase().includes(query);
+                      const matchStyle = String(tpl.style || "").toLowerCase().includes(query);
+                      const matchCode = String(tpl.code || "").toLowerCase().includes(query);
+                      if (!matchName && !matchStyle && !matchCode) return false;
+                    }
+                    if (templateCategoryFilter === "ADMIN") {
+                      return Boolean(tpl.backendId || !isNaN(Number(tpl.id)));
+                    }
+                    if (templateCategoryFilter === "CURTAIN") {
+                      return tpl.openingStyle === "curtain" || String(tpl.id || tpl.code).includes("emerald");
+                    }
+                    if (templateCategoryFilter === "ENVELOPE") {
+                      return tpl.openingStyle === "envelope-3d" || String(tpl.id || tpl.code).includes("yes");
+                    }
+                    if (templateCategoryFilter === "KHMER") {
+                      return tpl.openingStyle === "khmer-royal" || String(tpl.id || tpl.code).includes("khmer");
+                    }
+                    return true;
+                  })
+                  .map((tpl) => {
+                    const isSelected = String(form.templateId) === String(tpl.id) || String(form.templateId) === String(tpl.code);
+                    const preset = getTemplatePreset(tpl) || {};
+                    const cover = tpl.phoneCoverImage || tpl.mainImage || tpl.thumbnailUrl || tpl.image;
+                    return (
+                      <div
+                        key={tpl.id || tpl.code}
+                        className={`pe-tpl-card-modal ${isSelected ? "is-active" : ""}`}
+                        onClick={() => handleSelectTemplate(tpl)}
+                      >
+                        <div className="pe-tpl-thumb-box">
+                          <img
+                            src={cover || "/facebook/all/03-card/cover-card.jpg"}
+                            alt={tpl.name}
+                            className="pe-tpl-thumb-img"
+                            loading="lazy"
+                          />
+                          {isSelected && (
+                            <div className="pe-tpl-active-badge">
+                              <CheckCircle2 size={16} /> កំពុងប្រើ
+                            </div>
+                          )}
+                          <div className="pe-tpl-style-pill">
+                            {preset.openingStyle === "curtain"
+                              ? "Curtain Gate"
+                              : preset.openingStyle === "envelope-3d"
+                                ? "Envelope 3D"
+                                : "Khmer Royal"}
+                          </div>
+                        </div>
+
+                        <div className="pe-tpl-card-details">
+                          <h5 className="pe-tpl-name">{tpl.name || tpl.style}</h5>
+                          <div className="pe-tpl-footer">
+                            <div className="pe-tpl-dots">
+                              <span className="pe-dot" style={{ background: preset.frontColor || "#D4AF37" }} />
+                              <span className="pe-dot" style={{ background: preset.bottomColor || "#F3E5AB" }} />
+                            </div>
+                            <button
+                              type="button"
+                              className={`pe-btn-select-tpl ${isSelected ? "is-selected" : ""}`}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleSelectTemplate(tpl);
+                              }}
+                            >
+                              {isSelected ? "បានជ្រើស ✓" : "ជ្រើសរើស"}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -379,6 +379,57 @@ function sanitizeDisplayText(value, maxLength = 80) {
         .slice(0, maxLength);
 }
 
+const KHMER_HEX_NAMES = {
+    "#0F4C3A": "បៃតងចាស់",
+    "#2D8A6E": "បៃតងមរកត",
+    "#D4AF37": "មាស",
+    "#FFFDF7": "ស",
+    "#8B1E2D": "ក្រហមទុំ",
+    "#4A151C": "ក្រហមចាស់",
+    "#C5A880": "សាំប៉ាញ",
+    "#E8D8C8": "ភ្លុក",
+    "#2D7FA6": "ខៀវផ្កា",
+    "#6F9E2E": "បៃតងស្លឹក",
+    "#D6A63C": "មាស",
+    "#0F172A": "ខ្មៅប្រណិត",
+    "#94A3B8": "ប្រផេះ",
+    "#FFFFFF": "ស",
+    "#F59E0B": "មាសខ្ចី",
+    "#1A1A1A": "ខ្មៅ",
+    "#F3E5AB": "សាំប៉ាញ",
+    "#111827": "ខ្មៅប្រណិត",
+    "#4B5563": "ប្រផេះ",
+    "#E9D0A2": "សាំប៉ាញ",
+    "#4B2F1A": "ត្នោត",
+    "#C89B3C": "មាស",
+    "#FFF8E7": "ភ្លុក",
+    "#E8C98A": "សាំប៉ាញ",
+    "#5C3418": "ត្នោតចាស់",
+};
+
+export function normalizeDressColors(rawColors = []) {
+    if (!Array.isArray(rawColors) || !rawColors.length) return [];
+    return rawColors.map((item) => {
+        if (typeof item === "string") {
+            const hex = item.trim();
+            const upper = hex.toUpperCase();
+            return {
+                hex,
+                name: KHMER_HEX_NAMES[upper] || hex,
+            };
+        }
+        if (item && typeof item === "object") {
+            const hex = item.hex || item.color || "#D4AF37";
+            const upper = String(hex).toUpperCase();
+            return {
+                hex,
+                name: item.name || KHMER_HEX_NAMES[upper] || hex,
+            };
+        }
+        return { hex: "#D4AF37", name: "មាស" };
+    });
+}
+
 /**
  * Build the full content model for a template experience.
  * @param {object} tpl resolved template object (from getTemplateById)
@@ -422,15 +473,31 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         { hex: "#FFFDF7", name: "ស" },
         { hex: "#4A151C", name: "ក្រហមចាស់" },
     ];
+
+    const rawDressColors = (tpl.dressCode && Array.isArray(tpl.dressCode.colors) && tpl.dressCode.colors.length)
+        ? tpl.dressCode.colors
+        : (Array.isArray(tpl.dressColors) && tpl.dressColors.length)
+            ? tpl.dressColors
+            : (Array.isArray(tpl.design?.dressColors) && tpl.design.dressColors.length)
+                ? tpl.design.dressColors
+                : null;
+
+    const resolvedColors = rawDressColors
+        ? normalizeDressColors(rawDressColors)
+        : normalizeDressColors(themeDressColors);
+
+    const hasAdminColors = Boolean(rawDressColors && rawDressColors.length);
+    const colorNames = resolvedColors.map((c) => c.name).filter(Boolean);
+    const dynamicDressName = colorNames.length > 0 ? colorNames.join(" ") : "";
+    const dynamicDressNote = dynamicDressName
+        ? `សូមជ្រើសរើសសម្លៀកបំពាក់ពណ៌ ${dynamicDressName} ដើម្បីសមនឹងបរិយាកាសនៃពិធីមង្គលការ។`
+        : "";
+
     const dressCode = {
-        name: tpl.dressCode?.name || copy.dressName || "ពណ៌សម្លៀកបំពាក់ (Dress Code)",
-        description: tpl.dressCode?.description || copy.dressNote || "សូមស្លៀកសម្លៀកបំពាក់ពណ៌តាមប្រធានបទ ឬពណ៌សមរម្យ",
-        style: tpl.dressCode?.style || copy.dressStyle || "ខ្មែរប្រពៃណី / សម័យ",
-        colors: (tpl.dressCode && Array.isArray(tpl.dressCode.colors) && tpl.dressCode.colors.length)
-            ? tpl.dressCode.colors
-            : (Array.isArray(tpl.dressColors) && tpl.dressColors.length)
-                ? tpl.dressColors
-                : themeDressColors,
+        name: tpl.dressCode?.name || (hasAdminColors && dynamicDressName ? dynamicDressName : (copy.dressName || "ពណ៌សម្លៀកបំពាក់ (Dress Code)")),
+        description: tpl.dressCode?.description || (hasAdminColors && dynamicDressNote ? dynamicDressNote : (copy.dressNote || "សូមស្លៀកសម្លៀកបំពាក់ពណ៌តាមប្រធានបទ ឬពណ៌សមរម្យ")),
+        style: tpl.dressCode?.style || (tpl.style && tpl.style !== "Wedding Template" ? tpl.style : copy.dressStyle) || "ខ្មែរប្រពៃណី / សម័យ",
+        colors: resolvedColors,
     };
 
     const coverImage = nonBlank(tpl.customMainImage)
@@ -592,7 +659,7 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         coverImage,
         portraitImage: coverImage,
         backgroundImage,
-        message: tpl.message || copy.message,
+        message: nonBlank(tpl.message) || nonBlank(tpl.messageText) || nonBlank(tpl.blessingMessage) || copy.message,
         families: nonBlank(tpl.subtitle || host.subtitle) || "សូមគោរពអញ្ជើញ លោកអ្នក និងក្រុមគ្រួសារ",
         couple: {
             groomIntro: hostCouple.groomIntro || (hasHostContent ? "" : copy.groomIntro),

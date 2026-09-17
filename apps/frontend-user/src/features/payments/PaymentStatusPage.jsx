@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { IoArrowBackOutline, IoSparkles, IoShieldCheckmarkOutline } from "react-icons/io5";
 import PaymentQrCard from "./PaymentQrCard";
 import { statusMessage } from "./paymentStatus";
@@ -8,10 +8,30 @@ import heroBg from "../../assets/icons/background.png";
 import "./PaymentPages.css";
 
 export default function PaymentStatusPage() {
+  const navigate = useNavigate();
   const { orderCode } = useParams();
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const handleRetry = async () => {
+    try {
+      setLoading(true);
+      const response = await paymentService.createStaticPaymentOrder({
+        templateId: order?.templateId || "garden-royal-khmer-wedding",
+        templateName: order?.templateName || "Garden Royal Khmer Wedding",
+        packageName: order?.packageName || "Premium",
+        amount: order?.amount || "0.01",
+        currency: order?.currency || "USD",
+      });
+      navigate(`/payments/${response.orderCode}/status`, { replace: true });
+      setOrder(response);
+    } catch (err) {
+      setError(err.message || "Failed to generate new payment order");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     let active = true;
@@ -94,12 +114,12 @@ export default function PaymentStatusPage() {
           </div>
         )}
 
-        {order && <PaymentQrCard order={order} onStatusChange={setOrder} />}
+        {order && <PaymentQrCard order={order} onStatusChange={setOrder} onRetry={handleRetry} />}
 
         <div className="payment-footer-links">
-          <Link to="/dashboard/templates/paid">មើលគំរូដែលបានទិញ (Paid Templates)</Link>
+          <Link to="/dashboard">⬅️ ផ្ទាំងគ្រប់គ្រង (Dashboard)</Link>
           <span>•</span>
-          <Link to="/templates/browse">មើលគំរូទាំងអស់ (Browse Templates)</Link>
+          <Link to="/templates/browse">ស្វែងរកគំរូធៀបការ (Browse Templates)</Link>
         </div>
       </main>
     </div>

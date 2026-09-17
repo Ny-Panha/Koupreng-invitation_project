@@ -52,6 +52,8 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       host: true,
+      port: Number(frontendUserPort),
+      strictPort: true,
       allowedHosts: true,
       hmr: shouldUseSecureHmr
         ? {

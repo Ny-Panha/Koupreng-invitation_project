@@ -22,7 +22,9 @@ public class ProductionSecurityValidator implements ApplicationRunner {
     private static final Set<String> PLACEHOLDER_JWT_SECRETS = Set.of(
             "replace_with_a_random_64_character_or_longer_secret"
     );
-    private static final String REQUIRED_STATIC_ABA_PAYMENT_LINK = "https://link.payway.com.kh/ABAPAYrD450560q";
+    private static final Set<String> ALLOWED_STATIC_ABA_PAYMENT_LINKS = Set.of(
+            "https://pay.ababank.com/oRF8/vx2dp884"
+    );
     private static final Set<String> PLACEHOLDER_ADMIN_PAYMENT_SECRETS = Set.of(
             "change-me-local-only",
             "change_this_to_random_secret",
@@ -233,7 +235,9 @@ public class ProductionSecurityValidator implements ApplicationRunner {
         }
 
         String staticLink = nullToEmpty(paymentProperties.getAba().getStaticLink()).trim();
-        if (!REQUIRED_STATIC_ABA_PAYMENT_LINK.equals(staticLink)) {
+        if (!ALLOWED_STATIC_ABA_PAYMENT_LINKS.contains(staticLink)
+                && !staticLink.startsWith("https://pay.ababank.com/")
+                && !staticLink.startsWith("https://link.payway.com.kh/")) {
             failures.add("ABA_PAYWAY_STATIC_LINK must use the approved static ABA KHQR link");
         }
     }

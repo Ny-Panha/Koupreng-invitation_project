@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../../app/providers/AdminAuthProvider";
-import { Sparkles, Lock, Mail, ArrowRight, Loader2, ShieldCheck } from "lucide-react";
+import { Sparkles, Lock, Mail, ArrowRight, Loader2, ShieldCheck, Eye, EyeOff } from "lucide-react";
 
 function safeNext(searchParams) {
   const next = searchParams.get("next");
@@ -12,6 +12,7 @@ function safeNext(searchParams) {
 export default function LoginPage() {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -98,17 +99,29 @@ export default function LoginPage() {
                 លេខសម្ងាត់
               </label>
               <div className="relative">
-                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500" />
+                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500 pointer-events-none" />
                 <input
                   id="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   autoComplete="current-password"
                   required
-                  className="h-11 w-full rounded-xl border border-zinc-800 bg-zinc-900/60 pl-10 pr-4 text-sm text-zinc-100 placeholder:text-zinc-600 outline-none transition focus:border-amber-500 focus:bg-zinc-900 focus:ring-2 focus:ring-amber-500/20"
+                  className="h-11 w-full rounded-xl border border-zinc-800 bg-zinc-900/60 pl-10 pr-10 text-sm text-zinc-100 placeholder:text-zinc-600 outline-none transition focus:border-amber-500 focus:bg-zinc-900 focus:ring-2 focus:ring-amber-500/20"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 focus:outline-none transition-colors p-1 cursor-pointer"
+                  aria-label={showPassword ? "លាក់លេខសម្ងាត់" : "បង្ហាញលេខសម្ងាត់"}
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
+                </button>
               </div>
             </div>
 

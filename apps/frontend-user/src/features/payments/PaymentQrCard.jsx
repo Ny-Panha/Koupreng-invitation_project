@@ -8,27 +8,36 @@ import {
   IoShieldCheckmarkOutline,
   IoOpenOutline,
   IoSparkles,
+  IoArrowBackOutline,
 } from "react-icons/io5";
 
 import { paymentService } from "./paymentService";
 import { isTerminalStatus } from "./paymentStatus";
 import { toast } from "../../shared/ui/toast";
 import { KEEP_TEMPLATE_CODE } from "@/features/templates";
+import { ABA_STATIC_PAY_LINK, getPaymentQrValue } from "./khqr";
 import "./PaymentPages.css";
 
+const SESSION_DURATION_SECONDS = 180; // 3 minutes session strictly
 
-const DEFAULT_ABA_KHQR_STRING =
-  "00020101021129450016abaakhppxxx@abaa01090098588160208ABA Bank40600006abaP2P011241CF604FF46E020900985881603090078303860404Dual5204000053031165802KH5908PANHA NY6010Phnom Penh6304E9DC";
-
-function secondsRemaining(expiresAt, now = Date.now()) {
-  if (!expiresAt) {
-    return null;
+function getSessionSecondsRemaining(createdAt, expiresAt, now = Date.now()) {
+  let deadline = null;
+  if (createdAt) {
+    const createdTime = new Date(createdAt).getTime();
+    if (!Number.isNaN(createdTime)) {
+      deadline = createdTime + SESSION_DURATION_SECONDS * 1000;
+    }
   }
-  const expiresTime = new Date(expiresAt).getTime();
-  if (Number.isNaN(expiresTime)) {
-    return null;
+  if (expiresAt) {
+    const expTime = new Date(expiresAt).getTime();
+    if (!Number.isNaN(expTime)) {
+      deadline = deadline ? Math.min(deadline, expTime) : expTime;
+    }
   }
-  return Math.max(0, Math.floor((expiresTime - now) / 1000));
+  if (!deadline) {
+    deadline = now + SESSION_DURATION_SECONDS * 1000;
+  }
+  return Math.max(0, Math.floor((deadline - now) / 1000));
 }
 
 function formatRemaining(seconds) {
@@ -37,11 +46,12 @@ function formatRemaining(seconds) {
   }
   const minutes = Math.floor(seconds / 60);
   const rest = seconds % 60;
-  return `${minutes}:${String(rest).padStart(2, "0")}`;
+  return `${String(minutes).padStart(2, "0")}:${String(rest).padStart(2, "0")}`;
 }
 
 export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
   const [checking, setChecking] = useState(false);
+  const [claiming, setClaiming] = useState(false);
 
   const [now, setNow] = useState(() => Date.now());
   const [copied, setCopied] = useState(false);
@@ -49,7 +59,9 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
   const status = order?.status || "PENDING";
   const waitingForPayment = !isTerminalStatus(status);
   const orderCode = order?.orderCode || "";
-  const qrValue = order?.qrString || DEFAULT_ABA_KHQR_STRING;
+  const qrValue = useMemo(() => {
+    return getPaymentQrValue(order);
+  }, [order]);
 
   const copyOrderCode = () => {
     if (!orderCode) return;
@@ -82,37 +94,58 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
     [onStatusChange, orderCode]
   );
 
+  const handleClaim = async () => {
+    if (!orderCode || isExpired) return;
+    setClaiming(true);
+    try {
+      await paymentService.claimPayment(orderCode);
+      const latest = await paymentService.getTemplateOrder(orderCode);
+      onStatusChange?.(latest);
+      toast("🎉 ការទូទាត់ជោគជ័យ! Template ត្រូវបាន Unlock ភ្លាមៗ។");
+    } catch (err) {
+      toast(err.message || "មិនអាចផ្ទៀងផ្ទាត់ការទូទាត់បានទេ សូមព្យាយាមម្តងទៀត");
+    } finally {
+      setClaiming(false);
+    }
+  };
+
+  const remaining = useMemo(
+    () => getSessionSecondsRemaining(order?.createdAt, order?.expiresAt, now),
+    [order?.createdAt, order?.expiresAt, now]
+  );
+
+  const isExpired = status === "EXPIRED" || (waitingForPayment && remaining !== null && remaining <= 0);
+
   useEffect(() => {
-    if (!order?.expiresAt || isTerminalStatus(status)) {
+    if (isTerminalStatus(status) || isExpired) {
       return undefined;
     }
     const timer = window.setInterval(() => {
       setNow(Date.now());
     }, 1000);
     return () => window.clearInterval(timer);
-  }, [order?.expiresAt, status]);
+  }, [status, isExpired]);
 
   useEffect(() => {
-    if (!waitingForPayment || !orderCode) {
+    if (!waitingForPayment || isExpired || !orderCode) {
       return undefined;
     }
     const timer = window.setInterval(() => {
       checkStatus({ quiet: true });
-    }, 5000);
+    }, 4000);
     return () => window.clearInterval(timer);
-  }, [checkStatus, orderCode, waitingForPayment]);
-
-  const remaining = useMemo(
-    () => secondsRemaining(order?.expiresAt, now),
-    [order?.expiresAt, now]
-  );
+  }, [checkStatus, orderCode, waitingForPayment, isExpired]);
 
   const countdownText = useMemo(() => {
+    if (status === "PAID") return "";
+    if (isExpired) {
+      return "00:00 • ផុតកំណត់ (Session Expired)";
+    }
     if (remaining == null) {
       return "";
     }
-    return remaining > 0 ? formatRemaining(remaining) : "ផុតកំណត់ (Expired)";
-  }, [remaining]);
+    return formatRemaining(remaining);
+  }, [status, isExpired, remaining]);
 
   const targetTemplateId =
     order?.templateId || order?.templateSlug || KEEP_TEMPLATE_CODE;
@@ -130,12 +163,12 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
           </h2>
         </div>
 
-        <span className={`payment-status-badge ${status.toLowerCase()}`}>
+        <span className={`payment-status-badge ${isExpired ? "expired" : status.toLowerCase()}`}>
           {status === "PAID"
             ? "✓ ទូទាត់ជោគជ័យ (PAID)"
-            : status === "PENDING"
-            ? "⏳ រង់ចាំការទូទាត់ (PENDING)"
-            : status}
+            : isExpired
+            ? "⚠️ ផុតកំណត់ (EXPIRED)"
+            : "⏳ រង់ចាំការទូទាត់ (PENDING)"}
         </span>
       </div>
 
@@ -145,28 +178,51 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
         <div className="payment-qr-box-lux">
           {/* KHQR Card Top Header */}
           <div className="payment-khqr-header">
-            <div className="payment-khqr-tag">KHQR</div>
-            <div className="payment-khqr-sub">BAKONG • ABA BANK</div>
+            <div className="payment-khqr-tag">ABA PAY</div>
+            <div className="payment-khqr-sub">SCAN TO PAY • ABA MOBILE</div>
           </div>
 
           {/* Clean High-Contrast Vector QR */}
-          <div className="payment-qr-canvas-wrap">
+          <div className={`payment-qr-canvas-wrap ${isExpired ? "is-expired" : ""}`}>
             <QRCode
               value={qrValue}
               size={220}
               level="M"
+              className="payment-qr-code-svg"
               style={{ height: "auto", maxWidth: "100%", width: "100%", display: "block" }}
             />
+
+            {/* Expired Overlay */}
+            {isExpired && (
+              <div className="payment-qr-expired-overlay">
+                <span className="payment-qr-expired-badge">⚠️ Session Expired</span>
+                <p className="payment-qr-expired-text">QR Code បានផុតកំណត់ ៣ នាទី</p>
+                <p className="payment-qr-expired-sub">មិនអាចស្កេនទូទាត់បានទៀតទេ</p>
+                {onRetry && (
+                  <button
+                    type="button"
+                    className="payment-qr-renew-btn"
+                    onClick={onRetry}
+                  >
+                    <IoRefreshOutline /> បង្កើត QR ថ្មី (New QR)
+                  </button>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Payee Info */}
           <div className="payment-khqr-footer">
             <strong>PANHA NY</strong>
-            <span>USD 0.01</span>
+            {isExpired ? (
+              <span style={{ color: "#ef4444", fontWeight: 700, fontSize: "0.8rem" }}>Expired</span>
+            ) : (
+              <span>{order?.currency || "USD"} {Number(order?.amount || 0.01).toFixed(2)}</span>
+            )}
           </div>
 
           <span className="payment-qr-brand-label">
-            <IoShieldCheckmarkOutline /> ស្កេនបានជាមួយគ្រប់ App ធនាគារ
+            <IoShieldCheckmarkOutline /> ស្កេនតាម Camera ឬ App ABA Mobile
           </span>
         </div>
 
@@ -193,9 +249,9 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
           </div>
 
           {/* Countdown timer */}
-          {countdownText && status === "PENDING" && (
-            <div className="payment-countdown-lux">
-              <span>⏱️ QR ផុតកំណត់ក្នុងរយៈពេល (Expires In):</span>
+          {countdownText && status !== "PAID" && (
+            <div className={`payment-countdown-lux ${isExpired ? "expired" : remaining <= 30 ? "warning" : ""}`}>
+              <span>⏱️ រយៈពេល Session (Expires In):</span>
               <strong>{countdownText}</strong>
             </div>
           )}
@@ -206,7 +262,10 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
               👉 <strong>របៀបស្កេនទូទាត់៖</strong> បើកកម្មវិធី <strong>ABA Mobile</strong> (ឬ Bakong / ធនាគារណាក៏បាន) រួច Scan QR Code ខាងឆ្វេង។
             </p>
             <p className="payment-muted-lux">
-              Scan this clean KHQR with ABA Mobile to complete your test payment ($0.01). Your template unlocks automatically after verification.
+              ផ្ញើទៅកាន់ <strong>PANHA NY</strong> ចំនួនទឹកប្រាក់ <strong>{order?.currency || "USD"} {Number(order?.amount || 0.01).toFixed(2)}</strong> (គណនី USD: <code>007 830 386</code> / KHR: <code>009 858 816</code>)។
+            </p>
+            <p style={{ marginTop: "6px", color: "#059669", fontWeight: 600 }}>
+              ⚡ <strong>បន្ទាប់ពីផ្ទេររួច៖</strong> សូមចុចប៊ូតុង <strong>« ខ្ញុំបានផ្ទេរប្រាក់រួចរាល់ (Unlock Now) »</strong> ខាងក្រោមដើម្បី Unlock គំរូធៀបការភ្លាមៗដោយមិនបាច់រង់ចាំ!
             </p>
           </div>
 
@@ -231,10 +290,10 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
           )}
 
           {/* Expired / Failed Panel */}
-          {status === "EXPIRED" && (
+          {isExpired && (
             <div className="payment-alert-panel expired">
-              <strong>⚠️ QR Code នេះបានផុតកំណត់ហើយ</strong>
-              <p>សូមបង្កើតការបញ្ជាទិញម្ដងទៀតដើម្បីទទួលបាន QR ថ្មី។</p>
+              <strong>⚠️ Session និង QR Code នេះបានផុតកំណត់ហើយ</strong>
+              <p>ប្រព័ន្ធបានបិទការទូទាត់សម្រាប់ Session នេះ។ សូមចុចប៊ូតុងខាងក្រោមដើម្បីបង្កើត QR ថ្មី។</p>
               {onRetry && (
                 <button
                   type="button"
@@ -242,7 +301,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
                   onClick={onRetry}
                   style={{ marginTop: "10px" }}
                 >
-                  បង្កើតការទូទាត់ថ្មី (Retry)
+                  <IoRefreshOutline /> បង្កើត QR ថ្មី (Regenerate QR)
                 </button>
               )}
             </div>
@@ -250,21 +309,52 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
 
           {/* Actions Bar */}
           <div className="payment-actions-lux">
-            {order?.checkoutUrl && status !== "PAID" && (
+            {status !== "PAID" && !isExpired && (
+              <button
+                type="button"
+                className="payment-action-gold-btn payment-claim-btn"
+                disabled={claiming}
+                onClick={handleClaim}
+                style={{
+                  background: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
+                  color: "#ffffff",
+                  fontWeight: 700,
+                  boxShadow: "0 4px 14px rgba(16, 185, 129, 0.4)",
+                  border: "none",
+                  cursor: claiming ? "not-allowed" : "pointer",
+                }}
+              >
+                <IoSparkles />
+                <span>{claiming ? "កំពុង Unlock Template..." : "⚡ ខ្ញុំបានផ្ទេរប្រាក់រួចរាល់ (Unlock Now)"}</span>
+              </button>
+            )}
+
+            {status !== "PAID" && !isExpired && (
               <a
-                className="payment-action-gold-btn"
-                href={order.checkoutUrl}
+                className="payment-action-secondary-btn"
+                href={order?.checkoutUrl || ABA_STATIC_PAY_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <IoOpenOutline /> Open ABA Link
+                <IoOpenOutline /> បើកកម្មវិធី ABA Mobile (Open in App)
               </a>
+            )}
+
+            {isExpired && onRetry && (
+              <button
+                type="button"
+                className="payment-action-gold-btn"
+                onClick={onRetry}
+                style={{ background: "#f59e0b", color: "#000" }}
+              >
+                <IoRefreshOutline /> បង្កើត QR ថ្មី (Regenerate QR)
+              </button>
             )}
 
             <button
               type="button"
               className="payment-action-secondary-btn"
-              disabled={checking}
+              disabled={checking || isExpired}
               onClick={() => checkStatus()}
             >
               <IoRefreshOutline className={checking ? "checkout-spinner" : ""} />
@@ -272,10 +362,11 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
             </button>
 
             <Link
-              to="/dashboard/templates/paid"
+              to="/templates/browse"
               className="payment-action-secondary-btn"
             >
-              Paid Templates
+              <IoArrowBackOutline />
+              <span>ជ្រើសរើសគំរូផ្សេង</span>
             </Link>
           </div>
         </div>

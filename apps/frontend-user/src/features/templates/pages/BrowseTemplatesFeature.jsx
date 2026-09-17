@@ -14,6 +14,8 @@ import {
 import { templateCatalogService } from "@/features/templates/api/templateCatalogApi";
 import { paymentService } from "@/features/payments/paymentService";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
+import { SkeletonTable } from "@/shared/ui";
+import "./BrowseTemplatesPage.css";
 function formatTemplateDescription(description) {
   if (!description) return "";
   const str = String(description).trim();
@@ -166,7 +168,7 @@ export default function BrowseTemplatesFeature() {
       }
       return;
     }
-    navigate(`/templates/${tplId}/preview`);
+    navigate(`/templates/browse/${tplId}`);
   };
 
   return (
@@ -291,7 +293,7 @@ export default function BrowseTemplatesFeature() {
                     {isPremium(template) && !isUnlocked(template) ? (
                       <>
                         <IoDiamondOutline style={{ fontSize: "1.1rem" }} />
-                        <span>ទិញគំរូ ($0.01)</span>
+                        <span>ទិញគំរូ ({Number(template.price) > 0 ? `$${Number(template.price).toFixed(2)}` : "$0.01"})</span>
                       </>
                     ) : (
                       <>

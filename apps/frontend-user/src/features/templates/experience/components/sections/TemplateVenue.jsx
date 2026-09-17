@@ -138,6 +138,17 @@ export default function TemplateVenue({ content }) {
                             ) : (
                                 <p className="tx-venue__no-map">ព័ត៌មានទីតាំងលម្អិតនឹងបញ្ជាក់បន្ថែម</p>
                             )}
+                            {(content.sketchMapImage || venue.sketchMapImage) && (
+                                <a
+                                    className="tx-btn tx-btn--ghost"
+                                    href={content.sketchMapImage || venue.sketchMapImage}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <IoMapOutline aria-hidden="true" />
+                                    ប្លង់បង្ហាញផ្លូវ <span>/ Sketch Map</span>
+                                </a>
+                            )}
                             {hasFacebook && (
                                 <a
                                     className="tx-btn tx-btn--ghost tx-venue__facebook"

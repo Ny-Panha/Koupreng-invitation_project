@@ -5,9 +5,13 @@ import { formatDate } from "../../lib/format";
 import adminManagementService from "./adminManagementService";
 import "./AdminFeature.css";
 
+const ABA_PAYWAY_STATIC_LINK = "https://pay.ababank.com/oRF8/vx2dp884";
+
 function money(amount, currency = "USD") {
   if (amount === null || amount === undefined || amount === "") return "—";
-  return `${currency || "USD"} ${amount}`;
+  const num = Number(amount);
+  const formatted = isNaN(num) ? amount : num.toFixed(2);
+  return `${currency || "USD"} ${formatted}`;
 }
 
 export default function AdminPaymentsPage() {
@@ -58,7 +62,7 @@ export default function AdminPaymentsPage() {
       total: rows.length,
       pending: rows.filter((row) => String(row.status || "").includes("PENDING")).length,
       paid: rows.filter((row) => String(row.status || "") === "PAID").length,
-      failed: rows.filter((row) => ["FAILED", "REJECTED", "CANCELLED"].includes(String(row.status || ""))).length,
+      failed: rows.filter((row) => ["FAILED", "REJECTED", "CANCELLED", "EXPIRED"].includes(String(row.status || ""))).length,
     };
   }, [data]);
 
@@ -69,11 +73,22 @@ export default function AdminPaymentsPage() {
           <h2 className="page-title">Payments</h2>
           <p className="page-subtitle">Template and subscription payment orders from the active admin API.</p>
         </div>
-        <button type="button" className="btn btn-ghost" onClick={reload}>Refresh</button>
+        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+          <a
+            href={ABA_PAYWAY_STATIC_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-ghost"
+            style={{ display: "inline-flex", alignItems: "center", gap: "6px", textDecoration: "none" }}
+          >
+            <span>🔗 ABA Pay Link</span>
+          </a>
+          <button type="button" className="btn btn-ghost" onClick={reload}>Refresh</button>
+        </div>
       </div>
 
       {actionMessage && (
-        <div style={{ marginBottom: "16px", padding: "10px 16px", background: "#ecfdf5", color: "#065f46", borderRadius: "8px", fontWeight: "600" }}>
+        <div style={{ marginBottom: "16px", padding: "10px 16px", background: "rgba(16, 185, 129, 0.15)", color: "#10b981", borderRadius: "8px", fontWeight: "600" }}>
           {actionMessage}
         </div>
       )}
@@ -90,7 +105,7 @@ export default function AdminPaymentsPage() {
           <input className="text-input" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search payments..." />
         </div>
 
-        {loading ? <Loading /> : error ? <ErrorState onRetry={reload} /> : payments.length === 0 ? <Empty /> : (
+        {loading ? <Loading /> : error ? <ErrorState onRetry={reload} /> : payments.length === 0 ? <Empty label="រកមិនឃើញទិន្នន័យការទូទាត់ទេ" /> : (
           <div className="table-wrap">
             <table className="data">
               <thead>
@@ -111,14 +126,18 @@ export default function AdminPaymentsPage() {
                   <tr key={payment.orderCode}>
                     <td><strong>{payment.orderCode || "—"}</strong></td>
                     <td>{payment.templateName || payment.packageName || "—"}</td>
-                    <td>{payment.itemType || "TEMPLATE"}</td>
+                    <td>{payment.itemType || (payment.orderCode?.startsWith("SUB") ? "SUBSCRIPTION" : "TEMPLATE")}</td>
                     <td>{money(payment.amount, payment.currency)}</td>
-                    <td><span className={`badge ${payment.status === "PAID" ? "badge-green" : "badge-gray"}`}>{payment.status || "—"}</span></td>
+                    <td>
+                      <span className={`badge ${payment.status === "PAID" ? "badge-green" : String(payment.status || "").includes("PENDING") ? "badge-amber" : "badge-gray"}`}>
+                        {payment.status || "—"}
+                      </span>
+                    </td>
                     <td>{payment.provider || "—"}</td>
                     <td>{formatDate(payment.createdAt)}</td>
                     <td>{formatDate(payment.paidAt)}</td>
                     <td>
-                      {payment.status === "PENDING" ? (
+                      {String(payment.status || "").includes("PENDING") ? (
                         <button
                           type="button"
                           className="btn btn-primary btn-sm"

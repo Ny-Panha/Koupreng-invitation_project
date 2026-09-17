@@ -34,8 +34,16 @@ export const adminManagementService = {
 
   payments: () => api.get("/v1/admin/payments").then(unwrap),
   payment: (orderCode) => api.get(`/v1/admin/payments/${encodeURIComponent(orderCode)}`).then(unwrap),
-  confirmPayment: (payload) =>
-    api.post("/v1/admin/template-payments/confirm", payload).then(unwrap),
+  confirmPayment: (payload) => {
+    const code = payload?.orderCode;
+    if (code) {
+      return api
+        .post(`/v1/admin/payments/${encodeURIComponent(code)}/confirm`, payload)
+        .catch(() => api.post("/v1/admin/template-payments/confirm", payload))
+        .then(unwrap);
+    }
+    return api.post("/v1/admin/template-payments/confirm", payload).then(unwrap);
+  },
 
   packages: () => api.get("/v1/admin/packages").then(unwrap),
   createPackage: (payload) => api.post("/v1/admin/packages", payload).then(unwrap),

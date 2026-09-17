@@ -249,23 +249,142 @@
     border-color: var(--tpl-accent);
 }
 
-/* ── Breadcrumb wrapper (floats over hero) ─────────────────── */
+/* ── Floating Preview Top Bar ───────────────────────────────── */
+.tx-preview-topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 58px;
+    z-index: 1000;
+    background: rgba(22, 14, 8, 0.84);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.28);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+.tx-preview-topbar__inner {
+    max-width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.tx-preview-topbar__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.42rem 0.95rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.09);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #fdf8ee;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.tx-preview-topbar__back:hover {
+    background: rgba(212, 175, 55, 0.22);
+    border-color: rgba(212, 175, 55, 0.5);
+    color: #fbd68b;
+    transform: translateX(-2px);
+}
+
+.tx-preview-topbar__back-icon {
+    font-size: 1.15rem;
+    flex-shrink: 0;
+}
+
+.tx-preview-topbar__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-width: 0;
+}
+
+.tx-preview-topbar__name {
+    color: #fffaf0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: 0.01em;
+}
+
+.tx-preview-topbar__badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1;
+}
+
+.tx-preview-topbar__badge--premium {
+    background: linear-gradient(135deg, #d4af37, #aa7c11);
+    color: #1a1205;
+    box-shadow: 0 1px 6px rgba(212, 175, 55, 0.4);
+}
+
+.tx-preview-topbar__badge--free {
+    background: rgba(46, 125, 50, 0.95);
+    color: #ffffff;
+    border: 1px solid rgba(76, 175, 80, 0.45);
+}
+
+.tx-preview-topbar__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 1.15rem;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+    color: #1a1205;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 2px 12px rgba(212, 175, 55, 0.35);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.tx-preview-topbar__cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.55);
+    filter: brightness(1.08);
+    color: #120b02;
+}
+
+.tx-preview-topbar__cta-icon {
+    font-size: 1rem;
+    color: #1a1205;
+    flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+    .tx-preview-topbar {
+        height: 52px;
+    }
+    .tx-preview-topbar__inner {
+        padding: 0 0.85rem;
+    }
+    .tx-preview-topbar__name {
+        display: none;
+    }
+}
+
+/* ── Legacy Breadcrumb fallback (hidden on demo) ───────────── */
 .tx-breadcrumb {
-    position: absolute;
-    top: calc(var(--safe-top, 0px) + 96px);
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 5;
-    width: min(1180px, 92%);
-    pointer-events: none;
-}
-
-.tx-breadcrumb :where(.kp-breadcrumb) {
-    pointer-events: auto;
-}
-
-.tx-breadcrumb :where(.kp-breadcrumb-link, .kp-breadcrumb-current, .kp-breadcrumb-separator) {
-    color: rgba(255, 250, 241, 0.92);
+    display: none;
 }
 
 /* ============================================================
@@ -389,6 +508,42 @@
 
 .tx-gate__button {
     margin-top: 2rem;
+}
+
+/* ============================================================
+   HERO SCROLL LOCKING (UNTIL USER OPENS)
+   ============================================================ */
+.tx-stage--hero-locked {
+    height: 100vh;
+    height: 100svh;
+    max-height: 100svh;
+    overflow: hidden !important;
+    touch-action: none;
+}
+
+.tx-stage--hero-locked button,
+.tx-stage--hero-locked a,
+.tx-stage--hero-locked input,
+.tx-stage--hero-locked [role="button"] {
+    touch-action: manipulation;
+}
+
+.tx-stage--hero-locked .tx-root {
+    height: 100%;
+    max-height: 100%;
+    overflow: hidden !important;
+}
+
+.tx-stage--hero-locked .tx-experience {
+    height: 100%;
+    max-height: 100%;
+    overflow: hidden !important;
+}
+
+.tx-stage--hero-locked .tx-hero {
+    height: 100vh;
+    height: 100svh;
+    max-height: 100svh;
 }
 
 /* ============================================================
@@ -1699,10 +1854,10 @@
    ============================================================ */
 .tx-music {
     position: fixed;
-    top: max(16px, env(safe-area-inset-top));
+    top: max(calc(var(--site-header-offset, var(--host-nav-offset, 0px)) + 14px), 16px, env(safe-area-inset-top));
     right: max(16px, env(safe-area-inset-right));
     bottom: auto;
-    z-index: var(--z-overlay, 100);
+    z-index: 3100;
     width: 48px;
     height: 48px;
     border-radius: 50%;
@@ -1715,7 +1870,7 @@
     justify-content: center;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
     backdrop-filter: blur(8px);
-    transition: transform var(--motion-base, 200ms) ease;
+    transition: top var(--motion-base, 200ms) ease, transform var(--motion-base, 200ms) ease;
 }
 
 .tx-music:hover {
@@ -1754,7 +1909,7 @@
 /* On mobile, keep music button accessible at top-right without covering content */
 @media (max-width: 768px) {
     .tx-music {
-        top: max(14px, env(safe-area-inset-top));
+        top: max(calc(var(--site-header-offset, var(--host-nav-offset, 0px)) + 12px), 14px, env(safe-area-inset-top));
         right: max(14px, env(safe-area-inset-right));
         bottom: auto;
     }
@@ -4569,7 +4724,7 @@
     --gr-shadow: 0 28px 80px rgba(55, 31, 12, 0.22);
     width: 100%;
     min-height: 100svh;
-    padding: 24px;
+    padding: calc(58px + 20px) 24px 24px;
     background:
         radial-gradient(circle at 50% 8%, rgba(201, 154, 61, 0.18), transparent 30%),
         radial-gradient(circle at 50% 92%, rgba(101, 115, 79, 0.2), transparent 34%),
@@ -5478,11 +5633,18 @@
 }
 
 .template-experience--garden-royal-khmer-wedding .tx-music {
-    top: max(16px, env(safe-area-inset-top));
+    top: max(calc(var(--site-header-offset, var(--host-nav-offset, 0px)) + 14px), 16px, env(safe-area-inset-top));
     right: max(calc((100vw - 460px) / 2 + 14px), 14px);
     bottom: auto;
     width: 48px;
     height: 48px;
+}
+
+@media (max-width: 768px) {
+    .template-experience--garden-royal-khmer-wedding .tx-music {
+        top: max(calc(var(--site-header-offset, var(--host-nav-offset, 0px)) + 12px), 14px, env(safe-area-inset-top));
+        right: max(14px, env(safe-area-inset-right));
+    }
 }
 
 .tx-root--preview.template-experience--garden-royal-khmer-wedding .tx-section,
@@ -6827,7 +6989,7 @@
     overflow-x: hidden;
     overflow-y: auto;
     padding:
-        max(4.5rem, calc(env(safe-area-inset-top) + 2.25rem))
+        max(5rem, calc(env(safe-area-inset-top) + 3.75rem))
         max(1.35rem, calc(env(safe-area-inset-right) + 1rem))
         max(4rem, calc(env(safe-area-inset-bottom) + 2rem))
         max(1.35rem, calc(env(safe-area-inset-left) + 1rem));

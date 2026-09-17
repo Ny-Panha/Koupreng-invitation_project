@@ -49,6 +49,9 @@ export {
     COVER_KHMER_GOLDEN_CODE,
     TEMPLATE_CATEGORIES,
     getTemplateById,
+    getAllTemplates,
+    getTemplatePreset,
+    registerDynamicTemplates,
     normalizeTemplateId,
     isTemplatePremium,
 } from "./data/templatesData";

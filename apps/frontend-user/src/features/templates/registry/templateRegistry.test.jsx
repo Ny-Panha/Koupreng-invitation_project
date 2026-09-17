@@ -40,4 +40,22 @@ describe("templateRegistry (1 Template = 1 Dedicated UI)", () => {
     expect(DefaultTemplateLayout).toBeDefined();
     expect(typeof DefaultTemplateLayout).toBe("function");
   });
+
+  it("resolves dynamic admin template by presetId without falling back to Garden Royal Khmer", () => {
+    const adminTpl = {
+      id: "26",
+      name: "Emerald Custom VIP",
+      presetId: "EMERALD_GREEN",
+      primaryColor: "#0F4C3A",
+      openingStyle: "curtain",
+    };
+    const component = getDedicatedTemplateComponent(adminTpl);
+    expect(component).toBe(EmeraldLuxeLayout);
+  });
+
+  it("resolves other presetIds correctly (RUBY_RED, GOLD_LUXURY)", () => {
+    expect(getDedicatedTemplateComponent({ presetId: "RUBY_RED" })).toBe(RoyalKhmerLayout);
+    expect(getDedicatedTemplateComponent({ presetId: "GOLD_LUXURY" })).toBe(DigitalYesLayout);
+  });
 });
+

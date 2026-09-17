@@ -37,12 +37,15 @@ export function useEvents(t) {
         setDraftToDelete(null);
     };
 
-    const confirmDelete = async () => {
-        if (!draftToDelete) return;
+    const confirmDelete = async (directDraft) => {
+        const target = (directDraft && directDraft.id) ? directDraft : draftToDelete;
+        if (!target) return;
         setIsDeleting(true);
 
+        const targetId = target.id;
+        const backendId = target.backendInvitationId || targetId;
+
         try {
-            const backendId = draftToDelete.backendInvitationId || draftToDelete.id;
             if (backendId) {
                 await eventsApi.remove(backendId).catch((err) => {
                     console.warn("Failed to delete from API", err);
@@ -52,14 +55,24 @@ export function useEvents(t) {
             console.warn("Ignored local draft deletion error", e);
         }
 
-        deleteDraft(draftToDelete.id);
-        localStorage.removeItem(`koupreng.host.manualGuests.${draftToDelete.id}`);
-        localStorage.removeItem(`koupreng.host.guestGroups.${draftToDelete.id}`);
-        localStorage.removeItem(`koupreng.host.guestCategories.${draftToDelete.id}`);
-        localStorage.removeItem(`koupreng.host.expenses.${draftToDelete.id}`);
-        localStorage.removeItem(`koupreng.host.gifts.${draftToDelete.id}`);
+        deleteDraft(targetId);
+        if (target.backendInvitationId) {
+            deleteDraft(target.backendInvitationId);
+        }
+        localStorage.removeItem(`koupreng.host.manualGuests.${targetId}`);
+        localStorage.removeItem(`koupreng.host.guestGroups.${targetId}`);
+        localStorage.removeItem(`koupreng.host.guestCategories.${targetId}`);
+        localStorage.removeItem(`koupreng.host.expenses.${targetId}`);
+        localStorage.removeItem(`koupreng.host.gifts.${targetId}`);
 
-        setDrafts(listDrafts());
+        setDrafts((prev) =>
+            prev.filter(
+                (d) =>
+                    String(d.id) !== String(targetId) &&
+                    String(d.backendInvitationId) !== String(targetId) &&
+                    (!target.backendInvitationId || (String(d.id) !== String(target.backendInvitationId) && String(d.backendInvitationId) !== String(target.backendInvitationId)))
+            )
+        );
         setDraftToDelete(null);
         setIsDeleting(false);
         toast(t ? t("deletedSuccess") || "បានលុបកម្មវិធីជោគជ័យ" : "បានលុបកម្មវិធីជោគជ័យ");

@@ -28,6 +28,34 @@
   z-index: 250;
   display: flex;
   overflow: hidden;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.el-curtain-overlay:not(.opened) {
+  cursor: pointer;
+}
+
+.el-curtain-overlay.opened {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none !important;
+}
+
+.pe-canvas-wrapper .el-curtain-overlay,
+.tx-stage--preview .el-curtain-overlay,
+.tx-root--preview .el-curtain-overlay {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  height: 100% !important;
+}
+
+.pe-canvas-wrapper .el-curtain-btn-box,
+.tx-stage--preview .el-curtain-btn-box,
+.tx-root--preview .el-curtain-btn-box {
+  top: min(50%, 280px) !important;
 }
 
 .el-curtain-half {

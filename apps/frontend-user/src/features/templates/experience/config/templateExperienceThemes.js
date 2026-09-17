@@ -7,8 +7,19 @@ import {
 } from "../../data/templatesData";
 
 export { KEEP_TEMPLATE_CODE, ROYAL_KHMER_TEMPLATE_CODE, KHMER_GOLDEN_CANVA_INSPIRED_CODE, COVER_KHMER_GOLDEN_CODE, THE_DIGITAL_YES_TEMPLATE_CODE };
-
 export const TEMPLATE_VARIANTS = {
+    "emerald-canva-luxe-wedding": {
+        className: "template-experience--emerald-luxe-wedding",
+        mood: "dark",
+        badge: "Emerald Luxe",
+        amp: "❖",
+        dressColors: [
+            { hex: "#0F4C3A", name: "បៃតងចាស់" },
+            { hex: "#2D8A6E", name: "បៃតងមរកត" },
+            { hex: "#D4AF37", name: "មាស" },
+            { hex: "#FFFDF7", name: "ស" },
+        ],
+    },
     [KEEP_TEMPLATE_CODE]: {
         className: "template-experience--garden-royal-khmer-wedding",
         mood: "light",
@@ -91,6 +102,14 @@ export const VARIANT_ROUTE_ALIASES = {
     "vintage-gold": KEEP_TEMPLATE_CODE,
     "the-digital-yes": THE_DIGITAL_YES_TEMPLATE_CODE,
     "the-digital-yes-wedding": THE_DIGITAL_YES_TEMPLATE_CODE,
+    // Admin Studio presetId aliases
+    EMERALD_GREEN: "emerald-canva-luxe-wedding",
+    RUBY_RED: ROYAL_KHMER_TEMPLATE_CODE,
+    ROYAL_KHMER: ROYAL_KHMER_TEMPLATE_CODE,
+    GOLD_LUXURY: THE_DIGITAL_YES_TEMPLATE_CODE,
+    CHAMPAGNE: COVER_KHMER_GOLDEN_CODE,
+    KHMER_GOLDEN: KHMER_GOLDEN_CANVA_INSPIRED_CODE,
+    GARDEN_ROYAL: KEEP_TEMPLATE_CODE,
 };
 
 export function resolveVariant(tpl = {}, explicitVariant) {
@@ -104,6 +123,12 @@ export function resolveVariant(tpl = {}, explicitVariant) {
         if (TEMPLATE_VARIANTS[candidate]) return candidate;
         if (TEMPLATE_VARIANT_BY_ID[candidate]) return TEMPLATE_VARIANT_BY_ID[candidate];
         if (VARIANT_ROUTE_ALIASES[candidate]) return VARIANT_ROUTE_ALIASES[candidate];
+    }
+
+    // Check Admin presetId / theme for dynamic templates
+    const presetCandidate = tpl.presetId || tpl.design?.presetId || tpl.design?.theme;
+    if (presetCandidate && VARIANT_ROUTE_ALIASES[presetCandidate]) {
+        return VARIANT_ROUTE_ALIASES[presetCandidate];
     }
 
     return DEFAULT_VARIANT;

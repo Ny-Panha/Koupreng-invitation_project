@@ -2,8 +2,6 @@ import { NavLink } from "react-router-dom";
 import {
   LayoutDashboard,
   Users,
-  CalendarDays,
-  Mail,
   Palette,
   Layers,
   CreditCard,
@@ -35,8 +33,6 @@ export default function AdminSidebar({ isMobileOpen, isExpanded, onToggle, onNav
       label: t("nav.management", "ការគ្រប់គ្រងទូទៅ"),
       items: [
         { to: "/users", icon: Users, label: t("nav.users", "អ្នកប្រើប្រាស់") },
-        { to: "/events", icon: CalendarDays, label: t("nav.events", "ព្រឹត្តិការណ៍") },
-        { to: "/invitations", icon: Mail, label: t("nav.invitations", "ធៀបការ & RSVP") },
       ],
     },
     {

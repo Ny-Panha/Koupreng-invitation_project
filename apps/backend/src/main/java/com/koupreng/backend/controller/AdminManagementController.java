@@ -15,12 +15,15 @@ import com.koupreng.backend.dto.invitation.InvitationResponse;
 import com.koupreng.backend.dto.subscription.SubscriptionPackageResponse;
 import com.koupreng.backend.dto.subscription.SubscriptionPackageRequest;
 import com.koupreng.backend.dto.payments.PaymentHistoryResponse;
+import com.koupreng.backend.dto.payment.PaymentConfirmResponse;
 import com.koupreng.backend.service.SubscriptionService;
 import com.koupreng.backend.service.PaymentHistoryService;
 import com.koupreng.backend.service.AdminManagementService;
 import com.koupreng.backend.service.AuditLogService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import java.math.BigDecimal;
+import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -429,6 +432,28 @@ public class AdminManagementController {
         return ResponseEntity.ok(ApiResponse.success(
                 "Payment order fetched successfully",
                 paymentHistoryService.get(authentication, orderCode)
+        ));
+    }
+
+    @PostMapping({"/payments/{orderCode}/confirm", "/payments/confirm"})
+    public ResponseEntity<ApiResponse<PaymentConfirmResponse>> confirmPayment(
+            @PathVariable(required = false) String orderCode,
+            @RequestBody(required = false) Map<String, Object> body
+    ) {
+        String resolvedOrderCode = orderCode;
+        if ((resolvedOrderCode == null || resolvedOrderCode.isBlank()) && body != null && body.get("orderCode") != null) {
+            resolvedOrderCode = String.valueOf(body.get("orderCode"));
+        }
+        BigDecimal amount = null;
+        if (body != null && body.get("amount") != null) {
+            try {
+                amount = new BigDecimal(String.valueOf(body.get("amount")));
+            } catch (Exception ignored) {}
+        }
+        String confirmedBy = body != null && body.get("confirmedBy") != null ? String.valueOf(body.get("confirmedBy")) : "admin";
+        return ResponseEntity.ok(ApiResponse.success(
+                "Payment confirmed successfully",
+                paymentHistoryService.confirmPayment(resolvedOrderCode, amount, confirmedBy)
         ));
     }
 }

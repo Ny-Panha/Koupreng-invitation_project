@@ -12,16 +12,12 @@ import UsersPage from "../pages/users/AdminUsersPage";
 import UserDetailPage from "../pages/users/AdminUserDetailPage";
 import TemplatesPage from "../pages/templates/AdminTemplatesPage";
 import TemplateEditPage from "../pages/templates/AdminTemplateEditPage";
-import InvitationsPage from "../pages/invitations/AdminInvitationsPage";
-import InvitationDetailPage from "../pages/invitations/AdminInvitationDetailPage";
 import PaymentsPage from "../pages/payments/AdminPaymentsPage";
 import PackagesPage from "../pages/payments/AdminPackagesPage";
 import NotificationsPage from "../features/admin/AdminNotificationsPage";
 import SystemLogsPage from "../features/admin/AdminSystemLogsPage";
 import ReportsPage from "../pages/reports/AdminReportsPage";
 
-// Legacy fallback page kept for events reference
-import EventsPage from "../pages/EventsPage";
 import { ADMIN_ROUTE_PATHS } from "./routes";
 
 import "../styles/App.css";
@@ -63,9 +59,6 @@ export default function App() {
                 <Route path={ADMIN_ROUTE_PATHS.dashboard} element={<DashboardPage />} />
                 <Route path={ADMIN_ROUTE_PATHS.users} element={<UsersPage />} />
                 <Route path={ADMIN_ROUTE_PATHS.userDetail} element={<UserDetailPage />} />
-                <Route path={ADMIN_ROUTE_PATHS.events} element={<EventsPage />} />
-                <Route path={ADMIN_ROUTE_PATHS.invitations} element={<InvitationsPage />} />
-                <Route path={ADMIN_ROUTE_PATHS.invitationDetail} element={<InvitationDetailPage />} />
                 <Route path={ADMIN_ROUTE_PATHS.templates} element={<TemplatesPage />} />
                 <Route path={ADMIN_ROUTE_PATHS.payments} element={<PaymentsPage />} />
                 <Route path={ADMIN_ROUTE_PATHS.packages} element={<PackagesPage />} />

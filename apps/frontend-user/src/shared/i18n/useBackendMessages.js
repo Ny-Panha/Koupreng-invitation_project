@@ -38,7 +38,14 @@ export function useBackendMessages(namespace) {
         (key, replacements) => {
             const serverVal = messages[key];
             const localVal = LOCAL_MESSAGES[namespace]?.[lang]?.[key] || LOCAL_MESSAGES[namespace]?.["km"]?.[key];
-            const finalVal = serverVal || localVal || key;
+            const isRawKey = typeof serverVal === "string" && (
+                serverVal === `${namespace}.${key}` ||
+                serverVal.toLowerCase() === `${namespace}.${key}`.toLowerCase() ||
+                serverVal === key ||
+                serverVal.startsWith(`${namespace}.`)
+            );
+            const validServerVal = (!isRawKey && serverVal) ? serverVal : null;
+            const finalVal = validServerVal || localVal || serverVal || key;
             return formatMessage(finalVal, replacements);
         },
         [messages, namespace, lang]
