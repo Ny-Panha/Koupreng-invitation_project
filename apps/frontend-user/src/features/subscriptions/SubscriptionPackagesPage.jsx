@@ -1,40 +1,42 @@
 import { useCallback, useEffect, useState } from "react";
-import {
-  Crown,
-  CheckCircle2,
-  Sparkles,
-  Zap,
-  QrCode,
-  ArrowRight,
-  Clock,
-  Award
-} from "lucide-react";
+import { ArrowRight, CheckCircle2, Clock, Crown, ExternalLink, ShieldCheck, Sparkles, Zap } from "lucide-react";
+import Modal from "../../shared/ui/Modal";
 import { toast } from "../../shared/ui/toast";
 import subscriptionService from "./subscriptionService";
 import "../enterprise/EnterprisePages.css";
 
 function money(amount, currency = "USD") {
-  const value = Number(amount || 0);
-  if (value === 0) return "ឥតគិតថ្លៃ (Free)";
-  return new Intl.NumberFormat("en", { style: "currency", currency }).format(value);
+  return new Intl.NumberFormat("en", {
+    style: "currency",
+    currency,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(Number(amount || 0));
 }
 
 const PACKAGE_BADGES = {
-  FREE: { label: "សាមញ្ញ (Starter)", color: "#64748b", bg: "#f1f5f9", icon: Sparkles },
-  SILVER: { label: "ពេញនិយម (Silver)", color: "#0284c7", bg: "#e0f2fe", icon: Zap },
-  GOLD: { label: "ប្រណិត VIP (Gold)", color: "#b45309", bg: "#fef3c7", icon: Crown, featured: true },
-  VIP: { label: "VIP Unlimited", color: "#7c3aed", bg: "#ede9fe", icon: Award, featured: true },
+  BASIC: { label: "Basic", color: "#0284c7", bg: "#e0f2fe", icon: Sparkles },
+  PRO: { label: "Popular · Pro", color: "#b45309", bg: "#fef3c7", icon: Zap, featured: true },
+  PREMIUM: { label: "Premium", color: "#7c3aed", bg: "#ede9fe", icon: Crown },
+};
+
+const buttonStyle = {
+  width: "100%",
+  padding: "13px 18px",
+  borderRadius: 11,
+  border: 0,
+  fontWeight: 750,
+  cursor: "pointer",
 };
 
 export default function SubscriptionPackagesPage() {
   const [packages, setPackages] = useState([]);
   const [current, setCurrent] = useState(null);
   const [history, setHistory] = useState([]);
-  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const [savingId, setSavingId] = useState(null);
   const [error, setError] = useState("");
-  const [paymentModal, setPaymentModal] = useState(null);
+  const [checkout, setCheckout] = useState(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -48,8 +50,8 @@ export default function SubscriptionPackagesPage() {
       setPackages(plans || []);
       setCurrent(currentPlan || null);
       setHistory(subscriptionHistory || []);
-    } catch (err) {
-      setError(err.message || "មិនអាចទាញយកទិន្នន័យកញ្ចប់សេវាបានទេ");
+    } catch (loadError) {
+      setError(loadError.message || "Could not load subscription packages.");
     } finally {
       setLoading(false);
     }
@@ -59,382 +61,215 @@ export default function SubscriptionPackagesPage() {
     load();
   }, [load]);
 
-  const purchase = async (plan) => {
+  const openCheckout = (plan) => {
+    setError("");
+    setCheckout({
+      plan,
+      stage: "details",
+      payerName: "",
+      payerAccountLast3: "",
+      validationError: "",
+    });
+  };
+
+  const createCheckout = async () => {
+    const plan = checkout?.plan;
+    const payerName = checkout?.payerName?.trim() || "";
+    const payerAccountLast3 = checkout?.payerAccountLast3 || "";
+    if (!plan) return;
+    if (!payerName) {
+      setCheckout((value) => ({ ...value, validationError: "ABA account holder name is required." }));
+      return;
+    }
+    if (!/^\d{3}$/.test(payerAccountLast3)) {
+      setCheckout((value) => ({ ...value, validationError: "Last 3 digits must be exactly 3 numbers." }));
+      return;
+    }
+
     setSavingId(plan.id);
     setError("");
-    setMessage("");
     try {
-      const response = await subscriptionService.purchase(plan.id);
-      if (response.active) {
-        toast("កញ្ចប់សេវាត្រូវបានបើកដំណើរការដោយជោគជ័យ! 🎉");
-        await load();
-      } else {
-        setPaymentModal({
-          plan,
-          orderCode: response.orderCode,
-          amount: response.amount || plan.price,
-          currency: response.currency || plan.currency || "USD",
-          qrCode: response.qrPayload || response.qrCode,
-        });
-        toast("បានបង្កើតការបញ្ជាទិញ សូមបង់ប្រាក់តាម QR Code");
-      }
-    } catch (err) {
-      setError(err.message || "មិនអាចជាវកញ្ចប់សេវាកម្មបានទេ");
-      toast(err.message || "មិនអាចជាវកញ្ចប់សេវាបានទេ");
+      const order = await subscriptionService.purchase(plan.id, payerName, payerAccountLast3);
+      setCheckout((value) => ({ ...value, ...order, stage: "waiting", validationError: "" }));
+      toast.info("Payment order created. Waiting for confirmation.");
+      if (order.paymentUrl) window.open(order.paymentUrl, "_blank", "noopener,noreferrer");
+    } catch (purchaseError) {
+      const message = purchaseError.message || "Could not create the subscription payment order.";
+      setCheckout((value) => ({ ...value, validationError: message }));
+      toast.error(message);
     } finally {
       setSavingId(null);
     }
   };
 
+  useEffect(() => {
+    if (!checkout?.orderCode || checkout.stage !== "waiting") return undefined;
+
+    let cancelled = false;
+    const poll = async () => {
+      try {
+        const order = await subscriptionService.order(checkout.orderCode);
+        if (cancelled) return;
+        if (order.active || order.status === "ACTIVE" || order.paymentStatus === "PAID") {
+          setCheckout((value) => ({ ...value, ...order, stage: "success" }));
+          toast.success("Subscription activated successfully.");
+          await load();
+        } else if (order.status === "EXPIRED" || order.paymentStatus === "EXPIRED") {
+          setCheckout((value) => ({ ...value, ...order, stage: "expired" }));
+        } else if (order.status === "REVIEW_REQUIRED") {
+          setCheckout((value) => ({ ...value, ...order, stage: "review" }));
+        }
+      } catch (pollError) {
+        if (!cancelled) setError(pollError.message || "Could not refresh payment status.");
+      }
+    };
+
+    poll();
+    const intervalId = window.setInterval(poll, 4000);
+    return () => {
+      cancelled = true;
+      window.clearInterval(intervalId);
+    };
+  }, [checkout?.orderCode, checkout?.stage, load]);
+
   if (loading) {
     return (
       <main className="enterprise-page">
         <div style={{ textAlign: "center", padding: "60px 20px", color: "#64748b" }}>
-          <Sparkles className="spin" size={32} style={{ color: "#d97706", marginBottom: "12px" }} />
-          <div>កំពុងទាញយកព័ត៌មានកញ្ចប់សេវាកម្ម...</div>
+          <Sparkles className="spin" size={32} style={{ color: "#d97706", marginBottom: 12 }} />
+          <div>កំពុងទាញយកកញ្ចប់សេវាកម្ម…</div>
         </div>
       </main>
     );
   }
 
   return (
-    <main className="enterprise-page" style={{ maxWidth: "1200px", margin: "0 auto", padding: "32px 20px" }}>
-      {/* Header Banner */}
-      <header style={{ textAlign: "center", marginBottom: "40px" }}>
-        <div style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: "8px",
-          background: "#fef3c7",
-          color: "#b45309",
-          padding: "6px 16px",
-          borderRadius: "999px",
-          fontSize: "0.85rem",
-          fontWeight: 700,
-          marginBottom: "12px"
-        }}>
-          <Crown size={16} /> គម្រោងសេវាកម្មឌីជីថល (Packages & Pricing)
+    <main className="enterprise-page" style={{ maxWidth: 1200, margin: "0 auto", padding: "32px 20px" }}>
+      <header style={{ textAlign: "center", marginBottom: 40 }}>
+        <div style={{ display: "inline-flex", gap: 8, alignItems: "center", padding: "6px 16px", borderRadius: 999, background: "#fef3c7", color: "#b45309", fontWeight: 750 }}>
+          <Crown size={16} /> Packages & Pricing
         </div>
-        <h1 style={{ fontSize: "2.2rem", fontWeight: 800, color: "#0f172a", margin: "0 0 12px 0" }}>
+        <h1 style={{ fontSize: "clamp(1.8rem, 4vw, 2.3rem)", color: "#0f172a", marginBottom: 10 }}>
           ជ្រើសរើសកញ្ចប់សេវាកម្មដែលស័ក្តិសមសម្រាប់អ្នក
         </h1>
-        <p style={{ fontSize: "1rem", color: "#64748b", maxWidth: "680px", margin: "0 auto" }}>
-          ដោះសោរមុខងារពិសេសៗដូចជា ការស្កេន QR Code មាត់រោងការ, Templates ប្រណិត, គ្រប់គ្រងតុភ្ញៀវ និងស្ថិតិលម្អិត។
+        <p style={{ color: "#64748b", maxWidth: 680, margin: "0 auto" }}>
+          Secure fixed-link ABA PayWay checkout with administrator-confirmed payment reconciliation.
         </p>
       </header>
 
-      {message && <div className="enterprise-message" style={{ marginBottom: "20px" }}>{message}</div>}
-      {error && <div className="enterprise-error" style={{ marginBottom: "20px" }}>{error}</div>}
+      {error && <div className="enterprise-error" style={{ marginBottom: 20 }}>{error}</div>}
 
-      {/* Current Active Plan Card */}
       {current && (
-        <section style={{
-          background: "linear-gradient(135deg, #0f766e 0%, #115e59 100%)",
-          color: "#ffffff",
-          borderRadius: "16px",
-          padding: "20px 28px",
-          marginBottom: "36px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexWrap: "wrap",
-          gap: "16px",
-          boxShadow: "0 10px 25px -5px rgba(15, 118, 110, 0.3)"
-        }}>
+        <section style={{ background: "linear-gradient(135deg, #0f766e, #115e59)", color: "white", borderRadius: 16, padding: "20px 28px", marginBottom: 36, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
           <div>
-            <span style={{ fontSize: "0.8rem", textTransform: "uppercase", letterSpacing: "1px", opacity: 0.85, fontWeight: 700 }}>
-              កញ្ចប់សេវាកំពុងប្រើប្រាស់ (Active Plan)
-            </span>
-            <div style={{ fontSize: "1.6rem", fontWeight: 800, marginTop: "4px", display: "flex", alignItems: "center", gap: "10px" }}>
-              {current.packagePlan?.packageName || "Standard Plan"}
-              <span style={{ fontSize: "0.75rem", background: "#34d399", color: "#064e3b", padding: "4px 10px", borderRadius: "999px", fontWeight: 700 }}>
-                {current.status}
-              </span>
-            </div>
+            <small style={{ letterSpacing: 1, fontWeight: 750, opacity: 0.85 }}>ACTIVE PLAN</small>
+            <div style={{ fontSize: "1.55rem", fontWeight: 800, marginTop: 4 }}>{current.packagePlan?.packageName}</div>
           </div>
-          <div style={{ fontSize: "0.9rem", opacity: 0.9 }}>
-            {current.endDate ? (
-              <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
-                <Clock size={16} /> ផុតកំណត់៖ {new Intl.DateTimeFormat("km-KH", { dateStyle: "long" }).format(new Date(current.endDate))}
-              </span>
-            ) : "គ្មានកាលកំណត់ (Lifetime Access)"}
+          <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+            <Clock size={16} />
+            {current.endDate ? new Intl.DateTimeFormat("km-KH", { dateStyle: "long" }).format(new Date(current.endDate)) : "Lifetime access"}
           </div>
         </section>
       )}
 
-      {/* Pricing Showcase Grid */}
-      <section style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-        gap: "24px",
-        marginBottom: "48px"
-      }}>
+      <section style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24, marginBottom: 48 }}>
         {packages.map((plan) => {
-          const badge = PACKAGE_BADGES[plan.code?.toUpperCase()] || PACKAGE_BADGES.SILVER;
-          const isCurrentPlan = current?.packagePlan?.id === plan.id;
-          const isFeatured = badge.featured;
-
+          const badge = PACKAGE_BADGES[plan.code?.toUpperCase()] || PACKAGE_BADGES.BASIC;
+          const isCurrent = current?.packagePlan?.id === plan.id;
           return (
-            <article
-              key={plan.id}
-              style={{
-                background: "#ffffff",
-                borderRadius: "20px",
-                border: isFeatured ? "2px solid #f59e0b" : "1px solid #e2e8f0",
-                padding: "32px 24px",
-                display: "flex",
-                flexDirection: "column",
-                position: "relative",
-                boxShadow: isFeatured ? "0 20px 30px -10px rgba(245, 158, 11, 0.15)" : "0 4px 12px rgba(0,0,0,0.03)",
-                transform: isFeatured ? "scale(1.02)" : "none",
-                transition: "all 0.3s ease"
-              }}
-            >
-              {isFeatured && (
-                <div style={{
-                  position: "absolute",
-                  top: "-14px",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  background: "linear-gradient(135deg, #f59e0b, #d97706)",
-                  color: "#ffffff",
-                  padding: "4px 14px",
-                  borderRadius: "999px",
-                  fontSize: "0.78rem",
-                  fontWeight: 800,
-                  letterSpacing: "0.5px",
-                  boxShadow: "0 2px 6px rgba(217, 119, 6, 0.4)"
-                }}>
-                  🌟 ពេញនិយមបំផុត (POPULAR)
-                </div>
-              )}
-
-              <div style={{ marginBottom: "20px" }}>
-                <span style={{
-                  display: "inline-block",
-                  padding: "4px 10px",
-                  borderRadius: "6px",
-                  fontSize: "0.78rem",
-                  fontWeight: 700,
-                  color: badge.color,
-                  background: badge.bg,
-                  marginBottom: "8px"
-                }}>
-                  {badge.label}
-                </span>
-                <h2 style={{ fontSize: "1.4rem", fontWeight: 800, color: "#0f172a", margin: "0 0 6px 0" }}>
-                  {plan.packageName}
-                </h2>
-                <p style={{ fontSize: "0.88rem", color: "#64748b", minHeight: "40px", margin: 0 }}>
-                  {plan.description || "កញ្ចប់គ្រប់គ្រងធៀបការឌីជីថល"}
-                </p>
-              </div>
-
-              <div style={{ marginBottom: "24px", paddingBottom: "20px", borderBottom: "1px solid #f1f5f9" }}>
-                <span style={{ fontSize: "2rem", fontWeight: 900, color: "#0f172a" }}>
-                  {money(plan.price, plan.currency)}
-                </span>
-                {Number(plan.price || 0) > 0 && (
-                  <span style={{ color: "#94a3b8", fontSize: "0.85rem", marginLeft: "6px" }}>
-                    / {plan.durationDays ? `${plan.durationDays} ថ្ងៃ` : "កម្មវិធី"}
-                  </span>
-                )}
-              </div>
-
-              {/* Feature Checklist */}
-              <ul style={{ listStyle: "none", padding: 0, margin: "0 0 32px 0", flex: 1, display: "flex", flexDirection: "column", gap: "12px" }}>
-                <li style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "0.88rem", color: "#334155" }}>
-                  <CheckCircle2 size={18} color="#16a34a" />
-                  <span>បង្កើតធៀបការបាន៖ <strong>{plan.maxInvitations ?? "មិនកំណត់ (Unlimited)"}</strong></span>
-                </li>
-                <li style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "0.88rem", color: "#334155" }}>
-                  <CheckCircle2 size={18} color="#16a34a" />
-                  <span>ចំនួនភ្ញៀវក្នុងធៀប៖ <strong>{plan.maxGuestsPerInvitation ?? plan.maxGuests ?? "មិនកំណត់"} នាក់</strong></span>
-                </li>
-                <li style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "0.88rem", color: "#334155" }}>
-                  <CheckCircle2 size={18} color="#16a34a" />
-                  <span>សមាជិកជួយរៀបចំ៖ <strong>{plan.maxTeamMembers ?? 1} នាក់</strong></span>
-                </li>
-                <li style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "0.88rem", color: "#334155" }}>
-                  <CheckCircle2 size={18} color="#16a34a" />
-                  <span>ស្កេន QR Check-in មាត់រោងការ</span>
-                </li>
-                <li style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "0.88rem", color: "#334155" }}>
-                  <CheckCircle2 size={18} color="#16a34a" />
-                  <span>ទាញយក និងនាំចូលបញ្ជីភ្ញៀវ Excel/CSV</span>
-                </li>
-                {plan.premiumTemplatesEnabled && (
-                  <li style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "0.88rem", color: "#b45309", fontWeight: 700 }}>
-                    <Crown size={18} color="#d97706" />
-                    <span>ដោះសោរគ្រប់ Premium Templates ទាំងអស់</span>
-                  </li>
-                )}
+            <article key={plan.id} style={{ background: "white", borderRadius: 20, border: badge.featured ? "2px solid #f59e0b" : "1px solid #e2e8f0", padding: "30px 24px", display: "flex", flexDirection: "column", boxShadow: badge.featured ? "0 20px 30px -10px rgba(245,158,11,.18)" : "0 4px 12px rgba(0,0,0,.04)" }}>
+              <span style={{ alignSelf: "flex-start", background: badge.bg, color: badge.color, padding: "5px 10px", borderRadius: 7, fontSize: ".8rem", fontWeight: 750 }}>{badge.label}</span>
+              <h2 style={{ margin: "14px 0 6px", color: "#0f172a" }}>{plan.packageName}</h2>
+              <p style={{ color: "#64748b", minHeight: 42 }}>{plan.description}</p>
+              <div style={{ fontSize: "2rem", fontWeight: 900, color: "#0f172a", padding: "18px 0", borderBottom: "1px solid #f1f5f9" }}>{money(plan.price, plan.currency)}</div>
+              <ul style={{ listStyle: "none", padding: 0, display: "grid", gap: 12, margin: "22px 0 30px", flex: 1 }}>
+                <Feature>Up to {plan.maxInvitations ?? "unlimited"} invitations</Feature>
+                <Feature>Up to {plan.maxGuestsPerInvitation ?? plan.maxGuests ?? "unlimited"} guests per invitation</Feature>
+                <Feature>{plan.maxTeamMembers ?? 1} team members</Feature>
+                {plan.premiumTemplatesEnabled && <Feature>Premium invitation templates</Feature>}
+                {plan.qrCheckInEnabled && <Feature>QR guest check-in</Feature>}
               </ul>
-
-              <button
-                type="button"
-                disabled={savingId === plan.id || isCurrentPlan}
-                onClick={() => purchase(plan)}
-                style={{
-                  width: "100%",
-                  padding: "14px 20px",
-                  borderRadius: "12px",
-                  fontWeight: 700,
-                  fontSize: "0.95rem",
-                  cursor: isCurrentPlan ? "default" : "pointer",
-                  border: "none",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "8px",
-                  background: isCurrentPlan
-                    ? "#e2e8f0"
-                    : isFeatured
-                      ? "linear-gradient(135deg, #d97706, #b45309)"
-                      : "#0f766e",
-                  color: isCurrentPlan ? "#64748b" : "#ffffff",
-                  boxShadow: isCurrentPlan ? "none" : "0 4px 14px rgba(0,0,0,0.12)",
-                  transition: "all 0.2s ease"
-                }}
-              >
-                {savingId === plan.id ? (
-                  "កំពុងដំណើរការ..."
-                ) : isCurrentPlan ? (
-                  "កញ្ចប់កំពុងប្រើបច្ចុប្បន្ន"
-                ) : Number(plan.price || 0) > 0 ? (
-                  <>ជាវឥឡូវនេះ (Upgrade) <ArrowRight size={16} /></>
-                ) : (
-                  "ចាប់ផ្តើមឥតគិតថ្លៃ"
-                )}
+              <button type="button" disabled={savingId === plan.id || isCurrent} onClick={() => openCheckout(plan)} style={{ ...buttonStyle, background: isCurrent ? "#e2e8f0" : badge.featured ? "linear-gradient(135deg,#d97706,#b45309)" : "#0f766e", color: isCurrent ? "#64748b" : "white" }}>
+                {isCurrent ? "Current plan" : <>Subscribe / Upgrade <ArrowRight size={16} style={{ verticalAlign: "middle" }} /></>}
               </button>
             </article>
           );
         })}
       </section>
 
-      {/* Payment Instructions Modal if unpaid package */}
-      {paymentModal && (
-        <div style={{
-          position: "fixed",
-          inset: 0,
-          background: "rgba(0,0,0,0.6)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          zIndex: 9999,
-          padding: "20px"
-        }}>
-          <div style={{
-            background: "#ffffff",
-            borderRadius: "20px",
-            maxWidth: "460px",
-            width: "100%",
-            padding: "28px",
-            textAlign: "center",
-            boxShadow: "0 20px 40px rgba(0,0,0,0.25)"
-          }}>
-            <QrCode size={36} color="#d97706" style={{ marginBottom: "12px" }} />
-            <h3 style={{ fontSize: "1.3rem", fontWeight: 800, color: "#0f172a", margin: "0 0 8px 0" }}>
-              ស្កេនទូទាត់ប្រាក់តាម ABA KHQR
-            </h3>
-            <p style={{ fontSize: "0.85rem", color: "#64748b", margin: "0 0 16px 0" }}>
-              កញ្ចប់៖ <strong>{paymentModal.plan?.packageName}</strong> • ចំនួនទឹកប្រាក់៖ <strong style={{ color: "#16a34a" }}>{money(paymentModal.amount, paymentModal.currency)}</strong>
-            </p>
+      <HistoryTable history={history} />
+      <CheckoutModal checkout={checkout} saving={savingId != null} onChange={setCheckout} onSubmit={createCheckout} onClose={() => setCheckout(null)} />
+    </main>
+  );
+}
 
-            <div style={{
-              background: "#fafaf9",
-              border: "1px solid #e7e5e4",
-              borderRadius: "14px",
-              padding: "20px",
-              marginBottom: "20px"
-            }}>
-              <img
-                src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(paymentModal.qrCode || `KOUPRENG_PACKAGE_${paymentModal.orderCode}`)}`}
-                alt="Payment QR"
-                style={{ width: "180px", height: "180px", margin: "0 auto", display: "block" }}
-              />
-              <div style={{ marginTop: "10px", fontSize: "0.8rem", color: "#78716c", fontWeight: 600 }}>
-                លេខ Order: <code>{paymentModal.orderCode}</code>
-              </div>
-            </div>
+function Feature({ children }) {
+  return <li style={{ display: "flex", gap: 10, color: "#334155", alignItems: "center" }}><CheckCircle2 size={18} color="#16a34a" /> {children}</li>;
+}
 
-            <p style={{ fontSize: "0.8rem", color: "#64748b", marginBottom: "20px" }}>
-              បន្ទាប់ពីបង់ប្រាក់រួច ប្រព័ន្ធ Telegram Bot នឹងផ្ទៀងផ្ទាត់ និងបើកដំណើរការកញ្ចប់សេវាជូនភ្លាមៗ។
-            </p>
+function CheckoutModal({ checkout, saving, onChange, onSubmit, onClose }) {
+  if (!checkout) return null;
+  const isDetails = checkout.stage === "details";
+  const terminal = ["success", "expired", "review"].includes(checkout.stage);
 
-            <button
-              type="button"
-              onClick={() => { setPaymentModal(null); load(); }}
-              style={{
-                width: "100%",
-                padding: "12px 20px",
-                borderRadius: "10px",
-                background: "#0f766e",
-                color: "#ffffff",
-                border: "none",
-                fontWeight: 700,
-                cursor: "pointer"
-              }}
-            >
-              យល់ព្រម / រួចរាល់
-            </button>
+  return (
+    <Modal isOpen onClose={onClose} title={isDetails ? `Subscribe to ${checkout.plan.packageName}` : `Payment · ${checkout.plan.packageName}`} subtitle={money(checkout.amount ?? checkout.plan.price, checkout.currency ?? checkout.plan.currency)} size="sm" closeOnBackdropClick={!saving} closeOnEscape={!saving}>
+      {isDetails ? (
+        <form onSubmit={(event) => { event.preventDefault(); onSubmit(); }} style={{ display: "grid", gap: 16 }}>
+          <label style={{ display: "grid", gap: 7, color: "#334155", fontWeight: 700 }}>
+            ABA Account Holder Name
+            <input autoFocus value={checkout.payerName} onChange={(event) => onChange((value) => ({ ...value, payerName: event.target.value, validationError: "" }))} maxLength={120} placeholder="KOEURNG VIREAK" style={{ padding: "12px 13px", borderRadius: 9, border: "1px solid #cbd5e1", fontSize: "1rem" }} />
+          </label>
+          <label style={{ display: "grid", gap: 7, color: "#334155", fontWeight: 700 }}>
+            Last 3 digits of ABA account
+            <input inputMode="numeric" value={checkout.payerAccountLast3} onChange={(event) => onChange((value) => ({ ...value, payerAccountLast3: event.target.value.replace(/\D/g, "").slice(0, 3), validationError: "" }))} maxLength={3} placeholder="247" style={{ padding: "12px 13px", borderRadius: 9, border: "1px solid #cbd5e1", fontSize: "1rem", letterSpacing: 4 }} />
+          </label>
+          <div style={{ background: "#fff7ed", color: "#9a3412", borderRadius: 10, padding: 12, fontSize: ".9rem" }}>Use the same ABA account when making payment.</div>
+          {checkout.validationError && <div role="alert" style={{ color: "#b91c1c", fontSize: ".9rem" }}>{checkout.validationError}</div>}
+          <button type="submit" disabled={saving} style={{ ...buttonStyle, background: "#0f766e", color: "white" }}>{saving ? "Creating payment order…" : "Continue to ABA PayWay"}</button>
+        </form>
+      ) : (
+        <div style={{ display: "grid", gap: 15 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, color: checkout.stage === "success" ? "#15803d" : "#0f766e", fontWeight: 800 }}>
+            {checkout.stage === "success" ? <CheckCircle2 size={24} /> : <ShieldCheck size={24} />}
+            {checkout.stage === "waiting" && "Waiting for payment confirmation…"}
+            {checkout.stage === "success" && "Subscription activated successfully."}
+            {checkout.stage === "expired" && "Payment session expired. Please start again."}
+            {checkout.stage === "review" && "Payment received but needs administrator review."}
           </div>
+          <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 12, padding: 15, display: "grid", gap: 8, fontSize: ".92rem" }}>
+            <Summary label="Package" value={checkout.plan.packageName} />
+            <Summary label="Amount" value={money(checkout.amount, checkout.currency)} />
+            <Summary label="Payer" value={checkout.payerName} />
+            <Summary label="ABA account" value={`*${checkout.payerAccountLast3}`} />
+            <Summary label="Order" value={checkout.orderCode} code />
+            <Summary label="Status" value={checkout.status || "PENDING_PAYMENT"} />
+            <Summary label="Expires" value={checkout.expiresAt ? new Date(checkout.expiresAt).toLocaleString() : "—"} />
+          </div>
+          {checkout.stage === "waiting" && checkout.paymentUrl && <a href={checkout.paymentUrl} target="_blank" rel="noreferrer" style={{ ...buttonStyle, boxSizing: "border-box", background: "#0f766e", color: "white", textAlign: "center", textDecoration: "none" }}>Continue to ABA PayWay <ExternalLink size={15} style={{ verticalAlign: "middle" }} /></a>}
+          {terminal && <button type="button" onClick={onClose} style={{ ...buttonStyle, background: "#e2e8f0", color: "#334155" }}>Close</button>}
         </div>
       )}
+    </Modal>
+  );
+}
 
-      {/* Subscription History Table */}
-      <section style={{
-        background: "#ffffff",
-        borderRadius: "16px",
-        border: "1px solid #e2e8f0",
-        padding: "24px",
-        boxShadow: "0 2px 8px rgba(0,0,0,0.03)"
-      }}>
-        <h2 style={{ fontSize: "1.2rem", fontWeight: 800, color: "#0f172a", marginBottom: "16px" }}>
-          ប្រវត្តិការជាវកញ្ចប់សេវា (Subscription History)
-        </h2>
-        {history.length ? (
-          <div className="enterprise-table-wrap" style={{ overflowX: "auto" }}>
-            <table className="enterprise-table" style={{ width: "100%", textAlign: "left" }}>
-              <thead>
-                <tr>
-                  <th style={{ padding: "10px 14px" }}>កញ្ចប់សេវា</th>
-                  <th style={{ padding: "10px 14px" }}>ស្ថានភាព</th>
-                  <th style={{ padding: "10px 14px" }}>តម្លៃ</th>
-                  <th style={{ padding: "10px 14px" }}>លេខកូដ Order</th>
-                  <th style={{ padding: "10px 14px" }}>ចំណាំ</th>
-                </tr>
-              </thead>
-              <tbody>
-                {history.map((item) => (
-                  <tr key={item.id} style={{ borderBottom: "1px solid #f1f5f9" }}>
-                    <td style={{ padding: "12px 14px", fontWeight: 700 }}>{item.packagePlan?.packageName || "Package"}</td>
-                    <td style={{ padding: "12px 14px" }}>
-                      <span style={{
-                        padding: "3px 8px",
-                        borderRadius: "999px",
-                        fontSize: "0.75rem",
-                        fontWeight: 700,
-                        background: item.active ? "#dcfce7" : "#fef3c7",
-                        color: item.active ? "#15803d" : "#b45309"
-                      }}>
-                        {item.status}
-                      </span>
-                    </td>
-                    <td style={{ padding: "12px 14px", fontWeight: 600 }}>{money(item.amount, item.currency)}</td>
-                    <td style={{ padding: "12px 14px" }}><code>{item.orderCode || "—"}</code></td>
-                    <td style={{ padding: "12px 14px", color: "#64748b" }}>{item.paymentNote || item.message || "—"}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <div style={{ textAlign: "center", padding: "24px", color: "#94a3b8", fontSize: "0.9rem" }}>
-            មិនទាន់មានប្រវត្តិជាវកញ្ចប់សេវានៅឡើយទេ។
-          </div>
-        )}
-      </section>
-    </main>
+function Summary({ label, value, code = false }) {
+  return <div style={{ display: "flex", justifyContent: "space-between", gap: 16 }}><span style={{ color: "#64748b" }}>{label}</span>{code ? <code>{value}</code> : <strong style={{ textAlign: "right" }}>{value}</strong>}</div>;
+}
+
+function HistoryTable({ history }) {
+  return (
+    <section style={{ background: "white", borderRadius: 16, border: "1px solid #e2e8f0", padding: 24 }}>
+      <h2 style={{ color: "#0f172a", marginTop: 0 }}>ប្រវត្តិការជាវកញ្ចប់សេវា (Subscription History)</h2>
+      {history.length ? (
+        <div className="enterprise-table-wrap" style={{ overflowX: "auto" }}>
+          <table className="enterprise-table" style={{ width: "100%", textAlign: "left" }}>
+            <thead><tr><th>Package</th><th>Status</th><th>Amount</th><th>Order</th><th>Message</th></tr></thead>
+            <tbody>{history.map((item) => <tr key={item.id}><td>{item.packagePlan?.packageName}</td><td>{item.status}</td><td>{money(item.amount, item.currency)}</td><td><code>{item.orderCode || "—"}</code></td><td>{item.message || "—"}</td></tr>)}</tbody>
+          </table>
+        </div>
+      ) : <div style={{ color: "#94a3b8", padding: 20, textAlign: "center" }}>No subscription history yet.</div>}
+    </section>
   );
 }

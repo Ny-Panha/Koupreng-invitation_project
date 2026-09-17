@@ -123,6 +123,25 @@ class ProductionSecurityValidatorTests {
         assertTrue(exception.getMessage().contains("PAYMENT_PROVIDER_MODE"));
     }
 
+    @Test
+    void rejectsWrongProductionSubscriptionPaymentLink() {
+        ProductionSecurityValidator validator = validator(
+                "a".repeat(64),
+                "jdbc:mysql://db.example.com:3306/koupreng_db?sslMode=VERIFY_IDENTITY&serverTimezone=UTC",
+                "secure-admin-payment-secret",
+                "static",
+                new MockEnvironment(),
+                "https://link.payway.com.kh/wrong-basic-link"
+        );
+
+        IllegalStateException exception = assertThrows(
+                IllegalStateException.class,
+                validator::validateProductionConfiguration
+        );
+
+        assertTrue(exception.getMessage().contains("ABA subscription links"));
+    }
+
     private ProductionSecurityValidator validator(String jwtSecret, String databaseUrl) {
         return validator(jwtSecret, databaseUrl, "secure-admin-payment-secret", "static");
     }
@@ -149,6 +168,24 @@ class ProductionSecurityValidatorTests {
             String providerMode,
             MockEnvironment environment
     ) {
+        return validator(
+                jwtSecret,
+                databaseUrl,
+                adminPaymentSecret,
+                providerMode,
+                environment,
+                "https://link.payway.com.kh/ABAPAYMu523385B"
+        );
+    }
+
+    private ProductionSecurityValidator validator(
+            String jwtSecret,
+            String databaseUrl,
+            String adminPaymentSecret,
+            String providerMode,
+            MockEnvironment environment,
+            String basicSubscriptionLink
+    ) {
         environment.withProperty("spring.datasource.url", databaseUrl)
                 .withProperty("spring.jpa.hibernate.ddl-auto", "none");
 
@@ -173,6 +210,7 @@ class ProductionSecurityValidatorTests {
         paymentProperties.setAdminSecret(adminPaymentSecret);
         paymentProperties.setProviderMode(providerMode);
         paymentProperties.getAba().setStaticLink("https://link.payway.com.kh/ABAPAYrD450560q");
+        paymentProperties.getAba().getSubscription().setBasicLink(basicSubscriptionLink);
 
         return new ProductionSecurityValidator(
                 environment,

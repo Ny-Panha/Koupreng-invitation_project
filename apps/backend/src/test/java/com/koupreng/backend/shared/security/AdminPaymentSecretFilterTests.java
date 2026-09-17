@@ -55,6 +55,19 @@ class AdminPaymentSecretFilterTests {
     }
 
     @Test
+    void protectsInternalSubscriptionPaymentEndpoint() throws Exception {
+        AdminPaymentSecretFilter filter = filter();
+        MockHttpServletRequest request = request("/api/v1/internal/subscription-payments/telegram-detect");
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        AtomicBoolean called = new AtomicBoolean();
+
+        filter.doFilter(request, response, (servletRequest, servletResponse) -> called.set(true));
+
+        assertEquals(401, response.getStatus());
+        assertFalse(called.get());
+    }
+
+    @Test
     void ignoresNonPaymentAdminEndpoint() throws Exception {
         AdminPaymentSecretFilter filter = filter();
         MockHttpServletRequest request = request("/api/v1/invitations/my");

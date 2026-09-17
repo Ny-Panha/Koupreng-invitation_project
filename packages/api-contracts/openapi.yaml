@@ -1667,7 +1667,7 @@ paths:
     post:
       tags:
       - Subscriptions
-      summary: Purchase
+      summary: Create a pending fixed-link subscription checkout
       operationId: purchase
       parameters: []
       requestBody:
@@ -1680,9 +1680,12 @@ paths:
                 summary: Purchase the selected package
                 value:
                   packageId: 1
+                  payerName: KOEURNG VIREAK
+                  payerAccountLast3: "247"
+        required: true
       responses:
-        "200":
-          description: OK
+        "201":
+          description: Created
           content:
             '*/*':
               schema:
@@ -1693,7 +1696,7 @@ paths:
     post:
       tags:
       - Subscriptions
-      summary: Purchase
+      summary: Create a pending fixed-link subscription checkout
       operationId: purchase_1
       parameters:
       - name: packageId
@@ -1713,9 +1716,12 @@ paths:
                 summary: Purchase the selected package
                 value:
                   packageId: 1
+                  payerName: KOEURNG VIREAK
+                  payerAccountLast3: "247"
+        required: true
       responses:
-        "200":
-          description: OK
+        "201":
+          description: Created
           content:
             '*/*':
               schema:
@@ -2689,6 +2695,45 @@ paths:
                 $ref: "#/components/schemas/ApiResponseBudgetItemResponse"
       security:
       - bearerAuth: []
+  /api/v1/internal/subscription-payments/telegram-detect:
+    post:
+      tags:
+      - Subscriptions
+      summary: Reconcile trusted Telegram evidence for a subscription payment
+      operationId: detectInternalTelegramPayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TelegramDetectSubscriptionPaymentRequest"
+            examples:
+              trustedTelegramEvidence:
+                summary: Reconcile a merchant Telegram notification
+                value:
+                  rawMessage: "$199.00 paid by KOEURNG VIREAK (*247). Trx. ID: 178002499089682,\
+                    \ APV: 383331."
+                  detectedBy: telegram-admin-detect:123456789
+                  telegramChatId: "-1001234567890"
+                  telegramMessageId: "42"
+                  telegramSenderId: "987654321"
+                  telegramSenderUsername: PayWayByABA_bot
+                  detectedAmount: 199.0
+                  detectedCurrency: USD
+                  payerName: KOEURNG VIREAK
+                  payerAccountLast3: "247"
+                  paywayTransactionId: "178002499089682"
+                  paywayApprovalCode: "383331"
+                  remark: null
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseSubscriptionPaymentDetectionResponse"
+      security:
+      - adminPaymentSecret: []
   /api/v1/events:
     get:
       tags:
@@ -4764,6 +4809,28 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ApiResponseListSubscriptionResponse"
+      security:
+      - bearerAuth: []
+  /api/v1/me/subscriptions/orders/{orderCode}:
+    get:
+      tags:
+      - Subscriptions
+      summary: Poll a pending subscription payment order
+      operationId: order
+      parameters:
+      - name: orderCode
+        in: path
+        required: true
+        schema:
+          type: string
+        example: <pending-order-code>
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseSubscriptionResponse"
       security:
       - bearerAuth: []
   /api/v1/me/subscription:
@@ -6974,9 +7041,9 @@ components:
         publishedAt:
           type: string
           format: date-time
-        published:
-          type: boolean
         draft:
+          type: boolean
+        published:
           type: boolean
     UpdateProfileRequest:
       type: object
@@ -7621,8 +7688,18 @@ components:
         packageId:
           type: integer
           format: int64
+        payerName:
+          type: string
+          maxLength: 120
+          minLength: 0
+        payerAccountLast3:
+          type: string
+          minLength: 1
+          pattern: "^[0-9]{3}$"
       required:
       - packageId
+      - payerAccountLast3
+      - payerName
     ApiResponseSubscriptionResponse:
       type: object
       properties:
@@ -7665,8 +7742,20 @@ components:
           type: boolean
         paymentLink:
           type: string
+        paymentUrl:
+          type: string
         paymentNote:
           type: string
+        payerName:
+          type: string
+        payerAccountLast3:
+          type: string
+        expiresAt:
+          type: string
+          format: date-time
+        paymentDetectedAt:
+          type: string
+          format: date-time
         message:
           type: string
         createdAt:
@@ -7986,6 +8075,98 @@ components:
           type: string
       required:
       - itemName
+    TelegramDetectSubscriptionPaymentRequest:
+      type: object
+      properties:
+        rawMessage:
+          type: string
+          maxLength: 5000
+          minLength: 0
+        detectedBy:
+          type: string
+          maxLength: 120
+          minLength: 0
+        telegramChatId:
+          type: string
+        telegramMessageId:
+          type: string
+        telegramSenderId:
+          type: string
+        telegramSenderUsername:
+          type: string
+        detectedAmount:
+          type: number
+          exclusiveMinimum: 0
+        detectedCurrency:
+          type: string
+          minLength: 1
+        payerName:
+          type: string
+          maxLength: 120
+          minLength: 0
+        payerAccountLast3:
+          type: string
+          minLength: 1
+          pattern: "^[0-9]{3}$"
+        paywayTransactionId:
+          type: string
+          maxLength: 100
+          minLength: 0
+        paywayApprovalCode:
+          type: string
+          maxLength: 100
+          minLength: 0
+        remark:
+          type: string
+          maxLength: 120
+          minLength: 0
+      required:
+      - detectedAmount
+      - detectedBy
+      - detectedCurrency
+      - payerAccountLast3
+      - paywayTransactionId
+      - rawMessage
+    ApiResponseSubscriptionPaymentDetectionResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/SubscriptionPaymentDetectionResponse"
+        timestamp:
+          type: string
+          format: date-time
+    SubscriptionPaymentDetectionResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - PAID
+          - ALREADY_PROCESSED
+          - UNMATCHED
+          - REVIEW_REQUIRED
+        message:
+          type: string
+        orderCode:
+          type: string
+        packageCode:
+          type: string
+        amount:
+          type: number
+        currency:
+          type: string
+        payerAccountLast3:
+          type: string
+        paywayTransactionId:
+          type: string
+        paywayApprovalCode:
+          type: string
+        active:
+          type: boolean
     TelegramLoginRequest:
       type: object
       properties:
@@ -10114,3 +10295,8 @@ components:
         adds the Bearer prefix automatically; do not type it twice.
       scheme: bearer
       bearerFormat: JWT
+    adminPaymentSecret:
+      type: apiKey
+      description: Internal Telegram payment reconciliation secret.
+      name: X-ADMIN-PAYMENT-SECRET
+      in: header

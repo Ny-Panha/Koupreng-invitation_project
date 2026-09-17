@@ -27,7 +27,12 @@ public class SubscriptionResponse {
     private String status;
     private boolean active;
     private String paymentLink;
+    private String paymentUrl;
     private String paymentNote;
+    private String payerName;
+    private String payerAccountLast3;
+    private Instant expiresAt;
+    private Instant paymentDetectedAt;
     private String message;
     private Instant createdAt;
 
@@ -47,7 +52,12 @@ public class SubscriptionResponse {
                 .status(subscription.getStatus())
                 .active(subscription.isActive())
                 .paymentLink(subscription.getPaymentLink())
+                .paymentUrl(subscription.getPaymentLink())
                 .paymentNote(subscription.getPaymentNote())
+                .payerName(subscription.getPayerName())
+                .payerAccountLast3(subscription.getPayerAccountLast3())
+                .expiresAt(subscription.getPaymentExpiresAt())
+                .paymentDetectedAt(subscription.getPaymentDetectedAt())
                 .message(message)
                 .createdAt(subscription.getCreatedAt())
                 .build();

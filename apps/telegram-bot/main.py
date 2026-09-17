@@ -60,7 +60,13 @@ PAYWAY_APV_RE = re.compile(
     r"\b(?:APV|Approval\s*(?:Code|No\.?|Number)?)\s*[:#=]?\s*([A-Za-z0-9_-]+)\b",
     re.IGNORECASE,
 )
+PAYER_WITH_SUFFIX_RE = re.compile(
+    r"\bpaid by\s+(?P<name>.+?)\s*\(\s*\*(?P<last3>[0-9]{3})\s*\)"
+    r"(?=\s+on\b|\s+via\b|[.,]|$)",
+    re.IGNORECASE,
+)
 PAYER_RE = re.compile(r"\bpaid by\s+(.+?)(?:\s+via\b|\s+on\b|[.,]|$)", re.IGNORECASE)
+REMARK_RE = re.compile(r"\bRemark\s*[:#=]?\s*([^\s,.]+)", re.IGNORECASE)
 AMOUNT_PATTERNS = [
     re.compile(
         r"\b(?P<currency>USD|KHR)\s*(?P<amount>[0-9]+(?:\.[0-9]{1,2})?)(?![0-9.])\b",
@@ -231,6 +237,11 @@ async def telegram_webhook(request: Request):
     raw_text = callback_query.get("data") or message.get("text") or message.get("caption") or ""
     text = raw_text.strip() if isinstance(raw_text, str) else ""
     trusted_payment_sender = payment_sender_allowed(sender)
+    reply_value = message.get("reply_to_message")
+    reply_message = reply_value if isinstance(reply_value, dict) else {}
+    reply_raw_text = reply_message.get("text") or reply_message.get("caption") or ""
+    reply_text = reply_raw_text.strip() if isinstance(reply_raw_text, str) else ""
+    reply_sender = reply_message.get("from") if isinstance(reply_message.get("from"), dict) else {}
 
     if not chat_id or not text:
         logger.info("Ignoring Telegram update without a chat and text payload")
@@ -349,17 +360,22 @@ async def telegram_webhook(request: Request):
         await handle_paid_command(chat_id, message_id, text, sender_display)
         return {"ok": True}
 
-    if text.startswith("/detect"):
+    if command_name(text) in {"/detect", "/confirm"}:
         if sender_id not in TELEGRAM_ALLOWED_ADMIN_IDS:
             await send_message(chat_id, "You are not allowed to detect payments.", message_id)
             return {"ok": True}
-        detect_text = command_payload(text, "/detect")
+        command = command_name(text)
+        detect_text = reply_text or command_payload(text, command)
         if not detect_text:
             await send_message(
                 chat_id,
-                "Usage: /detect ABA alert text with amount and optional EVT order code",
+                "Reply to an ABA PayWay notification with /detect or /confirm.",
                 message_id,
             )
+            return {"ok": True}
+        if reply_text and payment_sender_identity_available(reply_sender) and not payment_sender_allowed(reply_sender):
+            logger.warning("Ignoring admin detection reply to an untrusted payment sender")
+            await send_message(chat_id, "The replied message is not from a trusted PayWay sender.", message_id)
             return {"ok": True}
         if not looks_like_payment_alert(detect_text):
             await send_message(chat_id, "Could not find a payment amount in that message.", message_id)
@@ -368,18 +384,23 @@ async def telegram_webhook(request: Request):
         if not payment:
             await send_message(chat_id, "Could not find a payment amount in that message.", message_id)
             return {"ok": True}
-        if not payment.get("orderCode"):
-            logger.info("Admin payment detection omitted because the order code was missing")
-            await send_message(chat_id, "Payment detected but no order code found. Please check manually.", message_id)
+        if not payment.get("orderCode") and not subscription_evidence_complete(payment):
+            logger.info("Admin subscription detection omitted because evidence was incomplete")
+            await send_message(
+                chat_id,
+                "Subscription alert must include payer *last3, Trx ID, and amount.",
+                message_id,
+            )
             return {"ok": True}
         await handle_detect_message(
             chat_id,
             message_id,
             detect_text,
-            username,
-            sender_id,
+            str(reply_sender.get("username") or "").lstrip("@") if reply_text else username,
+            str(reply_sender.get("id") or "") if reply_text else sender_id,
             detected_by=f"telegram-admin-detect:{sender_identity(username, sender_id)}",
             payment=payment,
+            evidence_message_id=str(reply_message.get("message_id") or message_id),
         )
         return {"ok": True}
 
@@ -458,20 +479,29 @@ def parse_payment_alert(text: str) -> dict | None:
     amount_groups = amount_match.groupdict()
     currency = normalize_currency(amount_groups.get("currency") or "USD")
     try:
-        amount = str(Decimal(amount_groups["amount"]))
+        parsed_amount = Decimal(amount_groups["amount"])
+        amount = str(parsed_amount.quantize(Decimal("0.01"))) if currency == "USD" else str(parsed_amount)
     except InvalidOperation:
         return None
 
     trx_match = PAYWAY_TRX_RE.search(text)
     apv_match = PAYWAY_APV_RE.search(text)
+    payer_with_suffix_match = PAYER_WITH_SUFFIX_RE.search(text)
     payer_match = PAYER_RE.search(text)
+    remark_match = REMARK_RE.search(text)
     return {
         "orderCode": order_match.group(0).upper() if order_match else None,
         "amount": amount,
         "currency": currency,
         "paywayTransactionId": trx_match.group(1) if trx_match else None,
         "paywayApprovalCode": apv_match.group(1) if apv_match else None,
-        "payerName": payer_match.group(1).strip() if payer_match else None,
+        "payerName": (
+            payer_with_suffix_match.group("name").strip()
+            if payer_with_suffix_match
+            else payer_match.group(1).strip() if payer_match else None
+        ),
+        "payerAccountLast3": payer_with_suffix_match.group("last3") if payer_with_suffix_match else None,
+        "remark": remark_match.group(1) if remark_match else None,
     }
 
 
@@ -484,6 +514,19 @@ def payment_sender_allowed(sender: dict) -> bool:
     if TELEGRAM_ALLOWED_PAYMENT_BOT_USERNAMES and username in TELEGRAM_ALLOWED_PAYMENT_BOT_USERNAMES:
         return is_bot
     return False
+
+
+def payment_sender_identity_available(sender: dict) -> bool:
+    return bool(sender.get("id") or sender.get("username"))
+
+
+def subscription_evidence_complete(payment: dict) -> bool:
+    return bool(
+        payment.get("amount")
+        and payment.get("currency")
+        and payment.get("payerAccountLast3")
+        and payment.get("paywayTransactionId")
+    )
 
 
 def normalize_currency(value: str) -> str:
@@ -541,28 +584,36 @@ async def handle_detect_message(
     sender_id: str,
     detected_by: str = "telegram-bot",
     payment: dict | None = None,
+    evidence_message_id: str | None = None,
 ):
     payment = payment or parse_payment_alert(text)
     if not payment:
         await send_message(chat_id, "Could not find a payment amount in that message.", message_id)
         return
 
-    result = await post_to_backend(
-        "/api/v1/internal/template-payments/telegram-detect",
-        {
-            "rawMessage": text,
-            "detectedBy": detected_by,
-            "telegramChatId": chat_id,
-            "telegramMessageId": message_id,
-            "telegramSenderUsername": username,
-            "telegramSenderId": sender_id,
-            "detectedOrderCode": payment.get("orderCode"),
-            "detectedAmount": payment["amount"],
-            "detectedCurrency": payment["currency"],
-            "paywayTransactionId": payment["paywayTransactionId"],
-            "paywayApprovalCode": payment["paywayApprovalCode"],
-        },
+    payload = {
+        "rawMessage": text,
+        "detectedBy": detected_by,
+        "telegramChatId": chat_id,
+        "telegramMessageId": evidence_message_id or message_id,
+        "telegramSenderUsername": username,
+        "telegramSenderId": sender_id,
+        "detectedOrderCode": payment.get("orderCode"),
+        "detectedAmount": payment["amount"],
+        "detectedCurrency": payment["currency"],
+        "payerName": payment.get("payerName"),
+        "payerAccountLast3": payment.get("payerAccountLast3"),
+        "paywayTransactionId": payment["paywayTransactionId"],
+        "paywayApprovalCode": payment["paywayApprovalCode"],
+        "remark": payment.get("remark"),
+    }
+    subscription_payment = not payment.get("orderCode")
+    endpoint = (
+        "/api/v1/internal/subscription-payments/telegram-detect"
+        if subscription_payment
+        else "/api/v1/internal/template-payments/telegram-detect"
     )
+    result = await post_to_backend(endpoint, payload)
     data = result.get("data") or {}
     order_code = data.get("orderCode") or payment.get("orderCode")
     logger.info(
@@ -572,6 +623,9 @@ async def handle_detect_message(
         payment.get("currency"),
     )
 
+    if subscription_payment:
+        await reply_for_subscription_detection(chat_id, message_id, result, payment)
+        return
     if result.get("ok") and data.get("status") == "PAID":
         await send_message(chat_id, payment_confirmed_reply(order_code, payment), message_id)
         return
@@ -584,6 +638,52 @@ async def handle_detect_message(
         f"❌ Payment verification failed\nReason: {reason}",
         message_id,
     )
+
+
+async def reply_for_subscription_detection(chat_id: str, message_id: str, result: dict, payment: dict):
+    data = result.get("data") or {}
+    status = data.get("status")
+    if result.get("ok") and status == "PAID":
+        lines = [
+            "✅ Subscription payment confirmed",
+            f"Order: {data.get('orderCode') or '—'}",
+            f"Plan: {data.get('packageCode') or '—'}",
+            f"Amount: {payment['currency']} {payment['amount']}",
+            f"Payer: *{payment.get('payerAccountLast3') or '—'}",
+        ]
+        append_payment_metadata(lines, payment)
+        lines.extend(["", "Subscription activated successfully."])
+        await send_message(chat_id, "\n".join(lines), message_id)
+        return
+    if result.get("ok") and status == "ALREADY_PROCESSED":
+        await send_message(
+            chat_id,
+            f"ℹ️ Payment already processed\nTrx ID: {payment.get('paywayTransactionId') or '—'}",
+            message_id,
+        )
+        return
+    if result.get("ok") and status == "UNMATCHED":
+        await send_message(
+            chat_id,
+            "❌ No matching pending subscription\n"
+            f"Amount: {payment['currency']} {payment['amount']}\n"
+            f"Payer: *{payment.get('payerAccountLast3') or '—'}\n"
+            f"Trx ID: {payment.get('paywayTransactionId') or '—'}",
+            message_id,
+        )
+        return
+    if result.get("ok") and status == "REVIEW_REQUIRED":
+        await send_message(
+            chat_id,
+            "⚠️ Multiple pending subscriptions matched\nManual review required.\n"
+            f"Amount: {payment['currency']} {payment['amount']}\n"
+            f"Payer: *{payment.get('payerAccountLast3') or '—'}\n"
+            f"Trx ID: {payment.get('paywayTransactionId') or '—'}",
+            message_id,
+        )
+        return
+    reason = result.get("message") or data.get("message") or "Unknown backend response"
+    await send_message(chat_id, f"❌ Payment verification failed\nReason: {reason}", message_id)
 
 
 def payment_confirmed_reply(order_code: str, payment: dict) -> str:

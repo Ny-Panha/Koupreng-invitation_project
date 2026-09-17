@@ -50,6 +50,36 @@ public class Subscription {
     @Column(name = "payment_note", length = 120)
     private String paymentNote;
 
+    @Column(name = "payer_name", length = 120)
+    private String payerName;
+
+    @Column(name = "payer_account_last3", length = 3)
+    private String payerAccountLast3;
+
+    @Column(name = "payment_expires_at")
+    private Instant paymentExpiresAt;
+
+    @Column(name = "payway_transaction_id", unique = true, length = 100)
+    private String paywayTransactionId;
+
+    @Column(name = "payway_approval_code", length = 100)
+    private String paywayApprovalCode;
+
+    @Column(name = "payway_payer_name", length = 120)
+    private String paywayPayerName;
+
+    @Column(name = "payment_detected_at")
+    private Instant paymentDetectedAt;
+
+    @Column(name = "payment_raw_source", columnDefinition = "TEXT")
+    private String paymentRawSource;
+
+    @Column(name = "payment_evidence_reference", length = 255)
+    private String paymentEvidenceReference;
+
+    @Column(name = "payment_remark", length = 120)
+    private String paymentRemark;
+
     @Column(name = "payment_status", length = 50)
     private String paymentStatus;
 

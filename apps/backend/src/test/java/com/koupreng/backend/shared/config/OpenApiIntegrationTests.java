@@ -106,7 +106,11 @@ class OpenApiIntegrationTests {
                 .andExpect(jsonPath("$.info.version").value("v1"))
                 .andExpect(jsonPath("$.components.securitySchemes.bearerAuth.type").value("http"))
                 .andExpect(jsonPath("$.components.securitySchemes.bearerAuth.scheme").value("bearer"))
-                .andExpect(jsonPath("$.components.securitySchemes.bearerAuth.bearerFormat").value("JWT"));
+                .andExpect(jsonPath("$.components.securitySchemes.bearerAuth.bearerFormat").value("JWT"))
+                .andExpect(jsonPath("$.components.securitySchemes.adminPaymentSecret.type").value("apiKey"))
+                .andExpect(jsonPath("$.components.securitySchemes.adminPaymentSecret.in").value("header"))
+                .andExpect(jsonPath("$.components.securitySchemes.adminPaymentSecret.name")
+                        .value("X-ADMIN-PAYMENT-SECRET"));
     }
 
     @Test
@@ -122,6 +126,10 @@ class OpenApiIntegrationTests {
                 .andExpect(jsonPath("$.paths['/api/v1/users/me'].get.security[0].bearerAuth").isArray())
                 .andExpect(jsonPath("$.paths['/api/v1/admin/payments/confirm'].post.security[0].bearerAuth").isArray())
                 .andExpect(jsonPath("$.paths['/api/v1/admin/users'].get.security[0].bearerAuth").isArray())
+                .andExpect(jsonPath("$.paths['/api/v1/internal/subscription-payments/telegram-detect']"
+                        + ".post.security[0].adminPaymentSecret").isArray())
+                .andExpect(jsonPath("$.paths['/api/v1/internal/subscription-payments/telegram-detect']"
+                        + ".post.security[0].bearerAuth").doesNotExist())
                 .andExpect(content().string(not(containsString("/api/v1/internal/template-payments/"))));
     }
 

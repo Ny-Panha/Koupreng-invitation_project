@@ -1,6 +1,8 @@
 # Koupreng Payment Telegram Bot
 
-FastAPI webhook helper for ABA PayWay static KHQR template payments.
+FastAPI webhook helper for ABA PayWay static template and subscription payments.
+
+Subscription payments use a separate reconciliation path. An authorized admin replies directly to a trusted merchant PayWay alert with `/detect` or `/confirm`; the bot extracts exact amount, payer name, payer `*last3`, transaction ID, APV, and optional remark, then calls `POST /api/v1/internal/subscription-payments/telegram-detect`. The backend requires exactly one non-expired pending amount/currency/suffix match before atomically activating a plan.
 
 The bot listens for ABA PayWay bot alerts in the Telegram payment group. When a trusted ABA PayWay bot message contains an exact amount and an `EVT...` order code, it calls the Spring Boot backend at `POST /api/v1/internal/template-payments/telegram-detect`. The backend verifies the internal payment secret, order, amount, currency, expiry, and status, then defaults the order to `PAID_PENDING_REVIEW`. An administrator must confirm the payment before the backend marks it `PAID` and unlocks the template.
 
@@ -160,6 +162,22 @@ Manual confirmation:
 ```
 
 Only sender IDs in `TELEGRAM_ALLOWED_ADMIN_IDS` can use these commands.
+
+For a fixed-link subscription alert that has no `EVT...` remark, reply directly to the merchant notification:
+
+```text
+/detect
+```
+
+or:
+
+```text
+/confirm
+```
+
+The replied message must come from the configured PayWay sender when Telegram supplies sender identity. Subscription evidence must include an amount, payer `*last3`, and transaction ID. No order code is required for subscription matching.
+
+See `../../docs/testing/subscription-static-payment-reconciliation.md` for the real USD 0.01 and local simulated procedures.
 
 ## Real Test
 

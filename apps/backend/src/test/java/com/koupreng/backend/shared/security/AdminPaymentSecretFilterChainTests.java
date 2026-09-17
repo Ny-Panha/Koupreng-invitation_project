@@ -5,6 +5,10 @@ import com.koupreng.backend.payment.api.dto.PaymentConfirmResponse;
 import com.koupreng.backend.payment.api.dto.TelegramDetectPaymentRequest;
 import com.koupreng.backend.payment.domain.PaymentStatus;
 import com.koupreng.backend.payment.application.TemplatePaymentService;
+import com.koupreng.backend.subscription.api.dto.SubscriptionPaymentDetectionResponse;
+import com.koupreng.backend.subscription.api.dto.TelegramDetectSubscriptionPaymentRequest;
+import com.koupreng.backend.subscription.application.SubscriptionService;
+import com.koupreng.backend.subscription.domain.SubscriptionPaymentDetectionStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +40,25 @@ class AdminPaymentSecretFilterChainTests {
     private static final String INTERNAL_TELEGRAM_DETECT_PATH = "/api/v1/internal/template-payments/telegram-detect";
     private static final String ADMIN_CONFIRM_PATH = "/api/v1/admin/template-payments/confirm";
     private static final String ADMIN_TELEGRAM_DETECT_PATH = "/api/v1/admin/template-payments/telegram-detect";
+    private static final String INTERNAL_SUBSCRIPTION_DETECT_PATH =
+            "/api/v1/internal/subscription-payments/telegram-detect";
     private static final String CONFIRM_REQUEST_BODY = """
             {
               "orderCode": "EVT260529001",
               "amount": 0.01,
               "confirmedBy": "telegram-bot"
+            }
+            """;
+    private static final String SUBSCRIPTION_DETECT_REQUEST_BODY = """
+            {
+              "rawMessage": "$0.01 paid by RAN NARATH (*288). Trx. ID: 178002499089682, APV: 383331.",
+              "detectedBy": "telegram-admin-detect:999",
+              "detectedAmount": 0.01,
+              "detectedCurrency": "USD",
+              "payerName": "RAN NARATH",
+              "payerAccountLast3": "288",
+              "paywayTransactionId": "178002499089682",
+              "paywayApprovalCode": "383331"
             }
             """;
     private static final String TELEGRAM_DETECT_REQUEST_BODY = """
@@ -59,6 +77,9 @@ class AdminPaymentSecretFilterChainTests {
     @MockitoBean
     private TemplatePaymentService templatePaymentService;
 
+    @MockitoBean
+    private SubscriptionService subscriptionService;
+
     @BeforeEach
     public void setUp() {
         when(templatePaymentService.confirmManualPayment(any(ConfirmTemplatePaymentRequest.class)))
@@ -72,6 +93,13 @@ class AdminPaymentSecretFilterChainTests {
                         .message("Telegram payment confirmed")
                         .orderCode("EVT260529001")
                         .status(PaymentStatus.PAID)
+                        .build());
+        when(subscriptionService.detectTelegramPayment(any(TelegramDetectSubscriptionPaymentRequest.class)))
+                .thenReturn(SubscriptionPaymentDetectionResponse.builder()
+                        .status(SubscriptionPaymentDetectionStatus.PAID)
+                        .orderCode("SUB2609151234")
+                        .packageCode("BASIC")
+                        .active(true)
                         .build());
     }
 
@@ -145,6 +173,40 @@ class AdminPaymentSecretFilterChainTests {
                 .andExpect(jsonPath("$.data.status").value("PAID"));
 
         verify(templatePaymentService).detectPaymentFromTelegram(any(TelegramDetectPaymentRequest.class));
+    }
+
+    @Test
+    void internalSubscriptionDetectRejectsMissingSecret() throws Exception {
+        mockMvc.perform(post(INTERNAL_SUBSCRIPTION_DETECT_PATH)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(SUBSCRIPTION_DETECT_REQUEST_BODY))
+                .andExpect(status().isUnauthorized());
+
+        verifyNoInteractions(subscriptionService);
+    }
+
+    @Test
+    void internalSubscriptionDetectRejectsWrongSecret() throws Exception {
+        mockMvc.perform(post(INTERNAL_SUBSCRIPTION_DETECT_PATH)
+                        .header(AdminPaymentSecretFilter.ADMIN_PAYMENT_SECRET_HEADER, "wrong-secret")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(SUBSCRIPTION_DETECT_REQUEST_BODY))
+                .andExpect(status().isForbidden());
+
+        verifyNoInteractions(subscriptionService);
+    }
+
+    @Test
+    void internalSubscriptionDetectAllowsValidSecretWithoutJwt() throws Exception {
+        mockMvc.perform(post(INTERNAL_SUBSCRIPTION_DETECT_PATH)
+                        .header(AdminPaymentSecretFilter.ADMIN_PAYMENT_SECRET_HEADER, "chain-secret")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(SUBSCRIPTION_DETECT_REQUEST_BODY))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.orderCode").value("SUB2609151234"))
+                .andExpect(jsonPath("$.data.status").value("PAID"));
+
+        verify(subscriptionService).detectTelegramPayment(any(TelegramDetectSubscriptionPaymentRequest.class));
     }
 
     @Test

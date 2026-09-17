@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import java.math.BigDecimal;
 
 public interface SubscriptionRepository extends JpaRepository<Subscription, Long> {
 
@@ -29,7 +30,34 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, Long
 
     Optional<Subscription> findByOrderCode(String orderCode);
 
+    Optional<Subscription> findByOrderCodeAndUserId(String orderCode, Long userId);
+
+    Optional<Subscription> findByPaywayTransactionId(String paywayTransactionId);
+
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select s from Subscription s where s.orderCode = :orderCode")
     Optional<Subscription> findForUpdateByOrderCode(@Param("orderCode") String orderCode);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("select s from Subscription s where s.paywayTransactionId = :transactionId")
+    Optional<Subscription> findForUpdateByPaywayTransactionId(@Param("transactionId") String transactionId);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("""
+            select s
+            from Subscription s
+            where s.paymentStatus = 'PENDING'
+              and s.status = 'PENDING_PAYMENT'
+              and s.currency = :currency
+              and s.amount = :amount
+              and s.payerAccountLast3 = :payerAccountLast3
+              and s.paymentExpiresAt > :now
+            order by s.id asc
+            """)
+    List<Subscription> findPendingMatchesForUpdate(
+            @Param("currency") String currency,
+            @Param("amount") BigDecimal amount,
+            @Param("payerAccountLast3") String payerAccountLast3,
+            @Param("now") Instant now
+    );
 }

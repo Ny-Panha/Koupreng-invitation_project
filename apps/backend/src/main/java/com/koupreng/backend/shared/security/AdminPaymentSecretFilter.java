@@ -16,13 +16,17 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.util.List;
 
 @Component
 public class AdminPaymentSecretFilter extends OncePerRequestFilter {
 
     private static final Logger log = LoggerFactory.getLogger(AdminPaymentSecretFilter.class);
     public static final String ADMIN_PAYMENT_SECRET_HEADER = "X-ADMIN-PAYMENT-SECRET";
-    private static final String PROTECTED_PATH_PREFIX = "/api/v1/internal/template-payments/";
+    private static final List<String> PROTECTED_PATH_PREFIXES = List.of(
+            "/api/v1/internal/template-payments/",
+            "/api/v1/internal/subscription-payments/"
+    );
 
     private final PaymentProperties paymentProperties;
 
@@ -37,7 +41,8 @@ public class AdminPaymentSecretFilter extends OncePerRequestFilter {
         if (contextPath != null && !contextPath.isBlank() && path.startsWith(contextPath)) {
             path = path.substring(contextPath.length());
         }
-        return HttpMethod.OPTIONS.matches(request.getMethod()) || !path.startsWith(PROTECTED_PATH_PREFIX);
+        boolean protectedPath = PROTECTED_PATH_PREFIXES.stream().anyMatch(path::startsWith);
+        return HttpMethod.OPTIONS.matches(request.getMethod()) || !protectedPath;
     }
 
     @Override

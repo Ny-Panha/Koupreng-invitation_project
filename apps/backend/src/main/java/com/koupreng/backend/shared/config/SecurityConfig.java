@@ -148,6 +148,7 @@ public class SecurityConfig {
                                         "/api/auth/forgot-password", "/api/auth/reset-password",
                                         "/api/v1/payway/callback", "/api/v1/payway/return",
                                         "/api/v1/payway/cancel", "/api/v1/internal/template-payments/**",
+                                        "/api/v1/internal/subscription-payments/**",
                                         "/api/v1/public/invitations/**",
                                         "/api/health", "/actuator/**"
                                 );
@@ -201,6 +202,7 @@ public class SecurityConfig {
                                 "/api/v1/payway/return",
                                 "/api/v1/payway/cancel").permitAll()
                         .requestMatchers("/api/v1/internal/template-payments/**").permitAll()
+                        .requestMatchers("/api/v1/internal/subscription-payments/**").permitAll()
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()

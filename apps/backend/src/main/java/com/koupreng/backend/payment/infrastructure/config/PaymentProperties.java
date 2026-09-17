@@ -18,7 +18,7 @@ public class PaymentProperties {
     private boolean autoConfirmTelegramDetected;
 
     @Min(1)
-    private long orderExpiryMinutes = 60;
+    private long orderExpiryMinutes = 30;
 
     private final Aba aba = new Aba();
 
@@ -63,12 +63,54 @@ public class PaymentProperties {
         @NotBlank
         private String staticLink = "https://link.payway.com.kh/ABAPAYrD450560q";
 
+        private final Subscription subscription = new Subscription();
+
         public String getStaticLink() {
             return staticLink;
         }
 
         public void setStaticLink(String staticLink) {
             this.staticLink = staticLink;
+        }
+
+        public Subscription getSubscription() {
+            return subscription;
+        }
+
+        public static class Subscription {
+
+            @NotBlank
+            private String basicLink = "https://link.payway.com.kh/ABAPAYMu523385B";
+
+            @NotBlank
+            private String proLink = "https://link.payway.com.kh/ABAPAY9G523386h";
+
+            @NotBlank
+            private String premiumLink = "https://link.payway.com.kh/ABAPAYBo5233877";
+
+            public String getBasicLink() {
+                return basicLink;
+            }
+
+            public void setBasicLink(String basicLink) {
+                this.basicLink = basicLink;
+            }
+
+            public String getProLink() {
+                return proLink;
+            }
+
+            public void setProLink(String proLink) {
+                this.proLink = proLink;
+            }
+
+            public String getPremiumLink() {
+                return premiumLink;
+            }
+
+            public void setPremiumLink(String premiumLink) {
+                this.premiumLink = premiumLink;
+            }
         }
     }
 }

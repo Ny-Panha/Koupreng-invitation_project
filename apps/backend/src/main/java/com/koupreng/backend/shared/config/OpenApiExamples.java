@@ -192,7 +192,31 @@ final class OpenApiExamples {
                     {"role":"MANAGER"}
                     """);
             case "SubscriptionPurchaseRequest" -> one("developmentPackage", "Purchase the selected package", """
-                    {"packageId":1}
+                    {
+                      "packageId": 1,
+                      "payerName": "KOEURNG VIREAK",
+                      "payerAccountLast3": "247"
+                    }
+                    """);
+            case "TelegramDetectSubscriptionPaymentRequest" -> one(
+                    "trustedTelegramEvidence",
+                    "Reconcile a merchant Telegram notification",
+                    """
+                    {
+                      "rawMessage": "$199.00 paid by KOEURNG VIREAK (*247). Trx. ID: 178002499089682, APV: 383331.",
+                      "detectedBy": "telegram-admin-detect:123456789",
+                      "telegramChatId": "-1001234567890",
+                      "telegramMessageId": "42",
+                      "telegramSenderId": "987654321",
+                      "telegramSenderUsername": "PayWayByABA_bot",
+                      "detectedAmount": 199.00,
+                      "detectedCurrency": "USD",
+                      "payerName": "KOEURNG VIREAK",
+                      "payerAccountLast3": "247",
+                      "paywayTransactionId": "178002499089682",
+                      "paywayApprovalCode": "383331",
+                      "remark": null
+                    }
                     """);
             case "SubscriptionPackageRequest" -> one("starterPackage", "Create or update a safe package definition", """
                     {
