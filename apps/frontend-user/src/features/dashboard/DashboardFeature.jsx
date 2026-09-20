@@ -30,6 +30,7 @@ import { planningService } from "@/features/planning/api/planningApi";
 import notificationService from "../notifications/notificationService";
 import { listDrafts } from "../../shared/storage/weddingStorage";
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import { SkeletonTable } from "@/shared/ui";
 import "./DashboardPage.css";
 
@@ -43,6 +44,7 @@ function asList(val) {
 
 export default function DashboardFeature() {
   const { lang, text } = useBackendMessages("dashboard");
+  const { user } = useAuth();
 
   const [copied, setCopied] = useState(false);
   const [selectedInvId, setSelectedInvId] = useState(null);
@@ -75,7 +77,7 @@ export default function DashboardFeature() {
     try {
       setState((prev) => ({ ...prev, loading: true, error: "" }));
       const invs = asList(await invitationService.listMine().catch(() => []));
-      const drafts = listDrafts();
+      const drafts = listDrafts(user?.id || user?.userId);
       const allInvs = [
         ...invs,
         ...drafts.filter((d) => !invs.some((i) => (i.id || i.invitationId) === (d.id || d.invitationId))),
@@ -148,7 +150,7 @@ export default function DashboardFeature() {
   useEffect(() => {
     const targetId = searchParams.get("id") || searchParams.get("invitationId");
     loadData(targetId || null);
-  }, [searchParams]);
+  }, [searchParams, user?.id, user?.userId]);
 
   const handleSelectInvitation = (id) => {
     setSelectedInvId(id);

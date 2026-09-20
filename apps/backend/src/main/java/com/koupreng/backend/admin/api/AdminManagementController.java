@@ -3,6 +3,7 @@ package com.koupreng.backend.admin.api;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.shared.response.ApiResponse;
+import com.koupreng.backend.admin.api.dto.AdminCreateUserRequest;
 import com.koupreng.backend.admin.api.dto.AdminInvitationModerationRequest;
 import com.koupreng.backend.admin.api.dto.AdminReportResponse;
 import com.koupreng.backend.admin.api.dto.AdminTemplatePremiumRequest;
@@ -64,6 +65,18 @@ public class AdminManagementController {
         this.auditLogService = auditLogService;
         this.subscriptionService = subscriptionService;
         this.paymentHistoryService = paymentHistoryService;
+    }
+
+    @PostMapping("/users")
+    public ResponseEntity<ApiResponse<AdminUserResponse>> createUser(
+            Authentication authentication,
+            @Valid @RequestBody AdminCreateUserRequest requestBody,
+            HttpServletRequest request
+    ) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(
+                "User created successfully",
+                adminManagementService.createUser(authentication, requestBody, request)
+        ));
     }
 
     @GetMapping("/users")

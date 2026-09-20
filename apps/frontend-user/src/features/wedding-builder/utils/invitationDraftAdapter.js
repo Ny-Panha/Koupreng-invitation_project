@@ -125,7 +125,9 @@ export function publicInvitationToDraft(invitation, media) {
     id: invitation?.id || invitation?.slug || "public-invitation",
     backendInvitationId: invitation?.id || null,
     slug: invitation?.slug || "",
-    templateId: content.templateId || design.templateId || KEEP_TEMPLATE_CODE,
+    templateId: invitation?.templateCode || content.templateId || design.templateId || KEEP_TEMPLATE_CODE,
+    templateCode: invitation?.templateCode || "",
+    templateThumbnailUrl: invitation?.templateThumbnailUrl || "",
     couple: {
       ...contentCouple,
       groom: contentCouple.groom || invitation?.groomName || invitation?.hostName || "",
@@ -149,7 +151,7 @@ export function publicInvitationToDraft(invitation, media) {
     party: Array.isArray(content.party) ? content.party : [],
     gift: Array.isArray(content.gift) ? content.gift : [],
     faq: Array.isArray(content.faq) ? content.faq : [],
-    coverImage: mediaCover || content.coverImage || "",
+    coverImage: mediaCover || invitation?.coverUrl || invitation?.media?.coverImage?.fileUrl || content.coverImage || invitation?.templateThumbnailUrl || "",
     gallery: gallery.length
       ? gallery
       : (Array.isArray(content.gallery) ? content.gallery.map(normalizeGalleryItem).filter(Boolean) : []),

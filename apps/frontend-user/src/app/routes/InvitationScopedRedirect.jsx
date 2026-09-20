@@ -3,10 +3,12 @@ import { Navigate, useLocation } from "react-router-dom";
 import { invitationService } from "@/features/invitations/api/invitationApi";
 import { listDrafts } from "@/shared/storage/weddingStorage";
 import { getActiveEventId } from "@/shared/storage/hostPlanningStorage";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 export default function InvitationScopedRedirect({ targetSubPath }) {
   const [targetUrl, setTargetUrl] = useState(null);
   const location = useLocation();
+  const { user } = useAuth();
 
   useEffect(() => {
     let active = true;
@@ -20,7 +22,7 @@ export default function InvitationScopedRedirect({ targetSubPath }) {
       try {
         const res = await invitationService.listMine().catch(() => []);
         const list = Array.isArray(res) ? res : res?.data || [];
-        const drafts = listDrafts();
+        const drafts = listDrafts(user?.id || user?.userId);
         const first = list[0] || drafts[0];
         const id = first?.id || first?.invitationId;
         if (active) {
@@ -38,7 +40,7 @@ export default function InvitationScopedRedirect({ targetSubPath }) {
     return () => {
       active = false;
     };
-  }, [targetSubPath]);
+  }, [targetSubPath, user?.id, user?.userId]);
 
   if (!targetUrl) {
     return (

@@ -26,6 +26,8 @@ public class InvitationResponse {
     private Long userId;
     private String ownerName;
     private Long templateId;
+    private String templateCode;
+    private String templateThumbnailUrl;
     private String templateName;
     private Long organizationId;
     private String organizationName;
@@ -67,6 +69,8 @@ public class InvitationResponse {
                 .userId(invitation.getUser() == null ? null : invitation.getUser().getId())
                 .ownerName(invitation.getUser() == null ? null : invitation.getUser().getFullName())
                 .templateId(template == null ? null : template.getId())
+                .templateCode(template == null ? null : template.getCode())
+                .templateThumbnailUrl(template == null ? null : template.getThumbnailUrl())
                 .templateName(template == null ? null : template.getName())
                 .organizationId(organization == null ? null : organization.getId())
                 .organizationName(organization == null ? null : organization.getName())

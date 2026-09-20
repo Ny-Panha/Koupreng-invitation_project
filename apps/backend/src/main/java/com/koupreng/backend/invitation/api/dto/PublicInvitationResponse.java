@@ -20,6 +20,8 @@ import java.time.LocalTime;
 public class PublicInvitationResponse {
 
     private Long templateId;
+    private String templateCode;
+    private String templateThumbnailUrl;
     private String templateName;
     private String title;
     private String slug;
@@ -56,6 +58,8 @@ public class PublicInvitationResponse {
         InvitationTemplate template = invitation.getTemplate();
         return PublicInvitationResponse.builder()
                 .templateId(template == null ? null : template.getId())
+                .templateCode(template == null ? null : template.getCode())
+                .templateThumbnailUrl(template == null ? null : template.getThumbnailUrl())
                 .templateName(template == null ? null : template.getName())
                 .title(invitation.getTitle())
                 .slug(invitation.getSlug())

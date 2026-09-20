@@ -23,7 +23,7 @@ class AppJwtAuthenticationConverterTests {
     void convertsValidTokenVersionForActiveUser() {
         AppUserRepository userRepository = mock(AppUserRepository.class);
         UserAuthCacheService cacheService = new UserAuthCacheService(userRepository);
-        AppJwtAuthenticationConverter converter = new AppJwtAuthenticationConverter(cacheService);
+        AppJwtAuthenticationConverter converter = new AppJwtAuthenticationConverter(cacheService, userRepository);
         AppUser user = user(AppUser.STATUS_ACTIVE);
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
@@ -37,7 +37,7 @@ class AppJwtAuthenticationConverterTests {
     void rejectsDisabledUser() {
         AppUserRepository userRepository = mock(AppUserRepository.class);
         UserAuthCacheService cacheService = new UserAuthCacheService(userRepository);
-        AppJwtAuthenticationConverter converter = new AppJwtAuthenticationConverter(cacheService);
+        AppJwtAuthenticationConverter converter = new AppJwtAuthenticationConverter(cacheService, userRepository);
         when(userRepository.findById(1L)).thenReturn(Optional.of(user(AppUser.STATUS_DISABLED)));
 
         assertThrows(BadCredentialsException.class, () -> converter.convert(jwtWithTokenVersion(0)));
@@ -47,7 +47,7 @@ class AppJwtAuthenticationConverterTests {
     void rejectsOldTokenAfterLogoutChangesTokenVersion() {
         AppUserRepository userRepository = mock(AppUserRepository.class);
         UserAuthCacheService cacheService = new UserAuthCacheService(userRepository);
-        AppJwtAuthenticationConverter converter = new AppJwtAuthenticationConverter(cacheService);
+        AppJwtAuthenticationConverter converter = new AppJwtAuthenticationConverter(cacheService, userRepository);
         AppUser user = user(AppUser.STATUS_ACTIVE);
         user.incrementTokenVersion();
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));

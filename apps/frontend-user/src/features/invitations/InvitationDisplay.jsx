@@ -15,7 +15,12 @@ export default function InvitationDisplay({ invitation, media, preview = false, 
     const mapHref = invitation.googleMapUrl || "";
     const dateText = formatDate(invitation.eventDate);
     const timeText = formatTime(invitation.eventTime);
-    const coverUrl = media?.coverImage?.fileUrl || "/image/a1.png";
+    const coverUrl = media?.coverImage?.fileUrl
+        || invitation?.coverUrl
+        || invitation?.media?.coverImage?.fileUrl
+        || invitation?.templateThumbnailUrl
+        || invitation?.template?.thumbnailUrl
+        || "";
     const galleryImages = media?.galleryImages || [];
 
     return (

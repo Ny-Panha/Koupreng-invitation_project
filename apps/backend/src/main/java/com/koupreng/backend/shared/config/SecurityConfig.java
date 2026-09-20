@@ -25,9 +25,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
@@ -229,9 +235,45 @@ public class SecurityConfig {
 
     @Bean
     public AppJwtAuthenticationConverter jwtAuthenticationConverter(
-            com.koupreng.backend.auth.infrastructure.session.UserAuthCacheService userAuthCacheService
+            com.koupreng.backend.auth.infrastructure.session.UserAuthCacheService userAuthCacheService,
+            com.koupreng.backend.user.infrastructure.persistence.AppUserRepository userRepository
     ) {
-        return new AppJwtAuthenticationConverter(userAuthCacheService);
+        return new AppJwtAuthenticationConverter(userAuthCacheService, userRepository);
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService(
+            com.koupreng.backend.user.infrastructure.persistence.AppUserRepository userRepository
+    ) {
+        return username -> {
+            com.koupreng.backend.user.domain.AppUser user = userRepository.findByEmailIgnoreCase(username)
+                    .or(() -> userRepository.findByPhone(username))
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+
+            return User.withUsername(user.getEmail() != null ? user.getEmail() : user.getPhone())
+                    .password(user.getPasswordHash())
+                    .authorities(user.getRole() == com.koupreng.backend.user.domain.Role.STAFF
+                            ? "ROLE_ADMIN"
+                            : "ROLE_" + user.getRole().name())
+                    .accountLocked(!user.isActive())
+                    .disabled(!user.isActive())
+                    .build();
+        };
+    }
+
+    @Bean
+    public DaoAuthenticationProvider daoAuthenticationProvider(
+            UserDetailsService userDetailsService,
+            PasswordEncoder passwordEncoder
+    ) {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
+        provider.setPasswordEncoder(passwordEncoder);
+        return provider;
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
     }
 
     @Bean

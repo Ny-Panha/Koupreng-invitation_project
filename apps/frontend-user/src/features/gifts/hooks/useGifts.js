@@ -8,6 +8,7 @@ import {
 } from "../../../shared/storage/hostPlanningStorage";
 import { listDrafts } from "../../../shared/storage/weddingStorage";
 import { giftsApi } from "../api/giftsApi";
+import { useAuth } from "../../auth/hooks/useAuth";
 
 export function toGiftPayload(form) {
     return {
@@ -39,9 +40,11 @@ export function normalizeGuestOption(guest) {
 }
 
 export function useGifts() {
+    const { user } = useAuth();
+    const ownerUserId = user?.id || user?.userId;
     const [backendInvitation, setBackendInvitation] = useState(null);
     const activeEventId = getActiveEventId();
-    const drafts = listDrafts();
+    const drafts = listDrafts(ownerUserId);
     const currentDraft = drafts.find((draft) => draft.id === activeEventId) || drafts[0] || null;
     const backendInvitationId = currentDraft?.backendInvitationId || currentDraft?.id || "";
     const eventId = currentDraft?.id || activeEventId || backendInvitation?.id || "";

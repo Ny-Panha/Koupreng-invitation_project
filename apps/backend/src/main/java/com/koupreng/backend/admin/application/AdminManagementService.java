@@ -3,6 +3,7 @@ package com.koupreng.backend.admin.application;
 import com.koupreng.backend.auth.infrastructure.session.UserAuthCacheService;
 
 import com.koupreng.backend.shared.exception.ApiException;
+import com.koupreng.backend.admin.api.dto.AdminCreateUserRequest;
 import com.koupreng.backend.admin.api.dto.AdminInvitationModerationRequest;
 import com.koupreng.backend.admin.api.dto.AdminReportResponse;
 import com.koupreng.backend.admin.api.dto.AdminTemplatePremiumRequest;
@@ -72,7 +73,9 @@ public class AdminManagementService {
     private final SystemAuditLogRepository systemAuditLogRepository;
     private final AuditLogService auditLogService;
     private final UserAuthCacheService userAuthCacheService;
+    private final org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
 
+    @org.springframework.beans.factory.annotation.Autowired
     public AdminManagementService(
             AppUserRepository userRepository,
             UserInvitationRepository invitationRepository,
@@ -84,7 +87,8 @@ public class AdminManagementService {
             NotificationRepository notificationRepository,
             SystemAuditLogRepository systemAuditLogRepository,
             AuditLogService auditLogService,
-            UserAuthCacheService userAuthCacheService
+            UserAuthCacheService userAuthCacheService,
+            org.springframework.security.crypto.password.PasswordEncoder passwordEncoder
     ) {
         this.userRepository = userRepository;
         this.invitationRepository = invitationRepository;
@@ -97,6 +101,44 @@ public class AdminManagementService {
         this.systemAuditLogRepository = systemAuditLogRepository;
         this.auditLogService = auditLogService;
         this.userAuthCacheService = userAuthCacheService;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @Transactional
+    public AdminUserResponse createUser(
+            Authentication authentication,
+            AdminCreateUserRequest requestBody,
+            HttpServletRequest request
+    ) {
+        String email = requestBody.getEmail() == null ? null : requestBody.getEmail().trim().toLowerCase(Locale.ROOT);
+        String fullName = requestBody.getFullName() == null ? null : requestBody.getFullName().trim();
+        String password = requestBody.getPassword();
+        Role role = requestBody.getRole() == null ? Role.USER : requestBody.getRole();
+
+        if (email == null || email.isBlank()) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Email is required");
+        }
+        if (fullName == null || fullName.isBlank()) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Full name is required");
+        }
+        if (password == null || password.length() < 8) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Password must be at least 8 characters");
+        }
+        if (userRepository.existsByEmailIgnoreCase(email)) {
+            throw new ApiException(HttpStatus.CONFLICT, "Email already registered");
+        }
+
+        AppUser user = new AppUser();
+        user.setEmail(email);
+        user.setFullName(fullName);
+        user.setPasswordHash(passwordEncoder.encode(password));
+        user.setRole(role);
+        user.setStatus(AppUser.STATUS_ACTIVE);
+
+        AppUser saved = userRepository.save(user);
+        auditLogService.logAdminAction(authentication, "USER_CREATED", "USER", saved.getId(),
+                "Created new user account", request, Map.of("email", saved.getEmail(), "role", saved.getRole()));
+        return AdminUserResponse.from(saved);
     }
 
     @Transactional(readOnly = true)
@@ -125,6 +167,8 @@ public class AdminManagementService {
     @Transactional
     public AdminUserResponse deactivateUser(Authentication authentication, Long userId, HttpServletRequest request) {
         AppUser user = requireUser(userId);
+        ensureNotSelfDeactivation(authentication, user);
+        ensureNotMasterAdmin(user);
         ensureNotLastActiveAdmin(user);
         user.setStatus(STATUS_DISABLED);
         user.incrementTokenVersion();
@@ -666,6 +710,34 @@ public class AdminManagementService {
     private UserInvitation requireInvitation(Long invitationId) {
         return invitationRepository.findByIdAndDeletedFalse(invitationId)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Invitation not found"));
+    }
+
+    private void ensureNotSelfDeactivation(Authentication authentication, AppUser user) {
+        if (authentication == null || user == null) {
+            return;
+        }
+        try {
+            Long actorId = Long.valueOf(authentication.getName());
+            if (actorId.equals(user.getId())) {
+                throw new ApiException(HttpStatus.BAD_REQUEST, "You cannot deactivate your own account");
+            }
+        } catch (NumberFormatException ignored) {
+            // authentication principal may be an email address in some flows; guard using email below
+        }
+
+        String principal = authentication.getName();
+        if (principal != null && user.getEmail() != null && principal.equalsIgnoreCase(user.getEmail())) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "You cannot deactivate your own account");
+        }
+    }
+
+    private void ensureNotMasterAdmin(AppUser user) {
+        if (user == null || user.getEmail() == null) {
+            return;
+        }
+        if (user.getEmail().equalsIgnoreCase(com.koupreng.backend.dev.DevSampleData.ADMIN_EMAIL)) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Master admin account cannot be deactivated");
+        }
     }
 
     private void ensureNotLastActiveAdmin(AppUser user) {

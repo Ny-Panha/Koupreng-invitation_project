@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -16,8 +17,13 @@ import { useAuth } from "../../app/providers/AdminAuthProvider";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 
 export default function AdminSidebar({ isMobileOpen, isExpanded, onToggle, onNavigate }) {
-  const { user } = useAuth();
+  const { user, refreshSession } = useAuth();
   const { lang, t } = useAdminLanguage();
+
+  useEffect(() => {
+    refreshSession();
+  }, [refreshSession]);
+
   const displayName = user?.fullName || user?.email || "Admin";
 
   const navSections = [

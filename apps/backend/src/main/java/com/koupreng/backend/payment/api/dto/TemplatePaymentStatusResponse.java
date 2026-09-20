@@ -18,6 +18,7 @@ public class TemplatePaymentStatusResponse {
 
     private String orderCode;
     private String transactionId;
+    private String customerName;
     private Long templateId;
     private String templateName;
     private String packageName;
@@ -31,6 +32,7 @@ public class TemplatePaymentStatusResponse {
     private String paymentLink;
     private String paymentNote;
     private String provider;
+    private Instant createdAt;
     private Instant paidAt;
     private Instant expiresAt;
     private String message;
@@ -39,6 +41,7 @@ public class TemplatePaymentStatusResponse {
         return TemplatePaymentStatusResponse.builder()
                 .orderCode(order.getOrderCode())
                 .transactionId(order.getTransactionId())
+                .customerName(order.getUser() == null ? null : order.getUser().getFullName())
                 .templateId(order.getTemplateId())
                 .templateName(order.getTemplateName())
                 .packageName(order.getPackageName())
@@ -52,6 +55,7 @@ public class TemplatePaymentStatusResponse {
                 .paymentLink(order.getPaymentLink())
                 .paymentNote(order.getPaymentNote())
                 .provider(order.getProvider())
+                .createdAt(order.getCreatedAt())
                 .paidAt(order.getPaidAt())
                 .expiresAt(order.getExpiresAt())
                 .message(message)

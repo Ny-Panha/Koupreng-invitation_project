@@ -124,7 +124,7 @@ export default function HostNav() {
     return () => { document.body.style.overflow = ""; };
   }, [mobileMenuOpen]);
 
-  const drafts = listDrafts();
+  const drafts = listDrafts(user?.id || user?.userId);
   const activeDraftId = drafts[0]?.id;
   const myInvitationPath = activeDraftId ? `/dashboard/invitations/${activeDraftId}/edit` : "/dashboard/invitations/design";
 

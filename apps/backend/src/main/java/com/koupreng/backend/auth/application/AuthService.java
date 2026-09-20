@@ -123,7 +123,7 @@ public class AuthService {
                         return new BadCredentialsException(msg.get("auth.invalid-credentials"));
                     });
 
-            if (!user.isActive()) {
+            if (!user.isActive() || AppUser.STATUS_DISABLED.equalsIgnoreCase(user.getStatus())) {
                 if (auditLogService != null) {
                     auditLogService.logSystemEvent("LOGIN_FAILED", "USER", user.getId(), "Failed login attempt: account is disabled for identifier: " + request.identifier(), java.util.Map.of("identifier", request.identifier(), "userId", user.getId(), "reason", "ACCOUNT_DISABLED"));
                 }

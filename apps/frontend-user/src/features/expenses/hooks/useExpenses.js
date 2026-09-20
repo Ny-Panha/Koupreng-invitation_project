@@ -7,6 +7,7 @@ import {
 } from "../../../shared/storage/hostPlanningStorage";
 import { listDrafts } from "../../../shared/storage/weddingStorage";
 import { expensesApi } from "../api/expensesApi";
+import { useAuth } from "../../auth/hooks/useAuth";
 
 function toList(value) {
     if (Array.isArray(value)) return value;
@@ -84,9 +85,11 @@ export function normalizeExpense(expense) {
 }
 
 export function useExpenses() {
+    const { user } = useAuth();
+    const ownerUserId = user?.id || user?.userId;
     const [backendInvitation, setBackendInvitation] = useState(null);
     const activeEventId = getActiveEventId();
-    const drafts = listDrafts();
+    const drafts = listDrafts(ownerUserId);
     const currentDraft = drafts.find((draft) => draft.id === activeEventId) || drafts[0] || null;
     const backendInvitationId = currentDraft?.backendInvitationId || currentDraft?.id || "";
     const eventId = currentDraft?.id || activeEventId || backendInvitation?.id || "";

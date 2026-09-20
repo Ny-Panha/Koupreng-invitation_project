@@ -42,6 +42,7 @@ import {
 import { templateCatalogService } from "../templates/api/templateCatalogApi";
 import { MUSIC_TRACKS } from "../../shared/data/musicTracks";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import LivePhoneSimulator from "./LivePhoneSimulator";
 import { DatePicker } from "../../shared/ui/DatePicker";
 import { TimePicker } from "../../shared/ui/TimePicker";
@@ -588,6 +589,7 @@ const DEFAULT_STATE = {
 
 export default function InvitationForm({ invitation }) {
     const { text: t } = useBackendMessages("invitations");
+    const { user } = useAuth();
     const navigate = useNavigate();
     const params = useParams();
     const [searchParams] = useSearchParams();
@@ -701,13 +703,16 @@ export default function InvitationForm({ invitation }) {
     // Mirrors the module-level catalog counter so the live preview recomputes
     // once the async catalog fetch registers the Admin-created templates.
     const [catalogVersion, setCatalogVersion] = useState(getCatalogVersion());
+    const [catalogTemplates, setCatalogTemplates] = useState([]);
 
     useEffect(() => {
         let active = true;
         templateCatalogService.list()
             .then((items) => {
                 if (active && items && items.length > 0) {
-                    registerDynamicTemplates(items);
+                    const activeTemplates = items.filter((item) => String(item.status || "ACTIVE").toUpperCase() === "ACTIVE");
+                    setCatalogTemplates(activeTemplates);
+                    registerDynamicTemplates(activeTemplates);
                     setCatalogVersion(getCatalogVersion());
                 }
             })
@@ -722,9 +727,51 @@ export default function InvitationForm({ invitation }) {
     const [activeLangTab, setActiveLangTab] = useState("KH");
     const [isSaving, setIsSaving] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
+    const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
     const [leftPercent, setLeftPercent] = useState(52);
     const [isDragging, setIsDragging] = useState(false);
     const containerRef = useRef(null);
+
+    const handleChangeTemplate = async (template) => {
+        if (!template) return;
+        const preset = getTemplatePreset(template) || {};
+        const nextForm = {
+            ...form,
+            templateId: template.id || template.slug || form.templateId,
+            title: form.title || template.name || preset.title || "",
+            coverImage: preset.coverImage || template.phoneCoverImage || template.mainImage || form.coverImage,
+        };
+        setForm(nextForm);
+        setCatalogVersion(getCatalogVersion());
+
+        if (isEdit && !isNaN(Number(invitationId))) {
+            try {
+                await invitationService.update(invitationId, {
+                    title: nextForm.title || "សិរីមង្គលអាពាហ៍ពិពាហ៍",
+                    eventType: "WEDDING",
+                    eventDate: nextForm.eventDate || null,
+                    eventTime: nextForm.eventTime || null,
+                    venueName: nextForm.venueName || "",
+                    venueAddress: nextForm.venueAddress || "",
+                    googleMapUrl: nextForm.googleMapUrl || "",
+                    hostName: nextForm.hostName || "",
+                    partnerName: nextForm.partnerName || "",
+                    groomName: nextForm.groomName || "",
+                    brideName: nextForm.brideName || "",
+                    storyText: nextForm.messageText || "",
+                    languageMode: nextForm.languageMode || "KH",
+                    visibility: nextForm.visibility || "PUBLIC",
+                    templateId: Number(nextForm.templateId) || null,
+                    designJson: JSON.stringify({ templateId: nextForm.templateId, presetId: nextForm.presetId || "" }),
+                    contentJson: JSON.stringify({ templateId: nextForm.templateId, presetId: nextForm.presetId || "" }),
+                });
+                saveDraft({ ...invitation, ...nextForm, id: invitationId, backendInvitationId: invitationId });
+            } catch (error) {
+                console.warn("Template selection backend sync failed:", error);
+            }
+        }
+        setIsTemplateModalOpen(false);
+    };
 
     // Draggable Resizer Handler
     const handleMouseDown = (e) => {
@@ -1051,6 +1098,7 @@ export default function InvitationForm({ invitation }) {
 
             // Always persist to local wedding draft storage
             saveDraft({
+                ownerUserId: user?.id || user?.userId,
                 id: invitationId || saved?.id || `wed-${Date.now().toString(36)}`,
                 backendInvitationId: saved?.id || invitation?.backendInvitationId || null,
                 templateId: form.templateId || "garden-royal-khmer-wedding",
@@ -1911,6 +1959,35 @@ export default function InvitationForm({ invitation }) {
                     />
                 )}
             </div>
+
+            {isTemplateModalOpen && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/60 p-4" role="dialog" aria-modal="true" aria-label="Change template">
+                    <div className="max-h-[85vh] w-full max-w-5xl overflow-y-auto rounded-2xl bg-white p-5 shadow-2xl dark:bg-zinc-900">
+                        <div className="mb-5 flex items-center justify-between gap-4">
+                            <div>
+                                <h2 className="text-xl font-bold text-slate-900 dark:text-zinc-100">ប្តូរគំរូធៀបការ</h2>
+                                <p className="text-sm text-slate-500 dark:text-zinc-400">ជ្រើសរើសគំរូថ្មីសម្រាប់កម្មវិធីនេះ</p>
+                            </div>
+                            <button type="button" className="pe-btn-outline" onClick={() => setIsTemplateModalOpen(false)} aria-label="Close template selector">
+                                <X size={18} />
+                            </button>
+                        </div>
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                            {catalogTemplates.map((template) => (
+                                <button
+                                    type="button"
+                                    key={template.id}
+                                    className={`overflow-hidden rounded-xl border text-left transition hover:-translate-y-0.5 hover:border-amber-500 hover:shadow-lg ${String(form.templateId) === String(template.id) ? "border-amber-500 ring-2 ring-amber-200" : "border-slate-200 dark:border-zinc-700"}`}
+                                    onClick={() => handleChangeTemplate(template)}
+                                >
+                                    <img className="h-40 w-full object-cover" src={template.thumbnailUrl || template.mainImage || "/facebook/all/03-card/cover-card.jpg"} alt={template.name} />
+                                    <span className="block p-3 text-sm font-bold text-slate-800 dark:text-zinc-100">{template.name}</span>
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

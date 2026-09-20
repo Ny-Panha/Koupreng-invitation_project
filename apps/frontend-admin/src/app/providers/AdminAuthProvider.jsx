@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useCallback, useContext, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { readAuth, writeAuth, clearAuth } from "../../lib/authStorage";
 import { authService } from "../../services/authService";
 
@@ -8,10 +8,32 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
     const [auth, setAuth] = useState(() => readAuth());
 
+    const refreshSession = useCallback(() => {
+        setAuth(readAuth());
+    }, []);
+
+    useEffect(() => {
+        const handleStorage = (event) => {
+            if (event.key === "koupreng.admin.auth") {
+                refreshSession();
+            }
+        };
+
+        const handleWindowFocus = () => refreshSession();
+
+        window.addEventListener("storage", handleStorage);
+        window.addEventListener("focus", handleWindowFocus);
+
+        return () => {
+            window.removeEventListener("storage", handleStorage);
+            window.removeEventListener("focus", handleWindowFocus);
+        };
+    }, [refreshSession]);
+
     const login = useCallback(async (identifier, password) => {
         const res = await authService.login(identifier, password);
         const role = res?.user?.role;
-        if (role !== "ADMIN") {
+        if (role !== "ADMIN" && role !== "STAFF") {
             throw new Error("គណនីនេះមិនមែនជា Admin ទេ។ សូមប្រើគណនី Admin ដើម្បីចូល។");
         }
         const session = {
@@ -42,8 +64,9 @@ export function AuthProvider({ children }) {
             isAuthenticated: Boolean(auth?.accessToken),
             login,
             logout,
+            refreshSession,
         }),
-        [auth, login, logout]
+        [auth, login, logout, refreshSession]
     );
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

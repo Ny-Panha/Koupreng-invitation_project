@@ -6,6 +6,7 @@ function unwrap(response) {
 
 export const adminManagementService = {
   users: () => api.get("/v1/admin/users").then(unwrap),
+  createUser: (payload) => api.post("/v1/admin/users", payload).then(unwrap),
   user: (userId) => api.get(`/v1/admin/users/${userId}`).then(unwrap),
   userInvitations: (userId) => api.get(`/v1/admin/users/${userId}/invitations`).then(unwrap),
   activateUser: (userId) => api.patch(`/v1/admin/users/${userId}/activate`, {}).then(unwrap),

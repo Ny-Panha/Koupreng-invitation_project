@@ -22,6 +22,7 @@ import {
 } from "../templates/data/templatesData";
 import { templateCatalogService } from "../templates/api/templateCatalogApi";
 import { saveDraft } from "@/shared/storage/weddingStorage";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import { toast } from "@/shared/ui/toast";
 import { DatePicker } from "@/shared/ui/DatePicker";
 import { TimePicker } from "@/shared/ui/TimePicker";
@@ -46,6 +47,7 @@ const EVENT_TYPES = [
 
 export default function WeddingBuilderFeature() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [searchParams] = useSearchParams();
   const templateIdParam = searchParams.get("templateId") || searchParams.get("template");
   const isCustom = !templateIdParam || templateIdParam === "custom";
@@ -373,6 +375,7 @@ export default function WeddingBuilderFeature() {
 
       // 2. Save to local wedding storage draft
       saveDraft({
+        ownerUserId: user?.id || user?.userId,
         id: invitationId,
         backendInvitationId: savedResult?.id || null,
         templateId: form.templateId || "garden-royal-khmer-wedding",

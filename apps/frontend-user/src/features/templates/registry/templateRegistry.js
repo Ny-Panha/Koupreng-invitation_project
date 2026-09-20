@@ -23,6 +23,9 @@ export const templateRegistry = {
 
   // 3. Emerald Luxe (Luxury Modern Evening Wedding - Velvet Curtain + 3D Card Flip)
   "emerald-canva-luxe-wedding": EmeraldLuxeLayout,
+  "emerald_royal_luxe": EmeraldLuxeLayout,
+  "emerald-royal-luxe": EmeraldLuxeLayout,
+  "emerald royal luxe": EmeraldLuxeLayout,
   "emerald-luxe-wedding": EmeraldLuxeLayout,
   "2": EmeraldLuxeLayout,
   "emerald-luxe": EmeraldLuxeLayout,

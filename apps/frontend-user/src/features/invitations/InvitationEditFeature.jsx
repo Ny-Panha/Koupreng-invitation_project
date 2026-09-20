@@ -6,10 +6,12 @@ import { getDraft, listDrafts } from "@/shared/storage/weddingStorage";
 import { getTemplateById, getTemplatePreset, registerDynamicTemplates } from "../templates/data/templatesData";
 import { templateCatalogService } from "../templates/api/templateCatalogApi";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import "@/features/events/EventsFeature.css";
 
 export default function InvitationEditPage() {
     const { id } = useParams();
+    const { user } = useAuth();
     const { text: t } = useBackendMessages("invitations");
     const [invitation, setInvitation] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -28,8 +30,9 @@ export default function InvitationEditPage() {
                 // Ignore catalog fetch failure
             }
 
-            const targetId = id || listDrafts()[0]?.id;
-            const localDraft = targetId ? getDraft(targetId) : null;
+            const ownerUserId = user?.id || user?.userId;
+            const targetId = id || listDrafts(ownerUserId)[0]?.id;
+            const localDraft = targetId ? getDraft(targetId, ownerUserId) : null;
 
             // 1. Check local wedding draft storage first
             if (localDraft) {
@@ -134,7 +137,7 @@ export default function InvitationEditPage() {
         return () => {
             active = false;
         };
-    }, [id]);
+    }, [id, user?.id, user?.userId]);
 
     if (loading) {
         return (

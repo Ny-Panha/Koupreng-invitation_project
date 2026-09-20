@@ -2,15 +2,18 @@ import { useState, useEffect, useCallback } from "react";
 import { listDrafts, deleteDraft } from "../../../shared/storage/weddingStorage";
 import { eventsApi } from "../api/eventsApi";
 import { toast } from "../../../shared/ui/toast";
+import { useAuth } from "../../auth/hooks/useAuth";
 
 export function useEvents(t) {
-    const [drafts, setDrafts] = useState(listDrafts());
+    const { user } = useAuth();
+    const ownerUserId = user?.id || user?.userId;
+    const [drafts, setDrafts] = useState(() => listDrafts(ownerUserId));
     const [draftToDelete, setDraftToDelete] = useState(null);
     const [isDeleting, setIsDeleting] = useState(false);
 
     const loadDrafts = useCallback(() => {
         eventsApi.listMine().then((apiInvs) => {
-            const localDrafts = listDrafts();
+            const localDrafts = listDrafts(ownerUserId);
             const merged = [...(apiInvs || [])];
             localDrafts.forEach((ld) => {
                 if (!merged.some((m) => String(m.id) === String(ld.id) || String(m.id) === String(ld.backendInvitationId))) {
@@ -23,7 +26,7 @@ export function useEvents(t) {
         }).catch(() => {
             // Keep local drafts
         });
-    }, []);
+    }, [ownerUserId]);
 
     useEffect(() => {
         loadDrafts();
