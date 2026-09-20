@@ -1,6 +1,6 @@
 # Architecture V2 Verification Results
 
-Evidence date: 2026-09-15. Branch: `refactor/architecture-v2`.
+Evidence date: 2026-09-15. Branch: `refactor/architecture-v2`. The backend OWASP row was refreshed on 2026-09-20 from `feat/week2-backend-security-owasp`.
 
 These results describe local Windows execution on the checked-out branch unless explicitly identified as a CI definition. No GitHub Actions, production, Railway, or live-provider success is claimed before those external systems run on the exact commit.
 
@@ -14,7 +14,7 @@ These results describe local Windows execution on the checked-out branch unless 
 | Architecture/API drift | ArchUnit plus runtime OpenAPI snapshot test | **PASS:** module rules pass and generated OpenAPI is semantically equal to `packages/api-contracts/openapi.yaml` |
 | Fresh database | `FreshDatabaseMigrationTests` | **NOT RUN locally on this tree:** disposable MySQL variables unavailable; exactly 1 test skipped. CI has a mandatory MySQL 8 service job for this test |
 | Java dependency use | `mvnw.cmd dependency:analyze` | **PASS with warnings:** Spring starter aggregation produces expected used-undeclared/unused-declared warnings; no blind transitive rewrite made |
-| Java vulnerability feed | `mvnw.cmd -Pdependency-security -DskipTests verify` | **INCOMPLETE:** first local NVD sync reached 20,000/391,720 records and produced no report before the long no-key run was stopped; CI must complete it with cache/API key |
+| Java vulnerability feed | `mvnw.cmd -Pdependency-security org.owasp:dependency-check-maven:check` | **PASS (2026-09-20):** 114 dependencies analyzed; Netty remediated from vulnerable 4.2.17 to patched 4.2.18; final HTML/JSON reports contain 0 unsuppressed vulnerabilities. One exact-version Spring Tools/Spring Boot DevTools false positive is documented and suppressed; Sonatype OSS Index was unavailable without credentials |
 | User frontend clean install | `npm ci --no-audit` | **PASS:** 385 packages installed from lockfile |
 | User frontend quality | lint, Vitest, Knip, depcheck, build | **PASS:** 33 test files / 124 tests; 2,664 modules built; no unused dependency/file findings |
 | User frontend bundle | Vite production build | **PASS with size warning:** JS 1,509.16 kB (412.56 kB gzip); CSS 569.37 kB (102.37 kB gzip) |
@@ -48,7 +48,7 @@ The user test suite emits expected Happy DOM network/iframe diagnostics for deli
 ## Required external gates
 
 - Complete CRITICAL-S01 credential revocation and history remediation with private owner evidence.
-- Obtain a successful OWASP Java dependency report for the exact release commit.
+- Retain a successful OWASP Java dependency report from CI for the exact release commit; local worktree evidence is documented in `backend-owasp-verification.md`.
 - Pass the CI fresh-MySQL and Docker image jobs for the exact release commit.
 - Execute applicable manual/provider items in `docs/testing/SMOKE_TEST.md`.
 - Approve or replace retained assets and approve the organization/scanner permission designs before enabling those capabilities.

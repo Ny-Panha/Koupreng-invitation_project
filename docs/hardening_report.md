@@ -1,6 +1,6 @@
 # Architecture V2 Hardening Report
 
-Refreshed: 2026-09-15.
+Refreshed: 2026-09-15. Backend OWASP evidence refreshed: 2026-09-20.
 
 ## Completed in the current tree
 
@@ -21,11 +21,12 @@ Refreshed: 2026-09-15.
 - All 56 controlled browser cases pass.
 - Bot passes 26 tests, Ruff, Bandit, compileall, and pip-audit.
 - Current tracked tree passes Gitleaks with zero findings.
+- OWASP Dependency-Check completed against refreshed NVD/CISA data: the detected Netty issue was remediated with 4.2.18.Final, and the final report has 0 unsuppressed vulnerabilities.
 
 ## Still external or unresolved
 
 - The historical Telegram credential incident remains critical until provider revocation and all-ref history remediation are proven.
-- Java advisory status is unverified because the local no-key OWASP first sync did not complete; exact-commit CI must pass.
+- Exact-commit CI must reproduce the local clean OWASP result; the local run did not have Sonatype OSS Index credentials.
 - Live providers, image builds, fresh/upgrade MySQL, public deployment controls, monitoring, backup/restore, asset rights, and full staging journeys require owner evidence.
 - Organization staff permissions and scanner revoke/rate policy require product decisions before those capabilities are enabled.
 - Telegram evidence retention/replay and frontend performance remain documented improvement work.

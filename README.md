@@ -297,10 +297,13 @@ The repository combines backend verification, frontend unit and browser testing,
 
 ```bash
 cd apps/backend && ./mvnw clean verify
+cd apps/backend && ./mvnw -Pdependency-security org.owasp:dependency-check-maven:check
 cd apps/frontend-user && npm run lint && npm test && npm run analyze:knip && npm run analyze:deps && npm run build
 cd apps/frontend-admin && npm run lint && npm test && npm run analyze:knip && npm run analyze:deps && npm run build
 cd apps/telegram-bot && python -m pytest -q && python -m ruff check . && python -m bandit -q -r main.py start.py
 ```
+
+The backend dependency scan fails on High/Critical findings (CVSS 7.0 or higher) and writes HTML and JSON reports under `apps/backend/target/`. See the [latest backend OWASP verification](docs/qa/backend-owasp-verification.md) for reviewed findings and limitations.
 
 Run Playwright browser journeys from `apps/frontend-user`:
 

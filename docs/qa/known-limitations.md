@@ -1,6 +1,6 @@
 # Known Limitations and Release Gates
 
-Reviewed: 2026-09-15.
+Reviewed: 2026-09-15. Backend OWASP gate refreshed: 2026-09-20.
 
 ## Blocker / critical
 
@@ -8,10 +8,9 @@ Reviewed: 2026-09-15.
 
 ## High release gates
 
-1. **Java advisory result:** the local OWASP Dependency-Check first sync without an NVD API key remained impractically slow and produced no report. CI must finish the CVSS ≥8 gate for the exact release commit. Java dependencies are not represented as zero-vulnerability.
-2. **Asset rights:** redistribution/production rights for retained music and gallery/photo assets must be recorded or the affected assets replaced.
-3. **Organization permissions, conditional:** team role labels are safe under current owner-only downstream enforcement, but team operations are not functionally complete. An approved role × action matrix and allow/deny/IDOR tests are required before marketing or enabling staff access.
-4. **Release-candidate environment:** mandatory CI fresh-MySQL migration and Docker image-build jobs must pass, followed by staging/provider smoke evidence. Local definition validation does not substitute for these jobs.
+1. **Asset rights:** redistribution/production rights for retained music and gallery/photo assets must be recorded or the affected assets replaced.
+2. **Organization permissions, conditional:** team role labels are safe under current owner-only downstream enforcement, but team operations are not functionally complete. An approved role × action matrix and allow/deny/IDOR tests are required before marketing or enabling staff access.
+3. **Release-candidate environment:** mandatory exact-commit CI gates—including OWASP Dependency-Check, fresh-MySQL migration, and Docker image builds—must pass, followed by staging/provider smoke evidence. The 2026-09-20 local OWASP run is clean but does not substitute for exact-commit CI.
 
 ## External/manual validation still required
 

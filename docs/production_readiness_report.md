@@ -1,10 +1,10 @@
 # Architecture V2 Production Readiness Report
 
-Assessment date: 2026-09-15. Branch: `refactor/architecture-v2`.
+Assessment date: 2026-09-15. Branch: `refactor/architecture-v2`. Backend OWASP evidence refreshed: 2026-09-20.
 
 ## Decision
 
-**Architecture V2 is implemented and repository-level automated gates are green, but the product is NOT APPROVED FOR PUBLIC RELEASE.** The remaining release blocker is an externally owned historical credential incident. Java advisory, asset-rights, exact-commit CI, and live environment/provider evidence are also required before sign-off.
+**Architecture V2 is implemented and repository-level automated gates are green, but the product is NOT APPROVED FOR PUBLIC RELEASE.** The remaining release blocker is an externally owned historical credential incident. Asset-rights, exact-commit CI, and live environment/provider evidence are also required before sign-off.
 
 ## Completed Architecture V2 scope
 
@@ -28,16 +28,16 @@ Assessment date: 2026-09-15. Branch: `refactor/architecture-v2`.
 - Controlled browser matrix: all 56 cases pass across desktop and mobile projects.
 - Telegram bot: 26 tests plus Ruff, Bandit, compileall, and pip-audit pass.
 - Current tracked tree: Gitleaks reports zero findings. Full history remains failed incident evidence with 32 redacted findings across 15 file/rule groups.
+- Backend OWASP scan: Netty upgraded to patched 4.2.18.Final; 114 dependencies analyzed with 0 unsuppressed vulnerabilities in the final HTML/JSON reports.
 - Compose configuration validates locally. Actual clean image builds and current-tree fresh MySQL are defined as CI jobs and require their exact-commit results.
 
 ## Blocking and conditional gates
 
 1. Complete Telegram credential revocation/rotation and coordinated history remediation, with proof the old credential is dead.
-2. Obtain a successful OWASP Java dependency report; the local no-key first sync did not complete.
-3. Pass all CI jobs—including clean image builds and MySQL 8 empty-schema validation—on the final commit.
-4. Document or replace retained assets before public redistribution.
-5. Run the staging/provider checklist for OAuth, ABA/Telegram, SMTP/storage, DNS/TLS/proxy/security, Redis, monitoring, backup, restore, and rollback.
-6. Approve and test the organization role matrix before enabling team operations; approve scanner staff/revoke policy before offering venue staff access.
+2. Pass all CI jobs—including OWASP Dependency-Check, clean image builds, and MySQL 8 empty-schema validation—on the final commit.
+3. Document or replace retained assets before public redistribution.
+4. Run the staging/provider checklist for OAuth, ABA/Telegram, SMTP/storage, DNS/TLS/proxy/security, Redis, monitoring, backup, restore, and rollback.
+5. Approve and test the organization role matrix before enabling team operations; approve scanner staff/revoke policy before offering venue staff access.
 
 ## Non-blocking backlog
 
