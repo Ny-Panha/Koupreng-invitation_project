@@ -31,7 +31,7 @@ export default function AdminUserDetailPage() {
           <h2 className="page-title">{user.fullName || user.email || `User #${user.id}`}</h2>
           <p className="page-subtitle">{t("users.detailSubtitle", "User detail and owned invitations")}</p>
         </div>
-        <Link className="btn btn-ghost" to="/admin/users">{t("users.back", "Back")}</Link>
+        <Link className="btn btn-ghost" to="/users">{t("users.back", "Back")}</Link>
       </div>
 
       <section className="card" style={{ marginBottom: 18 }}>

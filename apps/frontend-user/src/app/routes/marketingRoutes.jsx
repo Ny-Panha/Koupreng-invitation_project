@@ -1,4 +1,4 @@
-import { Route } from "react-router-dom";
+import { Navigate, Route } from "react-router-dom";
 
 import MarketingShell from "../../layouts/MarketingShell";
 import TemplateCheckoutPage from "../../features/payments/TemplateCheckoutPage";
@@ -27,8 +27,12 @@ export function marketingRoutes() {
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/venues" element={<VenuesPage />} />
+        <Route path="/venues/:id" element={<VenuesPage />} />
+        <Route path="/about" element={<Navigate to="/contact" replace />} />
+        <Route path="/help" element={<Navigate to="/contact" replace />} />
       </Route>
       <Route path="/templates/:id" element={<TemplateDemoPage />} />
+      <Route path="/templates/:id/demo" element={<TemplateDemoPage />} />
     </>
   );
 }

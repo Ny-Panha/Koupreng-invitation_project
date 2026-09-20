@@ -21,8 +21,8 @@ export default function PaymentCancelPage() {
                             Open Status
                         </Link>
                     )}
-                    <Link className="payment-primary-btn link-button" to="/templates/10/checkout">
-                        Return to Checkout
+                    <Link className="payment-primary-btn link-button" to="/templates/browse">
+                        Browse Templates
                     </Link>
                 </div>
             </section>

@@ -264,7 +264,7 @@ export default function PaidTemplatesPage() {
                       </Link>
 
                       <Link
-                        to={`/templates/${targetCode}/demo`}
+                        to={`/templates/${targetCode}`}
                         className="paid-btn-preview"
                         title="មើលគំរូផ្ទាល់"
                       >

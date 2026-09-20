@@ -188,7 +188,13 @@ export default function Home() {
             <h5>{t("footerCompany") || "ក្រុមហ៊ុន"}</h5>
             <Link to="/about">{t("footerAbout") || "អំពីយើង"}</Link>
             <Link to="/contact">{t("footerContact") || "ទំនាក់ទំនង"}</Link>
-            <Link to="/help">{t("footerHelp") || "ជំនួយ"}</Link>
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new CustomEvent("open-support-chat"))}
+              style={{ background: "none", border: "none", color: "#aaa", padding: 0, font: "inherit", cursor: "pointer", textAlign: "left", display: "block", marginBottom: "12px", fontSize: "14px", transition: "0.3s" }}
+            >
+              {t("footerHelp") || "ជំនួយ"}
+            </button>
           </div>
         </div>
         <div className="footer-bottom">

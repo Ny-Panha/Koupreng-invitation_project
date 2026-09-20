@@ -1,4 +1,9 @@
-import { Navigate, Route } from "react-router-dom";
+import { Navigate, Route, useParams } from "react-router-dom";
+
+function InvitationBareRedirect() {
+  const { id } = useParams();
+  return <Navigate to={`/dashboard/invitations/${id}/edit`} replace />;
+}
 
 import PaidTemplatesPage from "../../features/payments/PaidTemplatesPage";
 import HostShell from "../../layouts/HostShell";
@@ -51,6 +56,7 @@ export function hostRoutes() {
       <Route path="/dashboard/invitations/edit" element={<InvitationEditPage />} />
       <Route path="/dashboard/invitations/:id/edit" element={<InvitationEditPage />} />
       <Route path="/dashboard/invitations/:id/preview" element={<InvitationPreviewPage />} />
+      <Route path="/dashboard/invitations/:id" element={<InvitationBareRedirect />} />
       <Route path="/dashboard/invitations/:invitationId/assistant" element={<AiAssistantPage />} />
       <Route path="/dashboard/invitations/:invitationId/guests" element={<GuestsPage />} />
       <Route path="/dashboard/invitations/:invitationId/rsvp" element={<RsvpDashboardPage />} />

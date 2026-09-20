@@ -65,6 +65,17 @@ export default function App() {
                 <Route path={ADMIN_ROUTE_PATHS.notifications} element={<NotificationsPage />} />
                 <Route path={ADMIN_ROUTE_PATHS.systemLogs} element={<SystemLogsPage />} />
                 <Route path={ADMIN_ROUTE_PATHS.reports} element={<ReportsPage />} />
+
+                {/* Legacy /admin Route Aliases */}
+                <Route path="/admin" element={<Navigate to="/dashboard" replace />} />
+                <Route path="/admin/dashboard" element={<Navigate to="/dashboard" replace />} />
+                <Route path="/admin/users" element={<Navigate to="/users" replace />} />
+                <Route path="/admin/templates" element={<Navigate to="/templates" replace />} />
+                <Route path="/admin/payments" element={<Navigate to="/payments" replace />} />
+                <Route path="/admin/packages" element={<Navigate to="/packages" replace />} />
+                <Route path="/admin/notifications" element={<Navigate to="/notifications" replace />} />
+                <Route path="/admin/reports" element={<Navigate to="/reports" replace />} />
+                <Route path="/admin/system-logs" element={<Navigate to="/system-logs" replace />} />
               </Route>
               <Route path="*" element={<Navigate to="/dashboard" replace />} />
             </Routes>
