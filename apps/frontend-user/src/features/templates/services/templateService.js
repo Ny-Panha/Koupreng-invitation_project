@@ -69,13 +69,16 @@ export function normalizeTemplateViewModel(tpl = {}, content = {}) {
   }));
 
   // Gift & QR
-  const rawGift = Array.isArray(merged.gift) ? merged.gift[0] : (merged.gift || {});
+  const rawGift = (Array.isArray(merged.gift) ? merged.gift[0] : merged.gift) || {};
+  const giftBank = rawGift.bank || merged.bankName || "";
+  const giftNumber = rawGift.number || merged.bankAccountNumber || merged.accountNumber || "";
+  const giftAccountName = rawGift.account || merged.bankAccountName || merged.accountName || "";
   const bankAccount = {
-    bank: rawGift.bank || merged.bankName || "ABA Bank",
-    accountNumber: rawGift.number || merged.bankAccountNumber || merged.accountNumber || "000 123 456",
-    accountName: rawGift.account || merged.bankAccountName || merged.accountName || `${groom} & ${bride}`,
+    bank: giftBank,
+    accountNumber: giftNumber,
+    accountName: giftAccountName,
     qrUrl: rawGift.qrImage || rawGift.qrUrl || merged.qrGiftUrl || merged.qrUrl || "",
-    qrValue: rawGift.qrValue || merged.qrValue || `ABA Bank | ${groom} & ${bride} | 000 123 456`,
+    qrValue: rawGift.qrValue || merged.qrValue || [giftBank, giftAccountName, giftNumber].filter(Boolean).join(" | "),
   };
 
   // Dress code

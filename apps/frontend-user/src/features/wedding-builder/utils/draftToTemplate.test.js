@@ -7,6 +7,7 @@ import {
 import { getDedicatedTemplateComponent } from "../../templates/registry/templateRegistry";
 import DigitalYesLayout from "../../templates/layouts/DigitalYes/DigitalYesLayout";
 import EmeraldLuxeLayout from "../../templates/layouts/EmeraldLuxe/EmeraldLuxeLayout";
+import { buildTemplateContent } from "../../templates/experience/config/templateExperienceContent";
 
 describe("draftToTemplate and Dynamic Template Synchronization", () => {
   it("Scenario A: Built-in 7 resolves to The Digital Yes without fallback", () => {
@@ -124,5 +125,68 @@ describe("draftToTemplate and Dynamic Template Synchronization", () => {
     });
 
     expect(tpl.design.ornamentTheme).toBe("royal-floral");
+  });
+
+  it("keeps hosted Khmer Celestial content real and omits missing optional data", () => {
+    const { tpl, variant } = draftToTemplate({
+      id: 99,
+      templateId: "khmer-celestial",
+      couple: { groom: "Dara", bride: "Sophea" },
+      event: {
+        date: "2026-12-20",
+        ceremonyTime: "17:00",
+        venueName: "Riverside Hall",
+        venueAddress: "Phnom Penh",
+      },
+      enabledSections: { story: true, party: true, gift: true },
+    });
+
+    const content = buildTemplateContent(tpl, variant);
+    expect(content.groom).toBe("Dara");
+    expect(content.bride).toBe("Sophea");
+    expect(content.venue.name).toBe("Riverside Hall");
+    expect(content.targetDate).toContain("2026-12-20");
+    expect(content.story).toEqual([]);
+    expect(content.party).toEqual([]);
+    expect(content.gift).toEqual([]);
+    expect(content.gallery).toEqual([]);
+    expect(content.message).toBe("");
+    expect(content.coverImage).toBe("");
+    expect(content.music).toBe("");
+    expect(content.dressCode.colors).toEqual([]);
+
+    const blankHosted = draftToTemplate({ id: 100, templateId: "khmer-celestial" });
+    const blankContent = buildTemplateContent(blankHosted.tpl, blankHosted.variant);
+    expect(blankContent.groom).toBe("");
+    expect(blankContent.bride).toBe("");
+    expect(blankContent.venue.name).toBe("");
+    expect(blankContent.targetDate).toBe("");
+    expect(blankContent.gallery).toEqual([]);
+    expect(blankContent.message).toBe("");
+    expect(blankContent.music).toBe("");
+
+    const videoDisabled = draftToTemplate({
+      id: 101,
+      templateId: "khmer-celestial",
+      openingVideoEnabled: false,
+    });
+    expect(videoDisabled.tpl.openingVideo).toBeNull();
+    expect(videoDisabled.tpl.design.openingVideoEnabled).toBe(false);
+  });
+
+  it("does not backfill hosted story or wedding-party images from demo media", () => {
+    const { tpl, variant } = draftToTemplate({
+      id: 102,
+      templateId: "khmer-celestial",
+      storyChapters: [{ id: "chapter-1", title: "Our story", text: "Real host copy" }],
+      party: [{ id: "party-1", name: "Dara", role: "Best person" }],
+      enabledSections: { story: true, party: true },
+    });
+
+    const content = buildTemplateContent(tpl, variant);
+    expect(content.story).toHaveLength(1);
+    expect(content.story[0].image).toBe("");
+    expect(content.party).toHaveLength(1);
+    expect(content.party[0].image).toBe("");
   });
 });

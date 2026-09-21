@@ -1,4 +1,4 @@
-import { createElement, useRef } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
 import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
@@ -16,18 +16,14 @@ export function CelestialReveal({
   const inView = useInView(ref, { once: true, margin: "-64px" });
   const reducedMotion = usePrefersReducedMotion();
 
-  if (reducedMotion) {
-    return createElement(as, { ref, className, ...rest }, children);
-  }
-
   const MotionTag = motion[as] || motion.div;
   return (
     <MotionTag
       ref={ref}
       className={className}
-      initial={{ opacity: 0, y: 28 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 28 }}
-      transition={{ duration: 0.82, delay, ease: EASE }}
+      initial={reducedMotion ? false : { opacity: 0, y: 28 }}
+      animate={reducedMotion || inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 28 }}
+      transition={{ duration: reducedMotion ? 0 : 0.82, delay: reducedMotion ? 0 : delay, ease: EASE }}
       {...rest}
     >
       {children}
@@ -45,12 +41,17 @@ export function CelestialHeading({
 }) {
   const showKhmer = languageMode !== "en";
   const showEnglish = languageMode !== "km";
+  const hasKhmerHeading = showKhmer && Boolean(khmer);
 
   return (
     <CelestialReveal className={`kc-heading kc-heading--${align}`}>
       {eyebrow ? <p className="kc-heading__eyebrow">{eyebrow}</p> : null}
-      {showKhmer && khmer ? <h2 id={id} className="kc-heading__khmer">{khmer}</h2> : null}
-      {showEnglish && english ? <p className="kc-heading__english">{english}</p> : null}
+      {hasKhmerHeading ? <h2 id={id} className="kc-heading__khmer">{khmer}</h2> : null}
+      {showEnglish && english ? (
+        hasKhmerHeading
+          ? <p className="kc-heading__english">{english}</p>
+          : <h2 id={id} className="kc-heading__english">{english}</h2>
+      ) : null}
       <span className="kc-heading__ornament" aria-hidden="true"><i />◆<i /></span>
     </CelestialReveal>
   );
@@ -72,4 +73,3 @@ export function CelestialImage({ src, alt, className = "", eager = false }) {
     />
   );
 }
-

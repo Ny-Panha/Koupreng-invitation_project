@@ -5,12 +5,17 @@ import WithJoyPortalLayout from "../layouts/WithJoyPortalLayout";
 import BlissEditorialLayout from "../layouts/BlissEditorialLayout";
 import DefaultTemplateLayout from "../layouts/DefaultTemplate/DefaultTemplateLayout";
 import CanvaKhmerWeddingTemplate from "../experience/components/canva-khmer/CanvaKhmerWeddingTemplate";
+import KhmerCelestialLayout from "../layouts/KhmerCelestial/KhmerCelestialLayout";
 
 /**
  * 1 Template = 1 Dedicated UI Component Registry
  * Maps template slugs, IDs, and codes to their bespoke UI layout components.
  */
 export const templateRegistry = {
+  // Flagship Khmer Celestial (cinematic Cambodian editorial invitation)
+  "khmer-celestial": KhmerCelestialLayout,
+  "KHMER_CELESTIAL": KhmerCelestialLayout,
+
   // 1. The Digital Yes (Luxury Cinematic Digital Invitation - 3D Wax Seal Envelope + Falling Petals)
   "the-digital-yes-wedding": DigitalYesLayout,
   "7": DigitalYesLayout,
