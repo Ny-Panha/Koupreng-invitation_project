@@ -1,66 +1,150 @@
+/* ─────────────────────────────────────────────────────────────
+   Modern ConfirmDialog matching Image 1 Reference UI
+   ───────────────────────────────────────────────────────────── */
+
+.k-modal-container.k-confirm-dialog {
+  max-width: 375px;
+  border-radius: 20px;
+  padding: 22px 24px 20px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.18), 0 8px 16px -4px rgba(15, 23, 42, 0.06);
+}
+
+.k-confirm-dialog .k-modal-header {
+  border-bottom: none !important;
+  padding: 0 0 6px 0 !important;
+  margin: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.k-confirm-dialog .k-modal-title {
+  font-family: inherit;
+  font-size: 1.0625rem; /* ~17px */
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.k-confirm-dialog .k-modal-close-btn {
+  color: #9ca3af;
+  padding: 2px;
+  font-size: 1.2rem;
+  margin-top: -2px;
+  margin-right: -4px;
+  border-radius: 50%;
+  transition: all 0.15s ease;
+}
+
+.k-confirm-dialog .k-modal-close-btn:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.k-confirm-dialog .k-modal-body {
+  padding: 0 !important;
+  overflow: visible;
+}
+
 .k-confirm-body {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.15rem;
 }
 
 .k-confirm-message {
-  font-size: var(--text-base, 1rem);
-  color: var(--brand-text, #1e293b);
-  line-height: var(--leading-relaxed, 1.65);
+  font-family: inherit;
+  font-size: 0.84375rem; /* ~13.5px */
+  color: #6b7280;
+  line-height: 1.55;
+  margin: 0;
 }
 
 .k-confirm-actions {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 0.75rem;
+  gap: 10px;
+  margin-top: 4px;
 }
 
-.k-btn {
-  font-family: var(--font-sans);
-  font-size: var(--text-sm, 0.875rem);
-  font-weight: var(--weight-semibold, 600);
-  padding: 0.625rem 1.25rem;
-  border-radius: var(--radius-md, 10px);
-  border: 1px solid transparent;
+/* Pill buttons matching Image 1 */
+.k-confirm-btn {
+  font-family: inherit;
+  font-size: 0.8125rem; /* 13px */
+  font-weight: 600;
+  padding: 0.4375rem 1.125rem; /* ~7px 18px */
+  border-radius: 999px !important;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+  gap: 0.375rem;
+  transition: all 0.18s ease;
+  line-height: 1.4;
 }
 
-.k-btn:disabled {
+.k-confirm-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-.k-btn-secondary {
-  background: var(--brand-surface-2, #f8f8fd);
-  color: var(--brand-text, #1e293b);
-  border-color: var(--brand-border, #e7e7ee);
+.k-confirm-icon {
+  font-size: 0.75rem;
+  font-weight: 800;
+  display: inline-block;
+  line-height: 1;
 }
 
-.k-btn-secondary:hover:not(:disabled) {
-  background: var(--brand-border, #e7e7ee);
+/* Cancel Button - pill with crisp light border */
+.k-confirm-btn-cancel {
+  background: #ffffff !important;
+  color: #1f2937 !important;
+  border: 1.5px solid #cbd5e1 !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
-.k-btn-primary {
-  background: var(--brand-primary, #6b6bc4);
-  color: var(--brand-on-primary, #ffffff);
+.k-confirm-btn-cancel:hover:not(:disabled) {
+  background: #f8fafc !important;
+  border-color: #94a3b8 !important;
+  color: #0f172a !important;
 }
 
-.k-btn-primary:hover:not(:disabled) {
-  background: var(--brand-primary-hover, #5a55b3);
+.k-confirm-btn-cancel:active:not(:disabled) {
+  background: #f1f5f9 !important;
 }
 
-.k-btn-danger {
-  background: var(--status-danger-fg, #dc2626);
-  color: #ffffff;
+/* Destructive Confirm Button - soft coral/salmon red (#f87171 / #ef4444) */
+.k-confirm-btn-danger {
+  background: #f87171 !important;
+  color: #ffffff !important;
+  border: 1.5px solid #f87171 !important;
+  box-shadow: 0 2px 8px rgba(248, 113, 113, 0.35) !important;
 }
 
-.k-btn-danger:hover:not(:disabled) {
-  background: #b91c1c;
+.k-confirm-btn-danger:hover:not(:disabled) {
+  background: #ef4444 !important;
+  border-color: #ef4444 !important;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4) !important;
+  transform: translateY(-1px);
+}
+
+.k-confirm-btn-danger:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.k-confirm-btn-primary {
+  background: #6366f1 !important;
+  color: #ffffff !important;
+  border: 1.5px solid #6366f1 !important;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3) !important;
+}
+
+.k-confirm-btn-primary:hover:not(:disabled) {
+  background: #4f46e5 !important;
+  border-color: #4f46e5 !important;
+  transform: translateY(-1px);
 }

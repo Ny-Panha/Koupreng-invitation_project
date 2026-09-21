@@ -29,7 +29,14 @@ const REVEAL_SELECTORS = [
 ];
 
 function getInitialPreloaderState() {
-  if (typeof window === "undefined") return true;
+  if (typeof window === "undefined") return false;
+  // If inside Telegram WebApp or previously seen in session, skip preloader for instant load
+  if (window.Telegram?.WebApp?.initData) return false;
+  try {
+    if (sessionStorage.getItem("kp_intro_seen")) return false;
+  } catch {
+    // Session storage can be unavailable in restricted browser contexts.
+  }
   return true;
 }
 
@@ -40,9 +47,15 @@ function LogoPreloader({ disabled = false }) {
   useEffect(() => {
     if (disabled || !visible) return undefined;
 
+    try {
+      sessionStorage.setItem("kp_intro_seen", "true");
+    } catch {
+      // The preloader remains functional when session storage is unavailable.
+    }
+
     const timer = window.setTimeout(() => {
       setVisible(false);
-    }, 1800);
+    }, 450);
 
     return () => window.clearTimeout(timer);
   }, [disabled, visible]);

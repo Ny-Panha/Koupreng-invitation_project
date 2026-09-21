@@ -1198,6 +1198,9 @@ export default function AdminTemplatesPage() {
             </div>
             <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 leading-relaxed">
               តើ Nha ពិតជាចង់លុបគំរូ <strong>"{deleteConfirm.name}"</strong> (ID: #{deleteConfirm.id}) មែនទេ?
+              <span className="mt-2 block font-medium text-amber-700 dark:text-amber-300">
+                សកម្មភាពនេះនឹងត្រូវកត់ត្រាក្នុង Audit Log.
+              </span>
             </p>
             <div className="flex items-center justify-end gap-2.5 mt-6">
               <button

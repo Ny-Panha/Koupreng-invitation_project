@@ -3,6 +3,7 @@ package com.koupreng.backend.admin.api;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.shared.response.ApiResponse;
+import com.koupreng.backend.admin.api.dto.AdminCreateUserRequest;
 import com.koupreng.backend.admin.api.dto.AdminInvitationModerationRequest;
 import com.koupreng.backend.admin.api.dto.AdminReportResponse;
 import com.koupreng.backend.admin.api.dto.AdminTemplatePremiumRequest;
@@ -15,6 +16,8 @@ import com.koupreng.backend.invitation.api.dto.InvitationResponse;
 import com.koupreng.backend.subscription.api.dto.SubscriptionPackageResponse;
 import com.koupreng.backend.subscription.api.dto.SubscriptionPackageRequest;
 import com.koupreng.backend.payment.api.dto.PaymentHistoryResponse;
+import com.koupreng.backend.payment.api.dto.PaymentConfirmResponse;
+import com.koupreng.backend.payment.api.dto.AdminPaymentConfirmRequest;
 import com.koupreng.backend.subscription.application.SubscriptionService;
 import com.koupreng.backend.payment.application.PaymentHistoryService;
 import com.koupreng.backend.admin.application.AdminManagementService;
@@ -61,6 +64,18 @@ public class AdminManagementController {
         this.auditLogService = auditLogService;
         this.subscriptionService = subscriptionService;
         this.paymentHistoryService = paymentHistoryService;
+    }
+
+    @PostMapping("/users")
+    public ResponseEntity<ApiResponse<AdminUserResponse>> createUser(
+            Authentication authentication,
+            @Valid @RequestBody AdminCreateUserRequest requestBody,
+            HttpServletRequest request
+    ) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(
+                "User created successfully",
+                adminManagementService.createUser(authentication, requestBody, request)
+        ));
     }
 
     @GetMapping("/users")
@@ -429,6 +444,19 @@ public class AdminManagementController {
         return ResponseEntity.ok(ApiResponse.success(
                 "Payment order fetched successfully",
                 paymentHistoryService.get(authentication, orderCode)
+        ));
+    }
+
+    @PostMapping("/payments/{orderCode}/confirm")
+    public ResponseEntity<ApiResponse<PaymentConfirmResponse>> confirmPayment(
+            @PathVariable String orderCode,
+            @Valid @RequestBody(required = false) AdminPaymentConfirmRequest body
+    ) {
+        var amount = body != null ? body.amount() : null;
+        String confirmedBy = body != null ? body.confirmedBy() : "admin";
+        return ResponseEntity.ok(ApiResponse.success(
+                "Payment confirmed successfully",
+                paymentHistoryService.confirmPayment(orderCode, amount, confirmedBy)
         ));
     }
 }

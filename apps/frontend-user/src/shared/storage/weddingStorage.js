@@ -1,4 +1,15 @@
+import { readStoredAuth } from "./authStorage";
+
 const KEY = "koupreng.wedding.drafts";
+
+function currentOwnerUserId() {
+  const user = readStoredAuth()?.user;
+  return user?.id ?? user?.userId ?? null;
+}
+
+function resolveOwnerUserId(ownerUserId) {
+  return ownerUserId ?? currentOwnerUserId();
+}
 
 function readAll() {
   try {
@@ -21,26 +32,38 @@ function generateId() {
   return `wed-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
-export function listDrafts() {
-  return Object.values(readAll()).sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+export function listDrafts(ownerUserId = null) {
+  const drafts = Object.values(readAll());
+  const resolvedOwnerUserId = resolveOwnerUserId(ownerUserId);
+  const scoped = resolvedOwnerUserId == null
+    ? []
+    : drafts.filter((draft) => String(draft.ownerUserId) === String(resolvedOwnerUserId));
+  return scoped.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
 }
 
-export function getDraft(draftId) {
+export function getDraft(draftId, ownerUserId = null) {
   if (!draftId) return null;
   const all = readAll();
-  return all[draftId] || null;
+  const draft = all[draftId] || null;
+  const resolvedOwnerUserId = resolveOwnerUserId(ownerUserId);
+  if (!draft || resolvedOwnerUserId == null || String(draft.ownerUserId) !== String(resolvedOwnerUserId)) return null;
+  return draft;
 }
 
-export function getDraftBySlug(slug) {
+export function getDraftBySlug(slug, ownerUserId = null) {
   if (!slug) return null;
   const all = readAll();
-  return Object.values(all).find((draft) => draft.slug === slug) || null;
+  const resolvedOwnerUserId = resolveOwnerUserId(ownerUserId);
+  if (resolvedOwnerUserId == null) return null;
+  return Object.values(all).find((draft) => draft.slug === slug
+    && String(draft.ownerUserId) === String(resolvedOwnerUserId)) || null;
 }
 
 export function saveDraft(draft) {
   const all = readAll();
   const id = draft.id || generateId();
-  const next = { ...draft, id, updatedAt: Date.now() };
+  const ownerUserId = draft.ownerUserId ?? currentOwnerUserId();
+  const next = { ...draft, ownerUserId, id, updatedAt: Date.now() };
   all[id] = next;
   writeAll(all);
   return next;

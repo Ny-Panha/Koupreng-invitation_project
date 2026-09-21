@@ -3,12 +3,15 @@ import { Link, useParams } from "react-router-dom";
 import InvitationForm from "./InvitationForm";
 import { invitationService } from "@/features/invitations/api/invitationApi";
 import { getDraft, listDrafts } from "@/shared/storage/weddingStorage";
-import { getTemplateById } from "../templates/data/templatesData";
+import { getTemplateById, getTemplatePreset, registerDynamicTemplates } from "../templates/data/templatesData";
+import { templateCatalogService } from "../templates/api/templateCatalogApi";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import "@/features/events/EventsFeature.css";
 
 export default function InvitationEditPage() {
     const { id } = useParams();
+    const { user } = useAuth();
     const { text: t } = useBackendMessages("invitations");
     const [invitation, setInvitation] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -17,50 +20,86 @@ export default function InvitationEditPage() {
         let active = true;
 
         const loadData = async () => {
-            const targetId = id || listDrafts()[0]?.id;
-            const localDraft = targetId ? getDraft(targetId) : null;
+            // 0. Fetch dynamic catalog from backend to register any admin-created templates
+            try {
+                const catalogItems = await templateCatalogService.list();
+                if (catalogItems && catalogItems.length > 0) {
+                    registerDynamicTemplates(catalogItems);
+                }
+            } catch {
+                // Ignore catalog fetch failure
+            }
+
+            const ownerUserId = user?.id || user?.userId;
+            const targetId = id || listDrafts(ownerUserId)[0]?.id;
+            const localDraft = targetId ? getDraft(targetId, ownerUserId) : null;
 
             // 1. Check local wedding draft storage first
             if (localDraft) {
                 const chosenTemplateId = localDraft.templateId || "garden-royal-khmer-wedding";
                 const tpl = getTemplateById(chosenTemplateId);
-                const cover = localDraft.coverImage || tpl?.phoneCoverImage || tpl?.mainImage || "/facebook/all/03-card/cover-card.jpg";
+                const preset = getTemplatePreset(tpl) || {};
+
+                const isDefaultGold = localDraft.frontColor === "#f9af59" && localDraft.bottomColor === "#B08E4F";
+                const isDefaultOpening = !localDraft.openingStyle || localDraft.openingStyle === "khmer-royal";
+                const isDefaultCover = !localDraft.coverImage || localDraft.coverImage.includes("/facebook/all/03-card/cover-card.jpg");
+
+                const cover = (!isDefaultCover && localDraft.coverImage) ? localDraft.coverImage : (preset.coverImage || "/facebook/all/03-card/cover-card.jpg");
+                const frontColor = (!isDefaultGold && localDraft.frontColor) ? localDraft.frontColor : (preset.frontColor || "#f9af59");
+                const bottomColor = (!isDefaultGold && localDraft.bottomColor) ? localDraft.bottomColor : (preset.bottomColor || "#B08E4F");
+                const openingStyle = (!isDefaultOpening && localDraft.openingStyle) ? localDraft.openingStyle : (preset.openingStyle || "khmer-royal");
 
                 const designPayload = {
                     coverImage: cover,
-                    frontColor: localDraft.frontColor || "#f9af59",
-                    bottomColor: localDraft.bottomColor || "#B08E4F",
+                    frontColor,
+                    bottomColor,
+                    openingStyle,
                     templateId: chosenTemplateId,
-                    musicUrl: localDraft.musicUrl || (typeof tpl?.music === "string" ? tpl.music : tpl?.music?.url || ""),
-                    photos: localDraft.photos?.length ? localDraft.photos : (tpl?.storyImages?.map((img, i) => ({ id: `p${i+1}`, url: typeof img === "string" ? img : img.src })) || []),
+                    presetId: preset.presetId || tpl?.presetId || "",
+                    musicUrl: localDraft.musicUrl || preset.musicUrl || "",
+                    photos: localDraft.photos?.length ? localDraft.photos : (preset.photos || []),
                     khqrDollar: localDraft.khqrDollar || null,
                     khqrRiel: localDraft.khqrRiel || null,
                 };
 
+                const isDefaultTitle = !localDraft.event?.title && (!localDraft.title || localDraft.title === "សួនរាជហង្សខ្មែរ" || localDraft.title === "Garden Royal Khmer Wedding");
+                const isDefaultCouple = (!localDraft.couple?.groom && (!localDraft.groomName || localDraft.groomName === "វណ្ណដា")) &&
+                                        (!localDraft.couple?.bride && (!localDraft.brideName || localDraft.brideName === "ស្រីពេជ្រ"));
+
                 const contentPayload = {
-                    title: localDraft.event?.title || localDraft.title || tpl?.name || "សួនរាជហង្សខ្មែរ",
+                    title: (!isDefaultTitle && (localDraft.event?.title || localDraft.title)) ? (localDraft.event?.title || localDraft.title) : (preset.title || "សួនរាជហង្សខ្មែរ"),
                     subtitle: "សូមគោរពអញ្ជើញ",
-                    groomName: localDraft.couple?.groom || localDraft.groomName || tpl?.groom || "វណ្ណដា",
-                    brideName: localDraft.couple?.bride || localDraft.brideName || tpl?.bride || "ស្រីពេជ្រ",
+                    groomName: (!isDefaultCouple && (localDraft.couple?.groom || localDraft.groomName)) ? (localDraft.couple?.groom || localDraft.groomName) : (preset.groom || "វណ្ណដា"),
+                    brideName: (!isDefaultCouple && (localDraft.couple?.bride || localDraft.brideName)) ? (localDraft.couple?.bride || localDraft.brideName) : (preset.bride || "ស្រីពេជ្រ"),
                     eventDateText: localDraft.event?.date || localDraft.eventDate || tpl?.dateText || "ថ្ងៃពុធ ២៨ មករា ២០២៦",
-                    schedule: localDraft.schedule?.length ? localDraft.schedule : (tpl?.schedule || []),
+                    schedule: localDraft.schedule?.length ? localDraft.schedule : (preset.schedule || []),
                     agendaDays: localDraft.agendaDays || [],
-                    venueName: localDraft.event?.venueName || localDraft.venueName || tpl?.venueName || "The Premier Center Sen Sok",
-                    messageText: localDraft.message || tpl?.message || "",
+                    venueName: localDraft.event?.venueName || localDraft.venueName || preset.venueName || "The Premier Center Sen Sok",
+                    venueAddress: localDraft.event?.venueAddress || localDraft.venueAddress || preset.venueAddress || "អគារ A, សែនសុខ, ភ្នំពេញ",
+                    googleMapUrl: localDraft.googleMapUrl || tpl?.mapQuery || "",
+                    sketchMapImage: localDraft.sketchMapImage || null,
+                    messageText: localDraft.message || preset.messageText || "",
                     thankYouText: localDraft.thankYouText || "",
                 };
 
                 const mappedInvitation = {
                     id: localDraft.backendInvitationId || localDraft.id,
                     templateId: chosenTemplateId,
-                    title: localDraft.event?.title || localDraft.title || tpl?.name || "សួនរាជហង្សខ្មែរ",
-                    groomName: localDraft.couple?.groom || localDraft.groomName || tpl?.groom || "វណ្ណដា",
-                    brideName: localDraft.couple?.bride || localDraft.brideName || tpl?.bride || "ស្រីពេជ្រ",
+                    presetId: preset.presetId || tpl?.presetId || "",
+                    title: contentPayload.title,
+                    groomName: contentPayload.groomName,
+                    brideName: contentPayload.brideName,
                     eventDate: localDraft.event?.date || localDraft.eventDate || (tpl?.targetDate ? tpl.targetDate.split("T")[0] : "2026-01-28"),
                     eventTime: localDraft.event?.receptionTime || localDraft.eventTime || tpl?.receptionTime || "17:00",
-                    venueName: localDraft.event?.venueName || localDraft.venueName || tpl?.venueName || "The Premier Center Sen Sok",
-                    venueAddress: localDraft.event?.venueAddress || localDraft.venueAddress || tpl?.venueAddress || "អគារ A, សែនសុខ, ភ្នំពេញ",
-                    storyText: localDraft.message || tpl?.message || "",
+                    venueName: contentPayload.venueName,
+                    venueAddress: contentPayload.venueAddress,
+                    googleMapUrl: localDraft.googleMapUrl || tpl?.mapQuery || "",
+                    sketchMapImage: localDraft.sketchMapImage || null,
+                    openingStyle,
+                    frontColor,
+                    bottomColor,
+                    coverImage: cover,
+                    storyText: localDraft.message || preset.messageText || "",
                     designJson: JSON.stringify(designPayload),
                     contentJson: JSON.stringify(contentPayload),
                 };
@@ -72,9 +111,8 @@ export default function InvitationEditPage() {
                 }
             }
 
-            // 2. If not found locally and ID is numeric, query backend API
-            const isNumericId = id && !isNaN(Number(id)) && Number(id) > 0;
-            if (isNumericId) {
+            // 2. If not found locally, query backend API
+            if (id) {
                 try {
                     const data = await invitationService.get(id);
                     if (active && data) {
@@ -85,7 +123,6 @@ export default function InvitationEditPage() {
                 } catch {
                     // Not found in backend
                 }
-
             }
 
             // 3. No event created yet -> set null to show empty state with Go to Create Events
@@ -100,7 +137,7 @@ export default function InvitationEditPage() {
         return () => {
             active = false;
         };
-    }, [id]);
+    }, [id, user?.id, user?.userId]);
 
     if (loading) {
         return (

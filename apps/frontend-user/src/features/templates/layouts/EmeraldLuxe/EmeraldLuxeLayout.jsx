@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import defaultMusicUrl from "@/assets/music/Instrumental Wedding Music (VioSounds Cover).m4a";
 import { normalizeTemplateViewModel } from "../../services/templateService";
+import { normalizeDressColors } from "../../experience/config/templateExperienceContent";
 import VelvetCurtainOpening from "./components/VelvetCurtainOpening";
 import TemplateOpeningGate from "../../experience/components/sections/TemplateOpeningGate";
 import Card3DFlip from "./components/Card3DFlip";
@@ -34,8 +35,8 @@ export default function EmeraldLuxeLayout({
   const bride = tpl.bride || "ស្រីពេជ្រ";
   const musicUrl = tpl.music || defaultMusicUrl;
 
-  // Gate curtain state
-  const [opened, setOpened] = useState(false);
+  // Gate curtain state - open by default in preview so host can view the card
+  const [opened, setOpened] = useState(preview ? true : false);
   const [isFlipped, setIsFlipped] = useState(false);
 
   // Audio Control
@@ -84,14 +85,15 @@ export default function EmeraldLuxeLayout({
   }, []);
 
   const isEnabled = (key) => tpl.enabledSections?.[key] !== false;
-  const dressColors = Array.isArray(tpl.dressCode)
-    ? tpl.dressCode
-    : (Array.isArray(tpl.dressCode?.colors) ? tpl.dressCode.colors : (tpl.dressColors || [
-        { hex: "#0F4C3A", name: "បៃតងចាស់" },
-        { hex: "#2D8A6E", name: "បៃតងមរកត" },
-        { hex: "#D4AF37", name: "មាស" },
-        { hex: "#FFFDF7", name: "ស" },
-      ]));
+  const rawColors = Array.isArray(tpl.dressCode?.colors)
+    ? tpl.dressCode.colors
+    : (Array.isArray(tpl.dressCode) ? tpl.dressCode : (tpl.dressColors || []));
+  const dressColors = rawColors.length > 0 ? normalizeDressColors(rawColors) : [
+    { hex: "#0F4C3A", name: "បៃតងចាស់" },
+    { hex: "#2D8A6E", name: "បៃតងមរកត" },
+    { hex: "#D4AF37", name: "មាស" },
+    { hex: "#FFFDF7", name: "ស" },
+  ];
   const faqList = Array.isArray(tpl.faq) && tpl.faq.length > 0 ? tpl.faq : [
     { id: "f1", q: "តើមានចំណតរថយន្តដែរឬទេ?", a: "បាទ/ចាស មានចំណតរថយន្តធំទូលាយដោយឥតគិតថ្លៃសម្រាប់ភ្ញៀវកិត្តិយសទាំងអស់។" },
     { id: "f2", q: "តើអាចនាំកុមារតូចៗមកបានទេ?", a: "យើងខ្ញុំស្វាគមន៍វត្តមានកុមារតូចៗទាំងអស់ក្នុងពិធីមង្គលការ។" },
@@ -114,7 +116,7 @@ export default function EmeraldLuxeLayout({
         type="button"
         onClick={toggleMusic}
         style={{
-          position: "fixed",
+          position: preview ? "absolute" : "fixed",
           bottom: "24px",
           right: "24px",
           zIndex: 90,
@@ -140,7 +142,7 @@ export default function EmeraldLuxeLayout({
         <div
           className="tx-root tx-root--preview"
           style={{
-            position: "fixed",
+            position: preview ? "absolute" : "fixed",
             inset: 0,
             zIndex: 300,
             overflow: "hidden",
@@ -187,21 +189,25 @@ export default function EmeraldLuxeLayout({
             ← {backLabel}
           </Link>
         )}
-        {opened && preview && (
+        {preview && (
           <button
             type="button"
-            onClick={() => setOpened(false)}
+            onClick={() => setOpened((prev) => !prev)}
             style={{
               background: "rgba(212, 175, 55, 0.15)",
               border: "1px solid var(--el-gold-primary)",
               color: "var(--el-gold-light)",
-              padding: "0.3rem 0.8rem",
+              padding: "0.35rem 0.85rem",
               borderRadius: "6px",
               fontSize: "0.75rem",
               cursor: "pointer",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              marginLeft: "auto",
             }}
           >
-            បិទវាំងននម្តងទៀត
+            {opened ? "🔒 បិទវាំងននមើល (Close)" : "✨ បើកវាំងននមើល (Open)"}
           </button>
         )}
       </div>
@@ -231,12 +237,12 @@ export default function EmeraldLuxeLayout({
                       width: "36px",
                       height: "36px",
                       borderRadius: "50%",
-                      backgroundColor: c.hex,
+                      backgroundColor: typeof c === "string" ? c : (c.hex || c.color || "#0F4C3A"),
                       border: "2px solid rgba(212, 175, 55, 0.6)",
                       boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
                     }}
                   />
-                  <span style={{ fontSize: "0.75rem", color: "var(--el-gold-light)" }}>{c.name}</span>
+                  <span style={{ fontSize: "0.75rem", color: "var(--el-gold-light)" }}>{typeof c === "string" ? c : (c.name || c.hex)}</span>
                 </div>
               ))}
             </div>

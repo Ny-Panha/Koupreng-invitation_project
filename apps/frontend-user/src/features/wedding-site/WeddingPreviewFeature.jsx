@@ -1,7 +1,8 @@
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 
-import { TemplateExperience } from "@/features/templates";
+import { TemplateExperience, registerDynamicTemplates } from "@/features/templates";
+import { templateCatalogService } from "@/features/templates/api/templateCatalogApi";
 import { draftToTemplate } from "../wedding-builder/utils/draftToTemplate";
 import { useWeddingStore } from "../../stores/useWeddingStore";
 import { loadGallery } from "../../shared/storage/galleryStorage";
@@ -26,6 +27,13 @@ export default function WeddingPreviewPage() {
     const [gallery, setGallery] = useState(null); // null = loading, [] = loaded but empty
     const [draftMedia, setDraftMedia] = useState(null);
     const activeDraft = draft?.id === draftId ? draft : null;
+
+    // Load dynamic admin templates so getTemplateById resolves them
+    useEffect(() => {
+        templateCatalogService.list()
+            .then((items) => { if (items?.length) registerDynamicTemplates(items); })
+            .catch(() => {});
+    }, []);
 
     useEffect(() => {
         if (!draftId) {

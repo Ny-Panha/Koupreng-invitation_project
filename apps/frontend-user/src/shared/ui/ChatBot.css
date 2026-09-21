@@ -9,7 +9,6 @@
   gap: 16px;
   font-family: 'Kantumruy Pro', sans-serif;
 }
-
 /* Toggle Button */
 .chat-toggle-btn {
   width: 60px;
@@ -273,5 +272,12 @@
   .chat-window {
     width: calc(100vw - 32px);
     right: -8px;
+  }
+}
+
+/* Hide in Print / PDF Export */
+@media print {
+  .chatbot-wrapper {
+    display: none !important;
   }
 }

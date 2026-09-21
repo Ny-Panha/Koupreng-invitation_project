@@ -13,6 +13,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.examples.Example;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +24,10 @@ import org.springdoc.core.customizers.OperationCustomizer;
 public class OpenApiConfig {
 
     public static final String BEARER_AUTH = "bearerAuth";
+    public static final String ADMIN_PAYMENT_SECRET = "adminPaymentSecret";
+
+    private static final String INTERNAL_SUBSCRIPTION_PAYMENT_PATH =
+            "/api/v1/internal/subscription-payments/telegram-detect";
 
     private static final Set<String> PUBLIC_PATHS_IN_PROTECTED_CONTROLLERS = Set.of(
             "/api/v1/public/invitations/{slug}",
@@ -68,26 +73,41 @@ public class OpenApiConfig {
                                 and versioned /api/v1 routes; the version below does not imply a global base path.
                                 """)
                         .version("v1"))
-                .components(new Components().addSecuritySchemes(
-                        BEARER_AUTH,
-                        new SecurityScheme()
-                                .type(SecurityScheme.Type.HTTP)
-                                .scheme("bearer")
-                                .bearerFormat("JWT")
-                                .description("Paste the accessToken returned by POST /api/auth/login. "
-                                        + "Scalar adds the Bearer prefix automatically; do not type it twice.")
-                ));
+                .components(new Components()
+                        .addSecuritySchemes(
+                                BEARER_AUTH,
+                                new SecurityScheme()
+                                        .type(SecurityScheme.Type.HTTP)
+                                        .scheme("bearer")
+                                        .bearerFormat("JWT")
+                                        .description("Paste the accessToken returned by POST /api/auth/login. "
+                                                + "Scalar adds the Bearer prefix automatically; do not type it twice."))
+                        .addSecuritySchemes(
+                                ADMIN_PAYMENT_SECRET,
+                                new SecurityScheme()
+                                        .type(SecurityScheme.Type.APIKEY)
+                                        .in(SecurityScheme.In.HEADER)
+                                        .name("X-ADMIN-PAYMENT-SECRET")
+                                        .description("Internal Telegram payment reconciliation secret.")));
     }
 
     @Bean
     public OpenApiCustomizer publicOperationSecurityCustomizer() {
-        return openApi -> PUBLIC_PATHS_IN_PROTECTED_CONTROLLERS.forEach(path -> {
-            if (openApi.getPaths() == null || openApi.getPaths().get(path) == null) {
-                return;
+        return openApi -> {
+            PUBLIC_PATHS_IN_PROTECTED_CONTROLLERS.forEach(path -> {
+                if (openApi.getPaths() == null || openApi.getPaths().get(path) == null) {
+                    return;
+                }
+                openApi.getPaths().get(path).readOperations()
+                        .forEach(operation -> operation.setSecurity(List.of()));
+            });
+            if (openApi.getPaths() != null
+                    && openApi.getPaths().get(INTERNAL_SUBSCRIPTION_PAYMENT_PATH) != null) {
+                openApi.getPaths().get(INTERNAL_SUBSCRIPTION_PAYMENT_PATH).readOperations()
+                        .forEach(operation -> operation.setSecurity(List.of(
+                                new SecurityRequirement().addList(ADMIN_PAYMENT_SECRET))));
             }
-            openApi.getPaths().get(path).readOperations()
-                    .forEach(operation -> operation.setSecurity(List.of()));
-        });
+        };
     }
 
     /**

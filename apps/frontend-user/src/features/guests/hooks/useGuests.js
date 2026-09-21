@@ -5,6 +5,7 @@ import { invitationService } from "@/features/invitations/api/invitationApi";
 import { rsvpService } from "@/features/rsvp/api/rsvpApi";
 import { listDrafts } from "@/shared/storage/weddingStorage";
 import { getActiveEventId, listManualGuests } from "@/shared/storage/hostPlanningStorage";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import {
   normalizeBackendGuest,
   normalizeBackendRsvp,
@@ -62,7 +63,9 @@ function pickPublicInvitation(invitations, draft, requestedInvitationId) {
 
 export function useGuests() {
   const { invitationId: requestedInvitationId = "" } = useParams();
-  const drafts = useMemo(() => listDrafts(), []);
+  const { user } = useAuth();
+  const ownerUserId = user?.id || user?.userId;
+  const drafts = useMemo(() => listDrafts(ownerUserId), [ownerUserId]);
   const activeEventId = getActiveEventId();
   const currentDraft =
     drafts.find((draft) => draft.id === activeEventId) || drafts[0] || null;

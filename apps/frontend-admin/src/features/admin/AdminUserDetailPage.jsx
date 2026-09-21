@@ -31,7 +31,7 @@ export default function AdminUserDetailPage() {
           <h2 className="page-title">{user.fullName || user.email || `User #${user.id}`}</h2>
           <p className="page-subtitle">{t("users.detailSubtitle", "User detail and owned invitations")}</p>
         </div>
-        <Link className="btn btn-ghost" to="/admin/users">{t("users.back", "Back")}</Link>
+        <Link className="btn btn-ghost" to="/users">{t("users.back", "Back")}</Link>
       </div>
 
       <section className="card" style={{ marginBottom: 18 }}>
@@ -63,7 +63,7 @@ export default function AdminUserDetailPage() {
                 {invitations.map((invitation) => (
                   <tr key={invitation.id}>
                     <td>{invitation.id}</td>
-                    <td><Link className="btn btn-ghost btn-sm" to={`/admin/invitations/${invitation.id}`}>{invitation.title || invitation.slug}</Link></td>
+                    <td><span className="font-medium text-slate-800 dark:text-zinc-200">{invitation.title || invitation.slug}</span></td>
                     <td>{invitation.status}</td>
                     <td>{formatDate(invitation.eventDate)}</td>
                     <td>{invitation.moderationStatus || "ACTIVE"}</td>

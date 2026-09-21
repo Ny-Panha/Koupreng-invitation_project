@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 
 import {
   IoAddCircle,
@@ -30,6 +30,7 @@ import { planningService } from "@/features/planning/api/planningApi";
 import notificationService from "../notifications/notificationService";
 import { listDrafts } from "../../shared/storage/weddingStorage";
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import { SkeletonTable } from "@/shared/ui";
 import "./DashboardPage.css";
 
@@ -43,6 +44,8 @@ function asList(val) {
 
 export default function DashboardFeature() {
   const { lang, text } = useBackendMessages("dashboard");
+  const { user } = useAuth();
+  const userId = user?.id || user?.userId;
 
   const [copied, setCopied] = useState(false);
   const [selectedInvId, setSelectedInvId] = useState(null);
@@ -71,11 +74,11 @@ export default function DashboardFeature() {
     hasDate: false,
   });
 
-  const loadData = async (targetId = null) => {
+  const loadData = useCallback(async (targetId = null) => {
     try {
       setState((prev) => ({ ...prev, loading: true, error: "" }));
       const invs = asList(await invitationService.listMine().catch(() => []));
-      const drafts = listDrafts();
+      const drafts = listDrafts(userId);
       const allInvs = [
         ...invs,
         ...drafts.filter((d) => !invs.some((i) => (i.id || i.invitationId) === (d.id || d.invitationId))),
@@ -141,11 +144,14 @@ export default function DashboardFeature() {
         error: err.message || "Failed to load dashboard data.",
       }));
     }
-  };
+  }, [userId]);
+
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    loadData();
-  }, []);
+    const targetId = searchParams.get("id") || searchParams.get("invitationId");
+    loadData(targetId || null);
+  }, [loadData, searchParams]);
 
   const handleSelectInvitation = (id) => {
     setSelectedInvId(id);
@@ -795,4 +801,3 @@ export default function DashboardFeature() {
     </main>
   );
 }
-

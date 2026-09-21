@@ -10,6 +10,7 @@ export default function RequireAdmin({ children }) {
     const userRoles = Array.isArray(user?.roles) ? user.roles.map(normalizeRole) : [];
     const isAdmin =
         userRole === "ADMIN" ||
+        userRole === "STAFF" ||
         userRole === "SUPER_ADMIN" ||
         userRole === "ADMIN_MANAGER" ||
         userRoles.some((r) => r === "ADMIN" || r === "SUPER_ADMIN" || r === "ADMIN_MANAGER");

@@ -23,14 +23,25 @@ import {
     Map,
     CheckCircle2,
     Users,
+    ExternalLink,
+    Zap,
+    X,
 } from "lucide-react";
 
 
 import { toast } from "../../shared/ui/toast";
 import { invitationService } from "@/features/invitations/api/invitationApi";
-import { getTemplateById } from "../templates/data/templatesData";
+import { saveDraft } from "@/shared/storage/weddingStorage";
+import {
+    getTemplateById,
+    getTemplatePreset,
+    registerDynamicTemplates,
+    getCatalogVersion,
+} from "../templates/data/templatesData";
+import { templateCatalogService } from "../templates/api/templateCatalogApi";
 import { MUSIC_TRACKS } from "../../shared/data/musicTracks";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import LivePhoneSimulator from "./LivePhoneSimulator";
 import { DatePicker } from "../../shared/ui/DatePicker";
 import { TimePicker } from "../../shared/ui/TimePicker";
@@ -577,6 +588,7 @@ const DEFAULT_STATE = {
 
 export default function InvitationForm({ invitation }) {
     const { text: t } = useBackendMessages("invitations");
+    const { user } = useAuth();
     const navigate = useNavigate();
     const params = useParams();
     const [searchParams] = useSearchParams();
@@ -603,37 +615,69 @@ export default function InvitationForm({ invitation }) {
 
         const activeTplId = invitation?.templateId || customParsed.templateId || searchParams.get("templateId") || DEFAULT_STATE.templateId;
         const tpl = getTemplateById(activeTplId);
+        const preset = getTemplatePreset(tpl) || {};
+
+        const isDefaultGold = (customParsed.frontColor === "#f9af59" && customParsed.bottomColor === "#B08E4F") ||
+                              (invitation?.frontColor === "#f9af59" && invitation?.bottomColor === "#B08E4F");
+        const isDefaultOpening = (customParsed.openingStyle === "khmer-royal" || invitation?.openingStyle === "khmer-royal");
+        const isDefaultCover = !customParsed.coverImage || customParsed.coverImage.includes("/facebook/all/03-card/cover-card.jpg");
+        const isDefaultTitle = !customParsed.title || customParsed.title === "សួនរាជហង្សខ្មែរ" || customParsed.title === "Garden Royal Khmer Wedding" || customParsed.title.includes("W01");
+        const isDefaultCouple = (!customParsed.groomName || customParsed.groomName === "វណ្ណដា") && (!customParsed.brideName || customParsed.brideName === "ស្រីពេជ្រ");
+
+        const frontColor = (!isDefaultGold && (customParsed.frontColor || invitation?.frontColor)) || preset.frontColor || DEFAULT_STATE.frontColor;
+        const bottomColor = (!isDefaultGold && (customParsed.bottomColor || invitation?.bottomColor)) || preset.bottomColor || DEFAULT_STATE.bottomColor;
+        const openingStyle = (!isDefaultOpening && (customParsed.openingStyle || invitation?.openingStyle)) || preset.openingStyle || DEFAULT_STATE.openingStyle;
+        const coverImage = (!isDefaultCover && customParsed.coverImage) ? customParsed.coverImage : (preset.coverImage || DEFAULT_STATE.coverImage);
+        const title = (!isDefaultTitle && (invitation?.title || customParsed.title)) ? (invitation?.title || customParsed.title) : (preset.title || DEFAULT_STATE.title);
+        const groomName = (!isDefaultCouple && (invitation?.groomName || customParsed.groomName)) ? (invitation?.groomName || customParsed.groomName) : (preset.groom || DEFAULT_STATE.groomName);
+        const brideName = (!isDefaultCouple && (invitation?.brideName || customParsed.brideName)) ? (invitation?.brideName || customParsed.brideName) : (preset.bride || DEFAULT_STATE.brideName);
+        const venueName = (invitation?.venueName || customParsed.venueName) && (invitation?.venueName !== "The Premier Center Sen Sok" && customParsed.venueName !== "The Premier Center Sen Sok")
+            ? (invitation?.venueName || customParsed.venueName)
+            : (preset.venueName || DEFAULT_STATE.venueName);
+        const venueAddress = (invitation?.venueAddress || customParsed.venueAddress) && (invitation?.venueAddress !== "អគារ A, សែនសុខ, ភ្នំពេញ" && customParsed.venueAddress !== "អគារ A, សែនសុខ, ភ្នំពេញ")
+            ? (invitation?.venueAddress || customParsed.venueAddress)
+            : (preset.venueAddress || DEFAULT_STATE.venueAddress);
 
         const rawDate = invitation?.eventDate || customParsed.eventDate || DEFAULT_STATE.eventDate;
         const rawTime = invitation?.eventTime ? invitation.eventTime.slice(0, 5) : (customParsed.eventTime || tpl?.receptionTime || DEFAULT_STATE.eventTime);
 
         return {
             ...DEFAULT_STATE,
+            ...customParsed,
             templateId: activeTplId,
-            openingStyle: customParsed.openingStyle || invitation?.openingStyle || tpl?.design?.openingStyle || DEFAULT_STATE.openingStyle,
-            title: invitation?.title || customParsed.title || tpl?.name || DEFAULT_STATE.title,
-            groomName: invitation?.groomName || customParsed.groomName || tpl?.groom || DEFAULT_STATE.groomName,
-            brideName: invitation?.brideName || customParsed.brideName || tpl?.bride || DEFAULT_STATE.brideName,
-            hostName: invitation?.hostName || customParsed.hostName || tpl?.groom || DEFAULT_STATE.groomName,
-            partnerName: invitation?.partnerName || customParsed.partnerName || tpl?.bride || DEFAULT_STATE.brideName,
+            presetId: customParsed.presetId || invitation?.presetId || preset.presetId || tpl?.presetId || "",
+            openingStyle,
+            frontColor,
+            bottomColor,
+            title,
+            groomName,
+            brideName,
+            hostName: groomName,
+            partnerName: brideName,
             eventDate: toStandardDate(rawDate),
             eventDateText: customParsed.eventDateText || tpl?.dateText || DEFAULT_STATE.eventDateText,
             eventTime: toStandardTime(rawTime),
-            venueName: invitation?.venueName || customParsed.venueName || tpl?.venueName || DEFAULT_STATE.venueName,
-            venueAddress: invitation?.venueAddress || customParsed.venueAddress || tpl?.venueAddress || DEFAULT_STATE.venueAddress,
-            googleMapUrl: invitation?.googleMapUrl || customParsed.googleMapUrl || tpl?.mapQuery || "",
-            coverImage: customParsed.coverImage || tpl?.phoneCoverImage || tpl?.mainImage || DEFAULT_STATE.coverImage,
-            messageText: invitation?.storyText || customParsed.messageText || tpl?.message || DEFAULT_STATE.messageText,
-            schedule: (customParsed.schedule && customParsed.schedule.length > 0) ? customParsed.schedule : (tpl?.schedule || []),
+            venueName,
+            venueAddress,
+            googleMapUrl: invitation?.googleMapUrl || invitation?.event?.mapLink || customParsed.googleMapUrl || preset.mapQuery || "",
+            sketchMapImage: invitation?.sketchMapImage || customParsed.sketchMapImage || DEFAULT_STATE.sketchMapImage || null,
+            coverImage,
+            messageText: (invitation?.storyText && invitation.storyText !== DEFAULT_INVITATION_TEXT)
+                ? invitation.storyText
+                : ((customParsed.messageText && customParsed.messageText !== DEFAULT_INVITATION_TEXT)
+                    ? customParsed.messageText
+                    : (preset.messageText || DEFAULT_STATE.messageText)),
+            schedule: (customParsed.schedule && customParsed.schedule.length > 0) ? customParsed.schedule : (preset.schedule?.length ? preset.schedule : (tpl?.schedule || [])),
             languageMode: invitation?.languageMode || customParsed.languageMode || "KH",
             visibility: invitation?.visibility || "PUBLIC",
-            ...customParsed,
             photos: (() => {
                 let list = (customParsed.photos && customParsed.photos.length > 0 && customParsed.photos.some(p => p.url))
                     ? [...customParsed.photos]
-                    : (tpl?.galleryImages && tpl.galleryImages.length > 0
-                        ? tpl.galleryImages.map((url, i) => ({ id: `p${i + 1}`, url }))
-                        : [...DEFAULT_STATE.photos]);
+                    : (preset.photos && preset.photos.length > 0
+                        ? preset.photos
+                        : (tpl?.galleryImages && tpl.galleryImages.length > 0
+                            ? tpl.galleryImages.map((url, i) => ({ id: `p${i + 1}`, url: typeof url === "string" ? url : url.src }))
+                            : [...DEFAULT_STATE.photos]));
                 while (list.length < 5) {
                     list.push({ id: `p${list.length + 1}`, url: "" });
                 }
@@ -655,12 +699,78 @@ export default function InvitationForm({ invitation }) {
         };
     });
 
+    // Mirrors the module-level catalog counter so the live preview recomputes
+    // once the async catalog fetch registers the Admin-created templates.
+    const [catalogVersion, setCatalogVersion] = useState(getCatalogVersion());
+    const [catalogTemplates, setCatalogTemplates] = useState([]);
+
+    useEffect(() => {
+        let active = true;
+        templateCatalogService.list()
+            .then((items) => {
+                if (active && items && items.length > 0) {
+                    const activeTemplates = items.filter((item) => String(item.status || "ACTIVE").toUpperCase() === "ACTIVE");
+                    setCatalogTemplates(activeTemplates);
+                    registerDynamicTemplates(activeTemplates);
+                    setCatalogVersion(getCatalogVersion());
+                }
+            })
+            .catch(() => {
+                // Ignore catalog fetch failure
+            });
+        return () => {
+            active = false;
+        };
+    }, []);
+
     const [activeLangTab, setActiveLangTab] = useState("KH");
     const [isSaving, setIsSaving] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
+    const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
     const [leftPercent, setLeftPercent] = useState(52);
     const [isDragging, setIsDragging] = useState(false);
     const containerRef = useRef(null);
+
+    const handleChangeTemplate = async (template) => {
+        if (!template) return;
+        const preset = getTemplatePreset(template) || {};
+        const nextForm = {
+            ...form,
+            templateId: template.id || template.slug || form.templateId,
+            title: form.title || template.name || preset.title || "",
+            coverImage: preset.coverImage || template.phoneCoverImage || template.mainImage || form.coverImage,
+        };
+        setForm(nextForm);
+        setCatalogVersion(getCatalogVersion());
+
+        if (isEdit && !isNaN(Number(invitationId))) {
+            try {
+                await invitationService.update(invitationId, {
+                    title: nextForm.title || "សិរីមង្គលអាពាហ៍ពិពាហ៍",
+                    eventType: "WEDDING",
+                    eventDate: nextForm.eventDate || null,
+                    eventTime: nextForm.eventTime || null,
+                    venueName: nextForm.venueName || "",
+                    venueAddress: nextForm.venueAddress || "",
+                    googleMapUrl: nextForm.googleMapUrl || "",
+                    hostName: nextForm.hostName || "",
+                    partnerName: nextForm.partnerName || "",
+                    groomName: nextForm.groomName || "",
+                    brideName: nextForm.brideName || "",
+                    storyText: nextForm.messageText || "",
+                    languageMode: nextForm.languageMode || "KH",
+                    visibility: nextForm.visibility || "PUBLIC",
+                    templateId: Number(nextForm.templateId) || null,
+                    designJson: JSON.stringify({ templateId: nextForm.templateId, presetId: nextForm.presetId || "" }),
+                    contentJson: JSON.stringify({ templateId: nextForm.templateId, presetId: nextForm.presetId || "" }),
+                });
+                saveDraft({ ...invitation, ...nextForm, id: invitationId, backendInvitationId: invitationId });
+            } catch (error) {
+                console.warn("Template selection backend sync failed:", error);
+            }
+        }
+        setIsTemplateModalOpen(false);
+    };
 
     // Draggable Resizer Handler
     const handleMouseDown = (e) => {
@@ -868,11 +978,35 @@ export default function InvitationForm({ invitation }) {
         update("party", nextParty);
     };
 
+    const handleGenerateMapLink = () => {
+        const query = (form.googleMapUrl || form.venueName || "").trim();
+        if (!query) {
+            toast(t("enterVenueFirst") || "សូមបញ្ចូលឈ្មោះទីតាំងជាមុនសិន!");
+            return;
+        }
+        const generatedUrl = /^https?:\/\//i.test(query)
+            ? query
+            : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+        update("googleMapUrl", generatedUrl);
+        toast(t("mapLinkGenerated") || "បានបង្កើត Link Google Maps ដោយជោគជ័យ!");
+    };
+
+    const handleSearchMap = () => {
+        const query = (form.googleMapUrl || form.venueName || "").trim();
+        const searchUrl = query
+            ? (/^https?:\/\//i.test(query)
+                ? query
+                : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`)
+            : "https://www.google.com/maps";
+        window.open(searchUrl, "_blank", "noopener,noreferrer");
+    };
     // Save action
     const handleSave = async () => {
         setIsSaving(true);
         try {
             const designPayload = {
+                templateId: form.templateId,
+                presetId: form.presetId || "",
                 openingStyle: form.openingStyle || "khmer-royal",
                 frontColor: form.frontColor,
                 bottomColor: form.bottomColor,
@@ -891,6 +1025,8 @@ export default function InvitationForm({ invitation }) {
             };
 
             const contentPayload = {
+                templateId: form.templateId,
+                presetId: form.presetId || "",
                 subtitle: form.subtitle,
                 hideCoupleNameOnCover: form.hideCoupleNameOnCover,
                 eventDateText: form.eventDateText,
@@ -928,11 +1064,57 @@ export default function InvitationForm({ invitation }) {
             };
 
             let saved;
-            if (isEdit) {
-                saved = await invitationService.update(invitationId, payload);
-            } else {
-                saved = await invitationService.create(payload);
+            try {
+                if (isEdit && !isNaN(Number(invitationId))) {
+                    saved = await invitationService.update(invitationId, payload);
+                } else {
+                    saved = await invitationService.create(payload);
+                }
+            } catch (apiErr) {
+                console.warn("Backend sync failed, saved locally:", apiErr);
             }
+
+            // Always persist to local wedding draft storage
+            saveDraft({
+                ownerUserId: user?.id || user?.userId,
+                id: invitationId || saved?.id || `wed-${Date.now().toString(36)}`,
+                backendInvitationId: saved?.id || invitation?.backendInvitationId || null,
+                templateId: form.templateId || "garden-royal-khmer-wedding",
+                presetId: form.presetId || "",
+                couple: {
+                    groom: form.groomName,
+                    bride: form.brideName,
+                },
+                groomName: form.groomName,
+                brideName: form.brideName,
+                event: {
+                    title: form.title,
+                    date: form.eventDate,
+                    receptionTime: form.eventTime,
+                    venueName: form.venueName,
+                    venueAddress: form.venueAddress,
+                    mapLink: form.googleMapUrl,
+                },
+                title: form.title,
+                eventDate: form.eventDate,
+                eventTime: form.eventTime,
+                venueName: form.venueName,
+                venueAddress: form.venueAddress,
+                googleMapUrl: form.googleMapUrl,
+                sketchMapImage: form.sketchMapImage,
+                coverImage: form.coverImage,
+                openingStyle: form.openingStyle || "khmer-royal",
+                frontColor: form.frontColor,
+                bottomColor: form.bottomColor,
+                schedule: form.schedule,
+                photos: form.photos,
+                musicUrl: form.musicUrl,
+                message: form.messageText,
+                storyChapters: form.storyChapters,
+                party: form.party,
+                khqrDollar: form.khqrDollar,
+                khqrRiel: form.khqrRiel,
+            });
 
             toast(t("savedSuccess") || "បានរក្សាទុកគំរូធៀបដោយជោគជ័យ! (Saved successfully)");
 
@@ -959,6 +1141,13 @@ export default function InvitationForm({ invitation }) {
                     <span className="pe-status-badge">
                         <CheckCircle2 size={14} /> {t("activeBadge") || "កំពុងប្រើ"}
                     </span>
+                    <button
+                        type="button"
+                        className="pe-btn-switch-tpl"
+                        onClick={() => setIsTemplateModalOpen(true)}
+                    >
+                        <Sparkles size={14} /> {t("changeTemplateBtn") || "ប្តូរគំរូធៀប (Change Template)"}
+                    </button>
                 </div>
                 <div className="pe-sub-header-actions">
                     <button
@@ -1322,17 +1511,66 @@ export default function InvitationForm({ invitation }) {
                             </div>
 
                             <div className="pe-form-group">
-                                <label className="pe-label">
-                                    <span className="pe-label-icon"><MapPin size={15} /></span>
-                                    {t("mapsUrl") || "Google Maps Link (URL)"}
-                                </label>
+                                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px", flexWrap: "wrap", gap: "6px" }}>
+                                    <label className="pe-label" style={{ margin: 0 }}>
+                                        <span className="pe-label-icon"><MapPin size={15} /></span>
+                                        {t("mapsUrl") || "Google Maps Link (URL)"}
+                                    </label>
+                                    <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                                        <button
+                                            type="button"
+                                            onClick={handleGenerateMapLink}
+                                            title="បំលែងឈ្មោះទីតាំងទៅជា Link Google Maps ស្វ័យប្រវត្តិ"
+                                            style={{
+                                                fontSize: "0.75rem",
+                                                padding: "4px 10px",
+                                                borderRadius: "6px",
+                                                border: "1px solid #f59e0b",
+                                                background: "#fffbeb",
+                                                color: "#b45309",
+                                                cursor: "pointer",
+                                                display: "inline-flex",
+                                                alignItems: "center",
+                                                gap: "4px",
+                                                fontWeight: 600,
+                                            }}
+                                        >
+                                            <Zap size={13} />
+                                            បង្កើត Link ស្វ័យប្រវត្តិ
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={handleSearchMap}
+                                            title="បើកស្វែងរកលើ Google Maps ផ្ទាល់"
+                                            style={{
+                                                fontSize: "0.75rem",
+                                                padding: "4px 10px",
+                                                borderRadius: "6px",
+                                                border: "1px solid #cbd5e1",
+                                                background: "#f8fafc",
+                                                color: "#334155",
+                                                cursor: "pointer",
+                                                display: "inline-flex",
+                                                alignItems: "center",
+                                                gap: "4px",
+                                                fontWeight: 600,
+                                            }}
+                                        >
+                                            <ExternalLink size={13} />
+                                            ស្វែងរក / តេស្តមើល
+                                        </button>
+                                    </div>
+                                </div>
                                 <input
-                                    type="url"
+                                    type="text"
                                     className="pe-input"
                                     value={form.googleMapUrl}
                                     onChange={(e) => update("googleMapUrl", e.target.value)}
-                                    placeholder="https://maps.app.goo.gl/..."
+                                    placeholder="https://maps.app.goo.gl/... ឬ ឈ្មោះទីតាំង"
                                 />
+                                <div style={{ fontSize: "0.75rem", color: "#64748b", marginTop: "6px", lineHeight: "1.4" }}>
+                                    💡 អាចដាក់ជា Link (https://maps.app.goo.gl/...) ឬសរសេរឈ្មោះទីតាំងក៏បាន — ប្រព័ន្ធនឹងភ្ជាប់ទៅ Google Maps ជូនភ្ញៀវដោយស្វ័យប្រវត្តិ។
+                                </div>
                             </div>
 
                             <CleanImageUploadField
@@ -1693,11 +1931,41 @@ export default function InvitationForm({ invitation }) {
                 {!isExpanded && (
                     <LivePhoneSimulator
                         data={form}
+                        catalogVersion={catalogVersion}
                         onSave={handleSave}
                         isSaving={isSaving}
                     />
                 )}
             </div>
+
+            {isTemplateModalOpen && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/60 p-4" role="dialog" aria-modal="true" aria-label="Change template">
+                    <div className="max-h-[85vh] w-full max-w-5xl overflow-y-auto rounded-2xl bg-white p-5 shadow-2xl dark:bg-zinc-900">
+                        <div className="mb-5 flex items-center justify-between gap-4">
+                            <div>
+                                <h2 className="text-xl font-bold text-slate-900 dark:text-zinc-100">ប្តូរគំរូធៀបការ</h2>
+                                <p className="text-sm text-slate-500 dark:text-zinc-400">ជ្រើសរើសគំរូថ្មីសម្រាប់កម្មវិធីនេះ</p>
+                            </div>
+                            <button type="button" className="pe-btn-outline" onClick={() => setIsTemplateModalOpen(false)} aria-label="Close template selector">
+                                <X size={18} />
+                            </button>
+                        </div>
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                            {catalogTemplates.map((template) => (
+                                <button
+                                    type="button"
+                                    key={template.id}
+                                    className={`overflow-hidden rounded-xl border text-left transition hover:-translate-y-0.5 hover:border-amber-500 hover:shadow-lg ${String(form.templateId) === String(template.id) ? "border-amber-500 ring-2 ring-amber-200" : "border-slate-200 dark:border-zinc-700"}`}
+                                    onClick={() => handleChangeTemplate(template)}
+                                >
+                                    <img className="h-40 w-full object-cover" src={template.thumbnailUrl || template.mainImage || "/facebook/all/03-card/cover-card.jpg"} alt={template.name} />
+                                    <span className="block p-3 text-sm font-bold text-slate-800 dark:text-zinc-100">{template.name}</span>
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

@@ -6,6 +6,7 @@ function unwrap(response) {
 
 export const adminManagementService = {
   users: () => api.get("/v1/admin/users").then(unwrap),
+  createUser: (payload) => api.post("/v1/admin/users", payload).then(unwrap),
   user: (userId) => api.get(`/v1/admin/users/${userId}`).then(unwrap),
   userInvitations: (userId) => api.get(`/v1/admin/users/${userId}/invitations`).then(unwrap),
   activateUser: (userId) => api.patch(`/v1/admin/users/${userId}/activate`, {}).then(unwrap),
@@ -34,8 +35,16 @@ export const adminManagementService = {
 
   payments: () => api.get("/v1/admin/payments").then(unwrap),
   payment: (orderCode) => api.get(`/v1/admin/payments/${encodeURIComponent(orderCode)}`).then(unwrap),
-  confirmPayment: (payload) =>
-    api.post("/v1/admin/payments/confirm", payload).then(unwrap),
+  confirmPayment: (payload) => {
+    const code = payload?.orderCode;
+    if (code) {
+      return api
+        .post(`/v1/admin/payments/${encodeURIComponent(code)}/confirm`, payload)
+        .catch(() => api.post("/v1/admin/payments/confirm", payload))
+        .then(unwrap);
+    }
+    return api.post("/v1/admin/payments/confirm", payload).then(unwrap);
+  },
 
   packages: () => api.get("/v1/admin/packages").then(unwrap),
   createPackage: (payload) => api.post("/v1/admin/packages", payload).then(unwrap),

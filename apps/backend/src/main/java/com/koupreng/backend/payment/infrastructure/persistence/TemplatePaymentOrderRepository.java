@@ -33,6 +33,8 @@ public interface TemplatePaymentOrderRepository extends JpaRepository<TemplatePa
 
     boolean existsByTransactionId(String transactionId);
 
+    boolean existsByPaywayTransactionId(String paywayTransactionId);
+
     List<TemplatePaymentOrder> findByUserIdOrderByCreatedAtDesc(Long userId);
 
     List<TemplatePaymentOrder> findTop5ByUserIdOrderByCreatedAtDesc(Long userId);

@@ -1,9 +1,8 @@
+import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import {
   LayoutDashboard,
   Users,
-  CalendarDays,
-  Mail,
   Palette,
   Layers,
   CreditCard,
@@ -18,8 +17,13 @@ import { useAuth } from "../../app/providers/AdminAuthProvider";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 
 export default function AdminSidebar({ isMobileOpen, isExpanded, onToggle, onNavigate }) {
-  const { user } = useAuth();
+  const { user, refreshSession } = useAuth();
   const { lang, t } = useAdminLanguage();
+
+  useEffect(() => {
+    refreshSession();
+  }, [refreshSession]);
+
   const displayName = user?.fullName || user?.email || "Admin";
 
   const navSections = [
@@ -35,8 +39,6 @@ export default function AdminSidebar({ isMobileOpen, isExpanded, onToggle, onNav
       label: t("nav.management", "ការគ្រប់គ្រងទូទៅ"),
       items: [
         { to: "/users", icon: Users, label: t("nav.users", "អ្នកប្រើប្រាស់") },
-        { to: "/events", icon: CalendarDays, label: t("nav.events", "ព្រឹត្តិការណ៍") },
-        { to: "/invitations", icon: Mail, label: t("nav.invitations", "ធៀបការ & RSVP") },
       ],
     },
     {

@@ -1,4 +1,10 @@
-import { Navigate, Route } from "react-router-dom";
+/* eslint-disable react-refresh/only-export-components */
+import { Navigate, Route, useParams } from "react-router-dom";
+
+function InvitationBareRedirect() {
+  const { id } = useParams();
+  return <Navigate to={`/dashboard/invitations/${id}/edit`} replace />;
+}
 
 import PaidTemplatesPage from "../../features/payments/PaidTemplatesPage";
 import HostShell from "../../layouts/HostShell";
@@ -35,7 +41,8 @@ import InvitationScopedRedirect from "./InvitationScopedRedirect";
 
 export function hostRoutes() {
   return (
-    <Route
+    <>
+      <Route
       element={
         <RequireAuth>
           <HostShell />
@@ -50,6 +57,7 @@ export function hostRoutes() {
       <Route path="/dashboard/invitations/edit" element={<InvitationEditPage />} />
       <Route path="/dashboard/invitations/:id/edit" element={<InvitationEditPage />} />
       <Route path="/dashboard/invitations/:id/preview" element={<InvitationPreviewPage />} />
+      <Route path="/dashboard/invitations/:id" element={<InvitationBareRedirect />} />
       <Route path="/dashboard/invitations/:invitationId/assistant" element={<AiAssistantPage />} />
       <Route path="/dashboard/invitations/:invitationId/guests" element={<GuestsPage />} />
       <Route path="/dashboard/invitations/:invitationId/rsvp" element={<RsvpDashboardPage />} />
@@ -91,7 +99,15 @@ export function hostRoutes() {
       <Route path="/gifts" element={<Navigate to="/dashboard/gifts" replace />} />
       <Route path="/profile" element={<Navigate to="/dashboard/profile" replace />} />
       <Route path="/templates/browse" element={<BrowseTemplatesPage />} />
-      <Route path="/templates/browse/:id" element={<HostTemplateDemoPage />} />
     </Route>
+    <Route
+      path="/templates/browse/:id"
+      element={
+        <RequireAuth>
+          <HostTemplateDemoPage />
+        </RequireAuth>
+      }
+    />
+  </>
   );
 }

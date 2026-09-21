@@ -57,4 +57,45 @@ afterEach(() => {
   mockSessionStorage.clear();
 });
 
+/**
+ * Network guard.
+ *
+ * Unit tests must never reach the real internet — an outbound request makes the
+ * suite slow, non-deterministic and noisy (ECONNRESET / AbortError) in CI. Any
+ * code path that genuinely needs a response should mock `fetch` (or the service
+ * module) itself; that assignment simply replaces this stub for the test.
+ *
+ * happy-dom's own iframe/asset loading is disabled separately via
+ * `environmentOptions.happyDOM.settings` in vitest.config.js.
+ */
+class BlockedNetworkError extends Error {
+  constructor(url) {
+    super(`[test-setup] Blocked real network request to: ${url}`);
+    this.name = "BlockedNetworkError";
+  }
+}
+
+function describeRequest(input) {
+  if (typeof input === "string") return input;
+  if (input instanceof URL) return input.toString();
+  if (input && typeof input.url === "string") return input.url;
+  return String(input);
+}
+
+const blockedFetch = (input) => Promise.reject(new BlockedNetworkError(describeRequest(input)));
+
+Object.defineProperty(globalThis, "fetch", {
+  value: blockedFetch,
+  writable: true,
+  configurable: true,
+});
+
+if (typeof window !== "undefined") {
+  Object.defineProperty(window, "fetch", {
+    value: blockedFetch,
+    writable: true,
+    configurable: true,
+  });
+}
+
 

@@ -4,6 +4,7 @@ import java.time.Instant;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
@@ -13,11 +14,18 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
+import org.hibernate.annotations.SQLDelete;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 /**
  * Application user stored locally in MySQL.
  */
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "users")
+@SQLDelete(sql = "UPDATE users SET deleted = true WHERE user_id = ?")
 public class AppUser {
 
     public static final String STATUS_ACTIVE = "ACTIVE";
@@ -58,6 +66,17 @@ public class AppUser {
 
     @Column(nullable = false, name = "updated_at")
     private Instant updatedAt;
+
+    @Column(nullable = false)
+    private boolean deleted = false;
+
+    @CreatedBy
+    @Column(name = "created_by", length = 100)
+    private String createdBy;
+
+    @LastModifiedBy
+    @Column(name = "last_modified_by", length = 100)
+    private String lastModifiedBy;
 
     @PrePersist
     public void onCreate() {
@@ -170,5 +189,29 @@ public class AppUser {
 
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
     }
 }

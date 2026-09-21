@@ -36,10 +36,10 @@ export default function DigitalYesLayout({
     return normalizeTemplateViewModel(tplProp, { ...contentProp, ...liveData });
   }, [tplProp, contentProp, liveData]);
 
-  // Envelope Opening States
-  const [isFlapOpen, setIsFlapOpen] = useState(false);
-  const [isCardEmerging, setIsCardEmerging] = useState(false);
-  const [isFullView, setIsFullView] = useState(false);
+  // Envelope Opening States - default open in preview
+  const [isFlapOpen, setIsFlapOpen] = useState(preview ? true : false);
+  const [isCardEmerging, setIsCardEmerging] = useState(preview ? true : false);
+  const [isFullView, setIsFullView] = useState(preview ? true : false);
   const [isPlayingMusic, setIsPlayingMusic] = useState(false);
 
   // Audio Ref
@@ -250,7 +250,7 @@ export default function DigitalYesLayout({
         <div
           className="tx-root tx-root--preview"
           style={{
-            position: "fixed",
+            position: preview ? "absolute" : "fixed",
             inset: 0,
             zIndex: 300,
             overflow: "hidden",
@@ -430,6 +430,19 @@ export default function DigitalYesLayout({
                     <span>មើលទីតាំងលើ Google Maps</span>
                     <ExternalLink className="h-3.5 w-3.5" />
                   </a>
+                )}
+
+                {tpl.sketchMapImage && (
+                  <div className="mt-4 pt-3 border-t border-amber-500/20 text-center">
+                    <p className="text-xs text-amber-300 font-medium mb-2">
+                      🗺️ គំនូសប្លង់ទីតាំង / Sketch Map
+                    </p>
+                    <img
+                      src={tpl.sketchMapImage}
+                      alt="Sketch Map"
+                      className="max-h-44 w-auto mx-auto rounded-lg border border-amber-500/30 object-contain shadow-md"
+                    />
+                  </div>
                 )}
               </div>
             )}

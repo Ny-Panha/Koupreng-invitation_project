@@ -103,8 +103,52 @@ export default function Card3DFlip({
               <strong style={{ fontSize: "0.95rem" }}>{tpl.venueName}</strong>
             </div>
             <p style={{ fontSize: "0.8rem", color: "var(--el-text-muted)", margin: 0 }}>
-              {tpl.venueHall} — {tpl.venueAddress}
+              {tpl.venueHall ? `${tpl.venueHall} — ` : ""}{tpl.venueAddress}
             </p>
+            {tpl.googleMapsUrl && (
+              <div style={{ marginTop: "0.75rem" }}>
+                <a
+                  href={tpl.googleMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    background: "linear-gradient(135deg, var(--el-gold-primary), #997320)",
+                    color: "#061510",
+                    padding: "0.4rem 1rem",
+                    borderRadius: "9999px",
+                    textDecoration: "none",
+                    fontWeight: "700",
+                    fontSize: "0.75rem",
+                    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.3)",
+                  }}
+                >
+                  <MapPin className="w-3.5 h-3.5" />
+                  មើលទីតាំងលើ Google Maps
+                </a>
+              </div>
+            )}
+            {tpl.sketchMapImage && (
+              <div style={{ marginTop: "0.75rem", borderTop: "1px solid rgba(212,175,55,0.15)", paddingTop: "0.5rem", textAlign: "center" }}>
+                <p style={{ fontSize: "0.75rem", color: "var(--el-gold-light)", margin: "0 0 6px", fontWeight: "600" }}>
+                  🗺️ គំនូសប្លង់ទីតាំង (Sketch Map)
+                </p>
+                <img
+                  src={tpl.sketchMapImage}
+                  alt="Sketch Map"
+                  style={{
+                    maxWidth: "100%",
+                    maxHeight: "140px",
+                    objectFit: "contain",
+                    borderRadius: "8px",
+                    border: "1px solid rgba(212, 175, 55, 0.25)",
+                    background: "rgba(0,0,0,0.3)",
+                  }}
+                />
+              </div>
+            )}
           </div>
 
           {/* Gift QR */}

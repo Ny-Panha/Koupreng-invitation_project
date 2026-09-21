@@ -42,7 +42,7 @@ import static org.mockito.Mockito.when;
 
 class TemplatePaymentServiceTests {
 
-    private static final String STATIC_PAYMENT_LINK = "https://link.payway.com.kh/ABAPAYrD450560q";
+    private static final String STATIC_PAYMENT_LINK = "https://pay.ababank.com/oRF8/vx2dp884";
 
     @Test
     void telegramDetectionRequiresExplicitAutoConfirmOptIn() {

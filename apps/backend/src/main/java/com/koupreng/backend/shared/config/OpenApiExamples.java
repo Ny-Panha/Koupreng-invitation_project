@@ -192,7 +192,31 @@ final class OpenApiExamples {
                     {"role":"MANAGER"}
                     """);
             case "SubscriptionPurchaseRequest" -> one("developmentPackage", "Purchase the selected package", """
-                    {"packageId":1}
+                    {
+                      "packageId": 1,
+                      "payerName": "KOEURNG VIREAK",
+                      "payerAccountLast3": "247"
+                    }
+                    """);
+            case "TelegramDetectSubscriptionPaymentRequest" -> one(
+                    "trustedTelegramEvidence",
+                    "Reconcile a merchant Telegram notification",
+                    """
+                    {
+                      "rawMessage": "$199.00 paid by KOEURNG VIREAK (*247). Trx. ID: 178002499089682, APV: 383331.",
+                      "detectedBy": "telegram-admin-detect:123456789",
+                      "telegramChatId": "-1001234567890",
+                      "telegramMessageId": "42",
+                      "telegramSenderId": "987654321",
+                      "telegramSenderUsername": "PayWayByABA_bot",
+                      "detectedAmount": 199.00,
+                      "detectedCurrency": "USD",
+                      "payerName": "KOEURNG VIREAK",
+                      "payerAccountLast3": "247",
+                      "paywayTransactionId": "178002499089682",
+                      "paywayApprovalCode": "383331",
+                      "remark": null
+                    }
                     """);
             case "SubscriptionPackageRequest" -> one("starterPackage", "Create or update a safe package definition", """
                     {
@@ -304,6 +328,17 @@ final class OpenApiExamples {
                       "buyerPhone": "012345678"
                     }
                     """.formatted(DevSampleData.USER_EMAIL));
+            case "TemplatePaymentClaimRequest" -> one("paymentReference", "Claim a paid order using provider evidence", """
+                    {"reference":"<verified-provider-reference>"}
+                    """);
+            case "AdminPaymentConfirmRequest" -> one("adminReview", "Confirm the order identified by the request path", """
+                    {
+                      "orderCode": "<pending-order-code>",
+                      "amount": 19.00,
+                      "confirmedBy": "admin-demo",
+                      "itemType": "SUBSCRIPTION"
+                    }
+                    """);
             case "ConfirmTemplatePaymentRequest" -> one("adminReview", "Requires a real pending order and administrator authorization", """
                     {"orderCode":"<pending-order-code>","amount":0.01,"confirmedBy":"admin-demo"}
                     """);
@@ -344,6 +379,14 @@ final class OpenApiExamples {
                     """);
             case "AdminUpdateUserRoleRequest" -> one("administrator", "Grant the administrator role", """
                     {"role":"ADMIN"}
+                    """);
+            case "AdminCreateUserRequest" -> one("newManagedUser", "Create a fictional managed user", """
+                    {
+                      "fullName": "Koupreng Managed User",
+                      "email": "managed.user@example.com",
+                      "password": "ExamplePass123!",
+                      "role": "USER"
+                    }
                     """);
             case "AdminUpdateUserStatusRequest" -> one("activateUser", "Activate a user account", """
                     {"status":"ACTIVE"}

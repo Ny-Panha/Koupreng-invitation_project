@@ -38,7 +38,7 @@ export default function AdminLayout() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const routeKey = ["/dashboard", "/users", "/events", "/invitations", "/templates", "/packages", "/payments", "/notifications", "/system-logs", "/reports"].find((key) => location.pathname.startsWith(key));
+  const routeKey = ["/dashboard", "/users", "/templates", "/packages", "/payments", "/notifications", "/system-logs", "/reports"].find((key) => location.pathname.startsWith(key));
   const title = routeKey ? t(`pageTitles.${routeKey}`) : t("pageTitles.fallback", "ផ្ទាំងរដ្ឋបាលគូព្រេង");
 
   const isExpanded = isMobileOpen || isPinned;

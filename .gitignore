@@ -72,3 +72,4 @@ buildding.md
 scripts/dev/telegram-ai-bot.mjs
 scripts/dev/telegram-ai*
 scripts/dev/.bot-state.json
+CLAUDE.md

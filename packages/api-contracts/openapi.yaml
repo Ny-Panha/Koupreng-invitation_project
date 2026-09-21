@@ -40,6 +40,8 @@ tags:
   description: Public application liveness endpoint.
 - name: Payment History
   description: Current-user payment orders and receipts with ownership enforcement.
+- name: Audit Logs
+  description: Activity tracking for admin changes and deletions.
 - name: Check-In
   description: Invitation-owner guest check-in by QR token or manual selection.
 - name: Reports
@@ -1375,6 +1377,70 @@ paths:
                 $ref: "#/components/schemas/ApiResponseCreateTemplatePaymentResponse"
       security:
       - bearerAuth: []
+  /api/v1/template-payments/{orderCode}/claim:
+    post:
+      tags:
+      - Payments
+      summary: User confirms payment to unlock template immediately
+      operationId: claimPayment
+      parameters:
+      - name: orderCode
+        in: path
+        required: true
+        schema:
+          type: string
+        example: <pending-order-code>
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TemplatePaymentClaimRequest"
+            examples:
+              paymentReference:
+                summary: Claim a paid order using provider evidence
+                value:
+                  reference: <verified-provider-reference>
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponsePaymentConfirmResponse"
+      security:
+      - bearerAuth: []
+  /api/v1/template-payments/orders/{orderCode}/claim:
+    post:
+      tags:
+      - Payments
+      summary: User confirms payment to unlock template immediately
+      operationId: claimPayment_1
+      parameters:
+      - name: orderCode
+        in: path
+        required: true
+        schema:
+          type: string
+        example: <pending-order-code>
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TemplatePaymentClaimRequest"
+            examples:
+              paymentReference:
+                summary: Claim a paid order using provider evidence
+                value:
+                  reference: <verified-provider-reference>
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponsePaymentConfirmResponse"
+      security:
+      - bearerAuth: []
   /api/v1/template-payments/create:
     post:
       tags:
@@ -1667,7 +1733,7 @@ paths:
     post:
       tags:
       - Subscriptions
-      summary: Purchase
+      summary: Create a pending fixed-link subscription checkout
       operationId: purchase
       parameters: []
       requestBody:
@@ -1680,9 +1746,12 @@ paths:
                 summary: Purchase the selected package
                 value:
                   packageId: 1
+                  payerName: KOEURNG VIREAK
+                  payerAccountLast3: "247"
+        required: true
       responses:
-        "200":
-          description: OK
+        "201":
+          description: Created
           content:
             '*/*':
               schema:
@@ -1693,7 +1762,7 @@ paths:
     post:
       tags:
       - Subscriptions
-      summary: Purchase
+      summary: Create a pending fixed-link subscription checkout
       operationId: purchase_1
       parameters:
       - name: packageId
@@ -1713,9 +1782,12 @@ paths:
                 summary: Purchase the selected package
                 value:
                   packageId: 1
+                  payerName: KOEURNG VIREAK
+                  payerAccountLast3: "247"
+        required: true
       responses:
-        "200":
-          description: OK
+        "201":
+          description: Created
           content:
             '*/*':
               schema:
@@ -2689,6 +2761,45 @@ paths:
                 $ref: "#/components/schemas/ApiResponseBudgetItemResponse"
       security:
       - bearerAuth: []
+  /api/v1/internal/subscription-payments/telegram-detect:
+    post:
+      tags:
+      - Subscriptions
+      summary: Reconcile trusted Telegram evidence for a subscription payment
+      operationId: detectInternalTelegramPayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TelegramDetectSubscriptionPaymentRequest"
+            examples:
+              trustedTelegramEvidence:
+                summary: Reconcile a merchant Telegram notification
+                value:
+                  rawMessage: "$199.00 paid by KOEURNG VIREAK (*247). Trx. ID: 178002499089682,\
+                    \ APV: 383331."
+                  detectedBy: telegram-admin-detect:123456789
+                  telegramChatId: "-1001234567890"
+                  telegramMessageId: "42"
+                  telegramSenderId: "987654321"
+                  telegramSenderUsername: PayWayByABA_bot
+                  detectedAmount: 199.0
+                  detectedCurrency: USD
+                  payerName: KOEURNG VIREAK
+                  payerAccountLast3: "247"
+                  paywayTransactionId: "178002499089682"
+                  paywayApprovalCode: "383331"
+                  remark: null
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseSubscriptionPaymentDetectionResponse"
+      security:
+      - adminPaymentSecret: []
   /api/v1/events:
     get:
       tags:
@@ -3377,6 +3488,49 @@ paths:
                 $ref: "#/components/schemas/ApiResponseAiInvitationDraftResponse"
       security:
       - bearerAuth: []
+  /api/v1/admin/users:
+    get:
+      tags:
+      - Administration
+      summary: List Users
+      operationId: listUsers
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseListAdminUserResponse"
+      security:
+      - bearerAuth: []
+    post:
+      tags:
+      - Administration
+      summary: Create User
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminCreateUserRequest"
+            examples:
+              newManagedUser:
+                summary: Create a fictional managed user
+                value:
+                  fullName: Koupreng Managed User
+                  email: managed.user@example.com
+                  password: ExamplePass123!
+                  role: USER
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseAdminUserResponse"
+      security:
+      - bearerAuth: []
   /api/v1/admin/templates:
     get:
       tags:
@@ -3484,6 +3638,41 @@ paths:
                   amount: 0.01
                   confirmedBy: admin-demo
         required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponsePaymentConfirmResponse"
+      security:
+      - bearerAuth: []
+  /api/v1/admin/payments/{orderCode}/confirm:
+    post:
+      tags:
+      - Administration
+      summary: Confirm Payment
+      operationId: confirmPayment
+      parameters:
+      - name: orderCode
+        in: path
+        required: true
+        schema:
+          type: string
+        example: <pending-order-code>
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminPaymentConfirmRequest"
+            examples:
+              adminReview:
+                summary: Confirm the order identified by the request path
+                value:
+                  orderCode: <pending-order-code>
+                  amount: 19.0
+                  confirmedBy: admin-demo
+                  itemType: SUBSCRIPTION
       responses:
         "200":
           description: OK
@@ -4766,6 +4955,28 @@ paths:
                 $ref: "#/components/schemas/ApiResponseListSubscriptionResponse"
       security:
       - bearerAuth: []
+  /api/v1/me/subscriptions/orders/{orderCode}:
+    get:
+      tags:
+      - Subscriptions
+      summary: Poll a pending subscription payment order
+      operationId: order
+      parameters:
+      - name: orderCode
+        in: path
+        required: true
+        schema:
+          type: string
+        example: <pending-order-code>
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseSubscriptionResponse"
+      security:
+      - bearerAuth: []
   /api/v1/me/subscription:
     get:
       tags:
@@ -5645,19 +5856,19 @@ paths:
                 $ref: "#/components/schemas/ApiResponseUserDashboardSummaryResponse"
       security:
       - bearerAuth: []
-  /api/v1/admin/users:
+  /api/v1/audit-logs:
     get:
       tags:
-      - Administration
-      summary: List Users
-      operationId: listUsers
+      - Audit Logs
+      summary: List recent admin activity logs
+      operationId: listLogs
       responses:
         "200":
           description: OK
           content:
             '*/*':
               schema:
-                $ref: "#/components/schemas/ApiResponseListAdminUserResponse"
+                $ref: "#/components/schemas/ApiResponseListAuditLogResponse"
       security:
       - bearerAuth: []
   /api/v1/admin/users/{userId}:
@@ -6713,6 +6924,10 @@ components:
         templateId:
           type: integer
           format: int64
+        templateCode:
+          type: string
+        templateThumbnailUrl:
+          type: string
         templateName:
           type: string
         organizationId:
@@ -7013,6 +7228,7 @@ components:
           type: string
           enum:
           - USER
+          - STAFF
           - ADMIN
         status:
           type: string
@@ -7351,6 +7567,44 @@ components:
           format: date-time
         message:
           type: string
+    TemplatePaymentClaimRequest:
+      type: object
+      properties:
+        reference:
+          type: string
+          maxLength: 255
+          minLength: 0
+    ApiResponsePaymentConfirmResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/PaymentConfirmResponse"
+        timestamp:
+          type: string
+          format: date-time
+    PaymentConfirmResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        orderCode:
+          type: string
+        status:
+          type: string
+          enum:
+          - PENDING
+          - PAID_PENDING_REVIEW
+          - QR_CREATED
+          - CHECKOUT_CREATED
+          - PAID
+          - FAILED
+          - CANCELLED
+          - EXPIRED
+          - REJECTED
     RsvpRequest:
       type: object
       properties:
@@ -7621,8 +7875,18 @@ components:
         packageId:
           type: integer
           format: int64
+        payerName:
+          type: string
+          maxLength: 120
+          minLength: 0
+        payerAccountLast3:
+          type: string
+          minLength: 1
+          pattern: "^[0-9]{3}$"
       required:
       - packageId
+      - payerAccountLast3
+      - payerName
     ApiResponseSubscriptionResponse:
       type: object
       properties:
@@ -7665,8 +7929,20 @@ components:
           type: boolean
         paymentLink:
           type: string
+        paymentUrl:
+          type: string
         paymentNote:
           type: string
+        payerName:
+          type: string
+        payerAccountLast3:
+          type: string
+        expiresAt:
+          type: string
+          format: date-time
+        paymentDetectedAt:
+          type: string
+          format: date-time
         message:
           type: string
         createdAt:
@@ -7986,6 +8262,98 @@ components:
           type: string
       required:
       - itemName
+    TelegramDetectSubscriptionPaymentRequest:
+      type: object
+      properties:
+        rawMessage:
+          type: string
+          maxLength: 5000
+          minLength: 0
+        detectedBy:
+          type: string
+          maxLength: 120
+          minLength: 0
+        telegramChatId:
+          type: string
+        telegramMessageId:
+          type: string
+        telegramSenderId:
+          type: string
+        telegramSenderUsername:
+          type: string
+        detectedAmount:
+          type: number
+          exclusiveMinimum: 0
+        detectedCurrency:
+          type: string
+          minLength: 1
+        payerName:
+          type: string
+          maxLength: 120
+          minLength: 0
+        payerAccountLast3:
+          type: string
+          minLength: 1
+          pattern: "^[0-9]{3}$"
+        paywayTransactionId:
+          type: string
+          maxLength: 100
+          minLength: 0
+        paywayApprovalCode:
+          type: string
+          maxLength: 100
+          minLength: 0
+        remark:
+          type: string
+          maxLength: 120
+          minLength: 0
+      required:
+      - detectedAmount
+      - detectedBy
+      - detectedCurrency
+      - payerAccountLast3
+      - paywayTransactionId
+      - rawMessage
+    ApiResponseSubscriptionPaymentDetectionResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/SubscriptionPaymentDetectionResponse"
+        timestamp:
+          type: string
+          format: date-time
+    SubscriptionPaymentDetectionResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - PAID
+          - ALREADY_PROCESSED
+          - UNMATCHED
+          - REVIEW_REQUIRED
+        message:
+          type: string
+        orderCode:
+          type: string
+        packageCode:
+          type: string
+        amount:
+          type: number
+        currency:
+          type: string
+        payerAccountLast3:
+          type: string
+        paywayTransactionId:
+          type: string
+        paywayApprovalCode:
+          type: string
+        active:
+          type: boolean
     TelegramLoginRequest:
       type: object
       properties:
@@ -8184,6 +8552,73 @@ components:
         timestamp:
           type: string
           format: date-time
+    AdminCreateUserRequest:
+      type: object
+      properties:
+        fullName:
+          type: string
+          maxLength: 120
+          minLength: 0
+        email:
+          type: string
+          format: email
+          maxLength: 255
+          minLength: 0
+        password:
+          type: string
+          maxLength: 100
+          minLength: 8
+        role:
+          type: string
+          enum:
+          - USER
+          - STAFF
+          - ADMIN
+      required:
+      - email
+      - fullName
+      - password
+      - role
+    AdminUserResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        fullName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        role:
+          type: string
+          enum:
+          - USER
+          - STAFF
+          - ADMIN
+        status:
+          type: string
+        active:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    ApiResponseAdminUserResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/AdminUserResponse"
+        timestamp:
+          type: string
+          format: date-time
     TelegramDetectPaymentRequest:
       type: object
       properties:
@@ -8214,37 +8649,6 @@ components:
       required:
       - detectedBy
       - rawMessage
-    ApiResponsePaymentConfirmResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
-        data:
-          $ref: "#/components/schemas/PaymentConfirmResponse"
-        timestamp:
-          type: string
-          format: date-time
-    PaymentConfirmResponse:
-      type: object
-      properties:
-        message:
-          type: string
-        orderCode:
-          type: string
-        status:
-          type: string
-          enum:
-          - PENDING
-          - PAID_PENDING_REVIEW
-          - QR_CREATED
-          - CHECKOUT_CREATED
-          - PAID
-          - FAILED
-          - CANCELLED
-          - EXPIRED
-          - REJECTED
     ConfirmTemplatePaymentRequest:
       type: object
       properties:
@@ -8261,6 +8665,24 @@ components:
       - amount
       - confirmedBy
       - orderCode
+    AdminPaymentConfirmRequest:
+      type: object
+      properties:
+        orderCode:
+          type: string
+          maxLength: 50
+          minLength: 0
+        amount:
+          type: number
+          minimum: 0.01
+        confirmedBy:
+          type: string
+          maxLength: 120
+          minLength: 0
+        itemType:
+          type: string
+          maxLength: 30
+          minLength: 0
     ConfirmPaymentRequest:
       type: object
       properties:
@@ -8483,48 +8905,10 @@ components:
           type: string
           enum:
           - USER
+          - STAFF
           - ADMIN
       required:
       - role
-    AdminUserResponse:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        fullName:
-          type: string
-        email:
-          type: string
-        phone:
-          type: string
-        role:
-          type: string
-          enum:
-          - USER
-          - ADMIN
-        status:
-          type: string
-        active:
-          type: boolean
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-    ApiResponseAdminUserResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
-        data:
-          $ref: "#/components/schemas/AdminUserResponse"
-        timestamp:
-          type: string
-          format: date-time
     AdminTemplatePremiumRequest:
       type: object
       properties:
@@ -8643,6 +9027,8 @@ components:
           type: string
         transactionId:
           type: string
+        customerName:
+          type: string
         templateId:
           type: integer
           format: int64
@@ -8680,6 +9066,9 @@ components:
           type: string
         provider:
           type: string
+        createdAt:
+          type: string
+          format: date-time
         paidAt:
           type: string
           format: date-time
@@ -8726,6 +9115,10 @@ components:
         templateId:
           type: integer
           format: int64
+        templateCode:
+          type: string
+        templateThumbnailUrl:
+          type: string
         templateName:
           type: string
         title:
@@ -9904,6 +10297,49 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/NotificationResponse"
+    ApiResponseListAuditLogResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/AuditLogResponse"
+        timestamp:
+          type: string
+          format: date-time
+    AuditLogResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        adminId:
+          type: integer
+          format: int64
+        adminName:
+          type: string
+        adminEmail:
+          type: string
+        action:
+          type: string
+        targetEntity:
+          type: string
+        targetId:
+          type: integer
+          format: int64
+        oldValues:
+          type: string
+        newValues:
+          type: string
+        ipAddress:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
     ApiResponseListAdminUserResponse:
       type: object
       properties:
@@ -10114,3 +10550,8 @@ components:
         adds the Bearer prefix automatically; do not type it twice.
       scheme: bearer
       bearerFormat: JWT
+    adminPaymentSecret:
+      type: apiKey
+      description: Internal Telegram payment reconciliation secret.
+      name: X-ADMIN-PAYMENT-SECRET
+      in: header

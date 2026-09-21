@@ -4,7 +4,8 @@ import { useLocation, useParams, useSearchParams } from "react-router-dom";
 import InvitationDisplay from "../invitations/InvitationDisplay";
 import PublicRsvpForm from "../invitations/PublicRsvpForm";
 import "../invitations/InvitationPages.css";
-import { getTemplateById, TemplateExperience } from "@/features/templates";
+import { getTemplateById, TemplateExperience, registerDynamicTemplates } from "@/features/templates";
+import { templateCatalogService } from "@/features/templates/api/templateCatalogApi";
 import WeddingSite from "../wedding-site/WeddingSite";
 import { draftToTemplate } from "../wedding-builder/utils/draftToTemplate";
 import { publicInvitationToDraft } from "../wedding-builder/utils/invitationDraftAdapter";
@@ -86,6 +87,10 @@ export default function PublicInvitationPage() {
         Promise.all([
             invitationService.publicBySlug(slug, publicParams),
             mediaService.publicBySlug(slug, publicParams).catch(() => null),
+            // Also load dynamic catalog so admin-created templates can be resolved
+            templateCatalogService.list().then((items) => {
+                if (items?.length) registerDynamicTemplates(items);
+            }).catch(() => {}),
         ])
             .then(([invitationData, mediaData]) => {
                 if (active) {

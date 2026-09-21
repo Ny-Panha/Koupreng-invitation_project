@@ -3,6 +3,7 @@ import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
 import { useEvents } from "./hooks/useEvents";
 import { EventCard } from "./components/EventCard";
 import { EventDeleteModal } from "./components/EventDeleteModal";
+import { CalendarHeart } from "lucide-react";
 import "./EventsFeature.css";
 
 export function EventsFeature() {
@@ -18,9 +19,20 @@ export function EventsFeature() {
         confirmDelete,
     } = useEvents(t);
 
-    const handleManage = (draft) => {
+    const handleDashboard = (draft) => {
+        navigate(`/dashboard?id=${draft.id}`);
+    };
+
+    const handleEdit = (draft) => {
         navigate(`/dashboard/invitations/${draft.id}/edit`);
     };
+
+    const handlePreview = (draft) => {
+        navigate(`/dashboard/invitations/${draft.id}/preview`);
+    };
+
+    const createBtnText = (t("createBtn") || "បង្កើតកម្មវិធី").replace(/^\+*\s*/, "");
+    const emptyActionText = (t("goToCreate") || t("createBtn") || "បង្កើតកម្មវិធីថ្មី").replace(/^\+*\s*/, "");
 
     return (
         <main className="events-page">
@@ -31,17 +43,19 @@ export function EventsFeature() {
                     <p>{t("subtitle")}</p>
                 </div>
                 <Link to="/create/wedding" className="events-create-btn">
-                    {t("createBtn")}
+                    + {createBtnText}
                 </Link>
             </header>
 
             {drafts.length === 0 ? (
                 <div className="events-empty-state">
-                    <div className="events-empty-icon">📅</div>
+                    <div className="events-empty-icon">
+                        <CalendarHeart size={32} strokeWidth={1.75} aria-hidden="true" />
+                    </div>
                     <div className="events-empty-title">{t("emptyTitle")}</div>
                     <div className="events-empty-desc">{t("emptySubtitle")}</div>
                     <Link to="/create/wedding" className="events-empty-action">
-                        {t("goToCreate") || t("createBtn")}
+                        + {emptyActionText}
                     </Link>
                 </div>
             ) : (
@@ -50,7 +64,9 @@ export function EventsFeature() {
                         <EventCard
                             key={draft.id}
                             draft={draft}
-                            onManage={handleManage}
+                            onManage={handleDashboard}
+                            onEdit={handleEdit}
+                            onPreview={handlePreview}
                             onDelete={handleDeleteClick}
                             t={t}
                         />

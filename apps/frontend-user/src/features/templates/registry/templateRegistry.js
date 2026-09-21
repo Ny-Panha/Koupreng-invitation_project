@@ -23,6 +23,9 @@ export const templateRegistry = {
 
   // 3. Emerald Luxe (Luxury Modern Evening Wedding - Velvet Curtain + 3D Card Flip)
   "emerald-canva-luxe-wedding": EmeraldLuxeLayout,
+  "emerald_royal_luxe": EmeraldLuxeLayout,
+  "emerald-royal-luxe": EmeraldLuxeLayout,
+  "emerald royal luxe": EmeraldLuxeLayout,
   "emerald-luxe-wedding": EmeraldLuxeLayout,
   "2": EmeraldLuxeLayout,
   "emerald-luxe": EmeraldLuxeLayout,
@@ -38,6 +41,16 @@ export const templateRegistry = {
   // 6. Canva Golden Khmer Luxury (Traditional Kbach Frames + Golden Card)
   "khmer-golden-canva-inspired-wedding": CanvaKhmerWeddingTemplate,
   "5": CanvaKhmerWeddingTemplate,
+
+  // ── Admin Studio presetId-based mappings ──
+  // These match the THEME_PRESETS.id values used in AdminTemplateEditPage.jsx
+  "EMERALD_GREEN": EmeraldLuxeLayout,
+  "RUBY_RED": RoyalKhmerLayout,
+  "ROYAL_KHMER": RoyalKhmerLayout,
+  "GOLD_LUXURY": DigitalYesLayout,
+  "CHAMPAGNE": CanvaKhmerWeddingTemplate,
+  "KHMER_GOLDEN": CanvaKhmerWeddingTemplate,
+  // GARDEN_ROYAL intentionally omitted — renders through default TemplateExperience engine
 };
 
 // Alias for backward compatibility
@@ -52,14 +65,25 @@ export { DefaultTemplateLayout };
  * Returns null if no custom layout is mapped, allowing fallback to default layout engine.
  */
 export function getDedicatedTemplateComponent(tpl, variant, useFallback = false) {
+  if (tpl?.code === "garden-royal-khmer-wedding" || tpl?.slug === "garden-royal-khmer-wedding" || variant === "garden-royal-khmer-wedding") {
+    return useFallback ? DefaultTemplateLayout : null;
+  }
+
+  // Ordered most-specific first. Exact slug/code and the Admin presetId win over
+  // `variant` and the raw numeric DB id, because dynamic templates reuse the
+  // backend's auto-increment id — which collides with the static "1"–"7" keys.
   const keysToCheck = [
-    variant,
     tpl?.slug,
     tpl?.code,
     tpl?.templateCode,
+    // Admin-created templates carry a presetId (e.g. EMERALD_GREEN, RUBY_RED)
+    tpl?.presetId,
+    tpl?.design?.presetId,
+    tpl?.design?.theme,
+    variant,
+    tpl?.variant,
     tpl?.templateId,
     tpl?.id ? String(tpl.id) : null,
-    tpl?.variant,
   ].filter(Boolean);
 
   for (const key of keysToCheck) {

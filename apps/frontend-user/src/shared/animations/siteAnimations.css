@@ -9,9 +9,7 @@
     radial-gradient(circle at var(--kp-grid-x) var(--kp-grid-y), rgba(176, 146, 106, 0.16), transparent 180px),
     radial-gradient(circle, rgba(125, 100, 67, 0.16) 1px, transparent 1.6px);
   background-size: 100% 100%, 28px 28px;
-  opacity: 0.42;
-  transform: translateZ(0);
-  animation: kpGridDrift 18s ease-in-out infinite alternate;
+  opacity: 0.35;
 }
 
 .kp-route-pulse {

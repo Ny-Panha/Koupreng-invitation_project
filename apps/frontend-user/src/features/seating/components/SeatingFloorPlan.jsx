@@ -275,6 +275,7 @@ export function SeatingFloorPlan({
     const [newTableLabel, setNewTableLabel] = useState("");
     const [newCapacity, setNewCapacity] = useState(10);
     const [collidingTableId, setCollidingTableId] = useState(null);
+    const [canvasTheme, setCanvasTheme] = useState("light"); // "light" (Architectural) | "dark" (Night Ballroom)
 
     // Dynamic Table Scale: 1.0 (<=30 tables), 0.82 (31-50), 0.68 (51-75), 0.54 (76-100+)
     const tableScale = useMemo(() => {
@@ -589,20 +590,26 @@ export function SeatingFloorPlan({
                             <span>{tables.length} តុ {tables.length >= 60 ? "🔥 (សាលធំ)" : ""}</span>
                         </div>
 
+                        {/* Canvas Theme Toggle */}
+                        <button
+                            type="button"
+                            className="sfp-btn sfp-btn--outline sfp-btn--theme"
+                            onClick={() => setCanvasTheme((t) => (t === "light" ? "dark" : "light"))}
+                            title="ប្តូរពណ៌ផ្ទៃប្លង់ (Light / Dark Canvas)"
+                        >
+                            <span>{canvasTheme === "light" ? "🌙 ផ្ទាំងរាត្រី" : "☀️ ផ្ទាំងស្ថាបត្យកម្ម"}</span>
+                        </button>
+
                         {onCreateTable && (
                             <button
                                 type="button"
-                                className="sfp-btn sfp-btn--primary"
-                                style={{
-                                    background: "linear-gradient(135deg, #059669, #047857)",
-                                    boxShadow: "0 4px 12px rgba(5, 150, 105, 0.25)",
-                                }}
+                                className="sfp-btn sfp-btn--add"
                                 onClick={() => {
                                     setNewTableName(`តុ ${tables.length + 1}`);
                                     setShowAddModal(true);
                                 }}
                             >
-                                <IoAddCircleOutline style={{ fontSize: "1.1rem" }} />
+                                <IoAddCircleOutline style={{ fontSize: "1.15rem" }} />
                                 <span>+ បន្ថែមតុលើប្លង់ (Add Table)</span>
                             </button>
                         )}
@@ -620,7 +627,7 @@ export function SeatingFloorPlan({
 
                         <button
                             type="button"
-                            className="sfp-btn sfp-btn--primary"
+                            className={`sfp-btn ${isDirty ? "sfp-btn--save-dirty" : "sfp-btn--primary"}`}
                             onClick={handleSave}
                             disabled={saving || !isDirty}
                         >
@@ -687,7 +694,7 @@ export function SeatingFloorPlan({
 
             {/* Interactive Ballroom Canvas */}
             <div
-                className="sfp-canvas-wrapper"
+                className={`sfp-canvas-wrapper sfp-canvas--${canvasTheme}`}
                 ref={canvasRef}
                 onClick={(e) => {
                     if (e.target === canvasRef.current) {
@@ -759,26 +766,22 @@ export function SeatingFloorPlan({
                 {/* Empty State when 0 tables */}
                 {!readOnly && tables.length === 0 && (
                     <div className="sfp-canvas-empty">
-                        <IoRestaurantOutline style={{ fontSize: "2.8rem", color: "#ffd700", marginBottom: "8px" }} />
+                        <div className="sfp-canvas-empty__icon-wrap">
+                            <IoRestaurantOutline />
+                        </div>
                         <h3>ផ្ទាំងប្លង់សាលការទទេស្អាត (Empty Canvas)</h3>
                         <p>
-                            សូមចុចប៊ូតុងខាងក្រោមដើម្បីបង្កើតតុដំបូង ហើយអូសដាក់ទីតាំងលើកម្រាលសាលការជាក់ស្ដែងដូច Canva!
+                            សូមចុចប៊ូតុងខាងក្រោមដើម្បីបង្កើតតុដំបូង ហើយអូសដាក់ទីតាំងលើកម្រាលរៀបចំអាពាហ៍ពិពាហ៍ដូច Canva!
                         </p>
                         <button
                             type="button"
-                            className="sfp-btn sfp-btn--primary"
-                            style={{
-                                background: "linear-gradient(135deg, #ffd700, #d4a359)",
-                                color: "#1a1505",
-                                fontWeight: 800,
-                                padding: "10px 20px",
-                            }}
+                            className="sfp-btn sfp-btn--add sfp-btn--lg"
                             onClick={() => {
                                 setNewTableName("តុ ១");
                                 setShowAddModal(true);
                             }}
                         >
-                            <IoAddCircleOutline style={{ fontSize: "1.2rem" }} />
+                            <IoAddCircleOutline style={{ fontSize: "1.25rem" }} />
                             <span>+ បន្ថែមតុដំបូងឥឡូវនេះ</span>
                         </button>
                     </div>

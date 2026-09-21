@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ScrollReveal } from "../../shared/ui/ScrollReveal";
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 // Import Background ដូច Homepage
 import heroBg from "../../assets/icons/background.png";
@@ -54,6 +54,28 @@ const VenuesPage = () => {
   const { text: t } = useBackendMessages("venues");
   const venues = getVenues(t);
   const [searchTerm, setSearchTerm] = useState("");
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [selectedVenue, setSelectedVenue] = useState(null);
+
+  useEffect(() => {
+    if (id) {
+      const found = venues.find((v) => String(v.id) === String(id));
+      if (found) {
+        setSelectedVenue(found);
+      }
+    }
+  }, [id, venues]);
+
+  const handleOpenVenue = (venue) => {
+    setSelectedVenue(venue);
+    navigate(`/venues/${venue.id}`, { replace: true });
+  };
+
+  const handleCloseVenue = () => {
+    setSelectedVenue(null);
+    navigate("/venues", { replace: true });
+  };
 
   const filteredVenues = venues.filter(
     (v) =>
@@ -142,18 +164,94 @@ const VenuesPage = () => {
                         </span>
                       </p>
                     </div>
-                    <Link
-                      to={`/venues/${venue.id}`}
+                    <button
+                      type="button"
+                      onClick={() => handleOpenVenue(venue)}
                       className="view-detail-btn"
+                      style={{ width: "100%", cursor: "pointer" }}
                     >
                       {t("viewDetail") || "មើលព័ត៌មានលម្អិត"}
-                    </Link>
+                    </button>
                   </div>
                 </motion.div>
               </ScrollReveal>
             ))}
           </div>
         </div>
+
+        {/* Venue Detail Modal */}
+        <AnimatePresence>
+          {selectedVenue && (
+            <div className="venue-modal-backdrop" onClick={handleCloseVenue}>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.94, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.94, y: 20 }}
+                transition={{ duration: 0.22 }}
+                className="venue-modal-card"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  type="button"
+                  className="venue-modal-close"
+                  onClick={handleCloseVenue}
+                  aria-label="Close"
+                >
+                  ✕
+                </button>
+                <div className="venue-modal-image-wrapper">
+                  <img
+                    src={selectedVenue.image}
+                    alt={selectedVenue.name}
+                    className="venue-modal-img"
+                  />
+                  <div className="venue-modal-tags">
+                    {selectedVenue.tags.map((tag) => (
+                      <span key={tag} className="tag">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div className="venue-modal-body">
+                  <span className="venue-modal-kicker">VENUE DETAIL • ព័ត៌មានលម្អិត</span>
+                  <h2 className="venue-modal-title">{selectedVenue.name}</h2>
+                  <div className="venue-modal-meta-grid">
+                    <div className="venue-modal-meta-item">
+                      <span className="meta-icon">📍</span>
+                      <div>
+                        <small>ទីតាំង / Location</small>
+                        <strong>{selectedVenue.location}</strong>
+                      </div>
+                    </div>
+                    <div className="venue-modal-meta-item">
+                      <span className="meta-icon">👥</span>
+                      <div>
+                        <small>ចំណុះ / Capacity</small>
+                        <strong>{selectedVenue.capacity}</strong>
+                      </div>
+                    </div>
+                    <div className="venue-modal-meta-item">
+                      <span className="meta-icon">💰</span>
+                      <div>
+                        <small>តម្លៃ / Price Range</small>
+                        <strong className="gold-text-bold">{selectedVenue.priceRange}</strong>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="venue-modal-actions">
+                    <Link to="/contact" className="venue-modal-contact-btn" onClick={handleCloseVenue}>
+                      ទំនាក់ទំនងសាកសួរ / Inquire Venue
+                    </Link>
+                    <button type="button" className="venue-modal-secondary-btn" onClick={handleCloseVenue}>
+                      បិទ / Close
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
       </main>
 
       <style>{`
@@ -339,6 +437,151 @@ const VenuesPage = () => {
           .venues-grid { grid-template-columns: 1fr; }
           .venues-content { padding-top: 120px; }
           .main-title { font-size: 24px; }
+        }
+
+        /* Venue Modal Styles */
+        .venue-modal-backdrop {
+          position: fixed;
+          inset: 0;
+          z-index: 4000;
+          background: rgba(15, 12, 9, 0.7);
+          backdrop-filter: blur(8px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 20px;
+        }
+        .venue-modal-card {
+          position: relative;
+          background: #fff;
+          border-radius: 28px;
+          max-width: 580px;
+          width: 100%;
+          max-height: 90vh;
+          overflow-y: auto;
+          box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+          border: 1px solid rgba(176, 146, 106, 0.3);
+        }
+        .venue-modal-close {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          z-index: 10;
+          width: 38px;
+          height: 38px;
+          border-radius: 50%;
+          background: rgba(0, 0, 0, 0.55);
+          color: #fff;
+          border: none;
+          font-size: 16px;
+          font-weight: 700;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: 0.2s;
+        }
+        .venue-modal-close:hover {
+          background: rgba(0, 0, 0, 0.85);
+          transform: scale(1.08);
+        }
+        .venue-modal-image-wrapper {
+          position: relative;
+          height: 260px;
+          width: 100%;
+          overflow: hidden;
+          border-radius: 28px 28px 0 0;
+        }
+        .venue-modal-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        .venue-modal-tags {
+          position: absolute;
+          bottom: 14px;
+          left: 18px;
+          display: flex;
+          gap: 8px;
+        }
+        .venue-modal-body {
+          padding: 28px;
+        }
+        .venue-modal-kicker {
+          font-size: 11px;
+          font-weight: 800;
+          color: #B0926A;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+        .venue-modal-title {
+          font-family: 'Moul', serif;
+          font-size: 20px;
+          color: #1a1a1a;
+          margin: 8px 0 20px;
+          line-height: 1.5;
+        }
+        .venue-modal-meta-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 12px;
+          background: #faf7f2;
+          padding: 16px;
+          border-radius: 18px;
+          margin-bottom: 24px;
+          border: 1px solid rgba(176, 146, 106, 0.15);
+        }
+        .venue-modal-meta-item {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+        .venue-modal-meta-item .meta-icon {
+          font-size: 22px;
+        }
+        .venue-modal-meta-item small {
+          display: block;
+          font-size: 11px;
+          color: #888;
+        }
+        .venue-modal-meta-item strong {
+          font-size: 14px;
+          color: #222;
+        }
+        .venue-modal-actions {
+          display: flex;
+          gap: 12px;
+        }
+        .venue-modal-contact-btn {
+          flex: 1;
+          text-align: center;
+          padding: 14px 20px;
+          background: linear-gradient(135deg, #B0926A 0%, #7D6443 100%);
+          color: #fff;
+          text-decoration: none;
+          border-radius: 16px;
+          font-weight: 700;
+          font-size: 14px;
+          box-shadow: 0 4px 15px rgba(176, 146, 106, 0.3);
+          transition: 0.2s;
+        }
+        .venue-modal-contact-btn:hover {
+          opacity: 0.92;
+          transform: translateY(-1px);
+        }
+        .venue-modal-secondary-btn {
+          padding: 14px 20px;
+          background: #f1ede6;
+          color: #555;
+          border: none;
+          border-radius: 16px;
+          font-weight: 700;
+          font-size: 14px;
+          cursor: pointer;
+          transition: 0.2s;
+        }
+        .venue-modal-secondary-btn:hover {
+          background: #e5dfd5;
         }
       `}</style>
     </div>

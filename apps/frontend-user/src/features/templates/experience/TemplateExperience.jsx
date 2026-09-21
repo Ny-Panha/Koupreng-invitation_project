@@ -2,7 +2,7 @@ import { createElement, useCallback, useEffect, useMemo, useRef, useState } from
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
-import { Breadcrumb } from "@/shared/ui/Breadcrumb";
+import { IoArrowBackOutline, IoSparkles } from "react-icons/io5";
 import { buildTemplateContent } from "./config/templateExperienceContent";
 import {
     getVariantTheme,
@@ -52,9 +52,6 @@ import "./components/canva-khmer/canva-khmer-wedding.css";
  *  - useTemplateLink  route for the "use this template" CTA
  *  - variant          optional explicit variant override
  *  - content          optional pre-built content override
- *  - breadcrumbItems  optional breadcrumb override (defaults to the public
- *                     marketing trail). Pass dashboard-context items when the
- *                     experience is rendered inside the host shell.
  *  - backLink         optional "back to all templates" destination
  *  - backLabel        optional label for the back button
  *  - preview          when true, renders an embeddable preview: the marketing
@@ -68,9 +65,8 @@ export default function TemplateExperience({
     useTemplateLink,
     variant,
     content: contentProp,
-    breadcrumbItems,
-    backLink = "/templates",
-    backLabel = "ត្រឡប់ទៅគំរូទាំងអស់",
+    backLink = "/templates/browse",
+    backLabel = "ត្រឡប់ក្រោយ",
     primaryCtaLabel = "ប្រើគំរូនេះ",
     preview = false,
     showBreadcrumb = true,
@@ -194,22 +190,12 @@ export default function TemplateExperience({
 
     const reducedMotion = usePrefersReducedMotion();
     const [musicAudioRef, musicController] = useTemplateMusicController(content.music);
-    const crumbs = useMemo(
-        () =>
-            breadcrumbItems || [
-                { label: "ទំព័រដើម", to: "/" },
-                { label: "គំរូសន្លឹកការ", to: "/templates" },
-                { label: tpl.name },
-            ],
-        [breadcrumbItems, tpl.name]
-    );
-
     const rootRef = useRef(null);
     const contentRef = useRef(null);
     const openingTimerRef = useRef(null);
     const openingInFlightRef = useRef(false);
-    const [gateState, setGateState] = useState("closed");
-    const [heroOpened, setHeroOpened] = useState(false);
+    const [gateState, setGateState] = useState(preview ? "opened" : "closed");
+    const [heroOpened, setHeroOpened] = useState(preview ? true : false);
     const gateOpen = gateState === "opened";
 
     useEffect(() => {
@@ -279,14 +265,56 @@ export default function TemplateExperience({
         openingInFlightRef.current = false;
         musicController.pause();
         setGateState("closed");
+        setHeroOpened(false);
         rootRef.current?.closest(".wb-phone-scroll")?.scrollTo?.({ top: 0, behavior: "smooth" });
     }, [musicController, preview]);
 
+    useEffect(() => {
+        if (preview || heroOpened) return undefined;
+
+        const handleWheel = (e) => {
+            if (e.cancelable) {
+                e.preventDefault();
+            }
+        };
+
+        const handleTouchMove = (e) => {
+            if (e.cancelable) {
+                e.preventDefault();
+            }
+        };
+
+        const handleKeyDown = (e) => {
+            if (["ArrowDown", "PageDown", "Space"].includes(e.code)) {
+                e.preventDefault();
+            }
+        };
+
+        window.addEventListener("wheel", handleWheel, { passive: false });
+        window.addEventListener("touchmove", handleTouchMove, { passive: false });
+        window.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            window.removeEventListener("wheel", handleWheel);
+            window.removeEventListener("touchmove", handleTouchMove);
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [preview, heroOpened]);
+
     const handleHeroOpen = useCallback(() => {
         setHeroOpened(true);
-        const next = rootRef.current?.querySelector('[data-tx-section="message"]');
-        scrollToTarget(next);
-    }, [scrollToTarget]);
+        if (!musicController.playing) {
+            void musicController.play();
+        }
+        window.requestAnimationFrame(() => {
+            setTimeout(() => {
+                const next = rootRef.current?.querySelector('[data-tx-section="message"]');
+                if (next) {
+                    scrollToTarget(next);
+                }
+            }, 60);
+        });
+    }, [musicController, scrollToTarget]);
 
     const handleScrollTop = useCallback(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -325,7 +353,7 @@ export default function TemplateExperience({
     }
 
     return (
-        <div className={`tx-stage tx-stage--${resolvedVariant}${preview ? " tx-stage--preview" : ""}`}>
+        <div className={`tx-stage tx-stage--${resolvedVariant}${!heroOpened ? " tx-stage--hero-locked" : ""}${preview ? " tx-stage--preview" : ""}`}>
             <div
                 className={`tx-root ${theme.className} tx-ornament--${ornamentTheme}${preview ? " tx-root--preview" : ""}`}
                 data-theme="wed"
@@ -334,9 +362,28 @@ export default function TemplateExperience({
                 ref={rootRef}
             >
             {!preview && showBreadcrumb && (
-                <div className="tx-breadcrumb">
-                    <Breadcrumb items={crumbs} />
-                </div>
+                <header className="tx-preview-topbar" role="banner" aria-label="របារមើលគំរូ">
+                    <div className="tx-preview-topbar__inner">
+                        <Link to={backLink} className="tx-preview-topbar__back" title="ត្រឡប់ទៅបញ្ជីគំរូ">
+                            <IoArrowBackOutline className="tx-preview-topbar__back-icon" aria-hidden="true" />
+                            <span>{backLabel}</span>
+                        </Link>
+                        <div className="tx-preview-topbar__meta">
+                            <span className="tx-preview-topbar__name">{tpl?.name || content?.title || "គំរូសន្លឹកការ"}</span>
+                            {tpl?.isPremium ? (
+                                <span className="tx-preview-topbar__badge tx-preview-topbar__badge--premium">Premium</span>
+                            ) : (
+                                <span className="tx-preview-topbar__badge tx-preview-topbar__badge--free">Free</span>
+                            )}
+                        </div>
+                        {showActions && useTemplateLink && (
+                            <Link to={useTemplateLink} className="tx-preview-topbar__cta">
+                                <IoSparkles className="tx-preview-topbar__cta-icon" aria-hidden="true" />
+                                <span>{primaryCtaLabel}</span>
+                            </Link>
+                        )}
+                    </div>
+                </header>
             )}
 
             <AnimatePresence mode="wait">
@@ -403,7 +450,7 @@ export default function TemplateExperience({
 
             {content.music && <audio ref={musicAudioRef} src={content.music} loop preload="auto" />}
             {gateOpen && <TemplateMusicControl controller={musicController} />}
-            {gateOpen && content.enableFloatingBar !== false && (
+            {gateOpen && heroOpened && content.enableFloatingBar !== false && !showStickyCta && (
                 <FloatingActionBar
                     audioController={musicController}
                     googleMapsUrl={content.venue?.mapUrl || content.googleMapUrl}

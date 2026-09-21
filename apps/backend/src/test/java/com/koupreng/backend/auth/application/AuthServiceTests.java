@@ -1,11 +1,14 @@
 package com.koupreng.backend.auth.application;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import org.springframework.security.authentication.BadCredentialsException;
 
 import java.util.Optional;
 
@@ -48,6 +51,19 @@ class AuthServiceTests {
         assertEquals("jwt-token", response.accessToken());
         assertEquals("Bearer", response.tokenType());
         assertEquals(1L, response.user().id());
+    }
+
+    @Test
+    void loginRejectsDisabledUsers() {
+        Fixture fixture = fixture();
+        AppUser disabledUser = activeUser();
+        disabledUser.setStatus(AppUser.STATUS_DISABLED);
+
+        when(fixture.userRepository.findByEmailIgnoreCase("user@example.com")).thenReturn(Optional.of(disabledUser));
+
+        assertThrows(BadCredentialsException.class, () ->
+                fixture.authService.login(new LoginRequest("user@example.com", "password123"))
+        );
     }
 
     @Test

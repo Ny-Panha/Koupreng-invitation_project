@@ -59,7 +59,7 @@ public class TemplatePaymentService {
     private static final DateTimeFormatter TRANSACTION_DATE_FORMAT = DateTimeFormatter.ofPattern("yyMMddHHmmss")
             .withZone(BUSINESS_ZONE);
     private static final Pattern ORDER_CODE_PATTERN = Pattern.compile("\\bEVT\\d{9,10}\\b", Pattern.CASE_INSENSITIVE);
-    private static final String STATIC_ABA_PAYMENT_LINK = "https://link.payway.com.kh/ABAPAYrD450560q";
+    private static final String STATIC_ABA_PAYMENT_LINK = "https://pay.ababank.com/oRF8/vx2dp884";
     private static final String STATIC_ABA_PAYMENT_CURRENCY = "USD";
     private static final BigDecimal STATIC_ABA_PAYMENT_AMOUNT = new BigDecimal("0.01");
     private static final String KEEP_TEMPLATE_CODE = "garden-royal-khmer-wedding";
@@ -510,6 +510,54 @@ public class TemplatePaymentService {
         );
         return PaymentConfirmResponse.builder()
                 .message("Payment confirmed manually. Template unlocked.")
+                .orderCode(order.getOrderCode())
+                .status(order.getStatus())
+                .build();
+    }
+
+    @Transactional
+    public PaymentConfirmResponse claimOrderByUser(Authentication authentication, String orderCode, String reference) {
+        AppUser user = currentUserService.currentUser(authentication);
+        TemplatePaymentOrder order = requireOrderForUpdate(orderCode);
+        if (!isOwnerOrAdmin(order, user)) {
+            throw new ApiException(HttpStatus.FORBIDDEN, "You do not have access to this payment order");
+        }
+
+        if (order.getStatus() == PaymentStatus.PAID) {
+            return PaymentConfirmResponse.builder()
+                    .message("Order is already paid")
+                    .orderCode(order.getOrderCode())
+                    .status(order.getStatus())
+                    .build();
+        }
+
+        if (isExpired(order)) {
+            order.setStatus(PaymentStatus.EXPIRED);
+            orderRepository.save(order);
+            return PaymentConfirmResponse.builder()
+                    .message("Payment order expired")
+                    .orderCode(order.getOrderCode())
+                    .status(order.getStatus())
+                    .build();
+        }
+
+        String source = "USER_INSTANT_CONFIRM";
+        String userName = user.getFullName() != null && !user.getFullName().isBlank()
+                ? user.getFullName()
+                : (user.getEmail() != null ? user.getEmail() : "User #" + user.getId());
+        String confirmedBy = reference != null && !reference.isBlank()
+                ? userName + " (Ref: " + reference.trim() + ")"
+                : userName;
+
+        markOrderPaid(
+                order,
+                order.getAmount(),
+                source,
+                confirmedBy
+        );
+
+        return PaymentConfirmResponse.builder()
+                .message("Payment verified. Template unlocked.")
                 .orderCode(order.getOrderCode())
                 .status(order.getStatus())
                 .build();

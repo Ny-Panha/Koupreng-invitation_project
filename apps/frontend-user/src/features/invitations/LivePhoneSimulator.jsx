@@ -3,12 +3,16 @@ import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
 import { TemplateExperience } from "@/features/templates";
 import { draftToTemplate } from "../wedding-builder/utils/draftToTemplate";
 
-export default function LivePhoneSimulator({ data = {}, onSave, isSaving }) {
+export default function LivePhoneSimulator({ data = {}, onSave, isSaving, catalogVersion = 0 }) {
     const { text: t } = useBackendMessages("invitations");
 
+    // `catalogVersion` is a dependency because the first render runs while the
+    // template catalog is still fetching — without it the memo keeps the stale
+    // KEPT_TEMPLATE (Garden Royal) resolution forever.
     const merged = useMemo(() => {
+        void catalogVersion;
         return draftToTemplate(data, data.photos?.map((p) => ({ preview: p.url || p, type: "image" })));
-    }, [data]);
+    }, [data, catalogVersion]);
 
     const templateName = merged?.tpl?.name || merged?.tpl?.style || t("previewTopInfo") || "គំរូសន្លឹកការ (Live Preview)";
 

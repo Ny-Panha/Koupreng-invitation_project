@@ -1,11 +1,12 @@
 package com.koupreng.backend.payment.application;
 
 import com.koupreng.backend.user.application.CurrentUserService;
-
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.payment.api.dto.PaymentHistoryResponse;
 import com.koupreng.backend.payment.api.dto.PaymentReceiptResponse;
+import com.koupreng.backend.payment.api.dto.PaymentConfirmResponse;
 import com.koupreng.backend.payment.domain.TemplatePaymentOrder;
+import com.koupreng.backend.payment.domain.PaymentStatus;
 import com.koupreng.backend.subscription.domain.Subscription;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.user.domain.Role;
@@ -16,6 +17,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 
@@ -137,6 +140,51 @@ public class PaymentHistoryService {
         });
 
         return combined;
+    }
+
+    @Transactional
+    public PaymentConfirmResponse confirmPayment(String orderCode, BigDecimal amount, String confirmedBy) {
+        String code = normalizeOrderCode(orderCode);
+        java.util.Optional<TemplatePaymentOrder> optOrder = orderRepository.findByOrderCode(code);
+        if (optOrder.isPresent()) {
+            TemplatePaymentOrder order = optOrder.get();
+            order.setStatus(PaymentStatus.PAID);
+            if (amount != null) {
+                order.setPaidAmount(amount);
+            } else if (order.getPaidAmount() == null || order.getPaidAmount().compareTo(BigDecimal.ZERO) == 0) {
+                order.setPaidAmount(order.getAmount());
+            }
+            order.setPaidAt(Instant.now());
+            order.setConfirmedBy(confirmedBy != null && !confirmedBy.isBlank() ? confirmedBy : "admin");
+            order.setConfirmSource(TemplatePaymentOrder.CONFIRM_SOURCE_MANUAL_ADMIN);
+            orderRepository.save(order);
+            return PaymentConfirmResponse.builder()
+                    .message("Template payment confirmed successfully.")
+                    .orderCode(order.getOrderCode())
+                    .status(PaymentStatus.PAID)
+                    .build();
+        }
+
+        java.util.Optional<Subscription> optSub = subscriptionRepository.findByOrderCode(code);
+        if (optSub.isPresent()) {
+            Subscription sub = optSub.get();
+            sub.setPaymentStatus("PAID");
+            sub.setStatus("ACTIVE");
+            sub.setActive(true);
+            Instant now = Instant.now();
+            sub.setStartDate(now);
+            if (sub.getSubscriptionPackage() != null && sub.getSubscriptionPackage().getDurationDays() != null && sub.getSubscriptionPackage().getDurationDays() > 0) {
+                sub.setEndDate(now.plusSeconds(sub.getSubscriptionPackage().getDurationDays().longValue() * 86400L));
+            }
+            subscriptionRepository.save(sub);
+            return PaymentConfirmResponse.builder()
+                    .message("Subscription payment confirmed successfully.")
+                    .orderCode(sub.getOrderCode())
+                    .status(PaymentStatus.PAID)
+                    .build();
+        }
+
+        throw new ApiException(HttpStatus.NOT_FOUND, "Payment order not found");
     }
 
     private String normalizeOrderCode(String orderCode) {

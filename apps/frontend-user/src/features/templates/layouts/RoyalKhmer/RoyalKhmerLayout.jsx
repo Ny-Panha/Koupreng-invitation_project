@@ -44,8 +44,8 @@ export default function RoyalKhmerLayout({
   };
   const musicUrl = tpl.music || defaultMusicUrl;
 
-  // Gate state
-  const [gateState, setGateState] = useState("closed");
+  // Gate state - default to opened in preview
+  const [gateState, setGateState] = useState(preview ? "opened" : "closed");
   const opened = gateState === "opened";
 
   // Audio Control
@@ -135,7 +135,7 @@ export default function RoyalKhmerLayout({
         type="button"
         onClick={toggleMusic}
         style={{
-          position: "fixed",
+          position: preview ? "absolute" : "fixed",
           bottom: "24px",
           right: "24px",
           zIndex: 90,
@@ -161,7 +161,7 @@ export default function RoyalKhmerLayout({
         <div
           className="tx-root tx-root--preview"
           style={{
-            position: "fixed",
+            position: preview ? "absolute" : "fixed",
             inset: 0,
             zIndex: 300,
             overflow: "hidden",
@@ -208,10 +208,10 @@ export default function RoyalKhmerLayout({
             ← {backLabel}
           </Link>
         )}
-        {opened && preview && (
+        {preview && (
           <button
             type="button"
-            onClick={() => setGateState("closed")}
+            onClick={() => setGateState(opened ? "closed" : "opened")}
             style={{
               background: "var(--rkh-gold-soft)",
               border: "1px solid var(--rkh-gold)",
@@ -221,9 +221,10 @@ export default function RoyalKhmerLayout({
               fontSize: "0.75rem",
               cursor: "pointer",
               fontWeight: "600",
+              marginLeft: "auto",
             }}
           >
-            បិទទ្វារម្តងទៀត
+            {opened ? "🔒 បិទទ្វារវាំងមើល (Close)" : "✨ បើកទ្វារវាំងមើល (Open)"}
           </button>
         )}
       </div>
@@ -313,6 +314,26 @@ export default function RoyalKhmerLayout({
                 <span>មើលទីតាំងលើ Google Maps</span>
                 <ExternalLink className="w-4 h-4" />
               </a>
+            )}
+
+            {tpl.sketchMapImage && (
+              <div style={{ marginTop: "1.5rem", textAlign: "center" }}>
+                <p style={{ fontSize: "0.85rem", color: "var(--rkh-crimson)", fontWeight: "600", marginBottom: "0.5rem" }}>
+                  🗺️ គំនូសប្លង់ទីតាំង / Sketch Map
+                </p>
+                <img
+                  src={tpl.sketchMapImage}
+                  alt="Sketch Map"
+                  style={{
+                    maxWidth: "100%",
+                    maxHeight: "220px",
+                    objectFit: "contain",
+                    borderRadius: "10px",
+                    border: "1px solid rgba(139,30,45,0.2)",
+                    boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
+                  }}
+                />
+              </div>
             )}
           </div>
         </section>

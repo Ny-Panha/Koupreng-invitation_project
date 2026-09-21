@@ -117,6 +117,18 @@ export function draftToTemplate(draft, gallery = []) {
         );
     }
 
+    const rawMapInput = draft.googleMapUrl || draft.event?.mapLink || draft.mapQuery || baseTpl.mapQuery || "";
+    let normalizedGoogleMapsUrl;
+    if (rawMapInput && typeof rawMapInput === "string" && rawMapInput.trim()) {
+        const t = rawMapInput.trim();
+        normalizedGoogleMapsUrl = /^https?:\/\//i.test(t) ? t : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(t)}`;
+    } else {
+        const vName = draft.venueName || draft.event?.venueName || "";
+        const vAddr = draft.venueAddress || draft.event?.venueAddress || "";
+        const q = [vName, vAddr].filter(Boolean).join(" ");
+        normalizedGoogleMapsUrl = q ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}` : "";
+    }
+
     const tpl = {
         ...baseTpl,
         title: draft.title || draft.event?.title || baseTpl.title || "",
@@ -136,13 +148,24 @@ export function draftToTemplate(draft, gallery = []) {
         receptionTime: draft.event?.receptionTime || draft.eventTime || baseTpl.receptionTime || "១៧:០០",
         venueName: draft.event?.venueName || draft.venueName || baseTpl.venueName,
         venueAddress: draft.event?.venueAddress || draft.venueAddress || baseTpl.venueAddress,
-        mapQuery: draft.event?.mapLink || draft.googleMapUrl || baseTpl.mapQuery,
+        mapQuery: normalizedGoogleMapsUrl || baseTpl.mapQuery,
+        googleMapsUrl: normalizedGoogleMapsUrl,
+        googleMapUrl: normalizedGoogleMapsUrl,
+        sketchMapImage: draft.sketchMapImage || null,
+        venue: {
+            ...(baseTpl.venue || {}),
+            name: draft.event?.venueName || draft.venueName || baseTpl.venueName || "The Premier Center Sen Sok",
+            address: draft.event?.venueAddress || draft.venueAddress || baseTpl.venueAddress || "",
+            mapLink: normalizedGoogleMapsUrl,
+            sketchMapImage: draft.sketchMapImage || null,
+        },
         customMainImage: draft.coverImage || baseTpl.phoneCoverImage || baseTpl.mainImage || "/facebook/all/03-card/cover-card.jpg",
         coverImage: draft.coverImage || baseTpl.phoneCoverImage || baseTpl.mainImage || "/facebook/all/03-card/cover-card.jpg",
         backgroundImage: draft.backgroundImage || draft.design?.backgroundImage || "",
         message: draft.message || draft.messageText || baseTpl.message,
         storyText: (draft.storyChapters?.length || (draft.story && draft.story !== draft.messageText)) ? (draft.story || draft.storyText || "") : "",
-        dressCode: draft.dressCode || baseTpl.dressCode,
+        dressCode: draft.dressCode || baseTpl.dressCode || (baseTpl.dressColors?.length ? { colors: baseTpl.dressColors } : undefined),
+        dressColors: draft.dressColors || baseTpl.dressColors || baseTpl.design?.dressColors || [],
         enabledSections: {
             ...(baseTpl.enabledSections || {}),
             ...(draft.enabledSections || {}),
@@ -151,12 +174,18 @@ export function draftToTemplate(draft, gallery = []) {
             party: draft.showParty !== false,
             rsvp: draft.rsvp?.enabled !== false && draft.enabledSections?.rsvp !== false,
         },
+        presetId: draft.presetId || baseTpl.presetId || baseTpl.design?.presetId || "",
         design: {
+            // Level 2 precedence — inherit the base template's design config
+            // (ornamentTheme, palettes, accentColor, …) before the host's edits.
+            ...(baseTpl.design || {}),
             ...(draft.design || {}),
-            openingStyle: draft.openingStyle || draft.design?.openingStyle || baseTpl.design?.openingStyle || "khmer-royal",
+            presetId: draft.presetId || draft.design?.presetId || baseTpl.presetId || baseTpl.design?.presetId || "",
+            openingStyle: draft.openingStyle || draft.gateStyle || draft.design?.openingStyle || draft.design?.gateStyle || baseTpl.openingStyle || baseTpl.gateStyle || baseTpl.design?.openingStyle || "khmer-royal",
+            gateStyle: draft.openingStyle || draft.gateStyle || draft.design?.openingStyle || draft.design?.gateStyle || baseTpl.openingStyle || baseTpl.gateStyle || baseTpl.design?.openingStyle || "khmer-royal",
             coverImage: draft.coverImage || draft.design?.coverImage || baseTpl.phoneCoverImage || baseTpl.mainImage || "/facebook/all/03-card/cover-card.jpg",
-            frontColor: draft.frontColor || draft.design?.frontColor || "#f9af59",
-            bottomColor: draft.bottomColor || draft.design?.bottomColor || "#B08E4F",
+            frontColor: draft.frontColor || draft.primaryColor || draft.design?.frontColor || draft.design?.primaryColor || baseTpl.frontColor || baseTpl.primaryColor || baseTpl.design?.frontColor || baseTpl.design?.primaryColor || baseTpl.color || "#f9af59",
+            bottomColor: draft.bottomColor || draft.secondaryColor || draft.design?.bottomColor || draft.design?.secondaryColor || baseTpl.bottomColor || baseTpl.secondaryColor || baseTpl.design?.bottomColor || baseTpl.design?.secondaryColor || baseTpl.accent || "#B08E4F",
             openingVideoEnabled:
                 draft.openingVideoEnabled !== false && Boolean(draft.openingVideo || draft.design?.openingVideoUrl),
         },
@@ -197,6 +226,11 @@ export function draftToTemplate(draft, gallery = []) {
                 rsvp: draft.rsvp?.enabled !== false && draft.enabledSections?.rsvp !== false,
             },
             eventTitle: draft.event?.title || draft.title || "",
+            venueName: draft.event?.venueName || draft.venueName || baseTpl.venueName,
+            venueAddress: draft.event?.venueAddress || draft.venueAddress || baseTpl.venueAddress,
+            googleMapsUrl: normalizedGoogleMapsUrl,
+            googleMapUrl: normalizedGoogleMapsUrl,
+            sketchMapImage: draft.sketchMapImage || null,
             rsvp: draft.rsvp || {},
             opening: draft.opening || {},
             guest: draft.guestName ? { name: draft.guestName } : (draft.guest || null),
@@ -210,4 +244,3 @@ export function draftToTemplate(draft, gallery = []) {
 
     return { tpl, variant: resolveVariant(baseTpl) };
 }
-

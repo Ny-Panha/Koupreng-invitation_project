@@ -6,7 +6,15 @@ export const templateCatalogService = {
         api.get("/v1/templates", { skipAuth: true })
             .then(unwrap)
             .then((items) => {
-                const list = Array.isArray(items) ? items : Array.isArray(items?.data) ? items.data : [];
+                const list = Array.isArray(items)
+                    ? items
+                    : Array.isArray(items?.data)
+                        ? items.data
+                        : Array.isArray(items?.items)
+                            ? items.items
+                            : Array.isArray(items?.content)
+                                ? items.content
+                                : [];
                 return list.map((t) => {
                     const isPrem = Boolean(t.premium || t.isPremium || (Number(t.price) > 0));
                     return {

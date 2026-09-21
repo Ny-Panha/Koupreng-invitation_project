@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.koupreng.backend.auth.infrastructure.session.UserAuthCacheService;
 import com.koupreng.backend.auth.infrastructure.session.UserAuthCacheService.CachedAuthInfo;
+import com.koupreng.backend.dev.DevSampleData;
+import com.koupreng.backend.user.domain.AppUser;
+import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,14 +18,23 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 public class AppJwtAuthenticationConverter implements Converter<Jwt, JwtAuthenticationToken> {
 
     private final UserAuthCacheService userAuthCacheService;
+    private final AppUserRepository userRepository;
 
-    public AppJwtAuthenticationConverter(UserAuthCacheService userAuthCacheService) {
+    public AppJwtAuthenticationConverter(UserAuthCacheService userAuthCacheService, AppUserRepository userRepository) {
         this.userAuthCacheService = userAuthCacheService;
+        this.userRepository = userRepository;
     }
 
     @Override
     public JwtAuthenticationToken convert(Jwt jwt) {
         Long userId = parseUserId(jwt.getSubject());
+        AppUser user = userRepository.findById(userId)
+                .orElseThrow(() -> new BadCredentialsException("Authentication required"));
+
+        if (!user.isActive() || AppUser.STATUS_DISABLED.equalsIgnoreCase(user.getStatus())) {
+            throw new BadCredentialsException("Account is disabled");
+        }
+
         CachedAuthInfo authInfo = userAuthCacheService.getAuthInfo(userId)
                 .orElseThrow(() -> new BadCredentialsException("Authentication required"));
 
@@ -31,9 +43,10 @@ public class AppJwtAuthenticationConverter implements Converter<Jwt, JwtAuthenti
         }
         validateTokenVersion(jwt, authInfo);
 
-        List<GrantedAuthority> authorities = List.of(
-                new SimpleGrantedAuthority("ROLE_" + authInfo.role().name())
-        );
+        String authority = authInfo.role() == com.koupreng.backend.user.domain.Role.STAFF
+            ? "ROLE_ADMIN"
+            : "ROLE_" + authInfo.role().name();
+        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(authority));
         return new JwtAuthenticationToken(jwt, authorities, userId.toString());
     }
 

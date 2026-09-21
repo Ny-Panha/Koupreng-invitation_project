@@ -10,6 +10,7 @@ import com.koupreng.backend.payment.api.dto.CreateTemplatePaymentRequest;
 import com.koupreng.backend.payment.api.dto.CreateTemplatePaymentResponse;
 import com.koupreng.backend.payment.api.dto.PayWayCallbackResponse;
 import com.koupreng.backend.payment.api.dto.PaymentConfirmResponse;
+import com.koupreng.backend.payment.api.dto.TemplatePaymentClaimRequest;
 import com.koupreng.backend.payment.api.dto.TemplateAccessCheckResponse;
 import com.koupreng.backend.payment.api.dto.TemplatePaymentStatusResponse;
 import com.koupreng.backend.payment.api.dto.TelegramDetectPaymentRequest;
@@ -92,6 +93,19 @@ public class TemplatePaymentController {
                 templatePaymentService.getOrderStatus(authentication, orderCode)
         ));
     }
+
+    @Operation(summary = "User confirms payment to unlock template immediately")
+    @PostMapping({"/template-payments/{orderCode}/claim", "/template-payments/orders/{orderCode}/claim"})
+    public ResponseEntity<ApiResponse<PaymentConfirmResponse>> claimPayment(
+            Authentication authentication,
+            @PathVariable String orderCode,
+            @Valid @RequestBody(required = false) TemplatePaymentClaimRequest body
+    ) {
+        String reference = body != null ? body.reference() : null;
+        PaymentConfirmResponse response = templatePaymentService.claimOrderByUser(authentication, orderCode, reference);
+        return ResponseEntity.ok(ApiResponse.success("Template payment confirmed and template unlocked", response));
+    }
+
 
     @Operation(summary = "List templates paid for by the current user")
     @GetMapping("/me/templates/paid")
