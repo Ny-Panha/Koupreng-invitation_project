@@ -1,13 +1,26 @@
 import {
     KEEP_TEMPLATE_CODE,
+    KHMER_CELESTIAL_TEMPLATE_CODE,
     ROYAL_KHMER_TEMPLATE_CODE,
     KHMER_GOLDEN_CANVA_INSPIRED_CODE,
     COVER_KHMER_GOLDEN_CODE,
     THE_DIGITAL_YES_TEMPLATE_CODE,
 } from "../../data/templatesData";
 
-export { KEEP_TEMPLATE_CODE, ROYAL_KHMER_TEMPLATE_CODE, KHMER_GOLDEN_CANVA_INSPIRED_CODE, COVER_KHMER_GOLDEN_CODE, THE_DIGITAL_YES_TEMPLATE_CODE };
+export { KEEP_TEMPLATE_CODE, KHMER_CELESTIAL_TEMPLATE_CODE, ROYAL_KHMER_TEMPLATE_CODE, KHMER_GOLDEN_CANVA_INSPIRED_CODE, COVER_KHMER_GOLDEN_CODE, THE_DIGITAL_YES_TEMPLATE_CODE };
 export const TEMPLATE_VARIANTS = {
+    [KHMER_CELESTIAL_TEMPLATE_CODE]: {
+        className: "template-experience--khmer-celestial",
+        mood: "light",
+        badge: "Khmer Celestial",
+        amp: "◆",
+        dressColors: [
+            { hex: "#541722", name: "ក្រហមទុំ" },
+            { hex: "#B88A3A", name: "មាស" },
+            { hex: "#EAD39E", name: "សាំប៉ាញ" },
+            { hex: "#FFFAF2", name: "ភ្លុក" },
+        ],
+    },
     "emerald-canva-luxe-wedding": {
         className: "template-experience--emerald-luxe-wedding",
         mood: "dark",
@@ -85,6 +98,7 @@ export const TEMPLATE_VARIANTS = {
 export const DEFAULT_VARIANT = KEEP_TEMPLATE_CODE;
 
 export const TEMPLATE_VARIANT_BY_ID = {
+    [KHMER_CELESTIAL_TEMPLATE_CODE]: KHMER_CELESTIAL_TEMPLATE_CODE,
     [KEEP_TEMPLATE_CODE]: KEEP_TEMPLATE_CODE,
     [ROYAL_KHMER_TEMPLATE_CODE]: ROYAL_KHMER_TEMPLATE_CODE,
     [KHMER_GOLDEN_CANVA_INSPIRED_CODE]: KHMER_GOLDEN_CANVA_INSPIRED_CODE,
@@ -93,6 +107,7 @@ export const TEMPLATE_VARIANT_BY_ID = {
 };
 
 export const VARIANT_ROUTE_ALIASES = {
+    "khmer-celestial": KHMER_CELESTIAL_TEMPLATE_CODE,
     classic: KEEP_TEMPLATE_CODE,
     luxury: KEEP_TEMPLATE_CODE,
     royal: ROYAL_KHMER_TEMPLATE_CODE,
@@ -110,6 +125,7 @@ export const VARIANT_ROUTE_ALIASES = {
     CHAMPAGNE: COVER_KHMER_GOLDEN_CODE,
     KHMER_GOLDEN: KHMER_GOLDEN_CANVA_INSPIRED_CODE,
     GARDEN_ROYAL: KEEP_TEMPLATE_CODE,
+    KHMER_CELESTIAL: KHMER_CELESTIAL_TEMPLATE_CODE,
 };
 
 export function resolveVariant(tpl = {}, explicitVariant) {

@@ -2,6 +2,7 @@ import musicWaitingDay from "../../../assets/music/ថ្ងៃដែលរង�
 import musicInstrumental from "../../../assets/music/Instrumental Wedding Music (VioSounds Cover).m4a";
 
 export const KEEP_TEMPLATE_CODE = "garden-royal-khmer-wedding";
+export const KHMER_CELESTIAL_TEMPLATE_CODE = "khmer-celestial";
 export const ROYAL_KHMER_TEMPLATE_CODE = "royal-khmer-wedding";
 export const KHMER_GOLDEN_CANVA_INSPIRED_CODE = "khmer-golden-canva-inspired-wedding";
 export const COVER_KHMER_GOLDEN_CODE = "cover-khmer-golden-wedding";
@@ -77,6 +78,87 @@ const KEPT_TEMPLATE = withTemplateMedia({
     label: "GARDEN ROYAL KHMER",
     description: "គំរូសន្លឹកការរចនាបថសួនផ្កា និងទឹកពណ៌បែបព្រះរាជវង្សខ្មែរ ពណ៌ខៀវស្រាល បៃតង និងមាស។",
 }, "03-card");
+
+export const KHMER_CELESTIAL_TEMPLATE = withTemplateMedia({
+    id: KHMER_CELESTIAL_TEMPLATE_CODE,
+    code: KHMER_CELESTIAL_TEMPLATE_CODE,
+    slug: KHMER_CELESTIAL_TEMPLATE_CODE,
+    name: "ខ្មែរចន្ទតារា",
+    title: "សិរីមង្គលអាពាហ៍ពិពាហ៍",
+    style: "Khmer Celestial",
+    category: "ancient",
+    popular: true,
+    premium: false,
+    isPremium: false,
+    image: "/facebook/all/06-card/cover-card.jpg",
+    mainImage: "/facebook/all/06-card/cover-card.jpg",
+    phoneCoverImage: "/facebook/all/06-card/cover-card.jpg",
+    music: { url: musicWaitingDay },
+    openingVideo: { url: "/invitations/khmer-celestial/burgundy-bokeh.mp4" },
+    groom: "វីរៈ",
+    groomEn: "Vireak",
+    bride: "សុម៉ាលី",
+    brideEn: "Somaly",
+    dateText: "ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦",
+    dateTextEn: "Sunday, December 20, 2026",
+    targetDate: "2026-12-20T17:00:00+07:00",
+    ceremonyTime: "០៧:០០",
+    receptionTime: "១៧:០០",
+    venueName: "សណ្ឋាគារ ហ៊ីម៉ាវ៉ារី ភ្នំពេញ",
+    venueAddress: "វិថីព្រះស៊ីសុវត្ថិ រាជធានីភ្នំពេញ",
+    mapQuery: "Himawari Hotel Apartments Phnom Penh Cambodia",
+    bg: "#F7F0E4",
+    paper: "#FFFAF2",
+    color: "#B88A3A",
+    accent: "#541722",
+    dark: "#26090F",
+    label: "KHMER CELESTIAL",
+    description: "គំរូអាពាហ៍ពិពាហ៍ខ្មែរបែបនិពន្ធទំនើប ជាមួយពន្លឺចន្ទ្រា ពណ៌ក្រហមទុំ ក្រដាសភ្លុក និងមាសសាំប៉ាញ។",
+    message: "ដោយក្តីសោមនស្សរីករាយ យើងខ្ញុំ និងក្រុមគ្រួសារទាំងសងខាង សូមគោរពអញ្ជើញលោកអ្នកចូលរួមជាភ្ញៀវកិត្តិយស និងជាសាក្សីក្នុងថ្ងៃដ៏មានតម្លៃរបស់យើងខ្ញុំ។",
+    storyText: "ពីការជួបគ្នាដំបូង រហូតដល់ពេលដែលយើងសម្រេចចិត្តរួមដំណើរជីវិត សេចក្តីស្រឡាញ់របស់យើងបានរីកចម្រើនតាមរយៈការគោរព ការយល់ចិត្ត និងភាពកក់ក្តៅពីក្រុមគ្រួសារ។",
+    presetId: "KHMER_CELESTIAL",
+    openingStyle: "celestial-cover",
+    enabledSections: {
+        countdown: true,
+        story: true,
+        schedule: true,
+        map: true,
+        gallery: true,
+        party: false,
+        dressCode: true,
+        gift: false,
+        faq: false,
+        rsvp: true,
+        music: true,
+    },
+    dressCode: {
+        name: "ខ្មែរប្រណិត / Formal Khmer",
+        style: "Traditional elegance",
+        description: "សូមជ្រើសរើសពណ៌ក្រហមទុំ សាំប៉ាញ ភ្លុក ឬមាសស្រាល ដើម្បីសមនឹងបរិយាកាសពិធី។",
+        colors: [
+            { hex: "#541722", name: "ក្រហមទុំ" },
+            { hex: "#B88A3A", name: "មាស" },
+            { hex: "#EAD39E", name: "សាំប៉ាញ" },
+            { hex: "#FFFAF2", name: "ភ្លុក" },
+        ],
+    },
+    schedule: [
+        { id: "procession", time: "០៧:០០", title: "ពិធីហែជំនូន", titleEn: "Procession", description: "ទទួលស្វាគមន៍ក្រុមគ្រួសារទាំងសងខាង និងភ្ញៀវកិត្តិយស។" },
+        { id: "rings", time: "០៨:៣០", title: "ពិធីបំពាក់ចិញ្ចៀន", titleEn: "Ring Ceremony", description: "ពេលវេលានៃពាក្យសន្យា និងពរជ័យ។" },
+        { id: "blessing", time: "១០:០០", title: "ពិធីសំពះផ្ទឹម", titleEn: "Sompeas Ptem", description: "ទទួលពរជ័យពីមាតាបិតា និងចាស់ទុំ។" },
+        { id: "reception", time: "១៧:០០", title: "ទទួលភ្ញៀវ និងពិសាភោជនាហារ", titleEn: "Reception Dinner", description: "ចូលរួមអបអរ ជូនពរ និងពិសាភោជនាហារជុំគ្នា។" },
+    ],
+    design: {
+        presetId: "KHMER_CELESTIAL",
+        theme: "KHMER_CELESTIAL",
+        openingStyle: "celestial-cover",
+        primaryColor: "#541722",
+        secondaryColor: "#B88A3A",
+        ornamentTheme: "celestial-kbach",
+        openingVideoEnabled: true,
+        openingVideoUrl: "/invitations/khmer-celestial/burgundy-bokeh.mp4",
+    },
+}, "06-card");
 
 const ROYAL_KHMER_TEMPLATE = withTemplateMedia({
     id: ROYAL_KHMER_TEMPLATE_CODE,
@@ -361,6 +443,7 @@ export const BLISS_EDITORIAL_TEMPLATE = withTemplateMedia({
 }, "03-card");
 
 export const TEMPLATES = [
+    KHMER_CELESTIAL_TEMPLATE,
     THE_DIGITAL_YES_TEMPLATE,
     EMERALD_CANVA_LUXE_TEMPLATE,
     WITHJOY_PORTAL_TEMPLATE,
@@ -408,6 +491,7 @@ export function getCatalogVersion() {
  * component and theme variant (CSS class, colors, opening gate style, etc.).
  */
 const PRESET_TO_VARIANT = {
+    KHMER_CELESTIAL: KHMER_CELESTIAL_TEMPLATE_CODE,
     EMERALD_GREEN: "emerald-canva-luxe-wedding",
     RUBY_RED: "royal-khmer-wedding",
     ROYAL_KHMER: "royal-khmer-wedding",

@@ -20,6 +20,7 @@ export {
 export { default as DigitalYesLayout } from "./layouts/DigitalYes/DigitalYesLayout";
 export { default as RoyalKhmerLayout } from "./layouts/RoyalKhmer/RoyalKhmerLayout";
 export { default as EmeraldLuxeLayout } from "./layouts/EmeraldLuxe/EmeraldLuxeLayout";
+export { default as KhmerCelestialLayout } from "./layouts/KhmerCelestial/KhmerCelestialLayout";
 
 // Shared Primitives
 export {
@@ -45,6 +46,8 @@ export {
     TEMPLATES,
     FACEBOOK_TEMPLATE_CARDS,
     KEEP_TEMPLATE_CODE,
+    KHMER_CELESTIAL_TEMPLATE_CODE,
+    KHMER_CELESTIAL_TEMPLATE,
     KHMER_GOLDEN_CANVA_INSPIRED_CODE,
     COVER_KHMER_GOLDEN_CODE,
     TEMPLATE_CATEGORIES,

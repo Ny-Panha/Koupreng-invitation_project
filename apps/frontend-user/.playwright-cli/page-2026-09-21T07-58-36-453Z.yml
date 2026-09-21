@@ -1,0 +1,9 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e31] [cursor=pointer]:
+    - generic [ref=e34]:
+      - paragraph [ref=e35]: សិរីសួស្តីអាពាហ៍ពិពាហ៍
+      - img "Phai Vita & Sir Soriya" [ref=e37]
+      - paragraph [ref=e43]: ថ្ងៃអាទិត្យ ទី០៨ ខែវិច្ឆិកា ឆ្នាំ២០២៦
+      - paragraph [ref=e44]: សូមគោរពអញ្ជើញភ្ញៀវកិត្តិយស
+    - button "Skip intro / រំលង" [ref=e45]: រំលង ›
+  - button "Pause background music" [ref=e46] [cursor=pointer]

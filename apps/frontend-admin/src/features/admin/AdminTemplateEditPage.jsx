@@ -117,6 +117,23 @@ const THEME_PRESETS = [
     ],
   },
   {
+    id: "KHMER_CELESTIAL",
+    name: "Khmer Celestial (ខ្មែរចន្ទតារា)",
+    primary: "#541722",
+    secondary: "#B88A3A",
+    bg: "#F7F0E4",
+    badge: "Khmer Celestial",
+    amp: "◆",
+    fontKhmer: "Moul",
+    fontLatin: "Cormorant Garamond",
+    dressColors: [
+      { hex: "#541722", name: "ក្រហមទុំ" },
+      { hex: "#B88A3A", name: "មាស" },
+      { hex: "#EAD39E", name: "សាំប៉ាញ" },
+      { hex: "#FFFAF2", name: "ភ្លុក" },
+    ],
+  },
+  {
     id: "GARDEN_ROYAL",
     name: "Garden Royal (សួនផ្កា)",
     primary: "#2D7FA6",
@@ -394,6 +411,7 @@ export default function AdminTemplateEditPage() {
   // Apply Theme Preset
   const handleApplyPreset = (preset) => {
     const presetMap = {
+      KHMER_CELESTIAL: "khmer-celestial",
       GOLD_LUXURY: "the-digital-yes-wedding",
       EMERALD_GREEN: "emerald-canva-luxe-wedding",
       RUBY_RED: "royal-khmer-wedding",
@@ -2107,7 +2125,9 @@ export default function AdminTemplateEditPage() {
                 allow="clipboard-write; clipboard-read; autoplay"
                 src={userTemplateUrl(`${
                   form.code ||
-                  (form.presetId === "GARDEN_ROYAL"
+                  (form.presetId === "KHMER_CELESTIAL"
+                    ? "khmer-celestial"
+                    : form.presetId === "GARDEN_ROYAL"
                     ? "garden-royal-khmer-wedding"
                     : form.presetId === "KHMER_GOLDEN" || form.presetId === "CHAMPAGNE"
                     ? "cover-khmer-golden-wedding"

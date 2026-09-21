@@ -44,7 +44,15 @@ export function draftToTemplate(draft, gallery = []) {
     const baseTpl = getTemplateById(templateId);
     if (!baseTpl) return null;
 
-    // Prefer the host's uploaded photos; fall back to draft.photos, then template's own images.
+    const sectionEnabled = (legacyValue, key, defaultValue = true) => {
+        if (typeof draft.enabledSections?.[key] === "boolean") return draft.enabledSections[key];
+        if (typeof legacyValue === "boolean") return legacyValue;
+        if (typeof baseTpl.enabledSections?.[key] === "boolean") return baseTpl.enabledSections[key];
+        return defaultValue;
+    };
+
+    // Hosted invitations must never inherit the template demo gallery. The
+    // built-in catalog still owns its sample photography on /templates/*.
     const uploadedImages = (gallery || [])
         .filter((item) => (item?.preview || item?.url) && item.type !== "video")
         .map((item) => item.preview || item.url);
@@ -117,17 +125,19 @@ export function draftToTemplate(draft, gallery = []) {
         );
     }
 
-    const rawMapInput = draft.googleMapUrl || draft.event?.mapLink || draft.mapQuery || baseTpl.mapQuery || "";
-    let normalizedGoogleMapsUrl = "";
-    if (rawMapInput && typeof rawMapInput === "string" && rawMapInput.trim()) {
-        const t = rawMapInput.trim();
-        normalizedGoogleMapsUrl = /^https?:\/\//i.test(t) ? t : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(t)}`;
-    } else {
+    const rawMapInput = draft.googleMapUrl || draft.event?.mapLink || draft.mapQuery || "";
+    const normalizedGoogleMapsUrl = (() => {
+        if (rawMapInput && typeof rawMapInput === "string" && rawMapInput.trim()) {
+            const value = rawMapInput.trim();
+            return /^https?:\/\//i.test(value)
+                ? value
+                : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(value)}`;
+        }
         const vName = draft.venueName || draft.event?.venueName || "";
         const vAddr = draft.venueAddress || draft.event?.venueAddress || "";
         const q = [vName, vAddr].filter(Boolean).join(" ");
-        normalizedGoogleMapsUrl = q ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}` : "";
-    }
+        return q ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}` : "";
+    })();
 
     const tpl = {
         ...baseTpl,
@@ -159,20 +169,20 @@ export function draftToTemplate(draft, gallery = []) {
             mapLink: normalizedGoogleMapsUrl,
             sketchMapImage: draft.sketchMapImage || null,
         },
-        customMainImage: draft.coverImage || baseTpl.phoneCoverImage || baseTpl.mainImage || "/facebook/all/03-card/cover-card.jpg",
-        coverImage: draft.coverImage || baseTpl.phoneCoverImage || baseTpl.mainImage || "/facebook/all/03-card/cover-card.jpg",
+        customMainImage: draft.coverImage || "",
+        coverImage: draft.coverImage || "",
         backgroundImage: draft.backgroundImage || draft.design?.backgroundImage || "",
-        message: draft.message || draft.messageText || baseTpl.message,
+        message: draft.message || draft.messageText || "",
         storyText: (draft.storyChapters?.length || (draft.story && draft.story !== draft.messageText)) ? (draft.story || draft.storyText || "") : "",
-        dressCode: draft.dressCode || baseTpl.dressCode || (baseTpl.dressColors?.length ? { colors: baseTpl.dressColors } : undefined),
-        dressColors: draft.dressColors || baseTpl.dressColors || baseTpl.design?.dressColors || [],
+        dressCode: draft.dressCode || (draft.dressColors?.length ? { colors: draft.dressColors } : undefined),
+        dressColors: draft.dressColors || draft.design?.dressColors || [],
         enabledSections: {
             ...(baseTpl.enabledSections || {}),
             ...(draft.enabledSections || {}),
-            countdown: draft.showCountdown !== false,
-            story: draft.showStory !== false,
-            party: draft.showParty !== false,
-            rsvp: draft.rsvp?.enabled !== false && draft.enabledSections?.rsvp !== false,
+            countdown: sectionEnabled(draft.showCountdown, "countdown"),
+            story: sectionEnabled(draft.showStory, "story"),
+            party: sectionEnabled(draft.showParty, "party"),
+            rsvp: sectionEnabled(draft.rsvp?.enabled, "rsvp"),
         },
         presetId: draft.presetId || baseTpl.presetId || baseTpl.design?.presetId || "",
         design: {
@@ -187,47 +197,54 @@ export function draftToTemplate(draft, gallery = []) {
             frontColor: draft.frontColor || draft.primaryColor || draft.design?.frontColor || draft.design?.primaryColor || baseTpl.frontColor || baseTpl.primaryColor || baseTpl.design?.frontColor || baseTpl.design?.primaryColor || baseTpl.color || "#f9af59",
             bottomColor: draft.bottomColor || draft.secondaryColor || draft.design?.bottomColor || draft.design?.secondaryColor || baseTpl.bottomColor || baseTpl.secondaryColor || baseTpl.design?.bottomColor || baseTpl.design?.secondaryColor || baseTpl.accent || "#B08E4F",
             openingVideoEnabled:
-                draft.openingVideoEnabled !== false && Boolean(draft.openingVideo || draft.design?.openingVideoUrl),
+                draft.openingVideoEnabled !== false && Boolean(draft.openingVideo || draft.design?.openingVideoUrl || baseTpl.openingVideo || baseTpl.design?.openingVideoUrl),
         },
-        music: draft.musicUrl ? { url: draft.musicUrl } : (draft.music || baseTpl.music),
-        openingVideo: draft.openingVideoEnabled === false ? null : draft.openingVideo,
+        music: draft.musicUrl ? { url: draft.musicUrl } : (draft.music || null),
+        openingVideo: draft.openingVideoEnabled === false ? null : (draft.openingVideo || baseTpl.openingVideo),
         opening: draft.opening || {},
         // Host-authored rich sections. Passed straight through so the content
         // builder can prefer them over its demo fallbacks (see hostContent).
         hostContent: {
             title: draft.title || draft.event?.title || "",
             subtitle: draft.subtitle || "",
+            message: draft.message || draft.messageText || "",
             messageTitle: draft.messageTitle || "",
             hideCoupleNameOnCover: Boolean(draft.hideCoupleNameOnCover),
             thankYouTitle: draft.thankYouTitle || "",
             thankYouText: draft.thankYouText || "",
+            dateText: eventDate ? displayDate(eventDate) : (draft.eventDateText || ""),
+            dateTextEn: draft.extras?.dateTextEn || "",
+            targetDate: targetDate || "",
             eventTime: draft.eventTime || draft.event?.ceremonyTime || draft.event?.receptionTime || "",
             couple: {
-                groom: groomName || baseTpl.groom,
-                bride: brideName || baseTpl.bride,
+                groom: groomName,
+                bride: brideName,
                 ...(draft.couple || {}),
             },
             contact: draft.contact || {},
+            coverImage: draft.coverImage || "",
+            dressCode: draft.dressCode || null,
+            dressColors: draft.dressColors || draft.design?.dressColors || [],
             storyText: (draft.storyChapters?.length || (draft.story && draft.story !== draft.messageText)) ? (draft.story || draft.storyText || "") : "",
             storyTextEn: draft.extras?.storyTextEn || "",
             languageMode: draft.languageMode || draft.extras?.languageMode || "both",
             storyChapters: draft.storyChapters || [],
-            schedule: finalSchedule.length > 0 ? finalSchedule : baseTpl.schedule,
-            party: (draft.party && draft.party.length > 0) ? draft.party : (draft.showParty !== false ? (baseTpl.party || []) : []),
+            schedule: finalSchedule,
+            party: (draft.party && draft.party.length > 0) ? draft.party : [],
             gift: giftList.length > 0 ? giftList : (draft.gift || []),
             gallery: effectiveGallery,
             wishMessage: draft.thankYouText || draft.extras?.guestNote || "",
             faq: draft.faq || [],
             enabledSections: {
                 ...(draft.enabledSections || {}),
-                countdown: draft.showCountdown !== false,
-                story: draft.showStory !== false,
-                party: draft.showParty !== false,
-                rsvp: draft.rsvp?.enabled !== false && draft.enabledSections?.rsvp !== false,
+                countdown: sectionEnabled(draft.showCountdown, "countdown"),
+                story: sectionEnabled(draft.showStory, "story"),
+                party: sectionEnabled(draft.showParty, "party"),
+                rsvp: sectionEnabled(draft.rsvp?.enabled, "rsvp"),
             },
             eventTitle: draft.event?.title || draft.title || "",
-            venueName: draft.event?.venueName || draft.venueName || baseTpl.venueName,
-            venueAddress: draft.event?.venueAddress || draft.venueAddress || baseTpl.venueAddress,
+            venueName: draft.event?.venueName || draft.venueName || "",
+            venueAddress: draft.event?.venueAddress || draft.venueAddress || "",
             googleMapsUrl: normalizedGoogleMapsUrl,
             googleMapUrl: normalizedGoogleMapsUrl,
             sketchMapImage: draft.sketchMapImage || null,
@@ -236,12 +253,11 @@ export function draftToTemplate(draft, gallery = []) {
             guest: draft.guestName ? { name: draft.guestName } : (draft.guest || null),
         },
         // When the host has uploaded photos, drive gallery + story from them.
-        storyImages: effectiveGallery.length ? effectiveGallery : baseTpl.storyImages,
+        storyImages: effectiveGallery,
         storyCards: effectiveGallery.length
             ? [{ id: `${draft.id || "draft"}-uploads`, title: "Our Photos", images: effectiveGallery }]
-            : baseTpl.storyCards,
+            : [],
     };
 
     return { tpl, variant: resolveVariant(baseTpl) };
 }
-

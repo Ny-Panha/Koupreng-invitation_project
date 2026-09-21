@@ -7,8 +7,16 @@ import {
 import DigitalYesLayout from "../layouts/DigitalYes/DigitalYesLayout";
 import RoyalKhmerLayout from "../layouts/RoyalKhmer/RoyalKhmerLayout";
 import EmeraldLuxeLayout from "../layouts/EmeraldLuxe/EmeraldLuxeLayout";
+import KhmerCelestialLayout from "../layouts/KhmerCelestial/KhmerCelestialLayout";
 
 describe("templateRegistry (1 Template = 1 Dedicated UI)", () => {
+  it("maps Khmer Celestial by slug and admin preset", () => {
+    expect(templateRegistry["khmer-celestial"]).toBe(KhmerCelestialLayout);
+    expect(templateRegistry.KHMER_CELESTIAL).toBe(KhmerCelestialLayout);
+    expect(getDedicatedTemplateComponent({ slug: "khmer-celestial" })).toBe(KhmerCelestialLayout);
+    expect(getDedicatedTemplateComponent({ presetId: "KHMER_CELESTIAL" })).toBe(KhmerCelestialLayout);
+  });
+
   it("maps The Digital Yes wedding template (slug and ID 7)", () => {
     expect(templateRegistry["the-digital-yes-wedding"]).toBe(DigitalYesLayout);
     expect(templateRegistry["7"]).toBe(DigitalYesLayout);
@@ -58,4 +66,3 @@ describe("templateRegistry (1 Template = 1 Dedicated UI)", () => {
     expect(getDedicatedTemplateComponent({ presetId: "GOLD_LUXURY" })).toBe(DigitalYesLayout);
   });
 });
-

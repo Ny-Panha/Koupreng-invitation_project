@@ -445,14 +445,21 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
     const host = tpl.hostContent || {};
     const hostCouple = host.couple || {};
     const hostContact = host.contact || {};
-    const hostEnabledSections = host.enabledSections || {};
+    const hostEnabledSections = {
+        ...(tpl.enabledSections || {}),
+        ...(host.enabledSections || {}),
+    };
     const hasHostContent = Boolean(tpl.hostContent) || Object.keys(host).length > 0;
     const nonEmpty = (arr) => (Array.isArray(arr) && arr.length ? arr : null);
     const nonBlank = (value) => (typeof value === "string" && value.trim() ? value.trim() : "");
 
-    const venueName = tpl.venueName || "";
-    const venueAddress = (tpl.venueAddress || "").replace(/\n/g, ", ");
-    const mapValue = nonBlank(tpl.mapQuery);
+    const venueName = hasHostContent ? nonBlank(host.venueName) : (tpl.venueName || "");
+    const venueAddress = (hasHostContent ? nonBlank(host.venueAddress) : (tpl.venueAddress || "")).replace(/\n/g, ", ");
+    const mapValue = nonBlank(
+        hasHostContent
+            ? (host.googleMapUrl || host.googleMapsUrl)
+            : tpl.mapQuery
+    );
     const mapValueIsUrl = /^https?:\/\//i.test(mapValue);
     const mapSearch = (mapValueIsUrl ? `${venueName} ${venueAddress}` : (mapValue || `${venueName} ${venueAddress}`))
         .replace(/\s+/g, " ")
@@ -474,17 +481,22 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         { hex: "#4A151C", name: "ក្រហមចាស់" },
     ];
 
-    const rawDressColors = (tpl.dressCode && Array.isArray(tpl.dressCode.colors) && tpl.dressCode.colors.length)
-        ? tpl.dressCode.colors
-        : (Array.isArray(tpl.dressColors) && tpl.dressColors.length)
-            ? tpl.dressColors
-            : (Array.isArray(tpl.design?.dressColors) && tpl.design.dressColors.length)
-                ? tpl.design.dressColors
-                : null;
+    const hostedDressCode = host.dressCode || {};
+    const rawDressColors = hasHostContent
+        ? ((Array.isArray(hostedDressCode.colors) && hostedDressCode.colors.length)
+            ? hostedDressCode.colors
+            : (Array.isArray(host.dressColors) && host.dressColors.length ? host.dressColors : null))
+        : ((tpl.dressCode && Array.isArray(tpl.dressCode.colors) && tpl.dressCode.colors.length)
+            ? tpl.dressCode.colors
+            : (Array.isArray(tpl.dressColors) && tpl.dressColors.length)
+                ? tpl.dressColors
+                : (Array.isArray(tpl.design?.dressColors) && tpl.design.dressColors.length)
+                    ? tpl.design.dressColors
+                    : null);
 
     const resolvedColors = rawDressColors
         ? normalizeDressColors(rawDressColors)
-        : normalizeDressColors(themeDressColors);
+        : (hasHostContent ? [] : normalizeDressColors(themeDressColors));
 
     const hasAdminColors = Boolean(rawDressColors && rawDressColors.length);
     const colorNames = resolvedColors.map((c) => c.name).filter(Boolean);
@@ -493,19 +505,21 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         ? `សូមជ្រើសរើសសម្លៀកបំពាក់ពណ៌ ${dynamicDressName} ដើម្បីសមនឹងបរិយាកាសនៃពិធីមង្គលការ។`
         : "";
 
+    const dressCodeSource = hasHostContent ? hostedDressCode : (tpl.dressCode || {});
     const dressCode = {
-        name: tpl.dressCode?.name || (hasAdminColors && dynamicDressName ? dynamicDressName : (copy.dressName || "ពណ៌សម្លៀកបំពាក់ (Dress Code)")),
-        description: tpl.dressCode?.description || (hasAdminColors && dynamicDressNote ? dynamicDressNote : (copy.dressNote || "សូមស្លៀកសម្លៀកបំពាក់ពណ៌តាមប្រធានបទ ឬពណ៌សមរម្យ")),
-        style: tpl.dressCode?.style || (tpl.style && tpl.style !== "Wedding Template" ? tpl.style : copy.dressStyle) || "ខ្មែរប្រពៃណី / សម័យ",
+        name: dressCodeSource.name || (hasAdminColors && dynamicDressName ? dynamicDressName : (hasHostContent ? "" : copy.dressName || "ពណ៌សម្លៀកបំពាក់ (Dress Code)")),
+        description: dressCodeSource.description || (hasAdminColors && dynamicDressNote ? dynamicDressNote : (hasHostContent ? "" : copy.dressNote || "សូមស្លៀកសម្លៀកបំពាក់ពណ៌តាមប្រធានបទ ឬពណ៌សមរម្យ")),
+        style: dressCodeSource.style || (hasHostContent ? "" : (tpl.style && tpl.style !== "Wedding Template" ? tpl.style : copy.dressStyle) || "ខ្មែរប្រពៃណី / សម័យ"),
         colors: resolvedColors,
     };
 
-    const coverImage = nonBlank(tpl.customMainImage)
-        || nonBlank(tpl.coverImage)
-        || nonBlank(host.coverImage)
-        || tpl.phoneCoverImage
-        || tpl.mainImage
-        || "/facebook/all/03-card/cover-card.jpg";
+    const coverImage = hasHostContent
+        ? nonBlank(host.coverImage)
+        : (nonBlank(tpl.customMainImage)
+            || nonBlank(tpl.coverImage)
+            || tpl.phoneCoverImage
+            || tpl.mainImage
+            || "/facebook/all/03-card/cover-card.jpg");
 
     const backgroundImage = hasHostContent
         ? nonBlank(host.backgroundImage)
@@ -521,9 +535,13 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
             }))
             .filter((item) => item.src)
         : null;
-    const hostStoryText = nonBlank(host.storyText || tpl.storyText);
+    const hostedMedia = (hostGallery || []).map((item) => item.src).filter(Boolean);
+    const hostedImageAt = (index = 0) => hostedMedia.length
+        ? hostedMedia[index % hostedMedia.length]
+        : coverImage;
+    const hostStoryText = nonBlank(hasHostContent ? host.storyText : (host.storyText || tpl.storyText));
     const hostStoryTextEn = nonBlank(host.storyTextEn);
-    const languageMode = host.languageMode || "both";
+    const languageMode = host.languageMode || tpl.languageMode || "both";
     const combinedStoryText = languageMode === "en"
         ? (hostStoryTextEn || hostStoryText)
         : languageMode === "both" && hostStoryTextEn
@@ -537,16 +555,28 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
             title: c.title || `ដំណើររបស់យើង`,
             date: c.date || "",
             text: c.text || "",
+<<<<<<< HEAD
             image: c.image || (hasHostContent ? undefined : (ownImages ? ownImages[index % ownImages.length] : undefined)),
         })).filter((chapter) => !hasHostContent || chapter.image)
         : combinedStoryText && !hasHostContent
+=======
+            image: c.image || (hasHostContent
+                ? hostedImageAt(index)
+                : (ownImages ? ownImages[index % ownImages.length] : undefined)),
+        }))
+        : combinedStoryText
+>>>>>>> 474206360e3ff654b1e94c8eba22168bafe9f11c
             ? [{
                 id: "story-text",
                 kicker: "រឿងរ៉ាវស្នេហា",
                 title: "ដំណើររបស់យើង",
                 date: tpl.dateText || "",
                 text: combinedStoryText,
+<<<<<<< HEAD
                 image: hasHostContent ? undefined : (ownImages ? ownImages[0] : coverImage),
+=======
+                image: hasHostContent ? hostedImageAt() : (ownImages ? ownImages[0] : coverImage),
+>>>>>>> 474206360e3ff654b1e94c8eba22168bafe9f11c
             }]
         : null;
 
@@ -567,7 +597,9 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
             role: m.role || "",
             roleEn: m.roleEn || "",
             name: m.name || "",
-            image: m.image || (ownImages ? ownImages[index % ownImages.length] : DEMO_PARTY[index % DEMO_PARTY.length].image),
+            image: m.image || (hasHostContent
+                ? hostedImageAt(index)
+                : (ownImages ? ownImages[index % ownImages.length] : DEMO_PARTY[index % DEMO_PARTY.length].image)),
         }))
         : null;
 
@@ -641,46 +673,57 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         guestSeat: host.guest?.seatLabel || tpl.guestSeat || "",
         guestSeatsCount: host.guest?.seatCount || tpl.guestSeatsCount || null,
         guestGroup: host.guest?.guestGroup || tpl.guestGroup || "",
-        groom: tpl.groom || "វណ្ណដា",
-        bride: tpl.bride || "ស្រីពេជ្រ",
+        groom: hasHostContent ? nonBlank(hostCouple.groom) : (tpl.groom || "វណ្ណដា"),
+        bride: hasHostContent ? nonBlank(hostCouple.bride) : (tpl.bride || "ស្រីពេជ្រ"),
+        groomEn: nonBlank(hasHostContent ? hostCouple.groomEn : tpl.groomEn),
+        brideEn: nonBlank(hasHostContent ? hostCouple.brideEn : tpl.brideEn),
         groomNickname: nonBlank(hostCouple.groomNickname),
         brideNickname: nonBlank(hostCouple.brideNickname),
         eventTitle: nonBlank(host.eventTitle || tpl.eventTitle) || "WEDDING INVITATION",
-        title: nonBlank(tpl.title || host.title) || "សិរីមង្គលអាពាហ៍ពិពាហ៍",
+        title: nonBlank(host.title || tpl.title) || "សិរីមង្គលអាពាហ៍ពិពាហ៍",
         subtitle: nonBlank(tpl.subtitle || host.subtitle),
         messageTitle: nonBlank(tpl.messageTitle || host.messageTitle),
         hideCoupleNameOnCover: Boolean(tpl.hideCoupleNameOnCover || host.hideCoupleNameOnCover),
         thankYouTitle: nonBlank(tpl.thankYouTitle || host.thankYouTitle),
         thankYouText: nonBlank(tpl.thankYouText || host.thankYouText || host.wishMessage),
-        dateText: tpl.dateText || "ថ្ងៃពុធ ២៨ មករា ២០២៦",
-        eventTime: nonBlank(tpl.eventTime || host.eventTime || tpl.ceremonyTime),
-        targetDate: tpl.targetDate || "2026-11-28T17:00:00+07:00",
+        dateText: hasHostContent ? nonBlank(host.dateText) : (tpl.dateText || "ថ្ងៃពុធ ២៨ មករា ២០២៦"),
+        dateTextEn: nonBlank(hasHostContent ? host.dateTextEn : tpl.dateTextEn),
+        languageMode,
+        eventTime: nonBlank(hasHostContent ? host.eventTime : (tpl.eventTime || tpl.ceremonyTime)),
+        targetDate: hasHostContent ? nonBlank(host.targetDate) : (tpl.targetDate || "2026-11-28T17:00:00+07:00"),
         ceremonyTime: tpl.ceremonyTime || "០៧:០០",
         receptionTime: tpl.receptionTime || "១៧:០០",
         coverImage,
         portraitImage: coverImage,
         backgroundImage,
-        message: nonBlank(tpl.message) || nonBlank(tpl.messageText) || nonBlank(tpl.blessingMessage) || copy.message,
+        message: hasHostContent
+            ? nonBlank(host.message)
+            : (nonBlank(tpl.message) || nonBlank(tpl.messageText) || nonBlank(tpl.blessingMessage) || copy.message),
         families: nonBlank(tpl.subtitle || host.subtitle) || "សូមគោរពអញ្ជើញ លោកអ្នក និងក្រុមគ្រួសារ",
         couple: {
             groomIntro: hostCouple.groomIntro || (hasHostContent ? "" : copy.groomIntro),
             brideIntro: hostCouple.brideIntro || (hasHostContent ? "" : copy.brideIntro),
-            groomParents: hostCouple.groomParents || (hasHostContent ? "" : "បុត្រាលោក ... និងលោកស្រី ..."),
-            brideParents: hostCouple.brideParents || (hasHostContent ? "" : "បុត្រីលោក ... និងលោកស្រី ..."),
+            groomParents: hostCouple.groomParents || "",
+            brideParents: hostCouple.brideParents || "",
         },
         venue: {
             name: venueName || (hasHostContent ? "" : tpl.venueName || "The Premier Center Sen Sok"),
-            address: tpl.venueAddress || (hasHostContent ? "" : "អគារ A, សែនសុខ, ភ្នំពេញ"),
+            address: venueAddress || (hasHostContent ? "" : "អគារ A, សែនសុខ, ភ្នំពេញ"),
             mapLink,
             mapEmbedUrl,
             image: coverImage,
         },
+<<<<<<< HEAD
         gallery: hasHostContent ? (hostGallery || []) : ((hostGallery && hostGallery.length) ? hostGallery : buildGallery(tpl)),
         story: hasHostContent ? (hostStory || []) : ((hostStory && hostStory.length) ? hostStory : buildStory(tpl, variant)),
+=======
+        gallery: hasHostContent ? (hostGallery || []) : buildGallery(tpl),
+        story: (hostStory && hostStory.length) ? hostStory : (hasHostContent ? [] : buildStory(tpl, variant)),
+>>>>>>> 474206360e3ff654b1e94c8eba22168bafe9f11c
         schedule: (hostSchedule && hostSchedule.length) ? hostSchedule : (hasHostContent ? (host.schedule || []) : buildSchedule(tpl, variant)),
-        party: (hostParty && hostParty.length) ? hostParty : DEMO_PARTY,
+        party: (hostParty && hostParty.length) ? hostParty : (hasHostContent ? [] : DEMO_PARTY),
         dressCode,
-        gift: (hostGift && hostGift.length) ? hostGift : buildGift(tpl),
+        gift: (hostGift && hostGift.length) ? hostGift : (hasHostContent ? normalizeGiftAccounts(tpl.gift) : buildGift(tpl)),
         giftNote: tpl.giftNote || (hasHostContent ? "" : copy.giftNote || ""),
         wish: {
             message: nonBlank(host.wishMessage) || (hasHostContent ? "" : copy.wishMessage || DEMO_WISH),
@@ -696,7 +739,9 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         footerThanksEn: copy.footerThanksEn,
         design,
         opening,
-        music: (typeof tpl.music === "string" && tpl.music) ? tpl.music : (tpl.music?.url || defaultMusicUrl),
+        music: (typeof tpl.music === "string" && tpl.music)
+            ? tpl.music
+            : (tpl.music?.url || (hasHostContent ? "" : defaultMusicUrl)),
         openingVideo: resolveOpeningVideo({
             mediaVideo: tpl.openingVideo,
             configuredVideo: design.openingVideoUrl,
