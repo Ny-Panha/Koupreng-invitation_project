@@ -5,23 +5,34 @@ import { MailOpen } from "lucide-react";
 import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
 import { KHMER_CELESTIAL_ASSETS } from "../khmerCelestialAssets";
 
+const EASE = [0.22, 1, 0.36, 1];
+
 function mediaSource(value) {
   if (typeof value === "string") return value;
   return value?.url || value?.src || "";
 }
 
+function reveal(reducedMotion, delay, overrides = {}) {
+  if (reducedMotion) return { initial: false, animate: { opacity: 1 }, transition: { duration: 0 } };
+  return {
+    initial: { opacity: 0, y: 18, filter: "blur(5px)", ...overrides.initial },
+    animate: { opacity: 1, y: 0, filter: "blur(0px)", ...overrides.animate },
+    transition: { duration: 0.82, delay, ease: EASE, ...overrides.transition },
+  };
+}
+
 export default function CelestialOpening({ content, onOpen }) {
   const reducedMotion = usePrefersReducedMotion();
   const [videoFailed, setVideoFailed] = useState(false);
-  const openLabel = content.opening?.openButtonText || "បើកសំបុត្រអញ្ជើញ";
-  const hasCoupleNames = Boolean(content.groom || content.bride);
+  const openLabel = content.opening?.openButtonText || "បើកធៀបការ";
+  const names = [content.groom, content.bride].filter(Boolean);
+  const logoAlt = names.length
+    ? `ស្លាកឈ្មោះ ${names.join(" និង ")}`
+    : "ស្លាកឈ្មោះគូស្វាមីភរិយា";
   const videoEnabled = content.design?.openingVideoEnabled !== false;
   const openingVideo = videoEnabled
     ? mediaSource(content.openingVideo) || KHMER_CELESTIAL_ASSETS.openingVideo
     : "";
-  const openingPoster = videoEnabled
-    ? mediaSource(content.openingPoster) || KHMER_CELESTIAL_ASSETS.openingPoster
-    : content.coverImage || KHMER_CELESTIAL_ASSETS.openingPoster;
 
   return (
     <motion.div
@@ -31,69 +42,94 @@ export default function CelestialOpening({ content, onOpen }) {
       aria-labelledby="kc-opening-title"
       initial={reducedMotion ? false : { opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={reducedMotion ? { display: "none" } : { opacity: 0, scale: 1.035, filter: "blur(8px)" }}
-      transition={{ duration: reducedMotion ? 0 : 0.9, ease: [0.22, 1, 0.36, 1] }}
+      exit={reducedMotion ? { display: "none" } : { opacity: 0, filter: "blur(7px)" }}
+      transition={{ duration: reducedMotion ? 0 : 1.12, ease: EASE }}
     >
-      <img
-        className="kc-opening__photo"
-        src={content.coverImage || openingPoster}
+      <motion.div
+        className="kc-opening__film"
+        initial={reducedMotion ? false : { opacity: 0, scale: 1.025 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: reducedMotion ? 0 : 1.6, ease: EASE }}
+        aria-hidden="true"
+      >
+        {!reducedMotion && !videoFailed && openingVideo ? (
+          <video
+            src={openingVideo}
+            poster={KHMER_CELESTIAL_ASSETS.botanicalFrame}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            width="720"
+            height="1280"
+            onError={() => setVideoFailed(true)}
+          />
+        ) : null}
+      </motion.div>
+
+      <motion.img
+        className="kc-opening__botanical"
+        src={KHMER_CELESTIAL_ASSETS.botanicalFrame}
         alt=""
         aria-hidden="true"
-        width="2048"
-        height="1365"
+        width="999"
+        height="1575"
+        initial={reducedMotion ? false : { opacity: 0, scale: 1.04 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={reducedMotion ? undefined : { opacity: 0.65, scale: 1.035 }}
+        transition={{ duration: reducedMotion ? 0 : 1.7, delay: reducedMotion ? 0 : 0.2, ease: EASE }}
       />
-      {!reducedMotion && !videoFailed && openingVideo ? (
-        <video
-          className="kc-opening__media"
-          src={openingVideo}
-          poster={openingPoster}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-hidden="true"
-          width="720"
-          height="1280"
-          onError={() => setVideoFailed(true)}
-        />
-      ) : (
-        <img className="kc-opening__media" src={openingPoster} alt="" aria-hidden="true" width="720" height="1280" />
-      )}
       <div className="kc-opening__shade" aria-hidden="true" />
 
       <div className="kc-opening__content">
-        <img
-          className="kc-opening__brand"
-          src={KHMER_CELESTIAL_ASSETS.brandMark}
-          alt="Koupreng"
-          width="768"
-          height="512"
-        />
-        <p className="kc-opening__eyebrow">សិរីមង្គលអាពាហ៍ពិពាហ៍</p>
-        {!content.hideCoupleNameOnCover && hasCoupleNames ? (
-          <h1 id="kc-opening-title">
-            <span>{content.groom}</span>
-            <em>&amp;</em>
-            <span>{content.bride}</span>
-          </h1>
-        ) : (
-          <h1 id="kc-opening-title" className="kc-opening__title-only">{content.title}</h1>
-        )}
-        {content.dateText ? <p className="kc-opening__date">{content.dateText}</p> : null}
-        <p className="kc-opening__guest">
+        <motion.p className="kc-opening__eyebrow" {...reveal(reducedMotion, 0.62)}>
+          {content.opening?.heading || content.title || "សិរីសួស្តីអាពាហ៍ពិពាហ៍"}
+        </motion.p>
+
+        <motion.div
+          className="kc-opening__brand-wrap"
+          initial={reducedMotion ? false : { opacity: 0, y: 25, scale: 0.94, filter: "blur(8px)" }}
+          animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+          transition={{ duration: reducedMotion ? 0 : 1.35, delay: reducedMotion ? 0 : 1, ease: EASE }}
+        >
+          <img
+            className="kc-opening__brand"
+            src={KHMER_CELESTIAL_ASSETS.brandMark}
+            alt={logoAlt}
+            width="768"
+            height="512"
+          />
+          <span className="kc-opening__brand-highlight" aria-hidden="true" />
+        </motion.div>
+
+        <motion.h1 id="kc-opening-title" {...reveal(reducedMotion, 1.72)}>
+          {content.title || "សិរីសួស្តីអាពាហ៍ពិពាហ៍"}
+        </motion.h1>
+
+        <motion.div className="kc-opening__date-block" {...reveal(reducedMotion, 2.18)}>
+          {content.dateText ? <p className="kc-opening__date">{content.dateText}</p> : null}
+          {content.eventTime ? <p className="kc-opening__time">{content.eventTime}</p> : null}
+        </motion.div>
+
+        <motion.p className="kc-opening__guest" {...reveal(reducedMotion, 2.38)}>
           {content.isPersonalizedGuest ? "សូមគោរពអញ្ជើញ" : "ជូនចំពោះ"}<br />
           <strong>{content.guestName}</strong>
-        </p>
-        <button
+        </motion.p>
+
+        <motion.button
           type="button"
-          className="kc-button kc-button--gold kc-opening__button"
+          className="kc-button kc-opening__button"
           onClick={onOpen}
           autoFocus
+          {...reveal(reducedMotion, 2.7, {
+            initial: { y: 12 },
+            transition: { duration: 0.72 },
+          })}
         >
           <MailOpen aria-hidden="true" />
           <span>{openLabel}</span>
-        </button>
+        </motion.button>
       </div>
     </motion.div>
   );

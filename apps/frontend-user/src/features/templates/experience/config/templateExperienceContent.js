@@ -444,6 +444,8 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
     // pass no hostContent, so they keep showing tasteful sample data.
     const host = tpl.hostContent || {};
     const hostCouple = host.couple || {};
+    const templateCouple = tpl.couple || {};
+    const templateFamily = tpl.family || {};
     const hostContact = host.contact || {};
     const hostEnabledSections = {
         ...(tpl.enabledSections || {}),
@@ -675,11 +677,18 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         hideCoupleNameOnCover: Boolean(tpl.hideCoupleNameOnCover || host.hideCoupleNameOnCover),
         thankYouTitle: nonBlank(tpl.thankYouTitle || host.thankYouTitle),
         thankYouText: nonBlank(tpl.thankYouText || host.thankYouText || host.wishMessage),
+        apologyTitle: nonBlank(tpl.apologyTitle || host.apologyTitle),
+        apologyText: nonBlank(tpl.apologyText || host.apologyText),
         dateText: hasHostContent ? nonBlank(host.dateText) : (tpl.dateText || "ថ្ងៃពុធ ២៨ មករា ២០២៦"),
         dateTextEn: nonBlank(hasHostContent ? host.dateTextEn : tpl.dateTextEn),
         languageMode,
         eventTime: nonBlank(hasHostContent ? host.eventTime : (tpl.eventTime || tpl.ceremonyTime)),
-        targetDate: hasHostContent ? nonBlank(host.targetDate) : (tpl.targetDate || "2026-11-28T17:00:00+07:00"),
+        machineEventDate: hasHostContent
+            ? nonBlank(host.machineEventDate || host.targetDate)
+            : (tpl.machineEventDate || tpl.targetDate || "2026-11-28T17:00:00+07:00"),
+        targetDate: hasHostContent
+            ? nonBlank(host.machineEventDate || host.targetDate)
+            : (tpl.machineEventDate || tpl.targetDate || "2026-11-28T17:00:00+07:00"),
         ceremonyTime: tpl.ceremonyTime || "០៧:០០",
         receptionTime: tpl.receptionTime || "១៧:០០",
         coverImage,
@@ -688,12 +697,21 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         message: hasHostContent
             ? nonBlank(host.message)
             : (nonBlank(tpl.message) || nonBlank(tpl.messageText) || nonBlank(tpl.blessingMessage) || copy.message),
+        familyHeading: nonBlank(tpl.familyHeading || host.familyHeading) || "គ្រួសារទាំងសងខាង",
         families: nonBlank(tpl.subtitle || host.subtitle) || "សូមគោរពអញ្ជើញ លោកអ្នក និងក្រុមគ្រួសារ",
+        family: {
+            groomTitle: nonBlank(templateFamily.groomTitle || host.family?.groomTitle) || "ខាងកូនប្រុស",
+            groomParents: host.family?.groomParents || hostCouple.groomParents || templateFamily.groomParents || templateCouple.groomParents || [],
+            groomLabel: nonBlank(templateFamily.groomLabel || host.family?.groomLabel) || "កូនប្រុសនាម",
+            brideTitle: nonBlank(templateFamily.brideTitle || host.family?.brideTitle) || "ខាងកូនស្រី",
+            brideParents: host.family?.brideParents || hostCouple.brideParents || templateFamily.brideParents || templateCouple.brideParents || [],
+            brideLabel: nonBlank(templateFamily.brideLabel || host.family?.brideLabel) || "កូនស្រីនាម",
+        },
         couple: {
-            groomIntro: hostCouple.groomIntro || (hasHostContent ? "" : copy.groomIntro),
-            brideIntro: hostCouple.brideIntro || (hasHostContent ? "" : copy.brideIntro),
-            groomParents: hostCouple.groomParents || "",
-            brideParents: hostCouple.brideParents || "",
+            groomIntro: hostCouple.groomIntro || templateCouple.groomIntro || (hasHostContent ? "" : copy.groomIntro),
+            brideIntro: hostCouple.brideIntro || templateCouple.brideIntro || (hasHostContent ? "" : copy.brideIntro),
+            groomParents: hostCouple.groomParents || templateCouple.groomParents || templateFamily.groomParents || "",
+            brideParents: hostCouple.brideParents || templateCouple.brideParents || templateFamily.brideParents || "",
         },
         venue: {
             name: venueName || (hasHostContent ? "" : tpl.venueName || "The Premier Center Sen Sok"),
@@ -705,6 +723,9 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         gallery: hasHostContent ? (hostGallery || []) : buildGallery(tpl),
         story: (hostStory && hostStory.length) ? hostStory : (hasHostContent ? [] : buildStory(tpl, variant)),
         schedule: (hostSchedule && hostSchedule.length) ? hostSchedule : (hasHostContent ? (host.schedule || []) : buildSchedule(tpl, variant)),
+        scheduleTitle: nonBlank(tpl.scheduleTitle || host.scheduleTitle) || "កម្មវិធីមង្គលការ",
+        scheduleDate: nonBlank(tpl.scheduleDate || host.scheduleDate) || (hasHostContent ? nonBlank(host.dateText) : tpl.dateText || ""),
+        scheduleEnding: nonBlank(tpl.scheduleEnding || host.scheduleEnding),
         party: (hostParty && hostParty.length) ? hostParty : (hasHostContent ? [] : DEMO_PARTY),
         dressCode,
         gift: (hostGift && hostGift.length) ? hostGift : (hasHostContent ? normalizeGiftAccounts(tpl.gift) : buildGift(tpl)),

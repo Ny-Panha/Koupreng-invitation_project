@@ -3,6 +3,8 @@ import { MemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import TemplateExperience from "../../experience/TemplateExperience";
+import { buildTemplateContent } from "../../experience/config/templateExperienceContent";
+import { KHMER_CELESTIAL_TEMPLATE } from "../../data/templatesData";
 import { CelestialHeading } from "./components/CelestialSection";
 
 const content = {
@@ -69,6 +71,7 @@ describe("KhmerCelestialLayout integration", () => {
   afterEach(() => {
     cleanup();
     document.body.style.overflow = "";
+    document.documentElement.style.overflow = "";
     vi.unstubAllGlobals();
     vi.restoreAllMocks();
   });
@@ -84,12 +87,14 @@ describe("KhmerCelestialLayout integration", () => {
     );
 
     expect(document.body.style.overflow).toBe("hidden");
+    expect(document.documentElement.style.overflow).toBe("hidden");
     expect(screen.getByRole("button", { name: "បើកសំបុត្រអញ្ជើញ" })).toHaveFocus();
     expect(play).not.toHaveBeenCalled();
     fireEvent.click(screen.getByRole("button", { name: "បើកសំបុត្រអញ្ជើញ" }));
     expect(play).toHaveBeenCalledTimes(1);
     expect(screen.getAllByTestId("real-rsvp")).toHaveLength(1);
     expect(document.body.style.overflow).toBe("");
+    expect(document.documentElement.style.overflow).toBe("");
 
     const wheelEvent = new WheelEvent("wheel", { cancelable: true });
     const touchMoveEvent = new Event("touchmove", { cancelable: true });
@@ -165,6 +170,71 @@ describe("KhmerCelestialLayout integration", () => {
     expect(document.querySelector("audio")).not.toBeInTheDocument();
   });
 
+  it("keeps the visible preview date separate from an invalid machine date", () => {
+    const invalidDateContent = {
+      ...content,
+      dateText: "ថ្ងៃព្រហស្បតិ៍ ទី៣២ ខែធ្នូ ឆ្នាំ២០២៦",
+      targetDate: "not-a-date",
+      machineEventDate: "not-a-date",
+      enabledSections: { ...content.enabledSections, countdown: true, music: false },
+      music: "",
+    };
+
+    render(
+      <MemoryRouter>
+        <TemplateExperience tpl={{ id: "khmer-celestial", name: "Khmer Celestial" }} content={invalidDateContent} showBreadcrumb={false} showActions={false} />
+      </MemoryRouter>
+    );
+
+    expect(screen.getAllByText("ថ្ងៃព្រហស្បតិ៍ ទី៣២ ខែធ្នូ ឆ្នាំ២០២៦")).toHaveLength(3);
+    expect(screen.getAllByText("00")).toHaveLength(4);
+    expect(screen.queryByRole("link", { name: /Add to calendar/i })).not.toBeInTheDocument();
+  });
+
+  it("keeps map and gift integrations available when those optional sections are enabled", () => {
+    const integratedContent = {
+      ...content,
+      enabledSections: { ...content.enabledSections, map: true, gift: true, music: false },
+      music: "",
+      venue: {
+        name: "Himawari Hotel Apartments",
+        address: "Phnom Penh",
+        mapLink: "https://maps.example.test/wedding",
+        image: "/venue.jpg",
+      },
+      gift: [{
+        id: "aba",
+        bank: "ABA Bank",
+        account: "Koeung Vireak",
+        number: "000 111 222",
+        qrValue: "ABA|000111222",
+      }],
+    };
+
+    render(
+      <MemoryRouter>
+        <TemplateExperience tpl={{ id: "khmer-celestial", name: "Khmer Celestial" }} content={integratedContent} showBreadcrumb={false} showActions={false} />
+      </MemoryRouter>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "បើកសំបុត្រអញ្ជើញ" }));
+    expect(screen.getByRole("link", { name: /បើកផែនទី/ })).toHaveAttribute("href", "https://maps.example.test/wedding");
+    expect(screen.getByText("ABA Bank")).toBeInTheDocument();
+    expect(document.querySelector(".kc-gift")).toBeInTheDocument();
+  });
+
+  it("builds the flagship preview from the supplied Khmer sample fixture", () => {
+    const previewContent = buildTemplateContent(KHMER_CELESTIAL_TEMPLATE, "khmer-celestial");
+
+    expect(previewContent.title).toBe("សិរីសួស្តីអាពាហ៍ពិពាហ៍");
+    expect(previewContent.groom).toBe("កឿង វីរៈ");
+    expect(previewContent.bride).toBe("ឡុង សុម៉ាលី");
+    expect(previewContent.dateText).toBe("ថ្ងៃព្រហស្បតិ៍ ទី៣២ ខែធ្នូ ឆ្នាំ២០២៦");
+    expect(previewContent.machineEventDate).toBe("2026-12-20T17:00:00+07:00");
+    expect(previewContent.schedule).toHaveLength(9);
+    expect(previewContent.apologyTitle).toBe("លិខិតសូមអភ័យទោស");
+  });
+
   it("uses the optimized branded opening film and respects an explicit video opt-out", () => {
     window.matchMedia = vi.fn().mockReturnValue({
       matches: false,
@@ -187,7 +257,11 @@ describe("KhmerCelestialLayout integration", () => {
       "src",
       "/invitations/khmer-celestial/burgundy-bokeh.mp4"
     );
-    expect(screen.getAllByAltText("Koupreng")).toHaveLength(2);
+    expect(screen.getAllByAltText("ស្លាកឈ្មោះ វិរៈ និង សុភ័ក្រ្តា")).toHaveLength(3);
+    expect(document.querySelector(".kc-opening__brand")).toHaveAttribute(
+      "src",
+      "/invitations/khmer-celestial/koupreng-gold-mark.webp"
+    );
     unmount();
 
     render(
@@ -202,7 +276,10 @@ describe("KhmerCelestialLayout integration", () => {
     );
 
     expect(document.querySelector(".kc-opening video")).not.toBeInTheDocument();
-    expect(document.querySelector(".kc-opening__media")).toHaveAttribute("src", content.coverImage);
+    expect(document.querySelector(".kc-opening__botanical")).toHaveAttribute(
+      "src",
+      "/invitations/khmer-celestial/botanical-frame.jpg"
+    );
   });
 
   it("provides visible lightbox navigation, keyboard dismissal, and focus restoration", async () => {
