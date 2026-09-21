@@ -33,7 +33,7 @@ function normalizeGalleryItem(item, index) {
   if (typeof item === "string") {
     return { id: `gallery-${index}`, preview: item, type: "image" };
   }
-  const preview = item.preview || item.src || item.fileUrl || "";
+  const preview = item.preview || item.src || item.fileUrl || item.url || "";
   if (!preview) return null;
   return {
     id: item.id || `gallery-${index}`,
@@ -87,7 +87,16 @@ export function publicInvitationToDraft(invitation, media) {
   const layout = safeJson(invitation?.layoutSettings);
   const contentCouple = content.couple || {};
   const contentEvent = content.event || {};
+  const invitationGallery = invitation?.galleryImages
+    || invitation?.gallery_urls
+    || invitation?.gallery
+    || design.gallery
+    || design.photos
+    || [];
   const gallery = mediaGallery(media);
+  const savedGallery = Array.isArray(invitationGallery)
+    ? invitationGallery.map(normalizeGalleryItem).filter(Boolean)
+    : [];
   const eventTime = timeValue(invitation?.eventTime);
   const mediaCover = media?.coverImage?.fileUrl || "";
   const mediaMusic = media?.backgroundMusic?.fileUrl
@@ -154,7 +163,9 @@ export function publicInvitationToDraft(invitation, media) {
     coverImage: mediaCover || invitation?.coverUrl || invitation?.media?.coverImage?.fileUrl || content.coverImage || invitation?.templateThumbnailUrl || "",
     gallery: gallery.length
       ? gallery
-      : (Array.isArray(content.gallery) ? content.gallery.map(normalizeGalleryItem).filter(Boolean) : []),
+      : (Array.isArray(content.gallery)
+        ? content.gallery.map(normalizeGalleryItem).filter(Boolean)
+        : savedGallery),
     music: mediaMusic || content.music || null,
     openingVideo: reconstructedOpeningVideo,
     openingVideoEnabled,

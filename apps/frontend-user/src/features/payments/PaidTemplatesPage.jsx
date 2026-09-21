@@ -179,7 +179,7 @@ export default function PaidTemplatesPage() {
                               </Link>
                             ) : (
                               <Link
-                                to={`/create/wedding?templateId=${item.id || item.slug || ""}`}
+                                to="/templates/browse"
                                 className="paid-btn-use"
                               >
                                 <IoSparkles />
@@ -255,7 +255,7 @@ export default function PaidTemplatesPage() {
                     {/* Action Buttons */}
                     <div className="paid-card-actions">
                       <Link
-                        to={`/create/wedding?template=${targetCode}`}
+                                to="/templates/browse"
                         className="paid-btn-use"
                       >
                         <IoSparkles />

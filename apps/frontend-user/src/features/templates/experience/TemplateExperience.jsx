@@ -2,7 +2,6 @@ import { createElement, useCallback, useEffect, useMemo, useRef, useState } from
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
-import { Breadcrumb } from "@/shared/ui/Breadcrumb";
 import { IoArrowBackOutline, IoSparkles } from "react-icons/io5";
 import { buildTemplateContent } from "./config/templateExperienceContent";
 import {
@@ -19,7 +18,6 @@ import TemplateStory from "./components/sections/TemplateStory";
 import TemplateSchedule from "./components/sections/TemplateSchedule";
 import TemplateVenue from "./components/sections/TemplateVenue";
 import TemplateGallery from "./components/sections/TemplateGallery";
-import TemplateParty from "./components/sections/TemplateParty";
 import TemplateGift from "./components/sections/TemplateGift";
 
 import TemplateRsvp from "./components/sections/TemplateRsvp";
@@ -69,7 +67,6 @@ export default function TemplateExperience({
     useTemplateLink,
     variant,
     content: contentProp,
-    breadcrumbItems,
     backLink = "/templates/browse",
     backLabel = "ត្រឡប់ក្រោយ",
     primaryCtaLabel = "ប្រើគំរូនេះ",
@@ -196,16 +193,6 @@ export default function TemplateExperience({
 
     const reducedMotion = usePrefersReducedMotion();
     const [musicAudioRef, musicController] = useTemplateMusicController(content.music);
-    const crumbs = useMemo(
-        () =>
-            breadcrumbItems || [
-                { label: "ទំព័រដើម", to: "/" },
-                { label: "គំរូសន្លឹកការ", to: "/templates" },
-                { label: tpl.name },
-            ],
-        [breadcrumbItems, tpl.name]
-    );
-
     const rootRef = useRef(null);
     const contentRef = useRef(null);
     const openingTimerRef = useRef(null);
@@ -428,7 +415,6 @@ export default function TemplateExperience({
                         {sectionEnabled("map") && <TemplateVenue content={content} />}
                         {sectionEnabled("gallery") && <TemplateGallery content={content} />}
                         {sectionEnabled("story") && content.story?.length > 0 && <TemplateStory content={content} />}
-                        {sectionEnabled("party") && <TemplateParty content={content} />}
                         {sectionEnabled("gift") && <TemplateGift content={content} />}
                         {sectionEnabled("dressCode") && <TemplateDressCode content={content} />}
                         {sectionEnabled("faq") && <TemplateFaq content={content} />}

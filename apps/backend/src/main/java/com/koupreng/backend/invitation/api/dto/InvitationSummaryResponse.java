@@ -17,6 +17,7 @@ import java.time.LocalDate;
 public class InvitationSummaryResponse {
 
     private Long id;
+    private String coverUrl;
     private String title;
     private String slug;
     private EventType eventType;
@@ -25,8 +26,13 @@ public class InvitationSummaryResponse {
     private InvitationStatus status;
 
     public static InvitationSummaryResponse from(UserInvitation invitation) {
+        return from(invitation, null);
+    }
+
+    public static InvitationSummaryResponse from(UserInvitation invitation, String coverUrl) {
         return InvitationSummaryResponse.builder()
                 .id(invitation.getId())
+                .coverUrl(coverUrl)
                 .title(invitation.getTitle())
                 .slug(invitation.getSlug())
                 .eventType(invitation.getEventType())

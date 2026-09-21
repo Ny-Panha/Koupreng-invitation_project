@@ -141,4 +141,19 @@ describe("invitation draft adapters", () => {
         }, {});
         expect(reconstructed.guest).toBeNull();
     });
+
+    it("maps saved gallery fields when the media endpoint has no images", () => {
+        const reconstructed = publicInvitationToDraft({
+            galleryImages: [{ id: 1, fileUrl: "https://cdn.example/gallery-one.webp" }],
+            gallery_urls: ["https://cdn.example/gallery-two.webp"],
+            designJson: JSON.stringify({
+                photos: [{ id: "p3", url: "https://cdn.example/gallery-three.webp" }],
+            }),
+            contentJson: "{}",
+        }, { galleryImages: [] });
+
+        expect(reconstructed.gallery).toEqual([
+            expect.objectContaining({ preview: "https://cdn.example/gallery-one.webp" }),
+        ]);
+    });
 });

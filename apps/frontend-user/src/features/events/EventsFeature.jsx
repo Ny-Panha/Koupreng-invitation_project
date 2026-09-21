@@ -42,7 +42,7 @@ export function EventsFeature() {
                     <h1>{t("title")}</h1>
                     <p>{t("subtitle")}</p>
                 </div>
-                <Link to="/create/wedding" className="events-create-btn">
+                <Link to="/dashboard/invitations/design" className="events-create-btn">
                     + {createBtnText}
                 </Link>
             </header>
@@ -54,7 +54,7 @@ export function EventsFeature() {
                     </div>
                     <div className="events-empty-title">{t("emptyTitle")}</div>
                     <div className="events-empty-desc">{t("emptySubtitle")}</div>
-                    <Link to="/create/wedding" className="events-empty-action">
+                    <Link to="/dashboard/invitations/design" className="events-empty-action">
                         + {emptyActionText}
                     </Link>
                 </div>
@@ -65,8 +65,8 @@ export function EventsFeature() {
                             key={draft.id}
                             draft={draft}
                             onManage={handleDashboard}
-                            onEdit={handleEdit}
                             onPreview={handlePreview}
+                            onEdit={handleEdit}
                             onDelete={handleDeleteClick}
                             t={t}
                         />

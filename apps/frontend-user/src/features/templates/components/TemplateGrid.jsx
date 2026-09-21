@@ -48,7 +48,7 @@ function getCreatePath(path, isAuthenticated) {
 }
 
 function getUseTemplatePath(templateId, isAuthenticated) {
-    return getCreatePath(`/create/wedding?template=${templateId}`, isAuthenticated);
+    return getCreatePath("/templates/browse", isAuthenticated);
 }
 
 function formatTemplateDesc(description, fallback) {

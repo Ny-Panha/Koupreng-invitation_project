@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { IoCameraOutline, IoClose } from "react-icons/io5";
+import { IoClose } from "react-icons/io5";
 
 import TemplateReveal from "../shared/TemplateReveal";
 import TemplateImage from "../shared/TemplateImage";
@@ -25,6 +25,8 @@ export default function TemplateGallery({ content }) {
         document.addEventListener("keydown", onKey);
         return () => document.removeEventListener("keydown", onKey);
     }, [isOpen, close]);
+
+    if (!images.length) return null;
 
     return (
         <section className="tx-section tx-gallery" data-tx-section="gallery" aria-labelledby="tx-gallery-title">
@@ -52,13 +54,7 @@ export default function TemplateGallery({ content }) {
                         </button>
                         ))}
                     </TemplateReveal>
-                ) : (
-                    <TemplateReveal className="tx-gallery__empty">
-                        <IoCameraOutline aria-hidden="true" />
-                        <p>រូបភាពអនុស្សាវរីយ៍នឹងបង្ហាញនៅទីនេះ</p>
-                        <span>Wedding memories coming soon</span>
-                    </TemplateReveal>
-                )}
+                ) : null}
             </div>
 
             {isOpen && (

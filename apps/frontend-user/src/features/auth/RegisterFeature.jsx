@@ -59,7 +59,7 @@ function Register() {
         password,
       });
       login(authData);
-      navigate("/dashboard");
+      navigate("/dashboard/events");
     } catch (err) {
       setError(err.message || auth("registerFailed"));
     } finally {

@@ -14,7 +14,6 @@ import {
 import { paymentService } from "./paymentService";
 import { isTerminalStatus } from "./paymentStatus";
 import { toast } from "../../shared/ui/toast";
-import { KEEP_TEMPLATE_CODE } from "@/features/templates";
 import { ABA_STATIC_PAY_LINK, getPaymentQrValue } from "./khqr";
 import "./PaymentPages.css";
 
@@ -147,9 +146,6 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
     return formatRemaining(remaining);
   }, [status, isExpired, remaining]);
 
-  const targetTemplateId =
-    order?.templateId || order?.templateSlug || KEEP_TEMPLATE_CODE;
-
   return (
     <section className="checkout-card payment-qr-card-lux">
       {/* Top Order Summary Bar */}
@@ -280,7 +276,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
                 <p>គំរូធៀបការរបស់អ្នកត្រូវបាន Unlock រួចរាល់ហើយ។ អ្នកអាចចាប់ផ្តើមបង្កើតធៀបការបានឥឡូវនេះ។</p>
               </div>
               <Link
-                to={`/create/wedding?template=${targetTemplateId}`}
+                to="/templates/browse"
                 className="checkout-pay-btn"
                 style={{ marginTop: "12px", width: "100%" }}
               >

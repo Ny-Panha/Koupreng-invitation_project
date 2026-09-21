@@ -11,7 +11,7 @@ function getSafeRedirect(searchParams) {
   const redirect = searchParams.get("next") || searchParams.get("redirect");
 
   if (!redirect || !redirect.startsWith("/") || redirect.startsWith("//")) {
-    return "/dashboard";
+    return "/dashboard/events";
   }
 
   return redirect;

@@ -22,7 +22,6 @@ import {
     PenSquare,
     Map,
     CheckCircle2,
-    Users,
     ExternalLink,
     Zap,
     X,
@@ -32,6 +31,7 @@ import {
 
 import { toast } from "../../shared/ui/toast";
 import { invitationService } from "@/features/invitations/api/invitationApi";
+import { mediaService } from "@/features/invitations/api/mediaApi";
 import { saveDraft } from "@/shared/storage/weddingStorage";
 import {
     getTemplateById,
@@ -317,177 +317,6 @@ function CleanStoryItem({ idx, item, onChange, onUpload, onRemoveImage, onDelete
     );
 }
 
-function CleanPartyMemberItem({ idx, item, onChange, onUpload, onRemoveImage, onDelete, canDelete }) {
-    const fileInputRef = useRef(null);
-
-    return (
-        <div className="pe-party-item-card" style={{
-            background: "#faf8f5",
-            border: "1px solid #e8e2d8",
-            borderRadius: "10px",
-            padding: "14px",
-            marginBottom: "12px",
-            display: "flex",
-            gap: "14px",
-            alignItems: "flex-start",
-            flexWrap: "wrap",
-            position: "relative"
-        }}>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px" }}>
-                {item?.image ? (
-                    <div style={{
-                        width: "64px",
-                        height: "64px",
-                        borderRadius: "50%",
-                        overflow: "hidden",
-                        border: "2px solid #B08E4F",
-                        boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-                        background: "#fff"
-                    }}>
-                        <img src={item.image} alt={item.name || `Member ${idx + 1}`} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                    </div>
-                ) : (
-                    <div
-                        style={{
-                            width: "64px",
-                            height: "64px",
-                            borderRadius: "50%",
-                            border: "2px dashed #d1c7b7",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            cursor: "pointer",
-                            background: "#fff"
-                        }}
-                        onClick={() => fileInputRef.current?.click()}
-                    >
-                        <UploadCloud size={18} style={{ color: "#94a3b8" }} />
-                        <span style={{ fontSize: "0.62rem", color: "#94a3b8", marginTop: "2px" }}>រូបថត</span>
-                    </div>
-                )}
-                <div style={{ display: "flex", gap: "4px" }}>
-                    <button
-                        type="button"
-                        onClick={() => fileInputRef.current?.click()}
-                        style={{
-                            border: "1px solid #e2e8f0",
-                            background: "#fff",
-                            borderRadius: "4px",
-                            padding: "2px 6px",
-                            fontSize: "0.7rem",
-                            cursor: "pointer",
-                            color: "#475569"
-                        }}
-                    >
-                        {item?.image ? "ប្តូរ" : "ដាក់រូប"}
-                    </button>
-                    {item?.image && (
-                        <button
-                            type="button"
-                            onClick={onRemoveImage}
-                            style={{
-                                border: "1px solid #fee2e2",
-                                background: "#fff",
-                                borderRadius: "4px",
-                                padding: "2px 6px",
-                                fontSize: "0.7rem",
-                                cursor: "pointer",
-                                color: "#ef4444"
-                            }}
-                        >
-                            លុប
-                        </button>
-                    )}
-                </div>
-                <input
-                    type="file"
-                    ref={fileInputRef}
-                    accept="image/*"
-                    style={{ display: "none" }}
-                    onChange={onUpload}
-                />
-            </div>
-
-            <div style={{ flex: 1, minWidth: "220px", display: "flex", flexDirection: "column", gap: "8px" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <span style={{ fontSize: "0.82rem", fontWeight: 700, color: "#854d0e" }}>
-                        សមាជិកទី {idx + 1}
-                    </span>
-                    {canDelete && (
-                        <button
-                            type="button"
-                            onClick={onDelete}
-                            style={{
-                                border: "none",
-                                background: "transparent",
-                                color: "#ef4444",
-                                cursor: "pointer",
-                                display: "inline-flex",
-                                alignItems: "center",
-                                gap: "4px",
-                                fontSize: "0.75rem"
-                            }}
-                        >
-                            <Trash2 size={13} /> ដកចេញ
-                        </button>
-                    )}
-                </div>
-
-                <div className="pe-grid-2" style={{ gap: "8px" }}>
-                    <div>
-                        <label style={{ fontSize: "0.73rem", color: "#64748b", display: "block", marginBottom: "3px" }}>
-                            ឈ្មោះ (Name)
-                        </label>
-                        <input
-                            type="text"
-                            className="pe-input"
-                            style={{ padding: "6px 10px", fontSize: "0.85rem" }}
-                            placeholder="ឧ. សុខ វិបុល"
-                            value={item.name || ""}
-                            onChange={(e) => onChange("name", e.target.value)}
-                        />
-                    </div>
-                    <div>
-                        <label style={{ fontSize: "0.73rem", color: "#64748b", display: "block", marginBottom: "3px" }}>
-                            តួនាទី (Role)
-                        </label>
-                        <input
-                            type="text"
-                            className="pe-input"
-                            style={{ padding: "6px 10px", fontSize: "0.85rem" }}
-                            placeholder="ឧ. កូនកំលោះកិត្តិយស"
-                            value={item.role || ""}
-                            onChange={(e) => onChange("role", e.target.value)}
-                        />
-                    </div>
-                </div>
-
-                <div>
-                    <label style={{ fontSize: "0.73rem", color: "#64748b", display: "block", marginBottom: "3px" }}>
-                        តួនាទីជាអង់គ្លេស (Role in English)
-                    </label>
-                    <input
-                        type="text"
-                        className="pe-input"
-                        style={{ padding: "6px 10px", fontSize: "0.85rem" }}
-                        placeholder="ឧ. Best Man, Maid of Honor, Family"
-                        value={item.roleEn || ""}
-                        onChange={(e) => onChange("roleEn", e.target.value)}
-                    />
-                </div>
-            </div>
-        </div>
-    );
-}
-
-const DEFAULT_PARTY = [
-    { id: "party-1", role: "កូនកំលោះកិត្តិយស", roleEn: "Best Man", name: "សុខ វិបុល", image: "/facebook/all/02-card/02-04.jpg" },
-    { id: "party-2", role: "កូនក្រមុំកិត្តិយស", roleEn: "Maid of Honor", name: "ចាន់ ស្រីនិច", image: "/facebook/all/02-card/02-06.jpg" },
-    { id: "party-3", role: "គ្រួសារ", roleEn: "Family", name: "ឪពុកម្ដាយទាំងសងខាង", image: "/facebook/all/03-card/03-03.jpg" },
-    { id: "party-4", role: "មិត្តភក្ដិ", roleEn: "Friends", name: "ក្រុមមិត្តជិតស្និទ្ធ", image: "/facebook/all/03-card/03-05.jpg" },
-];
-
 const DEFAULT_INVITATION_TEXT = `សម្តេច ទ្រង់ ឯកឧត្តម លោកជំទាវ លោកអ្នកឧកញ៉ា 
 អ្នកឧកញ៉ា ឧកញ៉ា លោក លោកស្រី អ្នកនាង កញា 
 ព្រមទាំងប្រិយមិត្តអញ្ជើញចូលរួមជាអធិបតី និងជាភ្ញៀវកិត្តិយស ដើម្បីប្រសិទ្ធិពរជ័យសិរីសួស្តី ជ័យមង្គល ក្នុងពិធីអាពាហ៍ពិពាហ៍
@@ -523,65 +352,73 @@ function toStandardDate(val) {
     return "2026-01-28";
 }
 
+function isGoogleMapsUrl(value) {
+    if (!value || !/^https?:\/\//i.test(value.trim())) return false;
+    try {
+        const url = new URL(value.trim());
+        const hostname = url.hostname.toLowerCase();
+        return hostname === "maps.google.com"
+            || (hostname === "www.google.com" && url.pathname.toLowerCase().startsWith("/maps"))
+            || hostname === "maps.app.goo.gl"
+            || (hostname === "goo.gl" && url.pathname.toLowerCase().startsWith("/maps"));
+    } catch {
+        return false;
+    }
+}
+
+function previewMapUrl(value, venueName = "") {
+    const trimmed = String(value || "").trim();
+    if (!trimmed) return "";
+    if (isGoogleMapsUrl(trimmed)) return trimmed;
+    if (/^https?:\/\//i.test(trimmed)) return "";
+    const query = [trimmed, venueName].filter(Boolean).join(" ");
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
+
 const DEFAULT_STATE = {
     templateId: "garden-royal-khmer-wedding",
     language: "KH",
-    title: "សួនរាជហង្សខ្មែរ",
-    subtitle: "សូមគោរពអញ្ជើញ",
+    title: "",
+    subtitle: "",
     hideCoupleNameOnCover: false,
-    eventDateText: "ថ្ងៃពុធ ២៨ មករា ២០២៦",
-    eventDate: "2026-01-28",
-    eventTime: "17:00",
-    venueName: "The Premier Center Sen Sok",
-    venueAddress: "អគារ A, សែនសុខ, ភ្នំពេញ",
+    eventDateText: "",
+    eventDate: "",
+    eventTime: "",
+    venueName: "",
+    venueAddress: "",
     googleMapUrl: "",
-    hostName: "វណ្ណដា",
-    partnerName: "ស្រីពេជ្រ",
-    groomName: "វណ្ណដា",
-    brideName: "ស្រីពេជ្រ",
-    guestName: "ឯកឧត្តម លោកជំទាវ លោក លោកស្រី អ្នកនាង កញ្ញា",
-    messageTitle: "ដំណឹងអាពាហ៍ពិពាហ៍",
-    messageText: DEFAULT_INVITATION_TEXT,
+    hostName: "",
+    partnerName: "",
+    groomName: "",
+    brideName: "",
+    guestName: "",
+    messageTitle: "",
+    messageText: "",
     schedule: [],
     // Styling
     openingStyle: "khmer-royal",
     frontColor: "#f9af59",
     bottomColor: "#B08E4F",
-    coverImage: "/facebook/all/03-card/cover-card.jpg",
-    backgroundImage: "/facebook/all/03-card/cover-card.jpg",
+    coverImage: null,
+    backgroundImage: null,
     sketchMapImage: null,
     // Gallery (5-10 photos)
-    photos: [
-        { id: "p1", url: "/facebook/all/03-card/03-01.jpg" },
-        { id: "p2", url: "/facebook/all/03-card/03-02.jpg" },
-        { id: "p3", url: "/facebook/all/03-card/03-03.jpg" },
-        { id: "p4", url: "/facebook/all/03-card/03-04.jpg" },
-        { id: "p5", url: "" },
-    ],
+    photos: Array.from({ length: 5 }, (_, index) => ({ id: `p${index + 1}`, url: null })),
     // Love Story (ដំណើរនៃក្ដីស្រឡាញ់ - no limit)
     showStory: true,
-    storyChapters: [
-        {
-            id: "story-1",
-            image: "/facebook/all/03-card/03-01.jpg",
-            kicker: "រឿងរ៉ាវស្នេហា",
-            title: "ដំណើររបស់យើង",
-            date: "Wednesday, January 28, 2026",
-            text: "ថ្ងៃដែលយើងបានជួបគ្នា និងការចាប់ផ្តើមនៃក្តីស្រឡាញ់ដ៏ស្រស់ស្អាត...",
-        },
-    ],
+    storyChapters: [],
     // Family & Wedding Party (គ្រួសារ និង ក្រុមអម)
     showParty: true,
-    party: DEFAULT_PARTY,
+    party: [],
     // Thank you
-    thankYouTitle: "សារថ្លែងអំណរគុណ",
-    thankYouText: DEFAULT_THANK_YOU_TEXT,
+    thankYouTitle: "",
+    thankYouText: "",
     // KHQR
-    khqrDollar: { qrUrl: "", bankName: "KHQR Dollar ($)", accountNumber: "" },
-    khqrRiel: { qrUrl: "", bankName: "KHQR Riel (៛)", accountNumber: "" },
+    khqrDollar: { qrUrl: null, bankName: "KHQR Dollar ($)", accountNumber: "" },
+    khqrRiel: { qrUrl: null, bankName: "KHQR Riel (៛)", accountNumber: "" },
     // Music
-    musicTrackId: "waiting-day",
-    musicUrl: MUSIC_TRACKS[0]?.url || "",
+    musicTrackId: "",
+    musicUrl: "",
     // Extra
     languageMode: "KH",
     visibility: "PUBLIC",
@@ -624,11 +461,14 @@ export default function InvitationForm({ invitation }) {
         const isDefaultCover = !customParsed.coverImage || customParsed.coverImage.includes("/facebook/all/03-card/cover-card.jpg");
         const isDefaultTitle = !customParsed.title || customParsed.title === "សួនរាជហង្សខ្មែរ" || customParsed.title === "Garden Royal Khmer Wedding" || customParsed.title.includes("W01");
         const isDefaultCouple = (!customParsed.groomName || customParsed.groomName === "វណ្ណដា") && (!customParsed.brideName || customParsed.brideName === "ស្រីពេជ្រ");
+        const uploadedCover = invitation?.coverUrl || invitation?.media?.coverImage?.fileUrl || "";
+        const templateDefaultCover = preset.coverImage || DEFAULT_STATE.coverImage;
+        const uploadedCoverFromDraft = uploadedCover || ((!isDefaultCover && customParsed.coverImage) ? customParsed.coverImage : "");
 
         const frontColor = (!isDefaultGold && (customParsed.frontColor || invitation?.frontColor)) || preset.frontColor || DEFAULT_STATE.frontColor;
         const bottomColor = (!isDefaultGold && (customParsed.bottomColor || invitation?.bottomColor)) || preset.bottomColor || DEFAULT_STATE.bottomColor;
         const openingStyle = (!isDefaultOpening && (customParsed.openingStyle || invitation?.openingStyle)) || preset.openingStyle || DEFAULT_STATE.openingStyle;
-        const coverImage = (!isDefaultCover && customParsed.coverImage) ? customParsed.coverImage : (preset.coverImage || DEFAULT_STATE.coverImage);
+        const coverImage = uploadedCoverFromDraft || templateDefaultCover;
         const title = (!isDefaultTitle && (invitation?.title || customParsed.title)) ? (invitation?.title || customParsed.title) : (preset.title || DEFAULT_STATE.title);
         const groomName = (!isDefaultCouple && (invitation?.groomName || customParsed.groomName)) ? (invitation?.groomName || customParsed.groomName) : (preset.groom || DEFAULT_STATE.groomName);
         const brideName = (!isDefaultCouple && (invitation?.brideName || customParsed.brideName)) ? (invitation?.brideName || customParsed.brideName) : (preset.bride || DEFAULT_STATE.brideName);
@@ -638,6 +478,19 @@ export default function InvitationForm({ invitation }) {
         const venueAddress = (invitation?.venueAddress || customParsed.venueAddress) && (invitation?.venueAddress !== "អគារ A, សែនសុខ, ភ្នំពេញ" && customParsed.venueAddress !== "អគារ A, សែនសុខ, ភ្នំពេញ")
             ? (invitation?.venueAddress || customParsed.venueAddress)
             : (preset.venueAddress || DEFAULT_STATE.venueAddress);
+        const isEmptyDraft = Boolean(
+            invitation
+            && String(invitation.status || "").toUpperCase() === "DRAFT"
+            && !invitation.title
+            && !invitation.groomName
+            && !invitation.brideName
+            && !invitation.eventDate
+            && !invitation.storyText
+            && !customParsed.title
+            && !customParsed.groomName
+            && !customParsed.brideName
+            && !customParsed.eventDate
+        );
 
         const rawDate = invitation?.eventDate || customParsed.eventDate || DEFAULT_STATE.eventDate;
         const rawTime = invitation?.eventTime ? invitation.eventTime.slice(0, 5) : (customParsed.eventTime || tpl?.receptionTime || DEFAULT_STATE.eventTime);
@@ -663,6 +516,8 @@ export default function InvitationForm({ invitation }) {
             googleMapUrl: invitation?.googleMapUrl || invitation?.event?.mapLink || customParsed.googleMapUrl || preset.mapQuery || "",
             sketchMapImage: invitation?.sketchMapImage || customParsed.sketchMapImage || DEFAULT_STATE.sketchMapImage || null,
             coverImage,
+            uploadedCoverUrl: uploadedCoverFromDraft,
+            templateDefaultCover,
             messageText: (invitation?.storyText && invitation.storyText !== DEFAULT_INVITATION_TEXT)
                 ? invitation.storyText
                 : ((customParsed.messageText && customParsed.messageText !== DEFAULT_INVITATION_TEXT)
@@ -696,7 +551,28 @@ export default function InvitationForm({ invitation }) {
                 ? customParsed.party
                 : (invitation?.party && invitation.party.length > 0)
                     ? invitation.party
-                    : DEFAULT_PARTY,
+                    : [],
+            ...(isEmptyDraft ? {
+                title: "",
+                subtitle: "",
+                eventDateText: "",
+                eventDate: "",
+                eventTime: "",
+                venueName: "",
+                venueAddress: "",
+                hostName: "",
+                partnerName: "",
+                groomName: "",
+                brideName: "",
+                guestName: "",
+                messageTitle: "",
+                messageText: "",
+                coverImage: "",
+                backgroundImage: "",
+                photos: Array.from({ length: 5 }, (_, index) => ({ id: `p${index + 1}`, url: "" })),
+                storyChapters: [],
+                party: [],
+            } : {}),
         };
     });
 
@@ -728,6 +604,9 @@ export default function InvitationForm({ invitation }) {
     const [isSaving, setIsSaving] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
     const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
+    const [pendingCoverFile, setPendingCoverFile] = useState(null);
+    const [locationError, setLocationError] = useState("");
+    const [isLocating, setIsLocating] = useState(false);
     const [leftPercent, setLeftPercent] = useState(52);
     const [isDragging, setIsDragging] = useState(false);
     const containerRef = useRef(null);
@@ -735,12 +614,17 @@ export default function InvitationForm({ invitation }) {
     const handleChangeTemplate = async (template) => {
         if (!template) return;
         const preset = getTemplatePreset(template) || {};
+        const uploadedCoverUrl = form.uploadedCoverUrl || "";
         const nextForm = {
             ...form,
             templateId: template.id || template.slug || form.templateId,
-            title: form.title || template.name || preset.title || "",
-            coverImage: preset.coverImage || template.phoneCoverImage || template.mainImage || form.coverImage,
+            templateDefaultCover: preset.coverImage || template.phoneCoverImage || template.mainImage || "",
+            theme: template.theme || preset.theme || template.presetId || form.theme || "",
+            fontFamily: template.fontFamily || preset.fontFamily || form.fontFamily || "",
+            layoutStyles: template.layoutStyles || preset.layoutStyles || form.layoutStyles || {},
         };
+        nextForm.uploadedCoverUrl = uploadedCoverUrl;
+        nextForm.coverImage = uploadedCoverUrl || nextForm.templateDefaultCover;
         setForm(nextForm);
         setCatalogVersion(getCatalogVersion());
 
@@ -762,8 +646,20 @@ export default function InvitationForm({ invitation }) {
                     languageMode: nextForm.languageMode || "KH",
                     visibility: nextForm.visibility || "PUBLIC",
                     templateId: Number(nextForm.templateId) || null,
-                    designJson: JSON.stringify({ templateId: nextForm.templateId, presetId: nextForm.presetId || "" }),
-                    contentJson: JSON.stringify({ templateId: nextForm.templateId, presetId: nextForm.presetId || "" }),
+                    designJson: JSON.stringify({
+                        templateId: nextForm.templateId,
+                        presetId: nextForm.presetId || "",
+                        theme: nextForm.theme,
+                        fontFamily: nextForm.fontFamily,
+                        layoutStyles: nextForm.layoutStyles,
+                        coverImage: uploadedCoverUrl || undefined,
+                    }),
+                    contentJson: JSON.stringify({
+                        templateId: nextForm.templateId,
+                        theme: nextForm.theme,
+                        fontFamily: nextForm.fontFamily,
+                        layoutStyles: nextForm.layoutStyles,
+                    }),
                 });
                 saveDraft({ ...invitation, ...nextForm, id: invitationId, backendInvitationId: invitationId });
             } catch (error) {
@@ -827,7 +723,7 @@ export default function InvitationForm({ invitation }) {
         if (!file) return;
         const reader = new FileReader();
         reader.onload = (event) => {
-            callback(event.target.result);
+            callback(event.target.result, file);
         };
         reader.readAsDataURL(file);
         e.target.value = "";
@@ -947,38 +843,6 @@ export default function InvitationForm({ invitation }) {
         update("storyChapters", nextStories);
     };
 
-    // Party modifiers
-    const handlePartyChange = (index, key, value) => {
-        const nextParty = [...(form.party || [])];
-        nextParty[index] = { ...nextParty[index], [key]: value };
-        update("party", nextParty);
-    };
-
-    const handlePartyImageUpload = (index, e) => {
-        handleFileUpload(e, (url) => {
-            handlePartyChange(index, "image", url);
-        });
-    };
-
-    const addPartyMember = () => {
-        const nextParty = [
-            ...(form.party || []),
-            {
-                id: String(Date.now()),
-                role: "មិត្តភក្តិ",
-                roleEn: "Friends",
-                name: "",
-                image: "",
-            },
-        ];
-        update("party", nextParty);
-    };
-
-    const removePartyMember = (index) => {
-        const nextParty = (form.party || []).filter((_, i) => i !== index);
-        update("party", nextParty);
-    };
-
     // Music Selector
     const handleMusicSelect = (trackId) => {
         const track = MUSIC_TRACKS.find((t) => t.id === trackId) || MUSIC_TRACKS[0];
@@ -1010,7 +874,31 @@ export default function InvitationForm({ invitation }) {
             ? query
             : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
         update("googleMapUrl", generatedUrl);
+        setLocationError("");
         toast(t("mapLinkGenerated") || "បានបង្កើត Link Google Maps ដោយជោគជ័យ!");
+    };
+
+    const handleGetCurrentLocation = () => {
+        if (!navigator.geolocation) {
+            setLocationError("ឧបករណ៍នេះមិនគាំទ្រ Location ទេ។ សូម Paste Google Maps Link។");
+            return;
+        }
+        setIsLocating(true);
+        setLocationError("");
+        navigator.geolocation.getCurrentPosition(
+            ({ coords }) => {
+                update("googleMapUrl", `https://www.google.com/maps?q=${coords.latitude},${coords.longitude}`);
+                setIsLocating(false);
+                toast("បានយកទីតាំងបច្ចុប្បន្នរួចរាល់!");
+            },
+            (error) => {
+                setIsLocating(false);
+                setLocationError(error.code === error.PERMISSION_DENIED
+                    ? "សូមអនុញ្ញាត Location ក្នុង Browser ដើម្បីប្រើមុខងារនេះ។"
+                    : "មិនអាចយកទីតាំងបានទេ។ សូមពិនិត្យ GPS របស់អ្នក ឬ Paste Google Maps Link។");
+            },
+            { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 }
+        );
     };
 
     const handleSearchMap = () => {
@@ -1024,15 +912,27 @@ export default function InvitationForm({ invitation }) {
     };
     // Save action
     const handleSave = async () => {
+        const requiredFields = [form.groomName, form.brideName, form.eventDate];
+        if (requiredFields.some((value) => !String(value || "").trim())) {
+            toast("សូមបំពេញព័ត៌មានចាំបាច់ឱ្យបានគ្រប់គ្រាន់!");
+            return;
+        }
+        if (/^https?:\/\//i.test(form.googleMapUrl || "") && !isGoogleMapsUrl(form.googleMapUrl)) {
+            setLocationError("សូមបញ្ចូល Google Maps Link ត្រឹមត្រូវ (maps.google.com ឬ maps.app.goo.gl)។");
+            return;
+        }
         setIsSaving(true);
         try {
             const designPayload = {
                 templateId: form.templateId,
                 presetId: form.presetId || "",
+                theme: form.theme || "",
+                fontFamily: form.fontFamily || "",
+                layoutStyles: form.layoutStyles || {},
                 openingStyle: form.openingStyle || "khmer-royal",
                 frontColor: form.frontColor,
                 bottomColor: form.bottomColor,
-                coverImage: form.coverImage,
+                coverImage: form.uploadedCoverUrl || null,
                 backgroundImage: form.backgroundImage,
                 sketchMapImage: form.sketchMapImage,
                 photos: form.photos,
@@ -1049,6 +949,9 @@ export default function InvitationForm({ invitation }) {
             const contentPayload = {
                 templateId: form.templateId,
                 presetId: form.presetId || "",
+                theme: form.theme || "",
+                fontFamily: form.fontFamily || "",
+                layoutStyles: form.layoutStyles || {},
                 subtitle: form.subtitle,
                 hideCoupleNameOnCover: form.hideCoupleNameOnCover,
                 eventDateText: form.eventDateText,
@@ -1060,6 +963,9 @@ export default function InvitationForm({ invitation }) {
                 storyChapters: form.storyChapters || [],
                 showParty: form.showParty !== false,
                 party: form.party || [],
+                gallery: (form.photos || [])
+                    .filter((photo) => photo?.url)
+                    .map(({ id, url }) => ({ id, preview: url, type: "image" })),
                 thankYouTitle: form.thankYouTitle,
                 thankYouText: form.thankYouText,
             };
@@ -1096,6 +1002,15 @@ export default function InvitationForm({ invitation }) {
                 console.warn("Backend sync failed, saved locally:", apiErr);
             }
 
+            let savedCoverUrl = form.uploadedCoverUrl || "";
+            const backendId = saved?.id || (isEdit && !isNaN(Number(invitationId)) ? invitationId : null);
+            if (pendingCoverFile && backendId) {
+                const uploaded = await mediaService.uploadCover(backendId, pendingCoverFile);
+                savedCoverUrl = uploaded?.fileUrl || uploaded?.data?.fileUrl || savedCoverUrl;
+                setPendingCoverFile(null);
+                update("coverImage", savedCoverUrl);
+            }
+
             // Always persist to local wedding draft storage
             saveDraft({
                 ownerUserId: user?.id || user?.userId,
@@ -1124,12 +1039,18 @@ export default function InvitationForm({ invitation }) {
                 venueAddress: form.venueAddress,
                 googleMapUrl: form.googleMapUrl,
                 sketchMapImage: form.sketchMapImage,
-                coverImage: form.coverImage,
+                coverImage: savedCoverUrl,
+                coverUrl: savedCoverUrl,
+                uploadedCoverUrl: savedCoverUrl,
+                templateDefaultCover: form.templateDefaultCover,
                 openingStyle: form.openingStyle || "khmer-royal",
                 frontColor: form.frontColor,
                 bottomColor: form.bottomColor,
                 schedule: form.schedule,
                 photos: form.photos,
+                gallery: (form.photos || [])
+                    .filter((photo) => photo?.url)
+                    .map(({ id, url }) => ({ id, preview: url, type: "image" })),
                 musicUrl: form.musicUrl,
                 message: form.messageText,
                 storyChapters: form.storyChapters,
@@ -1250,8 +1171,16 @@ export default function InvitationForm({ invitation }) {
                                 label={t("coverImage") || "រូបភាពក្របខាងមុខ (Front Cover Image)"}
                                 icon={ImageIcon}
                                 image={form.coverImage}
-                                onUpload={(e) => handleFileUpload(e, (url) => update("coverImage", url))}
-                                onRemove={() => update("coverImage", "")}
+                                onUpload={(e) => handleFileUpload(e, (url, file) => {
+                                    update("uploadedCoverUrl", url);
+                                    update("coverImage", url);
+                                    setPendingCoverFile(file);
+                                })}
+                                onRemove={() => {
+                                    update("uploadedCoverUrl", "");
+                                    update("coverImage", form.templateDefaultCover || "");
+                                    setPendingCoverFile(null);
+                                }}
                                 inputRef={coverInputRef}
                                 hint="បង្ហាញលើក្របទំព័រដើម (Front Cover / Hero)"
                             />
@@ -1541,6 +1470,28 @@ export default function InvitationForm({ invitation }) {
                                     <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                                         <button
                                             type="button"
+                                            onClick={handleGetCurrentLocation}
+                                            disabled={isLocating}
+                                            title="យកទីតាំងបច្ចុប្បន្នរបស់អ្នក"
+                                            style={{
+                                                fontSize: "0.75rem",
+                                                padding: "4px 10px",
+                                                borderRadius: "6px",
+                                                border: "1px solid #0ea5e9",
+                                                background: "#f0f9ff",
+                                                color: "#0369a1",
+                                                cursor: isLocating ? "wait" : "pointer",
+                                                display: "inline-flex",
+                                                alignItems: "center",
+                                                gap: "4px",
+                                                fontWeight: 600,
+                                            }}
+                                        >
+                                            <MapPin size={13} />
+                                            {isLocating ? "កំពុងស្វែងរក..." : "យកទីតាំងបច្ចុប្បន្ន"}
+                                        </button>
+                                        <button
+                                            type="button"
                                             onClick={handleGenerateMapLink}
                                             title="បំលែងឈ្មោះទីតាំងទៅជា Link Google Maps ស្វ័យប្រវត្តិ"
                                             style={{
@@ -1587,11 +1538,23 @@ export default function InvitationForm({ invitation }) {
                                     type="text"
                                     className="pe-input"
                                     value={form.googleMapUrl}
-                                    onChange={(e) => update("googleMapUrl", e.target.value)}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        update("googleMapUrl", value);
+                                        setLocationError(/^https?:\/\//i.test(value) && !isGoogleMapsUrl(value)
+                                            ? "Link នេះមិនមែនជា Google Maps URL ត្រឹមត្រូវទេ។"
+                                            : "");
+                                    }}
                                     placeholder="https://maps.app.goo.gl/... ឬ ឈ្មោះទីតាំង"
                                 />
+                                {locationError && (
+                                    <div role="alert" style={{ fontSize: "0.75rem", color: "#b91c1c", marginTop: "6px" }}>
+                                        {locationError}
+                                    </div>
+                                )}
                                 <div style={{ fontSize: "0.75rem", color: "#64748b", marginTop: "6px", lineHeight: "1.4" }}>
-                                    💡 អាចដាក់ជា Link (https://maps.app.goo.gl/...) ឬសរសេរឈ្មោះទីតាំងក៏បាន — ប្រព័ន្ធនឹងភ្ជាប់ទៅ Google Maps ជូនភ្ញៀវដោយស្វ័យប្រវត្តិ។
+                                    <span className="pe-location-help-mobile">ចុចប៊ូតុង 📍 ដើម្បីទាញយកទីតាំងបច្ចុប្បន្នរបស់អ្នក ឬ Paste Google Maps Link</span>
+                                    <span className="pe-location-help-desktop">បញ្ចូល Google Maps Link ឬស្វែងរកឈ្មោះទីតាំងរោងការ</span>
                                 </div>
                             </div>
 
@@ -1754,72 +1717,6 @@ export default function InvitationForm({ invitation }) {
                             )}
                         </div>
 
-                        {/* 8. គ្រួសារ និង ក្រុមអម (Family & Wedding Party) */}
-                        <div className="pe-section-card">
-                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px", marginBottom: "14px" }}>
-                                <h4 className="pe-section-heading" style={{ margin: 0 }}>
-                                    <span className="pe-sec-icon-badge">
-                                        <Users size={17} />
-                                    </span>
-                                    <span>គ្រួសារ និង ក្រុមអម (Family & Wedding Party)</span>
-                                    <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "#854d0e", background: "#fef9c3", padding: "2px 8px", borderRadius: "12px", marginLeft: "6px" }}>
-                                        {form.party?.length || 0} នាក់
-                                    </span>
-                                </h4>
-
-                                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                                    <button
-                                        type="button"
-                                        onClick={addPartyMember}
-                                        className="pe-btn-upload-action"
-                                        style={{
-                                            padding: "6px 12px",
-                                            fontSize: "0.8rem",
-                                            background: "#fefce8",
-                                            borderColor: "#fef08a",
-                                            color: "#854d0e",
-                                            display: "inline-flex",
-                                            alignItems: "center",
-                                            gap: "4px"
-                                        }}
-                                        title="បន្ថែមសមាជិកក្រុមអមថ្មី"
-                                    >
-                                        <Plus size={14} /> បន្ថែមសមាជិក
-                                    </button>
-
-                                    <label className="pe-toggle" title="បើក/បិទ គ្រួសារ និង ក្រុមអម">
-                                        <input
-                                            type="checkbox"
-                                            checked={form.showParty !== false}
-                                            onChange={(e) => update("showParty", e.target.checked)}
-                                        />
-                                        <span className="pe-toggle-slider" />
-                                    </label>
-                                </div>
-                            </div>
-
-                            <p style={{ margin: "0 0 12px 0", fontSize: "0.8rem", color: "#64748b" }}>
-                                * បញ្ចូលព័ត៌មាន និងរូបថតរបស់កូនកំលោះ/កូនក្រមុំកិត្តិយស គ្រួសារ ឬមិត្តភក្តិ (Add wedding party members & photos)
-                            </p>
-
-                            {form.showParty !== false && (
-                                <div className="pe-party-list">
-                                    {(form.party || []).map((item, idx) => (
-                                        <CleanPartyMemberItem
-                                            key={item.id || `party-${idx}`}
-                                            idx={idx}
-                                            item={item}
-                                            onChange={(key, val) => handlePartyChange(idx, key, val)}
-                                            onUpload={(e) => handlePartyImageUpload(idx, e)}
-                                            onRemoveImage={() => handlePartyChange(idx, "image", "")}
-                                            onDelete={() => removePartyMember(idx)}
-                                            canDelete={(form.party || []).length > 1}
-                                        />
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-
                         {/* 9. KHQR ផ្ញើរចំណងដៃ (Gift QR) */}
                         <div className="pe-section-card">
                             <h4 className="pe-section-heading">
@@ -1952,7 +1849,10 @@ export default function InvitationForm({ invitation }) {
                 {/* RIGHT COLUMN: Live Mobile Phone Simulation */}
                 {!isExpanded && (
                     <LivePhoneSimulator
-                        data={form}
+                        data={{
+                            ...form,
+                            googleMapUrl: previewMapUrl(form.googleMapUrl, form.venueName),
+                        }}
                         catalogVersion={catalogVersion}
                         onSave={handleSave}
                         isSaving={isSaving}

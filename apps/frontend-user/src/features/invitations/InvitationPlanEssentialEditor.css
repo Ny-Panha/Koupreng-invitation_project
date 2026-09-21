@@ -13,6 +13,24 @@
     min-height: 100vh;
 }
 
+.pe-location-help-mobile {
+    display: none;
+}
+
+.pe-location-help-desktop {
+    display: inline;
+}
+
+@media (max-width: 640px) {
+    .pe-location-help-mobile {
+        display: inline;
+    }
+
+    .pe-location-help-desktop {
+        display: none;
+    }
+}
+
 /* Sub-Header Banner */
 .pe-sub-header-banner {
     display: flex;

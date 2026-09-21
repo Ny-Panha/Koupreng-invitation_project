@@ -17,18 +17,25 @@ export function EventCard({ draft, onManage, onEdit, onPreview, onDelete, t }) {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [isMenuOpen]);
 
-    let coverImage = "/facebook/all/03-card/cover-card.jpg";
+    let designCoverImage = "";
     try {
-        if (draft.coverImage) coverImage = draft.coverImage;
-        else if (draft.designJson) {
+        if (draft.designJson) {
             const parsed = typeof draft.designJson === "string" ? JSON.parse(draft.designJson) : draft.designJson;
-            if (parsed?.coverImage) coverImage = parsed.coverImage;
-        } else if (template?.phoneCoverImage || template?.mainImage) {
-            coverImage = template.phoneCoverImage || template.mainImage;
+            designCoverImage = parsed?.coverImage || "";
         }
     } catch {
-        // fallback image
+        designCoverImage = "";
     }
+
+    const coverImage = draft.coverUrl
+        || draft.cover_url
+        || draft.media?.coverImage?.fileUrl
+        || draft.coverImage
+        || designCoverImage
+        || template?.defaultImage
+        || template?.phoneCoverImage
+        || template?.mainImage
+        || "/facebook/all/03-card/cover-card.jpg";
 
     const title = draft.title || draft.event?.title || template?.name || "សិរីមង្គលអាពាហ៍ពិពាហ៍";
     const coupleText = (draft.couple?.groom && draft.couple?.bride)
@@ -41,10 +48,10 @@ export function EventCard({ draft, onManage, onEdit, onPreview, onDelete, t }) {
     const isPublished = Boolean(draft.publishedAt || draft.status === "PUBLISHED");
 
     const handleCardClick = () => {
-        if (onEdit) {
+        if (onPreview) {
+            onPreview(draft);
+        } else if (onEdit) {
             onEdit(draft);
-        } else if (onManage) {
-            onManage(draft);
         }
     };
 
@@ -125,22 +132,6 @@ export function EventCard({ draft, onManage, onEdit, onPreview, onDelete, t }) {
                                         <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                                     </svg>
                                     <span>{(t && t("editBtn")) || "កែសម្រួល"}</span>
-                                </button>
-
-                                <button
-                                    type="button"
-                                    className="event-card-dropdown-item"
-                                    onClick={(event) => {
-                                        event.stopPropagation();
-                                        setIsMenuOpen(false);
-                                        if (onPreview) onPreview(draft);
-                                    }}
-                                >
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                        <circle cx="12" cy="12" r="3"></circle>
-                                    </svg>
-                                    <span>{(t && t("previewBtn")) || "មើលសន្លឹកការ"}</span>
                                 </button>
 
                                 <div className="event-card-dropdown-divider" />
