@@ -237,7 +237,7 @@ export default function PublicInvitationPage() {
             <TemplateExperience
                 tpl={merged.tpl}
                 variant={merged.variant}
-                useTemplateLink={shouldBackToDashboard ? `/create/wedding/${activeDraft.id}` : ""}
+                useTemplateLink={shouldBackToDashboard ? `/dashboard/invitations/${activeDraft.id}/edit` : ""}
                 primaryCtaLabel="កែសម្រួលសន្លឹកការ"
                 breadcrumbItems={[
                     { label: "ផ្ទាំងគ្រប់គ្រង", to: "/dashboard" },

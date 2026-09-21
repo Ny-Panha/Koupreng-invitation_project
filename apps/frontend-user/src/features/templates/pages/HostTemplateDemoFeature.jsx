@@ -23,7 +23,7 @@ export default function HostTemplateDemoPage() {
     const forcedVariant = aliasTargetId ? id : undefined;
 
     // Logged-in host: go straight to the wedding builder.
-    const useTemplateLink = `/create/wedding?template=${tpl.id}`;
+    const useTemplateLink = "/templates/browse";
     const variant = resolveVariant(tpl, forcedVariant);
 
     return (

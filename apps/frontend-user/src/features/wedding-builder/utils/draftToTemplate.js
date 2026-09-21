@@ -55,7 +55,7 @@ export function draftToTemplate(draft, gallery = []) {
 
     const effectiveGallery = uploadedImages.length > 0
         ? uploadedImages
-        : (draftPhotos.length > 0 ? draftPhotos : (baseTpl.galleryImages || []));
+        : draftPhotos;
 
     const eventDate = draft.event?.date || draft.eventDate || draft.eventDateText || "";
     const eventTime = draft.event?.ceremonyTime || draft.event?.receptionTime || draft.eventTime || "17:00";

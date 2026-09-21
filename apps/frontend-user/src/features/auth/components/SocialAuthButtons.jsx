@@ -383,7 +383,7 @@ function openTelegramLogin(clientId, onResult, onError) {
 }
 
 /* ─── Main component ─────────────────────────────────────── */
-export default function SocialAuthButtons({ redirectTo = "/dashboard" }) {
+export default function SocialAuthButtons({ redirectTo = "/dashboard/events" }) {
   const navigate = useNavigate();
   const { login } = useAuth();
 

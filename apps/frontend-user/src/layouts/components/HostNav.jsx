@@ -9,7 +9,6 @@ import {
   IoDiamondOutline,
   IoGiftOutline,
   IoGridOutline,
-  IoHelpCircleOutline,
   IoLogOutOutline,
   IoPeopleOutline,
   IoPersonOutline,
@@ -477,34 +476,6 @@ export default function HostNav() {
           text-overflow: ellipsis;
           white-space: nowrap;
         }
-        .host-help-pill {
-          height: 44px;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 6px;
-          padding: 0 14px;
-          border-radius: 999px;
-          border: 1px solid rgba(176, 146, 106, 0.28);
-          background: rgba(255, 255, 255, 0.72);
-          color: #7D6443;
-          font-family: 'Kantumruy Pro', sans-serif;
-          font-size: 13.5px;
-          font-weight: 700;
-          cursor: pointer;
-          box-shadow: 0 4px 14px rgba(93, 67, 32, 0.06);
-          transition: all 0.2s ease;
-        }
-        .host-help-pill:hover {
-          background: #fff;
-          border-color: rgba(176, 146, 106, 0.48);
-          box-shadow: 0 6px 18px rgba(93, 67, 32, 0.12);
-          transform: translateY(-1px);
-        }
-        .host-help-pill svg {
-          font-size: 19px;
-          color: #B0926A;
-        }
         .host-profile-selector {
           position: relative;
           z-index: 20;
@@ -721,18 +692,8 @@ export default function HostNav() {
           .host-language-chevron {
             display: none;
           }
-          .host-help-pill span {
-            display: none;
-          }
-          .host-help-pill {
-            width: 44px;
-            padding: 0;
-          }
         }
         @media (max-width: 768px) {
-          .host-help-pill {
-            display: none;
-          }
           .host-header-container {
             width: calc(100% - 24px);
             padding: 0 16px;
@@ -799,17 +760,6 @@ export default function HostNav() {
           </nav>
 
           <div className="host-user-actions">
-            <button
-              type="button"
-              className="host-help-pill"
-              onClick={() => window.dispatchEvent(new CustomEvent("open-support-chat"))}
-              title={language === "en" ? "Need help?" : "ត្រូវការជំនួយ?"}
-              aria-label={language === "en" ? "Help & Support" : "ជំនួយ និងការគាំទ្រ"}
-            >
-              <IoHelpCircleOutline aria-hidden="true" />
-              <span>{language === "en" ? "Help" : "ជំនួយ"}</span>
-            </button>
-
             <div className="host-profile-selector" ref={profileRef}>
               <button
                 type="button"
@@ -867,18 +817,6 @@ export default function HostNav() {
                     <IoReceiptOutline aria-hidden="true" />
                     <span>{language === "en" ? "Payment History" : "ប្រវត្តិការទូទាត់"}</span>
                   </Link>
-                  <button
-                    type="button"
-                    className="host-profile-menu-item"
-                    onClick={() => {
-                      setProfileOpen(false);
-                      window.dispatchEvent(new CustomEvent("open-support-chat"));
-                    }}
-                    role="menuitem"
-                  >
-                    <IoHelpCircleOutline aria-hidden="true" style={{ color: "#B0926A", fontSize: "18px" }} />
-                    <span>{language === "en" ? "Help & Support" : "ជំនួយ និងការគាំទ្រ"}</span>
-                  </button>
                   <div style={{ height: "1px", background: "rgba(176, 146, 106, 0.2)", margin: "8px 0" }} />
                   
                   <div style={{ padding: "4px 12px", fontSize: "12px", fontWeight: "700", color: "#888", textTransform: "uppercase" }}>
@@ -989,19 +927,6 @@ export default function HostNav() {
           <span>{language === "en" ? "Payment History" : "ប្រវត្តិការទូទាត់"}</span>
         </Link>
 
-        <div className="host-mobile-menu-divider" />
-        <button
-          type="button"
-          className="host-mobile-menu-item"
-          style={{ width: "100%", background: "none", border: "none", textAlign: "left", cursor: "pointer" }}
-          onClick={() => {
-            closeMobileMenu();
-            window.dispatchEvent(new CustomEvent("open-support-chat"));
-          }}
-        >
-          <span className="menu-icon"><IoHelpCircleOutline aria-hidden="true" style={{ fontSize: "20px", color: "#B0926A" }} /></span>
-          <span>{language === "en" ? "Help & Support" : "ជំនួយ និងការគាំទ្រ"}</span>
-        </button>
         <button
           type="button"
           className="host-mobile-logout-btn"

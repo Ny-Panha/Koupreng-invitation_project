@@ -118,7 +118,7 @@ export default function WeddingPreviewPage() {
                 </p>
 
                 <Link
-                    to="/create/wedding"
+                    to="/dashboard/events"
                     className="wb-btn"
                     style={{ marginTop: 16, display: "inline-block" }}>
                     ចាប់ផ្ដើមថ្មី
@@ -138,7 +138,7 @@ export default function WeddingPreviewPage() {
         <TemplateExperience
             tpl={merged.tpl}
             variant={merged.variant}
-            useTemplateLink={`/create/wedding/${activeDraft.id}`}
+                    useTemplateLink={`/dashboard/invitations/${activeDraft.id}/edit`}
             primaryCtaLabel="កែសម្រួលសន្លឹកការ"
             breadcrumbItems={[
                 startCrumb,

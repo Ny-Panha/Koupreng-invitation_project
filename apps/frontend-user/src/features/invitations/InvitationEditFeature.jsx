@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import InvitationForm from "./InvitationForm";
 import { invitationService } from "@/features/invitations/api/invitationApi";
-import { getDraft, listDrafts } from "@/shared/storage/weddingStorage";
+import { mediaService } from "@/features/invitations/api/mediaApi";
+import { getDraft } from "@/shared/storage/weddingStorage";
 import { getTemplateById, getTemplatePreset, registerDynamicTemplates } from "../templates/data/templatesData";
 import { templateCatalogService } from "../templates/api/templateCatalogApi";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
@@ -31,7 +32,7 @@ export default function InvitationEditPage() {
             }
 
             const ownerUserId = user?.id || user?.userId;
-            const targetId = id || listDrafts(ownerUserId)[0]?.id;
+            const targetId = id;
             const localDraft = targetId ? getDraft(targetId, ownerUserId) : null;
 
             // 1. Check local wedding draft storage first
@@ -114,9 +115,16 @@ export default function InvitationEditPage() {
             // 2. If not found locally, query backend API
             if (id) {
                 try {
-                    const data = await invitationService.get(id);
+                    const [data, media] = await Promise.all([
+                        invitationService.get(id),
+                        mediaService.list(id).catch(() => null),
+                    ]);
                     if (active && data) {
-                        setInvitation(data);
+                        setInvitation({
+                            ...data,
+                            coverUrl: media?.coverImage?.fileUrl || data.coverUrl || null,
+                            media,
+                        });
                         setLoading(false);
                         return;
                     }
@@ -127,7 +135,7 @@ export default function InvitationEditPage() {
 
             // 3. No event created yet -> set null to show empty state with Go to Create Events
             if (active) {
-                setInvitation(null);
+                setInvitation(id ? null : { status: "DRAFT", templateId: null });
                 setLoading(false);
             }
         };
@@ -147,7 +155,7 @@ export default function InvitationEditPage() {
         );
     }
 
-    // When no events exist, show Empty State matching EventsPage with "+ បង្កើតកម្មវិធី (Go to Create Events)"
+    // A route without an id is a local, unsaved editor draft.
     if (!invitation) {
         return (
             <main className="events-page">
@@ -157,18 +165,14 @@ export default function InvitationEditPage() {
                         <h1>{t("title") || "គម្រូធៀប"}</h1>
                         <p>{t("subtitle") || "គ្រប់គ្រង និងកែសម្រួលគំរូធៀបអាពាហ៍ពិពាហ៍"}</p>
                     </div>
-                    <Link to="/create/wedding" className="events-create-btn">
-                        {t("createBtn") || "+ បង្កើតកម្មវិធី"}
-                    </Link>
+                    <span>{t("createBtn") || "+ បង្កើតកម្មវិធី"}</span>
                 </header>
 
                 <section className="events-empty">
                     <div className="events-empty-icon">{t("emptyIcon") || "គម្រោង"}</div>
                     <h2>{t("emptyTitle") || "មិនទាន់មានកម្មវិធី"}</h2>
                     <p>{t("emptyText") || "សូមចាប់ផ្តើមបង្កើតកម្មវិធីជាមុនសិន ដើម្បីកែសម្រួលគំរូធៀបឌីជីថល។"}</p>
-                    <Link to="/create/wedding" className="events-create-btn">
-                        {t("emptyActionBtn") || "+ បង្កើតកម្មវិធី (Go to Create Events)"}
-                    </Link>
+                    <span>{t("emptyActionBtn") || "+ បង្កើតកម្មវិធី"}</span>
                 </section>
             </main>
         );

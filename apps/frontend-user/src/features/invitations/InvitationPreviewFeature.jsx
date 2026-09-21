@@ -50,6 +50,7 @@ export default function InvitationPreviewPage() {
 
     const rendered = useMemo(() => {
         if (!invitation) return null;
+        const galleryPhotos = invitation?.galleryImages || invitation?.gallery_urls || invitation?.gallery || [];
         const catalogTemplate = catalog.find((item) =>
             String(item.id) === String(invitation.templateId)
             || String(item.code || "").toLowerCase() === String(invitation.templateCode || "").toLowerCase()
@@ -57,6 +58,7 @@ export default function InvitationPreviewPage() {
         const draft = publicInvitationToDraft(
             {
                 ...invitation,
+                gallery: galleryPhotos,
                 templateCode: invitation.templateCode || catalogTemplate?.code,
                 templateThumbnailUrl: invitation.templateThumbnailUrl || catalogTemplate?.thumbnailUrl,
             },

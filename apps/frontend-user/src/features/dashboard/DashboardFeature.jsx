@@ -3,7 +3,6 @@ import { Link, useSearchParams } from "react-router-dom";
 
 import {
   IoAddCircle,
-  IoAddCircleOutline,
   IoCalendarClearOutline,
   IoCheckmarkCircle,
   IoCheckmarkCircleOutline,
@@ -40,6 +39,19 @@ function asList(val) {
   if (Array.isArray(val?.items)) return val.items;
   if (Array.isArray(val?.content)) return val.content;
   return [];
+}
+
+function eventTitle(inv, lang = "km") {
+  const title = String(inv?.title || "").trim();
+  const normalized = title.toLowerCase();
+  const isPlaceholder = !title
+    || normalized === "fdfgf"
+    || normalized === "ererer"
+    || normalized.includes("wedding draft storage")
+    || normalized === "new wedding invitation";
+  if (!isPlaceholder) return title;
+  if (inv?.groomName && inv?.brideName) return `${inv.groomName} & ${inv.brideName}`;
+  return lang === "en" ? "Wedding Event" : "កម្មវិធីអាពាហ៍ពិពាហ៍";
 }
 
 export default function DashboardFeature() {
@@ -241,10 +253,7 @@ export default function DashboardFeature() {
     return {
       hasInvitation: !!inv,
       title:
-        inv?.title ||
-        (inv?.groomName && inv?.brideName
-          ? `${inv.groomName} & ${inv.brideName}`
-          : "ផ្ទាំងគ្រប់គ្រងមង្គលការ"),
+        eventTitle(inv, lang),
       couple: inv?.groomName && inv?.brideName ? `${inv.groomName} & ${inv.brideName}` : "",
       eventDate: inv?.eventDate || inv?.weddingDate || "",
       venue: inv?.venue || inv?.location || "",
@@ -345,15 +354,6 @@ export default function DashboardFeature() {
           <h1>{text("title")}</h1>
           <p>{text("subtitle")}</p>
         </div>
-        <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", alignItems: "center" }}>
-          <Link to="/templates/browse" className="dash-btn-outline">
-            <span>{text("browseTemplatesBtn")}</span>
-          </Link>
-          <Link to="/create/wedding" className="dash-btn-gold">
-            <IoAddCircleOutline style={{ fontSize: "1.2rem" }} />
-            <span>{text("createInvitationBtn")}</span>
-          </Link>
-        </div>
       </header>
 
       {/* =========================================================================
@@ -377,7 +377,7 @@ export default function DashboardFeature() {
             </p>
 
             <div className="dash-welcome-actions">
-              <Link to="/create/wedding" className="dash-btn-gold">
+              <Link to="/dashboard/invitations/design" className="dash-btn-gold">
                 <IoAddCircle style={{ fontSize: "1.25rem" }} />
                 <span>{text("welcomeCreateBtn")}</span>
               </Link>
@@ -436,7 +436,7 @@ export default function DashboardFeature() {
               </span>
               {state.invitations.map((inv) => {
                 const id = inv.id || inv.invitationId;
-                const isSelected = id === selectedInvId;
+                const isSelected = String(id) === String(selectedInvId);
                 return (
                   <button
                     key={id}
@@ -444,7 +444,7 @@ export default function DashboardFeature() {
                     onClick={() => handleSelectInvitation(id)}
                     className={`dash-event-tab ${isSelected ? "active" : ""}`}
                   >
-                    <span>{inv.title || `${inv.groomName || (lang === "en" ? "Groom" : "កូនកំលោះ")} & ${inv.brideName || (lang === "en" ? "Bride" : "កូនក្រមុំ")}`}</span>
+                    <span>{eventTitle(inv, lang)}</span>
                   </button>
                 );
               })}

@@ -1,10 +1,9 @@
-import { Route } from "react-router-dom";
+import { Navigate, Route } from "react-router-dom";
 
 import PaymentCancelPage from "../../features/payments/PaymentCancelPage";
 import PaymentStatusPage from "../../features/payments/PaymentStatusPage";
 import PaymentSuccessPage from "../../features/payments/PaymentSuccessPage";
 import WeddingSite from "../../features/wedding-site/WeddingSite";
-import CreateWeddingPage from "../../pages/builder/CreateWeddingPage";
 import PublicInvitationPage from "../../pages/public/PublicInvitationPage";
 import WeddingPreviewPage from "../../pages/public/WeddingPreviewPage";
 import InvitationEditPage from "../../pages/host/invitations/InvitationEditPage";
@@ -14,30 +13,9 @@ export function builderRoutes() {
   return (
     <>
       <Route path="/templates/:id/preview" element={<WeddingSite />} />
-      <Route
-        path="/create/wedding"
-        element={
-          <RequireAuth>
-            <CreateWeddingPage />
-          </RequireAuth>
-        }
-      />
-      <Route
-        path="/event/create"
-        element={
-          <RequireAuth>
-            <CreateWeddingPage />
-          </RequireAuth>
-        }
-      />
-      <Route
-        path="/dashboard/events/create"
-        element={
-          <RequireAuth>
-            <CreateWeddingPage />
-          </RequireAuth>
-        }
-      />
+      <Route path="/create/wedding" element={<Navigate to="/dashboard/events" replace />} />
+      <Route path="/event/create" element={<Navigate to="/dashboard/events" replace />} />
+      <Route path="/dashboard/events/create" element={<Navigate to="/dashboard/events" replace />} />
       <Route
         path="/create/wedding/:id"
         element={

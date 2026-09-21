@@ -9,6 +9,10 @@ import { templateIcons } from "../../config/templateIcons";
  * When only a single couple photo exists, renders a unified couple showcase card.
  */
 export default function TemplateCouple({ content }) {
+    if (content.hasHostContent && !content.groomImage && !content.brideImage && !content.backgroundImage) {
+        return null;
+    }
+
     const hasSeparateImages =
         content.groomImage &&
         content.brideImage &&

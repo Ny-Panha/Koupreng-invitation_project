@@ -39,6 +39,7 @@ import com.koupreng.backend.payment.infrastructure.persistence.UserTemplateAcces
 import com.koupreng.backend.seating.infrastructure.persistence.GuestSeatAssignmentRepository;
 import com.koupreng.backend.delivery.infrastructure.persistence.InvitationDeliveryEventRepository;
 import com.koupreng.backend.media.infrastructure.persistence.MediaFileRepository;
+import com.koupreng.backend.media.domain.MediaType;
 import com.koupreng.backend.notification.infrastructure.persistence.NotificationRepository;
 import com.koupreng.backend.rsvp.infrastructure.persistence.RsvpRepository;
 import com.koupreng.backend.shared.config.AppProperties;
@@ -196,8 +197,19 @@ public class InvitationService {
                         statusFilter.toDomain()
                 );
         return invitations.stream()
-                .map(InvitationSummaryResponse::from)
+                .map(invitation -> InvitationSummaryResponse.from(invitation, coverUrl(invitation)))
                 .toList();
+    }
+
+    private String coverUrl(UserInvitation invitation) {
+        if (mediaFileRepository == null) {
+            return null;
+        }
+        return mediaFileRepository.findAllByInvitationIdAndMediaType(invitation.getId(), MediaType.COVER_IMAGE)
+                .stream()
+                .findFirst()
+                .map(media -> media.getFileUrl())
+                .orElse(null);
     }
 
     @Transactional(readOnly = true)

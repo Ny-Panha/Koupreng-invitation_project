@@ -57,13 +57,10 @@ export default function Home() {
           className="bg-image"
           style={{ backgroundImage: `url(${heroBg})` }}
         ></div>
-        <div className="bg-gradient-cover"></div>
       </div>
 
       {/* Hero Section */}
       <section className="hero-modern">
-        <div className="overlay-gradient"></div>
-
         <div className="hero-content">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -227,11 +224,9 @@ export default function Home() {
         /* --- Fixed Background Pattern --- */
         .fixed-bg-overlay { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
         .bg-image { width: 100%; height: 100%; background-size: cover; background-position: center top; }
-        .bg-gradient-cover { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(252, 248, 242, 0.4) 0%, rgba(252, 248, 242, 1) 1000%); }
 
         /* --- រក្សារចនាបថចាស់ដែលបងមាន --- */
         .hero-modern { width: 100%; min-width: 0; min-height: 100svh; height: auto; position: relative; display: flex; align-items: center; justify-content: center; text-align: center; padding: 120px 16px 64px; overflow: hidden; }
-        .overlay-gradient { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(252, 248, 242, 0.15) 0%, rgba(252, 248, 242, 0.35) 55%, rgba(252, 248, 242, 0.95) 100%); z-index: 1; }
         .hero-content { position: relative; z-index: 10; width: min(100%, 800px); min-width: 0; }
         .khmer-title { font-family: 'Moul', serif; padding-top: 15px; font-size: clamp(30px, 8vw, 50px); color: #333; line-height: 1.3; overflow-wrap: anywhere; }
         .gold-gradient { background: linear-gradient(90deg, #B0926A, #D4AF37); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }

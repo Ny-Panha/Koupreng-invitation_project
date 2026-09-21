@@ -85,7 +85,7 @@ export default function TemplateDemoPage() {
     }, [remoteTpl, targetId]);
 
     const forcedVariant = aliasTargetId ? id : undefined;
-    const createTemplatePath = `/create/wedding?template=${tpl.id}`;
+    const createTemplatePath = "/templates/browse";
     const useTemplateLink = isAuthenticated
         ? createTemplatePath
         : `/login?next=${encodeURIComponent(createTemplatePath)}`;

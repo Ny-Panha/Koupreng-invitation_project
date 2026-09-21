@@ -167,7 +167,7 @@ export default function BrowseTemplatesFeature() {
       return;
     }
 
-    navigate(`/create/wedding?templateId=${template.id || template.slug || ""}`);
+    navigate(`/dashboard/invitations/design?templateId=${template.id || template.slug || ""}`);
   };
 
   const handlePreview = (template) => {

@@ -507,9 +507,9 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         || tpl.mainImage
         || "/facebook/all/03-card/cover-card.jpg";
 
-    const backgroundImage = nonBlank(tpl.backgroundImage)
-        || nonBlank(host.backgroundImage)
-        || "";
+    const backgroundImage = hasHostContent
+        ? nonBlank(host.backgroundImage)
+        : (nonBlank(tpl.backgroundImage) || nonBlank(host.backgroundImage) || "");
 
     // Map host story chapters onto the timeline shape, layering template images.
     const ownImages = getTemplateOwnImages(tpl);
@@ -537,16 +537,16 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
             title: c.title || `ដំណើររបស់យើង`,
             date: c.date || "",
             text: c.text || "",
-            image: c.image || (ownImages ? ownImages[index % ownImages.length] : undefined),
-        }))
-        : combinedStoryText
+            image: c.image || (hasHostContent ? undefined : (ownImages ? ownImages[index % ownImages.length] : undefined)),
+        })).filter((chapter) => !hasHostContent || chapter.image)
+        : combinedStoryText && !hasHostContent
             ? [{
                 id: "story-text",
                 kicker: "រឿងរ៉ាវស្នេហា",
                 title: "ដំណើររបស់យើង",
                 date: tpl.dateText || "",
                 text: combinedStoryText,
-                image: ownImages ? ownImages[0] : coverImage,
+                image: hasHostContent ? undefined : (ownImages ? ownImages[0] : coverImage),
             }]
         : null;
 
@@ -632,6 +632,7 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         amp: theme.amp,
         badge: theme.badge,
         enabledSections: hostEnabledSections,
+        hasHostContent,
         monogramText,
         shortName: monogramText,
         guestName,
@@ -674,8 +675,8 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
             mapEmbedUrl,
             image: coverImage,
         },
-        gallery: (hostGallery && hostGallery.length) ? hostGallery : buildGallery(tpl),
-        story: (hostStory && hostStory.length) ? hostStory : buildStory(tpl, variant),
+        gallery: hasHostContent ? (hostGallery || []) : ((hostGallery && hostGallery.length) ? hostGallery : buildGallery(tpl)),
+        story: hasHostContent ? (hostStory || []) : ((hostStory && hostStory.length) ? hostStory : buildStory(tpl, variant)),
         schedule: (hostSchedule && hostSchedule.length) ? hostSchedule : (hasHostContent ? (host.schedule || []) : buildSchedule(tpl, variant)),
         party: (hostParty && hostParty.length) ? hostParty : DEMO_PARTY,
         dressCode,
