@@ -401,16 +401,12 @@ export default function KhmerCelestialLayout({
               <CelestialHeading id="kc-story-title" khmer="ដំណើរនៃក្ដីស្រឡាញ់" english="Our story" eyebrow="MEMORIES" align="left" languageMode={languageMode} />
               <div className="kc-story__list">
                 {story.map((chapter, index) => (
-                  <CelestialReveal as="article" className="kc-story__chapter" key={chapter.id || `${chapter.title}-${index}`}>
-                    <div className="kc-story__media">
-                      <CelestialImage
-                        src={firstImage(chapter.image)
-                          || firstImage(galleryImages[index + 2])
-                          || firstImage(galleryImages[index + 1])
-                          || content.coverImage}
-                        alt={chapter.title || `រឿងរ៉ាវស្នេហា ទី ${index + 1}`}
-                      />
-                    </div>
+                  <CelestialReveal as="article" className={`kc-story__chapter${chapter.image ? "" : " kc-story__chapter--text-only"}`} key={chapter.id || `${chapter.title}-${index}`}>
+                    {chapter.image ? (
+                      <div className="kc-story__media">
+                        <CelestialImage src={firstImage(chapter.image)} alt={chapter.title || `រឿងរ៉ាវស្នេហា ទី ${index + 1}`} />
+                      </div>
+                    ) : null}
                     <div className="kc-story__copy">
                       {chapter.kicker ? <p className="kc-story__kicker">{chapter.kicker}</p> : null}
                       <h3>{chapter.title || "ដំណើររបស់យើង"}</h3>

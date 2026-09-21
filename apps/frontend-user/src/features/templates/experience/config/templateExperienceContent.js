@@ -527,7 +527,7 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         ? nonBlank(host.backgroundImage)
         : (nonBlank(tpl.backgroundImage) || nonBlank(host.backgroundImage) || "");
 
-    // Map host story chapters onto the timeline shape, layering template images.
+    // Host text and images remain authoritative; demo media belongs only to previews.
     const ownImages = getTemplateOwnImages(tpl);
     const hostGallery = nonEmpty(host.gallery)
         ? host.gallery
@@ -537,10 +537,6 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
             }))
             .filter((item) => item.src)
         : null;
-    const hostedMedia = (hostGallery || []).map((item) => item.src).filter(Boolean);
-    const hostedImageAt = (index = 0) => hostedMedia.length
-        ? hostedMedia[index % hostedMedia.length]
-        : coverImage;
     const hostStoryText = nonBlank(hasHostContent ? host.storyText : (host.storyText || tpl.storyText));
     const hostStoryTextEn = nonBlank(host.storyTextEn);
     const languageMode = host.languageMode || tpl.languageMode || "both";
@@ -557,28 +553,16 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
             title: c.title || `ដំណើររបស់យើង`,
             date: c.date || "",
             text: c.text || "",
-<<<<<<< HEAD
-            image: c.image || (hasHostContent ? undefined : (ownImages ? ownImages[index % ownImages.length] : undefined)),
-        })).filter((chapter) => !hasHostContent || chapter.image)
-        : combinedStoryText && !hasHostContent
-=======
-            image: c.image || (hasHostContent
-                ? hostedImageAt(index)
-                : (ownImages ? ownImages[index % ownImages.length] : undefined)),
+            image: c.image || (hasHostContent ? "" : (ownImages ? ownImages[index % ownImages.length] : "")),
         }))
         : combinedStoryText
->>>>>>> 474206360e3ff654b1e94c8eba22168bafe9f11c
             ? [{
                 id: "story-text",
                 kicker: "រឿងរ៉ាវស្នេហា",
                 title: "ដំណើររបស់យើង",
                 date: tpl.dateText || "",
                 text: combinedStoryText,
-<<<<<<< HEAD
-                image: hasHostContent ? undefined : (ownImages ? ownImages[0] : coverImage),
-=======
-                image: hasHostContent ? hostedImageAt() : (ownImages ? ownImages[0] : coverImage),
->>>>>>> 474206360e3ff654b1e94c8eba22168bafe9f11c
+                image: hasHostContent ? "" : (ownImages ? ownImages[0] : coverImage),
             }]
         : null;
 
@@ -600,7 +584,7 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
             roleEn: m.roleEn || "",
             name: m.name || "",
             image: m.image || (hasHostContent
-                ? hostedImageAt(index)
+                ? ""
                 : (ownImages ? ownImages[index % ownImages.length] : DEMO_PARTY[index % DEMO_PARTY.length].image)),
         }))
         : null;
@@ -731,13 +715,8 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
             mapEmbedUrl,
             image: coverImage,
         },
-<<<<<<< HEAD
         gallery: hasHostContent ? (hostGallery || []) : ((hostGallery && hostGallery.length) ? hostGallery : buildGallery(tpl)),
         story: hasHostContent ? (hostStory || []) : ((hostStory && hostStory.length) ? hostStory : buildStory(tpl, variant)),
-=======
-        gallery: hasHostContent ? (hostGallery || []) : buildGallery(tpl),
-        story: (hostStory && hostStory.length) ? hostStory : (hasHostContent ? [] : buildStory(tpl, variant)),
->>>>>>> 474206360e3ff654b1e94c8eba22168bafe9f11c
         schedule: (hostSchedule && hostSchedule.length) ? hostSchedule : (hasHostContent ? (host.schedule || []) : buildSchedule(tpl, variant)),
         scheduleTitle: nonBlank(tpl.scheduleTitle || host.scheduleTitle) || "កម្មវិធីមង្គលការ",
         scheduleDate: nonBlank(tpl.scheduleDate || host.scheduleDate) || (hasHostContent ? nonBlank(host.dateText) : tpl.dateText || ""),

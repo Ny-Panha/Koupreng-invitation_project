@@ -865,6 +865,11 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   align-items: center;
 }
 
+.kc-story__chapter--text-only {
+  max-width: 680px;
+  margin-inline: auto;
+}
+
 .kc-story__media {
   position: relative;
   min-height: 390px;
@@ -1686,6 +1691,8 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
     grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
     gap: 72px;
   }
+
+  .kc-story__chapter--text-only { grid-template-columns: minmax(0, 1fr); }
 
   .kc-story__chapter:nth-child(even) .kc-story__media { order: 2; }
   .kc-story__chapter:nth-child(even) .kc-story__copy { justify-self: end; }

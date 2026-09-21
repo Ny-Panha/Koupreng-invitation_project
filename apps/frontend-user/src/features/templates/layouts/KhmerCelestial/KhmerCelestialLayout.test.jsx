@@ -151,6 +151,30 @@ describe("KhmerCelestialLayout integration", () => {
     expect(document.querySelector(".kc-music-fab")).not.toBeInTheDocument();
   });
 
+  it("renders a hosted text-only story without demo photography", () => {
+    render(
+      <MemoryRouter>
+        <TemplateExperience
+          tpl={{ id: "khmer-celestial", name: "Khmer Celestial", hostContent: {} }}
+          content={{
+            ...content,
+            coverImage: "",
+            story: [{ id: "real-story", title: "Our story", text: "Real host copy", image: "" }],
+            enabledSections: { ...content.enabledSections, story: true, music: false },
+            music: "",
+          }}
+          showBreadcrumb={false}
+          showActions={false}
+        />
+      </MemoryRouter>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "បើកសំបុត្រអញ្ជើញ" }));
+    const story = document.querySelector(".kc-story");
+    expect(within(story).getByText("Real host copy")).toBeInTheDocument();
+    expect(story.querySelector(".kc-story__media")).not.toBeInTheDocument();
+  });
+
   it("handles an expired event date safely without producing negative countdown values", () => {
     const expiredContent = {
       ...content,

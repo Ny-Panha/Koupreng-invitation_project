@@ -5,6 +5,10 @@
 
 import { useEffect, useState } from "react";
 
+export const TELEGRAM_WEB_APP_READY_EVENT = "telegram-web-app-ready";
+
+let initializedTelegramInstance = null;
+
 export function getTelegramWebApp() {
   if (typeof window === "undefined") return null;
   return window.Telegram?.WebApp || null;
@@ -21,6 +25,7 @@ export function isInsideTelegram() {
 export function initTelegramWebApp() {
   const tg = getTelegramWebApp();
   if (!tg) return;
+  if (initializedTelegramInstance === tg) return;
 
   try {
     tg.ready();
@@ -53,6 +58,7 @@ export function initTelegramWebApp() {
     if (typeof tg.onEvent === "function") {
       tg.onEvent("viewportChanged", updateViewport);
     }
+    initializedTelegramInstance = tg;
   } catch (err) {
     console.warn("⚠️ [Telegram WebApp Init]:", err?.message || err);
   }
@@ -81,7 +87,9 @@ export function triggerHaptic(type = "impact", style = "medium") {
     } else if (type === "selection") {
       tg.HapticFeedback.selectionChanged();
     }
-  } catch {}
+  } catch {
+    // Haptic feedback is optional on older Telegram clients.
+  }
 }
 
 /**
@@ -92,12 +100,17 @@ export function useTelegramWebApp() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const tg = getTelegramWebApp();
-    if (tg) {
+    const syncTelegramState = () => {
+      const tg = getTelegramWebApp();
+      if (!tg) return;
       initTelegramWebApp();
       setIsTelegram(Boolean(tg.initData && tg.initData.length > 0));
       setUser(tg.initDataUnsafe?.user || null);
-    }
+    };
+
+    syncTelegramState();
+    window.addEventListener(TELEGRAM_WEB_APP_READY_EVENT, syncTelegramState);
+    return () => window.removeEventListener(TELEGRAM_WEB_APP_READY_EVENT, syncTelegramState);
   }, []);
 
   return {

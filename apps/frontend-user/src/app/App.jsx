@@ -7,7 +7,10 @@ import QueryProvider from "./providers/QueryProvider";
 import ThemeProvider from "./providers/ThemeProvider";
 import SiteAnimations from "../shared/animations/SiteAnimations";
 import ChatBot from "../shared/ui/ChatBot";
-import { initTelegramWebApp } from "../shared/telegram/telegramWebApp";
+import {
+  initTelegramWebApp,
+  TELEGRAM_WEB_APP_READY_EVENT,
+} from "../shared/telegram/telegramWebApp";
 
 /**
  * App — root component.
@@ -16,6 +19,8 @@ import { initTelegramWebApp } from "../shared/telegram/telegramWebApp";
 function App() {
   useEffect(() => {
     initTelegramWebApp();
+    window.addEventListener(TELEGRAM_WEB_APP_READY_EVENT, initTelegramWebApp);
+    return () => window.removeEventListener(TELEGRAM_WEB_APP_READY_EVENT, initTelegramWebApp);
   }, []);
   return (
     <AuthProvider>
