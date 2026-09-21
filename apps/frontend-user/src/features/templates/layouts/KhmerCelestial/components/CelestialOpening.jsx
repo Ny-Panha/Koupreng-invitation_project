@@ -31,9 +31,17 @@ export default function CelestialOpening({ content, onOpen }) {
       aria-labelledby="kc-opening-title"
       initial={reducedMotion ? false : { opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={reducedMotion ? { display: "none" } : { opacity: 0, scale: 1.025 }}
-      transition={{ duration: reducedMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
+      exit={reducedMotion ? { display: "none" } : { opacity: 0, scale: 1.035, filter: "blur(8px)" }}
+      transition={{ duration: reducedMotion ? 0 : 0.9, ease: [0.22, 1, 0.36, 1] }}
     >
+      <img
+        className="kc-opening__photo"
+        src={content.coverImage || openingPoster}
+        alt=""
+        aria-hidden="true"
+        width="2048"
+        height="1365"
+      />
       {!reducedMotion && !videoFailed && openingVideo ? (
         <video
           className="kc-opening__media"
@@ -53,15 +61,6 @@ export default function CelestialOpening({ content, onOpen }) {
         <img className="kc-opening__media" src={openingPoster} alt="" aria-hidden="true" width="720" height="1280" />
       )}
       <div className="kc-opening__shade" aria-hidden="true" />
-      <img
-        className="kc-opening__ornament"
-        src={KHMER_CELESTIAL_ASSETS.ceremonialCorners}
-        alt=""
-        aria-hidden="true"
-        width="736"
-        height="1308"
-      />
-      <div className="kc-opening__frame" aria-hidden="true"><i /><i /><i /><i /></div>
 
       <div className="kc-opening__content">
         <img
@@ -72,7 +71,6 @@ export default function CelestialOpening({ content, onOpen }) {
           height="512"
         />
         <p className="kc-opening__eyebrow">សិរីមង្គលអាពាហ៍ពិពាហ៍</p>
-        <p className="kc-opening__english">A signature Khmer invitation</p>
         {!content.hideCoupleNameOnCover && hasCoupleNames ? (
           <h1 id="kc-opening-title">
             <span>{content.groom}</span>
@@ -91,13 +89,11 @@ export default function CelestialOpening({ content, onOpen }) {
           type="button"
           className="kc-button kc-button--gold kc-opening__button"
           onClick={onOpen}
-          aria-describedby="kc-opening-hint"
           autoFocus
         >
           <MailOpen aria-hidden="true" />
           <span>{openLabel}</span>
         </button>
-        <p id="kc-opening-hint" className="kc-opening__hint">Tap to enter · ចុចដើម្បីបើក</p>
       </div>
     </motion.div>
   );

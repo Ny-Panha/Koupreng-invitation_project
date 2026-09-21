@@ -192,6 +192,7 @@ export default function TemplateExperience({
             music: liveData.musicUrl || liveData.music || baseContent.music,
         };
     }, [baseContent, liveData]);
+    const DedicatedComponent = getDedicatedTemplateComponent(tpl, variant);
 
     const reducedMotion = usePrefersReducedMotion();
     const [musicAudioRef, musicController] = useTemplateMusicController(content.music);
@@ -285,7 +286,7 @@ export default function TemplateExperience({
     }, [musicController, preview]);
 
     useEffect(() => {
-        if (preview || heroOpened) return undefined;
+        if (DedicatedComponent || preview || heroOpened) return undefined;
 
         const handleWheel = (e) => {
             if (e.cancelable) {
@@ -314,7 +315,7 @@ export default function TemplateExperience({
             window.removeEventListener("touchmove", handleTouchMove);
             window.removeEventListener("keydown", handleKeyDown);
         };
-    }, [preview, heroOpened]);
+    }, [DedicatedComponent, preview, heroOpened]);
 
     const handleHeroOpen = useCallback(() => {
         setHeroOpened(true);
@@ -350,7 +351,6 @@ export default function TemplateExperience({
     );
     const ornamentTheme = content.design?.ornamentTheme || "royal-floral";
 
-    const DedicatedComponent = getDedicatedTemplateComponent(tpl, variant);
     if (DedicatedComponent) {
         return createElement(DedicatedComponent, {
             tpl: content,

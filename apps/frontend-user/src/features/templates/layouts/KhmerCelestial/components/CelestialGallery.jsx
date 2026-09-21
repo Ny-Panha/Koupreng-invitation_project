@@ -71,14 +71,17 @@ export default function CelestialGallery({ images, languageMode }) {
 
   return (
     <section className="kc-section kc-gallery" data-tx-section="gallery" aria-labelledby="kc-gallery-title">
-      <div className="kc-shell">
+      <div className="kc-shell kc-gallery__intro">
         <CelestialHeading
           id="kc-gallery-title"
           khmer="កម្រងអនុស្សាវរីយ៍"
           english="A portrait of our story"
           eyebrow="THE GALLERY"
+          align="left"
           languageMode={languageMode}
         />
+      </div>
+      <div className="kc-gallery__canvas">
         <div className="kc-gallery__grid">
           {gallery.slice(0, 9).map((src, index) => (
             <CelestialReveal

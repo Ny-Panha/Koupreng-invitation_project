@@ -7,7 +7,7 @@ INSERT INTO templates (
 SELECT 'Khmer Celestial',
        'khmer-celestial',
        'TRADITIONAL',
-       '{"presetId":"KHMER_CELESTIAL","theme":"KHMER_CELESTIAL","openingStyle":"celestial-cover","gateStyle":"celestial-cover","openingVideoEnabled":true,"openingVideoUrl":"/invitations/khmer-celestial/burgundy-bokeh.mp4","primaryColor":"#541722","secondaryColor":"#B88A3A","backgroundColor":"#F7F0E4","coverImage":"/facebook/all/06-card/cover-card.jpg","enabledSections":{"countdown":true,"story":true,"schedule":true,"map":true,"gallery":true,"party":false,"dressCode":true,"gift":false,"faq":false,"rsvp":true,"music":true}}',
+       '{"presetId":"KHMER_CELESTIAL","theme":"KHMER_CELESTIAL","openingStyle":"celestial-cover","gateStyle":"celestial-cover","primaryColor":"#541722","secondaryColor":"#B88A3A","backgroundColor":"#F7F0E4","coverImage":"/facebook/all/06-card/cover-card.jpg","enabledSections":{"countdown":true,"story":true,"schedule":true,"map":true,"gallery":true,"party":false,"dressCode":true,"gift":false,"faq":false,"rsvp":true,"music":true}}',
        '/facebook/all/06-card/cover-card.jpg',
        '/templates/khmer-celestial',
        FALSE,
@@ -24,7 +24,7 @@ WHERE NOT EXISTS (
 UPDATE templates
 SET name = 'Khmer Celestial',
     category = 'TRADITIONAL',
-    description = '{"presetId":"KHMER_CELESTIAL","theme":"KHMER_CELESTIAL","openingStyle":"celestial-cover","gateStyle":"celestial-cover","openingVideoEnabled":true,"openingVideoUrl":"/invitations/khmer-celestial/burgundy-bokeh.mp4","primaryColor":"#541722","secondaryColor":"#B88A3A","backgroundColor":"#F7F0E4","coverImage":"/facebook/all/06-card/cover-card.jpg","enabledSections":{"countdown":true,"story":true,"schedule":true,"map":true,"gallery":true,"party":false,"dressCode":true,"gift":false,"faq":false,"rsvp":true,"music":true}}',
+    description = '{"presetId":"KHMER_CELESTIAL","theme":"KHMER_CELESTIAL","openingStyle":"celestial-cover","gateStyle":"celestial-cover","primaryColor":"#541722","secondaryColor":"#B88A3A","backgroundColor":"#F7F0E4","coverImage":"/facebook/all/06-card/cover-card.jpg","enabledSections":{"countdown":true,"story":true,"schedule":true,"map":true,"gallery":true,"party":false,"dressCode":true,"gift":false,"faq":false,"rsvp":true,"music":true}}',
     thumbnail_url = '/facebook/all/06-card/cover-card.jpg',
     preview_url = '/templates/khmer-celestial',
     is_premium = FALSE,

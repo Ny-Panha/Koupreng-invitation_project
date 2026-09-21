@@ -188,6 +188,9 @@ export default function KhmerCelestialLayout({
   const dressColors = Array.isArray(content.dressCode?.colors) ? content.dressCode.colors : [];
   const faq = Array.isArray(content.faq) ? content.faq : [];
   const gift = Array.isArray(content.gift) ? content.gift : [];
+  const galleryImages = Array.isArray(content.gallery) ? content.gallery : [];
+  const invitationImage = firstImage(galleryImages[1]) || firstImage(galleryImages[0]) || content.coverImage;
+  const closingImage = firstImage(galleryImages.at(-1)) || content.coverImage;
 
   return (
     <div className={`kc-root${preview ? " kc-root--preview" : ""}`} data-variant="khmer-celestial">
@@ -261,16 +264,6 @@ export default function KhmerCelestialLayout({
             <CelestialImage src={content.coverImage} alt={heroAlt} eager />
           </motion.div>
           <div className="kc-hero__shade" />
-          <img
-            className="kc-hero__ornament"
-            src={KHMER_CELESTIAL_ASSETS.ceremonialCorners}
-            alt=""
-            aria-hidden="true"
-            decoding="async"
-            width="736"
-            height="1308"
-          />
-          <div className="kc-hero__halo" aria-hidden="true" />
           <motion.div
             className="kc-hero__content"
             initial={reducedMotion ? false : { opacity: 0, y: 24 }}
@@ -300,23 +293,19 @@ export default function KhmerCelestialLayout({
         </section>
 
         <section className="kc-section kc-invitation" data-kc-section="invitation" aria-labelledby="kc-invitation-title">
-          <div className="kc-shell kc-shell--narrow kc-invitation__folio">
-            <img
-              className="kc-invitation__folio-art"
-              src={KHMER_CELESTIAL_ASSETS.ceremonialFolio}
-              alt=""
-              aria-hidden="true"
-              loading="lazy"
-              decoding="async"
-              width="900"
-              height="1600"
-            />
-            <div className="kc-invitation__folio-inner">
+          <div className="kc-shell">
+            <div className="kc-invitation__layout">
+              <CelestialReveal className="kc-invitation__portrait">
+                <CelestialImage src={invitationImage} alt={heroAlt} />
+              </CelestialReveal>
+              <div className="kc-invitation__copy">
             <CelestialHeading
               id="kc-invitation-title"
               khmer={content.messageTitle || "សូមគោរពអញ្ជើញ"}
               english="Together with our families"
               eyebrow="THE INVITATION"
+              align="left"
+              tone="ceremonial"
               languageMode={languageMode}
             />
             <CelestialReveal className="kc-invitation__guest">
@@ -341,6 +330,7 @@ export default function KhmerCelestialLayout({
                 </article>
               </CelestialReveal>
             ) : null}
+              </div>
             </div>
           </div>
         </section>
@@ -381,19 +371,22 @@ export default function KhmerCelestialLayout({
         {sectionEnabled("story") && story.length ? (
           <section className="kc-section kc-story" data-tx-section="story" aria-labelledby="kc-story-title">
             <div className="kc-shell">
-              <CelestialHeading id="kc-story-title" khmer="ដំណើរនៃក្ដីស្រឡាញ់" english="Written in the stars" eyebrow="OUR STORY" languageMode={languageMode} />
+              <CelestialHeading id="kc-story-title" khmer="ដំណើរនៃក្ដីស្រឡាញ់" english="Written in the stars" eyebrow="OUR STORY" align="left" languageMode={languageMode} />
               <div className="kc-story__list">
                 {story.map((chapter, index) => (
                   <CelestialReveal as="article" className="kc-story__chapter" key={chapter.id || `${chapter.title}-${index}`}>
                     <div className="kc-story__media">
                       <CelestialImage
-                        src={firstImage(chapter.image) || firstImage(content.gallery?.[index]) || content.coverImage}
+                        src={firstImage(chapter.image)
+                          || firstImage(galleryImages[index + 2])
+                          || firstImage(galleryImages[index + 1])
+                          || content.coverImage}
                         alt={chapter.title || `រឿងរ៉ាវស្នេហា ទី ${index + 1}`}
                       />
                       <span>{String(index + 1).padStart(2, "0")}</span>
                     </div>
                     <div className="kc-story__copy">
-                      <p>{chapter.kicker || "OUR STORY"}</p>
+                      {chapter.kicker ? <p className="kc-story__kicker">{chapter.kicker}</p> : null}
                       <h3>{chapter.title || "ដំណើររបស់យើង"}</h3>
                       {chapter.date ? <time>{chapter.date}</time> : null}
                       <div>{chapter.text}</div>
@@ -408,7 +401,7 @@ export default function KhmerCelestialLayout({
         {sectionEnabled("schedule") && schedule.length ? (
           <section className="kc-section kc-schedule" data-tx-section="schedule" aria-labelledby="kc-schedule-title">
             <div className="kc-shell kc-shell--narrow">
-              <CelestialHeading id="kc-schedule-title" khmer="កម្មវិធីមង្គលការ" english="Ceremony & celebration" eyebrow="THE PROGRAMME" languageMode={languageMode} />
+              <CelestialHeading id="kc-schedule-title" khmer="កម្មវិធីមង្គលការ" english="Ceremony & celebration" eyebrow="THE PROGRAMME" align="left" languageMode={languageMode} />
               <div className="kc-schedule__list">
                 {schedule.map((item, index) => (
                   <CelestialReveal as="article" className="kc-schedule__item" key={item.id || `${item.time}-${index}`} delay={(index % 3) * 0.04}>
@@ -516,8 +509,8 @@ export default function KhmerCelestialLayout({
 
         {sectionEnabled("rsvp") ? (
           <section className="kc-section kc-rsvp" data-tx-section="rsvp" aria-labelledby="kc-rsvp-title">
-            <div className="kc-shell kc-shell--narrow">
-              <CelestialHeading id="kc-rsvp-title" khmer="សូមបញ្ជាក់ការចូលរួម" english="We hope you can join us" eyebrow="RÉPONDEZ S'IL VOUS PLAÎT" languageMode={languageMode} />
+            <div className="kc-shell kc-rsvp__layout">
+              <CelestialHeading id="kc-rsvp-title" khmer="សូមបញ្ជាក់ការចូលរួម" english="We hope you can join us" eyebrow="RÉPONDEZ S'IL VOUS PLAÎT" align="left" languageMode={languageMode} />
               <CelestialReveal className="kc-rsvp__card">
                 {children || <TemplateRsvp useTemplateLink={useTemplateLink} />}
               </CelestialReveal>
@@ -526,7 +519,8 @@ export default function KhmerCelestialLayout({
         ) : null}
 
         <footer className="kc-footer">
-          <div className="kc-footer__halo" aria-hidden="true" />
+          <CelestialImage className="kc-footer__media" src={closingImage} alt={heroAlt} />
+          <div className="kc-footer__shade" aria-hidden="true" />
           <CelestialReveal>
             <img className="kc-footer__brand" src={KHMER_CELESTIAL_ASSETS.brandMark} alt="Koupreng" loading="lazy" decoding="async" width="768" height="512" />
             <p className="kc-footer__khmer">{content.thankYouTitle || "សូមអរគុណដោយក្តីគោរព"}</p>

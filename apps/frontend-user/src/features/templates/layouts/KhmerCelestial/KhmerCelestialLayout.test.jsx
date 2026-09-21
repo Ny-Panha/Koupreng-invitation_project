@@ -90,6 +90,13 @@ describe("KhmerCelestialLayout integration", () => {
     expect(play).toHaveBeenCalledTimes(1);
     expect(screen.getAllByTestId("real-rsvp")).toHaveLength(1);
     expect(document.body.style.overflow).toBe("");
+
+    const wheelEvent = new WheelEvent("wheel", { cancelable: true });
+    const touchMoveEvent = new Event("touchmove", { cancelable: true });
+    window.dispatchEvent(wheelEvent);
+    window.dispatchEvent(touchMoveEvent);
+    expect(wheelEvent.defaultPrevented).toBe(false);
+    expect(touchMoveEvent.defaultPrevented).toBe(false);
   });
 
   it("removes disabled optional sections without leaving empty renderers", () => {

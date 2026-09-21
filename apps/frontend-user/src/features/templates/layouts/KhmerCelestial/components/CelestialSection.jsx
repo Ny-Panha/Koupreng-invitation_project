@@ -21,8 +21,10 @@ export function CelestialReveal({
     <MotionTag
       ref={ref}
       className={className}
-      initial={reducedMotion ? false : { opacity: 0, y: 28 }}
-      animate={reducedMotion || inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 28 }}
+      initial={reducedMotion ? false : { opacity: 0, y: 20, filter: "blur(4px)" }}
+      animate={reducedMotion || inView
+        ? { opacity: 1, y: 0, filter: "blur(0px)" }
+        : { opacity: 0, y: 20, filter: "blur(4px)" }}
       transition={{ duration: reducedMotion ? 0 : 0.82, delay: reducedMotion ? 0 : delay, ease: EASE }}
       {...rest}
     >
@@ -37,6 +39,7 @@ export function CelestialHeading({
   english,
   eyebrow,
   align = "center",
+  tone = "editorial",
   languageMode = "both",
 }) {
   const showKhmer = languageMode !== "en";
@@ -44,7 +47,7 @@ export function CelestialHeading({
   const hasKhmerHeading = showKhmer && Boolean(khmer);
 
   return (
-    <CelestialReveal className={`kc-heading kc-heading--${align}`}>
+    <CelestialReveal className={`kc-heading kc-heading--${align} kc-heading--${tone}`}>
       {eyebrow ? <p className="kc-heading__eyebrow">{eyebrow}</p> : null}
       {hasKhmerHeading ? <h2 id={id} className="kc-heading__khmer">{khmer}</h2> : null}
       {showEnglish && english ? (
