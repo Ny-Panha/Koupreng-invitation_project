@@ -1,0 +1,12 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - group "Language / ភាសា" [ref=e6]:
+      - button "KH" [ref=e7] [cursor=pointer]
+      - button "EN" [ref=e8] [cursor=pointer]
+    - generic [ref=e9]:
+      - paragraph [ref=e10]:
+        - generic [ref=e11]: សិរីសួស្តីអាពាហ៍ពិពាហ៍
+      - img "Phai Vita & Sir Soriya" [ref=e12]
+      - paragraph [ref=e18]: សូមគោរពអញ្ជើញភ្ញៀវកិត្តិយស
+      - button "បើកសំបុត្រ" [ref=e20] [cursor=pointer]
+  - button "Play background music" [ref=e26] [cursor=pointer]
