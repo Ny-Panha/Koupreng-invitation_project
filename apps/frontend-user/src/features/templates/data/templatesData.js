@@ -100,6 +100,7 @@ export const KHMER_CELESTIAL_TEMPLATE = withTemplateMedia({
     groomEn: "Vireak",
     bride: "ឡុង សុម៉ាលី",
     brideEn: "Somaly",
+    guestName: "លោក រ៉ាន់ ណារ៉ាត់ ព្រមទាំងគ្រួសារ",
     familyHeading: "គ្រួសារទាំងសងខាង",
     family: {
         groomTitle: "ខាងកូនប្រុស",

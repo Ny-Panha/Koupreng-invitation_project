@@ -1,3 +1,7 @@
+import { existsSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
 import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -6,6 +10,9 @@ import TemplateExperience from "../../experience/TemplateExperience";
 import { buildTemplateContent } from "../../experience/config/templateExperienceContent";
 import { KHMER_CELESTIAL_TEMPLATE } from "../../data/templatesData";
 import { CelestialHeading } from "./components/CelestialSection";
+import { KHMER_CELESTIAL_ASSETS } from "./khmerCelestialAssets";
+
+const testDirectory = dirname(fileURLToPath(import.meta.url));
 
 const content = {
   variant: "khmer-celestial",
@@ -102,6 +109,72 @@ describe("KhmerCelestialLayout integration", () => {
     window.dispatchEvent(touchMoveEvent);
     expect(wheelEvent.defaultPrevented).toBe(false);
     expect(touchMoveEvent.defaultPrevented).toBe(false);
+  });
+
+  it("renders the supplied ornamental asset with accessible preview guest text in reduced motion", () => {
+    const previewContent = buildTemplateContent(KHMER_CELESTIAL_TEMPLATE, "khmer-celestial");
+
+    render(
+      <MemoryRouter>
+        <TemplateExperience
+          tpl={KHMER_CELESTIAL_TEMPLATE}
+          content={previewContent}
+          showBreadcrumb={false}
+          showActions={false}
+        />
+      </MemoryRouter>
+    );
+
+    const banner = document.querySelector(".kc-opening__guest-banner");
+    const bannerImage = banner.querySelector(".kc-opening__guest-banner-image");
+    const guestLabel = document.querySelector(".kc-opening__guest-label");
+    expect(previewContent.guestName).toBe("លោក រ៉ាន់ ណារ៉ាត់ ព្រមទាំងគ្រួសារ");
+    expect(within(banner).getByText("រ៉ាន់", { exact: false })).toHaveClass("kc-opening__guest-name");
+    expect(banner).not.toContainElement(guestLabel);
+    expect(guestLabel.compareDocumentPosition(banner) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(bannerImage).toHaveAttribute("src", KHMER_CELESTIAL_ASSETS.guestNameBanner);
+    expect(bannerImage).toHaveAttribute("alt", "");
+    expect(banner).toBeVisible();
+    expect(banner).toHaveStyle({ opacity: "1", filter: "blur(0px)" });
+    expect(existsSync(resolve(testDirectory, "../../../../../public/invitations/khmer-celestial/guest-name-banner1.webp"))).toBe(true);
+  });
+
+  it("renders the actual personalized guest in the banner instead of the preview sample", () => {
+    const personalizedContent = {
+      ...content,
+      guestName: "លោក សុខ ដារ៉ា",
+      isPersonalizedGuest: true,
+    };
+
+    render(
+      <MemoryRouter>
+        <TemplateExperience
+          tpl={{ id: "khmer-celestial", name: "Khmer Celestial" }}
+          content={personalizedContent}
+          showBreadcrumb={false}
+          showActions={false}
+        />
+      </MemoryRouter>
+    );
+
+    const banner = document.querySelector(".kc-opening__guest-banner");
+    expect(within(banner).getByText("លោក សុខ ដារ៉ា")).toBeInTheDocument();
+    expect(within(banner).queryByText("លោក រ៉ាន់ ណារ៉ាត់ ព្រមទាំងគ្រួសារ")).not.toBeInTheDocument();
+  });
+
+  it("keeps hosted generic invitations free of the preview guest identity", () => {
+    const genericContent = buildTemplateContent({
+      ...KHMER_CELESTIAL_TEMPLATE,
+      opening: {
+        ...KHMER_CELESTIAL_TEMPLATE.opening,
+        genericGuestText: "ភ្ញៀវកិត្តិយស",
+      },
+      hostContent: { guest: null },
+    }, "khmer-celestial");
+
+    expect(genericContent.isPersonalizedGuest).toBe(false);
+    expect(genericContent.guestName).toBe("ភ្ញៀវកិត្តិយស");
+    expect(genericContent.guestName).not.toContain("រ៉ាន់ ណារ៉ាត់");
   });
 
   it("removes disabled optional sections without leaving empty renderers", () => {

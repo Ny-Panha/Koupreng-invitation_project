@@ -621,15 +621,17 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         : "";
     const design = normalizeOpeningDesign(tpl.design || {});
     const opening = normalizeOpeningCopy(tpl.opening || host.opening || {});
-    const personalizedGuestName = sanitizeDisplayText(
-        tpl.guestName ||
-        tpl.invitedGuestName ||
+    const hostGuestName = sanitizeDisplayText(
         host.guestName ||
         host.invitedGuestName ||
         host.guest?.guestName ||
         host.guest?.name ||
         ""
     );
+    const previewGuestName = hasHostContent
+        ? ""
+        : sanitizeDisplayText(tpl.guestName || tpl.invitedGuestName || "");
+    const personalizedGuestName = hostGuestName || previewGuestName;
     const guestName = personalizedGuestName || opening.genericGuestText || "លោកអ្នក និងក្រុមគ្រួសារ";
     const effectiveGroom = tpl.groom || hostCouple.groom || "";
     const effectiveBride = tpl.bride || hostCouple.bride || "";

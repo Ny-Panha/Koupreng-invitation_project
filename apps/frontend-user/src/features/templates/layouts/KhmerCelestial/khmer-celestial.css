@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "Bayon";
+  src: url("/invitations/khmer-celestial/fonts/bayon.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 .kc-root {
   --kc-ivory: #f7f2e8;
   --kc-paper: #fffdf8;
@@ -256,16 +264,73 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   color: var(--kc-gold);
 }
 
-.kc-opening__guest {
-  margin: 9px auto 14px;
-  color: var(--kc-muted);
-  font-size: 0.76rem;
-  line-height: 1.85;
+.kc-opening__guest-label {
+  margin: 4px auto 0;
+  color: #785331;
+  font-family: var(--kc-ui);
+  font-size: clamp(0.62rem, 1.7vw, 0.8rem);
+  font-weight: 500;
+  line-height: 1.35;
 }
 
-.kc-opening__guest strong {
-  color: var(--kc-green-deep);
-  font-weight: 600;
+.kc-opening__guest-banner {
+  position: relative;
+  width: clamp(220px, 18vw, 250px);
+  max-width: 90vw;
+  aspect-ratio: 2172 / 724;
+  margin: 1px auto 10px;
+  isolation: isolate;
+}
+
+.kc-opening__guest-banner-image {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 10px 16px rgba(91, 59, 32, 0.14));
+}
+
+.kc-opening__guest-banner-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  width: 84%;
+  min-height: 42%;
+  margin: 0;
+  color: #55351f;
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+
+.kc-opening__guest-name {
+  display: block;
+  max-width: 100%;
+  color: #55351f;
+  font-family: "Bayon", "Noto Sans Khmer", sans-serif;
+  font-size: clamp(0.78rem, 2.4vw, 1.18rem);
+  font-weight: 400;
+  line-height: 1.08;
+  overflow-wrap: normal;
+  white-space: nowrap;
+  word-break: normal;
+}
+
+.kc-opening__guest-name--long {
+  font-size: clamp(0.72rem, 1.6vw, 0.95rem);
+}
+
+.kc-opening__guest-name--very-long {
+  font-size: clamp(0.68rem, 1.9vw, 0.9rem);
+  line-height: 1.12;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
 /* Buttons and invitation controls */
@@ -1778,8 +1843,9 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
     margin-top: 2px;
   }
 
-  .kc-opening__guest {
-    margin-block: 5px 9px;
+  .kc-opening__guest-banner {
+    width: min(30vw, 250px);
+    margin-block: 1px 7px;
   }
 
   .kc-hero__content {
@@ -1788,6 +1854,10 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
 }
 
 @media (max-width: 819px) {
+  .kc-opening__guest-banner {
+    width: min(64vw, 250px);
+  }
+
   .kc-heading--left {
     margin-inline: auto;
     text-align: center;
@@ -1924,8 +1994,37 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
     font-size: 0.8rem;
   }
 
-  .kc-opening__guest {
-    margin-block: 5px 8px;
+  .kc-opening__date-block {
+    margin-top: 0;
+  }
+
+  .kc-opening__date,
+  .kc-opening__time {
+    font-size: 0.7rem;
+    line-height: 1.45;
+  }
+
+  .kc-opening__guest-banner {
+    width: min(60vw, 220px);
+    margin-block: 0 5px;
+  }
+
+  .kc-opening__guest-label {
+    margin-top: 2px;
+    font-size: 0.58rem;
+  }
+
+  .kc-opening__guest-name {
+    font-size: clamp(0.68rem, 3vw, 0.78rem);
+    line-height: 1.08;
+  }
+
+  .kc-opening__guest-name--long {
+    font-size: clamp(0.64rem, 2.8vw, 0.72rem);
+  }
+
+  .kc-opening__guest-name--very-long {
+    font-size: clamp(0.6rem, 2.6vw, 0.68rem);
   }
 
   .kc-opening__button {
@@ -1946,5 +2045,16 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   .kc-opening__film video,
   .kc-opening__brand-highlight {
     display: none;
+  }
+
+  .kc-opening__guest-banner,
+  .kc-opening__guest-label,
+  .kc-opening__guest-name {
+    filter: none !important;
+    transform: none;
+  }
+
+  .kc-opening__guest-banner-content {
+    transform: translate(-50%, -50%);
   }
 }

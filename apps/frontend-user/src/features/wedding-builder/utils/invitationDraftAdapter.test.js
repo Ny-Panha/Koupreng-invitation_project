@@ -142,6 +142,34 @@ describe("invitation draft adapters", () => {
         expect(reconstructed.guest).toBeNull();
     });
 
+    it("keeps the Khmer Celestial demo guest out of personalized and generic public content", () => {
+        const publicInvitation = {
+            slug: "celestial-wedding",
+            templateCode: "khmer-celestial",
+            designJson: "{}",
+            contentJson: JSON.stringify({
+                opening: { genericGuestText: "ភ្ញៀវកិត្តិយស" },
+            }),
+            enabledSections: "{}",
+            guest: { guestName: "លោក សុខ ដារ៉ា" },
+        };
+        const personalizedDraft = publicInvitationToDraft(publicInvitation, {});
+        const personalizedTemplate = draftToTemplate(personalizedDraft, []);
+        const personalizedContent = buildTemplateContent(personalizedTemplate.tpl, personalizedTemplate.variant);
+
+        expect(personalizedContent.guestName).toBe("លោក សុខ ដារ៉ា");
+        expect(personalizedContent.isPersonalizedGuest).toBe(true);
+        expect(personalizedContent.guestName).not.toContain("រ៉ាន់ ណារ៉ាត់");
+
+        const genericDraft = publicInvitationToDraft({ ...publicInvitation, guest: null }, {});
+        const genericTemplate = draftToTemplate(genericDraft, []);
+        const genericContent = buildTemplateContent(genericTemplate.tpl, genericTemplate.variant);
+
+        expect(genericContent.guestName).toBe("ភ្ញៀវកិត្តិយស");
+        expect(genericContent.isPersonalizedGuest).toBe(false);
+        expect(genericContent.guestName).not.toContain("រ៉ាន់ ណារ៉ាត់");
+    });
+
     it("maps saved gallery fields when the media endpoint has no images", () => {
         const reconstructed = publicInvitationToDraft({
             galleryImages: [{ id: 1, fileUrl: "https://cdn.example/gallery-one.webp" }],
