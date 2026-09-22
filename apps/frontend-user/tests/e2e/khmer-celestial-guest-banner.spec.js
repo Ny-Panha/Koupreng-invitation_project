@@ -12,7 +12,11 @@ const VIEWPORTS = [
   { width: 390, height: 844 },
   { width: 412, height: 915 },
   { width: 430, height: 932 },
+  { width: 768, height: 900 },
+  { width: 820, height: 900 },
+  { width: 1024, height: 900 },
   { width: 1440, height: 900 },
+  { width: 1600, height: 900 },
 ];
 
 function json(route, data, status = 200) {
@@ -72,6 +76,7 @@ test("Khmer Celestial guest banner stays balanced in every required viewport", a
         contentScrollHeight: openingContent?.scrollHeight || 0,
         viewportWidth: window.innerWidth,
         viewportHeight: window.innerHeight,
+        documentWidth: document.documentElement.scrollWidth,
         guestNameFontFamily: guestNameStyle?.fontFamily || "",
         guestNameLineHeight: Number.parseFloat(guestNameStyle?.lineHeight || "0"),
         bayonLoaded: document.fonts.check("12px Bayon", guestNameElement?.textContent || ""),
@@ -80,7 +85,21 @@ test("Khmer Celestial guest banner stays balanced in every required viewport", a
 
     expect(metrics.banner.left).toBeGreaterThanOrEqual(0);
     expect(metrics.banner.right).toBeLessThanOrEqual(metrics.viewportWidth + 0.5);
-    expect(metrics.bannerImage.width / metrics.bannerImage.height).toBeCloseTo(2172 / 724, 2);
+    expect(Math.abs((metrics.banner.left + metrics.banner.right) / 2 - metrics.viewportWidth / 2)).toBeLessThanOrEqual(0.5);
+    expect(metrics.bannerImage.width).toBeCloseTo(metrics.banner.width, 0);
+    expect(metrics.bannerImage.height).toBeCloseTo(metrics.banner.height, 0);
+    expect(metrics.banner.height).toBe(viewport.width <= 768 ? 76 : 80);
+    if (viewport.width <= 430) {
+      expect(metrics.banner.width / viewport.width).toBeGreaterThanOrEqual(0.82);
+      expect(metrics.banner.width / viewport.width).toBeLessThanOrEqual(0.88);
+    } else if (viewport.width === 768) {
+      expect(metrics.banner.width).toBe(520);
+    } else if (viewport.width <= 1023) {
+      expect(metrics.banner.width).toBeCloseTo(Math.min(520, Math.max(440, viewport.width * 0.68)), 0);
+    } else {
+      expect(metrics.banner.width).toBeCloseTo(Math.min(560, Math.max(440, viewport.width * 0.36)), 0);
+    }
+    expect(metrics.documentWidth).toBeLessThanOrEqual(metrics.viewportWidth);
     expect(metrics.guestName.left).toBeGreaterThanOrEqual(metrics.guestContent.left - 0.5);
     expect(metrics.guestName.right).toBeLessThanOrEqual(metrics.guestContent.right + 0.5);
     expect(metrics.guestName.top).toBeGreaterThanOrEqual(metrics.banner.top);

@@ -135,7 +135,7 @@ export default function OpenInvitationCTA({
         {/* Hero CTA Button */}
         <motion.button
         type="button"
-        className="kc-opening__cta-button"
+        className="kc-opening__button kc-opening__cta-button"
         onClick={handleClick}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
