@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { MailOpen } from "lucide-react";
 
 import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
 import { KHMER_CELESTIAL_ASSETS } from "../khmerCelestialAssets";
+import CelestialLiveGarden from "./CelestialLiveGarden";
+import OpenInvitationCTA from "./OpenInvitationCTA";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -24,7 +25,7 @@ function reveal(reducedMotion, delay, overrides = {}) {
 export default function CelestialOpening({ content, onOpen }) {
   const reducedMotion = usePrefersReducedMotion();
   const [videoFailed, setVideoFailed] = useState(false);
-  const openLabel = content.opening?.openButtonText || "បើកធៀបការ";
+  const openLabel = content.opening?.openButtonText || "Open invitation";
   const guestName = content.guestName?.trim() || "ភ្ញៀវកិត្តិយស";
   const guestLabel = content.isPersonalizedGuest ? "សូមគោរពអញ្ជើញ" : "ជូនចំពោះ";
   const guestNameLength = Array.from(guestName.replace(/\s+/g, "")).length;
@@ -89,6 +90,7 @@ export default function CelestialOpening({ content, onOpen }) {
         transition={{ duration: reducedMotion ? 0 : 1.7, delay: reducedMotion ? 0 : 0.2, ease: EASE }}
       />
       <div className="kc-opening__shade" aria-hidden="true" />
+      <CelestialLiveGarden className="kc-opening__garden" variant="opening" />
 
       <div className="kc-opening__content">
         <motion.p id="kc-opening-title" className="kc-opening__eyebrow" {...reveal(reducedMotion, 0.62)}>
@@ -156,19 +158,10 @@ export default function CelestialOpening({ content, onOpen }) {
           </p>
         </motion.div>
 
-        <motion.button
-          type="button"
-          className="kc-button kc-opening__button"
-          onClick={onOpen}
-          autoFocus
-          {...reveal(reducedMotion, 2.96, {
-            initial: { y: 12 },
-            transition: { duration: 0.72 },
-          })}
-        >
-          <MailOpen aria-hidden="true" />
-          <span>{openLabel}</span>
-        </motion.button>
+        <OpenInvitationCTA
+          label={openLabel}
+          onOpen={onOpen}
+        />
       </div>
     </motion.div>
   );

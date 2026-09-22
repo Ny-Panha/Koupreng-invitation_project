@@ -27,6 +27,7 @@ import TemplateGift from "../../experience/components/sections/TemplateGift";
 import TemplateRsvp from "../../experience/components/sections/TemplateRsvp";
 import CelestialGallery from "./components/CelestialGallery";
 import CelestialOpening from "./components/CelestialOpening";
+import CelestialLiveGarden from "./components/CelestialLiveGarden";
 import {
   CelestialHeading,
   CelestialImage,
@@ -136,6 +137,7 @@ export default function KhmerCelestialLayout({
 }) {
   const reducedMotion = usePrefersReducedMotion();
   const [opened, setOpened] = useState(preview);
+  const [openTransitionActive, setOpenTransitionActive] = useState(false);
   const [musicState, setMusicState] = useState("idle");
   const mainRef = useRef(null);
   const heroRef = useRef(null);
@@ -157,6 +159,8 @@ export default function KhmerCelestialLayout({
     [content.enabledSections]
   );
   const musicEnabled = Boolean(musicUrl) && sectionEnabled("music");
+  const saveData = typeof navigator !== "undefined" && navigator.connection?.saveData === true;
+  const transitionEnabled = !reducedMotion && !saveData;
   const names = [content.groom, content.bride].filter(Boolean);
   const hasCoupleNames = names.length > 0;
   const logoAlt = hasCoupleNames
@@ -179,6 +183,12 @@ export default function KhmerCelestialLayout({
   }, [opened, preview]);
 
   useEffect(() => {
+    if (typeof window === "undefined" || opened) return;
+    const img = new Image();
+    img.src = KHMER_CELESTIAL_ASSETS.openButton;
+  }, [opened]);
+
+  useEffect(() => {
     const onMessage = (event) => {
       if (event.data?.type === "TOGGLE_GATE") {
         setOpened(Boolean(event.data.open ?? event.data.isOpen));
@@ -193,6 +203,12 @@ export default function KhmerCelestialLayout({
     window.requestAnimationFrame(() => mainRef.current?.focus({ preventScroll: true }));
   }, [opened]);
 
+  useEffect(() => {
+    if (!openTransitionActive) return undefined;
+    const timeout = window.setTimeout(() => setOpenTransitionActive(false), 1500);
+    return () => window.clearTimeout(timeout);
+  }, [openTransitionActive]);
+
   const startMusic = useCallback(async () => {
     if (!musicEnabled || !audioRef.current) return;
     try {
@@ -204,9 +220,10 @@ export default function KhmerCelestialLayout({
   }, [musicEnabled]);
 
   const handleOpen = useCallback(() => {
+    if (transitionEnabled) setOpenTransitionActive(true);
     setOpened(true);
     void startMusic();
-  }, [startMusic]);
+  }, [startMusic, transitionEnabled]);
 
   const toggleMusic = useCallback(async () => {
     const audio = audioRef.current;
@@ -258,6 +275,13 @@ export default function KhmerCelestialLayout({
         {!opened ? <CelestialOpening key="opening" content={content} onOpen={handleOpen} /> : null}
       </AnimatePresence>
 
+      {openTransitionActive ? (
+        <CelestialLiveGarden
+          className="kc-opening__transition"
+          variant="transition"
+        />
+      ) : null}
+
       <nav className="kc-toolbar" aria-label="Invitation controls" aria-hidden={!opened} inert={!opened}>
         {showBack ? (
           <Link className="kc-toolbar__button" to={backTo} aria-label={backLabel}>
@@ -276,22 +300,26 @@ export default function KhmerCelestialLayout({
       </nav>
 
       <main ref={mainRef} className="kc-main" tabIndex={-1} aria-hidden={!opened} inert={!opened}>
+        <CelestialLiveGarden className="kc-main__garden" variant="normal" />
         <section ref={heroRef} className="kc-hero" data-tx-section="hero" aria-labelledby="kc-hero-title">
-          <img
+          <motion.img
             className="kc-hero__botanical"
             src={KHMER_CELESTIAL_ASSETS.botanicalFrame}
             alt=""
             aria-hidden="true"
             width="999"
             height="1575"
+            initial={reducedMotion ? false : { scale: 1.02, filter: "blur(2px)" }}
+            animate={opened ? { scale: 1, filter: "blur(0px)" } : { scale: 1.02, filter: "blur(2px)" }}
+            transition={{ duration: reducedMotion ? 0 : 1.1, ease: [0.22, 1, 0.36, 1] }}
           />
           <div className="kc-hero__veil" aria-hidden="true" />
           <motion.div
             className="kc-hero__content"
             style={reducedMotion ? undefined : { y: heroLogoY, scale: heroLogoScale, opacity: heroLogoOpacity }}
-            initial={reducedMotion ? false : { opacity: 0, y: 24 }}
-            animate={opened ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-            transition={{ duration: reducedMotion ? 0 : 1, delay: reducedMotion ? 0 : 0.18 }}
+            initial={reducedMotion ? false : { opacity: 0, y: 18, scale: 0.985 }}
+            animate={opened ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 18, scale: 0.985 }}
+            transition={{ duration: reducedMotion ? 0 : 0.88, ease: [0.22, 1, 0.36, 1], delay: reducedMotion ? 0 : 0.15 }}
           >
             <p className="kc-hero__eyebrow">{content.title || "សិរីសួស្តីអាពាហ៍ពិពាហ៍"}</p>
             <img className="kc-hero__brand" src={KHMER_CELESTIAL_ASSETS.brandMark} alt={logoAlt} width="768" height="512" />
@@ -552,6 +580,7 @@ export default function KhmerCelestialLayout({
         ) : null}
 
         <section className="kc-section kc-closing" aria-label="Closing messages">
+          <CelestialLiveGarden className="kc-closing__garden" variant="closing" />
           <img className="kc-closing__botanical" src={KHMER_CELESTIAL_ASSETS.botanicalFrame} alt="" aria-hidden="true" width="999" height="1575" loading="lazy" decoding="async" />
           <div className="kc-shell kc-shell--narrow kc-closing__inner">
             <CelestialReveal as="article" className="kc-closing__note">

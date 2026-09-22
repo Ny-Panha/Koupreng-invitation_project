@@ -111,6 +111,42 @@ describe("KhmerCelestialLayout integration", () => {
     expect(touchMoveEvent.defaultPrevented).toBe(false);
   });
 
+  it("keeps an accessible static SVG garden when reduced motion is enabled", () => {
+    render(
+      <MemoryRouter>
+        <TemplateExperience tpl={{ id: "khmer-celestial", name: "Khmer Celestial" }} content={content} showBreadcrumb={false} showActions={false} />
+      </MemoryRouter>
+    );
+
+    const garden = document.querySelector(".kc-opening__garden");
+    expect(garden).toHaveClass("is-reduced");
+    expect(garden.querySelectorAll("svg").length).toBeGreaterThan(5);
+    expect(garden.querySelectorAll("[aria-hidden='true']").length).toBeGreaterThan(5);
+    expect(garden.querySelectorAll("video")).toHaveLength(0);
+  });
+
+  it("uses SVG garden motion for the opening and click transition", async () => {
+    window.matchMedia = vi.fn().mockReturnValue({
+      matches: false,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+    });
+
+    render(
+      <MemoryRouter>
+        <TemplateExperience tpl={{ id: "khmer-celestial", name: "Khmer Celestial" }} content={content} showBreadcrumb={false} showActions={false} />
+      </MemoryRouter>
+    );
+
+    await waitFor(() => expect(document.querySelectorAll(".kc-opening__garden .kc-butterfly").length).toBeGreaterThan(0));
+    expect(document.querySelector(".kc-opening__garden video")).not.toBeInTheDocument();
+    expect(document.querySelector(".kc-opening__garden .kc-butterfly__wing--left")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "បើកសំបុត្រអញ្ជើញ" }));
+    expect(document.querySelector(".kc-opening__transition")).toBeInTheDocument();
+    expect(document.querySelectorAll(".kc-opening__transition .kc-petal").length).toBeGreaterThan(0);
+  });
+
   it("renders the supplied ornamental asset with accessible preview guest text in reduced motion", () => {
     const previewContent = buildTemplateContent(KHMER_CELESTIAL_TEMPLATE, "khmer-celestial");
 
@@ -160,6 +196,43 @@ describe("KhmerCelestialLayout integration", () => {
     const banner = document.querySelector(".kc-opening__guest-banner");
     expect(within(banner).getByText("លោក សុខ ដារ៉ា")).toBeInTheDocument();
     expect(within(banner).queryByText("លោក រ៉ាន់ ណារ៉ាត់ ព្រមទាំងគ្រួសារ")).not.toBeInTheDocument();
+  });
+
+  it("renders the ceremonial WEBP Open Invitation button with accessible label and asset path", () => {
+    render(
+      <MemoryRouter>
+        <TemplateExperience tpl={{ id: "khmer-celestial", name: "Khmer Celestial" }} content={content} showBreadcrumb={false} showActions={false} />
+      </MemoryRouter>
+    );
+
+    const button = screen.getByRole("button", { name: "បើកសំបុត្រអញ្ជើញ" });
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveClass("kc-opening__cta-button");
+
+    const image = button.querySelector(".kc-opening__cta-image");
+    expect(image).toBeInTheDocument();
+    expect(image).toHaveAttribute("src", KHMER_CELESTIAL_ASSETS.openButton);
+    expect(image).toHaveAttribute("alt", "");
+    expect(image).toHaveAttribute("loading", "eager");
+
+    expect(existsSync(resolve(testDirectory, "../../../../../public/invitations/khmer-celestial/butto_invitation.webp"))).toBe(true);
+  });
+
+  it("falls back to Open invitation accessible label when no custom text is provided", () => {
+    const defaultContent = {
+      ...content,
+      opening: {},
+    };
+
+    render(
+      <MemoryRouter>
+        <TemplateExperience tpl={{ id: "khmer-celestial", name: "Khmer Celestial" }} content={defaultContent} showBreadcrumb={false} showActions={false} />
+      </MemoryRouter>
+    );
+
+    const button = screen.getByRole("button", { name: "Open invitation" });
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveClass("kc-opening__cta-button");
   });
 
   it("keeps hosted generic invitations free of the preview guest identity", () => {
