@@ -40,11 +40,6 @@ export default function OpenInvitationCTA({
     idle: {
       scale: [1, 1.025, 1],
       y: [0, -4, 0],
-      filter: [
-        "drop-shadow(0 5px 18px rgba(212, 175, 55, 0.20))",
-        "drop-shadow(0 8px 30px rgba(255, 206, 84, 0.35))",
-        "drop-shadow(0 5px 18px rgba(212, 175, 55, 0.20))",
-      ],
       transition: {
         duration: 4,
         ease: "easeInOut",
@@ -55,7 +50,6 @@ export default function OpenInvitationCTA({
     hover: {
       scale: 1.04,
       y: -2,
-      filter: "drop-shadow(0 10px 32px rgba(255, 206, 84, 0.42))",
       transition: {
         duration: 0.3,
         ease: CELESTIAL_EASE,
@@ -71,7 +65,7 @@ export default function OpenInvitationCTA({
     opening: {
       scale: 1.05,
       opacity: 0,
-      filter: "blur(5px) drop-shadow(0 12px 36px rgba(255, 214, 120, 0.45))",
+      filter: "blur(5px)",
       transition: {
         duration: 0.65,
         ease: CELESTIAL_EASE,
@@ -80,10 +74,10 @@ export default function OpenInvitationCTA({
   };
 
   const reducedVariants = {
-    idle: { scale: 1, y: 0, opacity: 1, filter: "none" },
-    hover: { scale: 1, y: 0, opacity: 1, filter: "none" },
-    tap: { scale: 1, y: 0, opacity: 1, filter: "none" },
-    opening: { scale: 1, y: 0, opacity: 0, filter: "none" },
+    idle: { scale: 1, y: 0, opacity: 1 },
+    hover: { scale: 1, y: 0, opacity: 1 },
+    tap: { scale: 1, y: 0, opacity: 1 },
+    opening: { scale: 1, y: 0, opacity: 0 },
   };
 
   return (
@@ -172,9 +166,6 @@ export default function OpenInvitationCTA({
             fetchPriority="high"
             draggable="false"
           />
-          {!reducedMotion && (
-            <div className="kc-opening__cta-shimmer" aria-hidden="true" />
-          )}
         </div>
       </motion.button>
       </div>

@@ -538,15 +538,19 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin: 2px auto 0;
+  margin: 16px auto 0;
   isolation: isolate;
 }
 
 .kc-opening__cta-frame {
   position: relative;
-  width: clamp(210px, 18vw, 250px);
-  max-width: 90vw;
+  width: clamp(170px, 14vw, 200px);
+  max-width: 85vw;
   margin: 0 auto;
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 .kc-opening__cta-flash {
@@ -570,7 +574,7 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
 
 .kc-opening__cta-particles {
   position: absolute;
-  inset: -10px -14px;
+  inset: -8px -10px;
   pointer-events: none;
   z-index: 1;
 }
@@ -580,33 +584,33 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   display: block;
   border-radius: 50%;
   background: radial-gradient(circle, #fff7d6 20%, #e8bc44 70%, rgba(212, 175, 55, 0) 100%);
-  box-shadow: 0 0 7px rgba(255, 215, 0, 0.6);
+  box-shadow: 0 0 6px rgba(255, 215, 0, 0.55);
   pointer-events: none;
 }
 
-.kc-opening__cta-button {
+.kc-opening__cta-button,
+.kc-opening__cta-button:focus,
+.kc-opening__cta-button:focus-visible,
+.kc-opening__cta-button:active,
+.kc-opening__cta-button:hover {
   position: relative;
   z-index: 2;
   display: block;
   width: 100%;
   margin: 0 auto;
   padding: 0;
-  background: transparent;
-  border: none;
-  outline: none;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
   cursor: pointer;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
   -webkit-user-select: none;
-  will-change: transform, filter, opacity;
-}
-
-.kc-opening__cta-button:focus-visible {
-  outline: 2px solid rgba(212, 175, 55, 0.85);
-  outline-offset: 4px;
-  border-radius: 10px;
-  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.25);
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  will-change: transform, opacity;
 }
 
 .kc-opening__cta-button:disabled {
@@ -618,8 +622,10 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   position: relative;
   width: 100%;
   aspect-ratio: 2172 / 724;
-  overflow: hidden;
-  border-radius: 8px;
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 .kc-opening__cta-image {
@@ -630,55 +636,24 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   pointer-events: none;
   user-select: none;
   -webkit-user-drag: none;
-}
-
-.kc-opening__cta-shimmer {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(
-    115deg,
-    transparent 0%,
-    transparent 36%,
-    rgba(255, 238, 180, 0.22) 48%,
-    rgba(255, 255, 255, 0.35) 50%,
-    rgba(255, 238, 180, 0.22) 52%,
-    transparent 64%,
-    transparent 100%
-  );
-  transform: translateX(-140%);
-  animation: kc-cta-shimmer 5.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  animation-delay: 2.2s;
-  mix-blend-mode: overlay;
-}
-
-@keyframes kc-cta-shimmer {
-  0% {
-    transform: translateX(-140%);
-  }
-  26% {
-    transform: translateX(140%);
-  }
-  100% {
-    transform: translateX(140%);
-  }
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 @media (max-width: 1024px) {
   .kc-opening__cta-frame {
-    width: clamp(200px, 28vw, 245px);
+    width: clamp(160px, 20vw, 190px);
   }
 }
 
 @media (max-width: 640px) {
   .kc-opening__cta-wrapper {
-    margin-top: 1px;
+    margin-top: 12px;
   }
   .kc-opening__cta-frame {
-    width: clamp(190px, 52vw, 230px);
-  }
-  .kc-opening__cta-media {
-    border-radius: 6px;
+    width: clamp(150px, 42vw, 180px);
   }
 }
 
@@ -2332,11 +2307,11 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   }
 
   .kc-opening__cta-wrapper {
-    margin-top: 1px;
+    margin-top: 8px;
   }
 
   .kc-opening__cta-frame {
-    width: clamp(170px, 48vw, 205px);
+    width: clamp(135px, 38vw, 160px);
   }
 }
 
@@ -2355,7 +2330,6 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   .kc-opening__butterfly,
   .kc-opening__transition,
   .kc-opening__cta-particles,
-  .kc-opening__cta-shimmer,
   .kc-opening__cta-flash {
     display: none !important;
   }
