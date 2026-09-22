@@ -424,7 +424,7 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
 
 .kc-opening__guest-banner {
   position: relative;
-  width: clamp(440px, 36vw, 560px);
+  width: clamp(320px, 50vw, 450px);
   max-width: 100%;
   height: 80px;
   margin: 1px auto 10px;
