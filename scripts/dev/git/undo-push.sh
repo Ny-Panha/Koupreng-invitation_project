@@ -22,7 +22,7 @@ echo -e "${BOLD}${CYAN}======================================================${N
 echo -e "  📍 Branch: ${GREEN}${BRANCH}${NC}"
 echo -e "  📌 Last commit: ${YELLOW}${LAST_COMMIT}${NC}\n"
 
-echo -ne "${RED}តើ Nha ចង់ undo commit នេះមែនទេ? [y/N]: ${NC}"
+echo -ne "${RED}Do you want to undo this commit? [y/N]: ${NC}"
 read -r CONFIRM
 if [[ "$CONFIRM" != "y" && "$CONFIRM" != "Y" ]]; then
   echo -e "  ${CYAN}Cancelled. Nothing changed.${NC}"
@@ -36,7 +36,7 @@ echo -e "  ${GREEN}✓ Commit undone — code changes still in staging${NC}"
 
 # Step 2: Force update remote
 echo ""
-echo -ne "${YELLOW}ចង់ update remote ដែរទេ? [force push] [y/N]: ${NC}"
+echo -ne "${YELLOW}Do you want to update remote? [force push] [y/N]: ${NC}"
 read -r FORCE
 if [[ "$FORCE" == "y" || "$FORCE" == "Y" ]]; then
   echo -e "\n${BOLD}[2/2] Force-updating remote...${NC}"
