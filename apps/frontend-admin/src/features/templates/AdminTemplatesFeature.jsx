@@ -20,14 +20,11 @@ import {
   Eye,
   AlertCircle
 } from "lucide-react";
-import { useResource } from "../../hooks/useResource";
-import { useToast } from "../../hooks/useToast";
-import { formatDate } from "../../lib/format";
+import { useResource, useToast } from "../../shared/hooks";
+import { formatDate } from "../../shared/utils";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
-import adminManagementService from "./adminManagementService";
-import { AdminPageHeader, StatCard, StatusBadge, ActionButton } from "../../shared/ui/AdminUI";
-import Toast from "../../components/Toast";
-import { Loading, ErrorState } from "../../components/States";
+import adminManagementService from "../../shared/api/adminService";
+import { AdminPageHeader, StatCard, StatusBadge, ActionButton, Loading, ErrorState, Toast } from "../../shared/ui";
 import { USER_APP_URL } from "../../shared/config/runtime";
 
 // Retained as the canonical category vocabulary for the pending filter control.
@@ -193,13 +190,13 @@ export default function AdminTemplatesPage() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (!file.type.startsWith("image/")) {
+    if (!file.type.startsWith("image/") || file.type.includes("svg") || file.name.toLowerCase().endsWith(".svg")) {
       show("សូមជ្រើសរើសប្រភេទ File រូបភាព (PNG, JPG, WEBP)", "error");
       return;
     }
 
-    if (file.size > 8 * 1024 * 1024) {
-      show("ទំហំរូបភាពធំជាង 8MB សូមបន្ថយទំហំរូបភាព", "error");
+    if (file.size > 5 * 1024 * 1024) {
+      show("ទំហំរូបភាពធំជាង 5MB សូមបន្ថយទំហំរូបភាព (អតិបរមា 5MB)", "error");
       return;
     }
 
@@ -1000,7 +997,7 @@ export default function AdminTemplatesPage() {
                       <input
                         type="file"
                         ref={fileInputRef}
-                        accept="image/png, image/jpeg, image/webp, image/svg+xml"
+                        accept="image/png, image/jpeg, image/webp"
                         className="hidden"
                         onChange={handleFileUpload}
                       />
@@ -1015,7 +1012,10 @@ export default function AdminTemplatesPage() {
                           ចុចទីនេះដើម្បី Upload រូបភាពពីកុំព្យូទ័រ
                         </p>
                         <p className="text-[10px] text-slate-400 dark:text-zinc-500 mt-0.5">
-                          គាំទ្រ PNG, JPG, WEBP, SVG
+                          គាំទ្រ PNG, JPG, WEBP (អតិបរមា 5MB)
+                        </p>
+                        <p className="text-[10px] text-amber-600 dark:text-amber-400 font-medium mt-1">
+                          ទំហំដែលណែនាំ: 1200x900px (4:3) ឬ 900x1200px (3:4)
                         </p>
                       </div>
                     </div>

@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { readAuth, writeAuth, clearAuth } from "../../lib/authStorage";
-import { authService } from "../../services/authService";
+import { readAuth, writeAuth, clearAuth } from "../../shared/utils";
+import { authService } from "../../shared/api";
 
 const AuthContext = createContext(null);
 

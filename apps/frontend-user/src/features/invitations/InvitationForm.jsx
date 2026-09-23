@@ -26,6 +26,8 @@ import {
     Zap,
     X,
     Check,
+    Search,
+    ArrowLeft,
 } from "lucide-react";
 
 
@@ -38,6 +40,8 @@ import {
     getTemplatePreset,
     registerDynamicTemplates,
     getCatalogVersion,
+    getAllTemplates,
+    resolveNumericTemplateId,
 } from "../templates/data/templatesData";
 import { templateCatalogService } from "../templates/api/templateCatalogApi";
 import { MUSIC_TRACKS } from "../../shared/data/musicTracks";
@@ -404,12 +408,21 @@ const DEFAULT_STATE = {
     sketchMapImage: null,
     // Gallery (5-10 photos)
     photos: Array.from({ length: 5 }, (_, index) => ({ id: `p${index + 1}`, url: null })),
+    // Countdown
+    showCountdown: true,
     // Love Story (ដំណើរនៃក្ដីស្រឡាញ់ - no limit)
     showStory: true,
     storyChapters: [],
+    // Dress Code (សម្លៀកបំពាក់)
+    showDressCode: true,
+    dressCode: null,
+    dressColors: [],
     // Family & Wedding Party (គ្រួសារ និង ក្រុមអម)
     showParty: true,
     party: [],
+    // Guest Notes & FAQ (សំណួរញឹកញាប់)
+    showFaq: true,
+    faq: [],
     // Thank you
     thankYouTitle: "",
     thankYouText: "",
@@ -523,7 +536,21 @@ export default function InvitationForm({ invitation }) {
                 : ((customParsed.messageText && customParsed.messageText !== DEFAULT_INVITATION_TEXT)
                     ? customParsed.messageText
                     : (preset.messageText || DEFAULT_STATE.messageText)),
-            schedule: (customParsed.schedule && customParsed.schedule.length > 0) ? customParsed.schedule : (preset.schedule?.length ? preset.schedule : (tpl?.schedule || [])),
+            schedule: (customParsed.schedule && customParsed.schedule.length > 0)
+                ? customParsed.schedule
+                : (preset.schedule?.length ? preset.schedule : (tpl?.schedule || [])),
+            dressCode: customParsed.dressCode || preset.dressCode || tpl?.dressCode || {
+                name: "ខ្មែរប្រពៃណី / សម័យ",
+                description: "សូមជ្រើសរើសសម្លៀកបំពាក់តាមពណ៌ដែលបានកំណត់ ដើម្បីបង្កើនភាពស្រស់ស្អាតនៃពិធី។",
+                colors: preset.dressColors?.length ? preset.dressColors : (tpl?.dressColors || []),
+            },
+            dressColors: (customParsed.dressColors && customParsed.dressColors.length > 0)
+                ? customParsed.dressColors
+                : (customParsed.dressCode?.colors?.length
+                    ? customParsed.dressCode.colors
+                    : (preset.dressColors?.length ? preset.dressColors : (tpl?.dressColors || tpl?.dressCode?.colors || []))),
+            showDressCode: customParsed.showDressCode !== undefined ? customParsed.showDressCode : (tpl?.enabledSections?.dressCode !== false),
+            showCountdown: customParsed.showCountdown !== undefined ? customParsed.showCountdown : (tpl?.enabledSections?.countdown !== false),
             languageMode: invitation?.languageMode || customParsed.languageMode || "KH",
             visibility: invitation?.visibility || "PUBLIC",
             photos: (() => {
@@ -532,8 +559,10 @@ export default function InvitationForm({ invitation }) {
                     : (preset.photos && preset.photos.length > 0
                         ? preset.photos
                         : (tpl?.galleryImages && tpl.galleryImages.length > 0
-                            ? tpl.galleryImages.map((url, i) => ({ id: `p${i + 1}`, url: typeof url === "string" ? url : url.src }))
-                            : [...DEFAULT_STATE.photos]));
+                            ? tpl.galleryImages.map((url, i) => ({ id: `p${i + 1}`, url: typeof url === "string" ? url : (url.src || url.url) }))
+                            : (tpl?.slideshowImages && tpl.slideshowImages.length > 0
+                                ? tpl.slideshowImages.map((url, i) => ({ id: `p${i + 1}`, url: typeof url === "string" ? url : (url.src || url.url) }))
+                                : [...DEFAULT_STATE.photos])));
                 while (list.length < 5) {
                     list.push({ id: `p${list.length + 1}`, url: "" });
                 }
@@ -542,16 +571,24 @@ export default function InvitationForm({ invitation }) {
                 }
                 return list;
             })(),
-            showStory: customParsed.showStory !== undefined ? customParsed.showStory : true,
+            showStory: customParsed.showStory !== undefined ? customParsed.showStory : (tpl?.enabledSections?.story !== false),
             storyChapters: (customParsed.storyChapters && customParsed.storyChapters.length > 0)
                 ? customParsed.storyChapters
-                : DEFAULT_STATE.storyChapters,
-            showParty: customParsed.showParty !== undefined ? customParsed.showParty : true,
+                : (preset.storyChapters?.length
+                    ? preset.storyChapters
+                    : (tpl?.storyChapters?.length
+                        ? tpl.storyChapters
+                        : (tpl?.storyText ? [{ id: "story-1", kicker: "រឿងរ៉ាវស្នេហា", title: "ដំណើររបស់យើង", date: tpl.dateText || "", text: tpl.storyText, image: tpl.phoneCoverImage || tpl.mainImage || "" }] : []))),
+            showParty: customParsed.showParty !== undefined ? customParsed.showParty : (tpl?.enabledSections?.party !== false),
             party: (customParsed.party && customParsed.party.length > 0)
                 ? customParsed.party
-                : (invitation?.party && invitation.party.length > 0)
+                : (invitation?.party && invitation.party.length > 0
                     ? invitation.party
-                    : [],
+                    : (preset.party?.length ? preset.party : (tpl?.party || []))),
+            showFaq: customParsed.showFaq !== undefined ? customParsed.showFaq : (tpl?.enabledSections?.faq !== false),
+            faq: (customParsed.faq && customParsed.faq.length > 0)
+                ? customParsed.faq
+                : (preset.faq?.length ? preset.faq : (tpl?.faq || [])),
             ...(isEmptyDraft ? {
                 title: "",
                 subtitle: "",
@@ -579,7 +616,9 @@ export default function InvitationForm({ invitation }) {
     // Mirrors the module-level catalog counter so the live preview recomputes
     // once the async catalog fetch registers the Admin-created templates.
     const [catalogVersion, setCatalogVersion] = useState(getCatalogVersion());
-    const [catalogTemplates, setCatalogTemplates] = useState([]);
+    const [catalogTemplates, setCatalogTemplates] = useState(() => getAllTemplates());
+    const [templateSearchQuery, setTemplateSearchQuery] = useState("");
+    const [templateCategoryFilter, setTemplateCategoryFilter] = useState("ALL");
 
     useEffect(() => {
         let active = true;
@@ -587,8 +626,8 @@ export default function InvitationForm({ invitation }) {
             .then((items) => {
                 if (active && items && items.length > 0) {
                     const activeTemplates = items.filter((item) => String(item.status || "ACTIVE").toUpperCase() === "ACTIVE");
-                    setCatalogTemplates(activeTemplates);
                     registerDynamicTemplates(activeTemplates);
+                    setCatalogTemplates(getAllTemplates());
                     setCatalogVersion(getCatalogVersion());
                 }
             })
@@ -600,10 +639,35 @@ export default function InvitationForm({ invitation }) {
         };
     }, []);
 
+    const displayedTemplates = (catalogTemplates && catalogTemplates.length > 0 ? catalogTemplates : getAllTemplates())
+        .filter((tpl) => {
+            const query = templateSearchQuery.trim().toLowerCase();
+            if (query) {
+                const matchName = String(tpl.name || "").toLowerCase().includes(query);
+                const matchStyle = String(tpl.style || "").toLowerCase().includes(query);
+                const matchCode = String(tpl.code || tpl.id || "").toLowerCase().includes(query);
+                if (!matchName && !matchStyle && !matchCode) return false;
+            }
+            if (templateCategoryFilter === "ADMIN") {
+                return Boolean(tpl.backendId || !isNaN(Number(tpl.id)));
+            }
+            if (templateCategoryFilter === "CURTAIN") {
+                return tpl.openingStyle === "curtain" || String(tpl.id || tpl.code).includes("emerald");
+            }
+            if (templateCategoryFilter === "ENVELOPE") {
+                return tpl.openingStyle === "envelope-3d" || String(tpl.id || tpl.code).includes("yes");
+            }
+            if (templateCategoryFilter === "KHMER") {
+                return tpl.openingStyle === "khmer-royal" || String(tpl.id || tpl.code).includes("khmer") || String(tpl.id || tpl.code).includes("garden");
+            }
+            return true;
+        });
+
     const [activeLangTab, setActiveLangTab] = useState("KH");
     const [isSaving, setIsSaving] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
     const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
+    const [isMobilePreviewOpen, setIsMobilePreviewOpen] = useState(false);
     const [pendingCoverFile, setPendingCoverFile] = useState(null);
     const [locationError, setLocationError] = useState("");
     const [isLocating, setIsLocating] = useState(false);
@@ -614,15 +678,81 @@ export default function InvitationForm({ invitation }) {
     const handleChangeTemplate = async (template) => {
         if (!template) return;
         const preset = getTemplatePreset(template) || {};
+        const currentTpl = getTemplateById(form.templateId);
         const uploadedCoverUrl = form.uploadedCoverUrl || "";
+
+        const isPrevDefaultTitle = !form.title ||
+            form.title === "សួនរាជហង្សខ្មែរ" ||
+            form.title === "Garden Royal Khmer Wedding" ||
+            form.title === "គំរូធៀបការ" ||
+            form.title === "សិរីមង្គលអាពាហ៍ពិពាហ៍" ||
+            (currentTpl && (form.title === currentTpl.name || form.title === currentTpl.style || form.title === currentTpl.title));
+
+        const nextTitle = isPrevDefaultTitle
+            ? (template.name || template.style || preset.title || "សិរីមង្គលអាពាហ៍ពិពាហ៍")
+            : form.title;
+
+        const isPrevDefaultDate = !form.eventDate || form.eventDate === "2026-11-28" || (currentTpl?.targetDate && form.eventDate === currentTpl.targetDate.split("T")[0]);
+        const nextDate = isPrevDefaultDate
+            ? (template.targetDate ? template.targetDate.split("T")[0] : form.eventDate || "2026-12-20")
+            : form.eventDate;
+
         const nextForm = {
             ...form,
-            templateId: template.id || template.slug || form.templateId,
+            templateId: template.id || template.code || template.slug || form.templateId,
+            presetId: preset.presetId || template.presetId || "",
             templateDefaultCover: preset.coverImage || template.phoneCoverImage || template.mainImage || "",
             theme: template.theme || preset.theme || template.presetId || form.theme || "",
             fontFamily: template.fontFamily || preset.fontFamily || form.fontFamily || "",
             layoutStyles: template.layoutStyles || preset.layoutStyles || form.layoutStyles || {},
+            openingStyle: preset.openingStyle || template.openingStyle || form.openingStyle || "khmer-royal",
+            frontColor: preset.frontColor || template.frontColor || form.frontColor,
+            bottomColor: preset.bottomColor || template.bottomColor || form.bottomColor,
+            title: nextTitle,
+            groomName: form.groomName || preset.groom || template.groom || "វណ្ណដា",
+            brideName: form.brideName || preset.bride || template.bride || "ស្រីពេជ្រ",
+            eventDate: nextDate,
+            eventTime: form.eventTime || template.receptionTime || "17:00",
+            venueName: form.venueName || preset.venueName || template.venueName || "The Premier Center Sen Sok",
+            venueAddress: form.venueAddress || preset.venueAddress || template.venueAddress || "អគារ A, សែនសុខ, ភ្នំពេញ",
+            schedule: (template.schedule && template.schedule.length > 0)
+                ? template.schedule
+                : (preset.schedule?.length ? preset.schedule : form.schedule),
+            dressCode: template.dressCode || preset.dressCode || form.dressCode,
+            dressColors: (template.dressColors && template.dressColors.length > 0)
+                ? template.dressColors
+                : (preset.dressColors?.length ? preset.dressColors : form.dressColors),
+            // Sync ALL section toggles from template.enabledSections so the form
+            // adapts its visible sections when the user switches templates.
+            showDressCode: template.enabledSections?.dressCode !== undefined
+                ? (template.enabledSections.dressCode !== false)
+                : form.showDressCode,
+            showCountdown: template.enabledSections?.countdown !== undefined
+                ? (template.enabledSections.countdown !== false)
+                : form.showCountdown,
+            showStory: template.enabledSections?.story !== undefined
+                ? (template.enabledSections.story !== false)
+                : form.showStory,
+            showParty: template.enabledSections?.party !== undefined
+                ? (template.enabledSections.party !== false)
+                : form.showParty,
+            showFaq: template.enabledSections?.faq !== undefined
+                ? (template.enabledSections.faq !== false)
+                : form.showFaq,
+            storyChapters: (template.storyChapters && template.storyChapters.length > 0)
+                ? template.storyChapters
+                : (template.storyText
+                    ? [{ id: "story-1", kicker: "រឿងរ៉ាវស្នេហា", title: "ដំណើររបស់យើង", date: template.dateText || "", text: template.storyText, image: template.phoneCoverImage || template.mainImage || "" }]
+                    : form.storyChapters),
+            party: (template.party && template.party.length > 0)
+                ? template.party
+                : (preset.party?.length ? preset.party : form.party),
+            faq: (template.faq && template.faq.length > 0)
+                ? template.faq
+                : (preset.faq?.length ? preset.faq : form.faq),
         };
+        nextForm.hostName = nextForm.groomName;
+        nextForm.partnerName = nextForm.brideName;
         nextForm.uploadedCoverUrl = uploadedCoverUrl;
         nextForm.coverImage = uploadedCoverUrl || nextForm.templateDefaultCover;
         setForm(nextForm);
@@ -630,6 +760,7 @@ export default function InvitationForm({ invitation }) {
 
         if (isEdit && !isNaN(Number(invitationId))) {
             try {
+                const numericTemplateId = resolveNumericTemplateId(nextForm.templateId);
                 await invitationService.update(invitationId, {
                     title: nextForm.title || "សិរីមង្គលអាពាហ៍ពិពាហ៍",
                     eventType: "WEDDING",
@@ -645,9 +776,9 @@ export default function InvitationForm({ invitation }) {
                     storyText: nextForm.messageText || "",
                     languageMode: nextForm.languageMode || "KH",
                     visibility: nextForm.visibility || "PUBLIC",
-                    templateId: Number(nextForm.templateId) || null,
+                    templateId: numericTemplateId,
                     designJson: JSON.stringify({
-                        templateId: nextForm.templateId,
+                        templateId: String(numericTemplateId || nextForm.templateId),
                         presetId: nextForm.presetId || "",
                         theme: nextForm.theme,
                         fontFamily: nextForm.fontFamily,
@@ -655,7 +786,7 @@ export default function InvitationForm({ invitation }) {
                         coverImage: uploadedCoverUrl || undefined,
                     }),
                     contentJson: JSON.stringify({
-                        templateId: nextForm.templateId,
+                        templateId: String(numericTemplateId || nextForm.templateId),
                         theme: nextForm.theme,
                         fontFamily: nextForm.fontFamily,
                         layoutStyles: nextForm.layoutStyles,
@@ -843,6 +974,92 @@ export default function InvitationForm({ invitation }) {
         update("storyChapters", nextStories);
     };
 
+    // Dress Code modifiers
+    const handleDressCodeFieldChange = (key, value) => {
+        const nextDressCode = { ...(form.dressCode || {}), [key]: value };
+        update("dressCode", nextDressCode);
+    };
+
+    const handleDressColorChange = (index, key, value) => {
+        const nextColors = [...(form.dressColors || [])];
+        const currentItem = nextColors[index];
+        const normalized = typeof currentItem === "string" ? { hex: currentItem, name: "" } : { ...(currentItem || {}) };
+        nextColors[index] = { ...normalized, [key]: value };
+        update("dressColors", nextColors);
+        update("dressCode", { ...(form.dressCode || {}), colors: nextColors });
+    };
+
+    const addDressColor = () => {
+        const nextColors = [
+            ...(form.dressColors || []),
+            { hex: "#B88A3A", name: "មាស" },
+        ];
+        update("dressColors", nextColors);
+        update("dressCode", { ...(form.dressCode || {}), colors: nextColors });
+    };
+
+    const removeDressColor = (index) => {
+        const nextColors = (form.dressColors || []).filter((_, i) => i !== index);
+        update("dressColors", nextColors);
+        update("dressCode", { ...(form.dressCode || {}), colors: nextColors });
+    };
+
+    // Wedding Party modifiers
+    const handlePartyChange = (index, key, value) => {
+        const nextParty = [...(form.party || [])];
+        nextParty[index] = { ...nextParty[index], [key]: value };
+        update("party", nextParty);
+    };
+
+    const handlePartyImageUpload = (index, e) => {
+        handleFileUpload(e, (url) => {
+            handlePartyChange(index, "image", url);
+        });
+    };
+
+    const addPartyMember = () => {
+        const nextParty = [
+            ...(form.party || []),
+            {
+                id: String(Date.now()),
+                role: "កូនកំលោះកិត្តិយស",
+                roleEn: "Best Man",
+                name: "ឈ្មោះសមាជិក",
+                image: "",
+            },
+        ];
+        update("party", nextParty);
+    };
+
+    const removePartyMember = (index) => {
+        const nextParty = (form.party || []).filter((_, i) => i !== index);
+        update("party", nextParty);
+    };
+
+    // FAQ modifiers
+    const handleFaqChange = (index, key, value) => {
+        const nextFaq = [...(form.faq || [])];
+        nextFaq[index] = { ...nextFaq[index], [key]: value };
+        update("faq", nextFaq);
+    };
+
+    const addFaqItem = () => {
+        const nextFaq = [
+            ...(form.faq || []),
+            {
+                id: `faq-${Date.now()}`,
+                q: "សំណួរថ្មី?",
+                a: "ចម្លើយសម្រាប់ភ្ញៀវ...",
+            },
+        ];
+        update("faq", nextFaq);
+    };
+
+    const removeFaqItem = (index) => {
+        const nextFaq = (form.faq || []).filter((_, i) => i !== index);
+        update("faq", nextFaq);
+    };
+
     // Music Selector
     const handleMusicSelect = (trackId) => {
         const track = MUSIC_TRACKS.find((t) => t.id === trackId) || MUSIC_TRACKS[0];
@@ -911,16 +1128,37 @@ export default function InvitationForm({ invitation }) {
         window.open(searchUrl, "_blank", "noopener,noreferrer");
     };
     // Save action
-    const handleSave = async () => {
-        const requiredFields = [form.groomName, form.brideName, form.eventDate];
-        if (requiredFields.some((value) => !String(value || "").trim())) {
-            toast("សូមបំពេញព័ត៌មានចាំបាច់ឱ្យបានគ្រប់គ្រាន់!");
-            return;
-        }
-        if (/^https?:\/\//i.test(form.googleMapUrl || "") && !isGoogleMapsUrl(form.googleMapUrl)) {
+    const handleSave = async ({ redirectToPreview = false } = {}) => {
+        if (!redirectToPreview && /^https?:\/\//i.test(form.googleMapUrl || "") && !isGoogleMapsUrl(form.googleMapUrl)) {
             setLocationError("សូមបញ្ចូល Google Maps Link ត្រឹមត្រូវ (maps.google.com ឬ maps.app.goo.gl)។");
             return;
         }
+
+        const activeTpl = getTemplateById(form.templateId);
+        const activePreset = getTemplatePreset(activeTpl) || {};
+        const finalGroom = String(form.groomName || "").trim() || activePreset.groom || activeTpl?.groom || "វណ្ណដា";
+        const finalBride = String(form.brideName || "").trim() || activePreset.bride || activeTpl?.bride || "ស្រីពេជ្រ";
+        const finalDate = String(form.eventDate || "").trim() || (activeTpl?.targetDate ? activeTpl.targetDate.split("T")[0] : "2026-03-28");
+        const finalTitle = String(form.title || "").trim() || activePreset.title || activeTpl?.name || "សិរីមង្គលអាពាហ៍ពិពាហ៍";
+        const finalTime = String(form.eventTime || "").trim() || activeTpl?.receptionTime || "17:00";
+        const finalVenueName = String(form.venueName || "").trim() || activePreset.venueName || activeTpl?.venueName || "The Premier Center Sen Sok";
+        const finalVenueAddress = String(form.venueAddress || "").trim() || activePreset.venueAddress || activeTpl?.venueAddress || "អគារ A, សែនសុខ, ភ្នំពេញ";
+
+        if (!form.groomName || !form.brideName || !form.eventDate || !form.title) {
+            setForm((prev) => ({
+                ...prev,
+                groomName: prev.groomName || finalGroom,
+                brideName: prev.brideName || finalBride,
+                hostName: prev.hostName || finalGroom,
+                partnerName: prev.partnerName || finalBride,
+                title: prev.title || finalTitle,
+                eventDate: prev.eventDate || finalDate,
+                eventTime: prev.eventTime || finalTime,
+                venueName: prev.venueName || finalVenueName,
+                venueAddress: prev.venueAddress || finalVenueAddress,
+            }));
+        }
+
         setIsSaving(true);
         try {
             const designPayload = {
@@ -929,17 +1167,23 @@ export default function InvitationForm({ invitation }) {
                 theme: form.theme || "",
                 fontFamily: form.fontFamily || "",
                 layoutStyles: form.layoutStyles || {},
-                openingStyle: form.openingStyle || "khmer-royal",
-                frontColor: form.frontColor,
-                bottomColor: form.bottomColor,
+                openingStyle: form.openingStyle || activePreset.openingStyle || "khmer-royal",
+                frontColor: form.frontColor || activePreset.frontColor || "#f9af59",
+                bottomColor: form.bottomColor || activePreset.bottomColor || "#B08E4F",
                 coverImage: form.uploadedCoverUrl || null,
                 backgroundImage: form.backgroundImage,
                 sketchMapImage: form.sketchMapImage,
                 photos: form.photos,
+                showCountdown: form.showCountdown !== false,
                 showStory: form.showStory !== false,
                 storyChapters: form.storyChapters || [],
+                showDressCode: form.showDressCode !== false,
+                dressCode: form.dressCode || (form.dressColors?.length ? { colors: form.dressColors } : null),
+                dressColors: form.dressColors || [],
                 showParty: form.showParty !== false,
                 party: form.party || [],
+                showFaq: form.showFaq !== false,
+                faq: form.faq || [],
                 khqrDollar: form.khqrDollar,
                 khqrRiel: form.khqrRiel,
                 musicTrackId: form.musicTrackId,
@@ -952,17 +1196,28 @@ export default function InvitationForm({ invitation }) {
                 theme: form.theme || "",
                 fontFamily: form.fontFamily || "",
                 layoutStyles: form.layoutStyles || {},
-                subtitle: form.subtitle,
+                title: finalTitle,
+                subtitle: form.subtitle || "សូមគោរពអញ្ជើញ",
                 hideCoupleNameOnCover: form.hideCoupleNameOnCover,
-                eventDateText: form.eventDateText,
+                eventDateText: form.eventDateText || finalDate,
                 guestName: form.guestName,
+                groomName: finalGroom,
+                brideName: finalBride,
+                venueName: finalVenueName,
+                venueAddress: finalVenueAddress,
                 messageTitle: form.messageTitle,
                 messageText: form.messageText,
                 schedule: form.schedule,
+                showCountdown: form.showCountdown !== false,
                 showStory: form.showStory !== false,
                 storyChapters: form.storyChapters || [],
+                showDressCode: form.showDressCode !== false,
+                dressCode: form.dressCode || (form.dressColors?.length ? { colors: form.dressColors } : null),
+                dressColors: form.dressColors || [],
                 showParty: form.showParty !== false,
                 party: form.party || [],
+                showFaq: form.showFaq !== false,
+                faq: form.faq || [],
                 gallery: (form.photos || [])
                     .filter((photo) => photo?.url)
                     .map(({ id, url }) => ({ id, preview: url, type: "image" })),
@@ -971,24 +1226,37 @@ export default function InvitationForm({ invitation }) {
             };
 
             const payload = {
-                title: form.title || "សិរីមង្គលអាពាហ៍ពិពាហ៍",
+                title: finalTitle,
                 eventType: "WEDDING",
-                eventDate: form.eventDate || null,
-                eventTime: form.eventTime || null,
-                venueName: form.venueName || "",
-                venueAddress: form.venueAddress || "",
+                eventDate: finalDate || null,
+                eventTime: finalTime || null,
+                venueName: finalVenueName || "",
+                venueAddress: finalVenueAddress || "",
                 googleMapUrl: form.googleMapUrl || "",
-                hostName: form.hostName || "",
-                partnerName: form.partnerName || "",
-                groomName: form.groomName || "",
-                brideName: form.brideName || "",
+                hostName: finalGroom || "",
+                partnerName: finalBride || "",
+                groomName: finalGroom || "",
+                brideName: finalBride || "",
                 storyText: form.messageText || "",
                 languageMode: form.languageMode || "KH",
                 visibility: form.visibility || "PUBLIC",
-                templateId: Number(form.templateId) || null,
+                templateId: resolveNumericTemplateId(form.templateId),
                 designJson: JSON.stringify(designPayload),
                 contentJson: JSON.stringify(contentPayload),
-                customColors: JSON.stringify({ front: form.frontColor, bottom: form.bottomColor }),
+                enabledSections: JSON.stringify({
+                    countdown: form.showCountdown !== false,
+                    story: form.showStory !== false,
+                    party: form.showParty !== false,
+                    dressCode: form.showDressCode !== false,
+                    faq: form.showFaq !== false,
+                    schedule: true,
+                    map: true,
+                    gallery: true,
+                    gift: Boolean(form.khqrDollar?.qrUrl || form.khqrRiel?.qrUrl),
+                    rsvp: true,
+                    music: Boolean(form.musicUrl),
+                }),
+                customColors: JSON.stringify({ front: form.frontColor || activePreset.frontColor, bottom: form.bottomColor || activePreset.bottomColor }),
             };
 
             let saved;
@@ -1011,41 +1279,43 @@ export default function InvitationForm({ invitation }) {
                 update("coverImage", savedCoverUrl);
             }
 
+            const targetDraftId = invitationId || saved?.id || `wed-${Date.now().toString(36)}`;
+
             // Always persist to local wedding draft storage
             saveDraft({
                 ownerUserId: user?.id || user?.userId,
-                id: invitationId || saved?.id || `wed-${Date.now().toString(36)}`,
+                id: targetDraftId,
                 backendInvitationId: saved?.id || invitation?.backendInvitationId || null,
                 templateId: form.templateId || "garden-royal-khmer-wedding",
                 presetId: form.presetId || "",
                 couple: {
-                    groom: form.groomName,
-                    bride: form.brideName,
+                    groom: finalGroom,
+                    bride: finalBride,
                 },
-                groomName: form.groomName,
-                brideName: form.brideName,
+                groomName: finalGroom,
+                brideName: finalBride,
                 event: {
-                    title: form.title,
-                    date: form.eventDate,
-                    receptionTime: form.eventTime,
-                    venueName: form.venueName,
-                    venueAddress: form.venueAddress,
+                    title: finalTitle,
+                    date: finalDate,
+                    receptionTime: finalTime,
+                    venueName: finalVenueName,
+                    venueAddress: finalVenueAddress,
                     mapLink: form.googleMapUrl,
                 },
-                title: form.title,
-                eventDate: form.eventDate,
-                eventTime: form.eventTime,
-                venueName: form.venueName,
-                venueAddress: form.venueAddress,
+                title: finalTitle,
+                eventDate: finalDate,
+                eventTime: finalTime,
+                venueName: finalVenueName,
+                venueAddress: finalVenueAddress,
                 googleMapUrl: form.googleMapUrl,
                 sketchMapImage: form.sketchMapImage,
-                coverImage: savedCoverUrl,
-                coverUrl: savedCoverUrl,
+                coverImage: savedCoverUrl || form.coverImage,
+                coverUrl: savedCoverUrl || form.coverImage,
                 uploadedCoverUrl: savedCoverUrl,
                 templateDefaultCover: form.templateDefaultCover,
-                openingStyle: form.openingStyle || "khmer-royal",
-                frontColor: form.frontColor,
-                bottomColor: form.bottomColor,
+                openingStyle: form.openingStyle || activePreset.openingStyle || "khmer-royal",
+                frontColor: form.frontColor || activePreset.frontColor,
+                bottomColor: form.bottomColor || activePreset.bottomColor,
                 schedule: form.schedule,
                 photos: form.photos,
                 gallery: (form.photos || [])
@@ -1061,11 +1331,16 @@ export default function InvitationForm({ invitation }) {
 
             toast(t("savedSuccess") || "បានរក្សាទុកគំរូធៀបដោយជោគជ័យ! (Saved successfully)");
 
-            if (!isEdit && saved?.id) {
-                navigate(`/dashboard/invitations/${saved.id}/edit`, { replace: true });
+            const finalSavedId = saved?.id || targetDraftId;
+            if (redirectToPreview && finalSavedId) {
+                navigate(`/dashboard/invitations/${finalSavedId}/preview`);
+            } else if (!isEdit && finalSavedId) {
+                navigate(`/dashboard/invitations/${finalSavedId}/edit`, { replace: true });
             }
+            return finalSavedId;
         } catch (err) {
             toast(err.message || (t("savedError") || "មិនអាចរក្សាទុកបានទេ (Save error)"));
+            return null;
         } finally {
             setIsSaving(false);
         }
@@ -1074,15 +1349,25 @@ export default function InvitationForm({ invitation }) {
     return (
         <div className="pe-editor-root">
 
-            {/* Sub-Header Banner */}
+            {/* Unified Studio Header */}
             <div className="pe-sub-header-banner">
                 <div className="pe-sub-header-left">
-                    <span className="pe-sub-header-label">{t("myTemplate") || "គំរូរបស់ខ្ញុំ:"}</span>
+                    <button
+                        type="button"
+                        className="pe-btn-back"
+                        onClick={() => navigate("/dashboard")}
+                        title={t("backBtn") || "ត្រឡប់ក្រោយ"}
+                    >
+                        <ArrowLeft size={16} />
+                        <span>{t("backBtn") || "ត្រឡប់ក្រោយ"}</span>
+                    </button>
+                    <span className="pe-header-divider" />
+                    <span className="pe-sub-header-label">{t("myTemplate") || "គំរូ:"}</span>
                     <span className="pe-template-tag">
-                        {getTemplateById(form.templateId)?.name || form.title || "គម្រោងអាពាហ៍ពិពាហ៍ (រចនាប័ទ្ម) W01"}
+                        {getTemplateById(form.templateId)?.name || form.title || "គម្រោងអាពាហ៍ពិពាហ៍ W01"}
                     </span>
                     <span className="pe-status-badge">
-                        <CheckCircle2 size={14} /> {t("activeBadge") || "កំពុងប្រើ"}
+                        <CheckCircle2 size={13} /> {t("activeBadge") || "កំពុងប្រើ"}
                     </span>
                     <button
                         type="button"
@@ -1095,10 +1380,28 @@ export default function InvitationForm({ invitation }) {
                 <div className="pe-sub-header-actions">
                     <button
                         type="button"
-                        className="pe-btn-outline"
-                        onClick={() => navigate("/dashboard")}
+                        className="pe-btn-expand-editor"
+                        onClick={() => setIsExpanded((prev) => !prev)}
+                        title={isExpanded ? "មើលធម្មតា (Normal View)" : "ពង្រីកពេញ (Fullscreen View)"}
                     >
-                        {t("backBtn") || "ត្រឡប់ក្រោយ"}
+                        <Maximize2 size={15} />
+                        <span>{isExpanded ? "បង្រួម" : "ពង្រីក"}</span>
+                    </button>
+                    <button
+                        type="button"
+                        className="pe-btn-mobile-preview"
+                        onClick={() => setIsMobilePreviewOpen(true)}
+                        aria-label="មើលគំរូ Preview"
+                    >
+                        <Maximize2 size={14} /> {t("previewBtn") || "មើលគំរូ"}
+                    </button>
+                    <button
+                        type="button"
+                        className="pe-save-main-btn"
+                        onClick={handleSave}
+                        disabled={isSaving}
+                    >
+                        {isSaving ? (t("saving") || "កំពុងរក្សា...") : (t("saveBtn") || "រក្សាទុក")}
                     </button>
                 </div>
             </div>
@@ -1115,23 +1418,7 @@ export default function InvitationForm({ invitation }) {
             >
                 {/* LEFT COLUMN: Customizer Form */}
                 <div className="pe-editor-column">
-                    {/* Dark Navy Header Bar */}
-                    <div className="pe-editor-header-bar">
-                        <h3 className="pe-editor-header-title">
-                            <span style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
-                                <PenSquare size={18} style={{ color: "#d97706" }} />
-                                {t("editorTitle") || "កម្មវិធីកែសម្រួល"}
-                            </span>
-                        </h3>
-                        <button
-                            type="button"
-                            className="pe-editor-header-icon-btn"
-                            onClick={() => setIsExpanded((prev) => !prev)}
-                            title={isExpanded ? "Normal View" : "Fullscreen View"}
-                        >
-                            <Maximize2 size={16} />
-                        </button>
-                    </div>
+
 
                     {/* Neutral Language Sub-Banner */}
                     <div className="pe-lang-sub-banner">
@@ -1363,14 +1650,14 @@ export default function InvitationForm({ invitation }) {
 
                         {/* 4. នាឡិការាប់ថយក្រោយ (Countdown Timer - ត្រូវគ្នានឹងផ្ទាំង Preview) */}
                         <div className="pe-section-card">
-                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                                <h4 className="pe-section-heading" style={{ margin: 0 }}>
+                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+                                <h4 className="pe-section-heading" style={{ margin: 0, flex: "1 1 auto", minWidth: 0 }}>
                                     <span className="pe-sec-icon-badge">
                                         <Clock size={17} />
                                     </span>
                                     <span>{t("secCountdown") || "នាឡិការាប់ថយក្រោយ (Countdown Timer)"}</span>
                                 </h4>
-                                <label className="pe-toggle" title="បើក/បិទ រាប់ថយក្រោយ">
+                                <label className="pe-toggle" style={{ flexShrink: 0 }} title="បើក/បិទ រាប់ថយក្រោយ">
                                     <input
                                         type="checkbox"
                                         checked={form.showCountdown !== false}
@@ -1404,17 +1691,12 @@ export default function InvitationForm({ invitation }) {
 
                             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                                 {form.schedule?.map((item, idx) => (
-                                    <div key={item.id || idx} className="pe-grid-2" style={{ alignItems: "center", background: "#f8f6f0", padding: "10px 12px", borderRadius: "8px", border: "1px solid #e8e2d8" }}>
-                                        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                                            <Clock size={15} style={{ color: "#c51c35", flexShrink: 0 }} />
-                                            <input
-                                                type="text"
-                                                className="pe-input"
-                                                value={item.time}
-                                                onChange={(e) => handleScheduleChange(idx, "time", e.target.value)}
-                                                placeholder="07:00 ព្រឹក"
-                                            />
-                                        </div>
+                                    <div key={item.id || idx} className="pe-grid-2" style={{ alignItems: "center", background: "#f8f6f0", padding: "10px 12px", borderRadius: "8px", border: "1px solid #e8e2d8", marginBottom: 0 }}>
+                                        <TimePicker
+                                            value={item.time}
+                                            onChange={(val) => handleScheduleChange(idx, "time", val)}
+                                            placeholder="ជ្រើសម៉ោង"
+                                        />
                                         <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
                                             <input
                                                 type="text"
@@ -1462,12 +1744,12 @@ export default function InvitationForm({ invitation }) {
                             </div>
 
                             <div className="pe-form-group">
-                                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px", flexWrap: "wrap", gap: "6px" }}>
+                                <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginBottom: "8px" }}>
                                     <label className="pe-label" style={{ margin: 0 }}>
                                         <span className="pe-label-icon"><MapPin size={15} /></span>
                                         {t("mapsUrl") || "Google Maps Link (URL)"}
                                     </label>
-                                    <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                                    <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "6px" }}>
                                         <button
                                             type="button"
                                             onClick={handleGetCurrentLocation}
@@ -1475,7 +1757,7 @@ export default function InvitationForm({ invitation }) {
                                             title="យកទីតាំងបច្ចុប្បន្នរបស់អ្នក"
                                             style={{
                                                 fontSize: "0.75rem",
-                                                padding: "4px 10px",
+                                                padding: "5px 10px",
                                                 borderRadius: "6px",
                                                 border: "1px solid #0ea5e9",
                                                 background: "#f0f9ff",
@@ -1485,6 +1767,7 @@ export default function InvitationForm({ invitation }) {
                                                 alignItems: "center",
                                                 gap: "4px",
                                                 fontWeight: 600,
+                                                whiteSpace: "nowrap",
                                             }}
                                         >
                                             <MapPin size={13} />
@@ -1496,7 +1779,7 @@ export default function InvitationForm({ invitation }) {
                                             title="បំលែងឈ្មោះទីតាំងទៅជា Link Google Maps ស្វ័យប្រវត្តិ"
                                             style={{
                                                 fontSize: "0.75rem",
-                                                padding: "4px 10px",
+                                                padding: "5px 10px",
                                                 borderRadius: "6px",
                                                 border: "1px solid #f59e0b",
                                                 background: "#fffbeb",
@@ -1506,6 +1789,7 @@ export default function InvitationForm({ invitation }) {
                                                 alignItems: "center",
                                                 gap: "4px",
                                                 fontWeight: 600,
+                                                whiteSpace: "nowrap",
                                             }}
                                         >
                                             <Zap size={13} />
@@ -1517,7 +1801,7 @@ export default function InvitationForm({ invitation }) {
                                             title="បើកស្វែងរកលើ Google Maps ផ្ទាល់"
                                             style={{
                                                 fontSize: "0.75rem",
-                                                padding: "4px 10px",
+                                                padding: "5px 10px",
                                                 borderRadius: "6px",
                                                 border: "1px solid #cbd5e1",
                                                 background: "#f8fafc",
@@ -1527,6 +1811,7 @@ export default function InvitationForm({ invitation }) {
                                                 alignItems: "center",
                                                 gap: "4px",
                                                 fontWeight: 600,
+                                                whiteSpace: "nowrap",
                                             }}
                                         >
                                             <ExternalLink size={13} />
@@ -1653,46 +1938,49 @@ export default function InvitationForm({ invitation }) {
 
                         {/* 7. ដំណើរនៃក្ដីស្រឡាញ់ (Our Love Story - No limit image uploading) */}
                         <div className="pe-section-card">
-                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px", marginBottom: "14px" }}>
-                                <h4 className="pe-section-heading" style={{ margin: 0 }}>
+                            {/* Heading row: icon + title on left, toggle on right */}
+                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px", marginBottom: "10px" }}>
+                                <h4 className="pe-section-heading" style={{ margin: 0, border: "none", paddingBottom: 0, flex: 1, minWidth: 0 }}>
                                     <span className="pe-sec-icon-badge">
                                         <Heart size={17} />
                                     </span>
-                                    <span>ដំណើរនៃក្ដីស្រឡាញ់ (Our Love Story)</span>
-                                    <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "#e11d48", background: "#ffe4e6", padding: "2px 8px", borderRadius: "12px", marginLeft: "6px" }}>
-                                        {form.storyChapters?.length || 0} រឿងរ៉ាវ (No Limit)
+                                    <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                                        ដំណើរនៃក្ដីស្រឡាញ់ (Our Love Story)
                                     </span>
                                 </h4>
+                                <label className="pe-toggle" title="បើក/បិទ ដំណើរនៃក្ដីស្រឡាញ់" style={{ flexShrink: 0 }}>
+                                    <input
+                                        type="checkbox"
+                                        checked={form.showStory !== false}
+                                        onChange={(e) => update("showStory", e.target.checked)}
+                                    />
+                                    <span className="pe-toggle-slider" />
+                                </label>
+                            </div>
 
-                                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                                    <button
-                                        type="button"
-                                        onClick={addStoryItem}
-                                        className="pe-btn-upload-action"
-                                        style={{
-                                            padding: "6px 12px",
-                                            fontSize: "0.8rem",
-                                            background: "#fff1f2",
-                                            borderColor: "#fecdd3",
-                                            color: "#be123c",
-                                            display: "inline-flex",
-                                            alignItems: "center",
-                                            gap: "4px"
-                                        }}
-                                        title="បន្ថែមដំណាក់កាលរឿងរ៉ាវថ្មី (គ្មានកំណត់ចំនួន)"
-                                    >
-                                        <Plus size={14} /> បន្ថែមរឿងរ៉ាវ
-                                    </button>
-
-                                    <label className="pe-toggle" title="បើក/បិទ ដំណើរនៃក្ដីស្រឡាញ់">
-                                        <input
-                                            type="checkbox"
-                                            checked={form.showStory !== false}
-                                            onChange={(e) => update("showStory", e.target.checked)}
-                                        />
-                                        <span className="pe-toggle-slider" />
-                                    </label>
-                                </div>
+                            {/* Actions row: count badge + add button */}
+                            <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", marginBottom: "14px" }}>
+                                <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#e11d48", background: "#ffe4e6", padding: "3px 10px", borderRadius: "12px", flexShrink: 0 }}>
+                                    {form.storyChapters?.length || 0} រឿងរ៉ាវ (No Limit)
+                                </span>
+                                <button
+                                    type="button"
+                                    onClick={addStoryItem}
+                                    className="pe-btn-upload-action"
+                                    style={{
+                                        padding: "6px 12px",
+                                        fontSize: "0.8rem",
+                                        background: "#fff1f2",
+                                        borderColor: "#fecdd3",
+                                        color: "#be123c",
+                                        display: "inline-flex",
+                                        alignItems: "center",
+                                        gap: "4px"
+                                    }}
+                                    title="បន្ថែមដំណាក់កាលរឿងរ៉ាវថ្មី (គ្មានកំណត់ចំនួន)"
+                                >
+                                    <Plus size={14} /> បន្ថែមរឿងរ៉ាវ
+                                </button>
                             </div>
 
                             <p style={{ margin: "0 0 12px 0", fontSize: "0.8rem", color: "#64748b" }}>
@@ -1717,7 +2005,403 @@ export default function InvitationForm({ invitation }) {
                             )}
                         </div>
 
-                        {/* 9. KHQR ផ្ញើរចំណងដៃ (Gift QR) */}
+                        {/* 8. សម្លៀកបំពាក់ (Dress Code - Ceremonial Palette) */}
+                        <div className="pe-section-card">
+                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
+                                <h4 className="pe-section-heading" style={{ margin: 0, border: "none", paddingBottom: 0, flex: 1, minWidth: 0 }}>
+                                    <span className="pe-sec-icon-badge">
+                                        <Sparkles size={17} />
+                                    </span>
+                                    <span>សម្លៀកបំពាក់ (Dress Code)</span>
+                                </h4>
+                                <label className="pe-toggle" title="បើក/បិទ សម្លៀកបំពាក់" style={{ flexShrink: 0 }}>
+                                    <input
+                                        type="checkbox"
+                                        checked={form.showDressCode !== false}
+                                        onChange={(e) => update("showDressCode", e.target.checked)}
+                                    />
+                                    <span className="pe-toggle-slider" />
+                                </label>
+                            </div>
+
+                            {form.showDressCode !== false && (
+                                <>
+                                    <div className="pe-grid-2">
+                                        <div className="pe-form-group">
+                                            <label className="pe-label">
+                                                <span className="pe-label-icon"><FileText size={15} /></span>
+                                                ឈ្មោះកូដសម្លៀកបំពាក់ (Name)
+                                            </label>
+                                            <input
+                                                type="text"
+                                                className="pe-input"
+                                                value={form.dressCode?.name || ""}
+                                                onChange={(e) => handleDressCodeFieldChange("name", e.target.value)}
+                                                placeholder="ខ្មែរប្រពៃណី / Formal Khmer"
+                                            />
+                                        </div>
+                                        <div className="pe-form-group">
+                                            <label className="pe-label">
+                                                <span className="pe-label-icon"><Sparkles size={15} /></span>
+                                                រចនាបថ (Style)
+                                            </label>
+                                            <input
+                                                type="text"
+                                                className="pe-input"
+                                                value={form.dressCode?.style || ""}
+                                                onChange={(e) => handleDressCodeFieldChange("style", e.target.value)}
+                                                placeholder="Traditional elegance"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="pe-form-group">
+                                        <label className="pe-label">
+                                            <span className="pe-label-icon"><FileText size={15} /></span>
+                                            ការណែនាំសម្លៀកបំពាក់ (Description)
+                                        </label>
+                                        <textarea
+                                            className="pe-textarea"
+                                            rows="2"
+                                            value={form.dressCode?.description || ""}
+                                            onChange={(e) => handleDressCodeFieldChange("description", e.target.value)}
+                                            placeholder="សូមជ្រើសរើសសម្លៀកបំពាក់តាមពណ៌ដែលបានកំណត់ ដើម្បីបង្កើនភាពស្រស់ស្អាតនៃពិធី..."
+                                        />
+                                    </div>
+
+                                    <div className="pe-form-group">
+                                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
+                                            <label className="pe-label" style={{ margin: 0 }}>
+                                                <span className="pe-label-icon"><Sparkles size={15} /></span>
+                                                ក្ដារពណ៌សម្លៀកបំពាក់ (Color Palette Swatches)
+                                            </label>
+                                            <button
+                                                type="button"
+                                                onClick={addDressColor}
+                                                className="pe-btn-upload-action"
+                                                style={{ padding: "4px 10px", fontSize: "0.78rem" }}
+                                            >
+                                                <Plus size={13} /> បន្ថែមពណ៌
+                                            </button>
+                                        </div>
+
+                                        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: "10px" }}>
+                                            {(form.dressColors || []).map((color, cIdx) => {
+                                                const hex = typeof color === "string" ? color : color?.hex || "#D4AF37";
+                                                const name = typeof color === "string" ? "" : color?.name || "";
+                                                return (
+                                                    <div
+                                                        key={`color-${cIdx}`}
+                                                        style={{
+                                                            display: "flex",
+                                                            alignItems: "center",
+                                                            gap: "8px",
+                                                            background: "#f8fafc",
+                                                            border: "1px solid #e2e8f0",
+                                                            borderRadius: "8px",
+                                                            padding: "6px 8px",
+                                                        }}
+                                                    >
+                                                        <input
+                                                            type="color"
+                                                            value={hex}
+                                                            onChange={(e) => handleDressColorChange(cIdx, "hex", e.target.value)}
+                                                            style={{
+                                                                width: "32px",
+                                                                height: "32px",
+                                                                borderRadius: "6px",
+                                                                border: "none",
+                                                                cursor: "pointer",
+                                                                padding: 0,
+                                                                background: "transparent",
+                                                            }}
+                                                            title="ជ្រើសពណ៌"
+                                                        />
+                                                        <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: "2px" }}>
+                                                            <input
+                                                                type="text"
+                                                                className="pe-input"
+                                                                style={{ padding: "3px 6px", fontSize: "0.75rem", height: "auto" }}
+                                                                value={name}
+                                                                onChange={(e) => handleDressColorChange(cIdx, "name", e.target.value)}
+                                                                placeholder="ឈ្មោះពណ៌ (e.g. មាស)"
+                                                            />
+                                                            <span style={{ fontSize: "0.7rem", color: "#64748b", fontFamily: "monospace" }}>
+                                                                {hex}
+                                                            </span>
+                                                        </div>
+                                                        {(form.dressColors || []).length > 1 && (
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => removeDressColor(cIdx)}
+                                                                style={{
+                                                                    border: "none",
+                                                                    background: "transparent",
+                                                                    color: "#94a3b8",
+                                                                    cursor: "pointer",
+                                                                    padding: "4px",
+                                                                    display: "flex",
+                                                                    alignItems: "center",
+                                                                }}
+                                                                title="លុបពណ៌នេះ"
+                                                            >
+                                                                <Trash2 size={13} />
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                </>
+                            )}
+                        </div>
+
+                        {/* 9. មនុស្សជាទីស្រឡាញ់ / ក្រុមអម (Wedding Party) */}
+                        <div className="pe-section-card">
+                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px", marginBottom: "10px" }}>
+                                <h4 className="pe-section-heading" style={{ margin: 0, border: "none", paddingBottom: 0, flex: 1, minWidth: 0 }}>
+                                    <span className="pe-sec-icon-badge">
+                                        <User size={17} />
+                                    </span>
+                                    <span>មនុស្សជាទីស្រឡាញ់ / ក្រុមអម (Wedding Party)</span>
+                                </h4>
+                                <label className="pe-toggle" title="បើក/បិទ ក្រុមអម" style={{ flexShrink: 0 }}>
+                                    <input
+                                        type="checkbox"
+                                        checked={form.showParty !== false}
+                                        onChange={(e) => update("showParty", e.target.checked)}
+                                    />
+                                    <span className="pe-toggle-slider" />
+                                </label>
+                            </div>
+
+                            <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", marginBottom: "14px" }}>
+                                <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#0284c7", background: "#e0f2fe", padding: "3px 10px", borderRadius: "12px" }}>
+                                    {form.party?.length || 0} នាក់
+                                </span>
+                                <button
+                                    type="button"
+                                    onClick={addPartyMember}
+                                    className="pe-btn-upload-action"
+                                    style={{
+                                        padding: "6px 12px",
+                                        fontSize: "0.8rem",
+                                        background: "#f0f9ff",
+                                        borderColor: "#bae6fd",
+                                        color: "#0369a1",
+                                        display: "inline-flex",
+                                        alignItems: "center",
+                                        gap: "4px"
+                                    }}
+                                >
+                                    <Plus size={14} /> បន្ថែមសមាជិក
+                                </button>
+                            </div>
+
+                            <p style={{ margin: "0 0 12px 0", fontSize: "0.8rem", color: "#64748b" }}>
+                                * បង្ហាញកូនកំលោះកិត្តិយស (Best Man), កូនក្រមុំកិត្តិយស (Maid of Honor), ឬក្រុមគ្រួសារ និងមិត្តភក្ដិជិតស្និទ្ធ
+                            </p>
+
+                            {form.showParty !== false && (
+                                <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                                    {(form.party || []).map((member, mIdx) => (
+                                        <div
+                                            key={member.id || `party-${mIdx}`}
+                                            style={{
+                                                display: "flex",
+                                                gap: "12px",
+                                                alignItems: "center",
+                                                padding: "10px",
+                                                background: "#f8fafc",
+                                                border: "1px solid #e2e8f0",
+                                                borderRadius: "10px",
+                                            }}
+                                        >
+                                            <div style={{ position: "relative", width: "56px", height: "56px", borderRadius: "50%", overflow: "hidden", flexShrink: 0, background: "#e2e8f0" }}>
+                                                {member.image ? (
+                                                    <img src={member.image} alt={member.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                                                ) : (
+                                                    <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", color: "#94a3b8" }}>
+                                                        <User size={24} />
+                                                    </div>
+                                                )}
+                                                <label
+                                                    style={{
+                                                        position: "absolute",
+                                                        inset: 0,
+                                                        cursor: "pointer",
+                                                        background: member.image ? "rgba(0,0,0,0.3)" : "transparent",
+                                                        display: "flex",
+                                                        alignItems: "center",
+                                                        justifyContent: "center",
+                                                        opacity: member.image ? 0 : 1,
+                                                        transition: "opacity 0.2s",
+                                                    }}
+                                                    onMouseEnter={(e) => { e.currentTarget.style.opacity = "1"; }}
+                                                    onMouseLeave={(e) => { e.currentTarget.style.opacity = member.image ? "0" : "1"; }}
+                                                    title="បញ្ចូលរូបថតសមាជិក"
+                                                >
+                                                    <UploadCloud size={16} color="#fff" />
+                                                    <input
+                                                        type="file"
+                                                        accept="image/*"
+                                                        style={{ display: "none" }}
+                                                        onChange={(e) => handlePartyImageUpload(mIdx, e)}
+                                                    />
+                                                </label>
+                                            </div>
+
+                                            <div style={{ flex: 1, minWidth: 0, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
+                                                <div>
+                                                    <label style={{ fontSize: "0.72rem", color: "#64748b", fontWeight: 600, display: "block", marginBottom: "2px" }}>តួនាទី (Role)</label>
+                                                    <input
+                                                        type="text"
+                                                        className="pe-input"
+                                                        style={{ padding: "4px 8px", fontSize: "0.8rem", height: "auto" }}
+                                                        value={member.role || ""}
+                                                        onChange={(e) => handlePartyChange(mIdx, "role", e.target.value)}
+                                                        placeholder="កូនកំលោះកិត្តិយស"
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label style={{ fontSize: "0.72rem", color: "#64748b", fontWeight: 600, display: "block", marginBottom: "2px" }}>ឈ្មោះ (Name)</label>
+                                                    <input
+                                                        type="text"
+                                                        className="pe-input"
+                                                        style={{ padding: "4px 8px", fontSize: "0.8rem", height: "auto" }}
+                                                        value={member.name || ""}
+                                                        onChange={(e) => handlePartyChange(mIdx, "name", e.target.value)}
+                                                        placeholder="ឈ្មោះសមាជិក"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <button
+                                                type="button"
+                                                onClick={() => removePartyMember(mIdx)}
+                                                style={{
+                                                    border: "none",
+                                                    background: "transparent",
+                                                    color: "#94a3b8",
+                                                    cursor: "pointer",
+                                                    padding: "4px",
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                }}
+                                                title="លុបសមាជិកនេះ"
+                                            >
+                                                <Trash2 size={16} />
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
+                        {/* 10. សំណួរញឹកញាប់ (Guest Notes & FAQ) */}
+                        <div className="pe-section-card">
+                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px", marginBottom: "10px" }}>
+                                <h4 className="pe-section-heading" style={{ margin: 0, border: "none", paddingBottom: 0, flex: 1, minWidth: 0 }}>
+                                    <span className="pe-sec-icon-badge">
+                                        <FileText size={17} />
+                                    </span>
+                                    <span>សំណួរញឹកញាប់ (Guest Notes & FAQ)</span>
+                                </h4>
+                                <label className="pe-toggle" title="បើក/បិទ សំណួរញឹកញាប់" style={{ flexShrink: 0 }}>
+                                    <input
+                                        type="checkbox"
+                                        checked={form.showFaq !== false}
+                                        onChange={(e) => update("showFaq", e.target.checked)}
+                                    />
+                                    <span className="pe-toggle-slider" />
+                                </label>
+                            </div>
+
+                            <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", marginBottom: "14px" }}>
+                                <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#7c3aed", background: "#ede9fe", padding: "3px 10px", borderRadius: "12px" }}>
+                                    {form.faq?.length || 0} សំណួរ
+                                </span>
+                                <button
+                                    type="button"
+                                    onClick={addFaqItem}
+                                    className="pe-btn-upload-action"
+                                    style={{
+                                        padding: "6px 12px",
+                                        fontSize: "0.8rem",
+                                        background: "#f5f3ff",
+                                        borderColor: "#ddd6fe",
+                                        color: "#6d28d9",
+                                        display: "inline-flex",
+                                        alignItems: "center",
+                                        gap: "4px"
+                                    }}
+                                >
+                                    <Plus size={14} /> បន្ថែមសំណួរ
+                                </button>
+                            </div>
+
+                            <p style={{ margin: "0 0 12px 0", fontSize: "0.8rem", color: "#64748b" }}>
+                                * ផ្តល់ព័ត៌មានលម្អិតដូចជាចំណតយានយន្ត ការនាំកុមារតូចៗ ឬពេលវេលាកម្មវិធីដល់ភ្ញៀវ
+                            </p>
+
+                            {form.showFaq !== false && (
+                                <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                                    {(form.faq || []).map((faqItem, fIdx) => (
+                                        <div
+                                            key={faqItem.id || `faq-${fIdx}`}
+                                            style={{
+                                                padding: "10px 12px",
+                                                background: "#f8fafc",
+                                                border: "1px solid #e2e8f0",
+                                                borderRadius: "10px",
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                gap: "8px",
+                                            }}
+                                        >
+                                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                                                <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#64748b" }}>
+                                                    សំណួរទី {fIdx + 1}
+                                                </span>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => removeFaqItem(fIdx)}
+                                                    style={{
+                                                        border: "none",
+                                                        background: "transparent",
+                                                        color: "#94a3b8",
+                                                        cursor: "pointer",
+                                                        padding: "2px",
+                                                    }}
+                                                    title="លុបសំណួរនេះ"
+                                                >
+                                                    <Trash2 size={14} />
+                                                </button>
+                                            </div>
+                                            <input
+                                                type="text"
+                                                className="pe-input"
+                                                style={{ padding: "6px 10px", fontSize: "0.82rem" }}
+                                                value={faqItem.q || ""}
+                                                onChange={(e) => handleFaqChange(fIdx, "q", e.target.value)}
+                                                placeholder="តើមានចំណតរថយន្ត និងម៉ូតូដែរឬទេ?"
+                                            />
+                                            <textarea
+                                                className="pe-textarea"
+                                                style={{ padding: "6px 10px", fontSize: "0.82rem", minHeight: "50px" }}
+                                                rows="2"
+                                                value={faqItem.a || ""}
+                                                onChange={(e) => handleFaqChange(fIdx, "a", e.target.value)}
+                                                placeholder="បាទ/ចាស មានចំណតធំទូលាយដោយឥតគិតថ្លៃ..."
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
+                        {/* 11. KHQR ផ្ញើរចំណងដៃ (Gift QR) */}
                         <div className="pe-section-card">
                             <h4 className="pe-section-heading">
                                 <span className="pe-sec-icon-badge">
@@ -1854,40 +2538,181 @@ export default function InvitationForm({ invitation }) {
                             googleMapUrl: previewMapUrl(form.googleMapUrl, form.venueName),
                         }}
                         catalogVersion={catalogVersion}
-                        onSave={handleSave}
-                        isSaving={isSaving}
                     />
                 )}
             </div>
 
-            {isTemplateModalOpen && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/60 p-4" role="dialog" aria-modal="true" aria-label="Change template">
-                    <div className="max-h-[85vh] w-full max-w-5xl overflow-y-auto rounded-2xl bg-white p-5 shadow-2xl dark:bg-zinc-900">
-                        <div className="mb-5 flex items-center justify-between gap-4">
-                            <div>
-                                <h2 className="text-xl font-bold text-slate-900 dark:text-zinc-100">ប្តូរគំរូធៀបការ</h2>
-                                <p className="text-sm text-slate-500 dark:text-zinc-400">ជ្រើសរើសគំរូថ្មីសម្រាប់កម្មវិធីនេះ</p>
-                            </div>
-                            <button type="button" className="pe-btn-outline" onClick={() => setIsTemplateModalOpen(false)} aria-label="Close template selector">
-                                <X size={18} />
+            {/* Mobile Live Phone Simulator Overlay */}
+            {isMobilePreviewOpen && (
+                <div
+                    className="pe-mobile-preview-overlay"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label="មើលគំរូការ (Mobile Preview)"
+                >
+                    <div className="pe-mobile-preview-drawer">
+                        <div className="pe-mobile-preview-drawer-header">
+                            <span className="pe-mobile-preview-drawer-title">
+                                <Maximize2 size={15} /> {t("previewTitle") || "មើលគំរូជាមុន"}
+                            </span>
+                            <button
+                                type="button"
+                                className="pe-mobile-preview-close-btn"
+                                onClick={() => setIsMobilePreviewOpen(false)}
+                                aria-label="បិទ Preview"
+                            >
+                                <X size={20} />
                             </button>
                         </div>
-                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                            {catalogTemplates.map((template) => (
-                                <button
-                                    type="button"
-                                    key={template.id}
-                                    className={`overflow-hidden rounded-xl border text-left transition hover:-translate-y-0.5 hover:border-amber-500 hover:shadow-lg ${String(form.templateId) === String(template.id) ? "border-amber-500 ring-2 ring-amber-200" : "border-slate-200 dark:border-zinc-700"}`}
-                                    onClick={() => handleChangeTemplate(template)}
-                                >
-                                    <img className="h-40 w-full object-cover" src={template.thumbnailUrl || template.mainImage || "/facebook/all/03-card/cover-card.jpg"} alt={template.name} />
-                                    <span className="block p-3 text-sm font-bold text-slate-800 dark:text-zinc-100">{template.name}</span>
-                                </button>
-                            ))}
+                        <div className="pe-mobile-preview-drawer-body">
+                            <LivePhoneSimulator
+                                data={{
+                                    ...form,
+                                    googleMapUrl: previewMapUrl(form.googleMapUrl, form.venueName),
+                                }}
+                                catalogVersion={catalogVersion}
+                                onSave={handleSave}
+                                isSaving={isSaving}
+                            />
                         </div>
                     </div>
                 </div>
             )}
+
+            {/* Template Selection Modal */}
+            {isTemplateModalOpen && (
+                <div className="pe-modal-overlay" onClick={() => setIsTemplateModalOpen(false)}>
+                    <div className="pe-modal-card pe-tpl-modal-card" onClick={(e) => e.stopPropagation()}>
+                        <div className="pe-modal-header">
+                            <div>
+                                <h3 className="pe-modal-title">
+                                    <Sparkles size={18} style={{ color: "#d97706", marginRight: 8 }} /> ប្តូរគំរូធៀបការ (Change Template)
+                                </h3>
+                                <p className="pe-modal-subtitle">
+                                    ជ្រើសរើសគំរូរចនាប័ទ្មដែលអ្នកពេញចិត្តសម្រាប់ធៀបការ
+                                </p>
+                            </div>
+                            <button
+                                type="button"
+                                className="pe-modal-close-btn"
+                                onClick={() => setIsTemplateModalOpen(false)}
+                                title="បិទ"
+                            >
+                                <X size={20} />
+                            </button>
+                        </div>
+
+                        {/* Search and Filters */}
+                        <div className="pe-modal-toolbar">
+                            <div className="pe-modal-search-box">
+                                <Search size={16} className="pe-modal-search-icon" />
+                                <input
+                                    type="text"
+                                    className="pe-modal-search-input"
+                                    placeholder="ស្វែងរកតាមឈ្មោះគំរូ..."
+                                    value={templateSearchQuery}
+                                    onChange={(e) => setTemplateSearchQuery(e.target.value)}
+                                />
+                                {templateSearchQuery && (
+                                    <button
+                                        type="button"
+                                        className="pe-search-clear-btn"
+                                        onClick={() => setTemplateSearchQuery("")}
+                                    >
+                                        <X size={14} />
+                                    </button>
+                                )}
+                            </div>
+                            <div className="pe-modal-filter-pills">
+                                {[
+                                    { id: "ALL", label: "ទាំងអស់" },
+                                    { id: "ADMIN", label: "គំរូថ្មី Admin" },
+                                    { id: "CURTAIN", label: "វាំងនន (Curtain)" },
+                                    { id: "ENVELOPE", label: "ស្រោមសំបុត្រ 3D" },
+                                    { id: "KHMER", label: "ប្រពៃណីខ្មែរ" },
+                                ].map((cat) => (
+                                    <button
+                                        key={cat.id}
+                                        type="button"
+                                        className={`pe-filter-pill ${templateCategoryFilter === cat.id ? "is-active" : ""}`}
+                                        onClick={() => setTemplateCategoryFilter(cat.id)}
+                                    >
+                                        {cat.label}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Templates Grid */}
+                        <div className="pe-tpl-grid-scroll">
+                            <div className="pe-tpl-modal-grid">
+                                {displayedTemplates.map((tpl) => {
+                                    const isSelected = String(form.templateId) === String(tpl.id) || String(form.templateId) === String(tpl.code) || String(form.templateId) === String(tpl.slug);
+                                    const preset = getTemplatePreset(tpl) || {};
+                                    const cover = tpl.phoneCoverImage || tpl.mainImage || tpl.thumbnailUrl || preset.coverImage || tpl.image;
+                                    const openingStyle = preset.openingStyle || tpl.openingStyle;
+                                    return (
+                                        <div
+                                            key={tpl.id || tpl.code}
+                                            className={`pe-tpl-card-modal ${isSelected ? "is-active" : ""}`}
+                                            onClick={() => handleChangeTemplate(tpl)}
+                                        >
+                                            <div className="pe-tpl-thumb-box">
+                                                <img
+                                                    src={cover || "/facebook/all/03-card/cover-card.jpg"}
+                                                    alt={tpl.name || tpl.style}
+                                                    className="pe-tpl-thumb-img"
+                                                    loading="lazy"
+                                                />
+                                                {isSelected && (
+                                                    <div className="pe-tpl-active-badge">
+                                                        <CheckCircle2 size={15} /> កំពុងប្រើ
+                                                    </div>
+                                                )}
+                                                <div className="pe-tpl-style-pill">
+                                                    {openingStyle === "curtain"
+                                                        ? "Curtain Gate"
+                                                        : openingStyle === "envelope-3d"
+                                                        ? "Envelope 3D"
+                                                        : "Khmer Royal"}
+                                                </div>
+                                            </div>
+
+                                            <div className="pe-tpl-card-details">
+                                                <h5 className="pe-tpl-name">{tpl.name || tpl.style}</h5>
+                                                <div className="pe-tpl-footer">
+                                                    <div className="pe-tpl-dots">
+                                                        <span className="pe-dot" style={{ background: preset.frontColor || "#D4AF37" }} />
+                                                        <span className="pe-dot" style={{ background: preset.bottomColor || "#F3E5AB" }} />
+                                                    </div>
+                                                    <button
+                                                        type="button"
+                                                        className={`pe-btn-select-tpl ${isSelected ? "is-selected" : ""}`}
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            handleChangeTemplate(tpl);
+                                                        }}
+                                                    >
+                                                        {isSelected ? "បានជ្រើស ✓" : "ជ្រើសរើស"}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+
+                                {displayedTemplates.length === 0 && (
+                                    <div style={{ padding: "40px 20px", textAlign: "center", color: "#64748b", gridColumn: "1 / -1" }}>
+                                        <p style={{ margin: 0, fontSize: "0.95rem", fontWeight: 600 }}>មិនមានគំរូធៀបការដែលត្រូវគ្នានឹងការស្វែងរកទេ</p>
+                                        <p style={{ margin: "4px 0 0 0", fontSize: "0.8rem" }}>សូមព្យាយាមស្វែងរកដោយពាក្យគន្លឹះផ្សេងទៀត</p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
         </div>
     );
 }

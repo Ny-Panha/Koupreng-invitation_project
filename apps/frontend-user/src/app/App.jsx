@@ -2,9 +2,7 @@ import { useEffect } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import AppRouter from "./router";
 import ScrollToTop from "./ScrollToTop";
-import AuthProvider from "./providers/AuthProvider";
-import QueryProvider from "./providers/QueryProvider";
-import ThemeProvider from "./providers/ThemeProvider";
+import { AuthProvider, QueryProvider, ThemeProvider } from "./providers";
 import SiteAnimations from "../shared/animations/SiteAnimations";
 import ChatBot from "../shared/ui/ChatBot";
 import {

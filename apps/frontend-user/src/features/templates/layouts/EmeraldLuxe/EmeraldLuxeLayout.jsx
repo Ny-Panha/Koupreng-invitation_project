@@ -6,7 +6,7 @@ import {
   VolumeX,
 } from "lucide-react";
 import defaultMusicUrl from "@/assets/music/Instrumental Wedding Music (VioSounds Cover).m4a";
-import { normalizeTemplateViewModel } from "../../services/templateService";
+import { normalizeTemplateViewModel } from "../../model/templateModel";
 import { normalizeDressColors } from "../../experience/config/templateExperienceContent";
 import VelvetCurtainOpening from "./components/VelvetCurtainOpening";
 import TemplateOpeningGate from "../../experience/components/sections/TemplateOpeningGate";

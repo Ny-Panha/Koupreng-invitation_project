@@ -21,7 +21,7 @@ export default function AdminSidebar({ isMobileOpen, isExpanded, onToggle, onNav
   const { lang, t } = useAdminLanguage();
 
   useEffect(() => {
-    refreshSession();
+    refreshSession?.();
   }, [refreshSession]);
 
   const displayName = user?.fullName || user?.email || "Admin";

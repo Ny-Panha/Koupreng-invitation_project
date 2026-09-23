@@ -1,4 +1,4 @@
-import AdminUserDetailFeature from "../../features/admin/AdminUserDetailPage";
+import AdminUserDetailFeature from "../../features/users/AdminUserDetailFeature";
 
 export default function AdminUserDetailPage() {
   return <AdminUserDetailFeature />;

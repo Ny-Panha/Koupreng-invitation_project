@@ -1,4 +1,3 @@
-import { templateService as apiService } from "../api/templateService";
 import { normalizeDressColors } from "../experience/config/templateExperienceContent";
 
 /**
@@ -156,6 +155,3 @@ export function normalizeTemplateViewModel(tpl = {}, content = {}) {
     blessingMessage,
   };
 }
-
-export const templateService = apiService;
-export default templateService;

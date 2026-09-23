@@ -1,13 +1,10 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Loading, ErrorState, Empty } from "../../components/States";
-import Toast from "../../components/Toast";
-import { useResource } from "../../hooks/useResource";
-import { useToast } from "../../hooks/useToast";
-import { formatDate } from "../../lib/format";
+import { Loading, ErrorState, Empty, Toast } from "../../shared/ui";
+import { useResource, useToast } from "../../shared/hooks";
+import { formatDate } from "../../shared/utils";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
-import adminManagementService from "./adminManagementService";
-import "./AdminFeature.css";
+import adminManagementService from "../../shared/api/adminService";
 
 const EMPTY_CREATE_FORM = {
   fullName: "",

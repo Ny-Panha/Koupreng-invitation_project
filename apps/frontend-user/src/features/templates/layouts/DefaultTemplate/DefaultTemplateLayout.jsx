@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Calendar, MapPin, Heart } from "lucide-react";
-import { normalizeTemplateViewModel } from "../../services/templateService";
+import { normalizeTemplateViewModel } from "../../model/templateModel";
 import CountdownTimer from "../../shared/Countdown/CountdownTimer";
 import GalleryGrid from "../../shared/Gallery/GalleryGrid";
 import RsvpContainer from "../../shared/RSVP/RsvpContainer";
