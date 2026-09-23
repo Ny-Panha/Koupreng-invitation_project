@@ -116,6 +116,7 @@ export default function CelestialOpening({ content, onOpen }) {
         <motion.div className="kc-opening__date-block" {...reveal(reducedMotion, 2.18)}>
           {content.dateText ? <p className="kc-opening__date">{content.dateText}</p> : null}
           {content.eventTime ? <p className="kc-opening__time">{content.eventTime}</p> : null}
+          {content.subtitle ? <p className="kc-opening__subtitle">{content.subtitle}</p> : null}
         </motion.div>
 
         <motion.p
