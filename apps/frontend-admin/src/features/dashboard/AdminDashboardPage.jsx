@@ -8,8 +8,8 @@ import {
   LoadingState,
   ErrorStateView,
 } from "../../shared/ui/AdminUI";
-import { useResource } from "../../hooks/useResource";
-import { formatMoney, formatDateTime } from "../../lib/format";
+import { useResource } from "../../shared/hooks";
+import { formatMoney, formatDateTime } from "../../shared/utils";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 import dashboardService from "./dashboardService";
 import {

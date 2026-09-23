@@ -3,7 +3,7 @@
  * Wraps axios with JSON handling, base URL, and JWT bearer auth.
  */
 import axios from "axios";
-import { getAccessToken, clearAuth } from "../../lib/authStorage";
+import { getAccessToken, clearAuth } from "../utils/authStorage";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 

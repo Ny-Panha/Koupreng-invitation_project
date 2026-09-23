@@ -23,11 +23,16 @@ import {
   Eye,
   Upload,
 } from "lucide-react";
-import Toast from "../../components/Toast";
-import { useToast } from "../../hooks/useToast";
+import { Toast } from "../../shared/ui";
+import { useToast } from "../../shared/hooks";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
-import adminManagementService from "./adminManagementService";
+import adminManagementService from "../../shared/api/adminService";
 import { userTemplateUrl } from "../../shared/config/runtime";
+import {
+  TemplateCoverSection,
+  TemplateGallerySection,
+  TemplateQrSection,
+} from "./components";
 
 // Preset Theme Styles
 const THEME_PRESETS = [
@@ -478,13 +483,13 @@ export default function AdminTemplateEditPage() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (!file.type.startsWith("image/")) {
+    if (!file.type.startsWith("image/") || file.type.includes("svg") || file.name.toLowerCase().endsWith(".svg")) {
       show(lang === "en" ? "Please select an image file (PNG, JPG, WEBP)" : "សូមជ្រើសរើសប្រភេទ File រូបភាព (PNG, JPG, WEBP)", "error");
       return;
     }
 
-    if (file.size > 8 * 1024 * 1024) {
-      show(lang === "en" ? "Image size exceeds 8MB" : "ទំហំរូបភាពធំជាង 8MB សូមបន្ថយទំហំរូបភាព", "error");
+    if (file.size > 5 * 1024 * 1024) {
+      show(lang === "en" ? "Image size exceeds 5MB (Max: 5MB)" : "ទំហំរូបភាពធំជាង 5MB សូមបន្ថយទំហំរូបភាព (អតិបរមា 5MB)", "error");
       return;
     }
 
@@ -503,13 +508,13 @@ export default function AdminTemplateEditPage() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (!file.type.startsWith("image/")) {
-      show(lang === "en" ? "Please select an image file" : "សូមជ្រើសរើសប្រភេទ File រូបភាព", "error");
+    if (!file.type.startsWith("image/") || file.type.includes("svg") || file.name.toLowerCase().endsWith(".svg")) {
+      show(lang === "en" ? "Please select an image file (PNG, JPG, WEBP)" : "សូមជ្រើសរើសប្រភេទ File រូបភាព (PNG, JPG, WEBP)", "error");
       return;
     }
 
-    if (file.size > 8 * 1024 * 1024) {
-      show(lang === "en" ? "Image size exceeds 8MB" : "ទំហំរូបភាពធំជាង 8MB សូមបន្ថយទំហំរូបភាព", "error");
+    if (file.size > 5 * 1024 * 1024) {
+      show(lang === "en" ? "Image size exceeds 5MB (Max: 5MB)" : "ទំហំរូបភាពធំជាង 5MB សូមបន្ថយទំហំរូបភាព (អតិបរមា 5MB)", "error");
       return;
     }
 
@@ -528,9 +533,15 @@ export default function AdminTemplateEditPage() {
     const files = Array.from(e.target.files || []);
     if (files.length === 0) return;
 
-    const validFiles = files.filter((f) => f.type.startsWith("image/"));
+    const validFiles = files.filter((f) => f.type.startsWith("image/") && !f.type.includes("svg") && !f.name.toLowerCase().endsWith(".svg"));
     if (validFiles.length === 0) {
-      show(lang === "en" ? "Please select valid image files" : "សូមជ្រើសរើសប្រភេទ File រូបភាព", "error");
+      show(lang === "en" ? "Please select valid image files (PNG, JPG, WEBP)" : "សូមជ្រើសរើសប្រភេទ File រូបភាព (PNG, JPG, WEBP)", "error");
+      return;
+    }
+
+    const oversized = validFiles.some((f) => f.size > 5 * 1024 * 1024);
+    if (oversized) {
+      show(lang === "en" ? "Some images exceed 5MB. Max size is 5MB per photo." : "រូបភាពមួយចំនួនធំជាង 5MB។ អតិបរមា 5MB ក្នុងមួយសន្លឹក។", "error");
       return;
     }
 
@@ -1149,61 +1160,14 @@ export default function AdminTemplateEditPage() {
                         className="h-10 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500"
                       />
                     </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
-                        ចំណងជើងធៀប (Hero Title)
-                      </label>
-                      <input
-                        type="text"
-                        value={form.invitationTitle}
-                        onChange={(e) => setField("invitationTitle", e.target.value)}
-                        placeholder="សិរីសួស្តី អាពាហ៍ពិពាហ៍"
-                        className="h-10 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500 font-moul"
-                      />
-                    </div>
-                    {/* Hidden Cover File Input */}
-                    <input
-                      type="file"
-                      ref={coverFileInputRef}
-                      accept="image/png, image/jpeg, image/webp, image/svg+xml"
-                      className="hidden"
-                      onChange={handleCoverFileUpload}
+                    <TemplateCoverSection
+                      coverImage={form.coverImage}
+                      invitationTitle={form.invitationTitle}
+                      onCoverChange={(val) => setField("coverImage", val)}
+                      onTitleChange={(val) => setField("invitationTitle", val)}
+                      onUploadCover={(file) => handleCoverFileUpload({ target: { files: [file] } })}
+                      lang={lang}
                     />
-
-                    <div>
-                      <div className="flex items-center justify-between mb-1.5">
-                        <label className="text-xs font-semibold text-zinc-300">
-                          {lang === "en" ? "Cover Banner Photo (URL / Upload)" : "រូបភាព Cover Banner (URL / Upload)"}
-                        </label>
-                        <button
-                          type="button"
-                          onClick={() => coverFileInputRef.current?.click()}
-                          className="flex items-center gap-1.5 rounded-lg bg-amber-500/10 px-2.5 py-1 text-[11px] font-bold text-amber-400 border border-amber-500/20 hover:bg-amber-500/20 transition cursor-pointer"
-                        >
-                          <Upload className="h-3 w-3" />
-                          <span>{lang === "en" ? "Upload Cover" : "Upload រូប Cover"}</span>
-                        </button>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        {form.coverImage && (
-                          <img
-                            src={form.coverImage}
-                            alt="Cover Preview"
-                            className="h-10 w-16 rounded-lg object-cover border border-zinc-700 shrink-0 bg-zinc-950"
-                            onError={(e) => {
-                              e.target.src = "/facebook/all/03-card/cover-card.jpg";
-                            }}
-                          />
-                        )}
-                        <input
-                          type="text"
-                          value={form.coverImage}
-                          onChange={(e) => setField("coverImage", e.target.value)}
-                          placeholder={lang === "en" ? "https://... or click Upload Cover" : "https://... ឬចុច Upload ពីកុំព្យូទ័រ"}
-                          className="h-10 flex-1 rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500 font-mono"
-                        />
-                      </div>
-                    </div>
                     <div>
                       <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
                         ពាក្យជូនពរផ្លូវការ (Formal Blessing Greeting)
@@ -1426,119 +1390,23 @@ export default function AdminTemplateEditPage() {
 
                 {eventsSubTab === "gallery" && (
                   <div className="space-y-6">
-                    <div>
-                      <div className="flex items-center justify-between mb-1">
-                        <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                          <ImageIcon className="h-4 w-4 text-amber-500" />
-                          <span>{lang === "en" ? "Photo Gallery" : "វិចិត្រសាលរូបថត (Photo Gallery)"}</span>
-                        </h3>
-                        <span className="text-xs text-zinc-400 font-mono">
-                          {(form.galleryImages || []).length} {lang === "en" ? "Photos" : "រូបថត"}
-                        </span>
-                      </div>
-                      <p className="text-xs text-zinc-400 mb-4">
-                        {lang === "en"
-                          ? "Pre-wedding photo collection and memories (Enter Image URL)"
-                          : "កម្រងរូបថត Pre-wedding និងរូបភាពអនុស្សាវរីយ៍ (បញ្ចូល URL រូបភាព)"}
-                      </p>
-
-                      {/* Hidden Gallery Files Input */}
-                      <input
-                        type="file"
-                        ref={galleryFileInputRef}
-                        accept="image/png, image/jpeg, image/webp, image/svg+xml"
-                        multiple
-                        className="hidden"
-                        onChange={handleGalleryFileUpload}
-                      />
-
-                      {/* Add Image Input Bar */}
-                      <div className="mb-4 rounded-2xl border border-amber-500/30 bg-amber-500/5 p-3 space-y-2">
-                        <div className="flex items-center justify-between">
-                          <label className="text-xs font-semibold text-amber-300">
-                            {lang === "en" ? "🔗 Add Photo by URL or Upload" : "🔗 បញ្ចូល URL រូបភាពថ្មី ឬ Upload"}
-                          </label>
-                          <button
-                            type="button"
-                            onClick={() => galleryFileInputRef.current?.click()}
-                            className="flex items-center gap-1.5 rounded-lg bg-amber-500/15 px-2.5 py-1 text-[11px] font-bold text-amber-300 border border-amber-500/30 hover:bg-amber-500/25 transition cursor-pointer"
-                          >
-                            <Upload className="h-3 w-3" />
-                            <span>{lang === "en" ? "Upload Files" : "Upload រូបពីកុំព្យូទ័រ"}</span>
-                          </button>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="text"
-                            value={newGalleryUrl}
-                            onChange={(e) => setNewGalleryUrl(e.target.value)}
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") {
-                                e.preventDefault();
-                                handleAddGalleryImage();
-                              }
-                            }}
-                            placeholder="https://example.com/photo.jpg ឬ /facebook/all/03-card/..."
-                            className="h-10 flex-1 rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500 font-mono"
-                          />
-                          <button
-                            type="button"
-                            onClick={handleAddGalleryImage}
-                            className="flex h-10 items-center gap-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-4 text-xs font-bold text-slate-950 shadow-md shadow-amber-500/20 hover:brightness-110 active:scale-95 transition shrink-0 cursor-pointer"
-                          >
-                            <Plus className="h-4 w-4" />
-                            <span>{lang === "en" ? "Add Photo" : "បន្ថែមរូបភាព"}</span>
-                          </button>
-                        </div>
-                      </div>
-
-                      {/* Gallery Images List */}
-                      <div className="space-y-3">
-                        {(form.galleryImages || []).length === 0 ? (
-                          <div className="rounded-xl border border-dashed border-zinc-800 p-6 text-center text-xs text-zinc-500">
-                            {lang === "en" ? "No photos added yet. Enter a URL above to add." : "មិនទាន់មានរូបថតនៅឡើយទេ។ សូមបញ្ចូល URL ខាងលើដើម្បីបន្ថែម។"}
-                          </div>
-                        ) : (
-                          (form.galleryImages || []).map((imgUrl, idx) => (
-                            <div
-                              key={idx}
-                              className="flex items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-900/80 p-2.5 transition hover:border-zinc-700"
-                            >
-                              <img
-                                src={imgUrl}
-                                alt={`Gallery ${idx + 1}`}
-                                className="h-12 w-12 rounded-lg object-cover border border-zinc-700 shrink-0 bg-zinc-950"
-                                onError={(e) => {
-                                  e.target.src = "/facebook/all/03-card/cover-card.jpg";
-                                }}
-                              />
-                              <input
-                                type="text"
-                                value={imgUrl}
-                                onChange={(e) => {
-                                  const newImages = [...form.galleryImages];
-                                  newImages[idx] = e.target.value;
-                                  setField("galleryImages", newImages);
-                                }}
-                                placeholder="https://..."
-                                className="flex-1 bg-transparent text-xs text-zinc-100 outline-none font-mono"
-                              />
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  const newImages = form.galleryImages.filter((_, i) => i !== idx);
-                                  setField("galleryImages", newImages);
-                                }}
-                                className="p-1.5 text-zinc-500 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition cursor-pointer"
-                                title={lang === "en" ? "Remove" : "លុបចេញ"}
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </button>
-                            </div>
-                          ))
-                        )}
-                      </div>
-                    </div>
+                    <TemplateGallerySection
+                      galleryImages={form.galleryImages || []}
+                      newGalleryUrl={newGalleryUrl}
+                      onNewGalleryUrlChange={setNewGalleryUrl}
+                      onAddGalleryImage={handleAddGalleryImage}
+                      onUploadGalleryFiles={(files) => handleGalleryFileUpload({ target: { files } })}
+                      onUpdateImage={(idx, val) => {
+                        const newImages = [...form.galleryImages];
+                        newImages[idx] = val;
+                        setField("galleryImages", newImages);
+                      }}
+                      onRemoveImage={(idx) => {
+                        const newImages = form.galleryImages.filter((_, i) => i !== idx);
+                        setField("galleryImages", newImages);
+                      }}
+                      lang={lang}
+                    />
 
                     <hr className="border-zinc-800/80" />
 
@@ -1687,126 +1555,50 @@ export default function AdminTemplateEditPage() {
 
                     <hr className="border-zinc-800/80" />
 
-                    <div>
-                      <h3 className="text-sm font-bold text-white mb-3">
-                        {lang === "en" ? "Digital Gift (QR Code & Bank Info)" : "QR Code ចងដៃ (Digital Gift)"}
-                      </h3>
+                    <TemplateQrSection
+                      qrGiftUrl={form.qrGiftUrl}
+                      onQrChange={(val) => setField("qrGiftUrl", val)}
+                      onUploadQr={(file) => handleQrFileUpload({ target: { files: [file] } })}
+                      lang={lang}
+                    />
 
-                      {/* Hidden QR File Input */}
-                      <input
-                        type="file"
-                        ref={qrFileInputRef}
-                        accept="image/png, image/jpeg, image/webp, image/svg+xml"
-                        className="hidden"
-                        onChange={handleQrFileUpload}
-                      />
-
-                      <div className="space-y-4">
-                        {/* QR Image Input & Upload */}
-                        <div className="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-4 space-y-3">
-                          <div className="flex items-center justify-between">
-                            <label className="text-xs font-semibold text-amber-300 flex items-center gap-1.5">
-                              <ImageIcon className="h-4 w-4 text-amber-500" />
-                              <span>{lang === "en" ? "QR Code Image (ABA / Bakong KHQR)" : "រូបភាព QR Code (ABA / Bakong KHQR)"}</span>
-                            </label>
-                            <button
-                              type="button"
-                              onClick={() => qrFileInputRef.current?.click()}
-                              className="flex items-center gap-1.5 rounded-xl bg-amber-500/15 px-3 py-1.5 text-xs font-bold text-amber-300 border border-amber-500/30 hover:bg-amber-500/25 transition cursor-pointer"
-                            >
-                              <Upload className="h-3.5 w-3.5" />
-                              <span>{lang === "en" ? "Upload QR Image" : "Upload រូប QR ពីកុំព្យូទ័រ"}</span>
-                            </button>
-                          </div>
-
-                          <div className="flex items-center gap-3">
-                            {/* QR Preview Thumbnail */}
-                            {form.qrGiftUrl ? (
-                              <div className="relative group shrink-0">
-                                <img
-                                  src={form.qrGiftUrl}
-                                  alt="QR Preview"
-                                  className="h-16 w-16 rounded-xl object-contain bg-white p-1 border border-amber-500/50 shadow-md shadow-amber-500/10"
-                                  onError={(e) => {
-                                    e.target.src = "/facebook/all/03-card/cover-card.jpg";
-                                  }}
-                                />
-                                <button
-                                  type="button"
-                                  onClick={() => setField("qrGiftUrl", "")}
-                                  className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-red-500 text-white flex items-center justify-center text-[10px] font-bold opacity-0 group-hover:opacity-100 transition shadow cursor-pointer"
-                                  title={lang === "en" ? "Clear QR" : "លុបចេញ"}
-                                >
-                                  ✕
-                                </button>
-                              </div>
-                            ) : (
-                              <div
-                                onClick={() => qrFileInputRef.current?.click()}
-                                className="h-16 w-16 rounded-xl border-2 border-dashed border-zinc-700 bg-zinc-900/80 flex flex-col items-center justify-center text-zinc-500 hover:border-amber-500 hover:text-amber-400 hover:bg-amber-500/5 transition cursor-pointer shrink-0"
-                                title={lang === "en" ? "Upload QR Image" : "Upload រូបភាព QR"}
-                              >
-                                <Upload className="h-5 w-5 mb-0.5" />
-                                <span className="text-[9px] font-bold">Upload</span>
-                              </div>
-                            )}
-
-                            {/* URL Text Input */}
-                            <div className="flex-1 space-y-1">
-                              <input
-                                type="text"
-                                value={form.qrGiftUrl}
-                                onChange={(e) => setField("qrGiftUrl", e.target.value)}
-                                placeholder={lang === "en" ? "https://... or click Upload QR Image" : "https://... ឬចុច Upload ពីកុំព្យូទ័រ"}
-                                className="h-10 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500 font-mono"
-                              />
-                              <p className="text-[10px] text-zinc-400">
-                                {lang === "en"
-                                  ? "Paste direct image URL or click Upload to pick a QR image file from your device."
-                                  : "អាច Paste URL រូបភាព ឬចុច Upload ដើម្បីជ្រើសរើសរូបពីកុំព្យូទ័រ។"}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="grid grid-cols-2 gap-3">
-                          <div>
-                            <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
-                              ឈ្មោះធនាគារ (Bank Name)
-                            </label>
-                            <input
-                              type="text"
-                              value={form.bankName || ""}
-                              onChange={(e) => setField("bankName", e.target.value)}
-                              placeholder="ABA Bank"
-                              className="h-10 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500"
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
-                              លេខគណនី (Account Number)
-                            </label>
-                            <input
-                              type="text"
-                              value={form.bankAccountNumber || ""}
-                              onChange={(e) => setField("bankAccountNumber", e.target.value)}
-                              placeholder="000 123 456"
-                              className="h-10 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500 font-mono"
-                            />
-                          </div>
-                        </div>
-                        <div>
-                          <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
-                            ឈ្មោះគណនីធនាគារ (Account Name)
-                          </label>
-                          <input
-                            type="text"
-                            value={form.bankAccountName}
-                            onChange={(e) => setField("bankAccountName", e.target.value)}
-                            placeholder="VANDA & SREYPICHOfficial"
-                            className="h-10 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500 uppercase"
-                          />
-                        </div>
+                            <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
+                          ឈ្មោះធនាគារ (Bank Name)
+                        </label>
+                        <input
+                          type="text"
+                          value={form.bankName || ""}
+                          onChange={(e) => setField("bankName", e.target.value)}
+                          placeholder="ABA Bank"
+                          className="h-10 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500"
+                        />
                       </div>
+                      <div>
+                        <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
+                          លេខគណនី (Account Number)
+                        </label>
+                        <input
+                          type="text"
+                          value={form.bankAccountNumber || ""}
+                          onChange={(e) => setField("bankAccountNumber", e.target.value)}
+                          placeholder="000 123 456"
+                          className="h-10 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500 font-mono"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
+                        ឈ្មោះគណនីធនាគារ (Account Name)
+                      </label>
+                      <input
+                        type="text"
+                        value={form.bankAccountName}
+                        onChange={(e) => setField("bankAccountName", e.target.value)}
+                        placeholder="VANDA & SREYPICHOfficial"
+                        className="h-10 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500 uppercase"
+                      />
                     </div>
                   </div>
                 )}

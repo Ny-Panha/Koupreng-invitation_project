@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { BarChart3, Download, Printer } from "lucide-react";
-import { Loading, ErrorState } from "../../components/States";
+import { Loading, ErrorState } from "../../shared/ui";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
-import { formatDate, formatMoney } from "../../lib/format";
-import adminManagementService from "./adminManagementService";
-import "./AdminFeature.css";
+import { formatDate, formatMoney } from "../../shared/utils";
+import adminManagementService from "../../shared/api/adminService";
 
 export default function AdminReportsPage() {
   const { lang, t } = useAdminLanguage();

@@ -384,7 +384,7 @@ export default function KhmerCelestialLayout({
                 <CelestialHeading
                   id="kc-invitation-title"
                   khmer={content.messageTitle || "មានកិត្តិយសសូមគោរពអញ្ជើញ"}
-                  english="With joy and honor"
+                  english={content.subtitle || "With joy and honor"}
                   eyebrow="THE INVITATION"
                   align="left"
                   tone="ceremonial"

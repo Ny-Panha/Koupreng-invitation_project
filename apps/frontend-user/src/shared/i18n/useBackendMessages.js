@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useLanguageStore } from "../../stores/useLanguageStore";
-import { i18nService } from "../services/i18nService";
+import { i18nService } from "../api/i18nService";
 import { LOCAL_MESSAGES } from "./messagesDictionary";
 
 export function formatMessage(value, replacements = {}) {

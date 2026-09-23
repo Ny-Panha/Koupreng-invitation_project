@@ -34,8 +34,8 @@ export {
     FloatingActionBar,
 } from "./shared";
 
-// Services
-export { normalizeTemplateViewModel } from "./services/templateService";
+// Models
+export { normalizeTemplateViewModel } from "./model/templateModel";
 
 // API Services
 export { templateCatalogService } from "./api/templateCatalogApi";

@@ -1,12 +1,10 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { AuthProvider } from "./providers/AdminAuthProvider";
-import QueryProvider from "./providers/QueryProvider";
-import AdminLanguageProvider from "./providers/AdminLanguageProvider";
+import { AuthProvider, QueryProvider, AdminLanguageProvider } from "./providers";
 import RequireAdmin from "./guards/RequireAdmin";
 import AdminLayout from "../layouts/AdminLayout";
 import LoginPage from "../pages/auth/LoginPage";
 
-// Modern Admin Pages from features/admin/...
+// Admin Pages from pages/...
 import DashboardPage from "../pages/dashboard/AdminDashboardPage";
 import UsersPage from "../pages/users/AdminUsersPage";
 import UserDetailPage from "../pages/users/AdminUserDetailPage";
@@ -14,8 +12,8 @@ import TemplatesPage from "../pages/templates/AdminTemplatesPage";
 import TemplateEditPage from "../pages/templates/AdminTemplateEditPage";
 import PaymentsPage from "../pages/payments/AdminPaymentsPage";
 import PackagesPage from "../pages/payments/AdminPackagesPage";
-import NotificationsPage from "../features/admin/AdminNotificationsPage";
-import SystemLogsPage from "../features/admin/AdminSystemLogsPage";
+import NotificationsPage from "../pages/notifications/AdminNotificationsPage";
+import SystemLogsPage from "../pages/system-logs/AdminSystemLogsPage";
 import ReportsPage from "../pages/reports/AdminReportsPage";
 
 import { ADMIN_ROUTE_PATHS } from "./routes";

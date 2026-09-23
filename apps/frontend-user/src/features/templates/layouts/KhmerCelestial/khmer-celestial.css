@@ -432,6 +432,15 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   color: var(--kc-gold);
 }
 
+.kc-opening__subtitle {
+  margin: 6px 0 0;
+  color: rgba(255, 249, 237, 0.72);
+  font-size: clamp(0.68rem, 2.2vw, 0.8rem);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
 .kc-opening__guest-label {
   margin: 4px auto 0;
   color: #785331;

@@ -12,7 +12,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import defaultMusicUrl from "@/assets/music/Instrumental Wedding Music (VioSounds Cover).m4a";
-import { normalizeTemplateViewModel } from "../../services/templateService";
+import { normalizeTemplateViewModel } from "../../model/templateModel";
 import FallingPetals from "./components/FallingPetals";
 import WaxSealEnvelope from "./components/WaxSealEnvelope";
 import TemplateOpeningGate from "../../experience/components/sections/TemplateOpeningGate";

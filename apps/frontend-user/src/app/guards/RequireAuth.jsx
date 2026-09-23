@@ -14,6 +14,7 @@ export default function RequireAuth({ children }) {
     <Navigate
       to={`/login?next=${encodeURIComponent(nextPath)}`}
       replace
+      state={{ from: location }}
     />
   );
 }

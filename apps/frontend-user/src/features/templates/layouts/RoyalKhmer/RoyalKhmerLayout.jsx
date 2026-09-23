@@ -9,7 +9,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import defaultMusicUrl from "@/assets/music/ថ្ងៃដែលរង់ចាំ.mp3";
-import { normalizeTemplateViewModel } from "../../services/templateService";
+import { normalizeTemplateViewModel } from "../../model/templateModel";
 import PalaceGateOpening from "./components/PalaceGateOpening";
 import TemplateOpeningGate from "../../experience/components/sections/TemplateOpeningGate";
 import ParentsHonorSection from "./components/ParentsHonorSection";

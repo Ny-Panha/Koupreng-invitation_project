@@ -1,4 +1,4 @@
-import AdminPaymentsFeature from "../../features/admin/AdminPaymentsPage";
+import AdminPaymentsFeature from "../../features/payments/AdminPaymentsFeature";
 
 export default function AdminPaymentsPage() {
   return <AdminPaymentsFeature />;

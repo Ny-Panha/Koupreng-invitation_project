@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import AdminSidebar from "../components/navigation/AdminSidebar";
-import TopMenu from "../components/navigation/TopMenu";
+import AdminSidebar from "./components/AdminSidebar";
+import AdminHeader from "./components/AdminHeader";
 import { useAdminLanguage } from "../app/providers/AdminLanguageProvider";
 
 export default function AdminLayout() {
@@ -68,7 +68,7 @@ export default function AdminLayout() {
 
       {/* Main Content Area */}
       <div className={`${sidebarPadding} min-w-0 max-w-full transition-all duration-300 flex flex-col min-h-screen`}>
-        <TopMenu
+        <AdminHeader
           title={title}
           onShowSidebar={() => {
             if (window.innerWidth < 1024) {

@@ -1,23 +1,31 @@
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import AdminUsersPage from "./AdminUsersPage";
-import AdminPaymentsPage from "./AdminPaymentsPage";
-import AdminPackagesPage from "./AdminPackagesPage";
-import AdminNotificationsPage from "./AdminNotificationsPage";
-import adminManagementService from "./adminManagementService";
+import AdminUsersFeature from "./users/AdminUsersFeature";
+import AdminPaymentsFeature from "./payments/AdminPaymentsFeature";
+import AdminPackagesFeature from "./packages/AdminPackagesFeature";
+import AdminNotificationsFeature from "./notifications/AdminNotificationsFeature";
 
 afterEach(() => {
   cleanup();
   vi.clearAllMocks();
 });
 
-vi.mock("./adminManagementService", () => ({
-  default: {
+const { mockAdminService } = vi.hoisted(() => ({
+  mockAdminService: {
     users: vi.fn().mockResolvedValue([
       { id: 1, fullName: "Koupreng Admin", email: "admin@koupreng.com", role: "ADMIN", status: "ACTIVE", active: true, createdAt: "2026-08-01T00:00:00Z" },
       { id: 2, fullName: "Sophea User", email: "sophea@koupreng.com", role: "USER", status: "ACTIVE", active: true, createdAt: "2026-08-01T00:00:00Z" },
     ]),
+    createUser: vi.fn().mockResolvedValue({
+      id: 7,
+      fullName: "New Admin",
+      email: "new.admin@koupreng.local",
+      role: "ADMIN",
+      status: "ACTIVE",
+      active: true,
+      createdAt: "2026-08-02T00:00:00Z",
+    }),
     invitations: vi.fn().mockResolvedValue([
       { id: 10, title: "Dara & Sophea Wedding", slug: "dara-sophea", ownerName: "Dara", status: "PUBLISHED", moderationStatus: "ACTIVE", eventDate: "2026-11-20" },
     ]),
@@ -33,12 +41,24 @@ vi.mock("./adminManagementService", () => ({
   },
 }));
 
-describe("Admin Feature Pages", () => {
-  it("renders users management page with backend user data", async () => {
+vi.mock("../shared/api", () => ({
+  default: mockAdminService,
+  adminService: mockAdminService,
+  adminManagementService: mockAdminService,
+}));
+
+vi.mock("../shared/api/adminService", () => ({
+  default: mockAdminService,
+  adminService: mockAdminService,
+  adminManagementService: mockAdminService,
+}));
+
+describe("Domain Feature Modules", () => {
+  it("renders users management feature with backend user data", async () => {
     render(
       <MemoryRouter initialEntries={["/admin/users"]}>
         <Routes>
-          <Route path="/admin/users" element={<AdminUsersPage />} />
+          <Route path="/admin/users" element={<AdminUsersFeature />} />
         </Routes>
       </MemoryRouter>
     );
@@ -55,7 +75,7 @@ describe("Admin Feature Pages", () => {
     render(
       <MemoryRouter initialEntries={["/admin/users"]}>
         <Routes>
-          <Route path="/admin/users" element={<AdminUsersPage />} />
+          <Route path="/admin/users" element={<AdminUsersFeature />} />
         </Routes>
       </MemoryRouter>
     );
@@ -75,7 +95,7 @@ describe("Admin Feature Pages", () => {
     render(
       <MemoryRouter initialEntries={["/admin/users"]}>
         <Routes>
-          <Route path="/admin/users" element={<AdminUsersPage />} />
+          <Route path="/admin/users" element={<AdminUsersFeature />} />
         </Routes>
       </MemoryRouter>
     );
@@ -88,27 +108,18 @@ describe("Admin Feature Pages", () => {
   });
 
   it("refetches the admin list immediately after creating a new admin account", async () => {
-    adminManagementService.users.mockResolvedValueOnce([
+    mockAdminService.users.mockResolvedValueOnce([
       { id: 1, fullName: "Sophea User", email: "sophea@koupreng.com", role: "USER", status: "ACTIVE", active: true, createdAt: "2026-08-01T00:00:00Z" },
     ]);
-    adminManagementService.users.mockResolvedValueOnce([
+    mockAdminService.users.mockResolvedValueOnce([
       { id: 1, fullName: "Sophea User", email: "sophea@koupreng.com", role: "USER", status: "ACTIVE", active: true, createdAt: "2026-08-01T00:00:00Z" },
       { id: 7, fullName: "New Admin", email: "new.admin@koupreng.local", role: "ADMIN", status: "ACTIVE", active: true, createdAt: "2026-08-02T00:00:00Z" },
     ]);
-    adminManagementService.createUser = vi.fn().mockResolvedValue({
-      id: 7,
-      fullName: "New Admin",
-      email: "new.admin@koupreng.local",
-      role: "ADMIN",
-      status: "ACTIVE",
-      active: true,
-      createdAt: "2026-08-02T00:00:00Z",
-    });
 
     render(
       <MemoryRouter initialEntries={["/admin/users"]}>
         <Routes>
-          <Route path="/admin/users" element={<AdminUsersPage />} />
+          <Route path="/admin/users" element={<AdminUsersFeature />} />
         </Routes>
       </MemoryRouter>
     );
@@ -119,20 +130,20 @@ describe("Admin Feature Pages", () => {
     fireEvent.click(screen.getByRole("button", { name: /create admin/i }));
 
     await waitFor(() => {
-      expect(adminManagementService.createUser).toHaveBeenCalled();
+      expect(mockAdminService.createUser).toHaveBeenCalled();
     });
-    expect(adminManagementService.createUser).toHaveBeenCalledWith(expect.objectContaining({ role: "ADMIN" }));
+    expect(mockAdminService.createUser).toHaveBeenCalledWith(expect.objectContaining({ role: "ADMIN" }));
 
     await waitFor(() => {
       expect(screen.getByText("New Admin")).toBeInTheDocument();
     });
   });
 
-  it("renders payments management page with status counts", async () => {
+  it("renders payments management feature with status counts", async () => {
     render(
       <MemoryRouter initialEntries={["/admin/payments"]}>
         <Routes>
-          <Route path="/admin/payments" element={<AdminPaymentsPage />} />
+          <Route path="/admin/payments" element={<AdminPaymentsFeature />} />
         </Routes>
       </MemoryRouter>
     );
@@ -142,11 +153,11 @@ describe("Admin Feature Pages", () => {
     });
   });
 
-  it("renders subscription packages page", async () => {
+  it("renders subscription packages feature", async () => {
     render(
       <MemoryRouter initialEntries={["/admin/packages"]}>
         <Routes>
-          <Route path="/admin/packages" element={<AdminPackagesPage />} />
+          <Route path="/admin/packages" element={<AdminPackagesFeature />} />
         </Routes>
       </MemoryRouter>
     );
@@ -156,11 +167,11 @@ describe("Admin Feature Pages", () => {
     });
   });
 
-  it("renders notifications management page and send form", async () => {
+  it("renders notifications management feature and send form", async () => {
     render(
       <MemoryRouter initialEntries={["/admin/notifications"]}>
         <Routes>
-          <Route path="/admin/notifications" element={<AdminNotificationsPage />} />
+          <Route path="/admin/notifications" element={<AdminNotificationsFeature />} />
         </Routes>
       </MemoryRouter>
     );

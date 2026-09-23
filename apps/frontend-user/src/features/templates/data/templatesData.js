@@ -502,23 +502,26 @@ export const DB_TEMPLATE_ID_MAP = {
     "10": KHMER_CELESTIAL_TEMPLATE_CODE,
 };
 
-export function resolveNumericTemplateId(rawId) {
+export function resolveNumericTemplateId(id) {
+    const rawId = String(id || "").trim();
     if (!rawId) return null;
-    const num = Number(rawId);
-    if (!isNaN(num) && num > 0) return num;
 
-    const CODE_TO_DB_ID = {
-        [ROYAL_KHMER_TEMPLATE_CODE]: 1,
-        [KEEP_TEMPLATE_CODE]: 2,
-        [WITHJOY_PORTAL_CODE]: 3,
-        [BLISS_EDITORIAL_CODE]: 4,
-        [KHMER_GOLDEN_CANVA_INSPIRED_CODE]: 5,
-        [THE_DIGITAL_YES_TEMPLATE_CODE]: 7,
-        "koupreng-demo-wedding": 8,
-        [EMERALD_CANVA_LUXE_CODE]: 9,
-        [KHMER_CELESTIAL_TEMPLATE_CODE]: 10,
-    };
-    return CODE_TO_DB_ID[String(rawId).trim()] || null;
+    if (/^\d+$/.test(rawId)) {
+        const num = Number(rawId);
+        if (num > 0) return num;
+    }
+
+    const dynamic = dynamicTemplates.find((template) =>
+        template.code === rawId || template.slug === rawId || template.id === rawId
+    );
+    if (dynamic?.backendId != null && Number.isFinite(Number(dynamic.backendId))) {
+        return Number(dynamic.backendId);
+    }
+
+    if (rawId === KEEP_TEMPLATE_CODE) return 2;
+
+    const mappedEntry = Object.entries(DB_TEMPLATE_ID_MAP).find(([, code]) => code === rawId);
+    return mappedEntry ? Number(mappedEntry[0]) : null;
 }
 
 let dynamicTemplates = [];

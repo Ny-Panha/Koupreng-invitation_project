@@ -1,10 +1,10 @@
-import { api } from "../../lib/api";
+import { api } from "./adminHttpClient";
 
 function unwrap(response) {
   return response?.data ?? response;
 }
 
-export const adminManagementService = {
+export const adminService = {
   users: () => api.get("/v1/admin/users").then(unwrap),
   createUser: (payload) => api.post("/v1/admin/users", payload).then(unwrap),
   user: (userId) => api.get(`/v1/admin/users/${userId}`).then(unwrap),
@@ -58,4 +58,5 @@ export const adminManagementService = {
     api.patch(`/v1/admin/notifications/${notificationId}/status`, payload).then(unwrap),
 };
 
-export default adminManagementService;
+export const adminManagementService = adminService;
+export default adminService;

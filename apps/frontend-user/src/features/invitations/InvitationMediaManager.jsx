@@ -10,15 +10,41 @@ const ACCEPT = {
     audio: "audio/mpeg,audio/mp3,audio/wav,audio/ogg",
 };
 
-function MediaFileInput({ accept, multiple = false, disabled, onFiles, label }) {
+const MAX_FILE_SIZES = {
+    image: 5 * 1024 * 1024,
+    video: 50 * 1024 * 1024,
+    audio: 15 * 1024 * 1024,
+};
+
+function validateMediaFile(file, category = "image") {
+    if (!file) return false;
+    const max = MAX_FILE_SIZES[category] || MAX_FILE_SIZES.image;
+    if (file.size > max) {
+        const limitMb = Math.round(max / (1024 * 1024));
+        throw new Error(`File "${file.name}" លើសទំហំកំណត់ ${limitMb}MB (Exceeds ${limitMb}MB)`);
+    }
+    if (file.name.toLowerCase().endsWith(".svg") || (file.type && file.type.includes("svg"))) {
+        throw new Error("SVG uploads are not permitted for security reasons");
+    }
+    return true;
+}
+
+function MediaFileInput({ accept, multiple = false, disabled, onFiles, label, mediaCategory = "image" }) {
     const inputRef = useRef(null);
 
     const handleChange = (event) => {
         const files = Array.from(event.target.files || []);
-        if (files.length) {
+        if (!files.length) return;
+        try {
+            for (const f of files) {
+                validateMediaFile(f, mediaCategory);
+            }
             onFiles(multiple ? files : files[0]);
+        } catch (err) {
+            toast(err.message, "error");
+        } finally {
+            event.target.value = "";
         }
-        event.target.value = "";
     };
 
     return (
@@ -57,6 +83,7 @@ function MediaPreview({ media, type, onReplace, onRemove, busy }) {
                     accept={type === "video" ? ACCEPT.video : type === "audio" ? ACCEPT.audio : ACCEPT.image}
                     disabled={busy}
                     label="Replace"
+                    mediaCategory={type === "video" ? "video" : type === "audio" ? "audio" : "image"}
                     onFiles={(file) => onReplace(media, file)}
                 />
                 <button type="button" className="danger" disabled={busy} onClick={() => onRemove(media)}>
@@ -202,21 +229,32 @@ export default function InvitationMediaManager() {
                 <div className="media-manager">
                     <section className="inv-form-section">
                         <div className="media-section-header">
-                            <h2>Cover image</h2>
-                            <MediaFileInput accept={ACCEPT.image} disabled={busy} label="Upload cover" onFiles={uploadCover} />
+                            <div>
+                                <h2>Cover image</h2>
+                                <p className="media-size-guide-hint">
+                                    ទំហំដែលណែនាំ: 1920x1080px (16:9) ឬ 900x1200px (3:4) | អតិបរមា 5MB (JPG, PNG, WEBP)
+                                </p>
+                            </div>
+                            <MediaFileInput accept={ACCEPT.image} disabled={busy} label="Upload cover" onFiles={uploadCover} mediaCategory="image" />
                         </div>
                         <MediaPreview media={media?.coverImage} type="image" busy={busy} onReplace={replaceMedia} onRemove={removeMedia} />
                     </section>
 
                     <section className="inv-form-section">
                         <div className="media-section-header">
-                            <h2>Gallery images</h2>
+                            <div>
+                                <h2>Gallery images</h2>
+                                <p className="media-size-guide-hint">
+                                    ទំហំដែលណែនាំ: 1200x900px (4:3) | អតិបរមា 5MB ក្នុងមួយសន្លឹក (JPG, PNG, WEBP)
+                                </p>
+                            </div>
                             <MediaFileInput
                                 accept={ACCEPT.image}
                                 multiple
                                 disabled={busy}
                                 label="Upload images"
                                 onFiles={uploadGallery}
+                                mediaCategory="image"
                             />
                         </div>
                         {media?.galleryImages?.length ? (
@@ -239,16 +277,26 @@ export default function InvitationMediaManager() {
 
                     <section className="inv-form-section">
                         <div className="media-section-header">
-                            <h2>Video</h2>
-                            <MediaFileInput accept={ACCEPT.video} disabled={busy} label="Upload video" onFiles={uploadVideo} />
+                            <div>
+                                <h2>Video</h2>
+                                <p className="media-size-guide-hint">
+                                    ទម្រង់ដែលគាំទ្រ: MP4, WebM | អតិបរមា 50MB
+                                </p>
+                            </div>
+                            <MediaFileInput accept={ACCEPT.video} disabled={busy} label="Upload video" onFiles={uploadVideo} mediaCategory="video" />
                         </div>
                         <MediaPreview media={media?.video} type="video" busy={busy} onReplace={replaceMedia} onRemove={removeMedia} />
                     </section>
 
                     <section className="inv-form-section">
                         <div className="media-section-header">
-                            <h2>Background music</h2>
-                            <MediaFileInput accept={ACCEPT.audio} disabled={busy} label="Upload music" onFiles={uploadMusic} />
+                            <div>
+                                <h2>Background music</h2>
+                                <p className="media-size-guide-hint">
+                                    ទម្រង់ដែលគាំទ្រ: MP3, WAV, OGG | អតិបរមា 15MB
+                                </p>
+                            </div>
+                            <MediaFileInput accept={ACCEPT.audio} disabled={busy} label="Upload music" onFiles={uploadMusic} mediaCategory="audio" />
                         </div>
                         <MediaPreview
                             media={media?.backgroundMusic}
