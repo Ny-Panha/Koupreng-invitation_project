@@ -7,7 +7,8 @@ COPY mvnw pom.xml ./
 RUN chmod +x mvnw && ./mvnw --batch-mode -DskipTests dependency:go-offline
 
 COPY src src
-RUN ./mvnw --batch-mode -DskipTests package
+# បន្ថែម -Dtoolchains.skip=true ដើម្បីបិទការឆែក Toolchains ចោល មិនឱ្យវា Error ទៀត
+RUN ./mvnw --batch-mode -DskipTests -Dtoolchains.skip=true package
 
 FROM eclipse-temurin:25-jre-jammy AS runtime
 RUN apt-get update \
