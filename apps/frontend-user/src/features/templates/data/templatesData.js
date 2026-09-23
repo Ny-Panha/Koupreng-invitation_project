@@ -499,6 +499,23 @@ const DB_TEMPLATE_ID_MAP = {
     "7": THE_DIGITAL_YES_TEMPLATE_CODE,
 };
 
+export function resolveNumericTemplateId(id) {
+    const rawId = String(id || "").trim();
+    if (!rawId) return null;
+
+    if (/^\d+$/.test(rawId)) return Number(rawId);
+
+    const dynamic = dynamicTemplates.find((template) =>
+        template.code === rawId || template.slug === rawId || template.id === rawId
+    );
+    if (dynamic?.backendId != null && Number.isFinite(Number(dynamic.backendId))) {
+        return Number(dynamic.backendId);
+    }
+
+    const mappedEntry = Object.entries(DB_TEMPLATE_ID_MAP).find(([, code]) => code === rawId);
+    return mappedEntry ? Number(mappedEntry[0]) : null;
+}
+
 let dynamicTemplates = [];
 
 /**

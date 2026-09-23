@@ -1,1 +1,22 @@
-export { subscriptionApi as subscriptionService, subscriptionApi, default } from "./api/subscriptionApi";
+import { api } from "../../shared/api/httpClient";
+
+function unwrap(response) {
+	return response?.data ?? response;
+}
+
+export const subscriptionApi = {
+	packages: () => api.get("/v1/packages").then(unwrap),
+	current: () => api.get("/v1/me/subscriptions/current").then(unwrap),
+	history: () => api.get("/v1/me/subscriptions").then(unwrap),
+	order: (orderCode) =>
+		api.get(`/v1/me/subscriptions/orders/${encodeURIComponent(orderCode)}`).then(unwrap),
+	purchase: (packageId, payerName, payerAccountLast3) =>
+		api.post("/v1/me/subscriptions/purchase", {
+			packageId,
+			payerName,
+			payerAccountLast3,
+		}).then(unwrap),
+};
+
+export const subscriptionService = subscriptionApi;
+export default subscriptionApi;
