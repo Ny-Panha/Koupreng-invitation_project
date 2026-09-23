@@ -425,16 +425,255 @@
     text-align: center;
 }
 
-.preview-toolbar {
-    position: sticky;
-    z-index: 10;
-    top: 0;
+/* ==========================================================================
+   Luxury Invitation Preview Studio (Phone Focused)
+   ========================================================================== */
+
+.inv-preview-loading-screen {
+    min-height: 100vh;
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    background: #0d1117;
+    color: #e6edf3;
+    font-family: inherit;
+}
+
+.inv-preview-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(200, 174, 124, 0.2);
+    border-top-color: #c8ae7c;
+    border-radius: 50%;
+    animation: inv-preview-spin 0.8s linear infinite;
+}
+
+@keyframes inv-preview-spin {
+    to { transform: rotate(360deg); }
+}
+
+.inv-preview-workspace {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #0d1117;
+    color: #f0f6fc;
+}
+
+/* Compact, Ultra-responsive Header Bar */
+.inv-preview-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     gap: 10px;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(10px);
+    padding: 10px 14px;
+    background: rgba(13, 17, 23, 0.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+}
+
+.inv-preview-header__left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    flex: 1;
+}
+
+.inv-preview-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    color: #c9d1d9;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    white-space: nowrap;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.inv-preview-back-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.24);
+}
+
+.inv-preview-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.inv-preview-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #f0f6fc;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: 0.01em;
+}
+
+.inv-preview-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 6px;
+    letter-spacing: 0.03em;
+    flex-shrink: 0;
+}
+
+.inv-preview-badge--live {
+    background: rgba(46, 160, 67, 0.16);
+    color: #3fb950;
+    border: 1px solid rgba(46, 160, 67, 0.32);
+}
+
+.inv-preview-badge--draft {
+    background: rgba(210, 153, 34, 0.16);
+    color: #e3b341;
+    border: 1px solid rgba(210, 153, 34, 0.32);
+}
+
+/* Right Action Buttons */
+.inv-preview-header__right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.inv-preview-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 11px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #c9d1d9;
+    text-decoration: none;
+    transition: all 0.18s ease;
+    white-space: nowrap;
+}
+
+.inv-preview-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.inv-preview-btn--gate {
+    background: rgba(200, 174, 124, 0.12);
+    border-color: rgba(200, 174, 124, 0.32);
+    color: #e2c991;
+}
+
+.inv-preview-btn--gate:hover {
+    background: rgba(200, 174, 124, 0.22);
+    border-color: rgba(200, 174, 124, 0.5);
+    color: #fff;
+}
+
+.inv-preview-btn--primary {
+    background: linear-gradient(135deg, #235b55 0%, #17423e 100%);
+    border-color: #2e756e;
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(35, 91, 85, 0.3);
+}
+
+.inv-preview-btn--primary:hover {
+    background: linear-gradient(135deg, #2b6d66 0%, #1e534e 100%);
+    box-shadow: 0 4px 12px rgba(35, 91, 85, 0.45);
+    transform: translateY(-1px);
+}
+
+/* Stage Canvas */
+.inv-preview-canvas {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    background:
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(200, 174, 124, 0.06), transparent 70%),
+        #0d1117;
+}
+
+/* Phone Viewport Container */
+.inv-phone-viewport {
+    width: 100%;
+    max-width: 430px;
+    margin: 0 auto;
+    background: #fbf8f2;
+    position: relative;
+}
+
+/* On Desktop screens: add a clean, elegant phone-like chassis frame (no artificial notch blocking photos!) */
+@media (min-width: 641px) {
+    .inv-preview-canvas {
+        padding: 24px 16px 48px;
+    }
+
+    .inv-phone-viewport {
+        border-radius: 36px;
+        box-shadow:
+            0 0 0 1px rgba(255, 255, 255, 0.1),
+            0 24px 60px -10px rgba(0, 0, 0, 0.75),
+            0 0 50px rgba(200, 174, 124, 0.06);
+        overflow: hidden;
+    }
+}
+
+/* On Mobile screens: fill the entire phone screen cleanly and naturally */
+@media (max-width: 640px) {
+    .inv-preview-canvas {
+        padding: 0;
+    }
+
+    .inv-phone-viewport {
+        max-width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .inv-preview-header {
+        padding: 8px 10px;
+        gap: 6px;
+    }
+
+    .inv-back-label {
+        display: none;
+    }
+
+    .inv-preview-title {
+        font-size: 0.85rem;
+    }
+
+    .inv-preview-btn {
+        padding: 5px 8px;
+        font-size: 0.75rem;
+    }
 }
 
 .pub-invitation {

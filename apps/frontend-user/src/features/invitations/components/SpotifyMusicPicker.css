@@ -9,7 +9,7 @@
     font-family: 'Kantumruy Pro', sans-serif;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
     margin-top: 6px;
-    overflow: hidden;
+    overflow: visible;
 }
 
 /* ─── Header ─── */
@@ -17,6 +17,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
     padding-bottom: 12px;
     border-bottom: 1px solid #f1ece1;
     margin-bottom: 12px;
@@ -48,6 +50,10 @@
     background: #f0fdf4;
     color: #15803d;
     border: 1px solid #bbf7d0;
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .spotify-status-pill.muted {
@@ -60,13 +66,14 @@
 .spotify-selected-banner {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     padding: 11px 14px;
     border-radius: 12px;
     background: #fbf9f5;
     border: 1.5px solid #ebe4d8;
     cursor: pointer;
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    min-width: 0;
 }
 
 .spotify-selected-banner:hover {

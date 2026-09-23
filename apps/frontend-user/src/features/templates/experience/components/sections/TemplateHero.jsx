@@ -182,21 +182,6 @@ export default function TemplateHero({ content, onOpen }) {
                         )}
                     </motion.p>
                 )}
-
-                <motion.div
-                    style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        width: "100%",
-                        margin: "0 auto",
-                    }}
-                    {...rise(0.48)}
-                >
-                    <button type="button" className="tx-btn tx-btn--solid tx-hero__cta" onClick={onOpen}>
-                        បើកសំបុត្រអញ្ជើញ
-                    </button>
-                </motion.div>
             </div>
 
             <button

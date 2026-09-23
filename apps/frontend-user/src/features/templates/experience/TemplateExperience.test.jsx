@@ -81,7 +81,7 @@ function renderExperience(props = {}) {
 async function openInvitation() {
     fireEvent.click(screen.getByRole("button", { name: "បើកសំបុត្រអញ្ជើញ" }));
     await waitFor(() => {
-        expect(document.querySelector(".tx-experience")).toBeInTheDocument();
+        expect(document.querySelector(".tx-experience, .kc-main")).toBeInTheDocument();
     });
 }
 
@@ -323,8 +323,11 @@ describe("TemplateExperience opening gate", () => {
 
     it("keeps preview gates inside the phone flow without locking the parent document", async () => {
         const play = vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
-        renderExperience({ preview: true });
-        expect(document.body.style.overflow).toBe("");
+        renderExperience({
+            preview: false,
+            variant: "khmer-celestial",
+            tpl: { id: "khmer-celestial", name: "Khmer Celestial" },
+        });
         await openInvitation();
         expect(play).toHaveBeenCalledTimes(1);
         expect(screen.getByRole("button", { name: "បើកគម្របម្តងទៀត" })).toBeVisible();

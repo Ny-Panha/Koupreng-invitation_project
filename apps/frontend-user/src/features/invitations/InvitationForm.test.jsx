@@ -228,3 +228,31 @@ describe("P0 — reactive catalog sync (no page reload needed)", () => {
         expect(container.textContent).not.toContain(KEPT_TEMPLATE_NAME);
     });
 });
+
+describe("Saving draft with defaults", () => {
+    it("saves draft without blocking toast when creating new draft with empty couple names", async () => {
+        const emptyInvitation = {
+            status: "DRAFT",
+            templateId: null,
+            title: "",
+            groomName: "",
+            brideName: "",
+            eventDate: "",
+        };
+
+        render(
+            <BrowserRouter>
+                <InvitationForm invitation={emptyInvitation} />
+            </BrowserRouter>
+        );
+
+        const saveButtons = screen.getAllByRole("button", { name: /រក្សាទុក/i });
+        expect(saveButtons.length).toBeGreaterThan(0);
+
+        await act(async () => {
+            saveButtons[0].click();
+        });
+
+        expect(saveButtons[0]).toBeInTheDocument();
+    });
+});

@@ -3374,6 +3374,7 @@
     container-type: inline-size;
     height: 100%;
     overflow: visible;
+    overflow-anchor: none;
 }
 
 /* Shell padding relative to the frame, not the viewport. */
@@ -6999,7 +7000,7 @@
 .tx-root--preview.template-experience--garden-royal-khmer-wedding .tx-gate {
     height: 100%;
     min-height: 100%;
-    overflow-y: auto;
+    overflow: hidden;
     padding: 3rem 1rem 2.5rem;
 }
 
@@ -7154,4 +7155,3 @@
 .el-container.tx-motion--standard-scroll {
     scroll-behavior: smooth;
 }
-

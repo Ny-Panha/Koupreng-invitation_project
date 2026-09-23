@@ -14,17 +14,28 @@ export function useEvents(t) {
     const loadDrafts = useCallback(() => {
         eventsApi.listMine().then((apiInvs) => {
             const localDrafts = listDrafts(ownerUserId);
-            const merged = [...(apiInvs || [])];
+            const merged = (apiInvs || []).map((apiInv) => {
+                const matchingLocal = localDrafts.find((ld) =>
+                    String(ld.id) === String(apiInv.id) || String(ld.backendInvitationId) === String(apiInv.id)
+                );
+                if (matchingLocal) {
+                    return {
+                        ...matchingLocal,
+                        ...apiInv,
+                        templateId: apiInv.templateId || matchingLocal.templateId,
+                        title: apiInv.title || matchingLocal.title,
+                    };
+                }
+                return apiInv;
+            });
             localDrafts.forEach((ld) => {
                 if (!merged.some((m) => String(m.id) === String(ld.id) || String(m.id) === String(ld.backendInvitationId))) {
                     merged.push(ld);
                 }
             });
-            if (merged.length > 0) {
-                setDrafts(merged);
-            }
+            setDrafts(merged);
         }).catch(() => {
-            // Keep local drafts
+            setDrafts(listDrafts(ownerUserId));
         });
     }, [ownerUserId]);
 

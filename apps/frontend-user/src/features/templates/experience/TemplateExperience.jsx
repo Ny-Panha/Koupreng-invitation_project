@@ -1,4 +1,4 @@
-import { createElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createElement, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
@@ -71,6 +71,7 @@ export default function TemplateExperience({
     backLabel = "ត្រឡប់ក្រោយ",
     primaryCtaLabel = "ប្រើគំរូនេះ",
     preview = false,
+    previewStartClosed = false,
     showBreadcrumb = true,
     showActions = true,
     showStickyCta = true,
@@ -197,8 +198,8 @@ export default function TemplateExperience({
     const contentRef = useRef(null);
     const openingTimerRef = useRef(null);
     const openingInFlightRef = useRef(false);
-    const [gateState, setGateState] = useState(preview ? "opened" : "closed");
-    const [heroOpened, setHeroOpened] = useState(preview ? true : false);
+    const [gateState, setGateState] = useState(preview && !previewStartClosed ? "opened" : "closed");
+    const [heroOpened, setHeroOpened] = useState(preview && !previewStartClosed);
     const gateOpen = gateState === "opened";
 
     useEffect(() => {
@@ -209,6 +210,7 @@ export default function TemplateExperience({
             if (event.data?.type === "TOGGLE_GATE") {
                 const shouldOpen = Boolean(event.data.open ?? event.data.isOpen);
                 setGateState(shouldOpen ? "opened" : "closed");
+                setHeroOpened(shouldOpen);
             }
         };
         window.addEventListener("message", handleMessage);
@@ -218,11 +220,11 @@ export default function TemplateExperience({
 
     const setContentNode = useCallback((node) => {
         contentRef.current = node;
-        if (!node) return;
+        if (!node || preview) return;
         window.requestAnimationFrame(() => {
             if (node.isConnected) node.focus({ preventScroll: true });
         });
-    }, []);
+    }, [preview]);
 
     const scrollToTarget = useCallback((node) => {
         if (!node) return;
@@ -234,6 +236,9 @@ export default function TemplateExperience({
     const handleOpen = useCallback(() => {
         if (openingInFlightRef.current || gateState !== "closed") return;
         openingInFlightRef.current = true;
+        if (document.activeElement instanceof HTMLElement) {
+            document.activeElement.blur();
+        }
         setGateState("opening");
         void musicController.play();
 
@@ -246,6 +251,7 @@ export default function TemplateExperience({
 
         openingTimerRef.current = window.setTimeout(() => {
             setGateState("opened");
+            setHeroOpened(true);
         }, reducedMotion ? 0 : duration);
     }, [gateState, musicController, reducedMotion, openingStyle]);
 
@@ -259,18 +265,11 @@ export default function TemplateExperience({
         if (gateOpen) openingInFlightRef.current = false;
     }, [gateOpen]);
 
-    const handleReplay = useCallback(() => {
-        if (!preview) return;
-        if (openingTimerRef.current !== null) {
-            window.clearTimeout(openingTimerRef.current);
-            openingTimerRef.current = null;
-        }
-        openingInFlightRef.current = false;
-        musicController.pause();
-        setGateState("closed");
-        setHeroOpened(false);
-        rootRef.current?.closest(".wb-phone-scroll")?.scrollTo?.({ top: 0, behavior: "smooth" });
-    }, [musicController, preview]);
+    useLayoutEffect(() => {
+        if (!preview || !gateOpen) return;
+        const scroller = rootRef.current?.closest(".pe-canvas-wrapper, .wb-phone-scroll");
+        if (scroller) scroller.scrollTop = 0;
+    }, [gateOpen, preview]);
 
     useEffect(() => {
         if (DedicatedComponent || preview || heroOpened) return undefined;
@@ -346,6 +345,7 @@ export default function TemplateExperience({
             backTo: backLink,
             backLabel,
             preview,
+            previewStartClosed,
             useTemplateLink,
             primaryCtaLabel,
             showActions,
@@ -461,41 +461,6 @@ export default function TemplateExperience({
                         accountName: `${content.groom} & ${content.bride}`,
                     }}
                 />
-            )}
-            {gateOpen && preview && (
-                <div
-                    className="tx-preview-replay-wrapper"
-                    style={{
-                        position: "sticky",
-                        bottom: "16px",
-                        left: 0,
-                        right: 0,
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        zIndex: 50,
-                        pointerEvents: "none",
-                        marginTop: "-3.5rem",
-                        marginBottom: "16px",
-                    }}
-                >
-                    <button
-                        type="button"
-                        className="tx-preview-replay"
-                        style={{
-                            pointerEvents: "auto",
-                            position: "relative",
-                            left: "auto",
-                            right: "auto",
-                            transform: "none",
-                            margin: "0 auto",
-                        }}
-                        onClick={handleReplay}
-                    >
-                        បើកគម្របម្តងទៀត
-                    </button>
-                </div>
             )}
             {gateOpen && showStickyCta && heroOpened && (
                 <TemplateQuickNav

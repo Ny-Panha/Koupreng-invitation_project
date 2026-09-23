@@ -56,6 +56,7 @@ export {
     getTemplatePreset,
     registerDynamicTemplates,
     normalizeTemplateId,
+    resolveNumericTemplateId,
     isTemplatePremium,
 } from "./data/templatesData";
 

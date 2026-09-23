@@ -17,6 +17,9 @@ import java.time.LocalDate;
 public class InvitationSummaryResponse {
 
     private Long id;
+    private Long templateId;
+    private String templateCode;
+    private String templateName;
     private String coverUrl;
     private String title;
     private String slug;
@@ -24,21 +27,40 @@ public class InvitationSummaryResponse {
     private LocalDate eventDate;
     private String venueName;
     private InvitationStatus status;
+    private String designJson;
 
     public static InvitationSummaryResponse from(UserInvitation invitation) {
         return from(invitation, null);
     }
 
     public static InvitationSummaryResponse from(UserInvitation invitation, String coverUrl) {
+        Long templateId = null;
+        String templateCode = null;
+        String templateName = null;
+        String resolvedCoverUrl = coverUrl;
+
+        if (invitation.getTemplate() != null) {
+            templateId = invitation.getTemplate().getId();
+            templateCode = invitation.getTemplate().getCode();
+            templateName = invitation.getTemplate().getName();
+            if (resolvedCoverUrl == null || resolvedCoverUrl.isBlank()) {
+                resolvedCoverUrl = invitation.getTemplate().getThumbnailUrl();
+            }
+        }
+
         return InvitationSummaryResponse.builder()
                 .id(invitation.getId())
-                .coverUrl(coverUrl)
+                .templateId(templateId)
+                .templateCode(templateCode)
+                .templateName(templateName)
+                .coverUrl(resolvedCoverUrl)
                 .title(invitation.getTitle())
                 .slug(invitation.getSlug())
                 .eventType(invitation.getEventType())
                 .eventDate(invitation.getEventDate())
                 .venueName(invitation.getVenueName())
                 .status(invitation.getStatus())
+                .designJson(invitation.getDesignJson())
                 .build();
     }
 }

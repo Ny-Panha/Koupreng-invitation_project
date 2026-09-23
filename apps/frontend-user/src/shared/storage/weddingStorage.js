@@ -36,8 +36,8 @@ export function listDrafts(ownerUserId = null) {
   const drafts = Object.values(readAll());
   const resolvedOwnerUserId = resolveOwnerUserId(ownerUserId);
   const scoped = resolvedOwnerUserId == null
-    ? []
-    : drafts.filter((draft) => String(draft.ownerUserId) === String(resolvedOwnerUserId));
+    ? drafts
+    : drafts.filter((draft) => !draft.ownerUserId || String(draft.ownerUserId) === String(resolvedOwnerUserId));
   return scoped.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
 }
 
@@ -45,8 +45,11 @@ export function getDraft(draftId, ownerUserId = null) {
   if (!draftId) return null;
   const all = readAll();
   const draft = all[draftId] || null;
+  if (!draft) return null;
   const resolvedOwnerUserId = resolveOwnerUserId(ownerUserId);
-  if (!draft || resolvedOwnerUserId == null || String(draft.ownerUserId) !== String(resolvedOwnerUserId)) return null;
+  if (resolvedOwnerUserId != null && draft.ownerUserId != null && String(draft.ownerUserId) !== String(resolvedOwnerUserId)) {
+    return null;
+  }
   return draft;
 }
 

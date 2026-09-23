@@ -156,7 +156,7 @@ export default function TemplateGrid() {
                 <div className="tp-grid">
                     {visibleTemplates.map((template) => {
                         const createPath = getUseTemplatePath(template.id, isAuthenticated);
-                        const coverImage = TEMPLATE_CARD_COVER[template.id] || template.image;
+                        const coverImage = template.image || TEMPLATE_CARD_COVER[template.id];
 
                         return (
                             <div key={template.id} className="tp-card">

@@ -15,6 +15,7 @@ import { templateCatalogService } from "@/features/templates/api/templateCatalog
 import { paymentService } from "@/features/payments/paymentService";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
 import { SkeletonTable } from "@/shared/ui";
+import "./BrowseTemplates.css";
 
 function formatTemplateDescription(description) {
   if (!description) return "";
@@ -217,8 +218,8 @@ export default function BrowseTemplatesFeature() {
       </section>
 
       {/* Toolbar & Filters */}
-      <section className="tb-toolbar mb-8 flex flex-col items-center justify-between gap-4 rounded-2xl p-4 md:flex-row">
-        <div className="tb-categories flex flex-wrap gap-2">
+      <section className="tb-toolbar">
+        <div className="tb-categories">
           {categories.map((cat) => (
             <button
               key={cat.id}
@@ -233,7 +234,7 @@ export default function BrowseTemplatesFeature() {
           ))}
         </div>
 
-        <div className="tb-search-wrap w-full md:max-w-sm">
+        <div className="tb-search-wrap">
           <IoSearchOutline />
           <input
             type="text"
@@ -258,61 +259,58 @@ export default function BrowseTemplatesFeature() {
           </p>
         </div>
       ) : (
-        <section className="tb-grid grid grid-cols-1 gap-6 md:grid-cols-3">
+        <section className="tb-grid">
           {filteredTemplates.map((template) => (
-            <article key={template.id} className="tb-card flex h-full min-w-0 flex-col justify-between overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all duration-200 hover:shadow-md">
+            <article key={template.id} className="tb-card">
               {/* Media Preview */}
-              <div className="tb-card-media relative flex h-48 items-center justify-center overflow-hidden bg-gray-100">
-                <div className="tb-card-badges absolute left-3 top-3 z-10 flex gap-1">
+              <div className="tb-card-media">
+                <div className="tb-card-badges">
                   {isPremium(template) && isUnlocked(template) ? (
-                    <span className="tb-badge tb-badge-unlocked" style={{ background: "rgba(21, 128, 61, 0.92)", color: "#fff", backdropFilter: "blur(6px)" }}>
+                    <span className="tb-badge tb-badge--unlocked">
                       ✓ បានទិញរួច
                     </span>
                   ) : (
-                    <span className={`tb-badge rounded-full px-2.5 py-1 text-[11px] font-bold uppercase ${isPremium(template) ? "bg-amber-100 text-amber-800" : "bg-emerald-100 text-emerald-800"}`}>
+                    <span className={`tb-badge tb-badge--${isPremium(template) ? "premium" : "free"}`}>
                       {isPremium(template) ? "Premium" : "Free"}
                     </span>
                   )}
                   {template.category && (
-                    <span className="tb-badge rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-slate-700 shadow-sm">{categoryLabel(template)}</span>
+                    <span className="tb-badge tb-badge--cat">{categoryLabel(template)}</span>
                   )}
                 </div>
 
                 {template.thumbnailUrl ? (
-                  <img className="h-48 w-full object-cover" src={template.thumbnailUrl} alt={template.name} loading="lazy" />
+                  <img className="tb-card-thumb" src={template.thumbnailUrl} alt={template.name} loading="lazy" />
                 ) : (
-                  <div className="flex flex-col items-center gap-1.5 text-gray-400">
-                    <IoImageOutline style={{ fontSize: "2rem" }} />
+                  <div className="tb-card-empty-thumb">
+                    <IoImageOutline style={{ fontSize: "2.4rem" }} />
                     <span style={{ fontSize: "0.75rem" }}>{t("fallbackCard")}</span>
                   </div>
                 )}
               </div>
 
               {/* Body Info */}
-              <div className="tb-card-body flex flex-1 flex-col justify-between gap-3 p-5">
-                <div className="flex items-start justify-between gap-3">
-                  <h3 className="tb-card-title min-w-0 flex-1 text-lg font-bold text-slate-900">{template.name}</h3>
-                  {template.category && <span className="tb-badge shrink-0 rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-semibold text-slate-700">{categoryLabel(template)}</span>}
-                </div>
+              <div className="tb-card-body">
+                <h3 className="tb-card-title">{template.name}</h3>
                 {template.description && (
-                  <p className="tb-card-desc line-clamp-2 min-h-10 text-sm leading-5 text-slate-600">{formatTemplateDescription(template.description)}</p>
+                  <p className="tb-card-desc">{formatTemplateDescription(template.description)}</p>
                 )}
 
                 {/* Actions */}
-                <div className="tb-card-actions mt-auto flex flex-wrap gap-2">
+                <div className="tb-card-actions">
                   <button
                     type="button"
                     onClick={() => handleSelect(template)}
-                    className="inline-flex min-h-10 flex-1 items-center justify-center gap-1.5 rounded-xl bg-amber-600 px-3 py-2 text-xs font-bold text-white transition hover:bg-amber-700"
+                    className="tb-btn tb-btn--primary"
                   >
                     {isPremium(template) && !isUnlocked(template) ? (
                       <>
-                        <IoDiamondOutline style={{ fontSize: "1.1rem" }} />
+                        <IoDiamondOutline />
                         <span>ទិញគំរូ ({Number(template.price) > 0 ? `$${Number(template.price).toFixed(2)}` : "$0.01"})</span>
                       </>
                     ) : (
                       <>
-                        <IoAddOutline style={{ fontSize: "1.1rem" }} />
+                        <IoAddOutline />
                         <span>{lang === "en" ? "Use Template" : "ជ្រើសរើស"}</span>
                       </>
                     )}
@@ -321,10 +319,10 @@ export default function BrowseTemplatesFeature() {
                   <button
                     type="button"
                     onClick={() => handlePreview(template)}
-                    className="inline-flex min-h-10 flex-1 items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-700 transition hover:border-amber-400 hover:text-amber-700"
+                    className="tb-btn tb-btn--preview"
                     title={t("previewTitle")}
                   >
-                    <IoEyeOutline style={{ fontSize: "1.1rem" }} />
+                    <IoEyeOutline />
                     <span>{lang === "en" ? "Preview" : "មើលគំរូ"}</span>
                   </button>
                 </div>

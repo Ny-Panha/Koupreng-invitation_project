@@ -490,14 +490,36 @@ export function normalizeTemplateId(id) {
     return id || KEEP_TEMPLATE_CODE;
 }
 
-const DB_TEMPLATE_ID_MAP = {
+export const DB_TEMPLATE_ID_MAP = {
     "1": ROYAL_KHMER_TEMPLATE_CODE,
     "2": EMERALD_CANVA_LUXE_CODE,
     "3": WITHJOY_PORTAL_CODE,
     "4": BLISS_EDITORIAL_CODE,
     "5": KHMER_GOLDEN_CANVA_INSPIRED_CODE,
     "7": THE_DIGITAL_YES_TEMPLATE_CODE,
+    "8": "koupreng-demo-wedding",
+    "9": EMERALD_CANVA_LUXE_CODE,
+    "10": KHMER_CELESTIAL_TEMPLATE_CODE,
 };
+
+export function resolveNumericTemplateId(rawId) {
+    if (!rawId) return null;
+    const num = Number(rawId);
+    if (!isNaN(num) && num > 0) return num;
+
+    const CODE_TO_DB_ID = {
+        [ROYAL_KHMER_TEMPLATE_CODE]: 1,
+        [KEEP_TEMPLATE_CODE]: 2,
+        [WITHJOY_PORTAL_CODE]: 3,
+        [BLISS_EDITORIAL_CODE]: 4,
+        [KHMER_GOLDEN_CANVA_INSPIRED_CODE]: 5,
+        [THE_DIGITAL_YES_TEMPLATE_CODE]: 7,
+        "koupreng-demo-wedding": 8,
+        [EMERALD_CANVA_LUXE_CODE]: 9,
+        [KHMER_CELESTIAL_TEMPLATE_CODE]: 10,
+    };
+    return CODE_TO_DB_ID[String(rawId).trim()] || null;
+}
 
 let dynamicTemplates = [];
 
@@ -548,10 +570,19 @@ export function registerDynamicTemplates(catalogList) {
         const presetId = parsedConfig.presetId || parsedConfig.theme || "";
         const resolvedVariant = PRESET_TO_VARIANT[presetId] || "";
 
-        const cover = item.thumbnailUrl || parsedConfig.coverImage || "/facebook/all/03-card/cover-card.jpg";
-        const primaryColor = parsedConfig.primaryColor || item.primaryColor || "#D4AF37";
-        const secondaryColor = parsedConfig.secondaryColor || item.secondaryColor || "#F3E5AB";
-        const openingStyle = parsedConfig.openingStyle || parsedConfig.gateStyle || (
+        const mappedCode = DB_TEMPLATE_ID_MAP[String(item.id)];
+        const baseStatic = TEMPLATES.find((t) =>
+            t.id === item.code ||
+            t.code === item.code ||
+            t.slug === item.code ||
+            (resolvedVariant && (t.id === resolvedVariant || t.code === resolvedVariant || t.slug === resolvedVariant)) ||
+            (mappedCode && (t.id === mappedCode || t.code === mappedCode || t.slug === mappedCode))
+        );
+
+        const cover = item.thumbnailUrl || parsedConfig.coverImage || baseStatic?.phoneCoverImage || baseStatic?.mainImage || "/facebook/all/03-card/cover-card.jpg";
+        const primaryColor = parsedConfig.primaryColor || item.primaryColor || baseStatic?.frontColor || baseStatic?.color || "#D4AF37";
+        const secondaryColor = parsedConfig.secondaryColor || item.secondaryColor || baseStatic?.bottomColor || baseStatic?.accent || "#F3E5AB";
+        const openingStyle = parsedConfig.openingStyle || parsedConfig.gateStyle || baseStatic?.openingStyle || (
             String(item.code || item.name || "").toLowerCase().includes("curtain") || String(item.code || item.name || "").toLowerCase().includes("emerald")
                 ? "curtain"
                 : (String(item.code || item.name || "").toLowerCase().includes("envelope") || String(item.code || item.name || "").toLowerCase().includes("yes")
@@ -559,17 +590,42 @@ export function registerDynamicTemplates(catalogList) {
                     : "khmer-royal")
         );
 
+        const schedule = (parsedConfig.schedule && parsedConfig.schedule.length > 0)
+            ? parsedConfig.schedule
+            : (baseStatic?.schedule || []);
+        const dressCode = parsedConfig.dressCode || baseStatic?.dressCode || null;
+        const dressColors = (parsedConfig.dressColors && parsedConfig.dressColors.length > 0)
+            ? parsedConfig.dressColors
+            : (baseStatic?.dressColors || baseStatic?.dressCode?.colors || []);
+        const storyChapters = (parsedConfig.storyChapters && parsedConfig.storyChapters.length > 0)
+            ? parsedConfig.storyChapters
+            : (baseStatic?.storyChapters || []);
+        const party = (parsedConfig.party && parsedConfig.party.length > 0)
+            ? parsedConfig.party
+            : (baseStatic?.party || []);
+        const faq = (parsedConfig.faq && parsedConfig.faq.length > 0)
+            ? parsedConfig.faq
+            : (baseStatic?.faq || []);
+        const gift = (parsedConfig.gift && parsedConfig.gift.length > 0)
+            ? parsedConfig.gift
+            : (baseStatic?.gift || []);
+        const enabledSections = {
+            ...(baseStatic?.enabledSections || {}),
+            ...(parsedConfig.enabledSections || {}),
+        };
+
         return {
+            ...(baseStatic || {}),
             ...item,
             ...parsedConfig,
             id: String(item.id),
             backendId: item.id,
             code: item.code || String(item.id),
             slug: item.slug || item.code || resolvedVariant || String(item.id),
-            name: item.name || parsedConfig.invitationTitle || "គំរូធៀបការ",
-            title: item.name || parsedConfig.invitationTitle || "គំរូធៀបការ",
-            style: item.name || "Wedding Template",
-            category: item.category || "wedding",
+            name: item.name || parsedConfig.invitationTitle || baseStatic?.name || "គំរូធៀបការ",
+            title: item.name || parsedConfig.invitationTitle || baseStatic?.title || "គំរូធៀបការ",
+            style: item.name || baseStatic?.style || "Wedding Template",
+            category: item.category || baseStatic?.category || "wedding",
             image: cover,
             mainImage: cover,
             phoneCoverImage: cover,
@@ -589,35 +645,45 @@ export function registerDynamicTemplates(catalogList) {
             accent: secondaryColor,
             primaryColor,
             secondaryColor,
-            dark: parsedConfig.backgroundColor || "#1A1A1A",
-            bg: parsedConfig.backgroundColor || "#FFFDF7",
-            music: parsedConfig.bgMusicUrl ? { url: parsedConfig.bgMusicUrl } : { url: musicWaitingDay },
-            groom: parsedConfig.groomName || "វណ្ណដា",
-            bride: parsedConfig.brideName || "ស្រីពេជ្រ",
-            groomName: parsedConfig.groomName || "វណ្ណដា",
-            brideName: parsedConfig.brideName || "ស្រីពេជ្រ",
+            dark: parsedConfig.backgroundColor || baseStatic?.dark || "#1A1A1A",
+            bg: parsedConfig.backgroundColor || baseStatic?.bg || "#FFFDF7",
+            music: parsedConfig.bgMusicUrl ? { url: parsedConfig.bgMusicUrl } : (baseStatic?.music || { url: musicWaitingDay }),
+            groom: parsedConfig.groomName || baseStatic?.groom || "វណ្ណដា",
+            bride: parsedConfig.brideName || baseStatic?.bride || "ស្រីពេជ្រ",
+            groomName: parsedConfig.groomName || baseStatic?.groom || "វណ្ណដា",
+            brideName: parsedConfig.brideName || baseStatic?.bride || "ស្រីពេជ្រ",
             groomFather: parsedConfig.groomFather || "",
             groomMother: parsedConfig.groomMother || "",
             brideFather: parsedConfig.brideFather || "",
             brideMother: parsedConfig.brideMother || "",
             groomParents: [parsedConfig.groomFather, parsedConfig.groomMother].filter(Boolean).join(" និង "),
             brideParents: [parsedConfig.brideFather, parsedConfig.brideMother].filter(Boolean).join(" និង "),
-            dateText: parsedConfig.weddingDate || "ថ្ងៃពុធ ២៨ មករា ២០២៦",
-            targetDate: parsedConfig.weddingDate ? `${parsedConfig.weddingDate}T17:00:00+07:00` : "2026-11-28T17:00:00+07:00",
-            receptionTime: parsedConfig.weddingTime || "17:00",
-            ceremonyTime: "07:00",
-            venueName: parsedConfig.venueName || "The Premier Center Sen Sok",
-            venueAddress: parsedConfig.venueAddress || "អគារ A, សែនសុខ, ភ្នំពេញ",
-            mapQuery: parsedConfig.googleMapUrl || "",
-            googleMapUrl: parsedConfig.googleMapUrl || "",
-            message: parsedConfig.blessingMessage || "សូមគោរពអញ្ជើញ ឯកឧត្តម លោកជំទាវ លោក លោកស្រី...",
-            messageText: parsedConfig.blessingMessage || "សូមគោរពអញ្ជើញ ឯកឧត្តម លោកជំទាវ លោក លោកស្រី...",
-            description: (parsedConfig.blessingMessage || item.description?.trim().startsWith("{") ? (parsedConfig.blessingMessage || item.name) : item.description) || "គំរូធៀបការ",
-            schedule: parsedConfig.schedule || [],
-            dressColors: parsedConfig.dressColors || [],
+            dateText: parsedConfig.weddingDate || baseStatic?.dateText || "ថ្ងៃពុធ ២៨ មករា ២០២៦",
+            targetDate: parsedConfig.weddingDate ? `${parsedConfig.weddingDate}T17:00:00+07:00` : (baseStatic?.targetDate || "2026-11-28T17:00:00+07:00"),
+            receptionTime: parsedConfig.weddingTime || baseStatic?.receptionTime || "17:00",
+            ceremonyTime: baseStatic?.ceremonyTime || "07:00",
+            venueName: parsedConfig.venueName || baseStatic?.venueName || "The Premier Center Sen Sok",
+            venueAddress: parsedConfig.venueAddress || baseStatic?.venueAddress || "អគារ A, សែនសុខ, ភ្នំពេញ",
+            mapQuery: parsedConfig.googleMapUrl || baseStatic?.mapQuery || "",
+            googleMapUrl: parsedConfig.googleMapUrl || baseStatic?.mapQuery || "",
+            message: parsedConfig.blessingMessage || baseStatic?.message || "សូមគោរពអញ្ជើញ ឯកឧត្តម លោកជំទាវ លោក លោកស្រី...",
+            messageText: parsedConfig.blessingMessage || baseStatic?.message || "សូមគោរពអញ្ជើញ ឯកឧត្តម លោកជំទាវ លោក លោកស្រី...",
+            description: (parsedConfig.blessingMessage || item.description?.trim().startsWith("{") ? (parsedConfig.blessingMessage || item.name) : item.description) || baseStatic?.description || "គំរូធៀបការ",
+            schedule,
+            dressCode,
+            dressColors,
+            storyChapters,
+            party,
+            faq,
+            gift,
+            enabledSections,
+            slideshowImages: parsedConfig.slideshowImages || baseStatic?.slideshowImages,
+            storyImages: parsedConfig.storyImages || baseStatic?.storyImages,
+            storyCards: parsedConfig.storyCards || baseStatic?.storyCards,
             design: {
                 // Admin JSON first, then normalized values — so an empty or null
                 // property in the stored config cannot clobber what we computed.
+                ...(baseStatic?.design || {}),
                 ...parsedConfig,
                 openingStyle,
                 gateStyle: openingStyle,
@@ -638,47 +704,63 @@ export function registerDynamicTemplates(catalogList) {
 
 export function getTemplateById(id) {
     const rawId = String(id || "").trim();
+
+    // 1. Check dynamic templates from backend/admin first (100% Admin Catalog)
+    if (dynamicTemplates && dynamicTemplates.length > 0) {
+        if (!rawId) return dynamicTemplates[0];
+
+        const mappedCode = DB_TEMPLATE_ID_MAP[rawId];
+        const dyn = dynamicTemplates.find((template) =>
+            String(template.id) === rawId ||
+            String(template.backendId) === rawId ||
+            template.code === rawId ||
+            template.slug === rawId ||
+            (mappedCode && (template.code === mappedCode || template.slug === mappedCode || String(template.id) === mappedCode))
+        );
+        if (dyn) return dyn;
+
+        const staticMatch = TEMPLATES.find((template) =>
+            template.id === rawId ||
+            template.code === rawId ||
+            template.slug === rawId ||
+            (mappedCode && (template.id === mappedCode || template.code === mappedCode))
+        );
+        if (staticMatch) return staticMatch;
+
+        return dynamicTemplates[0];
+    }
+
+    // 2. Fallback only when catalog not yet loaded (e.g. offline unit tests)
     if (!rawId) return KEPT_TEMPLATE;
-
-    // 1. Check dynamic templates from backend/admin first
-    const dyn = dynamicTemplates.find((template) =>
-        String(template.id) === rawId ||
-        String(template.backendId) === rawId ||
-        template.code === rawId ||
-        template.slug === rawId
-    );
-    if (dyn) return dyn;
-
-    // 2. Check static templates
     const mappedCode = DB_TEMPLATE_ID_MAP[rawId];
     const normalizedId = normalizeTemplateId(mappedCode || rawId);
     return TEMPLATES.find((template) =>
         template.id === normalizedId ||
         template.code === normalizedId ||
         template.slug === normalizedId ||
-        String(template.id) === rawId
+        String(template.id) === rawId ||
+        String(template.backendId) === rawId ||
+        (mappedCode && (template.id === mappedCode || template.code === mappedCode || template.slug === mappedCode))
     ) || KEPT_TEMPLATE;
 }
 
 export function getAllTemplates() {
-    const seen = new Set();
-    const result = [];
-    for (const t of dynamicTemplates) {
-        const idKey = String(t.id || t.code);
-        if (!seen.has(idKey)) {
-            seen.add(idKey);
-            result.push(t);
+    // 100% Admin Templates: when admin templates are loaded, return only Admin templates
+    if (dynamicTemplates && dynamicTemplates.length > 0) {
+        const seen = new Set();
+        const result = [];
+        for (const t of dynamicTemplates) {
+            const idKey = String(t.id || t.code);
+            if (!seen.has(idKey)) {
+                seen.add(idKey);
+                result.push(t);
+            }
         }
+        return result;
     }
-    for (const t of TEMPLATES) {
-        const idKey = String(t.id);
-        const codeKey = String(t.code || "");
-        if (!seen.has(idKey) && (!codeKey || !seen.has(codeKey))) {
-            seen.add(idKey);
-            result.push(t);
-        }
-    }
-    return result;
+
+    // Fallback for tests before mock fetch lands
+    return TEMPLATES;
 }
 
 export function getTemplatePreset(tpl) {
@@ -762,8 +844,13 @@ export function getTemplatePreset(tpl) {
         venueAddress: tpl.venueAddress || "អគារ A, សែនសុខ, ភ្នំពេញ",
         messageText: tpl.message || tpl.description || "",
         schedule: tpl.schedule || [],
-        dressColors: tpl.dressColors || tpl.design?.dressColors || [],
+        dressColors: tpl.dressColors || tpl.design?.dressColors || tpl.dressCode?.colors || [],
         dressCode: tpl.dressCode || (tpl.dressColors?.length ? { colors: tpl.dressColors } : null),
+        storyChapters: tpl.storyChapters || [],
+        party: tpl.party || [],
+        faq: tpl.faq || [],
+        gift: tpl.gift || [],
+        enabledSections: tpl.enabledSections || {},
     };
 }
 

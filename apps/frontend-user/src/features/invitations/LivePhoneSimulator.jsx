@@ -1,10 +1,11 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
 import { TemplateExperience } from "@/features/templates";
 import { draftToTemplate } from "../wedding-builder/utils/draftToTemplate";
 
 export default function LivePhoneSimulator({ data = {}, onSave, isSaving, catalogVersion = 0 }) {
     const { text: t } = useBackendMessages("invitations");
+    const [isGateOpen, setIsGateOpen] = useState(true);
 
     // `catalogVersion` is a dependency because the first render runs while the
     // template catalog is still fetching — without it the memo keeps the stale
@@ -15,26 +16,28 @@ export default function LivePhoneSimulator({ data = {}, onSave, isSaving, catalo
 
     const templateName = merged?.tpl?.name || merged?.tpl?.style || t("previewTopInfo") || "គំរូសន្លឹកការ (Live Preview)";
 
+    const handleToggleGate = () => {
+        const nextState = !isGateOpen;
+        setIsGateOpen(nextState);
+        window.postMessage({ type: "TOGGLE_GATE", open: nextState }, "*");
+    };
+
     return (
         <aside className="pe-preview-column">
-            {/* Top Bar matching PlanEssential */}
+            {/* Clean Studio Preview Top Bar */}
             <div className="pe-preview-top-bar">
                 <div className="pe-preview-top-left">
                     <h3 className="pe-preview-top-title">{t("previewTitle") || "មើលគំរូជាមុន"}</h3>
+                    <span className="pe-preview-tag" title="គំរូនាពេលបច្ចុប្បន្ន">{templateName}</span>
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-                    <span className="pe-preview-top-info">{templateName}</span>
-                    {onSave && (
-                        <button
-                            type="button"
-                            className="pe-save-main-btn"
-                            onClick={onSave}
-                            disabled={isSaving}
-                        >
-                            {isSaving ? (t("saving") || "កំពុងរក្សាទុក...") : (t("saveBtn") || "រក្សាទុក")}
-                        </button>
-                    )}
-                </div>
+                <button
+                    type="button"
+                    className="pe-preview-gate-toggle"
+                    onClick={handleToggleGate}
+                    title={isGateOpen ? "មើលគម្របសំបុត្រ (Cover)" : "មើលធៀបពេញ (Full Template)"}
+                >
+                    {isGateOpen ? "✉ គម្រប" : "📜 ធៀបពេញ"}
+                </button>
             </div>
 
             {/* Clean Portrait Canvas Wrapper with Live Template Experience */}
@@ -44,6 +47,7 @@ export default function LivePhoneSimulator({ data = {}, onSave, isSaving, catalo
                         tpl={merged.tpl}
                         variant={merged.variant}
                         preview={true}
+                        previewStartClosed={false}
                         showBreadcrumb={false}
                         showActions={false}
                         showStickyCta={true}

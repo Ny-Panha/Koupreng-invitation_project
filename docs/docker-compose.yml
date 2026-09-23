@@ -1,0 +1,174 @@
+name: koupreng
+
+services:
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-koupreng_db}
+      MYSQL_USER: ${MYSQL_USER:-koupreng}
+      MYSQL_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Set MYSQL_ROOT_PASSWORD in .env}
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping --silent -h 127.0.0.1 -u root -p$$MYSQL_ROOT_PASSWORD"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+    networks: [data]
+
+  redis:
+    image: redis:7.4-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--save", "60", "1", "--loglevel", "warning"]
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    networks: [data]
+
+  backend:
+    build:
+      context: apps/backend
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE:-koupreng_db}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Phnom_Penh
+      DB_USERNAME: ${MYSQL_USER:-koupreng}
+      DB_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in .env}
+      ADMIN_PAYMENT_SECRET: ${ADMIN_PAYMENT_SECRET:?Set ADMIN_PAYMENT_SECRET in .env}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      GOOGLE_CLIENT_IDS: ${GOOGLE_CLIENT_IDS:-}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:8080,http://admin.localhost:8080}
+      HTTPS_REQUIRED: ${HTTPS_REQUIRED:-false}
+      CLIENT_ADDRESS_FORWARDED_HEADERS_ENABLED: "true"
+      RATE_LIMIT_BACKEND: redis
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: "6379"
+      LOCAL_UPLOAD_DIR: /app/uploads
+      PUBLIC_UPLOAD_BASE_URL: /uploads
+      FRONTEND_BASE_URL: ${PUBLIC_APP_URL:-http://localhost:8080}
+      ABA_PAYWAY_STATIC_LINK: ${ABA_PAYWAY_STATIC_LINK:?Set ABA_PAYWAY_STATIC_LINK in .env}
+      ABA_SUBSCRIPTION_BASIC_LINK: ${ABA_SUBSCRIPTION_BASIC_LINK:-https://link.payway.com.kh/ABAPAYMu523385B}
+      ABA_SUBSCRIPTION_PRO_LINK: ${ABA_SUBSCRIPTION_PRO_LINK:-https://link.payway.com.kh/ABAPAY9G523386h}
+      ABA_SUBSCRIPTION_PREMIUM_LINK: ${ABA_SUBSCRIPTION_PREMIUM_LINK:-https://link.payway.com.kh/ABAPAYBo5233877}
+      PAYMENT_ORDER_EXPIRY_MINUTES: ${PAYMENT_ORDER_EXPIRY_MINUTES:-30}
+      AUTO_CONFIRM_TELEGRAM_DETECTED: ${AUTO_CONFIRM_TELEGRAM_DETECTED:-false}
+      OPENAPI_ENABLED: ${OPENAPI_ENABLED:-false}
+      SWAGGER_UI_ENABLED: ${SWAGGER_UI_ENABLED:-false}
+      SCALAR_ENABLED: ${SCALAR_ENABLED:-false}
+    volumes:
+      - uploads:/app/uploads
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "http://localhost:8080/actuator/health/readiness"]
+      interval: 15s
+      timeout: 5s
+      retries: 12
+      start_period: 45s
+    networks: [app, data]
+
+  frontend-user:
+    build:
+      context: apps/frontend-user
+      args:
+        VITE_API_URL: /api
+        VITE_PUBLIC_APP_URL: ${PUBLIC_APP_URL:-http://localhost:8080}
+        VITE_GOOGLE_CLIENT_ID: ${VITE_GOOGLE_CLIENT_ID:-}
+        VITE_TELEGRAM_BOT_USERNAME: ${VITE_TELEGRAM_BOT_USERNAME:-}
+        VITE_TELEGRAM_BOT_ID: ${VITE_TELEGRAM_BOT_ID:-}
+        VITE_TELEGRAM_CLIENT_ID: ${VITE_TELEGRAM_CLIENT_ID:-}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:8080/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    networks: [app]
+
+  frontend-admin:
+    build:
+      context: apps/frontend-admin
+      args:
+        VITE_API_URL: /api
+        VITE_USER_APP_URL: ${PUBLIC_APP_URL:-http://localhost:8080}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:8080/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    networks: [app]
+
+  telegram-bot:
+    build:
+      context: apps/telegram-bot
+    restart: unless-stopped
+    environment:
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:?Set TELEGRAM_BOT_TOKEN in .env}
+      TELEGRAM_WEBHOOK_SECRET: ${TELEGRAM_WEBHOOK_SECRET:?Set TELEGRAM_WEBHOOK_SECRET in .env}
+      SPRING_API_BASE_URL: http://backend:8080
+      FRONTEND_BASE_URL: ${PUBLIC_APP_URL:-http://localhost:8080}
+      ADMIN_PAYMENT_SECRET: ${ADMIN_PAYMENT_SECRET:?Set ADMIN_PAYMENT_SECRET in .env}
+      TELEGRAM_ALLOWED_GROUP_IDS: ${TELEGRAM_ALLOWED_GROUP_IDS:-}
+      TELEGRAM_ALLOWED_ADMIN_IDS: ${TELEGRAM_ALLOWED_ADMIN_IDS:-}
+      TELEGRAM_ALLOWED_PAYMENT_BOT_USERNAMES: ${TELEGRAM_ALLOWED_PAYMENT_BOT_USERNAMES:-PayWayByABA_bot}
+      TELEGRAM_ALLOWED_PAYMENT_BOT_IDS: ${TELEGRAM_ALLOWED_PAYMENT_BOT_IDS:-}
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    networks: [app]
+
+  gateway:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    environment:
+      USER_SERVER_NAME: ${USER_SERVER_NAME:-localhost _}
+      ADMIN_SERVER_NAME: ${ADMIN_SERVER_NAME:-admin.localhost}
+    volumes:
+      - ./infra/nginx/docker/gateway.conf.template:/etc/nginx/templates/default.conf.template:ro
+    ports:
+      - "${HTTP_PORT:-8080}:8080"
+    depends_on:
+      backend:
+        condition: service_healthy
+      frontend-user:
+        condition: service_healthy
+      frontend-admin:
+        condition: service_healthy
+      telegram-bot:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:8080/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    networks: [app]
+
+volumes:
+  mysql-data:
+  redis-data:
+  uploads:
+
+networks:
+  app:
+  data:
+    internal: true

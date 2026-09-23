@@ -23,6 +23,7 @@ export default function RoyalKhmerLayout({
   tpl: tplProp,
   content: contentProp,
   preview = false,
+  previewStartClosed = false,
   showBack = true,
   backTo = "/templates",
   backLabel = "ត្រឡប់ទៅគំរូទាំងអស់",
@@ -45,7 +46,7 @@ export default function RoyalKhmerLayout({
   const musicUrl = tpl.music || defaultMusicUrl;
 
   // Gate state - default to opened in preview
-  const [gateState, setGateState] = useState(preview ? "opened" : "closed");
+  const [gateState, setGateState] = useState(preview && !previewStartClosed ? "opened" : "closed");
   const opened = gateState === "opened";
 
   // Audio Control

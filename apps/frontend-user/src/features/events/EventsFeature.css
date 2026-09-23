@@ -21,6 +21,11 @@
     box-shadow: 0 18px 50px rgba(93, 67, 32, 0.08);
 }
 
+.events-page-header > div:first-child {
+    min-width: 0;
+    flex: 1;
+}
+
 .events-page-header span {
     display: block;
     margin-bottom: 8px;
@@ -35,6 +40,8 @@
     margin: 0;
     color: #2a1f10;
     font-size: 28px;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .events-page-header p {
@@ -230,6 +237,8 @@
 .events-page .events-create-btn,
 .events-page-header .events-create-btn {
     background: #7d6443;
+    flex-shrink: 0;
+    white-space: nowrap;
 }
 
 .events-page .events-create-btn:hover,
@@ -1108,4 +1117,45 @@
 .events-modal-confirm:hover {
     background: #e11d48;
     border-color: #e11d48;
+}
+
+
+/* ─────────────────────────────────────────
+   Responsive — Events page (list view)
+───────────────────────────────────────── */
+
+@media (max-width: 640px) {
+    .events-page {
+        width: min(1180px, calc(100% - 32px));
+        padding: 20px 0 40px;
+    }
+
+    .events-page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 20px;
+        margin-bottom: 16px;
+    }
+
+    .events-page-header h1 {
+        font-size: 22px;
+    }
+
+    .events-page .events-create-btn,
+    .events-page-header .events-create-btn {
+        align-self: flex-start;
+        white-space: nowrap;
+    }
+
+    .events-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .events-empty-state,
+    .events-empty {
+        padding: 48px 20px;
+        margin: 16px 0;
+    }
 }

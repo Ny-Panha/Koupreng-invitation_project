@@ -84,7 +84,7 @@ export default function HostNav() {
   const profileInitial = displayName.charAt(0)?.toUpperCase() || "K";
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => setScrolled(window.scrollY > 8);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -188,9 +188,14 @@ export default function HostNav() {
           left: 0;
           width: 100%;
           z-index: 3000;
-          padding: ${scrolled ? "10px 0" : "20px 0"};
-          transition: 0.4s;
+          padding: ${scrolled ? "10px 0" : "18px 0"};
+          transition: all 0.3s ease;
           pointer-events: none;
+          background: ${scrolled ? "rgba(251, 246, 238, 0.94)" : "transparent"};
+          backdrop-filter: ${scrolled ? "blur(14px)" : "none"};
+          -webkit-backdrop-filter: ${scrolled ? "blur(14px)" : "none"};
+          border-bottom: ${scrolled ? "1px solid rgba(176, 146, 106, 0.2)" : "1px solid transparent"};
+          box-shadow: ${scrolled ? "0 4px 20px rgba(42, 31, 16, 0.05)" : "none"};
         }
         .host-header-container {
           pointer-events: auto;
@@ -585,8 +590,8 @@ export default function HostNav() {
           display: none;
           position: fixed;
           top: 0;
-          right: -280px;
-          width: 210px;
+          right: -100%;
+          width: 260px;
           height: 100%;
           background: rgba(252, 248, 242, 0.85);
           backdrop-filter: blur(20px);
@@ -694,13 +699,25 @@ export default function HostNav() {
           }
         }
         @media (max-width: 768px) {
+          .host-header-wrapper {
+            padding: 8px 0;
+            background: rgba(251, 246, 238, 0.96);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(176, 146, 106, 0.2);
+            box-shadow: 0 4px 16px rgba(42, 31, 16, 0.06);
+          }
           .host-header-container {
-            width: calc(100% - 24px);
-            padding: 0 16px;
-            height: 62px;
+            width: calc(100% - 20px);
+            padding: 0 14px;
+            height: 58px;
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 999px;
+            border: 1px solid rgba(176, 146, 106, 0.25);
+            box-shadow: 0 2px 8px rgba(42, 31, 16, 0.05);
           }
           .host-logo-box img {
-            height: 65px;
+            height: 52px;
           }
           .host-nav-links {
             display: none;

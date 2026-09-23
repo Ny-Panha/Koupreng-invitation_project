@@ -31,19 +31,19 @@
     }
 }
 
-/* Sub-Header Banner */
+/* Unified Studio Header Banner */
 .pe-sub-header-banner {
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 12px;
-    padding: 12px 20px;
-    margin-bottom: 20px;
+    padding: 10px 18px;
+    margin-bottom: 16px;
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
 
 .pe-sub-header-left {
@@ -53,10 +53,38 @@
     flex-wrap: wrap;
 }
 
+.pe-btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #475569;
+    font-size: 0.84rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.pe-btn-back:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+    border-color: #cbd5e1;
+}
+
+.pe-header-divider {
+    display: inline-block;
+    width: 1px;
+    height: 20px;
+    background: #e2e8f0;
+}
+
 .pe-sub-header-label {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #334155;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #64748b;
 }
 
 .pe-template-tag {
@@ -69,7 +97,7 @@
     border-radius: 8px;
     font-size: 0.85rem;
     font-weight: 600;
-    color: #475569;
+    color: #1e293b;
 }
 
 .pe-status-badge {
@@ -89,6 +117,27 @@
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.pe-btn-expand-editor {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #475569;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.pe-btn-expand-editor:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+    border-color: #cbd5e1;
 }
 
 .pe-btn-outline {
@@ -114,8 +163,8 @@
 /* Split-Screen Workspace Grid */
 .pe-workspace-grid {
     display: grid;
-    grid-template-columns: minmax(480px, 1.15fr) 24px minmax(420px, 0.95fr);
-    align-items: start;
+    grid-template-columns: minmax(0, 1.2fr) 24px minmax(320px, 0.8fr);
+    align-items: stretch;
     gap: 0;
 }
 
@@ -209,6 +258,7 @@
     border-radius: 12px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
     overflow: hidden;
+    min-width: 0;
 }
 
 /* Clean Modern Header Bar */
@@ -250,16 +300,18 @@
     border-color: #cbd5e1;
 }
 
-/* Blue / Neutral Language Sub-Banner */
+/* Clean Language Top Header */
 .pe-lang-sub-banner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 14px;
-    background: #f8f6f0;
-    border: 1px solid #e8e2d8;
-    border-radius: 8px;
-    margin: 14px 16px 16px;
+    padding: 8px 16px;
+    background: #ffffff;
+    border-bottom: 1px solid #f1ece1;
+    border-radius: 12px 12px 0 0;
+    margin: 0;
+    min-height: 48px;
+    box-sizing: border-box;
 }
 
 .pe-lang-switch-pills {
@@ -788,17 +840,26 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: min(100%, 440px);
+    min-width: 0;
+    margin: 0 auto;
 }
 
 .pe-preview-top-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 4px 14px;
-    width: 100%;
-    max-width: 460px;
-    margin: 0 auto;
+    padding: 6px 14px;
+    margin-bottom: 10px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    width: min(100%, 430px);
+    max-width: 100%;
+    margin-inline: auto;
+    min-height: 48px;
+    box-sizing: border-box;
 }
 
 .pe-preview-top-left {
@@ -808,15 +869,45 @@
 }
 
 .pe-preview-top-title {
-    font-size: 1.05rem;
-    font-weight: 800;
+    font-size: 0.95rem;
+    font-weight: 700;
     color: #1e293b;
     margin: 0;
 }
 
-.pe-preview-top-info {
-    font-size: 0.78rem;
+.pe-preview-tag {
+    font-size: 0.72rem;
+    font-weight: 600;
     color: #64748b;
+    background: #f1f5f9;
+    padding: 2px 8px;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pe-preview-gate-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 12px;
+    border-radius: 16px;
+    background: #f8fafc;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.pe-preview-gate-toggle:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+    border-color: #94a3b8;
 }
 
 .pe-save-main-btn {
@@ -852,11 +943,17 @@
     border-radius: 16px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     overflow: hidden;
-    max-height: calc(100vh - 200px);
+    height: min(760px, calc(100vh - 150px));
+    min-height: 520px;
+    max-height: none;
     overflow-y: auto;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
     position: relative;
-    width: 100%;
-    max-width: 460px;
+    overflow-anchor: none;
+    width: min(100%, 430px);
+    max-width: 100%;
     margin: 0 auto;
     transform: translateZ(0);
     isolation: isolate;
@@ -865,6 +962,7 @@
 /* Strictly confine any fixed overlay/gate inside simulator phone frame */
 .pe-canvas-wrapper .el-curtain-overlay,
 .pe-canvas-wrapper .rkh-gate-overlay,
+.pe-canvas-wrapper .kc-opening,
 .pe-canvas-wrapper .tx-preview-topbar,
 .pe-canvas-wrapper .tx-sticky,
 .pe-canvas-wrapper .tx-quick-nav,
@@ -872,10 +970,34 @@
     position: absolute !important;
 }
 
+/* Keep the invitation body locked behind its opening gate. Once the gate
+   unmounts after opening, the canvas automatically becomes scrollable again. */
+.pe-canvas-wrapper:has(.kc-opening),
+.pe-canvas-wrapper:has(.el-curtain-overlay:not(.opened)),
+.pe-canvas-wrapper:has(.rkh-gate-overlay:not(.opened)),
+.pe-canvas-wrapper:has(.tx-root--preview .tx-gate) {
+    overflow: hidden !important;
+}
+
+/* Dedicated invitation themes keep their public phone width by default. The
+   editor canvas owns the available width, so its stage and root must follow it. */
+.pe-canvas-wrapper > .tx-stage,
+.pe-canvas-wrapper > .rkh-container,
+.pe-canvas-wrapper .tx-stage--preview,
+.pe-canvas-wrapper .tx-root {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+}
+
 /* Scrollbar Styling */
 .pe-editor-scroll-body::-webkit-scrollbar,
 .pe-canvas-wrapper::-webkit-scrollbar {
-    width: 6px;
+    width: 5px;
+}
+
+.pe-canvas-wrapper::-webkit-scrollbar-track {
+    background: transparent !important;
 }
 
 .pe-editor-scroll-body::-webkit-scrollbar-thumb,
@@ -1216,6 +1338,7 @@
     border-radius: 8px;
     font-size: 0.875rem;
     color: #1e293b;
+    background: #ffffff;
     outline: none;
     transition: border-color 0.15s;
 }
@@ -1404,4 +1527,261 @@
     background: #fef3c7;
     color: #b45309;
     border-color: #fcd34d;
+}
+
+/* ==========================================================================
+   MOBILE RESPONSIVE — ≤ 640 px
+   !important is intentional: the workspace grid has an inline style that
+   controls split-screen resize. On mobile we must override it so the editor
+   goes full-width and the phone simulator is hidden.
+   ========================================================================== */
+
+@media (max-width: 640px) {
+    /* Root padding */
+    .pe-editor-root {
+        padding: 8px 12px 48px;
+    }
+
+    /* Sub-header banner: stack to column */
+    .pe-sub-header-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 10px 14px;
+    }
+
+    .pe-sub-header-left {
+        flex-wrap: wrap;
+        gap: 8px;
+        width: 100%;
+    }
+
+    /* "ប្ដូរគំរូ" button: full-width pill on mobile */
+    .pe-btn-switch-tpl {
+        width: 100%;
+        justify-content: center;
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+
+    /* Actions row: wrap so buttons don't squash horizontally on mobile */
+    .pe-sub-header-actions {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    /* Preview + Save buttons: equal halves on the same row */
+    .pe-sub-header-actions .pe-btn-mobile-preview,
+    .pe-sub-header-actions .pe-save-mobile-btn {
+        flex: 1;
+        min-width: 0;
+        justify-content: center;
+        white-space: nowrap;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    /* Back button: full width on its own row below */
+    .pe-sub-header-actions .pe-btn-outline {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Workspace grid: single column, override inline style */
+    .pe-workspace-grid {
+        grid-template-columns: 1fr !important;
+        gap: 0 !important;
+    }
+
+    /* Hide the drag-resize divider and the right phone-preview column */
+    .pe-workspace-divider {
+        display: none !important;
+    }
+
+    /* LivePhoneSimulator: hide on mobile so editor is full-width */
+    .pe-preview-column {
+        display: none !important;
+    }
+
+    /* Editor column: remove radius/border on mobile for edge-to-edge feel */
+    .pe-editor-column {
+        border-radius: 8px;
+    }
+
+    /* Editor header bar: allow title + icon to stay on one line but shrink */
+    .pe-editor-header-bar {
+        padding: 10px 14px;
+        gap: 8px;
+    }
+
+    .pe-editor-header-title {
+        font-size: 0.9rem;
+    }
+
+    /* Lang sub-banner: stack on very small screens */
+    .pe-lang-sub-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        margin: 10px 12px 12px;
+    }
+
+    /* Editor scroll body: reduce padding */
+    .pe-editor-scroll-body {
+        padding: 12px 12px 32px;
+        max-height: none; /* let it expand naturally on mobile */
+    }
+
+    /* Section cards: tighter padding */
+    .pe-section-card {
+        padding: 16px;
+    }
+
+    /* Gate options: single column */
+    .pe-gate-options-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Template modal grid: single column */
+    .pe-tpl-modal-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+}
+
+/* ==========================================================================
+   MOBILE PREVIEW BUTTON — show only on mobile (≤ 640px)
+   ========================================================================== */
+
+.pe-btn-mobile-preview {
+    display: none; /* hidden on desktop — preview is always visible there */
+}
+
+@media (max-width: 640px) {
+    .pe-btn-mobile-preview {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 14px;
+        background: #0f172a;
+        border: 1px solid #0f172a;
+        border-radius: 8px;
+        color: #ffffff;
+        font-size: 0.86rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.15s ease;
+        white-space: nowrap;
+    }
+
+    .pe-btn-mobile-preview:hover,
+    .pe-btn-mobile-preview:active {
+        background: #1e293b;
+        border-color: #1e293b;
+    }
+}
+
+/* ==========================================================================
+   MOBILE PREVIEW DRAWER / OVERLAY
+   ========================================================================== */
+
+/* Overlay backdrop */
+.pe-mobile-preview-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(15, 23, 42, 0.65);
+    display: flex;
+    align-items: flex-end; /* drawer slides up from bottom */
+    justify-content: center;
+}
+
+/* Drawer panel */
+.pe-mobile-preview-drawer {
+    width: 100%;
+    max-width: 480px;
+    max-height: 93dvh;
+    background: #f7f4ee;
+    border-radius: 20px 20px 0 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.18);
+}
+
+/* Drawer top handle bar */
+.pe-mobile-preview-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px 10px;
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    flex-shrink: 0;
+}
+
+.pe-mobile-preview-drawer-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.pe-mobile-preview-close-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #475569;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.pe-mobile-preview-close-btn:hover {
+    background: #e2e8f0;
+}
+
+/* Scrollable body containing LivePhoneSimulator */
+.pe-mobile-preview-drawer-body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    padding: 0;
+}
+
+.pe-mobile-preview-drawer-body:has(.rkh-gate-overlay:not(.opened)),
+.pe-mobile-preview-drawer-body:has(.tx-root--preview .tx-gate) {
+    overflow: hidden;
+}
+
+/* Inside the drawer, make the preview column fill full width */
+.pe-mobile-preview-drawer-body .pe-preview-column {
+    display: flex !important; /* override the mobile hide rule */
+    width: 100%;
+    min-height: 0;
+    max-width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+}
+
+.pe-mobile-preview-drawer-body .pe-canvas-wrapper {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
 }

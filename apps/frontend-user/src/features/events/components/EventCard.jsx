@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import { getTemplateById } from "../../templates/data/templatesData";
 
 export function EventCard({ draft, onManage, onEdit, onPreview, onDelete, t }) {
-    const template = getTemplateById(draft.templateId);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const menuRef = useRef(null);
 
@@ -18,26 +17,31 @@ export function EventCard({ draft, onManage, onEdit, onPreview, onDelete, t }) {
     }, [isMenuOpen]);
 
     let designCoverImage = "";
+    let designTemplateId = "";
     try {
-        if (draft.designJson) {
+        if (draft?.designJson) {
             const parsed = typeof draft.designJson === "string" ? JSON.parse(draft.designJson) : draft.designJson;
             designCoverImage = parsed?.coverImage || "";
+            designTemplateId = parsed?.templateId || parsed?.presetId || "";
         }
     } catch {
         designCoverImage = "";
     }
 
-    const coverImage = draft.coverUrl
-        || draft.cover_url
-        || draft.media?.coverImage?.fileUrl
-        || draft.coverImage
+    const template = getTemplateById(draft?.templateId || draft?.templateCode || designTemplateId || draft?.presetId);
+
+    const coverImage = draft?.coverUrl
+        || draft?.cover_url
+        || draft?.media?.coverImage?.fileUrl
+        || draft?.coverImage
         || designCoverImage
+        || template?.thumbnailUrl
         || template?.defaultImage
         || template?.phoneCoverImage
         || template?.mainImage
         || "/facebook/all/03-card/cover-card.jpg";
 
-    const title = draft.title || draft.event?.title || template?.name || "សិរីមង្គលអាពាហ៍ពិពាហ៍";
+    const title = draft?.title || draft?.event?.title || template?.style || template?.name || "សិរីមង្គលអាពាហ៍ពិពាហ៍";
     const coupleText = (draft.couple?.groom && draft.couple?.bride)
         ? `${draft.couple.groom} & ${draft.couple.bride}`
         : (draft.groomName && draft.brideName)
