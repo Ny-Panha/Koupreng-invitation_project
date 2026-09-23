@@ -321,8 +321,19 @@ export default function KhmerCelestialLayout({
             animate={opened ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 18, scale: 0.985 }}
             transition={{ duration: reducedMotion ? 0 : 0.88, ease: [0.22, 1, 0.36, 1], delay: reducedMotion ? 0 : 0.15 }}
           >
-            <p className="kc-hero__eyebrow">{content.title || "សិរីសួស្តីអាពាហ៍ពិពាហ៍"}</p>
-            <img className="kc-hero__brand" src={KHMER_CELESTIAL_ASSETS.brandMark} alt={logoAlt} width="768" height="512" />
+            {(() => {
+              const heroEyebrowText = content.title || "សិរីសួស្តីអាពាហ៍ពិពាហ៍";
+              const heroEyebrowLength = Array.from(heroEyebrowText.replace(/\s+/g, "")).length;
+              const heroEyebrowClass = [
+                "kc-hero__eyebrow",
+                heroEyebrowLength > 20 ? "kc-hero__eyebrow--long" : "",
+                heroEyebrowLength > 36 ? "kc-hero__eyebrow--very-long" : "",
+              ].filter(Boolean).join(" ");
+              return <p className={heroEyebrowClass}>{heroEyebrowText}</p>;
+            })()}
+            {!content.hideCoupleNameOnCover && (
+              <img className="kc-hero__brand" src={KHMER_CELESTIAL_ASSETS.brandMark} alt={logoAlt} width="768" height="512" />
+            )}
             <h1 id="kc-hero-title">{content.familyHeading || "គ្រួសារទាំងសងខាង"}</h1>
             <span className="kc-hero__divider" aria-hidden="true"><i />◆<i /></span>
             {content.dateText ? <p className="kc-hero__date">{content.dateText}</p> : null}

@@ -29,7 +29,7 @@
   --kc-flower-pink: #edc2c5;
   --kc-leaf-green: #789578;
   --kc-ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --kc-khmer-display: "Moul", "Noto Sans Khmer", serif;
+  --kc-khmer-display: "Moul", "Noto Sans Khmer", "Cormorant Garamond", Georgia, serif;
   --kc-khmer-body: "Battambang", "Noto Sans Khmer", sans-serif;
   --kc-english-display: "Cormorant Garamond", Georgia, serif;
   --kc-ui: "Kantumruy Pro", "Noto Sans Khmer", sans-serif;
@@ -349,12 +349,31 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
 }
 
 .kc-opening__eyebrow {
-  margin: 0 0 4px;
+  margin: 0 auto 6px;
   color: var(--kc-green);
   font-family: var(--kc-khmer-display);
-  font-size: clamp(0.9rem, 3.4vw, 1.25rem);
+  font-size: clamp(0.88rem, 3.2vw, 1.25rem);
   font-weight: 400;
-  line-height: 1.9;
+  line-height: 1.45;
+  max-width: min(84%, 340px);
+  padding: 0 8px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+  text-wrap: balance;
+}
+
+.kc-opening__eyebrow--long {
+  font-size: clamp(0.78rem, 2.6vw, 1.05rem);
+  line-height: 1.38;
+  max-width: min(80%, 320px);
+}
+
+.kc-opening__eyebrow--very-long {
+  font-size: clamp(0.7rem, 2.2vw, 0.9rem);
+  line-height: 1.32;
+  max-width: min(78%, 300px);
+  letter-spacing: 0.01em;
 }
 
 .kc-opening__brand-wrap {
@@ -768,11 +787,31 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
 }
 
 .kc-hero__eyebrow {
-  margin: 0;
+  margin: 0 auto 6px;
   color: var(--kc-green);
   font-family: var(--kc-khmer-display);
-  font-size: clamp(1.1rem, 4vw, 1.5rem);
-  line-height: 1.9;
+  font-size: clamp(0.95rem, 3.4vw, 1.35rem);
+  font-weight: 400;
+  line-height: 1.45;
+  max-width: min(84%, 350px);
+  padding: 0 8px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+  text-wrap: balance;
+}
+
+.kc-hero__eyebrow--long {
+  font-size: clamp(0.82rem, 2.7vw, 1.1rem);
+  line-height: 1.38;
+  max-width: min(80%, 330px);
+}
+
+.kc-hero__eyebrow--very-long {
+  font-size: clamp(0.72rem, 2.2vw, 0.92rem);
+  line-height: 1.32;
+  max-width: min(78%, 310px);
+  letter-spacing: 0.01em;
 }
 
 .kc-hero__brand {
@@ -2109,7 +2148,7 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
     width: min(430px, 43vw);
   }
 
-  .kc-opening__eyebrow,
+  .kc-opening__eyebrow:not([class*="--long"]):not([class*="--very-long"]),
   .kc-opening h1 {
     font-size: 1.5rem;
   }
@@ -2358,4 +2397,182 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   .kc-opening__guest-banner-content {
     transform: translate(-50%, -50%);
   }
+}
+
+/* ==========================================================================
+   Phone Simulator Preview Mode for Khmer Celestial
+   ========================================================================== */
+
+/* Confine Khmer Celestial root inside simulator canvas */
+.pe-canvas-wrapper .kc-root,
+.kc-root--preview {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: 100% !important;
+  position: relative !important;
+  font-size: 14px;
+}
+
+/* Ensure opening gate fills the phone frame properly without scrolling off */
+.pe-canvas-wrapper .kc-opening,
+.kc-root--preview .kc-opening {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  max-height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  scrollbar-width: none !important;
+  background: var(--kc-ivory) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.pe-canvas-wrapper .kc-opening::-webkit-scrollbar,
+.kc-root--preview .kc-opening::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* Remove vertical border line cutting through phone screen in simulator */
+.pe-canvas-wrapper .kc-opening::before,
+.pe-canvas-wrapper .kc-opening::after,
+.kc-root--preview .kc-opening::before,
+.kc-root--preview .kc-opening::after {
+  display: none !important;
+}
+
+/* Position botanical floral frame nicely inside phone frame */
+.pe-canvas-wrapper .kc-opening__botanical,
+.kc-root--preview .kc-opening__botanical {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+  pointer-events: none !important;
+}
+
+/* Opening content: compact vertical flow designed specifically for mobile simulator */
+.pe-canvas-wrapper .kc-opening__content,
+.kc-root--preview .kc-opening__content {
+  position: relative !important;
+  z-index: 2 !important;
+  width: 100% !important;
+  max-width: 340px !important;
+  min-height: 100% !important;
+  padding: 24px 14px 20px !important;
+  margin: 0 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  box-sizing: border-box !important;
+  text-align: center !important;
+  gap: 8px !important;
+}
+
+.pe-canvas-wrapper .kc-opening__eyebrow,
+.kc-root--preview .kc-opening__eyebrow {
+  margin: 0 auto !important;
+  font-size: 0.95rem !important;
+  line-height: 1.35 !important;
+  color: var(--kc-green) !important;
+}
+
+.pe-canvas-wrapper .kc-opening__brand-wrap,
+.kc-root--preview .kc-opening__brand-wrap {
+  width: min(78%, 250px) !important;
+  max-width: 250px !important;
+  margin: 0 auto !important;
+}
+
+.pe-canvas-wrapper .kc-opening__brand,
+.kc-root--preview .kc-opening__brand {
+  width: 100% !important;
+  height: auto !important;
+  display: block !important;
+}
+
+.pe-canvas-wrapper .kc-opening__date-block,
+.kc-root--preview .kc-opening__date-block {
+  margin: 0 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 2px !important;
+}
+
+.pe-canvas-wrapper .kc-opening__date,
+.kc-root--preview .kc-opening__date {
+  font-size: 0.88rem !important;
+  line-height: 1.35 !important;
+  margin: 0 !important;
+}
+
+.pe-canvas-wrapper .kc-opening__time,
+.kc-root--preview .kc-opening__time {
+  font-size: 0.82rem !important;
+  line-height: 1.25 !important;
+  margin: 0 !important;
+}
+
+.pe-canvas-wrapper .kc-opening__guest-label,
+.kc-root--preview .kc-opening__guest-label {
+  margin: 0 auto !important;
+  font-size: 0.82rem !important;
+  color: #785331 !important;
+}
+
+.pe-canvas-wrapper .kc-opening__guest-banner,
+.kc-root--preview .kc-opening__guest-banner {
+  position: relative !important;
+  width: min(92%, 310px) !important;
+  max-width: 310px !important;
+  height: 64px !important;
+  margin: 0 auto !important;
+}
+
+.pe-canvas-wrapper .kc-opening__guest-banner-image,
+.kc-root--preview .kc-opening__guest-banner-image {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}
+
+.pe-canvas-wrapper .kc-opening__guest-banner-content,
+.kc-root--preview .kc-opening__guest-banner-content {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 82% !important;
+  margin: 0 !important;
+}
+
+.pe-canvas-wrapper .kc-opening__guest-name,
+.kc-root--preview .kc-opening__guest-name {
+  font-size: 0.95rem !important;
+  line-height: 1.25 !important;
+}
+
+.pe-canvas-wrapper .kc-opening__cta-wrapper,
+.kc-root--preview .kc-opening__cta-wrapper {
+  margin: 4px auto 0 !important;
+}
+
+.pe-canvas-wrapper .kc-opening__cta-frame,
+.kc-root--preview .kc-opening__cta-frame {
+  width: 155px !important;
+  max-width: 155px !important;
+  height: auto !important;
 }

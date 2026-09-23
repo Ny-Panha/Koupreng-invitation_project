@@ -20,6 +20,8 @@ export default function LivePhoneSimulator({ data = {}, onSave, isSaving, catalo
         const nextState = !isGateOpen;
         setIsGateOpen(nextState);
         window.postMessage({ type: "TOGGLE_GATE", open: nextState }, "*");
+        const scroller = document.querySelector(".pe-canvas-wrapper");
+        if (scroller) scroller.scrollTop = 0;
     };
 
     return (

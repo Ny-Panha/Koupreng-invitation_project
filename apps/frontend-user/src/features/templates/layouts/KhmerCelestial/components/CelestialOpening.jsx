@@ -93,25 +93,38 @@ export default function CelestialOpening({ content, onOpen }) {
       <CelestialLiveGarden className="kc-opening__garden" variant="opening" />
 
       <div className="kc-opening__content">
-        <motion.p id="kc-opening-title" className="kc-opening__eyebrow" {...reveal(reducedMotion, 0.62)}>
-          {content.opening?.heading || content.title || "សិរីសួស្តីអាពាហ៍ពិពាហ៍"}
-        </motion.p>
+        {(() => {
+          const openingEyebrowText = content.title || content.opening?.heading || "សិរីសួស្តីអាពាហ៍ពិពាហ៍";
+          const openingEyebrowLength = Array.from(openingEyebrowText.replace(/\s+/g, "")).length;
+          const openingEyebrowClass = [
+            "kc-opening__eyebrow",
+            openingEyebrowLength > 20 ? "kc-opening__eyebrow--long" : "",
+            openingEyebrowLength > 36 ? "kc-opening__eyebrow--very-long" : "",
+          ].filter(Boolean).join(" ");
+          return (
+            <motion.p id="kc-opening-title" className={openingEyebrowClass} {...reveal(reducedMotion, 0.62)}>
+              {openingEyebrowText}
+            </motion.p>
+          );
+        })()}
 
-        <motion.div
-          className="kc-opening__brand-wrap"
-          initial={reducedMotion ? false : { opacity: 0, y: 25, scale: 0.94, filter: "blur(8px)" }}
-          animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-          transition={{ duration: reducedMotion ? 0 : 1.35, delay: reducedMotion ? 0 : 1, ease: EASE }}
-        >
-          <img
-            className="kc-opening__brand"
-            src={KHMER_CELESTIAL_ASSETS.brandMark}
-            alt={logoAlt}
-            width="768"
-            height="512"
-          />
-          <span className="kc-opening__brand-highlight" aria-hidden="true" />
-        </motion.div>
+        {!content.hideCoupleNameOnCover && (
+          <motion.div
+            className="kc-opening__brand-wrap"
+            initial={reducedMotion ? false : { opacity: 0, y: 25, scale: 0.94, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+            transition={{ duration: reducedMotion ? 0 : 1.35, delay: reducedMotion ? 0 : 1, ease: EASE }}
+          >
+            <img
+              className="kc-opening__brand"
+              src={KHMER_CELESTIAL_ASSETS.brandMark}
+              alt={logoAlt}
+              width="768"
+              height="512"
+            />
+            <span className="kc-opening__brand-highlight" aria-hidden="true" />
+          </motion.div>
+        )}
 
         <motion.div className="kc-opening__date-block" {...reveal(reducedMotion, 2.18)}>
           {content.dateText ? <p className="kc-opening__date">{content.dateText}</p> : null}
