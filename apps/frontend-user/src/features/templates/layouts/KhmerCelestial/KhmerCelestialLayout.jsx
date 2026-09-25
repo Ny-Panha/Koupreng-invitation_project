@@ -45,7 +45,7 @@ const ensureGoogleFontLoaded = (fontFamily) => {
   const link = document.createElement("link");
   link.id = fontId;
   link.rel = "stylesheet";
-  link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(cleanName)}:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap`;
+  link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(cleanName)}&display=swap`;
   document.head.appendChild(link);
 };
 
@@ -263,6 +263,9 @@ export default function KhmerCelestialLayout({
       }
     };
     window.addEventListener("message", onMessage);
+    if (typeof window !== "undefined" && window.parent && window.parent !== window) {
+      window.parent.postMessage({ type: "PREVIEW_READY" }, "*");
+    }
     return () => window.removeEventListener("message", onMessage);
   }, []);
 
@@ -317,10 +320,18 @@ export default function KhmerCelestialLayout({
   }, [reducedMotion]);
 
   useEffect(() => {
+    const fontsToLoad = new Set();
     const kFont = liveData?.fontKhmer || content?.fontKhmer;
     const lFont = liveData?.fontLatin || content?.fontLatin;
-    if (kFont) ensureGoogleFontLoaded(kFont);
-    if (lFont) ensureGoogleFontLoaded(lFont);
+    if (kFont) fontsToLoad.add(kFont);
+    if (lFont) fontsToLoad.add(lFont);
+
+    const elemFonts = liveData?.elementFonts || content?.elementFonts || {};
+    Object.values(elemFonts).forEach((f) => {
+      if (f) fontsToLoad.add(f);
+    });
+
+    fontsToLoad.forEach((f) => ensureGoogleFontLoaded(f));
 
     const customList = liveData?.customFonts || content?.customFonts || [];
     if (Array.isArray(customList)) {
@@ -332,7 +343,16 @@ export default function KhmerCelestialLayout({
         }
       });
     }
-  }, [liveData?.fontKhmer, liveData?.fontLatin, liveData?.customFonts, content?.fontKhmer, content?.fontLatin, content?.customFonts]);
+  }, [
+    liveData?.fontKhmer,
+    liveData?.fontLatin,
+    liveData?.elementFonts,
+    liveData?.customFonts,
+    content?.fontKhmer,
+    content?.fontLatin,
+    content?.elementFonts,
+    content?.customFonts,
+  ]);
 
   const schedule = Array.isArray(content.schedule) ? content.schedule : [];
   const party = Array.isArray(content.party) ? content.party : [];
@@ -350,35 +370,57 @@ export default function KhmerCelestialLayout({
   const invitationImage2 = content.invitationImage2 || null;
 
   const effectiveContent = useMemo(() => {
-    if (!liveData) return content;
+    const base = liveData ? { ...content, ...liveData } : { ...content };
     return {
-      ...content,
-      ...liveData,
-      fontKhmer: liveData.fontKhmer !== undefined ? liveData.fontKhmer : content.fontKhmer,
-      fontLatin: liveData.fontLatin !== undefined ? liveData.fontLatin : content.fontLatin,
-      customFonts: liveData.customFonts || content.customFonts,
-      openingStyle: liveData.openingStyle || liveData.gateStyle || content.openingStyle || content.gateStyle || content.design?.openingStyle,
-      gateStyle: liveData.gateStyle || liveData.openingStyle || content.gateStyle || content.openingStyle || content.design?.openingStyle,
-      groom: liveData.groomName || liveData.groom || content.groom,
-      bride: liveData.brideName || liveData.bride || content.bride,
-      title: liveData.invitationTitle || liveData.title || content.title,
-      backgroundImage: liveData.backgroundImage || liveData.bgImage || content.backgroundImage,
-      openingVideo: liveData.openingVideoUrl || liveData.videoUrl || content.openingVideo,
-      openingVideoUrl: liveData.openingVideoUrl || liveData.videoUrl || content.openingVideoUrl,
-      showBrandMark: liveData.showBrandMark !== undefined ? liveData.showBrandMark : content.showBrandMark,
-      brandMark: liveData.showBrandMark === false || liveData.brandMark === "" ? "" : (liveData.brandMark !== undefined ? liveData.brandMark : content.brandMark),
-      showGuestBanner: liveData.showGuestBanner !== undefined ? liveData.showGuestBanner : content.showGuestBanner,
-      guestNameBanner: liveData.showGuestBanner === false || liveData.guestNameBanner === "" ? "" : (liveData.guestNameBanner !== undefined ? liveData.guestNameBanner : content.guestNameBanner),
-      showOpenButton: liveData.showOpenButton !== undefined ? liveData.showOpenButton : content.showOpenButton,
-      openButtonImage: liveData.showOpenButton === false || liveData.openButtonImage === "" ? "" : (liveData.openButtonImage !== undefined ? liveData.openButtonImage : content.openButtonImage),
-      showButterflies: liveData.showButterflies !== undefined ? liveData.showButterflies : content.showButterflies,
-      dateText: liveData.weddingDate || liveData.dateText || content.dateText,
-      dateTextEn: liveData.weddingDateEn || liveData.dateTextEn || (liveData.weddingDate ? liveData.weddingDate : content.dateTextEn),
-      receptionTime: liveData.weddingTime || liveData.receptionTime || content.receptionTime,
-      guestLabel: liveData.guestLabel || content.guestLabel || "ជូនចំពោះ:",
-      guestName: liveData.guestName || content.guestName || "លោកអ្នក និងក្រុមគ្រួសារ",
+      ...base,
+      fontKhmer: base.fontKhmer || "Siemreap",
+      fontLatin: base.fontLatin || "Cinzel Decorative",
+      elementFonts: {
+        ...(content.elementFonts || {}),
+        ...(base.elementFonts || {}),
+        ...(liveData?.elementFonts || {}),
+      },
+      selectedFontElement: liveData?.selectedFontElement || content.selectedFontElement || "couple",
+      customFonts: base.customFonts || content.customFonts,
+      openingStyle: base.openingStyle || base.gateStyle || content.openingStyle || content.gateStyle || content.design?.openingStyle,
+      gateStyle: base.gateStyle || base.openingStyle || content.gateStyle || content.openingStyle || content.design?.openingStyle,
+      groom: base.groomName || base.groom || content.groom,
+      bride: base.brideName || base.bride || content.bride,
+      title: base.invitationTitle || base.title || content.title,
+      invitationTitle: base.invitationTitle || base.title || content.invitationTitle || content.title,
+      subtitle: base.invitationSubtitle !== undefined ? base.invitationSubtitle : (base.subtitle !== undefined ? base.subtitle : (content.subtitle || content.invitationSubtitle || "យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ")),
+      invitationSubtitle: base.invitationSubtitle !== undefined ? base.invitationSubtitle : (base.subtitle !== undefined ? base.subtitle : (content.invitationSubtitle || content.subtitle || "យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ")),
+      backgroundImage: base.backgroundImage || base.bgImage || content.backgroundImage,
+      openingVideo: base.openingVideo !== undefined ? base.openingVideo : (base.openingVideoUrl !== undefined ? base.openingVideoUrl : (base.videoUrl !== undefined ? base.videoUrl : content.openingVideo)),
+      openingVideoUrl: base.openingVideoUrl !== undefined ? base.openingVideoUrl : (base.videoUrl !== undefined ? base.videoUrl : content.openingVideoUrl),
+      videoUrl: base.videoUrl !== undefined ? base.videoUrl : (base.openingVideoUrl !== undefined ? base.openingVideoUrl : content.videoUrl),
+      showCoverVideo: base.showCoverVideo !== undefined ? base.showCoverVideo : content.showCoverVideo,
+      showBrandMark: base.showBrandMark !== undefined ? base.showBrandMark : content.showBrandMark,
+      brandMark: base.showBrandMark === false || base.brandMark === "" ? "" : (base.brandMark !== undefined ? base.brandMark : content.brandMark),
+      showGuestBanner: base.showGuestBanner !== undefined ? base.showGuestBanner : content.showGuestBanner,
+      guestNameBanner: base.showGuestBanner === false || base.guestNameBanner === "" ? "" : (base.guestNameBanner !== undefined ? base.guestNameBanner : content.guestNameBanner),
+      showOpenButton: base.showOpenButton !== undefined ? base.showOpenButton : content.showOpenButton,
+      openButtonImage: base.showOpenButton === false || base.openButtonImage === "" ? "" : (base.openButtonImage !== undefined ? base.openButtonImage : content.openButtonImage),
+      showButterflies: base.showButterflies !== undefined ? base.showButterflies : content.showButterflies,
+      dateText: base.weddingDate || base.dateText || content.dateText || "ថ្ងៃពុធ ២៨ មករា ២០២៦",
+      dateTextEn: base.weddingDateEn || base.dateTextEn || content.dateTextEn,
+      weddingDate: base.weddingDate || base.dateText || content.weddingDate || content.dateText,
+      weddingTime: base.weddingTime || base.receptionTime || content.weddingTime || content.receptionTime,
+      receptionTime: base.weddingTime || base.receptionTime || content.receptionTime || "១៧:០០",
+      guestLabel: (base.guestLabel && base.guestLabel.trim()) || (content.guestLabel && content.guestLabel.trim()) || (base.isPersonalizedGuest ? "សូមគោរពអញ្ជើញ" : "ជូនចំពោះ:"),
+      guestName: (base.guestName && base.guestName.trim()) || (content.guestName && content.guestName.trim()) || "លោកអ្នក និងក្រុមគ្រួសារ",
+      message: base.blessingMessage || base.message || content.message,
     };
   }, [content, liveData]);
+
+  const elementFonts = effectiveContent.elementFonts || {};
+  const globalKhmer = effectiveContent.fontKhmer || "Siemreap";
+  const fontCouple = elementFonts.couple || globalKhmer;
+  const fontDate = elementFonts.date || globalKhmer;
+  const fontTime = elementFonts.time || globalKhmer;
+  const fontSubtitle = elementFonts.subtitle || globalKhmer;
+  const fontGuestLabel = elementFonts.guestLabel || globalKhmer;
+  const fontGuestName = elementFonts.guestName || globalKhmer;
 
   const currentGateStyle = effectiveContent.gateStyle
     || effectiveContent.openingStyle
@@ -403,11 +445,11 @@ export default function KhmerCelestialLayout({
       style={{
         "--kc-bg-frame": `url("${botanicalFrame}")`,
         "--kc-khmer-display": effectiveContent.fontKhmer
-          ? `"${effectiveContent.fontKhmer}", "Moul", serif`
-          : undefined,
+          ? `"${effectiveContent.fontKhmer}", "Bayon", "Moul", serif`
+          : '"Bayon", "Moul", serif',
         "--kc-khmer-body": effectiveContent.fontKhmer
           ? `"${effectiveContent.fontKhmer}", "Battambang", sans-serif`
-          : undefined,
+          : '"Battambang", sans-serif',
         "--kc-english-display": effectiveContent.fontLatin
           ? `"${effectiveContent.fontLatin}", "Cormorant Garamond", Georgia, serif`
           : undefined,
@@ -454,12 +496,13 @@ export default function KhmerCelestialLayout({
                 }
                 groom={effectiveContent.groom || groomName}
                 bride={effectiveContent.bride || brideName}
-                weddingTitle={effectiveContent.invitationTitle || "សិរីសួស្តី អាពាហ៍ពិពាហ៍"}
+                weddingTitle={effectiveContent.weddingTitle || "វីដេអូបើកឆាកអាពាហ៍ពិពាហ៍"}
                 weddingDate={effectiveContent.dateText || "ត្រីសង្ក្រាន្តទី ២៨ ខែមករា ឆ្នាំ ២០២៦"}
                 weddingTime={effectiveContent.receptionTime || "ម៉ោង ១៧:០០"}
                 venueName={effectiveContent.venueName || "The Premier Center Sen Sok"}
                 guestLabel={effectiveContent.guestLabel || "ជូនចំពោះ:"}
                 guestName={effectiveContent.guestName || "លោកអ្នក និងក្រុមគ្រួសារ"}
+                subtitle={effectiveContent.subtitle || effectiveContent.invitationSubtitle}
                 onOpen={handleOpen}
                 state={opened ? "opened" : "closed"}
                 preview={preview}
@@ -544,10 +587,10 @@ export default function KhmerCelestialLayout({
               <img className="kc-hero__brand" src={effectiveBrandMark} alt={logoAlt} width="768" height="512" />
             ) : null}
             {!content.hideCoupleNameOnCover && (
-              <h1 id="kc-hero-title" className="kc-hero__couple-names">
-                <span className="kc-hero__groom">{groomName}</span>
+              <h1 id="kc-hero-title" className="kc-hero__couple-names" style={{ fontFamily: `"${fontCouple}", var(--kc-khmer-display), "Bayon", "Moul", serif` }}>
+                <span className="kc-hero__groom" style={{ fontFamily: `"${fontCouple}", var(--kc-khmer-display), "Bayon", "Moul", serif` }}>{effectiveContent.groom || groomName}</span>
                 <span className="kc-hero__amp"> &amp; </span>
-                <span className="kc-hero__bride">{brideName}</span>
+                <span className="kc-hero__bride" style={{ fontFamily: `"${fontCouple}", var(--kc-khmer-display), "Bayon", "Moul", serif` }}>{effectiveContent.bride || brideName}</span>
               </h1>
             )}
             {heroImage ? (
@@ -556,8 +599,8 @@ export default function KhmerCelestialLayout({
               </div>
             ) : null}
             <span className="kc-hero__divider" aria-hidden="true"><i />◆<i /></span>
-            <p className="kc-hero__date">{content.dateText || "ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦"}</p>
-            <p className="kc-hero__time">{content.eventTime || "វេលាម៉ោង ៥:០០ ល្ងាច"}</p>
+            <p className="kc-hero__date" style={{ fontFamily: `"${fontDate}", var(--kc-khmer-display), "Bayon", "Moul", serif` }}>{effectiveContent.dateText || "ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦"}</p>
+            <p className="kc-hero__time" style={{ fontFamily: `"${fontTime}", var(--kc-khmer-display), "Bayon", "Moul", serif` }}>{effectiveContent.receptionTime || effectiveContent.eventTime || "វេលាម៉ោង ៥:០០ ល្ងាច"}</p>
             {content.venue?.name ? <p className="kc-hero__venue">{content.venue.name}</p> : null}
           </motion.div>
           <button type="button" className="kc-hero__scroll" onClick={scrollToInvitation} aria-label="រំកិលទៅព័ត៌មានគ្រួសារ">
@@ -566,217 +609,270 @@ export default function KhmerCelestialLayout({
           </button>
         </section>
 
-        <section className="kc-section kc-family" data-kc-section="family" aria-labelledby="kc-family-title">
-          <div className="kc-shell kc-shell--narrow">
-            <CelestialHeading
-              id="kc-family-title"
-              khmer={content.familyHeading || "គ្រួសារទាំងសងខាង"}
-              english="Together with our families"
-              eyebrow="FAMILY"
-              tone="ceremonial"
-              languageMode={languageMode}
-            />
-            <div className="kc-family__grid">
-              <FamilyGroup
-                title={content.family?.groomTitle || "ខាងកូនប្រុស"}
-                parents={content.family?.groomParents || content.couple?.groomParents}
-                label={content.family?.groomLabel || "កូនប្រុសនាម"}
-                name={groomName}
-              />
-              <span className="kc-family__seal" aria-hidden="true"><Flower2 /></span>
-              <FamilyGroup
-                title={content.family?.brideTitle || "ខាងកូនស្រី"}
-                parents={content.family?.brideParents || content.couple?.brideParents}
-                label={content.family?.brideLabel || "កូនស្រីនាម"}
-                name={brideName}
-              />
-            </div>
-          </div>
-        </section>
+        {(() => {
+          const defaultBodyOrder = [
+            "family",
+            "invitation",
+            "countdown",
+            "schedule",
+            "map",
+            "gallery",
+            "party",
+            "dressCode",
+            "gift",
+            "faq",
+            "rsvp",
+          ];
+          const activeOrder = Array.isArray(effectiveContent.sectionOrder) && effectiveContent.sectionOrder.length > 0
+            ? effectiveContent.sectionOrder
+            : defaultBodyOrder;
 
-        <section className="kc-section kc-invitation" data-kc-section="invitation" aria-labelledby="kc-invitation-title">
-          <div className="kc-shell">
-            <div className="kc-invitation__layout">
-              {invitationImage2 ? (
-                /* Dual portrait: two photos side-by-side */
-                <div className="kc-invitation__dual-portraits">
-                  <CelestialReveal className="kc-invitation__portrait kc-invitation__portrait--left">
-                    <CelestialImage src={invitationImage} alt={heroAlt} />
-                  </CelestialReveal>
-                  <CelestialReveal className="kc-invitation__portrait kc-invitation__portrait--right" delay={0.12}>
-                    <CelestialImage src={invitationImage2} alt={heroAlt} />
-                  </CelestialReveal>
-                </div>
-              ) : (
-                <CelestialReveal className="kc-invitation__portrait">
-                  <CelestialImage src={invitationImage} alt={heroAlt} />
-                </CelestialReveal>
-              )}
-              <div className="kc-invitation__copy">
-                <CelestialHeading
-                  id="kc-invitation-title"
-                  khmer={content.messageTitle || "មានកិត្តិយសសូមគោរពអញ្ជើញ"}
-                  english={content.subtitle || "With joy and honor"}
-                  eyebrow="THE INVITATION"
-                  align="left"
-                  tone="ceremonial"
-                  languageMode={languageMode}
-                />
-                <CelestialReveal className="kc-invitation__guest">
-                  <span>{content.isPersonalizedGuest ? "សូមគោរពអញ្ជើញ" : "ជូនចំពោះ"}</span>
-                  <strong>{content.guestName?.trim() || "លោកអ្នក និងក្រុមគ្រួសារ"}</strong>
-                </CelestialReveal>
-                <CelestialReveal as="p" className="kc-invitation__message" delay={0.08}>
-                  {content.message || "ឯកឧត្តម លោកជំទាវ លោក លោកស្រី អ្នកនាងកញ្ញា ព្រមទាំងញាតិមិត្តរាប់អានទាំងឡាយ សូមអញ្ជើញចូលរួមជាភ្ញៀវកិត្តិយស ដើម្បីប្រសិទ្ធពរជ័យជូនកូនប្រុសកូនស្រីយើងខ្ញុំ ក្នុងកម្មវិធីមង្គលអាពាហ៍ពិពាហ៍ ដែលរៀបចំឡើងដោយក្តីរីករាយ។"}
-                </CelestialReveal>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <CelestialCountdownSection
-          content={content}
-          calendarUrl={calendarUrl}
-          languageMode={languageMode}
-          enabled={sectionEnabled("countdown")}
-        />
-
-
-        {sectionEnabled("schedule") && schedule.length ? (
-          <section className="kc-section kc-schedule" data-tx-section="schedule" aria-labelledby="kc-schedule-title">
-            <div className="kc-shell kc-shell--narrow">
-              <CelestialHeading
-                id="kc-schedule-title"
-                khmer={content.scheduleTitle || "កម្មវិធីមង្គលការ"}
-                english="The wedding programme"
-                eyebrow="CEREMONY"
-                languageMode={languageMode}
-              />
-              {content.scheduleDate ? <CelestialReveal as="p" className="kc-schedule__date">{content.scheduleDate}</CelestialReveal> : null}
-              <div className="kc-schedule__list">
-                {schedule.map((item, index) => {
-                  const ProgrammeIcon = PROGRAM_ICONS[index % PROGRAM_ICONS.length];
-                  return (
-                    <CelestialReveal as="article" className="kc-schedule__item" key={item.id || `${item.time}-${index}`} delay={(index % 3) * 0.04}>
-                      <time>{item.time}</time>
-                      <span className="kc-schedule__marker" aria-hidden="true"><ProgrammeIcon /></span>
-                      <div>
-                        <h3>{item.title}</h3>
-                        {item.titleEn ? <p className="kc-schedule__english">{item.titleEn}</p> : null}
-                        {item.description ? <p>{item.description}</p> : null}
-                        {item.location ? <small>{item.location}</small> : null}
-                      </div>
-                    </CelestialReveal>
-                  );
-                })}
-              </div>
-              {content.scheduleEnding ? <CelestialReveal as="p" className="kc-schedule__ending">{content.scheduleEnding}</CelestialReveal> : null}
-            </div>
-          </section>
-        ) : null}
-
-        {sectionEnabled("map") && (content.venue?.name || content.venue?.mapLink) ? (
-          <section className="kc-section kc-venue" data-tx-section="map" aria-labelledby="kc-venue-title">
-            <div className="kc-shell">
-              <div className="kc-venue__layout">
-                <div className="kc-venue__copy">
-                  <CelestialHeading id="kc-venue-title" khmer="ទីតាំងប្រារព្ធពិធី" english="The celebration venue" eyebrow="LOCATION" align="center" languageMode={languageMode} />
-                  <CelestialReveal>
-                    {content.venue?.name ? <h3>{content.venue.name}</h3> : null}
-                    {content.venue?.address ? <p>{content.venue.address}</p> : null}
-                    {content.venue?.mapLink ? (
-                      <a className="kc-button kc-button--gold" href={content.venue.mapLink} target="_blank" rel="noreferrer">
-                        <MapPin aria-hidden="true" /> បើកផែនទី <ExternalLink aria-hidden="true" />
-                      </a>
-                    ) : null}
-                    {(content.venue?.sketchMapImage || content.sketchMapImage) ? (
-                      <div className="kc-venue__sketch-map">
-                        <img
-                          src={content.venue?.sketchMapImage || content.sketchMapImage}
-                          alt={content.venue?.name || "ផែនទីទីតាំងប្រារព្ធពិធី"}
-                          className="kc-venue__sketch-img"
+          const renderSectionItem = (key) => {
+            switch (key) {
+              case "family":
+                return (
+                  <section key="family" className="kc-section kc-family" data-kc-section="family" aria-labelledby="kc-family-title">
+                    <div className="kc-shell kc-shell--narrow">
+                      <CelestialHeading
+                        id="kc-family-title"
+                        khmer={content.familyHeading || "គ្រួសារទាំងសងខាង"}
+                        english="Together with our families"
+                        eyebrow="FAMILY"
+                        tone="ceremonial"
+                        languageMode={languageMode}
+                      />
+                      <div className="kc-family__grid">
+                        <FamilyGroup
+                          title={content.family?.groomTitle || "ខាងកូនប្រុស"}
+                          parents={content.family?.groomParents || content.couple?.groomParents}
+                          label={content.family?.groomLabel || "កូនប្រុសនាម"}
+                          name={effectiveContent.groom || groomName}
+                        />
+                        <span className="kc-family__seal" aria-hidden="true"><Flower2 /></span>
+                        <FamilyGroup
+                          title={content.family?.brideTitle || "ខាងកូនស្រី"}
+                          parents={content.family?.brideParents || content.couple?.brideParents}
+                          label={content.family?.brideLabel || "កូនស្រីនាម"}
+                          name={effectiveContent.bride || brideName}
                         />
                       </div>
-                    ) : null}
-                  </CelestialReveal>
-                </div>
-              </div>
-            </div>
-          </section>
-        ) : null}
-
-        {sectionEnabled("gallery") ? <CelestialGallery images={content.gallery} languageMode={languageMode} preview={preview} /> : null}
-
-        {sectionEnabled("party") && party.length ? (
-          <section className="kc-section kc-party" data-tx-section="party" aria-labelledby="kc-party-title">
-            <div className="kc-shell">
-              <CelestialHeading id="kc-party-title" khmer="មនុស្សជាទីស្រឡាញ់" english="With those closest to us" eyebrow="WEDDING PARTY" languageMode={languageMode} />
-              <div className="kc-party__grid">
-                {party.map((member, index) => (
-                  <CelestialReveal as="article" key={member.id || `${member.name}-${index}`} delay={(index % 4) * 0.05}>
-                    <CelestialImage src={firstImage(member.image)} alt={member.name || `Wedding party ${index + 1}`} />
-                    <p>{member.role}</p>
-                    <h3>{member.name}</h3>
-                  </CelestialReveal>
-                ))}
-              </div>
-            </div>
-          </section>
-        ) : null}
-
-        {sectionEnabled("dressCode") && dressColors.length ? (
-          <section className="kc-section kc-dress" data-tx-section="dressCode" aria-labelledby="kc-dress-title">
-            <div className="kc-shell kc-shell--narrow">
-              <CelestialHeading id="kc-dress-title" khmer="សម្លៀកបំពាក់" english="Ceremonial palette" eyebrow="DRESS CODE" languageMode={languageMode} />
-              <CelestialReveal className="kc-dress__content">
-                <h3>{content.dressCode.name}</h3>
-                {content.dressCode.style ? <p>{content.dressCode.style}</p> : null}
-                <div className="kc-dress__colors">
-                  {dressColors.map((color, index) => (
-                    <div key={`${color.hex}-${index}`}>
-                      <span style={{ backgroundColor: color.hex }} aria-hidden="true" />
-                      <small>{color.name}</small>
                     </div>
-                  ))}
-                </div>
-                {content.dressCode.description ? <p>{content.dressCode.description}</p> : null}
-              </CelestialReveal>
-            </div>
-          </section>
-        ) : null}
+                  </section>
+                );
 
-        {sectionEnabled("gift") && gift.length ? (
-          <div className="kc-gift" data-kc-section="gift">
-            <TemplateGift content={content} />
-          </div>
-        ) : null}
+              case "invitation":
+                return (
+                  <section key="invitation" className="kc-section kc-invitation" data-kc-section="invitation" aria-labelledby="kc-invitation-title">
+                    <div className="kc-shell">
+                      <div className="kc-invitation__layout">
+                        {invitationImage2 ? (
+                          /* Dual portrait: two photos side-by-side */
+                          <div className="kc-invitation__dual-portraits">
+                            <CelestialReveal className="kc-invitation__portrait kc-invitation__portrait--left">
+                              <CelestialImage src={invitationImage} alt={heroAlt} />
+                            </CelestialReveal>
+                            <CelestialReveal className="kc-invitation__portrait kc-invitation__portrait--right" delay={0.12}>
+                              <CelestialImage src={invitationImage2} alt={heroAlt} />
+                            </CelestialReveal>
+                          </div>
+                        ) : (
+                          <CelestialReveal className="kc-invitation__portrait">
+                            <CelestialImage src={invitationImage} alt={heroAlt} />
+                          </CelestialReveal>
+                        )}
+                        <div className="kc-invitation__copy">
+                          <CelestialHeading
+                            id="kc-invitation-title"
+                            khmer={effectiveContent.messageTitle || "មានកិត្តិយសសូមគោរពអញ្ជើញ"}
+                            english={effectiveContent.subtitle || "With joy and honor"}
+                            eyebrow="THE INVITATION"
+                            align="left"
+                            tone="ceremonial"
+                            languageMode={languageMode}
+                          />
+                          <CelestialReveal className="kc-invitation__guest">
+                            <span style={{ fontFamily: `"${fontGuestLabel}", var(--kc-khmer-display), "Bayon", "Moul", serif` }}>
+                              {effectiveContent.guestLabel || (effectiveContent.isPersonalizedGuest ? "សូមគោរពអញ្ជើញ" : "ជូនចំពោះ:")}
+                            </span>
+                            <strong style={{ fontFamily: `"${fontGuestName}", var(--kc-khmer-display), "Bayon", "Moul", serif` }}>
+                              {effectiveContent.guestName?.trim() || "លោកអ្នក និងក្រុមគ្រួសារ"}
+                            </strong>
+                          </CelestialReveal>
+                          <CelestialReveal as="p" className="kc-invitation__message" delay={0.08}>
+                            {effectiveContent.message || "ឯកឧត្តម លោកជំទាវ លោក លោកស្រី អ្នកនាងកញ្ញា ព្រមទាំងញាតិមិត្តរាប់អានទាំងឡាយ សូមអញ្ជើញចូលរួមជាភ្ញៀវកិត្តិយស ដើម្បីប្រសិទ្ធពរជ័យជូនកូនប្រុសកូនស្រីយើងខ្ញុំ ក្នុងកម្មវិធីមង្គលអាពាហ៍ពិពាហ៍ ដែលរៀបចំឡើងដោយក្តីរីករាយ។"}
+                          </CelestialReveal>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                );
 
-        {sectionEnabled("faq") && faq.length ? (
-          <section className="kc-section kc-faq" data-tx-section="faq" aria-labelledby="kc-faq-title">
-            <div className="kc-shell kc-shell--narrow">
-              <CelestialHeading id="kc-faq-title" khmer="សំណួរញឹកញាប់" english="Guest notes" eyebrow="DETAILS" languageMode={languageMode} />
-              <div className="kc-faq__list">
-                {faq.map((item, index) => (
-                  <CelestialReveal as="details" key={item.id || `${item.q}-${index}`}>
-                    <summary>{item.q}</summary>
-                    <p>{item.a}</p>
-                  </CelestialReveal>
-                ))}
-              </div>
-            </div>
-          </section>
-        ) : null}
+              case "countdown":
+                return (
+                  <CelestialCountdownSection
+                    key="countdown"
+                    content={content}
+                    calendarUrl={calendarUrl}
+                    languageMode={languageMode}
+                    enabled={sectionEnabled("countdown")}
+                  />
+                );
 
-        {sectionEnabled("rsvp") ? (
-          <section className="kc-section kc-rsvp" data-tx-section="rsvp" aria-labelledby="kc-rsvp-title">
-            <div className="kc-shell kc-rsvp__layout">
-              <CelestialHeading id="kc-rsvp-title" khmer="សូមបញ្ជាក់ការចូលរួម" english="We hope you can join us" eyebrow="RSVP" align="left" languageMode={languageMode} />
-              <CelestialReveal className="kc-rsvp__form">
-                {children || <TemplateRsvp useTemplateLink={useTemplateLink} />}
-              </CelestialReveal>
-            </div>
-          </section>
-        ) : null}
+              case "schedule":
+                return sectionEnabled("schedule") && schedule.length ? (
+                  <section key="schedule" className="kc-section kc-schedule" data-tx-section="schedule" aria-labelledby="kc-schedule-title">
+                    <div className="kc-shell kc-shell--narrow">
+                      <CelestialHeading
+                        id="kc-schedule-title"
+                        khmer={content.scheduleTitle || "កម្មវិធីមង្គលការ"}
+                        english="The wedding programme"
+                        eyebrow="CEREMONY"
+                        languageMode={languageMode}
+                      />
+                      {content.scheduleDate ? <CelestialReveal as="p" className="kc-schedule__date">{content.scheduleDate}</CelestialReveal> : null}
+                      <div className="kc-schedule__list">
+                        {schedule.map((item, index) => {
+                          const ProgrammeIcon = PROGRAM_ICONS[index % PROGRAM_ICONS.length];
+                          return (
+                            <CelestialReveal as="article" className="kc-schedule__item" key={item.id || `${item.time}-${index}`} delay={(index % 3) * 0.04}>
+                              <time>{item.time}</time>
+                              <span className="kc-schedule__marker" aria-hidden="true"><ProgrammeIcon /></span>
+                              <div>
+                                <h3>{item.title}</h3>
+                                {item.titleEn ? <p className="kc-schedule__english">{item.titleEn}</p> : null}
+                                {item.description ? <p>{item.description}</p> : null}
+                                {item.location ? <small>{item.location}</small> : null}
+                              </div>
+                            </CelestialReveal>
+                          );
+                        })}
+                      </div>
+                      {content.scheduleEnding ? <CelestialReveal as="p" className="kc-schedule__ending">{content.scheduleEnding}</CelestialReveal> : null}
+                    </div>
+                  </section>
+                ) : null;
+
+              case "map":
+              case "venue":
+                return sectionEnabled("map") && (content.venue?.name || content.venue?.mapLink) ? (
+                  <section key="map" className="kc-section kc-venue" data-tx-section="map" aria-labelledby="kc-venue-title">
+                    <div className="kc-shell">
+                      <div className="kc-venue__layout">
+                        <div className="kc-venue__copy">
+                          <CelestialHeading id="kc-venue-title" khmer="ទីតាំងប្រារព្ធពិធី" english="The celebration venue" eyebrow="LOCATION" align="center" languageMode={languageMode} />
+                          <CelestialReveal>
+                            {content.venue?.name ? <h3>{content.venue.name}</h3> : null}
+                            {content.venue?.address ? <p>{content.venue.address}</p> : null}
+                            {content.venue?.mapLink ? (
+                              <a className="kc-button kc-button--gold" href={content.venue.mapLink} target="_blank" rel="noreferrer">
+                                <MapPin aria-hidden="true" /> បើកផែនទី <ExternalLink aria-hidden="true" />
+                              </a>
+                            ) : null}
+                            {(content.venue?.sketchMapImage || content.sketchMapImage) ? (
+                              <div className="kc-venue__sketch-map">
+                                <img
+                                  src={content.venue?.sketchMapImage || content.sketchMapImage}
+                                  alt={content.venue?.name || "ផែនទីទីតាំងប្រារព្ធពិធី"}
+                                  className="kc-venue__sketch-img"
+                                />
+                              </div>
+                            ) : null}
+                          </CelestialReveal>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                ) : null;
+
+              case "gallery":
+                return sectionEnabled("gallery") ? (
+                  <CelestialGallery key="gallery" images={content.gallery} languageMode={languageMode} preview={preview} />
+                ) : null;
+
+              case "party":
+                return sectionEnabled("party") && party.length ? (
+                  <section key="party" className="kc-section kc-party" data-tx-section="party" aria-labelledby="kc-party-title">
+                    <div className="kc-shell">
+                      <CelestialHeading id="kc-party-title" khmer="មនុស្សជាទីស្រឡាញ់" english="With those closest to us" eyebrow="WEDDING PARTY" languageMode={languageMode} />
+                      <div className="kc-party__grid">
+                        {party.map((member, index) => (
+                          <CelestialReveal as="article" key={member.id || `${member.name}-${index}`} delay={(index % 4) * 0.05}>
+                            <CelestialImage src={firstImage(member.image)} alt={member.name || `Wedding party ${index + 1}`} />
+                            <p>{member.role}</p>
+                            <h3>{member.name}</h3>
+                          </CelestialReveal>
+                        ))}
+                      </div>
+                    </div>
+                  </section>
+                ) : null;
+
+              case "dressCode":
+              case "dress":
+                return sectionEnabled("dressCode") && dressColors.length ? (
+                  <section key="dressCode" className="kc-section kc-dress" data-tx-section="dressCode" aria-labelledby="kc-dress-title">
+                    <div className="kc-shell kc-shell--narrow">
+                      <CelestialHeading id="kc-dress-title" khmer="សម្លៀកបំពាក់" english="Ceremonial palette" eyebrow="DRESS CODE" languageMode={languageMode} />
+                      <CelestialReveal className="kc-dress__content">
+                        <h3>{content.dressCode.name}</h3>
+                        {content.dressCode.style ? <p>{content.dressCode.style}</p> : null}
+                        <div className="kc-dress__colors">
+                          {dressColors.map((color, index) => (
+                            <div key={`${color.hex}-${index}`}>
+                              <span style={{ backgroundColor: color.hex }} aria-hidden="true" />
+                              <small>{color.name}</small>
+                            </div>
+                          ))}
+                        </div>
+                        {content.dressCode.description ? <p>{content.dressCode.description}</p> : null}
+                      </CelestialReveal>
+                    </div>
+                  </section>
+                ) : null;
+
+              case "gift":
+                return sectionEnabled("gift") && gift.length ? (
+                  <div key="gift" className="kc-gift" data-kc-section="gift">
+                    <TemplateGift content={content} />
+                  </div>
+                ) : null;
+
+              case "faq":
+                return sectionEnabled("faq") && faq.length ? (
+                  <section key="faq" className="kc-section kc-faq" data-tx-section="faq" aria-labelledby="kc-faq-title">
+                    <div className="kc-shell kc-shell--narrow">
+                      <CelestialHeading id="kc-faq-title" khmer="សំណួរញឹកញាប់" english="Guest notes" eyebrow="DETAILS" languageMode={languageMode} />
+                      <div className="kc-faq__list">
+                        {faq.map((item, index) => (
+                          <CelestialReveal as="details" key={item.id || `${item.q}-${index}`}>
+                            <summary>{item.q}</summary>
+                            <p>{item.a}</p>
+                          </CelestialReveal>
+                        ))}
+                      </div>
+                    </div>
+                  </section>
+                ) : null;
+
+              case "rsvp":
+                return sectionEnabled("rsvp") ? (
+                  <section key="rsvp" className="kc-section kc-rsvp" data-tx-section="rsvp" aria-labelledby="kc-rsvp-title">
+                    <div className="kc-shell kc-rsvp__layout">
+                      <CelestialHeading id="kc-rsvp-title" khmer="សូមបញ្ជាក់ការចូលរួម" english="We hope you can join us" eyebrow="RSVP" align="left" languageMode={languageMode} />
+                      <CelestialReveal className="kc-rsvp__form">
+                        {children || <TemplateRsvp useTemplateLink={useTemplateLink} />}
+                      </CelestialReveal>
+                    </div>
+                  </section>
+                ) : null;
+
+              default:
+                return null;
+            }
+          };
+
+          return activeOrder.map((key) => renderSectionItem(key));
+        })()}
 
         <section className="kc-section kc-closing" aria-label="Closing messages">
           <CelestialLiveGarden className="kc-closing__garden" variant="closing" />

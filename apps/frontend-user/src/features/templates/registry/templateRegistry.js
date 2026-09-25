@@ -6,12 +6,17 @@ import BlissEditorialLayout from "../layouts/BlissEditorialLayout";
 import DefaultTemplateLayout from "../layouts/DefaultTemplate/DefaultTemplateLayout";
 import CanvaKhmerWeddingTemplate from "../experience/components/canva-khmer/CanvaKhmerWeddingTemplate";
 import KhmerCelestialLayout from "../layouts/KhmerCelestial/KhmerCelestialLayout";
+import TemplateBoilerplateLayout from "../layouts/TemplateBoilerplate/TemplateBoilerplateLayout";
 
 /**
  * 1 Template = 1 Dedicated UI Component Registry
  * Maps template slugs, IDs, and codes to their bespoke UI layout components.
  */
 export const templateRegistry = {
+  // Developer Starter Boilerplate
+  "template-boilerplate": TemplateBoilerplateLayout,
+  "custom-starter": TemplateBoilerplateLayout,
+
   // Flagship Khmer Celestial (cinematic Cambodian editorial invitation)
   "khmer-celestial": KhmerCelestialLayout,
   "KHMER_CELESTIAL": KhmerCelestialLayout,
@@ -22,10 +27,10 @@ export const templateRegistry = {
   "7": DigitalYesLayout,
   "digital-yes": DigitalYesLayout,
 
-  // 2. Royal Khmer (Cambodian Traditional Wedding - Golden Palace Gate + 8 Steps + Kbach)
-  "royal-khmer-wedding": RoyalKhmerLayout,
-  "1": RoyalKhmerLayout,
-  "royal-khmer": RoyalKhmerLayout,
+  // 2. Royal Khmer & Ruby Red (Migrated to flagship Khmer Celestial layout)
+  "royal-khmer-wedding": KhmerCelestialLayout,
+  "1": KhmerCelestialLayout,
+  "royal-khmer": KhmerCelestialLayout,
 
   // 3. Emerald Luxe (Luxury Modern Evening Wedding - Velvet Curtain + 3D Card Flip)
   "emerald-canva-luxe-wedding": EmeraldLuxeLayout,
@@ -46,13 +51,14 @@ export const templateRegistry = {
 
   // 6. Canva Golden Khmer Luxury (Traditional Kbach Frames + Golden Card)
   "khmer-golden-canva-inspired-wedding": CanvaKhmerWeddingTemplate,
+  "cover-khmer-golden-wedding": CanvaKhmerWeddingTemplate,
   "5": CanvaKhmerWeddingTemplate,
 
   // ── Admin Studio presetId-based mappings ──
   // These match the THEME_PRESETS.id values used in AdminTemplateEditPage.jsx
   "EMERALD_GREEN": EmeraldLuxeLayout,
-  "RUBY_RED": RoyalKhmerLayout,
-  "ROYAL_KHMER": RoyalKhmerLayout,
+  "RUBY_RED": KhmerCelestialLayout,
+  "ROYAL_KHMER": KhmerCelestialLayout,
   "GOLD_LUXURY": DigitalYesLayout,
   "CHAMPAGNE": CanvaKhmerWeddingTemplate,
   "KHMER_GOLDEN": CanvaKhmerWeddingTemplate,
@@ -71,10 +77,6 @@ export { DefaultTemplateLayout };
  * Returns null if no custom layout is mapped, allowing fallback to default layout engine.
  */
 export function getDedicatedTemplateComponent(tpl, variant, useFallback = false) {
-  if (tpl?.code === "garden-royal-khmer-wedding" || tpl?.slug === "garden-royal-khmer-wedding" || variant === "garden-royal-khmer-wedding") {
-    return useFallback ? DefaultTemplateLayout : null;
-  }
-
   // Ordered most-specific first. Exact slug/code and the Admin presetId win over
   // `variant` and the raw numeric DB id, because dynamic templates reuse the
   // backend's auto-increment id — which collides with the static "1"–"7" keys.
@@ -86,16 +88,20 @@ export function getDedicatedTemplateComponent(tpl, variant, useFallback = false)
     tpl?.presetId,
     tpl?.design?.presetId,
     tpl?.design?.theme,
-    variant,
     tpl?.variant,
     tpl?.templateId,
     tpl?.id ? String(tpl.id) : null,
+    variant,
   ].filter(Boolean);
 
   for (const key of keysToCheck) {
     if (templateRegistry[key]) {
       return templateRegistry[key];
     }
+  }
+
+  if (tpl?.code === "garden-royal-khmer-wedding" || tpl?.slug === "garden-royal-khmer-wedding" || variant === "garden-royal-khmer-wedding") {
+    return useFallback ? DefaultTemplateLayout : null;
   }
 
   return useFallback ? DefaultTemplateLayout : null;

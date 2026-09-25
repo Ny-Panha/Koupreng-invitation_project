@@ -22,13 +22,29 @@ function reveal(instant, delay, overrides = {}) {
   };
 }
 
+const ensureGoogleFontLoaded = (fontFamily) => {
+  if (!fontFamily || typeof document === "undefined") return;
+  const cleanName = fontFamily.trim().replace(/^['"]|['"]$/g, "");
+  const fontId = `gfont-${cleanName.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
+  if (document.getElementById(fontId)) return;
+  const link = document.createElement("link");
+  link.id = fontId;
+  link.rel = "stylesheet";
+  link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(cleanName)}&display=swap`;
+  document.head.appendChild(link);
+  if (document.fonts?.load) {
+    document.fonts.load(`1em "${cleanName}"`).catch(() => {});
+  }
+};
+
 export default function CelestialOpening({ content, onOpen, preview = false }) {
   const reducedMotion = usePrefersReducedMotion();
   const instant = Boolean(reducedMotion || preview);
   const [videoFailed, setVideoFailed] = useState(false);
   const openLabel = content.opening?.openButtonText || "Open invitation";
-  const guestName = content.guestName?.trim() || "លោកអ្នក និងក្រុមគ្រួសារ";
-  const guestLabel = content.isPersonalizedGuest ? "សូមគោរពអញ្ជើញ" : "ជូនចំពោះ:";
+  const guestName = (content.guestName && content.guestName.trim()) || "លោកអ្នក និងក្រុមគ្រួសារ";
+  const guestLabel = (content.guestLabel && content.guestLabel.trim()) || (content.isPersonalizedGuest ? "សូមគោរពអញ្ជើញ" : "ជូនចំពោះ:");
+  const subtitleText = content.subtitle || content.invitationSubtitle;
   const guestNameLength = Array.from(guestName.replace(/\s+/g, "")).length;
   const guestNameClass = [
     "kc-opening__guest-name",
@@ -54,13 +70,26 @@ export default function CelestialOpening({ content, onOpen, preview = false }) {
     ? (content.openButtonImage || KHMER_CELESTIAL_ASSETS.openButton)
     : null;
   const currentGateStyle = content.gateStyle || content.openingStyle || content.design?.openingStyle || "celestial-cover";
-  const videoEnabled = content.design?.openingVideoEnabled !== false && currentGateStyle !== "botanical-cover";
+  const explicitVideo =
+    mediaSource(content.openingVideo) ||
+    mediaSource(content.openingVideoUrl) ||
+    mediaSource(content.videoUrl) ||
+    mediaSource(content.design?.openingVideoUrl) ||
+    "";
+
+  const videoOptOut =
+    content.showCoverVideo === false ||
+    content.enableCoverVideo === false ||
+    content.design?.openingVideoEnabled === false ||
+    currentGateStyle === "botanical-cover" ||
+    (content.videoUrl === "" && content.openingVideoUrl === "");
+
+  const videoEnabled = !videoOptOut && Boolean(
+    explicitVideo || (content.design?.openingVideoEnabled === true ? KHMER_CELESTIAL_ASSETS.openingVideo : "")
+  );
+
   const openingVideo = videoEnabled
-    ? mediaSource(content.openingVideo)
-      || mediaSource(content.openingVideoUrl)
-      || mediaSource(content.videoUrl)
-      || mediaSource(content.design?.openingVideoUrl)
-      || KHMER_CELESTIAL_ASSETS.openingVideo
+    ? (explicitVideo || (content.design?.openingVideoEnabled === true ? KHMER_CELESTIAL_ASSETS.openingVideo : ""))
     : "";
 
   const botanicalFrame = content.backgroundImage
@@ -79,6 +108,59 @@ export default function CelestialOpening({ content, onOpen, preview = false }) {
     content.coverTheme === "dark" ||
     content.design?.coverTheme === "dark"
   );
+
+  const elementFonts = content.elementFonts || {};
+  const globalKhmer = content.fontKhmer || "Siemreap";
+  const globalLatin = content.fontLatin || "Cinzel Decorative";
+
+  const fontCouple = elementFonts.couple || globalKhmer;
+  const fontDate = elementFonts.date || globalKhmer;
+  const fontTime = elementFonts.time || globalKhmer;
+  const fontSubtitle = elementFonts.subtitle || globalKhmer;
+  const fontGuestLabel = elementFonts.guestLabel || globalKhmer;
+  const fontGuestName = elementFonts.guestName || globalKhmer;
+
+  useEffect(() => {
+    [
+      fontCouple,
+      fontDate,
+      fontTime,
+      fontSubtitle,
+      fontGuestLabel,
+      fontGuestName,
+      globalKhmer,
+      globalLatin,
+    ].forEach((f) => {
+      if (f && typeof f === "string") ensureGoogleFontLoaded(f);
+    });
+  }, [
+    fontCouple,
+    fontDate,
+    fontTime,
+    fontSubtitle,
+    fontGuestLabel,
+    fontGuestName,
+    globalKhmer,
+    globalLatin,
+  ]);
+
+  const activeSelected = content.selectedFontElement;
+
+  const handleSelectElement = (elementId, e) => {
+    if (!preview) return;
+    if (e) {
+      e.stopPropagation();
+    }
+    if (typeof window !== "undefined" && window.parent && window.parent !== window) {
+      window.parent.postMessage(
+        {
+          type: "SELECT_TARGET_ELEMENT",
+          elementId,
+        },
+        "*"
+      );
+    }
+  };
 
   useEffect(() => {
     setVideoFailed(false);
@@ -157,28 +239,86 @@ export default function CelestialOpening({ content, onOpen, preview = false }) {
 
         {!content.hideCoupleNameOnCover && (
           <motion.div className="kc-opening__couple-wrap" {...reveal(instant, 0.12)}>
-            <h2 id="kc-opening-title" className="kc-opening__couple-names">
-              <span className="kc-opening__groom">{content.groom?.trim() || "វណ្ណដា"}</span>
+            <h2
+              id="kc-opening-title"
+              className={`kc-opening__couple-names ${preview ? "kc-interactive-element" : ""} ${activeSelected === "couple" ? "kc-interactive-element--active" : ""}`}
+              onClick={(e) => handleSelectElement("couple", e)}
+              title={preview ? "ចុចដើម្បីកែប្រែឈ្មោះគូដណ្ដឹង & ពុម្ពអក្សរ" : undefined}
+              style={{
+                fontFamily: `"${fontCouple}", "Moul", "Bayon", serif`,
+                fontWeight: "normal",
+              }}
+            >
+              <span
+                className="kc-opening__groom"
+                style={{
+                  fontFamily: `"${fontCouple}", "Moul", "Bayon", serif`,
+                  fontWeight: "inherit",
+                }}
+              >
+                {content.groom?.trim() || "វណ្ណដា"}
+              </span>
               <span className="kc-opening__amp"> &amp; </span>
-              <span className="kc-opening__bride">{content.bride?.trim() || "ស្រីពេជ្រ"}</span>
+              <span
+                className="kc-opening__bride"
+                style={{
+                  fontFamily: `"${fontCouple}", "Moul", "Bayon", serif`,
+                  fontWeight: "inherit",
+                }}
+              >
+                {content.bride?.trim() || "ស្រីពេជ្រ"}
+              </span>
             </h2>
           </motion.div>
         )}
 
         <motion.div className="kc-opening__date-block" {...reveal(instant, 0.18)}>
-          <p className="kc-opening__date">
-            {content.dateTextEn || content.dateText || "Sunday, December 20, 2026"}
+          <p
+            className={`kc-opening__date ${preview ? "kc-interactive-element" : ""} ${activeSelected === "date" ? "kc-interactive-element--active" : ""}`}
+            onClick={(e) => handleSelectElement("date", e)}
+            title={preview ? "ចុចដើម្បីកែប្រែកាលបរិច្ឆេទ & ពុម្ពអក្សរ" : undefined}
+            style={{
+              fontFamily: `"${fontDate}", "Dangrek", "Kantumruy Pro", "Siemreap", sans-serif`,
+              fontWeight: "normal",
+            }}
+          >
+            {content.dateText || content.weddingDate || "ថ្ងៃពុធ ២៨ មករា ២០២៦"}
           </p>
-          <p className="kc-opening__time">
-            {content.receptionTime || content.eventTime || "១៧:០០"}
+          <p
+            className={`kc-opening__time ${preview ? "kc-interactive-element" : ""} ${activeSelected === "time" ? "kc-interactive-element--active" : ""}`}
+            onClick={(e) => handleSelectElement("time", e)}
+            title={preview ? "ចុចដើម្បីកែប្រែពេលវេលា & ពុម្ពអក្សរ" : undefined}
+            style={{
+              fontFamily: `"${fontTime}", "Bayon", "Moul", serif`,
+              fontWeight: "normal",
+            }}
+          >
+            {content.receptionTime || content.eventTime || content.weddingTime || "១៧:០០"}
           </p>
-          {content.subtitle && content.subtitle !== "សូមគោរពអញ្ជើញ" && content.subtitle !== guestLabel && content.subtitle !== "ជូនចំពោះ" && content.subtitle !== "ជូនចំពោះ:" ? (
-            <p className="kc-opening__subtitle">{content.subtitle}</p>
+          {subtitleText ? (
+            <p
+              className={`kc-opening__subtitle ${preview ? "kc-interactive-element" : ""} ${activeSelected === "subtitle" ? "kc-interactive-element--active" : ""}`}
+              onClick={(e) => handleSelectElement("subtitle", e)}
+              title={preview ? "ចុចដើម្បីកែប្រែពាក្យអញ្ជើញ & ពុម្ពអក្សរ" : undefined}
+              style={{
+                fontFamily: `"${fontSubtitle}", "Bayon", "Moul", "Siemreap", serif`,
+                fontWeight: "normal",
+                display: "block",
+              }}
+            >
+              {subtitleText}
+            </p>
           ) : null}
         </motion.div>
 
         <motion.p
-          className="kc-opening__guest-label"
+          className={`kc-opening__guest-label ${preview ? "kc-interactive-element" : ""} ${activeSelected === "guestLabel" ? "kc-interactive-element--active" : ""}`}
+          onClick={(e) => handleSelectElement("guestLabel", e)}
+          title={preview ? "ចុចដើម្បីកែប្រែពាក្យស្វាគមន៍ & ពុម្ពអក្សរ" : undefined}
+          style={{
+            fontFamily: `"${fontGuestLabel}", "Bayon", "Moul", "Siemreap", serif`,
+            fontWeight: "normal",
+          }}
           {...reveal(instant, 0.22, {
             initial: { y: 4 },
             transition: { duration: 0.4 },
@@ -209,7 +349,13 @@ export default function CelestialOpening({ content, onOpen, preview = false }) {
             style={!effectiveGuestBanner ? { position: "static", transform: "none", margin: "6px 0 10px" } : undefined}
           >
             <motion.strong
-              className={guestNameClass}
+              className={`${guestNameClass} ${preview ? "kc-interactive-element" : ""} ${activeSelected === "guestName" ? "kc-interactive-element--active" : ""}`}
+              onClick={(e) => handleSelectElement("guestName", e)}
+              title={preview ? "ចុចដើម្បីកែប្រែឈ្មោះភ្ញៀវ & ពុម្ពអក្សរ" : undefined}
+              style={{
+                fontFamily: `"${fontGuestName}", "Bayon", "Moul", serif`,
+                fontWeight: "normal",
+              }}
               {...reveal(instant, 0.3, {
                 initial: { y: 4 },
                 transition: { duration: 0.4 },

@@ -20,14 +20,21 @@ export default function CinematicVideoOpening({
   groom = "កូនកំលោះ",
   bride = "កូនក្រមុំ",
   weddingTitle,
+  weddingDate,
+  weddingTime,
+  guestLabel,
+  guestName,
+  subtitle,
   onOpen,
   state = "closed",
+  preview = false,
 }) {
   const videoRef = useRef(null);
   const [isMuted, setIsMuted] = useState(true);
   const [isFadingOut, setIsFadingOut] = useState(false);
   const [isOpened, setIsOpened] = useState(state === "opened");
-  const [showPopup, setShowPopup] = useState(false);
+  const isPreviewMode = Boolean(preview || content.preview);
+  const [showPopup, setShowPopup] = useState(isPreviewMode);
 
   const rawVideo =
     videoUrl ||
@@ -68,6 +75,31 @@ export default function CinematicVideoOpening({
     content.invitationTitle ||
     "វីដេអូបើកឆាកអាពាហ៍ពិពាហ៍";
 
+  const elementFonts = content.elementFonts || {};
+  const globalKhmer = content.fontKhmer || "Siemreap";
+  const fontCouple = elementFonts.couple || globalKhmer;
+  const fontSubtitle = elementFonts.subtitle || globalKhmer;
+  const fontGuestLabel = elementFonts.guestLabel || globalKhmer;
+  const fontGuestName = elementFonts.guestName || globalKhmer;
+
+  const effectiveGuestName = guestName || content.guestName || "លោកអ្នក និងក្រុមគ្រួសារ";
+  const effectiveGuestLabel = guestLabel || content.guestLabel || (content.isPersonalizedGuest ? "សូមគោរពអញ្ជើញ" : "ជូនចំពោះ:");
+  const effectiveSubtitle = subtitle || content.subtitle || content.invitationSubtitle || "យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ";
+
+  const handleSelectElement = (elementId, e) => {
+    if (!isPreviewMode) return;
+    if (e) e.stopPropagation();
+    if (typeof window !== "undefined" && window.parent && window.parent !== window) {
+      window.parent.postMessage(
+        {
+          type: "SELECT_TARGET_ELEMENT",
+          elementId,
+        },
+        "*"
+      );
+    }
+  };
+
   // Trigger autoplay on mount
   useEffect(() => {
     if (videoRef.current) {
@@ -79,11 +111,15 @@ export default function CinematicVideoOpening({
 
   // Fallback timer to show popup after video ends (~5.5 seconds)
   useEffect(() => {
+    if (isPreviewMode) {
+      setShowPopup(true);
+      return;
+    }
     const timer = setTimeout(() => {
       setShowPopup(true);
     }, 5500);
     return () => clearTimeout(timer);
-  }, [effectiveVideoUrl]);
+  }, [effectiveVideoUrl, isPreviewMode]);
 
   useEffect(() => {
     if (state === "opened") {
@@ -177,7 +213,7 @@ export default function CinematicVideoOpening({
         {/* Left: Royal Couple Monogram Badge */}
         <div className="cinematic-couple-badge">
           <Sparkles className="cinematic-couple-badge-icon w-3.5 h-3.5" />
-          <span>
+          <span style={{ fontFamily: `"${fontCouple}", var(--kc-khmer-display), "Bayon", "Moul", serif` }}>
             {effectiveGroom} &amp; {effectiveBride}
           </span>
         </div>
@@ -224,12 +260,22 @@ export default function CinematicVideoOpening({
             <Sparkles className="w-5 h-5 text-amber-300" />
           </div>
 
-          {/* Wedding Title: វីដេអូបើកឆាកអាពាហ៍ពិពាហ៍ in Moul Font */}
-          <h2 className="cinematic-hub-title">វីដេអូបើកឆាកអាពាហ៍ពិពាហ៍</h2>
+          {/* Wedding Title */}
+          <h2
+            className={`cinematic-hub-title ${isPreviewMode ? "kc-interactive-element" : ""}`}
+            onClick={(e) => handleSelectElement("couple", e)}
+            style={{ fontFamily: `"${fontCouple}", "Moul", "Bayon", serif` }}
+          >
+            {effectiveTitle}
+          </h2>
 
-          {/* Subtitle: ✧ CINEMATIC PRE-WEDDING STORY ✧ */}
-          <p className="cinematic-hub-subtitle">
-            ✧ CINEMATIC PRE-WEDDING STORY ✧
+          {/* Subtitle */}
+          <p
+            className={`cinematic-hub-subtitle ${isPreviewMode ? "kc-interactive-element" : ""}`}
+            onClick={(e) => handleSelectElement("subtitle", e)}
+            style={{ fontFamily: `"${fontSubtitle}", "Bayon", "Moul", "Siemreap", serif` }}
+          >
+            {effectiveSubtitle}
           </p>
 
           {/* Golden Hairline Divider */}
@@ -237,9 +283,30 @@ export default function CinematicVideoOpening({
             <span className="cinematic-hub-kbach">❖</span>
           </div>
 
-          <p className="cinematic-popup-couple-name">
+          <p
+            className={`cinematic-popup-couple-name ${isPreviewMode ? "kc-interactive-element" : ""}`}
+            onClick={(e) => handleSelectElement("couple", e)}
+            style={{ fontFamily: `"${fontCouple}", "Moul", "Bayon", serif` }}
+          >
             {effectiveGroom} &amp; {effectiveBride}
           </p>
+
+          <div className="cinematic-popup-guest" style={{ margin: "6px auto 10px", textAlign: "center" }}>
+            <p
+              className={isPreviewMode ? "kc-interactive-element" : ""}
+              onClick={(e) => handleSelectElement("guestLabel", e)}
+              style={{ fontSize: "11px", color: "rgba(255, 255, 255, 0.7)", fontFamily: `"${fontGuestLabel}", "Bayon", "Moul", "Siemreap", serif` }}
+            >
+              {effectiveGuestLabel}
+            </p>
+            <p
+              className={isPreviewMode ? "kc-interactive-element" : ""}
+              onClick={(e) => handleSelectElement("guestName", e)}
+              style={{ fontSize: "13px", fontWeight: "bold", color: "#f59e0b", fontFamily: `"${fontGuestName}", "Bayon", "Moul", serif` }}
+            >
+              {effectiveGuestName}
+            </p>
+          </div>
 
           <div className="cinematic-popup-actions">
             {/* Grand Gold Direct Enter Button */}

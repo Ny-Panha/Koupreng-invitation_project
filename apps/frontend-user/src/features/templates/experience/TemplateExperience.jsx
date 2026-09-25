@@ -34,6 +34,18 @@ import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion"
 import "./template-experience.css";
 import "./components/canva-khmer/canva-khmer-wedding.css";
 
+const ensureGoogleFontLoaded = (fontFamily) => {
+    if (!fontFamily || typeof document === "undefined") return;
+    const cleanName = fontFamily.trim().replace(/^['"]|['"]$/g, "");
+    const fontId = `gfont-${cleanName.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
+    if (document.getElementById(fontId)) return;
+    const link = document.createElement("link");
+    link.id = fontId;
+    link.rel = "stylesheet";
+    link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(cleanName)}&display=swap`;
+    document.head.appendChild(link);
+};
+
 /**
  * TemplateExperience — shared, themeable full-page wedding experience.
  *
@@ -89,11 +101,21 @@ export default function TemplateExperience({
         if (!liveData) return baseContent;
         return {
             ...baseContent,
+            fontKhmer: liveData.fontKhmer !== undefined ? liveData.fontKhmer : baseContent.fontKhmer,
+            fontLatin: liveData.fontLatin !== undefined ? liveData.fontLatin : baseContent.fontLatin,
+            elementFonts: liveData.elementFonts || baseContent.elementFonts || {},
+            selectedFontElement: liveData.selectedFontElement || baseContent.selectedFontElement || "couple",
+            customFonts: liveData.customFonts || baseContent.customFonts,
+            primaryColor: liveData.primaryColor || baseContent.primaryColor,
+            secondaryColor: liveData.secondaryColor || baseContent.secondaryColor,
+            backgroundColor: liveData.backgroundColor || baseContent.backgroundColor,
+            ampSymbol: liveData.ampSymbol || baseContent.ampSymbol,
             groom: liveData.groomName || baseContent.groom,
             bride: liveData.brideName || baseContent.bride,
             title: liveData.invitationTitle || baseContent.title,
             invitationTitle: liveData.invitationTitle || baseContent.invitationTitle,
-            subtitle: liveData.invitationSubtitle || baseContent.subtitle,
+            subtitle: liveData.invitationSubtitle !== undefined ? liveData.invitationSubtitle : (liveData.subtitle !== undefined ? liveData.subtitle : baseContent.subtitle),
+            invitationSubtitle: liveData.invitationSubtitle !== undefined ? liveData.invitationSubtitle : (liveData.subtitle !== undefined ? liveData.subtitle : baseContent.invitationSubtitle),
             amp: liveData.ampSymbol || baseContent.amp || "♥",
             badge: liveData.badgeText || baseContent.badge,
             monogramText: liveData.groomName && liveData.brideName
@@ -121,15 +143,16 @@ export default function TemplateExperience({
                 secondaryColor: liveData.secondaryColor || baseContent.design?.secondaryColor,
                 cardMotion: liveData.cardMotion || liveData.cardLayout || baseContent.design?.cardMotion,
                 backgroundImage: liveData.backgroundImage || liveData.bgImage || baseContent.design?.backgroundImage,
-                openingVideoUrl: liveData.openingVideoUrl || liveData.videoUrl || baseContent.design?.openingVideoUrl,
+                openingVideoUrl: liveData.openingVideoUrl !== undefined ? liveData.openingVideoUrl : (liveData.videoUrl !== undefined ? liveData.videoUrl : baseContent.design?.openingVideoUrl),
                 showButterflies: liveData.showButterflies,
             },
             openingStyle: liveData.gateStyle || liveData.openingStyle || baseContent.openingStyle || baseContent.design?.openingStyle,
             gateStyle: liveData.gateStyle || liveData.openingStyle || baseContent.gateStyle || baseContent.design?.openingStyle,
             cardMotion: liveData.cardMotion || liveData.cardLayout || baseContent.cardMotion,
-            videoUrl: liveData.videoUrl || liveData.openingVideoUrl || baseContent.videoUrl,
-            openingVideo: liveData.openingVideoUrl || liveData.videoUrl || baseContent.openingVideo,
-            openingVideoUrl: liveData.openingVideoUrl || liveData.videoUrl || baseContent.openingVideoUrl,
+            videoUrl: liveData.videoUrl !== undefined ? liveData.videoUrl : (liveData.openingVideoUrl !== undefined ? liveData.openingVideoUrl : baseContent.videoUrl),
+            openingVideo: liveData.openingVideo !== undefined ? liveData.openingVideo : (liveData.openingVideoUrl !== undefined ? liveData.openingVideoUrl : (liveData.videoUrl !== undefined ? liveData.videoUrl : baseContent.openingVideo)),
+            openingVideoUrl: liveData.openingVideoUrl !== undefined ? liveData.openingVideoUrl : (liveData.videoUrl !== undefined ? liveData.videoUrl : baseContent.openingVideoUrl),
+            showCoverVideo: liveData.showCoverVideo !== undefined ? liveData.showCoverVideo : (liveData.videoUrl !== undefined ? Boolean(liveData.videoUrl) : undefined),
             brandMark: liveData.showBrandMark === false || liveData.brandMark === "" ? "" : (liveData.brandMark !== undefined ? liveData.brandMark : baseContent.brandMark),
             showBrandMark: liveData.showBrandMark !== undefined ? liveData.showBrandMark : (liveData.brandMark === "" ? false : baseContent.showBrandMark),
             guestNameBanner: liveData.showGuestBanner === false || liveData.guestNameBanner === "" ? "" : (liveData.guestNameBanner !== undefined ? liveData.guestNameBanner : baseContent.guestNameBanner),
@@ -166,7 +189,8 @@ export default function TemplateExperience({
                 invitationText: liveData.invitationSubtitle || baseContent.opening?.invitationText,
                 genericGuestText: liveData.guestName || baseContent.opening?.genericGuestText,
             },
-            guestName: liveData.guestName || baseContent.guestName,
+            guestLabel: liveData.guestLabel !== undefined ? liveData.guestLabel : (baseContent.guestLabel || "ជូនចំពោះ:"),
+            guestName: liveData.guestName !== undefined ? liveData.guestName : (baseContent.guestName || "លោកអ្នក និងក្រុមគ្រួសារ"),
             dressCode: {
                 name: liveData.dressCodeName || baseContent.dressCode?.name || "ពណ៌សម្លៀកបំពាក់ (Dress Code)",
                 style: liveData.dressCodeStyle || baseContent.dressCode?.style || "ខ្មែរប្រពៃណី / សម័យ",
@@ -202,6 +226,8 @@ export default function TemplateExperience({
                 }))
                 : baseContent.schedule,
             targetDate: liveData.targetDate || liveData.eventDate || baseContent.targetDate,
+            weddingDate: liveData.weddingDate || baseContent.weddingDate,
+            weddingTime: liveData.weddingTime || baseContent.weddingTime,
             dateText: liveData.weddingDate || liveData.eventDateText || liveData.dateText || baseContent.dateText,
             eventTime: liveData.weddingTime || liveData.eventTime || baseContent.eventTime,
             receptionTime: liveData.weddingTime || liveData.receptionTime || baseContent.receptionTime,
@@ -233,8 +259,25 @@ export default function TemplateExperience({
             }
         };
         window.addEventListener("message", handleMessage);
+
+        if (typeof window !== "undefined" && window.parent && window.parent !== window) {
+            window.parent.postMessage({ type: "PREVIEW_READY" }, "*");
+        }
+
         return () => window.removeEventListener("message", handleMessage);
     }, []);
+
+    useEffect(() => {
+        const fontsToLoad = new Set();
+        if (content.fontKhmer) fontsToLoad.add(content.fontKhmer);
+        if (content.fontLatin) fontsToLoad.add(content.fontLatin);
+        if (content.elementFonts) {
+            Object.values(content.elementFonts).forEach((f) => {
+                if (f && typeof f === "string") fontsToLoad.add(f);
+            });
+        }
+        fontsToLoad.forEach((f) => ensureGoogleFontLoaded(f));
+    }, [content.fontKhmer, content.fontLatin, content.elementFonts]);
 
 
     const setContentNode = useCallback((node) => {
@@ -386,7 +429,17 @@ export default function TemplateExperience({
                 className={`tx-root ${theme.className} tx-ornament--${ornamentTheme}${preview ? " tx-root--preview" : ""}`}
                 data-theme="wed"
                 data-variant={resolvedVariant}
-                style={content.backgroundImage ? { "--tx-bg-custom": `url(${content.backgroundImage})` } : undefined}
+                style={{
+                    ...(content.backgroundImage ? { "--tx-bg-custom": `url(${content.backgroundImage})` } : {}),
+                    ...(content.fontKhmer ? {
+                        "--font-khmer-title": `"${content.fontKhmer}", "Bayon", "Moul", serif`,
+                        "--tpl-heading-font": `"${content.fontKhmer}", "Bayon", "Moul", serif`,
+                        "--font-kh-title": `"${content.fontKhmer}", "Bayon", "Moul", serif`,
+                    } : {}),
+                    ...(content.fontLatin ? {
+                        "--font-en-romantic": `"${content.fontLatin}", Georgia, serif`,
+                    } : {}),
+                }}
                 ref={rootRef}
             >
             {!preview && showBreadcrumb && (

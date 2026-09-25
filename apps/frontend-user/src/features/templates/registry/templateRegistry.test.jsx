@@ -24,11 +24,11 @@ describe("templateRegistry (1 Template = 1 Dedicated UI)", () => {
     expect(getDedicatedTemplateComponent({ slug: "the-digital-yes-wedding" })).toBe(DigitalYesLayout);
   });
 
-  it("maps Royal Khmer wedding template (slug and ID 1)", () => {
-    expect(templateRegistry["royal-khmer-wedding"]).toBe(RoyalKhmerLayout);
-    expect(templateRegistry["1"]).toBe(RoyalKhmerLayout);
-    expect(getDedicatedTemplateComponent({ id: "1" })).toBe(RoyalKhmerLayout);
-    expect(getDedicatedTemplateComponent({ slug: "royal-khmer-wedding" })).toBe(RoyalKhmerLayout);
+  it("maps Royal Khmer wedding template (slug and ID 1) to KhmerCelestialLayout", () => {
+    expect(templateRegistry["royal-khmer-wedding"]).toBe(KhmerCelestialLayout);
+    expect(templateRegistry["1"]).toBe(KhmerCelestialLayout);
+    expect(getDedicatedTemplateComponent({ id: "1" })).toBe(KhmerCelestialLayout);
+    expect(getDedicatedTemplateComponent({ slug: "royal-khmer-wedding" })).toBe(KhmerCelestialLayout);
   });
 
   it("maps Emerald Luxe wedding template (slug and ID 2)", () => {
@@ -62,7 +62,7 @@ describe("templateRegistry (1 Template = 1 Dedicated UI)", () => {
   });
 
   it("resolves other presetIds correctly (RUBY_RED, GOLD_LUXURY)", () => {
-    expect(getDedicatedTemplateComponent({ presetId: "RUBY_RED" })).toBe(RoyalKhmerLayout);
+    expect(getDedicatedTemplateComponent({ presetId: "RUBY_RED" })).toBe(KhmerCelestialLayout);
     expect(getDedicatedTemplateComponent({ presetId: "GOLD_LUXURY" })).toBe(DigitalYesLayout);
   });
 });

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   Palette,
@@ -26,6 +26,11 @@ import {
   Pause,
   Volume2,
   VolumeX,
+  Type,
+  X,
+  Check,
+  Globe,
+  LayoutTemplate,
 } from "lucide-react";
 import { Toast, DatePicker, TimePicker } from "../../shared/ui";
 import { useToast } from "../../shared/hooks";
@@ -36,7 +41,49 @@ import {
   TemplateCoverSection,
   TemplateGallerySection,
   TemplateQrSection,
+  TemplateSectionOrderManager,
+  DEFAULT_SECTIONS_LIST,
 } from "./components";
+
+// Template UI Layout Options - Only 100% Unique, Fully-functional Layouts
+const TEMPLATE_LAYOUT_OPTIONS = [
+  {
+    code: "khmer-celestial",
+    name: "Khmer Celestial",
+    labelKh: "ផ្កា & ពន្លឺមាសប្រណិត",
+    desc: "រចនាបទផ្កា ស៊ុម Botanical ព័ទ្ធជុំវិញ និងពន្លឺផ្កាយមាស (Flagship)",
+    badge: "Flagship",
+    badgeColor: "bg-amber-500/20 text-amber-300 border-amber-500/30",
+    icon: "🌸",
+  },
+  {
+    code: "the-digital-yes-wedding",
+    name: "The Digital Yes",
+    labelKh: "ស្រោមសំបុត្រ 3D & ផ្កាធ្លាក់",
+    desc: "ស្រោមសំបុត្របិទត្រា Wax Seal ចុចរបើកហូតសំបុត្រ + ផ្កាធ្លាក់",
+    badge: "Interactive",
+    badgeColor: "bg-rose-500/20 text-rose-300 border-rose-500/30",
+    icon: "💌",
+  },
+  {
+    code: "emerald-canva-luxe-wedding",
+    name: "Emerald Luxe",
+    labelKh: "កាត 3D Flip & វាំងននកម្ញី",
+    desc: "វាំងននកម្ញី Velvet បៃតងត្បូងមរកត + បង្វិលកាត 3D Flip",
+    badge: "Luxury",
+    badgeColor: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
+    icon: "🌿",
+  },
+  {
+    code: "template-boilerplate",
+    name: "Custom Boilerplate",
+    labelKh: "គំរូ Starter ថ្មីសម្រាប់ Custom",
+    desc: "Layout គំរូស្រាល លឿន សម្រាប់ Developer កែប្រែតាមចិត្ត",
+    badge: "Starter",
+    badgeColor: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+    icon: "🚀",
+  },
+];
 
 // Preset Theme Styles
 const THEME_PRESETS = [
@@ -186,6 +233,88 @@ const DEFAULT_SCHEDULE = [
   { id: "4", time: "05:00 ល្ងាច", title: "ពិធីពិសាភោជនាហារ និងរាំកម្សាន្ត", desc: "សូមអញ្ជើញចូលរួមពិធីលៀងសាយភោជនាហារ" },
 ];
 
+const ensureGoogleFontLoaded = (fontFamily) => {
+  if (!fontFamily || typeof document === "undefined") return;
+  const cleanName = fontFamily.trim().replace(/^['"]|['"]$/g, "");
+  const fontId = `gfont-${cleanName.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
+  if (document.getElementById(fontId)) return;
+  const link = document.createElement("link");
+  link.id = fontId;
+  link.rel = "stylesheet";
+  link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(cleanName)}&display=swap`;
+  document.head.appendChild(link);
+};
+
+const ensureCustomFontFace = (fontFamily, fontUrl) => {
+  if (!fontFamily || !fontUrl || typeof document === "undefined" || typeof FontFace === "undefined") return;
+  const cleanName = fontFamily.trim().replace(/^['"]|['"]$/g, "");
+  try {
+    const font = new FontFace(cleanName, `url("${fontUrl}")`);
+    font.load().then((loaded) => {
+      document.fonts.add(loaded);
+    }).catch(() => {});
+  } catch {}
+};
+
+const KHMER_FONTS = [
+  // 👑 Royal & Traditional Khmer Wedding Fonts
+  { value: "Moul", label: "Moul (អក្សរមូលឆ្លាក់បុរាណ)", group: "👑 ម៉ូតបុរាណ & រាជវាំង" },
+  { value: "Bayon", label: "Bayon (អក្សរបាយ័ន បុរាណរាជវាំង)", group: "👑 ម៉ូតបុរាណ & រាជវាំង" },
+  { value: "Koulen", label: "Koulen (អក្សរគូលែន ដិតស្រួចអំណាច)", group: "👑 ម៉ូតបុរាណ & រាជវាំង" },
+  { value: "Preahvihear", label: "Preahvihear (អក្សរព្រះវិហារ ថ្លៃថ្នូរ)", group: "👑 ម៉ូតបុរាណ & រាជវាំង" },
+  { value: "Angkor", label: "Angkor (អក្សរអង្គរ បុរាណវិចិត្រ)", group: "👑 ម៉ូតបុរាណ & រាជវាំង" },
+  { value: "Dangrek", label: "Dangrek (អក្សរដងរែក សង្ហាស្វាហាប់)", group: "👑 ម៉ូតបុរាណ & រាជវាំង" },
+  { value: "Bokor", label: "Bokor (អក្សរបូកគោ បែបសិល្បៈឆ្លាក់)", group: "👑 ម៉ូតបុរាណ & រាជវាំង" },
+  { value: "Chenla", label: "Chenla (អក្សរចេនឡា កេរដំណែលបុរាណ)", group: "👑 ម៉ូតបុរាណ & រាជវាំង" },
+  { value: "Taprom", label: "Taprom (អក្សរតាព្រហ្ម បែបសក្ការៈ)", group: "👑 ម៉ូតបុរាណ & រាជវាំង" },
+  { value: "Suwannaphum", label: "Suwannaphum (អក្សរសុវណ្ណភូមិ)", group: "👑 ម៉ូតបុរាណ & រាជវាំង" },
+
+  // ✨ Modern & Soft Khmer Fonts
+  { value: "Kantumruy Pro", label: "Kantumruy Pro (សម័យទំនើបស្អាត)", group: "✨ ម៉ូតសម័យទំនើប & ស្រទន់" },
+  { value: "Battambang", label: "Battambang (ស្រទន់រៀបរយ)", group: "✨ ម៉ូតសម័យទំនើប & ស្រទន់" },
+  { value: "Siemreap", label: "Siemreap (រៀបរយទន់ភ្លន់)", group: "✨ ម៉ូតសម័យទំនើប & ស្រទន់" },
+  { value: "Fasthand", label: "Fasthand (អក្សរសរសេរដៃរហ័ស)", group: "✨ ម៉ូតសម័យទំនើប & ស្រទន់" },
+  { value: "Nokora", label: "Nokora (អក្សរនគរាជ សង្ហារៀបរយ)", group: "✨ ម៉ូតសម័យទំនើប & ស្រទន់" },
+];
+
+const LATIN_FONTS = [
+  // 💎 Luxury Roman & Serif
+  { value: "Cinzel", label: "Cinzel (Royal Classical Roman)", group: "💎 Luxury Roman & Serif" },
+  { value: "Cinzel Decorative", label: "Cinzel Decorative (Royal Ornate)", group: "💎 Luxury Roman & Serif" },
+  { value: "Playfair Display", label: "Playfair Display (Luxury Editorial)", group: "💎 Luxury Roman & Serif" },
+  { value: "Cormorant Garamond", label: "Cormorant Garamond (Ultra Elegant Fine Serif)", group: "💎 Luxury Roman & Serif" },
+
+  // ✒️ Calligraphy & Script
+  { value: "Great Vibes", label: "Great Vibes (Romantic Calligraphy)", group: "✒️ Calligraphy & Script" },
+  { value: "Alex Brush", label: "Alex Brush (Classic Graceful Script)", group: "✒️ Calligraphy & Script" },
+  { value: "Pinyon Script", label: "Pinyon Script (Aristocratic French Script)", group: "✒️ Calligraphy & Script" },
+  { value: "Allura", label: "Allura (Flowing Handwritten Script)", group: "✒️ Calligraphy & Script" },
+
+  // 🏢 Modern Sans
+  { value: "Montserrat", label: "Montserrat (Clean Luxury Sans)", group: "🏢 Modern Sans" },
+  { value: "Inter", label: "Inter (Clean Contemporary)", group: "🏢 Modern Sans" },
+];
+
+const POPULAR_GOOGLE_FONTS_SUGGESTIONS = [
+  { name: "Odor Mean Chey", category: "khmer" },
+  { name: "Koh Santepheap", category: "khmer" },
+  { name: "Kdam Thmor Pro", category: "khmer" },
+  { name: "MonteCarlo", category: "latin" },
+  { name: "Italianno", category: "latin" },
+  { name: "Parisienne", category: "latin" },
+  { name: "Marck Script", category: "latin" },
+  { name: "Satisfy", category: "latin" },
+];
+
+export const TYPOGRAPHY_ELEMENTS = [
+  { id: "couple", label: "1. 💑 ឈ្មោះគូដណ្ដឹង", sub: "Couple Names", previewText: "នី បញ្ញា & កត់ ស្រីផ្កាយ" },
+  { id: "date", label: "2. 📅 កាលបរិច្ឆេទ", sub: "Date Text", previewText: "ថ្ងៃពុធ ២៨ មករា ២០២៦" },
+  { id: "time", label: "3. ⏰ ពេលវេលា", sub: "Time Text", previewText: "១៧:០០" },
+  { id: "subtitle", label: "4. 💌 ពាក្យអញ្ជើញ", sub: "Subtitle", previewText: "យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ" },
+  { id: "guestLabel", label: "5. 🏷️ ពាក្យស្វាគមន៍", sub: "Guest Label", previewText: "ជូនចំពោះ:" },
+  { id: "guestName", label: "6. 👤 ឈ្មោះភ្ញៀវ", sub: "Guest Name", previewText: "លោកអ្នក និងក្រុមគ្រួសារ" },
+];
+
 const DEFAULT_STUDIO_STATE = {
   // Metadata
   name: "Royal Khmer Wedding Studio 2026",
@@ -205,6 +334,15 @@ const DEFAULT_STUDIO_STATE = {
   ampSymbol: "❖",
   fontKhmer: "Moul",
   fontLatin: "Playfair Display",
+  elementFonts: {
+    couple: "",
+    date: "",
+    time: "",
+    subtitle: "",
+    guestLabel: "",
+    guestName: "",
+  },
+  customFonts: [],
   mood: "light",
 
   // Hero & Envelope & Motion (Media Cover Styles)
@@ -213,8 +351,9 @@ const DEFAULT_STUDIO_STATE = {
   cardMotion: "3D_FLIP",
   cardLayout: "3D_FLIP",
   bgMusicUrl: "/music/wedding.mp3",
-  videoUrl: "/invitations/khmer-celestial/burgundy-bokeh.mp4",
-  openingVideoUrl: "/invitations/khmer-celestial/burgundy-bokeh.mp4",
+  videoUrl: "",
+  openingVideoUrl: "",
+  showCoverVideo: false,
   enableFloatingBar: true,
   showBrandMark: true,
   brandMark: "/invitations/khmer-celestial/koupreng-gold-mark.webp",
@@ -224,6 +363,8 @@ const DEFAULT_STUDIO_STATE = {
   guestNameBanner: "/invitations/khmer-celestial/guest-name-banner1.webp",
   invitationTitle: "សិរីសួស្តី អាពាហ៍ពិពាហ៍",
   invitationSubtitle: "យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ",
+  guestLabel: "ជូនចំពោះ:",
+  guestName: "លោកអ្នក និងក្រុមគ្រួសារ",
   coverImage: "/facebook/all/03-card/cover-card.jpg",
   backgroundImage: "/invitations/khmer-celestial/botanical-frame.jpg",
   weddingDate: "ថ្ងៃពុធ ២៨ មករា ២០២៦",
@@ -283,7 +424,169 @@ const DEFAULT_STUDIO_STATE = {
     faq: false,
     rsvp: true,
   },
+  sectionOrder: DEFAULT_SECTIONS_LIST.map((s) => s.key),
 };
+
+function VisualKhmerFontPicker({
+  value,
+  onChange,
+  inheritFont = "",
+  customFonts = [],
+  sampleText = "សិរីសួស្តី អាពាហ៍ពិពាហ៍",
+}) {
+  const [filterCategory, setFilterCategory] = useState("all");
+  const [search, setSearch] = useState("");
+
+  const filteredFonts = useMemo(() => {
+    let list = [];
+    if (filterCategory === "royal") {
+      list = KHMER_FONTS.filter((f) => f.group.includes("បុរាណ"));
+    } else if (filterCategory === "modern") {
+      list = KHMER_FONTS.filter((f) => f.group.includes("សម័យ"));
+    } else if (filterCategory === "custom") {
+      list = customFonts.map((cf) => ({
+        value: cf.value,
+        label: cf.label,
+        sub: "Custom Font",
+        isCustom: true,
+      }));
+    } else {
+      const customList = customFonts.map((cf) => ({
+        value: cf.value,
+        label: cf.label,
+        sub: "Custom Font",
+        isCustom: true,
+      }));
+      list = [...customList, ...KHMER_FONTS];
+    }
+
+    if (search.trim()) {
+      const q = search.toLowerCase().trim();
+      list = list.filter(
+        (f) =>
+          f.value.toLowerCase().includes(q) ||
+          f.label.toLowerCase().includes(q)
+      );
+    }
+    return list;
+  }, [filterCategory, search, customFonts]);
+
+  const isInherited = !value;
+
+  return (
+    <div className="space-y-2">
+      {/* Category Filter Pills & Search */}
+      <div className="flex items-center justify-between gap-1.5 flex-wrap">
+        <div className="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5">
+          <button
+            type="button"
+            onClick={() => setFilterCategory("all")}
+            className={`px-2 py-0.5 rounded-lg text-[10px] font-semibold transition-all whitespace-nowrap cursor-pointer ${
+              filterCategory === "all"
+                ? "bg-amber-500 text-black font-bold shadow-sm"
+                : "text-zinc-400 hover:text-zinc-200 bg-zinc-900 border border-zinc-800"
+            }`}
+          >
+            ទាំងអស់ ({KHMER_FONTS.length + customFonts.length})
+          </button>
+          <button
+            type="button"
+            onClick={() => setFilterCategory("royal")}
+            className={`px-2 py-0.5 rounded-lg text-[10px] font-semibold transition-all whitespace-nowrap cursor-pointer ${
+              filterCategory === "royal"
+                ? "bg-amber-500 text-black font-bold shadow-sm"
+                : "text-zinc-400 hover:text-zinc-200 bg-zinc-900 border border-zinc-800"
+            }`}
+          >
+            👑 បុរាណ
+          </button>
+          <button
+            type="button"
+            onClick={() => setFilterCategory("modern")}
+            className={`px-2 py-0.5 rounded-lg text-[10px] font-semibold transition-all whitespace-nowrap cursor-pointer ${
+              filterCategory === "modern"
+                ? "bg-amber-500 text-black font-bold shadow-sm"
+                : "text-zinc-400 hover:text-zinc-200 bg-zinc-900 border border-zinc-800"
+            }`}
+          >
+            ✨ សម័យ
+          </button>
+          {customFonts.length > 0 && (
+            <button
+              type="button"
+              onClick={() => setFilterCategory("custom")}
+              className={`px-2 py-0.5 rounded-lg text-[10px] font-semibold transition-all whitespace-nowrap cursor-pointer ${
+                filterCategory === "custom"
+                  ? "bg-amber-500 text-black font-bold shadow-sm"
+                  : "text-zinc-400 hover:text-zinc-200 bg-zinc-900 border border-zinc-800"
+              }`}
+            >
+              ⭐ Custom ({customFonts.length})
+            </button>
+          )}
+        </div>
+
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="🔍 ស្វែងរក..."
+          className="h-6 w-24 sm:w-28 rounded-md border border-zinc-800 bg-zinc-950 px-2 text-[10px] text-zinc-200 placeholder-zinc-500 outline-none focus:border-amber-500/80"
+        />
+      </div>
+
+      {/* Visual Font Cards Grid */}
+      <div className="grid grid-cols-2 gap-1.5 max-h-60 overflow-y-auto pr-1 no-scrollbar select-none">
+        {filteredFonts.map((f) => {
+          const isSelected = value === f.value || (!value && f.value === (inheritFont || "Moul"));
+          const cleanDesc = f.label.replace(f.value, "").replace(/[()]/g, "").trim();
+
+          return (
+            <button
+              key={f.value}
+              type="button"
+              onClick={() => onChange(f.value)}
+              className={`p-2 rounded-xl border text-left transition-all relative flex flex-col justify-between group cursor-pointer ${
+                isSelected
+                  ? "bg-gradient-to-b from-amber-500/20 to-amber-500/5 border-amber-400 ring-1 ring-amber-400/50 shadow-md shadow-amber-500/10"
+                  : "bg-zinc-950/80 border-zinc-800/80 hover:border-zinc-700 hover:bg-zinc-900/70"
+              }`}
+            >
+              <div className="flex items-center justify-between gap-1 w-full mb-0.5">
+                <span className={`text-[11px] font-bold truncate ${isSelected ? "text-amber-300" : "text-zinc-300 group-hover:text-white"}`}>
+                  {f.value}
+                </span>
+                {isSelected ? (
+                  <span className="flex items-center justify-center w-3.5 h-3.5 rounded-full bg-amber-500 text-black text-[9px] font-black shrink-0 shadow-sm">
+                    ✓
+                  </span>
+                ) : (
+                  <span className="text-[9px] text-zinc-500 font-mono opacity-0 group-hover:opacity-100 transition-opacity">
+                    រើស
+                  </span>
+                )}
+              </div>
+
+              {/* Sample Text Rendered in this EXACT Font */}
+              <div
+                className={`text-sm leading-normal py-0.5 truncate transition-colors ${
+                  isSelected ? "text-amber-200 font-medium" : "text-zinc-200 group-hover:text-zinc-100"
+                }`}
+                style={{ fontFamily: `"${f.value}", "Moul", serif` }}
+              >
+                {sampleText}
+              </div>
+
+              <div className="mt-0.5 text-[9px] text-zinc-500 truncate">
+                {cleanDesc || f.sub || "Khmer Font"}
+              </div>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 export default function AdminTemplateEditPage() {
   const { lang, t } = useAdminLanguage();
@@ -293,7 +596,7 @@ export default function AdminTemplateEditPage() {
   const { toast, show, clear } = useToast();
 
   const [activeTab, setActiveTab] = useState("theme"); // 'theme' | 'couple' | 'events' | 'venue' | 'settings'
-  const [themeSubTab, setThemeSubTab] = useState("presets"); // 'presets' | 'cover'
+  const [themeSubTab, setThemeSubTab] = useState("layouts"); // 'layouts' | 'presets' | 'cover'
   const [coverSubTab, setCoverSubTab] = useState("media"); // 'media' | 'ornaments' | 'text' | 'music'
   const [isPlayingMusic, setIsPlayingMusic] = useState(false);
   const audioPlayerRef = useRef(null);
@@ -316,6 +619,141 @@ export default function AdminTemplateEditPage() {
   const brandMarkFileInputRef = useRef(null);
   const openButtonFileInputRef = useRef(null);
   const guestBannerFileInputRef = useRef(null);
+
+  // Custom Fonts State
+  const [customFonts, setCustomFonts] = useState(() => {
+    try {
+      const saved = localStorage.getItem("koupreng_custom_fonts");
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [selectedFontElement, setSelectedFontElement] = useState("couple");
+  const [showFontModal, setShowFontModal] = useState(false);
+  const [fontModalTab, setFontModalTab] = useState("google"); // 'google' | 'file'
+  const [newFontName, setNewFontName] = useState("");
+  const [newFontCategory, setNewFontCategory] = useState("khmer"); // 'khmer' | 'latin'
+  const fontFileInputRef = useRef(null);
+
+  // Dynamic Font Loading in Admin Studio
+  useEffect(() => {
+    if (form.fontKhmer) ensureGoogleFontLoaded(form.fontKhmer);
+    if (form.fontLatin) ensureGoogleFontLoaded(form.fontLatin);
+    if (form.elementFonts) {
+      Object.values(form.elementFonts).forEach((f) => {
+        if (f) ensureGoogleFontLoaded(f);
+      });
+    }
+    if (Array.isArray(customFonts)) {
+      customFonts.forEach((cf) => {
+        if (cf.source === "google") {
+          ensureGoogleFontLoaded(cf.value);
+        } else if (cf.source === "file" && cf.dataUrl) {
+          ensureCustomFontFace(cf.value, cf.dataUrl);
+        }
+      });
+    }
+  }, [form.fontKhmer, form.fontLatin, form.elementFonts, customFonts]);
+
+  const customKhmerFonts = customFonts.filter((f) => f.category === "khmer");
+  const customLatinFonts = customFonts.filter((f) => f.category === "latin");
+
+  const handleAddGoogleFont = (fontNameInput, categoryInput) => {
+    const clean = (fontNameInput || newFontName).trim();
+    if (!clean) {
+      show("សូមបញ្ចូលឈ្មោះ Google Font", "error");
+      return;
+    }
+    const cat = categoryInput || newFontCategory;
+    const exists = customFonts.some((f) => f.value.toLowerCase() === clean.toLowerCase());
+    if (exists) {
+      show(`ពុម្ពអក្សរ "${clean}" មានរួចហើយ`, "error");
+      return;
+    }
+
+    ensureGoogleFontLoaded(clean);
+    const newEntry = {
+      id: `custom-gfont-${Date.now()}`,
+      value: clean,
+      label: `${clean} (Custom Google Font)`,
+      category: cat,
+      source: "google",
+    };
+
+    const updated = [...customFonts, newEntry];
+    setCustomFonts(updated);
+    try {
+      localStorage.setItem("koupreng_custom_fonts", JSON.stringify(updated));
+    } catch {}
+
+    if (cat === "khmer") {
+      setField("fontKhmer", clean);
+    } else {
+      setField("fontLatin", clean);
+    }
+
+    setNewFontName("");
+    setShowFontModal(false);
+    show(`បានបន្ថែមពុម្ពអក្សរ "${clean}" ជោគជ័យ ✓`);
+  };
+
+  const handleUploadFontFile = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const baseName = file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ");
+    const fontName = newFontName.trim() || baseName;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const dataUrl = event.target?.result;
+      if (!dataUrl) return;
+
+      ensureCustomFontFace(fontName, dataUrl);
+      const newEntry = {
+        id: `custom-file-${Date.now()}`,
+        value: fontName,
+        label: `${fontName} (Uploaded File)`,
+        category: newFontCategory,
+        source: "file",
+        dataUrl,
+      };
+
+      const updated = [...customFonts, newEntry];
+      setCustomFonts(updated);
+      try {
+        localStorage.setItem("koupreng_custom_fonts", JSON.stringify(updated));
+      } catch {}
+
+      if (newFontCategory === "khmer") {
+        setField("fontKhmer", fontName);
+      } else {
+        setField("fontLatin", fontName);
+      }
+
+      setNewFontName("");
+      setShowFontModal(false);
+      show(`បាន Upload និងប្រើប្រាស់ពុម្ពអក្សរ "${fontName}" ជោគជ័យ ✓`);
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  const handleDeleteCustomFont = (fontId, fontVal, cat) => {
+    const updated = customFonts.filter((f) => f.id !== fontId);
+    setCustomFonts(updated);
+    try {
+      localStorage.setItem("koupreng_custom_fonts", JSON.stringify(updated));
+    } catch {}
+
+    if (cat === "khmer" && form.fontKhmer === fontVal) {
+      setField("fontKhmer", "Moul");
+    } else if (cat === "latin" && form.fontLatin === fontVal) {
+      setField("fontLatin", "Playfair Display");
+    }
+    show("បានលុបពុម្ពអក្សរផ្ទាល់ខ្លួនចេញ ✓");
+  };
 
   // Draggable Split Divider State (Left Controls vs Right Live Preview)
   const [leftWidthPercent, setLeftWidthPercent] = useState(48); // default 48% split
@@ -359,20 +797,63 @@ export default function AdminTemplateEditPage() {
   };
 
   // Sync form inputs to iframe live engine in real-time
-  useEffect(() => {
+  const broadcastSync = useCallback(() => {
     if (!iframeRef.current?.contentWindow) return;
     try {
       iframeRef.current.contentWindow.postMessage(
         {
           type: "LIVE_PREVIEW_SYNC",
-          data: form,
+          data: { ...form, customFonts, selectedFontElement },
         },
         "*"
       );
     } catch {
       // ignore
     }
-  }, [form]);
+  }, [form, customFonts, selectedFontElement]);
+
+  useEffect(() => {
+    broadcastSync();
+  }, [broadcastSync, selectedFontElement]);
+
+  useEffect(() => {
+    const handlePreviewHandshake = (event) => {
+      if (
+        event.data?.type === "PREVIEW_READY" ||
+        event.data?.type === "REQUEST_PREVIEW_SYNC"
+      ) {
+        broadcastSync();
+        if (previewGateOpen && iframeRef.current?.contentWindow) {
+          try {
+            iframeRef.current.contentWindow.postMessage(
+              {
+                type: "TOGGLE_GATE",
+                open: true,
+                isOpen: true,
+              },
+              "*"
+            );
+          } catch {}
+        }
+      }
+
+      if (event.data?.type === "SELECT_TARGET_ELEMENT" && event.data.elementId) {
+        setSelectedFontElement(event.data.elementId);
+        setActiveTab("theme");
+        setThemeSubTab("presets");
+        setTimeout(() => {
+          const targetCard = document.getElementById("typography-element-settings");
+          if (targetCard) {
+            targetCard.scrollIntoView({ behavior: "smooth", block: "center" });
+            targetCard.classList.add("ring-2", "ring-amber-400");
+            setTimeout(() => targetCard.classList.remove("ring-2", "ring-amber-400"), 1200);
+          }
+        }, 50);
+      }
+    };
+    window.addEventListener("message", handlePreviewHandshake);
+    return () => window.removeEventListener("message", handlePreviewHandshake);
+  }, [broadcastSync, previewGateOpen]);
 
   const handleSetGate = (shouldOpen) => {
     setPreviewGateOpen(shouldOpen);
@@ -409,6 +890,20 @@ export default function AdminTemplateEditPage() {
           // Ignore invalid JSON config
         }
 
+        if (Array.isArray(parsedConfig.customFonts) && parsedConfig.customFonts.length > 0) {
+          setCustomFonts((prev) => {
+            const map = new Map();
+            [...prev, ...parsedConfig.customFonts].forEach((item) => {
+              if (item?.value) map.set(item.value.toLowerCase(), item);
+            });
+            const merged = Array.from(map.values());
+            try {
+              localStorage.setItem("koupreng_custom_fonts", JSON.stringify(merged));
+            } catch {}
+            return merged;
+          });
+        }
+
         setForm((prev) => ({
           ...prev,
           code: t.code || prev.code,
@@ -441,9 +936,9 @@ export default function AdminTemplateEditPage() {
       KHMER_CELESTIAL: "khmer-celestial",
       GOLD_LUXURY: "the-digital-yes-wedding",
       EMERALD_GREEN: "emerald-canva-luxe-wedding",
-      RUBY_RED: "royal-khmer-wedding",
+      RUBY_RED: "khmer-celestial",
       CHAMPAGNE: "cover-khmer-golden-wedding",
-      ROYAL_KHMER: "royal-khmer-wedding",
+      ROYAL_KHMER: "khmer-celestial",
       GARDEN_ROYAL: "garden-royal-khmer-wedding",
       KHMER_GOLDEN: "cover-khmer-golden-wedding",
       MODERN_MINIMAL: "the-digital-yes-wedding",
@@ -751,6 +1246,7 @@ export default function AdminTemplateEditPage() {
     try {
       // Serialize full studio config into description JSON
       const fullConfigJson = JSON.stringify({
+        code: form.code,
         presetId: form.presetId,
         theme: form.presetId,
         gateStyle: form.gateStyle || "celestial-cover",
@@ -775,6 +1271,7 @@ export default function AdminTemplateEditPage() {
         ampSymbol: form.ampSymbol,
         fontKhmer: form.fontKhmer,
         fontLatin: form.fontLatin,
+        customFonts: customFonts,
         mood: form.mood,
         invitationTitle: form.invitationTitle,
         invitationSubtitle: form.invitationSubtitle,
@@ -805,6 +1302,7 @@ export default function AdminTemplateEditPage() {
 
       const payload = {
         name: form.name.trim(),
+        code: form.code,
         category: form.category,
         thumbnailUrl: form.thumbnailUrl || form.coverImage,
         previewUrl: form.previewUrl || `/templates/${form.presetId?.toLowerCase() || "custom"}`,
@@ -991,6 +1489,18 @@ export default function AdminTemplateEditPage() {
                 <div className="flex items-center gap-1 rounded-xl border border-zinc-800 bg-zinc-950/80 p-1">
                   <button
                     type="button"
+                    onClick={() => setThemeSubTab("layouts")}
+                    className={`flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-semibold transition cursor-pointer ${
+                      themeSubTab === "layouts"
+                        ? "bg-amber-500/20 text-amber-300 border border-amber-500/30 shadow-sm"
+                        : "text-zinc-400 hover:text-zinc-200"
+                    }`}
+                  >
+                    <LayoutTemplate className="h-3.5 w-3.5" />
+                    <span>ម៉ូដ Template (UI Layouts)</span>
+                  </button>
+                  <button
+                    type="button"
                     onClick={() => setThemeSubTab("presets")}
                     className={`flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-semibold transition cursor-pointer ${
                       themeSubTab === "presets"
@@ -1014,6 +1524,95 @@ export default function AdminTemplateEditPage() {
                     <span>ស្រោម & ពាក្យជូនពរ (Cover & Hero)</span>
                   </button>
                 </div>
+
+                {themeSubTab === "layouts" && (
+                  <div className="space-y-4 animate-in fade-in">
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                          <LayoutTemplate className="h-4 w-4 text-amber-500" />
+                          <span>រចនាបថម៉ូដ Template (UI Layout Engines)</span>
+                        </h3>
+                        <span className="text-[11px] font-mono text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded">
+                          {form.code || "khmer-celestial"}
+                        </span>
+                      </div>
+                      <p className="text-xs text-zinc-400">
+                        ជ្រើសរើស Architecture & Interactive Style របស់ទំព័រធៀបការ។ ចុចប្តូរ Layout ដើម្បីមើល Live Preview ខាងស្តាំភ្លាមៗ។
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-3">
+                      {TEMPLATE_LAYOUT_OPTIONS.map((layout) => {
+                        const isSelected = (form.code || "khmer-celestial") === layout.code;
+                        return (
+                          <button
+                            key={layout.code}
+                            type="button"
+                            onClick={() => {
+                              setField("code", layout.code);
+                              show(`បានប្តូរទៅកាន់ម៉ូដ: ${layout.name}`, "success");
+                            }}
+                            className={`group relative text-left p-3.5 rounded-2xl border transition-all cursor-pointer ${
+                              isSelected
+                                ? "bg-amber-500/10 border-amber-500/60 shadow-lg shadow-amber-500/10 ring-1 ring-amber-500/40"
+                                : "bg-zinc-900/70 border-zinc-800/80 hover:bg-zinc-850 hover:border-zinc-700"
+                            }`}
+                          >
+                            <div className="flex items-start justify-between gap-3">
+                              <div className="flex items-center gap-3">
+                                <div
+                                  className={`text-2xl p-2.5 rounded-xl border ${
+                                    isSelected
+                                      ? "bg-amber-500/20 border-amber-500/40"
+                                      : "bg-zinc-800 border-zinc-700/60 group-hover:border-zinc-600"
+                                  }`}
+                                >
+                                  {layout.icon}
+                                </div>
+                                <div>
+                                  <div className="flex items-center gap-2">
+                                    <h4
+                                      className={`text-sm font-bold ${
+                                        isSelected ? "text-amber-300" : "text-zinc-100 group-hover:text-white"
+                                      }`}
+                                    >
+                                      {layout.name}
+                                    </h4>
+                                    <span
+                                      className={`text-[10px] font-medium px-2 py-0.5 rounded-full border ${layout.badgeColor}`}
+                                    >
+                                      {layout.badge}
+                                    </span>
+                                  </div>
+                                  <div className="text-xs text-amber-400/90 font-medium mt-0.5">
+                                    {layout.labelKh}
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div className="flex items-center shrink-0">
+                                {isSelected ? (
+                                  <span className="flex items-center gap-1 text-[11px] font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-1 rounded-lg">
+                                    <Check className="h-3 w-3" />
+                                    <span>កំពុងប្រើ</span>
+                                  </span>
+                                ) : (
+                                  <span className="text-[11px] font-medium text-zinc-500 group-hover:text-amber-400 px-2.5 py-1 rounded-lg border border-transparent group-hover:border-zinc-700 group-hover:bg-zinc-800/60 transition">
+                                    ជ្រើសរើស
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                            <p className="text-xs text-zinc-400 mt-2 pl-12 leading-relaxed">
+                              {layout.desc}
+                            </p>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
 
                 {themeSubTab === "presets" && (
                   <div className="space-y-6">
@@ -1044,7 +1643,7 @@ export default function AdminTemplateEditPage() {
                             <div className="flex items-center gap-1.5 mt-auto">
                               {preset.dressColors.map((c, i) => (
                                 <span
-                                  key={i}
+                                  key={`preset-${preset.id}-color-${i}`}
                                   className="h-4 w-4 rounded-full border border-black/30 shadow-sm"
                                   style={{ backgroundColor: c.hex }}
                                 />
@@ -1124,39 +1723,239 @@ export default function AdminTemplateEditPage() {
                     <hr className="border-zinc-800/80" />
 
                     {/* Typography & Fonts */}
-                    <div>
-                      <h3 className="text-sm font-bold text-white mb-3">ពុម្ពអក្សរ (Typography)</h3>
-                      <div className="grid grid-cols-2 gap-4">
+                    <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-4 space-y-4">
+                      <div className="flex items-center justify-between">
                         <div>
-                          <label className="block text-xs font-medium text-zinc-300 mb-1.5">
-                            Khmer Font (អក្សរខ្មែរ)
-                          </label>
-                          <select
-                            value={form.fontKhmer}
-                            onChange={(e) => setField("fontKhmer", e.target.value)}
-                            className="h-10 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-xs text-zinc-200 outline-none focus:border-amber-500 cursor-pointer"
-                          >
-                            <option value="Moul">Moul (អក្សរមូលឆ្លាក់បុរាណ)</option>
-                            <option value="Kantumruy Pro">Kantumruy Pro (សម័យទំនើប)</option>
-                            <option value="Battambang">Battambang (ស្រទន់)</option>
-                            <option value="Siemreap">Siemreap (រៀបរយ)</option>
-                          </select>
+                          <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                            <Type className="h-4 w-4 text-amber-500" />
+                            <span>ពុម្ពអក្សរធៀបការ (Typography & Fonts)</span>
+                          </h3>
+                          <p className="text-[11px] text-zinc-400 mt-0.5">
+                            កំណត់ Font រួម ឬបំបែកកំណត់តាម Element ទាំង ៦ លើក្របសំបុត្រ
+                          </p>
                         </div>
-                        <div>
-                          <label className="block text-xs font-medium text-zinc-300 mb-1.5">
-                            Latin Font (អក្សរឡាតាំង)
-                          </label>
-                          <select
-                            value={form.fontLatin}
-                            onChange={(e) => setField("fontLatin", e.target.value)}
-                            className="h-10 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-xs text-zinc-200 outline-none focus:border-amber-500 cursor-pointer"
-                          >
-                            <option value="Playfair Display">Playfair Display (Luxury Serif)</option>
-                            <option value="Cinzel">Cinzel (Royal Classical)</option>
-                            <option value="Inter">Inter (Clean Modern Sans)</option>
-                          </select>
-                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setShowFontModal(true)}
+                          className="flex items-center gap-1.5 rounded-xl border border-amber-500/30 bg-amber-500/10 px-3 py-1.5 text-xs font-bold text-amber-400 hover:bg-amber-500/20 hover:text-amber-300 transition cursor-pointer shadow-sm shrink-0"
+                        >
+                          <Plus className="h-3.5 w-3.5" />
+                          <span>+ Add Custom Font</span>
+                        </button>
                       </div>
+
+                      {/* Selected Element Font Settings Card */}
+                      {(() => {
+                        const activeElem = TYPOGRAPHY_ELEMENTS.find((e) => e.id === selectedFontElement) || TYPOGRAPHY_ELEMENTS[0];
+                        const currentElementFont = form.elementFonts?.[selectedFontElement] || "";
+                        const effectiveFont = currentElementFont || form.fontKhmer;
+                        const isCustomized = Boolean(currentElementFont);
+                        const elementSampleText = (() => {
+                          if (selectedFontElement === "couple") return `${form.groomName || "ជា វណ្ណដា"} & ${form.brideName || "សុខ ស្រីពេជ្រ"}`;
+                          if (selectedFontElement === "date") return form.weddingDate || "ថ្ងៃពុធ ២៨ មករា ២០២៦";
+                          if (selectedFontElement === "time") return form.weddingTime || "១៧:០០";
+                          if (selectedFontElement === "subtitle") return form.invitationSubtitle || "យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ";
+                          if (selectedFontElement === "guestLabel") return form.guestLabel || "ជូនចំពោះ:";
+                          if (selectedFontElement === "guestName") return form.guestName || "លោកអ្នក និងក្រុមគ្រួសារ";
+                          return form.invitationTitle || "សិរីសួស្តី អាពាហ៍ពិពាហ៍";
+                        })();
+
+                        return (
+                          <div id="typography-element-settings" className="space-y-3 p-3.5 rounded-xl border border-amber-500/20 bg-amber-500/5 transition-all duration-300">
+                            <div className="flex items-center justify-between gap-2 flex-wrap pb-2 border-b border-zinc-800/80">
+                              <div className="flex items-center gap-2 flex-wrap">
+                                <label className="text-xs font-semibold text-zinc-400">
+                                  Element:
+                                </label>
+                                <select
+                                  value={selectedFontElement}
+                                  onChange={(e) => setSelectedFontElement(e.target.value)}
+                                  className="text-xs font-bold bg-zinc-900 border border-amber-500/40 rounded-lg px-2.5 py-1 text-amber-300 focus:outline-none focus:ring-1 focus:ring-amber-500 cursor-pointer"
+                                >
+                                  {TYPOGRAPHY_ELEMENTS.map((elem) => (
+                                    <option key={elem.id} value={elem.id}>
+                                      {elem.label}
+                                    </option>
+                                  ))}
+                                </select>
+                                <span className="text-[11px] font-mono font-bold text-amber-300 bg-amber-500/10 border border-amber-500/30 px-2 py-0.5 rounded-md">
+                                  Font: {effectiveFont}
+                                </span>
+                              </div>
+                              <span className="text-[10px] text-zinc-400 hidden sm:inline-flex items-center gap-1 font-medium">
+                                ⚡ ចុចលើអក្សរក្នុង Live Simulator ដើម្បីរើស
+                              </span>
+                            </div>
+
+                            {/* Visual Font Selector */}
+                            <VisualKhmerFontPicker
+                              value={currentElementFont}
+                                onChange={(val) => {
+                                  const nextElementFonts = {
+                                    ...(form.elementFonts || {}),
+                                    [selectedFontElement]: val,
+                                  };
+                                  setForm((prev) => ({
+                                    ...prev,
+                                    elementFonts: nextElementFonts,
+                                  }));
+                                  if (val) ensureGoogleFontLoaded(val);
+                                  if (iframeRef.current?.contentWindow) {
+                                    try {
+                                      iframeRef.current.contentWindow.postMessage(
+                                        {
+                                          type: "LIVE_PREVIEW_SYNC",
+                                          data: {
+                                            ...form,
+                                            elementFonts: nextElementFonts,
+                                            customFonts,
+                                          },
+                                        },
+                                        "*"
+                                      );
+                                    } catch {}
+                                  }
+                                }}
+                                inheritFont={form.fontKhmer}
+                                customFonts={customKhmerFonts}
+                                sampleText={elementSampleText}
+                              />
+
+                            {/* Quick Text Editor for Selected Element */}
+                            {selectedFontElement === "couple" && (
+                              <div className="space-y-2 p-2.5 rounded-xl bg-zinc-900/60 border border-zinc-800">
+                                <label className="text-[11px] font-medium text-amber-300 flex items-center justify-between">
+                                  <span>💑 កែប្រែឈ្មោះកូនកំលោះ & កូនក្រមុំ (Couple Names):</span>
+                                  <span className="text-[10px] text-zinc-400 font-mono">Live Edit</span>
+                                </label>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                  <input
+                                    type="text"
+                                    value={form.groomName || ""}
+                                    onChange={(e) => setField("groomName", e.target.value)}
+                                    placeholder="ឈ្មោះកូនកំលោះ (Groom)"
+                                    className="h-9 w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500"
+                                  />
+                                  <input
+                                    type="text"
+                                    value={form.brideName || ""}
+                                    onChange={(e) => setField("brideName", e.target.value)}
+                                    placeholder="ឈ្មោះកូនក្រមុំ (Bride)"
+                                    className="h-9 w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500"
+                                  />
+                                </div>
+                              </div>
+                            )}
+
+                            {selectedFontElement === "date" && (
+                              <div className="space-y-1.5 p-2.5 rounded-xl bg-zinc-900/60 border border-zinc-800">
+                                <label className="text-[11px] font-medium text-amber-300 flex items-center justify-between">
+                                  <span>📅 កែប្រែកាលបរិច្ឆេទ (Wedding Date):</span>
+                                  <span className="text-[10px] text-zinc-400 font-mono">DatePicker</span>
+                                </label>
+                                <DatePicker
+                                  value={form.weddingDate}
+                                  onChange={(dateVal, isoVal) => {
+                                    setField("weddingDate", dateVal);
+                                    if (isoVal) setField("targetDate", isoVal);
+                                  }}
+                                  placeholder="ជ្រើសរើសថ្ងៃមង្គលការ"
+                                />
+                              </div>
+                            )}
+
+                            {selectedFontElement === "time" && (
+                              <div className="space-y-1.5 p-2.5 rounded-xl bg-zinc-900/60 border border-zinc-800">
+                                <label className="text-[11px] font-medium text-amber-300 flex items-center justify-between">
+                                  <span>⏰ កែប្រែពេលវេលា (Wedding Time):</span>
+                                  <span className="text-[10px] text-zinc-400 font-mono">TimePicker</span>
+                                </label>
+                                <TimePicker
+                                  value={form.weddingTime}
+                                  onChange={(timeVal) => setField("weddingTime", timeVal)}
+                                  placeholder="ជ្រើសរើសម៉ោង"
+                                />
+                              </div>
+                            )}
+
+                            {selectedFontElement === "subtitle" && (
+                              <div className="space-y-1 p-2 rounded-xl bg-zinc-900/60 border border-zinc-800">
+                                <label className="text-[11px] font-medium text-amber-300 flex items-center justify-between">
+                                  <span>💌 កែប្រែខ្លឹមសារពាក្យអញ្ជើញ (Subtitle Text):</span>
+                                  <span className="text-[10px] text-zinc-400 font-mono">Live Edit</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  value={form.invitationSubtitle || ""}
+                                  onChange={(e) => setField("invitationSubtitle", e.target.value)}
+                                  placeholder="យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ"
+                                  className="h-9 w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500"
+                                />
+                              </div>
+                            )}
+
+                            {selectedFontElement === "guestLabel" && (
+                              <div className="space-y-1 p-2 rounded-xl bg-zinc-900/60 border border-zinc-800">
+                                <label className="text-[11px] font-medium text-amber-300 flex items-center justify-between">
+                                  <span>🏷️ កែប្រែពាក្យស្វាគមន៍ / ហៅភ្ញៀវ (Guest Label):</span>
+                                  <span className="text-[10px] text-zinc-400 font-mono">Live Edit</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  value={form.guestLabel || ""}
+                                  onChange={(e) => setField("guestLabel", e.target.value)}
+                                  placeholder="ជូនចំពោះ:"
+                                  className="h-9 w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500"
+                                />
+                              </div>
+                            )}
+
+                            {selectedFontElement === "guestName" && (
+                              <div className="space-y-1 p-2 rounded-xl bg-zinc-900/60 border border-zinc-800">
+                                <label className="text-[11px] font-medium text-amber-300 flex items-center justify-between">
+                                  <span>👤 កែប្រែឈ្មោះភ្ញៀវតេស្ត (Preview Guest Name):</span>
+                                  <span className="text-[10px] text-zinc-400 font-mono">Live Edit</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  value={form.guestName || ""}
+                                  onChange={(e) => setField("guestName", e.target.value)}
+                                  placeholder="លោកអ្នក និងក្រុមគ្រួសារ"
+                                  className="h-9 w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500"
+                                />
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })()}
+
+                      {/* Active Custom Fonts Manager List */}
+                      {customFonts.length > 0 && (
+                        <div className="pt-2 border-t border-zinc-800/60">
+                          <span className="block text-[11px] font-bold text-zinc-400 mb-2">
+                            ⭐ Custom Fonts ដែលបានបន្ថែម ({customFonts.length})
+                          </span>
+                          <div className="flex flex-wrap gap-2">
+                            {customFonts.map((cf, idx) => (
+                              <div
+                                key={`cf-pill-${cf.id || cf.value}-${idx}`}
+                                className="flex items-center gap-1.5 rounded-lg border border-amber-500/20 bg-amber-500/5 px-2.5 py-1 text-xs text-zinc-200 shadow-sm"
+                              >
+                                <span className="font-semibold text-amber-300">{cf.value}</span>
+                                <span className="text-[10px] text-zinc-400 uppercase">({cf.category})</span>
+                                <button
+                                  type="button"
+                                  title="លុប Font នេះ"
+                                  onClick={() => handleDeleteCustomFont(cf.id, cf.value, cf.category)}
+                                  className="text-zinc-400 hover:text-rose-400 transition ml-1 cursor-pointer p-0.5"
+                                >
+                                  <X className="h-3 w-3" />
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}
@@ -1182,7 +1981,9 @@ export default function AdminTemplateEditPage() {
                         <span className="text-[10px] font-bold text-amber-400/90 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
                           {(form.gateStyle === "cinematic-video")
                             ? "Full Video Mode"
-                            : "Video & Image Mode"}
+                            : (form.videoUrl || form.openingVideoUrl)
+                            ? "Video & Image Mode"
+                            : "Image Mode (រូបភាពសុទ្ធ)"}
                         </span>
                       </div>
                       <div className="grid grid-cols-2 gap-2.5">
@@ -1192,7 +1993,7 @@ export default function AdminTemplateEditPage() {
                             name: "ខ្មែរចន្ទតារា",
                             sub: "Khmer Celestial",
                             icon: "✨",
-                            tag: "Video & Image",
+                            tag: (form.videoUrl || form.openingVideoUrl) ? "Video & Image" : "រូបភាព (Image)",
                           },
                           {
                             id: "cinematic-video",
@@ -1211,7 +2012,6 @@ export default function AdminTemplateEditPage() {
                                 setField("gateStyle", item.id);
                                 setField("openingStyle", item.id);
                                 if (item.id === "celestial-cover") {
-                                  if (!form.videoUrl) setField("videoUrl", "/invitations/khmer-celestial/burgundy-bokeh.mp4");
                                   if (!form.backgroundImage) setField("backgroundImage", "/invitations/khmer-celestial/botanical-frame.jpg");
                                 } else if (item.id === "cinematic-video") {
                                   if (!form.videoUrl) setField("videoUrl", "/invitations/khmer-celestial/burgundy-bokeh.mp4");
@@ -1351,18 +2151,44 @@ export default function AdminTemplateEditPage() {
                             <div className="flex items-center justify-between">
                               <span className="text-xs font-bold text-zinc-200 flex items-center gap-1.5">
                                 <span>🎬 វីដេអូ Bokeh ផ្ទៃខាងក្រោយ</span>
+                                {(form.videoUrl || form.openingVideoUrl) ? (
+                                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">
+                                    កំពុងប្រើ
+                                  </span>
+                                ) : (
+                                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-400 border border-zinc-700 font-medium">
+                                    គ្មានវីដេអូ (រូបភាពសុទ្ធ)
+                                  </span>
+                                )}
                               </span>
                               <div className="flex items-center gap-1.5">
-                                <button
-                                  type="button"
-                                  onClick={() => {
-                                    setField("videoUrl", "/invitations/khmer-celestial/burgundy-bokeh.mp4");
-                                    setField("openingVideoUrl", "/invitations/khmer-celestial/burgundy-bokeh.mp4");
-                                  }}
-                                  className="text-[11px] font-bold text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 px-2 py-0.5 rounded-lg border border-amber-500/20 transition cursor-pointer"
-                                >
-                                  + Burgundy Bokeh
-                                </button>
+                                {(form.videoUrl || form.openingVideoUrl) ? (
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      setField("videoUrl", "");
+                                      setField("openingVideoUrl", "");
+                                      setField("showCoverVideo", false);
+                                      show("បានដកចេញវីដេអូ (ប្តូរទៅជារូបភាពសុទ្ធ)");
+                                    }}
+                                    className="text-[11px] font-bold text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 px-2 py-0.5 rounded-lg border border-red-500/20 transition cursor-pointer"
+                                  >
+                                    🗑️ ដកវីដេអូចេញ
+                                  </button>
+                                ) : (
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      setField("videoUrl", "/invitations/khmer-celestial/burgundy-bokeh.mp4");
+                                      setField("openingVideoUrl", "/invitations/khmer-celestial/burgundy-bokeh.mp4");
+                                      setField("showCoverVideo", true);
+                                      show("បានបន្ថែម Burgundy Bokeh Video ✓");
+                                    }}
+                                    className="text-[11px] font-bold text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 px-2 py-0.5 rounded-lg border border-amber-500/20 transition cursor-pointer"
+                                  >
+                                    + Burgundy Bokeh
+                                  </button>
+                                )}
                                 <button
                                   type="button"
                                   onClick={() => videoFileInputRef.current?.click()}
@@ -2282,7 +3108,7 @@ export default function AdminTemplateEditPage() {
                     <div className="space-y-3">
                       {form.schedule.map((item, index) => (
                         <div
-                          key={item.id}
+                          key={`sched-${item.id || index}-${index}`}
                           className="flex items-start gap-3 rounded-2xl border border-zinc-800 bg-zinc-900/70 p-4 transition hover:border-zinc-700"
                         >
                           <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-amber-500/10 text-xs font-bold text-amber-400">
@@ -2353,24 +3179,39 @@ export default function AdminTemplateEditPage() {
                         const newImages = form.galleryImages.filter((_, i) => i !== idx);
                         setField("galleryImages", newImages);
                       }}
+                      onMoveImage={(fromIdx, toIdx) => {
+                        if (toIdx < 0 || toIdx >= form.galleryImages.length) return;
+                        const newImages = [...form.galleryImages];
+                        const [moved] = newImages.splice(fromIdx, 1);
+                        newImages.splice(toIdx, 0, moved);
+                        setField("galleryImages", newImages);
+                      }}
                       lang={lang}
                     />
 
-                    <hr className="border-zinc-800/80" />
-
-                    <div>
-                      <h3 className="text-sm font-bold text-white mb-1">
-                        សាច់រឿងស្នេហា (Love Story Timeline Intro)
-                      </h3>
-                      <p className="text-xs text-zinc-400 mb-3">
-                        រៀបរាប់ដំណើរដើមទងនៃក្តីស្រឡាញ់របស់គូស្វាមីភរិយា
+                    <div className="rounded-2xl border border-zinc-800/80 bg-zinc-950/60 p-4 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <Heart className="h-4 w-4 text-amber-500 fill-amber-500/20" />
+                          <h3 className="text-sm font-bold text-white">
+                            {lang === "en" ? "Love Story Timeline Intro" : "សាច់រឿងស្នេហា (Love Story Timeline Intro)"}
+                          </h3>
+                        </div>
+                        <span className="text-[10px] font-mono text-zinc-500">
+                          {(form.storyText || "").length} {lang === "en" ? "chars" : "តួអក្សរ"}
+                        </span>
+                      </div>
+                      <p className="text-xs text-zinc-400">
+                        {lang === "en"
+                          ? "Share the heartfelt journey and romantic memories of bride & groom"
+                          : "រៀបរាប់ដំណើរដើមទងនៃក្ដីស្រឡាញ់ និងការចងចាំដ៏មានន័យរបស់គូស្វាមីភរិយា"}
                       </p>
                       <textarea
-                        rows={4}
+                        rows={3}
                         value={form.storyText || ""}
                         onChange={(e) => setField("storyText", e.target.value)}
                         placeholder="ពីការជួបគ្នាដំបូង រហូតដល់ថ្ងៃសន្យារួមដំណើរជីវិត..."
-                        className="w-full rounded-xl border border-zinc-800 bg-zinc-900 p-3 text-xs text-zinc-100 outline-none focus:border-amber-500 leading-relaxed"
+                        className="w-full rounded-xl border border-zinc-800 bg-zinc-900/90 p-3 text-xs text-zinc-100 outline-none focus:border-amber-500 leading-relaxed shadow-inner transition-colors"
                       />
                     </div>
                   </div>
@@ -2472,7 +3313,7 @@ export default function AdminTemplateEditPage() {
                       <div className="grid grid-cols-2 gap-3">
                         {form.dressColors.map((color, idx) => (
                           <div
-                            key={idx}
+                            key={`dress-color-${color.hex || idx}-${idx}`}
                             className="flex items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900 p-2"
                           >
                             <input
@@ -2586,64 +3427,32 @@ export default function AdminTemplateEditPage() {
 
                 {settingsSubTab === "sections" && (
                   <div className="space-y-4">
-                    <div>
-                      <h3 className="text-sm font-bold text-white flex items-center gap-2 mb-1">
-                        <Sliders className="h-4 w-4 text-amber-500" />
-                        <span>គ្រប់គ្រង Sections ទាំងអស់ (Section Visibility)</span>
-                      </h3>
-                      <p className="text-xs text-zinc-400 mb-4">
-                        បើក (ON) ឬបិទ (OFF) ផ្នែកណាមួយក្នុងទំព័រធៀបការពេញលេញ
-                      </p>
-
-                      <div className="space-y-2.5">
-                        {[
-                          { key: "countdown", label: "⏱️ រាប់ថយក្រោយ (Countdown Timer)", desc: "បង្ហាញនាឡិការាប់ថយក្រោយដល់ថ្ងៃមង្គលការ" },
-                          { key: "schedule", label: "📅 កម្មវិធីមង្គលការ (Schedule Timeline)", desc: "បង្ហាញកម្មវិធី និងម៉ោងតាមលំដាប់លំដោយ" },
-                          { key: "story", label: "📖 សាច់រឿងស្នេហា (Love Story Cards)", desc: "បង្ហាញដំណើររឿងស្នេហាជា Card រូបថត" },
-                          { key: "party", label: "👥 ក្រុមការងារមង្គល (Wedding Party)", desc: "បង្ហាញមិត្តភក្តិ និងក្រុមអ្នកកំដរ" },
-                          { key: "gallery", label: "🖼️ វិចិត្រសាលរូបថត (Photo Gallery)", desc: "បង្ហាញកម្រងរូបថតរៀបអាពាហ៍ពិពាហ៍" },
-                          { key: "gift", label: "🎁 ចំណងដៃឌីជីថល (Digital Gift QR)", desc: "បង្ហាញ QR Code ធនាគារ ABA/Bakong" },
-                          { key: "map", label: "📍 ទីតាំង និងផែនទី (Google Map)", desc: "បង្ហាញទីតាំង និងតំណភ្ជាប់ Google Maps" },
-                          { key: "dressCode", label: "👗 ពណ៌សម្លៀកបំពាក់ (Dress Code)", desc: "បង្ហាញ Palette ពណ៌សម្លៀកបំពាក់សម្រាប់ភ្ញៀវ" },
-                          { key: "faq", label: "❓ សំណួរដែលសួរញឹកញាប់ (FAQ Accordion)", desc: "សំណួរ-ចម្លើយលម្អិតសម្រាប់ភ្ញៀវកិត្តិយស" },
-                          { key: "rsvp", label: "✍️ បញ្ជាក់ការចូលរួម (RSVP Form)", desc: "ទម្រង់បែបបទសម្រាប់ភ្ញៀវចុះឈ្មោះចូលរួម" },
-                        ].map((sec) => {
-                          const isEnabled = form.enabledSections?.[sec.key] !== false;
-                          return (
-                            <div
-                              key={sec.key}
-                              className="flex items-center justify-between rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-3.5 transition hover:border-zinc-700"
-                            >
-                              <div>
-                                <h4 className="text-xs font-bold text-zinc-200">{sec.label}</h4>
-                                <p className="text-[11px] text-zinc-400 mt-0.5">{sec.desc}</p>
-                              </div>
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  setForm((prev) => ({
-                                    ...prev,
-                                    enabledSections: {
-                                      ...prev.enabledSections,
-                                      [sec.key]: !isEnabled,
-                                    },
-                                  }));
-                                }}
-                                className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-                                  isEnabled ? "bg-amber-500" : "bg-zinc-700"
-                                }`}
-                              >
-                                <span
-                                  className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out ${
-                                    isEnabled ? "translate-x-5" : "translate-x-0"
-                                  }`}
-                                />
-                              </button>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
+                    <TemplateSectionOrderManager
+                      sectionOrder={form.sectionOrder || DEFAULT_SECTIONS_LIST.map((s) => s.key)}
+                      enabledSections={form.enabledSections || {}}
+                      onReorderSections={(newOrder) => setField("sectionOrder", newOrder)}
+                      onToggleSection={(key) => {
+                        const isEnabled = form.enabledSections?.[key] !== false;
+                        setForm((prev) => ({
+                          ...prev,
+                          enabledSections: {
+                            ...prev.enabledSections,
+                            [key]: !isEnabled,
+                          },
+                        }));
+                      }}
+                      onResetDefault={() => {
+                        const defaultKeys = DEFAULT_SECTIONS_LIST.map((s) => s.key);
+                        setField("sectionOrder", defaultKeys);
+                        show(lang === "en" ? "Reset to default order ✓" : "បានកំណត់ទៅលំដាប់ដើមវិញ ✓");
+                      }}
+                      onJumpToTab={(tabId, subTabId) => {
+                        setActiveTab(tabId);
+                        if (tabId === "events" && subTabId) setEventsSubTab(subTabId);
+                        if (tabId === "venue" && subTabId) setVenueSubTab(subTabId);
+                      }}
+                      lang={lang}
+                    />
                   </div>
                 )}
 
@@ -2861,6 +3670,7 @@ export default function AdminTemplateEditPage() {
             {/* REAL-TIME LIVE TEMPLATE SIMULATOR */}
             <div className="flex-1 w-full h-full relative bg-zinc-950">
               <iframe
+                key={form.code || form.presetId || "template-preview"}
                 ref={iframeRef}
                 allow="clipboard-write; clipboard-read; autoplay"
                 src={userTemplateUrl(`${
@@ -2872,7 +3682,7 @@ export default function AdminTemplateEditPage() {
                     : form.presetId === "KHMER_GOLDEN" || form.presetId === "CHAMPAGNE"
                     ? "cover-khmer-golden-wedding"
                     : form.presetId === "ROYAL_KHMER" || form.presetId === "RUBY_RED"
-                    ? "royal-khmer-wedding"
+                    ? "khmer-celestial"
                     : form.presetId === "EMERALD_GREEN"
                     ? "emerald-canva-luxe-wedding"
                     : "the-digital-yes-wedding")
@@ -2882,15 +3692,12 @@ export default function AdminTemplateEditPage() {
                 }`}
                 title="Live User Template Preview"
                 onLoad={() => {
-                  if (iframeRef.current?.contentWindow) {
-                    iframeRef.current.contentWindow.postMessage(
-                      {
-                        type: "LIVE_PREVIEW_SYNC",
-                        data: form,
-                      },
-                      "*"
-                    );
-                    if (previewGateOpen) {
+                  broadcastSync();
+                  [100, 300, 600, 1200, 2000].forEach((delay) => {
+                    setTimeout(() => broadcastSync(), delay);
+                  });
+                  if (previewGateOpen && iframeRef.current?.contentWindow) {
+                    try {
                       iframeRef.current.contentWindow.postMessage(
                         {
                           type: "TOGGLE_GATE",
@@ -2899,7 +3706,7 @@ export default function AdminTemplateEditPage() {
                         },
                         "*"
                       );
-                    }
+                    } catch {}
                   }
                 }}
               />
@@ -2907,6 +3714,213 @@ export default function AdminTemplateEditPage() {
           </div>
         </main>
       </div>
+
+      {/* ============================================================== */}
+      {/* CUSTOM FONT MODAL (GOOGLE FONTS & LOCAL FILE UPLOAD) */}
+      {/* ============================================================== */}
+      {showFontModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
+          <div className="relative w-full max-w-lg rounded-3xl border border-zinc-800 bg-zinc-950 p-6 shadow-2xl space-y-5">
+            {/* Header */}
+            <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
+              <div className="flex items-center gap-2">
+                <div className="h-8 w-8 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
+                  <Type className="h-4 w-4" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-white">បន្ថែមពុម្ពអក្សរផ្ទាល់ខ្លួន (Add Custom Font)</h3>
+                  <p className="text-[11px] text-zinc-400">ប្រើ Google Font ឬ Upload file .ttf / .woff2</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowFontModal(false)}
+                className="rounded-lg p-1 text-zinc-400 hover:text-white hover:bg-zinc-800 transition cursor-pointer"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            {/* Sub-tab Pills */}
+            <div className="flex items-center gap-1 rounded-xl border border-zinc-800 bg-zinc-900 p-1">
+              <button
+                type="button"
+                onClick={() => setFontModalTab("google")}
+                className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold transition cursor-pointer flex items-center justify-center gap-1.5 ${
+                  fontModalTab === "google"
+                    ? "bg-amber-500 text-black font-bold shadow-sm"
+                    : "text-zinc-400 hover:text-white"
+                }`}
+              >
+                <Globe className="h-3.5 w-3.5" />
+                <span>Google Fonts</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setFontModalTab("file")}
+                className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold transition cursor-pointer flex items-center justify-center gap-1.5 ${
+                  fontModalTab === "file"
+                    ? "bg-amber-500 text-black font-bold shadow-sm"
+                    : "text-zinc-400 hover:text-white"
+                }`}
+              >
+                <Upload className="h-3.5 w-3.5" />
+                <span>Upload File Font</span>
+              </button>
+            </div>
+
+            {/* Category Selector: Khmer vs Latin */}
+            <div>
+              <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
+                ប្រភេទ Font (Font Target)
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => setNewFontCategory("khmer")}
+                  className={`py-2 px-3 rounded-xl border text-xs font-semibold transition cursor-pointer flex items-center justify-center gap-2 ${
+                    newFontCategory === "khmer"
+                      ? "border-amber-500 bg-amber-500/10 text-amber-300 font-bold"
+                      : "border-zinc-800 bg-zinc-900/60 text-zinc-400 hover:border-zinc-700"
+                  }`}
+                >
+                  <span>🇰🇭 អក្សរខ្មែរ (Khmer)</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setNewFontCategory("latin")}
+                  className={`py-2 px-3 rounded-xl border text-xs font-semibold transition cursor-pointer flex items-center justify-center gap-2 ${
+                    newFontCategory === "latin"
+                      ? "border-amber-500 bg-amber-500/10 text-amber-300 font-bold"
+                      : "border-zinc-800 bg-zinc-900/60 text-zinc-400 hover:border-zinc-700"
+                  }`}
+                >
+                  <span>🔤 អក្សរឡាតាំង (Latin)</span>
+                </button>
+              </div>
+            </div>
+
+            {/* TAB 1: Google Font Mode */}
+            {fontModalTab === "google" && (
+              <div className="space-y-3.5">
+                <div>
+                  <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+                    ឈ្មោះ Google Font (Family Name)
+                  </label>
+                  <input
+                    type="text"
+                    value={newFontName}
+                    onChange={(e) => {
+                      setNewFontName(e.target.value);
+                      if (e.target.value.trim()) {
+                        ensureGoogleFontLoaded(e.target.value.trim());
+                      }
+                    }}
+                    placeholder={
+                      newFontCategory === "khmer"
+                        ? "ឧ. Odor Mean Chey, Koh Santepheap, Kdam Thmor Pro..."
+                        : "e.g. MonteCarlo, Italianno, Parisienne, Marck Script..."
+                    }
+                    className="h-10 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500"
+                  />
+                </div>
+
+                {/* Popular Suggestions Chips */}
+                <div>
+                  <span className="block text-[10px] font-semibold text-zinc-400 mb-1.5">
+                    💡 ពុម្ពអក្សរពេញនិយម (ចុចដើម្បីជ្រើសរើសភ្លាមៗ)៖
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {POPULAR_GOOGLE_FONTS_SUGGESTIONS
+                      .filter((s) => s.category === newFontCategory)
+                      .map((s) => (
+                        <button
+                          key={s.name}
+                          type="button"
+                          onClick={() => {
+                            setNewFontName(s.name);
+                            ensureGoogleFontLoaded(s.name);
+                          }}
+                          className={`text-[11px] px-2.5 py-1 rounded-lg border transition cursor-pointer ${
+                            newFontName === s.name
+                              ? "border-amber-500 bg-amber-500/20 text-amber-300 font-bold"
+                              : "border-zinc-800 bg-zinc-900 hover:border-zinc-700 text-zinc-300"
+                          }`}
+                        >
+                          {s.name}
+                        </button>
+                      ))}
+                  </div>
+                </div>
+
+                {/* Live Preview Box */}
+                {newFontName.trim() && (
+                  <div className="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-3.5 text-center space-y-1">
+                    <span className="text-[10px] uppercase font-mono tracking-wider text-amber-400">Live Preview:</span>
+                    <div
+                      className="text-base text-zinc-100 py-1"
+                      style={{ fontFamily: `"${newFontName.trim()}", sans-serif` }}
+                    >
+                      {newFontCategory === "khmer" ? "នី បញ្ញា & កត់ ស្រីផ្កាយ ២០២៦" : "Nha & SreyPkay Wedding Invitation 2026"}
+                    </div>
+                  </div>
+                )}
+
+                <button
+                  type="button"
+                  onClick={() => handleAddGoogleFont()}
+                  disabled={!newFontName.trim()}
+                  className="w-full h-10 rounded-xl bg-amber-500 hover:bg-amber-400 disabled:opacity-50 text-slate-950 font-bold text-xs transition cursor-pointer flex items-center justify-center gap-1.5 shadow-lg shadow-amber-500/10"
+                >
+                  <Plus className="h-4 w-4" />
+                  <span>+ Add & Apply This Google Font</span>
+                </button>
+              </div>
+            )}
+
+            {/* TAB 2: File Upload Mode */}
+            {fontModalTab === "file" && (
+              <div className="space-y-3.5">
+                <input
+                  type="file"
+                  ref={fontFileInputRef}
+                  accept=".ttf,.otf,.woff,.woff2"
+                  className="hidden"
+                  onChange={handleUploadFontFile}
+                />
+
+                <div>
+                  <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+                    ឈ្មោះ Font (Font Family Name)
+                  </label>
+                  <input
+                    type="text"
+                    value={newFontName}
+                    onChange={(e) => setNewFontName(e.target.value)}
+                    placeholder="ឧ. My Royal Wedding Font"
+                    className="h-10 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500"
+                  />
+                </div>
+
+                <div
+                  onClick={() => fontFileInputRef.current?.click()}
+                  className="rounded-2xl border-2 border-dashed border-zinc-800 hover:border-amber-500/50 bg-zinc-900/50 hover:bg-amber-500/5 p-6 text-center transition cursor-pointer space-y-2"
+                >
+                  <Upload className="h-7 w-7 text-amber-500 mx-auto" />
+                  <div>
+                    <span className="text-xs font-bold text-zinc-200">
+                      ចុចដើម្បីជ្រើសរើស file Font
+                    </span>
+                    <p className="text-[10px] text-zinc-400 mt-0.5">
+                      គាំទ្រប្រភេទ file: .ttf, .otf, .woff, .woff2
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       <Toast toast={toast} onClose={clear} />
     </div>

@@ -99,9 +99,10 @@ EOF
 }
 
 safe_pull() {
-    local pull_mode="$1"
-    local remote="${2:-}"
-    local remote_branch="${3:-}"
+    local branch="$1"
+    local pull_mode="$2"
+    local remote="${3:-}"
+    local remote_branch="${4:-}"
     local stash_created=0
     local stash_ref='stash@{0}'
 
@@ -174,7 +175,7 @@ echo -e "${BLUE}Fetching latest changes from $TARGET_REMOTE...${NC}"
 git fetch "$TARGET_REMOTE" --prune
 origin_branch_exists "$TARGET_REMOTE" "$TARGET_BRANCH" || fail "$TARGET_REMOTE/$TARGET_BRANCH was not found."
 
-safe_pull explicit "$TARGET_REMOTE" "$TARGET_BRANCH"
+safe_pull "$branch" explicit "$TARGET_REMOTE" "$TARGET_BRANCH"
 
 echo ""
 echo -e "${GREEN}═══════════════════════════════════════════════════${NC}"
