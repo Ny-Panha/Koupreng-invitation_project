@@ -116,7 +116,7 @@ export default function EmeraldLuxeLayout({
         type="button"
         onClick={toggleMusic}
         style={{
-          position: preview ? "absolute" : "fixed",
+          position: "fixed",
           bottom: "24px",
           right: "24px",
           zIndex: 90,

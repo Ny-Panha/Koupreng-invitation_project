@@ -9,6 +9,7 @@ import { useLanguageStore } from "@/stores/useLanguageStore";
 export default function FloatingActionBar({
   musicUrl,
   audioController,
+  showMusic = false,
   googleMapsUrl,
   bankAccount = {
     bank: "ABA Bank",
@@ -24,7 +25,7 @@ export default function FloatingActionBar({
   const [showQrModal, setShowQrModal] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const hasMusicTrack = Boolean(musicUrl || audioController?.hasMusic);
+  const shouldRenderMusic = Boolean(showMusic && (musicUrl || audioController?.hasMusic));
   const isPlayingMusic = audioController ? audioController.playing : isPlaying;
 
   const toggleMusic = () => {
@@ -94,22 +95,22 @@ export default function FloatingActionBar({
 
       {/* Floating Action Dock */}
       <div
-        className={`floating-action-bar fixed bottom-6 right-4 sm:right-6 z-40 flex items-center gap-2 p-1.5 rounded-full bg-black/75 backdrop-blur-xl border border-amber-500/30 shadow-[0_10px_30px_rgba(0,0,0,0.6)] ${className}`}
+        className={`floating-action-bar fixed bottom-5 left-1/2 -translate-x-1/2 sm:left-auto sm:right-6 sm:translate-x-0 z-40 flex items-center gap-2 p-1.5 rounded-full bg-[#120c08]/85 backdrop-blur-xl border border-[#d4af37]/35 shadow-[0_12px_36px_rgba(0,0,0,0.65),inset_0_0_10px_rgba(212,175,55,0.08)] transition-all duration-300 ${className}`}
       >
         {/* 1. Music (Spinning Vinyl Record) */}
-        {hasMusicTrack && (
+        {shouldRenderMusic && (
           <button
             type="button"
             onClick={toggleMusic}
             title={isPlayingMusic ? (lang === "en" ? "Mute Music" : "បិទភ្លេង") : (lang === "en" ? "Play Music" : "ចាក់ភ្លេង")}
-            className={`relative w-10 h-10 rounded-full flex items-center justify-center transition-all cursor-pointer ${
+            className={`relative w-9 h-9 rounded-full flex items-center justify-center transition-all cursor-pointer ${
               isPlayingMusic
-                ? "bg-gradient-to-tr from-amber-500 to-amber-300 text-slate-950 shadow-[0_0_15px_rgba(212,175,55,0.5)]"
-                : "bg-white/10 text-zinc-300 hover:bg-white/20"
+                ? "bg-gradient-to-tr from-[#d4af37] via-[#f7e8ba] to-[#b38927] text-[#1a1106] shadow-[0_0_14px_rgba(212,175,55,0.4)]"
+                : "bg-white/5 border border-white/10 text-zinc-400 hover:bg-white/15"
             }`}
           >
             {isPlayingMusic ? (
-              <Music className="w-5 h-5 animate-spin-slow" />
+              <Music className="w-4 h-4 animate-spin-slow" />
             ) : (
               <VolumeX className="w-4 h-4 text-zinc-400" />
             )}
@@ -123,7 +124,7 @@ export default function FloatingActionBar({
             target="_blank"
             rel="noopener noreferrer"
             title={lang === "en" ? "View on Google Maps" : "មើលទីតាំងលើ Google Maps"}
-            className="w-10 h-10 rounded-full bg-white/10 text-amber-300 hover:bg-white/20 flex items-center justify-center transition cursor-pointer"
+            className="w-9 h-9 rounded-full bg-white/5 border border-[#d4af37]/20 text-[#f5dfa8] hover:bg-white/15 hover:text-white flex items-center justify-center transition cursor-pointer"
           >
             <MapPin className="w-4 h-4" />
           </a>
@@ -134,7 +135,7 @@ export default function FloatingActionBar({
           type="button"
           onClick={() => setShowQrModal(true)}
           title={lang === "en" ? "Send Gift (KHQR)" : "ចងដៃតាម ABA KHQR"}
-          className="w-10 h-10 rounded-full bg-white/10 text-amber-300 hover:bg-white/20 flex items-center justify-center transition cursor-pointer"
+          className="w-9 h-9 rounded-full bg-white/5 border border-[#d4af37]/20 text-[#f5dfa8] hover:bg-white/15 hover:text-white flex items-center justify-center transition cursor-pointer"
         >
           <QrCode className="w-4 h-4" />
         </button>
@@ -144,7 +145,7 @@ export default function FloatingActionBar({
           type="button"
           onClick={scrollToRsvp}
           title={lang === "en" ? "RSVP Attend" : "ឆ្លើយតបការចូលរួម (RSVP)"}
-          className="flex items-center gap-1.5 px-3.5 h-10 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold text-xs shadow-md transition hover:brightness-110 cursor-pointer"
+          className="flex items-center gap-1.5 px-3.5 h-9 rounded-full bg-gradient-to-r from-[#d4af37] to-[#ba8c26] text-[#140c04] font-bold text-xs shadow-md transition hover:brightness-110 cursor-pointer"
         >
           <Send className="w-3.5 h-3.5" />
           <span className="hidden sm:inline">RSVP</span>

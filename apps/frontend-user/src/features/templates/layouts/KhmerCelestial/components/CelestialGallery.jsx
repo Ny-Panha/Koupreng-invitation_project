@@ -10,8 +10,17 @@ function imageSource(item) {
   return typeof item === "string" ? item : item?.src || item?.url || item?.preview || "";
 }
 
-export default function CelestialGallery({ images, languageMode }) {
-  const gallery = (Array.isArray(images) ? images : []).map(imageSource).filter(Boolean);
+const SAMPLE_CELESTIAL_GALLERY = [
+  "/facebook/all/06-card/06-01.jpg",
+  "/facebook/all/06-card/06-02.jpg",
+  "/facebook/all/06-card/06-03.jpg",
+  "/facebook/all/06-card/06-04.jpg",
+  "/facebook/all/06-card/06-05.jpg",
+];
+
+export default function CelestialGallery({ images, languageMode, preview = false }) {
+  const userImages = (Array.isArray(images) ? images : []).map(imageSource).filter(Boolean);
+  const gallery = userImages.length > 0 ? userImages : (preview ? SAMPLE_CELESTIAL_GALLERY : []);
   const [activeIndex, setActiveIndex] = useState(-1);
   const reducedMotion = usePrefersReducedMotion();
   const triggerRef = useRef(null);

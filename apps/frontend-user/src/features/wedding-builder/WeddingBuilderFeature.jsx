@@ -996,7 +996,9 @@ export default function WeddingBuilderFeature() {
                               ? "Curtain Gate"
                               : preset.openingStyle === "envelope-3d"
                                 ? "Envelope 3D"
-                                : "Khmer Royal"}
+                                : (preset.openingStyle === "celestial-cover" || tpl.code === "khmer-celestial" || tpl.id === "khmer-celestial")
+                                  ? "Khmer Celestial"
+                                  : "Khmer Royal"}
                           </div>
                         </div>
 

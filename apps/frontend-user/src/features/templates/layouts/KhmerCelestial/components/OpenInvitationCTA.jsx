@@ -18,15 +18,18 @@ export default function OpenInvitationCTA({
   label = "Open invitation",
   onOpen,
   autoFocus = true,
+  instant = false,
+  image,
 }) {
   const reducedMotion = usePrefersReducedMotion();
+  const isInstant = Boolean(instant || reducedMotion);
   const [invitationState, setInvitationState] = useState("closed");
   const [isHovered, setIsHovered] = useState(false);
 
   const handleClick = useCallback(() => {
     if (invitationState !== "closed") return;
 
-    if (reducedMotion) {
+    if (isInstant) {
       setInvitationState("opened");
       onOpen?.();
       return;
@@ -34,7 +37,7 @@ export default function OpenInvitationCTA({
 
     setInvitationState("opening");
     onOpen?.();
-  }, [invitationState, onOpen, reducedMotion]);
+  }, [invitationState, onOpen, isInstant]);
 
   const buttonVariants = {
     idle: {
@@ -83,11 +86,11 @@ export default function OpenInvitationCTA({
   return (
     <motion.div
       className="kc-opening__cta-wrapper"
-      initial={reducedMotion ? false : { opacity: 0, scale: 0.92, y: 14 }}
+      initial={isInstant ? false : { opacity: 0, scale: 0.92, y: 14 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{
-        duration: reducedMotion ? 0 : 0.8,
-        delay: reducedMotion ? 0 : 0.4,
+        duration: isInstant ? 0 : 0.8,
+        delay: isInstant ? 0 : 0.4,
         ease: CELESTIAL_EASE,
       }}
     >
@@ -155,17 +158,40 @@ export default function OpenInvitationCTA({
         whileTap={reducedMotion ? undefined : "tap"}
       >
         <div className="kc-opening__cta-media">
-          <img
-            className="kc-opening__cta-image"
-            src={KHMER_CELESTIAL_ASSETS.openButton}
-            alt=""
-            width="2172"
-            height="724"
-            loading="eager"
-            decoding="async"
-            fetchPriority="high"
-            draggable="false"
-          />
+          {image ? (
+            <img
+              className="kc-opening__cta-image"
+              src={image}
+              alt=""
+              width="2172"
+              height="724"
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
+              draggable="false"
+            />
+          ) : (
+            <div
+              className="kc-opening__cta-text-pill"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: "10px 24px",
+                borderRadius: "9999px",
+                background: "linear-gradient(135deg, #d4af37 0%, #b8860b 50%, #d4af37 100%)",
+                color: "#1c140d",
+                fontWeight: "700",
+                fontSize: "13px",
+                letterSpacing: "0.03em",
+                boxShadow: "0 6px 20px rgba(212, 175, 55, 0.35)",
+                border: "1px solid rgba(255, 235, 170, 0.5)",
+                whiteSpace: "nowrap"
+              }}
+            >
+              <span>{label || "បើកសំបុត្រអញ្ជើញ"}</span>
+            </div>
+          )}
         </div>
       </motion.button>
       </div>

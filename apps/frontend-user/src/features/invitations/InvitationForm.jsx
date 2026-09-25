@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import {
     Music,
@@ -19,6 +19,7 @@ import {
     Maximize2,
     FileText,
     User,
+    Users,
     PenSquare,
     Map,
     CheckCircle2,
@@ -28,6 +29,7 @@ import {
     Check,
     Search,
     ArrowLeft,
+    RotateCcw,
 } from "lucide-react";
 
 
@@ -51,6 +53,7 @@ import LivePhoneSimulator from "./LivePhoneSimulator";
 import { DatePicker } from "../../shared/ui/DatePicker";
 import { TimePicker } from "../../shared/ui/TimePicker";
 import SpotifyMusicPicker from "./components/SpotifyMusicPicker";
+import { getTemplateFormFlow } from "./config/templateFormFlowConfig";
 import "./InvitationPlanEssentialEditor.css";
 
 function CleanImageUploadField({ label, icon: Icon, image, onUpload, onRemove, inputRef, hint = "PNG, JPG, WebP (ក្រោម 10MB)" }) {
@@ -404,7 +407,11 @@ const DEFAULT_STATE = {
     frontColor: "#f9af59",
     bottomColor: "#B08E4F",
     coverImage: null,
+    invitationImage: null,
+    invitationImage2: null,
     backgroundImage: null,
+    showBrandMark: true,
+    brandMarkUrl: "",
     sketchMapImage: null,
     // Gallery (5-10 photos)
     photos: Array.from({ length: 5 }, (_, index) => ({ id: `p${index + 1}`, url: null })),
@@ -418,14 +425,20 @@ const DEFAULT_STATE = {
     dressCode: null,
     dressColors: [],
     // Family & Wedding Party (គ្រួសារ និង ក្រុមអម)
+    groomFather: "",
+    groomMother: "",
+    brideFather: "",
+    brideMother: "",
     showParty: true,
     party: [],
     // Guest Notes & FAQ (សំណួរញឹកញាប់)
     showFaq: true,
     faq: [],
-    // Thank you
+    // Thank you & Apology
     thankYouTitle: "",
     thankYouText: "",
+    apologyTitle: "",
+    apologyText: "",
     // KHQR
     khqrDollar: { qrUrl: null, bankName: "KHQR Dollar ($)", accountNumber: "" },
     khqrRiel: { qrUrl: null, bankName: "KHQR Riel (៛)", accountNumber: "" },
@@ -469,7 +482,7 @@ export default function InvitationForm({ invitation }) {
         const preset = getTemplatePreset(tpl) || {};
 
         const isDefaultGold = (customParsed.frontColor === "#f9af59" && customParsed.bottomColor === "#B08E4F") ||
-                              (invitation?.frontColor === "#f9af59" && invitation?.bottomColor === "#B08E4F");
+            (invitation?.frontColor === "#f9af59" && invitation?.bottomColor === "#B08E4F");
         const isDefaultOpening = (customParsed.openingStyle === "khmer-royal" || invitation?.openingStyle === "khmer-royal");
         const isDefaultCover = !customParsed.coverImage || customParsed.coverImage.includes("/facebook/all/03-card/cover-card.jpg");
         const isDefaultTitle = !customParsed.title || customParsed.title === "សួនរាជហង្សខ្មែរ" || customParsed.title === "Garden Royal Khmer Wedding" || customParsed.title.includes("W01");
@@ -521,6 +534,10 @@ export default function InvitationForm({ invitation }) {
             brideName,
             hostName: groomName,
             partnerName: brideName,
+            groomFather: customParsed.groomFather || tpl?.family?.groomParents?.[0] || tpl?.groomFather || DEFAULT_STATE.groomFather,
+            groomMother: customParsed.groomMother || tpl?.family?.groomParents?.[1] || tpl?.groomMother || DEFAULT_STATE.groomMother,
+            brideFather: customParsed.brideFather || tpl?.family?.brideParents?.[0] || tpl?.brideFather || DEFAULT_STATE.brideFather,
+            brideMother: customParsed.brideMother || tpl?.family?.brideParents?.[1] || tpl?.brideMother || DEFAULT_STATE.brideMother,
             eventDate: toStandardDate(rawDate),
             eventDateText: customParsed.eventDateText || tpl?.dateText || DEFAULT_STATE.eventDateText,
             eventTime: toStandardTime(rawTime),
@@ -531,6 +548,7 @@ export default function InvitationForm({ invitation }) {
             coverImage,
             uploadedCoverUrl: uploadedCoverFromDraft,
             templateDefaultCover,
+            backgroundImage: customParsed.backgroundImage || invitation?.backgroundImage || preset.backgroundImage || tpl?.backgroundImage || "",
             messageText: (invitation?.storyText && invitation.storyText !== DEFAULT_INVITATION_TEXT)
                 ? invitation.storyText
                 : ((customParsed.messageText && customParsed.messageText !== DEFAULT_INVITATION_TEXT)
@@ -613,6 +631,8 @@ export default function InvitationForm({ invitation }) {
         };
     });
 
+    const flowConfig = useMemo(() => getTemplateFormFlow(form.templateId), [form.templateId]);
+
     // Mirrors the module-level catalog counter so the live preview recomputes
     // once the async catalog fetch registers the Admin-created templates.
     const [catalogVersion, setCatalogVersion] = useState(getCatalogVersion());
@@ -669,6 +689,8 @@ export default function InvitationForm({ invitation }) {
     const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
     const [isMobilePreviewOpen, setIsMobilePreviewOpen] = useState(false);
     const [pendingCoverFile, setPendingCoverFile] = useState(null);
+    const [pendingInvitationFile, setPendingInvitationFile] = useState(null);
+    const [pendingInvitation2File, setPendingInvitation2File] = useState(null);
     const [locationError, setLocationError] = useState("");
     const [isLocating, setIsLocating] = useState(false);
     const [leftPercent, setLeftPercent] = useState(52);
@@ -711,6 +733,10 @@ export default function InvitationForm({ invitation }) {
             title: nextTitle,
             groomName: form.groomName || preset.groom || template.groom || "វណ្ណដា",
             brideName: form.brideName || preset.bride || template.bride || "ស្រីពេជ្រ",
+            groomFather: form.groomFather || template.family?.groomParents?.[0] || "",
+            groomMother: form.groomMother || template.family?.groomParents?.[1] || "",
+            brideFather: form.brideFather || template.family?.brideParents?.[0] || "",
+            brideMother: form.brideMother || template.family?.brideParents?.[1] || "",
             eventDate: nextDate,
             eventTime: form.eventTime || template.receptionTime || "17:00",
             venueName: form.venueName || preset.venueName || template.venueName || "The Premier Center Sen Sok",
@@ -840,6 +866,8 @@ export default function InvitationForm({ invitation }) {
 
     // File input refs
     const coverInputRef = useRef(null);
+    const invitationInputRef = useRef(null);
+    const invitation2InputRef = useRef(null);
     const bgInputRef = useRef(null);
     const sketchInputRef = useRef(null);
     const qrDollarInputRef = useRef(null);
@@ -1170,10 +1198,16 @@ export default function InvitationForm({ invitation }) {
                 openingStyle: form.openingStyle || activePreset.openingStyle || "khmer-royal",
                 frontColor: form.frontColor || activePreset.frontColor || "#f9af59",
                 bottomColor: form.bottomColor || activePreset.bottomColor || "#B08E4F",
-                coverImage: form.uploadedCoverUrl || null,
+                coverImage: form.uploadedCoverUrl || form.coverImage || null,
+                invitationImage: form.uploadedInvitationUrl || form.invitationImage || null,
+                invitationImage2: form.invitationImage2 || null,
                 backgroundImage: form.backgroundImage,
                 sketchMapImage: form.sketchMapImage,
                 photos: form.photos,
+                groomFather: form.groomFather || "",
+                groomMother: form.groomMother || "",
+                brideFather: form.brideFather || "",
+                brideMother: form.brideMother || "",
                 showCountdown: form.showCountdown !== false,
                 showStory: form.showStory !== false,
                 storyChapters: form.storyChapters || [],
@@ -1188,6 +1222,8 @@ export default function InvitationForm({ invitation }) {
                 khqrRiel: form.khqrRiel,
                 musicTrackId: form.musicTrackId,
                 musicUrl: form.musicUrl,
+                showBrandMark: form.showBrandMark !== false,
+                brandMarkUrl: form.brandMarkUrl || "",
             };
 
             const contentPayload = {
@@ -1198,11 +1234,20 @@ export default function InvitationForm({ invitation }) {
                 layoutStyles: form.layoutStyles || {},
                 title: finalTitle,
                 subtitle: form.subtitle || "សូមគោរពអញ្ជើញ",
+                coverImage: form.uploadedCoverUrl || form.coverImage || null,
+                invitationImage: form.uploadedInvitationUrl || form.invitationImage || null,
+                invitationImage2: form.invitationImage2 || null,
                 hideCoupleNameOnCover: form.hideCoupleNameOnCover,
+                showBrandMark: form.showBrandMark !== false,
+                brandMarkUrl: form.brandMarkUrl || "",
                 eventDateText: form.eventDateText || finalDate,
                 guestName: form.guestName,
                 groomName: finalGroom,
                 brideName: finalBride,
+                groomFather: form.groomFather || "",
+                groomMother: form.groomMother || "",
+                brideFather: form.brideFather || "",
+                brideMother: form.brideMother || "",
                 venueName: finalVenueName,
                 venueAddress: finalVenueAddress,
                 messageTitle: form.messageTitle,
@@ -1223,6 +1268,8 @@ export default function InvitationForm({ invitation }) {
                     .map(({ id, url }) => ({ id, preview: url, type: "image" })),
                 thankYouTitle: form.thankYouTitle,
                 thankYouText: form.thankYouText,
+                apologyTitle: form.apologyTitle,
+                apologyText: form.apologyText,
             };
 
             const payload = {
@@ -1271,12 +1318,25 @@ export default function InvitationForm({ invitation }) {
             }
 
             let savedCoverUrl = form.uploadedCoverUrl || "";
+            let savedInvitationUrl = form.uploadedInvitationUrl || "";
             const backendId = saved?.id || (isEdit && !isNaN(Number(invitationId)) ? invitationId : null);
             if (pendingCoverFile && backendId) {
                 const uploaded = await mediaService.uploadCover(backendId, pendingCoverFile);
                 savedCoverUrl = uploaded?.fileUrl || uploaded?.data?.fileUrl || savedCoverUrl;
                 setPendingCoverFile(null);
                 update("coverImage", savedCoverUrl);
+            }
+            if (pendingInvitationFile && backendId) {
+                const uploaded = await mediaService.uploadCover(backendId, pendingInvitationFile);
+                savedInvitationUrl = uploaded?.fileUrl || uploaded?.data?.fileUrl || savedInvitationUrl;
+                setPendingInvitationFile(null);
+                update("invitationImage", savedInvitationUrl);
+            }
+            if (pendingInvitation2File && backendId) {
+                const uploaded2 = await mediaService.uploadCover(backendId, pendingInvitation2File);
+                const saved2Url = uploaded2?.fileUrl || uploaded2?.data?.fileUrl || form.invitationImage2 || "";
+                setPendingInvitation2File(null);
+                update("invitationImage2", saved2Url);
             }
 
             const targetDraftId = invitationId || saved?.id || `wed-${Date.now().toString(36)}`;
@@ -1291,9 +1351,19 @@ export default function InvitationForm({ invitation }) {
                 couple: {
                     groom: finalGroom,
                     bride: finalBride,
+                    groomParents: [form.groomFather, form.groomMother].filter(Boolean),
+                    brideParents: [form.brideFather, form.brideMother].filter(Boolean),
                 },
                 groomName: finalGroom,
                 brideName: finalBride,
+                groomFather: form.groomFather || "",
+                groomMother: form.groomMother || "",
+                brideFather: form.brideFather || "",
+                brideMother: form.brideMother || "",
+                family: {
+                    groomParents: [form.groomFather, form.groomMother].filter(Boolean),
+                    brideParents: [form.brideFather, form.brideMother].filter(Boolean),
+                },
                 event: {
                     title: finalTitle,
                     date: finalDate,
@@ -1312,6 +1382,8 @@ export default function InvitationForm({ invitation }) {
                 coverImage: savedCoverUrl || form.coverImage,
                 coverUrl: savedCoverUrl || form.coverImage,
                 uploadedCoverUrl: savedCoverUrl,
+                invitationImage: savedInvitationUrl || form.invitationImage || null,
+                invitationImage2: form.invitationImage2 || null,
                 templateDefaultCover: form.templateDefaultCover,
                 openingStyle: form.openingStyle || activePreset.openingStyle || "khmer-royal",
                 frontColor: form.frontColor || activePreset.frontColor,
@@ -1344,6 +1416,1400 @@ export default function InvitationForm({ invitation }) {
         } finally {
             setIsSaving(false);
         }
+    };
+
+    // --- Dynamic Section Renderers (Driven by templateFormFlowConfig) ---
+
+    const renderCoverSection = () => (
+        <div className="pe-section-card" key="cover">
+            <h4 className="pe-section-heading">
+                <span className="pe-sec-icon-badge">
+                    <Sparkles size={17} />
+                </span>
+                <span>{flowConfig.labels.coverSection || t("secCover") || "ក្របខាងមុខ (Front Cover)"}</span>
+            </h4>
+
+            {/* Clean Cover Image Upload (Image 1) */}
+            <CleanImageUploadField
+                label={flowConfig.labels.coverImage || t("coverImage") || "រូបភាពក្របខាងមុខ (Front Cover Image)"}
+                icon={ImageIcon}
+                image={form.coverImage}
+                onUpload={(e) => handleFileUpload(e, (url, file) => {
+                    update("uploadedCoverUrl", url);
+                    update("coverImage", url);
+                    setPendingCoverFile(file);
+                })}
+                onRemove={() => {
+                    update("uploadedCoverUrl", "");
+                    update("coverImage", form.templateDefaultCover || "");
+                    setPendingCoverFile(null);
+                }}
+                inputRef={coverInputRef}
+                hint={flowConfig.hints.coverImage || "បង្ហាញលើក្របទំព័រដើម (Front Cover / Hero)"}
+            />
+
+            {/* Background Frame / Botanical Image Upload */}
+            {(String(form.templateId || "").toLowerCase().includes("celestial") || Boolean(form.backgroundImage)) && (
+                <div style={{ marginTop: 12 }}>
+                    <CleanImageUploadField
+                        label="ស៊ុមផ្កា / រូបភាពផ្ទៃខាងក្រោយ (Botanical Frame / Background Image)"
+                        icon={Sparkles}
+                        image={form.backgroundImage || "/invitations/khmer-celestial/botanical-frame.jpg"}
+                        onUpload={(e) => handleFileUpload(e, (url) => {
+                            update("backgroundImage", url);
+                        })}
+                        onRemove={() => {
+                            update("backgroundImage", "/invitations/khmer-celestial/botanical-frame.jpg");
+                        }}
+                        hint="ស៊ុមផ្កាប្រណិតព័ទ្ធជុំវិញកាតធៀបការ (អាចប្តូរជារូបស៊ុមផ្ទាល់ខ្លួនបាន)"
+                    />
+                </div>
+            )}
+
+            {/* Main Title on Cover */}
+            <div className="pe-form-group">
+                <label className="pe-label">
+                    <span className="pe-label-icon"><FileText size={15} /></span>
+                    {t("mainTitle") || "ចំណងជើងធំលើក្រប"}
+                </label>
+                <input
+                    type="text"
+                    className="pe-input"
+                    value={form.title}
+                    onChange={(e) => update("title", e.target.value)}
+                    placeholder="សិរីមង្គលអាពាហ៍ពិពាហ៍"
+                />
+            </div>
+
+            {/* Couple Names on Cover */}
+            <div className="pe-grid-2">
+                <div className="pe-form-group">
+                    <label className="pe-label">
+                        <span className="pe-label-icon"><User size={15} /></span>
+                        {t("groom") || "កូនប្រុស (Groom Name)"}
+                    </label>
+                    <input
+                        type="text"
+                        className="pe-input"
+                        value={form.groomName}
+                        onChange={(e) => update("groomName", e.target.value)}
+                        placeholder="វណ្ណដា"
+                    />
+                </div>
+                <div className="pe-form-group">
+                    <label className="pe-label">
+                        <span className="pe-label-icon"><Heart size={15} /></span>
+                        {t("bride") || "កូនស្រី (Bride Name)"}
+                    </label>
+                    <input
+                        type="text"
+                        className="pe-input"
+                        value={form.brideName}
+                        onChange={(e) => update("brideName", e.target.value)}
+                        placeholder="ស្រីពេជ្រ"
+                    />
+                </div>
+            </div>
+
+            {/* Wedding Logo / Calligraphy Mark Controls (Turn On / Turn Off / Custom Upload) */}
+            <div style={{ padding: "14px 16px", background: "#fdfbf7", border: "1px solid #f0e6d6", borderRadius: 10, margin: "14px 0" }}>
+                <div className="pe-switch-row" style={{ margin: 0, paddingBottom: form.showBrandMark !== false ? 12 : 0, borderBottom: form.showBrandMark !== false ? "1px dashed #e6dbcb" : "none" }}>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                        <span className="pe-switch-label" style={{ fontWeight: 600, color: "#43250b", display: "flex", alignItems: "center", gap: 6 }}>
+                            <Sparkles size={16} color="#b88a3a" />
+                            បង្ហាញស្លាកឈ្មោះមាស / ឡូហ្គោ (Gold Mark / Logo)
+                        </span>
+                        <small style={{ color: "#786148", fontSize: "0.76rem" }}>
+                            {form.showBrandMark !== false ? "កំពុងបើកបង្ហាញលើក្របទំព័រ" : "បានបិទ (បង្ហាញតែឈ្មោះគូស្នេហ៍ជាអក្សរមាស)"}
+                        </small>
+                    </div>
+                    <label className="pe-toggle">
+                        <input
+                            type="checkbox"
+                            checked={form.showBrandMark !== false}
+                            onChange={(e) => update("showBrandMark", e.target.checked)}
+                        />
+                        <span className="pe-toggle-slider" />
+                    </label>
+                </div>
+
+                {form.showBrandMark !== false && (
+                    <div style={{ marginTop: 12, display: "flex", flexDirection: "column", gap: 10 }}>
+                        {form.brandMarkUrl ? (
+                            <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 12px", background: "#fff", borderRadius: 8, border: "1px solid #e2e8f0" }}>
+                                <img
+                                    src={form.brandMarkUrl}
+                                    alt="Custom Logo"
+                                    style={{ width: 48, height: 48, objectFit: "contain", background: "#fafafa", borderRadius: 6, border: "1px solid #cbd5e1" }}
+                                />
+                                <div style={{ flex: 1, minWidth: 0 }}>
+                                    <div style={{ fontSize: "0.84rem", fontWeight: 600, color: "#1e293b" }}>ឡូហ្គោផ្ទាល់ខ្លួន (Custom Logo)</div>
+                                    <div style={{ fontSize: "0.74rem", color: "#64748b" }}>បានបញ្ចូលរូបភាពផ្ទាល់ខ្លួន</div>
+                                </div>
+                                <div style={{ display: "flex", gap: 6 }}>
+                                    <label className="pe-btn-upload-cover" style={{ cursor: "pointer", padding: "4px 8px", fontSize: "0.75rem", margin: 0 }}>
+                                        ប្តូរ
+                                        <input
+                                            type="file"
+                                            accept="image/png,image/webp,image/jpeg"
+                                            style={{ display: "none" }}
+                                            onChange={(e) => {
+                                                const file = e.target.files?.[0];
+                                                if (file) {
+                                                    try {
+                                                        const url = URL.createObjectURL(file);
+                                                        update("brandMarkUrl", url);
+                                                    } catch (err) {
+                                                        console.error(err);
+                                                    }
+                                                }
+                                            }}
+                                        />
+                                    </label>
+                                    <button
+                                        type="button"
+                                        className="pe-btn-del-item"
+                                        style={{ padding: "4px 8px", fontSize: "0.75rem" }}
+                                        onClick={() => update("brandMarkUrl", "")}
+                                        title="ប្រើឡូហ្គោគំរូដើមរបស់ Template"
+                                    >
+                                        <RotateCcw size={13} /> គំរូដើម
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="pe-btn-del-item"
+                                        style={{ padding: "4px 8px", fontSize: "0.75rem", color: "#dc2626", borderColor: "#fecaca", background: "#fef2f2" }}
+                                        onClick={() => update("showBrandMark", false)}
+                                        title="បិទមិនបង្ហាញឡូហ្គោលើក្រប"
+                                    >
+                                        <X size={13} /> បិទ
+                                    </button>
+                                </div>
+                            </div>
+                        ) : (
+                            <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 12px", background: "#fff", borderRadius: 8, border: "1px solid #e8decb" }}>
+                                <img
+                                    src="/invitations/khmer-celestial/koupreng-gold-mark.webp"
+                                    alt="Template Default Logo"
+                                    style={{ width: 52, height: 38, objectFit: "contain", background: "#faf7f2", borderRadius: 6, border: "1px solid #e2d7c3" }}
+                                />
+                                <div style={{ flex: 1, minWidth: 0 }}>
+                                    <div style={{ fontSize: "0.84rem", fontWeight: 600, color: "#5c401d" }}>ឡូហ្គោគំរូដើម (Template Preset)</div>
+                                    <div style={{ fontSize: "0.74rem", color: "#8a755d" }}>ស្លាកឈ្មោះមាសរបស់ Template</div>
+                                </div>
+                                <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                                    <label className="pe-btn-upload-cover" style={{ cursor: "pointer", padding: "6px 10px", fontSize: "0.76rem", margin: 0, display: "inline-flex", alignItems: "center", gap: 5 }}>
+                                        <UploadCloud size={14} />
+                                        <span>ប្តូរជារូបផ្ទាល់ខ្លួន</span>
+                                        <input
+                                            type="file"
+                                            accept="image/png,image/webp,image/jpeg"
+                                            style={{ display: "none" }}
+                                            onChange={(e) => {
+                                                const file = e.target.files?.[0];
+                                                if (file) {
+                                                    try {
+                                                        const url = URL.createObjectURL(file);
+                                                        update("brandMarkUrl", url);
+                                                    } catch (err) {
+                                                        console.error(err);
+                                                    }
+                                                }
+                                            }}
+                                        />
+                                    </label>
+                                    <button
+                                        type="button"
+                                        className="pe-btn-del-item"
+                                        style={{ padding: "6px 10px", fontSize: "0.76rem", display: "inline-flex", alignItems: "center", gap: 4, color: "#dc2626", borderColor: "#fecaca", background: "#fef2f2" }}
+                                        onClick={() => update("showBrandMark", false)}
+                                        title="បិទមិនបង្ហាញឡូហ្គោលើក្រប"
+                                    >
+                                        <X size={14} />
+                                        <span>បិទ</span>
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
+                        <div className="pe-switch-row" style={{ margin: "4px 0 0", padding: "8px 10px", background: "rgba(255,255,255,0.7)", borderRadius: 6 }}>
+                            <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
+                                <span className="pe-switch-label" style={{ fontSize: "0.82rem" }}>{t("hideCoupleCover") || "បិទឈ្មោះកូនកំលោះ/កូនក្រមុំ (ក្របខាងលើ)"}</span>
+                                <small style={{ color: "#786148", fontSize: "0.72rem" }}>* ប្រើពេលឡូហ្គោរបស់អ្នកមានឈ្មោះស្រាប់ ដើម្បីកុំឱ្យជាន់ឈ្មោះគ្នា</small>
+                            </div>
+                            <label className="pe-toggle">
+                                <input
+                                    type="checkbox"
+                                    checked={form.hideCoupleNameOnCover}
+                                    onChange={(e) => update("hideCoupleNameOnCover", e.target.checked)}
+                                />
+                                <span className="pe-toggle-slider" />
+                            </label>
+                        </div>
+                    </div>
+                )}
+
+                {form.showBrandMark === false && (
+                    <div style={{ marginTop: 10, padding: "8px 12px", background: "rgba(255,255,255,0.85)", borderRadius: 8, border: "1px dashed #cbd5e1", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
+                        <span style={{ fontSize: "0.78rem", color: "#64748b" }}>
+                            🚫 បានបិទឡូហ្គោ (បង្ហាញតែឈ្មោះគូស្នេហ៍ជាអក្សរមាស)
+                        </span>
+                        <button
+                            type="button"
+                            className="pe-btn-outline"
+                            style={{ padding: "4px 10px", fontSize: "0.74rem", borderRadius: 6, whiteSpace: "nowrap" }}
+                            onClick={() => update("showBrandMark", true)}
+                        >
+                            បើកបង្ហាញឡើងវិញ
+                        </button>
+                    </div>
+                )}
+            </div>
+
+            {/* Subtitle / Invitation Line on Cover */}
+            <div className="pe-form-group">
+                <label className="pe-label">
+                    <span className="pe-label-icon"><Sparkles size={15} /></span>
+                    {t("subTitle") || "ចំណងជើងរងលើក្រប (Subtitle / Kicker)"}
+                </label>
+                <input
+                    type="text"
+                    className="pe-input"
+                    value={form.subtitle}
+                    onChange={(e) => update("subtitle", e.target.value)}
+                    placeholder="សូមគោរពអញ្ជើញ"
+                />
+            </div>
+
+            {/* Event Date & Time on Cover */}
+            <div className="pe-grid-2">
+                <div className="pe-form-group">
+                    <label className="pe-label">
+                        <span className="pe-label-icon"><Calendar size={15} /></span>
+                        {t("dateTime") || "កាលបរិច្ឆេទ (Event Date)"}
+                    </label>
+                    <DatePicker
+                        value={form.eventDate}
+                        onChange={(val) => {
+                            update("eventDate", val);
+                            update("eventDateText", val);
+                        }}
+                        placeholder="ជ្រើសកាលបរិច្ឆេទ"
+                    />
+                </div>
+                <div className="pe-form-group">
+                    <label className="pe-label">
+                        <span className="pe-label-icon"><Clock size={15} /></span>
+                        {t("timePicker") || "ម៉ោងទទួលភ្ញៀវ (Event Time)"}
+                    </label>
+                    <TimePicker
+                        value={form.eventTime}
+                        onChange={(val) => update("eventTime", val)}
+                        placeholder="ជ្រើសម៉ោង"
+                    />
+                </div>
+            </div>
+
+            {/* Spotify-style Music Selector & Player */}
+            <div className="pe-form-group">
+                <label className="pe-label">
+                    <span className="pe-label-icon"><Music size={15} /></span>
+                    {t("labelMusic") || "ជ្រើសរើសបទភ្លេង / Music Track"}
+                </label>
+                <SpotifyMusicPicker
+                    value={form.musicTrackId || "waiting-day"}
+                    onChange={(trackId, trackUrl) => {
+                        update("musicTrackId", trackId);
+                        update("musicUrl", trackUrl || "");
+                    }}
+                />
+            </div>
+        </div>
+    );
+
+    const renderFamilySection = () => (
+        <div className="pe-section-card" key="family">
+            <h4 className="pe-section-heading">
+                <span className="pe-sec-icon-badge">
+                    <Users size={17} />
+                </span>
+                <span>{flowConfig.labels.familySection || "មាតាបិតាទាំងសងខាង (Together with our families)"}</span>
+            </h4>
+            <p style={{ margin: "0 0 14px 0", fontSize: "0.8rem", color: "#64748b" }}>
+                {activeLangTab === "KH"
+                    ? "* បញ្ចូលឈ្មោះលោកឪពុក និងអ្នកម្តាយទាំងសងខាងសម្រាប់បង្ហាញក្នុងធៀបការ"
+                    : "* Enter the names of parents of both the groom and bride"}
+            </p>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "14px" }}>
+                {/* Groom's Family */}
+                <div style={{ background: "#fdfbf7", border: "1px solid #ebdcc5", borderRadius: "10px", padding: "12px" }}>
+                    <h5 style={{ margin: "0 0 10px 0", fontSize: "0.85rem", fontWeight: 700, color: "#8c6b32", display: "flex", alignItems: "center", gap: "6px" }}>
+                        <User size={15} /> ខាងកូនប្រុស (Groom's Side)
+                    </h5>
+                    <div className="pe-form-group" style={{ marginBottom: "8px" }}>
+                        <label className="pe-label" style={{ fontSize: "0.78rem" }}>លោកឪពុក (Father)</label>
+                        <input
+                            type="text"
+                            className="pe-input"
+                            value={form.groomFather || ""}
+                            onChange={(e) => update("groomFather", e.target.value)}
+                            placeholder="លោក ឃុន ស៊ីវខេង"
+                        />
+                    </div>
+                    <div className="pe-form-group" style={{ marginBottom: 0 }}>
+                        <label className="pe-label" style={{ fontSize: "0.78rem" }}>អ្នកម្តាយ (Mother)</label>
+                        <input
+                            type="text"
+                            className="pe-input"
+                            value={form.groomMother || ""}
+                            onChange={(e) => update("groomMother", e.target.value)}
+                            placeholder="លោកស្រី គុយ ដាលី"
+                        />
+                    </div>
+                </div>
+
+                {/* Bride's Family */}
+                <div style={{ background: "#fdfbf7", border: "1px solid #ebdcc5", borderRadius: "10px", padding: "12px" }}>
+                    <h5 style={{ margin: "0 0 10px 0", fontSize: "0.85rem", fontWeight: 700, color: "#8c6b32", display: "flex", alignItems: "center", gap: "6px" }}>
+                        <Heart size={15} /> ខាងកូនស្រី (Bride's Side)
+                    </h5>
+                    <div className="pe-form-group" style={{ marginBottom: "8px" }}>
+                        <label className="pe-label" style={{ fontSize: "0.78rem" }}>លោកឪពុក (Father)</label>
+                        <input
+                            type="text"
+                            className="pe-input"
+                            value={form.brideFather || ""}
+                            onChange={(e) => update("brideFather", e.target.value)}
+                            placeholder="លោក ឡាំ គីមឡុង"
+                        />
+                    </div>
+                    <div className="pe-form-group" style={{ marginBottom: 0 }}>
+                        <label className="pe-label" style={{ fontSize: "0.78rem" }}>អ្នកម្តាយ (Mother)</label>
+                        <input
+                            type="text"
+                            className="pe-input"
+                            value={form.brideMother || ""}
+                            onChange={(e) => update("brideMother", e.target.value)}
+                            placeholder="លោកស្រី ឡេង​ យ៉ុងស៊ី"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+
+    const renderInvitationSection = () => (
+        <div className="pe-section-card" key="invitation">
+            <h4 className="pe-section-heading">
+                <span className="pe-sec-icon-badge">
+                    <Mail size={17} />
+                </span>
+                <span>{flowConfig.labels.invitationSection || t("secMessage") || "សារអញ្ជើញភ្ញៀវកិត្តិយស (Invitation Message)"}</span>
+            </h4>
+
+            {/* When hasInvitationPhoto or placePhotoInInvitation is active, photo card is rendered seamlessly inside The Invitation */}
+            {(flowConfig.hasInvitationPhoto || flowConfig.placePhotoInInvitation) && (
+                <>
+                    {/* Photo 1 */}
+                    <CleanImageUploadField
+                        label={flowConfig.labels.invitationImage || "រូបថតទី១ — ប្តី/ប្រពន្ធ (Portrait Photo #1)"}
+                        icon={ImageIcon}
+                        image={form.invitationImage || form.uploadedInvitationUrl || ""}
+                        onUpload={(e) => handleFileUpload(e, (url, file) => {
+                            update("uploadedInvitationUrl", url);
+                            update("invitationImage", url);
+                            setPendingInvitationFile(file);
+                        })}
+                        onRemove={() => {
+                            update("uploadedInvitationUrl", "");
+                            update("invitationImage", "");
+                            setPendingInvitationFile(null);
+                        }}
+                        inputRef={invitationInputRef}
+                        hint="រូបបង្ហាញក្នុង Section លិខិតអញ្ជើញ (The Invitation)"
+                    />
+                    {/* Photo 2 — side by side */}
+                    <CleanImageUploadField
+                        label="រូបថតទី២ — គូស្នេហ៍ (Portrait Photo #2 · side-by-side)"
+                        icon={ImageIcon}
+                        image={form.invitationImage2 || ""}
+                        onUpload={(e) => handleFileUpload(e, (url, file) => {
+                            update("invitationImage2", url);
+                            setPendingInvitation2File(file);
+                        })}
+                        onRemove={() => {
+                            update("invitationImage2", "");
+                            setPendingInvitation2File(null);
+                        }}
+                        inputRef={invitation2InputRef}
+                        hint="រូបបង្ហាញខាងស្ដាំ — នឹងដាក់ 2 រូបនៅក្បែរគ្នា ប្រសិនបើបំពេញ"
+                    />
+                </>
+            )}
+
+            <div className="pe-form-group">
+                <label className="pe-label">
+                    <span className="pe-label-icon"><FileText size={15} /></span>
+                    {t("messageTitle") || "ចំណងជើងសារ (Kicker)"}
+                </label>
+                <input
+                    type="text"
+                    className="pe-input"
+                    value={form.messageTitle}
+                    onChange={(e) => update("messageTitle", e.target.value)}
+                    placeholder="ដំណឹងអាពាហ៍ពិពាហ៍"
+                />
+            </div>
+
+            <div className="pe-form-group">
+                <label className="pe-label">
+                    <span className="pe-label-icon"><Mail size={15} /></span>
+                    {t("messageText") || "អត្ថបទសារអញ្ជើញ"}
+                </label>
+                <textarea
+                    className="pe-textarea"
+                    rows="6"
+                    value={form.messageText}
+                    onChange={(e) => update("messageText", e.target.value)}
+                />
+            </div>
+        </div>
+    );
+
+    const renderCouplePhotoSection = () => (
+        <div className="pe-section-card" key="couplePhoto">
+            <h4 className="pe-section-heading">
+                <span className="pe-sec-icon-badge">
+                    <Heart size={17} />
+                </span>
+                <span>{t("secCouple") || "រូបថតគូស្នេហ៍ (The Bride & Groom Photo)"}</span>
+            </h4>
+
+            <CleanImageUploadField
+                label={t("backgroundImage") || "រូបថតគូស្នេហ៍ / ខាងក្នុង (Couple & Inner Photo)"}
+                icon={ImageIcon}
+                image={form.backgroundImage}
+                onUpload={(e) => handleFileUpload(e, (url) => update("backgroundImage", url))}
+                onRemove={() => update("backgroundImage", "")}
+                inputRef={bgInputRef}
+                hint="បង្ហាញក្នុងផ្នែកកូនកំលោះ និងកូនក្រមុំ (The Bride & Groom Card)"
+            />
+        </div>
+    );
+
+    const renderCountdownSection = () => (
+        <div className="pe-section-card" key="countdown">
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+                <h4 className="pe-section-heading" style={{ margin: 0, flex: "1 1 auto", minWidth: 0 }}>
+                    <span className="pe-sec-icon-badge">
+                        <Clock size={17} />
+                    </span>
+                    <span>{flowConfig.labels.countdownSection || t("secCountdown") || "នាឡិការាប់ថយក្រោយ (Countdown Timer)"}</span>
+                </h4>
+                <label className="pe-toggle" style={{ flexShrink: 0 }} title="បើក/បិទ រាប់ថយក្រោយ">
+                    <input
+                        type="checkbox"
+                        checked={form.showCountdown !== false}
+                        onChange={(e) => update("showCountdown", e.target.checked)}
+                    />
+                    <span className="pe-toggle-slider" />
+                </label>
+            </div>
+            <p style={{ fontSize: "12.5px", color: "#64748b", margin: "10px 0 0 0", lineHeight: "1.5" }}>
+                គណនាចំនួន <strong>ថ្ងៃ • ម៉ោង • នាទី • វិនាទី</strong> ដោយស្វ័យប្រវត្តិតាមកាលបរិច្ឆេទនៃពិធីមង្គលការ។ (បើក ឬបិទកាតនេះបាន)
+            </p>
+        </div>
+    );
+
+    const renderScheduleSection = () => (
+        <div className="pe-section-card" key="schedule">
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+                <h4 className="pe-section-heading" style={{ margin: 0 }}>
+                    <span className="pe-sec-icon-badge">
+                        <Clock size={17} />
+                    </span>
+                    <span>{flowConfig.labels.scheduleSection || t("secSchedule") || "របៀបវារៈកម្មវិធី"}</span>
+                </h4>
+                <button
+                    type="button"
+                    className="pe-btn-upload-action"
+                    onClick={addScheduleItem}
+                >
+                    <Plus size={14} /> {t("addSchedule") || "បន្ថែមកម្មវិធី"}
+                </button>
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                {form.schedule?.map((item, idx) => (
+                    <div key={item.id || idx} className="pe-grid-2" style={{ alignItems: "center", background: "#f8f6f0", padding: "10px 12px", borderRadius: "8px", border: "1px solid #e8e2d8", marginBottom: 0 }}>
+                        <TimePicker
+                            value={item.time}
+                            onChange={(val) => handleScheduleChange(idx, "time", val)}
+                            placeholder="ជ្រើសម៉ោង"
+                        />
+                        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                            <input
+                                type="text"
+                                className="pe-input"
+                                value={item.title}
+                                onChange={(e) => handleScheduleChange(idx, "title", e.target.value)}
+                                placeholder="ពិធីហែជំនូន"
+                            />
+                            <button
+                                type="button"
+                                className="pe-btn-delete-action"
+                                style={{ padding: "6px 10px" }}
+                                onClick={() => removeScheduleItem(idx)}
+                                title="Delete item"
+                            >
+                                <Trash2 size={13} />
+                            </button>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+
+    const renderVenueSection = () => (
+        <div className="pe-section-card" key="venue">
+            <h4 className="pe-section-heading">
+                <span className="pe-sec-icon-badge">
+                    <MapPin size={17} />
+                </span>
+                <span>{flowConfig.labels.venueSection || t("secLocation") || "ទីតាំង & ផែនទី"}</span>
+            </h4>
+
+            <div className="pe-form-group">
+                <label className="pe-label">
+                    <span className="pe-label-icon"><MapPin size={15} /></span>
+                    {t("venue") || "ទីតាំងប្រារព្ធពិធី (Venue Name)"}
+                </label>
+                <input
+                    type="text"
+                    className="pe-input"
+                    value={form.venueName}
+                    onChange={(e) => update("venueName", e.target.value)}
+                    placeholder="The Premier Center Sen Sok"
+                />
+            </div>
+
+            <div className="pe-form-group">
+                <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginBottom: "8px" }}>
+                    <label className="pe-label" style={{ margin: 0 }}>
+                        <span className="pe-label-icon"><MapPin size={15} /></span>
+                        {t("mapsUrl") || "Google Maps Link (URL)"}
+                    </label>
+                    <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "6px" }}>
+                        <button
+                            type="button"
+                            onClick={handleGetCurrentLocation}
+                            disabled={isLocating}
+                            title="យកទីតាំងបច្ចុប្បន្នរបស់អ្នក"
+                            style={{
+                                fontSize: "0.75rem",
+                                padding: "5px 10px",
+                                borderRadius: "6px",
+                                border: "1px solid #0ea5e9",
+                                background: "#f0f9ff",
+                                color: "#0369a1",
+                                cursor: isLocating ? "wait" : "pointer",
+                                display: "inline-flex",
+                                alignItems: "center",
+                                gap: "4px",
+                                fontWeight: 600,
+                                whiteSpace: "nowrap",
+                            }}
+                        >
+                            <MapPin size={13} />
+                            {isLocating ? "កំពុងស្វែងរក..." : "យកទីតាំងបច្ចុប្បន្ន"}
+                        </button>
+                        <button
+                            type="button"
+                            onClick={handleGenerateMapLink}
+                            title="បំលែងឈ្មោះទីតាំងទៅជា Link Google Maps ស្វ័យប្រវត្តិ"
+                            style={{
+                                fontSize: "0.75rem",
+                                padding: "5px 10px",
+                                borderRadius: "6px",
+                                border: "1px solid #f59e0b",
+                                background: "#fffbeb",
+                                color: "#b45309",
+                                cursor: "pointer",
+                                display: "inline-flex",
+                                alignItems: "center",
+                                gap: "4px",
+                                fontWeight: 600,
+                                whiteSpace: "nowrap",
+                            }}
+                        >
+                            <Zap size={13} />
+                            បង្កើត Link ស្វ័យប្រវត្តិ
+                        </button>
+                        <button
+                            type="button"
+                            onClick={handleSearchMap}
+                            title="បើកស្វែងរកលើ Google Maps ផ្ទាល់"
+                            style={{
+                                fontSize: "0.75rem",
+                                padding: "5px 10px",
+                                borderRadius: "6px",
+                                border: "1px solid #cbd5e1",
+                                background: "#f8fafc",
+                                color: "#334155",
+                                cursor: "pointer",
+                                display: "inline-flex",
+                                alignItems: "center",
+                                gap: "4px",
+                                fontWeight: 600,
+                                whiteSpace: "nowrap",
+                            }}
+                        >
+                            <ExternalLink size={13} />
+                            ស្វែងរក / តេស្តមើល
+                        </button>
+                    </div>
+                </div>
+                <input
+                    type="text"
+                    className="pe-input"
+                    value={form.googleMapUrl}
+                    onChange={(e) => {
+                        const value = e.target.value;
+                        update("googleMapUrl", value);
+                        setLocationError(/^https?:\/\//i.test(value) && !isGoogleMapsUrl(value)
+                            ? "Link នេះមិនមែនជា Google Maps URL ត្រឹមត្រូវទេ។"
+                            : "");
+                    }}
+                    placeholder="https://maps.app.goo.gl/... ឬ ឈ្មោះទីតាំង"
+                />
+                {locationError && (
+                    <div role="alert" style={{ fontSize: "0.75rem", color: "#b91c1c", marginTop: "6px" }}>
+                        {locationError}
+                    </div>
+                )}
+                <div style={{ fontSize: "0.75rem", color: "#64748b", marginTop: "6px", lineHeight: "1.4" }}>
+                    <span className="pe-location-help-mobile">ចុចប៊ូតុង 📍 ដើម្បីទាញយកទីតាំងបច្ចុប្បន្នរបស់អ្នក ឬ Paste Google Maps Link</span>
+                    <span className="pe-location-help-desktop">បញ្ចូល Google Maps Link ឬស្វែងរកឈ្មោះទីតាំងរោងការ</span>
+                </div>
+            </div>
+
+            <CleanImageUploadField
+                label={t("sketchMap") || "រូបគំនូសប្លង់ទីតាំង (Sketch Map)"}
+                icon={Map}
+                image={form.sketchMapImage}
+                onUpload={(e) => handleFileUpload(e, (url) => update("sketchMapImage", url))}
+                onRemove={() => update("sketchMapImage", null)}
+                inputRef={sketchInputRef}
+                hint="រូបប្លង់បង្ហាញផ្លូវទៅកាន់រោងការ (អាចទុកទំនេរបាន)"
+            />
+        </div>
+    );
+
+    const renderGallerySection = () => (
+        <div className="pe-section-card" key="gallery">
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px", marginBottom: "14px" }}>
+                <h4 className="pe-section-heading" style={{ margin: 0 }}>
+                    <span className="pe-sec-icon-badge">
+                        <Images size={17} />
+                    </span>
+                    <span>{flowConfig.labels.gallerySection || t("secGallery") || "វិចិត្រសាលរូបថត (Gallery 5-10 រូប)"}</span>
+                    <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "#4f46e5", background: "#eef2ff", padding: "2px 8px", borderRadius: "12px", marginLeft: "6px" }}>
+                        {form.photos.filter((p) => Boolean(p?.url)).length} / {form.photos.length} រូប
+                    </span>
+                </h4>
+
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+                    {/* Batch upload */}
+                    <label
+                        className="pe-btn-upload-action"
+                        style={{
+                            padding: "6px 12px",
+                            fontSize: "0.8rem",
+                            cursor: "pointer",
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "6px",
+                            margin: 0
+                        }}
+                        title="ជ្រើសរើសរូបថតច្រើនសន្លឹកក្នុងពេលតែមួយ (Upload multiple photos)"
+                    >
+                        <UploadCloud size={14} />
+                        ជ្រើសរើសរូបច្រើនសន្លឹក
+                        <input
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            style={{ display: "none" }}
+                            onChange={handleBatchGalleryUpload}
+                        />
+                    </label>
+
+                    {/* Add slot button up to 10 */}
+                    {form.photos.length < 10 && (
+                        <button
+                            type="button"
+                            onClick={addPhotoSlot}
+                            className="pe-btn-upload-action"
+                            style={{
+                                padding: "6px 12px",
+                                fontSize: "0.8rem",
+                                background: "#f0fdf4",
+                                borderColor: "#86efac",
+                                color: "#166534",
+                                display: "inline-flex",
+                                alignItems: "center",
+                                gap: "4px"
+                            }}
+                            title="បន្ថែមប្រអប់រូបថតថ្មី (អតិបរមា 10 រូប)"
+                        >
+                            <Plus size={14} /> បន្ថែមរូប ({form.photos.length}/10)
+                        </button>
+                    )}
+                </div>
+            </div>
+
+            <p style={{ margin: "0 0 12px 0", fontSize: "0.8rem", color: "#64748b" }}>
+                * លោកអ្នកអាចបញ្ចូលរូបថតពី 5 ដល់ 10 សន្លឹកសម្រាប់បង្ហាញក្នុងវិចិត្រសាលធៀបការ (Can upload 5 to 10 photos)
+            </p>
+
+            <div className="pe-gallery-grid-clean">
+                {form.photos.map((photo, idx) => (
+                    <CleanGalleryItem
+                        key={photo.id || `photo-${idx}`}
+                        idx={idx}
+                        photo={photo}
+                        onUpload={(e) => handleFileUpload(e, (url) => updatePhoto(idx, url))}
+                        onRemove={() => updatePhoto(idx, "")}
+                        canDeleteSlot={form.photos.length > 5}
+                        onDeleteSlot={() => removePhotoSlot(idx)}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+
+    const renderStorySection = () => (
+        <div className="pe-section-card" key="story">
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px", marginBottom: "10px" }}>
+                <h4 className="pe-section-heading" style={{ margin: 0, border: "none", paddingBottom: 0, flex: 1, minWidth: 0 }}>
+                    <span className="pe-sec-icon-badge">
+                        <Heart size={17} />
+                    </span>
+                    <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                        ដំណើរនៃក្ដីស្រឡាញ់ (Our Love Story)
+                    </span>
+                </h4>
+                <label className="pe-toggle" title="បើក/បិទ ដំណើររឿង" style={{ flexShrink: 0 }}>
+                    <input
+                        type="checkbox"
+                        checked={form.showStory !== false}
+                        onChange={(e) => update("showStory", e.target.checked)}
+                    />
+                    <span className="pe-toggle-slider" />
+                </label>
+            </div>
+
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", marginBottom: "14px" }}>
+                <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#d97706", background: "#fef3c7", padding: "3px 10px", borderRadius: "12px" }}>
+                    {form.storyChapters?.length || 0} ដំណាក់កាល
+                </span>
+                <button
+                    type="button"
+                    onClick={addStoryItem}
+                    className="pe-btn-upload-action"
+                    style={{
+                        padding: "6px 12px",
+                        fontSize: "0.8rem",
+                        background: "#fffbeb",
+                        borderColor: "#fde68a",
+                        color: "#b45309",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "4px"
+                    }}
+                >
+                    <Plus size={14} /> បន្ថែមដំណាក់កាល
+                </button>
+            </div>
+
+            <p style={{ margin: "0 0 12px 0", fontSize: "0.8rem", color: "#64748b" }}>
+                * បង្ហាញដំណើររឿងស្នេហាជា Timeline ដូចជា ថ្ងៃដំបូងដែលជួបគ្នា, ថ្ងៃសុំស្នេហ៍, ឬដំណាក់កាលសំខាន់ៗ
+            </p>
+
+            {form.showStory !== false && (
+                <div className="pe-story-list">
+                    {(form.storyChapters || []).map((item, idx) => (
+                        <CleanStoryItem
+                            key={item.id || `story-${idx}`}
+                            idx={idx}
+                            item={item}
+                            onChange={(key, val) => handleStoryChange(idx, key, val)}
+                            onUpload={(e) => handleStoryImageUpload(idx, e)}
+                            onRemoveImage={() => handleStoryChange(idx, "image", "")}
+                            onDelete={() => removeStoryItem(idx)}
+                            canDelete={(form.storyChapters || []).length > 1}
+                        />
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+
+    const renderDressCodeSection = () => (
+        <div className="pe-section-card" key="dressCode">
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
+                <h4 className="pe-section-heading" style={{ margin: 0, border: "none", paddingBottom: 0, flex: 1, minWidth: 0 }}>
+                    <span className="pe-sec-icon-badge">
+                        <Sparkles size={17} />
+                    </span>
+                    <span>{flowConfig.labels.dressCodeSection || "សម្លៀកបំពាក់ (Dress Code)"}</span>
+                </h4>
+                <label className="pe-toggle" title="បើក/បិទ សម្លៀកបំពាក់" style={{ flexShrink: 0 }}>
+                    <input
+                        type="checkbox"
+                        checked={form.showDressCode !== false}
+                        onChange={(e) => update("showDressCode", e.target.checked)}
+                    />
+                    <span className="pe-toggle-slider" />
+                </label>
+            </div>
+
+            {form.showDressCode !== false && (
+                <>
+                    <div className="pe-grid-2">
+                        <div className="pe-form-group">
+                            <label className="pe-label">
+                                <span className="pe-label-icon"><FileText size={15} /></span>
+                                ឈ្មោះកូដសម្លៀកបំពាក់ (Name)
+                            </label>
+                            <input
+                                type="text"
+                                className="pe-input"
+                                value={form.dressCode?.name || ""}
+                                onChange={(e) => handleDressCodeFieldChange("name", e.target.value)}
+                                placeholder="ខ្មែរប្រពៃណី / Formal Khmer"
+                            />
+                        </div>
+                        <div className="pe-form-group">
+                            <label className="pe-label">
+                                <span className="pe-label-icon"><Sparkles size={15} /></span>
+                                រចនាបថ (Style)
+                            </label>
+                            <input
+                                type="text"
+                                className="pe-input"
+                                value={form.dressCode?.style || ""}
+                                onChange={(e) => handleDressCodeFieldChange("style", e.target.value)}
+                                placeholder="Traditional elegance"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="pe-form-group">
+                        <label className="pe-label">
+                            <span className="pe-label-icon"><FileText size={15} /></span>
+                            ការណែនាំសម្លៀកបំពាក់ (Description)
+                        </label>
+                        <textarea
+                            className="pe-textarea"
+                            rows="2"
+                            value={form.dressCode?.description || ""}
+                            onChange={(e) => handleDressCodeFieldChange("description", e.target.value)}
+                            placeholder="សូមជ្រើសរើសសម្លៀកបំពាក់តាមពណ៌ដែលបានកំណត់ ដើម្បីបង្កើនភាពស្រស់ស្អាតនៃពិធី..."
+                        />
+                    </div>
+
+                    <div className="pe-form-group">
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
+                            <label className="pe-label" style={{ margin: 0 }}>
+                                <span className="pe-label-icon"><Sparkles size={15} /></span>
+                                ក្ដារពណ៌សម្លៀកបំពាក់ (Color Palette Swatches)
+                            </label>
+                            <button
+                                type="button"
+                                onClick={addDressColor}
+                                className="pe-btn-upload-action"
+                                style={{ padding: "4px 10px", fontSize: "0.78rem" }}
+                            >
+                                <Plus size={13} /> បន្ថែមពណ៌
+                            </button>
+                        </div>
+
+                        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: "10px" }}>
+                            {(form.dressColors || []).map((color, cIdx) => {
+                                const hex = typeof color === "string" ? color : color?.hex || "#D4AF37";
+                                const name = typeof color === "string" ? "" : color?.name || "";
+                                return (
+                                    <div
+                                        key={`color-${cIdx}`}
+                                        style={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                            gap: "8px",
+                                            background: "#f8fafc",
+                                            border: "1px solid #e2e8f0",
+                                            borderRadius: "8px",
+                                            padding: "6px 8px",
+                                        }}
+                                    >
+                                        <input
+                                            type="color"
+                                            value={hex}
+                                            onChange={(e) => handleDressColorChange(cIdx, "hex", e.target.value)}
+                                            style={{
+                                                width: "32px",
+                                                height: "32px",
+                                                borderRadius: "6px",
+                                                border: "none",
+                                                cursor: "pointer",
+                                                padding: 0,
+                                                background: "transparent",
+                                            }}
+                                            title="ជ្រើសពណ៌"
+                                        />
+                                        <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: "2px" }}>
+                                            <input
+                                                type="text"
+                                                className="pe-input"
+                                                style={{ padding: "3px 6px", fontSize: "0.75rem", height: "auto" }}
+                                                value={name}
+                                                onChange={(e) => handleDressColorChange(cIdx, "name", e.target.value)}
+                                                placeholder="ឈ្មោះពណ៌ (e.g. មាស)"
+                                            />
+                                            <span style={{ fontSize: "0.7rem", color: "#64748b", fontFamily: "monospace" }}>
+                                                {hex}
+                                            </span>
+                                        </div>
+                                        {(form.dressColors || []).length > 1 && (
+                                            <button
+                                                type="button"
+                                                onClick={() => removeDressColor(cIdx)}
+                                                style={{
+                                                    border: "none",
+                                                    background: "transparent",
+                                                    color: "#94a3b8",
+                                                    cursor: "pointer",
+                                                    padding: "4px",
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                }}
+                                                title="លុបពណ៌នេះ"
+                                            >
+                                                <Trash2 size={13} />
+                                            </button>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </>
+            )}
+        </div>
+    );
+
+    const renderPartySection = () => (
+        <div className="pe-section-card" key="party">
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px", marginBottom: "10px" }}>
+                <h4 className="pe-section-heading" style={{ margin: 0, border: "none", paddingBottom: 0, flex: 1, minWidth: 0 }}>
+                    <span className="pe-sec-icon-badge">
+                        <User size={17} />
+                    </span>
+                    <span>{flowConfig.labels.partySection || "មនុស្សជាទីស្រឡាញ់ / ក្រុមអម (Wedding Party)"}</span>
+                </h4>
+                <label className="pe-toggle" title="បើក/បិទ ក្រុមអម" style={{ flexShrink: 0 }}>
+                    <input
+                        type="checkbox"
+                        checked={form.showParty !== false}
+                        onChange={(e) => update("showParty", e.target.checked)}
+                    />
+                    <span className="pe-toggle-slider" />
+                </label>
+            </div>
+
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", marginBottom: "14px" }}>
+                <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#0284c7", background: "#e0f2fe", padding: "3px 10px", borderRadius: "12px" }}>
+                    {form.party?.length || 0} នាក់
+                </span>
+                <button
+                    type="button"
+                    onClick={addPartyMember}
+                    className="pe-btn-upload-action"
+                    style={{
+                        padding: "6px 12px",
+                        fontSize: "0.8rem",
+                        background: "#f0f9ff",
+                        borderColor: "#bae6fd",
+                        color: "#0369a1",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "4px"
+                    }}
+                >
+                    <Plus size={14} /> បន្ថែមសមាជិក
+                </button>
+            </div>
+
+            <p style={{ margin: "0 0 12px 0", fontSize: "0.8rem", color: "#64748b" }}>
+                * បង្ហាញកូនកំលោះកិត្តិយស (Best Man), កូនក្រមុំកិត្តិយស (Maid of Honor), ឬក្រុមគ្រួសារ និងមិត្តភក្ដិជិតស្និទ្ធ
+            </p>
+
+            {form.showParty !== false && (
+                <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                    {(form.party || []).map((member, mIdx) => (
+                        <div
+                            key={member.id || `party-${mIdx}`}
+                            style={{
+                                display: "flex",
+                                gap: "12px",
+                                alignItems: "center",
+                                padding: "10px",
+                                background: "#f8fafc",
+                                border: "1px solid #e2e8f0",
+                                borderRadius: "10px",
+                            }}
+                        >
+                            <div style={{ position: "relative", width: "56px", height: "56px", borderRadius: "50%", overflow: "hidden", flexShrink: 0, background: "#e2e8f0" }}>
+                                {member.image ? (
+                                    <img src={member.image} alt={member.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                                ) : (
+                                    <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", color: "#94a3b8" }}>
+                                        <User size={24} />
+                                    </div>
+                                )}
+                                <label
+                                    style={{
+                                        position: "absolute",
+                                        inset: 0,
+                                        cursor: "pointer",
+                                        background: member.image ? "rgba(0,0,0,0.3)" : "transparent",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        opacity: member.image ? 0 : 1,
+                                        transition: "opacity 0.2s",
+                                    }}
+                                    onMouseEnter={(e) => { e.currentTarget.style.opacity = "1"; }}
+                                    onMouseLeave={(e) => { e.currentTarget.style.opacity = member.image ? "0" : "1"; }}
+                                    title="បញ្ចូលរូបថតសមាជិក"
+                                >
+                                    <UploadCloud size={16} color="#fff" />
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        style={{ display: "none" }}
+                                        onChange={(e) => handlePartyImageUpload(mIdx, e)}
+                                    />
+                                </label>
+                            </div>
+
+                            <div style={{ flex: 1, minWidth: 0, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
+                                <div>
+                                    <label style={{ fontSize: "0.72rem", color: "#64748b", fontWeight: 600, display: "block", marginBottom: "2px" }}>តួនាទី (Role)</label>
+                                    <input
+                                        type="text"
+                                        className="pe-input"
+                                        style={{ padding: "4px 8px", fontSize: "0.8rem", height: "auto" }}
+                                        value={member.role || ""}
+                                        onChange={(e) => handlePartyChange(mIdx, "role", e.target.value)}
+                                        placeholder="កូនកំលោះកិត្តិយស"
+                                    />
+                                </div>
+                                <div>
+                                    <label style={{ fontSize: "0.72rem", color: "#64748b", fontWeight: 600, display: "block", marginBottom: "2px" }}>ឈ្មោះ (Name)</label>
+                                    <input
+                                        type="text"
+                                        className="pe-input"
+                                        style={{ padding: "4px 8px", fontSize: "0.8rem", height: "auto" }}
+                                        value={member.name || ""}
+                                        onChange={(e) => handlePartyChange(mIdx, "name", e.target.value)}
+                                        placeholder="ឈ្មោះសមាជិក"
+                                    />
+                                </div>
+                            </div>
+
+                            <button
+                                type="button"
+                                onClick={() => removePartyMember(mIdx)}
+                                style={{
+                                    border: "none",
+                                    background: "transparent",
+                                    color: "#94a3b8",
+                                    cursor: "pointer",
+                                    padding: "4px",
+                                    display: "flex",
+                                    alignItems: "center",
+                                }}
+                                title="លុបសមាជិកនេះ"
+                            >
+                                <Trash2 size={16} />
+                            </button>
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+
+    const renderFaqSection = () => (
+        <div className="pe-section-card" key="faq">
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px", marginBottom: "10px" }}>
+                <h4 className="pe-section-heading" style={{ margin: 0, border: "none", paddingBottom: 0, flex: 1, minWidth: 0 }}>
+                    <span className="pe-sec-icon-badge">
+                        <FileText size={17} />
+                    </span>
+                    <span>{flowConfig.labels.faqSection || "សំណួរញឹកញាប់ (Guest Notes & FAQ)"}</span>
+                </h4>
+                <label className="pe-toggle" title="បើក/បិទ សំណួរញឹកញាប់" style={{ flexShrink: 0 }}>
+                    <input
+                        type="checkbox"
+                        checked={form.showFaq !== false}
+                        onChange={(e) => update("showFaq", e.target.checked)}
+                    />
+                    <span className="pe-toggle-slider" />
+                </label>
+            </div>
+
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", marginBottom: "14px" }}>
+                <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#7c3aed", background: "#ede9fe", padding: "3px 10px", borderRadius: "12px" }}>
+                    {form.faq?.length || 0} សំណួរ
+                </span>
+                <button
+                    type="button"
+                    onClick={addFaqItem}
+                    className="pe-btn-upload-action"
+                    style={{
+                        padding: "6px 12px",
+                        fontSize: "0.8rem",
+                        background: "#f5f3ff",
+                        borderColor: "#ddd6fe",
+                        color: "#6d28d9",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "4px"
+                    }}
+                >
+                    <Plus size={14} /> បន្ថែមសំណួរ
+                </button>
+            </div>
+
+            <p style={{ margin: "0 0 12px 0", fontSize: "0.8rem", color: "#64748b" }}>
+                * ផ្តល់ព័ត៌មានលម្អិតដូចជាចំណតយានយន្ត ការនាំកុមារតូចៗ ឬពេលវេលាកម្មវិធីដល់ភ្ញៀវ
+            </p>
+
+            {form.showFaq !== false && (
+                <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                    {(form.faq || []).map((faqItem, fIdx) => (
+                        <div
+                            key={faqItem.id || `faq-${fIdx}`}
+                            style={{
+                                padding: "10px 12px",
+                                background: "#f8fafc",
+                                border: "1px solid #e2e8f0",
+                                borderRadius: "10px",
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: "8px",
+                            }}
+                        >
+                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                                <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#64748b" }}>
+                                    សំណួរទី {fIdx + 1}
+                                </span>
+                                <button
+                                    type="button"
+                                    onClick={() => removeFaqItem(fIdx)}
+                                    style={{
+                                        border: "none",
+                                        background: "transparent",
+                                        color: "#94a3b8",
+                                        cursor: "pointer",
+                                        padding: "2px",
+                                    }}
+                                    title="លុបសំណួរនេះ"
+                                >
+                                    <Trash2 size={14} />
+                                </button>
+                            </div>
+                            <input
+                                type="text"
+                                className="pe-input"
+                                style={{ padding: "6px 10px", fontSize: "0.82rem" }}
+                                value={faqItem.q || ""}
+                                onChange={(e) => handleFaqChange(fIdx, "q", e.target.value)}
+                                placeholder="តើមានចំណតរថយន្ត និងម៉ូតូដែរឬទេ?"
+                            />
+                            <textarea
+                                className="pe-textarea"
+                                style={{ padding: "6px 10px", fontSize: "0.82rem", minHeight: "50px" }}
+                                rows="2"
+                                value={faqItem.a || ""}
+                                onChange={(e) => handleFaqChange(fIdx, "a", e.target.value)}
+                                placeholder="បាទ/ចាស មានចំណតធំទូលាយដោយឥតគិតថ្លៃ..."
+                            />
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+
+    const renderKhqrSection = () => (
+        <div className="pe-section-card" key="khqr">
+            <h4 className="pe-section-heading">
+                <span className="pe-sec-icon-badge">
+                    <QrCode size={17} />
+                </span>
+                <span>{flowConfig.labels.khqrSection || t("secKhqr") || "KHQR ផ្ញើរចំណងដៃ"}</span>
+            </h4>
+
+            <div className="pe-grid-2">
+                {/* Dollar QR */}
+                <CleanImageUploadField
+                    label={t("qrDollar") || "KHQR Dollar ($)"}
+                    icon={QrCode}
+                    image={form.khqrDollar?.qrUrl}
+                    onUpload={(e) =>
+                        handleFileUpload(e, (url) =>
+                            update("khqrDollar", { ...form.khqrDollar, qrUrl: url })
+                        )
+                    }
+                    onRemove={() => update("khqrDollar", { ...form.khqrDollar, qrUrl: "" })}
+                    inputRef={qrDollarInputRef}
+                    hint="រូបភាព QR កូដប្រាក់ដុល្លារ ($)"
+                />
+
+                {/* Riel QR */}
+                <CleanImageUploadField
+                    label={t("qrRiel") || "KHQR Riel (៛)"}
+                    icon={QrCode}
+                    image={form.khqrRiel?.qrUrl}
+                    onUpload={(e) =>
+                        handleFileUpload(e, (url) =>
+                            update("khqrRiel", { ...form.khqrRiel, qrUrl: url })
+                        )
+                    }
+                    onRemove={() => update("khqrRiel", { ...form.khqrRiel, qrUrl: "" })}
+                    inputRef={qrRielInputRef}
+                    hint="រូបភាព QR កូដប្រាក់រៀល (៛)"
+                />
+            </div>
+        </div>
+    );
+
+    const renderClosingSection = () => (
+        <div className="pe-section-card" key="closing">
+            <h4 className="pe-section-heading">
+                <span className="pe-sec-icon-badge">
+                    <Gift size={17} />
+                </span>
+                <span>{flowConfig.labels.closingSection || t("secThankYou") || "សារថ្លែងអំណរគុណ"}</span>
+            </h4>
+
+            <div className="pe-form-group">
+                <label className="pe-label">
+                    <span className="pe-label-icon"><FileText size={15} /></span>
+                    {t("thankYouTitle") || "ចំណងជើងសារអរគុណ"}
+                </label>
+                <input
+                    type="text"
+                    className="pe-input"
+                    value={form.thankYouTitle}
+                    onChange={(e) => update("thankYouTitle", e.target.value)}
+                    placeholder="សារថ្លែងអំណរគុណ"
+                />
+            </div>
+
+            <div className="pe-form-group">
+                <label className="pe-label">
+                    <span className="pe-label-icon"><Gift size={15} /></span>
+                    {t("thankYouText") || "អត្ថបទសារអរគុណ"}
+                </label>
+                <textarea
+                    className="pe-textarea"
+                    rows="4"
+                    value={form.thankYouText}
+                    onChange={(e) => update("thankYouText", e.target.value)}
+                    placeholder="វត្តមាន និងពរជ័យរបស់លោកអ្នក គឺជាអំណោយដ៏មានតម្លៃសម្រាប់យើងខ្ញុំ..."
+                />
+            </div>
+
+            <div style={{ margin: "20px 0 16px", borderTop: "1px dashed #e2e8f0" }} />
+
+            <div className="pe-form-group">
+                <label className="pe-label">
+                    <span className="pe-label-icon"><FileText size={15} /></span>
+                    {t("apologyTitle") || "ចំណងជើងលិខិតសូមអភ័យទោស"}
+                </label>
+                <input
+                    type="text"
+                    className="pe-input"
+                    value={form.apologyTitle}
+                    onChange={(e) => update("apologyTitle", e.target.value)}
+                    placeholder="លិខិតសូមអភ័យទោស"
+                />
+            </div>
+
+            <div className="pe-form-group">
+                <label className="pe-label">
+                    <span className="pe-label-icon"><Heart size={15} /></span>
+                    {t("apologyText") || "អត្ថបទសូមអភ័យទោស"}
+                </label>
+                <textarea
+                    className="pe-textarea"
+                    rows="4"
+                    value={form.apologyText}
+                    onChange={(e) => update("apologyText", e.target.value)}
+                    placeholder="យើងខ្ញុំសូមអភ័យទោសក្នុងករណីពុំបានជូនសំបុត្រអញ្ជើញដោយផ្ទាល់..."
+                />
+            </div>
+        </div>
+    );
+
+    const renderLanguageModeSection = () => (
+        <div className="pe-section-card" key="languageMode">
+            <h4 className="pe-section-heading">
+                <span className="pe-sec-icon-badge">
+                    <Globe size={17} />
+                </span>
+                <span>{t("secLangMode") || "ភាសាធៀបការ"}</span>
+            </h4>
+            <div className="pe-form-group">
+                <label className="pe-label">
+                    <span className="pe-label-icon"><Globe size={15} /></span>
+                    ភាសាបង្ហាញក្នុងសំបុត្រ
+                </label>
+                <select
+                    className="pe-select"
+                    value={form.languageMode}
+                    onChange={(e) => update("languageMode", e.target.value)}
+                >
+                    <option value="KH">ភាសាខ្មែរ (Khmer)</option>
+                    <option value="EN">ភាសាអង់គ្លេស (English)</option>
+                    <option value="BILINGUAL">ភាសាទាំងពីរ (Bilingual Khmer + English)</option>
+                </select>
+            </div>
+        </div>
+    );
+
+    const sectionRenderers = {
+        cover: renderCoverSection,
+        family: renderFamilySection,
+        invitation: renderInvitationSection,
+        couplePhoto: renderCouplePhotoSection,
+        countdown: renderCountdownSection,
+        schedule: renderScheduleSection,
+        venue: renderVenueSection,
+        gallery: renderGallerySection,
+        story: renderStorySection,
+        dressCode: renderDressCodeSection,
+        party: renderPartySection,
+        faq: renderFaqSection,
+        khqr: renderKhqrSection,
+        closing: renderClosingSection,
+        languageMode: renderLanguageModeSection,
     };
 
     return (
@@ -1444,1066 +2910,11 @@ export default function InvitationForm({ invitation }) {
                     </div>
 
                     <div className="pe-editor-scroll-body">
-                        {/* 1. ក្របខាងមុខ (Front Cover / Hero - ត្រូវនឹងទំព័រមុខក្នុង Live Preview) */}
-                        <div className="pe-section-card">
-                            <h4 className="pe-section-heading">
-                                <span className="pe-sec-icon-badge">
-                                    <Sparkles size={17} />
-                                </span>
-                                <span>{t("secCover") || "ក្របខាងមុខ (Front Cover)"}</span>
-                            </h4>
-
-                            {/* Clean Cover Image Upload */}
-                            <CleanImageUploadField
-                                label={t("coverImage") || "រូបភាពក្របខាងមុខ (Front Cover Image)"}
-                                icon={ImageIcon}
-                                image={form.coverImage}
-                                onUpload={(e) => handleFileUpload(e, (url, file) => {
-                                    update("uploadedCoverUrl", url);
-                                    update("coverImage", url);
-                                    setPendingCoverFile(file);
-                                })}
-                                onRemove={() => {
-                                    update("uploadedCoverUrl", "");
-                                    update("coverImage", form.templateDefaultCover || "");
-                                    setPendingCoverFile(null);
-                                }}
-                                inputRef={coverInputRef}
-                                hint="បង្ហាញលើក្របទំព័រដើម (Front Cover / Hero)"
-                            />
-
-                            {/* Main Title on Cover */}
-                            <div className="pe-form-group">
-                                <label className="pe-label">
-                                    <span className="pe-label-icon"><FileText size={15} /></span>
-                                    {t("mainTitle") || "ចំណងជើងធំលើក្រប"}
-                                </label>
-                                <input
-                                    type="text"
-                                    className="pe-input"
-                                    value={form.title}
-                                    onChange={(e) => update("title", e.target.value)}
-                                    placeholder="សិរីមង្គលអាពាហ៍ពិពាហ៍"
-                                />
-                            </div>
-
-                            {/* Couple Names on Cover */}
-                            <div className="pe-grid-2">
-                                <div className="pe-form-group">
-                                    <label className="pe-label">
-                                        <span className="pe-label-icon"><User size={15} /></span>
-                                        {t("groom") || "កូនប្រុស (Groom Name)"}
-                                    </label>
-                                    <input
-                                        type="text"
-                                        className="pe-input"
-                                        value={form.groomName}
-                                        onChange={(e) => update("groomName", e.target.value)}
-                                        placeholder="វណ្ណដា"
-                                    />
-                                </div>
-                                <div className="pe-form-group">
-                                    <label className="pe-label">
-                                        <span className="pe-label-icon"><Heart size={15} /></span>
-                                        {t("bride") || "កូនស្រី (Bride Name)"}
-                                    </label>
-                                    <input
-                                        type="text"
-                                        className="pe-input"
-                                        value={form.brideName}
-                                        onChange={(e) => update("brideName", e.target.value)}
-                                        placeholder="ស្រីពេជ្រ"
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Switch to hide names on top cover */}
-                            <div className="pe-switch-row">
-                                <span className="pe-switch-label">{t("hideCoupleCover") || "បិទឈ្មោះកូនកំលោះ/កូនក្រមុំ (ក្របខាងលើ)"}</span>
-                                <label className="pe-toggle">
-                                    <input
-                                        type="checkbox"
-                                        checked={form.hideCoupleNameOnCover}
-                                        onChange={(e) => update("hideCoupleNameOnCover", e.target.checked)}
-                                    />
-                                    <span className="pe-toggle-slider" />
-                                </label>
-                            </div>
-
-                            {/* Subtitle / Invitation Line on Cover */}
-                            <div className="pe-form-group">
-                                <label className="pe-label">
-                                    <span className="pe-label-icon"><Sparkles size={15} /></span>
-                                    {t("subTitle") || "ចំណងជើងរងលើក្រប (Subtitle / Kicker)"}
-                                </label>
-                                <input
-                                    type="text"
-                                    className="pe-input"
-                                    value={form.subtitle}
-                                    onChange={(e) => update("subtitle", e.target.value)}
-                                    placeholder="សូមគោរពអញ្ជើញ"
-                                />
-                            </div>
-
-                            {/* Event Date & Time on Cover */}
-                            <div className="pe-grid-2">
-                                <div className="pe-form-group">
-                                    <label className="pe-label">
-                                        <span className="pe-label-icon"><Calendar size={15} /></span>
-                                        {t("dateTime") || "កាលបរិច្ឆេទ (Event Date)"}
-                                    </label>
-                                    <DatePicker
-                                        value={form.eventDate}
-                                        onChange={(val) => {
-                                            update("eventDate", val);
-                                            update("eventDateText", val);
-                                        }}
-                                        placeholder="ជ្រើសកាលបរិច្ឆេទ"
-                                    />
-                                </div>
-                                <div className="pe-form-group">
-                                    <label className="pe-label">
-                                        <span className="pe-label-icon"><Clock size={15} /></span>
-                                        {t("timePicker") || "ម៉ោងទទួលភ្ញៀវ (Event Time)"}
-                                    </label>
-                                    <TimePicker
-                                        value={form.eventTime}
-                                        onChange={(val) => update("eventTime", val)}
-                                        placeholder="ជ្រើសម៉ោង"
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Spotify-style Music Selector & Player */}
-                            <div className="pe-form-group">
-                                <label className="pe-label">
-                                    <span className="pe-label-icon"><Music size={15} /></span>
-                                    {t("labelMusic") || "ជ្រើសរើសបទភ្លេង / Music Track"}
-                                </label>
-                                <SpotifyMusicPicker
-                                    value={form.musicTrackId || "waiting-day"}
-                                    onChange={(trackId, trackUrl) => {
-                                        update("musicTrackId", trackId);
-                                        update("musicUrl", trackUrl || "");
-                                    }}
-                                />
-                            </div>
-                        </div>
-
-                        {/* 2. សារអញ្ជើញភ្ញៀវ (Invitation Message - Screen 2 ក្នុង Live Preview) */}
-                        <div className="pe-section-card">
-                            <h4 className="pe-section-heading">
-                                <span className="pe-sec-icon-badge">
-                                    <Mail size={17} />
-                                </span>
-                                <span>{t("secMessage") || "សារអញ្ជើញភ្ញៀវកិត្តិយស (Invitation Message)"}</span>
-                            </h4>
-
-                            <div className="pe-form-group">
-                                <label className="pe-label">
-                                    <span className="pe-label-icon"><FileText size={15} /></span>
-                                    {t("messageTitle") || "ចំណងជើងសារ (Kicker)"}
-                                </label>
-                                <input
-                                    type="text"
-                                    className="pe-input"
-                                    value={form.messageTitle}
-                                    onChange={(e) => update("messageTitle", e.target.value)}
-                                    placeholder="ដំណឹងអាពាហ៍ពិពាហ៍"
-                                />
-                            </div>
-
-                            <div className="pe-form-group">
-                                <label className="pe-label">
-                                    <span className="pe-label-icon"><Mail size={15} /></span>
-                                    {t("messageText") || "អត្ថបទសារអញ្ជើញ"}
-                                </label>
-                                <textarea
-                                    className="pe-textarea"
-                                    rows="6"
-                                    value={form.messageText}
-                                    onChange={(e) => update("messageText", e.target.value)}
-                                />
-                            </div>
-                        </div>
-
-                        {/* 3. រូបថតគូស្នេហ៍ (The Bride & Groom - Screen 3 ក្នុង Live Preview) */}
-                        <div className="pe-section-card">
-                            <h4 className="pe-section-heading">
-                                <span className="pe-sec-icon-badge">
-                                    <Heart size={17} />
-                                </span>
-                                <span>{t("secCouple") || "រូបថតគូស្នេហ៍ (The Bride & Groom Photo)"}</span>
-                            </h4>
-
-                            {/* Clean Couple / Background Image Upload */}
-                            <CleanImageUploadField
-                                label={t("backgroundImage") || "រូបថតគូស្នេហ៍ / ខាងក្នុង (Couple & Inner Photo)"}
-                                icon={ImageIcon}
-                                image={form.backgroundImage}
-                                onUpload={(e) => handleFileUpload(e, (url) => update("backgroundImage", url))}
-                                onRemove={() => update("backgroundImage", "")}
-                                inputRef={bgInputRef}
-                                hint="បង្ហាញក្នុងផ្នែកកូនកំលោះ និងកូនក្រមុំ (The Bride & Groom Card)"
-                            />
-                        </div>
-
-                        {/* 4. នាឡិការាប់ថយក្រោយ (Countdown Timer - ត្រូវគ្នានឹងផ្ទាំង Preview) */}
-                        <div className="pe-section-card">
-                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
-                                <h4 className="pe-section-heading" style={{ margin: 0, flex: "1 1 auto", minWidth: 0 }}>
-                                    <span className="pe-sec-icon-badge">
-                                        <Clock size={17} />
-                                    </span>
-                                    <span>{t("secCountdown") || "នាឡិការាប់ថយក្រោយ (Countdown Timer)"}</span>
-                                </h4>
-                                <label className="pe-toggle" style={{ flexShrink: 0 }} title="បើក/បិទ រាប់ថយក្រោយ">
-                                    <input
-                                        type="checkbox"
-                                        checked={form.showCountdown !== false}
-                                        onChange={(e) => update("showCountdown", e.target.checked)}
-                                    />
-                                    <span className="pe-toggle-slider" />
-                                </label>
-                            </div>
-                            <p style={{ fontSize: "12.5px", color: "#64748b", margin: "10px 0 0 0", lineHeight: "1.5" }}>
-                                គណនាចំនួន <strong>ថ្ងៃ • ម៉ោង • នាទី • វិនាទី</strong> ដោយស្វ័យប្រវត្តិតាមកាលបរិច្ឆេទនៃពិធីមង្គលការ។ (បើក ឬបិទកាតនេះបាន)
-                            </p>
-                        </div>
-
-                        {/* 5. របៀបវារៈកម្មវិធី (Program & Schedule - Screen 5 ក្នុង Live Preview) */}
-                        <div className="pe-section-card">
-                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
-                                <h4 className="pe-section-heading" style={{ margin: 0 }}>
-                                    <span className="pe-sec-icon-badge">
-                                        <Clock size={17} />
-                                    </span>
-                                    <span>{t("secSchedule") || "របៀបវារៈកម្មវិធី"}</span>
-                                </h4>
-                                <button
-                                    type="button"
-                                    className="pe-btn-upload-action"
-                                    onClick={addScheduleItem}
-                                >
-                                    <Plus size={14} /> {t("addSchedule") || "បន្ថែមកម្មវិធី"}
-                                </button>
-                            </div>
-
-                            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                                {form.schedule?.map((item, idx) => (
-                                    <div key={item.id || idx} className="pe-grid-2" style={{ alignItems: "center", background: "#f8f6f0", padding: "10px 12px", borderRadius: "8px", border: "1px solid #e8e2d8", marginBottom: 0 }}>
-                                        <TimePicker
-                                            value={item.time}
-                                            onChange={(val) => handleScheduleChange(idx, "time", val)}
-                                            placeholder="ជ្រើសម៉ោង"
-                                        />
-                                        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-                                            <input
-                                                type="text"
-                                                className="pe-input"
-                                                value={item.title}
-                                                onChange={(e) => handleScheduleChange(idx, "title", e.target.value)}
-                                                placeholder="ពិធីហែជំនូន"
-                                            />
-                                            <button
-                                                type="button"
-                                                className="pe-btn-delete-action"
-                                                style={{ padding: "6px 10px" }}
-                                                onClick={() => removeScheduleItem(idx)}
-                                                title="Delete item"
-                                            >
-                                                <Trash2 size={13} />
-                                            </button>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* 5. ទីតាំង & ផែនទី (Venue & Location - Screen 5 ក្នុង Live Preview) */}
-                        <div className="pe-section-card">
-                            <h4 className="pe-section-heading">
-                                <span className="pe-sec-icon-badge">
-                                    <MapPin size={17} />
-                                </span>
-                                <span>{t("secLocation") || "ទីតាំង & ផែនទី"}</span>
-                            </h4>
-
-                            <div className="pe-form-group">
-                                <label className="pe-label">
-                                    <span className="pe-label-icon"><MapPin size={15} /></span>
-                                    {t("venue") || "ទីតាំងប្រារព្ធពិធី (Venue Name)"}
-                                </label>
-                                <input
-                                    type="text"
-                                    className="pe-input"
-                                    value={form.venueName}
-                                    onChange={(e) => update("venueName", e.target.value)}
-                                    placeholder="The Premier Center Sen Sok"
-                                />
-                            </div>
-
-                            <div className="pe-form-group">
-                                <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginBottom: "8px" }}>
-                                    <label className="pe-label" style={{ margin: 0 }}>
-                                        <span className="pe-label-icon"><MapPin size={15} /></span>
-                                        {t("mapsUrl") || "Google Maps Link (URL)"}
-                                    </label>
-                                    <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "6px" }}>
-                                        <button
-                                            type="button"
-                                            onClick={handleGetCurrentLocation}
-                                            disabled={isLocating}
-                                            title="យកទីតាំងបច្ចុប្បន្នរបស់អ្នក"
-                                            style={{
-                                                fontSize: "0.75rem",
-                                                padding: "5px 10px",
-                                                borderRadius: "6px",
-                                                border: "1px solid #0ea5e9",
-                                                background: "#f0f9ff",
-                                                color: "#0369a1",
-                                                cursor: isLocating ? "wait" : "pointer",
-                                                display: "inline-flex",
-                                                alignItems: "center",
-                                                gap: "4px",
-                                                fontWeight: 600,
-                                                whiteSpace: "nowrap",
-                                            }}
-                                        >
-                                            <MapPin size={13} />
-                                            {isLocating ? "កំពុងស្វែងរក..." : "យកទីតាំងបច្ចុប្បន្ន"}
-                                        </button>
-                                        <button
-                                            type="button"
-                                            onClick={handleGenerateMapLink}
-                                            title="បំលែងឈ្មោះទីតាំងទៅជា Link Google Maps ស្វ័យប្រវត្តិ"
-                                            style={{
-                                                fontSize: "0.75rem",
-                                                padding: "5px 10px",
-                                                borderRadius: "6px",
-                                                border: "1px solid #f59e0b",
-                                                background: "#fffbeb",
-                                                color: "#b45309",
-                                                cursor: "pointer",
-                                                display: "inline-flex",
-                                                alignItems: "center",
-                                                gap: "4px",
-                                                fontWeight: 600,
-                                                whiteSpace: "nowrap",
-                                            }}
-                                        >
-                                            <Zap size={13} />
-                                            បង្កើត Link ស្វ័យប្រវត្តិ
-                                        </button>
-                                        <button
-                                            type="button"
-                                            onClick={handleSearchMap}
-                                            title="បើកស្វែងរកលើ Google Maps ផ្ទាល់"
-                                            style={{
-                                                fontSize: "0.75rem",
-                                                padding: "5px 10px",
-                                                borderRadius: "6px",
-                                                border: "1px solid #cbd5e1",
-                                                background: "#f8fafc",
-                                                color: "#334155",
-                                                cursor: "pointer",
-                                                display: "inline-flex",
-                                                alignItems: "center",
-                                                gap: "4px",
-                                                fontWeight: 600,
-                                                whiteSpace: "nowrap",
-                                            }}
-                                        >
-                                            <ExternalLink size={13} />
-                                            ស្វែងរក / តេស្តមើល
-                                        </button>
-                                    </div>
-                                </div>
-                                <input
-                                    type="text"
-                                    className="pe-input"
-                                    value={form.googleMapUrl}
-                                    onChange={(e) => {
-                                        const value = e.target.value;
-                                        update("googleMapUrl", value);
-                                        setLocationError(/^https?:\/\//i.test(value) && !isGoogleMapsUrl(value)
-                                            ? "Link នេះមិនមែនជា Google Maps URL ត្រឹមត្រូវទេ។"
-                                            : "");
-                                    }}
-                                    placeholder="https://maps.app.goo.gl/... ឬ ឈ្មោះទីតាំង"
-                                />
-                                {locationError && (
-                                    <div role="alert" style={{ fontSize: "0.75rem", color: "#b91c1c", marginTop: "6px" }}>
-                                        {locationError}
-                                    </div>
-                                )}
-                                <div style={{ fontSize: "0.75rem", color: "#64748b", marginTop: "6px", lineHeight: "1.4" }}>
-                                    <span className="pe-location-help-mobile">ចុចប៊ូតុង 📍 ដើម្បីទាញយកទីតាំងបច្ចុប្បន្នរបស់អ្នក ឬ Paste Google Maps Link</span>
-                                    <span className="pe-location-help-desktop">បញ្ចូល Google Maps Link ឬស្វែងរកឈ្មោះទីតាំងរោងការ</span>
-                                </div>
-                            </div>
-
-                            <CleanImageUploadField
-                                label={t("sketchMap") || "រូបគំនូសប្លង់ទីតាំង (Sketch Map)"}
-                                icon={Map}
-                                image={form.sketchMapImage}
-                                onUpload={(e) => handleFileUpload(e, (url) => update("sketchMapImage", url))}
-                                onRemove={() => update("sketchMapImage", null)}
-                                inputRef={sketchInputRef}
-                                hint="រូបប្លង់បង្ហាញផ្លូវទៅកាន់រោងការ (អាចទុកទំនេរបាន)"
-                            />
-                        </div>
-
-                        {/* 6. វិចិត្រសាលរូបថត (Photo Gallery 5-10 Photos - Screen 6 ក្នុង Live Preview) */}
-                        <div className="pe-section-card">
-                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px", marginBottom: "14px" }}>
-                                <h4 className="pe-section-heading" style={{ margin: 0 }}>
-                                    <span className="pe-sec-icon-badge">
-                                        <Images size={17} />
-                                    </span>
-                                    <span>{t("secGallery") || "វិចិត្រសាលរូបថត (Gallery 5-10 រូប)"}</span>
-                                    <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "#4f46e5", background: "#eef2ff", padding: "2px 8px", borderRadius: "12px", marginLeft: "6px" }}>
-                                        {form.photos.filter((p) => Boolean(p?.url)).length} / {form.photos.length} រូប
-                                    </span>
-                                </h4>
-
-                                <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
-                                    {/* Batch upload */}
-                                    <label
-                                        className="pe-btn-upload-action"
-                                        style={{
-                                            padding: "6px 12px",
-                                            fontSize: "0.8rem",
-                                            cursor: "pointer",
-                                            display: "inline-flex",
-                                            alignItems: "center",
-                                            gap: "6px",
-                                            margin: 0
-                                        }}
-                                        title="ជ្រើសរើសរូបថតច្រើនសន្លឹកក្នុងពេលតែមួយ (Upload multiple photos)"
-                                    >
-                                        <UploadCloud size={14} />
-                                        ជ្រើសរើសរូបច្រើនសន្លឹក
-                                        <input
-                                            type="file"
-                                            accept="image/*"
-                                            multiple
-                                            style={{ display: "none" }}
-                                            onChange={handleBatchGalleryUpload}
-                                        />
-                                    </label>
-
-                                    {/* Add slot button up to 10 */}
-                                    {form.photos.length < 10 && (
-                                        <button
-                                            type="button"
-                                            onClick={addPhotoSlot}
-                                            className="pe-btn-upload-action"
-                                            style={{
-                                                padding: "6px 12px",
-                                                fontSize: "0.8rem",
-                                                background: "#f0fdf4",
-                                                borderColor: "#86efac",
-                                                color: "#166534",
-                                                display: "inline-flex",
-                                                alignItems: "center",
-                                                gap: "4px"
-                                            }}
-                                            title="បន្ថែមប្រអប់រូបថតថ្មី (អតិបរមា 10 រូប)"
-                                        >
-                                            <Plus size={14} /> បន្ថែមរូប ({form.photos.length}/10)
-                                        </button>
-                                    )}
-                                </div>
-                            </div>
-
-                            <p style={{ margin: "0 0 12px 0", fontSize: "0.8rem", color: "#64748b" }}>
-                                * លោកអ្នកអាចបញ្ចូលរូបថតពី 5 ដល់ 10 សន្លឹកសម្រាប់បង្ហាញក្នុងវិចិត្រសាលធៀបការ (Can upload 5 to 10 photos)
-                            </p>
-
-                            <div className="pe-gallery-grid-clean">
-                                {form.photos.map((photo, idx) => (
-                                    <CleanGalleryItem
-                                        key={photo.id || `photo-${idx}`}
-                                        idx={idx}
-                                        photo={photo}
-                                        onUpload={(e) => handleFileUpload(e, (url) => updatePhoto(idx, url))}
-                                        onRemove={() => updatePhoto(idx, "")}
-                                        canDeleteSlot={form.photos.length > 5}
-                                        onDeleteSlot={() => removePhotoSlot(idx)}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* 7. ដំណើរនៃក្ដីស្រឡាញ់ (Our Love Story - No limit image uploading) */}
-                        <div className="pe-section-card">
-                            {/* Heading row: icon + title on left, toggle on right */}
-                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px", marginBottom: "10px" }}>
-                                <h4 className="pe-section-heading" style={{ margin: 0, border: "none", paddingBottom: 0, flex: 1, minWidth: 0 }}>
-                                    <span className="pe-sec-icon-badge">
-                                        <Heart size={17} />
-                                    </span>
-                                    <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                                        ដំណើរនៃក្ដីស្រឡាញ់ (Our Love Story)
-                                    </span>
-                                </h4>
-                                <label className="pe-toggle" title="បើក/បិទ ដំណើរនៃក្ដីស្រឡាញ់" style={{ flexShrink: 0 }}>
-                                    <input
-                                        type="checkbox"
-                                        checked={form.showStory !== false}
-                                        onChange={(e) => update("showStory", e.target.checked)}
-                                    />
-                                    <span className="pe-toggle-slider" />
-                                </label>
-                            </div>
-
-                            {/* Actions row: count badge + add button */}
-                            <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", marginBottom: "14px" }}>
-                                <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#e11d48", background: "#ffe4e6", padding: "3px 10px", borderRadius: "12px", flexShrink: 0 }}>
-                                    {form.storyChapters?.length || 0} រឿងរ៉ាវ (No Limit)
-                                </span>
-                                <button
-                                    type="button"
-                                    onClick={addStoryItem}
-                                    className="pe-btn-upload-action"
-                                    style={{
-                                        padding: "6px 12px",
-                                        fontSize: "0.8rem",
-                                        background: "#fff1f2",
-                                        borderColor: "#fecdd3",
-                                        color: "#be123c",
-                                        display: "inline-flex",
-                                        alignItems: "center",
-                                        gap: "4px"
-                                    }}
-                                    title="បន្ថែមដំណាក់កាលរឿងរ៉ាវថ្មី (គ្មានកំណត់ចំនួន)"
-                                >
-                                    <Plus size={14} /> បន្ថែមរឿងរ៉ាវ
-                                </button>
-                            </div>
-
-                            <p style={{ margin: "0 0 12px 0", fontSize: "0.8rem", color: "#64748b" }}>
-                                * អាចបញ្ចូលរូបភាព និងរៀបរាប់ដំណាក់កាលនៃក្ដីស្រឡាញ់ដោយគ្មានដែនកំណត់ (Upload story milestones & images with no limit)
-                            </p>
-
-                            {form.showStory !== false && (
-                                <div className="pe-story-list">
-                                    {(form.storyChapters || []).map((item, idx) => (
-                                        <CleanStoryItem
-                                            key={item.id || `story-${idx}`}
-                                            idx={idx}
-                                            item={item}
-                                            onChange={(key, val) => handleStoryChange(idx, key, val)}
-                                            onUpload={(e) => handleStoryImageUpload(idx, e)}
-                                            onRemoveImage={() => handleStoryChange(idx, "image", "")}
-                                            onDelete={() => removeStoryItem(idx)}
-                                            canDelete={(form.storyChapters || []).length > 1}
-                                        />
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-
-                        {/* 8. សម្លៀកបំពាក់ (Dress Code - Ceremonial Palette) */}
-                        <div className="pe-section-card">
-                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
-                                <h4 className="pe-section-heading" style={{ margin: 0, border: "none", paddingBottom: 0, flex: 1, minWidth: 0 }}>
-                                    <span className="pe-sec-icon-badge">
-                                        <Sparkles size={17} />
-                                    </span>
-                                    <span>សម្លៀកបំពាក់ (Dress Code)</span>
-                                </h4>
-                                <label className="pe-toggle" title="បើក/បិទ សម្លៀកបំពាក់" style={{ flexShrink: 0 }}>
-                                    <input
-                                        type="checkbox"
-                                        checked={form.showDressCode !== false}
-                                        onChange={(e) => update("showDressCode", e.target.checked)}
-                                    />
-                                    <span className="pe-toggle-slider" />
-                                </label>
-                            </div>
-
-                            {form.showDressCode !== false && (
-                                <>
-                                    <div className="pe-grid-2">
-                                        <div className="pe-form-group">
-                                            <label className="pe-label">
-                                                <span className="pe-label-icon"><FileText size={15} /></span>
-                                                ឈ្មោះកូដសម្លៀកបំពាក់ (Name)
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="pe-input"
-                                                value={form.dressCode?.name || ""}
-                                                onChange={(e) => handleDressCodeFieldChange("name", e.target.value)}
-                                                placeholder="ខ្មែរប្រពៃណី / Formal Khmer"
-                                            />
-                                        </div>
-                                        <div className="pe-form-group">
-                                            <label className="pe-label">
-                                                <span className="pe-label-icon"><Sparkles size={15} /></span>
-                                                រចនាបថ (Style)
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="pe-input"
-                                                value={form.dressCode?.style || ""}
-                                                onChange={(e) => handleDressCodeFieldChange("style", e.target.value)}
-                                                placeholder="Traditional elegance"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="pe-form-group">
-                                        <label className="pe-label">
-                                            <span className="pe-label-icon"><FileText size={15} /></span>
-                                            ការណែនាំសម្លៀកបំពាក់ (Description)
-                                        </label>
-                                        <textarea
-                                            className="pe-textarea"
-                                            rows="2"
-                                            value={form.dressCode?.description || ""}
-                                            onChange={(e) => handleDressCodeFieldChange("description", e.target.value)}
-                                            placeholder="សូមជ្រើសរើសសម្លៀកបំពាក់តាមពណ៌ដែលបានកំណត់ ដើម្បីបង្កើនភាពស្រស់ស្អាតនៃពិធី..."
-                                        />
-                                    </div>
-
-                                    <div className="pe-form-group">
-                                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
-                                            <label className="pe-label" style={{ margin: 0 }}>
-                                                <span className="pe-label-icon"><Sparkles size={15} /></span>
-                                                ក្ដារពណ៌សម្លៀកបំពាក់ (Color Palette Swatches)
-                                            </label>
-                                            <button
-                                                type="button"
-                                                onClick={addDressColor}
-                                                className="pe-btn-upload-action"
-                                                style={{ padding: "4px 10px", fontSize: "0.78rem" }}
-                                            >
-                                                <Plus size={13} /> បន្ថែមពណ៌
-                                            </button>
-                                        </div>
-
-                                        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: "10px" }}>
-                                            {(form.dressColors || []).map((color, cIdx) => {
-                                                const hex = typeof color === "string" ? color : color?.hex || "#D4AF37";
-                                                const name = typeof color === "string" ? "" : color?.name || "";
-                                                return (
-                                                    <div
-                                                        key={`color-${cIdx}`}
-                                                        style={{
-                                                            display: "flex",
-                                                            alignItems: "center",
-                                                            gap: "8px",
-                                                            background: "#f8fafc",
-                                                            border: "1px solid #e2e8f0",
-                                                            borderRadius: "8px",
-                                                            padding: "6px 8px",
-                                                        }}
-                                                    >
-                                                        <input
-                                                            type="color"
-                                                            value={hex}
-                                                            onChange={(e) => handleDressColorChange(cIdx, "hex", e.target.value)}
-                                                            style={{
-                                                                width: "32px",
-                                                                height: "32px",
-                                                                borderRadius: "6px",
-                                                                border: "none",
-                                                                cursor: "pointer",
-                                                                padding: 0,
-                                                                background: "transparent",
-                                                            }}
-                                                            title="ជ្រើសពណ៌"
-                                                        />
-                                                        <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: "2px" }}>
-                                                            <input
-                                                                type="text"
-                                                                className="pe-input"
-                                                                style={{ padding: "3px 6px", fontSize: "0.75rem", height: "auto" }}
-                                                                value={name}
-                                                                onChange={(e) => handleDressColorChange(cIdx, "name", e.target.value)}
-                                                                placeholder="ឈ្មោះពណ៌ (e.g. មាស)"
-                                                            />
-                                                            <span style={{ fontSize: "0.7rem", color: "#64748b", fontFamily: "monospace" }}>
-                                                                {hex}
-                                                            </span>
-                                                        </div>
-                                                        {(form.dressColors || []).length > 1 && (
-                                                            <button
-                                                                type="button"
-                                                                onClick={() => removeDressColor(cIdx)}
-                                                                style={{
-                                                                    border: "none",
-                                                                    background: "transparent",
-                                                                    color: "#94a3b8",
-                                                                    cursor: "pointer",
-                                                                    padding: "4px",
-                                                                    display: "flex",
-                                                                    alignItems: "center",
-                                                                }}
-                                                                title="លុបពណ៌នេះ"
-                                                            >
-                                                                <Trash2 size={13} />
-                                                            </button>
-                                                        )}
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
-                                    </div>
-                                </>
-                            )}
-                        </div>
-
-                        {/* 9. មនុស្សជាទីស្រឡាញ់ / ក្រុមអម (Wedding Party) */}
-                        <div className="pe-section-card">
-                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px", marginBottom: "10px" }}>
-                                <h4 className="pe-section-heading" style={{ margin: 0, border: "none", paddingBottom: 0, flex: 1, minWidth: 0 }}>
-                                    <span className="pe-sec-icon-badge">
-                                        <User size={17} />
-                                    </span>
-                                    <span>មនុស្សជាទីស្រឡាញ់ / ក្រុមអម (Wedding Party)</span>
-                                </h4>
-                                <label className="pe-toggle" title="បើក/បិទ ក្រុមអម" style={{ flexShrink: 0 }}>
-                                    <input
-                                        type="checkbox"
-                                        checked={form.showParty !== false}
-                                        onChange={(e) => update("showParty", e.target.checked)}
-                                    />
-                                    <span className="pe-toggle-slider" />
-                                </label>
-                            </div>
-
-                            <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", marginBottom: "14px" }}>
-                                <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#0284c7", background: "#e0f2fe", padding: "3px 10px", borderRadius: "12px" }}>
-                                    {form.party?.length || 0} នាក់
-                                </span>
-                                <button
-                                    type="button"
-                                    onClick={addPartyMember}
-                                    className="pe-btn-upload-action"
-                                    style={{
-                                        padding: "6px 12px",
-                                        fontSize: "0.8rem",
-                                        background: "#f0f9ff",
-                                        borderColor: "#bae6fd",
-                                        color: "#0369a1",
-                                        display: "inline-flex",
-                                        alignItems: "center",
-                                        gap: "4px"
-                                    }}
-                                >
-                                    <Plus size={14} /> បន្ថែមសមាជិក
-                                </button>
-                            </div>
-
-                            <p style={{ margin: "0 0 12px 0", fontSize: "0.8rem", color: "#64748b" }}>
-                                * បង្ហាញកូនកំលោះកិត្តិយស (Best Man), កូនក្រមុំកិត្តិយស (Maid of Honor), ឬក្រុមគ្រួសារ និងមិត្តភក្ដិជិតស្និទ្ធ
-                            </p>
-
-                            {form.showParty !== false && (
-                                <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                                    {(form.party || []).map((member, mIdx) => (
-                                        <div
-                                            key={member.id || `party-${mIdx}`}
-                                            style={{
-                                                display: "flex",
-                                                gap: "12px",
-                                                alignItems: "center",
-                                                padding: "10px",
-                                                background: "#f8fafc",
-                                                border: "1px solid #e2e8f0",
-                                                borderRadius: "10px",
-                                            }}
-                                        >
-                                            <div style={{ position: "relative", width: "56px", height: "56px", borderRadius: "50%", overflow: "hidden", flexShrink: 0, background: "#e2e8f0" }}>
-                                                {member.image ? (
-                                                    <img src={member.image} alt={member.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                                                ) : (
-                                                    <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", color: "#94a3b8" }}>
-                                                        <User size={24} />
-                                                    </div>
-                                                )}
-                                                <label
-                                                    style={{
-                                                        position: "absolute",
-                                                        inset: 0,
-                                                        cursor: "pointer",
-                                                        background: member.image ? "rgba(0,0,0,0.3)" : "transparent",
-                                                        display: "flex",
-                                                        alignItems: "center",
-                                                        justifyContent: "center",
-                                                        opacity: member.image ? 0 : 1,
-                                                        transition: "opacity 0.2s",
-                                                    }}
-                                                    onMouseEnter={(e) => { e.currentTarget.style.opacity = "1"; }}
-                                                    onMouseLeave={(e) => { e.currentTarget.style.opacity = member.image ? "0" : "1"; }}
-                                                    title="បញ្ចូលរូបថតសមាជិក"
-                                                >
-                                                    <UploadCloud size={16} color="#fff" />
-                                                    <input
-                                                        type="file"
-                                                        accept="image/*"
-                                                        style={{ display: "none" }}
-                                                        onChange={(e) => handlePartyImageUpload(mIdx, e)}
-                                                    />
-                                                </label>
-                                            </div>
-
-                                            <div style={{ flex: 1, minWidth: 0, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
-                                                <div>
-                                                    <label style={{ fontSize: "0.72rem", color: "#64748b", fontWeight: 600, display: "block", marginBottom: "2px" }}>តួនាទី (Role)</label>
-                                                    <input
-                                                        type="text"
-                                                        className="pe-input"
-                                                        style={{ padding: "4px 8px", fontSize: "0.8rem", height: "auto" }}
-                                                        value={member.role || ""}
-                                                        onChange={(e) => handlePartyChange(mIdx, "role", e.target.value)}
-                                                        placeholder="កូនកំលោះកិត្តិយស"
-                                                    />
-                                                </div>
-                                                <div>
-                                                    <label style={{ fontSize: "0.72rem", color: "#64748b", fontWeight: 600, display: "block", marginBottom: "2px" }}>ឈ្មោះ (Name)</label>
-                                                    <input
-                                                        type="text"
-                                                        className="pe-input"
-                                                        style={{ padding: "4px 8px", fontSize: "0.8rem", height: "auto" }}
-                                                        value={member.name || ""}
-                                                        onChange={(e) => handlePartyChange(mIdx, "name", e.target.value)}
-                                                        placeholder="ឈ្មោះសមាជិក"
-                                                    />
-                                                </div>
-                                            </div>
-
-                                            <button
-                                                type="button"
-                                                onClick={() => removePartyMember(mIdx)}
-                                                style={{
-                                                    border: "none",
-                                                    background: "transparent",
-                                                    color: "#94a3b8",
-                                                    cursor: "pointer",
-                                                    padding: "4px",
-                                                    display: "flex",
-                                                    alignItems: "center",
-                                                }}
-                                                title="លុបសមាជិកនេះ"
-                                            >
-                                                <Trash2 size={16} />
-                                            </button>
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-
-                        {/* 10. សំណួរញឹកញាប់ (Guest Notes & FAQ) */}
-                        <div className="pe-section-card">
-                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px", marginBottom: "10px" }}>
-                                <h4 className="pe-section-heading" style={{ margin: 0, border: "none", paddingBottom: 0, flex: 1, minWidth: 0 }}>
-                                    <span className="pe-sec-icon-badge">
-                                        <FileText size={17} />
-                                    </span>
-                                    <span>សំណួរញឹកញាប់ (Guest Notes & FAQ)</span>
-                                </h4>
-                                <label className="pe-toggle" title="បើក/បិទ សំណួរញឹកញាប់" style={{ flexShrink: 0 }}>
-                                    <input
-                                        type="checkbox"
-                                        checked={form.showFaq !== false}
-                                        onChange={(e) => update("showFaq", e.target.checked)}
-                                    />
-                                    <span className="pe-toggle-slider" />
-                                </label>
-                            </div>
-
-                            <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", marginBottom: "14px" }}>
-                                <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#7c3aed", background: "#ede9fe", padding: "3px 10px", borderRadius: "12px" }}>
-                                    {form.faq?.length || 0} សំណួរ
-                                </span>
-                                <button
-                                    type="button"
-                                    onClick={addFaqItem}
-                                    className="pe-btn-upload-action"
-                                    style={{
-                                        padding: "6px 12px",
-                                        fontSize: "0.8rem",
-                                        background: "#f5f3ff",
-                                        borderColor: "#ddd6fe",
-                                        color: "#6d28d9",
-                                        display: "inline-flex",
-                                        alignItems: "center",
-                                        gap: "4px"
-                                    }}
-                                >
-                                    <Plus size={14} /> បន្ថែមសំណួរ
-                                </button>
-                            </div>
-
-                            <p style={{ margin: "0 0 12px 0", fontSize: "0.8rem", color: "#64748b" }}>
-                                * ផ្តល់ព័ត៌មានលម្អិតដូចជាចំណតយានយន្ត ការនាំកុមារតូចៗ ឬពេលវេលាកម្មវិធីដល់ភ្ញៀវ
-                            </p>
-
-                            {form.showFaq !== false && (
-                                <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                                    {(form.faq || []).map((faqItem, fIdx) => (
-                                        <div
-                                            key={faqItem.id || `faq-${fIdx}`}
-                                            style={{
-                                                padding: "10px 12px",
-                                                background: "#f8fafc",
-                                                border: "1px solid #e2e8f0",
-                                                borderRadius: "10px",
-                                                display: "flex",
-                                                flexDirection: "column",
-                                                gap: "8px",
-                                            }}
-                                        >
-                                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                                                <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#64748b" }}>
-                                                    សំណួរទី {fIdx + 1}
-                                                </span>
-                                                <button
-                                                    type="button"
-                                                    onClick={() => removeFaqItem(fIdx)}
-                                                    style={{
-                                                        border: "none",
-                                                        background: "transparent",
-                                                        color: "#94a3b8",
-                                                        cursor: "pointer",
-                                                        padding: "2px",
-                                                    }}
-                                                    title="លុបសំណួរនេះ"
-                                                >
-                                                    <Trash2 size={14} />
-                                                </button>
-                                            </div>
-                                            <input
-                                                type="text"
-                                                className="pe-input"
-                                                style={{ padding: "6px 10px", fontSize: "0.82rem" }}
-                                                value={faqItem.q || ""}
-                                                onChange={(e) => handleFaqChange(fIdx, "q", e.target.value)}
-                                                placeholder="តើមានចំណតរថយន្ត និងម៉ូតូដែរឬទេ?"
-                                            />
-                                            <textarea
-                                                className="pe-textarea"
-                                                style={{ padding: "6px 10px", fontSize: "0.82rem", minHeight: "50px" }}
-                                                rows="2"
-                                                value={faqItem.a || ""}
-                                                onChange={(e) => handleFaqChange(fIdx, "a", e.target.value)}
-                                                placeholder="បាទ/ចាស មានចំណតធំទូលាយដោយឥតគិតថ្លៃ..."
-                                            />
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-
-                        {/* 11. KHQR ផ្ញើរចំណងដៃ (Gift QR) */}
-                        <div className="pe-section-card">
-                            <h4 className="pe-section-heading">
-                                <span className="pe-sec-icon-badge">
-                                    <QrCode size={17} />
-                                </span>
-                                <span>{t("secKhqr") || "KHQR ផ្ញើរចំណងដៃ"}</span>
-                            </h4>
-
-                            <div className="pe-grid-2">
-                                {/* Dollar QR */}
-                                <CleanImageUploadField
-                                    label={t("qrDollar") || "KHQR Dollar ($)"}
-                                    icon={QrCode}
-                                    image={form.khqrDollar?.qrUrl}
-                                    onUpload={(e) =>
-                                        handleFileUpload(e, (url) =>
-                                            update("khqrDollar", { ...form.khqrDollar, qrUrl: url })
-                                        )
-                                    }
-                                    onRemove={() => update("khqrDollar", { ...form.khqrDollar, qrUrl: "" })}
-                                    inputRef={qrDollarInputRef}
-                                    hint="រូបភាព QR កូដប្រាក់ដុល្លារ ($)"
-                                />
-
-                                {/* Riel QR */}
-                                <CleanImageUploadField
-                                    label={t("qrRiel") || "KHQR Riel (៛)"}
-                                    icon={QrCode}
-                                    image={form.khqrRiel?.qrUrl}
-                                    onUpload={(e) =>
-                                        handleFileUpload(e, (url) =>
-                                            update("khqrRiel", { ...form.khqrRiel, qrUrl: url })
-                                        )
-                                    }
-                                    onRemove={() => update("khqrRiel", { ...form.khqrRiel, qrUrl: "" })}
-                                    inputRef={qrRielInputRef}
-                                    hint="រូបភាព QR កូដប្រាក់រៀល (៛)"
-                                />
-                            </div>
-                        </div>
-
-                        {/* 10. សារថ្លែងអំណរគុណ (Thank You Message) */}
-                        <div className="pe-section-card">
-                            <h4 className="pe-section-heading">
-                                <span className="pe-sec-icon-badge">
-                                    <Gift size={17} />
-                                </span>
-                                <span>{t("secThankYou") || "សារថ្លែងអំណរគុណ"}</span>
-                            </h4>
-
-                            <div className="pe-form-group">
-                                <label className="pe-label">
-                                    <span className="pe-label-icon"><FileText size={15} /></span>
-                                    {t("thankYouTitle") || "ចំណងជើងសារអរគុណ"}
-                                </label>
-                                <input
-                                    type="text"
-                                    className="pe-input"
-                                    value={form.thankYouTitle}
-                                    onChange={(e) => update("thankYouTitle", e.target.value)}
-                                    placeholder="សារថ្លែងអំណរគុណ"
-                                />
-                            </div>
-
-                            <div className="pe-form-group">
-                                <label className="pe-label">
-                                    <span className="pe-label-icon"><Gift size={15} /></span>
-                                    {t("thankYouText") || "អត្ថបទសារអរគុណ"}
-                                </label>
-                                <textarea
-                                    className="pe-textarea"
-                                    rows="5"
-                                    value={form.thankYouText}
-                                    onChange={(e) => update("thankYouText", e.target.value)}
-                                />
-                            </div>
-                        </div>
-
-                        {/* 9. ភាសាធៀបការ (Language Mode) */}
-                        <div className="pe-section-card">
-                            <h4 className="pe-section-heading">
-                                <span className="pe-sec-icon-badge">
-                                    <Globe size={17} />
-                                </span>
-                                <span>{t("secLangMode") || "ភាសាធៀបការ"}</span>
-                            </h4>
-                            <div className="pe-form-group">
-                                <label className="pe-label">
-                                    <span className="pe-label-icon"><Globe size={15} /></span>
-                                    ភាសាបង្ហាញក្នុងសំបុត្រ
-                                </label>
-                                <select
-                                    className="pe-select"
-                                    value={form.languageMode}
-                                    onChange={(e) => update("languageMode", e.target.value)}
-                                >
-                                    <option value="KH">ភាសាខ្មែរ (Khmer)</option>
-                                    <option value="EN">ភាសាអង់គ្លេស (English)</option>
-                                    <option value="BILINGUAL">ភាសាទាំងពីរ (Bilingual Khmer + English)</option>
-                                </select>
-                            </div>
-                        </div>
+                        {flowConfig.sectionOrder.map((sectionKey) => {
+                            const renderer = sectionRenderers[sectionKey];
+                            if (!renderer) return null;
+                            return <React.Fragment key={sectionKey}>{renderer()}</React.Fragment>;
+                        })}
                     </div>
                 </div>
 
@@ -2673,8 +3084,10 @@ export default function InvitationForm({ invitation }) {
                                                     {openingStyle === "curtain"
                                                         ? "Curtain Gate"
                                                         : openingStyle === "envelope-3d"
-                                                        ? "Envelope 3D"
-                                                        : "Khmer Royal"}
+                                                            ? "Envelope 3D"
+                                                            : (openingStyle === "celestial-cover" || tpl.code === "khmer-celestial" || tpl.id === "khmer-celestial")
+                                                                ? "Khmer Celestial"
+                                                                : "Khmer Royal"}
                                                 </div>
                                             </div>
 

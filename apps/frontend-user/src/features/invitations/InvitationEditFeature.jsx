@@ -33,7 +33,7 @@ export default function InvitationEditPage() {
 
             const ownerUserId = user?.id || user?.userId;
             const targetId = id;
-            const localDraft = targetId ? getDraft(targetId, ownerUserId) : null;
+            const localDraft = targetId ? (getDraft(targetId, ownerUserId) || getDraft(targetId)) : null;
 
             // 1. Check local wedding draft storage first
             if (localDraft) {
@@ -112,8 +112,8 @@ export default function InvitationEditPage() {
                 }
             }
 
-            // 2. If not found locally, query backend API
-            if (id) {
+            // 2. If not found locally, query backend API (only for numeric backend IDs)
+            if (id && /^\d+$/.test(String(id))) {
                 try {
                     const [data, media] = await Promise.all([
                         invitationService.get(id),

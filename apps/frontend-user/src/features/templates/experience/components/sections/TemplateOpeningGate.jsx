@@ -5,6 +5,9 @@ import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion"
 import TemplateImage from "../shared/TemplateImage";
 import RibbonOpening from "@/features/templates/shared/Openings/RibbonOpening";
 import CinematicVideoOpening from "@/features/templates/shared/Openings/CinematicVideoOpening";
+import CelestialOpening from "@/features/templates/layouts/KhmerCelestial/components/CelestialOpening";
+import "@/features/templates/layouts/KhmerCelestial/khmer-celestial.css";
+
 
 function KhmerCornerOrnament({ position }) {
     return (
@@ -313,19 +316,11 @@ function MagicalGate({
 
             {/* Left 3D Temple Door */}
             <div className="tx-magical-door tx-magical-door--left" aria-hidden="true">
-                <div className="tx-magical-door-carving">
-                    <KhmerCornerOrnament position="top-left" />
-                    <KhmerCornerOrnament position="bottom-left" />
-                </div>
                 <div className="tx-magical-door-glow" />
             </div>
 
             {/* Right 3D Temple Door */}
             <div className="tx-magical-door tx-magical-door--right" aria-hidden="true">
-                <div className="tx-magical-door-carving">
-                    <KhmerCornerOrnament position="top-right" />
-                    <KhmerCornerOrnament position="bottom-right" />
-                </div>
                 <div className="tx-magical-door-glow" />
             </div>
 
@@ -458,7 +453,7 @@ export default function TemplateOpeningGate({
     const openingVideoUrl = videoUrl(content.openingVideo);
     const design = content.design || {};
     const opening = content.opening || {};
-    const openingStyle = design.openingStyle || "khmer-royal";
+    const openingStyle = content.gateStyle || content.openingStyle || design.openingStyle || "khmer-royal";
     const frameStyle = design.frameStyle || "double-gold";
     const ornamentStyle = design.ornamentStyle || "khmer-corner-01";
     const guestText = content.guestName || opening.genericGuestText;
@@ -512,7 +507,13 @@ export default function TemplateOpeningGate({
             }}
             {...motionProps}
         >
-            {openingStyle === "ribbon-untie" || openingStyle === "RIBBON_UNTIE" ? (
+            {openingStyle === "celestial-cover" || openingStyle === "CELESTIAL_COVER" ? (
+                <CelestialOpening
+                    content={content}
+                    onOpen={onOpen}
+                    preview={state !== "closed"}
+                />
+            ) : openingStyle === "ribbon-untie" || openingStyle === "RIBBON_UNTIE" ? (
                 <RibbonOpening
                     groom={content.groom}
                     bride={content.bride}
@@ -554,7 +555,7 @@ export default function TemplateOpeningGate({
                     onOpen={onOpen}
                     guestText={guestText}
                 />
-            ) : (
+            ) : openingStyle === "khmer-royal" || openingStyle === "KHMER_ROYAL" ? (
                 <KhmerRoyalGate
                     content={content}
                     opening={opening}
@@ -565,6 +566,12 @@ export default function TemplateOpeningGate({
                     videoRef={videoRef}
                     videoFailed={videoFailed}
                     setVideoFailed={setVideoFailed}
+                />
+            ) : (
+                <CelestialOpening
+                    content={content}
+                    onOpen={onOpen}
+                    preview={state !== "closed"}
                 />
             )}
         </motion.section>

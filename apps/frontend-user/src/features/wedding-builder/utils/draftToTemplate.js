@@ -46,6 +46,7 @@ export function draftToTemplate(draft, gallery = []) {
 
     const sectionEnabled = (legacyValue, key, defaultValue = true) => {
         if (typeof draft.enabledSections?.[key] === "boolean") return draft.enabledSections[key];
+        if (baseTpl.enabledSections?.[key] === false && draft.enabledSections?.[key] === undefined) return false;
         if (typeof legacyValue === "boolean") return legacyValue;
         if (typeof baseTpl.enabledSections?.[key] === "boolean") return baseTpl.enabledSections[key];
         return defaultValue;
@@ -84,6 +85,11 @@ export function draftToTemplate(draft, gallery = []) {
     const groomName = draft.couple?.groom || draft.groomName || draft.hostName || "";
     const brideName = draft.couple?.bride || draft.brideName || draft.partnerName || "";
 
+    const draftGroomParents = [draft.groomFather, draft.groomMother].filter(Boolean);
+    const resolvedGroomParents = draftGroomParents.length > 0 ? draftGroomParents : (draft.groomParents || draft.family?.groomParents || null);
+    const draftBrideParents = [draft.brideFather, draft.brideMother].filter(Boolean);
+    const resolvedBrideParents = draftBrideParents.length > 0 ? draftBrideParents : (draft.brideParents || draft.family?.brideParents || null);
+
     const initialsCouple = initials(draft.couple || { groom: groomName, bride: brideName });
 
     // KHQR and gifts
@@ -94,7 +100,7 @@ export function draftToTemplate(draft, gallery = []) {
             type: "khqr",
             currency: "USD",
             bank: draft.khqrDollar.bankName || "KHQR Dollar ($)",
-            account: draft.khqrDollar.accountName || draft.khqrDollar.bankName || "KHQR Dollar ($)",
+            account: draft.khqrDollar.accountName || "",
             number: draft.khqrDollar.accountNumber || "",
             note: "USD ($)",
             qrImage: draft.khqrDollar.qrUrl || "",
@@ -105,13 +111,20 @@ export function draftToTemplate(draft, gallery = []) {
             type: "khqr",
             currency: "KHR",
             bank: draft.khqrRiel.bankName || "KHQR Riel (៛)",
-            account: draft.khqrRiel.accountName || draft.khqrRiel.bankName || "KHQR Riel (៛)",
+            account: draft.khqrRiel.accountName || "",
             number: draft.khqrRiel.accountNumber || "",
             note: "KHR (៛)",
             qrImage: draft.khqrRiel.qrUrl || "",
             qrValue: draft.khqrRiel.accountNumber || "",
         }] : []),
     ];
+
+    const hasGiftData = giftList.length > 0;
+    const isGiftSectionEnabled = typeof draft.enabledSections?.gift === "boolean"
+        ? draft.enabledSections.gift
+        : (typeof draft.showGift === "boolean"
+            ? draft.showGift
+            : (hasGiftData ? true : (baseTpl.enabledSections?.gift ?? true)));
 
     // Schedules
     let finalSchedule = draft.schedule || [];
@@ -145,10 +158,23 @@ export function draftToTemplate(draft, gallery = []) {
         subtitle: draft.subtitle || "",
         messageTitle: draft.messageTitle || "",
         hideCoupleNameOnCover: Boolean(draft.hideCoupleNameOnCover),
+        showBrandMark: draft.showBrandMark !== false,
+        brandMark: draft.showBrandMark === false ? null : (draft.brandMarkUrl || draft.brandMark || draft.design?.brandMark || null),
         thankYouTitle: draft.thankYouTitle || "",
         thankYouText: draft.thankYouText || "",
+        apologyTitle: draft.apologyTitle || baseTpl.apologyTitle || "",
+        apologyText: draft.apologyText || baseTpl.apologyText || "",
+        gift: giftList.length > 0 ? giftList : (baseTpl.gift || []),
         groom: groomName || baseTpl.groom,
         bride: brideName || baseTpl.bride,
+        groomParents: resolvedGroomParents || baseTpl.groomParents || "",
+        brideParents: resolvedBrideParents || baseTpl.brideParents || "",
+        family: {
+            ...(baseTpl.family || {}),
+            ...(draft.family || {}),
+            ...(resolvedGroomParents ? { groomParents: resolvedGroomParents } : {}),
+            ...(resolvedBrideParents ? { brideParents: resolvedBrideParents } : {}),
+        },
         monogramText: draft.design?.monogramText || draft.monogramText || initialsCouple || (groomName && brideName ? `${groomName.trim().charAt(0).toUpperCase()} & ${brideName.trim().charAt(0).toUpperCase()}` : "N & P"),
         shortName: draft.design?.monogramText || draft.monogramText || initialsCouple || (groomName && brideName ? `${groomName.trim().charAt(0).toUpperCase()} & ${brideName.trim().charAt(0).toUpperCase()}` : "N & P"),
         dateText: eventDate ? displayDate(eventDate) : (draft.eventDateText || baseTpl.dateText),
@@ -171,6 +197,8 @@ export function draftToTemplate(draft, gallery = []) {
         },
         customMainImage: draft.coverImage || "",
         coverImage: draft.coverImage || "",
+        invitationImage: draft.invitationImage || "",
+        invitationImage2: draft.invitationImage2 || "",
         backgroundImage: draft.backgroundImage || draft.design?.backgroundImage || "",
         message: draft.message || draft.messageText || "",
         storyText: (draft.storyChapters?.length || (draft.story && draft.story !== draft.messageText)) ? (draft.story || draft.storyText || "") : "",
@@ -183,6 +211,7 @@ export function draftToTemplate(draft, gallery = []) {
             story: sectionEnabled(draft.showStory, "story"),
             party: sectionEnabled(draft.showParty, "party"),
             dressCode: sectionEnabled(draft.showDressCode, "dressCode"),
+            gift: isGiftSectionEnabled,
             faq: sectionEnabled(draft.showFaq, "faq"),
             rsvp: sectionEnabled(draft.rsvp?.enabled, "rsvp"),
         },
@@ -212,8 +241,12 @@ export function draftToTemplate(draft, gallery = []) {
             message: draft.message || draft.messageText || "",
             messageTitle: draft.messageTitle || "",
             hideCoupleNameOnCover: Boolean(draft.hideCoupleNameOnCover),
+            showBrandMark: draft.showBrandMark !== false,
+            brandMark: draft.showBrandMark === false ? null : (draft.brandMarkUrl || draft.brandMark || draft.design?.brandMark || null),
             thankYouTitle: draft.thankYouTitle || "",
             thankYouText: draft.thankYouText || "",
+            apologyTitle: draft.apologyTitle || "",
+            apologyText: draft.apologyText || "",
             dateText: eventDate ? displayDate(eventDate) : (draft.eventDateText || ""),
             dateTextEn: draft.extras?.dateTextEn || "",
             targetDate: targetDate || "",
@@ -222,9 +255,18 @@ export function draftToTemplate(draft, gallery = []) {
                 groom: groomName,
                 bride: brideName,
                 ...(draft.couple || {}),
+                ...(resolvedGroomParents ? { groomParents: resolvedGroomParents } : {}),
+                ...(resolvedBrideParents ? { brideParents: resolvedBrideParents } : {}),
+            },
+            family: {
+                ...(draft.family || {}),
+                ...(resolvedGroomParents ? { groomParents: resolvedGroomParents } : {}),
+                ...(resolvedBrideParents ? { brideParents: resolvedBrideParents } : {}),
             },
             contact: draft.contact || {},
             coverImage: draft.coverImage || "",
+            invitationImage: draft.invitationImage || "",
+            invitationImage2: draft.invitationImage2 || "",
             dressCode: draft.dressCode || null,
             dressColors: draft.dressColors || draft.design?.dressColors || [],
             storyText: (draft.storyChapters?.length || (draft.story && draft.story !== draft.messageText)) ? (draft.story || draft.storyText || "") : "",
@@ -243,6 +285,7 @@ export function draftToTemplate(draft, gallery = []) {
                 story: sectionEnabled(draft.showStory, "story"),
                 party: sectionEnabled(draft.showParty, "party"),
                 dressCode: sectionEnabled(draft.showDressCode, "dressCode"),
+                gift: isGiftSectionEnabled,
                 faq: sectionEnabled(draft.showFaq, "faq"),
                 rsvp: sectionEnabled(draft.rsvp?.enabled, "rsvp"),
             },

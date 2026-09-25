@@ -43,22 +43,24 @@ export default function LivePhoneSimulator({ data = {}, onSave, isSaving, catalo
             </div>
 
             {/* Clean Portrait Canvas Wrapper with Live Template Experience */}
-            <div className="pe-canvas-wrapper">
-                {merged?.tpl ? (
-                    <TemplateExperience
-                        tpl={merged.tpl}
-                        variant={merged.variant}
-                        preview={true}
-                        previewStartClosed={false}
-                        showBreadcrumb={false}
-                        showActions={false}
-                        showStickyCta={true}
-                    />
-                ) : (
-                    <div style={{ padding: "60px 20px", textAlign: "center", color: "#64748b" }}>
-                        <div>{t("loading") || "កំពុងទាញយក..."}</div>
-                    </div>
-                )}
+            <div className="pe-phone-frame">
+                <div className="pe-canvas-wrapper">
+                    {merged?.tpl ? (
+                        <TemplateExperience
+                            tpl={merged.tpl}
+                            variant={merged.variant}
+                            preview={true}
+                            previewStartClosed={false}
+                            showBreadcrumb={false}
+                            showActions={false}
+                            showStickyCta={true}
+                        />
+                    ) : (
+                        <div style={{ padding: "60px 20px", textAlign: "center", color: "#64748b" }}>
+                            <div>{t("loading") || "កំពុងទាញយក..."}</div>
+                        </div>
+                    )}
+                </div>
             </div>
         </aside>
     );

@@ -15,6 +15,7 @@ export const templateRegistry = {
   // Flagship Khmer Celestial (cinematic Cambodian editorial invitation)
   "khmer-celestial": KhmerCelestialLayout,
   "KHMER_CELESTIAL": KhmerCelestialLayout,
+  "10": KhmerCelestialLayout,
 
   // 1. The Digital Yes (Luxury Cinematic Digital Invitation - 3D Wax Seal Envelope + Falling Petals)
   "the-digital-yes-wedding": DigitalYesLayout,

@@ -26,7 +26,6 @@ import TemplateFaq from "./components/sections/TemplateFaq";
 
 import TemplateFooter from "./components/sections/TemplateFooter";
 import TemplateMusicControl from "./components/controls/TemplateMusicControl";
-import FloatingActionBar from "../shared/Controls/FloatingActionBar";
 import { useTemplateMusicController } from "./hooks/useTemplateMusicController";
 import TemplateQuickNav from "./components/controls/TemplateQuickNav";
 import TemplateSectionHeader from "./components/shared/TemplateSectionHeader";
@@ -92,6 +91,9 @@ export default function TemplateExperience({
             ...baseContent,
             groom: liveData.groomName || baseContent.groom,
             bride: liveData.brideName || baseContent.bride,
+            title: liveData.invitationTitle || baseContent.title,
+            invitationTitle: liveData.invitationTitle || baseContent.invitationTitle,
+            subtitle: liveData.invitationSubtitle || baseContent.subtitle,
             amp: liveData.ampSymbol || baseContent.amp || "♥",
             badge: liveData.badgeText || baseContent.badge,
             monogramText: liveData.groomName && liveData.brideName
@@ -118,9 +120,23 @@ export default function TemplateExperience({
                 primaryColor: liveData.primaryColor || baseContent.design?.primaryColor,
                 secondaryColor: liveData.secondaryColor || baseContent.design?.secondaryColor,
                 cardMotion: liveData.cardMotion || liveData.cardLayout || baseContent.design?.cardMotion,
+                backgroundImage: liveData.backgroundImage || liveData.bgImage || baseContent.design?.backgroundImage,
+                openingVideoUrl: liveData.openingVideoUrl || liveData.videoUrl || baseContent.design?.openingVideoUrl,
+                showButterflies: liveData.showButterflies,
             },
+            openingStyle: liveData.gateStyle || liveData.openingStyle || baseContent.openingStyle || baseContent.design?.openingStyle,
+            gateStyle: liveData.gateStyle || liveData.openingStyle || baseContent.gateStyle || baseContent.design?.openingStyle,
             cardMotion: liveData.cardMotion || liveData.cardLayout || baseContent.cardMotion,
-            videoUrl: liveData.videoUrl || baseContent.videoUrl,
+            videoUrl: liveData.videoUrl || liveData.openingVideoUrl || baseContent.videoUrl,
+            openingVideo: liveData.openingVideoUrl || liveData.videoUrl || baseContent.openingVideo,
+            openingVideoUrl: liveData.openingVideoUrl || liveData.videoUrl || baseContent.openingVideoUrl,
+            brandMark: liveData.showBrandMark === false || liveData.brandMark === "" ? "" : (liveData.brandMark !== undefined ? liveData.brandMark : baseContent.brandMark),
+            showBrandMark: liveData.showBrandMark !== undefined ? liveData.showBrandMark : (liveData.brandMark === "" ? false : baseContent.showBrandMark),
+            guestNameBanner: liveData.showGuestBanner === false || liveData.guestNameBanner === "" ? "" : (liveData.guestNameBanner !== undefined ? liveData.guestNameBanner : baseContent.guestNameBanner),
+            showGuestBanner: liveData.showGuestBanner !== undefined ? liveData.showGuestBanner : (liveData.guestNameBanner === "" ? false : baseContent.showGuestBanner),
+            openButtonImage: liveData.showOpenButton === false || liveData.openButtonImage === "" ? "" : (liveData.openButtonImage !== undefined ? liveData.openButtonImage : baseContent.openButtonImage),
+            showOpenButton: liveData.showOpenButton !== undefined ? liveData.showOpenButton : (liveData.openButtonImage === "" ? false : baseContent.showOpenButton),
+            showButterflies: liveData.showButterflies,
             googleMapUrl: liveData.googleMapUrl || baseContent.googleMapUrl,
             bankAccount: {
                 bank: liveData.bankName || baseContent.bankAccount?.bank || "ABA Bank",
@@ -186,8 +202,11 @@ export default function TemplateExperience({
                 }))
                 : baseContent.schedule,
             targetDate: liveData.targetDate || liveData.eventDate || baseContent.targetDate,
-            dateText: liveData.eventDateText || liveData.dateText || baseContent.dateText,
+            dateText: liveData.weddingDate || liveData.eventDateText || liveData.dateText || baseContent.dateText,
+            eventTime: liveData.weddingTime || liveData.eventTime || baseContent.eventTime,
+            receptionTime: liveData.weddingTime || liveData.receptionTime || baseContent.receptionTime,
             music: liveData.musicUrl || liveData.music || baseContent.music,
+            backgroundImage: liveData.backgroundImage || liveData.bgImage || baseContent.backgroundImage,
         };
     }, [baseContent, liveData]);
     const DedicatedComponent = getDedicatedTemplateComponent(tpl, variant);
@@ -199,7 +218,7 @@ export default function TemplateExperience({
     const openingTimerRef = useRef(null);
     const openingInFlightRef = useRef(false);
     const [gateState, setGateState] = useState(preview && !previewStartClosed ? "opened" : "closed");
-    const [heroOpened, setHeroOpened] = useState(preview && !previewStartClosed);
+    const [heroOpened, setHeroOpened] = useState(false);
     const gateOpen = gateState === "opened";
 
     useEffect(() => {
@@ -251,7 +270,7 @@ export default function TemplateExperience({
 
         openingTimerRef.current = window.setTimeout(() => {
             setGateState("opened");
-            setHeroOpened(true);
+            setHeroOpened(false);
         }, reducedMotion ? 0 : duration);
     }, [gateState, musicController, reducedMotion, openingStyle]);
 
@@ -272,36 +291,43 @@ export default function TemplateExperience({
     }, [gateOpen, preview]);
 
     useEffect(() => {
-        if (DedicatedComponent || preview || heroOpened) return undefined;
+        if (DedicatedComponent || heroOpened) return undefined;
 
-        const handleWheel = (e) => {
-            if (e.cancelable) {
-                e.preventDefault();
+        const handleUserScroll = () => {
+            const top = window.scrollY || document.documentElement.scrollTop || 0;
+            if (top > 20) {
+                setHeroOpened(true);
             }
         };
 
-        const handleTouchMove = (e) => {
-            if (e.cancelable) {
-                e.preventDefault();
+        const handleWheel = (e) => {
+            if (e.deltaY > 0) {
+                setHeroOpened(true);
             }
+        };
+
+        const handleTouchMove = () => {
+            setHeroOpened(true);
         };
 
         const handleKeyDown = (e) => {
             if (["ArrowDown", "PageDown", "Space"].includes(e.code)) {
-                e.preventDefault();
+                setHeroOpened(true);
             }
         };
 
-        window.addEventListener("wheel", handleWheel, { passive: false });
-        window.addEventListener("touchmove", handleTouchMove, { passive: false });
+        window.addEventListener("scroll", handleUserScroll, { passive: true });
+        window.addEventListener("wheel", handleWheel, { passive: true });
+        window.addEventListener("touchmove", handleTouchMove, { passive: true });
         window.addEventListener("keydown", handleKeyDown);
 
         return () => {
+            window.removeEventListener("scroll", handleUserScroll);
             window.removeEventListener("wheel", handleWheel);
             window.removeEventListener("touchmove", handleTouchMove);
             window.removeEventListener("keydown", handleKeyDown);
         };
-    }, [DedicatedComponent, preview, heroOpened]);
+    }, [DedicatedComponent, heroOpened]);
 
     const handleHeroOpen = useCallback(() => {
         setHeroOpened(true);
@@ -451,17 +477,6 @@ export default function TemplateExperience({
 
             {content.music && <audio ref={musicAudioRef} src={content.music} loop preload="auto" />}
             {gateOpen && <TemplateMusicControl controller={musicController} />}
-            {gateOpen && heroOpened && content.enableFloatingBar !== false && !showStickyCta && (
-                <FloatingActionBar
-                    audioController={musicController}
-                    googleMapsUrl={content.venue?.mapUrl || content.googleMapUrl}
-                    bankAccount={content.bankAccount || {
-                        bank: "ABA Bank",
-                        accountNumber: "000 123 456",
-                        accountName: `${content.groom} & ${content.bride}`,
-                    }}
-                />
-            )}
             {gateOpen && showStickyCta && heroOpened && (
                 <TemplateQuickNav
                     enabledSections={content.enabledSections}

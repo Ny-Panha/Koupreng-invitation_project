@@ -22,8 +22,12 @@ import {
   Sliders,
   Eye,
   Upload,
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
 } from "lucide-react";
-import { Toast } from "../../shared/ui";
+import { Toast, DatePicker, TimePicker } from "../../shared/ui";
 import { useToast } from "../../shared/hooks";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 import adminManagementService from "../../shared/api/adminService";
@@ -137,6 +141,7 @@ const THEME_PRESETS = [
       { hex: "#EAD39E", name: "សាំប៉ាញ" },
       { hex: "#FFFAF2", name: "ភ្លុក" },
     ],
+    backgroundImage: "/invitations/khmer-celestial/botanical-frame.jpg",
   },
   {
     id: "GARDEN_ROYAL",
@@ -202,17 +207,25 @@ const DEFAULT_STUDIO_STATE = {
   fontLatin: "Playfair Display",
   mood: "light",
 
-  // Hero & Envelope & Motion
-  gateStyle: "ribbon-untie",
-  openingStyle: "ribbon-untie",
+  // Hero & Envelope & Motion (Media Cover Styles)
+  gateStyle: "celestial-cover",
+  openingStyle: "celestial-cover",
   cardMotion: "3D_FLIP",
   cardLayout: "3D_FLIP",
   bgMusicUrl: "/music/wedding.mp3",
-  videoUrl: "",
+  videoUrl: "/invitations/khmer-celestial/burgundy-bokeh.mp4",
+  openingVideoUrl: "/invitations/khmer-celestial/burgundy-bokeh.mp4",
   enableFloatingBar: true,
+  showBrandMark: true,
+  brandMark: "/invitations/khmer-celestial/koupreng-gold-mark.webp",
+  showOpenButton: true,
+  openButtonImage: "/invitations/khmer-celestial/butto_invitation.webp",
+  showGuestBanner: true,
+  guestNameBanner: "/invitations/khmer-celestial/guest-name-banner1.webp",
   invitationTitle: "សិរីសួស្តី អាពាហ៍ពិពាហ៍",
   invitationSubtitle: "យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ",
   coverImage: "/facebook/all/03-card/cover-card.jpg",
+  backgroundImage: "/invitations/khmer-celestial/botanical-frame.jpg",
   weddingDate: "ថ្ងៃពុធ ២៨ មករា ២០២៦",
   weddingTime: "17:00",
   blessingMessage: "ដោយសេចក្តីសោមនស្សរីករាយក្រៃលែង យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ ឯកឧត្តម លោកជំទាវ លោក លោកស្រី អ្នកនាងកញ្ញា អញ្ជើញចូលរួមជាអធិបតី និងជាភ្ញៀវកិត្តិយស ដើម្បីប្រសិទ្ធពរជ័យសិរីមង្គល ក្នុងពិធីអាពាហ៍ពិពាហ៍ របស់យើងខ្ញុំទាំងពីរ។",
@@ -281,6 +294,11 @@ export default function AdminTemplateEditPage() {
 
   const [activeTab, setActiveTab] = useState("theme"); // 'theme' | 'couple' | 'events' | 'venue' | 'settings'
   const [themeSubTab, setThemeSubTab] = useState("presets"); // 'presets' | 'cover'
+  const [coverSubTab, setCoverSubTab] = useState("media"); // 'media' | 'ornaments' | 'text' | 'music'
+  const [isPlayingMusic, setIsPlayingMusic] = useState(false);
+  const audioPlayerRef = useRef(null);
+  const musicFileInputRef = useRef(null);
+  const videoFileInputRef = useRef(null);
   const [eventsSubTab, setEventsSubTab] = useState("schedule"); // 'schedule' | 'gallery'
   const [venueSubTab, setVenueSubTab] = useState("map"); // 'map' | 'dress'
   const [settingsSubTab, setSettingsSubTab] = useState("sections"); // 'sections' | 'catalog'
@@ -294,6 +312,10 @@ export default function AdminTemplateEditPage() {
   const qrFileInputRef = useRef(null);
   const galleryFileInputRef = useRef(null);
   const coverFileInputRef = useRef(null);
+  const bgFileInputRef = useRef(null);
+  const brandMarkFileInputRef = useRef(null);
+  const openButtonFileInputRef = useRef(null);
+  const guestBannerFileInputRef = useRef(null);
 
   // Draggable Split Divider State (Left Controls vs Right Live Preview)
   const [leftWidthPercent, setLeftWidthPercent] = useState(48); // default 48% split
@@ -438,6 +460,7 @@ export default function AdminTemplateEditPage() {
       fontKhmer: preset.fontKhmer,
       fontLatin: preset.fontLatin,
       dressColors: preset.dressColors,
+      backgroundImage: preset.backgroundImage !== undefined ? preset.backgroundImage : prev.backgroundImage,
     }));
     show(`បានកំណត់ Theme "${preset.name}" ✓`);
   };
@@ -529,6 +552,159 @@ export default function AdminTemplateEditPage() {
     reader.readAsDataURL(file);
   };
 
+  const handleBackgroundFileUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/") || file.type.includes("svg") || file.name.toLowerCase().endsWith(".svg")) {
+      show(lang === "en" ? "Please select an image file (PNG, JPG, WEBP)" : "សូមជ្រើសរើសប្រភេទ File រូបភាព (PNG, JPG, WEBP)", "error");
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      show(lang === "en" ? "Image size exceeds 5MB (Max: 5MB)" : "ទំហំរូបភាពធំជាង 5MB សូមបន្ថយទំហំរូបភាព (អតិបរមា 5MB)", "error");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const result = event.target?.result;
+      if (typeof result === "string") {
+        setField("backgroundImage", result);
+        show(lang === "en" ? "Background frame image uploaded ✓" : "បានជ្រើសរើសរូបភាពផ្ទៃខាងក្រោយ/ស៊ុមផ្កា ជោគជ័យ ✓");
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleGenericImageUpload = (e, fieldName, successMessage) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      show(lang === "en" ? "Please select an image file (PNG, JPG, WEBP, SVG)" : "សូមជ្រើសរើសប្រភេទ File រូបភាព (PNG, JPG, WEBP, SVG)", "error");
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      show(lang === "en" ? "Image size exceeds 5MB (Max: 5MB)" : "ទំហំរូបភាពធំជាង 5MB សូមបន្ថយទំហំរូបភាព (អតិបរមា 5MB)", "error");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const result = event.target?.result;
+      if (typeof result === "string") {
+        setField(fieldName, result);
+        show(successMessage || (lang === "en" ? "Image uploaded ✓" : "បានបញ្ចូលរូបភាពជោគជ័យ ✓"));
+      }
+    };
+    reader.readAsDataURL(file);
+    e.target.value = "";
+  };
+
+  const handleVideoFileUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("video/") && !file.name.match(/\.(mp4|webm|mov|mkv)$/i)) {
+      show(lang === "en" ? "Please select a video file (MP4, WebM)" : "សូមជ្រើសរើសប្រភេទ File វីដេអូ (MP4, WebM)", "error");
+      return;
+    }
+
+    if (file.size > 50 * 1024 * 1024) {
+      show(lang === "en" ? "Video file exceeds 50MB" : "ទំហំវីដេអូធំជាង 50MB សូមជ្រើសរើសវីដេអូតូចជាង 50MB", "error");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const result = event.target?.result;
+      if (typeof result === "string") {
+        setField("videoUrl", result);
+        setField("openingVideoUrl", result);
+        show(lang === "en" ? "Video uploaded successfully ✓" : "បានបញ្ចូលវីដេអូជោគជ័យ ✓");
+      }
+    };
+    reader.readAsDataURL(file);
+    e.target.value = "";
+  };
+
+  const MUSIC_PRESETS = [
+    {
+      id: "waiting-day",
+      title: "ថ្ងៃដែលរង់ចាំ (Official Song)",
+      artist: "ចម្រៀងមង្គលការខ្មែរ",
+      url: "/music/wedding-waiting-day.mp3",
+      tag: "Vocal",
+    },
+    {
+      id: "instrumental",
+      title: "Instrumental Wedding Music",
+      artist: "VioSounds Classical Violin Cover",
+      url: "/music/instrumental-wedding.m4a",
+      tag: "Violin",
+    },
+    {
+      id: "default",
+      title: "បទភ្លេងលំនាំដើម (Default)",
+      artist: "Traditional Suite",
+      url: "/music/wedding.mp3",
+      tag: "Default",
+    },
+  ];
+
+  const handleSelectMusic = (url) => {
+    setField("bgMusicUrl", url);
+    if (audioPlayerRef.current) {
+      audioPlayerRef.current.pause();
+      setIsPlayingMusic(false);
+      audioPlayerRef.current.src = url;
+    }
+  };
+
+  const toggleMusicPreview = () => {
+    if (!audioPlayerRef.current) return;
+    if (isPlayingMusic) {
+      audioPlayerRef.current.pause();
+      setIsPlayingMusic(false);
+    } else {
+      audioPlayerRef.current
+        .play()
+        .then(() => setIsPlayingMusic(true))
+        .catch(() => setIsPlayingMusic(false));
+    }
+  };
+
+  const handleMusicFileUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("audio/") && !file.name.match(/\.(mp3|m4a|wav|ogg)$/i)) {
+      show(lang === "en" ? "Please select an audio file (MP3, M4A, WAV)" : "សូមជ្រើសរើសប្រភេទ File សំឡេង (MP3, M4A, WAV)", "error");
+      return;
+    }
+
+    if (file.size > 15 * 1024 * 1024) {
+      show(lang === "en" ? "Audio file exceeds 15MB" : "ទំហំសំឡេងធំជាង 15MB សូមជ្រើសរើស File តូចជាងនេះ", "error");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const result = event.target?.result;
+      if (typeof result === "string") {
+        setField("bgMusicUrl", result);
+        if (audioPlayerRef.current) {
+          audioPlayerRef.current.src = result;
+          audioPlayerRef.current.play().then(() => setIsPlayingMusic(true)).catch(() => {});
+        }
+        show(lang === "en" ? "Wedding music uploaded ✓" : "បានបញ្ចូលបទភ្លេងមង្គលការជោគជ័យ ✓");
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
   const handleGalleryFileUpload = (e) => {
     const files = Array.from(e.target.files || []);
     if (files.length === 0) return;
@@ -577,12 +753,20 @@ export default function AdminTemplateEditPage() {
       const fullConfigJson = JSON.stringify({
         presetId: form.presetId,
         theme: form.presetId,
-        gateStyle: form.gateStyle || "khmer-royal",
-        openingStyle: form.gateStyle || "khmer-royal",
+        gateStyle: form.gateStyle || "celestial-cover",
+        openingStyle: form.gateStyle || "celestial-cover",
         cardMotion: form.cardMotion || "3D_FLIP",
         cardLayout: form.cardMotion || "3D_FLIP",
         bgMusicUrl: form.bgMusicUrl,
-        videoUrl: form.videoUrl,
+        videoUrl: form.videoUrl || form.openingVideoUrl || "",
+        openingVideoUrl: form.openingVideoUrl || form.videoUrl || "",
+        showButterflies: form.showButterflies !== false,
+        showBrandMark: form.showBrandMark !== false && Boolean(form.brandMark),
+        brandMark: form.showBrandMark === false ? "" : (form.brandMark || ""),
+        showGuestBanner: form.showGuestBanner !== false && Boolean(form.guestNameBanner),
+        guestNameBanner: form.showGuestBanner === false ? "" : (form.guestNameBanner || ""),
+        showOpenButton: form.showOpenButton !== false && Boolean(form.openButtonImage),
+        openButtonImage: form.showOpenButton === false ? "" : (form.openButtonImage || ""),
         enableFloatingBar: form.enableFloatingBar !== false,
         primaryColor: form.primaryColor,
         secondaryColor: form.secondaryColor,
@@ -978,34 +1162,60 @@ export default function AdminTemplateEditPage() {
                 )}
 
                 {themeSubTab === "cover" && (
-                  <div className="space-y-5">
-                    {/* Gate Style Selector (The Digital Yes 3D Styles) */}
+                  <div className="space-y-6">
+                    {/* Hidden Background File Input */}
+                    <input
+                      type="file"
+                      ref={bgFileInputRef}
+                      accept="image/png, image/jpeg, image/webp"
+                      className="hidden"
+                      onChange={handleBackgroundFileUpload}
+                    />
+
+                    {/* 1. Cover Style Selector (Pure Video & Image Driven) */}
                     <div className="rounded-2xl border border-amber-500/25 bg-amber-500/5 p-4 space-y-3">
                       <div className="flex items-center justify-between">
                         <label className="text-xs font-bold text-amber-400 flex items-center gap-1.5">
                           <Sparkles className="h-4 w-4 text-amber-500" />
-                          <span>ម៉ូដខ្លោងទ្វារបើកសំបុត្រ (Gate Opening Style - The Digital Yes)</span>
+                          <span>ម៉ូដក្រប Cover បើកសំបុត្រ (Cover Styles)</span>
                         </label>
-                        <span className="text-[10px] font-bold text-amber-400/80 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
-                          Live Animation
+                        <span className="text-[10px] font-bold text-amber-400/90 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
+                          {(form.gateStyle === "cinematic-video")
+                            ? "Full Video Mode"
+                            : "Video & Image Mode"}
                         </span>
                       </div>
                       <div className="grid grid-cols-2 gap-2.5">
                         {[
-                          { id: "ribbon-untie", name: "ស្រាយខ្សែបូ", sub: "Silk Ribbon Untie", icon: "🎀", tag: "Viral Reels" },
-                          { id: "envelope-3d", name: "ហែកត្រាទៀន 3D", sub: "3D Wax Seal", icon: "✉️", tag: "Trending" },
-                          { id: "cinematic-video", name: "វីដេអូបើកឆាក", sub: "Cinematic Pre-wedding", icon: "🎬", tag: "Full Video" },
-                          { id: "khmer-royal", name: "ទ្វាររាជវាំងមាស", sub: "Palace Gate Swing", icon: "🏛️", tag: "Royal" },
-                          { id: "curtain", name: "វាំងននល្ខោន", sub: "Theatrical Velvet", icon: "🎭", tag: "Prestige" },
-                          { id: "magical-gate", name: "ទ្វារវេទមន្ត", sub: "Magical Portal", icon: "✨", tag: "Glow" },
+                          {
+                            id: "celestial-cover",
+                            name: "ខ្មែរចន្ទតារា",
+                            sub: "Khmer Celestial",
+                            icon: "✨",
+                            tag: "Video & Image",
+                          },
+                          {
+                            id: "cinematic-video",
+                            name: "វីដេអូបើកឆាក",
+                            sub: "Cinematic Pre-wedding",
+                            icon: "🎬",
+                            tag: "Full Video",
+                          },
                         ].map((item) => {
-                          const isSelected = (form.gateStyle || "ribbon-untie") === item.id;
+                          const isSelected = (form.gateStyle || "celestial-cover") === item.id;
                           return (
                             <button
                               key={item.id}
                               type="button"
                               onClick={() => {
                                 setField("gateStyle", item.id);
+                                setField("openingStyle", item.id);
+                                if (item.id === "celestial-cover") {
+                                  if (!form.videoUrl) setField("videoUrl", "/invitations/khmer-celestial/burgundy-bokeh.mp4");
+                                  if (!form.backgroundImage) setField("backgroundImage", "/invitations/khmer-celestial/botanical-frame.jpg");
+                                } else if (item.id === "cinematic-video") {
+                                  if (!form.videoUrl) setField("videoUrl", "/invitations/khmer-celestial/burgundy-bokeh.mp4");
+                                }
                                 handleSetGate(false);
                               }}
                               className={`p-3 rounded-xl border text-left transition-all flex flex-col gap-1 cursor-pointer ${
@@ -1016,9 +1226,13 @@ export default function AdminTemplateEditPage() {
                             >
                               <div className="flex items-center justify-between">
                                 <span className="text-2xl">{item.icon}</span>
-                                <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${
-                                  isSelected ? "bg-amber-500 text-black font-bold" : "bg-zinc-800 text-zinc-400"
-                                }`}>
+                                <span
+                                  className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${
+                                    isSelected
+                                      ? "bg-amber-500 text-black font-bold"
+                                      : "bg-zinc-800 text-zinc-400"
+                                  }`}
+                                >
                                   {item.tag}
                                 </span>
                               </div>
@@ -1030,155 +1244,890 @@ export default function AdminTemplateEditPage() {
                       </div>
                     </div>
 
-                    {/* Video URL Input when Cinematic Video Opening is selected */}
-                    {(form.gateStyle === "cinematic-video" || form.gateStyle === "CINEMATIC_VIDEO") && (
-                      <div className="rounded-2xl border border-amber-500/30 bg-black/40 p-4 space-y-2 animate-in fade-in">
-                        <label className="block text-xs font-semibold text-amber-300">
-                          🎬 តំណភ្ជាប់វីដេអូបើកឆាក (Pre-wedding Video URL - MP4 / WebM)
-                        </label>
+                    {/* ============================================================== */}
+                    {/* SUB-TABS NAVIGATION (កាត់បន្ថយ Scrollbar និងធ្វើឱ្យ Clean) */}
+                    {/* ============================================================== */}
+                    <div className="flex items-center gap-1 p-1 rounded-xl bg-zinc-950 border border-zinc-800">
+                      <button
+                        type="button"
+                        onClick={() => setCoverSubTab("media")}
+                        className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1 cursor-pointer truncate ${
+                          coverSubTab === "media"
+                            ? "bg-amber-500 text-black shadow-sm font-bold"
+                            : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900"
+                        }`}
+                      >
+                        <span>🎨 ផ្ទៃ &amp; វីដេអូ</span>
+                      </button>
+                      {(form.gateStyle || "celestial-cover") !== "cinematic-video" && (
+                        <button
+                          type="button"
+                          onClick={() => setCoverSubTab("ornaments")}
+                          className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1 cursor-pointer truncate ${
+                            coverSubTab === "ornaments"
+                              ? "bg-amber-500 text-black shadow-sm font-bold"
+                              : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900"
+                          }`}
+                        >
+                          <span>👑 គ្រឿងលម្អ</span>
+                        </button>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => setCoverSubTab("text")}
+                        className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1 cursor-pointer truncate ${
+                          coverSubTab === "text"
+                            ? "bg-amber-500 text-black shadow-sm font-bold"
+                            : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900"
+                        }`}
+                      >
+                        <span>✍️ អត្ថបទ Cover</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setCoverSubTab("music")}
+                        className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1 cursor-pointer truncate ${
+                          coverSubTab === "music"
+                            ? "bg-amber-500 text-black shadow-sm font-bold"
+                            : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900"
+                        }`}
+                      >
+                        <span>🎵 ភ្លេងកំដរ</span>
+                      </button>
+                    </div>
+
+                    {/* ============================================================== */}
+                    {/* TAB 1: 🎨 ផ្ទៃខាងក្រោយ & វីដេអូ (BACKGROUND & MEDIA) */}
+                    {/* ============================================================== */}
+                    {coverSubTab === "media" && (
+                      <div className="space-y-3">
+                        {/* Hidden Video File Input */}
                         <input
-                          type="text"
-                          value={form.videoUrl || ""}
-                          onChange={(e) => setField("videoUrl", e.target.value)}
-                          placeholder="https://example.com/prewedding-cinematic.mp4"
-                          className="h-10 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500 font-mono"
+                          type="file"
+                          ref={videoFileInputRef}
+                          accept="video/mp4, video/webm, video/*"
+                          className="hidden"
+                          onChange={handleVideoFileUpload}
                         />
-                        <p className="text-[11px] text-zinc-400">
-                          វីដេអូនឹងចាក់បើកឆាក Fullscreen Reel មុនពេលបង្ហាញកាតធៀបការ។ ភ្ញៀវអាចចុច Skip បានគ្រប់ពេល។
-                        </p>
+
+                        {/* 1.1 FULL VIDEO MODE */}
+                        {(form.gateStyle || "celestial-cover") === "cinematic-video" && (
+                          <div className="rounded-2xl border border-amber-500/30 bg-amber-500/5 p-4 space-y-3">
+                            <div className="flex items-center justify-between">
+                              <label className="text-xs font-bold text-amber-300 flex items-center gap-1.5">
+                                <span>🎬 វីដេអូបើកឆាកអាពាហ៍ពិពាហ៍ (Fullscreen Video)</span>
+                              </label>
+                              <div className="flex items-center gap-1.5">
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setField("videoUrl", "/invitations/khmer-celestial/burgundy-bokeh.mp4");
+                                    setField("openingVideoUrl", "/invitations/khmer-celestial/burgundy-bokeh.mp4");
+                                  }}
+                                  className="text-[11px] font-bold text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 px-2.5 py-1 rounded-lg border border-amber-500/20 transition cursor-pointer"
+                                >
+                                  + Bokeh Burgundy
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => videoFileInputRef.current?.click()}
+                                  className="text-[11px] font-medium text-zinc-300 hover:text-white bg-zinc-800/80 hover:bg-zinc-800 px-2.5 py-1 rounded-lg border border-zinc-700/80 transition flex items-center gap-1 cursor-pointer"
+                                >
+                                  <Upload className="h-3 w-3" />
+                                  <span>Upload</span>
+                                </button>
+                              </div>
+                            </div>
+
+                            <div className="p-3 rounded-xl bg-zinc-900/90 border border-zinc-800 text-[11px] text-zinc-400 leading-relaxed">
+                              ✨ ម៉ូដ Full Video នឹងចាក់វីដេអូអាពាហ៍ពិពាហ៍ពេញអេក្រង់ទូរស័ព្ទ អមដោយប៊ូតុងសំឡេង និងប៊ូតុងរំលង (Skip) ចូលមើលសំបុត្រដោយស្វ័យប្រវត្តិ។
+                            </div>
+                          </div>
+                        )}
+
+                        {/* 1.2 BOKEH VIDEO (FOR HYBRID CELESTIAL COVER) */}
+                        {(form.gateStyle || "celestial-cover") === "celestial-cover" && (
+                          <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-3.5 space-y-2.5">
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs font-bold text-zinc-200 flex items-center gap-1.5">
+                                <span>🎬 វីដេអូ Bokeh ផ្ទៃខាងក្រោយ</span>
+                              </span>
+                              <div className="flex items-center gap-1.5">
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setField("videoUrl", "/invitations/khmer-celestial/burgundy-bokeh.mp4");
+                                    setField("openingVideoUrl", "/invitations/khmer-celestial/burgundy-bokeh.mp4");
+                                  }}
+                                  className="text-[11px] font-bold text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 px-2 py-0.5 rounded-lg border border-amber-500/20 transition cursor-pointer"
+                                >
+                                  + Burgundy Bokeh
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => videoFileInputRef.current?.click()}
+                                  className="text-[11px] font-medium text-zinc-300 hover:text-white bg-zinc-800 hover:bg-zinc-700 px-2.5 py-0.5 rounded-lg border border-zinc-700 transition flex items-center gap-1 cursor-pointer"
+                                >
+                                  <Upload className="h-3 w-3" />
+                                  <span>Upload</span>
+                                </button>
+                              </div>
+                            </div>
+                            <label className="flex items-center gap-2 cursor-pointer select-none pt-0.5">
+                              <input
+                                type="checkbox"
+                                checked={form.showButterflies !== false}
+                                onChange={(e) => setField("showButterflies", e.target.checked)}
+                                className="h-4 w-4 rounded border-zinc-700 bg-zinc-900 text-amber-500 focus:ring-amber-500"
+                              />
+                              <span className="text-xs font-medium text-zinc-300">
+                                🦋 បង្ហាញមេអំបៅហោះ (Floating Butterflies)
+                              </span>
+                            </label>
+                          </div>
+                        )}
+
+                        {/* 1.3 VISUAL IMAGE FRAME CARDS (FOR ALL NON-VIDEO MODES) */}
+                        {(form.gateStyle || "celestial-cover") !== "cinematic-video" && (
+                          <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-4 space-y-3">
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs font-bold text-zinc-200">
+                                🌿 រូបភាពស៊ុមផ្កា &amp; ផ្ទៃខាងក្រោយ (Frame Styles)
+                              </span>
+                              <div className="flex items-center gap-1.5">
+                                <button
+                                  type="button"
+                                  onClick={() => bgFileInputRef.current?.click()}
+                                  className="flex items-center gap-1 text-[11px] font-medium text-zinc-300 bg-zinc-800 hover:bg-zinc-700 px-2 py-1 rounded-lg border border-zinc-700 transition cursor-pointer"
+                                >
+                                  <Upload className="h-3 w-3" />
+                                  <span>Upload</span>
+                                </button>
+                              </div>
+                            </div>
+
+                            {/* VISUAL CARDS GRID */}
+                            <div className="grid grid-cols-3 gap-2">
+                              {[
+                                {
+                                  id: "botanical",
+                                  title: "Botanical",
+                                  src: "/invitations/khmer-celestial/botanical-frame.jpg",
+                                },
+                                {
+                                  id: "corners",
+                                  title: "Corners",
+                                  src: "/invitations/khmer-celestial/ceremonial-corners.webp",
+                                },
+                                {
+                                  id: "folio",
+                                  title: "Royal Folio",
+                                  src: "/invitations/khmer-celestial/ceremonial-folio.webp",
+                                },
+                              ].map((item) => {
+                                const isSelected = form.backgroundImage === item.src;
+                                return (
+                                  <button
+                                    key={item.id}
+                                    type="button"
+                                    onClick={() => setField("backgroundImage", item.src)}
+                                    className={`relative p-1.5 rounded-xl border flex flex-col items-center gap-1.5 transition cursor-pointer group ${
+                                      isSelected
+                                        ? "border-amber-500 bg-amber-500/10 ring-1 ring-amber-500/40"
+                                        : "border-zinc-800 bg-zinc-950/70 hover:border-zinc-700"
+                                    }`}
+                                  >
+                                    <div className="w-full h-16 rounded-lg overflow-hidden bg-zinc-900 border border-zinc-800/80">
+                                      <img
+                                        src={item.src}
+                                        alt={item.title}
+                                        className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                                        onError={(e) => {
+                                          e.target.style.display = "none";
+                                        }}
+                                      />
+                                    </div>
+                                    <span
+                                      className={`text-[10px] font-bold ${
+                                        isSelected ? "text-amber-400" : "text-zinc-400"
+                                      }`}
+                                    >
+                                      {item.title}
+                                    </span>
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        )}
                       </div>
                     )}
 
-                    {/* Card Motion & Layout Effects */}
-                    <div className="rounded-2xl border border-amber-500/25 bg-amber-500/5 p-4 space-y-3">
-                      <div className="flex items-center justify-between">
-                        <label className="text-xs font-bold text-amber-400 flex items-center gap-1.5">
-                          <Sliders className="h-4 w-4 text-amber-500" />
-                          <span>ចលនាកាត & ការរំកិល (Card Motion & Layout)</span>
-                        </label>
-                        <span className="text-[10px] font-bold text-amber-400/80 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
-                          Effects
-                        </span>
-                      </div>
-                      <div className="grid grid-cols-2 gap-2.5">
-                        {[
-                          { id: "3D_FLIP", name: "កាតបង្វិល 3D Flip", sub: "មើលខាងមុខ និងខាងក្រោយ", icon: "🔄", tag: "3D Motion" },
-                          { id: "VERTICAL_REEL", name: "រំកិលចុះក្រោមបែប Reels", sub: "TikTok / IG Snap Scroll", icon: "📱", tag: "Reels" },
-                          { id: "BOOK_SPREAD", name: "បើកបែបសៀវភៅ", sub: "Book Spread Elegance", icon: "📖", tag: "Elegance" },
-                          { id: "STANDARD_SCROLL", name: "រំកិលរលូនធម្មតា", sub: "Standard Smooth Scroll", icon: "📜", tag: "Smooth" },
-                        ].map((item) => {
-                          const isSelected = (form.cardMotion || "3D_FLIP") === item.id;
+                    {/* ============================================================== */}
+                    {/* TAB 2: 👑 គ្រឿងលម្អលើ COVER (LOGO, BUTTON, BANNER) */}
+                    {/* ============================================================== */}
+                    {coverSubTab === "ornaments" && (form.gateStyle || "celestial-cover") !== "cinematic-video" && (
+                      <div className="space-y-3">
+                        {/* Hidden File Inputs for Ornaments Upload */}
+                        <input
+                          type="file"
+                          ref={brandMarkFileInputRef}
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) => handleGenericImageUpload(e, "brandMark", "បានបញ្ចូល Logo មាសជោគជ័យ ✓")}
+                        />
+                        <input
+                          type="file"
+                          ref={openButtonFileInputRef}
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) => handleGenericImageUpload(e, "openButtonImage", "បានបញ្ចូលរូបប៊ូតុងបើកសំបុត្រជោគជ័យ ✓")}
+                        />
+                        <input
+                          type="file"
+                          ref={guestBannerFileInputRef}
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) => handleGenericImageUpload(e, "guestNameBanner", "បានបញ្ចូលរូបបូទ្រឈ្មោះភ្ញៀវជោគជ័យ ✓")}
+                        />
+
+                        {/* 2.1 LOGO MONOGRAM */}
+                        {(() => {
+                          const isBrandMarkActive = form.showBrandMark !== false && form.brandMark !== "" && form.brandMark !== "none";
                           return (
+                            <div className={`rounded-2xl border transition-all p-3.5 space-y-2 ${
+                              isBrandMarkActive ? "border-zinc-800 bg-zinc-900/60" : "border-zinc-800/50 bg-zinc-950/40 opacity-80"
+                            }`}>
+                              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                                <div className="flex items-center gap-3 min-w-0">
+                                  <div className="h-10 w-12 rounded-lg bg-zinc-950 border border-zinc-800 flex items-center justify-center p-1 shrink-0 overflow-hidden relative">
+                                    {isBrandMarkActive ? (
+                                      <img
+                                        src={form.brandMark || "/invitations/khmer-celestial/koupreng-gold-mark.webp"}
+                                        alt="Logo"
+                                        className="h-full w-full object-contain"
+                                        onError={(e) => {
+                                          e.target.style.display = "none";
+                                        }}
+                                      />
+                                    ) : (
+                                      <div className="flex flex-col items-center justify-center text-[9px] font-bold text-zinc-500">
+                                        <span>បិទ</span>
+                                      </div>
+                                    )}
+                                  </div>
+                                  <div className="min-w-0">
+                                    <div className="flex items-center gap-2">
+                                      <span className="block text-xs font-bold text-zinc-100 whitespace-nowrap">
+                                        ស្លាកសញ្ញាមាស (Brand Mark Monogram)
+                                      </span>
+                                      <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full border shrink-0 ${
+                                        isBrandMarkActive
+                                          ? "text-emerald-400 border-emerald-500/30 bg-emerald-500/10"
+                                          : "text-zinc-500 border-zinc-800 bg-zinc-900"
+                                      }`}>
+                                        {isBrandMarkActive ? "កំពុងបើក" : "បានបិទ"}
+                                      </span>
+                                    </div>
+                                    <span className="block text-[10px] text-zinc-400">
+                                      បង្ហាញនៅផ្នែកខាងលើនៃ Cover
+                                    </span>
+                                  </div>
+                                </div>
+                                <div className="flex items-center gap-1.5 shrink-0 self-end sm:self-center">
+                                  {isBrandMarkActive ? (
+                                    <>
+                                      <button
+                                        type="button"
+                                        onClick={() => setForm((prev) => ({ ...prev, showBrandMark: true, brandMark: "/invitations/khmer-celestial/koupreng-gold-mark.webp" }))}
+                                        className="text-[11px] font-bold text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 px-2 py-1 rounded-lg border border-amber-500/20 transition cursor-pointer"
+                                      >
+                                        + Koupreng Mark
+                                      </button>
+                                      <button
+                                        type="button"
+                                        onClick={() => brandMarkFileInputRef.current?.click()}
+                                        className="flex items-center gap-1 text-[11px] font-medium text-zinc-300 bg-zinc-800 hover:bg-zinc-700 px-2 py-1 rounded-lg border border-zinc-700 transition cursor-pointer"
+                                      >
+                                        <Upload className="h-3 w-3" />
+                                        <span>Upload</span>
+                                      </button>
+                                      <button
+                                        type="button"
+                                        onClick={() => setForm((prev) => ({ ...prev, showBrandMark: false, brandMark: "" }))}
+                                        className="flex items-center gap-1 text-[11px] font-medium text-rose-400 bg-rose-500/10 hover:bg-rose-500/20 hover:text-rose-300 px-2 py-1 rounded-lg border border-rose-500/20 transition cursor-pointer"
+                                        title="បិទមិនប្រើស្លាកសញ្ញានេះ"
+                                      >
+                                        <Trash2 className="h-3 w-3" />
+                                        <span>បិទ</span>
+                                      </button>
+                                    </>
+                                  ) : (
+                                    <button
+                                      type="button"
+                                      onClick={() => setForm((prev) => ({
+                                        ...prev,
+                                        showBrandMark: true,
+                                        brandMark: "/invitations/khmer-celestial/koupreng-gold-mark.webp",
+                                      }))}
+                                      className="flex items-center gap-1 text-[11px] font-bold text-amber-400 bg-amber-500/15 hover:bg-amber-500/25 px-2.5 py-1 rounded-lg border border-amber-500/30 transition cursor-pointer"
+                                    >
+                                      <Plus className="h-3 w-3" />
+                                      <span>បើកប្រើ Logo</span>
+                                    </button>
+                                  )}
+
+                                  {/* Toggle Switch */}
+                                  <button
+                                    type="button"
+                                    role="switch"
+                                    aria-checked={isBrandMarkActive}
+                                    onClick={() => {
+                                      if (isBrandMarkActive) {
+                                        setForm((prev) => ({ ...prev, showBrandMark: false, brandMark: "" }));
+                                      } else {
+                                        setForm((prev) => ({
+                                          ...prev,
+                                          showBrandMark: true,
+                                          brandMark: prev.brandMark || "/invitations/khmer-celestial/koupreng-gold-mark.webp",
+                                        }));
+                                      }
+                                    }}
+                                    className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                                      isBrandMarkActive ? "bg-amber-500" : "bg-zinc-700"
+                                    }`}
+                                    title={isBrandMarkActive ? "ចុចដើម្បីបិទ" : "ចុចដើម្បីបើក"}
+                                  >
+                                    <span
+                                      className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out ${
+                                        isBrandMarkActive ? "translate-x-4" : "translate-x-0"
+                                      }`}
+                                    />
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })()}
+
+                        {/* 2.2 GUEST NAME BANNER RIBBON (ផ្ទៃខាងក្រោយឈ្មោះភ្ញៀវ) */}
+                        {(() => {
+                          const isGuestBannerActive = form.showGuestBanner !== false && form.guestNameBanner !== "" && form.guestNameBanner !== "none";
+                          return (
+                            <div className={`rounded-2xl border transition-all p-3.5 space-y-2 ${
+                              isGuestBannerActive ? "border-zinc-800 bg-zinc-900/60" : "border-zinc-800/50 bg-zinc-950/40 opacity-80"
+                            }`}>
+                              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                                <div className="flex items-center gap-3 min-w-0">
+                                  <div className="h-10 w-12 rounded-lg bg-zinc-950 border border-zinc-800 flex items-center justify-center p-1 shrink-0 overflow-hidden relative">
+                                    {isGuestBannerActive ? (
+                                      <img
+                                        src={form.guestNameBanner || "/invitations/khmer-celestial/guest-name-banner1.webp"}
+                                        alt="Banner"
+                                        className="h-full w-full object-contain"
+                                        onError={(e) => {
+                                          e.target.style.display = "none";
+                                        }}
+                                      />
+                                    ) : (
+                                      <div className="flex flex-col items-center justify-center text-[9px] font-bold text-zinc-500">
+                                        <span>បិទ</span>
+                                      </div>
+                                    )}
+                                  </div>
+                                  <div className="min-w-0">
+                                    <div className="flex items-center gap-2">
+                                      <span className="block text-xs font-bold text-zinc-100 whitespace-nowrap">
+                                        បូទ្រឈ្មោះភ្ញៀវ (Guest Ribbon Banner)
+                                      </span>
+                                      <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full border shrink-0 ${
+                                        isGuestBannerActive
+                                          ? "text-emerald-400 border-emerald-500/30 bg-emerald-500/10"
+                                          : "text-zinc-500 border-zinc-800 bg-zinc-900"
+                                      }`}>
+                                        {isGuestBannerActive ? "កំពុងបើក" : "បានបិទ"}
+                                      </span>
+                                    </div>
+                                    <span className="block text-[10px] text-zinc-400">
+                                      ផ្ទៃខាងក្រោយសម្រាប់ឈ្មោះភ្ញៀវ
+                                    </span>
+                                  </div>
+                                </div>
+                                <div className="flex items-center gap-1.5 shrink-0 self-end sm:self-center">
+                                  {isGuestBannerActive ? (
+                                    <>
+                                      <button
+                                        type="button"
+                                        onClick={() => setForm((prev) => ({ ...prev, showGuestBanner: true, guestNameBanner: "/invitations/khmer-celestial/guest-name-banner1.webp" }))}
+                                        className="text-[11px] font-bold text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 px-2 py-1 rounded-lg border border-amber-500/20 transition cursor-pointer"
+                                      >
+                                        + Ribbon Banner
+                                      </button>
+                                      <button
+                                        type="button"
+                                        onClick={() => guestBannerFileInputRef.current?.click()}
+                                        className="flex items-center gap-1 text-[11px] font-medium text-zinc-300 bg-zinc-800 hover:bg-zinc-700 px-2 py-1 rounded-lg border border-zinc-700 transition cursor-pointer"
+                                      >
+                                        <Upload className="h-3 w-3" />
+                                        <span>Upload</span>
+                                      </button>
+                                      <button
+                                        type="button"
+                                        onClick={() => setForm((prev) => ({ ...prev, showGuestBanner: false, guestNameBanner: "" }))}
+                                        className="flex items-center gap-1 text-[11px] font-medium text-rose-400 bg-rose-500/10 hover:bg-rose-500/20 hover:text-rose-300 px-2 py-1 rounded-lg border border-rose-500/20 transition cursor-pointer"
+                                        title="បិទមិនប្រើបូទ្រឈ្មោះ"
+                                      >
+                                        <Trash2 className="h-3 w-3" />
+                                        <span>បិទ</span>
+                                      </button>
+                                    </>
+                                  ) : (
+                                    <button
+                                      type="button"
+                                      onClick={() => setForm((prev) => ({
+                                        ...prev,
+                                        showGuestBanner: true,
+                                        guestNameBanner: "/invitations/khmer-celestial/guest-name-banner1.webp",
+                                      }))}
+                                      className="flex items-center gap-1 text-[11px] font-bold text-amber-400 bg-amber-500/15 hover:bg-amber-500/25 px-2.5 py-1 rounded-lg border border-amber-500/30 transition cursor-pointer"
+                                    >
+                                      <Plus className="h-3 w-3" />
+                                      <span>បើកប្រើ Banner</span>
+                                    </button>
+                                  )}
+
+                                  {/* Toggle Switch */}
+                                  <button
+                                    type="button"
+                                    role="switch"
+                                    aria-checked={isGuestBannerActive}
+                                    onClick={() => {
+                                      if (isGuestBannerActive) {
+                                        setForm((prev) => ({ ...prev, showGuestBanner: false, guestNameBanner: "" }));
+                                      } else {
+                                        setForm((prev) => ({
+                                          ...prev,
+                                          showGuestBanner: true,
+                                          guestNameBanner: prev.guestNameBanner || "/invitations/khmer-celestial/guest-name-banner1.webp",
+                                        }));
+                                      }
+                                    }}
+                                    className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                                      isGuestBannerActive ? "bg-amber-500" : "bg-zinc-700"
+                                    }`}
+                                    title={isGuestBannerActive ? "ចុចដើម្បីបិទ" : "ចុចដើម្បីបើក"}
+                                  >
+                                    <span
+                                      className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out ${
+                                        isGuestBannerActive ? "translate-x-4" : "translate-x-0"
+                                      }`}
+                                    />
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })()}
+
+                        {/* 2.3 OPEN BUTTON GRAPHIC (ប៊ូតុងបើកសំបុត្រ) */}
+                        {(() => {
+                          const isOpenButtonActive = form.showOpenButton !== false && form.openButtonImage !== "" && form.openButtonImage !== "none";
+                          return (
+                            <div className={`rounded-2xl border transition-all p-3.5 space-y-2 ${
+                              isOpenButtonActive ? "border-zinc-800 bg-zinc-900/60" : "border-zinc-800/50 bg-zinc-950/40 opacity-80"
+                            }`}>
+                              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                                <div className="flex items-center gap-3 min-w-0">
+                                  <div className="h-10 w-12 rounded-lg bg-zinc-950 border border-zinc-800 flex items-center justify-center p-1 shrink-0 overflow-hidden relative">
+                                    {isOpenButtonActive ? (
+                                      <img
+                                        src={form.openButtonImage || "/invitations/khmer-celestial/butto_invitation.webp"}
+                                        alt="Button"
+                                        className="h-full w-full object-contain"
+                                        onError={(e) => {
+                                          e.target.style.display = "none";
+                                        }}
+                                      />
+                                    ) : (
+                                      <div className="flex flex-col items-center justify-center text-[9px] font-bold text-zinc-500">
+                                        <span>បិទ</span>
+                                      </div>
+                                    )}
+                                  </div>
+                                  <div className="min-w-0">
+                                    <div className="flex items-center gap-2">
+                                      <span className="block text-xs font-bold text-zinc-100 whitespace-nowrap">
+                                        ប៊ូតុងបើកមាស (Open Button Graphic)
+                                      </span>
+                                      <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full border shrink-0 ${
+                                        isOpenButtonActive
+                                          ? "text-emerald-400 border-emerald-500/30 bg-emerald-500/10"
+                                          : "text-zinc-500 border-zinc-800 bg-zinc-900"
+                                      }`}>
+                                        {isOpenButtonActive ? "កំពុងបើក" : "បានបិទ"}
+                                      </span>
+                                    </div>
+                                    <span className="block text-[10px] text-zinc-400">
+                                      ប៊ូតុងចុចដើម្បីបើកសំបុត្រអញ្ជើញ
+                                    </span>
+                                  </div>
+                                </div>
+                                <div className="flex items-center gap-1.5 shrink-0 self-end sm:self-center">
+                                  {isOpenButtonActive ? (
+                                    <>
+                                      <button
+                                        type="button"
+                                        onClick={() => setForm((prev) => ({ ...prev, showOpenButton: true, openButtonImage: "/invitations/khmer-celestial/butto_invitation.webp" }))}
+                                        className="text-[11px] font-bold text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 px-2 py-1 rounded-lg border border-amber-500/20 transition cursor-pointer"
+                                      >
+                                        + Gold Button
+                                      </button>
+                                      <button
+                                        type="button"
+                                        onClick={() => openButtonFileInputRef.current?.click()}
+                                        className="flex items-center gap-1 text-[11px] font-medium text-zinc-300 bg-zinc-800 hover:bg-zinc-700 px-2 py-1 rounded-lg border border-zinc-700 transition cursor-pointer"
+                                      >
+                                        <Upload className="h-3 w-3" />
+                                        <span>Upload</span>
+                                      </button>
+                                      <button
+                                        type="button"
+                                        onClick={() => setForm((prev) => ({ ...prev, showOpenButton: false, openButtonImage: "" }))}
+                                        className="flex items-center gap-1 text-[11px] font-medium text-rose-400 bg-rose-500/10 hover:bg-rose-500/20 hover:text-rose-300 px-2 py-1 rounded-lg border border-rose-500/20 transition cursor-pointer"
+                                        title="បិទមិនប្រើប៊ូតុងក្រាហ្វិក"
+                                      >
+                                        <Trash2 className="h-3 w-3" />
+                                        <span>បិទ</span>
+                                      </button>
+                                    </>
+                                  ) : (
+                                    <button
+                                      type="button"
+                                      onClick={() => setForm((prev) => ({
+                                        ...prev,
+                                        showOpenButton: true,
+                                        openButtonImage: "/invitations/khmer-celestial/butto_invitation.webp",
+                                      }))}
+                                      className="flex items-center gap-1 text-[11px] font-bold text-amber-400 bg-amber-500/15 hover:bg-amber-500/25 px-2.5 py-1 rounded-lg border border-amber-500/30 transition cursor-pointer"
+                                    >
+                                      <Plus className="h-3 w-3" />
+                                      <span>បើកប្រើ Button</span>
+                                    </button>
+                                  )}
+
+                                  {/* Toggle Switch */}
+                                  <button
+                                    type="button"
+                                    role="switch"
+                                    aria-checked={isOpenButtonActive}
+                                    onClick={() => {
+                                      if (isOpenButtonActive) {
+                                        setForm((prev) => ({ ...prev, showOpenButton: false, openButtonImage: "" }));
+                                      } else {
+                                        setForm((prev) => ({
+                                          ...prev,
+                                          showOpenButton: true,
+                                          openButtonImage: prev.openButtonImage || "/invitations/khmer-celestial/butto_invitation.webp",
+                                        }));
+                                      }
+                                    }}
+                                    className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                                      isOpenButtonActive ? "bg-amber-500" : "bg-zinc-700"
+                                    }`}
+                                    title={isOpenButtonActive ? "ចុចដើម្បីបិទ" : "ចុចដើម្បីបើក"}
+                                  >
+                                    <span
+                                      className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out ${
+                                        isOpenButtonActive ? "translate-x-4" : "translate-x-0"
+                                      }`}
+                                    />
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })()}
+
+                      </div>
+                    )}
+
+                    {/* ============================================================== */}
+                    {/* ============================================================== */}
+                    {/* TAB 3: ✍️ អត្ថបទលើ COVER (COVER TEXTS) */}
+                    {/* ============================================================== */}
+                    {coverSubTab === "text" && (
+                      <div className="space-y-3">
+                        {/* 3.1 ឈ្មោះគូស្នេហ៍លើ COVER */}
+                        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-3.5 space-y-2.5">
+                          <span className="block text-xs font-bold text-amber-400">
+                            💑 ឈ្មោះគូស្នេហ៍លើ Cover (Couple Names)
+                          </span>
+                          <div className="grid grid-cols-2 gap-2">
+                            <div>
+                              <label className="block text-[10px] text-zinc-400 mb-1">ឈ្មោះកូនកំលោះ (Groom)</label>
+                              <input
+                                type="text"
+                                value={form.groomName || ""}
+                                onChange={(e) => setField("groomName", e.target.value)}
+                                placeholder="ជា វណ្ណដា"
+                                className="h-8 w-full rounded-lg border border-zinc-800 bg-zinc-950 px-2.5 text-xs text-zinc-100 outline-none focus:border-amber-500 font-bold"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-[10px] text-zinc-400 mb-1">ឈ្មោះកូនក្រមុំ (Bride)</label>
+                              <input
+                                type="text"
+                                value={form.brideName || ""}
+                                onChange={(e) => setField("brideName", e.target.value)}
+                                placeholder="សុខ ស្រីពេជ្រ"
+                                className="h-8 w-full rounded-lg border border-zinc-800 bg-zinc-950 px-2.5 text-xs text-zinc-100 outline-none focus:border-amber-500 font-bold"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* 3.2 កាលបរិច្ឆេទ & ម៉ោងលើ COVER */}
+                        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-3.5 space-y-2.5">
+                          <span className="block text-xs font-bold text-amber-400">
+                            📅 កាលបរិច្ឆេទ & ម៉ោង (Date & Time)
+                          </span>
+                          <div className="grid grid-cols-2 gap-2">
+                            <div>
+                              <label className="block text-[10px] text-zinc-400 mb-1">ថ្ងៃមង្គលការ (Date)</label>
+                              <DatePicker
+                                value={form.weddingDate}
+                                onChange={(dateVal, isoVal) => {
+                                  setField("weddingDate", dateVal);
+                                  if (isoVal) setField("targetDate", isoVal);
+                                }}
+                                placeholder="ជ្រើសរើសថ្ងៃមង្គលការ"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-[10px] text-zinc-400 mb-1">ម៉ោងកម្មវិធី (Time)</label>
+                              <TimePicker
+                                value={form.weddingTime}
+                                onChange={(timeVal) => setField("weddingTime", timeVal)}
+                                placeholder="ជ្រើសរើសម៉ោង"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* 3.3 ស្លាកភ្ញៀវ & ឈ្មោះសាកល្បង */}
+                        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-3.5 space-y-2.5">
+                          <span className="block text-xs font-bold text-amber-400">
+                            ✉️ ស្លាកអញ្ជើញភ្ញៀវ (Guest Card Info)
+                          </span>
+                          <div className="grid grid-cols-2 gap-2">
+                            <div>
+                              <label className="block text-[10px] text-zinc-400 mb-1">ពាក្យហៅភ្ញៀវ (Guest Label)</label>
+                              <input
+                                type="text"
+                                value={form.guestLabel || ""}
+                                onChange={(e) => setField("guestLabel", e.target.value)}
+                                placeholder="ជូនចំពោះ:"
+                                className="h-8 w-full rounded-lg border border-zinc-800 bg-zinc-950 px-2.5 text-xs text-zinc-100 outline-none focus:border-amber-500"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-[10px] text-zinc-400 mb-1">ឈ្មោះភ្ញៀវតេស្ត (Preview Name)</label>
+                              <input
+                                type="text"
+                                value={form.guestName || ""}
+                                onChange={(e) => setField("guestName", e.target.value)}
+                                placeholder="លោកអ្នក និងក្រុមគ្រួសារ"
+                                className="h-8 w-full rounded-lg border border-zinc-800 bg-zinc-950 px-2.5 text-xs text-zinc-100 outline-none focus:border-amber-500"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* 3.4 ពាក្យស្វាគមន៍ & ជូនពរ */}
+                        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-3.5 space-y-2.5">
+                          <span className="block text-xs font-bold text-zinc-300">
+                            📝 ពាក្យស្វាគមន៍ & ជូនពរ
+                          </span>
+                          <div>
+                            <label className="block text-[10px] text-zinc-400 mb-1">
+                              ពាក្យស្វាគមន៍ (Subtitle / Greeting)
+                            </label>
+                            <input
+                              type="text"
+                              value={form.invitationSubtitle || ""}
+                              onChange={(e) => setField("invitationSubtitle", e.target.value)}
+                              placeholder="យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ"
+                              className="h-8 w-full rounded-lg border border-zinc-800 bg-zinc-950 px-2.5 text-xs text-zinc-100 outline-none focus:border-amber-500"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-[10px] text-zinc-400 mb-1">
+                              ពាក្យជូនពរផ្លូវការ (Formal Blessing Message)
+                            </label>
+                            <textarea
+                              rows={2}
+                              value={form.blessingMessage || ""}
+                              onChange={(e) => setField("blessingMessage", e.target.value)}
+                              className="w-full rounded-lg border border-zinc-800 bg-zinc-950 p-2 text-xs text-zinc-100 outline-none focus:border-amber-500 leading-relaxed"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* ============================================================== */}
+                    {/* TAB 4: 🎵 ភ្លេងមង្គលការ (BACKGROUND WEDDING MUSIC) */}
+                    {/* ============================================================== */}
+                    {coverSubTab === "music" && (
+                      <div className="space-y-4 animate-in fade-in">
+                        {/* Hidden Audio File Input */}
+                        <input
+                          type="file"
+                          ref={musicFileInputRef}
+                          accept="audio/mp3, audio/mpeg, audio/m4a, audio/wav, audio/ogg"
+                          className="hidden"
+                          onChange={handleMusicFileUpload}
+                        />
+
+                        {/* Audio HTML element for admin preview */}
+                        <audio
+                          ref={audioPlayerRef}
+                          src={form.bgMusicUrl || "/music/wedding-waiting-day.mp3"}
+                          onEnded={() => setIsPlayingMusic(false)}
+                          onError={() => setIsPlayingMusic(false)}
+                        />
+
+                        {/* Active Music Player Header Card */}
+                        <div className="rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 via-zinc-900/80 to-zinc-950 p-4 space-y-3">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <button
+                                type="button"
+                                onClick={toggleMusicPreview}
+                                disabled={!form.bgMusicUrl}
+                                className={`h-11 w-11 rounded-xl flex items-center justify-center transition-all cursor-pointer shadow-lg shrink-0 ${
+                                  !form.bgMusicUrl
+                                    ? "bg-zinc-800 text-zinc-600 cursor-not-allowed"
+                                    : isPlayingMusic
+                                    ? "bg-amber-500 text-black shadow-amber-500/30 ring-2 ring-amber-400"
+                                    : "bg-amber-500/20 text-amber-300 hover:bg-amber-500 hover:text-black border border-amber-500/40"
+                                }`}
+                                title={isPlayingMusic ? "ផ្អាក (Pause)" : "ចាក់ស្តាប់ (Play)"}
+                              >
+                                {isPlayingMusic ? (
+                                  <Pause className="h-5 w-5 fill-current" />
+                                ) : (
+                                  <Play className="h-5 w-5 fill-current ml-0.5" />
+                                )}
+                              </button>
+                              <div className="min-w-0">
+                                <div className="text-xs font-bold text-zinc-100 flex items-center gap-2">
+                                  <span>{isPlayingMusic ? "កំពុងចាក់ស្តាប់..." : "បទភ្លេងមង្គលការបច្ចុប្បន្ន"}</span>
+                                  {isPlayingMusic && (
+                                    <span className="flex items-center gap-0.5 text-amber-400">
+                                      <span className="w-1 h-3 bg-amber-400 rounded-full animate-pulse" />
+                                      <span className="w-1 h-4 bg-amber-400 rounded-full animate-pulse delay-75" />
+                                      <span className="w-1 h-2 bg-amber-400 rounded-full animate-pulse delay-150" />
+                                    </span>
+                                  )}
+                                </div>
+                                <div className="text-[11px] text-zinc-400 truncate">
+                                  {form.bgMusicUrl ? (
+                                    MUSIC_PRESETS.find((p) => p.url === form.bgMusicUrl)?.title || form.bgMusicUrl
+                                  ) : (
+                                    <span className="text-zinc-500 italic">🔇 បានបិទភ្លេង (គ្មានសំឡេង)</span>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="flex items-center gap-1.5 shrink-0">
+                              <button
+                                type="button"
+                                onClick={() => musicFileInputRef.current?.click()}
+                                className="text-[11px] font-medium text-zinc-300 hover:text-white bg-zinc-800/80 hover:bg-zinc-800 px-3 py-1.5 rounded-lg border border-zinc-700/80 transition flex items-center gap-1.5 cursor-pointer shadow-sm"
+                              >
+                                <Upload className="h-3.5 w-3.5 text-amber-400" />
+                                <span>Upload</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Presets List */}
+                        <div className="space-y-2">
+                          <label className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider block">
+                            ជ្រើសរើសបទភ្លេងគំរូ (Wedding Music Presets)
+                          </label>
+                          <div className="space-y-1.5">
+                            {MUSIC_PRESETS.map((track) => {
+                              const isSelected = form.bgMusicUrl === track.url;
+                              return (
+                                <button
+                                  key={track.id}
+                                  type="button"
+                                  onClick={() => handleSelectMusic(track.url)}
+                                  className={`w-full p-2.5 rounded-xl border flex items-center justify-between text-left transition cursor-pointer ${
+                                    isSelected
+                                      ? "border-amber-500/80 bg-amber-500/10 text-white ring-1 ring-amber-500/30"
+                                      : "border-zinc-800 bg-zinc-900/60 hover:bg-zinc-800/60 text-zinc-300"
+                                  }`}
+                                >
+                                  <div className="flex items-center gap-2.5">
+                                    <div
+                                      className={`h-8 w-8 rounded-lg flex items-center justify-center shrink-0 ${
+                                        isSelected ? "bg-amber-500 text-black font-bold" : "bg-zinc-800 text-zinc-400"
+                                      }`}
+                                    >
+                                      <Music className="h-4 w-4" />
+                                    </div>
+                                    <div>
+                                      <div className="text-xs font-bold leading-tight">{track.title}</div>
+                                      <div className="text-[10px] text-zinc-400">{track.artist}</div>
+                                    </div>
+                                  </div>
+                                  <span
+                                    className={`text-[10px] px-2 py-0.5 rounded-md font-semibold shrink-0 ${
+                                      isSelected ? "bg-amber-500 text-black font-bold" : "bg-zinc-800 text-zinc-400"
+                                    }`}
+                                  >
+                                    {isSelected ? "✓ ជ្រើសរើស" : track.tag}
+                                  </span>
+                                </button>
+                              );
+                            })}
+
+                            {/* Mute / Silent Option */}
                             <button
-                              key={item.id}
                               type="button"
-                              onClick={() => {
-                                setField("cardMotion", item.id);
-                                handleSetGate(true);
-                              }}
-                              className={`p-3 rounded-xl border text-left transition-all flex flex-col gap-1 cursor-pointer ${
-                                isSelected
-                                  ? "border-amber-500 bg-amber-500/15 shadow-md shadow-amber-500/10 ring-1 ring-amber-500/30"
-                                  : "border-zinc-800 bg-zinc-900/70 hover:border-zinc-700"
+                              onClick={() => handleSelectMusic("")}
+                              className={`w-full p-2.5 rounded-xl border flex items-center justify-between text-left transition cursor-pointer ${
+                                !form.bgMusicUrl
+                                  ? "border-amber-500/80 bg-amber-500/10 text-white ring-1 ring-amber-500/30"
+                                  : "border-zinc-800 bg-zinc-900/60 hover:bg-zinc-800/60 text-zinc-400"
                               }`}
                             >
-                              <div className="flex items-center justify-between">
-                                <span className="text-2xl">{item.icon}</span>
-                                <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${
-                                  isSelected ? "bg-amber-500 text-black font-bold" : "bg-zinc-800 text-zinc-400"
-                                }`}>
-                                  {item.tag}
-                                </span>
+                              <div className="flex items-center gap-2.5">
+                                <div className="h-8 w-8 rounded-lg bg-zinc-800 text-zinc-400 flex items-center justify-center shrink-0">
+                                  <VolumeX className="h-4 w-4" />
+                                </div>
+                                <div>
+                                  <div className="text-xs font-bold leading-tight">បិទសំឡេង (គ្មានភ្លេងកំដរ)</div>
+                                  <div className="text-[10px] text-zinc-500">បើកសំបុត្រដោយស្ងាត់ (Silent Mode)</div>
+                                </div>
                               </div>
-                              <span className="text-xs font-bold text-zinc-100">{item.name}</span>
-                              <span className="text-[10px] text-zinc-400">{item.sub}</span>
+                              <span
+                                className={`text-[10px] px-2 py-0.5 rounded-md font-semibold shrink-0 ${
+                                  !form.bgMusicUrl ? "bg-amber-500 text-black font-bold" : "bg-zinc-800 text-zinc-400"
+                                }`}
+                              >
+                                {!form.bgMusicUrl ? "✓ បានបិទ" : "Mute"}
+                              </span>
                             </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    {/* Background Wedding Music & Floating Action Dock */}
-                    <div className="rounded-2xl border border-amber-500/25 bg-amber-500/5 p-4 space-y-3">
-                      <div className="flex items-center justify-between">
-                        <label className="text-xs font-bold text-amber-400 flex items-center gap-1.5">
-                          <Music className="h-4 w-4 text-amber-500" />
-                          <span>បទភ្លេងមង្គលការ & របារសកម្មភាព (Music & Actions)</span>
-                        </label>
-                        <span className="text-[10px] font-bold text-amber-400/80 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
-                          Vinyl Spin
-                        </span>
-                      </div>
-                      <div className="space-y-3">
-                        <div>
-                          <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
-                            URL នៃបទភ្លេងមង្គលការ (Background Music URL)
-                          </label>
-                          <input
-                            type="text"
-                            value={form.bgMusicUrl || ""}
-                            onChange={(e) => setField("bgMusicUrl", e.target.value)}
-                            placeholder="/music/wedding.mp3 ឬ https://..."
-                            className="h-10 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500 font-mono"
-                          />
+                          </div>
                         </div>
-                        <label className="flex items-center gap-2.5 pt-1 cursor-pointer select-none">
-                          <input
-                            type="checkbox"
-                            checked={form.enableFloatingBar !== false}
-                            onChange={(e) => setField("enableFloatingBar", e.target.checked)}
-                            className="h-4 w-4 rounded border-zinc-700 bg-zinc-900 text-amber-500 focus:ring-amber-500"
-                          />
-                          <span className="text-xs font-medium text-zinc-200">
-                            បង្ហាញរបារប៊ូតុងអណ្តែត Floating Action Bar (ចាក់ភ្លេង Vinyl, Google Maps, ABA KHQR, RSVP)
-                          </span>
-                        </label>
                       </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
-                        Badge លើស្រោមសំបុត្រ (Seal Badge)
-                      </label>
-                      <input
-                        type="text"
-                        value={form.badgeText}
-                        onChange={(e) => setField("badgeText", e.target.value)}
-                        placeholder="Garden Royal / Royal Khmer"
-                        className="h-10 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
-                        និមិត្តសញ្ញាផ្កា (Ornament Amp Symbol)
-                      </label>
-                      <input
-                        type="text"
-                        value={form.ampSymbol}
-                        onChange={(e) => setField("ampSymbol", e.target.value)}
-                        placeholder="❀ ឬ ❖ ឬ ✦"
-                        className="h-10 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500"
-                      />
-                    </div>
-                    <TemplateCoverSection
-                      coverImage={form.coverImage}
-                      invitationTitle={form.invitationTitle}
-                      onCoverChange={(val) => setField("coverImage", val)}
-                      onTitleChange={(val) => setField("invitationTitle", val)}
-                      onUploadCover={(file) => handleCoverFileUpload({ target: { files: [file] } })}
-                      lang={lang}
-                    />
-                    <div>
-                      <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
-                        ពាក្យជូនពរផ្លូវការ (Formal Blessing Greeting)
-                      </label>
-                      <textarea
-                        rows={4}
-                        value={form.blessingMessage}
-                        onChange={(e) => setField("blessingMessage", e.target.value)}
-                        className="w-full rounded-xl border border-zinc-800 bg-zinc-900 p-3 text-xs text-zinc-100 outline-none focus:border-amber-500 leading-relaxed"
-                      />
-                    </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -1344,11 +2293,10 @@ export default function AdminTemplateEditPage() {
                               <label className="block text-[10px] text-zinc-400 mb-1">
                                 {lang === "en" ? "Time" : "ម៉ោង (Time)"}
                               </label>
-                              <input
-                                type="text"
+                              <TimePicker
                                 value={item.time}
-                                onChange={(e) => handleUpdateScheduleItem(item.id, "time", e.target.value)}
-                                className="h-8 w-full rounded-lg border border-zinc-800 bg-zinc-950 px-2.5 text-xs text-zinc-200 outline-none focus:border-amber-500"
+                                onChange={(timeVal) => handleUpdateScheduleItem(item.id, "time", timeVal)}
+                                placeholder="ជ្រើសរើសម៉ោង"
                               />
                             </div>
                             <div>

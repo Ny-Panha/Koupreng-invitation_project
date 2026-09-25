@@ -936,27 +936,41 @@
     cursor: not-allowed;
 }
 
-/* Clean Portrait Canvas */
-.pe-canvas-wrapper {
+/* Clean Portrait Phone Frame (non-scrolling outer shell & fixed positioning containing block) */
+.pe-phone-frame {
+    position: relative;
+    width: min(100%, 430px);
+    max-width: 100%;
+    height: min(760px, calc(100vh - 150px));
+    min-height: 520px;
+    max-height: none;
+    margin: 0 auto;
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 16px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     overflow: hidden;
-    height: min(760px, calc(100vh - 150px));
-    min-height: 520px;
-    max-height: none;
+    transform: translateZ(0);
+    isolation: isolate;
+}
+
+/* Inner scrolling canvas for invitation content */
+.pe-canvas-wrapper {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
     overflow-y: auto;
     overscroll-behavior-y: contain;
     -webkit-overflow-scrolling: touch;
     touch-action: pan-y;
     position: relative;
     overflow-anchor: none;
-    width: min(100%, 430px);
-    max-width: 100%;
-    margin: 0 auto;
-    transform: translateZ(0);
-    isolation: isolate;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    margin: 0;
+    transform: none !important;
 }
 
 /* Strictly confine any fixed overlay/gate inside simulator phone frame */
@@ -964,10 +978,22 @@
 .pe-canvas-wrapper .rkh-gate-overlay,
 .pe-canvas-wrapper .kc-opening,
 .pe-canvas-wrapper .tx-preview-topbar,
-.pe-canvas-wrapper .tx-sticky,
-.pe-canvas-wrapper .tx-quick-nav,
-.pe-canvas-wrapper .tx-music {
+.pe-canvas-wrapper .tx-quick-nav {
     position: absolute !important;
+}
+
+/* Pinned action buttons stay fixed to the phone frame while scrolling */
+.pe-canvas-wrapper .kc-music-fab,
+.pe-canvas-wrapper .tx-music,
+.pe-canvas-wrapper .floating-audio-btn {
+    position: fixed !important;
+    z-index: 500 !important;
+}
+
+.pe-canvas-wrapper .kc-music-fab,
+.pe-canvas-wrapper .floating-audio-btn {
+    right: 16px !important;
+    bottom: 16px !important;
 }
 
 /* Keep the invitation body locked behind its opening gate. Once the gate
@@ -1774,6 +1800,19 @@
     border: none;
 }
 
+.pe-mobile-preview-drawer-body .pe-phone-frame {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    transform: none;
+}
+
 .pe-mobile-preview-drawer-body .pe-canvas-wrapper {
     width: 100%;
     max-width: 100%;
@@ -1784,4 +1823,5 @@
     border: 0;
     border-radius: 0;
     box-shadow: none;
+    transform: none;
 }

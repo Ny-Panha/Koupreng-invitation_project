@@ -29,6 +29,7 @@ export default function WeddingSite({
         searchParams.get("preview") === "true" ||
         searchParams.get("embed") === "true"
     );
+    const startOpen = searchParams.get("open") === "true";
     const shouldShowBack = showBack && !isEmbedded;
     const backPath = backTo || `/templates/${tpl.id}`;
 
@@ -42,7 +43,8 @@ export default function WeddingSite({
             <TemplateExperience
                 tpl={tpl}
                 variant={variant}
-                preview={false}
+                preview={isEmbedded || startOpen}
+                previewStartClosed={isEmbedded && !startOpen}
                 showBreadcrumb={!isEmbedded}
                 showActions={!isEmbedded}
                 showStickyCta={!isEmbedded}

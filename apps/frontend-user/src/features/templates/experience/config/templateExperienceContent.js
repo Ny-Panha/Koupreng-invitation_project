@@ -672,6 +672,12 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         subtitle: nonBlank(tpl.subtitle || host.subtitle),
         messageTitle: nonBlank(tpl.messageTitle || host.messageTitle),
         hideCoupleNameOnCover: Boolean(tpl.hideCoupleNameOnCover || host.hideCoupleNameOnCover),
+        showBrandMark: host.showBrandMark !== undefined
+            ? Boolean(host.showBrandMark)
+            : (tpl.showBrandMark !== undefined ? Boolean(tpl.showBrandMark) : true),
+        brandMark: (host.showBrandMark === false || tpl.showBrandMark === false)
+            ? null
+            : nonBlank(host.brandMark || host.brandMarkUrl || tpl.brandMark || tpl.design?.brandMark),
         thankYouTitle: nonBlank(tpl.thankYouTitle || host.thankYouTitle),
         thankYouText: nonBlank(tpl.thankYouText || host.thankYouText || host.wishMessage),
         apologyTitle: nonBlank(tpl.apologyTitle || host.apologyTitle),
@@ -689,6 +695,8 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         ceremonyTime: tpl.ceremonyTime || "០៧:០០",
         receptionTime: tpl.receptionTime || "១៧:០០",
         coverImage,
+        invitationImage: hasHostContent ? nonBlank(host.invitationImage) : nonBlank(tpl.invitationImage),
+        invitationImage2: hasHostContent ? nonBlank(host.invitationImage2) : nonBlank(tpl.invitationImage2),
         portraitImage: coverImage,
         backgroundImage,
         message: hasHostContent
@@ -715,7 +723,8 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
             address: venueAddress || (hasHostContent ? "" : "អគារ A, សែនសុខ, ភ្នំពេញ"),
             mapLink,
             mapEmbedUrl,
-            image: coverImage,
+            sketchMapImage: nonBlank(host.sketchMapImage) || nonBlank(tpl.sketchMapImage) || null,
+            image: nonBlank(host.sketchMapImage) || nonBlank(tpl.sketchMapImage) || nonBlank(tpl.venue?.sketchMapImage) || null,
         },
         gallery: hasHostContent ? (hostGallery || []) : ((hostGallery && hostGallery.length) ? hostGallery : buildGallery(tpl)),
         story: hasHostContent ? (hostStory || []) : ((hostStory && hostStory.length) ? hostStory : buildStory(tpl, variant)),
@@ -741,6 +750,8 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         footerThanksEn: copy.footerThanksEn,
         design,
         opening,
+        gateStyle: tpl.gateStyle || tpl.design?.gateStyle || tpl.openingStyle || design.openingStyle,
+        openingStyle: tpl.openingStyle || tpl.design?.openingStyle || tpl.gateStyle || design.openingStyle,
         music: (typeof tpl.music === "string" && tpl.music)
             ? tpl.music
             : (tpl.music?.url || (hasHostContent ? "" : defaultMusicUrl)),

@@ -14,18 +14,46 @@
     --safe-right: env(safe-area-inset-right, 0px);
     min-height: 100vh;
     min-height: 100svh;
-    background:
-        radial-gradient(circle at 18% 12%, rgba(200, 163, 95, 0.18), transparent 28%),
-        linear-gradient(180deg, #fbf7ef 0%, #efe2cf 100%);
+    background: #090605;
     color: var(--ink);
     font-family: 'Noto Serif Khmer', 'Playfair Display', serif;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+}
+
+.tpl-wed-root::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+html:has(.tpl-wed-root),
+body:has(.tpl-wed-root) {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+    background: #090605 !important;
+}
+
+html:has(.tpl-wed-root)::-webkit-scrollbar,
+body:has(.tpl-wed-root)::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
 }
 
 .tpl-wed-root--embedded {
     min-height: 100vh;
     height: 100%;
-    background: transparent;
+    background: #090605;
     overflow-x: hidden;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+}
+
+.tpl-wed-root--embedded::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
 }
 
 .tpl-preview {

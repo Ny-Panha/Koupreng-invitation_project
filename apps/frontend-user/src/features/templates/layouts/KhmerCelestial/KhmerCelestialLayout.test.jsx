@@ -149,11 +149,13 @@ describe("KhmerCelestialLayout integration", () => {
 
   it("renders the supplied ornamental asset with accessible preview guest text in reduced motion", () => {
     const previewContent = buildTemplateContent(KHMER_CELESTIAL_TEMPLATE, "khmer-celestial");
+    previewContent.openingStyle = "celestial-cover";
+    previewContent.gateStyle = "celestial-cover";
 
     render(
       <MemoryRouter>
         <TemplateExperience
-          tpl={KHMER_CELESTIAL_TEMPLATE}
+          tpl={{ ...KHMER_CELESTIAL_TEMPLATE, openingStyle: "celestial-cover", gateStyle: "celestial-cover" }}
           content={previewContent}
           showBreadcrumb={false}
           showActions={false}
@@ -297,7 +299,7 @@ describe("KhmerCelestialLayout integration", () => {
     expect(document.querySelector(".kc-music-fab")).not.toBeInTheDocument();
   });
 
-  it("renders a hosted text-only story without demo photography", () => {
+  it("does not render the story section as it is removed from Khmer Celestial", () => {
     render(
       <MemoryRouter>
         <TemplateExperience
@@ -316,9 +318,7 @@ describe("KhmerCelestialLayout integration", () => {
     );
 
     fireEvent.click(screen.getByRole("button", { name: "បើកសំបុត្រអញ្ជើញ" }));
-    const story = document.querySelector(".kc-story");
-    expect(within(story).getByText("Real host copy")).toBeInTheDocument();
-    expect(story.querySelector(".kc-story__media")).not.toBeInTheDocument();
+    expect(document.querySelector(".kc-story")).not.toBeInTheDocument();
   });
 
   it("handles an expired event date safely without producing negative countdown values", () => {
@@ -491,4 +491,83 @@ describe("KhmerCelestialLayout integration", () => {
     expect(screen.getByRole("heading", { name: "Our story" })).toHaveAttribute("id", "english-only-heading");
     expect(screen.queryByText("ចំណងជើង")).not.toBeInTheDocument();
   });
+
+  it("does not render gold calligraphy logo when showBrandMark is false and renders couple names instead", () => {
+    const customContent = {
+      ...content,
+      groom: "រឿង វីរៈ",
+      bride: "ឡុង សុម៉ាលី",
+      showBrandMark: false,
+    };
+
+    render(
+      <MemoryRouter>
+        <TemplateExperience
+          tpl={{ id: "khmer-celestial", name: "Khmer Celestial" }}
+          content={customContent}
+          showBreadcrumb={false}
+          showActions={false}
+        />
+      </MemoryRouter>
+    );
+
+    expect(
+      document.querySelector('img[src="/invitations/khmer-celestial/koupreng-gold-mark.webp"]')
+    ).toBeNull();
+    expect(screen.getAllByText("រឿង វីរៈ").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("ឡុង សុម៉ាលី").length).toBeGreaterThan(0);
+  });
+
+  it("renders custom brandMark when provided by user", () => {
+    const customLogoContent = {
+      ...content,
+      groom: "សុខ",
+      bride: "ចិន្តា",
+      showBrandMark: true,
+      brandMark: "/uploads/custom-wedding-logo.png",
+    };
+
+    render(
+      <MemoryRouter>
+        <TemplateExperience
+          tpl={{ id: "khmer-celestial", name: "Khmer Celestial" }}
+          content={customLogoContent}
+          showBreadcrumb={false}
+          showActions={false}
+        />
+      </MemoryRouter>
+    );
+
+    expect(
+      document.querySelector('img[src="/uploads/custom-wedding-logo.png"]')
+    ).toBeInTheDocument();
+  });
+
+  it("renders CinematicVideoOpening when openingStyle or gateStyle is cinematic-video", () => {
+    const cinematicContent = {
+      ...content,
+      gateStyle: "cinematic-video",
+      openingStyle: "cinematic-video",
+      videoUrl: "/invitations/khmer-celestial/burgundy-bokeh.mp4",
+    };
+
+    render(
+      <MemoryRouter>
+        <TemplateExperience
+          tpl={{ id: "khmer-celestial", name: "Khmer Celestial" }}
+          content={cinematicContent}
+          showBreadcrumb={false}
+          showActions={false}
+        />
+      </MemoryRouter>
+    );
+
+    expect(document.querySelector(".kc-opening--cinematic")).toBeInTheDocument();
+    expect(screen.getByText("វីដេអូបើកឆាកអាពាហ៍ពិពាហ៍")).toBeInTheDocument();
+    expect(document.querySelector(".cinematic-video-overlay video")).toHaveAttribute(
+      "src",
+      "/invitations/khmer-celestial/burgundy-bokeh.mp4"
+    );
+  });
 });
+

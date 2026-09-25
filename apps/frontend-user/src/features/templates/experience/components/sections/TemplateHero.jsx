@@ -22,6 +22,32 @@ export default function TemplateHero({ content, onOpen }) {
                 transition: { duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] },
             };
 
+    const isCatalogOrEnglishName = (str) => {
+        if (!str || typeof str !== "string") return true;
+        const lower = str.trim().toLowerCase();
+        return (
+            lower.includes("garden royal") ||
+            lower.includes("khmer wedding") ||
+            lower.includes("royal khmer") ||
+            lower.includes("template") ||
+            lower.includes("celestial") ||
+            lower.includes("wedding invitation") ||
+            lower.includes("cover-") ||
+            lower === "គំរូធៀបការ" ||
+            lower === "គំរូសន្លឹកការ"
+        );
+    };
+
+    const displayTitle = !isCatalogOrEnglishName(content.title)
+        ? content.title
+        : (!isCatalogOrEnglishName(content.invitationTitle)
+            ? content.invitationTitle
+            : "សិរីមង្គលអាពាហ៍ពិពាហ៍");
+
+    const displayKicker = content.eventTitle && !content.eventTitle.toLowerCase().includes("garden royal")
+        ? content.eventTitle
+        : "WEDDING INVITATION";
+
     return (
         <section className="tx-hero" data-tx-section="hero" aria-label="ការអញ្ជើញ">
             <TemplateImage
@@ -44,40 +70,46 @@ export default function TemplateHero({ content, onOpen }) {
                     alignItems: "center",
                     justifyContent: "center",
                     width: "100%",
+                    maxWidth: "480px",
                     textAlign: "center",
                     margin: "0 auto",
+                    padding: "0 1rem",
                 }}
             >
                 <motion.p
                     className="tx-hero__kicker"
                     style={{
-                        fontSize: "0.72rem",
-                        letterSpacing: "0.22em",
-                        color: "#ead6aa",
+                        fontFamily: "'Cinzel', 'Playfair Display', Georgia, serif",
+                        fontSize: "0.68rem",
+                        letterSpacing: "0.32em",
+                        color: "#dfbe76",
+                        fontWeight: 600,
                         textTransform: "uppercase",
                         marginBottom: "4px",
-                        textShadow: "0 2px 10px rgba(0,0,0,0.6)",
+                        textShadow: "0 2px 12px rgba(0,0,0,0.85)",
                         textAlign: "center",
                         width: "100%",
                     }}
                     {...rise(0.02)}
                 >
-                    {content.eventTitle && content.eventTitle.toLowerCase() !== content.title?.toLowerCase() ? content.eventTitle : "WEDDING INVITATION"}
+                    {displayKicker}
                 </motion.p>
                 <motion.h2
                     className="tx-hero__subtitle"
                     style={{
-                        fontSize: "1.1rem",
-                        fontWeight: 700,
+                        fontFamily: "'Moul', 'Noto Serif Khmer', serif",
+                        fontSize: "1.05rem",
+                        fontWeight: 400,
                         color: "#fffaf0",
-                        margin: "0 0 12px",
-                        textShadow: "0 2px 12px rgba(0,0,0,0.7)",
+                        margin: "0 0 14px",
+                        letterSpacing: "0.03em",
+                        textShadow: "0 2px 14px rgba(0,0,0,0.9)",
                         textAlign: "center",
                         width: "100%",
                     }}
                     {...rise(0.06)}
                 >
-                    {content.title || "សិរីសួស្ដីអាពាហ៍ពិពាហ៍"}
+                    {displayTitle}
                 </motion.h2>
 
                 <motion.div
@@ -108,11 +140,12 @@ export default function TemplateHero({ content, onOpen }) {
                             textAlign: "center",
                             width: "100%",
                             margin: "0 auto",
+                            lineHeight: 1.25,
                         }}
                         {...rise(0.2)}
                     >
                         <span>{content.groom}</span>
-                        <em className="tx-hero__amp">{content.amp}</em>
+                        <em className="tx-hero__amp">{content.amp || "❖"}</em>
                         <span>{content.bride}</span>
                     </motion.h1>
                 )}
@@ -124,7 +157,7 @@ export default function TemplateHero({ content, onOpen }) {
                         alignItems: "center",
                         justifyContent: "center",
                         width: "100%",
-                        margin: "14px auto",
+                        margin: "10px auto 12px",
                     }}
                     aria-hidden="true"
                     {...rise(0.32)}
@@ -136,12 +169,13 @@ export default function TemplateHero({ content, onOpen }) {
                     <motion.p
                         className="tx-hero__families"
                         style={{
-                            fontSize: "0.85rem",
-                            color: "#ead6aa",
-                            margin: "6px auto 8px",
-                            textShadow: "0 2px 8px rgba(0,0,0,0.6)",
+                            fontSize: "0.82rem",
+                            color: "rgba(255, 248, 235, 0.92)",
+                            margin: "2px auto 12px",
+                            textShadow: "0 2px 10px rgba(0,0,0,0.85)",
                             textAlign: "center",
                             width: "100%",
+                            letterSpacing: "0.02em",
                         }}
                         {...rise(0.36)}
                     >
@@ -150,37 +184,43 @@ export default function TemplateHero({ content, onOpen }) {
                 )}
 
                 {(content.dateText || content.eventTime) && (
-                    <motion.p
+                    <motion.div
                         className="tx-hero__date"
                         style={{
-                            fontSize: "0.85rem",
-                            color: "#fffaf0",
-                            margin: "0 auto 16px",
-                            textShadow: "0 2px 8px rgba(0,0,0,0.6)",
-                            display: "flex",
+                            display: "inline-flex",
                             alignItems: "center",
                             justifyContent: "center",
+                            gap: "8px",
+                            padding: "6px 16px",
+                            borderRadius: "999px",
+                            background: "rgba(18, 12, 8, 0.62)",
+                            backdropFilter: "blur(10px)",
+                            WebkitBackdropFilter: "blur(10px)",
+                            border: "1px solid rgba(212, 175, 55, 0.38)",
+                            boxShadow: "0 4px 16px rgba(0,0,0,0.5), inset 0 0 10px rgba(212, 175, 55, 0.12)",
+                            color: "#fffaf0",
+                            fontSize: "0.78rem",
+                            margin: "0 auto",
+                            maxWidth: "92%",
                             flexWrap: "wrap",
-                            gap: "6px",
-                            width: "100%",
-                            textAlign: "center",
+                            textShadow: "0 1px 4px rgba(0,0,0,0.8)",
                         }}
                         {...rise(0.4)}
                     >
                         {content.dateText && (
-                            <span style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
-                                <IoCalendarOutline aria-hidden="true" />
+                            <span style={{ display: "inline-flex", alignItems: "center", gap: "5px" }}>
+                                <IoCalendarOutline aria-hidden="true" style={{ color: "#dfbe76" }} />
                                 <span>{content.dateText}</span>
                             </span>
                         )}
                         {content.eventTime && (
-                            <span style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
-                                {content.dateText && <span style={{ opacity: 0.6, margin: "0 2px" }}>•</span>}
-                                <IoTimeOutline aria-hidden="true" />
+                            <span style={{ display: "inline-flex", alignItems: "center", gap: "5px" }}>
+                                {content.dateText && <span style={{ opacity: 0.4, margin: "0 2px" }}>•</span>}
+                                <IoTimeOutline aria-hidden="true" style={{ color: "#dfbe76" }} />
                                 <span>{formatTime24toKhmer(content.eventTime) || content.eventTime}</span>
                             </span>
                         )}
-                    </motion.p>
+                    </motion.div>
                 )}
             </div>
 

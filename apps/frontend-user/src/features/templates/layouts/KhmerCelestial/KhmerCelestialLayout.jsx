@@ -28,6 +28,7 @@ import TemplateRsvp from "../../experience/components/sections/TemplateRsvp";
 import CelestialGallery from "./components/CelestialGallery";
 import CelestialOpening from "./components/CelestialOpening";
 import CelestialLiveGarden from "./components/CelestialLiveGarden";
+import CinematicVideoOpening from "@/features/templates/shared/Openings/CinematicVideoOpening";
 import {
   CelestialHeading,
   CelestialImage,
@@ -77,6 +78,43 @@ function useCountdown(targetDate) {
     Math.floor((remaining % 60_000) / 1000),
   ].map((value) => String(value).padStart(2, "0"));
   return { valid: true, expired: remaining === 0, values };
+}
+
+function CelestialCountdownSection({ content, calendarUrl, languageMode, enabled }) {
+  const countdown = useCountdown(content.machineEventDate || content.targetDate);
+  if (!enabled) return null;
+
+  return (
+    <section className="kc-section kc-countdown" data-tx-section="countdown" aria-labelledby="kc-countdown-title">
+      <div className="kc-shell kc-shell--narrow">
+        <CelestialHeading
+          id="kc-countdown-title"
+          khmer={countdown.expired ? "ថ្ងៃមង្គលបានមកដល់" : "រាប់ថយក្រោយដល់ថ្ងៃមង្គល"}
+          english={countdown.expired ? "The celebration has begun" : "Until the wedding day"}
+          eyebrow="SAVE THE DATE"
+          languageMode={languageMode}
+        />
+        <CelestialReveal className="kc-countdown__grid" aria-live="polite">
+          {countdown.values.map((value, index) => (
+            <div key={COUNTDOWN_LABELS[index][1]}>
+              <strong>{value}</strong>
+              <span>{COUNTDOWN_LABELS[index][0]}</span>
+              <small>{COUNTDOWN_LABELS[index][1]}</small>
+            </div>
+          ))}
+        </CelestialReveal>
+        <CelestialReveal className="kc-countdown__details" delay={0.08}>
+          {content.dateText ? <p><CalendarDays aria-hidden="true" /> {content.dateText}</p> : null}
+          {content.eventTime ? <p><Clock3 aria-hidden="true" /> {content.eventTime}</p> : null}
+          {calendarUrl ? (
+            <a className="kc-button kc-button--outline" href={calendarUrl} target="_blank" rel="noreferrer">
+              <CalendarDays aria-hidden="true" /> Add to calendar
+            </a>
+          ) : null}
+        </CelestialReveal>
+      </div>
+    </section>
+  );
 }
 
 function buildCalendarUrl(content) {
@@ -129,6 +167,7 @@ export default function KhmerCelestialLayout({
   backTo = "/templates",
   backLabel = "ត្រឡប់ទៅគំរូទាំងអស់",
   preview = false,
+  previewStartClosed = false,
   useTemplateLink,
   primaryCtaLabel = "ប្រើគំរូនេះ",
   showActions = true,
@@ -136,7 +175,7 @@ export default function KhmerCelestialLayout({
   children,
 }) {
   const reducedMotion = usePrefersReducedMotion();
-  const [opened, setOpened] = useState(preview);
+  const [opened, setOpened] = useState(preview && !previewStartClosed);
   const [openTransitionActive, setOpenTransitionActive] = useState(false);
   const [musicState, setMusicState] = useState("idle");
   const mainRef = useRef(null);
@@ -145,7 +184,6 @@ export default function KhmerCelestialLayout({
   const musicUrl = formatMusicSource(content.music)
     || (isHostedInvitation ? "" : KHMER_CELESTIAL_ASSETS.defaultMusic);
   const languageMode = content.languageMode || "both";
-  const countdown = useCountdown(content.machineEventDate || content.targetDate);
   const { scrollYProgress: heroScrollProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
@@ -161,14 +199,16 @@ export default function KhmerCelestialLayout({
   const musicEnabled = Boolean(musicUrl) && sectionEnabled("music");
   const saveData = typeof navigator !== "undefined" && navigator.connection?.saveData === true;
   const transitionEnabled = !reducedMotion && !saveData;
+  const groomName = content.groom?.trim() || "វណ្ណដា";
+  const brideName = content.bride?.trim() || "ស្រីពេជ្រ";
   const names = [content.groom, content.bride].filter(Boolean);
   const hasCoupleNames = names.length > 0;
-  const logoAlt = hasCoupleNames
-    ? `ស្លាកឈ្មោះ ${names.join(" និង ")}`
-    : "ស្លាកឈ្មោះគូស្វាមីភរិយា";
-  const heroAlt = hasCoupleNames
-    ? `រូបភាពអាពាហ៍ពិពាហ៍ ${names.join(" និង ")}`
-    : (content.title || "រូបភាពអាពាហ៍ពិពាហ៍");
+  const showBrandMark = content.showBrandMark !== false;
+  const effectiveBrandMark = showBrandMark
+    ? (content.brandMark || KHMER_CELESTIAL_ASSETS.brandMark)
+    : null;
+  const logoAlt = `ស្លាកឈ្មោះ ${groomName} និង ${brideName}`;
+  const heroAlt = `រូបភាពអាពាហ៍ពិពាហ៍ ${groomName} និង ${brideName}`;
 
   useEffect(() => {
     if (preview || opened) return undefined;
@@ -188,10 +228,15 @@ export default function KhmerCelestialLayout({
     img.src = KHMER_CELESTIAL_ASSETS.openButton;
   }, [opened]);
 
+  const [liveData, setLiveData] = useState(null);
+
   useEffect(() => {
     const onMessage = (event) => {
       if (event.data?.type === "TOGGLE_GATE") {
         setOpened(Boolean(event.data.open ?? event.data.isOpen));
+      }
+      if (event.data?.type === "LIVE_PREVIEW_SYNC" && event.data.data) {
+        setLiveData(event.data.data);
       }
     };
     window.addEventListener("message", onMessage);
@@ -248,17 +293,73 @@ export default function KhmerCelestialLayout({
     });
   }, [reducedMotion]);
 
-  const story = Array.isArray(content.story) ? content.story : [];
   const schedule = Array.isArray(content.schedule) ? content.schedule : [];
   const party = Array.isArray(content.party) ? content.party : [];
   const dressColors = Array.isArray(content.dressCode?.colors) ? content.dressCode.colors : [];
   const faq = Array.isArray(content.faq) ? content.faq : [];
   const gift = Array.isArray(content.gift) ? content.gift : [];
   const galleryImages = Array.isArray(content.gallery) ? content.gallery : [];
-  const invitationImage = firstImage(galleryImages[1]) || firstImage(galleryImages[0]) || content.coverImage;
+  // Hero: always shows the cover image in the hero section
+  const heroImage = content.coverImage || null;
+  // Invitation portrait: dedicated upload, fallback to gallery only — NOT coverImage
+  const invitationImage = content.invitationImage
+    || firstImage(galleryImages[1])
+    || firstImage(galleryImages[0])
+    || (preview ? "/facebook/all/06-card/cover-card.jpg" : "");
+  const invitationImage2 = content.invitationImage2 || null;
+
+  const effectiveContent = useMemo(() => {
+    if (!liveData) return content;
+    return {
+      ...content,
+      ...liveData,
+      openingStyle: liveData.openingStyle || liveData.gateStyle || content.openingStyle || content.gateStyle || content.design?.openingStyle,
+      gateStyle: liveData.gateStyle || liveData.openingStyle || content.gateStyle || content.openingStyle || content.design?.openingStyle,
+      groom: liveData.groomName || liveData.groom || content.groom,
+      bride: liveData.brideName || liveData.bride || content.bride,
+      title: liveData.invitationTitle || liveData.title || content.title,
+      backgroundImage: liveData.backgroundImage || liveData.bgImage || content.backgroundImage,
+      openingVideo: liveData.openingVideoUrl || liveData.videoUrl || content.openingVideo,
+      openingVideoUrl: liveData.openingVideoUrl || liveData.videoUrl || content.openingVideoUrl,
+      showBrandMark: liveData.showBrandMark !== undefined ? liveData.showBrandMark : content.showBrandMark,
+      brandMark: liveData.showBrandMark === false || liveData.brandMark === "" ? "" : (liveData.brandMark !== undefined ? liveData.brandMark : content.brandMark),
+      showGuestBanner: liveData.showGuestBanner !== undefined ? liveData.showGuestBanner : content.showGuestBanner,
+      guestNameBanner: liveData.showGuestBanner === false || liveData.guestNameBanner === "" ? "" : (liveData.guestNameBanner !== undefined ? liveData.guestNameBanner : content.guestNameBanner),
+      showOpenButton: liveData.showOpenButton !== undefined ? liveData.showOpenButton : content.showOpenButton,
+      openButtonImage: liveData.showOpenButton === false || liveData.openButtonImage === "" ? "" : (liveData.openButtonImage !== undefined ? liveData.openButtonImage : content.openButtonImage),
+      showButterflies: liveData.showButterflies !== undefined ? liveData.showButterflies : content.showButterflies,
+      dateText: liveData.weddingDate || liveData.dateText || content.dateText,
+      dateTextEn: liveData.weddingDateEn || liveData.dateTextEn || (liveData.weddingDate ? liveData.weddingDate : content.dateTextEn),
+      receptionTime: liveData.weddingTime || liveData.receptionTime || content.receptionTime,
+      guestLabel: liveData.guestLabel || content.guestLabel || "ជូនចំពោះ:",
+      guestName: liveData.guestName || content.guestName || "លោកអ្នក និងក្រុមគ្រួសារ",
+    };
+  }, [content, liveData]);
+
+  const currentGateStyle = effectiveContent.gateStyle
+    || effectiveContent.openingStyle
+    || effectiveContent.design?.openingStyle
+    || content.gateStyle
+    || content.openingStyle
+    || content.design?.openingStyle
+    || "celestial-cover";
+
+  const isCinematic = currentGateStyle === "cinematic-video" || currentGateStyle === "CINEMATIC_VIDEO";
+
+  const botanicalFrame = effectiveContent.backgroundImage
+    || effectiveContent.design?.backgroundImage
+    || effectiveContent.coverBgImage
+    || (typeof effectiveContent.tpl?.backgroundImage === "string" ? effectiveContent.tpl.backgroundImage : "")
+    || KHMER_CELESTIAL_ASSETS.botanicalFrame;
 
   return (
-    <div className={`kc-root${preview ? " kc-root--preview" : ""}`} data-variant="khmer-celestial">
+    <div
+      className={`kc-root${preview ? " kc-root--preview" : ""}`}
+      data-variant="khmer-celestial"
+      style={{
+        "--kc-bg-frame": `url("${botanicalFrame}")`,
+      }}
+    >
       {musicEnabled ? (
         <audio
           ref={audioRef}
@@ -272,7 +373,54 @@ export default function KhmerCelestialLayout({
       ) : null}
 
       <AnimatePresence>
-        {!opened ? <CelestialOpening key="opening" content={content} onOpen={handleOpen} /> : null}
+        {!opened ? (
+          isCinematic ? (
+            <motion.div
+              key="opening-cinematic"
+              className="kc-opening kc-opening--cinematic"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Cinematic Video Opening"
+              initial={reducedMotion ? false : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={reducedMotion ? { display: "none" } : { opacity: 0, filter: "blur(8px)" }}
+              transition={{ duration: reducedMotion ? 0 : 0.7 }}
+            >
+              <CinematicVideoOpening
+                content={effectiveContent}
+                videoUrl={
+                  (typeof effectiveContent.openingVideo === "object" ? effectiveContent.openingVideo?.url : effectiveContent.openingVideo) ||
+                  effectiveContent.openingVideoUrl ||
+                  effectiveContent.videoUrl ||
+                  "/invitations/khmer-celestial/burgundy-bokeh.mp4"
+                }
+                posterUrl={
+                  (typeof effectiveContent.videoPoster === "object" ? effectiveContent.videoPoster?.url : effectiveContent.videoPoster) ||
+                  "/invitations/khmer-celestial/burgundy-bokeh-poster.webp" ||
+                  (typeof effectiveContent.coverImage === "object" ? effectiveContent.coverImage?.url : effectiveContent.coverImage)
+                }
+                groom={effectiveContent.groom || groomName}
+                bride={effectiveContent.bride || brideName}
+                weddingTitle={effectiveContent.invitationTitle || "សិរីសួស្តី អាពាហ៍ពិពាហ៍"}
+                weddingDate={effectiveContent.dateText || "ត្រីសង្ក្រាន្តទី ២៨ ខែមករា ឆ្នាំ ២០២៦"}
+                weddingTime={effectiveContent.receptionTime || "ម៉ោង ១៧:០០"}
+                venueName={effectiveContent.venueName || "The Premier Center Sen Sok"}
+                guestLabel={effectiveContent.guestLabel || "ជូនចំពោះ:"}
+                guestName={effectiveContent.guestName || "លោកអ្នក និងក្រុមគ្រួសារ"}
+                onOpen={handleOpen}
+                state={opened ? "opened" : "closed"}
+                preview={preview}
+              />
+            </motion.div>
+          ) : (
+            <CelestialOpening
+              key="opening-celestial"
+              content={effectiveContent}
+              onOpen={handleOpen}
+              preview={preview}
+            />
+          )
+        ) : null}
       </AnimatePresence>
 
       {openTransitionActive ? (
@@ -299,12 +447,19 @@ export default function KhmerCelestialLayout({
         </div>
       </nav>
 
-      <main ref={mainRef} className="kc-main" tabIndex={-1} aria-hidden={!opened} inert={!opened}>
+      <main
+        ref={mainRef}
+        className="kc-main"
+        tabIndex={-1}
+        aria-hidden={!opened}
+        inert={!opened}
+        style={{ display: opened ? undefined : "none" }}
+      >
         <CelestialLiveGarden className="kc-main__garden" variant="normal" />
         <section ref={heroRef} className="kc-hero" data-tx-section="hero" aria-labelledby="kc-hero-title">
           <motion.img
             className="kc-hero__botanical"
-            src={KHMER_CELESTIAL_ASSETS.botanicalFrame}
+            src={botanicalFrame}
             alt=""
             aria-hidden="true"
             width="999"
@@ -322,7 +477,8 @@ export default function KhmerCelestialLayout({
             transition={{ duration: reducedMotion ? 0 : 0.88, ease: [0.22, 1, 0.36, 1], delay: reducedMotion ? 0 : 0.15 }}
           >
             {(() => {
-              const heroEyebrowText = content.title || "សិរីសួស្តីអាពាហ៍ពិពាហ៍";
+              const isGenericTitle = !content.title || content.title === "Khmer Celestial" || content.title.toLowerCase().includes("celestial");
+              const heroEyebrowText = isGenericTitle ? "សិរីសួស្តីអាពាហ៍ពិពាហ៍" : content.title;
               const heroEyebrowLength = Array.from(heroEyebrowText.replace(/\s+/g, "")).length;
               const heroEyebrowClass = [
                 "kc-hero__eyebrow",
@@ -331,13 +487,24 @@ export default function KhmerCelestialLayout({
               ].filter(Boolean).join(" ");
               return <p className={heroEyebrowClass}>{heroEyebrowText}</p>;
             })()}
+            {effectiveBrandMark ? (
+              <img className="kc-hero__brand" src={effectiveBrandMark} alt={logoAlt} width="768" height="512" />
+            ) : null}
             {!content.hideCoupleNameOnCover && (
-              <img className="kc-hero__brand" src={KHMER_CELESTIAL_ASSETS.brandMark} alt={logoAlt} width="768" height="512" />
+              <h1 id="kc-hero-title" className="kc-hero__couple-names">
+                <span className="kc-hero__groom">{groomName}</span>
+                <span className="kc-hero__amp"> &amp; </span>
+                <span className="kc-hero__bride">{brideName}</span>
+              </h1>
             )}
-            <h1 id="kc-hero-title">{content.familyHeading || "គ្រួសារទាំងសងខាង"}</h1>
+            {heroImage ? (
+              <div className="kc-hero__portrait">
+                <CelestialImage src={heroImage} alt={heroAlt} />
+              </div>
+            ) : null}
             <span className="kc-hero__divider" aria-hidden="true"><i />◆<i /></span>
-            {content.dateText ? <p className="kc-hero__date">{content.dateText}</p> : null}
-            {content.eventTime ? <p className="kc-hero__time">{content.eventTime}</p> : null}
+            <p className="kc-hero__date">{content.dateText || "ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦"}</p>
+            <p className="kc-hero__time">{content.eventTime || "វេលាម៉ោង ៥:០០ ល្ងាច"}</p>
             {content.venue?.name ? <p className="kc-hero__venue">{content.venue.name}</p> : null}
           </motion.div>
           <button type="button" className="kc-hero__scroll" onClick={scrollToInvitation} aria-label="រំកិលទៅព័ត៌មានគ្រួសារ">
@@ -361,14 +528,14 @@ export default function KhmerCelestialLayout({
                 title={content.family?.groomTitle || "ខាងកូនប្រុស"}
                 parents={content.family?.groomParents || content.couple?.groomParents}
                 label={content.family?.groomLabel || "កូនប្រុសនាម"}
-                name={content.groom}
+                name={groomName}
               />
               <span className="kc-family__seal" aria-hidden="true"><Flower2 /></span>
               <FamilyGroup
                 title={content.family?.brideTitle || "ខាងកូនស្រី"}
                 parents={content.family?.brideParents || content.couple?.brideParents}
                 label={content.family?.brideLabel || "កូនស្រីនាម"}
-                name={content.bride}
+                name={brideName}
               />
             </div>
           </div>
@@ -377,9 +544,21 @@ export default function KhmerCelestialLayout({
         <section className="kc-section kc-invitation" data-kc-section="invitation" aria-labelledby="kc-invitation-title">
           <div className="kc-shell">
             <div className="kc-invitation__layout">
-              <CelestialReveal className="kc-invitation__portrait">
-                <CelestialImage src={invitationImage} alt={heroAlt} />
-              </CelestialReveal>
+              {invitationImage2 ? (
+                /* Dual portrait: two photos side-by-side */
+                <div className="kc-invitation__dual-portraits">
+                  <CelestialReveal className="kc-invitation__portrait kc-invitation__portrait--left">
+                    <CelestialImage src={invitationImage} alt={heroAlt} />
+                  </CelestialReveal>
+                  <CelestialReveal className="kc-invitation__portrait kc-invitation__portrait--right" delay={0.12}>
+                    <CelestialImage src={invitationImage2} alt={heroAlt} />
+                  </CelestialReveal>
+                </div>
+              ) : (
+                <CelestialReveal className="kc-invitation__portrait">
+                  <CelestialImage src={invitationImage} alt={heroAlt} />
+                </CelestialReveal>
+              )}
               <div className="kc-invitation__copy">
                 <CelestialHeading
                   id="kc-invitation-title"
@@ -392,72 +571,23 @@ export default function KhmerCelestialLayout({
                 />
                 <CelestialReveal className="kc-invitation__guest">
                   <span>{content.isPersonalizedGuest ? "សូមគោរពអញ្ជើញ" : "ជូនចំពោះ"}</span>
-                  <strong>{content.guestName}</strong>
+                  <strong>{content.guestName?.trim() || "លោកអ្នក និងក្រុមគ្រួសារ"}</strong>
                 </CelestialReveal>
                 <CelestialReveal as="p" className="kc-invitation__message" delay={0.08}>
-                  {content.message}
+                  {content.message || "ឯកឧត្តម លោកជំទាវ លោក លោកស្រី អ្នកនាងកញ្ញា ព្រមទាំងញាតិមិត្តរាប់អានទាំងឡាយ សូមអញ្ជើញចូលរួមជាភ្ញៀវកិត្តិយស ដើម្បីប្រសិទ្ធពរជ័យជូនកូនប្រុសកូនស្រីយើងខ្ញុំ ក្នុងកម្មវិធីមង្គលអាពាហ៍ពិពាហ៍ ដែលរៀបចំឡើងដោយក្តីរីករាយ។"}
                 </CelestialReveal>
               </div>
             </div>
           </div>
         </section>
 
-        {sectionEnabled("countdown") ? (
-          <section className="kc-section kc-countdown" data-tx-section="countdown" aria-labelledby="kc-countdown-title">
-            <div className="kc-shell kc-shell--narrow">
-              <CelestialHeading
-                id="kc-countdown-title"
-                khmer={countdown.expired ? "ថ្ងៃមង្គលបានមកដល់" : "រាប់ថយក្រោយដល់ថ្ងៃមង្គល"}
-                english={countdown.expired ? "The celebration has begun" : "Until the wedding day"}
-                eyebrow="SAVE THE DATE"
-                languageMode={languageMode}
-              />
-              <CelestialReveal className="kc-countdown__grid" aria-live="polite">
-                {countdown.values.map((value, index) => (
-                  <div key={COUNTDOWN_LABELS[index][1]}>
-                    <strong>{value}</strong>
-                    <span>{COUNTDOWN_LABELS[index][0]}</span>
-                    <small>{COUNTDOWN_LABELS[index][1]}</small>
-                  </div>
-                ))}
-              </CelestialReveal>
-              <CelestialReveal className="kc-countdown__details" delay={0.08}>
-                {content.dateText ? <p><CalendarDays aria-hidden="true" /> {content.dateText}</p> : null}
-                {content.eventTime ? <p><Clock3 aria-hidden="true" /> {content.eventTime}</p> : null}
-                {calendarUrl ? (
-                  <a className="kc-button kc-button--outline" href={calendarUrl} target="_blank" rel="noreferrer">
-                    <CalendarDays aria-hidden="true" /> Add to calendar
-                  </a>
-                ) : null}
-              </CelestialReveal>
-            </div>
-          </section>
-        ) : null}
+        <CelestialCountdownSection
+          content={content}
+          calendarUrl={calendarUrl}
+          languageMode={languageMode}
+          enabled={sectionEnabled("countdown")}
+        />
 
-        {sectionEnabled("story") && story.length ? (
-          <section className="kc-section kc-story" data-tx-section="story" aria-labelledby="kc-story-title">
-            <div className="kc-shell">
-              <CelestialHeading id="kc-story-title" khmer="ដំណើរនៃក្ដីស្រឡាញ់" english="Our story" eyebrow="MEMORIES" align="left" languageMode={languageMode} />
-              <div className="kc-story__list">
-                {story.map((chapter, index) => (
-                  <CelestialReveal as="article" className={`kc-story__chapter${chapter.image ? "" : " kc-story__chapter--text-only"}`} key={chapter.id || `${chapter.title}-${index}`}>
-                    {chapter.image ? (
-                      <div className="kc-story__media">
-                        <CelestialImage src={firstImage(chapter.image)} alt={chapter.title || `រឿងរ៉ាវស្នេហា ទី ${index + 1}`} />
-                      </div>
-                    ) : null}
-                    <div className="kc-story__copy">
-                      {chapter.kicker ? <p className="kc-story__kicker">{chapter.kicker}</p> : null}
-                      <h3>{chapter.title || "ដំណើររបស់យើង"}</h3>
-                      {chapter.date ? <time>{chapter.date}</time> : null}
-                      <div>{chapter.text}</div>
-                    </div>
-                  </CelestialReveal>
-                ))}
-              </div>
-            </div>
-          </section>
-        ) : null}
 
         {sectionEnabled("schedule") && schedule.length ? (
           <section className="kc-section kc-schedule" data-tx-section="schedule" aria-labelledby="kc-schedule-title">
@@ -496,19 +626,24 @@ export default function KhmerCelestialLayout({
           <section className="kc-section kc-venue" data-tx-section="map" aria-labelledby="kc-venue-title">
             <div className="kc-shell">
               <div className="kc-venue__layout">
-                <CelestialReveal className="kc-venue__media">
-                  <CelestialImage src={content.venue.image || content.coverImage} alt={content.venue.name || "ទីតាំងប្រារព្ធពិធី"} />
-                  <span className="kc-venue__pin" aria-hidden="true"><MapPin /></span>
-                </CelestialReveal>
                 <div className="kc-venue__copy">
-                  <CelestialHeading id="kc-venue-title" khmer="ទីតាំងប្រារព្ធពិធី" english="The celebration venue" eyebrow="LOCATION" align="left" languageMode={languageMode} />
+                  <CelestialHeading id="kc-venue-title" khmer="ទីតាំងប្រារព្ធពិធី" english="The celebration venue" eyebrow="LOCATION" align="center" languageMode={languageMode} />
                   <CelestialReveal>
-                    {content.venue.name ? <h3>{content.venue.name}</h3> : null}
-                    {content.venue.address ? <p>{content.venue.address}</p> : null}
-                    {content.venue.mapLink ? (
+                    {content.venue?.name ? <h3>{content.venue.name}</h3> : null}
+                    {content.venue?.address ? <p>{content.venue.address}</p> : null}
+                    {content.venue?.mapLink ? (
                       <a className="kc-button kc-button--gold" href={content.venue.mapLink} target="_blank" rel="noreferrer">
                         <MapPin aria-hidden="true" /> បើកផែនទី <ExternalLink aria-hidden="true" />
                       </a>
+                    ) : null}
+                    {(content.venue?.sketchMapImage || content.sketchMapImage) ? (
+                      <div className="kc-venue__sketch-map">
+                        <img
+                          src={content.venue?.sketchMapImage || content.sketchMapImage}
+                          alt={content.venue?.name || "ផែនទីទីតាំងប្រារព្ធពិធី"}
+                          className="kc-venue__sketch-img"
+                        />
+                      </div>
                     ) : null}
                   </CelestialReveal>
                 </div>
@@ -517,7 +652,7 @@ export default function KhmerCelestialLayout({
           </section>
         ) : null}
 
-        {sectionEnabled("gallery") ? <CelestialGallery images={content.gallery} languageMode={languageMode} /> : null}
+        {sectionEnabled("gallery") ? <CelestialGallery images={content.gallery} languageMode={languageMode} preview={preview} /> : null}
 
         {sectionEnabled("party") && party.length ? (
           <section className="kc-section kc-party" data-tx-section="party" aria-labelledby="kc-party-title">
@@ -592,7 +727,7 @@ export default function KhmerCelestialLayout({
 
         <section className="kc-section kc-closing" aria-label="Closing messages">
           <CelestialLiveGarden className="kc-closing__garden" variant="closing" />
-          <img className="kc-closing__botanical" src={KHMER_CELESTIAL_ASSETS.botanicalFrame} alt="" aria-hidden="true" width="999" height="1575" loading="lazy" decoding="async" />
+          <img className="kc-closing__botanical" src={botanicalFrame} alt="" aria-hidden="true" width="999" height="1575" loading="lazy" decoding="async" />
           <div className="kc-shell kc-shell--narrow kc-closing__inner">
             <CelestialReveal as="article" className="kc-closing__note">
               <Flower2 aria-hidden="true" />
@@ -608,11 +743,13 @@ export default function KhmerCelestialLayout({
         </section>
 
         <footer className="kc-footer">
-          <img className="kc-footer__botanical" src={KHMER_CELESTIAL_ASSETS.botanicalFrame} alt="" aria-hidden="true" width="999" height="1575" loading="lazy" decoding="async" />
+          <img className="kc-footer__botanical" src={botanicalFrame} alt="" aria-hidden="true" width="999" height="1575" loading="lazy" decoding="async" />
           <CelestialReveal>
-            <img className="kc-footer__brand" src={KHMER_CELESTIAL_ASSETS.brandMark} alt={logoAlt} loading="lazy" decoding="async" width="768" height="512" />
+            {effectiveBrandMark ? (
+              <img className="kc-footer__brand" src={effectiveBrandMark} alt={logoAlt} loading="lazy" decoding="async" width="768" height="512" />
+            ) : null}
             <p className="kc-footer__khmer">សូមអរគុណដោយក្តីគោរព</p>
-            {hasCoupleNames ? <h2>{content.groom} <em>&amp;</em> {content.bride}</h2> : <h2>{content.title}</h2>}
+            <h2>{groomName} <em>&amp;</em> {brideName}</h2>
             <small>Koupreng · Khmer Celestial</small>
           </CelestialReveal>
         </footer>
