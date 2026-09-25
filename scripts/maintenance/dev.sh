@@ -45,7 +45,7 @@ for arg in "$@"; do
       ENABLE_NGROK=false
       ;;
     --help|-h)
-      echo -e "${BOLD}Usage:${NC} ./scripts/dev/dev.sh [OPTIONS]"
+      echo -e "${BOLD}Usage:${NC} ./scripts/maintenance/dev.sh [OPTIONS]"
       echo ""
       echo "Options:"
       echo "  --admin       Run Backend + Frontend Admin only"

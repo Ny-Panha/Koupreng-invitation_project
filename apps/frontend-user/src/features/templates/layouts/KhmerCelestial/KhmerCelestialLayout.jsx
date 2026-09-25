@@ -37,6 +37,29 @@ import {
 import { KHMER_CELESTIAL_ASSETS } from "./khmerCelestialAssets";
 import "./khmer-celestial.css";
 
+const ensureGoogleFontLoaded = (fontFamily) => {
+  if (!fontFamily || typeof document === "undefined") return;
+  const cleanName = fontFamily.trim().replace(/^['"]|['"]$/g, "");
+  const fontId = `gfont-${cleanName.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
+  if (document.getElementById(fontId)) return;
+  const link = document.createElement("link");
+  link.id = fontId;
+  link.rel = "stylesheet";
+  link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(cleanName)}:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap`;
+  document.head.appendChild(link);
+};
+
+const ensureCustomFontFace = (fontFamily, fontUrl) => {
+  if (!fontFamily || !fontUrl || typeof document === "undefined" || typeof FontFace === "undefined") return;
+  const cleanName = fontFamily.trim().replace(/^['"]|['"]$/g, "");
+  try {
+    const font = new FontFace(cleanName, `url("${fontUrl}")`);
+    font.load().then((loaded) => {
+      document.fonts.add(loaded);
+    }).catch(() => {});
+  } catch {}
+};
+
 const PROGRAM_ICONS = [
   Sparkles,
   UsersRound,
@@ -293,6 +316,24 @@ export default function KhmerCelestialLayout({
     });
   }, [reducedMotion]);
 
+  useEffect(() => {
+    const kFont = liveData?.fontKhmer || content?.fontKhmer;
+    const lFont = liveData?.fontLatin || content?.fontLatin;
+    if (kFont) ensureGoogleFontLoaded(kFont);
+    if (lFont) ensureGoogleFontLoaded(lFont);
+
+    const customList = liveData?.customFonts || content?.customFonts || [];
+    if (Array.isArray(customList)) {
+      customList.forEach((cf) => {
+        if (cf.source === "google") {
+          ensureGoogleFontLoaded(cf.value || cf.name);
+        } else if (cf.source === "file" && cf.dataUrl) {
+          ensureCustomFontFace(cf.value || cf.name, cf.dataUrl);
+        }
+      });
+    }
+  }, [liveData?.fontKhmer, liveData?.fontLatin, liveData?.customFonts, content?.fontKhmer, content?.fontLatin, content?.customFonts]);
+
   const schedule = Array.isArray(content.schedule) ? content.schedule : [];
   const party = Array.isArray(content.party) ? content.party : [];
   const dressColors = Array.isArray(content.dressCode?.colors) ? content.dressCode.colors : [];
@@ -313,6 +354,9 @@ export default function KhmerCelestialLayout({
     return {
       ...content,
       ...liveData,
+      fontKhmer: liveData.fontKhmer !== undefined ? liveData.fontKhmer : content.fontKhmer,
+      fontLatin: liveData.fontLatin !== undefined ? liveData.fontLatin : content.fontLatin,
+      customFonts: liveData.customFonts || content.customFonts,
       openingStyle: liveData.openingStyle || liveData.gateStyle || content.openingStyle || content.gateStyle || content.design?.openingStyle,
       gateStyle: liveData.gateStyle || liveData.openingStyle || content.gateStyle || content.openingStyle || content.design?.openingStyle,
       groom: liveData.groomName || liveData.groom || content.groom,
@@ -358,6 +402,15 @@ export default function KhmerCelestialLayout({
       data-variant="khmer-celestial"
       style={{
         "--kc-bg-frame": `url("${botanicalFrame}")`,
+        "--kc-khmer-display": effectiveContent.fontKhmer
+          ? `"${effectiveContent.fontKhmer}", "Moul", serif`
+          : undefined,
+        "--kc-khmer-body": effectiveContent.fontKhmer
+          ? `"${effectiveContent.fontKhmer}", "Battambang", sans-serif`
+          : undefined,
+        "--kc-english-display": effectiveContent.fontLatin
+          ? `"${effectiveContent.fontLatin}", "Cormorant Garamond", Georgia, serif`
+          : undefined,
       }}
     >
       {musicEnabled ? (

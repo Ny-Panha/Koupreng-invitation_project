@@ -1,11 +1,26 @@
-# Forward to scripts\dev\dev.ps1
+# Forward to scripts\maintenance\dev.ps1
 param(
-    [switch]$Ngrok,
-    [switch]$Bot,
+    [Alias("admin", "admin-only", "Admin")]
     [switch]$AdminOnly,
+
+    [Alias("user", "user-only", "User")]
     [switch]$UserOnly,
+
+    [Alias("ngrok")]
+    [switch]$Ngrok,
+
+    [Alias("no-ngrok")]
+    [switch]$NoNgrok,
+
+    [Alias("bot")]
+    [switch]$Bot,
+
+    [Alias("new-window", "window")]
+    [switch]$NewWindow,
+
+    [Alias("h", "?")]
     [switch]$Help
 )
 
-& "$PSScriptRoot\scripts\dev\dev.ps1" @PSBoundParameters
+& "$PSScriptRoot\scripts\maintenance\dev.ps1" @PSBoundParameters
 

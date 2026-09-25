@@ -807,7 +807,7 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   display: block;
   max-width: 100%;
   color: #55351f;
-  font-family: "Bayon", "Noto Sans Khmer", sans-serif;
+  font-family: var(--kc-khmer-display), "Bayon", "Noto Sans Khmer", sans-serif;
   font-size: clamp(0.85rem, 2.6vw, 1.25rem);
   font-weight: 400;
   line-height: 1.1;
