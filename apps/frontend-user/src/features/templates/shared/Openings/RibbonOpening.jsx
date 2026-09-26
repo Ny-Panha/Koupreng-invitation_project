@@ -116,14 +116,14 @@ export default function RibbonOpening({
           <span className="text-xs sm:text-sm font-bold text-amber-950 font-serif leading-tight">
             {groom?.[0] || "V"} &amp; {bride?.[0] || "S"}
           </span>
-          <span className="text-[8px] uppercase tracking-widest text-amber-900 font-semibold mt-0.5">
+          <span className="text-[8px] uppercase tracking-normal text-amber-900 font-semibold mt-0.5">
             ស្រាយខ្សែបូ
           </span>
         </div>
 
         {/* Action Prompt */}
         <div className="mt-8 px-5 py-2 rounded-full bg-black/60 border border-amber-400/40 backdrop-blur-md shadow-xl text-center">
-          <p className="text-xs sm:text-sm font-medium text-amber-200 tracking-wide">
+          <p className="text-xs sm:text-sm font-medium text-amber-200 tracking-normal">
             ✨ សូមចុចស្រាយខ្សែបូ ដើម្បីបើកសំបុត្រ
           </p>
           <span className="text-[10px] text-amber-300/60 uppercase tracking-widest block mt-0.5">

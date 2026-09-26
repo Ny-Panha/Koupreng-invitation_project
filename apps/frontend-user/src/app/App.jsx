@@ -5,6 +5,7 @@ import ScrollToTop from "./ScrollToTop";
 import { AuthProvider, QueryProvider, ThemeProvider } from "./providers";
 import SiteAnimations from "../shared/animations/SiteAnimations";
 import ChatBot from "../shared/ui/ChatBot";
+import { ToastContainer } from "../shared/ui";
 import {
   initTelegramWebApp,
   TELEGRAM_WEB_APP_READY_EVENT,
@@ -40,6 +41,7 @@ function App() {
             <div className="app-container">
               <AppRouter />
             </div>
+            <ToastContainer />
             <ChatBot />
           </Router>
         </ThemeProvider>

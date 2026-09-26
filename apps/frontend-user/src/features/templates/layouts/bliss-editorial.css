@@ -46,7 +46,7 @@
 
 .bliss-header-link {
   font-size: 0.8rem;
-  letter-spacing: 0.18em;
+  letter-spacing: normal;
   text-transform: uppercase;
   color: var(--bliss-dark-muted);
   text-decoration: none;
@@ -59,7 +59,7 @@
 
 .bliss-rsvp-trigger {
   font-size: 0.8rem;
-  letter-spacing: 0.2em;
+  letter-spacing: normal;
   text-transform: uppercase;
   background: var(--bliss-charcoal);
   color: #ffffff;
@@ -117,24 +117,24 @@
 }
 
 .bliss-editorial-names {
-  font-family: "Cinzel", "Playfair Display", Georgia, serif;
+  font-family: "Cinzel", "Playfair Display", "Moul", "Kantumruy Pro", Georgia, serif;
   font-size: clamp(3rem, 5.5vw, 5rem);
   font-weight: 400;
-  line-height: 1.05;
+  line-height: 1.2;
   margin-bottom: 2rem;
-  letter-spacing: -0.02em;
+  letter-spacing: normal;
 }
 
 .bliss-editorial-date {
   font-size: 1.1rem;
-  letter-spacing: 0.1em;
+  letter-spacing: normal;
   color: var(--bliss-taupe);
   margin-bottom: 2.5rem;
   text-transform: uppercase;
 }
 
 .bliss-quote {
-  font-family: Georgia, serif;
+  font-family: Georgia, "Kantumruy Pro", serif;
   font-style: italic;
   font-size: 1.15rem;
   color: var(--bliss-dark-muted);
@@ -158,17 +158,17 @@
 
 .bliss-kicker {
   font-size: 0.75rem;
-  letter-spacing: 0.35em;
+  letter-spacing: normal;
   text-transform: uppercase;
   color: var(--bliss-gold);
   margin-bottom: 1rem;
 }
 
 .bliss-title {
-  font-family: "Cinzel", "Playfair Display", Georgia, serif;
+  font-family: "Cinzel", "Playfair Display", "Moul", "Kantumruy Pro", Georgia, serif;
   font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 400;
-  letter-spacing: -0.01em;
+  letter-spacing: normal;
 }
 
 /* Asymmetrical Program Grid */
@@ -196,10 +196,11 @@
 }
 
 .bliss-program-title {
-  font-family: "Cinzel", "Playfair Display", serif;
+  font-family: "Cinzel", "Playfair Display", "Moul", "Kantumruy Pro", serif;
   font-size: 1.5rem;
   font-weight: 400;
   margin-bottom: 0.6rem;
+  letter-spacing: normal;
 }
 
 .bliss-program-desc {
@@ -305,10 +306,11 @@
 }
 
 .bliss-drawer-title {
-  font-family: "Cinzel", serif;
+  font-family: "Cinzel", "Moul", "Kantumruy Pro", serif;
   font-size: 1.8rem;
   font-weight: 400;
   margin-bottom: 0.5rem;
+  letter-spacing: normal;
 }
 
 /* Media Queries */

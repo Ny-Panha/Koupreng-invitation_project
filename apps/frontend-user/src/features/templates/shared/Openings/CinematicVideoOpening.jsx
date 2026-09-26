@@ -73,7 +73,8 @@ export default function CinematicVideoOpening({
     weddingTitle ||
     content.weddingTitle ||
     content.invitationTitle ||
-    "វីដេអូបើកឆាកអាពាហ៍ពិពាហ៍";
+    content.title ||
+    "សិរីសួស្តីអាពាហ៍ពិពាហ៍";
 
   const elementFonts = content.elementFonts || {};
   const globalKhmer = content.fontKhmer || "Siemreap";
@@ -83,8 +84,12 @@ export default function CinematicVideoOpening({
   const fontGuestName = elementFonts.guestName || globalKhmer;
 
   const effectiveGuestName = guestName || content.guestName || "លោកអ្នក និងក្រុមគ្រួសារ";
-  const effectiveGuestLabel = guestLabel || content.guestLabel || (content.isPersonalizedGuest ? "សូមគោរពអញ្ជើញ" : "ជូនចំពោះ:");
+  const effectiveGuestLabel = guestLabel || content.guestLabel || (content.isPersonalizedGuest ? "សូមគោរពអញ្ជើញ" : "សូមគោរពអញ្ជើញ");
   const effectiveSubtitle = subtitle || content.subtitle || content.invitationSubtitle || "យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ";
+  const effectiveOpenButtonText =
+    content.opening?.openButtonText ||
+    content.openButtonText ||
+    "បើកសំបុត្រអញ្ជើញ";
 
   const handleSelectElement = (elementId, e) => {
     if (!isPreviewMode) return;
@@ -229,9 +234,9 @@ export default function CinematicVideoOpening({
               aria-label={isMuted ? "បើកសំឡេង" : "បិទសំឡេង"}
             >
               {isMuted ? (
-                <VolumeX className="w-4 h-4 text-amber-300" />
+                <VolumeX className="w-4 h-4" />
               ) : (
-                <Volume2 className="w-4 h-4 text-amber-300" />
+                <Volume2 className="w-4 h-4" />
               )}
             </button>
           )}
@@ -257,7 +262,7 @@ export default function CinematicVideoOpening({
       >
         <div className="cinematic-popup-card">
           <div className="cinematic-popup-crest">
-            <Sparkles className="w-5 h-5 text-amber-300" />
+            <Sparkles className="w-5 h-5" />
           </div>
 
           {/* Wedding Title */}
@@ -291,21 +296,21 @@ export default function CinematicVideoOpening({
             {effectiveGroom} &amp; {effectiveBride}
           </p>
 
-          <div className="cinematic-popup-guest" style={{ margin: "6px auto 10px", textAlign: "center" }}>
-            <p
-              className={isPreviewMode ? "kc-interactive-element" : ""}
+          <div className="cinematic-popup-guest">
+            <span
+              className={`cinematic-guest-label ${isPreviewMode ? "kc-interactive-element" : ""}`}
               onClick={(e) => handleSelectElement("guestLabel", e)}
-              style={{ fontSize: "11px", color: "rgba(255, 255, 255, 0.7)", fontFamily: `"${fontGuestLabel}", "Bayon", "Moul", "Siemreap", serif` }}
+              style={{ fontFamily: `"${fontGuestLabel}", "Bayon", "Moul", "Siemreap", serif` }}
             >
               {effectiveGuestLabel}
-            </p>
-            <p
-              className={isPreviewMode ? "kc-interactive-element" : ""}
+            </span>
+            <strong
+              className={`cinematic-guest-name ${isPreviewMode ? "kc-interactive-element" : ""}`}
               onClick={(e) => handleSelectElement("guestName", e)}
-              style={{ fontSize: "13px", fontWeight: "bold", color: "#f59e0b", fontFamily: `"${fontGuestName}", "Bayon", "Moul", serif` }}
+              style={{ fontFamily: `"${fontGuestName}", "Bayon", "Moul", serif` }}
             >
               {effectiveGuestName}
-            </p>
+            </strong>
           </div>
 
           <div className="cinematic-popup-actions">
@@ -314,11 +319,11 @@ export default function CinematicVideoOpening({
               type="button"
               onClick={handleFinish}
               className="cinematic-enter-direct-btn"
-              aria-label="ចូលមើលសំបុត្រអញ្ជើញផ្ទាល់"
+              aria-label={effectiveOpenButtonText}
             >
-              <Mail className="w-4 h-4 text-amber-300" />
-              <span>ចូលមើលសំបុត្រអញ្ជើញផ្ទាល់ (Enter Invitation)</span>
-              <ChevronRight className="w-3.5 h-3.5 text-amber-300/80" />
+              <Mail className="cinematic-btn-icon" />
+              <span>{effectiveOpenButtonText}</span>
+              <ChevronRight className="cinematic-btn-icon opacity-80" />
             </button>
 
             {/* Replay Video Button */}
@@ -328,8 +333,8 @@ export default function CinematicVideoOpening({
               className="cinematic-replay-btn"
               aria-label="ចាក់វីដេអូឡើងវិញ"
             >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>ចាក់វីដេអូឡើងវិញ (Replay)</span>
+              <RotateCcw className="cinematic-btn-icon-sm" />
+              <span>ចាក់វីដេអូឡើងវិញ</span>
             </button>
           </div>
         </div>

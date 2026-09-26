@@ -102,7 +102,7 @@ export default function TemplateHero({ content, onOpen }) {
                         fontWeight: 400,
                         color: "#fffaf0",
                         margin: "0 0 14px",
-                        letterSpacing: "0.03em",
+                        letterSpacing: "normal",
                         textShadow: "0 2px 14px rgba(0,0,0,0.9)",
                         textAlign: "center",
                         width: "100%",
@@ -175,7 +175,7 @@ export default function TemplateHero({ content, onOpen }) {
                             textShadow: "0 2px 10px rgba(0,0,0,0.85)",
                             textAlign: "center",
                             width: "100%",
-                            letterSpacing: "0.02em",
+                            letterSpacing: "normal",
                         }}
                         {...rise(0.36)}
                     >

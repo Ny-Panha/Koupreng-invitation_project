@@ -22,7 +22,7 @@ export default function KhmerCeremonySequence({ schedule = [] }) {
   return (
     <section style={{ padding: "3rem 1.5rem", maxWidth: "1050px", margin: "0 auto" }}>
       <div style={{ textAlign: "center", marginBottom: "2rem" }}>
-        <p style={{ color: "var(--rkh-gold)", fontWeight: "700", letterSpacing: "0.15em", textTransform: "uppercase", fontSize: "0.85rem" }}>
+        <p style={{ color: "var(--rkh-gold)", fontWeight: "700", letterSpacing: "normal", textTransform: "uppercase", fontSize: "0.85rem" }}>
           កម្មវិធីតាមលំដាប់លំដោយ
         </p>
         <h2 style={{ fontFamily: "Moul, serif", fontSize: "1.75rem", color: "var(--rkh-crimson)" }}>

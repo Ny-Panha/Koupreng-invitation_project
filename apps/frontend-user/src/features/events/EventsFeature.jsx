@@ -1,15 +1,27 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
 import { useEvents } from "./hooks/useEvents";
 import { EventCard } from "./components/EventCard";
 import { EventDeleteModal } from "./components/EventDeleteModal";
+import { toast } from "../../shared/ui/toast";
 import { CalendarHeart } from "lucide-react";
 import "./EventsFeature.css";
 
 export function EventsFeature() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const hasTriggeredRef = useRef(false);
     const { text: t } = useBackendMessages("events");
     const { text: tDash } = useBackendMessages("dashboard");
+
+    useEffect(() => {
+        if (location.state?.savedSuccess && !hasTriggeredRef.current) {
+            hasTriggeredRef.current = true;
+            toast(location.state.message || "បានរក្សាទុកដោយជោគជ័យ!");
+            navigate(location.pathname, { replace: true, state: {} });
+        }
+    }, [location.state, navigate, location.pathname]);
     const {
         drafts,
         draftToDelete,
@@ -42,7 +54,7 @@ export function EventsFeature() {
                     <h1>{t("title")}</h1>
                     <p>{t("subtitle")}</p>
                 </div>
-                <Link to="/dashboard/invitations/design" className="events-create-btn">
+                <Link to="/dashboard/invitations/design" state={{ from: "/dashboard/events" }} className="events-create-btn">
                     + {createBtnText}
                 </Link>
             </header>
@@ -54,7 +66,7 @@ export function EventsFeature() {
                     </div>
                     <div className="events-empty-title">{t("emptyTitle")}</div>
                     <div className="events-empty-desc">{t("emptySubtitle")}</div>
-                    <Link to="/dashboard/invitations/design" className="events-empty-action">
+                    <Link to="/dashboard/invitations/design" state={{ from: "/dashboard/events" }} className="events-empty-action">
                         + {emptyActionText}
                     </Link>
                 </div>

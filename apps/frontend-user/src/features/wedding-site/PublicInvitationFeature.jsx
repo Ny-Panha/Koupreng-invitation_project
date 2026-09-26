@@ -10,6 +10,7 @@ import WeddingSite from "../wedding-site/WeddingSite";
 import { draftToTemplate } from "../wedding-builder/utils/draftToTemplate";
 import { publicInvitationToDraft } from "../wedding-builder/utils/invitationDraftAdapter";
 import { useWeddingStore } from "../../stores/useWeddingStore";
+import { getDraft, getDraftBySlug, listDrafts } from "../../shared/storage/weddingStorage";
 import { loadGallery } from "../../shared/storage/galleryStorage";
 import { invitationService } from "@/features/invitations/api/invitationApi";
 import { mediaService } from "@/features/invitations/api/mediaApi";
@@ -176,6 +177,31 @@ export default function PublicInvitationPage() {
 
     if (invitation) {
         const publicDraft = publicInvitationToDraft(invitation, media);
+
+        // Fallback / merge KHQR and local draft data if remote backend draft is missing them
+        if (!publicDraft.khqrDollar?.qrUrl || !publicDraft.khqrRiel?.qrUrl) {
+            const drafts = listDrafts();
+            const localCandidate =
+                (activeDraft && (activeDraft.slug === slug || activeDraft.khqrDollar?.qrUrl))
+                ? activeDraft
+                : (getDraftBySlug(slug) || (invitation.id ? getDraft(invitation.id) : null) || getDraft(slug) ||
+                   drafts.find((d) => d.slug === slug || (invitation.id && String(d.backendInvitationId) === String(invitation.id)) || d.id === slug) ||
+                   drafts.find((d) => d.khqrDollar?.qrUrl || d.khqrRiel?.qrUrl));
+
+            if (localCandidate) {
+                if (!publicDraft.khqrDollar?.qrUrl && localCandidate.khqrDollar?.qrUrl) {
+                    publicDraft.khqrDollar = localCandidate.khqrDollar;
+                    if (!publicDraft.enabledSections) publicDraft.enabledSections = {};
+                    publicDraft.enabledSections.gift = true;
+                }
+                if (!publicDraft.khqrRiel?.qrUrl && localCandidate.khqrRiel?.qrUrl) {
+                    publicDraft.khqrRiel = localCandidate.khqrRiel;
+                    if (!publicDraft.enabledSections) publicDraft.enabledSections = {};
+                    publicDraft.enabledSections.gift = true;
+                }
+            }
+        }
+
         const mergedPublicGarden = draftToTemplate(publicDraft, publicDraft.gallery);
         const showRsvp = publicDraft.enabledSections?.rsvp !== false;
 

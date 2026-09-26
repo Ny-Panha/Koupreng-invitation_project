@@ -267,22 +267,60 @@ export default function QrCameraScanner({ onScan, disabled }) {
   return (
     <div style={{
       background: "#ffffff",
-      borderRadius: "14px",
-      border: "1px solid #e2e8f0",
-      padding: "18px",
-      marginBottom: "20px",
-      boxShadow: "0 2px 8px rgba(0,0,0,0.04)"
+      borderRadius: "20px",
+      border: "1px solid #eadfce",
+      padding: "24px 28px",
+      marginBottom: "24px",
+      boxShadow: "0 6px 20px rgba(93, 67, 32, 0.04)"
     }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px", flexWrap: "wrap", gap: "10px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px", flexWrap: "wrap", gap: "14px" }}>
         <div>
-          <h3 style={{ margin: 0, fontSize: "1.05rem", color: "#0f172a", fontWeight: 700, display: "flex", alignItems: "center", gap: "8px" }}>
-            <Camera size={20} color="#d97706" /> ស្កេន QR Code កាមេរ៉ាផ្ទាល់ (Live QR Scanner)
-          </h3>
-          <p style={{ margin: "2px 0 0", fontSize: "0.82rem", color: "#64748b" }}>
-            ប្រើកាមេរ៉ាទូរស័ព្ទ ឬកុំព្យូទ័រស្កេនធៀបភ្ញៀវពេលមកដល់មាត់រោងការ
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
+            <h3 style={{ margin: 0, fontSize: "1.15rem", color: "#2a1f10", fontWeight: 800, display: "flex", alignItems: "center", gap: "10px" }}>
+              <span style={{ display: "inline-flex", padding: "8px", background: "rgba(176, 146, 106, 0.14)", borderRadius: "12px", color: "#B0926A" }}>
+                <Camera size={20} />
+              </span>
+              ស្កេន QR Code កាមេរ៉ាផ្ទាល់ (Live QR Scanner)
+            </h3>
+            {isScanning ? (
+              <span style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                padding: "4px 12px",
+                borderRadius: "999px",
+                fontSize: "12px",
+                fontWeight: 700,
+                background: "#ecfdf5",
+                color: "#059669",
+                border: "1px solid #a7f3d0"
+              }}>
+                <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#10b981", boxShadow: "0 0 8px #10b981" }} />
+                កំពុងដំណើរការ (Scanning Live)
+              </span>
+            ) : (
+              <span style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                padding: "4px 12px",
+                borderRadius: "999px",
+                fontSize: "12px",
+                fontWeight: 700,
+                background: "#f5efe5",
+                color: "#7d6443",
+                border: "1px solid #eadfce"
+              }}>
+                <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#a89078" }} />
+                មិនទាន់បើក (Ready)
+              </span>
+            )}
+          </div>
+          <p style={{ margin: "6px 0 0", fontSize: "13.5px", color: "#7d6443", lineHeight: 1.5 }}>
+            ប្រើកាមេរ៉ាទូរស័ព្ទ ឬ Webcam កុំព្យូទ័រ ដើម្បីស្កេនកាតអញ្ជើញ QR របស់ភ្ញៀវពេលមកដល់មាត់រោងការ
           </p>
         </div>
-        <div style={{ display: "flex", gap: "8px" }}>
+        <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
           {isScanning && (
             <button
               type="button"
@@ -292,14 +330,15 @@ export default function QrCameraScanner({ onScan, disabled }) {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "6px",
-                background: "#f1f5f9",
-                color: "#334155",
-                border: "1px solid #cbd5e1",
-                borderRadius: "8px",
-                padding: "8px 12px",
-                fontWeight: 600,
-                fontSize: "0.85rem",
-                cursor: "pointer"
+                background: "#f5efe5",
+                color: "#7d6443",
+                border: "1px solid #eadfce",
+                borderRadius: "999px",
+                padding: "11px 20px",
+                fontWeight: 700,
+                fontSize: "13.5px",
+                cursor: "pointer",
+                transition: "all 0.2s ease"
               }}
             >
               <RefreshCw size={15} /> ប្តូរកាមេរ៉ា
@@ -314,18 +353,30 @@ export default function QrCameraScanner({ onScan, disabled }) {
               style={{
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "6px",
-                background: "#0f766e",
+                gap: "8px",
+                background: "linear-gradient(135deg, #B0926A 0%, #8c6f4b 100%)",
                 color: "#ffffff",
                 border: "none",
-                borderRadius: "8px",
-                padding: "8px 16px",
-                fontWeight: 600,
-                fontSize: "0.88rem",
-                cursor: "pointer"
+                borderRadius: "999px",
+                padding: "12px 24px",
+                fontWeight: 700,
+                fontSize: "14px",
+                cursor: "pointer",
+                boxShadow: "0 6px 22px rgba(176, 146, 106, 0.35)",
+                transition: "all 0.25s ease"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "linear-gradient(135deg, #ba9c74 0%, #997c58 100%)";
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.boxShadow = "0 10px 30px rgba(176, 146, 106, 0.45)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "linear-gradient(135deg, #B0926A 0%, #8c6f4b 100%)";
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "0 6px 22px rgba(176, 146, 106, 0.35)";
               }}
             >
-              <Camera size={16} /> បើកកាមេរ៉ាស្កេន
+              <Camera size={18} /> បើកកាមេរ៉ាស្កេន
             </button>
           ) : (
             <button
@@ -334,44 +385,59 @@ export default function QrCameraScanner({ onScan, disabled }) {
               style={{
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "6px",
-                background: "#ef4444",
+                gap: "8px",
+                background: "linear-gradient(135deg, #ef4444, #dc2626)",
                 color: "#ffffff",
                 border: "none",
-                borderRadius: "8px",
-                padding: "8px 16px",
-                fontWeight: 600,
-                fontSize: "0.88rem",
-                cursor: "pointer"
+                borderRadius: "999px",
+                padding: "12px 24px",
+                fontWeight: 700,
+                fontSize: "14px",
+                cursor: "pointer",
+                boxShadow: "0 6px 18px rgba(239, 68, 68, 0.3)",
+                transition: "all 0.2s ease"
               }}
             >
-              <CameraOff size={16} /> បិទកាមេរ៉ា
+              <CameraOff size={18} /> បិទកាមេរ៉ា
             </button>
           )}
         </div>
       </div>
 
       {errorMsg && (
-        <div style={{ padding: "10px 14px", background: "#fef2f2", color: "#b91c1c", borderRadius: "8px", fontSize: "0.85rem", marginBottom: "12px", border: "1px solid #fecaca" }}>
+        <div style={{
+          padding: "12px 16px",
+          background: "#fef2f2",
+          color: "#b91c1c",
+          borderRadius: "10px",
+          fontSize: "0.88rem",
+          marginBottom: "14px",
+          border: "1px solid #fecaca",
+          display: "flex",
+          alignItems: "center",
+          gap: "8px"
+        }}>
           ⚠️ {errorMsg}
         </div>
       )}
 
       {lastScanned && (
         <div style={{
-          padding: "10px 14px",
-          background: "#f0fdf4",
-          border: "1px solid #bbf7d0",
+          padding: "12px 16px",
+          background: "linear-gradient(135deg, #f0fdf4, #ecfdf5)",
+          border: "1px solid #86efac",
           color: "#15803d",
-          borderRadius: "8px",
-          fontSize: "0.88rem",
-          fontWeight: 600,
+          borderRadius: "10px",
+          fontSize: "0.9rem",
+          fontWeight: 700,
           display: "flex",
           alignItems: "center",
-          gap: "8px",
-          marginBottom: "12px"
+          gap: "10px",
+          marginBottom: "14px",
+          boxShadow: "0 2px 8px rgba(34, 197, 94, 0.12)"
         }}>
-          <CheckCircle2 size={18} color="#16a34a" /> បានស្កេន Token: <code>{lastScanned}</code> (កំពុង Check-in...)
+          <CheckCircle2 size={20} color="#16a34a" /> 
+          <span>បានស្កេនដោយជោគជ័យ Token: <code style={{ background: "#dcfce7", padding: "2px 8px", borderRadius: "6px" }}>{lastScanned}</code> (កំពុងកត់ត្រាវត្តមាន...)</span>
         </div>
       )}
 
@@ -379,13 +445,13 @@ export default function QrCameraScanner({ onScan, disabled }) {
         <div style={{
           position: "relative",
           width: "100%",
-          maxWidth: "480px",
-          margin: "0 auto",
-          height: "320px",
-          borderRadius: "12px",
+          maxWidth: "520px",
+          margin: "12px auto 0",
+          height: "340px",
+          borderRadius: "16px",
           overflow: "hidden",
-          background: "#0f172a",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.15)"
+          background: "#090d16",
+          boxShadow: "0 8px 24px rgba(0,0,0,0.3)"
         }}>
           <video
             ref={videoRef}
@@ -395,54 +461,68 @@ export default function QrCameraScanner({ onScan, disabled }) {
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
 
-          {/* Target Scan Box Overlay */}
+          {/* Target Scan Box Overlay with Luxury Reticle */}
           <div style={{
             position: "absolute",
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: "200px",
-            height: "200px",
-            border: "2px solid #22c55e",
-            borderRadius: "12px",
-            boxShadow: "0 0 0 9999px rgba(0,0,0,0.45)",
+            width: "220px",
+            height: "220px",
+            border: "2px solid rgba(245, 158, 11, 0.5)",
+            borderRadius: "16px",
+            boxShadow: "0 0 0 9999px rgba(0, 0, 0, 0.52)",
             pointerEvents: "none"
           }}>
-            {/* Animated Laser Line (GPU hardware-accelerated) */}
+            {/* Corner accents */}
+            <div style={{ position: "absolute", top: "-2px", left: "-2px", width: "24px", height: "24px", borderTop: "4px solid #f59e0b", borderLeft: "4px solid #f59e0b", borderTopLeftRadius: "16px" }} />
+            <div style={{ position: "absolute", top: "-2px", right: "-2px", width: "24px", height: "24px", borderTop: "4px solid #f59e0b", borderRight: "4px solid #f59e0b", borderTopRightRadius: "16px" }} />
+            <div style={{ position: "absolute", bottom: "-2px", left: "-2px", width: "24px", height: "24px", borderBottom: "4px solid #f59e0b", borderLeft: "4px solid #f59e0b", borderBottomLeftRadius: "16px" }} />
+            <div style={{ position: "absolute", bottom: "-2px", right: "-2px", width: "24px", height: "24px", borderBottom: "4px solid #f59e0b", borderRight: "4px solid #f59e0b", borderBottomRightRadius: "16px" }} />
+
+            {/* Animated Laser Line */}
             <div style={{
               position: "absolute",
               top: 0,
-              left: 0,
-              right: 0,
+              left: "4px",
+              right: "4px",
               height: "2px",
-              background: "#ef4444",
-              boxShadow: "0 0 10px #ef4444",
+              background: "linear-gradient(90deg, transparent, #22c55e, #10b981, transparent)",
+              boxShadow: "0 0 14px #22c55e",
               willChange: "transform",
-              animation: "peLaserScan 2s infinite ease-in-out"
+              animation: "peLaserScan 2.2s infinite ease-in-out"
             }} />
           </div>
 
           <div style={{
             position: "absolute",
-            bottom: "12px",
+            bottom: "16px",
             left: 0,
             right: 0,
-            textAlign: "center",
-            color: "#ffffff",
-            fontSize: "0.8rem",
-            fontWeight: 600,
-            textShadow: "0 1px 3px rgba(0,0,0,0.8)"
+            display: "flex",
+            justifyContent: "center"
           }}>
-            សូមដាក់ QR Code ក្នុងប្រអប់ដើម្បីស្កេន
+            <span style={{
+              background: "rgba(15, 23, 42, 0.8)",
+              backdropFilter: "blur(4px)",
+              color: "#ffffff",
+              padding: "6px 16px",
+              borderRadius: "20px",
+              fontSize: "0.82rem",
+              fontWeight: 600,
+              border: "1px solid rgba(255, 255, 255, 0.15)"
+            }}>
+              🎯 សូមដាក់ QR Code កាតអញ្ជើញក្នុងប្រអប់
+            </span>
           </div>
         </div>
       )}
 
       <style>{`
         @keyframes peLaserScan {
-          0% { transform: translateY(10px); }
-          50% { transform: translateY(188px); }
-          100% { transform: translateY(10px); }
+          0% { transform: translateY(12px); opacity: 0.6; }
+          50% { transform: translateY(204px); opacity: 1; }
+          100% { transform: translateY(12px); opacity: 0.6; }
         }
       `}</style>
     </div>

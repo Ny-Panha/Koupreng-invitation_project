@@ -130,6 +130,13 @@ export function publicInvitationToDraft(invitation, media) {
     enabled: openingVideoEnabled,
   });
 
+  const khqrDollar = content.khqrDollar || design.khqrDollar || null;
+  const khqrRiel = content.khqrRiel || design.khqrRiel || null;
+  const resolvedGift = Array.isArray(content.gift) && content.gift.length
+    ? content.gift
+    : (Array.isArray(design.gift) && design.gift.length ? design.gift : []);
+  const hasGift = Boolean(khqrDollar?.qrUrl || khqrDollar?.accountNumber || khqrRiel?.qrUrl || khqrRiel?.accountNumber || resolvedGift.length);
+
   return {
     id: invitation?.id || invitation?.slug || "public-invitation",
     backendInvitationId: invitation?.id || null,
@@ -158,7 +165,9 @@ export function publicInvitationToDraft(invitation, media) {
     storyChapters: Array.isArray(content.storyChapters) ? content.storyChapters : [],
     schedule: Array.isArray(content.schedule) ? content.schedule : [],
     party: Array.isArray(content.party) ? content.party : (Array.isArray(design.party) ? design.party : []),
-    gift: Array.isArray(content.gift) ? content.gift : [],
+    gift: resolvedGift,
+    khqrDollar,
+    khqrRiel,
     faq: Array.isArray(content.faq) ? content.faq : (Array.isArray(design.faq) ? design.faq : []),
     dressCode: content.dressCode || design.dressCode || (content.dressColors?.length ? { colors: content.dressColors } : null),
     dressColors: content.dressColors || design.dressColors || content.dressCode?.colors || [],
@@ -196,6 +205,7 @@ export function publicInvitationToDraft(invitation, media) {
     },
     enabledSections: {
       ...enabled,
+      gift: enabled.gift !== undefined ? enabled.gift : (hasGift ? true : undefined),
       rsvp: enabled.rsvp !== false,
     },
   };
@@ -227,8 +237,10 @@ export function draftToInvitationPayload(draft, backendTemplateId) {
   const event = draft?.event || {};
   const couple = draft?.couple || {};
   const extras = draft?.extras || {};
+  const hasDraftGift = Boolean(draft?.khqrDollar?.qrUrl || draft?.khqrDollar?.accountNumber || draft?.khqrRiel?.qrUrl || draft?.khqrRiel?.accountNumber || draft?.gift?.length);
   const enabledSections = {
     ...(draft?.enabledSections || {}),
+    gift: draft?.enabledSections?.gift !== undefined ? draft.enabledSections.gift : hasDraftGift,
     rsvp: draft?.rsvp?.enabled !== false && draft?.enabledSections?.rsvp !== false,
   };
   const languageMode = extras.languageMode || "both";
@@ -245,6 +257,8 @@ export function draftToInvitationPayload(draft, backendTemplateId) {
     schedule: draft?.schedule || [],
     party: draft?.party || [],
     gift: draft?.gift || [],
+    khqrDollar: draft?.khqrDollar || null,
+    khqrRiel: draft?.khqrRiel || null,
     faq: draft?.faq || [],
     dressCode: draft?.dressCode || null,
     dressColors: draft?.dressColors || draft?.dressCode?.colors || [],
@@ -265,6 +279,8 @@ export function draftToInvitationPayload(draft, backendTemplateId) {
   const design = normalizeOpeningDesign({
     templateId: draft?.templateId || KEEP_TEMPLATE_CODE,
     ...(draft?.design || {}),
+    khqrDollar: draft?.khqrDollar || null,
+    khqrRiel: draft?.khqrRiel || null,
     openingVideoEnabled:
       draft?.openingVideoEnabled !== false && Boolean(draft?.openingVideo || draft?.design?.openingVideoUrl),
   });

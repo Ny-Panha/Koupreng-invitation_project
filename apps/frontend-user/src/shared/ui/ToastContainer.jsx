@@ -19,7 +19,12 @@ export default function ToastContainer() {
       const id = Date.now() + Math.random().toString(36).slice(2, 6);
       const newToast = { id, message, type };
 
-      setToasts((current) => [...current, newToast]);
+      setToasts((current) => {
+        if (current.some((item) => item.message === message)) {
+          return current;
+        }
+        return [...current, newToast];
+      });
 
       setTimeout(() => {
         setToasts((current) => current.filter((item) => item.id !== id));
@@ -53,7 +58,9 @@ export default function ToastContainer() {
 
         return (
           <div key={item.id} className={`k-toast k-toast-${item.type}`}>
-            <Icon className="k-toast-icon" aria-hidden="true" />
+            <div className="k-toast-icon-wrapper">
+              <Icon className="k-toast-icon" aria-hidden="true" />
+            </div>
             <span className="k-toast-message">{item.message}</span>
             <button
               type="button"

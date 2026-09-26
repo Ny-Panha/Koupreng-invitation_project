@@ -157,7 +157,7 @@
     background: radial-gradient(ellipse, rgba(248, 250, 245, 0.98) 58%, rgba(248, 250, 245, 0) 76%);
     transform: translateX(-50%);
 }
-.ck-cover__title small { color: #a77428; font: 700 clamp(7px, 2.2cqw, 10px)/1.2 "Kantumruy Pro", sans-serif; letter-spacing: 0.12em; }
+.ck-cover__title small { color: #a77428; font: 700 clamp(7px, 2.2cqw, 10px)/1.2 "Kantumruy Pro", sans-serif; letter-spacing: normal; }
 .ck-cover__title h1 { margin: 3px 0 0; font: 400 clamp(15px, 5cqw, 23px)/1.55 "Moul", serif; }
 .ck-cover__names {
     position: absolute;
@@ -253,7 +253,7 @@
     text-shadow: 0 1px rgba(255, 255, 255, 0.9);
     transform: translateX(-50%);
 }
-.ck-hero__copy > p { margin: 0; color: #b17b25; font: 700 clamp(8px, 2.7cqw, 12px)/1.2 "Kantumruy Pro", sans-serif; letter-spacing: 0.16em; }
+.ck-hero__copy > p { margin: 0; color: #b17b25; font: 700 clamp(8px, 2.7cqw, 12px)/1.2 "Kantumruy Pro", sans-serif; letter-spacing: normal; }
 .ck-hero__monogram { display: grid; width: 20%; margin-top: 4%; aspect-ratio: 1; place-items: center; border: 1px solid rgba(8, 47, 98, 0.46); border-radius: 50%; color: #bd8526; font: 400 clamp(17px, 6.5cqw, 29px)/1 "Moul", serif; background: rgba(249, 252, 246, 0.74); }
 .ck-hero__copy h1 { max-width: 14em; margin: 4% 0 0; font: 400 clamp(16px, 5.3cqw, 24px)/1.75 "Moul", serif; }
 .ck-hero__names { display: flex; align-items: center; gap: 10px; margin-top: 3%; font: 400 clamp(17px, 6cqw, 27px)/1.5 "Moul", serif; }
@@ -437,7 +437,7 @@
 
 .ck-footer { display: grid; place-items: center; color: var(--ck-navy); text-align: center; }
 .ck-footer > div { display: grid; justify-items: center; }
-.ck-footer small { color: #a87322; font: 700 clamp(7px, 2.2cqw, 10px)/1.2 "Kantumruy Pro", sans-serif; letter-spacing: 0.12em; }
+.ck-footer small { color: #a87322; font: 700 clamp(7px, 2.2cqw, 10px)/1.2 "Kantumruy Pro", sans-serif; letter-spacing: normal; }
 .ck-footer h2 { margin: 2px 0 0; font: 400 clamp(18px, 5.8cqw, 26px)/1.45 "Koulen", sans-serif; }
 .ck-footer p { margin: 0; font: 400 clamp(11px, 3.5cqw, 15px)/1.5 "Moul", serif; }
 .ck-footer p span { color: var(--ck-gold); }

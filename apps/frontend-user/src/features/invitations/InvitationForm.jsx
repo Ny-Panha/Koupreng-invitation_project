@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import {
     Music,
     Sparkles,
     Heart,
     Mail,
     Calendar,
+    CalendarHeart,
     Clock,
     MapPin,
     Images,
@@ -30,6 +31,8 @@ import {
     Search,
     ArrowLeft,
     RotateCcw,
+    Eye,
+    ArrowRight,
 } from "lucide-react";
 
 
@@ -454,6 +457,7 @@ export default function InvitationForm({ invitation }) {
     const { text: t } = useBackendMessages("invitations");
     const { user } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
     const params = useParams();
     const [searchParams] = useSearchParams();
     const invitationId = invitation?.id || params.id;
@@ -687,6 +691,7 @@ export default function InvitationForm({ invitation }) {
     const [isSaving, setIsSaving] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
     const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
+
     const [isMobilePreviewOpen, setIsMobilePreviewOpen] = useState(false);
     const [pendingCoverFile, setPendingCoverFile] = useState(null);
     const [pendingInvitationFile, setPendingInvitationFile] = useState(null);
@@ -880,11 +885,42 @@ export default function InvitationForm({ invitation }) {
     const handleFileUpload = (e, callback) => {
         const file = e.target.files?.[0];
         if (!file) return;
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            callback(event.target.result, file);
-        };
-        reader.readAsDataURL(file);
+
+        if (file.type?.startsWith("image/")) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const img = new Image();
+                img.onload = () => {
+                    const maxDim = 600;
+                    let { width, height } = img;
+                    if (width > maxDim || height > maxDim) {
+                        if (width > height) {
+                            height = Math.round((height * maxDim) / width);
+                            width = maxDim;
+                        } else {
+                            width = Math.round((width * maxDim) / height);
+                            height = maxDim;
+                        }
+                    }
+                    const canvas = document.createElement("canvas");
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext("2d");
+                    ctx.drawImage(img, 0, 0, width, height);
+                    const compressedDataUrl = canvas.toDataURL("image/jpeg", 0.82);
+                    callback(compressedDataUrl, file);
+                };
+                img.onerror = () => callback(event.target.result, file);
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        } else {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                callback(event.target.result, file);
+            };
+            reader.readAsDataURL(file);
+        }
         e.target.value = "";
     };
 
@@ -1266,6 +1302,8 @@ export default function InvitationForm({ invitation }) {
                 gallery: (form.photos || [])
                     .filter((photo) => photo?.url)
                     .map(({ id, url }) => ({ id, preview: url, type: "image" })),
+                khqrDollar: form.khqrDollar,
+                khqrRiel: form.khqrRiel,
                 thankYouTitle: form.thankYouTitle,
                 thankYouText: form.thankYouText,
                 apologyTitle: form.apologyTitle,
@@ -1308,8 +1346,9 @@ export default function InvitationForm({ invitation }) {
 
             let saved;
             try {
-                if (isEdit && !isNaN(Number(invitationId))) {
-                    saved = await invitationService.update(invitationId, payload);
+                const effectiveBackendId = (!isNaN(Number(invitationId)) ? invitationId : (invitation?.backendInvitationId || (!isNaN(Number(invitation?.id)) ? invitation.id : null)));
+                if (effectiveBackendId) {
+                    saved = await invitationService.update(effectiveBackendId, payload);
                 } else {
                     saved = await invitationService.create(payload);
                 }
@@ -1319,7 +1358,7 @@ export default function InvitationForm({ invitation }) {
 
             let savedCoverUrl = form.uploadedCoverUrl || "";
             let savedInvitationUrl = form.uploadedInvitationUrl || "";
-            const backendId = saved?.id || (isEdit && !isNaN(Number(invitationId)) ? invitationId : null);
+            const backendId = saved?.id || (isEdit && !isNaN(Number(invitationId)) ? invitationId : (invitation?.backendInvitationId || null));
             if (pendingCoverFile && backendId) {
                 const uploaded = await mediaService.uploadCover(backendId, pendingCoverFile);
                 savedCoverUrl = uploaded?.fileUrl || uploaded?.data?.fileUrl || savedCoverUrl;
@@ -1345,7 +1384,8 @@ export default function InvitationForm({ invitation }) {
             saveDraft({
                 ownerUserId: user?.id || user?.userId,
                 id: targetDraftId,
-                backendInvitationId: saved?.id || invitation?.backendInvitationId || null,
+                slug: saved?.slug || invitation?.slug || form.slug || "wedding",
+                backendInvitationId: saved?.id || invitation?.backendInvitationId || (!isNaN(Number(invitationId)) ? Number(invitationId) : null),
                 templateId: form.templateId || "garden-royal-khmer-wedding",
                 presetId: form.presetId || "",
                 couple: {
@@ -1401,13 +1441,14 @@ export default function InvitationForm({ invitation }) {
                 khqrRiel: form.khqrRiel,
             });
 
-            toast(t("savedSuccess") || "បានរក្សាទុកគំរូធៀបដោយជោគជ័យ! (Saved successfully)");
+            const successMsg = t("savedSuccess") || "បានរក្សាទុកដោយជោគជ័យ!";
 
             const finalSavedId = saved?.id || targetDraftId;
             if (redirectToPreview && finalSavedId) {
+                toast(successMsg);
                 navigate(`/dashboard/invitations/${finalSavedId}/preview`);
-            } else if (!isEdit && finalSavedId) {
-                navigate(`/dashboard/invitations/${finalSavedId}/edit`, { replace: true });
+            } else {
+                navigate("/dashboard/events", { state: { savedSuccess: true, message: successMsg } });
             }
             return finalSavedId;
         } catch (err) {
@@ -2821,7 +2862,13 @@ export default function InvitationForm({ invitation }) {
                     <button
                         type="button"
                         className="pe-btn-back"
-                        onClick={() => navigate("/dashboard")}
+                        onClick={() => {
+                            if (location.state?.from) {
+                                navigate(location.state.from);
+                            } else {
+                                navigate("/dashboard/events");
+                            }
+                        }}
                         title={t("backBtn") || "ត្រឡប់ក្រោយ"}
                     >
                         <ArrowLeft size={16} />

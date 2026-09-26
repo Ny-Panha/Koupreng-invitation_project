@@ -44,10 +44,10 @@
 }
 
 .wj-nav-brand {
-  font-family: "Cinzel", "Playfair Display", Georgia, serif;
+  font-family: "Cinzel", "Playfair Display", "Moul", "Kantumruy Pro", Georgia, serif;
   font-size: 1.35rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: normal;
   color: var(--wj-primary);
   text-decoration: none;
 }
@@ -113,7 +113,7 @@
 .wj-hero-tag {
   display: inline-block;
   font-size: 0.85rem;
-  letter-spacing: 0.2em;
+  letter-spacing: normal;
   text-transform: uppercase;
   color: var(--wj-accent);
   background: rgba(214, 158, 46, 0.15);
@@ -125,10 +125,11 @@
 }
 
 .wj-hero-names {
-  font-family: "Cinzel", "Playfair Display", Georgia, serif;
+  font-family: "Cinzel", "Playfair Display", "Moul", "Kantumruy Pro", Georgia, serif;
   font-size: clamp(2.5rem, 6vw, 4.5rem);
   font-weight: 700;
-  line-height: 1.15;
+  line-height: 1.25;
+  letter-spacing: normal;
   margin-bottom: 1rem;
   text-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
@@ -136,6 +137,7 @@
 .wj-hero-date {
   font-size: 1.25rem;
   font-weight: 400;
+  letter-spacing: normal;
   margin-bottom: 2rem;
   color: #e2e8f0;
 }
@@ -169,7 +171,7 @@
 .wj-countdown-label {
   font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: normal;
   color: #cbd5e0;
 }
 
@@ -189,16 +191,17 @@
   font-size: 0.85rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: normal;
   color: var(--wj-primary-light);
   margin-bottom: 0.5rem;
 }
 
 .wj-section-title {
-  font-family: "Cinzel", "Playfair Display", Georgia, serif;
+  font-family: "Cinzel", "Playfair Display", "Moul", "Kantumruy Pro", Georgia, serif;
   font-size: clamp(1.8rem, 3.5vw, 2.5rem);
   color: var(--wj-primary);
   font-weight: 700;
+  letter-spacing: normal;
 }
 
 .wj-section-sub {

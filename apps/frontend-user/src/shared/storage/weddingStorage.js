@@ -57,9 +57,13 @@ export function getDraftBySlug(slug, ownerUserId = null) {
   if (!slug) return null;
   const all = readAll();
   const resolvedOwnerUserId = resolveOwnerUserId(ownerUserId);
-  if (resolvedOwnerUserId == null) return null;
-  return Object.values(all).find((draft) => draft.slug === slug
-    && String(draft.ownerUserId) === String(resolvedOwnerUserId)) || null;
+  return Object.values(all).find((draft) => {
+    if (draft.slug !== slug) return false;
+    if (resolvedOwnerUserId != null && draft.ownerUserId != null && String(draft.ownerUserId) !== String(resolvedOwnerUserId)) {
+      return false;
+    }
+    return true;
+  }) || null;
 }
 
 export function saveDraft(draft) {

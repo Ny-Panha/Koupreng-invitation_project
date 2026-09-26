@@ -218,7 +218,7 @@ export default function BlissEditorialLayout({
                     boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
                   }}
                 />
-                <span style={{ fontSize: "0.8rem", letterSpacing: "0.05em", color: "var(--bliss-charcoal)", textTransform: "uppercase" }}>{c.name}</span>
+                <span style={{ fontSize: "0.8rem", letterSpacing: "normal", color: "var(--bliss-charcoal)", textTransform: "uppercase" }}>{c.name}</span>
               </div>
             ))}
           </div>
@@ -328,7 +328,7 @@ export default function BlissEditorialLayout({
               color: "#ffffff",
               padding: "0.8rem 2rem",
               fontSize: "0.85rem",
-              letterSpacing: "0.15em",
+              letterSpacing: "normal",
               textTransform: "uppercase",
               textDecoration: "none",
             }}
@@ -365,7 +365,7 @@ export default function BlissEditorialLayout({
         ) : (
           <form onSubmit={handleRsvpSubmit}>
             <div style={{ marginBottom: "1.5rem" }}>
-              <label style={{ display: "block", fontSize: "0.8rem", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.5rem" }}>
+              <label style={{ display: "block", fontSize: "0.8rem", letterSpacing: "normal", textTransform: "uppercase", marginBottom: "0.5rem" }}>
                 ឈ្មោះពេញ (Full Name)
               </label>
               <input
@@ -378,7 +378,7 @@ export default function BlissEditorialLayout({
             </div>
 
             <div style={{ marginBottom: "1.5rem" }}>
-              <label style={{ display: "block", fontSize: "0.8rem", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.5rem" }}>
+              <label style={{ display: "block", fontSize: "0.8rem", letterSpacing: "normal", textTransform: "uppercase", marginBottom: "0.5rem" }}>
                 ការចូលរួម (Attendance)
               </label>
               <div style={{ display: "flex", gap: "1rem" }}>
@@ -406,7 +406,7 @@ export default function BlissEditorialLayout({
             </div>
 
             <div style={{ marginBottom: "2rem" }}>
-              <label style={{ display: "block", fontSize: "0.8rem", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.5rem" }}>
+              <label style={{ display: "block", fontSize: "0.8rem", letterSpacing: "normal", textTransform: "uppercase", marginBottom: "0.5rem" }}>
                 ពាក្យជូនពរ (Blessing Note)
               </label>
               <textarea
@@ -427,7 +427,7 @@ export default function BlissEditorialLayout({
                 padding: "0.9rem",
                 border: "none",
                 fontSize: "0.85rem",
-                letterSpacing: "0.15em",
+                letterSpacing: "normal",
                 textTransform: "uppercase",
                 cursor: "pointer",
               }}

@@ -577,33 +577,33 @@
 /* Top Floating Header Toolbar */
 .cinematic-header-toolbar {
   position: absolute;
-  top: max(14px, env(safe-area-inset-top, 14px));
-  left: 14px;
-  right: 14px;
+  top: max(16px, env(safe-area-inset-top, 16px));
+  left: 16px;
+  right: 16px;
   z-index: 40;
   display: flex;
   align-items: center;
   justify-content: space-between;
   pointer-events: auto;
-  gap: 10px;
+  gap: 12px;
 }
 
 /* Royal Couple Monogram Badge (Top Left) */
 .cinematic-couple-badge {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 6px 14px;
+  gap: 8px;
+  padding: 7px 16px;
   border-radius: 9999px;
-  background: rgba(18, 2, 4, 0.78);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1.2px solid rgba(229, 185, 79, 0.6);
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.7), inset 0 0 10px rgba(229, 185, 79, 0.18);
-  color: #fff2b2;
+  background: rgba(26, 3, 7, 0.78);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(229, 185, 79, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+  color: #fff0a6;
   font-family: 'Kantumruy Pro', sans-serif;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 12.5px;
+  font-weight: 700;
   letter-spacing: 0.02em;
   max-width: 60%;
   white-space: nowrap;
@@ -613,9 +613,8 @@
 
 .cinematic-couple-badge-icon {
   color: #ffd76a;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1;
-  filter: drop-shadow(0 0 6px rgba(255, 215, 106, 0.9));
   flex-shrink: 0;
 }
 
@@ -628,58 +627,60 @@
 }
 
 .cinematic-sound-btn {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  background: rgba(18, 2, 4, 0.78);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1.2px solid rgba(229, 185, 79, 0.6);
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.7), inset 0 0 8px rgba(229, 185, 79, 0.15);
+  background: rgba(26, 3, 7, 0.78);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(229, 185, 79, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
   color: #ffd76a;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.22s ease;
+  transition: all 0.2s ease;
 }
 
 .cinematic-sound-btn:hover {
-  transform: scale(1.08);
+  transform: scale(1.06);
+  background: rgba(45, 6, 12, 0.95);
   border-color: #ffd76a;
-  box-shadow: 0 0 16px rgba(255, 215, 106, 0.6);
+  color: #ffffff;
 }
 
 .cinematic-sound-btn:active {
   transform: scale(0.94);
 }
 
-/* Skip Button: Rich 24k Gold Foil Pill */
+/* Skip Button: Clean Frosted Wine Pill */
 .cinematic-skip-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 14px;
+  padding: 7px 16px;
   border-radius: 9999px;
-  background: linear-gradient(135deg, #fff2a6 0%, #ffd76a 30%, #e5b94f 70%, #b88628 100%);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  box-shadow:
-    0 4px 16px rgba(212, 175, 55, 0.5),
-    inset 0 1px 2px rgba(255, 255, 255, 0.9);
-  color: #1a0505;
+  background: rgba(26, 3, 7, 0.78);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(229, 185, 79, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+  color: #fff0a6;
   font-family: 'Kantumruy Pro', sans-serif;
-  font-size: 11.5px;
+  font-size: 12.5px;
   font-weight: 700;
   letter-spacing: 0.02em;
   cursor: pointer;
   white-space: nowrap;
-  transition: all 0.22s ease;
+  transition: all 0.2s ease;
 }
 
 .cinematic-skip-btn:hover {
-  transform: scale(1.06);
-  filter: brightness(1.1);
-  box-shadow: 0 6px 22px rgba(255, 215, 106, 0.75);
+  transform: scale(1.04);
+  background: rgba(45, 6, 12, 0.95);
+  border-color: #ffd76a;
+  color: #ffffff;
 }
 
 .cinematic-skip-btn:active {
@@ -702,7 +703,7 @@
 }
 
 /* ==========================================================================
-   Popup Modal — "show vdo hxx jam popup"
+   Popup Modal — Frosted Wine Glass & Champagne Gold ("som ng bg vdo")
    ========================================================================== */
 .cinematic-popup-backdrop {
   position: absolute;
@@ -711,11 +712,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;
-  background: rgba(12, 1, 2, 0.68);
+  padding: 20px;
+  background: rgba(14, 1, 3, 0.55);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
 }
 
 .cinematic-popup-backdrop.is-hidden {
@@ -733,114 +735,59 @@
 .cinematic-popup-card {
   position: relative;
   width: 100%;
-  max-width: 340px;
-  padding: 24px 18px 20px 18px;
-  border-radius: 24px;
-  background: radial-gradient(circle at 50% 20%, rgba(38, 4, 8, 0.96) 0%, rgba(14, 1, 3, 0.98) 100%);
-  border: 1.5px solid rgba(229, 185, 79, 0.75);
+  max-width: 380px;
+  padding: 32px 24px 26px 24px;
+  border-radius: 28px;
+  background: linear-gradient(165deg, rgba(46, 6, 13, 0.86) 0%, rgba(18, 2, 6, 0.94) 100%);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1.2px solid rgba(229, 185, 79, 0.42);
   box-shadow:
-    0 24px 70px rgba(0, 0, 0, 0.95),
-    0 0 35px rgba(229, 185, 79, 0.35),
-    inset 0 0 20px rgba(229, 185, 79, 0.15);
+    0 25px 70px rgba(0, 0, 0, 0.8),
+    0 0 35px rgba(180, 20, 40, 0.22),
+    inset 0 1px 0 rgba(255, 230, 150, 0.22);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  animation: royalPopupGlow 4s infinite ease-in-out;
-}
-
-@keyframes royalPopupGlow {
-  0%, 100% {
-    box-shadow:
-      0 24px 70px rgba(0, 0, 0, 0.95),
-      0 0 30px rgba(229, 185, 79, 0.3),
-      inset 0 0 16px rgba(229, 185, 79, 0.12);
-  }
-  50% {
-    box-shadow:
-      0 24px 70px rgba(0, 0, 0, 0.95),
-      0 0 45px rgba(255, 215, 106, 0.6),
-      inset 0 0 24px rgba(255, 215, 106, 0.25);
-  }
+  box-sizing: border-box;
 }
 
 .cinematic-popup-crest {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: rgba(229, 185, 79, 0.15);
-  border: 1.2px solid rgba(255, 215, 106, 0.55);
+  border: 1px solid rgba(229, 185, 79, 0.45);
   color: #ffd76a;
-  margin-bottom: 10px;
-  box-shadow: 0 0 14px rgba(255, 215, 106, 0.4);
+  margin-bottom: 12px;
+  box-shadow: 0 0 14px rgba(229, 185, 79, 0.2);
 }
 
-.cinematic-popup-couple-name {
-  font-family: 'Kantumruy Pro', sans-serif;
-  font-size: 13.5px;
-  font-weight: 700;
-  color: #fff2b2;
-  margin-bottom: 14px;
-  letter-spacing: 0.02em;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
-}
-
-.cinematic-popup-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 100%;
-  align-items: center;
-}
-
-.cinematic-replay-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  background: transparent;
-  border: none;
-  color: #ffd76a;
-  font-family: 'Kantumruy Pro', sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  cursor: pointer;
-  padding: 5px 12px;
-  opacity: 0.85;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.cinematic-replay-btn:hover {
-  opacity: 1;
-  transform: scale(1.05);
-}
-
-/* Title: វីដេអូបើកឆាកអាពាហ៍ពិពាហ៍ in 3D Embossed Metallic Gold Moul Font */
+/* Title: In Luminous Warm White */
 .cinematic-hub-title {
-  font-family: 'Moul', serif;
-  font-size: clamp(17px, 5vw, 22px);
-  line-height: 1.4;
-  margin: 0 0 4px 0;
-  background: linear-gradient(180deg, #fffdf0 0%, #ffd76a 28%, #e5b94f 65%, #9c6e1e 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0px 2px 0px #4d2f02) drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.95));
-  letter-spacing: 0.02em;
+  font-family: 'Moul', 'Bayon', serif;
+  font-size: clamp(16px, 4.2vw, 19px);
+  line-height: 1.45;
+  margin: 0 0 6px 0;
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
 }
 
 /* Subtitle: ✧ CINEMATIC PRE-WEDDING STORY ✧ */
 .cinematic-hub-subtitle {
-  font-family: 'Cinzel', serif;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.26em;
-  color: #ffd76a;
-  text-transform: uppercase;
-  margin: 0 0 10px 0;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95), 0 0 12px rgba(255, 215, 106, 0.5);
+  font-family: 'Kantumruy Pro', 'Siemreap', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #e5b94f;
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
 }
 
 /* Luminous Hairline Divider with Kbach: — ❖ — */
@@ -850,7 +797,7 @@
   justify-content: center;
   gap: 12px;
   width: 140px;
-  margin: 0 auto 16px auto;
+  margin: 0 auto 12px auto;
 }
 
 .cinematic-hub-divider::before,
@@ -858,53 +805,147 @@
   content: "";
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, transparent, #ffd76a, transparent);
+  background: linear-gradient(90deg, transparent, rgba(229, 185, 79, 0.45), transparent);
 }
 
 .cinematic-hub-kbach {
   color: #ffd76a;
-  font-size: 12px;
-  filter: drop-shadow(0 0 6px rgba(255, 215, 106, 0.8));
+  font-size: 11px;
 }
 
-/* Luxury Frosted Gold Glass Entrance Button */
+.cinematic-popup-couple-name {
+  font-family: 'Moul', 'Bayon', serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff9ea;
+  margin-bottom: 12px;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+
+/* Translucent Frosted Guest Pill Box */
+.cinematic-popup-guest {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  width: 100%;
+  max-width: 300px;
+  padding: 10px 18px;
+  margin: 4px auto 16px auto;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(229, 185, 79, 0.35);
+  border-radius: 16px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+}
+
+.cinematic-guest-label {
+  font-family: 'Kantumruy Pro', 'Siemreap', sans-serif;
+  font-size: 11.5px;
+  color: #e5b94f;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.cinematic-guest-name {
+  font-family: 'Kantumruy Pro', 'Siemreap', 'Bayon', serif;
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.cinematic-popup-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  align-items: center;
+}
+
+/* Radiant Champagne Gold Entrance Button with High-Contrast Deep Dark Text */
 .cinematic-enter-direct-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 9px 22px;
+  width: 100%;
+  max-width: 320px;
+  min-height: 46px;
+  padding: 12px 20px;
   border-radius: 9999px;
-  background: rgba(24, 2, 5, 0.78);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1.4px solid rgba(229, 185, 79, 0.65);
-  box-shadow:
-    0 4px 20px rgba(0, 0, 0, 0.75),
-    inset 0 0 12px rgba(229, 185, 79, 0.2);
-  color: #fff4b8;
-  font-family: 'Kantumruy Pro', sans-serif;
-  font-size: 12.5px;
-  font-weight: 600;
+  background: linear-gradient(135deg, #ffd76a 0%, #e5b94f 50%, #c89b3c 100%);
+  border: none;
+  box-shadow: 0 8px 24px rgba(229, 185, 79, 0.38);
+  color: #1a0306;
+  font-family: 'Kantumruy Pro', 'Siemreap', 'Battambang', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
   letter-spacing: 0.02em;
   cursor: pointer;
-  max-width: 94%;
   white-space: nowrap;
-  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: all 0.25s ease;
+  box-sizing: border-box;
+}
+
+.cinematic-enter-direct-btn span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .cinematic-enter-direct-btn:hover {
-  transform: translateY(-2px) scale(1.03);
-  border-color: #ffd76a;
-  color: #ffffff;
-  box-shadow:
-    0 8px 25px rgba(0, 0, 0, 0.85),
-    0 0 20px rgba(255, 215, 106, 0.5),
-    inset 0 0 14px rgba(255, 215, 106, 0.3);
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #ffe085 0%, #eec65f 50%, #d4a544 100%);
+  box-shadow: 0 12px 32px rgba(229, 185, 79, 0.52);
+  color: #1a0306;
 }
 
 .cinematic-enter-direct-btn:active {
-  transform: scale(0.97);
+  transform: scale(0.98);
+}
+
+.cinematic-btn-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: #1a0306;
+}
+
+.cinematic-replay-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(229, 185, 79, 0.35);
+  border-radius: 9999px;
+  color: #ffd76a;
+  font-family: 'Kantumruy Pro', 'Siemreap', 'Battambang', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 8px 20px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.cinematic-replay-btn:hover {
+  background: rgba(229, 185, 79, 0.22);
+  border-color: #ffd76a;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.cinematic-btn-icon-sm {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: #ffd76a;
 }
 
 /* Bottom Grand Floating CTA while Playing Video */
@@ -926,16 +967,14 @@
   gap: 10px;
   width: 100%;
   max-width: 360px;
-  padding: 13px 22px;
+  padding: 13px 24px;
   border-radius: 9999px;
-  background: linear-gradient(180deg, #160205 0%, #080002 100%);
-  border: 1.8px solid #e5b94f;
-  box-shadow:
-    0 0 30px rgba(229, 185, 79, 0.5),
-    inset 0 0 12px rgba(229, 185, 79, 0.25);
-  color: #fff4b8;
+  background: linear-gradient(135deg, #ffd76a 0%, #e5b94f 50%, #c89b3c 100%);
+  border: none;
+  box-shadow: 0 8px 26px rgba(229, 185, 79, 0.4);
+  color: #1a0306;
   font-family: 'Kantumruy Pro', sans-serif;
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.02em;
   cursor: pointer;
@@ -943,14 +982,16 @@
 }
 
 .cinematic-bottom-cta-btn:hover {
-  transform: scale(1.03);
-  border-color: #ffd76a;
-  box-shadow:
-    0 0 40px rgba(255, 215, 106, 0.8),
-    inset 0 0 16px rgba(255, 215, 106, 0.4);
-  color: #ffffff;
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #ffe085 0%, #eec65f 50%, #d4a544 100%);
+  box-shadow: 0 12px 34px rgba(229, 185, 79, 0.55);
+  color: #1a0306;
 }
 
 .cinematic-bottom-cta-btn:active {
   transform: scale(0.97);
+}
+
+.cinematic-bottom-cta-btn svg {
+  color: #1a0306;
 }

@@ -129,7 +129,7 @@
   font-size: clamp(2rem, 5vw, 3.2rem);
   color: var(--rkh-crimson);
   margin-bottom: 0.75rem;
-  letter-spacing: 0.05em;
+  letter-spacing: normal;
   text-shadow: 0 2px 4px rgba(115, 19, 32, 0.15);
 }
 

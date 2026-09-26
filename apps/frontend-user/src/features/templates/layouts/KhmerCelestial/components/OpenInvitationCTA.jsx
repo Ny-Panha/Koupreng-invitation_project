@@ -183,7 +183,7 @@ export default function OpenInvitationCTA({
                 color: "#1c140d",
                 fontWeight: "700",
                 fontSize: "13px",
-                letterSpacing: "0.03em",
+                letterSpacing: "normal",
                 boxShadow: "0 6px 20px rgba(212, 175, 55, 0.35)",
                 border: "1px solid rgba(255, 235, 170, 0.5)",
                 whiteSpace: "nowrap"

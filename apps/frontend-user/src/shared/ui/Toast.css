@@ -1,76 +1,121 @@
 .k-toast-wrapper {
   position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  z-index: var(--z-toast, 2500);
+  bottom: 24px;
+  right: 96px; /* Positioned right next to chatbot button (60px + 24px + 12px) */
+  z-index: 10001; /* Higher than chatbot (9999) */
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
   gap: 0.75rem;
   max-width: 420px;
-  width: calc(100% - 3rem);
+  min-width: 250px;
   pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .k-toast-wrapper {
+    right: 16px;
+    bottom: 96px;
+    left: 16px;
+    max-width: calc(100vw - 32px);
+    align-items: center;
+  }
 }
 
 .k-toast {
   pointer-events: auto;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.875rem 1rem;
-  border-radius: var(--radius-lg, 14px);
-  background: var(--brand-surface, #ffffff);
-  border: 1px solid var(--brand-border, #e7e7ee);
-  box-shadow: var(--shadow-lg, 0 12px 32px rgba(15, 23, 42, 0.10));
-  color: var(--brand-text, #1e293b);
-  font-family: var(--font-sans);
-  font-size: var(--text-sm, 0.875rem);
-  font-weight: var(--weight-medium, 500);
-  line-height: var(--leading-normal, 1.5);
-  animation: k-toast-in 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  gap: 0.85rem;
+  padding: 0.75rem 1rem 0.75rem 0.85rem;
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 12px 30px -4px rgba(15, 23, 42, 0.15), 0 4px 10px -2px rgba(15, 23, 42, 0.05);
+  color: #0f172a;
+  font-family: 'Kantumruy Pro', var(--font-sans), sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.4;
+  animation: k-toast-slide-in 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   overflow-wrap: anywhere;
   word-break: break-word;
 }
 
-.k-toast-icon {
-  font-size: 1.25rem;
+.k-toast-icon-wrapper {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
 }
 
-.k-toast-success { border-left: 4px solid var(--status-success-fg, #15803d); }
-.k-toast-success .k-toast-icon { color: var(--status-success-fg, #15803d); }
+.k-toast-success .k-toast-icon-wrapper {
+  background: #dcfce7;
+  border: 1.5px solid #bbf7d0;
+  color: #059669;
+}
 
-.k-toast-error { border-left: 4px solid var(--status-danger-fg, #dc2626); }
-.k-toast-error .k-toast-icon { color: var(--status-danger-fg, #dc2626); }
+.k-toast-error .k-toast-icon-wrapper {
+  background: #fee2e2;
+  border: 1.5px solid #fecaca;
+  color: #dc2626;
+}
 
-.k-toast-warning { border-left: 4px solid var(--status-warning-fg, #b45309); }
-.k-toast-warning .k-toast-icon { color: var(--status-warning-fg, #b45309); }
+.k-toast-warning .k-toast-icon-wrapper {
+  background: #fef3c7;
+  border: 1.5px solid #fde68a;
+  color: #d97706;
+}
 
-.k-toast-info { border-left: 4px solid var(--brand-primary, #6b6bc4); }
-.k-toast-info .k-toast-icon { color: var(--brand-primary, #6b6bc4); }
+.k-toast-info .k-toast-icon-wrapper {
+  background: #e0e7ff;
+  border: 1.5px solid #c7d2fe;
+  color: #4f46e5;
+}
+
+.k-toast-icon {
+  font-size: 1.45rem;
+  flex-shrink: 0;
+}
 
 .k-toast-message {
   flex: 1;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.01em;
 }
 
 .k-toast-close {
   background: transparent;
   border: none;
-  color: var(--brand-text-muted, #7a8799);
+  color: #94a3b8;
   cursor: pointer;
   padding: 0.25rem;
-  border-radius: var(--radius-pill, 999px);
+  border-radius: 999px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 1.15rem;
+  transition: all 0.15s ease;
+  margin-left: 0.25rem;
 }
 
 .k-toast-close:hover {
-  background: var(--brand-surface-2, #f8f8fd);
-  color: var(--brand-text, #1e293b);
+  background: #f1f5f9;
+  color: #334155;
 }
 
-@keyframes k-toast-in {
-  from { transform: translateY(16px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+@keyframes k-toast-slide-in {
+  from {
+    transform: translateX(20px) scale(0.96);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
 }

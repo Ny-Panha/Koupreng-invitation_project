@@ -408,3 +408,77 @@ body {
   white-space: nowrap;
   border: 0;
 }
+
+/* ============================================================
+   Universal Khmer Typography Protection:
+   NEVER allow letter-spacing on Khmer fonts or text across any template.
+   Letter spacing separates Khmer vowels (ស្រៈ) and subscripts (ជើងអក្សរ)
+   causing broken, fragmented text ("បែកៗ").
+   ============================================================ */
+:is(
+  [lang="km"],
+  .font-moul,
+  .font-kantumruy,
+  .font-battambang,
+  .font-siemreap,
+  .font-bayon,
+  .font-koulen,
+  .font-dangrek,
+  .font-angkor,
+  .font-chenla,
+  .font-bokor,
+  .tdy-font-moul,
+  .tdy-font-kantumruy,
+  .kc-heading__khmer,
+  .kc-heading__eyebrow,
+  .kc-opening__couple-names,
+  .kc-opening__time,
+  .kc-opening__date,
+  .kc-opening__subtitle,
+  .kc-opening__guest-label,
+  .kc-opening__guest-name,
+  .el-parents-title,
+  .el-names-title,
+  .ck-cover__title,
+  .ck-hero__copy,
+  .ck-footer,
+  .ck-section-title h2,
+  .ck-section-title small,
+  .wj-nav-brand,
+  .wj-hero-tag,
+  .wj-hero-names,
+  .wj-countdown-label,
+  .wj-section-kicker,
+  .wj-section-title,
+  .bliss-header-link,
+  .bliss-rsvp-trigger,
+  .bliss-editorial-names,
+  .bliss-editorial-date,
+  .bliss-title,
+  .bliss-kicker,
+  .bliss-program-title,
+  .bliss-drawer-title,
+  .rkh-hero-title,
+  .tpl-heading__eyebrow,
+  .tpl-heading__khmer,
+  .tx-hero__subtitle,
+  .tx-hero__families,
+  .tx-kicker,
+  .tx-party__role,
+  .tx-story__kicker
+) {
+  letter-spacing: normal !important;
+}
+
+/* Enforce normal letter-spacing whenever Khmer font families are applied inline */
+[style*="Moul"],
+[style*="Kantumruy"],
+[style*="Battambang"],
+[style*="Bayon"],
+[style*="Siemreap"],
+[style*="Dangrek"],
+[style*="Koulen"],
+[style*="Noto Sans Khmer"],
+[style*="Noto Serif Khmer"] {
+  letter-spacing: normal !important;
+}

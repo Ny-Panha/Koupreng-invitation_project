@@ -86,7 +86,7 @@
   display: inline-block;
   font-size: 0.65rem;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
+  letter-spacing: normal;
   color: var(--tpl-primary);
   font-weight: 700;
   margin-bottom: 0.35rem;

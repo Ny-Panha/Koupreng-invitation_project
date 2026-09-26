@@ -81,10 +81,14 @@ export default function InvitationEditPage() {
                     sketchMapImage: localDraft.sketchMapImage || null,
                     messageText: localDraft.message || preset.messageText || "",
                     thankYouText: localDraft.thankYouText || "",
+                    khqrDollar: localDraft.khqrDollar || null,
+                    khqrRiel: localDraft.khqrRiel || null,
                 };
 
                 const mappedInvitation = {
                     id: localDraft.backendInvitationId || localDraft.id,
+                    backendInvitationId: localDraft.backendInvitationId || null,
+                    slug: localDraft.slug || null,
                     templateId: chosenTemplateId,
                     presetId: preset.presetId || tpl?.presetId || "",
                     title: contentPayload.title,

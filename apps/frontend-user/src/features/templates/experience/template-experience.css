@@ -145,7 +145,7 @@
     font-family: var(--font-english-romantic);
     font-size: 0.8rem;
     font-weight: 600;
-    letter-spacing: 0.16em;
+    letter-spacing: normal;
     text-transform: uppercase;
 }
 
@@ -160,7 +160,7 @@
 /* ── Kicker / section label ────────────────────────────────── */
 .tx-kicker {
     font-size: 0.72rem;
-    letter-spacing: 0.32em;
+    letter-spacing: normal;
     text-transform: uppercase;
     color: var(--tpl-accent-dark);
     font-weight: 600;
@@ -2400,22 +2400,47 @@
 
 .tx-root .tx-curtain-card {
     position: relative;
-    width: min(340px, 92%);
+    width: min(350px, 92%);
     padding: 2.2rem 1.6rem;
-    border-radius: 16px;
-    background: linear-gradient(160deg, #260a10 0%, #150306 100%);
-    border: 1px solid rgba(212, 175, 55, 0.6);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 235, 180, 0.2);
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid #eadfce;
+    box-shadow: 0 20px 60px rgba(42, 31, 16, 0.22), 0 6px 20px rgba(93, 67, 32, 0.05);
     text-align: center;
-    color: #fff4d6;
+    color: #2a1f10;
 }
 
 .tx-root .tx-curtain-card-border {
     position: absolute;
-    inset: 6px;
-    border: 1px dashed rgba(212, 175, 55, 0.45);
-    border-radius: 12px;
+    inset: 8px;
+    border: 1px solid rgba(176, 146, 106, 0.25);
+    border-radius: 18px;
     pointer-events: none;
+}
+
+.tx-root .tx-curtain-card .tx-gate__eyebrow {
+    color: #8c6f4b;
+}
+
+.tx-root .tx-curtain-card .tx-gate__invitation-text {
+    color: #7d6443;
+}
+
+.tx-root .tx-curtain-card h1,
+.tx-root .tx-curtain-card .tx-foil-gold {
+    color: #2a1f10;
+}
+
+.tx-root .tx-curtain-card .tx-gate__crest {
+    background: rgba(176, 146, 106, 0.12);
+    border: 1px solid rgba(176, 146, 106, 0.25);
+    color: #B0926A;
+}
+
+.tx-root .tx-curtain-card .tx-gate__guest {
+    color: #2a1f10;
 }
 
 .tx-root .tx-curtain-light-beam {
@@ -3416,12 +3441,12 @@
     font-size: clamp(0.9rem, 4cqw, 1rem);
 }
 
-/* Khmer script breaks under wide tracking — relax it in the narrow frame. */
+/* Khmer script breaks under wide tracking — enforce normal in preview. */
 .tx-root--preview .tx-kicker,
 .tx-root--preview .tx-schedule__en,
 .tx-root--preview .tx-party__role,
 .tx-root--preview .tx-story__kicker {
-    letter-spacing: 0.12em;
+    letter-spacing: normal !important;
     font-size: 0.66rem;
 }
 

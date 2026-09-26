@@ -563,7 +563,7 @@ describe("KhmerCelestialLayout integration", () => {
     );
 
     expect(document.querySelector(".kc-opening--cinematic")).toBeInTheDocument();
-    expect(screen.getByText("វីដេអូបើកឆាកអាពាហ៍ពិពាហ៍")).toBeInTheDocument();
+    expect(document.querySelector(".cinematic-hub-title")).toHaveTextContent("សិរីមង្គលអាពាហ៍ពិពាហ៍");
     expect(document.querySelector(".cinematic-video-overlay video")).toHaveAttribute(
       "src",
       "/invitations/khmer-celestial/burgundy-bokeh.mp4"

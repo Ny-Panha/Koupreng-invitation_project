@@ -2,6 +2,7 @@ const STORAGE_KEYS = {
   guests: "koupreng:guests",
   expenses: "koupreng:budget",
   gifts: "koupreng:gifts",
+  checkIns: "koupreng:checkIns",
   activeEvent: "koupreng.host.activeEventId",
 };
 
@@ -9,6 +10,7 @@ const LEGACY_STORAGE_KEYS = {
   guests: "koupreng.host.manualGuests",
   expenses: "koupreng.host.expenses",
   gifts: "koupreng.host.gifts",
+  checkIns: "koupreng.host.checkIns",
 };
 
 function scopedKey(baseKey, parentId) {
@@ -108,6 +110,16 @@ export function listWeddingGifts(defaultItems = [], eventId) {
 export function saveWeddingGifts(gifts, eventId) {
   const id = eventId || getActiveEventId();
   writeScopedList("gifts", id, gifts);
+}
+
+export function listManualCheckIns(eventId) {
+  const id = eventId || getActiveEventId();
+  return readScopedList("checkIns", id);
+}
+
+export function saveManualCheckIns(checkIns, eventId) {
+  const id = eventId || getActiveEventId();
+  writeScopedList("checkIns", id, checkIns);
 }
 
 export function removeHostPlanningData(eventId) {

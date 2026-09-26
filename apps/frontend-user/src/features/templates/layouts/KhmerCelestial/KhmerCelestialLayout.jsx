@@ -496,11 +496,11 @@ export default function KhmerCelestialLayout({
                 }
                 groom={effectiveContent.groom || groomName}
                 bride={effectiveContent.bride || brideName}
-                weddingTitle={effectiveContent.weddingTitle || "វីដេអូបើកឆាកអាពាហ៍ពិពាហ៍"}
+                weddingTitle={effectiveContent.weddingTitle || effectiveContent.title || "សិរីសួស្តីអាពាហ៍ពិពាហ៍"}
                 weddingDate={effectiveContent.dateText || "ត្រីសង្ក្រាន្តទី ២៨ ខែមករា ឆ្នាំ ២០២៦"}
                 weddingTime={effectiveContent.receptionTime || "ម៉ោង ១៧:០០"}
                 venueName={effectiveContent.venueName || "The Premier Center Sen Sok"}
-                guestLabel={effectiveContent.guestLabel || "ជូនចំពោះ:"}
+                guestLabel={effectiveContent.guestLabel || (effectiveContent.isPersonalizedGuest ? "សូមគោរពអញ្ជើញ" : "សូមគោរពអញ្ជើញ")}
                 guestName={effectiveContent.guestName || "លោកអ្នក និងក្រុមគ្រួសារ"}
                 subtitle={effectiveContent.subtitle || effectiveContent.invitationSubtitle}
                 onOpen={handleOpen}

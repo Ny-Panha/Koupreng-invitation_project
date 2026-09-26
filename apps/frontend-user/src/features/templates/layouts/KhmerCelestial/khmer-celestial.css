@@ -645,7 +645,7 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   font-size: clamp(0.7rem, 2.2vw, 0.9rem);
   line-height: 1.32;
   max-width: min(78%, 300px);
-  letter-spacing: 0.01em;
+  letter-spacing: normal;
 }
 
 .kc-opening__brand-wrap {
@@ -699,7 +699,7 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   justify-content: center;
   gap: 8px;
   flex-wrap: wrap;
-  letter-spacing: 0.02em;
+  letter-spacing: normal;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8), 0 2px 8px rgba(184, 134, 11, 0.25);
 }
 
@@ -733,7 +733,7 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   font-family: var(--kc-english-display), "Cormorant Garamond", Georgia, serif;
   font-size: clamp(1.15rem, 3.6vw, 1.35rem);
   font-weight: normal;
-  letter-spacing: 0.03em;
+  letter-spacing: normal;
   line-height: 1.35;
 }
 
@@ -743,7 +743,7 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   font-family: var(--kc-khmer-display), "Bayon", "Moul", serif;
   font-size: clamp(1.36rem, 4.6vw, 1.65rem);
   font-weight: 700;
-  letter-spacing: 0.03em;
+  letter-spacing: normal;
   line-height: 1.25;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7), 0 2px 6px rgba(184, 134, 11, 0.22);
 }
@@ -752,7 +752,7 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   margin: 6px 0 0;
   color: #6b4d24;
   font-size: clamp(0.68rem, 2.2vw, 0.8rem);
-  letter-spacing: 0.07em;
+  letter-spacing: normal;
   text-transform: uppercase;
   font-weight: 500;
 }
@@ -768,7 +768,7 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   font-size: clamp(0.95rem, 2.8vw, 1.15rem);
   font-weight: 700;
   line-height: 1.35;
-  letter-spacing: 0.02em;
+  letter-spacing: normal;
 }
 
 .kc-opening__guest-banner {
@@ -1143,7 +1143,7 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   font-size: clamp(0.72rem, 2.2vw, 0.92rem);
   line-height: 1.32;
   max-width: min(78%, 310px);
-  letter-spacing: 0.01em;
+  letter-spacing: normal;
 }
 
 .kc-hero__brand {
@@ -1174,7 +1174,7 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   font-family: var(--kc-khmer-display), "Moul", serif;
   font-size: clamp(1.15rem, 3.5vw, 1.55rem);
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: normal;
   color: #b88a3a;
   background: linear-gradient(135deg, #d4af37 0%, #b88a3a 50%, #8f6826 100%);
   -webkit-background-clip: text;
@@ -1213,7 +1213,7 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   justify-content: center;
   gap: 10px;
   flex-wrap: wrap;
-  letter-spacing: 0.02em;
+  letter-spacing: normal;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8), 0 2px 8px rgba(184, 134, 11, 0.25);
 }
 
@@ -2173,7 +2173,7 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
 .kc-gift .tx-kicker {
   font-size: 0.72rem !important;
   font-weight: 700 !important;
-  letter-spacing: 0.18em !important;
+  letter-spacing: normal !important;
   text-transform: uppercase !important;
   color: var(--kc-gold-dark, #8f6826) !important;
   margin-bottom: 6px !important;
@@ -2189,7 +2189,7 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
 
 .kc-gift .tx-section__subtitle {
   font-size: 0.76rem !important;
-  letter-spacing: 0.15em !important;
+  letter-spacing: normal !important;
   color: var(--kc-gold-dark, #8f6826) !important;
   margin: 0 0 10px !important;
 }
@@ -3373,7 +3373,7 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   justify-content: center !important;
   gap: 8px !important;
   flex-wrap: wrap !important;
-  letter-spacing: 0.02em !important;
+  letter-spacing: normal !important;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8), 0 2px 8px rgba(184, 134, 11, 0.25) !important;
 }
 
@@ -3402,7 +3402,7 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   margin: 0 !important;
   color: #3b3a36 !important;
   font-weight: normal !important;
-  letter-spacing: 0.03em !important;
+  letter-spacing: normal !important;
 }
 
 .pe-canvas-wrapper .kc-opening__time,
@@ -3412,7 +3412,7 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   margin: 0 !important;
   color: #b8860b !important;
   font-weight: 700;
-  letter-spacing: 0.03em !important;
+  letter-spacing: normal !important;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7), 0 2px 6px rgba(184, 134, 11, 0.22) !important;
 }
 
@@ -3454,7 +3454,7 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   font-size: 1.15rem !important;
   color: #5a3614 !important;
   font-weight: 700;
-  letter-spacing: 0.02em !important;
+  letter-spacing: normal !important;
 }
 
 .pe-canvas-wrapper .kc-opening__guest-banner,
@@ -3502,7 +3502,7 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   color: #3d1c06 !important;
   font-weight: 700;
   white-space: nowrap !important;
-  letter-spacing: 0.01em !important;
+  letter-spacing: normal !important;
 }
 
 
@@ -3667,7 +3667,7 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
 .pe-canvas-wrapper .kc-heading__eyebrow,
 .kc-root--preview .kc-heading__eyebrow {
   font-size: 0.72rem !important;
-  letter-spacing: 0.1em !important;
+  letter-spacing: normal !important;
   margin-bottom: 6px !important;
   color: #a77d3e !important;
 }
@@ -3842,7 +3842,7 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
 .kc-root--preview .kc-countdown__grid small {
   font-size: 0.65rem !important;
   color: #8fa58b !important;
-  letter-spacing: 0.08em !important;
+  letter-spacing: normal !important;
 }
 
 /* Schedule in preview */

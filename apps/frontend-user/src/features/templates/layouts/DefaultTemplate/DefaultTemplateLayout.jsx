@@ -37,7 +37,7 @@ export default function DefaultTemplateLayout({
           <div style={{ display: "inline-flex", padding: "0.75rem", borderRadius: "50%", background: "#ede9fe", color: "#7c3aed", marginBottom: "1rem" }}>
             <Heart size={28} />
           </div>
-          <p style={{ letterSpacing: "0.15em", textTransform: "uppercase", fontSize: "0.85rem", color: "#6b7280", margin: 0 }}>
+          <p style={{ letterSpacing: "normal", textTransform: "uppercase", fontSize: "0.85rem", color: "#6b7280", margin: 0 }}>
             អាពាហ៍ពិពាហ៍
           </p>
           <h1 style={{ fontSize: "2.25rem", fontWeight: "700", color: "#1f2937", margin: "0.5rem 0" }}>
