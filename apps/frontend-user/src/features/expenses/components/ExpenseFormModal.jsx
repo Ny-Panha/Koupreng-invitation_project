@@ -66,9 +66,9 @@ export function ExpenseFormModal({
                                 </label>
                                 <div className="exp-budget-grid">
                                     <label className="exp-field-full">
-                                        <span>{t ? t("fieldBudget") : "Estimated Budget ($)"}</span>
+                                        <span>{t ? t("fieldBudget") : "Estimated Budget"}</span>
                                         <div className="exp-input-with-icon">
-                                            <span className="exp-input-prefix">$</span>
+                                            <span className="exp-input-prefix">{form.currency === "KHR" ? "៛" : "$"}</span>
                                             <input
                                                 type="number"
                                                 min="0"
@@ -80,9 +80,9 @@ export function ExpenseFormModal({
                                         </div>
                                     </label>
                                     <label className="exp-field-full">
-                                        <span>{t ? t("fieldAmount") : "Actual Amount ($)"}</span>
+                                        <span>{t ? t("fieldAmount") : "Actual Amount"}</span>
                                         <div className="exp-input-with-icon">
-                                            <span className="exp-input-prefix">$</span>
+                                            <span className="exp-input-prefix">{form.currency === "KHR" ? "៛" : "$"}</span>
                                             <input
                                                 type="number"
                                                 min="0"
@@ -95,6 +95,13 @@ export function ExpenseFormModal({
                                         </div>
                                     </label>
                                 </div>
+                                <label className="exp-field-full">
+                                    <span>Currency / រូបិយប័ណ្ណ</span>
+                                    <select value={form.currency || "USD"} onChange={(e) => updateForm("currency", e.target.value)}>
+                                        <option value="USD">USD ($)</option>
+                                        <option value="KHR">KHR (៛)</option>
+                                    </select>
+                                </label>
                                 <label className="exp-field-full">
                                     <span>{t ? t("fieldDate") : "Date"}</span>
                                     <DatePicker
@@ -155,7 +162,7 @@ export function ExpenseFormModal({
                                                     onChange={(e) => updatePaymentRow(idx, "desc", e.target.value)}
                                                 />
                                                 <div className="exp-payment-amount-wrap">
-                                                    <span className="exp-input-prefix">$</span>
+                                                    <span className="exp-input-prefix">{form.currency === "KHR" ? "៛" : "$"}</span>
                                                     <input
                                                         type="number"
                                                         min="0"

@@ -17,6 +17,9 @@ import com.koupreng.backend.subscription.api.dto.SubscriptionPackageResponse;
 import com.koupreng.backend.subscription.api.dto.SubscriptionPackageRequest;
 import com.koupreng.backend.payment.api.dto.PaymentHistoryResponse;
 import com.koupreng.backend.payment.api.dto.PaymentConfirmResponse;
+import com.koupreng.backend.gift.api.dto.WeddingGiftResponse;
+import com.koupreng.backend.gift.application.WeddingGiftService;
+import com.koupreng.backend.rsvp.api.dto.RsvpSummaryResponse;
 import com.koupreng.backend.subscription.application.SubscriptionService;
 import com.koupreng.backend.payment.application.PaymentHistoryService;
 import com.koupreng.backend.admin.application.AdminManagementService;
@@ -54,17 +57,20 @@ public class AdminManagementController {
     private final AuditLogService auditLogService;
     private final SubscriptionService subscriptionService;
     private final PaymentHistoryService paymentHistoryService;
+        private final WeddingGiftService weddingGiftService;
 
     public AdminManagementController(
             AdminManagementService adminManagementService,
             AuditLogService auditLogService,
             SubscriptionService subscriptionService,
-            PaymentHistoryService paymentHistoryService
+            PaymentHistoryService paymentHistoryService,
+            WeddingGiftService weddingGiftService
     ) {
         this.adminManagementService = adminManagementService;
         this.auditLogService = auditLogService;
         this.subscriptionService = subscriptionService;
         this.paymentHistoryService = paymentHistoryService;
+        this.weddingGiftService = weddingGiftService;
     }
 
     @PostMapping("/users")
@@ -229,6 +235,22 @@ public class AdminManagementController {
         return ResponseEntity.ok(ApiResponse.success(
                 "Invitation fetched successfully",
                 adminManagementService.getInvitation(invitationId)
+        ));
+    }
+
+    @GetMapping("/invitations/{invitationId}/rsvp-summary")
+    public ResponseEntity<ApiResponse<RsvpSummaryResponse>> invitationRsvpSummary(@PathVariable Long invitationId) {
+        return ResponseEntity.ok(ApiResponse.success(
+                "Invitation RSVP summary fetched successfully",
+                adminManagementService.invitationRsvpSummary(invitationId)
+        ));
+    }
+
+    @GetMapping("/invitations/{invitationId}/gifts")
+    public ResponseEntity<ApiResponse<List<WeddingGiftResponse>>> listInvitationGifts(@PathVariable Long invitationId) {
+        return ResponseEntity.ok(ApiResponse.success(
+                "Wedding gifts fetched successfully",
+                weddingGiftService.listForAdmin(invitationId)
         ));
     }
 

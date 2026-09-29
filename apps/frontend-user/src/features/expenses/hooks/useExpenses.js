@@ -33,6 +33,7 @@ export function toExpensePayload(form) {
         category: form.category || "Other",
         budget: budgetNum,
         amount: finalAmount,
+        currency: form.currency || "USD",
         date: form.date || new Date().toISOString().slice(0, 10),
         status: finalAmount >= budgetNum ? "PAID" : "PENDING",
         vendorName: form.vendorName || "",
@@ -66,6 +67,7 @@ export function normalizeExpense(expense) {
     const category = expense.category || "Other";
     const budget = valueToNumber(expense.budget, expense.estimatedCost);
     const amount = valueToNumber(expense.amount, expense.actualCost);
+    const currency = expense.currency || expense.currencyCode || "USD";
     const date = expense.date || expense.expenseDate || "";
     const status = (expense.status || "pending").toLowerCase();
     const vendorName = expense.vendorName || "";
@@ -76,6 +78,7 @@ export function normalizeExpense(expense) {
         category,
         budget,
         amount,
+        currency,
         date,
         status,
         vendorName,
@@ -104,6 +107,7 @@ export function useExpenses() {
         category: "Food & Catering",
         budget: "",
         amount: "",
+        currency: "USD",
         date: "",
         vendorName: "",
         notesText: "",
@@ -188,6 +192,7 @@ export function useExpenses() {
             category: "Food & Catering",
             budget: "",
             amount: "",
+            currency: "USD",
             date: "",
             vendorName: "",
             notesText: "",
@@ -203,6 +208,7 @@ export function useExpenses() {
             category: "Food & Catering",
             budget: "",
             amount: "",
+            currency: "USD",
             date: "",
             vendorName: "",
             notesText: "",
@@ -256,6 +262,7 @@ export function useExpenses() {
             category: expense.category,
             budget: String(expense.budget || ""),
             amount: String(expense.amount || ""),
+            currency: expense.currency || "USD",
             date: expense.date || "",
             vendorName: expense.vendorName || "",
             notesText: expense.notesText || "",

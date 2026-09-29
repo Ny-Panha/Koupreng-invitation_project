@@ -93,7 +93,11 @@ export function publicInvitationToDraft(invitation, media) {
     || design.gallery
     || design.photos
     || [];
-  const gallery = mediaGallery(media);
+  const invitationImageUrls = new Set([
+    content.invitationImage,
+    content.invitationImage2,
+  ].filter(Boolean));
+  const gallery = mediaGallery(media).filter((item) => !invitationImageUrls.has(item.preview));
   const savedGallery = Array.isArray(invitationGallery)
     ? invitationGallery.map(normalizeGalleryItem).filter(Boolean)
     : [];

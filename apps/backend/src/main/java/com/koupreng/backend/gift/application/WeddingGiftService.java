@@ -38,6 +38,13 @@ public class WeddingGiftService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
+    public List<WeddingGiftResponse> listForAdmin(Long invitationId) {
+        return weddingGiftRepository.findAllByInvitationId(invitationId).stream()
+                .map(WeddingGiftResponse::from)
+                .toList();
+    }
+
     @Transactional
     public WeddingGiftResponse create(Authentication authentication, Long invitationId, WeddingGiftRequest request) {
         UserInvitation invitation = invitationService.requireOwnedInvitationEntity(authentication, invitationId);
@@ -74,9 +81,18 @@ public class WeddingGiftService {
     private void applyRequest(WeddingGift gift, WeddingGiftRequest request) {
         gift.setGiverName(trimToNull(request.getName()));
         gift.setAmount(nonNegative(request.getAmount()));
+        gift.setCurrency(normalizeCurrency(request.getCurrency()));
         gift.setMethod(trimToNull(request.getMethod()));
         gift.setReceivedDate(request.getDate() == null ? LocalDate.now() : request.getDate());
         gift.setNote(trimToNull(request.getNote()));
+    }
+
+    private String normalizeCurrency(String currency) {
+        String normalized = currency == null || currency.isBlank() ? "USD" : currency.trim().toUpperCase();
+        if (!normalized.equals("USD") && !normalized.equals("KHR")) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Currency must be USD or KHR");
+        }
+        return normalized;
     }
 
     private BigDecimal nonNegative(BigDecimal value) {

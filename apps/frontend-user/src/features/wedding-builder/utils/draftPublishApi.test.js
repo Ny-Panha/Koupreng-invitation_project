@@ -117,4 +117,19 @@ describe("real backend publishing", () => {
         expect(mediaService.remove).toHaveBeenNthCalledWith(2, 42, 8);
         expect(result.patch.removedGalleryMediaIds).toEqual([]);
     });
+
+    it("uploads inline gallery photos from the draft when the gallery cache is empty", async () => {
+        mediaService.uploadGallery.mockResolvedValueOnce([
+            { id: 11, fileUrl: "https://cdn.example/gallery.png", originalFilename: "gallery-1.png" },
+        ]);
+        await persistWeddingDraft({
+            ...validDraft(),
+            gallery: [{ id: "photo-1", preview: "data:image/png;base64,aGVsbG8=", type: "image" }],
+        }, { publish: false });
+
+        expect(mediaService.uploadGallery).toHaveBeenCalledTimes(1);
+        const [invitationId, files] = mediaService.uploadGallery.mock.calls[0];
+        expect(invitationId).toBe(42);
+        expect(files[0].type).toBe("image/png");
+    });
 });

@@ -40,6 +40,7 @@ import { toast } from "../../shared/ui/toast";
 import { invitationService } from "@/features/invitations/api/invitationApi";
 import { mediaService } from "@/features/invitations/api/mediaApi";
 import { saveDraft } from "@/shared/storage/weddingStorage";
+import { dataUrlToFile, stripInlineMedia } from "./invitationPayloadUtils";
 import {
     getTemplateById,
     getTemplatePreset,
@@ -1225,6 +1226,7 @@ export default function InvitationForm({ invitation }) {
 
         setIsSaving(true);
         try {
+            let savedPhotos = form.photos || [];
             const designPayload = {
                 templateId: form.templateId,
                 presetId: form.presetId || "",
@@ -1299,7 +1301,7 @@ export default function InvitationForm({ invitation }) {
                 party: form.party || [],
                 showFaq: form.showFaq !== false,
                 faq: form.faq || [],
-                gallery: (form.photos || [])
+                gallery: savedPhotos
                     .filter((photo) => photo?.url)
                     .map(({ id, url }) => ({ id, preview: url, type: "image" })),
                 khqrDollar: form.khqrDollar,
@@ -1326,8 +1328,8 @@ export default function InvitationForm({ invitation }) {
                 languageMode: form.languageMode || "KH",
                 visibility: form.visibility || "PUBLIC",
                 templateId: resolveNumericTemplateId(form.templateId),
-                designJson: JSON.stringify(designPayload),
-                contentJson: JSON.stringify(contentPayload),
+                designJson: JSON.stringify(stripInlineMedia(designPayload)),
+                contentJson: JSON.stringify(stripInlineMedia(contentPayload)),
                 enabledSections: JSON.stringify({
                     countdown: form.showCountdown !== false,
                     story: form.showStory !== false,
@@ -1345,37 +1347,89 @@ export default function InvitationForm({ invitation }) {
             };
 
             let saved;
+            let apiSyncFailed = false;
+            const effectiveBackendId = (!isNaN(Number(invitationId)) ? invitationId : (invitation?.backendInvitationId || (!isNaN(Number(invitation?.id)) ? invitation.id : null)));
             try {
-                const effectiveBackendId = (!isNaN(Number(invitationId)) ? invitationId : (invitation?.backendInvitationId || (!isNaN(Number(invitation?.id)) ? invitation.id : null)));
                 if (effectiveBackendId) {
                     saved = await invitationService.update(effectiveBackendId, payload);
                 } else {
                     saved = await invitationService.create(payload);
                 }
             } catch (apiErr) {
+                apiSyncFailed = true;
                 console.warn("Backend sync failed, saved locally:", apiErr);
             }
 
             let savedCoverUrl = form.uploadedCoverUrl || "";
             let savedInvitationUrl = form.uploadedInvitationUrl || "";
+            let savedInvitationUrl2 = "";
+            let mediaSyncError = "";
             const backendId = saved?.id || (isEdit && !isNaN(Number(invitationId)) ? invitationId : (invitation?.backendInvitationId || null));
-            if (pendingCoverFile && backendId) {
-                const uploaded = await mediaService.uploadCover(backendId, pendingCoverFile);
-                savedCoverUrl = uploaded?.fileUrl || uploaded?.data?.fileUrl || savedCoverUrl;
-                setPendingCoverFile(null);
-                update("coverImage", savedCoverUrl);
+            const coverFile = pendingCoverFile || dataUrlToFile(form.coverImage, "cover.jpg");
+            if (coverFile && backendId) {
+                try {
+                    const uploaded = await mediaService.uploadCover(backendId, coverFile);
+                    savedCoverUrl = uploaded?.fileUrl || uploaded?.data?.fileUrl || savedCoverUrl;
+                    setPendingCoverFile(null);
+                    update("coverImage", savedCoverUrl);
+                } catch (uploadError) {
+                    mediaSyncError = uploadError?.message || "Cover image upload failed";
+                }
             }
-            if (pendingInvitationFile && backendId) {
-                const uploaded = await mediaService.uploadCover(backendId, pendingInvitationFile);
-                savedInvitationUrl = uploaded?.fileUrl || uploaded?.data?.fileUrl || savedInvitationUrl;
-                setPendingInvitationFile(null);
-                update("invitationImage", savedInvitationUrl);
+            if (backendId) {
+                const photoUploads = savedPhotos
+                    .map((photo, index) => ({ index, file: dataUrlToFile(photo?.url, `gallery-${index + 1}.jpg`) }))
+                    .filter((item) => item.file);
+                const invitationImageUpload = pendingInvitationFile || dataUrlToFile(form.invitationImage, "invitation.jpg");
+                const invitationImage2Upload = pendingInvitation2File || dataUrlToFile(form.invitationImage2, "invitation-2.jpg");
+                const galleryUploads = [
+                    ...photoUploads.map((item) => ({ ...item, purpose: "photo" })),
+                    ...(invitationImageUpload ? [{ file: invitationImageUpload, purpose: "invitation" }] : []),
+                    ...(invitationImage2Upload ? [{ file: invitationImage2Upload, purpose: "invitation2" }] : []),
+                ];
+                if (galleryUploads.length) {
+                    try {
+                        const uploadedGallery = await mediaService.uploadGallery(backendId, galleryUploads.map((item) => item.file));
+                        const uploadedItems = Array.isArray(uploadedGallery) ? uploadedGallery : uploadedGallery?.items || uploadedGallery?.data || [];
+                        for (const [uploadIndex, upload] of galleryUploads.entries()) {
+                            const fileUrl = uploadedItems[uploadIndex]?.fileUrl;
+                            if (!fileUrl) continue;
+                            if (upload.purpose === "photo") {
+                                savedPhotos = savedPhotos.map((photo, index) => index === upload.index ? { ...photo, url: fileUrl } : photo);
+                            } else if (upload.purpose === "invitation") {
+                                savedInvitationUrl = fileUrl;
+                                setPendingInvitationFile(null);
+                                update("invitationImage", fileUrl);
+                            } else if (upload.purpose === "invitation2") {
+                                savedInvitationUrl2 = fileUrl;
+                                setPendingInvitation2File(null);
+                                update("invitationImage2", fileUrl);
+                            }
+                        }
+                    } catch (uploadError) {
+                        mediaSyncError ||= uploadError?.message || "Gallery upload failed";
+                    }
+                }
             }
-            if (pendingInvitation2File && backendId) {
-                const uploaded2 = await mediaService.uploadCover(backendId, pendingInvitation2File);
-                const saved2Url = uploaded2?.fileUrl || uploaded2?.data?.fileUrl || form.invitationImage2 || "";
-                setPendingInvitation2File(null);
-                update("invitationImage2", saved2Url);
+
+            if (backendId && (savedInvitationUrl || savedInvitationUrl2)) {
+                try {
+                    saved = await invitationService.update(backendId, {
+                        ...payload,
+                        designJson: JSON.stringify(stripInlineMedia({
+                            ...designPayload,
+                            invitationImage: savedInvitationUrl || form.invitationImage || null,
+                            invitationImage2: savedInvitationUrl2 || form.invitationImage2 || null,
+                        })),
+                        contentJson: JSON.stringify(stripInlineMedia({
+                            ...contentPayload,
+                            invitationImage: savedInvitationUrl || form.invitationImage || null,
+                            invitationImage2: savedInvitationUrl2 || form.invitationImage2 || null,
+                        })),
+                    });
+                } catch (updateError) {
+                    mediaSyncError ||= updateError?.message || "Invitation photo references could not be saved";
+                }
             }
 
             const targetDraftId = invitationId || saved?.id || `wed-${Date.now().toString(36)}`;
@@ -1386,6 +1440,8 @@ export default function InvitationForm({ invitation }) {
                 id: targetDraftId,
                 slug: saved?.slug || invitation?.slug || form.slug || "wedding",
                 backendInvitationId: saved?.id || invitation?.backendInvitationId || (!isNaN(Number(invitationId)) ? Number(invitationId) : null),
+                syncStatus: apiSyncFailed || mediaSyncError ? (effectiveBackendId || saved?.id ? "SYNC_FAILED" : "LOCAL_ONLY") : "SYNCED",
+                syncError: apiSyncFailed ? "មិនអាចភ្ជាប់ទៅ server បានទេ។" : mediaSyncError,
                 templateId: form.templateId || "garden-royal-khmer-wedding",
                 presetId: form.presetId || "",
                 couple: {
@@ -1423,16 +1479,16 @@ export default function InvitationForm({ invitation }) {
                 coverUrl: savedCoverUrl || form.coverImage,
                 uploadedCoverUrl: savedCoverUrl,
                 invitationImage: savedInvitationUrl || form.invitationImage || null,
-                invitationImage2: form.invitationImage2 || null,
+                invitationImage2: savedInvitationUrl2 || form.invitationImage2 || null,
                 templateDefaultCover: form.templateDefaultCover,
                 openingStyle: form.openingStyle || activePreset.openingStyle || "khmer-royal",
                 frontColor: form.frontColor || activePreset.frontColor,
                 bottomColor: form.bottomColor || activePreset.bottomColor,
                 schedule: form.schedule,
-                photos: form.photos,
+                photos: savedPhotos,
                 gallery: (form.photos || [])
                     .filter((photo) => photo?.url)
-                    .map(({ id, url }) => ({ id, preview: url, type: "image" })),
+                    .map(({ id }, index) => ({ id, preview: savedPhotos[index]?.url || form.photos[index]?.url, type: "image" })),
                 musicUrl: form.musicUrl,
                 message: form.messageText,
                 storyChapters: form.storyChapters,
@@ -1441,14 +1497,20 @@ export default function InvitationForm({ invitation }) {
                 khqrRiel: form.khqrRiel,
             });
 
-            const successMsg = t("savedSuccess") || "បានរក្សាទុកដោយជោគជ័យ!";
+            const successMsg = apiSyncFailed
+                ? effectiveBackendId
+                    ? "បានរក្សាទុកការកែប្រែក្នុង browser ប៉ុណ្ណោះ។ កំណែថ្មីមិនទាន់ sync ទៅ server ទេ; សូមពិនិត្យ internet ហើយរក្សាទុកម្ដងទៀត។"
+                    : "បានរក្សាទុកក្នុង browser ប៉ុណ្ណោះ។ មិនទាន់បង្ហាញក្នុង Admin ទេ; សូមពិនិត្យ internet ហើយកែ/រក្សាទុកម្ដងទៀត។"
+                : mediaSyncError
+                    ? "កម្មវិធីត្រូវបានរក្សាទុកហើយ ប៉ុន្តែរូបភាពខ្លះមិនទាន់បានផ្ទុកឡើងទេ។ កម្មវិធីមានក្នុង Admin ហើយ។"
+                : t("savedSuccess") || "បានរក្សាទុកដោយជោគជ័យ!";
 
             const finalSavedId = saved?.id || targetDraftId;
             if (redirectToPreview && finalSavedId) {
-                toast(successMsg);
+                toast(successMsg, apiSyncFailed || mediaSyncError ? "warning" : "success");
                 navigate(`/dashboard/invitations/${finalSavedId}/preview`);
             } else {
-                navigate("/dashboard/events", { state: { savedSuccess: true, message: successMsg } });
+                navigate("/dashboard/events", { state: { savedSuccess: true, syncFailed: apiSyncFailed || Boolean(mediaSyncError), message: successMsg } });
             }
             return finalSavedId;
         } catch (err) {

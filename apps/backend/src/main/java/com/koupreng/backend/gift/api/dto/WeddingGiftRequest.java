@@ -13,6 +13,7 @@ public class WeddingGiftRequest {
     private String name;
 
     private BigDecimal amount;
+    private String currency;
     private String method;
     private LocalDate date;
     private String note;

@@ -148,11 +148,11 @@ export function ExpenseTable({
                                             </span>
                                         </td>
                                         <td data-label={t ? t("colBudget") : "Budget"}>
-                                            <span className="exp-budget-val">${item.budget.toLocaleString()}</span>
+                                            <span className="exp-budget-val">{item.currency === "KHR" ? `${item.budget.toLocaleString()} ៛` : `$${item.budget.toLocaleString()}`}</span>
                                         </td>
                                         <td data-label={t ? t("colAmount") : "Amount"}>
                                             <span className="exp-amount" style={{ color: isItemOver ? "#ef4444" : "inherit" }}>
-                                                ${item.amount.toLocaleString()}
+                                                {item.currency === "KHR" ? `${item.amount.toLocaleString()} ៛` : `$${item.amount.toLocaleString()}`}
                                             </span>
                                             {isItemOver && (
                                                 <span className="exp-over-tag">

@@ -14,6 +14,7 @@ export function toGiftPayload(form) {
     return {
         name: form.name.trim(),
         amount: Math.max(0, Number(form.amount) || 0),
+        currency: form.currency || "USD",
         method: form.method,
         date: form.date || new Date().toISOString().slice(0, 10),
         note: form.note.trim(),
@@ -25,6 +26,7 @@ export function normalizeGift(gift) {
         id: gift.id || createHostRecordId("gift"),
         name: gift.name || gift.giverName || gift.payerName || "",
         amount: Number(gift.amount) || 0,
+        currency: gift.currency || gift.currencyCode || "USD",
         method: gift.method || "Bakong QR",
         date: gift.date || "",
         note: gift.note || "",
@@ -53,7 +55,7 @@ export function useGifts() {
     const [guestOptions, setGuestOptions] = useState(() => listManualGuests(eventId));
     const [showForm, setShowForm] = useState(false);
     const [editingId, setEditingId] = useState(null);
-    const [form, setForm] = useState({ name: "", amount: "", method: "Bakong QR", date: "", note: "" });
+    const [form, setForm] = useState({ name: "", amount: "", currency: "USD", method: "Bakong QR", date: "", note: "" });
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(true);
@@ -114,13 +116,13 @@ export function useGifts() {
 
     const resetForm = () => {
         setEditingId(null);
-        setForm({ name: "", amount: "", method: "Bakong QR", date: "", note: "" });
+        setForm({ name: "", amount: "", currency: "USD", method: "Bakong QR", date: "", note: "" });
         setShowForm(false);
     };
 
     const openAddModal = () => {
         setEditingId(null);
-        setForm({ name: "", amount: "", method: "Bakong QR", date: "", note: "" });
+        setForm({ name: "", amount: "", currency: "USD", method: "Bakong QR", date: "", note: "" });
         setShowForm(true);
     };
 
@@ -160,7 +162,7 @@ export function useGifts() {
 
     const editGift = (gift) => {
         setEditingId(gift.id);
-        setForm({ name: gift.name, amount: String(gift.amount), method: gift.method, date: gift.date, note: gift.note || "" });
+        setForm({ name: gift.name, amount: String(gift.amount), currency: gift.currency || "USD", method: gift.method, date: gift.date, note: gift.note || "" });
         setShowForm(true);
     };
 

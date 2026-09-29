@@ -135,6 +135,18 @@ public class BudgetController {
         ));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin/invitations/{invitationId}/budget-items")
+    public ResponseEntity<ApiResponse<List<BudgetItemResponse>>> adminBudgetItems(
+            Authentication authentication,
+            @PathVariable Long invitationId
+    ) {
+        return ResponseEntity.ok(ApiResponse.success(
+                "Budget items fetched successfully",
+                budgetService.listForAdmin(authentication, invitationId)
+        ));
+    }
+
     @GetMapping("/invitations/{invitationId}/budget-items")
     public ResponseEntity<ApiResponse<List<BudgetItemResponse>>> listBudgetItems(
             Authentication authentication,

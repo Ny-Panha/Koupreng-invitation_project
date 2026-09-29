@@ -50,7 +50,6 @@ export function EventCard({ draft, onManage, onEdit, onPreview, onDelete, t }) {
     const dateText = draft.event?.date || draft.eventDate || (t ? t("noDate") : null) || "មិនទាន់កំណត់កាលបរិច្ឆេទ";
     const timeText = draft.event?.receptionTime || draft.eventTime || "";
     const isPublished = Boolean(draft.publishedAt || draft.status === "PUBLISHED");
-
     const handleCardClick = () => {
         if (onPreview) {
             onPreview(draft);

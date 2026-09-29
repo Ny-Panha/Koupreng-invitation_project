@@ -11,4 +11,5 @@ export const ADMIN_ROUTE_PATHS = Object.freeze({
   notifications: "/notifications",
   systemLogs: "/system-logs",
   reports: "/reports",
+  reportDetail: "/reports/:invitationId",
 });

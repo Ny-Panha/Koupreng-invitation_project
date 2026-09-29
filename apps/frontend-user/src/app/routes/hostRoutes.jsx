@@ -33,7 +33,7 @@ import OrganizationPage from "../../features/organizations/OrganizationPage";
 import OrganizationDetailPage from "../../features/organizations/OrganizationDetailPage";
 import AiAssistantPage from "../../features/ai-assistant/AiAssistantPage";
 import RsvpDashboardPage from "../../features/rsvp/RsvpDashboardPage";
-import ReportsPage from "../../features/reports/ReportsPage";
+import FinancialReport from "../../features/reports/FinancialReport";
 import QrPage from "../../features/qr/QrPage";
 import WishesPage from "../../features/wishes/WishesPage";
 import InvitationScopedRedirect from "./InvitationScopedRedirect";
@@ -65,10 +65,11 @@ export function hostRoutes() {
       <Route path="/dashboard/invitations/:invitationId/budget" element={<BudgetPage />} />
       <Route path="/dashboard/invitations/:invitationId/check-in" element={<InvitationCheckInPage />} />
       <Route path="/dashboard/invitations/:invitationId/seating" element={<SeatingPage />} />
-      <Route path="/dashboard/invitations/:invitationId/reports" element={<ReportsPage />} />
+      <Route path="/dashboard/invitations/:invitationId/reports" element={<FinancialReport />} />
       <Route path="/dashboard/invitations/:invitationId/qr" element={<QrPage />} />
       <Route path="/dashboard/invitations/:invitationId/wishes" element={<WishesPage />} />
-      <Route path="/dashboard/reports" element={<ReportsPage />} />
+      <Route path="/dashboard/reports" element={<FinancialReport />} />
+      <Route path="/reports" element={<FinancialReport />} />
       <Route path="/dashboard/guests" element={<GuestsPage />} />
       <Route path="/dashboard/seating" element={<InvitationScopedRedirect targetSubPath="seating" />} />
       <Route path="/dashboard/check-in" element={<InvitationScopedRedirect targetSubPath="check-in" />} />

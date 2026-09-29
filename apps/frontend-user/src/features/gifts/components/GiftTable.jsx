@@ -60,7 +60,7 @@ export function GiftTable({ gifts = [], editGift, deleteGift, saving, t }) {
                                     <span className="wg-name-text">{gift.name}</span>
                                 </td>
                                 <td data-label={t ? t("colAmount") : "Amount"}>
-                                    <span className="wg-amount">${gift.amount.toLocaleString()}</span>
+                                    <span className="wg-amount">{gift.currency === "KHR" ? `${gift.amount.toLocaleString()} ៛` : `$${gift.amount.toLocaleString()}`}</span>
                                 </td>
                                 <td data-label={t ? t("colMethod") : "Method"}>
                                     <span className="wg-method-badge" style={{ background: methodStyle.bg, color: methodStyle.color }}>

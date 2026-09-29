@@ -48,11 +48,18 @@ export function GiftFormModal({
                                     />
                                 </label>
                                 <label className="wg-field-full">
-                                    <span>{t ? t("fieldAmount") : "Amount ($)"}</span>
+                                    <span>{t ? t("fieldAmount") : "Amount"}</span>
                                     <div className="wg-input-with-icon">
-                                        <span className="wg-input-prefix">$</span>
+                                        <span className="wg-input-prefix">{form.currency === "KHR" ? "៛" : "$"}</span>
                                         <input type="number" min="0" step="any" value={form.amount} onChange={(e) => updateForm("amount", e.target.value)} placeholder="0" />
                                     </div>
+                                </label>
+                                <label className="wg-field-full">
+                                    <span>Currency / រូបិយប័ណ្ណ</span>
+                                    <select value={form.currency || "USD"} onChange={(e) => updateForm("currency", e.target.value)}>
+                                        <option value="USD">USD ($)</option>
+                                        <option value="KHR">KHR (៛)</option>
+                                    </select>
                                 </label>
                                 <label className="wg-field-full">
                                     <span>{t ? t("fieldDate") : "Date"}</span>

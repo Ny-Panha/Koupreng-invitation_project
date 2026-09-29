@@ -5969,6 +5969,50 @@ paths:
                 $ref: "#/components/schemas/ApiResponseInvitationResponse"
       security:
       - bearerAuth: []
+  /api/v1/admin/invitations/{invitationId}/rsvp-summary:
+    get:
+      tags:
+      - Administration
+      summary: Get invitation guest and RSVP counts for the financial report
+      operationId: invitationRsvpSummary
+      parameters:
+      - name: invitationId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseRsvpSummaryResponse"
+      security:
+      - bearerAuth: []
+  /api/v1/admin/invitations/{invitationId}/gifts:
+    get:
+      tags:
+      - Administration
+      summary: List wedding gifts for an invitation as an administrator
+      operationId: listInvitationGifts
+      parameters:
+      - name: invitationId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseListWeddingGiftResponse"
+      security:
+      - bearerAuth: []
   /api/v1/admin/invitations/{invitationId}/budget:
     get:
       tags:
@@ -5991,6 +6035,28 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ApiResponseBudgetResponse"
+      security:
+      - bearerAuth: []
+  /api/v1/admin/invitations/{invitationId}/budget-items:
+    get:
+      tags:
+      - Budget
+      summary: List any invitation expense items as an administrator
+      operationId: adminBudgetItems
+      parameters:
+      - name: invitationId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseListBudgetItemResponse"
       security:
       - bearerAuth: []
   /api/v1/admin/dashboard/summary:
@@ -6491,6 +6557,10 @@ components:
           minLength: 1
         amount:
           type: number
+        currency:
+          type: string
+          enum: [USD, KHR]
+          default: USD
         method:
           type: string
         date:
@@ -6525,6 +6595,9 @@ components:
           type: string
         amount:
           type: number
+        currency:
+          type: string
+          enum: [USD, KHR]
         method:
           type: string
         date:
@@ -6574,6 +6647,9 @@ components:
           type: number
         actualCost:
           type: number
+        currency:
+          type: string
+          enum: [USD, KHR]
         budget:
           type: number
         amount:
@@ -6631,6 +6707,9 @@ components:
         actualCost:
           type: number
           minimum: 0.00
+        currency:
+          type: string
+          enum: [USD, KHR]
         vendorName:
           type: string
         notes:
@@ -6649,6 +6728,9 @@ components:
         amount:
           type: number
           minimum: 0.00
+        currency:
+          type: string
+          enum: [USD, KHR]
         date:
           type: string
           format: date
@@ -8069,6 +8151,9 @@ components:
         actualCost:
           type: number
           minimum: 0.00
+        currency:
+          type: string
+          enum: [USD, KHR]
         vendorName:
           type: string
         notes:

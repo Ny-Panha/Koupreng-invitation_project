@@ -23,6 +23,7 @@ public class BudgetItemResponse {
     private String itemName;
     private BigDecimal estimatedCost;
     private BigDecimal actualCost;
+    private String currency;
     private BigDecimal budget;
     private BigDecimal amount;
     private LocalDate date;
@@ -43,6 +44,7 @@ public class BudgetItemResponse {
                 .itemName(item.getItemName())
                 .estimatedCost(item.getEstimatedCost())
                 .actualCost(item.getActualCost())
+                .currency(item.getCurrency() == null ? "USD" : item.getCurrency())
                 .budget(item.getEstimatedCost())
                 .amount(item.getActualCost())
                 .date(item.getExpenseDate())

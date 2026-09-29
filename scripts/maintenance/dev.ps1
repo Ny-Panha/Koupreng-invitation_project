@@ -100,6 +100,10 @@ if (-not $env:SPRING_PROFILES_ACTIVE) {
     $env:SPRING_PROFILES_ACTIVE = "dev"
 }
 
+# This local database has applied repair migrations that are not present in every checkout.
+# Ignore only applied migrations missing from the local migration directory; keep checksum validation for resolved files.
+$env:SPRING_FLYWAY_IGNORE_MIGRATION_PATTERNS = "*:missing"
+
 $java25 = Get-ChildItem "C:\Program Files\Eclipse Adoptium\jdk-25*" -Directory -ErrorAction SilentlyContinue |
     Sort-Object Name -Descending |
     Select-Object -First 1
@@ -219,16 +223,21 @@ try {
     $null = Start-DevProcess -Title "[Koupreng] Backend API" -WorkingDir $backendDir -Command $backendCmd
 
     Write-Host "  Waiting for Backend to initialize..." -ForegroundColor Cyan
-    for ($i = 1; $i -le 35; $i++) {
+    $backendReady = $false
+    for ($i = 1; $i -le 120; $i++) {
         try {
             $resp = Invoke-WebRequest -Uri "http://127.0.0.1:8080/actuator/health/readiness" -UseBasicParsing -TimeoutSec 2 -ErrorAction Stop
             if ($resp.StatusCode -eq 200) {
+                $backendReady = $true
                 Write-Host "  ✓ Backend is READY at http://localhost:8080" -ForegroundColor Green
                 break
             }
         } catch {
             Start-Sleep -Seconds 1
         }
+    }
+    if (-not $backendReady) {
+        throw "Backend did not become ready at http://127.0.0.1:8080/actuator/health/readiness. Check the backend terminal output before starting the frontends."
     }
 
     # 3. Start Frontend User (:5173)

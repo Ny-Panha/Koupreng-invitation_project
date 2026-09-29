@@ -25,6 +25,10 @@ export const adminService = {
 
   invitations: () => api.get("/v1/admin/invitations").then(unwrap),
   invitation: (invitationId) => api.get(`/v1/admin/invitations/${invitationId}`).then(unwrap),
+  invitationGifts: (invitationId) => api.get(`/v1/admin/invitations/${invitationId}/gifts`).then(unwrap),
+  invitationBudget: (invitationId) => api.get(`/v1/admin/invitations/${invitationId}/budget`).then(unwrap),
+  invitationBudgetItems: (invitationId) => api.get(`/v1/admin/invitations/${invitationId}/budget-items`).then(unwrap),
+  invitationRsvpSummary: (invitationId) => api.get(`/v1/admin/invitations/${invitationId}/rsvp-summary`).then(unwrap),
   moderateInvitation: (invitationId, payload) =>
     api.patch(`/v1/admin/invitations/${invitationId}/moderate`, payload).then(unwrap),
   activateInvitation: (invitationId) => api.patch(`/v1/admin/invitations/${invitationId}/activate`, {}).then(unwrap),

@@ -38,6 +38,9 @@ public class WeddingGift {
     @Column(precision = 12, scale = 2)
     private BigDecimal amount;
 
+    @Column(length = 3, nullable = false)
+    private String currency = "USD";
+
     @Column(length = 100)
     private String method;
 

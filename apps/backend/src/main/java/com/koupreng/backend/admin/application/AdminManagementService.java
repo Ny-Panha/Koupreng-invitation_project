@@ -15,6 +15,8 @@ import com.koupreng.backend.checkin.api.dto.CheckInResponse;
 import com.koupreng.backend.invitation.api.dto.InvitationResponse;
 import com.koupreng.backend.payment.api.dto.TemplatePaymentStatusResponse;
 import com.koupreng.backend.rsvp.api.dto.RsvpResponse;
+import com.koupreng.backend.rsvp.api.dto.RsvpSummaryResponse;
+import com.koupreng.backend.rsvp.domain.RsvpStatus;
 import com.koupreng.backend.audit.domain.SystemAuditLog;
 import com.koupreng.backend.checkin.domain.GuestCheckIn;
 import com.koupreng.backend.template.domain.InvitationTemplate;
@@ -310,6 +312,19 @@ public class AdminManagementService {
     @Transactional(readOnly = true)
     public InvitationResponse getInvitation(Long invitationId) {
         return InvitationResponse.from(requireInvitation(invitationId));
+    }
+
+    @Transactional(readOnly = true)
+    public RsvpSummaryResponse invitationRsvpSummary(Long invitationId) {
+        requireInvitation(invitationId);
+        return RsvpSummaryResponse.builder()
+                .totalGuests(guestRepository.countByInvitationId(invitationId))
+                .attending(rsvpRepository.countByInvitationIdAndResponseStatus(invitationId, RsvpStatus.ATTENDING))
+                .notAttending(rsvpRepository.countByInvitationIdAndResponseStatus(invitationId, RsvpStatus.NOT_ATTENDING))
+                .maybe(rsvpRepository.countByInvitationIdAndResponseStatus(invitationId, RsvpStatus.MAYBE))
+                .pending(rsvpRepository.countPendingGuests(invitationId))
+                .totalAttendeeCount(rsvpRepository.sumAttendeeCountByInvitationIdAndStatus(invitationId, RsvpStatus.ATTENDING))
+                .build();
     }
 
     @Transactional

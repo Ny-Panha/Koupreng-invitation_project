@@ -18,7 +18,7 @@ export function EventsFeature() {
     useEffect(() => {
         if (location.state?.savedSuccess && !hasTriggeredRef.current) {
             hasTriggeredRef.current = true;
-            toast(location.state.message || "បានរក្សាទុកដោយជោគជ័យ!");
+            toast(location.state.message || "បានរក្សាទុកដោយជោគជ័យ!", location.state.syncFailed ? "warning" : "success");
             navigate(location.pathname, { replace: true, state: {} });
         }
     }, [location.state, navigate, location.pathname]);

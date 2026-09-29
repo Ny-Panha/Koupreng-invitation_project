@@ -19,6 +19,7 @@ public class WeddingGiftResponse {
     private Long invitationId;
     private String name;
     private BigDecimal amount;
+    private String currency;
     private String method;
     private LocalDate date;
     private String note;
@@ -30,6 +31,7 @@ public class WeddingGiftResponse {
                 .invitationId(invitationId)
                 .name(gift.getGiverName())
                 .amount(gift.getAmount())
+                .currency(gift.getCurrency() == null ? "USD" : gift.getCurrency())
                 .method(gift.getMethod())
                 .date(gift.getReceivedDate())
                 .note(gift.getNote())

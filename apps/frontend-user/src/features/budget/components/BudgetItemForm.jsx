@@ -3,6 +3,7 @@ import { BUDGET_CATEGORIES } from "../budgetCategories";
 
 const initialForm = {
   category: "OTHER",
+  currency: "USD",
   itemName: "",
   estimatedCost: "",
   actualCost: "",
@@ -40,6 +41,13 @@ export default function BudgetItemForm({ onSubmit, saving }) {
             {BUDGET_CATEGORIES.map((category) => (
               <option key={category.value} value={category.value}>{category.label}</option>
             ))}
+          </select>
+        </label>
+        <label>
+          Currency
+          <select value={form.currency} onChange={(event) => update("currency", event.target.value)}>
+            <option value="USD">USD ($)</option>
+            <option value="KHR">KHR (៛)</option>
           </select>
         </label>
         <label>

@@ -24,7 +24,7 @@ public class WafProperties {
     private int maxQueryLength = 2048;
 
     @Min(1024)
-    private int maxBodyBytes = 65536;
+    private int maxBodyBytes = 262144;
 
     @Min(256)
     private int maxHeaderValueLength = 4096;

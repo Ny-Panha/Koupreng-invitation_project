@@ -63,6 +63,7 @@ export default function App() {
                 <Route path={ADMIN_ROUTE_PATHS.notifications} element={<NotificationsPage />} />
                 <Route path={ADMIN_ROUTE_PATHS.systemLogs} element={<SystemLogsPage />} />
                 <Route path={ADMIN_ROUTE_PATHS.reports} element={<ReportsPage />} />
+                <Route path={ADMIN_ROUTE_PATHS.reportDetail} element={<ReportsPage />} />
 
                 {/* Legacy /admin Route Aliases */}
                 <Route path="/admin" element={<Navigate to="/dashboard" replace />} />

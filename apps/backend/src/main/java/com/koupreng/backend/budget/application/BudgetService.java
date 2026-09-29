@@ -115,6 +115,7 @@ public class BudgetService {
         item.setItemName(requiredText(request.getItemName(), "Item name"));
         item.setEstimatedCost(nonNegativeOrZero(request.getEstimatedCost(), "Estimated cost"));
         item.setActualCost(nonNegativeOrZero(request.getActualCost(), "Actual cost"));
+        item.setCurrency(normalizeCurrency(request.getCurrency()));
         item.setVendorName(trimToNull(request.getVendorName()));
         item.setNotes(trimToNull(request.getNotes()));
         BudgetItem saved = budgetItemRepository.save(item);
@@ -152,6 +153,9 @@ public class BudgetService {
         }
         if (request.getActualCost() != null) {
             item.setActualCost(nonNegativeOrZero(request.getActualCost(), "Actual cost"));
+        }
+        if (request.getCurrency() != null) {
+            item.setCurrency(normalizeCurrency(request.getCurrency()));
         }
         if (request.getVendorName() != null) {
             item.setVendorName(trimToNull(request.getVendorName()));
@@ -221,6 +225,16 @@ public class BudgetService {
         Budget budget = requireBudget(invitationId);
         return toResponse(budget);
     }
+
+        @Transactional(readOnly = true)
+        public List<BudgetItemResponse> listForAdmin(Authentication authentication, Long invitationId) {
+        requireAdmin(authentication);
+        invitationRepository.findByIdAndDeletedFalse(invitationId)
+            .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Invitation not found"));
+        return budgetItemRepository.findAllByInvitationId(invitationId).stream()
+            .map(BudgetItemResponse::from)
+            .toList();
+        }
 
     @Transactional(readOnly = true)
     public List<BudgetItemResponse> list(Authentication authentication, Long invitationId) {
@@ -300,6 +314,7 @@ public class BudgetService {
         item.setCategory(normalizeCategory(request.getCategory()));
         item.setEstimatedCost(nonNegativeOrZero(request.getBudget(), "Estimated cost"));
         item.setActualCost(nonNegativeOrZero(request.getAmount(), "Actual cost"));
+        item.setCurrency(normalizeCurrency(request.getCurrency()));
         item.setExpenseDate(request.getDate() == null ? LocalDate.now() : request.getDate());
         item.setStatus(trimToNull(request.getStatus()));
         item.setVendorName(trimToNull(request.getVendorName()));
@@ -372,6 +387,14 @@ public class BudgetService {
     private String normalizeCategory(String category) {
         String trimmed = trimToNull(category);
         return trimmed == null ? DEFAULT_CATEGORY : trimmed.toUpperCase(Locale.ROOT);
+    }
+
+    private String normalizeCurrency(String currency) {
+        String normalized = currency == null || currency.isBlank() ? "USD" : currency.trim().toUpperCase(Locale.ROOT);
+        if (!normalized.equals("USD") && !normalized.equals("KHR")) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Currency must be USD or KHR");
+        }
+        return normalized;
     }
 
     private String requiredText(String value, String field) {

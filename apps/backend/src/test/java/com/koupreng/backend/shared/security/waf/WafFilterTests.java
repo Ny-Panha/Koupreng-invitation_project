@@ -91,6 +91,21 @@ class WafFilterTests {
     }
 
     @Test
+    void allowsInvitationJsonEnvelopeWithinConfiguredBodyLimit() throws Exception {
+        WafFilter filter = filter(new WafProperties());
+        MockHttpServletRequest request = apiRequest("POST", "/api/v1/invitations");
+        request.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        request.setContent(("a".repeat(120 * 1024)).getBytes(StandardCharsets.UTF_8));
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        AtomicBoolean controllerCalled = new AtomicBoolean();
+
+        filter.doFilter(request, response, markCalled(controllerCalled));
+
+        assertEquals(200, response.getStatus());
+        assertTrue(controllerCalled.get());
+    }
+
+    @Test
     void rateLimitsApiRequestsPerClientAddress() throws Exception {
         WafProperties properties = new WafProperties();
         properties.setMaxRequestsPerMinute(1);

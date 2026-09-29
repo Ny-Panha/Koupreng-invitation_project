@@ -64,10 +64,11 @@ function remoteGalleryItem(item, index) {
 
 async function uploadDraftMedia(invitationId, draft) {
   if (!invitationId) return { media: null, mediaSynced: false };
-  const [pendingMedia, storedGallery] = await Promise.all([
+  const [pendingMedia, loadedGallery] = await Promise.all([
     draft.id ? loadDraftMediaFiles(draft.id).catch(() => ({})) : Promise.resolve({}),
     draft.id ? loadGallery(draft.id).catch(() => draft.gallery || []) : Promise.resolve(draft.gallery || []),
   ]);
+  const storedGallery = loadedGallery?.length ? loadedGallery : (draft.gallery || []);
   let mediaSynced = false;
 
   const removedMedia = draft.removedMedia || {};

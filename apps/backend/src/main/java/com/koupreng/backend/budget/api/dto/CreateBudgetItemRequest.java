@@ -20,6 +20,8 @@ public class CreateBudgetItemRequest {
     @DecimalMin(value = "0.00", message = "Actual cost must be zero or greater")
     private BigDecimal actualCost;
 
+    private String currency;
+
     private String vendorName;
     private String notes;
 }

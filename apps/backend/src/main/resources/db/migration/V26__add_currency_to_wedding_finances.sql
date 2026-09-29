@@ -1,0 +1,5 @@
+ALTER TABLE wedding_gifts
+    ADD COLUMN currency VARCHAR(3) NOT NULL DEFAULT 'USD';
+
+ALTER TABLE budget_items
+    ADD COLUMN currency VARCHAR(3) NOT NULL DEFAULT 'USD';

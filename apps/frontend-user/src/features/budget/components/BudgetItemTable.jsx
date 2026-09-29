@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { BUDGET_CATEGORIES } from "../budgetCategories";
 
-function money(value) {
-  return `$${Number(value || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+function money(value, currency = "USD") {
+  const formatted = Number(value || 0).toLocaleString(undefined, {
+    maximumFractionDigits: currency === "KHR" ? 0 : 2,
+  });
+  return currency === "KHR" ? `${formatted} ៛` : `$${formatted}`;
 }
 
 function editable(item) {
   return {
     category: item.category || "OTHER",
+    currency: item.currency || "USD",
     itemName: item.itemName || "",
     estimatedCost: item.estimatedCost ?? 0,
     actualCost: item.actualCost ?? 0,
@@ -50,6 +54,7 @@ export default function BudgetItemTable({ items, onUpdate, onDelete, saving }) {
           <tr>
             <th>Category</th>
             <th>Item</th>
+            <th>Currency</th>
             <th>Estimated</th>
             <th>Actual</th>
             <th>Vendor</th>
@@ -78,6 +83,14 @@ export default function BudgetItemTable({ items, onUpdate, onDelete, saving }) {
                 </td>
                 <td>
                   {editing ? (
+                    <select value={draft.currency} onChange={(event) => updateDraft("currency", event.target.value)}>
+                      <option value="USD">USD ($)</option>
+                      <option value="KHR">KHR (៛)</option>
+                    </select>
+                  ) : item.currency || "USD"}
+                </td>
+                <td>
+                  {editing ? (
                     <input
                       type="number"
                       min="0"
@@ -85,7 +98,7 @@ export default function BudgetItemTable({ items, onUpdate, onDelete, saving }) {
                       value={draft.estimatedCost}
                       onChange={(event) => updateDraft("estimatedCost", event.target.value)}
                     />
-                  ) : money(item.estimatedCost)}
+                  ) : money(item.estimatedCost, item.currency)}
                 </td>
                 <td>
                   {editing ? (
@@ -96,7 +109,7 @@ export default function BudgetItemTable({ items, onUpdate, onDelete, saving }) {
                       value={draft.actualCost}
                       onChange={(event) => updateDraft("actualCost", event.target.value)}
                     />
-                  ) : money(item.actualCost)}
+                  ) : money(item.actualCost, item.currency)}
                 </td>
                 <td>
                   {editing ? (

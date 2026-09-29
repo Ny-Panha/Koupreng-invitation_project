@@ -30,6 +30,9 @@ public class BudgetItem {
     @Column(name = "actual_cost", precision = 12, scale = 2)
     private BigDecimal actualCost;
 
+    @Column(length = 3, nullable = false)
+    private String currency = "USD";
+
     @Column(name = "expense_date")
     private LocalDate expenseDate;
 
