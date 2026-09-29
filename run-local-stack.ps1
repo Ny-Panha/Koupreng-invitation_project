@@ -1,21 +1,18 @@
 # Forward to scripts\maintenance\dev.ps1
 param(
-    [Alias("admin", "admin-only", "Admin")]
+    [Alias("admin", "admin-only")]
     [switch]$AdminOnly,
 
-    [Alias("user", "user-only", "User")]
+    [Alias("user", "user-only")]
     [switch]$UserOnly,
 
-    [Alias("ngrok")]
     [switch]$Ngrok,
 
-    [Alias("no-ngrok")]
     [switch]$NoNgrok,
 
-    [Alias("bot")]
     [switch]$Bot,
 
-    [Alias("new-window", "window")]
+    [Alias("window")]
     [switch]$NewWindow,
 
     [Alias("h", "?")]

@@ -1,4 +1,4 @@
-#!/usr/bin/env pwsh
+﻿#!/usr/bin/env pwsh
 # ==============================================================================
 # Koupreng Project - Full Stack Windows Dev Orchestrator
 # Author: Nha & Antigravity
@@ -7,22 +7,19 @@
 # ==============================================================================
 
 param (
-    [Alias("admin", "admin-only", "Admin")]
+    [Alias("admin", "admin-only")]
     [switch]$AdminOnly,
 
-    [Alias("user", "user-only", "User")]
+    [Alias("user", "user-only")]
     [switch]$UserOnly,
 
-    [Alias("ngrok")]
     [switch]$Ngrok,
 
-    [Alias("no-ngrok", "nongrok")]
     [switch]$NoNgrok,
 
-    [Alias("bot")]
     [switch]$Bot,
 
-    [Alias("new-window", "window")]
+    [Alias("window")]
     [switch]$NewWindow,
 
     [Alias("h", "?")]
@@ -101,6 +98,15 @@ if (Test-Path $EnvFile) {
 
 if (-not $env:SPRING_PROFILES_ACTIVE) {
     $env:SPRING_PROFILES_ACTIVE = "dev"
+}
+
+$java25 = Get-ChildItem "C:\Program Files\Eclipse Adoptium\jdk-25*" -Directory -ErrorAction SilentlyContinue |
+    Sort-Object Name -Descending |
+    Select-Object -First 1
+if ($java25) {
+    $env:JAVA_HOME = $java25.FullName
+    $env:Path = "$($java25.FullName)\bin;$env:Path"
+    Write-Host "  Using Java 25: $($java25.FullName)" -ForegroundColor Green
 }
 
 Write-Host "======================================================" -ForegroundColor Cyan
@@ -302,3 +308,4 @@ try {
 finally {
     Cleanup
 }
+
