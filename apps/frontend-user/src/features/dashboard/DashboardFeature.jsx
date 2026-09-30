@@ -332,20 +332,46 @@ export default function DashboardFeature() {
     if (!stats.id || publishing) return;
     try {
       setPublishing(true);
-      const isLocal = typeof stats.id === "string" && (stats.id.startsWith("wed-") || !/^\d+$/.test(stats.id));
-      if (stats.status === "PUBLISHED") {
-        if (isLocal) {
-          const draft = getDraft(stats.id);
-          if (draft) saveDraft({ ...draft, status: "DRAFT", published: false });
-        }
-        await invitationService.unpublish(stats.id);
-      } else {
-        if (isLocal) {
-          const draft = getDraft(stats.id);
-          if (draft) saveDraft({ ...draft, status: "PUBLISHED", published: true });
-        }
-        await invitationService.publish(stats.id);
+      const isPublished = stats.status === "PUBLISHED";
+      const nextStatus = isPublished ? "DRAFT" : "PUBLISHED";
+      const nextPublished = !isPublished;
+
+      // 1. Immediately update localStorage draft if exists
+      const currentInv = state.selectedInvitation;
+      if (currentInv) {
+        saveDraft({
+          ...currentInv,
+          id: stats.id,
+          status: nextStatus,
+          published: nextPublished,
+        });
       }
+
+      // 2. Immediately update local state for reactive UI toggle
+      setState((prev) => ({
+        ...prev,
+        selectedInvitation: prev.selectedInvitation
+          ? { ...prev.selectedInvitation, status: nextStatus, published: nextPublished }
+          : prev.selectedInvitation,
+        invitations: (prev.invitations || []).map((inv) =>
+          (inv.id || inv.invitationId) === stats.id
+            ? { ...inv, status: nextStatus, published: nextPublished }
+            : inv
+        ),
+      }));
+
+      // 3. Sync with backend
+      try {
+        if (isPublished) {
+          await invitationService.unpublish(stats.id);
+        } else {
+          await invitationService.publish(stats.id);
+        }
+      } catch (backendErr) {
+        console.warn("Backend publish sync warning:", backendErr?.message);
+      }
+
+      // 4. Reload data to keep in sync
       await loadData(stats.id);
     } catch (err) {
       alert(err?.message || "Failed to update publication status.");

@@ -52,6 +52,10 @@ export default function PublicInvitationPage() {
     const activeDraft = useMemo(() => {
         if (!slug) return null;
         const norm = slug.trim().toLowerCase();
+        const stored = getDraftBySlug(slug) || (norm === "wedding" ? listDrafts()[0] : null);
+        if (stored) {
+            return stored;
+        }
         if (draft && (
             draft.slug?.toLowerCase() === norm ||
             draft.id?.toLowerCase() === norm ||
@@ -60,7 +64,7 @@ export default function PublicInvitationPage() {
         )) {
             return draft;
         }
-        return getDraftBySlug(slug) || (norm === "wedding" ? listDrafts()[0] : null);
+        return null;
     }, [draft, slug]);
     const shouldBackToDashboard = location.state?.backTo === "/dashboard";
     const queryAccessToken = searchParams.get("accessToken") || "";
