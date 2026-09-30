@@ -511,7 +511,7 @@ const DEFAULT_STATE = {
     frontColor: "#f9af59",
     bottomColor: "#B08E4F",
     coverImage: null,
-    coverBackgroundImage: "",
+    coverBackgroundImage: null,
     invitationImage: null,
     invitationImage2: null,
     backgroundImage: null,
@@ -597,7 +597,14 @@ export default function InvitationForm({ invitation }) {
         const templateDefaultCover = preset.coverImage || DEFAULT_STATE.coverImage;
         const templateDefaultCoverBg = preset.coverBackgroundImage || tpl?.coverBackgroundImage || DEFAULT_STATE.coverBackgroundImage;
         const uploadedCoverFromDraft = uploadedCover || ((!isDefaultCover && customParsed.coverImage) ? customParsed.coverImage : "");
-        const coverBackgroundImage = customParsed.coverBackgroundImage || invitation?.coverBackgroundImage || templateDefaultCoverBg || "";
+        const coverBackgroundImage = customParsed.coverBackgroundImage
+            || invitation?.coverBackgroundImage
+            || invitation?.design?.coverBackgroundImage
+            || invitation?.content?.coverBackgroundImage
+            || preset.coverBackgroundImage
+            || tpl?.coverBackgroundImage
+            || templateDefaultCoverBg
+            || "";
 
         const frontColor = (!isDefaultGold && (customParsed.frontColor || invitation?.frontColor)) || preset.frontColor || DEFAULT_STATE.frontColor;
         const bottomColor = (!isDefaultGold && (customParsed.bottomColor || invitation?.bottomColor)) || preset.bottomColor || DEFAULT_STATE.bottomColor;
@@ -801,6 +808,7 @@ export default function InvitationForm({ invitation }) {
 
     const [isMobilePreviewOpen, setIsMobilePreviewOpen] = useState(false);
     const [pendingCoverFile, setPendingCoverFile] = useState(null);
+    const [pendingCoverBgFile, setPendingCoverBgFile] = useState(null);
     const [pendingBackgroundFile, setPendingBackgroundFile] = useState(null);
     const [pendingInvitationFile, setPendingInvitationFile] = useState(null);
     const [pendingInvitation2File, setPendingInvitation2File] = useState(null);
@@ -1365,6 +1373,8 @@ export default function InvitationForm({ invitation }) {
                 title: finalTitle,
                 subtitle: form.subtitle || "សូមគោរពអញ្ជើញ",
                 coverImage: form.uploadedCoverUrl || form.coverImage || null,
+                coverBackgroundImage: form.coverBackgroundImage || null,
+                backgroundImage: form.backgroundImage || null,
                 invitationImage: form.uploadedInvitationUrl || form.invitationImage || null,
                 invitationImage2: form.invitationImage2 || null,
                 hideCoupleNameOnCover: form.hideCoupleNameOnCover,
@@ -1504,17 +1514,54 @@ export default function InvitationForm({ invitation }) {
                 }
             }
 
-            if (backendId && (savedInvitationUrl || savedInvitationUrl2)) {
+            let savedCoverBgUrl = form.coverBackgroundImage || "";
+            const coverBgFile = pendingCoverBgFile || dataUrlToFile(form.coverBackgroundImage, "cover-bg.jpg");
+            if (coverBgFile && backendId) {
+                try {
+                    const uploadedCoverBg = await mediaService.uploadCover(backendId, coverBgFile);
+                    savedCoverBgUrl = uploadedCoverBg?.fileUrl || uploadedCoverBg?.data?.fileUrl || form.coverBackgroundImage;
+                    setPendingCoverBgFile(null);
+                    update("coverBackgroundImage", savedCoverBgUrl);
+                } catch (uploadError) {
+                    mediaSyncError ||= uploadError?.message || "Cover background upload failed";
+                }
+            }
+
+            let savedBgUrl = form.backgroundImage || "";
+            const bgFile = pendingBackgroundFile || dataUrlToFile(form.backgroundImage, "background.jpg");
+            if (bgFile && backendId) {
+                try {
+                    const uploadedBg = await mediaService.uploadCover(backendId, bgFile);
+                    savedBgUrl = uploadedBg?.fileUrl || uploadedBg?.data?.fileUrl || form.backgroundImage;
+                    setPendingBackgroundFile(null);
+                    update("backgroundImage", savedBgUrl);
+                } catch (uploadError) {
+                    mediaSyncError ||= uploadError?.message || "Background upload failed";
+                }
+            }
+
+            const hasMediaUpdates = backendId && (
+                savedInvitationUrl ||
+                savedInvitationUrl2 ||
+                (savedCoverBgUrl && savedCoverBgUrl !== form.coverBackgroundImage) ||
+                (savedBgUrl && savedBgUrl !== form.backgroundImage)
+            );
+
+            if (hasMediaUpdates) {
                 try {
                     saved = await invitationService.update(backendId, {
                         ...payload,
                         designJson: JSON.stringify(stripInlineMedia({
                             ...designPayload,
+                            coverBackgroundImage: savedCoverBgUrl || form.coverBackgroundImage || null,
+                            backgroundImage: savedBgUrl || form.backgroundImage || null,
                             invitationImage: savedInvitationUrl || form.invitationImage || null,
                             invitationImage2: savedInvitationUrl2 || form.invitationImage2 || null,
                         })),
                         contentJson: JSON.stringify(stripInlineMedia({
                             ...contentPayload,
+                            coverBackgroundImage: savedCoverBgUrl || form.coverBackgroundImage || null,
+                            backgroundImage: savedBgUrl || form.backgroundImage || null,
                             invitationImage: savedInvitationUrl || form.invitationImage || null,
                             invitationImage2: savedInvitationUrl2 || form.invitationImage2 || null,
                         })),
@@ -1522,12 +1569,6 @@ export default function InvitationForm({ invitation }) {
                 } catch (updateError) {
                     mediaSyncError ||= updateError?.message || "Invitation photo references could not be saved";
                 }
-            }
-            if (pendingBackgroundFile && backendId) {
-                const uploadedBg = await mediaService.uploadCover(backendId, pendingBackgroundFile);
-                const savedBgUrl = uploadedBg?.fileUrl || uploadedBg?.data?.fileUrl || form.backgroundImage;
-                setPendingBackgroundFile(null);
-                update("backgroundImage", savedBgUrl);
             }
 
             const targetDraftId = invitationId || saved?.id || `wed-${Date.now().toString(36)}`;
@@ -1576,11 +1617,11 @@ export default function InvitationForm({ invitation }) {
                 coverImage: savedCoverUrl || form.coverImage,
                 coverUrl: savedCoverUrl || form.coverImage,
                 uploadedCoverUrl: savedCoverUrl,
-                coverBackgroundImage: form.coverBackgroundImage || "",
+                coverBackgroundImage: savedCoverBgUrl || form.coverBackgroundImage || "",
                 templateDefaultCoverBg: form.templateDefaultCoverBg || "",
                 invitationImage: savedInvitationUrl || form.invitationImage || null,
                 invitationImage2: savedInvitationUrl2 || form.invitationImage2 || null,
-                backgroundImage: form.backgroundImage || "",
+                backgroundImage: savedBgUrl || form.backgroundImage || "",
                 templateDefaultCover: form.templateDefaultCover,
                 openingStyle: form.openingStyle || activePreset.openingStyle || "khmer-royal",
                 gateEnabled: form.gateEnabled,
@@ -1710,9 +1751,18 @@ export default function InvitationForm({ invitation }) {
                         label={activeLangTab === "EN" ? (flowConfig.labels.coverBackgroundImageEn || "Cover background (closed state)") : (flowConfig.labels.coverBackgroundImage || "ផ្ទៃខាងក្រោយគ្របមុខ (ពេលមិនទាន់បើក)")}
                         icon={ImageIcon}
                         image={form.coverBackgroundImage}
-                        onUpload={(e) => handleFileUpload(e, (url) => update("coverBackgroundImage", url))}
-                        onRemove={() => update("coverBackgroundImage", "")}
-                        onRestoreDefault={form.templateDefaultCoverBg ? () => update("coverBackgroundImage", form.templateDefaultCoverBg) : undefined}
+                        onUpload={(e) => handleFileUpload(e, (url, file) => {
+                            update("coverBackgroundImage", url);
+                            setPendingCoverBgFile(file);
+                        })}
+                        onRemove={() => {
+                            update("coverBackgroundImage", "");
+                            setPendingCoverBgFile(null);
+                        }}
+                        onRestoreDefault={form.templateDefaultCoverBg ? () => {
+                            update("coverBackgroundImage", form.templateDefaultCoverBg);
+                            setPendingCoverBgFile(null);
+                        } : undefined}
                         hasDefault={Boolean(form.templateDefaultCoverBg && form.coverBackgroundImage !== form.templateDefaultCoverBg)}
                         inputRef={coverBgInputRef}
                         hint={activeLangTab === "EN" ? (flowConfig.hints.coverBackgroundImageEn || "Shown on the cover before the invitation is opened") : (flowConfig.hints.coverBackgroundImage || "បង្ហាញលើគ្របមុខពេលមិនទាន់បើកធៀបការ")}
@@ -1727,9 +1777,18 @@ export default function InvitationForm({ invitation }) {
                         label={activeLangTab === "EN" ? (flowConfig.labels.backgroundImageEn || "Botanical frame (opened state)") : (flowConfig.labels.backgroundImage || "ស៊ុមផ្កា / រូបភាពផ្ទៃខាងក្រោយ (Botanical Frame)")}
                         icon={Sparkles}
                         image={form.backgroundImage || "/invitations/khmer-celestial/botanical-frame.jpg"}
-                        onUpload={(e) => handleFileUpload(e, (url) => update("backgroundImage", url))}
-                        onRemove={() => update("backgroundImage", "")}
-                        onRestoreDefault={() => update("backgroundImage", "/invitations/khmer-celestial/botanical-frame.jpg")}
+                        onUpload={(e) => handleFileUpload(e, (url, file) => {
+                            update("backgroundImage", url);
+                            setPendingBackgroundFile(file);
+                        })}
+                        onRemove={() => {
+                            update("backgroundImage", "");
+                            setPendingBackgroundFile(null);
+                        }}
+                        onRestoreDefault={() => {
+                            update("backgroundImage", "/invitations/khmer-celestial/botanical-frame.jpg");
+                            setPendingBackgroundFile(null);
+                        }}
                         hasDefault={Boolean(form.backgroundImage && form.backgroundImage !== "/invitations/khmer-celestial/botanical-frame.jpg")}
                         inputRef={bgFrameInputRef}
                         hint={activeLangTab === "EN" ? (flowConfig.hints.backgroundImageEn || "Botanical frame shown once invitation is opened") : (flowConfig.hints.backgroundImage || "ស៊ុមផ្កាប្រណិតព័ទ្ធជុំវិញកាតធៀបការពេលបើក (អាចប្តូរជារូបស៊ុមផ្ទាល់ខ្លួនបាន)")}
@@ -2121,8 +2180,14 @@ export default function InvitationForm({ invitation }) {
                 label={t("backgroundImage") || "រូបថតគូស្នេហ៍ / ខាងក្នុង (Couple & Inner Photo)"}
                 icon={ImageIcon}
                 image={form.backgroundImage}
-                onUpload={(e) => handleFileUpload(e, (url) => update("backgroundImage", url))}
-                onRemove={() => update("backgroundImage", "")}
+                onUpload={(e) => handleFileUpload(e, (url, file) => {
+                    update("backgroundImage", url);
+                    setPendingBackgroundFile(file);
+                })}
+                onRemove={() => {
+                    update("backgroundImage", "");
+                    setPendingBackgroundFile(null);
+                }}
                 inputRef={bgInputRef}
                 hint="បង្ហាញក្នុងផ្នែកកូនកំលោះ និងកូនក្រមុំ (The Bride & Groom Card)"
             />

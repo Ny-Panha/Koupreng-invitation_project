@@ -16,9 +16,26 @@ vi.mock("../templates/api/templateCatalogApi", () => ({
   templateCatalogService: { list: vi.fn() },
 }));
 
+vi.mock("@/features/invitations/api/invitationApi", () => ({
+  invitationService: {
+    create: vi.fn().mockResolvedValue({ id: 101, slug: "test-slug" }),
+    update: vi.fn().mockResolvedValue({ id: 101, slug: "test-slug" }),
+    get: vi.fn().mockResolvedValue({}),
+  },
+}));
+
+vi.mock("@/features/invitations/api/mediaApi", () => ({
+  mediaService: {
+    uploadCover: vi.fn().mockResolvedValue({ fileUrl: "https://example.com/uploaded.jpg" }),
+    uploadGallery: vi.fn().mockResolvedValue([]),
+    list: vi.fn().mockResolvedValue([]),
+  },
+}));
+
 import { templateCatalogService } from "../templates/api/templateCatalogApi";
 
 beforeEach(() => {
+  localStorage.clear();
   templateCatalogService.list.mockReset();
   // Empty by default: InvitationForm skips registration when the list is empty,
   // so tests that call registerDynamicTemplates() directly stay in control.
@@ -280,5 +297,58 @@ describe("Khmer Celestial Cover Image Fields", () => {
 
         // 3. Field 2: Botanical frame (opened state)
         expect(screen.getAllByText(/ស៊ុមផ្កា \/ រូបភាពផ្ទៃខាងក្រោយ/i).length).toBeGreaterThanOrEqual(1);
+    }, 15000);
+
+    it("restores coverBackgroundImage from draft/invitation designJson upon load", () => {
+        const invitationWithCoverBg = {
+            id: "wed-cover-bg-test",
+            templateId: "khmer-celestial",
+            title: "Celestial Wedding",
+            groomName: "វណ្ណដា",
+            brideName: "ស្រីពេជ្រ",
+            designJson: JSON.stringify({
+                coverBackgroundImage: "/uploads/saved-closed-cover-bg.jpg",
+            }),
+        };
+
+        const { container } = render(
+            <BrowserRouter>
+                <InvitationForm invitation={invitationWithCoverBg} />
+            </BrowserRouter>
+        );
+
+        const imgElements = container.querySelectorAll("img");
+        const found = Array.from(imgElements).some((img) => img.src && img.src.includes("saved-closed-cover-bg.jpg"));
+        expect(found).toBe(true);
+    }, 15000);
+
+    it("persists coverBackgroundImage to draft storage when save is clicked", async () => {
+        const invitationToSave = {
+            id: "wed-save-test",
+            templateId: "khmer-celestial",
+            title: "Celestial Save Test",
+            groomName: "វណ្ណដា",
+            brideName: "ស្រីពេជ្រ",
+            coverBackgroundImage: "https://example.com/permanent-cover-bg.jpg",
+        };
+
+        const { container } = render(
+            <BrowserRouter>
+                <InvitationForm invitation={invitationToSave} />
+            </BrowserRouter>
+        );
+
+        const saveButton = container.querySelector(".pe-save-main-btn");
+        expect(saveButton).toBeInTheDocument();
+
+        await act(async () => {
+            saveButton.click();
+        });
+
+        await waitFor(() => {
+            const storedDraft = JSON.parse(localStorage.getItem("koupreng.wedding.drafts") || "{}")["wed-save-test"];
+            expect(storedDraft).toBeDefined();
+            expect(storedDraft.coverBackgroundImage).toBe("https://example.com/permanent-cover-bg.jpg");
+        });
     }, 15000);
 });

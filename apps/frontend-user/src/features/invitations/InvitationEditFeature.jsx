@@ -52,6 +52,8 @@ export default function InvitationEditPage() {
 
                 const designPayload = {
                     coverImage: cover,
+                    coverBackgroundImage: localDraft.coverBackgroundImage || localDraft.design?.coverBackgroundImage || "",
+                    backgroundImage: localDraft.backgroundImage || localDraft.design?.backgroundImage || "",
                     frontColor,
                     bottomColor,
                     openingStyle,
@@ -70,6 +72,8 @@ export default function InvitationEditPage() {
                 const contentPayload = {
                     title: (!isDefaultTitle && (localDraft.event?.title || localDraft.title)) ? (localDraft.event?.title || localDraft.title) : (preset.title || "សួនរាជហង្សខ្មែរ"),
                     subtitle: "សូមគោរពអញ្ជើញ",
+                    coverBackgroundImage: localDraft.coverBackgroundImage || localDraft.design?.coverBackgroundImage || "",
+                    backgroundImage: localDraft.backgroundImage || localDraft.design?.backgroundImage || "",
                     groomName: (!isDefaultCouple && (localDraft.couple?.groom || localDraft.groomName)) ? (localDraft.couple?.groom || localDraft.groomName) : (preset.groom || "វណ្ណដា"),
                     brideName: (!isDefaultCouple && (localDraft.couple?.bride || localDraft.brideName)) ? (localDraft.couple?.bride || localDraft.brideName) : (preset.bride || "ស្រីពេជ្រ"),
                     eventDateText: localDraft.event?.date || localDraft.eventDate || tpl?.dateText || "ថ្ងៃពុធ ២៨ មករា ២០២៦",
@@ -106,6 +110,8 @@ export default function InvitationEditPage() {
                     frontColor,
                     bottomColor,
                     coverImage: cover,
+                    coverBackgroundImage: localDraft.coverBackgroundImage || localDraft.design?.coverBackgroundImage || "",
+                    backgroundImage: localDraft.backgroundImage || localDraft.design?.backgroundImage || "",
                     storyText: localDraft.messageText || localDraft.message || preset.messageText || "",
                     // Use saved designJson/contentJson if available (written by handleSave),
                     // otherwise fall back to the minimal reconstructed versions
