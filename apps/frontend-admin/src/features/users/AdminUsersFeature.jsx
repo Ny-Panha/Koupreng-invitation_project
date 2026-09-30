@@ -134,7 +134,7 @@ export default function AdminUsersPage() {
               />
             </label>
             <label>
-              {t("users.colEmail", "Email")}
+              {t("users.emailLabel", "Email")}
               <input
                 className="text-input"
                 type="email"
@@ -151,6 +151,7 @@ export default function AdminUsersPage() {
               <input
                 className="text-input"
                 type="password"
+                minLength={8}
                 value={createForm.password}
                 onChange={(event) => setCreateForm((prev) => ({ ...prev, password: event.target.value }))}
                 placeholder={t("users.passwordPlaceholder", "Minimum 8 characters")}
@@ -190,9 +191,9 @@ export default function AdminUsersPage() {
         </div>
         <div className="mb-4 flex flex-wrap gap-2" role="tablist" aria-label={t("users.roleFilters", "Filter users by role")}>
           {[
-            ["ALL", t("users.filterAll", "ទាំងអស់")],
-            ["ADMIN", t("users.filterAdmins", "អ្នកគ្រប់គ្រង")],
-            ["USER", t("users.filterUsers", "អ្នកប្រើប្រាស់")],
+            ["ALL", t("users.filterAll", "All")],
+            ["ADMIN", t("users.filterAdmins", "Admins")],
+            ["USER", t("users.filterUsers", "Users")],
           ].map(([value, label]) => (
             <button
               key={value}
@@ -220,8 +221,8 @@ export default function AdminUsersPage() {
                 <tr>
                   <th>{t("users.colId", "ID")}</th>
                   <th>{t("users.colName", "Name")}</th>
-                  <th>{t("users.colEmail", "គណនី (Email / Phone)")}</th>
-                  <th>{t("users.colRole", "តួនាទី (Role)")}</th>
+                  <th>{t("users.colEmail", "Account (Email / Phone)")}</th>
+                  <th>{t("users.colRole", "Role")}</th>
                   <th>{t("users.colStatus", "Status")}</th>
                   <th>{t("users.colJoined", "Joined")}</th>
                   <th>{t("users.colActions", "Actions")}</th>

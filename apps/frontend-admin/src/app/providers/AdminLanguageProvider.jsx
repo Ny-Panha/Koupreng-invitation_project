@@ -134,6 +134,25 @@ export const ADMIN_DICTIONARY = {
       noInvitations: "មិនមានធៀបការទេ",
       toastSuccess: "បានធ្វើបច្ចុប្បន្នភាពអ្នកប្រើប្រាស់ជោគជ័យ",
       toastFail: "បរាជ័យក្នុងការធ្វើបច្ចុប្បន្នភាព",
+      masterAdmin: "អ្នកគ្រប់គ្រងធំ",
+      admin: "អ្នកគ្រប់គ្រង",
+      regularUser: "អ្នកប្រើប្រាស់ទូទៅ",
+      createAdminTitle: "បង្កើតគណនីអេដមីនថ្មី",
+      namePlaceholder: "ឧ. Sok Dara",
+      emailLabel: "អ៊ីមែល",
+      emailPlaceholder: "admin@koupreng.local",
+      emailValidation: "សូមបញ្ចូលអ៊ីមែលត្រឹមត្រូវដែលមាន @",
+      passwordLabel: "ពាក្យសម្ងាត់",
+      passwordPlaceholder: "យ៉ាងតិច 8 តួអក្សរ",
+      roleLabel: "តួនាទី",
+      creating: "កំពុងបង្កើត...",
+      createAdminBtn: "បង្កើតអេដមីន",
+      createToastSuccess: "បានបង្កើតគណនីអេដមីនជោគជ័យ",
+      createToastFail: "មិនអាចបង្កើតគណនីអេដមីនបានទេ",
+      roleFilters: "ចម្រោះអ្នកប្រើប្រាស់តាមតួនាទី",
+      filterAll: "ទាំងអស់",
+      filterAdmins: "អ្នកគ្រប់គ្រង",
+      filterUsers: "អ្នកប្រើប្រាស់",
     },
     invitations: {
       title: "ធៀបការ & RSVP",
@@ -409,6 +428,25 @@ export const ADMIN_DICTIONARY = {
       noInvitations: "No invitations found",
       toastSuccess: "User updated successfully",
       toastFail: "User update failed",
+      masterAdmin: "Master Admin",
+      admin: "Admin",
+      regularUser: "Regular User",
+      createAdminTitle: "Create New Admin Account",
+      namePlaceholder: "e.g. Sok Dara",
+      emailLabel: "Email",
+      emailPlaceholder: "admin@koupreng.local",
+      emailValidation: "Enter a valid email address containing @",
+      passwordLabel: "Password",
+      passwordPlaceholder: "Minimum 8 characters",
+      roleLabel: "Role",
+      creating: "Creating...",
+      createAdminBtn: "Create Admin",
+      createToastSuccess: "Admin account created successfully",
+      createToastFail: "Could not create admin account",
+      roleFilters: "Filter users by role",
+      filterAll: "All",
+      filterAdmins: "Admins",
+      filterUsers: "Users",
     },
     invitations: {
       title: "Invitations & RSVP",
@@ -556,13 +594,6 @@ export const ADMIN_DICTIONARY = {
   },
 };
 
-const AdminLanguageContext = createContext({
-  lang: "km",
-  setLang: () => {},
-  t: (path, fallback) => fallback || path,
-  messages: ADMIN_DICTIONARY.km,
-});
-
 function formatTemplate(text, replacements) {
   if (!replacements || typeof text !== "string") return text;
   return Object.entries(replacements).reduce(
@@ -570,6 +601,29 @@ function formatTemplate(text, replacements) {
     text
   );
 }
+
+function resolveTranslation(dictionary, path, fallback, replacements) {
+  if (!path) return fallback;
+  const parts = path.split(".");
+  let current = dictionary;
+  for (const part of parts) {
+    if (current && typeof current === "object" && part in current) {
+      current = current[part];
+    } else {
+      const fallbackVal = fallback || path;
+      return replacements ? formatTemplate(fallbackVal, replacements) : fallbackVal;
+    }
+  }
+  const val = typeof current === "string" ? current : fallback || path;
+  return replacements ? formatTemplate(val, replacements) : val;
+}
+
+const AdminLanguageContext = createContext({
+  lang: "km",
+  setLang: () => {},
+  t: (path, fallback) => fallback || path,
+  messages: ADMIN_DICTIONARY.km,
+});
 
 export function AdminLanguageProvider({ children }) {
   const [lang, setLangState] = useState(() => {
@@ -600,19 +654,7 @@ export function AdminLanguageProvider({ children }) {
   const messages = useMemo(() => ADMIN_DICTIONARY[lang] || ADMIN_DICTIONARY.km, [lang]);
 
   const t = useCallback((path, fallback = "", replacements = null) => {
-    if (!path) return fallback;
-    const parts = path.split(".");
-    let current = messages;
-    for (const part of parts) {
-      if (current && typeof current === "object" && part in current) {
-        current = current[part];
-      } else {
-        const fallbackVal = fallback || path;
-        return replacements ? formatTemplate(fallbackVal, replacements) : fallbackVal;
-      }
-    }
-    const val = typeof current === "string" ? current : fallback || path;
-    return replacements ? formatTemplate(val, replacements) : val;
+    return resolveTranslation(messages, path, fallback, replacements);
   }, [messages]);
 
   const value = useMemo(() => ({ lang, setLang, t, messages }), [lang, messages, setLang, t]);

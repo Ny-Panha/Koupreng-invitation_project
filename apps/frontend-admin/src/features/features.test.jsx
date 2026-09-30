@@ -86,7 +86,7 @@ describe("Domain Feature Modules", () => {
     fireEvent.change(emailInput, { target: { value: "invalid-email" } });
     expect(emailInput).not.toBeValid();
 
-    fireEvent.click(screen.getByRole("tab", { name: "អ្នកប្រើប្រាស់" }));
+    fireEvent.click(screen.getByRole("tab", { name: /users|អ្នកប្រើប្រាស់/i }));
     expect(screen.queryByText("Koupreng Admin")).not.toBeInTheDocument();
     expect(screen.getByText("Sophea User")).toBeInTheDocument();
   });
