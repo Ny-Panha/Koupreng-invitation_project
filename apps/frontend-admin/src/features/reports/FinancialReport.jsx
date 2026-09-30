@@ -34,6 +34,39 @@ function formatMoney(value, currency) {
   return currency === "KHR" ? `${formatted} ៛` : `$${formatted}`;
 }
 
+function paymentChannelOf(row) {
+  const method = String(row.method || row.paymentMethod || "").trim().toUpperCase();
+  if (method.includes("ABA") || method.includes("KHQR") || method.includes("BAKONG")) return "digital";
+  if (method.includes("CASH") || method.includes("សាច់ប្រាក់")) return "cash";
+  return "other";
+}
+
+function expenseCategoryLabel(value) {
+  const category = String(value || "").trim();
+  const key = category.toUpperCase().replace(/[_-]+/g, " ").replace(/\s+/g, " ");
+  const labels = {
+    "ATTIRE & MAKEUP": "សំលៀកបំពាក់ និងការតុបតែងមុខ",
+    "ATTIRE AND MAKEUP": "សំលៀកបំពាក់ និងការតុបតែងមុខ",
+    ATTIRE: "សំលៀកបំពាក់",
+    MAKEUP: "ការតុបតែងមុខ",
+    VENUE: "ទីតាំងកម្មវិធី",
+    FOOD: "ម្ហូបអាហារ",
+    CATERING: "ម្ហូបអាហារ និងសេវាកម្ម",
+    DECOR: "ការតុបតែងកម្មវិធី",
+    DECORATION: "ការតុបតែងកម្មវិធី",
+    PHOTOGRAPHY: "ការថតរូប",
+    VIDEOGRAPHY: "ការថតវីដេអូ",
+    MUSIC: "តន្ត្រី",
+    ENTERTAINMENT: "ការកម្សាន្ត",
+    FLOWERS: "ផ្កា",
+    TRANSPORTATION: "ការដឹកជញ្ជូន",
+    INVITATIONS: "សំបុត្រអញ្ជើញ",
+    CAKE: "នំខេក",
+    OTHER: "ផ្សេងៗ",
+  };
+  return labels[key] || category || "ផ្សេងៗ";
+}
+
 function formatDate(value) {
   if (!value) return "—";
   const date = new Date(`${value}T00:00:00`);
@@ -48,18 +81,18 @@ function summarize(rows, amountKeys) {
 }
 
 function formatExpenseNotes(value, currency) {
-  if (!value) return "—";
+  if (!value) return "-";
 
   let notes = value;
   if (typeof value === "string") {
     try {
       notes = JSON.parse(value);
     } catch {
-      return value.trim() || "—";
+      return value.trim() || "-";
     }
   }
 
-  if (!notes || typeof notes !== "object" || Array.isArray(notes)) return "—";
+  if (!notes || typeof notes !== "object" || Array.isArray(notes)) return "-";
 
   const text = typeof notes.text === "string" ? notes.text.trim() : "";
   const payments = Array.isArray(notes.payments) ? notes.payments : [];
@@ -73,7 +106,13 @@ function formatExpenseNotes(value, currency) {
     return amount ? `${description}: ${amount}` : description;
   }).filter(Boolean);
 
-  return [text, ...paymentDetails].filter(Boolean).join(" · ") || "—";
+  return [text, ...paymentDetails].filter(Boolean).join(" · ") || "-";
+}
+
+function displayText(value) {
+  if (value === null || value === undefined) return "-";
+  const text = String(value).trim();
+  return text || "-";
 }
 
 export default function FinancialReport({ initialInvitationId = "", onInvitationChange }) {
@@ -87,6 +126,8 @@ export default function FinancialReport({ initialInvitationId = "", onInvitation
   const generatedAt = refreshedAt || new Date();
 
   const income = summarize(gifts, ["amount", "totalAmount"]);
+  const digitalPayments = summarize(gifts.filter((gift) => paymentChannelOf(gift) === "digital"), ["amount", "totalAmount"]);
+  const cashPayments = summarize(gifts.filter((gift) => paymentChannelOf(gift) === "cash"), ["amount", "totalAmount"]);
   const actualExpenses = expenses.filter((item) => hasAmount(item, ["actualCost", "amount"]));
   const unrecordedExpenseCount = expenses.length - actualExpenses.length;
   const expense = summarize(actualExpenses, ["actualCost", "amount"]);
@@ -185,9 +226,10 @@ export default function FinancialReport({ initialInvitationId = "", onInvitation
           <section className="afr-summary-grid">
             <SummaryCard title="ចំណូលដែលបានកត់ត្រា / Recorded Income" totals={income} />
             <SummaryCard title="ចំណាយជាក់ស្តែង / Actual Expenses" totals={expense} />
-            <SummaryCard title="សមតុល្យតាមកំណត់ត្រា / Recorded Net Balance" totals={balance} />
+            <BalanceSummaryCard title="សមតុល្យសុទ្ធ / Net Balance" totals={balance} />
             <SummaryCard title="អំណោយ / Gifts Recorded" value={gifts.length} />
             <SummaryCard title="ចំណាយមិនទាន់កត់ត្រាពិត / Actual Cost Missing" value={unrecordedExpenseCount} />
+            <PaymentBreakdown digital={digitalPayments} cash={cashPayments} />
           </section>
 
           <section className="afr-section">
@@ -202,22 +244,22 @@ export default function FinancialReport({ initialInvitationId = "", onInvitation
             </div>
           </section>
 
+          <p className="afr-data-note no-print">{refreshedAt ? `បានធ្វើបច្ចុប្បន្នភាព: ${new Intl.DateTimeFormat("en-GB", { timeStyle: "medium" }).format(refreshedAt)}` : ""} កំណត់ត្រាចាស់ដែលមិនមាន currency ត្រូវបង្ហាញជា USD។ ប្រព័ន្ធមិនបម្លែងរវាង USD និង KHR ទេ។ ចំណូលសរុបរាប់តែអំណោយដែលបានកត់ត្រា ហើយចំណាយសរុបរាប់តែ actual cost ដែលមានតម្លៃ; ថវិកាគ្រោងមិនត្រូវបូកជាចំណាយពិតទេ។</p>
+
           <ReportTable title="តារាងអំណោយ និងចំណូលផ្សេងៗ" kicker="INCOME" headings={["ឈ្មោះអ្នកផ្តល់", "ក្រុម/ខាង", "ចំនួន", "វិធីបង់ប្រាក់", "ថ្ងៃទទួល", "កំណត់សម្គាល់"]}>
-            {gifts.length ? gifts.map((gift, index) => <tr key={gift.id || index}><td>{gift.name || gift.giverName || "—"}</td><td>{gift.side || gift.sideType || "—"}</td><td>{formatMoney(amountOf(gift, ["amount"]), currencyOf(gift))}</td><td>{gift.method || gift.paymentMethod || "—"}</td><td>{formatDate(gift.date || gift.receivedDate)}</td><td>{gift.note || "—"}</td></tr>) : <EmptyRow count={6} />}
+            {gifts.length ? gifts.map((gift, index) => <tr key={gift.id || index}><td>{gift.name || gift.giverName || "-"}</td><td>{displayText(gift.side) !== "-" ? displayText(gift.side) : displayText(gift.sideType)}</td><td className="afr-money-cell">{formatMoney(amountOf(gift, ["amount"]), currencyOf(gift))}</td><td>{gift.method || gift.paymentMethod || "-"}</td><td>{formatDate(gift.date || gift.receivedDate)}</td><td>{gift.note || "-"}</td></tr>) : <EmptyRow count={6} />}
           </ReportTable>
 
           <ReportTable title="តារាងថវិកាគ្រោង និងចំណាយជាក់ស្តែង" kicker="EXPENSES" headings={["ប្រភេទ", "អ្នកផ្គត់ផ្គង់", "ថវិកាគ្រោង", "ចំណាយជាក់ស្តែង", "ថ្ងៃបង់ប្រាក់", "កំណត់ចំណាំ"]}>
             {expenses.length ? expenses.map((item, index) => <tr key={item.id || index}>
-              <td>{item.category || "ផ្សេងៗ"}</td>
-              <td>{item.vendorName || "—"}</td>
-              <td>{hasAmount(item, ["estimatedCost", "budget"]) ? formatMoney(amountOf(item, ["estimatedCost", "budget"]), currencyOf(item)) : "—"}</td>
-              <td>{hasAmount(item, ["actualCost", "amount"]) ? formatMoney(amountOf(item, ["actualCost", "amount"]), currencyOf(item)) : "មិនទាន់កត់ត្រា / Not recorded"}</td>
+              <td><span className="afr-category">{expenseCategoryLabel(item.category)}</span></td>
+              <td>{item.vendorName || "-"}</td>
+              <td className="afr-money-cell">{hasAmount(item, ["estimatedCost", "budget"]) ? formatMoney(amountOf(item, ["estimatedCost", "budget"]), currencyOf(item)) : "—"}</td>
+              <td className="afr-money-cell">{hasAmount(item, ["actualCost", "amount"]) ? formatMoney(amountOf(item, ["actualCost", "amount"]), currencyOf(item)) : "មិនទាន់កត់ត្រា / Not recorded"}</td>
               <td>{formatDate(item.date || item.expenseDate)}</td>
               <td>{formatExpenseNotes(item.notes || item.note, currencyOf(item))}</td>
             </tr>) : <EmptyRow count={6} />}
           </ReportTable>
-
-          <p className="afr-data-note">{refreshedAt ? `បានធ្វើបច្ចុប្បន្នភាព: ${new Intl.DateTimeFormat("en-GB", { timeStyle: "medium" }).format(refreshedAt)}` : ""} កំណត់ត្រាចាស់ដែលមិនមាន currency ត្រូវបង្ហាញជា USD។ ប្រព័ន្ធមិនបម្លែងរវាង USD និង KHR ទេ។ ចំណូលសរុបរាប់តែអំណោយដែលបានកត់ត្រា ហើយចំណាយសរុបរាប់តែ actual cost ដែលមានតម្លៃ; ថវិកាគ្រោងមិនត្រូវបូកជាចំណាយពិតទេ។</p>
 
           <footer className="afr-signatures reports-print-only">
             <Signature title="អ្នករៀបចំកម្មវិធី" subtitle="ហត្ថលេខា / ស្នាមមេដៃអ្នករៀបចំ" />
@@ -225,7 +267,6 @@ export default function FinancialReport({ initialInvitationId = "", onInvitation
           </footer>
         </>
       )}
-      <div className="afr-page-number" aria-hidden="true" />
     </main>
   );
 }
@@ -263,6 +304,34 @@ function invitationLabel(invitation) {
 
 function SummaryCard({ title, totals, value }) {
   return <article className="afr-summary-card"><span>{title}</span>{totals ? <><strong>{formatMoney(totals.USD, "USD")}</strong><strong>{formatMoney(totals.KHR, "KHR")}</strong></> : <strong>{typeof value === "number" ? new Intl.NumberFormat("en-US").format(value) : value}</strong>}</article>;
+}
+
+function BalanceSummaryCard({ title, totals }) {
+  return <article className="afr-summary-card afr-balance-card">
+    <span>{title}</span>
+    {(["USD", "KHR"]).map((currency) => {
+      const amount = totals[currency];
+      return <strong className={amount < 0 ? "afr-deficit" : ""} key={currency}>
+        {amount < 0 ? `Deficit ${formatMoney(Math.abs(amount), currency)}` : formatMoney(amount, currency)}
+      </strong>;
+    })}
+  </article>;
+}
+
+function PaymentBreakdown({ digital, cash }) {
+  return <article className="afr-summary-card afr-payment-card">
+    <span>ការទូទាត់តាមវិធី / Payment Breakdown</span>
+    <div className="afr-payment-channels">
+      <div className="afr-payment-channel">
+        <b>ABA / KHQR</b>
+        <div className="afr-payment-amounts"><span>USD</span><strong>{formatMoney(digital.USD, "USD")}</strong><span>KHR</span><strong>{formatMoney(digital.KHR, "KHR")}</strong></div>
+      </div>
+      <div className="afr-payment-channel">
+        <b>សាច់ប្រាក់ / Cash</b>
+        <div className="afr-payment-amounts"><span>USD</span><strong>{formatMoney(cash.USD, "USD")}</strong><span>KHR</span><strong>{formatMoney(cash.KHR, "KHR")}</strong></div>
+      </div>
+    </div>
+  </article>;
 }
 
 function ReportTable({ title, kicker, headings, children }) {

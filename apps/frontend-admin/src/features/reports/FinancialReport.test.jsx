@@ -63,6 +63,21 @@ describe("FinancialReport", () => {
     });
   });
 
+  it("defaults to printing all sections and updates the selected print mode", async () => {
+    render(<FinancialReport />);
+
+    const printFilter = await screen.findByRole("combobox", { name: "Print section" });
+    expect(printFilter).toHaveValue("all");
+    expect(document.querySelector(".admin-financial-report")).toHaveClass("print-mode-all");
+    expect(screen.getByRole("button", { name: /Print Selected Section/ })).toBeInTheDocument();
+
+    fireEvent.change(printFilter, { target: { value: "income" } });
+    expect(document.querySelector(".admin-financial-report")).toHaveClass("print-mode-income");
+
+    fireEvent.change(printFilter, { target: { value: "expenses" } });
+    expect(document.querySelector(".admin-financial-report")).toHaveClass("print-mode-expenses");
+  });
+
   it("uses user event titles and filters the list by event type", async () => {
     adminService.invitations.mockResolvedValue([
       { id: 42, title: "Wedding One", eventType: "WEDDING", groomName: "Dara", brideName: "Sophea" },
@@ -113,6 +128,29 @@ describe("FinancialReport", () => {
     expect(screen.getByText(/Attending Responses/)).toBeInTheDocument();
   });
 
+  it("shows payment channel totals, Khmer categories, clean fallbacks, and explicit deficits", async () => {
+    adminService.invitationGifts.mockResolvedValue([
+      { id: 1, amount: 40, currency: "USD", method: "ABA PayWay", name: "ABA giver", side: "   " },
+      { id: 2, amount: 15, currency: "USD", method: "Cash" },
+      { id: 3, amount: 12000, currency: "KHR", method: "KHQR" },
+    ]);
+    adminService.invitationBudgetItems.mockResolvedValue([
+      { id: 1, category: "ATTIRE & MAKEUP", actualCost: 70, currency: "USD", vendorName: null, notes: null },
+    ]);
+
+    render(<FinancialReport />);
+
+    const expenseHeading = await screen.findByText("តារាងថវិកាគ្រោង និងចំណាយជាក់ស្តែង");
+    const categoryRow = (await screen.findByText(/សំលៀកបំពាក់/)).closest("tr");
+    expect(categoryRow.cells[1]).toHaveTextContent("-");
+    expect(categoryRow.cells[5]).toHaveTextContent("-");
+    expect(screen.getByText("ABA giver").closest("tr").cells[1]).toHaveTextContent("-");
+    expect(screen.getByText("ABA / KHQR")).toBeInTheDocument();
+    expect(screen.getByText("សាច់ប្រាក់ / Cash")).toBeInTheDocument();
+    expect(screen.getByText("Deficit $15.00")).toBeInTheDocument();
+    expect(expenseHeading).toBeInTheDocument();
+  });
+
   it("formats structured expense notes and hides empty JSON metadata", async () => {
     adminService.invitationBudgetItems.mockResolvedValue([
       { id: 1, category: "Venue", actualCost: 200, currency: "USD", notes: '{"text":"","payments":[]}' },
@@ -125,8 +163,8 @@ describe("FinancialReport", () => {
     await screen.findByText("តារាងថវិកាគ្រោង និងចំណាយជាក់ស្តែង");
     await waitFor(() => expect(adminService.invitationBudgetItems).toHaveBeenCalledWith("42"));
 
-    const venueRow = screen.getByText("Venue").closest("tr");
-    expect(venueRow.cells[5]).toHaveTextContent("—");
+    const venueRow = screen.getByText("ទីតាំងកម្មវិធី").closest("tr");
+    expect(venueRow.cells[5]).toHaveTextContent("-");
     expect(screen.queryByText('{"text":"","payments":[]}')).not.toBeInTheDocument();
     expect(screen.getByText("Contract signed · Deposit: $75.00")).toBeInTheDocument();
     expect(screen.getByText("Legacy plain note")).toBeInTheDocument();
