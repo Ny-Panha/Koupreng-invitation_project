@@ -33,9 +33,17 @@ else
     echo -e "${GREEN}[INFO]${NC} Working tree is clean. No local changes to stash."
 fi
 
-# Pull latest changes from remote
-echo -e "${BLUE}[INFO]${NC} Pulling latest commits from origin/$CURRENT_BRANCH..."
-if git pull origin "$CURRENT_BRANCH"; then
+# Determine target branch on origin
+TARGET_BRANCH="$CURRENT_BRANCH"
+if ! git ls-remote --exit-code --heads origin "$CURRENT_BRANCH" > /dev/null 2>&1; then
+    echo -e "${YELLOW}[WARN]${NC} Branch '${YELLOW}$CURRENT_BRANCH${NC}' does not exist on remote 'origin' yet."
+    echo -e "${BLUE}[INFO]${NC} Pulling latest base commits from ${GREEN}origin/main${NC} instead..."
+    TARGET_BRANCH="main"
+else
+    echo -e "${BLUE}[INFO]${NC} Pulling latest commits from origin/${GREEN}$TARGET_BRANCH${NC}..."
+fi
+
+if git pull origin "$TARGET_BRANCH"; then
     echo -e "${GREEN}[SUCCESS]${NC} Pulled latest commits successfully!"
 else
     echo -e "${RED}[ERROR]${NC} git pull failed!"
