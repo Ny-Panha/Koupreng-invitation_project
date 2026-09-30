@@ -269,6 +269,16 @@ export default function PublicInvitationPage() {
     }
 
     if (activeDraft?.id && merged) {
+        const isPublished = activeDraft.status === "PUBLISHED" || activeDraft.published === true;
+        if (!isPublished && !shouldBackToDashboard) {
+            return (
+                <main className="public-state">
+                    <h1>{publicStateCopy(activeDraft?.languageMode).unavailable}</h1>
+                    <p>{publicStateCopy(activeDraft?.languageMode).unavailableDetail}</p>
+                </main>
+            );
+        }
+
         return (
             <TemplateExperience
                 tpl={merged.tpl}
