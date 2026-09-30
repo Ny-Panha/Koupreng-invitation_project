@@ -60,6 +60,7 @@ export default function DashboardFeature() {
 
   const [copied, setCopied] = useState(false);
   const [selectedInvId, setSelectedInvId] = useState(null);
+  const [publishing, setPublishing] = useState(false);
 
   const [state, setState] = useState({
     loading: true,
@@ -327,6 +328,23 @@ export default function DashboardFeature() {
     setTimeout(() => setCopied(false), 2200);
   };
 
+  const handlePublishToggle = async () => {
+    if (!stats.id || publishing) return;
+    try {
+      setPublishing(true);
+      if (stats.status === "PUBLISHED") {
+        await invitationService.unpublish(stats.id);
+      } else {
+        await invitationService.publish(stats.id);
+      }
+      await loadData(stats.id);
+    } catch (err) {
+      alert(err?.message || "Failed to update publication status.");
+    } finally {
+      setPublishing(false);
+    }
+  };
+
   // Loading Skeleton matching host pages
   if (state.loading) {
     return (
@@ -526,6 +544,35 @@ export default function DashboardFeature() {
                     <IoCreateOutline style={{ color: "var(--brand-primary)" }} />
                     <span>{text("edit")}</span>
                   </Link>
+                )}
+
+                {stats.id && (
+                  <button
+                    type="button"
+                    onClick={handlePublishToggle}
+                    disabled={publishing}
+                    className={stats.status === "PUBLISHED" ? "dash-btn-outline" : "dash-btn-gold"}
+                    style={{
+                      minHeight: "36px",
+                      padding: "0 14px",
+                      fontSize: "0.8125rem",
+                      cursor: publishing ? "not-allowed" : "pointer",
+                      opacity: publishing ? 0.7 : 1,
+                    }}
+                  >
+                    {stats.status === "PUBLISHED" ? (
+                      <IoCheckmarkCircleOutline style={{ color: "var(--brand-primary)" }} />
+                    ) : (
+                      <IoCheckmarkCircle style={{ color: "#ffffff" }} />
+                    )}
+                    <span>
+                      {publishing
+                        ? text("publishing")
+                        : stats.status === "PUBLISHED"
+                          ? text("unpublish")
+                          : text("publish")}
+                    </span>
+                  </button>
                 )}
               </div>
             </div>
