@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { useLocation, useParams, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useParams, useSearchParams } from "react-router-dom";
+import { IoLockClosedOutline, IoHomeOutline } from "react-icons/io5";
 
 import InvitationDisplay from "../invitations/InvitationDisplay";
 import PublicRsvpForm from "../invitations/PublicRsvpForm";
@@ -272,10 +273,11 @@ export default function PublicInvitationPage() {
         const isPublished = activeDraft.status === "PUBLISHED" || activeDraft.published === true;
         if (!isPublished && !shouldBackToDashboard) {
             return (
-                <main className="public-state">
-                    <h1>{publicStateCopy(activeDraft?.languageMode).unavailable}</h1>
-                    <p>{publicStateCopy(activeDraft?.languageMode).unavailableDetail}</p>
-                </main>
+                <PublicUnavailableView
+                    title={publicStateCopy(activeDraft?.languageMode).unavailable}
+                    message={publicStateCopy(activeDraft?.languageMode).unavailableDetail}
+                    languageMode={activeDraft?.languageMode}
+                />
             );
         }
 
@@ -309,10 +311,11 @@ export default function PublicInvitationPage() {
     }
 
     return (
-        <main className="public-state">
-            <h1>{publicStateCopy(invitation?.languageMode).unavailable}</h1>
-            <p>{remoteError || publicStateCopy(invitation?.languageMode).unavailableDetail}</p>
-        </main>
+        <PublicUnavailableView
+            title={publicStateCopy(invitation?.languageMode).unavailable}
+            message={remoteError || publicStateCopy(invitation?.languageMode).unavailableDetail}
+            languageMode={invitation?.languageMode}
+        />
     );
 }
 
@@ -346,6 +349,123 @@ function ProtectedInvitationGate({ error, loading, onSubmit }) {
                     {loading ? "កំពុងពិនិត្យ..." : "បើកសន្លឹកការ"}
                 </button>
             </form>
+        </main>
+    );
+}
+
+function PublicUnavailableView({ title, message, languageMode = "km" }) {
+    const isEn = String(languageMode).toUpperCase() === "EN";
+    return (
+        <main
+            style={{
+                minHeight: "100vh",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: "24px",
+                background: "radial-gradient(ellipse at top, #fdfbf7 0%, #f4ede2 100%)",
+                fontFamily: "'Inter', 'Battambang', system-ui, -apple-system, sans-serif",
+                boxSizing: "border-box",
+            }}
+        >
+            <div
+                style={{
+                    width: "100%",
+                    maxWidth: "460px",
+                    background: "rgba(255, 255, 255, 0.96)",
+                    backdropFilter: "blur(16px)",
+                    border: "1px solid rgba(185, 139, 66, 0.25)",
+                    borderRadius: "24px",
+                    padding: "44px 32px 36px",
+                    textAlign: "center",
+                    boxShadow: "0 20px 48px -10px rgba(92, 64, 28, 0.12), 0 4px 16px rgba(0, 0, 0, 0.04)",
+                }}
+            >
+                {/* Gold Lock Icon Badge */}
+                <div
+                    style={{
+                        width: "68px",
+                        height: "68px",
+                        margin: "0 auto 20px",
+                        borderRadius: "22px",
+                        background: "linear-gradient(135deg, rgba(185, 139, 66, 0.18) 0%, rgba(185, 139, 66, 0.06) 100%)",
+                        border: "1px solid rgba(185, 139, 66, 0.3)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "#b98b42",
+                        fontSize: "2rem",
+                        boxShadow: "0 8px 24px rgba(185, 139, 66, 0.15)",
+                    }}
+                >
+                    <IoLockClosedOutline />
+                </div>
+
+                {/* Kicker */}
+                <div
+                    style={{
+                        fontSize: "0.75rem",
+                        fontWeight: 700,
+                        letterSpacing: "0.1em",
+                        textTransform: "uppercase",
+                        color: "#b98b42",
+                        marginBottom: "12px",
+                    }}
+                >
+                    {isEn ? "Digital Wedding Hub" : "គូព្រេង • ធៀបការឌីជីថល"}
+                </div>
+
+                {/* Main Title */}
+                <h1
+                    style={{
+                        fontSize: "1.375rem",
+                        fontWeight: 800,
+                        color: "#292524",
+                        margin: "0 0 12px",
+                        lineHeight: 1.4,
+                    }}
+                >
+                    {title || (isEn ? "Invitation Unavailable" : "មិនទាន់បានផ្សព្វផ្សាយ")}
+                </h1>
+
+                {/* Message */}
+                <p
+                    style={{
+                        fontSize: "0.9375rem",
+                        color: "#78716c",
+                        lineHeight: 1.65,
+                        margin: "0 0 28px",
+                    }}
+                >
+                    {message || (isEn
+                        ? "This wedding invitation is currently in draft or has been unpublished by the host."
+                        : "សន្លឹកការអាពាហ៍ពិពាហ៍នេះកំពុងស្ថិតក្នុងដំណាក់កាលព្រាង (Draft) ឬត្រូវបានបិទការផ្សាយបណ្ដោះអាសន្នដោយម្ចាស់កម្មវិធី។")}
+                </p>
+
+                {/* Action Button */}
+                <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
+                    <Link
+                        to="/dashboard"
+                        style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "8px",
+                            padding: "11px 24px",
+                            borderRadius: "14px",
+                            background: "var(--brand-primary, #b98b42)",
+                            color: "#ffffff",
+                            fontSize: "0.875rem",
+                            fontWeight: 700,
+                            textDecoration: "none",
+                            boxShadow: "0 4px 16px rgba(185, 139, 66, 0.28)",
+                            transition: "all 0.2s ease",
+                        }}
+                    >
+                        <IoHomeOutline style={{ fontSize: "1.1rem" }} />
+                        <span>{isEn ? "Go to Dashboard" : "ត្រឡប់ទៅផ្ទាំងគ្រប់គ្រង"}</span>
+                    </Link>
+                </div>
+            </div>
         </main>
     );
 }
