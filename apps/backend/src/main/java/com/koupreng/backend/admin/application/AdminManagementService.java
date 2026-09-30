@@ -348,6 +348,27 @@ public class AdminManagementService {
     }
 
     @Transactional
+    public InvitationResponse updateInvitationStatus(
+            Authentication authentication,
+            Long invitationId,
+            InvitationStatus status,
+            HttpServletRequest request
+    ) {
+        UserInvitation invitation = requireInvitation(invitationId);
+        InvitationStatus previousStatus = invitation.getStatus();
+        invitation.setStatus(status);
+        if (status == InvitationStatus.PUBLISHED && invitation.getPublishedAt() == null) {
+            invitation.setPublishedAt(Instant.now());
+        } else if (status == InvitationStatus.DRAFT) {
+            invitation.setPublishedAt(null);
+        }
+        auditLogService.logAdminAction(authentication, "INVITATION_STATUS_CHANGED", "INVITATION", invitationId,
+                "Changed invitation publication status", request,
+                Map.of("from", previousStatus == null ? "UNKNOWN" : previousStatus, "to", status));
+        return InvitationResponse.from(invitation);
+    }
+
+    @Transactional
     public InvitationResponse activateInvitation(Authentication authentication, Long invitationId, HttpServletRequest request) {
         UserInvitation invitation = requireInvitation(invitationId);
         invitation.setModerationStatus(InvitationModerationStatus.ACTIVE);

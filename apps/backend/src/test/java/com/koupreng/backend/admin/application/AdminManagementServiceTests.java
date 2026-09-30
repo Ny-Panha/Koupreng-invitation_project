@@ -18,6 +18,9 @@ import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.checkin.infrastructure.persistence.GuestCheckInRepository;
 import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
 import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;
+import com.koupreng.backend.invitation.domain.InvitationStatus;
+import com.koupreng.backend.invitation.domain.UserInvitation;
+import com.koupreng.backend.invitation.api.dto.InvitationResponse;
 import com.koupreng.backend.notification.infrastructure.persistence.NotificationRepository;
 import com.koupreng.backend.payment.infrastructure.persistence.TemplatePaymentOrderRepository;
 import com.koupreng.backend.rsvp.infrastructure.persistence.RsvpRepository;
@@ -184,6 +187,52 @@ class AdminManagementServiceTests {
 
         assertEquals(5L, response.getId());
         assertEquals(AppUser.STATUS_DISABLED, target.getStatus());
+    }
+
+    @Test
+    void updateInvitationStatusChangesLifecycleAndMaintainsPublishedTimestamp() {
+        AppUserRepository userRepository = mock(AppUserRepository.class);
+        UserInvitationRepository invitationRepository = mock(UserInvitationRepository.class);
+        InvitationTemplateRepository templateRepository = mock(InvitationTemplateRepository.class);
+        TemplatePaymentOrderRepository paymentOrderRepository = mock(TemplatePaymentOrderRepository.class);
+        RsvpRepository rsvpRepository = mock(RsvpRepository.class);
+        GuestRepository guestRepository = mock(GuestRepository.class);
+        GuestCheckInRepository guestCheckInRepository = mock(GuestCheckInRepository.class);
+        NotificationRepository notificationRepository = mock(NotificationRepository.class);
+        SystemAuditLogRepository systemAuditLogRepository = mock(SystemAuditLogRepository.class);
+        AuditLogService auditLogService = mock(AuditLogService.class);
+        UserAuthCacheService userAuthCacheService = mock(UserAuthCacheService.class);
+        UserInvitation invitation = new UserInvitation();
+        invitation.setId(321L);
+        invitation.setStatus(InvitationStatus.DRAFT);
+        when(invitationRepository.findByIdAndDeletedFalse(321L)).thenReturn(java.util.Optional.of(invitation));
+        AdminManagementService service = new AdminManagementService(
+                userRepository,
+                invitationRepository,
+                templateRepository,
+                paymentOrderRepository,
+                rsvpRepository,
+                guestRepository,
+                guestCheckInRepository,
+                notificationRepository,
+                systemAuditLogRepository,
+                auditLogService,
+                userAuthCacheService,
+                new BCryptPasswordEncoder()
+        );
+
+        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken("admin", null);
+        HttpServletRequest request = new MockHttpServletRequest();
+        InvitationResponse published = service.updateInvitationStatus(auth, 321L, InvitationStatus.PUBLISHED, request);
+        assertEquals(InvitationStatus.PUBLISHED, published.getStatus());
+        assertNotNull(published.getPublishedAt());
+
+        InvitationResponse archived = service.updateInvitationStatus(auth, 321L, InvitationStatus.ARCHIVED, request);
+        assertEquals(InvitationStatus.ARCHIVED, archived.getStatus());
+        assertEquals(false, invitation.isDeleted());
+        verify(auditLogService, org.mockito.Mockito.times(2)).logAdminAction(
+                any(), any(), any(), any(), any(), any(), any()
+        );
     }
 
     private AdminManagementService newService(AppUserRepository userRepository) {

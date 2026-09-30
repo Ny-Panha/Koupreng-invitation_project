@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpRight, CalendarDays, CircleCheck, FilePenLine, RefreshCw, Search, ShieldAlert } from "lucide-react";
+import { Archive, ArrowUpRight, CalendarDays, CircleCheck, FilePenLine, MoreHorizontal, RefreshCw, Search, ShieldAlert, Upload, X } from "lucide-react";
 import { ActionButton, AdminPageHeader, ErrorStateView, LoadingState, StatCard, StatusBadge } from "../../shared/ui/AdminUI";
 import adminService from "../../shared/api/adminService";
 
@@ -49,6 +49,9 @@ export default function AdminReportOverview() {
   const [query, setQuery] = useState("");
   const [eventType, setEventType] = useState("");
   const [status, setStatus] = useState("");
+  const [openActionId, setOpenActionId] = useState(null);
+  const [updatingInvitationId, setUpdatingInvitationId] = useState(null);
+  const [actionError, setActionError] = useState("");
 
   const reload = useCallback(async () => {
     try {
@@ -61,6 +64,33 @@ export default function AdminReportOverview() {
       setLoading(false);
     }
   }, []);
+
+  const updateInvitationStatus = async (invitation, nextStatus) => {
+    setUpdatingInvitationId(invitation.id);
+    setActionError("");
+    try {
+      const updated = await adminService.updateInvitationStatus(invitation.id, nextStatus);
+      const updatedStatus = updated?.status || nextStatus;
+      setReport((current) => {
+        if (!current) return current;
+        const rows = asList(current.rows).map((item) => item.id === invitation.id
+          ? { ...item, ...updated, status: updatedStatus }
+          : item);
+        const publishedInvitations = rows.filter((item) => item.status === "PUBLISHED").length;
+        return {
+          ...current,
+          rows,
+          summary: { ...current.summary, publishedInvitations },
+        };
+      });
+      setOpenActionId(null);
+      await reload();
+    } catch (updateError) {
+      setActionError(updateError?.message || "មិនអាចធ្វើបច្ចុប្បន្នភាពស្ថានភាពកម្មវិធីបានទេ");
+    } finally {
+      setUpdatingInvitationId(null);
+    }
+  };
 
   useEffect(() => {
     let active = true;
@@ -129,7 +159,7 @@ export default function AdminReportOverview() {
         )}
       />
 
-      {error && <p role="status" className="text-xs text-amber-700">មិនអាចធ្វើបច្ចុប្បន្នភាពបានទេ; កំពុងបង្ហាញទិន្នន័យចុងក្រោយដែលបានទាញយក។</p>}
+      {(error || actionError) && <p role="status" className="text-xs text-amber-700">{actionError || "មិនអាចធ្វើបច្ចុប្បន្នភាពបានទេ; កំពុងបង្ហាញទិន្នន័យចុងក្រោយដែលបានទាញយក។"}</p>}
 
       <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4" aria-label="ស្ថិតិកម្មវិធី">
         <StatCard label="កម្មវិធីសរុប" value={summary.totalInvitations ?? invitations.length} note="កម្មវិធីទាំងអស់ក្នុងប្រព័ន្ធ" icon={CalendarDays} tone="cyan" />
@@ -192,12 +222,37 @@ export default function AdminReportOverview() {
                   <td className="px-4 py-3 text-slate-700 dark:text-zinc-300">{ownerLabel(invitation)}</td>
                   <td className="px-4 py-3">{eventTypeLabel(invitation.eventType)}</td>
                   <td className="px-4 py-3 tabular-nums">{dateLabel(invitation.eventDate)}</td>
-                  <td className="px-4 py-3"><StatusBadge status={invitation.status} /></td>
+                  <td className="px-4 py-3"><InvitationStatusBadge status={invitation.status} /></td>
                   <td className="px-4 py-3"><StatusBadge status={invitation.moderationStatus} /></td>
                   <td className="px-4 py-3 text-right">
-                    <Link to={`/reports/${encodeURIComponent(invitation.id)}`} aria-label={`មើលរបាយការណ៍ ${invitationName(invitation)}`} title="មើលរបាយការណ៍លម្អិត" className="inline-flex h-8 w-8 items-center justify-center rounded-md text-slate-600 hover:bg-slate-100 dark:text-zinc-300 dark:hover:bg-zinc-800">
-                      <ArrowUpRight className="h-4 w-4" />
-                    </Link>
+                    <div className="relative inline-flex items-center gap-1">
+                      <Link to={`/reports/${encodeURIComponent(invitation.id)}`} aria-label={`មើលរបាយការណ៍ ${invitationName(invitation)}`} title="មើលរបាយការណ៍លម្អិត" className="inline-flex h-8 w-8 items-center justify-center rounded-md text-slate-600 hover:bg-slate-100 dark:text-zinc-300 dark:hover:bg-zinc-800">
+                        <ArrowUpRight className="h-4 w-4" />
+                      </Link>
+                      <button
+                        type="button"
+                        aria-label={`សកម្មភាព ${invitationName(invitation)}`}
+                        aria-expanded={openActionId === invitation.id}
+                        onClick={() => setOpenActionId(openActionId === invitation.id ? null : invitation.id)}
+                        className="inline-flex h-8 w-8 items-center justify-center rounded-md text-slate-600 hover:bg-slate-100 disabled:opacity-50 dark:text-zinc-300 dark:hover:bg-zinc-800"
+                        disabled={updatingInvitationId === invitation.id}
+                      >
+                        <MoreHorizontal className="h-4 w-4" />
+                      </button>
+                      {openActionId === invitation.id && <div role="menu" className="absolute right-0 top-full z-20 mt-1 grid min-w-44 gap-1 rounded-lg border border-slate-200 bg-white p-1 text-left shadow-lg dark:border-zinc-700 dark:bg-zinc-900">
+                        {(["DRAFT", "UNPUBLISHED"].includes(invitation.status)) && <button type="button" role="menuitem" onClick={() => updateInvitationStatus(invitation, "PUBLISHED")} className="flex items-center gap-2 rounded-md px-3 py-2 text-xs font-semibold text-emerald-700 hover:bg-emerald-50 dark:text-emerald-400 dark:hover:bg-emerald-950/40">
+                          <Upload className="h-3.5 w-3.5" /> Publish / ផ្សព្វផ្សាយ
+                        </button>}
+                        {invitation.status === "PUBLISHED" && <>
+                          <button type="button" role="menuitem" onClick={() => updateInvitationStatus(invitation, "UNPUBLISHED")} className="flex items-center gap-2 rounded-md px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 dark:text-zinc-200 dark:hover:bg-zinc-800">
+                            <X className="h-3.5 w-3.5" /> Unpublish / បិទការផ្សាយ
+                          </button>
+                          <button type="button" role="menuitem" onClick={() => updateInvitationStatus(invitation, "ARCHIVED")} className="flex items-center gap-2 rounded-md px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 dark:text-zinc-200 dark:hover:bg-zinc-800">
+                            <Archive className="h-3.5 w-3.5" /> Archive / រក្សាទុក
+                          </button>
+                        </>}
+                      </div>}
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -210,4 +265,23 @@ export default function AdminReportOverview() {
       </section>
     </div>
   );
+}
+
+function InvitationStatusBadge({ status }) {
+  const styles = {
+    DRAFT: "bg-amber-100 text-amber-800 ring-amber-200 dark:bg-amber-950/50 dark:text-amber-300 dark:ring-amber-900",
+    PUBLISHED: "bg-emerald-100 text-emerald-800 ring-emerald-200 dark:bg-emerald-950/50 dark:text-emerald-300 dark:ring-emerald-900",
+    UNPUBLISHED: "bg-slate-100 text-slate-600 ring-slate-200 dark:bg-zinc-800 dark:text-zinc-300 dark:ring-zinc-700",
+    ARCHIVED: "bg-sky-100 text-sky-800 ring-sky-200 dark:bg-sky-950/50 dark:text-sky-300 dark:ring-sky-900",
+  };
+  const labels = {
+    DRAFT: "សេចក្តីព្រាង",
+    PUBLISHED: "បានផ្សាយ",
+    UNPUBLISHED: "មិនទាន់ផ្សាយ",
+    ARCHIVED: "បានរក្សាទុក",
+  };
+  const normalized = String(status || "").toUpperCase();
+  return <span className={`inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold ring-1 ring-inset ${styles[normalized] || "bg-slate-100 text-slate-600 ring-slate-200"}`}>
+    {labels[normalized] || status || "មិនបានកំណត់"}
+  </span>;
 }

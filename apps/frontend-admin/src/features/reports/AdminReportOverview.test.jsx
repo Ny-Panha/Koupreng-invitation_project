@@ -9,6 +9,7 @@ const adminService = vi.hoisted(() => ({
   invitationGifts: vi.fn(),
   invitationBudgetItems: vi.fn(),
   invitationRsvpSummary: vi.fn(),
+  updateInvitationStatus: vi.fn(),
 }));
 
 vi.mock("../../shared/api/adminService", () => ({ default: adminService }));
@@ -22,11 +23,12 @@ describe("admin report overview", () => {
     vi.clearAllMocks();
     adminService.report.mockResolvedValue({
       generatedAt: "2026-09-29T10:00:00Z",
-      summary: { totalInvitations: 3, publishedInvitations: 1, hiddenInvitations: 1 },
+      summary: { totalInvitations: 4, publishedInvitations: 1, hiddenInvitations: 1 },
       rows: [
         { id: 42, title: "Dara and Sophea", ownerName: "Dara", eventType: "WEDDING", eventDate: "2026-12-01", status: "PUBLISHED", moderationStatus: "ACTIVE" },
         { id: 77, title: "Sokha Birthday", ownerName: "Sokha", eventType: "BIRTHDAY", eventDate: "2027-01-15", status: "DRAFT", moderationStatus: "HIDDEN" },
         { id: 88, title: "Company Dinner", ownerName: "Koupreng Co.", eventType: "CORPORATE", status: "UNPUBLISHED", moderationStatus: "REPORTED" },
+        { id: 99, title: "Archived Dinner", ownerName: "Koupreng Co.", eventType: "CORPORATE", status: "ARCHIVED", moderationStatus: "ACTIVE" },
       ],
     });
     adminService.invitations.mockResolvedValue([]);
@@ -39,6 +41,7 @@ describe("admin report overview", () => {
     adminService.invitationGifts.mockResolvedValue([]);
     adminService.invitationBudgetItems.mockResolvedValue([]);
     adminService.invitationRsvpSummary.mockResolvedValue({ totalGuests: 0, attending: 0 });
+    adminService.updateInvitationStatus.mockImplementation(async (id, nextStatus) => ({ id: Number(id), status: nextStatus }));
   });
 
   function renderPage() {
@@ -86,6 +89,62 @@ describe("admin report overview", () => {
 
     expect(screen.getByText("Company Dinner")).toBeInTheDocument();
     expect(screen.queryByText("Dara and Sophea")).not.toBeInTheDocument();
-    await waitFor(() => expect(screen.getByText(/បង្ហាញ 1 ក្នុងចំណោម 3/)).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText(/បង្ហាញ 1 ក្នុងចំណោម 4/)).toBeInTheDocument());
+  });
+
+  it("filters each lifecycle status immediately and displays localized lifecycle badges", async () => {
+    renderPage();
+    await screen.findByText("Company Dinner");
+
+    const statusFilter = screen.getByRole("combobox", { name: "ស្ថានភាពផ្សាយ" });
+    const cases = [
+      ["PUBLISHED", "Dara and Sophea", "បានផ្សាយ"],
+      ["DRAFT", "Sokha Birthday", "សេចក្តីព្រាង"],
+      ["UNPUBLISHED", "Company Dinner", "មិនទាន់ផ្សាយ"],
+      ["ARCHIVED", "Archived Dinner", "បានរក្សាទុក"],
+    ];
+
+    for (const [value, title, badge] of cases) {
+      fireEvent.change(statusFilter, { target: { value } });
+      const eventRow = screen.getByText(title).closest("tr");
+      expect(eventRow).toBeInTheDocument();
+      expect(eventRow).toHaveTextContent(badge);
+      expect(screen.getAllByRole("row")).toHaveLength(2);
+    }
+  });
+
+  it("offers lifecycle actions for the current status and refreshes the row after updates", async () => {
+    let rows = [
+      { id: 42, title: "Dara and Sophea", ownerName: "Dara", eventType: "WEDDING", status: "PUBLISHED", moderationStatus: "ACTIVE" },
+      { id: 77, title: "Sokha Birthday", ownerName: "Sokha", eventType: "BIRTHDAY", status: "DRAFT", moderationStatus: "ACTIVE" },
+      { id: 55, title: "Vireak and Chenda", ownerName: "Vireak", eventType: "WEDDING", status: "PUBLISHED", moderationStatus: "ACTIVE" },
+    ];
+    adminService.report.mockImplementation(async () => ({
+      summary: { totalInvitations: rows.length, publishedInvitations: rows.filter((row) => row.status === "PUBLISHED").length },
+      rows,
+    }));
+    adminService.updateInvitationStatus.mockImplementation(async (id, nextStatus) => {
+      rows = rows.map((row) => row.id === Number(id) ? { ...row, status: nextStatus } : row);
+      return rows.find((row) => row.id === Number(id));
+    });
+
+    renderPage();
+    await screen.findByText("Sokha Birthday");
+
+    fireEvent.click(screen.getByRole("button", { name: "សកម្មភាព Sokha Birthday" }));
+    fireEvent.click(screen.getByRole("menuitem", { name: /Publish/ }));
+    await waitFor(() => expect(adminService.updateInvitationStatus).toHaveBeenCalledWith(77, "PUBLISHED"));
+    await waitFor(() => expect(screen.getAllByText("បានផ្សាយ").length).toBeGreaterThan(0));
+
+    fireEvent.click(screen.getByRole("button", { name: "សកម្មភាព Dara and Sophea" }));
+    expect(screen.getByRole("menuitem", { name: /Unpublish/ })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("menuitem", { name: /Unpublish/ }));
+    await waitFor(() => expect(adminService.updateInvitationStatus).toHaveBeenCalledWith(42, "UNPUBLISHED"));
+
+    fireEvent.click(screen.getByRole("button", { name: "សកម្មភាព Vireak and Chenda" }));
+    fireEvent.click(screen.getByRole("menuitem", { name: /Archive/ }));
+    await waitFor(() => expect(adminService.updateInvitationStatus).toHaveBeenCalledWith(55, "ARCHIVED"));
+    fireEvent.click(screen.getByRole("button", { name: "សកម្មភាព Vireak and Chenda" }));
+    expect(screen.queryByRole("menuitem", { name: /Publish|Unpublish|Archive/ })).not.toBeInTheDocument();
   });
 });

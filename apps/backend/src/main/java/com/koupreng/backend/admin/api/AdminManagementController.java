@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.shared.response.ApiResponse;
 import com.koupreng.backend.admin.api.dto.AdminCreateUserRequest;
 import com.koupreng.backend.admin.api.dto.AdminInvitationModerationRequest;
+import com.koupreng.backend.admin.api.dto.AdminInvitationStatusRequest;
 import com.koupreng.backend.admin.api.dto.AdminReportResponse;
 import com.koupreng.backend.admin.api.dto.AdminTemplatePremiumRequest;
 import com.koupreng.backend.admin.api.dto.AdminTemplateRequest;
@@ -264,6 +265,19 @@ public class AdminManagementController {
         return ResponseEntity.ok(ApiResponse.success(
                 "Invitation moderated successfully",
                 adminManagementService.moderateInvitation(authentication, invitationId, requestBody, request)
+        ));
+    }
+
+    @PatchMapping("/invitations/{invitationId}/status")
+    public ResponseEntity<ApiResponse<InvitationResponse>> updateInvitationStatus(
+            Authentication authentication,
+            @PathVariable Long invitationId,
+            @Valid @RequestBody AdminInvitationStatusRequest requestBody,
+            HttpServletRequest request
+    ) {
+        return ResponseEntity.ok(ApiResponse.success(
+                "Invitation status updated successfully",
+                adminManagementService.updateInvitationStatus(authentication, invitationId, requestBody.getStatus(), request)
         ));
     }
 
