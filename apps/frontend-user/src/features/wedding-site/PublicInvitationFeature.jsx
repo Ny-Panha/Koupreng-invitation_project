@@ -47,11 +47,20 @@ export default function PublicInvitationPage() {
     const [verifiedAccessToken, setVerifiedAccessToken] = useState("");
     const [verifyingAccess, setVerifyingAccess] = useState(false);
     const draft = useWeddingStore((state) => state.draft);
-    const loadDraft = useWeddingStore((state) => state.loadDraft);
-    const loadDraftBySlug = useWeddingStore((state) => state.loadDraftBySlug);
-    const localLoading = useWeddingStore((state) => state.loading);
     const [gallery, setGallery] = useState(null);
-    const activeDraft = draft?.slug === slug || draft?.id === slug ? draft : null;
+    const activeDraft = useMemo(() => {
+        if (!slug) return null;
+        const norm = slug.trim().toLowerCase();
+        if (draft && (
+            draft.slug?.toLowerCase() === norm ||
+            draft.id?.toLowerCase() === norm ||
+            draft.title?.trim().toLowerCase() === norm ||
+            draft.title?.trim().toLowerCase().replace(/\s+/g, "-") === norm
+        )) {
+            return draft;
+        }
+        return getDraftBySlug(slug) || (norm === "wedding" ? listDrafts()[0] : null);
+    }, [draft, slug]);
     const shouldBackToDashboard = location.state?.backTo === "/dashboard";
     const queryAccessToken = searchParams.get("accessToken") || "";
     const accessStorageKey = slug ? `koupreng_invitation_access_${slug}` : "";
@@ -119,32 +128,33 @@ export default function PublicInvitationPage() {
         };
     }, [slug, inviteToken, effectiveAccessToken]);
 
+    const activeDraftId = activeDraft?.id;
+
     useEffect(() => {
-        if (!slug) {
+        if (!activeDraftId) {
             setGallery([]);
             return;
         }
 
+        let active = true;
         setGallery(null);
-        let loadedDraft = loadDraftBySlug(slug);
-        if (!loadedDraft?.id) {
-            loadedDraft = loadDraft(slug);
-        }
+        loadGallery(activeDraftId)
+            .then((items) => {
+                if (active) setGallery(items || []);
+            })
+            .catch(() => {
+                if (active) setGallery([]);
+            });
 
-        if (!loadedDraft?.id) {
-            setGallery([]);
-            return;
-        }
-
-        loadGallery(loadedDraft.id)
-            .then(setGallery)
-            .catch(() => setGallery([]));
-    }, [slug, loadDraft, loadDraftBySlug]);
+        return () => {
+            active = false;
+        };
+    }, [activeDraftId]);
 
     const merged = useMemo(() => {
         if (!activeDraft?.id || gallery === null) return null;
 
-        const templateId = activeDraft.templateId || getTemplateById(activeDraft.templateId).id;
+        const templateId = activeDraft.templateId || getTemplateById(activeDraft.templateId)?.id || "khmer-celestial";
         return draftToTemplate({ ...activeDraft, templateId }, gallery);
     }, [activeDraft, gallery]);
 
@@ -250,7 +260,7 @@ export default function PublicInvitationPage() {
         );
     }
 
-    if (localLoading || (activeDraft?.id && gallery === null)) {
+    if (activeDraft?.id && gallery === null) {
         return (
             <div style={{ padding: 80, textAlign: "center", color: "#7d6443" }}>
                 កំពុងផ្ទុក...

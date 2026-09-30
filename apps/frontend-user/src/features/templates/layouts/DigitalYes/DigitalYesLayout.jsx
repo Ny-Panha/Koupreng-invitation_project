@@ -23,7 +23,7 @@ import "../../experience/template-experience.css";
 import "./digital-yes.css";
 
 const ensureGoogleFontLoaded = (fontFamily) => {
-  if (!fontFamily || typeof document === "undefined" || (typeof process !== "undefined" && process.env?.NODE_ENV === "test")) return;
+  if (!fontFamily || typeof document === "undefined" || (typeof globalThis !== "undefined" && globalThis.process?.env?.NODE_ENV === "test")) return;
   const cleanName = fontFamily.trim().replace(/^['"]|['"]$/g, "");
   const fontId = `gfont-${cleanName.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
   if (document.getElementById(fontId)) return;

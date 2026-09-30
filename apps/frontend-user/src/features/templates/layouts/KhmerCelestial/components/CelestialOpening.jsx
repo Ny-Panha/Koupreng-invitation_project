@@ -2,11 +2,30 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
+import { formatTime24toKhmer } from "@/shared/ui/TimePicker";
 import { KHMER_CELESTIAL_ASSETS } from "../khmerCelestialAssets";
 import CelestialLiveGarden from "./CelestialLiveGarden";
 import OpenInvitationCTA from "./OpenInvitationCTA";
 
 const EASE = [0.22, 1, 0.36, 1];
+
+function displayKhmerDate(dateStr) {
+  if (!dateStr) return "ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦";
+  if (!/^\d{4}-\d{2}-\d{2}/.test(dateStr)) return dateStr;
+  try {
+    const clean = dateStr.includes("T") ? dateStr.split("T")[0] : dateStr;
+    const d = new Date(`${clean}T00:00:00`);
+    if (isNaN(d.getTime())) return dateStr;
+    return new Intl.DateTimeFormat("km-KH", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }).format(d);
+  } catch {
+    return dateStr;
+  }
+}
 
 function mediaSource(value) {
   if (typeof value === "string") return value;
@@ -44,20 +63,18 @@ export default function CelestialOpening({ content, onOpen, preview = false }) {
   const openLabel = content.opening?.openButtonText || "Open invitation";
   const guestName = (content.guestName && content.guestName.trim()) || "លោកអ្នក និងក្រុមគ្រួសារ";
   const guestLabel = (content.guestLabel && content.guestLabel.trim()) || (content.isPersonalizedGuest ? "សូមគោរពអញ្ជើញ" : "ជូនចំពោះ:");
-  const subtitleText = content.subtitle || content.invitationSubtitle;
+  const subtitleText = content.subtitle || content.invitationSubtitle || content.messageTitle || "យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ";
   const guestNameLength = Array.from(guestName.replace(/\s+/g, "")).length;
   const guestNameClass = [
     "kc-opening__guest-name",
     guestNameLength > 28 ? "kc-opening__guest-name--long" : "",
     guestNameLength > 46 ? "kc-opening__guest-name--very-long" : "",
   ].filter(Boolean).join(" ");
-  const groomName = content.groom?.trim() || "វណ្ណដា";
-  const brideName = content.bride?.trim() || "ស្រីពេជ្រ";
   const names = [content.groom, content.bride].filter(Boolean);
   const logoAlt = names.length
     ? `ស្លាកឈ្មោះ ${names.join(" និង ")}`
     : "ស្លាកឈ្មោះគូស្វាមីភរិយា";
-  const showBrandMark = content.showBrandMark !== false && content.brandMark !== "" && content.brandMark !== "none";
+  const showBrandMark = content.showBrandMark !== false && content.brandMark !== "none";
   const effectiveBrandMark = showBrandMark
     ? (content.brandMark || KHMER_CELESTIAL_ASSETS.brandMark)
     : null;
@@ -144,10 +161,11 @@ export default function CelestialOpening({ content, onOpen, preview = false }) {
     globalLatin,
   ]);
 
-  const activeSelected = content.selectedFontElement;
+  const isInteractiveCanva = Boolean(content.canvaInspector || content.adminCanvaMode);
+  const activeSelected = isInteractiveCanva ? content.selectedFontElement : null;
 
   const handleSelectElement = (elementId, e) => {
-    if (!preview) return;
+    if (!isInteractiveCanva) return;
     if (e) {
       e.stopPropagation();
     }
@@ -241,9 +259,9 @@ export default function CelestialOpening({ content, onOpen, preview = false }) {
           <motion.div className="kc-opening__couple-wrap" {...reveal(instant, 0.12)}>
             <h2
               id="kc-opening-title"
-              className={`kc-opening__couple-names ${preview ? "kc-interactive-element" : ""} ${activeSelected === "couple" ? "kc-interactive-element--active" : ""}`}
+              className={`kc-opening__couple-names ${isInteractiveCanva ? "kc-interactive-element" : ""} ${activeSelected === "couple" ? "kc-interactive-element--active" : ""}`}
               onClick={(e) => handleSelectElement("couple", e)}
-              title={preview ? "ចុចដើម្បីកែប្រែឈ្មោះគូដណ្ដឹង & ពុម្ពអក្សរ" : undefined}
+              title={isInteractiveCanva ? "ចុចដើម្បីកែប្រែឈ្មោះគូដណ្ដឹង & ពុម្ពអក្សរ" : undefined}
               style={{
                 fontFamily: `"${fontCouple}", "Moul", "Bayon", serif`,
                 fontWeight: "normal",
@@ -274,32 +292,32 @@ export default function CelestialOpening({ content, onOpen, preview = false }) {
 
         <motion.div className="kc-opening__date-block" {...reveal(instant, 0.18)}>
           <p
-            className={`kc-opening__date ${preview ? "kc-interactive-element" : ""} ${activeSelected === "date" ? "kc-interactive-element--active" : ""}`}
+            className={`kc-opening__date ${isInteractiveCanva ? "kc-interactive-element" : ""} ${activeSelected === "date" ? "kc-interactive-element--active" : ""}`}
             onClick={(e) => handleSelectElement("date", e)}
-            title={preview ? "ចុចដើម្បីកែប្រែកាលបរិច្ឆេទ & ពុម្ពអក្សរ" : undefined}
+            title={isInteractiveCanva ? "ចុចដើម្បីកែប្រែកាលបរិច្ឆេទ & ពុម្ពអក្សរ" : undefined}
             style={{
               fontFamily: `"${fontDate}", "Dangrek", "Kantumruy Pro", "Siemreap", sans-serif`,
               fontWeight: "normal",
             }}
           >
-            {content.dateText || content.weddingDate || "ថ្ងៃពុធ ២៨ មករា ២០២៦"}
+            {displayKhmerDate(content.dateText || content.weddingDate || content.eventDate)}
           </p>
           <p
-            className={`kc-opening__time ${preview ? "kc-interactive-element" : ""} ${activeSelected === "time" ? "kc-interactive-element--active" : ""}`}
+            className={`kc-opening__time ${isInteractiveCanva ? "kc-interactive-element" : ""} ${activeSelected === "time" ? "kc-interactive-element--active" : ""}`}
             onClick={(e) => handleSelectElement("time", e)}
-            title={preview ? "ចុចដើម្បីកែប្រែពេលវេលា & ពុម្ពអក្សរ" : undefined}
+            title={isInteractiveCanva ? "ចុចដើម្បីកែប្រែពេលវេលា & ពុម្ពអក្សរ" : undefined}
             style={{
               fontFamily: `"${fontTime}", "Bayon", "Moul", serif`,
               fontWeight: "normal",
             }}
           >
-            {content.receptionTime || content.eventTime || content.weddingTime || "១៧:០០"}
+            {formatTime24toKhmer(content.receptionTime || content.eventTime || content.weddingTime) || content.receptionTime || content.eventTime || "០៥:០០ ល្ងាច"}
           </p>
           {subtitleText ? (
             <p
-              className={`kc-opening__subtitle ${preview ? "kc-interactive-element" : ""} ${activeSelected === "subtitle" ? "kc-interactive-element--active" : ""}`}
+              className={`kc-opening__subtitle ${isInteractiveCanva ? "kc-interactive-element" : ""} ${activeSelected === "subtitle" ? "kc-interactive-element--active" : ""}`}
               onClick={(e) => handleSelectElement("subtitle", e)}
-              title={preview ? "ចុចដើម្បីកែប្រែពាក្យអញ្ជើញ & ពុម្ពអក្សរ" : undefined}
+              title={isInteractiveCanva ? "ចុចដើម្បីកែប្រែពាក្យអញ្ជើញ & ពុម្ពអក្សរ" : undefined}
               style={{
                 fontFamily: `"${fontSubtitle}", "Bayon", "Moul", "Siemreap", serif`,
                 fontWeight: "normal",
@@ -311,60 +329,64 @@ export default function CelestialOpening({ content, onOpen, preview = false }) {
           ) : null}
         </motion.div>
 
-        <motion.p
-          className={`kc-opening__guest-label ${preview ? "kc-interactive-element" : ""} ${activeSelected === "guestLabel" ? "kc-interactive-element--active" : ""}`}
-          onClick={(e) => handleSelectElement("guestLabel", e)}
-          title={preview ? "ចុចដើម្បីកែប្រែពាក្យស្វាគមន៍ & ពុម្ពអក្សរ" : undefined}
-          style={{
-            fontFamily: `"${fontGuestLabel}", "Bayon", "Moul", "Siemreap", serif`,
-            fontWeight: "normal",
-          }}
-          {...reveal(instant, 0.22, {
-            initial: { y: 4 },
-            transition: { duration: 0.4 },
-          })}
-        >
-          {guestLabel}
-        </motion.p>
-
-        <motion.div
-          className="kc-opening__guest-banner"
-          {...reveal(instant, 0.26)}
-        >
-          {effectiveGuestBanner && (
-            <img
-              className="kc-opening__guest-banner-image"
-              src={effectiveGuestBanner}
-              alt=""
-              aria-hidden="true"
-              width="2172"
-              height="724"
-              loading="eager"
-              decoding="async"
-              draggable="false"
-            />
-          )}
-          <p
-            className="kc-opening__guest-banner-content"
-            style={!effectiveGuestBanner ? { position: "static", transform: "none", margin: "6px 0 10px" } : undefined}
-          >
-            <motion.strong
-              className={`${guestNameClass} ${preview ? "kc-interactive-element" : ""} ${activeSelected === "guestName" ? "kc-interactive-element--active" : ""}`}
-              onClick={(e) => handleSelectElement("guestName", e)}
-              title={preview ? "ចុចដើម្បីកែប្រែឈ្មោះភ្ញៀវ & ពុម្ពអក្សរ" : undefined}
+        {showGuestBanner && (
+          <>
+            <motion.p
+              className={`kc-opening__guest-label ${isInteractiveCanva ? "kc-interactive-element" : ""} ${activeSelected === "guestLabel" ? "kc-interactive-element--active" : ""}`}
+              onClick={(e) => handleSelectElement("guestLabel", e)}
+              title={isInteractiveCanva ? "ចុចដើម្បីកែប្រែពាក្យស្វាគមន៍ & ពុម្ពអក្សរ" : undefined}
               style={{
-                fontFamily: `"${fontGuestName}", "Bayon", "Moul", serif`,
+                fontFamily: `"${fontGuestLabel}", "Bayon", "Moul", "Siemreap", serif`,
                 fontWeight: "normal",
               }}
-              {...reveal(instant, 0.3, {
+              {...reveal(instant, 0.22, {
                 initial: { y: 4 },
                 transition: { duration: 0.4 },
               })}
             >
-              {guestName}
-            </motion.strong>
-          </p>
-        </motion.div>
+              {guestLabel}
+            </motion.p>
+
+            <motion.div
+              className="kc-opening__guest-banner"
+              {...reveal(instant, 0.26)}
+            >
+              {effectiveGuestBanner && (
+                <img
+                  className="kc-opening__guest-banner-image"
+                  src={effectiveGuestBanner}
+                  alt=""
+                  aria-hidden="true"
+                  width="2172"
+                  height="724"
+                  loading="eager"
+                  decoding="async"
+                  draggable="false"
+                />
+              )}
+              <p
+                className="kc-opening__guest-banner-content"
+                style={!effectiveGuestBanner ? { position: "static", transform: "none", margin: "6px 0 10px" } : undefined}
+              >
+                <motion.strong
+                  className={`${guestNameClass} ${isInteractiveCanva ? "kc-interactive-element" : ""} ${activeSelected === "guestName" ? "kc-interactive-element--active" : ""}`}
+                  onClick={(e) => handleSelectElement("guestName", e)}
+                  title={isInteractiveCanva ? "ចុចដើម្បីកែប្រែឈ្មោះភ្ញៀវ & ពុម្ពអក្សរ" : undefined}
+                  style={{
+                    fontFamily: `"${fontGuestName}", "Bayon", "Moul", serif`,
+                    fontWeight: "normal",
+                  }}
+                  {...reveal(instant, 0.3, {
+                    initial: { y: 4 },
+                    transition: { duration: 0.4 },
+                  })}
+                >
+                  {guestName}
+                </motion.strong>
+              </p>
+            </motion.div>
+          </>
+        )}
 
         <OpenInvitationCTA
           label={openLabel}

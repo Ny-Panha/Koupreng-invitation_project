@@ -664,23 +664,96 @@
 .pe-clean-preview-box {
     position: relative;
     width: 100%;
+    min-height: 140px;
+    max-height: 220px;
+    height: 160px;
     border-radius: 8px;
     overflow: hidden;
-    background: #1e293b;
+    background: #f8fafc;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
     border: 1px solid #e8e2d8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 }
 
 .pe-clean-preview-box img {
     width: 100%;
-    max-height: 180px;
+    height: 100%;
     object-fit: cover;
     display: block;
     transition: transform 0.3s ease;
 }
 
 .pe-clean-preview-box:hover img {
-    transform: scale(1.02);
+    transform: scale(1.03);
+}
+
+.pe-clean-preview-hover-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(2px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: #ffffff;
+    font-size: 0.82rem;
+    font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.pe-clean-preview-box:hover .pe-clean-preview-hover-overlay {
+    opacity: 1;
+}
+
+.pe-clean-error-card {
+    border: 1.5px dashed #fca5a5;
+    background: #fff8f8;
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.pe-clean-error-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 4px;
+    cursor: pointer;
+    padding: 10px 4px;
+}
+
+.pe-clean-error-icon {
+    color: #e11d48;
+    margin-bottom: 2px;
+}
+
+.pe-clean-error-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #9f1239;
+}
+
+.pe-clean-error-hint {
+    font-size: 0.75rem;
+    color: #b91c1c;
+}
+
+.pe-clean-dropzone-dragging {
+    border-color: #c51c35 !important;
+    background: #fdf2f4 !important;
+    box-shadow: 0 0 0 3px rgba(197, 28, 53, 0.15);
 }
 
 .pe-clean-actions-bar {
@@ -709,6 +782,47 @@
     background: #ede7da;
     border-color: #c5b9a5;
     color: #0f172a;
+}
+
+.pe-btn-restore-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 11px;
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.pe-btn-restore-action:hover {
+    background: #e2e8f0;
+    border-color: #94a3b8;
+    color: #1e293b;
+}
+
+.pe-btn-restore-inline {
+    margin-top: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    background: transparent;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.pe-btn-restore-inline:hover {
+    background: #f1f5f9;
+    color: #1e293b;
 }
 
 .pe-btn-delete-action {
@@ -843,23 +957,162 @@
     width: min(100%, 440px);
     min-width: 0;
     margin: 0 auto;
+    position: sticky;
+    top: 20px;
+    align-self: flex-start;
 }
 
 .pe-preview-top-bar {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 6px 14px;
-    margin-bottom: 10px;
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
-    width: min(100%, 430px);
+    flex-direction: column;
+    gap: 8px;
+    width: min(100%, 380px);
     max-width: 100%;
     margin-inline: auto;
-    min-height: 48px;
+    margin-bottom: 12px;
     box-sizing: border-box;
+}
+
+.pe-preview-status-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 4px;
+    box-sizing: border-box;
+}
+
+.pe-preview-status-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pe-preview-live-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #1e293b;
+    letter-spacing: -0.01em;
+}
+
+.pe-live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 12px;
+    border-radius: 9999px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    font-size: 11px;
+    font-weight: 600;
+    color: #475569;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.pe-live-dot {
+    position: relative;
+    display: flex;
+    width: 8px;
+    height: 8px;
+}
+
+.pe-live-dot-ping {
+    position: absolute;
+    display: inline-flex;
+    height: 100%;
+    width: 100%;
+    border-radius: 9999px;
+    background: #10b981;
+    opacity: 0.75;
+    animation: pe-ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.pe-live-dot-solid {
+    position: relative;
+    display: inline-flex;
+    border-radius: 9999px;
+    width: 8px;
+    height: 8px;
+    background: #10b981;
+}
+
+@keyframes pe-ping {
+    75%, 100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+.pe-preview-tag {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #64748b;
+    background: #ffffff;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    border: 1px solid #e2e8f0;
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+/* Clean, modern, high-usability segmented control */
+.pe-sim-gate-switcher,
+.pe-gate-switcher {
+    display: flex;
+    width: 100%;
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 4px;
+    gap: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    box-sizing: border-box;
+}
+
+.pe-sim-gate-btn,
+.pe-gate-switcher .pe-gate-btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 42px;
+    padding: 0 16px;
+    border-radius: 10px;
+    font-size: 0.86rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    color: #64748b;
+    background: transparent;
+    user-select: none;
+    outline: none;
+    text-align: center;
+}
+
+.pe-sim-gate-btn:hover:not(.is-active),
+.pe-gate-switcher .pe-gate-btn:hover:not(.is-active) {
+    background: #f8fafc;
+    color: #0f172a;
+}
+
+/* Active State: Clean gold accent matching the celestial wedding theme */
+.pe-sim-gate-btn.is-active,
+.pe-gate-switcher .pe-gate-btn.is-active {
+    background: #b8860b;
+    color: #ffffff;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(184, 134, 11, 0.32);
+    border-color: #a67c00;
+}
+
+.pe-sim-gate-btn:active,
+.pe-gate-switcher .pe-gate-btn:active {
+    transform: scale(0.98);
 }
 
 .pe-preview-top-left {
@@ -875,40 +1128,6 @@
     margin: 0;
 }
 
-.pe-preview-tag {
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: #64748b;
-    background: #f1f5f9;
-    padding: 2px 8px;
-    border-radius: 6px;
-    border: 1px solid #e2e8f0;
-    max-width: 140px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.pe-preview-gate-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 5px 12px;
-    border-radius: 16px;
-    background: #f8fafc;
-    color: #475569;
-    border: 1px solid #cbd5e1;
-    font-size: 0.78rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.15s ease;
-}
-
-.pe-preview-gate-toggle:hover {
-    background: #f1f5f9;
-    color: #0f172a;
-    border-color: #94a3b8;
-}
 
 .pe-save-main-btn {
     display: inline-flex;
@@ -936,22 +1155,24 @@
     cursor: not-allowed;
 }
 
-/* Clean Portrait Phone Frame (non-scrolling outer shell & fixed positioning containing block) */
+/* Luxury Portrait Phone Frame matching Admin */
 .pe-phone-frame {
     position: relative;
-    width: min(100%, 430px);
+    width: min(100%, 380px);
     max-width: 100%;
     height: min(760px, calc(100vh - 150px));
     min-height: 520px;
     max-height: none;
     margin: 0 auto;
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    background: #09090b;
+    border: 4px solid rgba(39, 39, 42, 0.9);
+    border-radius: 36px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     overflow: hidden;
     transform: translateZ(0);
     isolation: isolate;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Inner scrolling canvas for invitation content */

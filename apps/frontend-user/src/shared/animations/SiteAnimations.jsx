@@ -34,7 +34,9 @@ function getInitialPreloaderState() {
   if (window.Telegram?.WebApp?.initData) return false;
   try {
     if (sessionStorage.getItem("kp_intro_seen")) return false;
-  } catch {}
+  } catch {
+    /* ignore sessionStorage access errors */
+  }
   return true;
 }
 
@@ -47,7 +49,9 @@ function LogoPreloader({ disabled = false }) {
 
     try {
       sessionStorage.setItem("kp_intro_seen", "true");
-    } catch {}
+    } catch {
+      /* ignore sessionStorage access errors */
+    }
 
     const timer = window.setTimeout(() => {
       setVisible(false);

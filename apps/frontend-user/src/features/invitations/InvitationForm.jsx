@@ -6,7 +6,6 @@ import {
     Heart,
     Mail,
     Calendar,
-    CalendarHeart,
     Clock,
     MapPin,
     Images,
@@ -21,18 +20,15 @@ import {
     FileText,
     User,
     Users,
-    PenSquare,
     Map,
     CheckCircle2,
     ExternalLink,
     Zap,
     X,
-    Check,
     Search,
     ArrowLeft,
     RotateCcw,
-    Eye,
-    ArrowRight,
+    AlertCircle,
 } from "lucide-react";
 
 
@@ -50,7 +46,6 @@ import {
     resolveNumericTemplateId,
 } from "../templates/data/templatesData";
 import { templateCatalogService } from "../templates/api/templateCatalogApi";
-import { MUSIC_TRACKS } from "../../shared/data/musicTracks";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import LivePhoneSimulator from "./LivePhoneSimulator";
@@ -60,7 +55,38 @@ import SpotifyMusicPicker from "./components/SpotifyMusicPicker";
 import { getTemplateFormFlow } from "./config/templateFormFlowConfig";
 import "./InvitationPlanEssentialEditor.css";
 
-function CleanImageUploadField({ label, icon: Icon, image, onUpload, onRemove, inputRef, hint = "PNG, JPG, WebP (ក្រោម 10MB)" }) {
+function CleanImageUploadField({
+    label,
+    icon: Icon,
+    image,
+    onUpload,
+    onRemove,
+    inputRef,
+    hint = "PNG, JPG, WebP (ក្រោម 10MB)",
+    onRestoreDefault,
+    hasDefault = false,
+}) {
+    const internalInputRef = useRef(null);
+    const activeRef = inputRef || internalInputRef;
+    const [imgError, setImgError] = useState(false);
+    const [isDragging, setIsDragging] = useState(false);
+
+    const resolvedSrc = typeof image === "string" ? image : (image?.url || image?.preview || image?.src || image?.fileUrl || "");
+    const hasImage = Boolean(resolvedSrc && resolvedSrc.trim() && resolvedSrc !== "null" && resolvedSrc !== "undefined");
+
+    useEffect(() => {
+        setImgError(false);
+    }, [resolvedSrc]);
+
+    const handleDrop = (e) => {
+        e.preventDefault();
+        setIsDragging(false);
+        const file = e.dataTransfer?.files?.[0];
+        if (file && onUpload) {
+            onUpload({ target: { files: [file] } });
+        }
+    };
+
     return (
         <div className="pe-form-group">
             <label className="pe-label">
@@ -68,42 +94,118 @@ function CleanImageUploadField({ label, icon: Icon, image, onUpload, onRemove, i
                 {label}
             </label>
             <div className="pe-clean-upload-card">
-                {image ? (
+                {hasImage && !imgError ? (
                     <>
-                        <div className="pe-clean-preview-box">
-                            <img src={image} alt={label} />
+                        <div
+                            className="pe-clean-preview-box"
+                            onClick={() => activeRef.current?.click()}
+                            title="ចុចដើម្បីប្តូររូបភាព (Click to change image)"
+                        >
+                            <img
+                                src={resolvedSrc}
+                                alt={label}
+                                onError={() => setImgError(true)}
+                            />
+                            <div className="pe-clean-preview-hover-overlay">
+                                <UploadCloud size={20} />
+                                <span>ចុចដើម្បីប្តូររូបភាព</span>
+                            </div>
                         </div>
                         <div className="pe-clean-actions-bar">
                             <button
                                 type="button"
                                 className="pe-btn-upload-action"
-                                onClick={() => inputRef.current?.click()}
+                                onClick={() => activeRef.current?.click()}
                             >
                                 <UploadCloud size={14} /> ប្តូររូបភាព
                             </button>
-                            <button
-                                type="button"
-                                className="pe-btn-delete-action"
-                                onClick={onRemove}
-                            >
-                                <Trash2 size={14} /> លុប
-                            </button>
+                            <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
+                                {hasDefault && onRestoreDefault && (
+                                    <button
+                                        type="button"
+                                        className="pe-btn-restore-action"
+                                        onClick={onRestoreDefault}
+                                        title="ប្រើរូបដើមរបស់គំរូ (Reset to template default)"
+                                    >
+                                        <RotateCcw size={13} /> រូបដើម
+                                    </button>
+                                )}
+                                <button
+                                    type="button"
+                                    className="pe-btn-delete-action"
+                                    onClick={onRemove}
+                                >
+                                    <Trash2 size={14} /> លុប
+                                </button>
+                            </div>
                         </div>
                     </>
+                ) : hasImage && imgError ? (
+                    <div className="pe-clean-error-card">
+                        <div
+                            className="pe-clean-error-content"
+                            onClick={() => activeRef.current?.click()}
+                            title="ចុចដើម្បីជ្រើសរើសរូបភាពថ្មី"
+                        >
+                            <AlertCircle size={24} className="pe-clean-error-icon" />
+                            <span className="pe-clean-error-title">មិនអាចទាញយករូបភាពបានទេ</span>
+                            <span className="pe-clean-error-hint">តំណភ្ជាប់រូបភាពអាចខូច ឬមិនមាន។ សូមចុចទីនេះដើម្បីជ្រើសរើសរូបថ្មី</span>
+                        </div>
+                        <div className="pe-clean-actions-bar" style={{ marginTop: "4px" }}>
+                            <button
+                                type="button"
+                                className="pe-btn-upload-action"
+                                onClick={() => activeRef.current?.click()}
+                            >
+                                <UploadCloud size={14} /> ជ្រើសរើសរូបភាពថ្មី
+                            </button>
+                            <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
+                                {hasDefault && onRestoreDefault && (
+                                    <button
+                                        type="button"
+                                        className="pe-btn-restore-action"
+                                        onClick={onRestoreDefault}
+                                        title="ប្រើរូបដើមរបស់គំរូ"
+                                    >
+                                        <RotateCcw size={13} /> រូបដើម
+                                    </button>
+                                )}
+                                <button
+                                    type="button"
+                                    className="pe-btn-delete-action"
+                                    onClick={onRemove}
+                                >
+                                    <Trash2 size={14} /> លុបចេញ
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 ) : (
                     <div
-                        className="pe-clean-dropzone"
-                        onClick={() => inputRef.current?.click()}
+                        className={`pe-clean-dropzone ${isDragging ? "pe-clean-dropzone-dragging" : ""}`}
+                        onClick={() => activeRef.current?.click()}
+                        onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+                        onDragLeave={() => setIsDragging(false)}
+                        onDrop={handleDrop}
                     >
                         <UploadCloud className="pe-clean-dropzone-icon" size={28} />
-                        <span className="pe-clean-dropzone-title">ចុចទីនេះដើម្បីបញ្ចូលរូបភាព</span>
+                        <span className="pe-clean-dropzone-title">ចុចបញ្ចូលរូបភាព</span>
                         <span className="pe-clean-dropzone-hint">{hint}</span>
+                        {hasDefault && onRestoreDefault && (
+                            <button
+                                type="button"
+                                className="pe-btn-restore-inline"
+                                onClick={(e) => { e.stopPropagation(); onRestoreDefault(); }}
+                            >
+                                <RotateCcw size={12} /> ប្រើរូបគំរូដើម
+                            </button>
+                        )}
                     </div>
                 )}
                 <input
-                    ref={inputRef}
+                    ref={activeRef}
                     type="file"
-                    accept="image/*"
+                    accept="image/png,image/jpeg,image/webp,image/gif"
                     style={{ display: "none" }}
                     onChange={onUpload}
                 />
@@ -332,8 +434,6 @@ const DEFAULT_INVITATION_TEXT = `សម្តេច ទ្រង់ ឯកឧត
 អ្នកឧកញ៉ា ឧកញ៉ា លោក លោកស្រី អ្នកនាង កញា 
 ព្រមទាំងប្រិយមិត្តអញ្ជើញចូលរួមជាអធិបតី និងជាភ្ញៀវកិត្តិយស ដើម្បីប្រសិទ្ធិពរជ័យសិរីសួស្តី ជ័យមង្គល ក្នុងពិធីអាពាហ៍ពិពាហ៍
 កូនប្រុសស្រី របស់យើងខ្ញុំទាំងពីរ។`;
-
-const DEFAULT_THANK_YOU_TEXT = `យើងខ្ញុំទាំងពីរ សូមថ្លែងអំណរគុណ យ៉ាងជ្រាលជ្រៅ ចំពោះវត្តមាន ដ៏ឧត្តុង្គឧត្តមរបស់ សម្តេច ឯកឧត្តម លោកជំទាវ លោកអ្នកឧកញ៉ា អ្នកឧកញ៉ា ឧកញ៉ា លោក លោកស្រី អ្នកនាង កញ្ញា ដែលបាន អញ្ជើញចូលរួមជាកិត្តិយស ក្នុងពិធីសិរីសួស្តីអាពាហ៍ពិពាហ៍ របស់យើងខ្ញុំ នាពេលខាងមុខនេះ។ យើងខ្ញុំសូមការខន្តីអភ័យទោស ដែលពុំបានជូនលិខិតអញ្ជើញ ដោយផ្ទាល់ ។ ដោយការវកិច្ចដ៏ខ្ពង់ខ្ពស់ពីយើងខ្ញុំ។`;
 
 function toStandardTime(val) {
     if (!val || typeof val !== "string") return "17:00";
@@ -695,6 +795,7 @@ export default function InvitationForm({ invitation }) {
 
     const [isMobilePreviewOpen, setIsMobilePreviewOpen] = useState(false);
     const [pendingCoverFile, setPendingCoverFile] = useState(null);
+    const [pendingBackgroundFile, setPendingBackgroundFile] = useState(null);
     const [pendingInvitationFile, setPendingInvitationFile] = useState(null);
     const [pendingInvitation2File, setPendingInvitation2File] = useState(null);
     const [locationError, setLocationError] = useState("");
@@ -872,6 +973,7 @@ export default function InvitationForm({ invitation }) {
 
     // File input refs
     const coverInputRef = useRef(null);
+    const bgFrameInputRef = useRef(null);
     const invitationInputRef = useRef(null);
     const invitation2InputRef = useRef(null);
     const bgInputRef = useRef(null);
@@ -892,7 +994,7 @@ export default function InvitationForm({ invitation }) {
             reader.onload = (event) => {
                 const img = new Image();
                 img.onload = () => {
-                    const maxDim = 600;
+                    const maxDim = 1200;
                     let { width, height } = img;
                     if (width > maxDim || height > maxDim) {
                         if (width > height) {
@@ -908,7 +1010,10 @@ export default function InvitationForm({ invitation }) {
                     canvas.height = height;
                     const ctx = canvas.getContext("2d");
                     ctx.drawImage(img, 0, 0, width, height);
-                    const compressedDataUrl = canvas.toDataURL("image/jpeg", 0.82);
+                    const isPng = file.type === "image/png";
+                    const format = isPng ? "image/png" : "image/jpeg";
+                    const quality = isPng ? undefined : 0.88;
+                    const compressedDataUrl = canvas.toDataURL(format, quality);
                     callback(compressedDataUrl, file);
                 };
                 img.onerror = () => callback(event.target.result, file);
@@ -1123,27 +1228,6 @@ export default function InvitationForm({ invitation }) {
     const removeFaqItem = (index) => {
         const nextFaq = (form.faq || []).filter((_, i) => i !== index);
         update("faq", nextFaq);
-    };
-
-    // Music Selector
-    const handleMusicSelect = (trackId) => {
-        const track = MUSIC_TRACKS.find((t) => t.id === trackId) || MUSIC_TRACKS[0];
-        update("musicTrackId", track.id);
-        update("musicUrl", track.url);
-        if (audioPreviewRef.current) {
-            audioPreviewRef.current.load();
-            setAudioPlaying(false);
-        }
-    };
-
-    const toggleAudioPreview = () => {
-        if (!audioPreviewRef.current) return;
-        if (audioPlaying) {
-            audioPreviewRef.current.pause();
-            setAudioPlaying(false);
-        } else {
-            audioPreviewRef.current.play().then(() => setAudioPlaying(true)).catch(() => setAudioPlaying(false));
-        }
     };
 
     const handleGenerateMapLink = () => {
@@ -1431,6 +1515,12 @@ export default function InvitationForm({ invitation }) {
                     mediaSyncError ||= updateError?.message || "Invitation photo references could not be saved";
                 }
             }
+            if (pendingBackgroundFile && backendId) {
+                const uploadedBg = await mediaService.uploadCover(backendId, pendingBackgroundFile);
+                const savedBgUrl = uploadedBg?.fileUrl || uploadedBg?.data?.fileUrl || form.backgroundImage;
+                setPendingBackgroundFile(null);
+                update("backgroundImage", savedBgUrl);
+            }
 
             const targetDraftId = invitationId || saved?.id || `wed-${Date.now().toString(36)}`;
 
@@ -1480,21 +1570,62 @@ export default function InvitationForm({ invitation }) {
                 uploadedCoverUrl: savedCoverUrl,
                 invitationImage: savedInvitationUrl || form.invitationImage || null,
                 invitationImage2: savedInvitationUrl2 || form.invitationImage2 || null,
+                backgroundImage: form.backgroundImage || "",
                 templateDefaultCover: form.templateDefaultCover,
                 openingStyle: form.openingStyle || activePreset.openingStyle || "khmer-royal",
+                gateEnabled: form.gateEnabled,
+                hasGate: form.hasGate,
+                openingVideo: form.openingVideo || null,
                 frontColor: form.frontColor || activePreset.frontColor,
                 bottomColor: form.bottomColor || activePreset.bottomColor,
+                subtitle: form.subtitle || "",
+                guestName: form.guestName || "",
+                isPersonalizedGuest: form.isPersonalizedGuest || false,
+                messageTitle: form.messageTitle || "",
+                message: form.messageText,
+                messageText: form.messageText || "",
                 schedule: form.schedule,
                 photos: savedPhotos,
                 gallery: (form.photos || [])
                     .filter((photo) => photo?.url)
                     .map(({ id }, index) => ({ id, preview: savedPhotos[index]?.url || form.photos[index]?.url, type: "image" })),
                 musicUrl: form.musicUrl,
-                message: form.messageText,
                 storyChapters: form.storyChapters,
                 party: form.party,
+                faq: form.faq || [],
+                dressCode: form.dressCode || null,
+                dressColors: form.dressColors || [],
+                showDressCode: form.showDressCode,
+                showCountdown: form.showCountdown,
+                showStory: form.showStory,
+                showParty: form.showParty,
+                showFaq: form.showFaq,
                 khqrDollar: form.khqrDollar,
                 khqrRiel: form.khqrRiel,
+                gift: form.gift || [],
+                showBrandMark: form.showBrandMark !== false,
+                brandMarkUrl: form.brandMarkUrl || "",
+                brandMark: form.brandMarkUrl || "",
+                thankYouTitle: form.thankYouTitle || "",
+                thankYouText: form.thankYouText || "",
+                apologyTitle: form.apologyTitle || "",
+                apologyText: form.apologyText || "",
+                designJson: JSON.stringify(designPayload),
+                contentJson: JSON.stringify(contentPayload),
+                languageMode: form.languageMode || "KH",
+                enabledSections: {
+                    countdown: form.showCountdown !== false,
+                    story: form.showStory !== false,
+                    party: form.showParty !== false,
+                    dressCode: form.showDressCode !== false,
+                    faq: form.showFaq !== false,
+                    schedule: true,
+                    map: true,
+                    gallery: true,
+                    gift: Boolean(form.khqrDollar?.qrUrl || form.khqrRiel?.qrUrl),
+                    rsvp: true,
+                    music: Boolean(form.musicUrl),
+                },
             });
 
             const successMsg = apiSyncFailed
@@ -1510,7 +1641,10 @@ export default function InvitationForm({ invitation }) {
                 toast(successMsg, apiSyncFailed || mediaSyncError ? "warning" : "success");
                 navigate(`/dashboard/invitations/${finalSavedId}/preview`);
             } else {
-                navigate("/dashboard/events", { state: { savedSuccess: true, syncFailed: apiSyncFailed || Boolean(mediaSyncError), message: successMsg } });
+                toast(successMsg, apiSyncFailed || mediaSyncError ? "warning" : "success");
+                navigate(finalSavedId ? `/dashboard?id=${finalSavedId}` : "/dashboard/events", {
+                    state: { savedSuccess: true, syncFailed: apiSyncFailed || Boolean(mediaSyncError), message: successMsg },
+                });
             }
             return finalSavedId;
         } catch (err) {
@@ -1533,40 +1667,30 @@ export default function InvitationForm({ invitation }) {
             </h4>
 
             {/* Clean Cover Image Upload (Image 1) */}
-            <CleanImageUploadField
-                label={flowConfig.labels.coverImage || t("coverImage") || "រូបភាពក្របខាងមុខ (Front Cover Image)"}
-                icon={ImageIcon}
-                image={form.coverImage}
-                onUpload={(e) => handleFileUpload(e, (url, file) => {
-                    update("uploadedCoverUrl", url);
-                    update("coverImage", url);
-                    setPendingCoverFile(file);
-                })}
-                onRemove={() => {
-                    update("uploadedCoverUrl", "");
-                    update("coverImage", form.templateDefaultCover || "");
-                    setPendingCoverFile(null);
-                }}
-                inputRef={coverInputRef}
-                hint={flowConfig.hints.coverImage || "បង្ហាញលើក្របទំព័រដើម (Front Cover / Hero)"}
-            />
-
-            {/* Background Frame / Botanical Image Upload */}
-            {(String(form.templateId || "").toLowerCase().includes("celestial") || Boolean(form.backgroundImage)) && (
-                <div style={{ marginTop: 12 }}>
-                    <CleanImageUploadField
-                        label="ស៊ុមផ្កា / រូបភាពផ្ទៃខាងក្រោយ (Botanical Frame / Background Image)"
-                        icon={Sparkles}
-                        image={form.backgroundImage || "/invitations/khmer-celestial/botanical-frame.jpg"}
-                        onUpload={(e) => handleFileUpload(e, (url) => {
-                            update("backgroundImage", url);
-                        })}
-                        onRemove={() => {
-                            update("backgroundImage", "/invitations/khmer-celestial/botanical-frame.jpg");
-                        }}
-                        hint="ស៊ុមផ្កាប្រណិតព័ទ្ធជុំវិញកាតធៀបការ (អាចប្តូរជារូបស៊ុមផ្ទាល់ខ្លួនបាន)"
-                    />
-                </div>
+            {flowConfig.hasCoverImage !== false && !String(form.templateId || "").toLowerCase().includes("celestial") && String(form.templateId || "") !== "10" && (
+                <CleanImageUploadField
+                    label={flowConfig.labels.coverImage || t("coverImage") || "រូបភាពក្របខាងមុខ (Front Cover Image)"}
+                    icon={ImageIcon}
+                    image={form.coverImage}
+                    onUpload={(e) => handleFileUpload(e, (url, file) => {
+                        update("uploadedCoverUrl", url);
+                        update("coverImage", url);
+                        setPendingCoverFile(file);
+                    })}
+                    onRemove={() => {
+                        update("uploadedCoverUrl", "");
+                        update("coverImage", "");
+                        setPendingCoverFile(null);
+                    }}
+                    onRestoreDefault={form.templateDefaultCover ? () => {
+                        update("uploadedCoverUrl", "");
+                        update("coverImage", form.templateDefaultCover);
+                        setPendingCoverFile(null);
+                    } : undefined}
+                    hasDefault={Boolean(form.templateDefaultCover && form.coverImage !== form.templateDefaultCover)}
+                    inputRef={coverInputRef}
+                    hint={flowConfig.hints.coverImage || "បង្ហាញលើក្របទំព័រដើម (Front Cover / Hero)"}
+                />
             )}
 
             {/* Main Title on Cover */}
@@ -1908,48 +2032,8 @@ export default function InvitationForm({ invitation }) {
                 <span className="pe-sec-icon-badge">
                     <Mail size={17} />
                 </span>
-                <span>{flowConfig.labels.invitationSection || t("secMessage") || "សារអញ្ជើញភ្ញៀវកិត្តិយស (Invitation Message)"}</span>
+                <span>{flowConfig.labels.invitationSection || t("secMessage") || "សារលិខិតអញ្ជើញ (The Invitation)"}</span>
             </h4>
-
-            {/* When hasInvitationPhoto or placePhotoInInvitation is active, photo card is rendered seamlessly inside The Invitation */}
-            {(flowConfig.hasInvitationPhoto || flowConfig.placePhotoInInvitation) && (
-                <>
-                    {/* Photo 1 */}
-                    <CleanImageUploadField
-                        label={flowConfig.labels.invitationImage || "រូបថតទី១ — ប្តី/ប្រពន្ធ (Portrait Photo #1)"}
-                        icon={ImageIcon}
-                        image={form.invitationImage || form.uploadedInvitationUrl || ""}
-                        onUpload={(e) => handleFileUpload(e, (url, file) => {
-                            update("uploadedInvitationUrl", url);
-                            update("invitationImage", url);
-                            setPendingInvitationFile(file);
-                        })}
-                        onRemove={() => {
-                            update("uploadedInvitationUrl", "");
-                            update("invitationImage", "");
-                            setPendingInvitationFile(null);
-                        }}
-                        inputRef={invitationInputRef}
-                        hint="រូបបង្ហាញក្នុង Section លិខិតអញ្ជើញ (The Invitation)"
-                    />
-                    {/* Photo 2 — side by side */}
-                    <CleanImageUploadField
-                        label="រូបថតទី២ — គូស្នេហ៍ (Portrait Photo #2 · side-by-side)"
-                        icon={ImageIcon}
-                        image={form.invitationImage2 || ""}
-                        onUpload={(e) => handleFileUpload(e, (url, file) => {
-                            update("invitationImage2", url);
-                            setPendingInvitation2File(file);
-                        })}
-                        onRemove={() => {
-                            update("invitationImage2", "");
-                            setPendingInvitation2File(null);
-                        }}
-                        inputRef={invitation2InputRef}
-                        hint="រូបបង្ហាញខាងស្ដាំ — នឹងដាក់ 2 រូបនៅក្បែរគ្នា ប្រសិនបើបំពេញ"
-                    />
-                </>
-            )}
 
             <div className="pe-form-group">
                 <label className="pe-label">

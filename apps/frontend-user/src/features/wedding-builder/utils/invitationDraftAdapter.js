@@ -141,6 +141,17 @@ export function publicInvitationToDraft(invitation, media) {
     : (Array.isArray(design.gift) && design.gift.length ? design.gift : []);
   const hasGift = Boolean(khqrDollar?.qrUrl || khqrDollar?.accountNumber || khqrRiel?.qrUrl || khqrRiel?.accountNumber || resolvedGift.length);
 
+  const draftGroomFather = content.groomFather || design.groomFather || "";
+  const draftGroomMother = content.groomMother || design.groomMother || "";
+  const draftBrideFather = content.brideFather || design.brideFather || "";
+  const draftBrideMother = content.brideMother || design.brideMother || "";
+  const resolvedGroomParents = [draftGroomFather, draftGroomMother].filter(Boolean).length > 0
+    ? [draftGroomFather, draftGroomMother].filter(Boolean)
+    : (contentCouple.groomParents || null);
+  const resolvedBrideParents = [draftBrideFather, draftBrideMother].filter(Boolean).length > 0
+    ? [draftBrideFather, draftBrideMother].filter(Boolean)
+    : (contentCouple.brideParents || null);
+
   return {
     id: invitation?.id || invitation?.slug || "public-invitation",
     backendInvitationId: invitation?.id || null,
@@ -148,25 +159,49 @@ export function publicInvitationToDraft(invitation, media) {
     templateId: invitation?.templateCode || content.templateId || design.templateId || KEEP_TEMPLATE_CODE,
     templateCode: invitation?.templateCode || "",
     templateThumbnailUrl: invitation?.templateThumbnailUrl || "",
+    title: content.title || invitation?.title || "",
+    subtitle: content.subtitle !== undefined ? content.subtitle : (design.subtitle || ""),
+    messageTitle: content.messageTitle || "",
+    message: content.message || content.messageText || invitation?.title || "",
+    messageText: content.messageText || content.message || invitation?.storyText || "",
+    story: content.story || content.storyText || invitation?.storyText || "",
+    storyChapters: Array.isArray(content.storyChapters) ? content.storyChapters : [],
+    groomName: contentCouple.groom || invitation?.groomName || invitation?.hostName || "",
+    brideName: contentCouple.bride || invitation?.brideName || invitation?.partnerName || "",
+    groomFather: draftGroomFather,
+    groomMother: draftGroomMother,
+    brideFather: draftBrideFather,
+    brideMother: draftBrideMother,
+    groomParents: resolvedGroomParents,
+    brideParents: resolvedBrideParents,
+    family: {
+      groomParents: resolvedGroomParents,
+      brideParents: resolvedBrideParents,
+    },
     couple: {
       ...contentCouple,
       groom: contentCouple.groom || invitation?.groomName || invitation?.hostName || "",
       bride: contentCouple.bride || invitation?.brideName || invitation?.partnerName || "",
+      groomParents: resolvedGroomParents,
+      brideParents: resolvedBrideParents,
     },
     event: {
       ...contentEvent,
-      title: contentEvent.title || invitation?.title || "",
-      date: contentEvent.date || invitation?.eventDate || "",
+      title: contentEvent.title || content.title || invitation?.title || "",
+      date: contentEvent.date || content.eventDateText || invitation?.eventDate || "",
       ceremonyTime: contentEvent.ceremonyTime || eventTime,
       receptionTime: contentEvent.receptionTime || eventTime,
-      venueName: contentEvent.venueName || invitation?.venueName || "",
-      venueAddress: contentEvent.venueAddress || invitation?.venueAddress || "",
-      mapLink: contentEvent.mapLink || invitation?.googleMapUrl || "",
+      venueName: contentEvent.venueName || content.venueName || invitation?.venueName || "",
+      venueAddress: contentEvent.venueAddress || content.venueAddress || invitation?.venueAddress || "",
+      mapLink: contentEvent.mapLink || content.googleMapUrl || invitation?.googleMapUrl || "",
     },
+    eventDate: content.eventDateText || contentEvent.date || invitation?.eventDate || "",
+    eventDateText: content.eventDateText || "",
+    eventTime: contentEvent.receptionTime || contentEvent.ceremonyTime || eventTime,
+    venueName: content.venueName || contentEvent.venueName || invitation?.venueName || "",
+    venueAddress: content.venueAddress || contentEvent.venueAddress || invitation?.venueAddress || "",
+    googleMapUrl: content.googleMapUrl || contentEvent.mapLink || invitation?.googleMapUrl || "",
     contact: content.contact || {},
-    message: content.message || invitation?.title || "",
-    story: content.story || content.storyText || invitation?.storyText || "",
-    storyChapters: Array.isArray(content.storyChapters) ? content.storyChapters : [],
     schedule: Array.isArray(content.schedule) ? content.schedule : [],
     party: Array.isArray(content.party) ? content.party : (Array.isArray(design.party) ? design.party : []),
     gift: resolvedGift,
@@ -179,6 +214,23 @@ export function publicInvitationToDraft(invitation, media) {
     showParty: content.showParty ?? design.showParty ?? enabled.party,
     showFaq: content.showFaq ?? design.showFaq ?? enabled.faq,
     coverImage: mediaCover || invitation?.coverUrl || invitation?.media?.coverImage?.fileUrl || content.coverImage || invitation?.templateThumbnailUrl || "",
+    invitationImage: content.invitationImage || design.invitationImage || "",
+    invitationImage2: content.invitationImage2 || design.invitationImage2 || "",
+    backgroundImage: content.backgroundImage || design.backgroundImage || "",
+    sketchMapImage: content.sketchMapImage || design.sketchMapImage || null,
+    showBrandMark: content.showBrandMark !== undefined ? content.showBrandMark : (design.showBrandMark !== false),
+    brandMark: (content.showBrandMark === false || design.showBrandMark === false) ? "" : (content.brandMarkUrl || design.brandMarkUrl || content.brandMark || design.brandMark || ""),
+    brandMarkUrl: content.brandMarkUrl || design.brandMarkUrl || "",
+    hideCoupleNameOnCover: Boolean(content.hideCoupleNameOnCover),
+    thankYouTitle: content.thankYouTitle || "",
+    thankYouText: content.thankYouText || "",
+    apologyTitle: content.apologyTitle || "",
+    apologyText: content.apologyText || "",
+    guestName: content.guestName || invitation?.guest?.guestName || "",
+    guestLabel: content.guestLabel || "",
+    fontKhmer: content.fontKhmer || design.fontKhmer || "",
+    fontLatin: content.fontLatin || design.fontLatin || "",
+    elementFonts: content.elementFonts || design.elementFonts || null,
     gallery: gallery.length
       ? gallery
       : (Array.isArray(content.gallery)

@@ -112,10 +112,11 @@ export default function TemplateExperience({
             ampSymbol: liveData.ampSymbol || baseContent.ampSymbol,
             groom: liveData.groomName || baseContent.groom,
             bride: liveData.brideName || baseContent.bride,
-            title: liveData.invitationTitle || baseContent.title,
-            invitationTitle: liveData.invitationTitle || baseContent.invitationTitle,
+            title: liveData.invitationTitle || liveData.title || baseContent.title,
+            invitationTitle: liveData.invitationTitle || liveData.title || baseContent.invitationTitle,
             subtitle: liveData.invitationSubtitle !== undefined ? liveData.invitationSubtitle : (liveData.subtitle !== undefined ? liveData.subtitle : baseContent.subtitle),
             invitationSubtitle: liveData.invitationSubtitle !== undefined ? liveData.invitationSubtitle : (liveData.subtitle !== undefined ? liveData.subtitle : baseContent.invitationSubtitle),
+            messageTitle: liveData.messageTitle !== undefined ? liveData.messageTitle : baseContent.messageTitle,
             amp: liveData.ampSymbol || baseContent.amp || "♥",
             badge: liveData.badgeText || baseContent.badge,
             monogramText: liveData.groomName && liveData.brideName
@@ -128,14 +129,47 @@ export default function TemplateExperience({
                 address: liveData.venueAddress || baseContent.venue?.address,
             } : baseContent.venue,
             coverImage: liveData.coverImage || baseContent.coverImage,
-            message: (typeof liveData.blessingMessage === "string" && liveData.blessingMessage.trim())
-                ? liveData.blessingMessage
-                : (typeof baseContent.message === "string" ? baseContent.message : (baseContent.message?.text || "")),
-            couple: (liveData.groomFather || liveData.brideFather || liveData.groomMother || liveData.brideMother) ? {
+            invitationImage: liveData.invitationImage !== undefined ? liveData.invitationImage : baseContent.invitationImage,
+            invitationImage2: liveData.invitationImage2 !== undefined ? liveData.invitationImage2 : baseContent.invitationImage2,
+            messageText: (typeof liveData.messageText === "string" && liveData.messageText.trim())
+                ? liveData.messageText
+                : ((typeof liveData.blessingMessage === "string" && liveData.blessingMessage.trim())
+                    ? liveData.blessingMessage
+                    : ((typeof liveData.message === "string" && liveData.message.trim())
+                        ? liveData.message
+                        : (baseContent.messageText || baseContent.message || ""))),
+            message: (typeof liveData.messageText === "string" && liveData.messageText.trim())
+                ? liveData.messageText
+                : ((typeof liveData.blessingMessage === "string" && liveData.blessingMessage.trim())
+                    ? liveData.blessingMessage
+                    : ((typeof liveData.message === "string" && liveData.message.trim())
+                        ? liveData.message
+                        : (typeof baseContent.message === "string" ? baseContent.message : (baseContent.message?.text || "")))),
+            blessingMessage: (typeof liveData.messageText === "string" && liveData.messageText.trim())
+                ? liveData.messageText
+                : ((typeof liveData.blessingMessage === "string" && liveData.blessingMessage.trim())
+                    ? liveData.blessingMessage
+                    : ((typeof liveData.message === "string" && liveData.message.trim())
+                        ? liveData.message
+                        : (baseContent.blessingMessage || baseContent.message || ""))),
+            couple: (liveData.groomFather || liveData.brideFather || liveData.groomMother || liveData.brideMother || liveData.couple) ? {
                 ...baseContent.couple,
-                groomParents: [liveData.groomFather, liveData.groomMother].filter(Boolean).join(" និង ") || baseContent.couple?.groomParents,
-                brideParents: [liveData.brideFather, liveData.brideMother].filter(Boolean).join(" និង ") || baseContent.couple?.brideParents,
+                groomParents: [liveData.groomFather, liveData.groomMother].filter(Boolean).join(" និង ") || liveData.couple?.groomParents || baseContent.couple?.groomParents,
+                brideParents: [liveData.brideFather, liveData.brideMother].filter(Boolean).join(" និង ") || liveData.couple?.brideParents || baseContent.couple?.brideParents,
             } : baseContent.couple,
+            family: (liveData.groomFather || liveData.brideFather || liveData.groomMother || liveData.brideMother || liveData.family) ? {
+                ...baseContent.family,
+                groomParents: (liveData.groomFather || liveData.groomMother)
+                    ? [liveData.groomFather, liveData.groomMother].filter(Boolean)
+                    : (liveData.family?.groomParents || baseContent.family?.groomParents),
+                brideParents: (liveData.brideFather || liveData.brideMother)
+                    ? [liveData.brideFather, liveData.brideMother].filter(Boolean)
+                    : (liveData.family?.brideParents || baseContent.family?.brideParents),
+            } : baseContent.family,
+            thankYouTitle: liveData.thankYouTitle !== undefined ? liveData.thankYouTitle : baseContent.thankYouTitle,
+            thankYouText: liveData.thankYouText !== undefined ? liveData.thankYouText : baseContent.thankYouText,
+            apologyTitle: liveData.apologyTitle !== undefined ? liveData.apologyTitle : baseContent.apologyTitle,
+            apologyText: liveData.apologyText !== undefined ? liveData.apologyText : baseContent.apologyText,
             design: {
                 ...baseContent.design,
                 openingStyle: liveData.gateStyle || liveData.openingStyle || baseContent.design?.openingStyle,
@@ -167,7 +201,30 @@ export default function TemplateExperience({
                 accountName: liveData.bankAccountName || baseContent.bankAccount?.accountName || "VANDA & SREYPICH Official",
                 qrUrl: liveData.qrGiftUrl || baseContent.bankAccount?.qrUrl,
             },
-            gift: (liveData.qrGiftUrl || liveData.bankName || liveData.bankAccountNumber || liveData.bankAccountName) ? [
+            gift: (liveData.khqrDollar?.qrUrl || liveData.khqrRiel?.qrUrl) ? [
+                ...(liveData.khqrDollar?.qrUrl ? [{
+                    id: "khqr-dollar",
+                    type: "khqr",
+                    currency: "USD",
+                    bank: liveData.khqrDollar.bankName || "KHQR Dollar ($)",
+                    account: liveData.khqrDollar.accountName || "",
+                    number: liveData.khqrDollar.accountNumber || "",
+                    note: "USD ($)",
+                    qrImage: liveData.khqrDollar.qrUrl,
+                    qrValue: liveData.khqrDollar.accountNumber || "",
+                }] : []),
+                ...(liveData.khqrRiel?.qrUrl ? [{
+                    id: "khqr-riel",
+                    type: "khqr",
+                    currency: "KHR",
+                    bank: liveData.khqrRiel.bankName || "KHQR Riel (៛)",
+                    account: liveData.khqrRiel.accountName || "",
+                    number: liveData.khqrRiel.accountNumber || "",
+                    note: "KHR (៛)",
+                    qrImage: liveData.khqrRiel.qrUrl,
+                    qrValue: liveData.khqrRiel.accountNumber || "",
+                }] : []),
+            ] : ((liveData.qrGiftUrl || liveData.bankName || liveData.bankAccountNumber || liveData.bankAccountName) ? [
                 {
                     id: "gift-live",
                     bank: liveData.bankName || "ABA Bank",
@@ -177,12 +234,13 @@ export default function TemplateExperience({
                     qrImage: liveData.qrGiftUrl || "",
                     qrValue: liveData.qrGiftUrl ? "" : [liveData.bankName || "ABA Bank", liveData.bankAccountName || "", liveData.bankAccountNumber || ""].filter(Boolean).join(" | "),
                 }
-            ] : baseContent.gift,
+            ] : baseContent.gift),
             enableFloatingBar: liveData.enableFloatingBar !== false,
             enabledSections: liveData.enabledSections ? {
                 ...baseContent.enabledSections,
                 ...liveData.enabledSections,
             } : baseContent.enabledSections,
+            sectionOrder: liveData.sectionOrder || baseContent.sectionOrder,
             opening: {
                 ...baseContent.opening,
                 heading: liveData.invitationTitle || baseContent.opening?.heading,
@@ -211,9 +269,19 @@ export default function TemplateExperience({
                     { id: "f2", q: "តើអាចនាំកុមារតូចៗមកបានទេ?", a: "យើងខ្ញុំស្វាគមន៍វត្តមានកុមារតូចៗទាំងអស់ក្នុងពិធីមង្គលការ។" },
                     { id: "f3", q: "តើកម្មវិធីចាប់ផ្ដើម និងបញ្ចប់នៅម៉ោងប៉ុន្មាន?", a: "កម្មវិធីទទួលភ្ញៀវចាប់ផ្ដើមពីម៉ោង ០៥:០០ ល្ងាច តទៅ។" },
                 ]),
-            gallery: (liveData.galleryImages && liveData.galleryImages.length)
-                ? liveData.galleryImages.map((src, i) => ({ src, span: ["tall", "wide", "small", "small"][i % 4] }))
-                : baseContent.gallery,
+            party: (Array.isArray(liveData.party) && liveData.party.length)
+                ? liveData.party
+                : baseContent.party,
+            gallery: (Array.isArray(liveData.photos) && liveData.photos.length)
+                ? liveData.photos
+                    .filter((p) => (p && (p.url || p.preview)) || typeof p === "string")
+                    .map((p, i) => ({
+                        src: typeof p === "string" ? p : (p.url || p.preview),
+                        span: ["tall", "wide", "small", "small"][i % 4],
+                    }))
+                : (Array.isArray(liveData.galleryImages) && liveData.galleryImages.length
+                    ? liveData.galleryImages.map((src, i) => ({ src, span: ["tall", "wide", "small", "small"][i % 4] }))
+                    : baseContent.gallery),
             story: (liveData.storyText) ? (
                 baseContent.story?.map((c, i) => i === 0 ? { ...c, text: liveData.storyText } : c) || baseContent.story
             ) : baseContent.story,
@@ -228,7 +296,7 @@ export default function TemplateExperience({
             targetDate: liveData.targetDate || liveData.eventDate || baseContent.targetDate,
             weddingDate: liveData.weddingDate || baseContent.weddingDate,
             weddingTime: liveData.weddingTime || baseContent.weddingTime,
-            dateText: liveData.weddingDate || liveData.eventDateText || liveData.dateText || baseContent.dateText,
+            dateText: liveData.dateText || liveData.eventDateText || (liveData.weddingDate && !/^\d{4}-\d{2}-\d{2}$/.test(liveData.weddingDate) ? liveData.weddingDate : "") || baseContent.dateText,
             eventTime: liveData.weddingTime || liveData.eventTime || baseContent.eventTime,
             receptionTime: liveData.weddingTime || liveData.receptionTime || baseContent.receptionTime,
             music: liveData.musicUrl || liveData.music || baseContent.music,
@@ -410,6 +478,7 @@ export default function TemplateExperience({
         return createElement(DedicatedComponent, {
             tpl: content,
             content,
+            liveData,
             showBack: !preview && showBreadcrumb,
             backTo: backLink,
             backLabel,

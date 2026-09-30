@@ -1,5 +1,4 @@
 import DigitalYesLayout from "../layouts/DigitalYes/DigitalYesLayout";
-import RoyalKhmerLayout from "../layouts/RoyalKhmer/RoyalKhmerLayout";
 import EmeraldLuxeLayout from "../layouts/EmeraldLuxe/EmeraldLuxeLayout";
 import WithJoyPortalLayout from "../layouts/WithJoyPortalLayout";
 import BlissEditorialLayout from "../layouts/BlissEditorialLayout";

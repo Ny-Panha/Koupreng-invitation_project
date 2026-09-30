@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { Navigate, Route, useParams } from "react-router-dom";
 
 function InvitationBareRedirect() {

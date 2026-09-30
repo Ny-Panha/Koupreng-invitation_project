@@ -1,7 +1,6 @@
 import { useCallback, useState } from "react";
 import { motion } from "framer-motion";
 import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
-import { KHMER_CELESTIAL_ASSETS } from "../khmerCelestialAssets";
 
 const CELESTIAL_EASE = [0.22, 1, 0.36, 1];
 

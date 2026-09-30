@@ -86,27 +86,31 @@ export default function InvitationEditPage() {
                 };
 
                 const mappedInvitation = {
+                    // Spread the full draft first so ALL saved fields are present
+                    ...localDraft,
                     id: localDraft.backendInvitationId || localDraft.id,
                     backendInvitationId: localDraft.backendInvitationId || null,
                     slug: localDraft.slug || null,
                     templateId: chosenTemplateId,
-                    presetId: preset.presetId || tpl?.presetId || "",
-                    title: contentPayload.title,
-                    groomName: contentPayload.groomName,
-                    brideName: contentPayload.brideName,
-                    eventDate: localDraft.event?.date || localDraft.eventDate || (tpl?.targetDate ? tpl.targetDate.split("T")[0] : "2026-01-28"),
-                    eventTime: localDraft.event?.receptionTime || localDraft.eventTime || tpl?.receptionTime || "17:00",
-                    venueName: contentPayload.venueName,
-                    venueAddress: contentPayload.venueAddress,
+                    presetId: localDraft.presetId || preset.presetId || tpl?.presetId || "",
+                    title: localDraft.title || contentPayload.title,
+                    groomName: localDraft.groomName || localDraft.couple?.groom || contentPayload.groomName,
+                    brideName: localDraft.brideName || localDraft.couple?.bride || contentPayload.brideName,
+                    eventDate: localDraft.eventDate || localDraft.event?.date || (tpl?.targetDate ? tpl.targetDate.split("T")[0] : "2026-01-28"),
+                    eventTime: localDraft.eventTime || localDraft.event?.receptionTime || tpl?.receptionTime || "17:00",
+                    venueName: localDraft.venueName || localDraft.event?.venueName || contentPayload.venueName,
+                    venueAddress: localDraft.venueAddress || localDraft.event?.venueAddress || contentPayload.venueAddress,
                     googleMapUrl: localDraft.googleMapUrl || tpl?.mapQuery || "",
                     sketchMapImage: localDraft.sketchMapImage || null,
                     openingStyle,
                     frontColor,
                     bottomColor,
                     coverImage: cover,
-                    storyText: localDraft.message || preset.messageText || "",
-                    designJson: JSON.stringify(designPayload),
-                    contentJson: JSON.stringify(contentPayload),
+                    storyText: localDraft.messageText || localDraft.message || preset.messageText || "",
+                    // Use saved designJson/contentJson if available (written by handleSave),
+                    // otherwise fall back to the minimal reconstructed versions
+                    designJson: localDraft.designJson || JSON.stringify(designPayload),
+                    contentJson: localDraft.contentJson || JSON.stringify(contentPayload),
                 };
 
                 if (active) {

@@ -1,20 +1,14 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect, useRef, useMemo } from "react";
 import {
-  Heart,
   Clock,
   Calendar,
   MapPin,
   Music,
   VolumeX,
   ExternalLink,
-  ChevronDown,
   Sparkles,
-  QrCode,
-  Check,
   Send,
   X,
-  Share2,
 } from "lucide-react";
 import defaultMusicUrl from "../../../../assets/music/ថ្ងៃដែលរង់ចាំ.mp3";
 import "./template-boilerplate.css";
@@ -22,11 +16,6 @@ import "./template-boilerplate.css";
 export default function TemplateBoilerplateLayout({
   content = {},
   preview = false,
-  showBack = true,
-  backTo = "/templates",
-  backLabel = "ត្រឡប់ទៅគំរូទាំងអស់",
-  useTemplateLink,
-  children,
 }) {
   // Live sync from Admin simulator iframe
   const [liveData, setLiveData] = useState(null);
@@ -49,12 +38,32 @@ export default function TemplateBoilerplateLayout({
   // Merge base content + live admin edits
   const effectiveContent = useMemo(() => {
     const base = liveData ? { ...content, ...liveData } : { ...content };
+    const groomFather = base.groomFather || base.couple?.groomFather || "";
+    const groomMother = base.groomMother || base.couple?.groomMother || "";
+    const brideFather = base.brideFather || base.couple?.brideFather || "";
+    const brideMother = base.brideMother || base.couple?.brideMother || "";
+    const resolvedGroomParents = (groomFather || groomMother)
+      ? [groomFather, groomMother].filter(Boolean).join(" និង ")
+      : (base.family?.groomParents || base.couple?.groomParents || content.family?.groomParents || content.couple?.groomParents || "លោក ឪពុក & អ្នកម្តាយ");
+    const resolvedBrideParents = (brideFather || brideMother)
+      ? [brideFather, brideMother].filter(Boolean).join(" និង ")
+      : (base.family?.brideParents || base.couple?.brideParents || content.family?.brideParents || content.couple?.brideParents || "លោក ឪពុក & អ្នកម្តាយ");
+
     return {
       ...base,
       groom: base.groomName || base.groom || "វណ្ណដា",
       bride: base.brideName || base.bride || "ស្រីពេជ្រ",
       title: base.invitationTitle || base.title || "សិរីសួស្តី អាពាហ៍ពិពាហ៍",
       subtitle: base.invitationSubtitle || base.subtitle || "យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ",
+      messageTitle: base.messageTitle || content.messageTitle || "ការអញ្ជើញ",
+      message: (typeof base.messageText === "string" && base.messageText.trim())
+        ? base.messageText
+        : (base.blessingMessage || base.message || content.message || ""),
+      messageText: (typeof base.messageText === "string" && base.messageText.trim())
+        ? base.messageText
+        : (base.blessingMessage || base.messageText || base.message || content.messageText || ""),
+      groomParents: resolvedGroomParents,
+      brideParents: resolvedBrideParents,
       dateText: base.weddingDate || base.dateText || "ថ្ងៃពុធ ទី២៨ ខែមករា ឆ្នាំ២០២៦",
       receptionTime: base.weddingTime || base.receptionTime || "វេលាម៉ោង ៥:០០ ល្ងាច",
       coverImage: base.coverImage || "/facebook/all/03-card/cover-card.jpg",
@@ -233,7 +242,7 @@ export default function TemplateBoilerplateLayout({
                             <span className="text-[10px] text-amber-400 font-bold block mb-1">
                               ខាងកូនប្រុស
                             </span>
-                            <p className="font-semibold text-white">លោក ឪពុក & អ្នកម្តាយ</p>
+                            <p className="font-semibold text-white">{effectiveContent.groomParents || "លោក ឪពុក & អ្នកម្តាយ"}</p>
                             <p className="text-amber-300 mt-2 font-bold font-moul">
                               {effectiveContent.groom}
                             </p>
@@ -242,7 +251,7 @@ export default function TemplateBoilerplateLayout({
                             <span className="text-[10px] text-amber-400 font-bold block mb-1">
                               ខាងកូនស្រី
                             </span>
-                            <p className="font-semibold text-white">លោក ឪពុក & អ្នកម្តាយ</p>
+                            <p className="font-semibold text-white">{effectiveContent.brideParents || "លោក ឪពុក & អ្នកម្តាយ"}</p>
                             <p className="text-amber-300 mt-2 font-bold font-moul">
                               {effectiveContent.bride}
                             </p>

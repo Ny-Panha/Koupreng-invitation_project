@@ -17,6 +17,8 @@ public interface UserInvitationRepository extends JpaRepository<UserInvitation, 
 
     Optional<UserInvitation> findBySlugAndStatusAndDeletedFalse(String slug, InvitationStatus status);
 
+    Optional<UserInvitation> findFirstByTitleIgnoreCaseAndDeletedFalse(String title);
+
     List<UserInvitation> findAllByDeletedFalseOrderByCreatedAtDesc();
 
     List<UserInvitation> findTop5ByUserIdAndDeletedFalseOrderByCreatedAtDesc(Long userId);

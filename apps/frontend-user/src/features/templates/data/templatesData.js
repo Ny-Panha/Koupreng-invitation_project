@@ -95,7 +95,7 @@ export const KHMER_CELESTIAL_TEMPLATE = withTemplateMedia({
     phoneCoverImage: "/facebook/all/06-card/cover-card.jpg",
     backgroundImage: "/invitations/khmer-celestial/botanical-frame.jpg",
     music: { url: musicWaitingDay },
-    openingVideo: { url: "/invitations/khmer-celestial/burgundy-bokeh.mp4" },
+    openingVideo: null,
     groom: "កឿង វីរៈ",
     groomEn: "Vireak",
     bride: "ឡុង សុម៉ាលី",
@@ -138,8 +138,9 @@ export const KHMER_CELESTIAL_TEMPLATE = withTemplateMedia({
     apologyText: "យើងខ្ញុំជាមាតាបិតា កូនប្រុស - កូនស្រី សូមអភ័យទោសក្នុងករណីពុំបានជូនសំបុត្រអញ្ជើញដោយផ្ទាល់។ សូមឯកឧត្តម លោកជំទាវ លោកអ្នកឧកញ៉ា អ្នកឧកញ៉ា លោក លោកស្រី អ្នកនាង កញ្ញា អញ្ជើញចូលរួមជាអធិបតី និងជាភ្ញៀវកិត្តិយស ក្នុងពិធីរៀបអាពាហ៍ពិពាហ៍ កូនប្រុស - កូនស្រី របស់យើងខ្ញុំ ដោយមេត្រីភាព។",
     storyText: "ពីការជួបគ្នាដំបូង រហូតដល់ពេលដែលយើងសម្រេចចិត្តរួមដំណើរជីវិត សេចក្តីស្រឡាញ់របស់យើងបានរីកចម្រើនតាមរយៈការគោរព ការយល់ចិត្ត និងភាពកក់ក្តៅពីក្រុមគ្រួសារ។",
     presetId: "KHMER_CELESTIAL",
-    openingStyle: "cinematic-video",
-    gateStyle: "cinematic-video",
+    openingStyle: "celestial-cover",
+    gateStyle: "celestial-cover",
+    hasGate: true,
     opening: {
         heading: "សិរីសួស្តីអាពាហ៍ពិពាហ៍",
         openButtonText: "បើកធៀបការ",
@@ -182,13 +183,13 @@ export const KHMER_CELESTIAL_TEMPLATE = withTemplateMedia({
     design: {
         presetId: "KHMER_CELESTIAL",
         theme: "KHMER_CELESTIAL",
-        openingStyle: "cinematic-video",
-        gateStyle: "cinematic-video",
+        openingStyle: "celestial-cover",
+        gateStyle: "celestial-cover",
         primaryColor: "#214F3B",
         secondaryColor: "#B88A3A",
         ornamentTheme: "celestial-botanical",
-        openingVideoEnabled: true,
-        openingVideoUrl: "/invitations/khmer-celestial/burgundy-bokeh.mp4",
+        openingVideoEnabled: false,
+        openingVideoUrl: "",
     },
 }, "06-card");
 

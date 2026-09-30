@@ -122,10 +122,14 @@ export function normalizeTemplateViewModel(tpl = {}, content = {}) {
   // Music
   const music = merged.music?.url || (typeof merged.music === "string" ? merged.music : null);
 
-  // Message
-  const blessingMessage = (typeof merged.message === "string" && merged.message.trim())
-    ? merged.message
-    : (merged.blessingMessage || merged.message?.text || "សូមគោរពអញ្ជើញឯកឧត្តម លោកជំទាវ លោក លោកស្រី អ្នកនាង កញ្ញា ចូលរួមជាអធិបតី និងជាភ្ញៀវកិត្តិយសក្នុងពិធីមង្គលការរបស់យើងខ្ញុំ។");
+  // Message & Titles
+  const messageTitle = merged.messageTitle || merged.blessingTitle || merged.invitationTitle || "";
+  const messageText = (typeof merged.messageText === "string" && merged.messageText.trim())
+    ? merged.messageText
+    : ((typeof merged.message === "string" && merged.message.trim())
+      ? merged.message
+      : (merged.blessingMessage || merged.message?.text || "សូមគោរពអញ្ជើញឯកឧត្តម លោកជំទាវ លោក លោកស្រី អ្នកនាង កញ្ញា ចូលរួមជាអធិបតី និងជាភ្ញៀវកិត្តិយសក្នុងពិធីមង្គលការរបស់យើងខ្ញុំ។"));
+  const blessingMessage = messageText;
 
   return {
     ...merged,
@@ -152,6 +156,9 @@ export function normalizeTemplateViewModel(tpl = {}, content = {}) {
     bankAccount,
     dressCode,
     music,
+    messageTitle,
+    messageText,
+    message: messageText,
     blessingMessage,
   };
 }

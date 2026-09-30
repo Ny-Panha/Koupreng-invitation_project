@@ -5,7 +5,6 @@ import {
   DefaultTemplateLayout,
 } from "./templateRegistry";
 import DigitalYesLayout from "../layouts/DigitalYes/DigitalYesLayout";
-import RoyalKhmerLayout from "../layouts/RoyalKhmer/RoyalKhmerLayout";
 import EmeraldLuxeLayout from "../layouts/EmeraldLuxe/EmeraldLuxeLayout";
 import KhmerCelestialLayout from "../layouts/KhmerCelestial/KhmerCelestialLayout";
 

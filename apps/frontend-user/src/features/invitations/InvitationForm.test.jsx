@@ -8,7 +8,6 @@ import {
   getTemplatePreset,
   getCatalogVersion,
   registerDynamicTemplates,
-  getAllTemplates,
 } from "../templates/data/templatesData";
 
 // The catalog is fetched over HTTP in the real app. Mocking the service module

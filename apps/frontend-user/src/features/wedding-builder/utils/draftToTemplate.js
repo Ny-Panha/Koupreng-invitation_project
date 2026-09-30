@@ -222,8 +222,12 @@ export function draftToTemplate(draft, gallery = []) {
             ...(baseTpl.design || {}),
             ...(draft.design || {}),
             presetId: draft.presetId || draft.design?.presetId || baseTpl.presetId || baseTpl.design?.presetId || "",
-            openingStyle: draft.openingStyle || draft.gateStyle || draft.design?.openingStyle || draft.design?.gateStyle || baseTpl.openingStyle || baseTpl.gateStyle || baseTpl.design?.openingStyle || "khmer-royal",
-            gateStyle: draft.openingStyle || draft.gateStyle || draft.design?.openingStyle || draft.design?.gateStyle || baseTpl.openingStyle || baseTpl.gateStyle || baseTpl.design?.openingStyle || "khmer-royal",
+            // Respect the base template's declared gateStyle/openingStyle before
+            // falling back to a generic default. This prevents templates that
+            // explicitly declare gateStyle:"none" (e.g. Khmer Celestial) from
+            // being overridden by a hardcoded "khmer-royal" fallback.
+            openingStyle: draft.openingStyle || draft.gateStyle || draft.design?.openingStyle || draft.design?.gateStyle || baseTpl.openingStyle || baseTpl.gateStyle || baseTpl.design?.openingStyle || baseTpl.design?.gateStyle || "khmer-royal",
+            gateStyle: draft.gateStyle || draft.openingStyle || draft.design?.gateStyle || draft.design?.openingStyle || baseTpl.gateStyle || baseTpl.openingStyle || baseTpl.design?.gateStyle || baseTpl.design?.openingStyle || "khmer-royal",
             coverImage: draft.coverImage || draft.design?.coverImage || baseTpl.phoneCoverImage || baseTpl.mainImage || "/facebook/all/03-card/cover-card.jpg",
             frontColor: draft.frontColor || draft.primaryColor || draft.design?.frontColor || draft.design?.primaryColor || baseTpl.frontColor || baseTpl.primaryColor || baseTpl.design?.frontColor || baseTpl.design?.primaryColor || baseTpl.color || "#f9af59",
             bottomColor: draft.bottomColor || draft.secondaryColor || draft.design?.bottomColor || draft.design?.secondaryColor || baseTpl.bottomColor || baseTpl.secondaryColor || baseTpl.design?.bottomColor || baseTpl.design?.secondaryColor || baseTpl.accent || "#B08E4F",

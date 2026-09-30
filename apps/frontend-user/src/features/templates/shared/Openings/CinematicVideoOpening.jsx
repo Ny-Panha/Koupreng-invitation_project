@@ -20,8 +20,6 @@ export default function CinematicVideoOpening({
   groom = "កូនកំលោះ",
   bride = "កូនក្រមុំ",
   weddingTitle,
-  weddingDate,
-  weddingTime,
   guestLabel,
   guestName,
   subtitle,

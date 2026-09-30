@@ -134,7 +134,7 @@ describe("KhmerCelestialLayout integration", () => {
 
     render(
       <MemoryRouter>
-        <TemplateExperience tpl={{ id: "khmer-celestial", name: "Khmer Celestial" }} content={content} showBreadcrumb={false} showActions={false} />
+        <TemplateExperience tpl={{ id: "khmer-celestial", name: "Khmer Celestial", hasGate: true }} content={{ ...content, hasGate: true, gateEnabled: true }} showBreadcrumb={false} showActions={false} previewStartClosed={true} preview={false} />
       </MemoryRouter>
     );
 
@@ -142,10 +142,13 @@ describe("KhmerCelestialLayout integration", () => {
     expect(document.querySelector(".kc-opening__garden video")).not.toBeInTheDocument();
     expect(document.querySelector(".kc-opening__garden .kc-butterfly__wing--left")).toBeInTheDocument();
 
+    // After clicking open the gate should close — kc-main becomes accessible
     fireEvent.click(screen.getByRole("button", { name: "បើកសំបុត្រអញ្ជើញ" }));
-    expect(document.querySelector(".kc-opening__transition")).toBeInTheDocument();
-    expect(document.querySelectorAll(".kc-opening__transition .kc-petal").length).toBeGreaterThan(0);
+    // The openTransitionActive overlay was removed; main content should now render
+    expect(document.querySelector(".kc-opening__transition")).not.toBeInTheDocument();
+    await waitFor(() => expect(document.querySelector(".kc-main")).toBeInTheDocument());
   });
+
 
   it("renders the supplied ornamental asset with accessible preview guest text in reduced motion", () => {
     const previewContent = buildTemplateContent(KHMER_CELESTIAL_TEMPLATE, "khmer-celestial");
@@ -543,7 +546,10 @@ describe("KhmerCelestialLayout integration", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders CinematicVideoOpening when openingStyle or gateStyle is cinematic-video", () => {
+  it("does NOT render cinematic gate for Khmer Celestial even when gateStyle is cinematic-video", () => {
+    // Cinematic video opening was intentionally removed from Khmer Celestial.
+    // Passing cinematic gateStyle should be ignored — hasOpeningGate stays false
+    // because tpl.hasGate is not true, so main content renders immediately.
     const cinematicContent = {
       ...content,
       gateStyle: "cinematic-video",
@@ -554,7 +560,7 @@ describe("KhmerCelestialLayout integration", () => {
     render(
       <MemoryRouter>
         <TemplateExperience
-          tpl={{ id: "khmer-celestial", name: "Khmer Celestial" }}
+          tpl={{ id: "khmer-celestial", name: "Khmer Celestial", hasGate: false }}
           content={cinematicContent}
           showBreadcrumb={false}
           showActions={false}
@@ -562,12 +568,84 @@ describe("KhmerCelestialLayout integration", () => {
       </MemoryRouter>
     );
 
-    expect(document.querySelector(".kc-opening--cinematic")).toBeInTheDocument();
-    expect(document.querySelector(".cinematic-hub-title")).toHaveTextContent("សិរីមង្គលអាពាហ៍ពិពាហ៍");
-    expect(document.querySelector(".cinematic-video-overlay video")).toHaveAttribute(
-      "src",
-      "/invitations/khmer-celestial/burgundy-bokeh.mp4"
+    // Cinematic gate must NOT appear
+    expect(document.querySelector(".kc-opening--cinematic")).not.toBeInTheDocument();
+    // Main celestial content should be visible directly
+    expect(document.querySelector(".kc-main")).toBeInTheDocument();
+  });
+
+  it("live preview updates messageTitle and messageText in real time via LIVE_PREVIEW_SYNC", async () => {
+    render(
+      <MemoryRouter>
+        <TemplateExperience
+          tpl={{ id: "khmer-celestial", name: "Khmer Celestial", hasGate: false }}
+          content={content}
+          showBreadcrumb={false}
+          showActions={false}
+          preview={true}
+          previewStartClosed={false}
+        />
+      </MemoryRouter>
     );
+
+    // Initial check: default fallback message title
+    expect(screen.getByText("មានកិត្តិយសសូមគោរពអញ្ជើញ")).toBeInTheDocument();
+
+    // Broadcast LIVE_PREVIEW_SYNC simulating user typing in InvitationForm
+    fireEvent(
+      window,
+      new MessageEvent("message", {
+        data: {
+          type: "LIVE_PREVIEW_SYNC",
+          data: {
+            messageTitle: "ssasasasaAS",
+            messageText: "សារអញ្ជើញពិសេស sasaasASAAsaa",
+          },
+        },
+      })
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText("ssasasasaAS")).toBeInTheDocument();
+      expect(screen.getByText("សារអញ្ជើញពិសេស sasaasASAAsaa")).toBeInTheDocument();
+    });
+  });
+
+  it("live preview updates parents and closing notes via LIVE_PREVIEW_SYNC", async () => {
+    render(
+      <MemoryRouter>
+        <TemplateExperience
+          tpl={{ id: "khmer-celestial", name: "Khmer Celestial", hasGate: false }}
+          content={content}
+          showBreadcrumb={false}
+          showActions={false}
+          preview={true}
+          previewStartClosed={false}
+        />
+      </MemoryRouter>
+    );
+
+    fireEvent(
+      window,
+      new MessageEvent("message", {
+        data: {
+          type: "LIVE_PREVIEW_SYNC",
+          data: {
+            groomFather: "លោក ញឹក បញ្ញា",
+            groomMother: "លោកស្រី ម៉េង ចាន់ធី",
+            thankYouTitle: "អរគុណយ៉ាងជ្រាលជ្រៅពីក្រុមគ្រួសារ",
+            thankYouText: "សូមអរគុណភ្ញៀវកិត្តិយសទាំងអស់",
+          },
+        },
+      })
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText("លោក ញឹក បញ្ញា")).toBeInTheDocument();
+      expect(screen.getByText("លោកស្រី ម៉េង ចាន់ធី")).toBeInTheDocument();
+      expect(screen.getByText("អរគុណយ៉ាងជ្រាលជ្រៅពីក្រុមគ្រួសារ")).toBeInTheDocument();
+      expect(screen.getByText("សូមអរគុណភ្ញៀវកិត្តិយសទាំងអស់")).toBeInTheDocument();
+    });
   });
 });
 

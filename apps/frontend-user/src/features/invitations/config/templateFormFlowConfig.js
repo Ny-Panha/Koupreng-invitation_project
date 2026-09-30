@@ -40,6 +40,8 @@ export const TEMPLATE_FORM_FLOWS = {
     // 12. Closing (Thank You & Apology)
     // 13. LanguageMode
     "khmer-celestial": {
+        hasCoverImage: false,
+        hasGate: false,
         sectionOrder: [
             "cover",
             "family",
@@ -60,8 +62,7 @@ export const TEMPLATE_FORM_FLOWS = {
             coverImage: "រូបភាពក្របមុខ (Cover Photo)",
             coverSectionDesc: "ព័ត៌មានលេចធ្លោលើក្របបើក និងទំព័រដើម (Hero)",
             familySection: "មាតាបិតាទាំងសងខាង (Together with our families)",
-            invitationSection: "សារលិខិតអញ្ជើញ & រូបថតធៀបការ (The Invitation)",
-            invitationImage: "រូបថតទី១ — ប្តី/ប្រពន្ធ (Portrait Photo #1)",
+            invitationSection: "សារលិខិតអញ្ជើញ (The Invitation)",
             scheduleSection: "កម្មវិធីមង្គលការ (Wedding Programme)",
             countdownSection: "រាប់ថយក្រោយដល់ថ្ងៃមង្គល (Save The Date)",
             venueSection: "ទីតាំងប្រារព្ធពិធី (Celebration Venue)",
@@ -75,7 +76,7 @@ export const TEMPLATE_FORM_FLOWS = {
         hints: {
             coverImage: "បង្ហាញលើក្របទំព័រដើម / Hero (Front Cover)",
         },
-        placePhotoInInvitation: true,
+        placePhotoInInvitation: false,
     },
 };
 
@@ -92,13 +93,15 @@ export function getTemplateFormFlow(templateIdOrTpl) {
 
     let matched = TEMPLATE_FORM_FLOWS[key];
     if (!matched) {
-        if (key.includes("celestial")) {
+        if (key.includes("celestial") || key === "10" || key === "6") {
             matched = TEMPLATE_FORM_FLOWS["khmer-celestial"];
         }
     }
 
     if (matched) {
         return {
+            hasCoverImage: matched.hasCoverImage !== undefined ? Boolean(matched.hasCoverImage) : true,
+            hasGate: matched.hasGate !== undefined ? Boolean(matched.hasGate) : true,
             sectionOrder: matched.sectionOrder || DEFAULT_SECTION_ORDER,
             labels: matched.labels || {},
             hints: matched.hints || {},
@@ -107,6 +110,8 @@ export function getTemplateFormFlow(templateIdOrTpl) {
     }
 
     return {
+        hasCoverImage: true,
+        hasGate: true,
         sectionOrder: DEFAULT_SECTION_ORDER,
         labels: {},
         hints: {},

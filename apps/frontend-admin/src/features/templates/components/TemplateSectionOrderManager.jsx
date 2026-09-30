@@ -12,7 +12,7 @@ import {
 
 export const DEFAULT_SECTIONS_LIST = [
   { key: "family", label: "👨‍👩‍👧‍👦 គ្រួសារទាំងសងខាង (Family & Parents)", desc: "បង្ហាញឈ្មោះឪពុកម្តាយ និងកូនកំលោះកូនក្រមុំ", tabTarget: "couple" },
-  { key: "invitation", label: "💌 សេចក្តីអញ្ជើញ & រូបថត (Portraits & Blessing)", desc: "រូបថតគូស្នេហ៍ និងសារអញ្ជើញជាផ្លូវការ", tabTarget: "couple" },
+  { key: "invitation", label: "💌 សារលិខិតអញ្ជើញ (The Invitation)", desc: "សារអញ្ជើញភ្ញៀវកិត្តិយសជាផ្លូវការ", tabTarget: "couple" },
   { key: "countdown", label: "⏱️ រាប់ថយក្រោយ (Countdown Timer)", desc: "បង្ហាញនាឡិការាប់ថយក្រោយដល់ថ្ងៃមង្គលការ", tabTarget: "theme" },
   { key: "schedule", label: "📅 កម្មវិធីមង្គលការ (Schedule Timeline)", desc: "បង្ហាញកម្មវិធី និងម៉ោងតាមលំដាប់លំដោយ", tabTarget: "events", subTab: "schedule" },
   { key: "gallery", label: "🖼️ វិចិត្រសាលរូបថត (Photo Gallery)", desc: "បង្ហាញកម្រងរូបថតរៀបអាពាហ៍ពិពាហ៍", tabTarget: "events", subTab: "gallery" },
