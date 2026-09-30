@@ -528,10 +528,22 @@ export default function KhmerCelestialLayout({
     || (typeof effectiveContent.tpl?.backgroundImage === "string" ? effectiveContent.tpl.backgroundImage : "")
     || KHMER_CELESTIAL_ASSETS.botanicalFrame;
 
+  const isCustomBotanical = Boolean(
+    effectiveContent.backgroundImage &&
+    effectiveContent.backgroundImage !== KHMER_CELESTIAL_ASSETS.botanicalFrame &&
+    !effectiveContent.backgroundImage.includes("botanical-frame.jpg")
+  );
+  const hasCustomBg = Boolean(
+    isCustomBotanical ||
+    effectiveContent.coverBackgroundImage ||
+    effectiveContent.design?.coverBackgroundImage
+  );
+
   return (
     <div
       className={`kc-root${preview ? " kc-root--preview" : ""}${hasOpeningGate && opened && !heroUnlocked ? " kc-root--hero-locked" : ""}`}
       data-variant="khmer-celestial"
+      data-hero-bg={hasCustomBg ? "custom" : "default"}
       style={{
         "--kc-bg-frame": `url("${botanicalFrame}")`,
         "--kc-khmer-display": effectiveContent.fontKhmer
@@ -596,7 +608,13 @@ export default function KhmerCelestialLayout({
         style={{ display: opened ? undefined : "none" }}
       >
         <CelestialLiveGarden className="kc-main__garden" variant="normal" />
-        <section ref={heroRef} className="kc-hero" data-tx-section="hero" aria-labelledby="kc-hero-title">
+        <section
+          ref={heroRef}
+          className={`kc-hero ${hasCustomBg ? "kc-hero--custom-bg" : ""}`}
+          data-tx-section="hero"
+          data-hero-bg={hasCustomBg ? "custom" : "default"}
+          aria-labelledby="kc-hero-title"
+        >
           <motion.img
             className="kc-hero__botanical"
             src={botanicalFrame}
@@ -604,11 +622,10 @@ export default function KhmerCelestialLayout({
             aria-hidden="true"
             width="999"
             height="1575"
-            initial={reducedMotion ? false : { scale: 1.02, filter: "blur(2px)" }}
-            animate={opened ? { scale: 1, filter: "blur(0px)" } : { scale: 1.02, filter: "blur(2px)" }}
+            initial={reducedMotion ? false : { scale: 1.02 }}
+            animate={opened ? { scale: 1 } : { scale: 1.02 }}
             transition={{ duration: reducedMotion ? 0 : 1.1, ease: [0.22, 1, 0.36, 1] }}
           />
-          <div className="kc-hero__veil" aria-hidden="true" />
           <motion.div
             className="kc-hero__content"
             style={reducedMotion ? undefined : { y: heroLogoY, scale: heroLogoScale, opacity: heroLogoOpacity }}

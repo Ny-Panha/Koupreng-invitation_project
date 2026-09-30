@@ -1152,7 +1152,7 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
 }
 
 .kc-hero__veil {
-  background: radial-gradient(ellipse at center, rgba(255, 253, 248, 0.96) 0 25%, rgba(255, 253, 248, 0.7) 50%, transparent 74%);
+  display: none !important;
 }
 
 .kc-hero__content {
@@ -3404,6 +3404,72 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
 .pe-canvas-wrapper .kc-opening[data-cover-bg="custom"] .kc-opening__time,
 .kc-root--preview .kc-opening[data-cover-bg="custom"] .kc-opening__time {
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 2px 8px rgba(184, 134, 11, 0.65) !important;
+}
+
+/* ==========================================================================
+   Custom Hero Background (Vivid photo, zero white blur / veil)
+   ========================================================================== */
+.kc-hero[data-hero-bg="custom"],
+.pe-canvas-wrapper .kc-hero[data-hero-bg="custom"],
+.kc-root--preview .kc-hero[data-hero-bg="custom"],
+.kc-root[data-hero-bg="custom"] .kc-hero {
+  background: #08090d !important;
+}
+
+.kc-hero[data-hero-bg="custom"] .kc-hero__veil,
+.pe-canvas-wrapper .kc-hero[data-hero-bg="custom"] .kc-hero__veil,
+.kc-root--preview .kc-hero[data-hero-bg="custom"] .kc-hero__veil,
+.kc-root[data-hero-bg="custom"] .kc-hero__veil {
+  display: none !important;
+}
+
+.kc-hero[data-hero-bg="custom"] .kc-hero__botanical,
+.pe-canvas-wrapper .kc-hero[data-hero-bg="custom"] .kc-hero__botanical,
+.kc-root--preview .kc-hero[data-hero-bg="custom"] .kc-hero__botanical,
+.kc-root[data-hero-bg="custom"] .kc-hero__botanical {
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  opacity: 1 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  object-fit: cover !important;
+}
+
+.kc-hero[data-hero-bg="custom"] .kc-hero__couple-names,
+.pe-canvas-wrapper .kc-hero[data-hero-bg="custom"] .kc-hero__couple-names,
+.kc-root--preview .kc-hero[data-hero-bg="custom"] .kc-hero__couple-names,
+.kc-root[data-hero-bg="custom"] .kc-hero__couple-names {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 2px 8px rgba(0, 0, 0, 0.7), 0 0 16px rgba(212, 175, 55, 0.45) !important;
+}
+
+.kc-hero[data-hero-bg="custom"] .kc-hero__date,
+.kc-hero[data-hero-bg="custom"] .kc-hero__subtitle,
+.kc-hero[data-hero-bg="custom"] .kc-hero__venue,
+.pe-canvas-wrapper .kc-hero[data-hero-bg="custom"] .kc-hero__date,
+.pe-canvas-wrapper .kc-hero[data-hero-bg="custom"] .kc-hero__subtitle,
+.pe-canvas-wrapper .kc-hero[data-hero-bg="custom"] .kc-hero__venue,
+.kc-root--preview .kc-hero[data-hero-bg="custom"] .kc-hero__date,
+.kc-root--preview .kc-hero[data-hero-bg="custom"] .kc-hero__subtitle,
+.kc-root--preview .kc-hero[data-hero-bg="custom"] .kc-hero__venue,
+.kc-root[data-hero-bg="custom"] .kc-hero__date,
+.kc-root[data-hero-bg="custom"] .kc-hero__subtitle,
+.kc-root[data-hero-bg="custom"] .kc-hero__venue {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 2px 6px rgba(0, 0, 0, 0.65) !important;
+}
+
+.kc-hero[data-hero-bg="custom"] .kc-hero__time,
+.pe-canvas-wrapper .kc-hero[data-hero-bg="custom"] .kc-hero__time,
+.kc-root--preview .kc-hero[data-hero-bg="custom"] .kc-hero__time,
+.kc-root[data-hero-bg="custom"] .kc-hero__time {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 2px 8px rgba(184, 134, 11, 0.65) !important;
+}
+
+.kc-hero[data-hero-bg="custom"] .kc-hero__scroll,
+.pe-canvas-wrapper .kc-hero[data-hero-bg="custom"] .kc-hero__scroll,
+.kc-root--preview .kc-hero[data-hero-bg="custom"] .kc-hero__scroll,
+.kc-root[data-hero-bg="custom"] .kc-hero__scroll {
+  color: var(--kc-gold, #d4af37) !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9) !important;
 }
 
 /* Dark Cover Theme (Royal Folio, Corners, Dark Backgrounds) */
