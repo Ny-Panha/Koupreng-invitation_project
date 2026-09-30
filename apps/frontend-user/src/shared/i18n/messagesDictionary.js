@@ -107,7 +107,7 @@ export const LOCAL_MESSAGES = {
       statusLive: "● ផ្សាយផ្ទាល់ (Live)",
       statusDraft: "○ ព្រាង (Draft)",
       publish: "ផ្សព្វផ្សាយ",
-      unpublish: "ដកចេញពី Live",
+      unpublish: "បិទការផ្សាយ",
       publishing: "កំពុងផ្សព្វផ្សាយ...",
       unitDays: "ថ្ងៃ",
       unitHours: "ម៉ោង",

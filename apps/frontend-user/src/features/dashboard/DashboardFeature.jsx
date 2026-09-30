@@ -27,7 +27,7 @@ import { rsvpService } from "@/features/rsvp/api/rsvpApi";
 import { budgetService } from "../budget/api/budgetApi";
 import { planningService } from "@/features/planning/api/planningApi";
 import notificationService from "../notifications/notificationService";
-import { listDrafts } from "../../shared/storage/weddingStorage";
+import { listDrafts, getDraft, saveDraft } from "../../shared/storage/weddingStorage";
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { SkeletonTable } from "@/shared/ui";
@@ -332,9 +332,18 @@ export default function DashboardFeature() {
     if (!stats.id || publishing) return;
     try {
       setPublishing(true);
+      const isLocal = typeof stats.id === "string" && (stats.id.startsWith("wed-") || !/^\d+$/.test(stats.id));
       if (stats.status === "PUBLISHED") {
+        if (isLocal) {
+          const draft = getDraft(stats.id);
+          if (draft) saveDraft({ ...draft, status: "DRAFT", published: false });
+        }
         await invitationService.unpublish(stats.id);
       } else {
+        if (isLocal) {
+          const draft = getDraft(stats.id);
+          if (draft) saveDraft({ ...draft, status: "PUBLISHED", published: true });
+        }
         await invitationService.publish(stats.id);
       }
       await loadData(stats.id);
