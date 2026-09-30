@@ -510,6 +510,7 @@ const DEFAULT_STATE = {
     openingStyle: "khmer-royal",
     frontColor: "#f9af59",
     bottomColor: "#B08E4F",
+    backgroundColor: "#ffffff",
     coverImage: null,
     coverBackgroundImage: null,
     invitationImage: null,
@@ -606,8 +607,9 @@ export default function InvitationForm({ invitation }) {
             || templateDefaultCoverBg
             || "";
 
-        const frontColor = (!isDefaultGold && (customParsed.frontColor || invitation?.frontColor)) || preset.frontColor || DEFAULT_STATE.frontColor;
-        const bottomColor = (!isDefaultGold && (customParsed.bottomColor || invitation?.bottomColor)) || preset.bottomColor || DEFAULT_STATE.bottomColor;
+        const frontColor = (!isDefaultGold && (customParsed.frontColor || invitation?.frontColor)) || tpl?.primaryColor || preset.frontColor || DEFAULT_STATE.frontColor;
+        const bottomColor = (!isDefaultGold && (customParsed.bottomColor || invitation?.bottomColor)) || tpl?.secondaryColor || preset.bottomColor || DEFAULT_STATE.bottomColor;
+        const backgroundColor = customParsed.backgroundColor || invitation?.backgroundColor || tpl?.backgroundColor || preset.backgroundColor || DEFAULT_STATE.backgroundColor;
         const openingStyle = (!isDefaultOpening && (customParsed.openingStyle || invitation?.openingStyle)) || preset.openingStyle || DEFAULT_STATE.openingStyle;
         const coverImage = uploadedCoverFromDraft || templateDefaultCover;
         const title = (!isDefaultTitle && (invitation?.title || customParsed.title)) ? (invitation?.title || customParsed.title) : (preset.title || DEFAULT_STATE.title);
@@ -849,8 +851,9 @@ export default function InvitationForm({ invitation }) {
             fontFamily: template.fontFamily || preset.fontFamily || form.fontFamily || "",
             layoutStyles: template.layoutStyles || preset.layoutStyles || form.layoutStyles || {},
             openingStyle: preset.openingStyle || template.openingStyle || form.openingStyle || "khmer-royal",
-            frontColor: preset.frontColor || template.frontColor || form.frontColor,
-            bottomColor: preset.bottomColor || template.bottomColor || form.bottomColor,
+            frontColor: template.primaryColor || preset.frontColor || template.frontColor || form.frontColor,
+            bottomColor: template.secondaryColor || preset.bottomColor || template.bottomColor || form.bottomColor,
+            backgroundColor: template.backgroundColor || preset.backgroundColor || template.bgColor || form.backgroundColor,
             title: nextTitle,
             groomName: form.groomName || preset.groom || template.groom || "វណ្ណដា",
             brideName: form.brideName || preset.bride || template.bride || "ស្រីពេជ្រ",
