@@ -1,4 +1,4 @@
-import { cleanup, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import AdminUsersFeature from "./AdminUsersFeature";
@@ -23,6 +23,15 @@ const mockUsers = [
     active: true,
     createdAt: "2026-08-01T00:00:00Z",
   },
+  {
+    id: 3,
+    fullName: "Vannak Seller",
+    email: "vannak@koupreng.com",
+    role: "USER",
+    status: "ACTIVE",
+    active: true,
+    createdAt: "2026-08-03T00:00:00Z",
+  },
 ];
 
 const mockAdminService = vi.hoisted(() => ({
@@ -42,12 +51,21 @@ vi.mock("../../shared/api/adminService", () => ({
 afterEach(() => {
   cleanup();
   localStorage.clear();
+  sessionStorage.clear();
   vi.clearAllMocks();
 });
 
-describe("AdminUsersFeature i18n", () => {
+describe("AdminUsersFeature i18n & safety", () => {
   beforeEach(() => {
     mockAdminService.users.mockResolvedValue(mockUsers);
+    mockAdminService.deactivateUser.mockImplementation(async (id) => ({
+      id,
+      fullName: "Vannak Seller",
+      email: "vannak@koupreng.com",
+      role: "USER",
+      status: "INACTIVE",
+      active: false,
+    }));
   });
 
   it("renders all elements and filter tabs in English when EN is active", async () => {
@@ -88,7 +106,7 @@ describe("AdminUsersFeature i18n", () => {
     // Check table headers and role badges
     expect(screen.getByText("Account (Email / Phone)")).toBeInTheDocument();
     expect(screen.getAllByText("Admin").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getByText("Regular User")).toBeInTheDocument();
+    expect(screen.getAllByText("Regular User").length).toBeGreaterThanOrEqual(1);
   });
 
   it("renders all elements and filter tabs in Khmer when KM is active", async () => {
@@ -128,6 +146,101 @@ describe("AdminUsersFeature i18n", () => {
 
     // Check role badges in Khmer
     expect(screen.getAllByText("អ្នកគ្រប់គ្រង").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getByText("អ្នកប្រើប្រាស់ទូទៅ")).toBeInTheDocument();
+    expect(screen.getAllByText("អ្នកប្រើប្រាស់ទូទៅ").length).toBeGreaterThanOrEqual(1);
+  });
+
+  it("protects current logged in admin from self deactivation with a You badge", async () => {
+    localStorage.setItem("koupreng.admin.lang", "en");
+    const validFutureExpToken = `header.${btoa(JSON.stringify({ exp: 4102444800 }))}.signature`;
+    localStorage.setItem("koupreng.admin.auth", JSON.stringify({
+      accessToken: validFutureExpToken,
+      user: { id: 1, email: "admin@koupreng.com", role: "ADMIN" },
+    }));
+
+    render(
+      <AdminLanguageProvider>
+        <MemoryRouter initialEntries={["/users"]}>
+          <Routes>
+            <Route path="/users" element={<AdminUsersFeature />} />
+          </Routes>
+        </MemoryRouter>
+      </AdminLanguageProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText("Koupreng Admin")).toBeInTheDocument();
+    });
+
+    // Current user has You badge
+    expect(screen.getAllByText("You").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText("You (Protected)")).toBeInTheDocument();
+  });
+
+  it("opens confirmation modal when deactivating user and allows canceling or confirming", async () => {
+    localStorage.setItem("koupreng.admin.lang", "en");
+
+    render(
+      <AdminLanguageProvider>
+        <MemoryRouter initialEntries={["/users"]}>
+          <Routes>
+            <Route path="/users" element={<AdminUsersFeature />} />
+          </Routes>
+        </MemoryRouter>
+      </AdminLanguageProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText("Vannak Seller")).toBeInTheDocument();
+    });
+
+    const deactivateBtns = screen.getAllByRole("button", { name: "Deactivate" });
+    expect(deactivateBtns.length).toBeGreaterThanOrEqual(1);
+
+    // Click deactivate on the first deactivatable user (id 1)
+    fireEvent.click(deactivateBtns[0]);
+
+    // Confirmation modal appears
+    expect(screen.getByRole("heading", { name: "Deactivate User" })).toBeInTheDocument();
+    expect(screen.getByText(/Are you sure you want to deactivate/)).toBeInTheDocument();
+
+    // Click Cancel
+    fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
+    expect(screen.queryByRole("heading", { name: "Deactivate User" })).not.toBeInTheDocument();
+    expect(mockAdminService.deactivateUser).not.toHaveBeenCalled();
+
+    // Click deactivate again and confirm
+    const deactivateBtnsAgain = screen.getAllByRole("button", { name: "Deactivate" });
+    fireEvent.click(deactivateBtnsAgain[0]);
+    const modalDeactivateBtn = screen.getAllByRole("button", { name: "Deactivate" }).slice(-1)[0];
+    fireEvent.click(modalDeactivateBtn);
+
+    await waitFor(() => {
+      expect(mockAdminService.deactivateUser).toHaveBeenCalledWith(1);
+    });
+  });
+
+  it("calculates password strength dynamically", async () => {
+    localStorage.setItem("koupreng.admin.lang", "en");
+
+    render(
+      <AdminLanguageProvider>
+        <MemoryRouter initialEntries={["/users"]}>
+          <Routes>
+            <Route path="/users" element={<AdminUsersFeature />} />
+          </Routes>
+        </MemoryRouter>
+      </AdminLanguageProvider>
+    );
+
+    const passInput = screen.getByPlaceholderText("Minimum 8 characters");
+    expect(screen.queryByText(/Password Strength:/)).not.toBeInTheDocument();
+
+    // Weak
+    fireEvent.change(passInput, { target: { value: "abc" } });
+    expect(screen.getByText("Weak")).toBeInTheDocument();
+
+    // Strong
+    fireEvent.change(passInput, { target: { value: "StrongPass#123" } });
+    expect(screen.getByText("Strong")).toBeInTheDocument();
   });
 });
