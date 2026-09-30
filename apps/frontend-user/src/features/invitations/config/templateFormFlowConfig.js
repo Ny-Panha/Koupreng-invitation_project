@@ -40,7 +40,7 @@ export const TEMPLATE_FORM_FLOWS = {
     // 12. Closing (Thank You & Apology)
     // 13. LanguageMode
     "khmer-celestial": {
-        hasCoverImage: true,
+        hasCoverImage: false,
         hasCoverBackgroundImage: true,
         hasGate: false,
         sectionOrder: [
@@ -104,7 +104,7 @@ export function getTemplateFormFlow(templateIdOrTpl) {
 
     let matched = TEMPLATE_FORM_FLOWS[key];
     if (!matched) {
-        if (key.includes("celestial") || key === "10" || key === "6") {
+        if (key.includes("celestial") || key.includes("royal-khmer") || key === "10" || key === "6" || key === "1") {
             matched = TEMPLATE_FORM_FLOWS["khmer-celestial"];
         }
     }

@@ -667,10 +667,17 @@ describe("KhmerCelestialLayout integration", () => {
       </MemoryRouter>
     );
 
-    // Closed gate uses coverBackgroundImage
+    // Closed gate has backdrop and custom cover flag
+    const opening = document.querySelector(".kc-opening");
+    expect(opening).toHaveAttribute("data-cover-bg", "custom");
+    const backdrop = document.querySelector(".kc-opening__backdrop");
+    expect(backdrop).toBeInTheDocument();
+    expect(backdrop).toHaveAttribute("src", "/uploads/my-cover-background.jpg");
+
+    // Closed gate botanical overlay uses backgroundImage
     const closedBotanical = document.querySelector(".kc-opening__botanical");
     expect(closedBotanical).toBeInTheDocument();
-    expect(closedBotanical).toHaveAttribute("src", "/uploads/my-cover-background.jpg");
+    expect(closedBotanical).toHaveAttribute("src", "/uploads/my-main-background.jpg");
 
     // Opened layout root still uses backgroundImage
     const root = document.querySelector(".kc-root");
@@ -692,7 +699,9 @@ describe("KhmerCelestialLayout integration", () => {
       </MemoryRouter>
     );
 
-    // Initially falls back to botanical frame when coverBackgroundImage is not provided
+    // Initially default cover bg flag and no backdrop when coverBackgroundImage is not provided
+    expect(document.querySelector(".kc-opening")).toHaveAttribute("data-cover-bg", "default");
+    expect(document.querySelector(".kc-opening__backdrop")).toBeNull();
     expect(document.querySelector(".kc-opening__botanical")).toHaveAttribute(
       "src",
       "/uploads/original-main-bg.jpg"
@@ -712,7 +721,8 @@ describe("KhmerCelestialLayout integration", () => {
     );
 
     await waitFor(() => {
-      expect(document.querySelector(".kc-opening__botanical")).toHaveAttribute(
+      expect(document.querySelector(".kc-opening")).toHaveAttribute("data-cover-bg", "custom");
+      expect(document.querySelector(".kc-opening__backdrop")).toHaveAttribute(
         "src",
         "/uploads/new-live-cover-bg.jpg"
       );

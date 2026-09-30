@@ -1703,8 +1703,8 @@ export default function InvitationForm({ invitation }) {
                 />
             )}
 
-            {/* Cover Background (Closed State) Image Upload (Image 2) */}
-            {(String(form.templateId || "").toLowerCase().includes("celestial") || Boolean(form.coverBackgroundImage) || flowConfig.hasCoverBackgroundImage) && (
+            {/* Cover Background (Closed State) Image Upload (Field 1 for Celestial / Royal Khmer) */}
+            {(flowConfig.hasCoverBackgroundImage || String(form.templateId || "").toLowerCase().includes("celestial") || String(form.templateId || "").toLowerCase().includes("royal-khmer") || Boolean(form.coverBackgroundImage)) && (
                 <div style={{ marginTop: 12 }}>
                     <CleanImageUploadField
                         label={activeLangTab === "EN" ? (flowConfig.labels.coverBackgroundImageEn || "Cover background (closed state)") : (flowConfig.labels.coverBackgroundImage || "ផ្ទៃខាងក្រោយគ្របមុខ (ពេលមិនទាន់បើក)")}
@@ -1720,8 +1720,8 @@ export default function InvitationForm({ invitation }) {
                 </div>
             )}
 
-            {/* Background Frame / Botanical Image Upload (Opened State) (Image 3) */}
-            {(String(form.templateId || "").toLowerCase().includes("celestial") || Boolean(form.backgroundImage)) && (
+            {/* Background Frame / Botanical Image Upload (Opened State) (Field 2 for Celestial / Royal Khmer) */}
+            {(flowConfig.hasCoverBackgroundImage || String(form.templateId || "").toLowerCase().includes("celestial") || String(form.templateId || "").toLowerCase().includes("royal-khmer") || Boolean(form.backgroundImage)) && (
                 <div style={{ marginTop: 12 }}>
                     <CleanImageUploadField
                         label={activeLangTab === "EN" ? (flowConfig.labels.backgroundImageEn || "Botanical frame (opened state)") : (flowConfig.labels.backgroundImage || "ស៊ុមផ្កា / រូបភាពផ្ទៃខាងក្រោយ (Botanical Frame)")}

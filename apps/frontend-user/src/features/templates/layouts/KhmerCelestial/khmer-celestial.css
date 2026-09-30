@@ -180,9 +180,23 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
 
 .kc-opening__film,
 .kc-opening__shade,
+.kc-opening__backdrop,
 .kc-opening__botanical {
   position: absolute;
   inset: 0;
+}
+
+.kc-opening__backdrop {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
 }
 
 .kc-opening__film {
@@ -208,6 +222,7 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   object-fit: fill !important;
   object-position: center !important;
   filter: saturate(0.95) contrast(1.02);
+  z-index: 1 !important;
   pointer-events: none !important;
 }
 
@@ -3311,6 +3326,84 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   z-index: 1 !important;
   background: transparent !important;
   pointer-events: none !important;
+}
+
+/* ==========================================================================
+   Custom Cover Background (Full-bleed vivid backdrop + subtle dark scrim)
+   When user uploads a custom cover background photo for closed state:
+   - Eliminates light/white shade overlay (no washed-out appearance)
+   - Subtle dark gradient scrim at very top and bottom edges for gold text legibility
+   - Center remains transparent so the photo is 100% sharp and vivid
+   - Background layer itself has no blur filter
+   ========================================================================== */
+.kc-opening[data-cover-bg="custom"],
+.pe-canvas-wrapper .kc-opening[data-cover-bg="custom"],
+.kc-root--preview .kc-opening[data-cover-bg="custom"] {
+  background: #08090d !important;
+}
+
+.kc-opening[data-cover-bg="custom"] .kc-opening__backdrop,
+.pe-canvas-wrapper .kc-opening[data-cover-bg="custom"] .kc-opening__backdrop,
+.kc-root--preview .kc-opening[data-cover-bg="custom"] .kc-opening__backdrop {
+  filter: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  opacity: 1 !important;
+}
+
+.kc-opening[data-cover-bg="custom"] .kc-opening__film,
+.pe-canvas-wrapper .kc-opening[data-cover-bg="custom"] .kc-opening__film,
+.kc-root--preview .kc-opening[data-cover-bg="custom"] .kc-opening__film {
+  background: transparent !important;
+}
+
+/* Subtle dark scrim: transparent in center, gentle dark gradient at top & bottom edges */
+.kc-opening[data-cover-bg="custom"] .kc-opening__shade,
+.pe-canvas-wrapper .kc-opening[data-cover-bg="custom"] .kc-opening__shade,
+.kc-root--preview .kc-opening[data-cover-bg="custom"] .kc-opening__shade {
+  position: absolute !important;
+  inset: 0 !important;
+  display: block !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.14) 16%,
+    transparent 28%,
+    transparent 70%,
+    rgba(0, 0, 0, 0.25) 84%,
+    rgba(0, 0, 0, 0.62) 100%
+  ) !important;
+}
+
+/* Botanical decorative overlay on custom backdrop */
+.kc-opening[data-cover-bg="custom"] .kc-opening__botanical,
+.pe-canvas-wrapper .kc-opening[data-cover-bg="custom"] .kc-opening__botanical,
+.kc-root--preview .kc-opening[data-cover-bg="custom"] .kc-opening__botanical {
+  filter: none !important;
+}
+
+/* Text readability over custom backdrop */
+.kc-opening[data-cover-bg="custom"] .kc-opening__couple-names,
+.pe-canvas-wrapper .kc-opening[data-cover-bg="custom"] .kc-opening__couple-names,
+.kc-root--preview .kc-opening[data-cover-bg="custom"] .kc-opening__couple-names {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 2px 8px rgba(0, 0, 0, 0.7), 0 0 16px rgba(212, 175, 55, 0.45) !important;
+}
+
+.kc-opening[data-cover-bg="custom"] .kc-opening__date,
+.kc-opening[data-cover-bg="custom"] .kc-opening__subtitle,
+.pe-canvas-wrapper .kc-opening[data-cover-bg="custom"] .kc-opening__date,
+.pe-canvas-wrapper .kc-opening[data-cover-bg="custom"] .kc-opening__subtitle,
+.kc-root--preview .kc-opening[data-cover-bg="custom"] .kc-opening__date,
+.kc-root--preview .kc-opening[data-cover-bg="custom"] .kc-opening__subtitle {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 2px 6px rgba(0, 0, 0, 0.65) !important;
+}
+
+.kc-opening[data-cover-bg="custom"] .kc-opening__time,
+.pe-canvas-wrapper .kc-opening[data-cover-bg="custom"] .kc-opening__time,
+.kc-root--preview .kc-opening[data-cover-bg="custom"] .kc-opening__time {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 2px 8px rgba(184, 134, 11, 0.65) !important;
 }
 
 /* Dark Cover Theme (Royal Folio, Corners, Dark Backgrounds) */

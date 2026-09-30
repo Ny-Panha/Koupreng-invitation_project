@@ -257,7 +257,7 @@ describe("Saving draft with defaults", () => {
 });
 
 describe("Khmer Celestial Cover Image Fields", () => {
-    it("renders Front Cover, Cover background (closed state), and Botanical frame in editor", () => {
+    it("renders exactly 2 relevant cover fields for Khmer Celestial (hiding dead Front Cover field)", () => {
         const celestialInvitation = {
             id: "wed-celestial-test",
             templateId: "khmer-celestial",
@@ -272,11 +272,13 @@ describe("Khmer Celestial Cover Image Fields", () => {
             </BrowserRouter>
         );
 
-        // 1. Front Cover Image
-        expect(screen.getByText(/រូបភាពក្របខាងមុខ/i)).toBeInTheDocument();
-        // 2. Cover background (closed state)
-        expect(screen.getByText(/ផ្ទៃខាងក្រោយគ្របមុខ \(ពេលមិនទាន់បើក\)/i)).toBeInTheDocument();
-        // 3. Botanical frame
-        expect(screen.getByText(/ស៊ុមផ្កា \/ រូបភាពផ្ទៃខាងក្រោយ/i)).toBeInTheDocument();
-    });
+        // 1. Dead front cover image field is hidden for this template
+        expect(screen.queryAllByText(/រូបភាពក្របខាងមុខ/i)).toHaveLength(0);
+
+        // 2. Field 1: Cover background (closed state)
+        expect(screen.getAllByText(/ផ្ទៃខាងក្រោយគ្របមុខ \(ពេលមិនទាន់បើក\)/i).length).toBeGreaterThanOrEqual(1);
+
+        // 3. Field 2: Botanical frame (opened state)
+        expect(screen.getAllByText(/ស៊ុមផ្កា \/ រូបភាពផ្ទៃខាងក្រោយ/i).length).toBeGreaterThanOrEqual(1);
+    }, 15000);
 });

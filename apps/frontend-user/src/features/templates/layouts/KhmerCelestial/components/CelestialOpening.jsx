@@ -109,12 +109,20 @@ export default function CelestialOpening({ content, onOpen, preview = false }) {
     ? (explicitVideo || (content.design?.openingVideoEnabled === true ? KHMER_CELESTIAL_ASSETS.openingVideo : ""))
     : "";
 
-  const botanicalFrame = content.coverBackgroundImage
-    || content.design?.coverBackgroundImage
-    || content.backgroundImage
-    || content.design?.backgroundImage
-    || content.coverBgImage
-    || KHMER_CELESTIAL_ASSETS.botanicalFrame;
+  const hasCustomCoverBg = Boolean(
+    content.coverBackgroundImage ||
+    content.design?.coverBackgroundImage ||
+    content.coverBgImage
+  );
+
+  const coverBackgroundImage = hasCustomCoverBg
+    ? (content.coverBackgroundImage || content.design?.coverBackgroundImage || content.coverBgImage)
+    : "";
+
+  const botanicalFrame =
+    content.backgroundImage ||
+    content.design?.backgroundImage ||
+    KHMER_CELESTIAL_ASSETS.botanicalFrame;
 
   const showButterflies = content.showButterflies !== false && content.design?.showButterflies !== false;
 
@@ -189,6 +197,7 @@ export default function CelestialOpening({ content, onOpen, preview = false }) {
   return (
     <motion.div
       className={`kc-opening ${isDarkFrame ? "kc-opening--dark-theme" : ""}`}
+      data-cover-bg={hasCustomCoverBg ? "custom" : "default"}
       role="dialog"
       aria-modal="true"
       aria-labelledby="kc-opening-title"
@@ -197,6 +206,19 @@ export default function CelestialOpening({ content, onOpen, preview = false }) {
       exit={instant ? { display: "none" } : { opacity: 0, filter: "blur(7px)" }}
       transition={{ duration: instant ? 0 : 0.8, ease: EASE }}
     >
+      {coverBackgroundImage ? (
+        <motion.img
+          className="kc-opening__backdrop"
+          src={coverBackgroundImage}
+          alt=""
+          aria-hidden="true"
+          initial={instant ? false : { opacity: 0, scale: 1.02 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={instant ? undefined : { opacity: 0, scale: 1.02 }}
+          transition={{ duration: instant ? 0 : 1.2, ease: EASE }}
+        />
+      ) : null}
+
       {!reducedMotion && !videoFailed && openingVideo ? (
         <motion.div
           className="kc-opening__film"
@@ -208,7 +230,7 @@ export default function CelestialOpening({ content, onOpen, preview = false }) {
           <video
             key={openingVideo}
             src={openingVideo}
-            poster={botanicalFrame}
+            poster={coverBackgroundImage || botanicalFrame}
             autoPlay
             muted
             loop
