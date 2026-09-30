@@ -475,6 +475,7 @@ export default function KhmerCelestialLayout({
       },
       invitationImage: base.invitationImage !== undefined ? base.invitationImage : (content.invitationImage || ""),
       invitationImage2: base.invitationImage2 !== undefined ? base.invitationImage2 : (content.invitationImage2 || ""),
+      coverBackgroundImage: base.coverBackgroundImage !== undefined ? base.coverBackgroundImage : (content.coverBackgroundImage || ""),
       backgroundImage: base.backgroundImage || base.bgImage || content.backgroundImage,
       openingVideo: base.openingVideo !== undefined ? base.openingVideo : (base.openingVideoUrl !== undefined ? base.openingVideoUrl : (base.videoUrl !== undefined ? base.videoUrl : content.openingVideo)),
       openingVideoUrl: base.openingVideoUrl !== undefined ? base.openingVideoUrl : (base.videoUrl !== undefined ? base.videoUrl : content.openingVideoUrl),

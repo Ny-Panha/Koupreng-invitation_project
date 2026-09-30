@@ -109,7 +109,9 @@ export default function CelestialOpening({ content, onOpen, preview = false }) {
     ? (explicitVideo || (content.design?.openingVideoEnabled === true ? KHMER_CELESTIAL_ASSETS.openingVideo : ""))
     : "";
 
-  const botanicalFrame = content.backgroundImage
+  const botanicalFrame = content.coverBackgroundImage
+    || content.design?.coverBackgroundImage
+    || content.backgroundImage
     || content.design?.backgroundImage
     || content.coverBgImage
     || KHMER_CELESTIAL_ASSETS.botanicalFrame;

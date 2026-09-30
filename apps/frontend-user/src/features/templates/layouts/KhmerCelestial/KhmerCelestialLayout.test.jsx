@@ -647,5 +647,80 @@ describe("KhmerCelestialLayout integration", () => {
       expect(screen.getByText("សូមអរគុណភ្ញៀវកិត្តិយសទាំងអស់")).toBeInTheDocument();
     });
   });
+
+  it("renders independent cover background on closed gate while keeping backgroundImage for opened state", async () => {
+    const customBgContent = {
+      ...content,
+      coverBackgroundImage: "/uploads/my-cover-background.jpg",
+      backgroundImage: "/uploads/my-main-background.jpg",
+      design: { openingVideoEnabled: false },
+    };
+
+    render(
+      <MemoryRouter>
+        <TemplateExperience
+          tpl={{ id: "khmer-celestial", name: "Khmer Celestial" }}
+          content={customBgContent}
+          showBreadcrumb={false}
+          showActions={false}
+        />
+      </MemoryRouter>
+    );
+
+    // Closed gate uses coverBackgroundImage
+    const closedBotanical = document.querySelector(".kc-opening__botanical");
+    expect(closedBotanical).toBeInTheDocument();
+    expect(closedBotanical).toHaveAttribute("src", "/uploads/my-cover-background.jpg");
+
+    // Opened layout root still uses backgroundImage
+    const root = document.querySelector(".kc-root");
+    expect(root).toBeInTheDocument();
+    expect(root.style.getPropertyValue("--kc-bg-frame")).toBe('url("/uploads/my-main-background.jpg")');
+  });
+
+  it("updates closed gate cover background dynamically via LIVE_PREVIEW_SYNC without altering opened state", async () => {
+    render(
+      <MemoryRouter>
+        <TemplateExperience
+          tpl={{ id: "khmer-celestial", name: "Khmer Celestial" }}
+          content={{ ...content, backgroundImage: "/uploads/original-main-bg.jpg", design: { openingVideoEnabled: false } }}
+          showBreadcrumb={false}
+          showActions={false}
+          preview={true}
+          previewStartClosed={true}
+        />
+      </MemoryRouter>
+    );
+
+    // Initially falls back to botanical frame when coverBackgroundImage is not provided
+    expect(document.querySelector(".kc-opening__botanical")).toHaveAttribute(
+      "src",
+      "/uploads/original-main-bg.jpg"
+    );
+
+    // Send LIVE_PREVIEW_SYNC with new coverBackgroundImage
+    fireEvent(
+      window,
+      new MessageEvent("message", {
+        data: {
+          type: "LIVE_PREVIEW_SYNC",
+          data: {
+            coverBackgroundImage: "/uploads/new-live-cover-bg.jpg",
+          },
+        },
+      })
+    );
+
+    await waitFor(() => {
+      expect(document.querySelector(".kc-opening__botanical")).toHaveAttribute(
+        "src",
+        "/uploads/new-live-cover-bg.jpg"
+      );
+    });
+
+    // Root --kc-bg-frame retains original main background
+    const root = document.querySelector(".kc-root");
+    expect(root.style.getPropertyValue("--kc-bg-frame")).toBe('url("/uploads/original-main-bg.jpg")');
+  });
 });
 

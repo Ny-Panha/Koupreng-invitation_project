@@ -40,7 +40,8 @@ export const TEMPLATE_FORM_FLOWS = {
     // 12. Closing (Thank You & Apology)
     // 13. LanguageMode
     "khmer-celestial": {
-        hasCoverImage: false,
+        hasCoverImage: true,
+        hasCoverBackgroundImage: true,
         hasGate: false,
         sectionOrder: [
             "cover",
@@ -59,7 +60,12 @@ export const TEMPLATE_FORM_FLOWS = {
         ],
         labels: {
             coverSection: "ក្របទំព័រដើម (Celestial Cover & Hero)",
-            coverImage: "រូបភាពក្របមុខ (Cover Photo)",
+            coverImage: "រូបភាពក្របខាងមុខ (Front Cover Image)",
+            coverImageEn: "Front Cover Image",
+            coverBackgroundImage: "ផ្ទៃខាងក្រោយគ្របមុខ (ពេលមិនទាន់បើក)",
+            coverBackgroundImageEn: "Cover background (closed state)",
+            backgroundImage: "ស៊ុមផ្កា / រូបភាពផ្ទៃខាងក្រោយ (Botanical Frame)",
+            backgroundImageEn: "Botanical frame (opened state)",
             coverSectionDesc: "ព័ត៌មានលេចធ្លោលើក្របបើក និងទំព័រដើម (Hero)",
             familySection: "មាតាបិតាទាំងសងខាង (Together with our families)",
             invitationSection: "សារលិខិតអញ្ជើញ (The Invitation)",
@@ -74,7 +80,12 @@ export const TEMPLATE_FORM_FLOWS = {
             closingSection: "សារថ្លែងអំណរគុណ (Thank You & Apology)",
         },
         hints: {
-            coverImage: "បង្ហាញលើក្របទំព័រដើម / Hero (Front Cover)",
+            coverImage: "បង្ហាញលើក្របទំព័រដើម (Front Cover / Hero)",
+            coverImageEn: "Shown on the front cover / hero",
+            coverBackgroundImage: "បង្ហាញលើគ្របមុខពេលមិនទាន់បើកធៀបការ",
+            coverBackgroundImageEn: "Shown on the cover before the invitation is opened",
+            backgroundImage: "ស៊ុមផ្កាប្រណិតព័ទ្ធជុំវិញកាតធៀបការពេលបើក (អាចប្តូរជារូបស៊ុមផ្ទាល់ខ្លួនបាន)",
+            backgroundImageEn: "Botanical frame shown once invitation is opened",
         },
         placePhotoInInvitation: false,
     },
@@ -101,6 +112,7 @@ export function getTemplateFormFlow(templateIdOrTpl) {
     if (matched) {
         return {
             hasCoverImage: matched.hasCoverImage !== undefined ? Boolean(matched.hasCoverImage) : true,
+            hasCoverBackgroundImage: matched.hasCoverBackgroundImage !== undefined ? Boolean(matched.hasCoverBackgroundImage) : false,
             hasGate: matched.hasGate !== undefined ? Boolean(matched.hasGate) : true,
             sectionOrder: matched.sectionOrder || DEFAULT_SECTION_ORDER,
             labels: matched.labels || {},

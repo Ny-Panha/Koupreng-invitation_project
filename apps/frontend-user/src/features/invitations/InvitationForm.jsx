@@ -511,6 +511,7 @@ const DEFAULT_STATE = {
     frontColor: "#f9af59",
     bottomColor: "#B08E4F",
     coverImage: null,
+    coverBackgroundImage: "",
     invitationImage: null,
     invitationImage2: null,
     backgroundImage: null,
@@ -594,7 +595,9 @@ export default function InvitationForm({ invitation }) {
         const isDefaultCouple = (!customParsed.groomName || customParsed.groomName === "វណ្ណដា") && (!customParsed.brideName || customParsed.brideName === "ស្រីពេជ្រ");
         const uploadedCover = invitation?.coverUrl || invitation?.media?.coverImage?.fileUrl || "";
         const templateDefaultCover = preset.coverImage || DEFAULT_STATE.coverImage;
+        const templateDefaultCoverBg = preset.coverBackgroundImage || tpl?.coverBackgroundImage || DEFAULT_STATE.coverBackgroundImage;
         const uploadedCoverFromDraft = uploadedCover || ((!isDefaultCover && customParsed.coverImage) ? customParsed.coverImage : "");
+        const coverBackgroundImage = customParsed.coverBackgroundImage || invitation?.coverBackgroundImage || templateDefaultCoverBg || "";
 
         const frontColor = (!isDefaultGold && (customParsed.frontColor || invitation?.frontColor)) || preset.frontColor || DEFAULT_STATE.frontColor;
         const bottomColor = (!isDefaultGold && (customParsed.bottomColor || invitation?.bottomColor)) || preset.bottomColor || DEFAULT_STATE.bottomColor;
@@ -653,6 +656,8 @@ export default function InvitationForm({ invitation }) {
             coverImage,
             uploadedCoverUrl: uploadedCoverFromDraft,
             templateDefaultCover,
+            coverBackgroundImage,
+            templateDefaultCoverBg,
             backgroundImage: customParsed.backgroundImage || invitation?.backgroundImage || preset.backgroundImage || tpl?.backgroundImage || "",
             messageText: (invitation?.storyText && invitation.storyText !== DEFAULT_INVITATION_TEXT)
                 ? invitation.storyText
@@ -728,6 +733,7 @@ export default function InvitationForm({ invitation }) {
                 messageTitle: "",
                 messageText: "",
                 coverImage: "",
+                coverBackgroundImage: "",
                 backgroundImage: "",
                 photos: Array.from({ length: 5 }, (_, index) => ({ id: `p${index + 1}`, url: "" })),
                 storyChapters: [],
@@ -973,6 +979,7 @@ export default function InvitationForm({ invitation }) {
 
     // File input refs
     const coverInputRef = useRef(null);
+    const coverBgInputRef = useRef(null);
     const bgFrameInputRef = useRef(null);
     const invitationInputRef = useRef(null);
     const invitation2InputRef = useRef(null);
@@ -1321,6 +1328,7 @@ export default function InvitationForm({ invitation }) {
                 frontColor: form.frontColor || activePreset.frontColor || "#f9af59",
                 bottomColor: form.bottomColor || activePreset.bottomColor || "#B08E4F",
                 coverImage: form.uploadedCoverUrl || form.coverImage || null,
+                coverBackgroundImage: form.coverBackgroundImage || null,
                 invitationImage: form.uploadedInvitationUrl || form.invitationImage || null,
                 invitationImage2: form.invitationImage2 || null,
                 backgroundImage: form.backgroundImage,
@@ -1568,6 +1576,8 @@ export default function InvitationForm({ invitation }) {
                 coverImage: savedCoverUrl || form.coverImage,
                 coverUrl: savedCoverUrl || form.coverImage,
                 uploadedCoverUrl: savedCoverUrl,
+                coverBackgroundImage: form.coverBackgroundImage || "",
+                templateDefaultCoverBg: form.templateDefaultCoverBg || "",
                 invitationImage: savedInvitationUrl || form.invitationImage || null,
                 invitationImage2: savedInvitationUrl2 || form.invitationImage2 || null,
                 backgroundImage: form.backgroundImage || "",
@@ -1667,9 +1677,9 @@ export default function InvitationForm({ invitation }) {
             </h4>
 
             {/* Clean Cover Image Upload (Image 1) */}
-            {flowConfig.hasCoverImage !== false && !String(form.templateId || "").toLowerCase().includes("celestial") && String(form.templateId || "") !== "10" && (
+            {flowConfig.hasCoverImage !== false && (
                 <CleanImageUploadField
-                    label={flowConfig.labels.coverImage || t("coverImage") || "រូបភាពក្របខាងមុខ (Front Cover Image)"}
+                    label={flowConfig.labels.coverImage || (activeLangTab === "EN" ? (flowConfig.labels.coverImageEn || "Front Cover Image") : (t("coverImage") || "រូបភាពក្របខាងមុខ (Front Cover Image)"))}
                     icon={ImageIcon}
                     image={form.coverImage}
                     onUpload={(e) => handleFileUpload(e, (url, file) => {
@@ -1689,8 +1699,42 @@ export default function InvitationForm({ invitation }) {
                     } : undefined}
                     hasDefault={Boolean(form.templateDefaultCover && form.coverImage !== form.templateDefaultCover)}
                     inputRef={coverInputRef}
-                    hint={flowConfig.hints.coverImage || "បង្ហាញលើក្របទំព័រដើម (Front Cover / Hero)"}
+                    hint={flowConfig.hints.coverImage || (activeLangTab === "EN" ? (flowConfig.hints.coverImageEn || "Shown on front cover / hero") : "បង្ហាញលើក្របទំព័រដើម (Front Cover / Hero)")}
                 />
+            )}
+
+            {/* Cover Background (Closed State) Image Upload (Image 2) */}
+            {(String(form.templateId || "").toLowerCase().includes("celestial") || Boolean(form.coverBackgroundImage) || flowConfig.hasCoverBackgroundImage) && (
+                <div style={{ marginTop: 12 }}>
+                    <CleanImageUploadField
+                        label={activeLangTab === "EN" ? (flowConfig.labels.coverBackgroundImageEn || "Cover background (closed state)") : (flowConfig.labels.coverBackgroundImage || "ផ្ទៃខាងក្រោយគ្របមុខ (ពេលមិនទាន់បើក)")}
+                        icon={ImageIcon}
+                        image={form.coverBackgroundImage}
+                        onUpload={(e) => handleFileUpload(e, (url) => update("coverBackgroundImage", url))}
+                        onRemove={() => update("coverBackgroundImage", "")}
+                        onRestoreDefault={form.templateDefaultCoverBg ? () => update("coverBackgroundImage", form.templateDefaultCoverBg) : undefined}
+                        hasDefault={Boolean(form.templateDefaultCoverBg && form.coverBackgroundImage !== form.templateDefaultCoverBg)}
+                        inputRef={coverBgInputRef}
+                        hint={activeLangTab === "EN" ? (flowConfig.hints.coverBackgroundImageEn || "Shown on the cover before the invitation is opened") : (flowConfig.hints.coverBackgroundImage || "បង្ហាញលើគ្របមុខពេលមិនទាន់បើកធៀបការ")}
+                    />
+                </div>
+            )}
+
+            {/* Background Frame / Botanical Image Upload (Opened State) (Image 3) */}
+            {(String(form.templateId || "").toLowerCase().includes("celestial") || Boolean(form.backgroundImage)) && (
+                <div style={{ marginTop: 12 }}>
+                    <CleanImageUploadField
+                        label={activeLangTab === "EN" ? (flowConfig.labels.backgroundImageEn || "Botanical frame (opened state)") : (flowConfig.labels.backgroundImage || "ស៊ុមផ្កា / រូបភាពផ្ទៃខាងក្រោយ (Botanical Frame)")}
+                        icon={Sparkles}
+                        image={form.backgroundImage || "/invitations/khmer-celestial/botanical-frame.jpg"}
+                        onUpload={(e) => handleFileUpload(e, (url) => update("backgroundImage", url))}
+                        onRemove={() => update("backgroundImage", "")}
+                        onRestoreDefault={() => update("backgroundImage", "/invitations/khmer-celestial/botanical-frame.jpg")}
+                        hasDefault={Boolean(form.backgroundImage && form.backgroundImage !== "/invitations/khmer-celestial/botanical-frame.jpg")}
+                        inputRef={bgFrameInputRef}
+                        hint={activeLangTab === "EN" ? (flowConfig.hints.backgroundImageEn || "Botanical frame shown once invitation is opened") : (flowConfig.hints.backgroundImage || "ស៊ុមផ្កាប្រណិតព័ទ្ធជុំវិញកាតធៀបការពេលបើក (អាចប្តូរជារូបស៊ុមផ្ទាល់ខ្លួនបាន)")}
+                    />
+                </div>
             )}
 
             {/* Main Title on Cover */}

@@ -255,3 +255,28 @@ describe("Saving draft with defaults", () => {
         expect(saveButtons[0]).toBeInTheDocument();
     });
 });
+
+describe("Khmer Celestial Cover Image Fields", () => {
+    it("renders Front Cover, Cover background (closed state), and Botanical frame in editor", () => {
+        const celestialInvitation = {
+            id: "wed-celestial-test",
+            templateId: "khmer-celestial",
+            title: "Celestial Wedding",
+            groomName: "វណ្ណដា",
+            brideName: "ស្រីពេជ្រ",
+        };
+
+        render(
+            <BrowserRouter>
+                <InvitationForm invitation={celestialInvitation} />
+            </BrowserRouter>
+        );
+
+        // 1. Front Cover Image
+        expect(screen.getByText(/រូបភាពក្របខាងមុខ/i)).toBeInTheDocument();
+        // 2. Cover background (closed state)
+        expect(screen.getByText(/ផ្ទៃខាងក្រោយគ្របមុខ \(ពេលមិនទាន់បើក\)/i)).toBeInTheDocument();
+        // 3. Botanical frame
+        expect(screen.getByText(/ស៊ុមផ្កា \/ រូបភាពផ្ទៃខាងក្រោយ/i)).toBeInTheDocument();
+    });
+});
