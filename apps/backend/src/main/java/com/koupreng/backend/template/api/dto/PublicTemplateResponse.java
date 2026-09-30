@@ -27,6 +27,9 @@ public class PublicTemplateResponse {
     private BigDecimal price;
     private String currency;
     private String status;
+    private String primaryColor;
+    private String secondaryColor;
+    private String backgroundColor;
 
     public static PublicTemplateResponse from(InvitationTemplate template) {
         return PublicTemplateResponse.builder()
@@ -42,6 +45,9 @@ public class PublicTemplateResponse {
                 .price(template.getPrice())
                 .currency(template.getCurrency())
                 .status(template.getStatus())
+                .primaryColor(template.getPrimaryColor())
+                .secondaryColor(template.getSecondaryColor())
+                .backgroundColor(template.getBackgroundColor())
                 .build();
     }
 }

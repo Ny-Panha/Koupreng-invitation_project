@@ -1,7 +1,8 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Music, VolumeX, X, CheckCircle2 } from "lucide-react";
 import defaultMusicUrl from "../../../assets/music/Instrumental Wedding Music (VioSounds Cover).m4a";
+import CoverBackground from "../shared/Openings/CoverBackground";
 import "./bliss-editorial.css";
 
 export default function BlissEditorialLayout({
@@ -12,19 +13,32 @@ export default function BlissEditorialLayout({
   backLabel = "ត្រឡប់ទៅគំរូទាំងអស់",
   useTemplateLink,
 }) {
-  const groom = content.groom || "វណ្ណដា";
-  const bride = content.bride || "ស្រីពេជ្រ";
-  const groomEn = content.groomEn || "Vanda Chea";
-  const brideEn = content.brideEn || "Sreypich Sok";
-  const dateText = content.dateText || "ថ្ងៃសៅរ៍ ទី២៨ ខែវិច្ឆិកា ឆ្នាំ២០២៦";
-  const dateTextEn = content.dateTextEn || "Saturday, November 28, 2026";
-  const venue = content.venue || {
+  const [liveData, setLiveData] = useState(null);
+  const effectiveContent = { ...content, ...liveData };
+
+  useEffect(() => {
+    const handleMessage = (e) => {
+      if (e.data?.type === "LIVE_PREVIEW_SYNC" && e.data.data) {
+        setLiveData(e.data.data);
+      }
+    };
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
+
+  const groom = effectiveContent.groom || "វណ្ណដា";
+  const bride = effectiveContent.bride || "ស្រីពេជ្រ";
+  const groomEn = effectiveContent.groomEn || "Vanda Chea";
+  const brideEn = effectiveContent.brideEn || "Sreypich Sok";
+  const dateText = effectiveContent.dateText || "ថ្ងៃសៅរ៍ ទី២៨ ខែវិច្ឆិកា ឆ្នាំ២០២៦";
+  const dateTextEn = effectiveContent.dateTextEn || "Saturday, November 28, 2026";
+  const venue = effectiveContent.venue || {
     name: "The Premier Center Sen Sok",
     hall: "Grand Ballroom A",
     address: "ផ្លូវ 1003, សង្កាត់ភ្នំពេញថ្មី, ខណ្ឌសែនសុខ, រាជធានីភ្នំពេញ",
   };
-  const coverImage = content.coverImage || "/facebook/all/03-card/cover-card.jpg";
-  const musicUrl = content.music?.url || content.music || defaultMusicUrl;
+  const coverImage = effectiveContent.coverImage || "/facebook/all/03-card/cover-card.jpg";
+  const musicUrl = effectiveContent.music?.url || effectiveContent.music || defaultMusicUrl;
 
   // Audio Control
   const audioRef = useRef(null);
@@ -136,7 +150,14 @@ export default function BlissEditorialLayout({
       {/* Split-Screen Hero */}
       <section id="editorial-hero" className="bliss-hero-split">
         <div className="bliss-hero-visual">
-          <img src={coverImage} alt="Wedding Portrait" className="bliss-hero-img" />
+          <CoverBackground
+            content={effectiveContent}
+            templateDefault={{
+              src: coverImage,
+              type: "image",
+              poster: coverImage,
+            }}
+          />
         </div>
         <div className="bliss-hero-editorial">
           <span className="bliss-issue-tag">THE WEDDING CELEBRATION • ISSUE 2026</span>

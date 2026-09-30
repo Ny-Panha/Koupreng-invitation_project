@@ -49,6 +49,7 @@ export default function DigitalYesLayout({
   backTo = "/templates",
   backLabel = "← ត្រឡប់ទៅគំរូទាំងអស់",
   preview = false,
+  previewStartClosed = false,
   useTemplateLink,
   children,
 }) {
@@ -57,10 +58,11 @@ export default function DigitalYesLayout({
     return normalizeTemplateViewModel(tplProp, { ...contentProp, ...liveData });
   }, [tplProp, contentProp, liveData]);
 
-  // Envelope Opening States - default open in preview
-  const [isFlapOpen, setIsFlapOpen] = useState(preview ? true : false);
-  const [isCardEmerging, setIsCardEmerging] = useState(preview ? true : false);
-  const [isFullView, setIsFullView] = useState(preview ? true : false);
+  // Envelope Opening States - default open in preview unless previewStartClosed is requested
+  const initialOpened = preview && !previewStartClosed;
+  const [isFlapOpen, setIsFlapOpen] = useState(initialOpened);
+  const [isCardEmerging, setIsCardEmerging] = useState(initialOpened);
+  const [isFullView, setIsFullView] = useState(initialOpened);
   const [isPlayingMusic, setIsPlayingMusic] = useState(false);
 
   // Audio Ref

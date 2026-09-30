@@ -18,6 +18,7 @@ import {
     IoPause,
     IoTimeOutline,
 } from "react-icons/io5";
+import CoverBackground from "@/features/templates/shared/Openings/CoverBackground";
 import { formatTime24toKhmer } from "@/shared/ui/TimePicker";
 
 const ASSET_ROOT = "/invitations/canva-khmer";
@@ -217,29 +218,13 @@ function CanvaKhmerOpeningCover({ content, onOpen }) {
             transition={{ duration: 0.5 }}
             aria-label="បើកសំបុត្រអញ្ចើញ"
         >
-            {coverFailed ? (
-                <span className="ck-cover__fallback" aria-hidden="true" />
-            ) : (
-                <img
-                    className="ck-cover__art"
-                    src={`${ASSET_ROOT}/CoverKhmer.svg`}
-                    alt=""
-                    fetchPriority="high"
-                    onError={() => setCoverFailed(true)}
-                />
-            )}
-            {openingVideo && (
-                <video
-                    className="ck-cover__video"
-                    src={openingVideo}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="metadata"
-                    aria-label="វីដេអូបើកសំបុត្រអញ្ចើញ"
-                />
-            )}
+            <CoverBackground
+                content={content}
+                templateDefault={{
+                    src: `${ASSET_ROOT}/CoverKhmer.svg`,
+                    type: "image",
+                }}
+            />
             <div className="ck-cover__monogram" aria-label={`អក្សរកាត់ ${content.monogramText}`}>{content.monogramText}</div>
             <div className="ck-cover__title">
                 <small>THE WEDDING INVITATION</small>

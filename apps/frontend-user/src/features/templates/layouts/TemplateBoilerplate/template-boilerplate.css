@@ -1,9 +1,10 @@
 /* ==========================================================================
-   TEMPLATE BOILERPLATE STYLES
-   Easily customize colors, fonts, borders, and animations via CSS variables
+   TEMPLATE BOILERPLATE DESIGN SYSTEM
+   Standardized Design Tokens, Contextual Themes, and Asset Slots
    ========================================================================== */
 
 .tpl-boilerplate {
+  /* 1. Global Color Palette Tokens */
   --tpl-primary: #d4af37;
   --tpl-primary-rgb: 212, 175, 55;
   --tpl-secondary: #f3e5ab;
@@ -15,9 +16,24 @@
   --tpl-text-primary: #f8fafc;
   --tpl-text-secondary: #cbd5e1;
   --tpl-text-muted: #94a3b8;
+
+  /* 2. Contextual Tokens (can be overridden per section/panel) */
+  --tpl-tone: var(--tpl-text-primary);
+  --tpl-accent: var(--tpl-primary);
+  --tpl-panel-bg: var(--tpl-surface);
+
+  /* 3. Typography Tokens */
   --tpl-font-khmer: "Kantumruy Pro", "Siemreap", sans-serif;
   --tpl-font-display: "Moul", "Bayon", serif;
   --tpl-font-latin: "Playfair Display", serif;
+
+  /* 4. Asset Slots & Proportions (graceful degradation: missing = empty space) */
+  --asset-hero: none;
+  --asset-hero-ratio: 4 / 5;
+  --asset-frame: none;
+  --asset-frame-ratio: 16 / 9;
+  --asset-ornament: none;
+  --asset-ornament-ratio: 1 / 1;
 
   font-family: var(--tpl-font-khmer);
   background-color: var(--tpl-bg);
@@ -40,7 +56,7 @@
   z-index: 0;
 }
 
-/* Mobile-Centric Shell (Max 540px on desktop with elegant shadow) */
+/* Mobile-Centric Shell (Max 520px on desktop with elegant shadow) */
 .tpl-shell {
   max-width: 520px;
   margin: 0 auto;
@@ -54,7 +70,8 @@
 
 /* Glassmorphism Card Wrapper */
 .tpl-card {
-  background: var(--tpl-surface);
+  background: var(--tpl-panel-bg);
+  color: var(--tpl-tone);
   border: 1px solid var(--tpl-border-subtle);
   border-radius: 1.25rem;
   padding: 1.5rem;
@@ -76,6 +93,44 @@
   background: linear-gradient(90deg, transparent, rgba(var(--tpl-primary-rgb), 0.4), transparent);
 }
 
+/* Contextual Panel Overrides */
+.tpl-panel--dark {
+  --tpl-panel-bg: rgba(8, 10, 15, 0.85);
+  --tpl-tone: #ffffff;
+  --tpl-accent: var(--tpl-secondary);
+}
+
+.tpl-panel--accent {
+  --tpl-panel-bg: rgba(var(--tpl-primary-rgb), 0.12);
+  --tpl-tone: var(--tpl-primary);
+  --tpl-accent: var(--tpl-secondary);
+  border-color: rgba(var(--tpl-primary-rgb), 0.3);
+}
+
+.tpl-panel--light {
+  --tpl-panel-bg: rgba(255, 253, 248, 0.95);
+  --tpl-tone: #18181b;
+  --tpl-accent: #92400e;
+  border-color: rgba(212, 175, 55, 0.35);
+}
+
+/* Asset Slot Consumers */
+.tpl-slot-ornament {
+  background-image: var(--asset-ornament);
+  aspect-ratio: var(--asset-ornament-ratio);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 0 auto;
+}
+
+.tpl-slot-frame {
+  background-image: var(--asset-frame);
+  aspect-ratio: var(--asset-frame-ratio);
+  background-size: cover;
+  background-position: center;
+}
+
 /* Section Headings */
 .tpl-heading {
   text-align: center;
@@ -87,7 +142,7 @@
   font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: normal;
-  color: var(--tpl-primary);
+  color: var(--tpl-accent);
   font-weight: 700;
   margin-bottom: 0.35rem;
 }
@@ -95,7 +150,7 @@
 .tpl-heading__title {
   font-family: var(--tpl-font-display);
   font-size: 1.25rem;
-  color: var(--tpl-text-primary);
+  color: var(--tpl-tone);
   margin: 0;
   line-height: 1.4;
 }

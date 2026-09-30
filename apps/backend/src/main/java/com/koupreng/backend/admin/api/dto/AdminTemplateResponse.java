@@ -28,6 +28,9 @@ public class AdminTemplateResponse {
     private boolean premium;
     private String status;
     private Integer sortOrder;
+    private String primaryColor;
+    private String secondaryColor;
+    private String backgroundColor;
     private Instant createdAt;
     private Instant updatedAt;
 
@@ -45,6 +48,9 @@ public class AdminTemplateResponse {
                 .premium(template.isPremium())
                 .status(template.getStatus())
                 .sortOrder(template.getSortOrder())
+                .primaryColor(template.getPrimaryColor())
+                .secondaryColor(template.getSecondaryColor())
+                .backgroundColor(template.getBackgroundColor())
                 .createdAt(template.getCreatedAt())
                 .updatedAt(template.getUpdatedAt())
                 .build();

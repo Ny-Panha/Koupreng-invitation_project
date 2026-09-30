@@ -40,6 +40,9 @@ class TemplateCatalogServiceTests {
         assertEquals("royal-khmer", result.getFirst().getSlug());
         assertEquals(TemplateCategory.TRADITIONAL, result.getFirst().getCategory());
         assertEquals(new BigDecimal("25.00"), result.getFirst().getPrice());
+        assertEquals("#8B1E2D", result.getFirst().getPrimaryColor());
+        assertEquals("#D4AF37", result.getFirst().getSecondaryColor());
+        assertEquals("#FFFDF7", result.getFirst().getBackgroundColor());
         verify(repository).findAllByStatusIgnoreCaseOrderBySortOrderAscCreatedAtDesc(ACTIVE);
     }
 
@@ -100,6 +103,9 @@ class TemplateCatalogServiceTests {
         template.setPrice(new BigDecimal("25.00"));
         template.setCurrency("USD");
         template.setStatus(ACTIVE);
+        template.setPrimaryColor("#8B1E2D");
+        template.setSecondaryColor("#D4AF37");
+        template.setBackgroundColor("#FFFDF7");
         template.setCreatedAt(Instant.parse("2026-01-01T00:00:00Z"));
         return template;
     }

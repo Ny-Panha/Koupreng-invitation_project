@@ -1771,7 +1771,7 @@ export default function InvitationForm({ invitation }) {
             )}
 
             {/* Background Frame / Botanical Image Upload (Opened State) (Field 2 for Celestial / Royal Khmer) */}
-            {(flowConfig.hasCoverBackgroundImage || String(form.templateId || "").toLowerCase().includes("celestial") || String(form.templateId || "").toLowerCase().includes("royal-khmer") || Boolean(form.backgroundImage)) && (
+            {(flowConfig.hasBackgroundImage || String(form.templateId || "").toLowerCase().includes("celestial") || String(form.templateId || "").toLowerCase().includes("royal-khmer") || Boolean(form.backgroundImage)) && (
                 <div style={{ marginTop: 12 }}>
                     <CleanImageUploadField
                         label={activeLangTab === "EN" ? (flowConfig.labels.backgroundImageEn || "Botanical frame (opened state)") : (flowConfig.labels.backgroundImage || "ស៊ុមផ្កា / រូបភាពផ្ទៃខាងក្រោយ (Botanical Frame)")}

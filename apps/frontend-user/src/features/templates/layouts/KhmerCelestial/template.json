@@ -1,0 +1,40 @@
+{
+  "slug": "khmer-celestial",
+  "name": "Khmer Celestial",
+  "version": "1.0.0",
+  "category": "WEDDING",
+  "cover": {
+    "type": "video",
+    "src": "/invitations/khmer-celestial/burgundy-bokeh.mp4",
+    "poster": "/invitations/khmer-celestial/burgundy-bokeh-poster.webp",
+    "autoplay": true,
+    "loop": true,
+    "muted": true,
+    "objectFit": "cover"
+  },
+  "tokens": {
+    "--kc-gold": "#d4af37",
+    "--kc-ivory": "#fffdf8",
+    "--kc-dark": "#08090d"
+  },
+  "sections": [
+    "cover",
+    "family",
+    "invitation",
+    "schedule",
+    "countdown",
+    "venue",
+    "gallery",
+    "dressCode",
+    "party",
+    "faq",
+    "khqr",
+    "closing"
+  ],
+  "editable": {
+    "coverBackground": true,
+    "heroPhoto": true,
+    "gallery": true,
+    "music": true
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "slug": "template-boilerplate",
+  "name": "Template Boilerplate",
+  "version": "1.0.0",
+  "category": "WEDDING",
+  "cover": {
+    "type": "image",
+    "src": "/facebook/all/03-card/cover-card.jpg",
+    "poster": "/facebook/all/03-card/cover-card.jpg",
+    "autoplay": true,
+    "loop": true,
+    "muted": true,
+    "objectFit": "cover"
+  },
+  "tokens": {
+    "--tpl-primary": "#d4af37",
+    "--tpl-secondary": "#f3e5ab",
+    "--tpl-bg": "#0d0f12",
+    "--tpl-surface": "rgba(22, 26, 33, 0.75)",
+    "--tpl-surface-elevated": "rgba(30, 35, 45, 0.85)",
+    "--tpl-border": "rgba(212, 175, 55, 0.25)",
+    "--tpl-border-subtle": "rgba(255, 255, 255, 0.08)",
+    "--tpl-text-primary": "#f8fafc",
+    "--tpl-text-secondary": "#cbd5e1",
+    "--tpl-text-muted": "#94a3b8",
+    "--tpl-font-khmer": "'Kantumruy Pro', 'Siemreap', sans-serif",
+    "--tpl-font-display": "'Moul', 'Bayon', serif",
+    "--tpl-font-latin": "'Playfair Display', serif"
+  },
+  "assetSlots": {
+    "--asset-hero": "none",
+    "--asset-frame": "none",
+    "--asset-ornament": "none",
+    "--asset-hero-ratio": "4 / 5",
+    "--asset-frame-ratio": "16 / 9"
+  },
+  "sections": [
+    "hero",
+    "couple",
+    "invitation",
+    "schedule",
+    "countdown",
+    "venue",
+    "gallery",
+    "closing"
+  ],
+  "editable": {
+    "coverBackground": true,
+    "heroPhoto": true,
+    "gallery": true,
+    "music": true,
+    "colors": ["primary", "secondary", "background"]
+  }
+}

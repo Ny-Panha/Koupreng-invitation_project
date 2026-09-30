@@ -20,6 +20,7 @@ export default function EmeraldLuxeLayout({
   tpl: tplProp,
   content: contentProp,
   preview = false,
+  previewStartClosed = false,
   showBack = true,
   backTo = "/templates",
   backLabel = "ត្រឡប់ទៅគំរូទាំងអស់",
@@ -35,8 +36,8 @@ export default function EmeraldLuxeLayout({
   const bride = tpl.bride || "ស្រីពេជ្រ";
   const musicUrl = tpl.music || defaultMusicUrl;
 
-  // Gate curtain state - open by default in preview so host can view the card
-  const [opened, setOpened] = useState(preview ? true : false);
+  // Gate curtain state - open by default in preview unless previewStartClosed is requested
+  const [opened, setOpened] = useState(preview && !previewStartClosed ? true : false);
   const [isFlipped, setIsFlipped] = useState(false);
 
   // Audio Control
@@ -179,6 +180,7 @@ export default function EmeraldLuxeLayout({
           onOpenCurtain={handleOpenCurtain}
           groom={groom}
           bride={bride}
+          content={tpl}
         />
       )}
 

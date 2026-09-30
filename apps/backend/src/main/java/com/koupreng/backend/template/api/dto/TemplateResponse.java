@@ -21,6 +21,9 @@ public class TemplateResponse {
     private String previewUrl;
     private boolean premium;
     private String status;
+    private String primaryColor;
+    private String secondaryColor;
+    private String backgroundColor;
     private Instant createdAt;
 
     public static TemplateResponse from(InvitationTemplate template) {
@@ -32,6 +35,9 @@ public class TemplateResponse {
                 .previewUrl(template.getPreviewUrl())
                 .premium(template.isPremium())
                 .status(template.getStatus())
+                .primaryColor(template.getPrimaryColor())
+                .secondaryColor(template.getSecondaryColor())
+                .backgroundColor(template.getBackgroundColor())
                 .createdAt(template.getCreatedAt())
                 .build();
     }

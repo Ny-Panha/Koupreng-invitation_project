@@ -11,6 +11,7 @@ import {
   X,
 } from "lucide-react";
 import defaultMusicUrl from "../../../../assets/music/ថ្ងៃដែលរង់ចាំ.mp3";
+import CoverBackground from "../../shared/Openings/CoverBackground";
 import "./template-boilerplate.css";
 
 export default function TemplateBoilerplateLayout({
@@ -145,7 +146,17 @@ export default function TemplateBoilerplateLayout({
         {/* ================= 1. OPENING COVER SCREEN ================= */}
         {!opened ? (
           <div className="min-h-screen flex flex-col justify-between p-6 text-center relative overflow-hidden bg-zinc-950">
-            <div className="pt-8">
+            {/* Universal Cover Background (Image / Looping Video / Default Art) */}
+            <CoverBackground
+              content={effectiveContent}
+              templateDefault={{
+                src: "/facebook/all/03-card/cover-card.jpg",
+                type: "image",
+                poster: "/facebook/all/03-card/cover-card.jpg",
+              }}
+            />
+
+            <div className="pt-8 relative z-10">
               <span className="text-[11px] uppercase tracking-widest text-amber-400 font-bold">
                 WEDDING INVITATION
               </span>
@@ -155,7 +166,7 @@ export default function TemplateBoilerplateLayout({
             </div>
 
             {/* Couple Cover Photo */}
-            <div className="my-auto py-6">
+            <div className="my-auto py-6 relative z-10">
               <div className="relative mx-auto w-64 h-80 rounded-3xl overflow-hidden border-2 border-amber-500/40 shadow-2xl shadow-amber-500/10">
                 <img
                   src={effectiveContent.coverImage}
@@ -177,7 +188,7 @@ export default function TemplateBoilerplateLayout({
             </div>
 
             {/* Open Button */}
-            <div className="pb-8 space-y-3">
+            <div className="pb-8 space-y-3 relative z-10">
               <button
                 type="button"
                 onClick={handleOpenInvitation}

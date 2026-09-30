@@ -1,6 +1,8 @@
+import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Calendar, MapPin, Heart } from "lucide-react";
 import { normalizeTemplateViewModel } from "../../model/templateModel";
+import CoverBackground from "../../shared/Openings/CoverBackground";
 import CountdownTimer from "../../shared/Countdown/CountdownTimer";
 import GalleryGrid from "../../shared/Gallery/GalleryGrid";
 import RsvpContainer from "../../shared/RSVP/RsvpContainer";
@@ -20,7 +22,22 @@ export default function DefaultTemplateLayout({
   useTemplateLink,
   children,
 }) {
-  const tpl = normalizeTemplateViewModel(tplProp, contentProp);
+  const [liveData, setLiveData] = useState(null);
+  const tpl = useMemo(() => {
+    return normalizeTemplateViewModel(tplProp, { ...contentProp, ...liveData });
+  }, [tplProp, contentProp, liveData]);
+
+  useEffect(() => {
+    const handleMessage = (e) => {
+      if (e.data?.type === "LIVE_PREVIEW_SYNC" && e.data.data) {
+        setLiveData(e.data.data);
+      }
+    };
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
+
+  const hasCustomCover = Boolean(tpl.coverBackgroundImage || tpl.coverVideoUrl || tpl.openingVideoUrl);
 
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#faf8f5", color: "#2d3748", fontFamily: "system-ui, sans-serif" }}>
@@ -33,25 +50,39 @@ export default function DefaultTemplateLayout({
       )}
 
       <main style={{ maxWidth: "700px", margin: "0 auto", padding: "2rem 1.5rem 6rem", textAlign: "center" }}>
-        <div style={{ margin: "1rem 0 2rem" }}>
-          <div style={{ display: "inline-flex", padding: "0.75rem", borderRadius: "50%", background: "#ede9fe", color: "#7c3aed", marginBottom: "1rem" }}>
-            <Heart size={28} />
-          </div>
-          <p style={{ letterSpacing: "normal", textTransform: "uppercase", fontSize: "0.85rem", color: "#6b7280", margin: 0 }}>
-            អាពាហ៍ពិពាហ៍
-          </p>
-          <h1 style={{ fontSize: "2.25rem", fontWeight: "700", color: "#1f2937", margin: "0.5rem 0" }}>
-            {tpl.groom} &amp; {tpl.bride}
-          </h1>
-          {tpl.blessingMessage && (
-            <p style={{ fontSize: "1rem", color: "#4b5563", lineHeight: "1.6", maxWidth: "500px", margin: "1rem auto" }}>
-              {tpl.blessingMessage}
+        <div
+          style={{
+            margin: "1rem 0 2rem",
+            position: "relative",
+            borderRadius: "24px",
+            overflow: "hidden",
+            padding: hasCustomCover ? "3.5rem 1.5rem" : "0",
+          }}
+        >
+          <CoverBackground
+            content={tpl}
+            templateDefault={{ src: "", type: "image" }}
+          />
+          <div style={{ position: "relative", zIndex: 2 }}>
+            <div style={{ display: "inline-flex", padding: "0.75rem", borderRadius: "50%", background: hasCustomCover ? "rgba(255, 255, 255, 0.9)" : "#ede9fe", color: "#7c3aed", marginBottom: "1rem" }}>
+              <Heart size={28} />
+            </div>
+            <p style={{ letterSpacing: "normal", textTransform: "uppercase", fontSize: "0.85rem", color: hasCustomCover ? "#f3f4f6" : "#6b7280", margin: 0, textShadow: hasCustomCover ? "0 1px 3px rgba(0,0,0,0.6)" : "none" }}>
+              អាពាហ៍ពិពាហ៍
             </p>
-          )}
+            <h1 style={{ fontSize: "2.25rem", fontWeight: "700", color: hasCustomCover ? "#ffffff" : "#1f2937", margin: "0.5rem 0", textShadow: hasCustomCover ? "0 2px 8px rgba(0,0,0,0.7)" : "none" }}>
+              {tpl.groom} &amp; {tpl.bride}
+            </h1>
+            {tpl.blessingMessage && (
+              <p style={{ fontSize: "1rem", color: hasCustomCover ? "#f9fafb" : "#4b5563", lineHeight: "1.6", maxWidth: "500px", margin: "1rem auto", textShadow: hasCustomCover ? "0 1px 4px rgba(0,0,0,0.6)" : "none" }}>
+                {tpl.blessingMessage}
+              </p>
+            )}
 
-          <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "#f3f4f6", padding: "0.5rem 1.25rem", borderRadius: "9999px", marginTop: "1rem", color: "#374151", fontWeight: "600", fontSize: "0.95rem" }}>
-            <Calendar size={18} />
-            <span>{tpl.dateText}</span>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: hasCustomCover ? "rgba(255, 255, 255, 0.95)" : "#f3f4f6", padding: "0.5rem 1.25rem", borderRadius: "9999px", marginTop: "1rem", color: "#374151", fontWeight: "600", fontSize: "0.95rem" }}>
+              <Calendar size={18} />
+              <span>{tpl.dateText}</span>
+            </div>
           </div>
         </div>
 

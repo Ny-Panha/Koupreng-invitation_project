@@ -1,4 +1,5 @@
 import { Sparkles, Heart } from "lucide-react";
+import CoverBackground from "../../../shared/Openings/CoverBackground";
 
 export default function WaxSealEnvelope({
   tpl,
@@ -11,7 +12,14 @@ export default function WaxSealEnvelope({
 
   return (
     <div className="relative min-h-screen w-full flex flex-col items-center justify-center p-4 z-20 transition-opacity duration-700">
-      <div className="tdy-envelope-scene mb-8">
+      <CoverBackground
+        content={tpl}
+        templateDefault={{
+          src: "",
+          type: "image",
+        }}
+      />
+      <div className="tdy-envelope-scene mb-8 relative z-10">
         <div className="tdy-envelope-wrapper">
           {/* Envelope Back Base */}
           <div className="tdy-envelope-base">
@@ -74,7 +82,7 @@ export default function WaxSealEnvelope({
 
       {/* Instruction Prompt & Pulsing Button */}
       {!isFlapOpen && (
-        <div className="flex flex-col items-center gap-3 animate-fade-in text-center px-4 tdy-font-kantumruy">
+        <div className="flex flex-col items-center gap-3 animate-fade-in text-center px-4 tdy-font-kantumruy relative z-10">
           <p className="text-xs text-amber-300/90 font-medium">
             សូមចុចលើត្រាទៀនក្រមួន ដើម្បីបើកសំបុត្រ
           </p>

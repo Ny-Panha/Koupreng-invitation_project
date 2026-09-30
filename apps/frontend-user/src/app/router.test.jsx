@@ -31,6 +31,7 @@ const EXPECTED_PATHS = [
   "/dashboard/invitations/:invitationId/qr",
   "/dashboard/invitations/:invitationId/wishes",
   "/dashboard/reports",
+  "/reports",
   "/dashboard/guests",
   "/dashboard/seating",
   "/dashboard/check-in",

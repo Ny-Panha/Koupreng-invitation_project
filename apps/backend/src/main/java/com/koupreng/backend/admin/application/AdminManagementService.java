@@ -721,6 +721,15 @@ public class AdminManagementService {
         if (requestBody.getStatus() != null && !requestBody.getStatus().isBlank()) {
             template.setStatus(requestBody.getStatus().trim().toUpperCase(Locale.ROOT));
         }
+        if (requestBody.getPrimaryColor() != null) {
+            template.setPrimaryColor(trimToNull(requestBody.getPrimaryColor()));
+        }
+        if (requestBody.getSecondaryColor() != null) {
+            template.setSecondaryColor(trimToNull(requestBody.getSecondaryColor()));
+        }
+        if (requestBody.getBackgroundColor() != null) {
+            template.setBackgroundColor(trimToNull(requestBody.getBackgroundColor()));
+        }
     }
 
     private AppUser requireUser(Long userId) {

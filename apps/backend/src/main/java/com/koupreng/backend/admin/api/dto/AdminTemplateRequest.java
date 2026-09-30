@@ -22,4 +22,7 @@ public class AdminTemplateRequest {
     private Boolean premium;
     private String status;
     private Integer sortOrder;
+    private String primaryColor;
+    private String secondaryColor;
+    private String backgroundColor;
 }

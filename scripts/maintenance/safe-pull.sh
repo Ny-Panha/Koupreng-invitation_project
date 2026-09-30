@@ -43,7 +43,7 @@ else
     echo -e "${BLUE}[INFO]${NC} Pulling latest commits from origin/${GREEN}$TARGET_BRANCH${NC}..."
 fi
 
-if git pull origin "$TARGET_BRANCH"; then
+if git pull --rebase origin "$TARGET_BRANCH"; then
     echo -e "${GREEN}[SUCCESS]${NC} Pulled latest commits successfully!"
 else
     echo -e "${RED}[ERROR]${NC} git pull failed!"

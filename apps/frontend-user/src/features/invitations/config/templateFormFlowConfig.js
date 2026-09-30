@@ -42,6 +42,7 @@ export const TEMPLATE_FORM_FLOWS = {
     "khmer-celestial": {
         hasCoverImage: false,
         hasCoverBackgroundImage: true,
+        hasBackgroundImage: true,
         hasGate: false,
         sectionOrder: [
             "cover",
@@ -109,24 +110,37 @@ export function getTemplateFormFlow(templateIdOrTpl) {
         }
     }
 
+    const defaultLabels = {
+        coverBackgroundImage: "ផ្ទៃខាងក្រោយគ្របមុខ (ពេលមិនទាន់បើក)",
+        coverBackgroundImageEn: "Cover background (closed state)",
+    };
+
+    const defaultHints = {
+        coverBackgroundImage: "បង្ហាញលើគ្របមុខពេលមិនទាន់បើកធៀបការ",
+        coverBackgroundImageEn: "Shown on the cover before the invitation is opened",
+    };
+
     if (matched) {
         return {
             hasCoverImage: matched.hasCoverImage !== undefined ? Boolean(matched.hasCoverImage) : true,
-            hasCoverBackgroundImage: matched.hasCoverBackgroundImage !== undefined ? Boolean(matched.hasCoverBackgroundImage) : false,
+            hasCoverBackgroundImage: matched.hasCoverBackgroundImage !== undefined ? Boolean(matched.hasCoverBackgroundImage) : true,
+            hasBackgroundImage: matched.hasBackgroundImage !== undefined ? Boolean(matched.hasBackgroundImage) : false,
             hasGate: matched.hasGate !== undefined ? Boolean(matched.hasGate) : true,
             sectionOrder: matched.sectionOrder || DEFAULT_SECTION_ORDER,
-            labels: matched.labels || {},
-            hints: matched.hints || {},
+            labels: { ...defaultLabels, ...(matched.labels || {}) },
+            hints: { ...defaultHints, ...(matched.hints || {}) },
             placePhotoInInvitation: Boolean(matched.placePhotoInInvitation),
         };
     }
 
     return {
         hasCoverImage: true,
+        hasCoverBackgroundImage: true,
+        hasBackgroundImage: false,
         hasGate: true,
         sectionOrder: DEFAULT_SECTION_ORDER,
-        labels: {},
-        hints: {},
+        labels: defaultLabels,
+        hints: defaultHints,
         placePhotoInInvitation: false,
     };
 }

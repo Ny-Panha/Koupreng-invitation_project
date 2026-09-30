@@ -1,20 +1,37 @@
 import { Sparkles } from "lucide-react";
+import CoverBackground from "../../../shared/Openings/CoverBackground";
 
 export default function VelvetCurtainOpening({
   opened,
   onOpenCurtain,
   groom,
   bride,
+  content = {},
 }) {
+  const hasCustomCover = Boolean(
+    content.coverBackgroundImage ||
+    content.design?.coverBackgroundImage ||
+    content.coverVideoUrl ||
+    content.openingVideoUrl ||
+    content.openingVideo
+  );
+
   return (
     <div
-      className={`el-curtain-overlay ${opened ? "opened" : ""}`}
+      className={`el-curtain-overlay ${opened ? "opened" : ""} ${hasCustomCover ? "has-custom-bg" : ""}`}
       style={opened ? { pointerEvents: "none", visibility: "hidden" } : undefined}
       onClick={!opened ? onOpenCurtain : undefined}
       role={!opened ? "button" : undefined}
       tabIndex={!opened ? 0 : undefined}
       aria-label="ចុចដើម្បីបើកវាំងនន"
     >
+      <CoverBackground
+        content={content}
+        templateDefault={{
+          src: "",
+          type: "image",
+        }}
+      />
       <div className="el-curtain-half left" />
       <div className="el-curtain-half right" />
       <div

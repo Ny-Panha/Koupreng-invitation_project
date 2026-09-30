@@ -13,6 +13,7 @@ import {
   Gift,
 } from "lucide-react";
 import defaultMusicUrl from "../../../assets/music/ថ្ងៃដែលរង់ចាំ.mp3";
+import CoverBackground from "../shared/Openings/CoverBackground";
 import "./withjoy-portal.css";
 
 export default function WithJoyPortalLayout({
@@ -23,16 +24,29 @@ export default function WithJoyPortalLayout({
   backLabel = "ត្រឡប់ទៅគំរូទាំងអស់",
   useTemplateLink,
 }) {
-  const groom = content.groom || "វណ្ណដា";
-  const bride = content.bride || "ស្រីពេជ្រ";
-  const dateText = content.dateText || "ថ្ងៃពុធ ទី២៨ ខែមករា ឆ្នាំ២០២៦";
-  const venue = content.venue || {
+  const [liveData, setLiveData] = useState(null);
+  const effectiveContent = { ...content, ...liveData };
+
+  useEffect(() => {
+    const handleMessage = (e) => {
+      if (e.data?.type === "LIVE_PREVIEW_SYNC" && e.data.data) {
+        setLiveData(e.data.data);
+      }
+    };
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
+
+  const groom = effectiveContent.groom || "វណ្ណដា";
+  const bride = effectiveContent.bride || "ស្រីពេជ្រ";
+  const dateText = effectiveContent.dateText || "ថ្ងៃពុធ ទី២៨ ខែមករា ឆ្នាំ២០២៦";
+  const venue = effectiveContent.venue || {
     name: "The Premier Center Sen Sok",
     hall: "Grand Ballroom A",
     address: "ផ្លូវ 1003, សង្កាត់ភ្នំពេញថ្មី, ខណ្ឌសែនសុខ, រាជធានីភ្នំពេញ",
   };
-  const coverImage = content.coverImage || "/facebook/all/03-card/cover-card.jpg";
-  const musicUrl = content.music?.url || content.music || defaultMusicUrl;
+  const coverImage = effectiveContent.coverImage || "/facebook/all/03-card/cover-card.jpg";
+  const musicUrl = effectiveContent.music?.url || effectiveContent.music || defaultMusicUrl;
 
   // Audio Control
   const audioRef = useRef(null);
@@ -180,7 +194,15 @@ export default function WithJoyPortalLayout({
       </header>
 
       {/* Hero Section */}
-      <section id="home" className="wj-hero" style={{ backgroundImage: `url(${coverImage})` }}>
+      <section id="home" className="wj-hero" style={{ overflow: "hidden" }}>
+        <CoverBackground
+          content={effectiveContent}
+          templateDefault={{
+            src: coverImage,
+            type: "image",
+            poster: coverImage,
+          }}
+        />
         <div className="wj-hero-content">
           <span className="wj-hero-tag">អាពាហ៍ពិពាហ៍ឌីជីថលបែបទំនើប</span>
           <h1 className="wj-hero-names">

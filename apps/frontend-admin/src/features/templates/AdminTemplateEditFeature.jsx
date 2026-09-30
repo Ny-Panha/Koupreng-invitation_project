@@ -915,6 +915,9 @@ export default function AdminTemplateEditPage() {
           status: t.status || "ACTIVE",
           price: t.price != null ? String(t.price) : prev.price,
           ...parsedConfig,
+          primaryColor: t.primaryColor || parsedConfig.primaryColor || prev.primaryColor,
+          secondaryColor: t.secondaryColor || parsedConfig.secondaryColor || prev.secondaryColor,
+          backgroundColor: t.backgroundColor || parsedConfig.backgroundColor || prev.backgroundColor,
         }));
       })
       .catch((err) => {

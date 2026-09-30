@@ -67,6 +67,12 @@
   position: relative;
 }
 
+.el-curtain-overlay.has-custom-bg .el-curtain-half {
+  background: rgba(9, 32, 25, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
 .el-curtain-half.left {
   border-right: 2px solid var(--el-gold-primary);
 }

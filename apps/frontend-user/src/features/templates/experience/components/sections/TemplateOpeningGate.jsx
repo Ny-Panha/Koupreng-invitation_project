@@ -6,6 +6,7 @@ import TemplateImage from "../shared/TemplateImage";
 import RibbonOpening from "@/features/templates/shared/Openings/RibbonOpening";
 import CinematicVideoOpening from "@/features/templates/shared/Openings/CinematicVideoOpening";
 import CelestialOpening from "@/features/templates/layouts/KhmerCelestial/components/CelestialOpening";
+import CoverBackground from "@/features/templates/shared/Openings/CoverBackground";
 import "@/features/templates/layouts/KhmerCelestial/khmer-celestial.css";
 
 
@@ -377,15 +378,17 @@ function KhmerRoyalGate({
     setVideoFailed,
 }) {
     const lang = useLanguageStore((state) => state.lang);
+    const effectiveCoverImage = content.coverBackgroundImage || content.coverImage;
+    const effectiveOpeningVideo = content.coverVideoUrl || openingVideoUrl;
 
     return (
         <>
-            {openingVideoUrl && !videoFailed ? (
+            {effectiveOpeningVideo && !videoFailed ? (
                 <video
                     ref={videoRef}
                     className="tx-gate__media"
-                    src={openingVideoUrl}
-                    poster={content.coverImage || undefined}
+                    src={effectiveOpeningVideo}
+                    poster={effectiveCoverImage || undefined}
                     muted
                     loop
                     playsInline
@@ -396,7 +399,7 @@ function KhmerRoyalGate({
             ) : (
                 <TemplateImage
                     className="tx-gate__media"
-                    src={content.coverImage}
+                    src={effectiveCoverImage}
                     alt=""
                     loading="eager"
                     fetchPriority="high"

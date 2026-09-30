@@ -49,6 +49,15 @@ public class InvitationTemplate {
     @Column(name = "sort_order", nullable = false)
     private Integer sortOrder = 0;
 
+    @Column(name = "primary_color", length = 50)
+    private String primaryColor;
+
+    @Column(name = "secondary_color", length = 50)
+    private String secondaryColor;
+
+    @Column(name = "background_color", length = 50)
+    private String backgroundColor;
+
     @Column(name = "created_at", updatable = false)
     private Instant createdAt;
 
