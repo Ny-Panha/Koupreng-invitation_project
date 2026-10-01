@@ -360,13 +360,9 @@ public class InvitationService {
             try {
                 Long id = Long.parseLong(slug);
                 invitationOpt = invitationRepository.findByIdAndDeletedFalse(id)
-                        .filter(inv -> inv.getStatus() == InvitationStatus.PUBLISHED || inv.getStatus() == InvitationStatus.DRAFT);
+                        .filter(inv -> inv.getStatus() == InvitationStatus.PUBLISHED);
             } catch (NumberFormatException ignored) {
             }
-        }
-
-        if (invitationOpt.isEmpty()) {
-            invitationOpt = invitationRepository.findBySlugAndDeletedFalse(slug);
         }
 
         return invitationOpt.orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Invitation not found"));

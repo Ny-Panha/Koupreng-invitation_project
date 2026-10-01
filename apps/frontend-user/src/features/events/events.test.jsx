@@ -208,4 +208,42 @@ describe("Events Feature", () => {
             expect(screen.queryByText("To Be Deleted Event")).not.toBeInTheDocument();
         });
     });
+
+    it("does not navigate when clicking on the event card, but navigates to edit page from the menu", async () => {
+        vi.spyOn(eventsApi, "listMine").mockResolvedValue([
+            {
+                id: "evt-card-click",
+                title: "Card Click Wedding",
+                status: "DRAFT",
+            },
+        ]);
+
+        render(
+            <BrowserRouter>
+                <EventsFeature />
+            </BrowserRouter>
+        );
+
+        await waitFor(() => {
+            expect(screen.getByText("Card Click Wedding")).toBeInTheDocument();
+        });
+
+        const initialPath = window.location.pathname;
+        const card = screen.getByText("Card Click Wedding").closest(".event-card");
+        expect(card).toBeInTheDocument();
+        card.click();
+
+        // Clicking the card does NOT navigate
+        expect(window.location.pathname).toBe(initialPath);
+
+        // Menu edit option navigates
+        const moreBtn = screen.getByRole("button", { name: /ជម្រើស|More/i });
+        moreBtn.click();
+
+        const editBtn = await screen.findByRole("button", { name: /Edit|កែសម្រួល/i });
+        editBtn.click();
+
+        expect(window.location.pathname).toBe("/dashboard/invitations/evt-card-click/edit");
+    });
 });
+

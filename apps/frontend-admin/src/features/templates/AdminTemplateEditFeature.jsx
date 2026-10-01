@@ -372,22 +372,22 @@ const DEFAULT_STUDIO_STATE = {
   blessingMessage: "ដោយសេចក្តីសោមនស្សរីករាយក្រៃលែង យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ ឯកឧត្តម លោកជំទាវ លោក លោកស្រី អ្នកនាងកញ្ញា អញ្ជើញចូលរួមជាអធិបតី និងជាភ្ញៀវកិត្តិយស ដើម្បីប្រសិទ្ធពរជ័យសិរីមង្គល ក្នុងពិធីអាពាហ៍ពិពាហ៍ របស់យើងខ្ញុំទាំងពីរ។",
 
   // Couple & Parents
-  groomName: "ជា វណ្ណដា",
-  groomNameEn: "Vanda Chea",
-  groomFather: "លោក ជា សុផល",
-  groomMother: "លោកស្រី កែវ ចរិយា",
-  brideName: "សុខ ស្រីពេជ្រ",
-  brideNameEn: "Sreypich Sok",
-  brideFather: "លោក សុខ វិបុល",
-  brideMother: "លោកស្រី អ៊ុំ សោភា",
+  groomName: "",
+  groomNameEn: "",
+  groomFather: "",
+  groomMother: "",
+  brideName: "",
+  brideNameEn: "",
+  brideFather: "",
+  brideMother: "",
 
   // Schedule
   schedule: DEFAULT_SCHEDULE,
 
   // Venue & Location
-  venueName: "The Premier Center Sen Sok",
-  venueHall: "អគារ A (Building A)",
-  venueAddress: "ផ្លូវ 1003, សង្កាត់ភ្នំពេញថ្មី, ខណ្ឌសែនសុខ, រាជធានីភ្នំពេញ",
+  venueName: "",
+  venueHall: "",
+  venueAddress: "",
   googleMapUrl: "https://maps.google.com",
 
   // Dress code & Gift QR
@@ -397,10 +397,10 @@ const DEFAULT_STUDIO_STATE = {
     { hex: "#FFFDF7", name: "ស" },
     { hex: "#4A151C", name: "ក្រហមចាស់" },
   ],
-  qrGiftUrl: "https://images.unsplash.com/photo-1550565118-3a14e8d0386f?auto=format&fit=crop&w=400&q=80",
-  bankName: "ABA Bank",
-  bankAccountNumber: "000 123 456",
-  bankAccountName: "VANDA & SREYPICHOfficial",
+  qrGiftUrl: "",
+  bankName: "",
+  bankAccountNumber: "",
+  bankAccountName: "",
 
   // Story & Photo Gallery
   storyText: "ពីការជួបគ្នាដំបូង រហូតដល់ថ្ងៃសន្យារួមដំណើរជីវិត យើងបានរៀនថាសេចក្តីស្រឡាញ់ពិតប្រាកដ គឺកើតពីការគោរព ការយកចិត្តទុកដាក់ និងស្នាមញញឹមរៀងរាល់ថ្ងៃ។",
@@ -1754,7 +1754,7 @@ export default function AdminTemplateEditPage() {
                         const effectiveFont = currentElementFont || form.fontKhmer;
                         const isCustomized = Boolean(currentElementFont);
                         const elementSampleText = (() => {
-                          if (selectedFontElement === "couple") return `${form.groomName || "ជា វណ្ណដា"} & ${form.brideName || "សុខ ស្រីពេជ្រ"}`;
+                          if (selectedFontElement === "couple") return `${form.groomName || ""} ${form.groomName && form.brideName ? "&" : ""} ${form.brideName || ""}`.trim() || "គូស្វាមីភរិយា";
                           if (selectedFontElement === "date") return form.weddingDate || "ថ្ងៃពុធ ២៨ មករា ២០២៦";
                           if (selectedFontElement === "time") return form.weddingTime || "១៧:០០";
                           if (selectedFontElement === "subtitle") return form.invitationSubtitle || "យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ";

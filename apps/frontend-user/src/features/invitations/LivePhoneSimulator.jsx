@@ -25,6 +25,9 @@ function displayKhmerDate(dateStr) {
 function resolveTemplateSlug(data, merged) {
     const raw = data?.templateId || merged?.tpl?.id || merged?.tpl?.code || merged?.tpl?.slug || "khmer-celestial";
     const str = String(raw);
+    if (str === "garden-royal-khmer-wedding" || str === "garden_royal") {
+        return "garden-royal-khmer-wedding";
+    }
     if (str === "10" || str === "khmer-celestial" || str === "KHMER_CELESTIAL" || str === "royal-khmer-wedding" || str === "1") {
         return "khmer-celestial";
     }

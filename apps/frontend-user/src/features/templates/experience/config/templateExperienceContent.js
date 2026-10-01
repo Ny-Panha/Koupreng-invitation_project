@@ -80,9 +80,7 @@ const DEMO_PARTY = [
     { id: "friends", role: "មិត្តភក្ដិ", roleEn: "Friends", name: "ក្រុមមិត្តជិតស្និទ្ធ", image: "/facebook/all/03-card/03-05.jpg" },
 ];
 
-const DEMO_GIFT = [
-    { id: "aba", bank: "ABA Bank", account: "ឈ្មោះម្ចាស់គណនី (គំរូ)", number: "000 000 000", note: "ABA PAY", qrImage: "" },
-];
+const DEMO_GIFT = [];
 
 const KHMER_GOLDEN_DEMO_SCHEDULE = [
     { id: "procession", time: "០៧:០០", title: "ពិធីហែជំនូន", titleEn: "Procession", description: "ស្វាគមន៍ក្រុមគ្រួសារទាំងសងខាង និងភ្ញៀវកិត្តិយស។" },
@@ -661,8 +659,8 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         guestSeat: host.guest?.seatLabel || tpl.guestSeat || "",
         guestSeatsCount: host.guest?.seatCount || tpl.guestSeatsCount || null,
         guestGroup: host.guest?.guestGroup || tpl.guestGroup || "",
-        groom: hasHostContent ? nonBlank(hostCouple.groom) : (tpl.groom || "វណ្ណដា"),
-        bride: hasHostContent ? nonBlank(hostCouple.bride) : (tpl.bride || "ស្រីពេជ្រ"),
+        groom: hasHostContent ? nonBlank(hostCouple.groom) : (tpl.groom || ""),
+        bride: hasHostContent ? nonBlank(hostCouple.bride) : (tpl.bride || ""),
         groomEn: nonBlank(hasHostContent ? hostCouple.groomEn : tpl.groomEn),
         brideEn: nonBlank(hasHostContent ? hostCouple.brideEn : tpl.brideEn),
         groomNickname: nonBlank(hostCouple.groomNickname),
@@ -719,8 +717,8 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
             brideParents: hostCouple.brideParents || templateCouple.brideParents || templateFamily.brideParents || "",
         },
         venue: {
-            name: venueName || (hasHostContent ? "" : tpl.venueName || "The Premier Center Sen Sok"),
-            address: venueAddress || (hasHostContent ? "" : "អគារ A, សែនសុខ, ភ្នំពេញ"),
+            name: venueName || (hasHostContent ? "" : tpl.venueName || ""),
+            address: venueAddress || (hasHostContent ? "" : tpl.venueAddress || ""),
             mapLink,
             mapEmbedUrl,
             sketchMapImage: nonBlank(host.sketchMapImage) || nonBlank(tpl.sketchMapImage) || null,
@@ -742,7 +740,7 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         faq: hostFaq && hostFaq.length ? hostFaq : (hasHostContent ? [] : DEMO_FAQ),
         contact: {
             telegram: contactTelegram,
-            phone: hostContact.phone || (hasHostContent ? "" : "+855 12 345 678"),
+            phone: hostContact.phone || (hasHostContent ? "" : (tpl.contact?.phone || "")),
             email: hostContact.email || "",
             facebook: contactFacebook,
         },

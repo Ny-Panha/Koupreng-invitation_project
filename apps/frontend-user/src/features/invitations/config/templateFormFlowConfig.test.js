@@ -26,4 +26,11 @@ describe("templateFormFlowConfig", () => {
     expect(celestialConfig.hasCoverImage).toBe(false);
     expect(celestialConfig.hasGate).toBe(false);
   });
+
+  it("configures garden-royal-khmer-wedding with 2 fields: Cover and Full Background", () => {
+    const gardenConfig = getTemplateFormFlow("garden-royal-khmer-wedding");
+    expect(gardenConfig.hasCoverImage).toBe(true);
+    expect(gardenConfig.hasCoverBackgroundImage).toBe(false);
+    expect(gardenConfig.hasBackgroundImage).toBe(true);
+  });
 });

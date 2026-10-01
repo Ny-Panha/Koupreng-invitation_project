@@ -27,7 +27,7 @@ import { rsvpService } from "@/features/rsvp/api/rsvpApi";
 import { budgetService } from "../budget/api/budgetApi";
 import { planningService } from "@/features/planning/api/planningApi";
 import notificationService from "../notifications/notificationService";
-import { listDrafts, getDraft, saveDraft } from "../../shared/storage/weddingStorage";
+import { listDrafts, getDraft, getDraftBySlug, saveDraft } from "../../shared/storage/weddingStorage";
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { SkeletonTable } from "@/shared/ui";
@@ -330,51 +330,29 @@ export default function DashboardFeature() {
 
   const handlePublishToggle = async () => {
     if (!stats.id || publishing) return;
+    const wasPublished = stats.status === "PUBLISHED";
     try {
       setPublishing(true);
-      const isPublished = stats.status === "PUBLISHED";
-      const nextStatus = isPublished ? "DRAFT" : "PUBLISHED";
-      const nextPublished = !isPublished;
-
-      // 1. Immediately update localStorage draft if exists
-      const currentInv = state.selectedInvitation;
-      if (currentInv) {
-        saveDraft({
-          ...currentInv,
-          id: stats.id,
-          status: nextStatus,
-          published: nextPublished,
-        });
+      // Call the correct API: OFF→ON = publish, ON→OFF = unpublish
+      if (wasPublished) {
+        await invitationService.unpublish(stats.id);
+      } else {
+        await invitationService.publish(stats.id);
       }
-
-      // 2. Immediately update local state for reactive UI toggle
-      setState((prev) => ({
-        ...prev,
-        selectedInvitation: prev.selectedInvitation
-          ? { ...prev.selectedInvitation, status: nextStatus, published: nextPublished }
-          : prev.selectedInvitation,
-        invitations: (prev.invitations || []).map((inv) =>
-          (inv.id || inv.invitationId) === stats.id
-            ? { ...inv, status: nextStatus, published: nextPublished }
-            : inv
-        ),
-      }));
-
-      // 3. Sync with backend
-      try {
-        if (isPublished) {
-          await invitationService.unpublish(stats.id);
-        } else {
-          await invitationService.publish(stats.id);
-        }
-      } catch (backendErr) {
-        console.warn("Backend publish sync warning:", backendErr?.message);
-      }
-
-      // 4. Reload data to keep in sync
+      // Refresh from backend FIRST — this is the source of truth
       await loadData(stats.id);
+      // THEN sync localStorage draft so /w/{slug} fallback sees correct status.
+      // Without this, getDraftBySlug() returns a stale draft with published:true
+      // and the public page renders the invitation even after unpublishing.
+      const newStatus = wasPublished ? "DRAFT" : "PUBLISHED";
+      const newPublished = !wasPublished;
+      const localDraft = getDraft(stats.id) || (stats.slug ? getDraftBySlug(stats.slug) : null);
+      if (localDraft) {
+        saveDraft({ ...localDraft, status: newStatus, published: newPublished });
+      }
     } catch (err) {
-      alert(err?.message || "Failed to update publication status.");
+      // On failure: keep previous toggle position, show error
+      alert(err?.response?.data?.message || err?.message || "Failed to update publication status.");
     } finally {
       setPublishing(false);
     }
@@ -567,8 +545,12 @@ export default function DashboardFeature() {
                   </button>
                 )}
 
-                {stats.slug && (
-                  <Link to={`/w/${stats.slug}`} target="_blank" rel="noreferrer" className="dash-btn-outline" style={{ minHeight: "36px", padding: "0 14px", fontSize: "0.8125rem" }}>
+                {(stats.id || stats.slug) && (
+                  <Link
+                    to={stats.id ? `/dashboard/invitations/${stats.id}/preview` : `/w/${stats.slug}`}
+                    className="dash-btn-outline"
+                    style={{ minHeight: "36px", padding: "0 14px", fontSize: "0.8125rem" }}
+                  >
                     <IoGlobeOutline style={{ color: "#0f766e" }} />
                     <span>{text("viewLive")}</span>
                   </Link>
@@ -582,32 +564,21 @@ export default function DashboardFeature() {
                 )}
 
                 {stats.id && (
-                  <button
-                    type="button"
-                    onClick={handlePublishToggle}
-                    disabled={publishing}
-                    className={stats.status === "PUBLISHED" ? "dash-btn-outline" : "dash-btn-gold"}
-                    style={{
-                      minHeight: "36px",
-                      padding: "0 14px",
-                      fontSize: "0.8125rem",
-                      cursor: publishing ? "not-allowed" : "pointer",
-                      opacity: publishing ? 0.7 : 1,
-                    }}
-                  >
-                    {stats.status === "PUBLISHED" ? (
-                      <IoCheckmarkCircleOutline style={{ color: "var(--brand-primary)" }} />
-                    ) : (
-                      <IoCheckmarkCircle style={{ color: "#ffffff" }} />
-                    )}
-                    <span>
-                      {publishing
-                        ? text("publishing")
-                        : stats.status === "PUBLISHED"
-                          ? text("unpublish")
-                          : text("publish")}
-                    </span>
-                  </button>
+                  <div className="dash-publish-toggle-wrap">
+                    <span className="dash-publish-toggle-label">{text("publish")}</span>
+                    <button
+                      type="button"
+                      role="switch"
+                      aria-checked={stats.status === "PUBLISHED"}
+                      onClick={handlePublishToggle}
+                      disabled={publishing}
+                      className={`dash-publish-switch${stats.status === "PUBLISHED" ? " on" : ""}`}
+                    >
+                      <span className="dash-publish-switch-text on-text">{text("toggleOn")}</span>
+                      <span className="dash-publish-switch-text off-text">{text("toggleOff")}</span>
+                      <span className="dash-publish-knob" />
+                    </button>
+                  </div>
                 )}
               </div>
             </div>

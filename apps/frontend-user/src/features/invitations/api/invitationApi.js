@@ -26,11 +26,7 @@ export const invitationService = {
       const draft = getDraft(id);
       if (draft) return Promise.resolve(draft);
     }
-    return api.get(`/v1/invitations/${id}`).then(unwrap).catch((err) => {
-      const draft = getDraft(id);
-      if (draft) return draft;
-      throw err;
-    });
+    return api.get(`/v1/invitations/${id}`).then(unwrap);
   },
   create: (data) => api.post("/v1/invitations", data).then(unwrap),
   update: (id, data) => {

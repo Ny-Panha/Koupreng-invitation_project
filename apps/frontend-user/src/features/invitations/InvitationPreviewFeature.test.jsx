@@ -70,11 +70,13 @@ describe("InvitationPreviewPage", () => {
     // Check gate toggle button
     expect(within(header).getByRole("button", { name: /គម្រប|ធៀប/ })).toBeInTheDocument();
 
-    // Check edit button
-    expect(within(header).getByRole("button", { name: /កែ/ })).toBeInTheDocument();
+    // Verify edit and guest view buttons are removed
+    expect(within(header).queryByRole("button", { name: /កែ/ })).not.toBeInTheDocument();
+    expect(within(header).queryByRole("link", { name: /ភ្ញៀវ/ })).not.toBeInTheDocument();
 
-    // Check guest view link
-    expect(within(header).getByRole("link", { name: /ភ្ញៀវ/ })).toHaveAttribute("href", "/i/vanda-sreypich-wedding");
+    // Check view mode toggle buttons
+    expect(within(header).getByRole("button", { name: /ទូរស័ព្ទ/ })).toBeInTheDocument();
+    expect(within(header).getByRole("button", { name: /ពេញអេក្រង់/ })).toBeInTheDocument();
 
     // Phone viewport is present
     expect(document.querySelector(".inv-phone-viewport")).toBeInTheDocument();
@@ -112,6 +114,44 @@ describe("InvitationPreviewPage", () => {
     await waitFor(() => {
       expect(within(header).getByRole("button", { name: /ធៀប/ })).toBeInTheDocument();
     });
+  });
+
+  it("toggles between full screen and phone view mode", async () => {
+    invitationService.preview.mockResolvedValue({
+      id: 12,
+      title: "សិរីមង្គលអាពាហ៍ពិពាហ៍",
+      groomName: "ពិសិដ្ឋ",
+      brideName: "សុខា",
+      status: "DRAFT",
+      templateId: "khmer-celestial",
+    });
+
+    render(
+      <MemoryRouter initialEntries={["/dashboard/invitations/12/preview"]}>
+        <Routes>
+          <Route path="/dashboard/invitations/:id/preview" element={<InvitationPreviewPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText("ពិសិដ្ឋ & សុខា")).toBeInTheDocument();
+    });
+
+    const header = document.querySelector(".inv-preview-header");
+    const phoneBtn = within(header).getByRole("button", { name: /ទូរស័ព្ទ/ });
+    const fullBtn = within(header).getByRole("button", { name: /ពេញអេក្រង់/ });
+
+    // Initial state is full screen
+    expect(document.querySelector(".inv-phone-viewport--full")).toBeInTheDocument();
+
+    // Click phone view
+    fireEvent.click(phoneBtn);
+    expect(document.querySelector(".inv-phone-viewport--full")).not.toBeInTheDocument();
+
+    // Click full screen
+    fireEvent.click(fullBtn);
+    expect(document.querySelector(".inv-phone-viewport--full")).toBeInTheDocument();
   });
 
   it("renders error state when API call fails", async () => {

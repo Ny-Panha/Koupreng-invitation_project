@@ -17,7 +17,6 @@ import {
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
 import { useLanguageStore } from "../../stores/useLanguageStore";
-import { listDrafts } from "@/shared/storage/weddingStorage";
 import logo from "../../assets/logo.png";
 
 const NAV_LABELS = {
@@ -123,25 +122,17 @@ export default function HostNav() {
     return () => { document.body.style.overflow = ""; };
   }, [mobileMenuOpen]);
 
-  const drafts = listDrafts(user?.id || user?.userId);
-  const activeDraftId = drafts[0]?.id;
-  const myInvitationPath = activeDraftId ? `/dashboard/invitations/${activeDraftId}/edit` : "/dashboard/invitations/design";
-
   const dynamicNavItems = [
     { labelKey: "events", path: "/dashboard/events", Icon: IoCalendarClearOutline },
     { labelKey: "dashboard", path: "/dashboard", Icon: IoGridOutline },
     { labelKey: "guests", path: "/dashboard/guests", Icon: IoPeopleOutline },
     { labelKey: "expenses", path: "/dashboard/expenses", Icon: IoCashOutline },
     { labelKey: "gifts", path: "/dashboard/gifts", Icon: IoGiftOutline },
-    { labelKey: "myInvitation", path: myInvitationPath, Icon: IoColorPaletteOutline },
-    { labelKey: "browseTemplates", path: "/templates/browse", Icon: IoColorPaletteOutline },
+    { labelKey: "myInvitation", path: "/templates/browse", Icon: IoColorPaletteOutline },
   ];
 
   const isActive = (path) => {
     if (path === "/dashboard") return location.pathname === path;
-    if (path.includes("/invitations/") && path.includes("/edit")) {
-      return location.pathname.includes("/invitations/") && location.pathname.includes("/edit");
-    }
     return location.pathname === path || location.pathname.startsWith(`${path}/`);
   };
 

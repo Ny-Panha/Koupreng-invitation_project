@@ -66,21 +66,21 @@ export default function InvitationEditPage() {
                 };
 
                 const isDefaultTitle = !localDraft.event?.title && (!localDraft.title || localDraft.title === "សួនរាជហង្សខ្មែរ" || localDraft.title === "Garden Royal Khmer Wedding");
-                const isDefaultCouple = (!localDraft.couple?.groom && (!localDraft.groomName || localDraft.groomName === "វណ្ណដា")) &&
-                                        (!localDraft.couple?.bride && (!localDraft.brideName || localDraft.brideName === "ស្រីពេជ្រ"));
+                const isDefaultCouple = !localDraft.couple?.groom && !localDraft.groomName &&
+                                        !localDraft.couple?.bride && !localDraft.brideName;
 
                 const contentPayload = {
-                    title: (!isDefaultTitle && (localDraft.event?.title || localDraft.title)) ? (localDraft.event?.title || localDraft.title) : (preset.title || "សួនរាជហង្សខ្មែរ"),
+                    title: (!isDefaultTitle && (localDraft.event?.title || localDraft.title)) ? (localDraft.event?.title || localDraft.title) : (preset.title || "សិរីមង្គលអាពាហ៍ពិពាហ៍"),
                     subtitle: "សូមគោរពអញ្ជើញ",
                     coverBackgroundImage: localDraft.coverBackgroundImage || localDraft.design?.coverBackgroundImage || "",
                     backgroundImage: localDraft.backgroundImage || localDraft.design?.backgroundImage || "",
-                    groomName: (!isDefaultCouple && (localDraft.couple?.groom || localDraft.groomName)) ? (localDraft.couple?.groom || localDraft.groomName) : (preset.groom || "វណ្ណដា"),
-                    brideName: (!isDefaultCouple && (localDraft.couple?.bride || localDraft.brideName)) ? (localDraft.couple?.bride || localDraft.brideName) : (preset.bride || "ស្រីពេជ្រ"),
-                    eventDateText: localDraft.event?.date || localDraft.eventDate || tpl?.dateText || "ថ្ងៃពុធ ២៨ មករា ២០២៦",
+                    groomName: (!isDefaultCouple && (localDraft.couple?.groom || localDraft.groomName)) ? (localDraft.couple?.groom || localDraft.groomName) : "",
+                    brideName: (!isDefaultCouple && (localDraft.couple?.bride || localDraft.brideName)) ? (localDraft.couple?.bride || localDraft.brideName) : "",
+                    eventDateText: localDraft.event?.date || localDraft.eventDate || tpl?.dateText || "",
                     schedule: localDraft.schedule?.length ? localDraft.schedule : (preset.schedule || []),
                     agendaDays: localDraft.agendaDays || [],
-                    venueName: localDraft.event?.venueName || localDraft.venueName || preset.venueName || "The Premier Center Sen Sok",
-                    venueAddress: localDraft.event?.venueAddress || localDraft.venueAddress || preset.venueAddress || "អគារ A, សែនសុខ, ភ្នំពេញ",
+                    venueName: (localDraft.event?.venueName && localDraft.event.venueName !== "The Premier Center Sen Sok") ? localDraft.event.venueName : ((localDraft.venueName && localDraft.venueName !== "The Premier Center Sen Sok") ? localDraft.venueName : ""),
+                    venueAddress: (localDraft.event?.venueAddress && localDraft.event.venueAddress !== "អគារ A, សែនសុខ, ភ្នំពេញ") ? localDraft.event.venueAddress : ((localDraft.venueAddress && localDraft.venueAddress !== "អគារ A, សែនសុខ, ភ្នំពេញ") ? localDraft.venueAddress : ""),
                     googleMapUrl: localDraft.googleMapUrl || tpl?.mapQuery || "",
                     sketchMapImage: localDraft.sketchMapImage || null,
                     messageText: localDraft.message || preset.messageText || "",

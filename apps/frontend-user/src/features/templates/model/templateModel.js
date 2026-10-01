@@ -7,8 +7,8 @@ import { normalizeDressColors } from "../experience/config/templateExperienceCon
 export function normalizeTemplateViewModel(tpl = {}, content = {}) {
   const merged = { ...tpl, ...content };
 
-  const groom = merged.groom || merged.groomName || "កូនកំលោះ";
-  const bride = merged.bride || merged.brideName || "កូនក្រមុំ";
+  const groom = merged.groom || merged.groomName || "";
+  const bride = merged.bride || merged.brideName || "";
   const groomEn = merged.groomEn || merged.groomNameEn || "";
   const brideEn = merged.brideEn || merged.brideNameEn || "";
 
@@ -22,15 +22,15 @@ export function normalizeTemplateViewModel(tpl = {}, content = {}) {
   const brideParents = [brideFather, brideMother].filter(Boolean).join(" និង ") || couple.brideParents || "";
 
   // Dates
-  const dateText = merged.dateText || merged.weddingDateText || merged.weddingDate || "ថ្ងៃសៅរ៍ ទី២៨ ខែវិច្ឆិកា ឆ្នាំ២០២៦";
+  const dateText = merged.dateText || merged.weddingDateText || merged.weddingDate || "";
   const dateTextEn = merged.dateTextEn || merged.weddingDateTextEn || "";
-  const targetDate = merged.targetDate || merged.weddingDate || "2026-11-28T17:00:00+07:00";
+  const targetDate = merged.targetDate || merged.weddingDate || "";
 
   // Venue
   const venueObj = merged.venue || {};
-  const venueName = merged.venueName || venueObj.name || "The Premier Center Sen Sok";
-  const venueHall = merged.venueHall || venueObj.hall || "Grand Ballroom";
-  const venueAddress = merged.venueAddress || venueObj.address || "រាជធានីភ្នំពេញ";
+  const venueName = merged.venueName || venueObj.name || "";
+  const venueHall = merged.venueHall || venueObj.hall || "";
+  const venueAddress = merged.venueAddress || venueObj.address || "";
   const rawMap = merged.googleMapsUrl || merged.googleMapUrl || merged.mapQuery || venueObj.mapLink || venueObj.mapEmbedUrl || "";
   let googleMapsUrl = "";
   if (rawMap && typeof rawMap === "string" && rawMap.trim()) {

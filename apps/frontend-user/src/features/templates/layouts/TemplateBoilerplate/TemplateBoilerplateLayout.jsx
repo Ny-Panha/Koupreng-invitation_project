@@ -52,8 +52,8 @@ export default function TemplateBoilerplateLayout({
 
     return {
       ...base,
-      groom: base.groomName || base.groom || "វណ្ណដា",
-      bride: base.brideName || base.bride || "ស្រីពេជ្រ",
+      groom: base.groomName || base.groom || "",
+      bride: base.brideName || base.bride || "",
       title: base.invitationTitle || base.title || "សិរីសួស្តី អាពាហ៍ពិពាហ៍",
       subtitle: base.invitationSubtitle || base.subtitle || "យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ",
       messageTitle: base.messageTitle || content.messageTitle || "ការអញ្ជើញ",
@@ -350,12 +350,16 @@ export default function TemplateBoilerplateLayout({
                           <span className="tpl-heading__eyebrow">LOCATION & MAP</span>
                           <h3 className="tpl-heading__title">ទីតាំងប្រារព្ធពិធី</h3>
                         </div>
-                        <p className="text-xs text-zinc-300">
-                          {effectiveContent.venue?.name || "The Premier Center Sen Sok"}
-                        </p>
-                        <p className="text-[11px] text-zinc-400">
-                          {effectiveContent.venue?.address || "រាជធានីភ្នំពេញ"}
-                        </p>
+                        {effectiveContent.venue?.name && (
+                          <p className="text-xs text-zinc-300">
+                            {effectiveContent.venue.name}
+                          </p>
+                        )}
+                        {effectiveContent.venue?.address && (
+                          <p className="text-[11px] text-zinc-400">
+                            {effectiveContent.venue.address}
+                          </p>
+                        )}
                         <a
                           href={effectiveContent.venue?.mapLink || "https://maps.google.com"}
                           target="_blank"

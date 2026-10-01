@@ -16,6 +16,7 @@ import GuestQrModal from "./components/GuestQrModal";
 import GuestImportModal from "./components/GuestImportModal";
 import GroupCategoryModal from "./components/GroupCategoryModal";
 import { exportGuestsToCsv } from "./model/guestCsvUtils";
+import { saveManualGuests } from "@/shared/storage/hostPlanningStorage";
 import "./GuestsPage.css";
 
 function scopedKey(base, eventId) {
@@ -50,6 +51,7 @@ export default function GuestsPage() {
     eventId,
     draftMatch,
     backendInvitation,
+    backendInvitationId: hookBackendInvitationId,
     publicInvitation,
     guests,
     manualGuests,
@@ -60,6 +62,18 @@ export default function GuestsPage() {
     error,
     refreshData,
   } = useGuests();
+
+  const rawBackendId =
+    hookBackendInvitationId ||
+    backendInvitation?.id ||
+    backendInvitation?.invitationId ||
+    publicInvitation?.id ||
+    publicInvitation?.invitationId ||
+    draftMatch?.backendInvitationId;
+  const backendInvitationId =
+    rawBackendId != null && /^\d+$/.test(String(rawBackendId))
+      ? Number(rawBackendId)
+      : null;
 
   const {
     saving,
@@ -158,6 +172,40 @@ export default function GuestsPage() {
     } else {
       toast.error(t ? t("linkCopyFailed") : "មិនអាចចម្លងបានទេ");
     }
+  };
+
+  const handleGuestSynced = (updatedGuest) => {
+    if (!updatedGuest) return;
+    setQrGuestTarget(updatedGuest);
+
+    setBackendGuests((current) => {
+      const exists = current.some(
+        (g) =>
+          String(g.id) === String(updatedGuest.id) ||
+          String(g.backendId) === String(updatedGuest.backendId) ||
+          (g.name === updatedGuest.name && (g.phone || "") === (updatedGuest.phone || ""))
+      );
+      if (exists) {
+        return current.map((g) =>
+          String(g.id) === String(updatedGuest.id) ||
+          String(g.backendId) === String(updatedGuest.backendId) ||
+          (g.name === updatedGuest.name && (g.phone || "") === (updatedGuest.phone || ""))
+            ? { ...g, ...updatedGuest }
+            : g
+        );
+      }
+      return [...current, updatedGuest];
+    });
+
+    setManualGuests((current) => {
+      const next = current.map((g) =>
+        String(g.id) === String(updatedGuest.id) || g.name === updatedGuest.name
+          ? { ...g, ...updatedGuest }
+          : g
+      );
+      saveManualGuests(eventId, next);
+      return next;
+    });
   };
 
   const handleSaveGroups = (nextGroups) => {
@@ -286,6 +334,8 @@ export default function GuestsPage() {
         guest={qrGuestTarget}
         currentDraft={draftMatch}
         publicInvitation={publicInvitation || backendInvitation}
+        backendInvitationId={backendInvitationId}
+        onGuestSynced={handleGuestSynced}
         onClose={() => setQrGuestTarget(null)}
         onCopyLink={handleCopyLink}
         t={t}

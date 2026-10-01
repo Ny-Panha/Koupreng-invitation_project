@@ -1,6 +1,6 @@
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { act, cleanup, render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter, MemoryRouter } from "react-router-dom";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import InvitationForm from "./InvitationForm";
 import LivePhoneSimulator from "./LivePhoneSimulator";
 import {
@@ -40,6 +40,10 @@ beforeEach(() => {
   // Empty by default: InvitationForm skips registration when the list is empty,
   // so tests that call registerDynamicTemplates() directly stay in control.
   templateCatalogService.list.mockResolvedValue([]);
+});
+
+afterEach(() => {
+  cleanup();
 });
 
 describe("Dynamic Templates & Presets", () => {
@@ -296,6 +300,31 @@ describe("Khmer Celestial Cover Image Fields", () => {
         expect(screen.getAllByText(/ផ្ទៃខាងក្រោយគ្របមុខ \(ពេលមិនទាន់បើក\)/i).length).toBeGreaterThanOrEqual(1);
 
         // 3. Field 2: Botanical frame (opened state)
+        expect(screen.getAllByText(/ស៊ុមផ្កា \/ រូបភាពផ្ទៃខាងក្រោយ/i).length).toBeGreaterThanOrEqual(1);
+    }, 15000);
+
+    it("renders exactly 2 fields for Garden Royal: Cover and Full Background", () => {
+        const gardenInvitation = {
+            id: "wed-garden-test",
+            templateId: "garden-royal-khmer-wedding",
+            title: "Garden Royal Wedding",
+            groomName: "វណ្ណដា",
+            brideName: "ស្រីពេជ្រ",
+        };
+
+        render(
+            <BrowserRouter>
+                <InvitationForm invitation={gardenInvitation} />
+            </BrowserRouter>
+        );
+
+        // 1. Cover field is shown
+        expect(screen.getAllByText(/រូបភាពក្របមុខ/i).length).toBeGreaterThanOrEqual(1);
+
+        // 2. Closed-state cover background (the redundant 3rd field) is hidden
+        expect(screen.queryAllByText(/ផ្ទៃខាងក្រោយគ្របមុខ \(ពេលមិនទាន់បើក\)/i)).toHaveLength(0);
+
+        // 3. Full / Botanical Frame background field is shown
         expect(screen.getAllByText(/ស៊ុមផ្កា \/ រូបភាពផ្ទៃខាងក្រោយ/i).length).toBeGreaterThanOrEqual(1);
     }, 15000);
 

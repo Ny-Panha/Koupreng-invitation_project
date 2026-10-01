@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { QRCode } from "react-qr-code";
 import {
   IoCopyOutline,
@@ -10,7 +10,8 @@ import {
   IoCalendarOutline,
 } from "react-icons/io5";
 import { Modal } from "@/shared/ui";
-import { buildShareMessage, copyText, guestInviteUrl } from "../model/guestMappers";
+import { guestService } from "@/features/guests/api/guestApi";
+import { buildShareMessage, copyText, guestInviteUrl, normalizeBackendGuest } from "../model/guestMappers";
 
 export default function GuestQrModal({
   guest,
@@ -18,14 +19,98 @@ export default function GuestQrModal({
   publicInvitation,
   onClose,
   onCopyLink,
+  backendInvitationId = null,
+  onGuestSynced,
 }) {
-
   const [copiedMsg, setCopiedMsg] = useState(false);
   const [copiedUrl, setCopiedUrl] = useState(false);
+  const [syncedGuest, setSyncedGuest] = useState(null);
+  const [syncing, setSyncing] = useState(false);
+
+  useEffect(() => {
+    setSyncedGuest(null);
+
+    if (!guest) {
+      setSyncing(false);
+      return;
+    }
+
+    const existingToken =
+      guest.inviteToken ||
+      guest.token ||
+      guest.invite_token ||
+      guest.raw?.inviteToken ||
+      guest.raw?.invite_token ||
+      guest.raw?.token;
+
+    const numericId =
+      backendInvitationId != null &&
+      !isNaN(Number(backendInvitationId)) &&
+      Number(backendInvitationId) > 0
+        ? Number(backendInvitationId)
+        : null;
+
+    if (existingToken || !numericId) {
+      setSyncing(false);
+      return;
+    }
+
+    let isMounted = true;
+    setSyncing(true);
+
+    const payload = {
+      guestName: guest.name || guest.guestName || "Guest",
+      phone: guest.phone || "",
+      seatCount: Math.max(1, Number(guest.seatCount || guest.count) || 1),
+    };
+
+    const createFn = guestService.create || guestService.createForInvitation;
+
+    createFn(numericId, payload)
+      .then((created) => {
+        if (!isMounted) return;
+        const normalized = normalizeBackendGuest(created);
+        const updated = {
+          ...guest,
+          ...normalized,
+          inviteToken:
+            created?.inviteToken ||
+            normalized?.inviteToken ||
+            created?.token ||
+            "",
+          backendId: created?.id || normalized?.id,
+          id: guest.id || created?.id,
+          source: "backend",
+        };
+        setSyncedGuest(updated);
+        if (typeof onGuestSynced === "function") {
+          onGuestSynced(updated);
+        }
+      })
+      .catch((err) => {
+        console.warn("Could not sync guest to backend for personal QR link:", err);
+      })
+      .finally(() => {
+        if (isMounted) {
+          setSyncing(false);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [guest?.id, guest?.name, backendInvitationId]);
 
   if (!guest) return null;
 
-  const inviteUrl = guestInviteUrl(currentDraft, guest, publicInvitation);
+  const isMatchingGuest =
+    syncedGuest &&
+    (String(syncedGuest.id) === String(guest.id) ||
+      syncedGuest.name === guest.name);
+
+  const activeGuest = isMatchingGuest ? syncedGuest : guest;
+
+  const inviteUrl = guestInviteUrl(currentDraft, activeGuest, publicInvitation);
 
   const groomName = publicInvitation?.groomName || currentDraft?.groomName || "";
   const brideName = publicInvitation?.brideName || currentDraft?.brideName || "";
@@ -39,11 +124,11 @@ export default function GuestQrModal({
     currentDraft?.coverImage ||
     "/facebook/all/03-card/cover-card.jpg";
 
-  const guestSalutation = guest.companionName
-    ? `សូមគោរពអញ្ជើញ៖ ${guest.name} និង ${guest.companionName}`
-    : `សូមគោរពអញ្ជើញ៖ ${guest.name}`;
+  const guestSalutation = activeGuest.companionName
+    ? `សូមគោរពអញ្ជើញ៖ ${activeGuest.name} និង ${activeGuest.companionName}`
+    : `សូមគោរពអញ្ជើញ៖ ${activeGuest.name}`;
 
-  const shareMessageText = buildShareMessage(guest, currentDraft, publicInvitation);
+  const shareMessageText = buildShareMessage(activeGuest, currentDraft, publicInvitation);
 
   const handleCopyMessage = async () => {
     const ok = await copyText(shareMessageText);
@@ -68,7 +153,6 @@ export default function GuestQrModal({
   };
 
   const handleDownloadQr = () => {
-
     const svg = document.getElementById("guest-qr-svg");
     if (!svg) return;
     const svgData = new XMLSerializer().serializeToString(svg);
@@ -87,7 +171,7 @@ export default function GuestQrModal({
       const pngFile = canvas.toDataURL("image/png");
       const downloadLink = document.createElement("a");
       downloadLink.href = pngFile;
-      downloadLink.download = `qr-${guest.name.replace(/\s+/g, "-")}.png`;
+      downloadLink.download = `qr-${activeGuest.name.replace(/\s+/g, "-")}.png`;
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);
@@ -100,7 +184,7 @@ export default function GuestQrModal({
     <Modal
       isOpen={Boolean(guest)}
       onClose={onClose}
-      title={guest.name}
+      title={activeGuest.name}
       subtitle="ទម្រង់ផ្ញើធៀបការ និង Link Preview (Telegram / Messenger / Social)"
       size="md"
     >
@@ -148,13 +232,13 @@ export default function GuestQrModal({
                     <IoCalendarOutline /> {eventDate} {venueName ? `| ${venueName}` : ""}
                   </p>
                 )}
-                {guest.note && (
+                {activeGuest.note && (
                   <p style={{ margin: "0 0 0.25rem 0", fontSize: "0.75rem", color: "#fef08a" }}>
-                    📝 {guest.note}
+                    📝 {activeGuest.note}
                   </p>
                 )}
                 <span style={{ fontSize: "0.7rem", color: "#38bdf8", wordBreak: "break-all" }}>
-                  {inviteUrl}
+                  {syncing ? "កំពុងរៀបចំ link..." : inviteUrl}
                 </span>
               </div>
             </div>
@@ -163,26 +247,54 @@ export default function GuestQrModal({
 
         {/* QR Code & Link Field */}
         <div style={{ display: "flex", alignItems: "center", gap: "1.25rem", background: "#f8fafc", padding: "1rem", borderRadius: "12px", border: "1px solid #e2e8f0" }}>
-          <div style={{ background: "#ffffff", padding: "0.6rem", borderRadius: "10px", border: "1px solid #cbd5e1", flexShrink: 0 }}>
+          <div style={{ background: "#ffffff", padding: "0.6rem", borderRadius: "10px", border: "1px solid #cbd5e1", flexShrink: 0, opacity: syncing ? 0.6 : 1, transition: "opacity 0.2s" }}>
             <QRCode id="guest-qr-svg" value={inviteUrl} size={110} />
           </div>
 
           <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-            <label style={{ fontSize: "0.75rem", fontWeight: 600, color: "#475569" }}>
-              តំណភ្ជាប់ផ្ទាល់ខ្លួនរបស់ភ្ញៀវ (Personal Guest Link):
-            </label>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.25rem" }}>
+              <label style={{ fontSize: "0.75rem", fontWeight: 600, color: "#475569" }}>
+                តំណភ្ជាប់ផ្ទាល់ខ្លួនរបស់ភ្ញៀវ (Personal Guest Link):
+              </label>
+              {syncing && (
+                <span
+                  style={{
+                    fontSize: "0.75rem",
+                    color: "#d97706",
+                    fontWeight: 600,
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.25rem",
+                  }}
+                >
+                  <span
+                    style={{
+                      display: "inline-block",
+                      width: "10px",
+                      height: "10px",
+                      border: "2px solid #d97706",
+                      borderTopColor: "transparent",
+                      borderRadius: "50%",
+                      animation: "spin 0.8s linear infinite",
+                    }}
+                  />
+                  កំពុងរៀបចំ link...
+                </span>
+              )}
+            </div>
             <input
               type="text"
               readOnly
-              value={inviteUrl}
+              value={syncing ? "កំពុងរៀបចំ link..." : inviteUrl}
               style={{
                 width: "100%",
                 padding: "0.5rem 0.6rem",
                 fontSize: "0.8rem",
                 borderRadius: "6px",
                 border: "1px solid #cbd5e1",
-                background: "#ffffff",
-                color: "#1e293b",
+                background: syncing ? "#f8fafc" : "#ffffff",
+                color: syncing ? "#94a3b8" : "#1e293b",
+                fontStyle: syncing ? "italic" : "normal",
               }}
             />
             <span style={{ fontSize: "0.725rem", color: "#64748b" }}>
@@ -197,6 +309,7 @@ export default function GuestQrModal({
           <button
             type="button"
             className="pe-primary-btn"
+            disabled={syncing}
             style={{
               background: "#229ED9",
               borderColor: "#229ED9",
@@ -208,6 +321,8 @@ export default function GuestQrModal({
               padding: "0.6rem 0.75rem",
               fontSize: "0.85rem",
               borderRadius: "8px",
+              opacity: syncing ? 0.6 : 1,
+              cursor: syncing ? "not-allowed" : "pointer",
             }}
             onClick={handleShareTelegram}
           >
@@ -219,6 +334,7 @@ export default function GuestQrModal({
           <button
             type="button"
             className="pe-secondary-btn"
+            disabled={syncing}
             style={{
               background: copiedMsg ? "#dcfce7" : "#ffffff",
               borderColor: copiedMsg ? "#86efac" : "var(--brand-border)",
@@ -230,6 +346,8 @@ export default function GuestQrModal({
               padding: "0.6rem 0.75rem",
               fontSize: "0.85rem",
               borderRadius: "8px",
+              opacity: syncing ? 0.6 : 1,
+              cursor: syncing ? "not-allowed" : "pointer",
             }}
             onClick={handleCopyMessage}
           >
@@ -241,6 +359,7 @@ export default function GuestQrModal({
           <button
             type="button"
             className="pe-secondary-btn"
+            disabled={syncing}
             style={{
               background: copiedUrl ? "#dcfce7" : "#ffffff",
               borderColor: copiedUrl ? "#86efac" : "var(--brand-border)",
@@ -252,6 +371,8 @@ export default function GuestQrModal({
               padding: "0.6rem 0.75rem",
               fontSize: "0.85rem",
               borderRadius: "8px",
+              opacity: syncing ? 0.6 : 1,
+              cursor: syncing ? "not-allowed" : "pointer",
             }}
             onClick={handleCopyUrlOnly}
           >
@@ -263,6 +384,7 @@ export default function GuestQrModal({
           <button
             type="button"
             className="pe-secondary-btn"
+            disabled={syncing}
             style={{
               display: "flex",
               alignItems: "center",
@@ -271,6 +393,8 @@ export default function GuestQrModal({
               padding: "0.6rem 0.75rem",
               fontSize: "0.85rem",
               borderRadius: "8px",
+              opacity: syncing ? 0.6 : 1,
+              cursor: syncing ? "not-allowed" : "pointer",
             }}
             onClick={handleDownloadQr}
           >

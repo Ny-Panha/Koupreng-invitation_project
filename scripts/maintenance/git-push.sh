@@ -185,26 +185,20 @@ echo -e "${BLUE}Checking current branch...${NC}"
 CURRENT_BRANCH="$(git symbolic-ref --quiet --short HEAD 2>/dev/null || true)"
 
 if [ -z "$CURRENT_BRANCH" ]; then
-  echo -e "${RED}Error: You are in detached HEAD mode. Checkout main before pushing.${NC}" >&2
+  echo -e "${RED}Error: You are in detached HEAD mode. Checkout a branch before pushing.${NC}" >&2
   exit 1
 fi
 
-if [ "$CURRENT_BRANCH" != "main" ]; then
-  echo -e "${RED}Error: This script only pushes from main to origin/main.${NC}" >&2
-  echo -e "${YELLOW}Current branch: $CURRENT_BRANCH${NC}" >&2
-  echo -e "${YELLOW}Run: git checkout main${NC}" >&2
-  exit 1
-fi
-
-echo -e "${GREEN}Already on main branch${NC}"
+echo -e "${GREEN}Current branch: $CURRENT_BRANCH${NC}"
 
 echo ""
-echo -e "${BLUE}Fetching latest changes from origin/main...${NC}"
+echo -e "${BLUE}Fetching latest changes from origin...${NC}"
 git fetch origin --prune
-git ls-remote --exit-code --heads origin main >/dev/null 2>&1 || {
-  echo -e "${RED}Error: origin/main was not found.${NC}" >&2
-  exit 1
-}
+
+REMOTE_EXISTS=false
+if git ls-remote --exit-code --heads origin "$CURRENT_BRANCH" >/dev/null 2>&1; then
+  REMOTE_EXISTS=true
+fi
 
 echo ""
 echo -e "${BLUE}Checking for changes...${NC}"
@@ -215,27 +209,25 @@ git add -A
 if git diff --cached --quiet; then
   echo -e "${YELLOW}No changes to commit.${NC}"
 
-  LOCAL="$(git rev-parse HEAD)"
-  REMOTE="$(git rev-parse origin/main)"
+  if [ "$REMOTE_EXISTS" = true ]; then
+    LOCAL="$(git rev-parse HEAD)"
+    REMOTE="$(git rev-parse "origin/$CURRENT_BRANCH" 2>/dev/null || echo "")"
 
-  if [ "$LOCAL" = "$REMOTE" ]; then
-    echo -e "${GREEN}✓ Already up to date with origin/main${NC}"
-    exit 0
+    if [ "$LOCAL" = "$REMOTE" ]; then
+      echo -e "${GREEN}✓ Already up to date with origin/$CURRENT_BRANCH${NC}"
+      exit 0
+    fi
+
+    echo -e "${BLUE}Rebasing existing local commits on origin/$CURRENT_BRANCH...${NC}"
+    if ! git pull --rebase origin "$CURRENT_BRANCH"; then
+      show_rebase_conflict_help
+      exit 1
+    fi
   fi
 
-  echo -e "${BLUE}Rebasing existing local commits on origin/main...${NC}"
-  if ! git pull --rebase origin main; then
-    show_rebase_conflict_help
-    exit 1
-  fi
-
-  if [ "$(git rev-parse HEAD)" != "$(git rev-parse origin/main)" ]; then
-    echo -e "${BLUE}Pushing existing local commits to main branch...${NC}"
-    git push origin main
-  else
-    echo -e "${GREEN}✓ Up to date with origin/main${NC}"
-  fi
-
+  echo -e "${BLUE}Pushing existing local commits to origin/$CURRENT_BRANCH...${NC}"
+  git push -u origin "$CURRENT_BRANCH"
+  echo -e "${GREEN}✓ Up to date with origin/$CURRENT_BRANCH${NC}"
   exit 0
 fi
 
@@ -256,7 +248,7 @@ echo -e "${CYAN}Commit message:${NC} ${MAGENTA}$MSG${NC}"
 echo ""
 
 # Ask for confirmation
-echo -n -e "${YELLOW}Proceed with commit and push to main? [Y/n]: ${NC}"
+echo -n -e "${YELLOW}Proceed with commit and push to origin/$CURRENT_BRANCH? [Y/n]: ${NC}"
 read -r CONFIRM
 
 if [[ "$CONFIRM" =~ ^[Nn] ]]; then
@@ -269,20 +261,22 @@ fi
 echo -e "${BLUE}Committing changes...${NC}"
 git commit -m "$MSG"
 
-# Rebase the new commit on top of origin/main to get latest changes.
-echo -e "${BLUE}Rebasing on origin/main...${NC}"
-if ! git pull --rebase origin main; then
-  show_rebase_conflict_help
-  exit 1
+# Rebase the new commit on top of origin/$CURRENT_BRANCH if it exists remotely
+if [ "$REMOTE_EXISTS" = true ]; then
+  echo -e "${BLUE}Rebasing on origin/$CURRENT_BRANCH...${NC}"
+  if ! git pull --rebase origin "$CURRENT_BRANCH"; then
+    show_rebase_conflict_help
+    exit 1
+  fi
 fi
 
-# Push directly to main branch
-echo -e "${BLUE}Pushing to main branch...${NC}"
-git push origin main
+# Push directly to current branch
+echo -e "${BLUE}Pushing to origin/$CURRENT_BRANCH...${NC}"
+git push -u origin "$CURRENT_BRANCH"
 
 echo ""
 echo -e "${GREEN}═══════════════════════════════════════════════════${NC}"
-echo -e "${GREEN}✓ Successfully pushed to main branch!${NC}"
+echo -e "${GREEN}✓ Successfully pushed to origin/$CURRENT_BRANCH!${NC}"
 echo -e "${GREEN}✓ Commit: $MSG${NC}"
 echo -e "${GREEN}═══════════════════════════════════════════════════${NC}"
 echo ""

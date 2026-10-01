@@ -50,16 +50,9 @@ export function EventCard({ draft, onManage, onEdit, onPreview, onDelete, t }) {
     const dateText = draft.event?.date || draft.eventDate || (t ? t("noDate") : null) || "មិនទាន់កំណត់កាលបរិច្ឆេទ";
     const timeText = draft.event?.receptionTime || draft.eventTime || "";
     const isPublished = Boolean(draft.publishedAt || draft.status === "PUBLISHED");
-    const handleCardClick = () => {
-        if (onPreview) {
-            onPreview(draft);
-        } else if (onEdit) {
-            onEdit(draft);
-        }
-    };
 
     return (
-        <article className="event-card" onClick={handleCardClick}>
+        <article className="event-card">
             <div className="event-card-img-wrap">
                 <img src={coverImage} alt={title} className="event-card-img" />
                 <span className={`event-card-badge ${isPublished ? "event-card-badge--published" : "event-card-badge--draft"}`}>

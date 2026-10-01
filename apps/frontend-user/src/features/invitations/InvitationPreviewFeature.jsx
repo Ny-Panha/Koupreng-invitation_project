@@ -2,10 +2,10 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
     ArrowLeft,
-    ExternalLink,
     Mail,
-    Pencil,
+    Monitor,
     ScrollText,
+    Smartphone,
 } from "lucide-react";
 import "./InvitationPages.css";
 import { invitationService } from "@/features/invitations/api/invitationApi";
@@ -24,6 +24,7 @@ export default function InvitationPreviewPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [isGateOpen, setIsGateOpen] = useState(true);
+    const [viewMode, setViewMode] = useState("full");
 
     useEffect(() => {
         let active = true;
@@ -104,7 +105,6 @@ export default function InvitationPreviewPage() {
     const coupleNames = [invitation?.groomName, invitation?.brideName].filter(Boolean).join(" & ");
     const previewTitle = coupleNames || invitation?.title || "មើលសន្លឹកការ";
     const isPublished = invitation?.status === "PUBLISHED";
-    const publicUrl = invitation?.slug ? `/i/${invitation.slug}` : `/event/${id}`;
 
     return (
         <div className="inv-preview-workspace">
@@ -114,7 +114,13 @@ export default function InvitationPreviewPage() {
                     <button
                         type="button"
                         className="inv-preview-back-btn"
-                        onClick={() => navigate("/dashboard/invitations")}
+                        onClick={() => {
+                            if (window.history.length > 1) {
+                                navigate(-1);
+                            } else {
+                                navigate("/dashboard");
+                            }
+                        }}
                         title="ត្រឡប់ទៅផ្ទាំងគ្រប់គ្រង"
                     >
                         <ArrowLeft size={15} />
@@ -130,50 +136,50 @@ export default function InvitationPreviewPage() {
                 </div>
 
                 <div className="inv-preview-header__right">
+                    <div className="inv-preview-view-toggle" role="group" aria-label="ប្តូរទិដ្ឋភាព">
+                        <button
+                            type="button"
+                            className={`inv-preview-toggle-btn ${viewMode === "phone" ? "is-active" : ""}`}
+                            onClick={() => setViewMode("phone")}
+                            title="ទិដ្ឋភាពទូរស័ព្ទ (Phone View)"
+                        >
+                            <Smartphone size={14} />
+                            <span>ទូរស័ព្ទ</span>
+                        </button>
+                        <button
+                            type="button"
+                            className={`inv-preview-toggle-btn ${viewMode === "full" ? "is-active" : ""}`}
+                            onClick={() => setViewMode("full")}
+                            title="ទិដ្ឋភាពពេញអេក្រង់ (Full Screen)"
+                        >
+                            <Monitor size={14} />
+                            <span>ពេញអេក្រង់</span>
+                        </button>
+                    </div>
+
                     <button
                         type="button"
                         className="inv-preview-btn inv-preview-btn--gate"
                         onClick={handleToggleGate}
                         title={isGateOpen ? "មើលគម្របសំបុត្រ" : "បើកមើលធៀបពេញ"}
                     >
-                        {isGateOpen ? <Mail size={14} /> : <ScrollText size={14} />}
+                        {isGateOpen ? <Mail size={15} /> : <ScrollText size={15} />}
                         <span>{isGateOpen ? "គម្រប" : "ធៀប"}</span>
                     </button>
-
-                    <button
-                        type="button"
-                        className="inv-preview-btn"
-                        onClick={() => navigate(`/dashboard/invitations/${id}/edit`)}
-                        title="កែសម្រួលព័ត៌មានធៀប"
-                    >
-                        <Pencil size={14} />
-                        <span>កែ</span>
-                    </button>
-
-                    <a
-                        href={publicUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inv-preview-btn inv-preview-btn--primary"
-                        title="បើកមើលជាភ្ញៀវក្នុងផ្ទាំងថ្មី"
-                    >
-                        <ExternalLink size={14} />
-                        <span>ភ្ញៀវ</span>
-                    </a>
                 </div>
             </header>
 
-            {/* Preview Canvas: 100% phone experience without artificial notch blocking photos */}
-            <main className="inv-preview-canvas">
+            {/* Preview Canvas: supports Full Screen or Phone View */}
+            <main className={`inv-preview-canvas ${viewMode === "full" ? "inv-preview-canvas--full" : ""}`}>
                 {rendered ? (
-                    <div className="inv-phone-viewport">
+                    <div className={`inv-phone-viewport ${viewMode === "full" ? "inv-phone-viewport--full" : ""}`}>
                         <TemplateExperience
-                            key={`phone-${isGateOpen}`}
+                            key={`preview-${isGateOpen}-${viewMode}`}
                             tpl={rendered.tpl}
                             variant={rendered.variant}
                             showActions={false}
                             showBreadcrumb={false}
-                            preview={true}
+                            preview={viewMode === "phone"}
                             previewStartClosed={!isGateOpen}
                         />
                     </div>

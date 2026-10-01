@@ -39,10 +39,6 @@ export function EventsFeature() {
         navigate(`/dashboard/invitations/${draft.id}/edit`);
     };
 
-    const handlePreview = (draft) => {
-        navigate(`/dashboard/invitations/${draft.id}/preview`);
-    };
-
     const createBtnText = (t("createBtn") || "បង្កើតកម្មវិធី").replace(/^\+*\s*/, "");
     const emptyActionText = (t("goToCreate") || t("createBtn") || "បង្កើតកម្មវិធីថ្មី").replace(/^\+*\s*/, "");
 
@@ -77,7 +73,6 @@ export function EventsFeature() {
                             key={draft.id}
                             draft={draft}
                             onManage={handleDashboard}
-                            onPreview={handlePreview}
                             onEdit={handleEdit}
                             onDelete={handleDeleteClick}
                             t={t}

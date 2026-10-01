@@ -10,6 +10,8 @@ export const guestService = {
   },
   getByInvitation: (invitationId, guestId) =>
     api.get(`/v1/invitations/${invitationId}/guests/${guestId}`).then(unwrap),
+  create: (invitationId, guest) =>
+    api.post(`/v1/invitations/${invitationId}/guests`, guest).then(unwrap),
   createForInvitation: (invitationId, guest) =>
     api.post(`/v1/invitations/${invitationId}/guests`, guest).then(unwrap),
   updateForInvitation: (invitationId, guestId, guest) =>

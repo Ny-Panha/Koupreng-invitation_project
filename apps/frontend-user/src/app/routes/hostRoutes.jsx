@@ -43,21 +43,21 @@ export function hostRoutes() {
   return (
     <>
       <Route
-      element={
-        <RequireAuth>
-          <HostShell />
-        </RequireAuth>
-      }
-    >
-      <Route path="/dashboard" element={<DashboardPage />} />
-      <Route path="/dashboard/events" element={<EventsPage />} />
-      <Route path="/dashboard/invitations" element={<Navigate to="/dashboard/events" replace />} />
-      <Route path="/dashboard/invitations/new" element={<InvitationCreatePage />} />
-      <Route path="/dashboard/invitations/design" element={<InvitationEditPage />} />
-      <Route path="/dashboard/invitations/edit" element={<InvitationEditPage />} />
-      <Route path="/dashboard/invitations/:id/edit" element={<InvitationEditPage />} />
-      <Route path="/dashboard/invitations/:id/preview" element={<InvitationPreviewPage />} />
-      <Route path="/dashboard/invitations/:id" element={<InvitationBareRedirect />} />
+        element={
+          <RequireAuth>
+            <HostShell />
+          </RequireAuth>
+        }
+      >
+        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/dashboard/events" element={<EventsPage />} />
+        <Route path="/dashboard/invitations" element={<Navigate to="/dashboard/events" replace />} />
+        <Route path="/dashboard/invitations/new" element={<InvitationCreatePage />} />
+        <Route path="/dashboard/invitations/design" element={<InvitationEditPage />} />
+        <Route path="/dashboard/invitations/edit" element={<InvitationEditPage />} />
+        <Route path="/dashboard/invitations/:id/edit" element={<InvitationEditPage />} />
+        <Route path="/dashboard/invitations/:id/preview" element={<InvitationPreviewPage />} />
+        <Route path="/dashboard/invitations/:id" element={<InvitationBareRedirect />} />
       <Route path="/dashboard/invitations/:invitationId/assistant" element={<AiAssistantPage />} />
       <Route path="/dashboard/invitations/:invitationId/guests" element={<GuestsPage />} />
       <Route path="/dashboard/invitations/:invitationId/rsvp" element={<RsvpDashboardPage />} />

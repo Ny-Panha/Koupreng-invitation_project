@@ -32,8 +32,8 @@ export default function EmeraldLuxeLayout({
     return normalizeTemplateViewModel(tplProp, { ...contentProp, ...liveData });
   }, [tplProp, contentProp, liveData]);
 
-  const groom = tpl.groom || "វណ្ណដា";
-  const bride = tpl.bride || "ស្រីពេជ្រ";
+  const groom = tpl.groom || "";
+  const bride = tpl.bride || "";
   const musicUrl = tpl.music || defaultMusicUrl;
 
   // Gate curtain state - open by default in preview unless previewStartClosed is requested

@@ -1,13 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useParams, useSearchParams } from "react-router-dom";
-import { IoLockClosedOutline, IoHomeOutline } from "react-icons/io5";
+import { IoHomeOutline, IoLockClosedOutline, IoSearchOutline } from "react-icons/io5";
 
-import InvitationDisplay from "../invitations/InvitationDisplay";
 import PublicRsvpForm from "../invitations/PublicRsvpForm";
 import "../invitations/InvitationPages.css";
-import { getTemplateById, TemplateExperience, registerDynamicTemplates } from "@/features/templates";
+import { TemplateExperience, registerDynamicTemplates } from "@/features/templates";
 import { templateCatalogService } from "@/features/templates/api/templateCatalogApi";
-import WeddingSite from "../wedding-site/WeddingSite";
 import { draftToTemplate } from "../wedding-builder/utils/draftToTemplate";
 import { publicInvitationToDraft } from "../wedding-builder/utils/invitationDraftAdapter";
 import { useWeddingStore } from "../../stores/useWeddingStore";
@@ -15,23 +13,38 @@ import { getDraft, getDraftBySlug, listDrafts } from "../../shared/storage/weddi
 import { loadGallery } from "../../shared/storage/galleryStorage";
 import { invitationService } from "@/features/invitations/api/invitationApi";
 import { mediaService } from "@/features/invitations/api/mediaApi";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import { resolveInviteToken } from "./publicInvitationQuery";
 
-function publicStateCopy(languageMode) {
-    const mode = String(languageMode || "").toUpperCase();
-    if (mode === "EN") {
+function publicStateCopy(languageMode, stateType = "UNPUBLISHED") {
+    const isEn = String(languageMode || "").toUpperCase() === "EN";
+
+    if (stateType === "NOT_FOUND") {
+        const title = isEn ? "Invitation not found" : "រកសន្លឹកការមិនឃើញ";
+        const message = isEn
+            ? "This link is invalid or the invitation was removed."
+            : "Link មិនត្រឹមត្រូវ ឬសន្លឹកការត្រូវបានលុបចោល។";
         return {
-            loading: "Loading invitation…",
-            unavailable: "Invitation unavailable",
-            unavailableDetail: "This invitation may be unpublished or unavailable.",
+            loading: isEn ? "Loading invitation…" : "កំពុងផ្ទុកសន្លឹកការ...",
+            title,
+            message,
+            unavailable: title,
+            unavailableDetail: message,
+            stateType: "NOT_FOUND",
         };
     }
+
+    const title = isEn ? "This invitation isn't published yet" : "សន្លឹកការមិនទាន់បានផ្សព្វផ្សាយ";
+    const message = isEn
+        ? "The host has temporarily unpublished this invitation. Please check back later."
+        : "ម្ចាស់បានបិទការផ្សព្វផ្សាយជាបណ្តោះអាសន្ន។ សូមត្រឡប់មកម្តងទៀតនៅពេលក្រោយ។";
     return {
-        loading: mode === "KH" ? "កំពុងផ្ទុកសន្លឹកការ..." : "កំពុងផ្ទុកសន្លឹកការ... / Loading invitation…",
-        unavailable: mode === "KH" ? "មិនអាចបើកសន្លឹកការបាន" : "មិនអាចបើកសន្លឹកការបាន / Invitation unavailable",
-        unavailableDetail: mode === "KH"
-            ? "សន្លឹកការនេះមិនទាន់បានបោះផ្សាយ ឬមិនអាចប្រើបាន។"
-            : "សន្លឹកការនេះមិនទាន់បានបោះផ្សាយ ឬមិនអាចប្រើបាន។ Please check the invitation link.",
+        loading: isEn ? "Loading invitation…" : "កំពុងផ្ទុកសន្លឹកការ...",
+        title,
+        message,
+        unavailable: title,
+        unavailableDetail: message,
+        stateType: "UNPUBLISHED",
     };
 }
 
@@ -39,11 +52,15 @@ export default function PublicInvitationPage() {
     const { slug } = useParams();
     const [searchParams] = useSearchParams();
     const location = useLocation();
+    const { user, isAuthenticated } = useAuth();
+    const currentUserId = user?.id || user?.userId;
     const inviteToken = resolveInviteToken(searchParams);
     const [invitation, setInvitation] = useState(null);
     const [media, setMedia] = useState(null);
     const [remoteLoading, setRemoteLoading] = useState(true);
     const [remoteError, setRemoteError] = useState("");
+    const [errorType, setErrorType] = useState(null);
+    const [userOwnsInvitation, setUserOwnsInvitation] = useState(false);
     const [protectedMode, setProtectedMode] = useState(false);
     const [verifiedAccessToken, setVerifiedAccessToken] = useState("");
     const [verifyingAccess, setVerifyingAccess] = useState(false);
@@ -52,10 +69,6 @@ export default function PublicInvitationPage() {
     const activeDraft = useMemo(() => {
         if (!slug) return null;
         const norm = slug.trim().toLowerCase();
-        const stored = getDraftBySlug(slug) || (norm === "wedding" ? listDrafts()[0] : null);
-        if (stored) {
-            return stored;
-        }
         if (draft && (
             draft.slug?.toLowerCase() === norm ||
             draft.id?.toLowerCase() === norm ||
@@ -64,15 +77,51 @@ export default function PublicInvitationPage() {
         )) {
             return draft;
         }
-        return null;
+        return getDraftBySlug(slug);
     }, [draft, slug]);
     const shouldBackToDashboard = location.state?.backTo === "/dashboard";
     const queryAccessToken = searchParams.get("accessToken") || "";
     const accessStorageKey = slug ? `koupreng_invitation_access_${slug}` : "";
     const effectiveAccessToken = queryAccessToken || verifiedAccessToken;
-    const backProps = shouldBackToDashboard
-        ? { showBack: true, backTo: "/dashboard", backLabel: "← ផ្ទាំងគ្រប់គ្រង" }
-        : { showBack: false };
+
+    useEffect(() => {
+        if (!isAuthenticated) {
+            setUserOwnsInvitation(false);
+            return;
+        }
+        let active = true;
+        invitationService.listMine()
+            .then((items) => {
+                if (!active) return;
+                const list = Array.isArray(items) ? items : items?.data || [];
+                const owns = list.some((i) => {
+                    const s = String(i.slug || "").toLowerCase();
+                    const id = String(i.id || i.invitationId || "");
+                    const target = String(slug || "").toLowerCase();
+                    return s === target || id === target;
+                });
+                if (owns) setUserOwnsInvitation(true);
+            })
+            .catch(() => {});
+        return () => {
+            active = false;
+        };
+    }, [isAuthenticated, slug]);
+
+    const isOwner = Boolean(
+        isAuthenticated && (
+            userOwnsInvitation ||
+            (activeDraft && (activeDraft.ownerUserId == null || String(activeDraft.ownerUserId) === String(currentUserId))) ||
+            (slug && listDrafts(currentUserId).some((d) => {
+                const s = String(d.slug || "").toLowerCase();
+                const id = String(d.id || "");
+                const bId = String(d.backendInvitationId || "");
+                const target = String(slug || "").toLowerCase();
+                return s === target || id === target || bId === target;
+            })) ||
+            shouldBackToDashboard
+        )
+    );
 
     useEffect(() => {
         setVerifiedAccessToken(slug ? sessionStorage.getItem(`koupreng_invitation_access_${slug}`) || "" : "");
@@ -83,7 +132,8 @@ export default function PublicInvitationPage() {
         if (!slug) {
             setInvitation(null);
             setMedia(null);
-            setRemoteError(publicStateCopy().unavailableDetail);
+            setErrorType("NOT_FOUND");
+            setRemoteError(publicStateCopy(null, "NOT_FOUND").message);
             setRemoteLoading(false);
             return;
         }
@@ -91,6 +141,7 @@ export default function PublicInvitationPage() {
         let active = true;
         setRemoteLoading(true);
         setRemoteError("");
+        setErrorType(null);
         setProtectedMode(false);
         setInvitation(null);
         setMedia(null);
@@ -112,14 +163,18 @@ export default function PublicInvitationPage() {
                     setInvitation(invitationData);
                     setMedia(mediaData);
                     setRemoteError("");
+                    setErrorType(null);
                     setProtectedMode(false);
                 }
             })
             .catch((err) => {
                 if (active) {
                     const protectedError = err?.status === 403;
+                    const is404 = err?.status === 404 || String(err?.message || "").toLowerCase().includes("not found");
+                    const detectedType = is404 ? "NOT_FOUND" : "UNPUBLISHED";
+                    setErrorType(detectedType);
                     setProtectedMode(protectedError);
-                    setRemoteError(protectedError ? (err?.message || "សន្លឹកការនេះត្រូវការពាក្យសម្ងាត់។") : publicStateCopy().unavailableDetail);
+                    setRemoteError(protectedError ? (err?.message || "សន្លឹកការនេះត្រូវការពាក្យសម្ងាត់។") : (err?.message || publicStateCopy(null, detectedType).message));
                 }
             })
             .finally(() => {
@@ -159,14 +214,13 @@ export default function PublicInvitationPage() {
     const merged = useMemo(() => {
         if (!activeDraft?.id || gallery === null) return null;
 
-        const templateId = activeDraft.templateId || getTemplateById(activeDraft.templateId)?.id || "khmer-celestial";
+        const templateId = activeDraft.templateId || "garden-royal-khmer-wedding";
         return draftToTemplate({ ...activeDraft, templateId }, gallery);
     }, [activeDraft, gallery]);
 
-
-
     if (remoteLoading) {
-        return <div className="public-state" role="status">{publicStateCopy().loading}</div>;
+        const effectiveLang = invitation?.languageMode || activeDraft?.languageMode || searchParams.get("lang");
+        return <div className="public-state" role="status">{publicStateCopy(effectiveLang).loading}</div>;
     }
 
     const verifyAccess = async (password) => {
@@ -191,17 +245,26 @@ export default function PublicInvitationPage() {
     };
 
     if (invitation) {
+        const isInvPublished = invitation.status ? invitation.status === "PUBLISHED" : invitation.published !== false;
+        if (!isInvPublished) {
+            return (
+                <PublicUnavailableView
+                    stateType="UNPUBLISHED"
+                    languageMode={invitation?.languageMode}
+                    isOwner={isOwner}
+                />
+            );
+        }
         const publicDraft = publicInvitationToDraft(invitation, media);
 
         // Fallback / merge KHQR and local draft data if remote backend draft is missing them
         if (!publicDraft.khqrDollar?.qrUrl || !publicDraft.khqrRiel?.qrUrl) {
             const drafts = listDrafts();
             const localCandidate =
-                (activeDraft && (activeDraft.slug === slug || activeDraft.khqrDollar?.qrUrl))
+                (activeDraft && (activeDraft.slug === slug || activeDraft.id === slug || String(activeDraft.backendInvitationId) === String(invitation.id)))
                 ? activeDraft
                 : (getDraftBySlug(slug) || (invitation.id ? getDraft(invitation.id) : null) || getDraft(slug) ||
-                   drafts.find((d) => d.slug === slug || (invitation.id && String(d.backendInvitationId) === String(invitation.id)) || d.id === slug) ||
-                   drafts.find((d) => d.khqrDollar?.qrUrl || d.khqrRiel?.qrUrl));
+                   drafts.find((d) => d.slug === slug || (invitation.id && String(d.backendInvitationId) === String(invitation.id)) || d.id === slug));
 
             if (localCandidate) {
                 if (!publicDraft.khqrDollar?.qrUrl && localCandidate.khqrDollar?.qrUrl) {
@@ -240,19 +303,6 @@ export default function PublicInvitationPage() {
                 </TemplateExperience>
             );
         }
-
-        return (
-            <InvitationDisplay invitation={invitation} media={media}>
-                {showRsvp && (
-                    <PublicRsvpForm
-                        slug={slug}
-                        inviteToken={inviteToken}
-                        accessToken={effectiveAccessToken}
-                        languageMode={invitation.languageMode}
-                    />
-                )}
-            </InvitationDisplay>
-        );
     }
 
     if (protectedMode) {
@@ -261,30 +311,32 @@ export default function PublicInvitationPage() {
                 error={remoteError}
                 loading={verifyingAccess}
                 onSubmit={verifyAccess}
+                languageMode={invitation?.languageMode || activeDraft?.languageMode || searchParams.get("lang")}
             />
         );
     }
 
     if (activeDraft?.id && gallery === null) {
         return (
-            <div style={{ padding: 80, textAlign: "center", color: "#7d6443" }}>
-                កំពុងផ្ទុក...
-            </div>
+            <main className="public-state" role="status">
+                <div style={{ padding: 80, textAlign: "center", color: "#7d6443" }}>
+                    កំពុងផ្ទុក...
+                </div>
+            </main>
         );
     }
 
     if (activeDraft?.id && merged) {
-        const isPublished = activeDraft.status === "PUBLISHED" || activeDraft.published === true;
-        if (!isPublished && !shouldBackToDashboard) {
+        const isDraftPublished = activeDraft.status === "PUBLISHED" || activeDraft.published === true;
+        if (!isDraftPublished && !shouldBackToDashboard) {
             return (
                 <PublicUnavailableView
-                    title={publicStateCopy(activeDraft?.languageMode).unavailable}
-                    message={publicStateCopy(activeDraft?.languageMode).unavailableDetail}
+                    stateType="UNPUBLISHED"
                     languageMode={activeDraft?.languageMode}
+                    isOwner={isOwner}
                 />
             );
         }
-
         return (
             <TemplateExperience
                 tpl={merged.tpl}
@@ -308,23 +360,19 @@ export default function PublicInvitationPage() {
         );
     }
 
-    const fallbackTpl = getTemplateById(slug);
-
-    if (fallbackTpl.id === slug) {
-        return <WeddingSite tpl={fallbackTpl} {...backProps} />;
-    }
-
+    const effectiveStateType = (userOwnsInvitation || activeDraft) ? "UNPUBLISHED" : (errorType || "NOT_FOUND");
     return (
         <PublicUnavailableView
-            title={publicStateCopy(invitation?.languageMode).unavailable}
-            message={remoteError || publicStateCopy(invitation?.languageMode).unavailableDetail}
-            languageMode={invitation?.languageMode}
+            stateType={effectiveStateType}
+            languageMode={invitation?.languageMode || activeDraft?.languageMode || searchParams.get("lang")}
+            isOwner={isOwner}
         />
     );
 }
 
-function ProtectedInvitationGate({ error, loading, onSubmit }) {
+function ProtectedInvitationGate({ error, loading, onSubmit, languageMode = "km" }) {
     const [password, setPassword] = useState("");
+    const isEn = String(languageMode).toUpperCase() === "EN";
 
     return (
         <main className="public-state protected-gate">
@@ -335,11 +383,11 @@ function ProtectedInvitationGate({ error, loading, onSubmit }) {
                     onSubmit(password);
                 }}
             >
-                <p className="pub-kicker">សន្លឹកការឯកជន / Private invitation</p>
-                <h1>បញ្ចូលពាក្យសម្ងាត់</h1>
-                <p>សូមប្រើពាក្យសម្ងាត់ ឬតំណភ្ជាប់ភ្ញៀវដែលមានសុវត្ថិភាពដើម្បីបើកសន្លឹកការ។</p>
+                <p className="pub-kicker">{isEn ? "Private Invitation" : "សន្លឹកការឯកជន"}</p>
+                <h1>{isEn ? "Enter Password" : "បញ្ចូលពាក្យសម្ងាត់"}</h1>
+                <p>{isEn ? "Please enter the password or use your secure guest link to view the invitation." : "សូមប្រើពាក្យសម្ងាត់ ឬតំណភ្ជាប់ភ្ញៀវដែលមានសុវត្ថិភាពដើម្បីបើកសន្លឹកការ។"}</p>
                 <label>
-                    ពាក្យសម្ងាត់ / Password
+                    {isEn ? "Password" : "ពាក្យសម្ងាត់"}
                     <input
                         type="password"
                         value={password}
@@ -350,15 +398,26 @@ function ProtectedInvitationGate({ error, loading, onSubmit }) {
                 </label>
                 {error && <div className="inv-error">{error}</div>}
                 <button className="inv-primary-btn" type="submit" disabled={loading}>
-                    {loading ? "កំពុងពិនិត្យ..." : "បើកសន្លឹកការ"}
+                    {loading ? (isEn ? "Checking..." : "កំពុងពិនិត្យ...") : (isEn ? "Unlock Invitation" : "បើកសន្លឹកការ")}
                 </button>
             </form>
         </main>
     );
 }
 
-function PublicUnavailableView({ title, message, languageMode = "km" }) {
+function PublicUnavailableView({
+    stateType = "UNPUBLISHED",
+    title,
+    message,
+    languageMode = "km",
+    isOwner = false,
+}) {
     const isEn = String(languageMode).toUpperCase() === "EN";
+    const copy = publicStateCopy(languageMode, stateType);
+    const finalTitle = title || copy.title;
+    const finalMessage = message || copy.message;
+    const isNotFound = stateType === "NOT_FOUND";
+
     return (
         <main
             style={{
@@ -385,7 +444,7 @@ function PublicUnavailableView({ title, message, languageMode = "km" }) {
                     boxShadow: "0 20px 48px -10px rgba(92, 64, 28, 0.12), 0 4px 16px rgba(0, 0, 0, 0.04)",
                 }}
             >
-                {/* Gold Lock Icon Badge */}
+                {/* Gold Icon Badge: 🔒 for UNPUBLISHED, 🔍 for NOT_FOUND */}
                 <div
                     style={{
                         width: "68px",
@@ -402,7 +461,7 @@ function PublicUnavailableView({ title, message, languageMode = "km" }) {
                         boxShadow: "0 8px 24px rgba(185, 139, 66, 0.15)",
                     }}
                 >
-                    <IoLockClosedOutline />
+                    {isNotFound ? <IoSearchOutline /> : <IoLockClosedOutline />}
                 </div>
 
                 {/* Kicker */}
@@ -429,7 +488,7 @@ function PublicUnavailableView({ title, message, languageMode = "km" }) {
                         lineHeight: 1.4,
                     }}
                 >
-                    {title || (isEn ? "Invitation Unavailable" : "មិនទាន់បានផ្សព្វផ្សាយ")}
+                    {finalTitle}
                 </h1>
 
                 {/* Message */}
@@ -438,37 +497,37 @@ function PublicUnavailableView({ title, message, languageMode = "km" }) {
                         fontSize: "0.9375rem",
                         color: "#78716c",
                         lineHeight: 1.65,
-                        margin: "0 0 28px",
+                        margin: isOwner ? "0 0 28px" : "0",
                     }}
                 >
-                    {message || (isEn
-                        ? "This wedding invitation is currently in draft or has been unpublished by the host."
-                        : "សន្លឹកការអាពាហ៍ពិពាហ៍នេះកំពុងស្ថិតក្នុងដំណាក់កាលព្រាង (Draft) ឬត្រូវបានបិទការផ្សាយបណ្ដោះអាសន្នដោយម្ចាស់កម្មវិធី។")}
+                    {finalMessage}
                 </p>
 
-                {/* Action Button */}
-                <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
-                    <Link
-                        to="/dashboard"
-                        style={{
-                            display: "inline-flex",
-                            alignItems: "center",
-                            gap: "8px",
-                            padding: "11px 24px",
-                            borderRadius: "14px",
-                            background: "var(--brand-primary, #b98b42)",
-                            color: "#ffffff",
-                            fontSize: "0.875rem",
-                            fontWeight: 700,
-                            textDecoration: "none",
-                            boxShadow: "0 4px 16px rgba(185, 139, 66, 0.28)",
-                            transition: "all 0.2s ease",
-                        }}
-                    >
-                        <IoHomeOutline style={{ fontSize: "1.1rem" }} />
-                        <span>{isEn ? "Go to Dashboard" : "ត្រឡប់ទៅផ្ទាំងគ្រប់គ្រង"}</span>
-                    </Link>
-                </div>
+                {/* Action Button: render ONLY when the viewer is authenticated as the invitation owner */}
+                {isOwner && (
+                    <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
+                        <Link
+                            to="/dashboard"
+                            style={{
+                                display: "inline-flex",
+                                alignItems: "center",
+                                gap: "8px",
+                                padding: "11px 24px",
+                                borderRadius: "14px",
+                                background: "var(--brand-primary, #b98b42)",
+                                color: "#ffffff",
+                                fontSize: "0.875rem",
+                                fontWeight: 700,
+                                textDecoration: "none",
+                                boxShadow: "0 4px 16px rgba(185, 139, 66, 0.28)",
+                                transition: "all 0.2s ease",
+                            }}
+                        >
+                            <IoHomeOutline style={{ fontSize: "1.1rem" }} />
+                            <span>{isEn ? "Go to Dashboard" : "ត្រឡប់ទៅផ្ទាំងគ្រប់គ្រង"}</span>
+                        </Link>
+                    </div>
+                )}
             </div>
         </main>
     );

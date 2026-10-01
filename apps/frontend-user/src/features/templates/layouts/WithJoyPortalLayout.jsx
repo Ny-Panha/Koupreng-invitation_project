@@ -37,13 +37,13 @@ export default function WithJoyPortalLayout({
     return () => window.removeEventListener("message", handleMessage);
   }, []);
 
-  const groom = effectiveContent.groom || "វណ្ណដា";
-  const bride = effectiveContent.bride || "ស្រីពេជ្រ";
-  const dateText = effectiveContent.dateText || "ថ្ងៃពុធ ទី២៨ ខែមករា ឆ្នាំ២០២៦";
+  const groom = effectiveContent.groom || "";
+  const bride = effectiveContent.bride || "";
+  const dateText = effectiveContent.dateText || "";
   const venue = effectiveContent.venue || {
-    name: "The Premier Center Sen Sok",
-    hall: "Grand Ballroom A",
-    address: "ផ្លូវ 1003, សង្កាត់ភ្នំពេញថ្មី, ខណ្ឌសែនសុខ, រាជធានីភ្នំពេញ",
+    name: "",
+    hall: "",
+    address: "",
   };
   const coverImage = effectiveContent.coverImage || "/facebook/all/03-card/cover-card.jpg";
   const musicUrl = effectiveContent.music?.url || effectiveContent.music || defaultMusicUrl;
@@ -406,7 +406,7 @@ export default function WithJoyPortalLayout({
       )}
 
       {/* Gift / Blessing Registry */}
-      {isEnabled("gift") && (
+      {isEnabled("gift") && (effectiveContent.bankAccount?.accountNumber || effectiveContent.bankAccount?.qrUrl || (effectiveContent.gift && effectiveContent.gift.length > 0)) && (
         <section id="gift" className="wj-section">
           <div className="wj-section-header">
             <p className="wj-section-kicker">Wedding Gift</p>
@@ -441,7 +441,9 @@ export default function WithJoyPortalLayout({
             >
               <Gift className="w-8 h-8" />
             </div>
-            <h3 style={{ fontSize: "1.2rem", fontWeight: "700", marginBottom: "0.25rem" }}>ABA Bank &amp; KHQR</h3>
+            <h3 style={{ fontSize: "1.2rem", fontWeight: "700", marginBottom: "0.25rem" }}>
+              {effectiveContent.bankAccount?.bank || "Bank & KHQR"}
+            </h3>
             <p style={{ color: "var(--wj-text-muted)", fontSize: "0.9rem", marginBottom: "1.25rem" }}>
               ស្កេន QR Code ដើម្បីផ្ញើចំណងដៃជូនពរតាមប្រព័ន្ធធនាគារ
             </p>
@@ -455,9 +457,21 @@ export default function WithJoyPortalLayout({
                 marginBottom: "1rem",
               }}
             >
-              <QrCode className="w-36 h-36 mx-auto text-slate-800" />
-              <p style={{ fontSize: "0.85rem", fontWeight: "600", marginTop: "0.5rem" }}>000 123 456 (ABA)</p>
-              <p style={{ fontSize: "0.75rem", color: "var(--wj-text-muted)" }}>{groom} &amp; {bride}</p>
+              {effectiveContent.bankAccount?.qrUrl ? (
+                <img src={effectiveContent.bankAccount.qrUrl} alt="KHQR" className="w-36 h-36 mx-auto object-contain rounded-lg" />
+              ) : (
+                <QrCode className="w-36 h-36 mx-auto text-slate-800" />
+              )}
+              {effectiveContent.bankAccount?.accountNumber && (
+                <p style={{ fontSize: "0.85rem", fontWeight: "600", marginTop: "0.5rem" }}>
+                  {effectiveContent.bankAccount.accountNumber} {effectiveContent.bankAccount.bank ? `(${effectiveContent.bankAccount.bank})` : ""}
+                </p>
+              )}
+              {effectiveContent.bankAccount?.accountName ? (
+                <p style={{ fontSize: "0.75rem", color: "var(--wj-text-muted)" }}>{effectiveContent.bankAccount.accountName}</p>
+              ) : (groom || bride) ? (
+                <p style={{ fontSize: "0.75rem", color: "var(--wj-text-muted)" }}>{[groom, bride].filter(Boolean).join(" & ")}</p>
+              ) : null}
             </div>
           </div>
         </section>

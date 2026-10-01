@@ -37,6 +37,7 @@ export const templateRegistry = {
   "emerald-royal-luxe": EmeraldLuxeLayout,
   "emerald royal luxe": EmeraldLuxeLayout,
   "emerald-luxe-wedding": EmeraldLuxeLayout,
+  "9": EmeraldLuxeLayout,
   "2": EmeraldLuxeLayout,
   "emerald-luxe": EmeraldLuxeLayout,
 

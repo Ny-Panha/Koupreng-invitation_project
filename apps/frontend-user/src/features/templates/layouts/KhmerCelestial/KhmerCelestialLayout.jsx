@@ -243,8 +243,8 @@ export default function KhmerCelestialLayout({
   const musicEnabled = Boolean(musicUrl) && sectionEnabled("music");
   const saveData = typeof navigator !== "undefined" && navigator.connection?.saveData === true;
   const transitionEnabled = !reducedMotion && !saveData;
-  const groomName = content.groom?.trim() || "វណ្ណដា";
-  const brideName = content.bride?.trim() || "ស្រីពេជ្រ";
+  const groomName = content.groom?.trim() || "";
+  const brideName = content.bride?.trim() || "";
   const showBrandMark = content.showBrandMark !== false;
   const effectiveBrandMark = showBrandMark
     ? (content.brandMark || KHMER_CELESTIAL_ASSETS.brandMark)

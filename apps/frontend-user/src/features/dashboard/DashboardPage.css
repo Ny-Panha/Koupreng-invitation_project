@@ -540,11 +540,103 @@
   }
 }
 
-/* Accessibility - High contrast focus rings */
 .pe-dashboard-page a:focus-visible,
 .pe-dashboard-page button:focus-visible,
 .dash-event-tab:focus-visible,
 .dash-quick-btn:focus-visible {
+  outline: 2px solid var(--brand-primary, #b98b42);
+  outline-offset: 2px;
+}
+
+/* ── Publish Toggle Switch (text inside track) ── */
+.dash-publish-toggle-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.dash-publish-toggle-label {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--brand-text-muted, #8a8578);
+  user-select: none;
+  white-space: nowrap;
+}
+.dash-publish-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 64px;
+  height: 30px;
+  border-radius: 999px;
+  border: 2px solid var(--brand-border, #e5dfd6);
+  background: #cbc7be;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.3s ease, border-color 0.3s ease;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.dash-publish-switch:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Text labels inside track */
+.dash-publish-switch-text {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  transition: opacity 0.2s ease;
+}
+/* "បើក" / "On" — shown left of knob when switch is ON */
+.dash-publish-switch-text.on-text {
+  left: 8px;
+  color: #fff;
+  opacity: 0;
+}
+/* "បិទ" / "Off" — shown right of knob when switch is OFF */
+.dash-publish-switch-text.off-text {
+  right: 8px;
+  color: #756e62;
+  opacity: 1;
+}
+
+/* Knob */
+.dash-publish-switch .dash-publish-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+/* ON state */
+.dash-publish-switch.on {
+  background: var(--brand-primary, #b98b42);
+  border-color: var(--brand-primary, #b98b42);
+}
+.dash-publish-switch.on .dash-publish-knob {
+  transform: translateX(34px);
+}
+.dash-publish-switch.on .on-text {
+  opacity: 1;
+}
+.dash-publish-switch.on .off-text {
+  opacity: 0;
+}
+
+/* Focus ring */
+.dash-publish-switch:focus-visible {
   outline: 2px solid var(--brand-primary, #b98b42);
   outline-offset: 2px;
 }

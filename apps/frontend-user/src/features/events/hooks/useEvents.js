@@ -46,6 +46,10 @@ export function useEvents(t) {
                 return apiInv;
             });
             localDrafts.forEach((ld) => {
+                if (ld.syncStatus === "SYNCED" && ld.backendInvitationId && !apiInvs.some((m) => String(m.id) === String(ld.backendInvitationId))) {
+                    deleteDraft(ld.id);
+                    return;
+                }
                 if (!merged.some((m) => String(m.id) === String(ld.id) || String(m.id) === String(ld.backendInvitationId))) {
                     merged.push(ld);
                 }

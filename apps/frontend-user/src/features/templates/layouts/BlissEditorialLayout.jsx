@@ -26,16 +26,16 @@ export default function BlissEditorialLayout({
     return () => window.removeEventListener("message", handleMessage);
   }, []);
 
-  const groom = effectiveContent.groom || "វណ្ណដា";
-  const bride = effectiveContent.bride || "ស្រីពេជ្រ";
-  const groomEn = effectiveContent.groomEn || "Vanda Chea";
-  const brideEn = effectiveContent.brideEn || "Sreypich Sok";
-  const dateText = effectiveContent.dateText || "ថ្ងៃសៅរ៍ ទី២៨ ខែវិច្ឆិកា ឆ្នាំ២០២៦";
-  const dateTextEn = effectiveContent.dateTextEn || "Saturday, November 28, 2026";
+  const groom = effectiveContent.groom || "";
+  const bride = effectiveContent.bride || "";
+  const groomEn = effectiveContent.groomEn || "";
+  const brideEn = effectiveContent.brideEn || "";
+  const dateText = effectiveContent.dateText || "";
+  const dateTextEn = effectiveContent.dateTextEn || "";
   const venue = effectiveContent.venue || {
-    name: "The Premier Center Sen Sok",
-    hall: "Grand Ballroom A",
-    address: "ផ្លូវ 1003, សង្កាត់ភ្នំពេញថ្មី, ខណ្ឌសែនសុខ, រាជធានីភ្នំពេញ",
+    name: "",
+    hall: "",
+    address: "",
   };
   const coverImage = effectiveContent.coverImage || "/facebook/all/03-card/cover-card.jpg";
   const musicUrl = effectiveContent.music?.url || effectiveContent.music || defaultMusicUrl;

@@ -195,12 +195,12 @@ export default function TemplateExperience({
             showOpenButton: liveData.showOpenButton !== undefined ? liveData.showOpenButton : (liveData.openButtonImage === "" ? false : baseContent.showOpenButton),
             showButterflies: liveData.showButterflies,
             googleMapUrl: liveData.googleMapUrl || baseContent.googleMapUrl,
-            bankAccount: {
-                bank: liveData.bankName || baseContent.bankAccount?.bank || "ABA Bank",
-                accountNumber: liveData.bankAccountNumber || baseContent.bankAccount?.accountNumber || "000 123 456",
-                accountName: liveData.bankAccountName || baseContent.bankAccount?.accountName || "VANDA & SREYPICH Official",
+            bankAccount: (liveData.bankAccountNumber || baseContent.bankAccount?.accountNumber || liveData.qrGiftUrl || baseContent.bankAccount?.qrUrl) ? {
+                bank: liveData.bankName || baseContent.bankAccount?.bank || "",
+                accountNumber: liveData.bankAccountNumber || baseContent.bankAccount?.accountNumber || "",
+                accountName: liveData.bankAccountName || baseContent.bankAccount?.accountName || "",
                 qrUrl: liveData.qrGiftUrl || baseContent.bankAccount?.qrUrl,
-            },
+            } : null,
             gift: (liveData.khqrDollar?.qrUrl || liveData.khqrRiel?.qrUrl) ? [
                 ...(liveData.khqrDollar?.qrUrl ? [{
                     id: "khqr-dollar",
@@ -224,17 +224,17 @@ export default function TemplateExperience({
                     qrImage: liveData.khqrRiel.qrUrl,
                     qrValue: liveData.khqrRiel.accountNumber || "",
                 }] : []),
-            ] : ((liveData.qrGiftUrl || liveData.bankName || liveData.bankAccountNumber || liveData.bankAccountName) ? [
+            ] : ((liveData.qrGiftUrl || liveData.bankAccountNumber) ? [
                 {
                     id: "gift-live",
-                    bank: liveData.bankName || "ABA Bank",
-                    account: liveData.bankAccountName || "VANDA & SREYPICH Official",
-                    number: liveData.bankAccountNumber || "000 123 456",
-                    note: liveData.bankName ? `${liveData.bankName} PAY` : "ABA PAY",
+                    bank: liveData.bankName || "",
+                    account: liveData.bankAccountName || "",
+                    number: liveData.bankAccountNumber || "",
+                    note: liveData.bankName ? `${liveData.bankName} PAY` : "",
                     qrImage: liveData.qrGiftUrl || "",
-                    qrValue: liveData.qrGiftUrl ? "" : [liveData.bankName || "ABA Bank", liveData.bankAccountName || "", liveData.bankAccountNumber || ""].filter(Boolean).join(" | "),
+                    qrValue: liveData.qrGiftUrl ? "" : [liveData.bankName, liveData.bankAccountName, liveData.bankAccountNumber].filter(Boolean).join(" | "),
                 }
-            ] : baseContent.gift),
+            ] : (baseContent.gift || [])),
             enableFloatingBar: liveData.enableFloatingBar !== false,
             enabledSections: liveData.enabledSections ? {
                 ...baseContent.enabledSections,

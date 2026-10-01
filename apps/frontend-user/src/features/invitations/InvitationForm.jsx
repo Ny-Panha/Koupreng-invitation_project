@@ -593,10 +593,11 @@ export default function InvitationForm({ invitation }) {
         const isDefaultOpening = (customParsed.openingStyle === "khmer-royal" || invitation?.openingStyle === "khmer-royal");
         const isDefaultCover = !customParsed.coverImage || customParsed.coverImage.includes("/facebook/all/03-card/cover-card.jpg");
         const isDefaultTitle = !customParsed.title || customParsed.title === "សួនរាជហង្សខ្មែរ" || customParsed.title === "Garden Royal Khmer Wedding" || customParsed.title.includes("W01");
-        const isDefaultCouple = (!customParsed.groomName || customParsed.groomName === "វណ្ណដា") && (!customParsed.brideName || customParsed.brideName === "ស្រីពេជ្រ");
+        const isDefaultCouple = !customParsed.groomName && !customParsed.brideName;
         const uploadedCover = invitation?.coverUrl || invitation?.media?.coverImage?.fileUrl || "";
         const templateDefaultCover = preset.coverImage || DEFAULT_STATE.coverImage;
         const templateDefaultCoverBg = preset.coverBackgroundImage || tpl?.coverBackgroundImage || DEFAULT_STATE.coverBackgroundImage;
+        const templateDefaultBackground = preset.backgroundImage || tpl?.backgroundImage || (String(activeTplId).includes("celestial") ? "/invitations/khmer-celestial/botanical-frame.jpg" : "");
         const uploadedCoverFromDraft = uploadedCover || ((!isDefaultCover && customParsed.coverImage) ? customParsed.coverImage : "");
         const coverBackgroundImage = customParsed.coverBackgroundImage
             || invitation?.coverBackgroundImage
@@ -613,14 +614,14 @@ export default function InvitationForm({ invitation }) {
         const openingStyle = (!isDefaultOpening && (customParsed.openingStyle || invitation?.openingStyle)) || preset.openingStyle || DEFAULT_STATE.openingStyle;
         const coverImage = uploadedCoverFromDraft || templateDefaultCover;
         const title = (!isDefaultTitle && (invitation?.title || customParsed.title)) ? (invitation?.title || customParsed.title) : (preset.title || DEFAULT_STATE.title);
-        const groomName = (!isDefaultCouple && (invitation?.groomName || customParsed.groomName)) ? (invitation?.groomName || customParsed.groomName) : (preset.groom || DEFAULT_STATE.groomName);
-        const brideName = (!isDefaultCouple && (invitation?.brideName || customParsed.brideName)) ? (invitation?.brideName || customParsed.brideName) : (preset.bride || DEFAULT_STATE.brideName);
+        const groomName = (!isDefaultCouple && (invitation?.groomName || customParsed.groomName)) ? (invitation?.groomName || customParsed.groomName) : "";
+        const brideName = (!isDefaultCouple && (invitation?.brideName || customParsed.brideName)) ? (invitation?.brideName || customParsed.brideName) : "";
         const venueName = (invitation?.venueName || customParsed.venueName) && (invitation?.venueName !== "The Premier Center Sen Sok" && customParsed.venueName !== "The Premier Center Sen Sok")
             ? (invitation?.venueName || customParsed.venueName)
-            : (preset.venueName || DEFAULT_STATE.venueName);
+            : "";
         const venueAddress = (invitation?.venueAddress || customParsed.venueAddress) && (invitation?.venueAddress !== "អគារ A, សែនសុខ, ភ្នំពេញ" && customParsed.venueAddress !== "អគារ A, សែនសុខ, ភ្នំពេញ")
             ? (invitation?.venueAddress || customParsed.venueAddress)
-            : (preset.venueAddress || DEFAULT_STATE.venueAddress);
+            : "";
         const isEmptyDraft = Boolean(
             invitation
             && String(invitation.status || "").toUpperCase() === "DRAFT"
@@ -667,7 +668,8 @@ export default function InvitationForm({ invitation }) {
             templateDefaultCover,
             coverBackgroundImage,
             templateDefaultCoverBg,
-            backgroundImage: customParsed.backgroundImage || invitation?.backgroundImage || preset.backgroundImage || tpl?.backgroundImage || "",
+            templateDefaultBackground,
+            backgroundImage: customParsed.backgroundImage || invitation?.backgroundImage || templateDefaultBackground || "",
             messageText: (invitation?.storyText && invitation.storyText !== DEFAULT_INVITATION_TEXT)
                 ? invitation.storyText
                 : ((customParsed.messageText && customParsed.messageText !== DEFAULT_INVITATION_TEXT)
@@ -847,6 +849,8 @@ export default function InvitationForm({ invitation }) {
             templateId: template.id || template.code || template.slug || form.templateId,
             presetId: preset.presetId || template.presetId || "",
             templateDefaultCover: preset.coverImage || template.phoneCoverImage || template.mainImage || "",
+            templateDefaultCoverBg: preset.coverBackgroundImage || template.coverBackgroundImage || "",
+            templateDefaultBackground: preset.backgroundImage || template.backgroundImage || (String(template.id || template.slug).includes("celestial") ? "/invitations/khmer-celestial/botanical-frame.jpg" : ""),
             theme: template.theme || preset.theme || template.presetId || form.theme || "",
             fontFamily: template.fontFamily || preset.fontFamily || form.fontFamily || "",
             layoutStyles: template.layoutStyles || preset.layoutStyles || form.layoutStyles || {},
@@ -855,16 +859,16 @@ export default function InvitationForm({ invitation }) {
             bottomColor: template.secondaryColor || preset.bottomColor || template.bottomColor || form.bottomColor,
             backgroundColor: template.backgroundColor || preset.backgroundColor || template.bgColor || form.backgroundColor,
             title: nextTitle,
-            groomName: form.groomName || preset.groom || template.groom || "វណ្ណដា",
-            brideName: form.brideName || preset.bride || template.bride || "ស្រីពេជ្រ",
+            groomName: form.groomName || "",
+            brideName: form.brideName || "",
             groomFather: form.groomFather || template.family?.groomParents?.[0] || "",
             groomMother: form.groomMother || template.family?.groomParents?.[1] || "",
             brideFather: form.brideFather || template.family?.brideParents?.[0] || "",
             brideMother: form.brideMother || template.family?.brideParents?.[1] || "",
             eventDate: nextDate,
             eventTime: form.eventTime || template.receptionTime || "17:00",
-            venueName: form.venueName || preset.venueName || template.venueName || "The Premier Center Sen Sok",
-            venueAddress: form.venueAddress || preset.venueAddress || template.venueAddress || "អគារ A, សែនសុខ, ភ្នំពេញ",
+            venueName: form.venueName || "",
+            venueAddress: form.venueAddress || "",
             schedule: (template.schedule && template.schedule.length > 0)
                 ? template.schedule
                 : (preset.schedule?.length ? preset.schedule : form.schedule),
@@ -1303,26 +1307,18 @@ export default function InvitationForm({ invitation }) {
 
         const activeTpl = getTemplateById(form.templateId);
         const activePreset = getTemplatePreset(activeTpl) || {};
-        const finalGroom = String(form.groomName || "").trim() || activePreset.groom || activeTpl?.groom || "វណ្ណដា";
-        const finalBride = String(form.brideName || "").trim() || activePreset.bride || activeTpl?.bride || "ស្រីពេជ្រ";
-        const finalDate = String(form.eventDate || "").trim() || (activeTpl?.targetDate ? activeTpl.targetDate.split("T")[0] : "2026-03-28");
+        const finalGroom = String(form.groomName || "").trim();
+        const finalBride = String(form.brideName || "").trim();
+        const finalDate = String(form.eventDate || "").trim() || (activeTpl?.targetDate ? activeTpl.targetDate.split("T")[0] : "");
         const finalTitle = String(form.title || "").trim() || activePreset.title || activeTpl?.name || "សិរីមង្គលអាពាហ៍ពិពាហ៍";
         const finalTime = String(form.eventTime || "").trim() || activeTpl?.receptionTime || "17:00";
-        const finalVenueName = String(form.venueName || "").trim() || activePreset.venueName || activeTpl?.venueName || "The Premier Center Sen Sok";
-        const finalVenueAddress = String(form.venueAddress || "").trim() || activePreset.venueAddress || activeTpl?.venueAddress || "អគារ A, សែនសុខ, ភ្នំពេញ";
+        const finalVenueName = String(form.venueName || "").trim();
+        const finalVenueAddress = String(form.venueAddress || "").trim();
 
-        if (!form.groomName || !form.brideName || !form.eventDate || !form.title) {
+        if (finalTitle && !form.title) {
             setForm((prev) => ({
                 ...prev,
-                groomName: prev.groomName || finalGroom,
-                brideName: prev.brideName || finalBride,
-                hostName: prev.hostName || finalGroom,
-                partnerName: prev.partnerName || finalBride,
-                title: prev.title || finalTitle,
-                eventDate: prev.eventDate || finalDate,
-                eventTime: prev.eventTime || finalTime,
-                venueName: prev.venueName || finalVenueName,
-                venueAddress: prev.venueAddress || finalVenueAddress,
+                title: finalTitle,
             }));
         }
 
@@ -1582,8 +1578,8 @@ export default function InvitationForm({ invitation }) {
                 id: targetDraftId,
                 slug: saved?.slug || invitation?.slug || form.slug || "wedding",
                 backendInvitationId: saved?.id || invitation?.backendInvitationId || (!isNaN(Number(invitationId)) ? Number(invitationId) : null),
-                syncStatus: apiSyncFailed || mediaSyncError ? (effectiveBackendId || saved?.id ? "SYNC_FAILED" : "LOCAL_ONLY") : "SYNCED",
-                syncError: apiSyncFailed ? "មិនអាចភ្ជាប់ទៅ server បានទេ។" : mediaSyncError,
+                syncStatus: apiSyncFailed ? (effectiveBackendId || saved?.id ? "SYNC_FAILED" : "LOCAL_ONLY") : "SYNCED",
+                syncError: apiSyncFailed ? "មិនអាចភ្ជាប់ទៅ server បានទេ។" : (mediaSyncError || ""),
                 templateId: form.templateId || "garden-royal-khmer-wedding",
                 presetId: form.presetId || "",
                 couple: {
@@ -1748,7 +1744,7 @@ export default function InvitationForm({ invitation }) {
             )}
 
             {/* Cover Background (Closed State) Image Upload (Field 1 for Celestial / Royal Khmer) */}
-            {(flowConfig.hasCoverBackgroundImage || String(form.templateId || "").toLowerCase().includes("celestial") || String(form.templateId || "").toLowerCase().includes("royal-khmer") || Boolean(form.coverBackgroundImage)) && (
+            {Boolean(flowConfig.hasCoverBackgroundImage) && (
                 <div style={{ marginTop: 12 }}>
                     <CleanImageUploadField
                         label={activeLangTab === "EN" ? (flowConfig.labels.coverBackgroundImageEn || "Cover background (closed state)") : (flowConfig.labels.coverBackgroundImage || "ផ្ទៃខាងក្រោយគ្របមុខ (ពេលមិនទាន់បើក)")}
@@ -1773,13 +1769,13 @@ export default function InvitationForm({ invitation }) {
                 </div>
             )}
 
-            {/* Background Frame / Botanical Image Upload (Opened State) (Field 2 for Celestial / Royal Khmer) */}
-            {(flowConfig.hasBackgroundImage || String(form.templateId || "").toLowerCase().includes("celestial") || String(form.templateId || "").toLowerCase().includes("royal-khmer") || Boolean(form.backgroundImage)) && (
+            {/* Background Frame / Botanical Image Upload (Opened State) (Field 2 for Full / Botanical Frame) */}
+            {Boolean(flowConfig.hasBackgroundImage) && (
                 <div style={{ marginTop: 12 }}>
                     <CleanImageUploadField
                         label={activeLangTab === "EN" ? (flowConfig.labels.backgroundImageEn || "Botanical frame (opened state)") : (flowConfig.labels.backgroundImage || "ស៊ុមផ្កា / រូបភាពផ្ទៃខាងក្រោយ (Botanical Frame)")}
                         icon={Sparkles}
-                        image={form.backgroundImage || "/invitations/khmer-celestial/botanical-frame.jpg"}
+                        image={form.backgroundImage || form.templateDefaultBackground || (String(form.templateId).includes("celestial") ? "/invitations/khmer-celestial/botanical-frame.jpg" : "")}
                         onUpload={(e) => handleFileUpload(e, (url, file) => {
                             update("backgroundImage", url);
                             setPendingBackgroundFile(file);
@@ -1788,13 +1784,18 @@ export default function InvitationForm({ invitation }) {
                             update("backgroundImage", "");
                             setPendingBackgroundFile(null);
                         }}
-                        onRestoreDefault={() => {
-                            update("backgroundImage", "/invitations/khmer-celestial/botanical-frame.jpg");
+                        onRestoreDefault={form.templateDefaultBackground || String(form.templateId).includes("celestial") ? () => {
+                            const def = form.templateDefaultBackground || "/invitations/khmer-celestial/botanical-frame.jpg";
+                            update("backgroundImage", def);
                             setPendingBackgroundFile(null);
-                        }}
-                        hasDefault={Boolean(form.backgroundImage && form.backgroundImage !== "/invitations/khmer-celestial/botanical-frame.jpg")}
+                        } : undefined}
+                        hasDefault={Boolean(
+                            (form.templateDefaultBackground || String(form.templateId).includes("celestial")) &&
+                            form.backgroundImage &&
+                            form.backgroundImage !== (form.templateDefaultBackground || "/invitations/khmer-celestial/botanical-frame.jpg")
+                        )}
                         inputRef={bgFrameInputRef}
-                        hint={activeLangTab === "EN" ? (flowConfig.hints.backgroundImageEn || "Botanical frame shown once invitation is opened") : (flowConfig.hints.backgroundImage || "ស៊ុមផ្កាប្រណិតព័ទ្ធជុំវិញកាតធៀបការពេលបើក (អាចប្តូរជារូបស៊ុមផ្ទាល់ខ្លួនបាន)")}
+                        hint={activeLangTab === "EN" ? (flowConfig.hints.backgroundImageEn || "Shown as background or frame once invitation is opened (Full)") : (flowConfig.hints.backgroundImage || "ស៊ុមផ្កា ឬរូបភាពផ្ទៃខាងក្រោយពេលបើកធៀបការពេញ (Full)")}
                     />
                 </div>
             )}

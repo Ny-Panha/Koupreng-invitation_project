@@ -58,11 +58,11 @@ export default function WeddingBuilderFeature() {
     const preset = getTemplatePreset(tpl) || {};
     const initialCover = tpl?.phoneCoverImage || tpl?.mainImage || preset.coverImage || "";
     const initialTitle = tpl?.name || preset.title || "";
-    const initialGroom = tpl?.groom || preset.groom || "";
-    const initialBride = tpl?.bride || preset.bride || "";
+    const initialGroom = "";
+    const initialBride = "";
     const initialDate = tpl?.targetDate ? tpl.targetDate.split("T")[0] : "";
     const initialTime = tpl?.receptionTime || "17:00";
-    const initialVenue = tpl?.venueName || preset.venueName || "";
+    const initialVenue = "";
     const initialDesc = tpl?.message || tpl?.description || preset.messageText || "";
 
     return {
@@ -124,9 +124,9 @@ export default function WeddingBuilderFeature() {
               setForm((prev) => ({
                 ...prev,
                 title: prev.title || preset.title || tpl.name || "",
-                groomName: prev.groomName || preset.groom || tpl.groom || "",
-                brideName: prev.brideName || preset.bride || tpl.bride || "",
-                venueName: prev.venueName || preset.venueName || tpl.venueName || "",
+                groomName: prev.groomName || "",
+                brideName: prev.brideName || "",
+                venueName: prev.venueName || "",
                 coverImage: prev.coverImage || preset.coverImage || tpl.phoneCoverImage || tpl.mainImage || "",
                 description: prev.description || preset.messageText || tpl.message || "",
                 templateId: templateIdParam,
@@ -163,9 +163,9 @@ export default function WeddingBuilderFeature() {
     setForm((prev) => {
       const isPrevDefaultCover = !prev.coverImage || prev.coverImage.includes("/facebook/all/") || prev.coverImage.includes("cover-card.jpg");
       const isPrevDefaultTitle = !prev.title || prev.title === "សួនរាជហង្សខ្មែរ" || prev.title === "Garden Royal Khmer Wedding";
-      const isPrevDefaultGroom = !prev.groomName || prev.groomName === "វណ្ណដា";
-      const isPrevDefaultBride = !prev.brideName || prev.brideName === "ស្រីពេជ្រ";
-      const isPrevDefaultVenue = !prev.venueName || prev.venueName === "The Premier Center Sen Sok";
+      const isPrevDefaultGroom = !prev.groomName;
+      const isPrevDefaultBride = !prev.brideName;
+      const isPrevDefaultVenue = !prev.venueName;
 
       return {
         ...prev,
@@ -176,9 +176,9 @@ export default function WeddingBuilderFeature() {
         bottomColor: preset.bottomColor || prev.bottomColor || "#F3E5AB",
         coverImage: isPrevDefaultCover ? (preset.coverImage || selectedTpl.phoneCoverImage || selectedTpl.mainImage || prev.coverImage) : prev.coverImage,
         title: isPrevDefaultTitle ? (preset.title || selectedTpl.name || prev.title) : prev.title,
-        groomName: isPrevDefaultGroom ? (preset.groom || selectedTpl.groom || prev.groomName) : prev.groomName,
-        brideName: isPrevDefaultBride ? (preset.bride || selectedTpl.bride || prev.brideName) : prev.brideName,
-        venueName: isPrevDefaultVenue ? (preset.venueName || selectedTpl.venueName || prev.venueName) : prev.venueName,
+        groomName: prev.groomName || "",
+        brideName: prev.brideName || "",
+        venueName: prev.venueName || "",
       };
     });
 
@@ -384,18 +384,18 @@ export default function WeddingBuilderFeature() {
         frontColor: designPayload.frontColor,
         bottomColor: designPayload.bottomColor,
         couple: {
-          groom: form.groomName || preset.groom || "",
-          bride: form.brideName || preset.bride || "",
+          groom: form.groomName || "",
+          bride: form.brideName || "",
         },
-        groomName: form.groomName || preset.groom || "",
-        brideName: form.brideName || preset.bride || "",
+        groomName: form.groomName || "",
+        brideName: form.brideName || "",
         event: {
           title: form.title || preset.title || "",
           date: form.eventDate,
           receptionTime: form.eventTime,
-          venueName: form.venueName || preset.venueName || "",
+          venueName: form.venueName || "",
         },
-        venueName: form.venueName || preset.venueName || "",
+        venueName: form.venueName || "",
         title: form.title || preset.title || "",
         coverImage: designPayload.coverImage,
         schedule: flatSchedule,

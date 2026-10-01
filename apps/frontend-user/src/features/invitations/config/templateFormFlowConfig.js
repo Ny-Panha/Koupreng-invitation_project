@@ -90,6 +90,28 @@ export const TEMPLATE_FORM_FLOWS = {
         },
         placePhotoInInvitation: false,
     },
+    // Garden Royal Khmer Wedding (2 Fields: Cover & Full Background)
+    "garden-royal-khmer-wedding": {
+        hasCoverImage: true,
+        hasCoverBackgroundImage: false,
+        hasBackgroundImage: true,
+        hasGate: true,
+        sectionOrder: DEFAULT_SECTION_ORDER,
+        labels: {
+            coverSection: "ក្រប និងផ្ទៃខាងក្រោយ (Cover & Background)",
+            coverImage: "រូបភាពក្របមុខ (Cover Image)",
+            coverImageEn: "Cover / Envelope Image",
+            backgroundImage: "ស៊ុមផ្កា / រូបភាពផ្ទៃខាងក្រោយ (Full / Frame)",
+            backgroundImageEn: "Full Background / Botanical Frame",
+        },
+        hints: {
+            coverImage: "រូបភាពបង្ហាញលើស្រោមសំបុត្រ ឬក្របទំព័រដើម (Cover)",
+            coverImageEn: "Shown on front cover / envelope (Cover)",
+            backgroundImage: "ស៊ុមផ្កា ឬរូបភាពផ្ទៃខាងក្រោយពេលបើកធៀបការពេញ (Full)",
+            backgroundImageEn: "Shown as botanical frame / background once invitation is opened (Full)",
+        },
+        placePhotoInInvitation: false,
+    },
 };
 
 /**
@@ -97,15 +119,20 @@ export const TEMPLATE_FORM_FLOWS = {
  * Returns default configuration if no bespoke flow is registered.
  */
 export function getTemplateFormFlow(templateIdOrTpl) {
-    const rawKey = typeof templateIdOrTpl === "string"
-        ? templateIdOrTpl
-        : (templateIdOrTpl?.code || templateIdOrTpl?.slug || templateIdOrTpl?.presetId || templateIdOrTpl?.templateId || templateIdOrTpl?.id);
+    let rawKey = "";
+    if (typeof templateIdOrTpl === "string" || typeof templateIdOrTpl === "number") {
+        rawKey = String(templateIdOrTpl);
+    } else if (templateIdOrTpl && typeof templateIdOrTpl === "object") {
+        rawKey = templateIdOrTpl.code || templateIdOrTpl.slug || templateIdOrTpl.presetId || templateIdOrTpl.templateId || templateIdOrTpl.id || "";
+    }
 
     const key = String(rawKey || "").trim().toLowerCase();
 
     let matched = TEMPLATE_FORM_FLOWS[key];
     if (!matched) {
-        if (key.includes("celestial") || key.includes("royal-khmer") || key === "10" || key === "6" || key === "1") {
+        if (key.includes("garden") || key === "2") {
+            matched = TEMPLATE_FORM_FLOWS["garden-royal-khmer-wedding"];
+        } else if (key.includes("celestial") || (key.includes("royal-khmer") && !key.includes("garden")) || key === "10" || key === "6" || key === "1") {
             matched = TEMPLATE_FORM_FLOWS["khmer-celestial"];
         }
     }

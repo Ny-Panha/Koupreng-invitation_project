@@ -591,28 +591,33 @@
 }
 
 .inv-preview-btn--gate {
-    background: rgba(200, 174, 124, 0.12);
-    border-color: rgba(200, 174, 124, 0.32);
-    color: #e2c991;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 15px;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: rgba(200, 174, 124, 0.14);
+    border: 1px solid rgba(200, 174, 124, 0.36);
+    color: #e8d3a2;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    transition: all 0.18s ease;
+    white-space: nowrap;
 }
 
 .inv-preview-btn--gate:hover {
-    background: rgba(200, 174, 124, 0.22);
-    border-color: rgba(200, 174, 124, 0.5);
-    color: #fff;
-}
-
-.inv-preview-btn--primary {
-    background: linear-gradient(135deg, #235b55 0%, #17423e 100%);
-    border-color: #2e756e;
+    background: rgba(200, 174, 124, 0.26);
+    border-color: rgba(200, 174, 124, 0.6);
     color: #ffffff;
-    box-shadow: 0 2px 8px rgba(35, 91, 85, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(200, 174, 124, 0.22);
 }
 
-.inv-preview-btn--primary:hover {
-    background: linear-gradient(135deg, #2b6d66 0%, #1e534e 100%);
-    box-shadow: 0 4px 12px rgba(35, 91, 85, 0.45);
-    transform: translateY(-1px);
+.inv-preview-btn--gate:active {
+    transform: translateY(0);
 }
 
 /* Stage Canvas */
@@ -627,22 +632,72 @@
         #0d1117;
 }
 
+/* Segmented Pill Toggle for View Mode (Phone vs Full) */
+.inv-preview-view-toggle {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    padding: 3px;
+    gap: 2px;
+}
+
+.inv-preview-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #8b949e;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    white-space: nowrap;
+}
+
+.inv-preview-toggle-btn:hover {
+    color: #f0f6fc;
+}
+
+.inv-preview-toggle-btn.is-active {
+    background: rgba(200, 174, 124, 0.22);
+    color: #f1dfb8;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+}
+
 /* Phone Viewport Container */
 .inv-phone-viewport {
     width: 100%;
     max-width: 430px;
     margin: 0 auto;
-    background: #fbf8f2;
+    background: transparent;
     position: relative;
+    transition: max-width 0.25s ease;
+}
+
+.inv-phone-viewport--full {
+    max-width: 100% !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    width: 100% !important;
+}
+
+.inv-preview-canvas--full {
+    padding: 0 !important;
+    width: 100% !important;
 }
 
 /* On Desktop screens: add a clean, elegant phone-like chassis frame (no artificial notch blocking photos!) */
 @media (min-width: 641px) {
-    .inv-preview-canvas {
+    .inv-preview-canvas:not(.inv-preview-canvas--full) {
         padding: 24px 16px 48px;
     }
 
-    .inv-phone-viewport {
+    .inv-phone-viewport:not(.inv-phone-viewport--full) {
         border-radius: 36px;
         box-shadow:
             0 0 0 1px rgba(255, 255, 255, 0.1),
@@ -680,6 +735,14 @@
     .inv-preview-btn {
         padding: 5px 8px;
         font-size: 0.75rem;
+    }
+
+    .inv-preview-toggle-btn span {
+        display: none;
+    }
+
+    .inv-preview-toggle-btn {
+        padding: 4px 8px;
     }
 }
 

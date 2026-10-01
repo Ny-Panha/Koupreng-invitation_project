@@ -11,11 +11,7 @@ export default function FloatingActionBar({
   audioController,
   showMusic = false,
   googleMapsUrl,
-  bankAccount = {
-    bank: "ABA Bank",
-    accountNumber: "000 123 456",
-    accountName: "VANDA & SREYPICHOfficial",
-  },
+  bankAccount = null,
   onRsvpClick,
   className = "",
 }) {
@@ -131,14 +127,16 @@ export default function FloatingActionBar({
         )}
 
         {/* 3. ABA KHQR Gift */}
-        <button
-          type="button"
-          onClick={() => setShowQrModal(true)}
-          title={lang === "en" ? "Send Gift (KHQR)" : "ចងដៃតាម ABA KHQR"}
-          className="w-9 h-9 rounded-full bg-white/5 border border-[#d4af37]/20 text-[#f5dfa8] hover:bg-white/15 hover:text-white flex items-center justify-center transition cursor-pointer"
-        >
-          <QrCode className="w-4 h-4" />
-        </button>
+        {(bankAccount?.accountNumber || bankAccount?.qrUrl) && (
+          <button
+            type="button"
+            onClick={() => setShowQrModal(true)}
+            title={lang === "en" ? "Send Gift (KHQR)" : "ចងដៃតាម ABA KHQR"}
+            className="w-9 h-9 rounded-full bg-white/5 border border-[#d4af37]/20 text-[#f5dfa8] hover:bg-white/15 hover:text-white flex items-center justify-center transition cursor-pointer"
+          >
+            <QrCode className="w-4 h-4" />
+          </button>
+        )}
 
         {/* 4. RSVP Button */}
         <button

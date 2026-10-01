@@ -59,13 +59,13 @@ export default function CinematicVideoOpening({
     groom ||
     content.groomName ||
     content.groom ||
-    "ជា វណ្ណដា";
+    "";
 
   const effectiveBride =
     bride ||
     content.brideName ||
     content.bride ||
-    "សុខ ស្រីពេជ្រ";
+    "";
 
   const effectiveTitle =
     weddingTitle ||

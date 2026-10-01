@@ -298,7 +298,7 @@ export default function CelestialOpening({ content, onOpen, preview = false }) {
                   fontWeight: "inherit",
                 }}
               >
-                {content.groom?.trim() || "វណ្ណដា"}
+                {content.groom?.trim() || ""}
               </span>
               <span className="kc-opening__amp"> &amp; </span>
               <span
@@ -308,7 +308,7 @@ export default function CelestialOpening({ content, onOpen, preview = false }) {
                   fontWeight: "inherit",
                 }}
               >
-                {content.bride?.trim() || "ស្រីពេជ្រ"}
+                {content.bride?.trim() || ""}
               </span>
             </h2>
           </motion.div>

@@ -79,7 +79,7 @@ export default function InvitationForm({ invitation }) {
         const isDefaultOpening = (customParsed.openingStyle === "khmer-royal" || invitation?.openingStyle === "khmer-royal");
         const isDefaultCover = !customParsed.coverImage || customParsed.coverImage.includes("/facebook/all/03-card/cover-card.jpg");
         const isDefaultTitle = !customParsed.title || customParsed.title === "សួនរាជហង្សខ្មែរ" || customParsed.title === "Garden Royal Khmer Wedding" || customParsed.title.includes("W01");
-        const isDefaultCouple = (!customParsed.groomName || customParsed.groomName === "វណ្ណដា") && (!customParsed.brideName || customParsed.brideName === "ស្រីពេជ្រ");
+        const isDefaultCouple = !customParsed.groomName && !customParsed.brideName;
         // Prioritize user_uploaded_image (invitation.coverUrl) first
         const uploadedCover = invitation?.coverUrl || invitation?.media?.coverImage?.fileUrl || null; // Use null for empty
 
@@ -88,14 +88,14 @@ export default function InvitationForm({ invitation }) {
         const openingStyle = (!isDefaultOpening && (customParsed.openingStyle || invitation?.openingStyle)) || preset.openingStyle || DEFAULT_STATE.openingStyle;
         const coverImage = uploadedCover || ((!isDefaultCover && customParsed.coverImage) ? customParsed.coverImage : (preset.coverImage || DEFAULT_STATE.coverImage)); // Fallback to preset or default if no uploaded cover and not a default placeholder
         const title = (!isDefaultTitle && (invitation?.title || customParsed.title)) ? (invitation?.title || customParsed.title) : (preset.title || DEFAULT_STATE.title);
-        const groomName = (!isDefaultCouple && (invitation?.groomName || customParsed.groomName)) ? (invitation?.groomName || customParsed.groomName) : (preset.groom || DEFAULT_STATE.groomName);
-        const brideName = (!isDefaultCouple && (invitation?.brideName || customParsed.brideName)) ? (invitation?.brideName || customParsed.brideName) : (preset.bride || DEFAULT_STATE.brideName);
+        const groomName = (!isDefaultCouple && (invitation?.groomName || customParsed.groomName)) ? (invitation?.groomName || customParsed.groomName) : "";
+        const brideName = (!isDefaultCouple && (invitation?.brideName || customParsed.brideName)) ? (invitation?.brideName || customParsed.brideName) : "";
         const venueName = (invitation?.venueName || customParsed.venueName) && (invitation?.venueName !== "The Premier Center Sen Sok" && customParsed.venueName !== "The Premier Center Sen Sok")
             ? (invitation?.venueName || customParsed.venueName)
-            : (preset.venueName || DEFAULT_STATE.venueName);
+            : "";
         const venueAddress = (invitation?.venueAddress || customParsed.venueAddress) && (invitation?.venueAddress !== "អគារ A, សែនសុខ, ភ្នំពេញ" && customParsed.venueAddress !== "អគារ A, សែនសុខ, ភ្នំពេញ")
             ? (invitation?.venueAddress || customParsed.venueAddress)
-            : (preset.venueAddress || DEFAULT_STATE.venueAddress);
+            : "";
         const isEmptyDraft = Boolean(
             invitation
             && String(invitation.status || "").toUpperCase() === "DRAFT"
