@@ -185,20 +185,16 @@ echo -e "${BLUE}Checking current branch...${NC}"
 CURRENT_BRANCH="$(git symbolic-ref --quiet --short HEAD 2>/dev/null || true)"
 
 if [ -z "$CURRENT_BRANCH" ]; then
-  echo -e "${RED}Error: You are in detached HEAD mode. Checkout a branch before pushing.${NC}" >&2
+  echo -e "${RED}Error: You are in detached HEAD mode. Checkout main before pushing.${NC}" >&2
   exit 1
 fi
 
 echo -e "${GREEN}Current branch: $CURRENT_BRANCH${NC}"
+echo -e "${GREEN}Target branch:  main (origin/main)${NC}"
 
 echo ""
-echo -e "${BLUE}Fetching latest changes from origin...${NC}"
-git fetch origin --prune
-
-REMOTE_EXISTS=false
-if git ls-remote --exit-code --heads origin "$CURRENT_BRANCH" >/dev/null 2>&1; then
-  REMOTE_EXISTS=true
-fi
+echo -e "${BLUE}Fetching latest changes from origin/main...${NC}"
+git fetch origin main --prune
 
 echo ""
 echo -e "${BLUE}Checking for changes...${NC}"
@@ -206,28 +202,39 @@ echo -e "${BLUE}Checking for changes...${NC}"
 # Stage all changes, including deletes and renames.
 git add -A
 
+HAS_CHANGES=true
 if git diff --cached --quiet; then
-  echo -e "${YELLOW}No changes to commit.${NC}"
+  HAS_CHANGES=false
+fi
 
-  if [ "$REMOTE_EXISTS" = true ]; then
-    LOCAL="$(git rev-parse HEAD)"
-    REMOTE="$(git rev-parse "origin/$CURRENT_BRANCH" 2>/dev/null || echo "")"
+if [ "$HAS_CHANGES" = false ]; then
+  echo -e "${YELLOW}No uncommitted changes to stage.${NC}"
 
-    if [ "$LOCAL" = "$REMOTE" ]; then
-      echo -e "${GREEN}✓ Already up to date with origin/$CURRENT_BRANCH${NC}"
-      exit 0
-    fi
-
-    echo -e "${BLUE}Rebasing existing local commits on origin/$CURRENT_BRANCH...${NC}"
-    if ! git pull --rebase origin "$CURRENT_BRANCH"; then
-      show_rebase_conflict_help
-      exit 1
-    fi
+  # If on another branch, merge into main and push
+  if [ "$CURRENT_BRANCH" != "main" ]; then
+    echo -e "${BLUE}Switching to main and merging branch '$CURRENT_BRANCH'...${NC}"
+    git checkout main
+    git pull --rebase origin main
+    git merge "$CURRENT_BRANCH" -m "Merge branch '$CURRENT_BRANCH' into main"
   fi
 
-  echo -e "${BLUE}Pushing existing local commits to origin/$CURRENT_BRANCH...${NC}"
-  git push -u origin "$CURRENT_BRANCH"
-  echo -e "${GREEN}✓ Up to date with origin/$CURRENT_BRANCH${NC}"
+  LOCAL="$(git rev-parse HEAD)"
+  REMOTE="$(git rev-parse origin/main 2>/dev/null || echo "")"
+
+  if [ "$LOCAL" = "$REMOTE" ]; then
+    echo -e "${GREEN}✓ Already up to date with origin/main${NC}"
+    exit 0
+  fi
+
+  echo -e "${BLUE}Rebasing existing local commits on origin/main...${NC}"
+  if ! git pull --rebase origin main; then
+    show_rebase_conflict_help
+    exit 1
+  fi
+
+  echo -e "${BLUE}Pushing existing local commits to origin/main...${NC}"
+  git push origin main
+  echo -e "${GREEN}✓ Up to date with origin/main${NC}"
   exit 0
 fi
 
@@ -248,7 +255,7 @@ echo -e "${CYAN}Commit message:${NC} ${MAGENTA}$MSG${NC}"
 echo ""
 
 # Ask for confirmation
-echo -n -e "${YELLOW}Proceed with commit and push to origin/$CURRENT_BRANCH? [Y/n]: ${NC}"
+echo -n -e "${YELLOW}Proceed with commit and push to origin/main? [Y/n]: ${NC}"
 read -r CONFIRM
 
 if [[ "$CONFIRM" =~ ^[Nn] ]]; then
@@ -261,22 +268,33 @@ fi
 echo -e "${BLUE}Committing changes...${NC}"
 git commit -m "$MSG"
 
-# Rebase the new commit on top of origin/$CURRENT_BRANCH if it exists remotely
-if [ "$REMOTE_EXISTS" = true ]; then
-  echo -e "${BLUE}Rebasing on origin/$CURRENT_BRANCH...${NC}"
-  if ! git pull --rebase origin "$CURRENT_BRANCH"; then
+# If on another branch, checkout main and merge
+if [ "$CURRENT_BRANCH" != "main" ]; then
+  echo -e "${BLUE}Switching to main and merging branch '$CURRENT_BRANCH'...${NC}"
+  git checkout main
+  echo -e "${BLUE}Rebasing main on origin/main...${NC}"
+  if ! git pull --rebase origin main; then
+    show_rebase_conflict_help
+    exit 1
+  fi
+  echo -e "${BLUE}Merging '$CURRENT_BRANCH' into main...${NC}"
+  git merge "$CURRENT_BRANCH" -m "Merge branch '$CURRENT_BRANCH' into main"
+else
+  # On main: rebase directly
+  echo -e "${BLUE}Rebasing on origin/main...${NC}"
+  if ! git pull --rebase origin main; then
     show_rebase_conflict_help
     exit 1
   fi
 fi
 
-# Push directly to current branch
-echo -e "${BLUE}Pushing to origin/$CURRENT_BRANCH...${NC}"
-git push -u origin "$CURRENT_BRANCH"
+# Push directly to main branch
+echo -e "${BLUE}Pushing to origin/main...${NC}"
+git push origin main
 
 echo ""
 echo -e "${GREEN}═══════════════════════════════════════════════════${NC}"
-echo -e "${GREEN}✓ Successfully pushed to origin/$CURRENT_BRANCH!${NC}"
+echo -e "${GREEN}✓ Successfully pushed to origin/main!${NC}"
 echo -e "${GREEN}✓ Commit: $MSG${NC}"
 echo -e "${GREEN}═══════════════════════════════════════════════════${NC}"
 echo ""
