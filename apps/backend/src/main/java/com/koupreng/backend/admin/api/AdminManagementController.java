@@ -25,6 +25,7 @@ import com.koupreng.backend.subscription.application.SubscriptionService;
 import com.koupreng.backend.payment.application.PaymentHistoryService;
 import com.koupreng.backend.admin.application.AdminManagementService;
 import com.koupreng.backend.audit.application.AuditLogService;
+import com.koupreng.backend.shared.exception.ApiException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import java.math.BigDecimal;
@@ -505,8 +506,8 @@ public class AdminManagementController {
         if (body != null && body.get("amount") != null) {
             try {
                 amount = new BigDecimal(String.valueOf(body.get("amount")));
-            } catch (NumberFormatException ignored) {
-                // The service validates a missing amount consistently with older clients.
+            } catch (NumberFormatException invalidAmount) {
+                throw new ApiException(HttpStatus.BAD_REQUEST, "Payment amount must be a valid number");
             }
         }
         String confirmedBy = body != null && body.get("confirmedBy") != null ? String.valueOf(body.get("confirmedBy")) : "admin";

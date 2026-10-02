@@ -2,6 +2,7 @@ package com.koupreng.backend.shared.security;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.Mockito.verifyNoInteractions;
 
 import com.koupreng.backend.payment.application.PaymentConfirmationService;
 import com.koupreng.backend.payment.application.PaymentHistoryService;
@@ -92,5 +93,18 @@ class PaymentConfirmationSecurityTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(REQUEST_BODY))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void malformedLegacyAmountCannotFallBackToConfirmationAtTheStoredPrice() throws Exception {
+        mockMvc.perform(post("/api/v1/admin/payments/SUB2609151234/confirm")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"amount":"not-a-number","confirmedBy":"admin"}
+                                """))
+                .andExpect(status().isBadRequest());
+
+        verifyNoInteractions(paymentHistoryService);
     }
 }
