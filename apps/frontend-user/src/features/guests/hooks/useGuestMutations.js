@@ -34,50 +34,41 @@ export function useGuestMutations({
         ? backendGuests.find((item) => String(item.id) === String(editingId))
         : null;
 
-      if (backendIdToUse && (targetBackendGuest || !editingId)) {
+      if (backendIdToUse) {
+        if (editingId && !targetBackendGuest) {
+          throw new Error("Guest not found in this invitation");
+        }
         const payload = toBackendGuestPayload(form);
 
-        try {
-          let savedBackend;
-          if (targetBackendGuest) {
-            savedBackend = await guestService.updateForInvitation(
-              backendIdToUse,
-              targetBackendGuest.backendId || targetBackendGuest.id,
-              payload
-            );
-          } else {
-            savedBackend = await guestService.createForInvitation(backendIdToUse, payload);
-          }
-
-          const normalized = normalizeBackendGuest(savedBackend);
-
-          setBackendGuests((current) => {
-            const index = current.findIndex((item) => String(item.id) === String(normalized.id));
-            if (index >= 0) {
-              const next = [...current];
-              next[index] = normalized;
-              return next;
-            }
-            return [...current, normalized];
-          });
-        } catch (apiErr) {
-          console.warn("Backend guest save failed, falling back to local storage:", apiErr);
-          const guestToSave = toManualGuest(form, editingId);
-          setManualGuests((current) => {
-            const next = editingId
-              ? current.map((item) => (item.id === editingId ? guestToSave : item))
-              : [...current, guestToSave];
-            saveManualGuests(eventId, next);
-            return next;
-          });
+        let savedBackend;
+        if (targetBackendGuest) {
+          savedBackend = await guestService.updateForInvitation(
+            backendIdToUse,
+            targetBackendGuest.backendId || targetBackendGuest.id,
+            payload
+          );
+        } else {
+          savedBackend = await guestService.createForInvitation(backendIdToUse, payload);
         }
+
+        const normalized = normalizeBackendGuest(savedBackend);
+
+        setBackendGuests((current) => {
+          const index = current.findIndex((item) => String(item.id) === String(normalized.id));
+          if (index >= 0) {
+            const next = [...current];
+            next[index] = normalized;
+            return next;
+          }
+          return [...current, normalized];
+        });
       } else {
         const guestToSave = toManualGuest(form, editingId);
         setManualGuests((current) => {
           const next = editingId
             ? current.map((item) => (item.id === editingId ? guestToSave : item))
             : [...current, guestToSave];
-          saveManualGuests(eventId, next);
+          saveManualGuests(next, eventId);
           return next;
         });
       }
@@ -120,7 +111,7 @@ export function useGuestMutations({
 
       setManualGuests((current) => {
         const next = current.filter((item) => String(item.id) !== String(guestToDelete.id));
-        saveManualGuests(eventId, next);
+        saveManualGuests(next, eventId);
         return next;
       });
 
@@ -186,7 +177,7 @@ export function useGuestMutations({
         const normalizedNew = importedList.map(normalizeManualGuest);
         setManualGuests((current) => {
           const next = [...current, ...normalizedNew];
-          saveManualGuests(eventId, next);
+          saveManualGuests(next, eventId);
           return next;
         });
       }
@@ -218,7 +209,7 @@ export function useGuestMutations({
       const next = current.map((g) =>
         String(g.id) === String(guest.id) ? { ...g, sendStatus: nextStatus } : g
       );
-      saveManualGuests(eventId, next);
+      saveManualGuests(next, eventId);
       return next;
     });
 

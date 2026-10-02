@@ -203,7 +203,7 @@ export default function GuestsPage() {
           ? { ...g, ...updatedGuest }
           : g
       );
-      saveManualGuests(eventId, next);
+      saveManualGuests(next, eventId);
       return next;
     });
   };
