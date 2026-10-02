@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const { calls, invitationService, mediaService } = vi.hoisted(() => {
+const { calls, invitationService, mediaService, templateService } = vi.hoisted(() => {
     const order = [];
     return {
         calls: order,
@@ -18,14 +18,18 @@ const { calls, invitationService, mediaService } = vi.hoisted(() => {
             remove: vi.fn(),
             list: vi.fn(async () => { order.push("media"); return { galleryImages: [] }; }),
         },
+        templateService: {
+            getPublic: vi.fn(async () => ({ id: 4 })),
+            getPublicBySlug: vi.fn(async () => ({ id: 9 })),
+        },
     };
 });
 
 vi.mock("../../invitations/api/invitationApi", () => ({ invitationService, default: invitationService }));
 vi.mock("../../invitations/api/mediaApi", () => ({ mediaService, default: mediaService }));
 vi.mock("../../templates/api/templateService", () => ({
-    default: { getPublicBySlug: vi.fn(async () => ({ id: 9 })) },
-    templateService: { getPublicBySlug: vi.fn(async () => ({ id: 9 })) },
+    default: templateService,
+    templateService,
 }));
 
 
@@ -63,6 +67,32 @@ describe("real backend publishing", () => {
         await expect(persistWeddingDraft({ templateId: "garden-royal-khmer-wedding", couple: {}, event: {} }, { publish: true }))
             .rejects.toThrow("សូមបំពេញព័ត៌មានចាំបាច់");
         expect(invitationService.create).not.toHaveBeenCalled();
+    });
+
+    it.each([4, "4", " 4 "])("syncs a saved draft with numeric template reference %j", async (templateId) => {
+        await persistWeddingDraft({ ...validDraft(), templateId });
+
+        expect(templateService.getPublic).toHaveBeenCalledWith("4");
+        expect(templateService.getPublicBySlug).not.toHaveBeenCalled();
+        expect(invitationService.create).toHaveBeenCalledWith(expect.objectContaining({ templateId: 4 }));
+        expect(invitationService.update).toHaveBeenCalledWith(42, expect.objectContaining({ templateId: 4 }));
+    });
+
+    it("resolves a template slug even when the draft has an older backend template ID", async () => {
+        await persistWeddingDraft({ ...validDraft(), templateId: "khmer-celestial", backendTemplateId: 2 });
+
+        expect(templateService.getPublicBySlug).toHaveBeenCalledWith("khmer-celestial");
+        expect(templateService.getPublic).not.toHaveBeenCalled();
+        expect(invitationService.create).toHaveBeenCalledWith(expect.objectContaining({ templateId: 9 }));
+    });
+
+    it("preserves a missing-template failure without saving with another template", async () => {
+        templateService.getPublicBySlug.mockRejectedValueOnce(new Error("Template not found"));
+
+        await expect(persistWeddingDraft({ ...validDraft(), templateId: "deleted-template" }))
+            .rejects.toThrow("Template not found");
+        expect(invitationService.create).not.toHaveBeenCalled();
+        expect(invitationService.update).not.toHaveBeenCalled();
     });
 
     it("saves, reconnects media/customization, then publishes and returns a backend-confirmed link patch", async () => {

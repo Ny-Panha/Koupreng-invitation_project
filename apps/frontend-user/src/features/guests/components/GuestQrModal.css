@@ -1,0 +1,45 @@
+.guest-qr-backdrop {
+  z-index: 10000;
+  background: rgba(15, 23, 42, 0.28);
+  animation: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+body:has(.guest-qr-backdrop) .host-header-wrapper,
+body:has(.guest-qr-backdrop) .host-mobile-menu,
+body:has(.guest-qr-backdrop) .host-mobile-overlay {
+  display: none;
+}
+
+.guest-qr-dialog {
+  max-height: calc(100vh - 2rem);
+  max-height: calc(100dvh - 2rem);
+}
+
+.guest-qr-dialog .k-modal-header {
+  flex-shrink: 0;
+  gap: 1rem;
+}
+
+.guest-qr-dialog .k-modal-header-text,
+.guest-qr-link-details {
+  min-width: 0;
+}
+
+.guest-qr-dialog .k-modal-close-btn {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--brand-border, #e7e7ee);
+}
+
+@media (max-width: 480px) {
+  .guest-qr-link-card {
+    flex-direction: column;
+  }
+
+  .guest-qr-link-details {
+    width: 100%;
+  }
+}

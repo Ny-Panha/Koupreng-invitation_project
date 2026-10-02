@@ -47,9 +47,12 @@ function localGalleryFiles(gallery = []) {
     .filter(Boolean);
 }
 
-async function resolveBackendTemplateId(templateCode) {
-  const template = await templateService.getPublicBySlug(templateCode || "garden-royal-khmer-wedding");
-  if (!template?.id) throw new Error("The Garden Royal template is not available from the backend.");
+async function resolveBackendTemplateId(templateReference) {
+  const templateKey = String(templateReference || "garden-royal-khmer-wedding").trim();
+  const template = /^\d+$/.test(templateKey)
+    ? await templateService.getPublic(templateKey)
+    : await templateService.getPublicBySlug(templateKey);
+  if (!template?.id) throw new Error(`Template "${templateKey}" is not available from the backend.`);
   return template.id;
 }
 

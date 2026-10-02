@@ -14,6 +14,7 @@ export default function Modal({
   closeOnEscape = true,
   ariaLabel,
   className = "",
+  backdropClassName = "",
 }) {
   const modalRef = useRef(null);
 
@@ -47,7 +48,7 @@ export default function Modal({
 
   return (
     <div
-      className="k-modal-backdrop"
+      className={`k-modal-backdrop ${backdropClassName}`.trim()}
       onClick={handleBackdropClick}
       role="presentation"
     >

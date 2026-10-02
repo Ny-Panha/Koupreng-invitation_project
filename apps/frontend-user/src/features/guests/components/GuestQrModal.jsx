@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { QRCode } from "react-qr-code";
 import {
   IoCopyOutline,
@@ -12,6 +13,7 @@ import {
 import { Modal } from "@/shared/ui";
 import { guestService } from "@/features/guests/api/guestApi";
 import { buildShareMessage, copyText, guestInviteUrl, normalizeBackendGuest } from "../model/guestMappers";
+import "./GuestQrModal.css";
 
 export default function GuestQrModal({
   guest,
@@ -180,13 +182,15 @@ export default function GuestQrModal({
     img.src = `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svgData)))}`;
   };
 
-  return (
+  return createPortal(
     <Modal
       isOpen={Boolean(guest)}
       onClose={onClose}
       title={activeGuest.name}
       subtitle="ទម្រង់ផ្ញើធៀបការ និង Link Preview (Telegram / Messenger / Social)"
       size="md"
+      className="guest-qr-dialog"
+      backdropClassName="guest-qr-backdrop"
     >
       <div className="pe-qr-content" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
         
@@ -246,12 +250,12 @@ export default function GuestQrModal({
         </div>
 
         {/* QR Code & Link Field */}
-        <div style={{ display: "flex", alignItems: "center", gap: "1.25rem", background: "#f8fafc", padding: "1rem", borderRadius: "12px", border: "1px solid #e2e8f0" }}>
+        <div className="guest-qr-link-card" style={{ display: "flex", alignItems: "center", gap: "1.25rem", background: "#f8fafc", padding: "1rem", borderRadius: "12px", border: "1px solid #e2e8f0" }}>
           <div style={{ background: "#ffffff", padding: "0.6rem", borderRadius: "10px", border: "1px solid #cbd5e1", flexShrink: 0, opacity: syncing ? 0.6 : 1, transition: "opacity 0.2s" }}>
             <QRCode id="guest-qr-svg" value={inviteUrl} size={110} />
           </div>
 
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+          <div className="guest-qr-link-details" style={{ flex: 1, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.25rem" }}>
               <label style={{ fontSize: "0.75rem", fontWeight: 600, color: "#475569" }}>
                 តំណភ្ជាប់ផ្ទាល់ខ្លួនរបស់ភ្ញៀវ (Personal Guest Link):
@@ -404,6 +408,7 @@ export default function GuestQrModal({
         </div>
 
       </div>
-    </Modal>
+    </Modal>,
+    document.body
   );
 }

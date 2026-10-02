@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { guestService } from "@/features/guests/api/guestApi";
 import { invitationService } from "@/features/invitations/api/invitationApi";
@@ -87,6 +87,7 @@ export function useGuests() {
   const [backendInvitation, setBackendInvitation] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const loadedBackendInvitationId = useRef(null);
 
   const refreshData = useCallback(async () => {
     setLoading(true);
@@ -106,6 +107,7 @@ export function useGuests() {
       );
 
       if (requestedInvitationId && !matchedBackend) {
+        loadedBackendInvitationId.current = null;
         setBackendInvitation(null);
         setPublicInvitation(null);
         setBackendGuests([]);
@@ -118,32 +120,45 @@ export function useGuests() {
       setBackendInvitation(matchedBackend);
       setPublicInvitation(matchedPublic);
 
-      let fetchedBackendGuests = [];
       const backendIdToUse = matchedBackend ? invitationId(matchedBackend) : null;
 
-      if (backendIdToUse) {
-        try {
-          const [rawGuests, rawRsvps, rawCheckIns] = await Promise.all([
-            guestService.listByInvitation(backendIdToUse),
-            rsvpService.listByInvitation(backendIdToUse),
-            typeof guestService.checkInList === "function"
-              ? guestService.checkInList(backendIdToUse).catch(() => [])
-              : Promise.resolve([]),
-          ]);
-          fetchedBackendGuests = (rawGuests || []).map(normalizeBackendGuest);
-          setRsvpGuests((rawRsvps || []).map(normalizeBackendRsvp));
-          setCheckIns(rawCheckIns || []);
-        } catch (err) {
-          setError(err?.message || "Could not fetch backend guest records");
-          setRsvpGuests([]);
-          setCheckIns([]);
-        }
-      } else {
+      if (String(loadedBackendInvitationId.current) !== String(backendIdToUse)) {
+        setBackendGuests([]);
         setRsvpGuests([]);
         setCheckIns([]);
       }
+      loadedBackendInvitationId.current = backendIdToUse;
 
-      setBackendGuests(fetchedBackendGuests);
+      if (backendIdToUse) {
+        const [guestsResult, rsvpsResult, checkInsResult] = await Promise.allSettled([
+          guestService.listByInvitation(backendIdToUse),
+          rsvpService.listByInvitation(backendIdToUse),
+          typeof guestService.checkInList === "function"
+            ? guestService.checkInList(backendIdToUse)
+            : Promise.resolve([]),
+        ]);
+
+        if (guestsResult.status === "fulfilled") {
+          setBackendGuests((guestsResult.value || []).map(normalizeBackendGuest));
+        }
+        if (rsvpsResult.status === "fulfilled") {
+          setRsvpGuests((rsvpsResult.value || []).map(normalizeBackendRsvp));
+        }
+        if (checkInsResult.status === "fulfilled") {
+          setCheckIns(checkInsResult.value || []);
+        }
+
+        const failedResult = [guestsResult, rsvpsResult, checkInsResult].find(
+          (result) => result.status === "rejected"
+        );
+        if (failedResult) {
+          setError(failedResult.reason?.message || "Could not fetch backend guest records");
+        }
+      } else {
+        setBackendGuests([]);
+        setRsvpGuests([]);
+        setCheckIns([]);
+      }
     } catch (err) {
       setError(err?.message || "Failed to load guest data");
     } finally {
