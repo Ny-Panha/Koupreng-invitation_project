@@ -1,69 +1,33 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 
 import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
-import { formatTime24toKhmer } from "@/shared/ui/TimePicker";
 import { KHMER_CELESTIAL_ASSETS } from "../khmerCelestialAssets";
 import CelestialLiveGarden from "./CelestialLiveGarden";
 import OpenInvitationCTA from "./OpenInvitationCTA";
 
 const EASE = [0.22, 1, 0.36, 1];
 
-function displayKhmerDate(dateStr) {
-  if (!dateStr) return "ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦";
-  if (!/^\d{4}-\d{2}-\d{2}/.test(dateStr)) return dateStr;
-  try {
-    const clean = dateStr.includes("T") ? dateStr.split("T")[0] : dateStr;
-    const d = new Date(`${clean}T00:00:00`);
-    if (isNaN(d.getTime())) return dateStr;
-    return new Intl.DateTimeFormat("km-KH", {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }).format(d);
-  } catch {
-    return dateStr;
-  }
-}
-
 function mediaSource(value) {
   if (typeof value === "string") return value;
   return value?.url || value?.src || "";
 }
 
-function reveal(instant, delay, overrides = {}) {
-  if (instant) return { initial: false, animate: { opacity: 1, y: 0, filter: "blur(0px)" }, transition: { duration: 0, delay: 0 } };
+function reveal(reducedMotion, delay, overrides = {}) {
+  if (reducedMotion) return { initial: false, animate: { opacity: 1 }, transition: { duration: 0 } };
   return {
-    initial: { opacity: 0, y: 12, filter: "blur(4px)", ...overrides.initial },
+    initial: { opacity: 0, y: 18, filter: "blur(5px)", ...overrides.initial },
     animate: { opacity: 1, y: 0, filter: "blur(0px)", ...overrides.animate },
-    transition: { duration: 0.55, delay, ease: EASE, ...overrides.transition },
+    transition: { duration: 0.82, delay, ease: EASE, ...overrides.transition },
   };
 }
 
-const ensureGoogleFontLoaded = (fontFamily) => {
-  if (!fontFamily || typeof document === "undefined") return;
-  const cleanName = fontFamily.trim().replace(/^['"]|['"]$/g, "");
-  const fontId = `gfont-${cleanName.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
-  if (document.getElementById(fontId)) return;
-  const link = document.createElement("link");
-  link.id = fontId;
-  link.rel = "stylesheet";
-  link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(cleanName)}&display=swap`;
-  document.head.appendChild(link);
-  if (document.fonts?.load) {
-    document.fonts.load(`1em "${cleanName}"`).catch(() => {});
-  }
-};
-
-export default function CelestialOpening({ content, onOpen, preview = false }) {
+export default function CelestialOpening({ content, onOpen }) {
   const reducedMotion = usePrefersReducedMotion();
-  const instant = Boolean(reducedMotion || preview);
   const [videoFailed, setVideoFailed] = useState(false);
   const openLabel = content.opening?.openButtonText || "Open invitation";
-  const guestName = (content.guestName && content.guestName.trim()) || "លោកអ្នក និងក្រុមគ្រួសារ";
-  const guestLabel = (content.guestLabel && content.guestLabel.trim()) || (content.isPersonalizedGuest ? "សូមគោរពអញ្ជើញ" : "ជូនចំពោះ:");
-  const subtitleText = content.subtitle || content.invitationSubtitle || content.messageTitle || "យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ";
+  const guestName = content.guestName?.trim() || "ភ្ញៀវកិត្តិយស";
+  const guestLabel = content.isPersonalizedGuest ? "សូមគោរពអញ្ជើញ" : "ជូនចំពោះ";
   const guestNameLength = Array.from(guestName.replace(/\s+/g, "")).length;
   const guestNameClass = [
     "kc-opening__guest-name",
@@ -74,349 +38,129 @@ export default function CelestialOpening({ content, onOpen, preview = false }) {
   const logoAlt = names.length
     ? `ស្លាកឈ្មោះ ${names.join(" និង ")}`
     : "ស្លាកឈ្មោះគូស្វាមីភរិយា";
-  const showBrandMark = content.showBrandMark !== false && content.brandMark !== "none";
-  const effectiveBrandMark = showBrandMark
-    ? (content.brandMark || KHMER_CELESTIAL_ASSETS.brandMark)
-    : null;
-  const showGuestBanner = content.showGuestBanner !== false && content.guestNameBanner !== "" && content.guestNameBanner !== "none";
-  const effectiveGuestBanner = showGuestBanner
-    ? (content.guestNameBanner || KHMER_CELESTIAL_ASSETS.guestNameBanner)
-    : null;
-  const showOpenButton = content.showOpenButton !== false && content.openButtonImage !== "" && content.openButtonImage !== "none";
-  const effectiveOpenButton = showOpenButton
-    ? (content.openButtonImage || KHMER_CELESTIAL_ASSETS.openButton)
-    : null;
-  const currentGateStyle = content.gateStyle || content.openingStyle || content.design?.openingStyle || "celestial-cover";
-  const explicitVideo =
-    mediaSource(content.openingVideo) ||
-    mediaSource(content.openingVideoUrl) ||
-    mediaSource(content.videoUrl) ||
-    mediaSource(content.design?.openingVideoUrl) ||
-    "";
-
-  const videoOptOut =
-    content.showCoverVideo === false ||
-    content.enableCoverVideo === false ||
-    content.design?.openingVideoEnabled === false ||
-    currentGateStyle === "botanical-cover" ||
-    (content.videoUrl === "" && content.openingVideoUrl === "");
-
-  const videoEnabled = !videoOptOut && Boolean(
-    explicitVideo || (content.design?.openingVideoEnabled === true ? KHMER_CELESTIAL_ASSETS.openingVideo : "")
-  );
-
+  const videoEnabled = content.design?.openingVideoEnabled !== false;
   const openingVideo = videoEnabled
-    ? (explicitVideo || (content.design?.openingVideoEnabled === true ? KHMER_CELESTIAL_ASSETS.openingVideo : ""))
+    ? mediaSource(content.openingVideo) || KHMER_CELESTIAL_ASSETS.openingVideo
     : "";
-
-  const hasCustomCoverBg = Boolean(
-    content.coverBackgroundImage ||
-    content.design?.coverBackgroundImage ||
-    content.coverBgImage
-  );
-
-  const coverBackgroundImage = hasCustomCoverBg
-    ? (content.coverBackgroundImage || content.design?.coverBackgroundImage || content.coverBgImage)
-    : "";
-
-  const botanicalFrame =
-    content.backgroundImage ||
-    content.design?.backgroundImage ||
-    KHMER_CELESTIAL_ASSETS.botanicalFrame;
-
-  const showButterflies = content.showButterflies !== false && content.design?.showButterflies !== false;
-
-  const isDarkFrame = Boolean(
-    (typeof botanicalFrame === "string" && (
-      botanicalFrame.includes("folio") ||
-      botanicalFrame.includes("corners") ||
-      botanicalFrame.includes("dark")
-    )) ||
-    content.coverTheme === "dark" ||
-    content.design?.coverTheme === "dark"
-  );
-
-  const elementFonts = content.elementFonts || {};
-  const globalKhmer = content.fontKhmer || "Siemreap";
-  const globalLatin = content.fontLatin || "Cinzel Decorative";
-
-  const fontCouple = elementFonts.couple || globalKhmer;
-  const fontDate = elementFonts.date || globalKhmer;
-  const fontTime = elementFonts.time || globalKhmer;
-  const fontSubtitle = elementFonts.subtitle || globalKhmer;
-  const fontGuestLabel = elementFonts.guestLabel || globalKhmer;
-  const fontGuestName = elementFonts.guestName || globalKhmer;
-
-  useEffect(() => {
-    [
-      fontCouple,
-      fontDate,
-      fontTime,
-      fontSubtitle,
-      fontGuestLabel,
-      fontGuestName,
-      globalKhmer,
-      globalLatin,
-    ].forEach((f) => {
-      if (f && typeof f === "string") ensureGoogleFontLoaded(f);
-    });
-  }, [
-    fontCouple,
-    fontDate,
-    fontTime,
-    fontSubtitle,
-    fontGuestLabel,
-    fontGuestName,
-    globalKhmer,
-    globalLatin,
-  ]);
-
-  const isInteractiveCanva = Boolean(content.canvaInspector || content.adminCanvaMode);
-  const activeSelected = isInteractiveCanva ? content.selectedFontElement : null;
-
-  const handleSelectElement = (elementId, e) => {
-    if (!isInteractiveCanva) return;
-    if (e) {
-      e.stopPropagation();
-    }
-    if (typeof window !== "undefined" && window.parent && window.parent !== window) {
-      window.parent.postMessage(
-        {
-          type: "SELECT_TARGET_ELEMENT",
-          elementId,
-        },
-        "*"
-      );
-    }
-  };
-
-  useEffect(() => {
-    setVideoFailed(false);
-  }, [openingVideo]);
 
   return (
     <motion.div
-      className={`kc-opening ${isDarkFrame ? "kc-opening--dark-theme" : ""}`}
-      data-cover-bg={hasCustomCoverBg ? "custom" : "default"}
+      className="kc-opening"
       role="dialog"
       aria-modal="true"
       aria-labelledby="kc-opening-title"
-      initial={instant ? false : { opacity: 0 }}
+      initial={reducedMotion ? false : { opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={instant ? { display: "none" } : { opacity: 0, filter: "blur(7px)" }}
-      transition={{ duration: instant ? 0 : 0.8, ease: EASE }}
+      exit={reducedMotion ? { display: "none" } : { opacity: 0, filter: "blur(7px)" }}
+      transition={{ duration: reducedMotion ? 0 : 1.12, ease: EASE }}
     >
-      {coverBackgroundImage ? (
-        <motion.img
-          className="kc-opening__backdrop"
-          src={coverBackgroundImage}
-          alt=""
-          aria-hidden="true"
-          initial={instant ? false : { opacity: 0, scale: 1.02 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={instant ? undefined : { opacity: 0, scale: 1.02 }}
-          transition={{ duration: instant ? 0 : 1.2, ease: EASE }}
-        />
-      ) : null}
-
-      {!reducedMotion && !videoFailed && openingVideo ? (
-        <motion.div
-          className="kc-opening__film"
-          initial={instant ? false : { opacity: 0, scale: 1.025 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: instant ? 0 : 1.2, ease: EASE }}
-          aria-hidden="true"
-        >
+      <motion.div
+        className="kc-opening__film"
+        initial={reducedMotion ? false : { opacity: 0, scale: 1.025 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: reducedMotion ? 0 : 1.6, ease: EASE }}
+        aria-hidden="true"
+      >
+        {!reducedMotion && !videoFailed && openingVideo ? (
           <video
-            key={openingVideo}
             src={openingVideo}
-            poster={coverBackgroundImage || botanicalFrame}
+            poster={KHMER_CELESTIAL_ASSETS.botanicalFrame}
             autoPlay
             muted
             loop
             playsInline
-            preload="auto"
+            preload="metadata"
             width="720"
             height="1280"
             onError={() => setVideoFailed(true)}
           />
-        </motion.div>
-      ) : null}
+        ) : null}
+      </motion.div>
 
       <motion.img
         className="kc-opening__botanical"
-        src={botanicalFrame}
+        src={KHMER_CELESTIAL_ASSETS.botanicalFrame}
         alt=""
         aria-hidden="true"
         width="999"
         height="1575"
-        initial={instant ? false : { opacity: 0, scale: 1.02 }}
+        initial={reducedMotion ? false : { opacity: 0, scale: 1.04 }}
         animate={{ opacity: 1, scale: 1 }}
-        exit={instant ? undefined : { opacity: 0.65, scale: 1.02 }}
-        transition={{ duration: instant ? 0 : 1.2, delay: instant ? 0 : 0.1, ease: EASE }}
+        exit={reducedMotion ? undefined : { opacity: 0.65, scale: 1.035 }}
+        transition={{ duration: reducedMotion ? 0 : 1.7, delay: reducedMotion ? 0 : 0.2, ease: EASE }}
       />
       <div className="kc-opening__shade" aria-hidden="true" />
-      {showButterflies ? (
-        <CelestialLiveGarden className="kc-opening__garden" variant="opening" />
-      ) : null}
+      <CelestialLiveGarden className="kc-opening__garden" variant="opening" />
 
       <div className="kc-opening__content">
-        {effectiveBrandMark ? (
-          <motion.div
-            className="kc-opening__brand-wrap"
-            initial={instant ? false : { opacity: 0, y: 16, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: instant ? 0 : 0.8, delay: instant ? 0 : 0.05, ease: EASE }}
-          >
-            <img
-              className="kc-opening__brand"
-              src={effectiveBrandMark}
-              alt={logoAlt}
-              width="768"
-              height="512"
-            />
-            <span className="kc-opening__brand-highlight" aria-hidden="true" />
-          </motion.div>
-        ) : null}
+        <motion.p id="kc-opening-title" className="kc-opening__eyebrow" {...reveal(reducedMotion, 0.62)}>
+          {content.opening?.heading || content.title || "សិរីសួស្តីអាពាហ៍ពិពាហ៍"}
+        </motion.p>
 
-        {!content.hideCoupleNameOnCover && (
-          <motion.div className="kc-opening__couple-wrap" {...reveal(instant, 0.12)}>
-            <h2
-              id="kc-opening-title"
-              className={`kc-opening__couple-names ${isInteractiveCanva ? "kc-interactive-element" : ""} ${activeSelected === "couple" ? "kc-interactive-element--active" : ""}`}
-              onClick={(e) => handleSelectElement("couple", e)}
-              title={isInteractiveCanva ? "ចុចដើម្បីកែប្រែឈ្មោះគូដណ្ដឹង & ពុម្ពអក្សរ" : undefined}
-              style={{
-                fontFamily: `"${fontCouple}", "Moul", "Bayon", serif`,
-                fontWeight: "normal",
-              }}
-            >
-              <span
-                className="kc-opening__groom"
-                style={{
-                  fontFamily: `"${fontCouple}", "Moul", "Bayon", serif`,
-                  fontWeight: "inherit",
-                }}
-              >
-                {content.groom?.trim() || ""}
-              </span>
-              <span className="kc-opening__amp"> &amp; </span>
-              <span
-                className="kc-opening__bride"
-                style={{
-                  fontFamily: `"${fontCouple}", "Moul", "Bayon", serif`,
-                  fontWeight: "inherit",
-                }}
-              >
-                {content.bride?.trim() || ""}
-              </span>
-            </h2>
-          </motion.div>
-        )}
-
-        <motion.div className="kc-opening__date-block" {...reveal(instant, 0.18)}>
-          <p
-            className={`kc-opening__date ${isInteractiveCanva ? "kc-interactive-element" : ""} ${activeSelected === "date" ? "kc-interactive-element--active" : ""}`}
-            onClick={(e) => handleSelectElement("date", e)}
-            title={isInteractiveCanva ? "ចុចដើម្បីកែប្រែកាលបរិច្ឆេទ & ពុម្ពអក្សរ" : undefined}
-            style={{
-              fontFamily: `"${fontDate}", "Dangrek", "Kantumruy Pro", "Siemreap", sans-serif`,
-              fontWeight: "normal",
-            }}
-          >
-            {displayKhmerDate(content.dateText || content.weddingDate || content.eventDate)}
-          </p>
-          <p
-            className={`kc-opening__time ${isInteractiveCanva ? "kc-interactive-element" : ""} ${activeSelected === "time" ? "kc-interactive-element--active" : ""}`}
-            onClick={(e) => handleSelectElement("time", e)}
-            title={isInteractiveCanva ? "ចុចដើម្បីកែប្រែពេលវេលា & ពុម្ពអក្សរ" : undefined}
-            style={{
-              fontFamily: `"${fontTime}", "Bayon", "Moul", serif`,
-              fontWeight: "normal",
-            }}
-          >
-            {formatTime24toKhmer(content.receptionTime || content.eventTime || content.weddingTime) || content.receptionTime || content.eventTime || "០៥:០០ ល្ងាច"}
-          </p>
-          {subtitleText ? (
-            <p
-              className={`kc-opening__subtitle ${isInteractiveCanva ? "kc-interactive-element" : ""} ${activeSelected === "subtitle" ? "kc-interactive-element--active" : ""}`}
-              onClick={(e) => handleSelectElement("subtitle", e)}
-              title={isInteractiveCanva ? "ចុចដើម្បីកែប្រែពាក្យអញ្ជើញ & ពុម្ពអក្សរ" : undefined}
-              style={{
-                fontFamily: `"${fontSubtitle}", "Bayon", "Moul", "Siemreap", serif`,
-                fontWeight: "normal",
-                display: "block",
-              }}
-            >
-              {subtitleText}
-            </p>
-          ) : null}
+        <motion.div
+          className="kc-opening__brand-wrap"
+          initial={reducedMotion ? false : { opacity: 0, y: 25, scale: 0.94, filter: "blur(8px)" }}
+          animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+          transition={{ duration: reducedMotion ? 0 : 1.35, delay: reducedMotion ? 0 : 1, ease: EASE }}
+        >
+          <img
+            className="kc-opening__brand"
+            src={KHMER_CELESTIAL_ASSETS.brandMark}
+            alt={logoAlt}
+            width="768"
+            height="512"
+          />
+          <span className="kc-opening__brand-highlight" aria-hidden="true" />
         </motion.div>
 
-        {showGuestBanner && (
-          <>
-            <motion.p
-              className={`kc-opening__guest-label ${isInteractiveCanva ? "kc-interactive-element" : ""} ${activeSelected === "guestLabel" ? "kc-interactive-element--active" : ""}`}
-              onClick={(e) => handleSelectElement("guestLabel", e)}
-              title={isInteractiveCanva ? "ចុចដើម្បីកែប្រែពាក្យស្វាគមន៍ & ពុម្ពអក្សរ" : undefined}
-              style={{
-                fontFamily: `"${fontGuestLabel}", "Bayon", "Moul", "Siemreap", serif`,
-                fontWeight: "normal",
-              }}
-              {...reveal(instant, 0.22, {
-                initial: { y: 4 },
-                transition: { duration: 0.4 },
+        <motion.div className="kc-opening__date-block" {...reveal(reducedMotion, 2.18)}>
+          {content.dateText ? <p className="kc-opening__date">{content.dateText}</p> : null}
+          {content.eventTime ? <p className="kc-opening__time">{content.eventTime}</p> : null}
+        </motion.div>
+
+        <motion.p
+          className="kc-opening__guest-label"
+          {...reveal(reducedMotion, 2.42, {
+            initial: { y: 5, filter: "blur(3px)" },
+            transition: { duration: 0.58 },
+          })}
+        >
+          {guestLabel}
+        </motion.p>
+
+        <motion.div
+          className="kc-opening__guest-banner"
+          initial={reducedMotion ? false : { opacity: 0, y: 16, scale: 0.96, filter: "blur(4px)" }}
+          animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+          transition={{ duration: reducedMotion ? 0 : 0.96, delay: reducedMotion ? 0 : 2.54, ease: EASE }}
+        >
+          <img
+            className="kc-opening__guest-banner-image"
+            src={KHMER_CELESTIAL_ASSETS.guestNameBanner}
+            alt=""
+            aria-hidden="true"
+            width="2172"
+            height="724"
+            loading="eager"
+            decoding="async"
+            draggable="false"
+          />
+          <p className="kc-opening__guest-banner-content">
+            <motion.strong
+              className={guestNameClass}
+              {...reveal(reducedMotion, 2.68, {
+                initial: { y: 7, filter: "blur(3px)" },
+                transition: { duration: 0.68 },
               })}
             >
-              {guestLabel}
-            </motion.p>
-
-            <motion.div
-              className="kc-opening__guest-banner"
-              {...reveal(instant, 0.26)}
-            >
-              {effectiveGuestBanner && (
-                <img
-                  className="kc-opening__guest-banner-image"
-                  src={effectiveGuestBanner}
-                  alt=""
-                  aria-hidden="true"
-                  width="2172"
-                  height="724"
-                  loading="eager"
-                  decoding="async"
-                  draggable="false"
-                />
-              )}
-              <p
-                className="kc-opening__guest-banner-content"
-                style={!effectiveGuestBanner ? { position: "static", transform: "none", margin: "6px 0 10px" } : undefined}
-              >
-                <motion.strong
-                  className={`${guestNameClass} ${isInteractiveCanva ? "kc-interactive-element" : ""} ${activeSelected === "guestName" ? "kc-interactive-element--active" : ""}`}
-                  onClick={(e) => handleSelectElement("guestName", e)}
-                  title={isInteractiveCanva ? "ចុចដើម្បីកែប្រែឈ្មោះភ្ញៀវ & ពុម្ពអក្សរ" : undefined}
-                  style={{
-                    fontFamily: `"${fontGuestName}", "Bayon", "Moul", serif`,
-                    fontWeight: "normal",
-                  }}
-                  {...reveal(instant, 0.3, {
-                    initial: { y: 4 },
-                    transition: { duration: 0.4 },
-                  })}
-                >
-                  {guestName}
-                </motion.strong>
-              </p>
-            </motion.div>
-          </>
-        )}
+              {guestName}
+            </motion.strong>
+          </p>
+        </motion.div>
 
         <OpenInvitationCTA
           label={openLabel}
           onOpen={onOpen}
-          instant={instant}
-          image={effectiveOpenButton}
         />
       </div>
     </motion.div>

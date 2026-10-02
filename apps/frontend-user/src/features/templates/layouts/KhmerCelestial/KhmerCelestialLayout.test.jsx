@@ -134,7 +134,7 @@ describe("KhmerCelestialLayout integration", () => {
 
     render(
       <MemoryRouter>
-        <TemplateExperience tpl={{ id: "khmer-celestial", name: "Khmer Celestial", hasGate: true }} content={{ ...content, hasGate: true, gateEnabled: true }} showBreadcrumb={false} showActions={false} previewStartClosed={true} preview={false} />
+        <TemplateExperience tpl={{ id: "khmer-celestial", name: "Khmer Celestial" }} content={content} showBreadcrumb={false} showActions={false} />
       </MemoryRouter>
     );
 
@@ -142,23 +142,18 @@ describe("KhmerCelestialLayout integration", () => {
     expect(document.querySelector(".kc-opening__garden video")).not.toBeInTheDocument();
     expect(document.querySelector(".kc-opening__garden .kc-butterfly__wing--left")).toBeInTheDocument();
 
-    // After clicking open the gate should close — kc-main becomes accessible
     fireEvent.click(screen.getByRole("button", { name: "បើកសំបុត្រអញ្ជើញ" }));
-    // The openTransitionActive overlay was removed; main content should now render
-    expect(document.querySelector(".kc-opening__transition")).not.toBeInTheDocument();
-    await waitFor(() => expect(document.querySelector(".kc-main")).toBeInTheDocument());
+    expect(document.querySelector(".kc-opening__transition")).toBeInTheDocument();
+    expect(document.querySelectorAll(".kc-opening__transition .kc-petal").length).toBeGreaterThan(0);
   });
-
 
   it("renders the supplied ornamental asset with accessible preview guest text in reduced motion", () => {
     const previewContent = buildTemplateContent(KHMER_CELESTIAL_TEMPLATE, "khmer-celestial");
-    previewContent.openingStyle = "celestial-cover";
-    previewContent.gateStyle = "celestial-cover";
 
     render(
       <MemoryRouter>
         <TemplateExperience
-          tpl={{ ...KHMER_CELESTIAL_TEMPLATE, openingStyle: "celestial-cover", gateStyle: "celestial-cover" }}
+          tpl={KHMER_CELESTIAL_TEMPLATE}
           content={previewContent}
           showBreadcrumb={false}
           showActions={false}
@@ -302,7 +297,7 @@ describe("KhmerCelestialLayout integration", () => {
     expect(document.querySelector(".kc-music-fab")).not.toBeInTheDocument();
   });
 
-  it("does not render the story section as it is removed from Khmer Celestial", () => {
+  it("renders a hosted text-only story without demo photography", () => {
     render(
       <MemoryRouter>
         <TemplateExperience
@@ -321,7 +316,9 @@ describe("KhmerCelestialLayout integration", () => {
     );
 
     fireEvent.click(screen.getByRole("button", { name: "បើកសំបុត្រអញ្ជើញ" }));
-    expect(document.querySelector(".kc-story")).not.toBeInTheDocument();
+    const story = document.querySelector(".kc-story");
+    expect(within(story).getByText("Real host copy")).toBeInTheDocument();
+    expect(story.querySelector(".kc-story__media")).not.toBeInTheDocument();
   });
 
   it("handles an expired event date safely without producing negative countdown values", () => {
@@ -494,243 +491,4 @@ describe("KhmerCelestialLayout integration", () => {
     expect(screen.getByRole("heading", { name: "Our story" })).toHaveAttribute("id", "english-only-heading");
     expect(screen.queryByText("ចំណងជើង")).not.toBeInTheDocument();
   });
-
-  it("does not render gold calligraphy logo when showBrandMark is false and renders couple names instead", () => {
-    const customContent = {
-      ...content,
-      groom: "រឿង វីរៈ",
-      bride: "ឡុង សុម៉ាលី",
-      showBrandMark: false,
-    };
-
-    render(
-      <MemoryRouter>
-        <TemplateExperience
-          tpl={{ id: "khmer-celestial", name: "Khmer Celestial" }}
-          content={customContent}
-          showBreadcrumb={false}
-          showActions={false}
-        />
-      </MemoryRouter>
-    );
-
-    expect(
-      document.querySelector('img[src="/invitations/khmer-celestial/koupreng-gold-mark.webp"]')
-    ).toBeNull();
-    expect(screen.getAllByText("រឿង វីរៈ").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("ឡុង សុម៉ាលី").length).toBeGreaterThan(0);
-  });
-
-  it("renders custom brandMark when provided by user", () => {
-    const customLogoContent = {
-      ...content,
-      groom: "សុខ",
-      bride: "ចិន្តា",
-      showBrandMark: true,
-      brandMark: "/uploads/custom-wedding-logo.png",
-    };
-
-    render(
-      <MemoryRouter>
-        <TemplateExperience
-          tpl={{ id: "khmer-celestial", name: "Khmer Celestial" }}
-          content={customLogoContent}
-          showBreadcrumb={false}
-          showActions={false}
-        />
-      </MemoryRouter>
-    );
-
-    expect(
-      document.querySelector('img[src="/uploads/custom-wedding-logo.png"]')
-    ).toBeInTheDocument();
-  });
-
-  it("does NOT render cinematic gate for Khmer Celestial even when gateStyle is cinematic-video", () => {
-    // Cinematic video opening was intentionally removed from Khmer Celestial.
-    // Passing cinematic gateStyle should be ignored — hasOpeningGate stays false
-    // because tpl.hasGate is not true, so main content renders immediately.
-    const cinematicContent = {
-      ...content,
-      gateStyle: "cinematic-video",
-      openingStyle: "cinematic-video",
-      videoUrl: "/invitations/khmer-celestial/burgundy-bokeh.mp4",
-    };
-
-    render(
-      <MemoryRouter>
-        <TemplateExperience
-          tpl={{ id: "khmer-celestial", name: "Khmer Celestial", hasGate: false }}
-          content={cinematicContent}
-          showBreadcrumb={false}
-          showActions={false}
-        />
-      </MemoryRouter>
-    );
-
-    // Cinematic gate must NOT appear
-    expect(document.querySelector(".kc-opening--cinematic")).not.toBeInTheDocument();
-    // Main celestial content should be visible directly
-    expect(document.querySelector(".kc-main")).toBeInTheDocument();
-  });
-
-  it("live preview updates messageTitle and messageText in real time via LIVE_PREVIEW_SYNC", async () => {
-    render(
-      <MemoryRouter>
-        <TemplateExperience
-          tpl={{ id: "khmer-celestial", name: "Khmer Celestial", hasGate: false }}
-          content={content}
-          showBreadcrumb={false}
-          showActions={false}
-          preview={true}
-          previewStartClosed={false}
-        />
-      </MemoryRouter>
-    );
-
-    // Initial check: default fallback message title
-    expect(screen.getByText("មានកិត្តិយសសូមគោរពអញ្ជើញ")).toBeInTheDocument();
-
-    // Broadcast LIVE_PREVIEW_SYNC simulating user typing in InvitationForm
-    fireEvent(
-      window,
-      new MessageEvent("message", {
-        data: {
-          type: "LIVE_PREVIEW_SYNC",
-          data: {
-            messageTitle: "ssasasasaAS",
-            messageText: "សារអញ្ជើញពិសេស sasaasASAAsaa",
-          },
-        },
-      })
-    );
-
-    await waitFor(() => {
-      expect(screen.getByText("ssasasasaAS")).toBeInTheDocument();
-      expect(screen.getByText("សារអញ្ជើញពិសេស sasaasASAAsaa")).toBeInTheDocument();
-    });
-  });
-
-  it("live preview updates parents and closing notes via LIVE_PREVIEW_SYNC", async () => {
-    render(
-      <MemoryRouter>
-        <TemplateExperience
-          tpl={{ id: "khmer-celestial", name: "Khmer Celestial", hasGate: false }}
-          content={content}
-          showBreadcrumb={false}
-          showActions={false}
-          preview={true}
-          previewStartClosed={false}
-        />
-      </MemoryRouter>
-    );
-
-    fireEvent(
-      window,
-      new MessageEvent("message", {
-        data: {
-          type: "LIVE_PREVIEW_SYNC",
-          data: {
-            groomFather: "លោក ញឹក បញ្ញា",
-            groomMother: "លោកស្រី ម៉េង ចាន់ធី",
-            thankYouTitle: "អរគុណយ៉ាងជ្រាលជ្រៅពីក្រុមគ្រួសារ",
-            thankYouText: "សូមអរគុណភ្ញៀវកិត្តិយសទាំងអស់",
-          },
-        },
-      })
-    );
-
-    await waitFor(() => {
-      expect(screen.getByText("លោក ញឹក បញ្ញា")).toBeInTheDocument();
-      expect(screen.getByText("លោកស្រី ម៉េង ចាន់ធី")).toBeInTheDocument();
-      expect(screen.getByText("អរគុណយ៉ាងជ្រាលជ្រៅពីក្រុមគ្រួសារ")).toBeInTheDocument();
-      expect(screen.getByText("សូមអរគុណភ្ញៀវកិត្តិយសទាំងអស់")).toBeInTheDocument();
-    });
-  });
-
-  it("renders independent cover background on closed gate while keeping backgroundImage for opened state", async () => {
-    const customBgContent = {
-      ...content,
-      coverBackgroundImage: "/uploads/my-cover-background.jpg",
-      backgroundImage: "/uploads/my-main-background.jpg",
-      design: { openingVideoEnabled: false },
-    };
-
-    render(
-      <MemoryRouter>
-        <TemplateExperience
-          tpl={{ id: "khmer-celestial", name: "Khmer Celestial" }}
-          content={customBgContent}
-          showBreadcrumb={false}
-          showActions={false}
-        />
-      </MemoryRouter>
-    );
-
-    // Closed gate has backdrop and custom cover flag
-    const opening = document.querySelector(".kc-opening");
-    expect(opening).toHaveAttribute("data-cover-bg", "custom");
-    const backdrop = document.querySelector(".kc-opening__backdrop");
-    expect(backdrop).toBeInTheDocument();
-    expect(backdrop).toHaveAttribute("src", "/uploads/my-cover-background.jpg");
-
-    // Closed gate botanical overlay uses backgroundImage
-    const closedBotanical = document.querySelector(".kc-opening__botanical");
-    expect(closedBotanical).toBeInTheDocument();
-    expect(closedBotanical).toHaveAttribute("src", "/uploads/my-main-background.jpg");
-
-    // Opened layout root still uses backgroundImage
-    const root = document.querySelector(".kc-root");
-    expect(root).toBeInTheDocument();
-    expect(root.style.getPropertyValue("--kc-bg-frame")).toBe('url("/uploads/my-main-background.jpg")');
-  });
-
-  it("updates closed gate cover background dynamically via LIVE_PREVIEW_SYNC without altering opened state", async () => {
-    render(
-      <MemoryRouter>
-        <TemplateExperience
-          tpl={{ id: "khmer-celestial", name: "Khmer Celestial" }}
-          content={{ ...content, backgroundImage: "/uploads/original-main-bg.jpg", design: { openingVideoEnabled: false } }}
-          showBreadcrumb={false}
-          showActions={false}
-          preview={true}
-          previewStartClosed={true}
-        />
-      </MemoryRouter>
-    );
-
-    // Initially default cover bg flag and no backdrop when coverBackgroundImage is not provided
-    expect(document.querySelector(".kc-opening")).toHaveAttribute("data-cover-bg", "default");
-    expect(document.querySelector(".kc-opening__backdrop")).toBeNull();
-    expect(document.querySelector(".kc-opening__botanical")).toHaveAttribute(
-      "src",
-      "/uploads/original-main-bg.jpg"
-    );
-
-    // Send LIVE_PREVIEW_SYNC with new coverBackgroundImage
-    fireEvent(
-      window,
-      new MessageEvent("message", {
-        data: {
-          type: "LIVE_PREVIEW_SYNC",
-          data: {
-            coverBackgroundImage: "/uploads/new-live-cover-bg.jpg",
-          },
-        },
-      })
-    );
-
-    await waitFor(() => {
-      expect(document.querySelector(".kc-opening")).toHaveAttribute("data-cover-bg", "custom");
-      expect(document.querySelector(".kc-opening__backdrop")).toHaveAttribute(
-        "src",
-        "/uploads/new-live-cover-bg.jpg"
-      );
-    });
-
-    // Root --kc-bg-frame retains original main background
-    const root = document.querySelector(".kc-root");
-    expect(root.style.getPropertyValue("--kc-bg-frame")).toBe('url("/uploads/original-main-bg.jpg")');
-  });
 });
-
