@@ -4,6 +4,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.koupreng.backend.payment.application.PaymentConfirmationService;
+import com.koupreng.backend.payment.application.PaymentHistoryService;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ class PaymentConfirmationSecurityTests {
     @MockitoBean
     private PaymentConfirmationService paymentConfirmationService;
 
+    @MockitoBean
+    private PaymentHistoryService paymentHistoryService;
+
     @Test
     void anonymousUserCannotConfirmPayment() throws Exception {
         mockMvc.perform(post("/api/v1/admin/payments/confirm")
@@ -59,6 +63,32 @@ class PaymentConfirmationSecurityTests {
     @WithMockUser(roles = "ADMIN")
     void administratorCanReachConfirmationUseCase() throws Exception {
         mockMvc.perform(post("/api/v1/admin/payments/confirm")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(REQUEST_BODY))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void anonymousUserCannotUseLegacyConfirmation() throws Exception {
+        mockMvc.perform(post("/api/v1/admin/payments/SUB2609151234/confirm")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(REQUEST_BODY))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void normalUserCannotUseLegacyConfirmation() throws Exception {
+        mockMvc.perform(post("/api/v1/admin/payments/SUB2609151234/confirm")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(REQUEST_BODY))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void administratorCanUseLegacyConfirmation() throws Exception {
+        mockMvc.perform(post("/api/v1/admin/payments/SUB2609151234/confirm")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(REQUEST_BODY))
                 .andExpect(status().isOk());

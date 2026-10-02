@@ -163,10 +163,6 @@ export default function WeddingBuilderFeature() {
     setForm((prev) => {
       const isPrevDefaultCover = !prev.coverImage || prev.coverImage.includes("/facebook/all/") || prev.coverImage.includes("cover-card.jpg");
       const isPrevDefaultTitle = !prev.title || prev.title === "សួនរាជហង្សខ្មែរ" || prev.title === "Garden Royal Khmer Wedding";
-      const isPrevDefaultGroom = !prev.groomName;
-      const isPrevDefaultBride = !prev.brideName;
-      const isPrevDefaultVenue = !prev.venueName;
-
       return {
         ...prev,
         templateId: selectedTpl.id || selectedTpl.code || preset.templateId,

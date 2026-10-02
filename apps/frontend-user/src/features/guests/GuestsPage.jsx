@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
 import { EmptyState, ErrorState, SkeletonTable, toast } from "@/shared/ui";
 import { useGuests } from "./hooks/useGuests";
@@ -174,7 +174,7 @@ export default function GuestsPage() {
     }
   };
 
-  const handleGuestSynced = (updatedGuest) => {
+  const handleGuestSynced = useCallback((updatedGuest) => {
     if (!updatedGuest) return;
     setQrGuestTarget(updatedGuest);
 
@@ -206,7 +206,7 @@ export default function GuestsPage() {
       saveManualGuests(eventId, next);
       return next;
     });
-  };
+  }, [eventId, setBackendGuests, setManualGuests]);
 
   const handleSaveGroups = (nextGroups) => {
     setGroups(nextGroups);

@@ -24,6 +24,7 @@ describe("SocialAuthButtons", () => {
     const initialize = vi.fn();
     const renderButton = vi.fn((host) => {
       const iframe = document.createElement("iframe");
+      iframe.srcdoc = "<!doctype html><title>Google sign-in</title>";
       iframe.title = "Sign in with Google";
       host.appendChild(iframe);
     });

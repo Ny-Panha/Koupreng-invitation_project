@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.koupreng.backend.auth.infrastructure.session.UserAuthCacheService;
 import com.koupreng.backend.auth.infrastructure.session.UserAuthCacheService.CachedAuthInfo;
-import com.koupreng.backend.dev.DevSampleData;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;
 

@@ -165,15 +165,15 @@ export function useGuests() {
     return manualGuests;
   }, [backendGuests, backendInvitation, checkIns, manualGuests, requestedInvitationId, rsvpGuests]);
 
-  const backendInvitationId = useMemo(() => {
-    const rawId =
-      (backendInvitation ? invitationId(backendInvitation) : null) ||
-      (publicInvitation ? invitationId(publicInvitation) : null) ||
-      (draftMatch?.backendInvitationId && /^\d+$/.test(String(draftMatch.backendInvitationId))
-        ? Number(draftMatch.backendInvitationId)
-        : null);
-    return rawId != null && /^\d+$/.test(String(rawId)) ? Number(rawId) : null;
-  }, [backendInvitation, draftMatch?.backendInvitationId, publicInvitation]);
+  const rawBackendInvitationId =
+    (backendInvitation ? invitationId(backendInvitation) : null) ||
+    (publicInvitation ? invitationId(publicInvitation) : null) ||
+    (draftMatch?.backendInvitationId && /^\d+$/.test(String(draftMatch.backendInvitationId))
+      ? Number(draftMatch.backendInvitationId)
+      : null);
+  const backendInvitationId = rawBackendInvitationId != null && /^\d+$/.test(String(rawBackendInvitationId))
+    ? Number(rawBackendInvitationId)
+    : null;
 
   return {
     eventId,

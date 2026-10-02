@@ -484,25 +484,35 @@ public class AdminManagementController {
         ));
     }
 
-    @PostMapping({"/payments/{orderCode}/confirm", "/payments/confirm"})
+    @PostMapping("/payments/{orderCode}/confirm")
     public ResponseEntity<ApiResponse<PaymentConfirmResponse>> confirmPayment(
-            @PathVariable(required = false) String orderCode,
+            @PathVariable String orderCode,
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    content = @io.swagger.v3.oas.annotations.media.Content(
+                            mediaType = "application/json",
+                            examples = @io.swagger.v3.oas.annotations.media.ExampleObject(
+                                    name = "adminReview",
+                                    summary = "Confirm a pending order through the legacy path endpoint",
+                                    value = """
+                                            {"amount":19.00,"confirmedBy":"admin-demo"}
+                                            """
+                            )
+                    )
+            )
             @RequestBody(required = false) Map<String, Object> body
     ) {
-        String resolvedOrderCode = orderCode;
-        if ((resolvedOrderCode == null || resolvedOrderCode.isBlank()) && body != null && body.get("orderCode") != null) {
-            resolvedOrderCode = String.valueOf(body.get("orderCode"));
-        }
         BigDecimal amount = null;
         if (body != null && body.get("amount") != null) {
             try {
                 amount = new BigDecimal(String.valueOf(body.get("amount")));
-            } catch (Exception ignored) {}
+            } catch (NumberFormatException ignored) {
+                // The service validates a missing amount consistently with older clients.
+            }
         }
         String confirmedBy = body != null && body.get("confirmedBy") != null ? String.valueOf(body.get("confirmedBy")) : "admin";
         return ResponseEntity.ok(ApiResponse.success(
                 "Payment confirmed successfully",
-                paymentHistoryService.confirmPayment(resolvedOrderCode, amount, confirmedBy)
+                paymentHistoryService.confirmPayment(orderCode, amount, confirmedBy)
         ));
     }
 }

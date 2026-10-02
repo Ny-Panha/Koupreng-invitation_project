@@ -17,15 +17,23 @@ import { useAuth } from "@/features/auth/hooks/useAuth";
 import { resolveInviteToken } from "./publicInvitationQuery";
 
 function publicStateCopy(languageMode, stateType = "UNPUBLISHED") {
-    const isEn = String(languageMode || "").toUpperCase() === "EN";
+    const mode = String(languageMode || "").toUpperCase();
+    const isEn = mode === "EN";
+    const isKh = mode === "KH" || mode === "KM";
 
     if (stateType === "NOT_FOUND") {
-        const title = isEn ? "Invitation not found" : "រកសន្លឹកការមិនឃើញ";
+        const title = isEn
+            ? "Invitation unavailable"
+            : isKh
+                ? "រកសន្លឹកការមិនឃើញ"
+                : "រកសន្លឹកការមិនឃើញ / Invitation unavailable";
         const message = isEn
             ? "This link is invalid or the invitation was removed."
-            : "Link មិនត្រឹមត្រូវ ឬសន្លឹកការត្រូវបានលុបចោល។";
+            : isKh
+                ? "Link មិនត្រឹមត្រូវ ឬសន្លឹកការត្រូវបានលុបចោល។"
+                : "Link មិនត្រឹមត្រូវ ឬសន្លឹកការត្រូវបានលុបចោល។ This link is invalid or the invitation was removed.";
         return {
-            loading: isEn ? "Loading invitation…" : "កំពុងផ្ទុកសន្លឹកការ...",
+            loading: isEn ? "Loading invitation…" : isKh ? "កំពុងផ្ទុកសន្លឹកការ..." : "កំពុងផ្ទុកសន្លឹកការ... / Loading invitation…",
             title,
             message,
             unavailable: title,
@@ -34,12 +42,18 @@ function publicStateCopy(languageMode, stateType = "UNPUBLISHED") {
         };
     }
 
-    const title = isEn ? "This invitation isn't published yet" : "សន្លឹកការមិនទាន់បានផ្សព្វផ្សាយ";
+    const title = isEn
+        ? "This invitation isn't published yet"
+        : isKh
+            ? "សន្លឹកការមិនទាន់បានផ្សព្វផ្សាយ"
+            : "សន្លឹកការមិនទាន់បានផ្សព្វផ្សាយ / Invitation unavailable";
     const message = isEn
         ? "The host has temporarily unpublished this invitation. Please check back later."
-        : "ម្ចាស់បានបិទការផ្សព្វផ្សាយជាបណ្តោះអាសន្ន។ សូមត្រឡប់មកម្តងទៀតនៅពេលក្រោយ។";
+        : isKh
+            ? "ម្ចាស់បានបិទការផ្សព្វផ្សាយជាបណ្តោះអាសន្ន។ សូមត្រឡប់មកម្តងទៀតនៅពេលក្រោយ។"
+            : "ម្ចាស់បានបិទការផ្សព្វផ្សាយជាបណ្តោះអាសន្ន។ Please check back later.";
     return {
-        loading: isEn ? "Loading invitation…" : "កំពុងផ្ទុកសន្លឹកការ...",
+        loading: isEn ? "Loading invitation…" : isKh ? "កំពុងផ្ទុកសន្លឹកការ..." : "កំពុងផ្ទុកសន្លឹកការ... / Loading invitation…",
         title,
         message,
         unavailable: title,
@@ -409,7 +423,7 @@ function PublicUnavailableView({
     stateType = "UNPUBLISHED",
     title,
     message,
-    languageMode = "km",
+    languageMode = "",
     isOwner = false,
 }) {
     const isEn = String(languageMode).toUpperCase() === "EN";

@@ -1,6 +1,11 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { Clock, ChevronDown, Sun, Moon, Check } from "lucide-react";
-import { toKhmerNum, fromKhmerNum } from "./DatePicker";
+import {
+  formatTimeDisplay,
+  parseTime,
+  to24HourString,
+  toKhmerNum,
+} from "./dateTimeUtils";
 
 const HOURS_12 = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, "0"));
 const MINUTES_STEP = ["00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"];
@@ -11,61 +16,6 @@ const PRESETS = [
   { label24: "17:00", hour12: "05", minute: "00", period: "ល្ងាច", desc: "ទទួលភ្ញៀវល្ងាច" },
   { label24: "18:00", hour12: "06", minute: "00", period: "ល្ងាច", desc: "ពិសារភោជនាហារ" },
 ];
-
-/**
- * Parse time string into { hour12, minute, period, val24 }
- */
-export function parseTime(val) {
-  if (!val || typeof val !== "string") {
-    return { hour12: "05", minute: "00", period: "ល្ងាច", val24: "17:00" };
-  }
-  const clean = fromKhmerNum(val.trim());
-  const isPm = clean.includes("ល្ងាច") || clean.toLowerCase().includes("pm");
-  const isAm = clean.includes("ព្រឹក") || clean.toLowerCase().includes("am");
-  const digitsColons = clean.replace(/[^0-9:]/g, "");
-
-  if (!digitsColons.includes(":")) {
-    return { hour12: "05", minute: "00", period: "ល្ងាច", val24: "17:00" };
-  }
-
-  const [hStr, mStr] = digitsColons.split(":");
-  let h = parseInt(hStr, 10);
-  if (isNaN(h)) h = 17;
-  let m = parseInt(mStr || "0", 10);
-  if (isNaN(m)) m = 0;
-  m = Math.min(59, Math.max(0, m));
-  const mPadded = String(m).padStart(2, "0");
-
-  let period = isPm ? "ល្ងាច" : isAm ? "ព្រឹក" : h >= 12 ? "ល្ងាច" : "ព្រឹក";
-  let h12 = h % 12 || 12;
-  const h12Padded = String(h12).padStart(2, "0");
-
-  let h24 = parseInt(h12Padded, 10);
-  if (period === "ល្ងាច" && h24 !== 12) h24 += 12;
-  if (period === "ព្រឹក" && h24 === 12) h24 = 0;
-  const val24 = `${String(h24).padStart(2, "0")}:${mPadded}`;
-
-  return {
-    hour12: h12Padded,
-    minute: mPadded,
-    period,
-    val24,
-  };
-}
-
-export function to24HourString(hour12, minute, period) {
-  let h = parseInt(hour12, 10);
-  if (period === "ល្ងាច" && h !== 12) h += 12;
-  if (period === "ព្រឹក" && h === 12) h = 0;
-  return `${String(h).padStart(2, "0")}:${minute}`;
-}
-
-export function formatTimeDisplay(val) {
-  if (!val) return "";
-  const { hour12, minute, period, val24 } = parseTime(val);
-  const khmer12 = `${toKhmerNum(hour12)}:${toKhmerNum(minute)} ${period}`;
-  return `${val24} (${khmer12})`;
-}
 
 /**
  * Admin Dark Theme TimePicker

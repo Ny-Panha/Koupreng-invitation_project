@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { getTemplateFormFlow, DEFAULT_SECTION_ORDER } from "./templateFormFlowConfig";
+import { getTemplateFormFlow } from "./templateFormFlowConfig";
 
 describe("templateFormFlowConfig", () => {
   it("defaults hasCoverBackgroundImage to true for unknown / boilerplate templates", () => {

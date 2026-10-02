@@ -97,9 +97,27 @@ def test_parse_payment_alert_extracts_order_amount_and_currency(text, order_code
 @pytest.mark.parametrize(
     ("text", "amount", "payer_name", "last3"),
     [
-        ("$0.01 paid by RAN NARATH (*288) on May 29, 10:23 AM via ABA PAY. Trx. ID: 178002499089682, APV: 383331.", "0.01", "RAN NARATH", "288"),
-        ("$199.00 paid by KOEURNG VIREAK (*247) on May 29. Trx. ID: 178002499089683, APV: 383332.", "199.00", "KOEURNG VIREAK", "247"),
-        ("$499 paid by SOME USER (*999) on May 29. Trx. ID: 178002499089684, APV: 383333.", "499.00", "SOME USER", "999"),
+        (
+            "$0.01 paid by RAN NARATH (*288) on May 29, 10:23 AM via ABA PAY. "
+            "Trx. ID: 178002499089682, APV: 383331.",
+            "0.01",
+            "RAN NARATH",
+            "288",
+        ),
+        (
+            "$199.00 paid by KOEURNG VIREAK (*247) on May 29. "
+            "Trx. ID: 178002499089683, APV: 383332.",
+            "199.00",
+            "KOEURNG VIREAK",
+            "247",
+        ),
+        (
+            "$499 paid by SOME USER (*999) on May 29. "
+            "Trx. ID: 178002499089684, APV: 383333.",
+            "499.00",
+            "SOME USER",
+            "999",
+        ),
     ],
 )
 def test_parse_subscription_payment_alert(text, amount, payer_name, last3):

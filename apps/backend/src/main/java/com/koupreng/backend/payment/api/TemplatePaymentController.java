@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.shared.response.ApiResponse;
 import com.koupreng.backend.payment.api.dto.ConfirmTemplatePaymentRequest;
+import com.koupreng.backend.payment.api.dto.ClaimTemplatePaymentRequest;
 import com.koupreng.backend.payment.api.dto.CreateTemplatePaymentRequest;
 import com.koupreng.backend.payment.api.dto.CreateTemplatePaymentResponse;
 import com.koupreng.backend.payment.api.dto.PayWayCallbackResponse;
@@ -98,9 +99,9 @@ public class TemplatePaymentController {
     public ResponseEntity<ApiResponse<PaymentConfirmResponse>> claimPayment(
             Authentication authentication,
             @PathVariable String orderCode,
-            @RequestBody(required = false) Map<String, String> body
+            @Valid @RequestBody(required = false) ClaimTemplatePaymentRequest body
     ) {
-        String reference = body != null ? body.get("reference") : null;
+        String reference = body != null ? body.reference() : null;
         PaymentConfirmResponse response = templatePaymentService.claimOrderByUser(authentication, orderCode, reference);
         return ResponseEntity.ok(ApiResponse.success("Template payment confirmed and template unlocked", response));
     }

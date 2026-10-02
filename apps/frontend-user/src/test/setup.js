@@ -52,6 +52,13 @@ if (typeof window !== "undefined") {
   });
 }
 
+// Happy DOM's Web Animations implementation rejects `finished` when React
+// unmounts Framer Motion nodes. Unit tests do not exercise animation timing,
+// so force Motion onto its deterministic JavaScript fallback.
+if (typeof Element !== "undefined") {
+  delete Element.prototype.animate;
+}
+
 afterEach(() => {
   mockLocalStorage.clear();
   mockSessionStorage.clear();
@@ -84,8 +91,56 @@ function describeRequest(input) {
 
 const blockedFetch = (input) => Promise.reject(new BlockedNetworkError(describeRequest(input)));
 
+class BlockedXMLHttpRequest {
+  constructor() {
+    this.readyState = 0;
+    this.response = null;
+    this.responseText = "";
+    this.responseURL = "";
+    this.status = 0;
+    this.statusText = "";
+    this.timeout = 0;
+    this.upload = { addEventListener() {} };
+    this.withCredentials = false;
+    this.onloadend = null;
+    this.onerror = null;
+    this.onabort = null;
+    this.ontimeout = null;
+  }
+
+  open(method, url) {
+    this.method = method;
+    this.responseURL = String(url);
+    this.readyState = 1;
+  }
+
+  setRequestHeader() {}
+
+  addEventListener() {}
+
+  getAllResponseHeaders() {
+    return "";
+  }
+
+  send() {
+    queueMicrotask(() => {
+      this.readyState = 4;
+      this.onerror?.(new BlockedNetworkError(this.responseURL));
+    });
+  }
+
+  abort() {
+    this.onabort?.();
+  }
+}
+
 Object.defineProperty(globalThis, "fetch", {
   value: blockedFetch,
+  writable: true,
+  configurable: true,
+});
+Object.defineProperty(globalThis, "XMLHttpRequest", {
+  value: BlockedXMLHttpRequest,
   writable: true,
   configurable: true,
 });
@@ -93,6 +148,11 @@ Object.defineProperty(globalThis, "fetch", {
 if (typeof window !== "undefined") {
   Object.defineProperty(window, "fetch", {
     value: blockedFetch,
+    writable: true,
+    configurable: true,
+  });
+  Object.defineProperty(window, "XMLHttpRequest", {
+    value: BlockedXMLHttpRequest,
     writable: true,
     configurable: true,
   });

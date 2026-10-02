@@ -55,7 +55,7 @@ export function useFinancialReportData(refreshInterval = 10000, initialInvitatio
       window.removeEventListener("focus", onFocus);
       document.removeEventListener("visibilitychange", onVisibilityChange);
     };
-  }, [refreshInterval]);
+  }, [initialInvitationId, refreshInterval]);
 
   const fetchSelectedInvitation = useCallback(async (id, active) => {
     if (!id || !active()) return;

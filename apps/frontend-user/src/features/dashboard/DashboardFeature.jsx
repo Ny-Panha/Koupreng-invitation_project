@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 
 import {
@@ -86,7 +86,7 @@ export default function DashboardFeature() {
     hasDate: false,
   });
 
-  const loadData = async (targetId = null) => {
+  const loadData = useCallback(async (targetId = null) => {
     try {
       setState((prev) => ({ ...prev, loading: true, error: "" }));
       const invs = asList(await invitationService.listMine().catch(() => []));
@@ -156,14 +156,14 @@ export default function DashboardFeature() {
         error: err.message || "Failed to load dashboard data.",
       }));
     }
-  };
+  }, [user?.id, user?.userId]);
 
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
     const targetId = searchParams.get("id") || searchParams.get("invitationId");
     loadData(targetId || null);
-  }, [searchParams, user?.id, user?.userId]);
+  }, [loadData, searchParams]);
 
   const handleSelectInvitation = (id) => {
     setSelectedInvId(id);
@@ -274,7 +274,7 @@ export default function DashboardFeature() {
       totalGifts,
       giftCount: state.gifts.length,
     };
-  }, [state]);
+  }, [lang, state]);
 
   const completedSteps = useMemo(() => {
     return [

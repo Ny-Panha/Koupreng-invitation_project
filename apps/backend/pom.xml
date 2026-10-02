@@ -317,6 +317,7 @@
                         <configuration>
                             <failBuildOnCVSS>8</failBuildOnCVSS>
                             <skipTestScope>true</skipTestScope>
+                            <nvdApiKeyEnvironmentVariable>NVD_API_KEY</nvdApiKeyEnvironmentVariable>
                             <suppressionFiles>
                                 <suppressionFile>${project.basedir}/dependency-check-suppressions.xml</suppressionFile>
                             </suppressionFiles>

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { getTemplateById } from "../../templates/data/templatesData";
 
-export function EventCard({ draft, onManage, onEdit, onPreview, onDelete, t }) {
+export function EventCard({ draft, onManage, onEdit, onDelete, t }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const menuRef = useRef(null);
 

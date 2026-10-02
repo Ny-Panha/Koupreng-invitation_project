@@ -30,7 +30,7 @@ public class AuditLogResponse {
     public static AuditLogResponse from(AuditLog log, AppUser adminUser, String adminEmail) {
         String adminName = adminUser != null && adminUser.getFullName() != null
                 ? adminUser.getFullName()
-                : (adminUser != null ? adminUser.getEmail() : "Admin #" + log.getAdminId());
+                : adminUser != null ? adminUser.getEmail() : "Admin #" + log.getAdminId();
 
         return AuditLogResponse.builder()
                 .id(log.getId())

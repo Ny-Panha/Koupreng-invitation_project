@@ -11,6 +11,15 @@ export default defineConfig({
   },
   test: {
     environment: "happy-dom",
+    environmentOptions: {
+      happyDOM: {
+        settings: {
+          disableCSSFileLoading: true,
+          disableIframePageLoading: true,
+          disableJavaScriptFileLoading: true,
+        },
+      },
+    },
     setupFiles: "./src/test/setup.js",
     exclude: ["tests/e2e/**", "node_modules/**", "dist/**"],
   },

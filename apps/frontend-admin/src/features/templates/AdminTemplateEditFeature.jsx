@@ -24,7 +24,6 @@ import {
   Upload,
   Play,
   Pause,
-  Volume2,
   VolumeX,
   Type,
   X,
@@ -38,7 +37,6 @@ import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 import adminManagementService from "../../shared/api/adminService";
 import { userTemplateUrl } from "../../shared/config/runtime";
 import {
-  TemplateCoverSection,
   TemplateGallerySection,
   TemplateQrSection,
   TemplateSectionOrderManager,
@@ -252,8 +250,12 @@ const ensureCustomFontFace = (fontFamily, fontUrl) => {
     const font = new FontFace(cleanName, `url("${fontUrl}")`);
     font.load().then((loaded) => {
       document.fonts.add(loaded);
-    }).catch(() => {});
-  } catch {}
+    }).catch(() => {
+      // Font loading is best-effort; the browser falls back to the configured stack.
+    });
+  } catch {
+    // Invalid or unsupported font sources fall back to the configured stack.
+  }
 };
 
 const KHMER_FONTS = [
@@ -277,24 +279,6 @@ const KHMER_FONTS = [
   { value: "Nokora", label: "Nokora (អក្សរនគរាជ សង្ហារៀបរយ)", group: "✨ ម៉ូតសម័យទំនើប & ស្រទន់" },
 ];
 
-const LATIN_FONTS = [
-  // 💎 Luxury Roman & Serif
-  { value: "Cinzel", label: "Cinzel (Royal Classical Roman)", group: "💎 Luxury Roman & Serif" },
-  { value: "Cinzel Decorative", label: "Cinzel Decorative (Royal Ornate)", group: "💎 Luxury Roman & Serif" },
-  { value: "Playfair Display", label: "Playfair Display (Luxury Editorial)", group: "💎 Luxury Roman & Serif" },
-  { value: "Cormorant Garamond", label: "Cormorant Garamond (Ultra Elegant Fine Serif)", group: "💎 Luxury Roman & Serif" },
-
-  // ✒️ Calligraphy & Script
-  { value: "Great Vibes", label: "Great Vibes (Romantic Calligraphy)", group: "✒️ Calligraphy & Script" },
-  { value: "Alex Brush", label: "Alex Brush (Classic Graceful Script)", group: "✒️ Calligraphy & Script" },
-  { value: "Pinyon Script", label: "Pinyon Script (Aristocratic French Script)", group: "✒️ Calligraphy & Script" },
-  { value: "Allura", label: "Allura (Flowing Handwritten Script)", group: "✒️ Calligraphy & Script" },
-
-  // 🏢 Modern Sans
-  { value: "Montserrat", label: "Montserrat (Clean Luxury Sans)", group: "🏢 Modern Sans" },
-  { value: "Inter", label: "Inter (Clean Contemporary)", group: "🏢 Modern Sans" },
-];
-
 const POPULAR_GOOGLE_FONTS_SUGGESTIONS = [
   { name: "Odor Mean Chey", category: "khmer" },
   { name: "Koh Santepheap", category: "khmer" },
@@ -306,7 +290,7 @@ const POPULAR_GOOGLE_FONTS_SUGGESTIONS = [
   { name: "Satisfy", category: "latin" },
 ];
 
-export const TYPOGRAPHY_ELEMENTS = [
+const TYPOGRAPHY_ELEMENTS = [
   { id: "couple", label: "1. 💑 ឈ្មោះគូដណ្ដឹង", sub: "Couple Names", previewText: "នី បញ្ញា & កត់ ស្រីផ្កាយ" },
   { id: "date", label: "2. 📅 កាលបរិច្ឆេទ", sub: "Date Text", previewText: "ថ្ងៃពុធ ២៨ មករា ២០២៦" },
   { id: "time", label: "3. ⏰ ពេលវេលា", sub: "Time Text", previewText: "១៧:០០" },
@@ -438,7 +422,7 @@ function VisualKhmerFontPicker({
   const [search, setSearch] = useState("");
 
   const filteredFonts = useMemo(() => {
-    let list = [];
+    let list;
     if (filterCategory === "royal") {
       list = KHMER_FONTS.filter((f) => f.group.includes("បុរាណ"));
     } else if (filterCategory === "modern") {
@@ -470,8 +454,6 @@ function VisualKhmerFontPicker({
     }
     return list;
   }, [filterCategory, search, customFonts]);
-
-  const isInherited = !value;
 
   return (
     <div className="space-y-2">
@@ -612,9 +594,6 @@ export default function AdminTemplateEditPage() {
   const [newGalleryUrl, setNewGalleryUrl] = useState("");
   const [form, setForm] = useState(DEFAULT_STUDIO_STATE);
   const iframeRef = useRef(null);
-  const qrFileInputRef = useRef(null);
-  const galleryFileInputRef = useRef(null);
-  const coverFileInputRef = useRef(null);
   const bgFileInputRef = useRef(null);
   const brandMarkFileInputRef = useRef(null);
   const openButtonFileInputRef = useRef(null);
@@ -657,8 +636,6 @@ export default function AdminTemplateEditPage() {
   }, [form.fontKhmer, form.fontLatin, form.elementFonts, customFonts]);
 
   const customKhmerFonts = customFonts.filter((f) => f.category === "khmer");
-  const customLatinFonts = customFonts.filter((f) => f.category === "latin");
-
   const handleAddGoogleFont = (fontNameInput, categoryInput) => {
     const clean = (fontNameInput || newFontName).trim();
     if (!clean) {
@@ -685,7 +662,9 @@ export default function AdminTemplateEditPage() {
     setCustomFonts(updated);
     try {
       localStorage.setItem("koupreng_custom_fonts", JSON.stringify(updated));
-    } catch {}
+    } catch {
+      // localStorage can be unavailable in hardened browser contexts.
+    }
 
     if (cat === "khmer") {
       setField("fontKhmer", clean);
@@ -724,7 +703,9 @@ export default function AdminTemplateEditPage() {
       setCustomFonts(updated);
       try {
         localStorage.setItem("koupreng_custom_fonts", JSON.stringify(updated));
-      } catch {}
+      } catch {
+        // localStorage can be unavailable in hardened browser contexts.
+      }
 
       if (newFontCategory === "khmer") {
         setField("fontKhmer", fontName);
@@ -745,7 +726,9 @@ export default function AdminTemplateEditPage() {
     setCustomFonts(updated);
     try {
       localStorage.setItem("koupreng_custom_fonts", JSON.stringify(updated));
-    } catch {}
+    } catch {
+      // localStorage can be unavailable in hardened browser contexts.
+    }
 
     if (cat === "khmer" && form.fontKhmer === fontVal) {
       setField("fontKhmer", "Moul");
@@ -833,7 +816,9 @@ export default function AdminTemplateEditPage() {
               },
               "*"
             );
-          } catch {}
+          } catch {
+            // The preview can navigate away while the synchronization event is sent.
+          }
         }
       }
 
@@ -899,7 +884,9 @@ export default function AdminTemplateEditPage() {
             const merged = Array.from(map.values());
             try {
               localStorage.setItem("koupreng_custom_fonts", JSON.stringify(merged));
-            } catch {}
+            } catch {
+              // localStorage can be unavailable in hardened browser contexts.
+            }
             return merged;
           });
         }
@@ -1020,31 +1007,6 @@ export default function AdminTemplateEditPage() {
       if (typeof result === "string") {
         setField("qrGiftUrl", result);
         show(lang === "en" ? "QR code image uploaded ✓" : "បានជ្រើសរើសរូបភាព QR ជោគជ័យ ✓");
-      }
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const handleCoverFileUpload = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    if (!file.type.startsWith("image/") || file.type.includes("svg") || file.name.toLowerCase().endsWith(".svg")) {
-      show(lang === "en" ? "Please select an image file (PNG, JPG, WEBP)" : "សូមជ្រើសរើសប្រភេទ File រូបភាព (PNG, JPG, WEBP)", "error");
-      return;
-    }
-
-    if (file.size > 5 * 1024 * 1024) {
-      show(lang === "en" ? "Image size exceeds 5MB (Max: 5MB)" : "ទំហំរូបភាពធំជាង 5MB សូមបន្ថយទំហំរូបភាព (អតិបរមា 5MB)", "error");
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const result = event.target?.result;
-      if (typeof result === "string") {
-        setField("coverImage", result);
-        show(lang === "en" ? "Cover image uploaded ✓" : "បានជ្រើសរើសរូបភាព Cover ជោគជ័យ ✓");
       }
     };
     reader.readAsDataURL(file);
@@ -1749,10 +1711,8 @@ export default function AdminTemplateEditPage() {
 
                       {/* Selected Element Font Settings Card */}
                       {(() => {
-                        const activeElem = TYPOGRAPHY_ELEMENTS.find((e) => e.id === selectedFontElement) || TYPOGRAPHY_ELEMENTS[0];
                         const currentElementFont = form.elementFonts?.[selectedFontElement] || "";
                         const effectiveFont = currentElementFont || form.fontKhmer;
-                        const isCustomized = Boolean(currentElementFont);
                         const elementSampleText = (() => {
                           if (selectedFontElement === "couple") return `${form.groomName || ""} ${form.groomName && form.brideName ? "&" : ""} ${form.brideName || ""}`.trim() || "គូស្វាមីភរិយា";
                           if (selectedFontElement === "date") return form.weddingDate || "ថ្ងៃពុធ ២៨ មករា ២០២៦";
@@ -1816,7 +1776,9 @@ export default function AdminTemplateEditPage() {
                                         },
                                         "*"
                                       );
-                                    } catch {}
+                                    } catch {
+                                      // The preview can navigate away while the synchronization event is sent.
+                                    }
                                   }
                                 }}
                                 inheritFont={form.fontKhmer}
@@ -3709,7 +3671,9 @@ export default function AdminTemplateEditPage() {
                         },
                         "*"
                       );
-                    } catch {}
+                    } catch {
+                      // The preview can navigate away while the synchronization event is sent.
+                    }
                   }
                 }}
               />

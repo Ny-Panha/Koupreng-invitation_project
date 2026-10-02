@@ -6,7 +6,6 @@ import TemplateImage from "../shared/TemplateImage";
 import RibbonOpening from "@/features/templates/shared/Openings/RibbonOpening";
 import CinematicVideoOpening from "@/features/templates/shared/Openings/CinematicVideoOpening";
 import CelestialOpening from "@/features/templates/layouts/KhmerCelestial/components/CelestialOpening";
-import CoverBackground from "@/features/templates/shared/Openings/CoverBackground";
 import "@/features/templates/layouts/KhmerCelestial/khmer-celestial.css";
 
 

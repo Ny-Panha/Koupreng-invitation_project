@@ -328,6 +328,9 @@ final class OpenApiExamples {
                       "buyerPhone": "012345678"
                     }
                     """.formatted(DevSampleData.USER_EMAIL));
+            case "ClaimTemplatePaymentRequest" -> one("paymentReference", "Claim an owned pending payment", """
+                    {"reference":"ABA-TRANSACTION-REFERENCE"}
+                    """);
             case "ConfirmTemplatePaymentRequest" -> one("adminReview", "Requires a real pending order and administrator authorization", """
                     {"orderCode":"<pending-order-code>","amount":0.01,"confirmedBy":"admin-demo"}
                     """);
@@ -368,6 +371,17 @@ final class OpenApiExamples {
                     """);
             case "AdminUpdateUserRoleRequest" -> one("administrator", "Grant the administrator role", """
                     {"role":"ADMIN"}
+                    """);
+            case "AdminCreateUserRequest" -> one("administrator", "Create a fictional administrator", """
+                    {
+                      "fullName": "Koupreng Demo Administrator",
+                      "email": "new.admin@example.com",
+                      "password": "ExamplePass123!",
+                      "role": "ADMIN"
+                    }
+                    """);
+            case "AdminInvitationStatusRequest" -> one("publishInvitation", "Publish an invitation after review", """
+                    {"status":"PUBLISHED"}
                     """);
             case "AdminUpdateUserStatusRequest" -> one("activateUser", "Activate a user account", """
                     {"status":"ACTIVE"}

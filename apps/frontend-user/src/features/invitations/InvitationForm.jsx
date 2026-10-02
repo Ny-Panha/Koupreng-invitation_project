@@ -647,6 +647,7 @@ export default function InvitationForm({ invitation }) {
             openingStyle,
             frontColor,
             bottomColor,
+            backgroundColor,
             title,
             groomName,
             brideName,
@@ -996,8 +997,6 @@ export default function InvitationForm({ invitation }) {
     const coverInputRef = useRef(null);
     const coverBgInputRef = useRef(null);
     const bgFrameInputRef = useRef(null);
-    const invitationInputRef = useRef(null);
-    const invitation2InputRef = useRef(null);
     const bgInputRef = useRef(null);
     const sketchInputRef = useRef(null);
     const qrDollarInputRef = useRef(null);

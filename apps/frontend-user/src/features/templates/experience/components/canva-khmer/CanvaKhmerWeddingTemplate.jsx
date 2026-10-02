@@ -206,9 +206,6 @@ function CanvaKhmerMusicButton({ src, audioRef }) {
 }
 
 function CanvaKhmerOpeningCover({ content, onOpen }) {
-    const openingVideo = mediaSource(content.openingVideo);
-    const [coverFailed, setCoverFailed] = useState(false);
-
     return (
         <motion.section
             className="ck-cover"

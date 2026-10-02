@@ -1,19 +1,13 @@
 import { useState, useRef, useEffect, useMemo } from "react";
-import { Calendar, ChevronLeft, ChevronRight, ChevronDown, Check } from "lucide-react";
-
-export const KHMER_MONTHS = [
-  "មករា", "កុម្ភៈ", "មីនា", "មេសា", "ឧសភា", "មិថុនា",
-  "កក្កដា", "សីហា", "កញ្ញា", "តុលា", "វិច្ឆិកា", "ធ្នូ",
-];
-
-export const KHMER_DAYS_SHORT = ["អា", "ច", "អ", "ព", "ព្រ", "សុ", "ស"];
-export const KHMER_DAYS_FULL = ["អាទិត្យ", "ច័ន្ទ", "អង្គារ", "ពុធ", "ព្រហស្បតិ៍", "សុក្រ", "សៅរ៍"];
-
-export const toKhmerNum = (num) =>
-  String(num).replace(/[0-9]/g, (d) => "០១២៣៤៥៦៧៨៩"[d]);
-
-export const fromKhmerNum = (str) =>
-  String(str).replace(/[០-៩]/g, (d) => "0123456789"["០១២៣៤៥៦៧៨៩".indexOf(d)]);
+import { Calendar, ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
+import {
+  KHMER_DAYS_SHORT,
+  KHMER_MONTHS,
+  formatToKhmerDate,
+  parseKhmerOrIsoDate,
+  toIsoDate,
+  toKhmerNum,
+} from "./dateTimeUtils";
 
 function getDaysInMonth(year, month) {
   return new Date(year, month + 1, 0).getDate();
@@ -21,72 +15,6 @@ function getDaysInMonth(year, month) {
 
 function getFirstDayOfMonth(year, month) {
   return new Date(year, month, 1).getDay();
-}
-
-/**
- * Parse date from ISO ("2026-01-28") or Khmer string ("ថ្ងៃពុធ ២៨ មករា ២០២៦" or "២៨ មករា ២០២៦")
- */
-export function parseKhmerOrIsoDate(val) {
-  if (!val || typeof val !== "string") return null;
-  const clean = fromKhmerNum(val.trim());
-
-  // Check ISO format YYYY-MM-DD
-  const isoMatch = clean.match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
-  if (isoMatch) {
-    const y = parseInt(isoMatch[1], 10);
-    const m = parseInt(isoMatch[2], 10) - 1;
-    const d = parseInt(isoMatch[3], 10);
-    if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
-      return { year: y, month: m, day: d };
-    }
-  }
-
-  // Check Khmer month name
-  let foundMonth = -1;
-  for (let i = 0; i < KHMER_MONTHS.length; i++) {
-    if (val.includes(KHMER_MONTHS[i])) {
-      foundMonth = i;
-      break;
-    }
-  }
-
-  const numbers = clean.match(/\d+/g);
-  if (foundMonth !== -1 && numbers) {
-    let day = null;
-    let year = null;
-    for (const n of numbers) {
-      const num = parseInt(n, 10);
-      if (num >= 1900 && num <= 2100) {
-        year = num;
-      } else if (num >= 1 && num <= 31 && !day) {
-        day = num;
-      }
-    }
-    if (day && year) {
-      return { year, month: foundMonth, day };
-    }
-  }
-
-  return null;
-}
-
-/**
- * Format year, month, day into full Khmer display string
- * e.g. "ថ្ងៃពុធ ២៨ មករា ២០២៦"
- */
-export function formatToKhmerDate(year, month, day) {
-  const dateObj = new Date(year, month, day);
-  const dayOfWeek = KHMER_DAYS_FULL[dateObj.getDay()] || "ពុធ";
-  const khDay = toKhmerNum(day);
-  const khMonth = KHMER_MONTHS[month];
-  const khYear = toKhmerNum(year);
-  return `ថ្ងៃ${dayOfWeek} ${khDay} ${khMonth} ${khYear}`;
-}
-
-export function toIsoDate(year, month, day) {
-  const mm = String(month + 1).padStart(2, "0");
-  const dd = String(day).padStart(2, "0");
-  return `${year}-${mm}-${dd}`;
 }
 
 /**

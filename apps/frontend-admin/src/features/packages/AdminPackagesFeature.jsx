@@ -22,8 +22,6 @@ import {
   FileText,
   Sliders,
   CheckCircle2,
-  Calendar,
-  Hash,
   Info,
 } from "lucide-react";
 import { Loading, ErrorState, Empty, Toast } from "../../shared/ui";
@@ -311,7 +309,7 @@ function ToggleSwitch({ checked, onChange, label, sublabel, icon: Icon }) {
 }
 
 export default function AdminPackagesPage() {
-  const { lang, t } = useAdminLanguage();
+  const { lang } = useAdminLanguage();
   const { data, setData, loading, error, reload } = useResource(adminManagementService.packages);
   const [form, setForm] = useState(EMPTY_FORM);
   const [editingId, setEditingId] = useState(null);

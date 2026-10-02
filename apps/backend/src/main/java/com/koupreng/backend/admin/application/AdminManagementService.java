@@ -455,9 +455,9 @@ public class AdminManagementService {
                 .generatedAt(Instant.now())
                 .summary(Map.of(
                         "totalRsvps", rows.size(),
-                        "attending", rows.stream().filter(row -> row.getResponseStatus() == com.koupreng.backend.rsvp.domain.RsvpStatus.ATTENDING).count(),
-                        "declined", rows.stream().filter(row -> row.getResponseStatus() == com.koupreng.backend.rsvp.domain.RsvpStatus.NOT_ATTENDING).count(),
-                        "maybe", rows.stream().filter(row -> row.getResponseStatus() == com.koupreng.backend.rsvp.domain.RsvpStatus.MAYBE).count()
+                        "attending", rows.stream().filter(row -> row.getResponseStatus() == RsvpStatus.ATTENDING).count(),
+                        "declined", rows.stream().filter(row -> row.getResponseStatus() == RsvpStatus.NOT_ATTENDING).count(),
+                        "maybe", rows.stream().filter(row -> row.getResponseStatus() == RsvpStatus.MAYBE).count()
                 ))
                 .rows(rows)
                 .build();
@@ -557,17 +557,17 @@ public class AdminManagementService {
                 .toList();
         long totalGuests = guestRepository.count();
         long attending = rows.stream()
-                .filter(row -> row.getResponseStatus() == com.koupreng.backend.rsvp.domain.RsvpStatus.ATTENDING)
+                .filter(row -> row.getResponseStatus() == RsvpStatus.ATTENDING)
                 .count();
         Map<String, Object> summary = new LinkedHashMap<>();
         summary.put("totalGuests", totalGuests);
         summary.put("totalRsvps", rows.size());
         summary.put("attending", attending);
         summary.put("declined", rows.stream()
-                .filter(row -> row.getResponseStatus() == com.koupreng.backend.rsvp.domain.RsvpStatus.NOT_ATTENDING)
+                .filter(row -> row.getResponseStatus() == RsvpStatus.NOT_ATTENDING)
                 .count());
         summary.put("maybe", rows.stream()
-                .filter(row -> row.getResponseStatus() == com.koupreng.backend.rsvp.domain.RsvpStatus.MAYBE)
+                .filter(row -> row.getResponseStatus() == RsvpStatus.MAYBE)
                 .count());
         summary.put("rsvpConversion", totalGuests == 0 ? 0 : (double) rows.size() / totalGuests);
         summary.put("attendingRate", totalGuests == 0 ? 0 : (double) attending / totalGuests);

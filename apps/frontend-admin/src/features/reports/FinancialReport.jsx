@@ -119,6 +119,7 @@ export default function FinancialReport({ initialInvitationId = "", onInvitation
   const { invitations, invitationId, setInvitationId, reportData, loading, error, refreshedAt } = useFinancialReportData(10000, initialInvitationId);
   const [invitationSearch, setInvitationSearch] = useState("");
   const [eventTypeFilter, setEventTypeFilter] = useState("");
+  const [printMode, setPrintMode] = useState("all");
   const invitation = reportData?.invitation;
   const gifts = reportData?.gifts || [];
   const expenses = reportData?.expenses || [];
@@ -165,7 +166,7 @@ export default function FinancialReport({ initialInvitationId = "", onInvitation
   }, [initialInvitationId, invitationId, setInvitationId]);
 
   return (
-    <main className="admin-financial-report">
+    <main className={`admin-financial-report print-mode-${printMode}`}>
       <header className="afr-header">
         <div>
           <span className="afr-kicker">Event finance</span>
@@ -205,7 +206,17 @@ export default function FinancialReport({ initialInvitationId = "", onInvitation
               {visibleInvitations.map((item) => <option key={item.id} value={item.id}>{invitationLabel(item)}</option>)}
             </select>
           </div>
-          <button type="button" className="btn btn-primary btn-sm" onClick={() => window.print()}><Printer size={16} /> Print</button>
+          <label className="afr-print-filter">
+            <span>Print section</span>
+            <select value={printMode} onChange={(event) => setPrintMode(event.target.value)}>
+              <option value="all">All sections</option>
+              <option value="income">Income only</option>
+              <option value="expenses">Expenses only</option>
+            </select>
+          </label>
+          <button type="button" className="btn btn-primary btn-sm" onClick={() => window.print()}>
+            <Printer size={16} /> Print Selected Section
+          </button>
         </div>
       </header>
 
@@ -232,7 +243,7 @@ export default function FinancialReport({ initialInvitationId = "", onInvitation
             <PaymentBreakdown digital={digitalPayments} cash={cashPayments} />
           </section>
 
-          <section className="afr-section">
+          <section className="afr-section afr-rsvp-section">
             <div className="afr-section-title"><div><span>RSVP / ATTENDANCE</span><h2>ស្ថិតិការឆ្លើយតប និងចំនួនអ្នកចូលរួម</h2></div></div>
             <div className="afr-rsvp-grid">
               <SummaryCard title="ភ្ញៀវអញ្ជើញ / Total Invited" value={rsvpSummary?.totalGuests ?? 0} />
@@ -246,11 +257,11 @@ export default function FinancialReport({ initialInvitationId = "", onInvitation
 
           <p className="afr-data-note no-print">{refreshedAt ? `បានធ្វើបច្ចុប្បន្នភាព: ${new Intl.DateTimeFormat("en-GB", { timeStyle: "medium" }).format(refreshedAt)}` : ""} កំណត់ត្រាចាស់ដែលមិនមាន currency ត្រូវបង្ហាញជា USD។ ប្រព័ន្ធមិនបម្លែងរវាង USD និង KHR ទេ។ ចំណូលសរុបរាប់តែអំណោយដែលបានកត់ត្រា ហើយចំណាយសរុបរាប់តែ actual cost ដែលមានតម្លៃ; ថវិកាគ្រោងមិនត្រូវបូកជាចំណាយពិតទេ។</p>
 
-          <ReportTable title="តារាងអំណោយ និងចំណូលផ្សេងៗ" kicker="INCOME" headings={["ឈ្មោះអ្នកផ្តល់", "ក្រុម/ខាង", "ចំនួន", "វិធីបង់ប្រាក់", "ថ្ងៃទទួល", "កំណត់សម្គាល់"]}>
+          <ReportTable className="afr-income-section" title="តារាងអំណោយ និងចំណូលផ្សេងៗ" kicker="INCOME" headings={["ឈ្មោះអ្នកផ្តល់", "ក្រុម/ខាង", "ចំនួន", "វិធីបង់ប្រាក់", "ថ្ងៃទទួល", "កំណត់សម្គាល់"]}>
             {gifts.length ? gifts.map((gift, index) => <tr key={gift.id || index}><td>{gift.name || gift.giverName || "-"}</td><td>{displayText(gift.side) !== "-" ? displayText(gift.side) : displayText(gift.sideType)}</td><td className="afr-money-cell">{formatMoney(amountOf(gift, ["amount"]), currencyOf(gift))}</td><td>{gift.method || gift.paymentMethod || "-"}</td><td>{formatDate(gift.date || gift.receivedDate)}</td><td>{gift.note || "-"}</td></tr>) : <EmptyRow count={6} />}
           </ReportTable>
 
-          <ReportTable title="តារាងថវិកាគ្រោង និងចំណាយជាក់ស្តែង" kicker="EXPENSES" headings={["ប្រភេទ", "អ្នកផ្គត់ផ្គង់", "ថវិកាគ្រោង", "ចំណាយជាក់ស្តែង", "ថ្ងៃបង់ប្រាក់", "កំណត់ចំណាំ"]}>
+          <ReportTable className="afr-expenses-section" title="តារាងថវិកាគ្រោង និងចំណាយជាក់ស្តែង" kicker="EXPENSES" headings={["ប្រភេទ", "អ្នកផ្គត់ផ្គង់", "ថវិកាគ្រោង", "ចំណាយជាក់ស្តែង", "ថ្ងៃបង់ប្រាក់", "កំណត់ចំណាំ"]}>
             {expenses.length ? expenses.map((item, index) => <tr key={item.id || index}>
               <td><span className="afr-category">{expenseCategoryLabel(item.category)}</span></td>
               <td>{item.vendorName || "-"}</td>
@@ -334,8 +345,8 @@ function PaymentBreakdown({ digital, cash }) {
   </article>;
 }
 
-function ReportTable({ title, kicker, headings, children }) {
-  return <section className="afr-section"><div className="afr-section-title"><div><span>{kicker}</span><h2>{title}</h2></div></div><div className="afr-table-wrap"><table><thead><tr>{headings.map((heading) => <th key={heading}>{heading}</th>)}</tr></thead><tbody>{children}</tbody></table></div></section>;
+function ReportTable({ title, kicker, headings, children, className = "" }) {
+  return <section className={`afr-section ${className}`.trim()}><div className="afr-section-title"><div><span>{kicker}</span><h2>{title}</h2></div></div><div className="afr-table-wrap"><table><thead><tr>{headings.map((heading) => <th key={heading}>{heading}</th>)}</tr></thead><tbody>{children}</tbody></table></div></section>;
 }
 
 function EmptyRow({ count }) {

@@ -544,7 +544,7 @@ public class TemplatePaymentService {
         String source = "USER_INSTANT_CONFIRM";
         String userName = user.getFullName() != null && !user.getFullName().isBlank()
                 ? user.getFullName()
-                : (user.getEmail() != null ? user.getEmail() : "User #" + user.getId());
+                : user.getEmail() != null ? user.getEmail() : "User #" + user.getId();
         String confirmedBy = reference != null && !reference.isBlank()
                 ? userName + " (Ref: " + reference.trim() + ")"
                 : userName;

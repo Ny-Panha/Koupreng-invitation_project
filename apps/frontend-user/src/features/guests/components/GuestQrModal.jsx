@@ -99,7 +99,7 @@ export default function GuestQrModal({
     return () => {
       isMounted = false;
     };
-  }, [guest?.id, guest?.name, backendInvitationId]);
+  }, [backendInvitationId, guest, onGuestSynced]);
 
   if (!guest) return null;
 

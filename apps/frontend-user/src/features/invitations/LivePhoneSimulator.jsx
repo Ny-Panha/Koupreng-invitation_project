@@ -64,21 +64,6 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
     const templateName = merged?.tpl?.name || merged?.tpl?.style || t("previewTopInfo") || "គំរូសន្លឹកការ (Live Preview)";
     const templateSlug = useMemo(() => resolveTemplateSlug(data, merged), [data, merged]);
 
-    const hasGateOpening = Boolean(
-        merged?.tpl?.hasGate === true ||
-        merged?.tpl?.gateStyle === "celestial-cover" ||
-        merged?.tpl?.openingStyle === "celestial-cover" ||
-        merged?.tpl?.gateStyle === "curtain" ||
-        merged?.tpl?.gateStyle === "envelope" ||
-        merged?.tpl?.gateStyle === "envelope-3d" ||
-        merged?.tpl?.openingStyle === "envelope" ||
-        merged?.tpl?.openingStyle === "envelope-3d" ||
-        merged?.tpl?.openingStyle === "curtain" ||
-        templateSlug === "khmer-celestial" ||
-        templateSlug === "the-digital-yes-wedding" ||
-        templateSlug === "emerald-canva-luxe-wedding"
-    ) && merged?.tpl?.hasGate !== false;
-
     // Start closed on Cover if template supports gate opening, identical to Admin
     const [isGateOpen, setIsGateOpen] = useState(false);
 
@@ -163,7 +148,9 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
                     { type: "TOGGLE_GATE", open: shouldOpen, isOpen: shouldOpen },
                     "*"
                 );
-            } catch {}
+            } catch {
+                // The preview may navigate while the gate state is being sent.
+            }
         }
     };
 
@@ -180,7 +167,9 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
                             { type: "TOGGLE_GATE", open: isGateOpen, isOpen: isGateOpen },
                             "*"
                         );
-                    } catch {}
+                    } catch {
+                        // The preview may navigate while the gate state is being sent.
+                    }
                 }
             }
         };
@@ -189,7 +178,7 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
     }, [broadcastSync, isGateOpen]);
 
     // Check if running in headless test environment (Vitest / HappyDOM)
-    const isTest = typeof process !== "undefined" && (process.env?.NODE_ENV === "test" || Boolean(globalThis.__vitest_worker__));
+    const isTest = import.meta.env.MODE === "test" || Boolean(globalThis.__vitest_worker__);
 
     return (
         <aside className="pe-preview-column">
@@ -267,7 +256,9 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
                                             { type: "TOGGLE_GATE", open: isGateOpen, isOpen: isGateOpen },
                                             "*"
                                         );
-                                    } catch {}
+                                    } catch {
+                                        // The preview may navigate while the gate state is being sent.
+                                    }
                                 }
                             }}
                         />
