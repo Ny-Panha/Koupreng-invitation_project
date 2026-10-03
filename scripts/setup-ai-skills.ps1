@@ -5,7 +5,7 @@
 .DESCRIPTION
     Verifies and restores project-local AI agent skills according to ai-skills.lock.json.
     - Pins all skills to exact verified Git commits.
-    - Validates SHA-256 hashes of all installed skill files (handles CRLF/LF normalization).
+    - Validates SHA-256 hashes of all installed skill files.
     - Never modifies application source code, package.json, pom.xml, or database migrations.
     - Never accesses secrets or network credentials.
     - Never commits or pushes to Git.
@@ -48,13 +48,6 @@ $verifiedCount = 0
 $mismatchCount = 0
 $missingCount = 0
 
-function Get-NormalizedSha256([string]$filePath) {
-    $content = [System.IO.File]::ReadAllText($filePath).Replace("`r`n", "`n")
-    $bytes = [System.Text.Encoding]::UTF8.GetBytes($content)
-    $sha = [System.Security.Cryptography.SHA256]::Create()
-    return [System.BitConverter]::ToString($sha.ComputeHash($bytes)).Replace("-", "").ToLower()
-}
-
 foreach ($skillEntry in $lockJson.skills) {
     $skillName = $skillEntry.skill
     $targetSkillDir = Join-Path $skillsDir $skillName
@@ -77,20 +70,11 @@ foreach ($skillEntry in $lockJson.skills) {
             continue
         }
 
-        $rawHash = (Get-FileHash -Path $localFilePath -Algorithm SHA256).Hash.ToLower()
-        $expectedHash = $fileEntry.sha256.ToLower()
-        
-        $match = ($rawHash -eq $expectedHash)
-        if (-not $match) {
-            # Try normalized hash for cross-platform Git CRLF/LF compatibility
-            $normHash = Get-NormalizedSha256 $localFilePath
-            $match = ($normHash -eq $expectedHash)
-        }
-
-        if (-not $match) {
+        $currentHash = (Get-FileHash -Path $localFilePath -Algorithm SHA256).Hash.ToLower()
+        if ($currentHash -ne $fileEntry.sha256.ToLower()) {
             Write-Host "    [!] Checksum mismatch for $($fileEntry.path):" -ForegroundColor Yellow
-            Write-Host "        Expected: $expectedHash" -ForegroundColor DarkGray
-            Write-Host "        Found:    $rawHash" -ForegroundColor DarkGray
+            Write-Host "        Expected: $($fileEntry.sha256)" -ForegroundColor DarkGray
+            Write-Host "        Found:    $currentHash" -ForegroundColor DarkGray
             $skillFilesValid = $false
             $mismatchCount++
         }

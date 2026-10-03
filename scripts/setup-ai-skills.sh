@@ -80,9 +80,7 @@ for i in $(seq 0 $((TOTAL_SKILLS - 1))); do
         fi
 
         CURRENT_SHA=$(sha256sum "${FULL_PATH}" | awk '{print $1}')
-        NORM_SHA=$(tr -d '\r' < "${FULL_PATH}" | sha256sum | awk '{print $1}')
-
-        if [[ "${CURRENT_SHA}" != "${EXPECTED_SHA}" && "${NORM_SHA}" != "${EXPECTED_SHA}" ]]; then
+        if [[ "${CURRENT_SHA}" != "${EXPECTED_SHA}" ]]; then
             echo "    [!] Hash mismatch: ${FILE_PATH}"
             SKILL_OK=false
             ERRORS=$((ERRORS + 1))
