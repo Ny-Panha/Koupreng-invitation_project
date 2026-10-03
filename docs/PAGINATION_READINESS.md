@@ -1,0 +1,35 @@
+# Pagination readiness — BE-005
+
+Status: **PARTIAL / production hardening required**. Phase 3 retains the existing response shapes. Current external APIs return lists/full report objects; no compatible API pagination envelope was found. Internal `PageRequest` for recent payments is not a paginated public contract. No confirmed new memory defect justified a breaking or speculative rewrite.
+
+Categories describe retained behavior, not authorization changes. Paths below use `/api/v1`; legacy aliases remain. Multiple categories can apply to one family.
+
+| API family / representative GET paths | Category | Current bound and next step |
+| --- | --- | --- |
+| `/templates`, `/templates/{templateId}`, `/templates/slug/{code}`, `/packages`; admin catalog equivalents | SAFE_FOR_CURRENT_SCALE; admin variants ADMIN_ONLY | Small product catalog in fresh seed; no automatic hard cap. Revisit if catalog grows substantially |
+| `/invitations/my`, `/invitations/my/status/{status}` | SHOULD_PAGE_BEFORE_PRODUCTION | Full owner list; cover loading batched to 2 SQL at 20 invitations, but rows/response size unbounded. Future additive paged endpoint must retain old list aliases |
+| `/dashboard/summary` | SHOULD_PAGE_BEFORE_PRODUCTION | Recent output capped at five, but calculation loads all owner invitations/guests/RSVP/payment rows; 7 SQL at 20 invitations does not bound heap or SQL row count. Approve aggregate/paged strategy with parity tests before large-scale use |
+| `/invitations/{id}/dashboard` | SHOULD_PAGE_BEFORE_PRODUCTION | Invitation-level aggregates load complete scoped collections; constant request scope does not bound guest/payment cardinality |
+| `/invitations/{invitationId}/guests`, `/grouped`, `/send-list`, `/search` | SHOULD_PAGE_BEFORE_PRODUCTION | Owner-scoped full collections. Search/grouping are not pagination. Define deterministic ordering and additive cursor/page contract; keep imports and exports complete |
+| `/invitations/{invitationId}/rsvps`, `/wishes`; `/public/invitations/{slug}/wishes` | SHOULD_PAGE_BEFORE_PRODUCTION | Lists grow with responses. Public access/privacy checks preserved; avoid revealing private contact/token fields in any future page |
+| `/invitations/{invitationId}/check-in/list` | SHOULD_PAGE_BEFORE_PRODUCTION | Active check-in rows unbounded. Summary is separate scalar query: 4 SQL / 1 entity at 20 guests; do not load list for summary |
+| `/invitations/{invitationId}/budget`, `/budget-items`, `/gifts`, `/seating`, `/tables` | SHOULD_PAGE_BEFORE_PRODUCTION | Full ledgers/plan/assignments; a floor plan may need a separate bounded or chunked editor contract. Preserve currency separation and authoritative persistence |
+| `/invitations/{invitationId}/media`; public media variant | SHOULD_PAGE_BEFORE_PRODUCTION | Gallery cumulative cap disabled by default; an approved product quota could bound it. Request upload maxFiles does not bound reads |
+| `/invitations/{invitationId}/delivery/summary`, `/delivery/events` | SHOULD_PAGE_BEFORE_PRODUCTION | Summary includes guests; event history unbounded. Future paging must preserve delivery audit history |
+| `/notifications`, `/invitations/{invitationId}/notifications` | SHOULD_PAGE_BEFORE_PRODUCTION | Full notification lists; scalar notification summary does not require paging. Read-all remains a distinct mutation, not list pagination |
+| `/me/payments`, `/me/subscriptions`, `/me/templates/paid` | SHOULD_PAGE_BEFORE_PRODUCTION | Full owner histories/access lists. Individual order/access/current-subscription responses are bounded |
+| `/organizations`, `/organizations/{organizationId}` | SHOULD_PAGE_BEFORE_PRODUCTION | Organization DTO includes member lists. Team scope/cap remains owner decision, not an assumed read bound |
+| `/invitations/{invitationId}/reports/rsvp`, `/reports/guests` | SHOULD_PAGE_BEFORE_PRODUCTION | Full report rows; maintain report totals while adding optional paged drilldown later |
+| Guest, budget, seating and RSVP/guest-report `/export` endpoints | EXPORT_EXPECTED_TO_BE_UNBOUNDED | Complete exports are intentional. Current lists/StringBuilder/CSV buffers grow with data; future streaming/chunking needs stable ordering, consistent snapshot, CSV escaping and authorization parity. Never silently truncate an export |
+| `/admin/users`, `/admin/users/{userId}/invitations`, `/admin/invitations`, `/admin/payments`, `/admin/template-payments`, `/admin/notifications` | ADMIN_ONLY; SHOULD_PAGE_BEFORE_PRODUCTION | Full cross-account lists; admin authorization is not a memory bound. Prioritize these before a large customer import |
+| `/admin/reports/users`, `/invitations`, `/payments`, `/rsvp` | ADMIN_ONLY; SHOULD_PAGE_BEFORE_PRODUCTION | Full administrative report collections. Preserve legacy report fields and mixed-currency semantics |
+| `/admin/reports/system` | ADMIN_ONLY; SAFE_FOR_CURRENT_SCALE | Scalar system summary with empty detail rows; no growing report collection. Aggregate execution cost still needs production measurement |
+| `/admin/analytics/revenue`, `/templates`, `/delivery`, `/rsvp`, `/check-in` | ADMIN_ONLY; SHOULD_PAGE_BEFORE_PRODUCTION | Some results summarize collections but underlying entity reads remain full. Check plans/cardinality before promising production bounds |
+| `/admin/dashboard/summary`, `/admin/analytics/overview`, `/admin/system-health`, `/admin/alerts` | ADMIN_ONLY; SAFE_FOR_CURRENT_SCALE | Phase 2 scalar projections and bounded recent invitation/payment rows retained. Admin dashboard fixture: 10 SQL / 7 entities at 20 invitations. Query execution/aggregate costs still need production-scale measurement |
+| `/admin/audit-logs/recent` | ADMIN_ONLY; SAFE_FOR_CURRENT_SCALE | Dedicated recent service path returns at most 100 rows; preserve distinction from full system logs |
+| `/admin/system-logs`, `/audit-logs` | ADMIN_ONLY; SHOULD_PAGE_BEFORE_PRODUCTION; legacy audit also LEGACY_COMPATIBILITY | SystemAuditLog and historical AuditLog are separate models. Both full history queries remain; no model deletion/merge |
+| `/events`, `/events/published`, `/events/drafts` and individual legacy event operations | ADMIN_ONLY; LEGACY_COMPATIBILITY; list paths SHOULD_PAGE_BEFORE_PRODUCTION | Legacy Event API retained; do not reinterpret it as invitations or remove payloads |
+
+Phase 3 remeasured the exact Phase 2 fixtures: invitation covers 2 SQL/20 invitations; user dashboard 7 SQL/20 invitations; admin dashboard 10 SQL/7 loaded entities/20 invitations; check-in summary 4 SQL/1 loaded entity/20 guests. These are local Hibernate statistics, not production latency or capacity claims.
+
+Before production-scale rollout, agree expected account/admin cardinality, page-size maxima and sort/tie-breaker keys; measure row counts/heap and query plans; introduce additive list contracts and update clients incrementally; verify owners/admins cannot traverse another account's pages; preserve complete exports. Add indexes only from actual query-plan evidence. No pagination, index or report-API redesign was introduced in Phase 3.
