@@ -325,6 +325,14 @@ jobs:
           distribution: temurin
           cache: maven
 
+      - name: Verify NVD audit credentials
+        shell: bash
+        run: |
+          if [[ -z "${NVD_API_KEY:-}" ]]; then
+            echo "::error::Configure the NVD_API_KEY Actions repository secret for this repository. Java vulnerability auditing remains mandatory."
+            exit 1
+          fi
+
       - name: Audit Java dependencies
         working-directory: apps/backend
         run: |

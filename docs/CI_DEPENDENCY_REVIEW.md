@@ -15,7 +15,9 @@ The removed chain is depcheck 1.4.7 -> findup-sync -> micromatch -> braces 3.0.3
 
 ## Actions
 
-Official tag refs and action.yml at each release commit were checked before upgrading. All five use Node 24. Application toolchains remain Node 22, Java 25 and Python 3.13; ubuntu-latest uses a compatible hosted runner. Workflow gates, thresholds, permissions, triggers and job dependencies are unchanged.
+Official tag refs and action.yml at each release commit were checked before upgrading. All five use Node 24. Application toolchains remain Node 22, Java 25 and Python 3.13; ubuntu-latest uses a compatible hosted runner. Existing workflow gates, thresholds, permissions, triggers and job dependencies are unchanged.
+
+Run #151 passed nine jobs and both npm audits, then failed the Java audit while refreshing NVD data (HTTP 429). Its logs showed an empty NVD_API_KEY. The audit now checks that the repository Actions secret is available before starting Java auditing, with a clear error if it is absent. This does not bypass data updates or vulnerability scanning; missing credentials still fail CI.
 
 | Official release | Verified commit |
 | --- | --- |
