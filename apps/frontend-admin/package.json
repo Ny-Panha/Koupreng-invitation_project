@@ -11,7 +11,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "analyze:knip": "node ../../scripts/ci/run-knip.mjs --include files,dependencies,unlisted,binaries",
-    "analyze:deps": "depcheck --ignores=tailwindcss,@types/*,depcheck,knip"
+    "analyze:deps": "node ../../scripts/ci/run-knip.mjs --include dependencies,unlisted,binaries"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
@@ -30,7 +30,6 @@
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
     "@vitejs/plugin-react": "^6.0.5",
-    "depcheck": "^1.4.7",
     "eslint": "^10.8.1",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.3",

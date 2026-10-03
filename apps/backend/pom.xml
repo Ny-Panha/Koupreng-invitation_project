@@ -34,8 +34,30 @@
         <postgresql.version>42.7.13</postgresql.version>
         <tomcat.version>11.0.25</tomcat.version>
         <archunit.version>1.5.0</archunit.version>
+        <poi.version>5.4.1</poi.version>
+        <nimbus-jose-jwt.version>10.4</nimbus-jose-jwt.version>
     </properties>
     <dependencies>
+        <!-- Direct legacy Jackson APIs used by JSON configuration, audit and payment adapters.
+             Versions stay managed by Spring Boot's Jackson 2 BOM. -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <!-- SecurityConfig imports ImmutableSecret directly; match Spring Security's resolved version. -->
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+            <version>${nimbus-jose-jwt.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -105,8 +127,13 @@
         </dependency>
         <dependency>
             <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>${poi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
-            <version>5.4.1</version>
+            <version>${poi.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.zxing</groupId>
