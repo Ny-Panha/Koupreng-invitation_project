@@ -30,16 +30,13 @@ public class AppJwtAuthenticationConverter implements Converter<Jwt, JwtAuthenti
         AppUser user = userRepository.findById(userId)
                 .orElseThrow(() -> new BadCredentialsException("Authentication required"));
 
-        if (!user.isActive() || AppUser.STATUS_DISABLED.equalsIgnoreCase(user.getStatus())) {
+        if (!user.isActive() || user.isDeleted() || AppUser.STATUS_DISABLED.equalsIgnoreCase(user.getStatus())) {
             throw new BadCredentialsException("Account is disabled");
         }
 
-        CachedAuthInfo authInfo = userAuthCacheService.getAuthInfo(userId)
-                .orElseThrow(() -> new BadCredentialsException("Authentication required"));
-
-        if (!authInfo.active()) {
-            throw new BadCredentialsException("Account is disabled");
-        }
+        CachedAuthInfo authInfo = CachedAuthInfo.from(user);
+        userAuthCacheService.getAuthInfo(userId).filter(cached -> !cached.equals(authInfo))
+                .ifPresent(cached -> userAuthCacheService.evict(userId));
         validateTokenVersion(jwt, authInfo);
 
         String authority = authInfo.role() == com.koupreng.backend.user.domain.Role.STAFF

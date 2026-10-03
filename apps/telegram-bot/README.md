@@ -24,9 +24,9 @@ ADMIN_PAYMENT_SECRET=
 LOG_LEVEL=INFO
 ```
 
-`ADMIN_PAYMENT_SECRET` must match the Spring Boot `ADMIN_PAYMENT_SECRET`. The bot sends it as `X-ADMIN-PAYMENT-SECRET`.
+`ADMIN_PAYMENT_SECRET` must match the Spring Boot `ADMIN_PAYMENT_SECRET`. The bot sends it as `X-ADMIN-PAYMENT-SECRET`. Both this secret and `TELEGRAM_WEBHOOK_SECRET` must be nonempty, including during local development. Startup fails before contacting Telegram when either is missing or whitespace-only.
 
-`TELEGRAM_WEBHOOK_SECRET` authenticates requests sent by Telegram. Generate a random value, configure the same value as Telegram's `secret_token` when registering the webhook, and require it in every non-local deployment.
+`TELEGRAM_WEBHOOK_SECRET` authenticates every webhook request sent by Telegram. Generate a random value and configure the same value as Telegram's `secret_token` when registering the webhook. Missing or incorrect request headers receive HTTP 403; incomplete service security configuration receives HTTP 503 if an embedded host bypasses startup validation. `/health` remains a separate health endpoint.
 
 If `TELEGRAM_ALLOWED_PAYMENT_BOT_IDS` is set, ID matching is used for trusted payment bot checks. If IDs are not set, usernames from `TELEGRAM_ALLOWED_PAYMENT_BOT_USERNAMES` are matched case-insensitively. Do not trust normal user messages for auto-confirmation.
 
@@ -84,6 +84,12 @@ TELEGRAM_ALLOWED_PAYMENT_BOT_USERNAMES=PayWayByABA_bot
 ## Detection and Review Behavior
 
 The bot ignores messages from disallowed groups.
+
+Webhook processing separates updates currently being processed from completed updates. A backend timeout, network failure, HTTP 429/5xx, or invalid backend response returns HTTP 503 and leaves the update retryable. A duplicate still in progress also returns HTTP 503; an accepted duplicate returns HTTP 200 without repeating reconciliation. Terminal backend validation errors are acknowledged after the existing failure reply.
+
+The completed-update cache is bounded and local to one process. Restarting the bot or running multiple workers can redeliver an update to the backend; backend payment transaction/evidence idempotency remains the final protection against repeated financial mutations. This helper does not claim to provide a durable queue.
+
+Invalid JSON receives HTTP 400. Unsupported or malformed update/message/chat/sender/callback shapes are ignored with HTTP 200 before payment calls or update-cache entries. Supported message, edited-message, channel-post and callback command behavior remains available.
 
 The bot automatically processes a message only when:
 

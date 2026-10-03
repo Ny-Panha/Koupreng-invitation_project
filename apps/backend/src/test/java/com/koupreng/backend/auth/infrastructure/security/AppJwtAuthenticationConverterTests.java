@@ -20,6 +20,40 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 class AppJwtAuthenticationConverterTests {
 
     @Test
+    void staleCacheCannotAcceptRevokedToken() {
+        AppUserRepository repository = mock(AppUserRepository.class);
+        UserAuthCacheService cache = mock(UserAuthCacheService.class);
+        AppUser user = user(AppUser.STATUS_ACTIVE);
+        user.setTokenVersion(1);
+        when(repository.findById(1L)).thenReturn(Optional.of(user));
+        when(cache.getAuthInfo(1L)).thenReturn(Optional.of(new UserAuthCacheService.CachedAuthInfo(true, 0, Role.ADMIN)));
+        assertThrows(BadCredentialsException.class,
+                () -> new AppJwtAuthenticationConverter(cache, repository).convert(jwtWithTokenVersion(0)));
+    }
+
+    @Test
+    void staleAdminCacheCannotGrantAdminAfterDemotion() {
+        AppUserRepository repository = mock(AppUserRepository.class);
+        UserAuthCacheService cache = mock(UserAuthCacheService.class);
+        when(repository.findById(1L)).thenReturn(Optional.of(user(AppUser.STATUS_ACTIVE)));
+        when(cache.getAuthInfo(1L)).thenReturn(Optional.of(new UserAuthCacheService.CachedAuthInfo(true, 0, Role.ADMIN)));
+        JwtAuthenticationToken authentication = new AppJwtAuthenticationConverter(cache, repository).convert(jwtWithTokenVersion(0));
+        assertEquals("ROLE_USER", authentication.getAuthorities().iterator().next().getAuthority());
+        org.mockito.Mockito.verify(cache).evict(1L);
+    }
+
+    @Test
+    void staffAuthorityMappingIsPreserved() {
+        AppUserRepository repository = mock(AppUserRepository.class);
+        AppUser user = user(AppUser.STATUS_ACTIVE);
+        user.setRole(Role.STAFF);
+        when(repository.findById(1L)).thenReturn(Optional.of(user));
+        JwtAuthenticationToken authentication = new AppJwtAuthenticationConverter(new UserAuthCacheService(repository), repository)
+                .convert(jwtWithTokenVersion(0));
+        assertEquals("ROLE_ADMIN", authentication.getAuthorities().iterator().next().getAuthority());
+    }
+
+    @Test
     void convertsValidTokenVersionForActiveUser() {
         AppUserRepository userRepository = mock(AppUserRepository.class);
         UserAuthCacheService cacheService = new UserAuthCacheService(userRepository);

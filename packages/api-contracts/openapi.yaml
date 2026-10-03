@@ -19,6 +19,8 @@ tags:
     \ creation."
 - name: Payments
   description: Administrative payment verification and fulfillment.
+- name: Contact
+  description: Validated and rate-limited contact delivery.
 - name: Seating
   description: "Invitation-owner tables, seat assignments, summaries, and exports."
 - name: Administration
@@ -40,10 +42,10 @@ tags:
   description: Public application liveness endpoint.
 - name: Payment History
   description: Current-user payment orders and receipts with ownership enforcement.
-- name: Audit Logs
-  description: Activity tracking for admin changes and deletions.
 - name: Check-In
   description: Invitation-owner guest check-in by QR token or manual selection.
+- name: Audit Logs
+  description: Activity tracking for admin changes and deletions.
 - name: Reports
   description: "Authenticated dashboards, invitation-owner reports, and CSV exports."
 - name: Guests
@@ -985,6 +987,9 @@ paths:
       tags:
       - Authentication
       summary: Get the current user profile
+      description: Cookie mode also returns X-XSRF-TOKEN in an allowed CORS-exposed
+        response header for subsequent cookie-authenticated mutations. The user response
+        body is unchanged.
       operationId: me
       responses:
         "200":
@@ -1027,6 +1032,9 @@ paths:
       tags:
       - Authentication
       summary: Get the current user profile
+      description: Cookie mode also returns X-XSRF-TOKEN in an allowed CORS-exposed
+        response header for subsequent cookie-authenticated mutations. The user response
+        body is unchanged.
       operationId: me_1
       responses:
         "200":
@@ -1381,7 +1389,9 @@ paths:
     post:
       tags:
       - Payments
-      summary: User confirms payment to unlock template immediately
+      summary: Request payment review
+      description: A buyer claim is not payment proof. Only trusted confirmation can
+        unlock the template.
       operationId: claimPayment
       parameters:
       - name: orderCode
@@ -1413,7 +1423,9 @@ paths:
     post:
       tags:
       - Payments
-      summary: User confirms payment to unlock template immediately
+      summary: Request payment review
+      description: A buyer claim is not payment proof. Only trusted confirmation can
+        unlock the template.
       operationId: claimPayment_1
       parameters:
       - name: orderCode
@@ -2349,6 +2361,35 @@ paths:
                 $ref: "#/components/schemas/ApiResponseCheckInResponse"
       security:
       - bearerAuth: []
+    delete:
+      tags:
+      - Check-In
+      summary: Undo
+      operationId: undo
+      parameters:
+      - name: invitationId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      - name: guestId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+      security:
+      - bearerAuth: []
   /api/v1/invitations/{invitationId}/guests/import:
     post:
       tags:
@@ -2433,6 +2474,42 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ApiResponseGuestImportFileResultResponse"
+      security:
+      - bearerAuth: []
+  /api/v1/invitations/{invitationId}/guests/import-file/preview:
+    post:
+      tags:
+      - Guests
+      summary: Preview a guest import file
+      description: Owner-only CSV/XLSX parsing and duplicate preview. No guest data
+        or quota is changed. Import revalidates on submission.
+      operationId: previewGuestsFile
+      parameters:
+      - name: invitationId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required:
+              - file
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseGuestImportFilePreviewResponse"
       security:
       - bearerAuth: []
   /api/v1/invitations/{invitationId}/gifts:
@@ -2848,6 +2925,35 @@ paths:
                 $ref: "#/components/schemas/ApiResponseEventResponse"
       security:
       - bearerAuth: []
+  /api/v1/contact:
+    post:
+      tags:
+      - Contact
+      summary: Send a contact request
+      description: "Success means SMTP accepted the message, not inbox delivery."
+      operationId: submit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContactRequest"
+            examples:
+              contactInquiry:
+                summary: Send a fictional inquiry using configured SMTP
+                value:
+                  name: Sokha Demo
+                  email: sokha@example.com
+                  phone: "012345678"
+                  plan: Wedding invitation
+                  message: Please send information about invitation options.
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseContactDelivery"
   /api/auth/telegram:
     post:
       tags:
@@ -3170,6 +3276,124 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ApiError"
+  /api/v1/auth/link/telegram:
+    post:
+      tags:
+      - Authentication
+      summary: Link a verified Telegram identity to the current account
+      operationId: linkTelegram
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TelegramLoginRequest"
+            examples:
+              telegramOidc:
+                summary: Requires a real Telegram-issued ID token
+                value:
+                  idToken: <telegram-id-token>
+                  id: null
+                  first_name: null
+                  last_name: null
+                  username: null
+                  photo_url: null
+                  auth_date: null
+                  hash: null
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+      security:
+      - bearerAuth: []
+  /api/auth/link/telegram:
+    post:
+      tags:
+      - Authentication
+      summary: Link a verified Telegram identity to the current account
+      operationId: linkTelegram_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TelegramLoginRequest"
+            examples:
+              telegramOidc:
+                summary: Requires a real Telegram-issued ID token
+                value:
+                  idToken: <telegram-id-token>
+                  id: null
+                  first_name: null
+                  last_name: null
+                  username: null
+                  photo_url: null
+                  auth_date: null
+                  hash: null
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+      security:
+      - bearerAuth: []
+  /api/v1/auth/link/google:
+    post:
+      tags:
+      - Authentication
+      summary: Link a verified Google identity to the current account
+      operationId: linkGoogle
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GoogleLoginRequest"
+            examples:
+              googleOidc:
+                summary: Requires a real Google-issued ID token
+                value:
+                  idToken: <google-id-token>
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+      security:
+      - bearerAuth: []
+  /api/auth/link/google:
+    post:
+      tags:
+      - Authentication
+      summary: Link a verified Google identity to the current account
+      operationId: linkGoogle_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GoogleLoginRequest"
+            examples:
+              googleOidc:
+                summary: Requires a real Google-issued ID token
+                value:
+                  idToken: <google-id-token>
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+      security:
+      - bearerAuth: []
   /api/v1/auth/google:
     post:
       tags:
@@ -6438,6 +6662,35 @@ paths:
                 $ref: "#/components/schemas/ApiResponseVoid"
       security:
       - bearerAuth: []
+  /api/v1/invitations/{invitationId}/wishes/{wishId}:
+    delete:
+      tags:
+      - RSVP
+      summary: Remove wish text while preserving the RSVP attendance record
+      operationId: moderateWish
+      parameters:
+      - name: invitationId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      - name: wishId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+      security:
+      - bearerAuth: []
   /api/v1/invitations/{invitationId}/seating/assignments/{assignmentId}:
     delete:
       tags:
@@ -6857,6 +7110,18 @@ components:
           type: number
         remainingBudget:
           type: number
+        currency:
+          type: string
+        totalsComparable:
+          type: boolean
+        estimatedByCurrency:
+          type: object
+          additionalProperties:
+            type: number
+        actualByCurrency:
+          type: object
+          additionalProperties:
+            type: number
         overBudget:
           type: boolean
         notes:
@@ -8259,6 +8524,43 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/GuestResponse"
+    ApiResponseGuestImportFilePreviewResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/GuestImportFilePreviewResponse"
+        timestamp:
+          type: string
+          format: date-time
+    GuestImportFilePreviewResponse:
+      type: object
+      properties:
+        acceptedCount:
+          type: integer
+          format: int32
+        skippedCount:
+          type: integer
+          format: int32
+        errorRows:
+          type: array
+          items:
+            $ref: "#/components/schemas/GuestImportErrorResponse"
+        validRows:
+          type: array
+          items:
+            $ref: "#/components/schemas/ValidRow"
+    ValidRow:
+      type: object
+      properties:
+        rowNumber:
+          type: integer
+          format: int32
+        guest:
+          $ref: "#/components/schemas/GuestRequest"
     DeliveryRequest:
       type: object
       properties:
@@ -8481,6 +8783,53 @@ components:
           type: string
         active:
           type: boolean
+    ContactRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 120
+          minLength: 0
+        email:
+          type: string
+          format: email
+          maxLength: 255
+          minLength: 0
+        phone:
+          type: string
+          maxLength: 30
+          minLength: 0
+        plan:
+          type: string
+          maxLength: 120
+          minLength: 0
+        message:
+          type: string
+          maxLength: 5000
+          minLength: 0
+      required:
+      - email
+      - message
+      - name
+    ApiResponseContactDelivery:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/ContactDelivery"
+        timestamp:
+          type: string
+          format: date-time
+    ContactDelivery:
+      type: object
+      properties:
+        accepted:
+          type: boolean
+        delivery:
+          type: string
     TelegramLoginRequest:
       type: object
       properties:
@@ -8636,26 +8985,46 @@ components:
       properties:
         language:
           type: string
+          maxLength: 60
+          minLength: 0
         tone:
           type: string
+          maxLength: 60
+          minLength: 0
         eventType:
           type: string
+          maxLength: 120
+          minLength: 0
         coupleNames:
           type: string
+          maxLength: 240
+          minLength: 0
         hostName:
           type: string
+          maxLength: 120
+          minLength: 0
         venueName:
           type: string
+          maxLength: 240
+          minLength: 0
         eventDate:
           type: string
+          maxLength: 60
+          minLength: 0
         notes:
           type: string
+          maxLength: 5000
+          minLength: 0
     AiInvitationDraftResponse:
       type: object
       properties:
         enabled:
           type: boolean
         provider:
+          type: string
+        source:
+          type: string
+        operation:
           type: string
         generatedText:
           type: string
@@ -9122,6 +9491,14 @@ components:
         secondaryColor:
           type: string
         backgroundColor:
+          type: string
+        checkoutEligible:
+          type: boolean
+        checkoutAmount:
+          type: number
+        checkoutCurrency:
+          type: string
+        checkoutPolicy:
           type: string
     ApiResponsePublicTemplateResponse:
       type: object
@@ -10263,6 +10640,30 @@ components:
           type: number
         remainingBudget:
           type: number
+        currency:
+          type: string
+        totalsComparable:
+          type: boolean
+        estimatedByCurrency:
+          type: object
+          additionalProperties:
+            type: number
+        actualByCurrency:
+          type: object
+          additionalProperties:
+            type: number
+        estimatedByCurrencyAndCategory:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: number
+        actualByCurrencyAndCategory:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: number
         overBudget:
           type: boolean
         itemCount:
@@ -10423,6 +10824,14 @@ components:
           format: int64
         totalRevenue:
           type: number
+        revenueByCurrency:
+          type: object
+          additionalProperties:
+            type: number
+        revenueComparable:
+          type: boolean
+        currency:
+          type: string
         recentInvitations:
           type: array
           items:
@@ -10641,6 +11050,14 @@ components:
           format: int64
         totalRevenue:
           type: number
+        revenueByCurrency:
+          type: object
+          additionalProperties:
+            type: number
+        revenueComparable:
+          type: boolean
+        currency:
+          type: string
         failedPayments:
           type: integer
           format: int64

@@ -31,9 +31,11 @@ export function useQrCode(invitationId, guestId = null) {
   }, [loadQr]);
 
   const downloadPng = async () => {
+    if (downloading || !qrData) return;
+    setError("");
     setDownloading(true);
     try {
-      await qrApi.downloadQrPng(invitationId, guestId);
+      await qrApi.downloadQrPng(invitationId, guestId, qrData);
     } catch (err) {
       setError(err?.message || "Could not download QR code");
     } finally {

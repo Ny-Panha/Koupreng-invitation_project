@@ -216,7 +216,7 @@ class SubscriptionServiceTests {
         previous.setActive(true);
         when(fixture.subscriptionRepository.findForUpdateByOrderCode("SUB2609151234"))
                 .thenReturn(Optional.of(pending));
-        when(fixture.subscriptionRepository.findActiveForUser(eq(7L), any())).thenReturn(List.of(previous));
+        when(fixture.subscriptionRepository.findActiveFlagForUserForUpdate(7L)).thenReturn(List.of(previous));
 
         var response = fixture.service.confirmManualPayment(new ConfirmPaymentRequest(
                 "SUB2609151234", new BigDecimal("199.00"), "operator@example.test", "SUBSCRIPTION"));
@@ -225,6 +225,28 @@ class SubscriptionServiceTests {
         assertTrue(pending.isActive());
         assertFalse(previous.isActive());
         verify(fixture.subscriptionRepository).flush();
+    }
+
+    @Test
+    void renewalClosesExpiredActiveFlagBeforeActivatingReplacement() {
+        Fixture fixture = fixture();
+        Subscription pending = pendingSubscription(fixture.user, "PRO", "199.00", "247");
+        Subscription expired = pendingSubscription(fixture.user, "BASIC", "0.01", "288");
+        expired.setPaymentStatus("PAID");
+        expired.setStatus("ACTIVE");
+        expired.setActive(true);
+        expired.setEndDate(Instant.now().minusSeconds(60));
+        when(fixture.subscriptionRepository.findForUpdateByOrderCode("SUB2609151234")).thenReturn(Optional.of(pending));
+        when(fixture.subscriptionRepository.findActiveFlagForUserForUpdate(7L)).thenReturn(List.of(expired));
+        fixture.service.confirmManualPayment(new ConfirmPaymentRequest("SUB2609151234", new BigDecimal("199.00"),
+                "operator@example.test", "SUBSCRIPTION"));
+        assertFalse(expired.isActive());
+        assertEquals("EXPIRED", expired.getStatus());
+        assertEquals("PAID", expired.getPaymentStatus());
+        assertTrue(pending.isActive());
+        org.mockito.InOrder sequence = org.mockito.Mockito.inOrder(fixture.subscriptionRepository);
+        sequence.verify(fixture.subscriptionRepository).flush();
+        sequence.verify(fixture.subscriptionRepository).save(pending);
     }
 
     private Fixture fixture() {

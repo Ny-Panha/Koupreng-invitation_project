@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { IoCallOutline, IoMailOutline, IoLocationOutline, IoPaperPlaneOutline, IoCheckmarkCircleOutline } from "react-icons/io5";
 import heroBg from "../../assets/icons/background.png";
 import { toast } from "../../shared/ui/toast";
+import { api } from "../../shared/api/httpClient";
+import { unwrap } from "../../shared/api/helpers";
+import "./PricingContact.css";
 
 export default function ContactFeature() {
   const [formData, setFormData] = useState({
@@ -14,15 +17,33 @@ export default function ContactFeature() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+  const submissionInFlight = useRef(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (submissionInFlight.current) return;
+    submissionInFlight.current = true;
     setSubmitting(true);
-    setTimeout(() => {
-      setSubmitting(false);
+    setError("");
+    try {
+      const result = unwrap(await api.post("/v1/contact", {
+        ...formData, name: formData.name.trim(), email: formData.email.trim(),
+        phone: formData.phone.trim(), message: formData.message.trim(),
+      }, { skipAuth: true, suppressAuthRedirect: true }));
+      if (result?.accepted !== true || result?.delivery !== "SMTP_ACCEPTED") {
+        throw new Error("Contact delivery was not acknowledged");
+      }
       setSubmitted(true);
       toast("សាររបស់អ្នកត្រូវបានផ្ញើដោយជោគជ័យ!");
-    }, 600);
+    } catch (failure) {
+      setError(failure?.status === 429
+        ? "សូមរង់ចាំបន្តិច រួចព្យាយាមម្ដងទៀត។ / Please wait before sending again."
+        : "មិនអាចផ្ញើសារបានទេ។ ព័ត៌មានរបស់អ្នកនៅតែរក្សាទុក សូមព្យាយាមម្ដងទៀត។ / We could not send your message. Your entries are saved here; please try again.");
+    } finally {
+      submissionInFlight.current = false;
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -105,7 +126,7 @@ export default function ContactFeature() {
             {/* Contact Form Card */}
             <div className="pricing-card premium" style={{ padding: "36px 28px" }}>
               {submitted ? (
-                <div style={{ textAlign: "center", padding: "40px 10px" }}>
+                <div role="status" aria-live="polite" style={{ textAlign: "center", padding: "40px 10px" }}>
                   <IoCheckmarkCircleOutline style={{ fontSize: "4rem", color: "#0f766e", marginBottom: "16px" }} />
                   <h3 style={{ fontFamily: "Moul", fontSize: "1.2rem", color: "#7D6443", marginBottom: "10px" }}>
                     សូមអរគុណ!
@@ -123,14 +144,18 @@ export default function ContactFeature() {
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+                <form onSubmit={handleSubmit} aria-busy={submitting} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
                   <h3 className="plan-name" style={{ margin: "0 0 10px", fontSize: "1.2rem" }}>ផ្ញើសារមកកាន់យើង</h3>
                   
                   <div>
-                    <label style={{ display: "block", fontSize: "0.8rem", fontWeight: "700", color: "#555", marginBottom: "4px" }}>
+                    <label htmlFor="contact-name" style={{ display: "block", fontSize: "0.8rem", fontWeight: "700", color: "#555", marginBottom: "4px" }}>
                       ឈ្មោះរបស់អ្នក (Full Name) *
                     </label>
                     <input
+                      id="contact-name"
+                      name="name"
+                      autoComplete="name"
+                      maxLength={120}
                       type="text"
                       required
                       value={formData.name}
@@ -148,12 +173,15 @@ export default function ContactFeature() {
                   </div>
 
                   <div>
-                    <label style={{ display: "block", fontSize: "0.8rem", fontWeight: "700", color: "#555", marginBottom: "4px" }}>
-                      លេខទូរស័ព្ទ ឬ Telegram *
+                    <label htmlFor="contact-phone" style={{ display: "block", fontSize: "0.8rem", fontWeight: "700", color: "#555", marginBottom: "4px" }}>
+                      លេខទូរស័ព្ទ ឬ Telegram (Phone / Optional)
                     </label>
                     <input
+                      id="contact-phone"
+                      name="phone"
+                      autoComplete="tel"
+                      maxLength={30}
                       type="tel"
-                      required
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       placeholder="012 345 678"
@@ -169,10 +197,20 @@ export default function ContactFeature() {
                   </div>
 
                   <div>
-                    <label style={{ display: "block", fontSize: "0.8rem", fontWeight: "700", color: "#555", marginBottom: "4px" }}>
+                    <label htmlFor="contact-email" className="contact-label">អ៊ីមែល (Email) *</label>
+                    <input id="contact-email" name="email" type="email" autoComplete="email"
+                      required maxLength={255} className="contact-input" value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      placeholder="you@example.com" />
+                  </div>
+
+                  <div>
+                    <label htmlFor="contact-plan" style={{ display: "block", fontSize: "0.8rem", fontWeight: "700", color: "#555", marginBottom: "4px" }}>
                       កញ្ចប់សេវាកម្មដែលចាប់អារម្មណ៍ (Plan)
                     </label>
                     <select
+                      id="contact-plan"
+                      name="plan"
                       value={formData.plan}
                       onChange={(e) => setFormData({ ...formData, plan: e.target.value })}
                       style={{
@@ -193,10 +231,14 @@ export default function ContactFeature() {
                   </div>
 
                   <div>
-                    <label style={{ display: "block", fontSize: "0.8rem", fontWeight: "700", color: "#555", marginBottom: "4px" }}>
-                      សារ ឬព័ត៌មានលម្អិត (Message)
+                    <label htmlFor="contact-message" style={{ display: "block", fontSize: "0.8rem", fontWeight: "700", color: "#555", marginBottom: "4px" }}>
+                      សារ ឬព័ត៌មានលម្អិត (Message) *
                     </label>
                     <textarea
+                      id="contact-message"
+                      name="message"
+                      required
+                      maxLength={5000}
                       rows={3}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
@@ -213,6 +255,7 @@ export default function ContactFeature() {
                     />
                   </div>
 
+                  {error && <p role="alert" className="contact-error">{error}</p>}
                   <button
                     type="submit"
                     disabled={submitting}

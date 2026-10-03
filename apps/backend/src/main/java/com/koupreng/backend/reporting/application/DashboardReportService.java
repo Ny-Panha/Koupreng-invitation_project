@@ -16,14 +16,12 @@ import com.koupreng.backend.notification.api.dto.NotificationResponse;
 import com.koupreng.backend.payment.api.dto.TemplatePaymentStatusResponse;
 import com.koupreng.backend.rsvp.api.dto.RsvpResponse;
 import com.koupreng.backend.guest.domain.Guest;
-import com.koupreng.backend.template.domain.InvitationTemplate;
 import com.koupreng.backend.rsvp.domain.Rsvp;
 import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.payment.domain.TemplateOrder;
 import com.koupreng.backend.payment.domain.TemplatePaymentOrder;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.invitation.domain.InvitationStatus;
-import com.koupreng.backend.payment.domain.PaymentStatus;
 import com.koupreng.backend.rsvp.domain.RsvpStatus;
 import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;
 import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
@@ -85,19 +83,18 @@ public class DashboardReportService {
         AppUser user = currentUserService.currentUser(authentication);
         List<UserInvitation> invitations = invitationRepository
                 .findAllByUserIdAndDeletedFalseOrderByCreatedAtDesc(user.getId());
-        List<Guest> guests = invitations.stream()
-                .flatMap(invitation -> guestRepository.findByInvitationIdOrderByCreatedAtDesc(invitation.getId()).stream())
-                .toList();
-        List<Rsvp> rsvps = invitations.stream()
-                .flatMap(invitation -> rsvpRepository.findByInvitationIdOrderByRespondedAtDesc(invitation.getId()).stream())
-                .toList();
+        List<Long> invitationIds = invitations.stream().map(UserInvitation::getId).toList();
+        List<Guest> guests = invitationIds.isEmpty() ? List.of()
+                : guestRepository.findByInvitationIdInOrderByCreatedAtDesc(invitationIds);
+        List<Rsvp> rsvps = invitationIds.isEmpty() ? List.of()
+                : rsvpRepository.findByInvitationIdInOrderByRespondedAtDesc(invitationIds);
         List<TemplatePaymentOrder> templatePaymentOrders = templatePaymentOrderRepository
                 .findByUserIdOrderByCreatedAtDesc(user.getId());
         List<TemplateOrder> legacyOrders = templateOrderRepository.findByUserIdOrderByCreatedAtDesc(user.getId());
 
-        long totalPendingRsvp = invitations.stream()
-                .mapToLong(invitation -> rsvpRepository.countPendingGuests(invitation.getId()))
-                .sum();
+        long totalPendingRsvp = invitationIds.isEmpty() ? 0
+                : rsvpRepository.countPendingGuestsForInvitations(invitationIds);
+        var revenue = com.koupreng.backend.reporting.domain.RevenueTotals.fromPayments(templatePaymentOrders, legacyOrders);
 
         return UserDashboardSummaryResponse.builder()
                 .totalInvitations(invitations.size())
@@ -111,8 +108,8 @@ public class DashboardReportService {
                 .totalMaybe(countRsvps(rsvps, RsvpStatus.MAYBE))
                 .totalPendingRsvp(totalPendingRsvp)
                 .totalPayments(templatePaymentOrders.size() + legacyOrders.size())
-                .totalRevenue(sumPaidTemplatePaymentOrders(templatePaymentOrders)
-                        .add(sumPaidTemplateOrders(legacyOrders)))
+                .totalRevenue(revenue.total())
+                .revenueByCurrency(revenue.byCurrency()).revenueComparable(revenue.comparable()).currency(revenue.currency())
                 .recentInvitations(invitations.stream()
                         .limit(5)
                         .map(InvitationSummaryResponse::from)
@@ -194,32 +191,30 @@ public class DashboardReportService {
     @Transactional(readOnly = true)
     public AdminDashboardSummaryResponse getAdminDashboard(Authentication authentication) {
         requireAdmin(authentication);
-        List<AppUser> users = userRepository.findAllByOrderByCreatedAtDesc();
-        List<InvitationTemplate> templates = templateRepository.findAllByOrderByCreatedAtDesc();
-        List<UserInvitation> invitations = invitationRepository.findAllByDeletedFalseOrderByCreatedAtDesc();
-        List<TemplatePaymentOrder> payments = templatePaymentOrderRepository.findAll();
+        var users = userRepository.dashboardCounts();
+        var templates = templateRepository.dashboardCounts();
+        var invitations = invitationRepository.dashboardCounts();
+        var payments = templatePaymentOrderRepository.dashboardCounts();
+        var revenue = com.koupreng.backend.reporting.domain.RevenueTotals.fromAmounts(templatePaymentOrderRepository.revenueByCurrency());
 
         return AdminDashboardSummaryResponse.builder()
-                .totalUsers(users.size())
-                .activeUsers(users.stream().filter(AppUser::isActive).count())
-                .inactiveUsers(users.stream().filter(user -> !user.isActive()).count())
-                .totalTemplates(templates.size())
-                .activeTemplates(templates.stream().filter(template -> statusEquals(template.getStatus(), "ACTIVE")).count())
-                .premiumTemplates(templates.stream().filter(InvitationTemplate::isPremium).count())
-                .totalInvitations(invitations.size())
-                .publishedInvitations(countInvitations(invitations, InvitationStatus.PUBLISHED))
+                .totalUsers(users.getTotal())
+                .activeUsers(users.getActive())
+                .inactiveUsers(users.getTotal() - users.getActive())
+                .totalTemplates(templates.getTotal())
+                .activeTemplates(templates.getActive())
+                .premiumTemplates(templates.getPremium())
+                .totalInvitations(invitations.getTotal())
+                .publishedInvitations(invitations.getPublished())
                 .totalGuests(guestRepository.count())
                 .totalRsvps(rsvpRepository.count())
-                .totalPayments(payments.size())
-                .totalRevenue(sumPaidTemplatePaymentOrders(payments))
-                .failedPayments(payments.stream()
-                        .filter(order -> order.getStatus() == PaymentStatus.FAILED || order.getStatus() == PaymentStatus.REJECTED)
-                        .count())
-                .recentUsers(users.stream().limit(5).map(AdminUserResponse::from).toList())
-                .recentInvitations(invitations.stream().limit(5).map(InvitationResponse::from).toList())
-                .recentPayments(payments.stream()
-                        .sorted(byPaymentCreatedAtDesc())
-                        .limit(5)
+                .totalPayments(payments.getTotal())
+                .totalRevenue(revenue.total())
+                .revenueByCurrency(revenue.byCurrency()).revenueComparable(revenue.comparable()).currency(revenue.currency())
+                .failedPayments(payments.getFailed())
+                .recentUsers(userRepository.findTop5ByOrderByCreatedAtDesc().stream().map(AdminUserResponse::from).toList())
+                .recentInvitations(invitationRepository.findTop5ByDeletedFalseOrderByCreatedAtDesc().stream().map(InvitationResponse::from).toList())
+                .recentPayments(templatePaymentOrderRepository.findRecent(org.springframework.data.domain.PageRequest.of(0, 5)).stream()
                         .map(order -> TemplatePaymentStatusResponse.from(order, "Payment status"))
                         .toList())
                 .systemHealthSummary("OK")
@@ -321,22 +316,6 @@ public class DashboardReportService {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    private BigDecimal sumPaidTemplatePaymentOrders(List<TemplatePaymentOrder> orders) {
-        return orders.stream()
-                .filter(order -> order.getStatus() == PaymentStatus.PAID)
-                .map(order -> order.getPaidAmount() == null ? order.getAmount() : order.getPaidAmount())
-                .filter(Objects::nonNull)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    private BigDecimal sumPaidTemplateOrders(List<TemplateOrder> orders) {
-        return orders.stream()
-                .filter(order -> order.getStatus() == PaymentStatus.PAID)
-                .map(order -> order.getPaidAmount() == null ? order.getAmount() : order.getPaidAmount())
-                .filter(Objects::nonNull)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
     private boolean isReady(Guest guest) {
         return trimToNull(guest.getGuestName()) != null
                 && (trimToNull(guest.getEmail()) != null || trimToNull(guest.getPhone()) != null);
@@ -359,22 +338,8 @@ public class DashboardReportService {
         ).reversed();
     }
 
-    private Comparator<TemplatePaymentOrder> byPaymentCreatedAtDesc() {
-        return Comparator.comparing(
-                TemplatePaymentOrder::getCreatedAt,
-                Comparator.nullsLast(Comparator.naturalOrder())
-        ).reversed();
-    }
-
     private String csvValue(Object value) {
-        if (value == null) {
-            return "";
-        }
-        String text = value instanceof java.time.Instant ? value.toString() : String.valueOf(value);
-        if (text.contains(",") || text.contains("\"") || text.contains("\n")) {
-            return "\"" + text.replace("\"", "\"\"") + "\"";
-        }
-        return text;
+        return com.koupreng.backend.shared.export.CsvExportUtils.row(value);
     }
 
     private String trimToNull(String value) {

@@ -1,7 +1,8 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoCloudUploadOutline, IoDownloadOutline, IoDocumentTextOutline } from "react-icons/io5";
 import { FormField, LoadingButton, Modal } from "@/shared/ui";
 import { downloadSampleGuestTemplateCsv, parseGuestCsvText } from "../model/guestCsvUtils";
+import { guestService } from "../api/guestApi";
 
 export default function GuestImportModal({
   isOpen,
@@ -10,22 +11,46 @@ export default function GuestImportModal({
   onImport,
   error: externalError,
   t,
+  invitationId,
+  onFileImported,
 }) {
   const [activeTab, setActiveTab] = useState("file"); // "file" | "text"
   const [text, setText] = useState("");
   const [parsedGuests, setParsedGuests] = useState([]);
   const [fileName, setFileName] = useState("");
   const [error, setError] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const [processing, setProcessing] = useState(false);
+  const [importResult, setImportResult] = useState(null);
+  const fileGeneration = useRef(0);
   const fileInputRef = useRef(null);
+  useEffect(() => {
+    fileGeneration.current += 1; setSelectedFile(null); setPreview(null); setImportResult(null); setParsedGuests([]); setFileName(""); setText(""); setError(""); setProcessing(false);
+  }, [invitationId]);
 
   const displayError = error || externalError;
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     setError("");
     const file = e.target.files?.[0];
     if (!file) return;
 
+    const generation = ++fileGeneration.current;
+    setSelectedFile(file); setPreview(null); setImportResult(null); setParsedGuests([]);
     setFileName(file.name);
+    if (invitationId) {
+      setProcessing(true);
+      try {
+        const response = await guestService.previewFile(invitationId, file);
+        if (generation !== fileGeneration.current) return;
+        if (!response || !Array.isArray(response.validRows) || !Number.isInteger(response.acceptedCount) || response.acceptedCount < 0 || response.validRows.length !== response.acceptedCount || !Number.isInteger(response.skippedCount) || response.skippedCount < 0 || response.validRows.some((row) => !Number.isInteger(row.rowNumber) || typeof row.guest?.guestName !== "string" || !row.guest.guestName.trim())) throw new Error("The server returned an invalid import preview. Please retry.");
+        setPreview(response);
+        setParsedGuests(response.validRows.map(({ guest }) => ({ name: guest.guestName, phone: guest.phone, email: guest.email, group: guest.guestGroup, tableNumber: guest.tableNumber })));
+      } catch (failure) { if (generation === fileGeneration.current) setError(failure.message || "Could not validate the import file"); }
+      finally { if (generation === fileGeneration.current) setProcessing(false); }
+      return;
+    }
     const reader = new FileReader();
     reader.onload = (event) => {
       try {
@@ -54,7 +79,23 @@ export default function GuestImportModal({
 
   const handleProcessImport = () => {
     setError("");
-    const listToImport = parsedGuests.length > 0 ? parsedGuests : parseGuestCsvText(text);
+    if (invitationId && activeTab === "file") {
+      if (!selectedFile || !preview?.acceptedCount) { setError("Choose and preview a valid file before importing."); return; }
+      const generation = fileGeneration.current;
+      setProcessing(true);
+      guestService.importFile(invitationId, selectedFile).then(async (result) => {
+        if (generation !== fileGeneration.current) return;
+        if (!result || !Number.isInteger(result.importedCount) || !Number.isInteger(result.skippedCount)) throw new Error("The server returned an invalid import result. Refresh the guest list before retrying.");
+        setImportResult(result); setPreview(null); setParsedGuests([]); setSelectedFile(null);
+        await onFileImported?.();
+      }).catch((failure) => {
+        if (generation !== fileGeneration.current) return;
+        setPreview(null);
+        setError(`${failure.message || "Could not confirm the import result"}. Your file is retained. Refresh the guest list and preview the file again before retrying.`);
+      }).finally(() => { if (generation === fileGeneration.current) setProcessing(false); });
+      return;
+    }
+    const listToImport = activeTab === "text" ? parseGuestCsvText(text) : parsedGuests;
 
     if (!listToImport.length) {
       setError(t ? t("importEmptyErr") : "សូមបញ្ចូលឈ្មោះភ្ញៀវយ៉ាងហោចណាស់ ១ នាក់");
@@ -80,12 +121,12 @@ export default function GuestImportModal({
   return (
     <Modal
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={() => !processing && !saving && onClose()}
       title={t ? t("importTitle") : "នាំចូលបញ្ជីភ្ញៀវ (Import Guests)"}
       subtitle={t ? t("importSubtitle") : "នាំចូលតាមរយៈ File Excel/CSV ឬចម្លងដាក់តាមប្រអប់អត្ថបទ"}
       size="md"
-      closeOnBackdropClick={!saving}
-      closeOnEscape={!saving}
+      closeOnBackdropClick={!saving && !processing}
+      closeOnEscape={!saving && !processing}
     >
       <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
         {/* Tab Switcher */}
@@ -94,6 +135,7 @@ export default function GuestImportModal({
             type="button"
             className={`pe-lang-pill-btn ${activeTab === "file" ? "is-active" : ""}`}
             onClick={() => setActiveTab("file")}
+            disabled={saving || processing}
             style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
           >
             <IoCloudUploadOutline /> <span>Upload File CSV</span>
@@ -102,6 +144,7 @@ export default function GuestImportModal({
             type="button"
             className={`pe-lang-pill-btn ${activeTab === "text" ? "is-active" : ""}`}
             onClick={() => setActiveTab("text")}
+            disabled={saving || processing}
             style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
           >
             <IoDocumentTextOutline /> <span>វាយអក្សរដោយដៃ (Paste Text)</span>
@@ -114,10 +157,19 @@ export default function GuestImportModal({
           </div>
         )}
 
+        {processing && <p role="status">Processing file…</p>}
+        {preview && <div role="status"><p>Preview: {preview.acceptedCount} valid rows · {preview.skippedCount} skipped rows. Nothing has been imported yet.</p>
+          <ul>{preview.errorRows?.map((row) => <li key={row.rowNumber}>Row {row.rowNumber}: {row.reason}</li>)}</ul></div>}
+        {importResult && <div role="status"><p>Imported: {importResult.importedCount} · Skipped: {importResult.skippedCount}</p>
+          <ul>{importResult.errorRows?.map((row) => <li key={row.rowNumber}>Row {row.rowNumber}: {row.reason}</li>)}</ul></div>}
         {activeTab === "file" ? (
           <div>
             <div
               onClick={() => fileInputRef.current?.click()}
+              role="button"
+              tabIndex={0}
+              aria-label="Choose guest import file"
+              onKeyDown={(e) => { if (["Enter", " "].includes(e.key)) { e.preventDefault(); fileInputRef.current?.click(); } }}
               style={{
                 border: "2px dashed #cbd5e1",
                 borderRadius: "10px",
@@ -133,12 +185,14 @@ export default function GuestImportModal({
                 {fileName ? `File ជ្រើសរើស៖ ${fileName}` : "ចុចទីនេះដើម្បីជ្រើសរើស File CSV / Excel"}
               </div>
               <div style={{ fontSize: "0.8rem", color: "#64748b" }}>
-                គាំទ្រ File ប្រភេទ .csv ឬ .txt (អក្សរខ្មែរ UTF-8)
+                {invitationId ? "CSV / XLSX · server validation and preview before import" : "CSV / TXT · UTF-8"}
               </div>
               <input
                 ref={fileInputRef}
                 type="file"
-                accept=".csv,text/csv,text/plain"
+                accept={invitationId ? ".csv,.xlsx,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" : ".csv,text/csv,text/plain"}
+                aria-label="Guest import file"
+                disabled={processing || saving}
                 style={{ display: "none" }}
                 onChange={handleFileChange}
               />
@@ -216,15 +270,15 @@ export default function GuestImportModal({
 
         {/* Action Buttons */}
         <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.75rem", marginTop: "8px" }}>
-          <button type="button" className="pe-secondary-btn" onClick={onClose} disabled={saving}>
+          <button type="button" className="pe-secondary-btn" onClick={onClose} disabled={saving || processing}>
             {t ? t("cancel") : "បោះបង់"}
           </button>
           <LoadingButton
             type="button"
-            isLoading={saving}
+            isLoading={saving || processing}
             className="pe-primary-btn"
             onClick={handleProcessImport}
-            disabled={parsedGuests.length === 0 && !text.trim()}
+            disabled={processing || saving || (invitationId && activeTab === "file" ? !preview?.acceptedCount : parsedGuests.length === 0 && !text.trim())}
           >
             {t ? t("importSubmitBtn") : `នាំចូល ${parsedGuests.length ? `(${parsedGuests.length} នាក់)` : ""}`}
           </LoadingButton>

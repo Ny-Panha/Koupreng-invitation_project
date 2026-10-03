@@ -23,6 +23,7 @@ export default function InvitationSeatingPage() {
     const {
         invitation,
         plan,
+        summary,
         tableForm,
         setTableForm,
         assignmentForm,
@@ -43,12 +44,12 @@ export default function InvitationSeatingPage() {
     // Compute KPI metrics
     const stats = useMemo(() => {
         const tables = plan?.tables || [];
-        const totalTables = tables.length;
-        const totalCapacity = tables.reduce((sum, t) => sum + (Number(t.capacity) || 0), 0);
-        const assignedSeats = tables.reduce((sum, t) => sum + (Number(t.assignedSeats) || 0), 0);
+        const totalTables = summary?.totalTables ?? tables.length;
+        const totalCapacity = summary?.totalCapacity ?? tables.reduce((sum, t) => sum + (Number(t.capacity) || 0), 0);
+        const assignedSeats = summary?.assignedSeats ?? tables.reduce((sum, t) => sum + (Number(t.assignedSeats) || 0), 0);
         const unassignedCount = (plan?.unassignedGuests || []).length;
         return { totalTables, totalCapacity, assignedSeats, unassignedCount };
-    }, [plan]);
+    }, [plan, summary]);
 
     if (loading) {
         return (

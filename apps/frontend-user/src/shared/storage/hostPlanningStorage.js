@@ -50,18 +50,22 @@ function readScopedList(keyName, parentId, fallback = []) {
   return readList(legacyScopedKey(LEGACY_STORAGE_KEYS[keyName], parentId), fallback);
 }
 
-function writeList(key, list) {
-  if (typeof localStorage === "undefined") return;
+function writeList(key, list, options = {}) {
+  if (typeof localStorage === "undefined") {
+    if (options.throwOnError) throw new Error("Local storage is unavailable. The record was not saved.");
+    return;
+  }
 
   try {
     localStorage.setItem(key, JSON.stringify(Array.isArray(list) ? list : []));
   } catch (error) {
+    if (options.throwOnError) throw new Error("Local storage is unavailable or full. The record was not saved.", { cause: error });
     console.warn("Error writing to local storage:", error);
   }
 }
 
-function writeScopedList(keyName, parentId, list) {
-  writeList(scopedKey(STORAGE_KEYS[keyName], parentId), list);
+function writeScopedList(keyName, parentId, list, options) {
+  writeList(scopedKey(STORAGE_KEYS[keyName], parentId), list, options);
 }
 
 export function createHostRecordId(prefix) {
@@ -87,9 +91,9 @@ export function listManualGuests(eventId) {
   return readScopedList("guests", id);
 }
 
-export function saveManualGuests(guests, eventId) {
+export function saveManualGuests(guests, eventId, options) {
   const id = eventId || getActiveEventId();
-  writeScopedList("guests", id, guests);
+  writeScopedList("guests", id, guests, options);
 }
 
 export function listBudgetExpenses(defaultItems = [], eventId) {
@@ -107,9 +111,9 @@ export function listWeddingGifts(defaultItems = [], eventId) {
   return readScopedList("gifts", id, defaultItems);
 }
 
-export function saveWeddingGifts(gifts, eventId) {
+export function saveWeddingGifts(gifts, eventId, options) {
   const id = eventId || getActiveEventId();
-  writeScopedList("gifts", id, gifts);
+  writeScopedList("gifts", id, gifts, options);
 }
 
 export function listManualCheckIns(eventId) {
@@ -117,9 +121,9 @@ export function listManualCheckIns(eventId) {
   return readScopedList("checkIns", id);
 }
 
-export function saveManualCheckIns(checkIns, eventId) {
+export function saveManualCheckIns(checkIns, eventId, options) {
   const id = eventId || getActiveEventId();
-  writeScopedList("checkIns", id, checkIns);
+  writeScopedList("checkIns", id, checkIns, options);
 }
 
 export function removeHostPlanningData(eventId) {

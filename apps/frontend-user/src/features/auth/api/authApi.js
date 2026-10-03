@@ -13,11 +13,14 @@ export const authService = {
     loginWithTelegram: (loginData) => 
         api.post("/auth/telegram", loginData, { skipAuth: true }),
 
-    logout: () => 
-        api.post("/auth/logout"),
+    linkGoogle: (idToken) => api.post("/auth/link/google", { idToken }),
+    linkTelegram: (loginData) => api.post("/auth/link/telegram", loginData),
 
-    me: () => 
-        api.get("/auth/me"),
+    logout: (options) =>
+        api.post("/auth/logout", undefined, options),
+
+    me: (options) =>
+        api.get("/auth/me", options),
 
     changePassword: (currentPassword, newPassword) =>
         api.post("/auth/change-password", { currentPassword, newPassword }),

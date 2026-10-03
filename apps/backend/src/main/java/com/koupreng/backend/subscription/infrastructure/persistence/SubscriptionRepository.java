@@ -18,6 +18,7 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, Long
 
     boolean existsByOrderCode(String orderCode);
 
+    @org.springframework.data.jpa.repository.EntityGraph(attributePaths = "subscriptionPackage")
     @Query("""
             select s
             from Subscription s
@@ -27,6 +28,10 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, Long
             order by s.endDate desc
             """)
     List<Subscription> findActiveForUser(@Param("userId") Long userId, @Param("now") Instant now);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("select s from Subscription s where s.user.id = :userId and s.activeSlot = 1 order by s.id")
+    List<Subscription> findActiveFlagForUserForUpdate(@Param("userId") Long userId);
 
     Optional<Subscription> findByOrderCode(String orderCode);
 

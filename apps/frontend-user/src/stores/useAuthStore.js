@@ -4,6 +4,7 @@ import {
   clearStoredAuth,
   readStoredAuth,
   writeStoredAuth,
+  isCookieAuthStorage,
 } from "../shared/storage/authStorage";
 
 /**
@@ -34,22 +35,58 @@ export function isTokenExpired(token) {
 }
 
 const storedAuth = readStoredAuth();
-const initialAuth = storedAuth?.accessToken && !isTokenExpired(storedAuth.accessToken)
+const cookieAuth = isCookieAuthStorage();
+const initialAuth = !cookieAuth && storedAuth?.accessToken && !isTokenExpired(storedAuth.accessToken)
   ? storedAuth
   : null;
 
-if (storedAuth && !initialAuth) {
+if (storedAuth && !initialAuth && !cookieAuth) {
   clearStoredAuth();
 }
 
-export const useAuthStore = create((set) => ({
+let sessionGeneration = 0;
+let bootstrapRequest = null;
+const validUser = (user) => user && typeof user === "object" && !Array.isArray(user)
+  && user.id != null && typeof user.role === "string" && user.role.length > 0;
+
+export const useAuthStore = create((set, get) => ({
   user: initialAuth?.user || null,
   accessToken: initialAuth?.accessToken || null,
   isAuthenticated: Boolean(initialAuth?.accessToken && initialAuth?.user && !isTokenExpired(initialAuth?.accessToken)),
+  authStatus: cookieAuth ? "checking" : initialAuth ? "authenticated" : "anonymous",
+  sessionError: "",
+
+  initializeSession: (force = false) => {
+    if (!cookieAuth) return Promise.resolve();
+    if (bootstrapRequest && !force) return bootstrapRequest;
+    if (!force && get().authStatus !== "checking") return Promise.resolve();
+    const generation = ++sessionGeneration;
+    set({ authStatus: "checking", sessionError: "", isAuthenticated: false });
+    const request = authService.me({ authBootstrap: true })
+      .then((user) => {
+        if (generation !== sessionGeneration) return;
+        if (!validUser(user)) throw new Error("Invalid session response");
+        writeStoredAuth({ user });
+        set({ user, accessToken: null, isAuthenticated: true, authStatus: "authenticated", sessionError: "" });
+      })
+      .catch((error) => {
+        if (generation !== sessionGeneration) return;
+        clearStoredAuth();
+        const expired = [401, 403].includes(error?.status);
+        set({ user: null, accessToken: null, isAuthenticated: false,
+          authStatus: expired ? "anonymous" : "error",
+          sessionError: expired ? "" : "Could not verify your session. Please try again." });
+      })
+      .finally(() => { if (bootstrapRequest === request) bootstrapRequest = null; });
+    bootstrapRequest = request;
+    return request;
+  },
 
   login: (authData) => {
+    if (!validUser(authData?.user)) throw new Error("Invalid authentication response");
+    sessionGeneration += 1;
     const nextState = {
-      accessToken: authData.accessToken,
+      accessToken: cookieAuth ? null : authData.accessToken,
       tokenType: authData.tokenType || "Bearer",
       expiresAt: authData.expiresAt,
       user: authData.user,
@@ -57,18 +94,30 @@ export const useAuthStore = create((set) => ({
     writeStoredAuth(nextState);
     set({
       user: authData.user,
-      accessToken: authData.accessToken,
+      accessToken: cookieAuth ? null : authData.accessToken,
       isAuthenticated: true,
+      authStatus: "authenticated",
+      sessionError: "",
     });
   },
 
+  updateUser: (user) => {
+    if (!validUser(user) || !get().isAuthenticated) throw new Error("Invalid profile response");
+    const current = readStoredAuth() || {};
+    writeStoredAuth({ ...current, user });
+    set({ user });
+  },
+
   logout: async () => {
+    const accessToken = get().accessToken;
+    sessionGeneration += 1;
+    clearStoredAuth();
+    set({ user: null, accessToken: null, isAuthenticated: false, authStatus: "anonymous", sessionError: "" });
     try {
-      await authService.logout();
+      await authService.logout({ suppressAuthRedirect: true,
+        ...(accessToken ? { headers: { Authorization: `Bearer ${accessToken}` } } : {}) });
     } catch {
       // Ignore network/logout errors; clear the local session regardless.
     }
-    clearStoredAuth();
-    set({ user: null, accessToken: null, isAuthenticated: false });
   },
 }));

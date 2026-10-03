@@ -12,6 +12,9 @@ import com.koupreng.backend.auth.application.AccountService;
 import com.koupreng.backend.auth.application.AuthService;
 import com.koupreng.backend.auth.infrastructure.security.AuthCookieService;
 import jakarta.validation.Valid;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.web.csrf.CsrfToken;
 
 import com.koupreng.backend.auth.api.dto.MessageResponse;
 import com.koupreng.backend.user.api.dto.UpdateProfileRequest;
@@ -103,6 +106,20 @@ public class AuthController {
         return withAuthCookie(authService.loginWithTelegram(request));
     }
 
+    @Operation(summary = "Link a verified Google identity to the current account")
+    @SecurityRequirement(name = "bearerAuth")
+    @PostMapping("/link/google")
+    public UserResponse linkGoogle(Authentication authentication, @Valid @RequestBody GoogleLoginRequest request) {
+        return authService.linkGoogle(authentication, request);
+    }
+
+    @Operation(summary = "Link a verified Telegram identity to the current account")
+    @SecurityRequirement(name = "bearerAuth")
+    @PostMapping("/link/telegram")
+    public UserResponse linkTelegram(Authentication authentication, @Valid @RequestBody TelegramLoginRequest request) {
+        return authService.linkTelegram(authentication, request);
+    }
+
     @Operation(summary = "Log out", description = "Invalidate existing JWTs for the current user and clear the optional auth cookie.")
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/logout")
@@ -115,10 +132,16 @@ public class AuthController {
         return response.body(new MessageResponse("Logged out"));
     }
 
-    @Operation(summary = "Get the current user profile")
+    @Operation(summary = "Get the current user profile", description = "Cookie mode also returns X-XSRF-TOKEN in an allowed CORS-exposed response header for subsequent cookie-authenticated mutations. The user response body is unchanged.")
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/me")
-    public UserResponse me(Authentication authentication) {
+    public UserResponse me(Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
+        // An API-host cookie is unreadable by a frontend on another allowed origin.
+        // Return the same CSRF proof over authenticated, CORS-controlled transport.
+        Object token = request.getAttribute(CsrfToken.class.getName());
+        if (token instanceof CsrfToken csrfToken) {
+            response.setHeader(csrfToken.getHeaderName(), csrfToken.getToken());
+        }
         return userService.getProfile(authentication);
     }
 
@@ -162,6 +185,11 @@ public class AuthController {
 
     private ResponseEntity<AuthResponse> withAuthCookie(AuthResponse authResponse) {
         ResponseEntity.BodyBuilder response = ResponseEntity.ok();
+        if (org.springframework.web.context.request.RequestContextHolder.getRequestAttributes()
+                instanceof org.springframework.web.context.request.ServletRequestAttributes attributes
+                && attributes.getRequest().getAttribute(CsrfToken.class.getName()) instanceof CsrfToken token) {
+            response.header(token.getHeaderName(), token.getToken());
+        }
         authCookieService.createAuthCookie(authResponse)
                 .map(ResponseCookie::toString)
                 .ifPresent(cookie -> response.header(HttpHeaders.SET_COOKIE, cookie));

@@ -1,3 +1,4 @@
+import { localDateString } from "@/shared/utils/localDate";
 import { useState, useEffect } from "react";
 import {
     createHostRecordId,
@@ -8,6 +9,7 @@ import {
 import { listDrafts } from "../../../shared/storage/weddingStorage";
 import { expensesApi } from "../api/expensesApi";
 import { useAuth } from "../../auth/hooks/useAuth";
+import { expenseTotals } from "../expenseTotals";
 
 function toList(value) {
     if (Array.isArray(value)) return value;
@@ -34,7 +36,7 @@ export function toExpensePayload(form) {
         budget: budgetNum,
         amount: finalAmount,
         currency: form.currency || "USD",
-        date: form.date || new Date().toISOString().slice(0, 10),
+        date: form.date || localDateString(),
         status: finalAmount >= budgetNum ? "PAID" : "PENDING",
         vendorName: form.vendorName || "",
         notes: JSON.stringify({
@@ -296,11 +298,7 @@ export function useExpenses() {
         }
     };
 
-    const totalBudget = expenses.reduce((sum, e) => sum + (Number(e.budget) || 0), 0);
-    const totalSpent = expenses.reduce((sum, e) => sum + (Number(e.amount) || 0), 0);
-    const isOver = totalSpent > totalBudget && totalBudget > 0;
-    const diff = Math.abs(totalBudget - totalSpent);
-    const percent = totalBudget > 0 ? Math.min(100, Math.round((totalSpent / totalBudget) * 100)) : 0;
+    const totals = expenseTotals(expenses);
 
     return {
         eventId,
@@ -323,11 +321,7 @@ export function useExpenses() {
         submitExpense,
         editExpense,
         deleteExpense,
-        totalBudget,
-        totalSpent,
-        isOver,
-        diff,
-        percent,
+        ...totals,
         saving,
         error,
         loading,

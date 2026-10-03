@@ -23,12 +23,78 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.never;
 
 class RsvpServiceTests {
+
+    @Test
+    void wishModerationUsesTextOnlyUpdateInsteadOfDeletingAttendance() {
+        Fixture fixture = fixture();
+        Authentication authentication = mock(Authentication.class);
+        Rsvp existing = new Rsvp();
+        existing.setId(88L);
+        existing.setResponseStatus(RsvpStatus.ATTENDING);
+        existing.setAttendeeCount(2);
+        existing.setMessage("Wish text");
+        when(fixture.rsvpRepository.findByIdAndInvitationId(88L, 10L)).thenReturn(Optional.of(existing));
+        fixture.service.moderateWish(authentication, 10L, 88L);
+        verify(fixture.invitationService).requireOwnedInvitationEntity(authentication, 10L);
+        verify(fixture.rsvpRepository).clearWishByIdAndInvitationId(88L, 10L);
+        verify(fixture.rsvpRepository, never()).delete(any());
+        verify(fixture.rsvpRepository, never()).save(any());
+        assertEquals(RsvpStatus.ATTENDING, existing.getResponseStatus());
+        assertEquals(2, existing.getAttendeeCount());
+    }
+
+    @Test
+    void nonOwnerCannotModerateWish() {
+        Fixture fixture = fixture();
+        Authentication authentication = mock(Authentication.class);
+        when(fixture.invitationService.requireOwnedInvitationEntity(authentication, 10L))
+                .thenThrow(new ApiException(HttpStatus.FORBIDDEN, "Forbidden"));
+        assertThrows(ApiException.class, () -> fixture.service.moderateWish(authentication, 10L, 88L));
+        verify(fixture.rsvpRepository, never()).clearWishByIdAndInvitationId(any(), any());
+    }
+
+    @Test
+    void genericVisitorCannotModifyGuestByKnowingEmail() {
+        Fixture fixture = fixture();
+        UserInvitation invitation = invitation(LocalDate.now().plusDays(5));
+        Guest existing = guest(invitation);
+        when(fixture.invitationService.requirePublishedInvitationForRsvp("samnang-sreyneang", false))
+                .thenReturn(invitation);
+        when(fixture.guestRepository.findByInvitationIdAndEmailIgnoreCase(10L, "known@example.com"))
+                .thenReturn(Optional.of(existing));
+        RsvpRequest request = request(RsvpStatus.NOT_ATTENDING, 0);
+        request.setEmail("known@example.com");
+        ApiException exception = assertThrows(ApiException.class,
+                () -> fixture.service.submitPublic("samnang-sreyneang", request));
+        assertEquals(HttpStatus.CONFLICT, exception.getStatus());
+        verify(fixture.rsvpRepository, never()).save(any(Rsvp.class));
+        verify(fixture.guestRepository, never()).save(any(Guest.class));
+    }
+
+    @Test
+    void genericNewVisitorResponseDoesNotDiscloseGuestCapabilities() {
+        Fixture fixture = fixture();
+        when(fixture.invitationService.requirePublishedInvitationForRsvp("samnang-sreyneang", false))
+                .thenReturn(invitation(LocalDate.now().plusDays(5)));
+        when(fixture.guestRepository.save(any(Guest.class))).thenAnswer(invocation -> {
+            Guest guest = invocation.getArgument(0);
+            guest.setId(21L);
+            return guest;
+        });
+        RsvpResponse response = fixture.service.submitPublic("samnang-sreyneang", request(RsvpStatus.ATTENDING, 2));
+        assertEquals(RsvpStatus.ATTENDING, response.getResponseStatus());
+        assertEquals(2, response.getAttendeeCount());
+        assertNull(response.getInviteToken());
+        assertNull(response.getQrCodeUrl());
+    }
 
     @Test
     void publicTokenRsvpUpdatesExistingGuestResponse() {

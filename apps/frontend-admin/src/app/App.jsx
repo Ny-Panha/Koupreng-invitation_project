@@ -1,20 +1,21 @@
+import { lazy, Suspense } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AuthProvider, QueryProvider, AdminLanguageProvider } from "./providers";
 import RequireAdmin from "./guards/RequireAdmin";
 import AdminLayout from "../layouts/AdminLayout";
-import LoginPage from "../pages/auth/LoginPage";
+const LoginPage = lazy(() => import("../pages/auth/LoginPage"));
 
 // Admin Pages from pages/...
-import DashboardPage from "../pages/dashboard/AdminDashboardPage";
-import UsersPage from "../pages/users/AdminUsersPage";
-import UserDetailPage from "../pages/users/AdminUserDetailPage";
-import TemplatesPage from "../pages/templates/AdminTemplatesPage";
-import TemplateEditPage from "../pages/templates/AdminTemplateEditPage";
-import PaymentsPage from "../pages/payments/AdminPaymentsPage";
-import PackagesPage from "../pages/payments/AdminPackagesPage";
-import NotificationsPage from "../pages/notifications/AdminNotificationsPage";
-import SystemLogsPage from "../pages/system-logs/AdminSystemLogsPage";
-import ReportsPage from "../pages/reports/AdminReportsPage";
+const DashboardPage = lazy(() => import("../pages/dashboard/AdminDashboardPage"));
+const UsersPage = lazy(() => import("../pages/users/AdminUsersPage"));
+const UserDetailPage = lazy(() => import("../pages/users/AdminUserDetailPage"));
+const TemplatesPage = lazy(() => import("../pages/templates/AdminTemplatesPage"));
+const TemplateEditPage = lazy(() => import("../pages/templates/AdminTemplateEditPage"));
+const PaymentsPage = lazy(() => import("../pages/payments/AdminPaymentsPage"));
+const PackagesPage = lazy(() => import("../pages/payments/AdminPackagesPage"));
+const NotificationsPage = lazy(() => import("../pages/notifications/AdminNotificationsPage"));
+const SystemLogsPage = lazy(() => import("../pages/system-logs/AdminSystemLogsPage"));
+const ReportsPage = lazy(() => import("../pages/reports/AdminReportsPage"));
 
 import { ADMIN_ROUTE_PATHS } from "./routes";
 
@@ -26,6 +27,7 @@ export default function App() {
       <QueryProvider>
         <AdminLanguageProvider>
           <BrowserRouter>
+            <Suspense fallback={<main role="status" aria-live="polite">Loading page...</main>}>
             <Routes>
               <Route path={ADMIN_ROUTE_PATHS.login} element={<LoginPage />} />
               {/* Standalone Fullscreen Template Visual Studio */}
@@ -78,6 +80,7 @@ export default function App() {
               </Route>
               <Route path="*" element={<Navigate to="/dashboard" replace />} />
             </Routes>
+            </Suspense>
           </BrowserRouter>
         </AdminLanguageProvider>
       </QueryProvider>

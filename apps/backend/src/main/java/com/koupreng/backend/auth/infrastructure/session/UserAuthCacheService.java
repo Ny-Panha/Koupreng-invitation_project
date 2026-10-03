@@ -14,12 +14,13 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 /**
  * Distributed cache for JWT authentication state backed by Redis.
- * Prevents querying the database on every authenticated request while ensuring
- * that token version revocations, role changes, and bans propagate instantly
- * across all application replicas.
+ * Stores short-lived snapshots. The JWT converter uses fresh database state
+ * for authorization; cache invalidation runs only after a successful commit.
  */
 @Service
 public class UserAuthCacheService {
@@ -102,7 +103,20 @@ public class UserAuthCacheService {
         if (userId == null) {
             return;
         }
+        if (TransactionSynchronizationManager.isActualTransactionActive()
+                && TransactionSynchronizationManager.isSynchronizationActive()) {
+            TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+                @Override
+                public void afterCommit() {
+                    evictNow(userId);
+                }
+            });
+            return;
+        }
+        evictNow(userId);
+    }
 
+    private void evictNow(Long userId) {
         StringRedisTemplate redisTemplate = getRedisTemplate();
         if (redisTemplate != null) {
             try {

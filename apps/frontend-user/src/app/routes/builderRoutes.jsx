@@ -1,12 +1,13 @@
+import { PaymentCancelPage, PaymentStatusPage, PaymentSuccessPage, WeddingSite, PublicInvitationPage, WeddingPreviewPage, InvitationEditPage } from "./lazyRoutePages";
 import { Navigate, Route } from "react-router-dom";
 
-import PaymentCancelPage from "../../features/payments/PaymentCancelPage";
-import PaymentStatusPage from "../../features/payments/PaymentStatusPage";
-import PaymentSuccessPage from "../../features/payments/PaymentSuccessPage";
-import WeddingSite from "../../features/wedding-site/WeddingSite";
-import PublicInvitationPage from "../../pages/public/PublicInvitationPage";
-import WeddingPreviewPage from "../../pages/public/WeddingPreviewPage";
-import InvitationEditPage from "../../pages/host/invitations/InvitationEditPage";
+
+
+
+
+
+
+
 import RequireAuth from "./RequireAuth";
 
 export function builderRoutes() {

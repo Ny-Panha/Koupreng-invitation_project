@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { ScrollReveal } from "../../shared/ui/ScrollReveal";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useParams, useNavigate } from "react-router-dom";
@@ -52,30 +52,53 @@ const getVenues = (t) => [
 
 const VenuesPage = () => {
   const { text: t } = useBackendMessages("venues");
-  const venues = getVenues(t);
+  const venues = useMemo(() => getVenues(t), [t]);
   const [searchTerm, setSearchTerm] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
   const [selectedVenue, setSelectedVenue] = useState(null);
+  const dialogRef = useRef(null);
+  const triggerRef = useRef(null);
 
   useEffect(() => {
-    if (id) {
-      const found = venues.find((v) => String(v.id) === String(id));
-      if (found) {
-        setSelectedVenue(found);
-      }
-    }
+    setSelectedVenue(id ? venues.find((v) => String(v.id) === String(id)) || null : null);
   }, [id, venues]);
 
-  const handleOpenVenue = (venue) => {
+  const handleOpenVenue = (venue, event) => {
+    triggerRef.current = event.currentTarget;
     setSelectedVenue(venue);
     navigate(`/venues/${venue.id}`, { replace: true });
   };
 
-  const handleCloseVenue = () => {
+  const handleCloseVenue = useCallback(() => {
     setSelectedVenue(null);
     navigate("/venues", { replace: true });
-  };
+  }, [navigate]);
+
+  useEffect(() => {
+    if (!selectedVenue) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const dialog = dialogRef.current;
+    const focusable = () => [...dialog.querySelectorAll('button:not([disabled]),a[href],input,select,textarea,[tabindex="0"]')];
+    focusable()[0]?.focus();
+    const handleKeys = (event) => {
+      if (event.key === "Escape") { event.preventDefault(); handleCloseVenue(); }
+      if (event.key !== "Tab") return;
+      const items = focusable(), first = items[0], last = items.at(-1);
+      if (event.shiftKey && (document.activeElement === first || !dialog.contains(document.activeElement))) {
+        event.preventDefault(); last?.focus();
+      } else if (!event.shiftKey && (document.activeElement === last || !dialog.contains(document.activeElement))) {
+        event.preventDefault(); first?.focus();
+      }
+    };
+    document.addEventListener("keydown", handleKeys);
+    return () => {
+      document.removeEventListener("keydown", handleKeys);
+      document.body.style.overflow = previousOverflow;
+      if (triggerRef.current?.isConnected) triggerRef.current.focus();
+    };
+  }, [selectedVenue, handleCloseVenue]);
 
   const filteredVenues = venues.filter(
     (v) =>
@@ -119,6 +142,7 @@ const VenuesPage = () => {
                 <div className="search-box">
                   <input
                     type="text"
+                    aria-label={t("searchPlaceholder")}
                     placeholder={t("searchPlaceholder") || "ស្វែងរកតាមឈ្មោះ ឬទីតាំង..."}
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
@@ -166,7 +190,7 @@ const VenuesPage = () => {
                     </div>
                     <button
                       type="button"
-                      onClick={() => handleOpenVenue(venue)}
+                      onClick={(event) => handleOpenVenue(venue, event)}
                       className="view-detail-btn"
                       style={{ width: "100%", cursor: "pointer" }}
                     >
@@ -184,6 +208,10 @@ const VenuesPage = () => {
           {selectedVenue && (
             <div className="venue-modal-backdrop" onClick={handleCloseVenue}>
               <motion.div
+                ref={dialogRef}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="public-venue-title"
                 initial={{ opacity: 0, scale: 0.94, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.94, y: 20 }}
@@ -195,7 +223,7 @@ const VenuesPage = () => {
                   type="button"
                   className="venue-modal-close"
                   onClick={handleCloseVenue}
-                  aria-label="Close"
+                  aria-label="Close venue details"
                 >
                   ✕
                 </button>
@@ -215,7 +243,7 @@ const VenuesPage = () => {
                 </div>
                 <div className="venue-modal-body">
                   <span className="venue-modal-kicker">VENUE DETAIL • ព័ត៌មានលម្អិត</span>
-                  <h2 className="venue-modal-title">{selectedVenue.name}</h2>
+                  <h2 id="public-venue-title" className="venue-modal-title">{selectedVenue.name}</h2>
                   <div className="venue-modal-meta-grid">
                     <div className="venue-modal-meta-item">
                       <span className="meta-icon">📍</span>
@@ -261,6 +289,7 @@ const VenuesPage = () => {
           font-family: 'Kantumruy Pro', sans-serif;
           position: relative;
         }
+        .venues-page-wrapper :is(button,input,a):focus-visible { outline: 3px solid #7D6443; outline-offset: 4px; }
 
         /* Fixed Background Style ដូច Homepage */
         .fixed-bg-overlay {

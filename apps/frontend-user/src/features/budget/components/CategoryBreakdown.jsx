@@ -1,31 +1,32 @@
 import { BUDGET_CATEGORIES } from "../budgetCategories";
-
-function money(value) {
-  return `$${Number(value || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
-}
+import { budgetMoney } from "../currencyTotals";
 
 export default function CategoryBreakdown({ items = [] }) {
   if (!items.length) return null;
 
   const categoryTotals = {};
-  let totalSpending = 0;
+  const totalByCurrency = {};
 
   items.forEach((item) => {
     const cat = item.category || "OTHER";
-    const amount = Number(item.actualCost || item.estimatedCost || 0);
-    categoryTotals[cat] = (categoryTotals[cat] || 0) + amount;
-    totalSpending += amount;
+    const currency = item.currency || "USD";
+    const amount = Number(item.actualCost ?? item.estimatedCost ?? 0);
+    const key = `${currency}:${cat}`;
+    categoryTotals[key] = (categoryTotals[key] || 0) + amount;
+    totalByCurrency[currency] = (totalByCurrency[currency] || 0) + amount;
   });
 
-  const categories = BUDGET_CATEGORIES.map((cat) => {
-    const amount = categoryTotals[cat.value] || 0;
+  const categories = Object.keys(totalByCurrency).flatMap((currency) => BUDGET_CATEGORIES.map((cat) => {
+    const totalSpending = totalByCurrency[currency];
+    const amount = categoryTotals[`${currency}:${cat.value}`] || 0;
     const percentage = totalSpending > 0 ? Math.round((amount / totalSpending) * 100) : 0;
     return {
       ...cat,
+      currency,
       amount,
       percentage,
     };
-  }).filter((c) => c.amount > 0);
+  })).filter((c) => c.amount > 0);
 
   if (!categories.length) return null;
 
@@ -36,10 +37,10 @@ export default function CategoryBreakdown({ items = [] }) {
       </h3>
       <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
         {categories.map((c) => (
-          <div key={c.value}>
+          <div key={`${c.currency}:${c.value}`}>
             <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.875rem", fontWeight: "600", marginBottom: "0.25rem" }}>
               <span>{c.label}</span>
-              <span>{money(c.amount)} ({c.percentage}%)</span>
+              <span>{budgetMoney(c.amount, c.currency)} ({c.percentage}% of {c.currency})</span>
             </div>
             <div style={{ background: "rgba(107, 107, 196, 0.1)", borderRadius: "999px", height: "8px", overflow: "hidden" }}>
               <div

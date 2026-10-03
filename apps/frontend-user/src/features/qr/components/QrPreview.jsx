@@ -7,8 +7,8 @@ export function QrPreview({ qrData }) {
     );
   }
 
-  const qrImageUrl = qrData.qrImageUrl || qrData.qrUrl || qrData.imageUrl;
-  const qrCodeText = qrData.qrCode || qrData.token || qrData.slug;
+  const qrImageUrl = qrData.qrCodeDataUri || qrData.qrImageUrl || qrData.qrUrl || qrData.imageUrl;
+  const qrCodeText = qrData.qrPayload || qrData.qrCode || qrData.token || qrData.slug;
 
   return (
     <div className="qr-card">
@@ -24,6 +24,7 @@ export function QrPreview({ qrData }) {
       </div>
 
       <div className="qr-details">
+        {qrCodeText && qrImageUrl && <p className="qr-code-text">{qrCodeText}</p>}
         {qrData.title && <h3 className="qr-title">{qrData.title}</h3>}
         {qrData.guestName && (
           <p className="qr-guest">

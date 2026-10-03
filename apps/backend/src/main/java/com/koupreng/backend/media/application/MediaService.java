@@ -10,12 +10,18 @@ import com.koupreng.backend.media.domain.MediaType;
 import com.koupreng.backend.media.infrastructure.persistence.MediaFileRepository;
 import com.koupreng.backend.media.application.port.StorageService;
 import com.koupreng.backend.media.application.port.StorageUploadResult;
+import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;
+import com.koupreng.backend.shared.security.ApiSecurityProperties;
+import com.koupreng.backend.shared.security.FileUploadValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -23,6 +29,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 @Service
 public class MediaService {
@@ -75,66 +82,81 @@ public class MediaService {
     private final MediaFileRepository mediaFileRepository;
     private final InvitationService invitationService;
     private final StorageService storageService;
+    private final UserInvitationRepository invitationRepository;
+    private final FileUploadValidator fileUploadValidator;
+    private final ApiSecurityProperties.Upload uploadProperties;
 
+    @org.springframework.beans.factory.annotation.Autowired
     public MediaService(
             MediaFileRepository mediaFileRepository,
             InvitationService invitationService,
-            StorageService storageService
+            StorageService storageService,
+            UserInvitationRepository invitationRepository,
+            FileUploadValidator fileUploadValidator,
+            ApiSecurityProperties apiSecurityProperties
     ) {
         this.mediaFileRepository = mediaFileRepository;
         this.invitationService = invitationService;
         this.storageService = storageService;
+        this.invitationRepository = invitationRepository;
+        this.fileUploadValidator = fileUploadValidator;
+        this.uploadProperties = apiSecurityProperties.getUpload();
     }
 
-    @Transactional
+    public MediaService(MediaFileRepository mediaFileRepository, InvitationService invitationService, StorageService storageService) {
+        this(mediaFileRepository, invitationService, storageService, null,
+                new FileUploadValidator(new ApiSecurityProperties()), new ApiSecurityProperties());
+    }
+
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public MediaResponse uploadCover(Authentication authentication, Long invitationId, MultipartFile file) {
-        UserInvitation invitation = invitationService.requireOwnedInvitationEntity(authentication, invitationId);
-        validateFile(file, MediaType.COVER_IMAGE);
-        deleteExistingSingleton(invitationId, MediaType.COVER_IMAGE);
-        MediaFile mediaFile = store(invitation, file, MediaType.COVER_IMAGE, 0, true);
-        return MediaResponse.from(mediaFileRepository.save(mediaFile));
+        return uploadSingleton(authentication, invitationId, file, MediaType.COVER_IMAGE, true);
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public List<MediaResponse> uploadGallery(
             Authentication authentication,
             Long invitationId,
             List<MultipartFile> files,
             Integer sortOrder
     ) {
-        UserInvitation invitation = invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        UserInvitation invitation = requireMutableInvitation(authentication, invitationId);
         if (files == null || files.isEmpty()) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "At least one gallery image is required");
         }
+        if (uploadProperties.isEnabled() && files.size() > uploadProperties.getMaxFiles()) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Too many files in one upload");
+        }
+        long existingCount = mediaFileRepository.countByInvitationIdAndMediaType(invitationId, MediaType.GALLERY_IMAGE);
+        int galleryLimit = uploadProperties.getMaxGalleryFilesPerInvitation();
+        if (galleryLimit > 0 && existingCount + files.size() > galleryLimit) {
+            throw new ApiException(HttpStatus.CONFLICT, "Invitation gallery limit reached");
+        }
+        // Validate the whole batch before any external upload can occur.
+        files.forEach(file -> validateFile(file, MediaType.GALLERY_IMAGE));
 
         int nextSortOrder = sortOrder == null
-                ? Math.toIntExact(mediaFileRepository.countByInvitationIdAndMediaType(invitationId, MediaType.GALLERY_IMAGE))
+                ? Math.toIntExact(existingCount)
                 : sortOrder;
-        List<MediaResponse> responses = new ArrayList<>();
-        for (MultipartFile file : files) {
-            validateFile(file, MediaType.GALLERY_IMAGE);
-            MediaFile mediaFile = store(invitation, file, MediaType.GALLERY_IMAGE, nextSortOrder++, false);
-            responses.add(MediaResponse.from(mediaFileRepository.save(mediaFile)));
-        }
-        return responses;
+        return storageMutation(changes -> {
+            List<MediaResponse> responses = new ArrayList<>();
+            int index = nextSortOrder;
+            for (MultipartFile file : files) {
+                MediaFile mediaFile = store(invitation, file, MediaType.GALLERY_IMAGE, index++, false, changes);
+                responses.add(MediaResponse.from(mediaFileRepository.save(mediaFile)));
+            }
+            return responses;
+        });
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public MediaResponse uploadVideo(Authentication authentication, Long invitationId, MultipartFile file) {
-        UserInvitation invitation = invitationService.requireOwnedInvitationEntity(authentication, invitationId);
-        validateFile(file, MediaType.VIDEO);
-        deleteExistingSingleton(invitationId, MediaType.VIDEO);
-        MediaFile mediaFile = store(invitation, file, MediaType.VIDEO, 0, false);
-        return MediaResponse.from(mediaFileRepository.save(mediaFile));
+        return uploadSingleton(authentication, invitationId, file, MediaType.VIDEO, false);
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public MediaResponse uploadMusic(Authentication authentication, Long invitationId, MultipartFile file) {
-        UserInvitation invitation = invitationService.requireOwnedInvitationEntity(authentication, invitationId);
-        validateFile(file, MediaType.BACKGROUND_MUSIC);
-        deleteExistingSingleton(invitationId, MediaType.BACKGROUND_MUSIC);
-        MediaFile mediaFile = store(invitation, file, MediaType.BACKGROUND_MUSIC, 0, false);
-        return MediaResponse.from(mediaFileRepository.save(mediaFile));
+        return uploadSingleton(authentication, invitationId, file, MediaType.BACKGROUND_MUSIC, false);
     }
 
     @Transactional(readOnly = true)
@@ -160,28 +182,33 @@ public class MediaService {
         return MediaListResponse.from(mediaFileRepository.findByInvitationIdOrderBySortOrderAscCreatedAtAsc(invitation.getId()));
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public MediaResponse replace(
             Authentication authentication,
             Long invitationId,
             Long mediaId,
             MultipartFile file
     ) {
-        invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        requireMutableInvitation(authentication, invitationId);
         MediaFile mediaFile = requireMedia(invitationId, mediaId);
         validateFile(file, mediaFile.getMediaType());
-        StorageUploadResult upload = storageService.upload(file, mediaFile.getMediaType(), invitationId);
-        deleteStorageBestEffort(mediaFile);
-        applyUpload(mediaFile, file, upload);
-        return MediaResponse.from(mediaFileRepository.save(mediaFile));
+        return storageMutation(changes -> {
+            StorageUploadResult upload = changes.upload(file, mediaFile.getMediaType(), invitationId);
+            changes.removeAfterCommit(mediaFile);
+            applyUpload(mediaFile, file, upload);
+            return MediaResponse.from(mediaFileRepository.save(mediaFile));
+        });
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public void delete(Authentication authentication, Long invitationId, Long mediaId) {
-        invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        requireMutableInvitation(authentication, invitationId);
         MediaFile mediaFile = requireMedia(invitationId, mediaId);
-        deleteStorageBestEffort(mediaFile);
-        mediaFileRepository.delete(mediaFile);
+        storageMutation(changes -> {
+            changes.removeAfterCommit(mediaFile);
+            mediaFileRepository.delete(mediaFile);
+            return null;
+        });
     }
 
     private MediaFile requireMedia(Long invitationId, Long mediaId) {
@@ -189,10 +216,30 @@ public class MediaService {
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Media file not found"));
     }
 
-    private void deleteExistingSingleton(Long invitationId, MediaType mediaType) {
+    private MediaResponse uploadSingleton(Authentication authentication, Long invitationId, MultipartFile file,
+            MediaType mediaType, boolean cover) {
+        UserInvitation invitation = requireMutableInvitation(authentication, invitationId);
+        validateFile(file, mediaType);
+        return storageMutation(changes -> {
+            MediaFile mediaFile = store(invitation, file, mediaType, 0, cover, changes);
+            deleteExistingSingleton(invitationId, mediaType, changes);
+            return MediaResponse.from(mediaFileRepository.save(mediaFile));
+        });
+    }
+
+    private UserInvitation requireMutableInvitation(Authentication authentication, Long invitationId) {
+        UserInvitation invitation = invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        if (invitationRepository == null) {
+            return invitation;
+        }
+        return invitationRepository.findForUpdateByIdAndUserId(invitationId, invitation.getUser().getId())
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Invitation not found"));
+    }
+
+    private void deleteExistingSingleton(Long invitationId, MediaType mediaType, StorageChanges changes) {
         List<MediaFile> existing = mediaFileRepository.findAllByInvitationIdAndMediaType(invitationId, mediaType);
         for (MediaFile mediaFile : existing) {
-            deleteStorageBestEffort(mediaFile);
+            changes.removeAfterCommit(mediaFile);
             mediaFileRepository.delete(mediaFile);
         }
     }
@@ -202,9 +249,10 @@ public class MediaService {
             MultipartFile file,
             MediaType mediaType,
             Integer sortOrder,
-            boolean cover
+            boolean cover,
+            StorageChanges changes
     ) {
-        StorageUploadResult upload = storageService.upload(file, mediaType, invitation.getId());
+        StorageUploadResult upload = changes.upload(file, mediaType, invitation.getId());
         MediaFile mediaFile = new MediaFile();
         mediaFile.setInvitation(invitation);
         mediaFile.setMediaType(mediaType);
@@ -249,6 +297,7 @@ public class MediaService {
         if (!CONTENT_TYPES_BY_EXTENSION.getOrDefault(extension, Set.of()).contains(contentType)) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Uploaded file extension does not match its content type");
         }
+        fileUploadValidator.validateMedia(file);
     }
 
     private String maxSizeMessage(MediaType mediaType) {
@@ -289,11 +338,64 @@ public class MediaService {
         return filename.substring(index).toLowerCase(Locale.ROOT);
     }
 
-    private void deleteStorageBestEffort(MediaFile mediaFile) {
+    private void deleteStorageBestEffort(StorageObject object) {
         try {
-            storageService.delete(mediaFile.getPublicId(), mediaFile.getMediaType());
+            storageService.delete(object.publicId(), object.mediaType());
         } catch (RuntimeException exception) {
-            log.warn("Could not delete stored media publicId={}", mediaFile.getPublicId(), exception);
+            log.warn("Could not delete stored media publicId={}", object.publicId(), exception);
+        }
+    }
+
+    private <T> T storageMutation(Function<StorageChanges, T> mutation) {
+        StorageChanges changes = new StorageChanges();
+        boolean transactional = TransactionSynchronizationManager.isActualTransactionActive()
+                && TransactionSynchronizationManager.isSynchronizationActive();
+        if (transactional) {
+            TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+                @Override public void afterCommit() { changes.oldObjects.forEach(MediaService.this::deleteStorageBestEffort); }
+                @Override public void afterCompletion(int status) {
+                    if (status == STATUS_ROLLED_BACK) {
+                        changes.stagedObjects.forEach(MediaService.this::deleteStorageBestEffort);
+                    } else if (status == STATUS_UNKNOWN) {
+                        log.warn("Media transaction completion is unknown; staged objects retained for reconciliation");
+                    }
+                }
+            });
+        }
+        try {
+            T response = mutation.apply(changes);
+            if (!transactional) { changes.oldObjects.forEach(this::deleteStorageBestEffort); }
+            return response;
+        } catch (RuntimeException exception) {
+            if (!transactional) { changes.stagedObjects.forEach(this::deleteStorageBestEffort); }
+            throw exception;
+        }
+    }
+
+    private record StorageObject(String publicId, MediaType mediaType) { }
+
+    private class StorageChanges {
+        private final List<StorageObject> stagedObjects = new ArrayList<>();
+        private final List<StorageObject> oldObjects = new ArrayList<>();
+
+        StorageUploadResult upload(MultipartFile file, MediaType type, Long invitationId) {
+            StorageUploadResult upload = storageService.upload(file, type, invitationId);
+            if (upload != null && upload.publicId() != null && !upload.publicId().isBlank()) {
+                stagedObjects.add(new StorageObject(upload.publicId(), type));
+            }
+            if (upload == null || upload.fileUrl() == null || upload.fileUrl().isBlank()
+                    || upload.publicId() == null || upload.publicId().isBlank()
+                    || upload.storageProvider() == null || upload.storageProvider().isBlank()) {
+                throw new ApiException(HttpStatus.BAD_GATEWAY, "Storage upload did not return a usable media object");
+            }
+            return upload;
+        }
+
+        void removeAfterCommit(MediaFile file) {
+            StorageObject old = new StorageObject(file.getPublicId(), file.getMediaType());
+            if (!stagedObjects.contains(old)) {
+                oldObjects.add(old);
+            }
         }
     }
 }

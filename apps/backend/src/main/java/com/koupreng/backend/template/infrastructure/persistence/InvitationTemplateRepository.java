@@ -23,4 +23,18 @@ public interface InvitationTemplateRepository extends JpaRepository<InvitationTe
     long countByStatusIgnoreCase(String status);
 
     long countByIsPremiumTrue();
+
+    @org.springframework.data.jpa.repository.Query("""
+            select count(t) as total,
+              coalesce(sum(case when upper(trim(t.status)) = 'ACTIVE' then 1 else 0 end), 0) as active,
+              coalesce(sum(case when t.isPremium = true then 1 else 0 end), 0) as premium
+            from InvitationTemplate t
+            """)
+    DashboardCounts dashboardCounts();
+
+    interface DashboardCounts {
+        long getTotal();
+        long getActive();
+        long getPremium();
+    }
 }

@@ -92,7 +92,7 @@ public class AccountService {
     @Transactional
     public void resetPassword(ResetPasswordRequest request) {
         requirePasswordPolicy(request.newPassword());
-        PasswordResetToken resetToken = resetTokenRepository.findByTokenHash(hashToken(request.token()))
+        PasswordResetToken resetToken = resetTokenRepository.findForUpdateByTokenHash(hashToken(request.token()))
                 .orElseThrow(() -> new ApiException(HttpStatus.BAD_REQUEST, "Password reset token is invalid"));
 
         Instant now = Instant.now();
@@ -103,7 +103,10 @@ public class AccountService {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Password reset token has expired");
         }
 
-        AppUser user = resetToken.getUser();
+        AppUser user = userRepository.findForUpdateById(resetToken.getUser().getId())
+                .filter(AppUser::isActive)
+                .filter(account -> !account.isDeleted())
+                .orElseThrow(() -> new ApiException(HttpStatus.BAD_REQUEST, "Password reset token is invalid"));
         user.setPasswordHash(passwordEncoder.encode(request.newPassword()));
         user.incrementTokenVersion();
         resetToken.setUsedAt(now);

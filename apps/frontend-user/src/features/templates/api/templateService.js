@@ -1,11 +1,12 @@
 import { api } from "@/shared/api/httpClient";
+import { templateCatalogService } from "./templateCatalogApi";
 
 function unwrap(response) {
     return response?.data ?? response;
 }
 
 export const templateService = {
-    listPublic: () => api.get("/v1/templates", { skipAuth: true }).then(unwrap),
+    listPublic: (options) => templateCatalogService.list(options),
     getPublic: (templateId) => api.get(`/v1/templates/${encodeURIComponent(templateId)}`, { skipAuth: true }).then(unwrap),
     getPublicBySlug: (slug) => api.get(`/v1/templates/slug/${encodeURIComponent(slug)}`, { skipAuth: true }).then(unwrap),
 };

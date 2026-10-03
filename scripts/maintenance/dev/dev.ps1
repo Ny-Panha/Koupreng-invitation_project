@@ -45,7 +45,7 @@ foreach ($arg in $args) {
 }
 
 if ($Help) {
-    Write-Host "Usage: .\scripts\maintenance\dev.ps1 [OPTIONS]" -ForegroundColor White
+    Write-Host "Usage: .\run-local-stack.ps1 [OPTIONS]" -ForegroundColor White
     Write-Host ""
     Write-Host "Options:"
     Write-Host "  -Admin, -AdminOnly, --admin      Run Backend + Frontend Admin only"
@@ -61,7 +61,7 @@ if ($Help) {
 # Resolve root directory
 $ScriptDir = Split-Path -Parent $PSCommandPath
 if (-not $ScriptDir) { $ScriptDir = $PSScriptRoot }
-$RootDir = (Resolve-Path (Join-Path $ScriptDir "..\..")).Path
+$RootDir = (Resolve-Path (Join-Path $ScriptDir "..\..\..")).Path
 Set-Location $RootDir
 
 # Mode configuration

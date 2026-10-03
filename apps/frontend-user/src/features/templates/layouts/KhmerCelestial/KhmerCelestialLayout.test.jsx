@@ -111,6 +111,16 @@ describe("KhmerCelestialLayout integration", () => {
     expect(touchMoveEvent.defaultPrevented).toBe(false);
   });
 
+  it("applies selected couple and global fonts in the dedicated layout", () => {
+    render(<MemoryRouter><TemplateExperience tpl={{ id: "khmer-celestial" }} content={{ ...content,
+      fontKhmer: "Hanuman", fontLatin: "Cinzel", elementFonts: { couple: "Bayon", guestName: "Battambang" },
+    }} showActions={false} /></MemoryRouter>);
+    expect(document.querySelector(".kc-root").style.getPropertyValue("--kc-khmer-display")).toContain("Hanuman");
+    expect(document.querySelector(".kc-root").style.getPropertyValue("--kc-english-display")).toContain("Cinzel");
+    expect(document.querySelector(".kc-opening__guest-name").style.fontFamily).toContain("Battambang");
+    expect(document.querySelector(".kc-family__group h3").style.fontFamily).toContain("Bayon");
+  });
+
   it("keeps an accessible static SVG garden when reduced motion is enabled", () => {
     render(
       <MemoryRouter>

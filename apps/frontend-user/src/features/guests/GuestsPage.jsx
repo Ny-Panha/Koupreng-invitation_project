@@ -15,6 +15,8 @@ import GuestDeleteDialog from "./components/GuestDeleteDialog";
 import GuestQrModal from "./components/GuestQrModal";
 import GuestImportModal from "./components/GuestImportModal";
 import GroupCategoryModal from "./components/GroupCategoryModal";
+import GuestServerTools from "./components/GuestServerTools";
+import { guestService } from "./api/guestApi";
 import { exportGuestsToCsv } from "./model/guestCsvUtils";
 import { saveManualGuests } from "@/shared/storage/hostPlanningStorage";
 import "./GuestsPage.css";
@@ -222,7 +224,12 @@ export default function GuestsPage() {
     toast.success(t ? t("toastUpdated") : "រក្សាទុកប្រភេទបានជោគជ័យ");
   };
 
-  const handleExportCsv = () => {
+  const handleExportCsv = async () => {
+    if (backendInvitationId) {
+      try { await guestService.exportCsv(backendInvitationId); toast.success("Guest CSV exported"); }
+      catch (failure) { toast.error(failure.message || "Could not export guests"); }
+      return;
+    }
     if (!guests || !guests.length) {
       toast.error(t ? t("noGuestsToExport") : "មិនមានទិន្នន័យភ្ញៀវសម្រាប់ទាញយកទេ");
       return;
@@ -245,6 +252,7 @@ export default function GuestsPage() {
       </header>
 
       <GuestStats guests={guests} t={t} />
+      {backendInvitationId && <GuestServerTools invitationId={backendInvitationId} />}
 
       <GuestFilters
         search={search}
@@ -342,6 +350,8 @@ export default function GuestsPage() {
       />
 
       <GuestImportModal
+        invitationId={backendInvitationId}
+        onFileImported={refreshData}
         isOpen={importModalOpen}
         onClose={() => setImportModalOpen(false)}
         saving={saving}

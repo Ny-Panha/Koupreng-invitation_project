@@ -21,6 +21,8 @@ import com.koupreng.backend.payment.infrastructure.persistence.UserTemplateAcces
 import com.koupreng.backend.payment.infrastructure.aba.AbaPayWayService;
 import com.koupreng.backend.payment.infrastructure.aba.PayWayTransactionVerification;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 
@@ -43,6 +45,131 @@ import static org.mockito.Mockito.when;
 class TemplatePaymentServiceTests {
 
     private static final String STATIC_PAYMENT_LINK = "https://pay.ababank.com/oRF8/vx2dp884";
+
+    @ParameterizedTest
+    @EnumSource(value = PaymentStatus.class, names = {"PENDING", "QR_CREATED", "CHECKOUT_CREATED", "PAID_PENDING_REVIEW"})
+    void buyerClaimOnlyRequestsReviewWithoutPaymentOrAccess(PaymentStatus status) {
+        Fixture fixture = fixture();
+        TemplatePaymentOrder order = order(fixture.owner, status, new BigDecimal("0.01"));
+        when(fixture.orderRepository.findForUpdateByOrderCode(order.getOrderCode())).thenReturn(Optional.of(order));
+
+        PaymentConfirmResponse response = fixture.service.claimOrderByUser(fixture.authentication, order.getOrderCode(), "untrusted buyer reference");
+
+        assertEquals(PaymentStatus.PAID_PENDING_REVIEW, response.getStatus());
+        assertEquals(null, order.getPaidAt());
+        assertEquals(null, order.getPaidAmount());
+        assertEquals(null, order.getConfirmSource());
+        verify(fixture.accessRepository, never()).save(any(UserTemplateAccess.class));
+        verify(fixture.abaPayWayService, never()).checkTransaction(any());
+    }
+
+    @ParameterizedTest
+    @EnumSource(value = PaymentStatus.class, names = {"FAILED", "CANCELLED", "REJECTED", "EXPIRED"})
+    void buyerClaimCannotReviveTerminalOrder(PaymentStatus status) {
+        Fixture fixture = fixture();
+        TemplatePaymentOrder order = order(fixture.owner, status, new BigDecimal("0.01"));
+        when(fixture.orderRepository.findForUpdateByOrderCode(order.getOrderCode())).thenReturn(Optional.of(order));
+        assertEquals(status, fixture.service.claimOrderByUser(fixture.authentication, order.getOrderCode(), null).getStatus());
+        verify(fixture.accessRepository, never()).save(any(UserTemplateAccess.class));
+    }
+
+    @Test
+    void expiredBuyerClaimCannotUnlockAndAnotherUserCannotClaim() {
+        Fixture fixture = fixture();
+        TemplatePaymentOrder order = order(fixture.owner, PaymentStatus.PENDING, new BigDecimal("0.01"));
+        when(fixture.orderRepository.findForUpdateByOrderCode(order.getOrderCode())).thenReturn(Optional.of(order));
+        when(fixture.currentUserService.currentUser(fixture.authentication)).thenReturn(user(2L, Role.USER));
+        assertEquals(HttpStatus.FORBIDDEN, assertThrows(ApiException.class,
+                () -> fixture.service.claimOrderByUser(fixture.authentication, order.getOrderCode(), null)).getStatus());
+        when(fixture.currentUserService.currentUser(fixture.authentication)).thenReturn(fixture.owner);
+        order.setExpiresAt(Instant.now().minusSeconds(1));
+        assertEquals(PaymentStatus.EXPIRED, fixture.service.claimOrderByUser(fixture.authentication, order.getOrderCode(), null).getStatus());
+        verify(fixture.accessRepository, never()).save(any(UserTemplateAccess.class));
+    }
+
+    @Test
+    void duplicateClaimRemainsPendingUntilTrustedConfirmationAndThenPollsPaid() {
+        Fixture fixture = fixture();
+        TemplatePaymentOrder order = order(fixture.owner, PaymentStatus.PENDING, new BigDecimal("0.01"));
+        when(fixture.orderRepository.findForUpdateByOrderCode(order.getOrderCode())).thenReturn(Optional.of(order));
+        when(fixture.orderRepository.findByOrderCode(order.getOrderCode())).thenReturn(Optional.of(order));
+        fixture.service.claimOrderByUser(fixture.authentication, order.getOrderCode(), null);
+        fixture.service.claimOrderByUser(fixture.authentication, order.getOrderCode(), "again");
+        assertEquals(PaymentStatus.PAID_PENDING_REVIEW, fixture.service.getOrderStatus(fixture.authentication, order.getOrderCode()).getStatus());
+        verify(fixture.accessRepository, never()).save(any(UserTemplateAccess.class));
+        com.koupreng.backend.payment.api.dto.ConfirmTemplatePaymentRequest request = new com.koupreng.backend.payment.api.dto.ConfirmTemplatePaymentRequest();
+        request.setOrderCode(order.getOrderCode());
+        request.setAmount(new BigDecimal("0.01"));
+        request.setConfirmedBy("authorized-reviewer");
+        assertEquals(PaymentStatus.PAID, fixture.service.confirmManualPayment(request).getStatus());
+        fixture.service.confirmManualPayment(request);
+        fixture.service.claimOrderByUser(fixture.authentication, order.getOrderCode(), null);
+        assertEquals(PaymentStatus.PAID, fixture.service.getOrderStatus(fixture.authentication, order.getOrderCode()).getStatus());
+        verify(fixture.accessRepository).save(any(UserTemplateAccess.class));
+    }
+
+    @Test
+    void trustedConfirmationUnlocksOnlyStoredOwnerAndTemplateAndWrongAmountDoesNotUnlock() {
+        Fixture fixture = fixture();
+        TemplatePaymentOrder order = order(fixture.owner, PaymentStatus.PENDING, new BigDecimal("0.01"));
+        when(fixture.orderRepository.findForUpdateByOrderCode(order.getOrderCode())).thenReturn(Optional.of(order));
+        com.koupreng.backend.payment.api.dto.ConfirmTemplatePaymentRequest request = new com.koupreng.backend.payment.api.dto.ConfirmTemplatePaymentRequest();
+        request.setOrderCode(order.getOrderCode());
+        request.setAmount(new BigDecimal("0.02"));
+        request.setConfirmedBy("reviewer");
+        assertEquals(HttpStatus.BAD_REQUEST, assertThrows(ApiException.class,
+                () -> fixture.service.confirmManualPayment(request)).getStatus());
+        verify(fixture.accessRepository, never()).save(any(UserTemplateAccess.class));
+        order.setStatus(PaymentStatus.PENDING);
+        request.setAmount(new BigDecimal("0.01"));
+        fixture.service.confirmManualPayment(request);
+        org.mockito.ArgumentCaptor<UserTemplateAccess> access = org.mockito.ArgumentCaptor.forClass(UserTemplateAccess.class);
+        verify(fixture.accessRepository).save(access.capture());
+        assertEquals(1L, access.getValue().getUser().getId());
+        assertEquals(10L, access.getValue().getTemplateId());
+    }
+
+    @ParameterizedTest
+    @EnumSource(value = PaymentStatus.class, names = {"FAILED", "CANCELLED", "REJECTED", "EXPIRED"})
+    void trustedConfirmationRequiresPayableOrder(PaymentStatus status) {
+        Fixture fixture = fixture();
+        TemplatePaymentOrder order = order(fixture.owner, status, new BigDecimal("0.01"));
+        when(fixture.orderRepository.findForUpdateByOrderCode(order.getOrderCode())).thenReturn(Optional.of(order));
+        com.koupreng.backend.payment.api.dto.ConfirmTemplatePaymentRequest request = new com.koupreng.backend.payment.api.dto.ConfirmTemplatePaymentRequest();
+        request.setOrderCode(order.getOrderCode());
+        request.setAmount(new BigDecimal("0.01"));
+        request.setConfirmedBy("reviewer");
+        assertEquals(HttpStatus.CONFLICT, assertThrows(ApiException.class,
+                () -> fixture.service.confirmManualPayment(request)).getStatus());
+        verify(fixture.accessRepository, never()).save(any(UserTemplateAccess.class));
+    }
+
+    @Test
+    void remoteNonApprovalCannotReviveCancelledOrExpiredCallbackOrders() {
+        for (PaymentStatus terminal : new PaymentStatus[]{PaymentStatus.CANCELLED, PaymentStatus.EXPIRED, PaymentStatus.REJECTED, PaymentStatus.FAILED}) {
+            Fixture fixture = fixture();
+            TemplatePaymentOrder order = order(fixture.owner, terminal, new BigDecimal("0.01"));
+            Map<String, Object> payload = Map.of("tran_id", order.getTransactionId(), "status", "0");
+            when(fixture.orderRepository.findByTransactionId(order.getTransactionId())).thenReturn(Optional.of(order));
+            when(fixture.orderRepository.findForUpdateByTransactionId(order.getTransactionId())).thenReturn(Optional.of(order));
+            when(fixture.abaPayWayService.verifyCallbackSignature(payload, "sig")).thenReturn(true);
+            when(fixture.abaPayWayService.checkTransaction(order.getTransactionId())).thenReturn(
+                    new PayWayTransactionVerification(false, PaymentStatus.QR_CREATED, null, "USD", "PENDING", "bank-id", "{}"));
+            assertEquals(terminal, fixture.service.handlePaywayCallback(payload, "sig").getStatus());
+            verify(fixture.accessRepository, never()).save(any(UserTemplateAccess.class));
+        }
+    }
+
+    @Test
+    void lateFailureCallbackCannotDowngradePaidOrder() {
+        Fixture fixture = fixture();
+        TemplatePaymentOrder order = order(fixture.owner, PaymentStatus.PAID, new BigDecimal("0.01"));
+        Map<String, Object> payload = Map.of("tran_id", order.getTransactionId(), "status", "failed");
+        when(fixture.orderRepository.findByTransactionId(order.getTransactionId())).thenReturn(Optional.of(order));
+        when(fixture.orderRepository.findForUpdateByTransactionId(order.getTransactionId())).thenReturn(Optional.of(order));
+        when(fixture.abaPayWayService.verifyCallbackSignature(payload, "sig")).thenReturn(true);
+        assertEquals(PaymentStatus.PAID, fixture.service.handlePaywayCallback(payload, "sig").getStatus());
+    }
 
     @Test
     void telegramDetectionRequiresExplicitAutoConfirmOptIn() {
@@ -150,10 +277,21 @@ class TemplatePaymentServiceTests {
     }
 
     @Test
+    void emptyCatalogCannotAuthorizeCheckoutForAnUnknownTemplate() {
+        Fixture fixture = fixture();
+        when(fixture.templateRepository.count()).thenReturn(0L);
+        when(fixture.templateRepository.findById(10L)).thenReturn(Optional.empty());
+        assertEquals(HttpStatus.NOT_FOUND, assertThrows(ApiException.class,
+                () -> fixture.service.createStaticPaymentOrder(fixture.authentication, createStaticRequest())).getStatus());
+        verify(fixture.orderRepository, never()).save(any(TemplatePaymentOrder.class));
+    }
+
+    @Test
     void createStaticPaymentOrderRejectsUnknownTemplateWhenCatalogExists() {
         Fixture fixture = fixture();
         when(fixture.templateRepository.count()).thenReturn(1L);
         when(fixture.templateRepository.existsById(10L)).thenReturn(false);
+        when(fixture.templateRepository.findById(10L)).thenReturn(Optional.empty());
 
         ApiException exception = assertThrows(
                 ApiException.class,
@@ -480,7 +618,12 @@ class TemplatePaymentServiceTests {
         );
 
         when(currentUserService.currentUser(authentication)).thenReturn(owner);
-        when(templateRepository.count()).thenReturn(0L);
+        var template = new com.koupreng.backend.template.domain.InvitationTemplate();
+        template.setId(10L);
+        template.setCode("garden-royal-khmer-wedding");
+        template.setName("Khmer Wedding Gold");
+        template.setStatus("ACTIVE");
+        when(templateRepository.findById(10L)).thenReturn(Optional.of(template));
         when(orderRepository.existsByOrderCode(any())).thenReturn(false);
         when(orderRepository.existsByTransactionId(any())).thenReturn(false);
         when(orderRepository.save(any(TemplatePaymentOrder.class))).thenAnswer(invocation -> {

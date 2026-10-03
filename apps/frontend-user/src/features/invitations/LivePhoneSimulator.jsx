@@ -4,6 +4,8 @@ import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
 import { formatTime24toKhmer } from "@/shared/ui/TimePicker";
 import { TemplateExperience } from "@/features/templates";
 import { draftToTemplate } from "../wedding-builder/utils/draftToTemplate";
+import { buildPreviewUrl, createPreviewSession, iframePreviewChannel, isTrustedPreviewMessage, postPreviewMessage } from "@/shared/preview/previewMessaging";
+import { usePreviewSyncRetries } from "@/shared/hooks/usePreviewSyncRetries";
 
 function displayKhmerDate(dateStr) {
     if (!dateStr) return "ថ្ងៃពុធ ២៨ មករា ២០២៦";
@@ -52,6 +54,9 @@ function resolveTemplateSlug(data, merged) {
 export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
     const { text: t } = useBackendMessages("invitations");
     const iframeRef = useRef(null);
+    const [previewSession] = useState(createPreviewSession);
+    const sendPreview = useCallback((message) => postPreviewMessage(message,
+        iframePreviewChannel(iframeRef.current, previewSession)), [previewSession]);
 
     // `catalogVersion` is a dependency because the first render runs while the
     // template catalog is still fetching — without it the memo keeps the stale
@@ -127,14 +132,12 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
                 musicUrl: data.musicUrl,
                 sectionOrder: data.sectionOrder,
             };
-            iframeRef.current.contentWindow.postMessage(
-                { type: "LIVE_PREVIEW_SYNC", data: livePayload },
-                "*"
-            );
+            sendPreview({ type: "LIVE_PREVIEW_SYNC", data: livePayload });
         } catch {
             // ignore
         }
-    }, [data, templateSlug]);
+    }, [data, templateSlug, sendPreview]);
+    const synchronizeLoadedPreview = usePreviewSyncRetries(broadcastSync);
 
     useEffect(() => {
         broadcastSync();
@@ -144,10 +147,7 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
         setIsGateOpen(shouldOpen);
         if (iframeRef.current?.contentWindow) {
             try {
-                iframeRef.current.contentWindow.postMessage(
-                    { type: "TOGGLE_GATE", open: shouldOpen, isOpen: shouldOpen },
-                    "*"
-                );
+                sendPreview({ type: "TOGGLE_GATE", open: shouldOpen, isOpen: shouldOpen });
             } catch {
                 // The preview may navigate while the gate state is being sent.
             }
@@ -156,6 +156,7 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
 
     useEffect(() => {
         const handleMsg = (event) => {
+            if (!isTrustedPreviewMessage(event, iframePreviewChannel(iframeRef.current, previewSession))) return;
             if (event.data?.type === "GATE_STATE_CHANGE" || event.data?.type === "GATE_OPENED") {
                 setIsGateOpen(Boolean(event.data.open ?? event.data.isOpen));
             }
@@ -163,10 +164,7 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
                 broadcastSync();
                 if (iframeRef.current?.contentWindow) {
                     try {
-                        iframeRef.current.contentWindow.postMessage(
-                            { type: "TOGGLE_GATE", open: isGateOpen, isOpen: isGateOpen },
-                            "*"
-                        );
+                        sendPreview({ type: "TOGGLE_GATE", open: isGateOpen, isOpen: isGateOpen });
                     } catch {
                         // The preview may navigate while the gate state is being sent.
                     }
@@ -175,7 +173,7 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
         };
         window.addEventListener("message", handleMsg);
         return () => window.removeEventListener("message", handleMsg);
-    }, [broadcastSync, isGateOpen]);
+    }, [broadcastSync, isGateOpen, previewSession, sendPreview]);
 
     // Check if running in headless test environment (Vitest / HappyDOM)
     const isTest = import.meta.env.MODE === "test" || Boolean(globalThis.__vitest_worker__);
@@ -244,18 +242,14 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
                             key={templateSlug}
                             ref={iframeRef}
                             allow="clipboard-write; clipboard-read; autoplay"
-                            src={`/templates/${templateSlug}/preview?embed=true`}
+                            src={buildPreviewUrl(`/templates/${templateSlug}/preview?embed=true`, previewSession)}
                             className="w-full h-full border-0 bg-zinc-950"
                             title="Live User Template Preview"
                             onLoad={() => {
-                                broadcastSync();
-                                [100, 300, 600, 1200, 2000].forEach((delay) => setTimeout(broadcastSync, delay));
+                                synchronizeLoadedPreview();
                                 if (iframeRef.current?.contentWindow) {
                                     try {
-                                        iframeRef.current.contentWindow.postMessage(
-                                            { type: "TOGGLE_GATE", open: isGateOpen, isOpen: isGateOpen },
-                                            "*"
-                                        );
+                                        sendPreview({ type: "TOGGLE_GATE", open: isGateOpen, isOpen: isGateOpen });
                                     } catch {
                                         // The preview may navigate while the gate state is being sent.
                                     }

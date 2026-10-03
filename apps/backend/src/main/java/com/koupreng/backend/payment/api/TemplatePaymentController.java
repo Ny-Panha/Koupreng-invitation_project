@@ -94,7 +94,7 @@ public class TemplatePaymentController {
         ));
     }
 
-    @Operation(summary = "User confirms payment to unlock template immediately")
+    @Operation(summary = "Request payment review", description = "A buyer claim is not payment proof. Only trusted confirmation can unlock the template.")
     @PostMapping({"/template-payments/{orderCode}/claim", "/template-payments/orders/{orderCode}/claim"})
     public ResponseEntity<ApiResponse<PaymentConfirmResponse>> claimPayment(
             Authentication authentication,
@@ -103,7 +103,7 @@ public class TemplatePaymentController {
     ) {
         String reference = body != null ? body.reference() : null;
         PaymentConfirmResponse response = templatePaymentService.claimOrderByUser(authentication, orderCode, reference);
-        return ResponseEntity.ok(ApiResponse.success("Template payment confirmed and template unlocked", response));
+        return ResponseEntity.ok(ApiResponse.success("Template payment review request processed", response));
     }
 
 

@@ -14,22 +14,24 @@ async function downloadCsv(path, filename) {
 }
 
 export const reportsApi = {
+  dashboardSummary: () => api.get("/v1/dashboard/summary").then(unwrap),
+  invitationDashboard: (invitationId) => api.get(`/v1/invitations/${invitationId}/dashboard`).then(unwrap),
   /** GET /v1/invitations/:id/reports?type=...&from=...&to=... */
   getReport: (invitationId, params = {}) => {
     if (!invitationId || (typeof invitationId === "string" && !/^\d+$/.test(invitationId))) {
       return Promise.resolve(null);
     }
-    const query = new URLSearchParams(params).toString();
-    const endpoint = query
-      ? `/v1/invitations/${invitationId}/reports?${query}`
-      : `/v1/invitations/${invitationId}/reports`;
+    if (params.from || params.to) return Promise.reject(new Error("Date filtering is unavailable for this server report."));
+    const kind = params.type === "RSVP" ? "rsvp" : "guests";
+    const endpoint = `/v1/invitations/${invitationId}/reports/${kind}`;
     return api.get(endpoint).then(unwrap);
   },
 
   /** Export report data as CSV file */
   exportCsv: (invitationId, reportType = "GUEST") => {
     const filename = `report-${reportType.toLowerCase()}-${invitationId}.csv`;
-    return downloadCsv(`/v1/invitations/${invitationId}/reports/export?type=${reportType}`, filename);
+    const kind = reportType === "RSVP" ? "rsvp" : "guests";
+    return downloadCsv(`/v1/invitations/${invitationId}/reports/${kind}/export`, filename);
   },
 };
 

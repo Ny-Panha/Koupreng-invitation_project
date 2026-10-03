@@ -1,12 +1,13 @@
-import { render, screen } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes, useLocation } from "react-router-dom";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import RequireAuth from "./RequireAuth";
 
 let isAuthenticated = false;
+let isLoading = false;
 vi.mock("@/features/auth/hooks/useAuth", () => ({
-  useAuth: () => ({ isAuthenticated }),
+  useAuth: () => ({ isAuthenticated, isLoading }),
 }));
 
 function LoginProbe() {
@@ -26,7 +27,8 @@ function renderProtected(path = "/dashboard?tab=events#today") {
 }
 
 describe("RequireAuth", () => {
-  beforeEach(() => { isAuthenticated = false; });
+  beforeEach(() => { isAuthenticated = false; isLoading = false; });
+  afterEach(cleanup);
 
   it("redirects a guest and preserves the complete intended URL", () => {
     renderProtected();
@@ -37,5 +39,13 @@ describe("RequireAuth", () => {
     isAuthenticated = true;
     renderProtected("/dashboard");
     expect(screen.getByRole("heading", { name: "Private dashboard" })).toBeInTheDocument();
+  });
+
+  it("waits for cookie verification before redirecting or rendering private content", () => {
+    isLoading = true;
+    renderProtected();
+    expect(screen.getByRole("status")).toHaveTextContent("Checking your session");
+    expect(screen.queryByText(/^login/)).not.toBeInTheDocument();
+    expect(screen.queryByText("Private dashboard")).not.toBeInTheDocument();
   });
 });

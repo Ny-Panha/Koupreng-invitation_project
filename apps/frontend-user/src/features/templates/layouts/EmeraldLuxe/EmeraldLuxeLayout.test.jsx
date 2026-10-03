@@ -56,11 +56,14 @@ describe("EmeraldLuxeLayout Universal Cover Contract", () => {
   });
 
   it("dynamically updates cover background via LIVE_PREVIEW_SYNC without crashing", async () => {
+    const sessionId = "test-cover-preview-1234567890123456";
     const { container } = render(
       <MemoryRouter>
         <EmeraldLuxeLayout
           tpl={{ id: "emerald-canva-luxe-wedding", groom: "សុវណ្ណ", bride: "មាលា" }}
-          preview={false}
+          preview
+          previewStartClosed
+          previewChannel={{ source: window, origin: window.location.origin, sessionId }}
         />
       </MemoryRouter>
     );
@@ -70,8 +73,11 @@ describe("EmeraldLuxeLayout Universal Cover Contract", () => {
     act(() => {
       window.dispatchEvent(
         new MessageEvent("message", {
+          source: window,
+          origin: window.location.origin,
           data: {
             type: "LIVE_PREVIEW_SYNC",
+            sessionId,
             data: {
               coverBackgroundImage: updatedCover,
               groom: "ចាន់ថា",

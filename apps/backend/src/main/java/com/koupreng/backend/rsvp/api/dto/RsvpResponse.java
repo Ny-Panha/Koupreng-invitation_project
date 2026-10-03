@@ -27,6 +27,13 @@ public class RsvpResponse {
     private String message;
     private Instant respondedAt;
 
+    public static RsvpResponse publicSubmission(Rsvp rsvp) {
+        RsvpResponse response = from(rsvp);
+        response.setInviteToken(null);
+        response.setQrCodeUrl(null);
+        return response;
+    }
+
     public static RsvpResponse from(Rsvp rsvp) {
         Guest guest = rsvp.getGuest();
         return RsvpResponse.builder()

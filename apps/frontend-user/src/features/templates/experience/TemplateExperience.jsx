@@ -31,6 +31,7 @@ import TemplateQuickNav from "./components/controls/TemplateQuickNav";
 import TemplateSectionHeader from "./components/shared/TemplateSectionHeader";
 import { templateIcons } from "./config/templateIcons";
 import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
+import { isTrustedPreviewMessage, postPreviewMessage, readEmbeddedPreviewChannel } from "@/shared/preview/previewMessaging";
 import "./template-experience.css";
 import "./components/canva-khmer/canva-khmer-wedding.css";
 
@@ -83,6 +84,7 @@ export default function TemplateExperience({
     primaryCtaLabel = "ប្រើគំរូនេះ",
     preview = false,
     previewStartClosed = false,
+    previewChannel,
     showBreadcrumb = true,
     showActions = true,
     showStickyCta = true,
@@ -91,6 +93,7 @@ export default function TemplateExperience({
     const resolvedVariant = useMemo(() => resolveVariant(tpl, variant), [tpl, variant]);
     const theme = useMemo(() => getVariantTheme(resolvedVariant), [resolvedVariant]);
     const [liveData, setLiveData] = useState(null);
+    const messageChannel = useMemo(() => previewChannel || readEmbeddedPreviewChannel(), [previewChannel]);
 
     const baseContent = useMemo(
         () => contentProp || buildTemplateContent(tpl, resolvedVariant),
@@ -316,7 +319,9 @@ export default function TemplateExperience({
     const gateOpen = gateState === "opened";
 
     useEffect(() => {
+        if (!messageChannel) return undefined;
         const handleMessage = (event) => {
+            if (!isTrustedPreviewMessage(event, messageChannel)) return;
             if (event.data?.type === "LIVE_PREVIEW_SYNC" && event.data.data) {
                 setLiveData(event.data.data);
             }
@@ -328,12 +333,10 @@ export default function TemplateExperience({
         };
         window.addEventListener("message", handleMessage);
 
-        if (typeof window !== "undefined" && window.parent && window.parent !== window) {
-            window.parent.postMessage({ type: "PREVIEW_READY" }, "*");
-        }
+        postPreviewMessage({ type: "PREVIEW_READY" }, messageChannel);
 
         return () => window.removeEventListener("message", handleMessage);
-    }, []);
+    }, [messageChannel]);
 
     useEffect(() => {
         const fontsToLoad = new Set();
@@ -484,6 +487,7 @@ export default function TemplateExperience({
             backLabel,
             preview,
             previewStartClosed,
+            previewChannel: messageChannel,
             useTemplateLink,
             primaryCtaLabel,
             showActions,

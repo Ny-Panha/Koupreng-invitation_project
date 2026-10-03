@@ -43,6 +43,32 @@ public class RateLimitService {
         checkMemory(key, maxAttempts, windowSize);
     }
 
+    /** Check an existing failure counter before expensive verification, without charging successes. */
+    public void assertAllowed(String key, int maxAttempts) {
+        if (rateLimitProperties.getBackend() == Backend.REDIS) {
+            StringRedisTemplate redisTemplate = redisTemplateProvider.getIfAvailable();
+            if (redisTemplate == null) {
+                handleRedisUnavailable();
+                return;
+            }
+            try {
+                String attempts = redisTemplate.opsForValue().get(rateLimitProperties.getRedisKeyPrefix() + key);
+                if (attempts != null && Long.parseLong(attempts) >= maxAttempts) {
+                    throw tooManyRequests();
+                }
+            } catch (ApiException exception) {
+                throw exception;
+            } catch (RuntimeException exception) {
+                handleRedisUnavailable();
+            }
+            return;
+        }
+        Window window = memoryWindows.get(key);
+        if (window != null && window.resetAt.isAfter(clock.instant()) && window.attempts >= maxAttempts) {
+            throw tooManyRequests();
+        }
+    }
+
     private void checkMemory(String key, int maxAttempts, Duration windowSize) {
         Instant now = clock.instant();
         RateLimitDecision decision = new RateLimitDecision();
@@ -109,7 +135,7 @@ public class RateLimitService {
 
     private static class Window {
         private final Instant resetAt;
-        private int attempts;
+        private volatile int attempts;
 
         private Window(Instant resetAt, int attempts) {
             this.resetAt = resetAt;

@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import com.koupreng.backend.shared.response.ApiResponse;
 import com.koupreng.backend.guest.api.dto.GuestGroupResponse;
 import com.koupreng.backend.guest.api.dto.GuestImportFileResultResponse;
+import com.koupreng.backend.guest.api.dto.GuestImportFilePreviewResponse;
 import com.koupreng.backend.guest.api.dto.GuestImportRequest;
 import com.koupreng.backend.guest.api.dto.GuestRequest;
 import com.koupreng.backend.guest.api.dto.GuestResponse;
@@ -145,6 +146,18 @@ public class GuestController {
                         "Guests imported successfully",
                         guestService.importGuests(authentication, invitationId, request)
                 ));
+    }
+
+    @io.swagger.v3.oas.annotations.Operation(summary = "Preview a guest import file",
+            description = "Owner-only CSV/XLSX parsing and duplicate preview. No guest data or quota is changed. Import revalidates on submission.")
+    @PostMapping(value = "/import-file/preview", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ApiResponse<GuestImportFilePreviewResponse>> previewGuestsFile(
+            Authentication authentication,
+            @PathVariable Long invitationId,
+            @RequestParam("file") MultipartFile file
+    ) {
+        return ResponseEntity.ok(ApiResponse.success("Guest import file preview generated successfully",
+                guestService.previewGuestsFile(authentication, invitationId, file)));
     }
 
     @PostMapping(value = "/import-file", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

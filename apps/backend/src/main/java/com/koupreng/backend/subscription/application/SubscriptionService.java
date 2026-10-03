@@ -32,6 +32,7 @@ import com.koupreng.backend.subscription.infrastructure.payment.SubscriptionPaym
 import com.koupreng.backend.subscription.infrastructure.payment.SubscriptionPaymentPlanResolver.SubscriptionPaymentPlan;
 import com.koupreng.backend.user.application.CurrentUserService;
 import com.koupreng.backend.user.domain.AppUser;
+import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -60,8 +61,10 @@ public class SubscriptionService {
     private final AuditLogService auditLogService;
     private final SubscriptionPaymentPlanResolver paymentPlanResolver;
     private final TemplatePaymentOrderRepository templatePaymentOrderRepository;
+    private final AppUserRepository userRepository;
     private final SecureRandom random = new SecureRandom();
 
+    @org.springframework.beans.factory.annotation.Autowired
     public SubscriptionService(
             SubscriptionPackageRepository packageRepository,
             SubscriptionRepository subscriptionRepository,
@@ -69,7 +72,8 @@ public class SubscriptionService {
             PaymentProperties paymentProperties,
             AuditLogService auditLogService,
             SubscriptionPaymentPlanResolver paymentPlanResolver,
-            TemplatePaymentOrderRepository templatePaymentOrderRepository
+            TemplatePaymentOrderRepository templatePaymentOrderRepository,
+            AppUserRepository userRepository
     ) {
         this.packageRepository = packageRepository;
         this.subscriptionRepository = subscriptionRepository;
@@ -78,6 +82,15 @@ public class SubscriptionService {
         this.auditLogService = auditLogService;
         this.paymentPlanResolver = paymentPlanResolver;
         this.templatePaymentOrderRepository = templatePaymentOrderRepository;
+        this.userRepository = userRepository;
+    }
+
+    public SubscriptionService(SubscriptionPackageRepository packageRepository,
+            SubscriptionRepository subscriptionRepository, CurrentUserService currentUserService,
+            PaymentProperties paymentProperties, AuditLogService auditLogService,
+            SubscriptionPaymentPlanResolver paymentPlanResolver, TemplatePaymentOrderRepository templatePaymentOrderRepository) {
+        this(packageRepository, subscriptionRepository, currentUserService, paymentProperties,
+                auditLogService, paymentPlanResolver, templatePaymentOrderRepository, null);
     }
 
     @Transactional(readOnly = true)
@@ -165,10 +178,16 @@ public class SubscriptionService {
     }
 
     private void deactivateActiveSubscriptions(Long userId, Instant now) {
-        List<Subscription> activeSubscriptions = subscriptionRepository.findActiveForUser(userId, now);
+        // Serialize fulfillment even when the user has no existing active row.
+        if (userRepository != null) {
+            userRepository.findForUpdateById(userId)
+                    .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Subscription user not found"));
+        }
+        List<Subscription> activeSubscriptions = subscriptionRepository.findActiveFlagForUserForUpdate(userId);
         for (Subscription subscription : activeSubscriptions) {
             subscription.setActive(false);
-            subscription.setStatus("REPLACED");
+            subscription.setStatus(subscription.getEndDate() != null && !subscription.getEndDate().isAfter(now)
+                    ? STATUS_EXPIRED : "REPLACED");
         }
         if (!activeSubscriptions.isEmpty()) {
             subscriptionRepository.flush();

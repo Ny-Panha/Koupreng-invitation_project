@@ -12,29 +12,34 @@ import {
 } from "lucide-react";
 import defaultMusicUrl from "../../../../assets/music/ថ្ងៃដែលរង់ចាំ.mp3";
 import CoverBackground from "../../shared/Openings/CoverBackground";
+import { isTrustedPreviewMessage, postPreviewMessage, readEmbeddedPreviewChannel } from "@/shared/preview/previewMessaging";
 import "./template-boilerplate.css";
 
 export default function TemplateBoilerplateLayout({
   content = {},
   preview = false,
+  previewChannel,
 }) {
   // Live sync from Admin simulator iframe
   const [liveData, setLiveData] = useState(null);
 
   useEffect(() => {
+    const channel = previewChannel || readEmbeddedPreviewChannel();
+    if (!channel) return undefined;
     const handleMessage = (event) => {
+      if (!isTrustedPreviewMessage(event, channel)) return;
       if (event.data?.type === "LIVE_PREVIEW_SYNC" && event.data?.data) {
         setLiveData(event.data.data);
       }
     };
     window.addEventListener("message", handleMessage);
     try {
-      window.parent?.postMessage({ type: "PREVIEW_READY" }, "*");
+      postPreviewMessage({ type: "PREVIEW_READY" }, channel);
     } catch {
       // ignore
     }
     return () => window.removeEventListener("message", handleMessage);
-  }, []);
+  }, [previewChannel]);
 
   // Merge base content + live admin edits
   const effectiveContent = useMemo(() => {

@@ -109,4 +109,16 @@ class AuthEndpointSecurityTests {
                                 """))
                 .andExpect(status().isUnauthorized());
     }
+
+    @Test
+    void explicitProviderLinkRoutesRequireAuthenticationOnBothAliases() throws Exception {
+        for (String base : new String[]{"/api/v1/auth", "/api/auth"}) {
+            mockMvc.perform(post(base + "/link/google").contentType(MediaType.APPLICATION_JSON)
+                            .content("{\"idToken\":\"provider-token\"}"))
+                    .andExpect(status().isUnauthorized());
+            mockMvc.perform(post(base + "/link/telegram").contentType(MediaType.APPLICATION_JSON)
+                            .content("{\"idToken\":\"provider-token\"}"))
+                    .andExpect(status().isUnauthorized());
+        }
+    }
 }

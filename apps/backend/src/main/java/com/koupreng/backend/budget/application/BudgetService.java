@@ -3,11 +3,9 @@ package com.koupreng.backend.budget.application;
 import com.koupreng.backend.invitation.application.InvitationService;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -25,6 +23,7 @@ import com.koupreng.backend.budget.api.dto.UpdateBudgetItemRequest;
 import com.koupreng.backend.budget.api.dto.UpdateBudgetRequest;
 import com.koupreng.backend.budget.domain.Budget;
 import com.koupreng.backend.budget.domain.BudgetItem;
+import com.koupreng.backend.budget.domain.BudgetTotals;
 import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.budget.infrastructure.persistence.BudgetItemRepository;
 import com.koupreng.backend.budget.infrastructure.persistence.BudgetRepository;
@@ -207,11 +206,11 @@ public class BudgetService {
         Budget budget = requireBudget(invitationId);
         List<BudgetItem> items = budgetItemRepository.findByBudgetIdOrderByIdDesc(budget.getId());
         StringBuilder csv = new StringBuilder();
-        csv.append("itemId,category,itemName,estimatedCost,actualCost,date,status,vendorName,notes\n");
+        csv.append("itemId,category,itemName,estimatedCost,actualCost,date,status,vendorName,notes,currency\n");
         for (BudgetItem item : items) {
             csv.append(CsvExportUtils.row(
                     item.getId(), item.getCategory(), item.getItemName(), item.getEstimatedCost(),
-                    item.getActualCost(), item.getExpenseDate(), item.getStatus(), item.getVendorName(), item.getNotes()
+                    item.getActualCost(), item.getExpenseDate(), item.getStatus(), item.getVendorName(), item.getNotes(), item.getCurrency()
             )).append('\n');
         }
         return csv.toString();
@@ -251,7 +250,6 @@ public class BudgetService {
         item.setBudget(budget);
         applyRequest(item, request);
         BudgetItem saved = budgetItemRepository.save(item);
-        updateBudgetTotal(budget);
         return BudgetItemResponse.from(saved);
     }
 
@@ -266,7 +264,6 @@ public class BudgetService {
         BudgetItem item = requireItemByInvitation(invitationId, itemId);
         applyRequest(item, request);
         BudgetItem saved = budgetItemRepository.save(item);
-        updateBudgetTotal(item.getBudget());
         return BudgetItemResponse.from(saved);
     }
 
@@ -274,9 +271,7 @@ public class BudgetService {
     public void delete(Authentication authentication, Long invitationId, Long itemId) {
         invitationService.requireOwnedInvitationEntity(authentication, invitationId);
         BudgetItem item = requireItemByInvitation(invitationId, itemId);
-        Budget budget = item.getBudget();
         budgetItemRepository.delete(item);
-        updateBudgetTotal(budget);
     }
 
     private Budget findOrCreateBudget(UserInvitation invitation) {
@@ -321,55 +316,33 @@ public class BudgetService {
         item.setNotes(trimToNull(request.getNotes()));
     }
 
-    private void updateBudgetTotal(Budget budget) {
-        if (budget == null || budget.getInvitation() == null) {
-            return;
-        }
-        BigDecimal total = budgetItemRepository.findAllByInvitationId(budget.getInvitation().getId()).stream()
-                .map(BudgetItem::getEstimatedCost)
-                .map(this::valueOrZero)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-        budget.setTotalBudget(total);
-        budgetRepository.save(budget);
-    }
-
     private BudgetResponse toResponse(Budget budget) {
         return BudgetResponse.from(budget, budgetItemRepository.findByBudgetIdOrderByIdDesc(budget.getId()));
     }
 
     private BudgetSummaryResponse toSummary(Budget budget, List<BudgetItem> items) {
         BigDecimal totalBudget = valueOrZero(budget.getTotalBudget());
-        BigDecimal totalEstimated = sum(items, true);
-        BigDecimal totalActual = sum(items, false);
+        BudgetTotals totals = BudgetTotals.of(items);
+        BigDecimal totalEstimated = totals.estimated();
+        BigDecimal totalActual = totals.actual();
         return BudgetSummaryResponse.builder()
                 .invitationId(budget.getInvitation() == null ? null : budget.getInvitation().getId())
                 .budgetId(budget.getId())
                 .totalBudget(totalBudget)
                 .totalEstimated(totalEstimated)
                 .totalActual(totalActual)
-                .remainingBudget(totalBudget.subtract(totalActual))
-                .overBudget(totalActual.compareTo(totalBudget) > 0)
+                .remainingBudget(totals.comparable() ? totalBudget.subtract(totalActual) : null)
+                .overBudget(totals.comparable() && totalActual.compareTo(totalBudget) > 0)
+                .currency(totals.currency())
+                .totalsComparable(totals.comparable())
+                .estimatedByCurrency(totals.estimatedByCurrency())
+                .actualByCurrency(totals.actualByCurrency())
+                .estimatedByCurrencyAndCategory(totals.estimatedByCurrencyAndCategory())
+                .actualByCurrencyAndCategory(totals.actualByCurrencyAndCategory())
                 .itemCount(items.size())
-                .estimatedByCategory(sumByCategory(items, true))
-                .actualByCategory(sumByCategory(items, false))
+                .estimatedByCategory(totals.comparable() ? totals.estimatedByCurrencyAndCategory().getOrDefault(totals.currency(), Map.of()) : Map.of())
+                .actualByCategory(totals.comparable() ? totals.actualByCurrencyAndCategory().getOrDefault(totals.currency(), Map.of()) : Map.of())
                 .build();
-    }
-
-    private Map<String, BigDecimal> sumByCategory(List<BudgetItem> items, boolean estimated) {
-        Map<String, BigDecimal> totals = new LinkedHashMap<>();
-        for (BudgetItem item : items) {
-            String category = normalizeCategory(item.getCategory());
-            BigDecimal value = valueOrZero(estimated ? item.getEstimatedCost() : item.getActualCost());
-            totals.merge(category, value, BigDecimal::add);
-        }
-        return totals;
-    }
-
-    private BigDecimal sum(List<BudgetItem> items, boolean estimated) {
-        return items.stream()
-                .map(item -> estimated ? item.getEstimatedCost() : item.getActualCost())
-                .filter(Objects::nonNull)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     private BigDecimal nonNegativeOrZero(BigDecimal value, String field) {

@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
@@ -37,6 +38,9 @@ public class RsvpService {
     private final InvitationService invitationService;
     private final NotificationService notificationService;
 
+    @org.springframework.beans.factory.annotation.Autowired(required = false)
+    private com.koupreng.backend.entitlement.application.EntitlementService entitlementService;
+
     public RsvpService(
             RsvpRepository rsvpRepository,
             GuestRepository guestRepository,
@@ -49,13 +53,13 @@ public class RsvpService {
         this.notificationService = notificationService;
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public RsvpResponse submitPublic(String slug, RsvpRequest request) {
         UserInvitation invitation = invitationService.requirePublishedInvitationForRsvp(slug, false);
         return submitPublicForInvitation(invitation, request);
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public RsvpResponse submitPublic(String slug, String accessToken, RsvpRequest request) {
         UserInvitation invitation = invitationService.requirePublishedInvitationForRsvp(slug, false, accessToken, null);
         return submitPublicForInvitation(invitation, request);
@@ -63,14 +67,17 @@ public class RsvpService {
 
     private RsvpResponse submitPublicForInvitation(UserInvitation invitation, RsvpRequest request) {
         validateDeadline(invitation);
-        Guest guest = reusableGuest(invitation.getId(), request)
-                .orElseGet(() -> createPublicGuest(invitation, request));
+        if (reusableGuest(invitation.getId(), request).isPresent()) {
+            throw new ApiException(HttpStatus.CONFLICT, "RSVP_GUEST_LINK_REQUIRED",
+                    "Use your personalized guest invitation link to update an existing RSVP");
+        }
+        Guest guest = createPublicGuest(invitation, request);
         guest.setInvitationViewedAt(Instant.now());
         guest.setSendStatus("RESPONDED");
         guestRepository.save(guest);
         Rsvp saved = upsertRsvp(invitation, guest, request);
         notifyRsvpRecorded(saved);
-        return RsvpResponse.from(saved);
+        return RsvpResponse.publicSubmission(saved);
     }
 
     @Transactional
@@ -126,7 +133,7 @@ public class RsvpService {
         UserInvitation invitation = invitationService.requirePublicInvitationForView(slug, inviteToken);
         return rsvpRepository.findByInvitationIdOrderByRespondedAtDesc(invitation.getId()).stream()
                 .filter(rsvp -> trimToNull(rsvp.getMessage()) != null)
-                .map(RsvpResponse::from)
+                .map(RsvpResponse::publicSubmission)
                 .toList();
     }
 
@@ -183,6 +190,15 @@ public class RsvpService {
     public List<WishResponse> wishes(Authentication authentication, Long invitationId) {
         invitationService.requireOwnedInvitationEntity(authentication, invitationId);
         return wishesForInvitation(invitationId);
+    }
+
+    @Transactional
+    public void moderateWish(Authentication authentication, Long invitationId, Long wishId) {
+        invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        rsvpRepository.findByIdAndInvitationId(wishId, invitationId)
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Wish not found"));
+        // Bulk update touches only text, preserving attendance and respondedAt.
+        rsvpRepository.clearWishByIdAndInvitationId(wishId, invitationId);
     }
 
     private RsvpSummaryResponse summaryForInvitation(Long invitationId) {
@@ -243,6 +259,9 @@ public class RsvpService {
         String guestName = trimToNull(request.getGuestName());
         if (guestName == null) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Guest name is required");
+        }
+        if (entitlementService != null) {
+            entitlementService.requireGuestCreation(invitation, 1);
         }
         Guest guest = new Guest();
         guest.setInvitation(invitation);

@@ -11,6 +11,8 @@ import com.koupreng.backend.auth.api.dto.LoginRequest;
 import com.koupreng.backend.auth.api.dto.RegisterRequest;
 import com.koupreng.backend.auth.api.dto.TelegramLoginRequest;
 import com.koupreng.backend.auth.domain.ExternalAuthIdentity;
+import com.koupreng.backend.auth.domain.UserExternalIdentity;
+import com.koupreng.backend.auth.infrastructure.persistence.UserExternalIdentityRepository;
 import com.koupreng.backend.auth.infrastructure.identity.GoogleIdentityVerifier;
 import com.koupreng.backend.auth.infrastructure.identity.TelegramIdentityVerifier;
 import com.koupreng.backend.auth.infrastructure.session.UserAuthCacheService;
@@ -19,11 +21,13 @@ import com.koupreng.backend.shared.config.AppProperties;
 import com.koupreng.backend.user.api.dto.UserResponse;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.user.domain.Role;
+import com.koupreng.backend.user.domain.AuthProvider;
 import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;
 import com.koupreng.backend.audit.application.AuditLogService;
 import com.koupreng.backend.shared.i18n.MessageService;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -47,6 +51,7 @@ public class AuthService {
     private final AuditLogService auditLogService;
     private final MessageService msg;
     private final UserAuthCacheService userAuthCacheService;
+    private final UserExternalIdentityRepository externalIdentityRepository;
 
     @org.springframework.beans.factory.annotation.Autowired
     public AuthService(
@@ -58,7 +63,8 @@ public class AuthService {
             TelegramIdentityVerifier telegramIdentityVerifier,
             MessageService msg,
             AuditLogService auditLogService,
-            UserAuthCacheService userAuthCacheService
+            UserAuthCacheService userAuthCacheService,
+            UserExternalIdentityRepository externalIdentityRepository
     ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -69,6 +75,7 @@ public class AuthService {
         this.msg = msg;
         this.auditLogService = auditLogService;
         this.userAuthCacheService = userAuthCacheService;
+        this.externalIdentityRepository = externalIdentityRepository;
     }
 
     public AuthService(
@@ -81,7 +88,7 @@ public class AuthService {
             MessageService msg
     ) {
         this(userRepository, passwordEncoder, jwtEncoder, appProperties,
-                googleIdentityVerifier, telegramIdentityVerifier, msg, null, null);
+                googleIdentityVerifier, telegramIdentityVerifier, msg, null, null, null);
     }
 
     @Transactional
@@ -92,6 +99,12 @@ public class AuthService {
 
         if (email == null && phone == null) {
             throw new ApiException(HttpStatus.BAD_REQUEST, msg.get("auth.phone-or-email-required"));
+        }
+        String syntheticDomain = appProperties.getOauth().getTelegram().getEmailDomain();
+        if (email != null && syntheticDomain != null
+                && email.endsWith("@" + syntheticDomain.trim().toLowerCase(Locale.ROOT))) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "AUTH_RESERVED_EMAIL_DOMAIN",
+                    "This email domain is reserved for verified Telegram identities");
         }
         if (email != null && userRepository.existsByEmailIgnoreCase(email)) {
             throw new ApiException(HttpStatus.CONFLICT, msg.get("auth.email-taken"));
@@ -118,21 +131,21 @@ public class AuthService {
             AppUser user = findByIdentifier(request.identifier())
                     .orElseThrow(() -> {
                         if (auditLogService != null) {
-                            auditLogService.logSystemEvent("LOGIN_FAILED", "USER", null, "Failed login attempt: user not found for identifier: " + request.identifier(), java.util.Map.of("identifier", request.identifier(), "reason", "USER_NOT_FOUND"));
+                            auditLogService.logAuthenticationFailure(null, "USER_NOT_FOUND");
                         }
                         return new BadCredentialsException(msg.get("auth.invalid-credentials"));
                     });
 
             if (!user.isActive() || AppUser.STATUS_DISABLED.equalsIgnoreCase(user.getStatus())) {
                 if (auditLogService != null) {
-                    auditLogService.logSystemEvent("LOGIN_FAILED", "USER", user.getId(), "Failed login attempt: account is disabled for identifier: " + request.identifier(), java.util.Map.of("identifier", request.identifier(), "userId", user.getId(), "reason", "ACCOUNT_DISABLED"));
+                    auditLogService.logAuthenticationFailure(user.getId(), "ACCOUNT_DISABLED");
                 }
                 throw new BadCredentialsException(msg.get("auth.account-disabled"));
             }
             if (user.getPasswordHash() == null
                     || !passwordEncoder.matches(request.password(), user.getPasswordHash())) {
                 if (auditLogService != null) {
-                    auditLogService.logSystemEvent("LOGIN_FAILED", "USER", user.getId(), "Failed login attempt: password mismatch for identifier: " + request.identifier(), java.util.Map.of("identifier", request.identifier(), "userId", user.getId(), "reason", "BAD_CREDENTIALS"));
+                    auditLogService.logAuthenticationFailure(user.getId(), "BAD_CREDENTIALS");
                 }
                 throw new BadCredentialsException(msg.get("auth.invalid-credentials"));
             }
@@ -142,7 +155,7 @@ public class AuthService {
             throw ex;
         } catch (Exception ex) {
             if (auditLogService != null) {
-                auditLogService.logSystemEvent("LOGIN_FAILED", "USER", null, "Failed login attempt due to unexpected error: " + ex.getMessage(), java.util.Map.of("identifier", request.identifier(), "reason", "UNEXPECTED_ERROR"));
+                auditLogService.logAuthenticationFailure(null, "UNEXPECTED_ERROR");
             }
             throw ex;
         }
@@ -156,6 +169,16 @@ public class AuthService {
     @Transactional
     public AuthResponse loginWithTelegram(TelegramLoginRequest request) {
         return issueToken(upsertExternalUser(telegramIdentityVerifier.verify(request)));
+    }
+
+    @Transactional
+    public UserResponse linkGoogle(Authentication authentication, GoogleLoginRequest request) {
+        return linkExternalIdentity(authentication, googleIdentityVerifier.verify(request.idToken()));
+    }
+
+    @Transactional
+    public UserResponse linkTelegram(Authentication authentication, TelegramLoginRequest request) {
+        return linkExternalIdentity(authentication, telegramIdentityVerifier.verify(request));
     }
 
     @Transactional
@@ -212,18 +235,84 @@ public class AuthService {
     }
 
     private AppUser upsertExternalUser(ExternalAuthIdentity identity) {
+        validateExternalIdentity(identity);
+        Optional<UserExternalIdentity> linked = externalIdentityRepository
+                .findByProviderAndProviderSubject(identity.provider(), identity.providerId());
+        if (linked.isPresent()) {
+            return requireActiveExternalUser(linked.get().getUser());
+        }
         String email = normalizeEmail(identity.email());
-        AppUser user = userRepository.findByEmailIgnoreCase(email)
-                .orElseGet(() -> {
-                    AppUser newUser = new AppUser();
-                    newUser.setRole(shouldPromoteFirstUser() ? Role.ADMIN : Role.USER);
-                    newUser.setStatus(AppUser.STATUS_ACTIVE);
-                    return newUser;
-                });
-
+        if (email != null && userRepository.findByEmailIgnoreCase(email).isPresent()) {
+            throw new ApiException(HttpStatus.CONFLICT, "ACCOUNT_LINK_REQUIRED",
+                    "Sign in to your existing account or recover it, then link this provider in your profile");
+        }
+        AppUser user = new AppUser();
+        user.setRole(shouldPromoteFirstUser() ? Role.ADMIN : Role.USER);
+        user.setStatus(AppUser.STATUS_ACTIVE);
         user.setEmail(email);
         user.setFullName(identity.fullName().trim());
-        return userRepository.save(user);
+        try {
+            user = userRepository.save(user);
+            persistExternalIdentity(user, identity);
+            return user;
+        } catch (DataIntegrityViolationException exception) {
+            throw new ApiException(HttpStatus.CONFLICT, "IDENTITY_ALREADY_LINKED",
+                    "This identity is already registered; sign in or recover the existing account");
+        }
+    }
+
+    private UserResponse linkExternalIdentity(Authentication authentication, ExternalAuthIdentity identity) {
+        validateExternalIdentity(identity);
+        AppUser authenticatedUser = currentUser(authentication);
+        AppUser user = userRepository.findForUpdateById(authenticatedUser.getId())
+                .orElseThrow(() -> new BadCredentialsException("Authentication required"));
+        requireActiveExternalUser(user);
+        Optional<UserExternalIdentity> existing = externalIdentityRepository
+                .findByProviderAndProviderSubject(identity.provider(), identity.providerId());
+        if (existing.isPresent()) {
+            if (!existing.get().getUser().getId().equals(user.getId())) {
+                throw new ApiException(HttpStatus.CONFLICT, "IDENTITY_ALREADY_LINKED",
+                        "This provider identity is linked to another account");
+            }
+            return UserResponse.from(user);
+        }
+        if (externalIdentityRepository.findByUserIdAndProvider(user.getId(), identity.provider()).isPresent()) {
+            throw new ApiException(HttpStatus.CONFLICT, "IDENTITY_PROVIDER_MISMATCH",
+                    "Your account is already linked to a different identity for this provider");
+        }
+        try {
+            persistExternalIdentity(user, identity);
+        } catch (DataIntegrityViolationException exception) {
+            throw new ApiException(HttpStatus.CONFLICT, "IDENTITY_ALREADY_LINKED",
+                    "This provider identity is already linked");
+        }
+        return UserResponse.from(user);
+    }
+
+    private void persistExternalIdentity(AppUser user, ExternalAuthIdentity identity) {
+        UserExternalIdentity linked = new UserExternalIdentity();
+        linked.setUser(user);
+        linked.setProvider(identity.provider());
+        linked.setProviderSubject(identity.providerId());
+        externalIdentityRepository.saveAndFlush(linked);
+    }
+
+    private void validateExternalIdentity(ExternalAuthIdentity identity) {
+        if (externalIdentityRepository == null) {
+            throw new IllegalStateException("Verified provider identity persistence is unavailable");
+        }
+        if (identity == null || (identity.provider() != AuthProvider.GOOGLE && identity.provider() != AuthProvider.TELEGRAM)
+                || identity.providerId() == null || identity.providerId().isBlank() || identity.providerId().length() > 255
+                || identity.fullName() == null || identity.fullName().isBlank() || identity.fullName().trim().length() > 120) {
+            throw new BadCredentialsException("Invalid provider identity");
+        }
+    }
+
+    private AppUser requireActiveExternalUser(AppUser user) {
+        if (user == null || !user.isActive() || user.isDeleted()) {
+            throw new BadCredentialsException("Account is disabled");
+        }
+        return user;
     }
 
     private AppUser currentUser(Authentication authentication) {

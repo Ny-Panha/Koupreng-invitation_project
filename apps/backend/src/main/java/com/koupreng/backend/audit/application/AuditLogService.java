@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.Propagation;
 
 import java.util.List;
 
@@ -68,6 +69,13 @@ public class AuditLogService {
         return auditLogRepository.findAllByOrderByCreatedAtDesc().stream()
                 .map(SystemAuditLogResponse::from)
                 .toList();
+    }
+
+    /** Defensive events must survive the rejected authentication transaction. */
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void logAuthenticationFailure(Long userId, String reason) {
+        auditLogRepository.save(baseLog("LOGIN_FAILED", "USER", userId,
+                "Authentication attempt rejected", null, java.util.Map.of("reason", reason)));
     }
 
     private SystemAuditLog baseLog(

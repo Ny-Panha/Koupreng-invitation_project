@@ -60,10 +60,6 @@ public class TemplatePaymentService {
             .withZone(BUSINESS_ZONE);
     private static final Pattern ORDER_CODE_PATTERN = Pattern.compile("\\bEVT\\d{9,10}\\b", Pattern.CASE_INSENSITIVE);
     private static final String STATIC_ABA_PAYMENT_LINK = "https://pay.ababank.com/oRF8/vx2dp884";
-    private static final String STATIC_ABA_PAYMENT_CURRENCY = "USD";
-    private static final BigDecimal STATIC_ABA_PAYMENT_AMOUNT = new BigDecimal("0.01");
-    private static final String KEEP_TEMPLATE_CODE = "garden-royal-khmer-wedding";
-    private static final String TEMPLATE_STATUS_ACTIVE = "ACTIVE";
     private static final List<TelegramAmountPattern> TELEGRAM_AMOUNT_PATTERNS = List.of(
             new TelegramAmountPattern(
                     Pattern.compile("\\b(USD|KHR)\\s*([0-9]+(?:\\.[0-9]{1,2})?)\\b", Pattern.CASE_INSENSITIVE),
@@ -131,6 +127,9 @@ public class TemplatePaymentService {
     private final AuditLogService auditLogService;
     private final TransactionTemplate transactionTemplate;
     private final SecureRandom random = new SecureRandom();
+
+    @org.springframework.beans.factory.annotation.Autowired
+    private com.koupreng.backend.entitlement.application.EntitlementService entitlementService;
 
     @org.springframework.beans.factory.annotation.Autowired
     public TemplatePaymentService(
@@ -216,11 +215,12 @@ public class TemplatePaymentService {
     ) {
         AppUser user = currentUserService.currentUser(authentication);
         Long templateId = requirePositiveTemplateId(request.getTemplateId());
-        validateTemplateIfCatalogExists(templateId);
+        var template = requireCheckoutTemplate(templateId);
         String currency = normalizeCurrency(request.getCurrency());
         BigDecimal amount = money(request.getAmount(), currency);
         requireStaticAbaAmount(currency, amount);
-        String templateName = requireText(request.getTemplateName(), "Template name is required");
+        requireText(request.getTemplateName(), "Template name is required");
+        String templateName = template.getName();
         String packageName = requireText(request.getPackageName(), "Package name is required");
 
         if (accessRepository.existsByUserIdAndTemplateIdAndActiveTrue(user.getId(), templateId)) {
@@ -240,8 +240,8 @@ public class TemplatePaymentService {
         order.setTemplateId(templateId);
         order.setTemplateName(templateName);
         order.setPackageName(packageName);
-        order.setAmount(amount);
-        order.setCurrency(currency);
+        order.setAmount(TemplateCheckoutPolicy.AMOUNT);
+        order.setCurrency(TemplateCheckoutPolicy.CURRENCY);
         order.setPaymentLink(staticLink);
         order.setCheckoutUrl(staticLink);
         order.setPaymentNote(orderCode);
@@ -307,7 +307,7 @@ public class TemplatePaymentService {
         TemplatePaymentOrder order = requireOrderForUpdateByTransactionId(transactionId);
         order.setCallbackRawJson(toJson(payload));
         order.setPaywayStatus(callbackText(payload, "status"));
-        if (hasCallbackSignature
+        if (EXPIRABLE_STATUSES.contains(order.getStatus()) && hasCallbackSignature
                 && callbackStatus != PaymentStatus.QR_CREATED
                 && callbackStatus != PaymentStatus.CHECKOUT_CREATED) {
             order.setStatus(callbackStatus);
@@ -342,7 +342,13 @@ public class TemplatePaymentService {
         }
 
         if (!verification.approved()) {
-            order.setStatus(verification.mappedStatus());
+            if (EXPIRABLE_STATUSES.contains(order.getStatus())) {
+                if (isExpired(order)) {
+                    order.setStatus(PaymentStatus.EXPIRED);
+                } else if (verification.mappedStatus() != null && verification.mappedStatus() != PaymentStatus.PAID) {
+                    order.setStatus(verification.mappedStatus());
+                }
+            }
             orderRepository.save(order);
             return PayWayCallbackResponse.builder()
                     .message("Payment not approved by PayWay verification")
@@ -370,6 +376,12 @@ public class TemplatePaymentService {
             TemplatePaymentOrder order,
             PayWayTransactionVerification verification
     ) {
+        if (!verification.approved() || verification.mappedStatus() != PaymentStatus.PAID) {
+            throw new ApiException(HttpStatus.BAD_GATEWAY, "Payment verification is not approved");
+        }
+        if (!EXPIRABLE_STATUSES.contains(order.getStatus()) || isExpired(order)) {
+            throw new ApiException(HttpStatus.CONFLICT, "Payment order is no longer payable");
+        }
         if (verification.paidAmount() == null) {
             order.setStatus(PaymentStatus.REJECTED);
             orderRepository.save(order);
@@ -496,6 +508,10 @@ public class TemplatePaymentService {
                     .build();
         }
 
+        if (!EXPIRABLE_STATUSES.contains(order.getStatus())) {
+            throw new ApiException(HttpStatus.CONFLICT, "Payment order is no longer payable");
+        }
+
         if (order.getAmount().compareTo(paidAmount) != 0) {
             order.setStatus(PaymentStatus.REJECTED);
             orderRepository.save(order);
@@ -531,6 +547,14 @@ public class TemplatePaymentService {
                     .build();
         }
 
+        if (!EXPIRABLE_STATUSES.contains(order.getStatus())) {
+            return PaymentConfirmResponse.builder()
+                    .message("Payment order is no longer payable")
+                    .orderCode(order.getOrderCode())
+                    .status(order.getStatus())
+                    .build();
+        }
+
         if (isExpired(order)) {
             order.setStatus(PaymentStatus.EXPIRED);
             orderRepository.save(order);
@@ -541,23 +565,22 @@ public class TemplatePaymentService {
                     .build();
         }
 
-        String source = "USER_INSTANT_CONFIRM";
-        String userName = user.getFullName() != null && !user.getFullName().isBlank()
-                ? user.getFullName()
-                : user.getEmail() != null ? user.getEmail() : "User #" + user.getId();
-        String confirmedBy = reference != null && !reference.isBlank()
-                ? userName + " (Ref: " + reference.trim() + ")"
-                : userName;
-
-        markOrderPaid(
-                order,
-                order.getAmount(),
-                source,
-                confirmedBy
-        );
+        // A buyer reference is a request for reconciliation, never evidence of payment.
+        if (order.getStatus() != PaymentStatus.PAID_PENDING_REVIEW) {
+            order.setStatus(PaymentStatus.PAID_PENDING_REVIEW);
+            orderRepository.save(order);
+            if (auditLogService != null) {
+                auditLogService.logSystemEvent(
+                        "PAYMENT_REVIEW_REQUESTED", "PAYMENT", order.getId(),
+                        "Buyer requested payment review",
+                        Map.of("orderCode", order.getOrderCode(), "requesterUserId", user.getId(),
+                                "unverifiedReference", reference == null ? "" : reference.trim())
+                );
+            }
+        }
 
         return PaymentConfirmResponse.builder()
-                .message("Payment verified. Template unlocked.")
+                .message("Payment review requested. Waiting for trusted confirmation.")
                 .orderCode(order.getOrderCode())
                 .status(order.getStatus())
                 .build();
@@ -576,6 +599,11 @@ public class TemplatePaymentService {
         AppUser user = currentUserService.currentUser(authentication);
         Long validTemplateId = requirePositiveTemplateId(templateId);
         boolean hasAccess = accessRepository.existsByUserIdAndTemplateIdAndActiveTrue(user.getId(), validTemplateId);
+        if (entitlementService != null) {
+            var template = templateRepository.findById(validTemplateId)
+                    .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Template not found"));
+            hasAccess = entitlementService.hasTemplateAccess(user, template);
+        }
         return TemplateAccessCheckResponse.builder()
                 .templateId(validTemplateId)
                 .hasAccess(hasAccess)
@@ -751,17 +779,13 @@ public class TemplatePaymentService {
                 || (order.getUser() != null && order.getUser().getId().equals(user.getId()));
     }
 
-    private void validateTemplateIfCatalogExists(Long templateId) {
-        if (templateRepository.count() == 0) {
-            return;
-        }
-        boolean purchasable = templateRepository.findById(templateId)
-                .map(template -> KEEP_TEMPLATE_CODE.equalsIgnoreCase(template.getCode())
-                        && TEMPLATE_STATUS_ACTIVE.equalsIgnoreCase(template.getStatus()))
-                .orElse(false);
-        if (!purchasable) {
+    private com.koupreng.backend.template.domain.InvitationTemplate requireCheckoutTemplate(Long templateId) {
+        var template = templateRepository.findById(templateId)
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Template not found"));
+        if (!TemplateCheckoutPolicy.offer(template).eligible()) {
             throw new ApiException(HttpStatus.NOT_FOUND, "Template not found");
         }
+        return template;
     }
 
     private String uniqueOrderCode() {
@@ -823,9 +847,9 @@ public class TemplatePaymentService {
 
     private void requireStaticAbaAmount(String currency, BigDecimal amount) {
         String normalizedCurrency = normalizeCurrency(currency);
-        if (!STATIC_ABA_PAYMENT_CURRENCY.equals(normalizedCurrency)
+        if (!TemplateCheckoutPolicy.CURRENCY.equals(normalizedCurrency)
                 || amount == null
-                || STATIC_ABA_PAYMENT_AMOUNT.compareTo(amount) != 0) {
+                || TemplateCheckoutPolicy.AMOUNT.compareTo(amount) != 0) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Static ABA payment amount must be USD 0.01");
         }
     }

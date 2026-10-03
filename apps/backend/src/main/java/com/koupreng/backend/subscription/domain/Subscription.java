@@ -101,6 +101,10 @@ public class Subscription {
     @Column(name = "is_active", nullable = false)
     private boolean isActive = false;
 
+    /** Existing V18 generated column, used to lock through the unique active slot. */
+    @Column(name = "active_slot", insertable = false, updatable = false)
+    private Byte activeSlot;
+
     @Column(name = "created_at", updatable = false)
     private Instant createdAt;
 

@@ -1,16 +1,19 @@
 import { api } from "@/shared/api/httpClient";
 import { unwrap } from "@/shared/api/helpers";
 
-async function downloadBlob(url, filename) {
-  const blob = await api.get(url, { responseType: "blob" });
-  const objectUrl = window.URL.createObjectURL(blob);
+function downloadPngDataUri(dataUri, filename) {
+  if (typeof dataUri !== "string" || !/^data:image\/png;base64,[A-Za-z0-9+/]+={0,2}$/.test(dataUri)) {
+    throw new Error("The server did not return a valid PNG QR image.");
+  }
+  let bytes;
+  try { bytes = atob(dataUri.slice(dataUri.indexOf(",") + 1)); }
+  catch (error) { throw new Error("The server returned an invalid PNG QR image.", { cause: error }); }
+  if (!bytes.startsWith("\x89PNG\r\n\x1a\n")) throw new Error("The server returned an invalid PNG QR image.");
   const link = document.createElement("a");
-  link.href = objectUrl;
+  link.href = dataUri;
   link.download = filename;
   document.body.appendChild(link);
-  link.click();
-  link.remove();
-  window.URL.revokeObjectURL(objectUrl);
+  try { link.click(); } finally { link.remove(); }
 }
 
 export const qrApi = {
@@ -27,12 +30,10 @@ export const qrApi = {
     api.get(`/v1/invitations/${invitationId}/guests/${guestId}/qr`).then(unwrap),
 
   /** Download QR code as PNG image */
-  downloadQrPng: (invitationId, guestId = null) => {
-    const endpoint = guestId
-      ? `/v1/invitations/${invitationId}/guests/${guestId}/qr/download`
-      : `/v1/invitations/${invitationId}/qr/download`;
+  downloadQrPng: async (invitationId, guestId = null, existingData = null) => {
+    const data = existingData || await (guestId ? qrApi.getGuestQr(invitationId, guestId) : qrApi.getInvitationQr(invitationId));
     const name = guestId ? `qr-guest-${guestId}.png` : `qr-invitation-${invitationId}.png`;
-    return downloadBlob(endpoint, name);
+    return downloadPngDataUri(data?.qrCodeDataUri, name);
   },
 };
 

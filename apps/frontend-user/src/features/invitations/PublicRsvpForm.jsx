@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { QRCode } from "react-qr-code";
 import { rsvpService } from "@/features/rsvp/api/rsvpApi";
 import { invitationService } from "@/features/invitations/api/invitationApi";
+import { normalizeInvitationLanguage } from "@/shared/i18n/invitationLanguage";
 
 const initialForm = {
     guestName: "",
@@ -74,8 +75,10 @@ export default function PublicRsvpForm({
     languageMode,
     khmerLabels: useKhmerLabels = false,
 }) {
-    const isKhmer = useKhmerLabels || languageMode === "KHMER" || languageMode === "khmer";
-    const labels = isKhmer ? khmerLabels : englishLabels;
+    const language = languageMode ? normalizeInvitationLanguage(languageMode) : useKhmerLabels ? "kh" : "en";
+    const labels = language === "kh" ? khmerLabels : language === "both"
+        ? Object.fromEntries(Object.entries(englishLabels).map(([key, text]) => [key, `${khmerLabels[key]} / ${text}`]))
+        : englishLabels;
 
     const [form, setForm] = useState(initialForm);
     const [loading, setLoading] = useState(false);

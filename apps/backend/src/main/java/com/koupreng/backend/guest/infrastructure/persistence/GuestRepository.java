@@ -14,6 +14,8 @@ public interface GuestRepository extends JpaRepository<Guest, Long> {
 
     List<Guest> findByInvitationIdOrderByCreatedAtDesc(Long invitationId);
 
+    List<Guest> findByInvitationIdInOrderByCreatedAtDesc(List<Long> invitationIds);
+
     List<Guest> findByInvitationIdOrderByGuestGroupAscTableNumberAscGuestNameAsc(Long invitationId);
 
     Optional<Guest> findByIdAndInvitationId(Long id, Long invitationId);

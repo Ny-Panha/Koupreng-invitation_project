@@ -13,6 +13,7 @@ import TemplateOpeningGate from "../../experience/components/sections/TemplateOp
 import Card3DFlip from "./components/Card3DFlip";
 import GalleryGrid from "../../shared/Gallery/GalleryGrid";
 import RsvpContainer from "../../shared/RSVP/RsvpContainer";
+import { isTrustedPreviewMessage, readEmbeddedPreviewChannel } from "@/shared/preview/previewMessaging";
 import "../../experience/template-experience.css";
 import "./emerald-luxe.css";
 
@@ -21,6 +22,7 @@ export default function EmeraldLuxeLayout({
   content: contentProp,
   preview = false,
   previewStartClosed = false,
+  previewChannel,
   showBack = true,
   backTo = "/templates",
   backLabel = "ត្រឡប់ទៅគំរូទាំងអស់",
@@ -72,7 +74,10 @@ export default function EmeraldLuxeLayout({
 
   // Sync postMessage with Admin Studio
   useEffect(() => {
+    const channel = previewChannel || readEmbeddedPreviewChannel();
+    if (!channel) return undefined;
     const handleMessage = (e) => {
+      if (!isTrustedPreviewMessage(e, channel)) return;
       if (e.data?.type === "TOGGLE_GATE") {
         const shouldOpen = Boolean(e.data.open ?? e.data.isOpen);
         setOpened(shouldOpen);
@@ -83,7 +88,7 @@ export default function EmeraldLuxeLayout({
     };
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
-  }, []);
+  }, [previewChannel]);
 
   const isEnabled = (key) => tpl.enabledSections?.[key] !== false;
   const rawColors = Array.isArray(tpl.dressCode?.colors)

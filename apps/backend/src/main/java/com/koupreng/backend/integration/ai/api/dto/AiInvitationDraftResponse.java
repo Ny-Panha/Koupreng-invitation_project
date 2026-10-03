@@ -15,6 +15,8 @@ public class AiInvitationDraftResponse {
 
     private boolean enabled;
     private String provider;
+    private String source;
+    private String operation;
     private String generatedText;
     private List<String> suggestions;
     private List<String> warnings;

@@ -1,3 +1,5 @@
+# Local development stack. Production security validation remains enabled in
+# application-prod.properties and requires separately configured TLS/origins.
 name: koupreng
 
 services:
@@ -40,7 +42,9 @@ services:
       context: apps/backend
     restart: unless-stopped
     environment:
-      SPRING_PROFILES_ACTIVE: prod
+      SPRING_PROFILES_ACTIVE: dev
+      DEV_SAMPLE_DATA_ENABLED: "false"
+      FIRST_USER_ADMIN_ENABLED: "false"
       DB_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE:-koupreng_db}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Phnom_Penh
       DB_USERNAME: ${MYSQL_USER:-koupreng}
       DB_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}

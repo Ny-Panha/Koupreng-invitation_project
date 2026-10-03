@@ -9,6 +9,7 @@ import {
 import { listDrafts } from "../../../shared/storage/weddingStorage";
 import { giftsApi } from "../api/giftsApi";
 import { useAuth } from "../../auth/hooks/useAuth";
+import { localDateString } from "@/shared/utils/localDate";
 
 export function toGiftPayload(form) {
     return {
@@ -16,7 +17,7 @@ export function toGiftPayload(form) {
         amount: Math.max(0, Number(form.amount) || 0),
         currency: form.currency || "USD",
         method: form.method,
-        date: form.date || new Date().toISOString().slice(0, 10),
+        date: form.date || localDateString(),
         note: form.note.trim(),
     };
 }

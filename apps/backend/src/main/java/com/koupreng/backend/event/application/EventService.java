@@ -5,9 +5,10 @@ import com.koupreng.backend.event.api.dto.EventResponse;
 import com.koupreng.backend.event.domain.Event;
 import com.koupreng.backend.event.domain.EventStatus;
 import com.koupreng.backend.event.infrastructure.persistence.EventRepository;
-import jakarta.persistence.EntityNotFoundException;
+import com.koupreng.backend.shared.exception.ApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -114,7 +115,7 @@ public class EventService {
         Event event = findActiveEvent(id);
 
         if (event.getStatus() == EventStatus.PUBLISHED) {
-            throw new IllegalStateException("Event is already published.");
+            throw new ApiException(HttpStatus.CONFLICT, "EVENT_ALREADY_PUBLISHED", "Event is already published.");
         }
 
         event.setStatus(EventStatus.PUBLISHED);
@@ -130,7 +131,7 @@ public class EventService {
         Event event = findActiveEvent(id);
 
         if (event.getStatus() != EventStatus.PUBLISHED) {
-            throw new IllegalStateException("Event is not published yet.");
+            throw new ApiException(HttpStatus.CONFLICT, "EVENT_NOT_PUBLISHED", "Event is not published yet.");
         }
 
         event.setStatus(EventStatus.UNPUBLISHED);
@@ -147,7 +148,7 @@ public class EventService {
 
     private Event findActiveEvent(Long id) {
         return eventRepository.findByIdAndDeletedFalse(id)
-                .orElseThrow(() -> new EntityNotFoundException("Event not found with id: " + id));
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "EVENT_NOT_FOUND", "Event not found."));
     }
 
     private EventResponse toResponse(Event event) {

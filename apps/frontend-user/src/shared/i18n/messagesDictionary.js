@@ -1,4 +1,7 @@
+import { MARKETING_MESSAGES } from "./marketingMessages";
+
 export const LOCAL_MESSAGES = {
+  ...MARKETING_MESSAGES,
   hostNav: {
     km: {
       events: "កម្មវិធី",

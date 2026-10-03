@@ -9,7 +9,11 @@ test("Khmer Celestial unlocks document scrolling after opening", async ({ page }
   await expect(page.locator(".kc-opening__button")).toHaveCSS("opacity", "1");
   await page.screenshot({ path: testInfo.outputPath("opening.png") });
 
-  await page.locator(".kc-opening__button").click();
+  // This ornament moves continuously. Click the actual pointer target without
+  // waiting for an animation to stop; retain browser hit testing and scrolling.
+  const openingButton = await page.locator(".kc-opening__button").boundingBox();
+  expect(openingButton).not.toBeNull();
+  await page.mouse.click(openingButton.x + openingButton.width / 2, openingButton.y + openingButton.height / 2);
   await expect(page.locator(".kc-main")).not.toHaveAttribute("inert", "");
   await expect(page.locator(".kc-opening")).toHaveCount(0);
   await page.screenshot({ path: testInfo.outputPath("opened.png") });

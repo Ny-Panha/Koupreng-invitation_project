@@ -8,6 +8,7 @@ import { invitationService } from "@/features/invitations/api/invitationApi";
 import { rsvpService } from "@/features/rsvp/api/rsvpApi";
 import { ErrorState, SkeletonCard } from "@/shared/ui";
 import { buildFinancialReport, asList } from "./model/financialReport";
+import OwnerReportSummary from "./components/OwnerReportSummary";
 import "./ReportsPage.css";
 
 export default function FinancialReport({ invitationId: propInvitationId }) {
@@ -89,6 +90,7 @@ export default function FinancialReport({ invitationId: propInvitationId }) {
           បោះពុម្ព / Print
         </button>
       </header>
+      {invitationId && <OwnerReportSummary invitationId={invitationId} />}
 
       {error ? (
         <ErrorState message={error} onRetry={() => window.location.reload()} />

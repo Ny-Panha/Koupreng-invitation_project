@@ -955,3 +955,9 @@
     margin-top: 8px;
 }
 
+.sfp-position-controls { display: flex; flex-wrap: wrap; align-items: end; gap: 12px; margin: 12px 0; border: 1px solid #e7e5e4; border-radius: 12px; padding: 12px; }
+.sfp-position-controls label { display: grid; gap: 4px; font-size: 0.8rem; font-weight: 600; }
+.sfp-position-controls input { width: 95px; }
+.sfp-position-controls input, .sfp-position-controls select { padding: 8px; border: 1px solid #d6d3d1; border-radius: 8px; background: white; color: #292524; }
+.sfp-position-controls small { width: 100%; color: #57534e; }
+.sfp-table-node:focus-visible, .sfp-stage:focus-visible, .sfp-entrance:focus-visible, .sfp-walkway:focus-visible { outline: 3px solid #a16207; outline-offset: 4px; }

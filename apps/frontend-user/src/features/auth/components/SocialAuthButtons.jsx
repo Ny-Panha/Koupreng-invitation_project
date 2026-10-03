@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import authService from "@/features/auth/api/authApi";
 import { buildTelegramOAuthUrl, TELEGRAM_OAUTH_ORIGIN } from "./telegramOAuth";
+import { socialAuthError } from "./socialAuthError";
 
 const isDev = import.meta.env.DEV;
 
@@ -383,12 +384,14 @@ function openTelegramLogin(clientId, onResult, onError) {
 }
 
 /* ─── Main component ─────────────────────────────────────── */
-export default function SocialAuthButtons({ redirectTo = "/dashboard/events" }) {
+export default function SocialAuthButtons({ redirectTo = "/dashboard/events", mode = "login", onLinked }) {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, updateUser, isAuthenticated } = useAuth();
+  const linking = mode === "link";
 
   const [busy, setBusy] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [telegramReady, setTelegramReady] = useState(
     !hasTelegramClientId || !isTelegramInAppBrowser(),
   );
@@ -396,6 +399,23 @@ export default function SocialAuthButtons({ redirectTo = "/dashboard/events" }) 
 
   // Telegram widget iframe (legacy — needs BotFather /setdomain)
   const widgetHostRef = useRef(null);
+
+  const completeLogin = useCallback(async (providerFn) => {
+    setError(""); setSuccess("");
+    try {
+      if (linking && !isAuthenticated) throw new Error("Sign in before linking an identity.");
+      const data = await providerFn();
+      if (linking) {
+        updateUser(data);
+        onLinked?.(data);
+        setSuccess("Identity linked to your current account. Your existing session is unchanged.");
+      } else {
+        login(data); navigate(redirectTo, { replace: true });
+      }
+    } catch (e) {
+      setError(socialAuthError(e));
+    } finally { setBusy(""); }
+  }, [isAuthenticated, linking, login, navigate, onLinked, redirectTo, updateUser]);
 
   /* ── Telegram's in-app browser needs its SDK. Regular browsers use the
      explicit-origin popup above because the SDK currently omits origin. ── */
@@ -427,17 +447,11 @@ export default function SocialAuthButtons({ redirectTo = "/dashboard/events" }) 
     const cbName = "_kouprengTgWidgetAuth";
     window[cbName] = async (user) => {
       setError(""); setBusy("telegram");
-      try {
-        const data = await authService.loginWithTelegram({
+      await completeLogin(() => (linking ? authService.linkTelegram : authService.loginWithTelegram)({
           id: user.id, first_name: user.first_name, last_name: user.last_name,
           username: user.username, photo_url: user.photo_url,
           auth_date: user.auth_date, hash: user.hash,
-        });
-        login(data);
-        navigate(redirectTo, { replace: true });
-      } catch (e) {
-        setError(e.message || "Telegram login failed.");
-      } finally { setBusy(""); }
+        }));
     };
 
     const script = document.createElement("script");
@@ -454,22 +468,7 @@ export default function SocialAuthButtons({ redirectTo = "/dashboard/events" }) 
     host.appendChild(script);
 
     return () => { delete window[cbName]; if (host) host.innerHTML = ""; };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  /* ── shared completeLogin ── */
-  const completeLogin = useCallback(async (providerFn) => {
-    setError("");
-    try {
-      const data = await providerFn();
-      debugSocialAuth("social login completed", {
-        hasAccessToken: Boolean(data?.accessToken),
-        hasUser: Boolean(data?.user),
-      });
-      login(data); navigate(redirectTo, { replace: true });
-    } catch (e) {
-      setError(e.message || "Login failed.");
-    } finally { setBusy(""); }
-  }, [login, navigate, redirectTo]);
+  }, [completeLogin, linking, telegramMode]);
 
   /* ── Telegram OAuth click (numeric client_id flow) ── */
   const handleTelegramOidc = useCallback(() => {
@@ -500,11 +499,11 @@ export default function SocialAuthButtons({ redirectTo = "/dashboard/events" }) 
     openTelegramLogin(
       telegramClientId,
       (data) => {
-        completeLogin(() => authService.loginWithTelegram(data.loginData));
+        completeLogin(() => (linking ? authService.linkTelegram : authService.loginWithTelegram)(data.loginData));
       },
       (err) => { setError(err.message || "Telegram login failed."); setBusy(""); },
     );
-  }, [busy, completeLogin, telegramReady]);
+  }, [busy, completeLogin, telegramReady, linking]);
 
   /* ─── Render ─────────────────────────────────────────────── */
   useEffect(() => {
@@ -517,13 +516,14 @@ export default function SocialAuthButtons({ redirectTo = "/dashboard/events" }) 
 
   return (
     <>
+      {linking && <p className="auth-hint">Choose the Google or Telegram identity to link to this signed-in account. No accounts will be merged.</p>}
       <div className="auth-socials">
 
         {/* Google */}
         {googleClientId ? (
           <GoogleSignInButton
             clientId={googleClientId}
-            onSuccess={(credential) => completeLogin(() => authService.loginWithGoogle(credential))}
+            onSuccess={(credential) => completeLogin(() => (linking ? authService.linkGoogle : authService.loginWithGoogle)(credential))}
             onError={setError}
             busy={busy === "google"}
             onBusyChange={(v) => setBusy(v ? "google" : "")}
@@ -594,8 +594,9 @@ export default function SocialAuthButtons({ redirectTo = "/dashboard/events" }) 
       </div>
 
       {busy && <p className="auth-hint">Completing {busy} login…</p>}
+      {success && <p role="status" className="auth-hint">{success}</p>}
       {error && (
-        <div className="auth-error mt-2">
+        <div role="alert" className="auth-error mt-2">
           {error}
         </div>
       )}

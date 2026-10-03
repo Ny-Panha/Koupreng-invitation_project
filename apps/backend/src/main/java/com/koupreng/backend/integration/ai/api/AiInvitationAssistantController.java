@@ -7,6 +7,7 @@ import com.koupreng.backend.integration.ai.api.dto.AiInvitationDraftRequest;
 import com.koupreng.backend.integration.ai.api.dto.AiInvitationDraftResponse;
 import com.koupreng.backend.integration.ai.application.AiInvitationAssistantService;
 import org.springframework.http.ResponseEntity;
+import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +29,7 @@ public class AiInvitationAssistantController {
 
     @PostMapping("/invitation-copy")
     public ResponseEntity<ApiResponse<AiInvitationDraftResponse>> draft(
-            @RequestBody(required = false) AiInvitationDraftRequest request
+            @Valid @RequestBody(required = false) AiInvitationDraftRequest request
     ) {
         return ResponseEntity.ok(ApiResponse.success(
                 "AI invitation assistant response fetched successfully",
@@ -38,7 +39,7 @@ public class AiInvitationAssistantController {
 
     @PostMapping("/invitation/story")
     public ResponseEntity<ApiResponse<AiInvitationDraftResponse>> story(
-            @RequestBody(required = false) AiInvitationDraftRequest request
+            @Valid @RequestBody(required = false) AiInvitationDraftRequest request
     ) {
         return ResponseEntity.ok(ApiResponse.success(
                 "AI invitation story assistant response fetched successfully",
@@ -48,7 +49,7 @@ public class AiInvitationAssistantController {
 
     @PostMapping("/invitation/formal-text")
     public ResponseEntity<ApiResponse<AiInvitationDraftResponse>> formalText(
-            @RequestBody(required = false) AiInvitationDraftRequest request
+            @Valid @RequestBody(required = false) AiInvitationDraftRequest request
     ) {
         return ResponseEntity.ok(ApiResponse.success(
                 "AI invitation formal text assistant response fetched successfully",
@@ -58,7 +59,7 @@ public class AiInvitationAssistantController {
 
     @PostMapping("/invitation/translate")
     public ResponseEntity<ApiResponse<AiInvitationDraftResponse>> translate(
-            @RequestBody(required = false) AiInvitationDraftRequest request
+            @Valid @RequestBody(required = false) AiInvitationDraftRequest request
     ) {
         return ResponseEntity.ok(ApiResponse.success(
                 "AI invitation translation assistant response fetched successfully",
@@ -68,7 +69,7 @@ public class AiInvitationAssistantController {
 
     @PostMapping("/invitation/timeline-suggestion")
     public ResponseEntity<ApiResponse<AiInvitationDraftResponse>> timelineSuggestion(
-            @RequestBody(required = false) AiInvitationDraftRequest request
+            @Valid @RequestBody(required = false) AiInvitationDraftRequest request
     ) {
         return ResponseEntity.ok(ApiResponse.success(
                 "AI invitation timeline assistant response fetched successfully",

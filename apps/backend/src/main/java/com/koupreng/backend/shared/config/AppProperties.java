@@ -375,6 +375,17 @@ public class AppProperties {
 
     public static class Invitation {
 
+        @Min(1)
+        private int maxPasswordFailuresPerMinute = 5;
+
+        public int getMaxPasswordFailuresPerMinute() {
+            return maxPasswordFailuresPerMinute;
+        }
+
+        public void setMaxPasswordFailuresPerMinute(int maxPasswordFailuresPerMinute) {
+            this.maxPasswordFailuresPerMinute = maxPasswordFailuresPerMinute;
+        }
+
         @NotBlank
         private String publicBaseUrl = "http://localhost:5173";
 

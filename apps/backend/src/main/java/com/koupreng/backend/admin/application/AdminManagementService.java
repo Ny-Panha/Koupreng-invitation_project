@@ -45,7 +45,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Comparator;
 import java.util.ArrayList;
@@ -53,7 +52,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 @Service
 public class AdminManagementService {
@@ -425,22 +423,16 @@ public class AdminManagementService {
                 .sorted(paymentOrderComparator())
                 .map(order -> TemplatePaymentStatusResponse.from(order, "Payment status"))
                 .toList();
-        BigDecimal revenue = orders.stream()
-                .filter(order -> order.getStatus() == PaymentStatus.PAID)
-                .map(order -> order.getPaidAmount() == null ? order.getAmount() : order.getPaidAmount())
-                .filter(Objects::nonNull)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        var revenue = com.koupreng.backend.reporting.domain.RevenueTotals.fromPayments(orders, List.of());
+        Map<String, Object> summary = new LinkedHashMap<>(revenue.summaryFields());
+        summary.put("totalPayments", orders.size());
+        summary.put("paidPayments", orders.stream().filter(order -> order.getStatus() == PaymentStatus.PAID).count());
+        summary.put("failedPayments", orders.stream()
+                .filter(order -> order.getStatus() == PaymentStatus.FAILED || order.getStatus() == PaymentStatus.REJECTED).count());
         return AdminReportResponse.builder()
                 .report("payments")
                 .generatedAt(Instant.now())
-                .summary(Map.of(
-                        "totalPayments", orders.size(),
-                        "paidPayments", orders.stream().filter(order -> order.getStatus() == PaymentStatus.PAID).count(),
-                        "failedPayments", orders.stream()
-                                .filter(order -> order.getStatus() == PaymentStatus.FAILED || order.getStatus() == PaymentStatus.REJECTED)
-                                .count(),
-                        "totalRevenue", revenue
-                ))
+                .summary(summary)
                 .rows(rows)
                 .build();
     }
@@ -482,33 +474,28 @@ public class AdminManagementService {
 
     @Transactional(readOnly = true)
     public AdminReportResponse analyticsOverview() {
-        List<UserInvitation> invitations = invitationRepository.findAllByDeletedFalseOrderByCreatedAtDesc();
-        List<TemplatePaymentOrder> orders = paymentOrderRepository.findAll();
-        BigDecimal revenue = orders.stream()
-                .filter(order -> order.getStatus() == PaymentStatus.PAID)
-                .map(order -> order.getPaidAmount() == null ? order.getAmount() : order.getPaidAmount())
-                .filter(Objects::nonNull)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        var invitations = invitationRepository.dashboardCounts();
+        var users = userRepository.dashboardCounts();
+        var payments = paymentOrderRepository.dashboardCounts();
+        var revenue = com.koupreng.backend.reporting.domain.RevenueTotals.fromAmounts(paymentOrderRepository.revenueByCurrency());
         long totalGuests = guestRepository.count();
         long totalRsvps = rsvpRepository.count();
 
         Map<String, Object> summary = new LinkedHashMap<>();
-        summary.put("totalUsers", userRepository.count());
-        summary.put("activeUsers", userRepository.findAll().stream().filter(AppUser::isActive).count());
-        summary.put("totalInvitations", invitations.size());
-        summary.put("publishedInvitations", countInvitations(invitations, InvitationStatus.PUBLISHED));
+        summary.put("totalUsers", users.getTotal());
+        summary.put("activeUsers", users.getActive());
+        summary.put("totalInvitations", invitations.getTotal());
+        summary.put("publishedInvitations", invitations.getPublished());
         summary.put("totalGuests", totalGuests);
         summary.put("totalRsvps", totalRsvps);
         summary.put("rsvpConversion", totalGuests == 0 ? 0 : (double) totalRsvps / totalGuests);
-        summary.put("totalRevenue", revenue);
-        summary.put("failedPayments", orders.stream()
-                .filter(order -> order.getStatus() == PaymentStatus.FAILED || order.getStatus() == PaymentStatus.REJECTED)
-                .count());
+        summary.putAll(revenue.summaryFields());
+        summary.put("failedPayments", payments.getFailed());
         return AdminReportResponse.builder()
                 .report("analytics-overview")
                 .generatedAt(Instant.now())
                 .summary(summary)
-                .rows(invitations.stream().limit(10).map(InvitationResponse::from).toList())
+                .rows(invitationRepository.findTop10ByDeletedFalseOrderByCreatedAtDesc().stream().map(InvitationResponse::from).toList())
                 .build();
     }
 
@@ -582,6 +569,7 @@ public class AdminManagementService {
     @Transactional(readOnly = true)
     public AdminReportResponse analyticsCheckIn() {
         List<GuestCheckIn> checkIns = guestCheckInRepository.findAll().stream()
+                .filter(GuestCheckIn::isActive)
                 .sorted(Comparator.comparing(
                         GuestCheckIn::getCheckedInAt,
                         Comparator.nullsLast(Comparator.naturalOrder())
@@ -604,15 +592,9 @@ public class AdminManagementService {
     @Transactional(readOnly = true)
     public AdminReportResponse systemHealth() {
         long failedNotifications = notificationRepository.countByStatus(NotificationStatus.FAILED);
-        List<TemplatePaymentOrder> orders = paymentOrderRepository.findAll();
-        long pendingPayments = orders.stream()
-                .filter(order -> order.getStatus() == PaymentStatus.PENDING
-                        || order.getStatus() == PaymentStatus.PAID_PENDING_REVIEW)
-                .count();
-        long rejectedPayments = orders.stream()
-                .filter(order -> order.getStatus() == PaymentStatus.REJECTED
-                        || order.getStatus() == PaymentStatus.FAILED)
-                .count();
+        var payments = paymentOrderRepository.dashboardCounts();
+        long pendingPayments = payments.getPending();
+        long rejectedPayments = payments.getFailed();
 
         Map<String, Object> summary = new LinkedHashMap<>();
         summary.put("status", failedNotifications > 0 || rejectedPayments > 0 ? "WARN" : "OK");
@@ -649,9 +631,7 @@ public class AdminManagementService {
                     "description", "One or more notifications failed delivery."
             ));
         }
-        long pendingReviews = paymentOrderRepository.findAll().stream()
-                .filter(order -> order.getStatus() == PaymentStatus.PAID_PENDING_REVIEW)
-                .count();
+        long pendingReviews = paymentOrderRepository.dashboardCounts().getReview();
         if (pendingReviews > 0) {
             rows.add(Map.of(
                     "severity", "INFO",
@@ -735,12 +715,6 @@ public class AdminManagementService {
     private AppUser requireUser(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "User not found"));
-    }
-
-    private long countInvitations(List<UserInvitation> invitations, InvitationStatus status) {
-        return invitations.stream()
-                .filter(invitation -> invitation.getStatus() == status)
-                .count();
     }
 
     private boolean statusEquals(String value, String expected) {

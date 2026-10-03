@@ -1,6 +1,8 @@
 # Docker and reverse-proxy deployment
 
-The tracked Compose topology is a production-like single-host deployment for Koupreng. It builds immutable application images, runs MySQL and Redis on an internal network, persists database/upload/cache data in named volumes, and exposes only the Nginx gateway.
+The tracked Compose topology is a local development stack for Koupreng. It builds application images, runs MySQL and Redis on an internal network, persists database/upload/cache data in named volumes, and exposes only the Nginx gateway. The backend explicitly uses the `dev` profile, with sample-data generation and first-user administrator bootstrap disabled. An existing administrator or a deliberate local administrative setup is required.
+
+Local HTTP origins and the internal non-TLS MySQL URL are consistent with this development profile. The production profile retains its HTTPS, database TLS, CORS and secret validators. Selecting production requires a separately complete secure configuration; this local Compose file does not claim to be production-ready.
 
 ## Topology
 
@@ -39,7 +41,7 @@ Open `http://localhost:8080` for the user app and `http://admin.localhost:8080` 
 
 Terminate public TLS at Cloudflare or a host-level Nginx instance, then proxy to Compose port 8080 while preserving `Host`, `X-Forwarded-For`, and `X-Forwarded-Proto`. Set `HTTPS_REQUIRED=true` only after the proxy sends the correct external protocol. Restrict the host firewall so the Compose port is reachable only by the trusted edge/tunnel when deployed publicly.
 
-The gateway routes `/api/` and `/uploads/` to Spring Boot, `/telegram/webhook` to the bot, and all other paths to the applicable React application. Telegram must register the same `TELEGRAM_WEBHOOK_SECRET` as its `secret_token`.
+The gateway routes `/api/` and `/uploads/` to Spring Boot, `/telegram/webhook` to the bot, and all other paths to the applicable React application. Telegram must register the same `TELEGRAM_WEBHOOK_SECRET` as its `secret_token`; the bot requires nonblank webhook and internal payment secrets even locally. The user-origin Permissions-Policy allows its own camera for check-in and denies microphone access. Camera permission and a secure browser context are still required; manual code entry remains available when camera access is denied.
 
 ## Data and operations
 

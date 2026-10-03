@@ -38,6 +38,8 @@ export function ExpensesList() {
         isOver,
         diff,
         percent,
+        byCurrency,
+        currencyCode,
         saving,
         error,
         loading,
@@ -97,6 +99,8 @@ export function ExpensesList() {
                     isOver={isOver}
                     diff={diff}
                     percent={percent}
+                    byCurrency={byCurrency}
+                    currencyCode={currencyCode}
                     t={t}
                 />
             )}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { IoCheckmark, IoCopyOutline, IoInformationCircleOutline, IoSparklesOutline } from "react-icons/io5";
 import { FormField, LoadingButton, toast } from "@/shared/ui";
+import { isVerifiedAiResponse } from "../model/responseSource";
 
 export default function AssistantResult({
   response,
@@ -15,7 +16,7 @@ export default function AssistantResult({
 
   if (!response) return null;
 
-  const isLocalTemplate = response.source === "LOCAL_TEMPLATE" || response.enabled === false;
+  const isLocalTemplate = !isVerifiedAiResponse(response);
 
   const handleCopy = async () => {
     try {

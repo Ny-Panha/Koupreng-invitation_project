@@ -71,7 +71,8 @@ public class ApiSecurityProperties {
                 "Authorization",
                 "Content-Type",
                 "X-Requested-With",
-                "X-Request-Id"
+                "X-Request-Id",
+                "X-XSRF-TOKEN"
         ));
 
         private Set<String> exposedHeaders = new LinkedHashSet<>(Set.of("X-Request-Id"));
@@ -203,6 +204,17 @@ public class ApiSecurityProperties {
     }
 
     public static class Upload {
+
+        @Min(0)
+        private int maxGalleryFilesPerInvitation = 0;
+
+        public int getMaxGalleryFilesPerInvitation() {
+            return maxGalleryFilesPerInvitation;
+        }
+
+        public void setMaxGalleryFilesPerInvitation(int maxGalleryFilesPerInvitation) {
+            this.maxGalleryFilesPerInvitation = maxGalleryFilesPerInvitation;
+        }
 
         private boolean enabled = true;
 

@@ -29,6 +29,9 @@ public class AdminDashboardSummaryResponse {
     private long totalRsvps;
     private long totalPayments;
     private BigDecimal totalRevenue;
+    private java.util.Map<String, BigDecimal> revenueByCurrency;
+    private boolean revenueComparable;
+    private String currency;
     private long failedPayments;
     private List<AdminUserResponse> recentUsers;
     private List<InvitationResponse> recentInvitations;

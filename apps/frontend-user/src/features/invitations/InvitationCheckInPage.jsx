@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
     ArrowLeft,
@@ -17,18 +17,7 @@ import {
     AlertTriangle,
     Check,
 } from "lucide-react";
-import { guestService } from "@/features/guests/api/guestApi";
-import { invitationService } from "@/features/invitations/api/invitationApi";
-import {
-    listManualGuests,
-    saveManualGuests,
-    listManualCheckIns,
-    saveManualCheckIns,
-    listWeddingGifts,
-    saveWeddingGifts,
-    getActiveEventId,
-} from "@/shared/storage";
-import { toast } from "../../shared/ui/toast";
+import { useCheckInDesk } from "./hooks/useCheckInDesk";
 import QrCameraScanner from "./components/QrCameraScanner";
 import "./InvitationPages.css";
 
@@ -94,554 +83,23 @@ export default function InvitationCheckInPage() {
     const { invitationId: rawInvitationId } = useParams();
     const navigate = useNavigate();
 
-    const invitationId = useMemo(() => {
-        if (!rawInvitationId) return "";
-        return rawInvitationId.replace(/^inv-/, "");
-    }, [rawInvitationId]);
+    const {
+        invitationId, persistenceMode, invitation, guests, summary, checkIns,
+        token, setToken, note, setNote, tokenGiftAmount, setTokenGiftAmount,
+        tokenGiftCurrency, setTokenGiftCurrency, search, setSearch,
+        statusFilter, setStatusFilter, loading, saving, error,
+        celebrationData, celebrationGiftAmount, setCelebrationGiftAmount,
+        celebrationGiftCurrency, setCelebrationGiftCurrency, duplicateWarning, setDuplicateWarning,
+        walkInModalOpen, setWalkInModalOpen, walkInForm, setWalkInForm, pendingWalkIn,
+        load, scan, handleCameraScan, manual, handleSaveCelebrationAndClose,
+        handleCreateWalkInGuest, undoCheckIn,
+    } = useCheckInDesk(rawInvitationId, { onCheckIn: playBeep, onDuplicate: playWarningBeep });
 
-    const [invitation, setInvitation] = useState(null);
-    const [guests, setGuests] = useState([]);
-    const [summary, setSummary] = useState(null);
-    const [checkIns, setCheckIns] = useState([]);
-    const [token, setToken] = useState("");
-    const [note, setNote] = useState("");
-    const [tokenGiftAmount, setTokenGiftAmount] = useState("");
-    const [tokenGiftCurrency, setTokenGiftCurrency] = useState("USD");
-    const [search, setSearch] = useState("");
-    const [statusFilter, setStatusFilter] = useState("all");
-    const [loading, setLoading] = useState(true);
-    const [saving, setSaving] = useState(false);
-    const [error, setError] = useState("");
-
-    // Killer Features: Popups & Modals
-    const [celebrationData, setCelebrationData] = useState(null);
-    const [celebrationGiftAmount, setCelebrationGiftAmount] = useState("");
-    const [celebrationGiftCurrency, setCelebrationGiftCurrency] = useState("USD");
-
-    const [duplicateWarning, setDuplicateWarning] = useState(null);
-
-    const [walkInModalOpen, setWalkInModalOpen] = useState(false);
-    const [walkInForm, setWalkInForm] = useState({
-        name: "",
-        table: "",
-        phone: "",
-        group: "ភ្ញៀវទូទៅ",
-        side: "ខាងកូនកំលោះ",
-        gift: "",
-        currency: "USD",
-    });
-
-    const load = useCallback(() => {
-        let active = true;
-        if (!invitationId) return;
-
-        Promise.all([
-            invitationService.get(invitationId).catch(() => null),
-            guestService.listByInvitation(invitationId).catch(() => []),
-            guestService.checkInSummary(invitationId).catch(() => null),
-            guestService.checkInList(invitationId).catch(() => []),
-        ])
-            .then(([invitationData, guestsData, summaryData, checkInData]) => {
-                if (!active) return;
-                setInvitation(invitationData);
-
-                let resolvedGuests = Array.isArray(guestsData) ? guestsData : [];
-                if (!resolvedGuests.length) {
-                    const localGuests = listManualGuests(invitationId);
-                    if (localGuests && localGuests.length > 0) {
-                        resolvedGuests = localGuests;
-                    } else {
-                        const activeEventGuests = listManualGuests(getActiveEventId());
-                        if (activeEventGuests && activeEventGuests.length > 0) {
-                            resolvedGuests = activeEventGuests;
-                        } else {
-                            const anyGuests = listManualGuests();
-                            if (anyGuests && anyGuests.length > 0) {
-                                resolvedGuests = anyGuests;
-                            }
-                        }
-                    }
-                }
-                setGuests(resolvedGuests);
-
-                let resolvedCheckIns = Array.isArray(checkInData) ? checkInData : [];
-                if (!resolvedCheckIns.length) {
-                    const localCheckIns = listManualCheckIns(invitationId);
-                    if (localCheckIns && localCheckIns.length > 0) {
-                        resolvedCheckIns = localCheckIns;
-                    }
-                }
-                setCheckIns(resolvedCheckIns);
-
-                const totalCount = resolvedGuests.length;
-                const checkedCount = resolvedCheckIns.length;
-                const remainCount = Math.max(0, totalCount - checkedCount);
-
-                let resolvedSummary = summaryData;
-                if (!resolvedSummary || typeof resolvedSummary.totalGuests === "undefined") {
-                    resolvedSummary = {
-                        totalGuests: totalCount,
-                        checkedIn: checkedCount,
-                        attendingCheckedIn: checkedCount,
-                        remaining: remainCount,
-                    };
-                }
-                setSummary(resolvedSummary);
-                setError("");
-            })
-            .catch(async (err) => {
-                if (!active) return;
-                try {
-                    const mine = await invitationService.listMine();
-                    const list = Array.isArray(mine) ? mine : mine?.data || [];
-                    const first = list[0];
-                    const realId = first?.id || first?.invitationId;
-                    if (realId && String(realId) !== String(invitationId) && active) {
-                        navigate(`/dashboard/invitations/${realId}/check-in`, { replace: true });
-                        return;
-                    }
-                } catch {
-                    // ignore
-                }
-                if (active) setError(err.message || "Could not load check-in data");
-            })
-            .finally(() => {
-                if (active) setLoading(false);
-            });
-        return () => {
-            active = false;
-        };
-    }, [invitationId, navigate]);
-
-    useEffect(() => load(), [load]);
-
-    const recordGiftItem = useCallback((guestName, amount, currency, noteText) => {
-        if (!amount || isNaN(Number(amount)) || Number(amount) <= 0) return;
-        try {
-            const currentGifts = listWeddingGifts([], invitationId);
-            const newGift = {
-                id: `gift-${Date.now()}`,
-                donorName: guestName,
-                amount: Number(amount),
-                currency: currency || "USD",
-                category: "ENVELOPE",
-                note: noteText || "កត់ត្រាពេល Check-in",
-                createdAt: new Date().toISOString(),
-            };
-            const updated = [newGift, ...currentGifts];
-            saveWeddingGifts(updated, invitationId);
-            toast(`បានកត់ត្រាចងដៃ ${amount} ${currency} ជូន ${guestName}`);
-        } catch (err) {
-            console.warn("Failed to save gift to storage:", err);
-        }
-    }, [invitationId]);
-
-    const refreshCheckIns = useCallback(async () => {
-        if (/^\d+$/.test(invitationId)) {
-            try {
-                const [summaryData, checkInData] = await Promise.all([
-                    guestService.checkInSummary(invitationId),
-                    guestService.checkInList(invitationId),
-                ]);
-                if (summaryData) setSummary(summaryData);
-                if (checkInData) setCheckIns(checkInData);
-                return;
-            } catch {
-                // fall through
-            }
-        }
-
-        const localCheckIns = listManualCheckIns(invitationId);
-        setCheckIns(localCheckIns || []);
-        const total = guests.length;
-        const checked = (localCheckIns || []).length;
-        setSummary({
-            totalGuests: total,
-            checkedIn: checked,
-            attendingCheckedIn: checked,
-            remaining: Math.max(0, total - checked),
-        });
-    }, [invitationId, guests]);
-
-    const triggerCelebration = useCallback((guestName, tableNumber, groupName, side, checkInId) => {
-        setDuplicateWarning(null);
-        setCelebrationData({
-            guestName,
-            tableNumber,
-            groupName,
-            side,
-            checkInId,
-        });
-        setCelebrationGiftAmount("");
-    }, []);
-
-    const scan = async (event) => {
-        if (event) event.preventDefault();
-        const cleanToken = token.trim();
-        if (!cleanToken || saving) return;
-
-        setSaving(true);
-        setError("");
-        try {
-            if (/^\d+$/.test(invitationId)) {
-                try {
-                    const result = await guestService.scanCheckIn(invitationId, cleanToken, note);
-                    if (result?.alreadyCheckedIn) {
-                        playWarningBeep();
-                        setDuplicateWarning({
-                            guestName: result?.guestName || cleanToken,
-                            checkedInAt: "មុននេះបន្តិច",
-                            source: "Server Record",
-                        });
-                        toast("ភ្ញៀវនេះបាន Check-in រួចរាល់ហើយ!");
-                    } else {
-                        playBeep();
-                        triggerCelebration(result?.guestName || cleanToken, result?.tableNumber || "", result?.groupName || "", result?.side || "");
-                        if (tokenGiftAmount) {
-                            recordGiftItem(result?.guestName || cleanToken, tokenGiftAmount, tokenGiftCurrency, note);
-                        }
-                    }
-                    setToken("");
-                    setNote("");
-                    setTokenGiftAmount("");
-                    await refreshCheckIns();
-                    return;
-                } catch (err) {
-                    console.warn("Backend scan error, trying local match:", err);
-                }
-            }
-
-            const tokenLower = cleanToken.toLowerCase();
-            const matched = guests.find((g) => {
-                if (g.token && g.token.toLowerCase() === tokenLower) return true;
-                if (g.slug && cleanToken.includes(g.slug)) return true;
-                if (cleanToken.includes("/i/") && g.slug && cleanToken.includes(g.slug)) return true;
-                if (g.id && String(g.id) === cleanToken) return true;
-                if (g.phone && g.phone === cleanToken) return true;
-                if (g.guestName && g.guestName.toLowerCase() === tokenLower) return true;
-                return false;
-            });
-
-            const guestName = matched ? (matched.guestName || matched.name) : cleanToken;
-            const guestId = matched ? matched.id : `guest-${Date.now()}`;
-            const tableNumber = matched?.tableNumber || matched?.table || "";
-            const groupName = matched?.groupName || matched?.group || "";
-            const side = matched?.side || "";
-
-            const existingCheckIn = checkIns.find(
-                (c) => String(c.guestId) === String(guestId) || c.guestName?.toLowerCase() === guestName.toLowerCase()
-            );
-
-            if (existingCheckIn) {
-                playWarningBeep();
-                setDuplicateWarning({
-                    guestName,
-                    checkedInAt: existingCheckIn.checkedInAt
-                        ? new Intl.DateTimeFormat("en", { timeStyle: "short", dateStyle: "short" }).format(new Date(existingCheckIn.checkedInAt))
-                        : "មុននេះ",
-                    source: existingCheckIn.source || "QR Scan",
-                });
-                toast("⚠️ ភ្ញៀវនេះបាន Check-in រួចរាល់ហើយ!");
-                setToken("");
-                return;
-            }
-
-            playBeep();
-            const newCheckIn = {
-                id: `cin-${Date.now()}`,
-                guestId,
-                guestName,
-                source: "QR Token",
-                note: note || "",
-                tableNumber,
-                groupName,
-                side,
-                giftAmount: tokenGiftAmount || "",
-                giftCurrency: tokenGiftCurrency || "USD",
-                checkedInAt: new Date().toISOString(),
-            };
-
-            const updatedCheckIns = [newCheckIn, ...checkIns];
-            setCheckIns(updatedCheckIns);
-            saveManualCheckIns(updatedCheckIns, invitationId);
-
-            if (tokenGiftAmount) {
-                recordGiftItem(guestName, tokenGiftAmount, tokenGiftCurrency, note);
-            }
-
-            triggerCelebration(guestName, tableNumber, groupName, side, newCheckIn.id);
-
-            setToken("");
-            setNote("");
-            setTokenGiftAmount("");
-            setSummary({
-                totalGuests: guests.length,
-                checkedIn: updatedCheckIns.length,
-                attendingCheckedIn: updatedCheckIns.length,
-                remaining: Math.max(0, guests.length - updatedCheckIns.length),
-            });
-        } catch (err) {
-            setError(err.message || "Could not check in guest");
-        } finally {
-            setSaving(false);
-        }
-    };
-
-    const handleCameraScan = useCallback(async (scannedToken) => {
-        if (!scannedToken || saving) return;
-        setSaving(true);
-        setError("");
-        try {
-            if (/^\d+$/.test(invitationId)) {
-                try {
-                    const result = await guestService.scanCheckIn(invitationId, scannedToken, note);
-                    if (result?.alreadyCheckedIn) {
-                        playWarningBeep();
-                        setDuplicateWarning({
-                            guestName: result?.guestName || scannedToken,
-                            checkedInAt: "មុននេះបន្តិច",
-                            source: "Camera Scan",
-                        });
-                        toast("ភ្ញៀវនេះបាន Check-in រួចរាល់ហើយ!");
-                    } else {
-                        playBeep();
-                        triggerCelebration(result?.guestName || scannedToken, result?.tableNumber || "", result?.groupName || "", result?.side || "");
-                    }
-                    await refreshCheckIns();
-                    return;
-                } catch {
-                    // fall through
-                }
-            }
-
-            const cleanToken = scannedToken.trim();
-            const tokenLower = cleanToken.toLowerCase();
-            const matched = guests.find((g) => {
-                if (g.token && g.token.toLowerCase() === tokenLower) return true;
-                if (g.slug && cleanToken.includes(g.slug)) return true;
-                if (cleanToken.includes("/i/") && g.slug && cleanToken.includes(g.slug)) return true;
-                if (g.id && String(g.id) === cleanToken) return true;
-                if (g.phone && g.phone === cleanToken) return true;
-                if (g.guestName && g.guestName.toLowerCase() === tokenLower) return true;
-                return false;
-            });
-
-            const guestName = matched ? (matched.guestName || matched.name) : cleanToken;
-            const guestId = matched ? matched.id : `guest-${Date.now()}`;
-            const tableNumber = matched?.tableNumber || matched?.table || "";
-            const groupName = matched?.groupName || matched?.group || "";
-            const side = matched?.side || "";
-
-            const existingCheckIn = checkIns.find(
-                (c) => String(c.guestId) === String(guestId) || c.guestName?.toLowerCase() === guestName.toLowerCase()
-            );
-
-            if (existingCheckIn) {
-                playWarningBeep();
-                setDuplicateWarning({
-                    guestName,
-                    checkedInAt: existingCheckIn.checkedInAt
-                        ? new Intl.DateTimeFormat("en", { timeStyle: "short", dateStyle: "short" }).format(new Date(existingCheckIn.checkedInAt))
-                        : "មុននេះ",
-                    source: existingCheckIn.source || "Camera Scan",
-                });
-                toast("⚠️ ភ្ញៀវនេះបាន Check-in រួចរាល់ហើយ!");
-                return;
-            }
-
-            playBeep();
-            const newCheckIn = {
-                id: `cin-${Date.now()}`,
-                guestId,
-                guestName,
-                source: "Camera QR",
-                note: note || "",
-                tableNumber,
-                groupName,
-                side,
-                checkedInAt: new Date().toISOString(),
-            };
-
-            const updated = [newCheckIn, ...checkIns];
-            setCheckIns(updated);
-            saveManualCheckIns(updated, invitationId);
-            triggerCelebration(guestName, tableNumber, groupName, side, newCheckIn.id);
-
-            setSummary({
-                totalGuests: guests.length,
-                checkedIn: updated.length,
-                attendingCheckedIn: updated.length,
-                remaining: Math.max(0, guests.length - updated.length),
-            });
-        } catch (err) {
-            setError(err.message || "Could not check in guest");
-        } finally {
-            setSaving(false);
-        }
-    }, [invitationId, guests, checkIns, note, saving, refreshCheckIns, triggerCelebration]);
-
-    const manual = async (guest) => {
-        setSaving(true);
-        setError("");
-        try {
-            if (/^\d+$/.test(invitationId)) {
-                try {
-                    const result = await guestService.manualCheckIn(invitationId, guest.id);
-                    if (result?.alreadyCheckedIn) {
-                        playWarningBeep();
-                        toast("Guest was already checked in");
-                    } else {
-                        playBeep();
-                        triggerCelebration(guest.guestName, guest.tableNumber || "", guest.groupName || "", guest.side || "");
-                    }
-                    await refreshCheckIns();
-                    return;
-                } catch {
-                    // fall through
-                }
-            }
-
-            const guestId = guest.id;
-            const alreadyChecked = checkIns.some((c) => String(c.guestId) === String(guestId));
-            if (alreadyChecked) {
-                playWarningBeep();
-                toast("Guest was already checked in");
-                return;
-            }
-
-            playBeep();
-            const newCheckIn = {
-                id: `cin-${Date.now()}`,
-                guestId,
-                guestName: guest.guestName || guest.name,
-                source: "Manual Desk",
-                note: "",
-                tableNumber: guest.tableNumber || guest.table || "",
-                groupName: guest.groupName || guest.group || "",
-                side: guest.side || "",
-                checkedInAt: new Date().toISOString(),
-            };
-
-            const updated = [newCheckIn, ...checkIns];
-            setCheckIns(updated);
-            saveManualCheckIns(updated, invitationId);
-            triggerCelebration(guest.guestName, guest.tableNumber || "", guest.groupName || "", guest.side || "", newCheckIn.id);
-
-            setSummary({
-                totalGuests: guests.length,
-                checkedIn: updated.length,
-                attendingCheckedIn: updated.length,
-                remaining: Math.max(0, guests.length - updated.length),
-            });
-        } catch (err) {
-            setError(err.message || "Could not check in guest");
-        } finally {
-            setSaving(false);
-        }
-    };
-
-    const handleSaveCelebrationAndClose = () => {
-        if (celebrationData && celebrationGiftAmount) {
-            recordGiftItem(
-                celebrationData.guestName,
-                celebrationGiftAmount,
-                celebrationGiftCurrency,
-                "ចងដៃពេល Check-in"
-            );
-        }
-        setCelebrationData(null);
-        setCelebrationGiftAmount("");
-    };
-
-    const handleCreateWalkInGuest = (e) => {
-        e.preventDefault();
-        if (!walkInForm.name.trim()) return;
-
-        const newGuest = {
-            id: `walkin-${Date.now()}`,
-            guestName: walkInForm.name.trim(),
-            tableNumber: walkInForm.table.trim(),
-            phone: walkInForm.phone.trim(),
-            groupName: walkInForm.group || "ភ្ញៀវទូទៅ",
-            side: walkInForm.side || "ខាងកូនកំលោះ",
-            token: `tok-${Date.now().toString(36)}`,
-            createdAt: new Date().toISOString(),
-        };
-
-        const updatedGuests = [newGuest, ...guests];
-        setGuests(updatedGuests);
-        saveManualGuests(updatedGuests, invitationId);
-
-        const newCheckIn = {
-            id: `cin-${Date.now()}`,
-            guestId: newGuest.id,
-            guestName: newGuest.guestName,
-            source: "Walk-in Desk",
-            note: "ភ្ញៀវមកបន្ថែម (Walk-in)",
-            tableNumber: newGuest.tableNumber,
-            groupName: newGuest.groupName,
-            side: newGuest.side,
-            checkedInAt: new Date().toISOString(),
-        };
-
-        const updatedCheckIns = [newCheckIn, ...checkIns];
-        setCheckIns(updatedCheckIns);
-        saveManualCheckIns(updatedCheckIns, invitationId);
-
-        if (walkInForm.gift) {
-            recordGiftItem(
-                newGuest.guestName,
-                walkInForm.gift,
-                walkInForm.currency,
-                "ចងដៃភ្ញៀវ Walk-in"
-            );
-        }
-
-        playBeep();
-        toast(`បានចុះឈ្មោះ និង Check-in ជូន "${newGuest.guestName}" ជោគជ័យ!`);
-
-        setWalkInModalOpen(false);
-        setWalkInForm({
-            name: "",
-            table: "",
-            phone: "",
-            group: "ភ្ញៀវទូទៅ",
-            side: "ខាងកូនកំលោះ",
-            gift: "",
-            currency: "USD",
-        });
-
-        triggerCelebration(newGuest.guestName, newGuest.tableNumber, newGuest.groupName, newGuest.side, newCheckIn.id);
-
-        setSummary({
-            totalGuests: updatedGuests.length,
-            checkedIn: updatedCheckIns.length,
-            attendingCheckedIn: updatedCheckIns.length,
-            remaining: Math.max(0, updatedGuests.length - updatedCheckIns.length),
-        });
-    };
-
-    const undoCheckIn = (item) => {
-        const confirmUndo = window.confirm(`តើអ្នកចង់ដកការកត់ត្រាវត្តមានរបស់ "${item.guestName}" វិញមែនទេ?`);
-        if (!confirmUndo) return;
-
-        const updated = checkIns.filter((c) => c.id !== item.id && c.guestId !== item.guestId);
-        setCheckIns(updated);
-        saveManualCheckIns(updated, invitationId);
-        toast("បានដកការកត់ត្រាវត្តមានរួចរាល់");
-        setSummary({
-            totalGuests: guests.length,
-            checkedIn: updated.length,
-            attendingCheckedIn: updated.length,
-            remaining: Math.max(0, guests.length - updated.length),
-        });
-    };
-
-    const checkedGuestIds = useMemo(() => new Set(checkIns.map((item) => item.guestId)), [checkIns]);
+    const checkedGuestIds = useMemo(() => new Set(checkIns.map((item) => String(item.guestId))), [checkIns]);
 
     const filteredGuests = useMemo(() => {
         return guests.filter((guest) => {
-            const isChecked = checkedGuestIds.has(guest.id);
+            const isChecked = checkedGuestIds.has(String(guest.id));
             if (statusFilter === "pending" && isChecked) return false;
             if (statusFilter === "checked" && !isChecked) return false;
 
@@ -733,6 +191,7 @@ export default function InvitationCheckInPage() {
                         <Sparkles size={14} /> QR CHECK-IN DESK
                     </div>
                     <h1 className="checkin-hero-title">{invitation?.title || "Invitation check-in"}</h1>
+                    <p role="status">{persistenceMode === "LOCAL_DRAFT" ? "Local draft — records stay on this device." : "Server invitation — attendance and gifts are saved to your account."}</p>
                     <p className="checkin-hero-desc">
                         ស្កេន QR Code កាតអញ្ជើញ ឬស្វែងរកឈ្មោះភ្ញៀវ ដើម្បីកត់ត្រាវត្តមានចូលរួមមង្គលការជាក់ស្តែង
                     </p>
@@ -797,7 +256,7 @@ export default function InvitationCheckInPage() {
                 </div>
             )}
 
-            {error && <div className="inv-error" style={{ marginBottom: "20px" }}>{error}</div>}
+            {error && <div role="alert" className="inv-error" style={{ marginBottom: "20px" }}>{error}</div>}
 
             {/* Live Camera Scanner */}
             <QrCameraScanner onScan={handleCameraScan} disabled={saving} />
@@ -1247,6 +706,7 @@ export default function InvitationCheckInPage() {
                                 <button
                                     type="button"
                                     className="checkin-btn-submit"
+                                    disabled={saving}
                                     onClick={handleSaveCelebrationAndClose}
                                 >
                                     <Check size={18} /> {celebrationGiftAmount ? "កត់ត្រាចងដៃ & រួចរាល់" : "យល់ព្រម (Next Guest)"}
@@ -1272,6 +732,7 @@ export default function InvitationCheckInPage() {
 
                         <div className="checkin-modal-inner">
                             <form onSubmit={handleCreateWalkInGuest}>
+                                {pendingWalkIn && <p role="status">{pendingWalkIn.guest.guestName} is registered. {pendingWalkIn.attendance ? "Attendance is saved; retry the gift only." : "Retry attendance without creating another guest."}</p>}
                                 <h3 className="checkin-modal-title">
                                     <UserPlus size={22} /> បន្ថែមភ្ញៀវបន្ទាន់នៅមាត់រោង (Walk-in Guest)
                                 </h3>
@@ -1283,6 +744,7 @@ export default function InvitationCheckInPage() {
                                     <input
                                         required
                                         value={walkInForm.name}
+                                        disabled={saving || Boolean(pendingWalkIn)}
                                         onChange={(e) => setWalkInForm({ ...walkInForm, name: e.target.value })}
                                         placeholder="ឧ. ឯកឧត្តម ជា សំណាង"
                                         autoFocus
@@ -1384,6 +846,7 @@ export default function InvitationCheckInPage() {
                                     <button
                                         type="submit"
                                         className="checkin-btn-submit"
+                                        disabled={saving}
                                     >
                                         <UserPlus size={18} /> បន្ថែម & Check-in ភ្លាមៗ
                                     </button>

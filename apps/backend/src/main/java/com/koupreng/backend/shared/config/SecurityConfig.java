@@ -13,6 +13,7 @@ import com.koupreng.backend.shared.security.ApiRequestLoggingFilter;
 import com.koupreng.backend.shared.security.ApiSecurityProperties;
 import com.koupreng.backend.shared.security.ClientAddressResolver;
 import com.koupreng.backend.auth.infrastructure.security.CookieBearerTokenResolver;
+import com.koupreng.backend.auth.infrastructure.security.CookieCsrfProtectionMatcher;
 import com.koupreng.backend.shared.security.PublicRsvpRateLimitFilter;
 import com.koupreng.backend.shared.security.UploadSecurityFilter;
 import com.koupreng.backend.shared.security.RateLimitService;
@@ -29,6 +30,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.ObjectPostProcessor;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
@@ -47,6 +49,7 @@ import org.springframework.security.oauth2.server.resource.web.authentication.Be
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
+import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
 import org.springframework.security.web.util.matcher.AnyRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
@@ -56,6 +59,19 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
+
+    private static final String[] CSRF_PUBLIC_PATHS = {
+            "/api/v1/auth/login", "/api/v1/auth/register",
+            "/api/v1/auth/google", "/api/v1/auth/telegram",
+            "/api/v1/auth/forgot-password", "/api/v1/auth/reset-password",
+            "/api/auth/login", "/api/auth/register",
+            "/api/auth/google", "/api/auth/telegram",
+            "/api/auth/forgot-password", "/api/auth/reset-password",
+            "/api/v1/payway/callback", "/api/v1/payway/return",
+            "/api/v1/payway/cancel", "/api/v1/internal/template-payments/**",
+            "/api/v1/internal/subscription-payments/**", "/api/v1/public/invitations/**",
+            "/api/v1/contact", "/api/health", "/actuator/**"
+    };
 
     private static final String API_DOCS_CONTENT_SECURITY_POLICY = "default-src 'self'; "
             + "script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; "
@@ -145,19 +161,16 @@ public class SecurityConfig {
                         handler.setCsrfRequestAttributeName(null);
                         csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                                 .csrfTokenRequestHandler(handler)
-                                .ignoringRequestMatchers(
-                                        "/api/v1/auth/login", "/api/v1/auth/register",
-                                        "/api/v1/auth/google", "/api/v1/auth/telegram",
-                                        "/api/v1/auth/forgot-password", "/api/v1/auth/reset-password",
-                                        "/api/auth/login", "/api/auth/register",
-                                        "/api/auth/google", "/api/auth/telegram",
-                                        "/api/auth/forgot-password", "/api/auth/reset-password",
-                                        "/api/v1/payway/callback", "/api/v1/payway/return",
-                                        "/api/v1/payway/cancel", "/api/v1/internal/template-payments/**",
-                                        "/api/v1/internal/subscription-payments/**",
-                                        "/api/v1/public/invitations/**",
-                                        "/api/health", "/actuator/**"
-                                );
+                                .ignoringRequestMatchers(CSRF_PUBLIC_PATHS)
+                                .withObjectPostProcessor(new ObjectPostProcessor<CsrfFilter>() {
+                                    @Override
+                                    public <O extends CsrfFilter> O postProcess(O filter) {
+                                        // OAuth resource-server defaults exempt every token resolved by our
+                                        // cookie-aware resolver. Replace that matcher after configuration.
+                                        filter.setRequireCsrfProtectionMatcher(new CookieCsrfProtectionMatcher(CSRF_PUBLIC_PATHS));
+                                        return filter;
+                                    }
+                                });
                     } else {
                         csrf.disable();
                     }
@@ -203,6 +216,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/templates",
                                 "/api/v1/templates/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/i18n/messages").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/contact").permitAll()
                         .requestMatchers("/api/v1/public/invitations/**").permitAll()
                         .requestMatchers("/api/v1/payway/callback",
                                 "/api/v1/payway/return",
@@ -326,6 +340,7 @@ public class SecurityConfig {
         configuration.setAllowedMethods(List.copyOf(corsProperties.getAllowedMethods()));
         configuration.setAllowedHeaders(List.copyOf(corsProperties.getAllowedHeaders()));
         configuration.setExposedHeaders(List.copyOf(corsProperties.getExposedHeaders()));
+        configuration.addExposedHeader("X-XSRF-TOKEN");
         configuration.setAllowCredentials(corsProperties.isAllowCredentials());
         configuration.setMaxAge(corsProperties.getMaxAgeSeconds());
 

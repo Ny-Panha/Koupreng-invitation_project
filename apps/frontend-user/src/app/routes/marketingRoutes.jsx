@@ -1,13 +1,14 @@
+import { TemplateCheckoutPage, HomePage, PricingPage, ContactPage, TemplateDemoPage, TemplatesPage, VenuesPage } from "./lazyRoutePages";
 import { Navigate, Route } from "react-router-dom";
 
 import MarketingShell from "../../layouts/MarketingShell";
-import TemplateCheckoutPage from "../../features/payments/TemplateCheckoutPage";
-import HomePage from "../../pages/marketing/HomePage";
-import PricingPage from "../../pages/marketing/PricingPage";
-import ContactPage from "../../pages/marketing/ContactPage";
-import TemplateDemoPage from "../../pages/marketing/TemplateDemoPage";
-import TemplatesPage from "../../pages/marketing/TemplatesPage";
-import VenuesPage from "../../pages/marketing/VenuesPage";
+
+
+
+
+
+
+
 import RequireAuth from "./RequireAuth";
 
 export function marketingRoutes() {

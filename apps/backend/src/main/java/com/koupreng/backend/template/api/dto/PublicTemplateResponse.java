@@ -30,8 +30,13 @@ public class PublicTemplateResponse {
     private String primaryColor;
     private String secondaryColor;
     private String backgroundColor;
+    private boolean checkoutEligible;
+    private BigDecimal checkoutAmount;
+    private String checkoutCurrency;
+    private String checkoutPolicy;
 
     public static PublicTemplateResponse from(InvitationTemplate template) {
+        var offer = com.koupreng.backend.payment.application.TemplateCheckoutPolicy.offer(template);
         return PublicTemplateResponse.builder()
                 .id(template.getId())
                 .code(template.getCode())
@@ -48,6 +53,10 @@ public class PublicTemplateResponse {
                 .primaryColor(template.getPrimaryColor())
                 .secondaryColor(template.getSecondaryColor())
                 .backgroundColor(template.getBackgroundColor())
+                .checkoutEligible(offer.eligible())
+                .checkoutAmount(offer.amount())
+                .checkoutCurrency(offer.currency())
+                .checkoutPolicy(offer.policy())
                 .build();
     }
 }

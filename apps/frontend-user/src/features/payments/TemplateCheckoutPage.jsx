@@ -15,6 +15,7 @@ import {
 import { getTemplateById, KEEP_TEMPLATE_CODE } from "../templates/data/templatesData";
 import { templateCatalogService } from "@/features/templates/api/templateCatalogApi";
 import { paymentService } from "./paymentService";
+import { checkoutOffer } from "./checkoutOffer";
 import heroBg from "../../assets/icons/background.png";
 import "./PaymentPages.css";
 
@@ -73,6 +74,7 @@ export default function TemplateCheckoutPage() {
 
     if (fromCatalog) {
       return {
+        ...fromCatalog,
         id: fromCatalog.id,
         name: fromCatalog.name,
         image: fromCatalog.thumbnailUrl || "/facebook/all/03-card/cover-card.jpg",
@@ -81,15 +83,14 @@ export default function TemplateCheckoutPage() {
       };
     }
 
-    const fallback = getTemplateById(templateId) || getTemplateById(KEEP_TEMPLATE_CODE);
-    const fallbackCatalog = catalogList[0];
+    const fallback = getTemplateById(templateId);
 
     return {
-      id: fallbackCatalog?.id || 2,
-      name: fallback?.name || fallbackCatalog?.name || "Garden Royal Khmer Wedding",
-      image: fallback?.image || fallbackCatalog?.thumbnailUrl || "/facebook/all/03-card/cover-card.jpg",
-      category: fallback?.category || fallbackCatalog?.category || "TRADITIONAL",
-      description: fallback?.description || fallbackCatalog?.description,
+      id: null,
+      name: fallback?.name || "Template unavailable",
+      image: fallback?.image || "/facebook/all/03-card/cover-card.jpg",
+      category: fallback?.category || "TRADITIONAL",
+      description: fallback?.description,
     };
   }, [catalogList, templateId]);
 
@@ -98,14 +99,13 @@ export default function TemplateCheckoutPage() {
       templateId: matchedTemplate.id,
       templateName: matchedTemplate.name,
       packageName: "Premium",
-      amount: "0.01",
-      currency: "USD",
+      ...checkoutOffer(matchedTemplate.id ? matchedTemplate : null, templateId),
     }),
-    [matchedTemplate]
+    [matchedTemplate, templateId]
   );
 
   const createOrder = async () => {
-    if (!checkout.templateId) {
+    if (!checkout.templateId || !checkout.eligible) {
       setError("Template catalog is not available yet. Please refresh and try again.");
       return;
     }
@@ -177,7 +177,7 @@ export default function TemplateCheckoutPage() {
             <span></span>
           </div>
           <p className="checkout-subtitle">
-            ជ្រើសរើសទូទាត់តាម ABA KHQR ដើម្បីបើកដំណើរការគំរូភ្លាមៗ និងប្រើប្រាស់មុខងារពេញលេញ
+            ទូទាត់តាម ABA KHQR។ សិទ្ធិប្រើគំរូនឹងបើកក្រោយការផ្ទៀងផ្ទាត់ការទូទាត់។
           </p>
         </header>
 
@@ -254,7 +254,7 @@ export default function TemplateCheckoutPage() {
                     <div className="checkout-method-title">
                       <strong>ABA PAY / KHQR (Bakong Standard)</strong>
                       <span className="checkout-tag-instant">
-                        <IoFlashOutline /> Instant Unlock
+                        <IoFlashOutline /> Verified Activation
                       </span>
                     </div>
                     <span className="checkout-method-badge">ពេញនិយម & ងាយស្រួល</span>
@@ -322,7 +322,7 @@ export default function TemplateCheckoutPage() {
               <button
                 type="button"
                 className="checkout-pay-btn"
-                disabled={creating || catalogLoading || !checkout.templateId}
+                disabled={creating || catalogLoading || !checkout.templateId || !checkout.eligible}
                 onClick={createOrder}
               >
                 {creating ? (
@@ -335,16 +335,17 @@ export default function TemplateCheckoutPage() {
                 ) : (
                   <>
                     <IoLockClosedOutline />
-                    <span>ទូទាត់តាម ABA KHQR ($0.01)</span>
+                    <span>ទូទាត់តាម ABA KHQR ({checkout.currency} {checkout.amount})</span>
                   </>
                 )}
               </button>
+              {!catalogLoading && checkout.reason && <p role="status">{checkout.reason}</p>}
 
               {/* Instant Activation Guarantee */}
               <div className="checkout-guarantee-box">
                 <div className="checkout-guarantee-item">
                   <IoFlashOutline />
-                  <span>បើកដំណើរការភ្លាមៗក្រោយទូទាត់រួច (Instant Digital Access)</span>
+                  <span>បើកដំណើរការក្រោយផ្ទៀងផ្ទាត់ការទូទាត់ (Access after payment verification)</span>
                 </div>
                 <div className="checkout-guarantee-item">
                   <IoShieldCheckmarkOutline />

@@ -2,12 +2,14 @@ package com.koupreng.backend.reporting.application;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
+import com.koupreng.backend.guest.domain.Guest;
 import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;
 import com.koupreng.backend.notification.infrastructure.persistence.NotificationRepository;
@@ -26,6 +28,39 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 
 class DashboardReportServiceTests {
+
+    @Test
+    void mixedCurrencyHistoricPaymentsCannotBecomeOneRevenueNumber() {
+        Fixture fixture = fixture();
+        var usd = new com.koupreng.backend.payment.domain.TemplatePaymentOrder();
+        usd.setStatus(com.koupreng.backend.payment.domain.PaymentStatus.PAID); usd.setCurrency("USD"); usd.setAmount(new java.math.BigDecimal("10.00"));
+        var khr = new com.koupreng.backend.payment.domain.TemplateOrder();
+        khr.setStatus(com.koupreng.backend.payment.domain.PaymentStatus.PAID); khr.setCurrency("KHR"); khr.setAmount(new java.math.BigDecimal("40000"));
+        when(fixture.paymentRepository.findByUserIdOrderByCreatedAtDesc(1L)).thenReturn(List.of(usd));
+        when(fixture.legacyOrderRepository.findByUserIdOrderByCreatedAtDesc(1L)).thenReturn(List.of(khr));
+        var result = fixture.service.getMyDashboard(fixture.authentication);
+        assertEquals(null, result.getTotalRevenue());
+        assertEquals(false, result.isRevenueComparable());
+        assertEquals(null, result.getCurrency());
+        assertEquals(new java.math.BigDecimal("10.00"), result.getRevenueByCurrency().get("USD"));
+        assertEquals(new java.math.BigDecimal("40000"), result.getRevenueByCurrency().get("KHR"));
+    }
+
+    @Test
+    void guestReportCsvNeutralizesSpreadsheetFormulasAndEscapesMultilineNames() {
+        Fixture fixture = fixture();
+        UserInvitation invitation = invitation(user(1L));
+        when(fixture.invitationRepository.findByIdAndDeletedFalse(10L)).thenReturn(Optional.of(invitation));
+        Guest guest = new Guest();
+        guest.setId(20L);
+        guest.setInvitation(invitation);
+        guest.setGuestName("=HYPERLINK(\"untrusted\")\nsecond line");
+        when(fixture.guestRepository.findByInvitationIdOrderByGuestGroupAscTableNumberAscGuestNameAsc(10L))
+                .thenReturn(List.of(guest));
+        String csv = fixture.service.exportGuestReportCsv(fixture.authentication, 10L);
+        assertTrue(csv.contains("\"'=HYPERLINK(\"\"untrusted\"\")\nsecond line\""));
+        assertTrue(csv.startsWith("guestId,guestName,email,phone,"));
+    }
 
     @Test
     void invitationReportRejectsAnotherOwnerBeforeReadingReportData() {
@@ -81,7 +116,7 @@ class DashboardReportServiceTests {
                 currentUserService
         );
         return new Fixture(service, invitationRepository, guestRepository, userRepository,
-                currentUserService, authentication);
+                currentUserService, authentication, paymentRepository, orderRepository);
     }
 
     private UserInvitation invitation(AppUser owner) {
@@ -103,7 +138,9 @@ class DashboardReportServiceTests {
             GuestRepository guestRepository,
             AppUserRepository userRepository,
             CurrentUserService currentUserService,
-            Authentication authentication
+            Authentication authentication,
+            TemplatePaymentOrderRepository paymentRepository,
+            TemplateOrderRepository legacyOrderRepository
     ) {
     }
 }

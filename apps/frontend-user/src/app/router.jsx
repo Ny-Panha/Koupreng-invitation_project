@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import NotFoundPage from "../pages/marketing/NotFoundPage";
@@ -8,6 +9,7 @@ import { marketingRoutes } from "./routes/marketingRoutes";
 
 export default function AppRouter() {
   return (
+    <Suspense fallback={<main role="status" aria-live="polite">Loading page...</main>}>
     <Routes>
       {builderRoutes()}
       {marketingRoutes()}
@@ -16,5 +18,6 @@ export default function AppRouter() {
 
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
+    </Suspense>
   );
 }

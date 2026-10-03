@@ -43,3 +43,14 @@ export function formatMoney(amount, currency = "USD") {
         return `${num.toFixed(2)} ${currency || ""}`.trim();
     }
 }
+
+export function formatRevenue(report) {
+    if (report?.revenueComparable === false) {
+        const totals = report.revenueByCurrency;
+        if (!totals || typeof totals !== "object" || Array.isArray(totals)) return "—";
+        return Object.entries(totals)
+            .map(([currency, amount]) => `${currency} ${formatMoney(amount, currency)}`)
+            .join(" · ") || "—";
+    }
+    return formatMoney(report?.totalRevenue, report?.currency || "USD");
+}

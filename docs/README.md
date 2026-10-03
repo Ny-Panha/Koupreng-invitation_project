@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="apps/frontend-user/public/logo.png" alt="Koupreng Khmer wordmark" width="220">
+<img src="../apps/frontend-user/public/logo.png" alt="Koupreng Khmer wordmark" width="220">
 
 # 💌 Koupreng
 
@@ -29,9 +29,9 @@ Koupreng combines warm ceremonial presentation with the tools needed to publish 
 
 <div align="center">
 
-<img src="apps/frontend-user/public/templates/canva-luxury/emerald-luxury.jpg" alt="Emerald and gold Koupreng invitation template" width="420">
+<img src="../apps/frontend-user/public/invitations/khmer-celestial/burgundy-bokeh-poster.webp" alt="Burgundy Khmer Celestial invitation backdrop" width="420">
 
-<p><sub>A real invitation design asset shipped with Koupreng—combining deep Khmer-inspired color, restrained gold detail, and a guest-first mobile canvas.</sub></p>
+<p><sub>A real invitation design asset shipped with Koupreng—showing the burgundy atmosphere used by the Khmer Celestial invitation.</sub></p>
 
 </div>
 
@@ -62,19 +62,19 @@ These are authentic visual assets used by the current Koupreng user application�
 <table>
   <tr>
     <td width="33%" align="center">
-      <img src="apps/frontend-user/public/invitations/canva-khmer/sections/hero.webp" alt="Koupreng Khmer invitation opening scene" width="100%">
-      <br><strong>Invitation opening</strong><br>
-      <sub>A warm, music-ready first impression.</sub>
+      <img src="../apps/frontend-user/public/invitations/khmer-celestial/royal-stage-backdrop.jpg" alt="Khmer Celestial stage backdrop artwork" width="100%">
+      <br><strong>Ceremonial backdrop</strong><br>
+      <sub>Artwork used by the Khmer Celestial invitation.</sub>
     </td>
     <td width="33%" align="center">
-      <img src="apps/frontend-user/public/invitations/canva-khmer/sections/program.webp" alt="Koupreng Khmer wedding ceremony program" width="100%">
-      <br><strong>Ceremony program</strong><br>
-      <sub>Khmer schedule and venue guidance.</sub>
+      <img src="../apps/frontend-user/public/invitations/khmer-celestial/ceremonial-folio.webp" alt="Khmer Celestial ceremonial folio artwork" width="100%">
+      <br><strong>Ceremonial folio</strong><br>
+      <sub>Decorative artwork shipped with the invitation.</sub>
     </td>
     <td width="33%" align="center">
-      <img src="apps/frontend-user/public/invitations/canva-khmer/sections/gift.webp" alt="Koupreng invitation gift experience with demonstration payment details" width="100%">
-      <br><strong>Guest participation</strong><br>
-      <sub>Gift presentation using demonstration details.</sub>
+      <img src="../apps/frontend-user/public/invitations/khmer-celestial/royal-location-frame.png" alt="Khmer Celestial location frame artwork" width="100%">
+      <br><strong>Location frame</strong><br>
+      <sub>Artwork for the invitation's location presentation.</sub>
     </td>
   </tr>
 </table>
@@ -151,7 +151,7 @@ flowchart TB
     Gateway -. routes .-> API
 ```
 
-The backend follows domain-oriented package boundaries with API, application, domain, and infrastructure responsibilities. See the [Architecture V2 guide](docs/architecture/ARCHITECTURE.md), [folder ownership rules](docs/architecture/folder-structure.md), and [database architecture](docs/database/DATABASE.md) for the detailed design.
+The backend follows domain-oriented package boundaries with API, application, domain, and infrastructure responsibilities. See the [Architecture V2 guide](architecture/ARCHITECTURE.md), [folder ownership rules](architecture/folder-structure.md), and [database architecture](database/DATABASE.md) for the detailed design.
 
 <a id="repository-structure"></a>
 
@@ -204,12 +204,12 @@ Copy-Item .env.example .env
 Optional repository setup helpers:
 
 ```bash
-chmod +x scripts/dev/*.sh scripts/maintenance/*.sh
-./scripts/dev/setup.sh
+chmod +x scripts/maintenance/dev/setup.sh
+./scripts/maintenance/dev/setup.sh
 ```
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\dev\setup.ps1
+.\run-local-stack.ps1 -Help
 ```
 
 ### 4. Run locally
@@ -239,7 +239,7 @@ docker compose build --pull
 docker compose up -d
 ```
 
-The Compose gateway exposes the user application at `http://localhost:8080` and the admin application at `http://admin.localhost:8080`. MySQL and Redis remain private to the Compose network. See the [Docker deployment guide](docs/deployment/DOCKER.md) for topology, volumes, proxy rules, and release checks.
+The Compose gateway exposes the user application at `http://localhost:8080` and the admin application at `http://admin.localhost:8080`. MySQL and Redis remain private to the Compose network. See the [Docker deployment guide](deployment/DOCKER.md) for topology, volumes, proxy rules, and release checks.
 
 <a id="local-services"></a>
 
@@ -287,7 +287,7 @@ The fixture creates a published `demo-wedding` invitation, organization, represe
 
 </details>
 
-For endpoint ownership and compatibility rules, read the [API contract](docs/api/API_CONTRACT.md).
+For endpoint ownership and compatibility rules, read the [API contract](api/API_CONTRACT.md).
 
 <a id="testing-quality"></a>
 
@@ -308,7 +308,7 @@ Run Playwright browser journeys from `apps/frontend-user`:
 npm run test:e2e
 ```
 
-The CI workflow also covers secret scanning, dependency audits, fresh-MySQL Flyway migration, static analysis, build artifacts, and route smoke checks. Follow the reproducible [smoke-test guide](docs/testing/SMOKE_TEST.md), then review the latest [verification evidence](docs/qa/verification-results.md) and [known release gates](docs/qa/known-limitations.md).
+The CI workflow also covers secret scanning, dependency audits, fresh-MySQL Flyway migration, static analysis, build artifacts, and route smoke checks. Follow the reproducible [smoke-test guide](testing/SMOKE_TEST.md), then review the latest [verification evidence](qa/verification-results.md) and [known release gates](qa/known-limitations.md).
 
 <a id="security"></a>
 
@@ -325,14 +325,14 @@ The CI workflow also covers secret scanning, dependency audits, fresh-MySQL Flyw
 
 | Guide | Description |
 | --- | --- |
-| [Architecture](docs/architecture/ARCHITECTURE.md) | System boundaries, modules, and target architecture |
-| [Folder Structure](docs/architecture/folder-structure.md) | Package and directory ownership rules |
-| [Database](docs/database/DATABASE.md) | Schema ownership, migrations, and persistence rules |
-| [API Contract](docs/api/API_CONTRACT.md) | Endpoint compatibility and API conventions |
-| [Docker Deployment](docs/deployment/DOCKER.md) | Container topology, gateway, volumes, and operations |
-| [Smoke Testing](docs/testing/SMOKE_TEST.md) | Reproducible local and release verification |
-| [Verification Results](docs/qa/verification-results.md) | Latest recorded validation evidence |
-| [Known Limitations](docs/qa/known-limitations.md) | Open release gates and environment constraints |
+| [Architecture](architecture/ARCHITECTURE.md) | System boundaries, modules, and target architecture |
+| [Folder Structure](architecture/folder-structure.md) | Package and directory ownership rules |
+| [Database](database/DATABASE.md) | Schema ownership, migrations, and persistence rules |
+| [API Contract](api/API_CONTRACT.md) | Endpoint compatibility and API conventions |
+| [Docker Deployment](deployment/DOCKER.md) | Container topology, gateway, volumes, and operations |
+| [Smoke Testing](testing/SMOKE_TEST.md) | Reproducible local and release verification |
+| [Verification Results](qa/verification-results.md) | Latest recorded validation evidence |
+| [Known Limitations](qa/known-limitations.md) | Open release gates and environment constraints |
 | [Security Policy](SECURITY.md) | Vulnerability reporting and security expectations |
 
 ---

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   IoCheckmarkCircle,
   IoAlertCircle,
@@ -10,14 +10,23 @@ import "./Toast.css";
 
 export default function ToastContainer() {
   const [toasts, setToasts] = useState([]);
+  const timers = useRef(new Map());
+  const activeMessages = useRef(new Map());
+  const dismiss = useCallback((id) => {
+    clearTimeout(timers.current.get(id));
+    timers.current.delete(id);
+    for (const [message, activeId] of activeMessages.current) if (activeId === id) activeMessages.current.delete(message);
+    setToasts((current) => current.filter((item) => item.id !== id));
+  }, []);
 
   useEffect(() => {
     const handleToastEvent = (event) => {
       const { message, type = "success", duration = 3000 } = event.detail || {};
-      if (!message) return;
+      if (!message || activeMessages.current.has(message)) return;
 
       const id = Date.now() + Math.random().toString(36).slice(2, 6);
       const newToast = { id, message, type };
+      activeMessages.current.set(message, id);
 
       setToasts((current) => {
         if (current.some((item) => item.message === message)) {
@@ -26,21 +35,22 @@ export default function ToastContainer() {
         return [...current, newToast];
       });
 
-      setTimeout(() => {
-        setToasts((current) => current.filter((item) => item.id !== id));
-      }, duration);
+      timers.current.set(id, setTimeout(() => dismiss(id), duration));
     };
+    const handleLegacyToast = (event) => handleToastEvent({ detail: { message: event.detail, type: "info" } });
 
     window.addEventListener("koupreng:toast", handleToastEvent);
-    window.addEventListener("toast", (e) => {
-      handleToastEvent({ detail: { message: e.detail, type: "info" } });
-    });
+    window.addEventListener("toast", handleLegacyToast);
+    const activeTimers = timers.current;
+    const messages = activeMessages.current;
 
     return () => {
       window.removeEventListener("koupreng:toast", handleToastEvent);
-      window.removeEventListener("toast", handleToastEvent);
+      window.removeEventListener("toast", handleLegacyToast);
+      for (const timer of activeTimers.values()) clearTimeout(timer);
+      activeTimers.clear(); messages.clear();
     };
-  }, []);
+  }, [dismiss]);
 
   if (toasts.length === 0) return null;
 
@@ -65,11 +75,7 @@ export default function ToastContainer() {
             <button
               type="button"
               className="k-toast-close"
-              onClick={() =>
-                setToasts((current) =>
-                  current.filter((toast) => toast.id !== item.id)
-                )
-              }
+              onClick={() => dismiss(item.id)}
               aria-label="Dismiss toast"
             >
               <IoClose aria-hidden="true" />

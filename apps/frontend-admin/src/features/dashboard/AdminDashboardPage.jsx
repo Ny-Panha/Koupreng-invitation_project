@@ -9,7 +9,7 @@ import {
   ErrorStateView,
 } from "../../shared/ui/AdminUI";
 import { useResource } from "../../shared/hooks";
-import { formatMoney, formatDateTime } from "../../shared/utils";
+import { formatMoney, formatRevenue, formatDateTime } from "../../shared/utils";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 import dashboardService from "./dashboardService";
 import {
@@ -138,7 +138,7 @@ export default function AdminDashboardPage() {
         />
         <StatCard
           label={t("dashboard.totalRevenue", "ចំណូលសរុប")}
-          value={formatMoney(data.totalRevenue)}
+          value={formatRevenue(data)}
           note={data.systemHealthSummary || t("dashboard.normalOperation", "ដំណើរការធម្មតា")}
           icon={TrendingUp}
           tone="amber"

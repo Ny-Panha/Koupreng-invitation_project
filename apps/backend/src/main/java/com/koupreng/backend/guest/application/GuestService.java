@@ -1,12 +1,16 @@
 package com.koupreng.backend.guest.application;
 
 import com.koupreng.backend.invitation.application.InvitationService;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -32,6 +36,7 @@ import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.guest.api.dto.GuestGroupResponse;
 import com.koupreng.backend.guest.api.dto.GuestImportErrorResponse;
 import com.koupreng.backend.guest.api.dto.GuestImportFileResultResponse;
+import com.koupreng.backend.guest.api.dto.GuestImportFilePreviewResponse;
 import com.koupreng.backend.guest.api.dto.GuestImportRequest;
 import com.koupreng.backend.guest.api.dto.GuestRequest;
 import com.koupreng.backend.guest.api.dto.GuestResponse;
@@ -60,25 +65,40 @@ public class GuestService {
     private final GuestRepository guestRepository;
     private final RsvpRepository rsvpRepository;
     private final InvitationService invitationService;
+    private final Validator validator;
+
+    @Autowired
+    private com.koupreng.backend.entitlement.application.EntitlementService entitlementService;
 
     @Autowired
     public GuestService(
             GuestRepository guestRepository,
             RsvpRepository rsvpRepository,
-            InvitationService invitationService
+            InvitationService invitationService,
+            Validator validator
     ) {
         this.guestRepository = guestRepository;
         this.rsvpRepository = rsvpRepository;
         this.invitationService = invitationService;
+        this.validator = validator;
+    }
+
+    public GuestService(
+            GuestRepository guestRepository,
+            RsvpRepository rsvpRepository,
+            InvitationService invitationService
+    ) {
+        this(guestRepository, rsvpRepository, invitationService, null);
     }
 
     public GuestService(GuestRepository guestRepository, InvitationService invitationService) {
         this(guestRepository, null, invitationService);
     }
 
-    @Transactional
+    @Transactional(isolation = org.springframework.transaction.annotation.Isolation.READ_COMMITTED)
     public GuestResponse create(Authentication authentication, Long invitationId, GuestRequest request) {
         UserInvitation invitation = invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        requireGuestCapacity(invitation, 1);
         ensureUniqueGuest(invitationId, null, request);
         Guest guest = new Guest();
         guest.setInvitation(invitation);
@@ -172,9 +192,11 @@ public class GuestService {
                 .toList();
     }
 
-    @Transactional
+    @Transactional(isolation = org.springframework.transaction.annotation.Isolation.READ_COMMITTED)
     public List<GuestResponse> importGuests(Authentication authentication, Long invitationId, GuestImportRequest request) {
         UserInvitation invitation = invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        requireGuestCapacity(invitation, (int) request.getGuests().stream()
+                .filter(guest -> guest.getGuestName() != null && !guest.getGuestName().isBlank()).count());
         return request.getGuests().stream()
                 .filter(guest -> guest.getGuestName() != null && !guest.getGuestName().isBlank())
                 .map(guestRequest -> {
@@ -189,7 +211,44 @@ public class GuestService {
                 .toList();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
+    public GuestImportFilePreviewResponse previewGuestsFile(
+            Authentication authentication,
+            Long invitationId,
+            MultipartFile file
+    ) {
+        UserInvitation invitation = invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        validateImportFile(file);
+        List<GuestImportFilePreviewResponse.ValidRow> accepted = new ArrayList<>();
+        List<GuestImportErrorResponse> errors = new ArrayList<>();
+        Set<String> seenEmails = new HashSet<>();
+        Set<String> seenPhones = new HashSet<>();
+        for (ImportRow row : parseImportRows(file)) {
+            String reason = importRowError(invitation.getId(), row);
+            if (reason != null) {
+                errors.add(errorRow(row.rowNumber(), reason));
+                continue;
+            }
+            GuestRequest request = row.request();
+            String email = trimToNull(request.getEmail());
+            String normalizedEmail = email == null ? null : email.toLowerCase(Locale.ROOT);
+            String phone = trimToNull(request.getPhone());
+            if (reason == null && ((normalizedEmail != null && seenEmails.contains(normalizedEmail))
+                    || (phone != null && seenPhones.contains(phone)))) {
+                reason = "Guest with the same email or phone already exists";
+            }
+            if (reason != null) {
+                errors.add(errorRow(row.rowNumber(), reason));
+                continue;
+            }
+            accepted.add(new GuestImportFilePreviewResponse.ValidRow(row.rowNumber(), request));
+            if (normalizedEmail != null) { seenEmails.add(normalizedEmail); }
+            if (phone != null) { seenPhones.add(phone); }
+        }
+        return new GuestImportFilePreviewResponse(accepted.size(), errors.size(), errors, accepted);
+    }
+
+    @Transactional(isolation = org.springframework.transaction.annotation.Isolation.READ_COMMITTED)
     public GuestImportFileResultResponse importGuestsFile(
             Authentication authentication,
             Long invitationId,
@@ -205,18 +264,14 @@ public class GuestService {
 
         for (ImportRow row : rows) {
             GuestRequest guestRequest = row.request();
-            String guestName = trimToNull(guestRequest.getGuestName());
-            if (guestName == null) {
+            String reason = importRowError(invitation.getId(), row);
+            if (reason != null) {
                 skipped++;
-                errors.add(errorRow(row.rowNumber(), "Guest name is required"));
-                continue;
-            }
-            if (isDuplicateGuest(invitation.getId(), guestRequest)) {
-                skipped++;
-                errors.add(errorRow(row.rowNumber(), "Guest with the same email or phone already exists"));
+                errors.add(errorRow(row.rowNumber(), reason));
                 continue;
             }
 
+            requireGuestCapacity(invitation, 1);
             Guest guest = new Guest();
             guest.setInvitation(invitation);
             guest.setInviteToken(uniqueInviteToken());
@@ -253,6 +308,12 @@ public class GuestService {
             )).append('\n');
         }
         return csv.toString();
+    }
+
+    private void requireGuestCapacity(UserInvitation invitation, int additional) {
+        if (entitlementService != null) {
+            entitlementService.requireGuestCreation(invitation, additional);
+        }
     }
 
     private Guest requireGuest(Long invitationId, Long guestId) {
@@ -309,8 +370,8 @@ public class GuestService {
         }
 
         if (".xlsx".equals(extension)) {
-            try {
-                byte[] header = file.getInputStream().readNBytes(4);
+            try (java.io.InputStream input = file.getInputStream()) {
+                byte[] header = input.readNBytes(4);
                 if (header.length < 2 || header[0] != 0x50 || header[1] != 0x4B) {
                     throw new ApiException(HttpStatus.BAD_REQUEST, "XLSX file signature is invalid");
                 }
@@ -325,7 +386,7 @@ public class GuestService {
         String extension = extension(filename);
         try {
             return ".xlsx".equals(extension) ? parseXlsxRows(file) : parseCsvRows(file);
-        } catch (IOException exception) {
+        } catch (IOException | IllegalArgumentException exception) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Import file could not be parsed");
         }
     }
@@ -347,7 +408,11 @@ public class GuestService {
                 if (line.isBlank()) {
                     continue;
                 }
-                rows.add(new ImportRow(rowNumber, requestFromColumns(headers, parseCsvLine(line))));
+                try {
+                    rows.add(new ImportRow(rowNumber, requestFromColumns(headers, parseCsvLine(line)), null));
+                } catch (IllegalArgumentException exception) {
+                    rows.add(new ImportRow(rowNumber, null, exception.getMessage()));
+                }
             }
             return rows;
         }
@@ -373,7 +438,11 @@ public class GuestService {
                 if (values.stream().allMatch(value -> value == null || value.isBlank())) {
                     continue;
                 }
-                rows.add(new ImportRow(index + 1, requestFromColumns(headers, values)));
+                try {
+                    rows.add(new ImportRow(index + 1, requestFromColumns(headers, values), null));
+                } catch (IllegalArgumentException exception) {
+                    rows.add(new ImportRow(index + 1, null, exception.getMessage()));
+                }
             }
             return rows;
         }
@@ -438,6 +507,9 @@ public class GuestService {
                 current.append(ch);
             }
         }
+        if (quoted) {
+            throw new IllegalArgumentException("CSV row has an unmatched quote");
+        }
         values.add(trimToNull(current.toString()));
         return values;
     }
@@ -469,15 +541,47 @@ public class GuestService {
             return null;
         }
         try {
-            int parsed = Integer.parseInt(trimmed);
-            return parsed < 0 ? null : parsed;
+            return Integer.parseInt(trimmed);
         } catch (NumberFormatException exception) {
-            return null;
+            throw new IllegalArgumentException("Seat count must be a whole number between 1 and 2147483647");
         }
     }
 
     private boolean isDuplicateGuest(Long invitationId, GuestRequest request) {
         return duplicateGuest(invitationId, null, request);
+    }
+
+    private String importRowError(Long invitationId, ImportRow row) {
+        if (row.error() != null) {
+            return row.error();
+        }
+        GuestRequest request = row.request();
+        if (trimToNull(request.getGuestName()) == null) {
+            return "Guest name is required";
+        }
+        String validationError;
+        if (validator != null) {
+            validationError = importConstraintError(validator, request);
+        } else {
+            // Preserve manually constructed service compatibility without bypassing DTO rules.
+            try (var factory = Validation.buildDefaultValidatorFactory()) {
+                validationError = importConstraintError(factory.getValidator(), request);
+            }
+        }
+        if (validationError != null) {
+            return validationError;
+        }
+        return isDuplicateGuest(invitationId, request)
+                ? "Guest with the same email or phone already exists" : null;
+    }
+
+    private String importConstraintError(Validator requestValidator, GuestRequest request) {
+        String errors = requestValidator.validate(request).stream()
+                .map(ConstraintViolation::getMessage)
+                .distinct()
+                .sorted()
+                .collect(Collectors.joining("; "));
+        return errors.isEmpty() ? null : errors;
     }
 
     private void ensureUniqueGuest(Long invitationId, Long currentGuestId, GuestRequest request) {
@@ -558,6 +662,6 @@ public class GuestService {
         return value.trim();
     }
 
-    private record ImportRow(int rowNumber, GuestRequest request) {
+    private record ImportRow(int rowNumber, GuestRequest request, String error) {
     }
 }

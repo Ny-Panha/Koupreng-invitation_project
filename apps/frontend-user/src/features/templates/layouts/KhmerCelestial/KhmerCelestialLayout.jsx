@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 
 import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
+import { isTrustedPreviewMessage, readEmbeddedPreviewChannel } from "@/shared/preview/previewMessaging";
 import TemplateGift from "../../experience/components/sections/TemplateGift";
 import TemplateRsvp from "../../experience/components/sections/TemplateRsvp";
 import CelestialGallery from "./components/CelestialGallery";
@@ -34,6 +35,7 @@ import {
   CelestialReveal,
 } from "./components/CelestialSection";
 import { KHMER_CELESTIAL_ASSETS } from "./khmerCelestialAssets";
+import { celestialElementFont, celestialFont } from "./celestialTypography";
 import "./khmer-celestial.css";
 
 const PROGRAM_ICONS = [
@@ -109,7 +111,7 @@ function parentLines(value) {
   return [];
 }
 
-function FamilyGroup({ title, parents, label, name }) {
+function FamilyGroup({ title, parents, label, name, nameStyle }) {
   return (
     <CelestialReveal as="article" className="kc-family__group">
       <p className="kc-family__side">{title}</p>
@@ -118,7 +120,7 @@ function FamilyGroup({ title, parents, label, name }) {
       </div>
       <span className="kc-family__sprig" aria-hidden="true"><Flower2 /></span>
       <p className="kc-family__label">{label}</p>
-      <h3>{name}</h3>
+      <h3 style={nameStyle}>{name}</h3>
     </CelestialReveal>
   );
 }
@@ -129,6 +131,7 @@ export default function KhmerCelestialLayout({
   backTo = "/templates",
   backLabel = "ត្រឡប់ទៅគំរូទាំងអស់",
   preview = false,
+  previewChannel,
   useTemplateLink,
   primaryCtaLabel = "ប្រើគំរូនេះ",
   showActions = true,
@@ -189,14 +192,17 @@ export default function KhmerCelestialLayout({
   }, [opened]);
 
   useEffect(() => {
+    const channel = previewChannel || readEmbeddedPreviewChannel();
+    if (!channel) return undefined;
     const onMessage = (event) => {
+      if (!isTrustedPreviewMessage(event, channel)) return;
       if (event.data?.type === "TOGGLE_GATE") {
         setOpened(Boolean(event.data.open ?? event.data.isOpen));
       }
     };
     window.addEventListener("message", onMessage);
     return () => window.removeEventListener("message", onMessage);
-  }, []);
+  }, [previewChannel]);
 
   useEffect(() => {
     if (!opened) return;
@@ -258,7 +264,10 @@ export default function KhmerCelestialLayout({
   const invitationImage = firstImage(galleryImages[1]) || firstImage(galleryImages[0]) || content.coverImage;
 
   return (
-    <div className={`kc-root${preview ? " kc-root--preview" : ""}`} data-variant="khmer-celestial">
+    <div className={`kc-root${preview ? " kc-root--preview" : ""}`} data-variant="khmer-celestial" style={{
+      "--kc-khmer-display": celestialFont(content.fontKhmer),
+      "--kc-english-display": content.fontLatin ? `${JSON.stringify(content.fontLatin)}, Georgia, serif` : undefined,
+    }}>
       {musicEnabled ? (
         <audio
           ref={audioRef}
@@ -321,12 +330,12 @@ export default function KhmerCelestialLayout({
             animate={opened ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 18, scale: 0.985 }}
             transition={{ duration: reducedMotion ? 0 : 0.88, ease: [0.22, 1, 0.36, 1], delay: reducedMotion ? 0 : 0.15 }}
           >
-            <p className="kc-hero__eyebrow">{content.title || "សិរីសួស្តីអាពាហ៍ពិពាហ៍"}</p>
+            <p className="kc-hero__eyebrow" style={celestialElementFont(content, "subtitle")}>{content.title || "សិរីសួស្តីអាពាហ៍ពិពាហ៍"}</p>
             <img className="kc-hero__brand" src={KHMER_CELESTIAL_ASSETS.brandMark} alt={logoAlt} width="768" height="512" />
             <h1 id="kc-hero-title">{content.familyHeading || "គ្រួសារទាំងសងខាង"}</h1>
             <span className="kc-hero__divider" aria-hidden="true"><i />◆<i /></span>
-            {content.dateText ? <p className="kc-hero__date">{content.dateText}</p> : null}
-            {content.eventTime ? <p className="kc-hero__time">{content.eventTime}</p> : null}
+            {content.dateText ? <p className="kc-hero__date" style={celestialElementFont(content, "date")}>{content.dateText}</p> : null}
+            {content.eventTime ? <p className="kc-hero__time" style={celestialElementFont(content, "time")}>{content.eventTime}</p> : null}
             {content.venue?.name ? <p className="kc-hero__venue">{content.venue.name}</p> : null}
           </motion.div>
           <button type="button" className="kc-hero__scroll" onClick={scrollToInvitation} aria-label="រំកិលទៅព័ត៌មានគ្រួសារ">
@@ -351,6 +360,7 @@ export default function KhmerCelestialLayout({
                 parents={content.family?.groomParents || content.couple?.groomParents}
                 label={content.family?.groomLabel || "កូនប្រុសនាម"}
                 name={content.groom}
+                nameStyle={celestialElementFont(content, "couple")}
               />
               <span className="kc-family__seal" aria-hidden="true"><Flower2 /></span>
               <FamilyGroup
@@ -358,6 +368,7 @@ export default function KhmerCelestialLayout({
                 parents={content.family?.brideParents || content.couple?.brideParents}
                 label={content.family?.brideLabel || "កូនស្រីនាម"}
                 name={content.bride}
+                nameStyle={celestialElementFont(content, "couple")}
               />
             </div>
           </div>

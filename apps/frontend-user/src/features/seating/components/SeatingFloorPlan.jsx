@@ -269,6 +269,8 @@ export function SeatingFloorPlan({
 }) {
     const [positions, setPositions] = useState({});
     const [isDirty, setIsDirty] = useState(false);
+    const [saveError, setSaveError] = useState("");
+    const [positionElement, setPositionElement] = useState("stage");
     const [selectedTableId, setSelectedTableId] = useState(null);
     const [showAddModal, setShowAddModal] = useState(false);
     const [newTableName, setNewTableName] = useState("");
@@ -311,6 +313,9 @@ export function SeatingFloorPlan({
     // Refs for buttery smooth dragging without re-attaching event listeners on every tick
     const positionsRef = useRef(positions);
     const tableScaleRef = useRef(tableScale);
+    const venueLayoutRef = useRef(venueLayout);
+
+    useEffect(() => { venueLayoutRef.current = venueLayout; }, [venueLayout]);
 
     useEffect(() => {
         positionsRef.current = positions;
@@ -322,14 +327,44 @@ export function SeatingFloorPlan({
 
     // Initialize positions on tables load
     useEffect(() => {
-        const defaultGrid = calculateAutoArrangePositions(tables, venueLayout);
+        const defaultGrid = calculateAutoArrangePositions(tables, venueLayoutRef.current);
         const init = {};
         tables.forEach((t, i) => {
             init[t.id] = parsePosition(t, i, tables.length, defaultGrid);
         });
         setPositions(init);
         setIsDirty(false);
-    }, [tables, venueLayout]);
+    }, [tables]);
+
+    const moveElement = (target, coordinate, value) => {
+        if (readOnly || !Number.isFinite(value)) return;
+        const isTable = target.startsWith("table:");
+        const key = isTable ? target.slice(6) : target;
+        const min = coordinate === "x" ? (isTable ? 3 : key === "walkway" ? 5 : 10) : key === "walkway" ? 5 : 4;
+        const max = coordinate === "x" ? (isTable ? 97 : key === "walkway" ? 95 : 90) : key === "walkway" ? 95 : 96;
+        const next = Math.round(Math.max(min, Math.min(max, value)) * 10) / 10;
+        if (isTable) {
+            setPositions((prev) => ({ ...prev, [key]: { ...prev[key], [coordinate]: next } }));
+        } else {
+            setVenueLayout((prev) => ({ ...prev, [key]: { ...prev[key], [coordinate]: next } }));
+        }
+        setIsDirty(true);
+        setSaveError("");
+    };
+
+    const handlePositionKey = (event, target) => {
+        if (readOnly || !["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) return;
+        event.preventDefault();
+        const isTable = target.startsWith("table:");
+        const position = isTable ? positions[target.slice(6)] : venueLayout[target];
+        if (!position) return;
+        setPositionElement(target);
+        const axis = ["ArrowLeft", "ArrowRight"].includes(event.key) ? "x" : "y";
+        const sign = ["ArrowLeft", "ArrowUp"].includes(event.key) ? -1 : 1;
+        moveElement(target, axis, position[axis] + sign * (event.shiftKey ? 5 : 1));
+    };
+    const selectedPosition = positionElement.startsWith("table:")
+        ? positions[positionElement.slice(6)] : venueLayout[positionElement];
 
     // Drag start for tables
     const handleStartDragTable = (e, tableId) => {
@@ -475,15 +510,16 @@ export function SeatingFloorPlan({
 
     const handleSave = async () => {
         if (!onSavePositions) return;
-        if (invitationId) {
-            try {
+        setSaveError("");
+        try {
+            if (invitationId) {
                 localStorage.setItem(`koupreng_venue_layout_${invitationId}`, JSON.stringify(venueLayout));
-            } catch {
-                // ignore
             }
+            const saved = await onSavePositions(positions, venueLayout);
+            if (saved !== false) setIsDirty(false);
+        } catch (error) {
+            setSaveError(error.message || "Could not save floor plan. Your edits are retained.");
         }
-        await onSavePositions(positions, venueLayout);
-        setIsDirty(false);
     };
 
     const handleQuickAddTable = async (e) => {
@@ -638,6 +674,26 @@ export function SeatingFloorPlan({
                 </div>
             )}
 
+            {!readOnly && (
+                <fieldset className="sfp-position-controls">
+                    <legend>Position controls</legend>
+                    <label>Position element
+                        <select value={positionElement} onChange={(e) => setPositionElement(e.target.value)}>
+                            <option value="stage">Stage</option>
+                            <option value="entrance">Entrance</option>
+                            <option value="walkway">Walkway</option>
+                            {tables.map((table) => <option key={table.id} value={`table:${table.id}`}>{table.tableName}</option>)}
+                        </select>
+                    </label>
+                    {["x", "y"].map((axis) => <label key={axis}>{axis.toUpperCase()} position (%)
+                        <input type="number" step="0.1" min="0" max="100" value={selectedPosition?.[axis] ?? ""}
+                            onChange={(e) => { if (e.target.value !== "") moveElement(positionElement, axis, Number(e.target.value)); }} />
+                    </label>)}
+                    <small>Arrow keys move a focused element 1%. Shift + arrow moves 5%. Venue decorations are stored on this device.</small>
+                </fieldset>
+            )}
+            {saveError && <p role="alert">{saveError}</p>}
+
             {/* Quick Add Table Modal */}
             {showAddModal && (
                 <div className="sfp-add-modal-overlay" onClick={() => setShowAddModal(false)}>
@@ -711,6 +767,10 @@ export function SeatingFloorPlan({
                         left: `${venueLayout.stage.x}%`,
                         top: `${venueLayout.stage.y}%`,
                     }}
+                    role={readOnly ? undefined : "button"}
+                    tabIndex={readOnly ? undefined : 0}
+                    aria-label={readOnly ? undefined : "Move stage"}
+                    onKeyDown={(e) => handlePositionKey(e, "stage")}
                     onMouseDown={(e) => handleStartDragVenue(e, "stage")}
                     onTouchStart={(e) => handleStartDragVenue(e, "stage")}
                 >
@@ -735,6 +795,10 @@ export function SeatingFloorPlan({
                             left: `${venueLayout.walkway.x}%`,
                             top: `${venueLayout.walkway.y}%`,
                         }}
+                        role={readOnly ? undefined : "button"}
+                        tabIndex={readOnly ? undefined : 0}
+                        aria-label={readOnly ? undefined : "Move walkway"}
+                        onKeyDown={(e) => handlePositionKey(e, "walkway")}
                         onMouseDown={(e) => handleStartDragVenue(e, "walkway")}
                         onTouchStart={(e) => handleStartDragVenue(e, "walkway")}
                     >
@@ -754,6 +818,10 @@ export function SeatingFloorPlan({
                         left: `${venueLayout.entrance.x}%`,
                         top: `${venueLayout.entrance.y}%`,
                     }}
+                    role={readOnly ? undefined : "button"}
+                    tabIndex={readOnly ? undefined : 0}
+                    aria-label={readOnly ? undefined : "Move entrance"}
+                    onKeyDown={(e) => handlePositionKey(e, "entrance")}
                     onMouseDown={(e) => handleStartDragVenue(e, "entrance")}
                     onTouchStart={(e) => handleStartDragVenue(e, "entrance")}
                 >
@@ -817,6 +885,13 @@ export function SeatingFloorPlan({
                                 top: `${pos.y}%`,
                                 width: `${Math.round(82 * tableScale)}px`,
                                 height: `${Math.round(82 * tableScale)}px`,
+                            }}
+                            role="button"
+                            tabIndex={0}
+                            aria-label={`${readOnly ? "View" : "Move"} table ${table.tableName}`}
+                            onKeyDown={(e) => {
+                                if (["Enter", " "].includes(e.key)) { e.preventDefault(); setSelectedTableId(table.id); }
+                                else handlePositionKey(e, `table:${table.id}`);
                             }}
                             onMouseDown={(e) => handleStartDragTable(e, table.id)}
                             onTouchStart={(e) => handleStartDragTable(e, table.id)}

@@ -1,4 +1,4 @@
-# Forward to scripts\maintenance\dev.ps1
+# Forward to scripts\maintenance\dev\dev.ps1
 param(
     [Alias("admin", "admin-only")]
     [switch]$AdminOnly,
@@ -19,5 +19,5 @@ param(
     [switch]$Help
 )
 
-& "$PSScriptRoot\scripts\maintenance\dev.ps1" @PSBoundParameters
+& "$PSScriptRoot\scripts\maintenance\dev\dev.ps1" @PSBoundParameters @args
 

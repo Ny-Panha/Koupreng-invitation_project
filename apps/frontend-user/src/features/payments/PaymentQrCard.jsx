@@ -12,7 +12,7 @@ import {
 } from "react-icons/io5";
 
 import { paymentService } from "./paymentService";
-import { isTerminalStatus } from "./paymentStatus";
+import { isTerminalStatus, statusMessage } from "./paymentStatus";
 import { toast } from "../../shared/ui/toast";
 import { ABA_STATIC_PAY_LINK, getPaymentQrValue } from "./khqr";
 import "./PaymentPages.css";
@@ -51,6 +51,7 @@ function formatRemaining(seconds) {
 export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
   const [checking, setChecking] = useState(false);
   const [claiming, setClaiming] = useState(false);
+  const [claimFeedback, setClaimFeedback] = useState("");
 
   const [now, setNow] = useState(() => Date.now());
   const [copied, setCopied] = useState(false);
@@ -94,13 +95,21 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
   );
 
   const handleClaim = async () => {
-    if (!orderCode || isExpired) return;
+    if (!orderCode || !waitingForPayment || isExpired) return;
     setClaiming(true);
     try {
       await paymentService.claimPayment(orderCode);
+      // PAY-001: a customer claim requests reconciliation; only server PAID grants access.
+      const pendingMessage = "បានផ្ញើសំណើពិនិត្យការទូទាត់។ Awaiting trusted payment confirmation.";
+      setClaimFeedback(pendingMessage);
       const latest = await paymentService.getTemplateOrder(orderCode);
       onStatusChange?.(latest);
-      toast("🎉 ការទូទាត់ជោគជ័យ! Template ត្រូវបាន Unlock ភ្លាមៗ។");
+      if (latest.status === "PAID") {
+        setClaimFeedback("");
+        toast("ការទូទាត់ត្រូវបានផ្ទៀងផ្ទាត់។ Template ត្រូវបាន Unlock រួចរាល់។");
+      } else {
+        toast(pendingMessage);
+      }
     } catch (err) {
       toast(err.message || "មិនអាចផ្ទៀងផ្ទាត់ការទូទាត់បានទេ សូមព្យាយាមម្តងទៀត");
     } finally {
@@ -114,6 +123,10 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
   );
 
   const isExpired = status === "EXPIRED" || (waitingForPayment && remaining !== null && remaining <= 0);
+
+  useEffect(() => {
+    setClaimFeedback("");
+  }, [orderCode]);
 
   useEffect(() => {
     if (isTerminalStatus(status) || isExpired) {
@@ -164,6 +177,8 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
             ? "✓ ទូទាត់ជោគជ័យ (PAID)"
             : isExpired
             ? "⚠️ ផុតកំណត់ (EXPIRED)"
+            : isTerminalStatus(status)
+            ? statusMessage(status)
             : "⏳ រង់ចាំការទូទាត់ (PENDING)"}
         </span>
       </div>
@@ -261,11 +276,14 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
               ផ្ញើទៅកាន់ <strong>PANHA NY</strong> ចំនួនទឹកប្រាក់ <strong>{order?.currency || "USD"} {Number(order?.amount || 0.01).toFixed(2)}</strong> (គណនី USD: <code>007 830 386</code> / KHR: <code>009 858 816</code>)។
             </p>
             <p style={{ marginTop: "6px", color: "#059669", fontWeight: 600 }}>
-              ⚡ <strong>បន្ទាប់ពីផ្ទេររួច៖</strong> សូមចុចប៊ូតុង <strong>« ខ្ញុំបានផ្ទេរប្រាក់រួចរាល់ (Unlock Now) »</strong> ខាងក្រោមដើម្បី Unlock គំរូធៀបការភ្លាមៗដោយមិនបាច់រង់ចាំ!
+              <strong>បន្ទាប់ពីផ្ទេររួច៖</strong> សូមផ្ញើសំណើពិនិត្យការទូទាត់។ សិទ្ធិប្រើគំរូនឹងបើកក្រោយការផ្ទៀងផ្ទាត់ពីប្រព័ន្ធ ឬអ្នកគ្រប់គ្រង។ (Access follows verified payment confirmation.)
             </p>
           </div>
 
           {/* Success Status Panel */}
+          {claimFeedback && status !== "PAID" && (
+            <p className="payment-muted-lux" role="status">{claimFeedback}</p>
+          )}
           {status === "PAID" && (
             <div className="payment-confirmed-lux">
               <div className="payment-confirmed-icon">
@@ -303,9 +321,20 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
             </div>
           )}
 
+          {isTerminalStatus(status) && status !== "PAID" && !isExpired && (
+            <div className="payment-alert-panel" role="status">
+              <strong>{statusMessage(status)}</strong>
+              {onRetry && (
+                <button type="button" className="payment-primary-btn" onClick={onRetry}>
+                  <IoRefreshOutline /> បង្កើតការបញ្ជាទិញថ្មី (New order)
+                </button>
+              )}
+            </div>
+          )}
+
           {/* Actions Bar */}
           <div className="payment-actions-lux">
-            {status !== "PAID" && !isExpired && (
+            {waitingForPayment && !isExpired && (
               <button
                 type="button"
                 className="payment-action-gold-btn payment-claim-btn"
@@ -321,11 +350,11 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
                 }}
               >
                 <IoSparkles />
-                <span>{claiming ? "កំពុង Unlock Template..." : "⚡ ខ្ញុំបានផ្ទេរប្រាក់រួចរាល់ (Unlock Now)"}</span>
+                <span>{claiming ? "កំពុងផ្ញើសំណើ..." : "ខ្ញុំបានផ្ទេរប្រាក់ — ស្នើពិនិត្យ (Request payment review)"}</span>
               </button>
             )}
 
-            {status !== "PAID" && !isExpired && (
+            {waitingForPayment && !isExpired && (
               <a
                 className="payment-action-secondary-btn"
                 href={order?.checkoutUrl || ABA_STATIC_PAY_LINK}

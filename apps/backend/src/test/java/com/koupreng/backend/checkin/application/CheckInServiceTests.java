@@ -10,8 +10,10 @@ import com.koupreng.backend.checkin.domain.GuestCheckIn;
 import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.checkin.infrastructure.persistence.GuestCheckInRepository;
+import com.koupreng.backend.checkin.infrastructure.persistence.GuestCheckInEventRepository;
 import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
 import com.koupreng.backend.rsvp.infrastructure.persistence.RsvpRepository;
+import com.koupreng.backend.rsvp.domain.RsvpStatus;
 import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -25,8 +27,71 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.ArgumentMatchers.any;
 
 class CheckInServiceTests {
+
+    @Test
+    void undoIsIdempotentAndPreservesOriginalCheckInAndGuestData() {
+        Fixture fixture = fixture();
+        GuestCheckIn existing = state(fixture);
+        Instant originalTime = existing.getCheckedInAt();
+        when(fixture.guestRepository.findForUpdateByIdAndInvitationId(20L, 10L)).thenReturn(Optional.of(fixture.guest));
+        when(fixture.checkInRepository.findByInvitationIdAndGuestId(10L, 20L)).thenReturn(Optional.of(existing));
+        fixture.service.undo(fixture.authentication, 10L, 20L);
+        fixture.service.undo(fixture.authentication, 10L, 20L);
+        org.junit.jupiter.api.Assertions.assertFalse(existing.isActive());
+        assertEquals(originalTime, existing.getCheckedInAt());
+        assertEquals("original note", existing.getNote());
+        assertEquals("Sophea", fixture.guest.getGuestName());
+        verify(fixture.events, times(1)).save(any());
+        verify(fixture.audit, times(1)).logSystemEvent(org.mockito.ArgumentMatchers.eq("GUEST_CHECK_IN_UNDONE"),
+                any(), any(), any(), any());
+        verify(fixture.checkInRepository, never()).delete(any());
+        verify(fixture.guestRepository, never()).delete(any());
+    }
+
+    @Test
+    void undoDeniesNonOwnerBeforeLockingGuest() {
+        Fixture fixture = fixture();
+        AppUser other = new AppUser();
+        other.setId(99L);
+        when(fixture.currentUserService.currentUser(fixture.authentication)).thenReturn(other);
+        assertEquals(HttpStatus.FORBIDDEN, assertThrows(ApiException.class,
+                () -> fixture.service.undo(fixture.authentication, 10L, 20L)).getStatus());
+        verify(fixture.guestRepository, never()).findForUpdateByIdAndInvitationId(any(), any());
+        verify(fixture.events, never()).save(any());
+    }
+
+    @Test
+    void recheckInReusesStateIdAndRecordsNewEvent() {
+        Fixture fixture = fixture();
+        GuestCheckIn existing = state(fixture);
+        existing.setActive(false);
+        existing.setUndoneAt(Instant.now());
+        when(fixture.guestRepository.findForUpdateByIdAndInvitationId(20L, 10L)).thenReturn(Optional.of(fixture.guest));
+        when(fixture.checkInRepository.findByInvitationIdAndGuestId(10L, 20L)).thenReturn(Optional.of(existing));
+        when(fixture.checkInRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
+        CheckInResponse response = fixture.service.manual(fixture.authentication, 10L, 20L, "new note");
+        assertEquals(40L, response.getId());
+        assertEquals("CHECKED_IN", response.getResult());
+        org.junit.jupiter.api.Assertions.assertTrue(existing.isActive());
+        org.junit.jupiter.api.Assertions.assertNull(existing.getUndoneAt());
+        verify(fixture.events).save(any());
+    }
+
+    private GuestCheckIn state(Fixture fixture) {
+        GuestCheckIn state = new GuestCheckIn();
+        state.setId(40L);
+        state.setInvitation(fixture.invitation);
+        state.setGuest(fixture.guest);
+        state.setCheckedInAt(Instant.parse("2026-08-10T10:00:00Z"));
+        state.setSource("QR");
+        state.setNote("original note");
+        return state;
+    }
 
     @Test
     void duplicateManualCheckInIsSerializedAndReturnsStableResult() {
@@ -68,7 +133,8 @@ class CheckInServiceTests {
         Fixture fixture = fixture();
         when(fixture.guestRepository.countByInvitationId(10L)).thenReturn(50L);
         when(fixture.checkInRepository.countByInvitationId(10L)).thenReturn(30L);
-        when(fixture.checkInRepository.findByInvitationIdOrderByCheckedInAtDesc(10L)).thenReturn(java.util.List.of());
+        when(fixture.rsvpRepository.countActiveCheckedInGuestsByInvitationIdAndResponseStatus(10L, RsvpStatus.ATTENDING))
+                .thenReturn(18L);
 
         var summary = fixture.service.summary(fixture.authentication, 10L);
 
@@ -76,6 +142,7 @@ class CheckInServiceTests {
         assertEquals(50L, summary.getTotalGuests());
         assertEquals(30L, summary.getCheckedIn());
         assertEquals(20L, summary.getRemaining());
+        assertEquals(18L, summary.getAttendingCheckedIn());
     }
 
     @Test
@@ -105,6 +172,7 @@ class CheckInServiceTests {
         RsvpRepository rsvpRepository = mock(RsvpRepository.class);
         CurrentUserService currentUserService = mock(CurrentUserService.class);
         AuditLogService auditLogService = mock(AuditLogService.class);
+        GuestCheckInEventRepository events = mock(GuestCheckInEventRepository.class);
         Authentication authentication = mock(Authentication.class);
         AppUser owner = new AppUser();
         owner.setId(1L);
@@ -126,9 +194,11 @@ class CheckInServiceTests {
                 invitationRepository,
                 rsvpRepository,
                 currentUserService,
-                auditLogService
+                auditLogService,
+                events
         );
-        return new Fixture(service, checkInRepository, guestRepository, authentication, invitation, guest);
+        return new Fixture(service, checkInRepository, guestRepository, authentication, invitation, guest,
+                currentUserService, auditLogService, events, rsvpRepository);
     }
 
     private record Fixture(
@@ -137,7 +207,11 @@ class CheckInServiceTests {
             GuestRepository guestRepository,
             Authentication authentication,
             UserInvitation invitation,
-            Guest guest
+            Guest guest,
+            CurrentUserService currentUserService,
+            AuditLogService audit,
+            GuestCheckInEventRepository events,
+            RsvpRepository rsvpRepository
     ) {
     }
 }

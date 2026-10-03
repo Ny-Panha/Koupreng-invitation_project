@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { invitationService } from "@/features/invitations/api/invitationApi";
 import { seatingService } from "../seatingService";
 import { toast } from "../../../shared/ui/toast";
+import { writeTablePosition } from "../model/tableNotes";
 
 const emptyTable = { tableName: "", tableLabel: "", capacity: 10, sortOrder: 0, notes: "" };
 const emptyAssignment = { guestId: "", tableId: "", seatLabel: "", seatCount: 1, notes: "" };
@@ -9,6 +10,7 @@ const emptyAssignment = { guestId: "", tableId: "", seatLabel: "", seatCount: 1,
 export function useSeating(invitationId) {
     const [invitation, setInvitation] = useState(null);
     const [plan, setPlan] = useState(null);
+    const [summary, setSummary] = useState(null);
     const [tableForm, setTableForm] = useState(emptyTable);
     const [assignmentForm, setAssignmentForm] = useState(emptyAssignment);
     const [loading, setLoading] = useState(true);
@@ -19,12 +21,14 @@ export function useSeating(invitationId) {
         setLoading(true);
         setError("");
         try {
-            const [invitationData, planData] = await Promise.all([
+            const [invitationData, planData, summaryData] = await Promise.all([
                 invitationService.get(invitationId),
                 seatingService.plan(invitationId),
+                seatingService.summary?.(invitationId) ?? Promise.resolve(null),
             ]);
             setInvitation(invitationData);
             setPlan(planData);
+            setSummary(summaryData);
         } catch (err) {
             setError(err.message || "Could not load seating plan");
         } finally {
@@ -44,11 +48,13 @@ export function useSeating(invitationId) {
         Promise.all([
             invitationService.get(invitationId),
             seatingService.plan(invitationId),
+            seatingService.summary?.(invitationId) ?? Promise.resolve(null),
         ])
-            .then(([invitationData, planData]) => {
+            .then(([invitationData, planData, summaryData]) => {
                 if (!active) return;
                 setInvitation(invitationData);
                 setPlan(planData);
+                setSummary(summaryData);
                 setError("");
             })
             .catch((err) => {
@@ -185,21 +191,7 @@ export function useSeating(invitationId) {
                 const table = tables.find((t) => String(t.id) === String(tableId));
                 if (!table) return null;
 
-                let existingNotesObj = {};
-                try {
-                    if (table.notes && table.notes.trim().startsWith("{")) {
-                        existingNotesObj = JSON.parse(table.notes);
-                    }
-                } catch {
-                    // ignore non-json notes
-                }
-
-                const updatedNotes = JSON.stringify({
-                    ...existingNotesObj,
-                    x: Math.round(pos.x * 10) / 10,
-                    y: Math.round(pos.y * 10) / 10,
-                    zone: pos.zone || existingNotesObj.zone || "hall",
-                });
+                const updatedNotes = writeTablePosition(table.notes, pos);
 
                 return seatingService.updateTable(invitationId, table.id, {
                     tableName: table.tableName,
@@ -213,8 +205,10 @@ export function useSeating(invitationId) {
             await Promise.all(updates);
             toast("បានរក្សាទុកប្លង់សាលការរួចរាល់ (Floor plan saved)");
             await load();
+            return true;
         } catch (err) {
             setError(err.message || "Could not save floor plan");
+            return false;
         } finally {
             setSaving(false);
         }
@@ -223,6 +217,7 @@ export function useSeating(invitationId) {
     return {
         invitation,
         plan,
+        summary,
         tableForm,
         setTableForm,
         assignmentForm,

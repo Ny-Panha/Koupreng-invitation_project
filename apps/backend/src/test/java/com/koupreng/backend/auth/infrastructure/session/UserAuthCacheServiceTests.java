@@ -29,6 +29,37 @@ import org.springframework.data.redis.core.ValueOperations;
 
 class UserAuthCacheServiceTests {
 
+    @Test
+    void evictionWaitsForCommitAndRemovesConcurrentStaleRefill() {
+        org.springframework.transaction.support.TransactionTemplate transaction = transaction();
+        transaction.executeWithoutResult(status -> {
+            cacheService.evict(42L);
+            verify(redisTemplate, never()).delete("auth:user:42");
+            // A request running before commit can still repopulate the old snapshot.
+            valueOperations.set("auth:user:42", "true:0:ADMIN", Duration.ofSeconds(60));
+        });
+        verify(redisTemplate).delete("auth:user:42");
+    }
+
+    @Test
+    void rolledBackMutationDoesNotEvictCommittedCacheState() {
+        transaction().executeWithoutResult(status -> {
+            cacheService.evict(42L);
+            status.setRollbackOnly();
+        });
+        verify(redisTemplate, never()).delete("auth:user:42");
+    }
+
+    private org.springframework.transaction.support.TransactionTemplate transaction() {
+        return new org.springframework.transaction.support.TransactionTemplate(
+                new org.springframework.transaction.support.AbstractPlatformTransactionManager() {
+                    @Override protected Object doGetTransaction() { return new Object(); }
+                    @Override protected void doBegin(Object transaction, org.springframework.transaction.TransactionDefinition definition) { }
+                    @Override protected void doCommit(org.springframework.transaction.support.DefaultTransactionStatus status) { }
+                    @Override protected void doRollback(org.springframework.transaction.support.DefaultTransactionStatus status) { }
+                });
+    }
+
     private AppUserRepository userRepository;
     private StringRedisTemplate redisTemplate;
     private ValueOperations<String, String> valueOperations;

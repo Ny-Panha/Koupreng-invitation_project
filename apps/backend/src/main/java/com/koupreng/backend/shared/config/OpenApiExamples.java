@@ -15,6 +15,15 @@ final class OpenApiExamples {
 
     static List<NamedExample> forRequestType(Class<?> requestType) {
         return switch (requestType.getSimpleName()) {
+            case "ContactRequest" -> one("contactInquiry", "Send a fictional inquiry using configured SMTP", """
+                    {
+                      "name": "Sokha Demo",
+                      "email": "sokha@example.com",
+                      "phone": "012345678",
+                      "plan": "Wedding invitation",
+                      "message": "Please send information about invitation options."
+                    }
+                    """);
             case "LoginRequest" -> List.of(
                     example("demoUser", "Development user", """
                             {"identifier":"%s","password":"%s"}

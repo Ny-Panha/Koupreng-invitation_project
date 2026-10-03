@@ -42,7 +42,17 @@ export default function Header() {
   }, [location.pathname]);
 
   useEffect(() => {
-    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "unset";
+    if (!isMobileMenuOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const closeOnEscape = (event) => {
+      if (event.key === "Escape") setIsMobileMenuOpen(false);
+    };
+    document.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", closeOnEscape);
+    };
   }, [isMobileMenuOpen]);
 
   const isActivePath = (path) => {
@@ -95,6 +105,7 @@ export default function Header() {
         .lang-option.active { color: #d6336c; background: #fdf2f4; }
         .burger-menu { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; z-index: 3001; }
         .burger-menu span { width: 25px; height: 3px; background-color: #7D6443; border-radius: 2px; transition: 0.3s; }
+        .burger-menu:focus-visible, .mobile-nav :is(a,button):focus-visible { outline: 3px solid #7D6443; outline-offset: 5px; }
         .mobile-nav { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #FCF8F2; padding: 100px 30px; flex-direction: column; gap: 20px; z-index: 2999; pointer-events: auto; }
         .mobile-quick-actions { display: none; align-items: center; }
         @media (max-width: 1024px) { 
@@ -207,7 +218,11 @@ export default function Header() {
               </Link>
             )}
             <button
+              type="button"
               className="burger-menu"
+              aria-label={lang === "km" ? (isMobileMenuOpen ? "បិទម៉ឺនុយ" : "បើកម៉ឺនុយ") : (isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu")}
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="public-mobile-navigation"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               <span
@@ -230,7 +245,7 @@ export default function Header() {
         </header>
       </div>
 
-      <nav className="mobile-nav">
+      <nav id="public-mobile-navigation" aria-label={lang === "km" ? "ម៉ឺនុយ" : "Navigation"} className="mobile-nav">
         {navItems.map((item) => (
           <Link
             key={item.path}

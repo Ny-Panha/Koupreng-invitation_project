@@ -19,6 +19,7 @@ import WaxSealEnvelope from "./components/WaxSealEnvelope";
 import TemplateOpeningGate from "../../experience/components/sections/TemplateOpeningGate";
 import DigitalYesSchedule from "./components/DigitalYesSchedule";
 import DigitalYesRsvpModal from "./components/DigitalYesRsvpModal";
+import { isTrustedPreviewMessage, readEmbeddedPreviewChannel } from "@/shared/preview/previewMessaging";
 import "../../experience/template-experience.css";
 import "./digital-yes.css";
 
@@ -50,6 +51,7 @@ export default function DigitalYesLayout({
   backLabel = "← ត្រឡប់ទៅគំរូទាំងអស់",
   preview = false,
   previewStartClosed = false,
+  previewChannel,
   useTemplateLink,
   children,
 }) {
@@ -90,7 +92,10 @@ export default function DigitalYesLayout({
 
   // Sync postMessage with Admin Studio
   useEffect(() => {
+    const channel = previewChannel || readEmbeddedPreviewChannel();
+    if (!channel) return undefined;
     const handleMessage = (event) => {
+      if (!isTrustedPreviewMessage(event, channel)) return;
       if (event.data?.type === "TOGGLE_GATE") {
         const shouldOpen = Boolean(event.data.open ?? event.data.isOpen);
         if (shouldOpen) {
@@ -109,7 +114,7 @@ export default function DigitalYesLayout({
     };
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
-  }, []);
+  }, [previewChannel]);
 
   // Countdown timer calculation
   useEffect(() => {

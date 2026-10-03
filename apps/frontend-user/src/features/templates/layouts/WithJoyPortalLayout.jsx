@@ -14,11 +14,13 @@ import {
 } from "lucide-react";
 import defaultMusicUrl from "../../../assets/music/ថ្ងៃដែលរង់ចាំ.mp3";
 import CoverBackground from "../shared/Openings/CoverBackground";
+import { isTrustedPreviewMessage, readEmbeddedPreviewChannel } from "@/shared/preview/previewMessaging";
 import "./withjoy-portal.css";
 
 export default function WithJoyPortalLayout({
   content = {},
   preview = false,
+  previewChannel,
   showBack = true,
   backTo = "/templates",
   backLabel = "ត្រឡប់ទៅគំរូទាំងអស់",
@@ -28,14 +30,17 @@ export default function WithJoyPortalLayout({
   const effectiveContent = { ...content, ...liveData };
 
   useEffect(() => {
+    const channel = previewChannel || readEmbeddedPreviewChannel();
+    if (!channel) return undefined;
     const handleMessage = (e) => {
+      if (!isTrustedPreviewMessage(e, channel)) return;
       if (e.data?.type === "LIVE_PREVIEW_SYNC" && e.data.data) {
         setLiveData(e.data.data);
       }
     };
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
-  }, []);
+  }, [previewChannel]);
 
   const groom = effectiveContent.groom || "";
   const bride = effectiveContent.bride || "";

@@ -1,5 +1,6 @@
 import { EmptyState, SearchInput, StatusBadge } from "@/shared/ui";
 import { IoPeopleOutline } from "react-icons/io5";
+import RsvpOwnerActions from "./RsvpOwnerActions";
 
 export function RsvpGuestTable({
   filteredRsvps = [],
@@ -9,6 +10,8 @@ export function RsvpGuestTable({
   setStatusFilter,
   wishesListCount = 0,
   setViewMode,
+  invitationId,
+  onSaved,
 }) {
   return (
     <section className="rsvp-board">
@@ -65,6 +68,7 @@ export function RsvpGuestTable({
                 <th>ចំនួនមនុស្ស / Party</th>
                 <th>កាលបរិច្ឆេទ / Date</th>
                 <th>សារជូនពរ / Wishes</th>
+                {invitationId && <th>Manage response</th>}
               </tr>
             </thead>
             <tbody>
@@ -72,8 +76,8 @@ export function RsvpGuestTable({
                 const guestName = rsvp.guestName || rsvp.name || "ភ្ញៀវកិត្តិយស";
                 const initial = guestName.trim().charAt(0).toUpperCase();
                 const wishText = rsvp.wish || rsvp.message;
-                const partySize = rsvp.attendeeCount || rsvp.partySize || 1;
-                const dateVal = rsvp.updatedAt || rsvp.createdAt;
+                const partySize = rsvp.attendeeCount ?? rsvp.partySize ?? 1;
+                const dateVal = rsvp.respondedAt || rsvp.updatedAt || rsvp.createdAt;
 
                 return (
                   <tr key={rsvp.id || rsvp.guestId || Math.random()}>
@@ -118,6 +122,7 @@ export function RsvpGuestTable({
                         <span style={{ color: "#94a3b8" }}>—</span>
                       )}
                     </td>
+                    {invitationId && <td><RsvpOwnerActions invitationId={invitationId} record={rsvp} onSaved={onSaved} /></td>}
                   </tr>
                 );
               })}

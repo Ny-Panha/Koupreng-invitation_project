@@ -110,6 +110,9 @@ export default function ChatBot() {
             exit={{ opacity: 0, y: 50, scale: 0.9 }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
             className="chat-window"
+            id="public-support-chat"
+            role="region"
+            aria-label={t.support}
           >
             <div className="chat-header">
               <div className="chat-header-title">
@@ -118,7 +121,7 @@ export default function ChatBot() {
                 </svg>
                 <span>{t.support}</span>
               </div>
-              <button className="chat-close-btn" onClick={toggleChat}>
+              <button type="button" aria-label={lang === "km" ? "បិទការជជែក" : "Close support chat"} className="chat-close-btn" onClick={toggleChat}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="5" y1="12" x2="19" y2="12"></line>
                 </svg>
@@ -178,12 +181,13 @@ export default function ChatBot() {
             <form className="chat-footer" onSubmit={handleSendMessage}>
               <input
                 type="text"
+                aria-label={lang === "km" ? "សារទៅ Telegram" : "Message to Telegram support"}
                 placeholder={t.inputPlaceholder}
                 className="chat-input"
                 value={inputMsg}
                 onChange={(e) => setInputMsg(e.target.value)}
               />
-              <button type="submit" className="chat-send-btn" title="Send">
+              <button type="submit" className="chat-send-btn" aria-label={lang === "km" ? "ផ្ញើទៅ Telegram" : "Send to Telegram"}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="22" y1="2" x2="11" y2="13"></line>
                   <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
@@ -208,7 +212,7 @@ export default function ChatBot() {
             className="chat-greeting-bubble"
           >
             {t.greeting}
-            <button className="close-bubble" onClick={() => setShowGreeting(false)}>
+            <button type="button" aria-label={lang === "km" ? "បិទការស្វាគមន៍" : "Dismiss greeting"} className="close-bubble" onClick={() => setShowGreeting(false)}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
                 <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -220,6 +224,10 @@ export default function ChatBot() {
 
       {/* Chat Toggle Button */}
       <motion.button
+        type="button"
+        aria-label={lang === "km" ? (isOpen ? "បិទការជជែក" : "បើកការជជែកជំនួយ") : (isOpen ? "Close support chat" : "Open support chat")}
+        aria-expanded={isOpen}
+        aria-controls="public-support-chat"
         className="chat-toggle-btn"
         onClick={toggleChat}
         whileHover={{ scale: 1.05 }}

@@ -5,6 +5,7 @@ import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion"
 import { KHMER_CELESTIAL_ASSETS } from "../khmerCelestialAssets";
 import CelestialLiveGarden from "./CelestialLiveGarden";
 import OpenInvitationCTA from "./OpenInvitationCTA";
+import { celestialElementFont } from "../celestialTypography";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -93,7 +94,7 @@ export default function CelestialOpening({ content, onOpen }) {
       <CelestialLiveGarden className="kc-opening__garden" variant="opening" />
 
       <div className="kc-opening__content">
-        <motion.p id="kc-opening-title" className="kc-opening__eyebrow" {...reveal(reducedMotion, 0.62)}>
+        <motion.p id="kc-opening-title" className="kc-opening__eyebrow" style={celestialElementFont(content, "subtitle")} {...reveal(reducedMotion, 0.62)}>
           {content.opening?.heading || content.title || "សិរីសួស្តីអាពាហ៍ពិពាហ៍"}
         </motion.p>
 
@@ -114,12 +115,13 @@ export default function CelestialOpening({ content, onOpen }) {
         </motion.div>
 
         <motion.div className="kc-opening__date-block" {...reveal(reducedMotion, 2.18)}>
-          {content.dateText ? <p className="kc-opening__date">{content.dateText}</p> : null}
-          {content.eventTime ? <p className="kc-opening__time">{content.eventTime}</p> : null}
+          {content.dateText ? <p className="kc-opening__date" style={celestialElementFont(content, "date")}>{content.dateText}</p> : null}
+          {content.eventTime ? <p className="kc-opening__time" style={celestialElementFont(content, "time")}>{content.eventTime}</p> : null}
         </motion.div>
 
         <motion.p
           className="kc-opening__guest-label"
+          style={celestialElementFont(content, "guestLabel")}
           {...reveal(reducedMotion, 2.42, {
             initial: { y: 5, filter: "blur(3px)" },
             transition: { duration: 0.58 },
@@ -148,6 +150,7 @@ export default function CelestialOpening({ content, onOpen }) {
           <p className="kc-opening__guest-banner-content">
             <motion.strong
               className={guestNameClass}
+              style={celestialElementFont(content, "guestName")}
               {...reveal(reducedMotion, 2.68, {
                 initial: { y: 7, filter: "blur(3px)" },
                 transition: { duration: 0.68 },

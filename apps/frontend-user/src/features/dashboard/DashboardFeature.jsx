@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 
 import {
@@ -22,15 +22,13 @@ import {
 } from "react-icons/io5";
 
 import { invitationService } from "@/features/invitations/api/invitationApi";
-import { guestService } from "@/features/guests/api/guestApi";
-import { rsvpService } from "@/features/rsvp/api/rsvpApi";
-import { budgetService } from "../budget/api/budgetApi";
-import { planningService } from "@/features/planning/api/planningApi";
-import notificationService from "../notifications/notificationService";
+import { reportsApi } from "@/features/reports/api/reportsApi";
+import { loadServerDashboard, groupAmounts } from "./dashboardData";
+import { currencyAmounts } from "@/features/budget/currencyTotals";
 import { listDrafts, getDraft, getDraftBySlug, saveDraft } from "../../shared/storage/weddingStorage";
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { SkeletonTable } from "@/shared/ui";
+import { ErrorState, SkeletonTable } from "@/shared/ui";
 import "./DashboardPage.css";
 
 function asList(val) {
@@ -86,10 +84,20 @@ export default function DashboardFeature() {
     hasDate: false,
   });
 
+  const loadGeneration = useRef(0);
+  const [accountSummary, setAccountSummary] = useState(null);
+  useEffect(() => {
+    let active = true;
+    reportsApi.dashboardSummary().then((summary) => { if (active) setAccountSummary(summary); })
+      .catch(() => { if (active) setAccountSummary(null); });
+    return () => { active = false; };
+  }, []);
   const loadData = useCallback(async (targetId = null) => {
+    const generation = ++loadGeneration.current;
     try {
       setState((prev) => ({ ...prev, loading: true, error: "" }));
-      const invs = asList(await invitationService.listMine().catch(() => []));
+      const invs = asList(await invitationService.listMine());
+      if (generation !== loadGeneration.current) return;
       const drafts = listDrafts(user?.id || user?.userId);
       const allInvs = [
         ...invs,
@@ -107,31 +115,19 @@ export default function DashboardFeature() {
 
       if (invId) {
         setSelectedInvId(invId);
-        const [guests, rsvps, rsvpSummary, budgetItems, gifts, notifs, checkIn] =
-          isNumericBackendId
-            ? await Promise.all([
-                guestService.listByInvitation(invId).catch(() => []),
-                rsvpService.listByInvitation(invId).catch(() => []),
-                rsvpService.summary(invId).catch(() => null),
-                budgetService.listItems(invId).catch(() => []),
-                planningService.listGifts(invId).catch(() => []),
-                notificationService.listByInvitation(invId).catch(() => []),
-                guestService.checkInSummary(invId).catch(() => null),
-              ])
-            : [[], [], null, [], [], [], null];
+        const data = isNumericBackendId ? await loadServerDashboard(invId)
+          : { guests: [], rsvps: [], rsvpSummary: null, budgetItems: [], gifts: [], notifications: [], checkInSummary: null, dashboard: null };
+        if (generation !== loadGeneration.current) return;
 
         setState({
           loading: false,
           error: "",
           invitations: allInvs,
           selectedInvitation: activeInv,
-          guests: asList(guests),
-          rsvps: asList(rsvps),
-          rsvpSummary,
-          budgetItems: asList(budgetItems),
-          gifts: asList(gifts),
-          notifications: asList(notifs),
-          checkInSummary: checkIn,
+          ...data,
+          budgetItems: asList(data.budgetItems),
+          gifts: asList(data.gifts),
+          notifications: asList(data.notifications),
         });
         return;
       }
@@ -150,6 +146,7 @@ export default function DashboardFeature() {
         checkInSummary: null,
       });
     } catch (err) {
+      if (generation !== loadGeneration.current) return;
       setState((prev) => ({
         ...prev,
         loading: false,
@@ -173,7 +170,7 @@ export default function DashboardFeature() {
   const stats = useMemo(() => {
     const inv = state.selectedInvitation;
     const guestTotal = state.guests.reduce((sum, g) => sum + (Number(g.count) || 1), 0);
-    const totalGuestsCount = Math.max(guestTotal, state.guests.length);
+    const totalGuestsCount = state.dashboard?.totalInvited ?? Math.max(guestTotal, state.guests.length);
 
     // 1. Check summary from backend API (matching /dashboard/invitations/:id/rsvp)
     const summaryAttending =
@@ -224,24 +221,16 @@ export default function DashboardFeature() {
         : sum;
     }, 0);
 
-    const rsvpYes = summaryAttending !== null ? summaryAttending : Math.max(rsvpsYes, guestsYes);
-    const rsvpNo = summaryDeclined !== null ? summaryDeclined : Math.max(rsvpsNo, guestsNo);
-    const rsvpPending = summaryPending !== null
+    const rsvpYes = state.dashboard?.attending ?? (summaryAttending !== null ? summaryAttending : Math.max(rsvpsYes, guestsYes));
+    const rsvpNo = state.dashboard?.declined ?? (summaryDeclined !== null ? summaryDeclined : Math.max(rsvpsNo, guestsNo));
+    const rsvpPending = state.dashboard?.pending ?? (summaryPending !== null
       ? summaryPending
-      : Math.max(0, totalGuestsCount - rsvpYes - rsvpNo);
+      : Math.max(0, totalGuestsCount - rsvpYes - rsvpNo));
 
-    const totalBudget = state.budgetItems.reduce(
-      (sum, b) => sum + (Number(b.budget) || Number(b.estimatedCost) || Number(b.amount) || 0),
-      0
-    );
-    const actualExpense = state.budgetItems.reduce(
-      (sum, b) => sum + (Number(b.actualCost) || Number(b.amount) || 0),
-      0
-    );
-    const totalGifts = state.gifts.reduce(
-      (sum, g) => sum + (Number(g.amount) || 0),
-      0
-    );
+    const expenseAmounts = groupAmounts(state.budgetItems, "actualCost");
+    const estimatedAmounts = groupAmounts(state.budgetItems, "estimatedCost");
+    const giftAmounts = groupAmounts(state.gifts, "amount");
+    const hasBudget = [...Object.values(expenseAmounts), ...Object.values(estimatedAmounts)].some((amount) => amount > 0);
 
     const checkedInCount =
       state.checkInSummary?.totalCheckedIn ||
@@ -249,7 +238,6 @@ export default function DashboardFeature() {
       0;
 
     const rsvpRate = totalGuestsCount > 0 ? Math.min(100, Math.round((rsvpYes / totalGuestsCount) * 100)) : 0;
-    const budgetRate = totalBudget > 0 ? Math.min(100, Math.round((actualExpense / totalBudget) * 100)) : 0;
 
     return {
       hasInvitation: !!inv,
@@ -267,11 +255,10 @@ export default function DashboardFeature() {
       rsvpPending,
       rsvpRate,
       checkedInCount,
-      totalBudget,
-      actualExpense,
-      budgetRate,
-      remainingBudget: Math.max(0, totalBudget - actualExpense),
-      totalGifts,
+      hasBudget,
+      expenseAmounts,
+      estimatedAmounts,
+      giftAmounts,
       giftCount: state.gifts.length,
     };
   }, [lang, state]);
@@ -281,7 +268,7 @@ export default function DashboardFeature() {
       Boolean(stats.id),
       stats.guestTotal > 0,
       stats.rsvpYes > 0 || stats.rsvpNo > 0,
-      stats.totalBudget > 0 || stats.actualExpense > 0,
+      stats.hasBudget,
     ].filter(Boolean).length;
   }, [stats]);
 
@@ -386,6 +373,8 @@ export default function DashboardFeature() {
           <p>{text("subtitle")}</p>
         </div>
       </header>
+      {state.error && <ErrorState message={state.error} onRetry={() => loadData(selectedInvId)} />}
+      {accountSummary && <p role="status">Invitations: {accountSummary.totalInvitations} · Published: {accountSummary.publishedInvitations} · Guests across your invitations: {accountSummary.totalGuests}</p>}
 
       {/* =========================================================================
           CASE 1: HOST HAS NO INVITATIONS YET
@@ -610,10 +599,10 @@ export default function DashboardFeature() {
               <div>
                 <span>{text("statBudget")}</span>
                 <p style={{ margin: "4px 0 0", fontSize: "0.75rem", color: "var(--brand-text-muted)" }}>
-                  {text("statBudgetNote", { total: stats.totalBudget.toLocaleString() })}
+                  {currencyAmounts(stats.estimatedAmounts)}
                 </p>
               </div>
-              <strong style={{ color: "#e11d48" }}>${stats.actualExpense.toLocaleString()}</strong>
+              <strong style={{ color: "#e11d48" }}>{currencyAmounts(stats.expenseAmounts)}</strong>
             </Link>
 
             <Link to="/dashboard/gifts" className="pe-summary-card" style={{ textDecoration: "none", cursor: "pointer", transition: "all 0.2s ease" }}>
@@ -623,7 +612,7 @@ export default function DashboardFeature() {
                   {text("statGiftsNote", { count: stats.giftCount })}
                 </p>
               </div>
-              <strong style={{ color: "#7c3aed" }}>${stats.totalGifts.toLocaleString()}</strong>
+              <strong style={{ color: "#7c3aed" }}>{currencyAmounts(stats.giftAmounts)}</strong>
             </Link>
           </section>
 
@@ -735,9 +724,9 @@ export default function DashboardFeature() {
                   </div>
 
                   {/* Step 4 */}
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 16px", borderRadius: "12px", border: stats.totalBudget > 0 ? "1px solid rgba(15, 118, 110, 0.2)" : "1px solid var(--brand-border)", background: stats.totalBudget > 0 ? "rgba(15, 118, 110, 0.04)" : "#fdfbf7" }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 16px", borderRadius: "12px", border: stats.hasBudget ? "1px solid rgba(15, 118, 110, 0.2)" : "1px solid var(--brand-border)", background: stats.hasBudget ? "rgba(15, 118, 110, 0.04)" : "#fdfbf7" }}>
                     <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                      {stats.totalBudget > 0 ? (
+                      {stats.hasBudget ? (
                         <IoCheckmarkCircle style={{ fontSize: "1.4rem", color: "#0f766e", flexShrink: 0 }} />
                       ) : (
                         <IoWalletOutline style={{ fontSize: "1.4rem", color: "#e11d48", flexShrink: 0 }} />

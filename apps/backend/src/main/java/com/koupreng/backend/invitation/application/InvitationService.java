@@ -77,6 +77,7 @@ public class InvitationService {
     private final AppProperties appProperties;
     private final OrganizationRepository organizationRepository;
     private final OrganizationMemberRepository organizationMemberRepository;
+    private final InvitationPasswordAttemptLimiter passwordAttemptLimiter;
 
     @Autowired(required = false)
     private com.koupreng.backend.budget.infrastructure.persistence.BudgetRepository budgetRepository;
@@ -100,6 +101,41 @@ public class InvitationService {
     private EventTableRepository eventTableRepository;
 
     @Autowired
+    private com.koupreng.backend.entitlement.application.EntitlementService entitlementService;
+
+    @Autowired
+    public InvitationService(
+            UserInvitationRepository invitationRepository,
+            InvitationTemplateRepository templateRepository,
+            UserTemplateAccessRepository templateAccessRepository,
+            GuestRepository guestRepository,
+            GuestSeatAssignmentRepository seatAssignmentRepository,
+            CurrentUserService currentUserService,
+            PasswordEncoder passwordEncoder,
+            RsvpRepository rsvpRepository,
+            MediaFileRepository mediaFileRepository,
+            AuditLogService auditLogService,
+            AppProperties appProperties,
+            OrganizationRepository organizationRepository,
+            OrganizationMemberRepository organizationMemberRepository,
+            InvitationPasswordAttemptLimiter passwordAttemptLimiter
+    ) {
+        this.invitationRepository = invitationRepository;
+        this.templateRepository = templateRepository;
+        this.templateAccessRepository = templateAccessRepository;
+        this.guestRepository = guestRepository;
+        this.seatAssignmentRepository = seatAssignmentRepository;
+        this.currentUserService = currentUserService;
+        this.passwordEncoder = passwordEncoder;
+        this.rsvpRepository = rsvpRepository;
+        this.mediaFileRepository = mediaFileRepository;
+        this.auditLogService = auditLogService;
+        this.appProperties = appProperties;
+        this.organizationRepository = organizationRepository;
+        this.organizationMemberRepository = organizationMemberRepository;
+        this.passwordAttemptLimiter = passwordAttemptLimiter;
+    }
+
     public InvitationService(
             UserInvitationRepository invitationRepository,
             InvitationTemplateRepository templateRepository,
@@ -115,19 +151,10 @@ public class InvitationService {
             OrganizationRepository organizationRepository,
             OrganizationMemberRepository organizationMemberRepository
     ) {
-        this.invitationRepository = invitationRepository;
-        this.templateRepository = templateRepository;
-        this.templateAccessRepository = templateAccessRepository;
-        this.guestRepository = guestRepository;
-        this.seatAssignmentRepository = seatAssignmentRepository;
-        this.currentUserService = currentUserService;
-        this.passwordEncoder = passwordEncoder;
-        this.rsvpRepository = rsvpRepository;
-        this.mediaFileRepository = mediaFileRepository;
-        this.auditLogService = auditLogService;
-        this.appProperties = appProperties;
-        this.organizationRepository = organizationRepository;
-        this.organizationMemberRepository = organizationMemberRepository;
+        this(invitationRepository, templateRepository, templateAccessRepository, guestRepository,
+                seatAssignmentRepository, currentUserService, passwordEncoder, rsvpRepository,
+                mediaFileRepository, auditLogService, appProperties, organizationRepository,
+                organizationMemberRepository, null);
     }
 
     public InvitationService(
@@ -172,9 +199,12 @@ public class InvitationService {
                 currentUserService, passwordEncoder, null, null, null, null);
     }
 
-    @Transactional
+    @Transactional(isolation = org.springframework.transaction.annotation.Isolation.READ_COMMITTED)
     public InvitationResponse create(Authentication authentication, InvitationRequest request) {
         AppUser user = currentUserService.currentUser(authentication);
+        if (entitlementService != null) {
+            entitlementService.requireInvitationCreation(user);
+        }
         UserInvitation invitation = new UserInvitation();
         invitation.setUser(user);
         invitation.setStatus(InvitationStatus.DRAFT);
@@ -196,20 +226,14 @@ public class InvitationService {
                         user.getId(),
                         statusFilter.toDomain()
                 );
-        return invitations.stream()
-                .map(invitation -> InvitationSummaryResponse.from(invitation, coverUrl(invitation)))
-                .toList();
-    }
-
-    private String coverUrl(UserInvitation invitation) {
-        if (mediaFileRepository == null) {
-            return null;
+        java.util.Map<Long, String> covers = new java.util.HashMap<>();
+        if (mediaFileRepository != null && !invitations.isEmpty()) {
+            mediaFileRepository.findCoversForInvitations(invitations.stream().map(UserInvitation::getId).toList(), MediaType.COVER_IMAGE)
+                    .forEach(cover -> covers.putIfAbsent(cover.getInvitationId(), cover.getFileUrl()));
         }
-        return mediaFileRepository.findAllByInvitationIdAndMediaType(invitation.getId(), MediaType.COVER_IMAGE)
-                .stream()
-                .findFirst()
-                .map(media -> media.getFileUrl())
-                .orElse(null);
+        return invitations.stream()
+                .map(invitation -> InvitationSummaryResponse.from(invitation, covers.get(invitation.getId())))
+                .toList();
     }
 
     @Transactional(readOnly = true)
@@ -404,9 +428,18 @@ public class InvitationService {
         String inviteToken = request == null ? null : trimToNull(request.getInviteToken());
         String password = request == null ? null : trimToNull(request.getPassword());
 
-        if (invitation.getVisibility() == InvitationVisibility.PUBLIC
-                || hasInvitationAccess(invitation, accessToken, inviteToken)
-                || validPassword(invitation, password)) {
+        boolean granted = invitation.getVisibility() == InvitationVisibility.PUBLIC
+                || hasInvitationAccess(invitation, accessToken, inviteToken);
+        if (!granted && invitation.getVisibility() == InvitationVisibility.PASSWORD_PROTECTED && password != null) {
+            if (passwordAttemptLimiter != null) {
+                passwordAttemptLimiter.assertAllowed(invitation.getId());
+            }
+            granted = validPassword(invitation, password);
+            if (!granted && passwordAttemptLimiter != null) {
+                passwordAttemptLimiter.recordFailure(invitation.getId());
+            }
+        }
+        if (granted) {
             return InvitationAccessVerifyResponse.builder()
                     .slug(invitation.getSlug())
                     .accessGranted(true)
@@ -571,7 +604,11 @@ public class InvitationService {
         }
         InvitationTemplate template = templateRepository.findById(templateId)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Template not found"));
-        if (template.isPremium()
+        if (entitlementService != null) {
+            if (!entitlementService.hasTemplateAccess(user, template)) {
+                throw new ApiException(HttpStatus.FORBIDDEN, "Premium template access is required");
+            }
+        } else if (template.isPremium()
                 && (user == null
                 || !templateAccessRepository.existsByUserIdAndTemplateIdAndActiveTrue(user.getId(), templateId))) {
             throw new ApiException(HttpStatus.FORBIDDEN, "Premium template access is required");

@@ -1,3 +1,4 @@
+import { normalizeInvitationLanguage } from "@/shared/i18n/invitationLanguage";
 /**
  * templateExperienceContent — builds the full content model for the shared
  * TemplateExperience engine.
@@ -537,7 +538,7 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         : null;
     const hostStoryText = nonBlank(hasHostContent ? host.storyText : (host.storyText || tpl.storyText));
     const hostStoryTextEn = nonBlank(host.storyTextEn);
-    const languageMode = host.languageMode || tpl.languageMode || "both";
+    const languageMode = normalizeInvitationLanguage(host.languageMode || tpl.languageMode || "both");
     const combinedStoryText = languageMode === "en"
         ? (hostStoryTextEn || hostStoryText)
         : languageMode === "both" && hostStoryTextEn

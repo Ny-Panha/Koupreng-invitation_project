@@ -49,6 +49,8 @@ function publicParams(params) {
 }
 
 export const rsvpService = {
+  update: (invitationId, rsvpId, payload) => api.patch(`/v1/invitations/${invitationId}/rsvps/${rsvpId}`, payload).then(unwrap),
+  remove: (invitationId, rsvpId) => api.delete(`/v1/invitations/${invitationId}/rsvps/${rsvpId}`).then(unwrap),
   submitPublic: (slug, data, params) =>
     api
       .post(`/v1/public/invitations/${encodeURIComponent(slug)}/rsvp${toQuery(publicParams(params))}`, data, { skipAuth: true })

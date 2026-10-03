@@ -33,6 +33,62 @@ import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitation
 class BudgetServiceTests {
 
     @Test
+    void mixedCurrencyTotalsAreSeparatedAndNeverPresentedAsComparableScalar() {
+        Fixture fixture = fixture();
+        Authentication authentication = mock(Authentication.class);
+        Budget budget = budget(invitation());
+        BudgetItem usd = new BudgetItem();
+        usd.setBudget(budget);
+        usd.setCurrency("USD");
+        usd.setEstimatedCost(new BigDecimal("10.00"));
+        usd.setActualCost(new BigDecimal("12.00"));
+        BudgetItem khr = new BudgetItem();
+        khr.setBudget(budget);
+        khr.setCurrency("KHR");
+        khr.setEstimatedCost(new BigDecimal("40000"));
+        khr.setActualCost(new BigDecimal("50000"));
+        when(fixture.invitationService.requireOwnedInvitationEntity(authentication, 10L)).thenReturn(budget.getInvitation());
+        when(fixture.budgetRepository.findByInvitationId(10L)).thenReturn(Optional.of(budget));
+        when(fixture.budgetItemRepository.findByBudgetIdOrderByIdDesc(40L)).thenReturn(List.of(usd, khr));
+        BudgetResponse response = fixture.service.getOrCreateBudget(authentication, 10L);
+        assertEquals(null, response.getTotalActual());
+        assertFalse(response.isTotalsComparable());
+        assertEquals(new BigDecimal("12.00"), response.getActualByCurrency().get("USD"));
+        assertEquals(new BigDecimal("50000"), response.getActualByCurrency().get("KHR"));
+        assertEquals(new BigDecimal("1000.00"), response.getTotalBudget());
+        assertEquals(null, fixture.service.getBudgetSummary(authentication, 10L).getRemainingBudget());
+        String csv = fixture.service.exportBudgetCsv(authentication, 10L);
+        assertTrue(csv.lines().findFirst().orElseThrow().endsWith(",currency"));
+        assertTrue(csv.contains("USD"));
+        assertTrue(csv.contains("KHR"));
+    }
+
+    @Test
+    void planningItemMutationsPreserveTheHostsBudgetCap() {
+        Fixture fixture = fixture();
+        Authentication authentication = mock(Authentication.class);
+        Budget budget = budget(invitation());
+        BudgetItem item = new BudgetItem();
+        item.setId(55L);
+        item.setBudget(budget);
+        when(fixture.invitationService.requireOwnedInvitationEntity(authentication, 10L)).thenReturn(budget.getInvitation());
+        when(fixture.budgetRepository.findByInvitationId(10L)).thenReturn(Optional.of(budget));
+        when(fixture.budgetItemRepository.save(any())).thenAnswer(call -> call.getArgument(0));
+        when(fixture.budgetItemRepository.findByIdAndInvitationId(55L, 10L)).thenReturn(Optional.of(item));
+        when(fixture.budgetItemRepository.findAllByInvitationId(10L)).thenReturn(List.of(item));
+        var request = new com.koupreng.backend.budget.api.dto.BudgetItemRequest();
+        request.setName("Dinner");
+        request.setBudget(new BigDecimal("100.00"));
+        fixture.service.create(authentication, 10L, request);
+        assertEquals(new BigDecimal("1000.00"), budget.getTotalBudget());
+        fixture.service.update(authentication, 10L, 55L, request);
+        assertEquals(new BigDecimal("1000.00"), budget.getTotalBudget());
+        fixture.service.delete(authentication, 10L, 55L);
+        assertEquals(new BigDecimal("1000.00"), budget.getTotalBudget());
+        verify(fixture.budgetRepository, never()).save(any());
+    }
+
+    @Test
     void getOrCreateBudgetCreatesEmptyBudgetForOwner() {
         Fixture fixture = fixture();
         Authentication authentication = mock(Authentication.class);

@@ -45,4 +45,36 @@ public interface TemplatePaymentOrderRepository extends JpaRepository<TemplatePa
             Collection<PaymentStatus> statuses,
             Instant expiresAt
     );
+
+    @org.springframework.data.jpa.repository.EntityGraph(attributePaths = "user")
+    @Query("select p from TemplatePaymentOrder p order by case when p.createdAt is null then 0 else 1 end, p.createdAt desc")
+    List<TemplatePaymentOrder> findRecent(org.springframework.data.domain.Pageable pageable);
+
+    @Query("""
+            select count(p) as total,
+              coalesce(sum(case when p.status in (com.koupreng.backend.payment.domain.PaymentStatus.FAILED,
+                com.koupreng.backend.payment.domain.PaymentStatus.REJECTED) then 1 else 0 end), 0) as failed,
+              coalesce(sum(case when p.status in (com.koupreng.backend.payment.domain.PaymentStatus.PENDING,
+                com.koupreng.backend.payment.domain.PaymentStatus.PAID_PENDING_REVIEW) then 1 else 0 end), 0) as pending,
+              coalesce(sum(case when p.status = com.koupreng.backend.payment.domain.PaymentStatus.PAID_PENDING_REVIEW then 1 else 0 end), 0) as review
+            from TemplatePaymentOrder p
+            """)
+    DashboardCounts dashboardCounts();
+
+    interface DashboardCounts {
+        long getTotal();
+        long getFailed();
+        long getPending();
+        long getReview();
+    }
+
+    @Query("""
+            select coalesce(nullif(upper(trim(p.currency)), ''), 'USD') as currency,
+              sum(coalesce(p.paidAmount, p.amount)) as total
+            from TemplatePaymentOrder p where p.status = com.koupreng.backend.payment.domain.PaymentStatus.PAID
+            group by coalesce(nullif(upper(trim(p.currency)), ''), 'USD')
+            """)
+    List<RevenueByCurrency> revenueByCurrency();
+
+    interface RevenueByCurrency extends com.koupreng.backend.reporting.domain.RevenueTotals.AmountInCurrency { }
 }

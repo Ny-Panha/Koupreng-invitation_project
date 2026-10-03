@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Volume2, VolumeX, SkipForward, Mail, Sparkles, ChevronRight, RotateCcw } from "lucide-react";
 import "./CinematicVideoOpening.css";
+import { postPreviewMessage } from "@/shared/preview/previewMessaging";
 
 const resolveMediaSrc = (val) => {
   if (!val) return "";
@@ -93,13 +94,7 @@ export default function CinematicVideoOpening({
     if (!isPreviewMode) return;
     if (e) e.stopPropagation();
     if (typeof window !== "undefined" && window.parent && window.parent !== window) {
-      window.parent.postMessage(
-        {
-          type: "SELECT_TARGET_ELEMENT",
-          elementId,
-        },
-        "*"
-      );
+      postPreviewMessage({ type: "SELECT_TARGET_ELEMENT", elementId });
     }
   };
 

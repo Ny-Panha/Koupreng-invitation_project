@@ -30,13 +30,20 @@ function json(route, data, status = 200) {
 async function waitForOpening(page) {
   await expect(page.locator(".kc-opening__guest-banner")).toBeVisible();
   await expect(page.locator(".kc-opening__button")).toBeVisible();
-  await page.evaluate(() => document.fonts.ready);
+  await page.evaluate(async () => {
+    const guestName = document.querySelector(".kc-opening__guest-name")?.textContent || "";
+    await document.fonts.load("12px Bayon", guestName);
+    await document.fonts.ready;
+  });
+  await expect.poll(() => page.evaluate(() => document.fonts.check(
+    "12px Bayon", document.querySelector(".kc-opening__guest-name")?.textContent || "",
+  ))).toBe(true);
 }
 
 test("Khmer Celestial guest banner stays balanced in every required viewport", async ({ page }, testInfo) => {
   test.setTimeout(45_000);
   await page.emulateMedia({ reducedMotion: "reduce" });
-  const outputDirectory = join(testInfo.config.rootDir, "test-results", "khmer-celestial-guest-banner");
+  const outputDirectory = testInfo.outputPath("khmer-celestial-guest-banner");
   mkdirSync(outputDirectory, { recursive: true });
 
   for (const viewport of VIEWPORTS) {
@@ -97,7 +104,8 @@ test("Khmer Celestial guest banner stays balanced in every required viewport", a
     } else if (viewport.width <= 1023) {
       expect(metrics.banner.width).toBeCloseTo(Math.min(520, Math.max(440, viewport.width * 0.68)), 0);
     } else {
-      expect(metrics.banner.width).toBeCloseTo(Math.min(560, Math.max(440, viewport.width * 0.36)), 0);
+      // Original desktop artwork geometry at the Phase2 baseline (29c3241).
+      expect(metrics.banner.width).toBeCloseTo(450, 0);
     }
     expect(metrics.documentWidth).toBeLessThanOrEqual(metrics.viewportWidth);
     expect(metrics.guestName.left).toBeGreaterThanOrEqual(metrics.guestContent.left - 0.5);
@@ -114,9 +122,12 @@ test("Khmer Celestial guest banner stays balanced in every required viewport", a
     expect(metrics.button.bottom).toBeLessThanOrEqual(metrics.viewportHeight + 0.5);
     expect(metrics.contentScrollHeight).toBeLessThanOrEqual(metrics.contentClientHeight + 1);
 
-    await page.screenshot({
-      path: join(outputDirectory, `preview-${viewport.width}x${viewport.height}.png`),
-    });
+    await expect(async () => {
+      await page.screenshot({
+        path: join(outputDirectory, `preview-${viewport.width}x${viewport.height}.png`),
+        scale: "css",
+      });
+    }).toPass({ timeout: 5000, intervals: [100, 250] });
   }
 });
 
@@ -127,15 +138,41 @@ test("long Khmer guest names stay inside the ornamental safe area", async ({ pag
   await waitForOpening(page);
 
   const longGuestName = "ឯកឧត្តម លោកជំទាវ សុខ សុវណ្ណារ៉ា ព្រមទាំងក្រុមគ្រួសារ និងញាតិមិត្ត";
-  await page.evaluate((guestName) => {
-    window.postMessage({ type: "LIVE_PREVIEW_SYNC", data: { guestName } }, window.location.origin);
-  }, longGuestName);
+  const sessionId = "qa-preview-session-1234567890123456";
+  // Model the legitimate owner window and isolated preview frame. Published
+  // pages intentionally refuse editor updates, including same-origin messages.
+  await page.evaluate((sessionId) => {
+    const iframe = document.createElement("iframe");
+    iframe.title = "Authorized QA owner preview";
+    const url = new URL("/templates/khmer-celestial/preview", location.origin);
+    url.search = new URLSearchParams({ embed: "true", previewSession: sessionId, previewOrigin: location.origin });
+    iframe.src = url.href;
+    iframe.style.cssText = "position:fixed;inset:0;width:100%;height:100%;border:0;z-index:999999";
+    window.__qaPreviewReady = false;
+    window.addEventListener("message", (event) => {
+      if (event.source === iframe.contentWindow && event.origin === location.origin
+        && event.data?.type === "PREVIEW_READY" && event.data.sessionId === sessionId) {
+        window.__qaPreviewReady = true;
+      }
+    });
+    document.body.appendChild(iframe);
+  }, sessionId);
+  const preview = page.frameLocator('iframe[title="Authorized QA owner preview"]');
+  await expect.poll(() => page.evaluate(() => window.__qaPreviewReady)).toBe(true);
+  await page.evaluate(({ guestName, sessionId }) => {
+    const child = document.querySelector('iframe[title="Authorized QA owner preview"]').contentWindow;
+    child.postMessage({ type: "TOGGLE_GATE", sessionId, open: false }, location.origin);
+    child.postMessage(
+      { type: "LIVE_PREVIEW_SYNC", sessionId, data: { guestName } }, location.origin,
+    );
+  }, { guestName: longGuestName, sessionId });
 
-  const guestName = page.locator(".kc-opening__guest-name");
+  const guestName = preview.locator(".kc-opening__guest-name");
   await expect(guestName).toHaveText(longGuestName);
   await expect(guestName).toHaveClass(/kc-opening__guest-name--very-long/);
 
-  const containment = await page.evaluate(() => {
+  const containment = await preview.locator(".kc-opening__guest-name").evaluate((guestNameElement) => {
+    const document = guestNameElement.ownerDocument;
     const name = document.querySelector(".kc-opening__guest-name").getBoundingClientRect();
     const content = document.querySelector(".kc-opening__guest-banner-content").getBoundingClientRect();
     const banner = document.querySelector(".kc-opening__guest-banner").getBoundingClientRect();
@@ -147,6 +184,22 @@ test("long Khmer guest names stay inside the ornamental safe area", async ({ pag
 
   expect(containment.insideHorizontalSafeArea).toBe(true);
   expect(containment.insideBanner).toBe(true);
+});
+
+test("published Khmer Celestial ignores forged editor query and messages", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  const sessionId = "qa-forged-preview-1234567890123456";
+  await page.goto(`/templates/khmer-celestial?embed=true&previewSession=${sessionId}&previewOrigin=${encodeURIComponent("http://attacker.example.test")}`);
+  await waitForOpening(page);
+  await page.evaluate((sessionId) => {
+    window.__qaForgeryDelivered = false;
+    window.addEventListener("message", (event) => {
+      if (event.source === window && event.data?.sessionId === sessionId) window.__qaForgeryDelivered = true;
+    });
+    window.postMessage({ type: "LIVE_PREVIEW_SYNC", sessionId, data: { guestName: "FORGED PUBLIC GUEST" } }, location.origin);
+  }, sessionId);
+  await expect.poll(() => page.evaluate(() => window.__qaForgeryDelivered)).toBe(true);
+  await expect(page.locator(".kc-opening__guest-name")).toHaveText(SAMPLE_GUEST);
 });
 
 test("public invite token reaches the existing Khmer Celestial guest-name destination", async ({ page }) => {
@@ -193,7 +246,8 @@ test("public invite token reaches the existing Khmer Celestial guest-name destin
   expect(observedToken).toBe("qa-guest-token");
   await expect(banner.locator(".kc-opening__guest-name")).toHaveText(PERSONALIZED_GUEST);
   await expect(banner).not.toContainText(SAMPLE_GUEST);
-  await page.locator(".kc-opening__button").click();
+  await page.locator(".kc-opening__button").focus();
+  await page.keyboard.press("Enter");
   await expect(page.locator(".kc-opening")).toHaveCount(0);
 
   await page.goto("/w/celestial-browser-qa");
@@ -218,11 +272,12 @@ test("live local backend personalizes the real Khmer Celestial public link", asy
   const banner = page.locator(".kc-opening__guest-banner");
   await expect(banner.locator(".kc-opening__guest-name")).toHaveText(process.env.QA_GUEST_NAME);
 
-  const outputDirectory = join(testInfo.config.rootDir, "test-results", "khmer-celestial-guest-banner");
+  const outputDirectory = testInfo.outputPath("khmer-celestial-guest-banner");
   mkdirSync(outputDirectory, { recursive: true });
   await page.screenshot({ path: join(outputDirectory, "real-personalized-390x844.png") });
 
-  await page.locator(".kc-opening__button").click();
+  await page.locator(".kc-opening__button").focus();
+  await page.keyboard.press("Enter");
   await expect(page.locator(".kc-opening")).toHaveCount(0);
   expect(browserErrors).toEqual([]);
 });

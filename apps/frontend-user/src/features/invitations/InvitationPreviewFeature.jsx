@@ -14,6 +14,7 @@ import { templateCatalogService } from "@/features/templates/api/templateCatalog
 import { TemplateExperience, registerDynamicTemplates } from "@/features/templates";
 import { draftToTemplate } from "@/features/wedding-builder/utils/draftToTemplate";
 import { publicInvitationToDraft } from "@/features/wedding-builder/utils/invitationDraftAdapter";
+import { createPreviewSession, postPreviewMessage } from "@/shared/preview/previewMessaging";
 
 export default function InvitationPreviewPage() {
     const { id } = useParams();
@@ -25,6 +26,8 @@ export default function InvitationPreviewPage() {
     const [error, setError] = useState("");
     const [isGateOpen, setIsGateOpen] = useState(true);
     const [viewMode, setViewMode] = useState("full");
+    const [previewSession] = useState(createPreviewSession);
+    const previewChannel = useMemo(() => ({ source: window, origin: window.location.origin, sessionId: previewSession }), [previewSession]);
 
     useEffect(() => {
         let active = true;
@@ -79,7 +82,7 @@ export default function InvitationPreviewPage() {
     const handleToggleGate = () => {
         const nextState = !isGateOpen;
         setIsGateOpen(nextState);
-        window.postMessage({ type: "TOGGLE_GATE", open: nextState }, "*");
+        postPreviewMessage({ type: "TOGGLE_GATE", open: nextState }, previewChannel);
     };
 
     if (loading) {
@@ -174,13 +177,14 @@ export default function InvitationPreviewPage() {
                 {rendered ? (
                     <div className={`inv-phone-viewport ${viewMode === "full" ? "inv-phone-viewport--full" : ""}`}>
                         <TemplateExperience
-                            key={`preview-${isGateOpen}-${viewMode}`}
+                            key={`preview-${viewMode}`}
                             tpl={rendered.tpl}
                             variant={rendered.variant}
                             showActions={false}
                             showBreadcrumb={false}
                             preview={viewMode === "phone"}
                             previewStartClosed={!isGateOpen}
+                            previewChannel={previewChannel}
                         />
                     </div>
                 ) : (

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { usePreviewSyncRetries } from "../../shared/hooks/usePreviewSyncRetries";
 import {
   Palette,
   Sparkles,
@@ -36,6 +37,7 @@ import { useToast } from "../../shared/hooks";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 import adminManagementService from "../../shared/api/adminService";
 import { userTemplateUrl } from "../../shared/config/runtime";
+import { buildPreviewUrl, createPreviewSession, isTrustedPreviewReply, postIframePreview } from "../../shared/preview/previewMessaging";
 import {
   TemplateGallerySection,
   TemplateQrSection,
@@ -594,6 +596,8 @@ export default function AdminTemplateEditPage() {
   const [newGalleryUrl, setNewGalleryUrl] = useState("");
   const [form, setForm] = useState(DEFAULT_STUDIO_STATE);
   const iframeRef = useRef(null);
+  const [previewSession] = useState(createPreviewSession);
+  const sendPreview = useCallback((message) => postIframePreview(iframeRef.current, previewSession, message), [previewSession]);
   const bgFileInputRef = useRef(null);
   const brandMarkFileInputRef = useRef(null);
   const openButtonFileInputRef = useRef(null);
@@ -783,17 +787,17 @@ export default function AdminTemplateEditPage() {
   const broadcastSync = useCallback(() => {
     if (!iframeRef.current?.contentWindow) return;
     try {
-      iframeRef.current.contentWindow.postMessage(
+      sendPreview(
         {
           type: "LIVE_PREVIEW_SYNC",
           data: { ...form, customFonts, selectedFontElement },
-        },
-        "*"
+        }
       );
     } catch {
       // ignore
     }
-  }, [form, customFonts, selectedFontElement]);
+  }, [form, customFonts, selectedFontElement, sendPreview]);
+  const synchronizeLoadedPreview = usePreviewSyncRetries(broadcastSync);
 
   useEffect(() => {
     broadcastSync();
@@ -801,6 +805,7 @@ export default function AdminTemplateEditPage() {
 
   useEffect(() => {
     const handlePreviewHandshake = (event) => {
+      if (!isTrustedPreviewReply(event, iframeRef.current, previewSession)) return;
       if (
         event.data?.type === "PREVIEW_READY" ||
         event.data?.type === "REQUEST_PREVIEW_SYNC"
@@ -808,13 +813,12 @@ export default function AdminTemplateEditPage() {
         broadcastSync();
         if (previewGateOpen && iframeRef.current?.contentWindow) {
           try {
-            iframeRef.current.contentWindow.postMessage(
+            sendPreview(
               {
                 type: "TOGGLE_GATE",
                 open: true,
                 isOpen: true,
-              },
-              "*"
+              }
             );
           } catch {
             // The preview can navigate away while the synchronization event is sent.
@@ -838,19 +842,18 @@ export default function AdminTemplateEditPage() {
     };
     window.addEventListener("message", handlePreviewHandshake);
     return () => window.removeEventListener("message", handlePreviewHandshake);
-  }, [broadcastSync, previewGateOpen]);
+  }, [broadcastSync, previewGateOpen, previewSession, sendPreview]);
 
   const handleSetGate = (shouldOpen) => {
     setPreviewGateOpen(shouldOpen);
     if (iframeRef.current?.contentWindow) {
       try {
-        iframeRef.current.contentWindow.postMessage(
+        sendPreview(
           {
             type: "TOGGLE_GATE",
             open: shouldOpen,
             isOpen: shouldOpen,
-          },
-          "*"
+          }
         );
       } catch {
         // ignore
@@ -1765,7 +1768,7 @@ export default function AdminTemplateEditPage() {
                                   if (val) ensureGoogleFontLoaded(val);
                                   if (iframeRef.current?.contentWindow) {
                                     try {
-                                      iframeRef.current.contentWindow.postMessage(
+                                      sendPreview(
                                         {
                                           type: "LIVE_PREVIEW_SYNC",
                                           data: {
@@ -1773,8 +1776,7 @@ export default function AdminTemplateEditPage() {
                                             elementFonts: nextElementFonts,
                                             customFonts,
                                           },
-                                        },
-                                        "*"
+                                        }
                                       );
                                     } catch {
                                       // The preview can navigate away while the synchronization event is sent.
@@ -3638,7 +3640,7 @@ export default function AdminTemplateEditPage() {
                 key={form.code || form.presetId || "template-preview"}
                 ref={iframeRef}
                 allow="clipboard-write; clipboard-read; autoplay"
-                src={userTemplateUrl(`${
+                src={buildPreviewUrl(userTemplateUrl(`${
                   form.code ||
                   (form.presetId === "KHMER_CELESTIAL"
                     ? "khmer-celestial"
@@ -3651,25 +3653,21 @@ export default function AdminTemplateEditPage() {
                     : form.presetId === "EMERALD_GREEN"
                     ? "emerald-canva-luxe-wedding"
                     : "the-digital-yes-wedding")
-                }/preview?embed=true`)}
+                }/preview?embed=true`), previewSession)}
                 className={`w-full h-full border-0 bg-zinc-950 ${
                   isDraggingDivider ? "pointer-events-none" : ""
                 }`}
                 title="Live User Template Preview"
                 onLoad={() => {
-                  broadcastSync();
-                  [100, 300, 600, 1200, 2000].forEach((delay) => {
-                    setTimeout(() => broadcastSync(), delay);
-                  });
+                  synchronizeLoadedPreview();
                   if (previewGateOpen && iframeRef.current?.contentWindow) {
                     try {
-                      iframeRef.current.contentWindow.postMessage(
+                      sendPreview(
                         {
                           type: "TOGGLE_GATE",
                           open: true,
                           isOpen: true,
-                        },
-                        "*"
+                        }
                       );
                     } catch {
                       // The preview can navigate away while the synchronization event is sent.

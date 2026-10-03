@@ -11,4 +11,5 @@ public interface SubscriptionPackageRepository extends JpaRepository<Subscriptio
     List<SubscriptionPackage> findByActiveTrueOrderBySortOrderAscPriceAsc();
 
     Optional<SubscriptionPackage> findByIdAndActiveTrue(Long id);
+    Optional<SubscriptionPackage> findByCodeAndActiveTrue(String code);
 }

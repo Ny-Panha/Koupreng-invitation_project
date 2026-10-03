@@ -5,11 +5,13 @@ import pytest
 
 import main
 
+TEST_WEBHOOK_SECRET = "test-webhook-secret"
+
 
 class FakeRequest:
     def __init__(self, payload, headers=None):
         self.payload = payload
-        self.headers = headers or {}
+        self.headers = {"X-Telegram-Bot-Api-Secret-Token": TEST_WEBHOOK_SECRET} if headers is None else headers
 
     async def json(self):
         return self.payload
@@ -46,13 +48,14 @@ def reset_bot_state(monkeypatch):
     monkeypatch.setattr(main, "TELEGRAM_ALLOWED_ADMIN_IDS", {"999"})
     monkeypatch.setattr(main, "TELEGRAM_ALLOWED_PAYMENT_BOT_IDS", set())
     monkeypatch.setattr(main, "TELEGRAM_ALLOWED_PAYMENT_BOT_USERNAMES", {"paywaybyaba_bot"})
-    monkeypatch.setattr(main, "TELEGRAM_WEBHOOK_SECRET", "")
+    monkeypatch.setattr(main, "TELEGRAM_WEBHOOK_SECRET", TEST_WEBHOOK_SECRET)
+    monkeypatch.setattr(main, "ADMIN_PAYMENT_SECRET", "test-internal-secret")
 
 
 @pytest.mark.asyncio
 async def test_configured_webhook_secret_is_required(monkeypatch):
     monkeypatch.setattr(main, "TELEGRAM_WEBHOOK_SECRET", "expected-secret")
-    request = FakeRequest(message_update(99, "/start", is_bot=False))
+    request = FakeRequest(message_update(99, "/start", is_bot=False), headers={})
 
     with pytest.raises(main.HTTPException) as error:
         await main.telegram_webhook(request)
@@ -278,7 +281,7 @@ class Non2xxClient:
 async def test_backend_timeout_returns_sanitized_error(monkeypatch):
     monkeypatch.setattr(main.httpx, "AsyncClient", lambda **kwargs: TimeoutClient())
     result = await main.post_to_backend("/internal", {"value": "secret"})
-    assert result == {"ok": False, "message": "Backend request failed (ReadTimeout)"}
+    assert result == {"ok": False, "retryable": True, "message": "Backend request failed (ReadTimeout)"}
     assert "secret-bearing" not in result["message"]
 
 

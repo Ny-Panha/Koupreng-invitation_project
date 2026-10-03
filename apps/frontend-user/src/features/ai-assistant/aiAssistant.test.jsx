@@ -1,8 +1,9 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { cleanup, render, screen, fireEvent } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import AssistantComposer from "./components/AssistantComposer";
 import AssistantResult from "./components/AssistantResult";
 import { toInvitationStoryUpdate } from "./model/invitationContent";
+afterEach(cleanup);
 
 vi.mock("@/features/invitations/api/invitationApi", () => ({
   invitationService: {
@@ -57,6 +58,8 @@ describe("AI Invitation Assistant Module", () => {
       const handleApply = vi.fn();
       const sampleResponse = {
         enabled: true,
+        source: "AI_PROVIDER",
+        provider: "openai",
         generatedText: "សិរីសួស្តី អាពាហ៍ពិពាហ៍ Dara & Sophea",
         suggestions: ["Keep short for mobile"],
       };

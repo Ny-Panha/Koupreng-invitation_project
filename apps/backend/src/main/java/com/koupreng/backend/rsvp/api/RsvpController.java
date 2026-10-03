@@ -2,6 +2,7 @@ package com.koupreng.backend.rsvp.api;
 
 import com.koupreng.backend.shared.response.ApiErrorResponse;
 import com.koupreng.backend.shared.response.ApiResponse;
+import com.koupreng.backend.auth.api.dto.MessageResponse;
 import com.koupreng.backend.rsvp.api.dto.RsvpRequest;
 import com.koupreng.backend.rsvp.api.dto.RsvpResponse;
 import com.koupreng.backend.rsvp.api.dto.RsvpSummaryResponse;
@@ -151,6 +152,13 @@ public class RsvpController {
     ) {
         rsvpService.delete(authentication, invitationId, rsvpId);
         return ResponseEntity.ok(ApiResponse.success("RSVP deleted successfully", null));
+    }
+
+    @Operation(summary = "Remove wish text while preserving the RSVP attendance record")
+    @DeleteMapping("/invitations/{invitationId}/wishes/{wishId}")
+    public MessageResponse moderateWish(Authentication authentication, @PathVariable Long invitationId, @PathVariable Long wishId) {
+        rsvpService.moderateWish(authentication, invitationId, wishId);
+        return new MessageResponse("Wish removed");
     }
 
     @GetMapping("/invitations/{invitationId}/wishes")

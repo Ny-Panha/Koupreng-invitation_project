@@ -50,6 +50,7 @@ logger = logging.getLogger("koupreng.telegram_bot")
 
 MAX_PROCESSED_UPDATES = 4096
 PROCESSED_UPDATE_IDS: OrderedDict[str, None] = OrderedDict()
+PROCESSING_UPDATE_IDS: set[str] = set()
 
 ORDER_CODE_RE = re.compile(r"\bEVT[0-9]{9,10}\b", re.IGNORECASE)
 PAYWAY_TRX_RE = re.compile(
@@ -154,11 +155,25 @@ MAIN_MENU_REPLY_KEYBOARD = {
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
+    missing = missing_payment_security_configuration()
+    if missing:
+        raise RuntimeError("Missing required Telegram payment configuration: " + ", ".join(missing))
     await set_bot_commands()
     yield
 
 
 app = FastAPI(title="Koupreng payment Telegram webhook", lifespan=lifespan)
+
+
+def missing_payment_security_configuration() -> list[str]:
+    return [
+        name
+        for name, value in (
+            ("TELEGRAM_WEBHOOK_SECRET", TELEGRAM_WEBHOOK_SECRET),
+            ("ADMIN_PAYMENT_SECRET", ADMIN_PAYMENT_SECRET),
+        )
+        if not value.strip()
+    ]
 
 
 async def set_bot_commands():
@@ -192,21 +207,95 @@ async def health():
 
 @app.post("/telegram/webhook")
 async def telegram_webhook(request: Request):
-    if TELEGRAM_WEBHOOK_SECRET:
-        supplied_secret = request.headers.get("X-Telegram-Bot-Api-Secret-Token", "")
-        if not secrets.compare_digest(supplied_secret, TELEGRAM_WEBHOOK_SECRET):
-            logger.warning("Rejected Telegram webhook request with an invalid secret")
-            raise HTTPException(status_code=403, detail="Invalid Telegram webhook secret")
+    if missing_payment_security_configuration():
+        logger.error("Telegram payment webhook security configuration is incomplete")
+        raise HTTPException(status_code=503, detail="Telegram webhook is unavailable")
+    supplied_secret = request.headers.get("X-Telegram-Bot-Api-Secret-Token", "")
+    if not secrets.compare_digest(supplied_secret.encode("utf-8"), TELEGRAM_WEBHOOK_SECRET.encode("utf-8")):
+        logger.warning("Rejected Telegram webhook request with an invalid secret")
+        raise HTTPException(status_code=403, detail="Invalid Telegram webhook secret")
 
-    update = await request.json()
-    if not isinstance(update, dict):
-        logger.info("Ignoring Telegram update with a non-object payload")
+    try:
+        update = await request.json()
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail="Invalid Telegram update JSON") from exc
+    if not valid_telegram_update(update):
+        logger.info("Ignoring Telegram update with an invalid payload shape")
         return {"ok": True}
 
-    update_id = str(update.get("update_id") or "")
-    if update_id and not claim_update(update_id):
+    update_id = str(update["update_id"])
+    if update_id in PROCESSED_UPDATE_IDS:
         logger.info("Ignoring duplicate Telegram update")
         return {"ok": True}
+    if update_id in PROCESSING_UPDATE_IDS or len(PROCESSING_UPDATE_IDS) >= MAX_PROCESSED_UPDATES:
+        raise HTTPException(status_code=503, detail="Telegram update is still processing", headers={"Retry-After": "1"})
+    PROCESSING_UPDATE_IDS.add(update_id)
+    try:
+        result = await process_telegram_update(update)
+        claim_update(update_id)
+        return result
+    finally:
+        # Failed/cancelled attempts remain retryable. Only acknowledged processing
+        # enters the completed cache; backend payment transactions stay idempotent.
+        PROCESSING_UPDATE_IDS.discard(update_id)
+
+
+def valid_telegram_update(update: object) -> bool:
+    if not isinstance(update, dict) or type(update.get("update_id")) is not int or update["update_id"] < 0:
+        return False
+    for key in ("message", "edited_message", "channel_post", "edited_channel_post"):
+        if key in update and not valid_telegram_message(update[key]):
+            return False
+    if "callback_query" in update:
+        callback = update["callback_query"]
+        if not isinstance(callback, dict):
+            return False
+        if not isinstance(callback.get("id"), str) or not callback["id"]:
+            return False
+        if not isinstance(callback.get("data"), str) or not valid_telegram_message(callback.get("message")):
+            return False
+        if "from" in callback and not valid_telegram_sender(callback["from"]):
+            return False
+    return True
+
+
+def valid_telegram_id(value: object) -> bool:
+    # Telegram sends integers; integral strings preserve existing fixture/helper input.
+    return type(value) is int or isinstance(value, str) and bool(re.fullmatch(r"-?[0-9]+", value))
+
+
+def valid_telegram_sender(sender: object) -> bool:
+    if not isinstance(sender, dict):
+        return False
+    if "id" in sender and not valid_telegram_id(sender["id"]):
+        return False
+    if "is_bot" in sender and not isinstance(sender["is_bot"], bool):
+        return False
+    return all(key not in sender or isinstance(sender[key], str) for key in ("username", "first_name", "last_name"))
+
+
+def valid_telegram_message(message: object, *, validate_reply: bool = True) -> bool:
+    if not isinstance(message, dict):
+        return False
+    if "message_id" in message and not valid_telegram_id(message["message_id"]):
+        return False
+    if "chat" in message:
+        chat = message["chat"]
+        if not isinstance(chat, dict) or "id" in chat and not valid_telegram_id(chat["id"]):
+            return False
+    if "from" in message and not valid_telegram_sender(message["from"]):
+        return False
+    if any(
+        key in message and message[key] is not None and not isinstance(message[key], str)
+        for key in ("text", "caption")
+    ):
+        return False
+    if validate_reply and "reply_to_message" in message:
+        return valid_telegram_message(message["reply_to_message"], validate_reply=False)
+    return True
+
+
+async def process_telegram_update(update: dict):
 
     callback_value = update.get("callback_query")
     callback_query = callback_value if isinstance(callback_value, dict) else {}
@@ -573,6 +662,7 @@ async def handle_paid_command(chat_id: str, message_id: str, text: str, username
             "confirmedBy": username,
         },
     )
+    require_backend_delivery(result)
     await reply_from_backend(chat_id, message_id, result, success_prefix=f"Payment confirmed: {order_code}")
 
 
@@ -614,6 +704,7 @@ async def handle_detect_message(
         else "/api/v1/internal/template-payments/telegram-detect"
     )
     result = await post_to_backend(endpoint, payload)
+    require_backend_delivery(result)
     data = result.get("data") or {}
     order_code = data.get("orderCode") or payment.get("orderCode")
     logger.info(
@@ -721,13 +812,23 @@ async def post_to_backend(path: str, payload: dict):
             response = await client.post(f"{SPRING_API_BASE_URL}{path}", json=payload, headers=headers)
             body = response.json()
         except httpx.HTTPError as exc:
-            return {"ok": False, "message": f"Backend request failed ({type(exc).__name__})"}
+            return {"ok": False, "retryable": True, "message": f"Backend request failed ({type(exc).__name__})"}
         except ValueError:
-            return {"ok": False, "message": "Backend returned a non-JSON response"}
+            return {"ok": False, "retryable": True, "message": "Backend returned a non-JSON response"}
 
+    if not isinstance(body, dict):
+        return {"ok": False, "retryable": True, "message": "Backend returned an invalid response"}
+    if response.status_code == 429 or response.status_code >= 500:
+        return {"ok": False, "retryable": True, "message": "Backend is temporarily unavailable"}
     if response.status_code >= 400:
         return {"ok": False, "message": body.get("message") or response.reason_phrase}
     return {"ok": True, "data": body.get("data") or body}
+
+
+def require_backend_delivery(result: dict):
+    if result.get("retryable"):
+        raise HTTPException(status_code=503, detail="Payment reconciliation is temporarily unavailable",
+                            headers={"Retry-After": "1"})
 
 
 async def reply_from_backend(chat_id: str, message_id: str, result: dict, success_prefix: str):

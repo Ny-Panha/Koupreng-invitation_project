@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 import { Music, VolumeX, X, CheckCircle2 } from "lucide-react";
 import defaultMusicUrl from "../../../assets/music/Instrumental Wedding Music (VioSounds Cover).m4a";
 import CoverBackground from "../shared/Openings/CoverBackground";
+import { isTrustedPreviewMessage, readEmbeddedPreviewChannel } from "@/shared/preview/previewMessaging";
 import "./bliss-editorial.css";
 
 export default function BlissEditorialLayout({
   content = {},
   preview = false,
+  previewChannel,
   showBack = true,
   backTo = "/templates",
   backLabel = "ត្រឡប់ទៅគំរូទាំងអស់",
@@ -17,14 +19,17 @@ export default function BlissEditorialLayout({
   const effectiveContent = { ...content, ...liveData };
 
   useEffect(() => {
+    const channel = previewChannel || readEmbeddedPreviewChannel();
+    if (!channel) return undefined;
     const handleMessage = (e) => {
+      if (!isTrustedPreviewMessage(e, channel)) return;
       if (e.data?.type === "LIVE_PREVIEW_SYNC" && e.data.data) {
         setLiveData(e.data.data);
       }
     };
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
-  }, []);
+  }, [previewChannel]);
 
   const groom = effectiveContent.groom || "";
   const bride = effectiveContent.bride || "";

@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import com.koupreng.backend.auth.api.dto.MessageResponse;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,6 +60,12 @@ public class CheckInController {
                 "Guest check-in processed successfully",
                 checkInService.manual(authentication, invitationId, guestId, note)
         ));
+    }
+
+    @DeleteMapping("/invitations/{invitationId}/guests/{guestId}/check-in")
+    public MessageResponse undo(Authentication authentication, @PathVariable Long invitationId, @PathVariable Long guestId) {
+        checkInService.undo(authentication, invitationId, guestId);
+        return new MessageResponse("Guest check-in reverted");
     }
 
     @GetMapping("/invitations/{invitationId}/check-in/summary")

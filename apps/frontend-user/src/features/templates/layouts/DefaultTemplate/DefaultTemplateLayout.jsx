@@ -7,6 +7,7 @@ import CountdownTimer from "../../shared/Countdown/CountdownTimer";
 import GalleryGrid from "../../shared/Gallery/GalleryGrid";
 import RsvpContainer from "../../shared/RSVP/RsvpContainer";
 import ScheduleList from "../../shared/EventSchedule/ScheduleList";
+import { isTrustedPreviewMessage, readEmbeddedPreviewChannel } from "@/shared/preview/previewMessaging";
 
 /**
  * Safe fallback layout for unknown or default template IDs.
@@ -19,6 +20,7 @@ export default function DefaultTemplateLayout({
   backTo = "/templates",
   backLabel = "ត្រឡប់ទៅគំរូទាំងអស់",
   preview = false,
+  previewChannel,
   useTemplateLink,
   children,
 }) {
@@ -28,14 +30,17 @@ export default function DefaultTemplateLayout({
   }, [tplProp, contentProp, liveData]);
 
   useEffect(() => {
+    const channel = previewChannel || readEmbeddedPreviewChannel();
+    if (!channel) return undefined;
     const handleMessage = (e) => {
+      if (!isTrustedPreviewMessage(e, channel)) return;
       if (e.data?.type === "LIVE_PREVIEW_SYNC" && e.data.data) {
         setLiveData(e.data.data);
       }
     };
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
-  }, []);
+  }, [previewChannel]);
 
   const hasCustomCover = Boolean(tpl.coverBackgroundImage || tpl.coverVideoUrl || tpl.openingVideoUrl);
 

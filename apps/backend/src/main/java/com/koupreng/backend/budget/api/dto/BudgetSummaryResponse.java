@@ -20,6 +20,12 @@ public class BudgetSummaryResponse {
     private BigDecimal totalEstimated;
     private BigDecimal totalActual;
     private BigDecimal remainingBudget;
+    private String currency;
+    private boolean totalsComparable;
+    private Map<String, BigDecimal> estimatedByCurrency;
+    private Map<String, BigDecimal> actualByCurrency;
+    private Map<String, Map<String, BigDecimal>> estimatedByCurrencyAndCategory;
+    private Map<String, Map<String, BigDecimal>> actualByCurrencyAndCategory;
     private boolean overBudget;
     private int itemCount;
     private Map<String, BigDecimal> estimatedByCategory;

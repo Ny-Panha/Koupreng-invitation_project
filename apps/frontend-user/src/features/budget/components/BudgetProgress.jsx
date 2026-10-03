@@ -1,9 +1,9 @@
-function money(value) {
-  return `$${Number(value || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
-}
+import { budgetMoney, isMixedBudget } from "../currencyTotals";
 
 export default function BudgetProgress({ budget }) {
   if (!budget) return null;
+  if (isMixedBudget(budget)) return <p role="status">Budget comparison unavailable: USD and KHR amounts remain separate. The budget goal currency is not recorded; no exchange rate is applied.</p>;
+  const money = (value) => budgetMoney(value, budget.currency || "USD");
 
   const total = Number(budget.totalBudget || 0);
   const actual = Number(budget.totalActual || budget.totalSpent || 0);

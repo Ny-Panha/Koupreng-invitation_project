@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { useAuthStore } from "../../stores/useAuthStore";
+import SocialAuthButtons from "./components/SocialAuthButtons";
 import { userService } from "@/features/auth/api/userApi";
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
 
@@ -10,9 +10,7 @@ import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
  */
 export default function ProfilePage() {
   const { text: t } = useBackendMessages("profile");
-  const { user, logout } = useAuth();
-  const login = useAuthStore((s) => s.login);
-  const accessToken = useAuthStore((s) => s.accessToken);
+  const { user, logout, updateUser } = useAuth();
 
   // ── Profile state ──────────────────────────────────────────────────────────
   const [fullName, setFullName] = useState("");
@@ -91,9 +89,7 @@ export default function ProfilePage() {
 
       const updatedUser = await userService.updateProfile(profileData);
 
-      login({
-        accessToken,
-        user: {
+      updateUser({
           ...user,
           fullName: fullName.trim(),
           full_name: fullName.trim(),
@@ -103,7 +99,6 @@ export default function ProfilePage() {
           profile_image: imageUrl,
           profileComplete: true,
           ...updatedUser,
-        },
       });
 
       setProfileImage(imageUrl);
@@ -459,6 +454,11 @@ export default function ProfilePage() {
         </form>
 
         {/* ── Change password ── */}
+        <hr className="profile-section-divider" />
+        <section aria-labelledby="profile-linked-identities">
+          <h2 id="profile-linked-identities">Linked sign-in identities</h2>
+          <SocialAuthButtons mode="link" />
+        </section>
         <hr className="profile-section-divider" />
 
         <button

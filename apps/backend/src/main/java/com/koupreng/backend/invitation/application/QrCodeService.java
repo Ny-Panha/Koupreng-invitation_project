@@ -31,6 +31,8 @@ public class QrCodeService {
     private final InvitationService invitationService;
     private final GuestRepository guestRepository;
     private final AppProperties appProperties;
+    @org.springframework.beans.factory.annotation.Autowired
+    private com.koupreng.backend.entitlement.application.EntitlementService entitlementService;
 
     public QrCodeService(
             InvitationService invitationService,
@@ -45,6 +47,7 @@ public class QrCodeService {
     @Transactional
     public QrCodeResponse invitationQr(Authentication authentication, Long invitationId) {
         UserInvitation invitation = invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        requireQrFeature(invitation);
         if (invitation.getVisibility() != null && invitation.getVisibility() != InvitationVisibility.PUBLIC) {
             invitationService.ensureAccessTokenValue(invitation);
         }
@@ -55,6 +58,7 @@ public class QrCodeService {
     @Transactional(readOnly = true)
     public QrCodeResponse guestQr(Authentication authentication, Long invitationId, Long guestId) {
         UserInvitation invitation = invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        requireQrFeature(invitation);
         Guest guest = guestRepository.findByIdAndInvitationId(guestId, invitationId)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Guest not found"));
         if (guest.getInviteToken() == null || guest.getInviteToken().isBlank()) {
@@ -83,6 +87,13 @@ public class QrCodeService {
             url += "?accessToken=" + encode(invitation.getAccessToken());
         }
         return url;
+    }
+
+    private void requireQrFeature(UserInvitation invitation) {
+        if (entitlementService != null) {
+            entitlementService.requireFeature(invitation.getUser(),
+                    com.koupreng.backend.entitlement.application.EntitlementService.Feature.QR_INVITATIONS);
+        }
     }
 
     private QrCodeResponse response(String url, String qrPayload, String guestName, String tokenType) {

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { aiAssistantService } from "../api/aiAssistantApi";
+import { isVerifiedAiResponse } from "../model/responseSource";
 
 function buildLocalTemplateText(action, request) {
   const isKhmer = (request.language || "Khmer").toLowerCase().includes("khmer");
@@ -47,6 +48,7 @@ export function useAiAssistant() {
   const generate = async (action, request) => {
     setLoading(true);
     setError("");
+    setResponse(null);
 
     try {
       let apiResult;
@@ -70,13 +72,14 @@ export function useAiAssistant() {
       }
 
       let generatedText = apiResult?.generatedText;
-      const usedLocalTemplate = !generatedText || !generatedText.trim();
+      const usedLocalTemplate = !isVerifiedAiResponse(apiResult);
       if (usedLocalTemplate) {
         generatedText = buildLocalTemplateText(action, request);
       }
 
       const finalResponse = {
         ...apiResult,
+        enabled: !usedLocalTemplate,
         generatedText,
         source: usedLocalTemplate ? "LOCAL_TEMPLATE" : "AI_PROVIDER",
       };
@@ -85,7 +88,11 @@ export function useAiAssistant() {
       return finalResponse;
     } catch (err) {
       setError(err?.message || "Could not generate text suggestions");
-      return null;
+      const fallback = { enabled: false, source: "LOCAL_TEMPLATE", provider: "local-template",
+        generatedText: buildLocalTemplateText(action, request), suggestions: [],
+        warnings: ["The AI service is unavailable. This editable draft uses the built-in local template."] };
+      setResponse(fallback);
+      return fallback;
     } finally {
       setLoading(false);
     }

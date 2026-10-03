@@ -72,6 +72,15 @@ public class FileUploadValidator {
     }
 
     public void validate(MultipartFile file) {
+        validate(file, true);
+    }
+
+    /** MediaService owns its Unicode filename policy; content policy remains shared. */
+    public void validateMedia(MultipartFile file) {
+        validate(file, false);
+    }
+
+    private void validate(MultipartFile file, boolean strictFilename) {
         if (!properties.isEnabled()) {
             return;
         }
@@ -80,7 +89,7 @@ public class FileUploadValidator {
             throw badRequest("Uploaded file is empty");
         }
 
-        String filename = safeFilename(file.getOriginalFilename());
+        String filename = strictFilename ? safeFilename(file.getOriginalFilename()) : mediaFilename(file.getOriginalFilename());
         String extension = extension(filename);
         if (".svg".equalsIgnoreCase(extension)) {
             throw badRequest("SVG uploads are not permitted");
@@ -90,6 +99,9 @@ public class FileUploadValidator {
         }
 
         String contentType = normalizedContentType(file.getContentType());
+        if (!strictFilename && "audio/mp3".equals(contentType)) {
+            contentType = "audio/mpeg";
+        }
         if (contentType.contains("svg")) {
             throw badRequest("SVG uploads are not permitted");
         }
@@ -156,6 +168,18 @@ public class FileUploadValidator {
             throw badRequest("Uploaded file name contains unsupported characters");
         }
 
+        return filename;
+    }
+
+    private String mediaFilename(String originalFilename) {
+        if (originalFilename == null || originalFilename.isBlank()) {
+            throw badRequest("Uploaded file name is required");
+        }
+        String filename = originalFilename.trim();
+        if (filename.contains("/") || filename.contains("\\") || filename.contains("..")
+                || filename.length() > 255 || filename.chars().anyMatch(Character::isISOControl)) {
+            throw badRequest("Uploaded file name is invalid");
+        }
         return filename;
     }
 

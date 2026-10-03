@@ -1,3 +1,4 @@
+import { PaidTemplatesPage, BrowseTemplatesPage, BudgetPage, ChangePasswordPage, DashboardPage, EventsPage, ExpensesPage, GuestsPage, HostTemplateDemoPage, InvitationCheckInPage, InvitationCreatePage, InvitationEditPage, InvitationMediaPage, InvitationPreviewPage, InvitationDeliveryPage, NotificationsPage, PaymentHistoryPage, PaymentReceiptPage, ProfilePage, SeatingPage, SubscriptionPackagesPage, WeddingGiftPage, OrganizationPage, OrganizationDetailPage, AiAssistantPage, RsvpDashboardPage, FinancialReport, QrPage, WishesPage } from "./lazyRoutePages";
 /* eslint-disable react-refresh/only-export-components */
 import { Navigate, Route, useParams } from "react-router-dom";
 
@@ -6,37 +7,37 @@ function InvitationBareRedirect() {
   return <Navigate to={`/dashboard/invitations/${id}/edit`} replace />;
 }
 
-import PaidTemplatesPage from "../../features/payments/PaidTemplatesPage";
+
 import HostShell from "../../layouts/HostShell";
-import BrowseTemplatesPage from "../../pages/host/templates/BrowseTemplatesPage";
-import BudgetPage from "../../pages/host/BudgetPage";
-import ChangePasswordPage from "../../pages/host/ChangePasswordPage";
-import DashboardPage from "../../pages/host/DashboardPage";
-import EventsPage from "../../pages/host/EventsPage";
-import ExpensesPage from "../../pages/host/ExpensesPage";
-import GuestsPage from "../../pages/host/GuestsPage";
-import HostTemplateDemoPage from "../../pages/host/templates/HostTemplateDemoPage";
-import InvitationCheckInPage from "../../pages/host/invitations/InvitationCheckInPage";
-import InvitationCreatePage from "../../pages/host/invitations/InvitationCreatePage";
-import InvitationEditPage from "../../pages/host/invitations/InvitationEditPage";
-import InvitationMediaPage from "../../pages/host/invitations/InvitationMediaPage";
-import InvitationPreviewPage from "../../pages/host/invitations/InvitationPreviewPage";
-import InvitationDeliveryPage from "../../pages/host/invitations/InvitationDeliveryPage";
-import NotificationsPage from "../../pages/host/NotificationsPage";
-import PaymentHistoryPage from "../../pages/payments/PaymentHistoryPage";
-import PaymentReceiptPage from "../../pages/payments/PaymentReceiptPage";
-import ProfilePage from "../../pages/host/ProfilePage";
-import SeatingPage from "../../pages/host/SeatingPage";
-import SubscriptionPackagesPage from "../../pages/host/SubscriptionPackagesPage";
-import WeddingGiftPage from "../../pages/host/WeddingGiftPage";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import RequireAuth from "./RequireAuth";
-import OrganizationPage from "../../features/organizations/OrganizationPage";
-import OrganizationDetailPage from "../../features/organizations/OrganizationDetailPage";
-import AiAssistantPage from "../../features/ai-assistant/AiAssistantPage";
-import RsvpDashboardPage from "../../features/rsvp/RsvpDashboardPage";
-import FinancialReport from "../../features/reports/FinancialReport";
-import QrPage from "../../features/qr/QrPage";
-import WishesPage from "../../features/wishes/WishesPage";
+
+
+
+
+
+
+
 import InvitationScopedRedirect from "./InvitationScopedRedirect";
 
 export function hostRoutes() {
@@ -69,8 +70,8 @@ export function hostRoutes() {
       <Route path="/dashboard/invitations/:invitationId/reports" element={<FinancialReport />} />
       <Route path="/dashboard/invitations/:invitationId/qr" element={<QrPage />} />
       <Route path="/dashboard/invitations/:invitationId/wishes" element={<WishesPage />} />
-      <Route path="/dashboard/reports" element={<FinancialReport />} />
-      <Route path="/reports" element={<FinancialReport />} />
+      <Route path="/dashboard/reports" element={<InvitationScopedRedirect targetSubPath="reports" />} />
+      <Route path="/reports" element={<InvitationScopedRedirect targetSubPath="reports" />} />
       <Route path="/dashboard/guests" element={<GuestsPage />} />
       <Route path="/dashboard/seating" element={<InvitationScopedRedirect targetSubPath="seating" />} />
       <Route path="/dashboard/check-in" element={<InvitationScopedRedirect targetSubPath="check-in" />} />

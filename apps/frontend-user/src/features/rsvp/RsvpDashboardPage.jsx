@@ -92,6 +92,8 @@ export default function RsvpDashboardPage() {
           <RsvpWishesWall wishesList={wishesList} setViewMode={setViewMode} />
         ) : (
           <RsvpGuestTable
+            invitationId={invitationId}
+            onSaved={load}
             filteredRsvps={filteredRsvps}
             search={search}
             setSearch={setSearch}

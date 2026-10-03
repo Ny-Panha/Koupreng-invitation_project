@@ -1,0 +1,251 @@
+﻿{
+    "version":  "1.0.0",
+    "skills":  [
+                   {
+                       "version":  "1.0.0",
+                       "category":  "UI/UX / Accessibility",
+                       "files":  [
+                                     {
+                                         "path":  "LICENSE.txt",
+                                         "sha256":  "2f584cc05c83f599d529c9a01cf40ac626626dda7fc550b3ff38b6423bcb4c2a",
+                                         "bytes":  1088
+                                     },
+                                     {
+                                         "path":  "SKILL.md",
+                                         "sha256":  "71a4b3bb3d254c002997568fb3129e9b58768a955af143e675045abaf4fba582",
+                                         "bytes":  2591
+                                     },
+                                     {
+                                         "path":  "references/details.md",
+                                         "sha256":  "81c96d85c0d7194f4b74f028dad2c0d3fdd60aaa6eb95f1db57b0a194083fe8c",
+                                         "bytes":  10445
+                                     }
+                                 ],
+                       "repositoryUrl":  "https://github.com/wshobson/agents",
+                       "commit":  "156b7a5e7a8b93642628a339ee4039c925b34c7f",
+                       "installLocation":  ".agents/skills/wcag-audit-patterns",
+                       "repository":  "wshobson/agents",
+                       "license":  "MIT",
+                       "skill":  "wcag-audit-patterns"
+                   },
+                   {
+                       "version":  "1.0.0",
+                       "category":  "Frontend Engineering",
+                       "files":  [
+                                     {
+                                         "path":  "LICENSE.txt",
+                                         "sha256":  "2f584cc05c83f599d529c9a01cf40ac626626dda7fc550b3ff38b6423bcb4c2a",
+                                         "bytes":  1088
+                                     },
+                                     {
+                                         "path":  "SKILL.md",
+                                         "sha256":  "2f0257ea3e087c73230385755ae807fea46ead7dc83c19455810176f8c820182",
+                                         "bytes":  4139
+                                     },
+                                     {
+                                         "path":  "references/details.md",
+                                         "sha256":  "f32e91f3bbdff4f2a2254d14206adac3f1aa8273434883e5b70ab241ab59f17e",
+                                         "bytes":  8051
+                                     }
+                                 ],
+                       "repositoryUrl":  "https://github.com/wshobson/agents",
+                       "commit":  "156b7a5e7a8b93642628a339ee4039c925b34c7f",
+                       "installLocation":  ".agents/skills/react-state-management",
+                       "repository":  "wshobson/agents",
+                       "license":  "MIT",
+                       "skill":  "react-state-management"
+                   },
+                   {
+                       "version":  "1.0.0",
+                       "category":  "Frontend Engineering",
+                       "files":  [
+                                     {
+                                         "path":  "LICENSE.txt",
+                                         "sha256":  "2f584cc05c83f599d529c9a01cf40ac626626dda7fc550b3ff38b6423bcb4c2a",
+                                         "bytes":  1088
+                                     },
+                                     {
+                                         "path":  "SKILL.md",
+                                         "sha256":  "dc3723ef5db351ff9bd725f121789a4b30c7e73109c6546d7787d7563474d4d6",
+                                         "bytes":  5476
+                                     },
+                                     {
+                                         "path":  "references/advanced-patterns.md",
+                                         "sha256":  "3115a12da147a0bb8924dd0ae85b01a6bb2a26a852e6f7146b131e23d5117f13",
+                                         "bytes":  8427
+                                     },
+                                     {
+                                         "path":  "references/details.md",
+                                         "sha256":  "00a10769ebd9f6a61746b1f9aedf672662162dcd57f3c09cad8aa3f3e1c46058",
+                                         "bytes":  11046
+                                     }
+                                 ],
+                       "repositoryUrl":  "https://github.com/wshobson/agents",
+                       "commit":  "156b7a5e7a8b93642628a339ee4039c925b34c7f",
+                       "installLocation":  ".agents/skills/tailwind-design-system",
+                       "repository":  "wshobson/agents",
+                       "license":  "MIT",
+                       "skill":  "tailwind-design-system"
+                   },
+                   {
+                       "version":  "1.0.0",
+                       "category":  "Backend Engineering / Architecture",
+                       "files":  [
+                                     {
+                                         "path":  "LICENSE.txt",
+                                         "sha256":  "2f584cc05c83f599d529c9a01cf40ac626626dda7fc550b3ff38b6423bcb4c2a",
+                                         "bytes":  1088
+                                     },
+                                     {
+                                         "path":  "SKILL.md",
+                                         "sha256":  "fb3ea9a26405bc82b8bbbfd2250f15fb13995d09ae4ade999058633044a01562",
+                                         "bytes":  8106
+                                     },
+                                     {
+                                         "path":  "references/advanced-patterns.md",
+                                         "sha256":  "4dfeda6d36279c4f9905dd220b967feff39bb72eee0bdefb7a8dfb5adf649ee8",
+                                         "bytes":  15720
+                                     },
+                                     {
+                                         "path":  "references/details.md",
+                                         "sha256":  "0faee867e3b41515fd9a0023e3b9a896df6825f2030bcdc167f2354d6a85b454",
+                                         "bytes":  11328
+                                     }
+                                 ],
+                       "repositoryUrl":  "https://github.com/wshobson/agents",
+                       "commit":  "156b7a5e7a8b93642628a339ee4039c925b34c7f",
+                       "installLocation":  ".agents/skills/architecture-patterns",
+                       "repository":  "wshobson/agents",
+                       "license":  "MIT",
+                       "skill":  "architecture-patterns"
+                   },
+                   {
+                       "version":  "1.0.0",
+                       "category":  "Backend Engineering / API Architecture",
+                       "files":  [
+                                     {
+                                         "path":  "LICENSE.txt",
+                                         "sha256":  "3f13a5dce4e4dc3b11c62e321c55c95f828fb5e43996c0c850ee8be7eb17cfb8",
+                                         "bytes":  1077
+                                     },
+                                     {
+                                         "path":  "SKILL.md",
+                                         "sha256":  "5dafd0c44a3aabf11cae5bcb34f6fcc24dfa5c01ba6e0d3176bce997f4d68bc8",
+                                         "bytes":  14884
+                                     }
+                                 ],
+                       "repositoryUrl":  "https://github.com/addyosmani/agent-skills",
+                       "commit":  "9d0c60d406b454a78ccc0a175b19932047aa4dac",
+                       "installLocation":  ".agents/skills/api-and-interface-design",
+                       "repository":  "addyosmani/agent-skills",
+                       "license":  "MIT",
+                       "skill":  "api-and-interface-design"
+                   },
+                   {
+                       "version":  "1.0.0",
+                       "category":  "Cybersecurity / AppSec",
+                       "files":  [
+                                     {
+                                         "path":  "LICENSE.txt",
+                                         "sha256":  "2f584cc05c83f599d529c9a01cf40ac626626dda7fc550b3ff38b6423bcb4c2a",
+                                         "bytes":  1088
+                                     },
+                                     {
+                                         "path":  "SKILL.md",
+                                         "sha256":  "f1d005e2d04fea57f2e10e4cea2e9342cfdbf36f1afc373aa7a5e4b193dfaea8",
+                                         "bytes":  2760
+                                     },
+                                     {
+                                         "path":  "references/details.md",
+                                         "sha256":  "ecc41e78c23e298c448ad1e89ed31b3263543299a269670301389253e5a4c622",
+                                         "bytes":  14234
+                                     }
+                                 ],
+                       "repositoryUrl":  "https://github.com/wshobson/agents",
+                       "commit":  "156b7a5e7a8b93642628a339ee4039c925b34c7f",
+                       "installLocation":  ".agents/skills/auth-implementation-patterns",
+                       "repository":  "wshobson/agents",
+                       "license":  "MIT",
+                       "skill":  "auth-implementation-patterns"
+                   },
+                   {
+                       "version":  "1.0.0",
+                       "category":  "Cybersecurity / Threat Modeling",
+                       "files":  [
+                                     {
+                                         "path":  "LICENSE.txt",
+                                         "sha256":  "2f584cc05c83f599d529c9a01cf40ac626626dda7fc550b3ff38b6423bcb4c2a",
+                                         "bytes":  1088
+                                     },
+                                     {
+                                         "path":  "SKILL.md",
+                                         "sha256":  "a1fb2fd8cd41e5191d3ca5297a1e35ac4d367c4f7ace5a14ee4d47fab75d16ca",
+                                         "bytes":  2518
+                                     },
+                                     {
+                                         "path":  "references/details.md",
+                                         "sha256":  "0e0100cb90d2bbe151cb6d9fd31ea8c1ba67eff3fb7834e73c782d2b7dd11235",
+                                         "bytes":  19096
+                                     }
+                                 ],
+                       "repositoryUrl":  "https://github.com/wshobson/agents",
+                       "commit":  "156b7a5e7a8b93642628a339ee4039c925b34c7f",
+                       "installLocation":  ".agents/skills/stride-analysis-patterns",
+                       "repository":  "wshobson/agents",
+                       "license":  "MIT",
+                       "skill":  "stride-analysis-patterns"
+                   },
+                   {
+                       "version":  "1.0.0",
+                       "category":  "Cybersecurity / Threat Modeling",
+                       "files":  [
+                                     {
+                                         "path":  "LICENSE.txt",
+                                         "sha256":  "2f584cc05c83f599d529c9a01cf40ac626626dda7fc550b3ff38b6423bcb4c2a",
+                                         "bytes":  1088
+                                     },
+                                     {
+                                         "path":  "SKILL.md",
+                                         "sha256":  "4d84917f43dcb08a727f38900eab3ce0889f0144489c7d9b9661f6f0d929bd56",
+                                         "bytes":  2687
+                                     },
+                                     {
+                                         "path":  "references/details.md",
+                                         "sha256":  "ecde1070be0b33e5c2096bf2f5211115f582770470bd60a6cd98f5b5d304dd5a",
+                                         "bytes":  20429
+                                     }
+                                 ],
+                       "repositoryUrl":  "https://github.com/wshobson/agents",
+                       "commit":  "156b7a5e7a8b93642628a339ee4039c925b34c7f",
+                       "installLocation":  ".agents/skills/attack-tree-construction",
+                       "repository":  "wshobson/agents",
+                       "license":  "MIT",
+                       "skill":  "attack-tree-construction"
+                   },
+                   {
+                       "version":  "1.0.0",
+                       "category":  "QA / Performance Engineering",
+                       "files":  [
+                                     {
+                                         "path":  "LICENSE.txt",
+                                         "sha256":  "3f13a5dce4e4dc3b11c62e321c55c95f828fb5e43996c0c850ee8be7eb17cfb8",
+                                         "bytes":  1077
+                                     },
+                                     {
+                                         "path":  "SKILL.md",
+                                         "sha256":  "00694d0c69bbde674d0e39de24052d90afea32d9fef9553eaee21a50a7e9b8cf",
+                                         "bytes":  21717
+                                     }
+                                 ],
+                       "repositoryUrl":  "https://github.com/addyosmani/agent-skills",
+                       "commit":  "9d0c60d406b454a78ccc0a175b19932047aa4dac",
+                       "installLocation":  ".agents/skills/performance-optimization",
+                       "repository":  "addyosmani/agent-skills",
+                       "license":  "MIT",
+                       "skill":  "performance-optimization"
+                   }
+               ],
+    "installedAt":  "2026-10-03T11:45:00+07:00",
+    "targetDirectory":  ".agents/skills",
+    "schemaVersion":  "2026-03-01"
+}

@@ -35,6 +35,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class SeatingService {
+    @org.springframework.beans.factory.annotation.Autowired
+    private com.koupreng.backend.entitlement.application.EntitlementService entitlementService;
 
     private final UserInvitationRepository invitationRepository;
     private final GuestRepository guestRepository;
@@ -122,6 +124,7 @@ public class SeatingService {
             EventTableRequest request
     ) {
         UserInvitation invitation = requireInvitationAccess(authentication, invitationId);
+        requireSeatingFeature(invitation);
         String tableName = requireText(request.getTableName(), "Table name is required");
         if (tableRepository.existsByInvitationIdAndTableNameIgnoreCase(invitationId, tableName)) {
             throw new ApiException(HttpStatus.CONFLICT, "Table name already exists");
@@ -141,7 +144,7 @@ public class SeatingService {
             Long tableId,
             EventTableRequest request
     ) {
-        requireInvitationAccess(authentication, invitationId);
+        requireSeatingFeature(requireInvitationAccess(authentication, invitationId));
         EventTable table = requireTableForUpdate(invitationId, tableId);
         String tableName = requireText(request.getTableName(), "Table name is required");
         boolean nameUsedByOther = tableRepository.findByInvitationIdOrderBySortOrderAscTableNameAsc(invitationId).stream()
@@ -175,6 +178,7 @@ public class SeatingService {
     @Transactional
     public SeatAssignmentResponse assign(Authentication authentication, Long invitationId, SeatAssignmentRequest request) {
         UserInvitation invitation = requireInvitationAccess(authentication, invitationId);
+        requireSeatingFeature(invitation);
         EventTable table = requireTableForUpdate(invitationId, request.getTableId());
         Guest guest = guestRepository.findForUpdateByIdAndInvitationId(request.getGuestId(), invitationId)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Guest not found"));
@@ -278,6 +282,13 @@ public class SeatingService {
             throw new ApiException(HttpStatus.FORBIDDEN, "You do not have access to this invitation");
         }
         return invitation;
+    }
+
+    private void requireSeatingFeature(UserInvitation invitation) {
+        if (entitlementService != null) {
+            entitlementService.requireFeature(invitation.getUser(),
+                    com.koupreng.backend.entitlement.application.EntitlementService.Feature.SEATING);
+        }
     }
 
     private boolean isAdmin(Authentication authentication) {

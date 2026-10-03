@@ -283,3 +283,7 @@
   }
 }
 
+.chat-toggle-btn:focus-visible, .chat-window :is(button,input):focus-visible, .close-bubble:focus-visible {
+  outline: 3px solid #7D6443;
+  outline-offset: 4px;
+}

@@ -48,6 +48,16 @@ public class GuestCheckIn {
     @Column(columnDefinition = "TEXT")
     private String note;
 
+    @Column(name = "is_active", nullable = false)
+    private boolean active = true;
+
+    @Column(name = "undone_at")
+    private Instant undoneAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "undone_by")
+    private AppUser undoneBy;
+
     @PrePersist
     protected void onCreate() {
         if (checkedInAt == null) {

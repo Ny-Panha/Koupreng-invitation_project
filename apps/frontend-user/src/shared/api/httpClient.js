@@ -4,6 +4,7 @@ import { getStoredLang } from "./helpers";
 import { clearStoredAuth, getAccessToken, isCookieAuthStorage } from "../storage/authStorage";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
+let csrfToken = null;
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -15,7 +16,7 @@ apiClient.interceptors.request.use(
     const token = getAccessToken();
     const useCookieAuth = isCookieAuthStorage();
 
-    config.headers["Accept-Language"] = getStoredLang();
+    config.headers["Accept-Language"] ||= getStoredLang();
 
     const skipAuth = config.skipAuth === true;
 
@@ -29,6 +30,8 @@ apiClient.interceptors.request.use(
 
     if (useCookieAuth) {
       config.withCredentials = true;
+      config.withXSRFToken = true;
+      if (csrfToken) config.headers["X-XSRF-TOKEN"] = csrfToken;
     }
 
     if (config.data instanceof FormData) {
@@ -41,12 +44,17 @@ apiClient.interceptors.request.use(
 );
 
 apiClient.interceptors.response.use(
-  (response) => response.data,
+  (response) => {
+    const token = response.headers?.get?.("X-XSRF-TOKEN") || response.headers?.["x-xsrf-token"];
+    if (isCookieAuthStorage() && typeof token === "string" && /^[A-Za-z0-9_-]{16,256}$/.test(token)) csrfToken = token;
+    return response.data;
+  },
   (error) => {
     const status = error.response?.status;
     const data = error.response?.data;
 
-    if (status === 401) {
+    if (status === 401 && !error.config?.authBootstrap && !error.config?.suppressAuthRedirect) {
+      csrfToken = null;
       clearStoredAuth();
       if (typeof window !== "undefined" && window.location && !window.location.pathname.startsWith("/login")) {
         const next = `${window.location.pathname}${window.location.search || ""}${window.location.hash || ""}`;
