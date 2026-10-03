@@ -344,7 +344,9 @@
                         <configuration>
                             <failBuildOnCVSS>8</failBuildOnCVSS>
                             <skipTestScope>true</skipTestScope>
-                            <nvdApiKeyEnvironmentVariable>NVD_API_KEY</nvdApiKeyEnvironmentVariable>
+                            <!-- Official NVD JSON 2.0 feeds do not require an API key. -->
+                            <nvdDatafeedUrl>https://nvd.nist.gov/feeds/json/cve/2.0/nvdcve-2.0-{0}.json.gz</nvdDatafeedUrl>
+                            <nvdValidForHours>0</nvdValidForHours>
                             <suppressionFiles>
                                 <suppressionFile>${project.basedir}/dependency-check-suppressions.xml</suppressionFile>
                             </suppressionFiles>

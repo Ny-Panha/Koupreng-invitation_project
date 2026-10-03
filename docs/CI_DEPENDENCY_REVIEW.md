@@ -17,7 +17,9 @@ The removed chain is depcheck 1.4.7 -> findup-sync -> micromatch -> braces 3.0.3
 
 Official tag refs and action.yml at each release commit were checked before upgrading. All five use Node 24. Application toolchains remain Node 22, Java 25 and Python 3.13; ubuntu-latest uses a compatible hosted runner. Existing workflow gates, thresholds, permissions, triggers and job dependencies are unchanged.
 
-Run #151 passed nine jobs and both npm audits, then failed the Java audit while refreshing NVD data (HTTP 429). Its logs showed an empty NVD_API_KEY. The audit now checks that the repository Actions secret is available before starting Java auditing, with a clear error if it is absent. This does not bypass data updates or vulnerability scanning; missing credentials still fail CI.
+Run #151 passed nine jobs and both npm audits, then failed the Java audit while refreshing the NVD API (HTTP 429). The owner confirmed that no NVD API key is available. Java auditing now uses NVD's official JSON 2.0 annual and modified feeds through Dependency-Check's [supported datafeed configuration](https://dependency-check.github.io/DependencyCheck/data/mirrornvd.html). No API key or private mirror is required.
+
+`scripts/ci/check-nvd-feed.mjs` requires the official modified-feed timestamp to be at most four hours old before CI auditing. Missing, malformed, duplicate, excessively future-dated or stale timestamps, HTTP errors and network failures fail the job. The security profile sets `nvdValidForHours` to zero so every invocation checks the remote metadata and applies required updates, including when a Maven cache exists. Annual feeds initialize the complete database; the modified feed updates it. Existing CVSS 8, test-scope policy, suppressions and fail-on-error behavior are unchanged. Feed outages or stale publications remain a failing security gate.
 
 | Official release | Verified commit |
 | --- | --- |
@@ -131,11 +133,11 @@ All requested local commands exited 0 after the migration. Windows used mvnw.cmd
 | --- | --- |
 | Both frontends | Fresh npm ci, npm audit --audit-level=high, lint, tests, both explicit Knip gates and production builds pass. User: 370 tests; admin: 49 tests; both audits: zero vulnerabilities. |
 | Backend | Final clean verify, dependency:analyze, SpotBugs and PMD pass. 432 tests discovered: 413 pass in regular verify and 19 opt-in MySQL tests execute separately with zero skips/failures. |
-| Java security | The dependency-security profile passes after a complete fresh NVD update. failBuildOnCVSS remains 8; skipTestScope and existing suppression files are unchanged. This is a passing threshold check, not a claim of zero findings. |
+| Java security | The final dependency-security profile passes with an initially empty database and no API key, downloading all 25 annual official feeds (2002–2026) plus the modified feed. Full verify completed in 3 minutes 8 seconds. failBuildOnCVSS remains 8; skipTestScope and existing suppression files are unchanged. Existing findings below the threshold remain reported. |
 | Telegram | Ruff, 61 pytest tests, Bandit, compileall and pip-audit pass. |
-| Deployment | Six repository QA tests, all four YAML files, tracked shell-script syntax, Node script syntax, required assets, Compose config and all four Docker builds pass. The backend image was rebuilt with the final POM. |
+| Deployment | Eleven repository QA tests (including five NVD metadata/network regression tests), all four YAML files, tracked shell-script syntax, Node script syntax, required assets, Compose config and all four Docker builds pass. The backend image was rebuilt with the final application dependency declarations. |
 | Browser | critical-routes.spec.js and route-smoke.spec.js: 56 tests pass with one local worker and retries disabled. An earlier concurrent run hit two page-load timeouts; serial execution removed local build contention without changing assertions or adding retries. |
-| Secrets/skills | Gitleaks: zero findings in 1,949 files. Pinned skill integrity verification passes. |
+| Secrets/skills | Gitleaks: zero findings in 1,951 files. Pinned skill integrity verification passes. |
 
 ### Remaining security findings
 

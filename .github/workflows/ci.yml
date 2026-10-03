@@ -283,8 +283,6 @@ jobs:
   vulnerability-audit:
     name: Dependency Vulnerability Audit
     runs-on: ubuntu-latest
-    env:
-      NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
     steps:
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -325,13 +323,8 @@ jobs:
           distribution: temurin
           cache: maven
 
-      - name: Verify NVD audit credentials
-        shell: bash
-        run: |
-          if [[ -z "${NVD_API_KEY:-}" ]]; then
-            echo "::error::Configure the NVD_API_KEY Actions repository secret for this repository. Java vulnerability auditing remains mandatory."
-            exit 1
-          fi
+      - name: Verify official NVD feed freshness
+        run: node scripts/ci/check-nvd-feed.mjs
 
       - name: Audit Java dependencies
         working-directory: apps/backend
