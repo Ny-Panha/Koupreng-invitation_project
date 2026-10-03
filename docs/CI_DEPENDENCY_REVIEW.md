@@ -122,3 +122,34 @@ These are bytecode-analysis limitations for configuration, annotation processing
 | `org.flywaydb:flyway-core` | MigrationUpgradeMySqlTests invoke Flyway directly; production migration uses starter auto-configuration and database plugins. Keep the starter-managed compile/runtime stack. |
 
 No Spring Boot starter or runtime database/provider dependency was removed. dependency:analyze remains an explicit CI step and its warnings remain visible. SpotBugs, PMD, the OWASP CVSS threshold and fail-on-error behavior are preserved.
+
+## Local CI-equivalent verification
+
+All requested local commands exited 0 after the migration. Windows used mvnw.cmd and the installed Node/Python versions; GitHub #151 independently passed the Node 22/Python 3.13 application jobs.
+
+| Area | Result |
+| --- | --- |
+| Both frontends | Fresh npm ci, npm audit --audit-level=high, lint, tests, both explicit Knip gates and production builds pass. User: 370 tests; admin: 49 tests; both audits: zero vulnerabilities. |
+| Backend | Final clean verify, dependency:analyze, SpotBugs and PMD pass. 432 tests discovered: 413 pass in regular verify and 19 opt-in MySQL tests execute separately with zero skips/failures. |
+| Java security | The dependency-security profile passes after a complete fresh NVD update. failBuildOnCVSS remains 8; skipTestScope and existing suppression files are unchanged. This is a passing threshold check, not a claim of zero findings. |
+| Telegram | Ruff, 61 pytest tests, Bandit, compileall and pip-audit pass. |
+| Deployment | Six repository QA tests, all four YAML files, tracked shell-script syntax, Node script syntax, required assets, Compose config and all four Docker builds pass. The backend image was rebuilt with the final POM. |
+| Browser | critical-routes.spec.js and route-smoke.spec.js: 56 tests pass with one local worker and retries disabled. An earlier concurrent run hit two page-load timeouts; serial execution removed local build contention without changing assertions or adding retries. |
+| Secrets/skills | Gitleaks: zero findings in 1,949 files. Pinned skill integrity verification passes. |
+
+### Remaining security findings
+
+The fresh local Dependency-Check report flags these existing dependencies below the unchanged CVSS 8 failure threshold. No new suppressions were added, and these findings should remain visible for security maintenance.
+
+| Dependency | Finding | Reported severity/score |
+| --- | --- | --- |
+| MySQL Connector/J 9.7.0 | [CVE-2026-60586](https://nvd.nist.gov/vuln/detail/CVE-2026-60586) | HIGH, CVSS 3.1: 7.7 |
+| MySQL Connector/J 9.7.0 | [CVE-2026-60623](https://nvd.nist.gov/vuln/detail/CVE-2026-60623) | HIGH, CVSS 3.1: 7.1 |
+| MySQL Connector/J 9.7.0 | [CVE-2026-60624](https://nvd.nist.gov/vuln/detail/CVE-2026-60624) | MEDIUM, CVSS 3.1: 6.5 |
+| MySQL Connector/J 9.7.0 | [CVE-2026-61082](https://nvd.nist.gov/vuln/detail/CVE-2026-61082) | MEDIUM, CVSS 3.1: 6.5 |
+| Netty transport 4.2.17.Final | [CVE-2026-89044](https://nvd.nist.gov/vuln/detail/CVE-2026-89044) | MEDIUM, CVSS 4.0: 6.9; CVSS 3.1: 6.5 |
+| Swagger UI 5.32.14, bundled DOMPurify 3.4.13 | [GHSA-p98j-92pf-mc4p](https://github.com/advisories/GHSA-p98j-92pf-mc4p) | LOW, unscored RetireJS finding; repeated for the two bundled JavaScript variants. |
+
+Dependency-Check also reports that its OSS Index analyzer is unavailable without Sonatype credentials, reflecting the provider's [authentication requirement](https://dependency-check.github.io/DependencyCheck/analyzers/oss-index-analyzer.html). No analyzer-disable option was introduced. NVD and RetireJS analysis completed; OSS Index coverage was not available in this local run.
+
+Other retained informational warnings include Maven's documented starter/runtime aggregation findings, the PMD parent-project URL, Lombok/Mockito/JVM agent deprecations, Vite chunk-size warnings, Python TestClient deprecations and expected backend-proxy errors in controlled browser journeys. GitHub's Node 20 action-runtime warning is gone.
