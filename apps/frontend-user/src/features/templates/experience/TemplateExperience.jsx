@@ -495,6 +495,23 @@ export default function TemplateExperience({
         return [];
     }, [content?.sections, tpl?.sections, tpl?.description]);
 
+    const unifiedMode = useMemo(
+        () => Array.isArray(customSections) && customSections.some((b) => b?.type === "LEGACY_SECTION"),
+        [customSections]
+    );
+
+    const effectiveEnabledSections = useMemo(() => {
+        if (!unifiedMode) return content.enabledSections;
+        const map = {};
+        customSections.forEach((b) => {
+            if (b?.type === "LEGACY_SECTION" && b.data?.sectionKey) {
+                const isEnabled = b.data.enabled !== false && content.enabledSections?.[b.data.sectionKey] !== false;
+                map[b.data.sectionKey] = isEnabled;
+            }
+        });
+        return map;
+    }, [unifiedMode, customSections, content.enabledSections]);
+
     if (DedicatedComponent) {
 
         return (
@@ -585,40 +602,58 @@ export default function TemplateExperience({
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: reducedMotion ? 0 : 0.65, ease: [0.22, 1, 0.36, 1] }}
                     >
-                        <TemplateHero content={content} onOpen={handleHeroOpen} />
-                        <TemplateMessage content={content} />
-                        <TemplateCouple content={content} />
-                        {sectionEnabled("countdown") && <TemplateCountdown content={content} />}
-                        {sectionEnabled("schedule") && <TemplateSchedule content={content} />}
-                        {sectionEnabled("map") && <TemplateVenue content={content} />}
-                        {sectionEnabled("gallery") && <TemplateGallery content={content} />}
-                        {sectionEnabled("story") && content.story?.length > 0 && <TemplateStory content={content} />}
-                        {sectionEnabled("gift") && <TemplateGift content={content} />}
-                        {sectionEnabled("dressCode") && <TemplateDressCode content={content} />}
-                        {sectionEnabled("faq") && <TemplateFaq content={content} />}
+                        {unifiedMode ? (
+                            <>
+                                <TemplateHero content={content} onOpen={handleHeroOpen} />
+                                <DynamicTemplateRenderer
+                                    sections={customSections}
+                                    content={content}
+                                    blockProps={{
+                                        onHeroOpen: handleHeroOpen,
+                                        rsvpChildren: children,
+                                        useTemplateLink,
+                                    }}
+                                />
+                                <TemplateFooter content={content} />
+                            </>
+                        ) : (
+                            <>
+                                <TemplateHero content={content} onOpen={handleHeroOpen} />
+                                <TemplateMessage content={content} />
+                                <TemplateCouple content={content} />
+                                {sectionEnabled("countdown") && <TemplateCountdown content={content} />}
+                                {sectionEnabled("schedule") && <TemplateSchedule content={content} />}
+                                {sectionEnabled("map") && <TemplateVenue content={content} />}
+                                {sectionEnabled("gallery") && <TemplateGallery content={content} />}
+                                {sectionEnabled("story") && content.story?.length > 0 && <TemplateStory content={content} />}
+                                {sectionEnabled("gift") && <TemplateGift content={content} />}
+                                {sectionEnabled("dressCode") && <TemplateDressCode content={content} />}
+                                {sectionEnabled("faq") && <TemplateFaq content={content} />}
 
-                        {sectionEnabled("rsvp") && (
-                            children ? (
-                                <div className="tx-children" data-tx-section="rsvp">
-                                    <TemplateSectionHeader
-                                        id="tx-rsvp-title"
-                                        icon={templateIcons.invitation}
-                                        kicker="ការឆ្លើយតប"
-                                        title="សូមបញ្ជាក់ការចូលរួម"
-                                        subtitle="RSVP"
-                                    />
-                                    {children}
-                                </div>
-                            ) : (
-                                <TemplateRsvp useTemplateLink={useTemplateLink} />
-                            )
+                                {sectionEnabled("rsvp") && (
+                                    children ? (
+                                        <div className="tx-children" data-tx-section="rsvp">
+                                            <TemplateSectionHeader
+                                                id="tx-rsvp-title"
+                                                icon={templateIcons.invitation}
+                                                kicker="ការឆ្លើយតប"
+                                                title="សូមបញ្ជាក់ការចូលរួម"
+                                                subtitle="RSVP"
+                                            />
+                                            {children}
+                                        </div>
+                                    ) : (
+                                        <TemplateRsvp useTemplateLink={useTemplateLink} />
+                                    )
+                                )}
+
+                                {customSections?.length > 0 && (
+                                    <DynamicTemplateRenderer sections={customSections} content={content} />
+                                )}
+
+                                <TemplateFooter content={content} />
+                            </>
                         )}
-
-                        {customSections?.length > 0 && (
-                            <DynamicTemplateRenderer sections={customSections} content={content} />
-                        )}
-
-                        <TemplateFooter content={content} />
                     </motion.div>
 
                 )}
@@ -635,7 +670,7 @@ export default function TemplateExperience({
             {gateOpen && <TemplateMusicControl controller={musicController} />}
             {gateOpen && showStickyCta && heroOpened && (
                 <TemplateQuickNav
-                    enabledSections={content.enabledSections}
+                    enabledSections={effectiveEnabledSections}
                     onNavigate={handleNavigate}
                 />
             )}

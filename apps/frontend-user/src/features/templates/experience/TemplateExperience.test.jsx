@@ -497,4 +497,62 @@ describe("Modular Block CMS appending in TemplateExperience", () => {
         expect(view.container.querySelector(".dynamic-blocks-engine")).toBeInTheDocument();
         expect(screen.getByText("Extracted from Description JSON")).toBeInTheDocument();
     });
+
+    it("renders unified mode with admin custom order: gallery before schedule, with custom block interleaved", () => {
+        const unifiedSections = [
+            {
+                id: "sec-gallery",
+                type: "LEGACY_SECTION",
+                data: { sectionKey: "gallery", enabled: true },
+            },
+            {
+                id: "b-custom-middle",
+                type: "CUSTOM_TEXT",
+                data: { heading: "Interleaved Note Between Gallery and Schedule" },
+            },
+            {
+                id: "sec-schedule",
+                type: "LEGACY_SECTION",
+                data: { sectionKey: "schedule", enabled: true },
+            },
+            {
+                id: "sec-countdown-disabled",
+                type: "LEGACY_SECTION",
+                data: { sectionKey: "countdown", enabled: false },
+            },
+        ];
+
+        const testGallery = ["/photo1.jpg", "/photo2.jpg"];
+        const testSchedule = [{ id: "sc-1", time: "07:00", title: "ពិធីហែជំនូន" }];
+
+        const view = render(
+            <MemoryRouter>
+                <TemplateExperience
+                    tpl={{ id: "garden-royal-khmer-wedding", sections: unifiedSections }}
+                    content={content({
+                        sections: unifiedSections,
+                        gallery: testGallery,
+                        schedule: testSchedule,
+                        enabledSections: { gallery: true, schedule: true, countdown: false },
+                    })}
+                    preview={true}
+                />
+            </MemoryRouter>
+        );
+
+        // 1. Gallery and Schedule both exist
+        const galleryEl = view.container.querySelector("[data-tx-section='gallery']");
+        const scheduleEl = view.container.querySelector("[data-tx-section='schedule']");
+        expect(galleryEl).toBeInTheDocument();
+        expect(scheduleEl).toBeInTheDocument();
+
+        // 2. Interleaved custom block is present
+        expect(screen.getByText("Interleaved Note Between Gallery and Schedule")).toBeInTheDocument();
+
+        // 3. Document order: gallery precedes schedule
+        expect(galleryEl.compareDocumentPosition(scheduleEl) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+
+        // 4. Disabled legacy section is skipped (not in DOM)
+        expect(view.container.querySelector("[data-tx-section='countdown']")).toBeNull();
+    });
 });

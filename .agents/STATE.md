@@ -2,38 +2,61 @@
 
 ## Last Session
 - **Source:** Antigravity IDE
-- **Timestamp:** 2026-10-04T17:55:00+07:00
+- **Timestamp:** 2026-10-04T18:15:00+07:00
 - **Summary:**
-  - **Implemented Phase 2 — Admin Block Builder for Modular Block CMS**:
+  - **Implemented Phase 3 — Full Interleave: Modular Block CMS**:
     1. **Branch**: Active on `feature/block-cms`.
-    2. **Admin Block Pure Helpers & Tests**:
-       - Created [blockHelpers.js](file:///home/kali/Desktop/Koupreng-invitation_project-backup/apps/frontend-admin/src/features/templates/components/blockHelpers.js) with `addBlock`, `moveBlock`, `removeBlock`, `validateBlocks`, and `generateBlockId` (`block-<Date.now()>-<random>`).
-       - Enforced CMS validation rules: $\le 20$ blocks total, `CUSTOM_IMAGE` requires `imageUrl`, `CUSTOM_TEXT` requires `heading` or `body`, and `HORIZONTAL_SCROLL_SHOWCASE` requires $\ge 1$ card with `img`.
-       - Created [blockHelpers.test.js](file:///home/kali/Desktop/Koupreng-invitation_project-backup/apps/frontend-admin/src/features/templates/components/blockHelpers.test.js) with 18 comprehensive unit tests. All 18 tests pass.
-    3. **Admin Studio Block Builder Component**:
-       - Created [TemplateBlocksManager.jsx](file:///home/kali/Desktop/Koupreng-invitation_project-backup/apps/frontend-admin/src/features/templates/components/TemplateBlocksManager.jsx):
-         * Block palette buttons with counter: `+ រូបភាព (Image)`, `+ អត្ថបទ (Text)`, `+ Cinematic Scroll (Showcase)` styled in zinc + amber accents.
-         * Block list with reordering (`ArrowUp`, `ArrowDown`), deletion (`Trash2`), and collapsible settings form.
-         * `ImageUploaderInput` reusing native `FileReader` dataURL + URL input pattern.
-         * Collapsible settings forms for `CUSTOM_IMAGE` (URL/upload, caption, alt), `CUSTOM_TEXT` (heading, body, align left/center/right), and `HORIZONTAL_SCROLL_SHOWCASE` (heading, cards manager up to 10 cards).
-    4. **Admin Studio Integration**:
-       - Updated [AdminTemplateEditFeature.jsx](file:///home/kali/Desktop/Koupreng-invitation_project-backup/apps/frontend-admin/src/features/templates/AdminTemplateEditFeature.jsx):
-         * Added `customBlocks` state (`const [customBlocks, setCustomBlocks] = useState([])`).
-         * Rendered `<TemplateBlocksManager>` inside `settingsSubTab === "sections"` below `TemplateSectionOrderManager`.
-         * Real-time preview: included `sections: customBlocks` in `LIVE_PREVIEW_SYNC` message payload sent via `postIframePreview`.
-         * Save: serialized `sections: customBlocks` into `description` JSON payload.
-         * Load: parsed existing `description` JSON on edit and restored `customBlocks`.
-    5. **Frontend User Wiring & Appending Engine**:
+    2. **Frontend User (`apps/frontend-user`)**:
+       - Added `LEGACY_SECTION: 'LEGACY_SECTION'` to `blockTypes.js`.
+       - Created [LegacySectionBlock.jsx](file:///home/kali/Desktop/Koupreng-invitation_project-backup/apps/frontend-user/src/features/templates/blocks/LegacySectionBlock.jsx) mapping all 11 legacy sections:
+         * `family` → `TemplateCouple`
+         * `invitation` → `TemplateMessage`
+         * `countdown` → `TemplateCountdown`
+         * `schedule` → `TemplateSchedule`
+         * `map` → `TemplateVenue`
+         * `gallery` → `TemplateGallery`
+         * `story` → `TemplateStory` (returns `null` when `!content.story?.length`)
+         * `gift` → `TemplateGift`
+         * `dressCode` → `TemplateDressCode`
+         * `faq` → `TemplateFaq`
+         * `rsvp` → replicates `TemplateExperience` RSVP children wrapper / `TemplateRsvp`
+         * `hero` → `TemplateHero` (kept for completeness)
+         * `party` → dev warning + `null` (no component exists)
+         * Respects `enabled !== false` and `content.enabledSections[sectionKey] !== false`.
+       - Registered `LEGACY_SECTION` in [blockRegistry.js](file:///home/kali/Desktop/Koupreng-invitation_project-backup/apps/frontend-user/src/features/templates/blocks/blockRegistry.js) and exported via [index.js](file:///home/kali/Desktop/Koupreng-invitation_project-backup/apps/frontend-user/src/features/templates/blocks/index.js).
+       - Added optional `blockProps = {}` to [DynamicTemplateRenderer.jsx](file:///home/kali/Desktop/Koupreng-invitation_project-backup/apps/frontend-user/src/features/templates/blocks/DynamicTemplateRenderer.jsx).
        - Updated [TemplateExperience.jsx](file:///home/kali/Desktop/Koupreng-invitation_project-backup/apps/frontend-user/src/features/templates/experience/TemplateExperience.jsx):
-         * Removed early-return replacement.
-         * Appended `<DynamicTemplateRenderer sections={customSections} content={content} />` AFTER legacy invitation content (`DedicatedComponent` or default layout) but BEFORE the footer and floating actions.
-         * Propagated `sections` through `content` useMemo and fallback resolution.
-       - Updated [templateExperienceContent.js](file:///home/kali/Desktop/Koupreng-invitation_project-backup/apps/frontend-user/src/features/templates/experience/config/templateExperienceContent.js) and [templatesData.js](file:///home/kali/Desktop/Koupreng-invitation_project-backup/apps/frontend-user/src/features/templates/data/templatesData.js) to map `sections` from JSON `description`.
-    6. **Test Suites & Build Verification**:
-       - Added tests to [TemplateExperience.test.jsx](file:///home/kali/Desktop/Koupreng-invitation_project-backup/apps/frontend-user/src/features/templates/experience/TemplateExperience.test.jsx) covering zero regression (empty blocks), custom block appending after legacy content, and JSON `description` parsing.
-       - All 87 tests passed across all 11 template test suites in `apps/frontend-user`.
-       - All 18 tests passed in `apps/frontend-admin`.
-       - `npm run build` passed cleanly in both `apps/frontend-admin` and `apps/frontend-user`.
+         * Computed `unifiedMode = customSections.some(b => b?.type === 'LEGACY_SECTION')`.
+         * In unified mode: `TemplateHero` renders fixed first, followed by `<DynamicTemplateRenderer>` with `customSections`, followed by `TemplateFooter`.
+         * Derived `TemplateQuickNav` enabled sections from present legacy sections in the unified array.
+         * Retained zero-regression hardcoded fallback for templates without sections, and Phase-2 append behavior for dedicated monolithic layouts (e.g. `KhmerCelestial`).
+       - Unit tests:
+         * Created [LegacySectionBlock.test.jsx](file:///home/kali/Desktop/Koupreng-invitation_project-backup/apps/frontend-user/src/features/templates/blocks/LegacySectionBlock.test.jsx) (15 tests passing).
+         * Extended [TemplateExperience.test.jsx](file:///home/kali/Desktop/Koupreng-invitation_project-backup/apps/frontend-user/src/features/templates/experience/TemplateExperience.test.jsx) with unified interleave test suite (24 tests passing).
+         * All 103 tests in `src/features/templates` passed.
+         * `npm run build` passed cleanly.
+    3. **Frontend Admin (`apps/frontend-admin`)**:
+       - Extracted reusable editors to [BlockEditors.jsx](file:///home/kali/Desktop/Koupreng-invitation_project-backup/apps/frontend-admin/src/features/templates/components/BlockEditors.jsx) (`ImageUploaderInput`, `CustomImageBlockEditor`, `CustomTextBlockEditor`, `ShowcaseBlockEditor`, `UniversalBlockEditor`).
+       - Refactored [TemplateBlocksManager.jsx](file:///home/kali/Desktop/Koupreng-invitation_project-backup/apps/frontend-admin/src/features/templates/components/TemplateBlocksManager.jsx) to share `UniversalBlockEditor`.
+       - Extended [blockHelpers.js](file:///home/kali/Desktop/Koupreng-invitation_project-backup/apps/frontend-admin/src/features/templates/components/blockHelpers.js):
+         * Added `CMS_BLOCK_TYPES.LEGACY_SECTION`, `DEFAULT_SECTION_KEYS`.
+         * `buildUnifiedSections({ sectionOrder, enabledSections, customBlocks })`.
+         * `parseUnifiedSections(sections, savedSectionOrder, savedEnabledSections)` handling 3 cases: unified, Phase-2 migration, and absent/default.
+         * `moveUnifiedItem(list, index, dir)`.
+         * `toggleUnifiedSectionEnabled(list, id)`.
+         * Updated `validateBlocks` for $\le 30$ total items and valid legacy section keys.
+       - Extended [blockHelpers.test.js](file:///home/kali/Desktop/Koupreng-invitation_project-backup/apps/frontend-admin/src/features/templates/components/blockHelpers.test.js) (25 tests passing).
+       - Created [TemplateUnifiedSectionsManager.jsx](file:///home/kali/Desktop/Koupreng-invitation_project-backup/apps/frontend-admin/src/features/templates/components/TemplateUnifiedSectionsManager.jsx):
+         * Unified ordered list with up/down arrows, eye visibility toggle, and tab jumping for legacy sections.
+         * Palette buttons at top (`+ Image`, `+ Text`, `+ Cinematic Scroll`) inserting at end of list.
+         * Collapsible inline editors for custom blocks.
+       - Integrated in [AdminTemplateEditFeature.jsx](file:///home/kali/Desktop/Koupreng-invitation_project-backup/apps/frontend-admin/src/features/templates/AdminTemplateEditFeature.jsx):
+         * Single state `unifiedSections`.
+         * Live sync sends `sections: unifiedSections`, `sectionOrder`, and `enabledSections`.
+         * Save validates items and saves `sections: unifiedSections` plus backward-compatible `sectionOrder` and `enabledSections`.
+         * Load parses description via `parseUnifiedSections`.
+       - All 74 tests in `apps/frontend-admin` passed.
+       - `npm run build` passed cleanly.
 
 ## Active Environment
 - Branch: `feature/block-cms`
@@ -42,5 +65,6 @@
 - Backend API: `http://localhost:8080`
 
 ## Next Steps
-- Commit changes and push `feature/block-cms` to origin.
-- Phase 3: Free interleaving of custom blocks between legacy fixed sections.
+- Commit and push `feature/block-cms` to origin.
+- Conduct live browser testing of drag/reorder in admin and public template preview.
+

@@ -6,6 +6,10 @@ import {
   removeBlock,
   validateBlocks,
   generateBlockId,
+  buildUnifiedSections,
+  parseUnifiedSections,
+  moveUnifiedItem,
+  toggleUnifiedSectionEnabled,
 } from "./blockHelpers";
 
 describe("blockHelpers", () => {
@@ -214,14 +218,110 @@ describe("blockHelpers", () => {
       expect(errors[0]).toContain("Card 2 requires an image");
     });
 
-    it("fails when total blocks exceed 20", () => {
-      const blocks = Array.from({ length: 21 }, (_, i) => ({
+    it("fails when total blocks exceed 30", () => {
+      const blocks = Array.from({ length: 31 }, (_, i) => ({
         id: `block-${i}`,
         type: CMS_BLOCK_TYPES.CUSTOM_TEXT,
         data: { heading: `Heading ${i}` },
       }));
       const errors = validateBlocks(blocks);
-      expect(errors.some((e) => e.includes("exceed maximum limit of 20"))).toBe(true);
+      expect(errors.some((e) => e.includes("exceed maximum limit of 30"))).toBe(true);
+    });
+
+    it("fails when LEGACY_SECTION has missing or invalid sectionKey", () => {
+      const blocks = [
+        {
+          id: "sec-unknown",
+          type: CMS_BLOCK_TYPES.LEGACY_SECTION,
+          data: { sectionKey: "invalidKey", enabled: true },
+        },
+      ];
+      const errors = validateBlocks(blocks);
+      expect(errors.length).toBeGreaterThan(0);
+      expect(errors[0]).toContain("Unknown or missing sectionKey");
+    });
+  });
+
+  describe("Phase 3 - Unified Sections Helpers", () => {
+    it("buildUnifiedSections creates full 11 legacy sections and appends custom blocks", () => {
+      const customBlocks = [
+        { id: "c1", type: CMS_BLOCK_TYPES.CUSTOM_TEXT, data: { heading: "Hi" } },
+      ];
+      const unified = buildUnifiedSections({
+        sectionOrder: ["gallery", "schedule"],
+        enabledSections: { gallery: true, schedule: false },
+        customBlocks,
+      });
+
+      expect(unified).toHaveLength(12); // 11 legacy + 1 custom
+      expect(unified[0].data.sectionKey).toBe("gallery");
+      expect(unified[0].data.enabled).toBe(true);
+      expect(unified[1].data.sectionKey).toBe("schedule");
+      expect(unified[1].data.enabled).toBe(false);
+      expect(unified[11].id).toBe("c1");
+    });
+
+    it("parseUnifiedSections case (a): retains unified list as-is", () => {
+      const inputSections = [
+        { id: "sec-gallery", type: CMS_BLOCK_TYPES.LEGACY_SECTION, data: { sectionKey: "gallery", enabled: true } },
+        { id: "cust-1", type: CMS_BLOCK_TYPES.CUSTOM_TEXT, data: { heading: "Interleaved" } },
+        { id: "sec-schedule", type: CMS_BLOCK_TYPES.LEGACY_SECTION, data: { sectionKey: "schedule", enabled: false } },
+      ];
+
+      const res = parseUnifiedSections(inputSections);
+      expect(res.unifiedSections).toEqual(inputSections);
+      expect(res.sectionOrder.slice(0, 2)).toEqual(["gallery", "schedule"]);
+      expect(res.enabledSections.gallery).toBe(true);
+      expect(res.enabledSections.schedule).toBe(false);
+      expect(res.customBlocks).toHaveLength(1);
+      expect(res.customBlocks[0].id).toBe("cust-1");
+    });
+
+    it("parseUnifiedSections case (b): migrates Phase-2 custom-only array by appending to legacy sections", () => {
+      const phase2CustomBlocks = [
+        { id: "cust-1", type: CMS_BLOCK_TYPES.CUSTOM_TEXT, data: { heading: "After all" } },
+      ];
+      const savedOrder = ["countdown", "schedule", "gallery"];
+      const savedEnabled = { countdown: false };
+
+      const res = parseUnifiedSections(phase2CustomBlocks, savedOrder, savedEnabled);
+      expect(res.unifiedSections).toHaveLength(12); // 11 legacy + 1 custom
+      expect(res.unifiedSections[0].data.sectionKey).toBe("countdown");
+      expect(res.unifiedSections[0].data.enabled).toBe(false);
+      expect(res.unifiedSections[11].id).toBe("cust-1");
+      expect(res.customBlocks).toHaveLength(1);
+    });
+
+    it("parseUnifiedSections case (c): returns default 11 legacy sections when empty or absent", () => {
+      const res = parseUnifiedSections(null);
+      expect(res.unifiedSections).toHaveLength(11);
+      expect(res.unifiedSections.every((s) => s.type === CMS_BLOCK_TYPES.LEGACY_SECTION)).toBe(true);
+      expect(res.customBlocks).toHaveLength(0);
+    });
+
+    it("moveUnifiedItem moves across types (interleaving custom block between legacy sections)", () => {
+      const list = [
+        { id: "sec-gallery", type: CMS_BLOCK_TYPES.LEGACY_SECTION, data: { sectionKey: "gallery" } },
+        { id: "sec-schedule", type: CMS_BLOCK_TYPES.LEGACY_SECTION, data: { sectionKey: "schedule" } },
+        { id: "c1", type: CMS_BLOCK_TYPES.CUSTOM_TEXT, data: { heading: "Between" } },
+      ];
+
+      // Move c1 up by 1 position (from index 2 to index 1)
+      const reordered = moveUnifiedItem(list, 2, "up");
+      expect(reordered.map((i) => i.id)).toEqual(["sec-gallery", "c1", "sec-schedule"]);
+    });
+
+    it("toggleUnifiedSectionEnabled toggles enabled flag for target section", () => {
+      const list = [
+        { id: "sec-gallery", type: CMS_BLOCK_TYPES.LEGACY_SECTION, data: { sectionKey: "gallery", enabled: true } },
+      ];
+
+      const toggledOff = toggleUnifiedSectionEnabled(list, "sec-gallery");
+      expect(toggledOff[0].data.enabled).toBe(false);
+
+      const toggledOn = toggleUnifiedSectionEnabled(toggledOff, "sec-gallery");
+      expect(toggledOn[0].data.enabled).toBe(true);
     });
   });
 });
+

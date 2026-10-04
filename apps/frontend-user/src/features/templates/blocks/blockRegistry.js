@@ -3,6 +3,7 @@ import CustomImageBlock from "./CustomImageBlock";
 import CustomTextBlock from "./CustomTextBlock";
 import HorizontalScrollSection from "./HorizontalScrollSection";
 import LegacyTemplateBlock from "./LegacyTemplateBlock";
+import LegacySectionBlock from "./LegacySectionBlock";
 import {
   HeroCoverBlock,
   ScheduleBlock,
@@ -28,4 +29,5 @@ export const BLOCK_COMPONENTS = Object.freeze({
   [BLOCK_TYPES.MAP]: MapBlock,
   [BLOCK_TYPES.COUNTDOWN]: CountdownBlock,
   [BLOCK_TYPES.LEGACY_TEMPLATE]: LegacyTemplateBlock,
+  [BLOCK_TYPES.LEGACY_SECTION]: LegacySectionBlock,
 });
