@@ -1,17 +1,7 @@
 import { useState, useRef } from "react";
 import { IoAddOutline, IoChevronDownOutline, IoSearchOutline } from "react-icons/io5";
 import { useClickOutside } from "../../../shared/hooks/useClickOutside";
-
-export function getGuestLabel(guest, allGuests = []) {
-    const normalizedName = String(guest?.name || "").trim().toLowerCase();
-    const isDuplicate = normalizedName && allGuests.filter(
-        (candidate) => String(candidate?.name || "").trim().toLowerCase() === normalizedName,
-    ).length > 1;
-    if (!isDuplicate) return guest?.name || "";
-
-    const details = [guest.phone, guest.side || guest.group].filter(Boolean);
-    return details.length ? `${guest.name} (${details.join(" • ")})` : guest.name;
-}
+import { getGuestLabel } from "./guestLabels";
 
 function isGiftForGuest(gift, guest, guests) {
     if (gift.guestId != null) return String(gift.guestId) === String(guest.id);

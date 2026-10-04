@@ -3,12 +3,12 @@ import {
     IoCardOutline,
     IoCashOutline,
     IoCreateOutline,
-    IoGiftOutline,
     IoPhonePortraitOutline,
     IoSaveOutline,
     IoTrashOutline,
 } from "react-icons/io5";
-import { GuestSelectField, getGuestLabel } from "./GuestSelectField";
+import { GuestSelectField } from "./GuestSelectField";
+import { getGuestLabel } from "./guestLabels";
 
 const METHOD_STYLES = {
     "Bakong QR": { bg: "#e0f2fe", color: "#0369a1", Icon: IoPhonePortraitOutline },
