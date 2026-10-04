@@ -9,6 +9,7 @@ import {
     resolveVariant,
 } from "./config/templateExperienceThemes";
 import { getDedicatedTemplateComponent } from "../registry/templateRegistry";
+import DynamicTemplateRenderer from "../blocks/DynamicTemplateRenderer";
 import TemplateOpeningGate from "./components/sections/TemplateOpeningGate";
 import TemplateHero from "./components/sections/TemplateHero";
 import TemplateMessage from "./components/sections/TemplateMessage";
@@ -477,7 +478,16 @@ export default function TemplateExperience({
     );
     const ornamentTheme = content.design?.ornamentTheme || "royal-floral";
 
+    const dynamicSections = (Array.isArray(content?.sections) && content.sections.length > 0)
+        ? content.sections
+        : (Array.isArray(tpl?.sections) && tpl.sections.length > 0 ? tpl.sections : null);
+
+    if (dynamicSections) {
+        return <DynamicTemplateRenderer sections={dynamicSections} content={content} />;
+    }
+
     if (DedicatedComponent) {
+
         return createElement(DedicatedComponent, {
             tpl: content,
             content,
