@@ -454,6 +454,18 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
     const nonEmpty = (arr) => (Array.isArray(arr) && arr.length ? arr : null);
     const nonBlank = (value) => (typeof value === "string" && value.trim() ? value.trim() : "");
 
+    let templateSections = Array.isArray(tpl.sections) ? tpl.sections : [];
+    if (!templateSections.length && typeof tpl.description === "string" && tpl.description.trim().startsWith("{")) {
+        try {
+            const parsed = JSON.parse(tpl.description);
+            if (Array.isArray(parsed.sections)) {
+                templateSections = parsed.sections;
+            }
+        } catch {
+            // ignore
+        }
+    }
+
     const venueName = hasHostContent ? nonBlank(host.venueName) : (tpl.venueName || "");
     const venueAddress = (hasHostContent ? nonBlank(host.venueAddress) : (tpl.venueAddress || "")).replace(/\n/g, ", ");
     const mapValue = nonBlank(
@@ -760,5 +772,6 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
             enabled: design.openingVideoEnabled || Boolean(tpl.openingVideo),
         }),
         rsvpDeadline: nonBlank(host.rsvp?.deadline),
+        sections: templateSections,
     };
 }

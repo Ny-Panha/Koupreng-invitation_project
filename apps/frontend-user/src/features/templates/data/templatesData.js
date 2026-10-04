@@ -683,6 +683,7 @@ export function registerDynamicTemplates(catalogList) {
             faq,
             gift,
             enabledSections,
+            sections: Array.isArray(parsedConfig.sections) ? parsedConfig.sections : (baseStatic?.sections || []),
             slideshowImages: parsedConfig.slideshowImages || baseStatic?.slideshowImages,
             storyImages: parsedConfig.storyImages || baseStatic?.storyImages,
             storyCards: parsedConfig.storyCards || baseStatic?.storyCards,

@@ -42,6 +42,7 @@ import {
   TemplateGallerySection,
   TemplateQrSection,
   TemplateSectionOrderManager,
+  TemplateBlocksManager,
   DEFAULT_SECTIONS_LIST,
 } from "./components";
 
@@ -595,6 +596,7 @@ export default function AdminTemplateEditPage() {
   const [saving, setSaving] = useState(false);
   const [newGalleryUrl, setNewGalleryUrl] = useState("");
   const [form, setForm] = useState(DEFAULT_STUDIO_STATE);
+  const [customBlocks, setCustomBlocks] = useState([]);
   const iframeRef = useRef(null);
   const [previewSession] = useState(createPreviewSession);
   const sendPreview = useCallback((message) => postIframePreview(iframeRef.current, previewSession, message), [previewSession]);
@@ -790,13 +792,13 @@ export default function AdminTemplateEditPage() {
       sendPreview(
         {
           type: "LIVE_PREVIEW_SYNC",
-          data: { ...form, customFonts, selectedFontElement },
+          data: { ...form, customFonts, selectedFontElement, sections: customBlocks },
         }
       );
     } catch {
       // ignore
     }
-  }, [form, customFonts, selectedFontElement, sendPreview]);
+  }, [form, customFonts, selectedFontElement, customBlocks, sendPreview]);
   const synchronizeLoadedPreview = usePreviewSyncRetries(broadcastSync);
 
   useEffect(() => {
@@ -876,6 +878,12 @@ export default function AdminTemplateEditPage() {
           }
         } catch {
           // Ignore invalid JSON config
+        }
+
+        if (Array.isArray(parsedConfig.sections)) {
+          setCustomBlocks(parsedConfig.sections);
+        } else {
+          setCustomBlocks([]);
         }
 
         if (Array.isArray(parsedConfig.customFonts) && parsedConfig.customFonts.length > 0) {
@@ -1266,6 +1274,7 @@ export default function AdminTemplateEditPage() {
         bankAccountNumber: form.bankAccountNumber || "",
         bankAccountName: form.bankAccountName || "",
         enabledSections: form.enabledSections,
+        sections: customBlocks,
       });
 
       const payload = {
@@ -3418,6 +3427,12 @@ export default function AdminTemplateEditPage() {
                         if (tabId === "events" && subTabId) setEventsSubTab(subTabId);
                         if (tabId === "venue" && subTabId) setVenueSubTab(subTabId);
                       }}
+                      lang={lang}
+                    />
+
+                    <TemplateBlocksManager
+                      blocks={customBlocks}
+                      onChange={setCustomBlocks}
                       lang={lang}
                     />
                   </div>

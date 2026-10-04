@@ -423,3 +423,78 @@ describe("TemplateOpeningGate media and greeting fallbacks", () => {
         expect(view.container.querySelector(".tx-magical-petals")).toBeInTheDocument();
     });
 });
+
+describe("Modular Block CMS appending in TemplateExperience", () => {
+    it("renders zero custom block containers when sections array is empty (zero regression)", () => {
+        const view = render(
+            <MemoryRouter>
+                <TemplateExperience
+                    tpl={{ id: "test-tpl", sections: [] }}
+                    content={content({ sections: [] })}
+                    preview={true}
+                />
+            </MemoryRouter>
+        );
+        expect(view.container.querySelector(".dynamic-blocks-engine")).toBeNull();
+    });
+
+    it("appends custom CMS blocks after legacy invitation content when sections are present", () => {
+        const customBlocks = [
+            {
+                id: "b-txt",
+                type: "CUSTOM_TEXT",
+                data: { heading: "Custom Section Header", body: "Custom section message content" },
+            },
+            {
+                id: "b-img",
+                type: "CUSTOM_IMAGE",
+                data: { imageUrl: "/custom-photo.jpg", caption: "Photo from our trip" },
+            },
+        ];
+
+        const view = render(
+            <MemoryRouter>
+                <TemplateExperience
+                    tpl={{ id: "garden-royal-khmer-wedding", sections: customBlocks }}
+                    content={content({ sections: customBlocks })}
+                    preview={true}
+                />
+            </MemoryRouter>
+        );
+
+        // Legacy content is present
+        expect(screen.getAllByText("សុវណ្ណ").length).toBeGreaterThan(0);
+        expect(screen.getAllByText("មាលា").length).toBeGreaterThan(0);
+
+        // Custom blocks are also present in the document
+        expect(view.container.querySelector(".dynamic-blocks-engine")).toBeInTheDocument();
+        expect(screen.getByText("Custom Section Header")).toBeInTheDocument();
+        expect(screen.getByText("Custom section message content")).toBeInTheDocument();
+        expect(screen.getByText("Photo from our trip")).toBeInTheDocument();
+    });
+
+    it("restores sections from tpl.description JSON string if sections not on tpl root", () => {
+        const customBlocks = [
+            {
+                id: "b-desc",
+                type: "CUSTOM_TEXT",
+                data: { heading: "Extracted from Description JSON" },
+            },
+        ];
+        const jsonDescription = JSON.stringify({
+            sections: customBlocks,
+        });
+
+        const view = render(
+            <MemoryRouter>
+                <TemplateExperience
+                    tpl={{ id: "garden-royal-khmer-wedding", description: jsonDescription }}
+                    preview={true}
+                />
+            </MemoryRouter>
+        );
+
+        expect(view.container.querySelector(".dynamic-blocks-engine")).toBeInTheDocument();
+        expect(screen.getByText("Extracted from Description JSON")).toBeInTheDocument();
+    });
+});

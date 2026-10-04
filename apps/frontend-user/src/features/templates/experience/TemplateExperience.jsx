@@ -245,6 +245,9 @@ export default function TemplateExperience({
                 ...liveData.enabledSections,
             } : baseContent.enabledSections,
             sectionOrder: liveData.sectionOrder || baseContent.sectionOrder,
+            sections: Array.isArray(liveData.sections)
+                ? liveData.sections
+                : (baseContent.sections || (Array.isArray(tpl?.sections) ? tpl.sections : [])),
             opening: {
                 ...baseContent.opening,
                 heading: liveData.invitationTitle || baseContent.opening?.heading,
@@ -478,32 +481,45 @@ export default function TemplateExperience({
     );
     const ornamentTheme = content.design?.ornamentTheme || "royal-floral";
 
-    const dynamicSections = (Array.isArray(content?.sections) && content.sections.length > 0)
-        ? content.sections
-        : (Array.isArray(tpl?.sections) && tpl.sections.length > 0 ? tpl.sections : null);
-
-    if (dynamicSections) {
-        return <DynamicTemplateRenderer sections={dynamicSections} content={content} />;
-    }
+    const customSections = useMemo(() => {
+        if (Array.isArray(content?.sections) && content.sections.length > 0) return content.sections;
+        if (Array.isArray(tpl?.sections) && tpl.sections.length > 0) return tpl.sections;
+        if (typeof tpl?.description === "string" && tpl.description.trim().startsWith("{")) {
+            try {
+                const parsed = JSON.parse(tpl.description);
+                if (Array.isArray(parsed.sections) && parsed.sections.length > 0) return parsed.sections;
+            } catch {
+                // ignore
+            }
+        }
+        return [];
+    }, [content?.sections, tpl?.sections, tpl?.description]);
 
     if (DedicatedComponent) {
 
-        return createElement(DedicatedComponent, {
-            tpl: content,
-            content,
-            liveData,
-            showBack: !preview && showBreadcrumb,
-            backTo: backLink,
-            backLabel,
-            preview,
-            previewStartClosed,
-            previewChannel: messageChannel,
-            useTemplateLink,
-            primaryCtaLabel,
-            showActions,
-            showStickyCta,
-            isHostedInvitation: Boolean(tpl?.hostContent),
-        }, children);
+        return (
+            <>
+                {createElement(DedicatedComponent, {
+                    tpl: content,
+                    content,
+                    liveData,
+                    showBack: !preview && showBreadcrumb,
+                    backTo: backLink,
+                    backLabel,
+                    preview,
+                    previewStartClosed,
+                    previewChannel: messageChannel,
+                    useTemplateLink,
+                    primaryCtaLabel,
+                    showActions,
+                    showStickyCta,
+                    isHostedInvitation: Boolean(tpl?.hostContent),
+                }, children)}
+                {customSections?.length > 0 && (
+                    <DynamicTemplateRenderer sections={customSections} content={content} />
+                )}
+            </>
+        );
     }
 
     return (
@@ -596,6 +612,10 @@ export default function TemplateExperience({
                             ) : (
                                 <TemplateRsvp useTemplateLink={useTemplateLink} />
                             )
+                        )}
+
+                        {customSections?.length > 0 && (
+                            <DynamicTemplateRenderer sections={customSections} content={content} />
                         )}
 
                         <TemplateFooter content={content} />
