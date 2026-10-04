@@ -5,7 +5,6 @@ import {
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
 import { useGifts } from "./hooks/useGifts";
 import { GiftStatsCards } from "./components/GiftStatsCards";
-import { GiftFormModal } from "./components/GiftFormModal";
 import { GiftTable } from "./components/GiftTable";
 import "./GiftsFeature.css";
 
@@ -17,8 +16,7 @@ export function GiftsFeature() {
         backendInvitation,
         gifts,
         guestOptions,
-        showForm,
-        openAddModal,
+        openAddForm,
         editingId,
         form,
         updateForm,
@@ -58,7 +56,10 @@ export function GiftsFeature() {
                     type="button"
                     className="wg-add-btn"
                     disabled={!eventId || saving}
-                    onClick={openAddModal}
+                    onClick={() => {
+                        openAddForm();
+                        requestAnimationFrame(() => document.querySelector(".wg-inline-form-row [data-gift-name-input]")?.focus());
+                    }}
                 >
                     <IoAddOutline aria-hidden="true" />
                     {t("addBtn")}
@@ -78,25 +79,17 @@ export function GiftsFeature() {
             {/* Stats */}
             {eventId && <GiftStatsCards gifts={gifts} t={t} />}
 
-            {/* Modal */}
-            <GiftFormModal
-                show={showForm && !!eventId}
-                editingId={editingId}
-                form={form}
-                updateForm={updateForm}
-                submitGift={submitGift}
-                resetForm={resetForm}
-                guestOptions={guestOptions}
-                gifts={gifts}
-                saving={saving}
-                isDuplicateGift={isDuplicateGift}
-                t={t}
-            />
-
             {/* Table */}
             {eventId && (
                 <GiftTable
                     gifts={gifts}
+                    guestOptions={guestOptions}
+                    form={form}
+                    editingId={editingId}
+                    updateForm={updateForm}
+                    submitGift={submitGift}
+                    resetForm={resetForm}
+                    isDuplicateGift={isDuplicateGift}
                     editGift={editGift}
                     deleteGift={(id) => deleteGift(id, t("deleteConfirm"))}
                     saving={saving}

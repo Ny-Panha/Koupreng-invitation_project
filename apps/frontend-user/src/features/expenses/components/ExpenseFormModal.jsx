@@ -24,7 +24,16 @@ export function ExpenseFormModal({
 }) {
     if (!show) return null;
 
-    const sumPayments = (form.payments || []).reduce((acc, p) => acc + (Number(p.amount) || 0), 0);
+    const sumPayments = (form.payments || []).reduce((total, payment) => {
+        const amount = Number(payment.amount);
+        return Number.isFinite(amount) && amount >= 0 ? total + amount : total;
+    }, 0);
+    const budget = Number(form.budget) || 0;
+    const remainingBalance = budget - sumPayments;
+    const paymentStatus = sumPayments === 0
+        ? "unpaid"
+        : sumPayments >= budget ? "paid" : "partial";
+    const progress = budget > 0 ? Math.min((sumPayments / budget) * 100, 100) : sumPayments > 0 ? 100 : 0;
 
     return (
         <div className="exp-modal-layer" onClick={resetForm}>
@@ -80,21 +89,53 @@ export function ExpenseFormModal({
                                         </div>
                                     </label>
                                     <label className="exp-field-full">
-                                        <span>{t ? t("fieldAmount") : "Actual Amount"}</span>
+                                        <span>{t ? t("fieldAmount") : "Actual Expense ($) / ចំណាយពិត"}</span>
                                         <div className="exp-input-with-icon">
                                             <span className="exp-input-prefix">{form.currency === "KHR" ? "៛" : "$"}</span>
                                             <input
                                                 type="number"
-                                                min="0"
-                                                step="any"
                                                 placeholder="0"
-                                                value={sumPayments > 0 ? sumPayments : form.amount}
-                                                disabled={sumPayments > 0}
-                                                onChange={(e) => updateForm("amount", e.target.value)}
+                                                    value={sumPayments}
+                                                    readOnly
+                                                    aria-readonly="true"
+                                                    className="exp-calculated-input"
+                                            />
+                                        </div>
+                                            <small className="exp-field-hint">{t ? t("actualAutoHint") : "(គណនាស្វ័យប្រវត្តិតាមការបង់ប្រាក់)"}</small>
+                                    </label>
+                                </div>
+                                    <label className="exp-field-full">
+                                        <span>{t ? t("fieldRemaining") : "Remaining Balance ($) / នៅខ្វះ"}</span>
+                                        <div className="exp-input-with-icon">
+                                            <span className="exp-input-prefix">{form.currency === "KHR" ? "៛" : "$"}</span>
+                                            <input
+                                                type="number"
+                                                value={remainingBalance}
+                                                readOnly
+                                                aria-readonly="true"
+                                                className="exp-calculated-input"
                                             />
                                         </div>
                                     </label>
-                                </div>
+                                    <div className="exp-payment-progress" aria-live="polite">
+                                        <div className="exp-payment-progress-heading">
+                                            <span>{t ? t("paymentStatus") : "ស្ថានភាពការបង់ប្រាក់"}</span>
+                                            <strong className={`exp-payment-status exp-payment-status-${paymentStatus}`}>
+                                                {t ? t(paymentStatus === "unpaid" ? "statusUnpaid" : paymentStatus === "partial" ? "statusPartial" : "statusFullyPaid") : paymentStatus}
+                                            </strong>
+                                        </div>
+                                        <div
+                                            className="exp-payment-progress-track"
+                                            role="progressbar"
+                                            aria-label={t ? t("paymentProgress") : "Payment progress"}
+                                            aria-valuemin="0"
+                                            aria-valuemax="100"
+                                            aria-valuenow={Math.round(progress)}
+                                        >
+                                            <span style={{ width: `${progress}%` }} />
+                                        </div>
+                                        <small>{Math.round(progress)}% {t ? t("paidOfBudget") : "paid"}</small>
+                                    </div>
                                 <label className="exp-field-full">
                                     <span>Currency / រូបិយប័ណ្ណ</span>
                                     <select value={form.currency || "USD"} onChange={(e) => updateForm("currency", e.target.value)}>
@@ -157,7 +198,8 @@ export function ExpenseFormModal({
                                                 <input
                                                     type="text"
                                                     className="exp-payment-desc"
-                                                    placeholder="Description (e.g. Deposit)"
+                                                    placeholder={t ? t("paymentFor") : "ការពិពណ៌នា (ឧ. ប្រាក់កក់)"}
+                                                    aria-label={`${t ? t("paymentFor") : "ការពិពណ៌នាការបង់ប្រាក់"} ${idx + 1}`}
                                                     value={p.desc || ""}
                                                     onChange={(e) => updatePaymentRow(idx, "desc", e.target.value)}
                                                 />
@@ -169,10 +211,18 @@ export function ExpenseFormModal({
                                                         step="any"
                                                         className="exp-payment-amount"
                                                         placeholder="0"
+                                                        aria-label={`${t ? t("paymentAmount") : "ចំនួនប្រាក់"} ${idx + 1}`}
                                                         value={p.amount || ""}
                                                         onChange={(e) => updatePaymentRow(idx, "amount", e.target.value)}
                                                     />
                                                 </div>
+                                                <input
+                                                    type="date"
+                                                    className="exp-payment-date"
+                                                    aria-label={`${t ? t("paymentDate") : "កាលបរិច្ឆេទបង់ប្រាក់"} ${idx + 1}`}
+                                                    value={p.date || ""}
+                                                    onChange={(e) => updatePaymentRow(idx, "date", e.target.value)}
+                                                />
                                                 <button
                                                     type="button"
                                                     className="exp-payment-del-btn"
@@ -184,6 +234,11 @@ export function ExpenseFormModal({
                                                 </button>
                                             </div>
                                         ))
+                                    )}
+                                    {sumPayments > budget && (
+                                        <p className="exp-payment-warning" role="alert">
+                                            {t ? t("paymentsOverBudget") : "ការបង់ប្រាក់សរុបលើសពីថវិកាគ្រោងទុក។"}
+                                        </p>
                                     )}
                                 </div>
                             </div>

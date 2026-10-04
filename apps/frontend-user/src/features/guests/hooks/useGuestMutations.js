@@ -27,6 +27,7 @@ export function useGuestMutations({
   const saveGuest = async (form, editingId) => {
     setSaving(true);
     setError("");
+    let optimisticId = null;
 
     try {
       const backendIdToUse = backendInvitation ? invitationId(backendInvitation) : null;
@@ -39,6 +40,15 @@ export function useGuestMutations({
           throw new Error("Guest not found in this invitation");
         }
         const payload = toBackendGuestPayload(form);
+        optimisticId = editingId ? targetBackendGuest.id : `optimistic-${Date.now()}-${Math.random()}`;
+        const optimisticGuest = {
+          ...normalizeBackendGuest({ ...(targetBackendGuest || {}), ...payload, id: optimisticId }),
+          pending: true,
+        };
+
+        setBackendGuests((current) => editingId
+          ? current.map((item) => String(item.id) === String(targetBackendGuest.id) ? optimisticGuest : item)
+          : [...current, optimisticGuest]);
 
         let savedBackend;
         if (targetBackendGuest) {
@@ -51,16 +61,17 @@ export function useGuestMutations({
           savedBackend = await guestService.createForInvitation(backendIdToUse, payload);
         }
 
-        const normalized = normalizeBackendGuest(savedBackend);
+        const normalized = {
+          ...normalizeBackendGuest(savedBackend || { ...(targetBackendGuest || {}), ...payload, id: optimisticId }),
+          pending: false,
+        };
 
         setBackendGuests((current) => {
-          const index = current.findIndex((item) => String(item.id) === String(normalized.id));
-          if (index >= 0) {
-            const next = [...current];
-            next[index] = normalized;
-            return next;
-          }
-          return [...current, normalized];
+          const index = current.findIndex((item) => String(item.id) === String(optimisticId));
+          if (index < 0) return current.some((item) => String(item.id) === String(normalized.id))
+            ? current.map((item) => String(item.id) === String(normalized.id) ? normalized : item)
+            : [...current, normalized];
+          return current.map((item, itemIndex) => itemIndex === index ? normalized : item);
         });
       } else {
         const guestToSave = toManualGuest(form, editingId);
@@ -73,9 +84,13 @@ export function useGuestMutations({
         });
       }
 
-      await refreshData();
       return true;
     } catch (err) {
+      if (backendInvitation) {
+        setBackendGuests((current) => editingId
+          ? current.map((item) => String(item.id) === String(editingId) ? backendGuests.find((guest) => String(guest.id) === String(editingId)) || item : item)
+          : current.filter((item) => String(item.id) !== String(optimisticId)));
+      }
       setError(err?.message || "Could not save guest record");
       return false;
     } finally {

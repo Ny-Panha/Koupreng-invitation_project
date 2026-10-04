@@ -47,6 +47,43 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, Long
     @Query("select s from Subscription s where s.paywayTransactionId = :transactionId")
     Optional<Subscription> findForUpdateByPaywayTransactionId(@Param("transactionId") String transactionId);
 
+                @Query("""
+                                                select s.user.id as userId,
+                                                        s.createdAt as createdAt,
+                                                        s.endDate as endDate,
+                                                        s.isActive as active,
+                                                        s.status as status,
+                                                        s.paymentStatus as paymentStatus,
+                                                        s.orderCode as reference,
+                                                        s.amount as amount,
+                                                        s.paidAmount as paidAmount,
+                                                        s.currency as currency,
+                                                        s.provider as provider,
+                                                        s.subscriptionPackage.packageName as packageName,
+                                                        s.subscriptionPackage.code as packageCode,
+                                                        s.subscriptionPackage.price as packagePrice
+                                                from Subscription s
+                                                order by s.user.id, s.createdAt
+                                                """)
+                List<PlatformMetricsRow> findPlatformMetrics();
+
+                interface PlatformMetricsRow {
+                                Long getUserId();
+                                Instant getCreatedAt();
+                                Instant getEndDate();
+                                Boolean getActive();
+                                String getStatus();
+                                String getPaymentStatus();
+                                String getReference();
+                                BigDecimal getAmount();
+                                BigDecimal getPaidAmount();
+                                String getCurrency();
+                                String getProvider();
+                                String getPackageName();
+                                String getPackageCode();
+                                BigDecimal getPackagePrice();
+                }
+
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("""
             select s

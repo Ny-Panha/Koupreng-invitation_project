@@ -17,6 +17,7 @@ import {
   IoQrCodeOutline,
   IoRestaurantOutline,
   IoSparkles,
+  IoStatsChartOutline,
   IoWalletOutline,
   IoShareSocialOutline,
 } from "react-icons/io5";
@@ -804,6 +805,13 @@ export default function DashboardFeature() {
                     </div>
                     <span>{text("quickGifts")}</span>
                   </Link>
+
+                  <Link to="/dashboard/reports" className="dash-quick-btn">
+                    <div className="quick-icon" style={{ background: "rgba(14, 116, 144, 0.12)", color: "#0e7490" }}>
+                      <IoStatsChartOutline />
+                    </div>
+                    <span>{text("quickReports")}</span>
+                  </Link>
                 </div>
               </div>
 
@@ -842,4 +850,3 @@ export default function DashboardFeature() {
     </main>
   );
 }
-

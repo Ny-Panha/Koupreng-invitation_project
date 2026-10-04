@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.domain.Pageable;
 
 import java.time.Instant;
 import java.util.Collection;
@@ -75,6 +76,29 @@ public interface TemplatePaymentOrderRepository extends JpaRepository<TemplatePa
             group by coalesce(nullif(upper(trim(p.currency)), ''), 'USD')
             """)
     List<RevenueByCurrency> revenueByCurrency();
+
+                @Query("""
+                                                select p.orderCode as reference,
+                                                        p.packageName as packageName,
+                                                        coalesce(p.paidAmount, p.amount) as amount,
+                                                        p.currency as currency,
+                                                        p.status as status,
+                                                        p.provider as provider,
+                                                        p.createdAt as createdAt
+                                                from TemplatePaymentOrder p
+                                                order by p.createdAt desc
+                                                """)
+                List<PlatformPaymentRow> findRecentPlatformPayments(Pageable pageable);
+
+                interface PlatformPaymentRow {
+                                String getReference();
+                                String getPackageName();
+                                java.math.BigDecimal getAmount();
+                                String getCurrency();
+                                PaymentStatus getStatus();
+                                String getProvider();
+                                Instant getCreatedAt();
+                }
 
     interface RevenueByCurrency extends com.koupreng.backend.reporting.domain.RevenueTotals.AmountInCurrency { }
 }

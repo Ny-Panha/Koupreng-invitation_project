@@ -7,6 +7,7 @@ import com.koupreng.backend.gift.api.dto.WeddingGiftResponse;
 import com.koupreng.backend.gift.domain.WeddingGift;
 import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.gift.infrastructure.persistence.WeddingGiftRepository;
+import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -114,8 +115,9 @@ class WeddingGiftServiceTests {
 
     private Fixture fixture() {
         WeddingGiftRepository weddingGiftRepository = mock(WeddingGiftRepository.class);
+        GuestRepository guestRepository = mock(GuestRepository.class);
         InvitationService invitationService = mock(InvitationService.class);
-        WeddingGiftService service = new WeddingGiftService(weddingGiftRepository, invitationService);
+        WeddingGiftService service = new WeddingGiftService(weddingGiftRepository, guestRepository, invitationService);
         return new Fixture(service, weddingGiftRepository, invitationService);
     }
 

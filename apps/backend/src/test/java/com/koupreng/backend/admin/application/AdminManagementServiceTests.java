@@ -24,6 +24,7 @@ import com.koupreng.backend.invitation.api.dto.InvitationResponse;
 import com.koupreng.backend.notification.infrastructure.persistence.NotificationRepository;
 import com.koupreng.backend.payment.infrastructure.persistence.TemplatePaymentOrderRepository;
 import com.koupreng.backend.rsvp.infrastructure.persistence.RsvpRepository;
+import com.koupreng.backend.subscription.infrastructure.persistence.SubscriptionRepository;
 import com.koupreng.backend.template.infrastructure.persistence.InvitationTemplateRepository;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.user.domain.Role;
@@ -46,6 +47,7 @@ class AdminManagementServiceTests {
         UserInvitationRepository invitationRepository = mock(UserInvitationRepository.class);
         InvitationTemplateRepository templateRepository = mock(InvitationTemplateRepository.class);
         TemplatePaymentOrderRepository paymentOrderRepository = mock(TemplatePaymentOrderRepository.class);
+        SubscriptionRepository subscriptionRepository = mock(SubscriptionRepository.class);
         RsvpRepository rsvpRepository = mock(RsvpRepository.class);
         GuestRepository guestRepository = mock(GuestRepository.class);
         GuestCheckInRepository guestCheckInRepository = mock(GuestCheckInRepository.class);
@@ -67,6 +69,7 @@ class AdminManagementServiceTests {
                 invitationRepository,
                 templateRepository,
                 paymentOrderRepository,
+                subscriptionRepository,
                 rsvpRepository,
                 guestRepository,
                 guestCheckInRepository,
@@ -141,6 +144,7 @@ class AdminManagementServiceTests {
         UserInvitationRepository invitationRepository = mock(UserInvitationRepository.class);
         InvitationTemplateRepository templateRepository = mock(InvitationTemplateRepository.class);
         TemplatePaymentOrderRepository paymentOrderRepository = mock(TemplatePaymentOrderRepository.class);
+        SubscriptionRepository subscriptionRepository = mock(SubscriptionRepository.class);
         RsvpRepository rsvpRepository = mock(RsvpRepository.class);
         GuestRepository guestRepository = mock(GuestRepository.class);
         GuestCheckInRepository guestCheckInRepository = mock(GuestCheckInRepository.class);
@@ -170,6 +174,7 @@ class AdminManagementServiceTests {
                 invitationRepository,
                 templateRepository,
                 paymentOrderRepository,
+                subscriptionRepository,
                 rsvpRepository,
                 guestRepository,
                 guestCheckInRepository,
@@ -195,6 +200,7 @@ class AdminManagementServiceTests {
         UserInvitationRepository invitationRepository = mock(UserInvitationRepository.class);
         InvitationTemplateRepository templateRepository = mock(InvitationTemplateRepository.class);
         TemplatePaymentOrderRepository paymentOrderRepository = mock(TemplatePaymentOrderRepository.class);
+        SubscriptionRepository subscriptionRepository = mock(SubscriptionRepository.class);
         RsvpRepository rsvpRepository = mock(RsvpRepository.class);
         GuestRepository guestRepository = mock(GuestRepository.class);
         GuestCheckInRepository guestCheckInRepository = mock(GuestCheckInRepository.class);
@@ -211,6 +217,7 @@ class AdminManagementServiceTests {
                 invitationRepository,
                 templateRepository,
                 paymentOrderRepository,
+                subscriptionRepository,
                 rsvpRepository,
                 guestRepository,
                 guestCheckInRepository,
@@ -239,6 +246,7 @@ class AdminManagementServiceTests {
         UserInvitationRepository invitationRepository = mock(UserInvitationRepository.class);
         InvitationTemplateRepository templateRepository = mock(InvitationTemplateRepository.class);
         TemplatePaymentOrderRepository paymentOrderRepository = mock(TemplatePaymentOrderRepository.class);
+        SubscriptionRepository subscriptionRepository = mock(SubscriptionRepository.class);
         RsvpRepository rsvpRepository = mock(RsvpRepository.class);
         GuestRepository guestRepository = mock(GuestRepository.class);
         GuestCheckInRepository guestCheckInRepository = mock(GuestCheckInRepository.class);
@@ -253,6 +261,7 @@ class AdminManagementServiceTests {
                 invitationRepository,
                 templateRepository,
                 paymentOrderRepository,
+                subscriptionRepository,
                 rsvpRepository,
                 guestRepository,
                 guestCheckInRepository,

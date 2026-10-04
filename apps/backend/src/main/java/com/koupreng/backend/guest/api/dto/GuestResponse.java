@@ -18,6 +18,7 @@ public class GuestResponse {
     private Long id;
     private Long invitationId;
     private String guestName;
+    private String companionName;
     private String phone;
     private String email;
     private String guestGroup;
@@ -39,6 +40,7 @@ public class GuestResponse {
                 .id(guest.getId())
                 .invitationId(guest.getInvitation() == null ? null : guest.getInvitation().getId())
                 .guestName(guest.getGuestName())
+                .companionName(guest.getCompanionName())
                 .phone(guest.getPhone())
                 .email(guest.getEmail())
                 .guestGroup(guest.getGuestGroup())

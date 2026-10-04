@@ -169,4 +169,50 @@ describe("guest state authority", () => {
     expect(refreshData).not.toHaveBeenCalled();
     expect(result.current.error).toBe("Import rejected");
   });
+
+  it("maps companion and guest fields into the invitation-scoped batch request", async () => {
+    guestService.importForInvitation.mockResolvedValueOnce([]);
+    const refreshData = vi.fn().mockResolvedValue(undefined);
+    const { result } = renderHook(
+      () =>
+        useGuestMutations({
+          eventId: "draft-1",
+          backendInvitation: { id: 42 },
+          setManualGuests: vi.fn(),
+          backendGuests: [],
+          setBackendGuests: vi.fn(),
+          refreshData,
+        }),
+      { wrapper: routeWrapper() }
+    );
+
+    let success;
+    await act(async () => {
+      success = await result.current.importGuests([{
+        name: "Sok Dara",
+        companionName: "Srey Mom",
+        phone: "012345678",
+        group: "Bride Side",
+        category: "Family",
+        count: 2,
+        note: "VIP",
+      }]);
+    });
+
+    expect(success).toBe(true);
+    expect(guestService.importForInvitation).toHaveBeenCalledWith(42, [
+      {
+        guestName: "Sok Dara",
+        companionName: "Srey Mom",
+        phone: "012345678",
+        guestGroup: "Bride Side",
+        sideType: "Family",
+        tableNumber: null,
+        sendStatus: null,
+        seatCount: 2,
+        note: "VIP",
+      },
+    ]);
+    expect(refreshData).toHaveBeenCalledTimes(1);
+  });
 });

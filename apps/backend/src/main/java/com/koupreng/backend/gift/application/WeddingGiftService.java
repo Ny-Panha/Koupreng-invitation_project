@@ -7,6 +7,7 @@ import com.koupreng.backend.gift.api.dto.WeddingGiftResponse;
 import com.koupreng.backend.gift.domain.WeddingGift;
 import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.gift.infrastructure.persistence.WeddingGiftRepository;
+import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -20,13 +21,16 @@ import java.util.List;
 public class WeddingGiftService {
 
     private final WeddingGiftRepository weddingGiftRepository;
+    private final GuestRepository guestRepository;
     private final InvitationService invitationService;
 
     public WeddingGiftService(
             WeddingGiftRepository weddingGiftRepository,
+            GuestRepository guestRepository,
             InvitationService invitationService
     ) {
         this.weddingGiftRepository = weddingGiftRepository;
+        this.guestRepository = guestRepository;
         this.invitationService = invitationService;
     }
 
@@ -50,7 +54,7 @@ public class WeddingGiftService {
         UserInvitation invitation = invitationService.requireOwnedInvitationEntity(authentication, invitationId);
         WeddingGift gift = new WeddingGift();
         gift.setInvitation(invitation);
-        applyRequest(gift, request);
+        applyRequest(gift, invitationId, request);
         return WeddingGiftResponse.from(weddingGiftRepository.save(gift));
     }
 
@@ -63,7 +67,7 @@ public class WeddingGiftService {
     ) {
         invitationService.requireOwnedInvitationEntity(authentication, invitationId);
         WeddingGift gift = requireGift(invitationId, giftId);
-        applyRequest(gift, request);
+        applyRequest(gift, invitationId, request);
         return WeddingGiftResponse.from(weddingGiftRepository.save(gift));
     }
 
@@ -78,7 +82,12 @@ public class WeddingGiftService {
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Wedding gift not found"));
     }
 
-    private void applyRequest(WeddingGift gift, WeddingGiftRequest request) {
+    private void applyRequest(WeddingGift gift, Long invitationId, WeddingGiftRequest request) {
+        Long guestId = request.getGuestId();
+        if (guestId != null && !guestRepository.findByIdAndInvitationId(guestId, invitationId).isPresent()) {
+            throw new ApiException(HttpStatus.NOT_FOUND, "Guest not found for this invitation");
+        }
+        gift.setGuestId(guestId);
         gift.setGiverName(trimToNull(request.getName()));
         gift.setAmount(nonNegative(request.getAmount()));
         gift.setCurrency(normalizeCurrency(request.getCurrency()));

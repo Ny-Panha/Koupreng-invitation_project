@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { IoAdd, IoCloudUploadOutline, IoDownloadOutline, IoQrCodeOutline, IoSettingsOutline } from "react-icons/io5";
+import { IoCloudUploadOutline, IoDownloadOutline, IoQrCodeOutline, IoSettingsOutline } from "react-icons/io5";
 import { SearchInput } from "@/shared/ui";
 
 export default function GuestFilters({
@@ -11,7 +11,6 @@ export default function GuestFilters({
   setCategoryFilter,
   groups,
   categories,
-  onOpenCreate,
   onOpenImport,
   onExportCsv,
   onOpenGroupManager,
@@ -101,10 +100,6 @@ export default function GuestFilters({
         <button type="button" className="pe-secondary-btn" onClick={onOpenImport}>
           <IoCloudUploadOutline aria-hidden="true" />
           <span>{t ? t("importBtn") : "នាំចូល"}</span>
-        </button>
-        <button type="button" className="pe-primary-btn" onClick={onOpenCreate}>
-          <IoAdd aria-hidden="true" />
-          <span>{t ? t("addGuestBtn") : "បន្ថែមភ្ញៀវ"}</span>
         </button>
       </div>
     </div>
