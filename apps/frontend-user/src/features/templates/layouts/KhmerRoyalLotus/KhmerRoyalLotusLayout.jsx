@@ -230,7 +230,8 @@ export default function KhmerRoyalLotusLayout({
       subtitle: base.invitationSubtitle || base.subtitle || "យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ",
       guestName: base.guestName || base.guestNameBanner || "លោកអ្នក និងក្រុមគ្រួសារ",
       messageTitle: base.messageTitle || "មានកិត្តិយសសូមគោរពអញ្ជើញ",
-      message: base.messageText || base.blessingMessage || base.message ||
+      message: base.messageText || base.blessingMessage ||
+        (typeof base.message === "string" ? base.message : base.message?.text) ||
         "ចូលរួមជាភ្ញៀវកិត្តិយស ដើម្បីប្រសិទ្ធពរជ័យសិរីសួស្តីមង្គល ជូនកូនប្រុស កូនស្រី របស់យើងខ្ញុំ ក្នុងថ្ងៃដ៏វិសេសវិសាលនេះ។",
       dateText: base.dateText || base.eventDateText || base.weddingDate || "ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦",
       receptionTime: base.receptionTime || base.eventTime || base.weddingTime || "វេលាម៉ោង ៥:០០ ល្ងាច",
