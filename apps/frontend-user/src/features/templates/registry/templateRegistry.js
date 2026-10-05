@@ -5,6 +5,7 @@ import BlissEditorialLayout from "../layouts/BlissEditorialLayout";
 import DefaultTemplateLayout from "../layouts/DefaultTemplate/DefaultTemplateLayout";
 import CanvaKhmerWeddingTemplate from "../experience/components/canva-khmer/CanvaKhmerWeddingTemplate";
 import KhmerCelestialLayout from "../layouts/KhmerCelestial/KhmerCelestialLayout";
+import KhmerRoyalLotusLayout from "../layouts/KhmerRoyalLotus/KhmerRoyalLotusLayout";
 import TemplateBoilerplateLayout from "../layouts/TemplateBoilerplate/TemplateBoilerplateLayout";
 
 /**
@@ -15,6 +16,10 @@ export const templateRegistry = {
   // Developer Starter Boilerplate
   "template-boilerplate": TemplateBoilerplateLayout,
   "custom-starter": TemplateBoilerplateLayout,
+
+  // Khmer Royal Lotus (printed-card inspired Khmer ceremonial invitation)
+  "khmer-royal-lotus": KhmerRoyalLotusLayout,
+  "KHMER_ROYAL_LOTUS": KhmerRoyalLotusLayout,
 
   // Flagship Khmer Celestial (cinematic Cambodian editorial invitation)
   "khmer-celestial": KhmerCelestialLayout,
