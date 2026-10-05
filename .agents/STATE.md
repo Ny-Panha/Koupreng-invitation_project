@@ -64,7 +64,14 @@
 - Frontend Admin UI: `http://localhost:5174`
 - Backend API: `http://localhost:8080`
 
+## Latest Features Added (2026-10-05)
+- Drag-and-Drop: Mouse grab handle with `@dnd-kit/core` and `@dnd-kit/sortable`
+- Delete Section: Trash icon on every section (both legacy and custom CMS blocks)
+- Clear All: `🗑️ សម្អាតទាំងអស់` button to clear default sections completely
+- Add Legacy Section: `+ ផ្នែកធៀបការ (+ Section)` dropdown picker to re-add deleted legacy sections
+- Cinematic Scroll starter data: 3 dark luxury sample cards pre-populated with images so new blocks show immediately in simulator
+
 ## Next Steps
-- Commit and push `feature/block-cms` to origin.
-- Conduct live browser testing of drag/reorder in admin and public template preview.
+- Admin tests drag-and-drop & deleting defaults in `http://localhost:5174/templates/new`.
+- Verify live mobile preview responsiveness.
 
