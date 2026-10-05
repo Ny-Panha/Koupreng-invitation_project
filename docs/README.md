@@ -220,6 +220,8 @@ Launch the repository-specific local stack on Windows:
 .\run-local-stack.ps1
 ```
 
+The Windows launcher installs a frontend's locked npm dependencies with `npm ci` when its local Vite executable is missing, then verifies the app entry module before reporting that the frontend is ready.
+
 Or run each service independently:
 
 ```bash

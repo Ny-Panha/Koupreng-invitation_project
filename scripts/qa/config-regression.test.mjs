@@ -56,3 +56,24 @@ test('Windows launcher forwards supported help without starting services', { ski
   const targetSource = readFileSync(target, 'utf8');
   assert.match(targetSource, /Join-Path \$ScriptDir "\.\.\\\.\.\\\.\."/);
 });
+
+test('Windows dev runner waits up to ten minutes for backend readiness', () => {
+  const target = join(root, 'scripts/maintenance/dev/dev.ps1');
+  const targetSource = readFileSync(target, 'utf8');
+  assert.match(targetSource, /\$backendStartupTimeoutSeconds = 600/);
+  assert.match(targetSource, /while \(\$backendStartupTimer\.Elapsed\.TotalSeconds -lt \$backendStartupTimeoutSeconds\)/);
+});
+
+test('frontend dev startup installs missing dependencies and checks the transformed entry module', () => {
+  const scriptPath = join(root, 'scripts/maintenance/dev/dev.ps1');
+  const scriptSource = readFileSync(scriptPath, 'utf8');
+  const userEntry = readFileSync(join(root, 'apps/frontend-user/src/main.jsx'), 'utf8');
+
+  assert.match(scriptSource, /Ensure-FrontendDependencies -WorkingDir \$userDir/);
+  assert.match(scriptSource, /Ensure-FrontendDependencies -WorkingDir \$adminDir/);
+  assert.match(scriptSource, /npm\.cmd ci --no-audit --no-fund/);
+  assert.match(scriptSource, /src\/main\.jsx/);
+  assert.match(scriptSource, /Wait-ForFrontend -Name "Frontend Admin" -Port 5174/);
+  assert.match(userEntry, /createRoot\(document\.getElementById\("root"\)\)/);
+  assert.match(userEntry, /import App from "\.\/app\/App\.jsx"/);
+});

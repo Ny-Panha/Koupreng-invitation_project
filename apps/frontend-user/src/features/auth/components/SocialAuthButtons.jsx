@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import authService from "@/features/auth/api/authApi";
 import { buildTelegramOAuthUrl, TELEGRAM_OAUTH_ORIGIN } from "./telegramOAuth";
@@ -391,6 +391,7 @@ export default function SocialAuthButtons({ redirectTo = "/dashboard/events", mo
 
   const [busy, setBusy] = useState("");
   const [error, setError] = useState("");
+  const [accountLinkRequired, setAccountLinkRequired] = useState(false);
   const [success, setSuccess] = useState("");
   const [telegramReady, setTelegramReady] = useState(
     !hasTelegramClientId || !isTelegramInAppBrowser(),
@@ -401,7 +402,7 @@ export default function SocialAuthButtons({ redirectTo = "/dashboard/events", mo
   const widgetHostRef = useRef(null);
 
   const completeLogin = useCallback(async (providerFn) => {
-    setError(""); setSuccess("");
+    setError(""); setAccountLinkRequired(false); setSuccess("");
     try {
       if (linking && !isAuthenticated) throw new Error("Sign in before linking an identity.");
       const data = await providerFn();
@@ -414,6 +415,7 @@ export default function SocialAuthButtons({ redirectTo = "/dashboard/events", mo
       }
     } catch (e) {
       setError(socialAuthError(e));
+      setAccountLinkRequired(e?.data?.code === "ACCOUNT_LINK_REQUIRED");
     } finally { setBusy(""); }
   }, [isAuthenticated, linking, login, navigate, onLinked, redirectTo, updateUser]);
 
@@ -598,6 +600,12 @@ export default function SocialAuthButtons({ redirectTo = "/dashboard/events", mo
       {error && (
         <div role="alert" className="auth-error mt-2">
           {error}
+          {accountLinkRequired && (
+            <p className="auth-link-recovery">
+              <Link to="/forgot-password" className="auth-footer-link">Recover your existing account</Link>
+              {" "}then sign in and link Google from your profile.
+            </p>
+          )}
         </div>
       )}
     </>

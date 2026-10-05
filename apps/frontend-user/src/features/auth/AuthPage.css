@@ -161,6 +161,17 @@
     border-radius: 8px;
 }
 
+.auth-link-recovery {
+    margin: 8px 0 0;
+    color: #8f2d2d;
+}
+
+.auth-link-recovery .auth-footer-link {
+    color: #8f2d2d;
+    font-weight: 700;
+    text-decoration: underline;
+}
+
 /* ── Submit button ── */
 .auth-submit {
     width: 100%;

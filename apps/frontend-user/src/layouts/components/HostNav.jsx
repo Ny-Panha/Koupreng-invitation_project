@@ -42,6 +42,27 @@ const NAV_LABELS = {
   },
 };
 
+const REQUIRED_NAV_LABELS = {
+  km: {
+    events: "កម្មវិធី",
+    dashboard: "ផ្ទាំងគ្រប់គ្រង",
+    guests: "បញ្ជីភ្ញៀវ",
+    expenses: "កម្រោងថវិកា",
+    gifts: "ចងដៃទទួល",
+    myInvitation: "កម្រងធៀប",
+    browseTemplates: "ស្វែងរកគំរូ",
+  },
+  en: {
+    events: "App",
+    dashboard: "Dashboard Overview",
+    guests: "Guests",
+    expenses: "Budgeting",
+    gifts: "Gifts",
+    myInvitation: "My Templates / Invitations",
+    browseTemplates: "Browse Templates",
+  },
+};
+
 const LANGUAGE_OPTIONS = [
 
   { code: "en", label: "English", buttonLabel: "English", flag: "us", htmlLang: "en" },
@@ -128,7 +149,8 @@ export default function HostNav() {
     { labelKey: "guests", path: "/dashboard/guests", Icon: IoPeopleOutline },
     { labelKey: "expenses", path: "/dashboard/expenses", Icon: IoCashOutline },
     { labelKey: "gifts", path: "/dashboard/gifts", Icon: IoGiftOutline },
-    { labelKey: "myInvitation", path: "/templates/browse", Icon: IoColorPaletteOutline },
+    { labelKey: "myInvitation", path: "/dashboard/invitations/design", activePath: "/dashboard/invitations", Icon: IoColorPaletteOutline },
+    { labelKey: "browseTemplates", path: "/templates/browse", Icon: IoColorPaletteOutline },
   ];
 
   const isActive = (path) => {
@@ -141,6 +163,8 @@ export default function HostNav() {
   };
 
   const getNavLabel = (key) => {
+    const requiredLabel = REQUIRED_NAV_LABELS[language]?.[key];
+    if (requiredLabel) return requiredLabel;
     if (key === "browseTemplates") return language === "en" ? "Browse Templates" : "ស្វែងរកគំរូ";
     if (key === "myInvitation") return language === "en" ? "Invitation Template" : "គម្រូធៀប";
     const serverText = navText(key);
@@ -263,19 +287,22 @@ export default function HostNav() {
         .host-nav-links {
           display: flex;
           flex: 1;
-          gap: 8px;
+          gap: 5px;
           align-items: center;
           justify-content: center;
           min-width: 0;
+          white-space: nowrap;
         }
         .host-nav-item-wrap {
           display: flex;
           align-items: center;
-          gap: 8px;
+          gap: 5px;
+          flex: 0 0 auto;
         }
         .host-nav-divider {
           color: #ccc;
-          font-size: 14px;
+          font-size: 13px;
+          white-space: nowrap;
           font-weight: 300;
           user-select: none;
         }
@@ -667,12 +694,9 @@ export default function HostNav() {
           border-radius: 10px;
         }
 
-        @media (max-width: 1024px) {
+        @media (max-width: 1200px) {
           .host-nav-links {
-            gap: 14px;
-          }
-          .host-nav-link {
-            font-size: 12.5px;
+            display: none;
           }
           .host-language-label,
           .host-profile-name,
@@ -687,6 +711,13 @@ export default function HostNav() {
           }
           .host-language-chevron {
             display: none;
+          }
+          .host-hamburger-btn {
+            display: block;
+          }
+          .host-mobile-overlay,
+          .host-mobile-menu {
+            display: block;
           }
         }
         @media (max-width: 768px) {
@@ -753,13 +784,13 @@ export default function HostNav() {
           </Link>
 
           {/* Desktop nav links */}
-          <nav className="host-nav-links">
+          <nav className="host-nav-links" aria-label={language === "en" ? "Main navigation" : "ម៉ឺនុយចម្បង"}>
             {dynamicNavItems.map((item, index) => (
               <span key={item.labelKey} className="host-nav-item-wrap">
                 {index > 0 && <span className="host-nav-divider">|</span>}
                 <Link
                   to={item.path}
-                  className={`host-nav-link${isActive(item.path) ? " active" : ""}`}
+                  className={`host-nav-link${isActive(item.activePath || item.path) ? " active" : ""}`}
                 >
                   {getNavLabel(item.labelKey)}
                 </Link>
@@ -884,7 +915,7 @@ export default function HostNav() {
       />
 
       {/* Mobile slide-out menu */}
-      <nav className={`host-mobile-menu${mobileMenuOpen ? " open" : ""}`}>
+      <nav className={`host-mobile-menu${mobileMenuOpen ? " open" : ""}`} aria-label={language === "en" ? "Main navigation" : "ម៉ឺនុយចម្បង"}>
         {/* Profile section */}
         <Link
           to="/dashboard/profile"
@@ -906,7 +937,7 @@ export default function HostNav() {
             <Link
               key={item.labelKey}
               to={item.path}
-              className={`host-mobile-menu-item${isActive(item.path) ? " active" : ""}`}
+              className={`host-mobile-menu-item${isActive(item.activePath || item.path) ? " active" : ""}`}
               onClick={closeMobileMenu}
             >
               <span className="menu-icon"><ItemIcon aria-hidden="true" /></span>
