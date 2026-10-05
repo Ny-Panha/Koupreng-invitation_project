@@ -18,13 +18,45 @@ export default function OwnerReportSummary({ invitationId }) {
     catch (error) { setState((current) => ({ ...current, error: error.message || "Could not export report" })); }
     finally { setExporting(false); }
   };
-  return <section className="budget-panel reports-screen-only" aria-label="Server attendance reports">
-    <h2>Guest delivery and attendance reports</h2>
-    {state.loading ? <p role="status">Loading attendance reports…</p> : state.error ? <p role="alert">{state.error}</p> : <p>
-      Guests: {state.guests?.totalGuests ?? "Unavailable"} · Sent: {state.guests?.sent ?? "Unavailable"} · Opened: {state.guests?.opened ?? "Unavailable"} ·
-      RSVP attending: {state.rsvp?.yesCount ?? "Unavailable"} · Attendees: {state.rsvp?.attendeeTotal ?? "Unavailable"} · Pending: {state.rsvp?.pendingCount ?? "Unavailable"}
-    </p>}
-    <button type="button" className="dash-btn" disabled={exporting || state.loading} onClick={() => exportCsv("GUEST")}>Export guest report CSV</button>
-    <button type="button" className="dash-btn" disabled={exporting || state.loading} onClick={() => exportCsv("RSVP")}>Export RSVP report CSV</button>
-  </section>;
+  const metrics = [
+    { label: "Guests", value: state.guests?.totalGuests },
+    { label: "Sent", value: state.guests?.sent },
+    { label: "Opened", value: state.guests?.opened },
+    { label: "RSVP attending", value: state.rsvp?.yesCount },
+    { label: "Attendees", value: state.rsvp?.attendeeTotal },
+    { label: "Pending", value: state.rsvp?.pendingCount },
+  ];
+
+  return (
+    <section className="owner-report-summary" aria-label="Guest delivery and attendance reports">
+      <div className="owner-report-heading">
+        <div>
+          <h2>Guest delivery and attendance reports</h2>
+          <p>Guest invitation delivery and RSVP totals for this event.</p>
+        </div>
+        <div className="owner-report-export-actions reports-screen-only">
+          <button type="button" disabled={exporting || state.loading} onClick={() => exportCsv("GUEST")}>
+            Export guest report CSV
+          </button>
+          <button type="button" disabled={exporting || state.loading} onClick={() => exportCsv("RSVP")}>
+            Export RSVP report CSV
+          </button>
+        </div>
+      </div>
+      {state.loading ? (
+        <p className="owner-report-message" role="status">Loading attendance reports…</p>
+      ) : state.error ? (
+        <p className="owner-report-message is-error" role="alert">{state.error}</p>
+      ) : (
+        <div className="owner-report-metrics">
+          {metrics.map(({ label, value }) => (
+            <article className="owner-report-metric" key={label}>
+              <span>{label}</span>
+              <strong>{value ?? "Unavailable"}</strong>
+            </article>
+          ))}
+        </div>
+      )}
+    </section>
+  );
 }

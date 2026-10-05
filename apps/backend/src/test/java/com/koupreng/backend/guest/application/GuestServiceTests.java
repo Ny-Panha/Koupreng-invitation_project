@@ -38,6 +38,17 @@ class GuestServiceTests {
     }
 
     @Test
+    void createGuestPersistsCompanionName() {
+        Fixture fixture = fixture();
+        GuestRequest request = request("Sophea");
+        request.setCompanionName("Dara");
+
+        GuestResponse response = fixture.service.create(fixture.authentication, 10L, request);
+
+        assertEquals("Dara", response.getCompanionName());
+    }
+
+    @Test
     void createGuestRejectsDuplicateEmailWithinInvitation() {
         Fixture fixture = fixture();
         GuestRequest request = request("Duplicate");

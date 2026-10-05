@@ -17,6 +17,7 @@ public class WeddingGiftResponse {
 
     private Long id;
     private Long invitationId;
+    private Long guestId;
     private String name;
     private BigDecimal amount;
     private String currency;
@@ -29,6 +30,7 @@ public class WeddingGiftResponse {
         return WeddingGiftResponse.builder()
                 .id(gift.getId())
                 .invitationId(invitationId)
+                .guestId(gift.getGuestId())
                 .name(gift.getGiverName())
                 .amount(gift.getAmount())
                 .currency(gift.getCurrency() == null ? "USD" : gift.getCurrency())

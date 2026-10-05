@@ -1,287 +1,142 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
-import { Archive, ArrowUpRight, CalendarDays, CircleCheck, FilePenLine, MoreHorizontal, RefreshCw, Search, ShieldAlert, Upload, X } from "lucide-react";
-import { ActionButton, AdminPageHeader, ErrorStateView, LoadingState, StatCard, StatusBadge } from "../../shared/ui/AdminUI";
+import { Activity, CalendarDays, CreditCard, RefreshCw, Users } from "lucide-react";
+import { ActionButton, AdminPageHeader, ErrorStateView, LoadingState, StatCard } from "../../shared/ui/AdminUI";
 import adminService from "../../shared/api/adminService";
 
-function asList(value) {
-  if (Array.isArray(value)) return value;
-  if (Array.isArray(value?.items)) return value.items;
-  if (Array.isArray(value?.data)) return value.data;
-  if (Array.isArray(value?.content)) return value.content;
-  return [];
+const categories = [
+  { key: "WEDDING", label: "Wedding (អាពាហ៍ពិពាហ៍)", color: "#a855f7" },
+  { key: "ENGAGEMENT", label: "Engagement (ភ្ជាប់ពាក្យ)", color: "#0ea5e9" },
+  { key: "ANNIVERSARY_BIRTHDAY", label: "Anniversary / Birthday (ខួប/ជប់លៀង)", color: "#f59e0b" },
+];
+const tiers = ["Basic", "Pro", "Premium"];
+const list = (value) => Array.isArray(value) ? value : [];
+const amount = (value) => Number(value || 0);
+const integer = (value) => new Intl.NumberFormat().format(amount(value));
+const currency = (value, code = "USD") => new Intl.NumberFormat(undefined, { style: "currency", currency: code, maximumFractionDigits: 2 }).format(amount(value));
+const monthLabel = (value) => {
+  const date = new Date(`${value}-01T00:00:00`);
+  return Number.isNaN(date.getTime()) ? value : new Intl.DateTimeFormat(undefined, { month: "short" }).format(date);
+};
+
+function MetricPanel({ title, description, children }) {
+  return <section className="rounded-xl border border-slate-200 bg-white p-5 dark:border-zinc-800 dark:bg-[#111113]">
+    <div className="mb-4"><h3 className="text-sm font-bold text-slate-900 dark:text-zinc-100">{title}</h3>
+      {description && <p className="mt-1 text-xs text-slate-500 dark:text-zinc-400">{description}</p>}</div>{children}
+  </section>;
 }
 
-function eventTypeLabel(type) {
-  const labels = {
-    WEDDING: "អាពាហ៍ពិពាហ៍",
-    ENGAGEMENT: "ភ្ជាប់ពាក្យ",
-    BIRTHDAY: "ខួបកំណើត",
-    ANNIVERSARY: "ខួបអនុស្សាវរីយ៍",
-    CORPORATE: "ស្ថាប័ន",
-    OTHER: "ផ្សេងៗ",
-  };
-  return labels[type] || type || "មិនបានកំណត់";
-}
-
-function dateLabel(value) {
-  if (!value) return "មិនទាន់កំណត់";
-  const date = new Date(`${value}T00:00:00`);
-  return Number.isNaN(date.getTime()) ? value : new Intl.DateTimeFormat("en-GB", { dateStyle: "medium" }).format(date);
-}
-
-function ownerLabel(invitation) {
-  return invitation.ownerName || invitation.organizationName || `User #${invitation.userId || "—"}`;
-}
-
-function invitationName(invitation) {
-  return invitation.title || invitation.slug || `កម្មវិធី #${invitation.id}`;
-}
-
-function isNeedsReview(invitation) {
-  return ["HIDDEN", "REPORTED", "SUSPENDED"].includes(String(invitation.moderationStatus || "").toUpperCase());
+function Breakdown({ rows, keyName, valueName, labels, colors }) {
+  const normalized = labels.map((label, index) => {
+    const row = rows.find((item) => item[keyName] === label.key);
+    return { ...label, value: amount(row?.[valueName]), color: colors[index] };
+  });
+  const total = normalized.reduce((sum, item) => sum + item.value, 0);
+  let cursor = 0;
+  const gradient = total ? normalized.map((item) => {
+    const start = total ? cursor / total * 100 : 0;
+    cursor += item.value;
+    const end = total ? cursor / total * 100 : 0;
+    return `${item.color} ${start}% ${end}%`;
+  }).join(", ") : "#e2e8f0 0% 100%";
+  return <div className="grid gap-5 sm:grid-cols-[132px_1fr] sm:items-center">
+    <div aria-label={`${integer(total)} total`} className="mx-auto grid h-32 w-32 place-items-center rounded-full" style={{ background: `conic-gradient(${gradient || "#e2e8f0 0% 100%"})` }}>
+      <div className="grid h-20 w-20 place-items-center rounded-full bg-white text-center dark:bg-[#111113]"><strong className="text-xl tabular-nums text-slate-900 dark:text-white">{integer(total)}</strong><span className="text-[10px] text-slate-500">total</span></div>
+    </div>
+    <ul className="grid gap-3">{normalized.map((item) => <li key={item.key} className="flex items-center justify-between gap-3 text-xs">
+      <span className="flex items-center gap-2 text-slate-600 dark:text-zinc-300"><i aria-hidden="true" className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: item.color }} />{item.label}</span>
+      <span className="font-semibold tabular-nums text-slate-900 dark:text-zinc-100">{integer(item.value)}{total ? <span className="ml-1 font-normal text-slate-500">({Math.round(item.value / total * 100)}%)</span> : null}</span>
+    </li>)}</ul>
+  </div>;
 }
 
 export default function AdminReportOverview() {
   const [report, setReport] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [query, setQuery] = useState("");
-  const [eventType, setEventType] = useState("");
-  const [status, setStatus] = useState("");
-  const [openActionId, setOpenActionId] = useState(null);
-  const [updatingInvitationId, setUpdatingInvitationId] = useState(null);
-  const [actionError, setActionError] = useState("");
-
   const reload = useCallback(async () => {
     try {
-      const data = await adminService.report("invitations");
+      const data = await adminService.platformReport();
       setReport(data || null);
       setError("");
     } catch (loadError) {
-      setError(loadError?.message || "មិនអាចទាញយករបាយការណ៍កម្មវិធីបានទេ");
+      setError(loadError?.message || "Could not load platform analytics.");
     } finally {
       setLoading(false);
     }
   }, []);
-
-  const updateInvitationStatus = async (invitation, nextStatus) => {
-    setUpdatingInvitationId(invitation.id);
-    setActionError("");
-    try {
-      const updated = await adminService.updateInvitationStatus(invitation.id, nextStatus);
-      const updatedStatus = updated?.status || nextStatus;
-      setReport((current) => {
-        if (!current) return current;
-        const rows = asList(current.rows).map((item) => item.id === invitation.id
-          ? { ...item, ...updated, status: updatedStatus }
-          : item);
-        const publishedInvitations = rows.filter((item) => item.status === "PUBLISHED").length;
-        return {
-          ...current,
-          rows,
-          summary: { ...current.summary, publishedInvitations },
-        };
-      });
-      setOpenActionId(null);
-      await reload();
-    } catch (updateError) {
-      setActionError(updateError?.message || "មិនអាចធ្វើបច្ចុប្បន្នភាពស្ថានភាពកម្មវិធីបានទេ");
-    } finally {
-      setUpdatingInvitationId(null);
-    }
-  };
-
   useEffect(() => {
     let active = true;
     const load = async () => {
       try {
-        const data = await adminService.report("invitations");
-        if (!active) return;
-        setReport(data || null);
-        setError("");
+        const data = await adminService.platformReport();
+        if (active) { setReport(data || null); setError(""); }
       } catch (loadError) {
-        if (active) setError(loadError?.message || "មិនអាចទាញយករបាយការណ៍កម្មវិធីបានទេ");
-      } finally {
-        if (active) setLoading(false);
-      }
+        if (active) setError(loadError?.message || "Could not load platform analytics.");
+      } finally { if (active) setLoading(false); }
     };
     load();
-    const intervalId = window.setInterval(load, 30000);
+    const interval = window.setInterval(load, 30000);
     const onFocus = () => load();
     window.addEventListener("focus", onFocus);
-    return () => {
-      active = false;
-      window.clearInterval(intervalId);
-      window.removeEventListener("focus", onFocus);
-    };
+    return () => { active = false; window.clearInterval(interval); window.removeEventListener("focus", onFocus); };
   }, []);
 
-  const invitations = asList(report?.rows);
   const summary = report?.summary || {};
-  const eventTypes = useMemo(() => [...new Set(invitations.map((item) => item.eventType).filter(Boolean))].sort(), [invitations]);
-  const visibleInvitations = useMemo(() => {
-    const normalizedQuery = query.trim().toLowerCase();
-    return invitations.filter((item) => {
-      const matchesQuery = !normalizedQuery || [
-        item.title,
-        item.slug,
-        item.ownerName,
-        item.organizationName,
-        item.userId,
-        item.eventType,
-        item.eventDate,
-      ].some((value) => String(value || "").toLowerCase().includes(normalizedQuery));
-      return matchesQuery
-        && (!eventType || item.eventType === eventType)
-        && (!status || item.status === status);
-    });
-  }, [invitations, query, eventType, status]);
-
-  if (loading) return <LoadingState label="កំពុងទាញយករបាយការណ៍កម្មវិធី..." />;
+  const growth = useMemo(() => list(summary.eventCreationGrowth), [summary.eventCreationGrowth]);
+  const maxGrowth = Math.max(1, ...growth.map((item) => amount(item.created)));
+  const revenueByCurrency = summary.revenueByCurrency || {};
+  const tiersData = list(summary.subscriptionTiers);
+  const transactions = list(report?.rows);
+  if (loading) return <LoadingState label="Loading platform analytics..." />;
   if (error && !report) return <ErrorStateView message={error} onRetry={reload} />;
 
-  const publishedCount = Number(summary.publishedInvitations ?? invitations.filter((item) => item.status === "PUBLISHED").length);
-  const draftCount = invitations.filter((item) => ["DRAFT", "UNPUBLISHED"].includes(item.status)).length;
-  const reviewCount = invitations.filter(isNeedsReview).length;
+  return <div className="space-y-6">
+    <AdminPageHeader eyebrow="PLATFORM ANALYTICS" title="Platform Reports" subtitle="Aggregated platform activity, revenue, and adoption metrics. No individual event or guest details are shown."
+      actions={<ActionButton variant="ghost" size="sm" onClick={reload}><RefreshCw className="h-3.5 w-3.5" /><span>Refresh</span></ActionButton>} />
+    {error && <p role="status" className="text-xs text-amber-700">Analytics could not refresh. Showing the last loaded snapshot.</p>}
 
-  return (
-    <div className="space-y-6">
-      <AdminPageHeader
-        eyebrow="PLATFORM REPORTS"
-        title="របាយការណ៍កម្មវិធី"
-        subtitle="ទិដ្ឋភាពទូទៅនៃកម្មវិធីទាំងអស់ ស្ថានភាពផ្សាយ និងកម្មវិធីដែលត្រូវការត្រួតពិនិត្យ។"
-        actions={(
-          <ActionButton variant="ghost" size="sm" onClick={reload}>
-            <RefreshCw className="h-3.5 w-3.5" />
-            <span>ធ្វើបច្ចុប្បន្នភាព</span>
-          </ActionButton>
-        )}
-      />
+    <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4" aria-label="Platform totals">
+      <StatCard label="Total events" value={integer(summary.totalInvitations)} note="All created events" icon={CalendarDays} tone="cyan" />
+      <StatCard label="Active / Published" value={integer(summary.publishedInvitations)} note="Published events" icon={Activity} tone="emerald" />
+      <StatCard label="Registered users" value={integer(summary.totalUsers)} note={`${integer(summary.activeUsers)} active users`} icon={Users} tone="purple" />
+      <StatCard label="Platform check-ins" value={integer(summary.totalCheckIns)} note="Total QR check-ins" icon={CreditCard} tone="amber" />
+    </section>
 
-      {(error || actionError) && <p role="status" className="text-xs text-amber-700">{actionError || "មិនអាចធ្វើបច្ចុប្បន្នភាពបានទេ; កំពុងបង្ហាញទិន្នន័យចុងក្រោយដែលបានទាញយក។"}</p>}
-
-      <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4" aria-label="ស្ថិតិកម្មវិធី">
-        <StatCard label="កម្មវិធីសរុប" value={summary.totalInvitations ?? invitations.length} note="កម្មវិធីទាំងអស់ក្នុងប្រព័ន្ធ" icon={CalendarDays} tone="cyan" />
-        <StatCard label="បានផ្សាយ" value={publishedCount} note="ស្ថានភាព PUBLISHED" icon={CircleCheck} tone="emerald" />
-        <StatCard label="Draft / មិនទាន់ផ្សាយ" value={draftCount} note="DRAFT និង UNPUBLISHED" icon={FilePenLine} tone="amber" />
-        <StatCard label="ត្រូវការត្រួតពិនិត្យ" value={reviewCount} note="Hidden, reported ឬ suspended" icon={ShieldAlert} tone="rose" />
-      </section>
-
-      <section className="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-zinc-800 dark:bg-[#111113]">
-        <div className="flex flex-col gap-3 border-b border-slate-200 p-4 dark:border-zinc-800 lg:flex-row lg:items-center lg:justify-between">
-          <div>
-            <h2 className="text-sm font-bold text-slate-900 dark:text-zinc-100">បញ្ជីកម្មវិធី</h2>
-            <p className="mt-1 text-xs text-slate-500 dark:text-zinc-400">បង្ហាញ {visibleInvitations.length} ក្នុងចំណោម {invitations.length} កម្មវិធី</p>
-          </div>
-          <div className="grid gap-2 sm:grid-cols-3">
-            <label className="relative">
-              <Search aria-hidden="true" className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
-              <span className="sr-only">ស្វែងរកកម្មវិធី</span>
-              <input type="search" aria-label="ស្វែងរកកម្មវិធី" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="ឈ្មោះ, ម្ចាស់ ឬ ID" className="h-9 w-full min-w-48 rounded-lg border border-slate-200 bg-white pl-9 pr-3 text-xs dark:border-zinc-700 dark:bg-zinc-900 dark:text-white" />
-            </label>
-            <label>
-              <span className="sr-only">ប្រភេទកម្មវិធី</span>
-              <select aria-label="ប្រភេទកម្មវិធី" value={eventType} onChange={(event) => setEventType(event.target.value)} className="h-9 w-full rounded-lg border border-slate-200 bg-white px-3 text-xs dark:border-zinc-700 dark:bg-zinc-900 dark:text-white">
-                <option value="">គ្រប់ប្រភេទ</option>
-                {eventTypes.map((type) => <option key={type} value={type}>{eventTypeLabel(type)}</option>)}
-              </select>
-            </label>
-            <label>
-              <span className="sr-only">ស្ថានភាពផ្សាយ</span>
-              <select aria-label="ស្ថានភាពផ្សាយ" value={status} onChange={(event) => setStatus(event.target.value)} className="h-9 w-full rounded-lg border border-slate-200 bg-white px-3 text-xs dark:border-zinc-700 dark:bg-zinc-900 dark:text-white">
-                <option value="">គ្រប់ស្ថានភាព</option>
-                <option value="PUBLISHED">បានផ្សាយ</option>
-                <option value="DRAFT">Draft</option>
-                <option value="UNPUBLISHED">មិនទាន់ផ្សាយ</option>
-                <option value="ARCHIVED">បានរក្សាទុក</option>
-              </select>
-            </label>
-          </div>
+    <div className="grid gap-4 xl:grid-cols-2">
+      <MetricPanel title="Platform events" description="Lifecycle totals and event creation by month.">
+        <div className="mb-5 grid grid-cols-3 gap-2">
+          <div className="rounded-lg bg-slate-50 p-3 dark:bg-zinc-900"><p className="text-[11px] text-slate-500">Draft</p><strong className="mt-1 block text-lg text-slate-900 dark:text-white">{integer(summary.draftInvitations)}</strong></div>
+          <div className="rounded-lg bg-slate-50 p-3 dark:bg-zinc-900"><p className="text-[11px] text-slate-500">Suspended</p><strong className="mt-1 block text-lg text-slate-900 dark:text-white">{integer(summary.suspendedInvitations)}</strong></div>
+          <div className="rounded-lg bg-slate-50 p-3 dark:bg-zinc-900"><p className="text-[11px] text-slate-500">Published</p><strong className="mt-1 block text-lg text-slate-900 dark:text-white">{integer(summary.publishedInvitations)}</strong></div>
         </div>
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-225 text-left text-xs">
-            <thead className="bg-slate-50 text-[11px] uppercase text-slate-500 dark:bg-zinc-900/70 dark:text-zinc-400">
-              <tr>
-                <th className="px-4 py-3">កម្មវិធី</th>
-                <th className="px-4 py-3">ម្ចាស់</th>
-                <th className="px-4 py-3">ប្រភេទ</th>
-                <th className="px-4 py-3">ថ្ងៃកម្មវិធី</th>
-                <th className="px-4 py-3">ការផ្សាយ</th>
-                <th className="px-4 py-3">Moderation</th>
-                <th className="px-4 py-3 text-right">លម្អិត</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-zinc-800">
-              {visibleInvitations.map((invitation) => (
-                <tr key={invitation.id} className="hover:bg-slate-50/70 dark:hover:bg-zinc-900/60">
-                  <td className="px-4 py-3">
-                    <Link to={`/reports/${encodeURIComponent(invitation.id)}`} className="font-semibold text-slate-900 hover:text-emerald-700 dark:text-zinc-100 dark:hover:text-emerald-400">{invitationName(invitation)}</Link>
-                    <span className="mt-1 block text-[11px] text-slate-500">ID {invitation.id}{invitation.slug ? ` · ${invitation.slug}` : ""}</span>
-                  </td>
-                  <td className="px-4 py-3 text-slate-700 dark:text-zinc-300">{ownerLabel(invitation)}</td>
-                  <td className="px-4 py-3">{eventTypeLabel(invitation.eventType)}</td>
-                  <td className="px-4 py-3 tabular-nums">{dateLabel(invitation.eventDate)}</td>
-                  <td className="px-4 py-3"><InvitationStatusBadge status={invitation.status} /></td>
-                  <td className="px-4 py-3"><StatusBadge status={invitation.moderationStatus} /></td>
-                  <td className="px-4 py-3 text-right">
-                    <div className="relative inline-flex items-center gap-1">
-                      <Link to={`/reports/${encodeURIComponent(invitation.id)}`} aria-label={`មើលរបាយការណ៍ ${invitationName(invitation)}`} title="មើលរបាយការណ៍លម្អិត" className="inline-flex h-8 w-8 items-center justify-center rounded-md text-slate-600 hover:bg-slate-100 dark:text-zinc-300 dark:hover:bg-zinc-800">
-                        <ArrowUpRight className="h-4 w-4" />
-                      </Link>
-                      <button
-                        type="button"
-                        aria-label={`សកម្មភាព ${invitationName(invitation)}`}
-                        aria-expanded={openActionId === invitation.id}
-                        onClick={() => setOpenActionId(openActionId === invitation.id ? null : invitation.id)}
-                        className="inline-flex h-8 w-8 items-center justify-center rounded-md text-slate-600 hover:bg-slate-100 disabled:opacity-50 dark:text-zinc-300 dark:hover:bg-zinc-800"
-                        disabled={updatingInvitationId === invitation.id}
-                      >
-                        <MoreHorizontal className="h-4 w-4" />
-                      </button>
-                      {openActionId === invitation.id && <div role="menu" className="absolute right-0 top-full z-20 mt-1 grid min-w-44 gap-1 rounded-lg border border-slate-200 bg-white p-1 text-left shadow-lg dark:border-zinc-700 dark:bg-zinc-900">
-                        {(["DRAFT", "UNPUBLISHED"].includes(invitation.status)) && <button type="button" role="menuitem" onClick={() => updateInvitationStatus(invitation, "PUBLISHED")} className="flex items-center gap-2 rounded-md px-3 py-2 text-xs font-semibold text-emerald-700 hover:bg-emerald-50 dark:text-emerald-400 dark:hover:bg-emerald-950/40">
-                          <Upload className="h-3.5 w-3.5" /> Publish / ផ្សព្វផ្សាយ
-                        </button>}
-                        {invitation.status === "PUBLISHED" && <>
-                          <button type="button" role="menuitem" onClick={() => updateInvitationStatus(invitation, "UNPUBLISHED")} className="flex items-center gap-2 rounded-md px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 dark:text-zinc-200 dark:hover:bg-zinc-800">
-                            <X className="h-3.5 w-3.5" /> Unpublish / បិទការផ្សាយ
-                          </button>
-                          <button type="button" role="menuitem" onClick={() => updateInvitationStatus(invitation, "ARCHIVED")} className="flex items-center gap-2 rounded-md px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 dark:text-zinc-200 dark:hover:bg-zinc-800">
-                            <Archive className="h-3.5 w-3.5" /> Archive / រក្សាទុក
-                          </button>
-                        </>}
-                      </div>}
-                    </div>
-                  </td>
-                </tr>
-              ))}
-              {!visibleInvitations.length && (
-                <tr><td colSpan={7} className="px-4 py-10 text-center text-slate-500">មិនមានកម្មវិធីត្រូវនឹងលក្ខខណ្ឌស្វែងរកទេ</td></tr>
-              )}
-            </tbody>
-          </table>
+        <div className="grid h-36 grid-cols-12 items-end gap-2" role="img" aria-label="Events created per month, last 12 months">
+          {growth.map((item) => <div key={item.month} className="flex h-full min-w-0 flex-col items-center justify-end gap-1" title={`${item.month}: ${integer(item.created)} events`}>
+            <span className="text-[9px] tabular-nums text-slate-500">{integer(item.created)}</span><div className="w-full rounded-t bg-cyan-500" style={{ height: `${Math.max(4, amount(item.created) / maxGrowth * 100)}%` }} />
+            <span className="text-[9px] text-slate-500">{monthLabel(item.month)}</span>
+          </div>)}
         </div>
-      </section>
+      </MetricPanel>
+      <MetricPanel title="Event categories" description="Platform-wide distribution by event type.">
+        <Breakdown rows={list(summary.eventCategoryBreakdown)} keyName="category" valueName="count" labels={categories} colors={categories.map((item) => item.color)} />
+      </MetricPanel>
+      <MetricPanel title="Revenue & payments" description="Platform revenue totals by currency and source.">
+        <div className="mb-4 grid gap-3 sm:grid-cols-2">
+          <div className="rounded-lg bg-slate-50 p-3 dark:bg-zinc-900"><p className="text-xs text-slate-500">KHQR / payment orders</p>{Object.entries(summary.paymentRevenueByCurrency || revenueByCurrency).map(([code, value]) => <strong key={code} className="mt-1 block text-lg text-slate-900 dark:text-white">{currency(value, code)}</strong>)}</div>
+          <div className="rounded-lg bg-slate-50 p-3 dark:bg-zinc-900"><p className="text-xs text-slate-500">Subscriptions</p>{Object.entries(summary.subscriptionRevenueByCurrency || {}).map(([code, value]) => <strong key={code} className="mt-1 block text-lg text-slate-900 dark:text-white">{currency(value, code)}</strong>)}{!Object.keys(summary.subscriptionRevenueByCurrency || {}).length && <strong className="mt-1 block text-lg text-slate-900 dark:text-white">—</strong>}</div>
+        </div>
+        <p className="mb-3 text-xs text-slate-500">{integer(summary.totalPayments)} payment orders · {integer(summary.failedPayments)} failed</p>
+        <div className="overflow-x-auto"><table className="w-full min-w-[460px] text-left text-xs"><thead className="text-[10px] uppercase text-slate-500"><tr><th className="py-2">Period</th><th>Source</th><th>Status</th><th className="text-right">Transactions</th><th className="text-right">Total</th></tr></thead>
+          <tbody className="divide-y divide-slate-100 dark:divide-zinc-800">{transactions.map((row, index) => <tr key={`${row.period}-${row.type}-${row.provider}-${row.status}-${index}`}><td className="py-2">{row.period || "—"}</td><td>{row.type === "SUBSCRIPTION" ? "Subscription" : row.provider || "KHQR"}</td><td>{row.status || "—"}</td><td className="text-right tabular-nums">{integer(row.transactionCount)}</td><td className="text-right tabular-nums">{row.totalAmount == null ? <span className="text-slate-500">Suppressed (&lt;5)</span> : currency(row.totalAmount, row.currency || "USD")}</td></tr>)}
+          {!transactions.length && <tr><td colSpan={5} className="py-6 text-center text-slate-500">No aggregate transactions available.</td></tr>}</tbody></table></div>
+      </MetricPanel>
+      <MetricPanel title="Subscription packages" description="Active subscriptions by tier.">
+        <Breakdown rows={tiersData} keyName="tier" valueName="activeSubscriptions" labels={tiers.map((key) => ({ key, label: key }))} colors={["#64748b", "#0ea5e9", "#a855f7"]} />
+      </MetricPanel>
+      <MetricPanel title="User analytics" description="Registered and active accounts with aggregate system usage.">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {[{ label: "Registered", value: summary.totalUsers }, { label: "Active", value: summary.activeUsers }, { label: "Total check-ins", value: summary.totalCheckIns }, { label: "Events created", value: summary.totalInvitations }].map((item) => <div key={item.label} className="rounded-lg bg-slate-50 p-3 dark:bg-zinc-900"><p className="text-[11px] text-slate-500">{item.label}</p><strong className="mt-1 block text-lg tabular-nums text-slate-900 dark:text-white">{integer(item.value)}</strong></div>)}
+        </div>
+      </MetricPanel>
     </div>
-  );
-}
-
-function InvitationStatusBadge({ status }) {
-  const styles = {
-    DRAFT: "bg-amber-100 text-amber-800 ring-amber-200 dark:bg-amber-950/50 dark:text-amber-300 dark:ring-amber-900",
-    PUBLISHED: "bg-emerald-100 text-emerald-800 ring-emerald-200 dark:bg-emerald-950/50 dark:text-emerald-300 dark:ring-emerald-900",
-    UNPUBLISHED: "bg-slate-100 text-slate-600 ring-slate-200 dark:bg-zinc-800 dark:text-zinc-300 dark:ring-zinc-700",
-    ARCHIVED: "bg-sky-100 text-sky-800 ring-sky-200 dark:bg-sky-950/50 dark:text-sky-300 dark:ring-sky-900",
-  };
-  const labels = {
-    DRAFT: "សេចក្តីព្រាង",
-    PUBLISHED: "បានផ្សាយ",
-    UNPUBLISHED: "មិនទាន់ផ្សាយ",
-    ARCHIVED: "បានរក្សាទុក",
-  };
-  const normalized = String(status || "").toUpperCase();
-  return <span className={`inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold ring-1 ring-inset ${styles[normalized] || "bg-slate-100 text-slate-600 ring-slate-200"}`}>
-    {labels[normalized] || status || "មិនបានកំណត់"}
-  </span>;
+  </div>;
 }

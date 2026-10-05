@@ -35,7 +35,7 @@ export function normalizeBackendGuest(guest) {
     backendId: id,
     raw: guest,
     name,
-    companionName: "",
+    companionName: guest.companionName || "",
     phone: guest.phone === "-" ? "" : guest.phone || "",
     group: guest.guestGroup || DEFAULT_GROUPS[0].name,
     category: guest.sideType || DEFAULT_CATEGORIES[0].name,
@@ -131,6 +131,7 @@ export function toManualGuest(form, existingId) {
 export function toBackendGuestPayload(form) {
   return {
     guestName: cleanText(form.name),
+    companionName: cleanText(form.companionName) || null,
     phone: cleanText(form.phone) || null,
     guestGroup: form.group || null,
     sideType: form.category || null,

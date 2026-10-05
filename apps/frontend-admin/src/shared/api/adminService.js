@@ -4,6 +4,11 @@ function unwrap(response) {
   return response?.data ?? response;
 }
 
+function unwrapApiData(response) {
+  const body = unwrap(response);
+  return body?.data ?? body;
+}
+
 export const adminService = {
   users: () => api.get("/v1/admin/users").then(unwrap),
   createUser: (payload) => api.post("/v1/admin/users", payload).then(unwrap),
@@ -24,11 +29,6 @@ export const adminService = {
   deleteTemplate: (templateId) => api.delete(`/v1/admin/templates/${templateId}`).then(unwrap),
 
   invitations: () => api.get("/v1/admin/invitations").then(unwrap),
-  invitation: (invitationId) => api.get(`/v1/admin/invitations/${invitationId}`).then(unwrap),
-  invitationGifts: (invitationId) => api.get(`/v1/admin/invitations/${invitationId}/gifts`).then(unwrap),
-  invitationBudget: (invitationId) => api.get(`/v1/admin/invitations/${invitationId}/budget`).then(unwrap),
-  invitationBudgetItems: (invitationId) => api.get(`/v1/admin/invitations/${invitationId}/budget-items`).then(unwrap),
-  invitationRsvpSummary: (invitationId) => api.get(`/v1/admin/invitations/${invitationId}/rsvp-summary`).then(unwrap),
   updateInvitationStatus: (invitationId, status) =>
     api.patch(`/v1/admin/invitations/${invitationId}/status`, { status }).then(unwrap),
   moderateInvitation: (invitationId, payload) =>
@@ -37,6 +37,7 @@ export const adminService = {
   deactivateInvitation: (invitationId) => api.patch(`/v1/admin/invitations/${invitationId}/deactivate`, {}).then(unwrap),
 
   report: (name) => api.get(`/v1/admin/reports/${name}`).then(unwrap),
+  platformReport: () => api.get("/v1/admin/reports/platform").then(unwrapApiData),
   systemLogs: () => api.get("/v1/admin/system-logs").then(unwrap),
 
   payments: () => api.get("/v1/admin/payments").then(unwrap),

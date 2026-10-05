@@ -1,8 +1,15 @@
 import { useState, useRef } from "react";
 import { IoAddOutline, IoChevronDownOutline, IoSearchOutline } from "react-icons/io5";
 import { useClickOutside } from "../../../shared/hooks/useClickOutside";
+import { getGuestLabel } from "./guestLabels";
 
-export function GuestSelectField({ value, onChange, options, placeholder, existingGifts = [], t }) {
+function isGiftForGuest(gift, guest, guests) {
+    if (gift.guestId != null) return String(gift.guestId) === String(guest.id);
+    const matchingGuests = guests.filter((candidate) => candidate.name === guest.name);
+    return matchingGuests.length === 1 && gift.name === guest.name;
+}
+
+export function GuestSelectField({ value, guestId, onChange, options = [], placeholder, existingGifts = [], ariaLabel, t }) {
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState("");
     const ref = useRef();
@@ -11,16 +18,42 @@ export function GuestSelectField({ value, onChange, options, placeholder, existi
         setQuery("");
     });
 
-    const filtered = options.filter(g => g.name.toLowerCase().includes(query.toLowerCase()));
-    const isCustom = query.trim() && !options.find(g => g.name.toLowerCase() === query.toLowerCase());
+    const normalizedQuery = query.trim().toLowerCase();
+    const filtered = options.filter((guest) => {
+        const label = getGuestLabel(guest, options).toLowerCase();
+        const details = [guest.phone, guest.side, guest.group].filter(Boolean).join(" ").toLowerCase();
+        return label.includes(normalizedQuery) || details.includes(normalizedQuery);
+    });
+    const isCustom = normalizedQuery && !options.some((guest) => guest.name.toLowerCase() === normalizedQuery);
 
-    const selectedOption = options.find(g => g.name === value) || (value ? { name: value } : null);
-    const existingGiftForSelected = selectedOption ? existingGifts.find(gift => gift.name === selectedOption.name) : null;
+    const selectedById = guestId == null ? null : options.find((guest) => String(guest.id) === String(guestId));
+    const sameNameOptions = options.filter((guest) => guest.name === value);
+    const selectedOption = selectedById
+        || (sameNameOptions.length === 1 ? sameNameOptions[0] : null)
+        || (value ? { name: value } : null);
+    const selectedLabel = selectedOption ? getGuestLabel(selectedOption, options) : "";
+    const existingGiftForSelected = selectedOption
+        ? existingGifts.find((gift) => isGiftForGuest(gift, selectedOption, options))
+        : null;
+
+    const selectGuest = (guest) => {
+        onChange({ name: guest.name, guestId: guest.id ?? null });
+        setOpen(false);
+        setQuery("");
+    };
+
+    const selectCustomName = (name) => {
+        onChange({ name, guestId: null });
+        setOpen(false);
+        setQuery("");
+    };
 
     return (
         <div ref={ref} style={{ position: "relative", width: "100%" }}>
             <button
                 type="button"
+                aria-label={ariaLabel}
+                data-gift-name-input="true"
                 onClick={() => setOpen(!open)}
                 style={{
                     display: "flex", justifyContent: "space-between", alignItems: "center",
@@ -32,7 +65,7 @@ export function GuestSelectField({ value, onChange, options, placeholder, existi
             >
                 {selectedOption ? (
                     <span style={{ fontWeight: 600, color: "#2a1f10", fontSize: "14px" }}>
-                        {selectedOption.name}
+                        {selectedLabel}
                     </span>
                 ) : (
                     <span style={{ color: "#a8a096" }}>{placeholder}</span>
@@ -75,13 +108,9 @@ export function GuestSelectField({ value, onChange, options, placeholder, existi
                                 if (e.key === 'Enter') {
                                     e.preventDefault();
                                     if (query.trim() && isCustom) {
-                                        onChange(query.trim());
-                                        setOpen(false);
-                                        setQuery("");
+                                        selectCustomName(query.trim());
                                     } else if (filtered.length > 0) {
-                                        onChange(filtered[0].name);
-                                        setOpen(false);
-                                        setQuery("");
+                                        selectGuest(filtered[0]);
                                     }
                                 }
                             }}
@@ -98,7 +127,7 @@ export function GuestSelectField({ value, onChange, options, placeholder, existi
                         {isCustom && (
                             <button
                                 type="button"
-                                onClick={() => { onChange(query.trim()); setOpen(false); setQuery(""); }}
+                                onClick={() => selectCustomName(query.trim())}
                                 style={{
                                     display: "flex", alignItems: "center", gap: "10px", width: "100%", 
                                     padding: "12px 14px", border: "none", background: "#fdfaf5",
@@ -116,12 +145,13 @@ export function GuestSelectField({ value, onChange, options, placeholder, existi
                             </div>
                         )}
                         {filtered.map(g => {
-                            const pastGift = existingGifts.find(gift => gift.name === g.name);
+                            const pastGift = existingGifts.find((gift) => isGiftForGuest(gift, g, options));
                             return (
                                 <button
                                     key={g.id || g.name}
                                     type="button"
-                                    onClick={() => { onChange(g.name); setOpen(false); setQuery(""); }}
+                                    aria-label={getGuestLabel(g, options)}
+                                    onClick={() => selectGuest(g)}
                                     style={{
                                         display: "flex", alignItems: "center", gap: "10px", width: "100%", 
                                         padding: "10px 14px", border: "none", background: "transparent",
@@ -133,7 +163,7 @@ export function GuestSelectField({ value, onChange, options, placeholder, existi
                                     onMouseOut={(e) => e.currentTarget.style.background = "transparent"}
                                 >
                                     <span style={{ flexGrow: 1, display: "flex", alignItems: "center", gap: "8px", fontWeight: 500 }}>
-                                        {g.name}
+                                        {getGuestLabel(g, options)}
                                         {pastGift && (
                                             <span style={{ 
                                                 background: "#FB7185", color: "white", padding: "2px 8px", 

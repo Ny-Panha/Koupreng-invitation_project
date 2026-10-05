@@ -22,6 +22,9 @@ public class Guest {
     @Column(name = "guest_name", nullable = false)
     private String guestName;
 
+    @Column(name = "companion_name", length = 255)
+    private String companionName;
+
     private String phone;
 
     private String email;

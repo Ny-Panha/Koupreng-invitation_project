@@ -67,11 +67,11 @@ export function hostRoutes() {
       <Route path="/dashboard/invitations/:invitationId/budget" element={<BudgetPage />} />
       <Route path="/dashboard/invitations/:invitationId/check-in" element={<InvitationCheckInPage />} />
       <Route path="/dashboard/invitations/:invitationId/seating" element={<SeatingPage />} />
-      <Route path="/dashboard/invitations/:invitationId/reports" element={<FinancialReport />} />
+      <Route path="/dashboard/invitations/:invitationId/reports" element={<Navigate to="/dashboard/reports" replace />} />
       <Route path="/dashboard/invitations/:invitationId/qr" element={<QrPage />} />
       <Route path="/dashboard/invitations/:invitationId/wishes" element={<WishesPage />} />
-      <Route path="/dashboard/reports" element={<InvitationScopedRedirect targetSubPath="reports" />} />
-      <Route path="/reports" element={<InvitationScopedRedirect targetSubPath="reports" />} />
+      <Route path="/dashboard/reports" element={<FinancialReport />} />
+      <Route path="/reports" element={<Navigate to="/dashboard/reports" replace />} />
       <Route path="/dashboard/guests" element={<GuestsPage />} />
       <Route path="/dashboard/seating" element={<InvitationScopedRedirect targetSubPath="seating" />} />
       <Route path="/dashboard/check-in" element={<InvitationScopedRedirect targetSubPath="check-in" />} />

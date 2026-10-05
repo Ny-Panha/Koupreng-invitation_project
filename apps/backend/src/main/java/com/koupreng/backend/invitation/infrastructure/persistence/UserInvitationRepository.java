@@ -1,6 +1,8 @@
 package com.koupreng.backend.invitation.infrastructure.persistence;
 
 import com.koupreng.backend.invitation.domain.InvitationStatus;
+import com.koupreng.backend.invitation.domain.InvitationModerationStatus;
+import com.koupreng.backend.invitation.domain.EventType;
 import com.koupreng.backend.invitation.domain.UserInvitation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -11,6 +13,7 @@ import jakarta.persistence.LockModeType;
 
 import java.util.List;
 import java.util.Optional;
+import java.time.Instant;
 
 public interface UserInvitationRepository extends JpaRepository<UserInvitation, Long> {
 
@@ -67,6 +70,22 @@ public interface UserInvitationRepository extends JpaRepository<UserInvitation, 
             from UserInvitation i where i.deleted = false
             """)
     DashboardCounts dashboardCounts();
+
+    @Query("""
+            select i.createdAt as createdAt,
+              i.eventType as eventType,
+              i.status as status,
+              i.moderationStatus as moderationStatus
+            from UserInvitation i where i.deleted = false
+            """)
+    List<PlatformMetricsRow> findPlatformMetrics();
+
+    interface PlatformMetricsRow {
+        Instant getCreatedAt();
+        EventType getEventType();
+        InvitationStatus getStatus();
+        InvitationModerationStatus getModerationStatus();
+    }
 
     interface DashboardCounts {
         long getTotal();

@@ -1498,10 +1498,104 @@
 
 .pe-desktop-table-wrap {
     display: block;
+    width: 100%;
+    min-width: 0;
 }
 
 .pe-mobile-cards-wrap {
     display: none;
+}
+
+.pe-guest-data-table {
+    width: 100%;
+    min-width: 0;
+    table-layout: fixed;
+}
+
+.pe-guest-data-table th,
+.pe-guest-data-table td {
+    min-width: 0;
+    padding: 8px 7px;
+    overflow-wrap: anywhere;
+}
+
+.pe-guest-data-table th {
+    white-space: normal;
+    line-height: 1.25;
+}
+
+.pe-guest-inline-add-row {
+    background: #fffdf7 !important;
+}
+
+.pe-guest-inline-add-row td {
+    padding: 12px !important;
+    vertical-align: top;
+}
+
+.pe-guest-inline-form {
+    display: flex;
+    justify-content: flex-end;
+    min-width: 0;
+}
+
+.pe-guest-inline-save {
+    display: inline-flex;
+    min-height: 42px;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 10px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: #fff;
+    background: #9a7d5a;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.pe-guest-inline-save:hover:not(:disabled) {
+    background: #8a6f4f;
+}
+
+.pe-guest-inline-save:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+.pe-guest-inline-save:focus-visible {
+    outline: 3px solid rgba(176, 146, 106, 0.35);
+    outline-offset: 2px;
+}
+
+.pe-guest-inline-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    min-width: 0;
+}
+
+.pe-guest-data-table .pe-icon-btn {
+    flex: 0 0 32px;
+    width: 32px;
+    height: 32px;
+}
+
+.pe-inline-field-error {
+    display: block;
+    margin-top: 4px;
+    color: #b42318;
+    font-size: 0.75rem;
+}
+
+.pe-guest-inline-status,
+.pe-guest-table-empty {
+    color: var(--brand-text-muted, #687386) !important;
+    font-size: 0.8125rem;
 }
 
 .pe-guest-card {
@@ -1550,16 +1644,7 @@
 }
 
 @media (max-width: 820px) {
-    .pe-desktop-table-wrap {
-        display: none;
-    }
-
-    .pe-mobile-cards-wrap {
-        display: grid;
-        gap: var(--space-3, 12px);
-    }
-
-    .pe-card-top .pe-guest-statuses {
-        justify-content: flex-end;
+    .pe-guest-data-table {
+        min-width: 0;
     }
 }

@@ -70,12 +70,12 @@ describe("GiftsFeature Module", () => {
       expect(screen.getByText("Uncle Sok")).toBeInTheDocument();
       expect(screen.getByText("Aunt Chann")).toBeInTheDocument();
       expect(screen.getByText("$150")).toBeInTheDocument();
-      expect(screen.getByText("Bakong QR")).toBeInTheDocument();
+      expect(screen.getByText("Bakong QR", { selector: ".wg-method-badge" })).toBeInTheDocument();
     });
   });
 
   it("opens gift record modal on add button click", async () => {
-    render(
+    const { container } = render(
       <BrowserRouter>
         <GiftsFeature />
       </BrowserRouter>
@@ -85,11 +85,12 @@ describe("GiftsFeature Module", () => {
       expect(screen.getByText("Uncle Sok")).toBeInTheDocument();
     });
 
-    const addBtn = screen.getByRole("button", { name: /\+ កត់ត្រាចំណងដៃ/i });
+    const addBtn = container.querySelector(".wg-add-btn");
+    expect(addBtn).not.toBeNull();
     fireEvent.click(addBtn);
 
     await waitFor(() => {
-      expect(screen.getByRole("button", { name: /បោះបង់/i })).toBeInTheDocument();
+      expect(document.activeElement).toBe(container.querySelector("[data-gift-name-input]"));
     });
   });
 });

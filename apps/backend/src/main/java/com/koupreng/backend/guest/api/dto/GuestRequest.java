@@ -16,6 +16,9 @@ public class GuestRequest {
     @Size(max = 255, message = "Guest name must be 255 characters or fewer")
     private String guestName;
 
+    @Size(max = 255, message = "Companion name must be 255 characters or fewer")
+    private String companionName;
+
     @Size(max = 50, message = "Phone must be 50 characters or fewer")
     private String phone;
 

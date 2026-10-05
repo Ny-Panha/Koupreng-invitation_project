@@ -1,64 +1,13 @@
-import { useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useMemo } from "react";
 import { Printer } from "lucide-react";
-import { budgetService } from "@/features/budget/api/budgetApi";
-import { giftsApi } from "@/features/gifts/api/giftsApi";
-import { guestService } from "@/features/guests/api/guestApi";
-import { invitationService } from "@/features/invitations/api/invitationApi";
-import { rsvpService } from "@/features/rsvp/api/rsvpApi";
 import { ErrorState, SkeletonCard } from "@/shared/ui";
-import { buildFinancialReport, asList } from "./model/financialReport";
+import { buildFinancialReport } from "./model/financialReport";
+import { useActiveEventReport } from "./hooks/useActiveEventReport";
 import OwnerReportSummary from "./components/OwnerReportSummary";
 import "./ReportsPage.css";
 
-export default function FinancialReport({ invitationId: propInvitationId }) {
-  const params = useParams();
-  const invitationId = propInvitationId || params.invitationId || params.id;
-  const [sourceData, setSourceData] = useState(null);
-  const [generatedAt, setGeneratedAt] = useState(() => new Date());
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    let active = true;
-    if (!invitationId) {
-      setLoading(false);
-      setError("រកមិនឃើញកម្មវិធី / Invitation not found");
-      return undefined;
-    }
-
-    setLoading(true);
-    setError("");
-    Promise.all([
-      invitationService.get(invitationId),
-      giftsApi.listGifts(invitationId),
-      budgetService.getBudget(invitationId),
-      guestService.listByInvitation(invitationId),
-      rsvpService.listByInvitation(invitationId),
-    ])
-      .then(([invitation, gifts, budget, guests, rsvps]) => {
-        if (!active) return;
-        setSourceData({
-          invitation,
-          gifts: asList(gifts),
-          expenses: asList(budget?.items || budget?.budgetItems),
-          guests: asList(guests),
-          rsvps: asList(rsvps),
-        });
-        setGeneratedAt(new Date());
-      })
-      .catch((loadError) => {
-        if (active) setError(loadError?.message || "មិនអាចទាញយករបាយការណ៍បានទេ / Could not load report");
-      })
-      .finally(() => {
-        if (active) setLoading(false);
-      });
-
-    return () => {
-      active = false;
-    };
-  }, [invitationId]);
-
+export default function FinancialReport() {
+  const { sourceData, generatedAt, loading, error, reload } = useActiveEventReport();
   const report = useMemo(
     () => sourceData ? buildFinancialReport(sourceData) : null,
     [sourceData],
@@ -70,13 +19,16 @@ export default function FinancialReport({ invitationId: propInvitationId }) {
     || event?.ownerName
     || "";
   const eventTitle = event?.title || eventPeople || `កម្មវិធី #${event?.id || ""}`;
+  const invitationId = event?.id || event?.invitationId;
+  const hasServerInvitation = Number.isInteger(Number(invitationId)) && Number(invitationId) > 0;
 
   return (
-    <main className="dash-main reports-page financial-report-page">
-      <header className="financial-report-header">
+    <main className="dash-main reports-page financial-report-page flex-1 flex justify-center w-full">
+      <div className="reports-content-container min-h-screen bg-[#faf8f5] py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+      <header className="financial-report-header flex flex-wrap justify-between items-center gap-4 mb-6">
         <div>
           <span className="dash-kicker reports-screen-only">Event finances</span>
-          <h1>របាយការណ៍សង្ខេបចំណូល និងចំណាយកម្មវិធី</h1>
+          <h1 className="font-bold text-gray-800">របាយការណ៍សង្ខេបចំណូល និងចំណាយកម្មវិធី</h1>
           <p className="report-event-title">{eventTitle}</p>
           <div className="report-event-meta">
             {event?.eventType && <span><strong>ប្រភេទ:</strong> {eventTypeLabel(event.eventType)}</span>}
@@ -85,29 +37,38 @@ export default function FinancialReport({ invitationId: propInvitationId }) {
             <span><strong>បង្កើតនៅ:</strong> {formatDateTime(generatedAt)}</span>
           </div>
         </div>
-        <button type="button" className="dash-btn dash-btn-primary reports-screen-only report-print-button" onClick={() => window.print()}>
+        <button type="button" className="reports-screen-only report-print-button" onClick={() => window.print()}>
           <Printer aria-hidden="true" size={17} />
           បោះពុម្ព / Print
         </button>
       </header>
-      {invitationId && <OwnerReportSummary invitationId={invitationId} />}
+      {hasServerInvitation && <OwnerReportSummary invitationId={invitationId} />}
 
       {error ? (
-        <ErrorState message={error} onRetry={() => window.location.reload()} />
+        <ErrorState message={error} onRetry={reload} />
       ) : loading ? (
         <div className="report-loading reports-screen-only">
           <SkeletonCard height="60px" />
           <SkeletonCard height="120px" />
         </div>
+      ) : !report ? (
+        <p className="report-no-event">មិនមានកម្មវិធីសកម្ម / No active event is available for this account.</p>
       ) : (
         <>
-          <section className="report-summary-grid" aria-label="Financial summary">
+          <section className="report-summary-grid grid grid-cols-1 md:grid-cols-3 gap-5" aria-label="Financial summary">
             <MoneyCard label="ចំណូលសរុប / Total Income" amounts={report.totalIncome} tone="income" detail="ចំណងដៃ និងចំណូលដែលមានក្នុងទិន្នន័យ" />
-            <MoneyCard label="ចំណាយសរុប / Total Expenses" amounts={report.totalExpenses} tone="expense" detail="គិតតែចំណាយជាក់ស្តែងដែលបានកត់ត្រា" />
-            <MoneyCard label="សមតុល្យសុទ្ធ / Net Balance" amounts={report.netBalance} tone="balance" detail="ចំណូលសរុប ដកចំណាយសរុប" />
+            <MoneyCard label="ថវិកាប៉ាន់ស្មាន / Estimated Budget" amounts={report.plannedBudget} tone="budget" detail="ថវិកាដែលបានគ្រោងទុក" />
+            <MoneyCard label="ចំណាយពិត / Actual Expenses" amounts={report.totalExpenses} tone="expense" detail="គិតតែចំណាយពិតដែលបានកត់ត្រា" />
+            <MoneyCard label="នៅខ្វះ / Unpaid Balance" amounts={report.unpaidBalance} tone="balance" detail="ថវិកាគ្រោង ដកចំណាយពិត" />
             <StatCard label="ភ្ញៀវអញ្ជើញ / Total Invited" value={report.guestStats.invited} />
-            <StatCard label="ឆ្លើយតបចូលរួម / RSVP Attending" value={report.guestStats.attending} />
+            <StatCard label="អ្នកចូលរួមបានបញ្ជាក់ / Confirmed Attendees" value={report.guestStats.attending} />
+            <StatCard label="បានស្កេន QR / QR Check-ins" value={report.guestStats.checkedIn} />
             <StatCard label="អំណោយ / Gifts Recorded" value={report.guestStats.gifted} />
+          </section>
+
+          <section className="report-channel-grid" aria-label="Gift payment channels">
+            <MoneyCard label="ABA / KHQR" amounts={report.digitalIncome} tone="income" detail="ចំណងដៃតាមធនាគារ និង QR" />
+            <MoneyCard label="សាច់ប្រាក់ / Cash" amounts={report.cashIncome} tone="expense" detail="ចំណងដៃជាសាច់ប្រាក់" />
           </section>
 
           <section className="report-section">
@@ -160,7 +121,8 @@ export default function FinancialReport({ invitationId: propInvitationId }) {
                   <tr>
                     <th>ប្រភេទចំណាយ</th>
                     <th>អ្នកផ្គត់ផ្គង់</th>
-                    <th className="is-numeric">ចំនួន</th>
+                    <th className="is-numeric">ថវិកាគ្រោង</th>
+                    <th className="is-numeric">ចំណាយពិត</th>
                     <th>រូបិយប័ណ្ណ</th>
                     <th>ថ្ងៃបង់ប្រាក់</th>
                   </tr>
@@ -170,11 +132,12 @@ export default function FinancialReport({ invitationId: propInvitationId }) {
                     <tr key={row.id}>
                       <td>{row.category}</td>
                       <td>{row.vendor || "—"}</td>
-                      <td className="is-numeric">{formatAmount(row.amount, row.currency)}</td>
+                      <td className="is-numeric">{formatAmount(row.budget, row.currency)}</td>
+                      <td className="is-numeric">{row.hasActual ? formatAmount(row.amount, row.currency) : "—"}</td>
                       <td>{row.currency}</td>
                       <td>{formatDate(row.date)}</td>
                     </tr>
-                  )) : <EmptyTableRow columns={5} />}
+                  )) : <EmptyTableRow columns={6} />}
                 </tbody>
               </table>
             </div>
@@ -191,26 +154,33 @@ export default function FinancialReport({ invitationId: propInvitationId }) {
           <div className="report-page-number" aria-hidden="true" />
         </>
       )}
+      </div>
     </main>
   );
 }
 
 function MoneyCard({ label, amounts, tone, detail }) {
+  const amountColor = tone === "income"
+    ? "text-emerald-600"
+    : tone === "balance"
+      ? "text-rose-500"
+      : "text-amber-600";
+
   return (
-    <article className={`report-summary-card money-card is-${tone}`}>
+    <article className={`report-summary-card money-card is-${tone} bg-white border border-[#f0e8dd] shadow-sm hover:shadow-md transition-all rounded-2xl p-5`}>
       <span>{label}</span>
       <div className="money-card-amounts">
-        <strong>{formatAmount(amounts.USD, "USD")}</strong>
-        <strong>{formatAmount(amounts.KHR, "KHR")}</strong>
+        <strong className={amountColor}>{formatAmount(amounts.USD, "USD")}</strong>
+        <strong className={amountColor}>{formatAmount(amounts.KHR, "KHR")}</strong>
       </div>
-      <small>{detail}</small>
+      <small className="text-xs text-gray-500">{detail}</small>
     </article>
   );
 }
 
 function StatCard({ label, value }) {
   return (
-    <article className="report-summary-card stat-card">
+    <article className="report-summary-card stat-card bg-white border border-[#f0e8dd] shadow-sm hover:shadow-md transition-all rounded-2xl p-5">
       <span>{label}</span>
       <strong>{new Intl.NumberFormat("en-US").format(value)}</strong>
     </article>

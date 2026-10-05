@@ -17,6 +17,9 @@ public interface GuestCheckInRepository extends JpaRepository<GuestCheckIn, Long
     @Query("select count(c) from GuestCheckIn c where c.invitation.id = :invitationId and c.active = true")
     long countByInvitationId(@Param("invitationId") Long invitationId);
 
+    @Query("select count(c) from GuestCheckIn c where c.active = true")
+    long countActiveCheckIns();
+
     @Query("select c from GuestCheckIn c where c.invitation.id = :invitationId and c.active = true order by c.checkedInAt desc")
     List<GuestCheckIn> findByInvitationIdOrderByCheckedInAtDesc(@Param("invitationId") Long invitationId);
 

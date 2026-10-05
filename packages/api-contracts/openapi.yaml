@@ -6266,6 +6266,21 @@ paths:
                 $ref: "#/components/schemas/ApiResponseAdminReportResponse"
       security:
       - bearerAuth: []
+  /api/v1/admin/reports/platform:
+    get:
+      tags:
+      - Administration
+      summary: Platform Report
+      operationId: platformReport
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseAdminReportResponse"
+      security:
+      - bearerAuth: []
   /api/v1/admin/reports/payments:
     get:
       tags:
@@ -6346,75 +6361,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ApiResponseListInvitationResponse"
-      security:
-      - bearerAuth: []
-  /api/v1/admin/invitations/{invitationId}:
-    get:
-      tags:
-      - Administration
-      summary: Get Invitation
-      operationId: getInvitation
-      parameters:
-      - name: invitationId
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-        example: 1
-      responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/ApiResponseInvitationResponse"
-      security:
-      - bearerAuth: []
-  /api/v1/admin/invitations/{invitationId}/rsvp-summary:
-    get:
-      tags:
-      - Administration
-      summary: Invitation Rsvp Summary
-      operationId: invitationRsvpSummary
-      parameters:
-      - name: invitationId
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-        example: 1
-      responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/ApiResponseRsvpSummaryResponse"
-      security:
-      - bearerAuth: []
-  /api/v1/admin/invitations/{invitationId}/gifts:
-    get:
-      tags:
-      - Administration
-      summary: List Invitation Gifts
-      operationId: listInvitationGifts
-      parameters:
-      - name: invitationId
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-        example: 1
-      responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/ApiResponseListWeddingGiftResponse"
       security:
       - bearerAuth: []
   /api/v1/admin/invitations/{invitationId}/budget:
@@ -6896,6 +6842,10 @@ components:
           type: string
           maxLength: 255
           minLength: 0
+        companionName:
+          type: string
+          maxLength: 255
+          minLength: 0
         phone:
           type: string
           maxLength: 50
@@ -6949,6 +6899,8 @@ components:
           format: int64
         guestName:
           type: string
+        companionName:
+          type: string
         phone:
           type: string
         email:
@@ -6989,6 +6941,10 @@ components:
         name:
           type: string
           minLength: 1
+        guestId:
+          type: integer
+          format: int64
+          exclusiveMinimum: 0
         amount:
           type: number
         currency:
@@ -7021,6 +6977,9 @@ components:
           type: integer
           format: int64
         invitationId:
+          type: integer
+          format: int64
+        guestId:
           type: integer
           format: int64
         name:
@@ -7567,9 +7526,9 @@ components:
         publishedAt:
           type: string
           format: date-time
-        published:
-          type: boolean
         draft:
+          type: boolean
+        published:
           type: boolean
     UpdateProfileRequest:
       type: object

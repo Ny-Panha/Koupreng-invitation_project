@@ -27,8 +27,10 @@ function valueToNumber(...values) {
 }
 
 export function toExpensePayload(form) {
-    const sumPayments = (form.payments || []).reduce((acc, p) => acc + (Number(p.amount) || 0), 0);
-    const finalAmount = sumPayments > 0 ? sumPayments : (Number(form.amount) || 0);
+    const finalAmount = (form.payments || []).reduce((total, payment) => {
+        const amount = Number(payment.amount);
+        return Number.isFinite(amount) && amount >= 0 ? total + amount : total;
+    }, 0);
     const budgetNum = Number(form.budget) || 0;
     return {
         name: form.name.trim(),
@@ -37,7 +39,7 @@ export function toExpensePayload(form) {
         amount: finalAmount,
         currency: form.currency || "USD",
         date: form.date || localDateString(),
-        status: finalAmount >= budgetNum ? "PAID" : "PENDING",
+        status: finalAmount > 0 && finalAmount >= budgetNum ? "PAID" : "PENDING",
         vendorName: form.vendorName || "",
         notes: JSON.stringify({
             text: form.notesText || "",
@@ -168,7 +170,7 @@ export function useExpenses() {
     const addPaymentRow = () => {
         setForm((current) => ({
             ...current,
-            payments: [...(current.payments || []), { desc: "", amount: "" }]
+            payments: [...(current.payments || []), { desc: "", amount: "", date: "" }]
         }));
     };
 
@@ -268,7 +270,11 @@ export function useExpenses() {
             date: expense.date || "",
             vendorName: expense.vendorName || "",
             notesText: expense.notesText || "",
-            payments: expense.payments || []
+            payments: expense.payments?.length
+                ? expense.payments
+                : expense.amount > 0
+                    ? [{ desc: "Previously recorded", amount: String(expense.amount), date: expense.date || "" }]
+                    : []
         });
         setShowForm(true);
     };

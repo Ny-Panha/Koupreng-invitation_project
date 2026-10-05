@@ -338,6 +338,7 @@ public class GuestService {
 
     private void applyRequest(Guest guest, GuestRequest request) {
         guest.setGuestName(trimToNull(request.getGuestName()));
+        guest.setCompanionName(trimToNull(request.getCompanionName()));
         guest.setPhone(trimToNull(request.getPhone()));
         guest.setEmail(trimToNull(request.getEmail()));
         guest.setGuestGroup(trimToNull(request.getGuestGroup()));

@@ -11,14 +11,10 @@ import com.koupreng.backend.admin.api.dto.AdminTemplateRequest;
 import com.koupreng.backend.admin.api.dto.AdminTemplateResponse;
 import com.koupreng.backend.admin.api.dto.AdminUserResponse;
 import com.koupreng.backend.audit.api.dto.SystemAuditLogResponse;
-import com.koupreng.backend.checkin.api.dto.CheckInResponse;
 import com.koupreng.backend.invitation.api.dto.InvitationResponse;
-import com.koupreng.backend.payment.api.dto.TemplatePaymentStatusResponse;
 import com.koupreng.backend.rsvp.api.dto.RsvpResponse;
-import com.koupreng.backend.rsvp.api.dto.RsvpSummaryResponse;
 import com.koupreng.backend.rsvp.domain.RsvpStatus;
 import com.koupreng.backend.audit.domain.SystemAuditLog;
-import com.koupreng.backend.checkin.domain.GuestCheckIn;
 import com.koupreng.backend.template.domain.InvitationTemplate;
 import com.koupreng.backend.template.domain.TemplateCategory;
 import com.koupreng.backend.invitation.domain.UserInvitation;
@@ -38,6 +34,7 @@ import com.koupreng.backend.rsvp.infrastructure.persistence.RsvpRepository;
 import com.koupreng.backend.audit.infrastructure.persistence.SystemAuditLogRepository;
 import com.koupreng.backend.audit.application.AuditLogService;
 import com.koupreng.backend.payment.infrastructure.persistence.TemplatePaymentOrderRepository;
+import com.koupreng.backend.subscription.infrastructure.persistence.SubscriptionRepository;
 import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -46,12 +43,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.time.YearMonth;
+import java.time.ZoneOffset;
 import java.util.Comparator;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.math.BigDecimal;
+import org.springframework.data.domain.PageRequest;
 
 @Service
 public class AdminManagementService {
@@ -66,6 +68,7 @@ public class AdminManagementService {
     private final UserInvitationRepository invitationRepository;
     private final InvitationTemplateRepository templateRepository;
     private final TemplatePaymentOrderRepository paymentOrderRepository;
+    private final SubscriptionRepository subscriptionRepository;
     private final RsvpRepository rsvpRepository;
     private final GuestRepository guestRepository;
     private final GuestCheckInRepository guestCheckInRepository;
@@ -81,6 +84,7 @@ public class AdminManagementService {
             UserInvitationRepository invitationRepository,
             InvitationTemplateRepository templateRepository,
             TemplatePaymentOrderRepository paymentOrderRepository,
+            SubscriptionRepository subscriptionRepository,
             RsvpRepository rsvpRepository,
             GuestRepository guestRepository,
             GuestCheckInRepository guestCheckInRepository,
@@ -94,6 +98,7 @@ public class AdminManagementService {
         this.invitationRepository = invitationRepository;
         this.templateRepository = templateRepository;
         this.paymentOrderRepository = paymentOrderRepository;
+        this.subscriptionRepository = subscriptionRepository;
         this.rsvpRepository = rsvpRepository;
         this.guestRepository = guestRepository;
         this.guestCheckInRepository = guestCheckInRepository;
@@ -307,24 +312,6 @@ public class AdminManagementService {
                 .toList();
     }
 
-    @Transactional(readOnly = true)
-    public InvitationResponse getInvitation(Long invitationId) {
-        return InvitationResponse.from(requireInvitation(invitationId));
-    }
-
-    @Transactional(readOnly = true)
-    public RsvpSummaryResponse invitationRsvpSummary(Long invitationId) {
-        requireInvitation(invitationId);
-        return RsvpSummaryResponse.builder()
-                .totalGuests(guestRepository.countByInvitationId(invitationId))
-                .attending(rsvpRepository.countByInvitationIdAndResponseStatus(invitationId, RsvpStatus.ATTENDING))
-                .notAttending(rsvpRepository.countByInvitationIdAndResponseStatus(invitationId, RsvpStatus.NOT_ATTENDING))
-                .maybe(rsvpRepository.countByInvitationIdAndResponseStatus(invitationId, RsvpStatus.MAYBE))
-                .pending(rsvpRepository.countPendingGuests(invitationId))
-                .totalAttendeeCount(rsvpRepository.sumAttendeeCountByInvitationIdAndStatus(invitationId, RsvpStatus.ATTENDING))
-                .build();
-    }
-
     @Transactional
     public InvitationResponse moderateInvitation(
             Authentication authentication,
@@ -412,17 +399,13 @@ public class AdminManagementService {
                                 .filter(row -> row.getModerationStatus() == InvitationModerationStatus.HIDDEN)
                                 .count()
                 ))
-                .rows(rows)
+                .rows(List.of())
                 .build();
     }
 
     @Transactional(readOnly = true)
     public AdminReportResponse paymentsReport() {
         List<TemplatePaymentOrder> orders = paymentOrderRepository.findAll();
-        List<TemplatePaymentStatusResponse> rows = orders.stream()
-                .sorted(paymentOrderComparator())
-                .map(order -> TemplatePaymentStatusResponse.from(order, "Payment status"))
-                .toList();
         var revenue = com.koupreng.backend.reporting.domain.RevenueTotals.fromPayments(orders, List.of());
         Map<String, Object> summary = new LinkedHashMap<>(revenue.summaryFields());
         summary.put("totalPayments", orders.size());
@@ -433,7 +416,11 @@ public class AdminManagementService {
                 .report("payments")
                 .generatedAt(Instant.now())
                 .summary(summary)
-                .rows(rows)
+                .rows(paymentOrderRepository.findRecentPlatformPayments(PageRequest.of(0, 20)).stream()
+                    .map(row -> safeTransaction(
+                        row.getReference(), row.getPackageName(), row.getAmount(), row.getCurrency(),
+                        row.getStatus() == null ? "UNKNOWN" : row.getStatus().name(), row.getProvider(), row.getCreatedAt(), "TEMPLATE"))
+                    .toList())
                 .build();
     }
 
@@ -451,7 +438,7 @@ public class AdminManagementService {
                         "declined", rows.stream().filter(row -> row.getResponseStatus() == RsvpStatus.NOT_ATTENDING).count(),
                         "maybe", rows.stream().filter(row -> row.getResponseStatus() == RsvpStatus.MAYBE).count()
                 ))
-                .rows(rows)
+                .rows(List.of())
                 .build();
     }
 
@@ -474,29 +461,7 @@ public class AdminManagementService {
 
     @Transactional(readOnly = true)
     public AdminReportResponse analyticsOverview() {
-        var invitations = invitationRepository.dashboardCounts();
-        var users = userRepository.dashboardCounts();
-        var payments = paymentOrderRepository.dashboardCounts();
-        var revenue = com.koupreng.backend.reporting.domain.RevenueTotals.fromAmounts(paymentOrderRepository.revenueByCurrency());
-        long totalGuests = guestRepository.count();
-        long totalRsvps = rsvpRepository.count();
-
-        Map<String, Object> summary = new LinkedHashMap<>();
-        summary.put("totalUsers", users.getTotal());
-        summary.put("activeUsers", users.getActive());
-        summary.put("totalInvitations", invitations.getTotal());
-        summary.put("publishedInvitations", invitations.getPublished());
-        summary.put("totalGuests", totalGuests);
-        summary.put("totalRsvps", totalRsvps);
-        summary.put("rsvpConversion", totalGuests == 0 ? 0 : (double) totalRsvps / totalGuests);
-        summary.putAll(revenue.summaryFields());
-        summary.put("failedPayments", payments.getFailed());
-        return AdminReportResponse.builder()
-                .report("analytics-overview")
-                .generatedAt(Instant.now())
-                .summary(summary)
-                .rows(invitationRepository.findTop10ByDeletedFalseOrderByCreatedAtDesc().stream().map(InvitationResponse::from).toList())
-                .build();
+        return platformReport();
     }
 
     @Transactional(readOnly = true)
@@ -512,11 +477,11 @@ public class AdminManagementService {
         summary.put("activeTemplates", templates.stream().filter(template -> statusEquals(template.getStatus(), TEMPLATE_STATUS_ACTIVE)).count());
         summary.put("premiumTemplates", templates.stream().filter(AdminTemplateResponse::isPremium).count());
         return AdminReportResponse.builder()
-                .report("analytics-templates")
-                .generatedAt(Instant.now())
-                .summary(summary)
-                .rows(templates)
-                .build();
+            .report("analytics-templates")
+            .generatedAt(Instant.now())
+            .summary(summary)
+            .rows(List.of())
+            .build();
     }
 
     @Transactional(readOnly = true)
@@ -536,6 +501,200 @@ public class AdminManagementService {
                 .rows(List.of())
                 .build();
     }
+
+    @Transactional(readOnly = true)
+    public AdminReportResponse platformReport() {
+        Instant now = Instant.now();
+        YearMonth currentMonth = YearMonth.from(now.atZone(ZoneOffset.UTC));
+        Map<YearMonth, Long> monthlyEvents = new HashMap<>();
+        for (int monthOffset = 11; monthOffset >= 0; monthOffset--) {
+            monthlyEvents.put(currentMonth.minusMonths(monthOffset), 0L);
+        }
+
+        long totalInvitations = 0;
+        long publishedInvitations = 0;
+        long draftInvitations = 0;
+        long suspendedInvitations = 0;
+        Map<String, Long> eventCategories = new LinkedHashMap<>();
+        eventCategories.put("WEDDING", 0L);
+        eventCategories.put("ENGAGEMENT", 0L);
+        eventCategories.put("ANNIVERSARY_BIRTHDAY", 0L);
+
+        for (var invitation : invitationRepository.findPlatformMetrics()) {
+            totalInvitations++;
+            if (invitation.getCreatedAt() != null) {
+                YearMonth createdMonth = YearMonth.from(invitation.getCreatedAt().atZone(ZoneOffset.UTC));
+                monthlyEvents.computeIfPresent(createdMonth, (month, count) -> count + 1);
+            }
+            if (invitation.getStatus() == InvitationStatus.PUBLISHED) publishedInvitations++;
+            if (invitation.getStatus() == InvitationStatus.DRAFT || invitation.getStatus() == InvitationStatus.UNPUBLISHED) draftInvitations++;
+            if (invitation.getModerationStatus() == InvitationModerationStatus.HIDDEN
+                    || invitation.getModerationStatus() == InvitationModerationStatus.SUSPENDED) suspendedInvitations++;
+
+            String eventType = invitation.getEventType() == null ? "" : invitation.getEventType().name();
+            if ("WEDDING".equals(eventType)) eventCategories.computeIfPresent("WEDDING", (key, count) -> count + 1);
+            else if ("ENGAGEMENT".equals(eventType)) eventCategories.computeIfPresent("ENGAGEMENT", (key, count) -> count + 1);
+            else if ("ANNIVERSARY".equals(eventType) || "BIRTHDAY".equals(eventType)) {
+                eventCategories.computeIfPresent("ANNIVERSARY_BIRTHDAY", (key, count) -> count + 1);
+            }
+        }
+
+        var users = userRepository.dashboardCounts();
+        var payments = paymentOrderRepository.dashboardCounts();
+        List<SubscriptionRepository.PlatformMetricsRow> subscriptions = subscriptionRepository.findPlatformMetrics();
+        Map<String, Long> subscriptionTiers = new LinkedHashMap<>();
+        subscriptionTiers.put("Basic", 0L);
+        subscriptionTiers.put("Pro", 0L);
+        subscriptionTiers.put("Premium", 0L);
+        Map<Long, Integer> lastTierByUser = new HashMap<>();
+        long tierTransitions = 0;
+        long upgrades = 0;
+        long downgrades = 0;
+        Map<String, BigDecimal> revenueByCurrency = new LinkedHashMap<>();
+        Map<String, BigDecimal> paymentRevenueByCurrency = new LinkedHashMap<>();
+        Map<String, BigDecimal> subscriptionRevenueByCurrency = new LinkedHashMap<>();
+        paymentOrderRepository.revenueByCurrency().forEach(amount -> {
+            com.koupreng.backend.reporting.domain.RevenueTotals.add(revenueByCurrency, amount.getCurrency(), amount.getTotal());
+            com.koupreng.backend.reporting.domain.RevenueTotals.add(paymentRevenueByCurrency, amount.getCurrency(), amount.getTotal());
+        });
+        List<PlatformTransaction> transactions = new ArrayList<>();
+        paymentOrderRepository.findRecentPlatformPayments(PageRequest.of(0, 20)).forEach(payment ->
+                transactions.add(new PlatformTransaction(payment.getCreatedAt(), safeTransaction(
+                        payment.getReference(), payment.getPackageName(), payment.getAmount(), payment.getCurrency(),
+                        payment.getStatus() == null ? "UNKNOWN" : payment.getStatus().name(), payment.getProvider(), payment.getCreatedAt(), "TEMPLATE"))));
+
+        for (var subscription : subscriptions) {
+            String tier = subscriptionTier(subscription.getPackageCode(), subscription.getPackageName());
+            int rank = tierRank(tier);
+            if (Boolean.TRUE.equals(subscription.getActive())
+                    && (subscription.getEndDate() == null || subscription.getEndDate().isAfter(now))) {
+                subscriptionTiers.computeIfPresent(tier, (key, count) -> count + 1);
+            }
+            if (subscription.getUserId() != null && rank > 0) {
+                Integer previousRank = lastTierByUser.put(subscription.getUserId(), rank);
+                if (previousRank != null && previousRank != rank) {
+                    tierTransitions++;
+                    if (rank > previousRank) upgrades++; else downgrades++;
+                }
+            }
+            if ("PAID".equalsIgnoreCase(subscription.getPaymentStatus())) {
+                BigDecimal paidAmount = subscription.getPaidAmount() == null ? subscription.getAmount() : subscription.getPaidAmount();
+                com.koupreng.backend.reporting.domain.RevenueTotals.add(revenueByCurrency, subscription.getCurrency(), paidAmount);
+                com.koupreng.backend.reporting.domain.RevenueTotals.add(subscriptionRevenueByCurrency, subscription.getCurrency(), paidAmount);
+            }
+            if (subscription.getReference() != null && !subscription.getReference().isBlank()) {
+                String transactionStatus = subscription.getPaymentStatus() == null ? subscription.getStatus() : subscription.getPaymentStatus();
+                BigDecimal amount = subscription.getPaidAmount() == null ? subscription.getAmount() : subscription.getPaidAmount();
+                transactions.add(new PlatformTransaction(subscription.getCreatedAt(), safeTransaction(
+                        subscription.getReference(), subscription.getPackageName(), amount, subscription.getCurrency(),
+                        transactionStatus, subscription.getProvider(), subscription.getCreatedAt(), "SUBSCRIPTION")));
+            }
+        }
+
+        transactions.sort(Comparator.comparing(PlatformTransaction::createdAt, Comparator.nullsLast(Comparator.reverseOrder())));
+        List<Map<String, Object>> eventGrowth = monthlyEvents.entrySet().stream().map(entry -> Map.<String, Object>of(
+                "month", entry.getKey().toString(), "created", entry.getValue())).toList();
+        List<Map<String, Object>> categoryBreakdown = eventCategories.entrySet().stream().map(entry -> Map.<String, Object>of(
+                "category", entry.getKey(), "count", entry.getValue())).toList();
+        List<Map<String, Object>> tierBreakdown = subscriptionTiers.entrySet().stream().map(entry -> Map.<String, Object>of(
+                "tier", entry.getKey(), "activeSubscriptions", entry.getValue())).toList();
+
+        Map<String, Object> summary = new LinkedHashMap<>();
+        summary.put("totalUsers", users.getTotal());
+        summary.put("activeUsers", users.getActive());
+        summary.put("totalInvitations", totalInvitations);
+        summary.put("publishedInvitations", publishedInvitations);
+        summary.put("draftInvitations", draftInvitations);
+        summary.put("suspendedInvitations", suspendedInvitations);
+        summary.put("totalGuests", guestRepository.count());
+        summary.put("totalRsvps", rsvpRepository.count());
+        summary.put("totalCheckIns", guestCheckInRepository.countActiveCheckIns());
+        summary.put("eventCreationGrowth", eventGrowth);
+        summary.put("eventCategoryBreakdown", categoryBreakdown);
+        summary.put("subscriptionTiers", tierBreakdown);
+        summary.put("subscriptionTransitions", tierTransitions);
+        summary.put("upgradeRate", tierTransitions == 0 ? 0 : upgrades * 100.0 / tierTransitions);
+        summary.put("downgradeRate", tierTransitions == 0 ? 0 : downgrades * 100.0 / tierTransitions);
+        summary.put("totalPayments", payments.getTotal());
+        summary.put("failedPayments", payments.getFailed());
+        summary.put("totalRevenueUsd", revenueByCurrency.getOrDefault("USD", BigDecimal.ZERO));
+        summary.put("revenueByCurrency", revenueByCurrency);
+        summary.put("paymentRevenueByCurrency", paymentRevenueByCurrency);
+        summary.put("subscriptionRevenueByCurrency", subscriptionRevenueByCurrency);
+        summary.put("revenueComparable", revenueByCurrency.size() <= 1);
+
+        Map<String, Map<String, Object>> transactionGroups = new LinkedHashMap<>();
+        for (PlatformTransaction transaction : transactions) {
+            Map<String, Object> source = transaction.data();
+            String date = transaction.createdAt() == null ? "Unknown" : YearMonth.from(transaction.createdAt().atZone(ZoneOffset.UTC)).toString();
+            String type = String.valueOf(source.getOrDefault("type", "PAYMENT"));
+            String provider = String.valueOf(source.getOrDefault("provider", "UNKNOWN"));
+            String currency = String.valueOf(source.getOrDefault("currency", "USD"));
+            String groupKey = String.join("|", date, type, provider, currency);
+            Map<String, Object> group = transactionGroups.computeIfAbsent(groupKey, ignored -> {
+                Map<String, Object> row = new LinkedHashMap<>();
+                row.put("period", date);
+                row.put("type", type);
+                row.put("provider", provider);
+                row.put("status", "AGGREGATED");
+                row.put("currency", currency);
+                row.put("transactionCount", 0L);
+                row.put("totalAmount", BigDecimal.ZERO);
+                return row;
+            });
+            group.put("transactionCount", ((Long) group.get("transactionCount")) + 1);
+            BigDecimal transactionAmount = source.get("amount") instanceof BigDecimal value ? value : BigDecimal.ZERO;
+            group.put("totalAmount", ((BigDecimal) group.get("totalAmount")).add(transactionAmount));
+        }
+        List<Map<String, Object>> aggregateTransactions = transactionGroups.values().stream()
+                .peek(row -> {
+                    if (((Long) row.get("transactionCount")) < 5) row.put("totalAmount", null);
+                })
+                .sorted(Comparator.comparing(row -> String.valueOf(row.get("period")), Comparator.reverseOrder()))
+                .limit(20).toList();
+
+        return AdminReportResponse.builder()
+                .report("platform")
+                .generatedAt(now)
+                .summary(summary)
+                .rows(aggregateTransactions)
+                .build();
+    }
+
+    private static Map<String, Object> safeTransaction(
+            String reference, String packageName, BigDecimal amount, String currency,
+            String status, String provider, Instant createdAt, String type
+    ) {
+        Map<String, Object> row = new LinkedHashMap<>();
+        row.put("reference", reference);
+        row.put("packageName", packageName);
+        row.put("amount", amount);
+        row.put("currency", currency == null || currency.isBlank() ? "USD" : currency);
+        row.put("status", status);
+        row.put("provider", provider);
+        row.put("createdAt", createdAt);
+        row.put("type", type);
+        return row;
+    }
+
+    private static String subscriptionTier(String code, String name) {
+        String normalized = ((code == null ? "" : code) + " " + (name == null ? "" : name)).toLowerCase(Locale.ROOT);
+        if (normalized.contains("premium")) return "Premium";
+        if (normalized.contains("pro")) return "Pro";
+        if (normalized.contains("basic")) return "Basic";
+        return "Basic";
+    }
+
+    private static int tierRank(String tier) {
+        return switch (tier) {
+            case "Basic" -> 1;
+            case "Pro" -> 2;
+            case "Premium" -> 3;
+            default -> 0;
+        };
+    }
+
+    private record PlatformTransaction(Instant createdAt, Map<String, Object> data) { }
 
     @Transactional(readOnly = true)
     public AdminReportResponse analyticsRsvp() {
@@ -562,30 +721,24 @@ public class AdminManagementService {
                 .report("analytics-rsvp")
                 .generatedAt(Instant.now())
                 .summary(summary)
-                .rows(rows)
+                .rows(List.of())
                 .build();
     }
 
     @Transactional(readOnly = true)
     public AdminReportResponse analyticsCheckIn() {
-        List<GuestCheckIn> checkIns = guestCheckInRepository.findAll().stream()
-                .filter(GuestCheckIn::isActive)
-                .sorted(Comparator.comparing(
-                        GuestCheckIn::getCheckedInAt,
-                        Comparator.nullsLast(Comparator.naturalOrder())
-                ).reversed())
-                .toList();
         long totalGuests = guestRepository.count();
+        long checkedIn = guestCheckInRepository.countActiveCheckIns();
         Map<String, Object> summary = new LinkedHashMap<>();
         summary.put("totalGuests", totalGuests);
-        summary.put("checkedIn", checkIns.size());
-        summary.put("remaining", Math.max(0, totalGuests - checkIns.size()));
-        summary.put("checkInRate", totalGuests == 0 ? 0 : (double) checkIns.size() / totalGuests);
+        summary.put("checkedIn", checkedIn);
+        summary.put("remaining", Math.max(0, totalGuests - checkedIn));
+        summary.put("checkInRate", totalGuests == 0 ? 0 : (double) checkedIn / totalGuests);
         return AdminReportResponse.builder()
                 .report("analytics-check-in")
                 .generatedAt(Instant.now())
                 .summary(summary)
-                .rows(checkIns.stream().limit(50).map(checkIn -> CheckInResponse.from(checkIn, false)).toList())
+            .rows(List.of())
                 .build();
     }
 
@@ -770,13 +923,6 @@ public class AdminManagementService {
         if (activeAdmins <= 1) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "At least one active admin account is required");
         }
-    }
-
-    private Comparator<TemplatePaymentOrder> paymentOrderComparator() {
-        return Comparator.comparing(
-                TemplatePaymentOrder::getCreatedAt,
-                Comparator.nullsLast(Comparator.naturalOrder())
-        ).reversed();
     }
 
     private String trimOrDefault(String value, String defaultValue) {

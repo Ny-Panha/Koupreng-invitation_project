@@ -1,21 +1,18 @@
 import { useCallback, useState } from "react";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
-import { EmptyState, ErrorState, SkeletonTable, toast } from "@/shared/ui";
+import { ErrorState, SkeletonTable, toast } from "@/shared/ui";
 import { useGuests } from "./hooks/useGuests";
 import { useGuestMutations } from "./hooks/useGuestMutations";
 import { useGuestFilters } from "./hooks/useGuestFilters";
-import { DEFAULT_CATEGORIES, DEFAULT_GROUPS, EMPTY_GUEST_FORM } from "./model/guestConstants";
+import { DEFAULT_CATEGORIES, DEFAULT_GROUPS } from "./model/guestConstants";
 import { copyText } from "./model/guestMappers";
 import GuestStats from "./components/GuestStats";
 import GuestFilters from "./components/GuestFilters";
 import GuestTable from "./components/GuestTable";
-import GuestCard from "./components/GuestCard";
-import GuestFormModal from "./components/GuestFormModal";
 import GuestDeleteDialog from "./components/GuestDeleteDialog";
 import GuestQrModal from "./components/GuestQrModal";
 import GuestImportModal from "./components/GuestImportModal";
 import GroupCategoryModal from "./components/GroupCategoryModal";
-import GuestServerTools from "./components/GuestServerTools";
 import { guestService } from "./api/guestApi";
 import { exportGuestsToCsv } from "./model/guestCsvUtils";
 import { saveManualGuests } from "@/shared/storage/hostPlanningStorage";
@@ -111,43 +108,18 @@ export default function GuestsPage() {
     filteredGuests,
   } = useGuestFilters(guests);
 
-  const [form, setForm] = useState(EMPTY_GUEST_FORM);
-  const [editingId, setEditingId] = useState(null);
-  const [formModalOpen, setFormModalOpen] = useState(false);
   const [deleteGuestTarget, setDeleteGuestTarget] = useState(null);
   const [qrGuestTarget, setQrGuestTarget] = useState(null);
   const [importModalOpen, setImportModalOpen] = useState(false);
   const [groupModalOpen, setGroupModalOpen] = useState(false);
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
 
-  const handleOpenCreate = () => {
-    setEditingId(null);
-    setForm(EMPTY_GUEST_FORM);
-    setFormModalOpen(true);
-  };
-
-  const handleOpenEdit = (guest) => {
-    setEditingId(guest.id);
-    setForm({
-      name: guest.name || "",
-      companionName: guest.companionName || "",
-      phone: guest.phone || "",
-      group: guest.group || groups[0]?.name || "Groom Side",
-      category: guest.category || categories[0]?.name || "Friend",
-      note: guest.note || "",
-      count: String(guest.count || 1),
-      seat: guest.seat || "",
-      sendStatus: guest.sendStatus || "មិនទាន់ផ្ញើ",
-    });
-    setFormModalOpen(true);
-  };
-
-  const handleSaveForm = async () => {
+  const handleSaveGuest = async (form, editingId = null) => {
     const success = await saveGuest(form, editingId);
     if (success) {
-      setFormModalOpen(false);
       toast.success(editingId ? (t ? t("toastUpdated") : "កែប្រែព័ត៌មានភ្ញៀវបានជោគជ័យ") : (t ? t("toastAdded") : "បន្ថែមភ្ញៀវបានជោគជ័យ"));
     }
+    return success;
   };
 
   const handleConfirmDelete = async () => {
@@ -252,7 +224,6 @@ export default function GuestsPage() {
       </header>
 
       <GuestStats guests={guests} t={t} />
-      {backendInvitationId && <GuestServerTools invitationId={backendInvitationId} />}
 
       <GuestFilters
         search={search}
@@ -263,7 +234,6 @@ export default function GuestsPage() {
         setCategoryFilter={setCategoryFilter}
         groups={groups}
         categories={categories}
-        onOpenCreate={handleOpenCreate}
         onOpenImport={() => setImportModalOpen(true)}
         onExportCsv={handleExportCsv}
         onOpenGroupManager={() => setGroupModalOpen(true)}
@@ -276,59 +246,27 @@ export default function GuestsPage() {
       )}
 
       {loading ? (
-        <SkeletonTable rows={5} columns={6} />
-      ) : filteredGuests.length === 0 ? (
-        <EmptyState
-          title={search || groupFilter || categoryFilter ? "មិនមានលទ្ធផលស្វែងរកទេ" : (t ? t("emptyTitle") : "មិនទាន់មានភ្ញៀវនៅឡើយទេ")}
-          description={search || groupFilter || categoryFilter ? "សូមសាកល្បងស្វែងរកដោយប្រើពាក្យផ្សេង" : (t ? t("emptyDesc") : "ចាប់ផ្តើមបន្ថែមភ្ញៀវដំបូងរបស់អ្នកឥឡូវនេះ")}
-          actionLabel={t ? t("addGuestBtn") : "បន្ថែមភ្ញៀវ"}
-          onAction={handleOpenCreate}
-        />
+        <SkeletonTable rows={5} columns={9} />
       ) : (
-        <>
-          <div className="pe-desktop-table-wrap">
+          <div className="pe-desktop-table-wrap w-full max-w-6xl mx-auto">
             <GuestTable
               guests={filteredGuests}
+              groups={groups}
+              categories={categories}
+              saving={saving}
+              emptyMessage={search || groupFilter || categoryFilter
+                ? (t ? t("emptySearchDesc") : "No guests match these filters.")
+                : (t ? t("emptyDesc") : "Add the first guest using the row above.")}
               currentDraft={draftMatch}
               publicInvitation={publicInvitation}
-              onEdit={handleOpenEdit}
+              onSaveGuest={handleSaveGuest}
               onDelete={(g) => setDeleteGuestTarget(g)}
               onShowQr={(g) => setQrGuestTarget(g)}
               onCopyLink={handleCopyLink}
               t={t}
             />
           </div>
-
-          <div className="pe-mobile-cards-wrap">
-            {filteredGuests.map((guest) => (
-              <GuestCard
-                key={guest.id}
-                guest={guest}
-                currentDraft={draftMatch}
-                publicInvitation={publicInvitation}
-                onEdit={handleOpenEdit}
-                onDelete={(g) => setDeleteGuestTarget(g)}
-                onShowQr={(g) => setQrGuestTarget(g)}
-                onCopyLink={handleCopyLink}
-                t={t}
-              />
-            ))}
-          </div>
-        </>
       )}
-
-      <GuestFormModal
-        isOpen={formModalOpen}
-        onClose={() => setFormModalOpen(false)}
-        form={form}
-        setForm={setForm}
-        groups={groups}
-        categories={categories}
-        editingId={editingId}
-        saving={saving}
-        onSave={handleSaveForm}
-        t={t}
-      />
 
       <GuestDeleteDialog
         guest={deleteGuestTarget}

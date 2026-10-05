@@ -14,6 +14,7 @@ import { localDateString } from "@/shared/utils/localDate";
 export function toGiftPayload(form) {
     return {
         name: form.name.trim(),
+        guestId: form.guestId ?? null,
         amount: Math.max(0, Number(form.amount) || 0),
         currency: form.currency || "USD",
         method: form.method,
@@ -25,6 +26,7 @@ export function toGiftPayload(form) {
 export function normalizeGift(gift) {
     return {
         id: gift.id || createHostRecordId("gift"),
+        guestId: gift.guestId || null,
         name: gift.name || gift.giverName || gift.payerName || "",
         amount: Number(gift.amount) || 0,
         currency: gift.currency || gift.currencyCode || "USD",
@@ -38,6 +40,9 @@ export function normalizeGuestOption(guest) {
     return {
         id: guest.id || guest.guestId || createHostRecordId("guest"),
         name: guest.guestName || guest.name || "Guest",
+        phone: guest.phone || guest.phoneNumber || "",
+        side: guest.side || guest.guestSide || "",
+        group: guest.group || guest.guestGroup || guest.groupName || "",
         note: guest.note || "",
     };
 }
@@ -54,9 +59,8 @@ export function useGifts() {
 
     const [gifts, setGifts] = useState(() => listWeddingGifts([], eventId).map(normalizeGift));
     const [guestOptions, setGuestOptions] = useState(() => listManualGuests(eventId));
-    const [showForm, setShowForm] = useState(false);
     const [editingId, setEditingId] = useState(null);
-    const [form, setForm] = useState({ name: "", amount: "", currency: "USD", method: "Bakong QR", date: "", note: "" });
+    const [form, setForm] = useState({ name: "", guestId: null, amount: "", currency: "USD", method: "Bakong QR", date: "", note: "" });
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(true);
@@ -113,18 +117,20 @@ export function useGifts() {
 
     const updateForm = (field, value) => setForm((current) => ({ ...current, [field]: value }));
 
-    const isDuplicateGift = gifts.some(g => g.name === form.name && g.id !== editingId);
+    const isDuplicateGift = gifts.some((gift) => {
+        if (gift.id === editingId) return false;
+        if (form.guestId != null) return gift.guestId != null && String(gift.guestId) === String(form.guestId);
+        return gift.guestId == null && gift.name === form.name;
+    });
 
     const resetForm = () => {
         setEditingId(null);
-        setForm({ name: "", amount: "", currency: "USD", method: "Bakong QR", date: "", note: "" });
-        setShowForm(false);
+        setForm({ name: "", guestId: null, amount: "", currency: "USD", method: "Bakong QR", date: "", note: "" });
     };
 
-    const openAddModal = () => {
+    const openAddForm = () => {
         setEditingId(null);
-        setForm({ name: "", amount: "", currency: "USD", method: "Bakong QR", date: "", note: "" });
-        setShowForm(true);
+        setForm({ name: "", guestId: null, amount: "", currency: "USD", method: "Bakong QR", date: "", note: "" });
     };
 
     const submitGift = async (event) => {
@@ -163,8 +169,7 @@ export function useGifts() {
 
     const editGift = (gift) => {
         setEditingId(gift.id);
-        setForm({ name: gift.name, amount: String(gift.amount), currency: gift.currency || "USD", method: gift.method, date: gift.date, note: gift.note || "" });
-        setShowForm(true);
+        setForm({ name: gift.name, guestId: gift.guestId || null, amount: String(gift.amount), currency: gift.currency || "USD", method: gift.method, date: gift.date, note: gift.note || "" });
     };
 
     const deleteGift = async (giftId, confirmMsg) => {
@@ -194,9 +199,7 @@ export function useGifts() {
         backendInvitation,
         gifts,
         guestOptions,
-        showForm,
-        openAddModal,
-        setShowForm,
+        openAddForm,
         editingId,
         setEditingId,
         form,
