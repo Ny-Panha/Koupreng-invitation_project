@@ -78,6 +78,8 @@ describe("SocialAuthButtons", () => {
     await waitFor(() => expect(window.google.accounts.id.initialize).toHaveBeenCalled());
     await act(() => window.google.accounts.id.initialize.mock.calls[0][0].callback({ credential: "verified-token" }));
     expect(await screen.findByRole("alert")).toHaveTextContent("Sign in to your existing account");
+    expect(screen.getByRole("link", { name: "Recover your existing account" })).toHaveAttribute("href", "/forgot-password");
+    expect(screen.getByRole("alert")).toHaveTextContent("then sign in and link Google from your profile");
     expect(login).not.toHaveBeenCalled();
     expect(service.linkGoogle).not.toHaveBeenCalled();
   });

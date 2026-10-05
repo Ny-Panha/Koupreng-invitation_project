@@ -214,6 +214,71 @@ function Start-DevProcess {
     return $proc
 }
 
+function Ensure-FrontendDependencies {
+    param(
+        [string]$WorkingDir,
+        [string]$Name
+    )
+
+    $viteExecutable = Join-Path $WorkingDir "node_modules\.bin\vite.cmd"
+    if (Test-Path $viteExecutable) {
+        return
+    }
+
+    $lockFile = Join-Path $WorkingDir "package-lock.json"
+    if (-not (Test-Path $lockFile)) {
+        throw "$Name dependencies are missing and package-lock.json was not found in $WorkingDir."
+    }
+
+    Write-Host "  Installing $Name dependencies from package-lock.json..." -ForegroundColor Cyan
+    Push-Location $WorkingDir
+    try {
+        & npm.cmd ci --no-audit --no-fund
+        if ($LASTEXITCODE -ne 0) {
+            throw "npm ci failed for $Name with exit code $LASTEXITCODE."
+        }
+    } finally {
+        Pop-Location
+    }
+
+    if (-not (Test-Path $viteExecutable)) {
+        throw "npm ci completed but Vite was not installed for $Name."
+    }
+}
+
+function Wait-ForFrontend {
+    param(
+        [string]$Name,
+        [int]$Port
+    )
+
+    $baseUrl = "http://127.0.0.1:$Port"
+    $startupTimeoutSeconds = 120
+    $startupTimer = [System.Diagnostics.Stopwatch]::StartNew()
+    $lastProbeError = $null
+
+    Write-Host "  Waiting for $Name to initialize..." -ForegroundColor Cyan
+    while ($startupTimer.Elapsed.TotalSeconds -lt $startupTimeoutSeconds) {
+        try {
+            $page = Invoke-WebRequest -Uri "$baseUrl/" -UseBasicParsing -TimeoutSec 2 -ErrorAction Stop
+            if ($page.StatusCode -eq 200) {
+                $entry = Invoke-WebRequest -Uri "$baseUrl/src/main.jsx" -UseBasicParsing -TimeoutSec 2 -ErrorAction Stop
+                if ($entry.StatusCode -eq 200) {
+                    Write-Host "  ✓ $Name is READY at http://localhost:$Port" -ForegroundColor Green
+                    return
+                }
+                $lastProbeError = "Entry module returned HTTP $($entry.StatusCode)."
+            }
+        } catch {
+            $lastProbeError = $_.Exception.Message
+        }
+        Start-Sleep -Seconds 1
+    }
+
+    $probeDetails = if ($lastProbeError) { " Last probe error: $lastProbeError" } else { "" }
+    throw "$Name did not become ready at $baseUrl within $startupTimeoutSeconds seconds.$probeDetails"
+}
+
 try {
     # 2. Start Backend (Spring Boot :8080)
     Free-Port 8080
@@ -224,7 +289,10 @@ try {
 
     Write-Host "  Waiting for Backend to initialize..." -ForegroundColor Cyan
     $backendReady = $false
-    for ($i = 1; $i -le 120; $i++) {
+    $backendStartupTimeoutSeconds = 600
+    $backendStartupTimer = [System.Diagnostics.Stopwatch]::StartNew()
+    $backendLastProbeError = $null
+    while ($backendStartupTimer.Elapsed.TotalSeconds -lt $backendStartupTimeoutSeconds) {
         try {
             $resp = Invoke-WebRequest -Uri "http://127.0.0.1:8080/actuator/health/readiness" -UseBasicParsing -TimeoutSec 2 -ErrorAction Stop
             if ($resp.StatusCode -eq 200) {
@@ -232,12 +300,17 @@ try {
                 Write-Host "  ✓ Backend is READY at http://localhost:8080" -ForegroundColor Green
                 break
             }
+            $backendLastProbeError = "Readiness endpoint returned HTTP $($resp.StatusCode)."
         } catch {
+            $backendLastProbeError = $_.Exception.Message
+        }
+        if (-not $backendReady) {
             Start-Sleep -Seconds 1
         }
     }
     if (-not $backendReady) {
-        throw "Backend did not become ready at http://127.0.0.1:8080/actuator/health/readiness. Check the backend terminal output before starting the frontends."
+        $probeDetails = if ($backendLastProbeError) { " Last probe error: $backendLastProbeError" } else { "" }
+        throw "Backend did not become ready at http://127.0.0.1:8080/actuator/health/readiness within $backendStartupTimeoutSeconds seconds.$probeDetails Check the backend terminal output before starting the frontends."
     }
 
     # 3. Start Frontend User (:5173)
@@ -245,21 +318,11 @@ try {
         Free-Port 5173
         Write-Host "`n[3/4] Starting Frontend User (React on :5173)..." -ForegroundColor White
         $userDir = Join-Path $RootDir "apps\frontend-user"
+        Ensure-FrontendDependencies -WorkingDir $userDir -Name "Frontend User"
         $userCmd = "npm.cmd run dev -- --host --port 5173"
         $null = Start-DevProcess -Title "[Koupreng] Frontend User" -WorkingDir $userDir -Command $userCmd
 
-        Write-Host "  Waiting for Frontend User to initialize..." -ForegroundColor Cyan
-        for ($i = 1; $i -le 30; $i++) {
-            try {
-                $resp = Invoke-WebRequest -Uri "http://127.0.0.1:5173/login" -UseBasicParsing -TimeoutSec 2 -ErrorAction Stop
-                if ($resp.StatusCode -eq 200) {
-                    Write-Host "  ✓ Frontend User is READY at http://localhost:5173" -ForegroundColor Green
-                    break
-                }
-            } catch {
-                Start-Sleep -Seconds 1
-            }
-        }
+        Wait-ForFrontend -Name "Frontend User" -Port 5173
     }
 
     # 4. Start Frontend Admin (:5174)
@@ -267,8 +330,10 @@ try {
         Free-Port 5174
         Write-Host "`n[4/4] Starting Frontend Admin (React on :5174)..." -ForegroundColor White
         $adminDir = Join-Path $RootDir "apps\frontend-admin"
+        Ensure-FrontendDependencies -WorkingDir $adminDir -Name "Frontend Admin"
         $adminCmd = "npm.cmd run dev -- --host --port 5174"
         $null = Start-DevProcess -Title "[Koupreng] Frontend Admin" -WorkingDir $adminDir -Command $adminCmd
+        Wait-ForFrontend -Name "Frontend Admin" -Port 5174
     }
 
     # Optional: Telegram Bot (:8000)
@@ -317,4 +382,3 @@ try {
 finally {
     Cleanup
 }
-
