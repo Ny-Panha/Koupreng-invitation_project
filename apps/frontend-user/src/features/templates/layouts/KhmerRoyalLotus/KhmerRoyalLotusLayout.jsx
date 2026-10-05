@@ -13,6 +13,7 @@ import {
   VolumeX,
 } from "lucide-react";
 import defaultMusicUrl from "../../../../assets/music/ថ្ងៃដែលរង់ចាំ.mp3";
+import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
 import CoverBackground from "../../shared/Openings/CoverBackground";
 import CountdownTimer from "../../shared/Countdown/CountdownTimer";
 import GalleryGrid from "../../shared/Gallery/GalleryGrid";
@@ -141,9 +142,12 @@ export default function KhmerRoyalLotusLayout({
 }) {
   const [liveData, setLiveData] = useState(null);
   const [opened, setOpened] = useState(preview && !previewStartClosed);
+  const [isOpening, setIsOpening] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
   const invitationRef = useRef(null);
+  const openingTimerRef = useRef(null);
+  const reducedMotion = usePrefersReducedMotion();
 
   const channel = useMemo(
     () => previewChannel || readEmbeddedPreviewChannel(),
@@ -158,6 +162,8 @@ export default function KhmerRoyalLotusLayout({
         setLiveData(event.data.data);
       }
       if (event.data?.type === "TOGGLE_GATE") {
+        if (openingTimerRef.current) window.clearTimeout(openingTimerRef.current);
+        setIsOpening(false);
         setOpened(Boolean(event.data.open ?? event.data.isOpen));
       }
     };
@@ -172,8 +178,16 @@ export default function KhmerRoyalLotusLayout({
   }, [channel]);
 
   useEffect(() => {
-    if (preview) setOpened(!previewStartClosed);
+    if (preview) {
+      if (openingTimerRef.current) window.clearTimeout(openingTimerRef.current);
+      setIsOpening(false);
+      setOpened(!previewStartClosed);
+    }
   }, [preview, previewStartClosed]);
+
+  useEffect(() => () => {
+    if (openingTimerRef.current) window.clearTimeout(openingTimerRef.current);
+  }, []);
 
   const content = useMemo(() => {
     const base = {
@@ -246,16 +260,29 @@ export default function KhmerRoyalLotusLayout({
   );
 
   const handleOpen = useCallback(() => {
-    setOpened(true);
-    window.requestAnimationFrame(() => {
-      invitationRef.current?.focus({ preventScroll: true });
-    });
+    if (isOpening) return;
+    setIsOpening(true);
     if (audioRef.current && content.musicUrl) {
       audioRef.current.play()
         .then(() => setIsPlaying(true))
         .catch(() => setIsPlaying(false));
     }
-  }, [content.musicUrl]);
+
+    const finishOpening = () => {
+      setOpened(true);
+      setIsOpening(false);
+      window.requestAnimationFrame(() => {
+        invitationRef.current?.focus({ preventScroll: true });
+      });
+    };
+
+    if (reducedMotion) {
+      finishOpening();
+      return;
+    }
+
+    openingTimerRef.current = window.setTimeout(finishOpening, 1450);
+  }, [content.musicUrl, isOpening, reducedMotion]);
 
   const toggleMusic = useCallback(() => {
     if (!audioRef.current) return;
@@ -283,7 +310,7 @@ export default function KhmerRoyalLotusLayout({
       <audio ref={audioRef} src={content.musicUrl} loop preload="metadata" />
 
       {!opened ? (
-        <section className="krl-opening" aria-label="បើកធៀបការ">
+        <section className={`krl-opening${isOpening ? " is-opening" : ""}`} aria-label="បើកធៀបការ">
           <CoverBackground
             content={content}
             templateDefault={{
@@ -324,9 +351,9 @@ export default function KhmerRoyalLotusLayout({
               <span>ជូនចំពោះ</span>
               <strong>{content.guestName}</strong>
             </p>
-            <button type="button" className="krl-open-button" onClick={handleOpen}>
+            <button type="button" className="krl-open-button" onClick={handleOpen} disabled={isOpening}>
               <Sparkles size={18} aria-hidden="true" />
-              <span>បើកធៀបការ</span>
+              <span>{isOpening ? "កំពុងបើកធៀបការ..." : "បើកធៀបការ"}</span>
             </button>
             <small>ចុចដើម្បីបើកសំបុត្រ និងចាក់ភ្លេងមង្គលការ</small>
           </div>
