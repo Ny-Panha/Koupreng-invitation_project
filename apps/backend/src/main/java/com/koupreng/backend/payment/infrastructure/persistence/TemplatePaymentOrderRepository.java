@@ -49,7 +49,7 @@ public interface TemplatePaymentOrderRepository extends JpaRepository<TemplatePa
 
     @org.springframework.data.jpa.repository.EntityGraph(attributePaths = "user")
     @Query("select p from TemplatePaymentOrder p order by case when p.createdAt is null then 0 else 1 end, p.createdAt desc")
-    List<TemplatePaymentOrder> findRecent(org.springframework.data.domain.Pageable pageable);
+    List<TemplatePaymentOrder> findRecent(Pageable pageable);
 
     @Query("""
             select count(p) as total,

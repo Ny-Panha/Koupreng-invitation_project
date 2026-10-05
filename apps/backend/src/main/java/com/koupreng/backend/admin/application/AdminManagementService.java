@@ -11,13 +11,10 @@ import com.koupreng.backend.admin.api.dto.AdminTemplateRequest;
 import com.koupreng.backend.admin.api.dto.AdminTemplateResponse;
 import com.koupreng.backend.admin.api.dto.AdminUserResponse;
 import com.koupreng.backend.audit.api.dto.SystemAuditLogResponse;
-import com.koupreng.backend.checkin.api.dto.CheckInResponse;
 import com.koupreng.backend.invitation.api.dto.InvitationResponse;
-import com.koupreng.backend.payment.api.dto.TemplatePaymentStatusResponse;
 import com.koupreng.backend.rsvp.api.dto.RsvpResponse;
 import com.koupreng.backend.rsvp.domain.RsvpStatus;
 import com.koupreng.backend.audit.domain.SystemAuditLog;
-import com.koupreng.backend.checkin.domain.GuestCheckIn;
 import com.koupreng.backend.template.domain.InvitationTemplate;
 import com.koupreng.backend.template.domain.TemplateCategory;
 import com.koupreng.backend.invitation.domain.UserInvitation;
@@ -926,13 +923,6 @@ public class AdminManagementService {
         if (activeAdmins <= 1) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "At least one active admin account is required");
         }
-    }
-
-    private Comparator<TemplatePaymentOrder> paymentOrderComparator() {
-        return Comparator.comparing(
-                TemplatePaymentOrder::getCreatedAt,
-                Comparator.nullsLast(Comparator.naturalOrder())
-        ).reversed();
     }
 
     private String trimOrDefault(String value, String defaultValue) {
