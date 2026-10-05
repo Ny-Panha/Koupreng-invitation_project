@@ -230,10 +230,10 @@ export default function KhmerRoyalLotusLayout({
       gallery: normalizeGallery(base),
       gift: normalizeGift(base),
       musicUrl: base.musicUrl || base.bgMusicUrl || formatMusicSource(base.music) || defaultMusicUrl,
-      primaryColor: base.primaryColor || base.design?.primaryColor || "#6B1E2B",
-      secondaryColor: base.secondaryColor || base.design?.secondaryColor || "#C8A45D",
-      backgroundColor: base.backgroundColor || base.bg || "#F5EEDF",
-      fontKhmer: base.fontKhmer || "Kantumruy Pro",
+      primaryColor: base.primaryColor || base.design?.primaryColor || "",
+      secondaryColor: base.secondaryColor || base.design?.secondaryColor || "",
+      backgroundColor: base.backgroundColor || base.bg || "",
+      fontKhmer: base.fontKhmer || "",
       thankYouTitle: base.thankYouTitle || "សូមថ្លែងអំណរគុណ",
       thankYouText: base.thankYouText ||
         "វត្តមានរបស់លោកអ្នក គឺជាកិត្តិយស និងជាពរជ័យដ៏មានតម្លៃសម្រាប់គ្រួសារយើងខ្ញុំ។",
@@ -270,10 +270,12 @@ export default function KhmerRoyalLotusLayout({
   }, []);
 
   const dynamicStyles = {
-    "--krl-primary": content.primaryColor,
-    "--krl-secondary": content.secondaryColor,
-    "--krl-page": content.backgroundColor,
-    "--krl-font-khmer": `"${content.fontKhmer}", "Kantumruy Pro", "Battambang", sans-serif`,
+    ...(content.primaryColor ? { "--krl-primary": content.primaryColor } : {}),
+    ...(content.secondaryColor ? { "--krl-secondary": content.secondaryColor } : {}),
+    ...(content.backgroundColor ? { "--krl-page": content.backgroundColor } : {}),
+    ...(content.fontKhmer ? {
+      "--krl-font-khmer": `"${content.fontKhmer}", "Kantumruy Pro", "Battambang", sans-serif`,
+    } : {}),
   };
 
   return (
