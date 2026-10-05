@@ -124,7 +124,6 @@
   position: relative;
   width: min(88vw, 24rem);
   aspect-ratio: 1.28 / 1;
-  filter: drop-shadow(0 1.35rem 1.4rem rgba(0, 0, 0, 0.34));
   transform-style: preserve-3d;
   animation: krl-envelope-float 5.5s ease-in-out infinite;
 }
@@ -137,7 +136,9 @@
   background:
     repeating-linear-gradient(118deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 5px),
     linear-gradient(145deg, color-mix(in srgb, var(--krl-primary) 92%, black), var(--krl-primary));
-  box-shadow: inset 0 0 2.2rem rgba(0, 0, 0, 0.16);
+  box-shadow:
+    0 1.35rem 1.4rem rgba(0, 0, 0, 0.34),
+    inset 0 0 2.2rem rgba(0, 0, 0, 0.16);
 }
 
 .krl-envelope__card {
@@ -327,6 +328,33 @@
 .krl-music-toggle:focus-visible {
   outline: 3px solid color-mix(in srgb, var(--krl-secondary) 72%, white);
   outline-offset: 3px;
+}
+
+.krl-open-button:disabled {
+  cursor: progress;
+  filter: saturate(0.86);
+}
+
+.krl-opening.is-opening .krl-envelope {
+  animation: krl-envelope-release 1.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.krl-opening.is-opening .krl-wax-seal {
+  animation: krl-seal-lift 0.72s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.krl-opening.is-opening .krl-envelope__flap {
+  animation: krl-flap-open 0.72s 0.34s cubic-bezier(0.2, 0.76, 0.16, 1) forwards;
+  backface-visibility: hidden;
+}
+
+.krl-opening.is-opening .krl-envelope__card {
+  animation: krl-card-rise 0.8s 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.krl-opening.is-opening .krl-opening__top,
+.krl-opening.is-opening .krl-opening__action {
+  animation: krl-opening-copy-fade 0.55s 0.62s ease forwards;
 }
 
 .krl-opening__action small {
@@ -972,6 +1000,34 @@
 
 .krl-music-toggle.is-playing {
   animation: krl-music-pulse 2.2s ease-out infinite;
+}
+
+@keyframes krl-seal-lift {
+  0% { transform: translate(-50%, -50%) rotate(-5deg) scale(1); opacity: 1; }
+  38% { transform: translate(-50%, -68%) rotate(5deg) scale(1.06); opacity: 1; }
+  100% { transform: translate(92%, -150%) rotate(24deg) scale(0.88); opacity: 0; }
+}
+
+@keyframes krl-flap-open {
+  0% { transform: rotateX(0deg); z-index: 5; }
+  48% { transform: rotateX(92deg); z-index: 5; }
+  49% { z-index: 1; }
+  100% { transform: rotateX(180deg); z-index: 1; }
+}
+
+@keyframes krl-card-rise {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  55% { transform: translate3d(0, -40%, 2rem) rotate(-1.4deg); }
+  100% { transform: translate3d(0, -64%, 4rem) scale(1.045) rotate(0deg); }
+}
+
+@keyframes krl-envelope-release {
+  0%, 55% { transform: translate3d(0, 0, 0) rotateX(0) rotateY(0); opacity: 1; }
+  100% { transform: translate3d(0, 15%, -2rem) scale(0.92); opacity: 0.28; }
+}
+
+@keyframes krl-opening-copy-fade {
+  to { opacity: 0; transform: translateY(-0.35rem); }
 }
 
 @keyframes krl-envelope-float {
