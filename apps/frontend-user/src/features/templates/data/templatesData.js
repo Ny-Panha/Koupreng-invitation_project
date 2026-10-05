@@ -3,6 +3,7 @@ import musicInstrumental from "../../../assets/music/Instrumental Wedding Music 
 
 export const KEEP_TEMPLATE_CODE = "garden-royal-khmer-wedding";
 export const KHMER_CELESTIAL_TEMPLATE_CODE = "khmer-celestial";
+export const KHMER_ROYAL_LOTUS_TEMPLATE_CODE = "khmer-royal-lotus";
 export const ROYAL_KHMER_TEMPLATE_CODE = "royal-khmer-wedding";
 export const KHMER_GOLDEN_CANVA_INSPIRED_CODE = "khmer-golden-canva-inspired-wedding";
 export const COVER_KHMER_GOLDEN_CODE = "cover-khmer-golden-wedding";
@@ -192,6 +193,77 @@ export const KHMER_CELESTIAL_TEMPLATE = withTemplateMedia({
         openingVideoUrl: "",
     },
 }, "06-card");
+
+export const KHMER_ROYAL_LOTUS_TEMPLATE = withTemplateMedia({
+    id: KHMER_ROYAL_LOTUS_TEMPLATE_CODE,
+    code: KHMER_ROYAL_LOTUS_TEMPLATE_CODE,
+    slug: KHMER_ROYAL_LOTUS_TEMPLATE_CODE,
+    name: "រាជឈូកខ្មែរ",
+    title: "សិរីសួស្តីអាពាហ៍ពិពាហ៍",
+    style: "Khmer Royal Lotus",
+    category: "ancient",
+    popular: true,
+    premium: false,
+    isPremium: false,
+    image: "/facebook/all/01-card/cover-card.jpg",
+    mainImage: "/facebook/all/01-card/cover-card.jpg",
+    phoneCoverImage: "/facebook/all/01-card/cover-card.jpg",
+    music: { url: musicWaitingDay },
+    groom: "",
+    groomEn: "",
+    bride: "",
+    brideEn: "",
+    guestName: "លោកអ្នក និងក្រុមគ្រួសារ",
+    messageTitle: "មានកិត្តិយសសូមគោរពអញ្ជើញ",
+    message: "ចូលរួមជាភ្ញៀវកិត្តិយស ដើម្បីប្រសិទ្ធពរជ័យសិរីសួស្តីមង្គល ជូនកូនប្រុស កូនស្រី របស់យើងខ្ញុំ ក្នុងថ្ងៃដ៏វិសេសវិសាលនេះ។",
+    dateText: "ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦",
+    targetDate: "2026-12-20T17:00:00+07:00",
+    ceremonyTime: "០៦:៣០",
+    receptionTime: "១៧:០០",
+    venueName: "រាជធានីភ្នំពេញ",
+    venueAddress: "សូមកែប្រែទីតាំងក្នុង Wedding Builder",
+    mapQuery: "Phnom Penh Cambodia",
+    bg: "#F5EEDF",
+    paper: "#FFF9EE",
+    color: "#6B1E2B",
+    accent: "#C8A45D",
+    dark: "#321016",
+    label: "KHMER ROYAL LOTUS",
+    description: "គំរូធៀបការខ្មែរបែបប្រណិត ដោយបញ្ចូលអារម្មណ៍ក្រដាសធៀបការបោះពុម្ព ពណ៌ក្រហមទុំ មាសបុរាណ និងភ្លុក ជាមួយប្លង់អានងាយសម្រាប់ទូរសព្ទ។",
+    presetId: "KHMER_ROYAL_LOTUS",
+    openingStyle: "royal-lotus-envelope",
+    gateStyle: "royal-lotus-envelope",
+    hasGate: true,
+    enabledSections: {
+        countdown: true,
+        story: false,
+        schedule: true,
+        map: true,
+        gallery: true,
+        party: false,
+        dressCode: false,
+        gift: true,
+        faq: false,
+        rsvp: true,
+        music: true,
+    },
+    schedule: [
+        { id: "procession", time: "៦:៣០ ព្រឹក", title: "ពិធីហែជំនូន", description: "ជួបជុំញាតិមិត្ត និងហែជំនូនចូលរោងជ័យ" },
+        { id: "rings", time: "៨:០០ ព្រឹក", title: "ពិធីបំពាក់ចិញ្ចៀន", description: "គូស្វាមីភរិយាប្តូរចិញ្ចៀន និងទទួលពរជ័យ" },
+        { id: "hair", time: "៩:៣០ ព្រឹក", title: "ពិធីកាត់សក់បង្កក់សិរី", description: "ទទួលពរជ័យពីមាតាបិតា និងចាស់ទុំ" },
+        { id: "reception", time: "៥:០០ ល្ងាច", title: "ពិធីពិសាភោជនាហារ", description: "ទទួលបដិសណ្ឋារកិច្ចភ្ញៀវកិត្តិយស" },
+    ],
+    design: {
+        presetId: "KHMER_ROYAL_LOTUS",
+        theme: "KHMER_ROYAL_LOTUS",
+        openingStyle: "royal-lotus-envelope",
+        gateStyle: "royal-lotus-envelope",
+        primaryColor: "#6B1E2B",
+        secondaryColor: "#C8A45D",
+        backgroundColor: "#F5EEDF",
+        ornamentTheme: "royal-lotus",
+    },
+}, "01-card");
 
 const ROYAL_KHMER_TEMPLATE = withTemplateMedia({
     id: ROYAL_KHMER_TEMPLATE_CODE,
@@ -477,6 +549,7 @@ export const BLISS_EDITORIAL_TEMPLATE = withTemplateMedia({
 
 export const TEMPLATES = [
     KHMER_CELESTIAL_TEMPLATE,
+    KHMER_ROYAL_LOTUS_TEMPLATE,
     THE_DIGITAL_YES_TEMPLATE,
     EMERALD_CANVA_LUXE_TEMPLATE,
     WITHJOY_PORTAL_TEMPLATE,
@@ -550,6 +623,7 @@ export function getCatalogVersion() {
  */
 const PRESET_TO_VARIANT = {
     KHMER_CELESTIAL: KHMER_CELESTIAL_TEMPLATE_CODE,
+    KHMER_ROYAL_LOTUS: KHMER_ROYAL_LOTUS_TEMPLATE_CODE,
     EMERALD_GREEN: "emerald-canva-luxe-wedding",
     RUBY_RED: KHMER_CELESTIAL_TEMPLATE_CODE,
     ROYAL_KHMER: KHMER_CELESTIAL_TEMPLATE_CODE,
