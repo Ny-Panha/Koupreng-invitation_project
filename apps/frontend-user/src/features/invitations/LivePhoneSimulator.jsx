@@ -30,6 +30,9 @@ function resolveTemplateSlug(data, merged) {
     if (str === "garden-royal-khmer-wedding" || str === "garden_royal") {
         return "garden-royal-khmer-wedding";
     }
+    if (str === "khmer-royal-lotus" || str === "KHMER_ROYAL_LOTUS") {
+        return "khmer-royal-lotus";
+    }
     if (str === "10" || str === "khmer-celestial" || str === "KHMER_CELESTIAL" || str === "royal-khmer-wedding" || str === "1") {
         return "khmer-celestial";
     }
