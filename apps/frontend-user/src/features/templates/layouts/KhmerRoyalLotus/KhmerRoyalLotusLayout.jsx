@@ -34,11 +34,6 @@ const DEFAULT_SCHEDULE = [
   { id: "reception", time: "៥:០០ ល្ងាច", title: "ពិធីពិសាភោជនាហារ", description: "ទទួលបដិសណ្ឋារកិច្ចភ្ញៀវកិត្តិយស" },
 ];
 
-function asArray(value) {
-  if (!value) return [];
-  return Array.isArray(value) ? value.filter(Boolean) : [value].filter(Boolean);
-}
-
 function normalizeGallery(base) {
   const source = Array.isArray(base.photos) && base.photos.length
     ? base.photos
