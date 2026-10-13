@@ -88,11 +88,37 @@ foreach ($skillEntry in $lockJson.skills) {
     }
 }
 
+$customSkills = @(
+    "koupreng-premium-ux",
+    "koupreng-backend-standards",
+    "koupreng-payment-security",
+    "koupreng-database-flyway",
+    "koupreng-qa-release",
+    "koupreng-deployment"
+)
+
+Write-Host "`nChecking Koupreng Custom Canonical Skills..." -ForegroundColor Cyan
+$customVerifiedCount = 0
+foreach ($cSkill in $customSkills) {
+    $cSkillDir = Join-Path $skillsDir $cSkill
+    $cSkillMd = Join-Path $cSkillDir "SKILL.md"
+    $cSkillRefs = Join-Path $cSkillDir "references"
+    if ((Test-Path $cSkillDir) -and (Test-Path $cSkillMd) -and (Test-Path $cSkillRefs)) {
+        Write-Host "  [+] Verified [Koupreng Canonical] $cSkill" -ForegroundColor Green
+        $customVerifiedCount++
+    } else {
+        Write-Host "  [x] Missing custom skill assets in: $cSkillDir" -ForegroundColor Red
+        $allValid = $false
+        $missingCount++
+    }
+}
+
 Write-Host "`n----------------------------------------------------------"
 Write-Host "Verification Summary:" -ForegroundColor Cyan
-Write-Host "  Verified Skills : $verifiedCount / $($lockJson.skills.Count)"
-Write-Host "  Missing Files   : $missingCount"
-Write-Host "  Checksum Errors : $mismatchCount"
+Write-Host "  Verified Pinned Skills : $verifiedCount / $($lockJson.skills.Count)"
+Write-Host "  Verified Custom Skills : $customVerifiedCount / $($customSkills.Count)"
+Write-Host "  Missing Files/Dirs     : $missingCount"
+Write-Host "  Checksum Errors        : $mismatchCount"
 
 if ($allValid) {
     Write-Host "`nAll team AI Agent Skills are fully verified and intact!" -ForegroundColor Green

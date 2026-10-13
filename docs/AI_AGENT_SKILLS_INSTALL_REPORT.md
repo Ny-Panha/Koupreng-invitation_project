@@ -2,8 +2,8 @@
 
 **Project:** E-Invitation Web Application  
 **Execution Date:** 2026-10-03  
-**Lockfile:** [`ai-skills.lock.json`](file:///d:/Koupreng-invitation_project/ai-skills.lock.json)  
-**Configuration Directory:** [`.agents/skills/`](file:///d:/Koupreng-invitation_project/.agents/skills)  
+**Lockfile:** [`ai-skills.lock.json`](../ai-skills.lock.json)  
+**Configuration Directory:** [`.agents/skills/`](../.agents/skills)  
 **Specification:** Agent Skills Specification (`SKILL.md`) / OpenAI Codex / Google Antigravity / Claude Code compatible
 
 ---
@@ -22,19 +22,19 @@
 
 ## 2. Installed Skills
 
-All installed skills are pinned to immutable commit SHAs in [`ai-skills.lock.json`](file:///d:/Koupreng-invitation_project/ai-skills.lock.json) and vendored into [`.agents/skills/`](file:///d:/Koupreng-invitation_project/.agents/skills) with MIT licenses:
+All installed skills are pinned to immutable commit SHAs in [`ai-skills.lock.json`](../ai-skills.lock.json) and vendored into [`.agents/skills/`](../.agents/skills) with MIT licenses:
 
 | Category | Skill | Repository | Stars | Commit | License | Technical Value & Stack Justification |
 |---|---|---|---:|---|---|---|
-| **UI/UX / Accessibility** | [`wcag-audit-patterns`](file:///d:/Koupreng-invitation_project/.agents/skills/wcag-audit-patterns) | `wshobson/agents` | 40,168 | `156b7a5e` | MIT | Comprehensive WCAG 2.2 AA audit checklists, keyboard traps, ARIA landmarks, screen reader testing, and bilingual contrast verification for public invitations. |
-| **Frontend Engineering** | [`react-state-management`](file:///d:/Koupreng-invitation_project/.agents/skills/react-state-management) | `wshobson/agents` | 40,168 | `156b7a5e` | MIT | Direct guidance for Zustand store slicing, optimistic UI updates, multi-step RSVP forms, and React 19 state synchronization without unnecessary re-renders. |
-| **Frontend Engineering** | [`tailwind-design-system`](file:///d:/Koupreng-invitation_project/.agents/skills/tailwind-design-system) | `wshobson/agents` | 40,168 | `156b7a5e` | MIT | Native Tailwind CSS v4 guidance focusing on `@theme`, OKLCH design tokens, CSS-first configurations, and class-variance-authority (cva) component variants. |
-| **Backend Engineering** | [`architecture-patterns`](file:///d:/Koupreng-invitation_project/.agents/skills/architecture-patterns) | `wshobson/agents` | 40,168 | `156b7a5e` | MIT | Enforces Clean Architecture, Hexagonal / Ports & Adapters, and Domain-Driven Design bounded contexts (`auth`, `invitation`, `checkin`, `payment`, `reporting`). |
-| **Backend / API Design** | [`api-and-interface-design`](file:///d:/Koupreng-invitation_project/.agents/skills/api-and-interface-design) | `addyosmani/agent-skills` | 100,579 | `9d0c60d4` | MIT | Contract-first REST API boundaries, Hyrum's Law adherence, strict edge validation for untrusted third-party inputs (Telegram webhooks, Google OAuth). |
-| **Cybersecurity / AppSec** | [`auth-implementation-patterns`](file:///d:/Koupreng-invitation_project/.agents/skills/auth-implementation-patterns) | `wshobson/agents` | 40,168 | `156b7a5e` | MIT | Hardened authentication standards: short-lived JWT access tokens, refresh token rotation, OAuth2/OIDC flows, RBAC authorization, and cookie CSRF protection. |
-| **Cybersecurity / Threat Modeling** | [`stride-analysis-patterns`](file:///d:/Koupreng-invitation_project/.agents/skills/stride-analysis-patterns) | `wshobson/agents` | 40,168 | `156b7a5e` | MIT | Systematic STRIDE threat modeling, Data Flow Diagram (DFD) trust boundary analysis, and threat mitigation matrices for public invitation endpoints and guest check-in. |
-| **Cybersecurity / Threat Modeling** | [`attack-tree-construction`](file:///d:/Koupreng-invitation_project/.agents/skills/attack-tree-construction) | `wshobson/agents` | 40,168 | `156b7a5e` | MIT | Visual attack path modeling and AND/OR node risk quantification for payment confirmation flows, webhook forgery prevention, and password brute-force defense. |
-| **QA / Performance** | [`performance-optimization`](file:///d:/Koupreng-invitation_project/.agents/skills/performance-optimization) | `addyosmani/agent-skills` | 100,579 | `9d0c60d4` | MIT | Empirical performance workflows: Core Web Vitals (LCP, INP, CLS) optimization, synthetic vs RUM profiling, database query bottlenecks, and N+1 query elimination. |
+| **UI/UX / Accessibility** | [`wcag-audit-patterns`](../.agents/skills/wcag-audit-patterns) | `wshobson/agents` | 40,168 | `156b7a5e` | MIT | Comprehensive WCAG 2.2 AA audit checklists, keyboard traps, ARIA landmarks, screen reader testing, and bilingual contrast verification for public invitations. |
+| **Frontend Engineering** | [`react-state-management`](../.agents/skills/react-state-management) | `wshobson/agents` | 40,168 | `156b7a5e` | MIT | Direct guidance for Zustand store slicing, optimistic UI updates, multi-step RSVP forms, and React 19 state synchronization without unnecessary re-renders. |
+| **Frontend Engineering** | [`tailwind-design-system`](../.agents/skills/tailwind-design-system) | `wshobson/agents` | 40,168 | `156b7a5e` | MIT | Native Tailwind CSS v4 guidance focusing on `@theme`, OKLCH design tokens, CSS-first configurations, and class-variance-authority (cva) component variants. |
+| **Backend Engineering** | [`architecture-patterns`](../.agents/skills/architecture-patterns) | `wshobson/agents` | 40,168 | `156b7a5e` | MIT | Enforces Clean Architecture, Hexagonal / Ports & Adapters, and Domain-Driven Design bounded contexts (`auth`, `invitation`, `checkin`, `payment`, `reporting`). |
+| **Backend / API Design** | [`api-and-interface-design`](../.agents/skills/api-and-interface-design) | `addyosmani/agent-skills` | 100,579 | `9d0c60d4` | MIT | Contract-first REST API boundaries, Hyrum's Law adherence, strict edge validation for untrusted third-party inputs (Telegram webhooks, Google OAuth). |
+| **Cybersecurity / AppSec** | [`auth-implementation-patterns`](../.agents/skills/auth-implementation-patterns) | `wshobson/agents` | 40,168 | `156b7a5e` | MIT | Hardened authentication standards: short-lived JWT access tokens, refresh token rotation, OAuth2/OIDC flows, RBAC authorization, and cookie CSRF protection. |
+| **Cybersecurity / Threat Modeling** | [`stride-analysis-patterns`](../.agents/skills/stride-analysis-patterns) | `wshobson/agents` | 40,168 | `156b7a5e` | MIT | Systematic STRIDE threat modeling, Data Flow Diagram (DFD) trust boundary analysis, and threat mitigation matrices for public invitation endpoints and guest check-in. |
+| **Cybersecurity / Threat Modeling** | [`attack-tree-construction`](../.agents/skills/attack-tree-construction) | `wshobson/agents` | 40,168 | `156b7a5e` | MIT | Visual attack path modeling and AND/OR node risk quantification for payment confirmation flows, webhook forgery prevention, and password brute-force defense. |
+| **QA / Performance** | [`performance-optimization`](../.agents/skills/performance-optimization) | `addyosmani/agent-skills` | 100,579 | `9d0c60d4` | MIT | Empirical performance workflows: Core Web Vitals (LCP, INP, CLS) optimization, synthetic vs RUM profiling, database query bottlenecks, and N+1 query elimination. |
 
 ---
 

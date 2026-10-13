@@ -23,21 +23,18 @@ if [[ ! -f "${LOCK_FILE}" ]]; then
 fi
 
 if ! command -v jq >/dev/null 2>&1; then
-    echo "WARNING: jq not installed. Verifying file presence only."
-    MISSING=0
-    for skill in $(ls -d "${SKILLS_DIR}"/*/ 2>/dev/null); do
-        if [[ -f "${skill}SKILL.md" ]]; then
-            echo "  [+] Found skill: $(basename "${skill}")"
-        else
-            echo "  [-] Missing SKILL.md in: $(basename "${skill}")"
-            MISSING=$((MISSING + 1))
-        fi
-    done
-    if [[ $MISSING -eq 0 ]]; then
-        echo "All skills verified."
-        exit 0
+    if python -c "import sys" >/dev/null 2>&1; then
+        echo "Notice: jq not found; delegating to python for full SHA-256 cryptographic verification..."
+        python "${PROJECT_ROOT}/scripts/validate-agent-routing.py"
+        exit $?
+    elif python3 -c "import sys" >/dev/null 2>&1; then
+        echo "Notice: jq not found; delegating to python3 for full SHA-256 cryptographic verification..."
+        python3 "${PROJECT_ROOT}/scripts/validate-agent-routing.py"
+        exit $?
     else
-        echo "Verification failed."
+        echo "ERROR: Neither 'jq' nor a functioning 'python/python3' interpreter was found." >&2
+        echo "Cannot perform required SHA-256 cryptographic integrity verification without jq or Python." >&2
+        echo "Please install jq or Python 3 to verify ai-skills.lock.json." >&2
         exit 1
     fi
 fi
@@ -95,9 +92,38 @@ for i in $(seq 0 $((TOTAL_SKILLS - 1))); do
     fi
 done
 
+CUSTOM_SKILLS=(
+    "koupreng-premium-ux"
+    "koupreng-backend-standards"
+    "koupreng-payment-security"
+    "koupreng-database-flyway"
+    "koupreng-qa-release"
+    "koupreng-deployment"
+)
+
+echo ""
+echo "Checking Koupreng Custom Canonical Skills..."
+CUSTOM_VERIFIED=0
+
+for c_skill in "${CUSTOM_SKILLS[@]}"; do
+    C_DIR="${SKILLS_DIR}/${c_skill}"
+    C_MD="${C_DIR}/SKILL.md"
+    C_REFS="${C_DIR}/references"
+
+    if [[ -d "${C_DIR}" && -f "${C_MD}" && -d "${C_REFS}" ]]; then
+        echo "  [+] Verified [Koupreng Canonical] ${c_skill}"
+        CUSTOM_VERIFIED=$((CUSTOM_VERIFIED + 1))
+    else
+        echo "  [x] Missing custom skill assets in: ${c_skill}"
+        ALL_VALID=false
+        ERRORS=$((ERRORS + 1))
+    fi
+done
+
 echo "----------------------------------------------------------"
-echo "Verified Skills: ${VERIFIED} / ${TOTAL_SKILLS}"
-echo "Errors: ${ERRORS}"
+echo "Verified Pinned Skills : ${VERIFIED} / ${TOTAL_SKILLS}"
+echo "Verified Custom Skills : ${CUSTOM_VERIFIED} / ${#CUSTOM_SKILLS[@]}"
+echo "Errors                 : ${ERRORS}"
 
 if [[ "${ALL_VALID}" == "true" ]]; then
     echo "All team AI Agent Skills are fully verified and intact!"

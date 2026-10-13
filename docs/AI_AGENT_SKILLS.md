@@ -1,148 +1,164 @@
-# Team AI Agent Skills Guide — E-Invitation Project
+# Team AI Agent Skills Guide — Koupreng E-Invitation Project
 
-> **Project Stack Alignment:** React 19 (Vite, Tailwind CSS 4, Zustand, React Router) · Spring Boot 4 / Java 25 (Spring Security, JPA/Hibernate) · MySQL 8 (Flyway, Redis) · FastAPI / Telegram Bot · Strict AppSec (JWT, Google Auth, Telegram Webhook HMAC, Payment Reconciliation).
-
----
-
-## 1. Overview & System Purpose
-
-The E-Invitation Project employs a reproducible, project-local AI Agent Skill architecture compliant with the [Agent Skills Standard](https://agentskills.io) and OpenAI Codex / Anthropic / Google Antigravity multi-harness specifications.
-
-Agent Skills provide modular, contextual engineering knowledge loaded dynamically when specific engineering workflows are executed. This prevents context bloat while enforcing strict architectural standards, security controls, and design consistency across all team members.
-
-All skills approved for this repository have been:
-1. **Discovered live** from high-reputation, actively maintained repositories.
-2. **Security-audited** against prompt injections, arbitrary shell execution, unauthorized network egress, and secret harvesting.
-3. **Verified non-redundant** against pre-existing capabilities.
-4. **Pinned to exact Git commit SHAs** in [`ai-skills.lock.json`](file:///d:/Koupreng-invitation_project/ai-skills.lock.json).
-5. **Vendored project-locally** into [`.agents/skills/`](file:///d:/Koupreng-invitation_project/.agents/skills) under permissive MIT licenses.
+> **Project Stack Alignment:** React 19 (Vite 8, Tailwind CSS 4, Zustand 5, React Router 7) · Spring Boot 4.0.8 / Java 25 (Spring Security, JPA/Hibernate, Flyway) · MySQL 8.0 (`utf8mb4_unicode_ci`, Redis 7.4) · FastAPI / Telegram Bot · Strict AppSec (JWT, Google Auth, Telegram Webhook HMAC, ABA Payment Reconciliation).
 
 ---
 
-## 2. Complete Skills Inventory
+## 1. What the Skills System Does
 
-### A. Newly Installed Project-Local Skills (`.agents/skills/`)
-
-| Skill | Category | Source Repository | Commit SHA | License | Primary Focus |
-|---|---|---|---|---|---|
-| [`wcag-audit-patterns`](file:///d:/Koupreng-invitation_project/.agents/skills/wcag-audit-patterns) | UI/UX / Accessibility | `wshobson/agents` | `156b7a5e` | MIT | WCAG 2.2 AA audit matrix, focus management, screen reader test patterns, bilingual contrast |
-| [`react-state-management`](file:///d:/Koupreng-invitation_project/.agents/skills/react-state-management) | Frontend Engineering | `wshobson/agents` | `156b7a5e` | MIT | Zustand store slices, optimistic UI updates, form/URL state integration, React 19 state |
-| [`tailwind-design-system`](file:///d:/Koupreng-invitation_project/.agents/skills/tailwind-design-system) | Frontend Engineering | `wshobson/agents` | `156b7a5e` | MIT | Tailwind CSS v4 `@theme`, CSS-first configuration, OKLCH tokens, variant authority |
-| [`architecture-patterns`](file:///d:/Koupreng-invitation_project/.agents/skills/architecture-patterns) | Backend Engineering | `wshobson/agents` | `156b7a5e` | MIT | Clean Architecture, Hexagonal / Ports & Adapters, Domain-Driven Design bounded contexts |
-| [`api-and-interface-design`](file:///d:/Koupreng-invitation_project/.agents/skills/api-and-interface-design) | Backend / API Design | `addyosmani/agent-skills` | `9d0c60d4` | MIT | Contract-first API boundaries, Hyrum's Law, structured errors, untrusted webhook validation |
-| [`auth-implementation-patterns`](file:///d:/Koupreng-invitation_project/.agents/skills/auth-implementation-patterns) | Cybersecurity / AppSec | `wshobson/agents` | `156b7a5e` | MIT | JWT lifecycle, short-lived tokens, refresh rotation, OAuth2/OIDC, RBAC, session cookie hardening |
-| [`stride-analysis-patterns`](file:///d:/Koupreng-invitation_project/.agents/skills/stride-analysis-patterns) | Cybersecurity / Threat Modeling | `wshobson/agents` | `156b7a5e` | MIT | Systematic STRIDE threat analysis, DFD trust boundaries, threat mitigation mappings |
-| [`attack-tree-construction`](file:///d:/Koupreng-invitation_project/.agents/skills/attack-tree-construction) | Cybersecurity / Threat Modeling | `wshobson/agents` | `156b7a5e` | MIT | Attack path graph modeling, AND/OR logic trees, defense gap identification, payment flow defense |
-| [`performance-optimization`](file:///d:/Koupreng-invitation_project/.agents/skills/performance-optimization) | QA / Performance | `addyosmani/agent-skills` | `9d0c60d4` | MIT | Core Web Vitals (LCP, INP, CLS), frontend bundle profiling, backend query tuning, N+1 fix |
-
-### B. Pre-Existing Project Skills (`.agents/skills/`)
-
-- `banner-design`: Promotional and invitation visual banner generation.
-- `brand`: Brand identity, voice, tone, and visual guidelines.
-- `build-awwwards-quality-sites`: High-impact landing page motion and creative direction.
-- `design`: General design tokens, CIP mockups, and presentations.
-- `design-system`: Token architecture and UI component specifications.
-- `frontend-design`: Intentional visual design avoiding generic template aesthetics.
-- `slides`: Presentation slides with Chart.js.
-- `ui-styling`: Radix UI / shadcn style component integration.
-- `ui-ux-pro-max`: Multi-platform UI/UX intelligence database (colors, typography, heuristics).
-- `vercel-react-best-practices`: Vercel performance and architecture patterns.
-- `vercel-react-view-transitions`: Native browser View Transition API choreography.
-
-### C. Retained User/Global Skills (`~/.codex/skills/`)
-
-- `spring-boot-engineer`: Spring Boot 3/4 baseline configurations, controllers, and JPA repositories.
-- `sql-pro`: Complex query formulation, CTEs, window functions, and EXPLAIN plans.
-- `security-best-practices`: Language-specific secure coding guidance (Python, JS, Go).
-- `playwright`: End-to-end browser test automation.
-- `test-master`: Test slicing, unit testing, and test pyramid workflows.
-- `code-reviewer`: Automated patch inspection and defect detection.
-- `fastapi`: Python FastAPI service configuration and endpoint patterns.
-- `styleseed`: StyleSeed design token generation and UI review suite.
+The Koupreng AI Agent Skills infrastructure equips AI coding assistants (OpenAI Codex, Claude Code, Gemini CLI, Antigravity, Cursor) with modular, domain-specific engineering guidance. Rather than dumping entire style guides, architecture patterns, and security manuals into every context window, skills are loaded **on-demand** based on the active task.
 
 ---
 
-## 3. Skill Precedence & Conflict Resolution Rules
+## 2. Where Canonical Skill Files Live
 
-When multiple skills offer guidance on a shared technical area, AI agents and engineers must enforce the following strict precedence hierarchy:
-
-```
-[Level 1: Highest] Project Security Rules & Codebase Invariants
-       ↓
-[Level 2] Framework-Specific & Architecture Guidance
-       ↓
-[Level 3] Domain & State Management Patterns
-       ↓
-[Level 4: Lowest] General Design, Style & Aesthetic Guidance
+All canonical, project-local skill packages live directly under:
+```text
+.agents/skills/<skill-name>/
+  ├── SKILL.md          # Primary specification with YAML frontmatter
+  └── references/       # Targeted technical deep-dives
 ```
 
-### Concrete Conflict Scenarios & Precedence:
-
-1. **Security vs Convenience:**
-   - Any conflict between security rules (`auth-implementation-patterns`, `stride-analysis-patterns`) and ease-of-use or design flexibility is resolved in favor of **Security**.
-   - Example: JWT tokens must remain short-lived with rotation, and Telegram webhooks must verify HMAC signatures, regardless of UI simplicity.
-
-2. **Tailwind CSS 4 vs Legacy Tailwind v3:**
-   - The project uses Tailwind CSS 4.
-   - Use `tailwind-design-system` over legacy Tailwind tutorials.
-   - Precedence: `@theme` in CSS-first configuration overrides any obsolete `tailwind.config.js` guidance.
-
-3. **React State Architecture:**
-   - Use `react-state-management` for Zustand store slicing and optimistic UI updates.
-   - Precedence: `react-state-management` governs store topology; `vercel-react-best-practices` governs rendering lifecycle and bundle splitting.
-
-4. **API Design & Domain Boundaries:**
-   - Use `architecture-patterns` to enforce Domain-Driven Design and Clean Architecture boundaries (`domain/` vs `application/` vs `infrastructure/`).
-   - Use `api-and-interface-design` for REST DTO contracts, input validation, and backwards compatibility.
-   - Precedence: Application domain invariants override generic REST defaults.
-
-5. **Existing Codebase Conventions:**
-   - Repository-specific conventions (e.g. bilingual Khmer/English dictionary structure, Flyway migration versioning `V<n>__...sql`) always supersede generic agent rules.
+The router and index live at:
+- **Routing Engine:** [`.agents/ROUTER.md`](../.agents/ROUTER.md)
+- **Skills Directory Index:** [`.agents/SKILLS_INDEX.md`](../.agents/SKILLS_INDEX.md)
+- **Integrity Lockfile:** [`ai-skills.lock.json`](../ai-skills.lock.json)
 
 ---
 
-## 4. Team Task Routing Matrix
+## 3. How Codex, Claude, and Gemini Discover Instructions
 
-Agents and developers should activate skills according to the nature of the task:
-
-| Engineering Task | Recommended Skills to Activate | Key Objectives |
-|---|---|---|
-| **UX / UI Work & Theming** | `ui-ux-pro-max`<br>`tailwind-design-system`<br>`wcag-audit-patterns` | Ensure responsive layout, consistent OKLCH tokens, accessible contrast, and mobile readiness. |
-| **React Component / State** | `react-state-management`<br>`vercel-react-best-practices`<br>`frontend-design` | Maintain clean Zustand store boundaries, eliminate unnecessary re-renders, handle loading states. |
-| **Accessibility Audit / Remediation** | `wcag-audit-patterns`<br>`playwright`<br>`ui-styling` | Verify keyboard navigation, ARIA landmarks, form labels, and bilingual screen-reader behavior. |
-| **Spring Boot API Development** | `spring-boot-engineer`<br>`architecture-patterns`<br>`api-and-interface-design` | Implement clean layered architecture, immutable DTO contracts, input validation, and error envelopes. |
-| **Authentication & Tokens** | `auth-implementation-patterns`<br>`stride-analysis-patterns`<br>`security-best-practices` | Ensure secure JWT signing, refresh token rotation, OAuth2 handling, and CSRF protection. |
-| **Payment & Webhook Flow** | `attack-tree-construction`<br>`api-and-interface-design`<br>`auth-implementation-patterns` | Map attack vectors, enforce idempotency keys, validate untrusted payloads, prevent double-spend. |
-| **Database & Migration Work** | `sql-pro`<br>`performance-optimization`<br>`architecture-patterns` | Optimize queries, eliminate N+1 scans, design non-blocking Flyway migrations, verify index coverage. |
-| **Performance Tuning & Profiling** | `performance-optimization`<br>`vercel-react-best-practices`<br>`sql-pro` | Measure before optimizing; optimize Core Web Vitals (LCP, INP, CLS); tune database bottlenecks. |
-| **Full-Stack Feature Implementation** | `architecture-patterns`<br>`api-and-interface-design`<br>`react-state-management`<br>`wcag-audit-patterns`<br>`test-master` | End-to-end alignment from domain models and REST APIs to reactive Zustand stores and accessible UI. |
+- **OpenAI Codex:** Automatically discovers and loads [`AGENTS.md`](../AGENTS.md) at the repository root. `AGENTS.md` directs Codex to consult [`.agents/ROUTER.md`](../.agents/ROUTER.md). Supplementary workflow details live in [`CODEX.md`](../CODEX.md).
+- **Claude Code:** Automatically reads [`CLAUDE.md`](../CLAUDE.md) at the root, which imports canonical instructions via `@./AGENTS.md` and discovers project skills in `.agents/skills/`.
+- **Gemini CLI:** Reads [`GEMINI.md`](../GEMINI.md) at the root, importing `@./AGENTS.md` and recognizing the workspace skill path `.agents/skills/`.
 
 ---
 
-## 5. Team Bootstrap & Reproducibility Guide
+## 4. How a Skill is Selected
 
-The skill set is completely locked and self-contained within the repository.
+AI agents and team members follow a deterministic selection process:
+1. Identify the task domain (e.g. Wedding invitation UI, Spring Boot API, Payment reconciliation).
+2. Consult the decision matrix in [`.agents/ROUTER.md`](../.agents/ROUTER.md).
+3. Select **one primary skill**.
+4. Select **at most two supporting skills** if the task spans multiple disciplines.
+5. Read only the chosen skill's `SKILL.md` and required `references/` before touching code.
 
-### Verifying Installation Integrity
+---
 
-To verify that all skill files are present and match their cryptographic SHA-256 hashes:
+## 5. How to Verify Installation
+
+Run the automated integrity verification tools from the project root:
 
 **PowerShell (Windows):**
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\setup-ai-skills.ps1 -VerifyOnly
 ```
 
-**Bash (Linux / macOS):**
+**Bash / Git Bash (Linux / macOS / Windows):**
 ```bash
-chmod +x ./scripts/setup-ai-skills.sh
 ./scripts/setup-ai-skills.sh
 ```
 
-### Lockfile Manifest (`ai-skills.lock.json`)
+**Python 3 (Cross-Platform Routing & Hash Validator):**
+```powershell
+python scripts/validate-agent-routing.py
+```
 
-The lockfile pins each skill to:
-- Upstream GitHub repository and exact Git commit SHA.
-- License type and local target directory.
-- Individual relative file paths, byte sizes, and SHA-256 checksums.
+All 10 pinned external skills, 6 custom Koupreng skills, frontmatter manifests, router references, and entry file imports are verified with exit code 0.
 
-Never modify files inside `.agents/skills/` without updating `ai-skills.lock.json` and obtaining security approval.
+---
+
+## 6. How to Add an Approved Skill
+
+To introduce a new third-party skill:
+1. Verify upstream repository ownership and license (MIT, Apache-2.0, or BSD). Reject copyleft (GPL, CC-BY-SA) or unverified sources.
+2. Resolve an immutable Git commit SHA (never track mutable branches).
+3. Inspect `SKILL.md` for executable commands, prompt injections, or unauthorized network calls.
+4. Prefer documentation-only skills with zero external runtime dependencies.
+5. Vendor into `.agents/skills/<skill-name>/`.
+6. Calculate SHA-256 hashes and byte counts for all files.
+7. Record the entry into `ai-skills.lock.json`.
+8. Update `.agents/SKILLS_INDEX.md` and `.agents/ROUTER.md`.
+9. Verify using `python scripts/validate-agent-routing.py`.
+
+---
+
+## 7. How to Update a Pinned Skill
+
+1. Identify the new target upstream commit SHA.
+2. Review the upstream diff and verify security compliance.
+3. Update the files in `.agents/skills/<skill-name>/`.
+4. Recompute file hashes and update `ai-skills.lock.json`.
+5. Run `python scripts/validate-agent-routing.py` and commit changes.
+
+---
+
+## 8. How to Avoid Conflicting Skills
+
+When skills offer overlapping or differing recommendations, follow this strict precedence hierarchy:
+1. **Security Invariants & Codebase Constraints:** Token expiration, HMAC webhook validation, server-owned prices, and IDOR prevention take precedence over all else.
+2. **Framework & Architecture Contracts:** Java 25 / Spring Boot 4 boundaries, ArchUnit tests, and React 19 conventions override generic tutorials.
+3. **Koupreng Custom Skills:** (`koupreng-*` custom skills provide the authoritative overlay).
+4. **Validated Vendor Skills:** Pinned skills in `ai-skills.lock.json`.
+5. **Generic Aesthetic Defaults:** General styling guidelines.
+
+*Repository code conventions and existing test suites always override generic skill defaults.*
+
+---
+
+## 9. How to Troubleshoot Skill Activation
+
+| Issue | Root Cause | Solution |
+|---|---|---|
+| Agent ignores custom skill | Agent did not read `ROUTER.md` | In your prompt, remind the agent: "Consult `.agents/ROUTER.md` and activate `koupreng-backend-standards`." |
+| Hash mismatch error in script | File was edited without updating lockfile | Revert accidental edits in `.agents/skills/` or update checksum in `ai-skills.lock.json`. |
+| Script references `CLAUDE_PLUGIN_ROOT` | Outdated environment path in third-party skill | Use the portable project command: `python .agents/skills/ui-ux-pro-max/scripts/search.py "<query>"`. |
+| Spring Boot 3 deprecated annotations | Generic `spring-boot-engineer` loaded alone | Activate `koupreng-backend-standards` as primary skill for Spring Boot 4 & Java 25 compatibility. |
+
+---
+
+## 10. How to Reduce Context & Token Usage
+
+1. **Never Load All Skills:** Do not load the whole `.agents/skills` tree into context.
+2. **Read Slices, Not Entire Files:** Inspect only the specific lines or classes under modification.
+3. **Targeted Reference Loading:** Only open references directly relevant to the current user request (e.g. read `aba-telegram-reconciliation.md` only when touching payments).
+4. **Run Targeted Tests:** Run only unit tests covering the modified function instead of the entire monorepo suite.
+
+---
+
+## 11. Practical Team Routing Examples
+
+### Example A: Premium Wedding Invitation UI
+> **User Prompt:** "Improve my wedding invitation UI to look premium."  
+> **Routing:**
+> - **Primary:** `koupreng-premium-ux`
+> - **Supporting:** `ui-ux-pro-max`, `frontend-design`  
+> - **Action:** Apply gold/cream palettes (`--wed-gold-400`, `--wed-cream`), refine Khmer typography (`Moul` display headers, `Noto Sans Khmer` body with `leading-relaxed`), ensure 3D wax seal or envelope opening animation respects reduced-motion.
+
+### Example B: Secure Spring Boot API Endpoint
+> **User Prompt:** "Build a secure Spring Boot endpoint for guest RSVP check-in."  
+> **Routing:**
+> - **Primary:** `koupreng-backend-standards`
+> - **Supporting:** `api-and-interface-design`, `spring-boot-engineer`  
+> - **Action:** Implement clean architecture boundaries, ensure controller delegates to application use case, validate request DTO with Jakarta constraints, return `ApiResponse<T>`, verify with ArchUnit test (`mvn test -Dtest=ArchitectureRulesTests`).
+
+### Example C: ABA Telegram Payment Reconciliation
+> **User Prompt:** "Test ABA Telegram payment verification and settle candidate orders."  
+> **Routing:**
+> - **Primary:** `koupreng-payment-security`
+> - **Supporting:** `koupreng-qa-release`, `stride-analysis-patterns`  
+> - **Action:** Verify webhook secret and bot ID whitelisting, enforce pessimistic locking on candidate order, match exact amount and currency, check payer suffix, prevent double-spend replay, test scenario without granting access to unverified browser claims.
+
+### Example D: Guest Management QA
+> **User Prompt:** "Run QA on the guest management module."  
+> **Routing:**
+> - **Primary:** `koupreng-qa-release`
+> - **Supporting:** `test-master`, `playwright`  
+> - **Action:** Execute targeted Vitest specs in `apps/frontend-user/src/features/guests/`, execute backend guest service unit tests, run Playwright E2E smoke tests if browser flows are affected, report exact pass/fail counts.
+
+### Example E: Security Audit & SAST
+> **User Prompt:** "Review security vulnerabilities and configure static analysis."  
+> **Routing:**
+> - **Primary:** `sast-configuration`
+> - **Supporting:** `security-best-practices`, `stride-analysis-patterns`  
+> - **Action:** Configure Semgrep and CodeQL rules for Java, Python, and TypeScript, review authentication token lifetimes, audit webhook boundaries, verify no hardcoded secrets exist.
