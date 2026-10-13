@@ -85,6 +85,13 @@ public class Notification {
     @Column(name = "provider_message_id", length = 255)
     private String providerMessageId;
 
+    @Column(name = "payment_delivery_key", unique = true, length = 100)
+    private String paymentDeliveryKey;
+    @Column(name = "delivery_attempts", nullable = false)
+    private int deliveryAttempts;
+    @Column(name = "next_delivery_at")
+    private Instant nextDeliveryAt;
+
     @Column(name = "error_message", columnDefinition = "TEXT")
     private String errorMessage;
 

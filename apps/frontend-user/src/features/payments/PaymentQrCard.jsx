@@ -14,28 +14,12 @@ import {
 import { paymentService } from "./paymentService";
 import { isTerminalStatus, statusMessage } from "./paymentStatus";
 import { toast } from "../../shared/ui/toast";
-import { ABA_STATIC_PAY_LINK, getPaymentQrValue } from "./khqr";
+import { getPaymentQrValue } from "./khqr";
 import "./PaymentPages.css";
 
-const SESSION_DURATION_SECONDS = 180; // 3 minutes session strictly
-
-function getSessionSecondsRemaining(createdAt, expiresAt, now = Date.now()) {
-  let deadline = null;
-  if (createdAt) {
-    const createdTime = new Date(createdAt).getTime();
-    if (!Number.isNaN(createdTime)) {
-      deadline = createdTime + SESSION_DURATION_SECONDS * 1000;
-    }
-  }
-  if (expiresAt) {
-    const expTime = new Date(expiresAt).getTime();
-    if (!Number.isNaN(expTime)) {
-      deadline = deadline ? Math.min(deadline, expTime) : expTime;
-    }
-  }
-  if (!deadline) {
-    deadline = now + SESSION_DURATION_SECONDS * 1000;
-  }
+function getSessionSecondsRemaining(expiresAt, now = Date.now()) {
+  const deadline = expiresAt ? new Date(expiresAt).getTime() : null;
+  if (deadline === null || !Number.isFinite(deadline)) return null;
   return Math.max(0, Math.floor((deadline - now) / 1000));
 }
 
@@ -118,8 +102,8 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
   };
 
   const remaining = useMemo(
-    () => getSessionSecondsRemaining(order?.createdAt, order?.expiresAt, now),
-    [order?.createdAt, order?.expiresAt, now]
+    () => getSessionSecondsRemaining(order?.expiresAt, now),
+    [order?.expiresAt, now]
   );
 
   const isExpired = status === "EXPIRED" || (waitingForPayment && remaining !== null && remaining <= 0);
@@ -190,25 +174,25 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
           {/* KHQR Card Top Header */}
           <div className="payment-khqr-header">
             <div className="payment-khqr-tag">ABA PAY</div>
-            <div className="payment-khqr-sub">SCAN TO PAY • ABA MOBILE</div>
+          <div className="payment-khqr-sub">OPEN FIXED PAYWAY LINK</div>
           </div>
 
           {/* Clean High-Contrast Vector QR */}
           <div className={`payment-qr-canvas-wrap ${isExpired ? "is-expired" : ""}`}>
-            <QRCode
+            {qrValue ? <QRCode
               value={qrValue}
               size={220}
               level="M"
               className="payment-qr-code-svg"
               style={{ height: "auto", maxWidth: "100%", width: "100%", display: "block" }}
-            />
+            /> : <p role="alert">Payment link unavailable. Please retry.</p>}
 
             {/* Expired Overlay */}
             {isExpired && (
               <div className="payment-qr-expired-overlay">
                 <span className="payment-qr-expired-badge">⚠️ Session Expired</span>
-                <p className="payment-qr-expired-text">QR Code បានផុតកំណត់ ៣ នាទី</p>
-                <p className="payment-qr-expired-sub">មិនអាចស្កេនទូទាត់បានទៀតទេ</p>
+                <p className="payment-qr-expired-text">Order session expired</p>
+                <p className="payment-qr-expired-sub">The bank link may remain usable. Contact support for late payments.</p>
                 {onRetry && (
                   <button
                     type="button"
@@ -224,7 +208,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
 
           {/* Payee Info */}
           <div className="payment-khqr-footer">
-            <strong>PANHA NY</strong>
+            <strong>ABA PayWay</strong>
             {isExpired ? (
               <span style={{ color: "#ef4444", fontWeight: 700, fontSize: "0.8rem" }}>Expired</span>
             ) : (
@@ -255,7 +239,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
             </div>
             <code className="payment-code-number">{orderCode}</code>
             <small className="payment-trx-id">
-              Transaction ID: {order?.transactionId || "—"}
+              Internal checkout ID: {order?.transactionId || "—"}
             </small>
           </div>
 
@@ -270,10 +254,11 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
           {/* Instructions text */}
           <div className="payment-instructions-lux">
             <p>
-              👉 <strong>របៀបស្កេនទូទាត់៖</strong> បើកកម្មវិធី <strong>ABA Mobile</strong> (ឬ Bakong / ធនាគារណាក៏បាន) រួច Scan QR Code ខាងឆ្វេង។
+              👉 <strong>របៀបទូទាត់៖</strong> Scan this link with your camera or open the ABA PayWay link below.
             </p>
             <p className="payment-muted-lux">
-              ផ្ញើទៅកាន់ <strong>PANHA NY</strong> ចំនួនទឹកប្រាក់ <strong>{order?.currency || "USD"} {Number(order?.amount || 0.01).toFixed(2)}</strong> (គណនី USD: <code>007 830 386</code> / KHR: <code>009 858 816</code>)។
+              Expected: <strong>{order?.currency || "USD"} {Number(order?.amount || 0).toFixed(2)}</strong>.
+              Include the order code in the remark if the bank offers that field. Fixed links may not retain it.
             </p>
             <p style={{ marginTop: "6px", color: "#059669", fontWeight: 600 }}>
               <strong>បន្ទាប់ពីផ្ទេររួច៖</strong> សូមផ្ញើសំណើពិនិត្យការទូទាត់។ សិទ្ធិប្រើគំរូនឹងបើកក្រោយការផ្ទៀងផ្ទាត់ពីប្រព័ន្ធ ឬអ្នកគ្រប់គ្រង។ (Access follows verified payment confirmation.)
@@ -306,8 +291,8 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
           {/* Expired / Failed Panel */}
           {isExpired && (
             <div className="payment-alert-panel expired">
-              <strong>⚠️ Session និង QR Code នេះបានផុតកំណត់ហើយ</strong>
-              <p>ប្រព័ន្ធបានបិទការទូទាត់សម្រាប់ Session នេះ។ សូមចុចប៊ូតុងខាងក្រោមដើម្បីបង្កើត QR ថ្មី។</p>
+              <strong>⚠️ Order session expired</strong>
+              <p>Start a new order before paying. Late payment evidence requires manual review; bank link expiry is controlled by ABA.</p>
               {onRetry && (
                 <button
                   type="button"
@@ -350,14 +335,14 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
                 }}
               >
                 <IoSparkles />
-                <span>{claiming ? "កំពុងផ្ញើសំណើ..." : "ខ្ញុំបានផ្ទេរប្រាក់ — ស្នើពិនិត្យ (Request payment review)"}</span>
+                <span>{claiming ? "កំពុងផ្ញើសំណើ..." : "ផ្ទៀងផ្ទាត់ការទូទាត់ — ស្នើពិនិត្យ (Request payment review)"}</span>
               </button>
             )}
 
-            {waitingForPayment && !isExpired && (
+            {waitingForPayment && !isExpired && qrValue && (
               <a
                 className="payment-action-secondary-btn"
-                href={order?.checkoutUrl || ABA_STATIC_PAY_LINK}
+                href={qrValue}
                 target="_blank"
                 rel="noopener noreferrer"
               >

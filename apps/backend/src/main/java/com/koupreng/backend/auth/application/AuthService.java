@@ -351,5 +351,8 @@ public class AuthService {
                 || !password.chars().anyMatch(Character::isDigit)) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Password must contain at least one letter and one number");
         }
+        if (!password.chars().anyMatch(Character::isUpperCase)) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Password must contain at least one uppercase letter");
+        }
     }
 }

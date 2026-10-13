@@ -27,7 +27,11 @@ function valueToNumber(...values) {
 }
 
 export function toExpensePayload(form) {
-    const finalAmount = (form.payments || []).reduce((total, payment) => {
+    const validPayments = (form.payments || []).filter((payment) => {
+        const amount = Number(payment.amount);
+        return payment.amount !== "" && Number.isFinite(amount) && amount >= 0;
+    });
+    const finalAmount = validPayments.reduce((total, payment) => {
         const amount = Number(payment.amount);
         return Number.isFinite(amount) && amount >= 0 ? total + amount : total;
     }, 0);
@@ -43,7 +47,7 @@ export function toExpensePayload(form) {
         vendorName: form.vendorName || "",
         notes: JSON.stringify({
             text: form.notesText || "",
-            payments: form.payments || []
+            payments: validPayments
         })
     };
 }

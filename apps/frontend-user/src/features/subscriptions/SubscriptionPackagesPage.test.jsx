@@ -28,6 +28,7 @@ const basicPlan = {
 
 describe("SubscriptionPackagesPage", () => {
   beforeEach(() => {
+    vi.clearAllMocks();
     subscriptionService.packages.mockResolvedValue([basicPlan]);
     subscriptionService.current.mockResolvedValue(null);
     subscriptionService.history.mockResolvedValue([]);
@@ -127,5 +128,28 @@ describe("SubscriptionPackagesPage", () => {
     await act(async () => vi.advanceTimersByTimeAsync(8000));
 
     expect(subscriptionService.order).toHaveBeenCalledTimes(callsBeforeUnmount);
+  });
+
+  it("continues polling through review and displays success only after activation", async () => {
+    subscriptionService.order.mockResolvedValueOnce({ status: "REVIEW_REQUIRED", paymentStatus: "PENDING", active: false })
+      .mockResolvedValue({ status: "ACTIVE", paymentStatus: "PAID", active: true });
+    render(<SubscriptionPackagesPage />);
+    fireEvent.click(await screen.findByRole("button", { name: /subscribe \/ upgrade/i }));
+    fireEvent.change(screen.getByLabelText(/aba account holder name/i), { target: { value: "KOEURNG VIREAK" } });
+    fireEvent.change(screen.getByLabelText(/last 3 digits/i), { target: { value: "247" } });
+    fireEvent.click(screen.getByRole("button", { name: /continue to aba payway/i }));
+    expect(await screen.findByText("Subscription activated successfully.")).toBeInTheDocument();
+    expect(subscriptionService.order).toHaveBeenCalledTimes(2);
+  });
+
+  it("does not announce activation for a paid order without active entitlement", async () => {
+    subscriptionService.order.mockResolvedValue({ status: "REVIEW_REQUIRED", paymentStatus: "PAID", active: false });
+    render(<SubscriptionPackagesPage />);
+    fireEvent.click(await screen.findByRole("button", { name: /subscribe \/ upgrade/i }));
+    fireEvent.change(screen.getByLabelText(/aba account holder name/i), { target: { value: "KOEURNG VIREAK" } });
+    fireEvent.change(screen.getByLabelText(/last 3 digits/i), { target: { value: "247" } });
+    fireEvent.click(screen.getByRole("button", { name: /continue to aba payway/i }));
+    await screen.findByText("Payment received but needs administrator review.");
+    expect(screen.queryByText("Subscription activated successfully.")).not.toBeInTheDocument();
   });
 });

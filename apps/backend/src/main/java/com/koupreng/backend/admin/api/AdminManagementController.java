@@ -466,6 +466,7 @@ public class AdminManagementController {
     @PostMapping("/payments/{orderCode}/confirm")
     public ResponseEntity<ApiResponse<PaymentConfirmResponse>> confirmPayment(
             @PathVariable String orderCode,
+            Authentication authentication,
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     content = @io.swagger.v3.oas.annotations.media.Content(
                             mediaType = "application/json",
@@ -488,10 +489,12 @@ public class AdminManagementController {
                 throw new ApiException(HttpStatus.BAD_REQUEST, "Payment amount must be a valid number");
             }
         }
-        String confirmedBy = body != null && body.get("confirmedBy") != null ? String.valueOf(body.get("confirmedBy")) : "admin";
+        String confirmedBy = authentication.getName();
+        String transactionId = body != null && body.get("paywayTransactionId") != null
+                ? String.valueOf(body.get("paywayTransactionId")) : null;
         return ResponseEntity.ok(ApiResponse.success(
                 "Payment confirmed successfully",
-                paymentHistoryService.confirmPayment(orderCode, amount, confirmedBy)
+                paymentHistoryService.confirmPayment(orderCode, amount, confirmedBy, transactionId)
         ));
     }
 }

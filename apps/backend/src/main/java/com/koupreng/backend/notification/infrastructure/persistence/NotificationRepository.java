@@ -35,4 +35,17 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     );
 
     void deleteByInvitationId(Long invitationId);
+    boolean existsByPaymentDeliveryKey(String paymentDeliveryKey);
+
+    @org.springframework.data.jpa.repository.Lock(jakarta.persistence.LockModeType.PESSIMISTIC_WRITE)
+    @org.springframework.data.jpa.repository.Query("select n from Notification n where n.id = :id")
+    java.util.Optional<Notification> lock(@org.springframework.data.repository.query.Param("id") Long id);
+
+    @org.springframework.data.jpa.repository.Query("""
+            select n.id from Notification n where n.paymentDeliveryKey is not null
+            and n.status = com.koupreng.backend.notification.domain.NotificationStatus.PENDING
+            and n.deliveryAttempts < 3 and n.nextDeliveryAt <= :now order by n.id
+            """)
+    List<Long> paymentDeliveries(@org.springframework.data.repository.query.Param("now") Instant now,
+                                org.springframework.data.domain.Pageable limit);
 }

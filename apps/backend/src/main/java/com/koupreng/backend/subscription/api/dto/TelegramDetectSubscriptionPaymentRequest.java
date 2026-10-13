@@ -25,6 +25,10 @@ public class TelegramDetectSubscriptionPaymentRequest {
     private String telegramMessageId;
     private String telegramSenderId;
     private String telegramSenderUsername;
+    private boolean trustedMerchantAlert;
+    private java.time.Instant merchantMessageAt;
+    @Size(max = 120) private String transactionDateText;
+    @Size(max = 50) private String detectedOrderCode;
 
     @NotNull(message = "Detected amount is required")
     @Positive(message = "Detected amount must be positive")

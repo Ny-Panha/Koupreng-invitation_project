@@ -201,6 +201,10 @@ public class NotificationService {
     ) {
         Notification notification = requireNotification(notificationId);
         applyStatus(notification, request.getStatus(), request.getProviderMessageId(), request.getErrorMessage());
+        if (notification.getPaymentDeliveryKey() != null && request.getStatus() == NotificationStatus.PENDING) {
+            notification.setDeliveryAttempts(0);
+            notification.setNextDeliveryAt(Instant.now());
+        }
         return NotificationResponse.from(notificationRepository.save(notification));
     }
 

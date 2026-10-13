@@ -320,6 +320,9 @@ class TemplatePaymentServiceTests {
         request.setDetectedCurrency("USD");
         request.setPaywayTransactionId("178002414241549");
         request.setPaywayApprovalCode("704787");
+        request.setTrustedMerchantAlert(true);
+        request.setMerchantMessageAt(Instant.now());
+        order.setCreatedAt(Instant.now().minusSeconds(60));
 
         PaymentConfirmResponse response = fixture.service.detectPaymentFromTelegram(request);
 

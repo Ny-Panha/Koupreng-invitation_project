@@ -50,6 +50,10 @@ function Register() {
       setError(auth("passwordMismatch"));
       return;
     }
+    if (password.length < 8 || !/\p{Lu}/u.test(password)) {
+      setError("ពាក្យសម្ងាត់ត្រូវមានយ៉ាងតិច ៨ តួអក្សរ និងអក្សរធំមួយ។ Password needs 8 characters and an uppercase letter.");
+      return;
+    }
 
     setLoading(true);
     try {
@@ -122,6 +126,8 @@ function Register() {
                 placeholder={auth("passwordPlaceholder")}
                 className="auth-input"
                 autoComplete="new-password"
+                minLength={8}
+                maxLength={100}
                 required
               />
               <button type="button" onClick={togglePassword} className="auth-eye-btn" aria-label="Toggle password">

@@ -30,6 +30,11 @@ export default function AdminPaymentsPage() {
     if (!window.confirm(confirmPrompt)) {
       return;
     }
+    const paywayTransactionId = payment.paywayTransactionId || window.prompt(
+      lang === "en" ? "Real ABA transaction ID from the recorded merchant alert:"
+        : "លេខប្រតិបត្តិការ ABA ពិតប្រាកដពីសារធនាគារដែលបានកត់ត្រា៖"
+    );
+    if (!paywayTransactionId?.trim()) return;
     setConfirmingCode(payment.orderCode);
     setActionMessage("");
     try {
@@ -38,6 +43,7 @@ export default function AdminPaymentsPage() {
         amount: payment.amount || 0.01,
         confirmedBy: "admin",
         itemType: payment.itemType || "TEMPLATE",
+        paywayTransactionId: paywayTransactionId.trim(),
       });
       setActionMessage(
         t("payments.confirmSuccess", `Order ${payment.orderCode} confirmed successfully!`, {
@@ -173,7 +179,7 @@ export default function AdminPaymentsPage() {
                     <td>{formatDate(payment.createdAt)}</td>
                     <td>{formatDate(payment.paidAt)}</td>
                     <td>
-                      {String(payment.status || "").includes("PENDING") ? (
+                      {String(payment.status || "").includes("PENDING") || payment.status === "REVIEW_REQUIRED" ? (
                         <button
                           type="button"
                           className="btn btn-primary btn-sm"

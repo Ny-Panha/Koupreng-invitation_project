@@ -17,6 +17,7 @@ import java.time.Instant;
 public class TemplatePaymentStatusResponse {
 
     private String orderCode;
+    @io.swagger.v3.oas.annotations.media.Schema(description = "Backend checkout identifier, not a bank transaction ID")
     private String transactionId;
     private String customerName;
     private Long templateId;

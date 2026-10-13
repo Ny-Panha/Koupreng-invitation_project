@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { renderHook, waitFor } from "@testing-library/react";
+import { act, renderHook, waitFor } from "@testing-library/react";
+import { mediaApi } from "./api/mediaApi";
 import { useMedia } from "./hooks/useMedia";
 
 vi.mock("./api/mediaApi", () => ({
@@ -33,6 +34,11 @@ describe("useMedia", () => {
     const { result } = renderHook(() => useMedia("101"));
     await waitFor(() => expect(result.current.loading).toBe(false));
     expect(typeof result.current.uploadFile).toBe("function");
+    const file = new File(["fixture"], "event.jpg", { type: "image/jpeg" });
+    await act(async () => { await result.current.uploadFile(file); });
+    expect(mediaApi.upload).toHaveBeenCalledWith("101", file, expect.any(Function));
+    expect(result.current.files.at(-1)).toMatchObject({ id: "3", url: "https://cdn.test/new.jpg", mediaType: "IMAGE" });
+    expect(result.current.uploading).toBe(false);
   });
 
   it("handles deleteFile action", async () => {

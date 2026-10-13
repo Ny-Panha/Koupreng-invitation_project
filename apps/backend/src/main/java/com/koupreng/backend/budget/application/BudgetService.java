@@ -308,12 +308,33 @@ public class BudgetService {
         item.setItemName(requiredText(request.getName(), "Budget item name"));
         item.setCategory(normalizeCategory(request.getCategory()));
         item.setEstimatedCost(nonNegativeOrZero(request.getBudget(), "Estimated cost"));
-        item.setActualCost(nonNegativeOrZero(request.getAmount(), "Actual cost"));
+        item.setActualCost(expensePaymentTotal(request.getNotes(), item.getActualCost()));
         item.setCurrency(normalizeCurrency(request.getCurrency()));
         item.setExpenseDate(request.getDate() == null ? LocalDate.now() : request.getDate());
-        item.setStatus(trimToNull(request.getStatus()));
+        item.setStatus(item.getActualCost().signum() > 0
+                && item.getActualCost().compareTo(item.getEstimatedCost()) >= 0 ? "PAID" : "PENDING");
         item.setVendorName(trimToNull(request.getVendorName()));
         item.setNotes(trimToNull(request.getNotes()));
+    }
+
+    private BigDecimal expensePaymentTotal(String notes, BigDecimal previous) {
+        if (notes == null || notes.isBlank() || !notes.stripLeading().startsWith("{")) return valueOrZero(previous);
+        try {
+            var payments = new com.fasterxml.jackson.databind.ObjectMapper().readTree(notes).get("payments");
+            if (payments == null) return valueOrZero(previous);
+            if (!payments.isArray() || payments.size() > 200) throw new IllegalArgumentException();
+            BigDecimal total = BigDecimal.ZERO;
+            for (var payment : payments) {
+                var value = payment.get("amount");
+                if (value == null) throw new IllegalArgumentException();
+                BigDecimal amount = new BigDecimal(value.asText()).setScale(2, java.math.RoundingMode.UNNECESSARY);
+                if (amount.signum() < 0) throw new IllegalArgumentException();
+                total = total.add(amount);
+            }
+            return total;
+        } catch (com.fasterxml.jackson.core.JsonProcessingException | IllegalArgumentException | ArithmeticException exception) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Expense payment entries must contain valid non-negative amounts");
+        }
     }
 
     private BudgetResponse toResponse(Budget budget) {

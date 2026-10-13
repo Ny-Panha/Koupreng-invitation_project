@@ -205,6 +205,7 @@ export default function AdminReportOverview() {
         adminService.report("invitations"),
         adminService.report("payments"),
       ]);
+      if (!platformData && invitationRes.status === "rejected") throw invitationRes.reason;
       if (platformData) {
         setReport(platformData);
       } else if (invitationRes.status === "fulfilled") {
@@ -264,6 +265,7 @@ export default function AdminReportOverview() {
           adminService.report("invitations"),
           adminService.report("payments"),
         ]);
+        if (!platformData && invitationRes.status === "rejected") throw invitationRes.reason;
         if (!active) return;
         if (platformData) {
           setReport(platformData);
@@ -318,6 +320,15 @@ export default function AdminReportOverview() {
 
   // Aggregate Category Metrics for Donut & Breakdown
   const categoryStats = useMemo(() => {
+    if (Array.isArray(summary.eventCategoryBreakdown)) {
+      const counts = new Map(summary.eventCategoryBreakdown.map((row) => [
+        row.category === "ANNIVERSARY_BIRTHDAY" ? "BIRTHDAY" : row.category, Number(row.count) || 0,
+      ]));
+      const total = [...counts.values()].reduce((sum, count) => sum + count, 0);
+      return EVENT_CATEGORIES.map((cat) => ({ ...cat, total: counts.get(cat.key) || 0,
+        published: 0, draft: 0, publishRate: 0,
+        percent: total ? Math.round((counts.get(cat.key) || 0) / total * 100) : 0 }));
+    }
     const total = invitations.length || 1;
     const grouped = {};
 
@@ -344,11 +355,11 @@ export default function AdminReportOverview() {
         publishRate,
       };
     });
-  }, [invitations]);
+  }, [invitations, summary.eventCategoryBreakdown]);
 
   // Compute SVG Donut Slices
   const donutSlices = useMemo(() => {
-    const total = invitations.length;
+    const total = categoryStats.reduce((sum, cat) => sum + cat.total, 0);
     if (!total) return [];
     const C = 2 * Math.PI * 60; // circumference for r=60 (~376.99)
     let accumulated = 0;
@@ -368,12 +379,12 @@ export default function AdminReportOverview() {
           dashOffset,
         };
       });
-  }, [invitations.length, categoryStats]);
+  }, [categoryStats]);
 
   // Revenue Metrics from paymentsReport
   const paymentsSummary = useMemo(() => paymentsReport?.summary || {}, [paymentsReport]);
-  const paidUsd = paymentsSummary.paidAmountUsd !== undefined ? Number(paymentsSummary.paidAmountUsd) : 0;
-  const paidKhr = paymentsSummary.paidAmountKhr !== undefined ? Number(paymentsSummary.paidAmountKhr) : 0;
+  const paidUsd = Number(summary.revenueByCurrency?.USD ?? summary.totalRevenueUsd ?? paymentsSummary.paidAmountUsd ?? 0);
+  const paidKhr = Number(summary.revenueByCurrency?.KHR ?? paymentsSummary.paidAmountKhr ?? 0);
   const paidPaymentsCount = paymentsSummary.paidPayments !== undefined ? Number(paymentsSummary.paidPayments) : 0;
 
   // Transactions list from report or paymentsReport
@@ -584,6 +595,16 @@ export default function AdminReportOverview() {
         />
       </section>
 
+      {Array.isArray(summary.subscriptionTiers) && (
+        <section className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-zinc-800" aria-label="Subscription packages report">
+          <h2 className="text-sm font-bold">{lang === "en" ? "Subscription packages report" : "របាយការណ៍ប្រភេទ Subscription"}</h2>
+          <ul className="mt-3 grid gap-3 sm:grid-cols-3">
+            {summary.subscriptionTiers.map((tier) => <li key={tier.tier} className="rounded-xl bg-slate-50 p-3 dark:bg-zinc-900">
+              <span>{tier.tier}</span>: <strong>{tier.activeSubscriptions}</strong>
+            </li>)}
+          </ul>
+        </section>
+      )}
       {/* Task 2: Interactive Event Categories Widget (Donut + Breakdown Component) */}
       <section
         className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-zinc-800 dark:bg-[#111113]"
@@ -656,7 +677,7 @@ export default function AdminReportOverview() {
               {/* Center count */}
               <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center">
                 <span className="text-2xl font-black text-slate-900 dark:text-zinc-100">
-                  {invitations.length}
+                  {categoryStats.reduce((sum, cat) => sum + cat.total, 0)}
                 </span>
                 <span className="text-[10px] font-medium text-slate-400 dark:text-zinc-500">
                   {t("reports.donutCenterTotal", "សរុប / Total")}
@@ -756,7 +777,7 @@ export default function AdminReportOverview() {
                 </span>
                 {paidKhr > 0 && (
                   <span className="text-sm font-bold text-slate-600 dark:text-zinc-300">
-                    + {formatMoney(paidKhr, "KHR")}
+                    {formatMoney(paidKhr, "KHR")}
                   </span>
                 )}
                 <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400">

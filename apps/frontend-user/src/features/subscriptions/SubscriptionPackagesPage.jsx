@@ -103,14 +103,14 @@ export default function SubscriptionPackagesPage() {
   };
 
   useEffect(() => {
-    if (!checkout?.orderCode || checkout.stage !== "waiting") return undefined;
+    if (!checkout?.orderCode || !["waiting", "review"].includes(checkout.stage)) return undefined;
 
     let cancelled = false;
     const poll = async () => {
       try {
         const order = await subscriptionService.order(checkout.orderCode);
         if (cancelled) return;
-        if (order.active || order.status === "ACTIVE" || order.paymentStatus === "PAID") {
+        if (order.active && order.status === "ACTIVE" && order.paymentStatus === "PAID") {
           setCheckout((value) => ({ ...value, ...order, stage: "success" }));
           toast.success("Subscription activated successfully.");
           await load();
@@ -244,6 +244,7 @@ function CheckoutModal({ checkout, saving, onChange, onSubmit, onClose }) {
             <Summary label="ABA account" value={`*${checkout.payerAccountLast3}`} />
             <Summary label="Order" value={checkout.orderCode} code />
             <Summary label="Status" value={checkout.status || "PENDING_PAYMENT"} />
+            <Summary label="Payment status" value={checkout.paymentStatus || "PENDING"} />
             <Summary label="Expires" value={checkout.expiresAt ? new Date(checkout.expiresAt).toLocaleString() : "—"} />
           </div>
           {checkout.stage === "waiting" && checkout.paymentUrl && <a href={checkout.paymentUrl} target="_blank" rel="noreferrer" style={{ ...buttonStyle, boxSizing: "border-box", background: "#0f766e", color: "white", textAlign: "center", textDecoration: "none" }}>Continue to ABA PayWay <ExternalLink size={15} style={{ verticalAlign: "middle" }} /></a>}

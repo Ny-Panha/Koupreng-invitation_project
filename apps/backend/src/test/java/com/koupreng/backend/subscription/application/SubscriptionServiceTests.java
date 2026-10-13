@@ -83,6 +83,7 @@ class SubscriptionServiceTests {
     @Test
     void exactTelegramEvidenceActivatesOnePendingSubscriptionAtomically() {
         Fixture fixture = fixture();
+        fixture.properties.setAutoConfirmTelegramDetected(true);
         Subscription pending = pendingSubscription(fixture.user, "PRO", "199.00", "247");
         when(fixture.subscriptionRepository.findPendingMatchesForUpdate(
                 eq("USD"), eq(new BigDecimal("199.00")), eq("247"), any()))
@@ -111,6 +112,51 @@ class SubscriptionServiceTests {
         assertEquals(SubscriptionPaymentDetectionStatus.UNMATCHED, response.status());
         assertFalse(pending.isActive());
         verify(fixture.subscriptionRepository, never()).save(pending);
+    }
+
+    @Test
+    void matchingEvidenceRequiresReviewByDefault() {
+        Fixture fixture = fixture();
+        Subscription pending = pendingSubscription(fixture.user, "PRO", "199.00", "247");
+        when(fixture.subscriptionRepository.findPendingMatchesForUpdate(any(), any(), any(), any()))
+                .thenReturn(List.of(pending));
+        var response = fixture.service.detectTelegramPayment(detectionRequest("199.00", "247", "trx-default"));
+        assertEquals(SubscriptionPaymentDetectionStatus.REVIEW_REQUIRED, response.status());
+        assertFalse(pending.isActive());
+        assertEquals("PENDING", pending.getPaymentStatus());
+    }
+
+    @ParameterizedTest
+    @org.junit.jupiter.params.provider.ValueSource(strings = {"wrongName", "missingName", "reference", "orderReference", "competingTemplate", "untrusted", "oldAlert"})
+    void unsafeEvidenceNeverActivatesWithAutomaticModeEnabled(String defect) {
+        Fixture fixture = fixture();
+        fixture.properties.setAutoConfirmTelegramDetected(true);
+        Subscription pending = pendingSubscription(fixture.user, "PRO", "199.00", "247");
+        when(fixture.subscriptionRepository.findPendingMatchesForUpdate(any(), any(), any(), any()))
+                .thenReturn(List.of(pending));
+        var request = detectionRequest("199.00", "247", "trx-" + defect);
+        switch (defect) {
+            case "wrongName" -> request.setPayerName("SOME OTHER USER");
+            case "missingName" -> request.setPayerName(null);
+            case "reference" -> request.setRemark("SUB9999999999");
+            case "orderReference" -> request.setDetectedOrderCode("SUB9999999999");
+            case "competingTemplate" -> when(fixture.templatePaymentOrderRepository.hasCompetingPendingPayment(any(), any(), any()))
+                    .thenReturn(true);
+            case "untrusted" -> request.setTrustedMerchantAlert(false);
+            case "oldAlert" -> request.setMerchantMessageAt(Instant.now().minusSeconds(3600));
+            default -> throw new IllegalArgumentException();
+        }
+        assertEquals(SubscriptionPaymentDetectionStatus.REVIEW_REQUIRED,
+                fixture.service.detectTelegramPayment(request).status());
+        assertFalse(pending.isActive());
+        assertEquals(null, pending.getStartDate());
+    }
+
+    @Test
+    void missingRealTransactionIdIsRejectedBeforeMatching() {
+        Fixture fixture = fixture();
+        assertThrows(ApiException.class, () -> fixture.service.detectTelegramPayment(detectionRequest("199.00", "247", null)));
+        verify(fixture.subscriptionRepository, never()).findPendingMatchesForUpdate(any(), any(), any(), any());
     }
 
     @Test
@@ -208,6 +254,20 @@ class SubscriptionServiceTests {
     }
 
     @Test
+    void pollingAnExpiredReviewOrderClosesThePaymentWindowWithoutDiscardingEvidence() {
+        Fixture fixture = fixture();
+        Subscription pending = pendingSubscription(fixture.user, "PRO", "199.00", "247");
+        pending.setStatus("REVIEW_REQUIRED");
+        pending.setPaymentExpiresAt(Instant.now().minusSeconds(1));
+        pending.setPaymentEvidenceReference("telegram:-1001:77");
+        when(fixture.subscriptionRepository.findForUpdateByOrderCode(pending.getOrderCode())).thenReturn(Optional.of(pending));
+        var result = fixture.service.getOrder(fixture.authentication, pending.getOrderCode());
+        assertEquals("EXPIRED", result.getStatus());
+        assertFalse(result.isActive());
+        assertEquals("telegram:-1001:77", pending.getPaymentEvidenceReference());
+    }
+
+    @Test
     void manualConfirmationStillActivatesAndReplacesCurrentSubscription() {
         Fixture fixture = fixture();
         Subscription pending = pendingSubscription(fixture.user, "PRO", "199.00", "247");
@@ -276,6 +336,7 @@ class SubscriptionServiceTests {
                 packageRepository,
                 subscriptionRepository,
                 templatePaymentOrderRepository,
+                paymentProperties,
                 authentication,
                 user
         );
@@ -301,6 +362,8 @@ class SubscriptionServiceTests {
         request.setPayerAccountLast3(last3);
         request.setPaywayTransactionId(trxId);
         request.setPaywayApprovalCode("383331");
+        request.setTrustedMerchantAlert(true);
+        request.setMerchantMessageAt(Instant.now());
         return request;
     }
 
@@ -318,6 +381,7 @@ class SubscriptionServiceTests {
         subscription.setPaymentStatus("PENDING");
         subscription.setStatus("PENDING_PAYMENT");
         subscription.setActive(false);
+        subscription.setCreatedAt(Instant.now().minusSeconds(60));
         return subscription;
     }
 
@@ -345,6 +409,7 @@ class SubscriptionServiceTests {
             SubscriptionPackageRepository packageRepository,
             SubscriptionRepository subscriptionRepository,
             TemplatePaymentOrderRepository templatePaymentOrderRepository,
+            PaymentProperties properties,
             Authentication authentication,
             AppUser user
     ) {

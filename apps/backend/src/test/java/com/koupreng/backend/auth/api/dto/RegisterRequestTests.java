@@ -43,4 +43,17 @@ class RegisterRequestTests {
                 RegisterRequest.class
         );
     }
+
+    @Test
+    void registrationRejectsMissingUppercaseAndShortPassword() {
+        try (var factory = jakarta.validation.Validation.buildDefaultValidatorFactory()) {
+            var validator = factory.getValidator();
+            for (String password : new String[]{"lowercase123", "Abc123"}) {
+                org.junit.jupiter.api.Assertions.assertFalse(validator.validate(
+                        new RegisterRequest("Vireak", "vireak@example.test", null, password)).isEmpty());
+            }
+            org.junit.jupiter.api.Assertions.assertTrue(validator.validate(
+                    new RegisterRequest("Vireak", "vireak@example.test", null, "Password123")).isEmpty());
+        }
+    }
 }

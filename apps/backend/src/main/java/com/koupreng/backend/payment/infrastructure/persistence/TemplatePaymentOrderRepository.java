@@ -15,6 +15,14 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TemplatePaymentOrderRepository extends JpaRepository<TemplatePaymentOrder, Long> {
+    @Query("""
+            select count(o) > 0 from TemplatePaymentOrder o
+            where o.currency = :currency and o.amount = :amount and o.expiresAt > :now
+              and o.status in (com.koupreng.backend.payment.domain.PaymentStatus.PENDING,
+                               com.koupreng.backend.payment.domain.PaymentStatus.PAID_PENDING_REVIEW)
+            """)
+    boolean hasCompetingPendingPayment(@Param("currency") String currency, @Param("amount") java.math.BigDecimal amount,
+                                      @Param("now") Instant now);
 
     Optional<TemplatePaymentOrder> findByOrderCode(String orderCode);
 

@@ -13,6 +13,8 @@ public record RegisterRequest(
         @Size(max = 30) String phone,
         @Schema(format = "password", accessMode = Schema.AccessMode.WRITE_ONLY,
                 example = "ExamplePass123!")
-        @NotBlank @Size(min = 8, max = 100) String password
+        @NotBlank @Size(min = 8, max = 100)
+        @jakarta.validation.constraints.Pattern(regexp = "(?s).*\\p{Lu}.*",
+                message = "Password must contain at least one uppercase letter") String password
 ) {
 }

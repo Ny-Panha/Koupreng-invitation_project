@@ -4,12 +4,15 @@ import re
 import secrets
 from collections import OrderedDict
 from contextlib import asynccontextmanager
+from datetime import UTC, datetime
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
+from typing import Annotated
 
 import httpx
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, Header, HTTPException, Request
+from pydantic import BaseModel, Field
 
 BOT_DIR = Path(__file__).resolve().parent
 load_dotenv(BOT_DIR / ".env")
@@ -51,10 +54,12 @@ logger = logging.getLogger("koupreng.telegram_bot")
 MAX_PROCESSED_UPDATES = 4096
 PROCESSED_UPDATE_IDS: OrderedDict[str, None] = OrderedDict()
 PROCESSING_UPDATE_IDS: set[str] = set()
+DELIVERED_NOTIFICATION_IDS: OrderedDict[str, None] = OrderedDict()
+PROCESSING_NOTIFICATION_IDS: set[str] = set()
 
-ORDER_CODE_RE = re.compile(r"\bEVT[0-9]{9,10}\b", re.IGNORECASE)
+ORDER_CODE_RE = re.compile(r"\b(?:EVT[0-9]{9,10}|SUB[0-9]{10})\b", re.IGNORECASE)
 PAYWAY_TRX_RE = re.compile(
-    r"\b(?:Transaction|Txn|Trx)\.?\s*(?:ID|No\.?|Number)?\s*[:#=]?\s*([A-Za-z0-9_-]+)\b",
+    r"\b(?:Transaction|Txn|Trx)\.?\s*(?:ID|No\.?|Number)\s*[:#=]\s*([A-Za-z0-9_-]+)\b",
     re.IGNORECASE,
 )
 PAYWAY_APV_RE = re.compile(
@@ -68,6 +73,7 @@ PAYER_WITH_SUFFIX_RE = re.compile(
 )
 PAYER_RE = re.compile(r"\bpaid by\s+(.+?)(?:\s+via\b|\s+on\b|[.,]|$)", re.IGNORECASE)
 REMARK_RE = re.compile(r"\bRemark\s*[:#=]?\s*([^\s,.]+)", re.IGNORECASE)
+TRANSACTION_DATE_RE = re.compile(r"\bon\s+(.+?)(?=\s+via\b|\.\s*(?:Trx|Remark)\b|$)", re.IGNORECASE)
 AMOUNT_PATTERNS = [
     re.compile(
         r"\b(?P<currency>USD|KHR)\s*(?P<amount>[0-9]+(?:\.[0-9]{1,2})?)(?![0-9.])\b",
@@ -163,6 +169,40 @@ async def lifespan(_app: FastAPI):
 
 
 app = FastAPI(title="Koupreng payment Telegram webhook", lifespan=lifespan)
+
+
+class PaymentNotification(BaseModel):
+    notificationId: str = Field(min_length=1, max_length=100)
+    chatId: str = Field(min_length=1, max_length=100)
+    text: str = Field(min_length=1, max_length=4000)
+
+
+@app.post("/internal/payment-notifications")
+async def payment_notification(
+    notification: PaymentNotification,
+    supplied_secret: Annotated[str, Header(alias="X-ADMIN-PAYMENT-SECRET")] = "",
+):
+    if not ADMIN_PAYMENT_SECRET or not secrets.compare_digest(
+        supplied_secret.encode(), ADMIN_PAYMENT_SECRET.encode()
+    ):
+        raise HTTPException(status_code=403, detail="Invalid internal notification secret")
+    if notification.chatId not in TELEGRAM_ALLOWED_GROUP_IDS:
+        raise HTTPException(status_code=403, detail="Payment notification chat is not configured")
+    key = notification.notificationId
+    if key in DELIVERED_NOTIFICATION_IDS:
+        return {"ok": True}
+    if key in PROCESSING_NOTIFICATION_IDS or len(PROCESSING_NOTIFICATION_IDS) >= MAX_PROCESSED_UPDATES:
+        raise HTTPException(status_code=503, detail="Notification is still processing")
+    PROCESSING_NOTIFICATION_IDS.add(key)
+    try:
+        if not await send_message(notification.chatId, notification.text):
+            raise HTTPException(status_code=503, detail="Telegram notification delivery unavailable")
+        DELIVERED_NOTIFICATION_IDS[key] = None
+        if len(DELIVERED_NOTIFICATION_IDS) > MAX_PROCESSED_UPDATES:
+            DELIVERED_NOTIFICATION_IDS.popitem(last=False)
+        return {"ok": True}
+    finally:
+        PROCESSING_NOTIFICATION_IDS.discard(key)
 
 
 def missing_payment_security_configuration() -> list[str]:
@@ -443,6 +483,8 @@ async def process_telegram_update(update: dict):
         return {"ok": True}
 
     if text.startswith("/paid"):
+        if chat_id not in TELEGRAM_ALLOWED_GROUP_IDS:
+            return {"ok": True}
         if sender_id not in TELEGRAM_ALLOWED_ADMIN_IDS:
             await send_message(chat_id, "You are not allowed to confirm payments.", message_id)
             return {"ok": True}
@@ -450,11 +492,12 @@ async def process_telegram_update(update: dict):
         return {"ok": True}
 
     if command_name(text) in {"/detect", "/confirm"}:
+        if chat_id not in TELEGRAM_ALLOWED_GROUP_IDS:
+            return {"ok": True}
         if sender_id not in TELEGRAM_ALLOWED_ADMIN_IDS:
             await send_message(chat_id, "You are not allowed to detect payments.", message_id)
             return {"ok": True}
-        command = command_name(text)
-        detect_text = reply_text or command_payload(text, command)
+        detect_text = reply_text
         if not detect_text:
             await send_message(
                 chat_id,
@@ -462,7 +505,7 @@ async def process_telegram_update(update: dict):
                 message_id,
             )
             return {"ok": True}
-        if reply_text and payment_sender_identity_available(reply_sender) and not payment_sender_allowed(reply_sender):
+        if not original_merchant_message(reply_message):
             logger.warning("Ignoring admin detection reply to an untrusted payment sender")
             await send_message(chat_id, "The replied message is not from a trusted PayWay sender.", message_id)
             return {"ok": True}
@@ -490,6 +533,7 @@ async def process_telegram_update(update: dict):
             detected_by=f"telegram-admin-detect:{sender_identity(username, sender_id)}",
             payment=payment,
             evidence_message_id=str(reply_message.get("message_id") or message_id),
+            merchant_message=reply_message,
         )
         return {"ok": True}
 
@@ -497,7 +541,7 @@ async def process_telegram_update(update: dict):
         logger.info("Telegram update did not match a payment alert")
         return {"ok": True}
 
-    if not trusted_payment_sender:
+    if chat_id not in TELEGRAM_ALLOWED_GROUP_IDS or not original_merchant_message(message):
         logger.warning(
             "Ignoring payment-like Telegram update from an untrusted sender is_bot=%s",
             sender.get("is_bot"),
@@ -513,7 +557,7 @@ async def process_telegram_update(update: dict):
     if not payment:
         await send_message(chat_id, "Could not find a payment amount in that message.", message_id)
         return {"ok": True}
-    if not payment.get("orderCode"):
+    if not payment.get("orderCode") and not subscription_evidence_complete(payment):
         logger.info("Trusted payment alert omitted because the order code was missing")
         await send_message(chat_id, "Payment detected but no order code found. Please check manually.", message_id)
         return {"ok": True}
@@ -526,6 +570,7 @@ async def process_telegram_update(update: dict):
         sender_id,
         detected_by=f"telegram-payway-bot:{sender_identity(username, sender_id)}",
         payment=payment,
+        merchant_message=message,
     )
     return {"ok": True}
 
@@ -578,6 +623,7 @@ def parse_payment_alert(text: str) -> dict | None:
     payer_with_suffix_match = PAYER_WITH_SUFFIX_RE.search(text)
     payer_match = PAYER_RE.search(text)
     remark_match = REMARK_RE.search(text)
+    date_match = TRANSACTION_DATE_RE.search(text)
     return {
         "orderCode": order_match.group(0).upper() if order_match else None,
         "amount": amount,
@@ -591,6 +637,7 @@ def parse_payment_alert(text: str) -> dict | None:
         ),
         "payerAccountLast3": payer_with_suffix_match.group("last3") if payer_with_suffix_match else None,
         "remark": remark_match.group(1) if remark_match else None,
+        "transactionDateText": date_match.group(1).strip().rstrip(".") if date_match else None,
     }
 
 
@@ -599,10 +646,23 @@ def payment_sender_allowed(sender: dict) -> bool:
     username = str(sender.get("username") or "").lower().lstrip("@")
     is_bot = bool(sender.get("is_bot"))
     if TELEGRAM_ALLOWED_PAYMENT_BOT_IDS:
-        return sender_id in TELEGRAM_ALLOWED_PAYMENT_BOT_IDS
+        return is_bot and sender_id in TELEGRAM_ALLOWED_PAYMENT_BOT_IDS
     if TELEGRAM_ALLOWED_PAYMENT_BOT_USERNAMES and username in TELEGRAM_ALLOWED_PAYMENT_BOT_USERNAMES:
         return is_bot
     return False
+
+
+def original_merchant_message(message: dict) -> bool:
+    sender = message.get("from") or {}
+    return bool(
+        TELEGRAM_ALLOWED_PAYMENT_BOT_IDS
+        and str(sender.get("id") or "") in TELEGRAM_ALLOWED_PAYMENT_BOT_IDS
+        and sender.get("is_bot") is True
+        and message.get("message_id")
+        and not any(message.get(key) for key in (
+            "forward_origin", "forward_from", "forward_from_chat", "forward_date", "is_automatic_forward"
+        ))
+    )
 
 
 def payment_sender_identity_available(sender: dict) -> bool:
@@ -646,6 +706,11 @@ async def handle_paid_command(chat_id: str, message_id: str, text: str, username
     if len(parts) < 3:
         await send_message(chat_id, "Usage: /paid EVT260520001 0.01", message_id)
         return
+    if len(parts) != 4:
+        await send_message(
+            chat_id, "Usage: /paid ORDER AMOUNT REAL_ABA_TRANSACTION_ID (record /detect first)", message_id
+        )
+        return
 
     order_code = parts[1].upper()
     try:
@@ -655,11 +720,14 @@ async def handle_paid_command(chat_id: str, message_id: str, text: str, username
         return
 
     result = await post_to_backend(
-        "/api/v1/internal/template-payments/confirm",
+        "/api/v1/internal/subscription-payments/confirm" if order_code.startswith("SUB")
+        else "/api/v1/internal/template-payments/confirm",
         {
             "orderCode": order_code,
             "amount": amount,
             "confirmedBy": username,
+            "itemType": "SUBSCRIPTION" if order_code.startswith("SUB") else "TEMPLATE",
+            "paywayTransactionId": parts[3],
         },
     )
     require_backend_delivery(result)
@@ -675,6 +743,7 @@ async def handle_detect_message(
     detected_by: str = "telegram-bot",
     payment: dict | None = None,
     evidence_message_id: str | None = None,
+    merchant_message: dict | None = None,
 ):
     payment = payment or parse_payment_alert(text)
     if not payment:
@@ -696,8 +765,14 @@ async def handle_detect_message(
         "paywayTransactionId": payment["paywayTransactionId"],
         "paywayApprovalCode": payment["paywayApprovalCode"],
         "remark": payment.get("remark"),
+        "transactionDateText": payment.get("transactionDateText"),
+        "trustedMerchantAlert": original_merchant_message(merchant_message or {}),
+        "merchantMessageAt": (
+            datetime.fromtimestamp(merchant_message["date"], UTC).isoformat()
+            if merchant_message and type(merchant_message.get("date")) is int else None
+        ),
     }
-    subscription_payment = not payment.get("orderCode")
+    subscription_payment = not payment.get("orderCode") or payment["orderCode"].startswith("SUB")
     endpoint = (
         "/api/v1/internal/subscription-payments/telegram-detect"
         if subscription_payment
@@ -766,7 +841,7 @@ async def reply_for_subscription_detection(chat_id: str, message_id: str, result
     if result.get("ok") and status == "REVIEW_REQUIRED":
         await send_message(
             chat_id,
-            "⚠️ Multiple pending subscriptions matched\nManual review required.\n"
+            "⚠️ Subscription payment requires manual review\n"
             f"Amount: {payment['currency']} {payment['amount']}\n"
             f"Payer: *{payment.get('payerAccountLast3') or '—'}\n"
             f"Trx ID: {payment.get('paywayTransactionId') or '—'}",

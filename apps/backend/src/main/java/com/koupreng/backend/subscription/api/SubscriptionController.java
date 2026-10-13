@@ -110,4 +110,12 @@ public class SubscriptionController {
         request.setPackageId(packageId);
         return request;
     }
+
+    @PostMapping("/internal/subscription-payments/confirm")
+    @Operation(summary = "Confirm a reviewed subscription with a recorded merchant transaction")
+    public ResponseEntity<ApiResponse<com.koupreng.backend.payment.api.dto.PaymentConfirmResponse>> confirmInternal(
+            @Valid @RequestBody com.koupreng.backend.payment.api.dto.ConfirmPaymentRequest request) {
+        return ResponseEntity.ok(ApiResponse.success("Reviewed subscription payment processed",
+                subscriptionService.confirmManualPayment(request)));
+    }
 }

@@ -11,6 +11,9 @@ import java.util.Locale;
 import java.util.Map;
 
 import com.koupreng.backend.payment.infrastructure.config.PaymentProperties;
+import com.koupreng.backend.payment.application.PaymentEvidenceService;
+import com.koupreng.backend.payment.domain.PaymentEvidence;
+import com.koupreng.backend.notification.application.PaymentNotificationService;
 import com.koupreng.backend.payment.infrastructure.persistence.TemplatePaymentOrderRepository;
 import com.koupreng.backend.payment.api.dto.PaymentConfirmResponse;
 import com.koupreng.backend.payment.domain.PaymentStatus;
@@ -62,6 +65,8 @@ public class SubscriptionService {
     private final SubscriptionPaymentPlanResolver paymentPlanResolver;
     private final TemplatePaymentOrderRepository templatePaymentOrderRepository;
     private final AppUserRepository userRepository;
+    private final PaymentEvidenceService evidenceService;
+    private final PaymentNotificationService paymentNotifications;
     private final SecureRandom random = new SecureRandom();
 
     @org.springframework.beans.factory.annotation.Autowired
@@ -73,7 +78,9 @@ public class SubscriptionService {
             AuditLogService auditLogService,
             SubscriptionPaymentPlanResolver paymentPlanResolver,
             TemplatePaymentOrderRepository templatePaymentOrderRepository,
-            AppUserRepository userRepository
+            AppUserRepository userRepository,
+            PaymentEvidenceService evidenceService,
+            PaymentNotificationService paymentNotifications
     ) {
         this.packageRepository = packageRepository;
         this.subscriptionRepository = subscriptionRepository;
@@ -83,6 +90,15 @@ public class SubscriptionService {
         this.paymentPlanResolver = paymentPlanResolver;
         this.templatePaymentOrderRepository = templatePaymentOrderRepository;
         this.userRepository = userRepository;
+        this.evidenceService = evidenceService;
+        this.paymentNotifications = paymentNotifications;
+    }
+
+    public SubscriptionService(SubscriptionPackageRepository packages, SubscriptionRepository subscriptions,
+            CurrentUserService users, PaymentProperties properties, AuditLogService audit,
+            SubscriptionPaymentPlanResolver resolver, TemplatePaymentOrderRepository templates,
+            AppUserRepository userRepository) {
+        this(packages, subscriptions, users, properties, audit, resolver, templates, userRepository, null, null);
     }
 
     public SubscriptionService(SubscriptionPackageRepository packageRepository,
@@ -148,6 +164,7 @@ public class SubscriptionService {
         Instant now = Instant.now();
 
         Subscription subscription = baseSubscription(user, plan, price);
+        subscription.setCurrency(paymentPlan.currency());
         subscription.setOrderCode(uniqueOrderCode());
         subscription.setPaymentStatus(PAYMENT_STATUS_PENDING);
         subscription.setStatus(STATUS_PENDING_PAYMENT);
@@ -159,6 +176,7 @@ public class SubscriptionService {
         subscription.setPayerAccountLast3(requireLast3(request.getPayerAccountLast3()));
         subscription.setPaymentExpiresAt(now.plusSeconds(paymentProperties.getOrderExpiryMinutes() * 60L));
         Subscription saved = subscriptionRepository.save(subscription);
+        if (paymentNotifications != null) paymentNotifications.subscriptionPending(saved);
         if (auditLogService != null) {
             auditLogService.logSystemEvent("SUBSCRIPTION_CREATED", "SUBSCRIPTION", saved.getId(), "Subscription payment order created for package: " + plan.getPackageName() + ", code: " + saved.getOrderCode(), Map.of("userId", user.getId(), "packageId", plan.getId()));
         }
@@ -208,6 +226,17 @@ public class SubscriptionService {
         BigDecimal detectedAmount = money(request.getDetectedAmount(), request.getDetectedCurrency());
         String currency = normalizeCurrency(request.getDetectedCurrency());
         String payerLast3 = requireLast3(request.getPayerAccountLast3());
+        PaymentEvidence evidence = evidenceService == null ? null : evidenceService.record(
+                transactionId, detectedAmount, currency, request.getTelegramChatId(), request.getTelegramMessageId(),
+                request.getTelegramSenderId(), request.isTrustedMerchantAlert(), request.getMerchantMessageAt(),
+                request.getPayerName(), payerLast3, request.getPaywayApprovalCode(), request.getRemark());
+        if (evidence != null && !"RECEIVED".equals(evidence.getOutcome())) {
+            return unmatchedDetectionResponse(request, detectedAmount, currency,
+                    "PAID".equals(evidence.getOutcome()) ? SubscriptionPaymentDetectionStatus.ALREADY_PROCESSED
+                            : SubscriptionPaymentDetectionStatus.REVIEW_REQUIRED,
+                    "Merchant transaction is already recorded. Use authorized review for unresolved evidence.");
+        }
+        if (evidence != null) evidence.setTransactionDateText(request.getTransactionDateText());
 
         Subscription alreadyProcessed = subscriptionRepository.findForUpdateByPaywayTransactionId(transactionId)
                 .orElse(null);
@@ -236,6 +265,7 @@ public class SubscriptionService {
                 now
         );
         if (matches.isEmpty()) {
+            if (evidence != null) evidence.setOutcome("UNMATCHED");
             auditDetection("SUBSCRIPTION_PAYMENT_UNMATCHED", null, request, detectedAmount, currency);
             return unmatchedDetectionResponse(
                     request,
@@ -246,6 +276,7 @@ public class SubscriptionService {
             );
         }
         if (matches.size() > 1) {
+            if (evidence != null) evidence.setOutcome("REVIEW_REQUIRED");
             for (Subscription match : matches) {
                 match.setStatus(STATUS_REVIEW_REQUIRED);
                 applyTelegramEvidence(match, request, now, false);
@@ -269,6 +300,37 @@ public class SubscriptionService {
 
         Subscription subscription = matches.getFirst();
         requirePendingMatch(subscription, detectedAmount, currency, payerLast3, now);
+        boolean matchingName = request.getPayerName() != null && subscription.getPayerName() != null
+                && normalizedName(request.getPayerName()).equals(normalizedName(subscription.getPayerName()));
+        boolean matchingReference = blankToNull(request.getRemark()) == null
+                || subscription.getOrderCode().equalsIgnoreCase(request.getRemark().trim());
+        matchingReference = matchingReference && (blankToNull(request.getDetectedOrderCode()) == null
+                || subscription.getOrderCode().equalsIgnoreCase(request.getDetectedOrderCode().trim()));
+        boolean hasReference = blankToNull(request.getRemark()) != null || blankToNull(request.getDetectedOrderCode()) != null;
+        boolean competingTemplate = !hasReference
+                && templatePaymentOrderRepository.hasCompetingPendingPayment(currency, detectedAmount, now);
+        Instant alertAt = request.getMerchantMessageAt();
+        boolean validWindow = alertAt != null && subscription.getCreatedAt() != null
+                && !alertAt.isBefore(subscription.getCreatedAt().minusSeconds(60))
+                && !alertAt.isAfter(now.plusSeconds(60)) && alertAt.isBefore(subscription.getPaymentExpiresAt());
+        boolean trusted = evidence != null ? evidence.isTrusted() : request.isTrustedMerchantAlert();
+        if (!paymentProperties.isAutoConfirmTelegramDetected() || !trusted
+                || !matchingName || !matchingReference || !validWindow || competingTemplate) {
+            subscription.setStatus(STATUS_REVIEW_REQUIRED);
+            applyTelegramEvidence(subscription, request, now, false);
+            subscriptionRepository.save(subscription);
+            if (evidence != null) {
+                evidence.setOutcome("REVIEW_REQUIRED");
+                // Only non-conflicting unique matches can be associated automatically for manual review.
+                if (matchingName && matchingReference && trusted && validWindow && !competingTemplate) {
+                    evidence.setOrderCode(subscription.getOrderCode());
+                }
+            }
+            auditDetection("SUBSCRIPTION_PAYMENT_REVIEW_REQUIRED", subscription.getId(), request, detectedAmount, currency);
+            return detectionResponse(subscription, SubscriptionPaymentDetectionStatus.REVIEW_REQUIRED,
+                    "Merchant evidence recorded. Automatic policy is disabled or evidence requires manual review.");
+        }
+        if (evidence != null) evidenceService.claim(evidence, subscription.getOrderCode(), detectedAmount, currency);
         deactivateActiveSubscriptions(subscription.getUser().getId(), now);
         applyTelegramEvidence(subscription, request, now, true);
         subscription.setPaidAmount(detectedAmount);
@@ -280,6 +342,8 @@ public class SubscriptionService {
         subscription.setStatus(STATUS_ACTIVE);
         subscription.setActive(true);
         Subscription saved = subscriptionRepository.save(subscription);
+        saved.setConfirmSource("TRUSTED_TELEGRAM_MERCHANT_ALERT");
+        if (paymentNotifications != null) paymentNotifications.subscriptionConfirmed(saved);
 
         if (auditLogService != null) {
             auditLogService.logSystemEvent(
@@ -338,7 +402,9 @@ public class SubscriptionService {
         subscription.setPaywayApprovalCode(blankToNull(request.getPaywayApprovalCode()));
         subscription.setPaywayPayerName(blankToNull(request.getPayerName()));
         subscription.setPaymentDetectedAt(now);
-        subscription.setPaymentRawSource(requireText(request.getRawMessage(), "Raw message is required"));
+        subscription.setPaymentRawSource("Normalized Telegram evidence; amount=" + request.getDetectedAmount()
+                + " " + request.getDetectedCurrency() + "; payer=***" + request.getPayerAccountLast3()
+                + "; transaction=" + request.getPaywayTransactionId());
         subscription.setPaymentEvidenceReference(evidenceReference(request));
         subscription.setPaymentRemark(blankToNull(request.getRemark()));
         subscription.setConfirmSource(CONFIRM_SOURCE_TELEGRAM_ADMIN);
@@ -353,6 +419,11 @@ public class SubscriptionService {
         }
         return "telegram:" + (chatId == null ? "unknown" : chatId)
                 + ":" + (messageId == null ? "unknown" : messageId);
+    }
+
+    private String normalizedName(String value) {
+        return java.text.Normalizer.normalize(value, java.text.Normalizer.Form.NFKC)
+                .strip().replaceAll("\\s+", " ").toUpperCase(Locale.ROOT);
     }
 
     private void auditDetection(
@@ -443,6 +514,15 @@ public class SubscriptionService {
         }
 
         Instant now = Instant.now();
+        if (subscription.getPaymentExpiresAt() == null || !subscription.getPaymentExpiresAt().isAfter(now)) {
+            throw new ApiException(HttpStatus.CONFLICT, "Expired subscription requires separate payment investigation");
+        }
+        if (evidenceService != null) {
+            PaymentEvidence evidence = evidenceService.manualEvidence(request.paywayTransactionId(), orderCode);
+            evidenceService.claim(evidence, orderCode, paidAmount, subscription.getCurrency());
+            subscription.setPaywayTransactionId(evidence.getTransactionId());
+            subscription.setPaywayApprovalCode(evidence.getApprovalCode());
+        }
         deactivateActiveSubscriptions(subscription.getUser().getId(), now);
         subscription.setPaidAmount(paidAmount);
         subscription.setPaymentStatus(PAYMENT_STATUS_PAID);
@@ -455,6 +535,7 @@ public class SubscriptionService {
         subscription.setStatus(STATUS_ACTIVE);
         subscription.setActive(true);
         subscriptionRepository.save(subscription);
+        if (paymentNotifications != null) paymentNotifications.subscriptionConfirmed(subscription);
 
         if (auditLogService != null) {
             auditLogService.logSystemEvent(
@@ -537,7 +618,8 @@ public class SubscriptionService {
 
     private void expireIfNeeded(Subscription subscription, Instant now) {
         if (PAYMENT_STATUS_PENDING.equalsIgnoreCase(subscription.getPaymentStatus())
-                && STATUS_PENDING_PAYMENT.equalsIgnoreCase(subscription.getStatus())
+                && (STATUS_PENDING_PAYMENT.equalsIgnoreCase(subscription.getStatus())
+                    || STATUS_REVIEW_REQUIRED.equalsIgnoreCase(subscription.getStatus()))
                 && subscription.getPaymentExpiresAt() != null
                 && !subscription.getPaymentExpiresAt().isAfter(now)) {
             subscription.setPaymentStatus(STATUS_EXPIRED);

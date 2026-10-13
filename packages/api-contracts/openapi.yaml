@@ -2877,6 +2877,35 @@ paths:
                 $ref: "#/components/schemas/ApiResponseSubscriptionPaymentDetectionResponse"
       security:
       - adminPaymentSecret: []
+  /api/v1/internal/subscription-payments/confirm:
+    post:
+      tags:
+      - Subscriptions
+      summary: Confirm a reviewed subscription with a recorded merchant transaction
+      operationId: confirmInternal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConfirmPaymentRequest"
+            examples:
+              subscriptionReview:
+                summary: Confirm a real server-priced order after administrator review
+                value:
+                  orderCode: <pending-order-code>
+                  amount: 19.0
+                  confirmedBy: admin-demo
+                  itemType: SUBSCRIPTION
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponsePaymentConfirmResponse"
+      security:
+      - adminPaymentSecret: []
   /api/v1/events:
     get:
       tags:
@@ -7526,9 +7555,9 @@ components:
         publishedAt:
           type: string
           format: date-time
-        draft:
-          type: boolean
         published:
+          type: boolean
+        draft:
           type: boolean
     UpdateProfileRequest:
       type: object
@@ -8669,6 +8698,19 @@ components:
           type: string
         telegramSenderUsername:
           type: string
+        trustedMerchantAlert:
+          type: boolean
+        merchantMessageAt:
+          type: string
+          format: date-time
+        transactionDateText:
+          type: string
+          maxLength: 120
+          minLength: 0
+        detectedOrderCode:
+          type: string
+          maxLength: 50
+          minLength: 0
         detectedAmount:
           type: number
           exclusiveMinimum: 0
@@ -8742,6 +8784,33 @@ components:
           type: string
         active:
           type: boolean
+    ConfirmPaymentRequest:
+      type: object
+      properties:
+        orderCode:
+          type: string
+          maxLength: 50
+          minLength: 0
+        amount:
+          type: number
+          minimum: 0.01
+        confirmedBy:
+          type: string
+          maxLength: 120
+          minLength: 0
+        itemType:
+          type: string
+          maxLength: 30
+          minLength: 0
+        paywayTransactionId:
+          type: string
+          maxLength: 100
+          minLength: 0
+      required:
+      - amount
+      - confirmedBy
+      - itemType
+      - orderCode
     ContactRequest:
       type: object
       properties:
@@ -8894,6 +8963,7 @@ components:
           example: ExamplePass123!
           maxLength: 100
           minLength: 8
+          pattern: "(?s).*\\p{Lu}.*"
           writeOnly: true
       required:
       - fullName
@@ -9101,6 +9171,27 @@ components:
           type: string
         paywayApprovalCode:
           type: string
+        trustedMerchantAlert:
+          type: boolean
+        merchantMessageAt:
+          type: string
+          format: date-time
+        transactionDateText:
+          type: string
+          maxLength: 120
+          minLength: 0
+        payerName:
+          type: string
+          maxLength: 120
+          minLength: 0
+        payerAccountLast3:
+          type: string
+          maxLength: 3
+          minLength: 0
+        remark:
+          type: string
+          maxLength: 120
+          minLength: 0
       required:
       - detectedBy
       - rawMessage
@@ -9116,32 +9207,13 @@ components:
         confirmedBy:
           type: string
           minLength: 1
-      required:
-      - amount
-      - confirmedBy
-      - orderCode
-    ConfirmPaymentRequest:
-      type: object
-      properties:
-        orderCode:
+        paywayTransactionId:
           type: string
-          maxLength: 50
-          minLength: 0
-        amount:
-          type: number
-          minimum: 0.01
-        confirmedBy:
-          type: string
-          maxLength: 120
-          minLength: 0
-        itemType:
-          type: string
-          maxLength: 30
+          maxLength: 100
           minLength: 0
       required:
       - amount
       - confirmedBy
-      - itemType
       - orderCode
     CreateNotificationRequest:
       type: object
@@ -9490,6 +9562,7 @@ components:
           type: string
         transactionId:
           type: string
+          description: "Backend checkout identifier, not a bank transaction ID"
         customerName:
           type: string
         templateId:

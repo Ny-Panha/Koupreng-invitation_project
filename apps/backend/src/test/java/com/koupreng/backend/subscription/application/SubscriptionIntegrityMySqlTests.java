@@ -25,7 +25,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+@SpringBootTest(properties = {"app.payment.telegram-group-ids=-1001", "app.payment.telegram-payment-bot-ids=42"})
 @ActiveProfiles("test")
 @EnabledIfEnvironmentVariable(named = "RUN_FLYWAY_INTEGRATION", matches = "true")
 class SubscriptionIntegrityMySqlTests {
@@ -34,6 +34,10 @@ class SubscriptionIntegrityMySqlTests {
     @Autowired private SubscriptionPackageRepository packages;
     @Autowired private AppUserRepository users;
     @Autowired private PlatformTransactionManager transactions;
+    @Autowired private com.koupreng.backend.payment.application.PaymentEvidenceService evidenceService;
+    @Autowired private com.koupreng.backend.payment.infrastructure.persistence.PaymentEvidenceRepository evidenceRepository;
+    @Autowired private com.koupreng.backend.payment.infrastructure.config.PaymentProperties paymentProperties;
+    @Autowired private com.koupreng.backend.notification.infrastructure.persistence.NotificationRepository notifications;
 
     @DynamicPropertySource
     static void database(DynamicPropertyRegistry registry) {
@@ -120,9 +124,62 @@ class SubscriptionIntegrityMySqlTests {
         confirm(order);
     }
 
+    @Test
+    void strictOptInMerchantEvidenceActivatesOnlyOnceUsingTheRealPersistencePath() {
+        Subscription pending = order(user(), false, null);
+        pending.setAmount(new BigDecimal("27.13"));
+        pending.setPayerName("FIXTURE USER");
+        pending.setPayerAccountLast3("982");
+        subscriptions.saveAndFlush(pending);
+        var request = new com.koupreng.backend.subscription.api.dto.TelegramDetectSubscriptionPaymentRequest();
+        request.setPaywayTransactionId("SIM-" + UUID.randomUUID());
+        request.setRawMessage("USD 27.13 paid by FIXTURE USER (*982). Trx. ID: " + request.getPaywayTransactionId());
+        request.setDetectedAmount(pending.getAmount());
+        request.setDetectedCurrency("USD");
+        request.setPayerName(" fixture   user ");
+        request.setPayerAccountLast3("982");
+        request.setDetectedBy("telegram-payway-bot:42");
+        request.setTelegramChatId("-1001");
+        request.setTelegramSenderId("42");
+        request.setTelegramMessageId("900000" + pending.getId());
+        request.setTrustedMerchantAlert(true);
+        request.setMerchantMessageAt(Instant.now());
+        paymentProperties.setAutoConfirmTelegramDetected(true);
+        try {
+            assertEquals(com.koupreng.backend.subscription.domain.SubscriptionPaymentDetectionStatus.PAID,
+                    service.detectTelegramPayment(request).status());
+            Instant end = subscriptions.findById(pending.getId()).orElseThrow().getEndDate();
+            assertEquals(com.koupreng.backend.subscription.domain.SubscriptionPaymentDetectionStatus.ALREADY_PROCESSED,
+                    service.detectTelegramPayment(request).status());
+            assertEquals(end, subscriptions.findById(pending.getId()).orElseThrow().getEndDate());
+            assertEquals("TRUSTED_TELEGRAM_MERCHANT_ALERT",
+                    subscriptions.findById(pending.getId()).orElseThrow().getConfirmSource());
+        } finally {
+            paymentProperties.setAutoConfirmTelegramDetected(false);
+        }
+    }
+
+    @Test
+    void rolledBackActivationDoesNotLeaveADeliverableSuccessNotification() {
+        Subscription pending = order(user(), false, null);
+        new TransactionTemplate(transactions).executeWithoutResult(status -> {
+            confirm(pending);
+            status.setRollbackOnly();
+        });
+        assertTrue(notifications.findAll().stream().noneMatch(n ->
+                ("subscription-paid:" + pending.getOrderCode()).equals(n.getPaymentDeliveryKey())));
+        assertFalse(subscriptions.findById(pending.getId()).orElseThrow().isActive());
+    }
+
     private void confirm(Subscription order) {
+        String transactionId = "QA-" + order.getId();
+        if (evidenceRepository.findById(transactionId).isEmpty()) {
+            new TransactionTemplate(transactions).executeWithoutResult(status -> evidenceService.record(transactionId,
+                    BigDecimal.ONE, "USD", "-1001", String.valueOf(order.getId()), "42", true, Instant.now(),
+                    "FIXTURE", "247", null, order.getOrderCode()));
+        }
         service.confirmManualPayment(new ConfirmPaymentRequest(order.getOrderCode(), BigDecimal.ONE,
-                "integrity-fixture", "SUBSCRIPTION"));
+                "integrity-fixture", "SUBSCRIPTION", transactionId));
     }
 
     private long activeCount(AppUser user) {
@@ -141,6 +198,7 @@ class SubscriptionIntegrityMySqlTests {
         order.setStatus(active ? "ACTIVE" : "PENDING_PAYMENT");
         order.setPaymentStatus(active ? "PAID" : "PENDING");
         order.setEndDate(end);
+        order.setPaymentExpiresAt(Instant.now().plusSeconds(1800));
         return subscriptions.saveAndFlush(order);
     }
 

@@ -19,4 +19,6 @@ public class ConfirmTemplatePaymentRequest {
 
     @NotBlank(message = "Confirmed by is required")
     private String confirmedBy;
+    @jakarta.validation.constraints.Size(max = 100)
+    private String paywayTransactionId;
 }

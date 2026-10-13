@@ -85,6 +85,6 @@ def privileged_update():
             "message_id": 22,
             "chat": {"id": -1001},
             "from": {"id": 999, "is_bot": False},
-            "text": "/paid EVT260529001 0.01",
+            "text": "/paid EVT260529001 0.01 SIM-0001",
         },
     }

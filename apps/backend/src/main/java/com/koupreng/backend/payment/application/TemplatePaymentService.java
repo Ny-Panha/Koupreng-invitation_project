@@ -126,6 +126,8 @@ public class TemplatePaymentService {
     private final ObjectMapper objectMapper;
     private final AuditLogService auditLogService;
     private final TransactionTemplate transactionTemplate;
+    private final PaymentEvidenceService evidenceService;
+    private final com.koupreng.backend.notification.application.PaymentNotificationService paymentNotifications;
     private final SecureRandom random = new SecureRandom();
 
     @org.springframework.beans.factory.annotation.Autowired
@@ -141,7 +143,9 @@ public class TemplatePaymentService {
             AbaPayWayService abaPayWayService,
             ObjectMapper objectMapper,
             AuditLogService auditLogService,
-            PlatformTransactionManager transactionManager
+            PlatformTransactionManager transactionManager,
+            PaymentEvidenceService evidenceService,
+            com.koupreng.backend.notification.application.PaymentNotificationService paymentNotifications
     ) {
         this.orderRepository = orderRepository;
         this.accessRepository = accessRepository;
@@ -152,6 +156,14 @@ public class TemplatePaymentService {
         this.objectMapper = objectMapper;
         this.auditLogService = auditLogService;
         this.transactionTemplate = new TransactionTemplate(transactionManager);
+        this.evidenceService = evidenceService;
+        this.paymentNotifications = paymentNotifications;
+    }
+
+    public TemplatePaymentService(TemplatePaymentOrderRepository orders, UserTemplateAccessRepository access,
+            InvitationTemplateRepository templates, CurrentUserService users, PaymentProperties properties,
+            AbaPayWayService aba, ObjectMapper mapper, AuditLogService audit, PlatformTransactionManager manager) {
+        this(orders, access, templates, users, properties, aba, mapper, audit, manager, null, null);
     }
 
     public TemplatePaymentService(
@@ -172,6 +184,8 @@ public class TemplatePaymentService {
         this.objectMapper = objectMapper;
         this.auditLogService = null;
         this.transactionTemplate = null;
+        this.evidenceService = null;
+        this.paymentNotifications = null;
     }
 
     @Transactional
@@ -400,6 +414,10 @@ public class TemplatePaymentService {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Currency mismatch");
         }
 
+        if (evidenceService != null && verification.paywayTransactionId() != null) {
+            evidenceService.claimVerifiedProviderTransaction(verification.paywayTransactionId(), order.getOrderCode(),
+                    verifiedAmount, order.getCurrency());
+        }
         markOrderPaid(
                 order,
                 verifiedAmount,
@@ -428,6 +446,18 @@ public class TemplatePaymentService {
         BigDecimal paidAmount = money(detectedPayment.amount(), detectedCurrency);
         requireStaticAbaAmount(detectedCurrency, paidAmount);
 
+        com.koupreng.backend.payment.domain.PaymentEvidence evidence = evidenceService == null ? null
+                : evidenceService.record(request.getPaywayTransactionId(), paidAmount, detectedCurrency,
+                        request.getTelegramChatId(), request.getTelegramMessageId(), request.getTelegramSenderId(),
+                        request.isTrustedMerchantAlert(), request.getMerchantMessageAt(), request.getPayerName(),
+                        request.getPayerAccountLast3(), request.getPaywayApprovalCode(), request.getRemark());
+        if (evidence != null && !"RECEIVED".equals(evidence.getOutcome())) {
+            return PaymentConfirmResponse.builder().orderCode(orderCode)
+                    .status(PaymentStatus.PAID_PENDING_REVIEW)
+                    .message("Merchant transaction already recorded; check order status or request authorized review.").build();
+        }
+        if (evidence != null) evidence.setTransactionDateText(request.getTransactionDateText());
+
         TemplatePaymentOrder order = requireOrderForUpdate(orderCode);
 
         if (order.getStatus() == PaymentStatus.PAID) {
@@ -435,6 +465,7 @@ public class TemplatePaymentService {
         }
 
         if (isExpired(order)) {
+            if (evidence != null) evidence.setOutcome("UNMATCHED");
             order.setStatus(PaymentStatus.EXPIRED);
             orderRepository.save(order);
             return PaymentConfirmResponse.builder()
@@ -462,7 +493,19 @@ public class TemplatePaymentService {
 
         applyTelegramMetadata(order, request, paidAmount);
 
-        if (!paymentProperties.isAutoConfirmTelegramDetected()) {
+        boolean trusted = evidence != null ? evidence.isTrusted() : request.isTrustedMerchantAlert();
+        Instant alertAt = request.getMerchantMessageAt();
+        boolean validWindow = alertAt != null && order.getCreatedAt() != null
+                && !alertAt.isBefore(order.getCreatedAt().minusSeconds(60))
+                && !alertAt.isAfter(Instant.now().plusSeconds(60)) && alertAt.isBefore(order.getExpiresAt());
+        boolean validReference = request.getRemark() == null || request.getRemark().isBlank()
+                || orderCode.equalsIgnoreCase(request.getRemark().trim());
+        if (!paymentProperties.isAutoConfirmTelegramDetected() || !trusted || !validWindow || !validReference
+                || request.getPaywayTransactionId() == null || request.getPaywayTransactionId().isBlank()) {
+            if (evidence != null) {
+                evidence.setOutcome("REVIEW_REQUIRED");
+                if (trusted && validReference) evidence.setOrderCode(orderCode);
+            }
             order.setStatus(PaymentStatus.PAID_PENDING_REVIEW);
             orderRepository.save(order);
             return PaymentConfirmResponse.builder()
@@ -472,6 +515,8 @@ public class TemplatePaymentService {
                     .build();
         }
 
+        if (evidence != null) evidenceService.claim(evidence, orderCode, paidAmount, detectedCurrency);
+
         markOrderPaid(
                 order,
                 paidAmount,
@@ -479,7 +524,7 @@ public class TemplatePaymentService {
                 requireText(request.getDetectedBy(), "Detected by is required")
         );
         return PaymentConfirmResponse.builder()
-                .message("Telegram payment verified. Template unlocked.")
+                .message("Trusted Telegram merchant evidence confirmed. Template unlocked.")
                 .orderCode(order.getOrderCode())
                 .status(order.getStatus())
                 .build();
@@ -518,6 +563,12 @@ public class TemplatePaymentService {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Amount mismatch");
         }
 
+        if (evidenceService != null) {
+            var evidence = evidenceService.manualEvidence(request.getPaywayTransactionId(), order.getOrderCode());
+            evidenceService.claim(evidence, order.getOrderCode(), paidAmount, order.getCurrency());
+            order.setPaywayTransactionId(evidence.getTransactionId());
+            order.setPaywayApprovalCode(evidence.getApprovalCode());
+        }
         markOrderPaid(
                 order,
                 paidAmount,
@@ -566,6 +617,7 @@ public class TemplatePaymentService {
         }
 
         // A buyer reference is a request for reconciliation, never evidence of payment.
+        if (paymentNotifications != null) paymentNotifications.templateReview(order);
         if (order.getStatus() != PaymentStatus.PAID_PENDING_REVIEW) {
             order.setStatus(PaymentStatus.PAID_PENDING_REVIEW);
             orderRepository.save(order);
@@ -678,7 +730,8 @@ public class TemplatePaymentService {
         order.setPaidAmount(detectedAmount);
         order.setConfirmSource(TemplatePaymentOrder.CONFIRM_SOURCE_TELEGRAM_ABA_ALERT);
         order.setConfirmedBy(requireText(request.getDetectedBy(), "Detected by is required"));
-        order.setRawTelegramMessage(request.getRawMessage());
+        order.setRawTelegramMessage("Normalized Telegram evidence; amount=" + detectedAmount
+                + " " + request.getDetectedCurrency() + "; transaction=" + request.getPaywayTransactionId());
         order.setTelegramChatId(blankToNull(request.getTelegramChatId()));
         order.setTelegramMessageId(blankToNull(request.getTelegramMessageId()));
         order.setTelegramSenderUsername(blankToNull(request.getTelegramSenderUsername()));

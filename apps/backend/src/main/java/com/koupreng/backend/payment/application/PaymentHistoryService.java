@@ -146,13 +146,18 @@ public class PaymentHistoryService {
 
     @Transactional
     public PaymentConfirmResponse confirmPayment(String orderCode, BigDecimal amount, String confirmedBy) {
+        return confirmPayment(orderCode, amount, confirmedBy, null);
+    }
+
+    @Transactional
+    public PaymentConfirmResponse confirmPayment(String orderCode, BigDecimal amount, String confirmedBy, String transactionId) {
         String code = normalizeOrderCode(orderCode);
         String reviewer = confirmedBy != null && !confirmedBy.isBlank() ? confirmedBy : "admin";
         java.util.Optional<TemplatePaymentOrder> optOrder = orderRepository.findByOrderCode(code);
         if (optOrder.isPresent()) {
             TemplatePaymentOrder order = optOrder.get();
             return paymentConfirmationService.confirm(new ConfirmPaymentRequest(
-                    code, amount != null ? amount : order.getAmount(), reviewer, "TEMPLATE"
+                    code, amount != null ? amount : order.getAmount(), reviewer, "TEMPLATE", transactionId
             ));
         }
 
@@ -160,7 +165,7 @@ public class PaymentHistoryService {
         if (optSub.isPresent()) {
             Subscription sub = optSub.get();
             return paymentConfirmationService.confirm(new ConfirmPaymentRequest(
-                    code, amount != null ? amount : sub.getAmount(), reviewer, "SUBSCRIPTION"
+                    code, amount != null ? amount : sub.getAmount(), reviewer, "SUBSCRIPTION", transactionId
             ));
         }
 

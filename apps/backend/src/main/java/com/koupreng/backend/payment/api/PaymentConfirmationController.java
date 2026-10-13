@@ -35,11 +35,13 @@ public class PaymentConfirmationController {
     @Operation(summary = "Confirm and fulfill a payment manually",
             description = "Confirms a server-priced template or subscription order. Requires ADMIN authority.")
     public ResponseEntity<ApiResponse<PaymentConfirmResponse>> confirm(
-            @Valid @RequestBody ConfirmPaymentRequest request
+            @Valid @RequestBody ConfirmPaymentRequest request,
+            org.springframework.security.core.Authentication authentication
     ) {
         return ResponseEntity.ok(ApiResponse.success(
                 "Payment confirmed successfully",
-                paymentConfirmationService.confirm(request)
+                paymentConfirmationService.confirm(new ConfirmPaymentRequest(request.orderCode(), request.amount(),
+                        authentication.getName(), request.itemType(), request.paywayTransactionId()))
         ));
     }
 }

@@ -16,6 +16,16 @@ public class PaymentProperties {
     private String providerMode = "static";
 
     private boolean autoConfirmTelegramDetected;
+    private String telegramGroupIds = "";
+    private String telegramPaymentBotIds = "";
+    private String telegramBotUrl = "";
+
+    public String getTelegramGroupIds() { return telegramGroupIds; }
+    public void setTelegramGroupIds(String value) { telegramGroupIds = value; }
+    public String getTelegramPaymentBotIds() { return telegramPaymentBotIds; }
+    public void setTelegramPaymentBotIds(String value) { telegramPaymentBotIds = value; }
+    public String getTelegramBotUrl() { return telegramBotUrl; }
+    public void setTelegramBotUrl(String value) { telegramBotUrl = value; }
 
     @Min(1)
     private long orderExpiryMinutes = 30;

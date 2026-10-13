@@ -230,7 +230,7 @@ jobs:
         working-directory: apps/backend
         run: |
           chmod +x mvnw
-          ./mvnw --batch-mode -Dtest=FreshDatabaseMigrationTests,MigrationUpgradeMySqlTests,AuthIntegrityMySqlTests,SubscriptionIntegrityMySqlTests,GuestMutationIntegrityMySqlTests,MediaIntegrityMySqlTests,EntitlementIntegrityMySqlTests,ReportingIntegrityMySqlTests test
+          ./mvnw --batch-mode -Dtest=FreshDatabaseMigrationTests,MigrationUpgradeMySqlTests,AuthIntegrityMySqlTests,SubscriptionIntegrityMySqlTests,GuestMutationIntegrityMySqlTests,MediaIntegrityMySqlTests,EntitlementIntegrityMySqlTests,ReportingIntegrityMySqlTests,PaymentEvidenceIntegrityMySqlTests test
 
   browser-tests:
     name: Browser E2E & Route Smoke

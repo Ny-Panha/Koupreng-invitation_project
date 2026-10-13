@@ -101,11 +101,11 @@ public class OpenApiConfig {
                 openApi.getPaths().get(path).readOperations()
                         .forEach(operation -> operation.setSecurity(List.of()));
             });
-            if (openApi.getPaths() != null
-                    && openApi.getPaths().get(INTERNAL_SUBSCRIPTION_PAYMENT_PATH) != null) {
-                openApi.getPaths().get(INTERNAL_SUBSCRIPTION_PAYMENT_PATH).readOperations()
-                        .forEach(operation -> operation.setSecurity(List.of(
-                                new SecurityRequirement().addList(ADMIN_PAYMENT_SECRET))));
+            for (String internalPath : List.of(INTERNAL_SUBSCRIPTION_PAYMENT_PATH, "/api/v1/internal/subscription-payments/confirm")) {
+                if (openApi.getPaths() != null && openApi.getPaths().get(internalPath) != null) {
+                    openApi.getPaths().get(internalPath).readOperations().forEach(operation -> operation.setSecurity(
+                            List.of(new SecurityRequirement().addList(ADMIN_PAYMENT_SECRET))));
+                }
             }
         };
     }

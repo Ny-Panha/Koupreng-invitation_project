@@ -42,6 +42,7 @@ public class PaymentConfirmationService {
         mapped.setOrderCode(request.orderCode());
         mapped.setAmount(request.amount());
         mapped.setConfirmedBy(request.confirmedBy());
+        mapped.setPaywayTransactionId(request.paywayTransactionId());
         return mapped;
     }
 }

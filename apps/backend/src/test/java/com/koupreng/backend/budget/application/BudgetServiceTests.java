@@ -275,6 +275,27 @@ class BudgetServiceTests {
         return new Fixture(service, budgetRepository, budgetItemRepository, invitationRepository, invitationService);
     }
 
+    @Test
+    void expenseActualCostIsCalculatedFromPaymentsInsteadOfTheEditableScalar() {
+        Fixture fixture = fixture();
+        Authentication authentication = mock(Authentication.class);
+        UserInvitation invitation = invitation();
+        Budget budget = budget(invitation);
+        when(fixture.invitationService.requireOwnedInvitationEntity(authentication, 10L)).thenReturn(invitation);
+        when(fixture.budgetRepository.findByInvitationId(10L)).thenReturn(Optional.of(budget));
+        when(fixture.budgetItemRepository.save(any(BudgetItem.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        var request = new com.koupreng.backend.budget.api.dto.BudgetItemRequest();
+        request.setName("Venue");
+        request.setCategory("OTHER");
+        request.setBudget(new BigDecimal("100"));
+        request.setAmount(new BigDecimal("9999"));
+        request.setCurrency("USD");
+        request.setNotes("{\"payments\":[{\"amount\":\"15.50\"},{\"amount\":\"24.50\"}]}");
+        var response = fixture.service.create(authentication, 10L, request);
+        assertEquals(new BigDecimal("40.00"), response.getAmount());
+        assertEquals("PENDING", response.getStatus());
+    }
+
     private UserInvitation invitation() {
         UserInvitation invitation = new UserInvitation();
         invitation.setId(10L);

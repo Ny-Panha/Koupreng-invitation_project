@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 
 const adminService = vi.hoisted(() => ({
+  platformReport: vi.fn(),
   report: vi.fn(),
   invitations: vi.fn(),
   invitation: vi.fn(),
@@ -22,6 +23,7 @@ afterEach(cleanup);
 describe("admin report overview", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    adminService.platformReport.mockResolvedValue(null);
     adminService.report.mockImplementation(async (name) => {
       if (name === "payments") {
         return {
@@ -283,5 +285,20 @@ describe("admin report overview", () => {
     expect(screen.getByText("Event Categories Report")).toBeInTheDocument();
     expect(screen.getByText("Revenue & Payments Report")).toBeInTheDocument();
     localStorage.removeItem("koupreng.admin.lang");
+  });
+
+  it("renders backend category, subscription and currency aggregates without event-level rows", async () => {
+    adminService.platformReport.mockResolvedValue({
+      summary: { totalInvitations: 12, publishedInvitations: 8, revenueByCurrency: { USD: 199, KHR: 40000 },
+        eventCategoryBreakdown: [{ category: "WEDDING", count: 9 }, { category: "ANNIVERSARY_BIRTHDAY", count: 3 }],
+        subscriptionTiers: [{ tier: "Basic", activeSubscriptions: 2 }, { tier: "Pro", activeSubscriptions: 4 }] },
+      rows: [],
+    });
+    renderPage();
+    expect(await screen.findByRole("region", { name: "Subscription packages report" })).toHaveTextContent("Pro: 4");
+    expect(screen.getByTestId("category-row-WEDDING")).toHaveTextContent("9");
+    expect(screen.getByTestId("category-row-BIRTHDAY")).toHaveTextContent("3");
+    expect(screen.getByText("$199.00")).toBeInTheDocument();
+    expect(screen.getByText("40,000 ៛")).toBeInTheDocument();
   });
 });

@@ -46,7 +46,8 @@ def reset_bot_state(monkeypatch):
     main.PROCESSED_UPDATE_IDS.clear()
     monkeypatch.setattr(main, "TELEGRAM_ALLOWED_GROUP_IDS", {"-1001"})
     monkeypatch.setattr(main, "TELEGRAM_ALLOWED_ADMIN_IDS", {"999"})
-    monkeypatch.setattr(main, "TELEGRAM_ALLOWED_PAYMENT_BOT_IDS", set())
+    monkeypatch.setattr(main, "TELEGRAM_ALLOWED_PAYMENT_BOT_IDS", {"200", "42"})
+    monkeypatch.setattr(main, "TELEGRAM_BOT_TOKEN", "")
     monkeypatch.setattr(main, "TELEGRAM_ALLOWED_PAYMENT_BOT_USERNAMES", {"paywaybyaba_bot"})
     monkeypatch.setattr(main, "TELEGRAM_WEBHOOK_SECRET", TEST_WEBHOOK_SECRET)
     monkeypatch.setattr(main, "ADMIN_PAYMENT_SECRET", "test-internal-secret")
@@ -94,6 +95,7 @@ def test_parse_payment_alert_extracts_order_amount_and_currency(text, order_code
         "payerName": None,
         "payerAccountLast3": None,
         "remark": None,
+        "transactionDateText": None,
     }
 
 
@@ -148,6 +150,7 @@ def test_parse_full_payway_alert_preserves_remark_and_separates_suffix():
         "payerName": "RAN NARATH",
         "payerAccountLast3": "288",
         "remark": "EVT260529932",
+        "transactionDateText": "May 29, 10:23 AM",
     }
 
 
@@ -166,7 +169,8 @@ def test_group_allowlist(monkeypatch):
 
 def test_payment_sender_allowlist_prefers_ids_and_requires_bot(monkeypatch):
     monkeypatch.setattr(main, "TELEGRAM_ALLOWED_PAYMENT_BOT_IDS", {"42"})
-    assert main.payment_sender_allowed({"id": 42, "username": "other", "is_bot": False}) is True
+    assert main.payment_sender_allowed({"id": 42, "username": "other", "is_bot": False}) is False
+    assert main.payment_sender_allowed({"id": 42, "username": "other", "is_bot": True}) is True
     assert main.payment_sender_allowed({"id": 41, "username": "PayWayByABA_bot", "is_bot": True}) is False
 
     monkeypatch.setattr(main, "TELEGRAM_ALLOWED_PAYMENT_BOT_IDS", set())
