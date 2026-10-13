@@ -1,4 +1,4 @@
-import { Search, RotateCcw, Filter } from "lucide-react";
+import { Search, RotateCcw, Clock, AlertTriangle } from "lucide-react";
 
 export function RequestFilters({
   search,
@@ -11,10 +11,22 @@ export function RequestFilters({
   onMethodFilterChange,
   slowOnly,
   onSlowOnlyChange,
+  timeRange = "ALL",
+  onTimeRangeChange,
+  nPlusOneOnly = false,
+  onNPlusOneOnlyChange,
   onResetFilters,
-  t,
   lang,
 }) {
+  const hasActiveFilters =
+    Boolean(search) ||
+    appFilter !== "ALL" ||
+    methodFilter !== "ALL" ||
+    statusFilter !== "ALL" ||
+    slowOnly ||
+    timeRange !== "ALL" ||
+    nPlusOneOnly;
+
   return (
     <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-slate-200/80 bg-white/70 p-3 shadow-sm backdrop-blur-md dark:border-zinc-800/80 dark:bg-zinc-900/70">
       {/* Search Bar */}
@@ -32,6 +44,27 @@ export function RequestFilters({
           className="w-full rounded-xl border border-slate-200 bg-white py-2 pl-9 pr-3 text-xs text-slate-800 placeholder-slate-400 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:placeholder-zinc-500"
         />
       </div>
+
+      {/* Time Range Selector */}
+      {onTimeRangeChange && (
+        <div className="flex items-center gap-1.5">
+          <label className="text-xs font-medium text-slate-500 dark:text-zinc-400 flex items-center gap-1">
+            <Clock className="h-3 w-3 text-amber-500" />
+            <span>{lang === "km" ? "ពេល:" : "Window:"}</span>
+          </label>
+          <select
+            aria-label="Time range filter"
+            value={timeRange}
+            onChange={(e) => onTimeRangeChange(e.target.value)}
+            className="rounded-xl border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-800 focus:border-amber-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
+          >
+            <option value="ALL">{lang === "km" ? "ទាំងអស់ (All Time)" : "All Time"}</option>
+            <option value="1m">{lang === "km" ? "១ នាទីចុងក្រោយ (1m)" : "Last 1 min"}</option>
+            <option value="5m">{lang === "km" ? "៥ នាទីចុងក្រោយ (5m)" : "Last 5 mins"}</option>
+            <option value="15m">{lang === "km" ? "១៥ នាទីចុងក្រោយ (15m)" : "Last 15 mins"}</option>
+          </select>
+        </div>
+      )}
 
       {/* App Filter */}
       <div className="flex items-center gap-1.5">
@@ -101,8 +134,22 @@ export function RequestFilters({
         <span>{lang === "km" ? "យឺតប៉ុណ្ណោះ (≥500ms)" : "Slow Only (≥500ms)"}</span>
       </label>
 
+      {/* N+1 Warnings Toggle */}
+      {onNPlusOneOnlyChange && (
+        <label className="flex cursor-pointer select-none items-center gap-1.5 rounded-xl border border-rose-200 bg-rose-50/50 px-2.5 py-1.5 text-xs font-medium text-rose-800 hover:bg-rose-100/60 dark:border-rose-900/60 dark:bg-rose-950/40 dark:text-rose-300">
+          <input
+            type="checkbox"
+            checked={nPlusOneOnly}
+            onChange={(e) => onNPlusOneOnlyChange(e.target.checked)}
+            className="h-3.5 w-3.5 rounded border-rose-300 text-rose-600 focus:ring-rose-500 dark:border-rose-700"
+          />
+          <AlertTriangle className="h-3 w-3 text-rose-600 dark:text-rose-400" />
+          <span>N+1 Only</span>
+        </label>
+      )}
+
       {/* Reset Filters */}
-      {(search || appFilter !== "ALL" || methodFilter !== "ALL" || statusFilter !== "ALL" || slowOnly) && (
+      {hasActiveFilters && (
         <button
           type="button"
           onClick={onResetFilters}

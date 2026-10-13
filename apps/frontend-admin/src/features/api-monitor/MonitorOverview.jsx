@@ -1,6 +1,6 @@
-import { Activity, CheckCircle2, AlertTriangle, XCircle, Clock, Zap, Pause, Play, Wifi, WifiOff } from "lucide-react";
+import { Activity, CheckCircle2, AlertTriangle, XCircle, Clock, Zap, Pause, Play, Wifi } from "lucide-react";
 
-export function MonitorOverview({ stats, status, isPaused, onTogglePause, onReconnect, onClear, t, lang }) {
+export function MonitorOverview({ stats, status, isPaused, onTogglePause, onReconnect, onClear, lang }) {
   const total = stats?.totalRequests ?? 0;
   const success = stats?.successCount ?? 0;
   const clientErr = stats?.clientErrorCount ?? 0;

@@ -227,6 +227,7 @@ public class SecurityConfig {
                                 "/api/v1/payway/cancel").permitAll()
                         .requestMatchers("/api/v1/internal/template-payments/**").permitAll()
                         .requestMatchers("/api/v1/internal/subscription-payments/**").permitAll()
+                        .requestMatchers("/api/v1/dev-monitor/telemetry").permitAll()
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()

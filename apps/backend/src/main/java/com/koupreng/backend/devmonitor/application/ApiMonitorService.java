@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import com.koupreng.backend.devmonitor.api.dto.ApiMonitorEventDto;
 import com.koupreng.backend.devmonitor.api.dto.ApiMonitorStatsDto;
+import com.koupreng.backend.devmonitor.api.dto.ClientTelemetryRequest;
 import com.koupreng.backend.devmonitor.infrastructure.ApiMonitorEventStore;
 import com.koupreng.backend.shared.exception.ApiException;
 
@@ -25,6 +26,12 @@ public class ApiMonitorService {
 
     private static final Logger log = LoggerFactory.getLogger(ApiMonitorService.class);
     private static final long SSE_TIMEOUT_MS = 30 * 60 * 1000L;
+
+    /**
+     * Default loopback address fallback when client remote address cannot be resolved from the request.
+     */
+    @SuppressWarnings("PMD.AvoidUsingHardCodedIP")
+    private static final String DEFAULT_LOOPBACK_IP = "127.0.0.1";
 
     private final ApiMonitorProperties properties;
     private final ApiMonitorEventStore eventStore;
@@ -162,7 +169,7 @@ public class ApiMonitorService {
         }
 
         boolean slow = durationMs >= properties.getSlowThresholdMs();
-        String outcome = status < 400 ? "SUCCESS" : (status < 500 ? "CLIENT_ERROR" : "SERVER_ERROR");
+        String outcome = determineOutcome(status);
 
         ApiMonitorEventDto event = new ApiMonitorEventDto(
                 sequence.getAndIncrement(),
@@ -186,7 +193,7 @@ public class ApiMonitorService {
                 nPlusOneDetected,
                 source != null ? source : "BACKEND_OBSERVED",
                 contractStatus != null ? contractStatus : "UNMATCHED",
-                clientIp != null ? clientIp : "127.0.0.1",
+                clientIp != null ? clientIp : DEFAULT_LOOPBACK_IP,
                 userPrincipal != null ? userPrincipal : "anonymous",
                 userRole != null ? userRole : "ANONYMOUS",
                 authenticated,
@@ -253,13 +260,36 @@ public class ApiMonitorService {
                 0L,
                 false,
                 "BACKEND_OBSERVED",
-                path != null && path.startsWith("/api/v1") ? "MATCHED" : (path != null && path.startsWith("/api") ? "COMPATIBILITY_ALIAS" : "UNMATCHED"),
+                resolveContractStatus(path),
                 clientIp,
                 userPrincipal,
                 userRole,
                 authenticated,
                 errorCode
         );
+    }
+
+    private static String determineOutcome(int status) {
+        if (status < 400) {
+            return "SUCCESS";
+        }
+        if (status < 500) {
+            return "CLIENT_ERROR";
+        }
+        return "SERVER_ERROR";
+    }
+
+    private static String resolveContractStatus(String path) {
+        if (path == null) {
+            return "UNMATCHED";
+        }
+        if (path.startsWith("/api/v1")) {
+            return "MATCHED";
+        }
+        if (path.startsWith("/api")) {
+            return "COMPATIBILITY_ALIAS";
+        }
+        return "UNMATCHED";
     }
 
     public List<ApiMonitorEventDto> getEvents(
@@ -297,6 +327,37 @@ public class ApiMonitorService {
         if (!deadEmitters.isEmpty()) {
             emitters.removeAll(deadEmitters);
         }
+    }
+
+    public void recordClientTelemetry(ClientTelemetryRequest req, String remoteAddr) {
+        if (!properties.isEnabled()) {
+            return;
+        }
+        recordEvent(
+                req.requestId(),
+                req.actionId() != null ? req.actionId() : "",
+                req.clientApp() != null ? req.clientApp() : "frontend-user",
+                req.frontendRoute() != null ? req.frontendRoute() : "",
+                req.clientAction() != null ? req.clientAction() : "",
+                req.method() != null ? req.method() : "GET",
+                req.path() != null ? req.path() : "",
+                req.path() != null ? req.path() : "",
+                "",
+                "ClientTelemetry",
+                req.status(),
+                req.clientDurationMs(),
+                req.clientDurationMs(),
+                0,
+                0L,
+                false,
+                "CLIENT_OBSERVED",
+                resolveContractStatus(req.path()),
+                remoteAddr != null && !remoteAddr.isBlank() ? remoteAddr : DEFAULT_LOOPBACK_IP,
+                "anonymous",
+                "ANONYMOUS",
+                false,
+                req.errorCode() != null && !req.errorCode().isBlank() ? req.errorCode() : "CLIENT_NETWORK_ERROR"
+        );
     }
 
     public int getActiveSubscribersCount() {

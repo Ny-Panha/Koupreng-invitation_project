@@ -202,6 +202,49 @@ describe("ApiMonitorFeature", () => {
     expect(screen.getByText(/Interactive Request Waterfall/i)).toBeInTheDocument();
   });
 
+  it("switches to Error Triage view when button is clicked", () => {
+    renderComponent();
+
+    const errorsBtn = screen.getByRole("button", { name: /Error Triage|ស៊ើបអង្កេតកំហុស/i });
+    fireEvent.click(errorsBtn);
+
+    expect(screen.getByText(/Total Error Rate|អត្រាកំហុសសរុប/i)).toBeInTheDocument();
+    expect(screen.getByText(/Quick Remediation & Triage Guide/i)).toBeInTheDocument();
+  });
+
+  it("switches to SQL Diagnostics view when button is clicked", () => {
+    renderComponent();
+
+    const sqlBtn = screen.getByRole("button", { name: /SQL Diagnostics|ការវិភាគ SQL/i });
+    fireEvent.click(sqlBtn);
+
+    expect(screen.getByText(/Total SQL Queries|សំណួរ SQL សរុប/i)).toBeInTheDocument();
+    expect(screen.getByText(/N\+1 Query Patterns|ទម្រង់ N\+1/i)).toBeInTheDocument();
+    expect(screen.getByText(/Hibernate StatementInspector/i)).toBeInTheDocument();
+  });
+
+  it("switches to Combined view when button is clicked", () => {
+    renderComponent();
+
+    const combinedBtn = screen.getByRole("button", { name: /Combined View|ទាំងពីរ/i });
+    fireEvent.click(combinedBtn);
+
+    expect(screen.getByText(/Interactive Request Waterfall/i)).toBeInTheDocument();
+    expect(screen.getAllByText("REGISTER_SUBMIT").length).toBeGreaterThanOrEqual(2);
+  });
+
+  it("toggles table density between comfortable and compact", () => {
+    renderComponent();
+
+    const compactBtn = screen.getByRole("button", { name: /Compact/i });
+    fireEvent.click(compactBtn);
+
+    const comfortableBtn = screen.getByRole("button", { name: /Comfortable/i });
+    fireEvent.click(comfortableBtn);
+
+    expect(screen.getByText("REGISTER_SUBMIT")).toBeInTheDocument();
+  });
+
   it("opens Command Palette when trigger button is clicked", () => {
     renderComponent();
 

@@ -2,12 +2,12 @@ import { useMemo, useState } from "react";
 import {
   ExternalLink,
   Terminal,
-  ShieldCheck,
-  Zap,
   Layers,
   Table,
   Keyboard,
-  Download,
+  ShieldAlert,
+  Database,
+  Combine,
 } from "lucide-react";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 import { useApiMonitorStream } from "./useApiMonitorStream";
@@ -20,6 +20,8 @@ import { LiveRequestTable } from "./LiveRequestTable";
 import { RequestWaterfall } from "./RequestWaterfall";
 import { RequestDetailsDrawer } from "./RequestDetailsDrawer";
 import { SlowRequestsPanel } from "./SlowRequestsPanel";
+import { ErrorInvestigationPanel } from "./ErrorInvestigationPanel";
+import { SqlDiagnosticsPanel } from "./SqlDiagnosticsPanel";
 import { ApiMonitorCommandPalette } from "./ApiMonitorCommandPalette";
 
 export default function ApiMonitorFeature() {
@@ -47,7 +49,7 @@ export default function ApiMonitorFeature() {
     exportSanitizedData,
   } = useQaSessionRecorder();
 
-  // View state: 'table' | 'waterfall' | 'both'
+  // View state: 'table' | 'waterfall' | 'errors' | 'sql' | 'both'
   const [viewMode, setViewMode] = useState("table");
   const [isPaletteOpen, setIsPaletteOpen] = useState(false);
 
@@ -57,11 +59,27 @@ export default function ApiMonitorFeature() {
   const [methodFilter, setMethodFilter] = useState("ALL");
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [slowOnly, setSlowOnly] = useState(false);
+  const [timeRange, setTimeRange] = useState("ALL"); // 'ALL' | '1m' | '5m' | '15m'
+  const [nPlusOneOnly, setNPlusOneOnly] = useState(false);
 
   // Filter events
   const filteredEvents = useMemo(() => {
     const q = search.trim().toLowerCase();
+    const now = Date.now();
+    let maxAgeMs = Infinity;
+    if (timeRange === "1m") maxAgeMs = 60 * 1000;
+    else if (timeRange === "5m") maxAgeMs = 5 * 60 * 1000;
+    else if (timeRange === "15m") maxAgeMs = 15 * 60 * 1000;
+
     return events.filter((ev) => {
+      // Time window check
+      if (maxAgeMs !== Infinity) {
+        const evTime = new Date(ev.timestamp).getTime();
+        if (now - evTime > maxAgeMs) {
+          return false;
+        }
+      }
+
       if (q) {
         const matches =
           ev.path?.toLowerCase().includes(q) ||
@@ -96,9 +114,13 @@ export default function ApiMonitorFeature() {
         return false;
       }
 
+      if (nPlusOneOnly && !ev.nPlusOneDetected) {
+        return false;
+      }
+
       return true;
     });
-  }, [events, search, appFilter, methodFilter, statusFilter, slowOnly]);
+  }, [events, search, appFilter, methodFilter, statusFilter, slowOnly, timeRange, nPlusOneOnly]);
 
   const handleResetFilters = () => {
     setSearch("");
@@ -106,10 +128,17 @@ export default function ApiMonitorFeature() {
     setMethodFilter("ALL");
     setStatusFilter("ALL");
     setSlowOnly(false);
+    setTimeRange("ALL");
+    setNPlusOneOnly(false);
   };
 
   const handleFilterByAction = (actionId) => {
     setSearch(actionId);
+  };
+
+  const handleShowInWaterfall = (event) => {
+    setViewMode("waterfall");
+    setSelectedEvent(event);
   };
 
   return (
@@ -127,7 +156,7 @@ export default function ApiMonitorFeature() {
                   {lang === "km" ? "ឧបករណ៍តាមដានសំណើ API ផ្ទាល់ (Developer API Monitor V2.0)" : "Developer API Live Monitor V2.0"}
                 </h2>
                 <span className="rounded-full bg-amber-100 px-2 py-0.5 font-mono text-[10px] font-bold text-amber-800 dark:bg-amber-950/60 dark:text-amber-300">
-                  V2.0 Tracing
+                  V2.1 Tracing
                 </span>
               </div>
               <p className="text-xs text-slate-500 dark:text-zinc-400">
@@ -235,9 +264,9 @@ export default function ApiMonitorFeature() {
         <SlowRequestsPanel topEndpoints={stats.topEndpoints} lang={lang} />
       )}
 
-      {/* View Switcher & Filter Toolbar */}
+      {/* View Switcher Tabs */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 pb-3 dark:border-zinc-800">
-        <div className="flex items-center gap-1 rounded-xl bg-slate-100 p-1 dark:bg-zinc-800">
+        <div className="flex flex-wrap items-center gap-1 rounded-xl bg-slate-100 p-1 dark:bg-zinc-800">
           <button
             type="button"
             onClick={() => setViewMode("table")}
@@ -266,6 +295,32 @@ export default function ApiMonitorFeature() {
 
           <button
             type="button"
+            onClick={() => setViewMode("errors")}
+            className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all ${
+              viewMode === "errors"
+                ? "bg-white text-slate-900 shadow-xs dark:bg-zinc-900 dark:text-zinc-100"
+                : "text-slate-600 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-zinc-200"
+            }`}
+          >
+            <ShieldAlert className="h-3.5 w-3.5 text-rose-500" />
+            <span>{lang === "km" ? "ស៊ើបអង្កេតកំហុស (Errors)" : "Error Triage"}</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setViewMode("sql")}
+            className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all ${
+              viewMode === "sql"
+                ? "bg-white text-slate-900 shadow-xs dark:bg-zinc-900 dark:text-zinc-100"
+                : "text-slate-600 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-zinc-200"
+            }`}
+          >
+            <Database className="h-3.5 w-3.5 text-violet-500" />
+            <span>{lang === "km" ? "ការវិភាគ SQL" : "SQL Diagnostics"}</span>
+          </button>
+
+          <button
+            type="button"
             onClick={() => setViewMode("both")}
             className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all ${
               viewMode === "both"
@@ -273,6 +328,7 @@ export default function ApiMonitorFeature() {
                 : "text-slate-600 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-zinc-200"
             }`}
           >
+            <Combine className="h-3.5 w-3.5" />
             <span>{lang === "km" ? "ទាំងពីរ (Combined)" : "Combined View"}</span>
           </button>
         </div>
@@ -290,6 +346,10 @@ export default function ApiMonitorFeature() {
         onMethodFilterChange={setMethodFilter}
         slowOnly={slowOnly}
         onSlowOnlyChange={setSlowOnly}
+        timeRange={timeRange}
+        onTimeRangeChange={setTimeRange}
+        nPlusOneOnly={nPlusOneOnly}
+        onNPlusOneOnlyChange={setNPlusOneOnly}
         onResetFilters={handleResetFilters}
         t={t}
         lang={lang}
@@ -312,6 +372,27 @@ export default function ApiMonitorFeature() {
           onSelectEvent={setSelectedEvent}
           onFilterByAction={handleFilterByAction}
           selectedEventId={selectedEvent?.id}
+          searchQuery={search}
+          lang={lang}
+        />
+      )}
+
+      {/* Dedicated Error Investigation View */}
+      {viewMode === "errors" && (
+        <ErrorInvestigationPanel
+          events={filteredEvents}
+          onSelectEvent={setSelectedEvent}
+          selectedEventId={selectedEvent?.id}
+          lang={lang}
+        />
+      )}
+
+      {/* Dedicated SQL Diagnostics View */}
+      {viewMode === "sql" && (
+        <SqlDiagnosticsPanel
+          events={filteredEvents}
+          onSelectEvent={setSelectedEvent}
+          selectedEventId={selectedEvent?.id}
           lang={lang}
         />
       )}
@@ -322,6 +403,7 @@ export default function ApiMonitorFeature() {
           event={selectedEvent}
           onClose={() => setSelectedEvent(null)}
           onFilterByAction={handleFilterByAction}
+          onShowInWaterfall={handleShowInWaterfall}
           lang={lang}
         />
       )}
@@ -333,8 +415,7 @@ export default function ApiMonitorFeature() {
         isPaused={isPaused}
         onTogglePause={togglePause}
         onClear={clearHistory}
-        showWaterfall={viewMode === "waterfall" || viewMode === "both"}
-        onToggleWaterfall={() => setViewMode((m) => (m === "table" ? "waterfall" : "table"))}
+        onSelectViewMode={setViewMode}
         onSetAppFilter={setAppFilter}
         onSetStatusFilter={setStatusFilter}
         onSetSlowOnly={setSlowOnly}

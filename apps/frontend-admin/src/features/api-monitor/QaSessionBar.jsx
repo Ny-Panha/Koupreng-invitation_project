@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Play, Square, MessageSquarePlus, Download, CheckCircle2, ShieldCheck } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Play, Square, MessageSquarePlus, Download, ShieldCheck, Clock } from "lucide-react";
 
 export function QaSessionBar({
   isRecording,
@@ -15,6 +15,28 @@ export function QaSessionBar({
   const [isStarting, setIsStarting] = useState(false);
   const [noteInput, setNoteInput] = useState("");
   const [isAddingNote, setIsAddingNote] = useState(false);
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
+
+  useEffect(() => {
+    let interval = null;
+    if (isRecording) {
+      setElapsedSeconds(0);
+      interval = setInterval(() => {
+        setElapsedSeconds((prev) => prev + 1);
+      }, 1000);
+    } else {
+      setElapsedSeconds(0);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isRecording]);
+
+  const formatElapsed = (sec) => {
+    const mins = Math.floor(sec / 60);
+    const secs = sec % 60;
+    return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+  };
 
   const handleStart = (e) => {
     e.preventDefault();
@@ -40,7 +62,7 @@ export function QaSessionBar({
           {isRecording ? (
             <div className="flex items-center gap-2">
               <span className="relative flex h-3 w-3">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-rose-400 opacity-75"></span>
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-rose-400 opacity-75 motion-reduce:animate-none"></span>
                 <span className="relative inline-flex h-3 w-3 rounded-full bg-rose-500"></span>
               </span>
               <span className="text-xs font-bold text-rose-600 dark:text-rose-400">
@@ -49,8 +71,15 @@ export function QaSessionBar({
               <span className="rounded-lg bg-rose-50 px-2 py-0.5 text-xs font-semibold text-rose-700 dark:bg-rose-950/50 dark:text-rose-300">
                 {activeSession?.name}
               </span>
+
+              {/* Live Timer */}
+              <div className="flex items-center gap-1 rounded bg-slate-100 px-2 py-0.5 font-mono text-xs font-semibold text-slate-700 dark:bg-zinc-800 dark:text-zinc-300 tabular-nums">
+                <Clock className="h-3 w-3 text-rose-500" />
+                <span>{formatElapsed(elapsedSeconds)}</span>
+              </div>
+
               {activeSession?.notes?.length > 0 && (
-                <span className="text-xs text-slate-400 dark:text-zinc-500">
+                <span className="text-xs text-slate-400 dark:text-zinc-500 font-mono tabular-nums">
                   ({activeSession.notes.length} {lang === "km" ? "កំណត់សម្គាល់" : "notes"})
                 </span>
               )}
@@ -98,27 +127,27 @@ export function QaSessionBar({
               <button
                 type="button"
                 onClick={() => setIsStarting(true)}
-                className="inline-flex items-center gap-1.5 rounded-xl bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-slate-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-white"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white shadow-xs hover:bg-emerald-700"
               >
-                <Play className="h-3.5 w-3.5 fill-current" />
-                <span>{lang === "km" ? "ចាប់ផ្ដើមវគ្គ QA" : "Record QA Session"}</span>
+                <Play className="h-3.5 w-3.5" />
+                <span>{lang === "km" ? "កត់ត្រាវគ្គ QA" : "Record QA Session"}</span>
               </button>
             )
           ) : (
-            <>
+            <div className="flex items-center gap-2">
               {isAddingNote ? (
                 <form onSubmit={handleNoteSubmit} className="flex items-center gap-2">
                   <input
                     type="text"
                     value={noteInput}
                     onChange={(e) => setNoteInput(e.target.value)}
-                    placeholder={lang === "km" ? "កំណត់សម្គាល់ជំហានសាកល្បង..." : "Enter test step note..."}
-                    className="w-48 rounded-lg border border-slate-300 bg-white px-2.5 py-1 text-xs text-slate-900 focus:border-amber-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
+                    placeholder={lang === "km" ? "បញ្ចូលចំណាំជំហានតេស្ត..." : "Enter test step note..."}
+                    className="rounded-lg border border-slate-300 bg-white px-2.5 py-1 text-xs text-slate-900 focus:border-amber-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
                     autoFocus
                   />
                   <button
                     type="submit"
-                    className="rounded-lg bg-amber-500 px-2.5 py-1 text-xs font-semibold text-slate-900 hover:bg-amber-400"
+                    className="rounded-lg bg-amber-500 px-2.5 py-1 text-xs font-semibold text-white hover:bg-amber-600"
                   >
                     {lang === "km" ? "រក្សាទុក" : "Save"}
                   </button>
@@ -134,7 +163,7 @@ export function QaSessionBar({
                 <button
                   type="button"
                   onClick={() => setIsAddingNote(true)}
-                  className="inline-flex items-center gap-1 rounded-xl border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-200"
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-slate-700 shadow-xs hover:bg-slate-50 dark:border-zinc-800 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700"
                 >
                   <MessageSquarePlus className="h-3.5 w-3.5 text-amber-500" />
                   <span>{lang === "km" ? "បន្ថែមចំណាំ" : "Add Note"}</span>
@@ -144,22 +173,22 @@ export function QaSessionBar({
               <button
                 type="button"
                 onClick={onStopSession}
-                className="inline-flex items-center gap-1.5 rounded-xl bg-rose-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-rose-700"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-rose-600 px-3 py-1.5 text-xs font-semibold text-white shadow-xs hover:bg-rose-700"
               >
-                <Square className="h-3.5 w-3.5 fill-current" />
-                <span>{lang === "km" ? "បញ្ចប់ការថត" : "Stop Recording"}</span>
+                <Square className="h-3.5 w-3.5" />
+                <span>{lang === "km" ? "បញ្ចប់ការកត់ត្រា" : "Stop Recording"}</span>
               </button>
-            </>
+            </div>
           )}
 
-          {/* Export Buttons */}
-          <div className="flex items-center gap-1.5 border-l border-slate-200 pl-2 dark:border-zinc-800">
+          {/* Export Dropdown */}
+          <div className="flex items-center gap-1 border-l border-slate-200 pl-2 dark:border-zinc-700">
             <button
               type="button"
               onClick={() => onExport("json")}
               disabled={eventsCount === 0}
-              className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-700 shadow-xs hover:bg-slate-50 disabled:opacity-40 dark:border-zinc-800 dark:bg-zinc-800 dark:text-zinc-300"
-              title="Export sanitized JSON report without any secrets or sensitive payloads"
+              className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 disabled:opacity-40 dark:border-zinc-800 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700"
+              title="Export sanitized session JSON"
             >
               <Download className="h-3 w-3 text-slate-400" />
               <span>JSON</span>
@@ -168,8 +197,8 @@ export function QaSessionBar({
               type="button"
               onClick={() => onExport("csv")}
               disabled={eventsCount === 0}
-              className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-700 shadow-xs hover:bg-slate-50 disabled:opacity-40 dark:border-zinc-800 dark:bg-zinc-800 dark:text-zinc-300"
-              title="Export sanitized CSV spreadsheet"
+              className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 disabled:opacity-40 dark:border-zinc-800 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700"
+              title="Export sanitized session CSV"
             >
               <Download className="h-3 w-3 text-slate-400" />
               <span>CSV</span>
@@ -180,4 +209,3 @@ export function QaSessionBar({
     </div>
   );
 }
-

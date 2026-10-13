@@ -107,26 +107,35 @@ com.koupreng.backend.devmonitor/
 
 ---
 
-## 5. Admin UI Dashboard
+## 5. Admin UI Dashboard (V2.1)
 
 The dashboard is accessible at:
 ```
 http://localhost:5174/dev/api-monitor
 ```
 
-### Features
-- **Live Stream Status:** Real-time pulse indicator showing live stream health, pause/resume controls, and clear history action.
-- **Key Metrics Tiles:**
-  - Total Requests (breakdown by `frontend-user` vs `frontend-admin`)
-  - Success Rate (% of 2xx/3xx requests)
-  - Client Errors (4xx count)
-  - Server Errors (5xx count)
-  - Slow Requests (count of calls exceeding 500ms threshold)
-  - Latency Averages (mean and P95 latency in ms)
-- **Top Endpoints & Latency Profile:** Ranked summary of endpoints with volume, average latency, and error counts.
-- **Search & Multi-Dimensional Filters:** Real-time filtering by path, request ID, client action, user, application (`frontend-user` / `frontend-admin`), HTTP method, status code class, and slow requests only.
-- **Real-Time Request Table:** Tabular view showing colored status codes, HTTP methods, normalized endpoints, matched Spring MVC route patterns, client application, duration, user, and timestamp.
-- **Request Details Drawer:** Slide-out drawer displaying full diagnostic metadata (correlation ID, Spring controller handler method, authentication status, error diagnostics, and raw JSON copy).
+### Key Capabilities in V2.1
+- **Dedicated View Switcher:**
+  - **Live Table (`table`):** High-density network view with density toggles (`Comfortable` vs `Compact`), multi-column sorting, search query highlighting, and quick cURL copy actions.
+  - **Request Waterfall (`waterfall`):** Timeline visualization with zoom controls (`1x`–`3x`), action correlation grouping, automatic concurrency detection (`⚡ Concurrent / Parallel` vs `↳ Sequential`), and client-side transit latency overlays.
+  - **Error Triage (`errors`):** Dedicated incident investigation panel aggregating 4xx, 5xx, and client network drops, top recurring error codes, and contextual remediation triage recipes.
+  - **SQL Diagnostics (`sql`):** Database statement profiling tracking executed query counts, Hibernate `StatementInspector` AST template patterns, and prominent `POTENTIAL_N_PLUS_ONE` warning alerts.
+  - **Combined View (`both`):** Synchronized dual view displaying both the Request Waterfall and the Live Request Table simultaneously.
+- **7-Tab Request Details Drawer:**
+  - *Overview:* Metadata summary, correlation tokens, quick cURL / JSON export actions.
+  - *Timeline:* 5-stage milestone progression with "Inspect in Waterfall" navigation jump.
+  - *Headers & Auth:* Masked credentials (`Authorization: Bearer ey...[SANITIZED]`), principal, and roles.
+  - *Controller:* Spring Boot handler signature and matched route pattern.
+  - *Database:* Executed SQL query count, Hibernate StatementInspector disclosure, and N+1 warning.
+  - *Contract:* OpenAPI 3.0 specification alignment status (`MATCHED`, `COMPATIBILITY_ALIAS`, `UNTRACKED`).
+  - *Errors:* Detailed error classifications and remediation steps for 4xx/5xx/network drops.
+- **QA Session Recorder & Export:**
+  - Live recording session timer (`Elapsed: MM:SS`).
+  - In-session contextual note-taking.
+  - Sanitized export in JSON and CSV formats, omitting sensitive tokens and passwords.
+- **Command Palette (`Ctrl+K`):**
+  - Full keyboard-driven navigation with Arrow Up/Down and Enter execution.
+  - Shortcuts to toggle views, stream state, filter modes, and run QA actions.
 
 ---
 

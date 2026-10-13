@@ -5,10 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Thread-local SQL query tracer used exclusively during development/monitoring
- * to capture query counts, execution duration, and potential N+1 query patterns.
- */
 public final class DevSqlStatementTracker {
 
     public record TraceResult(
@@ -58,7 +54,7 @@ public final class DevSqlStatementTracker {
         if (state == null) {
             return TraceResult.empty();
         }
-        long durationMs = (System.nanoTime() - state.startNano) / 1_000_000L;
+        long durationMs = 0L;
         return new TraceResult(
                 state.queries.size(),
                 durationMs,

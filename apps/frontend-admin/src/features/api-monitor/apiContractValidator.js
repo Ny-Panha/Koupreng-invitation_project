@@ -39,10 +39,14 @@ export function validateApiContract(method, rawPath) {
   const upperMethod = (method || "GET").toUpperCase();
 
   // Special case: Developer API monitor internal routes and health checks
-  if (cleanPath.startsWith("/api/v1/admin/dev-monitor") || cleanPath === "/api/health") {
+  if (cleanPath.startsWith("/api/v1/admin/dev-monitor") || cleanPath.startsWith("/api/v1/dev-monitor") || cleanPath === "/api/health") {
     return {
       status: "MATCHED",
-      matchedTemplate: cleanPath.startsWith("/api/v1/admin/dev-monitor") ? "/api/v1/admin/dev-monitor/**" : "/api/health",
+      matchedTemplate: cleanPath.startsWith("/api/v1/admin/dev-monitor")
+        ? "/api/v1/admin/dev-monitor/**"
+        : cleanPath.startsWith("/api/v1/dev-monitor")
+        ? "/api/v1/dev-monitor/**"
+        : "/api/health",
       tag: "System",
       summary: cleanPath === "/api/health" ? "Health Check" : "Developer Monitor Telemetry",
       isLegacy: false,

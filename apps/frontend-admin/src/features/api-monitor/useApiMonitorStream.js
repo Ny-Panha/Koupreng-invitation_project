@@ -13,8 +13,76 @@ export function useApiMonitorStream() {
 
   const abortControllerRef = useRef(null);
   const isPausedRef = useRef(false);
-  isPausedRef.current = isPaused;
   const lastEventIdRef = useRef(null);
+
+  useEffect(() => {
+    isPausedRef.current = isPaused;
+  }, [isPaused]);
+
+  const handleSseEvent = useCallback((eventName, data) => {
+    if (isPausedRef.current && eventName === "request") {
+      return;
+    }
+
+    if (eventName === "init") {
+      if (Array.isArray(data?.events)) {
+        if (data.replayed) {
+          // Merge replayed events avoiding duplicates
+          setEvents((prev) => {
+            const existingIds = new Set(prev.map((e) => e.id));
+            const newEvents = data.events.filter((e) => !existingIds.has(e.id));
+            return [...newEvents.reverse(), ...prev].slice(0, MAX_CLIENT_BUFFER);
+          });
+        } else {
+          setEvents(data.events);
+        }
+      }
+      if (data?.stats) {
+        setStats(data.stats);
+      }
+    } else if (eventName === "request") {
+      setEvents((prev) => {
+        // Prevent duplicate insertion
+        if (prev.some((e) => e.id === data.id)) return prev;
+        const next = [data, ...prev];
+        return next.length > MAX_CLIENT_BUFFER ? next.slice(0, MAX_CLIENT_BUFFER) : next;
+      });
+      // Incrementally update stats
+      setStats((prev) => {
+        if (!prev) return null;
+        const isSuccess = data.status >= 200 && data.status < 400;
+        const isClientErr = data.status >= 400 && data.status < 500;
+        const isServerErr = data.status >= 500;
+        return {
+          ...prev,
+          totalRequests: prev.totalRequests + 1,
+          successCount: prev.successCount + (isSuccess ? 1 : 0),
+          clientErrorCount: prev.clientErrorCount + (isClientErr ? 1 : 0),
+          serverErrorCount: prev.serverErrorCount + (isServerErr ? 1 : 0),
+          slowRequestsCount: prev.slowRequestsCount + (data.slow ? 1 : 0),
+          totalSqlQueries: (prev.totalSqlQueries || 0) + (data.sqlQueryCount || 0),
+          nPlusOneCount: (prev.nPlusOneCount || 0) + (data.nPlusOneDetected ? 1 : 0),
+        };
+      });
+    } else if (eventName === "clear") {
+      setEvents([]);
+      lastEventIdRef.current = null;
+      setStats((prev) =>
+        prev
+          ? {
+              ...prev,
+              totalRequests: 0,
+              successCount: 0,
+              clientErrorCount: 0,
+              serverErrorCount: 0,
+              slowRequestsCount: 0,
+              totalSqlQueries: 0,
+              nPlusOneCount: 0,
+            }
+          : null
+      );
+    }
+  }, []);
 
   const connectStream = useCallback(() => {
     if (abortControllerRef.current) {
@@ -123,72 +191,7 @@ export function useApiMonitorStream() {
         setStatus("error");
         setErrorMessage(err.message || "Failed to connect to monitor stream");
       });
-  }, []);
-
-  const handleSseEvent = useCallback((eventName, data) => {
-    if (isPausedRef.current && eventName === "request") {
-      return;
-    }
-
-    if (eventName === "init") {
-      if (Array.isArray(data?.events)) {
-        if (data.replayed) {
-          // Merge replayed events avoiding duplicates
-          setEvents((prev) => {
-            const existingIds = new Set(prev.map((e) => e.id));
-            const newEvents = data.events.filter((e) => !existingIds.has(e.id));
-            return [...newEvents.reverse(), ...prev].slice(0, MAX_CLIENT_BUFFER);
-          });
-        } else {
-          setEvents(data.events);
-        }
-      }
-      if (data?.stats) {
-        setStats(data.stats);
-      }
-    } else if (eventName === "request") {
-      setEvents((prev) => {
-        // Prevent duplicate insertion
-        if (prev.some((e) => e.id === data.id)) return prev;
-        const next = [data, ...prev];
-        return next.length > MAX_CLIENT_BUFFER ? next.slice(0, MAX_CLIENT_BUFFER) : next;
-      });
-      // Incrementally update stats
-      setStats((prev) => {
-        if (!prev) return null;
-        const isSuccess = data.status >= 200 && data.status < 400;
-        const isClientErr = data.status >= 400 && data.status < 500;
-        const isServerErr = data.status >= 500;
-        return {
-          ...prev,
-          totalRequests: prev.totalRequests + 1,
-          successCount: prev.successCount + (isSuccess ? 1 : 0),
-          clientErrorCount: prev.clientErrorCount + (isClientErr ? 1 : 0),
-          serverErrorCount: prev.serverErrorCount + (isServerErr ? 1 : 0),
-          slowRequestsCount: prev.slowRequestsCount + (data.slow ? 1 : 0),
-          totalSqlQueries: (prev.totalSqlQueries || 0) + (data.sqlQueryCount || 0),
-          nPlusOneCount: (prev.nPlusOneCount || 0) + (data.nPlusOneDetected ? 1 : 0),
-        };
-      });
-    } else if (eventName === "clear") {
-      setEvents([]);
-      lastEventIdRef.current = null;
-      setStats((prev) =>
-        prev
-          ? {
-              ...prev,
-              totalRequests: 0,
-              successCount: 0,
-              clientErrorCount: 0,
-              serverErrorCount: 0,
-              slowRequestsCount: 0,
-              totalSqlQueries: 0,
-              nPlusOneCount: 0,
-            }
-          : null
-      );
-    }
-  }, []);
+  }, [handleSseEvent]);
 
   // Capture client-side network failures dispatched by httpClient or adminHttpClient
   useEffect(() => {

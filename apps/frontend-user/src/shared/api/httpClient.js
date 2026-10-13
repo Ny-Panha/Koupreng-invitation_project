@@ -134,31 +134,53 @@ apiClient.interceptors.response.use(
 
     // Report client-observed failures if no HTTP response arrived
     if (!error.response && typeof window !== "undefined") {
+      const errorDetail = {
+        id: Date.now(),
+        requestId: error.config?.headers?.["X-Request-Id"] || generateRequestId(),
+        actionId: error.config?.headers?.["X-Action-Id"] || "",
+        clientApp: "frontend-user",
+        frontendRoute: typeof window !== "undefined" ? window.location?.pathname || "/" : "/",
+        clientAction: error.config?.headers?.["X-Client-Action"] || "",
+        method: error.config?.method?.toUpperCase() || "GET",
+        path: error.config?.url || "",
+        target: error.config?.url || "",
+        status: 0,
+        durationMs: clientDurationMs,
+        clientDurationMs,
+        slow: clientDurationMs >= 500,
+        source: "CLIENT_OBSERVED",
+        contractStatus: "UNMATCHED",
+        outcome: "NETWORK_ERROR",
+        errorCode: error.code || "ERR_NETWORK",
+        errorMessage: error.message || "Network request failed",
+        timestamp: new Date().toISOString(),
+      };
+
       window.dispatchEvent(
         new CustomEvent("koupreng:api-error", {
-          detail: {
-            id: Date.now(),
-            requestId: error.config?.headers?.["X-Request-Id"] || generateRequestId(),
-            actionId: error.config?.headers?.["X-Action-Id"] || "",
-            clientApp: "frontend-user",
-            frontendRoute: typeof window !== "undefined" ? window.location?.pathname || "/" : "/",
-            clientAction: error.config?.headers?.["X-Client-Action"] || "",
-            method: error.config?.method?.toUpperCase() || "GET",
-            path: error.config?.url || "",
-            target: error.config?.url || "",
-            status: 0,
-            durationMs: clientDurationMs,
-            clientDurationMs,
-            slow: clientDurationMs >= 500,
-            source: "CLIENT_OBSERVED",
-            contractStatus: "UNMATCHED",
-            outcome: "NETWORK_ERROR",
-            errorCode: error.code || "ERR_NETWORK",
-            errorMessage: error.message || "Network request failed",
-            timestamp: new Date().toISOString(),
-          },
+          detail: errorDetail,
         })
       );
+
+      // In development mode (not test runner), transmit diagnostic telemetry to backend so admin dashboard tab receives it via SSE
+      if (import.meta.env?.DEV && import.meta.env?.MODE !== "test") {
+        try {
+          const beaconUrl = `${API_BASE_URL}/v1/dev-monitor/telemetry`;
+          const payloadBlob = new Blob([JSON.stringify(errorDetail)], { type: "application/json" });
+          if (navigator.sendBeacon) {
+            navigator.sendBeacon(beaconUrl, payloadBlob);
+          } else {
+            fetch(beaconUrl, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(errorDetail),
+              keepalive: true,
+            }).catch(() => {});
+          }
+        } catch {
+          // Dev telemetry failure ignored
+        }
+      }
     }
 
     const status = error.response?.status;

@@ -71,10 +71,8 @@ public class ApiMonitorEventStore {
                                 || contains(event.controller(), normalizedSearch);
                         if (!match) return false;
                     }
-                    if (!normalizedApp.isEmpty()) {
-                        if (event.clientApp() == null || !event.clientApp().toLowerCase(Locale.ROOT).contains(normalizedApp)) {
-                            return false;
-                        }
+                    if (!normalizedApp.isEmpty() && (event.clientApp() == null || !event.clientApp().toLowerCase(Locale.ROOT).contains(normalizedApp))) {
+                        return false;
                     }
                     if (status != null && event.status() != status) {
                         return false;
