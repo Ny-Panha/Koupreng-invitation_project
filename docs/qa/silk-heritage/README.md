@@ -49,14 +49,14 @@ Commands ran in the listed workspace. Redirected terminal logs are under
 | `apps/frontend-user` | `npm run build` | Passed; existing >500 KB entry warning remains |
 | `apps/frontend-user` | `npm run analyze:knip` | Passed |
 | `apps/frontend-user` | `npm run test:e2e -- --workers=4` | 96 passed, 2 skipped |
-| `apps/frontend-user` | `npm test -- --reporter=dot src/features/templates/layouts/SilkHeritage/SilkHeritageLayout.test.jsx src/features/templates/shared/Openings/CoverBackground.test.jsx` | Final contrast/media follow-up: 16 tests passed |
+| `apps/frontend-user` | `npm test -- --reporter=dot src/features/templates/layouts/SilkHeritage/SilkHeritageLayout.test.jsx src/features/templates/shared/Openings/CoverBackground.test.jsx` | Final media/Khmer-fallback follow-up: 17 tests passed |
 | `apps/frontend-admin` | `npm test -- --reporter=dot` | 10 files, 46 tests passed |
 | `apps/frontend-admin` | `npm run lint` | Passed |
 | `apps/frontend-admin` | `npm run build` | Passed |
 | `apps/backend` | `.\mvnw.cmd test -Dtest=ArchitectureRulesTests,TemplateCatalogServiceTests,FlywayMigrationVersionTests,KhmerCelestialMigrationTests` | 11 tests passed |
 | `apps/backend`, isolated MySQL 8 | `.\mvnw.cmd test -Dtest=FreshDatabaseMigrationTests,MigrationUpgradeMySqlTests,SilkHeritageMigrationMySqlTests,TemplateCheckoutPolicyTests` | 7 tests passed, none skipped |
 | Repository root | `powershell -ExecutionPolicy Bypass -File .\scripts\setup-ai-skills.ps1 -VerifyOnly` | Passed; zero checksum errors |
-| Repository root | `python scripts/validate-agent-routing.py` | Failed on the pre-existing empty premium-UX skill |
+| Repository root | `python scripts/validate-agent-routing.py` | Final rerun passed: 58 valid skills, zero errors |
 | Repository root | `git diff --check` | Passed |
 
 Docker Desktop was initially stopped. It was started in the background for a new,
@@ -80,7 +80,7 @@ Routing validation reports exactly:
 koupreng-premium-ux: SKILL.md missing YAML frontmatter opening '---'
 ```
 
-That file was empty in the baseline checkout and remains outside this UI change.
+That file was empty in the baseline checkout. Concurrent work restored it; the final routing rerun passed. The quoted error records the baseline result.
 
 ## Visual evidence and review
 
@@ -160,3 +160,5 @@ All changed/new deliverable paths are listed in `modified-files.json`. Existing
 untracked `output/` material was preserved and is excluded from that inventory.
 Temporary font-conversion tools also remain under `output/playwright/`: automatic
 approval review rejected their recursive cleanup with the reason `blocked by policy`.
+
+The subsequent integration task also includes the developer API monitor and its request-tracing changes. This report records the Silk Heritage checkpoint; final merge checks are reported separately.
