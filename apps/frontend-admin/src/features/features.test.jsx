@@ -5,6 +5,7 @@ import AdminUsersFeature from "./users/AdminUsersFeature";
 import AdminPaymentsFeature from "./payments/AdminPaymentsFeature";
 import AdminPackagesFeature from "./packages/AdminPackagesFeature";
 import AdminNotificationsFeature from "./notifications/AdminNotificationsFeature";
+import { AdminLanguageProvider } from "../app/providers/AdminLanguageProvider";
 
 afterEach(() => {
   cleanup();
@@ -165,6 +166,26 @@ describe("Domain Feature Modules", () => {
       expect(screen.getByText("Standard Package")).toBeInTheDocument();
       expect(screen.getByText("STD")).toBeInTheDocument();
     });
+  });
+
+  it("renders subscription packages feature in English when language is en", async () => {
+    localStorage.setItem("koupreng.admin.lang", "en");
+    render(
+      <AdminLanguageProvider>
+        <MemoryRouter initialEntries={["/admin/packages"]}>
+          <Routes>
+            <Route path="/admin/packages" element={<AdminPackagesFeature />} />
+          </Routes>
+        </MemoryRouter>
+      </AdminLanguageProvider>
+    );
+    await waitFor(() => {
+      expect(screen.getByText("Standard Package")).toBeInTheDocument();
+      expect(screen.getByText("Pricing & Packages")).toBeInTheDocument();
+      expect(screen.getByText("+ New Package")).toBeInTheDocument();
+      expect(screen.getByText("All Packages")).toBeInTheDocument();
+    });
+    localStorage.removeItem("koupreng.admin.lang");
   });
 
   it("renders notifications management feature and send form", async () => {

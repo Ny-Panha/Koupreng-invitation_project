@@ -58,52 +58,80 @@ const FEATURE_LIST = [
   {
     key: "premiumTemplatesEnabled",
     label: "គំរូ Premium (Templates)",
+    labelKm: "គំរូ Premium (Templates)",
+    labelEn: "Premium Templates",
     sublabel: "បើកសិទ្ធិប្រើប្រាស់ម៉ូតធៀបការលំដាប់ប្រណិត",
+    sublabelKm: "បើកសិទ្ធិប្រើប្រាស់ម៉ូតធៀបការលំដាប់ប្រណិត",
+    sublabelEn: "Access to luxury and premium wedding templates",
     icon: Crown,
   },
   {
     key: "qrInvitationsEnabled",
     label: "ធៀបការ QR (QR Invitations)",
+    labelKm: "ធៀបការ QR (QR Invitations)",
+    labelEn: "QR Invitations",
     sublabel: "ចែករំលែកធៀបការតាម QR Code និងតំណភ្ជាប់",
+    sublabelKm: "ចែករំលែកធៀបការតាម QR Code និងតំណភ្ជាប់",
+    sublabelEn: "Share invitations via QR Code and direct links",
     icon: QrCode,
   },
   {
     key: "qrCheckInEnabled",
     label: "ស្កេន QR ពេលចូលរោង (Check-in)",
+    labelKm: "ស្កេន QR ពេលចូលរោង (Check-in)",
+    labelEn: "QR Guest Check-in",
     sublabel: "ប្រព័ន្ធស្កេនពិនិត្យវត្តមានភ្ញៀវនៅមុខរោងការ",
+    sublabelKm: "ប្រព័ន្ធស្កេនពិនិត្យវត្តមានភ្ញៀវនៅមុខរោងការ",
+    sublabelEn: "Scan guest QR codes at reception entrance",
     icon: CheckCircle2,
   },
   {
     key: "seatingEnabled",
     label: "រៀបចំតុភ្ញៀវ (Seating Chart)",
+    labelKm: "រៀបចំតុភ្ញៀវ (Seating Chart)",
+    labelEn: "Seating Chart",
     sublabel: "រៀបចំលេខតុ និងប្លង់អង្គុយសម្រាប់ភ្ញៀវកិត្តិយស",
+    sublabelKm: "រៀបចំលេខតុ និងប្លង់អង្គុយសម្រាប់ភ្ញៀវកិត្តិយស",
+    sublabelEn: "Table numbers and seating arrangement for guests",
     icon: Armchair,
   },
   {
     key: "advancedAnalyticsEnabled",
     label: "របាយការណ៍លម្អិត (Analytics)",
+    labelKm: "របាយការណ៍លម្អិត (Analytics)",
+    labelEn: "Advanced Analytics",
     sublabel: "ស្ថិតិការបើកមើលធៀប និងចំនួនភ្ញៀវ RSVP ជាក់ស្តែង",
+    sublabelKm: "ស្ថិតិការបើកមើលធៀប និងចំនួនភ្ញៀវ RSVP ជាក់ស្តែង",
+    sublabelEn: "Track invitation views and real-time RSVP rates",
     icon: BarChart3,
   },
   {
     key: "teamMembersEnabled",
     label: "សមាជិកក្រុម (Team Collaboration)",
+    labelKm: "សមាជិកក្រុម (Team Collaboration)",
+    labelEn: "Team Collaboration",
     sublabel: "អាច Invite សមាជិកគ្រួសារជួយរៀបចំធៀបការរួមគ្នា",
+    sublabelKm: "អាច Invite សមាជិកគ្រួសារជួយរៀបចំធៀបការរួមគ្នា",
+    sublabelEn: "Invite family members to co-manage invitations",
     icon: Users,
   },
   {
     key: "aiAssistantEnabled",
     label: "ជំនួយការ AI (AI Assistant)",
+    labelKm: "ជំនួយការ AI (AI Assistant)",
+    labelEn: "AI Assistant",
     sublabel: "ជំនួយការឆ្លាតវៃជួយសរសេរពាក្យជូនពរ និងរៀបកាលវិភាគ",
+    sublabelKm: "ជំនួយការឆ្លាតវៃជួយសរសេរពាក្យជូនពរ និងរៀបកាលវិភាគ",
+    sublabelEn: "Smart AI to help write blessings and event schedules",
     icon: Bot,
   },
 ];
 
 const INTERVALS = [
-  { value: "YEARLY", label: "ប្រចាំឆ្នាំ", sub: "Yearly", days: "365", icon: "📅" },
-  { value: "MONTHLY", label: "ប្រចាំខែ", sub: "Monthly", days: "30", icon: "🗓️" },
-  { value: "ONE_TIME", label: "ម្តងគត់", sub: "One-time", days: "90", icon: "🎫" },
-  { value: "LIFETIME", label: "មួយជីវិត", sub: "Lifetime", days: "9999", icon: "♾️" },
+  { value: "YEARLY", label: "ប្រចាំឆ្នាំ", labelKm: "ប្រចាំឆ្នាំ", labelEn: "Yearly", sub: "Yearly", days: "365", icon: "📅" },
+  { value: "MONTHLY", label: "ប្រចាំខែ", labelKm: "ប្រចាំខែ", labelEn: "Monthly", sub: "Monthly", days: "30", icon: "🗓️" },
+  { value: "ONE_TIME", label: "ម្តងគត់", labelKm: "ម្តងគត់", labelEn: "One-time", sub: "One-time", days: "90", icon: "🎫" },
+  { value: "LIFETIME", label: "មួយជីវិត", labelKm: "មួយជីវិត", labelEn: "Lifetime", sub: "Lifetime", days: "9999", icon: "♾️" },
 ];
 
 const PACKAGE_PRESETS = [
@@ -309,7 +337,7 @@ function ToggleSwitch({ checked, onChange, label, sublabel, icon: Icon }) {
 }
 
 export default function AdminPackagesPage() {
-  const { lang } = useAdminLanguage();
+  const { lang, t } = useAdminLanguage();
   const { data, setData, loading, error, reload } = useResource(adminManagementService.packages);
   const [form, setForm] = useState(EMPTY_FORM);
   const [editingId, setEditingId] = useState(null);
@@ -382,7 +410,7 @@ export default function AdminPackagesPage() {
       description: preset.description,
       ...preset.features,
     }));
-    show(`បានជ្រើសរើសគំរូ "${preset.name}" ✓`);
+    show(lang === "en" ? `Selected preset "${preset.name}" ✓` : `បានជ្រើសរើសគំរូ "${preset.name}" ✓`);
   };
 
   const openCreateDrawer = () => {
@@ -458,10 +486,10 @@ export default function AdminPackagesPage() {
             </div>
             <div>
               <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-zinc-100">
-                កញ្ចប់សេវាកម្ម (Packages)
+                {t("packages.title", lang === "en" ? "Pricing & Packages" : "កញ្ចប់សេវាកម្ម (Packages)")}
               </h1>
               <p className="text-xs sm:text-sm text-slate-500 dark:text-zinc-400">
-                កំណត់តម្លៃ កូតា និងសិទ្ធិប្រើប្រាស់មុខងារសម្រាប់ User
+                {t("packages.subtitle", lang === "en" ? "Manage package tiers, quotas, and feature access for users" : "កំណត់តម្លៃ កូតា និងសិទ្ធិប្រើប្រាស់មុខងារសម្រាប់ User")}
               </p>
             </div>
           </div>
@@ -471,10 +499,10 @@ export default function AdminPackagesPage() {
             type="button"
             onClick={reload}
             className="btn btn-ghost h-9 px-3 text-xs"
-            title="Refresh"
+            title={lang === "en" ? "Refresh" : "ផ្ទុកឡើងវិញ"}
           >
             <RotateCw className="h-3.5 w-3.5" />
-            <span>{lang === "en" ? "Refresh" : "ផ្ទុកឡើងវិញ"}</span>
+            <span>{t("packages.refresh", lang === "en" ? "Refresh" : "ផ្ទុកឡើងវិញ")}</span>
           </button>
           <button
             type="button"
@@ -482,7 +510,7 @@ export default function AdminPackagesPage() {
             className="btn btn-primary h-9 px-4 text-xs shadow-md shadow-amber-500/20 font-bold"
           >
             <Plus className="h-4 w-4" />
-            <span>{lang === "en" ? "+ New Package" : "+ បង្កើតកញ្ចប់ថ្មី"}</span>
+            <span>{t("packages.createBtn", lang === "en" ? "+ New Package" : "+ បង្កើតកញ្ចប់ថ្មី")}</span>
           </button>
         </div>
       </div>
@@ -492,7 +520,7 @@ export default function AdminPackagesPage() {
         <div className="card p-4 flex items-center justify-between">
           <div>
             <p className="text-[11px] font-medium uppercase tracking-wider text-slate-400 dark:text-zinc-500">
-              កញ្ចប់ទាំងអស់
+              {t("packages.allPackages", lang === "en" ? "All Packages" : "កញ្ចប់ទាំងអស់")}
             </p>
             <p className="text-2xl font-bold text-slate-900 dark:text-zinc-100 mt-1">
               {stats.total}
@@ -506,7 +534,7 @@ export default function AdminPackagesPage() {
         <div className="card p-4 flex items-center justify-between">
           <div>
             <p className="text-[11px] font-medium uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-              សកម្ម (Active)
+              {t("packages.activePackages", lang === "en" ? "Active" : "សកម្ម (Active)")}
             </p>
             <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">
               {stats.active}
@@ -520,7 +548,7 @@ export default function AdminPackagesPage() {
         <div className="card p-4 flex items-center justify-between">
           <div>
             <p className="text-[11px] font-medium uppercase tracking-wider text-amber-600 dark:text-amber-400">
-              កញ្ចប់បង់ប្រាក់ (Paid)
+              {t("packages.paidPackages", lang === "en" ? "Paid" : "កញ្ចប់បង់ប្រាក់ (Paid)")}
             </p>
             <p className="text-2xl font-bold text-amber-600 dark:text-amber-400 mt-1">
               {stats.paid}
@@ -534,7 +562,7 @@ export default function AdminPackagesPage() {
         <div className="card p-4 flex items-center justify-between">
           <div>
             <p className="text-[11px] font-medium uppercase tracking-wider text-slate-400 dark:text-zinc-500">
-              ឥតគិតថ្លៃ (Free)
+              {t("packages.freePackages", lang === "en" ? "Free" : "ឥតគិតថ្លៃ (Free)")}
             </p>
             <p className="text-2xl font-bold text-slate-900 dark:text-zinc-100 mt-1">
               {stats.free}
@@ -553,7 +581,7 @@ export default function AdminPackagesPage() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <input
               type="text"
-              placeholder="ស្វែងរកតាមឈ្មោះ ឬ Code..."
+              placeholder={t("packages.searchPlaceholder", lang === "en" ? "Search by name or code..." : "ស្វែងរកតាមឈ្មោះ ឬ Code...")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="text-input pl-9 w-full"
@@ -565,9 +593,9 @@ export default function AdminPackagesPage() {
             onChange={(e) => setStatusFilter(e.target.value)}
             className="select text-xs"
           >
-            <option value="ALL">ស្ថានភាពទាំងអស់</option>
-            <option value="ACTIVE">សកម្ម (Active)</option>
-            <option value="INACTIVE">អសកម្ម (Inactive)</option>
+            <option value="ALL">{t("packages.allStatus", lang === "en" ? "All Statuses" : "ស្ថានភាពទាំងអស់")}</option>
+            <option value="ACTIVE">{t("packages.activeStatus", lang === "en" ? "Active" : "សកម្ម (Active)")}</option>
+            <option value="INACTIVE">{t("packages.inactiveStatus", lang === "en" ? "Inactive" : "អសកម្ម (Inactive)")}</option>
           </select>
         </div>
 
@@ -583,7 +611,7 @@ export default function AdminPackagesPage() {
             }`}
           >
             <LayoutGrid className="h-3.5 w-3.5" />
-            <span>Cards</span>
+            <span>{t("packages.viewCards", "Cards")}</span>
           </button>
           <button
             type="button"
@@ -595,7 +623,7 @@ export default function AdminPackagesPage() {
             }`}
           >
             <TableIcon className="h-3.5 w-3.5" />
-            <span>Table</span>
+            <span>{t("packages.viewTable", "Table")}</span>
           </button>
         </div>
       </div>
@@ -606,21 +634,16 @@ export default function AdminPackagesPage() {
       ) : error ? (
         <ErrorState onRetry={reload} />
       ) : filteredPackages.length === 0 ? (
-        <Empty label="រកមិនឃើញកញ្ចប់សេវាកម្មទេ" />
+        <Empty label={t("packages.empty", lang === "en" ? "No packages found" : "រកមិនឃើញកញ្ចប់សេវាកម្មទេ")} />
       ) : viewMode === "cards" ? (
         /* Cards / Grid View */
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
           {filteredPackages.map((plan) => {
             const isFree = Number(plan.price) === 0;
             const enabledCount = FEATURE_LIST.filter((f) => Boolean(plan[f.key])).length;
-            const intervalText =
-              plan.billingInterval === "YEARLY"
-                ? "ឆ្នាំ"
-                : plan.billingInterval === "MONTHLY"
-                ? "ខែ"
-                : plan.billingInterval === "LIFETIME"
-                ? "មួយជីវិត"
-                : "ម្តងគត់";
+            const intervalText = lang === "en"
+              ? (plan.billingInterval === "YEARLY" ? "year" : plan.billingInterval === "MONTHLY" ? "month" : plan.billingInterval === "LIFETIME" ? "lifetime" : "one-time")
+              : (plan.billingInterval === "YEARLY" ? "ឆ្នាំ" : plan.billingInterval === "MONTHLY" ? "ខែ" : plan.billingInterval === "LIFETIME" ? "មួយជីវិត" : "ម្តងគត់");
 
             return (
               <div
@@ -630,11 +653,11 @@ export default function AdminPackagesPage() {
                 }`}
               >
                 <div className="space-y-3.5">
-                  {/* Section 1: ១. ព័ត៌មានទូទៅ (Basic Info, Price & Duration) */}
+                  {/* Section 1: Basic Info, Price & Duration */}
                   <div>
                     <div className="flex items-center justify-between gap-2 mb-2.5">
                       <span className="text-[10px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
-                        ១. ព័ត៌មានទូទៅ
+                        {t("packages.basicInfoSec", lang === "en" ? "1. Basic Info" : "១. ព័ត៌មានទូទៅ")}
                       </span>
                       <div className="flex items-center gap-1.5">
                         <span className="font-mono text-xs font-bold px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700">
@@ -654,7 +677,7 @@ export default function AdminPackagesPage() {
                       {plan.packageName}
                     </h3>
                     <p className="text-xs text-slate-500 dark:text-zinc-400 line-clamp-2 mt-0.5 min-h-[32px]">
-                      {plan.description || "គ្មានការពិពណ៌នា"}
+                      {plan.description || t("packages.noDescription", lang === "en" ? "No description provided" : "គ្មានការពិពណ៌នា")}
                     </p>
 
                     <div className="mt-3 pt-3 border-t border-dashed border-slate-200 dark:border-zinc-800">
@@ -664,7 +687,7 @@ export default function AdminPackagesPage() {
                         </span>
                         {isFree ? (
                           <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">
-                            Free $0
+                            {t("packages.freeBadge", "Free $0")}
                           </span>
                         ) : (
                           <span className="text-xs font-medium text-slate-500 dark:text-zinc-400">
@@ -674,58 +697,59 @@ export default function AdminPackagesPage() {
                       </div>
                       {plan.durationDays && (
                         <p className="text-[11px] text-slate-400 dark:text-zinc-500 mt-1 flex items-center gap-1">
-                          <span>📅 សុពលភាព:</span>
+                          <span>{t("packages.validity", lang === "en" ? "📅 Duration:" : "📅 សុពលភាព:")}</span>
                           <span className="font-semibold text-slate-600 dark:text-zinc-400">
-                            {plan.durationDays} ថ្ងៃ
+                            {plan.durationDays} {t("packages.days", lang === "en" ? "days" : "ថ្ងៃ")}
                           </span>
                         </p>
                       )}
                     </div>
                   </div>
 
-                  {/* Section 2: ២. កូតាកំណត់ (Quotas & Limits) */}
+                  {/* Section 2: Quotas & Limits */}
                   <div className="pt-3 border-t border-slate-200 dark:border-zinc-800">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
-                        ២. កូតាកំណត់
+                        {t("packages.quotasSec", lang === "en" ? "2. Quotas & Limits" : "២. កូតាកំណត់")}
                       </span>
                     </div>
                     <div className="space-y-1.5 text-xs">
                       <div className="flex items-center justify-between text-slate-600 dark:text-zinc-300">
                         <span className="flex items-center gap-1.5 text-slate-500 dark:text-zinc-400">
-                          <Mail className="h-3.5 w-3.5 text-amber-500" /> ធៀបការអតិបរមា:
+                          <Mail className="h-3.5 w-3.5 text-amber-500" /> {t("packages.maxInvites", lang === "en" ? "Max Invitations:" : "ធៀបការអតិបរមា:")}
                         </span>
                         <span className="font-semibold text-slate-800 dark:text-zinc-200">
-                          {plan.maxInvitations ? `${plan.maxInvitations} ធៀប` : "មិនកំណត់"}
+                          {plan.maxInvitations ? `${plan.maxInvitations} ${t("packages.invitationsCount", lang === "en" ? "invites" : "ធៀប")}` : t("packages.unlimited", lang === "en" ? "Unlimited" : "មិនកំណត់")}
                         </span>
                       </div>
                       <div className="flex items-center justify-between text-slate-600 dark:text-zinc-300">
                         <span className="flex items-center gap-1.5 text-slate-500 dark:text-zinc-400">
-                          <Users className="h-3.5 w-3.5 text-amber-500" /> ចំនួនភ្ញៀវអតិបរមា:
+                          <Users className="h-3.5 w-3.5 text-amber-500" /> {t("packages.maxGuests", lang === "en" ? "Max Guests:" : "ចំនួនភ្ញៀវអតិបរមា:")}
                         </span>
                         <span className="font-semibold text-slate-800 dark:text-zinc-200">
-                          {plan.maxGuests ? `${plan.maxGuests} នាក់` : "មិនកំណត់"}
+                          {plan.maxGuests ? `${plan.maxGuests} ${t("packages.guestsCount", lang === "en" ? "guests" : "នាក់")}` : t("packages.unlimited", lang === "en" ? "Unlimited" : "មិនកំណត់")}
                         </span>
                       </div>
                     </div>
                   </div>
 
-                  {/* Section 3: ៣. មុខងារពិសេស (Features & Permissions) */}
+                  {/* Section 3: Features & Permissions */}
                   <div className="pt-3 border-t border-slate-200 dark:border-zinc-800">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
-                        ៣. មុខងារពិសេស
+                        {t("packages.featuresSec", lang === "en" ? "3. Features & Permissions" : "៣. មុខងារពិសេស")}
                       </span>
                       <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-1.5 py-0.2 rounded border border-amber-500/20">
                         {enabledCount}/{FEATURE_LIST.length}
                       </span>
                     </div>
                     <div className="space-y-1.5 text-[11px]">
-                      {FEATURE_LIST.map(({ key, label }) => {
-                        const enabled = Boolean(plan[key]);
+                      {FEATURE_LIST.map((feat) => {
+                        const enabled = Boolean(plan[feat.key]);
+                        const featLabel = lang === "en" ? (feat.labelEn || feat.label) : (feat.labelKm || feat.label).split(" (")[0];
                         return (
                           <div
-                            key={key}
+                            key={feat.key}
                             className={`flex items-center gap-2 ${
                               enabled
                                 ? "text-slate-700 dark:text-zinc-300"
@@ -737,7 +761,7 @@ export default function AdminPackagesPage() {
                             ) : (
                               <X className="h-3.5 w-3.5 text-slate-300 dark:text-zinc-700 shrink-0" />
                             )}
-                            <span className="truncate">{label.split(" (")[0]}</span>
+                            <span className="truncate">{featLabel}</span>
                           </div>
                         );
                       })}
@@ -752,7 +776,7 @@ export default function AdminPackagesPage() {
                     className="btn btn-ghost flex-1 h-8 text-xs font-semibold hover:border-amber-500"
                   >
                     <Pencil className="h-3.5 w-3.5 text-amber-500" />
-                    <span>កែសម្រួល</span>
+                    <span>{t("packages.edit", lang === "en" ? "Edit" : "កែសម្រួល")}</span>
                   </button>
                   <button
                     type="button"
@@ -763,7 +787,7 @@ export default function AdminPackagesPage() {
                         ? "btn-danger"
                         : "bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 hover:bg-emerald-500 hover:text-white"
                     }`}
-                    title={plan.active ? "ផ្អាកដំណើរការ" : "បើកដំណើរការ"}
+                    title={plan.active ? t("packages.deactivate", lang === "en" ? "Deactivate" : "ផ្អាកដំណើរការ") : t("packages.activate", lang === "en" ? "Activate" : "បើកដំណើរការ")}
                   >
                     <Power className="h-3.5 w-3.5" />
                   </button>
@@ -778,13 +802,13 @@ export default function AdminPackagesPage() {
           <table className="data">
             <thead>
               <tr>
-                <th>Code</th>
-                <th>ឈ្មោះកញ្ចប់</th>
-                <th>តម្លៃ (Price)</th>
-                <th>កូតាកំណត់ (Limits)</th>
-                <th>មុខងារសំខាន់ៗ</th>
-                <th>ស្ថានភាព</th>
-                <th>សកម្មភាព</th>
+                <th>{t("packages.colCode", "Code")}</th>
+                <th>{t("packages.colName", "ឈ្មោះកញ្ចប់")}</th>
+                <th>{t("packages.colPrice", "តម្លៃ (Price)")}</th>
+                <th>{t("packages.colLimits", "កូតាកំណត់ (Limits)")}</th>
+                <th>{t("packages.colFeatures", "មុខងារសំខាន់ៗ")}</th>
+                <th>{t("packages.colStatus", "ស្ថានភាព")}</th>
+                <th>{t("packages.colActions", "សកម្មភាព")}</th>
               </tr>
             </thead>
             <tbody>
@@ -822,23 +846,26 @@ export default function AdminPackagesPage() {
                     <td>
                       <div className="text-xs space-y-0.5">
                         <p className="text-slate-700 dark:text-zinc-300">
-                          💌 {plan.maxInvitations || "—"} ធៀប
+                          💌 {plan.maxInvitations || "—"} {t("packages.invitationsCount", "ធៀប")}
                         </p>
                         <p className="text-slate-500 dark:text-zinc-400 text-[11px]">
-                          👥 {plan.maxGuests || "—"} ភ្ញៀវ
+                          👥 {plan.maxGuests || "—"} {t("packages.guestsCount", "ភ្ញៀវ")}
                         </p>
                       </div>
                     </td>
                     <td>
                       <div className="flex flex-wrap gap-1 max-w-xs">
-                        {FEATURE_LIST.filter((f) => Boolean(plan[f.key])).map((f) => (
-                          <span
-                            key={f.key}
-                            className="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-300"
-                          >
-                            {f.label.split(" (")[0]}
-                          </span>
-                        ))}
+                        {FEATURE_LIST.filter((f) => Boolean(plan[f.key])).map((f) => {
+                          const badgeLabel = lang === "en" ? (f.labelEn || f.label) : (f.labelKm || f.label).split(" (")[0];
+                          return (
+                            <span
+                              key={f.key}
+                              className="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-300"
+                            >
+                              {badgeLabel}
+                            </span>
+                          );
+                        })}
                       </div>
                     </td>
                     <td>
@@ -854,7 +881,7 @@ export default function AdminPackagesPage() {
                           onClick={() => openEditDrawer(plan)}
                         >
                           <Pencil className="h-3 w-3 text-amber-500" />
-                          <span>{lang === "en" ? "Edit" : "កែ"}</span>
+                          <span>{t("packages.editShort", lang === "en" ? "Edit" : "កែ")}</span>
                         </button>
                         <button
                           type="button"
@@ -866,7 +893,7 @@ export default function AdminPackagesPage() {
                           disabled={busyId === plan.id}
                           onClick={() => toggleActive(plan)}
                         >
-                          {plan.active ? (lang === "en" ? "Deactivate" : "បិទ") : (lang === "en" ? "Activate" : "បើក")}
+                          {plan.active ? t("packages.deactivateShort", lang === "en" ? "Deactivate" : "បិទ") : t("packages.activateShort", lang === "en" ? "Activate" : "បើក")}
                         </button>
                       </div>
                     </td>
@@ -894,7 +921,7 @@ export default function AdminPackagesPage() {
                 <div>
                   <div className="flex items-center gap-2">
                     <h2 className="text-base font-bold text-slate-900 dark:text-zinc-100">
-                      {editingId ? `កែសម្រួលកញ្ចប់: ${form.packageName || "—"}` : "បង្កើតកញ្ចប់សេវាថ្មី"}
+                      {editingId ? `${t("packages.modalEditTitle", "កែសម្រួលកញ្ចប់:")} ${form.packageName || "—"}` : t("packages.modalCreateTitle", "បង្កើតកញ្ចប់សេវាថ្មី")}
                     </h2>
                     {form.code && (
                       <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/15 text-amber-600 dark:text-amber-400">
@@ -903,7 +930,7 @@ export default function AdminPackagesPage() {
                     )}
                   </div>
                   <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">
-                    {editingId ? "កែប្រែព័ត៌មានកញ្ចប់ កូតា និងសិទ្ធិមុខងារ" : "បន្ថែម Subscription Package ថ្មីសម្រាប់ User"}
+                    {editingId ? t("packages.modalEditSub", "កែប្រែព័ត៌មានកញ្ចប់ កូតា និងសិទ្ធិមុខងារ") : t("packages.modalCreateSub", "បន្ថែម Subscription Package ថ្មីសម្រាប់ User")}
                   </p>
                 </div>
               </div>
@@ -929,7 +956,7 @@ export default function AdminPackagesPage() {
                   }`}
                 >
                   <FileText className="h-3.5 w-3.5" />
-                  <span>១. ព័ត៌មានទូទៅ</span>
+                  <span>{t("packages.basicInfoSec", "១. ព័ត៌មានទូទៅ")}</span>
                 </button>
 
                 <button
@@ -942,7 +969,7 @@ export default function AdminPackagesPage() {
                   }`}
                 >
                   <Sliders className="h-3.5 w-3.5" />
-                  <span>២. កូតាកំណត់</span>
+                  <span>{t("packages.quotasSec", "២. កូតាកំណត់")}</span>
                 </button>
 
                 <button
@@ -955,7 +982,7 @@ export default function AdminPackagesPage() {
                   }`}
                 >
                   <Crown className="h-3.5 w-3.5" />
-                  <span>៣. មុខងារពិសេស</span>
+                  <span>{t("packages.featuresSec", "៣. មុខងារពិសេស")}</span>
                   <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 font-extrabold">
                     {enabledFeaturesCount}
                   </span>
@@ -973,9 +1000,9 @@ export default function AdminPackagesPage() {
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-[11px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 flex items-center gap-1.5">
                         <Sparkles className="h-3.5 w-3.5 text-amber-500" />
-                        <span>១. ជ្រើសរើសគំរូរហ័ស (QUICK PRESETS)</span>
+                        <span>{t("packages.quickPresets", "១. ជ្រើសរើសគំរូរហ័ស (QUICK PRESETS)")}</span>
                       </span>
-                      <span className="text-[10px] text-slate-400">ចុច ១ Click បំពេញគ្រប់ប្រឡោះ</span>
+                      <span className="text-[10px] text-slate-400">{t("packages.quickPresetsSub", "ចុច ១ Click បំពេញគ្រប់ប្រឡោះ")}</span>
                     </div>
                     <div className="flex items-center gap-2 flex-wrap">
                       {PACKAGE_PRESETS.map((preset) => {
@@ -1002,21 +1029,21 @@ export default function AdminPackagesPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1.5">
-                        ២. ឈ្មោះកញ្ចប់ <span className="text-rose-500">*</span>
+                        {t("packages.packageNameLabel", "២. ឈ្មោះកញ្ចប់")} <span className="text-rose-500">*</span>
                       </label>
                       <input
                         className="text-input w-full font-medium"
                         value={form.packageName}
                         onChange={(e) => handleNameChange(e.target.value)}
                         required
-                        placeholder="ឧ. Pro, Standard, Enterprise"
+                        placeholder={lang === "en" ? "e.g. Pro, Standard, Enterprise" : "ឧ. Pro, Standard, Enterprise"}
                       />
                     </div>
 
                     <div>
                       <div className="flex items-center justify-between mb-1.5">
                         <label className="text-xs font-semibold text-slate-700 dark:text-zinc-300">
-                          កូដសម្គាល់ (Code) <span className="text-rose-500">*</span>
+                          {t("packages.packageCodeLabel", "កូដសម្គាល់ (Code)")} <span className="text-rose-500">*</span>
                         </label>
                         {!editingId && (
                           <span className="text-[10px] text-amber-600 dark:text-amber-400 font-semibold">
@@ -1029,7 +1056,7 @@ export default function AdminPackagesPage() {
                         value={form.code}
                         onChange={(e) => setField("code", e.target.value.toUpperCase())}
                         required
-                        placeholder="ឧ. PRO, FREE, VIP"
+                        placeholder={lang === "en" ? "e.g. PRO, FREE, VIP" : "ឧ. PRO, FREE, VIP"}
                       />
                     </div>
                   </div>
@@ -1037,14 +1064,14 @@ export default function AdminPackagesPage() {
                   {/* 3. Description (Right after Name & Code, matching Card order) */}
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1.5">
-                      ៣. ការពិពណ៌នាសង្ខេប (Description)
+                      {t("packages.descriptionLabel", "៣. ការពិពណ៌នាសង្ខេប (Description)")}
                     </label>
                     <textarea
                       rows={2}
                       className="text-input w-full h-auto py-2.5 resize-none"
                       value={form.description || ""}
                       onChange={(e) => setField("description", e.target.value)}
-                      placeholder="ពន្យល់ពីអត្ថប្រយោជន៍ ឬលក្ខណៈពិសេសនៃកញ្ចប់នេះ..."
+                      placeholder={lang === "en" ? "Explain package benefits and special features..." : "ពន្យល់ពីអត្ថប្រយោជន៍ ឬលក្ខណៈពិសេសនៃកញ្ចប់នេះ..."}
                     />
                   </div>
 
@@ -1052,7 +1079,7 @@ export default function AdminPackagesPage() {
                   <div>
                     <div className="flex items-center justify-between mb-1.5">
                       <label className="text-xs font-semibold text-slate-700 dark:text-zinc-300">
-                        ៤. តម្លៃកញ្ចប់ (Pricing)
+                        {t("packages.pricingLabel", "៤. តម្លៃកញ្ចប់ (Pricing)")}
                       </label>
                       <button
                         type="button"
@@ -1063,7 +1090,7 @@ export default function AdminPackagesPage() {
                             : "text-slate-400 hover:text-slate-600 dark:hover:text-zinc-300"
                         }`}
                       >
-                        {Number(form.price) === 0 ? "✓ កញ្ចប់ឥតគិតថ្លៃ (Free $0)" : "កំណត់ជា Free ($0)"}
+                        {Number(form.price) === 0 ? t("packages.freePackageOpt", "✓ កញ្ចប់ឥតគិតថ្លៃ (Free $0)") : t("packages.setFreeOpt", "កំណត់ជា Free ($0)")}
                       </button>
                     </div>
 
@@ -1090,7 +1117,7 @@ export default function AdminPackagesPage() {
                   {/* 5. 1-Click Segmented Buttons for Billing Interval */}
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1.5">
-                      ៥. របៀបបង់ប្រាក់ (Billing Interval)
+                      {t("packages.billingIntervalLabel", "៥. របៀបបង់ប្រាក់ (Billing Interval)")}
                     </label>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                       {INTERVALS.map((int) => {
@@ -1110,7 +1137,7 @@ export default function AdminPackagesPage() {
                             }`}
                           >
                             <span className="text-sm mb-0.5">{int.icon}</span>
-                            <span>{int.label}</span>
+                            <span>{lang === "en" ? (int.labelEn || int.label) : (int.labelKm || int.label)}</span>
                             <span className="text-[10px] font-normal opacity-70">({int.sub})</span>
                           </button>
                         );
@@ -1121,7 +1148,7 @@ export default function AdminPackagesPage() {
                   {/* 6. Duration & Sort Order */}
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1.5">
-                      ៦. សុពលភាព និងលំដាប់បង្ហាញ (Duration & Sort Order)
+                      {t("packages.durationOrderLabel", "៦. សុពលភាព និងលំដាប់បង្ហាញ (Duration & Sort Order)")}
                     </label>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
@@ -1134,10 +1161,10 @@ export default function AdminPackagesPage() {
                             placeholder="365"
                           />
                           <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs font-semibold">
-                            ថ្ងៃ
+                            {t("packages.days", "ថ្ងៃ")}
                           </span>
                         </div>
-                        <span className="text-[10px] text-slate-400 mt-1 block">សុពលភាពជាថ្ងៃ</span>
+                        <span className="text-[10px] text-slate-400 mt-1 block">{t("packages.durationDaysSub", "សុពលភាពជាថ្ងៃ")}</span>
                       </div>
 
                       <div>
@@ -1148,7 +1175,7 @@ export default function AdminPackagesPage() {
                           onChange={(e) => setField("sortOrder", e.target.value)}
                           placeholder="0"
                         />
-                        <span className="text-[10px] text-slate-400 mt-1 block">លេខលំដាប់បង្ហាញ (Sort Order)</span>
+                        <span className="text-[10px] text-slate-400 mt-1 block">{t("packages.sortOrderSub", "លេខលំដាប់បង្ហាញ (Sort Order)")}</span>
                       </div>
                     </div>
                   </div>
@@ -1161,7 +1188,7 @@ export default function AdminPackagesPage() {
                   <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-800 dark:text-amber-300 flex items-center gap-2.5 mb-2">
                     <Info className="h-4 w-4 shrink-0 text-amber-600 dark:text-amber-400" />
                     <span>
-                      កំណត់កូតា និងទំហំផ្ទុកសម្រាប់គណនី User ដែលប្រើប្រាស់កញ្ចប់នេះ។
+                      {t("packages.quotaBanner", "កំណត់កូតា និងទំហំផ្ទុកសម្រាប់គណនី User ដែលប្រើប្រាស់កញ្ចប់នេះ។")}
                     </span>
                   </div>
 
@@ -1170,11 +1197,11 @@ export default function AdminPackagesPage() {
                       <div className="flex items-center gap-2 mb-2">
                         <Mail className="h-4 w-4 text-amber-500" />
                         <label className="text-xs font-bold text-slate-800 dark:text-zinc-200">
-                          ចំនួនធៀបការអតិបរមា
+                          {t("packages.quotaMaxInvites", "ចំនួនធៀបការអតិបរមា")}
                         </label>
                       </div>
                       <p className="text-[11px] text-slate-500 dark:text-zinc-400 mb-2">
-                        ចំនួនធៀបការមង្គលការដែល User អាចបង្កើតបាន
+                        {t("packages.quotaMaxInvitesSub", "ចំនួនធៀបការមង្គលការដែល User អាចបង្កើតបាន")}
                       </p>
                       <div className="relative">
                         <input
@@ -1182,10 +1209,10 @@ export default function AdminPackagesPage() {
                           type="number"
                           value={form.maxInvitations}
                           onChange={(e) => setField("maxInvitations", e.target.value)}
-                          placeholder="ឧ. 1, 10, 50"
+                          placeholder={lang === "en" ? "e.g. 1, 10, 50" : "ឧ. 1, 10, 50"}
                         />
                         <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs">
-                          ធៀប
+                          {t("packages.invitationsCount", "ធៀប")}
                         </span>
                       </div>
                     </div>
@@ -1194,11 +1221,11 @@ export default function AdminPackagesPage() {
                       <div className="flex items-center gap-2 mb-2">
                         <Users className="h-4 w-4 text-amber-500" />
                         <label className="text-xs font-bold text-slate-800 dark:text-zinc-200">
-                          ចំនួនភ្ញៀវអតិបរមា
+                          {t("packages.quotaMaxGuests", "ចំនួនភ្ញៀវអតិបរមា")}
                         </label>
                       </div>
                       <p className="text-[11px] text-slate-500 dark:text-zinc-400 mb-2">
-                        ចំនួនភ្ញៀវសរុបទាំងអស់ដែលគណនីអាចផ្ទុកបាន
+                        {t("packages.quotaMaxGuestsSub", "ចំនួនភ្ញៀវសរុបទាំងអស់ដែលគណនីអាចផ្ទុកបាន")}
                       </p>
                       <div className="relative">
                         <input
@@ -1206,10 +1233,10 @@ export default function AdminPackagesPage() {
                           type="number"
                           value={form.maxGuests}
                           onChange={(e) => setField("maxGuests", e.target.value)}
-                          placeholder="ឧ. 100, 500, 2000"
+                          placeholder={lang === "en" ? "e.g. 100, 500, 2000" : "ឧ. 100, 500, 2000"}
                         />
                         <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs">
-                          នាក់
+                          {t("packages.guestsCount", "នាក់")}
                         </span>
                       </div>
                     </div>
@@ -1218,11 +1245,11 @@ export default function AdminPackagesPage() {
                       <div className="flex items-center gap-2 mb-2">
                         <Users className="h-4 w-4 text-amber-500" />
                         <label className="text-xs font-bold text-slate-800 dark:text-zinc-200">
-                          ភ្ញៀវក្នុង១ធៀបការ
+                          {t("packages.quotaPerInvite", "ភ្ញៀវក្នុង១ធៀបការ")}
                         </label>
                       </div>
                       <p className="text-[11px] text-slate-500 dark:text-zinc-400 mb-2">
-                        ចំនួនភ្ញៀវអតិបរមាក្នុងធៀបនីមួយៗ
+                        {t("packages.quotaPerInviteSub", "ចំនួនភ្ញៀវអតិបរមាក្នុងធៀបនីមួយៗ")}
                       </p>
                       <div className="relative">
                         <input
@@ -1230,10 +1257,10 @@ export default function AdminPackagesPage() {
                           type="number"
                           value={form.maxGuestsPerInvitation}
                           onChange={(e) => setField("maxGuestsPerInvitation", e.target.value)}
-                          placeholder="ឧ. 40"
+                          placeholder={lang === "en" ? "e.g. 40" : "ឧ. 40"}
                         />
                         <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs">
-                          នាក់
+                          {t("packages.guestsCount", "នាក់")}
                         </span>
                       </div>
                     </div>
@@ -1242,11 +1269,11 @@ export default function AdminPackagesPage() {
                       <div className="flex items-center gap-2 mb-2">
                         <Users className="h-4 w-4 text-amber-500" />
                         <label className="text-xs font-bold text-slate-800 dark:text-zinc-200">
-                          សមាជិកក្រុមជំនួយការ
+                          {t("packages.quotaTeam", "សមាជិកក្រុមជំនួយការ")}
                         </label>
                       </div>
                       <p className="text-[11px] text-slate-500 dark:text-zinc-400 mb-2">
-                        ចំនួន Team members អាចសហការគ្នាបាន
+                        {t("packages.quotaTeamSub", "ចំនួន Team members អាចសហការគ្នាបាន")}
                       </p>
                       <div className="relative">
                         <input
@@ -1254,10 +1281,10 @@ export default function AdminPackagesPage() {
                           type="number"
                           value={form.maxTeamMembers}
                           onChange={(e) => setField("maxTeamMembers", e.target.value)}
-                          placeholder="ឧ. 1, 5"
+                          placeholder={lang === "en" ? "e.g. 1, 5" : "ឧ. 1, 5"}
                         />
                         <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs">
-                          នាក់
+                          {lang === "en" ? "members" : "នាក់"}
                         </span>
                       </div>
                     </div>
@@ -1273,28 +1300,28 @@ export default function AdminPackagesPage() {
                     <ToggleSwitch
                       checked={Boolean(form.active)}
                       onChange={(val) => setField("active", val)}
-                      label="ស្ថានភាពដំណើរការ (Status: Active)"
+                      label={t("packages.statusActiveLabel", "ស្ថានភាពដំណើរការ (Status: Active)")}
                       sublabel={
                         form.active
-                          ? "កញ្ចប់នេះកំពុងផ្សាយផ្ទាល់ User អាចមើលឃើញ និងទិញបាន"
-                          : "កញ្ចប់នេះត្រូវបានលាក់បណ្ដោះអាសន្ន"
+                          ? t("packages.statusActiveSub", "កញ្ចប់នេះកំពុងផ្សាយផ្ទាល់ User អាចមើលឃើញ និងទិញបាន")
+                          : t("packages.statusInactiveSub", "កញ្ចប់នេះត្រូវបានលាក់បណ្ដោះអាសន្ន")
                       }
                       icon={Power}
                     />
                   </div>
 
                   <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-zinc-500 px-1 pt-1">
-                    សិទ្ធិប្រើប្រាស់មុខងារនីមួយៗ (Feature Switches)
+                    {t("packages.featureSwitches", "សិទ្ធិប្រើប្រាស់មុខងារនីមួយៗ (Feature Switches)")}
                   </p>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    {FEATURE_LIST.map(({ key, label, sublabel, icon }) => (
+                    {FEATURE_LIST.map(({ key, labelKm, labelEn, label, sublabelKm, sublabelEn, sublabel, icon }) => (
                       <ToggleSwitch
                         key={key}
                         checked={Boolean(form[key])}
                         onChange={(val) => setField(key, val)}
-                        label={label}
-                        sublabel={sublabel}
+                        label={lang === "en" ? (labelEn || label) : (labelKm || label)}
+                        sublabel={lang === "en" ? (sublabelEn || sublabel) : (sublabelKm || sublabel)}
                         icon={icon}
                       />
                     ))}
@@ -1306,9 +1333,9 @@ export default function AdminPackagesPage() {
             {/* Modal Footer Actions */}
             <div className="px-6 py-4 border-t border-slate-100 dark:border-zinc-800/80 flex items-center justify-between bg-slate-50/50 dark:bg-zinc-900/30 shrink-0">
               <div className="flex items-center gap-1.5 text-xs text-slate-400">
-                <span>ជំហាន:</span>
+                <span>{t("packages.stepLabel", "ជំហាន:")}</span>
                 <span className="font-semibold text-slate-700 dark:text-zinc-300">
-                  {activeTab === "basic" ? "១. ព័ត៌មានទូទៅ" : activeTab === "quotas" ? "២. កូតាកំណត់" : "៣. មុខងារពិសេស"}
+                  {activeTab === "basic" ? t("packages.basicInfoSec", "១. ព័ត៌មានទូទៅ") : activeTab === "quotas" ? t("packages.quotasSec", "២. កូតាកំណត់") : t("packages.featuresSec", "៣. មុខងារពិសេស")}
                 </span>
               </div>
 
@@ -1318,7 +1345,7 @@ export default function AdminPackagesPage() {
                   onClick={closeDrawer}
                   className="btn btn-ghost px-4 py-2"
                 >
-                  បោះបង់
+                  {t("packages.cancelBtn", "បោះបង់")}
                 </button>
                 <button
                   type="submit"
@@ -1326,7 +1353,7 @@ export default function AdminPackagesPage() {
                   disabled={busyId === (editingId || "new")}
                   className="btn btn-primary px-5 py-2 font-bold shadow-md shadow-amber-500/20"
                 >
-                  {editingId ? "រក្សាទុកការកែប្រែ" : "បង្កើតកញ្ចប់ថ្មី"}
+                  {editingId ? t("packages.saveBtn", "រក្សាទុកការកែប្រែ") : t("packages.createSubmitBtn", "បង្កើតកញ្ចប់ថ្មី")}
                 </button>
               </div>
             </div>
