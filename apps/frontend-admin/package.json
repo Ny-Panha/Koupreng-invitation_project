@@ -14,6 +14,9 @@
     "analyze:deps": "node ../../scripts/ci/run-knip.mjs --include dependencies,unlisted,binaries"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "@tailwindcss/vite": "^4.3.3",
     "axios": "^1.19.0",
     "lucide-react": "^1.34.0",

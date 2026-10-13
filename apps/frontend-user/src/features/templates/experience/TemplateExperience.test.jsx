@@ -423,3 +423,136 @@ describe("TemplateOpeningGate media and greeting fallbacks", () => {
         expect(view.container.querySelector(".tx-magical-petals")).toBeInTheDocument();
     });
 });
+
+describe("Modular Block CMS appending in TemplateExperience", () => {
+    it("renders zero custom block containers when sections array is empty (zero regression)", () => {
+        const view = render(
+            <MemoryRouter>
+                <TemplateExperience
+                    tpl={{ id: "test-tpl", sections: [] }}
+                    content={content({ sections: [] })}
+                    preview={true}
+                />
+            </MemoryRouter>
+        );
+        expect(view.container.querySelector(".dynamic-blocks-engine")).toBeNull();
+    });
+
+    it("appends custom CMS blocks after legacy invitation content when sections are present", () => {
+        const customBlocks = [
+            {
+                id: "b-txt",
+                type: "CUSTOM_TEXT",
+                data: { heading: "Custom Section Header", body: "Custom section message content" },
+            },
+            {
+                id: "b-img",
+                type: "CUSTOM_IMAGE",
+                data: { imageUrl: "/custom-photo.jpg", caption: "Photo from our trip" },
+            },
+        ];
+
+        const view = render(
+            <MemoryRouter>
+                <TemplateExperience
+                    tpl={{ id: "garden-royal-khmer-wedding", sections: customBlocks }}
+                    content={content({ sections: customBlocks })}
+                    preview={true}
+                />
+            </MemoryRouter>
+        );
+
+        // Legacy content is present
+        expect(screen.getAllByText("សុវណ្ណ").length).toBeGreaterThan(0);
+        expect(screen.getAllByText("មាលា").length).toBeGreaterThan(0);
+
+        // Custom blocks are also present in the document
+        expect(view.container.querySelector(".dynamic-blocks-engine")).toBeInTheDocument();
+        expect(screen.getByText("Custom Section Header")).toBeInTheDocument();
+        expect(screen.getByText("Custom section message content")).toBeInTheDocument();
+        expect(screen.getByText("Photo from our trip")).toBeInTheDocument();
+    });
+
+    it("restores sections from tpl.description JSON string if sections not on tpl root", () => {
+        const customBlocks = [
+            {
+                id: "b-desc",
+                type: "CUSTOM_TEXT",
+                data: { heading: "Extracted from Description JSON" },
+            },
+        ];
+        const jsonDescription = JSON.stringify({
+            sections: customBlocks,
+        });
+
+        const view = render(
+            <MemoryRouter>
+                <TemplateExperience
+                    tpl={{ id: "garden-royal-khmer-wedding", description: jsonDescription }}
+                    preview={true}
+                />
+            </MemoryRouter>
+        );
+
+        expect(view.container.querySelector(".dynamic-blocks-engine")).toBeInTheDocument();
+        expect(screen.getByText("Extracted from Description JSON")).toBeInTheDocument();
+    });
+
+    it("renders unified mode with admin custom order: gallery before schedule, with custom block interleaved", () => {
+        const unifiedSections = [
+            {
+                id: "sec-gallery",
+                type: "LEGACY_SECTION",
+                data: { sectionKey: "gallery", enabled: true },
+            },
+            {
+                id: "b-custom-middle",
+                type: "CUSTOM_TEXT",
+                data: { heading: "Interleaved Note Between Gallery and Schedule" },
+            },
+            {
+                id: "sec-schedule",
+                type: "LEGACY_SECTION",
+                data: { sectionKey: "schedule", enabled: true },
+            },
+            {
+                id: "sec-countdown-disabled",
+                type: "LEGACY_SECTION",
+                data: { sectionKey: "countdown", enabled: false },
+            },
+        ];
+
+        const testGallery = ["/photo1.jpg", "/photo2.jpg"];
+        const testSchedule = [{ id: "sc-1", time: "07:00", title: "ពិធីហែជំនូន" }];
+
+        const view = render(
+            <MemoryRouter>
+                <TemplateExperience
+                    tpl={{ id: "garden-royal-khmer-wedding", sections: unifiedSections }}
+                    content={content({
+                        sections: unifiedSections,
+                        gallery: testGallery,
+                        schedule: testSchedule,
+                        enabledSections: { gallery: true, schedule: true, countdown: false },
+                    })}
+                    preview={true}
+                />
+            </MemoryRouter>
+        );
+
+        // 1. Gallery and Schedule both exist
+        const galleryEl = view.container.querySelector("[data-tx-section='gallery']");
+        const scheduleEl = view.container.querySelector("[data-tx-section='schedule']");
+        expect(galleryEl).toBeInTheDocument();
+        expect(scheduleEl).toBeInTheDocument();
+
+        // 2. Interleaved custom block is present
+        expect(screen.getByText("Interleaved Note Between Gallery and Schedule")).toBeInTheDocument();
+
+        // 3. Document order: gallery precedes schedule
+        expect(galleryEl.compareDocumentPosition(scheduleEl) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+
+        // 4. Disabled legacy section is skipped (not in DOM)
+        expect(view.container.querySelector("[data-tx-section='countdown']")).toBeNull();
+    });
+});

@@ -21,6 +21,7 @@ NC='\033[0m'
 
 ENABLE_NGROK=false
 ENABLE_BOT=false
+RUN_BACKEND=true
 RUN_USER=true
 RUN_ADMIN=true
 
@@ -41,19 +42,31 @@ for arg in "$@"; do
       RUN_USER=true
       RUN_ADMIN=false
       ;;
+    --ui|--ui-only|--no-backend)
+      RUN_BACKEND=false
+      RUN_USER=true
+      RUN_ADMIN=true
+      ;;
+    --backend|--backend-only)
+      RUN_BACKEND=true
+      RUN_USER=false
+      RUN_ADMIN=false
+      ;;
     --no-ngrok)
       ENABLE_NGROK=false
       ;;
     --help|-h)
-      echo -e "${BOLD}Usage:${NC} ./scripts/maintenance/dev.sh [OPTIONS]"
+      echo -e "${BOLD}Usage:${NC} ./dev.sh [OPTIONS]"
       echo ""
       echo "Options:"
-      echo "  --admin       Run Backend + Frontend Admin only"
-      echo "  --user        Run Backend + Frontend User only"
-      echo "  --ngrok       Launch ngrok tunnel for Frontend (:5173)"
-      echo "  --bot         Launch Telegram Bot service (:8000)"
-      echo "  --no-ngrok    Run locally without tunnel (default)"
-      echo "  --help, -h    Show this help message"
+      echo "  --ui, --ui-only   Run Frontend User + Frontend Admin only (Fastest)"
+      echo "  --admin           Run Backend + Frontend Admin only"
+      echo "  --user            Run Backend + Frontend User only"
+      echo "  --backend-only    Run Backend only"
+      echo "  --ngrok           Launch ngrok tunnel for Frontend (:5173)"
+      echo "  --bot             Launch Telegram Bot service (:8000)"
+      echo "  --no-ngrok        Run locally without tunnel (default)"
+      echo "  --help, -h        Show this help message"
       exit 0
       ;;
   esac
@@ -84,18 +97,6 @@ free_port() {
   fi
 }
 
-# 1. Database Check & Start
-echo -e "\n${BOLD}[1/4] Checking Database Service...${NC}"
-if systemctl is-active --quiet mariadb 2>/dev/null; then
-  echo -e "  ${GREEN}✓ MariaDB service is active on port 3306${NC}"
-elif systemctl is-active --quiet mysql 2>/dev/null; then
-  echo -e "  ${GREEN}✓ MySQL service is active on port 3306${NC}"
-else
-  echo -e "  ${YELLOW}⚡ Starting database service...${NC}"
-  sudo systemctl start mariadb 2>/dev/null || sudo systemctl start mysql 2>/dev/null || true
-  echo -e "  ${GREEN}✓ Database started${NC}"
-fi
-
 # Track child PIDs
 PIDS=()
 
@@ -113,23 +114,39 @@ cleanup() {
 
 trap cleanup SIGINT SIGTERM EXIT
 
-# 2. Start Backend (Spring Boot :8080)
-free_port 8080
-echo -e "\n${BOLD}[2/4] Starting Backend (Spring Boot on :8080)...${NC}"
-(
-  cd "${ROOT_DIR}/apps/backend"
-  ./mvnw spring-boot:run -Dspring-boot.run.profiles="${SPRING_PROFILES_ACTIVE:-dev}"
-) &
-PIDS+=($!)
-
-echo -e "  ${CYAN}Waiting for Backend to initialize...${NC}"
-for i in {1..30}; do
-  if curl -fsS http://127.0.0.1:8080/actuator/health/readiness >/dev/null 2>&1; then
-    echo -e "  ${GREEN}✓ Backend is READY at http://localhost:8080${NC}"
-    break
+# 1. Database Check & Start (if Backend requested)
+if [ "$RUN_BACKEND" = true ]; then
+  echo -e "\n${BOLD}[1/4] Checking Database Service...${NC}"
+  if systemctl is-active --quiet mariadb 2>/dev/null; then
+    echo -e "  ${GREEN}✓ MariaDB service is active on port 3306${NC}"
+  elif systemctl is-active --quiet mysql 2>/dev/null; then
+    echo -e "  ${GREEN}✓ MySQL service is active on port 3306${NC}"
+  else
+    echo -e "  ${YELLOW}⚡ Starting database service...${NC}"
+    sudo systemctl start mariadb 2>/dev/null || sudo systemctl start mysql 2>/dev/null || true
+    echo -e "  ${GREEN}✓ Database started${NC}"
   fi
-  sleep 1
-done
+
+  # 2. Start Backend (Spring Boot :8080)
+  free_port 8080
+  echo -e "\n${BOLD}[2/4] Starting Backend (Spring Boot on :8080)...${NC}"
+  (
+    cd "${ROOT_DIR}/apps/backend"
+    ./mvnw spring-boot:run -Dspring-boot.run.profiles="${SPRING_PROFILES_ACTIVE:-dev}"
+  ) &
+  PIDS+=($!)
+
+  echo -e "  ${CYAN}Waiting for Backend to initialize...${NC}"
+  for i in {1..30}; do
+    if curl -fsS http://127.0.0.1:8080/actuator/health/readiness >/dev/null 2>&1; then
+      echo -e "  ${GREEN}✓ Backend is READY at http://localhost:8080${NC}"
+      break
+    fi
+    sleep 1
+  done
+else
+  echo -e "\n${BOLD}[1/2] Skipping Backend & Database (UI-only mode active)...${NC}"
+fi
 
 # 3. Start Frontend User (:5173)
 if [ "$RUN_USER" = true ]; then

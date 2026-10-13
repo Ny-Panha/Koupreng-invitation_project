@@ -41,7 +41,10 @@ import { buildPreviewUrl, createPreviewSession, isTrustedPreviewReply, postIfram
 import {
   TemplateGallerySection,
   TemplateQrSection,
-  TemplateSectionOrderManager,
+  TemplateUnifiedSectionsManager,
+  buildUnifiedSections,
+  parseUnifiedSections,
+  validateBlocks,
   DEFAULT_SECTIONS_LIST,
 } from "./components";
 
@@ -638,6 +641,13 @@ export default function AdminTemplateEditPage() {
   const [saving, setSaving] = useState(false);
   const [newGalleryUrl, setNewGalleryUrl] = useState("");
   const [form, setForm] = useState(DEFAULT_STUDIO_STATE);
+  const [unifiedSections, setUnifiedSections] = useState(() =>
+    buildUnifiedSections({
+      sectionOrder: DEFAULT_STUDIO_STATE.sectionOrder,
+      enabledSections: DEFAULT_STUDIO_STATE.enabledSections,
+      customBlocks: [],
+    })
+  );
   const iframeRef = useRef(null);
   const [previewSession] = useState(createPreviewSession);
   const sendPreview = useCallback((message) => postIframePreview(iframeRef.current, previewSession, message), [previewSession]);
@@ -830,16 +840,26 @@ export default function AdminTemplateEditPage() {
   const broadcastSync = useCallback(() => {
     if (!iframeRef.current?.contentWindow) return;
     try {
+      const { sectionOrder: derivedSectionOrder, enabledSections: derivedEnabledSections } =
+        parseUnifiedSections(unifiedSections, form.sectionOrder, form.enabledSections);
+
       sendPreview(
         {
           type: "LIVE_PREVIEW_SYNC",
-          data: { ...form, customFonts, selectedFontElement },
+          data: {
+            ...form,
+            customFonts,
+            selectedFontElement,
+            sectionOrder: derivedSectionOrder,
+            enabledSections: derivedEnabledSections,
+            sections: unifiedSections,
+          },
         }
       );
     } catch {
       // ignore
     }
-  }, [form, customFonts, selectedFontElement, sendPreview]);
+  }, [form, customFonts, selectedFontElement, unifiedSections, sendPreview]);
   const synchronizeLoadedPreview = usePreviewSyncRetries(broadcastSync);
 
   useEffect(() => {
@@ -921,6 +941,13 @@ export default function AdminTemplateEditPage() {
           // Ignore invalid JSON config
         }
 
+        const parsedUnified = parseUnifiedSections(
+          parsedConfig.sections,
+          parsedConfig.sectionOrder || DEFAULT_STUDIO_STATE.sectionOrder,
+          parsedConfig.enabledSections || DEFAULT_STUDIO_STATE.enabledSections
+        );
+        setUnifiedSections(parsedUnified.unifiedSections);
+
         if (Array.isArray(parsedConfig.customFonts) && parsedConfig.customFonts.length > 0) {
           setCustomFonts((prev) => {
             const map = new Map();
@@ -948,6 +975,8 @@ export default function AdminTemplateEditPage() {
           status: t.status || "ACTIVE",
           price: t.price != null ? String(t.price) : prev.price,
           ...parsedConfig,
+          sectionOrder: parsedUnified.sectionOrder,
+          enabledSections: parsedUnified.enabledSections,
           primaryColor: t.primaryColor || parsedConfig.primaryColor || prev.primaryColor,
           secondaryColor: t.secondaryColor || parsedConfig.secondaryColor || prev.secondaryColor,
           backgroundColor: t.backgroundColor || parsedConfig.backgroundColor || prev.backgroundColor,
@@ -1255,8 +1284,17 @@ export default function AdminTemplateEditPage() {
       return;
     }
 
+    const blockErrors = validateBlocks(unifiedSections);
+    if (blockErrors.length > 0) {
+      show(blockErrors[0], "error");
+      return;
+    }
+
     setSaving(true);
     try {
+      const { sectionOrder: derivedSectionOrder, enabledSections: derivedEnabledSections } =
+        parseUnifiedSections(unifiedSections, form.sectionOrder, form.enabledSections);
+
       // Serialize full studio config into description JSON
       const fullConfigJson = JSON.stringify({
         code: form.code,
@@ -1310,7 +1348,9 @@ export default function AdminTemplateEditPage() {
         bankName: form.bankName || "ABA Bank",
         bankAccountNumber: form.bankAccountNumber || "",
         bankAccountName: form.bankAccountName || "",
-        enabledSections: form.enabledSections,
+        enabledSections: derivedEnabledSections,
+        sectionOrder: derivedSectionOrder,
+        sections: unifiedSections,
       });
 
       const payload = {
@@ -3421,7 +3461,7 @@ export default function AdminTemplateEditPage() {
                     }`}
                   >
                     <Sliders className="h-3.5 w-3.5" />
-                    <span>គ្រប់គ្រង Sections ទាំង ១០</span>
+                    <span>{lang === "en" ? "Sections & Blocks" : "គ្រប់គ្រង Sections & Blocks"}</span>
                   </button>
                   <button
                     type="button"
@@ -3439,29 +3479,21 @@ export default function AdminTemplateEditPage() {
 
                 {settingsSubTab === "sections" && (
                   <div className="space-y-4">
-                    <TemplateSectionOrderManager
-                      sectionOrder={form.sectionOrder || DEFAULT_SECTIONS_LIST.map((s) => s.key)}
-                      enabledSections={form.enabledSections || {}}
-                      onReorderSections={(newOrder) => setField("sectionOrder", newOrder)}
-                      onToggleSection={(key) => {
-                        const isEnabled = form.enabledSections?.[key] !== false;
-                        setForm((prev) => ({
-                          ...prev,
-                          enabledSections: {
-                            ...prev.enabledSections,
-                            [key]: !isEnabled,
-                          },
-                        }));
-                      }}
-                      onResetDefault={() => {
-                        const defaultKeys = DEFAULT_SECTIONS_LIST.map((s) => s.key);
-                        setField("sectionOrder", defaultKeys);
-                        show(lang === "en" ? "Reset to default order ✓" : "បានកំណត់ទៅលំដាប់ដើមវិញ ✓");
-                      }}
+                    <TemplateUnifiedSectionsManager
+                      sections={unifiedSections}
+                      onChange={setUnifiedSections}
                       onJumpToTab={(tabId, subTabId) => {
                         setActiveTab(tabId);
                         if (tabId === "events" && subTabId) setEventsSubTab(subTabId);
                         if (tabId === "venue" && subTabId) setVenueSubTab(subTabId);
+                      }}
+                      onResetDefault={() => {
+                        const defaultUnified = buildUnifiedSections({
+                          sectionOrder: DEFAULT_SECTIONS_LIST.map((s) => s.key),
+                          enabledSections: DEFAULT_STUDIO_STATE.enabledSections,
+                        });
+                        setUnifiedSections(defaultUnified);
+                        show(lang === "en" ? "Reset to default order ✓" : "បានកំណត់ទៅលំដាប់ដើមវិញ ✓");
                       }}
                       lang={lang}
                     />
