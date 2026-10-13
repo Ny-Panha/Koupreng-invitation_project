@@ -45,7 +45,7 @@
     "jsdom": "^30.0.1",
     "knip": "^6.32.1",
     "vite": "^8.2.1",
-    "vitest": "^4.1.10"
+    "vitest": "^5.0.2"
   },
   "optionalDependencies": {
     "@esbuild/linux-x64": "^0.28.2",
