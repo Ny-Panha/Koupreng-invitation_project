@@ -45,6 +45,22 @@ Keep the existing `ABA_SUBSCRIPTION_BASIC_LINK`, `ABA_SUBSCRIPTION_PRO_LINK`, `A
 
 ## Delivery and review operations
 
+### Existing V33 database upgrade
+
+V33 is restored to its originally applied checksum, `1422459132`. The optional
+`transaction_date_text` column is added by forward-only V34, which preserves an
+already-present column and its data. A database with the original V33 can upgrade
+normally with Flyway validation enabled; no schema-history repair is needed.
+
+The briefly published, modified V33 had checksum `2107393366`. A database that
+already applied that variant is a separate recovery case: back it up and verify
+its exact schema/history before any targeted history alignment. Do not run a
+blanket Flyway repair or disable validation to hide other migration mismatches.
+
+The original-V33 upgrade and already-present-column cases are covered by
+`MigrationUpgradeMySqlTests`, and V33's original checksum is pinned by
+`PaymentEvidenceMigrationChecksumTests`.
+
 Pending/success/review notifications are stored in the existing notifications table in the originating database transaction. A scheduled worker reads committed rows, takes a short delivery lease and calls the bot outside the database transaction. It retries at most three times. Failure never changes payment status. Order-specific unique keys suppress repeat buyer requests.
 
 After fixing delivery configuration, an authorized operator can set a failed notification back to PENDING using the existing admin notification status endpoint; this resets its retry counter. Telegram delivery is at least once: timeout/restart at the external send boundary can duplicate a message. Notification IDs are deduplicated while the bot process runs; financial settlement remains durably idempotent across restarts.

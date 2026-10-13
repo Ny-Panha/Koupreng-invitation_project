@@ -184,7 +184,7 @@ $ProcessIds = [System.Collections.Generic.List[int]]::new()
 function Cleanup {
     Write-Host "`n`n🛑 Shutting down all Koupreng dev services..." -ForegroundColor Yellow
     foreach ($procId in $ProcessIds) {
-        if ($procId) {
+        if ($procId -and (Get-Process -Id $procId -ErrorAction SilentlyContinue)) {
             Start-Process -FilePath "taskkill.exe" -ArgumentList "/PID $procId /T /F" -NoNewWindow -Wait -ErrorAction SilentlyContinue 2>$null
         }
     }
@@ -285,7 +285,7 @@ try {
     Write-Host "`n[2/4] Starting Backend (Spring Boot on :8080)..." -ForegroundColor White
     $backendDir = Join-Path $RootDir "apps\backend"
     $backendCmd = "mvnw.cmd spring-boot:run -Dspring-boot.run.profiles=$($env:SPRING_PROFILES_ACTIVE)"
-    $null = Start-DevProcess -Title "[Koupreng] Backend API" -WorkingDir $backendDir -Command $backendCmd
+    $backendProcess = Start-DevProcess -Title "[Koupreng] Backend API" -WorkingDir $backendDir -Command $backendCmd
 
     Write-Host "  Waiting for Backend to initialize..." -ForegroundColor Cyan
     $backendReady = $false
@@ -293,6 +293,9 @@ try {
     $backendStartupTimer = [System.Diagnostics.Stopwatch]::StartNew()
     $backendLastProbeError = $null
     while ($backendStartupTimer.Elapsed.TotalSeconds -lt $backendStartupTimeoutSeconds) {
+        if ($backendProcess -and $backendProcess.HasExited) {
+            throw "Backend exited before becoming ready. Check the backend startup output for the actual error."
+        }
         try {
             $resp = Invoke-WebRequest -Uri "http://127.0.0.1:8080/actuator/health/readiness" -UseBasicParsing -TimeoutSec 2 -ErrorAction Stop
             if ($resp.StatusCode -eq 200) {

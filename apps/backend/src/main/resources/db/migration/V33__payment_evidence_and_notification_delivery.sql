@@ -11,7 +11,6 @@ CREATE TABLE payment_evidence (
     message_id VARCHAR(100),
     sender_id VARCHAR(100),
     merchant_message_at DATETIME(6),
-    transaction_date_text VARCHAR(120),
     received_at DATETIME(6) NOT NULL,
     trusted BOOLEAN NOT NULL DEFAULT FALSE,
     order_code VARCHAR(50),
