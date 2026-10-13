@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="1080" viewBox="0 0 720 1080">
+  <defs><pattern id="weave" width="36" height="36" patternUnits="userSpaceOnUse"><path d="m18 3 15 15-15 15L3 18zM18 9l9 9-9 9-9-9z" stroke="#B39460" fill="none" stroke-width=".7"/></pattern></defs>
+  <path fill="#672C39" d="M0 0h720v1080H0z"/><path fill="url(#weave)" opacity=".6" d="M22 0h36v1080H22zM662 0h36v1080h-36z"/>
+  <path fill="#F6F0E5" d="M99 64h522v952H99z"/>
+  <g stroke="#B39460" fill="none"><rect x="110" y="76" width="500" height="928"/><path d="M160 233h92l108-108 108 108h92M160 243h88l112-112 112 112h88m-200-90 40 40-40 40-40-40zM175 784h370M175 790h370m-185-44 22 22-22 22-22-22z"/></g>
+  <g fill="#672C39" font-family="Georgia,serif" text-anchor="middle"><text x="360" y="402" font-size="26">Koupreng</text><text x="360" y="495" font-size="60">Silk</text><text x="360" y="565" font-size="60">Heritage</text><text x="360" y="663" font-size="20">A wedding folio</text></g>
+</svg>

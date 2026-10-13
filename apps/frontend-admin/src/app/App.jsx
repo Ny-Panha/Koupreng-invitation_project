@@ -16,6 +16,7 @@ const PackagesPage = lazy(() => import("../pages/payments/AdminPackagesPage"));
 const NotificationsPage = lazy(() => import("../pages/notifications/AdminNotificationsPage"));
 const SystemLogsPage = lazy(() => import("../pages/system-logs/AdminSystemLogsPage"));
 const ReportsPage = lazy(() => import("../pages/reports/AdminReportsPage"));
+const ApiMonitorPage = lazy(() => import("../pages/dev/ApiMonitorPage"));
 
 import { ADMIN_ROUTE_PATHS } from "./routes";
 
@@ -65,6 +66,7 @@ export default function App() {
                 <Route path={ADMIN_ROUTE_PATHS.notifications} element={<NotificationsPage />} />
                 <Route path={ADMIN_ROUTE_PATHS.systemLogs} element={<SystemLogsPage />} />
                 <Route path={ADMIN_ROUTE_PATHS.reports} element={<ReportsPage />} />
+                <Route path={ADMIN_ROUTE_PATHS.apiMonitor} element={<ApiMonitorPage />} />
 
                 {/* Legacy /admin Route Aliases */}
                 <Route path="/admin" element={<Navigate to="/dashboard" replace />} />

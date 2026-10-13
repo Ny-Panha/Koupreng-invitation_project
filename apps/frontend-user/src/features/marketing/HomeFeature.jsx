@@ -2,53 +2,16 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ScrollReveal } from "../../shared/ui/ScrollReveal";
 import { AnimatedButton } from "../../shared/ui/AnimatedButton";
-import { MagicCard } from "../../shared/ui/MagicCard";
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
+import { usePrefersReducedMotion } from "../../shared/hooks/usePrefersReducedMotion";
 import "./MarketingFeature.css";
 
 import heroBg from "../../assets/icons/background.png";
 
-const getPlans = (t) => [
-  {
-    id: "basic",
-    name: t("planBasicName") || "គតិដៃគូ",
-    price: "$0",
-    desc: t("planBasicDesc") || "សម្រាប់ការរៀបចំដំបូង",
-    features: [
-      t("planBasicFeat1") || "ផែនការការងារ ៥ ចំណុច",
-      t("planBasicFeat2") || "គ្រប់គ្រងភ្ញៀវ ៤០ នាក់",
-      t("planBasicFeat3") || "ថវិការ ១ ព្រឹត្តិការណ៍",
-    ],
-  },
-  {
-    id: "pro",
-    name: t("planProName") || "កញ្ចប់ប្រូ",
-    price: "$19",
-    desc: t("planProDesc") || "ពេញនិយមបំផុតសម្រាប់គូស្វាមីភរិយា",
-    features: [
-      t("planProFeat1") || "ផែនការមិនដែនកំណត់",
-      t("planProFeat2") || "គ្រប់គ្រងភ្ញៀវមិនដែនកំណត់",
-      t("planProFeat3") || "ការទូទាត់ Bakong QR",
-      t("planProFeat4") || "គាំទ្រ ២៤/៧",
-    ],
-    featured: true,
-  },
-  {
-    id: "enterprise",
-    name: t("planEntName") || "សហគ្រាស",
-    price: t("planEntPrice") || "តម្លៃពិគ្រោះ",
-    desc: t("planEntDesc") || "សម្រាប់ក្រុមហ៊ុនរៀបចំការ",
-    features: [
-      t("planEntFeat1") || "White-label Branding",
-      t("planEntFeat2") || "គ្រប់គ្រងក្រុមការងារ",
-      t("planEntFeat3") || "API Integration",
-    ],
-  },
-];
-
 export default function Home() {
-  const { text: t } = useBackendMessages("home");
-  const plans = getPlans(t);
+  const { text: t, lang } = useBackendMessages("home");
+  const reduced = usePrefersReducedMotion();
+  const copy = (kh, en) => lang === "en" ? en : kh;
   return (
     <div className="khmer-theme">
       {/* Background Section (Fixed for Mobile compatibility) */}
@@ -63,7 +26,7 @@ export default function Home() {
       <section className="hero-modern">
         <div className="hero-content">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={reduced ? false : { opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="hero-text-center"
@@ -86,7 +49,19 @@ export default function Home() {
               </Link>
             </div>
           </motion.div>
+          <figure className="home-invitation-preview">
+            <Link to="/templates/silk-heritage" aria-label={copy("មើលគំរូសូត្រមង្គល", "Open Silk Heritage demo")}>
+              <img src="/templates/silk-heritage/preview.svg" alt={copy("សូត្រមង្គល សន្លឹកការពណ៌ក្រហមទុំ និងភ្លុក", "Silk Heritage wedding folio in burgundy and ivory")} width="720" height="1080" fetchPriority="high" />
+            </Link>
+            <figcaption>សូត្រមង្គល / Silk Heritage <Link to="/templates/silk-heritage">{copy("មើលគំរូ", "Preview invitation")}</Link></figcaption>
+          </figure>
         </div>
+      </section>
+
+      <section className="home-invitation-benefits">
+        <h2 className="khmer-title-small">{copy("ការអញ្ជើញដែលមានអត្ថន័យ", "An invitation with a personal touch")}</h2>
+        <p>{copy("ចែករំលែករូបភាព កម្មវិធី និងទីតាំងក្នុងសន្លឹកការតែមួយ។ តំណភ្ជាប់ផ្ទាល់ខ្លួនអាចបង្ហាញឈ្មោះភ្ញៀវ និងអនុញ្ញាតឱ្យភ្ញៀវឆ្លើយតប RSVP។", "Share your photographs, program and venue in one invitation. Personal guest links can show a guest's name and let them respond to your RSVP.")}</p>
+        <Link className="btn-outline" to="/templates">{copy("ស្វែងរកគំរូសន្លឹកការ", "Explore the collection")}</Link>
       </section>
 
       {/* ៣. Section: តើវាដំណើរការយ៉ាងដូចម្ដេច? (How it works) */}
@@ -112,22 +87,20 @@ export default function Home() {
           <div className="step-card">
             <div className="step-num">០២</div>
             <h3>
-              {t("step2Setup") || "រៀបចំ"}{" "}
-              <Link to="/pricing" className="step-link">
-                {t("step2Pricing") || "កញ្ចប់សេវា"}
+              <Link to="/templates/browse" className="step-link">
+                {copy("កែសម្រួល", "Customize")}
               </Link>
             </h3>
-            <p>{t("step2Desc") || "ជ្រើសរើសមុខងារដែលត្រូវនឹងតម្រូវការ និងថវិកាក្នុងក្តីស្រមៃ។"}</p>
+            <p>{copy("បញ្ចូលឈ្មោះ រូបភាព កាលបរិច្ឆេទ និងកម្មវិធីរបស់អ្នក។", "Add your names, photos, date and wedding program.")}</p>
           </div>
           <div className="step-card">
             <div className="step-num">០៣</div>
             <h3>
-              {t("step3Find") || "ស្វែងរក"}{" "}
-              <Link to="/venues" className="step-link">
-                {t("step3Venues") || "ទីកន្លែង"}
+              <Link to="/templates/browse" className="step-link">
+                {copy("ចែករំលែក", "Share")}
               </Link>
             </h3>
-            <p>{t("step3Desc") || "សម្រាំងទីតាំងរៀបការដ៏ស្រស់ស្អាតបំផុតសម្រាប់ភ្ញៀវកិត្តិយស។"}</p>
+            <p>{copy("ពិនិត្យមើល រួចផ្សព្វផ្សាយ និងផ្ញើតំណភ្ជាប់ទៅភ្ញៀវ។", "Review your invitation, publish it and send the link to your guests.")}</p>
           </div>
         </div>
       </section>
@@ -141,31 +114,17 @@ export default function Home() {
           </div>
         </ScrollReveal>
 
-        <div className="pricing-container">
-          {plans.map((plan, i) => (
-            <ScrollReveal key={i} delay={i * 0.1}>
-              <MagicCard className={`kh-card ${plan.featured ? "active" : ""}`}>
-                {plan.featured && <div className="card-tag">{t("popular") || "ពេញនិយម"}</div>}
-                <h3 className="card-name">{plan.name}</h3>
-                <div className="card-price">
-                  {plan.price}
-                  <span>
-                    {plan.id !== "enterprise" ? (t("perEvent") || "/ព្រឹត្តិការណ៍") : ""}
-                  </span>
-                </div>
-                <p className="card-desc">{plan.desc}</p>
-                <ul className="card-feats">
-                  {plan.features.map((f, idx) => (
-                    <li key={idx}>✓ {f}</li>
-                  ))}
-                </ul>
-                <button className={`card-btn ${plan.featured ? "gold" : ""}`}>
-                  {t("selectPlan") || "ជ្រើសរើសយកនេះ"}
-                </button>
-              </MagicCard>
-            </ScrollReveal>
-          ))}
+        <div className="home-invitation-benefits">
+          <p>{copy("មើលតម្លៃកញ្ចប់ និងមុខងារបច្ចុប្បន្ន។ គំរូប្រណិតតម្រូវឱ្យមានសិទ្ធិប្រើប្រាស់ ហើយការមើលគំរូមិនបើកសិទ្ធិប្រើប្រាស់ទេ។", "View current packages and included features. Premium templates require access; previewing a design does not unlock it.")}</p>
+          <Link to="/pricing" className="btn-outline">{copy("មើលកញ្ចប់ និងតម្លៃ", "View packages and pricing")}</Link>
         </div>
+      </section>
+
+      <section className="home-invitation-faq">
+        <h2 className="khmer-title-small">{copy("សំណួរដែលសួរញឹកញាប់", "Common questions")}</h2>
+        <details><summary>{copy("អាចមើលគំរូដោយមិនចូលគណនីបានទេ?", "Can I preview without an account?")}</summary><p>{copy("បាន។ បើកគំរូបង្ហាញពីទំព័រគំរូសន្លឹកការ។", "Yes. Open any public demo from the template collection.")}</p></details>
+        <details><summary>{copy("ភ្ញៀវឆ្លើយតប RSVP នៅឯណា?", "Where do guests RSVP?")}</summary><p>{copy("ភ្ញៀវអាចឆ្លើយតបតាមសន្លឹកការដែលបានផ្សព្វផ្សាយ និងតំណភ្ជាប់ដែលអ្នកបានផ្ញើ។", "Guests respond on the published invitation using the link you share.")}</p></details>
+        <Link to="/contact">{copy("ទាក់ទងសម្រាប់ជំនួយ", "Contact us for help")}</Link>
       </section>
 
       {/* ៤. Footer ពេញលេញ */}
@@ -183,15 +142,8 @@ export default function Home() {
           </div>
           <div className="footer-col">
             <h5>{t("footerCompany") || "ក្រុមហ៊ុន"}</h5>
-            <Link to="/about">{t("footerAbout") || "អំពីយើង"}</Link>
             <Link to="/contact">{t("footerContact") || "ទំនាក់ទំនង"}</Link>
-            <button
-              type="button"
-              onClick={() => window.dispatchEvent(new CustomEvent("open-support-chat"))}
-              style={{ background: "none", border: "none", color: "#aaa", padding: 0, font: "inherit", cursor: "pointer", textAlign: "left", display: "block", marginBottom: "12px", fontSize: "14px", transition: "0.3s" }}
-            >
-              {t("footerHelp") || "ជំនួយ"}
-            </button>
+            <Link to="/contact">{t("footerHelp") || "ជំនួយ"}</Link>
           </div>
         </div>
         <div className="footer-bottom">

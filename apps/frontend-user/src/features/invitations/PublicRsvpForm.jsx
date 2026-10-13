@@ -251,7 +251,7 @@ export default function PublicRsvpForm({
     return (
         <section className="pub-rsvp-live">
             {showQrPass ? (
-                <div className="pub-rsvp-done" style={{ textAlign: "center", padding: "1.25rem 1rem" }}>
+                <div className="pub-rsvp-done" role="status" style={{ textAlign: "center", padding: "1.25rem 1rem" }}>
                     <h2>{labels.receivedTitle}</h2>
                     <p style={{ margin: "0.5rem 0 1rem", color: "#475569" }}>
                         {submitted.guestName ? `${submitted.guestName}, ` : ""}{labels.receivedText}
@@ -428,7 +428,7 @@ export default function PublicRsvpForm({
                             rows="3"
                         />
                     </label>
-                    {error && <div className="inv-error">{error}</div>}
+                    {error && <div className="inv-error" role="alert">{error}</div>}
                     <button className="inv-primary-btn" type="submit" disabled={loading}>
                         {loading ? labels.submitting : labels.submit}
                     </button>

@@ -88,6 +88,23 @@ const TEMPLATE_LAYOUT_OPTIONS = [
 // Preset Theme Styles
 const THEME_PRESETS = [
   {
+    id: "SILK_HERITAGE",
+    name: "សូត្រមង្គល / Silk Heritage",
+    primary: "#672C39",
+    secondary: "#B39460",
+    bg: "#F6F0E5",
+    badge: "Silk Heritage",
+    amp: "&",
+    fontKhmer: "Moul",
+    fontLatin: "Cormorant Garamond",
+    dressColors: [
+      { hex: "#672C39", name: "ក្រហមទុំ" },
+      { hex: "#283F39", name: "បៃតងចាស់" },
+      { hex: "#F6F0E5", name: "ភ្លុក" },
+    ],
+    backgroundImage: "",
+  },
+  {
     id: "GOLD_LUXURY",
     name: "Gold Luxury (មាសប្រណិត)",
     primary: "#D4AF37",
@@ -934,6 +951,7 @@ export default function AdminTemplateEditPage() {
       ROYAL_KHMER: "khmer-celestial",
       GARDEN_ROYAL: "garden-royal-khmer-wedding",
       KHMER_GOLDEN: "cover-khmer-golden-wedding",
+      SILK_HERITAGE: "silk-heritage",
       MODERN_MINIMAL: "the-digital-yes-wedding",
     };
     setForm((prev) => ({

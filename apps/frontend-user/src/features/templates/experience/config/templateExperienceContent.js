@@ -274,6 +274,11 @@ function getTemplateOwnImages(tpl) {
 
 /** Build the gallery from the template's own images (no cross-card mixing). */
 function buildGallery(tpl) {
+    if (Array.isArray(tpl.storyImages) && tpl.storyImages.length && !tpl.storyCards?.length) {
+        return tpl.storyImages.map((image, index) => typeof image === "string"
+            ? { src: image, alt: `Wedding photo ${index + 1}`, span: GALLERY_SPANS[index % GALLERY_SPANS.length] }
+            : { ...image, span: image.span || GALLERY_SPANS[index % GALLERY_SPANS.length] });
+    }
     const own = getTemplateOwnImages(tpl);
     if (!own) return DEMO_GALLERY;
     return own.map((src, index) => ({ src, span: GALLERY_SPANS[index % GALLERY_SPANS.length] }));
@@ -532,6 +537,8 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         ? host.gallery
             .map((item, index) => ({
                 src: typeof item === "string" ? item : item?.src || item?.preview || "",
+                alt: typeof item === "object" ? item?.alt || `Wedding photo ${index + 1}` : `Wedding photo ${index + 1}`,
+                caption: typeof item === "object" ? item?.caption || "" : "",
                 span: GALLERY_SPANS[index % GALLERY_SPANS.length],
             }))
             .filter((item) => item.src)
@@ -651,7 +658,12 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         amp: theme.amp,
         badge: theme.badge,
         enabledSections: hostEnabledSections,
+        sectionOrder: host.sectionOrder || tpl.sectionOrder || [],
         hasHostContent,
+        fontKhmer: host.fontKhmer || tpl.fontKhmer || tpl.design?.fontKhmer || "",
+        fontLatin: host.fontLatin || tpl.fontLatin || tpl.design?.fontLatin || "",
+        elementFonts: host.elementFonts || tpl.elementFonts || tpl.design?.elementFonts || {},
+        backgroundColor: host.backgroundColor || tpl.backgroundColor || tpl.design?.backgroundColor || "",
         monogramText,
         shortName: monogramText,
         guestName,
@@ -694,6 +706,9 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         ceremonyTime: tpl.ceremonyTime || "០៧:០០",
         receptionTime: tpl.receptionTime || "១៧:០០",
         coverImage,
+        coverBackgroundImage: host.coverBackgroundImage || tpl.coverBackgroundImage || "",
+        coverVideoUrl: host.coverVideoUrl || tpl.coverVideoUrl || "",
+        videoPoster: host.videoPoster || tpl.videoPoster || "",
         invitationImage: hasHostContent ? nonBlank(host.invitationImage) : nonBlank(tpl.invitationImage),
         invitationImage2: hasHostContent ? nonBlank(host.invitationImage2) : nonBlank(tpl.invitationImage2),
         portraitImage: coverImage,

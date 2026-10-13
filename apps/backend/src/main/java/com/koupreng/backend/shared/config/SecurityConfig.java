@@ -136,7 +136,8 @@ public class SecurityConfig {
             BearerTokenResolver bearerTokenResolver,
             AdminPaymentSecretFilter adminPaymentSecretFilter,
             RateLimitService rateLimitService,
-            ClientAddressResolver clientAddressResolver
+            ClientAddressResolver clientAddressResolver,
+            org.springframework.beans.factory.ObjectProvider<com.koupreng.backend.devmonitor.application.ApiMonitorService> apiMonitorServiceProvider
     ) throws Exception {
         WafFilter wafFilter = new WafFilter(wafProperties, rateLimitService, clientAddressResolver);
         AuthRateLimitFilter authRateLimitFilter = new AuthRateLimitFilter(
@@ -150,7 +151,10 @@ public class SecurityConfig {
                 clientAddressResolver
         );
         ApiRequestLoggingFilter apiRequestLoggingFilter =
-                new ApiRequestLoggingFilter(apiSecurityProperties.getLogging());
+                new ApiRequestLoggingFilter(
+                        apiSecurityProperties.getLogging(),
+                        apiMonitorServiceProvider.getIfAvailable()
+                );
 
         UploadSecurityFilter uploadSecurityFilter = new UploadSecurityFilter();
 

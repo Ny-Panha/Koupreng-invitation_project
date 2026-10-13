@@ -32,7 +32,7 @@ export default function CoverBackground({
 }) {
   const prefersReduced = usePrefersReducedMotion();
   const [videoError, setVideoError] = useState(false);
-  const [imageError, setImageError] = useState(false);
+  const [failedImages, setFailedImages] = useState([]);
 
   // 1. Resolve custom user uploads
   const customCoverImage = resolveMediaUrl(
@@ -57,10 +57,11 @@ export default function CoverBackground({
   // 3. Determine active media type and source
   let mediaType = "none";
   let mediaSrc = "";
-  let posterSrc = resolveMediaUrl(content.videoPoster || content.coverImage || defaultPoster || defaultSrc);
+  const posterSrc = [content.videoPoster, content.coverImage, defaultPoster, defaultType === "image" ? defaultSrc : ""]
+    .map(resolveMediaUrl).find((src) => src && !failedImages.includes(src)) || "";
   const isCustomUpload = Boolean(customCoverImage);
 
-  if (customCoverImage && !imageError) {
+  if (customCoverImage && !failedImages.includes(customCoverImage)) {
     mediaType = "image";
     mediaSrc = customCoverImage;
   } else if (customCoverVideo && !videoError && !prefersReduced) {
@@ -70,7 +71,7 @@ export default function CoverBackground({
     if (defaultType === "video" && !videoError && !prefersReduced) {
       mediaType = "video";
       mediaSrc = defaultSrc;
-    } else if (!imageError) {
+    } else if (defaultType === "image" && !failedImages.includes(defaultSrc)) {
       mediaType = "image";
       mediaSrc = defaultSrc;
     }
@@ -79,11 +80,12 @@ export default function CoverBackground({
   // Reset errors when sources change
   useEffect(() => {
     setVideoError(false);
-    setImageError(false);
+    setFailedImages([]);
   }, [customCoverImage, customCoverVideo, defaultSrc]);
+  const failImage = (src) => setFailedImages((items) => items.includes(src) ? items : [...items, src]);
 
   return (
-    <div className={`cover-bg-root ${className}`.trim()} aria-hidden="true">
+    <div className={`cover-bg-root ${className}`.trim()} data-cover-media={mediaType} aria-hidden="true">
       {/* Media Layer */}
       {mediaType === "video" ? (
         <video
@@ -103,7 +105,7 @@ export default function CoverBackground({
           className="cover-bg-media"
           src={mediaSrc}
           alt=""
-          onError={() => setImageError(true)}
+          onError={() => failImage(mediaSrc)}
         />
       ) : posterSrc ? (
         /* Video fallback poster when video is skipped due to reduced motion or error */
@@ -111,7 +113,7 @@ export default function CoverBackground({
           className="cover-bg-media"
           src={posterSrc}
           alt=""
-          onError={() => setImageError(true)}
+          onError={() => failImage(posterSrc)}
         />
       ) : null}
 

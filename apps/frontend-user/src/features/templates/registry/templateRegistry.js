@@ -1,17 +1,22 @@
-import DigitalYesLayout from "../layouts/DigitalYes/DigitalYesLayout";
-import EmeraldLuxeLayout from "../layouts/EmeraldLuxe/EmeraldLuxeLayout";
-import WithJoyPortalLayout from "../layouts/WithJoyPortalLayout";
-import BlissEditorialLayout from "../layouts/BlissEditorialLayout";
 import DefaultTemplateLayout from "../layouts/DefaultTemplate/DefaultTemplateLayout";
-import CanvaKhmerWeddingTemplate from "../experience/components/canva-khmer/CanvaKhmerWeddingTemplate";
-import KhmerCelestialLayout from "../layouts/KhmerCelestial/KhmerCelestialLayout";
-import TemplateBoilerplateLayout from "../layouts/TemplateBoilerplate/TemplateBoilerplateLayout";
+import { lazy } from "react";
+
+const DigitalYesLayout = lazy(() => import("../layouts/DigitalYes/DigitalYesLayout"));
+const EmeraldLuxeLayout = lazy(() => import("../layouts/EmeraldLuxe/EmeraldLuxeLayout"));
+const WithJoyPortalLayout = lazy(() => import("../layouts/WithJoyPortalLayout"));
+const BlissEditorialLayout = lazy(() => import("../layouts/BlissEditorialLayout"));
+const CanvaKhmerWeddingTemplate = lazy(() => import("../experience/components/canva-khmer/CanvaKhmerWeddingTemplate"));
+const KhmerCelestialLayout = lazy(() => import("../layouts/KhmerCelestial/KhmerCelestialLayout"));
+const TemplateBoilerplateLayout = lazy(() => import("../layouts/TemplateBoilerplate/TemplateBoilerplateLayout"));
+const SilkHeritageLayout = lazy(() => import("../layouts/SilkHeritage/SilkHeritageLayout"));
 
 /**
  * 1 Template = 1 Dedicated UI Component Registry
  * Maps template slugs, IDs, and codes to their bespoke UI layout components.
  */
 export const templateRegistry = {
+  "silk-heritage": SilkHeritageLayout,
+  "SILK_HERITAGE": SilkHeritageLayout,
   // Developer Starter Boilerplate
   "template-boilerplate": TemplateBoilerplateLayout,
   "custom-starter": TemplateBoilerplateLayout,
@@ -95,7 +100,7 @@ export function getDedicatedTemplateComponent(tpl, variant, useFallback = false)
   ].filter(Boolean);
 
   for (const key of keysToCheck) {
-    if (templateRegistry[key]) {
+    if (Object.hasOwn(templateRegistry, key)) {
       return templateRegistry[key];
     }
   }

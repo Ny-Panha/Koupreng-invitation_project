@@ -9,7 +9,7 @@ describe("the authoritative admin router", () => {
       userDetail: "/users/:userId", templates: "/templates",
       templateNew: "/templates/new", templateEdit: "/templates/:templateId",
       payments: "/payments", packages: "/packages", notifications: "/notifications",
-      systemLogs: "/system-logs", reports: "/reports",
+      systemLogs: "/system-logs", reports: "/reports", apiMonitor: "/dev/api-monitor",
     });
   });
 });

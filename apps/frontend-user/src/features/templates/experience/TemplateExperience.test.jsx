@@ -79,7 +79,7 @@ function renderExperience(props = {}) {
 }
 
 async function openInvitation() {
-    fireEvent.click(screen.getByRole("button", { name: "បើកសំបុត្រអញ្ជើញ" }));
+    fireEvent.click(await screen.findByRole("button", { name: "បើកសំបុត្រអញ្ជើញ" }, { timeout: 5000 }));
     await waitFor(() => {
         expect(document.querySelector(".tx-experience, .kc-main")).toBeInTheDocument();
     });

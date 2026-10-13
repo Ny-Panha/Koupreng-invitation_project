@@ -72,10 +72,16 @@ public class ApiSecurityProperties {
                 "Content-Type",
                 "X-Requested-With",
                 "X-Request-Id",
-                "X-XSRF-TOKEN"
+                "X-Action-Id",
+                "X-Client-Duration-Ms",
+                "Last-Event-ID",
+                "X-XSRF-TOKEN",
+                "X-Frontend-Route",
+                "X-Client-Action",
+                "X-Client-App"
         ));
 
-        private Set<String> exposedHeaders = new LinkedHashSet<>(Set.of("X-Request-Id"));
+        private Set<String> exposedHeaders = new LinkedHashSet<>(Set.of("X-Request-Id", "X-Action-Id"));
 
         private boolean allowCredentials;
 

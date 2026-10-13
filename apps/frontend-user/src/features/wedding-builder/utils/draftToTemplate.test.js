@@ -4,9 +4,9 @@ import {
   registerDynamicTemplates,
   getTemplateById,
 } from "../../templates/data/templatesData";
-import { getDedicatedTemplateComponent } from "../../templates/registry/templateRegistry";
-import DigitalYesLayout from "../../templates/layouts/DigitalYes/DigitalYesLayout";
-import EmeraldLuxeLayout from "../../templates/layouts/EmeraldLuxe/EmeraldLuxeLayout";
+import { getDedicatedTemplateComponent, templateRegistry } from "../../templates/registry/templateRegistry";
+const DigitalYesLayout = templateRegistry["the-digital-yes-wedding"];
+const EmeraldLuxeLayout = templateRegistry["emerald-canva-luxe-wedding"];
 import { buildTemplateContent } from "../../templates/experience/config/templateExperienceContent";
 
 describe("draftToTemplate and Dynamic Template Synchronization", () => {

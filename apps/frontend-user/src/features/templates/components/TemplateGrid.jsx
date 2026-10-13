@@ -7,6 +7,7 @@ import {
     COVER_KHMER_GOLDEN_CODE,
     KHMER_GOLDEN_CANVA_INSPIRED_CODE,
     THE_DIGITAL_YES_TEMPLATE_CODE,
+    SILK_HERITAGE_TEMPLATE_CODE,
     TEMPLATES,
 } from "../data/templatesData";
 import { templateService } from "../api/templateService";
@@ -15,6 +16,7 @@ import heroBg from "../../../assets/icons/background.png";
 import { useBackendMessages } from "../../../shared/i18n/useBackendMessages";
 
 const FEATURED_TEMPLATE_IDS = [
+    SILK_HERITAGE_TEMPLATE_CODE,
     THE_DIGITAL_YES_TEMPLATE_CODE,
     KEEP_TEMPLATE_CODE,
     ROYAL_KHMER_TEMPLATE_CODE,
@@ -48,7 +50,7 @@ function getCreatePath(path, isAuthenticated) {
 }
 
 function getUseTemplatePath(templateId, isAuthenticated) {
-    return getCreatePath("/templates/browse", isAuthenticated);
+    return getCreatePath(`/templates/browse?template=${encodeURIComponent(templateId)}`, isAuthenticated);
 }
 
 function formatTemplateDesc(description, fallback) {
@@ -85,26 +87,32 @@ function getTemplateBenefit(template, t) {
  */
 export default function TemplateGrid() {
     const { isAuthenticated } = useAuth();
-    const { text: t } = useBackendMessages("templateGrid");
+    const { text: rawText, lang } = useBackendMessages("templateGrid");
+    const t = (key) => { const text = rawText(key); return text === key ? "" : text; };
     const categoryLabels = getCategoryLabels(t);
     const [apiTemplates, setApiTemplates] = useState(null);
+    const [status, setStatus] = useState("loading");
+    const [category, setCategory] = useState("all");
+    const [reload, setReload] = useState(0);
 
     useEffect(() => {
         let active = true;
-        templateService.listPublic()
+        setStatus("loading");
+        templateService.listPublic({ force: reload > 0 })
             .then((res) => {
-                if (active && Array.isArray(res) && res.length > 0) {
+                if (active && Array.isArray(res)) {
                     setApiTemplates(res);
+                    setStatus("ready");
                 }
             })
             .catch(() => {
-                // Keep local fallback on error
+                if (active) { setApiTemplates(null); setStatus("error"); }
             });
         return () => { active = false; };
-    }, []);
+    }, [reload]);
 
     const visibleTemplates = useMemo(() => {
-        if (!apiTemplates || apiTemplates.length === 0) {
+        if (!apiTemplates) {
             return FEATURED_TEMPLATE_IDS
                 .map((templateId) => TEMPLATES.find((template) => template.id === templateId))
                 .filter(Boolean);
@@ -129,6 +137,7 @@ export default function TemplateGrid() {
             };
         });
     }, [apiTemplates]);
+    const filteredTemplates = visibleTemplates.filter((template) => category === "all" || template.category === category);
 
     return (
         <div className="tp-page">
@@ -153,8 +162,14 @@ export default function TemplateGrid() {
                     </div>
                 </header>
 
+                <div className="tp-catalog-controls" aria-label={lang === "en" ? "Template categories" : "ប្រភេទគំរូ"}>
+                    {[["all", lang === "en" ? "All" : "ទាំងអស់"], ["ancient", lang === "en" ? "Khmer tradition" : "ប្រពៃណីខ្មែរ"], ["modern", lang === "en" ? "Modern" : "ទំនើប"]].map(([key, label]) => <button type="button" key={key} aria-pressed={category === key} onClick={() => setCategory(key)}>{label}</button>)}
+                </div>
+                {status === "loading" && <p role="status" className="tp-catalog-status">{lang === "en" ? "Loading the template collection…" : "កំពុងផ្ទុកគំរូសន្លឹកការ…"}</p>}
+                {status === "error" && <p role="status" className="tp-catalog-status">{lang === "en" ? "The live collection is unavailable. These are demo designs; availability is checked when you select one." : "មិនអាចផ្ទុកគំរូពីម៉ាស៊ីនមេបាន។ នេះជាគំរូបង្ហាញ។"} <button type="button" onClick={() => setReload((value) => value + 1)}>{lang === "en" ? "Try again" : "សាកម្ដងទៀត"}</button></p>}
+                {status === "ready" && filteredTemplates.length === 0 && <p role="status" className="tp-catalog-status">{lang === "en" ? "No templates in this collection yet." : "មិនទាន់មានគំរូក្នុងប្រភេទនេះទេ។"}</p>}
                 <div className="tp-grid">
-                    {visibleTemplates.map((template) => {
+                    {filteredTemplates.map((template) => {
                         const createPath = getUseTemplatePath(template.id, isAuthenticated);
                         const coverImage = template.image || TEMPLATE_CARD_COVER[template.id];
 
@@ -169,6 +184,10 @@ export default function TemplateGrid() {
 
                                 <Link to={`/templates/${template.id}`} className="tp-image-box">
                                     <img
+                                        loading="lazy"
+                                        decoding="async"
+                                        width="720"
+                                        height="1080"
                                         src={coverImage}
                                         alt={template.name}
                                         className="tp-main-img"
@@ -184,6 +203,7 @@ export default function TemplateGrid() {
                                         {categoryLabels[template.category]} / {template.style}
                                     </span>
                                     <p className="tp-card-benefit">{getTemplateBenefit(template, t)}</p>
+                                    <p className="tp-access-label">{template.isPremium ? (lang === "en" ? "Premium · access required" : "ប្រណិត · តម្រូវឱ្យមានសិទ្ធិប្រើប្រាស់") : (lang === "en" ? "Free template" : "គំរូឥតគិតថ្លៃ")}</p>
                                     <div className="tp-card-actions">
                                         <Link to={createPath} className="tp-action-btn">
                                             {t("useTemplate") || "ប្រើគំរូនេះ"}

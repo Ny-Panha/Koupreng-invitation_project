@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import TemplateExperience from "../experience/TemplateExperience";
-import { getTemplateById } from "../data/templatesData";
+import { DB_TEMPLATE_ID_MAP, getTemplateById, TEMPLATES } from "../data/templatesData";
 import { templateService } from "../api/templateService";
 import {
     resolveVariant,
@@ -18,10 +18,13 @@ export default function TemplateDemoPage() {
     const aliasTargetId = VARIANT_ROUTE_ALIASES[id];
     const targetId = aliasTargetId || id;
     const [remoteTpl, setRemoteTpl] = useState(null);
+    const [loading, setLoading] = useState(true);
     const { isAuthenticated } = useAuth();
 
     useEffect(() => {
         let active = true;
+        setRemoteTpl(null);
+        setLoading(true);
         const fetcher = /^\d+$/.test(targetId)
             ? templateService.getPublic(targetId)
             : templateService.getPublicBySlug(targetId);
@@ -34,7 +37,7 @@ export default function TemplateDemoPage() {
             })
             .catch(() => {
                 // Keep local fallback on network error
-            });
+            }).finally(() => { if (active) setLoading(false); });
 
         return () => {
             active = false;
@@ -61,8 +64,9 @@ export default function TemplateDemoPage() {
             style: remoteTpl.name || baseTpl.style,
             description: parsedConfig.blessingMessage || remoteTpl.description || baseTpl.description,
             image: remoteTpl.thumbnailUrl || baseTpl.image,
-            mainImage: remoteTpl.thumbnailUrl || baseTpl.mainImage,
-            phoneCoverImage: remoteTpl.thumbnailUrl || baseTpl.phoneCoverImage,
+            mainImage: parsedConfig.coverImage || baseTpl.mainImage || remoteTpl.thumbnailUrl,
+            phoneCoverImage: parsedConfig.coverImage || baseTpl.phoneCoverImage || remoteTpl.thumbnailUrl,
+            presetId: parsedConfig.presetId || parsedConfig.theme || baseTpl.presetId,
             price: remoteTpl.price ?? baseTpl.price,
             isPremium: Boolean(remoteTpl.isPremium || remoteTpl.premium),
             design: {
@@ -85,12 +89,18 @@ export default function TemplateDemoPage() {
     }, [remoteTpl, targetId]);
 
     const forcedVariant = aliasTargetId ? id : undefined;
-    const createTemplatePath = "/templates/browse";
+    const createTemplatePath = `/templates/browse?template=${encodeURIComponent(remoteTpl?.code || targetId)}`;
     const useTemplateLink = isAuthenticated
         ? createTemplatePath
         : `/login?next=${encodeURIComponent(createTemplatePath)}`;
 
     const variant = resolveVariant(tpl, forcedVariant);
+    const knownId = DB_TEMPLATE_ID_MAP[targetId] || targetId;
+    const knownLocal = TEMPLATES.some((item) => [item.id, item.code, item.slug].includes(knownId));
+    if (!remoteTpl && !knownLocal) {
+        if (loading) return <div className="public-state" role="status">កំពុងផ្ទុកគំរូ… / Loading template…</div>;
+        return <main className="public-state"><h1>រកគំរូមិនឃើញ / Template unavailable</h1><Link to="/templates">មើលគំរូសន្លឹកការ / Browse templates</Link></main>;
+    }
 
     return (
         <TemplateExperience

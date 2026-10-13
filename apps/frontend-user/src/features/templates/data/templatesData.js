@@ -3,6 +3,7 @@ import musicInstrumental from "../../../assets/music/Instrumental Wedding Music 
 
 export const KEEP_TEMPLATE_CODE = "garden-royal-khmer-wedding";
 export const KHMER_CELESTIAL_TEMPLATE_CODE = "khmer-celestial";
+export const SILK_HERITAGE_TEMPLATE_CODE = "silk-heritage";
 export const ROYAL_KHMER_TEMPLATE_CODE = "royal-khmer-wedding";
 export const KHMER_GOLDEN_CANVA_INSPIRED_CODE = "khmer-golden-canva-inspired-wedding";
 export const COVER_KHMER_GOLDEN_CODE = "cover-khmer-golden-wedding";
@@ -475,7 +476,45 @@ export const BLISS_EDITORIAL_TEMPLATE = withTemplateMedia({
     description: "គំរូធៀបការបែប High-Fashion Vogue Editorial អក្សរ Serif ថ្លៃថ្នូរ Asymmetrical Gallery និង Slide-out RSVP Drawer។",
 }, "03-card");
 
+export const SILK_HERITAGE_TEMPLATE = {
+    id: SILK_HERITAGE_TEMPLATE_CODE,
+    code: SILK_HERITAGE_TEMPLATE_CODE,
+    slug: SILK_HERITAGE_TEMPLATE_CODE,
+    presetId: "SILK_HERITAGE",
+    name: "សូត្រមង្គល / Silk Heritage",
+    style: "Silk Heritage",
+    category: "ancient",
+    isPremium: false,
+    image: "/templates/silk-heritage/preview.svg",
+    mainImage: "/templates/silk-heritage/portrait.webp",
+    phoneCoverImage: "/templates/silk-heritage/portrait.webp",
+    storyImages: [
+        { src: "/templates/silk-heritage/portrait.webp", alt: "Demo couple holding hands in a garden", caption: "រូបភាពគំរូ / Demo portrait" },
+        { src: "/templates/silk-heritage/together.webp", alt: "Demo newlyweds smiling together outdoors", caption: "រូបភាពគំរូ / Demo photograph" },
+    ],
+    groom: "សុវណ្ណ",
+    bride: "សុភា",
+    groomEn: "Sovann",
+    brideEn: "Sophea",
+    dateText: "ថ្ងៃសៅរ៍ ទី២៨ ខែវិច្ឆិកា ឆ្នាំ២០២៦",
+    dateTextEn: "Saturday, 28 November 2026",
+    targetDate: "2026-11-28T17:00:00+07:00",
+    eventTime: "17:00",
+    venueName: "ភ្នំពេញ / Phnom Penh",
+    venueAddress: "ទីតាំងសម្រាប់គំរូបង្ហាញ / Demo venue",
+    message: "យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ លោក លោកស្រី និងក្រុមគ្រួសារ ចូលរួមក្នុងពិធីមង្គលការរបស់យើងខ្ញុំ។",
+    description: "សន្លឹកការបែបសូត្រ ពណ៌ក្រហមទុំ និងក្រដាសភ្លុក ជាមួយកម្មវិធី រូបភាព ទីតាំង និង RSVP។",
+    schedule: [
+        { id: "welcome", time: "17:00", title: "ទទួលភ្ញៀវកិត្តិយស", titleEn: "Guest welcome" },
+        { id: "celebrate", time: "18:00", title: "ពិធីជប់លៀងមង្គលការ", titleEn: "Wedding reception" },
+    ],
+    music: null,
+    enabledSections: { story: false, dressCode: false, gift: false, faq: false, music: false },
+    design: { presetId: "SILK_HERITAGE", primaryColor: "#672C39", secondaryColor: "#B39460", backgroundColor: "#F6F0E5", openingStyle: "paper" },
+};
+
 export const TEMPLATES = [
+    SILK_HERITAGE_TEMPLATE,
     KHMER_CELESTIAL_TEMPLATE,
     THE_DIGITAL_YES_TEMPLATE,
     EMERALD_CANVA_LUXE_TEMPLATE,
@@ -549,6 +588,7 @@ export function getCatalogVersion() {
  * component and theme variant (CSS class, colors, opening gate style, etc.).
  */
 const PRESET_TO_VARIANT = {
+    SILK_HERITAGE: SILK_HERITAGE_TEMPLATE_CODE,
     KHMER_CELESTIAL: KHMER_CELESTIAL_TEMPLATE_CODE,
     EMERALD_GREEN: "emerald-canva-luxe-wedding",
     RUBY_RED: KHMER_CELESTIAL_TEMPLATE_CODE,
@@ -585,7 +625,7 @@ export function registerDynamicTemplates(catalogList) {
             (mappedCode && (t.id === mappedCode || t.code === mappedCode || t.slug === mappedCode))
         );
 
-        const cover = item.thumbnailUrl || parsedConfig.coverImage || baseStatic?.phoneCoverImage || baseStatic?.mainImage || "/facebook/all/03-card/cover-card.jpg";
+        const cover = parsedConfig.coverImage || baseStatic?.phoneCoverImage || baseStatic?.mainImage || item.thumbnailUrl || "/facebook/all/03-card/cover-card.jpg";
         const primaryColor = parsedConfig.primaryColor || item.primaryColor || baseStatic?.frontColor || baseStatic?.color || "#D4AF37";
         const secondaryColor = parsedConfig.secondaryColor || item.secondaryColor || baseStatic?.bottomColor || baseStatic?.accent || "#F3E5AB";
         const openingStyle = parsedConfig.openingStyle || parsedConfig.gateStyle || baseStatic?.openingStyle || (
@@ -632,10 +672,10 @@ export function registerDynamicTemplates(catalogList) {
             title: item.name || parsedConfig.invitationTitle || baseStatic?.title || "គំរូធៀបការ",
             style: item.name || baseStatic?.style || "Wedding Template",
             category: item.category || baseStatic?.category || "wedding",
-            image: cover,
+            image: item.thumbnailUrl || baseStatic?.image || cover,
             mainImage: cover,
             phoneCoverImage: cover,
-            thumbnailUrl: cover,
+            thumbnailUrl: item.thumbnailUrl || cover,
             price: item.price ?? 0,
             currency: item.currency || "USD",
             premium: Boolean(item.premium || item.isPremium),
