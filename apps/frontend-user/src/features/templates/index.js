@@ -21,6 +21,7 @@ export { default as DigitalYesLayout } from "./layouts/DigitalYes/DigitalYesLayo
 export { default as RoyalKhmerLayout } from "./layouts/RoyalKhmer/RoyalKhmerLayout";
 export { default as EmeraldLuxeLayout } from "./layouts/EmeraldLuxe/EmeraldLuxeLayout";
 export { default as KhmerCelestialLayout } from "./layouts/KhmerCelestial/KhmerCelestialLayout";
+export { default as KhmerRoyalLotusLayout } from "./layouts/KhmerRoyalLotus/KhmerRoyalLotusLayout";
 
 // Shared Primitives
 export {
@@ -48,6 +49,8 @@ export {
     KEEP_TEMPLATE_CODE,
     KHMER_CELESTIAL_TEMPLATE_CODE,
     KHMER_CELESTIAL_TEMPLATE,
+    KHMER_ROYAL_LOTUS_TEMPLATE_CODE,
+    KHMER_ROYAL_LOTUS_TEMPLATE,
     KHMER_GOLDEN_CANVA_INSPIRED_CODE,
     COVER_KHMER_GOLDEN_CODE,
     TEMPLATE_CATEGORIES,

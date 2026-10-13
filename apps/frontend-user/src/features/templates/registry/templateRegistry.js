@@ -9,6 +9,7 @@ const CanvaKhmerWeddingTemplate = lazy(() => import("../experience/components/ca
 const KhmerCelestialLayout = lazy(() => import("../layouts/KhmerCelestial/KhmerCelestialLayout"));
 const TemplateBoilerplateLayout = lazy(() => import("../layouts/TemplateBoilerplate/TemplateBoilerplateLayout"));
 const SilkHeritageLayout = lazy(() => import("../layouts/SilkHeritage/SilkHeritageLayout"));
+const KhmerRoyalLotusLayout = lazy(() => import("../layouts/KhmerRoyalLotus/KhmerRoyalLotusLayout"));
 
 /**
  * 1 Template = 1 Dedicated UI Component Registry
@@ -20,6 +21,10 @@ export const templateRegistry = {
   // Developer Starter Boilerplate
   "template-boilerplate": TemplateBoilerplateLayout,
   "custom-starter": TemplateBoilerplateLayout,
+
+  // Khmer Royal Lotus (printed-card inspired Khmer ceremonial invitation)
+  "khmer-royal-lotus": KhmerRoyalLotusLayout,
+  "KHMER_ROYAL_LOTUS": KhmerRoyalLotusLayout,
 
   // Flagship Khmer Celestial (cinematic Cambodian editorial invitation)
   "khmer-celestial": KhmerCelestialLayout,
