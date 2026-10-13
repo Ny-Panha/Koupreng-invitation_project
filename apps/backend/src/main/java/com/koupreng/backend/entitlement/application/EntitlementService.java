@@ -3,6 +3,7 @@ package com.koupreng.backend.entitlement.application;
 import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
 import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;
+import com.koupreng.backend.payment.application.TemplateCheckoutPolicy;
 import com.koupreng.backend.payment.infrastructure.persistence.UserTemplateAccessRepository;
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.subscription.domain.SubscriptionPackage;
@@ -52,7 +53,7 @@ public class EntitlementService {
 
     @Transactional(readOnly = true)
     public boolean hasTemplateAccess(AppUser user, InvitationTemplate template) {
-        if (!template.isPremium()) {
+        if (!template.isPremium() && !TemplateCheckoutPolicy.offer(template).eligible()) {
             return true;
         }
         if (user == null || user.getId() == null) {

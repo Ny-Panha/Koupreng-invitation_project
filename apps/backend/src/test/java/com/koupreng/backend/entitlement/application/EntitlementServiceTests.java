@@ -40,6 +40,22 @@ class EntitlementServiceTests {
         assertThat(service.hasTemplateAccess(user, template)).isTrue();
     }
 
+    @Test void existingStaticOfferRequiresTrustedEntitlementDespiteFreeCatalogMetadata() {
+        var template = template();
+        template.setCode("garden-royal-khmer-wedding");
+        template.setStatus("ACTIVE");
+        template.setPremium(false);
+        template.setPrice(BigDecimal.ZERO);
+        assertThat(service(false).hasTemplateAccess(null, template)).isFalse();
+        assertThat(service(false).hasTemplateAccess(user, template)).isFalse();
+        assertThat(service(true).hasTemplateAccess(user, template)).isFalse();
+        when(purchases.existsByUserIdAndTemplateIdAndActiveTrue(1L, 5L)).thenReturn(true);
+        assertThat(service(false).hasTemplateAccess(user, template)).isTrue();
+        when(purchases.existsByUserIdAndTemplateIdAndActiveTrue(1L, 5L)).thenReturn(false);
+        when(subscriptions.findActiveForUser(eq(1L), any())).thenReturn(List.of(subscription()));
+        assertThat(service(false).hasTemplateAccess(user, template)).isTrue();
+    }
+
     @Test void onlyPaidActiveUnexpiredPackageGrantsPremiumCapability() {
         var template = template(); template.setPremium(true);
         var subscription = subscription();
