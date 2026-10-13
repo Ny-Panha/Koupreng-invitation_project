@@ -20,6 +20,7 @@ import {
 } from "react-icons/io5";
 import CoverBackground from "@/features/templates/shared/Openings/CoverBackground";
 import { formatTime24toKhmer } from "@/shared/ui/TimePicker";
+import "./canva-khmer-wedding.css";
 
 const ASSET_ROOT = "/invitations/canva-khmer";
 const NAV_ITEMS = [

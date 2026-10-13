@@ -93,4 +93,66 @@ describe("httpClient 401 interceptor", () => {
     expect(config.withCredentials).toBeUndefined();
     expect(config.headers["X-XSRF-TOKEN"]).toBeUndefined();
   });
+
+  it("injects correlation and tracing headers for API observability", () => {
+    const requestInterceptor = apiClient.interceptors.request.handlers[0];
+    const config = requestInterceptor.fulfilled({
+      headers: {},
+      clientAction: "REGISTER_SUBMIT",
+    });
+
+    expect(config.headers["X-Request-Id"]).toBeDefined();
+    expect(config.headers["X-Request-Id"]).toMatch(/^[A-Za-z0-9._-]+$/);
+    expect(config.headers["X-Client-App"]).toBe("frontend-user");
+    expect(config.headers["X-Frontend-Route"]).toBe("/dashboard");
+    expect(config.headers["X-Client-Action"]).toBe("REGISTER_SUBMIT");
+    expect(config.clientAction).toBeUndefined();
+  });
+
+  it("propagates X-Action-Id when running within runWithAction context", async () => {
+    const { runWithAction } = await import("./httpClient");
+    const requestInterceptor = apiClient.interceptors.request.handlers[0];
+
+    await runWithAction("SAVE_INVITATION", async (actionId) => {
+      expect(actionId).toMatch(/^act-/);
+      const config = requestInterceptor.fulfilled({ headers: {} });
+      expect(config.headers["X-Action-Id"]).toBe(actionId);
+      expect(config.headers["X-Client-Action"]).toBe("SAVE_INVITATION");
+    });
+
+    // After runWithAction completes, context should be reset
+    const afterConfig = requestInterceptor.fulfilled({ headers: {} });
+    expect(afterConfig.headers["X-Action-Id"]).toBeUndefined();
+  });
+
+  it("dispatches koupreng:api-error window event on client-observed network failure", () => {
+    const responseInterceptor = apiClient.interceptors.response.handlers[0];
+    const eventSpy = vi.fn();
+    window.addEventListener("koupreng:api-error", eventSpy);
+
+    const networkError = {
+      message: "Network Error",
+      code: "ERR_NETWORK",
+      config: {
+        method: "get",
+        url: "/api/v1/invitations",
+        headers: {
+          "X-Request-Id": "req-client-fail",
+          "X-Action-Id": "act-test-fail",
+        },
+        metadata: { startTime: performance.now() - 50 },
+      },
+    };
+
+    expect(() => responseInterceptor.rejected(networkError)).toThrow(ApiError);
+    expect(eventSpy).toHaveBeenCalledTimes(1);
+    const detail = eventSpy.mock.calls[0][0].detail;
+    expect(detail.source).toBe("CLIENT_OBSERVED");
+    expect(detail.requestId).toBe("req-client-fail");
+    expect(detail.actionId).toBe("act-test-fail");
+    expect(detail.status).toBe(0);
+    expect(detail.outcome).toBe("NETWORK_ERROR");
+
+    window.removeEventListener("koupreng:api-error", eventSpy);
+  });
 });

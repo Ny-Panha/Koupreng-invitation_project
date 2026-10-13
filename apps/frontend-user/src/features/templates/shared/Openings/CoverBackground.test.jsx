@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { cleanup, fireEvent, render } from "@testing-library/react";
+import { afterEach, beforeEach } from "vitest";
 import CoverBackground from "./CoverBackground";
 
 // Mock reduced motion
@@ -8,8 +9,31 @@ vi.mock("@/shared/hooks/usePrefersReducedMotion", () => ({
 }));
 
 import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
+afterEach(cleanup);
+beforeEach(() => vi.mocked(usePrefersReducedMotion).mockReturnValue(false));
 
 describe("CoverBackground component", () => {
+  it("falls back after failed uploads and stops rendering failed fallback images", () => {
+    const { container } = render(<CoverBackground content={{ coverBackgroundImage: "/missing.jpg" }} templateDefault={{ type: "image", src: "/default.svg" }} />);
+    fireEvent.error(container.querySelector("img"));
+    expect(container.querySelector("img")).toHaveAttribute("src", "/default.svg");
+    fireEvent.error(container.querySelector("img"));
+    expect(container.querySelector("img")).toBeNull();
+  });
+
+  it("uses a poster after a failed video", () => {
+    const { container } = render(<CoverBackground content={{ coverVideoUrl: "/failed.mp4", videoPoster: "/poster.webp" }} />);
+    fireEvent.error(container.querySelector("video"));
+    expect(container.querySelector("video")).toBeNull();
+    expect(container.querySelector("img")).toHaveAttribute("src", "/poster.webp");
+  });
+
+  it("never treats a default video URL as an image under reduced motion", () => {
+    vi.mocked(usePrefersReducedMotion).mockReturnValue(true);
+    const { container } = render(<CoverBackground templateDefault={{ type: "video", src: "/default.mp4", poster: "/poster.jpg" }} />);
+    expect(container.querySelector("video")).toBeNull();
+    expect(container.querySelector("img")).toHaveAttribute("src", "/poster.jpg");
+  });
   it("renders default template image when no user cover is provided", () => {
     const { container } = render(
       <CoverBackground
@@ -78,7 +102,7 @@ describe("CoverBackground component", () => {
   });
 
   it("falls back to poster image when user prefers reduced motion", () => {
-    vi.mocked(usePrefersReducedMotion).mockReturnValueOnce(true);
+    vi.mocked(usePrefersReducedMotion).mockReturnValue(true);
 
     const { container } = render(
       <CoverBackground

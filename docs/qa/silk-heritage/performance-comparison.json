@@ -1,0 +1,42 @@
+{
+  "baseline_commit": "b1c72db489ce1960399e98ececbe604c8c42aee2",
+  "comparison_scope": "Baseline Celestial cover versus new Silk Heritage cover; different media. Host-build overlap excluded, diagnostic retained.",
+  "profile": "Chromium headless; 390x844; 4x CPU; 1.6Mbps down; 150ms latency; cache disabled; API 404 mocked; 3 cold contexts; fonts live; INP not measured",
+  "before": {
+    "lcp": 13424,
+    "cls": 0.0029605087972496215,
+    "resourceBytes": 3378325,
+    "longestTask": 425
+  },
+  "after": {
+    "lcp": 4092,
+    "cls": 0.007605902401322856,
+    "resourceBytes": 665852,
+    "longestTask": 156
+  },
+  "shared_js_before": {
+    "name": "TemplateExperience-CAW9kDEV.js",
+    "bytes": 332380
+  },
+  "shared_js_after": {
+    "name": "TemplateExperience-B9ae4avW.js",
+    "bytes": 141306
+  },
+  "shared_css_before": {
+    "name": "TemplateExperience-DhaMbxwf.css",
+    "bytes": 274679
+  },
+  "shared_css_after": {
+    "name": "TemplateExperience-CdcXAu6q.css",
+    "bytes": 182257
+  },
+  "flagship_js": {
+    "name": "SilkHeritageLayout-BaZRiDNc.js",
+    "bytes": 16630
+  },
+  "lcp_target_ms": 2500,
+  "lcp_target_met": false,
+  "cls_target": 0.1,
+  "cls_target_met": true,
+  "inp": "Not measured; long-task measurements are not INP."
+}

@@ -40,6 +40,8 @@ function normalizeGalleryItem(item, index) {
     name: item.name || item.originalFilename || `Gallery ${index + 1}`,
     type: item.type || (item.mimeType?.startsWith("video/") ? "video" : "image"),
     preview,
+    alt: item.alt || item.description || "",
+    caption: item.caption || "",
   };
 }
 
@@ -229,6 +231,7 @@ export function publicInvitationToDraft(invitation, media) {
     guestName: content.guestName || invitation?.guest?.guestName || "",
     guestLabel: content.guestLabel || "",
     fontKhmer: content.fontKhmer || design.fontKhmer || "",
+    sectionOrder: content.sectionOrder || design.sectionOrder || [],
     fontLatin: content.fontLatin || design.fontLatin || "",
     elementFonts: content.elementFonts || design.elementFonts || null,
     gallery: gallery.length

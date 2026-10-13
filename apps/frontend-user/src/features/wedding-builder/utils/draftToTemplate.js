@@ -56,11 +56,15 @@ export function draftToTemplate(draft, gallery = []) {
     // built-in catalog still owns its sample photography on /templates/*.
     const uploadedImages = (gallery || [])
         .filter((item) => (item?.preview || item?.url) && item.type !== "video")
-        .map((item) => item.preview || item.url);
+        .map((item) => item.alt || item.caption
+            ? { src: item.preview || item.url, alt: item.alt || "", caption: item.caption || "" }
+            : item.preview || item.url);
 
     const draftPhotos = (draft.photos || [])
         .filter((p) => p && (p.url || p.preview))
-        .map((p) => p.url || p.preview);
+        .map((p) => p.alt || p.caption
+            ? { src: p.url || p.preview, alt: p.alt || "", caption: p.caption || "" }
+            : p.url || p.preview);
 
     const effectiveGallery = uploadedImages.length > 0
         ? uploadedImages
@@ -242,6 +246,11 @@ export function draftToTemplate(draft, gallery = []) {
         // Host-authored rich sections. Passed straight through so the content
         // builder can prefer them over its demo fallbacks (see hostContent).
         hostContent: {
+            sectionOrder: draft.sectionOrder || [],
+            fontKhmer: draft.fontKhmer || draft.design?.fontKhmer || "",
+            fontLatin: draft.fontLatin || draft.design?.fontLatin || "",
+            elementFonts: draft.elementFonts || draft.design?.elementFonts || {},
+            backgroundColor: draft.backgroundColor || draft.design?.backgroundColor || "",
             title: draft.title || draft.event?.title || "",
             subtitle: draft.subtitle || "",
             message: draft.message || draft.messageText || "",

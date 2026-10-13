@@ -330,7 +330,8 @@ jobs:
         working-directory: apps/backend
         run: |
           chmod +x mvnw
-          ./mvnw --batch-mode -Pdependency-security -DskipTests verify
+          # Recheck missing artifacts instead of retaining failures from the restored Maven cache.
+          ./mvnw --batch-mode --update-snapshots -Pdependency-security -DskipTests verify
 
   deployment-config:
     name: Deployment Configuration & Docker Applicability

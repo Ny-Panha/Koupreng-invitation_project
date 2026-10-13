@@ -551,3 +551,8 @@
         grid-template-columns: 1fr;
     }
 }
+.tp-catalog-controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin: 24px 0; }
+.tp-catalog-controls button, .tp-catalog-status button { min-height: 44px; padding: 8px 18px; font: inherit; color: #362A28; background: #FFFDF7; border: 1px solid #B39460; border-radius: 4px; cursor: pointer; }
+.tp-catalog-controls button[aria-pressed="true"] { background: #672C39; color: #F6F0E5; }
+.tp-catalog-status { text-align: center; margin: 16px auto 28px; max-width: 680px; color: #362A28; line-height: 1.8; }
+.tp-access-label { color: #672C39; font-size: 14px; margin: 12px 0; }

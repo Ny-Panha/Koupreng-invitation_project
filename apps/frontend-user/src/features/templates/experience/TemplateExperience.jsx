@@ -1,4 +1,4 @@
-import { createElement, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { createElement, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
@@ -33,7 +33,6 @@ import { templateIcons } from "./config/templateIcons";
 import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
 import { isTrustedPreviewMessage, postPreviewMessage, readEmbeddedPreviewChannel } from "@/shared/preview/previewMessaging";
 import "./template-experience.css";
-import "./components/canva-khmer/canva-khmer-wedding.css";
 
 const ensureGoogleFontLoaded = (fontFamily) => {
     if (!fontFamily || typeof document === "undefined") return;
@@ -46,6 +45,14 @@ const ensureGoogleFontLoaded = (fontFamily) => {
     link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(cleanName)}&display=swap`;
     document.head.appendChild(link);
 };
+
+function DedicatedTemplateRenderer({ component, previewChannel, children, ...props }) {
+    // A lazy layout must commit its listeners before the editor receives READY.
+    useEffect(() => {
+        if (previewChannel) postPreviewMessage({ type: "PREVIEW_READY" }, previewChannel);
+    }, [component, previewChannel]);
+    return createElement(component, { ...props, previewChannel }, children);
+}
 
 /**
  * TemplateExperience — shared, themeable full-page wedding experience.
@@ -93,6 +100,7 @@ export default function TemplateExperience({
     const resolvedVariant = useMemo(() => resolveVariant(tpl, variant), [tpl, variant]);
     const theme = useMemo(() => getVariantTheme(resolvedVariant), [resolvedVariant]);
     const [liveData, setLiveData] = useState(null);
+    const [previewGateCommand, setPreviewGateCommand] = useState(null);
     const messageChannel = useMemo(() => previewChannel || readEmbeddedPreviewChannel(), [previewChannel]);
 
     const baseContent = useMemo(
@@ -327,16 +335,17 @@ export default function TemplateExperience({
             }
             if (event.data?.type === "TOGGLE_GATE") {
                 const shouldOpen = Boolean(event.data.open ?? event.data.isOpen);
+                setPreviewGateCommand({ open: shouldOpen });
                 setGateState(shouldOpen ? "opened" : "closed");
                 setHeroOpened(shouldOpen);
             }
         };
         window.addEventListener("message", handleMessage);
 
-        postPreviewMessage({ type: "PREVIEW_READY" }, messageChannel);
+        if (!DedicatedComponent) postPreviewMessage({ type: "PREVIEW_READY" }, messageChannel);
 
         return () => window.removeEventListener("message", handleMessage);
-    }, [messageChannel]);
+    }, [messageChannel, DedicatedComponent]);
 
     useEffect(() => {
         const fontsToLoad = new Set();
@@ -478,7 +487,8 @@ export default function TemplateExperience({
     const ornamentTheme = content.design?.ornamentTheme || "royal-floral";
 
     if (DedicatedComponent) {
-        return createElement(DedicatedComponent, {
+        return <Suspense fallback={<div className="public-state" role="status">កំពុងផ្ទុកសន្លឹកការ… / Loading invitation…</div>}>{createElement(DedicatedTemplateRenderer, {
+            component: DedicatedComponent,
             tpl: content,
             content,
             liveData,
@@ -488,12 +498,13 @@ export default function TemplateExperience({
             preview,
             previewStartClosed,
             previewChannel: messageChannel,
+            previewGateCommand,
             useTemplateLink,
             primaryCtaLabel,
             showActions,
             showStickyCta,
             isHostedInvitation: Boolean(tpl?.hostContent),
-        }, children);
+        }, children)}</Suspense>;
     }
 
     return (

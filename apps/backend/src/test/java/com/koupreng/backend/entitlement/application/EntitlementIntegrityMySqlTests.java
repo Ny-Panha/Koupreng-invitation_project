@@ -11,6 +11,7 @@ import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.invitation.domain.InvitationStatus;
 import com.koupreng.backend.invitation.domain.InvitationVisibility;
 import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;
+import com.koupreng.backend.payment.application.TemplatePaymentService;
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.rsvp.api.dto.RsvpRequest;
 import com.koupreng.backend.rsvp.application.RsvpService;
@@ -18,6 +19,7 @@ import com.koupreng.backend.rsvp.domain.RsvpStatus;
 import com.koupreng.backend.rsvp.infrastructure.persistence.RsvpRepository;
 import com.koupreng.backend.subscription.domain.SubscriptionPackage;
 import com.koupreng.backend.subscription.infrastructure.persistence.SubscriptionPackageRepository;
+import com.koupreng.backend.template.infrastructure.persistence.InvitationTemplateRepository;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;
 import java.math.BigDecimal;
@@ -28,6 +30,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -40,6 +43,8 @@ import org.springframework.test.context.DynamicPropertySource;
 @ActiveProfiles("test")
 @EnabledIfEnvironmentVariable(named = "RUN_FLYWAY_INTEGRATION", matches = "true")
 class EntitlementIntegrityMySqlTests {
+    @Autowired TemplatePaymentService paymentService;
+    @Autowired InvitationTemplateRepository templates;
     @Autowired GuestService guestService;
     @Autowired GuestRepository guests;
     @Autowired InvitationService invitationService;
@@ -109,6 +114,21 @@ class EntitlementIntegrityMySqlTests {
         assertEquals("PACKAGE_LIMIT_REACHED", assertThrows(ApiException.class,
                 () -> guestService.importGuests(fixture.auth(), fixture.invitation().getId(), request)).getCode());
         assertEquals(0, guests.countByInvitationId(fixture.invitation().getId()));
+    }
+
+    @Test void existingStaticOfferCannotBeUsedBeforeTrustedConfirmation() {
+        var fixture = fixture();
+        var template = templates.findByCodeIgnoreCaseAndStatusIgnoreCase("garden-royal-khmer-wedding", "ACTIVE")
+                .orElseThrow();
+        assertFalse(template.isPremium());
+        assertEquals(0, BigDecimal.ZERO.compareTo(template.getPrice()));
+        assertFalse(paymentService.hasTemplateAccess(fixture.auth(), template.getId()).isHasAccess());
+        var request = new InvitationRequest();
+        request.setTitle("Unpaid static offer " + UUID.randomUUID());
+        request.setTemplateId(template.getId());
+        assertEquals(HttpStatus.FORBIDDEN,
+                assertThrows(ApiException.class, () -> invitationService.create(fixture.auth(), request)).getStatus());
+        assertEquals(1, invitations.countByUserIdAndDeletedFalse(fixture.owner().getId()));
     }
 
     private int race(Callable<?> first, Callable<?> second) throws Exception {

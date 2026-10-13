@@ -1,0 +1,161 @@
+@font-face { font-family: 'Silk Moul'; src: url('/fonts/silk-heritage/Moul-Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Silk Kantumruy'; src: url('/fonts/silk-heritage/KantumruyPro.woff2') format('woff2'); font-weight: 100 700; font-display: swap; }
+@font-face { font-family: 'Silk Cormorant'; src: url('/fonts/silk-heritage/CormorantGaramond.woff2') format('woff2'); font-weight: 300 700; font-display: swap; }
+
+.tpl-silk-heritage {
+  --tpl-primary: #672C39; --tpl-secondary: #B39460; --tpl-bg: #F6F0E5;
+  --tpl-surface: #FFFBF4; --tpl-jade: #283F39; --tpl-text-primary: #362A28;
+  --tpl-text-secondary: #6B534B; --tpl-border: #B39460;
+  --sh-display: 'Silk Moul', 'Moul', 'Noto Sans Khmer', serif;
+  --sh-body: 'Silk Kantumruy', 'Kantumruy Pro', 'Noto Sans Khmer', sans-serif;
+  --sh-latin: 'Silk Cormorant', 'Cormorant Garamond', Georgia, serif;
+  --asset-ornament: url('/templates/silk-heritage/woven-ornament.svg');
+  --asset-hero: none; --asset-frame: none; --asset-hero-ratio: 4 / 5;
+  color: var(--tpl-text-primary); background: var(--tpl-bg);
+  font-family: var(--sh-body); font-size: 1rem; line-height: 1.9;
+  min-width: 0; isolation: isolate; letter-spacing: normal; position: relative;
+}
+.tpl-silk-heritage *, .tpl-silk-heritage *::before, .tpl-silk-heritage *::after { box-sizing: border-box; }
+.tpl-silk-heritage :is(h1,h2,h3,p,figure,ol,ul) { margin: 0; }
+.tpl-silk-heritage :is(h1,h2,h3,p,a,button,figcaption) { overflow-wrap: anywhere; letter-spacing: normal; }
+.tpl-silk-heritage :is(h1,h2) { font-family: var(--sh-display); font-weight: 400; line-height: 1.9; text-wrap: balance; }
+.tpl-silk-heritage h2 { font-size: clamp(1.35rem, 4.8vw, 2.1rem); }
+.tpl-silk-heritage .sh-heading-translation { display: block; font-family: var(--sh-latin); font-size: 1.35em; line-height: 1.3; margin-top: .5rem; }
+.tpl-silk-heritage h3 { font-size: 1.12rem; font-weight: 600; line-height: 1.8; }
+.tpl-silk-heritage :is(button,a,input,select,textarea):focus-visible { outline: 3px solid currentColor; outline-offset: 5px; }
+.tpl-silk-heritage button, .tpl-silk-heritage a { -webkit-tap-highlight-color: transparent; }
+.tpl-silk-heritage button { cursor: pointer; font: inherit; }
+.tpl-silk-heritage button:disabled { cursor: wait; }
+.tpl-silk-heritage a { color: inherit; text-underline-offset: .3em; }
+.tpl-silk-heritage main[hidden] { display: none; }
+.tpl-silk-heritage .sh-toolbar { padding: .65rem 1rem; display: flex; justify-content: space-between; gap: 1rem; background: var(--tpl-surface); }
+.tpl-silk-heritage .sh-toolbar a { display: inline-flex; align-items: center; min-height: 44px; font-size: .9rem; }
+.tpl-silk-heritage .sh-ornament { display: block; width: 144px; height: 72px; margin: 0 auto; background: var(--asset-ornament) center / contain no-repeat; flex: none; }
+.tpl-silk-heritage .sh-cover {
+  position: relative; min-height: 100svh; padding: max(2.5rem, env(safe-area-inset-top)) max(2rem, env(safe-area-inset-right)) max(2rem, env(safe-area-inset-bottom));
+  display: grid; place-items: center; overflow: clip; background: var(--tpl-primary);
+  color: var(--tpl-bg); text-align: center; perspective: 1200px;
+}
+.tpl-silk-heritage .sh-cover .cover-bg-root::after { content: ''; position: absolute; inset: 0; background: var(--tpl-primary); opacity: .12; }
+.tpl-silk-heritage .sh-cover .cover-bg-scrim { background: var(--tpl-primary); opacity: .84; }
+.tpl-silk-heritage .sh-cover .cover-bg-root[data-cover-media="video"]::after { opacity: .84; }
+.tpl-silk-heritage .sh-cover-content { position: relative; z-index: 2; max-width: 620px; width: 100%; padding: 1rem 0; }
+.tpl-silk-heritage .sh-cover h1 { font-size: clamp(1.2rem, 4.6vw, 1.85rem); margin-bottom: 1.6rem; }
+.tpl-silk-heritage .sh-brand { font-family: var(--sh-latin); font-size: 1.4rem; }
+.tpl-silk-heritage .sh-cover-names { font-family: var(--sh-display); font-size: clamp(1.5rem, 6vw, 2.4rem); line-height: 2; display: grid; }
+.tpl-silk-heritage .sh-and { font-family: var(--sh-latin); font-size: .8em; font-style: italic; }
+.tpl-silk-heritage .sh-dedication { margin: 1.8rem 0; padding: 1rem .5rem; border-block: 1px solid var(--tpl-secondary); }
+.tpl-silk-heritage .sh-dedication > p:first-child { font-size: .85rem; }
+.tpl-silk-heritage .sh-guest { font-size: 1.15rem; padding-top: .4rem; }
+.tpl-silk-heritage .sh-button { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; padding: .7rem 1.25rem; border: 1px solid var(--tpl-secondary); border-radius: 2px; text-decoration: none; font-size: .95rem; line-height: 1.8; }
+.tpl-silk-heritage .sh-button-light { background: var(--tpl-bg); color: var(--tpl-primary); }
+.tpl-silk-heritage .sh-cover .sh-button { margin-top: 1.6rem; }
+.tpl-silk-heritage .sh-skip { display: block; margin: .6rem auto 0; border: 0; background: transparent; color: inherit; padding: .5rem; min-height: 44px; font-size: .8rem; text-decoration: underline; text-underline-offset: .3em; }
+.tpl-silk-heritage .sh-folio-leaf { position: absolute; top: 0; bottom: 0; width: 50%; background: var(--tpl-primary) var(--asset-frame) 0 0 / 200% 100% no-repeat; z-index: 1; opacity: .06; backface-visibility: hidden; transition: transform 640ms cubic-bezier(.4,0,.15,1), opacity 100ms; }
+.tpl-silk-heritage .sh-folio-leaf-left { left: 0; transform-origin: left center; border-right: 1px solid var(--tpl-secondary); }
+.tpl-silk-heritage .sh-folio-leaf-right { right: 0; transform-origin: right center; border-left: 1px solid var(--tpl-secondary); background-position: 100% 0; }
+.tpl-silk-heritage .sh-cover.is-opening { position: absolute; left: 0; right: 0; z-index: 3; background: transparent; }
+.tpl-silk-heritage .is-opening .cover-bg-root { opacity: 0; transition: opacity 120ms; }
+.tpl-silk-heritage .is-opening .sh-folio-leaf { opacity: 1; }
+.tpl-silk-heritage .is-opening .sh-folio-leaf-left { transform: rotateY(-105deg); }
+.tpl-silk-heritage .is-opening .sh-folio-leaf-right { transform: rotateY(105deg); }
+.tpl-silk-heritage .is-opening .sh-cover-content > :not(.sh-skip) { opacity: 0; transition: opacity 220ms; }
+.tpl-silk-heritage .sh-hero { padding: 2.5rem 1.2rem 1.5rem; max-width: 1160px; margin: 0 auto; }
+.tpl-silk-heritage .sh-hero-copy { text-align: center; padding: 1rem .6rem 2rem; }
+.tpl-silk-heritage .sh-hero-copy > p:first-of-type { font-size: .9rem; }
+.tpl-silk-heritage .sh-hero h1 { display: grid; grid-template-columns: minmax(0,1fr) auto minmax(0,1fr); align-items: center; gap: .5rem; font-size: clamp(1.5rem, 6vw, 3rem); color: var(--tpl-primary); margin-top: .75rem; }
+.tpl-silk-heritage .sh-hero h1:focus { outline: none; }
+.tpl-silk-heritage .sh-latin-names { font-family: var(--sh-latin); font-size: 1.8rem; }
+.tpl-silk-heritage .sh-hero-date { margin-top: 1.3rem; }
+.tpl-silk-heritage .sh-hero-photo { position: relative; padding: .6rem; border: 1px solid var(--tpl-secondary); background: var(--tpl-surface); }
+.tpl-silk-heritage .sh-hero-photo img { aspect-ratio: var(--asset-hero-ratio); width: 100%; height: auto; object-fit: cover; object-position: 50% 42%; display: block; }
+.tpl-silk-heritage .sh-hero-photo figcaption { font-size: .75rem; text-align: center; padding-top: .4rem; color: var(--tpl-text-secondary); }
+.tpl-silk-heritage .sh-photo-fallback { aspect-ratio: var(--asset-hero-ratio); background: var(--tpl-bg) var(--asset-hero) center / cover no-repeat; display: grid; place-items: center; }
+.tpl-silk-heritage .sh-section { padding: clamp(3rem, 9vw, 6rem) max(1.4rem, env(safe-area-inset-left)); scroll-margin-top: 1rem; }
+.tpl-silk-heritage .sh-section > :is(h2,p) { max-width: 680px; margin-inline: auto; }
+.tpl-silk-heritage .sh-section > h2 { margin-bottom: 1.5rem; }
+.tpl-silk-heritage .sh-formal { max-width: 900px; margin: 0 auto; text-align: center; }
+.tpl-silk-heritage .sh-formal h2 { color: var(--tpl-primary); }
+.tpl-silk-heritage .sh-families { display: grid; gap: 1.2rem; margin: 1rem 0 2rem; }
+.tpl-silk-heritage .sh-invitation-copy { line-height: 2.1; white-space: pre-line; }
+.tpl-silk-heritage .sh-formal-names { display: grid; font-family: var(--sh-display); font-size: 1.5rem; color: var(--tpl-primary); padding-block: 1.5rem; }
+.tpl-silk-heritage .sh-invitation-photo { margin: 1.5rem auto; max-width: 500px; }
+.tpl-silk-heritage .sh-invitation-photo img { width: 100%; height: auto; display: block; }
+.tpl-silk-heritage .sh-date-note { text-align: center; padding: 1.5rem; border-block: 1px solid var(--tpl-border); }
+.tpl-silk-heritage .sh-countdown strong { font: 600 3rem var(--sh-latin); padding-inline-end: .4rem; }
+.tpl-silk-heritage .sh-program { color: var(--tpl-bg); background: var(--tpl-jade); }
+.tpl-silk-heritage .sh-section-intro { text-align: center; max-width: 620px; margin: 0 auto 2rem; }
+.tpl-silk-heritage .sh-section-intro h2 { margin-block: .6rem 1rem; }
+.tpl-silk-heritage .sh-program ol { max-width: 700px; margin: 0 auto; padding: 0; list-style: none; }
+.tpl-silk-heritage .sh-program li { display: grid; grid-template-columns: minmax(0, 85px) minmax(0, 1fr); gap: 1rem; padding: 1.4rem 0; border-top: 1px solid var(--tpl-secondary); }
+.tpl-silk-heritage .sh-program time { font-size: 1.1rem; font-variant-numeric: tabular-nums; }
+.tpl-silk-heritage .sh-program li p { font-size: .95rem; margin-top: .3rem; }
+.tpl-silk-heritage .sh-story { max-width: 900px; margin: auto; }
+.tpl-silk-heritage .sh-story article { padding: 1.4rem 0; border-top: 1px solid var(--tpl-border); }
+.tpl-silk-heritage .sh-story article p { margin-top: .65rem; white-space: pre-line; }
+.tpl-silk-heritage .sh-story-date { color: var(--tpl-text-secondary); }
+.tpl-silk-heritage .sh-gallery { background: var(--tpl-surface); }
+.tpl-silk-heritage .sh-gallery > h2 { text-align: center; }
+.tpl-silk-heritage .sh-album { display: grid; gap: 2.5rem; max-width: 1000px; margin: 2rem auto 0; }
+.tpl-silk-heritage .sh-album figure { min-width: 0; }
+.tpl-silk-heritage .sh-album button { padding: .5rem; width: 100%; border: 1px solid var(--tpl-secondary); background: var(--tpl-bg); display: block; }
+.tpl-silk-heritage .sh-album img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 42%; display: block; }
+.tpl-silk-heritage .sh-album figcaption { font-size: .9rem; padding-top: .75rem; text-align: center; }
+.tpl-silk-heritage .sh-lightbox { max-width: min(92vw, 1000px); max-height: 92dvh; padding: 3.5rem 1rem 1rem; background: var(--tpl-bg); color: var(--tpl-text-primary); border: 1px solid var(--tpl-secondary); margin: auto; }
+.tpl-silk-heritage .sh-lightbox::backdrop { background: var(--tpl-text-primary); opacity: .9; }
+.tpl-silk-heritage .sh-lightbox img { width: auto; max-width: 100%; height: auto; max-height: 65dvh; display: block; margin: auto; object-fit: contain; }
+.tpl-silk-heritage .sh-lightbox-close { position: absolute; top: .25rem; right: .25rem; width: 48px; height: 48px; background: none; border: 0; color: inherit; font-size: 2rem; }
+.tpl-silk-heritage .sh-lightbox-controls { display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 1rem; }
+.tpl-silk-heritage .sh-lightbox-controls button { width: 48px; height: 48px; border: 1px solid var(--tpl-border); color: inherit; background: transparent; }
+.tpl-silk-heritage .sh-venue { background: var(--tpl-jade); color: var(--tpl-bg); text-align: center; }
+.tpl-silk-heritage .sh-venue h3 { font-size: 1.5rem; max-width: 600px; margin: auto; }
+.tpl-silk-heritage .sh-venue p { margin-top: .8rem; }
+.tpl-silk-heritage .sh-venue .sh-button { margin-top: 1.5rem; }
+.tpl-silk-heritage .sh-sketch { max-width: 600px; margin: 2rem auto 0; }
+.tpl-silk-heritage .sh-sketch img { width: 100%; height: auto; }
+.tpl-silk-heritage .sh-dress { text-align: center; }
+.tpl-silk-heritage .sh-dress ul { display: flex; flex-wrap: wrap; gap: 1.2rem; justify-content: center; list-style: none; padding: 1.5rem 0 0; }
+.tpl-silk-heritage .sh-dress li { display: grid; gap: .5rem; justify-items: center; }
+.tpl-silk-heritage .sh-dress li span { display: block; width: 40px; height: 40px; border: 1px solid var(--tpl-text-secondary); border-radius: 50%; }
+.tpl-silk-heritage .sh-gift { --tx-text: var(--tpl-text-primary); --tx-surface: var(--tpl-surface); --tx-gold: var(--tpl-secondary); --tx-muted: var(--tpl-text-secondary); }
+.tpl-silk-heritage details { max-width: 680px; margin: .75rem auto; border-bottom: 1px solid var(--tpl-border); padding-block: .5rem; }
+.tpl-silk-heritage summary { cursor: pointer; min-height: 44px; }
+.tpl-silk-heritage .sh-rsvp { text-align: center; }
+.tpl-silk-heritage .sh-demo-note { font-size: .95rem; color: var(--tpl-text-secondary); }
+.tpl-silk-heritage .pub-rsvp-live { max-width: 650px; margin: auto; color: inherit; text-align: start; background: none; border: 0; padding: 0; }
+.tpl-silk-heritage .pub-rsvp-form { background: none; border: 0; padding: 0; }
+.tpl-silk-heritage .pub-rsvp-form label { font-family: var(--sh-body); color: inherit; display: grid; gap: .5rem; }
+.tpl-silk-heritage .pub-rsvp-form :is(input,select,textarea) { min-height: 48px; max-width: 100%; min-width: 0; border: 1px solid var(--tpl-text-secondary); border-radius: 2px; color: inherit; background: var(--tpl-surface); font-family: var(--sh-body); font-size: 1rem; line-height: 1.8; padding: .75rem; }
+.tpl-silk-heritage .pub-rsvp-form textarea { min-height: 100px; }
+.tpl-silk-heritage .pub-rsvp-live :is(.inv-primary-btn,.inv-secondary-btn) { min-height: 48px; border-radius: 2px; font-family: var(--sh-body); line-height: 1.8; }
+.tpl-silk-heritage .pub-rsvp-live .inv-primary-btn { background: var(--tpl-primary); color: var(--tpl-bg); border-color: var(--tpl-primary); }
+.tpl-silk-heritage .inv-form-grid { grid-template-columns: minmax(0,1fr); }
+.tpl-silk-heritage .sh-closing { text-align: center; padding: 4rem 1.5rem max(3rem, env(safe-area-inset-bottom)); background: var(--tpl-primary); color: var(--tpl-bg); }
+.tpl-silk-heritage .sh-closing > p { max-width: 580px; margin: 1rem auto; }
+.tpl-silk-heritage .sh-closing-names { font-family: var(--sh-display); font-size: 1.3rem; }
+.tpl-silk-heritage .sh-closing nav { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem 1rem; margin-top: 2rem; }
+.tpl-silk-heritage .sh-closing :is(a,button) { min-height: 44px; display: inline-flex; align-items: center; color: inherit; font-size: .85rem; }
+.tpl-silk-heritage .sh-closing button { background: none; border: 0; text-decoration: underline; text-underline-offset: .3em; }
+.tpl-silk-heritage .sh-music { position: fixed; z-index: 5; right: max(1rem, env(safe-area-inset-right)); bottom: max(1rem, env(safe-area-inset-bottom)); background: var(--tpl-bg); color: var(--tpl-primary); border: 1px solid var(--tpl-primary); border-radius: 2px; padding: .5rem .8rem; min-height: 44px; font-size: .85rem; }
+.tpl-silk-heritage .sh-music-error { position: fixed; bottom: 5rem; right: 1rem; padding: .5rem; max-width: 260px; background: var(--tpl-bg); color: var(--tpl-primary); z-index: 5; }
+.tpl-silk-heritage.sh-preview .sh-music { position: sticky; margin: 1rem; }
+.tpl-silk-heritage:lang(en) :is(h1,h2,.sh-cover-names,.sh-formal-names,.sh-closing-names) { font-family: var(--sh-latin); }
+.tpl-silk-heritage:lang(en) .sh-hero h1 { font-size: clamp(2.5rem, 7vw, 4.5rem); line-height: 1.2; }
+
+@media (min-width: 768px) {
+  .tpl-silk-heritage .sh-hero { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 2rem; padding: 4rem 2rem; align-items: center; }
+  .tpl-silk-heritage .sh-hero-copy { padding: 1rem 0; }
+  .tpl-silk-heritage .sh-hero h1 { grid-template-columns: minmax(0,1fr); gap: 0; }
+  .tpl-silk-heritage .sh-families { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .tpl-silk-heritage .sh-album { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 3rem; align-items: start; }
+  .tpl-silk-heritage .sh-album figure:nth-child(even) { padding-top: 5rem; }
+  .tpl-silk-heritage .inv-form-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .tpl-silk-heritage .sh-program li { grid-template-columns: minmax(0,120px) minmax(0,1fr); gap: 2rem; }
+}
+@media (max-width: 360px) {
+  .tpl-silk-heritage .sh-cover { padding-inline: 1.4rem; }
+  .tpl-silk-heritage .sh-program li { grid-template-columns: minmax(0,65px) minmax(0,1fr); gap: .7rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tpl-silk-heritage *, .tpl-silk-heritage *::before, .tpl-silk-heritage *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

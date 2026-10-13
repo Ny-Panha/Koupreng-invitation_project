@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   IoAddOutline,
   IoCheckmarkCircleOutline,
@@ -46,6 +46,8 @@ function formatTemplateDescription(description) {
 export default function BrowseTemplatesFeature() {
   const { lang, text: t } = useBackendMessages("templates");
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedTemplate = searchParams.get("template");
   const [templates, setTemplates] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -127,6 +129,7 @@ export default function BrowseTemplatesFeature() {
 
   const filteredTemplates = useMemo(() => {
     return templates.filter((tpl) => {
+      if (selectedTemplate && ![tpl.code, tpl.slug, String(tpl.id)].includes(selectedTemplate)) return false;
       const prem = isPremium(tpl);
       // Category filter
       if (activeCategory === "PAID") return prem && isUnlocked(tpl);
@@ -150,7 +153,7 @@ export default function BrowseTemplatesFeature() {
 
       return true;
     });
-  }, [templates, activeCategory, searchQuery, isPremium, isUnlocked]);
+  }, [templates, activeCategory, searchQuery, isPremium, isUnlocked, selectedTemplate]);
 
   const stats = useMemo(() => {
     const total = templates.length;
@@ -196,6 +199,7 @@ export default function BrowseTemplatesFeature() {
           <p>{t("subtitle")}</p>
         </div>
       </header>
+      {selectedTemplate && <p className="tp-catalog-status">{lang === "en" ? "Showing your selected design." : "កំពុងបង្ហាញគំរូដែលអ្នកបានជ្រើសរើស។"} <button type="button" className="inv-secondary-btn" onClick={() => { const next = new URLSearchParams(searchParams); next.delete("template"); setSearchParams(next); }}>{lang === "en" ? "Show all templates" : "បង្ហាញគំរូទាំងអស់"}</button></p>}
 
       {/* Stats Summary matching GuestsPage */}
       <section className="pe-summary-grid">

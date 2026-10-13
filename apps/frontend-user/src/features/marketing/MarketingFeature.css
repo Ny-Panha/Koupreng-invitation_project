@@ -890,4 +890,15 @@
   .hero-title { font-size: 2.4rem; }
   .section-title { font-size: 1.7rem; }
   .footer-top { flex-direction: column; }
-}                                                                                                                                                                                                               
+}
+.khmer-theme .hero-content { width: min(100%, 1140px); display: grid; gap: 2rem; align-items: center; }
+.home-invitation-preview { margin: 0 auto; max-width: 260px; }
+.home-invitation-preview img { width: 100%; height: auto; display: block; }
+.home-invitation-preview figcaption { padding-top: 1rem; color: #362A28; font-size: 14px; }
+.home-invitation-preview figcaption a { display: block; min-height: 44px; padding-top: .5rem; color: #672C39; }
+.home-invitation-benefits, .home-invitation-faq { position: relative; padding: 3rem 1.5rem; max-width: 850px; margin: auto; text-align: center; color: #362A28; line-height: 1.9; }
+.home-invitation-benefits p { margin: 1.5rem auto 2rem; }
+.home-invitation-faq details { text-align: start; border-bottom: 1px solid #B39460; padding: 1rem 0; }
+.home-invitation-faq summary { min-height: 44px; cursor: pointer; }
+.home-invitation-faq > a { display: inline-flex; align-items: center; min-height: 44px; margin-top: 1rem; }
+@media (min-width: 900px) { .khmer-theme .hero-content { grid-template-columns: minmax(0,1.5fr) minmax(0,1fr); } .home-invitation-preview { max-width: 300px; } }

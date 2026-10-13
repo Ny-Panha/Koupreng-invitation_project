@@ -4,9 +4,9 @@ import {
   getDedicatedTemplateComponent,
   DefaultTemplateLayout,
 } from "./templateRegistry";
-import DigitalYesLayout from "../layouts/DigitalYes/DigitalYesLayout";
-import EmeraldLuxeLayout from "../layouts/EmeraldLuxe/EmeraldLuxeLayout";
-import KhmerCelestialLayout from "../layouts/KhmerCelestial/KhmerCelestialLayout";
+const DigitalYesLayout = templateRegistry["the-digital-yes-wedding"];
+const EmeraldLuxeLayout = templateRegistry["emerald-canva-luxe-wedding"];
+const KhmerCelestialLayout = templateRegistry["khmer-celestial"];
 
 describe("templateRegistry (1 Template = 1 Dedicated UI)", () => {
   it("maps Khmer Celestial by slug and admin preset", () => {

@@ -1,0 +1,1668 @@
+[
+  {
+    "path": "/api/v1/invitations/{invitationId}/seating/tables/{tableId}",
+    "method": "PUT",
+    "tag": "Seating",
+    "summary": "Update Table",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/seating/tables/{tableId}",
+    "method": "DELETE",
+    "tag": "Seating",
+    "summary": "Delete Table",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/tables/{tableId}",
+    "method": "PUT",
+    "tag": "Seating",
+    "summary": "Update Table",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/tables/{tableId}",
+    "method": "DELETE",
+    "tag": "Seating",
+    "summary": "Delete Table",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/media/{mediaId}/replace",
+    "method": "PUT",
+    "tag": "Media",
+    "summary": "Replace",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/guests/{guestId}",
+    "method": "GET",
+    "tag": "Guests",
+    "summary": "Retrieve a guest record",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/guests/{guestId}",
+    "method": "PUT",
+    "tag": "Guests",
+    "summary": "Update a guest record",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/guests/{guestId}",
+    "method": "DELETE",
+    "tag": "Guests",
+    "summary": "Delete a guest record",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/gifts/{giftId}",
+    "method": "PUT",
+    "tag": "Wedding Gifts",
+    "summary": "Update a wedding gift record",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/gifts/{giftId}",
+    "method": "DELETE",
+    "tag": "Wedding Gifts",
+    "summary": "Delete a wedding gift record",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/budget",
+    "method": "GET",
+    "tag": "Budget",
+    "summary": "Get Budget",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/budget",
+    "method": "PUT",
+    "tag": "Budget",
+    "summary": "Update Budget",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/budget/items/{itemId}",
+    "method": "PUT",
+    "tag": "Budget",
+    "summary": "Update Budget Item",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/budget/items/{itemId}",
+    "method": "DELETE",
+    "tag": "Budget",
+    "summary": "Delete Budget Item",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/budget-items/{itemId}",
+    "method": "PUT",
+    "tag": "Budget",
+    "summary": "Update Planning Budget Item",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/budget-items/{itemId}",
+    "method": "DELETE",
+    "tag": "Budget",
+    "summary": "Delete Planning Budget Item",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{id}",
+    "method": "GET",
+    "tag": "Invitations",
+    "summary": "Retrieve a invitation record",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{id}",
+    "method": "PUT",
+    "tag": "Invitations",
+    "summary": "Update a invitation record",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{id}",
+    "method": "DELETE",
+    "tag": "Invitations",
+    "summary": "Delete a invitation record",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{id}/customization",
+    "method": "GET",
+    "tag": "Invitations",
+    "summary": "Get Customization",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{id}/customization",
+    "method": "PUT",
+    "tag": "Invitations",
+    "summary": "Update Customization",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/events/{id}",
+    "method": "GET",
+    "tag": "Events",
+    "summary": "Get Event By Id",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/events/{id}",
+    "method": "PUT",
+    "tag": "Events",
+    "summary": "Update Event",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/events/{id}",
+    "method": "DELETE",
+    "tag": "Events",
+    "summary": "Delete Event",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/auth/me",
+    "method": "GET",
+    "tag": "Authentication",
+    "summary": "Get the current user profile",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/auth/me",
+    "method": "PUT",
+    "tag": "Authentication",
+    "summary": "Update the current user profile",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/auth/me",
+    "method": "GET",
+    "tag": "Authentication",
+    "summary": "Get the current user profile",
+    "isLegacy": true
+  },
+  {
+    "path": "/api/auth/me",
+    "method": "PUT",
+    "tag": "Authentication",
+    "summary": "Update the current user profile",
+    "isLegacy": true
+  },
+  {
+    "path": "/api/v1/admin/templates/{templateId}",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "Get Template",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/templates/{templateId}",
+    "method": "PUT",
+    "tag": "Administration",
+    "summary": "Update Template",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/templates/{templateId}",
+    "method": "DELETE",
+    "tag": "Administration",
+    "summary": "Delete Template",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/packages/{packageId}",
+    "method": "PUT",
+    "tag": "Administration",
+    "summary": "Update Package",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/users/me/profile-image",
+    "method": "POST",
+    "tag": "Users",
+    "summary": "Upload Profile Image",
+    "isLegacy": true
+  },
+  {
+    "path": "/api/v1/users/me/profile-image",
+    "method": "POST",
+    "tag": "Users",
+    "summary": "Upload Profile Image",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/users/me/change-password",
+    "method": "POST",
+    "tag": "Users",
+    "summary": "Change Password",
+    "isLegacy": true
+  },
+  {
+    "path": "/api/v1/users/me/change-password",
+    "method": "POST",
+    "tag": "Users",
+    "summary": "Change Password",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/template-payments/static/create",
+    "method": "POST",
+    "tag": "Payments",
+    "summary": "Create a static ABA payment order",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/template-payments/payway/create",
+    "method": "POST",
+    "tag": "Payments",
+    "summary": "Create a PayWay template checkout",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/template-payments/{orderCode}/claim",
+    "method": "POST",
+    "tag": "Payments",
+    "summary": "Request payment review",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/template-payments/orders/{orderCode}/claim",
+    "method": "POST",
+    "tag": "Payments",
+    "summary": "Request payment review",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/template-payments/create",
+    "method": "POST",
+    "tag": "Payments",
+    "summary": "Create a static ABA template payment",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/public/invitations/{slug}/rsvp",
+    "method": "POST",
+    "tag": "RSVP",
+    "summary": "Submit a public RSVP",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/public/invitations/{slug}/guests/{inviteToken}/rsvp",
+    "method": "POST",
+    "tag": "RSVP",
+    "summary": "Submit a personalized guest RSVP",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/public/invitations/{slug}/access/verify",
+    "method": "POST",
+    "tag": "Invitations",
+    "summary": "Verify public invitation access",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/payway/callback",
+    "method": "POST",
+    "tag": "Payments",
+    "summary": "Receive a PayWay payment callback",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/organizations",
+    "method": "GET",
+    "tag": "Organizations",
+    "summary": "List Mine",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/organizations",
+    "method": "POST",
+    "tag": "Organizations",
+    "summary": "Create a organization record",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/organizations/{organizationId}/members",
+    "method": "POST",
+    "tag": "Organizations",
+    "summary": "Add Member",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/me/subscriptions/purchase",
+    "method": "POST",
+    "tag": "Subscriptions",
+    "summary": "Create a pending fixed-link subscription checkout",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/packages/{packageId}/purchase",
+    "method": "POST",
+    "tag": "Subscriptions",
+    "summary": "Create a pending fixed-link subscription checkout",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations",
+    "method": "POST",
+    "tag": "Invitations",
+    "summary": "Create a invitation record",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/tables/{tableId}/assign-guests",
+    "method": "POST",
+    "tag": "Seating",
+    "summary": "Assign To Table",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/tables",
+    "method": "GET",
+    "tag": "Seating",
+    "summary": "Get Tables",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/tables",
+    "method": "POST",
+    "tag": "Seating",
+    "summary": "Create Table",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/seating/tables",
+    "method": "POST",
+    "tag": "Seating",
+    "summary": "Create Table",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/seating/assignments",
+    "method": "POST",
+    "tag": "Seating",
+    "summary": "Create a seating assignment",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/media/video",
+    "method": "POST",
+    "tag": "Media",
+    "summary": "Upload Video",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/media/music",
+    "method": "POST",
+    "tag": "Media",
+    "summary": "Upload Music",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/media/gallery",
+    "method": "POST",
+    "tag": "Media",
+    "summary": "Upload Gallery",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/media/cover",
+    "method": "POST",
+    "tag": "Media",
+    "summary": "Upload Cover",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/guests",
+    "method": "GET",
+    "tag": "Guests",
+    "summary": "List guest records",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/guests",
+    "method": "POST",
+    "tag": "Guests",
+    "summary": "Create a guest record",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/guests/{guestId}/check-in",
+    "method": "POST",
+    "tag": "Check-In",
+    "summary": "Check in a guest manually",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/guests/{guestId}/check-in",
+    "method": "DELETE",
+    "tag": "Check-In",
+    "summary": "Undo",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/guests/import",
+    "method": "POST",
+    "tag": "Guests",
+    "summary": "Import Guests",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/guests/import-file",
+    "method": "POST",
+    "tag": "Guests",
+    "summary": "Import Guests File",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/guests/import-file/preview",
+    "method": "POST",
+    "tag": "Guests",
+    "summary": "Preview a guest import file",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/gifts",
+    "method": "GET",
+    "tag": "Wedding Gifts",
+    "summary": "List wedding gift records",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/gifts",
+    "method": "POST",
+    "tag": "Wedding Gifts",
+    "summary": "Create a wedding gift record",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/delivery/reminders",
+    "method": "POST",
+    "tag": "Invitation Delivery",
+    "summary": "Send Reminders",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/delivery/prepare",
+    "method": "POST",
+    "tag": "Invitation Delivery",
+    "summary": "Prepare",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/delivery/guests/{guestId}/mark-shared",
+    "method": "POST",
+    "tag": "Invitation Delivery",
+    "summary": "Mark Shared",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/delivery/email",
+    "method": "POST",
+    "tag": "Invitation Delivery",
+    "summary": "Send Email",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/check-in/scan",
+    "method": "POST",
+    "tag": "Check-In",
+    "summary": "Process a guest check-in scan",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/budget/items",
+    "method": "POST",
+    "tag": "Budget",
+    "summary": "Add Budget Item",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/budget-items",
+    "method": "GET",
+    "tag": "Budget",
+    "summary": "List Budget Items",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/budget-items",
+    "method": "POST",
+    "tag": "Budget",
+    "summary": "Create Budget Item",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/internal/subscription-payments/telegram-detect",
+    "method": "POST",
+    "tag": "Subscriptions",
+    "summary": "Reconcile trusted Telegram evidence for a subscription payment",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/internal/subscription-payments/confirm",
+    "method": "POST",
+    "tag": "Subscriptions",
+    "summary": "Confirm a reviewed subscription with a recorded merchant transaction",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/events",
+    "method": "GET",
+    "tag": "Events",
+    "summary": "Get All Events",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/events",
+    "method": "POST",
+    "tag": "Events",
+    "summary": "Create Event",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/contact",
+    "method": "POST",
+    "tag": "Contact",
+    "summary": "Send a contact request",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/auth/telegram",
+    "method": "POST",
+    "tag": "Authentication",
+    "summary": "Log in with Telegram",
+    "isLegacy": true
+  },
+  {
+    "path": "/api/v1/auth/telegram",
+    "method": "POST",
+    "tag": "Authentication",
+    "summary": "Log in with Telegram",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/auth/reset-password",
+    "method": "POST",
+    "tag": "Authentication",
+    "summary": "Reset a password",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/auth/reset-password",
+    "method": "POST",
+    "tag": "Authentication",
+    "summary": "Reset a password",
+    "isLegacy": true
+  },
+  {
+    "path": "/api/auth/register",
+    "method": "POST",
+    "tag": "Authentication",
+    "summary": "Register a user account",
+    "isLegacy": true
+  },
+  {
+    "path": "/api/v1/auth/register",
+    "method": "POST",
+    "tag": "Authentication",
+    "summary": "Register a user account",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/auth/logout",
+    "method": "POST",
+    "tag": "Authentication",
+    "summary": "Log out",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/auth/logout",
+    "method": "POST",
+    "tag": "Authentication",
+    "summary": "Log out",
+    "isLegacy": true
+  },
+  {
+    "path": "/api/auth/login",
+    "method": "POST",
+    "tag": "Authentication",
+    "summary": "Log in with email or phone",
+    "isLegacy": true
+  },
+  {
+    "path": "/api/v1/auth/login",
+    "method": "POST",
+    "tag": "Authentication",
+    "summary": "Log in with email or phone",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/auth/link/telegram",
+    "method": "POST",
+    "tag": "Authentication",
+    "summary": "Link a verified Telegram identity to the current account",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/auth/link/telegram",
+    "method": "POST",
+    "tag": "Authentication",
+    "summary": "Link a verified Telegram identity to the current account",
+    "isLegacy": true
+  },
+  {
+    "path": "/api/v1/auth/link/google",
+    "method": "POST",
+    "tag": "Authentication",
+    "summary": "Link a verified Google identity to the current account",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/auth/link/google",
+    "method": "POST",
+    "tag": "Authentication",
+    "summary": "Link a verified Google identity to the current account",
+    "isLegacy": true
+  },
+  {
+    "path": "/api/v1/auth/google",
+    "method": "POST",
+    "tag": "Authentication",
+    "summary": "Log in with Google",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/auth/google",
+    "method": "POST",
+    "tag": "Authentication",
+    "summary": "Log in with Google",
+    "isLegacy": true
+  },
+  {
+    "path": "/api/v1/auth/forgot-password",
+    "method": "POST",
+    "tag": "Authentication",
+    "summary": "Request password reset instructions",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/auth/forgot-password",
+    "method": "POST",
+    "tag": "Authentication",
+    "summary": "Request password reset instructions",
+    "isLegacy": true
+  },
+  {
+    "path": "/api/v1/auth/change-password",
+    "method": "POST",
+    "tag": "Authentication",
+    "summary": "Change the current user password",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/auth/change-password",
+    "method": "POST",
+    "tag": "Authentication",
+    "summary": "Change the current user password",
+    "isLegacy": true
+  },
+  {
+    "path": "/api/v1/ai/invitation/translate",
+    "method": "POST",
+    "tag": "AI Invitation Assistant",
+    "summary": "Translate invitation copy",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/ai/invitation/timeline-suggestion",
+    "method": "POST",
+    "tag": "AI Invitation Assistant",
+    "summary": "Suggest an invitation timeline",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/ai/invitation/story",
+    "method": "POST",
+    "tag": "AI Invitation Assistant",
+    "summary": "Generate an invitation story",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/ai/invitation/formal-text",
+    "method": "POST",
+    "tag": "AI Invitation Assistant",
+    "summary": "Generate formal invitation text",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/ai/invitation-copy",
+    "method": "POST",
+    "tag": "AI Invitation Assistant",
+    "summary": "Draft invitation copy",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/users",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "List Users",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/users",
+    "method": "POST",
+    "tag": "Administration",
+    "summary": "Create User",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/templates",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "List Templates",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/templates",
+    "method": "POST",
+    "tag": "Administration",
+    "summary": "Create Template",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/template-payments/telegram-detect",
+    "method": "POST",
+    "tag": "Payments",
+    "summary": "Review Telegram-detected payment data",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/template-payments/confirm",
+    "method": "POST",
+    "tag": "Payments",
+    "summary": "Confirm a template payment manually",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/payments/{orderCode}/confirm",
+    "method": "POST",
+    "tag": "Administration",
+    "summary": "Confirm Payment",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/payments/confirm",
+    "method": "POST",
+    "tag": "Payments",
+    "summary": "Confirm and fulfill a payment manually",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/packages",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "List Packages",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/packages",
+    "method": "POST",
+    "tag": "Administration",
+    "summary": "Create Package",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/notifications",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "List admin notification records",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/notifications",
+    "method": "POST",
+    "tag": "Administration",
+    "summary": "Create a admin notification record",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/users/me",
+    "method": "GET",
+    "tag": "Users",
+    "summary": "Get Profile",
+    "isLegacy": true
+  },
+  {
+    "path": "/api/users/me",
+    "method": "PATCH",
+    "tag": "Users",
+    "summary": "Update Profile",
+    "isLegacy": true
+  },
+  {
+    "path": "/api/v1/users/me",
+    "method": "GET",
+    "tag": "Users",
+    "summary": "Get Profile",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/users/me",
+    "method": "PATCH",
+    "tag": "Users",
+    "summary": "Update Profile",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/organizations/{organizationId}/members/{memberId}/role",
+    "method": "PATCH",
+    "tag": "Organizations",
+    "summary": "Update Member Role",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/notifications/{notificationId}/read",
+    "method": "PATCH",
+    "tag": "Notifications",
+    "summary": "Mark Read",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/notifications/read-all",
+    "method": "PATCH",
+    "tag": "Notifications",
+    "summary": "Mark All Read",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/rsvps/{rsvpId}",
+    "method": "DELETE",
+    "tag": "RSVP",
+    "summary": "Delete a rsvp record",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/rsvps/{rsvpId}",
+    "method": "PATCH",
+    "tag": "RSVP",
+    "summary": "Update a rsvp record",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{id}/unpublish",
+    "method": "PATCH",
+    "tag": "Invitations",
+    "summary": "Unpublish",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{id}/publish",
+    "method": "PATCH",
+    "tag": "Invitations",
+    "summary": "Publish",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{id}/draft",
+    "method": "PATCH",
+    "tag": "Invitations",
+    "summary": "Save As Draft",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/events/{id}/unpublish",
+    "method": "PATCH",
+    "tag": "Events",
+    "summary": "Unpublish Event",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/events/{id}/publish",
+    "method": "PATCH",
+    "tag": "Events",
+    "summary": "Publish Event",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/events/{id}/draft",
+    "method": "PATCH",
+    "tag": "Events",
+    "summary": "Save As Draft",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/users/{userId}/role",
+    "method": "PATCH",
+    "tag": "Administration",
+    "summary": "Update User Role",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/users/{userId}/deactivate",
+    "method": "PATCH",
+    "tag": "Administration",
+    "summary": "Deactivate User",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/users/{userId}/activate",
+    "method": "PATCH",
+    "tag": "Administration",
+    "summary": "Activate User",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/templates/{templateId}/premium",
+    "method": "PATCH",
+    "tag": "Administration",
+    "summary": "Update Template Premium",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/templates/{templateId}/deactivate",
+    "method": "PATCH",
+    "tag": "Administration",
+    "summary": "Deactivate Template",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/templates/{templateId}/activate",
+    "method": "PATCH",
+    "tag": "Administration",
+    "summary": "Activate Template",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/packages/{packageId}/deactivate",
+    "method": "PATCH",
+    "tag": "Administration",
+    "summary": "Deactivate Package",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/packages/{packageId}/activate",
+    "method": "PATCH",
+    "tag": "Administration",
+    "summary": "Activate Package",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/notifications/{notificationId}/status",
+    "method": "PATCH",
+    "tag": "Administration",
+    "summary": "Update Status",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/invitations/{invitationId}/status",
+    "method": "PATCH",
+    "tag": "Administration",
+    "summary": "Update Invitation Status",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/invitations/{invitationId}/moderate",
+    "method": "PATCH",
+    "tag": "Administration",
+    "summary": "Moderate Invitation",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/invitations/{invitationId}/deactivate",
+    "method": "PATCH",
+    "tag": "Administration",
+    "summary": "Deactivate Invitation",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/invitations/{invitationId}/activate",
+    "method": "PATCH",
+    "tag": "Administration",
+    "summary": "Activate Invitation",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/templates",
+    "method": "GET",
+    "tag": "Templates",
+    "summary": "List Templates",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/templates/{templateId}",
+    "method": "GET",
+    "tag": "Templates",
+    "summary": "Get Template",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/templates/slug/{code}",
+    "method": "GET",
+    "tag": "Templates",
+    "summary": "Get Template By Code",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/template-payments/{orderCode}",
+    "method": "GET",
+    "tag": "Payments",
+    "summary": "Get an owned template payment order",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/public/invitations/{slug}",
+    "method": "GET",
+    "tag": "Invitations",
+    "summary": "Retrieve a public invitation",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/public/invitations/{slug}/wishes",
+    "method": "GET",
+    "tag": "RSVP",
+    "summary": "List public guest wishes",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/public/invitations/{slug}/rsvp-summary-public",
+    "method": "GET",
+    "tag": "RSVP",
+    "summary": "Get the public RSVP summary",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/public/invitations/{slug}/media",
+    "method": "GET",
+    "tag": "Media",
+    "summary": "List public invitation media",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/public/invitations/{slug}/guest-view",
+    "method": "GET",
+    "tag": "Invitations",
+    "summary": "Retrieve a personalized guest invitation",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/payway/return",
+    "method": "GET",
+    "tag": "Payments",
+    "summary": "Handle the public PayWay return redirect",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/payway/cancel",
+    "method": "GET",
+    "tag": "Payments",
+    "summary": "Handle the public PayWay cancellation redirect",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/packages",
+    "method": "GET",
+    "tag": "Subscriptions",
+    "summary": "List available subscription packages",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/organizations/{organizationId}",
+    "method": "GET",
+    "tag": "Organizations",
+    "summary": "Retrieve a organization record",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/notifications",
+    "method": "GET",
+    "tag": "Notifications",
+    "summary": "List My Notifications",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/notifications/summary",
+    "method": "GET",
+    "tag": "Notifications",
+    "summary": "Summarize notification activity",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/me/templates/{templateId}/access",
+    "method": "GET",
+    "tag": "Payments",
+    "summary": "Check the current user's template access",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/me/templates/paid",
+    "method": "GET",
+    "tag": "Payments",
+    "summary": "List templates paid for by the current user",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/me/subscriptions",
+    "method": "GET",
+    "tag": "Subscriptions",
+    "summary": "List subscription history",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/me/subscriptions/orders/{orderCode}",
+    "method": "GET",
+    "tag": "Subscriptions",
+    "summary": "Poll a pending subscription payment order",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/me/subscription",
+    "method": "GET",
+    "tag": "Subscriptions",
+    "summary": "Retrieve the current subscription",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/me/subscriptions/current",
+    "method": "GET",
+    "tag": "Subscriptions",
+    "summary": "Retrieve the current subscription",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/me/payments",
+    "method": "GET",
+    "tag": "Payment History",
+    "summary": "List Mine",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/me/payments/{orderCode}",
+    "method": "GET",
+    "tag": "Payment History",
+    "summary": "Retrieve a payment history record",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/me/payments/{orderCode}/receipt",
+    "method": "GET",
+    "tag": "Payment History",
+    "summary": "Retrieve a payment receipt",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/wishes",
+    "method": "GET",
+    "tag": "RSVP",
+    "summary": "List invitation wishes",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/seating",
+    "method": "GET",
+    "tag": "Seating",
+    "summary": "Retrieve the seating plan",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/seating/summary",
+    "method": "GET",
+    "tag": "Seating",
+    "summary": "Summarize seating activity",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/seating/export",
+    "method": "GET",
+    "tag": "Seating",
+    "summary": "Export seating data",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/rsvps",
+    "method": "GET",
+    "tag": "RSVP",
+    "summary": "List rsvp records",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/rsvps/summary",
+    "method": "GET",
+    "tag": "RSVP",
+    "summary": "Summarize rsvp activity",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/reports/rsvp",
+    "method": "GET",
+    "tag": "Reports",
+    "summary": "Rsvp Report",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/reports/rsvp/export",
+    "method": "GET",
+    "tag": "Reports",
+    "summary": "Export Rsvp Report",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/reports/guests",
+    "method": "GET",
+    "tag": "Reports",
+    "summary": "Guest Report",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/reports/guests/export",
+    "method": "GET",
+    "tag": "Reports",
+    "summary": "Export Guest Report",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/qr",
+    "method": "GET",
+    "tag": "QR Codes",
+    "summary": "Invitation Qr",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/notifications",
+    "method": "GET",
+    "tag": "Notifications",
+    "summary": "List Invitation Notifications",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/media",
+    "method": "GET",
+    "tag": "Media",
+    "summary": "List media records",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/guests/{guestId}/qr",
+    "method": "GET",
+    "tag": "QR Codes",
+    "summary": "Guest Qr",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/guests/send-list",
+    "method": "GET",
+    "tag": "Guests",
+    "summary": "Send List",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/guests/search",
+    "method": "GET",
+    "tag": "Guests",
+    "summary": "Search guest records",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/guests/grouped",
+    "method": "GET",
+    "tag": "Guests",
+    "summary": "Grouped",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/guests/export",
+    "method": "GET",
+    "tag": "Guests",
+    "summary": "Export Guests",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/delivery/summary",
+    "method": "GET",
+    "tag": "Invitation Delivery",
+    "summary": "Summarize invitation delivery activity",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/delivery/guests/{guestId}/share-message",
+    "method": "GET",
+    "tag": "Invitation Delivery",
+    "summary": "Share Message",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/delivery/events",
+    "method": "GET",
+    "tag": "Invitation Delivery",
+    "summary": "List invitation delivery events",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/dashboard",
+    "method": "GET",
+    "tag": "Reports",
+    "summary": "Invitation Dashboard",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/check-in/summary",
+    "method": "GET",
+    "tag": "Check-In",
+    "summary": "Summarize check in activity",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/check-in/list",
+    "method": "GET",
+    "tag": "Check-In",
+    "summary": "List check in records",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/budget/summary",
+    "method": "GET",
+    "tag": "Budget",
+    "summary": "Get Budget Summary",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/budget/export",
+    "method": "GET",
+    "tag": "Budget",
+    "summary": "Export Budget",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{id}/preview",
+    "method": "GET",
+    "tag": "Invitations",
+    "summary": "Preview",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/my",
+    "method": "GET",
+    "tag": "Invitations",
+    "summary": "My Invitations",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/my/status/{status}",
+    "method": "GET",
+    "tag": "Invitations",
+    "summary": "My Invitations By Status",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/i18n/messages",
+    "method": "GET",
+    "tag": "Internationalization",
+    "summary": "Get localized UI messages",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/events/{id}/preview",
+    "method": "GET",
+    "tag": "Events",
+    "summary": "Preview Event",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/events/published",
+    "method": "GET",
+    "tag": "Events",
+    "summary": "Get Published Events",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/events/drafts",
+    "method": "GET",
+    "tag": "Events",
+    "summary": "Get Draft Events",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/dashboard/summary",
+    "method": "GET",
+    "tag": "Reports",
+    "summary": "My Dashboard",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/audit-logs",
+    "method": "GET",
+    "tag": "Audit Logs",
+    "summary": "List recent admin activity logs",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/users/{userId}",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "Get User",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/users/{userId}/invitations",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "List User Invitations",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/template-payments",
+    "method": "GET",
+    "tag": "Payments",
+    "summary": "List template payment orders",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/system-logs",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "System Logs",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/system-health",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "Review system health",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/reports/users",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "Users Report",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/reports/system",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "System Report",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/reports/rsvp",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "Rsvp Report",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/reports/platform",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "Platform Report",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/reports/payments",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "Payments Report",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/reports/invitations",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "Invitations Report",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/payments",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "List All Payments",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/payments/{orderCode}",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "Get Payment",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/invitations",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "List Invitations",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/invitations/{invitationId}/budget",
+    "method": "GET",
+    "tag": "Budget",
+    "summary": "Retrieve any invitation budget as an administrator",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/invitations/{invitationId}/budget-items",
+    "method": "GET",
+    "tag": "Budget",
+    "summary": "Admin Budget Items",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/dashboard/summary",
+    "method": "GET",
+    "tag": "Reports",
+    "summary": "Retrieve the administration dashboard",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/audit-logs/recent",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "Recent Audit Logs",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/analytics/templates",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "Analytics Templates",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/analytics/rsvp",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "Analytics Rsvp",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/analytics/revenue",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "Analytics Revenue",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/analytics/overview",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "Analytics Overview",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/analytics/delivery",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "Analytics Delivery",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/analytics/check-in",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "Analytics Check In",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/alerts",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "List administration alerts",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/health",
+    "method": "GET",
+    "tag": "Health",
+    "summary": "Check API health",
+    "isLegacy": true
+  },
+  {
+    "path": "/api/health",
+    "method": "GET",
+    "tag": "Health",
+    "summary": "Check API health",
+    "isLegacy": true
+  },
+  {
+    "path": "/api/v1/organizations/{organizationId}/members/{memberId}",
+    "method": "DELETE",
+    "tag": "Organizations",
+    "summary": "Remove Member",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/wishes/{wishId}",
+    "method": "DELETE",
+    "tag": "RSVP",
+    "summary": "Remove wish text while preserving the RSVP attendance record",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/seating/assignments/{assignmentId}",
+    "method": "DELETE",
+    "tag": "Seating",
+    "summary": "Remove a seating assignment",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/media/{mediaId}",
+    "method": "DELETE",
+    "tag": "Media",
+    "summary": "Delete a media record",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/guests/{guestId}/seat",
+    "method": "DELETE",
+    "tag": "Seating",
+    "summary": "Unassign Guest",
+    "isLegacy": false
+  }
+]
