@@ -1,0 +1,57 @@
+[
+    {
+        "path":  "apps/frontend-user/public/fonts/silk-heritage/CormorantGaramond-OFL.txt",
+        "bytes":  4387,
+        "sha256":  "60700d351cac4650c51f3f9db318d2a420f8b45052dba2715eb5fec41f0f6956"
+    },
+    {
+        "path":  "apps/frontend-user/public/fonts/silk-heritage/CormorantGaramond.woff2",
+        "bytes":  24320,
+        "sha256":  "6e98d74ae6485ffe25928b4bca958fde0d97744c4ac90c520679a32574e7ae19"
+    },
+    {
+        "path":  "apps/frontend-user/public/fonts/silk-heritage/KantumruyPro-OFL.txt",
+        "bytes":  4396,
+        "sha256":  "7b300b8a1e2e9d7cddb68859551f1ad54a05019eff28da02e3be811c1257f0a7"
+    },
+    {
+        "path":  "apps/frontend-user/public/fonts/silk-heritage/KantumruyPro.woff2",
+        "bytes":  76848,
+        "sha256":  "d8a6c2afe949c322a5187ef1ed4ce3ad65b929eac54fdc4b7acce7bd4a76e48e"
+    },
+    {
+        "path":  "apps/frontend-user/public/fonts/silk-heritage/Moul-OFL.txt",
+        "bytes":  4378,
+        "sha256":  "993860a6b21dbb0eb98c7e07490f07d24c919d4ad4fed04a1b34f1663d9d53e3"
+    },
+    {
+        "path":  "apps/frontend-user/public/fonts/silk-heritage/Moul-Regular.woff2",
+        "bytes":  52296,
+        "sha256":  "172fe1c3ea1651e60c57333c7550ebe28ad72962f7ab2878a811b47c6c579e57"
+    },
+    {
+        "path":  "apps/frontend-user/public/templates/silk-heritage/cover.svg",
+        "bytes":  1066,
+        "sha256":  "f5c0dfda51330717786929c436f6f07d42f523352f7d0c543c72c9c0464bf261"
+    },
+    {
+        "path":  "apps/frontend-user/public/templates/silk-heritage/portrait.webp",
+        "bytes":  103634,
+        "sha256":  "9e03de3c989fb4ab9ae535ddd042d5b3ce7560bb063d74e9ec3e57afa5c2fdbc"
+    },
+    {
+        "path":  "apps/frontend-user/public/templates/silk-heritage/preview.svg",
+        "bytes":  991,
+        "sha256":  "3bef3c937be059235540883b779dd84064bead935db1b969aabe6cef11c5af6d"
+    },
+    {
+        "path":  "apps/frontend-user/public/templates/silk-heritage/together.webp",
+        "bytes":  99152,
+        "sha256":  "d41efca25f387915e68f1ceaed7dd335d0411c0d6c616e36fac998376be0c1b9"
+    },
+    {
+        "path":  "apps/frontend-user/public/templates/silk-heritage/woven-ornament.svg",
+        "bytes":  367,
+        "sha256":  "e0f7b12023c0380a91e38483c7b624c4ce98dfa76d5c03a74fe6bf7a8aa35659"
+    }
+]

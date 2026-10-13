@@ -83,7 +83,7 @@ describe("KhmerCelestialLayout integration", () => {
     vi.restoreAllMocks();
   });
 
-  it("opens from a user gesture, starts configured music, and preserves the real RSVP child", () => {
+  it("opens from a user gesture, starts configured music, and preserves the real RSVP child", async () => {
     const play = vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
     render(
       <MemoryRouter>
@@ -93,7 +93,8 @@ describe("KhmerCelestialLayout integration", () => {
       </MemoryRouter>
     );
 
-    expect(document.body.style.overflow).toBe("hidden");
+    await screen.findByRole("button", { name: "បើកសំបុត្រអញ្ជើញ" }, { timeout: 5000 });
+    await waitFor(() => expect(document.body.style.overflow).toBe("hidden"));
     expect(document.documentElement.style.overflow).toBe("hidden");
     expect(screen.getByRole("button", { name: "បើកសំបុត្រអញ្ជើញ" })).toHaveFocus();
     expect(play).not.toHaveBeenCalled();
@@ -111,23 +112,25 @@ describe("KhmerCelestialLayout integration", () => {
     expect(touchMoveEvent.defaultPrevented).toBe(false);
   });
 
-  it("applies selected couple and global fonts in the dedicated layout", () => {
+  it("applies selected couple and global fonts in the dedicated layout", async () => {
     render(<MemoryRouter><TemplateExperience tpl={{ id: "khmer-celestial" }} content={{ ...content,
       fontKhmer: "Hanuman", fontLatin: "Cinzel", elementFonts: { couple: "Bayon", guestName: "Battambang" },
     }} showActions={false} /></MemoryRouter>);
+    await screen.findByRole("button", { name: "បើកសំបុត្រអញ្ជើញ" }, { timeout: 5000 });
     expect(document.querySelector(".kc-root").style.getPropertyValue("--kc-khmer-display")).toContain("Hanuman");
     expect(document.querySelector(".kc-root").style.getPropertyValue("--kc-english-display")).toContain("Cinzel");
     expect(document.querySelector(".kc-opening__guest-name").style.fontFamily).toContain("Battambang");
     expect(document.querySelector(".kc-family__group h3").style.fontFamily).toContain("Bayon");
   });
 
-  it("keeps an accessible static SVG garden when reduced motion is enabled", () => {
+  it("keeps an accessible static SVG garden when reduced motion is enabled", async () => {
     render(
       <MemoryRouter>
         <TemplateExperience tpl={{ id: "khmer-celestial", name: "Khmer Celestial" }} content={content} showBreadcrumb={false} showActions={false} />
       </MemoryRouter>
     );
 
+    await screen.findByRole("button", { name: "បើកសំបុត្រអញ្ជើញ" }, { timeout: 5000 });
     const garden = document.querySelector(".kc-opening__garden");
     expect(garden).toHaveClass("is-reduced");
     expect(garden.querySelectorAll("svg").length).toBeGreaterThan(5);

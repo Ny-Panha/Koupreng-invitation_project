@@ -157,6 +157,9 @@ public class GlobalExceptionHandler {
     }
 
     private Map<String, Object> errorBody(HttpStatus status, String code, String message) {
+        if (RequestContextHolder.getRequestAttributes() instanceof ServletRequestAttributes attributes) {
+            attributes.getRequest().setAttribute("koupreng.error_code", code);
+        }
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", Instant.now());
         body.put("status", status.value());

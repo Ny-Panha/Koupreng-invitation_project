@@ -1,0 +1,670 @@
+{
+  "profile": "Chromium headless; 390x844; 4x CPU; 1.6Mbps down; 150ms latency; cache disabled; API 404 mocked; 3 cold contexts; fonts live; INP not measured",
+  "metrics": [
+    {
+      "run": 1,
+      "path": "/templates/khmer-celestial",
+      "lcp": 13436,
+      "cls": 0.0029553078598133884,
+      "longestTask": 470,
+      "resourceBytes": 3378325
+    },
+    {
+      "run": 2,
+      "path": "/templates/khmer-celestial",
+      "lcp": 13384,
+      "cls": 0.0029605087972496215,
+      "longestTask": 425,
+      "resourceBytes": 3378325
+    },
+    {
+      "run": 3,
+      "path": "/templates/khmer-celestial",
+      "lcp": 13424,
+      "cls": 0.002991506646255568,
+      "longestTask": 394,
+      "resourceBytes": 3378325
+    }
+  ],
+  "findings": [
+    {
+      "path": "/",
+      "width": 390,
+      "viewport": 390,
+      "headings": [
+        "រៀបចំពិធីមង្គលការដ៏ល្អឥតខ្ចោះ",
+        "តើវាដំណើរការយ៉ាងដូចម្ដេច?",
+        "ជ្រើសរើសកញ្ចប់ដែលសាកសម"
+      ],
+      "buttons": [
+        "khmer",
+        "khmer",
+        "english",
+        "",
+        "khmer",
+        "khmer"
+      ]
+    },
+    {
+      "path": "/templates",
+      "width": 390,
+      "viewport": 390,
+      "headings": [
+        "titleTemplatestitleTemplatesSpan"
+      ],
+      "buttons": [
+        "khmer",
+        "khmer",
+        "english",
+        "",
+        "khmer",
+        "khmer"
+      ]
+    },
+    {
+      "path": "/templates/khmer-celestial",
+      "width": 390,
+      "viewport": 390,
+      "headings": [
+        "គ្រួសារទាំងសងខាង",
+        "គ្រួសារទាំងសងខាង",
+        "មានកិត្តិយសសូមគោរពអញ្ជើញ",
+        "រាប់ថយក្រោយដល់ថ្ងៃមង្គល",
+        "កម្មវិធីមង្គលការ"
+      ],
+      "buttons": [
+        "",
+        "សូមអញ្ជើញ",
+        "01",
+        "02",
+        "03",
+        "04"
+      ]
+    },
+    {
+      "path": "/templates/the-digital-yes-wedding",
+      "width": 390,
+      "viewport": 390,
+      "headings": [],
+      "buttons": [
+        "បើកភ្លេង",
+        "បើកសំបុត្រអាពាហ៍ពិពាហ៍",
+        "",
+        ""
+      ]
+    },
+    {
+      "path": "/templates/emerald-canva-luxe-wedding",
+      "width": 390,
+      "viewport": 390,
+      "headings": [
+        " & ",
+        "",
+        ""
+      ],
+      "buttons": [
+        "",
+        "បើកសំបុត្រអញ្ជើញ (OPEN)",
+        " មើលកម្មវិធី & ទីតាំង (Flip Card)",
+        " ត្រឡប់មកមុខវិញ (Flip Back)",
+        "ផ្ញើការឆ្លើយតប",
+        ""
+      ]
+    },
+    {
+      "path": "/templates/bliss-editorial-wedding",
+      "width": 390,
+      "viewport": 390,
+      "headings": [
+        " &",
+        "កាលវិភាគពិធីមង្គលការ",
+        "ខៀវផ្កា បៃតងស្លឹក ស និងមាស",
+        "កម្រងអនុស្សាវរីយ៍",
+        "The Premier Center Sen Sok"
+      ],
+      "buttons": [
+        "",
+        "RSVP",
+        "សូមបញ្ជាក់ការចូលរួម • RSVP NOW",
+        "",
+        "ផ្ញើការឆ្លើយតប • SUBMIT",
+        ""
+      ]
+    },
+    {
+      "path": "/templates/withjoy-modern-portal",
+      "width": 390,
+      "viewport": 390,
+      "headings": [
+        " & ",
+        "រឿងរ៉ាវស្នេហារបស់យើង",
+        "កម្មវិធីពិធីមង្គលការ",
+        "ខៀវផ្កា បៃតងស្លឹក ស និងមាស",
+        "កម្រងរូបភាពអនុស្សាវរីយ៍"
+      ],
+      "buttons": [
+        "",
+        " ផ្ញើការបញ្ជាក់ (Submit RSVP)",
+        "",
+        ""
+      ]
+    },
+    {
+      "path": "/templates/khmer-golden-canva-inspired-wedding",
+      "width": 390,
+      "viewport": 390,
+      "headings": [
+        "សិរីមង្គលអាពាហ៍ពិពាហ៍"
+      ],
+      "buttons": [
+        "ចុចទីនេះដើម្បីមើលព័ត៌មានលម្អិត",
+        "",
+        "",
+        ""
+      ]
+    },
+    {
+      "path": "/templates/garden-royal-khmer-wedding",
+      "width": 390,
+      "viewport": 390,
+      "headings": [
+        "❀"
+      ],
+      "buttons": [
+        "បើកសំបុត្រអញ្ជើញ",
+        "",
+        ""
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "name": "AiAssistantPage-B8Gdr5Cu.js",
+      "bytes": 13676
+    },
+    {
+      "name": "AiAssistantPage-CbaqwFwC.css",
+      "bytes": 3508
+    },
+    {
+      "name": "AuthPage-vcHywrYT.css",
+      "bytes": 7068
+    },
+    {
+      "name": "background-Dt0NvFi2.js",
+      "bytes": 55
+    },
+    {
+      "name": "BrowseTemplatesPage-Bhbe5BkH.js",
+      "bytes": 156
+    },
+    {
+      "name": "budgetApi-DY21jI1i.js",
+      "bytes": 1419
+    },
+    {
+      "name": "BudgetPage-B1_ANOOI.js",
+      "bytes": 15299
+    },
+    {
+      "name": "BudgetPage-CJWQtRWI.css",
+      "bytes": 2159
+    },
+    {
+      "name": "ChangePasswordPage-DDUik5hA.js",
+      "bytes": 1965
+    },
+    {
+      "name": "clock-CtOF574V.js",
+      "bytes": 209
+    },
+    {
+      "name": "ContactPage-B4PX3neq.js",
+      "bytes": 9720
+    },
+    {
+      "name": "createLucideIcon-q3MZMmnf.js",
+      "bytes": 3100
+    },
+    {
+      "name": "currencyTotals-CpX6dh_3.js",
+      "bytes": 380
+    },
+    {
+      "name": "DashboardPage-BUW_TF82.js",
+      "bytes": 25465
+    },
+    {
+      "name": "DashboardPage-Dafa6Nxr.css",
+      "bytes": 9904
+    },
+    {
+      "name": "DatePicker-7mPUsDoq.js",
+      "bytes": 5813
+    },
+    {
+      "name": "DatePicker-CmASfBZO.css",
+      "bytes": 3396
+    },
+    {
+      "name": "draftMediaStorage-DTubrHY0.js",
+      "bytes": 984
+    },
+    {
+      "name": "draftToTemplate-vPnPV-N3.js",
+      "bytes": 9127
+    },
+    {
+      "name": "EnterprisePages-CaLKO3tt.css",
+      "bytes": 3237
+    },
+    {
+      "name": "EventsFeature-D8zgd2Oz.css",
+      "bytes": 15491
+    },
+    {
+      "name": "EventsPage-Cq0l_gMr.js",
+      "bytes": 16497
+    },
+    {
+      "name": "ExpensesPage-G_pvR_co.css",
+      "bytes": 18141
+    },
+    {
+      "name": "ExpensesPage-rzGaN2Db.js",
+      "bytes": 23217
+    },
+    {
+      "name": "external-link-MAL7vJYj.js",
+      "bytes": 291
+    },
+    {
+      "name": "FinancialReport-BkiZBgLI.js",
+      "bytes": 17255
+    },
+    {
+      "name": "FinancialReport-Cf6Bnl93.css",
+      "bytes": 9806
+    },
+    {
+      "name": "ForgotPasswordPage-B7WlgkY5.js",
+      "bytes": 8425
+    },
+    {
+      "name": "galleryStorage-hdbuO4NG.js",
+      "bytes": 668
+    },
+    {
+      "name": "giftsApi-t6LRXIMw.js",
+      "bytes": 361
+    },
+    {
+      "name": "guestApi-C94kCPp5.js",
+      "bytes": 1991
+    },
+    {
+      "name": "GuestsPage-BtpNzD9m.css",
+      "bytes": 23718
+    },
+    {
+      "name": "GuestsPage-le9rB1WC.js",
+      "bytes": 53935
+    },
+    {
+      "name": "HomePage-DxcmTsoN.css",
+      "bytes": 13144
+    },
+    {
+      "name": "HomePage-Dz2esOZ-.js",
+      "bytes": 14204
+    },
+    {
+      "name": "HostTemplateDemoPage-DkdF9E3A.js",
+      "bytes": 156
+    },
+    {
+      "name": "httpClient-CGtYN9vg.js",
+      "bytes": 52587
+    },
+    {
+      "name": "index-B6N3Vka8.css",
+      "bytes": 98631
+    },
+    {
+      "name": "index-DW0JYYk3.js",
+      "bytes": 550116
+    },
+    {
+      "name": "InvitationCheckInPage-dS9LygS3.js",
+      "bytes": 173417
+    },
+    {
+      "name": "InvitationCreatePage-DfKoFnW2.css",
+      "bytes": 14967
+    },
+    {
+      "name": "InvitationCreatePage-D_tTkRyf.js",
+      "bytes": 25616
+    },
+    {
+      "name": "InvitationDeliveryPage-hVgEdVT4.js",
+      "bytes": 7558
+    },
+    {
+      "name": "invitationDraftAdapter-5e1U8rJX.js",
+      "bytes": 9080
+    },
+    {
+      "name": "InvitationEditPage-CclyOI2c.css",
+      "bytes": 35881
+    },
+    {
+      "name": "InvitationEditPage-jCVAZrEf.js",
+      "bytes": 124097
+    },
+    {
+      "name": "InvitationMediaPage-D1AbGrsx.js",
+      "bytes": 7119
+    },
+    {
+      "name": "InvitationPages-CyFdEHSW.css",
+      "bytes": 30207
+    },
+    {
+      "name": "InvitationPreviewPage-DrusNf5X.js",
+      "bytes": 5360
+    },
+    {
+      "name": "io5-C0h9VnRv.js",
+      "bytes": 51257
+    },
+    {
+      "name": "jsx-runtime-D3jfb0Ew.js",
+      "bytes": 8901
+    },
+    {
+      "name": "layers-CDzX37ft.js",
+      "bytes": 482
+    },
+    {
+      "name": "lib-S-OCrmWQ.js",
+      "bytes": 23926
+    },
+    {
+      "name": "localDate-B9RESVsC.js",
+      "bytes": 146
+    },
+    {
+      "name": "LoginPage-BCTGX4YJ.js",
+      "bytes": 3712
+    },
+    {
+      "name": "mediaApi-q6PjCiH9.js",
+      "bytes": 2555
+    },
+    {
+      "name": "notificationsApi-CCiwFIqK.js",
+      "bytes": 459
+    },
+    {
+      "name": "NotificationsPage-CHAlT3AJ.css",
+      "bytes": 2135
+    },
+    {
+      "name": "NotificationsPage-DIiR0oQA.js",
+      "bytes": 4118
+    },
+    {
+      "name": "OrganizationDetailPage-EmobdGs4.js",
+      "bytes": 13139
+    },
+    {
+      "name": "OrganizationPage-Bc9Y-NaS.css",
+      "bytes": 7848
+    },
+    {
+      "name": "OrganizationPage-BR9Rb9lN.js",
+      "bytes": 393
+    },
+    {
+      "name": "OrganizationPage-CtJvS2ST.js",
+      "bytes": 6165
+    },
+    {
+      "name": "PaidTemplatesPage-ZYfvqDA9.js",
+      "bytes": 8161
+    },
+    {
+      "name": "PaymentCancelPage-D9LHi_e5.js",
+      "bytes": 947
+    },
+    {
+      "name": "PaymentHistoryPage-TI8L4EXv.js",
+      "bytes": 2460
+    },
+    {
+      "name": "PaymentPages-DCVLLcPw.css",
+      "bytes": 23391
+    },
+    {
+      "name": "PaymentReceiptPage-D3Ecwt_9.js",
+      "bytes": 2563
+    },
+    {
+      "name": "paymentService-i7f5LJVi.js",
+      "bytes": 1007
+    },
+    {
+      "name": "paymentStatus-BxUf9ylN.js",
+      "bytes": 778
+    },
+    {
+      "name": "PaymentStatusPage-DP18Tbgl.js",
+      "bytes": 13111
+    },
+    {
+      "name": "PaymentSuccessPage-C96ad0iD.js",
+      "bytes": 1697
+    },
+    {
+      "name": "planningApi-DoepgPhP.js",
+      "bytes": 770
+    },
+    {
+      "name": "PricingContact-CQ2E7Lmd.css",
+      "bytes": 4683
+    },
+    {
+      "name": "PricingPage-DxlCeEbE.js",
+      "bytes": 5150
+    },
+    {
+      "name": "ProfilePage-6xcNjjoi.js",
+      "bytes": 12212
+    },
+    {
+      "name": "PublicInvitationPage-C8FQyU3f.js",
+      "bytes": 20642
+    },
+    {
+      "name": "QrPage-4jqRkEhE.js",
+      "bytes": 3899
+    },
+    {
+      "name": "QrPage-BNKtD63O.css",
+      "bytes": 1025
+    },
+    {
+      "name": "react-1SDRmDo0.js",
+      "bytes": 651
+    },
+    {
+      "name": "react-dom-DenslgJm.js",
+      "bytes": 3864
+    },
+    {
+      "name": "RegisterPage-BQpae_-o.js",
+      "bytes": 4835
+    },
+    {
+      "name": "reportsApi-o6t4d58L.js",
+      "bytes": 873
+    },
+    {
+      "name": "ResetPasswordPage-BdVECC7i.js",
+      "bytes": 2778
+    },
+    {
+      "name": "rotate-ccw-L0lhBYtu.js",
+      "bytes": 1335
+    },
+    {
+      "name": "rsvpApi-CyQPd0io.js",
+      "bytes": 1337
+    },
+    {
+      "name": "RsvpDashboardPage-DB6_JJru.js",
+      "bytes": 14487
+    },
+    {
+      "name": "RsvpDashboardPage-DMdtfJvX.css",
+      "bytes": 7574
+    },
+    {
+      "name": "ScrollReveal-CSRaDHS2.js",
+      "bytes": 549
+    },
+    {
+      "name": "search-CBncK8aW.js",
+      "bytes": 214
+    },
+    {
+      "name": "SeatingFloorPlan-C8rBCXbf.css",
+      "bytes": 16267
+    },
+    {
+      "name": "SeatingFloorPlan-QJk9DwSI.js",
+      "bytes": 20263
+    },
+    {
+      "name": "SeatingPage-Cplehtyd.css",
+      "bytes": 8192
+    },
+    {
+      "name": "SeatingPage-GAnApkpX.js",
+      "bytes": 17384
+    },
+    {
+      "name": "SocialAuthButtons-BqaYxmD5.js",
+      "bytes": 12807
+    },
+    {
+      "name": "sparkles-Bfo-1RR4.js",
+      "bytes": 734
+    },
+    {
+      "name": "SubscriptionPackagesPage-BS7PsMpI.js",
+      "bytes": 12849
+    },
+    {
+      "name": "TemplateCheckoutPage-ClxDXe29.js",
+      "bytes": 11440
+    },
+    {
+      "name": "TemplateDemoPage-CFKjqfbR.js",
+      "bytes": 156
+    },
+    {
+      "name": "TemplateExperience-CAW9kDEV.js",
+      "bytes": 332380
+    },
+    {
+      "name": "TemplateExperience-DhaMbxwf.css",
+      "bytes": 274679
+    },
+    {
+      "name": "templates-Caiv91CI.js",
+      "bytes": 14883
+    },
+    {
+      "name": "templates-DeOK0P5Q.css",
+      "bytes": 14599
+    },
+    {
+      "name": "TemplatesPage-_0HkADLx.js",
+      "bytes": 151
+    },
+    {
+      "name": "TimePicker-Dl-JTwja.js",
+      "bytes": 7249
+    },
+    {
+      "name": "TimePicker-WdylPF6N.css",
+      "bytes": 5265
+    },
+    {
+      "name": "use-in-view-DtNC_ny0.js",
+      "bytes": 856
+    },
+    {
+      "name": "useClickOutside-CNvDkIFz.js",
+      "bytes": 287
+    },
+    {
+      "name": "useLanguageStore-B71aOcxu.js",
+      "bytes": 428
+    },
+    {
+      "name": "users-BuT8YFfQ.js",
+      "bytes": 346
+    },
+    {
+      "name": "useToggle-B1f_M9Pl.js",
+      "bytes": 150
+    },
+    {
+      "name": "useWeddingStore-7bdezYIJ.js",
+      "bytes": 894
+    },
+    {
+      "name": "VenuesPage-mAZ2k04Z.js",
+      "bytes": 17718
+    },
+    {
+      "name": "WeddingGiftPage-Bkw3xYGa.css",
+      "bytes": 13592
+    },
+    {
+      "name": "WeddingGiftPage-Db33TqDC.js",
+      "bytes": 17309
+    },
+    {
+      "name": "WeddingPreviewPage-BlQWzMd8.js",
+      "bytes": 2538
+    },
+    {
+      "name": "WeddingSite-CFf-xRSx.css",
+      "bytes": 60931
+    },
+    {
+      "name": "WeddingSite-qVWFauGs.js",
+      "bytes": 800
+    },
+    {
+      "name": "WishesPage-BaOuM83q.js",
+      "bytes": 3216
+    },
+    {
+      "name": "WishesPage-BOASiNOX.css",
+      "bytes": 1273
+    },
+    {
+      "name": "x-C25T52Ao.js",
+      "bytes": 194
+    },
+    {
+      "name": "zap-znsNXZUu.js",
+      "bytes": 313
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 import {
     KEEP_TEMPLATE_CODE,
     KHMER_CELESTIAL_TEMPLATE_CODE,
+    SILK_HERITAGE_TEMPLATE_CODE,
     ROYAL_KHMER_TEMPLATE_CODE,
     KHMER_GOLDEN_CANVA_INSPIRED_CODE,
     COVER_KHMER_GOLDEN_CODE,
@@ -9,6 +10,17 @@ import {
 
 export { KEEP_TEMPLATE_CODE, KHMER_CELESTIAL_TEMPLATE_CODE, ROYAL_KHMER_TEMPLATE_CODE, KHMER_GOLDEN_CANVA_INSPIRED_CODE, COVER_KHMER_GOLDEN_CODE, THE_DIGITAL_YES_TEMPLATE_CODE };
 export const TEMPLATE_VARIANTS = {
+    [SILK_HERITAGE_TEMPLATE_CODE]: {
+        className: "template-experience--silk-heritage",
+        mood: "light",
+        badge: "Silk Heritage",
+        amp: "&",
+        dressColors: [
+            { hex: "#672C39", name: "ក្រហមទុំ" },
+            { hex: "#283F39", name: "បៃតងចាស់" },
+            { hex: "#F6F0E5", name: "ភ្លុក" },
+        ],
+    },
     [KHMER_CELESTIAL_TEMPLATE_CODE]: {
         className: "template-experience--khmer-celestial",
         mood: "light",
@@ -107,6 +119,8 @@ export const TEMPLATE_VARIANT_BY_ID = {
 };
 
 export const VARIANT_ROUTE_ALIASES = {
+    "silk-heritage": SILK_HERITAGE_TEMPLATE_CODE,
+    SILK_HERITAGE: SILK_HERITAGE_TEMPLATE_CODE,
     "khmer-celestial": KHMER_CELESTIAL_TEMPLATE_CODE,
     classic: KEEP_TEMPLATE_CODE,
     luxury: KEEP_TEMPLATE_CODE,

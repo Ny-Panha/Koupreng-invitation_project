@@ -6,6 +6,13 @@ import { clearStoredAuth, getAccessToken, isCookieAuthStorage } from "../storage
 const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 let csrfToken = null;
 
+function generateRequestId() {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID();
+  }
+  return "req-" + Date.now().toString(36) + "-" + Math.random().toString(36).substring(2, 10);
+}
+
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
   timeout: 30000,
@@ -13,6 +20,19 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   (config) => {
+    config.headers = config.headers || {};
+    if (!config.headers["X-Request-Id"]) {
+      config.headers["X-Request-Id"] = generateRequestId();
+    }
+    config.headers["X-Client-App"] = "frontend-user";
+    if (typeof window !== "undefined" && window.location) {
+      config.headers["X-Frontend-Route"] = window.location.pathname || "/";
+    }
+    if (config.clientAction) {
+      config.headers["X-Client-Action"] = config.clientAction;
+      delete config.clientAction;
+    }
+
     const token = getAccessToken();
     const useCookieAuth = isCookieAuthStorage();
 

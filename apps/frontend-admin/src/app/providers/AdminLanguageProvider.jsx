@@ -21,6 +21,7 @@ export const ADMIN_DICTIONARY = {
       system: "ប្រព័ន្ធ & សុវត្ថិភាព",
       notifications: "ការជូនដំណឹង",
       systemLogs: "កំណត់ហេតុប្រព័ន្ធ",
+      apiMonitor: "API Live Monitor",
     },
     topMenu: {
       notifications: "ការជូនដំណឹង",
@@ -455,6 +456,7 @@ export const ADMIN_DICTIONARY = {
       system: "System & Security",
       notifications: "Notifications",
       systemLogs: "System Logs",
+      apiMonitor: "API Live Monitor",
     },
     topMenu: {
       notifications: "Notifications",

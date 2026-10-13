@@ -1,3 +1,7 @@
+import { useEffect, useState } from "react";
+import subscriptionService from "../subscriptions/subscriptionService";
+import { useAuth } from "../auth/hooks/useAuth";
+import { MagicCard } from "../../shared/ui/MagicCard";
 import "./PricingContact.css";
 import { ScrollReveal } from "../../shared/ui/ScrollReveal";
 import { Link } from "react-router-dom";
@@ -7,58 +11,44 @@ import { motion } from "framer-motion";
 import heroBg from "../../assets/icons/background.png";
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
 
-const getPlans = (t) => [
-  {
-    id: "basic",
-    name: t("planBasicName") || "កញ្ចប់មង្គល",
-    price: t("planBasicPrice") || "ឥតគិតថ្លៃ",
-    desc: t("planBasicDesc") || "សាកសមសម្រាប់គូស្វាមីភរិយារៀបចំគម្រោងដំបូង",
+function getPlans(packages, lang) {
+  const copy = (kh, en) => lang === "en" ? en : kh;
+  return packages.map((plan) => ({
+    id: plan.id,
+    name: plan.packageName || plan.code,
+    price: new Intl.NumberFormat(lang === "en" ? "en-US" : "km-KH", { style: "currency", currency: plan.currency || "USD" }).format(Number(plan.price)),
+    desc: plan.description || "",
     features: [
-      t("planBasicFeat1") || "គ្រប់គ្រងភ្ញៀវរហូតដល់ ៥០ នាក់",
-      t("planBasicFeat2") || "ធៀបការឌីជីថលគំរូមូលដ្ឋាន",
-      t("planBasicFeat3") || "មុខងារ RSVP ទទួលការឆ្លើយតបអនឡាញ",
-      t("planBasicFeat4") || "ផែនទីទីតាំងកម្មវិធី (Google Maps)",
-      t("planBasicFeat5") || "បញ្ជីគ្រប់គ្រងកិច្ចការ និងថវិកា",
-    ],
-    btnText: t("btnStartNow") || "ចាប់ផ្ដើមឥតគិតថ្លៃ",
-    featured: false,
-  },
-  {
-    id: "pro",
-    name: t("planProName") || "កញ្ចប់មាស",
-    price: t("planProPrice") || "$19",
-    desc: t("planProDesc") || "ល្អឥតខ្ចោះសម្រាប់ពិធីមង្គលការពេញលេញ និងស៊ីវិល័យ",
-    features: [
-      t("planProFeat1") || "គ្រប់គ្រងភ្ញៀវមិនកំណត់",
-      t("planProFeat2") || "ធៀបការ Premium (ចម្រៀង & រូបថត HD)",
-      t("planProFeat3") || "1 ភ្ញៀវ = 1 លីង & QR Code ផ្ទាល់ខ្លួន",
-      t("planProFeat4") || "ស្កេន QR Check-in ចូលពិធីរហ័ស",
-      t("planProFeat5") || "ទទួលចំណងដៃតាម KHQR បាគង",
-      t("planProFeat6") || "រៀបចំតុ និងកៅអីអង្គុយ (Table Seating)",
-    ],
-    btnText: t("btnSelectGold") || "ជ្រើសរើសកញ្ចប់មាស",
-    featured: true,
-  },
-  {
-    id: "enterprise",
-    name: t("planEntName") || "កញ្ចប់ពេជ្រ",
-    price: t("planEntPrice") || "តម្លៃពិគ្រោះ",
-    desc: t("planEntDesc") || "សម្រាប់ Wedding Planners និងកម្មវិធីខ្នាតធំ",
-    features: [
-      t("planEntFeat1") || "គ្រប់គ្រងកម្មវិធីមង្គលការច្រើន",
-      t("planEntFeat2") || "Custom Domain ផ្ទាល់ខ្លួន",
-      t("planEntFeat3") || "White-label (ដកស្លាកយីហោចេញ)",
-      t("planEntFeat4") || "Export របាយការណ៍ភ្ញៀវ និងចំណងដៃ",
-      t("planEntFeat5") || "ជំនួយការបច្ចេកទេសផ្ទាល់ ២៤/៧",
-    ],
-    btnText: t("btnContactSales") || "ទាក់ទងផ្នែកលក់",
-    featured: false,
-  },
-];
+      plan.maxInvitations != null && `${copy("ចំនួនសន្លឹកការ", "Invitations")}: ${plan.maxInvitations}`,
+      plan.maxGuestsPerInvitation != null && `${copy("ភ្ញៀវក្នុងមួយសន្លឹកការ", "Guests per invitation")}: ${plan.maxGuestsPerInvitation}`,
+      plan.durationDays != null && `${copy("រយៈពេល (ថ្ងៃ)", "Duration (days)")}: ${plan.durationDays}`,
+      plan.premiumTemplatesEnabled && copy("សិទ្ធិប្រើគំរូប្រណិត", "Premium template access"),
+      plan.qrCheckInEnabled && copy("ស្កេន QR ចូលពិធី", "QR check-in"),
+      plan.seatingEnabled && copy("ការរៀបចំកន្លែងអង្គុយ", "Seating management"),
+    ].filter(Boolean),
+    btnText: copy("មើលកញ្ចប់ និងសិទ្ធិប្រើប្រាស់", "View package and eligibility"),
+  }));
+}
 
 const PricingPage = () => {
   const { text: t, lang } = useBackendMessages("pricing");
-  const plans = getPlans(t);
+  const { isAuthenticated } = useAuth();
+  const [packages, setPackages] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [reload, setReload] = useState(0);
+  useEffect(() => {
+    let active = true;
+    if (!isAuthenticated) { setLoading(false); return undefined; }
+    setLoading(true); setError("");
+    subscriptionService.packages().then((items) => {
+      if (active) setPackages(Array.isArray(items) ? items : []);
+    }).catch(() => {
+      if (active) setError(lang === "en" ? "Current packages could not be loaded." : "មិនអាចផ្ទុកកញ្ចប់បច្ចុប្បន្នបាន។");
+    }).finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
+  }, [lang, reload, isAuthenticated]);
+  const plans = getPlans(packages, lang);
 
   return (
     <div className="khmer-modern-theme">
@@ -91,10 +81,14 @@ const PricingPage = () => {
             </div>
           </ScrollReveal>
 
+          {loading && <p role="status">{lang === "en" ? "Loading current packages…" : "កំពុងផ្ទុកកញ្ចប់បច្ចុប្បន្ន…"}</p>}
+          {error && <p role="alert">{error} <button type="button" className="action-btn btn-outline" onClick={() => setReload((value) => value + 1)}>{lang === "en" ? "Try again" : "សាកម្ដងទៀត"}</button></p>}
+          {!isAuthenticated && <p className="home-invitation-benefits">{lang === "en" ? "Sign in to view current package prices, limits and eligibility." : "សូមចូលគណនីដើម្បីមើលតម្លៃកញ្ចប់ កម្រិតប្រើប្រាស់ និងសិទ្ធិបច្ចុប្បន្ន។"} <Link to="/login?next=%2Fdashboard%2Fpackages" className="action-btn btn-outline">{lang === "en" ? "View current packages" : "មើលកញ្ចប់បច្ចុប្បន្ន"}</Link></p>}
+          {isAuthenticated && !loading && !error && !plans.length && <p role="status">{lang === "en" ? "No packages are currently available." : "មិនទាន់មានកញ្ចប់បច្ចុប្បន្នទេ។"}</p>}
           <div className="pricing-grid">
             {plans.map((plan, i) => (
               <ScrollReveal key={i} delay={i * 0.1}>
-                <div
+                <MagicCard
                   className={`pricing-card ${plan.featured ? "premium" : ""}`}
                 >
                   {plan.featured && <div className="badge">{t("recommended") || "ពេញនិយមបំផុត"}</div>}
@@ -123,12 +117,12 @@ const PricingPage = () => {
                   </div>
 
                   <Link
-                    to={plan.id === "enterprise" ? "/contact" : "/register"}
+                    to="/dashboard/packages"
                     className={`action-btn ${plan.featured ? "btn-gold" : "btn-outline"}`}
                   >
                     {plan.btnText}
                   </Link>
-                </div>
+                </MagicCard>
               </ScrollReveal>
             ))}
           </div>

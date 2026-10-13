@@ -11,7 +11,8 @@ import {
   Activity,
   PanelLeftClose,
   PanelLeftOpen,
-  Sparkles
+  Sparkles,
+  Terminal
 } from "lucide-react";
 import { useAuth } from "../../app/providers/AdminAuthProvider";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
@@ -63,6 +64,7 @@ export default function AdminSidebar({ isMobileOpen, isExpanded, onToggle, onNav
       items: [
         { to: "/notifications", icon: Bell, label: t("nav.notifications", "ការជូនដំណឹង") },
         { to: "/system-logs", icon: Activity, label: t("nav.systemLogs", "កំណត់ហេតុប្រព័ន្ធ") },
+        { to: "/dev/api-monitor", icon: Terminal, label: t("nav.apiMonitor", "API Live Monitor") },
       ],
     },
   ];

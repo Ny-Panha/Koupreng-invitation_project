@@ -93,7 +93,7 @@ export default function ChatBot() {
     location.pathname.startsWith("/i/") ||
     location.pathname.startsWith("/preview/") ||
     (location.pathname.startsWith("/event/") && !location.pathname.includes("/manage") && !location.pathname.includes("/create")) ||
-    (location.pathname.includes("/templates/") && location.pathname.endsWith("/preview"));
+    /^\/templates\/(?!browse(?:\/|$))[^/]+(?:\/(?:demo|preview))?\/?$/.test(location.pathname);
 
   if (isExcluded) {
     return null;

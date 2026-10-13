@@ -54,6 +54,10 @@ export const adminService = {
   createNotification: (payload) => api.post("/v1/admin/notifications", payload).then(unwrap),
   updateNotificationStatus: (notificationId, payload) =>
     api.patch(`/v1/admin/notifications/${notificationId}/status`, payload).then(unwrap),
+
+  apiMonitorEvents: (params) => api.get("/v1/admin/dev-monitor/events", { params }).then(unwrap),
+  apiMonitorStats: () => api.get("/v1/admin/dev-monitor/stats").then(unwrap),
+  clearApiMonitor: () => api.post("/v1/admin/dev-monitor/clear").then(unwrap),
 };
 
 export const adminManagementService = adminService;

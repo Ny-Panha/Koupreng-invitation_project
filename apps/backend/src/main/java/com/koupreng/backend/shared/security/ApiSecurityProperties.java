@@ -72,7 +72,10 @@ public class ApiSecurityProperties {
                 "Content-Type",
                 "X-Requested-With",
                 "X-Request-Id",
-                "X-XSRF-TOKEN"
+                "X-XSRF-TOKEN",
+                "X-Frontend-Route",
+                "X-Client-Action",
+                "X-Client-App"
         ));
 
         private Set<String> exposedHeaders = new LinkedHashSet<>(Set.of("X-Request-Id"));

@@ -16,6 +16,13 @@ export class ApiError extends Error {
     }
 }
 
+function generateRequestId() {
+    if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+        return crypto.randomUUID();
+    }
+    return "req-" + Date.now().toString(36) + "-" + Math.random().toString(36).substring(2, 10);
+}
+
 const apiClient = axios.create({
     baseURL: API_BASE_URL,
     timeout: 30000,
@@ -23,6 +30,19 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
     (config) => {
+        config.headers = config.headers || {};
+        if (!config.headers["X-Request-Id"]) {
+            config.headers["X-Request-Id"] = generateRequestId();
+        }
+        config.headers["X-Client-App"] = "frontend-admin";
+        if (typeof window !== "undefined" && window.location) {
+            config.headers["X-Frontend-Route"] = window.location.pathname || "/";
+        }
+        if (config.clientAction) {
+            config.headers["X-Client-Action"] = config.clientAction;
+            delete config.clientAction;
+        }
+
         const skipAuth = config.skipAuth || config.auth === false;
         
         if (config.skipAuth !== undefined) {

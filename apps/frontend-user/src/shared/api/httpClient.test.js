@@ -93,4 +93,19 @@ describe("httpClient 401 interceptor", () => {
     expect(config.withCredentials).toBeUndefined();
     expect(config.headers["X-XSRF-TOKEN"]).toBeUndefined();
   });
+
+  it("injects correlation and tracing headers for API observability", () => {
+    const requestInterceptor = apiClient.interceptors.request.handlers[0];
+    const config = requestInterceptor.fulfilled({
+      headers: {},
+      clientAction: "REGISTER_SUBMIT",
+    });
+
+    expect(config.headers["X-Request-Id"]).toBeDefined();
+    expect(config.headers["X-Request-Id"]).toMatch(/^[A-Za-z0-9._-]+$/);
+    expect(config.headers["X-Client-App"]).toBe("frontend-user");
+    expect(config.headers["X-Frontend-Route"]).toBe("/dashboard");
+    expect(config.headers["X-Client-Action"]).toBe("REGISTER_SUBMIT");
+    expect(config.clientAction).toBeUndefined();
+  });
 });

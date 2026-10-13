@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="1080" viewBox="0 0 720 1080">
+  <defs>
+    <pattern id="silk" width="6" height="6" patternUnits="userSpaceOnUse"><path d="M0 1h6M1 0v6" stroke="#F6F0E5" opacity=".035" stroke-width=".6"/></pattern>
+    <pattern id="weave" width="42" height="42" patternUnits="userSpaceOnUse"><path d="m21 3 18 18-18 18L3 21zM21 10l11 11-11 11-11-11z" fill="none" stroke="#B39460" stroke-width=".65"/></pattern>
+  </defs>
+  <path fill="#672C39" d="M0 0h720v1080H0z"/><path fill="url(#silk)" d="M0 0h720v1080H0z"/>
+  <path fill="url(#weave)" opacity=".4" d="M24 0h42v1080H24zM654 0h42v1080h-42z"/>
+  <g fill="none" stroke="#B39460"><rect x="82" y="24" width="556" height="1032"/><rect x="89" y="31" width="542" height="1018" stroke-width=".5"/>
+    <path d="M136 147h110L360 33l114 114h110M136 159h105L360 40l119 119h105M136 933h110l114 114 114-114h110M136 921h105l119 119 119-119h105"/>
+    <path d="m360 72 42 42-42 42-42-42zM360 88l26 26-26 26-26-26zM360 924l42 42-42 42-42-42zM360 940l26 26-26 26-26-26z"/>
+  </g>
+</svg>
