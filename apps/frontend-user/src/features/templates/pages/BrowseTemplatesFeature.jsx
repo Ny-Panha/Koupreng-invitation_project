@@ -15,6 +15,7 @@ import { templateCatalogService } from "@/features/templates/api/templateCatalog
 import { paymentService } from "@/features/payments/paymentService";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
 import { SkeletonTable } from "@/shared/ui";
+import { templateIdentity, templatePriceLabel } from "../model/templateIdentity";
 import "./BrowseTemplates.css";
 
 function formatTemplateDescription(description) {
@@ -167,15 +168,19 @@ export default function BrowseTemplatesFeature() {
     const unlocked = isUnlocked(template);
 
     if (prem && !unlocked) {
-      navigate(`/templates/${template.slug || template.code || template.id}/checkout`);
+      if (!templatePriceLabel(template, lang)) {
+        navigate("/pricing");
+        return;
+      }
+      navigate(`/templates/${encodeURIComponent(templateIdentity(template))}/checkout`);
       return;
     }
 
-    navigate(`/dashboard/invitations/design?templateId=${template.id || template.slug || ""}`);
+    navigate(`/dashboard/invitations/design?templateId=${encodeURIComponent(template.id || templateIdentity(template))}`);
   };
 
   const handlePreview = (template) => {
-    const tplId = template.id || template.slug || "cover-khmer-golden-wedding";
+    const tplId = templateIdentity(template);
     if (template.previewUrl) {
       if (template.previewUrl.startsWith("/")) {
         navigate(template.previewUrl);
@@ -184,7 +189,7 @@ export default function BrowseTemplatesFeature() {
       }
       return;
     }
-    navigate(`/templates/browse/${tplId}`);
+    navigate(`/templates/browse/${encodeURIComponent(tplId)}`);
   };
 
   return (
@@ -271,11 +276,11 @@ export default function BrowseTemplatesFeature() {
                 <div className="tb-card-badges">
                   {isPremium(template) && isUnlocked(template) ? (
                     <span className="tb-badge tb-badge--unlocked">
-                      ✓ បានទិញរួច
+                      {lang === "en" ? "Purchased" : "បានទិញរួច"}
                     </span>
                   ) : (
                     <span className={`tb-badge tb-badge--${isPremium(template) ? "premium" : "free"}`}>
-                      {isPremium(template) ? "Premium" : "Free"}
+                      {isPremium(template) ? (lang === "en" ? "Premium" : "ប្រណិត") : (lang === "en" ? "Free" : "ឥតគិតថ្លៃ")}
                     </span>
                   )}
                   {template.category && (
@@ -310,7 +315,9 @@ export default function BrowseTemplatesFeature() {
                     {isPremium(template) && !isUnlocked(template) ? (
                       <>
                         <IoDiamondOutline />
-                        <span>ទិញគំរូ ({Number(template.price) > 0 ? `$${Number(template.price).toFixed(2)}` : "$0.01"})</span>
+                        <span>{templatePriceLabel(template, lang)
+                          ? `${lang === "en" ? "Buy design" : "ទិញគំរូ"} (${templatePriceLabel(template, lang)})`
+                          : (lang === "en" ? "View pricing — price unavailable" : "មើលតម្លៃ — មិនមានតម្លៃគំរូ")}</span>
                       </>
                     ) : (
                       <>

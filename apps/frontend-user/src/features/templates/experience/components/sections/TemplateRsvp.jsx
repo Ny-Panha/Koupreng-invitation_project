@@ -25,8 +25,8 @@ const TemplateRsvp = forwardRef(function TemplateRsvp({ useTemplateLink }, ref) 
                         </h2>
                         <p className="tx-section__lead">
                             {lang === "en"
-                                ? "Please let us know by submitting your response so we can prepare your seat."
-                                : "សូមជូនដំណឹងមកយើងខ្ញុំ ដើម្បីយើងអាចរៀបចំទទួលស្វាគមន៍អ្នកបានសមរម្យ"}
+                                ? "Demo only. These sample fields do not send or save a response. Guests RSVP on your published invitation."
+                                : "នេះជាគំរូបង្ហាញប៉ុណ្ណោះ។ ព័ត៌មាននេះមិនត្រូវបានផ្ញើ ឬរក្សាទុកទេ។ ភ្ញៀវឆ្លើយតបនៅលើសន្លឹកការដែលបានផ្សព្វផ្សាយ។"}
                         </p>
                     </TemplateReveal>
                 </header>
@@ -35,7 +35,7 @@ const TemplateRsvp = forwardRef(function TemplateRsvp({ useTemplateLink }, ref) 
                     <form
                         className="tx-rsvp__form"
                         onSubmit={(event) => event.preventDefault()}
-                        aria-label={lang === "en" ? "RSVP Form" : "គំរូ RSVP"}
+                        aria-label={lang === "en" ? "RSVP demonstration — no responses are sent" : "គំរូ RSVP — មិនផ្ញើការឆ្លើយតប"}
                     >
                         <div className="tx-rsvp__field">
                             <label htmlFor="tx-rsvp-name">{lang === "en" ? "Full Name" : "ឈ្មោះ"}</label>
@@ -79,12 +79,12 @@ const TemplateRsvp = forwardRef(function TemplateRsvp({ useTemplateLink }, ref) 
                         {useTemplateLink ? (
                             <Link to={useTemplateLink} className="tx-btn tx-btn--solid tx-rsvp__submit">
                                 <IoHeart className="tx-rsvp__submit-icon" aria-hidden="true" />
-                                <span>{lang === "en" ? "Send RSVP Response" : "ផ្ញើការឆ្លើយតប"}</span>
+                                <span>{lang === "en" ? "Create with this design" : "បង្កើតជាមួយគំរូនេះ"}</span>
                             </Link>
                         ) : (
-                            <button type="submit" className="tx-btn tx-btn--solid tx-rsvp__submit">
+                            <button type="button" disabled className="tx-btn tx-btn--solid tx-rsvp__submit">
                                 <IoHeart className="tx-rsvp__submit-icon" aria-hidden="true" />
-                                <span>{lang === "en" ? "Send RSVP Response" : "ផ្ញើការឆ្លើយតប"}</span>
+                                <span>{lang === "en" ? "Demo only — RSVP unavailable" : "គំរូបង្ហាញ — មិនអាចផ្ញើ RSVP"}</span>
                             </button>
                         )}
                     </form>

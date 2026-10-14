@@ -1,5 +1,17 @@
 # Template asset licenses
 
+## Cinematic marketing landing (2026-10-14)
+
+The public landing reuses the documented Silk Heritage photographs, preview and
+woven SVG, Kantumruy Pro and Cormorant Garamond WOFF2 files below. No additional
+photograph or font was downloaded. Local CSS family aliases do not alter the font
+files. The hero botanical line drawing and invitation framing are original
+project SVG/CSS. Photograph subjects are explicitly sample/demo imagery.
+
+Public gallery covers come from the existing catalog/template assets; existing
+rights-review limitations for older templates still apply. No competitor art,
+logo, photo, text, source or layout was copied.
+
 The Cover Khmer Golden artwork is original project material; no third-party media was downloaded for it.
 
 | Asset | Source | License note |

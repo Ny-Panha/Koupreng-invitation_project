@@ -299,6 +299,29 @@
   --focus-ring-offset: 2px;
 }
 
+/* Public marketing aliases; management and template token values stay intact. */
+.kp-marketing-shell {
+  --kp-bg: #FCF8F2;
+  --kp-surface: var(--wed-surface, #FFFFFF);
+  --kp-gold: var(--wed-gold-400);
+  --kp-gold-deep: var(--wed-gold-800);
+  --kp-emerald: #3D554A;
+  --kp-emerald-deep: #233B32;
+  --kp-ink: var(--wed-ink);
+  --kp-muted: #605A52;
+  --kp-border: #E8DED0;
+  --kp-blush: #EFE0DE;
+  --kp-burgundy: #672C39;
+  --kp-paper: #F6F0E5;
+  --kp-font: 'Koupreng UI', 'DM Sans', 'Noto Sans Khmer', sans-serif;
+  --kp-display: 'Koupreng Editorial', Georgia, serif;
+  --kp-ease: cubic-bezier(.22, 1, .36, 1);
+  --site-header-offset: 112px;
+  color: var(--kp-ink);
+  background: var(--kp-bg);
+  font-family: var(--kp-font);
+}
+
 /* ============================================================
    Reduced motion: zero out transitions for users who request it
    ============================================================ */

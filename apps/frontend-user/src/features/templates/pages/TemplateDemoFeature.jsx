@@ -8,6 +8,7 @@ import {
     VARIANT_ROUTE_ALIASES,
 } from "../experience/config/templateExperienceThemes";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { templateIdentity, templateUsePath } from "../model/templateIdentity";
 
 /**
  * TemplateDemoPage — public template detail / demo page.
@@ -89,10 +90,7 @@ export default function TemplateDemoPage() {
     }, [remoteTpl, targetId]);
 
     const forcedVariant = aliasTargetId ? id : undefined;
-    const createTemplatePath = `/templates/browse?template=${encodeURIComponent(remoteTpl?.code || targetId)}`;
-    const useTemplateLink = isAuthenticated
-        ? createTemplatePath
-        : `/login?next=${encodeURIComponent(createTemplatePath)}`;
+    const useTemplateLink = templateUsePath(remoteTpl ? templateIdentity(remoteTpl) : targetId, isAuthenticated);
 
     const variant = resolveVariant(tpl, forcedVariant);
     const knownId = DB_TEMPLATE_ID_MAP[targetId] || targetId;

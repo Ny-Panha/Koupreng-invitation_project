@@ -22,4 +22,10 @@ describe("PERF-002 public catalog cache", () => {
     await expect(templateCatalogService.list({ force: true })).rejects.toThrow("Unavailable");
     await templateCatalogService.list(); expect(api.get).toHaveBeenCalledTimes(2);
   });
+  it("rejects an HTML/malformed response instead of treating it as live empty inventory", async () => {
+    api.get.mockResolvedValueOnce("<!doctype html><html></html>").mockResolvedValueOnce({ data: [] });
+    await expect(templateCatalogService.list({ force: true })).rejects.toThrow("Invalid template catalog response");
+    await expect(templateCatalogService.list()).resolves.toEqual([]);
+    expect(api.get).toHaveBeenCalledTimes(2);
+  });
 });

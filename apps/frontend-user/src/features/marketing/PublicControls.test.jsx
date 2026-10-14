@@ -15,20 +15,29 @@ it("names the mobile toggle and exposes its controlled menu state", () => {
   const toggle = screen.getByLabelText("Open navigation menu");
   expect(toggle).toHaveAttribute("aria-expanded", "false");
   fireEvent.click(toggle);
-  expect(screen.getByLabelText("Close navigation menu")).toHaveAttribute("aria-expanded", "true");
-  expect(document.getElementById(toggle.getAttribute("aria-controls"))).toHaveAttribute("aria-label", "Navigation");
-  fireEvent.keyDown(document, { key: "Escape" });
+  expect(toggle).toHaveAttribute("aria-expanded", "true");
+  const dialog = screen.getByRole("dialog", { name: "Navigation" });
+  expect(dialog).toHaveAttribute("id", toggle.getAttribute("aria-controls"));
+  expect(dialog).toHaveAttribute("open");
+  fireEvent.click(screen.getByLabelText("Close navigation menu"));
   expect(screen.getByLabelText("Open navigation menu")).toHaveAttribute("aria-expanded", "false");
 });
 
 it("names support icon buttons and the message field", () => {
-  render(<MemoryRouter><ChatBot /></MemoryRouter>);
+  render(<MemoryRouter initialEntries={["/pricing"]}><ChatBot /></MemoryRouter>);
   expect(screen.getByLabelText("Dismiss greeting")).toBeInTheDocument();
   fireEvent.click(screen.getByLabelText("Open support chat"));
   expect(screen.getByRole("region", { name: "Help & Support" })).toBeInTheDocument();
   expect(screen.getByLabelText("Message to Telegram support")).toBeInTheDocument();
   expect(screen.getByLabelText("Send to Telegram")).toBeInTheDocument();
   fireEvent.click(screen.getByLabelText("Close support chat", { selector: ".chat-close-btn" }));
+});
+
+it("keeps home support available without an automatic greeting over the invitation", () => {
+  render(<MemoryRouter><ChatBot /></MemoryRouter>);
+  expect(screen.queryByLabelText("Dismiss greeting")).not.toBeInTheDocument();
+  fireEvent.click(screen.getByLabelText("Open support chat"));
+  expect(screen.getByRole("region", { name: "Help & Support" })).toBeInTheDocument();
 });
 
 it("supports a keyboard-contained venue dialog and restores trigger focus", async () => {

@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import TemplateExperience from "../experience/TemplateExperience";
 import { getTemplateById } from "../data/templatesData";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import {
     resolveVariant,
     VARIANT_ROUTE_ALIASES,
@@ -18,12 +19,13 @@ import {
  */
 export default function HostTemplateDemoPage() {
     const { id } = useParams();
+    const lang = useLanguageStore((state) => state.lang);
     const aliasTargetId = VARIANT_ROUTE_ALIASES[id];
     const tpl = getTemplateById(aliasTargetId || id);
     const forcedVariant = aliasTargetId ? id : undefined;
 
     // Logged-in host: go straight to the wedding builder.
-    const useTemplateLink = "/templates/browse";
+    const useTemplateLink = `/templates/browse?template=${encodeURIComponent(aliasTargetId || id)}`;
     const variant = resolveVariant(tpl, forcedVariant);
 
     return (
@@ -37,8 +39,8 @@ export default function HostTemplateDemoPage() {
                 { label: tpl.name },
             ]}
             backLink="/templates/browse"
-            backLabel="ត្រឡប់ទៅបន្ថែមគម្រូ"
-            primaryCtaLabel="ប្រើគំរូនេះ"
+            backLabel={lang === "en" ? "Back to designs" : "ត្រឡប់ទៅបញ្ជីគំរូ"}
+            primaryCtaLabel={lang === "en" ? "Use this design" : "ប្រើគំរូនេះ"}
         />
     );
 }

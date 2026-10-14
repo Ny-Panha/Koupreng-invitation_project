@@ -147,6 +147,8 @@ function useSiteReveal() {
   const selector = useMemo(() => REVEAL_SELECTORS.join(","), []);
 
   useEffect(() => {
+    // The landing owns finite, readable choreography.
+    if (location.pathname === "/") return;
     let observer;
     let cancelled = false;
 
@@ -206,6 +208,8 @@ export default function SiteAnimations() {
   );
 
   useSiteReveal();
+
+  if (location.pathname === "/") return null;
 
   return (
     <>

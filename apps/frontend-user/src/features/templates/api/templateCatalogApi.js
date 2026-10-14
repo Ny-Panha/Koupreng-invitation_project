@@ -22,7 +22,8 @@ export const templateCatalogService = {
                             ? items.items
                             : Array.isArray(items?.content)
                                 ? items.content
-                                : [];
+                                : null;
+                if (!list) throw new Error("Invalid template catalog response");
                 return list.map((t) => {
                     const isPrem = Boolean(t.premium || t.isPremium || (Number(t.price) > 0));
                     return {

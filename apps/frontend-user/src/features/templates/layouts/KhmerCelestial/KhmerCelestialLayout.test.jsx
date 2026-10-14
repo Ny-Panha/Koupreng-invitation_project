@@ -412,7 +412,7 @@ describe("KhmerCelestialLayout integration", () => {
     expect(previewContent.title).toBe("សិរីសួស្តីអាពាហ៍ពិពាហ៍");
     expect(previewContent.groom).toBe("កឿង វីរៈ");
     expect(previewContent.bride).toBe("ឡុង សុម៉ាលី");
-    expect(previewContent.dateText).toBe("ថ្ងៃព្រហស្បតិ៍ ទី៣២ ខែធ្នូ ឆ្នាំ២០២៦");
+    expect(previewContent.dateText).toBe("ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦");
     expect(previewContent.machineEventDate).toBe("2026-12-20T17:00:00+07:00");
     expect(previewContent.schedule).toHaveLength(9);
     expect(previewContent.apologyTitle).toBe("លិខិតសូមអភ័យទោស");

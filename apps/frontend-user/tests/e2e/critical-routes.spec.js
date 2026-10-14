@@ -33,7 +33,7 @@ test("public landing and template catalog render real content", async ({ page })
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   await page.goto("/templates");
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-  await expect(page.locator('a[href*="/templates/"]').first()).toBeVisible();
+  await expect(page.locator('.kp-design-card .kp-design-media').first()).toBeVisible();
 });
 
 test("user protected route redirects to the login form with next", async ({ page }) => {
