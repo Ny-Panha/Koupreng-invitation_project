@@ -17,7 +17,7 @@ export default function Header() {
   const copy = (km, en) => lang === "en" ? en : km;
   const items = isAuthenticated
     ? [["/dashboard", copy("ផ្ទាំងគ្រប់គ្រង", "Dashboard")], ["/templates", copy("គំរូសន្លឹកការ", "Designs")]]
-    : [["/", copy("ទំព័រដើម", "Home")], ["/templates", copy("គំរូសន្លឹកការ", "Designs")], ["/pricing", copy("តម្លៃ", "Pricing")], ["/venues", copy("ទីកន្លែង", "Venues")]];
+    : [["/", copy("ទំព័រដើម", "Home")], ["/templates", copy("គំរូសន្លឹកការ", "Designs")], ["/pricing", copy("តម្លៃ", "Pricing")], ["/contact", copy("ទំនាក់ទំនង", "Contact")]];
   const active = (path) => path === "/" ? location.pathname === "/" : location.pathname === path || location.pathname.startsWith(path + "/");
   const closeMenu = () => dialog.current?.close();
   const containMenuFocus = (event) => {

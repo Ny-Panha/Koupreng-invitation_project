@@ -11,9 +11,73 @@ export default function LandingConversion({ copy }) {
   ];
   return (
     <>
-      <section className="kp-pricing kp-section" aria-labelledby="kp-pricing-title"><div><p className="kp-eyebrow">{copy("ជ្រើសរើសដោយទំនុកចិត្ត", "CHOOSE WITH CONFIDENCE")}</p><h2 id="kp-pricing-title">{copy("មើលគំរូជាមុន។\nជ្រើសរើសពេលអ្នករួចរាល់។", "Fall in love with a design.\nThen make it yours.")}</h2><p className="kp-section-lead">{copy("ស្វែងយល់ពីកញ្ចប់ មុខងារ និងតម្លៃបច្ចុប្បន្ន នៅទំព័រតម្លៃ។ គំរូបង្ហាញមិនបើកសិទ្ធិប្រើប្រាស់គំរូប្រណិតទេ។", "Explore current packages, included features and template access on our pricing page. Previewing a premium design does not unlock it.")}</p><Link to="/pricing" className="kp-button">{copy("មើលកញ្ចប់ និងតម្លៃ", "View packages & pricing")}<ArrowUpRight size={18} aria-hidden="true" /></Link></div><ul className="kp-pricing-notes">{[copy("មើលគំរូពេញលេញមុនជ្រើសរើស", "Explore full demos before choosing"), copy("បង្កើត និងកែសម្រួលតាមគណនីរបស់អ្នក", "Create and personalize in your account"), copy("សិទ្ធិប្រណិតបន្ទាប់ពីបញ្ជាក់ការទូទាត់", "Premium access after payment confirmation")].map((note) => <li key={note}><Check size={20} aria-hidden="true" />{note}</li>)}</ul></section>
-      <section className="kp-faq kp-section" aria-labelledby="kp-faq-title"><div><p className="kp-eyebrow">{copy("ព័ត៌មានមុនចាប់ផ្តើម", "A FEW THINGS BEFORE YOU BEGIN")}</p><h2 id="kp-faq-title">{copy("សំណួរតូចៗ។\nចម្លើយច្បាស់លាស់។", "Little questions.\nThoughtful answers.")}</h2><Link to="/contact" className="kp-text-link">{copy("ទាក់ទងសម្រាប់ជំនួយ", "We are here to help")}<ArrowUpRight size={18} aria-hidden="true" /></Link></div><div className="kp-faq-list">{questions.map(([question, answer]) => <details key={question}><summary>{question}<Plus size={18} aria-hidden="true" /></summary><p>{answer}</p></details>)}</div></section>
-      <section className="kp-final" aria-labelledby="kp-final-title"><img src="/templates/silk-heritage/woven-ornament.svg" alt="" width="360" height="80" loading="lazy" /><p className="kp-eyebrow">{copy("ថ្ងៃពិសេសរបស់អ្នក ចាប់ផ្តើមពីទីនេះ", "YOUR NEXT CHAPTER BEGINS HERE")}</p><h2 id="kp-final-title">{copy("បង្កើតសន្លឹកការ\nដែលជារបស់អ្នក។", "An invitation as special\nas the day itself.")}</h2><p>{copy("ជ្រើសរើសរចនាបទមួយ ហើយចាប់ផ្តើមរឿងរ៉ាវរបស់អ្នក។", "Find your design. Tell your story. Bring your people together.")}</p><div className="kp-actions"><Link to="/templates" className="kp-button kp-button--light">{copy("មើលគំរូសន្លឹកការ", "Find your invitation")}<ArrowUpRight size={18} aria-hidden="true" /></Link><Link to="/templates/browse" className="kp-text-link">{copy("ចាប់ផ្តើមបង្កើត", "Start creating")}<ArrowUpRight size={18} aria-hidden="true" /></Link></div></section>
+      <section className="kp-pricing kp-section" aria-labelledby="kp-pricing-title">
+        <div>
+          <p className="kp-eyebrow">{copy("តម្លៃច្បាស់លាស់ និងស្មោះត្រង់", "TRANSPARENT & HONEST PRICING")}</p>
+          <h2 id="kp-pricing-title">{copy("មើលគំរូជាមុន\nជ្រើសរើសពេលអ្នករួចរាល់", "Explore freely.\nChoose when you are ready.")}</h2>
+          <p className="kp-section-lead">
+            {copy(
+              "ស្វែងយល់ពីកញ្ចប់ មុខងារ និងតម្លៃបច្ចុប្បន្ន នៅទំព័រតម្លៃ។ គំរូឥតគិតថ្លៃអាចប្រើបានភ្លាមៗ ចំណែកគំរូប្រណិតតម្រូវឱ្យមានការបញ្ជាក់ការទូទាត់។ មិនមានការកាត់ប្រាក់ដោយមិនដឹងខ្លួនឡើយ។",
+              "Explore packages and template access on our pricing page. Free templates can be used immediately; premium designs require confirmed payment. No surprise charges."
+            )}
+          </p>
+          <Link to="/pricing" className="kp-button">
+            {copy("មើលកញ្ចប់ និងតម្លៃ", "View packages & pricing")}
+            <ArrowUpRight size={18} aria-hidden="true" />
+          </Link>
+        </div>
+        <ul className="kp-pricing-notes">
+          {[
+            copy("មើលគំរូពេញលេញមុនជ្រើសរើស", "Explore full demos before choosing"),
+            copy("បង្កើត និងកែសម្រួលតាមគណនីរបស់អ្នក", "Create and personalize in your account"),
+            copy("សិទ្ធិប្រណិតបន្ទាប់ពីបញ្ជាក់ការទូទាត់", "Premium access after payment confirmation"),
+          ].map((note) => (
+            <li key={note}>
+              <Check size={20} aria-hidden="true" />
+              {note}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="kp-faq kp-section" aria-labelledby="kp-faq-title">
+        <div>
+          <p className="kp-eyebrow">{copy("ព័ត៌មានមុនចាប់ផ្តើម", "A FEW THINGS BEFORE YOU BEGIN")}</p>
+          <h2 id="kp-faq-title">{copy("សំណួរតូចៗ។\nចម្លើយច្បាស់លាស់។", "Little questions.\nThoughtful answers.")}</h2>
+          <Link to="/contact" className="kp-text-link">
+            {copy("ទាក់ទងសម្រាប់ជំនួយ", "We are here to help")}
+            <ArrowUpRight size={18} aria-hidden="true" />
+          </Link>
+        </div>
+        <div className="kp-faq-list">
+          {questions.map(([question, answer]) => (
+            <details key={question}>
+              <summary>
+                {question}
+                <Plus size={18} aria-hidden="true" />
+              </summary>
+              <p>{answer}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <section className="kp-final" aria-labelledby="kp-final-title">
+        <img src="/templates/silk-heritage/woven-ornament.svg" alt="" width="360" height="80" loading="lazy" />
+        <p className="kp-eyebrow">{copy("ថ្ងៃពិសេសរបស់អ្នក ចាប់ផ្តើមពីទីនេះ", "YOUR NEXT CHAPTER BEGINS HERE")}</p>
+        <h2 id="kp-final-title">{copy("ត្រៀមបង្កើតសន្លឹកការរបស់អ្នកហើយឬនៅ?", "Ready to create your wedding invitation?")}</h2>
+        <p>{copy("ជ្រើសរើសគំរូដែលអ្នកពេញចិត្ត ហើយចាប់ផ្តើមចែករំលែកថ្ងៃពិសេសរបស់អ្នក។", "Choose a design and begin sharing your special celebration today.")}</p>
+        <div className="kp-actions">
+          <Link to="/templates" className="kp-button kp-button--light">
+            {copy("មើលគំរូសន្លឹកការ", "Find your invitation")}
+            <ArrowUpRight size={18} aria-hidden="true" />
+          </Link>
+          <Link to="/templates/browse" className="kp-text-link">
+            {copy("ចាប់ផ្តើមបង្កើត", "Start creating")}
+            <ArrowUpRight size={18} aria-hidden="true" />
+          </Link>
+        </div>
+      </section>
     </>
   );
 }

@@ -42,9 +42,20 @@ export default function TemplateGrid({ featured = false }) {
       {status === "loading" && <><p role="status" className="tp-catalog-status">{copy("កំពុងផ្ទុកគំរូសន្លឹកការ…", "Loading the invitation collection…")}</p><div className="kp-design-grid" aria-hidden="true">{[1, 2, 3].map((key) => <div key={key} className="kp-design-skeleton" />)}</div></>}
       {status === "error" && <p role="status" className="tp-catalog-status">{copy("មិនអាចផ្ទុកគំរូពីម៉ាស៊ីនមេបាន។ ខាងក្រោមជាគំរូបង្ហាញប៉ុណ្ណោះ។ សិទ្ធិ និងតម្លៃត្រូវពិនិត្យពេលជ្រើសរើស។", "The live collection is unavailable. These are demo designs; availability and price must be checked when you select one.")} <button type="button" onClick={retry}>{copy("សាកម្ដងទៀត", "Try again")}</button></p>}
       {status !== "loading" && filtered.length === 0 && <p role="status" className="tp-catalog-status">{copy("មិនមានគំរូត្រូវនឹងការជ្រើសរើសនេះទេ។ សាកជ្រើសរើសប្រភេទផ្សេង ឬស្វែងរកម្ដងទៀត។", "No designs match this selection. Try another category or search.")}</p>}
-      {status !== "loading" && <div className="kp-design-grid tp-grid">{filtered.map((tpl) => <PublicTemplateCard key={tpl.identity} template={tpl} lang={lang} isAuthenticated={isAuthenticated} categoryLabel={categories[tpl.category] || categories.other} />)}</div>}
+      {status !== "loading" && <div className="kp-design-grid tp-grid">{filtered.map((tpl, index) => <PublicTemplateCard key={tpl.identity} template={tpl} lang={lang} isAuthenticated={isAuthenticated} categoryLabel={categories[tpl.category] || categories.other} priority={featured || index < 3} />)}</div>}
     </>
   );
-  if (featured) return <section className="kp-collection kp-section" aria-labelledby="kp-collection-title"><div className="kp-section-heading"><div><p className="kp-eyebrow">{copy("គំរូសម្រាប់រឿងរ៉ាវរបស់អ្នក", "A DESIGN FOR YOUR KIND OF BEAUTIFUL")}</p><h2 id="kp-collection-title">{copy("ធៀបការមួយ\nសម្រាប់រាល់អនុស្សាវរីយ៍។", "Find the one\nthat feels like you.")}</h2></div><Link to="/templates" className="kp-text-link">{copy("មើលគំរូទាំងអស់", "Explore the collection")}<ArrowUpRight size={18} aria-hidden="true" /></Link></div>{content}</section>;
+  if (featured) return (
+    <section className="kp-collection kp-section" aria-labelledby="kp-collection-title">
+      <div className="kp-section-heading">
+        <div>
+          <p className="kp-eyebrow">{copy("គំរូសន្លឹកការប្រណីត", "CURATED INVITATION COLLECTION")}</p>
+          <h2 id="kp-collection-title">{copy("ជ្រើសរើសគំរូដែលសាកសមនឹងថ្ងៃពិសេស", "Curated designs for your wedding day")}</h2>
+        </div>
+        <Link to="/templates" className="kp-text-link">{copy("មើលគំរូទាំងអស់", "Explore the collection")}<ArrowUpRight size={18} aria-hidden="true" /></Link>
+      </div>
+      {content}
+    </section>
+  );
   return <div className="tp-page kp-public-catalog"><div className="tp-container"><header className="tp-header-section"><p className="kp-eyebrow">{copy("គូព្រេង — គំរូសន្លឹកការ", "KOUPRENG — THE INVITATION COLLECTION")}</p><h1 className="tp-title">{copy("រចនាបទដែលជារបស់អ្នក។", "A design that feels like you.")}</h1><p>{copy("មើលគំរូពេញលេញ រួចជ្រើសរើសគំរូសម្រាប់ថ្ងៃពិសេសរបស់អ្នក។", "Preview the complete invitation, then choose a design for your celebration.")}</p></header>{content}</div></div>;
 }

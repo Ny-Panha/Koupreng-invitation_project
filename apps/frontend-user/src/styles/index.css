@@ -1,23 +1,7 @@
 @import "../assets/fonts/fonts.css";
 @import "tailwindcss";
 
-/* ============================================================
-   Koupreng — Design Tokens
-   Two-palette system:
-   --brand-*  → host / dashboard / admin / management UI       (purple SaaS)
-   --wed-*    → wedding builder / public invitation / templates (cream / gold)
-
-   Shared scales:
-   --space-*, --radius-*, --shadow-*, --font-*, --z-*
-
-   Naming rules:
-   - All tokens are CSS variables on :root.
-   - Use semantic aliases (--brand-bg, --wed-ink) in components,
-     not raw hex values. Hex is allowed only inside this file.
-   ============================================================ */
-
 :root {
-  /* ── Legacy font variables (kept for backward compatibility) ── */
   --app-planessential-com-inter-medium-font-family: 'DM Sans', sans-serif;
   --app-planessential-com-noto-sans-khmer-bold-font-family: 'Noto Sans Khmer', sans-serif;
   --app-planessential-com-noto-sans-khmer-medium-font-family: 'Noto Sans Khmer', sans-serif;
@@ -32,10 +16,6 @@
   --planessential-com-montserrat-regular-font-family: 'Montserrat', sans-serif;
   --planessential-com-moulpali-regular-font-family: 'Noto Sans Khmer', sans-serif;
 
-  /* ──────────────────────────────────────────────────────────
-     FONT FAMILIES
-     Khmer-first stack. Latin fallback. Display fonts opt-in.
-     ────────────────────────────────────────────────────────── */
   --font-sans:
     'Noto Sans Khmer', 'Kantumruy Pro', 'DM Sans',
     system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -46,7 +26,6 @@
   --font-mono:
     ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
 
-  /* Type scale (rem). Use clamp for fluid headings where appropriate. */
   --text-xs: 0.75rem;
   /* 12 */
   --text-sm: 0.875rem;
@@ -300,23 +279,38 @@
 }
 
 /* Public marketing aliases; management and template token values stay intact. */
+/* Public marketing tokens — Silk & Ink Editorial design system.
+   Preserves dashboard and wedding template variables intact. */
 .kp-marketing-shell {
-  --kp-bg: #FCF8F2;
-  --kp-surface: var(--wed-surface, #FFFFFF);
-  --kp-gold: var(--wed-gold-400);
-  --kp-gold-deep: var(--wed-gold-800);
-  --kp-emerald: #3D554A;
-  --kp-emerald-deep: #233B32;
-  --kp-ink: var(--wed-ink);
-  --kp-muted: #605A52;
-  --kp-border: #E8DED0;
-  --kp-blush: #EFE0DE;
+  --kp-public-bg: #F8F5EE;
+  --kp-public-surface: #FFFFFF;
+  --kp-public-surface-warm: #F4EFE6;
+  --kp-public-ink: #262622;
+  --kp-public-muted: #695D50;
+  --kp-public-gold: #C3A26B;
+  --kp-public-gold-ink: #77572C;
+  --kp-public-deep: #2E433A;
+  --kp-public-deep-hover: #22332C;
+  --kp-public-border: #E5DED2;
+
+  --kp-bg: var(--kp-public-bg);
+  --kp-surface: var(--kp-public-surface);
+  --kp-gold: var(--kp-public-gold);
+  --kp-gold-deep: var(--kp-public-gold-ink);
+  --kp-gold-ink: var(--kp-public-gold-ink);
+  --kp-deep: var(--kp-public-deep);
+  --kp-deep-hover: var(--kp-public-deep-hover);
+  --kp-emerald: var(--kp-public-deep);
+  --kp-emerald-deep: var(--kp-public-deep-hover);
+  --kp-ink: var(--kp-public-ink);
+  --kp-muted: var(--kp-public-muted);
+  --kp-border: var(--kp-public-border);
+  --kp-paper: var(--kp-public-surface-warm);
   --kp-burgundy: #672C39;
-  --kp-paper: #F6F0E5;
   --kp-font: 'Koupreng UI', 'DM Sans', 'Noto Sans Khmer', sans-serif;
   --kp-display: 'Koupreng Editorial', Georgia, serif;
   --kp-ease: cubic-bezier(.22, 1, .36, 1);
-  --site-header-offset: 112px;
+  --site-header-offset: 86px;
   color: var(--kp-ink);
   background: var(--kp-bg);
   font-family: var(--kp-font);
