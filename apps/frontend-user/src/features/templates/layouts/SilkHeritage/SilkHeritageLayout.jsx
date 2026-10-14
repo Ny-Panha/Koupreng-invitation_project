@@ -9,6 +9,7 @@ import useCountdown from "@/features/wedding-site/hooks/useCountdown";
 import { normalizeInvitationLanguage } from "@/shared/i18n/invitationLanguage";
 import { postPreviewMessage } from "@/shared/preview/previewMessaging";
 import manifest from "./template.json";
+import { useSilkMotion } from "./useSilkMotion";
 import "./silk-heritage.css";
 
 const parentText = (value) => Array.isArray(value) ? value.filter(Boolean).join(" និង ") : value || "";
@@ -53,13 +54,32 @@ function Album({ images, title, viewLabel }) {
   </>;
 }
 
-function Countdown({ date, label }) {
-  const count = useCountdown(date && !Number.isNaN(new Date(date).getTime()) ? date : undefined);
+
+function Countdown({ date, copy }) {
+  const count = useCountdown(date);
   if (!date || Number.isNaN(new Date(date).getTime()) || new Date(date) <= new Date()) return null;
-  return <p className="sh-countdown"><strong>{count.d}</strong> {label}</p>;
+  const units = [["d", copy("ថ្ងៃ", "Days")], ["h", copy("ម៉ោង", "Hours")], ["m", copy("នាទី", "Minutes")], ["s", copy("វិនាទី", "Seconds")]];
+  return <div className="sh-countdown" role="timer" aria-live="off" aria-label={copy("រង់ចាំថ្ងៃមង្គល", "Until our wedding")}>
+    {units.map(([key, label]) => <div key={key}><strong>{count[key]}</strong><span>{label}</span></div>)}
+  </div>;
 }
 
-export default function SilkHeritageLayout({ content = {}, liveData, preview = false, previewStartClosed = false, previewChannel, previewGateCommand, showBack = true, backTo = "/templates", backLabel = "ត្រឡប់ក្រោយ", useTemplateLink, primaryCtaLabel = "ប្រើគំរូនេះ", showActions = true, children }) {
+const latinTime = (value = "") => String(value).replace(/[០-៩]/g, (digit) => String("០១២៣៤៥៦៧៨៩".indexOf(digit)))
+  .replace("វេលាម៉ោង", "").replaceAll("ព្រឹក", "AM").replaceAll("ល្ងាច", "PM").replaceAll("ថ្ងៃត្រង់", "AM").trim();
+
+function SilkOrnament({ className = "" }) {
+  return <svg className={`sh-linework ${className}`} viewBox="0 0 300 60" fill="none" aria-hidden="true">
+    <path d="M8 30H96L114 12L132 30L150 48L168 30L186 12L204 30H292M96 30L114 48L150 12L186 48L204 30M132 30H168" />
+    <path d="M8 35H88M212 35H292M150 19L161 30L150 41L139 30Z" />
+  </svg>;
+}
+
+export default function SilkHeritageLayout({
+  content = {}, liveData, preview = false, previewStartClosed = false,
+  previewChannel, previewGateCommand, showBack = true, backTo = "/templates",
+  backLabel = "ត្រឡប់ក្រោយ", useTemplateLink, primaryCtaLabel = "ប្រើគំរូនេះ",
+  showActions = true, children,
+}) {
   const vm = useMemo(() => normalizeTemplateViewModel({}, {
     ...content,
     ...(liveData?.coverBackgroundImage !== undefined ? { coverBackgroundImage: liveData.coverBackgroundImage } : {}),
@@ -73,21 +93,30 @@ export default function SilkHeritageLayout({ content = {}, liveData, preview = f
   const reduced = usePrefersReducedMotion();
   const [gate, setGate] = useState(preview && !previewStartClosed ? "open" : "closed");
   const [folioBounds, setFolioBounds] = useState(null);
+  const root = useRef(null);
   const cover = useRef(null);
   const hero = useRef(null);
+  const openButton = useRef(null);
   const timer = useRef(null);
   const language = normalizeInvitationLanguage(vm.languageMode);
   const copy = (kh, en) => language === "en" ? en : language === "kh" ? kh : `${kh} / ${en}`;
   const heading = (kh, en) => language === "both"
     ? <><span lang="km">{kh}</span><span className="sh-heading-translation" lang="en">{en}</span></>
     : copy(kh, en);
+  const passage = (kh, en) => language === "en"
+    ? (en || <span lang={/[\u1780-\u17ff]/.test(kh || "") ? "km" : "en"}>{kh}</span>)
+    : language === "both" && en
+      ? <><span lang="km">{kh}</span><span className="sh-passage-translation" lang="en">{en}</span></>
+      : kh;
   const elementFont = (key) => ({ fontFamily: typeof vm.elementFonts?.[key] === "string"
     ? `${JSON.stringify(vm.elementFonts[key])}, var(--sh-display)` : undefined });
   const enabled = (key) => vm.enabledSections?.[key] !== false;
-  // Existing demo songs have unresolved rights. Only use a host-selected track.
+  // Demo tracks are metadata only. A host-selected track requires a user gesture.
   const musicSource = enabled("music") && (vm.hasHostContent || liveData?.musicUrl !== undefined) ? vm.music : "";
   const [audioRef, music] = useTemplateMusicController(musicSource);
   const opened = gate === "open";
+  useSilkMotion(root, opened, reduced, preview);
+
   useEffect(() => () => clearTimeout(timer.current), []);
   useEffect(() => {
     if (!previewGateCommand) return;
@@ -99,25 +128,46 @@ export default function SilkHeritageLayout({ content = {}, liveData, preview = f
     if (opened && hero.current && !(preview && !previewStartClosed)) hero.current.focus({ preventScroll: true });
     if (previewChannel) postPreviewMessage({ type: "PREVIEW_READY" }, previewChannel);
   }, [opened, preview, previewStartClosed, previewChannel]);
+
   const open = (skip = false) => {
     if (skip) { clearTimeout(timer.current); setGate("open"); return; }
     if (gate !== "closed") return;
     if (reduced) setGate("open");
     else {
       setFolioBounds({ height: cover.current.offsetHeight, top: cover.current.offsetTop });
-      setGate("opening"); timer.current = setTimeout(() => setGate("open"), 640);
+      setGate("opening");
+      timer.current = setTimeout(() => setGate("open"), 1100);
     }
+  };
+  const closeCover = () => {
+    clearTimeout(timer.current);
+    setGate("closed");
+    requestAnimationFrame(() => {
+      cover.current?.scrollIntoView({ behavior: "auto", block: "start" });
+      openButton.current?.focus({ preventScroll: true });
+    });
   };
   const groom = language === "en" ? vm.groomEn || vm.groom : vm.groom;
   const bride = language === "en" ? vm.brideEn || vm.bride : vm.bride;
   const date = language === "en" ? vm.dateTextEn || vm.dateText : vm.dateText;
+  const venueName = language === "en" ? vm.venueNameEn || vm.venueName : vm.venueName;
+  const venueAddress = language === "en" ? vm.venueAddressEn || vm.venueAddress : vm.venueAddress;
   const nameStyle = (name) => {
     const khmer = /[\u1780-\u17ff]/.test(name);
-    return { fontFamily: elementFont("couple").fontFamily || (khmer ? "var(--sh-display)" : "var(--sh-latin)"), lineHeight: khmer ? 1.9 : 1.3, ...(khmer && language === "en" ? { fontSize: ".75em" } : {}) };
+    return {
+      fontFamily: elementFont("couple").fontFamily || (khmer ? "var(--sh-display)" : "var(--sh-latin)"),
+      lineHeight: khmer ? 1.9 : 1.3,
+      ...(khmer && language === "en" ? { fontSize: ".75em" } : {}),
+    };
   };
-  const names = <><span lang={/[\u1780-\u17ff]/.test(groom) ? "km" : "en"} style={nameStyle(groom)}>{groom}</span><span className="sh-and" aria-hidden="true">&</span><span lang={/[\u1780-\u17ff]/.test(bride) ? "km" : "en"} style={nameStyle(bride)}>{bride}</span></>;
+  const names = <>
+    <span lang={/[\u1780-\u17ff]/.test(groom) ? "km" : "en"} style={nameStyle(groom)}>{groom}</span>
+    <span className="sh-and" aria-hidden="true">&</span>
+    <span lang={/[\u1780-\u17ff]/.test(bride) ? "km" : "en"} style={nameStyle(bride)}>{bride}</span>
+  </>;
   const familyGroom = parentText(vm.family?.groomParents || vm.groomParents);
   const familyBride = parentText(vm.family?.brideParents || vm.brideParents);
+  const monogram = [vm.groomEn || groom, vm.brideEn || bride].filter(Boolean).map((name) => name.trim().charAt(0)).join(" & ");
   const style = {
     ...manifest.tokens, ...manifest.assetSlots,
     ...(themeColor(vm.primaryColor || vm.design?.primaryColor) ? { "--tpl-primary": vm.primaryColor || vm.design.primaryColor } : {}),
@@ -127,33 +177,87 @@ export default function SilkHeritageLayout({ content = {}, liveData, preview = f
     ...(vm.fontLatin && vm.fontLatin !== "Cormorant Garamond" ? { "--sh-latin": `"${vm.fontLatin}", "Silk Cormorant", Georgia, serif` } : {}),
   };
   const sections = {
-    countdown: enabled("countdown") && <section className="sh-date-note" key="countdown"><Countdown date={vm.targetDate} label={copy("ថ្ងៃដល់ថ្ងៃមង្គល", "days until our wedding")} /></section>,
-    schedule: enabled("schedule") && vm.schedule.length > 0 && <section className="sh-program sh-section" id="sh-program" key="schedule" aria-labelledby="sh-program-title">
-      <div className="sh-section-intro"><span className="sh-ornament" aria-hidden="true" /><h2 id="sh-program-title">{heading("កម្មវិធីមង្គលការ", "The wedding program")}</h2><p>{date}</p></div>
-      <ol>{vm.schedule.map((item) => <li key={item.id}><time>{item.time}</time><div><h3>{language === "en" ? item.titleEn || item.title : item.title}</h3>{language === "both" && item.titleEn && <p lang="en">{item.titleEn}</p>}{item.description && <p>{item.description}</p>}{item.location && <p>{item.location}</p>}</div></li>)}</ol>
-      {vm.scheduleEnding && <p>{vm.scheduleEnding}</p>}
+    countdown: opened && enabled("countdown") && <section className="sh-date-note" key="countdown">
+      <p className="sh-kicker">{copy("រង់ចាំថ្ងៃមង្គល", "COUNTING THE DAYS TO OUR CELEBRATION")}</p>
+      <Countdown date={vm.targetDate} copy={copy} />
     </section>,
-    story: enabled("story") && vm.story?.length > 0 && <section className="sh-story sh-section" key="story" aria-labelledby="sh-story-title"><h2 id="sh-story-title">{heading("រឿងរ៉ាវរបស់យើង", "Our story")}</h2>{vm.story.map((chapter, index) => <article key={chapter.id || index}><h3>{chapter.title}</h3>{chapter.date && <p className="sh-story-date">{chapter.date}</p>}<p>{chapter.text}</p></article>)}</section>,
-    gallery: enabled("gallery") && vm.gallery.length > 0 && <section className="sh-gallery sh-section" key="gallery" aria-labelledby="sh-gallery-title"><h2 id="sh-gallery-title">{heading("អនុស្សាវរីយ៍របស់យើង", "Moments to keep")}</h2><Album images={vm.gallery} title={copy("រូបភាព", "Photo album")} viewLabel={copy("មើលរូបភាព", "View photo")} /></section>,
-    map: enabled("map") && enabled("venue") && (vm.venueName || vm.venueAddress) && <section className="sh-venue sh-section" id="sh-venue" key="map" aria-labelledby="sh-venue-title"><span className="sh-ornament" aria-hidden="true" /><h2 id="sh-venue-title">{heading("ជួបគ្នានៅថ្ងៃមង្គល", "A place to celebrate")}</h2><h3>{vm.venueName}</h3>{vm.venueHall && <p>{vm.venueHall}</p>}<p>{vm.venueAddress}</p><p>{date}{vm.eventTime && <> · {vm.eventTime}</>}</p>{vm.googleMapsUrl && <a className="sh-button sh-button-light" href={vm.googleMapsUrl} target="_blank" rel="noopener noreferrer">{copy("បើកផែនទី", "Open Google Maps")}</a>}{vm.sketchMapImage && <div className="sh-sketch"><Photo src={vm.sketchMapImage} alt={copy("ផែនទីទីតាំងពិធី", "Venue directions")} /></div>}</section>,
+    schedule: enabled("schedule") && vm.schedule.length > 0 && <section className="sh-program sh-section" id="sh-program" key="schedule" aria-labelledby="sh-program-title">
+      <div className="sh-section-intro"><SilkOrnament /><p className="sh-kicker">{copy("ថ្ងៃពិសេសរបស់យើង", "THE DAY, BEAUTIFULLY TOGETHER")}</p><h2 id="sh-program-title">{heading(vm.scheduleTitle || "កម្មវិធីមង្គលការ", "The wedding program")}</h2><p>{language === "en" ? date : vm.scheduleDate || date}</p></div>
+      <ol>{vm.schedule.map((item, index) => <li key={item.id}>
+        <time>{language === "en" ? latinTime(item.time) : item.time}</time>
+        <span className="sh-timeline-point" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+        <div><h3>{language === "en" ? item.titleEn || item.title : item.title}</h3>{language === "both" && item.titleEn && <p lang="en">{item.titleEn}</p>}{item.description && <p>{item.description}</p>}{item.location && <p>{item.location}</p>}</div>
+      </li>)}</ol>
+      {vm.scheduleEnding && <p className="sh-program-ending">{passage(vm.scheduleEnding, "With gratitude, we look forward to celebrating with you.")}</p>}
+    </section>,
+    story: enabled("story") && vm.story?.length > 0 && <section className="sh-story sh-section" key="story" aria-labelledby="sh-story-title">
+      <div className="sh-section-intro"><SilkOrnament /><h2 id="sh-story-title">{heading("រឿងរ៉ាវរបស់យើង", "Our story")}</h2></div>
+      {vm.story.map((chapter, index) => <article key={chapter.id || index}><h3>{chapter.title}</h3>{chapter.date && <p className="sh-story-date">{chapter.date}</p>}<p>{chapter.text}</p></article>)}
+    </section>,
+    gallery: enabled("gallery") && vm.gallery.length > 0 && <section className="sh-gallery sh-section" key="gallery" aria-labelledby="sh-gallery-title">
+      <div className="sh-section-intro"><p className="sh-kicker">{copy("អនុស្សាវរីយ៍នៃសេចក្តីស្រឡាញ់", "LITTLE MOMENTS, LASTING MEMORIES")}</p><h2 id="sh-gallery-title">{heading("អនុស្សាវរីយ៍របស់យើង", "Moments to keep")}</h2><SilkOrnament /></div>
+      <Album images={vm.gallery} title={copy("រូបភាព", "Photo album")} viewLabel={copy("មើលរូបភាព", "View photo")} />
+    </section>,
+    map: enabled("map") && enabled("venue") && (venueName || venueAddress) && <section className="sh-venue sh-section" id="sh-venue" key="map" aria-labelledby="sh-venue-title">
+      <div className="sh-section-intro"><SilkOrnament /><p className="sh-kicker">{copy("រួមគ្នា នៅថ្ងៃមង្គល", "MEET US WHERE THE MEMORIES BEGIN")}</p><h2 id="sh-venue-title">{heading("ជួបគ្នានៅថ្ងៃមង្គល", "A place to celebrate")}</h2></div>
+      <div className="sh-venue-card"><h3>{venueName}</h3>{vm.venueHall && <p>{vm.venueHall}</p>}<p>{venueAddress}</p><p>{date}{vm.eventTime && <> · {language === "en" ? latinTime(vm.eventTime) : vm.eventTime}</>}</p>{vm.googleMapsUrl && <a className="sh-button sh-button-light" href={vm.googleMapsUrl} target="_blank" rel="noopener noreferrer">{copy("បើកផែនទី", "Open Google Maps")}<span aria-hidden="true">↗</span></a>}</div>
+      {vm.sketchMapImage && <div className="sh-sketch"><Photo src={vm.sketchMapImage} alt={copy("ផែនទីទីតាំងពិធី", "Venue directions")} /></div>}
+    </section>,
     dressCode: enabled("dressCode") && vm.dressCode?.description && <section className="sh-section sh-dress" key="dressCode"><h2>{heading("សម្លៀកបំពាក់", "Dress code")}</h2><p>{vm.dressCode.description}</p><ul>{vm.dressCode.colors.map((color) => <li key={color.hex}><span style={{ backgroundColor: themeColor(color.hex) }} aria-hidden="true" />{color.name}</li>)}</ul></section>,
-    gift: enabled("gift") && vm.gift?.length > 0 && <div key="gift" className="sh-gift"><TemplateGift content={vm} /></div>,
+    gift: enabled("gift") && <section className="sh-gift sh-section" key="gift" aria-labelledby="sh-gift-title">
+      <div className="sh-section-intro"><SilkOrnament /><h2 id="sh-gift-title">{heading("ចំណងដៃ និងពរជ័យ", "Gifts and blessings")}</h2></div>
+      {vm.hasHostContent && vm.gift?.length > 0 ? <TemplateGift content={vm} /> : <p className="sh-demo-note">{copy("វត្តមាន និងពរជ័យរបស់លោកអ្នក ជាអំណោយដ៏មានតម្លៃ។ នេះជាគំរូបង្ហាញ មិនមានព័ត៌មានទូទាត់ប្រាក់ពិតទេ។", "Your presence and blessings are our greatest gifts. This preview contains no real payment details.")}</p>}
+    </section>,
     faq: enabled("faq") && vm.faq?.length > 0 && <section key="faq" className="sh-section"><h2>{heading("ព័ត៌មានបន្ថែម", "Helpful details")}</h2>{vm.faq.map((item, index) => <details key={item.id || index}><summary>{item.q}</summary><p>{item.a}</p></details>)}</section>,
-    rsvp: enabled("rsvp") && <section className="sh-rsvp sh-section" id="sh-rsvp" key="rsvp" aria-labelledby="sh-rsvp-title"><span className="sh-ornament" aria-hidden="true" /><h2 id="sh-rsvp-title">{heading("រីករាយនឹងវត្តមានលោកអ្នក", "We would love to see you")}</h2>{children || <p className="sh-demo-note">{copy("នេះជាគំរូបង្ហាញ។ ការឆ្លើយតប RSVP អាចធ្វើបានតាមសន្លឹកការដែលបានផ្សព្វផ្សាយ។", "This is a preview. RSVP is available on the published invitation.")}</p>}</section>,
+    rsvp: enabled("rsvp") && <section className="sh-rsvp sh-section" id="sh-rsvp" key="rsvp" aria-labelledby="sh-rsvp-title">
+      <div className="sh-section-intro"><SilkOrnament /><p className="sh-kicker">{copy("រីករាយនឹងវត្តមានលោកអ្នក", "A SEAT SAVED WITH LOVE")}</p><h2 id="sh-rsvp-title">{heading("រីករាយនឹងវត្តមានលោកអ្នក", "We would love to see you")}</h2></div>
+      {children || <p className="sh-demo-note">{copy("នេះជាគំរូបង្ហាញ។ ការឆ្លើយតប RSVP អាចធ្វើបានតាមសន្លឹកការដែលបានផ្សព្វផ្សាយ។", "This is a preview. RSVP is available on the published invitation.")}</p>}
+    </section>,
   };
-  const order = [...new Set([...(Array.isArray(vm.sectionOrder) ? vm.sectionOrder.map((key) => key === "venue" ? "map" : key) : []), "countdown", "schedule", "story", "gallery", "map", "dressCode", "gift", "faq", "rsvp"])];
-  return <div className={`tpl-silk-heritage${preview ? " sh-preview" : ""}`} style={style} lang={language === "en" ? "en" : "km"} dir="ltr" data-template-version={manifest.version}>
-    {showBack && !preview && <nav className="sh-toolbar" aria-label={copy("គំរូសន្លឹកការ", "Template navigation")}><Link to={backTo}>{backLabel}</Link>{useTemplateLink && showActions && <Link to={useTemplateLink}>{primaryCtaLabel}</Link>}</nav>}
+  const order = [...new Set([
+    ...(Array.isArray(vm.sectionOrder) ? vm.sectionOrder.map((key) => key === "venue" ? "map" : key) : []),
+    "countdown", "schedule", "story", "gallery", "map", "dressCode", "gift", "faq", "rsvp",
+  ])];
+  return <div ref={root} className={`tpl-silk-heritage${preview ? " sh-preview" : ""}`} style={style} lang={language === "en" ? "en" : "km"} dir="ltr" data-template-version={manifest.version} data-motion={reduced ? "reduced" : "full"}>
+    {showBack && !preview && <nav className="sh-toolbar" aria-label={copy("គំរូសន្លឹកការ", "Template navigation")}><Link to={backTo}>{backLabel}</Link><span className="sh-toolbar-name" lang="en">Silk Heritage</span>{useTemplateLink && showActions && <Link to={useTemplateLink}>{primaryCtaLabel}</Link>}</nav>}
     {!opened && <section ref={cover} className={`sh-cover is-${gate}`} style={gate === "opening" && folioBounds ? { top: folioBounds.top, height: folioBounds.height } : undefined} aria-label={copy("សំបុត្រអញ្ជើញ", "Invitation cover")}>
       <CoverBackground content={vm} templateDefault={manifest.cover} />
       <div className="sh-folio-leaf sh-folio-leaf-left" aria-hidden="true" /><div className="sh-folio-leaf sh-folio-leaf-right" aria-hidden="true" />
-      <div className="sh-cover-content"><p className="sh-brand" lang="en">Koupreng</p><span className="sh-ornament" aria-hidden="true" /><h1>{language === "en" ? "Wedding invitation" : vm.title || "សិរីមង្គលអាពាហ៍ពិពាហ៍"}</h1>{!vm.hideCoupleNameOnCover && <p className="sh-cover-names" style={elementFont("couple")}>{names}</p>}<div className="sh-dedication"><p>{copy("សូមគោរពអញ្ជើញ", "With our warm invitation")}</p><p className="sh-guest" style={elementFont("guestName")}>{vm.guestName || copy("លោកអ្នក និងក្រុមគ្រួសារ", "You and your family")}</p></div><p>{date}</p><button type="button" className="sh-button sh-button-light" onClick={() => open()} disabled={gate === "opening"}>{copy("បើកសំបុត្រអញ្ជើញ", "Open invitation")}</button><button type="button" className="sh-skip" onClick={() => open(true)}>{copy("មើលព័ត៌មានភ្លាម", "Skip opening")}</button></div>
+      <div className="sh-cover-content">
+        <p className="sh-brand" lang="en">Koupreng</p><SilkOrnament />
+        <h1>{language === "en" ? "Wedding invitation" : vm.title || "សិរីមង្គលអាពាហ៍ពិពាហ៍"}</h1>
+        {!vm.hideCoupleNameOnCover && <p className="sh-cover-names" style={elementFont("couple")}>{names}</p>}
+        <div className="sh-dedication"><p>{copy("សូមគោរពអញ្ជើញ", "With our warm invitation")}</p><p className="sh-guest" style={elementFont("guestName")}>{vm.guestName || copy("លោកអ្នក និងក្រុមគ្រួសារ", "You and your family")}</p></div>
+        <p>{date}</p><span className="sh-wax-seal" aria-hidden="true">{monogram || "K"}</span>
+        <button ref={openButton} type="button" className="sh-button sh-button-light" onClick={() => open()} disabled={gate === "opening"}>{copy("បើកសំបុត្រអញ្ជើញ", "Open invitation")}<span aria-hidden="true">↗</span></button>
+        <button type="button" className="sh-skip" onClick={() => open(true)}>{copy("មើលព័ត៌មានភ្លាម", "Skip opening")}</button>
+      </div>
     </section>}
     <main hidden={gate === "closed"} inert={!opened}>
-      <section className="sh-hero" aria-labelledby="sh-hero-title"><div className="sh-hero-copy"><span className="sh-ornament" aria-hidden="true" /><p>{copy("សិរីមង្គលអាពាហ៍ពិពាហ៍", "Together with our families")}</p><h1 id="sh-hero-title" ref={hero} tabIndex={-1} style={elementFont("couple")}>{names}</h1>{language === "both" && (vm.groomEn || vm.brideEn) && <p className="sh-latin-names" lang="en">{[vm.groomEn, vm.brideEn].filter(Boolean).join(" & ")}</p>}<p className="sh-hero-date" style={elementFont("date")}>{date}</p>{vm.eventTime && <p>{vm.eventTime}</p>}<p>{vm.venueName}</p><span className="sh-ornament" aria-hidden="true" /></div><figure className="sh-hero-photo"><Photo src={gate !== "closed" ? vm.coverImage : ""} alt={copy("រូបគូស្វាមីភរិយា", "The couple's portrait")} priority />{!vm.hasHostContent && <figcaption>{copy("រូបភាពសម្រាប់គំរូបង្ហាញ", "Demo photography")}</figcaption>}</figure></section>
-      <section className="sh-formal sh-section" aria-labelledby="sh-formal-title"><span className="sh-ornament" aria-hidden="true" /><h2 id="sh-formal-title">{heading("សូមគោរពអញ្ជើញ", "You are warmly invited")}</h2>{(familyGroom || familyBride) && <div className="sh-families">{familyGroom && <p>{familyGroom}</p>}{familyBride && <p>{familyBride}</p>}</div>}<p className="sh-invitation-copy">{vm.messageText}</p><div className="sh-formal-names" style={elementFont("couple")}>{names}</div><p>{date}</p>{vm.invitationImage && <div className="sh-invitation-photo"><Photo src={vm.invitationImage} alt={copy("រូបភាពអញ្ជើញ", "Invitation artwork")} /></div>}{vm.invitationImage2 && <div className="sh-invitation-photo"><Photo src={vm.invitationImage2} alt={copy("រូបភាពអញ្ជើញបន្ថែម", "Additional invitation artwork")} /></div>}</section>
+      <section className="sh-hero" aria-labelledby="sh-hero-title">
+        <div className="sh-hero-copy"><SilkOrnament /><p className="sh-kicker">{copy("សិរីមង្គលអាពាហ៍ពិពាហ៍", "TOGETHER WITH OUR FAMILIES")}</p><h1 id="sh-hero-title" ref={hero} tabIndex={-1} style={elementFont("couple")}>{names}</h1>{language === "both" && (vm.groomEn || vm.brideEn) && <p className="sh-latin-names" lang="en">{[vm.groomEn, vm.brideEn].filter(Boolean).join(" & ")}</p>}<p className="sh-hero-date" style={elementFont("date")}>{date}</p>{vm.eventTime && <p>{language === "en" ? latinTime(vm.eventTime) : vm.eventTime}</p>}<p>{venueName}</p><a className="sh-scroll-cue" href="#sh-formal">{copy("ដោយក្តីរីករាយ សូមអញ្ជើញ", "An invitation, with love")}<span aria-hidden="true">↓</span></a></div>
+        <figure className="sh-hero-photo"><Photo src={gate !== "closed" ? vm.coverImage : ""} alt={copy("រូបគូស្វាមីភរិយា", "The couple's portrait")} priority />{!vm.hasHostContent && <figcaption>{copy("រូបភាពសម្រាប់គំរូបង្ហាញ", "Demo photography")}</figcaption>}<span className="sh-photo-monogram" aria-hidden="true">{monogram}</span></figure>
+      </section>
+      <section className="sh-formal sh-section" id="sh-formal" aria-labelledby="sh-formal-title">
+        <div className="sh-section-intro"><SilkOrnament />{(familyGroom || familyBride) && <p className="sh-kicker">{heading(vm.familyHeading || "គ្រួសារទាំងសងខាង", "OUR TWO FAMILIES")}</p>}<h2 id="sh-formal-title">{heading(vm.messageTitle || "សូមគោរពអញ្ជើញ", "You are warmly invited")}</h2></div>
+        {(familyGroom || familyBride) && <div className="sh-families">
+          {familyGroom && <article><p className="sh-family-side">{copy(vm.family?.groomTitle || "ខាងកូនប្រុស", "The groom's family")}</p><p className="sh-parent-names" lang={/[\u1780-\u17ff]/.test(familyGroom) ? "km" : "en"}>{familyGroom}</p><p className="sh-family-label">{copy(vm.family?.groomLabel || "កូនប្រុសនាម", "The groom")}</p><h3>{groom}</h3></article>}
+          {familyBride && <article><p className="sh-family-side">{copy(vm.family?.brideTitle || "ខាងកូនស្រី", "The bride's family")}</p><p className="sh-parent-names" lang={/[\u1780-\u17ff]/.test(familyBride) ? "km" : "en"}>{familyBride}</p><p className="sh-family-label">{copy(vm.family?.brideLabel || "កូនស្រីនាម", "The bride")}</p><h3>{bride}</h3></article>}
+        </div>}
+        <p className="sh-invitation-copy">{passage(vm.messageText, vm.messageEn)}</p>
+        <div className="sh-formal-names" style={elementFont("couple")}>{names}</div><p>{date}</p>
+        {vm.invitationImage && <div className="sh-invitation-photo"><Photo src={vm.invitationImage} alt={copy("រូបភាពអញ្ជើញ", "Invitation artwork")} /></div>}
+        {vm.invitationImage2 && <div className="sh-invitation-photo"><Photo src={vm.invitationImage2} alt={copy("រូបភាពអញ្ជើញបន្ថែម", "Additional invitation artwork")} /></div>}
+      </section>
       {order.map((key) => sections[key] || null)}
-      <footer className="sh-closing"><span className="sh-ornament" aria-hidden="true" /><h2>{vm.thankYouTitle || copy("សូមអរគុណ", "With love and gratitude")}</h2><p>{vm.thankYouText || copy("វត្តមានរបស់លោកអ្នក ជាកិត្តិយសដ៏ថ្លៃថ្លាសម្រាប់យើងខ្ញុំ។", "Your presence will mean so much to us.")}</p><p className="sh-closing-names">{[groom, bride].filter(Boolean).join(" & ")}</p><nav aria-label={copy("ព័ត៌មានពិធី", "Wedding details")}>{sections.schedule && <a href="#sh-program">{copy("កម្មវិធី", "Program")}</a>}{sections.map && <a href="#sh-venue">{copy("ទីតាំង", "Venue")}</a>}{sections.rsvp && <a href="#sh-rsvp">RSVP</a>}<button type="button" onClick={() => setGate("closed")}>{copy("មើលគម្របវិញ", "View cover")}</button></nav></footer>
+      {enabled("apology") && vm.apologyText && <section className="sh-apology sh-section" aria-labelledby="sh-apology-title"><div className="sh-note"><SilkOrnament /><p className="sh-kicker">{copy("ដោយមេត្រីភាព និងក្តីគោរព", "WITH WARMTH AND RESPECT")}</p><h2 id="sh-apology-title">{heading(vm.apologyTitle || "លិខិតសូមអភ័យទោស", vm.apologyTitleEn || "A heartfelt invitation")}</h2><p>{passage(vm.apologyText, vm.apologyTextEn)}</p></div></section>}
+      <footer className="sh-closing">
+        <SilkOrnament /><p className="sh-kicker">{copy("ដោយក្តីស្រលាញ់ ពីគ្រួសារយើងខ្ញុំ", "WITH LOVE, FROM OUR FAMILIES")}</p>
+        <h2>{heading(vm.thankYouTitle || "សូមអរគុណ", vm.thankYouTitleEn || "With love and gratitude")}</h2>
+        <p>{passage(vm.thankYouText || copy("វត្តមានរបស់លោកអ្នក ជាកិត្តិយសដ៏ថ្លៃថ្លាសម្រាប់យើងខ្ញុំ។", "Your presence will mean so much to us."), vm.thankYouTextEn)}</p>
+        <p className="sh-closing-names">{[groom, bride].filter(Boolean).join(" & ")}</p>
+        <nav aria-label={copy("ព័ត៌មានពិធី", "Wedding details")}>{sections.schedule && <a href="#sh-program">{copy("កម្មវិធី", "Program")}</a>}{sections.map && <a href="#sh-venue">{copy("ទីតាំង", "Venue")}</a>}{sections.rsvp && <a href="#sh-rsvp">RSVP</a>}<button type="button" onClick={closeCover}>{copy("មើលគម្របវិញ", "View cover")}</button></nav>
+      </footer>
     </main>
     {music.hasMusic && <><audio ref={audioRef} src={musicSource} preload="none" loop /><button type="button" className="sh-music" onClick={music.toggle} aria-pressed={music.playing}>{music.playing ? copy("បិទតន្ត្រី", "Pause music") : copy("បើកតន្ត្រី", "Play music")}</button>{music.status === "error" && <p className="sh-music-error" role="status">{copy("តន្ត្រីមិនអាចចាក់បាន។ សូមសាកម្ដងទៀត។", "Music could not play. Please try again.")}</p>}</>}
   </div>;

@@ -682,6 +682,13 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         title: nonBlank(host.title || tpl.title) || "សិរីមង្គលអាពាហ៍ពិពាហ៍",
         subtitle: nonBlank(tpl.subtitle || host.subtitle),
         messageTitle: nonBlank(tpl.messageTitle || host.messageTitle),
+        messageEn: nonBlank(hasHostContent ? host.messageEn : tpl.messageEn),
+        thankYouTitleEn: nonBlank(hasHostContent ? host.thankYouTitleEn : tpl.thankYouTitleEn),
+        thankYouTextEn: nonBlank(hasHostContent ? host.thankYouTextEn : tpl.thankYouTextEn),
+        apologyTitleEn: nonBlank(hasHostContent ? host.apologyTitleEn : tpl.apologyTitleEn),
+        apologyTextEn: nonBlank(hasHostContent ? host.apologyTextEn : tpl.apologyTextEn),
+        venueNameEn: nonBlank(hasHostContent ? host.venueNameEn : tpl.venueNameEn),
+        venueAddressEn: nonBlank(hasHostContent ? host.venueAddressEn : tpl.venueAddressEn),
         hideCoupleNameOnCover: Boolean(tpl.hideCoupleNameOnCover || host.hideCoupleNameOnCover),
         showBrandMark: host.showBrandMark !== undefined
             ? Boolean(host.showBrandMark)

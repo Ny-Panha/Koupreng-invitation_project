@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import SilkHeritageLayout from "./SilkHeritageLayout";
 import TemplateExperience from "../../experience/TemplateExperience";
 import { getDedicatedTemplateComponent, templateRegistry } from "../../registry/templateRegistry";
-import { getTemplateById, registerDynamicTemplates, resolveNumericTemplateId, SILK_HERITAGE_TEMPLATE } from "../../data/templatesData";
+import { getTemplateById, registerDynamicTemplates, resolveNumericTemplateId, SILK_HERITAGE_TEMPLATE, KHMER_CELESTIAL_TEMPLATE } from "../../data/templatesData";
 import { draftToTemplate } from "../../../wedding-builder/utils/draftToTemplate";
 import { publicInvitationToDraft } from "../../../wedding-builder/utils/invitationDraftAdapter";
 import { buildTemplateContent } from "../../experience/config/templateExperienceContent";
@@ -17,6 +17,45 @@ afterEach(() => { cleanup(); registerDynamicTemplates([]); });
 const show = (props = {}) => render(<MemoryRouter><SilkHeritageLayout {...props} content={{ groom: "សុវណ្ណ", bride: "សុភា", guestName: "លោក សំណាង", languageMode: "en", gallery: [], schedule: [], enabledSections: { countdown: false, dressCode: false }, ...props.content }} /></MemoryRouter>);
 
 describe("Silk Heritage integration", () => {
+  it("copies the complete ceremonial information with independent Silk data and media", () => {
+    for (const key of ["title", "guestName", "familyHeading", "messageTitle", "message", "dateText", "dateTextEn", "machineEventDate", "targetDate", "eventTime", "ceremonyTime", "receptionTime", "venueName", "venueAddress", "mapQuery", "scheduleTitle", "scheduleDate", "scheduleEnding", "thankYouTitle", "thankYouText", "apologyTitle", "apologyText", "storyText"]) {
+      expect(SILK_HERITAGE_TEMPLATE[key], key).toBeTruthy();
+    }
+    expect(SILK_HERITAGE_TEMPLATE.family).not.toBe(KHMER_CELESTIAL_TEMPLATE.family);
+    expect(SILK_HERITAGE_TEMPLATE.family.groomParents).not.toBe(KHMER_CELESTIAL_TEMPLATE.family.groomParents);
+    expect(SILK_HERITAGE_TEMPLATE.schedule).toHaveLength(9);
+    expect(SILK_HERITAGE_TEMPLATE.schedule.map(({ id, time, title }) => ({ id, time, title })))
+      .toEqual(KHMER_CELESTIAL_TEMPLATE.schedule);
+    expect(SILK_HERITAGE_TEMPLATE.design).toMatchObject({ presetId: "SILK_HERITAGE", openingStyle: "paper", primaryColor: "#672C39" });
+    expect(SILK_HERITAGE_TEMPLATE.storyImages.every((image) => image.src.includes("/silk-heritage/"))).toBe(true);
+    expect(SILK_HERITAGE_TEMPLATE.isPremium).toBe(false);
+  });
+
+  it("renders the full families, program, gratitude and apology instead of dropping copied fields", () => {
+    const content = buildTemplateContent(SILK_HERITAGE_TEMPLATE, "silk-heritage");
+    const { container } = show({ preview: true, content: { ...content, languageMode: "kh" } });
+    expect(screen.getByText(SILK_HERITAGE_TEMPLATE.familyHeading)).toBeInTheDocument();
+    for (const side of ["groom", "bride"]) expect(screen.getByText(SILK_HERITAGE_TEMPLATE.family[`${side}Title`])).toBeInTheDocument();
+    expect(container.querySelectorAll(".sh-program li")).toHaveLength(9);
+    expect(screen.getByText(SILK_HERITAGE_TEMPLATE.apologyText)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: SILK_HERITAGE_TEMPLATE.thankYouTitle })).toBeInTheDocument();
+    expect(screen.getByText(SILK_HERITAGE_TEMPLATE.thankYouText)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /បើកផែនទី/ })).toHaveAttribute("href", expect.stringContaining("Himawari"));
+    expect(container.querySelector("audio")).toBeNull();
+    expect(container.querySelector(".tx-gift__qr")).toBeNull();
+  });
+
+  it("translates ceremonial copy and does not leak demo translations into a hosted invitation", () => {
+    const content = buildTemplateContent(SILK_HERITAGE_TEMPLATE, "silk-heritage");
+    show({ preview: true, content: { ...content, languageMode: "en" } });
+    expect(screen.getByText(SILK_HERITAGE_TEMPLATE.messageEn)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "A heartfelt invitation" })).toBeInTheDocument();
+    expect(screen.getAllByText("Himawari Hotel, Phnom Penh")).toHaveLength(2);
+    const hosted = draftToTemplate({ id: 901, templateId: "silk-heritage", couple: { groom: "Saved groom", bride: "Saved bride" }, event: { date: "2026-12-20", venueName: "Saved venue" }, messageText: "Our saved copy" }, []);
+    const published = buildTemplateContent(hosted.tpl, hosted.variant);
+    expect(published.messageEn).toBe("");
+    expect(published.venueNameEn).toBe("");
+  });
   it("uses the catalog's actual ID despite legacy numeric collisions", () => {
     registerDynamicTemplates([{ id: 2, code: "silk-heritage", description: JSON.stringify({ presetId: "SILK_HERITAGE", coverImage: "/saved-portrait.jpg" }), thumbnailUrl: "/thumbnail.svg", premium: true, price: 12 }]);
     const template = getTemplateById("silk-heritage");
@@ -73,12 +112,12 @@ describe("Silk Heritage integration", () => {
     const sessionId = "silk-preview-session-1234567890";
     const channel = { sessionId, origin: window.location.origin, source: window };
     render(<MemoryRouter><TemplateExperience tpl={SILK_HERITAGE_TEMPLATE} preview previewChannel={channel} /></MemoryRouter>);
-    await screen.findByRole("heading", { name: /សុវណ្ណ.*សុភា/ });
+    await screen.findByRole("heading", { level: 1, name: new RegExp(`${SILK_HERITAGE_TEMPLATE.groom}.*${SILK_HERITAGE_TEMPLATE.bride}`) });
     const send = (origin, data, type = "LIVE_PREVIEW_SYNC") => act(() => window.dispatchEvent(new MessageEvent("message", { origin, source: window, data: { type, sessionId, data, open: false } })));
     send("https://attacker.invalid", { groomName: "Unsafe name" });
     expect(screen.queryByText("Unsafe name")).not.toBeInTheDocument();
     send(window.location.origin, { groomName: "Edited groom", photos: [], schedule: [] });
-    await waitFor(() => expect(screen.getByRole("heading", { name: /Edited groom/ })).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByRole("heading", { level: 1, name: /Edited groom/ })).toBeInTheDocument());
     expect(screen.queryByRole("heading", { name: /wedding program/i })).not.toBeInTheDocument();
     send(window.location.origin, undefined, "TOGGLE_GATE");
     expect(screen.getByRole("button", { name: /Open invitation/ })).toBeInTheDocument();

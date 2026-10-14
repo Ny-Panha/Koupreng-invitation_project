@@ -1,7 +1,7 @@
 {
   "slug": "silk-heritage",
-  "name": "សូត្រមង្គល / Silk Heritage",
-  "version": "1.0.0",
+  "name": "Silk Heritage",
+  "version": "1.1.0",
   "category": "WEDDING",
   "cover": { "type": "image", "src": "/templates/silk-heritage/cover.svg", "poster": "/templates/silk-heritage/cover.svg", "objectFit": "cover" },
   "tokens": {
@@ -20,6 +20,6 @@
     "--asset-ornament": "url('/templates/silk-heritage/woven-ornament.svg')",
     "--asset-hero-ratio": "4 / 5"
   },
-  "sections": ["hero", "invitation", "countdown", "schedule", "story", "gallery", "venue", "rsvp", "closing"],
+  "sections": ["hero", "invitation", "countdown", "schedule", "story", "gallery", "venue", "gift", "rsvp", "apology", "closing"],
   "editable": { "coverBackground": true, "heroPhoto": true, "gallery": true, "music": true, "colors": ["primary", "secondary", "background"] }
 }
