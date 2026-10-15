@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import { TEMPLATES } from "../data/templatesData";
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { useBackendMessages } from "../../../shared/i18n/useBackendMessages";
+import { useLanguageStore } from "../../../stores/useLanguageStore";
 import { usePublicTemplateCatalog } from "../hooks/usePublicTemplateCatalog";
 import { presentTemplate } from "../model/templatePresentation";
 import PublicTemplateCard from "./PublicTemplateCard";
@@ -13,7 +13,7 @@ const FEATURED = ["silk-heritage", "khmer-celestial", "emerald-canva-luxe-weddin
 
 export default function TemplateGrid({ featured = false }) {
   const { isAuthenticated } = useAuth();
-  const { lang } = useBackendMessages("templateGrid");
+  const lang = useLanguageStore((state) => state.lang);
   const { items, status, retry } = usePublicTemplateCatalog(lang);
   const [category, setCategory] = useState("all");
   const [search, setSearch] = useState("");
@@ -42,7 +42,7 @@ export default function TemplateGrid({ featured = false }) {
       {status === "loading" && <><p role="status" className="tp-catalog-status">{copy("កំពុងផ្ទុកគំរូសន្លឹកការ…", "Loading the invitation collection…")}</p><div className="kp-design-grid" aria-hidden="true">{[1, 2, 3].map((key) => <div key={key} className="kp-design-skeleton" />)}</div></>}
       {status === "error" && <p role="status" className="tp-catalog-status">{copy("មិនអាចផ្ទុកគំរូពីម៉ាស៊ីនមេបាន។ ខាងក្រោមជាគំរូបង្ហាញប៉ុណ្ណោះ។ សិទ្ធិ និងតម្លៃត្រូវពិនិត្យពេលជ្រើសរើស។", "The live collection is unavailable. These are demo designs; availability and price must be checked when you select one.")} <button type="button" onClick={retry}>{copy("សាកម្ដងទៀត", "Try again")}</button></p>}
       {status !== "loading" && filtered.length === 0 && <p role="status" className="tp-catalog-status">{items.length === 0 && status === "ready" ? copy("មិនទាន់មានគំរូក្នុងបញ្ជីនេះទេ។ សូមពិនិត្យម្ដងទៀតនៅពេលក្រោយ។", "There are no designs in the collection yet. Please check back later.") : copy("មិនមានគំរូត្រូវនឹងការជ្រើសរើសនេះទេ។ សាកជ្រើសរើសប្រភេទផ្សេង ឬស្វែងរកម្ដងទៀត។", "No designs match this selection. Try another category or search.")}</p>}
-      {status !== "loading" && <div className="kp-design-grid tp-grid">{filtered.map((tpl, index) => <PublicTemplateCard key={tpl.identity} template={tpl} lang={lang} isAuthenticated={isAuthenticated} categoryLabel={categories[tpl.category] || categories.other} priority={!featured && index === 0} />)}</div>}
+      {status !== "loading" && <div className="kp-design-grid tp-grid">{filtered.map((tpl, index) => <PublicTemplateCard key={tpl.identity} template={tpl} lang={lang} isAuthenticated={isAuthenticated} categoryLabel={categories[tpl.category] || categories.other} compact={featured} priority={!featured && index === 0} />)}</div>}
     </>
   );
   if (featured) return (

@@ -1,0 +1,54 @@
+{
+  "generator": "generate-marketing-thumbnails.mjs; Chromium canvas WebP quality 0.88; unchanged aspect ratio, no crop or enlargement",
+  "chromium": "153.0.8010.12",
+  "assets": [
+    {
+      "source": "/facebook/all/06-card/cover-card.jpg",
+      "sourceSha256": "186ccc07cb589fb88aa8d6a7ff19a174a9a4c22a351e305b165826ed3278b037",
+      "file": "khmer-celestial-320.webp",
+      "width": 320,
+      "bytes": 27670,
+      "sha256": "9ad60884eba161986394a5e0ce853f4cce1a9ef1f4e542be2563ad9061637a4b"
+    },
+    {
+      "source": "/facebook/all/06-card/cover-card.jpg",
+      "sourceSha256": "186ccc07cb589fb88aa8d6a7ff19a174a9a4c22a351e305b165826ed3278b037",
+      "file": "khmer-celestial-640.webp",
+      "width": 640,
+      "bytes": 100188,
+      "sha256": "ced14c49ad1972f80500778da56bc189fa767ac7014f1eaaf305fcff2c2289b1"
+    },
+    {
+      "source": "/facebook/all/06-card/cover-card.jpg",
+      "sourceSha256": "186ccc07cb589fb88aa8d6a7ff19a174a9a4c22a351e305b165826ed3278b037",
+      "file": "khmer-celestial-1280.webp",
+      "width": 1280,
+      "bytes": 350998,
+      "sha256": "5c7cf6548ae7e75de51acb7d8c95837df3e16b41e2031e953d44c4e4f9d2d2a9"
+    },
+    {
+      "source": "/templates/canva-luxury/emerald-luxury.jpg",
+      "sourceSha256": "f0fc22a73ea5265306d4f3956713b7504641a50d66d5bc05b23ae26752e2ccca",
+      "file": "emerald-luxe-240.webp",
+      "width": 240,
+      "bytes": 37286,
+      "sha256": "f8637880cb6178140214382eb393dec26755c9f99c2070231c2c7c3142609492"
+    },
+    {
+      "source": "/templates/canva-luxury/emerald-luxury.jpg",
+      "sourceSha256": "f0fc22a73ea5265306d4f3956713b7504641a50d66d5bc05b23ae26752e2ccca",
+      "file": "emerald-luxe-480.webp",
+      "width": 480,
+      "bytes": 133146,
+      "sha256": "3799593c972d086fa7e76a0f17fd3c437900bd15d65ca7c5175ec803f73b1b95"
+    },
+    {
+      "source": "/templates/canva-luxury/emerald-luxury.jpg",
+      "sourceSha256": "f0fc22a73ea5265306d4f3956713b7504641a50d66d5bc05b23ae26752e2ccca",
+      "file": "emerald-luxe-768.webp",
+      "width": 768,
+      "bytes": 318954,
+      "sha256": "2ef4b7734afaa5162d37b1810f1defa34575f94bfe0798db00a7651c6524b912"
+    }
+  ]
+}

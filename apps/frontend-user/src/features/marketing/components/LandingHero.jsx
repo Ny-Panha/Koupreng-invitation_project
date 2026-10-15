@@ -10,14 +10,22 @@ import LandingPhoto from "./LandingPhoto";
 export default function LandingHero({ copy }) {
   const [opened, setOpened] = useState(false);
   const previewLink = useRef(null);
+  const previewOpener = useRef(null);
   const { isAuthenticated } = useAuth();
   const reduced = usePrefersReducedMotion();
-  const tryPreview = () => {
+  const tryPreview = (event) => {
+    previewOpener.current = event.currentTarget;
     setOpened(true);
     requestAnimationFrame(() => previewLink.current?.focus());
   };
+  const closePreview = () => {
+    setOpened(false);
+    previewOpener.current?.focus();
+  };
   return (
-    <section className="kp-hero" aria-labelledby="kp-hero-title" data-reduced-motion={reduced}>
+    <section className="kp-hero" aria-labelledby="kp-hero-title" data-reduced-motion={reduced} onKeyDown={(event) => {
+      if (opened && event.key === "Escape") { event.preventDefault(); closePreview(); }
+    }}>
       <div className="kp-hero-copy">
         <p className="kp-eyebrow kp-enter">{copy("សន្លឹកការឌីជីថល", "Digital wedding invitations")}</p>
         <h1 id="kp-hero-title" className="kp-enter kp-enter--2">
@@ -66,7 +74,10 @@ export default function LandingHero({ copy }) {
             className="kp-folio-cover"
             aria-expanded={opened}
             aria-controls="kp-folio-paper"
-            onClick={() => setOpened((value) => !value)}
+            onClick={(event) => {
+              if (opened) closePreview();
+              else { previewOpener.current = event.currentTarget; setOpened(true); }
+            }}
             aria-label={opened ? copy("បិទសន្លឹកការគំរូ", "Close invitation preview") : copy("បើកសន្លឹកការគំរូ", "Open invitation preview")}
           >
             <img src="/templates/silk-heritage/preview.svg" width="720" height="1080" alt="" />

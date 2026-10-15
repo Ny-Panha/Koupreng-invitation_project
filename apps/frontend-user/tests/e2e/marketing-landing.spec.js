@@ -1,8 +1,9 @@
 import { expect, test } from "@playwright/test";
 import { mkdir } from "node:fs/promises";
+import process from "node:process";
 
 const widths = [320, 360, 375, 390, 430, 768, 1024, 1280, 1440, 1920];
-const output = "../../output/playwright/cinematic";
+const output = process.env.MARKETING_EVIDENCE_DIR || "../../output/playwright/cinematic";
 const token = "eyJhbGciOiJub25lIn0.eyJleHAiOjQxMDIyNjg4MDB9.";
 const user = { id: 7, fullName: "Fixture Host", email: "host@example.test", role: "USER" };
 const catalog = [
@@ -259,4 +260,44 @@ test("premium designs with invalid amounts or currencies keep the pricing gate",
     await expect(page).toHaveURL(/\/pricing$/);
     await page.unroute("**/api/v1/templates");
   }
+});
+
+test("folio Escape and closing return focus to the control that opened it", async ({ page }) => {
+  await fixture(page);
+  await page.addInitScript(() => localStorage.setItem("koupreng.lang", "en"));
+  await page.goto("/");
+  const secondary = page.getByRole("button", { name: "Try the preview" });
+  await secondary.focus(); await page.keyboard.press("Enter");
+  await expect(page.locator(".kp-folio-demo")).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(secondary).toBeFocused();
+  await expect(page.locator(".kp-folio-paper")).toHaveAttribute("inert", "");
+  await secondary.click();
+  await page.getByRole("button", { name: "Close invitation preview" }).click();
+  await expect(secondary).toBeFocused();
+  const cover = page.getByRole("button", { name: "Open invitation preview" });
+  await cover.focus(); await page.keyboard.press("Enter");
+  await page.keyboard.press("Escape");
+  await expect(cover).toBeFocused();
+  await expect(cover).toHaveAttribute("aria-expanded", "false");
+});
+
+test("public catalog loads responsive local artwork while unknown server URLs stay exact", async ({ page }) => {
+  await fixture(page);
+  const requests = [];
+  page.on("request", request => requests.push(request.url()));
+  await page.goto("/templates");
+  const localImage = page.locator('[data-template="khmer-celestial"] img');
+  await localImage.scrollIntoViewIfNeeded();
+  await expect.poll(() => localImage.evaluate(node => node.complete && node.naturalWidth > 0)).toBe(true);
+  expect(await localImage.evaluate(node => node.currentSrc)).toMatch(/\/images\/marketing\/catalog\/khmer-celestial-(640|1280)\.webp$/);
+  expect(requests.some(url => /\/(HostShell|InvitationScopedRedirect)-/.test(url))).toBe(false);
+  expect(requests.some(url => url.endsWith("/facebook/all/06-card/cover-card.jpg"))).toBe(false);
+  const unknown = "/uploads/custom-cover.jpg?revision=7";
+  await page.route("**/api/v1/templates", route => json(route, [{ ...catalog[1], thumbnailUrl: unknown }]));
+  await page.route("**/uploads/custom-cover.jpg?revision=7", route => route.abort());
+  await page.reload();
+  await expect(page.locator(".kp-design-placeholder")).toBeVisible();
+  expect(requests.some(url => url.endsWith(unknown))).toBe(true);
+  await expect(page.locator(".kp-design-actions a").first()).toHaveAttribute("href", /template%3Dkhmer-celestial/);
 });

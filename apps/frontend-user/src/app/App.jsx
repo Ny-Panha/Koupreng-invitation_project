@@ -6,7 +6,7 @@ import { AuthProvider, QueryProvider, ThemeProvider } from "./providers";
 import RouteMotion from "../shared/animations/RouteMotion";
 import SupportWidget from "../shared/ui/SupportWidget";
 import RouteFontLoader from "../shared/fonts/RouteFontLoader";
-import { ToastContainer } from "../shared/ui";
+import ToastContainer from "../shared/ui/ToastContainer";
 import {
   initTelegramWebApp,
   TELEGRAM_WEB_APP_READY_EVENT,

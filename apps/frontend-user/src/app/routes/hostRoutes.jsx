@@ -1,6 +1,7 @@
 import { PaidTemplatesPage, BrowseTemplatesPage, BudgetPage, ChangePasswordPage, DashboardPage, EventsPage, ExpensesPage, GuestsPage, HostTemplateDemoPage, InvitationCheckInPage, InvitationCreatePage, InvitationEditPage, InvitationMediaPage, InvitationPreviewPage, InvitationDeliveryPage, NotificationsPage, PaymentHistoryPage, PaymentReceiptPage, ProfilePage, SeatingPage, SubscriptionPackagesPage, WeddingGiftPage, OrganizationPage, OrganizationDetailPage, AiAssistantPage, RsvpDashboardPage, FinancialReport, QrPage, WishesPage } from "./lazyRoutePages";
 /* eslint-disable react-refresh/only-export-components */
 import { Navigate, Route, useParams } from "react-router-dom";
+import { lazy } from "react";
 
 function InvitationBareRedirect() {
   const { id } = useParams();
@@ -8,7 +9,7 @@ function InvitationBareRedirect() {
 }
 
 
-import HostShell from "../../layouts/HostShell";
+const HostShell = lazy(() => import("../../layouts/HostShell"));
 
 
 
@@ -38,7 +39,7 @@ import RequireAuth from "./RequireAuth";
 
 
 
-import InvitationScopedRedirect from "./InvitationScopedRedirect";
+const InvitationScopedRedirect = lazy(() => import("./InvitationScopedRedirect"));
 
 export function hostRoutes() {
   return (
