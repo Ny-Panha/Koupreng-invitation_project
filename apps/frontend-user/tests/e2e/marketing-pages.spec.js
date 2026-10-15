@@ -1,7 +1,8 @@
+import { fixtureToken } from "./support/fixtureToken.js";
 import { expect, test } from "@playwright/test";
 
 // All endpoints are fixtures. POSTs are intercepted; nothing reaches SMTP/bank.
-const token = "eyJhbGciOiJub25lIn0.eyJleHAiOjQxMDIyNjg4MDB9.";
+const token = fixtureToken;
 const user = { id: 7, fullName: "Fixture Host", email: "host@example.test", role: "USER" };
 const catalog = [{ id: 2, code: "silk-heritage", name: "Silk Heritage", premium: false, price: 0, currency: "USD", category: "TRADITIONAL", thumbnailUrl: "/templates/silk-heritage/preview.svg" }];
 const offers = [

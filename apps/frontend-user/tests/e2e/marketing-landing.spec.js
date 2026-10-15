@@ -1,10 +1,11 @@
+import { fixtureToken } from "./support/fixtureToken.js";
 import { expect, test } from "@playwright/test";
 import { mkdir } from "node:fs/promises";
 import process from "node:process";
 
 const widths = [320, 360, 375, 390, 430, 768, 1024, 1280, 1440, 1920];
 const output = process.env.MARKETING_EVIDENCE_DIR || "../../output/playwright/cinematic";
-const token = "eyJhbGciOiJub25lIn0.eyJleHAiOjQxMDIyNjg4MDB9.";
+const token = fixtureToken;
 const user = { id: 7, fullName: "Fixture Host", email: "host@example.test", role: "USER" };
 const catalog = [
   { id: 2, code: "silk-heritage", slug: "silk-heritage", name: "សូត្រមង្គល", nameEn: "Silk Heritage", category: "TRADITIONAL", premium: false, price: 0, currency: "USD", thumbnailUrl: "/templates/silk-heritage/preview.svg", description: JSON.stringify({ presetId: "SILK_HERITAGE", coverImage: "/templates/silk-heritage/portrait.webp" }) },

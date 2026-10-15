@@ -132,7 +132,7 @@ final class AdminReportWorkbookWriter {
         for (String unit : List.of("USD","KHR")) {
             var row = sheet.createRow(nextRow++); set(row.createCell(0), "Verified " + unit + " (sheet)", "TEXT", styles);
             var cell = row.createCell(2); cell.setCellStyle(styles.money);
-            cell.setCellFormula("SUMIFS(" + paid + "7:" + paid + (dataEnd) + "," + currency + "7:" + currency + (dataEnd) + ",\"" + unit + "\"," + outcome + "7:" + outcome + (dataEnd) + ",\"MATCHED\")");
+            cell.setCellFormula("SUMIFS(" + paid + "7:" + paid + dataEnd + "," + currency + "7:" + currency + dataEnd + ",\"" + unit + "\"," + outcome + "7:" + outcome + dataEnd + ",\"MATCHED\")");
             set(cell,totals.get(unit),"MONEY",styles);
         }
         sheet.getWorkbook().setPrintArea(sheet.getWorkbook().getSheetIndex(sheet),0,definition.columns().size(),0,nextRow-1);

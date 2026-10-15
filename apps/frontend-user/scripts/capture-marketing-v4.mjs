@@ -1,5 +1,6 @@
 // Production-preview visual and lab evidence. All API calls are intercepted;
 // no contact message, purchase or authenticated request reaches a real backend.
+import { fixtureToken } from "../tests/e2e/support/fixtureToken.js";
 import { chromium } from "@playwright/test";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import process from "node:process";
@@ -8,7 +9,7 @@ const phase = process.argv[2] || "before";
 const performanceOnly = process.argv.includes("--performance");
 const output = `../../output/design-review/marketing-v4/${phase}`;
 const origin = "http://127.0.0.1:4173";
-const token = "eyJhbGciOiJub25lIn0.eyJleHAiOjQxMDIyNjg4MDB9.";
+const token = fixtureToken;
 const user = { id: 7, fullName: "Fixture Host", email: "host@example.test", role: "USER" };
 const catalog = [
   { id: 2, code: "silk-heritage", name: "សូត្រមង្គល", nameEn: "Silk Heritage", category: "TRADITIONAL", premium: false, price: 0, currency: "USD", thumbnailUrl: "/templates/silk-heritage/preview.svg" },

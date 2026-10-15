@@ -765,7 +765,7 @@ public class AdminManagementService {
             long total = categoryTotals.getOrDefault(name, 0L);
             long pub = categoryPublished.getOrDefault(name, 0L);
             long dft = categoryDrafts.getOrDefault(name, 0L);
-            double rate = total == 0 ? 0.0 : Math.round((pub * 100.0 / total) * 10.0) / 10.0;
+            double rate = total == 0 ? 0.0 : Math.round(pub * 100.0 / total * 10.0) / 10.0;
             Map<String, Object> catMap = new LinkedHashMap<>();
             catMap.put("category", name);
             catMap.put("total", total);
@@ -783,7 +783,7 @@ public class AdminManagementService {
         long lastMonthEvents = monthlyEvents.getOrDefault(currentMonth.minusMonths(1), 0L);
         Double eventGrowthMoM = lastMonthEvents == 0
                 ? null
-                : Math.round(((double)(thisMonthEvents - lastMonthEvents) / lastMonthEvents * 100.0) * 10.0) / 10.0;
+                : Math.round((double)(thisMonthEvents - lastMonthEvents) / lastMonthEvents * 100.0 * 10.0) / 10.0;
 
         List<InvitationResponse> recentInvitations = invitationRepository.findTop10ByDeletedFalseOrderByCreatedAtDesc().stream()
                 .map(InvitationResponse::from)
