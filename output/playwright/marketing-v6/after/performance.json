@@ -1,0 +1,2387 @@
+{
+  "source": "Local production preview, API fixtures; packages and guests are illustrative, no live backend or messages",
+  "conditions": "Chromium cold contexts; 4x CPU, 1.6 Mbps, 150ms latency; Event Timing is not field INP",
+  "rows": [
+    {
+      "language": "km",
+      "width": 390,
+      "run": 1,
+      "lcp": 2532,
+      "cls": 0,
+      "events": [],
+      "longTasks": [
+        103,
+        367,
+        80
+      ],
+      "lcpUrl": "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp",
+      "lcpElement": "<img sizes=\"(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px\" alt=\"រូបថតគូស្នេហ៍សម្រាប់គំរូសូត្រមង្គល\" width=\"960\" height=\"1440\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\" srcset=\"/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w\" src=\"/templates/silk-heritage/portrait.webp\">",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "start": 192.80000000447035,
+          "duration": 1314.6999999955297,
+          "initiator": "script"
+        },
+        {
+          "path": "/assets/index-FC8xx69x.js",
+          "bytes": 122568,
+          "start": 193.60000000149012,
+          "duration": 1814.6000000014901,
+          "initiator": "script"
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "start": 194,
+          "duration": 264.8999999985099,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "start": 194.39999999850988,
+          "duration": 187.5,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 1488,
+          "start": 194.60000000149012,
+          "duration": 233.60000000149012,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "start": 195,
+          "duration": 639.1000000014901,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/index-afImhO3r.css",
+          "bytes": 25497,
+          "start": 195.30000000447035,
+          "duration": 746.0999999940395,
+          "initiator": "link"
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "start": 210.70000000298023,
+          "duration": 1593,
+          "initiator": "link"
+        },
+        {
+          "path": "/images/marketing/silk-portrait-480.webp",
+          "bytes": 39796,
+          "start": 211.89999999850988,
+          "duration": 1216.3000000044703,
+          "initiator": "link"
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "start": 2249.7000000029802,
+          "duration": 656.7999999970198,
+          "initiator": "css"
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 15813,
+          "start": 2491.10000000149,
+          "duration": 321.1000000014901,
+          "initiator": "img"
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "start": 2491.5,
+          "duration": 178.10000000149012,
+          "initiator": "img"
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "start": 2492.10000000149,
+          "duration": 177.70000000298023,
+          "initiator": "img"
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "start": 2551.89999999851,
+          "duration": 2.7000000029802322,
+          "initiator": "xmlhttprequest"
+        },
+        {
+          "path": "/images/marketing/catalog/khmer-celestial-320.webp",
+          "bytes": 27670,
+          "start": 2702.10000000149,
+          "duration": 459.1000000014901,
+          "initiator": "img"
+        },
+        {
+          "path": "/images/marketing/catalog/emerald-luxe-240.webp",
+          "bytes": 37286,
+          "start": 2702.5,
+          "duration": 506.6000000014901,
+          "initiator": "img"
+        }
+      ],
+      "attribution": {
+        "ttfb": 6.399999998509884,
+        "imageLoadDelay": 205.5,
+        "imageLoadDuration": 1216.3000000044703,
+        "renderDelay": 1103.7999999970198,
+        "paints": [
+          {
+            "name": "first-paint",
+            "start": 1092
+          },
+          {
+            "name": "first-contentful-paint",
+            "start": 2532
+          }
+        ],
+        "image": {
+          "src": "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp",
+          "width": 287,
+          "height": 302,
+          "dpr": 1,
+          "fetchPriority": "high"
+        },
+        "fontStatus": "loaded",
+        "googleStylesheets": [],
+        "navigation": {
+          "domInteractive": 217.30000000447035,
+          "domContentLoaded": 2123.5,
+          "load": 2123.7000000029802
+        }
+      },
+      "mainThread": {
+        "Timestamp": 65399.469925,
+        "AudioHandlers": 0,
+        "AudioWorkletProcessors": 0,
+        "Documents": 8,
+        "Frames": 6,
+        "JSEventListeners": 244,
+        "LayoutObjects": 640,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "Nodes": 804,
+        "Resources": 17,
+        "ContextLifecycleStateObservers": 26,
+        "V8PerContextDatas": 4,
+        "WorkerGlobalScopes": 0,
+        "UACSSResources": 0,
+        "RTCPeerConnections": 0,
+        "ResourceFetchers": 8,
+        "AdSubframes": 0,
+        "DetachedScriptStates": 2,
+        "ArrayBufferContents": 0,
+        "LayoutCount": 9,
+        "RecalcStyleCount": 30,
+        "LayoutDuration": 0.265484,
+        "RecalcStyleDuration": 0.075703,
+        "DevToolsCommandDuration": 0.012046,
+        "ScriptDuration": 0.344816,
+        "V8CompileDuration": 0.001206,
+        "TaskDuration": 0.987595,
+        "TaskOtherDuration": 0.28834,
+        "ThreadTime": 0.237897,
+        "ProcessTime": 4.822096,
+        "JSHeapUsedSize": 3710528,
+        "JSHeapTotalSize": 6553600,
+        "FirstMeaningfulPaint": 65397.208891,
+        "DomContentLoaded": 65396.802723,
+        "NavigationStart": 65394.679406
+      }
+    },
+    {
+      "language": "km",
+      "width": 390,
+      "run": 2,
+      "lcp": 2556,
+      "cls": 0,
+      "events": [],
+      "longTasks": [
+        109,
+        381,
+        58
+      ],
+      "lcpUrl": "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp",
+      "lcpElement": "<img sizes=\"(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px\" alt=\"រូបថតគូស្នេហ៍សម្រាប់គំរូសូត្រមង្គល\" width=\"960\" height=\"1440\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\" srcset=\"/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w\" src=\"/templates/silk-heritage/portrait.webp\">",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "start": 200.19999999552965,
+          "duration": 1290.7000000029802,
+          "initiator": "script"
+        },
+        {
+          "path": "/assets/index-FC8xx69x.js",
+          "bytes": 122568,
+          "start": 203.79999999701977,
+          "duration": 1807.1000000014901,
+          "initiator": "script"
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "start": 204.39999999850988,
+          "duration": 264.29999999701977,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "start": 204.79999999701977,
+          "duration": 201.20000000298023,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 1488,
+          "start": 207.5,
+          "duration": 245.39999999850988,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "start": 207.89999999850988,
+          "duration": 639.5,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/index-afImhO3r.css",
+          "bytes": 25497,
+          "start": 208.29999999701977,
+          "duration": 747.8000000044703,
+          "initiator": "link"
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "start": 225.89999999850988,
+          "duration": 1596.1000000014901,
+          "initiator": "link"
+        },
+        {
+          "path": "/images/marketing/silk-portrait-480.webp",
+          "bytes": 39796,
+          "start": 226.89999999850988,
+          "duration": 1232.7000000029802,
+          "initiator": "link"
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "start": 2244.60000000149,
+          "duration": 747.5999999940395,
+          "initiator": "css"
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 15813,
+          "start": 2517.60000000149,
+          "duration": 349.59999999403954,
+          "initiator": "img"
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "start": 2518,
+          "duration": 189.19999999552965,
+          "initiator": "img"
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "start": 2518.2999999970198,
+          "duration": 177.89999999850988,
+          "initiator": "img"
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "start": 2575.39999999851,
+          "duration": 1.7999999970197678,
+          "initiator": "xmlhttprequest"
+        },
+        {
+          "path": "/images/marketing/catalog/khmer-celestial-320.webp",
+          "bytes": 27670,
+          "start": 2693.5,
+          "duration": 489.8999999985099,
+          "initiator": "img"
+        },
+        {
+          "path": "/images/marketing/catalog/emerald-luxe-240.webp",
+          "bytes": 37286,
+          "start": 2693.89999999851,
+          "duration": 552.7000000029802,
+          "initiator": "img"
+        }
+      ],
+      "attribution": {
+        "ttfb": 7,
+        "imageLoadDelay": 219.89999999850988,
+        "imageLoadDuration": 1232.7000000029802,
+        "renderDelay": 1096.3999999985099,
+        "paints": [
+          {
+            "name": "first-paint",
+            "start": 1100
+          },
+          {
+            "name": "first-contentful-paint",
+            "start": 2556
+          }
+        ],
+        "image": {
+          "src": "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp",
+          "width": 287,
+          "height": 302,
+          "dpr": 1,
+          "fetchPriority": "high"
+        },
+        "fontStatus": "loaded",
+        "googleStylesheets": [],
+        "navigation": {
+          "domInteractive": 232.79999999701977,
+          "domContentLoaded": 2135.2999999970198,
+          "load": 2135.5
+        }
+      },
+      "mainThread": {
+        "Timestamp": 65404.364188,
+        "AudioHandlers": 0,
+        "AudioWorkletProcessors": 0,
+        "Documents": 8,
+        "Frames": 6,
+        "JSEventListeners": 244,
+        "LayoutObjects": 640,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "Nodes": 804,
+        "Resources": 17,
+        "ContextLifecycleStateObservers": 26,
+        "V8PerContextDatas": 4,
+        "WorkerGlobalScopes": 0,
+        "UACSSResources": 0,
+        "RTCPeerConnections": 0,
+        "ResourceFetchers": 8,
+        "AdSubframes": 0,
+        "DetachedScriptStates": 2,
+        "ArrayBufferContents": 0,
+        "LayoutCount": 10,
+        "RecalcStyleCount": 29,
+        "LayoutDuration": 0.299862,
+        "RecalcStyleDuration": 0.074177,
+        "DevToolsCommandDuration": 0.023454,
+        "ScriptDuration": 0.318041,
+        "V8CompileDuration": 0.000459,
+        "TaskDuration": 1.040817,
+        "TaskOtherDuration": 0.324824,
+        "ThreadTime": 0.241086,
+        "ProcessTime": 4.637113,
+        "JSHeapUsedSize": 3703476,
+        "JSHeapTotalSize": 6553600,
+        "FirstMeaningfulPaint": 65402.121537,
+        "DomContentLoaded": 65401.703213,
+        "NavigationStart": 65399.568187
+      }
+    },
+    {
+      "language": "km",
+      "width": 390,
+      "run": 3,
+      "lcp": 2604,
+      "cls": 0,
+      "events": [],
+      "longTasks": [
+        122,
+        420,
+        65
+      ],
+      "lcpUrl": "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp",
+      "lcpElement": "<img sizes=\"(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px\" alt=\"រូបថតគូស្នេហ៍សម្រាប់គំរូសូត្រមង្គល\" width=\"960\" height=\"1440\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\" srcset=\"/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w\" src=\"/templates/silk-heritage/portrait.webp\">",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "start": 203.10000000149012,
+          "duration": 1197.3999999985099,
+          "initiator": "script"
+        },
+        {
+          "path": "/assets/index-FC8xx69x.js",
+          "bytes": 122568,
+          "start": 205,
+          "duration": 1812.3000000044703,
+          "initiator": "script"
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "start": 205.60000000149012,
+          "duration": 275.1000000014901,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "start": 206.10000000149012,
+          "duration": 198.5,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 1488,
+          "start": 206.40000000596046,
+          "duration": 242.69999999552965,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "start": 206.90000000596046,
+          "duration": 649.6999999955297,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/index-afImhO3r.css",
+          "bytes": 25497,
+          "start": 207.10000000149012,
+          "duration": 784.3000000044703,
+          "initiator": "link"
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "start": 226.30000000447035,
+          "duration": 1601.3999999985099,
+          "initiator": "link"
+        },
+        {
+          "path": "/images/marketing/silk-portrait-480.webp",
+          "bytes": 39796,
+          "start": 227.60000000149012,
+          "duration": 1251.5,
+          "initiator": "link"
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "start": 2358.10000000149,
+          "duration": 674.5,
+          "initiator": "css"
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 15813,
+          "start": 2570.9000000059605,
+          "duration": 341.8999999985099,
+          "initiator": "img"
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "start": 2571.2000000029802,
+          "duration": 185.60000000149012,
+          "initiator": "img"
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "start": 2571.5,
+          "duration": 186.30000000447035,
+          "initiator": "img"
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "start": 2625.3000000044703,
+          "duration": 1.5,
+          "initiator": "xmlhttprequest"
+        },
+        {
+          "path": "/images/marketing/catalog/khmer-celestial-320.webp",
+          "bytes": 27670,
+          "start": 2755.9000000059605,
+          "duration": 481.5,
+          "initiator": "img"
+        },
+        {
+          "path": "/images/marketing/catalog/emerald-luxe-240.webp",
+          "bytes": 37286,
+          "start": 2757.10000000149,
+          "duration": 544.3000000044703,
+          "initiator": "img"
+        }
+      ],
+      "attribution": {
+        "ttfb": 6.100000001490116,
+        "imageLoadDelay": 221.5,
+        "imageLoadDuration": 1251.5,
+        "renderDelay": 1124.8999999985099,
+        "paints": [
+          {
+            "name": "first-paint",
+            "start": 1116
+          },
+          {
+            "name": "first-contentful-paint",
+            "start": 2604
+          }
+        ],
+        "image": {
+          "src": "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp",
+          "width": 287,
+          "height": 302,
+          "dpr": 1,
+          "fetchPriority": "high"
+        },
+        "fontStatus": "loaded",
+        "googleStylesheets": [],
+        "navigation": {
+          "domInteractive": 232.40000000596046,
+          "domContentLoaded": 2149.60000000149,
+          "load": 2149.60000000149
+        }
+      },
+      "mainThread": {
+        "Timestamp": 65408.521393,
+        "AudioHandlers": 0,
+        "AudioWorkletProcessors": 0,
+        "Documents": 8,
+        "Frames": 6,
+        "JSEventListeners": 244,
+        "LayoutObjects": 640,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "Nodes": 804,
+        "Resources": 17,
+        "ContextLifecycleStateObservers": 26,
+        "V8PerContextDatas": 4,
+        "WorkerGlobalScopes": 0,
+        "UACSSResources": 0,
+        "RTCPeerConnections": 0,
+        "ResourceFetchers": 8,
+        "AdSubframes": 0,
+        "DetachedScriptStates": 2,
+        "ArrayBufferContents": 0,
+        "LayoutCount": 8,
+        "RecalcStyleCount": 29,
+        "LayoutDuration": 0.228329,
+        "RecalcStyleDuration": 0.06551,
+        "DevToolsCommandDuration": 0.010894,
+        "ScriptDuration": 0.420761,
+        "V8CompileDuration": 0.000801,
+        "TaskDuration": 0.990312,
+        "TaskOtherDuration": 0.264017,
+        "ThreadTime": 0.22796,
+        "ProcessTime": 4.116427,
+        "JSHeapUsedSize": 3721704,
+        "JSHeapTotalSize": 6029312,
+        "FirstMeaningfulPaint": 65407.049411,
+        "DomContentLoaded": 65406.59851,
+        "NavigationStart": 65404.449343
+      }
+    },
+    {
+      "language": "km",
+      "width": 1440,
+      "run": 1,
+      "lcp": 2492,
+      "cls": 0.00011290901089891976,
+      "events": [],
+      "longTasks": [
+        88,
+        348,
+        64
+      ],
+      "lcpUrl": "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp",
+      "lcpElement": "<img sizes=\"(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px\" alt=\"រូបថតគូស្នេហ៍សម្រាប់គំរូសូត្រមង្គល\" width=\"960\" height=\"1440\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\" srcset=\"/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w\" src=\"/templates/silk-heritage/portrait.webp\">",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "start": 191.39999999850988,
+          "duration": 1174.6999999955297,
+          "initiator": "script"
+        },
+        {
+          "path": "/assets/index-FC8xx69x.js",
+          "bytes": 122568,
+          "start": 191.5,
+          "duration": 1806.1999999955297,
+          "initiator": "script"
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "start": 191.59999999403954,
+          "duration": 198.40000000596046,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "start": 191.59999999403954,
+          "duration": 260.30000000447035,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 1488,
+          "start": 191.69999999552965,
+          "duration": 245.20000000298023,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "start": 191.69999999552965,
+          "duration": 648.8999999985099,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/index-afImhO3r.css",
+          "bytes": 25497,
+          "start": 191.69999999552965,
+          "duration": 769.5,
+          "initiator": "link"
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "start": 194.89999999850988,
+          "duration": 1630.6000000014901,
+          "initiator": "link"
+        },
+        {
+          "path": "/images/marketing/silk-portrait-480.webp",
+          "bytes": 39796,
+          "start": 195,
+          "duration": 1266.8999999985099,
+          "initiator": "link"
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "start": 2208.5,
+          "duration": 676.3999999985099,
+          "initiator": "css"
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 15813,
+          "start": 2443.0999999940395,
+          "duration": 331.80000000447035,
+          "initiator": "img"
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "start": 2444,
+          "duration": 172.89999999850988,
+          "initiator": "img"
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "start": 2444.5999999940395,
+          "duration": 181.60000000149012,
+          "initiator": "img"
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "start": 2498.39999999851,
+          "duration": 1.7999999970197678,
+          "initiator": "xmlhttprequest"
+        },
+        {
+          "path": "/images/marketing/catalog/khmer-celestial-640.webp",
+          "bytes": 100188,
+          "start": 2623.7999999970198,
+          "duration": 913.7000000029802,
+          "initiator": "img"
+        },
+        {
+          "path": "/images/marketing/catalog/emerald-luxe-240.webp",
+          "bytes": 37286,
+          "start": 2623.89999999851,
+          "duration": 595.1999999955297,
+          "initiator": "img"
+        }
+      ],
+      "attribution": {
+        "ttfb": 2.5999999940395355,
+        "imageLoadDelay": 192.40000000596046,
+        "imageLoadDuration": 1266.8999999985099,
+        "renderDelay": 1030.1000000014901,
+        "paints": [
+          {
+            "name": "first-paint",
+            "start": 1092
+          },
+          {
+            "name": "first-contentful-paint",
+            "start": 2492
+          }
+        ],
+        "image": {
+          "src": "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp",
+          "width": 423,
+          "height": 400,
+          "dpr": 1,
+          "fetchPriority": "high"
+        },
+        "fontStatus": "loaded",
+        "googleStylesheets": [],
+        "navigation": {
+          "domInteractive": 195.69999999552965,
+          "domContentLoaded": 2094.7999999970198,
+          "load": 2094.7999999970198
+        }
+      },
+      "mainThread": {
+        "Timestamp": 65413.696493,
+        "AudioHandlers": 0,
+        "AudioWorkletProcessors": 0,
+        "Documents": 8,
+        "Frames": 6,
+        "JSEventListeners": 244,
+        "LayoutObjects": 667,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "Nodes": 804,
+        "Resources": 17,
+        "ContextLifecycleStateObservers": 26,
+        "V8PerContextDatas": 4,
+        "WorkerGlobalScopes": 0,
+        "UACSSResources": 0,
+        "RTCPeerConnections": 0,
+        "ResourceFetchers": 8,
+        "AdSubframes": 0,
+        "DetachedScriptStates": 2,
+        "ArrayBufferContents": 0,
+        "LayoutCount": 11,
+        "RecalcStyleCount": 33,
+        "LayoutDuration": 0.251198,
+        "RecalcStyleDuration": 0.065952,
+        "DevToolsCommandDuration": 0.010107,
+        "ScriptDuration": 0.279127,
+        "V8CompileDuration": 0.000117,
+        "TaskDuration": 0.857195,
+        "TaskOtherDuration": 0.250694,
+        "ThreadTime": 0.208212,
+        "ProcessTime": 5.009163,
+        "JSHeapUsedSize": 3719032,
+        "JSHeapTotalSize": 6291456,
+        "FirstMeaningfulPaint": 65411.081403,
+        "DomContentLoaded": 65410.68799,
+        "NavigationStart": 65408.593198
+      }
+    },
+    {
+      "language": "km",
+      "width": 1440,
+      "run": 2,
+      "lcp": 2436,
+      "cls": 0.00011290901089891976,
+      "events": [],
+      "longTasks": [
+        89,
+        300,
+        53
+      ],
+      "lcpUrl": "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp",
+      "lcpElement": "<img sizes=\"(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px\" alt=\"រូបថតគូស្នេហ៍សម្រាប់គំរូសូត្រមង្គល\" width=\"960\" height=\"1440\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\" srcset=\"/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w\" src=\"/templates/silk-heritage/portrait.webp\">",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "start": 182.79999999701977,
+          "duration": 1316.4000000059605,
+          "initiator": "script"
+        },
+        {
+          "path": "/assets/index-FC8xx69x.js",
+          "bytes": 122568,
+          "start": 182.89999999850988,
+          "duration": 1808.7000000029802,
+          "initiator": "script"
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "start": 183,
+          "duration": 224.5,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 1488,
+          "start": 183,
+          "duration": 272.29999999701977,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "start": 183,
+          "duration": 288.3999999985099,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "start": 183,
+          "duration": 656.7000000029802,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/index-afImhO3r.css",
+          "bytes": 25497,
+          "start": 183,
+          "duration": 778.3999999985099,
+          "initiator": "link"
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "start": 185.60000000149012,
+          "duration": 1631.8999999985099,
+          "initiator": "link"
+        },
+        {
+          "path": "/images/marketing/silk-portrait-480.webp",
+          "bytes": 39796,
+          "start": 185.70000000298023,
+          "duration": 1265.5999999940395,
+          "initiator": "link"
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "start": 2194.39999999851,
+          "duration": 635.3999999985099,
+          "initiator": "css"
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 15813,
+          "start": 2394.5,
+          "duration": 356.20000000298023,
+          "initiator": "img"
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "start": 2395.10000000149,
+          "duration": 180.39999999850988,
+          "initiator": "img"
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "start": 2395.7000000029802,
+          "duration": 197.09999999403954,
+          "initiator": "img"
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "start": 2450.60000000149,
+          "duration": 1.1999999955296516,
+          "initiator": "xmlhttprequest"
+        },
+        {
+          "path": "/images/marketing/catalog/khmer-celestial-640.webp",
+          "bytes": 100188,
+          "start": 2550.10000000149,
+          "duration": 922.3999999985099,
+          "initiator": "img"
+        },
+        {
+          "path": "/images/marketing/catalog/emerald-luxe-240.webp",
+          "bytes": 37286,
+          "start": 2550.2000000029802,
+          "duration": 627.5999999940395,
+          "initiator": "img"
+        }
+      ],
+      "attribution": {
+        "ttfb": 3.2000000029802322,
+        "imageLoadDelay": 182.5,
+        "imageLoadDuration": 1265.5999999940395,
+        "renderDelay": 984.7000000029802,
+        "paints": [
+          {
+            "name": "first-paint",
+            "start": 1100
+          },
+          {
+            "name": "first-contentful-paint",
+            "start": 2436
+          }
+        ],
+        "image": {
+          "src": "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp",
+          "width": 423,
+          "height": 400,
+          "dpr": 1,
+          "fetchPriority": "high"
+        },
+        "fontStatus": "loaded",
+        "googleStylesheets": [],
+        "navigation": {
+          "domInteractive": 186.20000000298023,
+          "domContentLoaded": 2093.39999999851,
+          "load": 2093.39999999851
+        }
+      },
+      "mainThread": {
+        "Timestamp": 65418.782004,
+        "AudioHandlers": 0,
+        "AudioWorkletProcessors": 0,
+        "Documents": 8,
+        "Frames": 6,
+        "JSEventListeners": 244,
+        "LayoutObjects": 667,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "Nodes": 804,
+        "Resources": 17,
+        "ContextLifecycleStateObservers": 26,
+        "V8PerContextDatas": 4,
+        "WorkerGlobalScopes": 0,
+        "UACSSResources": 0,
+        "RTCPeerConnections": 0,
+        "ResourceFetchers": 8,
+        "AdSubframes": 0,
+        "DetachedScriptStates": 2,
+        "ArrayBufferContents": 0,
+        "LayoutCount": 12,
+        "RecalcStyleCount": 34,
+        "LayoutDuration": 0.212858,
+        "RecalcStyleDuration": 0.060942,
+        "DevToolsCommandDuration": 0.00938,
+        "ScriptDuration": 0.272784,
+        "V8CompileDuration": 0.000101,
+        "TaskDuration": 0.819889,
+        "TaskOtherDuration": 0.263824,
+        "ThreadTime": 0.196758,
+        "ProcessTime": 4.848234,
+        "JSHeapUsedSize": 3727980,
+        "JSHeapTotalSize": 6029312,
+        "FirstMeaningfulPaint": 65416.199844,
+        "DomContentLoaded": 65415.859194,
+        "NavigationStart": 65413.765958
+      }
+    },
+    {
+      "language": "km",
+      "width": 1440,
+      "run": 3,
+      "lcp": 2400,
+      "cls": 0.00011290901089891976,
+      "events": [],
+      "longTasks": [
+        75,
+        287,
+        57
+      ],
+      "lcpUrl": "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp",
+      "lcpElement": "<img sizes=\"(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px\" alt=\"រូបថតគូស្នេហ៍សម្រាប់គំរូសូត្រមង្គល\" width=\"960\" height=\"1440\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\" srcset=\"/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w\" src=\"/templates/silk-heritage/portrait.webp\">",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "start": 199.90000000596046,
+          "duration": 1170.2999999970198,
+          "initiator": "script"
+        },
+        {
+          "path": "/assets/index-FC8xx69x.js",
+          "bytes": 122568,
+          "start": 200.60000000149012,
+          "duration": 1786,
+          "initiator": "script"
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "start": 200.90000000596046,
+          "duration": 265.79999999701977,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "start": 201,
+          "duration": 189.20000000298023,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 1488,
+          "start": 201.20000000298023,
+          "duration": 235.5,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "start": 201.5,
+          "duration": 645.3000000044703,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/index-afImhO3r.css",
+          "bytes": 25497,
+          "start": 201.70000000298023,
+          "duration": 771.1000000014901,
+          "initiator": "link"
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "start": 214.80000000447035,
+          "duration": 1597.6000000014901,
+          "initiator": "link"
+        },
+        {
+          "path": "/images/marketing/silk-portrait-480.webp",
+          "bytes": 39796,
+          "start": 215.40000000596046,
+          "duration": 1250.6999999955297,
+          "initiator": "link"
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "start": 2173,
+          "duration": 653.4000000059605,
+          "initiator": "css"
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 15813,
+          "start": 2361.7000000029802,
+          "duration": 337.70000000298023,
+          "initiator": "img"
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "start": 2361.9000000059605,
+          "duration": 179.89999999850988,
+          "initiator": "img"
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "start": 2362.7000000029802,
+          "duration": 187.70000000298023,
+          "initiator": "img"
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "start": 2401,
+          "duration": 2.4000000059604645,
+          "initiator": "xmlhttprequest"
+        },
+        {
+          "path": "/images/marketing/catalog/khmer-celestial-640.webp",
+          "bytes": 100188,
+          "start": 2510,
+          "duration": 951.6000000014901,
+          "initiator": "img"
+        },
+        {
+          "path": "/images/marketing/catalog/emerald-luxe-240.webp",
+          "bytes": 37286,
+          "start": 2510.7000000029802,
+          "duration": 633,
+          "initiator": "img"
+        }
+      ],
+      "attribution": {
+        "ttfb": 3.9000000059604645,
+        "imageLoadDelay": 211.5,
+        "imageLoadDuration": 1250.6999999955297,
+        "renderDelay": 933.8999999985099,
+        "paints": [
+          {
+            "name": "first-paint",
+            "start": 1096
+          },
+          {
+            "name": "first-contentful-paint",
+            "start": 2400
+          }
+        ],
+        "image": {
+          "src": "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp",
+          "width": 423,
+          "height": 400,
+          "dpr": 1,
+          "fetchPriority": "high"
+        },
+        "fontStatus": "loaded",
+        "googleStylesheets": [],
+        "navigation": {
+          "domInteractive": 218.30000000447035,
+          "domContentLoaded": 2072.4000000059605,
+          "load": 2072.7000000029802
+        }
+      },
+      "mainThread": {
+        "Timestamp": 65423.883732,
+        "AudioHandlers": 0,
+        "AudioWorkletProcessors": 0,
+        "Documents": 8,
+        "Frames": 6,
+        "JSEventListeners": 244,
+        "LayoutObjects": 666,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "Nodes": 804,
+        "Resources": 17,
+        "ContextLifecycleStateObservers": 26,
+        "V8PerContextDatas": 4,
+        "WorkerGlobalScopes": 0,
+        "UACSSResources": 0,
+        "RTCPeerConnections": 0,
+        "ResourceFetchers": 8,
+        "AdSubframes": 0,
+        "DetachedScriptStates": 2,
+        "ArrayBufferContents": 0,
+        "LayoutCount": 11,
+        "RecalcStyleCount": 36,
+        "LayoutDuration": 0.203519,
+        "RecalcStyleDuration": 0.058882,
+        "DevToolsCommandDuration": 0.025317,
+        "ScriptDuration": 0.241733,
+        "V8CompileDuration": 0.000423,
+        "TaskDuration": 0.785055,
+        "TaskOtherDuration": 0.255181,
+        "ThreadTime": 0.185519,
+        "ProcessTime": 4.867818,
+        "JSHeapUsedSize": 3718944,
+        "JSHeapTotalSize": 6291456,
+        "FirstMeaningfulPaint": 65421.255227,
+        "DomContentLoaded": 65420.927615,
+        "NavigationStart": 65418.855324
+      }
+    },
+    {
+      "language": "en",
+      "width": 390,
+      "run": 1,
+      "lcp": 2136,
+      "cls": 0,
+      "events": [],
+      "longTasks": [
+        78,
+        231
+      ],
+      "lcpUrl": "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp",
+      "lcpElement": "<img sizes=\"(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px\" alt=\"Sample wedding portrait from the Silk Heritage design\" width=\"960\" height=\"1440\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\" srcset=\"/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w\" src=\"/templates/silk-heritage/portrait.webp\">",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "start": 183.20000000298023,
+          "duration": 1244.1000000014901,
+          "initiator": "script"
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "start": 183.30000000447035,
+          "duration": 212.39999999850988,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "start": 183.30000000447035,
+          "duration": 277.19999999552965,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/index-FC8xx69x.js",
+          "bytes": 122568,
+          "start": 183.30000000447035,
+          "duration": 1606.6999999955297,
+          "initiator": "script"
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 1488,
+          "start": 183.39999999850988,
+          "duration": 260.70000000298023,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "start": 183.39999999850988,
+          "duration": 655.1000000014901,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/index-afImhO3r.css",
+          "bytes": 25497,
+          "start": 183.5,
+          "duration": 750.6000000014901,
+          "initiator": "link"
+        },
+        {
+          "path": "/fonts/marketing/DMSans-Latin.woff2",
+          "bytes": 36932,
+          "start": 186.20000000298023,
+          "duration": 1145.3999999985099,
+          "initiator": "link"
+        },
+        {
+          "path": "/images/marketing/silk-portrait-480.webp",
+          "bytes": 39796,
+          "start": 186.39999999850988,
+          "duration": 1256.7000000029802,
+          "initiator": "link"
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "start": 1972,
+          "duration": 571.8999999985099,
+          "initiator": "css"
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 15813,
+          "start": 2109.39999999851,
+          "duration": 355.40000000596046,
+          "initiator": "img"
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "start": 2109.5,
+          "duration": 185.10000000149012,
+          "initiator": "img"
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "start": 2109.7000000029802,
+          "duration": 191.5,
+          "initiator": "img"
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "start": 2149,
+          "duration": 2.8000000044703484,
+          "initiator": "xmlhttprequest"
+        },
+        {
+          "path": "/images/marketing/catalog/khmer-celestial-320.webp",
+          "bytes": 27670,
+          "start": 2238.39999999851,
+          "duration": 528.6000000014901,
+          "initiator": "img"
+        },
+        {
+          "path": "/images/marketing/catalog/emerald-luxe-240.webp",
+          "bytes": 37286,
+          "start": 2238.7000000029802,
+          "duration": 591.6000000014901,
+          "initiator": "img"
+        }
+      ],
+      "attribution": {
+        "ttfb": 5.899999998509884,
+        "imageLoadDelay": 180.5,
+        "imageLoadDuration": 1256.7000000029802,
+        "renderDelay": 692.8999999985099,
+        "paints": [
+          {
+            "name": "first-paint",
+            "start": 1072
+          },
+          {
+            "name": "first-contentful-paint",
+            "start": 2136
+          }
+        ],
+        "image": {
+          "src": "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp",
+          "width": 287,
+          "height": 302,
+          "dpr": 1,
+          "fetchPriority": "high"
+        },
+        "fontStatus": "loaded",
+        "googleStylesheets": [],
+        "navigation": {
+          "domInteractive": 186.80000000447035,
+          "domContentLoaded": 1876.8999999985099,
+          "load": 1876.8999999985099
+        }
+      },
+      "mainThread": {
+        "Timestamp": 65428.335575,
+        "AudioHandlers": 0,
+        "AudioWorkletProcessors": 0,
+        "Documents": 8,
+        "Frames": 6,
+        "JSEventListeners": 244,
+        "LayoutObjects": 641,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "Nodes": 804,
+        "Resources": 17,
+        "ContextLifecycleStateObservers": 26,
+        "V8PerContextDatas": 4,
+        "WorkerGlobalScopes": 0,
+        "UACSSResources": 0,
+        "RTCPeerConnections": 0,
+        "ResourceFetchers": 8,
+        "AdSubframes": 0,
+        "DetachedScriptStates": 2,
+        "ArrayBufferContents": 0,
+        "LayoutCount": 13,
+        "RecalcStyleCount": 36,
+        "LayoutDuration": 0.154009,
+        "RecalcStyleDuration": 0.052358,
+        "DevToolsCommandDuration": 0.009414,
+        "ScriptDuration": 0.240456,
+        "V8CompileDuration": 0.000092,
+        "TaskDuration": 0.691441,
+        "TaskOtherDuration": 0.235112,
+        "ThreadTime": 0.155611,
+        "ProcessTime": 4.300751,
+        "JSHeapUsedSize": 3704936,
+        "JSHeapTotalSize": 6291456,
+        "FirstMeaningfulPaint": 65426.095968,
+        "DomContentLoaded": 65425.837086,
+        "NavigationStart": 65423.960393
+      }
+    },
+    {
+      "language": "en",
+      "width": 390,
+      "run": 2,
+      "lcp": 2136,
+      "cls": 0,
+      "events": [],
+      "longTasks": [
+        73,
+        244,
+        56
+      ],
+      "lcpUrl": "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp",
+      "lcpElement": "<img sizes=\"(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px\" alt=\"Sample wedding portrait from the Silk Heritage design\" width=\"960\" height=\"1440\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\" srcset=\"/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w\" src=\"/templates/silk-heritage/portrait.webp\">",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "start": 176.30000000447035,
+          "duration": 1208.6999999955297,
+          "initiator": "script"
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "start": 176.40000000596046,
+          "duration": 277.19999999552965,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/index-FC8xx69x.js",
+          "bytes": 122568,
+          "start": 176.40000000596046,
+          "duration": 1602.7999999970198,
+          "initiator": "script"
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "start": 176.5,
+          "duration": 197.40000000596046,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 1488,
+          "start": 176.5,
+          "duration": 243.20000000298023,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "start": 176.60000000149012,
+          "duration": 648.3999999985099,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/index-afImhO3r.css",
+          "bytes": 25497,
+          "start": 176.60000000149012,
+          "duration": 780.6000000014901,
+          "initiator": "link"
+        },
+        {
+          "path": "/fonts/marketing/DMSans-Latin.woff2",
+          "bytes": 36932,
+          "start": 179.10000000149012,
+          "duration": 1174,
+          "initiator": "link"
+        },
+        {
+          "path": "/images/marketing/silk-portrait-480.webp",
+          "bytes": 39796,
+          "start": 179.20000000298023,
+          "duration": 1237.7999999970198,
+          "initiator": "link"
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "start": 1956,
+          "duration": 646.3000000044703,
+          "initiator": "css"
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 15813,
+          "start": 2107.60000000149,
+          "duration": 405,
+          "initiator": "img"
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "start": 2107.9000000059605,
+          "duration": 194.09999999403954,
+          "initiator": "img"
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "start": 2108.9000000059605,
+          "duration": 193.69999999552965,
+          "initiator": "img"
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "start": 2148.5,
+          "duration": 4.700000002980232,
+          "initiator": "xmlhttprequest"
+        },
+        {
+          "path": "/images/marketing/catalog/khmer-celestial-320.webp",
+          "bytes": 27670,
+          "start": 2248.4000000059605,
+          "duration": 528.3999999985099,
+          "initiator": "img"
+        },
+        {
+          "path": "/images/marketing/catalog/emerald-luxe-240.webp",
+          "bytes": 37286,
+          "start": 2248.7000000029802,
+          "duration": 591.6000000014901,
+          "initiator": "img"
+        }
+      ],
+      "attribution": {
+        "ttfb": 2.8000000044703484,
+        "imageLoadDelay": 176.39999999850988,
+        "imageLoadDuration": 1237.7999999970198,
+        "renderDelay": 719,
+        "paints": [
+          {
+            "name": "first-paint",
+            "start": 1080
+          },
+          {
+            "name": "first-contentful-paint",
+            "start": 2136
+          }
+        ],
+        "image": {
+          "src": "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp",
+          "width": 287,
+          "height": 302,
+          "dpr": 1,
+          "fetchPriority": "high"
+        },
+        "fontStatus": "loaded",
+        "googleStylesheets": [],
+        "navigation": {
+          "domInteractive": 179.70000000298023,
+          "domContentLoaded": 1863,
+          "load": 1863.3000000044703
+        }
+      },
+      "mainThread": {
+        "Timestamp": 65432.788171,
+        "AudioHandlers": 0,
+        "AudioWorkletProcessors": 0,
+        "Documents": 8,
+        "Frames": 6,
+        "JSEventListeners": 244,
+        "LayoutObjects": 641,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "Nodes": 804,
+        "Resources": 17,
+        "ContextLifecycleStateObservers": 26,
+        "V8PerContextDatas": 4,
+        "WorkerGlobalScopes": 0,
+        "UACSSResources": 0,
+        "RTCPeerConnections": 0,
+        "ResourceFetchers": 8,
+        "AdSubframes": 0,
+        "DetachedScriptStates": 2,
+        "ArrayBufferContents": 0,
+        "LayoutCount": 11,
+        "RecalcStyleCount": 37,
+        "LayoutDuration": 0.170754,
+        "RecalcStyleDuration": 0.060784,
+        "DevToolsCommandDuration": 0.009362,
+        "ScriptDuration": 0.242114,
+        "V8CompileDuration": 0.000091,
+        "TaskDuration": 0.709583,
+        "TaskOtherDuration": 0.226478,
+        "ThreadTime": 0.156646,
+        "ProcessTime": 4.288057,
+        "JSHeapUsedSize": 3706436,
+        "JSHeapTotalSize": 6291456,
+        "FirstMeaningfulPaint": 65430.537728,
+        "DomContentLoaded": 65430.267297,
+        "NavigationStart": 65428.404304
+      }
+    },
+    {
+      "language": "en",
+      "width": 390,
+      "run": 3,
+      "lcp": 2208,
+      "cls": 0,
+      "events": [],
+      "longTasks": [
+        91,
+        259,
+        55
+      ],
+      "lcpUrl": "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp",
+      "lcpElement": "<img sizes=\"(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px\" alt=\"Sample wedding portrait from the Silk Heritage design\" width=\"960\" height=\"1440\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\" srcset=\"/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w\" src=\"/templates/silk-heritage/portrait.webp\">",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "start": 186.19999999552965,
+          "duration": 1224,
+          "initiator": "script"
+        },
+        {
+          "path": "/assets/index-FC8xx69x.js",
+          "bytes": 122568,
+          "start": 186.29999999701977,
+          "duration": 1616.7000000029802,
+          "initiator": "script"
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "start": 186.39999999850988,
+          "duration": 198.29999999701977,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 1488,
+          "start": 186.39999999850988,
+          "duration": 261.69999999552965,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "start": 186.39999999850988,
+          "duration": 277.29999999701977,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "start": 186.5,
+          "duration": 655.5,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/index-afImhO3r.css",
+          "bytes": 25497,
+          "start": 186.5,
+          "duration": 765.5999999940395,
+          "initiator": "link"
+        },
+        {
+          "path": "/fonts/marketing/DMSans-Latin.woff2",
+          "bytes": 36932,
+          "start": 189.69999999552965,
+          "duration": 1141.3000000044703,
+          "initiator": "link"
+        },
+        {
+          "path": "/images/marketing/silk-portrait-480.webp",
+          "bytes": 39796,
+          "start": 189.89999999850988,
+          "duration": 1241.3999999985099,
+          "initiator": "link"
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "start": 2024.5,
+          "duration": 635.1999999955297,
+          "initiator": "css"
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 15813,
+          "start": 2178.1999999955297,
+          "duration": 356.20000000298023,
+          "initiator": "img"
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "start": 2178.5,
+          "duration": 179.59999999403954,
+          "initiator": "img"
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "start": 2178.5,
+          "duration": 180.59999999403954,
+          "initiator": "img"
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "start": 2218.2999999970198,
+          "duration": 2.100000001490116,
+          "initiator": "xmlhttprequest"
+        },
+        {
+          "path": "/images/marketing/catalog/khmer-celestial-320.webp",
+          "bytes": 27670,
+          "start": 2323.39999999851,
+          "duration": 510.5,
+          "initiator": "img"
+        },
+        {
+          "path": "/images/marketing/catalog/emerald-luxe-240.webp",
+          "bytes": 37286,
+          "start": 2323.7999999970198,
+          "duration": 572.2999999970198,
+          "initiator": "img"
+        }
+      ],
+      "attribution": {
+        "ttfb": 2.6999999955296516,
+        "imageLoadDelay": 187.20000000298023,
+        "imageLoadDuration": 1241.3999999985099,
+        "renderDelay": 776.7000000029802,
+        "paints": [
+          {
+            "name": "first-paint",
+            "start": 1088
+          },
+          {
+            "name": "first-contentful-paint",
+            "start": 2208
+          }
+        ],
+        "image": {
+          "src": "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp",
+          "width": 287,
+          "height": 302,
+          "dpr": 1,
+          "fetchPriority": "high"
+        },
+        "fontStatus": "loaded",
+        "googleStylesheets": [],
+        "navigation": {
+          "domInteractive": 190.39999999850988,
+          "domContentLoaded": 1916.2999999970198,
+          "load": 1916.3999999985099
+        }
+      },
+      "mainThread": {
+        "Timestamp": 65437.307664,
+        "AudioHandlers": 0,
+        "AudioWorkletProcessors": 0,
+        "Documents": 8,
+        "Frames": 6,
+        "JSEventListeners": 244,
+        "LayoutObjects": 640,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "Nodes": 804,
+        "Resources": 17,
+        "ContextLifecycleStateObservers": 26,
+        "V8PerContextDatas": 4,
+        "WorkerGlobalScopes": 0,
+        "UACSSResources": 0,
+        "RTCPeerConnections": 0,
+        "ResourceFetchers": 8,
+        "AdSubframes": 0,
+        "DetachedScriptStates": 2,
+        "ArrayBufferContents": 0,
+        "LayoutCount": 9,
+        "RecalcStyleCount": 34,
+        "LayoutDuration": 0.169399,
+        "RecalcStyleDuration": 0.062145,
+        "DevToolsCommandDuration": 0.007971,
+        "ScriptDuration": 0.266456,
+        "V8CompileDuration": 0.000093,
+        "TaskDuration": 0.731044,
+        "TaskOtherDuration": 0.22498,
+        "ThreadTime": 0.168021,
+        "ProcessTime": 4.368019,
+        "JSHeapUsedSize": 3708460,
+        "JSHeapTotalSize": 6291456,
+        "FirstMeaningfulPaint": 65435.071384,
+        "DomContentLoaded": 65434.782883,
+        "NavigationStart": 65432.866697
+      }
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "run": 1,
+      "lcp": 2204,
+      "cls": 0.00013158516589506175,
+      "events": [],
+      "longTasks": [
+        76,
+        293
+      ],
+      "lcpUrl": "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp",
+      "lcpElement": "<img sizes=\"(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px\" alt=\"Sample wedding portrait from the Silk Heritage design\" width=\"960\" height=\"1440\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\" srcset=\"/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w\" src=\"/templates/silk-heritage/portrait.webp\">",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "start": 185.89999999850988,
+          "duration": 1280.2999999970198,
+          "initiator": "script"
+        },
+        {
+          "path": "/assets/index-FC8xx69x.js",
+          "bytes": 122568,
+          "start": 186.60000000149012,
+          "duration": 1595.8999999985099,
+          "initiator": "script"
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "start": 187,
+          "duration": 269.29999999701977,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "start": 187.39999999850988,
+          "duration": 205.79999999701977,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 1488,
+          "start": 187.69999999552965,
+          "duration": 252.40000000596046,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "start": 188,
+          "duration": 642.6000000014901,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/index-afImhO3r.css",
+          "bytes": 25497,
+          "start": 188.19999999552965,
+          "duration": 757.6000000014901,
+          "initiator": "link"
+        },
+        {
+          "path": "/fonts/marketing/DMSans-Latin.woff2",
+          "bytes": 36932,
+          "start": 198,
+          "duration": 1109,
+          "initiator": "link"
+        },
+        {
+          "path": "/images/marketing/silk-portrait-480.webp",
+          "bytes": 39796,
+          "start": 198.60000000149012,
+          "duration": 1203.5,
+          "initiator": "link"
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "start": 1967.6000000014901,
+          "duration": 861.5999999940395,
+          "initiator": "css"
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "start": 2141.1999999955297,
+          "duration": 1334.5,
+          "initiator": "css"
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 15813,
+          "start": 2164.6999999955297,
+          "duration": 456.1000000014901,
+          "initiator": "img"
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "start": 2165.10000000149,
+          "duration": 186,
+          "initiator": "img"
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "start": 2165.1999999955297,
+          "duration": 193.20000000298023,
+          "initiator": "img"
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "start": 2219.1999999955297,
+          "duration": 1.6000000014901161,
+          "initiator": "xmlhttprequest"
+        },
+        {
+          "path": "/images/marketing/catalog/khmer-celestial-640.webp",
+          "bytes": 100188,
+          "start": 2319.2999999970198,
+          "duration": 1313.6000000014901,
+          "initiator": "img"
+        },
+        {
+          "path": "/images/marketing/catalog/emerald-luxe-240.webp",
+          "bytes": 37286,
+          "start": 2320.10000000149,
+          "duration": 873,
+          "initiator": "img"
+        }
+      ],
+      "attribution": {
+        "ttfb": 4.5,
+        "imageLoadDelay": 194.10000000149012,
+        "imageLoadDuration": 1203.5,
+        "renderDelay": 801.8999999985099,
+        "paints": [
+          {
+            "name": "first-paint",
+            "start": 1092
+          },
+          {
+            "name": "first-contentful-paint",
+            "start": 2204
+          }
+        ],
+        "image": {
+          "src": "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp",
+          "width": 423,
+          "height": 400,
+          "dpr": 1,
+          "fetchPriority": "high"
+        },
+        "fontStatus": "loaded",
+        "googleStylesheets": [],
+        "navigation": {
+          "domInteractive": 201.29999999701977,
+          "domContentLoaded": 1869.6999999955297,
+          "load": 1869.8999999985099
+        }
+      },
+      "mainThread": {
+        "Timestamp": 65442.537506,
+        "AudioHandlers": 0,
+        "AudioWorkletProcessors": 0,
+        "Documents": 8,
+        "Frames": 6,
+        "JSEventListeners": 244,
+        "LayoutObjects": 666,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "Nodes": 804,
+        "Resources": 17,
+        "ContextLifecycleStateObservers": 26,
+        "V8PerContextDatas": 4,
+        "WorkerGlobalScopes": 0,
+        "UACSSResources": 0,
+        "RTCPeerConnections": 0,
+        "ResourceFetchers": 8,
+        "AdSubframes": 0,
+        "DetachedScriptStates": 2,
+        "ArrayBufferContents": 0,
+        "LayoutCount": 12,
+        "RecalcStyleCount": 36,
+        "LayoutDuration": 0.219024,
+        "RecalcStyleDuration": 0.057813,
+        "DevToolsCommandDuration": 0.006244,
+        "ScriptDuration": 0.251218,
+        "V8CompileDuration": 0.000415,
+        "TaskDuration": 0.804467,
+        "TaskOtherDuration": 0.269753,
+        "ThreadTime": 0.186772,
+        "ProcessTime": 5.068596,
+        "JSHeapUsedSize": 3699976,
+        "JSHeapTotalSize": 6291456,
+        "FirstMeaningfulPaint": 65439.578519,
+        "DomContentLoaded": 65439.247261,
+        "NavigationStart": 65437.377611
+      }
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "run": 2,
+      "lcp": 2152,
+      "cls": 0.00013158516589506175,
+      "events": [],
+      "longTasks": [
+        73,
+        262
+      ],
+      "lcpUrl": "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp",
+      "lcpElement": "<img sizes=\"(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px\" alt=\"Sample wedding portrait from the Silk Heritage design\" width=\"960\" height=\"1440\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\" srcset=\"/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w\" src=\"/templates/silk-heritage/portrait.webp\">",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "start": 180.60000000149012,
+          "duration": 1272.7000000029802,
+          "initiator": "script"
+        },
+        {
+          "path": "/assets/index-FC8xx69x.js",
+          "bytes": 122568,
+          "start": 181,
+          "duration": 1589.8999999985099,
+          "initiator": "script"
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "start": 181.10000000149012,
+          "duration": 276.20000000298023,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "start": 181.30000000447035,
+          "duration": 196.09999999403954,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 1488,
+          "start": 181.5,
+          "duration": 243.80000000447035,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "start": 181.70000000298023,
+          "duration": 653.3999999985099,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/index-afImhO3r.css",
+          "bytes": 25497,
+          "start": 181.70000000298023,
+          "duration": 765.7999999970198,
+          "initiator": "link"
+        },
+        {
+          "path": "/fonts/marketing/DMSans-Latin.woff2",
+          "bytes": 36932,
+          "start": 192.30000000447035,
+          "duration": 1103.5999999940395,
+          "initiator": "link"
+        },
+        {
+          "path": "/images/marketing/silk-portrait-480.webp",
+          "bytes": 39796,
+          "start": 192.89999999850988,
+          "duration": 1213.6000000014901,
+          "initiator": "link"
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "start": 1947.3000000044703,
+          "duration": 819.5999999940395,
+          "initiator": "css"
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "start": 2097.39999999851,
+          "duration": 1329.5,
+          "initiator": "css"
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 15813,
+          "start": 2118.3000000044703,
+          "duration": 490.29999999701977,
+          "initiator": "img"
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "start": 2118.7000000029802,
+          "duration": 191.5,
+          "initiator": "img"
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "start": 2118.8000000044703,
+          "duration": 191.59999999403954,
+          "initiator": "img"
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "start": 2168.10000000149,
+          "duration": 1.2999999970197678,
+          "initiator": "xmlhttprequest"
+        },
+        {
+          "path": "/images/marketing/catalog/khmer-celestial-640.webp",
+          "bytes": 100188,
+          "start": 2260.89999999851,
+          "duration": 1323.6000000014901,
+          "initiator": "img"
+        },
+        {
+          "path": "/images/marketing/catalog/emerald-luxe-240.webp",
+          "bytes": 37286,
+          "start": 2261.3000000044703,
+          "duration": 896.5999999940395,
+          "initiator": "img"
+        }
+      ],
+      "attribution": {
+        "ttfb": 3.100000001490116,
+        "imageLoadDelay": 189.79999999701977,
+        "imageLoadDuration": 1213.6000000014901,
+        "renderDelay": 745.5,
+        "paints": [
+          {
+            "name": "first-paint",
+            "start": 1072
+          },
+          {
+            "name": "first-contentful-paint",
+            "start": 2152
+          }
+        ],
+        "image": {
+          "src": "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp",
+          "width": 423,
+          "height": 400,
+          "dpr": 1,
+          "fetchPriority": "high"
+        },
+        "fontStatus": "loaded",
+        "googleStylesheets": [],
+        "navigation": {
+          "domInteractive": 195.70000000298023,
+          "domContentLoaded": 1853,
+          "load": 1853
+        }
+      },
+      "mainThread": {
+        "Timestamp": 65447.740377,
+        "AudioHandlers": 0,
+        "AudioWorkletProcessors": 0,
+        "Documents": 8,
+        "Frames": 6,
+        "JSEventListeners": 244,
+        "LayoutObjects": 666,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "Nodes": 804,
+        "Resources": 17,
+        "ContextLifecycleStateObservers": 26,
+        "V8PerContextDatas": 4,
+        "WorkerGlobalScopes": 0,
+        "UACSSResources": 0,
+        "RTCPeerConnections": 0,
+        "ResourceFetchers": 8,
+        "AdSubframes": 0,
+        "DetachedScriptStates": 2,
+        "ArrayBufferContents": 0,
+        "LayoutCount": 13,
+        "RecalcStyleCount": 33,
+        "LayoutDuration": 0.197341,
+        "RecalcStyleDuration": 0.054388,
+        "DevToolsCommandDuration": 0.006065,
+        "ScriptDuration": 0.242654,
+        "V8CompileDuration": 0.000412,
+        "TaskDuration": 0.771832,
+        "TaskOtherDuration": 0.270972,
+        "ThreadTime": 0.182194,
+        "ProcessTime": 5.007562,
+        "JSHeapUsedSize": 3718852,
+        "JSHeapTotalSize": 6553600,
+        "FirstMeaningfulPaint": 65444.75926,
+        "DomContentLoaded": 65444.462501,
+        "NavigationStart": 65442.609903
+      }
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "run": 3,
+      "lcp": 2204,
+      "cls": 0.00013158516589506175,
+      "events": [],
+      "longTasks": [
+        82,
+        280
+      ],
+      "lcpUrl": "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp",
+      "lcpElement": "<img sizes=\"(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px\" alt=\"Sample wedding portrait from the Silk Heritage design\" width=\"960\" height=\"1440\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\" srcset=\"/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w\" src=\"/templates/silk-heritage/portrait.webp\">",
+      "resources": [
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "start": 180.10000000149012,
+          "duration": 261.1000000014901,
+          "initiator": "other"
+        },
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "start": 180.10000000149012,
+          "duration": 1243.3999999985099,
+          "initiator": "script"
+        },
+        {
+          "path": "/assets/index-FC8xx69x.js",
+          "bytes": 122568,
+          "start": 180.10000000149012,
+          "duration": 1609.8999999985099,
+          "initiator": "script"
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "start": 180.30000000447035,
+          "duration": 200.89999999850988,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 1488,
+          "start": 180.30000000447035,
+          "duration": 245.79999999701977,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "start": 180.30000000447035,
+          "duration": 651.5,
+          "initiator": "other"
+        },
+        {
+          "path": "/assets/index-afImhO3r.css",
+          "bytes": 25497,
+          "start": 180.30000000447035,
+          "duration": 766.0999999940395,
+          "initiator": "link"
+        },
+        {
+          "path": "/fonts/marketing/DMSans-Latin.woff2",
+          "bytes": 36932,
+          "start": 187.10000000149012,
+          "duration": 1124.2000000029802,
+          "initiator": "link"
+        },
+        {
+          "path": "/images/marketing/silk-portrait-480.webp",
+          "bytes": 39796,
+          "start": 187.20000000298023,
+          "duration": 1220.1000000014901,
+          "initiator": "link"
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "start": 1977.3000000044703,
+          "duration": 837.2999999970198,
+          "initiator": "css"
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "start": 2140.2000000029802,
+          "duration": 1350.1999999955297,
+          "initiator": "css"
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 15813,
+          "start": 2164.39999999851,
+          "duration": 491,
+          "initiator": "img"
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "start": 2164.7000000029802,
+          "duration": 190.29999999701977,
+          "initiator": "img"
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "start": 2165.2000000029802,
+          "duration": 205.19999999552965,
+          "initiator": "img"
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "start": 2211.10000000149,
+          "duration": 2.2000000029802322,
+          "initiator": "xmlhttprequest"
+        },
+        {
+          "path": "/images/marketing/catalog/khmer-celestial-640.webp",
+          "bytes": 100188,
+          "start": 2303.60000000149,
+          "duration": 1343.6000000014901,
+          "initiator": "img"
+        },
+        {
+          "path": "/images/marketing/catalog/emerald-luxe-240.webp",
+          "bytes": 37286,
+          "start": 2303.89999999851,
+          "duration": 889,
+          "initiator": "img"
+        }
+      ],
+      "attribution": {
+        "ttfb": 6.399999998509884,
+        "imageLoadDelay": 180.80000000447035,
+        "imageLoadDuration": 1220.1000000014901,
+        "renderDelay": 796.6999999955297,
+        "paints": [
+          {
+            "name": "first-paint",
+            "start": 1068
+          },
+          {
+            "name": "first-contentful-paint",
+            "start": 2204
+          }
+        ],
+        "image": {
+          "src": "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp",
+          "width": 423,
+          "height": 400,
+          "dpr": 1,
+          "fetchPriority": "high"
+        },
+        "fontStatus": "loaded",
+        "googleStylesheets": [],
+        "navigation": {
+          "domInteractive": 192.20000000298023,
+          "domContentLoaded": 1882.3999999985099,
+          "load": 1882.3999999985099
+        }
+      },
+      "mainThread": {
+        "Timestamp": 65453.025303,
+        "AudioHandlers": 0,
+        "AudioWorkletProcessors": 0,
+        "Documents": 8,
+        "Frames": 6,
+        "JSEventListeners": 244,
+        "LayoutObjects": 667,
+        "MediaKeySessions": 0,
+        "MediaKeys": 0,
+        "Nodes": 804,
+        "Resources": 17,
+        "ContextLifecycleStateObservers": 26,
+        "V8PerContextDatas": 4,
+        "WorkerGlobalScopes": 0,
+        "UACSSResources": 0,
+        "RTCPeerConnections": 0,
+        "ResourceFetchers": 8,
+        "AdSubframes": 0,
+        "DetachedScriptStates": 2,
+        "ArrayBufferContents": 0,
+        "LayoutCount": 14,
+        "RecalcStyleCount": 38,
+        "LayoutDuration": 0.205212,
+        "RecalcStyleDuration": 0.051149,
+        "DevToolsCommandDuration": 0.03671,
+        "ScriptDuration": 0.23955,
+        "V8CompileDuration": 0.000111,
+        "TaskDuration": 0.80979,
+        "TaskOtherDuration": 0.277058,
+        "ThreadTime": 0.195577,
+        "ProcessTime": 5.405543,
+        "JSHeapUsedSize": 3739856,
+        "JSHeapTotalSize": 6291456,
+        "FirstMeaningfulPaint": 65450.011514,
+        "DomContentLoaded": 65449.693594,
+        "NavigationStart": 65447.811335
+      }
+    }
+  ]
+}

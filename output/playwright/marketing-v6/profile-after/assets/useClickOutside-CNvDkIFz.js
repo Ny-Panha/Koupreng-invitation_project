@@ -1,0 +1,2 @@
+import{a as e,n as t}from"./jsx-runtime-D3jfb0Ew.js";var n=e(t(),1);function r(e,t){(0,n.useEffect)(()=>{function n(n){e.current&&!e.current.contains(n.target)&&t(n)}return document.addEventListener(`mousedown`,n),()=>{document.removeEventListener(`mousedown`,n)}},[e,t])}export{r as t};
+//# sourceMappingURL=useClickOutside-CNvDkIFz.js.map

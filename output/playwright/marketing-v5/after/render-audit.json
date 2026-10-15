@@ -1,0 +1,816 @@
+{
+  "source": "Local production preview, API fixtures; packages and guests are illustrative, no live backend or messages",
+  "conditions": "Reduced motion, local static assets; full-page screenshots after lazy media load",
+  "rows": [
+    {
+      "name": "home-km-320",
+      "path": "/",
+      "language": "km",
+      "width": 320,
+      "overflow": false,
+      "h1": "សន្លឹកការមង្គលដែលជារបស់អ្នក។",
+      "headerHeight": 70,
+      "fonts": [
+        "\"Koupreng UI\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "documentHeight": 8449,
+      "positions": {
+        ".kp-hero .kp-button": {
+          "top": 320.359375,
+          "bottom": 371.859375
+        },
+        ".kp-folio-cover": {
+          "top": 586.85986328125,
+          "bottom": 800.45263671875
+        },
+        ".kp-collection": {
+          "top": 884.65625,
+          "bottom": 2202.984375
+        },
+        ".kp-product": {
+          "top": 3308.75,
+          "bottom": 4543.5625
+        }
+      },
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "blocked": "Audit-only axe-core is unavailable"
+      }
+    },
+    {
+      "name": "home-km-390",
+      "path": "/",
+      "language": "km",
+      "width": 390,
+      "overflow": false,
+      "h1": "សន្លឹកការមង្គលដែលជារបស់អ្នក។",
+      "headerHeight": 70,
+      "fonts": [
+        "\"Koupreng UI\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "documentHeight": 7725,
+      "positions": {
+        ".kp-hero .kp-button": {
+          "top": 327.421875,
+          "bottom": 378.921875
+        },
+        ".kp-folio-cover": {
+          "top": 520.74267578125,
+          "bottom": 755.69482421875
+        },
+        ".kp-collection": {
+          "top": 839.71875,
+          "bottom": 1931.890625
+        },
+        ".kp-product": {
+          "top": 2983.65625,
+          "bottom": 4165.96875
+        }
+      },
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "templates-km-390",
+      "path": "/templates",
+      "language": "km",
+      "width": 390,
+      "overflow": false,
+      "h1": "រចនាបទដែលជារបស់អ្នក។",
+      "headerHeight": 70,
+      "fonts": [
+        "\"Koupreng UI\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "documentHeight": 2989,
+      "positions": {
+        ".kp-hero .kp-button": null,
+        ".kp-folio-cover": null,
+        ".kp-collection": null,
+        ".kp-product": null
+      },
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "pricing-km-390",
+      "path": "/pricing",
+      "language": "km",
+      "width": 390,
+      "overflow": false,
+      "h1": "ស្វែងយល់ពីគំរូ\nកញ្ចប់ និងសិទ្ធិប្រើប្រាស់។",
+      "headerHeight": 70,
+      "fonts": [
+        "\"Koupreng UI\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "documentHeight": 2489,
+      "positions": {
+        ".kp-hero .kp-button": null,
+        ".kp-folio-cover": null,
+        ".kp-collection": null,
+        ".kp-product": null
+      },
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "contact-km-390",
+      "path": "/contact",
+      "language": "km",
+      "width": 390,
+      "overflow": false,
+      "h1": "មានសំណួរ?\nយើងរីករាយជួយអ្នក។",
+      "headerHeight": 70,
+      "fonts": [
+        "\"Koupreng UI\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "documentHeight": 2209,
+      "positions": {
+        ".kp-hero .kp-button": null,
+        ".kp-folio-cover": null,
+        ".kp-collection": null,
+        ".kp-product": null
+      },
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "home-km-768",
+      "path": "/",
+      "language": "km",
+      "width": 768,
+      "overflow": false,
+      "h1": "សន្លឹកការមង្គលដែលជារបស់អ្នក។",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng UI\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "documentHeight": 7130,
+      "positions": {
+        ".kp-hero .kp-button": {
+          "top": 403.765625,
+          "bottom": 455.265625
+        },
+        ".kp-folio-cover": {
+          "top": 667.4940185546875,
+          "bottom": 989.6309814453125
+        },
+        ".kp-collection": {
+          "top": 1098.0625,
+          "bottom": 2743.3125
+        },
+        ".kp-product": {
+          "top": 3431.5,
+          "bottom": 4182.953125
+        }
+      },
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "blocked": "Audit-only axe-core is unavailable"
+      }
+    },
+    {
+      "name": "home-km-1024",
+      "path": "/",
+      "language": "km",
+      "width": 1024,
+      "overflow": false,
+      "h1": "សន្លឹកការមង្គលដែលជារបស់អ្នក។",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng UI\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "documentHeight": 5609,
+      "positions": {
+        ".kp-hero .kp-button": {
+          "top": 435.59375,
+          "bottom": 487.09375
+        },
+        ".kp-folio-cover": {
+          "top": 239.7713623046875,
+          "bottom": 531.2286376953125
+        },
+        ".kp-collection": {
+          "top": 640,
+          "bottom": 1617.3125
+        },
+        ".kp-product": {
+          "top": 2305.5,
+          "bottom": 3034.203125
+        }
+      },
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "blocked": "Audit-only axe-core is unavailable"
+      }
+    },
+    {
+      "name": "home-km-1440",
+      "path": "/",
+      "language": "km",
+      "width": 1440,
+      "overflow": false,
+      "h1": "សន្លឹកការមង្គលដែលជារបស់អ្នក។",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng UI\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "documentHeight": 5673,
+      "positions": {
+        ".kp-hero .kp-button": {
+          "top": 456.03125,
+          "bottom": 507.53125
+        },
+        ".kp-folio-cover": {
+          "top": 194.26156616210938,
+          "bottom": 531.7384033203125
+        },
+        ".kp-collection": {
+          "top": 640,
+          "bottom": 1609.109375
+        },
+        ".kp-product": {
+          "top": 2297.296875,
+          "bottom": 3026
+        }
+      },
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "templates-km-1440",
+      "path": "/templates",
+      "language": "km",
+      "width": 1440,
+      "overflow": false,
+      "h1": "រចនាបទដែលជារបស់អ្នក។",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng UI\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "documentHeight": 1519,
+      "positions": {
+        ".kp-hero .kp-button": null,
+        ".kp-folio-cover": null,
+        ".kp-collection": null,
+        ".kp-product": null
+      },
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "pricing-km-1440",
+      "path": "/pricing",
+      "language": "km",
+      "width": 1440,
+      "overflow": false,
+      "h1": "ស្វែងយល់ពីគំរូ\nកញ្ចប់ និងសិទ្ធិប្រើប្រាស់។",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng UI\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "documentHeight": 1854,
+      "positions": {
+        ".kp-hero .kp-button": null,
+        ".kp-folio-cover": null,
+        ".kp-collection": null,
+        ".kp-product": null
+      },
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "contact-km-1440",
+      "path": "/contact",
+      "language": "km",
+      "width": 1440,
+      "overflow": false,
+      "h1": "មានសំណួរ?\nយើងរីករាយជួយអ្នក។",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng UI\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "documentHeight": 1297,
+      "positions": {
+        ".kp-hero .kp-button": null,
+        ".kp-folio-cover": null,
+        ".kp-collection": null,
+        ".kp-product": null
+      },
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "home-km-1920",
+      "path": "/",
+      "language": "km",
+      "width": 1920,
+      "overflow": false,
+      "h1": "សន្លឹកការមង្គលដែលជារបស់អ្នក។",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng UI\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "documentHeight": 5701,
+      "positions": {
+        ".kp-hero .kp-button": {
+          "top": 456.03125,
+          "bottom": 507.53125
+        },
+        ".kp-folio-cover": {
+          "top": 194.26156616210938,
+          "bottom": 531.7384033203125
+        },
+        ".kp-collection": {
+          "top": 640,
+          "bottom": 1614.8125
+        },
+        ".kp-product": {
+          "top": 2303,
+          "bottom": 3031.703125
+        }
+      },
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "blocked": "Audit-only axe-core is unavailable"
+      }
+    },
+    {
+      "name": "home-en-320",
+      "path": "/",
+      "language": "en",
+      "width": 320,
+      "overflow": false,
+      "h1": "Your wedding.Your invitation.",
+      "headerHeight": 70,
+      "fonts": [
+        "\"Koupreng Latin\", \"Koupreng UI\", sans-serif",
+        "\"Koupreng Editorial\", Georgia, serif"
+      ],
+      "documentHeight": 8964,
+      "positions": {
+        ".kp-hero .kp-button": {
+          "top": 338.765625,
+          "bottom": 390.265625
+        },
+        ".kp-folio-cover": {
+          "top": 605.26611328125,
+          "bottom": 818.85888671875
+        },
+        ".kp-collection": {
+          "top": 903.0625,
+          "bottom": 2262.078125
+        },
+        ".kp-product": {
+          "top": 3444.75,
+          "bottom": 4851.421875
+        }
+      },
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "blocked": "Audit-only axe-core is unavailable"
+      }
+    },
+    {
+      "name": "home-en-390",
+      "path": "/",
+      "language": "en",
+      "width": 390,
+      "overflow": false,
+      "h1": "Your wedding.Your invitation.",
+      "headerHeight": 70,
+      "fonts": [
+        "\"Koupreng Latin\", \"Koupreng UI\", sans-serif",
+        "\"Koupreng Editorial\", Georgia, serif"
+      ],
+      "documentHeight": 8085,
+      "positions": {
+        ".kp-hero .kp-button": {
+          "top": 311.796875,
+          "bottom": 363.296875
+        },
+        ".kp-folio-cover": {
+          "top": 557.11767578125,
+          "bottom": 792.06982421875
+        },
+        ".kp-collection": {
+          "top": 876.09375,
+          "bottom": 1982.484375
+        },
+        ".kp-product": {
+          "top": 3075.328125,
+          "bottom": 4320.203125
+        }
+      },
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "templates-en-390",
+      "path": "/templates",
+      "language": "en",
+      "width": 390,
+      "overflow": false,
+      "h1": "A design that feels like you.",
+      "headerHeight": 70,
+      "fonts": [
+        "\"Koupreng Latin\", \"Koupreng UI\", sans-serif"
+      ],
+      "documentHeight": 3095,
+      "positions": {
+        ".kp-hero .kp-button": null,
+        ".kp-folio-cover": null,
+        ".kp-collection": null,
+        ".kp-product": null
+      },
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "pricing-en-390",
+      "path": "/pricing",
+      "language": "en",
+      "width": 390,
+      "overflow": false,
+      "h1": "Designs, packages\n& access.",
+      "headerHeight": 70,
+      "fonts": [
+        "\"Koupreng Latin\", \"Koupreng UI\", sans-serif"
+      ],
+      "documentHeight": 2660,
+      "positions": {
+        ".kp-hero .kp-button": null,
+        ".kp-folio-cover": null,
+        ".kp-collection": null,
+        ".kp-product": null
+      },
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "contact-en-390",
+      "path": "/contact",
+      "language": "en",
+      "width": 390,
+      "overflow": false,
+      "h1": "Have a question?\nWe’re happy to help.",
+      "headerHeight": 70,
+      "fonts": [
+        "\"Koupreng Latin\", \"Koupreng UI\", sans-serif"
+      ],
+      "documentHeight": 2193,
+      "positions": {
+        ".kp-hero .kp-button": null,
+        ".kp-folio-cover": null,
+        ".kp-collection": null,
+        ".kp-product": null
+      },
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "home-en-768",
+      "path": "/",
+      "language": "en",
+      "width": 768,
+      "overflow": false,
+      "h1": "Your wedding.Your invitation.",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng Latin\", \"Koupreng UI\", sans-serif",
+        "\"Koupreng Editorial\", Georgia, serif"
+      ],
+      "documentHeight": 7238,
+      "positions": {
+        ".kp-hero .kp-button": {
+          "top": 367.953125,
+          "bottom": 419.453125
+        },
+        ".kp-folio-cover": {
+          "top": 631.6815185546875,
+          "bottom": 953.8184814453125
+        },
+        ".kp-collection": {
+          "top": 1062.25,
+          "bottom": 2783.046875
+        },
+        ".kp-product": {
+          "top": 3490.421875,
+          "bottom": 4267.0625
+        }
+      },
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "blocked": "Audit-only axe-core is unavailable"
+      }
+    },
+    {
+      "name": "home-en-1024",
+      "path": "/",
+      "language": "en",
+      "width": 1024,
+      "overflow": false,
+      "h1": "Your wedding.Your invitation.",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng Latin\", \"Koupreng UI\", sans-serif",
+        "\"Koupreng Editorial\", Georgia, serif"
+      ],
+      "documentHeight": 5691,
+      "positions": {
+        ".kp-hero .kp-button": {
+          "top": 432.390625,
+          "bottom": 483.890625
+        },
+        ".kp-folio-cover": {
+          "top": 239.7713623046875,
+          "bottom": 531.2286376953125
+        },
+        ".kp-collection": {
+          "top": 640,
+          "bottom": 1639.265625
+        },
+        ".kp-product": {
+          "top": 2346.640625,
+          "bottom": 3098.09375
+        }
+      },
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "blocked": "Audit-only axe-core is unavailable"
+      }
+    },
+    {
+      "name": "home-en-1440",
+      "path": "/",
+      "language": "en",
+      "width": 1440,
+      "overflow": false,
+      "h1": "Your wedding.Your invitation.",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng Latin\", \"Koupreng UI\", sans-serif",
+        "\"Koupreng Editorial\", Georgia, serif"
+      ],
+      "documentHeight": 5667,
+      "positions": {
+        ".kp-hero .kp-button": {
+          "top": 450.078125,
+          "bottom": 501.578125
+        },
+        ".kp-folio-cover": {
+          "top": 194.26156616210938,
+          "bottom": 531.7384033203125
+        },
+        ".kp-collection": {
+          "top": 640,
+          "bottom": 1618.890625
+        },
+        ".kp-product": {
+          "top": 2326.265625,
+          "bottom": 3054.96875
+        }
+      },
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "templates-en-1440",
+      "path": "/templates",
+      "language": "en",
+      "width": 1440,
+      "overflow": false,
+      "h1": "A design that feels like you.",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng Latin\", \"Koupreng UI\", sans-serif"
+      ],
+      "documentHeight": 1515,
+      "positions": {
+        ".kp-hero .kp-button": null,
+        ".kp-folio-cover": null,
+        ".kp-collection": null,
+        ".kp-product": null
+      },
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "pricing-en-1440",
+      "path": "/pricing",
+      "language": "en",
+      "width": 1440,
+      "overflow": false,
+      "h1": "Designs, packages\n& access.",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng Latin\", \"Koupreng UI\", sans-serif"
+      ],
+      "documentHeight": 1849,
+      "positions": {
+        ".kp-hero .kp-button": null,
+        ".kp-folio-cover": null,
+        ".kp-collection": null,
+        ".kp-product": null
+      },
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "contact-en-1440",
+      "path": "/contact",
+      "language": "en",
+      "width": 1440,
+      "overflow": false,
+      "h1": "Have a question?\nWe’re happy to help.",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng Latin\", \"Koupreng UI\", sans-serif"
+      ],
+      "documentHeight": 1290,
+      "positions": {
+        ".kp-hero .kp-button": null,
+        ".kp-folio-cover": null,
+        ".kp-collection": null,
+        ".kp-product": null
+      },
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "home-en-1920",
+      "path": "/",
+      "language": "en",
+      "width": 1920,
+      "overflow": false,
+      "h1": "Your wedding.Your invitation.",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng Latin\", \"Koupreng UI\", sans-serif",
+        "\"Koupreng Editorial\", Georgia, serif"
+      ],
+      "documentHeight": 5667,
+      "positions": {
+        ".kp-hero .kp-button": {
+          "top": 450.078125,
+          "bottom": 501.578125
+        },
+        ".kp-folio-cover": {
+          "top": 194.26156616210938,
+          "bottom": 531.7384033203125
+        },
+        ".kp-collection": {
+          "top": 640,
+          "bottom": 1618.890625
+        },
+        ".kp-product": {
+          "top": 2326.265625,
+          "bottom": 3054.96875
+        }
+      },
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "blocked": "Audit-only axe-core is unavailable"
+      }
+    },
+    {
+      "name": "pricing-auth-km-390",
+      "width": 390,
+      "accessibility": {
+        "violations": []
+      },
+      "height": 844
+    },
+    {
+      "name": "pricing-auth-km-1440",
+      "width": 1440,
+      "accessibility": {
+        "violations": []
+      },
+      "height": 900
+    },
+    {
+      "name": "pricing-auth-en-390",
+      "width": 390,
+      "accessibility": {
+        "violations": []
+      },
+      "height": 844
+    },
+    {
+      "name": "pricing-auth-en-1440",
+      "width": 1440,
+      "accessibility": {
+        "violations": []
+      },
+      "height": 900
+    },
+    {
+      "name": "folio-open-km-390",
+      "paper": {
+        "height": 308,
+        "contentHeight": 308
+      }
+    },
+    {
+      "name": "folio-open-km-1440",
+      "paper": {
+        "height": 310,
+        "contentHeight": 310
+      }
+    },
+    {
+      "name": "folio-open-en-390",
+      "paper": {
+        "height": 308,
+        "contentHeight": 308
+      }
+    },
+    {
+      "name": "folio-open-en-1440",
+      "paper": {
+        "height": 310,
+        "contentHeight": 310
+      }
+    }
+  ]
+}

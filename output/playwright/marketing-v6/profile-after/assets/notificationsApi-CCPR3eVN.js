@@ -1,0 +1,2 @@
+import{t as e}from"./httpClient-oM6DHhph.js";function t(e){return e?.data??e}var n={list:()=>e.get(`/v1/notifications`).then(t),summary:()=>e.get(`/v1/notifications/summary`).then(t),listByInvitation:n=>!n||typeof n==`string`&&!/^\d+$/.test(n)?Promise.resolve([]):e.get(`/v1/invitations/${n}/notifications`).then(t),markRead:n=>e.patch(`/v1/notifications/${n}/read`,{}).then(t),markAllRead:()=>e.patch(`/v1/notifications/read-all`,{}).then(t)};export{n as t};
+//# sourceMappingURL=notificationsApi-CCPR3eVN.js.map

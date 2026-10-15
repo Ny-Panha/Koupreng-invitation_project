@@ -1,0 +1,37 @@
+{
+  "source": "Intercepted API fixtures; all contact POSTs are simulated",
+  "audits": [
+    {
+      "name": "contact-invalid-en-1440",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "contact-accepted-en-1440",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "contact-accepted-en-390",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "support-open-en-390",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "pricing-auth-en-390",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "pricing-auth-en-1440",
+      "violations": [],
+      "incomplete": []
+    }
+  ]
+}

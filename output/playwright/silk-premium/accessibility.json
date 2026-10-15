@@ -1,0 +1,64 @@
+{
+  "audits": [
+    {
+      "width": 1440,
+      "state": "cover",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "width": 1440,
+      "state": "open",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "width": 1440,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "state": "cover",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "width": 390,
+      "state": "open",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "width": 390,
+      "errors": []
+    }
+  ],
+  "contrastChecks": [
+    {
+      "role": "program/closing burgundy",
+      "text": "#F6F0E5",
+      "background": "#672C39",
+      "ratio": 9.28
+    },
+    {
+      "role": "program/closing charcoal",
+      "text": "#F6F0E5",
+      "background": "#362A28",
+      "ratio": 12.19
+    },
+    {
+      "role": "family gold text on paper",
+      "text": "#775528",
+      "background": "#FFFBF4",
+      "ratio": 6.54
+    }
+  ]
+}

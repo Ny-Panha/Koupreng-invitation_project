@@ -1,0 +1,2 @@
+import{C as e}from"./index-DWR6E2Wk.js";import{t}from"./planningApi-VOvU4dI0.js";import{t as n}from"./guestApi-DLMzQeR2.js";var r={listMineInvitations:()=>e.listMine(),listGifts:e=>t.listGifts(e),createGift:(e,n)=>t.createGift(e,n),updateGift:(e,n,r)=>t.updateGift(e,n,r),removeGift:(e,n)=>t.removeGift(e,n),listGuests:e=>n.listByInvitation(e)};export{r as t};
+//# sourceMappingURL=giftsApi-CRI0kR0w.js.map

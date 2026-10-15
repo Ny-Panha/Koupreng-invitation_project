@@ -1,0 +1,2 @@
+import{t as e}from"./httpClient-oM6DHhph.js";function t(e){return e?.data??e}var n={packages:n=>e.get(`/v1/packages`,n).then(t),current:()=>e.get(`/v1/me/subscriptions/current`).then(t),history:()=>e.get(`/v1/me/subscriptions`).then(t),order:n=>e.get(`/v1/me/subscriptions/orders/${encodeURIComponent(n)}`).then(t),purchase:(n,r,i)=>e.post(`/v1/me/subscriptions/purchase`,{packageId:n,payerName:r,payerAccountLast3:i}).then(t)};export{n as t};
+//# sourceMappingURL=subscriptionService-BZ8FSdR1.js.map

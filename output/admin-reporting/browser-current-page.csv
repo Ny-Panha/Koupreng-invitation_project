@@ -1,0 +1,9 @@
+﻿"Scope","CURRENT PAGE 2; 1 of 3 matching records"
+"Snapshot","fixture-invitations-1"
+"Period","2026-10-15 inclusive / 2026-10-16 exclusive"
+"Timezone","Asia/Phnom_Penh"
+"Date dimension","createdAt"
+"Filters","{}"
+
+"Invitation ID","Event title","Owner ID","Owner display name","Template ID","Template","Event type","Publication status","Moderation","Event date","Event time","Venue","Created at","Published at","Guests","Guest-linked responses","Checked in"
+"6","Other event","1","របាយការណ៍ សាកល្បង","2","Free template","OTHER","DRAFT","ACTIVE","2026-10-15","09:00","Venue","15 Oct 2026, 08:00","Unavailable","0","0","0"

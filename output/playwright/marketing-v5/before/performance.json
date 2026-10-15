@@ -1,0 +1,1258 @@
+{
+  "source": "Local production preview, API fixtures; packages and guests are illustrative, no live backend or messages",
+  "conditions": "Chromium cold contexts; 4x CPU, 1.6 Mbps, 150ms latency; Event Timing is not field INP",
+  "rows": [
+    {
+      "language": "km",
+      "width": 390,
+      "run": 1,
+      "lcp": 2548,
+      "cls": 0,
+      "events": [],
+      "longTasks": [
+        90,
+        281,
+        59
+      ],
+      "lcpElement": "<img sizes=\"(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px\" alt=\"រូបថតគូស្នេហ៍សម្រាប់គំរូសូត្រមង្គល\" width=\"960\" height=\"1440\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\" srcset=\"/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w\" src=\"/templates/silk-heritage/portrait.webp\">",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "duration": 1309.3999999985099
+        },
+        {
+          "path": "/assets/index-D8lACMoz.js",
+          "bytes": 133472,
+          "duration": 1941.1000000014901
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "duration": 254.70000000298023
+        },
+        {
+          "path": "/assets/react-dom-DenslgJm.js",
+          "bytes": 1392,
+          "duration": 238.30000000447035
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "duration": 191.79999999701977
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 1488,
+          "duration": 237.80000000447035
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "duration": 895.2999999970198
+        },
+        {
+          "path": "/assets/io5-C0h9VnRv.js",
+          "bytes": 11871,
+          "duration": 784.6000000014901
+        },
+        {
+          "path": "/assets/index-Dn890-z8.css",
+          "bytes": 27412,
+          "duration": 752.4000000059605
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "duration": 1707.0999999940395
+        },
+        {
+          "path": "/images/marketing/silk-portrait-480.webp",
+          "bytes": 39796,
+          "duration": 1343.8999999985099
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "duration": 575.9000000059605
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 15813,
+          "duration": 353.3999999985099
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "duration": 195.5
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "duration": 195.20000000298023
+        },
+        {
+          "path": "/api/v1/i18n/messages?namespace=templateGrid&lang=km",
+          "bytes": 24,
+          "duration": 4.5
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "duration": 3.100000001490116
+        }
+      ]
+    },
+    {
+      "language": "km",
+      "width": 390,
+      "run": 2,
+      "lcp": 2564,
+      "cls": 0,
+      "events": [],
+      "longTasks": [
+        82,
+        288,
+        51
+      ],
+      "lcpElement": "<img sizes=\"(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px\" alt=\"រូបថតគូស្នេហ៍សម្រាប់គំរូសូត្រមង្គល\" width=\"960\" height=\"1440\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\" srcset=\"/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w\" src=\"/templates/silk-heritage/portrait.webp\">",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "duration": 1367
+        },
+        {
+          "path": "/assets/index-D8lACMoz.js",
+          "bytes": 133472,
+          "duration": 1970.6000000014901
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "duration": 273
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "duration": 216.10000000149012
+        },
+        {
+          "path": "/assets/react-dom-DenslgJm.js",
+          "bytes": 1392,
+          "duration": 264.1000000014901
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 1488,
+          "duration": 264.3999999985099
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "duration": 920.2999999970198
+        },
+        {
+          "path": "/assets/io5-C0h9VnRv.js",
+          "bytes": 11871,
+          "duration": 805.3000000044703
+        },
+        {
+          "path": "/assets/index-Dn890-z8.css",
+          "bytes": 27412,
+          "duration": 805.2999999970198
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "duration": 1754.6000000014901
+        },
+        {
+          "path": "/images/marketing/silk-portrait-480.webp",
+          "bytes": 39796,
+          "duration": 1372.5
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "duration": 580.5
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 15813,
+          "duration": 357.19999999552965
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "duration": 197.69999999552965
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "duration": 197.70000000298023
+        },
+        {
+          "path": "/api/v1/i18n/messages?namespace=templateGrid&lang=km",
+          "bytes": 24,
+          "duration": 7.399999998509884
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "duration": 4.600000001490116
+        }
+      ]
+    },
+    {
+      "language": "km",
+      "width": 390,
+      "run": 3,
+      "lcp": 2556,
+      "cls": 0,
+      "events": [],
+      "longTasks": [
+        97,
+        262
+      ],
+      "lcpElement": "<img sizes=\"(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px\" alt=\"រូបថតគូស្នេហ៍សម្រាប់គំរូសូត្រមង្គល\" width=\"960\" height=\"1440\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\" srcset=\"/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w\" src=\"/templates/silk-heritage/portrait.webp\">",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "duration": 1344.1000000014901
+        },
+        {
+          "path": "/assets/index-D8lACMoz.js",
+          "bytes": 133472,
+          "duration": 1960.3000000044703
+        },
+        {
+          "path": "/assets/react-dom-DenslgJm.js",
+          "bytes": 1392,
+          "duration": 252.70000000298023
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "duration": 285
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "duration": 205.5
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 1488,
+          "duration": 252.69999999552965
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "duration": 554.8999999985099
+        },
+        {
+          "path": "/assets/io5-C0h9VnRv.js",
+          "bytes": 11871,
+          "duration": 762.3999999985099
+        },
+        {
+          "path": "/assets/index-Dn890-z8.css",
+          "bytes": 27412,
+          "duration": 1060.6999999955297
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "duration": 1720.5
+        },
+        {
+          "path": "/images/marketing/silk-portrait-480.webp",
+          "bytes": 39796,
+          "duration": 1371.6000000014901
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "duration": 562.7000000029802
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 15813,
+          "duration": 351.8999999985099
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "duration": 193.90000000596046
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "duration": 193.89999999850988
+        },
+        {
+          "path": "/api/v1/i18n/messages?namespace=templateGrid&lang=km",
+          "bytes": 24,
+          "duration": 3.2000000029802322
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "duration": 2.100000001490116
+        }
+      ]
+    },
+    {
+      "language": "km",
+      "width": 1440,
+      "run": 1,
+      "lcp": 2756,
+      "cls": 0.00009453125,
+      "events": [],
+      "longTasks": [
+        138,
+        427,
+        62
+      ],
+      "lcpElement": "<img sizes=\"(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px\" alt=\"រូបថតគូស្នេហ៍សម្រាប់គំរូសូត្រមង្គល\" width=\"960\" height=\"1440\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\" srcset=\"/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w\" src=\"/templates/silk-heritage/portrait.webp\">",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "duration": 1277.5
+        },
+        {
+          "path": "/assets/index-D8lACMoz.js",
+          "bytes": 133472,
+          "duration": 1936.6000000014901
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "duration": 269.1000000014901
+        },
+        {
+          "path": "/assets/react-dom-DenslgJm.js",
+          "bytes": 1392,
+          "duration": 252.39999999850988
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "duration": 206.19999999552965
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 1488,
+          "duration": 268.29999999701977
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "duration": 915.1000000014901
+        },
+        {
+          "path": "/assets/io5-C0h9VnRv.js",
+          "bytes": 11871,
+          "duration": 788.2999999970198
+        },
+        {
+          "path": "/assets/index-Dn890-z8.css",
+          "bytes": 27412,
+          "duration": 741.3000000044703
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "duration": 1734.5
+        },
+        {
+          "path": "/images/marketing/silk-portrait-480.webp",
+          "bytes": 39796,
+          "duration": 1356.4000000059605
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "duration": 695.7999999970198
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 15813,
+          "duration": 349.80000000447035
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "duration": 185.20000000298023
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "duration": 191
+        },
+        {
+          "path": "/api/v1/i18n/messages?namespace=templateGrid&lang=km",
+          "bytes": 24,
+          "duration": 5.399999998509884
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "duration": 3.899999998509884
+        }
+      ]
+    },
+    {
+      "language": "km",
+      "width": 1440,
+      "run": 2,
+      "lcp": 2824,
+      "cls": 0.00009453125,
+      "events": [],
+      "longTasks": [
+        132,
+        471,
+        71,
+        114
+      ],
+      "lcpElement": "<img sizes=\"(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px\" alt=\"រូបថតគូស្នេហ៍សម្រាប់គំរូសូត្រមង្គល\" width=\"960\" height=\"1440\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\" srcset=\"/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w\" src=\"/templates/silk-heritage/portrait.webp\">",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "duration": 1286.6000000014901
+        },
+        {
+          "path": "/assets/index-D8lACMoz.js",
+          "bytes": 133472,
+          "duration": 1961.5
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "duration": 195
+        },
+        {
+          "path": "/assets/react-dom-DenslgJm.js",
+          "bytes": 1392,
+          "duration": 257.5
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 1488,
+          "duration": 257.70000000298023
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "duration": 273.6000000014901
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "duration": 558.5
+        },
+        {
+          "path": "/assets/io5-C0h9VnRv.js",
+          "bytes": 11871,
+          "duration": 790.1000000014901
+        },
+        {
+          "path": "/assets/index-Dn890-z8.css",
+          "bytes": 27412,
+          "duration": 1049.5
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "duration": 1740.1000000014901
+        },
+        {
+          "path": "/images/marketing/silk-portrait-480.webp",
+          "bytes": 39796,
+          "duration": 1377.1999999955297
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "duration": 694.3999999985099
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 15813,
+          "duration": 346.5
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "duration": 178.30000000447035
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "duration": 190.5
+        },
+        {
+          "path": "/api/v1/i18n/messages?namespace=templateGrid&lang=km",
+          "bytes": 24,
+          "duration": 6.600000001490116
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "duration": 4.299999997019768
+        }
+      ]
+    },
+    {
+      "language": "km",
+      "width": 1440,
+      "run": 3,
+      "lcp": 2936,
+      "cls": 0.00009453125,
+      "events": [],
+      "longTasks": [
+        172,
+        554
+      ],
+      "lcpElement": "<img sizes=\"(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px\" alt=\"រូបថតគូស្នេហ៍សម្រាប់គំរូសូត្រមង្គល\" width=\"960\" height=\"1440\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\" srcset=\"/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w\" src=\"/templates/silk-heritage/portrait.webp\">",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "duration": 1389.4000000059605
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "duration": 275.20000000298023
+        },
+        {
+          "path": "/assets/index-D8lACMoz.js",
+          "bytes": 133472,
+          "duration": 1955.2999999970198
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "duration": 212.29999999701977
+        },
+        {
+          "path": "/assets/react-dom-DenslgJm.js",
+          "bytes": 1392,
+          "duration": 242.69999999552965
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 1488,
+          "duration": 252.60000000149012
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "duration": 556.1999999955297
+        },
+        {
+          "path": "/assets/io5-C0h9VnRv.js",
+          "bytes": 11871,
+          "duration": 730.5
+        },
+        {
+          "path": "/assets/index-Dn890-z8.css",
+          "bytes": 27412,
+          "duration": 1044.1000000014901
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "duration": 1728.6000000014901
+        },
+        {
+          "path": "/images/marketing/silk-portrait-480.webp",
+          "bytes": 39796,
+          "duration": 1366.2999999970198
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "duration": 727.1000000014901
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 15813,
+          "duration": 337.70000000298023
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "duration": 181.89999999850988
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "duration": 196.70000000298023
+        },
+        {
+          "path": "/api/v1/i18n/messages?namespace=templateGrid&lang=km",
+          "bytes": 24,
+          "duration": 5
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "duration": 5.100000001490116
+        }
+      ]
+    },
+    {
+      "language": "en",
+      "width": 390,
+      "run": 1,
+      "lcp": 2352,
+      "cls": 0,
+      "events": [],
+      "longTasks": [
+        102,
+        279,
+        62
+      ],
+      "lcpElement": "<img sizes=\"(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px\" alt=\"Sample wedding portrait from the Silk Heritage design\" width=\"960\" height=\"1440\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\" srcset=\"/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w\" src=\"/templates/silk-heritage/portrait.webp\">",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "duration": 1327.2999999970198
+        },
+        {
+          "path": "/assets/index-D8lACMoz.js",
+          "bytes": 133472,
+          "duration": 1751
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "duration": 269.40000000596046
+        },
+        {
+          "path": "/assets/react-dom-DenslgJm.js",
+          "bytes": 1392,
+          "duration": 237
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "duration": 205.59999999403954
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 1488,
+          "duration": 252.70000000298023
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "duration": 568.5
+        },
+        {
+          "path": "/assets/io5-C0h9VnRv.js",
+          "bytes": 11871,
+          "duration": 742.3999999985099
+        },
+        {
+          "path": "/assets/index-Dn890-z8.css",
+          "bytes": 27412,
+          "duration": 1056
+        },
+        {
+          "path": "/fonts/marketing/DMSans-Latin.woff2",
+          "bytes": 36932,
+          "duration": 1295.1000000014901
+        },
+        {
+          "path": "/images/marketing/silk-portrait-480.webp",
+          "bytes": 39796,
+          "duration": 1340.8999999985099
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "duration": 562.3999999985099
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 15813,
+          "duration": 340.29999999701977
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "duration": 182
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "duration": 196.70000000298023
+        },
+        {
+          "path": "/api/v1/i18n/messages?namespace=templateGrid&lang=en",
+          "bytes": 24,
+          "duration": 5.700000002980232
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "duration": 4
+        }
+      ]
+    },
+    {
+      "language": "en",
+      "width": 390,
+      "run": 2,
+      "lcp": 2284,
+      "cls": 0,
+      "events": [],
+      "longTasks": [
+        86,
+        246,
+        51
+      ],
+      "lcpElement": "<img sizes=\"(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px\" alt=\"Sample wedding portrait from the Silk Heritage design\" width=\"960\" height=\"1440\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\" srcset=\"/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w\" src=\"/templates/silk-heritage/portrait.webp\">",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "duration": 1268
+        },
+        {
+          "path": "/assets/index-D8lACMoz.js",
+          "bytes": 133472,
+          "duration": 1738.5
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "duration": 253.5
+        },
+        {
+          "path": "/assets/react-dom-DenslgJm.js",
+          "bytes": 1392,
+          "duration": 236.5
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "duration": 189.5
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 1488,
+          "duration": 252.20000000298023
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "duration": 916.3999999985099
+        },
+        {
+          "path": "/assets/io5-C0h9VnRv.js",
+          "bytes": 11871,
+          "duration": 787.5999999940395
+        },
+        {
+          "path": "/assets/index-Dn890-z8.css",
+          "bytes": 27412,
+          "duration": 803.5
+        },
+        {
+          "path": "/fonts/marketing/DMSans-Latin.woff2",
+          "bytes": 36932,
+          "duration": 1288.8999999985099
+        },
+        {
+          "path": "/images/marketing/silk-portrait-480.webp",
+          "bytes": 39796,
+          "duration": 1332.1999999955297
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "duration": 539.9000000059605
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 15813,
+          "duration": 335.1000000014901
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "duration": 179.5
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "duration": 179.89999999850988
+        },
+        {
+          "path": "/api/v1/i18n/messages?namespace=templateGrid&lang=en",
+          "bytes": 24,
+          "duration": 5.9000000059604645
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "duration": 2.2000000029802322
+        }
+      ]
+    },
+    {
+      "language": "en",
+      "width": 390,
+      "run": 3,
+      "lcp": 2288,
+      "cls": 0,
+      "events": [],
+      "longTasks": [
+        89,
+        226
+      ],
+      "lcpElement": "<img sizes=\"(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px\" alt=\"Sample wedding portrait from the Silk Heritage design\" width=\"960\" height=\"1440\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\" srcset=\"/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w\" src=\"/templates/silk-heritage/portrait.webp\">",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "duration": 1264
+        },
+        {
+          "path": "/assets/index-D8lACMoz.js",
+          "bytes": 133472,
+          "duration": 1738.6000000014901
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "duration": 266
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "duration": 204.5
+        },
+        {
+          "path": "/assets/react-dom-DenslgJm.js",
+          "bytes": 1392,
+          "duration": 250
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 1488,
+          "duration": 250
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "duration": 533.7000000029802
+        },
+        {
+          "path": "/assets/io5-C0h9VnRv.js",
+          "bytes": 11871,
+          "duration": 786.8999999985099
+        },
+        {
+          "path": "/assets/index-Dn890-z8.css",
+          "bytes": 27412,
+          "duration": 1072.2000000029802
+        },
+        {
+          "path": "/fonts/marketing/DMSans-Latin.woff2",
+          "bytes": 36932,
+          "duration": 1299.2000000029802
+        },
+        {
+          "path": "/images/marketing/silk-portrait-480.webp",
+          "bytes": 39796,
+          "duration": 1346.3999999985099
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "duration": 514.5999999940395
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 15813,
+          "duration": 335.1000000014901
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "duration": 192.59999999403954
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "duration": 191.39999999850988
+        },
+        {
+          "path": "/api/v1/i18n/messages?namespace=templateGrid&lang=en",
+          "bytes": 24,
+          "duration": 3.2999999970197678
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "duration": 2.100000001490116
+        }
+      ]
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "run": 1,
+      "lcp": 2296,
+      "cls": 0.00010270061728395063,
+      "events": [],
+      "longTasks": [
+        83,
+        245
+      ],
+      "lcpElement": "<img sizes=\"(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px\" alt=\"Sample wedding portrait from the Silk Heritage design\" width=\"960\" height=\"1440\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\" srcset=\"/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w\" src=\"/templates/silk-heritage/portrait.webp\">",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "duration": 1252.1999999955297
+        },
+        {
+          "path": "/assets/index-D8lACMoz.js",
+          "bytes": 133472,
+          "duration": 1725.7999999970198
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "duration": 257.29999999701977
+        },
+        {
+          "path": "/assets/react-dom-DenslgJm.js",
+          "bytes": 1392,
+          "duration": 225.39999999850988
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "duration": 193.29999999701977
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 1488,
+          "duration": 241
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "duration": 918.3000000044703
+        },
+        {
+          "path": "/assets/io5-C0h9VnRv.js",
+          "bytes": 11871,
+          "duration": 761.1000000014901
+        },
+        {
+          "path": "/assets/index-Dn890-z8.css",
+          "bytes": 27412,
+          "duration": 776.7999999970198
+        },
+        {
+          "path": "/fonts/marketing/DMSans-Latin.woff2",
+          "bytes": 36932,
+          "duration": 1287.6999999955297
+        },
+        {
+          "path": "/images/marketing/silk-portrait-480.webp",
+          "bytes": 39796,
+          "duration": 1334.6000000014901
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "duration": 661.5
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "duration": 1189.8999999985099
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 15813,
+          "duration": 427.8999999985099
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "duration": 190.39999999850988
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "duration": 237.5
+        },
+        {
+          "path": "/api/v1/i18n/messages?namespace=templateGrid&lang=en",
+          "bytes": 24,
+          "duration": 4.399999998509884
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "duration": 1.9000000059604645
+        },
+        {
+          "path": "/facebook/all/06-card/cover-card.jpg",
+          "bytes": 667795,
+          "duration": 7385.5
+        },
+        {
+          "path": "/templates/canva-luxury/emerald-luxury.jpg",
+          "bytes": 1064977,
+          "duration": 9387
+        }
+      ]
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "run": 2,
+      "lcp": 2344,
+      "cls": 0.00010270061728395063,
+      "events": [],
+      "longTasks": [
+        89,
+        264
+      ],
+      "lcpElement": "<img sizes=\"(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px\" alt=\"Sample wedding portrait from the Silk Heritage design\" width=\"960\" height=\"1440\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\" srcset=\"/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w\" src=\"/templates/silk-heritage/portrait.webp\">",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "duration": 1249.5999999940395
+        },
+        {
+          "path": "/assets/index-D8lACMoz.js",
+          "bytes": 133472,
+          "duration": 1753.6000000014901
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "duration": 269.1000000014901
+        },
+        {
+          "path": "/assets/react-dom-DenslgJm.js",
+          "bytes": 1392,
+          "duration": 253
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "duration": 206.39999999850988
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 1488,
+          "duration": 252.89999999850988
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "duration": 539.2999999970198
+        },
+        {
+          "path": "/assets/io5-C0h9VnRv.js",
+          "bytes": 11871,
+          "duration": 791
+        },
+        {
+          "path": "/assets/index-Dn890-z8.css",
+          "bytes": 27412,
+          "duration": 1090.1000000014901
+        },
+        {
+          "path": "/fonts/marketing/DMSans-Latin.woff2",
+          "bytes": 36932,
+          "duration": 1300
+        },
+        {
+          "path": "/images/marketing/silk-portrait-480.webp",
+          "bytes": 39796,
+          "duration": 1346.7000000029802
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "duration": 675.5
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "duration": 1141.0999999940395
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 15813,
+          "duration": 441.19999999552965
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "duration": 189.70000000298023
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "duration": 235.60000000149012
+        },
+        {
+          "path": "/api/v1/i18n/messages?namespace=templateGrid&lang=en",
+          "bytes": 24,
+          "duration": 4.299999997019768
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "duration": 3.399999998509884
+        },
+        {
+          "path": "/facebook/all/06-card/cover-card.jpg",
+          "bytes": 667795,
+          "duration": 7333.89999999851
+        },
+        {
+          "path": "/templates/canva-luxury/emerald-luxury.jpg",
+          "bytes": 1064977,
+          "duration": 9361
+        }
+      ]
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "run": 3,
+      "lcp": 2360,
+      "cls": 0.00010270061728395063,
+      "events": [],
+      "longTasks": [
+        79,
+        291
+      ],
+      "lcpElement": "<img sizes=\"(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px\" alt=\"Sample wedding portrait from the Silk Heritage design\" width=\"960\" height=\"1440\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\" srcset=\"/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w\" src=\"/templates/silk-heritage/portrait.webp\">",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "duration": 1327.5
+        },
+        {
+          "path": "/assets/index-D8lACMoz.js",
+          "bytes": 133472,
+          "duration": 1737
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "duration": 265.20000000298023
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "duration": 200.89999999850988
+        },
+        {
+          "path": "/assets/react-dom-DenslgJm.js",
+          "bytes": 1392,
+          "duration": 248.59999999403954
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 1488,
+          "duration": 248.5
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "duration": 896
+        },
+        {
+          "path": "/assets/io5-C0h9VnRv.js",
+          "bytes": 11871,
+          "duration": 802.5
+        },
+        {
+          "path": "/assets/index-Dn890-z8.css",
+          "bytes": 27412,
+          "duration": 818.2000000029802
+        },
+        {
+          "path": "/fonts/marketing/DMSans-Latin.woff2",
+          "bytes": 36932,
+          "duration": 1299.6000000014901
+        },
+        {
+          "path": "/images/marketing/silk-portrait-480.webp",
+          "bytes": 39796,
+          "duration": 1346.2999999970198
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "duration": 705.6000000014901
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "duration": 1169.8000000044703
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 15813,
+          "duration": 420.09999999403954
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "duration": 184.39999999850988
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "duration": 247.10000000149012
+        },
+        {
+          "path": "/api/v1/i18n/messages?namespace=templateGrid&lang=en",
+          "bytes": 24,
+          "duration": 4.699999995529652
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "duration": 5.299999997019768
+        },
+        {
+          "path": "/facebook/all/06-card/cover-card.jpg",
+          "bytes": 667795,
+          "duration": 7322.5999999940395
+        },
+        {
+          "path": "/templates/canva-luxury/emerald-luxury.jpg",
+          "bytes": 1064977,
+          "duration": 9341.19999999553
+        }
+      ]
+    }
+  ]
+}

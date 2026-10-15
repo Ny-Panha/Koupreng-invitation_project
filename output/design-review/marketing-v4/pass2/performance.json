@@ -1,0 +1,1120 @@
+{
+  "source": "Local production preview, API fixtures; packages and guests are illustrative, no live backend or messages",
+  "conditions": "Chromium cold contexts; 4x CPU, 1.6 Mbps, 150ms latency; Event Timing is not field INP",
+  "rows": [
+    {
+      "width": 390,
+      "run": 1,
+      "lcp": 3528,
+      "cls": 0.00038578343535420565,
+      "events": [
+        {
+          "name": "pointerdown",
+          "duration": 32
+        },
+        {
+          "name": "pointerup",
+          "duration": 32
+        },
+        {
+          "name": "click",
+          "duration": 32
+        }
+      ],
+      "longTasks": [
+        95,
+        73,
+        203,
+        127
+      ],
+      "lcpElement": "",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "duration": 1048
+        },
+        {
+          "path": "/assets/index-CVOjCOUY.js",
+          "bytes": 166411,
+          "duration": 1474.1000000238419
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "duration": 283.2999999523163
+        },
+        {
+          "path": "/assets/react-dom-DenslgJm.js",
+          "bytes": 1392,
+          "duration": 252.09999990463257
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "duration": 189.20000004768372
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "duration": 584.6999999284744
+        },
+        {
+          "path": "/assets/io5-C0h9VnRv.js",
+          "bytes": 11871,
+          "duration": 596.3999999761581
+        },
+        {
+          "path": "/assets/index-7d-xOkzO.css",
+          "bytes": 18977,
+          "duration": 568.1999999284744
+        },
+        {
+          "path": "/assets/HomePage-FFLDAVIm.js",
+          "bytes": 7761,
+          "duration": 278.1999999284744
+        },
+        {
+          "path": "/assets/calendar-days-CITgTjnA.js",
+          "bytes": 659,
+          "duration": 198
+        },
+        {
+          "path": "/assets/arrow-right-D7BRyNej.js",
+          "bytes": 195,
+          "duration": 197.69999992847443
+        },
+        {
+          "path": "/assets/check-CUFeU_1d.js",
+          "bytes": 154,
+          "duration": 199.89999997615814
+        },
+        {
+          "path": "/assets/usePrefersReducedMotion-DleGGVfx.js",
+          "bytes": 908,
+          "duration": 212.39999997615814
+        },
+        {
+          "path": "/assets/TemplateGrid-UcxwhT0T.js",
+          "bytes": 3775,
+          "duration": 243.59999990463257
+        },
+        {
+          "path": "/assets/TemplateGrid-_OvAbrNP.css",
+          "bytes": 3073,
+          "duration": 434.2000000476837
+        },
+        {
+          "path": "/assets/layout-template-DMHeEbGD.js",
+          "bytes": 316,
+          "duration": 385.6999999284744
+        },
+        {
+          "path": "/assets/plus-DolsN1tU.js",
+          "bytes": 183,
+          "duration": 417.39999997615814
+        },
+        {
+          "path": "/assets/send-ZssbwtO1.js",
+          "bytes": 320,
+          "duration": 448.1999999284744
+        },
+        {
+          "path": "/assets/users-round-DZ3IzU1i.js",
+          "bytes": 303,
+          "duration": 564.0999999046326
+        },
+        {
+          "path": "/assets/PricingFactors-Cb9KQbM5.js",
+          "bytes": 789,
+          "duration": 590.5
+        },
+        {
+          "path": "/assets/layers-D36Bel9N.js",
+          "bytes": 472,
+          "duration": 589.7000000476837
+        },
+        {
+          "path": "/assets/sparkles-DVtLL15O.js",
+          "bytes": 542,
+          "duration": 589.6999999284744
+        },
+        {
+          "path": "/assets/HomePage-CDLFEqdq.css",
+          "bytes": 5748,
+          "duration": 460.3000000715256
+        },
+        {
+          "path": "/assets/MarketingPages-BT6TiSGz.css",
+          "bytes": 2593,
+          "duration": 412.5
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 14373,
+          "duration": 671.5
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "duration": 2
+        },
+        {
+          "path": "/templates/silk-heritage/portrait.webp",
+          "bytes": 103634,
+          "duration": 1019.3999999761581
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "duration": 179.5
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "duration": 179.19999992847443
+        },
+        {
+          "path": "/fonts/marketing/DMSans-Latin.woff2",
+          "bytes": 36932,
+          "duration": 852.1999999284744
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "duration": 725
+        },
+        {
+          "path": "/api/v1/i18n/messages?namespace=templateGrid&lang=en",
+          "bytes": 24,
+          "duration": 1.7000000476837158
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "run": 2,
+      "lcp": 3532,
+      "cls": 0.00038578343535420565,
+      "events": [],
+      "longTasks": [
+        93,
+        68,
+        190,
+        122
+      ],
+      "lcpElement": "",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "duration": 1031.2999999523163
+        },
+        {
+          "path": "/assets/index-CVOjCOUY.js",
+          "bytes": 166411,
+          "duration": 1471.5
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "duration": 286.8000000715256
+        },
+        {
+          "path": "/assets/react-dom-DenslgJm.js",
+          "bytes": 1392,
+          "duration": 238.39999997615814
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "duration": 204.39999997615814
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "duration": 594.5
+        },
+        {
+          "path": "/assets/io5-C0h9VnRv.js",
+          "bytes": 11871,
+          "duration": 607.2999999523163
+        },
+        {
+          "path": "/assets/index-7d-xOkzO.css",
+          "bytes": 18977,
+          "duration": 552.1000000238419
+        },
+        {
+          "path": "/assets/HomePage-FFLDAVIm.js",
+          "bytes": 7761,
+          "duration": 288.2999999523163
+        },
+        {
+          "path": "/assets/calendar-days-CITgTjnA.js",
+          "bytes": 659,
+          "duration": 209.29999995231628
+        },
+        {
+          "path": "/assets/arrow-right-D7BRyNej.js",
+          "bytes": 195,
+          "duration": 224.79999995231628
+        },
+        {
+          "path": "/assets/check-CUFeU_1d.js",
+          "bytes": 154,
+          "duration": 208.89999997615814
+        },
+        {
+          "path": "/assets/usePrefersReducedMotion-DleGGVfx.js",
+          "bytes": 908,
+          "duration": 224.30000007152557
+        },
+        {
+          "path": "/assets/TemplateGrid-UcxwhT0T.js",
+          "bytes": 3775,
+          "duration": 269.7999999523163
+        },
+        {
+          "path": "/assets/TemplateGrid-_OvAbrNP.css",
+          "bytes": 3073,
+          "duration": 428.39999997615814
+        },
+        {
+          "path": "/assets/layout-template-DMHeEbGD.js",
+          "bytes": 316,
+          "duration": 395.7000000476837
+        },
+        {
+          "path": "/assets/plus-DolsN1tU.js",
+          "bytes": 183,
+          "duration": 443.10000002384186
+        },
+        {
+          "path": "/assets/send-ZssbwtO1.js",
+          "bytes": 320,
+          "duration": 458.7000000476837
+        },
+        {
+          "path": "/assets/users-round-DZ3IzU1i.js",
+          "bytes": 303,
+          "duration": 577.1000000238419
+        },
+        {
+          "path": "/assets/PricingFactors-Cb9KQbM5.js",
+          "bytes": 789,
+          "duration": 584.8000000715256
+        },
+        {
+          "path": "/assets/layers-D36Bel9N.js",
+          "bytes": 472,
+          "duration": 586
+        },
+        {
+          "path": "/assets/sparkles-DVtLL15O.js",
+          "bytes": 542,
+          "duration": 616.1000000238419
+        },
+        {
+          "path": "/assets/HomePage-CDLFEqdq.css",
+          "bytes": 5748,
+          "duration": 472
+        },
+        {
+          "path": "/assets/MarketingPages-BT6TiSGz.css",
+          "bytes": 2593,
+          "duration": 423.6999999284744
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 14373,
+          "duration": 844.2999999523163
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "duration": 1.3000000715255737
+        },
+        {
+          "path": "/templates/silk-heritage/portrait.webp",
+          "bytes": 103634,
+          "duration": 1025.2999999523163
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "duration": 175
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "duration": 174.79999995231628
+        },
+        {
+          "path": "/fonts/marketing/DMSans-Latin.woff2",
+          "bytes": 36932,
+          "duration": 830.2999999523163
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "duration": 701.6000000238419
+        },
+        {
+          "path": "/api/v1/i18n/messages?namespace=templateGrid&lang=en",
+          "bytes": 24,
+          "duration": 1.5
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "run": 3,
+      "lcp": 3564,
+      "cls": 0.00038578343535420565,
+      "events": [],
+      "longTasks": [
+        134,
+        73,
+        190,
+        111
+      ],
+      "lcpElement": "",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "duration": 1062.6000000238419
+        },
+        {
+          "path": "/assets/index-CVOjCOUY.js",
+          "bytes": 166411,
+          "duration": 1441.3000000715256
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "duration": 254.29999995231628
+        },
+        {
+          "path": "/assets/react-dom-DenslgJm.js",
+          "bytes": 1392,
+          "duration": 237.89999997615814
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "duration": 189.89999997615814
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "duration": 567.7000000476837
+        },
+        {
+          "path": "/assets/io5-C0h9VnRv.js",
+          "bytes": 11871,
+          "duration": 583.2999999523163
+        },
+        {
+          "path": "/assets/index-7d-xOkzO.css",
+          "bytes": 18977,
+          "duration": 523.7999999523163
+        },
+        {
+          "path": "/assets/HomePage-FFLDAVIm.js",
+          "bytes": 7761,
+          "duration": 269.1999999284744
+        },
+        {
+          "path": "/assets/calendar-days-CITgTjnA.js",
+          "bytes": 659,
+          "duration": 188.60000002384186
+        },
+        {
+          "path": "/assets/arrow-right-D7BRyNej.js",
+          "bytes": 195,
+          "duration": 188.10000002384186
+        },
+        {
+          "path": "/assets/check-CUFeU_1d.js",
+          "bytes": 154,
+          "duration": 203.19999992847443
+        },
+        {
+          "path": "/assets/usePrefersReducedMotion-DleGGVfx.js",
+          "bytes": 908,
+          "duration": 218.5
+        },
+        {
+          "path": "/assets/TemplateGrid-UcxwhT0T.js",
+          "bytes": 3775,
+          "duration": 249.59999990463257
+        },
+        {
+          "path": "/assets/TemplateGrid-_OvAbrNP.css",
+          "bytes": 3073,
+          "duration": 407.2000000476837
+        },
+        {
+          "path": "/assets/layout-template-DMHeEbGD.js",
+          "bytes": 316,
+          "duration": 392
+        },
+        {
+          "path": "/assets/plus-DolsN1tU.js",
+          "bytes": 183,
+          "duration": 421.40000009536743
+        },
+        {
+          "path": "/assets/send-ZssbwtO1.js",
+          "bytes": 320,
+          "duration": 437
+        },
+        {
+          "path": "/assets/users-round-DZ3IzU1i.js",
+          "bytes": 303,
+          "duration": 563.5999999046326
+        },
+        {
+          "path": "/assets/PricingFactors-Cb9KQbM5.js",
+          "bytes": 789,
+          "duration": 563.2999999523163
+        },
+        {
+          "path": "/assets/layers-D36Bel9N.js",
+          "bytes": 472,
+          "duration": 578.2999999523163
+        },
+        {
+          "path": "/assets/sparkles-DVtLL15O.js",
+          "bytes": 542,
+          "duration": 593.7999999523163
+        },
+        {
+          "path": "/assets/HomePage-CDLFEqdq.css",
+          "bytes": 5748,
+          "duration": 434
+        },
+        {
+          "path": "/assets/MarketingPages-BT6TiSGz.css",
+          "bytes": 2593,
+          "duration": 387.5
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 14373,
+          "duration": 834.5
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "duration": 1.2999999523162842
+        },
+        {
+          "path": "/templates/silk-heritage/portrait.webp",
+          "bytes": 103634,
+          "duration": 1060.6999999284744
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "duration": 182.10000002384186
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "duration": 182
+        },
+        {
+          "path": "/fonts/marketing/DMSans-Latin.woff2",
+          "bytes": 36932,
+          "duration": 838.2000000476837
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "duration": 708.4000000953674
+        },
+        {
+          "path": "/api/v1/i18n/messages?namespace=templateGrid&lang=en",
+          "bytes": 24,
+          "duration": 1.3000000715255737
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "run": 1,
+      "lcp": 3740,
+      "cls": 0.0012424858438625254,
+      "events": [],
+      "longTasks": [
+        106,
+        70,
+        228,
+        155
+      ],
+      "lcpElement": "",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "duration": 1027.1000000238419
+        },
+        {
+          "path": "/assets/index-CVOjCOUY.js",
+          "bytes": 166411,
+          "duration": 1455
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "duration": 264.6999999284744
+        },
+        {
+          "path": "/assets/react-dom-DenslgJm.js",
+          "bytes": 1392,
+          "duration": 248.29999995231628
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "duration": 201.10000002384186
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "duration": 579.7000000476837
+        },
+        {
+          "path": "/assets/io5-C0h9VnRv.js",
+          "bytes": 11871,
+          "duration": 595.3999999761581
+        },
+        {
+          "path": "/assets/index-7d-xOkzO.css",
+          "bytes": 18977,
+          "duration": 547
+        },
+        {
+          "path": "/assets/HomePage-FFLDAVIm.js",
+          "bytes": 7761,
+          "duration": 283
+        },
+        {
+          "path": "/assets/calendar-days-CITgTjnA.js",
+          "bytes": 659,
+          "duration": 202.30000007152557
+        },
+        {
+          "path": "/assets/arrow-right-D7BRyNej.js",
+          "bytes": 195,
+          "duration": 201.79999995231628
+        },
+        {
+          "path": "/assets/check-CUFeU_1d.js",
+          "bytes": 154,
+          "duration": 202.80000007152557
+        },
+        {
+          "path": "/assets/usePrefersReducedMotion-DleGGVfx.js",
+          "bytes": 908,
+          "duration": 232.5
+        },
+        {
+          "path": "/assets/TemplateGrid-UcxwhT0T.js",
+          "bytes": 3775,
+          "duration": 264.10000002384186
+        },
+        {
+          "path": "/assets/TemplateGrid-_OvAbrNP.css",
+          "bytes": 3073,
+          "duration": 421.39999997615814
+        },
+        {
+          "path": "/assets/layout-template-DMHeEbGD.js",
+          "bytes": 316,
+          "duration": 405
+        },
+        {
+          "path": "/assets/plus-DolsN1tU.js",
+          "bytes": 183,
+          "duration": 436.39999997615814
+        },
+        {
+          "path": "/assets/send-ZssbwtO1.js",
+          "bytes": 320,
+          "duration": 452.10000002384186
+        },
+        {
+          "path": "/assets/users-round-DZ3IzU1i.js",
+          "bytes": 303,
+          "duration": 577.7000000476837
+        },
+        {
+          "path": "/assets/PricingFactors-Cb9KQbM5.js",
+          "bytes": 789,
+          "duration": 593.5
+        },
+        {
+          "path": "/assets/layers-D36Bel9N.js",
+          "bytes": 472,
+          "duration": 592.8000000715256
+        },
+        {
+          "path": "/assets/sparkles-DVtLL15O.js",
+          "bytes": 542,
+          "duration": 607.3999999761581
+        },
+        {
+          "path": "/assets/HomePage-CDLFEqdq.css",
+          "bytes": 5748,
+          "duration": 465.7999999523163
+        },
+        {
+          "path": "/assets/MarketingPages-BT6TiSGz.css",
+          "bytes": 2593,
+          "duration": 417.5
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 14373,
+          "duration": 871.8000000715256
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "duration": 1.2000000476837158
+        },
+        {
+          "path": "/templates/silk-heritage/portrait.webp",
+          "bytes": 103634,
+          "duration": 1262.6000000238419
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "duration": 169
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "duration": 169
+        },
+        {
+          "path": "/fonts/marketing/DMSans-Latin.woff2",
+          "bytes": 36932,
+          "duration": 872.8999999761581
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "duration": 746.5
+        },
+        {
+          "path": "/api/v1/i18n/messages?namespace=templateGrid&lang=en",
+          "bytes": 24,
+          "duration": 1.600000023841858
+        },
+        {
+          "path": "/facebook/all/06-card/cover-card.jpg",
+          "bytes": 667795,
+          "duration": 7725.700000047684
+        },
+        {
+          "path": "/templates/canva-luxury/emerald-luxury.jpg",
+          "bytes": 1064977,
+          "duration": 9718
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "duration": 1325.5999999046326
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "run": 2,
+      "lcp": 3676,
+      "cls": 0.001244126534167631,
+      "events": [],
+      "longTasks": [
+        114,
+        65,
+        247,
+        203
+      ],
+      "lcpElement": "",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "duration": 925.7999999523163
+        },
+        {
+          "path": "/assets/index-CVOjCOUY.js",
+          "bytes": 166411,
+          "duration": 1461.2000000476837
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "duration": 261.2999999523163
+        },
+        {
+          "path": "/assets/react-dom-DenslgJm.js",
+          "bytes": 1392,
+          "duration": 224.60000002384186
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "duration": 177.90000009536743
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "duration": 575.2000000476837
+        },
+        {
+          "path": "/assets/io5-C0h9VnRv.js",
+          "bytes": 11871,
+          "duration": 574.7999999523163
+        },
+        {
+          "path": "/assets/index-7d-xOkzO.css",
+          "bytes": 18977,
+          "duration": 526.3999999761581
+        },
+        {
+          "path": "/assets/HomePage-FFLDAVIm.js",
+          "bytes": 7761,
+          "duration": 268.3000000715256
+        },
+        {
+          "path": "/assets/calendar-days-CITgTjnA.js",
+          "bytes": 659,
+          "duration": 187.89999997615814
+        },
+        {
+          "path": "/assets/arrow-right-D7BRyNej.js",
+          "bytes": 195,
+          "duration": 187.5
+        },
+        {
+          "path": "/assets/check-CUFeU_1d.js",
+          "bytes": 154,
+          "duration": 188.89999997615814
+        },
+        {
+          "path": "/assets/usePrefersReducedMotion-DleGGVfx.js",
+          "bytes": 908,
+          "duration": 218.20000004768372
+        },
+        {
+          "path": "/assets/TemplateGrid-UcxwhT0T.js",
+          "bytes": 3775,
+          "duration": 256.60000002384186
+        },
+        {
+          "path": "/assets/TemplateGrid-_OvAbrNP.css",
+          "bytes": 3073,
+          "duration": 397.5
+        },
+        {
+          "path": "/assets/layout-template-DMHeEbGD.js",
+          "bytes": 316,
+          "duration": 392.7999999523163
+        },
+        {
+          "path": "/assets/plus-DolsN1tU.js",
+          "bytes": 183,
+          "duration": 422.6999999284744
+        },
+        {
+          "path": "/assets/send-ZssbwtO1.js",
+          "bytes": 320,
+          "duration": 438.10000002384186
+        },
+        {
+          "path": "/assets/users-round-DZ3IzU1i.js",
+          "bytes": 303,
+          "duration": 564.7999999523163
+        },
+        {
+          "path": "/assets/PricingFactors-Cb9KQbM5.js",
+          "bytes": 789,
+          "duration": 564.6000000238419
+        },
+        {
+          "path": "/assets/layers-D36Bel9N.js",
+          "bytes": 472,
+          "duration": 580.1000000238419
+        },
+        {
+          "path": "/assets/sparkles-DVtLL15O.js",
+          "bytes": 542,
+          "duration": 595.6000000238419
+        },
+        {
+          "path": "/assets/HomePage-CDLFEqdq.css",
+          "bytes": 5748,
+          "duration": 451.3000000715256
+        },
+        {
+          "path": "/assets/MarketingPages-BT6TiSGz.css",
+          "bytes": 2593,
+          "duration": 403.60000002384186
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 14373,
+          "duration": 836.5
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "duration": 1.5
+        },
+        {
+          "path": "/templates/silk-heritage/portrait.webp",
+          "bytes": 103634,
+          "duration": 1180.3999999761581
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "duration": 183.20000004768372
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "duration": 182.89999997615814
+        },
+        {
+          "path": "/fonts/marketing/DMSans-Latin.woff2",
+          "bytes": 36932,
+          "duration": 864.1999999284744
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "duration": 751.7999999523163
+        },
+        {
+          "path": "/api/v1/i18n/messages?namespace=templateGrid&lang=en",
+          "bytes": 24,
+          "duration": 1.6999999284744263
+        },
+        {
+          "path": "/facebook/all/06-card/cover-card.jpg",
+          "bytes": 667795,
+          "duration": 7709.100000023842
+        },
+        {
+          "path": "/templates/canva-luxury/emerald-luxury.jpg",
+          "bytes": 1064977,
+          "duration": 9725.600000023842
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "duration": 1337.3000000715256
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "run": 3,
+      "lcp": 3720,
+      "cls": 0.0012424858438625254,
+      "events": [],
+      "longTasks": [
+        98,
+        73,
+        227,
+        133
+      ],
+      "lcpElement": "",
+      "resources": [
+        {
+          "path": "https://telegram.org/js/telegram-web-app.js",
+          "bytes": 0,
+          "duration": 1017.3999999761581
+        },
+        {
+          "path": "/assets/index-CVOjCOUY.js",
+          "bytes": 166411,
+          "duration": 1475.3999999761581
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382,
+          "duration": 254.60000002384186
+        },
+        {
+          "path": "/assets/react-dom-DenslgJm.js",
+          "bytes": 1392,
+          "duration": 238.09999990463257
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "duration": 191.60000002384186
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973,
+          "duration": 554.7000000476837
+        },
+        {
+          "path": "/assets/io5-C0h9VnRv.js",
+          "bytes": 11871,
+          "duration": 442.2000000476837
+        },
+        {
+          "path": "/assets/index-7d-xOkzO.css",
+          "bytes": 18977,
+          "duration": 632
+        },
+        {
+          "path": "/assets/HomePage-FFLDAVIm.js",
+          "bytes": 7761,
+          "duration": 292.39999997615814
+        },
+        {
+          "path": "/assets/calendar-days-CITgTjnA.js",
+          "bytes": 659,
+          "duration": 197.5
+        },
+        {
+          "path": "/assets/arrow-right-D7BRyNej.js",
+          "bytes": 195,
+          "duration": 212.29999995231628
+        },
+        {
+          "path": "/assets/check-CUFeU_1d.js",
+          "bytes": 154,
+          "duration": 212
+        },
+        {
+          "path": "/assets/usePrefersReducedMotion-DleGGVfx.js",
+          "bytes": 908,
+          "duration": 225.69999992847443
+        },
+        {
+          "path": "/assets/TemplateGrid-UcxwhT0T.js",
+          "bytes": 3775,
+          "duration": 255.70000004768372
+        },
+        {
+          "path": "/assets/TemplateGrid-_OvAbrNP.css",
+          "bytes": 3073,
+          "duration": 399.10000002384186
+        },
+        {
+          "path": "/assets/layout-template-DMHeEbGD.js",
+          "bytes": 316,
+          "duration": 395.39999997615814
+        },
+        {
+          "path": "/assets/plus-DolsN1tU.js",
+          "bytes": 183,
+          "duration": 425.3000000715256
+        },
+        {
+          "path": "/assets/send-ZssbwtO1.js",
+          "bytes": 320,
+          "duration": 456.8000000715256
+        },
+        {
+          "path": "/assets/users-round-DZ3IzU1i.js",
+          "bytes": 303,
+          "duration": 565.6000000238419
+        },
+        {
+          "path": "/assets/PricingFactors-Cb9KQbM5.js",
+          "bytes": 789,
+          "duration": 581.1000000238419
+        },
+        {
+          "path": "/assets/layers-D36Bel9N.js",
+          "bytes": 472,
+          "duration": 565.1000000238419
+        },
+        {
+          "path": "/assets/sparkles-DVtLL15O.js",
+          "bytes": 542,
+          "duration": 596.1000000238419
+        },
+        {
+          "path": "/assets/HomePage-CDLFEqdq.css",
+          "bytes": 5748,
+          "duration": 437.6999999284744
+        },
+        {
+          "path": "/assets/MarketingPages-BT6TiSGz.css",
+          "bytes": 2593,
+          "duration": 390.2000000476837
+        },
+        {
+          "path": "/branding/koupreng-mark.png",
+          "bytes": 14373,
+          "duration": 822.7999999523163
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 655,
+          "duration": 1.5
+        },
+        {
+          "path": "/templates/silk-heritage/portrait.webp",
+          "bytes": 103634,
+          "duration": 1226.6999999284744
+        },
+        {
+          "path": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367,
+          "duration": 183.70000004768372
+        },
+        {
+          "path": "/templates/silk-heritage/preview.svg",
+          "bytes": 991,
+          "duration": 199
+        },
+        {
+          "path": "/fonts/marketing/DMSans-Latin.woff2",
+          "bytes": 36932,
+          "duration": 865.1000000238419
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "duration": 737.5
+        },
+        {
+          "path": "/api/v1/i18n/messages?namespace=templateGrid&lang=en",
+          "bytes": 24,
+          "duration": 1.899999976158142
+        },
+        {
+          "path": "/facebook/all/06-card/cover-card.jpg",
+          "bytes": 667795,
+          "duration": 7715.899999976158
+        },
+        {
+          "path": "/templates/canva-luxury/emerald-luxury.jpg",
+          "bytes": 1064977,
+          "duration": 9724.799999952316
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "duration": 1330.5
+        }
+      ]
+    }
+  ]
+}

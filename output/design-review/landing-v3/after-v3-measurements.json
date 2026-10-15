@@ -1,0 +1,1322 @@
+{
+  "km-1440": {
+    "title": "Koupreng - ធៀបការឌីជីថល (Digital Invitation)",
+    "bodyBg": "rgb(247, 245, 251)",
+    "bodyColor": "rgb(30, 41, 59)",
+    "h1": {
+      "text": "រាល់ការអញ្ជើញ\nចាប់ផ្តើមពីក្តីស្រឡាញ់",
+      "fontSize": "48px",
+      "lineHeight": "74.4px",
+      "fontFamily": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+      "color": "rgb(38, 38, 34)"
+    },
+    "headerHeight": 82,
+    "heroPadding": "104px 48px 64px",
+    "folioTransform": "matrix(0.999391, -0.0348995, 0.0348995, 0.999391, 0, 0)",
+    "folioRect": {
+      "width": 231,
+      "height": 337
+    },
+    "archRect": {
+      "width": 438,
+      "height": 480
+    },
+    "h2s": [
+      {
+        "text": "ម៉ឺនុយ",
+        "fontSize": "20px",
+        "lineHeight": "36px",
+        "fontFamily": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "ការអញ្ជើញមួយ។\nអនុស្សាវរីយ៍រាប់មិនអស់។",
+        "fontSize": "40.32px",
+        "lineHeight": "62.496px",
+        "fontFamily": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "ជ្រើសរើសគំរូដែលសាកសមនឹងថ្ងៃពិសេស",
+        "fontSize": "40.32px",
+        "lineHeight": "62.496px",
+        "fontFamily": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "ពីការជ្រើសរើស ដល់ការចែករំលែក",
+        "fontSize": "40.32px",
+        "lineHeight": "62.496px",
+        "fontFamily": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "រៀបចំពិធីដោយក្តីរីករាយ និងទំនុកចិត្ត",
+        "fontSize": "40.32px",
+        "lineHeight": "62.496px",
+        "fontFamily": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+        "color": "rgb(248, 245, 238)"
+      },
+      {
+        "text": "រូបថតមួយ។ ឈ្មោះមួយ។\nអារម្មណ៍ដែលជារបស់អ្នក។",
+        "fontSize": "40.32px",
+        "lineHeight": "62.496px",
+        "fontFamily": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "មើលគំរូជាមុន\nជ្រើសរើសពេលអ្នករួចរាល់",
+        "fontSize": "40.32px",
+        "lineHeight": "62.496px",
+        "fontFamily": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "សំណួរតូចៗ។\nចម្លើយច្បាស់លាស់។",
+        "fontSize": "40.32px",
+        "lineHeight": "62.496px",
+        "fontFamily": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "ត្រៀមបង្កើតសន្លឹកការរបស់អ្នកហើយឬនៅ?",
+        "fontSize": "51.84px",
+        "lineHeight": "80.352px",
+        "fontFamily": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+        "color": "rgb(248, 245, 238)"
+      }
+    ],
+    "buttons": [
+      {
+        "tag": "BUTTON",
+        "text": "ខ្មែរ",
+        "rect": {
+          "width": 44,
+          "height": 44
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(38, 38, 34)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "14px",
+          "radius": "0px",
+          "border": "0px none rgb(38, 38, 34)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "EN",
+        "rect": {
+          "width": 44,
+          "height": 44
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(105, 93, 80)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "14px",
+          "radius": "0px",
+          "border": "0px none rgb(105, 93, 80)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "",
+        "rect": {
+          "width": 0,
+          "height": 0
+        },
+        "style": {
+          "bg": "rgb(248, 245, 238)",
+          "color": "rgb(38, 38, 34)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "16px",
+          "radius": "6px",
+          "border": "1px solid rgb(229, 222, 210)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "",
+        "rect": {
+          "width": 0,
+          "height": 0
+        },
+        "style": {
+          "bg": "rgb(248, 245, 238)",
+          "color": "rgb(38, 38, 34)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "16px",
+          "radius": "6px",
+          "border": "1px solid rgb(229, 222, 210)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "ខ្មែរ",
+        "rect": {
+          "width": 0,
+          "height": 0
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(38, 38, 34)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "14px",
+          "radius": "0px",
+          "border": "0px none rgb(38, 38, 34)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "EN",
+        "rect": {
+          "width": 0,
+          "height": 0
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(105, 93, 80)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "14px",
+          "radius": "0px",
+          "border": "0px none rgb(105, 93, 80)"
+        }
+      },
+      {
+        "tag": "A",
+        "text": "មើលគំរូសន្លឹកការ",
+        "rect": {
+          "width": 173,
+          "height": 50
+        },
+        "style": {
+          "bg": "rgb(46, 67, 58)",
+          "color": "rgb(248, 245, 238)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "15px",
+          "radius": "6px",
+          "border": "1px solid rgb(46, 67, 58)"
+        }
+      },
+      {
+        "tag": "A",
+        "text": "ចាប់ផ្តើមបង្កើត",
+        "rect": {
+          "width": 106,
+          "height": 44
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(46, 67, 58)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "15px",
+          "radius": "0px",
+          "border": "0px solid rgb(46, 67, 58)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "បើកសន្លឹកការគំរូ",
+        "rect": {
+          "width": 231,
+          "height": 337
+        },
+        "style": {
+          "bg": "rgb(103, 44, 57)",
+          "color": "rgb(248, 245, 238)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "16px",
+          "radius": "6px",
+          "border": "0px none rgb(248, 245, 238)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "01\nការអញ្ជើញ",
+        "rect": {
+          "width": 131,
+          "height": 48
+        },
+        "style": {
+          "bg": "rgb(46, 67, 58)",
+          "color": "rgb(248, 245, 238)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "13px",
+          "radius": "6px",
+          "border": "1px solid rgb(46, 67, 58)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "02\nរឿងរ៉ាវរបស់អ្នក",
+        "rect": {
+          "width": 130,
+          "height": 48
+        },
+        "style": {
+          "bg": "rgb(255, 255, 255)",
+          "color": "rgb(38, 38, 34)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "13px",
+          "radius": "6px",
+          "border": "1px solid rgb(229, 222, 210)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "03\nព័ត៌មានសម្រាប់ភ្ញៀវ",
+        "rect": {
+          "width": 149,
+          "height": 48
+        },
+        "style": {
+          "bg": "rgb(255, 255, 255)",
+          "color": "rgb(38, 38, 34)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "13px",
+          "radius": "6px",
+          "border": "1px solid rgb(229, 222, 210)"
+        }
+      },
+      {
+        "tag": "A",
+        "text": "មើលគំរូពេញលេញ",
+        "rect": {
+          "width": 130,
+          "height": 44
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(46, 67, 58)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "15px",
+          "radius": "0px",
+          "border": "0px solid rgb(46, 67, 58)"
+        }
+      },
+      {
+        "tag": "A",
+        "text": "មើលគំរូទាំងអស់",
+        "rect": {
+          "width": 115,
+          "height": 44
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(46, 67, 58)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "15px",
+          "radius": "0px",
+          "border": "0px solid rgb(46, 67, 58)"
+        }
+      },
+      {
+        "tag": "A",
+        "text": "ស្វែងយល់ក្នុងគំរូ",
+        "rect": {
+          "width": 115,
+          "height": 44
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(248, 245, 238)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "15px",
+          "radius": "0px",
+          "border": "0px solid rgb(248, 245, 238)"
+        }
+      }
+    ]
+  },
+  "km-390": {
+    "title": "Koupreng - ធៀបការឌីជីថល (Digital Invitation)",
+    "bodyBg": "rgb(247, 245, 251)",
+    "bodyColor": "rgb(30, 41, 59)",
+    "h1": {
+      "text": "រាល់ការអញ្ជើញ\nចាប់ផ្តើមពីក្តីស្រឡាញ់",
+      "fontSize": "30.42px",
+      "lineHeight": "45.63px",
+      "fontFamily": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+      "color": "rgb(38, 38, 34)"
+    },
+    "headerHeight": 70,
+    "heroPadding": "84px 16px 48px",
+    "folioTransform": "matrix(0.999657, -0.0261769, 0.0261769, 0.999657, 0, 0)",
+    "folioRect": {
+      "width": 156,
+      "height": 229
+    },
+    "archRect": {
+      "width": 294,
+      "height": 360
+    },
+    "h2s": [
+      {
+        "text": "ម៉ឺនុយ",
+        "fontSize": "20px",
+        "lineHeight": "36px",
+        "fontFamily": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "ការអញ្ជើញមួយ។\nអនុស្សាវរីយ៍រាប់មិនអស់។",
+        "fontSize": "32px",
+        "lineHeight": "49.6px",
+        "fontFamily": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "ជ្រើសរើសគំរូដែលសាកសមនឹងថ្ងៃពិសេស",
+        "fontSize": "28px",
+        "lineHeight": "43.4px",
+        "fontFamily": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "ពីការជ្រើសរើស ដល់ការចែករំលែក",
+        "fontSize": "28px",
+        "lineHeight": "43.4px",
+        "fontFamily": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "រៀបចំពិធីដោយក្តីរីករាយ និងទំនុកចិត្ត",
+        "fontSize": "28px",
+        "lineHeight": "43.4px",
+        "fontFamily": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+        "color": "rgb(248, 245, 238)"
+      },
+      {
+        "text": "រូបថតមួយ។ ឈ្មោះមួយ។\nអារម្មណ៍ដែលជារបស់អ្នក។",
+        "fontSize": "28px",
+        "lineHeight": "43.4px",
+        "fontFamily": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "មើលគំរូជាមុន\nជ្រើសរើសពេលអ្នករួចរាល់",
+        "fontSize": "28px",
+        "lineHeight": "43.4px",
+        "fontFamily": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "សំណួរតូចៗ។\nចម្លើយច្បាស់លាស់។",
+        "fontSize": "28px",
+        "lineHeight": "43.4px",
+        "fontFamily": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "ត្រៀមបង្កើតសន្លឹកការរបស់អ្នកហើយឬនៅ?",
+        "fontSize": "32px",
+        "lineHeight": "49.6px",
+        "fontFamily": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+        "color": "rgb(248, 245, 238)"
+      }
+    ],
+    "buttons": [
+      {
+        "tag": "BUTTON",
+        "text": "ខ្មែរ",
+        "rect": {
+          "width": 0,
+          "height": 0
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(38, 38, 34)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "14px",
+          "radius": "0px",
+          "border": "0px none rgb(38, 38, 34)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "EN",
+        "rect": {
+          "width": 0,
+          "height": 0
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(105, 93, 80)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "14px",
+          "radius": "0px",
+          "border": "0px none rgb(105, 93, 80)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "",
+        "rect": {
+          "width": 44,
+          "height": 44
+        },
+        "style": {
+          "bg": "rgb(248, 245, 238)",
+          "color": "rgb(38, 38, 34)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "16px",
+          "radius": "6px",
+          "border": "1px solid rgb(229, 222, 210)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "",
+        "rect": {
+          "width": 0,
+          "height": 0
+        },
+        "style": {
+          "bg": "rgb(248, 245, 238)",
+          "color": "rgb(38, 38, 34)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "16px",
+          "radius": "6px",
+          "border": "1px solid rgb(229, 222, 210)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "ខ្មែរ",
+        "rect": {
+          "width": 0,
+          "height": 0
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(38, 38, 34)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "14px",
+          "radius": "0px",
+          "border": "0px none rgb(38, 38, 34)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "EN",
+        "rect": {
+          "width": 0,
+          "height": 0
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(105, 93, 80)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "14px",
+          "radius": "0px",
+          "border": "0px none rgb(105, 93, 80)"
+        }
+      },
+      {
+        "tag": "A",
+        "text": "មើលគំរូសន្លឹកការ",
+        "rect": {
+          "width": 154,
+          "height": 48
+        },
+        "style": {
+          "bg": "rgb(46, 67, 58)",
+          "color": "rgb(248, 245, 238)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "14px",
+          "radius": "6px",
+          "border": "1px solid rgb(46, 67, 58)"
+        }
+      },
+      {
+        "tag": "A",
+        "text": "ចាប់ផ្តើមបង្កើត",
+        "rect": {
+          "width": 101,
+          "height": 44
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(46, 67, 58)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "14px",
+          "radius": "0px",
+          "border": "0px solid rgb(46, 67, 58)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "បើកសន្លឹកការគំរូ",
+        "rect": {
+          "width": 156,
+          "height": 229
+        },
+        "style": {
+          "bg": "rgb(103, 44, 57)",
+          "color": "rgb(248, 245, 238)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "16px",
+          "radius": "6px",
+          "border": "0px none rgb(248, 245, 238)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "01\nការអញ្ជើញ",
+        "rect": {
+          "width": 119,
+          "height": 48
+        },
+        "style": {
+          "bg": "rgb(46, 67, 58)",
+          "color": "rgb(248, 245, 238)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "12px",
+          "radius": "6px",
+          "border": "1px solid rgb(46, 67, 58)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "02\nរឿងរ៉ាវរបស់អ្នក",
+        "rect": {
+          "width": 116,
+          "height": 48
+        },
+        "style": {
+          "bg": "rgb(255, 255, 255)",
+          "color": "rgb(38, 38, 34)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "12px",
+          "radius": "6px",
+          "border": "1px solid rgb(229, 222, 210)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "03\nព័ត៌មានសម្រាប់ភ្ញៀវ",
+        "rect": {
+          "width": 133,
+          "height": 48
+        },
+        "style": {
+          "bg": "rgb(255, 255, 255)",
+          "color": "rgb(38, 38, 34)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "12px",
+          "radius": "6px",
+          "border": "1px solid rgb(229, 222, 210)"
+        }
+      },
+      {
+        "tag": "A",
+        "text": "មើលគំរូពេញលេញ",
+        "rect": {
+          "width": 123,
+          "height": 44
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(46, 67, 58)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "14px",
+          "radius": "0px",
+          "border": "0px solid rgb(46, 67, 58)"
+        }
+      },
+      {
+        "tag": "A",
+        "text": "មើលគំរូទាំងអស់",
+        "rect": {
+          "width": 109,
+          "height": 44
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(46, 67, 58)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "14px",
+          "radius": "0px",
+          "border": "0px solid rgb(46, 67, 58)"
+        }
+      },
+      {
+        "tag": "A",
+        "text": "ស្វែងយល់ក្នុងគំរូ",
+        "rect": {
+          "width": 109,
+          "height": 44
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(248, 245, 238)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "14px",
+          "radius": "0px",
+          "border": "0px solid rgb(248, 245, 238)"
+        }
+      }
+    ]
+  },
+  "en-1440": {
+    "title": "Koupreng - ធៀបការឌីជីថល (Digital Invitation)",
+    "bodyBg": "rgb(247, 245, 251)",
+    "bodyColor": "rgb(30, 41, 59)",
+    "h1": {
+      "text": "Every invitation\nbegins with love.",
+      "fontSize": "68px",
+      "lineHeight": "76.16px",
+      "fontFamily": "\"Koupreng Editorial\", Georgia, serif",
+      "color": "rgb(38, 38, 34)"
+    },
+    "headerHeight": 82,
+    "heroPadding": "104px 48px 64px",
+    "folioTransform": "matrix(0.999391, -0.0348995, 0.0348995, 0.999391, 0, 0)",
+    "folioRect": {
+      "width": 231,
+      "height": 337
+    },
+    "archRect": {
+      "width": 438,
+      "height": 480
+    },
+    "h2s": [
+      {
+        "text": "Navigation",
+        "fontSize": "20px",
+        "lineHeight": "36px",
+        "fontFamily": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "One invitation.\nSo much to remember.",
+        "fontSize": "51.84px",
+        "lineHeight": "57.024px",
+        "fontFamily": "\"Koupreng Editorial\", Georgia, serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "Curated designs for your wedding day",
+        "fontSize": "51.84px",
+        "lineHeight": "57.024px",
+        "fontFamily": "\"Koupreng Editorial\", Georgia, serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "From selection to sharing",
+        "fontSize": "51.84px",
+        "lineHeight": "57.024px",
+        "fontFamily": "\"Koupreng Editorial\", Georgia, serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "Thoughtful details for your wedding",
+        "fontSize": "51.84px",
+        "lineHeight": "57.024px",
+        "fontFamily": "\"Koupreng Editorial\", Georgia, serif",
+        "color": "rgb(248, 245, 238)"
+      },
+      {
+        "text": "The photographs.\nThe names. The feeling.",
+        "fontSize": "51.84px",
+        "lineHeight": "57.024px",
+        "fontFamily": "\"Koupreng Editorial\", Georgia, serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "Explore freely.\nChoose when you are ready.",
+        "fontSize": "51.84px",
+        "lineHeight": "57.024px",
+        "fontFamily": "\"Koupreng Editorial\", Georgia, serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "Little questions.\nThoughtful answers.",
+        "fontSize": "51.84px",
+        "lineHeight": "57.024px",
+        "fontFamily": "\"Koupreng Editorial\", Georgia, serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "Ready to create your wedding invitation?",
+        "fontSize": "69.12px",
+        "lineHeight": "76.032px",
+        "fontFamily": "\"Koupreng Editorial\", Georgia, serif",
+        "color": "rgb(248, 245, 238)"
+      }
+    ],
+    "buttons": [
+      {
+        "tag": "BUTTON",
+        "text": "ខ្មែរ",
+        "rect": {
+          "width": 44,
+          "height": 44
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(105, 93, 80)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "14px",
+          "radius": "0px",
+          "border": "0px none rgb(105, 93, 80)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "EN",
+        "rect": {
+          "width": 44,
+          "height": 44
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(38, 38, 34)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "14px",
+          "radius": "0px",
+          "border": "0px none rgb(38, 38, 34)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "",
+        "rect": {
+          "width": 0,
+          "height": 0
+        },
+        "style": {
+          "bg": "rgb(248, 245, 238)",
+          "color": "rgb(38, 38, 34)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "16px",
+          "radius": "6px",
+          "border": "1px solid rgb(229, 222, 210)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "",
+        "rect": {
+          "width": 0,
+          "height": 0
+        },
+        "style": {
+          "bg": "rgb(248, 245, 238)",
+          "color": "rgb(38, 38, 34)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "16px",
+          "radius": "6px",
+          "border": "1px solid rgb(229, 222, 210)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "ខ្មែរ",
+        "rect": {
+          "width": 0,
+          "height": 0
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(105, 93, 80)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "14px",
+          "radius": "0px",
+          "border": "0px none rgb(105, 93, 80)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "EN",
+        "rect": {
+          "width": 0,
+          "height": 0
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(38, 38, 34)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "14px",
+          "radius": "0px",
+          "border": "0px none rgb(38, 38, 34)"
+        }
+      },
+      {
+        "tag": "A",
+        "text": "Explore invitation designs",
+        "rect": {
+          "width": 262,
+          "height": 50
+        },
+        "style": {
+          "bg": "rgb(46, 67, 58)",
+          "color": "rgb(248, 245, 238)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "15px",
+          "radius": "6px",
+          "border": "1px solid rgb(46, 67, 58)"
+        }
+      },
+      {
+        "tag": "A",
+        "text": "Create your invitation",
+        "rect": {
+          "width": 180,
+          "height": 44
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(46, 67, 58)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "15px",
+          "radius": "0px",
+          "border": "0px solid rgb(46, 67, 58)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Open invitation preview",
+        "rect": {
+          "width": 231,
+          "height": 337
+        },
+        "style": {
+          "bg": "rgb(103, 44, 57)",
+          "color": "rgb(248, 245, 238)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "16px",
+          "radius": "6px",
+          "border": "0px none rgb(248, 245, 238)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "01\nThe arrival",
+        "rect": {
+          "width": 142,
+          "height": 48
+        },
+        "style": {
+          "bg": "rgb(46, 67, 58)",
+          "color": "rgb(248, 245, 238)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "13px",
+          "radius": "6px",
+          "border": "1px solid rgb(46, 67, 58)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "02\nYour story",
+        "rect": {
+          "width": 117,
+          "height": 48
+        },
+        "style": {
+          "bg": "rgb(255, 255, 255)",
+          "color": "rgb(38, 38, 34)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "13px",
+          "radius": "6px",
+          "border": "1px solid rgb(229, 222, 210)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "03\nThe details",
+        "rect": {
+          "width": 123,
+          "height": 48
+        },
+        "style": {
+          "bg": "rgb(255, 255, 255)",
+          "color": "rgb(38, 38, 34)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "13px",
+          "radius": "6px",
+          "border": "1px solid rgb(229, 222, 210)"
+        }
+      },
+      {
+        "tag": "A",
+        "text": "View full interactive demo",
+        "rect": {
+          "width": 213,
+          "height": 44
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(46, 67, 58)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "15px",
+          "radius": "0px",
+          "border": "0px solid rgb(46, 67, 58)"
+        }
+      },
+      {
+        "tag": "A",
+        "text": "Explore the collection",
+        "rect": {
+          "width": 183,
+          "height": 44
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(46, 67, 58)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "15px",
+          "radius": "0px",
+          "border": "0px solid rgb(46, 67, 58)"
+        }
+      },
+      {
+        "tag": "A",
+        "text": "See the details in a demo",
+        "rect": {
+          "width": 208,
+          "height": 44
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(248, 245, 238)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "15px",
+          "radius": "0px",
+          "border": "0px solid rgb(248, 245, 238)"
+        }
+      }
+    ]
+  },
+  "en-390": {
+    "title": "Koupreng - ធៀបការឌីជីថល (Digital Invitation)",
+    "bodyBg": "rgb(247, 245, 251)",
+    "bodyColor": "rgb(30, 41, 59)",
+    "h1": {
+      "text": "Every invitation\nbegins with love.",
+      "fontSize": "39px",
+      "lineHeight": "44.85px",
+      "fontFamily": "\"Koupreng Editorial\", Georgia, serif",
+      "color": "rgb(38, 38, 34)"
+    },
+    "headerHeight": 70,
+    "heroPadding": "84px 16px 48px",
+    "folioTransform": "matrix(0.999657, -0.0261769, 0.0261769, 0.999657, 0, 0)",
+    "folioRect": {
+      "width": 156,
+      "height": 229
+    },
+    "archRect": {
+      "width": 294,
+      "height": 360
+    },
+    "h2s": [
+      {
+        "text": "Navigation",
+        "fontSize": "20px",
+        "lineHeight": "36px",
+        "fontFamily": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "One invitation.\nSo much to remember.",
+        "fontSize": "34px",
+        "lineHeight": "37.4px",
+        "fontFamily": "\"Koupreng Editorial\", Georgia, serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "Curated designs for your wedding day",
+        "fontSize": "34px",
+        "lineHeight": "37.4px",
+        "fontFamily": "\"Koupreng Editorial\", Georgia, serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "From selection to sharing",
+        "fontSize": "34px",
+        "lineHeight": "37.4px",
+        "fontFamily": "\"Koupreng Editorial\", Georgia, serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "Thoughtful details for your wedding",
+        "fontSize": "34px",
+        "lineHeight": "37.4px",
+        "fontFamily": "\"Koupreng Editorial\", Georgia, serif",
+        "color": "rgb(248, 245, 238)"
+      },
+      {
+        "text": "The photographs.\nThe names. The feeling.",
+        "fontSize": "34px",
+        "lineHeight": "37.4px",
+        "fontFamily": "\"Koupreng Editorial\", Georgia, serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "Explore freely.\nChoose when you are ready.",
+        "fontSize": "34px",
+        "lineHeight": "37.4px",
+        "fontFamily": "\"Koupreng Editorial\", Georgia, serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "Little questions.\nThoughtful answers.",
+        "fontSize": "34px",
+        "lineHeight": "37.4px",
+        "fontFamily": "\"Koupreng Editorial\", Georgia, serif",
+        "color": "rgb(38, 38, 34)"
+      },
+      {
+        "text": "Ready to create your wedding invitation?",
+        "fontSize": "40px",
+        "lineHeight": "44px",
+        "fontFamily": "\"Koupreng Editorial\", Georgia, serif",
+        "color": "rgb(248, 245, 238)"
+      }
+    ],
+    "buttons": [
+      {
+        "tag": "BUTTON",
+        "text": "ខ្មែរ",
+        "rect": {
+          "width": 0,
+          "height": 0
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(105, 93, 80)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "14px",
+          "radius": "0px",
+          "border": "0px none rgb(105, 93, 80)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "EN",
+        "rect": {
+          "width": 0,
+          "height": 0
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(38, 38, 34)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "14px",
+          "radius": "0px",
+          "border": "0px none rgb(38, 38, 34)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "",
+        "rect": {
+          "width": 44,
+          "height": 44
+        },
+        "style": {
+          "bg": "rgb(248, 245, 238)",
+          "color": "rgb(38, 38, 34)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "16px",
+          "radius": "6px",
+          "border": "1px solid rgb(229, 222, 210)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "",
+        "rect": {
+          "width": 0,
+          "height": 0
+        },
+        "style": {
+          "bg": "rgb(248, 245, 238)",
+          "color": "rgb(38, 38, 34)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "16px",
+          "radius": "6px",
+          "border": "1px solid rgb(229, 222, 210)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "ខ្មែរ",
+        "rect": {
+          "width": 0,
+          "height": 0
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(105, 93, 80)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "14px",
+          "radius": "0px",
+          "border": "0px none rgb(105, 93, 80)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "EN",
+        "rect": {
+          "width": 0,
+          "height": 0
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(38, 38, 34)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "14px",
+          "radius": "0px",
+          "border": "0px none rgb(38, 38, 34)"
+        }
+      },
+      {
+        "tag": "A",
+        "text": "Explore invitation designs",
+        "rect": {
+          "width": 238,
+          "height": 48
+        },
+        "style": {
+          "bg": "rgb(46, 67, 58)",
+          "color": "rgb(248, 245, 238)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "14px",
+          "radius": "6px",
+          "border": "1px solid rgb(46, 67, 58)"
+        }
+      },
+      {
+        "tag": "A",
+        "text": "Create your invitation",
+        "rect": {
+          "width": 170,
+          "height": 44
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(46, 67, 58)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "14px",
+          "radius": "0px",
+          "border": "0px solid rgb(46, 67, 58)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Open invitation preview",
+        "rect": {
+          "width": 156,
+          "height": 229
+        },
+        "style": {
+          "bg": "rgb(103, 44, 57)",
+          "color": "rgb(248, 245, 238)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "16px",
+          "radius": "6px",
+          "border": "0px none rgb(248, 245, 238)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "01\nThe arrival",
+        "rect": {
+          "width": 129,
+          "height": 48
+        },
+        "style": {
+          "bg": "rgb(46, 67, 58)",
+          "color": "rgb(248, 245, 238)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "12px",
+          "radius": "6px",
+          "border": "1px solid rgb(46, 67, 58)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "02\nYour story",
+        "rect": {
+          "width": 105,
+          "height": 48
+        },
+        "style": {
+          "bg": "rgb(255, 255, 255)",
+          "color": "rgb(38, 38, 34)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "12px",
+          "radius": "6px",
+          "border": "1px solid rgb(229, 222, 210)"
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "03\nThe details",
+        "rect": {
+          "width": 110,
+          "height": 48
+        },
+        "style": {
+          "bg": "rgb(255, 255, 255)",
+          "color": "rgb(38, 38, 34)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "12px",
+          "radius": "6px",
+          "border": "1px solid rgb(229, 222, 210)"
+        }
+      },
+      {
+        "tag": "A",
+        "text": "View full interactive demo",
+        "rect": {
+          "width": 201,
+          "height": 44
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(46, 67, 58)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "14px",
+          "radius": "0px",
+          "border": "0px solid rgb(46, 67, 58)"
+        }
+      },
+      {
+        "tag": "A",
+        "text": "Explore the collection",
+        "rect": {
+          "width": 172,
+          "height": 44
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(46, 67, 58)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "14px",
+          "radius": "0px",
+          "border": "0px solid rgb(46, 67, 58)"
+        }
+      },
+      {
+        "tag": "A",
+        "text": "See the details in a demo",
+        "rect": {
+          "width": 196,
+          "height": 44
+        },
+        "style": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(248, 245, 238)",
+          "font": "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+          "fontSize": "14px",
+          "radius": "0px",
+          "border": "0px solid rgb(248, 245, 238)"
+        }
+      }
+    ]
+  }
+}

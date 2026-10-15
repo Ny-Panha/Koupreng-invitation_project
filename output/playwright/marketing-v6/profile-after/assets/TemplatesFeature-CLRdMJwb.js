@@ -1,0 +1,2 @@
+import{t as e}from"./jsx-runtime-D3jfb0Ew.js";import{Vt as t}from"./index-FC8xx69x.js";var n=e();function r(){return(0,n.jsx)(t,{})}export{r as t};
+//# sourceMappingURL=TemplatesFeature-CLRdMJwb.js.map

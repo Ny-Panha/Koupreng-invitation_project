@@ -1,0 +1,172 @@
+{
+  "source": "Local production preview, API fixtures; packages and guests are illustrative, no live backend or messages",
+  "conditions": "Reduced motion, local static assets; full-page screenshots after lazy media load",
+  "rows": [
+    {
+      "engine": "firefox",
+      "status": "NOT TESTED",
+      "reason": "browserType.launch: Executable doesn't exist at C:\\Users\\ASER Nitro\\AppData\\Local\\ms-playwright\\firefox-1543\\firefox\\firefox.exe"
+    },
+    {
+      "engine": "webkit",
+      "status": "NOT TESTED",
+      "reason": "browserType.launch: Executable doesn't exist at C:\\Users\\ASER Nitro\\AppData\\Local\\ms-playwright\\webkit-2359\\Playwright.exe"
+    },
+    {
+      "engine": "chromium",
+      "version": "153.0.8010.12"
+    },
+    {
+      "name": "dpr2-km-390",
+      "image": {
+        "source": "http://127.0.0.1:4173/images/marketing/silk-portrait-768.webp",
+        "naturalWidth": 286,
+        "paintedWidth": 287,
+        "dpr": 2
+      },
+      "requests": [
+        "http://127.0.0.1:4173/images/marketing/silk-portrait-768.webp",
+        "http://127.0.0.1:4173/images/marketing/silk-portrait-768.webp",
+        "http://127.0.0.1:4173/images/marketing/silk-portrait-768.webp",
+        "http://127.0.0.1:4173/images/marketing/silk-portrait-768.webp",
+        "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp"
+      ]
+    },
+    {
+      "name": "text200-home-km-390",
+      "kind": "Computed font-size stress; not native OS scaling",
+      "overflow": false,
+      "clipped": []
+    },
+    {
+      "name": "text200-templates-km-390",
+      "kind": "Computed font-size stress; not native OS scaling",
+      "overflow": false,
+      "clipped": []
+    },
+    {
+      "name": "text200-pricing-km-390",
+      "kind": "Computed font-size stress; not native OS scaling",
+      "overflow": false,
+      "clipped": []
+    },
+    {
+      "name": "text200-contact-km-390",
+      "kind": "Computed font-size stress; not native OS scaling",
+      "overflow": false,
+      "clipped": []
+    },
+    {
+      "name": "dpr2-km-1440",
+      "image": {
+        "source": "http://127.0.0.1:4173/templates/silk-heritage/portrait.webp",
+        "naturalWidth": 439,
+        "paintedWidth": 423,
+        "dpr": 2
+      },
+      "requests": [
+        "http://127.0.0.1:4173/templates/silk-heritage/portrait.webp",
+        "http://127.0.0.1:4173/templates/silk-heritage/portrait.webp",
+        "http://127.0.0.1:4173/templates/silk-heritage/portrait.webp",
+        "http://127.0.0.1:4173/templates/silk-heritage/portrait.webp",
+        "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp"
+      ]
+    },
+    {
+      "name": "zoom200-home-km-1440",
+      "kind": "CSS zoom stress; not native browser zoom",
+      "overflow": false
+    },
+    {
+      "name": "zoom200-templates-km-1440",
+      "kind": "CSS zoom stress; not native browser zoom",
+      "overflow": false
+    },
+    {
+      "name": "zoom200-pricing-km-1440",
+      "kind": "CSS zoom stress; not native browser zoom",
+      "overflow": false
+    },
+    {
+      "name": "zoom200-contact-km-1440",
+      "kind": "CSS zoom stress; not native browser zoom",
+      "overflow": false
+    },
+    {
+      "name": "dpr2-en-390",
+      "image": {
+        "source": "http://127.0.0.1:4173/images/marketing/silk-portrait-768.webp",
+        "naturalWidth": 286,
+        "paintedWidth": 287,
+        "dpr": 2
+      },
+      "requests": [
+        "http://127.0.0.1:4173/images/marketing/silk-portrait-768.webp",
+        "http://127.0.0.1:4173/images/marketing/silk-portrait-768.webp",
+        "http://127.0.0.1:4173/images/marketing/silk-portrait-768.webp",
+        "http://127.0.0.1:4173/images/marketing/silk-portrait-768.webp",
+        "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp"
+      ]
+    },
+    {
+      "name": "text200-home-en-390",
+      "kind": "Computed font-size stress; not native OS scaling",
+      "overflow": false,
+      "clipped": []
+    },
+    {
+      "name": "text200-templates-en-390",
+      "kind": "Computed font-size stress; not native OS scaling",
+      "overflow": false,
+      "clipped": []
+    },
+    {
+      "name": "text200-pricing-en-390",
+      "kind": "Computed font-size stress; not native OS scaling",
+      "overflow": false,
+      "clipped": []
+    },
+    {
+      "name": "text200-contact-en-390",
+      "kind": "Computed font-size stress; not native OS scaling",
+      "overflow": false,
+      "clipped": []
+    },
+    {
+      "name": "dpr2-en-1440",
+      "image": {
+        "source": "http://127.0.0.1:4173/templates/silk-heritage/portrait.webp",
+        "naturalWidth": 439,
+        "paintedWidth": 423,
+        "dpr": 2
+      },
+      "requests": [
+        "http://127.0.0.1:4173/templates/silk-heritage/portrait.webp",
+        "http://127.0.0.1:4173/templates/silk-heritage/portrait.webp",
+        "http://127.0.0.1:4173/templates/silk-heritage/portrait.webp",
+        "http://127.0.0.1:4173/templates/silk-heritage/portrait.webp",
+        "http://127.0.0.1:4173/images/marketing/silk-portrait-480.webp"
+      ]
+    },
+    {
+      "name": "zoom200-home-en-1440",
+      "kind": "CSS zoom stress; not native browser zoom",
+      "overflow": false
+    },
+    {
+      "name": "zoom200-templates-en-1440",
+      "kind": "CSS zoom stress; not native browser zoom",
+      "overflow": false
+    },
+    {
+      "name": "zoom200-pricing-en-1440",
+      "kind": "CSS zoom stress; not native browser zoom",
+      "overflow": false
+    },
+    {
+      "name": "zoom200-contact-en-1440",
+      "kind": "CSS zoom stress; not native browser zoom",
+      "overflow": false
+    }
+  ]
+}

@@ -1,0 +1,238 @@
+{
+  "source": "Local production preview, API fixtures; packages and guests are illustrative, no live backend or messages",
+  "conditions": "Reduced motion, local static assets; full-page screenshots after lazy media load",
+  "rows": [
+    {
+      "name": "contact-invalid-km-390",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "contact-error-km-390",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "contact-rate-km-390",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "contact-accepted-km-390",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "guest-filter-km-390",
+      "accessibility": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "catalog-loading-km-390",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "catalog-offline-km-390",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "catalog-image-failure-km-390",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "contact-invalid-km-1440",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "contact-error-km-1440",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "contact-rate-km-1440",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "contact-accepted-km-1440",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "guest-filter-km-1440",
+      "accessibility": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "catalog-loading-km-1440",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "catalog-offline-km-1440",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "catalog-image-failure-km-1440",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "contact-invalid-en-390",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "contact-error-en-390",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "contact-rate-en-390",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "contact-accepted-en-390",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "guest-filter-en-390",
+      "accessibility": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "catalog-loading-en-390",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "catalog-offline-en-390",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "catalog-image-failure-en-390",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "contact-invalid-en-1440",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "contact-error-en-1440",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "contact-rate-en-1440",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "contact-accepted-en-1440",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "guest-filter-en-1440",
+      "accessibility": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "catalog-loading-en-1440",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "catalog-offline-en-1440",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "catalog-image-failure-en-1440",
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    }
+  ]
+}

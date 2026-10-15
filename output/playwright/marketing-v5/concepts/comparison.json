@@ -1,0 +1,122 @@
+[
+  {
+    "lang": "en",
+    "width": 390,
+    "concept": "v4-product-first",
+    "positions": {
+      ".kp-hero": 0,
+      ".kp-product": 1016,
+      ".kp-collection": 2261
+    }
+  },
+  {
+    "lang": "en",
+    "width": 390,
+    "concept": "a-folio-and-designs",
+    "positions": {
+      ".kp-hero": 0,
+      ".kp-product": 3614,
+      ".kp-collection": 832
+    }
+  },
+  {
+    "lang": "en",
+    "width": 390,
+    "concept": "b-centered-stationery",
+    "positions": {
+      ".kp-hero": 0,
+      ".kp-product": 3630,
+      ".kp-collection": 848
+    }
+  },
+  {
+    "lang": "en",
+    "width": 1440,
+    "concept": "v4-product-first",
+    "positions": {
+      ".kp-hero": 0,
+      ".kp-product": 645,
+      ".kp-collection": 1374
+    }
+  },
+  {
+    "lang": "en",
+    "width": 1440,
+    "concept": "a-folio-and-designs",
+    "positions": {
+      ".kp-hero": 0,
+      ".kp-product": 1766,
+      ".kp-collection": 616
+    }
+  },
+  {
+    "lang": "en",
+    "width": 1440,
+    "concept": "b-centered-stationery",
+    "positions": {
+      ".kp-hero": 0,
+      ".kp-product": 2197,
+      ".kp-collection": 1047
+    }
+  },
+  {
+    "lang": "km",
+    "width": 390,
+    "concept": "v4-product-first",
+    "positions": {
+      ".kp-hero": 0,
+      ".kp-product": 1002,
+      ".kp-collection": 2184
+    }
+  },
+  {
+    "lang": "km",
+    "width": 390,
+    "concept": "a-folio-and-designs",
+    "positions": {
+      ".kp-hero": 0,
+      ".kp-product": 3568,
+      ".kp-collection": 818
+    }
+  },
+  {
+    "lang": "km",
+    "width": 390,
+    "concept": "b-centered-stationery",
+    "positions": {
+      ".kp-hero": 0,
+      ".kp-product": 3584,
+      ".kp-collection": 834
+    }
+  },
+  {
+    "lang": "km",
+    "width": 1440,
+    "concept": "v4-product-first",
+    "positions": {
+      ".kp-hero": 0,
+      ".kp-product": 657,
+      ".kp-collection": 1386
+    }
+  },
+  {
+    "lang": "km",
+    "width": 1440,
+    "concept": "a-folio-and-designs",
+    "positions": {
+      ".kp-hero": 0,
+      ".kp-product": 1714,
+      ".kp-collection": 616
+    }
+  },
+  {
+    "lang": "km",
+    "width": 1440,
+    "concept": "b-centered-stationery",
+    "positions": {
+      ".kp-hero": 0,
+      ".kp-product": 2156,
+      ".kp-collection": 1059
+    }
+  }
+]

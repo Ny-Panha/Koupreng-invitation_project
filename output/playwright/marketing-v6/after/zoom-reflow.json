@@ -1,0 +1,66 @@
+{
+  "source": "Local production preview, API fixtures; packages and guests are illustrative, no live backend or messages",
+  "conditions": "Reduced motion, local static assets; full-page screenshots after lazy media load",
+  "rows": [
+    {
+      "name": "zoom-reflow200-home-km",
+      "kind": "Effective CSS viewport model, not native browser zoom",
+      "overflow": false,
+      "clippedControls": []
+    },
+    {
+      "name": "zoom-reflow200-templates-km",
+      "kind": "Effective CSS viewport model, not native browser zoom",
+      "overflow": false,
+      "clippedControls": []
+    },
+    {
+      "name": "zoom-reflow200-pricing-km",
+      "kind": "Effective CSS viewport model, not native browser zoom",
+      "overflow": false,
+      "clippedControls": []
+    },
+    {
+      "name": "zoom-reflow200-contact-km",
+      "kind": "Effective CSS viewport model, not native browser zoom",
+      "overflow": false,
+      "clippedControls": []
+    },
+    {
+      "name": "css-zoom-header-diagnostic-km",
+      "kind": "CSS zoom keeps desktop media queries; document overflow alone misses clipping",
+      "clippedControls": []
+    },
+    {
+      "name": "zoom-reflow200-home-en",
+      "kind": "Effective CSS viewport model, not native browser zoom",
+      "overflow": false,
+      "clippedControls": []
+    },
+    {
+      "name": "zoom-reflow200-templates-en",
+      "kind": "Effective CSS viewport model, not native browser zoom",
+      "overflow": false,
+      "clippedControls": []
+    },
+    {
+      "name": "zoom-reflow200-pricing-en",
+      "kind": "Effective CSS viewport model, not native browser zoom",
+      "overflow": false,
+      "clippedControls": []
+    },
+    {
+      "name": "zoom-reflow200-contact-en",
+      "kind": "Effective CSS viewport model, not native browser zoom",
+      "overflow": false,
+      "clippedControls": []
+    },
+    {
+      "name": "css-zoom-header-diagnostic-en",
+      "kind": "CSS zoom keeps desktop media queries; document overflow alone misses clipping",
+      "clippedControls": [
+        "Create invitation"
+      ]
+    }
+  ]
+}

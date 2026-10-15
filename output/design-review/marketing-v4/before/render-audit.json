@@ -1,0 +1,415 @@
+{
+  "source": "Local production preview, API fixtures; packages and guests are illustrative, no live backend or messages",
+  "conditions": "Reduced motion, local static assets; full-page screenshots after lazy media load",
+  "rows": [
+    {
+      "name": "home-km-390",
+      "path": "/",
+      "language": "km",
+      "width": 390,
+      "overflow": false,
+      "h1": "រាល់ការអញ្ជើញចាប់ផ្តើមពីក្តីស្រឡាញ់",
+      "headerHeight": 70,
+      "fonts": [
+        "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "nodes": [
+              {
+                "target": [
+                  ".kp-benefits-intro > .kp-eyebrow"
+                ],
+                "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #c3a26b, background color: #2e433a, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            ]
+          }
+        ],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "pricing-km-390",
+      "path": "/pricing",
+      "language": "km",
+      "width": 390,
+      "overflow": false,
+      "h1": "ជ្រើសរើសសេវាកម្មដែលសាកសមបំផុត",
+      "headerHeight": 70,
+      "fonts": [
+        "Moul, serif",
+        "\"Kantumruy Pro\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "contact-km-390",
+      "path": "/contact",
+      "language": "km",
+      "width": 390,
+      "overflow": false,
+      "h1": "ទាក់ទងផ្នែកលក់ និងសេវាកម្ម",
+      "headerHeight": 70,
+      "fonts": [
+        "Moul, serif",
+        "\"Kantumruy Pro\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "home-km-1440",
+      "path": "/",
+      "language": "km",
+      "width": 1440,
+      "overflow": false,
+      "h1": "រាល់ការអញ្ជើញចាប់ផ្តើមពីក្តីស្រឡាញ់",
+      "headerHeight": 82,
+      "fonts": [
+        "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "nodes": [
+              {
+                "target": [
+                  ".kp-benefits-intro > .kp-eyebrow"
+                ],
+                "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #c3a26b, background color: #2e433a, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            ]
+          }
+        ],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "pricing-km-1440",
+      "path": "/pricing",
+      "language": "km",
+      "width": 1440,
+      "overflow": false,
+      "h1": "ជ្រើសរើសសេវាកម្មដែលសាកសមបំផុត",
+      "headerHeight": 82,
+      "fonts": [
+        "Moul, serif",
+        "\"Kantumruy Pro\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "contact-km-1440",
+      "path": "/contact",
+      "language": "km",
+      "width": 1440,
+      "overflow": false,
+      "h1": "ទាក់ទងផ្នែកលក់ និងសេវាកម្ម",
+      "headerHeight": 82,
+      "fonts": [
+        "Moul, serif",
+        "\"Kantumruy Pro\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "home-km-320",
+      "path": "/",
+      "language": "km",
+      "width": 320,
+      "overflow": false,
+      "h1": "រាល់ការអញ្ជើញចាប់ផ្តើមពីក្តីស្រឡាញ់",
+      "headerHeight": 70,
+      "fonts": [
+        "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "blocked": "Audit-only axe-core is unavailable"
+      }
+    },
+    {
+      "name": "pricing-km-320",
+      "path": "/pricing",
+      "language": "km",
+      "width": 320,
+      "overflow": false,
+      "h1": "ជ្រើសរើសសេវាកម្មដែលសាកសមបំផុត",
+      "headerHeight": 70,
+      "fonts": [
+        "Moul, serif",
+        "\"Kantumruy Pro\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "blocked": "Audit-only axe-core is unavailable"
+      }
+    },
+    {
+      "name": "contact-km-320",
+      "path": "/contact",
+      "language": "km",
+      "width": 320,
+      "overflow": false,
+      "h1": "ទាក់ទងផ្នែកលក់ និងសេវាកម្ម",
+      "headerHeight": 70,
+      "fonts": [
+        "Moul, serif",
+        "\"Kantumruy Pro\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "blocked": "Audit-only axe-core is unavailable"
+      }
+    },
+    {
+      "name": "home-en-390",
+      "path": "/",
+      "language": "en",
+      "width": 390,
+      "overflow": false,
+      "h1": "Every invitationbegins with love.",
+      "headerHeight": 70,
+      "fonts": [
+        "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+        "\"Koupreng Editorial\", Georgia, serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "nodes": [
+              {
+                "target": [
+                  ".kp-benefits-intro > .kp-eyebrow"
+                ],
+                "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #c3a26b, background color: #2e433a, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            ]
+          }
+        ],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "pricing-en-390",
+      "path": "/pricing",
+      "language": "en",
+      "width": 390,
+      "overflow": false,
+      "h1": "Choose the Best Service",
+      "headerHeight": 70,
+      "fonts": [
+        "Moul, serif",
+        "\"Kantumruy Pro\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "contact-en-390",
+      "path": "/contact",
+      "language": "en",
+      "width": 390,
+      "overflow": false,
+      "h1": "ទាក់ទងផ្នែកលក់ និងសេវាកម្ម",
+      "headerHeight": 70,
+      "fonts": [
+        "Moul, serif",
+        "\"Kantumruy Pro\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "home-en-1440",
+      "path": "/",
+      "language": "en",
+      "width": 1440,
+      "overflow": false,
+      "h1": "Every invitationbegins with love.",
+      "headerHeight": 82,
+      "fonts": [
+        "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+        "\"Koupreng Editorial\", Georgia, serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "nodes": [
+              {
+                "target": [
+                  ".kp-benefits-intro > .kp-eyebrow"
+                ],
+                "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #c3a26b, background color: #2e433a, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            ]
+          }
+        ],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "pricing-en-1440",
+      "path": "/pricing",
+      "language": "en",
+      "width": 1440,
+      "overflow": false,
+      "h1": "Choose the Best Service",
+      "headerHeight": 82,
+      "fonts": [
+        "Moul, serif",
+        "\"Kantumruy Pro\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "contact-en-1440",
+      "path": "/contact",
+      "language": "en",
+      "width": 1440,
+      "overflow": false,
+      "h1": "ទាក់ទងផ្នែកលក់ និងសេវាកម្ម",
+      "headerHeight": 82,
+      "fonts": [
+        "Moul, serif",
+        "\"Kantumruy Pro\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "home-en-320",
+      "path": "/",
+      "language": "en",
+      "width": 320,
+      "overflow": false,
+      "h1": "Every invitationbegins with love.",
+      "headerHeight": 70,
+      "fonts": [
+        "\"Koupreng UI\", \"DM Sans\", \"Noto Sans Khmer\", sans-serif",
+        "\"Koupreng Editorial\", Georgia, serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "blocked": "Audit-only axe-core is unavailable"
+      }
+    },
+    {
+      "name": "pricing-en-320",
+      "path": "/pricing",
+      "language": "en",
+      "width": 320,
+      "overflow": false,
+      "h1": "Choose the Best Service",
+      "headerHeight": 70,
+      "fonts": [
+        "Moul, serif",
+        "\"Kantumruy Pro\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "blocked": "Audit-only axe-core is unavailable"
+      }
+    },
+    {
+      "name": "contact-en-320",
+      "path": "/contact",
+      "language": "en",
+      "width": 320,
+      "overflow": false,
+      "h1": "ទាក់ទងផ្នែកលក់ និងសេវាកម្ម",
+      "headerHeight": 70,
+      "fonts": [
+        "Moul, serif",
+        "\"Kantumruy Pro\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "blocked": "Audit-only axe-core is unavailable"
+      }
+    }
+  ]
+}

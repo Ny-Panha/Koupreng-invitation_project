@@ -1,0 +1,34 @@
+{
+  "workbooks": [
+    {
+      "file": "browser-xlsx.xlsx",
+      "sheets": [
+        "Payments Ledger",
+        "Summary",
+        "KPI Dictionary",
+        "Metadata"
+      ],
+      "zipCrcValid": true
+    },
+    {
+      "file": "browser-all-reports.xlsx",
+      "sheets": [
+        "Executive Summary",
+        "Payments Ledger",
+        "Reconciliation",
+        "Invitations",
+        "Users",
+        "Templates",
+        "Subscriptions",
+        "Engagement",
+        "System Audit",
+        "KPI Dictionary",
+        "Metadata"
+      ],
+      "zipCrcValid": true
+    }
+  ],
+  "filteredCsvRecords": 12,
+  "verifiedUsdFromCsv": "47.00",
+  "csvBomValid": true
+}

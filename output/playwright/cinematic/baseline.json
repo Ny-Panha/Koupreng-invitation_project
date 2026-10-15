@@ -1,0 +1,61 @@
+{
+  "rows": [
+    {
+      "lang": "km",
+      "footers": 2,
+      "h1": 1
+    },
+    {
+      "lang": "en",
+      "footers": 2,
+      "h1": 1
+    }
+  ],
+  "assets": [
+    {
+      "name": "background-Dt0NvFi2.js",
+      "bytes": 55,
+      "gzip": 75
+    },
+    {
+      "name": "background-E3mlAaLv.png",
+      "bytes": 2520889,
+      "gzip": 2521625
+    },
+    {
+      "name": "HomePage-BeQfTArb.js",
+      "bytes": 15125,
+      "gzip": 4499
+    },
+    {
+      "name": "HomePage-BP4W0ukF.css",
+      "bytes": 14141,
+      "gzip": 3345
+    },
+    {
+      "name": "index-B6N3Vka8.css",
+      "bytes": 98631,
+      "gzip": 17749
+    },
+    {
+      "name": "index-DCO81hC9.js",
+      "bytes": 553615,
+      "gzip": 165317
+    },
+    {
+      "name": "logo-HJEElCDm.png",
+      "bytes": 384504,
+      "gzip": 379753
+    },
+    {
+      "name": "templates-BfeoW7nj.js",
+      "bytes": 18102,
+      "gzip": 5806
+    },
+    {
+      "name": "templates-DJFn3TsG.css",
+      "bytes": 15130,
+      "gzip": 3788
+    }
+  ]
+}

@@ -1,0 +1,482 @@
+{
+  "source": "Local production preview, API fixtures; packages and guests are illustrative, no live backend or messages",
+  "conditions": "Reduced motion, local static assets; full-page screenshots after lazy media load",
+  "rows": [
+    {
+      "name": "home-km-320",
+      "path": "/",
+      "language": "km",
+      "width": 320,
+      "overflow": false,
+      "h1": "រាល់ការអញ្ជើញចាប់ផ្តើមពីក្តីស្រឡាញ់",
+      "headerHeight": 70,
+      "fonts": [
+        "\"Koupreng UI\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "blocked": "Audit-only axe-core is unavailable"
+      }
+    },
+    {
+      "name": "home-km-390",
+      "path": "/",
+      "language": "km",
+      "width": 390,
+      "overflow": false,
+      "h1": "រាល់ការអញ្ជើញចាប់ផ្តើមពីក្តីស្រឡាញ់",
+      "headerHeight": 70,
+      "fonts": [
+        "\"Koupreng UI\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "templates-km-390",
+      "path": "/templates",
+      "language": "km",
+      "width": 390,
+      "overflow": false,
+      "h1": "រចនាបទដែលជារបស់អ្នក។",
+      "headerHeight": 70,
+      "fonts": [
+        "\"Koupreng UI\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "pricing-km-390",
+      "path": "/pricing",
+      "language": "km",
+      "width": 390,
+      "overflow": false,
+      "h1": "ជ្រើសរើសកញ្ចប់\nសម្រាប់ថ្ងៃពិសេសរបស់អ្នក។",
+      "headerHeight": 70,
+      "fonts": [
+        "\"Koupreng UI\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "contact-km-390",
+      "path": "/contact",
+      "language": "km",
+      "width": 390,
+      "overflow": false,
+      "h1": "មានសំណួរ?\nយើងរីករាយជួយអ្នក។",
+      "headerHeight": 70,
+      "fonts": [
+        "\"Koupreng UI\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "home-km-768",
+      "path": "/",
+      "language": "km",
+      "width": 768,
+      "overflow": false,
+      "h1": "រាល់ការអញ្ជើញចាប់ផ្តើមពីក្តីស្រឡាញ់",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng UI\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "blocked": "Audit-only axe-core is unavailable"
+      }
+    },
+    {
+      "name": "home-km-1024",
+      "path": "/",
+      "language": "km",
+      "width": 1024,
+      "overflow": false,
+      "h1": "រាល់ការអញ្ជើញចាប់ផ្តើមពីក្តីស្រឡាញ់",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng UI\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "blocked": "Audit-only axe-core is unavailable"
+      }
+    },
+    {
+      "name": "home-km-1440",
+      "path": "/",
+      "language": "km",
+      "width": 1440,
+      "overflow": false,
+      "h1": "រាល់ការអញ្ជើញចាប់ផ្តើមពីក្តីស្រឡាញ់",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng UI\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "templates-km-1440",
+      "path": "/templates",
+      "language": "km",
+      "width": 1440,
+      "overflow": false,
+      "h1": "រចនាបទដែលជារបស់អ្នក។",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng UI\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "pricing-km-1440",
+      "path": "/pricing",
+      "language": "km",
+      "width": 1440,
+      "overflow": false,
+      "h1": "ជ្រើសរើសកញ្ចប់\nសម្រាប់ថ្ងៃពិសេសរបស់អ្នក។",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng UI\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "contact-km-1440",
+      "path": "/contact",
+      "language": "km",
+      "width": 1440,
+      "overflow": false,
+      "h1": "មានសំណួរ?\nយើងរីករាយជួយអ្នក។",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng UI\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "home-km-1920",
+      "path": "/",
+      "language": "km",
+      "width": 1920,
+      "overflow": false,
+      "h1": "រាល់ការអញ្ជើញចាប់ផ្តើមពីក្តីស្រឡាញ់",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng UI\", \"Noto Sans Khmer\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "blocked": "Audit-only axe-core is unavailable"
+      }
+    },
+    {
+      "name": "home-en-320",
+      "path": "/",
+      "language": "en",
+      "width": 320,
+      "overflow": false,
+      "h1": "Every invitationbegins with love.",
+      "headerHeight": 70,
+      "fonts": [
+        "\"Koupreng Latin\", \"Koupreng UI\", sans-serif",
+        "\"Koupreng Editorial\", Georgia, serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "blocked": "Audit-only axe-core is unavailable"
+      }
+    },
+    {
+      "name": "home-en-390",
+      "path": "/",
+      "language": "en",
+      "width": 390,
+      "overflow": false,
+      "h1": "Every invitationbegins with love.",
+      "headerHeight": 70,
+      "fonts": [
+        "\"Koupreng Latin\", \"Koupreng UI\", sans-serif",
+        "\"Koupreng Editorial\", Georgia, serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "templates-en-390",
+      "path": "/templates",
+      "language": "en",
+      "width": 390,
+      "overflow": false,
+      "h1": "A design that feels like you.",
+      "headerHeight": 70,
+      "fonts": [
+        "\"Koupreng Latin\", \"Koupreng UI\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "pricing-en-390",
+      "path": "/pricing",
+      "language": "en",
+      "width": 390,
+      "overflow": false,
+      "h1": "A package for\nyour celebration.",
+      "headerHeight": 70,
+      "fonts": [
+        "\"Koupreng Latin\", \"Koupreng UI\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "contact-en-390",
+      "path": "/contact",
+      "language": "en",
+      "width": 390,
+      "overflow": false,
+      "h1": "Have a question?\nWe’re happy to help.",
+      "headerHeight": 70,
+      "fonts": [
+        "\"Koupreng Latin\", \"Koupreng UI\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "home-en-768",
+      "path": "/",
+      "language": "en",
+      "width": 768,
+      "overflow": false,
+      "h1": "Every invitationbegins with love.",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng Latin\", \"Koupreng UI\", sans-serif",
+        "\"Koupreng Editorial\", Georgia, serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "blocked": "Audit-only axe-core is unavailable"
+      }
+    },
+    {
+      "name": "home-en-1024",
+      "path": "/",
+      "language": "en",
+      "width": 1024,
+      "overflow": false,
+      "h1": "Every invitationbegins with love.",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng Latin\", \"Koupreng UI\", sans-serif",
+        "\"Koupreng Editorial\", Georgia, serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "blocked": "Audit-only axe-core is unavailable"
+      }
+    },
+    {
+      "name": "home-en-1440",
+      "path": "/",
+      "language": "en",
+      "width": 1440,
+      "overflow": false,
+      "h1": "Every invitationbegins with love.",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng Latin\", \"Koupreng UI\", sans-serif",
+        "\"Koupreng Editorial\", Georgia, serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "templates-en-1440",
+      "path": "/templates",
+      "language": "en",
+      "width": 1440,
+      "overflow": false,
+      "h1": "A design that feels like you.",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng Latin\", \"Koupreng UI\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ]
+      }
+    },
+    {
+      "name": "pricing-en-1440",
+      "path": "/pricing",
+      "language": "en",
+      "width": 1440,
+      "overflow": false,
+      "h1": "A package for\nyour celebration.",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng Latin\", \"Koupreng UI\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "contact-en-1440",
+      "path": "/contact",
+      "language": "en",
+      "width": 1440,
+      "overflow": false,
+      "h1": "Have a question?\nWe’re happy to help.",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng Latin\", \"Koupreng UI\", sans-serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "name": "home-en-1920",
+      "path": "/",
+      "language": "en",
+      "width": 1920,
+      "overflow": false,
+      "h1": "Every invitationbegins with love.",
+      "headerHeight": 74,
+      "fonts": [
+        "\"Koupreng Latin\", \"Koupreng UI\", sans-serif",
+        "\"Koupreng Editorial\", Georgia, serif"
+      ],
+      "clippedText": [],
+      "errors": [],
+      "accessibility": {
+        "blocked": "Audit-only axe-core is unavailable"
+      }
+    },
+    {
+      "name": "pricing-auth-km-390",
+      "width": 390,
+      "accessibility": {
+        "violations": []
+      },
+      "height": 844
+    },
+    {
+      "name": "pricing-auth-km-1440",
+      "width": 1440,
+      "accessibility": {
+        "violations": []
+      },
+      "height": 900
+    },
+    {
+      "name": "pricing-auth-en-390",
+      "width": 390,
+      "accessibility": {
+        "violations": []
+      },
+      "height": 844
+    },
+    {
+      "name": "pricing-auth-en-1440",
+      "width": 1440,
+      "accessibility": {
+        "violations": []
+      },
+      "height": 900
+    }
+  ]
+}

@@ -1,0 +1,236 @@
+{
+  "desktop": {
+    "title": "Bandith Card Store - Wedding Invitations Made Simple - Bandith Card Store",
+    "bodyBg": "rgb(255, 255, 255)",
+    "bodyColor": "rgb(25, 22, 16)",
+    "bodyFont": "\"Google Sans\", ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+    "headerHeight": 103,
+    "headerBg": "oklab(0.999994 0.0000455678 0.0000200868 / 0.95)",
+    "h1": {
+      "text": "លិខិតអញ្ជើញ Digital\nសម្រាប់គ្រប់កម្មវិធី",
+      "fontSize": "63.75px",
+      "lineHeight": "82.875px",
+      "fontFamily": "\"Google Sans\", ui-sans-serif, system-ui, sans-serif",
+      "color": "rgb(155, 119, 99)"
+    },
+    "h2s": [
+      {
+        "text": "ជ្រើសរើសសេវាកម្មឌីជីថលរបស់អ្នក",
+        "fontSize": "42.5px",
+        "fontFamily": "\"Google Sans\", ui-sans-serif, system-ui, sans-serif",
+        "color": "rgb(74, 63, 53)"
+      },
+      {
+        "text": "ជ្រើសរើសម៉ូតធៀប Digital-E-invitation ថ្មីៗ",
+        "fontSize": "46.75px",
+        "fontFamily": "\"Google Sans\", ui-sans-serif, system-ui, sans-serif",
+        "color": "rgb(74, 63, 53)"
+      },
+      {
+        "text": "The Signature ឌីហ្សាញតាមតម្រូវការ",
+        "fontSize": "46.75px",
+        "fontFamily": "\"Google Sans\", ui-sans-serif, system-ui, sans-serif",
+        "color": "rgb(74, 63, 53)"
+      },
+      {
+        "text": "រកមិនឃើញម៉ូតដែរពេញចិត្ត?",
+        "fontSize": "42.5px",
+        "fontFamily": "\"Google Sans\", ui-sans-serif, system-ui, sans-serif",
+        "color": "rgb(74, 63, 53)"
+      },
+      {
+        "text": "បណ្ឌិត កាដូអាពាហ៍ពិពាហ៍",
+        "fontSize": "46.75px",
+        "fontFamily": "\"Google Sans\", ui-sans-serif, system-ui, sans-serif",
+        "color": "rgb(74, 63, 53)"
+      },
+      {
+        "text": "ម៉ូតធៀប Premium ឌីហ្សាញ និង បោះពុម្ព",
+        "fontSize": "46.75px",
+        "fontFamily": "\"Google Sans\", ui-sans-serif, system-ui, sans-serif",
+        "color": "rgb(74, 63, 53)"
+      },
+      {
+        "text": "ហេតុអ្វីជ្រើសរើសយើង?",
+        "fontSize": "42.5px",
+        "fontFamily": "\"Google Sans\", ui-sans-serif, system-ui, sans-serif",
+        "color": "rgb(74, 63, 53)"
+      }
+    ],
+    "buttons": [
+      {
+        "tag": "BUTTON",
+        "text": "",
+        "width": 280,
+        "height": 76,
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(74, 63, 53)",
+        "fontSize": "17px",
+        "borderRadius": "0px",
+        "border": "0px solid rgb(233, 228, 216)"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "ទំព័រដើម",
+        "width": 47,
+        "height": 40,
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(138, 112, 81)",
+        "fontSize": "15px",
+        "borderRadius": "0px",
+        "border": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "គំរូអញ្ជើញ",
+        "width": 57,
+        "height": 40,
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(98, 88, 78)",
+        "fontSize": "15px",
+        "borderRadius": "0px",
+        "border": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "ហាងវត្ថុអនុស្សាវរីយ៍",
+        "width": 109,
+        "height": 40,
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(98, 88, 78)",
+        "fontSize": "15px",
+        "borderRadius": "0px",
+        "border": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "ការអញ្ជើញ",
+        "width": 61,
+        "height": 40,
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(98, 88, 78)",
+        "fontSize": "15px",
+        "borderRadius": "0px",
+        "border": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "ទំនាក់ទំនង",
+        "width": 59,
+        "height": 40,
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(98, 88, 78)",
+        "fontSize": "15px",
+        "borderRadius": "0px",
+        "border": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "ខ្មែរ",
+        "width": 69,
+        "height": 43,
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(98, 88, 78)",
+        "fontSize": "14.875px",
+        "borderRadius": "3.35544e+07px",
+        "border": "0px solid rgb(233, 228, 216)"
+      },
+      {
+        "tag": "A",
+        "text": "ចូលគណនី",
+        "width": 116,
+        "height": 43,
+        "bg": "rgb(155, 119, 99)",
+        "color": "rgb(255, 255, 255)",
+        "fontSize": "14.875px",
+        "borderRadius": "3.35544e+07px",
+        "border": "0px solid rgb(233, 228, 216)"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "",
+        "width": 0,
+        "height": 0,
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(98, 88, 78)",
+        "fontSize": "17px",
+        "borderRadius": "0px",
+        "border": "0px solid rgb(233, 228, 216)"
+      },
+      {
+        "tag": "A",
+        "text": "ជ្រើសរើស Template",
+        "width": 193,
+        "height": 51,
+        "bg": "rgb(95, 129, 125)",
+        "color": "rgb(255, 255, 255)",
+        "fontSize": "14.875px",
+        "borderRadius": "12.75px",
+        "border": "0px solid rgb(233, 228, 216)"
+      },
+      {
+        "tag": "A",
+        "text": "បណ្ឌិត Gift Store",
+        "width": 212,
+        "height": 142,
+        "bg": "rgb(247, 239, 229)",
+        "color": "rgb(74, 63, 53)",
+        "fontSize": "17px",
+        "borderRadius": "17px",
+        "border": "0px solid rgb(233, 228, 216)"
+      },
+      {
+        "tag": "A",
+        "text": "ពិធីមង្គលអាពាហ៍ពិពាហ៍",
+        "width": 212,
+        "height": 142,
+        "bg": "rgb(247, 239, 229)",
+        "color": "rgb(74, 63, 53)",
+        "fontSize": "17px",
+        "borderRadius": "17px",
+        "border": "0px solid rgb(233, 228, 216)"
+      },
+      {
+        "tag": "A",
+        "text": "សម្ពោធអាជីវកម្ម",
+        "width": 212,
+        "height": 142,
+        "bg": "rgb(247, 239, 229)",
+        "color": "rgb(74, 63, 53)",
+        "fontSize": "17px",
+        "borderRadius": "17px",
+        "border": "0px solid rgb(233, 228, 216)"
+      },
+      {
+        "tag": "A",
+        "text": "ពិធីភ្ជាប់ពាក្យ",
+        "width": 212,
+        "height": 142,
+        "bg": "rgb(247, 239, 229)",
+        "color": "rgb(74, 63, 53)",
+        "fontSize": "17px",
+        "borderRadius": "17px",
+        "border": "0px solid rgb(233, 228, 216)"
+      },
+      {
+        "tag": "A",
+        "text": "ពិធីឡើងគេហដ្ឋានថ្មី",
+        "width": 212,
+        "height": 142,
+        "bg": "rgb(247, 239, 229)",
+        "color": "rgb(74, 63, 53)",
+        "fontSize": "17px",
+        "borderRadius": "17px",
+        "border": "0px solid rgb(233, 228, 216)"
+      }
+    ]
+  },
+  "mobile": {
+    "headerHeight": 81,
+    "h1": {
+      "text": "លិខិតអញ្ជើញ Digital\nសម្រាប់គ្រប់កម្មវិធី",
+      "fontSize": "36px",
+      "lineHeight": "46.8px"
+    }
+  }
+}

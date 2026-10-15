@@ -59,10 +59,19 @@ htmlcov/
 
 # Local test and runtime artifacts
 *.db
-playwright-report/
 test-results/
-output/
 .cache/
+
+# Large non-evidence archives, tools, and virtualenvs in output
+output/ci-tools/source*
+output/ci-tools/*.exe
+output/ci-tools/*.zip
+output/playwright/marketing-v5/baseline-source/
+output/playwright/marketing-v5/baseline-source.zip
+output/playwright/font-tools/
+output/admin-reporting/pdf-tools/
+!output/**/*.log
+!output/*.log
 
 database.txt
 buildding.md

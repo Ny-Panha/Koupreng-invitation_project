@@ -1,0 +1,61 @@
+{
+  "rows": [
+    {
+      "width": 320,
+      "overflow": false,
+      "badText": []
+    },
+    {
+      "width": 360,
+      "overflow": false,
+      "badText": []
+    },
+    {
+      "width": 375,
+      "overflow": false,
+      "badText": []
+    },
+    {
+      "width": 390,
+      "overflow": false,
+      "badText": []
+    },
+    {
+      "width": 430,
+      "overflow": false,
+      "badText": []
+    },
+    {
+      "width": 768,
+      "overflow": false,
+      "badText": []
+    },
+    {
+      "width": 1024,
+      "overflow": false,
+      "badText": []
+    },
+    {
+      "width": 1280,
+      "overflow": false,
+      "badText": []
+    },
+    {
+      "width": 1440,
+      "overflow": false,
+      "badText": []
+    },
+    {
+      "width": 1920,
+      "overflow": false,
+      "badText": []
+    }
+  ],
+  "errors": [],
+  "h1": 1,
+  "events": 9,
+  "violations": [],
+  "incomplete": [
+    "color-contrast"
+  ]
+}

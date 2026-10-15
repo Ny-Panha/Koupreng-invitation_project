@@ -1,0 +1,1206 @@
+{
+  "environment": "Windows local Vite production preview; Chromium cold contexts; 4x CPU, 1.6 Mbps, 150ms latency; intercepted catalog API; Event Timing sample is not field INP",
+  "performanceRows": [
+    {
+      "width": 390,
+      "run": 1,
+      "lcp": 4312,
+      "cls": 0.0013049305555555555,
+      "events": [
+        {
+          "name": "pointerdown",
+          "duration": 24
+        },
+        {
+          "name": "pointerup",
+          "duration": 24
+        },
+        {
+          "name": "click",
+          "duration": 24
+        }
+      ],
+      "longTasks": [
+        201,
+        164,
+        54,
+        201,
+        119
+      ],
+      "resources": [
+        {
+          "name": "/assets/index-TavKWcg_.js",
+          "bytes": 166274
+        },
+        {
+          "name": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382
+        },
+        {
+          "name": "/assets/react-dom-DenslgJm.js",
+          "bytes": 1392
+        },
+        {
+          "name": "/assets/react-1SDRmDo0.js",
+          "bytes": 651
+        },
+        {
+          "name": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973
+        },
+        {
+          "name": "/assets/io5-C0h9VnRv.js",
+          "bytes": 11871
+        },
+        {
+          "name": "/assets/index-J_-pcpYJ.css",
+          "bytes": 19049
+        },
+        {
+          "name": "/assets/HomePage-B3_A_3k0.js",
+          "bytes": 7430
+        },
+        {
+          "name": "/assets/calendar-days-32CtQSiL.js",
+          "bytes": 659
+        },
+        {
+          "name": "/assets/arrow-right-D1QkICcx.js",
+          "bytes": 195
+        },
+        {
+          "name": "/assets/check-CU2Vy5pd.js",
+          "bytes": 154
+        },
+        {
+          "name": "/assets/usePrefersReducedMotion-C4rviiMT.js",
+          "bytes": 664
+        },
+        {
+          "name": "/assets/TemplateGrid-CT7wiyDT.js",
+          "bytes": 3763
+        },
+        {
+          "name": "/assets/TemplateGrid-ClChz4Fi.css",
+          "bytes": 3010
+        },
+        {
+          "name": "/assets/plus-z44ghX-O.js",
+          "bytes": 183
+        },
+        {
+          "name": "/assets/HomePage-BAT5KhPi.css",
+          "bytes": 3815
+        },
+        {
+          "name": "/assets/logo-HJEElCDm.png",
+          "bytes": 384504
+        },
+        {
+          "name": "/api/v1/templates",
+          "bytes": 562
+        },
+        {
+          "name": "/templates/silk-heritage/portrait.webp",
+          "bytes": 103634
+        },
+        {
+          "name": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367
+        },
+        {
+          "name": "/templates/silk-heritage/preview.svg",
+          "bytes": 991
+        },
+        {
+          "name": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848
+        },
+        {
+          "name": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320
+        },
+        {
+          "name": "/api/v1/i18n/messages",
+          "bytes": 24
+        }
+      ],
+      "heavyTemplateRequested": false,
+      "decorativeBackgroundRequested": false
+    },
+    {
+      "width": 390,
+      "run": 2,
+      "lcp": 4220,
+      "cls": 0.0013049305555555555,
+      "events": [
+        {
+          "name": "pointerdown",
+          "duration": 24
+        },
+        {
+          "name": "pointerup",
+          "duration": 24
+        },
+        {
+          "name": "click",
+          "duration": 24
+        }
+      ],
+      "longTasks": [
+        183,
+        95,
+        269,
+        56,
+        130
+      ],
+      "resources": [
+        {
+          "name": "/assets/index-TavKWcg_.js",
+          "bytes": 166274
+        },
+        {
+          "name": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382
+        },
+        {
+          "name": "/assets/react-dom-DenslgJm.js",
+          "bytes": 1392
+        },
+        {
+          "name": "/assets/react-1SDRmDo0.js",
+          "bytes": 651
+        },
+        {
+          "name": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973
+        },
+        {
+          "name": "/assets/io5-C0h9VnRv.js",
+          "bytes": 11871
+        },
+        {
+          "name": "/assets/index-J_-pcpYJ.css",
+          "bytes": 19049
+        },
+        {
+          "name": "/assets/HomePage-B3_A_3k0.js",
+          "bytes": 7430
+        },
+        {
+          "name": "/assets/calendar-days-32CtQSiL.js",
+          "bytes": 659
+        },
+        {
+          "name": "/assets/arrow-right-D1QkICcx.js",
+          "bytes": 195
+        },
+        {
+          "name": "/assets/check-CU2Vy5pd.js",
+          "bytes": 154
+        },
+        {
+          "name": "/assets/usePrefersReducedMotion-C4rviiMT.js",
+          "bytes": 664
+        },
+        {
+          "name": "/assets/TemplateGrid-CT7wiyDT.js",
+          "bytes": 3763
+        },
+        {
+          "name": "/assets/TemplateGrid-ClChz4Fi.css",
+          "bytes": 3010
+        },
+        {
+          "name": "/assets/plus-z44ghX-O.js",
+          "bytes": 183
+        },
+        {
+          "name": "/assets/HomePage-BAT5KhPi.css",
+          "bytes": 3815
+        },
+        {
+          "name": "/assets/logo-HJEElCDm.png",
+          "bytes": 384504
+        },
+        {
+          "name": "/api/v1/templates",
+          "bytes": 562
+        },
+        {
+          "name": "/templates/silk-heritage/portrait.webp",
+          "bytes": 103634
+        },
+        {
+          "name": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367
+        },
+        {
+          "name": "/templates/silk-heritage/preview.svg",
+          "bytes": 991
+        },
+        {
+          "name": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848
+        },
+        {
+          "name": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320
+        },
+        {
+          "name": "/api/v1/i18n/messages",
+          "bytes": 24
+        }
+      ],
+      "heavyTemplateRequested": false,
+      "decorativeBackgroundRequested": false
+    },
+    {
+      "width": 390,
+      "run": 3,
+      "lcp": 4220,
+      "cls": 0.0013049305555555555,
+      "events": [
+        {
+          "name": "pointerdown",
+          "duration": 32
+        },
+        {
+          "name": "pointerup",
+          "duration": 32
+        },
+        {
+          "name": "click",
+          "duration": 32
+        }
+      ],
+      "longTasks": [
+        165,
+        122,
+        270,
+        51,
+        87
+      ],
+      "resources": [
+        {
+          "name": "/assets/index-TavKWcg_.js",
+          "bytes": 166274
+        },
+        {
+          "name": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382
+        },
+        {
+          "name": "/assets/react-dom-DenslgJm.js",
+          "bytes": 1392
+        },
+        {
+          "name": "/assets/react-1SDRmDo0.js",
+          "bytes": 651
+        },
+        {
+          "name": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973
+        },
+        {
+          "name": "/assets/io5-C0h9VnRv.js",
+          "bytes": 11871
+        },
+        {
+          "name": "/assets/index-J_-pcpYJ.css",
+          "bytes": 19049
+        },
+        {
+          "name": "/assets/HomePage-B3_A_3k0.js",
+          "bytes": 7430
+        },
+        {
+          "name": "/assets/calendar-days-32CtQSiL.js",
+          "bytes": 659
+        },
+        {
+          "name": "/assets/arrow-right-D1QkICcx.js",
+          "bytes": 195
+        },
+        {
+          "name": "/assets/check-CU2Vy5pd.js",
+          "bytes": 154
+        },
+        {
+          "name": "/assets/usePrefersReducedMotion-C4rviiMT.js",
+          "bytes": 664
+        },
+        {
+          "name": "/assets/TemplateGrid-CT7wiyDT.js",
+          "bytes": 3763
+        },
+        {
+          "name": "/assets/TemplateGrid-ClChz4Fi.css",
+          "bytes": 3010
+        },
+        {
+          "name": "/assets/plus-z44ghX-O.js",
+          "bytes": 183
+        },
+        {
+          "name": "/assets/HomePage-BAT5KhPi.css",
+          "bytes": 3815
+        },
+        {
+          "name": "/assets/logo-HJEElCDm.png",
+          "bytes": 384504
+        },
+        {
+          "name": "/api/v1/templates",
+          "bytes": 562
+        },
+        {
+          "name": "/templates/silk-heritage/portrait.webp",
+          "bytes": 103634
+        },
+        {
+          "name": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367
+        },
+        {
+          "name": "/templates/silk-heritage/preview.svg",
+          "bytes": 991
+        },
+        {
+          "name": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848
+        },
+        {
+          "name": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320
+        },
+        {
+          "name": "/api/v1/i18n/messages",
+          "bytes": 24
+        }
+      ],
+      "heavyTemplateRequested": false,
+      "decorativeBackgroundRequested": false
+    },
+    {
+      "width": 1440,
+      "run": 1,
+      "lcp": 4948,
+      "cls": 0.04473482547126843,
+      "events": [
+        {
+          "name": "pointerdown",
+          "duration": 24
+        },
+        {
+          "name": "pointerup",
+          "duration": 24
+        },
+        {
+          "name": "click",
+          "duration": 24
+        }
+      ],
+      "longTasks": [
+        113,
+        133,
+        244,
+        116
+      ],
+      "resources": [
+        {
+          "name": "/assets/index-TavKWcg_.js",
+          "bytes": 166274
+        },
+        {
+          "name": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382
+        },
+        {
+          "name": "/assets/react-dom-DenslgJm.js",
+          "bytes": 1392
+        },
+        {
+          "name": "/assets/react-1SDRmDo0.js",
+          "bytes": 651
+        },
+        {
+          "name": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973
+        },
+        {
+          "name": "/assets/io5-C0h9VnRv.js",
+          "bytes": 11871
+        },
+        {
+          "name": "/assets/index-J_-pcpYJ.css",
+          "bytes": 19049
+        },
+        {
+          "name": "/assets/HomePage-B3_A_3k0.js",
+          "bytes": 7430
+        },
+        {
+          "name": "/assets/calendar-days-32CtQSiL.js",
+          "bytes": 659
+        },
+        {
+          "name": "/assets/arrow-right-D1QkICcx.js",
+          "bytes": 195
+        },
+        {
+          "name": "/assets/check-CU2Vy5pd.js",
+          "bytes": 154
+        },
+        {
+          "name": "/assets/usePrefersReducedMotion-C4rviiMT.js",
+          "bytes": 664
+        },
+        {
+          "name": "/assets/TemplateGrid-CT7wiyDT.js",
+          "bytes": 3763
+        },
+        {
+          "name": "/assets/TemplateGrid-ClChz4Fi.css",
+          "bytes": 3010
+        },
+        {
+          "name": "/assets/plus-z44ghX-O.js",
+          "bytes": 183
+        },
+        {
+          "name": "/assets/HomePage-BAT5KhPi.css",
+          "bytes": 3815
+        },
+        {
+          "name": "/assets/logo-HJEElCDm.png",
+          "bytes": 384504
+        },
+        {
+          "name": "/api/v1/templates",
+          "bytes": 562
+        },
+        {
+          "name": "/templates/silk-heritage/portrait.webp",
+          "bytes": 103634
+        },
+        {
+          "name": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367
+        },
+        {
+          "name": "/templates/silk-heritage/preview.svg",
+          "bytes": 991
+        },
+        {
+          "name": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848
+        },
+        {
+          "name": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320
+        },
+        {
+          "name": "/api/v1/i18n/messages",
+          "bytes": 24
+        },
+        {
+          "name": "/facebook/all/06-card/cover-card.jpg",
+          "bytes": 667795
+        },
+        {
+          "name": "/templates/canva-luxury/emerald-luxury.jpg",
+          "bytes": 1064977
+        }
+      ],
+      "heavyTemplateRequested": false,
+      "decorativeBackgroundRequested": false
+    },
+    {
+      "width": 1440,
+      "run": 2,
+      "lcp": 4948,
+      "cls": 0.04473482547126843,
+      "events": [
+        {
+          "name": "pointerdown",
+          "duration": 24
+        },
+        {
+          "name": "pointerup",
+          "duration": 24
+        },
+        {
+          "name": "click",
+          "duration": 24
+        }
+      ],
+      "longTasks": [
+        155,
+        106,
+        265,
+        52,
+        107
+      ],
+      "resources": [
+        {
+          "name": "/assets/index-TavKWcg_.js",
+          "bytes": 166274
+        },
+        {
+          "name": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382
+        },
+        {
+          "name": "/assets/react-dom-DenslgJm.js",
+          "bytes": 1392
+        },
+        {
+          "name": "/assets/react-1SDRmDo0.js",
+          "bytes": 651
+        },
+        {
+          "name": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973
+        },
+        {
+          "name": "/assets/io5-C0h9VnRv.js",
+          "bytes": 11871
+        },
+        {
+          "name": "/assets/index-J_-pcpYJ.css",
+          "bytes": 19049
+        },
+        {
+          "name": "/assets/HomePage-B3_A_3k0.js",
+          "bytes": 7430
+        },
+        {
+          "name": "/assets/calendar-days-32CtQSiL.js",
+          "bytes": 659
+        },
+        {
+          "name": "/assets/arrow-right-D1QkICcx.js",
+          "bytes": 195
+        },
+        {
+          "name": "/assets/check-CU2Vy5pd.js",
+          "bytes": 154
+        },
+        {
+          "name": "/assets/usePrefersReducedMotion-C4rviiMT.js",
+          "bytes": 664
+        },
+        {
+          "name": "/assets/TemplateGrid-CT7wiyDT.js",
+          "bytes": 3763
+        },
+        {
+          "name": "/assets/TemplateGrid-ClChz4Fi.css",
+          "bytes": 3010
+        },
+        {
+          "name": "/assets/plus-z44ghX-O.js",
+          "bytes": 183
+        },
+        {
+          "name": "/assets/HomePage-BAT5KhPi.css",
+          "bytes": 3815
+        },
+        {
+          "name": "/assets/logo-HJEElCDm.png",
+          "bytes": 384504
+        },
+        {
+          "name": "/api/v1/templates",
+          "bytes": 562
+        },
+        {
+          "name": "/templates/silk-heritage/portrait.webp",
+          "bytes": 103634
+        },
+        {
+          "name": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367
+        },
+        {
+          "name": "/templates/silk-heritage/preview.svg",
+          "bytes": 991
+        },
+        {
+          "name": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848
+        },
+        {
+          "name": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320
+        },
+        {
+          "name": "/api/v1/i18n/messages",
+          "bytes": 24
+        },
+        {
+          "name": "/facebook/all/06-card/cover-card.jpg",
+          "bytes": 667795
+        },
+        {
+          "name": "/templates/canva-luxury/emerald-luxury.jpg",
+          "bytes": 1064977
+        }
+      ],
+      "heavyTemplateRequested": false,
+      "decorativeBackgroundRequested": false
+    },
+    {
+      "width": 1440,
+      "run": 3,
+      "lcp": 4868,
+      "cls": 0.04473482547126843,
+      "events": [
+        {
+          "name": "pointerdown",
+          "duration": 56
+        },
+        {
+          "name": "pointerup",
+          "duration": 56
+        },
+        {
+          "name": "click",
+          "duration": 56
+        }
+      ],
+      "longTasks": [
+        125,
+        99,
+        296,
+        50,
+        116,
+        55
+      ],
+      "resources": [
+        {
+          "name": "/assets/index-TavKWcg_.js",
+          "bytes": 166274
+        },
+        {
+          "name": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 3382
+        },
+        {
+          "name": "/assets/react-dom-DenslgJm.js",
+          "bytes": 1392
+        },
+        {
+          "name": "/assets/react-1SDRmDo0.js",
+          "bytes": 651
+        },
+        {
+          "name": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 19973
+        },
+        {
+          "name": "/assets/io5-C0h9VnRv.js",
+          "bytes": 11871
+        },
+        {
+          "name": "/assets/index-J_-pcpYJ.css",
+          "bytes": 19049
+        },
+        {
+          "name": "/assets/HomePage-B3_A_3k0.js",
+          "bytes": 7430
+        },
+        {
+          "name": "/assets/calendar-days-32CtQSiL.js",
+          "bytes": 659
+        },
+        {
+          "name": "/assets/arrow-right-D1QkICcx.js",
+          "bytes": 195
+        },
+        {
+          "name": "/assets/check-CU2Vy5pd.js",
+          "bytes": 154
+        },
+        {
+          "name": "/assets/usePrefersReducedMotion-C4rviiMT.js",
+          "bytes": 664
+        },
+        {
+          "name": "/assets/TemplateGrid-CT7wiyDT.js",
+          "bytes": 3763
+        },
+        {
+          "name": "/assets/TemplateGrid-ClChz4Fi.css",
+          "bytes": 3010
+        },
+        {
+          "name": "/assets/plus-z44ghX-O.js",
+          "bytes": 183
+        },
+        {
+          "name": "/assets/HomePage-BAT5KhPi.css",
+          "bytes": 3815
+        },
+        {
+          "name": "/assets/logo-HJEElCDm.png",
+          "bytes": 384504
+        },
+        {
+          "name": "/api/v1/templates",
+          "bytes": 562
+        },
+        {
+          "name": "/templates/silk-heritage/portrait.webp",
+          "bytes": 103634
+        },
+        {
+          "name": "/templates/silk-heritage/woven-ornament.svg",
+          "bytes": 367
+        },
+        {
+          "name": "/templates/silk-heritage/preview.svg",
+          "bytes": 991
+        },
+        {
+          "name": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848
+        },
+        {
+          "name": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320
+        },
+        {
+          "name": "/api/v1/i18n/messages",
+          "bytes": 24
+        },
+        {
+          "name": "/facebook/all/06-card/cover-card.jpg",
+          "bytes": 667795
+        },
+        {
+          "name": "/templates/canva-luxury/emerald-luxury.jpg",
+          "bytes": 1064977
+        }
+      ],
+      "heavyTemplateRequested": false,
+      "decorativeBackgroundRequested": false
+    }
+  ],
+  "accessibility": [
+    {
+      "lang": "km",
+      "width": 390,
+      "engine": {
+        "name": "axe-core",
+        "version": "4.14.0"
+      },
+      "passes": 22,
+      "manualContrast": [
+        {
+          "selector": ".kp-final > .kp-eyebrow",
+          "color": "rgb(246, 240, 229)",
+          "backgrounds": [
+            "rgb(61, 85, 74)",
+            "rgb(35, 59, 50)"
+          ],
+          "ratio": 7.129823920913365,
+          "passesStandardText": true
+        },
+        {
+          "selector": "#kp-final-title",
+          "color": "rgb(252, 248, 242)",
+          "backgrounds": [
+            "rgb(61, 85, 74)",
+            "rgb(35, 59, 50)"
+          ],
+          "ratio": 7.643622187258932,
+          "passesStandardText": true
+        },
+        {
+          "selector": ".kp-final > p:nth-child(4)",
+          "color": "rgb(246, 240, 229)",
+          "backgrounds": [
+            "rgb(61, 85, 74)",
+            "rgb(35, 59, 50)"
+          ],
+          "ratio": 7.129823920913365,
+          "passesStandardText": true
+        },
+        {
+          "selector": ".kp-final .kp-text-link",
+          "color": "rgb(252, 248, 242)",
+          "backgrounds": [
+            "rgb(61, 85, 74)",
+            "rgb(35, 59, 50)"
+          ],
+          "ratio": 7.643622187258932,
+          "passesStandardText": true
+        },
+        {
+          "selector": ".kp-details-paper > span",
+          "color": "rgb(103, 44, 57)",
+          "backgrounds": [
+            "rgb(246, 240, 229)"
+          ],
+          "ratio": 9.275253332916831,
+          "passesStandardText": true
+        },
+        {
+          "selector": ".kp-promise-strip",
+          "color": "rgb(111, 77, 36)",
+          "backgrounds": [
+            "rgb(252, 248, 242)"
+          ],
+          "ratio": 7.183761499958583,
+          "passesStandardText": true
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".kp-final > .kp-eyebrow"
+            ],
+            [
+              "#kp-final-title"
+            ],
+            [
+              ".kp-final > p:nth-child(4)"
+            ],
+            [
+              ".kp-final > .kp-actions > .kp-text-link[href$=\"browse\"][data-discover=\"true\"]"
+            ]
+          ]
+        }
+      ],
+      "violations": []
+    },
+    {
+      "lang": "km",
+      "width": 1440,
+      "engine": {
+        "name": "axe-core",
+        "version": "4.14.0"
+      },
+      "passes": 22,
+      "manualContrast": [
+        {
+          "selector": ".kp-final > .kp-eyebrow",
+          "color": "rgb(246, 240, 229)",
+          "backgrounds": [
+            "rgb(61, 85, 74)",
+            "rgb(35, 59, 50)"
+          ],
+          "ratio": 7.129823920913365,
+          "passesStandardText": true
+        },
+        {
+          "selector": "#kp-final-title",
+          "color": "rgb(252, 248, 242)",
+          "backgrounds": [
+            "rgb(61, 85, 74)",
+            "rgb(35, 59, 50)"
+          ],
+          "ratio": 7.643622187258932,
+          "passesStandardText": true
+        },
+        {
+          "selector": ".kp-final > p:nth-child(4)",
+          "color": "rgb(246, 240, 229)",
+          "backgrounds": [
+            "rgb(61, 85, 74)",
+            "rgb(35, 59, 50)"
+          ],
+          "ratio": 7.129823920913365,
+          "passesStandardText": true
+        },
+        {
+          "selector": ".kp-final .kp-text-link",
+          "color": "rgb(252, 248, 242)",
+          "backgrounds": [
+            "rgb(61, 85, 74)",
+            "rgb(35, 59, 50)"
+          ],
+          "ratio": 7.643622187258932,
+          "passesStandardText": true
+        },
+        {
+          "selector": ".kp-details-paper > span",
+          "color": "rgb(103, 44, 57)",
+          "backgrounds": [
+            "rgb(246, 240, 229)"
+          ],
+          "ratio": 9.275253332916831,
+          "passesStandardText": true
+        },
+        {
+          "selector": ".kp-promise-strip",
+          "color": "rgb(111, 77, 36)",
+          "backgrounds": [
+            "rgb(252, 248, 242)"
+          ],
+          "ratio": 7.183761499958583,
+          "passesStandardText": true
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".kp-promise-strip > span:nth-child(2)"
+            ],
+            [
+              "span:nth-child(4)"
+            ],
+            [
+              ".kp-final > .kp-eyebrow"
+            ],
+            [
+              "#kp-final-title"
+            ],
+            [
+              ".kp-final > p:nth-child(4)"
+            ],
+            [
+              ".kp-final > .kp-actions > .kp-text-link[href$=\"browse\"][data-discover=\"true\"]"
+            ]
+          ]
+        }
+      ],
+      "violations": []
+    },
+    {
+      "lang": "en",
+      "width": 390,
+      "engine": {
+        "name": "axe-core",
+        "version": "4.14.0"
+      },
+      "passes": 22,
+      "manualContrast": [
+        {
+          "selector": ".kp-final > .kp-eyebrow",
+          "color": "rgb(246, 240, 229)",
+          "backgrounds": [
+            "rgb(61, 85, 74)",
+            "rgb(35, 59, 50)"
+          ],
+          "ratio": 7.129823920913365,
+          "passesStandardText": true
+        },
+        {
+          "selector": "#kp-final-title",
+          "color": "rgb(252, 248, 242)",
+          "backgrounds": [
+            "rgb(61, 85, 74)",
+            "rgb(35, 59, 50)"
+          ],
+          "ratio": 7.643622187258932,
+          "passesStandardText": true
+        },
+        {
+          "selector": ".kp-final > p:nth-child(4)",
+          "color": "rgb(246, 240, 229)",
+          "backgrounds": [
+            "rgb(61, 85, 74)",
+            "rgb(35, 59, 50)"
+          ],
+          "ratio": 7.129823920913365,
+          "passesStandardText": true
+        },
+        {
+          "selector": ".kp-final .kp-text-link",
+          "color": "rgb(252, 248, 242)",
+          "backgrounds": [
+            "rgb(61, 85, 74)",
+            "rgb(35, 59, 50)"
+          ],
+          "ratio": 7.643622187258932,
+          "passesStandardText": true
+        },
+        {
+          "selector": ".kp-details-paper > span",
+          "color": "rgb(103, 44, 57)",
+          "backgrounds": [
+            "rgb(246, 240, 229)"
+          ],
+          "ratio": 9.275253332916831,
+          "passesStandardText": true
+        },
+        {
+          "selector": ".kp-promise-strip",
+          "color": "rgb(111, 77, 36)",
+          "backgrounds": [
+            "rgb(252, 248, 242)"
+          ],
+          "ratio": 7.183761499958583,
+          "passesStandardText": true
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".kp-final > .kp-eyebrow"
+            ],
+            [
+              "#kp-final-title"
+            ],
+            [
+              ".kp-final > p:nth-child(4)"
+            ],
+            [
+              ".kp-final > .kp-actions > .kp-text-link[href$=\"browse\"][data-discover=\"true\"]"
+            ]
+          ]
+        }
+      ],
+      "violations": []
+    },
+    {
+      "lang": "en",
+      "width": 1440,
+      "engine": {
+        "name": "axe-core",
+        "version": "4.14.0"
+      },
+      "passes": 22,
+      "manualContrast": [
+        {
+          "selector": ".kp-final > .kp-eyebrow",
+          "color": "rgb(246, 240, 229)",
+          "backgrounds": [
+            "rgb(61, 85, 74)",
+            "rgb(35, 59, 50)"
+          ],
+          "ratio": 7.129823920913365,
+          "passesStandardText": true
+        },
+        {
+          "selector": "#kp-final-title",
+          "color": "rgb(252, 248, 242)",
+          "backgrounds": [
+            "rgb(61, 85, 74)",
+            "rgb(35, 59, 50)"
+          ],
+          "ratio": 7.643622187258932,
+          "passesStandardText": true
+        },
+        {
+          "selector": ".kp-final > p:nth-child(4)",
+          "color": "rgb(246, 240, 229)",
+          "backgrounds": [
+            "rgb(61, 85, 74)",
+            "rgb(35, 59, 50)"
+          ],
+          "ratio": 7.129823920913365,
+          "passesStandardText": true
+        },
+        {
+          "selector": ".kp-final .kp-text-link",
+          "color": "rgb(252, 248, 242)",
+          "backgrounds": [
+            "rgb(61, 85, 74)",
+            "rgb(35, 59, 50)"
+          ],
+          "ratio": 7.643622187258932,
+          "passesStandardText": true
+        },
+        {
+          "selector": ".kp-details-paper > span",
+          "color": "rgb(103, 44, 57)",
+          "backgrounds": [
+            "rgb(246, 240, 229)"
+          ],
+          "ratio": 9.275253332916831,
+          "passesStandardText": true
+        },
+        {
+          "selector": ".kp-promise-strip",
+          "color": "rgb(111, 77, 36)",
+          "backgrounds": [
+            "rgb(252, 248, 242)"
+          ],
+          "ratio": 7.183761499958583,
+          "passesStandardText": true
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".kp-promise-strip > span:nth-child(2)"
+            ],
+            [
+              "span:nth-child(4)"
+            ],
+            [
+              ".kp-details-paper > span"
+            ],
+            [
+              ".kp-final > .kp-eyebrow"
+            ],
+            [
+              "#kp-final-title"
+            ],
+            [
+              ".kp-final > p:nth-child(4)"
+            ],
+            [
+              ".kp-final > .kp-actions > .kp-text-link[href$=\"browse\"][data-discover=\"true\"]"
+            ]
+          ]
+        }
+      ],
+      "violations": []
+    }
+  ],
+  "assets": [
+    {
+      "name": "HomePage-CAce2wav.css",
+      "bytes": 16173,
+      "gzip": 3831
+    },
+    {
+      "name": "HomePage-DBKqhViy.js",
+      "bytes": 27003,
+      "gzip": 7417
+    },
+    {
+      "name": "index-CcHHoUgj.css",
+      "bytes": 104306,
+      "gzip": 19053
+    },
+    {
+      "name": "index-DBmRILcj.js",
+      "bytes": 552533,
+      "gzip": 166254
+    },
+    {
+      "name": "TemplateGrid-C5XcayW_.js",
+      "bytes": 9513,
+      "gzip": 3780
+    },
+    {
+      "name": "TemplateGrid-ClChz4Fi.css",
+      "bytes": 11932,
+      "gzip": 3010
+    },
+    {
+      "name": "templates-BhBq-GCw.js",
+      "bytes": 11345,
+      "gzip": 4042
+    },
+    {
+      "name": "templates-CFCVfUoY.css",
+      "bytes": 7049,
+      "gzip": 2029
+    }
+  ]
+}

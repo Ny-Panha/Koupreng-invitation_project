@@ -1,0 +1,2 @@
+import{t as e}from"./jsx-runtime-D3jfb0Ew.js";import{t}from"./TemplatesFeature-0WHmDJOd.js";var n=e();function r(){return(0,n.jsx)(t,{})}export{r as default};
+//# sourceMappingURL=TemplatesPage-CvdjNsJT.js.map

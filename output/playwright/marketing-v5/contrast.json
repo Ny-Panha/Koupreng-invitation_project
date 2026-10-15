@@ -1,0 +1,27 @@
+[
+  {
+    "foreground": "ink",
+    "background": "ivory",
+    "ratio": 13.95
+  },
+  {
+    "foreground": "muted",
+    "background": "ivory",
+    "ratio": 5.88
+  },
+  {
+    "foreground": "gold text",
+    "background": "ivory",
+    "ratio": 6.06
+  },
+  {
+    "foreground": "ivory",
+    "background": "evergreen",
+    "ratio": 9.74
+  },
+  {
+    "foreground": "muted",
+    "background": "white",
+    "ratio": 6.4
+  }
+]

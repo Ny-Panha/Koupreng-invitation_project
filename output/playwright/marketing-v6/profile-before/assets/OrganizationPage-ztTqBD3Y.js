@@ -1,0 +1,2 @@
+import{c as e,t}from"./httpClient-oM6DHhph.js";var n=`/v1/organizations`,r={listMine:()=>t.get(n).then(e),get:r=>t.get(`${n}/${r}`).then(e),create:r=>t.post(n,{name:r}).then(e),addMember:(r,i)=>t.post(`${n}/${r}/members`,i).then(e),updateMemberRole:(r,i,a)=>t.patch(`${n}/${r}/members/${i}/role`,{role:a}).then(e),removeMember:(r,i)=>t.delete(`${n}/${r}/members/${i}`).then(e)};export{r as t};
+//# sourceMappingURL=OrganizationPage-ztTqBD3Y.js.map

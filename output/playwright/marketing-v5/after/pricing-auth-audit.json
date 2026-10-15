@@ -1,0 +1,34 @@
+{
+  "source": "Local production preview, API fixtures; packages and guests are illustrative, no live backend or messages",
+  "conditions": "Reduced motion, local static assets; full-page screenshots after lazy media load",
+  "rows": [
+    {
+      "name": "pricing-auth-km-390",
+      "width": 390,
+      "accessibility": {
+        "violations": []
+      }
+    },
+    {
+      "name": "pricing-auth-km-1440",
+      "width": 1440,
+      "accessibility": {
+        "violations": []
+      }
+    },
+    {
+      "name": "pricing-auth-en-390",
+      "width": 390,
+      "accessibility": {
+        "violations": []
+      }
+    },
+    {
+      "name": "pricing-auth-en-1440",
+      "width": 1440,
+      "accessibility": {
+        "violations": []
+      }
+    }
+  ]
+}

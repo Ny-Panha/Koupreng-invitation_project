@@ -1,0 +1,2 @@
+import{P as e}from"./index-DWR6E2Wk.js";function t(){let{text:t}=e(`nav`),{text:n}=e(`authUI`),{text:r}=e(`common`),i=e=>new Proxy(e,{get:(t,n)=>n in t?t[n]:typeof n==`string`?e(n):void 0});return{nav:i(t),auth:i(n),common:i(r)}}export{t};
+//# sourceMappingURL=useT-Csm0WuwU.js.map

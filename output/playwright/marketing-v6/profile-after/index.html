@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="km">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/branding/favicon.png" />
+    <link rel="shortcut icon" href="/branding/favicon.png" type="image/png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content" />
+    <title>Koupreng - ធៀបការឌីជីថល (Digital Invitation)</title>
+
+    <!-- Public marketing uses locally licensed fonts; legacy catalogs load per route. -->
+    <script>
+      if (["/", "/pricing", "/contact", "/templates"].includes(location.pathname)) {
+        let marketingLanguage = "km";
+        try { marketingLanguage = localStorage.getItem("koupreng.lang") || "km"; } catch (_) {}
+        const fontHint = document.createElement("link");
+        fontHint.rel = "preload"; fontHint.as = "font"; fontHint.type = "font/woff2"; fontHint.crossOrigin = "anonymous";
+        fontHint.href = marketingLanguage === "en" ? "/fonts/marketing/DMSans-Latin.woff2" : "/fonts/silk-heritage/KantumruyPro.woff2";
+        document.head.appendChild(fontHint);
+        if (location.pathname === "/") {
+          const portraitHint = document.createElement("link");
+          portraitHint.rel = "preload"; portraitHint.as = "image"; portraitHint.href = "/templates/silk-heritage/portrait.webp"; portraitHint.fetchPriority = "high";
+          portraitHint.imageSrcset = "/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w";
+          portraitHint.imageSizes = "(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px";
+          document.head.appendChild(portraitHint);
+        }
+      }
+    </script>
+
+    <!-- Telegram WebApp SDK -->
+    <script async src="https://telegram.org/js/telegram-web-app.js" onload="window.dispatchEvent(new Event('telegram-web-app-ready'))"></script>
+
+    <!-- Open Graph / Telegram / Facebook / Messenger -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Koupreng - ធៀបការឌីជីថល" />
+    <meta property="og:title" content="លិខិតអញ្ជើញអាពាហ៍ពិពាហ៍ | Koupreng Invitation" />
+    <meta property="og:description" content="សូមគោរពអញ្ជើញចូលរួមជាអធិបតី និងជាភ្ញៀវកិត្តិយសក្នុងពិធីមង្គលការ។ សូមចុចតំណភ្ជាប់ដើម្បីមើលធៀបការ និង RSVP។" />
+    <meta property="og:image" content="https://pronto-ashy-consoling.ngrok-free.dev/facebook/all/03-card/cover-card.jpg" />
+    <meta property="og:image:secure_url" content="https://pronto-ashy-consoling.ngrok-free.dev/facebook/all/03-card/cover-card.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter / Telegram Preview Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="លិខិតអញ្ជើញអាពាហ៍ពិពាហ៍ | Koupreng Invitation" />
+    <meta name="twitter:description" content="សូមគោរពអញ្ជើញចូលរួមជាអធិបតី និងជាភ្ញៀវកិត្តិយសក្នុងពិធីមង្គលការ។ សូមចុចតំណភ្ជាប់ដើម្បីមើលធៀបការ និង RSVP។" />
+    <meta name="twitter:image" content="https://pronto-ashy-consoling.ngrok-free.dev/facebook/all/03-card/cover-card.jpg" />
+    <script type="module" crossorigin src="/assets/index-FC8xx69x.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/jsx-runtime-D3jfb0Ew.js">
+    <link rel="modulepreload" crossorigin href="/assets/react-1SDRmDo0.js">
+    <link rel="modulepreload" crossorigin href="/assets/createLucideIcon-q3MZMmnf.js">
+    <link rel="modulepreload" crossorigin href="/assets/httpClient-oM6DHhph.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-afImhO3r.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

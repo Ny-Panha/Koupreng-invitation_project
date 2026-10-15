@@ -1,0 +1,352 @@
+[
+  {
+    "file": "invitations-landscape.pdf",
+    "pageCount": 5,
+    "embeddedFonts": {
+      "AAAAAA+TimesNewRomanPSMT": 39040,
+      "BAAAAA+KantumruyPro-Regular": 14380,
+      "CAAAAA+Moul-Regular": 15964,
+      "DAAAAA+KantumruyPro-Regular": 14452
+    },
+    "selectableKhmerText": true,
+    "outsidePaperBlocks": 0,
+    "pages": [
+      {
+        "page": 1,
+        "textCharacters": 962,
+        "tableHeader": false,
+        "width": 841.9199829101562,
+        "height": 594.9599609375
+      },
+      {
+        "page": 2,
+        "textCharacters": 216,
+        "tableHeader": false,
+        "width": 841.9199829101562,
+        "height": 594.9599609375
+      },
+      {
+        "page": 3,
+        "textCharacters": 455,
+        "tableHeader": true,
+        "width": 841.9199829101562,
+        "height": 594.9599609375
+      },
+      {
+        "page": 4,
+        "textCharacters": 505,
+        "tableHeader": true,
+        "width": 841.9199829101562,
+        "height": 594.9599609375
+      },
+      {
+        "page": 5,
+        "textCharacters": 472,
+        "tableHeader": true,
+        "width": 841.9199829101562,
+        "height": 594.9599609375
+      }
+    ]
+  },
+  {
+    "file": "large-invitations-landscape.pdf",
+    "pageCount": 21,
+    "embeddedFonts": {
+      "AAAAAA+TimesNewRomanPSMT": 41084,
+      "BAAAAA+KantumruyPro-Regular": 14380,
+      "CAAAAA+Moul-Regular": 15964,
+      "DAAAAA+KantumruyPro-Regular": 14560
+    },
+    "selectableKhmerText": true,
+    "outsidePaperBlocks": 0,
+    "pages": [
+      {
+        "page": 1,
+        "textCharacters": 965,
+        "tableHeader": false,
+        "width": 841.9199829101562,
+        "height": 594.9599609375
+      },
+      {
+        "page": 2,
+        "textCharacters": 220,
+        "tableHeader": false,
+        "width": 841.9199829101562,
+        "height": 594.9599609375
+      },
+      {
+        "page": 3,
+        "textCharacters": 1268,
+        "tableHeader": true,
+        "width": 841.9199829101562,
+        "height": 594.9599609375
+      },
+      {
+        "page": 4,
+        "textCharacters": 1256,
+        "tableHeader": true,
+        "width": 841.9199829101562,
+        "height": 594.9599609375
+      },
+      {
+        "page": 5,
+        "textCharacters": 1257,
+        "tableHeader": true,
+        "width": 841.9199829101562,
+        "height": 594.9599609375
+      },
+      {
+        "page": 6,
+        "textCharacters": 1257,
+        "tableHeader": true,
+        "width": 841.9199829101562,
+        "height": 594.9599609375
+      },
+      {
+        "page": 7,
+        "textCharacters": 1257,
+        "tableHeader": true,
+        "width": 841.9199829101562,
+        "height": 594.9599609375
+      },
+      {
+        "page": 8,
+        "textCharacters": 1257,
+        "tableHeader": true,
+        "width": 841.9199829101562,
+        "height": 594.9599609375
+      },
+      {
+        "page": 9,
+        "textCharacters": 1257,
+        "tableHeader": true,
+        "width": 841.9199829101562,
+        "height": 594.9599609375
+      },
+      {
+        "page": 10,
+        "textCharacters": 1258,
+        "tableHeader": true,
+        "width": 841.9199829101562,
+        "height": 594.9599609375
+      },
+      {
+        "page": 11,
+        "textCharacters": 927,
+        "tableHeader": true,
+        "width": 841.9199829101562,
+        "height": 594.9599609375
+      },
+      {
+        "page": 12,
+        "textCharacters": 894,
+        "tableHeader": true,
+        "width": 841.9199829101562,
+        "height": 594.9599609375
+      },
+      {
+        "page": 13,
+        "textCharacters": 888,
+        "tableHeader": true,
+        "width": 841.9199829101562,
+        "height": 594.9599609375
+      },
+      {
+        "page": 14,
+        "textCharacters": 888,
+        "tableHeader": true,
+        "width": 841.9199829101562,
+        "height": 594.9599609375
+      },
+      {
+        "page": 15,
+        "textCharacters": 888,
+        "tableHeader": true,
+        "width": 841.9199829101562,
+        "height": 594.9599609375
+      },
+      {
+        "page": 16,
+        "textCharacters": 888,
+        "tableHeader": true,
+        "width": 841.9199829101562,
+        "height": 594.9599609375
+      },
+      {
+        "page": 17,
+        "textCharacters": 495,
+        "tableHeader": true,
+        "width": 841.9199829101562,
+        "height": 594.9599609375
+      },
+      {
+        "page": 18,
+        "textCharacters": 395,
+        "tableHeader": true,
+        "width": 841.9199829101562,
+        "height": 594.9599609375
+      },
+      {
+        "page": 19,
+        "textCharacters": 381,
+        "tableHeader": true,
+        "width": 841.9199829101562,
+        "height": 594.9599609375
+      },
+      {
+        "page": 20,
+        "textCharacters": 381,
+        "tableHeader": true,
+        "width": 841.9199829101562,
+        "height": 594.9599609375
+      },
+      {
+        "page": 21,
+        "textCharacters": 453,
+        "tableHeader": true,
+        "width": 841.9199829101562,
+        "height": 594.9599609375
+      }
+    ]
+  },
+  {
+    "file": "large-invitations-portrait.pdf",
+    "pageCount": 18,
+    "embeddedFonts": {
+      "AAAAAA+TimesNewRomanPSMT": 41084,
+      "BAAAAA+KantumruyPro-Regular": 14380,
+      "CAAAAA+Moul-Regular": 15964,
+      "DAAAAA+KantumruyPro-Regular": 14560
+    },
+    "selectableKhmerText": true,
+    "outsidePaperBlocks": 0,
+    "pages": [
+      {
+        "page": 1,
+        "textCharacters": 1054,
+        "tableHeader": false,
+        "width": 594.9599609375,
+        "height": 841.9199829101562
+      },
+      {
+        "page": 2,
+        "textCharacters": 1070,
+        "tableHeader": true,
+        "width": 594.9599609375,
+        "height": 841.9199829101562
+      },
+      {
+        "page": 3,
+        "textCharacters": 1261,
+        "tableHeader": true,
+        "width": 594.9599609375,
+        "height": 841.9199829101562
+      },
+      {
+        "page": 4,
+        "textCharacters": 1264,
+        "tableHeader": true,
+        "width": 594.9599609375,
+        "height": 841.9199829101562
+      },
+      {
+        "page": 5,
+        "textCharacters": 1264,
+        "tableHeader": true,
+        "width": 594.9599609375,
+        "height": 841.9199829101562
+      },
+      {
+        "page": 6,
+        "textCharacters": 1264,
+        "tableHeader": true,
+        "width": 594.9599609375,
+        "height": 841.9199829101562
+      },
+      {
+        "page": 7,
+        "textCharacters": 1264,
+        "tableHeader": true,
+        "width": 594.9599609375,
+        "height": 841.9199829101562
+      },
+      {
+        "page": 8,
+        "textCharacters": 1264,
+        "tableHeader": true,
+        "width": 594.9599609375,
+        "height": 841.9199829101562
+      },
+      {
+        "page": 9,
+        "textCharacters": 1264,
+        "tableHeader": true,
+        "width": 594.9599609375,
+        "height": 841.9199829101562
+      },
+      {
+        "page": 10,
+        "textCharacters": 1237,
+        "tableHeader": true,
+        "width": 594.9599609375,
+        "height": 841.9199829101562
+      },
+      {
+        "page": 11,
+        "textCharacters": 949,
+        "tableHeader": true,
+        "width": 594.9599609375,
+        "height": 841.9199829101562
+      },
+      {
+        "page": 12,
+        "textCharacters": 943,
+        "tableHeader": true,
+        "width": 594.9599609375,
+        "height": 841.9199829101562
+      },
+      {
+        "page": 13,
+        "textCharacters": 943,
+        "tableHeader": true,
+        "width": 594.9599609375,
+        "height": 841.9199829101562
+      },
+      {
+        "page": 14,
+        "textCharacters": 943,
+        "tableHeader": true,
+        "width": 594.9599609375,
+        "height": 841.9199829101562
+      },
+      {
+        "page": 15,
+        "textCharacters": 935,
+        "tableHeader": true,
+        "width": 594.9599609375,
+        "height": 841.9199829101562
+      },
+      {
+        "page": 16,
+        "textCharacters": 538,
+        "tableHeader": true,
+        "width": 594.9599609375,
+        "height": 841.9199829101562
+      },
+      {
+        "page": 17,
+        "textCharacters": 524,
+        "tableHeader": true,
+        "width": 594.9599609375,
+        "height": 841.9199829101562
+      },
+      {
+        "page": 18,
+        "textCharacters": 427,
+        "tableHeader": true,
+        "width": 594.9599609375,
+        "height": 841.9199829101562
+      }
+    ]
+  }
+]

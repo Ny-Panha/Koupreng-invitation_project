@@ -1,0 +1,2 @@
+function e(e,t=`USD`){return e==null||!Number.isFinite(Number(e))?`Unavailable`:`${t} ${Number(e).toLocaleString(void 0,{maximumFractionDigits:t===`KHR`?0:2})}`}function t(e){return e?.totalsComparable===!1||new Set((e?.items||[]).map(e=>e.currency||`USD`)).size>1}function n(t={}){return Object.entries(t).map(([t,n])=>e(n,t)).join(` · `)||`Unavailable`}export{n,t as r,e as t};
+//# sourceMappingURL=currencyTotals-CpX6dh_3.js.map

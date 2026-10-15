@@ -1,0 +1,2 @@
+function e(e,t=`success`){if(typeof window>`u`)return;let n=typeof e==`object`?e:{message:String(e),type:t};window.dispatchEvent(new CustomEvent(`koupreng:toast`,{detail:n}))}e.success=t=>e(t,`success`),e.error=t=>e(t,`error`),e.warning=t=>e(t,`warning`),e.info=t=>e(t,`info`);export{e as t};
+//# sourceMappingURL=toast-BNSoQ1dn.js.map
