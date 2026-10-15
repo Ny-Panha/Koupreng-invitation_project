@@ -7,6 +7,18 @@ import authService from "@/features/auth/api/authApi";
 import SocialAuthButtons from "./components/SocialAuthButtons";
 import "./AuthPage.css";
 
+const MIN_PASSWORD_LENGTH = 8;
+const MAX_PASSWORD_LENGTH = 100;
+
+function RequirementIcon({ met }) {
+  return (
+    <svg className="auth-password-rule-icon" aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="10" cy="10" r="8" />
+      <path d={met ? "m6 10 2.5 2.5L14 7" : "m7 7 6 6m0-6-6 6"} />
+    </svg>
+  );
+}
+
 function EyeIcon({ open }) {
   return open ? (
     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -24,7 +36,9 @@ function Register() {
   const nameId = useId();
   const phoneId = useId();
   const passwordId = useId();
+  const passwordRequirementsId = useId();
   const confirmPasswordId = useId();
+  const confirmPasswordStatusId = useId();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -37,21 +51,32 @@ function Register() {
   const { login } = useAuth();
   const { auth } = useT();
 
-  const passwordMatch = confirmPassword && password !== confirmPassword;
+  // Match the backend's character checks on UTF-16 code units,
+  // including Khmer letters and digits.
+  const passwordCharacters = password.split("");
+  const passwordRequirements = [
+    { key: "passwordMinLength", met: password.length >= MIN_PASSWORD_LENGTH },
+    { key: "passwordMaxLength", met: password.length > 0 && password.length <= MAX_PASSWORD_LENGTH },
+    { key: "passwordLetter", met: passwordCharacters.some((character) => /\p{L}/u.test(character)) },
+    { key: "passwordUppercase", met: passwordCharacters.some((character) => /\p{Uppercase}/u.test(character)) },
+    { key: "passwordNumber", met: passwordCharacters.some((character) => /\p{Nd}/u.test(character)) },
+  ];
+  const passwordValid = passwordRequirements.every((requirement) => requirement.met);
+  const passwordMatch = Boolean(confirmPassword) && password !== confirmPassword;
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
-    if (!name.trim() || !phone.trim() || !password) {
+    if (!name.trim() || !phone.trim() || !password || !confirmPassword) {
       setError(auth("registerRequired"));
+      return;
+    }
+    if (!passwordValid) {
+      setError(auth("passwordRequirementsError"));
       return;
     }
     if (passwordMatch) {
       setError(auth("passwordMismatch"));
-      return;
-    }
-    if (password.length < 8 || !/\p{Lu}/u.test(password)) {
-      setError("ពាក្យសម្ងាត់ត្រូវមានយ៉ាងតិច ៨ តួអក្សរ និងអក្សរធំមួយ។ Password needs 8 characters and an uppercase letter.");
       return;
     }
 
@@ -86,7 +111,7 @@ function Register() {
           <p className="auth-subtitle">{auth("registerSubtitle")}</p>
         </div>
 
-        {error && <p className="auth-error">{error}</p>}
+        {error && <p className="auth-error" role="alert">{error}</p>}
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="auth-form">
@@ -126,14 +151,32 @@ function Register() {
                 placeholder={auth("passwordPlaceholder")}
                 className="auth-input"
                 autoComplete="new-password"
-                minLength={8}
-                maxLength={100}
+                aria-describedby={password ? passwordRequirementsId : undefined}
+                aria-invalid={Boolean(password) && !passwordValid}
+                minLength={MIN_PASSWORD_LENGTH}
+                maxLength={MAX_PASSWORD_LENGTH}
                 required
               />
               <button type="button" onClick={togglePassword} className="auth-eye-btn" aria-label="Toggle password">
                 <EyeIcon open={showPassword} />
               </button>
             </div>
+            {password ? (
+              <div id={passwordRequirementsId} className="auth-password-guidance">
+                <p className="auth-password-guidance-title">{auth("passwordRequirements")}</p>
+                <ul className="auth-password-requirements" aria-live="polite" aria-atomic="true">
+                  {passwordRequirements.map(({ key, met }) => (
+                    <li key={key} className={`auth-password-rule ${met ? "is-met" : "is-unmet"}`}>
+                      <RequirementIcon met={met} />
+                      <span>
+                        {auth(key)}
+                        <span className="sr-only"> — {auth(met ? "passwordRuleMet" : "passwordRuleUnmet")}</span>
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
           </div>
 
           {/* Confirm Password */}
@@ -145,22 +188,27 @@ function Register() {
                 type={showConfirm ? "text" : "password"}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder={auth("confirmPassword")}
+                placeholder={auth("confirmPasswordPlaceholder")}
                 className={`auth-input${passwordMatch ? " error" : ""}`}
                 autoComplete="new-password"
+                aria-describedby={confirmPassword ? confirmPasswordStatusId : undefined}
+                aria-invalid={passwordMatch}
                 required
               />
               <button type="button" onClick={toggleConfirm} className="auth-eye-btn" aria-label="Toggle confirm">
                 <EyeIcon open={showConfirm} />
               </button>
             </div>
-            {passwordMatch && (
-              <p className="auth-error-msg">{auth("passwordMismatch")}</p>
+            {confirmPassword && (
+              <p id={confirmPasswordStatusId} className={`auth-password-rule ${passwordMatch ? "is-unmet" : "is-met"}`} role="status">
+                <RequirementIcon met={!passwordMatch} />
+                <span>{auth(passwordMatch ? "passwordMismatch" : "passwordsMatch")}</span>
+              </p>
             )}
           </div>
 
           {/* Submit */}
-          <button type="submit" className="auth-submit" disabled={loading || Boolean(passwordMatch)}>
+          <button type="submit" className="auth-submit" disabled={loading || !passwordValid || !confirmPassword || passwordMatch}>
             {loading ? auth("registering") : auth("registerBtn")}
           </button>
         </form>

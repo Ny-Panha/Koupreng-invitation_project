@@ -36,6 +36,8 @@ import com.koupreng.backend.audit.application.AuditLogService;
 import com.koupreng.backend.shared.i18n.MessageService;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -43,6 +45,42 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 
 class AuthServiceTests {
+
+    @ParameterizedTest
+    @ValueSource(strings = {"abcdefg1", "កខគឃងចឆ១"})
+    void registrationRejectsPasswordsWithoutCapitalLetters(String password) {
+        Fixture fixture = fixture();
+
+        ApiException exception = assertThrows(ApiException.class, () -> fixture.authService.register(
+                new RegisterRequest("Test Host", "new@example.com", null, password)));
+
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+        assertEquals("Password must contain at least one capital letter", exception.getMessage());
+        verify(fixture.passwordEncoder, never()).encode(anyString());
+        verify(fixture.userRepository, never()).save(any());
+        verify(fixture.jwtEncoder, never()).encode(any());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"Abcdefg1", "ABCDEFG1", "Aកខគឃងច១", "Äbcdefg1"})
+    void registrationAcceptsPasswordsWithCapitalLettersAndNumbers(String password) {
+        Fixture fixture = fixture();
+        when(fixture.passwordEncoder.encode(password)).thenReturn("encoded-password");
+        when(fixture.userRepository.save(any(AppUser.class))).thenAnswer(invocation -> {
+            AppUser user = invocation.getArgument(0);
+            user.setId(1L);
+            return user;
+        });
+        when(fixture.jwtEncoder.encode(any(JwtEncoderParameters.class))).thenReturn(jwt("jwt-token"));
+
+        AuthResponse response = fixture.authService.register(
+                new RegisterRequest("Test Host", "new@example.com", null, password));
+
+        assertEquals("jwt-token", response.accessToken());
+        assertEquals("new@example.com", response.user().email());
+        verify(fixture.passwordEncoder).encode(password);
+        verify(fixture.userRepository).save(any(AppUser.class));
+    }
 
     @Test
     void localRegistrationCannotAttachPasswordToExistingSocialFirstAccount() {
