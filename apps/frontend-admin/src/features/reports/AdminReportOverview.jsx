@@ -8,13 +8,18 @@ import {
   CreditCard,
   DollarSign,
   Download,
+  Eye,
+  FileDown,
   FilePenLine,
   MoreHorizontal,
+  Printer,
   RefreshCw,
   Search,
   ShieldAlert,
   Upload,
   X,
+  ZoomIn,
+  ZoomOut,
 } from "lucide-react";
 import { ActionButton, AdminPageHeader, ErrorStateView, LoadingState, StatCard, StatusBadge } from "../../shared/ui/AdminUI";
 import adminService from "../../shared/api/adminService";
@@ -190,6 +195,32 @@ export default function AdminReportOverview() {
 
   // Task 2: Interactive Category Widget Selection State
   const [selectedCategory, setSelectedCategory] = useState(null);
+
+  // Print Preview & PDF Export State
+  const [isPreviewMode, setIsPreviewMode] = useState(false);
+  const [previewZoom, setPreviewZoom] = useState(100);
+
+  useEffect(() => {
+    if (!isPreviewMode) return;
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") setIsPreviewMode(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isPreviewMode]);
+
+  const handlePrint = () => {
+    const originalTitle = document.title;
+    const dateStamp = new Date().toISOString().slice(0, 10);
+    document.title = `Koupreng-Admin-Platform-Report-${dateStamp}`;
+    try {
+      window.print();
+    } finally {
+      setTimeout(() => {
+        document.title = originalTitle;
+      }, 1000);
+    }
+  };
 
   const reload = useCallback(async () => {
     try {
@@ -538,24 +569,110 @@ export default function AdminReportOverview() {
   const reviewCount = invitations.filter(isNeedsReview).length;
 
   return (
-    <div className="space-y-6">
-      <AdminPageHeader
-        eyebrow={t("reports.eyebrow", "PLATFORM REPORTS")}
-        title={t("reports.title", "របាយការណ៍កម្មវិធី និងប្រព័ន្ធ")}
-        subtitle={t("reports.subtitle", "ទិដ្ឋភាពទូទៅនៃកម្មវិធីទាំងអស់ ស្ថានភាពផ្សាយ ការវិភាគតាមប្រភេទកម្មវិធី និងចំណូលហិរញ្ញវត្ថុ។")}
-        actions={
-          <div className="flex items-center gap-2">
-            <ActionButton variant="secondary" size="sm" onClick={handleExportCsv}>
-              <Download className="h-3.5 w-3.5" />
-              <span>{t("reports.exportCsv", "ទាញយក CSV")}</span>
-            </ActionButton>
-            <ActionButton variant="ghost" size="sm" onClick={reload}>
-              <RefreshCw className="h-3.5 w-3.5" />
-              <span>{t("reports.refresh", "ធ្វើបច្ចុប្បន្នភាព")}</span>
-            </ActionButton>
+    <div className={`reports-page space-y-6 ${isPreviewMode ? "is-print-preview" : ""}`}>
+      {isPreviewMode && (
+        <aside className="report-preview-toolbar reports-screen-only" role="region" aria-label="Print preview controls">
+          <div className="report-preview-toolbar-inner">
+            <div className="report-preview-meta">
+              <span className="report-preview-badge">A4 Portrait</span>
+              <strong>{lang === "en" ? "Platform Report Preview" : "ផ្ទាំងមើលគំរូមុនបោះពុម្ព / Print Preview"}</strong>
+              <span className="report-preview-hint text-xs text-slate-300 hidden md:inline">
+                {lang === "en" ? "(A4 210 × 297 mm · Press Esc to exit)" : "(ទំហំក្រដាស A4 210 × 297 mm · ចុច Esc ដើម្បីបិទ)"}
+              </span>
+            </div>
+            <div className="report-preview-controls">
+              <div className="report-zoom-controls">
+                <button
+                  type="button"
+                  className="report-zoom-btn"
+                  onClick={() => setPreviewZoom((z) => Math.max(70, z - 10))}
+                  disabled={previewZoom <= 70}
+                  title={lang === "en" ? "Zoom out" : "បង្រួម"}
+                  aria-label="Zoom out"
+                >
+                  <ZoomOut size={14} aria-hidden="true" />
+                </button>
+                <span className="report-zoom-level">{previewZoom}%</span>
+                <button
+                  type="button"
+                  className="report-zoom-btn"
+                  onClick={() => setPreviewZoom((z) => Math.min(140, z + 10))}
+                  disabled={previewZoom >= 140}
+                  title={lang === "en" ? "Zoom in" : "ពង្រីក"}
+                  aria-label="Zoom in"
+                >
+                  <ZoomIn size={14} aria-hidden="true" />
+                </button>
+              </div>
+              <button
+                type="button"
+                className="report-preview-action report-preview-print"
+                onClick={handlePrint}
+              >
+                <FileDown size={14} aria-hidden="true" />
+                <span>{lang === "en" ? "Save as PDF" : "ទាញយកជា PDF"}</span>
+              </button>
+              <button
+                type="button"
+                className="report-preview-action report-preview-print"
+                onClick={handlePrint}
+              >
+                <Printer size={14} aria-hidden="true" />
+                <span>{lang === "en" ? "Print" : "បោះពុម្ព"}</span>
+              </button>
+              <button
+                type="button"
+                className="report-preview-close"
+                onClick={() => setIsPreviewMode(false)}
+                aria-label="Exit preview"
+              >
+                <X size={15} aria-hidden="true" />
+                <span>{lang === "en" ? "Exit" : "បិទ / Exit"}</span>
+              </button>
+            </div>
           </div>
-        }
-      />
+        </aside>
+      )}
+
+      <div
+        className={isPreviewMode ? "report-sheet-simulation space-y-6" : "space-y-6"}
+        style={isPreviewMode && previewZoom !== 100 ? { transform: `scale(${previewZoom / 100})`, transformOrigin: "top center" } : undefined}
+      >
+        <AdminPageHeader
+          eyebrow={t("reports.eyebrow", "PLATFORM REPORTS")}
+          title={t("reports.title", "របាយការណ៍កម្មវិធី និងប្រព័ន្ធ")}
+          subtitle={t("reports.subtitle", "ទិដ្ឋភាពទូទៅនៃកម្មវិធីទាំងអស់ ស្ថានភាពផ្សាយ ការវិភាគតាមប្រភេទកម្មវិធី និងចំណូលហិរញ្ញវត្ថុ។")}
+          actions={
+            <div className="flex flex-wrap items-center gap-2 reports-screen-only">
+              <ActionButton
+                variant="secondary"
+                size="sm"
+                onClick={() => setIsPreviewMode(true)}
+                title={lang === "en" ? "Print preview A4 layout" : "មើលគំរូមុនបោះពុម្ព / Print Preview"}
+              >
+                <Eye className="h-3.5 w-3.5" />
+                <span>{lang === "en" ? "Print Preview" : "មើលគំរូ / Print Preview"}</span>
+              </ActionButton>
+              <ActionButton
+                variant="secondary"
+                size="sm"
+                onClick={handlePrint}
+                title={lang === "en" ? "Print or save platform report as PDF" : "បោះពុម្ព ឬរក្សាទុកជារបាយការណ៍ PDF"}
+              >
+                <Printer className="h-3.5 w-3.5" />
+                <span>{lang === "en" ? "Print Report" : "បោះពុម្ព / Print Report"}</span>
+              </ActionButton>
+              <ActionButton variant="secondary" size="sm" onClick={handleExportCsv}>
+                <Download className="h-3.5 w-3.5" />
+                <span>{t("reports.exportCsv", "ទាញយក CSV")}</span>
+              </ActionButton>
+              <ActionButton variant="ghost" size="sm" onClick={reload}>
+                <RefreshCw className="h-3.5 w-3.5" />
+                <span>{t("reports.refresh", "ធ្វើបច្ចុប្បន្នភាព")}</span>
+              </ActionButton>
+            </div>
+          }
+        />
 
       {(error || actionError) && (
         <p role="status" className="text-xs text-amber-700">
@@ -1099,6 +1216,7 @@ export default function AdminReportOverview() {
           </table>
         </div>
       </section>
+      </div>
     </div>
   );
 }

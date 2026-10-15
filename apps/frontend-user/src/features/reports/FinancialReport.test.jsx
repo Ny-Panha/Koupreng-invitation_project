@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const reportState = vi.hoisted(() => ({
@@ -46,8 +46,36 @@ describe("user financial report", () => {
     expect(screen.getByText("សាច់ប្រាក់ / Cash", { selector: "span" }).parentElement).toHaveTextContent("$15.00");
     expect(screen.getByText("អ្នកចូលរួមបានបញ្ជាក់ / Confirmed Attendees").parentElement).toHaveTextContent("4");
     expect(screen.getByText("បានស្កេន QR / QR Check-ins").parentElement).toHaveTextContent("1");
-    expect(screen.getByRole("button", { name: /Print/ })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "បោះពុម្ពរបាយការណ៍ / Print Report" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Save as PDF/ })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Preview/ })).toBeInTheDocument();
     expect(screen.getByText("តារាងចំណាយ")).toBeInTheDocument();
+  });
+
+  it("toggles print preview mode and handles escape key to exit", () => {
+    const { container } = render(<ReportsPage />);
+
+    expect(container.querySelector(".is-print-preview")).toBeNull();
+    const previewBtn = screen.getByRole("button", { name: /Preview/ });
+    fireEvent.click(previewBtn);
+
+    expect(container.querySelector(".is-print-preview")).toBeInTheDocument();
+    expect(screen.getByLabelText("Print preview controls")).toBeInTheDocument();
+
+    const exitBtn = screen.getByRole("button", { name: /Exit/ });
+    fireEvent.click(exitBtn);
+    expect(container.querySelector(".is-print-preview")).toBeNull();
+  });
+
+  it("triggers window.print with custom document title for PDF export", () => {
+    window.print = vi.fn();
+    render(<ReportsPage />);
+
+    const pdfBtn = screen.getByRole("button", { name: /Save as PDF/ });
+    fireEvent.click(pdfBtn);
+
+    expect(window.print).toHaveBeenCalledTimes(1);
+    expect(document.title).toContain("Koupreng-Financial-Report-Sokha_s_Birthday");
   });
 
   it("shows an empty state instead of selecting an arbitrary event", () => {

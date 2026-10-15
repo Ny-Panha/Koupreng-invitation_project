@@ -180,6 +180,14 @@ export default function BudgetPage() {
               ត្រឡប់ទៅធៀប / Back to Invitation
             </Link>
           )}
+          <button
+            type="button"
+            className="dash-btn"
+            onClick={() => window.print()}
+            title="បោះពុម្ពរបាយការណ៍ថវិកា / Print budget report"
+          >
+            បោះពុម្ព / Print Report
+          </button>
           <button type="button" className="dash-btn dash-btn-primary" onClick={exportCsv} disabled={saving}>
             ទាញយក CSV / Export CSV
           </button>

@@ -1,5 +1,5 @@
-import { useMemo } from "react";
-import { Printer } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Eye, FileDown, Printer, X, ZoomIn, ZoomOut } from "lucide-react";
 import { ErrorState, SkeletonCard } from "@/shared/ui";
 import { buildFinancialReport } from "./model/financialReport";
 import { useActiveEventReport } from "./hooks/useActiveEventReport";
@@ -8,6 +8,9 @@ import "./ReportsPage.css";
 
 export default function FinancialReport() {
   const { sourceData, generatedAt, loading, error, reload } = useActiveEventReport();
+  const [isPreviewMode, setIsPreviewMode] = useState(false);
+  const [previewZoom, setPreviewZoom] = useState(100);
+
   const report = useMemo(
     () => sourceData ? buildFinancialReport(sourceData) : null,
     [sourceData],
@@ -22,26 +25,149 @@ export default function FinancialReport() {
   const invitationId = event?.id || event?.invitationId;
   const hasServerInvitation = Number.isInteger(Number(invitationId)) && Number(invitationId) > 0;
 
+  useEffect(() => {
+    if (!isPreviewMode) return;
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        setIsPreviewMode(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isPreviewMode]);
+
+  const handlePrint = () => {
+    window.print();
+  };
+
+  const handlePrintPdf = () => {
+    const originalTitle = document.title;
+    const safeTitle = (eventTitle || "Event")
+      .replace(/[\s/\\?%*:|"'<>]/g, "_")
+      .slice(0, 40);
+    const dateStamp = new Date().toISOString().slice(0, 10);
+    document.title = `Koupreng-Financial-Report-${safeTitle}-${dateStamp}`;
+    try {
+      window.print();
+    } finally {
+      setTimeout(() => {
+        document.title = originalTitle;
+      }, 1000);
+    }
+  };
+
   return (
-    <main className="dash-main reports-page financial-report-page flex-1 flex justify-center w-full">
-      <div className="reports-content-container min-h-screen bg-[#faf8f5] py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-      <header className="financial-report-header flex flex-wrap justify-between items-center gap-4 mb-6">
-        <div>
-          <span className="dash-kicker reports-screen-only">Event finances</span>
-          <h1 className="font-bold text-gray-800">របាយការណ៍សង្ខេបចំណូល និងចំណាយកម្មវិធី</h1>
-          <p className="report-event-title">{eventTitle}</p>
-          <div className="report-event-meta">
-            {event?.eventType && <span><strong>ប្រភេទ:</strong> {eventTypeLabel(event.eventType)}</span>}
-            {eventPeople && eventPeople !== eventTitle && <span><strong>ម្ចាស់កម្មវិធី:</strong> {eventPeople}</span>}
-            <span><strong>ថ្ងៃកម្មវិធី:</strong> {formatDate(event?.eventDate)}</span>
-            <span><strong>បង្កើតនៅ:</strong> {formatDateTime(generatedAt)}</span>
+    <main className={`dash-main reports-page financial-report-page flex-1 flex justify-center w-full ${isPreviewMode ? "is-print-preview" : ""}`}>
+      {isPreviewMode && (
+        <aside className="report-preview-toolbar reports-screen-only" role="region" aria-label="Print preview controls">
+          <div className="report-preview-toolbar-inner">
+            <div className="report-preview-meta">
+              <span className="report-preview-badge">A4 Portrait</span>
+              <strong>ផ្ទាំងមើលគំរូមុនបោះពុម្ព / Print Preview</strong>
+              <span className="report-preview-hint text-xs text-gray-300 hidden md:inline">
+                (ទំហំក្រដាស A4 210 × 297 mm · ចុច Esc ដើម្បីបិទ)
+              </span>
+            </div>
+            <div className="report-preview-controls">
+              <div className="report-zoom-controls">
+                <button
+                  type="button"
+                  className="report-zoom-btn"
+                  onClick={() => setPreviewZoom((z) => Math.max(70, z - 10))}
+                  disabled={previewZoom <= 70}
+                  title="បង្រួម / Zoom out"
+                  aria-label="Zoom out"
+                >
+                  <ZoomOut size={15} aria-hidden="true" />
+                </button>
+                <span className="report-zoom-level">{previewZoom}%</span>
+                <button
+                  type="button"
+                  className="report-zoom-btn"
+                  onClick={() => setPreviewZoom((z) => Math.min(140, z + 10))}
+                  disabled={previewZoom >= 140}
+                  title="ពង្រីក / Zoom in"
+                  aria-label="Zoom in"
+                >
+                  <ZoomIn size={15} aria-hidden="true" />
+                </button>
+              </div>
+              <button
+                type="button"
+                className="report-preview-action report-preview-pdf"
+                onClick={handlePrintPdf}
+              >
+                <FileDown size={15} aria-hidden="true" />
+                <span>ទាញយកជា PDF / Save as PDF</span>
+              </button>
+              <button
+                type="button"
+                className="report-preview-action report-preview-print"
+                onClick={handlePrint}
+              >
+                <Printer size={15} aria-hidden="true" />
+                <span>បោះពុម្ព / Print</span>
+              </button>
+              <button
+                type="button"
+                className="report-preview-close"
+                onClick={() => setIsPreviewMode(false)}
+                aria-label="បិទផ្ទាំងមើលគំរូ / Exit preview"
+              >
+                <X size={17} aria-hidden="true" />
+                <span>បិទ / Exit</span>
+              </button>
+            </div>
           </div>
-        </div>
-        <button type="button" className="reports-screen-only report-print-button" onClick={() => window.print()}>
-          <Printer aria-hidden="true" size={17} />
-          បោះពុម្ព / Print
-        </button>
-      </header>
+        </aside>
+      )}
+
+      <div
+        className={`reports-content-container ${isPreviewMode ? "report-sheet-simulation" : "min-h-screen bg-[#faf8f5] py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full"}`}
+        style={isPreviewMode && previewZoom !== 100 ? { transform: `scale(${previewZoom / 100})`, transformOrigin: "top center" } : undefined}
+      >
+        <header className="financial-report-header flex flex-wrap justify-between items-center gap-4 mb-6">
+          <div>
+            <span className="dash-kicker reports-screen-only">Event finances</span>
+            <h1 className="font-bold text-gray-800">របាយការណ៍សង្ខេបចំណូល និងចំណាយកម្មវិធី</h1>
+            <p className="report-event-title">{eventTitle}</p>
+            <div className="report-event-meta">
+              {event?.eventType && <span><strong>ប្រភេទ:</strong> {eventTypeLabel(event.eventType)}</span>}
+              {eventPeople && eventPeople !== eventTitle && <span><strong>ម្ចាស់កម្មវិធី:</strong> {eventPeople}</span>}
+              <span><strong>ថ្ងៃកម្មវិធី:</strong> {formatDate(event?.eventDate)}</span>
+              <span><strong>បង្កើតនៅ:</strong> {formatDateTime(generatedAt)}</span>
+            </div>
+          </div>
+          <div className="report-header-actions reports-screen-only flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              className="report-action-btn report-preview-btn"
+              onClick={() => setIsPreviewMode(true)}
+              title="មើលគំរូទម្រង់បោះពុម្ព A4 / View A4 print layout"
+            >
+              <Eye aria-hidden="true" size={16} />
+              មើលគំរូមុនបោះពុម្ព / Print Preview
+            </button>
+            <button
+              type="button"
+              className="report-action-btn report-pdf-btn"
+              onClick={handlePrintPdf}
+              title="ទាញយក ឬរក្សាទុកជា PDF / Save report as PDF"
+            >
+              <FileDown aria-hidden="true" size={16} />
+              ទាញយកជា PDF / Save as PDF
+            </button>
+            <button
+              type="button"
+              className="report-action-btn report-print-button"
+              onClick={handlePrint}
+              title="បោះពុម្ពរបាយការណ៍ / Print report"
+            >
+              <Printer aria-hidden="true" size={16} />
+              បោះពុម្ពរបាយការណ៍ / Print Report
+            </button>
+          </div>
+        </header>
       {hasServerInvitation && <OwnerReportSummary invitationId={invitationId} />}
 
       {error ? (

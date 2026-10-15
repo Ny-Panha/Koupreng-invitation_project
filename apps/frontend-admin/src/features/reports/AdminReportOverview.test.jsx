@@ -301,4 +301,28 @@ describe("admin report overview", () => {
     expect(screen.getByText("$199.00")).toBeInTheDocument();
     expect(screen.getByText("40,000 ៛")).toBeInTheDocument();
   });
+
+  it("renders print preview and print report actions in the admin header", async () => {
+    window.print = vi.fn();
+    const { container } = renderPage();
+    await screen.findByText("Company Dinner");
+
+    const previewBtn = screen.getByRole("button", { name: /Print Preview/ });
+    expect(previewBtn).toBeInTheDocument();
+    const printBtn = screen.getByRole("button", { name: /Print Report/ });
+    expect(printBtn).toBeInTheDocument();
+
+    expect(container.querySelector(".is-print-preview")).toBeNull();
+    fireEvent.click(previewBtn);
+    expect(container.querySelector(".is-print-preview")).toBeInTheDocument();
+    expect(screen.getByLabelText("Print preview controls")).toBeInTheDocument();
+
+    const exitBtn = screen.getByRole("button", { name: /Exit/ });
+    fireEvent.click(exitBtn);
+    expect(container.querySelector(".is-print-preview")).toBeNull();
+
+    fireEvent.click(printBtn);
+    expect(window.print).toHaveBeenCalledTimes(1);
+    expect(document.title).toContain("Koupreng-Admin-Platform-Report");
+  });
 });

@@ -58,7 +58,15 @@
   color: var(--report-ink);
 }
 
-.report-print-button {
+.report-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.report-print-button,
+.report-action-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -76,15 +84,301 @@
   transition: background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
 }
 
-.report-print-button:hover {
+.report-print-button:hover,
+.report-action-btn:hover {
   border-color: #cbbda9;
   background: #fdfbf8;
   box-shadow: 0 2px 8px rgba(36, 49, 46, 0.08);
 }
 
-.report-print-button:focus-visible {
+.report-print-button:focus-visible,
+.report-action-btn:focus-visible {
   outline: 3px solid rgba(23, 107, 85, 0.24);
   outline-offset: 2px;
+}
+
+.report-action-btn.report-pdf-btn {
+  background: #fcf9f5;
+  border-color: #ded5c6;
+  color: #176b55;
+}
+
+.report-action-btn.report-pdf-btn:hover {
+  background: #f5eee4;
+  border-color: #c5b6a1;
+}
+
+.report-action-btn.report-preview-btn {
+  background: #f4f7f5;
+  border-color: #cad8d1;
+  color: #176b55;
+}
+
+.report-action-btn.report-preview-btn:hover {
+  background: #e8efe9;
+  border-color: #a8c2b5;
+}
+
+.report-action-btn.report-print-button {
+  background: #176b55;
+  border-color: #176b55;
+  color: #ffffff;
+}
+
+.report-action-btn.report-print-button:hover {
+  background: #125745;
+  border-color: #125745;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(23, 107, 85, 0.25);
+}
+
+/* ============================================================
+   Interactive Print Preview Mode
+   Simulates authentic A4 sheet with toolbar and zoom controls
+   ============================================================ */
+.financial-report-page.is-print-preview {
+  background: #323639 !important;
+  min-height: 100vh;
+  padding-top: 68px !important;
+  padding-bottom: 60px !important;
+  display: block !important;
+  overflow-x: auto !important;
+}
+
+.financial-report-page.is-print-preview .report-preview-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: #1f2326;
+  color: #fff;
+  z-index: 1000;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.financial-report-page.is-print-preview .report-preview-toolbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 16px;
+}
+
+.financial-report-page.is-print-preview .report-preview-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.88rem;
+  color: #f3f4f6;
+}
+
+.financial-report-page.is-print-preview .report-preview-badge {
+  background: #176b55;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.financial-report-page.is-print-preview .report-preview-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.financial-report-page.is-print-preview .report-zoom-controls {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 2px 6px;
+  gap: 4px;
+}
+
+.financial-report-page.is-print-preview .report-zoom-btn {
+  background: transparent;
+  border: none;
+  color: #d1d5db;
+  padding: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.financial-report-page.is-print-preview .report-zoom-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.financial-report-page.is-print-preview .report-zoom-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.financial-report-page.is-print-preview .report-zoom-level {
+  font-size: 0.75rem;
+  font-weight: 600;
+  min-width: 36px;
+  text-align: center;
+  color: #e5e7eb;
+}
+
+.financial-report-page.is-print-preview .report-preview-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  transition: all 0.15s;
+}
+
+.financial-report-page.is-print-preview .report-preview-action:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.financial-report-page.is-print-preview .report-preview-action.report-preview-print {
+  background: #176b55;
+  border-color: #176b55;
+}
+
+.financial-report-page.is-print-preview .report-preview-action.report-preview-print:hover {
+  background: #135846;
+}
+
+.financial-report-page.is-print-preview .report-preview-close {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 10px;
+  border-radius: 6px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #9ca3af;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.financial-report-page.is-print-preview .report-preview-close:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Simulated A4 Paper Sheet */
+.financial-report-page.is-print-preview .report-sheet-simulation {
+  width: 210mm;
+  max-width: calc(100vw - 32px);
+  min-height: 297mm;
+  background: #FFFFFF !important;
+  color: #111 !important;
+  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.45);
+  margin: 20px auto 40px;
+  padding: 14mm 16mm;
+  border-radius: 3px;
+  box-sizing: border-box;
+  transition: transform 0.2s ease;
+}
+
+.financial-report-page.is-print-preview .report-sheet-simulation .reports-screen-only {
+  display: none !important;
+}
+
+.financial-report-page.is-print-preview .report-sheet-simulation .financial-report-header {
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid #dce4df;
+}
+
+.financial-report-page.is-print-preview .report-sheet-simulation .financial-report-header h1 {
+  font-size: 16pt;
+}
+
+.financial-report-page.is-print-preview .report-sheet-simulation .report-event-title {
+  font-size: 12pt;
+}
+
+.financial-report-page.is-print-preview .report-sheet-simulation .report-event-meta,
+.financial-report-page.is-print-preview .report-sheet-simulation .report-table,
+.financial-report-page.is-print-preview .report-sheet-simulation .report-data-note {
+  font-size: 8.5pt;
+}
+
+.financial-report-page.is-print-preview .report-sheet-simulation .report-summary-grid {
+  gap: 7px;
+  margin-bottom: 16px;
+}
+
+.financial-report-page.is-print-preview .report-sheet-simulation .report-summary-card {
+  padding: 9px 10px;
+  border-radius: 0;
+  box-shadow: none !important;
+  border: 1px solid #dce4df;
+}
+
+.financial-report-page.is-print-preview .report-sheet-simulation .money-card-amounts strong,
+.financial-report-page.is-print-preview .report-sheet-simulation .stat-card > strong {
+  font-size: 10pt;
+}
+
+.financial-report-page.is-print-preview .report-sheet-simulation .report-section {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.financial-report-page.is-print-preview .report-sheet-simulation .report-table-wrapper {
+  display: block;
+  width: 100%;
+  border-radius: 0;
+  border: 1px solid #dce4df;
+}
+
+.financial-report-page.is-print-preview .report-sheet-simulation .report-table {
+  font-size: 7.5pt;
+}
+
+.financial-report-page.is-print-preview .report-sheet-simulation .report-table th,
+.financial-report-page.is-print-preview .report-sheet-simulation .report-table td {
+  padding: 6px 7px;
+}
+
+.financial-report-page.is-print-preview .report-sheet-simulation .report-signatures {
+  gap: 30px;
+  padding-top: 16px;
+}
+
+.financial-report-page.is-print-preview .report-sheet-simulation .report-signature-line {
+  height: 38px;
+}
+
+.financial-report-page.is-print-preview .report-sheet-simulation .report-page-number {
+  display: block;
+  text-align: right;
+  color: #56615c;
+  font-size: 8pt;
+  margin-top: 12px;
+}
+
+.financial-report-page.is-print-preview .report-sheet-simulation .report-page-number::after {
+  content: "Page 1 of 1 · Koupreng Financial Report";
 }
 
 .report-loading {
