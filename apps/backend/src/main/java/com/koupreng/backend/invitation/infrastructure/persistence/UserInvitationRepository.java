@@ -64,6 +64,49 @@ public interface UserInvitationRepository extends JpaRepository<UserInvitation, 
     @EntityGraph(attributePaths = {"user", "template"})
     List<UserInvitation> findTop10ByDeletedFalseOrderByCreatedAtDesc();
 
+    @EntityGraph(attributePaths = {"user", "template"})
+    @Query("""
+            select i from UserInvitation i
+            where i.deleted = false
+              and (:eventType is null or i.eventType = :eventType)
+              and (:status is null or i.status = :status)
+              and (:moderationStatus is null or i.moderationStatus = :moderationStatus)
+              and (:search is null or :search = ''
+                   or lower(i.title) like lower(concat('%', :search, '%'))
+                   or lower(i.slug) like lower(concat('%', :search, '%'))
+                   or lower(coalesce(i.user.fullName, '')) like lower(concat('%', :search, '%'))
+                   or lower(coalesce(i.venueName, '')) like lower(concat('%', :search, '%')))
+            order by i.createdAt desc
+            """)
+    org.springframework.data.domain.Page<UserInvitation> findReportInvitations(
+            @Param("eventType") EventType eventType,
+            @Param("status") InvitationStatus status,
+            @Param("moderationStatus") InvitationModerationStatus moderationStatus,
+            @Param("search") String search,
+            org.springframework.data.domain.Pageable pageable
+    );
+
+    @EntityGraph(attributePaths = {"user", "template"})
+    @Query("""
+            select i from UserInvitation i
+            where i.deleted = false
+              and (:eventType is null or i.eventType = :eventType)
+              and (:status is null or i.status = :status)
+              and (:moderationStatus is null or i.moderationStatus = :moderationStatus)
+              and (:search is null or :search = ''
+                   or lower(i.title) like lower(concat('%', :search, '%'))
+                   or lower(i.slug) like lower(concat('%', :search, '%'))
+                   or lower(coalesce(i.user.fullName, '')) like lower(concat('%', :search, '%'))
+                   or lower(coalesce(i.venueName, '')) like lower(concat('%', :search, '%')))
+            order by i.createdAt desc
+            """)
+    List<UserInvitation> findAllReportInvitations(
+            @Param("eventType") EventType eventType,
+            @Param("status") InvitationStatus status,
+            @Param("moderationStatus") InvitationModerationStatus moderationStatus,
+            @Param("search") String search
+    );
+
     @Query("""
             select count(i) as total,
               coalesce(sum(case when i.status = com.koupreng.backend.invitation.domain.InvitationStatus.PUBLISHED then 1 else 0 end), 0) as published

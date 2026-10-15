@@ -17,6 +17,7 @@ import com.koupreng.backend.rsvp.domain.RsvpStatus;
 import com.koupreng.backend.audit.domain.SystemAuditLog;
 import com.koupreng.backend.template.domain.InvitationTemplate;
 import com.koupreng.backend.template.domain.TemplateCategory;
+import com.koupreng.backend.invitation.domain.EventType;
 import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.payment.domain.TemplatePaymentOrder;
 import com.koupreng.backend.user.domain.AppUser;
@@ -53,6 +54,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
+import com.koupreng.backend.shared.export.CsvExportUtils;
 import org.springframework.data.domain.PageRequest;
 
 @Service
@@ -387,41 +390,277 @@ public class AdminManagementService {
     }
 
     @Transactional(readOnly = true)
-    public AdminReportResponse invitationsReport() {
-        List<InvitationResponse> rows = listInvitations();
+    public AdminReportResponse invitationsReport(
+            String eventType,
+            String status,
+            String moderationStatus,
+            String search,
+            Integer page,
+            Integer size
+    ) {
+        int pageIndex = (page == null || page < 0) ? 0 : page;
+        int pageSize = (size == null || size <= 0) ? 20 : Math.min(size, 100);
+
+        EventType parsedEventType = null;
+        if (eventType != null && !eventType.isBlank() && !"ALL".equalsIgnoreCase(eventType)) {
+            try {
+                parsedEventType = EventType.valueOf(eventType.trim().toUpperCase(Locale.ROOT));
+            } catch (IllegalArgumentException ignored) { }
+        }
+
+        InvitationStatus parsedStatus = null;
+        if (status != null && !status.isBlank() && !"ALL".equalsIgnoreCase(status)) {
+            try {
+                parsedStatus = InvitationStatus.valueOf(status.trim().toUpperCase(Locale.ROOT));
+            } catch (IllegalArgumentException ignored) { }
+        }
+
+        InvitationModerationStatus parsedModStatus = null;
+        if (moderationStatus != null && !moderationStatus.isBlank() && !"ALL".equalsIgnoreCase(moderationStatus)) {
+            try {
+                parsedModStatus = InvitationModerationStatus.valueOf(moderationStatus.trim().toUpperCase(Locale.ROOT));
+            } catch (IllegalArgumentException ignored) { }
+        }
+
+        String searchParam = (search == null || search.isBlank()) ? null : search.trim();
+
+        var pageResult = invitationRepository.findReportInvitations(
+                parsedEventType,
+                parsedStatus,
+                parsedModStatus,
+                searchParam,
+                PageRequest.of(pageIndex, pageSize)
+        );
+
+        List<InvitationResponse> contentRows = pageResult.getContent().stream()
+                .map(InvitationResponse::from)
+                .toList();
+
+        long total = invitationRepository.count();
+        long published = invitationRepository.countByStatusAndDeletedFalse(InvitationStatus.PUBLISHED);
+        long drafts = invitationRepository.countByStatusAndDeletedFalse(InvitationStatus.DRAFT);
+        long hidden = invitationRepository.findAllByDeletedFalseOrderByCreatedAtDesc().stream()
+                .filter(row -> row.getModerationStatus() == InvitationModerationStatus.HIDDEN)
+                .count();
+
+        Map<String, Object> summary = new LinkedHashMap<>();
+        summary.put("totalInvitations", total);
+        summary.put("publishedInvitations", published);
+        summary.put("draftInvitations", drafts);
+        summary.put("hiddenInvitations", hidden);
+        summary.put("filteredTotal", pageResult.getTotalElements());
+        summary.put("page", pageIndex);
+        summary.put("size", pageSize);
+        summary.put("totalPages", pageResult.getTotalPages());
+
         return AdminReportResponse.builder()
                 .report("invitations")
                 .generatedAt(Instant.now())
-                .summary(Map.of(
-                        "totalInvitations", rows.size(),
-                        "publishedInvitations", rows.stream().filter(row -> row.getStatus() == InvitationStatus.PUBLISHED).count(),
-                        "hiddenInvitations", rows.stream()
-                                .filter(row -> row.getModerationStatus() == InvitationModerationStatus.HIDDEN)
-                                .count()
-                ))
-                .rows(List.of())
+                .page(pageIndex)
+                .size(pageSize)
+                .totalElements(pageResult.getTotalElements())
+                .totalPages(pageResult.getTotalPages())
+                .summary(summary)
+                .rows(contentRows)
                 .build();
+    }
+
+    @Transactional(readOnly = true)
+    public AdminReportResponse invitationsReport() {
+        return invitationsReport(null, null, null, null, 0, 50);
+    }
+
+    @Transactional(readOnly = true)
+    public byte[] exportInvitationsCsv(String eventType, String status, String moderationStatus, String search) {
+        EventType parsedEventType = null;
+        if (eventType != null && !eventType.isBlank() && !"ALL".equalsIgnoreCase(eventType)) {
+            try {
+                parsedEventType = EventType.valueOf(eventType.trim().toUpperCase(Locale.ROOT));
+            } catch (IllegalArgumentException ignored) { }
+        }
+        InvitationStatus parsedStatus = null;
+        if (status != null && !status.isBlank() && !"ALL".equalsIgnoreCase(status)) {
+            try {
+                parsedStatus = InvitationStatus.valueOf(status.trim().toUpperCase(Locale.ROOT));
+            } catch (IllegalArgumentException ignored) { }
+        }
+        InvitationModerationStatus parsedModStatus = null;
+        if (moderationStatus != null && !moderationStatus.isBlank() && !"ALL".equalsIgnoreCase(moderationStatus)) {
+            try {
+                parsedModStatus = InvitationModerationStatus.valueOf(moderationStatus.trim().toUpperCase(Locale.ROOT));
+            } catch (IllegalArgumentException ignored) { }
+        }
+        String searchParam = (search == null || search.isBlank()) ? null : search.trim();
+
+        List<UserInvitation> invitations = invitationRepository.findAllReportInvitations(
+                parsedEventType, parsedStatus, parsedModStatus, searchParam
+        );
+
+        StringBuilder sb = new StringBuilder();
+        sb.append('\uFEFF'); // UTF-8 BOM
+        sb.append(CsvExportUtils.row("ID", "Title", "Slug", "EventType", "Status", "ModerationStatus", "Owner", "EventDate", "Venue", "CreatedAt", "PublishedAt"));
+        sb.append("\r\n");
+
+        for (UserInvitation inv : invitations) {
+            String owner = inv.getUser() != null ? inv.getUser().getFullName() : "";
+            sb.append(CsvExportUtils.row(
+                    inv.getId(),
+                    inv.getTitle(),
+                    inv.getSlug(),
+                    inv.getEventType() != null ? inv.getEventType().name() : "",
+                    inv.getStatus() != null ? inv.getStatus().name() : "",
+                    inv.getModerationStatus() != null ? inv.getModerationStatus().name() : "",
+                    owner,
+                    inv.getEventDate() != null ? inv.getEventDate().toString() : "",
+                    inv.getVenueName() != null ? inv.getVenueName() : "",
+                    inv.getCreatedAt() != null ? inv.getCreatedAt().toString() : "",
+                    inv.getPublishedAt() != null ? inv.getPublishedAt().toString() : ""
+            ));
+            sb.append("\r\n");
+        }
+        return sb.toString().getBytes(StandardCharsets.UTF_8);
     }
 
     @Transactional(readOnly = true)
     public AdminReportResponse paymentsReport() {
         List<TemplatePaymentOrder> orders = paymentOrderRepository.findAll();
-        var revenue = com.koupreng.backend.reporting.domain.RevenueTotals.fromPayments(orders, List.of());
-        Map<String, Object> summary = new LinkedHashMap<>(revenue.summaryFields());
-        summary.put("totalPayments", orders.size());
-        summary.put("paidPayments", orders.stream().filter(order -> order.getStatus() == PaymentStatus.PAID).count());
-        summary.put("failedPayments", orders.stream()
-                .filter(order -> order.getStatus() == PaymentStatus.FAILED || order.getStatus() == PaymentStatus.REJECTED).count());
+        List<com.koupreng.backend.subscription.domain.Subscription> subscriptions = subscriptionRepository.findAll();
+
+        Map<String, BigDecimal> paidRevenueByCurrency = new LinkedHashMap<>();
+        Map<String, BigDecimal> pendingRevenueByCurrency = new LinkedHashMap<>();
+        Map<String, BigDecimal> failedRevenueByCurrency = new LinkedHashMap<>();
+        Map<String, BigDecimal> templateRevenueByCurrency = new LinkedHashMap<>();
+        Map<String, BigDecimal> subscriptionRevenueByCurrency = new LinkedHashMap<>();
+
+        long paidPayments = 0;
+        long pendingPayments = 0;
+        long failedPayments = 0;
+        long reviewPayments = 0;
+
+        for (TemplatePaymentOrder order : orders) {
+            BigDecimal amount = order.getPaidAmount() == null ? order.getAmount() : order.getPaidAmount();
+            String currency = order.getCurrency();
+            if (order.getStatus() == PaymentStatus.PAID) {
+                paidPayments++;
+                com.koupreng.backend.reporting.domain.RevenueTotals.add(paidRevenueByCurrency, currency, amount);
+                com.koupreng.backend.reporting.domain.RevenueTotals.add(templateRevenueByCurrency, currency, amount);
+            } else if (order.getStatus() == PaymentStatus.PENDING) {
+                pendingPayments++;
+                com.koupreng.backend.reporting.domain.RevenueTotals.add(pendingRevenueByCurrency, currency, order.getAmount());
+            } else if (order.getStatus() == PaymentStatus.PAID_PENDING_REVIEW) {
+                pendingPayments++;
+                reviewPayments++;
+                com.koupreng.backend.reporting.domain.RevenueTotals.add(pendingRevenueByCurrency, currency, amount);
+            } else if (order.getStatus() == PaymentStatus.FAILED || order.getStatus() == PaymentStatus.REJECTED) {
+                failedPayments++;
+                com.koupreng.backend.reporting.domain.RevenueTotals.add(failedRevenueByCurrency, currency, order.getAmount());
+            }
+        }
+
+        for (var sub : subscriptions) {
+            BigDecimal amount = sub.getPaidAmount() == null ? sub.getAmount() : sub.getPaidAmount();
+            String currency = sub.getCurrency();
+            String status = sub.getPaymentStatus() == null ? sub.getStatus() : sub.getPaymentStatus();
+            if ("PAID".equalsIgnoreCase(status)) {
+                paidPayments++;
+                com.koupreng.backend.reporting.domain.RevenueTotals.add(paidRevenueByCurrency, currency, amount);
+                com.koupreng.backend.reporting.domain.RevenueTotals.add(subscriptionRevenueByCurrency, currency, amount);
+            } else if ("PENDING".equalsIgnoreCase(status) || "PENDING_PAYMENT".equalsIgnoreCase(status)) {
+                pendingPayments++;
+                com.koupreng.backend.reporting.domain.RevenueTotals.add(pendingRevenueByCurrency, currency, sub.getAmount());
+            } else if ("FAILED".equalsIgnoreCase(status) || "REJECTED".equalsIgnoreCase(status)) {
+                failedPayments++;
+                com.koupreng.backend.reporting.domain.RevenueTotals.add(failedRevenueByCurrency, currency, sub.getAmount());
+            }
+        }
+
+        Map<String, Object> summary = new LinkedHashMap<>();
+        summary.put("totalPayments", orders.size() + subscriptions.size());
+        summary.put("paidPayments", paidPayments);
+        summary.put("pendingPayments", pendingPayments);
+        summary.put("failedPayments", failedPayments);
+        summary.put("reviewPayments", reviewPayments);
+        summary.put("templatePayments", orders.size());
+        summary.put("subscriptionPayments", subscriptions.size());
+
+        summary.put("paidRevenueByCurrency", paidRevenueByCurrency);
+        summary.put("revenueByCurrency", paidRevenueByCurrency);
+        summary.put("pendingRevenueByCurrency", pendingRevenueByCurrency);
+        summary.put("failedRevenueByCurrency", failedRevenueByCurrency);
+        summary.put("templateRevenueByCurrency", templateRevenueByCurrency);
+        summary.put("subscriptionRevenueByCurrency", subscriptionRevenueByCurrency);
+
+        summary.put("paidAmountUsd", paidRevenueByCurrency.getOrDefault("USD", BigDecimal.ZERO));
+        summary.put("paidAmountKhr", paidRevenueByCurrency.getOrDefault("KHR", BigDecimal.ZERO));
+        summary.put("pendingAmountUsd", pendingRevenueByCurrency.getOrDefault("USD", BigDecimal.ZERO));
+        summary.put("pendingAmountKhr", pendingRevenueByCurrency.getOrDefault("KHR", BigDecimal.ZERO));
+        summary.put("totalRevenueUsd", paidRevenueByCurrency.getOrDefault("USD", BigDecimal.ZERO));
+        summary.put("totalRevenue", paidRevenueByCurrency.size() <= 1 ? paidRevenueByCurrency.values().stream().reduce(BigDecimal.ZERO, BigDecimal::add) : null);
+        summary.put("revenueComparable", paidRevenueByCurrency.size() <= 1);
+
+        List<PlatformTransaction> transactions = new ArrayList<>();
+        orders.stream().limit(50).forEach(order -> {
+            transactions.add(new PlatformTransaction(order.getCreatedAt(), safeTransaction(
+                    order.getOrderCode(), order.getPackageName(), order.getPaidAmount() == null ? order.getAmount() : order.getPaidAmount(),
+                    order.getCurrency(), order.getStatus() == null ? "UNKNOWN" : order.getStatus().name(),
+                    order.getProvider(), order.getCreatedAt(), "TEMPLATE")));
+        });
+        subscriptions.stream().limit(50).forEach(sub -> {
+            String status = sub.getPaymentStatus() == null ? sub.getStatus() : sub.getPaymentStatus();
+            String pkgName = sub.getSubscriptionPackage() != null ? sub.getSubscriptionPackage().getPackageName() : "Subscription";
+            transactions.add(new PlatformTransaction(sub.getCreatedAt(), safeTransaction(
+                    sub.getOrderCode(), pkgName, sub.getPaidAmount() == null ? sub.getAmount() : sub.getPaidAmount(),
+                    sub.getCurrency(), status, sub.getProvider(), sub.getCreatedAt(), "SUBSCRIPTION")));
+        });
+        transactions.sort(Comparator.comparing(PlatformTransaction::createdAt, Comparator.nullsLast(Comparator.reverseOrder())));
+
+        List<Map<String, Object>> txRows = transactions.stream().limit(50).map(PlatformTransaction::data).toList();
+
         return AdminReportResponse.builder()
                 .report("payments")
                 .generatedAt(Instant.now())
                 .summary(summary)
-                .rows(paymentOrderRepository.findRecentPlatformPayments(PageRequest.of(0, 20)).stream()
-                    .map(row -> safeTransaction(
-                        row.getReference(), row.getPackageName(), row.getAmount(), row.getCurrency(),
-                        row.getStatus() == null ? "UNKNOWN" : row.getStatus().name(), row.getProvider(), row.getCreatedAt(), "TEMPLATE"))
-                    .toList())
+                .rows(txRows)
                 .build();
+    }
+
+    @Transactional(readOnly = true)
+    public byte[] exportPaymentsCsv() {
+        List<TemplatePaymentOrder> orders = paymentOrderRepository.findAll();
+        List<com.koupreng.backend.subscription.domain.Subscription> subscriptions = subscriptionRepository.findAll();
+
+        List<Map<String, Object>> txList = new ArrayList<>();
+        for (var o : orders) {
+            txList.add(safeTransaction(o.getOrderCode(), o.getPackageName(), o.getPaidAmount() == null ? o.getAmount() : o.getPaidAmount(),
+                    o.getCurrency(), o.getStatus() == null ? "" : o.getStatus().name(), o.getProvider(), o.getCreatedAt(), "TEMPLATE"));
+        }
+        for (var s : subscriptions) {
+            String status = s.getPaymentStatus() == null ? s.getStatus() : s.getPaymentStatus();
+            String pkgName = s.getSubscriptionPackage() != null ? s.getSubscriptionPackage().getPackageName() : "Subscription";
+            txList.add(safeTransaction(s.getOrderCode(), pkgName, s.getPaidAmount() == null ? s.getAmount() : s.getPaidAmount(),
+                    s.getCurrency(), status, s.getProvider(), s.getCreatedAt(), "SUBSCRIPTION"));
+        }
+        txList.sort(Comparator.comparing(m -> (Instant) m.get("createdAt"), Comparator.nullsLast(Comparator.reverseOrder())));
+
+        StringBuilder sb = new StringBuilder();
+        sb.append('\uFEFF');
+        sb.append(CsvExportUtils.row("Reference", "Type", "PackageName", "Amount", "Currency", "Status", "Provider", "CreatedAt"));
+        sb.append("\r\n");
+
+        for (var tx : txList) {
+            sb.append(CsvExportUtils.row(
+                    tx.get("reference"),
+                    tx.get("type"),
+                    tx.get("packageName"),
+                    tx.get("amount"),
+                    tx.get("currency"),
+                    tx.get("status"),
+                    tx.get("provider"),
+                    tx.get("createdAt") != null ? tx.get("createdAt").toString() : ""
+            ));
+            sb.append("\r\n");
+        }
+        return sb.toString().getBytes(StandardCharsets.UTF_8);
     }
 
     @Transactional(readOnly = true)
@@ -506,7 +745,7 @@ public class AdminManagementService {
     public AdminReportResponse platformReport() {
         Instant now = Instant.now();
         YearMonth currentMonth = YearMonth.from(now.atZone(ZoneOffset.UTC));
-        Map<YearMonth, Long> monthlyEvents = new HashMap<>();
+        Map<YearMonth, Long> monthlyEvents = new LinkedHashMap<>();
         for (int monthOffset = 11; monthOffset >= 0; monthOffset--) {
             monthlyEvents.put(currentMonth.minusMonths(monthOffset), 0L);
         }
@@ -515,10 +754,20 @@ public class AdminManagementService {
         long publishedInvitations = 0;
         long draftInvitations = 0;
         long suspendedInvitations = 0;
-        Map<String, Long> eventCategories = new LinkedHashMap<>();
-        eventCategories.put("WEDDING", 0L);
-        eventCategories.put("ENGAGEMENT", 0L);
-        eventCategories.put("ANNIVERSARY_BIRTHDAY", 0L);
+
+        Map<String, Long> categoryTotals = new LinkedHashMap<>();
+        Map<String, Long> categoryPublished = new LinkedHashMap<>();
+        Map<String, Long> categoryDrafts = new LinkedHashMap<>();
+        for (EventType type : EventType.values()) {
+            categoryTotals.put(type.name(), 0L);
+            categoryPublished.put(type.name(), 0L);
+            categoryDrafts.put(type.name(), 0L);
+        }
+
+        Map<String, Long> legacyEventCategories = new LinkedHashMap<>();
+        legacyEventCategories.put("WEDDING", 0L);
+        legacyEventCategories.put("ENGAGEMENT", 0L);
+        legacyEventCategories.put("ANNIVERSARY_BIRTHDAY", 0L);
 
         for (var invitation : invitationRepository.findPlatformMetrics()) {
             totalInvitations++;
@@ -526,16 +775,26 @@ public class AdminManagementService {
                 YearMonth createdMonth = YearMonth.from(invitation.getCreatedAt().atZone(ZoneOffset.UTC));
                 monthlyEvents.computeIfPresent(createdMonth, (month, count) -> count + 1);
             }
-            if (invitation.getStatus() == InvitationStatus.PUBLISHED) publishedInvitations++;
-            if (invitation.getStatus() == InvitationStatus.DRAFT || invitation.getStatus() == InvitationStatus.UNPUBLISHED) draftInvitations++;
+            boolean isPub = invitation.getStatus() == InvitationStatus.PUBLISHED;
+            boolean isDft = invitation.getStatus() == InvitationStatus.DRAFT || invitation.getStatus() == InvitationStatus.UNPUBLISHED;
+            if (isPub) publishedInvitations++;
+            if (isDft) draftInvitations++;
             if (invitation.getModerationStatus() == InvitationModerationStatus.HIDDEN
                     || invitation.getModerationStatus() == InvitationModerationStatus.SUSPENDED) suspendedInvitations++;
 
-            String eventType = invitation.getEventType() == null ? "" : invitation.getEventType().name();
-            if ("WEDDING".equals(eventType)) eventCategories.computeIfPresent("WEDDING", (key, count) -> count + 1);
-            else if ("ENGAGEMENT".equals(eventType)) eventCategories.computeIfPresent("ENGAGEMENT", (key, count) -> count + 1);
-            else if ("ANNIVERSARY".equals(eventType) || "BIRTHDAY".equals(eventType)) {
-                eventCategories.computeIfPresent("ANNIVERSARY_BIRTHDAY", (key, count) -> count + 1);
+            EventType eventType = invitation.getEventType() != null ? invitation.getEventType() : EventType.OTHER;
+            String typeName = eventType.name();
+            categoryTotals.computeIfPresent(typeName, (key, count) -> count + 1);
+            if (isPub) {
+                categoryPublished.computeIfPresent(typeName, (key, count) -> count + 1);
+            } else {
+                categoryDrafts.computeIfPresent(typeName, (key, count) -> count + 1);
+            }
+
+            if ("WEDDING".equals(typeName)) legacyEventCategories.computeIfPresent("WEDDING", (key, count) -> count + 1);
+            else if ("ENGAGEMENT".equals(typeName)) legacyEventCategories.computeIfPresent("ENGAGEMENT", (key, count) -> count + 1);
+            else if ("ANNIVERSARY".equals(typeName) || "BIRTHDAY".equals(typeName)) {
+                legacyEventCategories.computeIfPresent("ANNIVERSARY_BIRTHDAY", (key, count) -> count + 1);
             }
         }
 
@@ -558,7 +817,7 @@ public class AdminManagementService {
             com.koupreng.backend.reporting.domain.RevenueTotals.add(paymentRevenueByCurrency, amount.getCurrency(), amount.getTotal());
         });
         List<PlatformTransaction> transactions = new ArrayList<>();
-        paymentOrderRepository.findRecentPlatformPayments(PageRequest.of(0, 20)).forEach(payment ->
+        paymentOrderRepository.findRecentPlatformPayments(PageRequest.of(0, 50)).forEach(payment ->
                 transactions.add(new PlatformTransaction(payment.getCreatedAt(), safeTransaction(
                         payment.getReference(), payment.getPackageName(), payment.getAmount(), payment.getCurrency(),
                         payment.getStatus() == null ? "UNKNOWN" : payment.getStatus().name(), payment.getProvider(), payment.getCreatedAt(), "TEMPLATE"))));
@@ -594,10 +853,36 @@ public class AdminManagementService {
         transactions.sort(Comparator.comparing(PlatformTransaction::createdAt, Comparator.nullsLast(Comparator.reverseOrder())));
         List<Map<String, Object>> eventGrowth = monthlyEvents.entrySet().stream().map(entry -> Map.<String, Object>of(
                 "month", entry.getKey().toString(), "created", entry.getValue())).toList();
-        List<Map<String, Object>> categoryBreakdown = eventCategories.entrySet().stream().map(entry -> Map.<String, Object>of(
-                "category", entry.getKey(), "count", entry.getValue())).toList();
+
+        List<Map<String, Object>> categoryBreakdown = new ArrayList<>();
+        for (EventType type : EventType.values()) {
+            String name = type.name();
+            long total = categoryTotals.getOrDefault(name, 0L);
+            long pub = categoryPublished.getOrDefault(name, 0L);
+            long dft = categoryDrafts.getOrDefault(name, 0L);
+            double rate = total == 0 ? 0.0 : Math.round((pub * 100.0 / total) * 10.0) / 10.0;
+            Map<String, Object> catMap = new LinkedHashMap<>();
+            catMap.put("category", name);
+            catMap.put("total", total);
+            catMap.put("published", pub);
+            catMap.put("draft", dft);
+            catMap.put("publishRate", rate);
+            catMap.put("count", total);
+            categoryBreakdown.add(catMap);
+        }
+
         List<Map<String, Object>> tierBreakdown = subscriptionTiers.entrySet().stream().map(entry -> Map.<String, Object>of(
                 "tier", entry.getKey(), "activeSubscriptions", entry.getValue())).toList();
+
+        long thisMonthEvents = monthlyEvents.getOrDefault(currentMonth, 0L);
+        long lastMonthEvents = monthlyEvents.getOrDefault(currentMonth.minusMonths(1), 0L);
+        double eventGrowthMoM = lastMonthEvents == 0
+                ? (thisMonthEvents > 0 ? 100.0 : 0.0)
+                : Math.round(((double)(thisMonthEvents - lastMonthEvents) / lastMonthEvents * 100.0) * 10.0) / 10.0;
+
+        List<InvitationResponse> recentInvitations = invitationRepository.findTop10ByDeletedFalseOrderByCreatedAtDesc().stream()
+                .map(InvitationResponse::from)
+                .toList();
 
         Map<String, Object> summary = new LinkedHashMap<>();
         summary.put("totalUsers", users.getTotal());
@@ -610,7 +895,11 @@ public class AdminManagementService {
         summary.put("totalRsvps", rsvpRepository.count());
         summary.put("totalCheckIns", guestCheckInRepository.countActiveCheckIns());
         summary.put("eventCreationGrowth", eventGrowth);
+        summary.put("thisMonthEvents", thisMonthEvents);
+        summary.put("lastMonthEvents", lastMonthEvents);
+        summary.put("eventGrowthMoM", eventGrowthMoM);
         summary.put("eventCategoryBreakdown", categoryBreakdown);
+        summary.put("legacyEventCategories", legacyEventCategories);
         summary.put("subscriptionTiers", tierBreakdown);
         summary.put("subscriptionTransitions", tierTransitions);
         summary.put("upgradeRate", tierTransitions == 0 ? 0 : upgrades * 100.0 / tierTransitions);
@@ -622,6 +911,8 @@ public class AdminManagementService {
         summary.put("paymentRevenueByCurrency", paymentRevenueByCurrency);
         summary.put("subscriptionRevenueByCurrency", subscriptionRevenueByCurrency);
         summary.put("revenueComparable", revenueByCurrency.size() <= 1);
+        summary.put("recentInvitations", recentInvitations);
+        summary.put("invitations", recentInvitations);
 
         Map<String, Map<String, Object>> transactionGroups = new LinkedHashMap<>();
         for (PlatformTransaction transaction : transactions) {
@@ -630,6 +921,9 @@ public class AdminManagementService {
             String type = String.valueOf(source.getOrDefault("type", "PAYMENT"));
             String provider = String.valueOf(source.getOrDefault("provider", "UNKNOWN"));
             String currency = String.valueOf(source.getOrDefault("currency", "USD"));
+            String status = String.valueOf(source.getOrDefault("status", "UNKNOWN"));
+            boolean isConfirmed = "PAID".equalsIgnoreCase(status) || "COMPLETED".equalsIgnoreCase(status);
+
             String groupKey = String.join("|", date, type, provider, currency);
             Map<String, Object> group = transactionGroups.computeIfAbsent(groupKey, ignored -> {
                 Map<String, Object> row = new LinkedHashMap<>();
@@ -639,16 +933,27 @@ public class AdminManagementService {
                 row.put("status", "AGGREGATED");
                 row.put("currency", currency);
                 row.put("transactionCount", 0L);
+                row.put("confirmedCount", 0L);
                 row.put("totalAmount", BigDecimal.ZERO);
                 return row;
             });
             group.put("transactionCount", ((Long) group.get("transactionCount")) + 1);
-            BigDecimal transactionAmount = source.get("amount") instanceof BigDecimal value ? value : BigDecimal.ZERO;
-            group.put("totalAmount", ((BigDecimal) group.get("totalAmount")).add(transactionAmount));
+            if (isConfirmed) {
+                group.put("confirmedCount", ((Long) group.get("confirmedCount")) + 1);
+                BigDecimal transactionAmount = source.get("amount") instanceof BigDecimal value ? value : BigDecimal.ZERO;
+                group.put("totalAmount", ((BigDecimal) group.get("totalAmount")).add(transactionAmount));
+            }
         }
         List<Map<String, Object>> aggregateTransactions = transactionGroups.values().stream()
                 .peek(row -> {
-                    if (((Long) row.get("transactionCount")) < 5) row.put("totalAmount", null);
+                    long count = (Long) row.get("transactionCount");
+                    if (count < 5) {
+                        row.put("suppressed", true);
+                        row.put("totalAmount", null);
+                        row.put("suppressionReason", "SAMPLE_SIZE_UNDER_5");
+                    } else {
+                        row.put("suppressed", false);
+                    }
                 })
                 .sorted(Comparator.comparing(row -> String.valueOf(row.get("period")), Comparator.reverseOrder()))
                 .limit(20).toList();

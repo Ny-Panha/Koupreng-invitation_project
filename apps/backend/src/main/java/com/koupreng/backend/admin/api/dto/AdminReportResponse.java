@@ -19,4 +19,8 @@ public class AdminReportResponse {
     private Instant generatedAt;
     private Map<String, Object> summary;
     private List<?> rows;
+    private Integer page;
+    private Integer size;
+    private Long totalElements;
+    private Integer totalPages;
 }

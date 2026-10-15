@@ -36,8 +36,12 @@ export const adminService = {
   activateInvitation: (invitationId) => api.patch(`/v1/admin/invitations/${invitationId}/activate`, {}).then(unwrap),
   deactivateInvitation: (invitationId) => api.patch(`/v1/admin/invitations/${invitationId}/deactivate`, {}).then(unwrap),
 
-  report: (name) => api.get(`/v1/admin/reports/${name}`).then(unwrap),
-  platformReport: () => api.get("/v1/admin/reports/platform").then(unwrapApiData),
+  report: (name, params) => api.get(`/v1/admin/reports/${name}`, { params }).then(unwrap),
+  invitationsReport: (params) => api.get("/v1/admin/reports/invitations", { params }).then(unwrapApiData),
+  paymentsReport: (params) => api.get("/v1/admin/reports/payments", { params }).then(unwrapApiData),
+  platformReport: (params) => api.get("/v1/admin/reports/platform", { params }).then(unwrapApiData),
+  exportInvitationsCsv: (params) => api.get("/v1/admin/reports/invitations/export", { params, responseType: "blob" }),
+  exportPaymentsCsv: (params) => api.get("/v1/admin/reports/payments/export", { params, responseType: "blob" }),
   systemLogs: () => api.get("/v1/admin/system-logs").then(unwrap),
 
   payments: () => api.get("/v1/admin/payments").then(unwrap),

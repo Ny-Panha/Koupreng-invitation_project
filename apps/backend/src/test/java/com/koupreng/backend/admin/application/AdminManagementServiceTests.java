@@ -37,6 +37,17 @@ import org.mockito.ArgumentCaptor;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import com.koupreng.backend.admin.api.dto.AdminReportResponse;
+import com.koupreng.backend.invitation.domain.EventType;
+import com.koupreng.backend.invitation.domain.InvitationModerationStatus;
+import com.koupreng.backend.payment.domain.PaymentStatus;
+import com.koupreng.backend.payment.domain.TemplatePaymentOrder;
+import com.koupreng.backend.subscription.domain.Subscription;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.Map;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 class AdminManagementServiceTests {
@@ -240,6 +251,192 @@ class AdminManagementServiceTests {
         verify(auditLogService, org.mockito.Mockito.times(2)).logAdminAction(
                 any(), any(), any(), any(), any(), any(), any()
         );
+    }
+
+    @Test
+    void invitationsReportPopulatesRowsAndRespectsPagination() {
+        AppUserRepository userRepository = mock(AppUserRepository.class);
+        UserInvitationRepository invitationRepository = mock(UserInvitationRepository.class);
+        InvitationTemplateRepository templateRepository = mock(InvitationTemplateRepository.class);
+        TemplatePaymentOrderRepository paymentOrderRepository = mock(TemplatePaymentOrderRepository.class);
+        SubscriptionRepository subscriptionRepository = mock(SubscriptionRepository.class);
+        RsvpRepository rsvpRepository = mock(RsvpRepository.class);
+        GuestRepository guestRepository = mock(GuestRepository.class);
+        GuestCheckInRepository guestCheckInRepository = mock(GuestCheckInRepository.class);
+        NotificationRepository notificationRepository = mock(NotificationRepository.class);
+        SystemAuditLogRepository systemAuditLogRepository = mock(SystemAuditLogRepository.class);
+        AuditLogService auditLogService = mock(AuditLogService.class);
+        UserAuthCacheService userAuthCacheService = mock(UserAuthCacheService.class);
+
+        UserInvitation inv = new UserInvitation();
+        inv.setId(101L);
+        inv.setTitle("Royal Khmer Wedding");
+        inv.setEventType(EventType.WEDDING);
+        inv.setStatus(InvitationStatus.PUBLISHED);
+        inv.setModerationStatus(InvitationModerationStatus.ACTIVE);
+
+        when(invitationRepository.findReportInvitations(
+                EventType.WEDDING, InvitationStatus.PUBLISHED, InvitationModerationStatus.ACTIVE, "Khmer", PageRequest.of(0, 20)
+        )).thenReturn(new PageImpl<>(List.of(inv), PageRequest.of(0, 20), 1));
+        when(invitationRepository.count()).thenReturn(1L);
+        when(invitationRepository.countByStatusAndDeletedFalse(InvitationStatus.PUBLISHED)).thenReturn(1L);
+        when(invitationRepository.countByStatusAndDeletedFalse(InvitationStatus.DRAFT)).thenReturn(0L);
+
+        AdminManagementService service = new AdminManagementService(
+                userRepository, invitationRepository, templateRepository, paymentOrderRepository,
+                subscriptionRepository, rsvpRepository, guestRepository, guestCheckInRepository,
+                notificationRepository, systemAuditLogRepository, auditLogService, userAuthCacheService,
+                new BCryptPasswordEncoder()
+        );
+
+        AdminReportResponse report = service.invitationsReport("WEDDING", "PUBLISHED", "ACTIVE", "Khmer", 0, 20);
+
+        assertEquals("invitations", report.getReport());
+        assertEquals(1, report.getRows().size());
+        assertEquals(0, report.getPage());
+        assertEquals(20, report.getSize());
+        assertEquals(1L, report.getTotalElements());
+        assertEquals(1, report.getTotalPages());
+        assertEquals(1L, report.getSummary().get("totalInvitations"));
+        assertEquals(1L, report.getSummary().get("publishedInvitations"));
+    }
+
+    @Test
+    void exportInvitationsCsvAppliesFormulaInjectionDefenseAndUtf8Bom() {
+        AppUserRepository userRepository = mock(AppUserRepository.class);
+        UserInvitationRepository invitationRepository = mock(UserInvitationRepository.class);
+        AdminManagementService service = new AdminManagementService(
+                userRepository, invitationRepository, mock(InvitationTemplateRepository.class),
+                mock(TemplatePaymentOrderRepository.class), mock(SubscriptionRepository.class),
+                mock(RsvpRepository.class), mock(GuestRepository.class), mock(GuestCheckInRepository.class),
+                mock(NotificationRepository.class), mock(SystemAuditLogRepository.class),
+                mock(AuditLogService.class), mock(UserAuthCacheService.class), new BCryptPasswordEncoder()
+        );
+
+        UserInvitation inv = new UserInvitation();
+        inv.setId(202L);
+        inv.setTitle("=1+1 Formula Attack");
+        inv.setEventType(EventType.WEDDING);
+        inv.setStatus(InvitationStatus.DRAFT);
+        inv.setModerationStatus(InvitationModerationStatus.ACTIVE);
+
+        when(invitationRepository.findAllReportInvitations(null, null, null, null))
+                .thenReturn(List.of(inv));
+
+        byte[] csv = service.exportInvitationsCsv(null, null, null, null);
+        String csvText = new String(csv, java.nio.charset.StandardCharsets.UTF_8);
+
+        assertTrue(csvText.startsWith("\uFEFF"));
+        assertTrue(csvText.contains("\"'=1+1 Formula Attack\""));
+    }
+
+    @Test
+    void platformReportIncludesAllSixEventCategoriesAndExplicitPrivacySuppression() {
+        AppUserRepository userRepository = mock(AppUserRepository.class);
+        UserInvitationRepository invitationRepository = mock(UserInvitationRepository.class);
+        TemplatePaymentOrderRepository paymentOrderRepository = mock(TemplatePaymentOrderRepository.class);
+        SubscriptionRepository subscriptionRepository = mock(SubscriptionRepository.class);
+
+        var userCounts = mock(AppUserRepository.DashboardCounts.class);
+        when(userCounts.getTotal()).thenReturn(10L);
+        when(userCounts.getActive()).thenReturn(8L);
+        when(userRepository.dashboardCounts()).thenReturn(userCounts);
+
+        var paymentCounts = mock(TemplatePaymentOrderRepository.DashboardCounts.class);
+        when(paymentCounts.getTotal()).thenReturn(2L);
+        when(paymentCounts.getFailed()).thenReturn(0L);
+        when(paymentOrderRepository.dashboardCounts()).thenReturn(paymentCounts);
+        when(paymentOrderRepository.revenueByCurrency()).thenReturn(List.of());
+        when(paymentOrderRepository.findRecentPlatformPayments(any())).thenReturn(List.of());
+        when(subscriptionRepository.findPlatformMetrics()).thenReturn(List.of());
+
+        var rowWedding = mock(UserInvitationRepository.PlatformMetricsRow.class);
+        when(rowWedding.getEventType()).thenReturn(EventType.WEDDING);
+        when(rowWedding.getStatus()).thenReturn(InvitationStatus.PUBLISHED);
+        when(rowWedding.getCreatedAt()).thenReturn(Instant.now());
+
+        var rowCorporate = mock(UserInvitationRepository.PlatformMetricsRow.class);
+        when(rowCorporate.getEventType()).thenReturn(EventType.CORPORATE);
+        when(rowCorporate.getStatus()).thenReturn(InvitationStatus.DRAFT);
+        when(rowCorporate.getCreatedAt()).thenReturn(Instant.now());
+
+        when(invitationRepository.findPlatformMetrics()).thenReturn(List.of(rowWedding, rowCorporate));
+
+        AdminManagementService service = new AdminManagementService(
+                userRepository, invitationRepository, mock(InvitationTemplateRepository.class),
+                paymentOrderRepository, subscriptionRepository, mock(RsvpRepository.class),
+                mock(GuestRepository.class), mock(GuestCheckInRepository.class),
+                mock(NotificationRepository.class), mock(SystemAuditLogRepository.class),
+                mock(AuditLogService.class), mock(UserAuthCacheService.class), new BCryptPasswordEncoder()
+        );
+
+        AdminReportResponse report = service.platformReport();
+        assertEquals("platform", report.getReport());
+
+        @SuppressWarnings("unchecked")
+        List<Map<String, Object>> breakdown = (List<Map<String, Object>>) report.getSummary().get("eventCategoryBreakdown");
+        assertNotNull(breakdown);
+        assertEquals(6, breakdown.size());
+
+        Map<String, Object> wedding = breakdown.stream().filter(m -> "WEDDING".equals(m.get("category"))).findFirst().orElseThrow();
+        assertEquals(1L, wedding.get("total"));
+        assertEquals(1L, wedding.get("published"));
+        assertEquals(0L, wedding.get("draft"));
+        assertEquals(100.0, wedding.get("publishRate"));
+
+        Map<String, Object> corporate = breakdown.stream().filter(m -> "CORPORATE".equals(m.get("category"))).findFirst().orElseThrow();
+        assertEquals(1L, corporate.get("total"));
+        assertEquals(0L, corporate.get("published"));
+        assertEquals(1L, corporate.get("draft"));
+        assertEquals(0.0, corporate.get("publishRate"));
+    }
+
+    @Test
+    void paymentsReportSeparatesConfirmedPendingFailedAndCurrencies() {
+        TemplatePaymentOrderRepository paymentOrderRepository = mock(TemplatePaymentOrderRepository.class);
+        SubscriptionRepository subscriptionRepository = mock(SubscriptionRepository.class);
+
+        TemplatePaymentOrder paidOrder = new TemplatePaymentOrder();
+        paidOrder.setOrderCode("ORD-USD-001");
+        paidOrder.setPackageName("Royal Wedding Template");
+        paidOrder.setAmount(new BigDecimal("25.00"));
+        paidOrder.setPaidAmount(new BigDecimal("25.00"));
+        paidOrder.setCurrency("USD");
+        paidOrder.setStatus(PaymentStatus.PAID);
+
+        TemplatePaymentOrder pendingOrder = new TemplatePaymentOrder();
+        pendingOrder.setOrderCode("ORD-KHR-002");
+        pendingOrder.setPackageName("Khmer Celestial Template");
+        pendingOrder.setAmount(new BigDecimal("100000.00"));
+        pendingOrder.setCurrency("KHR");
+        pendingOrder.setStatus(PaymentStatus.PENDING);
+
+        when(paymentOrderRepository.findAll()).thenReturn(List.of(paidOrder, pendingOrder));
+        when(subscriptionRepository.findAll()).thenReturn(List.of());
+
+        AdminManagementService service = new AdminManagementService(
+                mock(AppUserRepository.class), mock(UserInvitationRepository.class), mock(InvitationTemplateRepository.class),
+                paymentOrderRepository, subscriptionRepository, mock(RsvpRepository.class),
+                mock(GuestRepository.class), mock(GuestCheckInRepository.class),
+                mock(NotificationRepository.class), mock(SystemAuditLogRepository.class),
+                mock(AuditLogService.class), mock(UserAuthCacheService.class), new BCryptPasswordEncoder()
+        );
+
+        AdminReportResponse report = service.paymentsReport();
+        assertEquals("payments", report.getReport());
+
+        Map<String, Object> summary = report.getSummary();
+        assertEquals(2, summary.get("totalPayments"));
+        assertEquals(1L, summary.get("paidPayments"));
+        assertEquals(1L, summary.get("pendingPayments"));
+
+        @SuppressWarnings("unchecked")
+        Map<String, BigDecimal> paidRev = (Map<String, BigDecimal>) summary.get("paidRevenueByCurrency");
+        assertEquals(new BigDecimal("25.00"), paidRev.get("USD"));
+
+        @SuppressWarnings("unchecked")
+        Map<String, BigDecimal> pendingRev = (Map<String, BigDecimal>) summary.get("pendingRevenueByCurrency");
+        assertEquals(new BigDecimal("100000.00"), pendingRev.get("KHR"));
     }
 
     private AdminManagementService newService(AppUserRepository userRepository) {

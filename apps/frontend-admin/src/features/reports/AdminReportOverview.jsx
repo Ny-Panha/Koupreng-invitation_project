@@ -17,6 +17,7 @@ import {
   Search,
   ShieldAlert,
   Upload,
+  Lock,
   X,
   ZoomIn,
   ZoomOut,
@@ -24,6 +25,7 @@ import {
 import { ActionButton, AdminPageHeader, ErrorStateView, LoadingState, StatCard, StatusBadge } from "../../shared/ui/AdminUI";
 import adminService from "../../shared/api/adminService";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
+import { exportCsv } from "../../shared/utils/csvExport";
 
 function asList(value) {
   if (Array.isArray(value)) return value;
@@ -148,30 +150,6 @@ function invitationName(invitation, lang = "km") {
 
 function isNeedsReview(invitation) {
   return ["HIDDEN", "REPORTED", "SUSPENDED"].includes(String(invitation.moderationStatus || "").toUpperCase());
-}
-
-function exportCsv(filename, headers, rows) {
-  const content = [
-    headers.join(","),
-    ...rows.map((row) =>
-      row
-        .map((cell) => {
-          const stringified = String(cell ?? "").replace(/"/g, '""');
-          return `"${stringified}"`;
-        })
-        .join(",")
-    ),
-  ].join("\n");
-
-  const blob = new Blob(["\uFEFF" + content], { type: "text/csv;charset=utf-8;" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = filename;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
 }
 
 export default function AdminReportOverview() {
@@ -353,12 +331,37 @@ export default function AdminReportOverview() {
   const categoryStats = useMemo(() => {
     if (Array.isArray(summary.eventCategoryBreakdown)) {
       const counts = new Map(summary.eventCategoryBreakdown.map((row) => [
-        row.category === "ANNIVERSARY_BIRTHDAY" ? "BIRTHDAY" : row.category, Number(row.count) || 0,
+        row.category === "ANNIVERSARY_BIRTHDAY" ? "BIRTHDAY" : row.category,
+        Number(row.total ?? row.count) || 0,
       ]));
+      const publishedMap = new Map(summary.eventCategoryBreakdown.map((row) => [
+        row.category === "ANNIVERSARY_BIRTHDAY" ? "BIRTHDAY" : row.category,
+        Number(row.published) || 0,
+      ]));
+      const draftMap = new Map(summary.eventCategoryBreakdown.map((row) => [
+        row.category === "ANNIVERSARY_BIRTHDAY" ? "BIRTHDAY" : row.category,
+        Number(row.draft) || 0,
+      ]));
+      const rateMap = new Map(summary.eventCategoryBreakdown.map((row) => [
+        row.category === "ANNIVERSARY_BIRTHDAY" ? "BIRTHDAY" : row.category,
+        Number(row.publishRate) || 0,
+      ]));
+
       const total = [...counts.values()].reduce((sum, count) => sum + count, 0);
-      return EVENT_CATEGORIES.map((cat) => ({ ...cat, total: counts.get(cat.key) || 0,
-        published: 0, draft: 0, publishRate: 0,
-        percent: total ? Math.round((counts.get(cat.key) || 0) / total * 100) : 0 }));
+      return EVENT_CATEGORIES.map((cat) => {
+        const catTotal = counts.get(cat.key) || 0;
+        const pub = publishedMap.get(cat.key) || 0;
+        const dft = draftMap.get(cat.key) || 0;
+        const publishRate = rateMap.get(cat.key) || (catTotal > 0 ? Math.round((pub / catTotal) * 100) : 0);
+        return {
+          ...cat,
+          total: catTotal,
+          published: pub,
+          draft: dft,
+          publishRate,
+          percent: total ? Math.round((catTotal / total) * 100) : 0,
+        };
+      });
     }
     const total = invitations.length || 1;
     const grouped = {};
@@ -1024,7 +1027,20 @@ export default function AdminReportOverview() {
                       {tx.transactionCount ?? 1}
                     </td>
                     <td className="px-4 py-3 text-right tabular-nums font-bold text-slate-900 dark:text-zinc-100">
-                      {formatMoney(tx.totalAmount ?? tx.amount, tx.currency || "USD")}
+                      {tx.suppressed ? (
+                        <span
+                          className="inline-flex items-center gap-1 rounded-md bg-amber-500/10 px-2 py-0.5 text-[11px] font-semibold text-amber-700 dark:text-amber-400 border border-amber-500/20"
+                          title={t(
+                            "reports.suppressedPrivacy",
+                            "Fewer than 5 transactions in group: amount suppressed for privacy"
+                          )}
+                        >
+                          <Lock className="h-3 w-3" />
+                          <span>{t("reports.privateSuppressed", "Private (<5)")}</span>
+                        </span>
+                      ) : (
+                        formatMoney(tx.totalAmount ?? tx.amount, tx.currency || "USD")
+                      )}
                     </td>
                   </tr>
                 );

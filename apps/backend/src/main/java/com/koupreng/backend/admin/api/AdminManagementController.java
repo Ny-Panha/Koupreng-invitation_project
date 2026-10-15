@@ -27,6 +27,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import java.math.BigDecimal;
 import java.util.Map;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -40,6 +41,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -282,11 +284,32 @@ public class AdminManagementController {
     }
 
     @GetMapping("/reports/invitations")
-    public ResponseEntity<ApiResponse<AdminReportResponse>> invitationsReport() {
+    public ResponseEntity<ApiResponse<AdminReportResponse>> invitationsReport(
+            @RequestParam(required = false) String eventType,
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String moderationStatus,
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false, defaultValue = "0") Integer page,
+            @RequestParam(required = false, defaultValue = "20") Integer size
+    ) {
         return ResponseEntity.ok(ApiResponse.success(
                 "Invitation report fetched successfully",
-                adminManagementService.invitationsReport()
+                adminManagementService.invitationsReport(eventType, status, moderationStatus, search, page, size)
         ));
+    }
+
+    @GetMapping(value = "/reports/invitations/export", produces = "text/csv; charset=UTF-8")
+    public ResponseEntity<byte[]> exportInvitationsCsv(
+            @RequestParam(required = false) String eventType,
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String moderationStatus,
+            @RequestParam(required = false) String search
+    ) {
+        byte[] csv = adminManagementService.exportInvitationsCsv(eventType, status, moderationStatus, search);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"invitations-report.csv\"")
+                .header(HttpHeaders.CONTENT_TYPE, "text/csv; charset=UTF-8")
+                .body(csv);
     }
 
     @GetMapping("/reports/payments")
@@ -295,6 +318,15 @@ public class AdminManagementController {
                 "Payment report fetched successfully",
                 adminManagementService.paymentsReport()
         ));
+    }
+
+    @GetMapping(value = "/reports/payments/export", produces = "text/csv; charset=UTF-8")
+    public ResponseEntity<byte[]> exportPaymentsCsv() {
+        byte[] csv = adminManagementService.exportPaymentsCsv();
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"payments-report.csv\"")
+                .header(HttpHeaders.CONTENT_TYPE, "text/csv; charset=UTF-8")
+                .body(csv);
     }
 
     @GetMapping("/reports/rsvp")
