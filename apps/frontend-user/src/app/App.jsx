@@ -3,8 +3,9 @@ import { BrowserRouter as Router } from "react-router-dom";
 import AppRouter from "./router";
 import ScrollToTop from "./ScrollToTop";
 import { AuthProvider, QueryProvider, ThemeProvider } from "./providers";
-import SiteAnimations from "../shared/animations/SiteAnimations";
-import ChatBot from "../shared/ui/ChatBot";
+import RouteMotion from "../shared/animations/RouteMotion";
+import SupportWidget from "../shared/ui/SupportWidget";
+import RouteFontLoader from "../shared/fonts/RouteFontLoader";
 import { ToastContainer } from "../shared/ui";
 import {
   initTelegramWebApp,
@@ -36,13 +37,14 @@ function App() {
       <QueryProvider>
         <ThemeProvider>
           <Router>
+            <RouteFontLoader />
             <ScrollToTop />
-            <SiteAnimations />
+            <RouteMotion />
             <div className="app-container">
               <AppRouter />
             </div>
             <ToastContainer />
-            <ChatBot />
+            <SupportWidget />
           </Router>
         </ThemeProvider>
       </QueryProvider>

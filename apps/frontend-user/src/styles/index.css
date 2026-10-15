@@ -282,6 +282,14 @@
 /* Public marketing tokens — Silk & Ink Editorial design system.
    Preserves dashboard and wedding template variables intact. */
 .kp-marketing-shell {
+  --kp-page: #F8F5EE;
+  --kp-surface-soft: #F2ECE2;
+  --kp-brand: #2E433A;
+  --kp-brand-hover: #21352D;
+  --kp-gold-decorative: #C3A26B;
+  --kp-gold-text: #77572C;
+  --kp-focus: #254F7E;
+  --kp-motion-silk: cubic-bezier(.22, 1, .36, 1);
   --kp-public-bg: #F8F5EE;
   --kp-public-surface: #FFFFFF;
   --kp-public-surface-warm: #F4EFE6;
@@ -307,7 +315,7 @@
   --kp-border: var(--kp-public-border);
   --kp-paper: var(--kp-public-surface-warm);
   --kp-burgundy: #672C39;
-  --kp-font: 'Koupreng UI', 'DM Sans', 'Noto Sans Khmer', sans-serif;
+  --kp-font: 'Koupreng UI', 'Noto Sans Khmer', sans-serif;
   --kp-display: 'Koupreng Editorial', Georgia, serif;
   --kp-ease: cubic-bezier(.22, 1, .36, 1);
   --site-header-offset: 86px;
@@ -315,6 +323,8 @@
   background: var(--kp-bg);
   font-family: var(--kp-font);
 }
+
+.kp-marketing-shell:lang(en) { --kp-font: 'Koupreng Latin', 'Koupreng UI', sans-serif; }
 
 /* ============================================================
    Reduced motion: zero out transitions for users who request it

@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useLanguageStore } from "../../stores/useLanguageStore";
-import logo from "../../assets/logo.png";
 import "./MarketingChrome.css";
 
 export default function Header() {
@@ -15,9 +14,7 @@ export default function Header() {
   const location = useLocation();
   const navigate = useNavigate();
   const copy = (km, en) => lang === "en" ? en : km;
-  const items = isAuthenticated
-    ? [["/dashboard", copy("ផ្ទាំងគ្រប់គ្រង", "Dashboard")], ["/templates", copy("គំរូសន្លឹកការ", "Designs")]]
-    : [["/", copy("ទំព័រដើម", "Home")], ["/templates", copy("គំរូសន្លឹកការ", "Designs")], ["/pricing", copy("តម្លៃ", "Pricing")], ["/contact", copy("ទំនាក់ទំនង", "Contact")]];
+  const items = [["/", copy("ទំព័រដើម", "Home")], ["/templates", copy("គំរូសន្លឹកការ", "Templates")], ["/pricing", copy("តម្លៃ", "Pricing")], ["/contact", copy("ទំនាក់ទំនង", "Contact")]];
   const active = (path) => path === "/" ? location.pathname === "/" : location.pathname === path || location.pathname.startsWith(path + "/");
   const closeMenu = () => dialog.current?.close();
   const containMenuFocus = (event) => {
@@ -73,7 +70,7 @@ export default function Header() {
       <header className={`kp-header${scrolled ? " kp-header--scrolled" : ""}`}>
         <div className="kp-header-inner">
           <Link to="/" className="kp-brand" title={copy("ទំព័រដើម", "Home")}>
-            <img src={logo} alt="" width="76" height="54" /><span>Koupreng{" "}<span className="kp-brand-note">{copy("សិល្បៈនៃការអញ្ជើញ", "THE ART OF INVITING")}</span></span>
+            <img src="/branding/koupreng-mark.png" alt="" width="152" height="101" /><span>Koupreng{" "}<span className="kp-brand-note">{copy("ការអញ្ជើញ និងភ្ញៀវ", "Invitations & guests")}</span></span>
           </Link>
           <nav className="kp-desktop-nav" aria-label={copy("ម៉ឺនុយចម្បង", "Main navigation")}>
             {items.map(([path, label]) => <Link key={path} to={path} className="kp-nav-link" aria-current={active(path) ? "page" : undefined}>{label}</Link>)}

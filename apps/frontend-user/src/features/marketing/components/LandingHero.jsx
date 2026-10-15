@@ -11,24 +11,24 @@ export default function LandingHero({ copy }) {
   return (
     <section className="kp-hero" aria-labelledby="kp-hero-title" data-reduced-motion={reduced}>
       <div className="kp-hero-copy">
-        <p className="kp-eyebrow kp-enter">{copy("គូព្រេង — ធៀបការអាពាហ៍ពិពាហ៍ខ្មែរ", "KOUPRENG — DIGITAL WEDDING INVITATIONS")}</p>
+        <p className="kp-eyebrow kp-enter">{copy("សន្លឹកការឌីជីថល និងការគ្រប់គ្រងភ្ញៀវ", "Digital invitations & guest management")}</p>
         <h1 id="kp-hero-title" className="kp-enter kp-enter--2">
           <span>{copy("រាល់ការអញ្ជើញ", "Every invitation")}</span>
-          <span className="kp-heading-accent">{copy("ចាប់ផ្តើមពីក្តីស្រឡាញ់", "begins with love.")}</span>
+          <span>{copy("ចាប់ផ្តើមពីក្តីស្រឡាញ់", "begins with love.")}</span>
         </h1>
         <p className="kp-hero-lead kp-enter kp-enter--3">
           {copy(
-            "បង្កើតសន្លឹកការឌីជីថលតាមស្ទីលរបស់អ្នក។ ជ្រើសគំរូ បញ្ចូលព័ត៌មានពិធី ហើយចែករំលែកទៅកាន់ភ្ញៀវបានងាយស្រួល។",
-            "Craft a digital wedding invitation that reflects your story. Choose a design, personalize your celebration, and share one elegant link with every guest."
+            "បង្កើតសន្លឹកការឌីជីថល កែសម្រួលព័ត៌មានពិធី និងចែករំលែកទៅភ្ញៀវតាមតំណភ្ជាប់តែមួយ។",
+            "Create a digital invitation, personalize your event details and share one thoughtful link with your guests."
           )}
         </p>
         <div className="kp-actions kp-enter kp-enter--3">
           <Link to="/templates" className="kp-button">
-            {copy("មើលគំរូសន្លឹកការ", "Explore invitation designs")}
+            {copy("មើលគំរូសន្លឹកការ", "Explore templates")}
             <ArrowUpRight size={18} aria-hidden="true" />
           </Link>
           <Link to="/templates/browse" className="kp-text-link">
-            {copy("ចាប់ផ្តើមបង្កើត", "Create your invitation")}
+            {copy("ចាប់ផ្តើមបង្កើត", "Start creating")}
             <ArrowRight size={18} aria-hidden="true" />
           </Link>
         </div>
@@ -37,16 +37,16 @@ export default function LandingHero({ copy }) {
           {copy("មើលគំរូមុនសម្រេចចិត្ត · មិនចាំបាច់ចូលគណនី", "Preview before you choose · No account needed")}
         </p>
         <div className="kp-hero-chips kp-enter kp-enter--3" role="list" aria-label={copy("លក្ខណៈពិសេសចម្បង", "Key features")}>
-          <span className="kp-hero-chip" role="listitem">{copy("ភាសាខ្មែរ និង English", "Khmer & English")}</span>
+          <span className="kp-hero-chip" role="listitem">{copy("ភាសាខ្មែរ និងអង់គ្លេស", "Khmer & English")}</span>
           <span className="kp-hero-chip" role="listitem">{copy("តំណភ្ជាប់ផ្ទាល់ខ្លួន", "Personalized Guest Link")}</span>
           <span className="kp-hero-chip" role="listitem">{copy("តាមដាន RSVP", "RSVP Tracking")}</span>
-          <span className="kp-hero-chip" role="listitem">{copy("ផែនទី & កម្មវិធី", "Map & Schedule")}</span>
+          <span className="kp-hero-chip" role="listitem">{copy("ផែនទី និងកម្មវិធី", "Map & schedule")}</span>
         </div>
       </div>
       <div className="kp-hero-art kp-enter kp-enter--2">
-        <div className="kp-art-index" aria-hidden="true">01 / {copy("សូត្រមង្គល", "SILK HERITAGE")}</div>
+        <div className="kp-art-index">{copy("សាកមើលសូត្រមង្គល", "Explore Silk Heritage")}</div>
         <div className="kp-photo-arch">
-          <LandingPhoto src={silk.mainImage} priority alt={copy("រូបថតគូស្នេហ៍សម្រាប់គំរូសូត្រមង្គល", "Sample wedding portrait from the Silk Heritage design")} />
+          <LandingPhoto src={silk.mainImage} srcSet="/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w" sizes="(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px" priority alt={copy("រូបថតគូស្នេហ៍សម្រាប់គំរូសូត្រមង្គល", "Sample wedding portrait from the Silk Heritage design")} />
         </div>
         <div className={`kp-hero-folio${opened ? " kp-hero-folio--open" : ""}`}>
           <div id="kp-folio-paper" className="kp-folio-paper" inert={!opened} aria-hidden={!opened}>

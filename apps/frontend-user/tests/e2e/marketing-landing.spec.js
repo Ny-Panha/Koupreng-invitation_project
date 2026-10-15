@@ -195,6 +195,7 @@ test("broken images and 200 percent CSS zoom preserve readable actions", async (
   await fixture(page);
   await page.addInitScript(() => localStorage.setItem("koupreng.lang", "en"));
   await page.route("**/templates/silk-heritage/portrait.webp", (route) => route.abort());
+  await page.route("**/images/marketing/silk-portrait-*.webp", (route) => route.abort());
   await page.route("**/templates/silk-heritage/preview.svg", (route) => route.abort());
   await page.goto("/");
   await expect(page.locator(".kp-photo-fallback")).toBeVisible();
@@ -202,6 +203,6 @@ test("broken images and 200 percent CSS zoom preserve readable actions", async (
   await expect(page.locator(".kp-design-placeholder").first()).toBeVisible();
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.evaluate(() => { document.documentElement.style.zoom = "2"; window.scrollTo(0, 0); });
-  await expect(page.getByRole("link", { name: "Explore invitation designs", exact: true })).toBeVisible();
+  await expect(page.locator(".kp-hero").getByRole("link", { name: "Explore templates", exact: true })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });

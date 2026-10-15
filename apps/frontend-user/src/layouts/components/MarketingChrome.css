@@ -3,23 +3,24 @@
 @font-face {
   font-family: 'Koupreng UI';
   src: url('/fonts/silk-heritage/KantumruyPro.woff2') format('woff2');
-  font-weight: 100 900;
+  font-weight: 100 700;
   font-display: swap;
 }
+@font-face { font-family: 'Koupreng Latin'; src: url('/fonts/marketing/DMSans-Latin.woff2') format('woff2'); font-weight: 400 700; font-display: swap; }
 @font-face {
   font-family: 'Koupreng Editorial';
   src: url('/fonts/silk-heritage/CormorantGaramond.woff2') format('woff2');
   font-weight: 600;
   font-display: swap;
 }
-.kp-marketing-shell :is(a, button, summary, input, select):focus-visible {
-  outline: 3px solid var(--kp-emerald);
+.kp-marketing-shell :is(a, button, summary, input, select, textarea):focus-visible {
+  outline: 3px solid var(--kp-focus);
   outline-offset: 5px;
 }
 .kp-skip { position: fixed; top: 8px; left: 16px; z-index: 4000; padding: 12px 20px; color: var(--kp-surface); background: var(--kp-emerald); transform: translateY(-150%); }
 .kp-skip:focus { transform: translateY(0); }
-.kp-header { position: fixed; inset: 0 0 auto; z-index: var(--z-header); padding: 12px 24px; transition: padding .3s var(--kp-ease); }
-.kp-header-inner { max-width: 1440px; margin: auto; padding: 6px 24px; min-height: 56px; border: 1px solid var(--kp-border); border-radius: 8px; display: flex; align-items: center; justify-content: space-between; gap: 24px; background: rgba(248, 245, 238, 0.95); backdrop-filter: blur(10px); }
+.kp-header { position: fixed; inset: 0 0 auto; z-index: var(--z-header); padding: 8px 24px; transition: padding .3s var(--kp-ease); }
+.kp-header-inner { max-width: 1280px; margin: auto; padding: 6px 24px; min-height: 58px; border: 1px solid var(--kp-border); border-radius: 12px; display: flex; align-items: center; justify-content: space-between; gap: 24px; background: var(--kp-bg); }
 .kp-header--scrolled { padding-block: 6px; }
 .kp-header--scrolled .kp-header-inner { box-shadow: var(--shadow-md); background: rgba(248, 245, 238, 0.98); }
 .kp-brand { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--kp-gold-deep); flex-shrink: 0; }
@@ -53,6 +54,26 @@
 .kp-footer nav a { color: var(--kp-muted); text-decoration: none; min-height: 44px; display: flex; align-items: center; }
 .kp-footer nav a:hover { color: var(--kp-gold-deep); text-decoration: underline; }
 .kp-footer-bottom { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; border-top: 1px solid var(--kp-border); padding-top: 24px; font-size: 12px; }
+.kp-marketing-shell .kp-button { display: inline-flex; justify-content: center; align-items: center; gap: 10px; min-height: 48px; max-width: 100%; padding: 12px 22px; border: 1px solid var(--kp-brand); border-radius: 10px; background: var(--kp-brand); color: var(--kp-bg); font: 550 15px/1.7 var(--kp-font); text-decoration: none; text-align: center; cursor: pointer; box-shadow: none; transition: background .2s, transform .3s var(--kp-ease); }
+.kp-marketing-shell .kp-button svg { flex: none; }
+.kp-marketing-shell .kp-button:hover { background: var(--kp-brand-hover); border-color: var(--kp-brand-hover); }
+.kp-marketing-shell .kp-button--outline { background: transparent; color: var(--kp-brand); border-color: var(--kp-brand); }
+.kp-marketing-shell .kp-button--outline:hover { background: var(--kp-surface); }
+.kp-marketing-shell .kp-button--light { background: var(--kp-bg); color: var(--kp-brand); border-color: var(--kp-bg); }
+.kp-marketing-shell .kp-button--light:hover { background: var(--kp-surface); border-color: var(--kp-surface); }
+.kp-marketing-shell .kp-button:disabled { background: #56675F; border-color: #56675F; color: #FFFFFF; cursor: wait; transform: none; }
+.kp-marketing-shell .kp-text-link { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--kp-brand); font: 550 15px/1.7 var(--kp-font); text-decoration: underline; text-underline-offset: 5px; }
+.kp-marketing-shell .kp-text-link svg { flex: none; }
+.kp-public-support { position: fixed; z-index: 1100; right: max(20px, env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom)); font: 400 15px/1.75 'Koupreng UI', sans-serif; color: #262622; }
+.kp-public-support:lang(en) { font-family: 'Koupreng Latin', sans-serif; }
+.kp-public-support .kp-support-toggle { display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid #2E433A; border-radius: 12px; background: #2E433A; color: #FFFFFF; cursor: pointer; box-shadow: 0 4px 20px -8px rgba(38,38,34,.3); }
+.kp-support-panel { width: min(340px, calc(100vw - 40px)); max-height: calc(100dvh - 120px); overflow-y: auto; background: #FFFFFF; border: 1px solid #E5DED2; border-radius: 14px; padding: 24px; margin-bottom: 12px; box-shadow: 0 16px 48px -24px rgba(38,38,34,.3); }
+.kp-support-panel > div { display: flex; align-items: center; gap: 12px; justify-content: space-between; }
+.kp-support-panel h2 { font-family: inherit; font-size: 18px; font-weight: 600; line-height: 1.7; margin: 0; }
+.kp-support-panel > div > button { display: grid; place-items: center; min-width: 44px; min-height: 44px; border: 0; background: #F2ECE2; color: #262622; border-radius: 8px; cursor: pointer; }
+.kp-support-panel p { margin: 14px 0; color: #695D50; }
+.kp-support-panel > a { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 0; min-height: 48px; border-top: 1px solid #E5DED2; color: #2E433A; text-decoration: none; }
+.kp-support-panel :is(a,button):focus-visible, .kp-support-toggle:focus-visible { outline: 3px solid #254F7E; outline-offset: 4px; }
 @media (max-width: 1100px) {
   .kp-desktop-nav, .kp-desktop-actions { display: none; }
   .kp-menu-trigger { display: grid; }
@@ -60,7 +81,7 @@
 @media (max-width: 600px) {
   .kp-marketing-shell { --site-header-offset: 74px; }
   .kp-header { padding: 8px 12px; }
-  .kp-header-inner { min-height: 48px; padding: 4px 12px; gap: 12px; }
+  .kp-header-inner { min-height: 52px; padding: 4px 12px; gap: 12px; }
   .kp-brand img { width: 44px; height: 32px; }
   .kp-brand > span { font-size: 20px; }
   .kp-brand-note { display: none; }

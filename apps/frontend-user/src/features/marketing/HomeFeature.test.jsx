@@ -37,6 +37,7 @@ it("opens a labeled lightweight preview and lets visitors choose story stages", 
   expect(screen.getByRole("link", { name: "View the full demo" })).toHaveAttribute("href", "/templates/silk-heritage");
   fireEvent.click(screen.getByRole("button", { name: /The details/ }));
   expect(screen.getByText(/This sample does not collect responses/)).toBeInTheDocument();
+  expect(screen.getByText("Himawari Hotel, Phnom Penh")).toBeInTheDocument();
   await waitFor(() => expect(screen.getByText(/Premium · Access required/)).toBeInTheDocument());
 });
 it("labels offline fallback as demo and retries the actual service", async () => {
@@ -47,4 +48,14 @@ it("labels offline fallback as demo and retries the actual service", async () =>
   fireEvent.click(screen.getByRole("button", { name: "Try again" }));
   await screen.findByText(/No designs match/);
   expect(templateService.listPublic).toHaveBeenLastCalledWith({ force: true });
+});
+it("shows a labeled guest fixture, lazy featured images and connected pricing/help destinations", async () => {
+  const { container } = show();
+  await screen.findByText(/Premium · Access required/);
+  expect(screen.getByText(/names and responses below are sample data/)).toBeVisible();
+  fireEvent.click(screen.getByRole("button", { name: "Pending", exact: true }));
+  expect(screen.getByRole("table", { name: "Illustrative guest response data" }).querySelectorAll("tbody tr")).toHaveLength(1);
+  for (const image of container.querySelectorAll(".kp-design-card img")) expect(image).toHaveAttribute("loading", "lazy");
+  expect(container.querySelector(".kp-pricing-preview .kp-button")).toHaveAttribute("href", "/pricing");
+  expect(container.querySelector(".kp-help-preview .kp-button")).toHaveAttribute("href", "/contact");
 });

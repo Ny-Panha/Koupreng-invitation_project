@@ -1,135 +1,69 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Check, Minus, LockKeyhole, ArrowUpRight, Plus } from "lucide-react";
 import subscriptionService from "../subscriptions/subscriptionService";
 import { useAuth } from "../auth/hooks/useAuth";
-import { MagicCard } from "../../shared/ui/MagicCard";
-import "./PricingContact.css";
-import { ScrollReveal } from "../../shared/ui/ScrollReveal";
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { useLanguageStore } from "../../stores/useLanguageStore";
+import PricingFactors from "./components/PricingFactors";
+import { packagePrice, packageLimit } from "./model/packagePresentation";
+import "./MarketingPages.css";
 
-// Import Background
-import heroBg from "../../assets/icons/background.png";
-import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
-
-function getPlans(packages, lang) {
-  const copy = (kh, en) => lang === "en" ? en : kh;
-  return packages.map((plan) => ({
-    id: plan.id,
-    name: plan.packageName || plan.code,
-    price: new Intl.NumberFormat(lang === "en" ? "en-US" : "km-KH", { style: "currency", currency: plan.currency || "USD" }).format(Number(plan.price)),
-    desc: plan.description || "",
-    features: [
-      plan.maxInvitations != null && `${copy("ចំនួនសន្លឹកការ", "Invitations")}: ${plan.maxInvitations}`,
-      plan.maxGuestsPerInvitation != null && `${copy("ភ្ញៀវក្នុងមួយសន្លឹកការ", "Guests per invitation")}: ${plan.maxGuestsPerInvitation}`,
-      plan.durationDays != null && `${copy("រយៈពេល (ថ្ងៃ)", "Duration (days)")}: ${plan.durationDays}`,
-      plan.premiumTemplatesEnabled && copy("សិទ្ធិប្រើគំរូប្រណិត", "Premium template access"),
-      plan.qrCheckInEnabled && copy("ស្កេន QR ចូលពិធី", "QR check-in"),
-      plan.seatingEnabled && copy("ការរៀបចំកន្លែងអង្គុយ", "Seating management"),
-    ].filter(Boolean),
-    btnText: copy("មើលកញ្ចប់ និងសិទ្ធិប្រើប្រាស់", "View package and eligibility"),
-  }));
-}
-
-const PricingPage = () => {
-  const { text: t, lang } = useBackendMessages("pricing");
-  const { isAuthenticated } = useAuth();
-  const [packages, setPackages] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+export default function PricingFeature() {
+  const lang = useLanguageStore(state => state.lang);
+  const copy = (km, en) => lang === "en" ? en : km;
+  const { isAuthenticated, isLoading: checkingSession } = useAuth();
+  const [catalog, setCatalog] = useState({ status: "idle", items: [] });
   const [reload, setReload] = useState(0);
   useEffect(() => {
     let active = true;
-    if (!isAuthenticated) { setLoading(false); return undefined; }
-    setLoading(true); setError("");
-    subscriptionService.packages().then((items) => {
-      if (active) setPackages(Array.isArray(items) ? items : []);
-    }).catch(() => {
-      if (active) setError(lang === "en" ? "Current packages could not be loaded." : "មិនអាចផ្ទុកកញ្ចប់បច្ចុប្បន្នបាន។");
-    }).finally(() => { if (active) setLoading(false); });
+    if (!isAuthenticated) { setCatalog({ status: "idle", items: [] }); return; }
+    setCatalog({ status: "loading", items: [] });
+    subscriptionService.packages({ suppressAuthRedirect: true }).then(items => {
+      if (active) setCatalog({ status: "ready", items: Array.isArray(items) ? items.filter(plan => plan.active !== false && !["INACTIVE", "DISABLED"].includes(plan.status)) : [] });
+    }).catch(failure => {
+      if (active) setCatalog({ status: [401, 403].includes(failure?.status) ? "restricted" : "error", items: [] });
+    });
     return () => { active = false; };
-  }, [lang, reload, isAuthenticated]);
-  const plans = getPlans(packages, lang);
-
-  return (
-    <div className="khmer-modern-theme">
-      <section
-        className="pricing-wrapper"
-        style={{ backgroundImage: `url(${heroBg})` }}
-      >
-        <div className="glass-overlay"></div>
-
-        <div className="container">
-          <ScrollReveal>
-            <div className="header-content">
-              <motion.span
-                initial={{ opacity: 0, letterSpacing: "0px" }}
-                animate={{ opacity: 1, letterSpacing: "2px" }}
-                className="sub-title"
-              >
-                {t("subtitle") || "កញ្ចប់សេវាកម្មធៀបការឌីជីថល"}
-              </motion.span>
-              <h1 className="main-title">
-                {t("titlePlan") || "ជ្រើសរើសសេវាកម្ម"}
-                <br />
-                {lang === 'km' ? "ដែល" : " "}<span className="gold-text">{t("titlePerfect") || "សាកសមបំផុត"}</span>
-              </h1>
-              <div className="divider-modern">
-                <span></span>
-                <div className="diamond"></div>
-                <span></span>
-              </div>
-            </div>
-          </ScrollReveal>
-
-          {loading && <p role="status">{lang === "en" ? "Loading current packages…" : "កំពុងផ្ទុកកញ្ចប់បច្ចុប្បន្ន…"}</p>}
-          {error && <p role="alert">{error} <button type="button" className="action-btn btn-outline" onClick={() => setReload((value) => value + 1)}>{lang === "en" ? "Try again" : "សាកម្ដងទៀត"}</button></p>}
-          {!isAuthenticated && <p className="home-invitation-benefits">{lang === "en" ? "Sign in to view current package prices, limits and eligibility." : "សូមចូលគណនីដើម្បីមើលតម្លៃកញ្ចប់ កម្រិតប្រើប្រាស់ និងសិទ្ធិបច្ចុប្បន្ន។"} <Link to="/login?next=%2Fdashboard%2Fpackages" className="action-btn btn-outline">{lang === "en" ? "View current packages" : "មើលកញ្ចប់បច្ចុប្បន្ន"}</Link></p>}
-          {isAuthenticated && !loading && !error && !plans.length && <p role="status">{lang === "en" ? "No packages are currently available." : "មិនទាន់មានកញ្ចប់បច្ចុប្បន្នទេ។"}</p>}
-          <div className="pricing-grid">
-            {plans.map((plan, i) => (
-              <ScrollReveal key={i} delay={i * 0.1}>
-                <MagicCard
-                  className={`pricing-card ${plan.featured ? "premium" : ""}`}
-                >
-                  {plan.featured && <div className="badge">{t("recommended") || "ពេញនិយមបំផុត"}</div>}
-
-                  <div className="card-top">
-                    <h3 className="plan-name">{plan.name}</h3>
-                    <div className="price-tag">
-                      <span className={`amount ${plan.price.includes("$") ? "usd-price" : "khmer-price"}`}>
-                        {plan.price}
-                      </span>
-                    </div>
-                    <p className="plan-desc">{plan.desc}</p>
-                  </div>
-
-                  <div className="features-list">
-                    {plan.features.map((f, idx) => (
-                      <div key={idx} className="feature-item">
-                        <div className="check-icon">
-                          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
-                            <polyline points="20 6 9 17 4 12" />
-                          </svg>
-                        </div>
-                        <span>{f}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <Link
-                    to="/dashboard/packages"
-                    className={`action-btn ${plan.featured ? "btn-gold" : "btn-outline"}`}
-                  >
-                    {plan.btnText}
-                  </Link>
-                </MagicCard>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-export default PricingPage;
+  }, [isAuthenticated, reload]);
+  const rows = [
+    ["maxInvitations", copy("ចំនួនសន្លឹកការ", "Invitations")],
+    ["maxGuestsPerInvitation", copy("ភ្ញៀវក្នុងមួយសន្លឹកការ", "Guests per invitation")],
+    ["durationDays", copy("រយៈពេល (ថ្ងៃ)", "Duration (days)")],
+    ["premiumTemplatesEnabled", copy("សិទ្ធិគំរូប្រណិត", "Premium template access"), true],
+    ["seatingEnabled", copy("ការរៀបចំកន្លែងអង្គុយ", "Seating management"), true],
+    ["qrCheckInEnabled", copy("ស្កេនចូលពិធី", "QR check-in"), true],
+  ];
+  const value = (plan, key, boolean) => boolean
+    ? plan[key] === true ? <><Check size={16} aria-hidden="true" />{copy("រួមបញ្ចូល", "Included")}</>
+      : plan[key] === false ? <><Minus size={16} aria-hidden="true" />{copy("មិនរួមបញ្ចូល", "Not included")}</> : copy("មិនបានបញ្ជាក់", "Not specified")
+    : packageLimit(plan[key], lang);
+  const plans = isAuthenticated ? catalog.items : [];
+  const signIn = "/login?next=%2Fdashboard%2Fpackages";
+  const questions = [
+    [copy("តើការមើលគំរូផ្តល់សិទ្ធិប្រណិតទេ?", "Does a preview include premium access?"), copy("ការមើលគំរូជួយអ្នកស្វែងយល់ពីរចនាបទ។ សិទ្ធិប្រើប្រាស់គំរូប្រណិតត្រូវពិនិត្យតាមគណនី និងការបញ្ជាក់ការទូទាត់។", "A preview helps you explore the design. Premium access is checked against your account and confirmed payment.")],
+    [copy("កញ្ចប់ និងគំរូប្រណិតខុសគ្នាដូចម្តេច?", "How do packages and individual designs differ?"), copy("កញ្ចប់កំណត់រយៈពេល កម្រិតប្រើប្រាស់ និងមុខងារដែលរួមបញ្ចូល។ ការទិញគំរូប្រណិតមួយមានការពិនិត្យសិទ្ធិ និងទំព័រទូទាត់របស់វា។ សូមពិនិត្យព័ត៌មានមុនបញ្ជាក់។", "A package defines duration, limits and included tools. An individual premium design has its own access and checkout checks. Review the details before confirming.")],
+    [copy("ពេលណាសិទ្ធិត្រូវបានបើក?", "When is access activated?"), copy("ធ្វើតាមការណែនាំក្នុងគណនីរបស់អ្នក។ ការទូទាត់ដែលតម្រូវត្រូវបានពិនិត្យ និងបញ្ជាក់ មុនបើកសិទ្ធិ។ ការផ្ញើព័ត៌មានទូទាត់មិនមែនជាការបញ្ជាក់ភ្លាមៗទេ។", "Follow the instructions in your account. Required payments are verified before access is activated; sending payment details is not instant approval.")],
+  ];
+  return <div className="kp-product-page kp-plans-page" lang={lang}>
+    <header className="kp-page-intro"><p className="kp-page-label">{copy("កញ្ចប់សេវាកម្ម", "Packages & access")}</p><h1>{copy("ជ្រើសរើសកញ្ចប់\nសម្រាប់ថ្ងៃពិសេសរបស់អ្នក។", "A package for\nyour celebration.")}</h1><p>{copy("ប្រៀបធៀបចំនួនសន្លឹកការ កម្រិតភ្ញៀវ និងមុខងារដែលអ្នកត្រូវការ។", "Compare the invitations, guest limits and tools your event needs.")}</p><Link className="kp-text-link" to="/templates">{copy("ស្វែងរកគំរូជាមុន", "Explore designs first")}<ArrowUpRight size={16} aria-hidden="true" /></Link></header>
+    <section className="kp-page-section" aria-label={copy("កញ្ចប់បច្ចុប្បន្ន", "Current packages")}>
+      {(checkingSession || (isAuthenticated && catalog.status === "loading")) && <><p role="status">{copy("កំពុងផ្ទុកកញ្ចប់បច្ចុប្បន្ន…", "Loading current packages…")}</p><div className="kp-plan-grid" aria-hidden="true">{[1, 2, 3].map(id => <div className="kp-plan-skeleton" key={id} />)}</div></>}
+      {!checkingSession && !isAuthenticated && <><div className="kp-plan-discovery"><div><LockKeyhole size={24} aria-hidden="true" /><h2>{copy("មើលកញ្ចប់ដែលមានក្នុងគណនីរបស់អ្នក", "See the packages available to you")}</h2><p>{copy("តម្លៃ រយៈពេល និងសិទ្ធិបច្ចុប្បន្នអាចមើលបានបន្ទាប់ពីចូលគណនី។ អ្នកអាចស្វែងរកគំរូជាមុនបាន។", "Sign in to view current prices, durations and eligibility. You can explore invitation demos before creating an account.")}</p></div><Link to={signIn} className="kp-button">{copy("ចូលគណនីដើម្បីមើលកញ្ចប់", "Sign in to view packages")}<ArrowUpRight size={18} aria-hidden="true" /></Link></div><PricingFactors copy={copy} /></>}
+      {isAuthenticated && catalog.status === "error" && <div className="kp-page-state" role="alert"><h2>{copy("មិនអាចផ្ទុកកញ្ចប់បាន", "Packages could not be loaded")}</h2><p>{copy("សូមសាកម្ដងទៀត ដើម្បីមើលព័ត៌មានបច្ចុប្បន្ន។", "Try again to load the current offers.")}</p><button className="kp-button" type="button" onClick={() => setReload(n => n + 1)}>{copy("សាកម្ដងទៀត", "Try again")}</button></div>}
+      {isAuthenticated && catalog.status === "restricted" && <div className="kp-page-state" role="alert"><h2>{copy("ត្រូវការចូលគណនីឡើងវិញ", "Sign in to check your access")}</h2><p>{copy("មិនអាចមើលកញ្ចប់ដោយប្រើសម័យគណនីនេះបានទេ។", "Your current session cannot view these packages.")}</p><Link className="kp-button" to={signIn}>{copy("ចូលគណនី", "Sign in")}</Link></div>}
+      {isAuthenticated && catalog.status === "ready" && plans.length === 0 && <div className="kp-page-state" role="status"><h2>{copy("មិនទាន់មានកញ្ចប់បច្ចុប្បន្នទេ", "No packages are currently available")}</h2><p>{copy("អ្នកអាចមើលគំរូ ឬទាក់ទងក្រុមការងារសម្រាប់ព័ត៌មានបន្ថែម។", "Explore the invitation collection or contact us for more information.")}</p><Link className="kp-text-link" to="/contact">{copy("ទាក់ទងក្រុមការងារ", "Contact the team")}</Link></div>}
+      {plans.length > 0 && <div className="kp-plan-grid">{plans.map((plan, index) => {
+        const price = packagePrice(plan, lang);
+        return <article className="kp-plan-card" key={plan.id || index}>
+          <h2>{plan.packageName || plan.code}</h2><p className={`kp-plan-price${price === null ? " kp-plan-price--missing" : price.length > 12 ? " kp-plan-price--long" : ""}`}>{price ?? copy("តម្លៃមិនទាន់មាន", "Price unavailable")}</p>
+          {price !== null && <p className="kp-plan-term">{plan.currency}{Number.isInteger(plan.durationDays) && plan.durationDays >= 0 ? ` · ${packageLimit(plan.durationDays, lang)} ${copy("ថ្ងៃ", "days")}` : ""}</p>}
+          <p className="kp-plan-description">{plan.description}</p><dl>{rows.filter(([key, , boolean]) => boolean ? plan[key] === true : plan[key] != null).map(([key, label, boolean]) => <div key={key}><dt>{label}</dt><dd>{value(plan, key, boolean)}</dd></div>)}</dl>
+          <Link to={price === null ? "/contact" : "/dashboard/packages"} className={`kp-button${price === null ? " kp-button--outline" : ""}`}>{price === null ? copy("សួរអំពីកញ្ចប់នេះ", "Ask about this package") : copy("មើលកញ្ចប់ និងសិទ្ធិប្រើប្រាស់", "View package & eligibility")}</Link>
+        </article>;
+      })}</div>}
+    </section>
+    {plans.length > 0 && <section className="kp-page-section kp-plan-compare" aria-labelledby="kp-compare-title"><div className="kp-page-section-head"><h2 id="kp-compare-title">{copy("ប្រៀបធៀបព័ត៌មានលម្អិត", "Compare the details")}</h2><p>{copy("មុខងារ និងកម្រិតខាងក្រោមគឺជាព័ត៌មានពីកញ្ចប់បច្ចុប្បន្ន។", "Features and limits below come from the current package catalog.")}</p></div><div className="kp-compare-table"><table><caption className="sr-only">{copy("តារាងប្រៀបធៀបកញ្ចប់", "Package feature comparison")}</caption><thead><tr><th scope="col">{copy("ព័ត៌មាន", "Details")}</th>{plans.map((plan, index) => <th scope="col" key={plan.id || index}>{plan.packageName || plan.code}</th>)}</tr></thead><tbody>{rows.map(([key, label, boolean]) => <tr key={key}><th scope="row">{label}</th>{plans.map((plan, index) => <td key={plan.id || index}><span>{value(plan, key, boolean)}</span></td>)}</tr>)}</tbody></table></div><div className="kp-compare-mobile">{plans.map((plan, index) => <details key={plan.id || index}><summary>{plan.packageName || plan.code}<Plus size={18} aria-hidden="true" /></summary><dl>{rows.map(([key, label, boolean]) => <div key={key}><dt>{label}</dt><dd>{value(plan, key, boolean)}</dd></div>)}</dl></details>)}</div></section>}
+    <section className="kp-page-section kp-access-note"><div><p className="kp-page-label">{copy("ស្វែងយល់ពីសិទ្ធិប្រើប្រាស់", "Understanding access")}</p><h2>{copy("មើលគំរូដោយសេរី។\nពិនិត្យសិទ្ធិមុនជ្រើសរើស។", "Explore the design.\nReview your access.")}</h2><p>{copy("រចនាបទសន្លឹកការ និងកញ្ចប់សេវាកម្មមានព័ត៌មានសិទ្ធិរបស់វា។ ពិនិត្យព័ត៌មានក្នុងគណនី មុនបង្កើត ឬបញ្ជាក់ការទូទាត់។", "Invitation designs and service packages have their own access details. Review your account information before creating an invitation or confirming a payment.")}</p></div><div className="kp-page-faq">{questions.map(([question, answer]) => <details key={question}><summary>{question}<Plus size={18} aria-hidden="true" /></summary><p>{answer}</p></details>)}</div></section>
+    <section className="kp-guidance-strip"><div><h2>{copy("ចង់ជ្រើសរើសឱ្យត្រូវតាមពិធីរបស់អ្នក?", "Planning something specific?")}</h2><p>{copy("ប្រាប់យើងអំពីពិធី និងមុខងារដែលអ្នកត្រូវការ។", "Tell us about your event and the tools you need.")}</p></div><Link to="/contact" className="kp-button kp-button--outline">{copy("ទាក់ទងក្រុមការងារ", "Contact the team")}<ArrowUpRight size={18} aria-hidden="true" /></Link></section>
+  </div>;
+}

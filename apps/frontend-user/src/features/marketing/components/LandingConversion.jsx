@@ -1,83 +1,23 @@
 import { Link } from "react-router-dom";
-import { ArrowUpRight, Check, Plus } from "lucide-react";
+import { ArrowUpRight, MessageSquare, Plus } from "lucide-react";
+import PricingFactors from "./PricingFactors";
 
 export default function LandingConversion({ copy }) {
   const questions = [
     [copy("អាចមើលគំរូដោយមិនចូលគណនីបានទេ?", "Can I preview a design without an account?"), copy("បាន។ មើលគំរូបង្ហាញសាធារណៈដោយមិនចូលគណនី។ អ្នកត្រូវចូលគណនីពេលបង្កើតសន្លឹកការរបស់អ្នក។", "Yes. Public demos are available without signing in. You will need an account to create your own invitation.")],
     [copy("តើអាចកែសម្រួលអ្វីខ្លះ?", "What can I personalize?"), copy("បញ្ចូលឈ្មោះ រូបភាព កាលបរិច្ឆេទ ព័ត៌មានគ្រួសារ កម្មវិធី និងទីតាំង។ ជម្រើសអាស្រ័យលើគំរូដែលអ្នកជ្រើសរើស។", "Add your names, photographs, date, family details, program and venue. Available options depend on the design you choose.")],
-    [copy("ភ្ញៀវឆ្លើយតប RSVP នៅឯណា?", "Where do my guests RSVP?"), copy("ភ្ញៀវឆ្លើយតបនៅលើសន្លឹកការដែលបានផ្សព្វផ្សាយ តាមតំណភ្ជាប់ដែលអ្នកផ្ញើ។ គំរូបង្ហាញមិនផ្ញើ ឬរក្សាទុកការឆ្លើយតបទេ។", "Guests respond on the published invitation through the link you share. Demo forms do not send or save a real response.")],
-    [copy("ការមើលគំរូបើកសិទ្ធិប្រើគំរូប្រណិតទេ?", "Does previewing unlock a premium design?"), copy("ទេ។ ការមើលគំរូអនុញ្ញាតឱ្យអ្នកស្វែងយល់ពីរចនាបទ។ គំរូប្រណិតតម្រូវឱ្យមានសិទ្ធិប្រើប្រាស់ និងការបញ្ជាក់ការទូទាត់។ មើលតម្លៃបច្ចុប្បន្នមុនជ្រើសរើស។", "A preview lets you explore the design. Premium templates require access and confirmed payment. Check current pricing before choosing.")],
+    [copy("ភ្ញៀវឆ្លើយតបនៅឯណា?", "Where do my guests RSVP?"), copy("ភ្ញៀវឆ្លើយតបនៅលើសន្លឹកការដែលបានផ្សព្វផ្សាយ តាមតំណភ្ជាប់ដែលអ្នកផ្ញើ។ គំរូបង្ហាញមិនផ្ញើ ឬរក្សាទុកការឆ្លើយតបទេ។", "Guests respond on the published invitation through the link you share. Demo forms do not send or save a real response.")],
+    [copy("ការមើលគំរូបើកសិទ្ធិប្រើគំរូប្រណិតទេ?", "Does previewing unlock a premium design?"), copy("ការមើលគំរូអនុញ្ញាតឱ្យអ្នកស្វែងយល់ពីរចនាបទ។ គំរូប្រណិតតម្រូវឱ្យមានសិទ្ធិប្រើប្រាស់ និងការបញ្ជាក់ការទូទាត់។ មើលព័ត៌មានបច្ចុប្បន្នមុនជ្រើសរើស។", "A preview lets you explore the design. Premium templates require access and confirmed payment. Check current details before choosing.")],
     [copy("តើការទូទាត់ត្រូវបានបញ្ជាក់ដោយរបៀបណា?", "How is payment confirmed?"), copy("ធ្វើតាមការណែនាំនៅទំព័រទូទាត់។ ប្រព័ន្ធត្រូវពិនិត្យ និងបញ្ជាក់ការទូទាត់ មុនបើកសិទ្ធិប្រើប្រាស់។ ការផ្ញើព័ត៌មានទូទាត់មិនមែនជាការបញ្ជាក់ភ្លាមៗទេ។", "Follow the checkout instructions. Payment must be verified before premium access is activated; submitting payment details is not instant approval.")],
   ];
-  return (
-    <>
-      <section className="kp-pricing kp-section" aria-labelledby="kp-pricing-title">
-        <div>
-          <p className="kp-eyebrow">{copy("តម្លៃច្បាស់លាស់ និងស្មោះត្រង់", "TRANSPARENT & HONEST PRICING")}</p>
-          <h2 id="kp-pricing-title">{copy("មើលគំរូជាមុន\nជ្រើសរើសពេលអ្នករួចរាល់", "Explore freely.\nChoose when you are ready.")}</h2>
-          <p className="kp-section-lead">
-            {copy(
-              "ស្វែងយល់ពីកញ្ចប់ មុខងារ និងតម្លៃបច្ចុប្បន្ន នៅទំព័រតម្លៃ។ គំរូឥតគិតថ្លៃអាចប្រើបានភ្លាមៗ ចំណែកគំរូប្រណិតតម្រូវឱ្យមានការបញ្ជាក់ការទូទាត់។ មិនមានការកាត់ប្រាក់ដោយមិនដឹងខ្លួនឡើយ។",
-              "Explore packages and template access on our pricing page. Free templates can be used immediately; premium designs require confirmed payment. No surprise charges."
-            )}
-          </p>
-          <Link to="/pricing" className="kp-button">
-            {copy("មើលកញ្ចប់ និងតម្លៃ", "View packages & pricing")}
-            <ArrowUpRight size={18} aria-hidden="true" />
-          </Link>
-        </div>
-        <ul className="kp-pricing-notes">
-          {[
-            copy("មើលគំរូពេញលេញមុនជ្រើសរើស", "Explore full demos before choosing"),
-            copy("បង្កើត និងកែសម្រួលតាមគណនីរបស់អ្នក", "Create and personalize in your account"),
-            copy("សិទ្ធិប្រណិតបន្ទាប់ពីបញ្ជាក់ការទូទាត់", "Premium access after payment confirmation"),
-          ].map((note) => (
-            <li key={note}>
-              <Check size={20} aria-hidden="true" />
-              {note}
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="kp-faq kp-section" aria-labelledby="kp-faq-title">
-        <div>
-          <p className="kp-eyebrow">{copy("ព័ត៌មានមុនចាប់ផ្តើម", "A FEW THINGS BEFORE YOU BEGIN")}</p>
-          <h2 id="kp-faq-title">{copy("សំណួរតូចៗ។\nចម្លើយច្បាស់លាស់។", "Little questions.\nThoughtful answers.")}</h2>
-          <Link to="/contact" className="kp-text-link">
-            {copy("ទាក់ទងសម្រាប់ជំនួយ", "We are here to help")}
-            <ArrowUpRight size={18} aria-hidden="true" />
-          </Link>
-        </div>
-        <div className="kp-faq-list">
-          {questions.map(([question, answer]) => (
-            <details key={question}>
-              <summary>
-                {question}
-                <Plus size={18} aria-hidden="true" />
-              </summary>
-              <p>{answer}</p>
-            </details>
-          ))}
-        </div>
-      </section>
-
-      <section className="kp-final" aria-labelledby="kp-final-title">
-        <img src="/templates/silk-heritage/woven-ornament.svg" alt="" width="360" height="80" loading="lazy" />
-        <p className="kp-eyebrow">{copy("ថ្ងៃពិសេសរបស់អ្នក ចាប់ផ្តើមពីទីនេះ", "YOUR NEXT CHAPTER BEGINS HERE")}</p>
-        <h2 id="kp-final-title">{copy("ត្រៀមបង្កើតសន្លឹកការរបស់អ្នកហើយឬនៅ?", "Ready to create your wedding invitation?")}</h2>
-        <p>{copy("ជ្រើសរើសគំរូដែលអ្នកពេញចិត្ត ហើយចាប់ផ្តើមចែករំលែកថ្ងៃពិសេសរបស់អ្នក។", "Choose a design and begin sharing your special celebration today.")}</p>
-        <div className="kp-actions">
-          <Link to="/templates" className="kp-button kp-button--light">
-            {copy("មើលគំរូសន្លឹកការ", "Find your invitation")}
-            <ArrowUpRight size={18} aria-hidden="true" />
-          </Link>
-          <Link to="/templates/browse" className="kp-text-link">
-            {copy("ចាប់ផ្តើមបង្កើត", "Start creating")}
-            <ArrowUpRight size={18} aria-hidden="true" />
-          </Link>
-        </div>
-      </section>
-    </>
-  );
+  return <>
+    <section className="kp-pricing-preview kp-section" aria-labelledby="kp-pricing-title">
+      <div className="kp-section-heading"><div><p className="kp-eyebrow">{copy("កញ្ចប់សម្រាប់ការរៀបចំរបស់អ្នក", "Choose around your celebration")}</p><h2 id="kp-pricing-title">{copy("អ្វីដែលអ្នកត្រូវការ។\nកញ្ចប់ដែលសាកសម។", "What you need.\nA package that fits.")}</h2></div><p>{copy("ចូលគណនីដើម្បីមើលតម្លៃ និងសិទ្ធិបច្ចុប្បន្ន។ ស្វែងយល់ពីជម្រើសជាមុនបាន។", "Sign in for current prices and eligibility. Explore what to compare first.")}</p></div>
+      <PricingFactors copy={copy} compact />
+      <div className="kp-pricing-preview-actions"><p>{copy("គំរូឥតគិតថ្លៃ និងគំរូប្រណិតមានព័ត៌មានសិទ្ធិបង្ហាញនៅពេលជ្រើសរើស។ ការមើលគំរូមិនបើកសិទ្ធិទូទាត់ទេ។", "Free and premium designs show their access details when you choose. Previewing does not unlock paid access.")}</p><div className="kp-actions"><Link to="/pricing" className="kp-button">{copy("មើលកញ្ចប់ និងតម្លៃ", "View packages & pricing")}<ArrowUpRight size={18} aria-hidden="true" /></Link><Link to="/contact" className="kp-text-link">{copy("សួរអំពីកញ្ចប់", "Ask about packages")}</Link></div></div>
+    </section>
+    <section className="kp-faq kp-section" aria-labelledby="kp-faq-title"><div><p className="kp-eyebrow">{copy("ព័ត៌មានមុនចាប់ផ្តើម", "Before you begin")}</p><h2 id="kp-faq-title">{copy("សំណួររបស់អ្នក។\nចម្លើយច្បាស់លាស់។", "Your questions,\nclearly answered.")}</h2></div><div className="kp-faq-list">{questions.map(([question, answer]) => <details key={question}><summary>{question}<Plus size={18} aria-hidden="true" /></summary><p>{answer}</p></details>)}</div></section>
+    <section className="kp-help-preview kp-section" aria-labelledby="kp-help-title"><div className="kp-help-mark" aria-hidden="true"><MessageSquare size={28} strokeWidth={1.5} /></div><div><h2 id="kp-help-title">{copy("ចង់បានការណែនាំបន្ថែម?", "A little guidance goes a long way.")}</h2><p>{copy("សួរអំពីគំរូ កញ្ចប់ ឬរបៀបរៀបចំសន្លឹកការរបស់អ្នក។ ក្រុមការងាររីករាយស្វែងយល់ពីតម្រូវការរបស់អ្នក។", "Ask about designs, packages or setting up your invitation. Tell our team what you’re planning.")}</p></div><Link to="/contact" className="kp-button kp-button--outline">{copy("ទាក់ទងក្រុមការងារ", "Contact the team")}<ArrowUpRight size={18} aria-hidden="true" /></Link></section>
+    <section className="kp-final" aria-labelledby="kp-final-title"><h2 id="kp-final-title">{copy("ចាប់ផ្តើមថ្ងៃពិសេសរបស់អ្នក\nដោយការអញ្ជើញដ៏មានន័យ។", "Begin your celebration\nwith a thoughtful invitation.")}</h2><p>{copy("ជ្រើសរើសគំរូដែលអ្នកពេញចិត្ត ហើយបញ្ចូលរឿងរ៉ាវរបស់អ្នក។", "Choose a design you love and make it part of your story.")}</p><div className="kp-actions"><Link to="/templates" className="kp-button kp-button--light">{copy("មើលគំរូសន្លឹកការ", "Explore templates")}<ArrowUpRight size={18} aria-hidden="true" /></Link><Link to="/templates/browse" className="kp-text-link">{copy("ចាប់ផ្តើមបង្កើត", "Start creating")}<ArrowUpRight size={18} aria-hidden="true" /></Link></div></section>
+  </>;
 }

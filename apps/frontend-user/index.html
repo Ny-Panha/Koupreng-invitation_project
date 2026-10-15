@@ -2,15 +2,29 @@
 <html lang="km">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/logo.png" />
-    <link rel="shortcut icon" href="/logo.png" type="image/png" />
+    <link rel="icon" type="image/png" href="/branding/favicon.png" />
+    <link rel="shortcut icon" href="/branding/favicon.png" type="image/png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content" />
     <title>Koupreng - ធៀបការឌីជីថល (Digital Invitation)</title>
 
-    <!-- Google Fonts for Luxury Khmer Wedding Typography -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Allura&family=Angkor&family=Battambang:wght@400;700&family=Bayon&family=Bokor&family=Chenla&family=Cinzel+Decorative:wght@700&family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Dangrek&family=Fasthand&family=Great+Vibes&family=Kantumruy+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Koulen&family=Moul&family=Nokora:wght@400;700&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,400&family=Preahvihear&family=Siemreap&family=Suwannaphum:wght@400;700&family=Taprom&display=swap" rel="stylesheet" />
+    <!-- Public marketing uses locally licensed fonts; legacy catalogs load per route. -->
+    <script>
+      if (["/", "/pricing", "/contact", "/templates"].includes(location.pathname)) {
+        let marketingLanguage = "km";
+        try { marketingLanguage = localStorage.getItem("koupreng.lang") || "km"; } catch (_) {}
+        const fontHint = document.createElement("link");
+        fontHint.rel = "preload"; fontHint.as = "font"; fontHint.type = "font/woff2"; fontHint.crossOrigin = "anonymous";
+        fontHint.href = marketingLanguage === "en" ? "/fonts/marketing/DMSans-Latin.woff2" : "/fonts/silk-heritage/KantumruyPro.woff2";
+        document.head.appendChild(fontHint);
+        if (location.pathname === "/") {
+          const portraitHint = document.createElement("link");
+          portraitHint.rel = "preload"; portraitHint.as = "image"; portraitHint.href = "/templates/silk-heritage/portrait.webp"; portraitHint.fetchPriority = "high";
+          portraitHint.imageSrcset = "/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w";
+          portraitHint.imageSizes = "(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px";
+          document.head.appendChild(portraitHint);
+        }
+      }
+    </script>
 
     <!-- Telegram WebApp SDK -->
     <script async src="https://telegram.org/js/telegram-web-app.js" onload="window.dispatchEvent(new Event('telegram-web-app-ready'))"></script>

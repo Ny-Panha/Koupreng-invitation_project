@@ -1,4 +1,5 @@
 import { lazy } from "react";
+import HomePageComponent from "../../pages/marketing/HomePage";
 
 export const PaidTemplatesPage = lazy(() => import("../../features/payments/PaidTemplatesPage"));
 export const BrowseTemplatesPage = lazy(() => import("../../pages/host/templates/BrowseTemplatesPage"));
@@ -30,7 +31,8 @@ export const FinancialReport = lazy(() => import("../../features/reports/Financi
 export const QrPage = lazy(() => import("../../features/qr/QrPage"));
 export const WishesPage = lazy(() => import("../../features/wishes/WishesPage"));
 export const TemplateCheckoutPage = lazy(() => import("../../features/payments/TemplateCheckoutPage"));
-export const HomePage = lazy(() => import("../../pages/marketing/HomePage"));
+// The public first view paints with the entry; editors/invitations stay lazy.
+export const HomePage = HomePageComponent;
 export const PricingPage = lazy(() => import("../../pages/marketing/PricingPage"));
 export const ContactPage = lazy(() => import("../../pages/marketing/ContactPage"));
 export const TemplateDemoPage = lazy(() => import("../../pages/marketing/TemplateDemoPage"));

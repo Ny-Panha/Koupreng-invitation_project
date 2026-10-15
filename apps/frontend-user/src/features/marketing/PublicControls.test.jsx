@@ -24,7 +24,7 @@ it("names the mobile toggle and exposes its controlled menu state", () => {
 });
 
 it("names support icon buttons and the message field", () => {
-  render(<MemoryRouter initialEntries={["/pricing"]}><ChatBot /></MemoryRouter>);
+  render(<MemoryRouter initialEntries={["/venues"]}><ChatBot /></MemoryRouter>);
   expect(screen.getByLabelText("Dismiss greeting")).toBeInTheDocument();
   fireEvent.click(screen.getByLabelText("Open support chat"));
   expect(screen.getByRole("region", { name: "Help & Support" })).toBeInTheDocument();

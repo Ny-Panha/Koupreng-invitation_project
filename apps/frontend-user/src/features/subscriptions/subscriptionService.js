@@ -5,7 +5,7 @@ function unwrap(response) {
 }
 
 export const subscriptionApi = {
-	packages: () => api.get("/v1/packages").then(unwrap),
+	packages: (options) => api.get("/v1/packages", options).then(unwrap),
 	current: () => api.get("/v1/me/subscriptions/current").then(unwrap),
 	history: () => api.get("/v1/me/subscriptions").then(unwrap),
 	order: (orderCode) =>
