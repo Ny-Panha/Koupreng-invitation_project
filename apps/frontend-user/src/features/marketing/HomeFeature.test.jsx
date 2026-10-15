@@ -46,7 +46,7 @@ it("labels offline fallback as demo and retries the actual service", async () =>
   await screen.findByText(/These are demo designs/);
   expect(screen.queryByText("Free design")).not.toBeInTheDocument();
   fireEvent.click(screen.getByRole("button", { name: "Try again" }));
-  await screen.findByText(/No designs match/);
+  await screen.findByText(/There are no designs in the collection yet/);
   expect(templateService.listPublic).toHaveBeenLastCalledWith({ force: true });
 });
 it("shows a labeled guest fixture, lazy featured images and connected pricing/help destinations", async () => {

@@ -57,6 +57,7 @@
 .kp-marketing-shell .kp-button { display: inline-flex; justify-content: center; align-items: center; gap: 10px; min-height: 48px; max-width: 100%; padding: 12px 22px; border: 1px solid var(--kp-brand); border-radius: 10px; background: var(--kp-brand); color: var(--kp-bg); font: 550 15px/1.7 var(--kp-font); text-decoration: none; text-align: center; cursor: pointer; box-shadow: none; transition: background .2s, transform .3s var(--kp-ease); }
 .kp-marketing-shell .kp-button svg { flex: none; }
 .kp-marketing-shell .kp-button:hover { background: var(--kp-brand-hover); border-color: var(--kp-brand-hover); }
+.kp-marketing-shell .kp-button:active, .kp-nav-cta:active { transform: translateY(1px); }
 .kp-marketing-shell .kp-button--outline { background: transparent; color: var(--kp-brand); border-color: var(--kp-brand); }
 .kp-marketing-shell .kp-button--outline:hover { background: var(--kp-surface); }
 .kp-marketing-shell .kp-button--light { background: var(--kp-bg); color: var(--kp-brand); border-color: var(--kp-bg); }

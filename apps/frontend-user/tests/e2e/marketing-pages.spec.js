@@ -33,7 +33,7 @@ async function fixtures(page, { lang = "en", signedIn = false, packageStatus = 2
   return state;
 }
 
-for (const lang of ["km", "en"]) for (const path of ["/", "/pricing", "/contact"]) {
+for (const lang of ["km", "en"]) for (const path of ["/", "/templates", "/pricing", "/contact"]) {
   test(`${path} ${lang} keeps shared chrome and fits all required widths`, async ({ page }) => {
     test.setTimeout(90_000);
     const state = await fixtures(page, { lang });
@@ -189,7 +189,7 @@ test("home pricing/help and the guest fixture lead to real destinations without 
   await page.getByRole("button", { name: "Pending", exact: true }).click();
   await expect(page.locator(".kp-guest-demo tbody tr")).toHaveCount(1);
   await expect(page.locator(".kp-collection img").first()).toHaveAttribute("loading", "lazy");
-  await page.locator(".kp-pricing-preview").getByRole("link", { name: "View packages & pricing" }).click();
+  await page.locator(".kp-pricing-preview").getByRole("link", { name: "Understand packages & access" }).click();
   await expect(page).toHaveURL(/\/pricing$/);
   await page.goto("/");
   await page.locator(".kp-help-preview").getByRole("link", { name: "Contact the team" }).click();

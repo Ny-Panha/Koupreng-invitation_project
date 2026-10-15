@@ -78,6 +78,10 @@ test("preview stages, envelope and keyboard FAQ work with reduced motion", async
   await page.keyboard.press("Enter");
   await expect(page.getByRole("link", { name: "View the full demo" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Close invitation preview" })).toHaveAttribute("aria-expanded", "true");
+  await page.getByRole("button", { name: /The arrival/ }).click();
+  await expect(page.locator(".kp-showcase-frame")).toHaveAttribute("data-stage", "closed");
+  await page.getByRole("button", { name: /Your story/ }).click();
+  await expect(page.getByRole("img", { name: "Sample couple portrait", exact: true })).toBeVisible();
   await page.getByRole("button", { name: /The details/ }).click();
   await expect(page.locator("#kp-stage-copy")).toContainText("does not collect responses");
   const faq = page.locator(".kp-faq summary").first();
@@ -205,4 +209,54 @@ test("broken images and 200 percent CSS zoom preserve readable actions", async (
   await page.evaluate(() => { document.documentElement.style.zoom = "2"; window.scrollTo(0, 0); });
   await expect(page.locator(".kp-hero").getByRole("link", { name: "Explore templates", exact: true })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});
+
+for (const lang of ["km", "en"]) test(`V5 ${lang} hero keeps exploration and manual opening in the mobile fold`, async ({ page }) => {
+  await fixture(page);
+  await page.addInitScript(value => localStorage.setItem("koupreng.lang", value), lang);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  await page.evaluate(() => document.fonts.ready);
+  for (const selector of [".kp-hero .kp-button", ".kp-folio-cover"]) {
+    const box = await page.locator(selector).boundingBox();
+    expect(box.y).toBeGreaterThan(64);
+    expect(box.y + box.height).toBeLessThanOrEqual(844);
+  }
+  const headings = await page.locator(".kp-landing > section").evaluateAll(nodes => nodes.map(node => node.className));
+  expect(headings.findIndex(name => name.includes("kp-collection"))).toBeLessThan(headings.findIndex(name => name.includes("kp-product")));
+  await expect(page.locator(".kp-hero-chips")).toHaveCount(0);
+});
+
+for (const signedIn of [false, true]) test(`hero preview preserves Silk selection with signedIn=${signedIn}`, async ({ page }) => {
+  await fixture(page, { signedIn });
+  await page.addInitScript(() => localStorage.setItem("koupreng.lang", "en"));
+  await page.goto("/");
+  await expect(page.locator(".kp-folio-demo")).not.toBeVisible();
+  await page.getByRole("button", { name: "Try the preview" }).click();
+  await expect(page.getByRole("link", { name: "View the full demo" })).toBeFocused();
+  await expect(page.getByRole("link", { name: "View the full demo" })).toHaveAttribute("href", "/templates/silk-heritage");
+  await page.locator("#kp-folio-note").getByRole("link", { name: "Use this design" }).click();
+  await expect(page).toHaveURL(signedIn ? /\/templates\/browse\?template=silk-heritage$/ : /\/login\?next=%2Ftemplates%2Fbrowse%3Ftemplate%3Dsilk-heritage$/);
+});
+
+test("an empty server catalog stays empty instead of offering demo designs", async ({ page }) => {
+  await fixture(page);
+  await page.addInitScript(() => localStorage.setItem("koupreng.lang", "en"));
+  await page.route("**/api/v1/templates", route => json(route, []));
+  await page.goto("/templates");
+  await expect(page.getByRole("status")).toContainText("There are no designs in the collection yet");
+  await expect(page.locator(".kp-design-card")).toHaveCount(0);
+});
+
+test("premium designs with invalid amounts or currencies keep the pricing gate", async ({ page }) => {
+  await fixture(page, { signedIn: true });
+  await page.addInitScript(() => localStorage.setItem("koupreng.lang", "en"));
+  for (const invalid of [{ price: "bad", currency: "USD" }, { price: 20, currency: "invalid" }]) {
+    await page.route("**/api/v1/templates", route => json(route, [{ ...catalog[2], ...invalid }]));
+    await page.goto("/templates/browse?template=emerald-canva-luxe-wedding");
+    await page.getByRole("button", { name: /View pricing — price unavailable/ }).click();
+    await expect(page).toHaveURL(/\/pricing$/);
+    await page.unroute("**/api/v1/templates");
+  }
 });

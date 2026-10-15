@@ -14,9 +14,9 @@ export default function Home() {
   return (
     <div className="kp-landing" lang={lang}>
       <LandingHero copy={copy} />
-      <LandingProduct copy={copy} lang={lang} />
       <TemplateGrid featured />
       <InvitationShowcase copy={copy} />
+      <LandingProduct copy={copy} lang={lang} />
       <LandingStory copy={copy} />
       <LandingConversion copy={copy} />
     </div>

@@ -14,7 +14,7 @@ export default function Header() {
   const location = useLocation();
   const navigate = useNavigate();
   const copy = (km, en) => lang === "en" ? en : km;
-  const items = [["/", copy("ទំព័រដើម", "Home")], ["/templates", copy("គំរូសន្លឹកការ", "Templates")], ["/pricing", copy("តម្លៃ", "Pricing")], ["/contact", copy("ទំនាក់ទំនង", "Contact")]];
+  const items = [["/", copy("ទំព័រដើម", "Home")], ["/templates", copy("គំរូសន្លឹកការ", "Templates")], ["/pricing", copy("កញ្ចប់ និងសិទ្ធិ", "Packages & access")], ["/contact", copy("ទំនាក់ទំនង", "Contact")]];
   const active = (path) => path === "/" ? location.pathname === "/" : location.pathname === path || location.pathname.startsWith(path + "/");
   const closeMenu = () => dialog.current?.close();
   const containMenuFocus = (event) => {

@@ -13,8 +13,8 @@
 .kp-page-section { max-width: 1200px; margin: 0 auto; padding-bottom: 72px; }
 .kp-page-section-head { margin-bottom: 28px; }
 .kp-page-section-head p { margin-top: 12px; color: var(--kp-muted); }
-.kp-price-factors { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
-.kp-price-factors article { padding: 28px; background: var(--kp-surface); border: 1px solid var(--kp-border); border-radius: 14px; }
+.kp-price-factors { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
+.kp-price-factors article { padding: 24px 0 24px 24px; border-left: 2px solid var(--kp-gold); }
 .kp-price-factors svg { color: var(--kp-brand); margin-bottom: 16px; }
 .kp-price-factors h3 { font: 600 18px/1.6 var(--kp-font); margin: 0 0 12px; }
 .kp-price-factors p { color: var(--kp-muted); font: 400 16px/1.75 var(--kp-font); margin: 0; }
@@ -52,6 +52,11 @@
 .kp-compare-table td > span { display: inline-flex; align-items: center; gap: 8px; }
 .kp-compare-table td svg { flex: none; }
 .kp-compare-table tr:last-child > * { border-bottom: 0; }
+.kp-compare-table { max-height: 540px; scroll-margin-top: 96px; }
+.kp-compare-table:focus-visible { outline: 3px solid var(--kp-focus); outline-offset: 5px; }
+.kp-compare-table thead th { position: sticky; top: 0; z-index: 2; background: var(--kp-surface-soft); }
+.kp-compare-table tbody th { position: sticky; left: 0; z-index: 1; background: var(--kp-surface); }
+.kp-compare-table thead th:first-child { left: 0; z-index: 3; }
 .kp-compare-mobile { display: none; }
 .kp-access-note { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; border-top: 1px solid var(--kp-border); padding-top: 60px; }
 .kp-access-note > div > p:last-child { color: var(--kp-muted); margin-top: 20px; }
@@ -102,8 +107,8 @@
 .kp-busy-icon { animation: kpSending 1s linear infinite; }
 @keyframes kpAccepted { from { transform: translateY(8px); } to { transform: translateY(0); } }
 @keyframes kpSending { to { transform: rotate(360deg); } }
-@media (hover:hover) and (pointer:fine) { .kp-plan-card:hover { transform: translateY(-3px); border-color: var(--kp-brand); } }
-@media (min-width: 768px) { .kp-contact-page:lang(en) h1 { font-size: 48px; } }
+@media (hover:hover) and (pointer:fine) { .kp-plan-card:hover { border-color: var(--kp-brand); } }
+@media (min-width: 768px) { .kp-contact-page:lang(en) h1 { font-size: clamp(32px, 3.2vw, 44px); } }
 @media (max-width: 1000px) {
   .kp-contact-layout { gap: 36px; }
   .kp-contact-panel { padding: 28px; }
@@ -114,7 +119,7 @@
 @media (max-width: 767px) {
   .kp-product-page { padding-top: 106px; }
   .kp-price-factors { grid-template-columns: 1fr; gap: 16px; }
-  .kp-price-factors article { padding: 24px; }
+  .kp-price-factors article { padding: 8px 0 8px 20px; }
   .kp-plan-card { padding: 28px; }
   .kp-access-note, .kp-contact-layout { grid-template-columns: 1fr; }
   .kp-contact-layout { gap: 36px; }

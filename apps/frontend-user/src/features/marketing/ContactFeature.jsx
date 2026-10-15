@@ -73,7 +73,7 @@ export default function ContactFeature() {
         </section>;
   return <div className="kp-product-page kp-contact-page" lang={lang}>
     <div className="kp-contact-layout">
-      <section className="kp-contact-intro" aria-labelledby="kp-contact-title"><p className="kp-page-label">{copy("នៅជាមួយអ្នក គ្រប់ជំហាន", "Here for your next step")}</p><h1 id="kp-contact-title">{copy("មានសំណួរ?\nយើងរីករាយជួយអ្នក។", "Have a question?\nWe’re happy to help.")}</h1><p className="kp-contact-lead">{copy("សួរអំពីគំរូសន្លឹកការ កញ្ចប់សេវាកម្ម ឬការប្រើប្រាស់ Koupreng។ សូមផ្ញើសារមកក្រុមការងាររបស់យើង។", "Ask about invitation designs, service packages or using Koupreng. Send a message to our team.")}</p>
+      <section className="kp-contact-intro" aria-labelledby="kp-contact-title"><p className="kp-page-label">{copy("នៅជាមួយអ្នក គ្រប់ជំហាន", "Here for your next step")}</p><h1 id="kp-contact-title">{copy("មានសំណួរ?\nយើងរីករាយជួយអ្នក។", "Have a question?\nWe’re happy to help.")}</h1><p className="kp-contact-lead">{copy("សួរអំពីគំរូ កញ្ចប់ ឬការប្រើប្រាស់ Koupreng។ ប្រាប់យើងពីអ្វីដែលអ្នកត្រូវការ។", "Questions about a design, a package or your invitation? Tell us what you need a hand with.")}</p>
 
       </section>
       <section className="kp-contact-panel" id="contact-form" aria-labelledby="kp-contact-form-title">

@@ -18,7 +18,8 @@ it("explains anonymous plan discovery without requesting the private catalog", (
   mount();
   expect(subscriptionService.packages).not.toHaveBeenCalled();
   expect(screen.getByRole("link", { name: "Sign in to view packages" })).toHaveAttribute("href", "/login?next=%2Fdashboard%2Fpackages");
-  expect(screen.getByRole("heading", { name: "Your guest list" })).toBeVisible();
+  expect(screen.getByRole("heading", { name: "Your invitation design" })).toBeVisible();
+  expect(screen.getByRole("heading", { name: "Your service package" })).toBeVisible();
   expect(screen.queryByText(/\$0/)).not.toBeInTheDocument();
 });
 it("loads authoritative offers, compares flags and hides them immediately on logout", async () => {

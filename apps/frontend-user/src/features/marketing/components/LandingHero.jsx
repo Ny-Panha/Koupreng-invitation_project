@@ -1,25 +1,33 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowDown, ArrowUpRight, ArrowRight, Check, MailOpen, X } from "lucide-react";
+import { ArrowUpRight, Check, MailOpen, X } from "lucide-react";
+import { useAuth } from "../../auth/hooks/useAuth";
+import { templateUsePath } from "../../templates/model/templateIdentity";
 import { usePrefersReducedMotion } from "../../../shared/hooks/usePrefersReducedMotion";
 import { SILK_HERITAGE_TEMPLATE as silk } from "../../templates/data/templatesData";
 import LandingPhoto from "./LandingPhoto";
 
 export default function LandingHero({ copy }) {
   const [opened, setOpened] = useState(false);
+  const previewLink = useRef(null);
+  const { isAuthenticated } = useAuth();
   const reduced = usePrefersReducedMotion();
+  const tryPreview = () => {
+    setOpened(true);
+    requestAnimationFrame(() => previewLink.current?.focus());
+  };
   return (
     <section className="kp-hero" aria-labelledby="kp-hero-title" data-reduced-motion={reduced}>
       <div className="kp-hero-copy">
-        <p className="kp-eyebrow kp-enter">{copy("សន្លឹកការឌីជីថល និងការគ្រប់គ្រងភ្ញៀវ", "Digital invitations & guest management")}</p>
+        <p className="kp-eyebrow kp-enter">{copy("សន្លឹកការឌីជីថល", "Digital wedding invitations")}</p>
         <h1 id="kp-hero-title" className="kp-enter kp-enter--2">
-          <span>{copy("រាល់ការអញ្ជើញ", "Every invitation")}</span>
-          <span>{copy("ចាប់ផ្តើមពីក្តីស្រឡាញ់", "begins with love.")}</span>
+          <span>{copy("សន្លឹកការមង្គល", "Your wedding.")}</span>
+          <span>{copy("ដែលជារបស់អ្នក។", "Your invitation.")}</span>
         </h1>
         <p className="kp-hero-lead kp-enter kp-enter--3">
           {copy(
-            "បង្កើតសន្លឹកការឌីជីថល កែសម្រួលព័ត៌មានពិធី និងចែករំលែកទៅភ្ញៀវតាមតំណភ្ជាប់តែមួយ។",
-            "Create a digital invitation, personalize your event details and share one thoughtful link with your guests."
+            "ជ្រើសគំរូ បញ្ចូលព័ត៌មានពិធី និងចែករំលែកតំណភ្ជាប់ទៅភ្ញៀវ។ តាមដានចម្លើយនៅកន្លែងតែមួយ។",
+            "Choose a design, add your details and share one link. Keep your guest replies together."
           )}
         </p>
         <div className="kp-actions kp-enter kp-enter--3">
@@ -27,23 +35,17 @@ export default function LandingHero({ copy }) {
             {copy("មើលគំរូសន្លឹកការ", "Explore templates")}
             <ArrowUpRight size={18} aria-hidden="true" />
           </Link>
-          <Link to="/templates/browse" className="kp-text-link">
-            {copy("ចាប់ផ្តើមបង្កើត", "Start creating")}
-            <ArrowRight size={18} aria-hidden="true" />
-          </Link>
+          <button type="button" className="kp-text-link" onClick={tryPreview} aria-controls="kp-folio-paper" aria-expanded={opened}>
+            {copy("សាកមើលសន្លឹកការ", "Try the preview")}
+            <MailOpen size={18} aria-hidden="true" />
+          </button>
         </div>
         <p className="kp-hero-proof">
           <Check size={16} aria-hidden="true" />
-          {copy("មើលគំរូមុនសម្រេចចិត្ត · មិនចាំបាច់ចូលគណនី", "Preview before you choose · No account needed")}
+          {copy("មើលគំរូដោយមិនចាំបាច់ចូលគណនី", "No account needed to preview")}
         </p>
-        <div className="kp-hero-chips kp-enter kp-enter--3" role="list" aria-label={copy("លក្ខណៈពិសេសចម្បង", "Key features")}>
-          <span className="kp-hero-chip" role="listitem">{copy("ភាសាខ្មែរ និងអង់គ្លេស", "Khmer & English")}</span>
-          <span className="kp-hero-chip" role="listitem">{copy("តំណភ្ជាប់ផ្ទាល់ខ្លួន", "Personalized Guest Link")}</span>
-          <span className="kp-hero-chip" role="listitem">{copy("តាមដាន RSVP", "RSVP Tracking")}</span>
-          <span className="kp-hero-chip" role="listitem">{copy("ផែនទី និងកម្មវិធី", "Map & schedule")}</span>
-        </div>
       </div>
-      <div className="kp-hero-art kp-enter kp-enter--2">
+      <div className="kp-hero-art kp-enter kp-enter--2" data-opened={opened}>
         <div className="kp-art-index">{copy("សាកមើលសូត្រមង្គល", "Explore Silk Heritage")}</div>
         <div className="kp-photo-arch">
           <LandingPhoto src={silk.mainImage} srcSet="/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w" sizes="(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px" priority alt={copy("រូបថតគូស្នេហ៍សម្រាប់គំរូសូត្រមង្គល", "Sample wedding portrait from the Silk Heritage design")} />
@@ -54,7 +56,7 @@ export default function LandingHero({ copy }) {
             <p className="kp-folio-ceremony">{copy("សិរីសួស្តីអាពាហ៍ពិពាហ៍", "TOGETHER WITH OUR FAMILIES")}</p>
             <p className="kp-sample-names">{copy(silk.groom, silk.groomEn)}<span>&</span>{copy(silk.bride, silk.brideEn)}</p>
             <p className="kp-folio-date">{copy(silk.dateText, silk.dateTextEn)}</p>
-            <Link to="/templates/silk-heritage" className="kp-folio-demo">
+            <Link ref={previewLink} to="/templates/silk-heritage" className="kp-folio-demo">
               {copy("មើលគំរូពេញលេញ", "View the full demo")}
               <ArrowUpRight size={16} aria-hidden="true" />
             </Link>
@@ -73,15 +75,11 @@ export default function LandingHero({ copy }) {
             </span>
           </button>
         </div>
-        <p id="kp-folio-note" className="kp-art-caption">{copy("សូត្រមង្គល · គំរូបង្ហាញ", "Silk Heritage · Sample preview")}</p>
-        <svg className="kp-hero-ornament" viewBox="0 0 150 180" fill="none" aria-hidden="true">
-          <path d="M75 170V50M75 100C15 85 15 35 35 20C68 25 75 72 75 100ZM75 130C130 105 146 55 120 25C85 45 75 100 75 130ZM75 60C53 27 66 6 75 3C97 20 90 45 75 60Z" />
-        </svg>
+        <div id="kp-folio-note" className="kp-art-caption">
+          <span>{copy("សូត្រមង្គល · គំរូបង្ហាញ", "Silk Heritage · Sample preview")}</span>
+          {opened && <Link to={templateUsePath("silk-heritage", isAuthenticated)}>{copy("ប្រើគំរូនេះ", "Use this design")}<ArrowUpRight size={16} aria-hidden="true" /></Link>}
+        </div>
       </div>
-      <a href="#invitation-story" className="kp-scroll-link">
-        <ArrowDown size={16} aria-hidden="true" />
-        {copy("ស្វែងយល់ពីសន្លឹកការ", "Discover the invitation")}
-      </a>
     </section>
   );
 }
