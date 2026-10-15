@@ -1,7 +1,7 @@
 # Postman
 
-Verified moved collection:
-- `tools/postman/koupreng.postman.json`
+Import the [checked-in OpenAPI contract](../openapi.yaml) into Postman to
+generate requests for the current backend routes.
 
-Insufficient data to verify:
-- Whether the moved collection covers every current backend route.
+The [API testing guide](../../../docs/postman_api_testing.txt) contains example
+requests and authentication steps. The legacy standalone collection was removed.

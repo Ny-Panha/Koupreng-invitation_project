@@ -252,7 +252,7 @@ function isTelegramInAppBrowser() {
   return Boolean(
     window.TelegramWebviewProxy
     || window.TelegramWebviewProxyProto
-    || window.TelegramGameProxy,
+    || (window.Telegram?.WebApp?.initData && window.Telegram.WebApp.initData.length > 0),
   );
 }
 
@@ -391,7 +391,7 @@ export default function SocialAuthButtons({ redirectTo = "/dashboard/events", mo
 
   const [busy, setBusy] = useState("");
   const [error, setError] = useState("");
-  const [accountLinkRequired, setAccountLinkRequired] = useState(false);
+  const [accountLinkRequired, setAccountLinkRequired] = useState("");
   const [success, setSuccess] = useState("");
   const [telegramReady, setTelegramReady] = useState(
     !hasTelegramClientId || !isTelegramInAppBrowser(),
@@ -401,8 +401,8 @@ export default function SocialAuthButtons({ redirectTo = "/dashboard/events", mo
   // Telegram widget iframe (legacy — needs BotFather /setdomain)
   const widgetHostRef = useRef(null);
 
-  const completeLogin = useCallback(async (providerFn) => {
-    setError(""); setAccountLinkRequired(false); setSuccess("");
+  const completeLogin = useCallback(async (providerFn, provider) => {
+    setError(""); setAccountLinkRequired(""); setSuccess("");
     try {
       if (linking && !isAuthenticated) throw new Error("Sign in before linking an identity.");
       const data = await providerFn();
@@ -414,8 +414,8 @@ export default function SocialAuthButtons({ redirectTo = "/dashboard/events", mo
         login(data); navigate(redirectTo, { replace: true });
       }
     } catch (e) {
-      setError(socialAuthError(e));
-      setAccountLinkRequired(e?.data?.code === "ACCOUNT_LINK_REQUIRED");
+      setError(socialAuthError(e, provider));
+      setAccountLinkRequired(e?.data?.code === "ACCOUNT_LINK_REQUIRED" ? provider : "");
     } finally { setBusy(""); }
   }, [isAuthenticated, linking, login, navigate, onLinked, redirectTo, updateUser]);
 
@@ -453,7 +453,7 @@ export default function SocialAuthButtons({ redirectTo = "/dashboard/events", mo
           id: user.id, first_name: user.first_name, last_name: user.last_name,
           username: user.username, photo_url: user.photo_url,
           auth_date: user.auth_date, hash: user.hash,
-        }));
+        }), "Telegram");
     };
 
     const script = document.createElement("script");
@@ -501,7 +501,7 @@ export default function SocialAuthButtons({ redirectTo = "/dashboard/events", mo
     openTelegramLogin(
       telegramClientId,
       (data) => {
-        completeLogin(() => (linking ? authService.linkTelegram : authService.loginWithTelegram)(data.loginData));
+        completeLogin(() => (linking ? authService.linkTelegram : authService.loginWithTelegram)(data.loginData), "Telegram");
       },
       (err) => { setError(err.message || "Telegram login failed."); setBusy(""); },
     );
@@ -525,7 +525,7 @@ export default function SocialAuthButtons({ redirectTo = "/dashboard/events", mo
         {googleClientId ? (
           <GoogleSignInButton
             clientId={googleClientId}
-            onSuccess={(credential) => completeLogin(() => (linking ? authService.linkGoogle : authService.loginWithGoogle)(credential))}
+            onSuccess={(credential) => completeLogin(() => (linking ? authService.linkGoogle : authService.loginWithGoogle)(credential), "Google")}
             onError={setError}
             busy={busy === "google"}
             onBusyChange={(v) => setBusy(v ? "google" : "")}
@@ -603,7 +603,8 @@ export default function SocialAuthButtons({ redirectTo = "/dashboard/events", mo
           {accountLinkRequired && (
             <p className="auth-link-recovery">
               <Link to="/forgot-password" className="auth-footer-link">Recover your existing account</Link>
-              {" "}then sign in and link Google from your profile.
+              {" "}using an email inbox you can access, then sign in and link {accountLinkRequired} from your profile.
+              {accountLinkRequired === "Telegram" && " If you only used Telegram and have no recovery email, contact support to restore account access."}
             </p>
           )}
         </div>

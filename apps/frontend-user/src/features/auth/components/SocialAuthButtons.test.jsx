@@ -1,4 +1,4 @@
-import { act, cleanup, render, screen, waitFor } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -44,6 +44,8 @@ describe("SocialAuthButtons", () => {
     document.getElementById("telegram-login-script")?.remove();
     delete window.google;
     delete window.Telegram;
+    delete window.TelegramWebviewProxy;
+    vi.restoreAllMocks();
     vi.unstubAllEnvs();
     vi.resetModules();
     vi.clearAllMocks();
@@ -77,11 +79,38 @@ describe("SocialAuthButtons", () => {
     render(<MemoryRouter><SocialAuthButtons /></MemoryRouter>);
     await waitFor(() => expect(window.google.accounts.id.initialize).toHaveBeenCalled());
     await act(() => window.google.accounts.id.initialize.mock.calls[0][0].callback({ credential: "verified-token" }));
-    expect(await screen.findByRole("alert")).toHaveTextContent("Sign in to your existing account");
+    expect(await screen.findByRole("alert")).toHaveTextContent("Google is not linked to your existing account");
     expect(screen.getByRole("link", { name: "Recover your existing account" })).toHaveAttribute("href", "/forgot-password");
     expect(screen.getByRole("alert")).toHaveTextContent("then sign in and link Google from your profile");
+    expect(screen.getByRole("alert")).not.toHaveTextContent("If you only used Telegram");
     expect(login).not.toHaveBeenCalled();
     expect(service.linkGoogle).not.toHaveBeenCalled();
+  });
+
+  it("explains Telegram account-link conflicts without directing users to link Google", async () => {
+    vi.spyOn(window.location, "origin", "get").mockReturnValue("https://example.test");
+    window.TelegramWebviewProxy = {};
+    window.Telegram.Login.auth.mockImplementation((_options, callback) => {
+      callback({ result: { id_token: "verified-telegram-token" } });
+    });
+    const { default: service } = await import("@/features/auth/api/authApi");
+    service.loginWithTelegram.mockRejectedValue({ status: 409, data: { code: "ACCOUNT_LINK_REQUIRED" } });
+    const { default: SocialAuthButtons } = await import("./SocialAuthButtons");
+    render(<MemoryRouter><SocialAuthButtons /></MemoryRouter>);
+    const button = screen.getByRole("button", { name: /Telegram/ });
+    await waitFor(() => expect(button).toBeEnabled());
+    await act(async () => { fireEvent.click(button); });
+
+    expect(service.loginWithTelegram).toHaveBeenCalledWith({ idToken: "verified-telegram-token" });
+    const alert = await screen.findByRole("alert");
+    expect(alert).toHaveTextContent("Telegram is not linked to your existing account");
+    expect(alert).toHaveTextContent("then sign in and link Telegram from your profile");
+    expect(alert).toHaveTextContent("If you only used Telegram and have no recovery email, contact support");
+    expect(alert).not.toHaveTextContent("link Google");
+    expect(screen.getByRole("link", { name: "Recover your existing account" })).toHaveAttribute("href", "/forgot-password");
+    expect(login).not.toHaveBeenCalled();
+    expect(service.linkTelegram).not.toHaveBeenCalled();
+    expect(service.loginWithGoogle).not.toHaveBeenCalled();
   });
 
   it("explicitly links a verified identity and updates the user without replacing the session", async () => {

@@ -27,12 +27,10 @@ import com.koupreng.backend.auth.infrastructure.persistence.UserExternalIdentity
 import com.koupreng.backend.auth.api.dto.RegisterRequest;
 import com.koupreng.backend.auth.infrastructure.identity.GoogleIdentityVerifier;
 import com.koupreng.backend.auth.infrastructure.identity.TelegramIdentityVerifier;
-import com.koupreng.backend.auth.infrastructure.session.UserAuthCacheService;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.user.domain.AuthProvider;
 import com.koupreng.backend.user.domain.Role;
 import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;
-import com.koupreng.backend.audit.application.AuditLogService;
 import com.koupreng.backend.shared.i18n.MessageService;
 
 import org.junit.jupiter.api.Test;

@@ -147,8 +147,9 @@ public class DevSampleDataInitializer implements ApplicationRunner {
                 "email",
                 email
         );
-        boolean created = user == null;
-        if (created) {
+        boolean created = false;
+        if (user == null) {
+            created = true;
             user = new AppUser();
             user.setEmail(email);
         }
@@ -171,8 +172,9 @@ public class DevSampleDataInitializer implements ApplicationRunner {
                 "code",
                 DevSampleData.TEMPLATE_CODE
         );
-        boolean created = template == null;
-        if (created) {
+        boolean created = false;
+        if (template == null) {
+            created = true;
             template = new InvitationTemplate();
             template.setCode(DevSampleData.TEMPLATE_CODE);
         }
@@ -197,8 +199,9 @@ public class DevSampleDataInitializer implements ApplicationRunner {
                 "slug",
                 DevSampleData.ORGANIZATION_SLUG
         );
-        boolean created = organization == null;
-        if (created) {
+        boolean created = false;
+        if (organization == null) {
+            created = true;
             organization = new Organization();
             organization.setSlug(DevSampleData.ORGANIZATION_SLUG);
         }
@@ -219,8 +222,9 @@ public class DevSampleDataInitializer implements ApplicationRunner {
                 List.of("organization", "email"),
                 List.of(organization, user.getEmail())
         );
-        boolean created = member == null;
-        if (created) {
+        boolean created = false;
+        if (member == null) {
+            created = true;
             member = new OrganizationMember();
             member.setOrganization(organization);
             member.setEmail(user.getEmail());
@@ -247,8 +251,9 @@ public class DevSampleDataInitializer implements ApplicationRunner {
                 "slug",
                 DevSampleData.INVITATION_SLUG
         );
-        boolean created = invitation == null;
-        if (created) {
+        boolean created = false;
+        if (invitation == null) {
+            created = true;
             invitation = new UserInvitation();
             invitation.setSlug(DevSampleData.INVITATION_SLUG);
         }
@@ -308,8 +313,9 @@ public class DevSampleDataInitializer implements ApplicationRunner {
                 "inviteToken",
                 inviteToken
         );
-        boolean created = guest == null;
-        if (created) {
+        boolean created = false;
+        if (guest == null) {
+            created = true;
             guest = new Guest();
             guest.setInviteToken(inviteToken);
         }
@@ -344,8 +350,9 @@ public class DevSampleDataInitializer implements ApplicationRunner {
                 List.of("invitation", "guest"),
                 List.of(invitation, guest)
         );
-        boolean created = rsvp == null;
-        if (created) {
+        boolean created = false;
+        if (rsvp == null) {
+            created = true;
             rsvp = new Rsvp();
             rsvp.setInvitation(invitation);
             rsvp.setGuest(guest);
@@ -365,8 +372,9 @@ public class DevSampleDataInitializer implements ApplicationRunner {
                 List.of("invitation", "name"),
                 List.of(invitation, FAMILY_TABLE_NAME)
         );
-        boolean created = table == null;
-        if (created) {
+        boolean created = false;
+        if (table == null) {
+            created = true;
             table = new EventTable();
             table.setInvitation(invitation);
             table.setTableName(FAMILY_TABLE_NAME);
@@ -388,8 +396,9 @@ public class DevSampleDataInitializer implements ApplicationRunner {
                 List.of("invitation", "guest"),
                 List.of(invitation, guest)
         );
-        boolean created = assignment == null;
-        if (created) {
+        boolean created = false;
+        if (assignment == null) {
+            created = true;
             assignment = new GuestSeatAssignment();
             assignment.setInvitation(invitation);
             assignment.setGuest(guest);
@@ -410,8 +419,9 @@ public class DevSampleDataInitializer implements ApplicationRunner {
                 List.of("invitation", "guest"),
                 List.of(invitation, guest)
         );
-        boolean created = checkIn == null;
-        if (created) {
+        boolean created = false;
+        if (checkIn == null) {
+            created = true;
             checkIn = new GuestCheckIn();
             checkIn.setInvitation(invitation);
             checkIn.setGuest(guest);
@@ -431,8 +441,9 @@ public class DevSampleDataInitializer implements ApplicationRunner {
                 "invitation",
                 invitation
         );
-        boolean created = budget == null;
-        if (created) {
+        boolean created = false;
+        if (budget == null) {
+            created = true;
             budget = new Budget();
             budget.setInvitation(invitation);
         }
@@ -458,8 +469,9 @@ public class DevSampleDataInitializer implements ApplicationRunner {
                 List.of("budget", "itemName"),
                 List.of(budget, itemName)
         );
-        boolean created = item == null;
-        if (created) {
+        boolean created = false;
+        if (item == null) {
+            created = true;
             item = new BudgetItem();
             item.setBudget(budget);
             item.setItemName(itemName);
@@ -483,8 +495,9 @@ public class DevSampleDataInitializer implements ApplicationRunner {
                 List.of("invitation", "name"),
                 List.of(invitation, "Vanna Keo")
         );
-        boolean created = gift == null;
-        if (created) {
+        boolean created = false;
+        if (gift == null) {
+            created = true;
             gift = new WeddingGift();
             gift.setInvitation(invitation);
             gift.setGiverName("Vanna Keo");
@@ -505,8 +518,9 @@ public class DevSampleDataInitializer implements ApplicationRunner {
                 List.of("user", "title"),
                 List.of(user, DEMO_NOTIFICATION_TITLE)
         );
-        boolean created = notification == null;
-        if (created) {
+        boolean created = false;
+        if (notification == null) {
+            created = true;
             notification = new Notification();
             notification.setUser(user);
             notification.setTitle(DEMO_NOTIFICATION_TITLE);
@@ -530,8 +544,9 @@ public class DevSampleDataInitializer implements ApplicationRunner {
                 "code",
                 DevSampleData.PACKAGE_CODE
         );
-        boolean created = subscriptionPackage == null;
-        if (created) {
+        boolean created = false;
+        if (subscriptionPackage == null) {
+            created = true;
             subscriptionPackage = new SubscriptionPackage();
             subscriptionPackage.setCode(DevSampleData.PACKAGE_CODE);
         }

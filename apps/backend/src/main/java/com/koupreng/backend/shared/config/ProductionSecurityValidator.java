@@ -27,7 +27,6 @@ public class ProductionSecurityValidator implements ApplicationRunner {
             "https://pay.ababank.com/oRF8/vx2dp884",
             "https://link.payway.com.kh/ABAPAYrD450560q"
     );
-    private static final String REQUIRED_STATIC_ABA_PAYMENT_LINK = "https://link.payway.com.kh/ABAPAYrD450560q";
     private static final String REQUIRED_BASIC_PAYMENT_LINK =
             "https://link.payway.com.kh/ABAPAYMu523385B";
     private static final String REQUIRED_PRO_PAYMENT_LINK =
