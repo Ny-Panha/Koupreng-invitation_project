@@ -1,0 +1,633 @@
+{
+  "mode": "Synthetic backend fixtures plus explicitly supplemental UI error/review scenarios; no production API or database",
+  "matrix": [
+    {
+      "width": 390,
+      "lang": "km",
+      "theme": "light",
+      "reportsAccessible": 10,
+      "pageOverflow": false
+    },
+    {
+      "width": 390,
+      "lang": "km",
+      "theme": "dark",
+      "reportsAccessible": 10,
+      "pageOverflow": false
+    },
+    {
+      "width": 390,
+      "lang": "en",
+      "theme": "light",
+      "reportsAccessible": 10,
+      "pageOverflow": false
+    },
+    {
+      "width": 390,
+      "lang": "en",
+      "theme": "dark",
+      "reportsAccessible": 10,
+      "pageOverflow": false
+    },
+    {
+      "width": 768,
+      "lang": "km",
+      "theme": "light",
+      "reportsAccessible": 10,
+      "pageOverflow": false
+    },
+    {
+      "width": 768,
+      "lang": "km",
+      "theme": "dark",
+      "reportsAccessible": 10,
+      "pageOverflow": false
+    },
+    {
+      "width": 768,
+      "lang": "en",
+      "theme": "light",
+      "reportsAccessible": 10,
+      "pageOverflow": false
+    },
+    {
+      "width": 768,
+      "lang": "en",
+      "theme": "dark",
+      "reportsAccessible": 10,
+      "pageOverflow": false
+    },
+    {
+      "width": 1280,
+      "lang": "km",
+      "theme": "light",
+      "reportsAccessible": 10,
+      "pageOverflow": false
+    },
+    {
+      "width": 1280,
+      "lang": "km",
+      "theme": "dark",
+      "reportsAccessible": 10,
+      "pageOverflow": false
+    },
+    {
+      "width": 1280,
+      "lang": "en",
+      "theme": "light",
+      "reportsAccessible": 10,
+      "pageOverflow": false
+    },
+    {
+      "width": 1280,
+      "lang": "en",
+      "theme": "dark",
+      "reportsAccessible": 10,
+      "pageOverflow": false
+    },
+    {
+      "width": 1440,
+      "lang": "km",
+      "theme": "light",
+      "reportsAccessible": 10,
+      "pageOverflow": false
+    },
+    {
+      "width": 1440,
+      "lang": "km",
+      "theme": "dark",
+      "reportsAccessible": 10,
+      "pageOverflow": false
+    },
+    {
+      "width": 1440,
+      "lang": "en",
+      "theme": "light",
+      "reportsAccessible": 10,
+      "pageOverflow": false
+    },
+    {
+      "width": 1440,
+      "lang": "en",
+      "theme": "dark",
+      "reportsAccessible": 10,
+      "pageOverflow": false
+    }
+  ],
+  "journeys": [
+    {
+      "name": "A - Find verified receipts",
+      "start": "Reports / Executive summary",
+      "actions": [
+        "Select This month"
+      ],
+      "interactions": 1,
+      "completion": "Both verified-currency totals are visible immediately",
+      "confusingStates": [
+        "Amounts are synthetic fixture totals, not live revenue."
+      ],
+      "accessibilityProblems": []
+    },
+    {
+      "name": "B - Investigate a review transaction",
+      "start": "Reports / Executive summary",
+      "actions": [
+        "Open Finance",
+        "Choose Pending review",
+        "Open record details"
+      ],
+      "interactions": 3,
+      "completion": "Order identity, verification result and permitted audit fields are visible",
+      "confusingStates": [
+        "A supplemental UI-only pending-review fixture exercises this state; golden financial files remain unchanged."
+      ],
+      "accessibilityProblems": []
+    },
+    {
+      "name": "C - Find an invitation",
+      "start": "Reports / Payments",
+      "actions": [
+        "Open Events",
+        "Type event title",
+        "Submit search",
+        "Choose Published",
+        "Open record details"
+      ],
+      "interactions": 5,
+      "completion": "The matching event is found and its full details can be inspected",
+      "confusingStates": [],
+      "accessibilityProblems": []
+    },
+    {
+      "name": "D - Export all filtered records",
+      "start": "Reports / Payments",
+      "actions": [
+        "Open More filters",
+        "Choose USD",
+        "Apply filters",
+        "Open Export report",
+        "Choose Download Excel"
+      ],
+      "interactions": 5,
+      "completion": "A complete server-generated USD workbook downloads; the menu explains all-record scope",
+      "confusingStates": [],
+      "accessibilityProblems": []
+    },
+    {
+      "name": "E - Print a filtered report",
+      "start": "Reports / Payments, USD filter active",
+      "actions": [
+        "Open Export report",
+        "Choose Print / Save as PDF",
+        "Choose A4 portrait",
+        "Print / Save as PDF",
+        "Close preview"
+      ],
+      "interactions": 5,
+      "completion": "Print dispatch and a real Chromium PDF are verified; report, filters and trigger focus are restored",
+      "confusingStates": [
+        "The OS print dialog is not automated. Native print invocation is intercepted, and the captured document is independently rendered to PDF."
+      ],
+      "accessibilityProblems": []
+    }
+  ],
+  "states": [
+    "export failed, with recovery",
+    "export completed",
+    "stale snapshot, export disabled",
+    "permission denied, stale data removed",
+    "empty filtered records, clear-filter recovery",
+    "initial loading without invented zero metrics"
+  ],
+  "accessibility": [
+    {
+      "name": "executive-390-km-light",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "payments-390-km-light",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "invitations-390-km-light",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "executive-390-km-dark",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "payments-390-km-dark",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "invitations-390-km-dark",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "executive-390-en-light",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "payments-390-en-light",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "invitations-390-en-light",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "executive-390-en-dark",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "payments-390-en-dark",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "invitations-390-en-dark",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "executive-768-km-light",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "payments-768-km-light",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "invitations-768-km-light",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "executive-768-km-dark",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "payments-768-km-dark",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "invitations-768-km-dark",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "executive-768-en-light",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "payments-768-en-light",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "invitations-768-en-light",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "executive-768-en-dark",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "payments-768-en-dark",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "invitations-768-en-dark",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "executive-1280-km-light",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "payments-1280-km-light",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "invitations-1280-km-light",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "executive-1280-km-dark",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "payments-1280-km-dark",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "invitations-1280-km-dark",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "executive-1280-en-light",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "payments-1280-en-light",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "invitations-1280-en-light",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "executive-1280-en-dark",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "payments-1280-en-dark",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "invitations-1280-en-dark",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "executive-1440-km-light",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "payments-1440-km-light",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "invitations-1440-km-light",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "executive-1440-km-dark",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "payments-1440-km-dark",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "invitations-1440-km-dark",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "executive-1440-en-light",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "payments-1440-en-light",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "reconciliation",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "invitations-1440-en-light",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "users",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "templates",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "subscriptions",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "engagement",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "system",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "dictionary",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "executive-1440-en-dark",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "payments-1440-en-dark",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "name": "invitations-1440-en-dark",
+      "version": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ]
+    }
+  ],
+  "errors": []
+}

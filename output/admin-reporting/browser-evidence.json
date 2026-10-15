@@ -84,17 +84,6 @@
       "method": "GET"
     },
     {
-      "path": "/api/v1/admin/reports/management/executive",
-      "query": {
-        "from": "2026-10-15",
-        "to": "2026-10-16",
-        "dateDimension": "metric",
-        "page": "0",
-        "size": "20"
-      },
-      "method": "GET"
-    },
-    {
       "path": "/api/v1/admin/reports/management/payments",
       "query": {
         "from": "2026-10-15",
@@ -220,17 +209,6 @@
     {
       "path": "/api/v1/admin/reports/management/definitions",
       "query": {},
-      "method": "GET"
-    },
-    {
-      "path": "/api/v1/admin/reports/management/executive",
-      "query": {
-        "from": "2026-10-15",
-        "to": "2026-10-16",
-        "dateDimension": "metric",
-        "page": "0",
-        "size": "20"
-      },
       "method": "GET"
     },
     {
@@ -648,6 +626,20 @@
         "page": "0",
         "size": "20",
         "currency": "USD"
+      },
+      "method": "GET"
+    },
+    {
+      "path": "/api/v1/admin/reports/management/payments",
+      "query": {
+        "from": "2026-10-15",
+        "to": "2026-10-16",
+        "dateDimension": "activity",
+        "page": "0",
+        "size": "20",
+        "currency": "USD",
+        "sort": "expectedAmount",
+        "direction": "ASC"
       },
       "method": "GET"
     },

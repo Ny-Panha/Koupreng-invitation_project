@@ -355,9 +355,7 @@
     "name": "reconciliation",
     "version": "4.14.0",
     "violations": [],
-    "incomplete": [
-      "color-contrast"
-    ]
+    "incomplete": []
   },
   {
     "name": "invitations-1440-en-light",
@@ -385,17 +383,13 @@
     "name": "subscriptions",
     "version": "4.14.0",
     "violations": [],
-    "incomplete": [
-      "color-contrast"
-    ]
+    "incomplete": []
   },
   {
     "name": "engagement",
     "version": "4.14.0",
     "violations": [],
-    "incomplete": [
-      "color-contrast"
-    ]
+    "incomplete": []
   },
   {
     "name": "system",

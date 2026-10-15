@@ -11,17 +11,26 @@ const axePath = process.env.ADMIN_REPORT_AXE_PATH || resolve("output/playwright/
 const result = { mode: "Synthetic backend fixtures plus explicitly supplemental UI error/review scenarios; no production API or database", matrix: [], journeys: [], states: [], accessibility: [], errors: [] };
 const groupIndex = { executive: 0, payments: 1, reconciliation: 1, invitations: 2, engagement: 2, users: 3, subscriptions: 3, templates: 4, system: 5, dictionary: 5 };
 const period = "from=2026-10-15&to=2026-10-16";
-async function ready(page) { await page.locator('.management-reports[aria-busy="false"] .report-ledger').waitFor(); }
+async function ready(page, code) {
+  if (code) {
+    await page.locator(`.management-reports[data-report="${code}"][aria-busy="false"] .report-ledger[data-report="${code}"]`).waitFor();
+  } else {
+    await page.locator('.management-reports[aria-busy="false"] .report-ledger').waitFor();
+  }
+}
 async function choose(page, code, lang = "en") {
   await page.locator(".report-navigation").waitFor();
   if (await page.locator(".report-mobile-selector").isVisible()) await page.locator(".report-mobile-selector select").selectOption(code);
   else {
     const group = page.locator(".report-category-list button").nth(groupIndex[code]);
-    if (await group.getAttribute("aria-pressed") !== "true") await group.click();
+    if (await group.getAttribute("aria-pressed") !== "true") {
+      await group.click();
+      await page.locator(`.report-category-list button:nth-child(${groupIndex[code] + 1})[aria-pressed="true"]`).waitFor();
+    }
     const definition = definitions.definitions.find((value) => value.code === code);
     if (new URL(page.url()).searchParams.get("report") !== code) await page.locator(".report-subnavigation").getByRole("button", { name: lang === "en" ? definition.titleEn : definition.titleKm, exact: true }).click();
   }
-  await ready(page);
+  await ready(page, code);
   assert.equal(new URL(page.url()).searchParams.get("report"), code);
 }
 async function audit(page, name) {

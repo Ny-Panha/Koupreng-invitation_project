@@ -130,6 +130,7 @@ export default function ReportLedger({
   return (
     <section
       className="card report-ledger"
+      data-report={report.definition?.code}
       aria-label={reportLabel(report.definition, lang)}
       aria-busy={disabled}
     >

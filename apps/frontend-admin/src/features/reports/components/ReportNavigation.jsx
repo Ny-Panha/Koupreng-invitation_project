@@ -56,8 +56,9 @@ export default function ReportNavigation({
               <button
                 type="button"
                 key={group.key}
+                data-group={group.key}
                 aria-pressed={active?.key === group.key}
-              onClick={() => { if (active?.key !== group.key) onChoose(first.code); }}
+                onClick={() => { if (active?.key !== group.key) onChoose(first.code); }}
               >
                 <Icon size={17} aria-hidden="true" />
                 {workspaceText(group.key, lang)}
@@ -73,6 +74,7 @@ export default function ReportNavigation({
             <button
               key={item.code}
               type="button"
+              data-code={item.code}
               aria-current={code === item.code ? "page" : undefined}
               onClick={() => onChoose(item.code)}
             >

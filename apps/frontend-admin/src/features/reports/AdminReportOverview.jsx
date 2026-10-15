@@ -289,6 +289,7 @@ export default function AdminReportOverview() {
     <section
       className="management-reports"
       lang={lang}
+      data-report={code}
       aria-busy={Boolean(definition) && loading}
     >
       <AdminPageHeader
