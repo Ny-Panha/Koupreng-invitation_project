@@ -7,6 +7,11 @@
       "overflow": false
     },
     {
+      "width": 1280,
+      "tabs": 10,
+      "overflow": false
+    },
+    {
       "width": 768,
       "tabs": 10,
       "overflow": false
@@ -79,6 +84,17 @@
       "method": "GET"
     },
     {
+      "path": "/api/v1/admin/reports/management/executive",
+      "query": {
+        "from": "2026-10-15",
+        "to": "2026-10-16",
+        "dateDimension": "metric",
+        "page": "0",
+        "size": "20"
+      },
+      "method": "GET"
+    },
+    {
       "path": "/api/v1/admin/reports/management/payments",
       "query": {
         "from": "2026-10-15",
@@ -135,6 +151,17 @@
       "method": "GET"
     },
     {
+      "path": "/api/v1/admin/reports/management/users",
+      "query": {
+        "from": "2026-10-15",
+        "to": "2026-10-16",
+        "dateDimension": "createdAt",
+        "page": "0",
+        "size": "20"
+      },
+      "method": "GET"
+    },
+    {
       "path": "/api/v1/admin/reports/management/subscriptions",
       "query": {
         "from": "2026-10-15",
@@ -142,6 +169,168 @@
         "dateDimension": "createdAt",
         "page": "0",
         "size": "20"
+      },
+      "method": "GET"
+    },
+    {
+      "path": "/api/v1/admin/reports/invitations",
+      "query": {
+        "from": "2026-10-15",
+        "to": "2026-10-16",
+        "dateDimension": "createdAt",
+        "page": "0",
+        "size": "20",
+        "view": "ledger"
+      },
+      "method": "GET"
+    },
+    {
+      "path": "/api/v1/admin/reports/management/engagement",
+      "query": {
+        "from": "2026-10-15",
+        "to": "2026-10-16",
+        "dateDimension": "createdAt",
+        "page": "0",
+        "size": "20"
+      },
+      "method": "GET"
+    },
+    {
+      "path": "/api/v1/admin/reports/management/system",
+      "query": {
+        "from": "2026-10-15",
+        "to": "2026-10-16",
+        "dateDimension": "createdAt",
+        "page": "0",
+        "size": "20"
+      },
+      "method": "GET"
+    },
+    {
+      "path": "/api/v1/admin/reports/management/dictionary",
+      "query": {
+        "from": "2026-10-15",
+        "to": "2026-10-16",
+        "dateDimension": "definition",
+        "page": "0",
+        "size": "20"
+      },
+      "method": "GET"
+    },
+    {
+      "path": "/api/v1/admin/reports/management/definitions",
+      "query": {},
+      "method": "GET"
+    },
+    {
+      "path": "/api/v1/admin/reports/management/executive",
+      "query": {
+        "from": "2026-10-15",
+        "to": "2026-10-16",
+        "dateDimension": "metric",
+        "page": "0",
+        "size": "20"
+      },
+      "method": "GET"
+    },
+    {
+      "path": "/api/v1/admin/reports/management/executive",
+      "query": {
+        "from": "2026-10-15",
+        "to": "2026-10-16",
+        "dateDimension": "metric",
+        "page": "0",
+        "size": "20"
+      },
+      "method": "GET"
+    },
+    {
+      "path": "/api/v1/admin/reports/management/payments",
+      "query": {
+        "from": "2026-10-15",
+        "to": "2026-10-16",
+        "dateDimension": "activity",
+        "page": "0",
+        "size": "20"
+      },
+      "method": "GET"
+    },
+    {
+      "path": "/api/v1/admin/reports/management/reconciliation",
+      "query": {
+        "from": "2026-10-15",
+        "to": "2026-10-16",
+        "dateDimension": "activity",
+        "page": "0",
+        "size": "20"
+      },
+      "method": "GET"
+    },
+    {
+      "path": "/api/v1/admin/reports/invitations",
+      "query": {
+        "from": "2026-10-15",
+        "to": "2026-10-16",
+        "dateDimension": "createdAt",
+        "page": "0",
+        "size": "20",
+        "view": "ledger"
+      },
+      "method": "GET"
+    },
+    {
+      "path": "/api/v1/admin/reports/management/users",
+      "query": {
+        "from": "2026-10-15",
+        "to": "2026-10-16",
+        "dateDimension": "createdAt",
+        "page": "0",
+        "size": "20"
+      },
+      "method": "GET"
+    },
+    {
+      "path": "/api/v1/admin/reports/management/templates",
+      "query": {
+        "from": "2026-10-15",
+        "to": "2026-10-16",
+        "dateDimension": "activity",
+        "page": "0",
+        "size": "20"
+      },
+      "method": "GET"
+    },
+    {
+      "path": "/api/v1/admin/reports/management/users",
+      "query": {
+        "from": "2026-10-15",
+        "to": "2026-10-16",
+        "dateDimension": "createdAt",
+        "page": "0",
+        "size": "20"
+      },
+      "method": "GET"
+    },
+    {
+      "path": "/api/v1/admin/reports/management/subscriptions",
+      "query": {
+        "from": "2026-10-15",
+        "to": "2026-10-16",
+        "dateDimension": "createdAt",
+        "page": "0",
+        "size": "20"
+      },
+      "method": "GET"
+    },
+    {
+      "path": "/api/v1/admin/reports/invitations",
+      "query": {
+        "from": "2026-10-15",
+        "to": "2026-10-16",
+        "dateDimension": "createdAt",
+        "page": "0",
+        "size": "20",
+        "view": "ledger"
       },
       "method": "GET"
     },
@@ -322,17 +511,6 @@
       "method": "GET"
     },
     {
-      "path": "/api/v1/admin/reports/management/executive",
-      "query": {
-        "from": "2026-10-15",
-        "to": "2026-10-16",
-        "dateDimension": "metric",
-        "page": "0",
-        "size": "20"
-      },
-      "method": "GET"
-    },
-    {
       "path": "/api/v1/admin/reports/management/payments",
       "query": {
         "from": "2026-10-15",
@@ -435,6 +613,18 @@
     {
       "path": "/api/v1/admin/reports/management/definitions",
       "query": {},
+      "method": "GET"
+    },
+    {
+      "path": "/api/v1/admin/reports/management/payments",
+      "query": {
+        "from": "2026-10-15",
+        "to": "2026-10-16",
+        "dateDimension": "activity",
+        "page": "0",
+        "size": "20",
+        "currency": "KHR"
+      },
       "method": "GET"
     },
     {
@@ -574,18 +764,6 @@
     {
       "path": "/api/v1/admin/reports/management/definitions",
       "query": {},
-      "method": "GET"
-    },
-    {
-      "path": "/api/v1/admin/reports/invitations",
-      "query": {
-        "from": "2026-10-15",
-        "to": "2026-10-16",
-        "dateDimension": "createdAt",
-        "page": "0",
-        "size": "20",
-        "view": "ledger"
-      },
       "method": "GET"
     },
     {
