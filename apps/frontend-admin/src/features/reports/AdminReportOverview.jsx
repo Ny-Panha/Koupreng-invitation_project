@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { RefreshCw, CircleAlert } from "lucide-react";
 import { ActionButton, AdminPageHeader } from "../../shared/ui/AdminUI";
 import adminService from "../../shared/api/adminService";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
@@ -8,7 +9,6 @@ import {
   columnLabel,
   reportLabel,
   reportPreset,
-  reportText,
   reportValue,
 } from "./reportModel";
 import ReportOverviewCards from "./components/ReportOverviewCards";
@@ -21,11 +21,14 @@ import ReportPrintPreviewModal from "./components/ReportPrintPreviewModal";
 import ReportLedger from "./components/ReportLedger";
 import ReportFilters from "./components/ReportFilters";
 import ReportAnalytics from "./components/ReportAnalytics";
+import ReportNavigation from "./components/ReportNavigation";
+import ReportExportMenu from "./components/ReportExportMenu";
+import { workspaceText } from "./reportWorkspace";
 import "./reports.css";
 
 export default function AdminReportOverview() {
   const { lang } = useAdminLanguage(),
-    text = (key) => reportText(key, lang);
+    text = (key) => workspaceText(key, lang);
   const [urlParams, setParams] = useSearchParams();
   const [defaults] = useState(() => reportPreset("last30"));
   const params = useMemo(() => {
@@ -46,6 +49,7 @@ export default function AdminReportOverview() {
     [refresh, setRefresh] = useState(0);
   const [exporting, setExporting] = useState(""),
     [feedback, setFeedback] = useState(""),
+    [exportFailed, setExportFailed] = useState(false),
     [preview, setPreview] = useState(null);
   const code = params.get("report"),
     definition = definitions?.find((item) => item.code === code);
@@ -133,7 +137,10 @@ export default function AdminReportOverview() {
       controller.abort();
     };
   }, [requestKey, refresh, request, code]); // requestKey captures the immutable serialized request; stale responses are discarded.
-  const report = snapshot?.key === requestKey ? snapshot.data : null;
+  const report =
+    snapshot?.key === requestKey && error !== "FORBIDDEN"
+      ? snapshot.data
+      : null;
   const updateQuery = (patch) => {
     const next = new URLSearchParams(params);
     for (const [key, value] of Object.entries(patch))
@@ -141,7 +148,8 @@ export default function AdminReportOverview() {
       else next.set(key, String(value));
     setParams(next);
   };
-  const chooseReport = (nextCode, extra = {}) =>
+  const chooseReport = (nextCode, extra = {}) => {
+    if (nextCode === code && Object.keys(extra).length === 0) return;
     setParams({
       report: nextCode,
       from: params.get("from"),
@@ -149,8 +157,14 @@ export default function AdminReportOverview() {
       preset: params.get("preset") || "custom",
       ...extra,
     });
+  };
   const reset = () =>
-    setParams({ report: code, ...reportPreset("last30"), preset: "last30" });
+    setParams({
+      report: code,
+      from: params.get("from"),
+      to: params.get("to"),
+      preset: params.get("preset") || "custom",
+    });
   const disabled = loading || Boolean(error) || !report || Boolean(exporting);
   const download = async (format, wholeWorkbook = false) => {
     const captured = {
@@ -164,6 +178,7 @@ export default function AdminReportOverview() {
       `${captured.code} \u00b7 ${captured.parameters.from} / ${captured.parameters.to}`,
     );
     setFeedback("");
+    setExportFailed(false);
     try {
       const result = await adminService.exportManagementReport(
         captured.code,
@@ -204,6 +219,7 @@ export default function AdminReportOverview() {
         }
       } else if (failure.message) message = failure.message;
       setFeedback(message);
+      setExportFailed(true);
     } finally {
       setExporting("");
     }
@@ -241,6 +257,7 @@ export default function AdminReportOverview() {
       lang,
       onQuery: updateQuery,
       disabled: loading,
+      onReset: reset,
       children: (
         <ReportAnalytics
           report={report}
@@ -270,7 +287,7 @@ export default function AdminReportOverview() {
   }
   return (
     <section
-      className="management-reports space-y-5"
+      className="management-reports"
       lang={lang}
       aria-busy={Boolean(definition) && loading}
     >
@@ -282,6 +299,11 @@ export default function AdminReportOverview() {
             disabled={loading && Boolean(definitions)}
             onClick={() => setRefresh((value) => value + 1)}
           >
+            <RefreshCw
+              size={16}
+              aria-hidden="true"
+              className={loading ? "report-spinning" : ""}
+            />
             {text("refresh")}
           </ActionButton>
         }
@@ -297,57 +319,57 @@ export default function AdminReportOverview() {
         </div>
       )}
       {definitions && (
-        <nav className="report-tabs" aria-label={text("title")}>
-          {definitions.map((item) => (
-            <button
-              key={item.code}
-              type="button"
-              aria-current={code === item.code ? "page" : undefined}
-              onClick={() => chooseReport(item.code)}
-            >
-              {reportLabel(item, lang)}
-            </button>
-          ))}
-        </nav>
+        <ReportNavigation
+          definitions={definitions}
+          code={code}
+          onChoose={chooseReport}
+          lang={lang}
+        />
       )}
       {definition && (
         <>
+          <div className="report-context">
+            <div>
+              <h3>{reportLabel(definition, lang)}</h3>
+              <p>{text(`${code}Purpose`)}</p>
+            </div>
+            <ReportExportMenu
+              disabled={disabled}
+              onDownload={download}
+              onPageCsv={() => {
+                try {
+                  pageCsv();
+                  setExportFailed(false);
+                  setFeedback(text("exported"));
+                } catch {
+                  setExportFailed(true);
+                  setFeedback(text("exportError"));
+                }
+              }}
+              lang={lang}
+            />
+          </div>
           <ReportFilters
+            key={code}
             definition={definition}
             params={params}
             onQuery={updateQuery}
             onReset={reset}
             lang={lang}
           />
-          <div className="report-actions">
-            <ActionButton disabled={disabled} onClick={() => download("xlsx")}>
-              {text("excel")}
-            </ActionButton>
-            <ActionButton disabled={disabled} onClick={() => download("csv")}>
-              {text("csvAll")}
-            </ActionButton>
-            <ActionButton disabled={disabled} onClick={pageCsv}>
-              {text("csvPage")}
-            </ActionButton>
-            <ActionButton disabled={disabled} onClick={() => download("html")}>
-              {text("preview")}
-            </ActionButton>
-            <ActionButton
-              disabled={disabled}
-              onClick={() => download("xlsx", true)}
-            >
-              {text("workbook")}
-            </ActionButton>
-          </div>
         </>
       )}
-      <p role="status">
+      <p role={exportFailed ? "alert" : "status"} className="report-feedback">
         {exporting
           ? `${text("exporting")} ${exporting}`
-          : feedback || (loading && definition ? text("loading") : "")}
+          : feedback ||
+            (loading && definition
+              ? text(report ? "refreshing" : "loadingReport")
+              : "")}
       </p>
       {error && (
-        <div role="alert">
+        <div role="alert" className="report-alert">
+          <CircleAlert size={20} aria-hidden="true" />
           {error === "FORBIDDEN" ? text("permission") : error}
           {report && <p>{text("stale")}</p>}
           <ActionButton onClick={() => setRefresh((value) => value + 1)}>
@@ -361,6 +383,13 @@ export default function AdminReportOverview() {
           <ActionButton onClick={() => chooseReport("executive")}>
             {text("reset")}
           </ActionButton>
+        </div>
+      )}
+      {loading && !report && !error && (
+        <div className="report-skeleton" aria-label={text("loadingReport")}>
+          <span />
+          <span />
+          <span />
         </div>
       )}
       {report && (

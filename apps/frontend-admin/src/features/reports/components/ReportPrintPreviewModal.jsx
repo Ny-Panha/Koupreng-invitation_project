@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ActionButton } from "../../../shared/ui/AdminUI";
 import { reportText } from "../reportModel";
+import { periodLabel } from "../reportWorkspace";
+import { trapDialogTab } from "../reportFocus";
 export default function ReportPrintPreviewModal({ preview, onClose, lang }) {
   const dialog = useRef(null),
     frame = useRef(null);
@@ -56,6 +58,7 @@ export default function ReportPrintPreviewModal({ preview, onClose, lang }) {
       className="management-print-preview"
       onClose={onClose}
       aria-labelledby="report-preview-title"
+      onKeyDown={trapDialogTab}
     >
       <header className="report-preview-controls">
         <h2 id="report-preview-title">{preview.title}</h2>
@@ -84,10 +87,11 @@ export default function ReportPrintPreviewModal({ preview, onClose, lang }) {
         </label>
         <ActionButton
           disabled={!ready}
-          onClick={() => {
+          onClick={(event) => {
             applyOrientation();
             frame.current.contentWindow.focus();
             frame.current.contentWindow.print();
+            event.currentTarget.focus();
           }}
         >
           {text("print")}
@@ -100,7 +104,7 @@ export default function ReportPrintPreviewModal({ preview, onClose, lang }) {
         {(error && text(error)) ||
           (!ready
             ? text("loading")
-            : `[${preview.from}, ${preview.to}) · Asia/Phnom_Penh`)}
+            : `${periodLabel(preview.from, preview.to, lang)} · Asia/Phnom_Penh`)}
       </p>
       <div className="report-preview-canvas">
         {url && (

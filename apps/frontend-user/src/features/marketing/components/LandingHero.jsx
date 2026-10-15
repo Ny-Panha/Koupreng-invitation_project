@@ -27,30 +27,30 @@ export default function LandingHero({ copy }) {
       if (opened && event.key === "Escape") { event.preventDefault(); closePreview(); }
     }}>
       <div className="kp-hero-copy">
-        <p className="kp-eyebrow kp-enter">{copy("សន្លឹកការឌីជីថល", "Digital wedding invitations")}</p>
+        <p className="kp-eyebrow kp-enter">{copy("ធៀបការមង្គលការឌីជីថល", "Digital wedding invitations")}</p>
         <h1 id="kp-hero-title" className="kp-enter kp-enter--2">
-          <span>{copy("សន្លឹកការមង្គល", "Your wedding.")}</span>
-          <span>{copy("ដែលជារបស់អ្នក។", "Your invitation.")}</span>
+          <span>{copy("ធៀបការដែលបង្ហាញ", "Invitations crafted")}</span>
+          <span>{copy("រឿងរ៉ាវរបស់អ្នក។", "around your story.")}</span>
         </h1>
         <p className="kp-hero-lead kp-enter kp-enter--3">
           {copy(
-            "ជ្រើសគំរូ បញ្ចូលព័ត៌មានពិធី និងចែករំលែកតំណភ្ជាប់ទៅភ្ញៀវ។ តាមដានចម្លើយនៅកន្លែងតែមួយ។",
-            "Choose a design, add your details and share one link. Keep your guest replies together."
+            "ជ្រើសរើសគំរូដែលពេញចិត្ត បញ្ចូលព័ត៌មានមង្គលការ និងផ្ញើតំណភ្ជាប់ទៅកាន់ភ្ញៀវដោយទំនុកចិត្ត។ គ្រប់គ្រងការឆ្លើយតបយ៉ាងងាយស្រួលនៅកន្លែងតែមួយ។",
+            "Select an authentic design, add your celebration program, and share one elegant link. Manage guest RSVPs seamlessly in one place."
           )}
         </p>
         <div className="kp-actions kp-enter kp-enter--3">
           <Link to="/templates" className="kp-button">
-            {copy("មើលគំរូសន្លឹកការ", "Explore templates")}
+            {copy("មើលគំរូធៀបការ", "Explore templates")}
             <ArrowUpRight size={18} aria-hidden="true" />
           </Link>
-          <button type="button" className="kp-text-link" onClick={tryPreview} aria-controls="kp-folio-paper" aria-expanded={opened}>
-            {copy("សាកមើលសន្លឹកការ", "Try the preview")}
+          <button type="button" className="kp-text-link kp-preview-trigger" onClick={tryPreview} aria-controls="kp-folio-paper" aria-expanded={opened}>
+            {copy("សាកមើលធៀបការ", "Try live preview")}
             <MailOpen size={18} aria-hidden="true" />
           </button>
         </div>
         <p className="kp-hero-proof">
           <Check size={16} aria-hidden="true" />
-          {copy("មើលគំរូដោយមិនចាំបាច់ចូលគណនី", "No account needed to preview")}
+          {copy("មើលគំរូភ្លាមៗ ដោយមិនបាច់ចុះឈ្មោះ", "Preview instantly without signing up")}
         </p>
       </div>
       <div className="kp-hero-art kp-enter kp-enter--2" data-opened={opened}>

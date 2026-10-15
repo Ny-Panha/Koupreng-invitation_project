@@ -15,6 +15,7 @@ const service = vi.hoisted(() => ({
   exportManagementReport: vi.fn(),
 }));
 vi.mock("../../shared/api/adminService", () => ({ default: service }));
+import { reportGroups, workspaceText } from "./reportWorkspace";
 import AdminReportsPage from "../../pages/reports/AdminReportsPage";
 import {
   AdminLanguageProvider,
@@ -107,6 +108,21 @@ function mount(
 async function loaded() {
   await screen.findByText("Server row");
 }
+function openExports() {
+  fireEvent.click(screen.getByText("Export report", { selector: "summary" }));
+}
+async function chooseReport(code) {
+  const group = reportGroups.find((item) => item.codes.includes(code));
+  fireEvent.click(
+    screen.getByRole("button", {
+      name: workspaceText(group.key, "en"),
+      exact: true,
+    }),
+  );
+  fireEvent.click(
+    await screen.findByRole("button", { name: code, exact: true }),
+  );
+}
 beforeEach(() => {
   vi.clearAllMocks();
   localStorage.setItem("koupreng.admin.lang", "en");
@@ -151,17 +167,15 @@ describe("active Reports route", () => {
     expect(screen.getByTestId("location")).toHaveTextContent(
       "report=invitations",
     );
-    expect(screen.getByText("42", { selector: "strong" })).toBeInTheDocument();
+    expect(
+      screen.getAllByText("42", { selector: "strong" }).length,
+    ).toBeGreaterThan(0);
   });
   it("mounts every family through the shared components", async () => {
     mount();
     await loaded();
     for (const code of codes) {
-      fireEvent.click(
-        within(
-          screen.getByRole("navigation", { name: "Reports & Analytics" }),
-        ).getByRole("button", { name: code, exact: true }),
-      );
+      await chooseReport(code);
       await waitFor(() =>
         expect(
           screen.getByRole("button", { name: code, exact: true }),
@@ -176,9 +190,11 @@ describe("active Reports route", () => {
   it("sends filter, sort and page changes to the server without local slicing", async () => {
     mount();
     await loaded();
+    fireEvent.click(screen.getByRole("button", { name: /More filters/ }));
     fireEvent.change(screen.getByLabelText("Event type"), {
       target: { value: "WEDDING" },
     });
+    fireEvent.click(screen.getByRole("button", { name: "Apply filters" }));
     await waitFor(() =>
       expect(service.invitationsReport).toHaveBeenLastCalledWith(
         expect.objectContaining({ eventType: "WEDDING", page: 0 }),
@@ -237,6 +253,7 @@ describe("active Reports route", () => {
     expect(
       screen.getByText(/Showing the last successful snapshot/),
     ).toBeInTheDocument();
+    openExports();
     expect(
       screen.getByRole("button", { name: "Download Excel" }),
     ).toBeDisabled();
@@ -252,7 +269,7 @@ describe("active Reports route", () => {
     );
     mount();
     await waitFor(() => expect(service.invitationsReport).toHaveBeenCalled());
-    fireEvent.click(screen.getByRole("button", { name: "users", exact: true }));
+    await chooseReport("users");
     await loaded();
     resolve({
       ...response("invitations"),
@@ -282,6 +299,7 @@ describe("active Reports route", () => {
       .mockImplementation(() => {});
     mount();
     await loaded();
+    openExports();
     fireEvent.click(screen.getByRole("button", { name: "Download Excel" }));
     await waitFor(() =>
       expect(service.exportManagementReport).toHaveBeenCalledWith(
@@ -291,6 +309,7 @@ describe("active Reports route", () => {
       ),
     );
     await waitFor(() => expect(click).toHaveBeenCalled());
+    openExports();
     await waitFor(() =>
       expect(
         screen.getByRole("button", { name: "CSV · All filtered records" }),
@@ -318,8 +337,9 @@ describe("active Reports route", () => {
     );
     mount();
     await loaded();
+    openExports();
     fireEvent.click(
-      screen.getByRole("button", { name: "Print preview", exact: true }),
+      screen.getByRole("button", { name: "Print / Save as PDF", exact: true }),
     );
     await screen.findByRole("dialog");
     await waitFor(() =>
@@ -329,7 +349,9 @@ describe("active Reports route", () => {
       ),
     );
     expect(
-      screen.getByRole("button", { name: "Print / Save as PDF" }),
+      within(screen.getByRole("dialog")).getByRole("button", {
+        name: "Print / Save as PDF",
+      }),
     ).toBeInTheDocument();
     fireEvent.change(screen.getByLabelText("Page orientation"), {
       target: { value: "landscape" },
@@ -344,7 +366,9 @@ describe("active Reports route", () => {
   it("supports Khmer labels, column visibility and read-only row details", async () => {
     mount();
     await loaded();
-    fireEvent.click(screen.getByText("Columns", { selector: "summary" }));
+    fireEvent.click(
+      screen.getByText("Columns", { selector: "summary", exact: false }),
+    );
     fireEvent.click(
       screen.getByRole("checkbox", { name: "Record title", exact: true }),
     );
@@ -362,6 +386,49 @@ describe("active Reports route", () => {
       screen.queryByRole("button", { name: /Delete|Approve payment|Edit/ }),
     ).not.toBeInTheDocument();
   });
+  it("applies advanced filters once and leaves the report unchanged when cancelled", async () => {
+    mount("/reports?report=payments&from=2026-10-01&to=2026-10-16");
+    await loaded();
+    fireEvent.click(screen.getByRole("button", { name: /More filters/ }));
+    fireEvent.change(screen.getByLabelText("Currency", { exact: true }), { target: { value: "USD" } });
+    expect(service.managementReport).toHaveBeenCalledTimes(1);
+    fireEvent.click(screen.getByRole("button", { name: "Cancel", exact: true }));
+    expect(screen.getByTestId("location")).not.toHaveTextContent("currency=");
+    expect(service.managementReport).toHaveBeenCalledTimes(1);
+    fireEvent.click(screen.getByRole("button", { name: /More filters/ }));
+    fireEvent.change(screen.getByLabelText("Currency", { exact: true }), { target: { value: "KHR" } });
+    fireEvent.click(screen.getByRole("button", { name: "Apply filters", exact: true }));
+    await waitFor(() => expect(service.managementReport).toHaveBeenLastCalledWith("payments", expect.objectContaining({ currency: "KHR", page: 0 }), expect.anything()));
+  });
+  it("submits search deliberately and clears filters without losing the period", async () => {
+    mount(); await loaded();
+    const input = screen.getByRole("searchbox");
+    fireEvent.change(input, { target: { value: "Royal wedding" } });
+    expect(service.invitationsReport).toHaveBeenCalledTimes(1);
+    fireEvent.submit(input.closest("form"));
+    await waitFor(() => expect(service.invitationsReport).toHaveBeenLastCalledWith(expect.objectContaining({ search: "Royal wedding", page: 0 }), expect.anything()));
+    await loaded();
+    fireEvent.click(screen.getByRole("button", { name: "Clear filters", exact: true }));
+    await waitFor(() => expect(screen.getByTestId("location")).not.toHaveTextContent("search="));
+    expect(screen.getByTestId("location")).toHaveTextContent("from=2026-10-15");
+    expect(screen.getByTestId("location")).toHaveTextContent("to=2026-10-16");
+  });
+  it("keeps the all-report workbook limited to dates and preserves the selected report", async () => {
+    vi.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(() => {});
+    mount("/reports?report=payments&from=2026-10-01&to=2026-10-16&currency=KHR&search=order");
+    await loaded(); openExports();
+    fireEvent.click(screen.getByRole("button", { name: /Excel .*All reports/ }));
+    await waitFor(() => expect(service.exportManagementReport).toHaveBeenCalledWith("all", "xlsx", { from: "2026-10-01", to: "2026-10-16" }));
+    expect(screen.getByTestId("location")).toHaveTextContent("currency=KHR");
+    expect(screen.getByTestId("location")).toHaveTextContent("report=payments");
+  });
+  it("removes stale records if a refresh revokes administrator access", async () => {
+    mount(); await loaded();
+    service.invitationsReport.mockRejectedValueOnce(Object.assign(new Error("Forbidden"), { status: 403 }));
+    fireEvent.click(screen.getByRole("button", { name: "Refresh", exact: true }));
+    await screen.findByText("Administrator report access is required");
+    expect(screen.queryByText("Server row")).not.toBeInTheDocument();
+  });
   it("shows administrator permission errors and rejects misleading partial URL periods", async () => {
     service.invitationsReport.mockRejectedValueOnce(
       Object.assign(new Error("Forbidden"), { status: 403 }),
@@ -372,6 +439,7 @@ describe("active Reports route", () => {
       expect.objectContaining({ from: "2026-10-15", to: null }),
       expect.anything(),
     );
+    openExports();
     expect(
       screen.getByRole("button", { name: "Download Excel" }),
     ).toBeDisabled();

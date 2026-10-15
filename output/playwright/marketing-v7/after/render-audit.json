@@ -1,0 +1,608 @@
+{
+  "phase": "after",
+  "capturedAt": "2026-10-15T16:53:41.294Z",
+  "totalSnapshots": 60,
+  "overflowCount": 0,
+  "records": [
+    {
+      "route": "/",
+      "id": "home",
+      "lang": "km",
+      "width": 320,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "home-km-320-viewport.png"
+    },
+    {
+      "route": "/login",
+      "id": "login",
+      "lang": "km",
+      "width": 320,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "login-km-320-viewport.png"
+    },
+    {
+      "route": "/",
+      "id": "home",
+      "lang": "km",
+      "width": 390,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "home-km-390-viewport.png"
+    },
+    {
+      "route": "/templates",
+      "id": "templates",
+      "lang": "km",
+      "width": 390,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "templates-km-390-viewport.png"
+    },
+    {
+      "route": "/pricing",
+      "id": "pricing",
+      "lang": "km",
+      "width": 390,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "pricing-km-390-viewport.png"
+    },
+    {
+      "route": "/contact",
+      "id": "contact",
+      "lang": "km",
+      "width": 390,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "contact-km-390-viewport.png"
+    },
+    {
+      "route": "/login",
+      "id": "login",
+      "lang": "km",
+      "width": 390,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "login-km-390-viewport.png"
+    },
+    {
+      "route": "/register",
+      "id": "register",
+      "lang": "km",
+      "width": 390,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "register-km-390-viewport.png"
+    },
+    {
+      "route": "/forgot-password",
+      "id": "forgot-password",
+      "lang": "km",
+      "width": 390,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "forgot-password-km-390-viewport.png"
+    },
+    {
+      "route": "/reset-password",
+      "id": "reset-password",
+      "lang": "km",
+      "width": 390,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "reset-password-km-390-viewport.png"
+    },
+    {
+      "route": "/templates/silk-heritage",
+      "id": "demo-free",
+      "lang": "km",
+      "width": 390,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "demo-free-km-390-viewport.png"
+    },
+    {
+      "route": "/templates/emerald-canva-luxe-wedding",
+      "id": "demo-premium",
+      "lang": "km",
+      "width": 390,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "demo-premium-km-390-viewport.png"
+    },
+    {
+      "route": "/templates/khmer-celestial",
+      "id": "demo-contact",
+      "lang": "km",
+      "width": 390,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "demo-contact-km-390-viewport.png"
+    },
+    {
+      "route": "/",
+      "id": "home",
+      "lang": "km",
+      "width": 768,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "home-km-768-viewport.png"
+    },
+    {
+      "route": "/login",
+      "id": "login",
+      "lang": "km",
+      "width": 768,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "login-km-768-viewport.png"
+    },
+    {
+      "route": "/",
+      "id": "home",
+      "lang": "km",
+      "width": 1024,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "home-km-1024-viewport.png"
+    },
+    {
+      "route": "/login",
+      "id": "login",
+      "lang": "km",
+      "width": 1024,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "login-km-1024-viewport.png"
+    },
+    {
+      "route": "/",
+      "id": "home",
+      "lang": "km",
+      "width": 1440,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "home-km-1440-viewport.png"
+    },
+    {
+      "route": "/templates",
+      "id": "templates",
+      "lang": "km",
+      "width": 1440,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "templates-km-1440-viewport.png"
+    },
+    {
+      "route": "/pricing",
+      "id": "pricing",
+      "lang": "km",
+      "width": 1440,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "pricing-km-1440-viewport.png"
+    },
+    {
+      "route": "/contact",
+      "id": "contact",
+      "lang": "km",
+      "width": 1440,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "contact-km-1440-viewport.png"
+    },
+    {
+      "route": "/login",
+      "id": "login",
+      "lang": "km",
+      "width": 1440,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "login-km-1440-viewport.png"
+    },
+    {
+      "route": "/register",
+      "id": "register",
+      "lang": "km",
+      "width": 1440,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "register-km-1440-viewport.png"
+    },
+    {
+      "route": "/forgot-password",
+      "id": "forgot-password",
+      "lang": "km",
+      "width": 1440,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "forgot-password-km-1440-viewport.png"
+    },
+    {
+      "route": "/reset-password",
+      "id": "reset-password",
+      "lang": "km",
+      "width": 1440,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "reset-password-km-1440-viewport.png"
+    },
+    {
+      "route": "/templates/silk-heritage",
+      "id": "demo-free",
+      "lang": "km",
+      "width": 1440,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "demo-free-km-1440-viewport.png"
+    },
+    {
+      "route": "/templates/emerald-canva-luxe-wedding",
+      "id": "demo-premium",
+      "lang": "km",
+      "width": 1440,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "demo-premium-km-1440-viewport.png"
+    },
+    {
+      "route": "/templates/khmer-celestial",
+      "id": "demo-contact",
+      "lang": "km",
+      "width": 1440,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "demo-contact-km-1440-viewport.png"
+    },
+    {
+      "route": "/",
+      "id": "home",
+      "lang": "km",
+      "width": 1920,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "home-km-1920-viewport.png"
+    },
+    {
+      "route": "/login",
+      "id": "login",
+      "lang": "km",
+      "width": 1920,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "login-km-1920-viewport.png"
+    },
+    {
+      "route": "/",
+      "id": "home",
+      "lang": "en",
+      "width": 320,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "home-en-320-viewport.png"
+    },
+    {
+      "route": "/login",
+      "id": "login",
+      "lang": "en",
+      "width": 320,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "login-en-320-viewport.png"
+    },
+    {
+      "route": "/",
+      "id": "home",
+      "lang": "en",
+      "width": 390,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "home-en-390-viewport.png"
+    },
+    {
+      "route": "/templates",
+      "id": "templates",
+      "lang": "en",
+      "width": 390,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "templates-en-390-viewport.png"
+    },
+    {
+      "route": "/pricing",
+      "id": "pricing",
+      "lang": "en",
+      "width": 390,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "pricing-en-390-viewport.png"
+    },
+    {
+      "route": "/contact",
+      "id": "contact",
+      "lang": "en",
+      "width": 390,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "contact-en-390-viewport.png"
+    },
+    {
+      "route": "/login",
+      "id": "login",
+      "lang": "en",
+      "width": 390,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "login-en-390-viewport.png"
+    },
+    {
+      "route": "/register",
+      "id": "register",
+      "lang": "en",
+      "width": 390,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "register-en-390-viewport.png"
+    },
+    {
+      "route": "/forgot-password",
+      "id": "forgot-password",
+      "lang": "en",
+      "width": 390,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "forgot-password-en-390-viewport.png"
+    },
+    {
+      "route": "/reset-password",
+      "id": "reset-password",
+      "lang": "en",
+      "width": 390,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "reset-password-en-390-viewport.png"
+    },
+    {
+      "route": "/templates/silk-heritage",
+      "id": "demo-free",
+      "lang": "en",
+      "width": 390,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "demo-free-en-390-viewport.png"
+    },
+    {
+      "route": "/templates/emerald-canva-luxe-wedding",
+      "id": "demo-premium",
+      "lang": "en",
+      "width": 390,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "demo-premium-en-390-viewport.png"
+    },
+    {
+      "route": "/templates/khmer-celestial",
+      "id": "demo-contact",
+      "lang": "en",
+      "width": 390,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "demo-contact-en-390-viewport.png"
+    },
+    {
+      "route": "/",
+      "id": "home",
+      "lang": "en",
+      "width": 768,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "home-en-768-viewport.png"
+    },
+    {
+      "route": "/login",
+      "id": "login",
+      "lang": "en",
+      "width": 768,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "login-en-768-viewport.png"
+    },
+    {
+      "route": "/",
+      "id": "home",
+      "lang": "en",
+      "width": 1024,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "home-en-1024-viewport.png"
+    },
+    {
+      "route": "/login",
+      "id": "login",
+      "lang": "en",
+      "width": 1024,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "login-en-1024-viewport.png"
+    },
+    {
+      "route": "/",
+      "id": "home",
+      "lang": "en",
+      "width": 1440,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "home-en-1440-viewport.png"
+    },
+    {
+      "route": "/templates",
+      "id": "templates",
+      "lang": "en",
+      "width": 1440,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "templates-en-1440-viewport.png"
+    },
+    {
+      "route": "/pricing",
+      "id": "pricing",
+      "lang": "en",
+      "width": 1440,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "pricing-en-1440-viewport.png"
+    },
+    {
+      "route": "/contact",
+      "id": "contact",
+      "lang": "en",
+      "width": 1440,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "contact-en-1440-viewport.png"
+    },
+    {
+      "route": "/login",
+      "id": "login",
+      "lang": "en",
+      "width": 1440,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "login-en-1440-viewport.png"
+    },
+    {
+      "route": "/register",
+      "id": "register",
+      "lang": "en",
+      "width": 1440,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "register-en-1440-viewport.png"
+    },
+    {
+      "route": "/forgot-password",
+      "id": "forgot-password",
+      "lang": "en",
+      "width": 1440,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "forgot-password-en-1440-viewport.png"
+    },
+    {
+      "route": "/reset-password",
+      "id": "reset-password",
+      "lang": "en",
+      "width": 1440,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "reset-password-en-1440-viewport.png"
+    },
+    {
+      "route": "/templates/silk-heritage",
+      "id": "demo-free",
+      "lang": "en",
+      "width": 1440,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "demo-free-en-1440-viewport.png"
+    },
+    {
+      "route": "/templates/emerald-canva-luxe-wedding",
+      "id": "demo-premium",
+      "lang": "en",
+      "width": 1440,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "demo-premium-en-1440-viewport.png"
+    },
+    {
+      "route": "/templates/khmer-celestial",
+      "id": "demo-contact",
+      "lang": "en",
+      "width": 1440,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "demo-contact-en-1440-viewport.png"
+    },
+    {
+      "route": "/",
+      "id": "home",
+      "lang": "en",
+      "width": 1920,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "home-en-1920-viewport.png"
+    },
+    {
+      "route": "/login",
+      "id": "login",
+      "lang": "en",
+      "width": 1920,
+      "overflow": false,
+      "h1": "",
+      "buttonsCount": 0,
+      "snapshot": "login-en-1920-viewport.png"
+    }
+  ]
+}

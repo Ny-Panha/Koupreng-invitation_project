@@ -18,7 +18,7 @@
 .kp-price-factors svg { color: var(--kp-brand); margin-bottom: 16px; }
 .kp-price-factors h3 { font: 600 18px/1.6 var(--kp-font); margin: 0 0 12px; }
 .kp-price-factors p { color: var(--kp-muted); font: 400 16px/1.75 var(--kp-font); margin: 0; }
-.kp-plan-discovery { display: flex; align-items: center; justify-content: space-between; gap: 40px; padding: 36px; margin-top: 28px; background: var(--kp-surface-soft); border: 1px solid var(--kp-border); border-radius: 14px; }
+.kp-plan-discovery { display: flex; align-items: center; justify-content: space-between; gap: 40px; padding: 36px; margin-top: 28px; background: var(--kp-surface-soft); border: 1px solid var(--kp-border); border-radius: 22px; }
 .kp-plan-discovery > div { max-width: 680px; }
 .kp-plan-discovery svg { color: var(--kp-brand); }
 .kp-plan-discovery h2 { font-size: 23px; margin-block: 12px; }
@@ -26,7 +26,8 @@
 .kp-plan-discovery > .kp-button { flex: none; }
 .kp-plan-discovery { margin: 0 0 28px; }
 .kp-plan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr)); gap: 24px; align-items: stretch; }
-.kp-plan-card { display: flex; flex-direction: column; min-width: 0; padding: 32px; background: var(--kp-surface); border: 1px solid var(--kp-border); border-radius: 16px; transition: border-color .25s, transform .4s var(--kp-ease); }
+.kp-plan-card { display: flex; flex-direction: column; min-width: 0; padding: 32px; background: var(--kp-surface); border: 1px solid var(--kp-border); border-radius: 24px; box-shadow: 0 8px 24px -6px rgba(46, 67, 58, 0.06); transition: border-color .25s, transform .4s var(--kp-ease), box-shadow .25s; }
+.kp-plan-card:hover { transform: translateY(-3px); box-shadow: 0 16px 36px -8px rgba(46, 67, 58, 0.14); }
 .kp-plan-card h2 { font-size: 23px; }
 .kp-plan-price { font: 650 clamp(32px, 3vw, 44px)/1.4 var(--kp-font); font-variant-numeric: tabular-nums; padding-top: 18px; }
 .kp-plan-price--missing { font-size: 24px; color: var(--kp-muted); }
@@ -41,10 +42,10 @@
 .kp-plan-card dd svg { flex: none; }
 .kp-plan-card > .kp-button { width: 100%; padding-inline: 12px; font-size: 14px; }
 .kp-plan-card:focus-within { border-color: var(--kp-brand); }
-.kp-plan-skeleton { height: 460px; border: 1px solid var(--kp-border); border-radius: 16px; background: linear-gradient(var(--kp-surface-soft) 0 0) 28px 32px / 35% 24px no-repeat, linear-gradient(var(--kp-surface-soft) 0 0) 28px 88px / 50% 54px no-repeat, var(--kp-surface); }
-.kp-page-state { padding: 40px; border: 1px solid var(--kp-border); border-radius: 16px; background: var(--kp-surface); text-align: center; }
+.kp-plan-skeleton { height: 460px; border: 1px solid var(--kp-border); border-radius: 24px; background: linear-gradient(var(--kp-surface-soft) 0 0) 28px 32px / 35% 24px no-repeat, linear-gradient(var(--kp-surface-soft) 0 0) 28px 88px / 50% 54px no-repeat, var(--kp-surface); }
+.kp-page-state { padding: 40px; border: 1px solid var(--kp-border); border-radius: 22px; background: var(--kp-surface); text-align: center; }
 .kp-page-state p { margin-block: 16px 24px; color: var(--kp-muted); }
-.kp-compare-table { overflow-x: auto; border: 1px solid var(--kp-border); border-radius: 14px; }
+.kp-compare-table { overflow-x: auto; border: 1px solid var(--kp-border); border-radius: 20px; }
 .kp-compare-table table { width: 100%; border-collapse: collapse; background: var(--kp-surface); text-align: start; font-size: 15px; }
 .kp-compare-table th, .kp-compare-table td { padding: 20px; border-bottom: 1px solid var(--kp-border); vertical-align: middle; min-width: 160px; }
 .kp-compare-table th { font-weight: 550; }
@@ -66,7 +67,7 @@
 .kp-page-faq summary svg, .kp-compare-mobile summary svg { flex: none; transition: transform .25s var(--kp-ease); }
 .kp-page-faq details[open] summary svg, .kp-compare-mobile details[open] summary svg { transform: rotate(45deg); }
 .kp-page-faq details > p { color: var(--kp-muted); padding: 0 24px 20px 0; }
-.kp-guidance-strip { max-width: 1200px; margin: auto; display: flex; justify-content: space-between; align-items: center; gap: 36px; padding: 32px 36px; background: var(--kp-surface-soft); border-radius: 16px; }
+.kp-guidance-strip { max-width: 1200px; margin: auto; display: flex; justify-content: space-between; align-items: center; gap: 36px; padding: 32px 36px; background: var(--kp-surface-soft); border-radius: 22px; }
 .kp-guidance-strip h2 { font-size: 24px; }
 .kp-guidance-strip p { color: var(--kp-muted); margin-top: 10px; }
 .kp-guidance-strip > a { flex: none; }
@@ -84,14 +85,14 @@
 .kp-contact-help a > svg:last-child { margin-left: auto; }
 .kp-contact-help small { display: block; font-size: 14px; color: var(--kp-muted); margin-top: 4px; }
 .kp-contact-help a:hover span { text-decoration: underline; text-underline-offset: 4px; }
-.kp-contact-panel { background: var(--kp-surface); padding: 36px; border: 1px solid var(--kp-border); border-radius: 16px; box-shadow: 0 16px 40px -28px rgba(38,38,34,.25); scroll-margin-top: 92px; }
+.kp-contact-panel { background: var(--kp-surface); padding: 36px; border: 1px solid var(--kp-border); border-radius: 24px; box-shadow: 0 16px 40px -28px rgba(38,38,34,.25); scroll-margin-top: 92px; }
 .kp-contact-panel h2 { font-size: 24px; }
 .kp-contact-form-note { font-size: 14px; color: var(--kp-muted); margin-top: 8px !important; }
 .kp-contact-panel fieldset { padding: 0; border: 0; margin: 28px 0 0; min-width: 0; }
 .kp-contact-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
 .kp-contact-field { margin-bottom: 22px; min-width: 0; }
 .kp-contact-field label { display: block; font-size: 15px; font-weight: 550; margin-bottom: 8px; }
-.kp-contact-field :is(input,select,textarea) { width: 100%; min-width: 0; min-height: 48px; padding: 11px 12px; border: 1px solid #B5AEA3; border-radius: 8px; background: var(--kp-surface); color: var(--kp-ink); font: 400 16px/1.7 var(--kp-font); transition: border-color .2s, box-shadow .2s; }
+.kp-contact-field :is(input,select,textarea) { width: 100%; min-width: 0; min-height: 48px; padding: 11px 16px; border: 1px solid #B5AEA3; border-radius: 14px; background: var(--kp-surface); color: var(--kp-ink); font: 400 16px/1.7 var(--kp-font); transition: border-color .2s, box-shadow .2s; }
 .kp-contact-field :is(input,select,textarea)::placeholder { color: var(--kp-muted); opacity: 1; }
 .kp-contact-field textarea { min-height: 156px; resize: vertical; }
 .kp-contact-field :is(input,select,textarea):focus { border-color: var(--kp-focus); box-shadow: 0 0 0 3px rgba(37,79,126,.1); }

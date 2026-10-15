@@ -1,0 +1,156 @@
+[
+  {
+    "route": "/",
+    "id": "home",
+    "lang": "km",
+    "violationsCount": 0,
+    "violations": []
+  },
+  {
+    "route": "/templates",
+    "id": "templates",
+    "lang": "km",
+    "violationsCount": 0,
+    "violations": []
+  },
+  {
+    "route": "/pricing",
+    "id": "pricing",
+    "lang": "km",
+    "violationsCount": 0,
+    "violations": []
+  },
+  {
+    "route": "/contact",
+    "id": "contact",
+    "lang": "km",
+    "violationsCount": 0,
+    "violations": []
+  },
+  {
+    "route": "/login",
+    "id": "login",
+    "lang": "km",
+    "violationsCount": 0,
+    "violations": []
+  },
+  {
+    "route": "/register",
+    "id": "register",
+    "lang": "km",
+    "violationsCount": 0,
+    "violations": []
+  },
+  {
+    "route": "/forgot-password",
+    "id": "forgot-password",
+    "lang": "km",
+    "violationsCount": 0,
+    "violations": []
+  },
+  {
+    "route": "/reset-password",
+    "id": "reset-password",
+    "lang": "km",
+    "violationsCount": 0,
+    "violations": []
+  },
+  {
+    "route": "/templates/silk-heritage",
+    "id": "demo-free",
+    "lang": "km",
+    "violationsCount": 0,
+    "violations": []
+  },
+  {
+    "route": "/templates/emerald-canva-luxe-wedding",
+    "id": "demo-premium",
+    "lang": "km",
+    "violationsCount": 0,
+    "violations": []
+  },
+  {
+    "route": "/templates/khmer-celestial",
+    "id": "demo-contact",
+    "lang": "km",
+    "violationsCount": 0,
+    "violations": []
+  },
+  {
+    "route": "/",
+    "id": "home",
+    "lang": "en",
+    "violationsCount": 0,
+    "violations": []
+  },
+  {
+    "route": "/templates",
+    "id": "templates",
+    "lang": "en",
+    "violationsCount": 0,
+    "violations": []
+  },
+  {
+    "route": "/pricing",
+    "id": "pricing",
+    "lang": "en",
+    "violationsCount": 0,
+    "violations": []
+  },
+  {
+    "route": "/contact",
+    "id": "contact",
+    "lang": "en",
+    "violationsCount": 0,
+    "violations": []
+  },
+  {
+    "route": "/login",
+    "id": "login",
+    "lang": "en",
+    "violationsCount": 0,
+    "violations": []
+  },
+  {
+    "route": "/register",
+    "id": "register",
+    "lang": "en",
+    "violationsCount": 0,
+    "violations": []
+  },
+  {
+    "route": "/forgot-password",
+    "id": "forgot-password",
+    "lang": "en",
+    "violationsCount": 0,
+    "violations": []
+  },
+  {
+    "route": "/reset-password",
+    "id": "reset-password",
+    "lang": "en",
+    "violationsCount": 0,
+    "violations": []
+  },
+  {
+    "route": "/templates/silk-heritage",
+    "id": "demo-free",
+    "lang": "en",
+    "violationsCount": 0,
+    "violations": []
+  },
+  {
+    "route": "/templates/emerald-canva-luxe-wedding",
+    "id": "demo-premium",
+    "lang": "en",
+    "violationsCount": 0,
+    "violations": []
+  },
+  {
+    "route": "/templates/khmer-celestial",
+    "id": "demo-contact",
+    "lang": "en",
+    "violationsCount": 0,
+    "violations": []
+  }
+]

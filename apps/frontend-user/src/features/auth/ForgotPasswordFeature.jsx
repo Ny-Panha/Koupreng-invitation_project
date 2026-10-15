@@ -1,302 +1,152 @@
-import { useId, useState, useRef } from "react";
+import { useId, useState } from "react";
 import { Link } from "react-router-dom";
-import { useToggle } from "../../shared/hooks/useToggle";
+import { Mail, ArrowRight, CheckCircle2, ArrowLeft } from "lucide-react";
 import authService from "./api/authApi";
+import AuthLayout from "./components/AuthLayout";
+import { useLanguageStore } from "../../stores/useLanguageStore";
 import "./AuthPage.css";
 
-/* ── Eye icon ── */
-function EyeIcon({ open }) {
-  return open ? (
-    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
-    </svg>
-  ) : (
-    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-    </svg>
-  );
-}
-
-/* ── Step 1 — Email/Phone ── */
-function StepEmail({ onNext, loading }) {
+export default function ForgotPassword() {
   const emailId = useId();
-  const [identifier, setIdentifier] = useState("");
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [serverMessage, setServerMessage] = useState("");
+
+  const lang = useLanguageStore((state) => state.lang);
+  const copy = (km, en) => (lang === "en" ? en : km);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (identifier.trim()) {
-      await onNext(identifier.trim());
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="auth-form">
-      <div className="auth-field">
-        <label htmlFor={emailId} className="auth-label">
-          លេខទូរស័ព្ទ ឬ អ៊ីមែល
-        </label>
-        <input
-          id={emailId}
-          type="text"
-          value={identifier}
-          onChange={(e) => setIdentifier(e.target.value)}
-          placeholder="បញ្ចូលលេខទូរស័ព្ទ ឬ អ៊ីមែល"
-          required
-          className="auth-input"
-        />
-        <p className="auth-hint">យើងនឹងផ្ញើតំណ ឬ Reset Token ទៅកាន់អ្នក</p>
-      </div>
-      <button type="submit" className="auth-submit" disabled={loading}>
-        {loading ? "កំពុងផ្ញើ..." : "ផ្ញើតំណកំណត់លេខសម្ងាត់"}
-      </button>
-    </form>
-  );
-}
-
-/* ── Step 2 — OTP ── */
-function StepOTP({ identifier, onNext, onResend }) {
-  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-  const inputs = useRef([]);
-
-  const handleChange = (i, val) => {
-    if (!/^\d?$/.test(val)) return;
-    const next = [...otp];
-    next[i] = val;
-    setOtp(next);
-    if (val && i < 5) inputs.current[i + 1]?.focus();
-  };
-
-  const handleKeyDown = (i, e) => {
-    if (e.key === "Backspace" && !otp[i] && i > 0) inputs.current[i - 1]?.focus();
-  };
-
-  const handlePaste = (e) => {
-    const text = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6);
-    if (text.length === 6) { setOtp(text.split("")); inputs.current[5]?.focus(); }
-    e.preventDefault();
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const code = otp.join("");
-    if (code.length === 6) onNext(code);
-  };
-
-  const filled = otp.every((d) => d !== "");
-
-  return (
-    <form onSubmit={handleSubmit} className="auth-form">
-      <div className="auth-field">
-        <p className="auth-otp-hint">
-          OTP បានផ្ញើទៅ <span>{identifier}</span>
-        </p>
-        <div className="auth-otp-row" onPaste={handlePaste}>
-          {otp.map((digit, i) => (
-            <input
-              key={i}
-              ref={(el) => (inputs.current[i] = el)}
-              type="text"
-              inputMode="numeric"
-              maxLength={1}
-              value={digit}
-              onChange={(e) => handleChange(i, e.target.value)}
-              onKeyDown={(e) => handleKeyDown(i, e)}
-              className={`auth-otp-box${digit ? " filled" : ""}`}
-            />
-          ))}
-        </div>
-        <p className="auth-resend">
-          មិនទទួលបាន OTP?{" "}
-          <button type="button" onClick={onResend}>ផ្ញើម្តងទៀត</button>
-        </p>
-      </div>
-      <button type="submit" disabled={!filled} className="auth-submit">
-        បញ្ជាក់ OTP
-      </button>
-    </form>
-  );
-}
-
-/* ── Step 3 — New Password ── */
-function StepNewPassword({ onDone }) {
-  const newPassId = useId();
-  const confirmPassId = useId();
-  const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
-  const [showPass, togglePass] = useToggle();
-
-  const mismatch = confirm && password !== confirm;
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!mismatch && password) onDone();
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="auth-form">
-      <div className="auth-field">
-        <label htmlFor={newPassId} className="auth-label">លេខសម្ងាត់ថ្មី</label>
-        <div className="auth-input-wrap">
-          <input
-            id={newPassId}
-            type={showPass ? "text" : "password"}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="បញ្ចូលលេខសម្ងាត់ថ្មី"
-            required
-            className="auth-input"
-          />
-          <button type="button" onClick={togglePass} className="auth-eye-btn" aria-label="Toggle password">
-            <EyeIcon open={showPass} />
-          </button>
-        </div>
-      </div>
-
-      <div className="auth-field">
-        <label htmlFor={confirmPassId} className="auth-label">បញ្ជាក់លេខសម្ងាត់</label>
-        <input
-          id={confirmPassId}
-          type="password"
-          value={confirm}
-          onChange={(e) => setConfirm(e.target.value)}
-          placeholder="បញ្ជាក់លេខសម្ងាត់"
-          required
-          className={`auth-input${mismatch ? " error" : ""}`}
-        />
-        {mismatch && <p className="auth-error-msg">លេខសម្ងាត់មិនត្រូវគ្នា</p>}
-      </div>
-
-      <button
-        type="submit"
-        disabled={!!mismatch || !password || !confirm}
-        className="auth-submit"
-      >
-        កំណត់លេខសម្ងាត់ឡើងវិញ
-      </button>
-    </form>
-  );
-}
-
-/* ── Step 4 — Success ── */
-function StepSuccess({ message }) {
-  return (
-    <div className="auth-success">
-      <div className="auth-success-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-        </svg>
-      </div>
-      <div>
-        <h2>ជោគជ័យ!</h2>
-        <p>{message || "បើគណនីមាន ព័ត៌មានកំណត់លេខសម្ងាត់ត្រូវបានផ្ញើរួចហើយ"}</p>
-      </div>
-      <Link to="/reset-password" className="auth-submit" style={{ display: "flex", alignItems: "center", justifyContent: "center", textDecoration: "none", marginTop: "4px" }}>
-        បញ្ចូល Reset Token
-      </Link>
-    </div>
-  );
-}
-
-/* ── Step config ── */
-const STEPS = [
-  { num: 1, label: "អ៊ីមែល" },
-  { num: 2, label: "Token" },
-  { num: 3, label: "លេខសម្ងាត់" },
-];
-
-const STEP_META = {
-  1: { title: "ភ្លេចលេខសម្ងាត់", sub: "បញ្ចូលអ៊ីមែល ឬ លេខទូរស័ព្ទ ដើម្បីទទួលតំណកំណត់លេខសម្ងាត់" },
-  2: { title: "បញ្ចូល OTP", sub: "OTP ៦ ខ្ទង់ត្រូវបានផ្ញើទៅអ្នក" },
-  3: { title: "លេខសម្ងាត់ថ្មី", sub: "កំណត់លេខសម្ងាត់ថ្មីរបស់អ្នក" },
-  4: { title: "រួចរាល់", sub: "" },
-};
-
-/* ── Main ── */
-function ForgotPassword() {
-  const [step, setStep] = useState(1);
-  const [identifier, setIdentifier] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [message, setMessage] = useState("");
-
-  const meta = STEP_META[step];
-
-  const requestReset = async (id) => {
-    setIdentifier(id);
     setError("");
-    setMessage("");
+    setServerMessage("");
+
+    const trimmed = email.trim();
+    if (!trimmed) {
+      setError(copy("សូមបញ្ចូលអាសយដ្ឋានអ៊ីមែលរបស់អ្នក", "Please enter your email address"));
+      return;
+    }
+
     setLoading(true);
     try {
-      const response = await authService.forgotPassword(id);
-      setMessage(response?.message || "If the account exists, password reset instructions will be sent.");
-      setStep(4);
+      const response = await authService.forgotPassword(trimmed);
+      setServerMessage(
+        response?.message ||
+          copy(
+            "ប្រសិនបើអ៊ីមែលនេះមានក្នុងប្រព័ន្ធ យើងបានផ្ញើសេចក្តីណែនាំសម្រាប់កំណត់លេខសម្ងាត់ឡើងវិញរួចហើយ។",
+            "If this email is registered, password reset instructions have been sent."
+          )
+      );
+      setSubmitted(true);
     } catch (err) {
-      setError(err.message || "Could not request password reset.");
+      setError(err.message || copy("មិនអាចផ្ញើសំណើកំណត់លេខសម្ងាត់បានទេ។ សូមព្យាយាមម្តងទៀត។", "Could not request password reset. Please try again."));
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="auth-page">
-      {/* Background blobs */}
-      <div className="auth-blob auth-blob-1" />
-      <div className="auth-blob auth-blob-2" />
-      <div className="auth-blob auth-blob-3" />
-
-      {/* Card */}
+    <AuthLayout>
       <div className="auth-card">
-        {/* Header */}
-        <div className="auth-header">
-          <h1 className="auth-title">{meta.title}</h1>
-          {meta.sub && <p className="auth-subtitle">{meta.sub}</p>}
-        </div>
-
-        {error && <p className="auth-error">{error}</p>}
-        {message && step !== 4 && <p className="auth-success-text">{message}</p>}
-
-        {/* Step indicator */}
-        {step <= 3 && (
-          <div className="auth-steps">
-            {STEPS.map((s, i) => (
-              <div key={s.num} className="auth-step-row">
-                <div className={`auth-step-dot ${step > s.num ? "done" : step === s.num ? "active" : "pending"}`}>
-                  {step > s.num ? (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                    </svg>
-                  ) : s.num}
-                </div>
-                {i < STEPS.length - 1 && (
-                  <div className={`auth-step-line ${step > s.num ? "done" : "pending"}`} />
+        {!submitted ? (
+          <>
+            <div className="auth-header">
+              <h1 className="auth-title">
+                {copy("ភ្លេចលេខសម្ងាត់", "Forgot your password?")}
+              </h1>
+              <p className="auth-subtitle">
+                {copy(
+                  "បញ្ចូលអ៊ីមែលគណនីរបស់អ្នក ដើម្បីទទួលលេខកូដ Reset Token សម្រាប់កំណត់លេខសម្ងាត់ថ្មី។",
+                  "Enter your registered email address to receive a reset token."
                 )}
-              </div>
-            ))}
-          </div>
-        )}
+              </p>
+            </div>
 
-        {/* Step content */}
-        {step === 1 && <StepEmail onNext={requestReset} loading={loading} />}
-        {step === 2 && <StepOTP identifier={identifier} onNext={() => setStep(3)} onResend={() => { }} />}
-        {step === 3 && <StepNewPassword onDone={() => setStep(4)} />}
-        {step === 4 && <StepSuccess message={message} />}
-
-        {/* Back */}
-        {step < 4 && (
-          <div className="auth-back">
-            {step === 1 ? (
-              <Link to="/login" className="auth-back-btn">← ត្រឡប់ទៅចូលគណនី</Link>
-            ) : (
-              <button type="button" onClick={() => setStep((s) => s - 1)} className="auth-back-btn">
-                ← ត្រឡប់ក្រោយ
-              </button>
+            {error && (
+              <p className="auth-error" role="alert">
+                {error}
+              </p>
             )}
+
+            <form onSubmit={handleSubmit} className="auth-form">
+              <div className="auth-field">
+                <label htmlFor={emailId} className="auth-label">
+                  {copy("អាសយដ្ឋានអ៊ីមែល", "Email address")}
+                </label>
+                <div className="auth-input-wrap">
+                  <input
+                    id={emailId}
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder={copy("ឧ. name@example.com", "e.g. name@example.com")}
+                    required
+                    autoComplete="email"
+                    className="auth-input"
+                  />
+                </div>
+                <p className="auth-hint">
+                  {copy(
+                    "យើងនឹងផ្ញើតំណ ឬលេខកូដសម្ងាត់ទៅកាន់អ៊ីមែលនេះ។",
+                    "We will send reset instructions to this email."
+                  )}
+                </p>
+              </div>
+
+              <button type="submit" className="auth-submit" disabled={loading}>
+                <Mail size={16} aria-hidden="true" />
+                <span>
+                  {loading
+                    ? copy("កំពុងផ្ញើ...", "Sending instructions...")
+                    : copy("ផ្ញើសំណើកំណត់លេខសម្ងាត់", "Send reset instructions")}
+                </span>
+              </button>
+            </form>
+
+            <div className="auth-back" style={{ marginTop: "20px" }}>
+              <Link to="/login" className="auth-home-link">
+                <ArrowLeft size={15} aria-hidden="true" />
+                <span>{copy("ត្រឡប់ទៅការចូលគណនី", "Back to sign in")}</span>
+              </Link>
+            </div>
+          </>
+        ) : (
+          <div className="auth-success" role="status">
+            <div className="auth-success-icon" style={{ width: "64px", height: "64px", background: "rgba(46, 67, 58, 0.1)" }}>
+              <CheckCircle2 size={36} color="#2E433A" aria-hidden="true" />
+            </div>
+
+            <div style={{ margin: "16px 0 20px" }}>
+              <h2 style={{ fontSize: "20px", fontWeight: "700", color: "#2E433A", marginBottom: "8px" }}>
+                {copy("បានផ្ញើសេចក្តីណែនាំរួចរាល់", "Instructions sent")}
+              </h2>
+              <p style={{ fontSize: "14px", color: "#695D50", lineHeight: "1.7", maxWidth: "360px", margin: "0 auto" }}>
+                {serverMessage}
+              </p>
+              <p style={{ fontSize: "13px", color: "#77572C", marginTop: "10px" }}>
+                {copy("សូមពិនិត្យប្រអប់សំបុត្រ ឬ Spam ក្នុងអ៊ីមែលរបស់អ្នក។", "Please check your inbox or spam folder.")}
+              </p>
+            </div>
+
+            <Link
+              to="/reset-password"
+              className="auth-submit"
+              style={{ textDecoration: "none" }}
+            >
+              <span>{copy("បញ្ចូល Reset Token ដើម្បីប្តូរលេខសម្ងាត់", "Enter reset token to set new password")}</span>
+              <ArrowRight size={16} aria-hidden="true" />
+            </Link>
+
+            <div className="auth-back" style={{ marginTop: "16px" }}>
+              <Link to="/login" className="auth-home-link">
+                <ArrowLeft size={15} aria-hidden="true" />
+                <span>{copy("ត្រឡប់ទៅចូលគណនី", "Back to sign in")}</span>
+              </Link>
+            </div>
           </div>
         )}
       </div>
-    </div>
+    </AuthLayout>
   );
 }
-
-export default ForgotPassword;

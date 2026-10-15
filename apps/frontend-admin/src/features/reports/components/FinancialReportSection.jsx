@@ -1,5 +1,6 @@
-import { StatCard } from "../../../shared/ui/AdminUI";
-import { reportText, reportValue } from "../reportModel";
+import ReportKpi from "./ReportKpi";
+import { reportValue } from "../reportModel";
+import { workspaceText as reportText } from "../reportWorkspace";
 import ReportLedger from "./ReportLedger";
 export default function FinancialReportSection({
   report,
@@ -11,12 +12,12 @@ export default function FinancialReportSection({
   return (
     <div className="space-y-4">
       <section
-        className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4"
+        className="report-kpis report-financial-kpis"
         aria-label={reportText("fullScope", lang)}
       >
         {["confirmedReceipts", "pendingValue", "failedValue"].flatMap((key) =>
           ["USD", "KHR"].map((currency) => (
-            <StatCard
+            <ReportKpi
               key={`${key}-${currency}`}
               label={`${reportText(key, lang)} \u00b7 ${currency}`}
               value={reportValue(
@@ -25,12 +26,16 @@ export default function FinancialReportSection({
                 lang,
                 { currency },
               )}
-              note={reportText("fullScope", lang)}
+              note={reportText(
+                key === "confirmedReceipts" ? "cashHint" : "pendingHint",
+                lang,
+              )}
               tone={key === "confirmedReceipts" ? "emerald" : "amber"}
             />
           )),
         )}
       </section>
+      <p className="report-scope-note">{reportText("exceptionHint", lang)}</p>
       {children}
       <ReportLedger report={report} lang={lang} {...props} />
     </div>

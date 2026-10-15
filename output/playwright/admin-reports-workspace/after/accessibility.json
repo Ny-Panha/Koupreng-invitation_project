@@ -1,0 +1,436 @@
+[
+  {
+    "name": "executive-390-km-light",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "payments-390-km-light",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "invitations-390-km-light",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "executive-390-km-dark",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "payments-390-km-dark",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "invitations-390-km-dark",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "executive-390-en-light",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "payments-390-en-light",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "invitations-390-en-light",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "executive-390-en-dark",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "payments-390-en-dark",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "invitations-390-en-dark",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "executive-768-km-light",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "payments-768-km-light",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "invitations-768-km-light",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "executive-768-km-dark",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "payments-768-km-dark",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "invitations-768-km-dark",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "executive-768-en-light",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "payments-768-en-light",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "invitations-768-en-light",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "executive-768-en-dark",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "payments-768-en-dark",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "invitations-768-en-dark",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "executive-1280-km-light",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "payments-1280-km-light",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "invitations-1280-km-light",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "executive-1280-km-dark",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "payments-1280-km-dark",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "invitations-1280-km-dark",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "executive-1280-en-light",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "payments-1280-en-light",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "invitations-1280-en-light",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "executive-1280-en-dark",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "payments-1280-en-dark",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "invitations-1280-en-dark",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "executive-1440-km-light",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "payments-1440-km-light",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "invitations-1440-km-light",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "executive-1440-km-dark",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "payments-1440-km-dark",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "invitations-1440-km-dark",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "executive-1440-en-light",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "payments-1440-en-light",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "reconciliation",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "invitations-1440-en-light",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "users",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "templates",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "name": "subscriptions",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "engagement",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "system",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "name": "dictionary",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "name": "executive-1440-en-dark",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "payments-1440-en-dark",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "name": "invitations-1440-en-dark",
+    "version": "4.14.0",
+    "violations": [],
+    "incomplete": [
+      "color-contrast"
+    ]
+  }
+]

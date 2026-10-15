@@ -1,4 +1,4 @@
-import { StatCard } from "../../../shared/ui/AdminUI";
+import ReportKpi from "./ReportKpi";
 import { reportText } from "../reportModel";
 import ReportLedger from "./ReportLedger";
 export default function SubscriptionsReportSection({
@@ -10,11 +10,11 @@ export default function SubscriptionsReportSection({
   return (
     <div className="space-y-4">
       <section
-        className="grid grid-cols-1 sm:grid-cols-3 gap-4"
+        className="report-kpis"
         aria-label={reportText("activeSubscriptions", lang)}
       >
         {(report.filteredSummary.subscriptionTiers || []).map((tier) => (
-          <StatCard
+          <ReportKpi
             key={tier.tier}
             label={tier.tier || reportText("unavailable", lang)}
             value={tier.activeSubscriptions}

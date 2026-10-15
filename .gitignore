@@ -63,9 +63,7 @@ test-results/
 .cache/
 
 # Large non-evidence archives, tools, and virtualenvs in output
-output/ci-tools/source*
-output/ci-tools/*.exe
-output/ci-tools/*.zip
+output/ci-tools/
 output/playwright/marketing-v5/baseline-source/
 output/playwright/marketing-v5/baseline-source.zip
 output/playwright/font-tools/

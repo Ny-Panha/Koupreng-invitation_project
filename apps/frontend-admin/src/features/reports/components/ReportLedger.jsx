@@ -1,28 +1,61 @@
-import { useRef, useState } from "react";
-import { ActionButton, StatusBadge } from "../../../shared/ui/AdminUI";
+import { useState } from "react";
 import {
-  columnLabel,
-  reportLabel,
-  reportText,
-  reportValue,
-  safeTsv,
-} from "../reportModel";
+  ArrowDownUp,
+  ArrowDown,
+  ArrowUp,
+  ChevronRight,
+  Columns3,
+  Copy,
+  Inbox,
+} from "lucide-react";
+import { ActionButton } from "../../../shared/ui/AdminUI";
+import { columnLabel, reportLabel, safeTsv } from "../reportModel";
+import {
+  displayValue,
+  priorityColumns,
+  workspaceText,
+} from "../reportWorkspace";
+import ReportDrawer from "./ReportDrawer";
 
 export default function ReportLedger({
   report,
   lang,
   onQuery,
+  onReset,
   disabled = false,
 }) {
-  const [hidden, setHidden] = useState([]),
-    [selection, setSelection] = useState({ snapshotId: null, ids: [] }),
+  const allColumns = report.definition.columns;
+  const storageKey = `koupreng.admin.report.columns.${report.report}`;
+  const [visible, setVisible] = useState(() => {
+    try {
+      const stored = JSON.parse(localStorage.getItem(storageKey));
+      if (
+        Array.isArray(stored) &&
+        stored.some((key) => allColumns.some((column) => column.key === key))
+      )
+        return stored;
+    } catch {
+      /* An unavailable preference must not prevent report access. */
+    }
+    const preferred = priorityColumns[report.report]?.filter((key) =>
+      allColumns.some((column) => column.key === key),
+    );
+    return preferred?.length
+      ? [
+          ...preferred,
+          ...allColumns
+            .filter((column) => !preferred.includes(column.key))
+            .map((column) => column.key),
+        ].slice(0, Math.min(7, Math.max(5, preferred.length)))
+      : allColumns.slice(0, 6).map((column) => column.key);
+  });
+  const [selection, setSelection] = useState({ snapshotId: null, ids: [] }),
     [detail, setDetail] = useState(null),
     [feedback, setFeedback] = useState("");
-  const dialog = useRef(null);
-  const text = (key) => reportText(key, lang);
-  const columns = report.definition.columns.filter(
-    (column) => !hidden.includes(column.key),
-  );
+  const text = (key) => workspaceText(key, lang);
+  const columns = visible
+    .map((key) => allColumns.find((column) => column.key === key))
+    .filter(Boolean);
   const rows = report.rows || [],
     start = report.page * report.size;
   const selected =
@@ -32,19 +65,27 @@ export default function ReportLedger({
       snapshotId: report.metadata.snapshotId,
       ids: update(selected),
     });
+  const toggleColumn = (key, checked) => {
+    const next = checked
+      ? [...visible, key]
+      : visible.filter((value) => value !== key);
+    setVisible(next);
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(next));
+    } catch {
+      /* Session-only selection remains usable. */
+    }
+  };
   const copy = async () => {
     const chosen = rows.filter((row) => selected.includes(String(row.id)));
     const lines = [
       columns.map((column) => columnLabel(column, lang)),
       ...chosen.map((row) =>
         columns.map((column) =>
-          ["DATETIME", "DATE"].includes(column.type) && row[column.key] != null
-            ? reportValue(row[column.key], column, lang, row)
-            : row[column.key],
+          displayValue(row[column.key], column, lang, row),
         ),
       ),
     ];
-    // Raw data is already minimized and authorized by the server. No guest identities.
     try {
       await navigator.clipboard.writeText(
         lines.map((row) => row.map(safeTsv).join("\t")).join("\r\n"),
@@ -54,38 +95,81 @@ export default function ReportLedger({
       setFeedback(text("copyFailed"));
     }
   };
+  const cell = (row, column) => {
+    const value = displayValue(row[column.key], column, lang, row);
+    return /^(status|paymentStatus|moderationStatus|activeState|reconciliationOutcome)$/.test(
+      column.key,
+    ) && row[column.key] ? (
+      <span className="report-status" data-status={row[column.key]}>
+        {value}
+      </span>
+    ) : (
+      <span className="report-cell-value" title={value}>
+        {value}
+      </span>
+    );
+  };
+  const rowTitle = (row) =>
+    row.title ||
+    row.orderCode ||
+    row.displayName ||
+    row.name ||
+    (lang === "en" ? row.labelEn : row.labelKm) ||
+    row.label ||
+    row.id;
+  const empty = (
+    <div className="report-empty">
+      <Inbox size={28} aria-hidden="true" />
+      <h4>{report.totalElements === 0 ? text("empty") : text("noRecords")}</h4>
+      <p>{text("emptyHint")}</p>
+      {onReset && (
+        <ActionButton onClick={onReset}>{text("clearFilters")}</ActionButton>
+      )}
+    </div>
+  );
   return (
     <section
       className="card report-ledger"
       aria-label={reportLabel(report.definition, lang)}
+      aria-busy={disabled}
     >
       <div className="report-ledger-toolbar">
         <div>
-          <h3>{reportLabel(report.definition, lang)}</h3>
+          <h3>{text("records")}</h3>
           <p>
             {text("matching")}: <strong>{report.totalElements}</strong> ·{" "}
             {text("pageScope")}: {rows.length}
           </p>
         </div>
-        <div className="report-actions">
-          <details className="report-column-menu">
-            <summary>{text("columns")}</summary>
+        <div className="report-table-tools">
+          <details
+            className="report-column-menu"
+            onKeyDown={(event) => {
+              if (event.key === "Escape") {
+                event.currentTarget.open = false;
+                event.currentTarget.querySelector("summary").focus();
+              }
+            }}
+          >
+            <summary>
+              <Columns3 size={16} aria-hidden="true" />
+              {text("columns")}{" "}
+              <span className="report-muted">
+                {columns.length}/{allColumns.length}
+              </span>
+            </summary>
             <fieldset>
               <legend className="sr-only">{text("columns")}</legend>
-              {report.definition.columns.map((column) => (
+              {allColumns.map((column) => (
                 <label key={column.key}>
                   <input
                     type="checkbox"
-                    checked={!hidden.includes(column.key)}
+                    checked={visible.includes(column.key)}
                     disabled={
-                      columns.length === 1 && !hidden.includes(column.key)
+                      columns.length === 1 && visible.includes(column.key)
                     }
                     onChange={(event) =>
-                      setHidden((current) =>
-                        event.target.checked
-                          ? current.filter((key) => key !== column.key)
-                          : [...current, column.key],
-                      )
+                      toggleColumn(column.key, event.target.checked)
                     }
                   />
                   {columnLabel(column, lang)}
@@ -93,15 +177,14 @@ export default function ReportLedger({
               ))}
             </fieldset>
           </details>
-          <ActionButton
-            disabled={selected.length === 0 || disabled}
-            onClick={copy}
-          >
+          <ActionButton disabled={!selected.length || disabled} onClick={copy}>
+            <Copy size={15} aria-hidden="true" />
             {text("copy")} ({selected.length})
           </ActionButton>
         </div>
       </div>
-      <p role="status">{feedback}</p>
+      <p className="report-selection-hint">{text("selectHint")}</p>
+      {feedback && <p role="status">{feedback}</p>}
       <div
         className="table-wrap management-report-scroll"
         tabIndex={0}
@@ -114,60 +197,69 @@ export default function ReportLedger({
           </caption>
           <thead>
             <tr>
-              <th scope="col">{text("select")}</th>
-              <th scope="col">#</th>
-              {columns.map((column) => (
-                <th
-                  key={column.key}
-                  scope="col"
-                  aria-sort={
-                    report.metadata.sort === column.key
-                      ? report.metadata.direction === "ASC"
-                        ? "ascending"
-                        : "descending"
-                      : undefined
+              <th scope="col">
+                <span className="sr-only">{text("select")}</span>
+                <input
+                  type="checkbox"
+                  aria-label={text("select") + " · " + text("pageScope")}
+                  checked={rows.length > 0 && selected.length === rows.length}
+                  disabled={disabled || !rows.length}
+                  onChange={(event) =>
+                    setSelected(() =>
+                      event.target.checked
+                        ? rows.map((row) => String(row.id))
+                        : [],
+                    )
                   }
-                >
-                  <button
-                    type="button"
-                    disabled={disabled}
-                    onClick={() =>
-                      onQuery({
-                        sort: column.key,
-                        direction:
-                          report.metadata.sort === column.key &&
-                          report.metadata.direction === "ASC"
-                            ? "DESC"
-                            : "ASC",
-                        page: 0,
-                      })
+                />
+              </th>
+              <th scope="col">#</th>
+              {columns.map((column, index) => {
+                const sorted = report.metadata.sort === column.key,
+                  asc = report.metadata.direction === "ASC",
+                  Icon = sorted ? (asc ? ArrowUp : ArrowDown) : ArrowDownUp;
+                return (
+                  <th
+                    key={column.key}
+                    scope="col"
+                    className={`${index === 0 ? "report-sticky" : ""} ${["NUMBER", "MONEY", "PERCENT"].includes(column.type) ? "report-number" : ""}`}
+                    aria-sort={
+                      sorted ? (asc ? "ascending" : "descending") : undefined
                     }
                   >
-                    {columnLabel(column, lang)}{" "}
-                    {report.metadata.sort === column.key
-                      ? report.metadata.direction === "ASC"
-                        ? "↑"
-                        : "↓"
-                      : "↕"}
-                  </button>
-                </th>
-              ))}
+                    <button
+                      type="button"
+                      disabled={disabled}
+                      onClick={() =>
+                        onQuery({
+                          sort: column.key,
+                          direction: sorted && asc ? "DESC" : "ASC",
+                          page: 0,
+                        })
+                      }
+                    >
+                      {columnLabel(column, lang)}
+                      <Icon size={13} aria-hidden="true" />
+                    </button>
+                  </th>
+                );
+              })}
               <th scope="col">{text("details")}</th>
             </tr>
           </thead>
           <tbody>
-            {rows.length === 0 ? (
-              <tr>
-                <td colSpan={columns.length + 3}>{text("empty")}</td>
-              </tr>
-            ) : (
+            {rows.length ? (
               rows.map((row, index) => (
-                <tr key={row.id}>
+                <tr
+                  key={row.id}
+                  data-selected={selected.includes(String(row.id))}
+                >
                   <td>
                     <input
                       type="checkbox"
                       aria-label={`${text("select")} ${start + index + 1}`}
                       checked={selected.includes(String(row.id))}
+                      disabled={disabled}
                       onChange={(event) =>
                         setSelected((current) =>
                           event.target.checked
@@ -177,37 +269,32 @@ export default function ReportLedger({
                       }
                     />
                   </td>
-                  <td>{start + index + 1}</td>
-                  {columns.map((column) => (
+                  <td className="report-muted">{start + index + 1}</td>
+                  {columns.map((column, position) => (
                     <td
                       key={column.key}
-                      className={
-                        ["NUMBER", "MONEY", "PERCENT"].includes(column.type)
-                          ? "report-number"
-                          : undefined
-                      }
+                      data-label={columnLabel(column, lang)}
+                      className={`${position > 4 ? "report-mobile-hidden" : ""} ${position === 0 ? "report-sticky" : ""} ${["NUMBER", "MONEY", "PERCENT"].includes(column.type) ? "report-number" : ""}`}
                     >
-                      {/^(status|paymentStatus|moderationStatus|activeState|reconciliationOutcome)$/.test(
-                        column.key,
-                      ) && row[column.key] ? (
-                        <StatusBadge status={row[column.key]} />
-                      ) : (
-                        reportValue(row[column.key], column, lang, row)
-                      )}
+                      {cell(row, column)}
                     </td>
                   ))}
                   <td>
-                    <ActionButton
-                      onClick={() => {
-                        setDetail(row);
-                        dialog.current.showModal();
-                      }}
+                    <button
+                      type="button"
+                      className="report-row-details"
+                      onClick={() => setDetail(row)}
+                      aria-label={`${text("details")} #${start + index + 1}`}
                     >
-                      {text("details")} #{start + index + 1}
-                    </ActionButton>
+                      <ChevronRight size={19} aria-hidden="true" />
+                    </button>
                   </td>
                 </tr>
               ))
+            ) : (
+              <tr>
+                <td colSpan={columns.length + 3}>{empty}</td>
+              </tr>
             )}
           </tbody>
         </table>
@@ -232,39 +319,46 @@ export default function ReportLedger({
           {Math.min(start + rows.length, report.totalElements)} /{" "}
           {report.totalElements}
         </span>
-        <ActionButton
-          disabled={report.page === 0 || disabled}
-          onClick={() => onQuery({ page: report.page - 1 })}
-        >
-          {text("previous")}
-        </ActionButton>
-        <ActionButton
-          disabled={report.page + 1 >= report.totalPages || disabled}
-          onClick={() => onQuery({ page: report.page + 1 })}
-        >
-          {text("next")}
-        </ActionButton>
+        <div>
+          <ActionButton
+            disabled={report.page === 0 || disabled}
+            onClick={() => onQuery({ page: report.page - 1 })}
+          >
+            {text("previous")}
+          </ActionButton>
+          <ActionButton
+            disabled={report.page + 1 >= report.totalPages || disabled}
+            onClick={() => onQuery({ page: report.page + 1 })}
+          >
+            {text("next")}
+          </ActionButton>
+        </div>
       </div>
-      <dialog
-        ref={dialog}
-        className="report-detail-dialog"
-        aria-label={text("details")}
+      <ReportDrawer
+        open={Boolean(detail)}
         onClose={() => setDetail(null)}
+        title={text("details")}
+        lang={lang}
       >
-        <h3>{text("details")}</h3>
-        <dl>
-          {detail &&
-            report.definition.columns.map((column) => (
-              <div key={column.key}>
-                <dt>{columnLabel(column, lang)}</dt>
-                <dd>{reportValue(detail[column.key], column, lang, detail)}</dd>
-              </div>
-            ))}
-        </dl>
-        <ActionButton onClick={() => dialog.current.close()}>
-          {text("close")}
-        </ActionButton>
-      </dialog>
+        {detail && (
+          <div className="report-detail-content">
+            <p className="report-detail-title">{rowTitle(detail)}</p>
+            <p className="report-muted">
+              {text("snapshot")}: {report.metadata.snapshotId}
+            </p>
+            <dl>
+              {allColumns.map((column) => (
+                <div key={column.key}>
+                  <dt>{columnLabel(column, lang)}</dt>
+                  <dd>
+                    {displayValue(detail[column.key], column, lang, detail)}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        )}
+      </ReportDrawer>
     </section>
   );
 }

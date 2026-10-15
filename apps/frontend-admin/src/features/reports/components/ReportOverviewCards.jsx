@@ -1,55 +1,52 @@
-import { Users, Mail, TrendingUp, UserCheck, CalendarDays } from "lucide-react";
-import { StatCard } from "../../../shared/ui/AdminUI";
-import { reportText, reportValue } from "../reportModel";
+import { reportValue } from "../reportModel";
+import { workspaceText } from "../reportWorkspace";
+import ReportKpi from "./ReportKpi";
 export default function ReportOverviewCards({ summary, lang }) {
-  const text = (key) => reportText(key, lang);
-  const fields = [
-    ["totalUsers", Users],
-    ["activeUsers", Users],
-    ["totalInvitations", Mail],
-    ["activeSubscriptions", CalendarDays],
-    ["totalGuests", UserCheck],
-    ["totalRsvps", UserCheck],
-  ];
+  const text = (key) => workspaceText(key, lang);
   return (
     <section
-      className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4"
+      className="report-kpis report-overview-kpis"
       aria-label={text("fullScope")}
     >
-      {fields.map(([key, Icon]) => (
-        <StatCard
-          key={key}
-          label={text(key)}
-          value={reportValue(summary[key], { type: "NUMBER" }, lang)}
-          icon={Icon}
-          tone="amber"
-        />
-      ))}
       {["USD", "KHR"].map((currency) => (
-        <StatCard
+        <ReportKpi
           key={currency}
-          label={`${text("confirmedReceipts")} \u00b7 ${currency}`}
+          label={`${text("confirmedReceipts")} · ${currency}`}
           value={reportValue(
             summary.confirmedReceiptsByCurrency?.[currency],
             { type: "MONEY" },
             lang,
             { currency },
           )}
-          icon={TrendingUp}
+          note={text("cashHint")}
           tone="emerald"
         />
       ))}
-      <StatCard
-        label={text("periodGrowth")}
-        value={reportValue(summary.periodGrowth, { type: "PERCENT" }, lang)}
-        note={
-          summary.periodGrowth == null
-            ? `${text("noActivity")} \u00b7 ${summary.growthState || ""}`
-            : text("fullScope")
-        }
-        icon={TrendingUp}
-        tone="cyan"
-      />
+      {[
+        "totalInvitations",
+        "totalUsers",
+        "activeSubscriptions",
+        "periodGrowth",
+      ].map((key) => (
+        <ReportKpi
+          key={key}
+          label={text(key)}
+          value={reportValue(
+            summary[key],
+            { type: key === "periodGrowth" ? "PERCENT" : "NUMBER" },
+            lang,
+          )}
+          note={
+            key === "periodGrowth"
+              ? text(summary[key] == null ? "noActivity" : "fullScope")
+              : text(
+                  ["totalUsers", "activeSubscriptions"].includes(key)
+                    ? "currentSnapshot"
+                    : "fullScope",
+                )
+          }
+        />
+      ))}
     </section>
   );
 }

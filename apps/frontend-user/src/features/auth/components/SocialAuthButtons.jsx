@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import authService from "@/features/auth/api/authApi";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import { buildTelegramOAuthUrl, TELEGRAM_OAUTH_ORIGIN } from "./telegramOAuth";
 import { socialAuthError } from "./socialAuthError";
 
@@ -387,6 +388,8 @@ function openTelegramLogin(clientId, onResult, onError) {
 export default function SocialAuthButtons({ redirectTo = "/dashboard/events", mode = "login", onLinked }) {
   const navigate = useNavigate();
   const { login, updateUser, isAuthenticated } = useAuth();
+  const lang = useLanguageStore((state) => state.lang);
+  const isKm = lang === "km";
   const linking = mode === "link";
 
   const [busy, setBusy] = useState("");
@@ -529,6 +532,7 @@ export default function SocialAuthButtons({ redirectTo = "/dashboard/events", mo
             onError={setError}
             busy={busy === "google"}
             onBusyChange={(v) => setBusy(v ? "google" : "")}
+            lang={lang}
           />
         ) : (
           <button
@@ -536,7 +540,8 @@ export default function SocialAuthButtons({ redirectTo = "/dashboard/events", mo
             className="auth-social-btn google"
             onClick={() => setError(GOOGLE_CONFIG_ERROR)}
           >
-            <GoogleIcon /> បន្តជាមួយ Google
+            <GoogleIcon />
+            <span>{isKm ? "បន្តជាមួយ Google" : "Continue with Google"}</span>
           </button>
         )}
 
@@ -549,7 +554,13 @@ export default function SocialAuthButtons({ redirectTo = "/dashboard/events", mo
             disabled={busy === "telegram" || !telegramReady}
           >
             <TelegramIcon />
-            {!telegramReady ? "Loading Telegram…" : busy === "telegram" ? "Logging in…" : "បន្តជាមួយ Telegram"}
+            <span>
+              {!telegramReady
+                ? (isKm ? "កំពុងផ្ទុក Telegram…" : "Loading Telegram…")
+                : busy === "telegram"
+                ? (isKm ? "កំពុងចូល Telegram…" : "Logging in…")
+                : (isKm ? "បន្តជាមួយ Telegram" : "Continue with Telegram")}
+            </span>
           </button>
         )}
 
@@ -569,14 +580,22 @@ export default function SocialAuthButtons({ redirectTo = "/dashboard/events", mo
               disabled={busy === "telegram"}
             >
               <TelegramIcon />
-              {busy === "telegram" ? "Logging in…" : "បន្តជាមួយ Telegram"}
+              <span>
+                {busy === "telegram"
+                  ? (isKm ? "កំពុងចូល Telegram…" : "Logging in…")
+                  : (isKm ? "បន្តជាមួយ Telegram" : "Continue with Telegram")}
+              </span>
             </button>
           ) : (
             <div className="auth-social-widget-tg">
               <div ref={widgetHostRef} className="auth-tg-iframe-host" />
               <div className="auth-social-btn telegram auth-tg-fake-btn" aria-hidden="true">
                 <TelegramIcon />
-                {busy === "telegram" ? "Logging in…" : "បន្តជាមួយ Telegram"}
+                <span>
+                  {busy === "telegram"
+                    ? (isKm ? "កំពុងចូល Telegram…" : "Logging in…")
+                    : (isKm ? "បន្តជាមួយ Telegram" : "Continue with Telegram")}
+                </span>
               </div>
             </div>
           )
@@ -589,7 +608,8 @@ export default function SocialAuthButtons({ redirectTo = "/dashboard/events", mo
             className="auth-social-btn telegram"
             onClick={() => setError(TELEGRAM_CONFIG_ERROR)}
           >
-            <TelegramIcon /> បន្តជាមួយ Telegram
+            <TelegramIcon />
+            <span>{isKm ? "បន្តជាមួយ Telegram" : "Continue with Telegram"}</span>
           </button>
         )}
 
@@ -616,9 +636,10 @@ export default function SocialAuthButtons({ redirectTo = "/dashboard/events", mo
 /* ─── GoogleSignInButton ─────────────────────────────────────
    Google requires the visible button rendered by its Identity Services SDK.
 ──────────────────────────────────────────────────────────── */
-function GoogleSignInButton({ clientId, onSuccess, onError, busy, onBusyChange }) {
+function GoogleSignInButton({ clientId, onSuccess, onError, busy, onBusyChange, lang = "km" }) {
   const containerRef = useRef(null);
   const [ready, setReady] = useState(false);
+  const isKm = lang === "km";
 
   useEffect(() => {
     let cancelled = false;
@@ -641,7 +662,7 @@ function GoogleSignInButton({ clientId, onSuccess, onError, busy, onBusyChange }
       containerRef.current.innerHTML = "";
       window.google.accounts.id.renderButton(containerRef.current, {
         type: "standard", theme: "outline", size: "large",
-        text: "continue_with", shape: "rectangular", logo_alignment: "left",
+        text: "continue_with", shape: "pill", logo_alignment: "left",
         width: Math.min(400, Math.max(200, containerRef.current.offsetWidth || 320)),
       });
       if (!cancelled) setReady(true);
@@ -655,16 +676,17 @@ function GoogleSignInButton({ clientId, onSuccess, onError, busy, onBusyChange }
 
   return (
     <div className={`auth-google-wrap${busy ? " is-busy" : ""}`} aria-busy={busy}>
-      <div ref={containerRef} className="auth-gsi-host" />
-      {!ready && <button
-        type="button"
-        className="auth-social-btn google"
-        disabled
-        aria-label="Google login is loading"
-      >
+      <div className="auth-social-btn google auth-google-display-btn" aria-hidden="true">
         <GoogleIcon />
-        Loading Google…
-      </button>}
+        <span>
+          {!ready
+            ? (isKm ? "កំពុងផ្ទុក Google…" : "Loading Google…")
+            : busy
+            ? (isKm ? "កំពុងចូល Google…" : "Signing in…")
+            : (isKm ? "បន្តជាមួយ Google" : "Continue with Google")}
+        </span>
+      </div>
+      <div ref={containerRef} className="auth-gsi-host" />
     </div>
   );
 }

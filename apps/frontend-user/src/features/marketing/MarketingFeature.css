@@ -118,7 +118,7 @@
   justify-content: center;
   gap: 10px;
   min-height: 50px;
-  padding: 12px 24px;
+  padding: 12px 26px;
   border: 1px solid var(--kp-deep);
   background: var(--kp-deep);
   color: var(--kp-bg);
@@ -126,8 +126,8 @@
   font-size: 15px;
   font-weight: 500;
   line-height: 1.6;
-  border-radius: 6px;
-  transition: transform 0.25s var(--kp-ease), background 0.25s, border-color 0.25s;
+  border-radius: var(--kp-radius-pill, 9999px);
+  transition: transform 0.25s var(--kp-ease), background 0.25s, border-color 0.25s, box-shadow 0.25s;
   box-shadow: 0 4px 14px -3px rgba(46, 67, 58, 0.25);
   box-sizing: border-box;
   max-width: 100%;
@@ -136,7 +136,8 @@
 .kp-button:hover {
   background: #22332C;
   border-color: #22332C;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px -4px rgba(46, 67, 58, 0.35);
 }
 
 .kp-text-link {
@@ -670,15 +671,15 @@
   gap: 8px;
   align-items: center;
   justify-content: center;
-  min-height: 48px;
-  padding: 8px 16px;
+  min-height: 44px;
+  padding: 8px 18px;
   border: 1px solid var(--kp-border);
   color: var(--kp-ink);
   background: var(--kp-surface);
   cursor: pointer;
   font: 500 13px/1.6 var(--kp-font);
-  border-radius: 6px;
-  transition: all 0.2s;
+  border-radius: var(--kp-radius-pill, 9999px);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   box-sizing: border-box;
   max-width: 100%;
 }
@@ -687,10 +688,12 @@
   color: var(--kp-bg);
   border-color: var(--kp-deep);
   background: var(--kp-deep);
+  box-shadow: 0 4px 12px rgba(46, 67, 58, 0.2);
 }
 
 .kp-stage-controls button:hover:not([aria-pressed="true"]) {
   border-color: var(--kp-gold);
+  transform: translateY(-1px);
 }
 
 .kp-stage-controls button span {

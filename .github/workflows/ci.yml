@@ -270,6 +270,35 @@ jobs:
         working-directory: apps/frontend-user
         run: npx playwright test tests/e2e/route-smoke.spec.js
 
+      - name: Install isolated accessibility QA tool
+        run: npm install --prefix "$RUNNER_TEMP/report-a11y" --no-save --ignore-scripts --no-audit axe-core@4.14.0
+
+      - name: Verify reporting workspace, exports, and PDF journeys
+        env:
+          ADMIN_REPORT_AXE_PATH: ${{ runner.temp }}/report-a11y/node_modules/axe-core/axe.min.js
+        shell: bash
+        run: |
+          set -euo pipefail
+          node apps/frontend-admin/node_modules/vite/bin/vite.js preview apps/frontend-admin --host 127.0.0.1 --port 4184 --strictPort > "$RUNNER_TEMP/report-preview.log" 2>&1 &
+          preview_pid=$!
+          trap 'kill "$preview_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent http://127.0.0.1:4184/ > /dev/null; then break; fi
+            sleep 1
+          done
+          node scripts/qa/admin-reporting-browser.mjs
+          node scripts/qa/admin-reports-workspace.mjs
+
+      - name: Upload reporting workspace evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: admin-reports-workspace-evidence
+          path: |
+            output/playwright/admin-reports-workspace/after/
+            output/admin-reporting/browser-evidence.json
+          if-no-files-found: ignore
+
       - name: Upload Playwright diagnostics
         if: failure()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

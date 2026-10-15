@@ -1,46 +1,37 @@
-import { eventTypeLabel } from "../reportConstants";
-import { reportText, reportValue } from "../reportModel";
-
+import { reportValue } from "../reportModel";
+import { valueLabel, workspaceText } from "../reportWorkspace";
 export default function CategoryBreakdownSection({
   categoryBreakdown,
   onSelectCategory,
   lang,
 }) {
+  const max = Math.max(...categoryBreakdown.map((point) => point.total), 1);
   return (
-    <section
-      className="card"
-      aria-label={reportText("eventCategoryBreakdown", lang)}
-    >
-      <h3>{reportText("eventCategoryBreakdown", lang)}</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>{reportText("eventType", lang)}</th>
-            <th>{reportText("count", lang)}</th>
-            <th>{reportText("publishedInvitations", lang)}</th>
-            <th>{reportText("publishedRate", lang)}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {categoryBreakdown.map((point) => (
-            <tr key={point.category}>
-              <th scope="row">
-                <button
-                  type="button"
-                  onClick={() => onSelectCategory(point.category)}
-                >
-                  {eventTypeLabel(point.category, lang)} ↗
-                </button>
-              </th>
-              <td>{point.total}</td>
-              <td>{point.published}</td>
-              <td>
-                {reportValue(point.publishedRate, { type: "PERCENT" }, lang)}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </section>
+    <div className="report-rankings report-category-rankings">
+      {categoryBreakdown.map((point) => (
+        <div key={point.category}>
+          <div>
+            {onSelectCategory ? (
+              <button
+                type="button"
+                onClick={() => onSelectCategory(point.category)}
+              >
+                {valueLabel(point.category, lang)} ↗
+              </button>
+            ) : (
+              <span>{valueLabel(point.category, lang)}</span>
+            )}
+            <strong>{point.total}</strong>
+          </div>
+          <div className="report-ranking-track" aria-hidden="true">
+            <span style={{ width: `${(point.total / max) * 100}%` }} />
+          </div>
+          <small>
+            {workspaceText("publishedRate", lang)}:{" "}
+            {reportValue(point.publishedRate, { type: "PERCENT" }, lang)}
+          </small>
+        </div>
+      ))}
+    </div>
   );
 }

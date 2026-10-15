@@ -1,4 +1,4 @@
-import { StatCard } from "../../../shared/ui/AdminUI";
+import ReportKpi from "./ReportKpi";
 import { reportText, reportValue } from "../reportModel";
 import ReportLedger from "./ReportLedger";
 
@@ -12,11 +12,11 @@ export default function GuestsRsvpCheckinSection({
   return (
     <div className="space-y-4">
       <section
-        className="grid grid-cols-1 sm:grid-cols-3 gap-4"
+        className="report-kpis"
         aria-label={reportText("fullScope", lang)}
       >
         {["totalGuests", "totalRsvps", "totalCheckIns"].map((key) => (
-          <StatCard
+          <ReportKpi
             key={key}
             label={reportText(key, lang)}
             value={reportValue(summary[key], { type: "NUMBER" }, lang)}
@@ -25,7 +25,7 @@ export default function GuestsRsvpCheckinSection({
           />
         ))}
         {["rsvpRate", "checkInRate"].map((key) => (
-          <StatCard
+          <ReportKpi
             key={key}
             label={reportText(key, lang)}
             value={reportValue(summary[key], { type: "PERCENT" }, lang)}

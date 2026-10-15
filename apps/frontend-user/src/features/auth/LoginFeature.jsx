@@ -5,6 +5,7 @@ import { useToggle } from "../../shared/hooks/useToggle";
 import { useT } from "../../shared/i18n/useT";
 import authService from "@/features/auth/api/authApi";
 import SocialAuthButtons from "./components/SocialAuthButtons";
+import AuthLayout from "./components/AuthLayout";
 import "./AuthPage.css";
 
 function getSafeRedirect(searchParams) {
@@ -54,12 +55,7 @@ function Login() {
   };
 
   return (
-    <div className="auth-page">
-      {/* Background blobs */}
-      <div className="auth-blob auth-blob-1" />
-      <div className="auth-blob auth-blob-2" />
-      <div className="auth-blob auth-blob-3" />
-
+    <AuthLayout>
       {/* Card */}
       <div className="auth-card">
         {/* Header */}
@@ -173,10 +169,13 @@ function Login() {
 
         {/* Register link */}
         <p className="auth-footer-text">
-          {auth("noAccount")} <Link to="/register">{nav("register")}</Link>
+          {auth("noAccount")}{" "}
+          <Link to={redirectTo && redirectTo !== "/dashboard/events" ? `/register?next=${encodeURIComponent(redirectTo)}` : "/register"}>
+            {nav("register")}
+          </Link>
         </p>
       </div>
-    </div>
+    </AuthLayout>
   );
 }
 

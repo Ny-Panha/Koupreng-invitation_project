@@ -1,14 +1,25 @@
 import { useId, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useToggle } from "../../shared/hooks/useToggle";
 import { useT } from "../../shared/i18n/useT";
 import authService from "@/features/auth/api/authApi";
 import SocialAuthButtons from "./components/SocialAuthButtons";
+import AuthLayout from "./components/AuthLayout";
 import "./AuthPage.css";
 
 const MIN_PASSWORD_LENGTH = 8;
 const MAX_PASSWORD_LENGTH = 100;
+
+function getSafeRedirect(searchParams) {
+  const redirect = searchParams.get("next") || searchParams.get("redirect");
+
+  if (!redirect || !redirect.startsWith("/") || redirect.startsWith("//")) {
+    return "/dashboard/events";
+  }
+
+  return redirect;
+}
 
 function RequirementIcon({ met }) {
   return (
@@ -48,8 +59,10 @@ function Register() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { login } = useAuth();
   const { auth } = useT();
+  const redirectTo = getSafeRedirect(searchParams);
 
   // Match the backend's character checks on UTF-16 code units,
   // including Khmer letters and digits.
@@ -88,7 +101,7 @@ function Register() {
         password,
       });
       login(authData);
-      navigate("/dashboard/events");
+      navigate(redirectTo);
     } catch (err) {
       setError(err.message || auth("registerFailed"));
     } finally {
@@ -97,12 +110,7 @@ function Register() {
   };
 
   return (
-    <div className="auth-page">
-      {/* Background blobs */}
-      <div className="auth-blob auth-blob-1" />
-      <div className="auth-blob auth-blob-2" />
-      <div className="auth-blob auth-blob-3" />
-
+    <AuthLayout>
       {/* Card */}
       <div className="auth-card">
         {/* Header */}
@@ -217,15 +225,17 @@ function Register() {
         <p className="auth-divider">{auth("orContinueWith")}</p>
 
         {/* Social buttons */}
-        <SocialAuthButtons />
+        <SocialAuthButtons redirectTo={redirectTo} />
 
         {/* Login link */}
         <p className="auth-footer-text" style={{ marginTop: "14px" }}>
           {auth("haveAccount")}{" "}
-          <Link to="/login">{auth("signIn")}</Link>
+          <Link to={redirectTo && redirectTo !== "/dashboard/events" ? `/login?next=${encodeURIComponent(redirectTo)}` : "/login"}>
+            {auth("signIn")}
+          </Link>
         </p>
       </div>
-    </div>
+    </AuthLayout>
   );
 }
 
