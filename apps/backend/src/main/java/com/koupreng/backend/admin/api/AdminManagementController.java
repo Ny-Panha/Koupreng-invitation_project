@@ -58,17 +58,23 @@ public class AdminManagementController {
     private final AuditLogService auditLogService;
     private final SubscriptionService subscriptionService;
     private final PaymentHistoryService paymentHistoryService;
+    private final com.koupreng.backend.admin.application.AdminReportingService reportingService;
+    private final com.koupreng.backend.admin.application.AdminReportExportService reportExports;
 
     public AdminManagementController(
             AdminManagementService adminManagementService,
             AuditLogService auditLogService,
             SubscriptionService subscriptionService,
-            PaymentHistoryService paymentHistoryService
+            PaymentHistoryService paymentHistoryService,
+            com.koupreng.backend.admin.application.AdminReportingService reportingService,
+            com.koupreng.backend.admin.application.AdminReportExportService reportExports
     ) {
         this.adminManagementService = adminManagementService;
         this.auditLogService = auditLogService;
         this.subscriptionService = subscriptionService;
         this.paymentHistoryService = paymentHistoryService;
+        this.reportingService = reportingService;
+        this.reportExports = reportExports;
     }
 
     @PostMapping("/users")
@@ -284,32 +290,27 @@ public class AdminManagementController {
     }
 
     @GetMapping("/reports/invitations")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Invitation report", description = "view=ledger selects the minimized versioned report contract with period/sort/metadata; omitted view retains the legacy response.")
     public ResponseEntity<ApiResponse<AdminReportResponse>> invitationsReport(
-            @RequestParam(required = false) String eventType,
-            @RequestParam(required = false) String status,
-            @RequestParam(required = false) String moderationStatus,
-            @RequestParam(required = false) String search,
-            @RequestParam(required = false, defaultValue = "0") Integer page,
-            @RequestParam(required = false, defaultValue = "20") Integer size
+            Authentication authentication,
+            @RequestParam(defaultValue = "legacy") String view,
+            @org.springdoc.core.annotations.ParameterObject @org.springframework.web.bind.annotation.ModelAttribute com.koupreng.backend.admin.api.dto.AdminReportQuery query
     ) {
-        return ResponseEntity.ok(ApiResponse.success(
-                "Invitation report fetched successfully",
-                adminManagementService.invitationsReport(eventType, status, moderationStatus, search, page, size)
-        ));
+        if ("ledger".equals(view)) return ResponseEntity.ok().header(HttpHeaders.CACHE_CONTROL, "no-store")
+                .body(ApiResponse.success("Invitation ledger", reportingService.report(authentication, "invitations", query)));
+        if (!"legacy".equals(view) || query.getFrom() != null || query.getTo() != null || query.getDateDimension() != null || query.getSort() != null || query.getDirection() != null)
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Use view=ledger for reporting date/sort filters");
+        return ResponseEntity.ok(ApiResponse.success("Invitation report fetched successfully",
+                adminManagementService.invitationsReport(query.getEventType(), query.getStatus(), query.getModerationStatus(), query.getSearch(), query.getPage(), query.getSize())));
     }
 
     @GetMapping(value = "/reports/invitations/export", produces = "text/csv; charset=UTF-8")
-    public ResponseEntity<byte[]> exportInvitationsCsv(
-            @RequestParam(required = false) String eventType,
-            @RequestParam(required = false) String status,
-            @RequestParam(required = false) String moderationStatus,
-            @RequestParam(required = false) String search
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode="200",description="Complete legacy-header CSV attachment",content=@io.swagger.v3.oas.annotations.media.Content(mediaType="text/csv",schema=@io.swagger.v3.oas.annotations.media.Schema(type="string",format="binary")))
+    public ResponseEntity<org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody> exportInvitationsCsv(
+            Authentication authentication,
+            @org.springdoc.core.annotations.ParameterObject @org.springframework.web.bind.annotation.ModelAttribute com.koupreng.backend.admin.api.dto.AdminReportQuery query
     ) {
-        byte[] csv = adminManagementService.exportInvitationsCsv(eventType, status, moderationStatus, search);
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"invitations-report.csv\"")
-                .header(HttpHeaders.CONTENT_TYPE, "text/csv; charset=UTF-8")
-                .body(csv);
+        return AdminReportingController.download(reportExports, authentication, "invitations", "csv", query, true);
     }
 
     @GetMapping("/reports/payments")
@@ -321,12 +322,12 @@ public class AdminManagementController {
     }
 
     @GetMapping(value = "/reports/payments/export", produces = "text/csv; charset=UTF-8")
-    public ResponseEntity<byte[]> exportPaymentsCsv() {
-        byte[] csv = adminManagementService.exportPaymentsCsv();
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"payments-report.csv\"")
-                .header(HttpHeaders.CONTENT_TYPE, "text/csv; charset=UTF-8")
-                .body(csv);
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode="200",description="Complete legacy-header CSV attachment",content=@io.swagger.v3.oas.annotations.media.Content(mediaType="text/csv",schema=@io.swagger.v3.oas.annotations.media.Schema(type="string",format="binary")))
+    public ResponseEntity<org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody> exportPaymentsCsv(
+            Authentication authentication,
+            @org.springdoc.core.annotations.ParameterObject @org.springframework.web.bind.annotation.ModelAttribute com.koupreng.backend.admin.api.dto.AdminReportQuery query
+    ) {
+        return AdminReportingController.download(reportExports, authentication, "payments", "csv", query, true);
     }
 
     @GetMapping("/reports/rsvp")

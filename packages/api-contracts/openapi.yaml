@@ -73,6 +73,9 @@ tags:
   description: "Current-user profile, password, and validated profile-image operations."
 - name: Templates
   description: Public active invitation template catalog.
+- name: Management reporting
+  description: Read-only ADMIN reports. Calendar dates use Asia/Phnom_Penh; from inclusive
+    / to exclusive. No settlement operations.
 - name: Events
   description: ADMIN-only lifecycle operations for the legacy event model.
 paths:
@@ -6325,12 +6328,251 @@ paths:
                 $ref: "#/components/schemas/ApiResponseAdminReportResponse"
       security:
       - bearerAuth: []
-  /api/v1/admin/reports/invitations:
+  /api/v1/admin/reports/payments/export:
     get:
       tags:
       - Administration
-      summary: Invitations Report
-      operationId: invitationsReport
+      summary: Export Payments Csv
+      operationId: exportPaymentsCsv
+      parameters:
+      - name: from
+        in: query
+        description: Inclusive Phnom Penh calendar date; supply both bounds or neither
+        required: false
+        schema:
+          type: string
+          format: date
+          description: Inclusive Phnom Penh calendar date; supply both bounds or neither
+          example: 2026-10-01
+        example: 2026-10-01
+      - name: to
+        in: query
+        description: Exclusive Phnom Penh calendar date
+        required: false
+        schema:
+          type: string
+          format: date
+          description: Exclusive Phnom Penh calendar date
+          example: 2026-11-01
+        example: 2026-11-01
+      - name: dateDimension
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: eventType
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: moderationStatus
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: paymentType
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: paymentStatus
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: provider
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: currency
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: packageId
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: sort
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: direction
+        in: query
+        required: false
+        schema:
+          type: string
+          default: DESC
+          enum:
+          - ASC
+          - DESC
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          maximum: 1000000
+          minimum: 0
+        example: 0
+      - name: size
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 20
+          maximum: 200
+          minimum: 1
+        example: 20
+      responses:
+        "200":
+          description: Complete legacy-header CSV attachment
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+      security:
+      - bearerAuth: []
+  /api/v1/admin/reports/management/{report}:
+    get:
+      tags:
+      - Management reporting
+      summary: "Filtered, sorted report page"
+      description: "One repeatable-read snapshot for rows, totals and chart aggregates.\
+        \ size 1..200; sort is a schema column; a stable ID tie-breaker is appended.\
+        \ Monetary chart groups below five payments are suppressed. Individual ledgers\
+        \ are explicitly ADMIN-authorized, not public aggregates."
+      operationId: report
+      parameters:
+      - name: report
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: from
+        in: query
+        description: Inclusive Phnom Penh calendar date; supply both bounds or neither
+        required: false
+        schema:
+          type: string
+          format: date
+          description: Inclusive Phnom Penh calendar date; supply both bounds or neither
+          example: 2026-10-01
+        example: 2026-10-01
+      - name: to
+        in: query
+        description: Exclusive Phnom Penh calendar date
+        required: false
+        schema:
+          type: string
+          format: date
+          description: Exclusive Phnom Penh calendar date
+          example: 2026-11-01
+        example: 2026-11-01
+      - name: dateDimension
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: eventType
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: moderationStatus
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: paymentType
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: paymentStatus
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: provider
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: currency
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: packageId
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: sort
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: direction
+        in: query
+        required: false
+        schema:
+          type: string
+          default: DESC
+          enum:
+          - ASC
+          - DESC
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          maximum: 1000000
+          minimum: 0
+        example: 0
+      - name: size
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 20
+          maximum: 200
+          minimum: 1
+        example: 20
       responses:
         "200":
           description: OK
@@ -6338,6 +6580,421 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ApiResponseAdminReportResponse"
+      security:
+      - bearerAuth: []
+  /api/v1/admin/reports/management/{report}/export/{format}:
+    get:
+      tags:
+      - Management reporting
+      summary: "Complete filtered CSV, XLSX or print HTML"
+      description: "Page/size do not truncate exports. Bounded batches and SXSSF spill\
+        \ to a temporary snapshot file, then stream it after releasing the database\
+        \ transaction. html is print content, not a PDF download. report=all supports\
+        \ XLSX and common date filters only; individual exports preserve all supported\
+        \ filters."
+      operationId: export_1
+      parameters:
+      - name: report
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: format
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: from
+        in: query
+        description: Inclusive Phnom Penh calendar date; supply both bounds or neither
+        required: false
+        schema:
+          type: string
+          format: date
+          description: Inclusive Phnom Penh calendar date; supply both bounds or neither
+          example: 2026-10-01
+        example: 2026-10-01
+      - name: to
+        in: query
+        description: Exclusive Phnom Penh calendar date
+        required: false
+        schema:
+          type: string
+          format: date
+          description: Exclusive Phnom Penh calendar date
+          example: 2026-11-01
+        example: 2026-11-01
+      - name: dateDimension
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: eventType
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: moderationStatus
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: paymentType
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: paymentStatus
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: provider
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: currency
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: packageId
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: sort
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: direction
+        in: query
+        required: false
+        schema:
+          type: string
+          default: DESC
+          enum:
+          - ASC
+          - DESC
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          maximum: 1000000
+          minimum: 0
+        example: 0
+      - name: size
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 20
+          maximum: 200
+          minimum: 1
+        example: 20
+      responses:
+        "200":
+          description: Complete filtered attachment
+          content:
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+            text/csv:
+              schema:
+                type: string
+                format: binary
+            text/html:
+              schema:
+                type: string
+      security:
+      - bearerAuth: []
+  /api/v1/admin/reports/management/definitions:
+    get:
+      tags:
+      - Management reporting
+      summary: Report schemas and KPI dictionary
+      description: "Bilingual columns, supported filters/date dimensions, unavailable-data\
+        \ notices and metric definitions."
+      operationId: definitions
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseCatalog"
+      security:
+      - bearerAuth: []
+  /api/v1/admin/reports/invitations:
+    get:
+      tags:
+      - Administration
+      summary: Invitation report
+      description: view=ledger selects the minimized versioned report contract with
+        period/sort/metadata; omitted view retains the legacy response.
+      operationId: invitationsReport
+      parameters:
+      - name: view
+        in: query
+        required: false
+        schema:
+          type: string
+          default: legacy
+      - name: from
+        in: query
+        description: Inclusive Phnom Penh calendar date; supply both bounds or neither
+        required: false
+        schema:
+          type: string
+          format: date
+          description: Inclusive Phnom Penh calendar date; supply both bounds or neither
+          example: 2026-10-01
+        example: 2026-10-01
+      - name: to
+        in: query
+        description: Exclusive Phnom Penh calendar date
+        required: false
+        schema:
+          type: string
+          format: date
+          description: Exclusive Phnom Penh calendar date
+          example: 2026-11-01
+        example: 2026-11-01
+      - name: dateDimension
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: eventType
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: moderationStatus
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: paymentType
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: paymentStatus
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: provider
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: currency
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: packageId
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: sort
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: direction
+        in: query
+        required: false
+        schema:
+          type: string
+          default: DESC
+          enum:
+          - ASC
+          - DESC
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          maximum: 1000000
+          minimum: 0
+        example: 0
+      - name: size
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 20
+          maximum: 200
+          minimum: 1
+        example: 20
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseAdminReportResponse"
+      security:
+      - bearerAuth: []
+  /api/v1/admin/reports/invitations/export:
+    get:
+      tags:
+      - Administration
+      summary: Export Invitations Csv
+      operationId: exportInvitationsCsv
+      parameters:
+      - name: from
+        in: query
+        description: Inclusive Phnom Penh calendar date; supply both bounds or neither
+        required: false
+        schema:
+          type: string
+          format: date
+          description: Inclusive Phnom Penh calendar date; supply both bounds or neither
+          example: 2026-10-01
+        example: 2026-10-01
+      - name: to
+        in: query
+        description: Exclusive Phnom Penh calendar date
+        required: false
+        schema:
+          type: string
+          format: date
+          description: Exclusive Phnom Penh calendar date
+          example: 2026-11-01
+        example: 2026-11-01
+      - name: dateDimension
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: eventType
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: moderationStatus
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: paymentType
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: paymentStatus
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: provider
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: currency
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: packageId
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: sort
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: direction
+        in: query
+        required: false
+        schema:
+          type: string
+          default: DESC
+          enum:
+          - ASC
+          - DESC
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          maximum: 1000000
+          minimum: 0
+        example: 0
+      - name: size
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 20
+          maximum: 200
+          minimum: 1
+        example: 20
+      responses:
+        "200":
+          description: Complete legacy-header CSV attachment
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
       security:
       - bearerAuth: []
   /api/v1/admin/payments:
@@ -11032,6 +11689,33 @@ components:
         rows:
           type: array
           items: {}
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        definition:
+          $ref: "#/components/schemas/Definition"
+        filteredSummary:
+          type: object
+          additionalProperties: {}
+        series:
+          type: array
+          items:
+            $ref: "#/components/schemas/Series"
+        notices:
+          type: array
+          items:
+            type: string
     ApiResponseAdminReportResponse:
       type: object
       properties:
@@ -11044,6 +11728,143 @@ components:
         timestamp:
           type: string
           format: date-time
+    Column:
+      type: object
+      properties:
+        key:
+          type: string
+        labelKm:
+          type: string
+        labelEn:
+          type: string
+        type:
+          type: string
+    Definition:
+      type: object
+      properties:
+        code:
+          type: string
+        titleKm:
+          type: string
+        titleEn:
+          type: string
+        sheetName:
+          type: string
+        defaultDateDimension:
+          type: string
+        dateDimensions:
+          type: array
+          items:
+            type: string
+        filters:
+          type: array
+          items:
+            type: string
+        columns:
+          type: array
+          items:
+            $ref: "#/components/schemas/Column"
+        notes:
+          type: array
+          items:
+            type: string
+    Metadata:
+      type: object
+      properties:
+        snapshotId:
+          type: string
+        generatedAt:
+          type: string
+          format: date-time
+        timezone:
+          type: string
+        from:
+          type: string
+          format: date
+        to:
+          type: string
+          format: date
+        dateDimension:
+          type: string
+        filters:
+          type: object
+          additionalProperties:
+            type: string
+        totalMatchingRecords:
+          type: integer
+          format: int64
+        scope:
+          type: string
+        sort:
+          type: string
+        direction:
+          type: string
+        version:
+          type: string
+    Series:
+      type: object
+      properties:
+        name:
+          type: string
+        dimension:
+          type: string
+        points:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+    ApiResponseCatalog:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/Catalog"
+        timestamp:
+          type: string
+          format: date-time
+    Catalog:
+      type: object
+      properties:
+        definitions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Definition"
+        metrics:
+          type: array
+          items:
+            $ref: "#/components/schemas/Metric"
+    Metric:
+      type: object
+      properties:
+        code:
+          type: string
+        labelKm:
+          type: string
+        labelEn:
+          type: string
+        definition:
+          type: string
+        calculation:
+          type: string
+        databaseSource:
+          type: string
+        dateDimension:
+          type: string
+        includedStatuses:
+          type: string
+        excludedStatuses:
+          type: string
+        denominator:
+          type: string
+        currencyBehavior:
+          type: string
+        missingDataBehavior:
+          type: string
+        version:
+          type: string
     AdminDashboardSummaryResponse:
       type: object
       properties:

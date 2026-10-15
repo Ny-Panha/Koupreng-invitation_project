@@ -37,11 +37,14 @@ export const adminService = {
   deactivateInvitation: (invitationId) => api.patch(`/v1/admin/invitations/${invitationId}/deactivate`, {}).then(unwrap),
 
   report: (name, params) => api.get(`/v1/admin/reports/${name}`, { params }).then(unwrap),
-  invitationsReport: (params) => api.get("/v1/admin/reports/invitations", { params }).then(unwrapApiData),
+  invitationsReport: (params, signal) => api.get("/v1/admin/reports/invitations", { params, signal }).then(unwrapApiData),
   paymentsReport: (params) => api.get("/v1/admin/reports/payments", { params }).then(unwrapApiData),
   platformReport: (params) => api.get("/v1/admin/reports/platform", { params }).then(unwrapApiData),
   exportInvitationsCsv: (params) => api.get("/v1/admin/reports/invitations/export", { params, responseType: "blob" }),
   exportPaymentsCsv: (params) => api.get("/v1/admin/reports/payments/export", { params, responseType: "blob" }),
+  reportDefinitions: () => api.get("/v1/admin/reports/management/definitions").then(unwrapApiData),
+  managementReport: (name, params, signal) => api.get(`/v1/admin/reports/management/${encodeURIComponent(name)}`, { params, signal }).then(unwrapApiData),
+  exportManagementReport: (name, format, params) => api.get(`/v1/admin/reports/management/${encodeURIComponent(name)}/export/${encodeURIComponent(format)}`, { params, responseType: "blob", timeout: 180000 }),
   systemLogs: () => api.get("/v1/admin/system-logs").then(unwrap),
 
   payments: () => api.get("/v1/admin/payments").then(unwrap),

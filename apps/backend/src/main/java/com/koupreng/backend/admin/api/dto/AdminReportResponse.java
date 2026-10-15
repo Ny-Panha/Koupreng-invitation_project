@@ -23,4 +23,9 @@ public class AdminReportResponse {
     private Integer size;
     private Long totalElements;
     private Integer totalPages;
+    private AdminReportingModels.Metadata metadata;
+    private AdminReportingModels.Definition definition;
+    private Map<String, Object> filteredSummary;
+    private List<AdminReportingModels.Series> series;
+    private List<String> notices;
 }

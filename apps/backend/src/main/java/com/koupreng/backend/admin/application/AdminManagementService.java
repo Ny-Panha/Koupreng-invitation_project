@@ -54,8 +54,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
-import com.koupreng.backend.shared.export.CsvExportUtils;
 import org.springframework.data.domain.PageRequest;
 
 @Service
@@ -65,7 +63,6 @@ public class AdminManagementService {
     private static final String STATUS_DISABLED = AppUser.STATUS_DISABLED;
     private static final String TEMPLATE_STATUS_ACTIVE = "ACTIVE";
     private static final String TEMPLATE_STATUS_INACTIVE = "INACTIVE";
-    private static final String KEEP_TEMPLATE_CODE = "garden-royal-khmer-wedding";
 
     private final AppUserRepository userRepository;
     private final UserInvitationRepository invitationRepository;
@@ -439,9 +436,7 @@ public class AdminManagementService {
         long total = invitationRepository.count();
         long published = invitationRepository.countByStatusAndDeletedFalse(InvitationStatus.PUBLISHED);
         long drafts = invitationRepository.countByStatusAndDeletedFalse(InvitationStatus.DRAFT);
-        long hidden = invitationRepository.findAllByDeletedFalseOrderByCreatedAtDesc().stream()
-                .filter(row -> row.getModerationStatus() == InvitationModerationStatus.HIDDEN)
-                .count();
+        long hidden = invitationRepository.countByModerationStatusAndDeletedFalse(InvitationModerationStatus.HIDDEN);
 
         Map<String, Object> summary = new LinkedHashMap<>();
         summary.put("totalInvitations", total);
@@ -468,57 +463,6 @@ public class AdminManagementService {
     @Transactional(readOnly = true)
     public AdminReportResponse invitationsReport() {
         return invitationsReport(null, null, null, null, 0, 50);
-    }
-
-    @Transactional(readOnly = true)
-    public byte[] exportInvitationsCsv(String eventType, String status, String moderationStatus, String search) {
-        EventType parsedEventType = null;
-        if (eventType != null && !eventType.isBlank() && !"ALL".equalsIgnoreCase(eventType)) {
-            try {
-                parsedEventType = EventType.valueOf(eventType.trim().toUpperCase(Locale.ROOT));
-            } catch (IllegalArgumentException ignored) { }
-        }
-        InvitationStatus parsedStatus = null;
-        if (status != null && !status.isBlank() && !"ALL".equalsIgnoreCase(status)) {
-            try {
-                parsedStatus = InvitationStatus.valueOf(status.trim().toUpperCase(Locale.ROOT));
-            } catch (IllegalArgumentException ignored) { }
-        }
-        InvitationModerationStatus parsedModStatus = null;
-        if (moderationStatus != null && !moderationStatus.isBlank() && !"ALL".equalsIgnoreCase(moderationStatus)) {
-            try {
-                parsedModStatus = InvitationModerationStatus.valueOf(moderationStatus.trim().toUpperCase(Locale.ROOT));
-            } catch (IllegalArgumentException ignored) { }
-        }
-        String searchParam = (search == null || search.isBlank()) ? null : search.trim();
-
-        List<UserInvitation> invitations = invitationRepository.findAllReportInvitations(
-                parsedEventType, parsedStatus, parsedModStatus, searchParam
-        );
-
-        StringBuilder sb = new StringBuilder();
-        sb.append('\uFEFF'); // UTF-8 BOM
-        sb.append(CsvExportUtils.row("ID", "Title", "Slug", "EventType", "Status", "ModerationStatus", "Owner", "EventDate", "Venue", "CreatedAt", "PublishedAt"));
-        sb.append("\r\n");
-
-        for (UserInvitation inv : invitations) {
-            String owner = inv.getUser() != null ? inv.getUser().getFullName() : "";
-            sb.append(CsvExportUtils.row(
-                    inv.getId(),
-                    inv.getTitle(),
-                    inv.getSlug(),
-                    inv.getEventType() != null ? inv.getEventType().name() : "",
-                    inv.getStatus() != null ? inv.getStatus().name() : "",
-                    inv.getModerationStatus() != null ? inv.getModerationStatus().name() : "",
-                    owner,
-                    inv.getEventDate() != null ? inv.getEventDate().toString() : "",
-                    inv.getVenueName() != null ? inv.getVenueName() : "",
-                    inv.getCreatedAt() != null ? inv.getCreatedAt().toString() : "",
-                    inv.getPublishedAt() != null ? inv.getPublishedAt().toString() : ""
-            ));
-            sb.append("\r\n");
-        }
-        return sb.toString().getBytes(StandardCharsets.UTF_8);
     }
 
     @Transactional(readOnly = true)
@@ -622,45 +566,6 @@ public class AdminManagementService {
                 .summary(summary)
                 .rows(txRows)
                 .build();
-    }
-
-    @Transactional(readOnly = true)
-    public byte[] exportPaymentsCsv() {
-        List<TemplatePaymentOrder> orders = paymentOrderRepository.findAll();
-        List<com.koupreng.backend.subscription.domain.Subscription> subscriptions = subscriptionRepository.findAll();
-
-        List<Map<String, Object>> txList = new ArrayList<>();
-        for (var o : orders) {
-            txList.add(safeTransaction(o.getOrderCode(), o.getPackageName(), o.getPaidAmount() == null ? o.getAmount() : o.getPaidAmount(),
-                    o.getCurrency(), o.getStatus() == null ? "" : o.getStatus().name(), o.getProvider(), o.getCreatedAt(), "TEMPLATE"));
-        }
-        for (var s : subscriptions) {
-            String status = s.getPaymentStatus() == null ? s.getStatus() : s.getPaymentStatus();
-            String pkgName = s.getSubscriptionPackage() != null ? s.getSubscriptionPackage().getPackageName() : "Subscription";
-            txList.add(safeTransaction(s.getOrderCode(), pkgName, s.getPaidAmount() == null ? s.getAmount() : s.getPaidAmount(),
-                    s.getCurrency(), status, s.getProvider(), s.getCreatedAt(), "SUBSCRIPTION"));
-        }
-        txList.sort(Comparator.comparing(m -> (Instant) m.get("createdAt"), Comparator.nullsLast(Comparator.reverseOrder())));
-
-        StringBuilder sb = new StringBuilder();
-        sb.append('\uFEFF');
-        sb.append(CsvExportUtils.row("Reference", "Type", "PackageName", "Amount", "Currency", "Status", "Provider", "CreatedAt"));
-        sb.append("\r\n");
-
-        for (var tx : txList) {
-            sb.append(CsvExportUtils.row(
-                    tx.get("reference"),
-                    tx.get("type"),
-                    tx.get("packageName"),
-                    tx.get("amount"),
-                    tx.get("currency"),
-                    tx.get("status"),
-                    tx.get("provider"),
-                    tx.get("createdAt") != null ? tx.get("createdAt").toString() : ""
-            ));
-            sb.append("\r\n");
-        }
-        return sb.toString().getBytes(StandardCharsets.UTF_8);
     }
 
     @Transactional(readOnly = true)
@@ -876,8 +781,8 @@ public class AdminManagementService {
 
         long thisMonthEvents = monthlyEvents.getOrDefault(currentMonth, 0L);
         long lastMonthEvents = monthlyEvents.getOrDefault(currentMonth.minusMonths(1), 0L);
-        double eventGrowthMoM = lastMonthEvents == 0
-                ? (thisMonthEvents > 0 ? 100.0 : 0.0)
+        Double eventGrowthMoM = lastMonthEvents == 0
+                ? null
                 : Math.round(((double)(thisMonthEvents - lastMonthEvents) / lastMonthEvents * 100.0) * 10.0) / 10.0;
 
         List<InvitationResponse> recentInvitations = invitationRepository.findTop10ByDeletedFalseOrderByCreatedAtDesc().stream()
@@ -898,6 +803,7 @@ public class AdminManagementService {
         summary.put("thisMonthEvents", thisMonthEvents);
         summary.put("lastMonthEvents", lastMonthEvents);
         summary.put("eventGrowthMoM", eventGrowthMoM);
+        summary.put("eventGrowthState", lastMonthEvents == 0 ? (thisMonthEvents > 0 ? "NEW_ACTIVITY" : "NO_ACTIVITY") : "COMPARABLE");
         summary.put("eventCategoryBreakdown", categoryBreakdown);
         summary.put("legacyEventCategories", legacyEventCategories);
         summary.put("subscriptionTiers", tierBreakdown);

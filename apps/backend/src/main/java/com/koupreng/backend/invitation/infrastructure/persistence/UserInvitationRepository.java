@@ -17,6 +17,8 @@ import java.time.Instant;
 
 public interface UserInvitationRepository extends JpaRepository<UserInvitation, Long> {
 
+    long countByModerationStatusAndDeletedFalse(InvitationModerationStatus status);
+
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select i from UserInvitation i where i.id = :id and i.user.id = :userId and i.deleted = false")
     Optional<UserInvitation> findForUpdateByIdAndUserId(@Param("id") Long id, @Param("userId") Long userId);

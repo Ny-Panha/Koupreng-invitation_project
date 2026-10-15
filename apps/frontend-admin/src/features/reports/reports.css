@@ -1,0 +1,331 @@
+@font-face {
+  font-family: AdminReportKhmer;
+  src: url("/fonts/reports/KantumruyPro.woff2") format("woff2");
+  font-display: swap;
+}
+.management-reports {
+  font-family: Inter, AdminReportKhmer, sans-serif;
+  min-width: 0;
+}
+.management-reports [lang="km"],
+.management-reports:lang(km) {
+  font-family: AdminReportKhmer, Inter, sans-serif;
+}
+.report-tabs,
+.report-actions,
+.report-filter-row,
+.report-date-form,
+.report-ledger-toolbar,
+.report-pagination,
+.report-preview-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 0.75rem;
+}
+.report-tabs {
+  gap: 0.4rem;
+}
+.report-tabs button {
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 0.65rem;
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+.report-tabs button[aria-current="page"] {
+  background: #79591f;
+  color: #fff;
+  border-color: #79591f;
+}
+.report-filters {
+  padding: 1rem;
+}
+.report-filters label,
+.report-preview-controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  line-height: 1.8;
+}
+.report-filters input,
+.report-filters select,
+.report-ledger select,
+.report-preview-controls select {
+  padding: 0.5rem;
+  border: 1px solid #a8ada7;
+  border-radius: 0.4rem;
+  background: var(--card);
+  color: inherit;
+  max-width: 100%;
+  min-height: 2.5rem;
+}
+.report-filter-row {
+  margin-bottom: 0.75rem;
+}
+.report-filter-row form {
+  display: flex;
+  gap: 0.4rem;
+  align-items: end;
+}
+.report-filters p,
+.report-notes p {
+  font-size: 0.8rem;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+.report-ledger {
+  min-width: 0;
+  padding: 1rem;
+}
+.report-ledger-toolbar,
+.report-pagination {
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+}
+.report-ledger details {
+  position: relative;
+}
+.report-ledger details label {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.3rem;
+}
+.management-report-scroll,
+.report-ledger-scroll,
+.report-table-scroll {
+  max-height: 65vh;
+  overflow: auto;
+  border: 1px solid #9ea69e;
+  border-radius: 0.5rem;
+}
+.report-ledger table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.8rem;
+}
+.report-ledger th,
+.report-ledger td {
+  padding: 0.7rem;
+  border-bottom: 1px solid #c0c7be;
+  border-right: 1px solid #d0d5cd;
+  text-align: left;
+  vertical-align: top;
+  min-width: 9rem;
+  max-width: 24rem;
+  overflow-wrap: anywhere;
+  line-height: 1.8;
+}
+.report-ledger th {
+  position: sticky;
+  top: 0;
+  background: var(--card);
+  z-index: 2;
+  white-space: nowrap;
+}
+.report-ledger th:first-child,
+.report-ledger td:first-child {
+  min-width: 3rem;
+}
+.report-ledger th button {
+  display: block;
+  width: 100%;
+  text-align: inherit;
+}
+.report-ledger tr:nth-child(even) {
+  background: color-mix(in srgb, currentColor 3%, transparent);
+}
+.report-ledger input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  accent-color: #79591f;
+}
+.report-pagination {
+  margin-top: 1rem;
+}
+.report-analytics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  gap: 1rem;
+}
+.report-analytics section {
+  padding: 1rem;
+  overflow: auto;
+}
+.report-analytics table {
+  width: 100%;
+  font-size: 0.8rem;
+  border-collapse: collapse;
+}
+.report-analytics th,
+.report-analytics td {
+  padding: 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid #b7bfb3;
+}
+.report-analytics h3 {
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+.report-bar {
+  display: block;
+  min-height: 5px;
+  background: #a68442;
+  border-radius: 3px;
+}
+.report-notes {
+  padding: 1rem;
+}
+.report-notes summary,
+.report-ledger summary {
+  cursor: pointer;
+}
+.report-ledger dialog {
+  max-width: min(92vw, 60rem);
+  max-height: 85vh;
+  padding: 1.5rem;
+  border-radius: 0.8rem;
+  background: var(--card);
+  color: inherit;
+}
+.report-ledger dialog dt {
+  font-weight: 600;
+  margin-top: 0.8rem;
+}
+.report-ledger dialog dd {
+  overflow-wrap: anywhere;
+}
+.management-print-preview {
+  width: 96vw;
+  max-width: 96vw;
+  height: 94vh;
+  max-height: 94vh;
+  padding: 1rem;
+  border: 0;
+  border-radius: 0.6rem;
+  background: #e5e7eb;
+  color: #17241e;
+  overflow: auto;
+}
+.management-print-preview::backdrop,
+.report-ledger dialog::backdrop {
+  background: #0009;
+}
+.report-preview-controls {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  padding: 0.8rem;
+  background: white;
+  align-items: center;
+}
+.report-preview-controls h2 {
+  flex: 1;
+  min-width: 10rem;
+  font-weight: 600;
+}
+.report-preview-canvas {
+  overflow: auto;
+  padding: 1rem;
+  min-height: 65vh;
+}
+.report-preview-canvas iframe {
+  display: block;
+  border: 0;
+  background: white;
+  box-shadow: 0 4px 20px #0002;
+}
+.management-reports button:focus-visible,
+.management-reports summary:focus-visible {
+  outline: 3px solid #ac7f2a;
+  outline-offset: 3px;
+}
+.dark .report-ledger th,
+.dark .report-filters input,
+.dark .report-filters select,
+.dark .report-ledger select {
+  background: #202a25;
+  color: #f5f1e8;
+}
+.dark .report-ledger tr:nth-child(even) {
+  background: #ffffff08;
+}
+@media (max-width: 640px) {
+  .report-actions > * {
+    flex: 1 1 45%;
+  }
+  .report-filter-row > * {
+    max-width: 100%;
+  }
+  .report-date-form {
+    width: 100%;
+  }
+  .report-tabs button {
+    flex: 1 1 40%;
+  }
+  .report-ledger th,
+  .report-ledger td {
+    min-width: 8rem;
+  }
+  .report-preview-controls {
+    position: static;
+  }
+}
+
+.report-number {
+  text-align: right !important;
+  font-variant-numeric: tabular-nums;
+}
+.report-bar {
+  background: #ddd6c5;
+  height: 6px;
+  margin: 0.3rem 0;
+}
+.report-bar span {
+  display: block;
+  height: 100%;
+  background: #9c7637;
+}
+.report-analytics small {
+  display: block;
+  line-height: 1.8;
+}
+.report-scope-note {
+  font-size: 0.85rem;
+  line-height: 1.8;
+}
+.report-detail-dialog::backdrop {
+  background: #0009;
+}
+
+.management-reports .management-report-table td {
+  white-space: normal;
+  line-height: 1.8;
+}
+.management-reports .management-report-table thead th {
+  background: var(--card);
+  line-height: 1.8;
+}
+.report-ledger h3 {
+  font-weight: 600;
+}
+.report-ledger fieldset {
+  max-height: 20rem;
+  overflow: auto;
+}
+
+.management-report-table tbody td:nth-child(3) {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--card);
+}
+.management-report-table thead th:nth-child(3) {
+  left: 0;
+  z-index: 3;
+}
+.management-report-scroll {
+  isolation: isolate;
+}

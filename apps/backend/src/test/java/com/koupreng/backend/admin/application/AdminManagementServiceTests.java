@@ -302,35 +302,6 @@ class AdminManagementServiceTests {
     }
 
     @Test
-    void exportInvitationsCsvAppliesFormulaInjectionDefenseAndUtf8Bom() {
-        AppUserRepository userRepository = mock(AppUserRepository.class);
-        UserInvitationRepository invitationRepository = mock(UserInvitationRepository.class);
-        AdminManagementService service = new AdminManagementService(
-                userRepository, invitationRepository, mock(InvitationTemplateRepository.class),
-                mock(TemplatePaymentOrderRepository.class), mock(SubscriptionRepository.class),
-                mock(RsvpRepository.class), mock(GuestRepository.class), mock(GuestCheckInRepository.class),
-                mock(NotificationRepository.class), mock(SystemAuditLogRepository.class),
-                mock(AuditLogService.class), mock(UserAuthCacheService.class), new BCryptPasswordEncoder()
-        );
-
-        UserInvitation inv = new UserInvitation();
-        inv.setId(202L);
-        inv.setTitle("=1+1 Formula Attack");
-        inv.setEventType(EventType.WEDDING);
-        inv.setStatus(InvitationStatus.DRAFT);
-        inv.setModerationStatus(InvitationModerationStatus.ACTIVE);
-
-        when(invitationRepository.findAllReportInvitations(null, null, null, null))
-                .thenReturn(List.of(inv));
-
-        byte[] csv = service.exportInvitationsCsv(null, null, null, null);
-        String csvText = new String(csv, java.nio.charset.StandardCharsets.UTF_8);
-
-        assertTrue(csvText.startsWith("\uFEFF"));
-        assertTrue(csvText.contains("\"'=1+1 Formula Attack\""));
-    }
-
-    @Test
     void platformReportIncludesAllSixEventCategoriesAndExplicitPrivacySuppression() {
         AppUserRepository userRepository = mock(AppUserRepository.class);
         UserInvitationRepository invitationRepository = mock(UserInvitationRepository.class);

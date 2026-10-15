@@ -8,37 +8,30 @@ export function sanitizeCsvCell(value) {
   }
   let s = String(value);
 
-  // CSV Formula Injection guard: prefix dangerous leading characters with single quote
-  const trimmed = s.replace(/^\s+/, "");
-  if (trimmed.length > 0) {
-    const firstChar = trimmed.charAt(0);
-    if (
-      firstChar === "=" ||
-      firstChar === "+" ||
-      firstChar === "-" ||
-      firstChar === "@" ||
-      firstChar === "\t" ||
-      firstChar === "\r" ||
-      firstChar === "\n" ||
-      firstChar === "＝" ||
-      firstChar === "＋" ||
-      firstChar === "－" ||
-      firstChar === "＠"
-    ) {
-      s = "'" + s;
-    }
-  }
+  // Include Unicode format/control prefixes that spreadsheet importers may ignore.
+  if (
+    /^[\s\p{Cc}\p{Cf}]*[=+\-@\uFF1D\uFF0B\uFF0D\uFF20]/u.test(s) ||
+    /^[\t\r\n]/.test(s)
+  )
+    s = "'" + s;
 
   // Escape inner double quotes
   return `"${s.replace(/"/g, '""')}"`;
 }
 
-export function exportCsv(filename, headers, rows) {
+export function exportCsv(filename, headers, rows, metadata = []) {
   const headerLine = headers.map(sanitizeCsvCell).join(",");
   const dataLines = rows.map((row) => row.map(sanitizeCsvCell).join(","));
-  const content = [headerLine, ...dataLines].join("\r\n");
+  const content = [
+    ...metadata.map((row) => row.map(sanitizeCsvCell).join(",")),
+    ...(metadata.length ? [""] : []),
+    headerLine,
+    ...dataLines,
+  ].join("\r\n");
 
-  const blob = new Blob(["\uFEFF" + content], { type: "text/csv;charset=utf-8;" });
+  const blob = new Blob(["\uFEFF" + content], {
+    type: "text/csv;charset=utf-8;",
+  });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
@@ -46,8 +39,7 @@ export function exportCsv(filename, headers, rows) {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
-  URL.revokeObjectURL(url);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 export default exportCsv;
-

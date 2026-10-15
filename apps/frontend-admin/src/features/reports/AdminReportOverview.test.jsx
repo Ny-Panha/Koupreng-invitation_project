@@ -1,328 +1,379 @@
-import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
-
-const adminService = vi.hoisted(() => ({
-  platformReport: vi.fn(),
-  report: vi.fn(),
-  invitations: vi.fn(),
-  invitation: vi.fn(),
-  invitationGifts: vi.fn(),
-  invitationBudgetItems: vi.fn(),
-  invitationRsvpSummary: vi.fn(),
-  updateInvitationStatus: vi.fn(),
+import { MemoryRouter, useLocation } from "react-router-dom";
+const service = vi.hoisted(() => ({
+  reportDefinitions: vi.fn(),
+  managementReport: vi.fn(),
+  invitationsReport: vi.fn(),
+  exportManagementReport: vi.fn(),
 }));
-
-vi.mock("../../shared/api/adminService", () => ({ default: adminService }));
-
+vi.mock("../../shared/api/adminService", () => ({ default: service }));
 import AdminReportsPage from "../../pages/reports/AdminReportsPage";
-import { AdminLanguageProvider } from "../../app/providers/AdminLanguageProvider";
-
-afterEach(cleanup);
-
-describe("admin report overview", () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-    adminService.platformReport.mockResolvedValue(null);
-    adminService.report.mockImplementation(async (name) => {
-      if (name === "payments") {
-        return {
-          summary: { paidAmountUsd: 150 },
-          rows: [
-            {
-              id: 1,
-              period: "2026-03",
-              type: "TEMPLATE",
-              provider: "KHQR",
-              status: "COMPLETED",
-              transactionCount: 5,
-              totalAmount: 50,
-              currency: "USD",
-              reference: "REF-KHQR-1",
-            },
-            {
-              id: 2,
-              period: "2026-03",
-              type: "SUBSCRIPTION",
-              provider: "STRIPE",
-              status: "PENDING",
-              transactionCount: 2,
-              totalAmount: 100,
-              currency: "USD",
-              reference: "REF-STRIPE-2",
-            },
-          ],
-        };
-      }
-      return {
-        generatedAt: "2026-09-29T10:00:00Z",
-        summary: { totalInvitations: 4, publishedInvitations: 1, hiddenInvitations: 1 },
-        rows: [
-          { id: 42, title: "Dara and Sophea", ownerName: "Dara", eventType: "WEDDING", eventDate: "2026-12-01", status: "PUBLISHED", moderationStatus: "ACTIVE" },
-          { id: 77, title: "Sokha Birthday", ownerName: "Sokha", eventType: "BIRTHDAY", eventDate: "2027-01-15", status: "DRAFT", moderationStatus: "HIDDEN" },
-          { id: 88, title: "Company Dinner", ownerName: "Koupreng Co.", eventType: "CORPORATE", status: "UNPUBLISHED", moderationStatus: "REPORTED" },
-          { id: 99, title: "Archived Dinner", ownerName: "Koupreng Co.", eventType: "CORPORATE", status: "ARCHIVED", moderationStatus: "ACTIVE" },
-        ],
-      };
-    });
-    adminService.invitations.mockResolvedValue([]);
-    adminService.invitation.mockImplementation(async (id) => ({
-      id: Number(id),
-      title: "Sokha Birthday",
-      eventType: "BIRTHDAY",
-      ownerName: "Sokha",
-    }));
-    adminService.invitationGifts.mockResolvedValue([]);
-    adminService.invitationBudgetItems.mockResolvedValue([]);
-    adminService.invitationRsvpSummary.mockResolvedValue({ totalGuests: 0, attending: 0 });
-    adminService.updateInvitationStatus.mockImplementation(async (id, nextStatus) => ({ id: Number(id), status: nextStatus }));
-  });
-
-  function renderPage() {
-    return render(
-      <MemoryRouter initialEntries={["/reports"]}>
-        <Routes>
-          <Route path="/reports" element={<AdminReportsPage />} />
-          <Route path="/reports/:invitationId" element={<AdminReportsPage />} />
-        </Routes>
-      </MemoryRouter>,
-    );
-  }
-
-  it("shows platform-level event and moderation counts from the report API", async () => {
-    renderPage();
-
-    expect(await screen.findByText("Dara and Sophea")).toBeInTheDocument();
-    expect(screen.getByText("កម្មវិធីសរុប")).toBeInTheDocument();
-    expect(screen.getAllByText("បានផ្សាយ").length).toBeGreaterThan(0);
-    expect(screen.getByText("ត្រូវការត្រួតពិនិត្យ")).toBeInTheDocument();
-    expect(adminService.report).toHaveBeenCalledWith("invitations");
-  });
-
-  it("filters by event type without exposing a removed detail route", async () => {
-    renderPage();
-
-    expect(await screen.findByText("Company Dinner")).toBeInTheDocument();
-    fireEvent.change(screen.getByRole("combobox", { name: "ប្រភេទកម្មវិធី" }), { target: { value: "BIRTHDAY" } });
-
-    expect(screen.getByText("Sokha Birthday")).toBeInTheDocument();
-    expect(screen.queryByText("Company Dinner")).not.toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: /Sokha Birthday/ })).not.toBeInTheDocument();
-  });
-
-  it("filters invitations by search and publication status", async () => {
-    renderPage();
-
-    await screen.findByText("Company Dinner");
-    fireEvent.change(screen.getByRole("searchbox", { name: "ស្វែងរកកម្មវិធី" }), { target: { value: "Koupreng" } });
-    fireEvent.change(screen.getByRole("combobox", { name: "ស្ថានភាពផ្សាយ" }), { target: { value: "UNPUBLISHED" } });
-
-    expect(screen.getByText("Company Dinner")).toBeInTheDocument();
-    expect(screen.queryByText("Dara and Sophea")).not.toBeInTheDocument();
-    await waitFor(() => expect(screen.getByText(/បង្ហាញ 1 ក្នុងចំណោម 4/)).toBeInTheDocument());
-  });
-
-  it("filters each lifecycle status immediately and displays localized lifecycle badges", async () => {
-    renderPage();
-    await screen.findByText("Company Dinner");
-
-    const statusFilter = screen.getByRole("combobox", { name: "ស្ថានភាពផ្សាយ" });
-    const cases = [
-      ["PUBLISHED", "Dara and Sophea", "បានផ្សាយ"],
-      ["DRAFT", "Sokha Birthday", "សេចក្តីព្រាង"],
-      ["UNPUBLISHED", "Company Dinner", "មិនទាន់ផ្សាយ"],
-      ["ARCHIVED", "Archived Dinner", "បានរក្សាទុក"],
-    ];
-
-    const eventsTable = screen.getByRole("table", { name: "បញ្ជីកម្មវិធី" });
-    for (const [value, title, badge] of cases) {
-      fireEvent.change(statusFilter, { target: { value } });
-      const eventRow = screen.getByText(title).closest("tr");
-      expect(eventRow).toBeInTheDocument();
-      expect(eventRow).toHaveTextContent(badge);
-      expect(within(eventsTable).getAllByRole("row")).toHaveLength(2);
-    }
-  });
-
-  it("offers lifecycle actions for the current status and refreshes the row after updates", async () => {
-    let rows = [
-      { id: 42, title: "Dara and Sophea", ownerName: "Dara", eventType: "WEDDING", status: "PUBLISHED", moderationStatus: "ACTIVE" },
-      { id: 77, title: "Sokha Birthday", ownerName: "Sokha", eventType: "BIRTHDAY", status: "DRAFT", moderationStatus: "ACTIVE" },
-      { id: 55, title: "Vireak and Chenda", ownerName: "Vireak", eventType: "WEDDING", status: "PUBLISHED", moderationStatus: "ACTIVE" },
-    ];
-    adminService.report.mockImplementation(async (name) => {
-      if (name === "payments") {
-        return { summary: {}, rows: [] };
-      }
-      return {
-        summary: { totalInvitations: rows.length, publishedInvitations: rows.filter((row) => row.status === "PUBLISHED").length },
-        rows,
-      };
-    });
-    adminService.updateInvitationStatus.mockImplementation(async (id, nextStatus) => {
-      rows = rows.map((row) => row.id === Number(id) ? { ...row, status: nextStatus } : row);
-      return rows.find((row) => row.id === Number(id));
-    });
-
-    renderPage();
-    await screen.findByText("Sokha Birthday");
-
-    fireEvent.click(screen.getByRole("button", { name: "សកម្មភាព Sokha Birthday" }));
-    fireEvent.click(screen.getByRole("menuitem", { name: /Publish/ }));
-    await waitFor(() => expect(adminService.updateInvitationStatus).toHaveBeenCalledWith(77, "PUBLISHED"));
-    await waitFor(() => expect(screen.getAllByText("បានផ្សាយ").length).toBeGreaterThan(0));
-
-    fireEvent.click(screen.getByRole("button", { name: "សកម្មភាព Dara and Sophea" }));
-    expect(screen.getByRole("menuitem", { name: /Unpublish/ })).toBeInTheDocument();
-    fireEvent.click(screen.getByRole("menuitem", { name: /Unpublish/ }));
-    await waitFor(() => expect(adminService.updateInvitationStatus).toHaveBeenCalledWith(42, "UNPUBLISHED"));
-
-    fireEvent.click(screen.getByRole("button", { name: "សកម្មភាព Vireak and Chenda" }));
-    fireEvent.click(screen.getByRole("menuitem", { name: /Archive/ }));
-    await waitFor(() => expect(adminService.updateInvitationStatus).toHaveBeenCalledWith(55, "ARCHIVED"));
-    fireEvent.click(screen.getByRole("button", { name: "សកម្មភាព Vireak and Chenda" }));
-    expect(screen.queryByRole("menuitem", { name: /Publish|Unpublish|Archive/ })).not.toBeInTheDocument();
-  });
-
-  // Task 1 (a) - Search filter on transactions table
-  it("filters transactions table rows by typing in search input", async () => {
-    renderPage();
-    expect(await screen.findByText("REF-KHQR-1")).toBeInTheDocument();
-    expect(screen.getByText("REF-STRIPE-2")).toBeInTheDocument();
-    expect(screen.getByText("Showing 2 of 2 transactions")).toBeInTheDocument();
-
-    const searchInput = screen.getByRole("searchbox", { name: "Search transactions" });
-    fireEvent.change(searchInput, { target: { value: "STRIPE" } });
-
-    expect(screen.getByText("REF-STRIPE-2")).toBeInTheDocument();
-    expect(screen.queryByText("REF-KHQR-1")).not.toBeInTheDocument();
-    expect(screen.getByText("Showing 1 of 2 transactions")).toBeInTheDocument();
-  });
-
-  // Task 1 (b) - Type dropdown filter on transactions table
-  it("filters transactions table rows by selecting a Type dropdown value", async () => {
-    renderPage();
-    expect(await screen.findByText("REF-KHQR-1")).toBeInTheDocument();
-    expect(screen.getByText("REF-STRIPE-2")).toBeInTheDocument();
-
-    const typeFilter = screen.getByRole("combobox", { name: "Transaction type" });
-    fireEvent.change(typeFilter, { target: { value: "TEMPLATE" } });
-
-    expect(screen.getByText("REF-KHQR-1")).toBeInTheDocument();
-    expect(screen.queryByText("REF-STRIPE-2")).not.toBeInTheDocument();
-    expect(screen.getByText("Showing 1 of 2 transactions")).toBeInTheDocument();
-
-    fireEvent.change(typeFilter, { target: { value: "SUBSCRIPTION" } });
-    expect(screen.getByText("REF-STRIPE-2")).toBeInTheDocument();
-    expect(screen.queryByText("REF-KHQR-1")).not.toBeInTheDocument();
-    expect(screen.getByText("Showing 1 of 2 transactions")).toBeInTheDocument();
-  });
-
-  // Task 1 (c) - Clear filters resets all controls
-  it("resets all transaction filter controls and restores rows when Clear filters is clicked", async () => {
-    renderPage();
-    expect(await screen.findByText("REF-KHQR-1")).toBeInTheDocument();
-
-    const searchInput = screen.getByRole("searchbox", { name: "Search transactions" });
-    fireEvent.change(searchInput, { target: { value: "NO_MATCHING_REFERENCE" } });
-
-    expect(screen.getByText("No transactions match the current filters.")).toBeInTheDocument();
-    expect(screen.queryByText("REF-KHQR-1")).not.toBeInTheDocument();
-    expect(screen.getByText("Showing 0 of 2 transactions")).toBeInTheDocument();
-
-    const clearBtn = screen.getByRole("button", { name: "Clear filters" });
-    fireEvent.click(clearBtn);
-
-    expect(screen.getByText("REF-KHQR-1")).toBeInTheDocument();
-    expect(screen.getByText("REF-STRIPE-2")).toBeInTheDocument();
-    expect(screen.getByText("Showing 2 of 2 transactions")).toBeInTheDocument();
-    expect(searchInput.value).toBe("");
-    expect(screen.getByRole("combobox", { name: "Transaction type" }).value).toBe("ALL");
-  });
-
-  // Task 2 (d) - Interactive Category Widget toggles selected state
-  it("toggles category row selection and highlights donut segment", async () => {
-    renderPage();
-    await screen.findByText("Dara and Sophea");
-
-    const weddingRow = screen.getByTestId("category-row-WEDDING");
-    expect(weddingRow).toHaveAttribute("aria-pressed", "false");
-
-    const weddingSegment = screen.getByTestId("donut-segment-WEDDING");
-    const birthdaySegment = screen.getByTestId("donut-segment-BIRTHDAY");
-
-    expect(weddingSegment.style.opacity).toBe("1");
-    expect(birthdaySegment.style.opacity).toBe("1");
-
-    // Click WEDDING category row -> toggle selected ON
-    fireEvent.click(weddingRow);
-    expect(weddingRow).toHaveAttribute("aria-pressed", "true");
-    expect(weddingSegment.style.opacity).toBe("1");
-    expect(birthdaySegment.style.opacity).toBe("0.25");
-
-    // Click WEDDING category row again -> toggle selected OFF
-    fireEvent.click(weddingRow);
-    expect(weddingRow).toHaveAttribute("aria-pressed", "false");
-    expect(weddingSegment.style.opacity).toBe("1");
-    expect(birthdaySegment.style.opacity).toBe("1");
-  });
-
-  it("renders report overview in English when language is en", async () => {
-    localStorage.setItem("koupreng.admin.lang", "en");
-    render(
+import {
+  AdminLanguageProvider,
+  useAdminLanguage,
+} from "../../app/providers/AdminLanguageProvider";
+const codes = [
+  "executive",
+  "payments",
+  "reconciliation",
+  "invitations",
+  "users",
+  "templates",
+  "subscriptions",
+  "engagement",
+  "system",
+  "dictionary",
+];
+const definitions = codes.map((code) => ({
+  code,
+  titleEn: code,
+  titleKm: `ខ្មែរ ${code}`,
+  defaultDateDimension: code === "executive" ? "metric" : "createdAt",
+  dateDimensions: code === "executive" ? ["metric"] : ["createdAt", "paidAt"],
+  filters:
+    code === "executive" || code === "dictionary"
+      ? []
+      : code === "payments"
+        ? ["paymentType", "currency", "search"]
+        : ["eventType", "search"],
+  columns: [
+    { key: "id", labelEn: "Record ID", labelKm: "លេខកំណត់ត្រា", type: "TEXT" },
+    { key: "title", labelEn: "Record title", labelKm: "ចំណងជើង", type: "TEXT" },
+  ],
+  notes: ["Server definition"],
+}));
+function response(code, request = {}) {
+  return {
+    definition: definitions.find((item) => item.code === code),
+    metadata: {
+      snapshotId: `${code}-${request.page || 0}`,
+      dateDimension: request.dateDimension,
+      sort: request.sort || "id",
+      direction: request.direction || "DESC",
+      generatedAt: "2026-10-15T10:00:00Z",
+      timezone: "Asia/Phnom_Penh",
+      filters: {},
+    },
+    report: code,
+    rows: [{ id: `${code}-${request.page || 0}`, title: "Server row" }],
+    summary: {},
+    filteredSummary: {
+      totalInvitations: 42,
+      confirmedReceiptsByCurrency: {
+        USD: request.currency === "KHR" ? 0 : 47,
+        KHR: request.currency === "USD" ? 0 : 40000,
+      },
+      pendingValueByCurrency: { USD: 999, KHR: 0 },
+      failedValueByCurrency: { USD: 0, KHR: 0 },
+    },
+    series: [],
+    notices: ["Server definition"],
+    totalElements: 42,
+    totalPages: 3,
+    page: request.page || 0,
+    size: request.size || 20,
+  };
+}
+function Controls() {
+  const location = useLocation(),
+    { setLang } = useAdminLanguage();
+  return (
+    <>
+      <output data-testid="location">{location.search}</output>
+      <button onClick={() => setLang("km")}>Use Khmer</button>
+    </>
+  );
+}
+function mount(
+  route = "/reports?report=invitations&from=2026-10-15&to=2026-10-16",
+) {
+  return render(
+    <MemoryRouter initialEntries={[route]}>
       <AdminLanguageProvider>
-        <MemoryRouter initialEntries={["/reports"]}>
-          <Routes>
-            <Route path="/reports" element={<AdminReportsPage />} />
-          </Routes>
-        </MemoryRouter>
+        <Controls />
+        <AdminReportsPage />
       </AdminLanguageProvider>
+    </MemoryRouter>,
+  );
+}
+async function loaded() {
+  await screen.findByText("Server row");
+}
+beforeEach(() => {
+  vi.clearAllMocks();
+  localStorage.setItem("koupreng.admin.lang", "en");
+  service.reportDefinitions.mockResolvedValue({ definitions });
+  service.managementReport.mockImplementation(async (code, query) =>
+    response(code, query),
+  );
+  service.invitationsReport.mockImplementation(async (query) =>
+    response("invitations", query),
+  );
+  service.exportManagementReport.mockResolvedValue(
+    new Blob(["actual fixture bytes"], { type: "application/octet-stream" }),
+  );
+  URL.createObjectURL = vi.fn(() => "blob:report-test");
+  URL.revokeObjectURL = vi.fn();
+  HTMLDialogElement.prototype.showModal = function () {
+    this.setAttribute("open", "");
+  };
+  HTMLDialogElement.prototype.close = function () {
+    this.removeAttribute("open");
+    this.dispatchEvent(new Event("close"));
+  };
+});
+afterEach(() => {
+  cleanup();
+  vi.restoreAllMocks();
+});
+describe("active Reports route", () => {
+  it("loads the existing paginated invitation API with the shared ledger contract", async () => {
+    mount();
+    await loaded();
+    expect(service.invitationsReport).toHaveBeenCalledWith(
+      expect.objectContaining({
+        view: "ledger",
+        from: "2026-10-15",
+        to: "2026-10-16",
+        page: 0,
+        size: 20,
+      }),
+      expect.any(AbortSignal),
     );
-
-    expect(await screen.findByText("Platform & System Reports")).toBeInTheDocument();
-    expect(screen.getAllByText("Total Events").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getByText("Export CSV")).toBeInTheDocument();
-    expect(screen.getByText("Event Categories Report")).toBeInTheDocument();
-    expect(screen.getByText("Revenue & Payments Report")).toBeInTheDocument();
-    localStorage.removeItem("koupreng.admin.lang");
+    expect(screen.getByTestId("location")).toHaveTextContent(
+      "report=invitations",
+    );
+    expect(screen.getByText("42", { selector: "strong" })).toBeInTheDocument();
   });
-
-  it("renders backend category, subscription and currency aggregates without event-level rows", async () => {
-    adminService.platformReport.mockResolvedValue({
-      summary: { totalInvitations: 12, publishedInvitations: 8, revenueByCurrency: { USD: 199, KHR: 40000 },
-        eventCategoryBreakdown: [{ category: "WEDDING", count: 9 }, { category: "ANNIVERSARY_BIRTHDAY", count: 3 }],
-        subscriptionTiers: [{ tier: "Basic", activeSubscriptions: 2 }, { tier: "Pro", activeSubscriptions: 4 }] },
-      rows: [],
+  it("mounts every family through the shared components", async () => {
+    mount();
+    await loaded();
+    for (const code of codes) {
+      fireEvent.click(
+        within(
+          screen.getByRole("navigation", { name: "Reports & Analytics" }),
+        ).getByRole("button", { name: code, exact: true }),
+      );
+      await waitFor(() =>
+        expect(
+          screen.getByRole("button", { name: code, exact: true }),
+        ).toHaveAttribute("aria-current", "page"),
+      );
+      await screen.findByText("Server row");
+    }
+    expect(service.managementReport.mock.calls.map((call) => call[0])).toEqual(
+      expect.arrayContaining(codes.filter((code) => code !== "invitations")),
+    );
+  });
+  it("sends filter, sort and page changes to the server without local slicing", async () => {
+    mount();
+    await loaded();
+    fireEvent.change(screen.getByLabelText("Event type"), {
+      target: { value: "WEDDING" },
     });
-    renderPage();
-    expect(await screen.findByRole("region", { name: "Subscription packages report" })).toHaveTextContent("Pro: 4");
-    expect(screen.getByTestId("category-row-WEDDING")).toHaveTextContent("9");
-    expect(screen.getByTestId("category-row-BIRTHDAY")).toHaveTextContent("3");
-    expect(screen.getByText("$199.00")).toBeInTheDocument();
-    expect(screen.getByText("40,000 ៛")).toBeInTheDocument();
+    await waitFor(() =>
+      expect(service.invitationsReport).toHaveBeenLastCalledWith(
+        expect.objectContaining({ eventType: "WEDDING", page: 0 }),
+        expect.anything(),
+      ),
+    );
+    await loaded();
+    fireEvent.click(screen.getByRole("button", { name: /Record title/ }));
+    await waitFor(() =>
+      expect(service.invitationsReport).toHaveBeenLastCalledWith(
+        expect.objectContaining({ sort: "title", direction: "ASC" }),
+        expect.anything(),
+      ),
+    );
+    await loaded();
+    fireEvent.click(screen.getByRole("button", { name: "Next", exact: true }));
+    await waitFor(() =>
+      expect(service.invitationsReport).toHaveBeenLastCalledWith(
+        expect.objectContaining({ page: 1 }),
+        expect.anything(),
+      ),
+    );
+    expect(screen.getByTestId("location")).toHaveTextContent(
+      "eventType=WEDDING",
+    );
   });
-
-  it("renders print preview and print report actions in the admin header", async () => {
-    window.print = vi.fn();
-    const { container } = renderPage();
-    await screen.findByText("Company Dinner");
-
-    const previewBtn = screen.getByRole("button", { name: /Print Preview/ });
-    expect(previewBtn).toBeInTheDocument();
-    const printBtn = screen.getByRole("button", { name: /Print Report/ });
-    expect(printBtn).toBeInTheDocument();
-
-    expect(container.querySelector(".is-print-preview")).toBeNull();
-    fireEvent.click(previewBtn);
-    expect(container.querySelector(".is-print-preview")).toBeInTheDocument();
-    expect(screen.getByLabelText("Print preview controls")).toBeInTheDocument();
-
-    const exitBtn = screen.getByRole("button", { name: /Exit/ });
-    fireEvent.click(exitBtn);
-    expect(container.querySelector(".is-print-preview")).toBeNull();
-
-    fireEvent.click(printBtn);
-    expect(window.print).toHaveBeenCalledTimes(1);
-    expect(document.title).toContain("Koupreng-Admin-Platform-Report");
+  it("preserves URL scope on refresh and uses server totals rather than page sums", async () => {
+    mount(
+      "/reports?report=payments&from=2026-10-15&to=2026-10-16&currency=KHR",
+    );
+    await loaded();
+    expect(screen.getAllByText("0 USD").length).toBeGreaterThan(0);
+    expect(screen.getByText("40,000 KHR")).toBeInTheDocument();
+    fireEvent.click(
+      screen.getByRole("button", { name: "Refresh", exact: true }),
+    );
+    await waitFor(() =>
+      expect(service.managementReport).toHaveBeenCalledTimes(2),
+    );
+    expect(service.managementReport).toHaveBeenLastCalledWith(
+      "payments",
+      expect.objectContaining({ currency: "KHR", from: "2026-10-15" }),
+      expect.anything(),
+    );
+  });
+  it("keeps failed refresh data visibly stale and disables exports", async () => {
+    mount();
+    await loaded();
+    service.invitationsReport.mockRejectedValueOnce(
+      new Error("Network unavailable"),
+    );
+    fireEvent.click(
+      screen.getByRole("button", { name: "Refresh", exact: true }),
+    );
+    await screen.findByText("Network unavailable");
+    expect(
+      screen.getByText(/Showing the last successful snapshot/),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Download Excel" }),
+    ).toBeDisabled();
+    expect(screen.getByText("Server row")).toBeInTheDocument();
+  });
+  it("discards late responses when scope changes", async () => {
+    let resolve;
+    service.invitationsReport.mockImplementationOnce(
+      () =>
+        new Promise((done) => {
+          resolve = done;
+        }),
+    );
+    mount();
+    await waitFor(() => expect(service.invitationsReport).toHaveBeenCalled());
+    fireEvent.click(screen.getByRole("button", { name: "users", exact: true }));
+    await loaded();
+    resolve({
+      ...response("invitations"),
+      rows: [{ id: "late", title: "Stale wrong scope" }],
+    });
+    await waitFor(() =>
+      expect(screen.queryByText("Stale wrong scope")).not.toBeInTheDocument(),
+    );
+    expect(screen.getByTestId("location")).toHaveTextContent("report=users");
+  });
+  it("distinguishes empty and unavailable values", async () => {
+    service.invitationsReport.mockResolvedValueOnce({
+      ...response("invitations"),
+      rows: [],
+      totalElements: 0,
+      totalPages: 0,
+    });
+    mount();
+    await screen.findByText("No records match these filters");
+    expect(
+      screen.getByRole("button", { name: "Next", exact: true }),
+    ).toBeDisabled();
+  });
+  it("downloads all-filtered XLSX and CSV and keeps current-page CSV explicit", async () => {
+    const click = vi
+      .spyOn(HTMLAnchorElement.prototype, "click")
+      .mockImplementation(() => {});
+    mount();
+    await loaded();
+    fireEvent.click(screen.getByRole("button", { name: "Download Excel" }));
+    await waitFor(() =>
+      expect(service.exportManagementReport).toHaveBeenCalledWith(
+        "invitations",
+        "xlsx",
+        expect.objectContaining({ from: "2026-10-15", to: "2026-10-16" }),
+      ),
+    );
+    await waitFor(() => expect(click).toHaveBeenCalled());
+    await waitFor(() =>
+      expect(
+        screen.getByRole("button", { name: "CSV · All filtered records" }),
+      ).toBeEnabled(),
+    );
+    fireEvent.click(
+      screen.getByRole("button", { name: "CSV · All filtered records" }),
+    );
+    await waitFor(() =>
+      expect(service.exportManagementReport).toHaveBeenLastCalledWith(
+        "invitations",
+        "csv",
+        expect.anything(),
+      ),
+    );
+  });
+  it("uses one captured HTML preview and exits without losing scope", async () => {
+    // Blob iframe navigation is a real-browser check; about:blank keeps this DOM-only test local.
+    URL.createObjectURL.mockReturnValue("about:blank");
+    service.exportManagementReport.mockResolvedValueOnce(
+      new Blob(
+        ["<!doctype html><html><head></head><body>Snapshot</body></html>"],
+        { type: "text/html" },
+      ),
+    );
+    mount();
+    await loaded();
+    fireEvent.click(
+      screen.getByRole("button", { name: "Print preview", exact: true }),
+    );
+    await screen.findByRole("dialog");
+    await waitFor(() =>
+      expect(screen.getByTitle("Print preview")).toHaveAttribute(
+        "src",
+        "about:blank",
+      ),
+    );
+    expect(
+      screen.getByRole("button", { name: "Print / Save as PDF" }),
+    ).toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText("Page orientation"), {
+      target: { value: "landscape" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Close", exact: true }));
+    await waitFor(() =>
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument(),
+    );
+    expect(screen.getByTestId("location")).toHaveTextContent("from=2026-10-15");
+    expect(service.exportManagementReport).toHaveBeenCalledTimes(1);
+  });
+  it("supports Khmer labels, column visibility and read-only row details", async () => {
+    mount();
+    await loaded();
+    fireEvent.click(screen.getByText("Columns", { selector: "summary" }));
+    fireEvent.click(
+      screen.getByRole("checkbox", { name: "Record title", exact: true }),
+    );
+    expect(
+      screen.queryByRole("button", { name: /Record title/ }),
+    ).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Use Khmer" }));
+    expect(
+      screen.getByRole("heading", { name: "របាយការណ៍ និងវិភាគ" }),
+    ).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: /ព័ត៌មានលម្អិត #1/ }));
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+    expect(screen.getByRole("dialog")).toHaveAccessibleName("ព័ត៌មានលម្អិត");
+    expect(
+      screen.queryByRole("button", { name: /Delete|Approve payment|Edit/ }),
+    ).not.toBeInTheDocument();
+  });
+  it("shows administrator permission errors and rejects misleading partial URL periods", async () => {
+    service.invitationsReport.mockRejectedValueOnce(
+      Object.assign(new Error("Forbidden"), { status: 403 }),
+    );
+    mount("/reports?report=invitations&from=2026-10-15");
+    await screen.findByText("Administrator report access is required");
+    expect(service.invitationsReport).toHaveBeenLastCalledWith(
+      expect.objectContaining({ from: "2026-10-15", to: null }),
+      expect.anything(),
+    );
+    expect(
+      screen.getByRole("button", { name: "Download Excel" }),
+    ).toBeDisabled();
   });
 });

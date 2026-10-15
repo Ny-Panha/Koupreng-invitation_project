@@ -33,3 +33,23 @@ Categories describe retained behavior, not authorization changes. Paths below us
 Phase 3 remeasured the exact Phase 2 fixtures: invitation covers 2 SQL/20 invitations; user dashboard 7 SQL/20 invitations; admin dashboard 10 SQL/7 loaded entities/20 invitations; check-in summary 4 SQL/1 loaded entity/20 guests. These are local Hibernate statistics, not production latency or capacity claims.
 
 Before production-scale rollout, agree expected account/admin cardinality, page-size maxima and sort/tie-breaker keys; measure row counts/heap and query plans; introduce additive list contracts and update clients incrementally; verify owners/admins cannot traverse another account's pages; preserve complete exports. Add indexes only from actual query-plan evidence. No pagination, index or report-API redesign was introduced in Phase 3.
+
+## Admin reporting update — 2026-10-15
+
+The historical Phase 3 table above remains the baseline. The active Reports &
+Analytics route now uses additive `/admin/reports/management/**` contracts and
+`/admin/reports/invitations?view=ledger`: server page size 1–200, allowlisted
+sort plus deterministic ID tie breaker, shared period/search filters, SQL
+aggregates and minimized projections. Full filtered CSV/XLSX exports read
+200-row batches into disk-backed snapshots; SXSSF uses a 100-row heap window.
+Legacy CSV routes use the same bounded engine with their existing header layout.
+
+This bounds application row materialization, **not database execution cost**.
+Global payment duplicate detection uses window functions before report filters;
+guest metrics use grouped joins/latest-response windows; exports repeat stable
+offset queries. Large offsets, global histories and concurrent exports require
+MySQL EXPLAIN/latency/temp-disk/heap measurements at target cardinality before
+capacity claims or an index migration. No production measurements or new indexes
+are claimed. Retained legacy platform/payments/RSVP JSON reports still include
+unbounded compatibility reads. The legacy invitation hidden count now uses a
+COUNT query. See [the audit](audit/admin-reporting-system.md).

@@ -14,21 +14,19 @@ public class CsvExportUtils {
                 .collect(Collectors.joining(","));
     }
 
+    public static String spreadsheetText(String value) {
+        if (value == null) return "";
+        // Include invisible Unicode format/control prefixes, not only ASCII space.
+        if (value.matches("(?s)^[\\p{Z}\\p{C}\\s]*[=+\\-@＝＋－＠].*")
+                || value.startsWith("\t") || value.startsWith("\r") || value.startsWith("\n")) return "'" + value;
+        return value;
+    }
+
     private static String escapeCell(Object arg) {
         if (arg == null) {
             return "\"\"";
         }
-        String s = arg.toString();
-        // Check for CSV Formula Injection
-        String trimmed = s.stripLeading();
-        if (!trimmed.isEmpty()) {
-            char first = trimmed.charAt(0);
-            if (first == '=' || first == '+' || first == '-' || first == '@'
-                    || first == '\t' || first == '\r' || first == '\n'
-                    || first == '＝' || first == '＋' || first == '－' || first == '＠') {
-                s = "'" + s;
-            }
-        }
+        String s = spreadsheetText(arg.toString());
         // Escape quotes and wrap in quotes
         String escaped = s.replace("\"", "\"\"");
         return "\"" + escaped + "\"";

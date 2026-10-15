@@ -66,6 +66,19 @@ class OpenApiIntegrationTests {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Test
+    void managementReportsDocumentFlatFiltersAndRealDownloadMediaTypes() throws Exception {
+        JsonNode document=objectMapper.readTree(mockMvc.perform(get("/v3/api-docs")).andExpect(status().isOk()).andReturn().getResponse().getContentAsString());
+        JsonNode operation=document.path("paths").path("/api/v1/admin/reports/management/{report}/export/{format}").path("get");
+        var parameters=new java.util.HashSet<String>();operation.path("parameters").forEach(parameter -> parameters.add(parameter.path("name").asText()));
+        assertTrue(parameters.containsAll(List.of("report","format","from","to","dateDimension","currency","sort","page","size")));
+        assertFalse(parameters.contains("query"),"Filters must be ordinary URL parameters, not an opaque query object");
+        JsonNode content=operation.path("responses").path("200").path("content");
+        assertEquals("binary",content.path("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet").path("schema").path("format").asText());
+        assertTrue(content.has("text/csv"));assertTrue(content.has("text/html"));
+        for(String report:List.of("invitations","payments")) assertEquals("binary",document.path("paths").path("/api/v1/admin/reports/"+report+"/export").path("get").path("responses").path("200").path("content").path("text/csv").path("schema").path("format").asText());
+    }
+
     @MockitoBean
     private AuthService authService;
 
