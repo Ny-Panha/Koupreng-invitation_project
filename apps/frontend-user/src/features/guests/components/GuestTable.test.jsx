@@ -33,6 +33,14 @@ describe("GuestTable inline guest entry", () => {
     expect(document.activeElement).toBe(nameInput);
   });
 
+  it("uses the host add-dialog action without showing the competing inline editor", () => {
+    const onOpenAddGuest = vi.fn();
+    render(<GuestTable guests={[]} groups={groups} categories={categories} onOpenAddGuest={onOpenAddGuest} />);
+    expect(screen.queryByRole("textbox", { name: "ឈ្មោះ" })).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: /បន្ថែមភ្ញៀវ/ }));
+    expect(onOpenAddGuest).toHaveBeenCalledTimes(1);
+  });
+
   it("edits an existing guest in place", async () => {
     const onSaveGuest = vi.fn().mockResolvedValue(true);
     render(
