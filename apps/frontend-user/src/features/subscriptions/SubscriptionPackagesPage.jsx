@@ -31,8 +31,8 @@ const PACKAGE_BADGES = {
     icon: Sparkles,
   },
   PRO: {
-    labelKm: "ពេញនិយម · Pro",
-    labelEn: "Popular · Pro",
+    labelKm: "កញ្ចប់ Pro",
+    labelEn: "Pro",
     color: "#b45309",
     bg: "#fef3c7",
     icon: Zap,
@@ -376,7 +376,7 @@ export default function SubscriptionPackagesPage() {
 
               <button
                 type="button"
-                aria-label={isCurrent ? "Current plan" : "Subscribe / Upgrade"}
+                aria-label={isCurrent ? copy("កញ្ចប់បច្ចុប្បន្ន", "Current plan") : copy("ជ្រើសកញ្ចប់នេះ", "Choose this plan")}
                 disabled={savingId === plan.id || isCurrent}
                 onClick={() => openCheckout(plan)}
                 className={`pkg-card-btn ${isCurrent ? "current" : badgeConfig.featured ? "featured" : "primary"}`}
@@ -385,7 +385,7 @@ export default function SubscriptionPackagesPage() {
                   copy("កញ្ចប់បច្ចុប្បន្ន", "Current Plan")
                 ) : (
                   <>
-                    <span>{copy("ជ្រើសកញ្ចប់នេះ (Subscribe / Upgrade)", "Subscribe / Upgrade")}</span>
+                    <span>{copy("ជ្រើសកញ្ចប់នេះ", "Choose this plan")}</span>
                     <ArrowRight size={15} />
                   </>
                 )}
