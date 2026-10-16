@@ -1949,3 +1949,44 @@
         min-width: 0;
     }
 }
+
+
+/* Center genuine empty states inside the guest table across desktop and card mode. */
+.pe-guests-page .pe-guest-data-table .pe-guest-table-empty {
+    text-align: center;
+    padding: clamp(28px, 5vw, 52px) 20px !important;
+    border-bottom: none !important;
+}
+
+.pe-guests-page .pe-guest-table-empty > div {
+    width: min(100%, 440px);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+}
+
+.pe-guests-page .pe-guest-table-empty p {
+    margin: 0;
+    color: #4d5952;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+}
+
+.pe-guests-page .pe-guest-table-empty button {
+    min-height: 44px;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 999px;
+}
+
+@media (max-width: 767px) {
+    .pe-guests-page .pe-guest-data-table .pe-guest-table-empty {
+        width: 100%;
+        padding: 28px 12px !important;
+    }
+}

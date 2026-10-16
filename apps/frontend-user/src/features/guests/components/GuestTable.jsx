@@ -249,7 +249,9 @@ export default function GuestTable({
         </tr>
       </thead>
       <tbody>
-        {/* Desktop Quick Add Row */}
+        {/* Keep keyboard-friendly quick entry for standalone table usage.
+            In the host workspace, the primary Add Guest dialog replaces this row. */}
+        {!onOpenAddGuest && (
         <tr className="pe-guest-inline-add-row">
           {renderEditor(newGuest, setNewGuest, { newRow: true })}
           <td data-label={t ? t("thActions") : "Actions"} className="pe-guest-inline-actions">
@@ -260,6 +262,7 @@ export default function GuestTable({
             </form>
           </td>
         </tr>
+        )}
 
         {guests.map((guest) => {
           const inviteUrl = guestInviteUrl(currentDraft, guest, publicInvitation);

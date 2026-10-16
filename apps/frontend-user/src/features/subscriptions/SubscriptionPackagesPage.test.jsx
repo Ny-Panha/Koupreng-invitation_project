@@ -60,7 +60,7 @@ describe("SubscriptionPackagesPage", () => {
   it("opens payer details before creating a paid checkout", async () => {
     render(<SubscriptionPackagesPage />);
 
-    fireEvent.click(await screen.findByRole("button", { name: /subscribe \/ upgrade/i }));
+    fireEvent.click(await screen.findByRole("button", { name: /ជ្រើសកញ្ចប់នេះ|Choose this plan/i }));
 
     expect(screen.getByRole("dialog", { name: /subscribe to basic/i })).toBeInTheDocument();
     expect(screen.getByLabelText(/aba account holder name/i)).toBeInTheDocument();
@@ -69,7 +69,7 @@ describe("SubscriptionPackagesPage", () => {
 
   it("validates last3 and sends only package and payer inputs", async () => {
     render(<SubscriptionPackagesPage />);
-    fireEvent.click(await screen.findByRole("button", { name: /subscribe \/ upgrade/i }));
+    fireEvent.click(await screen.findByRole("button", { name: /ជ្រើសកញ្ចប់នេះ|Choose this plan/i }));
     fireEvent.change(screen.getByLabelText(/aba account holder name/i), { target: { value: "KOEURNG VIREAK" } });
     fireEvent.change(screen.getByLabelText(/last 3 digits/i), { target: { value: "12" } });
     fireEvent.click(screen.getByRole("button", { name: /continue to aba payway/i }));
@@ -100,7 +100,7 @@ describe("SubscriptionPackagesPage", () => {
       active: true,
     });
     render(<SubscriptionPackagesPage />);
-    fireEvent.click(await screen.findByRole("button", { name: /subscribe \/ upgrade/i }));
+    fireEvent.click(await screen.findByRole("button", { name: /ជ្រើសកញ្ចប់នេះ|Choose this plan/i }));
     fireEvent.change(screen.getByLabelText(/aba account holder name/i), { target: { value: "KOEURNG VIREAK" } });
     fireEvent.change(screen.getByLabelText(/last 3 digits/i), { target: { value: "247" } });
     fireEvent.click(screen.getByRole("button", { name: /continue to aba payway/i }));
@@ -117,7 +117,7 @@ describe("SubscriptionPackagesPage", () => {
     vi.useFakeTimers();
     const view = render(<SubscriptionPackagesPage />);
     await act(async () => Promise.resolve());
-    fireEvent.click(screen.getByRole("button", { name: /subscribe \/ upgrade/i }));
+    fireEvent.click(screen.getByRole("button", { name: /ជ្រើសកញ្ចប់នេះ|Choose this plan/i }));
     fireEvent.change(screen.getByLabelText(/aba account holder name/i), { target: { value: "KOEURNG VIREAK" } });
     fireEvent.change(screen.getByLabelText(/last 3 digits/i), { target: { value: "247" } });
     fireEvent.click(screen.getByRole("button", { name: /continue to aba payway/i }));
@@ -134,7 +134,7 @@ describe("SubscriptionPackagesPage", () => {
     subscriptionService.order.mockResolvedValueOnce({ status: "REVIEW_REQUIRED", paymentStatus: "PENDING", active: false })
       .mockResolvedValue({ status: "ACTIVE", paymentStatus: "PAID", active: true });
     render(<SubscriptionPackagesPage />);
-    fireEvent.click(await screen.findByRole("button", { name: /subscribe \/ upgrade/i }));
+    fireEvent.click(await screen.findByRole("button", { name: /ជ្រើសកញ្ចប់នេះ|Choose this plan/i }));
     fireEvent.change(screen.getByLabelText(/aba account holder name/i), { target: { value: "KOEURNG VIREAK" } });
     fireEvent.change(screen.getByLabelText(/last 3 digits/i), { target: { value: "247" } });
     fireEvent.click(screen.getByRole("button", { name: /continue to aba payway/i }));
@@ -142,10 +142,23 @@ describe("SubscriptionPackagesPage", () => {
     expect(subscriptionService.order).toHaveBeenCalledTimes(2);
   });
 
+  it("shows payment review and pending records without marking them active", async () => {
+    subscriptionService.history.mockResolvedValue([
+      { id: 10, orderCode: "SUB-REVIEW", packagePlan: basicPlan, amount: 0.01, currency: "USD", status: "REVIEW_REQUIRED", paymentStatus: "PAID", active: false },
+      { id: 11, orderCode: "SUB-PENDING", packagePlan: basicPlan, amount: 0.01, currency: "USD", status: "PENDING_PAYMENT", paymentStatus: "PENDING", active: false },
+    ]);
+    render(<SubscriptionPackagesPage />);
+    expect((await screen.findAllByText(/Under review|កំពុងរង់ចាំការផ្ទៀងផ្ទាត់/)).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Awaiting payment|រង់ចាំការទូទាត់/).length).toBeGreaterThan(0);
+    expect(screen.getByText("SUB-REVIEW")).toBeInTheDocument();
+    expect(screen.getByText("SUB-PENDING")).toBeInTheDocument();
+    expect(screen.queryByText("Subscription activated successfully.")).not.toBeInTheDocument();
+  });
+
   it("does not announce activation for a paid order without active entitlement", async () => {
     subscriptionService.order.mockResolvedValue({ status: "REVIEW_REQUIRED", paymentStatus: "PAID", active: false });
     render(<SubscriptionPackagesPage />);
-    fireEvent.click(await screen.findByRole("button", { name: /subscribe \/ upgrade/i }));
+    fireEvent.click(await screen.findByRole("button", { name: /ជ្រើសកញ្ចប់នេះ|Choose this plan/i }));
     fireEvent.change(screen.getByLabelText(/aba account holder name/i), { target: { value: "KOEURNG VIREAK" } });
     fireEvent.change(screen.getByLabelText(/last 3 digits/i), { target: { value: "247" } });
     fireEvent.click(screen.getByRole("button", { name: /continue to aba payway/i }));

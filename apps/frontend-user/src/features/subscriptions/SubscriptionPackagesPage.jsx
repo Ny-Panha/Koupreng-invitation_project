@@ -31,8 +31,8 @@ const PACKAGE_BADGES = {
     icon: Sparkles,
   },
   PRO: {
-    labelKm: "ពេញនិយម · Pro",
-    labelEn: "Popular · Pro",
+    labelKm: "កញ្ចប់ Pro",
+    labelEn: "Pro",
     color: "#b45309",
     bg: "#fef3c7",
     icon: Zap,
@@ -225,7 +225,7 @@ export default function SubscriptionPackagesPage() {
         </h1>
         <p className="pkg-subtitle">
           {copy(
-            "ការទូទាត់ប្រកបដោយសុវត្ថិភាពតាម ABA PayWay ជាមួយការផ្ទៀងផ្ទាត់ដោយស្វ័យប្រវត្តិ។",
+            "បង់ប្រាក់តាម ABA PayWay ហើយរង់ចាំការផ្ទៀងផ្ទាត់ មុនពេលកញ្ចប់ត្រូវបានបើកប្រើ។",
             "Secure fixed-link ABA PayWay checkout with administrator-confirmed payment reconciliation."
           )}
         </p>
@@ -376,7 +376,7 @@ export default function SubscriptionPackagesPage() {
 
               <button
                 type="button"
-                aria-label={isCurrent ? "Current plan" : "Subscribe / Upgrade"}
+                aria-label={isCurrent ? copy("កញ្ចប់បច្ចុប្បន្ន", "Current plan") : copy("ជ្រើសកញ្ចប់នេះ", "Choose this plan")}
                 disabled={savingId === plan.id || isCurrent}
                 onClick={() => openCheckout(plan)}
                 className={`pkg-card-btn ${isCurrent ? "current" : badgeConfig.featured ? "featured" : "primary"}`}
@@ -385,7 +385,7 @@ export default function SubscriptionPackagesPage() {
                   copy("កញ្ចប់បច្ចុប្បន្ន", "Current Plan")
                 ) : (
                   <>
-                    <span>{copy("ជ្រើសកញ្ចប់នេះ (Subscribe / Upgrade)", "Subscribe / Upgrade")}</span>
+                    <span>{copy("ជ្រើសកញ្ចប់នេះ", "Choose this plan")}</span>
                     <ArrowRight size={15} />
                   </>
                 )}
@@ -414,7 +414,7 @@ export default function SubscriptionPackagesPage() {
             </h3>
             <p className="leading-relaxed">
               {copy(
-                "កញ្ចប់សេវាកម្មទាំងអស់មានសុពលភាពរយៈពេល ៣៦៥ ថ្ងៃ គិតចាប់ពីថ្ងៃទូទាត់ជោគជ័យ។ ធៀបការរបស់អ្នកនឹងបន្តដំណើរការធម្មតា។",
+                "សុពលភាពអាស្រ័យលើកញ្ចប់ដែលអ្នកជ្រើសរើស។ សូមពិនិត្យរយៈពេល និងសិទ្ធិប្រើប្រាស់ក្នុងព័ត៌មានកញ្ចប់មុនទូទាត់។",
                 "Plans remain active for 365 days from payment confirmation. All published wedding invitations stay online."
               )}
             </p>
@@ -681,79 +681,77 @@ function SummaryRow({ label, value, code = false }) {
 
 function HistoryTable({ history, lang, copy }) {
   return (
-    <section className="bg-white rounded-2xl border border-[#EADFCE] p-6 sm:p-8 shadow-[0_4px_20px_-2px_rgba(42,31,16,0.06)]">
-      <div className="flex items-center justify-between mb-5">
-        <h2 className="text-lg sm:text-xl font-black text-[#1F2421]">
-          {copy("ប្រវត្តិការជាវកញ្ចប់សេវា (Subscription History)", "Subscription History")}
-        </h2>
+    <section className="pkg-history" aria-labelledby="pkg-history-title">
+      <div className="pkg-history-heading">
+        <div>
+          <p className="pkg-history-eyebrow">{copy("គណនី និងការទូទាត់", "Account & payments")}</p>
+          <h2 id="pkg-history-title">{copy("ប្រវត្តិជាវកញ្ចប់", "Subscription history")}</h2>
+        </div>
         {history.length > 0 && (
-          <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600">
+          <span className="pkg-history-count">
             {history.length} {copy("កំណត់ត្រា", "orders")}
           </span>
         )}
       </div>
-
-      {history.length ? (
-        <div className="overflow-x-auto rounded-xl border border-[#F1EBD8]">
-          <table className="w-full text-left text-xs sm:text-sm border-collapse bg-white">
-            <thead>
-              <tr className="bg-[#FBF8F2] border-b border-[#EADFCE] text-[#4B5563] text-xs font-bold uppercase tracking-wider">
-                <th className="py-3 px-4">{copy("កញ្ចប់", "Package")}</th>
-                <th className="py-3 px-4">{copy("ស្ថានភាព", "Status")}</th>
-                <th className="py-3 px-4">{copy("តម្លៃ", "Amount")}</th>
-                <th className="py-3 px-4">{copy("លេខកូដ", "Order")}</th>
-                <th className="py-3 px-4">{copy("ព័ត៌មាន", "Message")}</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-[#F1EBD8]">
-              {history.map((item) => {
-                const isPaid = item.status === "ACTIVE" || item.paymentStatus === "PAID";
-                const isPending = item.status === "PENDING_PAYMENT" || item.paymentStatus === "PENDING";
-                const isExpired = item.status === "EXPIRED" || item.paymentStatus === "EXPIRED";
-
-                return (
-                  <tr key={item.id} className="hover:bg-[#FDFBF7] transition-colors">
-                    <td className="py-3.5 px-4 font-bold text-[#1F2421]">
-                      {item.packagePlan?.packageName || "—"}
-                    </td>
-                    <td className="py-3.5 px-4">
-                      <span
-                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold ${
-                          isPaid
-                            ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
-                            : isPending
-                            ? "bg-amber-50 text-amber-800 border border-amber-200"
-                            : isExpired
-                            ? "bg-slate-100 text-slate-600 border border-slate-200"
-                            : "bg-slate-100 text-slate-700"
-                        }`}
-                      >
-                        {item.status}
-                      </span>
-                    </td>
-                    <td className="py-3.5 px-4 font-black text-[#1F2421]">
-                      {formatMoney(item.amount, item.currency, lang)}
-                    </td>
-                    <td className="py-3.5 px-4 font-mono text-xs text-slate-600">
-                      {item.orderCode ? (
-                        <span className="bg-slate-100 px-2 py-0.5 rounded font-bold">{item.orderCode}</span>
-                      ) : (
-                        "—"
-                      )}
-                    </td>
-                    <td className="py-3.5 px-4 text-slate-500 max-w-xs truncate text-xs">
-                      {item.message || "—"}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+      {history.length === 0 ? (
+        <p className="pkg-history-empty">
+          {copy("មិនទាន់មានប្រវត្តិទិញកញ្ចប់នៅឡើយទេ។", "You don't have any subscription orders yet.")}
+        </p>
       ) : (
-        <div className="text-center py-10 text-slate-500 text-xs sm:text-sm">
-          <p>{copy("មិនទាន់មានប្រវត្តិជាវកញ្ចប់សេវាកម្មនៅឡើយទេ។", "No subscription history yet.")}</p>
-        </div>
+        <ul className="pkg-history-list">
+          {history.map((item, index) => {
+            // Payment receipt alone never grants active subscription entitlement.
+            const active = item.active === true && item.status === "ACTIVE" && item.paymentStatus === "PAID";
+            const expired = item.status === "EXPIRED" || item.paymentStatus === "EXPIRED";
+            const review = item.status === "REVIEW_REQUIRED"
+              || (item.paymentStatus === "PAID" && !active && !expired);
+            const pending = !review && !expired
+              && (item.status === "PENDING_PAYMENT" || item.paymentStatus === "PENDING");
+            const tone = active ? "active" : expired ? "expired" : review ? "review" : pending ? "pending" : "neutral";
+            const statusText = active
+              ? copy("កំពុងប្រើប្រាស់", "Active")
+              : expired
+                ? copy("ផុតកំណត់", "Expired")
+                : review
+                  ? copy("កំពុងរង់ចាំការផ្ទៀងផ្ទាត់", "Under review")
+                  : pending
+                    ? copy("រង់ចាំការទូទាត់", "Awaiting payment")
+                    : (item.status || copy("មិនទាន់បានបញ្ជាក់", "Not confirmed"));
+            const details = lang === "km"
+              ? active
+                ? "កញ្ចប់នេះបានបើកប្រើប្រាស់រួចហើយ។"
+                : expired
+                  ? "កញ្ចប់ ឬការបញ្ជាទិញនេះផុតកំណត់ហើយ។"
+                  : review
+                    ? "ការទូទាត់កំពុងត្រូវបានផ្ទៀងផ្ទាត់។ សិទ្ធិប្រើប្រាស់មិនទាន់បានបើកទេ។"
+                    : pending
+                      ? "ការបញ្ជាទិញកំពុងរង់ចាំការទូទាត់ និងការផ្ទៀងផ្ទាត់។"
+                      : statusText
+              : (item.message || statusText);
+            return (
+              <li className="pkg-history-item" key={item.id || item.orderCode || index}>
+                <div className="pkg-history-package">
+                  <h3>{item.packagePlan?.packageName || copy("កញ្ចប់សេវាកម្ម", "Subscription package")}</h3>
+                  <span className={`pkg-history-status pkg-history-status--${tone}`}>{statusText}</span>
+                </div>
+                <dl className="pkg-history-details">
+                  <div>
+                    <dt>{copy("ចំនួនទឹកប្រាក់", "Amount")}</dt>
+                    <dd className="pkg-history-amount">{formatMoney(item.amount, item.currency, lang)}</dd>
+                  </div>
+                  <div>
+                    <dt>{copy("លេខបញ្ជាទិញ", "Order reference")}</dt>
+                    <dd><code>{item.orderCode || "—"}</code></dd>
+                  </div>
+                </dl>
+                <div className="pkg-history-note">
+                  <span>{copy("ព័ត៌មានស្ថានភាព", "Status details")}</span>
+                  <p>{details}</p>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
       )}
     </section>
   );
