@@ -1,0 +1,288 @@
+/* SubscriptionPackagesPage.css — Koupreng Atelier Styles */
+
+.pkg-page-container {
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+  box-sizing: border-box;
+}
+
+.pkg-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 2.5rem;
+}
+
+.pkg-tag-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: rgba(185, 139, 66, 0.1);
+  color: #9C7332;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  border: 1px solid rgba(185, 139, 66, 0.25);
+}
+
+.pkg-title {
+  font-size: clamp(1.75rem, 3.5vw, 2.35rem);
+  font-weight: 900;
+  color: #1F2421;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.75rem;
+  line-height: 1.25;
+}
+
+.pkg-subtitle {
+  font-size: 0.875rem;
+  color: #5D665F;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Active Plan Banner */
+.pkg-active-banner {
+  background: linear-gradient(135deg, #0F766E 0%, #0D5F58 50%, #0A4B45 100%);
+  border: 1px solid rgba(19, 138, 129, 0.35);
+  border-radius: 1.25rem;
+  padding: 1.75rem 2rem;
+  margin-bottom: 2.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  box-shadow: 0 10px 30px -5px rgba(15, 118, 110, 0.25);
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .pkg-active-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.25rem 1.5rem;
+  }
+}
+
+.pkg-active-banner-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #A7F3D0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.pkg-active-banner-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #ffffff;
+  margin: 0.5rem 0 0.25rem;
+  letter-spacing: -0.01em;
+}
+
+.pkg-active-banner-desc {
+  font-size: 0.85rem;
+  color: rgba(209, 250, 229, 0.9);
+  margin: 0;
+  max-width: 550px;
+}
+
+.pkg-active-banner-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+/* Plan Cards Grid */
+.pkg-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.75rem;
+  margin-bottom: 3rem;
+  align-items: stretch;
+}
+
+@media (max-width: 960px) {
+  .pkg-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.pkg-card {
+  background: #ffffff;
+  border: 1px solid #EADFCE;
+  border-radius: 1.25rem;
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 20px -2px rgba(42, 31, 16, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.pkg-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px -4px rgba(42, 31, 16, 0.12);
+}
+
+.pkg-card.is-featured {
+  border: 2px solid #B98B42;
+  box-shadow: 0 8px 28px -2px rgba(185, 139, 66, 0.16);
+}
+
+.pkg-card.is-targeted {
+  border: 2px solid #B98B42;
+  box-shadow: 0 12px 36px -4px rgba(185, 139, 66, 0.25);
+}
+
+.pkg-card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.pkg-card-name {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #1F2421;
+  margin: 0.75rem 0 0.35rem;
+}
+
+.pkg-card-desc {
+  font-size: 0.85rem;
+  color: #5D665F;
+  margin: 0;
+  min-height: 40px;
+  line-height: 1.5;
+}
+
+.pkg-card-pricing {
+  padding: 1.25rem 0;
+  margin: 0.75rem 0 1.25rem;
+  border-top: 1px solid #F1EBD8;
+  border-bottom: 1px solid #F1EBD8;
+}
+
+.pkg-card-price {
+  font-size: 2.25rem;
+  font-weight: 900;
+  color: #1F2421;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.pkg-card-period {
+  font-size: 0.75rem;
+  color: #6F766F;
+  font-weight: 600;
+  margin-top: 0.35rem;
+}
+
+.pkg-card-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.pkg-card-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0.85rem 1.25rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(15, 118, 110, 0.2);
+}
+
+.pkg-card-btn.primary {
+  background: #0F766E;
+  color: #ffffff;
+}
+
+.pkg-card-btn.primary:hover:not(:disabled) {
+  background: #0D5F58;
+  transform: translateY(-1px);
+}
+
+.pkg-card-btn.featured {
+  background: linear-gradient(135deg, #B98B42, #9C7332);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(185, 139, 66, 0.25);
+}
+
+.pkg-card-btn.featured:hover:not(:disabled) {
+  background: linear-gradient(135deg, #9C7332, #7D5C28);
+  transform: translateY(-1px);
+}
+
+.pkg-card-btn.current {
+  background: #E2E8F0;
+  color: #64748B;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* History & FAQ Cards */
+.pkg-section-card {
+  background: #ffffff;
+  border: 1px solid #EADFCE;
+  border-radius: 1.25rem;
+  padding: 2rem 1.75rem;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 4px 20px -2px rgba(42, 31, 16, 0.05);
+  box-sizing: border-box;
+}
+
+.pkg-faq-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.25rem;
+}
+
+@media (max-width: 960px) {
+  .pkg-faq-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+}
+

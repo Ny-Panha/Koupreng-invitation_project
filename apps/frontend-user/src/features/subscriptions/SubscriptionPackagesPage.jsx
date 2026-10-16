@@ -1,35 +1,73 @@
 import { useCallback, useEffect, useState } from "react";
-import { ArrowRight, CheckCircle2, Clock, Crown, ExternalLink, ShieldCheck, Sparkles, Zap } from "lucide-react";
+import {
+  ArrowRight,
+  CheckCircle2,
+  Clock,
+  Crown,
+  ExternalLink,
+  ShieldCheck,
+  Sparkles,
+  Zap,
+  RotateCw,
+  AlertCircle,
+  HelpCircle,
+  FileText,
+  CreditCard,
+  Calendar,
+} from "lucide-react";
 import Modal from "../../shared/ui/Modal";
 import { toast } from "../../shared/ui/toast";
 import subscriptionService from "./subscriptionService";
-import "../enterprise/EnterprisePages.css";
-
-function money(amount, currency = "USD") {
-  return new Intl.NumberFormat("en", {
-    style: "currency",
-    currency,
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(Number(amount || 0));
-}
+import { useLanguageStore } from "../../stores/useLanguageStore";
+import { packagePrice, packageLimit } from "../marketing/model/packagePresentation";
+import "./SubscriptionPackagesPage.css";
 
 const PACKAGE_BADGES = {
-  BASIC: { label: "Basic", color: "#0284c7", bg: "#e0f2fe", icon: Sparkles },
-  PRO: { label: "Popular · Pro", color: "#b45309", bg: "#fef3c7", icon: Zap, featured: true },
-  PREMIUM: { label: "Premium", color: "#7c3aed", bg: "#ede9fe", icon: Crown },
+  BASIC: {
+    labelKm: "មូលដ្ឋាន (Basic)",
+    labelEn: "Basic",
+    color: "#0284c7",
+    bg: "#e0f2fe",
+    icon: Sparkles,
+  },
+  PRO: {
+    labelKm: "ពេញនិយម · Pro",
+    labelEn: "Popular · Pro",
+    color: "#b45309",
+    bg: "#fef3c7",
+    icon: Zap,
+    featured: true,
+  },
+  PREMIUM: {
+    labelKm: "ប្រណិត (Premium)",
+    labelEn: "Premium",
+    color: "#7c3aed",
+    bg: "#ede9fe",
+    icon: Crown,
+  },
 };
 
-const buttonStyle = {
-  width: "100%",
-  padding: "13px 18px",
-  borderRadius: 11,
-  border: 0,
-  fontWeight: 750,
-  cursor: "pointer",
-};
+function formatMoney(amount, currency, lang) {
+  const formatted = packagePrice({ price: amount, currency }, lang);
+  if (formatted !== null) return formatted;
+  if (amount == null || amount === "") return lang === "en" ? "Price unavailable" : "តម្លៃមិនទាន់មាន";
+  return `${currency || "USD"} ${amount}`;
+}
+
+function getTargetedPackageCode() {
+  if (typeof window === "undefined" || !window.location) return null;
+  try {
+    return new URLSearchParams(window.location.search).get("package")?.toUpperCase() || null;
+  } catch {
+    return null;
+  }
+}
 
 export default function SubscriptionPackagesPage() {
+  const lang = useLanguageStore((state) => state.lang);
+  const copy = useCallback((km, en) => (lang === "en" ? en : km), [lang]);
+  const targetedCode = getTargetedPackageCode();
+
   const [packages, setPackages] = useState([]);
   const [current, setCurrent] = useState(null);
   const [history, setHistory] = useState([]);
@@ -42,20 +80,31 @@ export default function SubscriptionPackagesPage() {
     setLoading(true);
     setError("");
     try {
-      const [plans, currentPlan, subscriptionHistory] = await Promise.all([
+      const [plansResult, currentResult, historyResult] = await Promise.allSettled([
         subscriptionService.packages(),
         subscriptionService.current(),
         subscriptionService.history(),
       ]);
-      setPackages(plans || []);
-      setCurrent(currentPlan || null);
-      setHistory(subscriptionHistory || []);
+
+      if (plansResult.status === "fulfilled") {
+        setPackages(plansResult.value || []);
+      } else {
+        setError(plansResult.reason?.message || copy("មិនអាចផ្ទុកកញ្ចប់សេវាកម្មបានទេ", "Could not load subscription packages."));
+      }
+
+      if (currentResult.status === "fulfilled") {
+        setCurrent(currentResult.value || null);
+      }
+
+      if (historyResult.status === "fulfilled") {
+        setHistory(historyResult.value || []);
+      }
     } catch (loadError) {
-      setError(loadError.message || "Could not load subscription packages.");
+      setError(loadError?.message || copy("មិនអាចផ្ទុកកញ្ចប់សេវាកម្មបានទេ", "Could not load subscription packages."));
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [copy]);
 
   useEffect(() => {
     load();
@@ -78,23 +127,41 @@ export default function SubscriptionPackagesPage() {
     const payerAccountLast3 = checkout?.payerAccountLast3 || "";
     if (!plan) return;
     if (!payerName) {
-      setCheckout((value) => ({ ...value, validationError: "ABA account holder name is required." }));
+      setCheckout((value) => ({
+        ...value,
+        validationError: copy("សូមបញ្ចូលឈ្មោះម្ចាស់គណនី ABA (ABA account holder name is required.)", "ABA account holder name is required."),
+      }));
       return;
     }
     if (!/^\d{3}$/.test(payerAccountLast3)) {
-      setCheckout((value) => ({ ...value, validationError: "Last 3 digits must be exactly 3 numbers." }));
+      setCheckout((value) => ({
+        ...value,
+        validationError: copy("លេខ ៣ ខ្ទង់ចុងក្រោយត្រូវតែជាលេខពិតប្រាកដចំនួន ៣ ខ្ទង់ (Last 3 digits must be exactly 3 numbers.)", "Last 3 digits must be exactly 3 numbers."),
+      }));
       return;
     }
 
     setSavingId(plan.id);
-    setError("");
+    setCheckout((value) => ({ ...value, validationError: "" }));
     try {
       const order = await subscriptionService.purchase(plan.id, payerName, payerAccountLast3);
-      setCheckout((value) => ({ ...value, ...order, stage: "waiting", validationError: "" }));
-      toast.info("Payment order created. Waiting for confirmation.");
-      if (order.paymentUrl) window.open(order.paymentUrl, "_blank", "noopener,noreferrer");
-    } catch (purchaseError) {
-      const message = purchaseError.message || "Could not create the subscription payment order.";
+      setCheckout((value) => ({
+        ...value,
+        ...order,
+        stage: order.active ? "success" : "waiting",
+      }));
+      if (order.paymentUrl) {
+        const opened = window.open(order.paymentUrl, "_blank", "noopener,noreferrer");
+        if (!opened) {
+          toast.info("Pop-up blocked. Click the payment button to proceed.");
+        }
+      }
+      if (order.active) {
+        toast.success("Subscription activated successfully.");
+        await load();
+      }
+    } catch (checkoutError) {
+      const message = checkoutError?.message || "Could not create payment order.";
       setCheckout((value) => ({ ...value, validationError: message }));
       toast.error(message);
     } finally {
@@ -134,143 +201,560 @@ export default function SubscriptionPackagesPage() {
 
   if (loading) {
     return (
-      <main className="enterprise-page">
-        <div style={{ textAlign: "center", padding: "60px 20px", color: "#64748b" }}>
-          <Sparkles className="spin" size={32} style={{ color: "#d97706", marginBottom: 12 }} />
-          <div>កំពុងទាញយកកញ្ចប់សេវាកម្ម…</div>
+      <main className="dash-main w-full min-h-screen py-16 px-4 flex items-center justify-center">
+        <div className="text-center py-20 text-slate-500">
+          <Sparkles className="animate-spin inline-block text-[#B98B42] mb-3" size={36} />
+          <div className="text-sm font-semibold text-slate-700">
+            {copy("កំពុងទាញយកកញ្ចប់សេវាកម្ម…", "Loading subscription packages…")}
+          </div>
         </div>
       </main>
     );
   }
 
   return (
-    <main className="enterprise-page" style={{ maxWidth: 1200, margin: "0 auto", padding: "32px 20px" }}>
-      <header style={{ textAlign: "center", marginBottom: 40 }}>
-        <div style={{ display: "inline-flex", gap: 8, alignItems: "center", padding: "6px 16px", borderRadius: 999, background: "#fef3c7", color: "#b45309", fontWeight: 750 }}>
-          <Crown size={16} /> Packages & Pricing
+    <main className="dash-main pkg-page-container" lang={lang}>
+      {/* Header */}
+      <header className="pkg-header">
+        <div className="pkg-tag-badge">
+          <Crown size={15} />
+          <span>{copy("កញ្ចប់សេវាកម្ម & តម្លៃ", "Packages & Pricing")}</span>
         </div>
-        <h1 style={{ fontSize: "clamp(1.8rem, 4vw, 2.3rem)", color: "#0f172a", marginBottom: 10 }}>
-          ជ្រើសរើសកញ្ចប់សេវាកម្មដែលស័ក្តិសមសម្រាប់អ្នក
+        <h1 className="pkg-title">
+          {copy("ជ្រើសរើសកញ្ចប់សេវាកម្មដែលស័ក្តិសមសម្រាប់អ្នក", "Choose the subscription tier for your celebration")}
         </h1>
-        <p style={{ color: "#64748b", maxWidth: 680, margin: "0 auto" }}>
-          Secure fixed-link ABA PayWay checkout with administrator-confirmed payment reconciliation.
+        <p className="pkg-subtitle">
+          {copy(
+            "ការទូទាត់ប្រកបដោយសុវត្ថិភាពតាម ABA PayWay ជាមួយការផ្ទៀងផ្ទាត់ដោយស្វ័យប្រវត្តិ។",
+            "Secure fixed-link ABA PayWay checkout with administrator-confirmed payment reconciliation."
+          )}
         </p>
       </header>
 
-      {error && <div className="enterprise-error" style={{ marginBottom: 20 }}>{error}</div>}
-
-      {current && (
-        <section style={{ background: "linear-gradient(135deg, #0f766e, #115e59)", color: "white", borderRadius: 16, padding: "20px 28px", marginBottom: 36, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
-          <div>
-            <small style={{ letterSpacing: 1, fontWeight: 750, opacity: 0.85 }}>ACTIVE PLAN</small>
-            <div style={{ fontSize: "1.55rem", fontWeight: 800, marginTop: 4 }}>{current.packagePlan?.packageName}</div>
+      {error && (
+        <div
+          className="mb-8 p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs sm:text-sm flex items-center justify-between gap-3 shadow-xs"
+          role="alert"
+        >
+          <div className="flex items-center gap-2.5">
+            <AlertCircle size={18} className="shrink-0 text-rose-600" />
+            <span className="font-medium">{error}</span>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-            <Clock size={16} />
-            {current.endDate ? new Intl.DateTimeFormat("km-KH", { dateStyle: "long" }).format(new Date(current.endDate)) : "Lifetime access"}
+          <button
+            type="button"
+            onClick={load}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-rose-200 text-rose-700 hover:bg-rose-50 text-xs font-bold transition-all cursor-pointer"
+          >
+            <RotateCw size={12} /> {copy("សាកម្ដងទៀត", "Retry")}
+          </button>
+        </div>
+      )}
+
+      {/* Active Subscription Banner */}
+      {current && (
+        <section
+          className="pkg-active-banner"
+          aria-label={copy("កញ្ចប់បច្ចុប្បន្ន", "Active Subscription")}
+        >
+          <div>
+            <span className="pkg-active-banner-pill">
+              <ShieldCheck size={13} />
+              <span>{copy("កញ្ចប់បច្ចុប្បន្នរបស់អ្នក", "ACTIVE PLAN")}</span>
+            </span>
+            <h2 className="pkg-active-banner-title">
+              {current.packagePlan?.packageName || copy("កញ្ចប់សកម្ម", "Active Plan")}
+            </h2>
+            <p className="pkg-active-banner-desc">
+              {current.message || copy("កញ្ចប់នេះកំពុងដំណើរការពេញលេញលើគណនីរបស់អ្នក។", "This subscription is fully active for your account.")}
+            </p>
+          </div>
+          <div className="pkg-active-banner-meta">
+            <Clock size={16} className="text-emerald-300" />
+            <span>
+              {current.endDate
+                ? `${copy("ផុតកំណត់នៅថ្ងៃ:", "Expires:")} ${new Intl.DateTimeFormat(lang === "en" ? "en-US" : "km-KH", { dateStyle: "long" }).format(new Date(current.endDate))}`
+                : copy("សិទ្ធិប្រើប្រាស់គ្មានកំណត់", "Lifetime access")}
+            </span>
           </div>
         </section>
       )}
 
-      <section style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24, marginBottom: 48 }}>
+      {/* Plan Cards Grid */}
+      <section
+        className="pkg-grid"
+        aria-label={copy("បញ្ជីកញ្ចប់សេវាកម្ម", "Available subscription plans")}
+      >
         {packages.map((plan) => {
-          const badge = PACKAGE_BADGES[plan.code?.toUpperCase()] || PACKAGE_BADGES.BASIC;
+          const badgeConfig = PACKAGE_BADGES[plan.code?.toUpperCase()] || PACKAGE_BADGES.BASIC;
           const isCurrent = current?.packagePlan?.id === plan.id;
+          const isTargeted = targetedCode && plan.code?.toUpperCase() === targetedCode;
+          const BadgeIcon = badgeConfig.icon;
+          const badgeText = lang === "en" ? badgeConfig.labelEn : badgeConfig.labelKm;
+
           return (
-            <article key={plan.id} style={{ background: "white", borderRadius: 20, border: badge.featured ? "2px solid #f59e0b" : "1px solid #e2e8f0", padding: "30px 24px", display: "flex", flexDirection: "column", boxShadow: badge.featured ? "0 20px 30px -10px rgba(245,158,11,.18)" : "0 4px 12px rgba(0,0,0,.04)" }}>
-              <span style={{ alignSelf: "flex-start", background: badge.bg, color: badge.color, padding: "5px 10px", borderRadius: 7, fontSize: ".8rem", fontWeight: 750 }}>{badge.label}</span>
-              <h2 style={{ margin: "14px 0 6px", color: "#0f172a" }}>{plan.packageName}</h2>
-              <p style={{ color: "#64748b", minHeight: 42 }}>{plan.description}</p>
-              <div style={{ fontSize: "2rem", fontWeight: 900, color: "#0f172a", padding: "18px 0", borderBottom: "1px solid #f1f5f9" }}>{money(plan.price, plan.currency)}</div>
-              <ul style={{ listStyle: "none", padding: 0, display: "grid", gap: 12, margin: "22px 0 30px", flex: 1 }}>
-                <Feature>Up to {plan.maxInvitations ?? "unlimited"} invitations</Feature>
-                <Feature>Up to {plan.maxGuestsPerInvitation ?? plan.maxGuests ?? "unlimited"} guests per invitation</Feature>
-                <Feature>{plan.maxTeamMembers ?? 1} team members</Feature>
-                {plan.premiumTemplatesEnabled && <Feature>Premium invitation templates</Feature>}
-                {plan.qrCheckInEnabled && <Feature>QR guest check-in</Feature>}
-              </ul>
-              <button type="button" disabled={savingId === plan.id || isCurrent} onClick={() => openCheckout(plan)} style={{ ...buttonStyle, background: isCurrent ? "#e2e8f0" : badge.featured ? "linear-gradient(135deg,#d97706,#b45309)" : "#0f766e", color: isCurrent ? "#64748b" : "white" }}>
-                {isCurrent ? "Current plan" : <>Subscribe / Upgrade <ArrowRight size={16} style={{ verticalAlign: "middle" }} /></>}
+            <article
+              key={plan.id}
+              className={`pkg-card ${badgeConfig.featured ? "is-featured" : ""} ${isTargeted ? "is-targeted" : ""}`}
+            >
+              {isTargeted && (
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3.5 py-1 rounded-full bg-gradient-to-r from-[#B98B42] to-[#9C7332] text-white text-[10px] font-extrabold uppercase tracking-wider shadow-sm flex items-center gap-1.5 whitespace-nowrap">
+                  <Sparkles size={11} />
+                  <span>{copy("បានជ្រើសរើសពីទំព័រតម្លៃ", "Selected plan")}</span>
+                </div>
+              )}
+
+              <div>
+                <div className="flex items-center justify-between gap-2 mb-3.5">
+                  <span
+                    className="pkg-card-badge"
+                    style={{ background: badgeConfig.bg, color: badgeConfig.color }}
+                  >
+                    <BadgeIcon size={14} />
+                    <span>{badgeText}</span>
+                  </span>
+                  {isCurrent && (
+                    <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                      {copy("កំពុងប្រើ", "Current")}
+                    </span>
+                  )}
+                </div>
+
+                <h2 className="pkg-card-name">
+                  {plan.packageName}
+                </h2>
+                <p className="pkg-card-desc">
+                  {plan.description}
+                </p>
+
+                <div className="pkg-card-pricing">
+                  <div className="pkg-card-price">
+                    {formatMoney(plan.price, plan.currency, lang)}
+                  </div>
+                  {plan.durationDays && (
+                    <div className="pkg-card-period">
+                      {copy("សុពលភាព:", "Validity:")} {packageLimit(plan.durationDays, lang)} {copy("ថ្ងៃ", "days")} ({plan.billingInterval})
+                    </div>
+                  )}
+                </div>
+
+                <ul className="pkg-card-features">
+                  <FeatureItem>
+                    {copy("បង្កើតបានរហូតដល់", "Up to")}{" "}
+                    <strong className="font-bold text-[#1F2421]">
+                      {packageLimit(plan.maxInvitations, lang)} {copy("សន្លឹកការ", "invitations")}
+                    </strong>
+                  </FeatureItem>
+                  <FeatureItem>
+                    {copy("ភ្ញៀវរហូតដល់", "Up to")}{" "}
+                    <strong className="font-bold text-[#1F2421]">
+                      {packageLimit(plan.maxGuestsPerInvitation ?? plan.maxGuests, lang)} {copy("នាក់/សន្លឹកការ", "guests per invitation")}
+                    </strong>
+                  </FeatureItem>
+                  <FeatureItem>
+                    {copy("សមាជិកគ្រប់គ្រងរួម", "Team collaboration:")}{" "}
+                    <strong className="font-bold text-[#1F2421]">
+                      {packageLimit(plan.maxTeamMembers ?? 1, lang)} {copy("នាក់", "members")}
+                    </strong>
+                  </FeatureItem>
+                  {plan.premiumTemplatesEnabled && (
+                    <FeatureItem>
+                      {copy("សិទ្ធិប្រើប្រាស់ម៉ូតធៀបការ Premium", "Premium invitation templates")}
+                    </FeatureItem>
+                  )}
+                  {plan.qrCheckInEnabled && (
+                    <FeatureItem>
+                      {copy("ប្រព័ន្ធស្កេន QR ពិនិត្យវត្តមានភ្ញៀវមុខរោង", "QR guest check-in at reception")}
+                    </FeatureItem>
+                  )}
+                  {plan.seatingEnabled && (
+                    <FeatureItem>
+                      {copy("រៀបចំតុភ្ញៀវ (Seating arrangement)", "Guest seating chart")}
+                    </FeatureItem>
+                  )}
+                </ul>
+              </div>
+
+              <button
+                type="button"
+                aria-label={isCurrent ? "Current plan" : "Subscribe / Upgrade"}
+                disabled={savingId === plan.id || isCurrent}
+                onClick={() => openCheckout(plan)}
+                className={`pkg-card-btn ${isCurrent ? "current" : badgeConfig.featured ? "featured" : "primary"}`}
+              >
+                {isCurrent ? (
+                  copy("កញ្ចប់បច្ចុប្បន្ន", "Current Plan")
+                ) : (
+                  <>
+                    <span>{copy("ជ្រើសកញ្ចប់នេះ (Subscribe / Upgrade)", "Subscribe / Upgrade")}</span>
+                    <ArrowRight size={15} />
+                  </>
+                )}
               </button>
             </article>
           );
         })}
       </section>
 
-      <HistoryTable history={history} />
-      <CheckoutModal checkout={checkout} saving={savingId != null} onChange={setCheckout} onSubmit={createCheckout} onClose={() => setCheckout(null)} />
+      {/* Subscription History Section */}
+      <HistoryTable history={history} lang={lang} copy={copy} />
+
+      {/* Frequently Asked Questions */}
+      <section className="pkg-section-card" aria-label="FAQ">
+        <div className="flex items-center gap-2 mb-4 text-[#B98B42]">
+          <HelpCircle size={20} />
+          <h2 className="text-base sm:text-lg font-bold text-[#1F2421]">
+            {copy("សំណួរដែលសួរញឹកញាប់អំពីកញ្ចប់សេវា", "Frequently Asked Questions")}
+          </h2>
+        </div>
+        <div className="pkg-faq-grid">
+          <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#F1EBD8]">
+            <h3 className="font-bold text-[#1F2421] mb-1.5 flex items-center gap-1.5">
+              <Calendar size={15} className="text-[#B98B42]" />
+              {copy("សុពលភាព និងការបន្តសេវា", "Plan Validity & Expiry")}
+            </h3>
+            <p className="leading-relaxed">
+              {copy(
+                "កញ្ចប់សេវាកម្មទាំងអស់មានសុពលភាពរយៈពេល ៣៦៥ ថ្ងៃ គិតចាប់ពីថ្ងៃទូទាត់ជោគជ័យ។ ធៀបការរបស់អ្នកនឹងបន្តដំណើរការធម្មតា។",
+                "Plans remain active for 365 days from payment confirmation. All published wedding invitations stay online."
+              )}
+            </p>
+          </div>
+          <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#F1EBD8]">
+            <h3 className="font-bold text-[#1F2421] mb-1.5 flex items-center gap-1.5">
+              <CreditCard size={15} className="text-[#0F766E]" />
+              {copy("ការទូទាត់តាម ABA PayWay", "ABA PayWay Reconciliation")}
+            </h3>
+            <p className="leading-relaxed">
+              {copy(
+                "ប្រព័ន្ធទទួលការទូទាត់ប្រាក់ដុល្លារ (USD) តាម ABA PayWay ជាមួយការផ្ទៀងផ្ទាត់ដោយស្វ័យប្រវត្តិតាមរយៈលេខ ៣ ខ្ទង់ចុងក្រោយនៃគណនី។",
+                "Payments are settled in USD via ABA PayWay and automatically reconciled using the trailing 3 digits of your account."
+              )}
+            </p>
+          </div>
+          <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#F1EBD8]">
+            <h3 className="font-bold text-[#1F2421] mb-1.5 flex items-center gap-1.5">
+              <FileText size={15} className="text-[#7C3AED]" />
+              {copy("កូតាភ្ញៀវ និងម៉ូតធៀប", "Guest Quotas & Templates")}
+            </h3>
+            <p className="leading-relaxed">
+              {copy(
+                "កញ្ចប់ Pro និង Premium ផ្តល់សិទ្ធិប្រើប្រាស់ម៉ូតធៀបការ VIP ទាំងអស់ ព្រមទាំងប្រព័ន្ធស្កេនវត្តមាន QR Code នៅមុខរោងការ។",
+                "Pro and Premium packages unlock all VIP templates and reception QR check-in capabilities."
+              )}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Checkout Modal */}
+      <CheckoutModal
+        checkout={checkout}
+        saving={savingId != null}
+        lang={lang}
+        copy={copy}
+        onChange={setCheckout}
+        onSubmit={createCheckout}
+        onClose={() => setCheckout(null)}
+      />
     </main>
   );
 }
 
-function Feature({ children }) {
-  return <li style={{ display: "flex", gap: 10, color: "#334155", alignItems: "center" }}><CheckCircle2 size={18} color="#16a34a" /> {children}</li>;
+function FeatureItem({ children }) {
+  return (
+    <li className="flex items-start gap-2.5">
+      <CheckCircle2 size={16} className="text-[#0F766E] mt-0.5 shrink-0" />
+      <span className="leading-relaxed">{children}</span>
+    </li>
+  );
 }
 
-function CheckoutModal({ checkout, saving, onChange, onSubmit, onClose }) {
+function CheckoutModal({ checkout, saving, lang, copy, onChange, onSubmit, onClose }) {
   if (!checkout) return null;
   const isDetails = checkout.stage === "details";
   const terminal = ["success", "expired", "review"].includes(checkout.stage);
 
   return (
-    <Modal isOpen onClose={onClose} title={isDetails ? `Subscribe to ${checkout.plan.packageName}` : `Payment · ${checkout.plan.packageName}`} subtitle={money(checkout.amount ?? checkout.plan.price, checkout.currency ?? checkout.plan.currency)} size="sm" closeOnBackdropClick={!saving} closeOnEscape={!saving}>
+    <Modal
+      isOpen
+      onClose={onClose}
+      title={isDetails ? `Subscribe to ${checkout.plan?.packageName || ""}` : `Payment · ${checkout.plan?.packageName || ""}`}
+      subtitle={formatMoney(checkout.amount ?? checkout.plan?.price, checkout.currency ?? checkout.plan?.currency, lang)}
+      size="sm"
+      closeOnBackdropClick={!saving}
+      closeOnEscape={!saving}
+    >
       {isDetails ? (
-        <form onSubmit={(event) => { event.preventDefault(); onSubmit(); }} style={{ display: "grid", gap: 16 }}>
-          <label style={{ display: "grid", gap: 7, color: "#334155", fontWeight: 700 }}>
-            ABA Account Holder Name
-            <input autoFocus value={checkout.payerName} onChange={(event) => onChange((value) => ({ ...value, payerName: event.target.value, validationError: "" }))} maxLength={120} placeholder="KOEURNG VIREAK" style={{ padding: "12px 13px", borderRadius: 9, border: "1px solid #cbd5e1", fontSize: "1rem" }} />
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            onSubmit();
+          }}
+          className="space-y-4"
+        >
+          <label htmlFor="payerNameInput" className="block text-xs font-bold text-slate-800">
+            <span className="block mb-1.5">{copy("ឈ្មោះម្ចាស់គណនី ABA (ABA Account Holder Name)", "ABA Account Holder Name")}</span>
+            <input
+              id="payerNameInput"
+              aria-label="ABA Account Holder Name"
+              autoFocus
+              value={checkout.payerName}
+              onChange={(event) =>
+                onChange((value) => ({ ...value, payerName: event.target.value, validationError: "" }))
+              }
+              maxLength={120}
+              placeholder="KOEURNG VIREAK"
+              className="w-full h-11 px-3.5 py-2 text-sm text-slate-800 bg-white border border-slate-300 rounded-xl uppercase font-semibold shadow-xs focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 focus:outline-none"
+            />
           </label>
-          <label style={{ display: "grid", gap: 7, color: "#334155", fontWeight: 700 }}>
-            Last 3 digits of ABA account
-            <input inputMode="numeric" value={checkout.payerAccountLast3} onChange={(event) => onChange((value) => ({ ...value, payerAccountLast3: event.target.value.replace(/\D/g, "").slice(0, 3), validationError: "" }))} maxLength={3} placeholder="247" style={{ padding: "12px 13px", borderRadius: 9, border: "1px solid #cbd5e1", fontSize: "1rem", letterSpacing: 4 }} />
+
+          <label htmlFor="payerLast3Input" className="block text-xs font-bold text-slate-800">
+            <span className="block mb-1.5">{copy("លេខ ៣ ខ្ទង់ចុងក្រោយនៃគណនី ABA (Last 3 digits of ABA account)", "Last 3 digits of ABA account")}</span>
+            <input
+              id="payerLast3Input"
+              aria-label="Last 3 digits of ABA account"
+              inputMode="numeric"
+              value={checkout.payerAccountLast3}
+              onChange={(event) =>
+                onChange((value) => ({
+                  ...value,
+                  payerAccountLast3: event.target.value.replace(/\D/g, "").slice(0, 3),
+                  validationError: "",
+                }))
+              }
+              maxLength={3}
+              placeholder="247"
+              className="w-full h-11 px-3.5 py-2 text-sm text-slate-800 bg-white border border-slate-300 rounded-xl font-mono text-center tracking-widest font-black shadow-xs focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 focus:outline-none"
+            />
           </label>
-          <div style={{ background: "#fff7ed", color: "#9a3412", borderRadius: 10, padding: 12, fontSize: ".9rem" }}>Use the same ABA account when making payment.</div>
-          {checkout.validationError && <div role="alert" style={{ color: "#b91c1c", fontSize: ".9rem" }}>{checkout.validationError}</div>}
-          <button type="submit" disabled={saving} style={{ ...buttonStyle, background: "#0f766e", color: "white" }}>{saving ? "Creating payment order…" : "Continue to ABA PayWay"}</button>
+
+          <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-900 text-xs leading-relaxed">
+            {copy(
+              "សូមប្រើប្រាស់គណនី ABA ដូចគ្នានៅពេលធ្វើការផ្ទេរប្រាក់ ដើម្បីឱ្យប្រព័ន្ធអាចផ្ទៀងផ្ទាត់ដោយស្វ័យប្រវត្តិ។",
+              "Use the same ABA account when making payment."
+            )}
+          </div>
+
+          {checkout.validationError && (
+            <p className="text-xs text-rose-600 font-semibold" role="alert">
+              {checkout.validationError}
+            </p>
+          )}
+
+          <div className="pt-2 flex items-center justify-end gap-2.5">
+            <button
+              type="button"
+              onClick={onClose}
+              disabled={saving}
+              className="px-5 py-2.5 rounded-full border border-slate-300 hover:bg-slate-100 text-slate-700 text-xs sm:text-sm font-bold transition-all cursor-pointer"
+            >
+              {copy("បោះបង់", "Cancel")}
+            </button>
+            <button
+              type="submit"
+              aria-label={copy("បន្តទៅកាន់ ABA PayWay (Continue to ABA PayWay)", "Continue to ABA PayWay")}
+              disabled={saving}
+              className="px-6 py-2.5 rounded-full bg-[#0F766E] hover:bg-[#0D5F58] text-white text-xs sm:text-sm font-bold shadow-md shadow-[#0F766E]/20 transition-all cursor-pointer flex items-center gap-1.5"
+            >
+              {saving ? (
+                <span>{copy("កំពុងរៀបចំ...", "Processing...")}</span>
+              ) : (
+                <>
+                  <span>{copy("បន្តទៅកាន់ ABA PayWay", "Continue to ABA PayWay")}</span>
+                  <ArrowRight size={14} />
+                </>
+              )}
+            </button>
+          </div>
         </form>
       ) : (
-        <div style={{ display: "grid", gap: 15 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10, color: checkout.stage === "success" ? "#15803d" : "#0f766e", fontWeight: 800 }}>
-            {checkout.stage === "success" ? <CheckCircle2 size={24} /> : <ShieldCheck size={24} />}
-            {checkout.stage === "waiting" && "Waiting for payment confirmation…"}
-            {checkout.stage === "success" && "Subscription activated successfully."}
-            {checkout.stage === "expired" && "Payment session expired. Please start again."}
-            {checkout.stage === "review" && "Payment received but needs administrator review."}
+        <div className="space-y-4 text-xs sm:text-sm text-slate-700">
+          <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#F1EBD8] space-y-2">
+            <SummaryRow label={copy("លេខកូដកម្ម៉ង់", "Order Code")} value={checkout.orderCode} code />
+            <SummaryRow
+              label={copy("ចំនួនទឹកប្រាក់", "Amount")}
+              value={formatMoney(checkout.amount, checkout.currency, lang)}
+            />
+            <SummaryRow
+              label={copy("ស្ថានភាព", "Status")}
+              value={
+                checkout.stage === "success"
+                  ? copy("ទូទាត់ជោគជ័យ", "Active / Paid")
+                  : checkout.stage === "review"
+                  ? copy("កំពុងពិនិត្យ", "Review Required")
+                  : checkout.stage === "expired"
+                  ? copy("ផុតកំណត់", "Expired")
+                  : copy("រង់ចាំការទូទាត់", "Awaiting Payment")
+              }
+            />
           </div>
-          <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 12, padding: 15, display: "grid", gap: 8, fontSize: ".92rem" }}>
-            <Summary label="Package" value={checkout.plan.packageName} />
-            <Summary label="Amount" value={money(checkout.amount, checkout.currency)} />
-            <Summary label="Payer" value={checkout.payerName} />
-            <Summary label="ABA account" value={`*${checkout.payerAccountLast3}`} />
-            <Summary label="Order" value={checkout.orderCode} code />
-            <Summary label="Status" value={checkout.status || "PENDING_PAYMENT"} />
-            <Summary label="Payment status" value={checkout.paymentStatus || "PENDING"} />
-            <Summary label="Expires" value={checkout.expiresAt ? new Date(checkout.expiresAt).toLocaleString() : "—"} />
-          </div>
-          {checkout.stage === "waiting" && checkout.paymentUrl && <a href={checkout.paymentUrl} target="_blank" rel="noreferrer" style={{ ...buttonStyle, boxSizing: "border-box", background: "#0f766e", color: "white", textAlign: "center", textDecoration: "none" }}>Continue to ABA PayWay <ExternalLink size={15} style={{ verticalAlign: "middle" }} /></a>}
-          {terminal && <button type="button" onClick={onClose} style={{ ...buttonStyle, background: "#e2e8f0", color: "#334155" }}>Close</button>}
+
+          {checkout.stage === "waiting" && (
+            <div className="text-center py-3 text-slate-600">
+              <RotateCw className="animate-spin inline-block text-[#0F766E] mb-2" size={20} />
+              <p className="font-medium text-xs">
+                {copy("កំពុងរង់ចាំការបញ្ជាក់ការទូទាត់ពី ABA PayWay…", "Waiting for payment confirmation…")}
+              </p>
+            </div>
+          )}
+
+          {checkout.stage === "review" && (
+            <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-900 text-xs" role="status">
+              {lang === "km" && (
+                <div className="font-semibold mb-1">
+                  ការទូទាត់ត្រូវបានទទួល ប៉ុន្តែត្រូវការការពិនិត្យពីអ្នកគ្រប់គ្រង។
+                </div>
+              )}
+              <div className={lang === "km" ? "text-[11px] text-amber-800/80" : "font-semibold"}>
+                Payment received but needs administrator review.
+              </div>
+            </div>
+          )}
+
+          {checkout.stage === "success" && (
+            <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-900 text-xs">
+              {lang === "km" && (
+                <div className="font-bold mb-1">
+                  កញ្ចប់សេវាកម្មត្រូវបានបើកដំណើរការដោយជោគជ័យ!
+                </div>
+              )}
+              <div className={lang === "km" ? "text-[11px] text-emerald-800/80" : "font-bold"}>
+                Subscription activated successfully.
+              </div>
+            </div>
+          )}
+
+          {checkout.stage === "expired" && (
+            <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-900 text-xs font-semibold">
+              {lang === "km" && (
+                <div className="font-semibold mb-1">
+                  ការទូទាត់បានផុតកំណត់។ សូមសាកល្បងម្ដងទៀត។
+                </div>
+              )}
+              <div className={lang === "km" ? "text-[11px] text-rose-800/80" : "font-semibold"}>
+                Payment session expired. Please start again.
+              </div>
+            </div>
+          )}
+
+          {checkout.paymentUrl && !terminal && (
+            <a
+              href={checkout.paymentUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="w-full py-3 px-4 rounded-full bg-[#0F766E] hover:bg-[#0D5F58] text-white font-bold text-xs sm:text-sm text-center flex items-center justify-center gap-2 no-underline transition-all shadow-md shadow-[#0F766E]/20"
+            >
+              <span>{copy("បន្តទៅកាន់ ABA PayWay", "Continue to ABA PayWay")}</span>
+              <ExternalLink size={14} />
+            </a>
+          )}
+
+          {terminal && (
+            <button
+              type="button"
+              onClick={onClose}
+              className="w-full py-2.5 px-4 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-all cursor-pointer"
+            >
+              {copy("បិទ", "Close")}
+            </button>
+          )}
         </div>
       )}
     </Modal>
   );
 }
 
-function Summary({ label, value, code = false }) {
-  return <div style={{ display: "flex", justifyContent: "space-between", gap: 16 }}><span style={{ color: "#64748b" }}>{label}</span>{code ? <code>{value}</code> : <strong style={{ textAlign: "right" }}>{value}</strong>}</div>;
+function SummaryRow({ label, value, code = false }) {
+  return (
+    <div className="flex justify-between items-center gap-4">
+      <span className="text-slate-500">{label}</span>
+      {code ? (
+        <code className="font-mono text-[11px] bg-slate-200/80 px-1.5 py-0.5 rounded text-slate-800 font-bold">
+          {value}
+        </code>
+      ) : (
+        <strong className="text-slate-800 font-bold">{value}</strong>
+      )}
+    </div>
+  );
 }
 
-function HistoryTable({ history }) {
+function HistoryTable({ history, lang, copy }) {
   return (
-    <section style={{ background: "white", borderRadius: 16, border: "1px solid #e2e8f0", padding: 24 }}>
-      <h2 style={{ color: "#0f172a", marginTop: 0 }}>ប្រវត្តិការជាវកញ្ចប់សេវា (Subscription History)</h2>
+    <section className="bg-white rounded-2xl border border-[#EADFCE] p-6 sm:p-8 shadow-[0_4px_20px_-2px_rgba(42,31,16,0.06)]">
+      <div className="flex items-center justify-between mb-5">
+        <h2 className="text-lg sm:text-xl font-black text-[#1F2421]">
+          {copy("ប្រវត្តិការជាវកញ្ចប់សេវា (Subscription History)", "Subscription History")}
+        </h2>
+        {history.length > 0 && (
+          <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600">
+            {history.length} {copy("កំណត់ត្រា", "orders")}
+          </span>
+        )}
+      </div>
+
       {history.length ? (
-        <div className="enterprise-table-wrap" style={{ overflowX: "auto" }}>
-          <table className="enterprise-table" style={{ width: "100%", textAlign: "left" }}>
-            <thead><tr><th>Package</th><th>Status</th><th>Amount</th><th>Order</th><th>Message</th></tr></thead>
-            <tbody>{history.map((item) => <tr key={item.id}><td>{item.packagePlan?.packageName}</td><td>{item.status}</td><td>{money(item.amount, item.currency)}</td><td><code>{item.orderCode || "—"}</code></td><td>{item.message || "—"}</td></tr>)}</tbody>
+        <div className="overflow-x-auto rounded-xl border border-[#F1EBD8]">
+          <table className="w-full text-left text-xs sm:text-sm border-collapse bg-white">
+            <thead>
+              <tr className="bg-[#FBF8F2] border-b border-[#EADFCE] text-[#4B5563] text-xs font-bold uppercase tracking-wider">
+                <th className="py-3 px-4">{copy("កញ្ចប់", "Package")}</th>
+                <th className="py-3 px-4">{copy("ស្ថានភាព", "Status")}</th>
+                <th className="py-3 px-4">{copy("តម្លៃ", "Amount")}</th>
+                <th className="py-3 px-4">{copy("លេខកូដ", "Order")}</th>
+                <th className="py-3 px-4">{copy("ព័ត៌មាន", "Message")}</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[#F1EBD8]">
+              {history.map((item) => {
+                const isPaid = item.status === "ACTIVE" || item.paymentStatus === "PAID";
+                const isPending = item.status === "PENDING_PAYMENT" || item.paymentStatus === "PENDING";
+                const isExpired = item.status === "EXPIRED" || item.paymentStatus === "EXPIRED";
+
+                return (
+                  <tr key={item.id} className="hover:bg-[#FDFBF7] transition-colors">
+                    <td className="py-3.5 px-4 font-bold text-[#1F2421]">
+                      {item.packagePlan?.packageName || "—"}
+                    </td>
+                    <td className="py-3.5 px-4">
+                      <span
+                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold ${
+                          isPaid
+                            ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                            : isPending
+                            ? "bg-amber-50 text-amber-800 border border-amber-200"
+                            : isExpired
+                            ? "bg-slate-100 text-slate-600 border border-slate-200"
+                            : "bg-slate-100 text-slate-700"
+                        }`}
+                      >
+                        {item.status}
+                      </span>
+                    </td>
+                    <td className="py-3.5 px-4 font-black text-[#1F2421]">
+                      {formatMoney(item.amount, item.currency, lang)}
+                    </td>
+                    <td className="py-3.5 px-4 font-mono text-xs text-slate-600">
+                      {item.orderCode ? (
+                        <span className="bg-slate-100 px-2 py-0.5 rounded font-bold">{item.orderCode}</span>
+                      ) : (
+                        "—"
+                      )}
+                    </td>
+                    <td className="py-3.5 px-4 text-slate-500 max-w-xs truncate text-xs">
+                      {item.message || "—"}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
           </table>
         </div>
-      ) : <div style={{ color: "#94a3b8", padding: 20, textAlign: "center" }}>No subscription history yet.</div>}
+      ) : (
+        <div className="text-center py-10 text-slate-500 text-xs sm:text-sm">
+          <p>{copy("មិនទាន់មានប្រវត្តិជាវកញ្ចប់សេវាកម្មនៅឡើយទេ។", "No subscription history yet.")}</p>
+        </div>
+      )}
     </section>
   );
 }

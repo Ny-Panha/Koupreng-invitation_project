@@ -1,5 +1,11 @@
 import { Link } from "react-router-dom";
-import { IoCloudUploadOutline, IoDownloadOutline, IoQrCodeOutline, IoSettingsOutline } from "react-icons/io5";
+import {
+  IoCloudUploadOutline,
+  IoDownloadOutline,
+  IoQrCodeOutline,
+  IoSettingsOutline,
+  IoPersonAddOutline,
+} from "react-icons/io5";
 import { SearchInput } from "@/shared/ui";
 
 export default function GuestFilters({
@@ -11,20 +17,29 @@ export default function GuestFilters({
   setCategoryFilter,
   groups,
   categories,
+  onOpenAddGuest,
   onOpenImport,
   onExportCsv,
   onOpenGroupManager,
   onOpenCategoryManager,
   t,
 }) {
+  const exportLabel = (t && t("exportBtn") && t("exportBtn") !== "exportBtn")
+    ? t("exportBtn")
+    : "ទាញយក CSV";
+
+  const addGuestLabel = (t && t("addGuestBtn")) ? t("addGuestBtn") : "+ បន្ថែមភ្ញៀវ";
+  const importLabel = (t && t("importBtn")) ? t("importBtn") : "នាំចូល";
+
   return (
     <div className="pe-toolbar">
+      {/* Search and Filters Section */}
       <div className="pe-filters">
         <SearchInput
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           onClear={() => setSearch("")}
-          placeholder={t ? t("searchPlaceholder") : "ស្វែងរកឈ្មោះ ក្រុម លេខ..."}
+          placeholder={t ? t("searchPlaceholder") : "ស្វែងរកឈ្មោះ ក្រុម លេខទូរស័ព្ទ..."}
         />
 
         <div className="pe-select-wrap">
@@ -78,7 +93,20 @@ export default function GuestFilters({
         </div>
       </div>
 
+      {/* Action Buttons Section */}
       <div className="pe-actions">
+        {onOpenAddGuest && (
+          <button
+            type="button"
+            className="pe-primary-add-btn"
+            onClick={onOpenAddGuest}
+            aria-label={addGuestLabel}
+          >
+            <IoPersonAddOutline aria-hidden="true" />
+            <span>{addGuestLabel}</span>
+          </button>
+        )}
+
         <Link
           to="/dashboard/check-in"
           className="pe-secondary-btn"
@@ -88,18 +116,20 @@ export default function GuestFilters({
           <IoQrCodeOutline aria-hidden="true" />
           <span>ស្កេន Check-in</span>
         </Link>
+
         <button
           type="button"
           className="pe-secondary-btn"
           onClick={onExportCsv}
-          title={t ? t("exportBtn") : "ទាញយកបញ្ជីភ្ញៀវជា Excel/CSV"}
+          title={exportLabel}
         >
           <IoDownloadOutline aria-hidden="true" />
-          <span>{t ? t("exportBtn") : "ទាញយក CSV"}</span>
+          <span>{exportLabel}</span>
         </button>
+
         <button type="button" className="pe-secondary-btn" onClick={onOpenImport}>
           <IoCloudUploadOutline aria-hidden="true" />
-          <span>{t ? t("importBtn") : "នាំចូល"}</span>
+          <span>{importLabel}</span>
         </button>
       </div>
     </div>

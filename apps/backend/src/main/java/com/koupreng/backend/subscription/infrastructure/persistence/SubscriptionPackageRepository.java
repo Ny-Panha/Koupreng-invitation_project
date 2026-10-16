@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface SubscriptionPackageRepository extends JpaRepository<SubscriptionPackage, Long> {
 
     List<SubscriptionPackage> findByActiveTrueOrderBySortOrderAscPriceAsc();
+    List<SubscriptionPackage> findByActiveTrueAndPublicVisibleTrueOrderBySortOrderAscPriceAsc();
 
     Optional<SubscriptionPackage> findByIdAndActiveTrue(Long id);
     Optional<SubscriptionPackage> findByCodeAndActiveTrue(String code);

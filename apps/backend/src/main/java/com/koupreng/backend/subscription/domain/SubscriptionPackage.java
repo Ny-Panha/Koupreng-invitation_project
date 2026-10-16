@@ -80,6 +80,9 @@ public class SubscriptionPackage {
     @Column(nullable = false)
     private boolean active = true;
 
+    @Column(name = "public_visible", nullable = false)
+    private boolean publicVisible = false;
+
     @Column(name = "sort_order", nullable = false)
     private Integer sortOrder = 0;
 

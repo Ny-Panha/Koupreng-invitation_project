@@ -36,6 +36,7 @@ public class SubscriptionPackageResponse {
     private boolean teamMembersEnabled;
     private boolean aiAssistantEnabled;
     private boolean active;
+    private boolean publicVisible;
     private String status;
     private Integer sortOrder;
 
@@ -63,6 +64,7 @@ public class SubscriptionPackageResponse {
                 .teamMembersEnabled(plan.isTeamMembersEnabled())
                 .aiAssistantEnabled(plan.isAiAssistantEnabled())
                 .active(plan.isActive())
+                .publicVisible(plan.isPublicVisible())
                 .status(plan.getStatus())
                 .sortOrder(plan.getSortOrder())
                 .build();

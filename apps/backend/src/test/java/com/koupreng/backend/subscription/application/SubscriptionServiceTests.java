@@ -81,6 +81,48 @@ class SubscriptionServiceTests {
     }
 
     @Test
+    void purchaseRejectsUnpublishedPackageForNormalUser() {
+        Fixture fixture = fixture();
+        SubscriptionPackage unpublished = plan("BASIC", "0.01", 365);
+        unpublished.setPublicVisible(false);
+        when(fixture.packageRepository.findByIdAndActiveTrue(3L))
+                .thenReturn(Optional.of(unpublished));
+
+        ApiException exception = assertThrows(
+                ApiException.class,
+                () -> fixture.service.purchase(fixture.authentication, purchaseRequest("247"))
+        );
+
+        assertEquals("SUBSCRIPTION_PACKAGE_NOT_AVAILABLE", exception.getCode());
+        verify(fixture.subscriptionRepository, never()).save(any());
+    }
+
+    @Test
+    void listPublicPackagesFiltersOutDevCodesAndAppliesResolverPrices() {
+        Fixture fixture = fixture();
+        SubscriptionPackage basic = plan("BASIC", "999.00", 365);
+        basic.setPublicVisible(true);
+        SubscriptionPackage devStarter = plan("DEV_STARTER", "0.00", 30);
+        devStarter.setPublicVisible(true);
+        SubscriptionPackage customPlan = plan("CUSTOM_ENTERPRISE", "1000.00", 365);
+        customPlan.setPublicVisible(true);
+
+        when(fixture.packageRepository.findByActiveTrueAndPublicVisibleTrueOrderBySortOrderAscPriceAsc())
+                .thenReturn(List.of(basic, devStarter, customPlan));
+
+        var publicPackages = fixture.service.listPublicPackages();
+
+        assertEquals(2, publicPackages.size());
+        var basicResp = publicPackages.stream().filter(p -> "BASIC".equals(p.getCode())).findFirst().orElseThrow();
+        assertEquals(new BigDecimal("0.01"), basicResp.getPrice());
+        assertTrue(basicResp.isPurchasable());
+
+        var customResp = publicPackages.stream().filter(p -> "CUSTOM_ENTERPRISE".equals(p.getCode())).findFirst().orElseThrow();
+        assertEquals(new BigDecimal("1000.00"), customResp.getPrice());
+        assertFalse(customResp.isPurchasable());
+    }
+
+    @Test
     void exactTelegramEvidenceActivatesOnePendingSubscriptionAtomically() {
         Fixture fixture = fixture();
         fixture.properties.setAutoConfirmTelegramDetected(true);
@@ -394,6 +436,7 @@ class SubscriptionServiceTests {
         plan.setCurrency("USD");
         plan.setDurationDays(durationDays);
         plan.setActive(true);
+        plan.setPublicVisible(true);
         return plan;
     }
 

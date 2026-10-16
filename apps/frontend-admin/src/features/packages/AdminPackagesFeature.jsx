@@ -23,6 +23,9 @@ import {
   Sliders,
   CheckCircle2,
   Info,
+  Globe,
+  EyeOff,
+  AlertTriangle,
 } from "lucide-react";
 import { Loading, ErrorState, Empty, Toast } from "../../shared/ui";
 import { useResource, useToast } from "../../shared/hooks";
@@ -51,8 +54,27 @@ const EMPTY_FORM = {
   teamMembersEnabled: false,
   aiAssistantEnabled: false,
   active: true,
+  publicVisible: false,
   sortOrder: "0",
 };
+
+const RESOLVER_PLANS = {
+  BASIC: { price: "0.01", currency: "USD" },
+  PRO: { price: "199.00", currency: "USD" },
+  PREMIUM: { price: "499.00", currency: "USD" },
+};
+
+function getPlanCheckoutStatus(plan) {
+  const code = plan?.code?.toUpperCase();
+  const resolverPlan = RESOLVER_PLANS[code];
+  const isSellable = Boolean(resolverPlan);
+  const isDev = Boolean(code?.startsWith("DEV_"));
+  const priceMismatch = isSellable && (
+    Number(plan?.price || 0).toFixed(2) !== Number(resolverPlan.price).toFixed(2) ||
+    plan?.currency !== resolverPlan.currency
+  );
+  return { isSellable, isDev, resolverPlan, priceMismatch };
+}
 
 const FEATURE_LIST = [
   {
@@ -269,6 +291,7 @@ function toForm(plan) {
     maxGuestsPerInvitation: plan?.maxGuestsPerInvitation ?? "",
     maxTeamMembers: plan?.maxTeamMembers ?? "",
     sortOrder: plan?.sortOrder ?? "0",
+    publicVisible: Boolean(plan?.publicVisible),
     featuresJson: plan?.featuresJson || "{}",
   };
 }
@@ -283,6 +306,7 @@ function toPayload(form) {
     maxGuestsPerInvitation: numberOrNull(form.maxGuestsPerInvitation),
     maxTeamMembers: numberOrNull(form.maxTeamMembers),
     sortOrder: numberOrNull(form.sortOrder) || 0,
+    publicVisible: Boolean(form.publicVisible),
   };
 }
 
@@ -471,6 +495,23 @@ export default function AdminPackagesPage() {
     }
   };
 
+  const toggleVisibility = async (plan) => {
+    setBusyId(plan.id);
+    try {
+      const saved = await adminManagementService.togglePackageVisibility(plan.id);
+      setData((current) => (current || []).map((item) => (item.id === saved.id ? saved : item)));
+      show(
+        saved.publicVisible
+          ? (lang === "en" ? "Package is now public ✓" : "បានកំណត់កញ្ចប់ជាសាធារណៈ ✓")
+          : (lang === "en" ? "Package is now unlisted/private ✓" : "បានកំណត់កញ្ចប់ជាឯកជន/មិនបង្ហាញ ✓")
+      );
+    } catch (err) {
+      show(err?.message || (lang === "en" ? "Operation failed" : "ប្រតិបត្តិការបរាជ័យ"), "error");
+    } finally {
+      setBusyId(null);
+    }
+  };
+
   // Count active features for badge
   const enabledFeaturesCount = useMemo(() => {
     return FEATURE_LIST.filter((f) => Boolean(form[f.key])).length;
@@ -640,6 +681,7 @@ export default function AdminPackagesPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
           {filteredPackages.map((plan) => {
             const isFree = Number(plan.price) === 0;
+            const checkoutStatus = getPlanCheckoutStatus(plan);
             const enabledCount = FEATURE_LIST.filter((f) => Boolean(plan[f.key])).length;
             const intervalText = lang === "en"
               ? (plan.billingInterval === "YEARLY" ? "year" : plan.billingInterval === "MONTHLY" ? "month" : plan.billingInterval === "LIFETIME" ? "lifetime" : "one-time")
@@ -659,9 +701,19 @@ export default function AdminPackagesPage() {
                       <span className="text-[10px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
                         {t("packages.basicInfoSec", lang === "en" ? "1. Basic Info" : "១. ព័ត៌មានទូទៅ")}
                       </span>
-                      <div className="flex items-center gap-1.5">
+                      <div className="flex items-center gap-1.5 flex-wrap justify-end">
                         <span className="font-mono text-xs font-bold px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700">
                           {plan.code}
+                        </span>
+                        <span
+                          className={`badge text-[10px] ${
+                            plan.publicVisible
+                              ? "bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20"
+                              : "bg-slate-100 dark:bg-zinc-800 text-slate-500 dark:text-zinc-400 border border-slate-200 dark:border-zinc-700"
+                          }`}
+                          title={plan.publicVisible ? "Publicly listed on /pricing" : "Unlisted / hidden from /pricing"}
+                        >
+                          {plan.publicVisible ? (lang === "en" ? "PUBLIC" : "សាធារណៈ") : (lang === "en" ? "UNLISTED" : "ឯកជន")}
                         </span>
                         <span
                           className={`badge text-[10px] ${
@@ -702,6 +754,22 @@ export default function AdminPackagesPage() {
                             {plan.durationDays} {t("packages.days", lang === "en" ? "days" : "ថ្ងៃ")}
                           </span>
                         </p>
+                      )}
+                      {checkoutStatus.priceMismatch && (
+                        <div className="mt-2.5 p-2 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-800 dark:text-amber-300 text-[11px] flex items-start gap-1.5">
+                          <AlertTriangle className="h-3.5 w-3.5 shrink-0 mt-0.5 text-amber-500" />
+                          <span>
+                            {lang === "en"
+                              ? `PayWay resolver enforces $${checkoutStatus.resolverPlan.price}, DB has $${plan.price}`
+                              : `PayWay គិតថ្លៃ $${checkoutStatus.resolverPlan.price}, ឯក្នុង DB គឺ $${plan.price}`}
+                          </span>
+                        </div>
+                      )}
+                      {checkoutStatus.isDev && (
+                        <div className="mt-2.5 p-2 rounded-lg bg-purple-500/10 border border-purple-500/30 text-purple-800 dark:text-purple-300 text-[11px] flex items-center gap-1.5">
+                          <Bot className="h-3.5 w-3.5 shrink-0 text-purple-500" />
+                          <span>{lang === "en" ? "Dev/Internal code (excluded from public catalog)" : "កូដ Dev/Internal (មិនបង្ហាញជាសាធារណៈ)"}</span>
+                        </div>
                       )}
                     </div>
                   </div>
@@ -777,6 +845,19 @@ export default function AdminPackagesPage() {
                   >
                     <Pencil className="h-3.5 w-3.5 text-amber-500" />
                     <span>{t("packages.edit", lang === "en" ? "Edit" : "កែសម្រួល")}</span>
+                  </button>
+                  <button
+                    type="button"
+                    disabled={busyId === plan.id}
+                    onClick={() => toggleVisibility(plan)}
+                    className={`btn h-8 text-xs font-semibold px-2.5 ${
+                      plan.publicVisible
+                        ? "bg-blue-500/10 text-blue-600 border border-blue-500/20 hover:bg-blue-500 hover:text-white"
+                        : "btn-ghost text-slate-500 hover:text-slate-800"
+                    }`}
+                    title={plan.publicVisible ? (lang === "en" ? "Make unlisted" : "លាក់ពីសាធារណៈ") : (lang === "en" ? "Make public" : "បង្ហាញជាសាធារណៈ")}
+                  >
+                    {plan.publicVisible ? <Globe className="h-3.5 w-3.5" /> : <EyeOff className="h-3.5 w-3.5" />}
                   </button>
                   <button
                     type="button"
@@ -869,9 +950,24 @@ export default function AdminPackagesPage() {
                       </div>
                     </td>
                     <td>
-                      <span className={`badge ${plan.active ? "badge-green" : "badge-gray"}`}>
-                        {plan.active ? "ACTIVE" : "INACTIVE"}
-                      </span>
+                      <div className="flex flex-col gap-1 items-start">
+                        <span className={`badge ${plan.active ? "badge-green" : "badge-gray"}`}>
+                          {plan.active ? "ACTIVE" : "INACTIVE"}
+                        </span>
+                        <button
+                          type="button"
+                          disabled={busyId === plan.id}
+                          onClick={() => toggleVisibility(plan)}
+                          className={`badge text-[10px] cursor-pointer hover:opacity-80 transition ${
+                            plan.publicVisible
+                              ? "bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20"
+                              : "bg-slate-100 dark:bg-zinc-800 text-slate-500 dark:text-zinc-400 border border-slate-200 dark:border-zinc-700"
+                          }`}
+                          title={lang === "en" ? "Click to toggle public visibility" : "ចុចដើម្បីផ្លាស់ប្តូរការបង្ហាញជាសាធារណៈ"}
+                        >
+                          {plan.publicVisible ? (lang === "en" ? "PUBLIC ✓" : "សាធារណៈ ✓") : (lang === "en" ? "UNLISTED" : "ឯកជន")}
+                        </button>
+                      </div>
                     </td>
                     <td>
                       <div className="row-actions">
@@ -882,6 +978,19 @@ export default function AdminPackagesPage() {
                         >
                           <Pencil className="h-3 w-3 text-amber-500" />
                           <span>{t("packages.editShort", lang === "en" ? "Edit" : "កែ")}</span>
+                        </button>
+                        <button
+                          type="button"
+                          className={`btn btn-sm ${
+                            plan.publicVisible
+                              ? "bg-blue-500/10 text-blue-600 border border-blue-500/20"
+                              : "btn-ghost text-slate-500"
+                          }`}
+                          disabled={busyId === plan.id}
+                          onClick={() => toggleVisibility(plan)}
+                          title={plan.publicVisible ? (lang === "en" ? "Make unlisted" : "លាក់ពីសាធារណៈ") : (lang === "en" ? "Make public" : "បង្ហាញជាសាធារណៈ")}
+                        >
+                          {plan.publicVisible ? <Globe className="h-3 w-3" /> : <EyeOff className="h-3 w-3" />}
                         </button>
                         <button
                           type="button"
@@ -1178,6 +1287,20 @@ export default function AdminPackagesPage() {
                         <span className="text-[10px] text-slate-400 mt-1 block">{t("packages.sortOrderSub", "លេខលំដាប់បង្ហាញ (Sort Order)")}</span>
                       </div>
                     </div>
+                  </div>
+
+                  {/* 7. Public Pricing Visibility Switch */}
+                  <div className="pt-3 border-t border-slate-200 dark:border-zinc-800">
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1.5">
+                      {t("packages.visibilityLabel", lang === "en" ? "7. Public Catalog Visibility" : "៧. ការបង្ហាញជាសាធារណៈ (Public Pricing)")}
+                    </label>
+                    <ToggleSwitch
+                      checked={Boolean(form.publicVisible)}
+                      onChange={(val) => setField("publicVisible", val)}
+                      label={lang === "en" ? "List on Public Pricing (/pricing)" : "បង្ហាញលើទំព័រតម្លៃសាធារណៈ (/pricing)"}
+                      sublabel={lang === "en" ? "Allow anonymous visitors to view this package without logging in" : "អនុញ្ញាតឱ្យភ្ញៀវទូទៅមើលឃើញកញ្ចប់នេះដោយមិនបាច់ Login"}
+                      icon={Globe}
+                    />
                   </div>
                 </div>
               )}

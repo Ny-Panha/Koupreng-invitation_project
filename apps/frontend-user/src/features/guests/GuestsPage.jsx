@@ -13,6 +13,7 @@ import GuestDeleteDialog from "./components/GuestDeleteDialog";
 import GuestQrModal from "./components/GuestQrModal";
 import GuestImportModal from "./components/GuestImportModal";
 import GroupCategoryModal from "./components/GroupCategoryModal";
+import GuestFormModal from "./components/GuestFormModal";
 import { guestService } from "./api/guestApi";
 import { exportGuestsToCsv } from "./model/guestCsvUtils";
 import { saveManualGuests } from "@/shared/storage/hostPlanningStorage";
@@ -113,11 +114,27 @@ export default function GuestsPage() {
   const [importModalOpen, setImportModalOpen] = useState(false);
   const [groupModalOpen, setGroupModalOpen] = useState(false);
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
+  const [formModalOpen, setFormModalOpen] = useState(false);
+  const [formModalGuest, setFormModalGuest] = useState(null);
+
+  const handleOpenAddGuest = () => {
+    setFormModalGuest(null);
+    setFormModalOpen(true);
+  };
+
+  const handleOpenEditGuest = (guest) => {
+    setFormModalGuest(guest);
+    setFormModalOpen(true);
+  };
 
   const handleSaveGuest = async (form, editingId = null) => {
     const success = await saveGuest(form, editingId);
     if (success) {
-      toast.success(editingId ? (t ? t("toastUpdated") : "កែប្រែព័ត៌មានភ្ញៀវបានជោគជ័យ") : (t ? t("toastAdded") : "បន្ថែមភ្ញៀវបានជោគជ័យ"));
+      toast.success(
+        editingId
+          ? (t ? t("toastUpdated") : "កែប្រែព័ត៌មានភ្ញៀវបានជោគជ័យ")
+          : (t ? t("toastAdded") : "បន្ថែមភ្ញៀវបានជោគជ័យ")
+      );
     }
     return success;
   };
@@ -131,56 +148,59 @@ export default function GuestsPage() {
     }
   };
 
-  const handleCopyLink = async (text, guest) => {
+  const handleCopyLink = async (text) => {
     const ok = await copyText(text);
     if (ok) {
-      toast.success(t ? t("messageCopied") : "ចម្លងសារអញ្ជើញបានជោគជ័យ");
-      if (
-        guest &&
-        (guest.sendStatus === "មិនទាន់ផ្ញើ" ||
-          guest.sendStatus === "PENDING" ||
-          !guest.sendStatus)
-      ) {
-        markGuestAsSent(guest);
-      }
+      toast.success(t ? t("messageCopied") : "បានចម្លងសារអញ្ជើញ");
     } else {
       toast.error(t ? t("linkCopyFailed") : "មិនអាចចម្លងបានទេ");
     }
   };
 
-  const handleGuestSynced = useCallback((updatedGuest) => {
-    if (!updatedGuest) return;
-    setQrGuestTarget(updatedGuest);
+  const handleMarkAsSent = async (guest) => {
+    if (!guest) return;
+    const success = await markGuestAsSent(guest);
+    if (success) {
+      toast.success("បានសម្គាល់ថាបានផ្ញើ");
+    }
+  };
 
-    setBackendGuests((current) => {
-      const exists = current.some(
-        (g) =>
-          String(g.id) === String(updatedGuest.id) ||
-          String(g.backendId) === String(updatedGuest.backendId) ||
-          (g.name === updatedGuest.name && (g.phone || "") === (updatedGuest.phone || ""))
-      );
-      if (exists) {
-        return current.map((g) =>
-          String(g.id) === String(updatedGuest.id) ||
-          String(g.backendId) === String(updatedGuest.backendId) ||
-          (g.name === updatedGuest.name && (g.phone || "") === (updatedGuest.phone || ""))
+  const handleGuestSynced = useCallback(
+    (updatedGuest) => {
+      if (!updatedGuest) return;
+      setQrGuestTarget(updatedGuest);
+
+      setBackendGuests((current) => {
+        const exists = current.some(
+          (g) =>
+            String(g.id) === String(updatedGuest.id) ||
+            String(g.backendId) === String(updatedGuest.backendId) ||
+            (g.name === updatedGuest.name && (g.phone || "") === (updatedGuest.phone || ""))
+        );
+        if (exists) {
+          return current.map((g) =>
+            String(g.id) === String(updatedGuest.id) ||
+            String(g.backendId) === String(updatedGuest.backendId) ||
+            (g.name === updatedGuest.name && (g.phone || "") === (updatedGuest.phone || ""))
+              ? { ...g, ...updatedGuest }
+              : g
+          );
+        }
+        return [...current, updatedGuest];
+      });
+
+      setManualGuests((current) => {
+        const next = current.map((g) =>
+          String(g.id) === String(updatedGuest.id) || g.name === updatedGuest.name
             ? { ...g, ...updatedGuest }
             : g
         );
-      }
-      return [...current, updatedGuest];
-    });
-
-    setManualGuests((current) => {
-      const next = current.map((g) =>
-        String(g.id) === String(updatedGuest.id) || g.name === updatedGuest.name
-          ? { ...g, ...updatedGuest }
-          : g
-      );
-      saveManualGuests(next, eventId);
-      return next;
-    });
-  }, [eventId, setBackendGuests, setManualGuests]);
+        saveManualGuests(next, eventId);
+        return next;
+      });
+    },
+    [eventId, setBackendGuests, setManualGuests]
+  );
 
   const handleSaveGroups = (nextGroups) => {
     setGroups(nextGroups);
@@ -198,8 +218,12 @@ export default function GuestsPage() {
 
   const handleExportCsv = async () => {
     if (backendInvitationId) {
-      try { await guestService.exportCsv(backendInvitationId); toast.success("Guest CSV exported"); }
-      catch (failure) { toast.error(failure.message || "Could not export guests"); }
+      try {
+        await guestService.exportCsv(backendInvitationId);
+        toast.success("Guest CSV exported");
+      } catch (failure) {
+        toast.error(failure.message || "Could not export guests");
+      }
       return;
     }
     if (!guests || !guests.length) {
@@ -213,13 +237,42 @@ export default function GuestsPage() {
     }
   };
 
+  const eventTitle = draftMatch?.title || backendInvitation?.title || null;
+
   return (
     <main className="dash-main pe-guests-page">
       <header className="dash-page-header">
         <div>
-          <span className="dash-kicker">{t ? t("kicker") : "Guest Management"}</span>
-          <h1>{t ? t("title") : "គ្រប់គ្រងភ្ញៀវកិត្តិយស"}</h1>
+          <span className="dash-kicker">
+            <span className="pe-kicker-dot" />
+            {eventTitle || (t ? t("kicker") : "Guest Management")}
+          </span>
+          <h1>{t ? t("title") : "បញ្ជីភ្ញៀវកិត្តិយស"}</h1>
           <p>{t ? t("subtitle") : "គ្រប់គ្រងបញ្ជីភ្ញៀវ QR Code ធៀបការ និងស្ថានភាព RSVP របស់អ្នក។"}</p>
+        </div>
+
+        <div className="dash-header-actions">
+          <button
+            type="button"
+            onClick={handleOpenAddGuest}
+            className="dash-btn-primary"
+            aria-label={t ? t("addGuestBtn") : "បន្ថែមភ្ញៀវ"}
+          >
+            <span className="text-base font-black leading-none"></span>
+            <span>{t ? t("addGuestBtn") : "បន្ថែមភ្ញៀវ"}</span>
+          </button>
+        </div>
+
+        <div className="dash-header-actions">
+          <button
+            type="button"
+            onClick={handleOpenAddGuest}
+            className="dash-btn-primary"
+            aria-label={t ? t("addGuestBtn") : "+ បន្ថែមភ្ញៀវ"}
+          >
+            <span className="text-base font-black leading-none">+</span>
+            <span>{t ? t("addGuestBtn") : "បន្ថែមភ្ញៀវ"}</span>
+          </button>
         </div>
       </header>
 
@@ -234,6 +287,7 @@ export default function GuestsPage() {
         setCategoryFilter={setCategoryFilter}
         groups={groups}
         categories={categories}
+        onOpenAddGuest={handleOpenAddGuest}
         onOpenImport={() => setImportModalOpen(true)}
         onExportCsv={handleExportCsv}
         onOpenGroupManager={() => setGroupModalOpen(true)}
@@ -248,25 +302,45 @@ export default function GuestsPage() {
       {loading ? (
         <SkeletonTable rows={5} columns={9} />
       ) : (
-          <div className="pe-desktop-table-wrap w-full max-w-6xl mx-auto">
-            <GuestTable
-              guests={filteredGuests}
-              groups={groups}
-              categories={categories}
-              saving={saving}
-              emptyMessage={search || groupFilter || categoryFilter
-                ? (t ? t("emptySearchDesc") : "No guests match these filters.")
-                : (t ? t("emptyDesc") : "Add the first guest using the row above.")}
-              currentDraft={draftMatch}
-              publicInvitation={publicInvitation}
-              onSaveGuest={handleSaveGuest}
-              onDelete={(g) => setDeleteGuestTarget(g)}
-              onShowQr={(g) => setQrGuestTarget(g)}
-              onCopyLink={handleCopyLink}
-              t={t}
-            />
-          </div>
+        <div className="pe-desktop-table-wrap w-full max-w-6xl mx-auto">
+          <GuestTable
+            guests={filteredGuests}
+            groups={groups}
+            categories={categories}
+            saving={saving}
+            emptyMessage={
+              search || groupFilter || categoryFilter
+                ? (t ? t("emptySearchDesc") : "មិនមានភ្ញៀវត្រូវនឹងការស្វែងរកនេះទេ")
+                : (t ? t("emptyDesc") : "មិនទាន់មានឈ្មោះភ្ញៀវទេ។ ចាប់ផ្តើមដោយបន្ថែមភ្ញៀវម្នាក់ ឬនាំចូលបញ្ជី។")
+            }
+            currentDraft={draftMatch}
+            publicInvitation={publicInvitation}
+            onSaveGuest={handleSaveGuest}
+            onEdit={handleOpenEditGuest}
+            onDelete={(g) => setDeleteGuestTarget(g)}
+            onShowQr={(g) => setQrGuestTarget(g)}
+            onCopyLink={handleCopyLink}
+            onMarkAsSent={handleMarkAsSent}
+            onOpenAddGuest={handleOpenAddGuest}
+            t={t}
+          />
+        </div>
       )}
+
+      {/* Add / Edit Guest Modal */}
+      <GuestFormModal
+        isOpen={formModalOpen}
+        onClose={() => {
+          setFormModalOpen(false);
+          setFormModalGuest(null);
+        }}
+        onSave={handleSaveGuest}
+        guest={formModalGuest}
+        groups={groups}
+        categories={categories}
+        saving={saving}
+        t={t}
+      />
 
       <GuestDeleteDialog
         guest={deleteGuestTarget}
@@ -318,3 +392,4 @@ export default function GuestsPage() {
     </main>
   );
 }
+

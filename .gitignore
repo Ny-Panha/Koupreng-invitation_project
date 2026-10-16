@@ -6,7 +6,8 @@
 .windsurf
 .kiro
 .idea/
-.vscode/
+.vscode/*
+!.vscode/settings.json
 
 .source-ref
 

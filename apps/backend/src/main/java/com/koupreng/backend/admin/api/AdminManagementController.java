@@ -477,6 +477,16 @@ public class AdminManagementController {
         ));
     }
 
+    @PatchMapping("/packages/{packageId}/toggle-visibility")
+    public ResponseEntity<ApiResponse<SubscriptionPackageResponse>> toggleVisibility(
+            @PathVariable Long packageId
+    ) {
+        return ResponseEntity.ok(ApiResponse.success(
+                "Subscription package visibility toggled successfully",
+                subscriptionService.togglePublicVisibility(packageId)
+        ));
+    }
+
     @GetMapping("/payments")
     public ResponseEntity<ApiResponse<List<PaymentHistoryResponse>>> listAllPayments() {
         return ResponseEntity.ok(ApiResponse.success(

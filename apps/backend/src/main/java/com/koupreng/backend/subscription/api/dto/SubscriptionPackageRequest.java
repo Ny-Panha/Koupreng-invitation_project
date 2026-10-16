@@ -33,5 +33,6 @@ public class SubscriptionPackageRequest {
     private boolean teamMembersEnabled;
     private boolean aiAssistantEnabled;
     private boolean active;
+    private boolean publicVisible;
     private Integer sortOrder;
 }

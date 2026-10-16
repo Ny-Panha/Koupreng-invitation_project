@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import com.koupreng.backend.shared.response.ApiResponse;
+import com.koupreng.backend.subscription.api.dto.PublicPackageResponse;
 import com.koupreng.backend.subscription.api.dto.SubscriptionPackageResponse;
 import com.koupreng.backend.subscription.api.dto.SubscriptionPurchaseRequest;
 import com.koupreng.backend.subscription.api.dto.SubscriptionResponse;
@@ -36,6 +37,15 @@ public class SubscriptionController {
 
     public SubscriptionController(SubscriptionService subscriptionService) {
         this.subscriptionService = subscriptionService;
+    }
+
+    @GetMapping("/public/packages")
+    @Operation(summary = "Public pricing package catalog without authentication")
+    public ResponseEntity<ApiResponse<List<PublicPackageResponse>>> publicPackages() {
+        return ResponseEntity.ok(ApiResponse.success(
+                "Public packages fetched successfully",
+                subscriptionService.listPublicPackages()
+        ));
     }
 
     @GetMapping("/packages")

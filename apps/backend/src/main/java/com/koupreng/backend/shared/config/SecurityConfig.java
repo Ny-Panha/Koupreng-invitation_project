@@ -70,6 +70,7 @@ public class SecurityConfig {
             "/api/v1/payway/callback", "/api/v1/payway/return",
             "/api/v1/payway/cancel", "/api/v1/internal/template-payments/**",
             "/api/v1/internal/subscription-payments/**", "/api/v1/public/invitations/**",
+            "/api/v1/public/packages",
             "/api/v1/contact", "/api/health", "/actuator/**"
     };
 
@@ -221,6 +222,7 @@ public class SecurityConfig {
                                 "/api/v1/templates/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/i18n/messages").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/contact").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/public/packages").permitAll()
                         .requestMatchers("/api/v1/public/invitations/**").permitAll()
                         .requestMatchers("/api/v1/payway/callback",
                                 "/api/v1/payway/return",

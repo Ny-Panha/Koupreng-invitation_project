@@ -7,37 +7,71 @@ import { useLanguageStore } from "../../stores/useLanguageStore";
 import { packagePrice } from "./model/packagePresentation";
 
 let authenticated = false;
-vi.mock("../auth/hooks/useAuth", () => ({ useAuth: () => ({ isAuthenticated: authenticated, isLoading: false }) }));
-vi.mock("../subscriptions/subscriptionService", () => ({ default: { packages: vi.fn() } }));
+vi.mock("../auth/hooks/useAuth", () => ({
+  useAuth: () => ({ isAuthenticated: authenticated, isLoading: false }),
+}));
+vi.mock("../subscriptions/subscriptionService", () => ({
+  default: {
+    publicPackages: vi.fn(),
+    packages: vi.fn(),
+  },
+}));
+
 const mount = () => render(<MemoryRouter><PricingFeature /></MemoryRouter>);
-const offer = { id: 2, packageName: "Fixture package", price: "29", currency: "USD", durationDays: 90, maxInvitations: 3, maxGuestsPerInvitation: 300, premiumTemplatesEnabled: true, seatingEnabled: false, qrCheckInEnabled: false, active: true };
-beforeEach(() => { authenticated = false; vi.resetAllMocks(); useLanguageStore.setState({ lang: "en" }); });
+const offer = {
+  id: 2,
+  code: "PRO",
+  packageName: "Fixture package",
+  price: "29",
+  currency: "USD",
+  durationDays: 90,
+  maxInvitations: 3,
+  maxGuestsPerInvitation: 300,
+  premiumTemplatesEnabled: true,
+  seatingEnabled: false,
+  qrCheckInEnabled: false,
+  active: true,
+};
+
+beforeEach(() => {
+  authenticated = false;
+  vi.resetAllMocks();
+  useLanguageStore.setState({ lang: "en" });
+});
 afterEach(cleanup);
 
-it("explains anonymous plan discovery without requesting the private catalog", () => {
+it("loads authoritative public offers for anonymous visitors without login requirement", async () => {
+  authenticated = false;
+  subscriptionService.publicPackages.mockResolvedValue([offer]);
   mount();
-  expect(subscriptionService.packages).not.toHaveBeenCalled();
-  expect(screen.getByRole("link", { name: "Sign in to view packages" })).toHaveAttribute("href", "/login?next=%2Fdashboard%2Fpackages");
-  expect(screen.getByRole("heading", { name: "Your invitation design" })).toBeVisible();
-  expect(screen.getByRole("heading", { name: "Your service package" })).toBeVisible();
-  expect(screen.queryByText(/\$0/)).not.toBeInTheDocument();
-});
-it("loads authoritative offers, compares flags and hides them immediately on logout", async () => {
-  authenticated = true; subscriptionService.packages.mockResolvedValue([offer]);
-  const view = mount();
+
   await screen.findByText("$29.00");
-  expect(subscriptionService.packages).toHaveBeenCalledWith({ suppressAuthRedirect: true });
+  expect(subscriptionService.publicPackages).toHaveBeenCalledWith({ suppressAuthRedirect: true });
   expect(screen.getByRole("table")).toHaveAccessibleName("Package feature comparison");
   expect(screen.getAllByText("Not included").length).toBeGreaterThan(0);
-  expect(screen.queryByText(/recommended|most popular/i)).not.toBeInTheDocument();
-  authenticated = false;
-  view.rerender(<MemoryRouter><PricingFeature /></MemoryRouter>);
-  expect(screen.queryByText("$29.00")).not.toBeInTheDocument();
+  expect(screen.getByRole("link", { name: "Sign in to select package" })).toHaveAttribute(
+    "href",
+    `/login?next=${encodeURIComponent("/dashboard/packages?package=PRO")}`
+  );
+  expect(screen.queryByText(/\$0\.00/)).not.toBeInTheDocument();
 });
-it("keeps loading, retry and empty states distinct", async () => {
+
+it("routes authenticated visitors directly to host dashboard package selection", async () => {
   authenticated = true;
+  subscriptionService.publicPackages.mockResolvedValue([offer]);
+  mount();
+
+  await screen.findByText("$29.00");
+  expect(screen.getByRole("link", { name: "View package & eligibility" })).toHaveAttribute(
+    "href",
+    "/dashboard/packages?package=PRO"
+  );
+});
+
+it("keeps loading, retry and empty states distinct", async () => {
   let reject;
-  subscriptionService.packages.mockReturnValueOnce(new Promise((_, fail) => { reject = fail; })).mockResolvedValueOnce([]);
+  subscriptionService.publicPackages.mockReturnValueOnce(new Promise((_, fail) => { reject = fail; }))
+    .mockResolvedValueOnce([]);
   mount();
   expect(screen.getByRole("status")).toHaveTextContent("Loading current packages");
   await act(async () => reject({ status: 503 }));
@@ -46,27 +80,40 @@ it("keeps loading, retry and empty states distinct", async () => {
   await screen.findByText("No packages are currently available");
   expect(screen.queryByRole("alert")).not.toBeInTheDocument();
 });
+
 it("offers recovery for a restricted catalog and excludes inactive offers", async () => {
-  authenticated = true; subscriptionService.packages.mockRejectedValueOnce({ status: 403 }).mockResolvedValueOnce([{ ...offer, active: false }]);
+  subscriptionService.publicPackages.mockRejectedValueOnce({ status: 403 })
+    .mockResolvedValueOnce([{ ...offer, active: false }]);
   const view = mount();
   await screen.findByText("Sign in to check your access");
   expect(screen.queryByText("$29.00")).not.toBeInTheDocument();
-  view.unmount(); mount();
+  view.unmount();
+  mount();
   await screen.findByText("No packages are currently available");
 });
+
 it("labels a missing price and currency without fabricating an offer", async () => {
-  authenticated = true; subscriptionService.packages.mockResolvedValue([{ ...offer, price: null }, { ...offer, id: 3, packageName: "Missing currency", currency: undefined }]);
+  subscriptionService.publicPackages.mockResolvedValue([
+    { ...offer, price: null },
+    { ...offer, id: 3, packageName: "Missing currency", currency: undefined }
+  ]);
   mount();
   await waitFor(() => expect(screen.getAllByText("Price unavailable")).toHaveLength(2));
   expect(screen.queryByText("$0.00")).not.toBeInTheDocument();
   expect(screen.getAllByRole("link", { name: "Ask about this package" }).every(link => link.getAttribute("href") === "/contact")).toBe(true);
 });
+
 it.each([null, undefined, "", " ", "not a number", "0x1", -1, Infinity])("does not turn invalid price %s into zero", price => {
   expect(packagePrice({ price, currency: "USD" }, "en")).toBeNull();
 });
+
 it.each(["USD", "KHR"])("formats a server %s amount with Intl and retains a real zero", currency => {
-  for (const language of ["en", "km"]) for (const price of [0, "160000"]) {
-    expect(packagePrice({ price, currency }, language)).toBe(new Intl.NumberFormat(language === "en" ? "en-US" : "km-KH", { style: "currency", currency }).format(Number(price)));
+  for (const language of ["en", "km"]) {
+    for (const price of [0, "160000"]) {
+      expect(packagePrice({ price, currency }, language)).toBe(
+        new Intl.NumberFormat(language === "en" ? "en-US" : "km-KH", { style: "currency", currency }).format(Number(price))
+      );
+    }
   }
   expect(packagePrice({ price: "29", currency: "" }, "en")).toBeNull();
 });

@@ -20,8 +20,10 @@ import com.koupreng.backend.payment.domain.PaymentStatus;
 import com.koupreng.backend.payment.api.dto.ConfirmPaymentRequest;
 import com.koupreng.backend.audit.application.AuditLogService;
 import com.koupreng.backend.shared.exception.ApiException;
+import com.koupreng.backend.subscription.api.dto.PublicPackageResponse;
 import com.koupreng.backend.subscription.api.dto.SubscriptionPackageResponse;
 import com.koupreng.backend.subscription.api.dto.SubscriptionPackageRequest;
+import com.koupreng.backend.user.domain.Role;
 import com.koupreng.backend.subscription.api.dto.SubscriptionPaymentDetectionResponse;
 import com.koupreng.backend.subscription.api.dto.SubscriptionPurchaseRequest;
 import com.koupreng.backend.subscription.api.dto.SubscriptionResponse;
@@ -117,6 +119,50 @@ public class SubscriptionService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
+    public List<PublicPackageResponse> listPublicPackages() {
+        return packageRepository.findByActiveTrueAndPublicVisibleTrueOrderBySortOrderAscPriceAsc().stream()
+                .filter(plan -> plan.getStatus() == null || (!"INACTIVE".equalsIgnoreCase(plan.getStatus()) && !"DISABLED".equalsIgnoreCase(plan.getStatus())))
+                .filter(plan -> plan.getCode() != null && !plan.getCode().toUpperCase(Locale.ROOT).startsWith("DEV_"))
+                .map(this::toPublicPackageResponse)
+                .toList();
+    }
+
+    private PublicPackageResponse toPublicPackageResponse(SubscriptionPackage plan) {
+        BigDecimal price = plan.getPrice();
+        String currency = plan.getCurrency();
+        boolean purchasable = paymentPlanResolver.supports(plan.getCode());
+        if (purchasable) {
+            SubscriptionPaymentPlan paymentPlan = paymentPlanResolver.resolve(plan.getCode());
+            price = paymentPlan.amount();
+            currency = paymentPlan.currency();
+        }
+        return PublicPackageResponse.builder()
+                .id(plan.getId())
+                .code(plan.getCode())
+                .packageName(plan.getPackageName())
+                .description(plan.getDescription())
+                .price(price)
+                .currency(currency)
+                .billingInterval(plan.getBillingInterval())
+                .durationDays(plan.getDurationDays())
+                .maxInvitations(plan.getMaxInvitations())
+                .maxGuests(plan.getMaxGuests())
+                .maxGuestsPerInvitation(plan.getMaxGuestsPerInvitation())
+                .maxTeamMembers(plan.getMaxTeamMembers())
+                .premiumTemplatesEnabled(plan.isPremiumTemplatesEnabled())
+                .qrInvitationsEnabled(plan.isQrInvitationsEnabled())
+                .qrCheckInEnabled(plan.isQrCheckInEnabled())
+                .seatingEnabled(plan.isSeatingEnabled())
+                .advancedAnalyticsEnabled(plan.isAdvancedAnalyticsEnabled())
+                .customBrandingEnabled(plan.isCustomBrandingEnabled())
+                .teamMembersEnabled(plan.isTeamMembersEnabled())
+                .aiAssistantEnabled(plan.isAiAssistantEnabled())
+                .purchasable(purchasable)
+                .sortOrder(plan.getSortOrder())
+                .build();
+    }
+
     private SubscriptionPackageResponse publicPackageResponse(SubscriptionPackage plan) {
         SubscriptionPaymentPlan paymentPlan = paymentPlanResolver.resolve(plan.getCode());
         SubscriptionPackageResponse response = SubscriptionPackageResponse.from(plan);
@@ -159,6 +205,10 @@ public class SubscriptionService {
         AppUser user = currentUserService.currentUser(authentication);
         SubscriptionPackage plan = packageRepository.findByIdAndActiveTrue(request.getPackageId())
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Package not found"));
+        boolean isAdmin = user != null && user.getRole() == Role.ADMIN;
+        if (!plan.isPublicVisible() && !isAdmin) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "SUBSCRIPTION_PACKAGE_NOT_AVAILABLE", "Package is not available for purchase");
+        }
         SubscriptionPaymentPlan paymentPlan = paymentPlanResolver.resolve(plan.getCode());
         BigDecimal price = paymentPlan.amount();
         Instant now = Instant.now();
@@ -736,6 +786,20 @@ public class SubscriptionService {
         plan.setTeamMembersEnabled(request.isTeamMembersEnabled());
         plan.setAiAssistantEnabled(request.isAiAssistantEnabled());
         plan.setActive(request.isActive());
+        plan.setPublicVisible(request.isPublicVisible());
         plan.setSortOrder(request.getSortOrder() != null ? request.getSortOrder() : 0);
+    }
+
+    @Transactional
+    public SubscriptionPackageResponse togglePublicVisibility(Long id) {
+        SubscriptionPackage plan = packageRepository.findById(id)
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Package not found"));
+        plan.setPublicVisible(!plan.isPublicVisible());
+        SubscriptionPackage saved = packageRepository.save(plan);
+        if (auditLogService != null) {
+            auditLogService.logSystemEvent("PACKAGE_VISIBILITY_TOGGLED", "PACKAGE", saved.getId(),
+                    "Package public visibility toggled to: " + saved.isPublicVisible() + " for: " + saved.getPackageName(), null);
+        }
+        return SubscriptionPackageResponse.from(saved);
     }
 }
