@@ -142,6 +142,19 @@ describe("SubscriptionPackagesPage", () => {
     expect(subscriptionService.order).toHaveBeenCalledTimes(2);
   });
 
+  it("shows payment review and pending records without marking them active", async () => {
+    subscriptionService.history.mockResolvedValue([
+      { id: 10, orderCode: "SUB-REVIEW", packagePlan: basicPlan, amount: 0.01, currency: "USD", status: "REVIEW_REQUIRED", paymentStatus: "PAID", active: false },
+      { id: 11, orderCode: "SUB-PENDING", packagePlan: basicPlan, amount: 0.01, currency: "USD", status: "PENDING_PAYMENT", paymentStatus: "PENDING", active: false },
+    ]);
+    render(<SubscriptionPackagesPage />);
+    expect(await screen.findByText("Under review")).toBeInTheDocument();
+    expect(screen.getByText("Awaiting payment")).toBeInTheDocument();
+    expect(screen.getByText("SUB-REVIEW")).toBeInTheDocument();
+    expect(screen.getByText("SUB-PENDING")).toBeInTheDocument();
+    expect(screen.queryByText("Subscription activated successfully.")).not.toBeInTheDocument();
+  });
+
   it("does not announce activation for a paid order without active entitlement", async () => {
     subscriptionService.order.mockResolvedValue({ status: "REVIEW_REQUIRED", paymentStatus: "PAID", active: false });
     render(<SubscriptionPackagesPage />);
