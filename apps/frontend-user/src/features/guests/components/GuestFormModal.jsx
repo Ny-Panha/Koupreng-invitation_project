@@ -93,7 +93,7 @@ export default function GuestFormModal({
           ? (t ? t("editGuestSubtitle") : "កែប្រែព័ត៌មានលម្អិតរបស់ភ្ញៀវកិត្តិយស")
           : (t ? t("addGuestSubtitle") : "បញ្ចូលព័ត៌មានភ្ញៀវកិត្តិយសទៅក្នុងបញ្ជីមង្គលការរបស់អ្នក")
       }
-      size="md"
+      size="lg"
       closeOnBackdropClick={!saving}
       closeOnEscape={!saving}
     >
@@ -221,7 +221,7 @@ export default function GuestFormModal({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label htmlFor="guestFormSeat" className="block text-xs font-bold text-slate-800 mb-1.5">
-              <span>{t ? t("batchFieldSeats") : "លេខតុ / កៅអី (Table / Seat)"}</span>
+              <span>{t ? t("fieldSeat") : "លេខតុ / កន្លែងអង្គុយ"}</span>
             </label>
             <input
               id="guestFormSeat"
@@ -270,12 +270,12 @@ export default function GuestFormModal({
         </div>
 
         {/* Actions Footer */}
-        <div className="pt-4 border-t border-slate-200 flex flex-col-reverse sm:flex-row items-center justify-end gap-2.5">
+        <div className="pt-4 border-t border-slate-200 flex flex-col-reverse sm:flex-row sm:flex-wrap items-stretch sm:items-center justify-end gap-3">
           <button
             type="button"
             onClick={onClose}
             disabled={saving}
-            className="w-full sm:w-auto px-5 py-2.5 rounded-full border border-slate-300 hover:bg-slate-100 text-slate-700 text-xs sm:text-sm font-bold transition-all cursor-pointer"
+            className="w-full sm:w-auto min-h-11 px-5 py-2.5 rounded-full border border-slate-300 hover:bg-slate-100 text-slate-700 text-sm font-semibold transition-colors cursor-pointer"
           >
             {t ? t("cancel") : "បោះបង់"}
           </button>
@@ -285,7 +285,7 @@ export default function GuestFormModal({
               type="button"
               disabled={saving}
               onClick={(e) => handleSubmit(e, true)}
-              className="w-full sm:w-auto px-5 py-2.5 rounded-full border border-[#B98B42] text-[#9C7332] hover:bg-[#B98B42]/10 text-xs sm:text-sm font-bold transition-all cursor-pointer"
+              className="w-full sm:w-auto min-h-11 px-5 py-2.5 rounded-full border border-[#B98B42] text-[#835B22] hover:bg-[#B98B42]/10 text-sm font-semibold transition-colors cursor-pointer"
             >
               {t ? t("saveAndAddAnother") : "រក្សាទុក និងបន្ថែមទៀត"}
             </button>
@@ -294,7 +294,7 @@ export default function GuestFormModal({
           <button
             type="submit"
             disabled={saving}
-            className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-[#0F766E] hover:bg-[#0D5F58] text-white text-xs sm:text-sm font-bold transition-all cursor-pointer shadow-md shadow-[#0F766E]/20 flex items-center justify-center gap-1.5"
+            className="w-full sm:w-auto min-h-11 px-6 py-2.5 rounded-full bg-[#0F766E] hover:bg-[#0D5F58] text-white text-sm font-semibold transition-colors cursor-pointer shadow-md shadow-[#0F766E]/20 flex items-center justify-center gap-1.5"
           >
             {saving ? (
               <span>{t ? t("saving") : "កំពុងរក្សាទុក..."}</span>
