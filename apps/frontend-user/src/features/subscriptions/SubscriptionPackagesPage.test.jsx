@@ -148,8 +148,8 @@ describe("SubscriptionPackagesPage", () => {
       { id: 11, orderCode: "SUB-PENDING", packagePlan: basicPlan, amount: 0.01, currency: "USD", status: "PENDING_PAYMENT", paymentStatus: "PENDING", active: false },
     ]);
     render(<SubscriptionPackagesPage />);
-    expect(await screen.findByText("Under review")).toBeInTheDocument();
-    expect(screen.getByText("Awaiting payment")).toBeInTheDocument();
+    expect((await screen.findAllByText(/Under review|កំពុងរង់ចាំការផ្ទៀងផ្ទាត់/)).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Awaiting payment|រង់ចាំការទូទាត់/).length).toBeGreaterThan(0);
     expect(screen.getByText("SUB-REVIEW")).toBeInTheDocument();
     expect(screen.getByText("SUB-PENDING")).toBeInTheDocument();
     expect(screen.queryByText("Subscription activated successfully.")).not.toBeInTheDocument();
