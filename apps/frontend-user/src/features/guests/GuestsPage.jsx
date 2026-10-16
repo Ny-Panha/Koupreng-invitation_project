@@ -258,19 +258,6 @@ export default function GuestsPage() {
             className="dash-btn-primary"
             aria-label={t ? t("addGuestBtn") : "បន្ថែមភ្ញៀវ"}
           >
-            <span className="text-base font-black leading-none"></span>
-            <span>{t ? t("addGuestBtn") : "បន្ថែមភ្ញៀវ"}</span>
-          </button>
-        </div>
-
-        <div className="dash-header-actions">
-          <button
-            type="button"
-            onClick={handleOpenAddGuest}
-            className="dash-btn-primary"
-            aria-label={t ? t("addGuestBtn") : "+ បន្ថែមភ្ញៀវ"}
-          >
-            <span className="text-base font-black leading-none">+</span>
             <span>{t ? t("addGuestBtn") : "បន្ថែមភ្ញៀវ"}</span>
           </button>
         </div>
@@ -287,7 +274,6 @@ export default function GuestsPage() {
         setCategoryFilter={setCategoryFilter}
         groups={groups}
         categories={categories}
-        onOpenAddGuest={handleOpenAddGuest}
         onOpenImport={() => setImportModalOpen(true)}
         onExportCsv={handleExportCsv}
         onOpenGroupManager={() => setGroupModalOpen(true)}
