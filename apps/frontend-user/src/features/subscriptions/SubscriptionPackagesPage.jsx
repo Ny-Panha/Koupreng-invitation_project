@@ -717,6 +717,17 @@ function HistoryTable({ history, lang, copy }) {
                   : pending
                     ? copy("រង់ចាំការទូទាត់", "Awaiting payment")
                     : (item.status || copy("មិនទាន់បានបញ្ជាក់", "Not confirmed"));
+            const details = lang === "km"
+              ? active
+                ? "កញ្ចប់នេះបានបើកប្រើប្រាស់រួចហើយ។"
+                : expired
+                  ? "កញ្ចប់ ឬការបញ្ជាទិញនេះផុតកំណត់ហើយ។"
+                  : review
+                    ? "ការទូទាត់កំពុងត្រូវបានផ្ទៀងផ្ទាត់។ សិទ្ធិប្រើប្រាស់មិនទាន់បានបើកទេ។"
+                    : pending
+                      ? "ការបញ្ជាទិញកំពុងរង់ចាំការទូទាត់ និងការផ្ទៀងផ្ទាត់។"
+                      : statusText
+              : (item.message || statusText);
             return (
               <li className="pkg-history-item" key={item.id || item.orderCode || index}>
                 <div className="pkg-history-package">
@@ -735,7 +746,7 @@ function HistoryTable({ history, lang, copy }) {
                 </dl>
                 <div className="pkg-history-note">
                   <span>{copy("ព័ត៌មានស្ថានភាព", "Status details")}</span>
-                  <p>{item.message || statusText}</p>
+                  <p>{details}</p>
                 </div>
               </li>
             );
