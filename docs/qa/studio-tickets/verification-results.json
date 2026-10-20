@@ -1,0 +1,181 @@
+{
+  "recordedAt": "2026-10-20T22:22:02.568449+07:00",
+  "sourceCommit": "3032b6ba2cb8bd60abc7a55e51726cb85467756a",
+  "baselineCommit": "715b85ef",
+  "scope": "Final suite results; focused checks overlap broader suites.",
+  "frontendUser": {
+    "passed": 540,
+    "files": 100
+  },
+  "frontendAdmin": {
+    "passed": 80,
+    "files": 16
+  },
+  "backend": {
+    "run": 538,
+    "passed": 508,
+    "skipped": 30,
+    "failures": 0,
+    "errors": 0
+  },
+  "backendFocused": {
+    "run": 16,
+    "passed": 16,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0
+  },
+  "editorFocused": {
+    "passed": 21,
+    "files": 3
+  },
+  "templateFocused": {
+    "passed": 20,
+    "files": 1
+  },
+  "browserRegression": {
+    "passed": 56,
+    "skipped": 4
+  },
+  "browserTicketsFinal": {
+    "passed": 14,
+    "skipped": 0
+  },
+  "worker": {
+    "passed": 72,
+    "warnings": 2
+  },
+  "migrationCertification": "MySQL V38/V39 not certified; 30 gated tests skipped",
+  "providerCertification": "Not verified against real providers or physical camera/native sharing",
+  "pdf": "Deferred; PNG is implemented and verified",
+  "exports": [
+    {
+      "file": "floral-2x-desktop-chromium.png",
+      "width": 1200,
+      "height": 1800,
+      "bytes": 231540,
+      "sha256": "3eee86100c5a4123dae9b99752fa88216c4caba69bef8fb5439c69765476916d",
+      "qrVerification": "Full PNG decoded with jsQR in the passing Playwright export test"
+    },
+    {
+      "file": "floral-2x-mobile-chromium.png",
+      "width": 1200,
+      "height": 1800,
+      "bytes": 231540,
+      "sha256": "3eee86100c5a4123dae9b99752fa88216c4caba69bef8fb5439c69765476916d",
+      "qrVerification": "Full PNG decoded with jsQR in the passing Playwright export test"
+    },
+    {
+      "file": "floral-3x-desktop-chromium.png",
+      "width": 1800,
+      "height": 2700,
+      "bytes": 392886,
+      "sha256": "394ca2aaf170bb2ceda779d96a9292e804188efacf3c5a4ffdc15c9097f142b6",
+      "qrVerification": "Full PNG decoded with jsQR in the passing Playwright export test"
+    },
+    {
+      "file": "floral-3x-mobile-chromium.png",
+      "width": 1800,
+      "height": 2700,
+      "bytes": 392886,
+      "sha256": "394ca2aaf170bb2ceda779d96a9292e804188efacf3c5a4ffdc15c9097f142b6",
+      "qrVerification": "Full PNG decoded with jsQR in the passing Playwright export test"
+    },
+    {
+      "file": "gold-2x-desktop-chromium.png",
+      "width": 1200,
+      "height": 1800,
+      "bytes": 189413,
+      "sha256": "708979ac7f2075a1b5ef9333cb0d28b1635f1caf05e1bae7908b700d97321650",
+      "qrVerification": "Full PNG decoded with jsQR in the passing Playwright export test"
+    },
+    {
+      "file": "gold-2x-mobile-chromium.png",
+      "width": 1200,
+      "height": 1800,
+      "bytes": 189413,
+      "sha256": "708979ac7f2075a1b5ef9333cb0d28b1635f1caf05e1bae7908b700d97321650",
+      "qrVerification": "Full PNG decoded with jsQR in the passing Playwright export test"
+    },
+    {
+      "file": "gold-3x-desktop-chromium.png",
+      "width": 1800,
+      "height": 2700,
+      "bytes": 329087,
+      "sha256": "bdf6e4573895cbc208c909dd6da01cf9dc7f8f0201014c681da54b2beb70726f",
+      "qrVerification": "Full PNG decoded with jsQR in the passing Playwright export test"
+    },
+    {
+      "file": "gold-3x-mobile-chromium.png",
+      "width": 1800,
+      "height": 2700,
+      "bytes": 329087,
+      "sha256": "bdf6e4573895cbc208c909dd6da01cf9dc7f8f0201014c681da54b2beb70726f",
+      "qrVerification": "Full PNG decoded with jsQR in the passing Playwright export test"
+    },
+    {
+      "file": "ivory-2x-desktop-chromium.png",
+      "width": 1200,
+      "height": 1800,
+      "bytes": 195105,
+      "sha256": "2db1aaec1321f1710c16fd58e404523605e76f9b0b77a12928c18ed678e6b142",
+      "qrVerification": "Full PNG decoded with jsQR in the passing Playwright export test"
+    },
+    {
+      "file": "ivory-2x-mobile-chromium.png",
+      "width": 1200,
+      "height": 1800,
+      "bytes": 195105,
+      "sha256": "2db1aaec1321f1710c16fd58e404523605e76f9b0b77a12928c18ed678e6b142",
+      "qrVerification": "Full PNG decoded with jsQR in the passing Playwright export test"
+    },
+    {
+      "file": "ivory-3x-desktop-chromium.png",
+      "width": 1800,
+      "height": 2700,
+      "bytes": 337916,
+      "sha256": "e76db288268afa393eb49e24e37e05afd3c30f8e3fea97791faef1946f480343",
+      "qrVerification": "Full PNG decoded with jsQR in the passing Playwright export test"
+    },
+    {
+      "file": "ivory-3x-mobile-chromium.png",
+      "width": 1800,
+      "height": 2700,
+      "bytes": 337916,
+      "sha256": "e76db288268afa393eb49e24e37e05afd3c30f8e3fea97791faef1946f480343",
+      "qrVerification": "Full PNG decoded with jsQR in the passing Playwright export test"
+    },
+    {
+      "file": "minimal-2x-desktop-chromium.png",
+      "width": 1200,
+      "height": 1800,
+      "bytes": 186022,
+      "sha256": "8cfff8badc3cbb40d021e02d24c49cf6e6996139ed62b305017d30860d1d3b04",
+      "qrVerification": "Full PNG decoded with jsQR in the passing Playwright export test"
+    },
+    {
+      "file": "minimal-2x-mobile-chromium.png",
+      "width": 1200,
+      "height": 1800,
+      "bytes": 186022,
+      "sha256": "8cfff8badc3cbb40d021e02d24c49cf6e6996139ed62b305017d30860d1d3b04",
+      "qrVerification": "Full PNG decoded with jsQR in the passing Playwright export test"
+    },
+    {
+      "file": "minimal-3x-desktop-chromium.png",
+      "width": 1800,
+      "height": 2700,
+      "bytes": 324184,
+      "sha256": "5904cc839019bd1e52b8ee3993f022b7d3f7eb761876e1a054062e42d6c797e4",
+      "qrVerification": "Full PNG decoded with jsQR in the passing Playwright export test"
+    },
+    {
+      "file": "minimal-3x-mobile-chromium.png",
+      "width": 1800,
+      "height": 2700,
+      "bytes": 324184,
+      "sha256": "5904cc839019bd1e52b8ee3993f022b7d3f7eb761876e1a054062e42d6c797e4",
+      "qrVerification": "Full PNG decoded with jsQR in the passing Playwright export test"
+    }
+  ]
+}
