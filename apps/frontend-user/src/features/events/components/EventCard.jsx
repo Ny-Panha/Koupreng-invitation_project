@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { getTemplateById } from "../../templates/data/templatesData";
+import { EVENT_TYPES } from "../onboarding/eventFields";
 
-export function EventCard({ draft, onManage, onEdit, onDelete, t }) {
+export function EventCard({ draft, onManage, onEdit, onDelete, onPreview, t }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const menuRef = useRef(null);
 
@@ -35,6 +36,8 @@ export function EventCard({ draft, onManage, onEdit, onDelete, t }) {
         || draft?.media?.coverImage?.fileUrl
         || draft?.coverImage
         || designCoverImage
+        || draft?.templateThumbnailUrl
+        || (draft?.templateCode === "event-essential" ? "/templates/event-essential.svg" : "")
         || template?.thumbnailUrl
         || template?.defaultImage
         || template?.phoneCoverImage
@@ -49,14 +52,17 @@ export function EventCard({ draft, onManage, onEdit, onDelete, t }) {
             : "";
     const dateText = draft.event?.date || draft.eventDate || (t ? t("noDate") : null) || "មិនទាន់កំណត់កាលបរិច្ឆេទ";
     const timeText = draft.event?.receptionTime || draft.eventTime || "";
-    const isPublished = Boolean(draft.publishedAt || draft.status === "PUBLISHED");
+    const isPublished = draft.status ? draft.status === "PUBLISHED" : Boolean(draft.publishedAt);
+    const statusLabel = draft.status === "UNPUBLISHED" ? "ផ្អាកផ្សាយ / Unpublished"
+        : draft.status === "ARCHIVED" ? "ទុកក្នុងបណ្ណសារ / Archived"
+        : isPublished ? ((t && t("badgePublished")) || "បោះពុម្ពផ្សាយ") : ((t && t("badgeDraft")) || "ព្រាង");
 
     return (
         <article className="event-card">
             <div className="event-card-img-wrap">
-                <img src={coverImage} alt={title} className="event-card-img" />
+                <img src={coverImage} alt={title} loading="lazy" className="event-card-img" />
                 <span className={`event-card-badge ${isPublished ? "event-card-badge--published" : "event-card-badge--draft"}`}>
-                    {isPublished ? ((t && t("badgePublished")) || "បោះពុម្ពផ្សាយ") : ((t && t("badgeDraft")) || "ព្រាង")}
+                    {statusLabel}
                 </span>
             </div>
             <div className="event-card-body">
@@ -72,6 +78,9 @@ export function EventCard({ draft, onManage, onEdit, onDelete, t }) {
                     <span>{dateText} {timeText ? `• ${timeText}` : ""}</span>
                 </div>
 
+                <p>{EVENT_TYPES.find(type => type[0] === draft.eventType)?.[1] || draft.eventType} · {draft.venueName || draft.event?.venueName}</p>
+                {draft.templateName && <p>{draft.templateName}</p>}
+                {draft.syncError && <p role="status">{draft.syncError}</p>}
                 <div className="event-card-footer">
                     <button
                         type="button"
@@ -153,6 +162,7 @@ export function EventCard({ draft, onManage, onEdit, onDelete, t }) {
                         )}
                     </div>
                 </div>
+                <div className="event-card-footer"><button type="button" className="event-card-manage-btn" onClick={() => onEdit?.(draft)}>{draft.status === "DRAFT" ? "បន្តកែសម្រួល / Continue Editing" : "កែសម្រួល / Edit"}</button><button type="button" className="event-card-manage-btn" onClick={() => onPreview?.(draft)}>មើលជាមុន / Preview</button></div>
             </div>
         </article>
     );

@@ -10,7 +10,7 @@ import { EmptyState, ErrorState, SkeletonCard, toast } from "@/shared/ui";
 import "./BudgetPages.css";
 
 export default function BudgetPage() {
-  const { invitationId } = useParams();
+  const { eventId, invitationId = eventId } = useParams();
   const [budget, setBudget] = useState(null);
   const [budgetForm, setBudgetForm] = useState({ totalBudget: "", notes: "" });
   const [loading, setLoading] = useState(true);

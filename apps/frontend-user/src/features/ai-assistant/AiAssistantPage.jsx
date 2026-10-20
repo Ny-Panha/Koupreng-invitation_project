@@ -10,7 +10,7 @@ import { toInvitationStoryUpdate } from "./model/invitationContent";
 import "./AiAssistantPage.css";
 
 export default function AiAssistantPage() {
-  const { id, invitationId: paramInvId } = useParams();
+  const { eventId, id = eventId, invitationId: paramInvId } = useParams();
   const invitationId = id || paramInvId;
   const navigate = useNavigate();
 

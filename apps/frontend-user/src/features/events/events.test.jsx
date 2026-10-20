@@ -198,7 +198,7 @@ describe("Events Feature", () => {
     it("successfully deletes event from API and UI when confirmed", async () => {
         vi.spyOn(eventsApi, "listMine").mockResolvedValue([
             {
-                id: "evt-to-delete",
+                id: "123",
                 title: "To Be Deleted Event",
                 status: "DRAFT",
             },
@@ -230,7 +230,7 @@ describe("Events Feature", () => {
         confirmBtn.click();
 
         await waitFor(() => {
-            expect(removeSpy).toHaveBeenCalledWith("evt-to-delete");
+            expect(removeSpy).toHaveBeenCalledWith("123");
             expect(screen.queryByText("To Be Deleted Event")).not.toBeInTheDocument();
         });
     });

@@ -13,11 +13,17 @@ export function useEvents(t) {
     const [isDeleting, setIsDeleting] = useState(false);
     const [syncingDraftId, setSyncingDraftId] = useState("");
     const [backendListLoaded, setBackendListLoaded] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+    const loadGeneration = useRef(0);
     const autoSyncAttempted = useRef(new Set());
     const syncInFlight = useRef(new Set());
 
     const loadDrafts = useCallback(() => {
+        const generation = ++loadGeneration.current;
+        setLoading(true); setError("");
         eventsApi.listMine().then((apiInvs) => {
+            if (generation !== loadGeneration.current) return;
             const localDrafts = listDrafts(ownerUserId);
             const merged = (apiInvs || []).map((apiInv) => {
                 const matchingLocal = localDrafts.find((ld) =>
@@ -47,7 +53,7 @@ export function useEvents(t) {
             });
             localDrafts.forEach((ld) => {
                 if (ld.syncStatus === "SYNCED" && ld.backendInvitationId && !apiInvs.some((m) => String(m.id) === String(ld.backendInvitationId))) {
-                    deleteDraft(ld.id);
+                    merged.push({ ...ld, syncError: "Server record unavailable; local copy preserved" });
                     return;
                 }
                 if (!merged.some((m) => String(m.id) === String(ld.id) || String(m.id) === String(ld.backendInvitationId))) {
@@ -56,14 +62,17 @@ export function useEvents(t) {
             });
             setDrafts(merged);
             setBackendListLoaded(true);
-        }).catch(() => {
+        }).catch((err) => {
+            if (generation !== loadGeneration.current) return;
+            setError(err.message || "Could not load events");
             setDrafts(listDrafts(ownerUserId));
             setBackendListLoaded(false);
-        });
+        }).finally(() => { if (generation === loadGeneration.current) setLoading(false); });
     }, [ownerUserId]);
 
     useEffect(() => {
         loadDrafts();
+        return () => { loadGeneration.current += 1; };
     }, [loadDrafts]);
 
     const handleDeleteClick = (draft) => {
@@ -77,9 +86,15 @@ export function useEvents(t) {
     const syncDraft = useCallback(async (draft, { silent = false } = {}) => {
         const draftId = String(draft?.id || "");
         if (!draftId || syncInFlight.current.has(draftId)) return;
+        autoSyncAttempted.current.add(draftId);
         syncInFlight.current.add(draftId);
         setSyncingDraftId(String(draft.id));
         try {
+            if (!draft.backendInvitationId) {
+                draft = { ...draft, clientRequestId: draft.clientRequestId || crypto.randomUUID(),
+                    ...(ownerUserId != null ? { ownerUserId } : {}) };
+                saveDraft(draft);
+            }
             const { response, patch } = await persistWeddingDraft(draft);
             const syncedDraft = {
                 ...draft,
@@ -108,7 +123,7 @@ export function useEvents(t) {
             syncInFlight.current.delete(draftId);
             setSyncingDraftId("");
         }
-    }, []);
+    }, [ownerUserId]);
 
     useEffect(() => {
         if (!backendListLoaded) return undefined;
@@ -140,16 +155,14 @@ export function useEvents(t) {
         setIsDeleting(true);
 
         const targetId = target.id;
-        const backendId = target.backendInvitationId || targetId;
-
+        const candidateId = target.backendInvitationId || targetId;
+        const backendId = /^[1-9]\d*$/.test(String(candidateId)) ? candidateId : null;
         try {
-            if (backendId) {
-                await eventsApi.remove(backendId).catch((err) => {
-                    console.warn("Failed to delete from API", err);
-                });
-            }
-        } catch (e) {
-            console.warn("Ignored local draft deletion error", e);
+            if (backendId) await eventsApi.remove(backendId);
+        } catch (err) {
+            setError(err.message || "Could not delete event; your draft is preserved");
+            setIsDeleting(false);
+            return;
         }
 
         deleteDraft(targetId);
@@ -177,6 +190,7 @@ export function useEvents(t) {
 
     return {
         drafts,
+        loading, error, reload: loadDrafts,
         syncingDraftId,
         syncDraft,
         draftToDelete,

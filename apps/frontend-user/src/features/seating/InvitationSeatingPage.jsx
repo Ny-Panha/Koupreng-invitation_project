@@ -17,7 +17,7 @@ import { SeatingFloorPlan } from "./components/SeatingFloorPlan";
 import "./SeatingPage.css";
 
 export default function InvitationSeatingPage() {
-    const { invitationId } = useParams();
+    const { eventId, invitationId = eventId } = useParams();
     const navigate = useNavigate();
     const [activeView, setActiveView] = useState("list"); // "list" | "plan"
     const {

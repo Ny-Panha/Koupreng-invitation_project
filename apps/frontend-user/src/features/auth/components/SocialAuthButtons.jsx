@@ -1,3 +1,4 @@
+import { safeAuthRedirect } from "../safeRedirect";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/features/auth/hooks/useAuth";
@@ -385,7 +386,7 @@ function openTelegramLogin(clientId, onResult, onError) {
 }
 
 /* ─── Main component ─────────────────────────────────────── */
-export default function SocialAuthButtons({ redirectTo = "/dashboard/events", mode = "login", onLinked }) {
+export default function SocialAuthButtons({ redirectTo = "/app/events", mode = "login", onLinked }) {
   const navigate = useNavigate();
   const { login, updateUser, isAuthenticated } = useAuth();
   const lang = useLanguageStore((state) => state.lang);
@@ -414,7 +415,7 @@ export default function SocialAuthButtons({ redirectTo = "/dashboard/events", mo
         onLinked?.(data);
         setSuccess("Identity linked to your current account. Your existing session is unchanged.");
       } else {
-        login(data); navigate(redirectTo, { replace: true });
+        login(data); navigate(safeAuthRedirect(redirectTo), { replace: true });
       }
     } catch (e) {
       setError(socialAuthError(e, provider));

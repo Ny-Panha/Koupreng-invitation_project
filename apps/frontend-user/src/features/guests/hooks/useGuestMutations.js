@@ -30,6 +30,7 @@ export function useGuestMutations({
     let optimisticId = null;
 
     try {
+      if (/^[1-9]\d*$/.test(String(eventId)) && !backendInvitation) throw new Error("Event data is still loading");
       const backendIdToUse = backendInvitation ? invitationId(backendInvitation) : null;
       const targetBackendGuest = editingId
         ? backendGuests.find((item) => String(item.id) === String(editingId))
@@ -104,6 +105,7 @@ export function useGuestMutations({
     setError("");
 
     try {
+      if (/^[1-9]\d*$/.test(String(eventId)) && !backendInvitation) throw new Error("Event data is still loading");
       const backendIdToUse = backendInvitation ? invitationId(backendInvitation) : null;
 
       if (
@@ -145,6 +147,7 @@ export function useGuestMutations({
     setError("");
 
     try {
+      if (/^[1-9]\d*$/.test(String(eventId)) && !backendInvitation) throw new Error("Event data is still loading");
       const backendIdToUse = backendInvitation ? invitationId(backendInvitation) : null;
       if (backendIdToUse) {
         // Collect existing phones and emails to prevent 409 Conflict with already-saved guests

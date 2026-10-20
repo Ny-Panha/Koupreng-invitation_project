@@ -1,5 +1,7 @@
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
+
+function BrowserRouter({ children }) { return <MemoryRouter initialEntries={["/app/events/1"]}><Routes><Route path="/app/events/:eventId" element={children} /></Routes></MemoryRouter>; }
 import { afterEach, describe, expect, it, vi } from "vitest";
 import GiftsFeature from "./GiftsFeature";
 import { planningService } from "@/features/planning/api/planningApi";

@@ -1,4 +1,4 @@
-import { createElement, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { createElement, lazy, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
@@ -81,7 +81,7 @@ function DedicatedTemplateRenderer({ component, previewChannel, children, ...pro
  *                     The floating music control stays so the host can hear the
  *                     chosen track; it anchors to the phone frame.
  */
-export default function TemplateExperience({
+function WeddingTemplateExperience({
     tpl,
     useTemplateLink,
     variant,
@@ -623,4 +623,13 @@ export default function TemplateExperience({
             </div>
         </div>
     );
+}
+
+const EventEssentialLayout = lazy(() => import("../layouts/EventEssentialLayout"));
+export default function TemplateExperience(props) {
+    const tpl = props.tpl;
+    if ([tpl?.code, tpl?.slug, tpl?.templateCode, tpl?.templateId].includes("event-essential")) {
+        return <Suspense fallback={<p role="status">??????????? / Loading?</p>}><EventEssentialLayout {...props} /></Suspense>;
+    }
+    return <WeddingTemplateExperience {...props} />;
 }

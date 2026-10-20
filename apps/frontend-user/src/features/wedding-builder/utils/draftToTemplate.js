@@ -42,7 +42,9 @@ export function draftToTemplate(draft, gallery = []) {
     if (!draft) return null;
 
     const templateId = draft.templateId || "garden-royal-khmer-wedding";
-    const baseTpl = getTemplateById(templateId);
+    const baseTpl = templateId === "event-essential"
+        ? { id: "event-essential", code: "event-essential", slug: "event-essential", enabledSections: {} }
+        : getTemplateById(templateId);
     if (!baseTpl) return null;
 
     const sectionEnabled = (legacyValue, key, defaultValue = true) => {
@@ -159,6 +161,11 @@ export function draftToTemplate(draft, gallery = []) {
 
     const tpl = {
         ...baseTpl,
+        eventType: draft.eventType || "WEDDING",
+        languageMode: draft.languageMode || draft.extras?.languageMode || "KH",
+        hostName: draft.hostName || groomName,
+        partnerName: draft.partnerName || brideName,
+        eventDate: draft.eventDate || draft.event?.date || "",
         title: draft.title || draft.event?.title || baseTpl.title || "",
         subtitle: draft.subtitle || "",
         messageTitle: draft.messageTitle || "",

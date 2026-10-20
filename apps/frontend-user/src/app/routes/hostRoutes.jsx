@@ -1,116 +1,78 @@
-import { PaidTemplatesPage, BrowseTemplatesPage, BudgetPage, ChangePasswordPage, DashboardPage, EventsPage, ExpensesPage, GuestsPage, HostTemplateDemoPage, InvitationCheckInPage, InvitationCreatePage, InvitationEditPage, InvitationMediaPage, InvitationPreviewPage, InvitationDeliveryPage, NotificationsPage, PaymentHistoryPage, PaymentReceiptPage, ProfilePage, SeatingPage, SubscriptionPackagesPage, WeddingGiftPage, OrganizationPage, OrganizationDetailPage, AiAssistantPage, RsvpDashboardPage, FinancialReport, QrPage, WishesPage } from "./lazyRoutePages";
 /* eslint-disable react-refresh/only-export-components */
-import { Navigate, Route, useParams } from "react-router-dom";
 import { lazy } from "react";
+import { Navigate, Route, useLocation, useParams } from "react-router-dom";
+import { PaidTemplatesPage, BrowseTemplatesPage, ChangePasswordPage, DashboardPage, EventsPage, ExpensesPage, GuestsPage, HostTemplateDemoPage, InvitationEditPage, InvitationMediaPage, InvitationPreviewPage, InvitationDeliveryPage, InvitationCheckInPage, NotificationsPage, PaymentHistoryPage, PaymentReceiptPage, ProfilePage, SeatingPage, SubscriptionPackagesPage, WeddingGiftPage, OrganizationPage, OrganizationDetailPage, AiAssistantPage, RsvpDashboardPage, FinancialReport, QrPage, WishesPage } from "./lazyRoutePages";
+import RequireAuth from "./RequireAuth";
+import InvitationScopedRedirect from "./InvitationScopedRedirect";
+const HostShell = lazy(() => import("../../layouts/HostShell"));
+const EventWorkspace = lazy(() => import("../../features/events/workspace/EventWorkspace"));
+const EventWizard = lazy(() => import("../../features/events/onboarding/EventWizard"));
+const EventDetails = lazy(() => import("../../features/events/onboarding/EventDetails"));
+const EventInvitation = lazy(() => import("../../features/events/workspace/EventInvitation"));
 
-function InvitationBareRedirect() {
+function LegacyEditor({ preview = false }) {
   const { id } = useParams();
-  return <Navigate to={`/dashboard/invitations/${id}/edit`} replace />;
+  if (/^[1-9]\d*$/.test(String(id || ""))) return <InvitationScopedRedirect targetSubPath={preview ? "preview" : "invitation"} />;
+  return preview ? <InvitationPreviewPage /> : <InvitationEditPage />;
+}
+function AccountRedirect() {
+  const location = useLocation();
+  return <Navigate to={location.pathname.replace(/^\/dashboard/, "/app") + location.search + location.hash} replace />;
 }
 
-
-const HostShell = lazy(() => import("../../layouts/HostShell"));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import RequireAuth from "./RequireAuth";
-
-
-
-
-
-
-
-const InvitationScopedRedirect = lazy(() => import("./InvitationScopedRedirect"));
-
 export function hostRoutes() {
-  return (
-    <>
-      <Route
-        element={
-          <RequireAuth>
-            <HostShell />
-          </RequireAuth>
-        }
-      >
-        <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/dashboard/events" element={<EventsPage />} />
-        <Route path="/dashboard/invitations" element={<Navigate to="/dashboard/events" replace />} />
-        <Route path="/dashboard/invitations/new" element={<InvitationCreatePage />} />
-        <Route path="/dashboard/invitations/design" element={<InvitationEditPage />} />
-        <Route path="/dashboard/invitations/edit" element={<InvitationEditPage />} />
-        <Route path="/dashboard/invitations/:id/edit" element={<InvitationEditPage />} />
-        <Route path="/dashboard/invitations/:id/preview" element={<InvitationPreviewPage />} />
-        <Route path="/dashboard/invitations/:id" element={<InvitationBareRedirect />} />
-      <Route path="/dashboard/invitations/:invitationId/assistant" element={<AiAssistantPage />} />
-      <Route path="/dashboard/invitations/:invitationId/guests" element={<GuestsPage />} />
-      <Route path="/dashboard/invitations/:invitationId/rsvp" element={<RsvpDashboardPage />} />
-      <Route path="/dashboard/invitations/:id/delivery" element={<InvitationDeliveryPage />} />
-      <Route path="/dashboard/invitations/:id/media" element={<InvitationMediaPage />} />
-      <Route path="/dashboard/invitations/:invitationId/budget" element={<BudgetPage />} />
-      <Route path="/dashboard/invitations/:invitationId/check-in" element={<InvitationCheckInPage />} />
-      <Route path="/dashboard/invitations/:invitationId/seating" element={<SeatingPage />} />
-      <Route path="/dashboard/invitations/:invitationId/reports" element={<Navigate to="/dashboard/reports" replace />} />
-      <Route path="/dashboard/invitations/:invitationId/qr" element={<QrPage />} />
-      <Route path="/dashboard/invitations/:invitationId/wishes" element={<WishesPage />} />
-      <Route path="/dashboard/reports" element={<FinancialReport />} />
-      <Route path="/reports" element={<Navigate to="/dashboard/reports" replace />} />
-      <Route path="/dashboard/guests" element={<GuestsPage />} />
-      <Route path="/dashboard/seating" element={<InvitationScopedRedirect targetSubPath="seating" />} />
-      <Route path="/dashboard/check-in" element={<InvitationScopedRedirect targetSubPath="check-in" />} />
-      <Route path="/dashboard/rsvp" element={<InvitationScopedRedirect targetSubPath="rsvp" />} />
-      <Route path="/dashboard/media" element={<InvitationScopedRedirect targetSubPath="media" />} />
-      <Route path="/dashboard/delivery" element={<InvitationScopedRedirect targetSubPath="delivery" />} />
+  const accountPages = [
+    ["profile", <ProfilePage />], ["change-password", <ChangePasswordPage />],
+    ["notifications", <NotificationsPage />], ["packages", <SubscriptionPackagesPage />],
+    ["payments", <PaymentHistoryPage />], ["payments/:orderCode", <PaymentReceiptPage />],
+    ["organizations", <OrganizationPage />], ["organizations/:organizationId", <OrganizationDetailPage />],
+    ["templates/paid", <PaidTemplatesPage />],
+  ];
+  return <>
+    <Route element={<RequireAuth><HostShell /></RequireAuth>}>
+      <Route path="/app/events" element={<EventsPage />} />
+      <Route path="/app/events/new" element={<EventWizard />} />
+      <Route path="/app/events/:eventId" element={<EventWorkspace />}>
+        <Route index element={<DashboardPage />} />
+        <Route path="invitation" element={<EventInvitation />} />
+        <Route path="settings" element={<EventDetails />} />
+        <Route path="preview" element={<InvitationPreviewPage />} />
+        <Route path="guests" element={<GuestsPage />} />
+        <Route path="rsvp" element={<RsvpDashboardPage />} />
+        <Route path="gifts" element={<WeddingGiftPage />} />
+        <Route path="budget" element={<ExpensesPage />} />
+        <Route path="seating" element={<SeatingPage />} />
+        <Route path="check-in" element={<InvitationCheckInPage />} />
+        <Route path="reports" element={<FinancialReport />} />
+        <Route path="delivery" element={<InvitationDeliveryPage />} />
+        <Route path="media" element={<InvitationMediaPage />} />
+        <Route path="qr" element={<QrPage />} />
+        <Route path="wishes" element={<WishesPage />} />
+        <Route path="assistant" element={<AiAssistantPage />} />
+      </Route>
+      {accountPages.map(([path, page]) => <Route key={path} path={`/app/${path}`} element={page} />)}
+      {accountPages.map(([path]) => <Route key={`old-${path}`} path={`/dashboard/${path}`} element={<AccountRedirect />} />)}
+      <Route path="/dashboard" element={<InvitationScopedRedirect />} />
+      <Route path="/dashboard/events" element={<Navigate to="/app/events" replace />} />
+      <Route path="/dashboard/invitations" element={<Navigate to="/app/events" replace />} />
+      <Route path="/dashboard/invitations/new" element={<Navigate to="/app/events/new" replace />} />
+      <Route path="/dashboard/invitations/design" element={<InvitationEditPage />} />
+      <Route path="/dashboard/invitations/edit" element={<InvitationEditPage />} />
+      <Route path="/dashboard/invitations/:id/edit" element={<LegacyEditor />} />
+      <Route path="/dashboard/invitations/:id/preview" element={<LegacyEditor preview />} />
+      <Route path="/dashboard/invitations/:id" element={<InvitationScopedRedirect />} />
+      {["guests", "rsvp", "gifts", "budget", "seating", "check-in", "reports", "qr", "wishes", "assistant", "delivery", "media"].map(module =>
+        <Route key={module} path={`/dashboard/invitations/:invitationId/${module}`} element={<InvitationScopedRedirect targetSubPath={module} />} />)}
+      {["guests", "rsvp", "gifts", "budget", "seating", "check-in", "reports", "delivery", "media"].map(module =>
+        <Route key={`global-${module}`} path={`/dashboard/${module}`} element={<InvitationScopedRedirect targetSubPath={module} />} />)}
+      <Route path="/dashboard/expenses" element={<InvitationScopedRedirect targetSubPath="budget" />} />
       <Route path="/dashboard/share" element={<InvitationScopedRedirect targetSubPath="delivery" />} />
-      <Route path="/dashboard/budget" element={<Navigate to="/dashboard/expenses" replace />} />
-      <Route path="/dashboard/expenses" element={<ExpensesPage />} />
-      <Route path="/dashboard/gifts" element={<WeddingGiftPage />} />
-      <Route path="/dashboard/templates/paid" element={<PaidTemplatesPage />} />
-      <Route path="/dashboard/profile" element={<ProfilePage />} />
-      <Route path="/dashboard/change-password" element={<ChangePasswordPage />} />
-      <Route path="/dashboard/notifications" element={<NotificationsPage />} />
-      <Route path="/dashboard/organizations" element={<OrganizationPage />} />
-      <Route path="/dashboard/organizations/:organizationId" element={<OrganizationDetailPage />} />
-      <Route path="/dashboard/packages" element={<SubscriptionPackagesPage />} />
-      <Route path="/dashboard/payments" element={<PaymentHistoryPage />} />
-      <Route path="/dashboard/payments/:orderCode" element={<PaymentReceiptPage />} />
-      
-      {/* Legacy Route Aliases Redirects */}
-      <Route path="/events" element={<Navigate to="/dashboard/events" replace />} />
-      <Route path="/event/list" element={<Navigate to="/dashboard/events" replace />} />
-      <Route path="/guests" element={<Navigate to="/dashboard/guests" replace />} />
-      <Route path="/expenses" element={<Navigate to="/dashboard/expenses" replace />} />
-      <Route path="/gift" element={<Navigate to="/dashboard/gifts" replace />} />
-      <Route path="/gifts" element={<Navigate to="/dashboard/gifts" replace />} />
-      <Route path="/profile" element={<Navigate to="/dashboard/profile" replace />} />
+      {["/events", "/event/list"].map(path => <Route key={path} path={path} element={<Navigate to="/app/events" replace />} />)}
+      {[["/guests", "guests"], ["/expenses", "budget"], ["/gift", "gifts"], ["/gifts", "gifts"], ["/reports", "reports"]].map(([path, module]) =>
+        <Route key={path} path={path} element={<InvitationScopedRedirect targetSubPath={module} />} />)}
+      <Route path="/profile" element={<Navigate to="/app/profile" replace />} />
       <Route path="/templates/browse" element={<BrowseTemplatesPage />} />
     </Route>
-    <Route
-      path="/templates/browse/:id"
-      element={
-        <RequireAuth>
-          <HostTemplateDemoPage />
-        </RequireAuth>
-      }
-    />
-  </>
-  );
+    <Route path="/templates/browse/:id" element={<RequireAuth><HostTemplateDemoPage /></RequireAuth>} />
+  </>;
 }

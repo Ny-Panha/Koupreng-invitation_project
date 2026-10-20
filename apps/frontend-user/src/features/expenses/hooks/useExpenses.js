@@ -1,9 +1,8 @@
+import { useParams } from "react-router-dom";
 import { localDateString } from "@/shared/utils/localDate";
 import { useState, useEffect } from "react";
 import {
     createHostRecordId,
-    getActiveEventId,
-    listBudgetExpenses,
     saveBudgetExpenses,
 } from "../../../shared/storage/hostPlanningStorage";
 import { listDrafts } from "../../../shared/storage/weddingStorage";
@@ -15,10 +14,6 @@ function toList(value) {
     if (Array.isArray(value)) return value;
     if (Array.isArray(value?.data)) return value.data;
     return [];
-}
-
-function pickFirstWithId(value) {
-    return toList(value).find((item) => item?.id) || null;
 }
 
 function valueToNumber(...values) {
@@ -99,13 +94,14 @@ export function useExpenses() {
     const { user } = useAuth();
     const ownerUserId = user?.id || user?.userId;
     const [backendInvitation, setBackendInvitation] = useState(null);
-    const activeEventId = getActiveEventId();
+    const params = useParams();
+    const activeEventId = params.eventId || params.invitationId || "";
     const drafts = listDrafts(ownerUserId);
-    const currentDraft = drafts.find((draft) => draft.id === activeEventId) || drafts[0] || null;
-    const backendInvitationId = currentDraft?.backendInvitationId || currentDraft?.id || "";
-    const eventId = currentDraft?.id || activeEventId || backendInvitation?.id || "";
+    const currentDraft = drafts.find((draft) => String(draft.id) === String(activeEventId) || String(draft.backendInvitationId) === String(activeEventId)) || null;
+    const backendInvitationId = params.eventId || params.invitationId || currentDraft?.backendInvitationId || "";
+    const eventId = activeEventId;
 
-    const [expenses, setExpenses] = useState(() => listBudgetExpenses([], eventId).map(normalizeExpense));
+    const [expenses, setExpenses] = useState([]);
     const [selectedCat, setSelectedCat] = useState("All");
     const [search, setSearch] = useState("");
     const [showForm, setShowForm] = useState(false);
@@ -128,6 +124,8 @@ export function useExpenses() {
     useEffect(() => {
         let active = true;
         setLoading(true);
+        setBackendInvitation(null);
+        setExpenses([]);
         setError("");
 
         expensesApi.listMineInvitations()
@@ -137,7 +135,8 @@ export function useExpenses() {
                 const matched = backendInvitationId
                     ? invitations.find((inv) => String(inv.id) === String(backendInvitationId)) || null
                     : null;
-                const selected = matched || invitations.find((inv) => inv?.status === "PUBLISHED") || pickFirstWithId(invitations);
+                const selected = matched;
+                if (!selected) throw new Error("Choose an event you own to manage budget");
                 setBackendInvitation(selected);
 
                 if (selected?.id) {
@@ -147,14 +146,14 @@ export function useExpenses() {
                     }
                 } else {
                     if (active) {
-                        setExpenses(listBudgetExpenses([], eventId).map(normalizeExpense));
+                        setExpenses([]);
                     }
                 }
             })
             .catch((err) => {
                 if (active) {
                     setError(err?.message || "Could not load expenses from backend");
-                    setExpenses(listBudgetExpenses([], eventId).map(normalizeExpense));
+                    setExpenses([]);
                 }
             })
             .finally(() => {
@@ -164,7 +163,6 @@ export function useExpenses() {
         return () => {
             active = false;
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [backendInvitationId]);
 
     const updateForm = (field, value) => {
@@ -227,7 +225,7 @@ export function useExpenses() {
 
     const submitExpense = async (event) => {
         event.preventDefault();
-        if (!form.name.trim() || !eventId || saving) return;
+        if (!form.name.trim() || !eventId || !backendInvitation?.id || saving) return;
         setSaving(true);
         setError("");
         try {
@@ -285,7 +283,7 @@ export function useExpenses() {
 
     const deleteExpense = async (expenseId, confirmMsg) => {
         if (!window.confirm(confirmMsg || "Are you sure you want to delete this expense?")) return;
-        if (!eventId || saving) return;
+        if (!eventId || !backendInvitation?.id || saving) return;
         setSaving(true);
         setError("");
         try {

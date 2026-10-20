@@ -11,7 +11,7 @@ import { useAuth } from "@/features/auth/hooks/useAuth";
 import "@/features/events/EventsFeature.css";
 
 export default function InvitationEditPage() {
-    const { id } = useParams();
+    const { eventId, id = eventId } = useParams();
     const { user } = useAuth();
     const { text: t } = useBackendMessages("invitations");
     const [invitation, setInvitation] = useState(null);
@@ -33,7 +33,7 @@ export default function InvitationEditPage() {
 
             const ownerUserId = user?.id || user?.userId;
             const targetId = id;
-            const localDraft = targetId ? (getDraft(targetId, ownerUserId) || getDraft(targetId)) : null;
+            const localDraft = !eventId && targetId ? getDraft(targetId, ownerUserId) : null;
 
             // 1. Check local wedding draft storage first
             if (localDraft) {
@@ -159,7 +159,7 @@ export default function InvitationEditPage() {
         return () => {
             active = false;
         };
-    }, [id, user?.id, user?.userId]);
+    }, [id, eventId, user?.id, user?.userId]);
 
     if (loading) {
         return (

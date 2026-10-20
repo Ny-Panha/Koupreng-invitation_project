@@ -2,6 +2,8 @@ import { act, cleanup, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const services = vi.hoisted(() => ({
+  get: vi.fn(),
+  params: { eventId: "51" },
   listMine: vi.fn(),
   listGifts: vi.fn(),
   getBudget: vi.fn(),
@@ -12,8 +14,9 @@ const services = vi.hoisted(() => ({
   getActiveEventId: vi.fn(),
 }));
 
+vi.mock("react-router-dom", () => ({ useParams: () => services.params }));
 vi.mock("@/features/auth/hooks/useAuth", () => ({ useAuth: () => ({ user: { id: 7 } }) }));
-vi.mock("@/features/invitations/api/invitationApi", () => ({ invitationService: { listMine: services.listMine } }));
+vi.mock("@/features/invitations/api/invitationApi", () => ({ invitationService: { get: services.get, listMine: services.listMine } }));
 vi.mock("@/features/gifts/api/giftsApi", () => ({ giftsApi: { listGifts: services.listGifts } }));
 vi.mock("@/features/budget/api/budgetApi", () => ({ budgetService: { getBudget: services.getBudget } }));
 vi.mock("@/features/guests/api/guestApi", () => ({ guestService: { listByInvitation: services.listGuests, checkInList: services.checkInList } }));
@@ -37,6 +40,8 @@ afterEach(() => {
 describe("useActiveEventReport", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    services.params = { eventId: "51" };
+    services.get.mockResolvedValue({ id: 51, title: "Owned Event" });
     vi.spyOn(window, "setInterval").mockReturnValue(1);
     vi.spyOn(window, "clearInterval").mockImplementation(() => {});
     services.listDrafts.mockReturnValue([{ id: "local-51", backendInvitationId: 51, slug: "owned-event" }]);
@@ -59,12 +64,13 @@ describe("useActiveEventReport", () => {
 
     expect(result.current.sourceData.invitation.id).toBe(51);
     expect(result.current.sourceData.guests).toEqual([{ id: 3, guestName: "Owned Guest" }]);
-    expect(services.listGuests).toHaveBeenCalledWith(51);
-    expect(services.checkInList).toHaveBeenCalledWith(51);
+    expect(services.listGuests).toHaveBeenCalledWith("51");
+    expect(services.checkInList).toHaveBeenCalledWith("51");
     expect(services.listGifts).not.toHaveBeenCalledWith(99);
   });
 
   it("does not fetch details when the user has no active or owned event", async () => {
+    services.params = {};
     services.listDrafts.mockReturnValue([]);
     services.getActiveEventId.mockReturnValue("foreign-event");
     services.listMine.mockResolvedValue([]);

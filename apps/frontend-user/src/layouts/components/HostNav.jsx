@@ -2,15 +2,11 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import {
   IoCalendarClearOutline,
-  IoCashOutline,
   IoCheckmarkOutline,
   IoChevronDownOutline,
   IoColorPaletteOutline,
   IoDiamondOutline,
-  IoGiftOutline,
-  IoGridOutline,
   IoLogOutOutline,
-  IoPeopleOutline,
   IoPersonOutline,
   IoReceiptOutline,
 } from "react-icons/io5";
@@ -144,17 +140,14 @@ export default function HostNav() {
   }, [mobileMenuOpen]);
 
   const dynamicNavItems = [
-    { labelKey: "events", path: "/dashboard/events", Icon: IoCalendarClearOutline },
-    { labelKey: "dashboard", path: "/dashboard", Icon: IoGridOutline },
-    { labelKey: "guests", path: "/dashboard/guests", Icon: IoPeopleOutline },
-    { labelKey: "expenses", path: "/dashboard/expenses", Icon: IoCashOutline },
-    { labelKey: "gifts", path: "/dashboard/gifts", Icon: IoGiftOutline },
-    { labelKey: "myInvitation", path: "/dashboard/invitations/design", activePath: "/dashboard/invitations", Icon: IoColorPaletteOutline },
+    { labelKey: "events", path: "/app/events", Icon: IoCalendarClearOutline },
+    { labelKey: "createEvent", path: "/app/events/new", Icon: IoCalendarClearOutline },
+    { labelKey: "packages", path: "/app/packages", Icon: IoDiamondOutline },
     { labelKey: "browseTemplates", path: "/templates/browse", Icon: IoColorPaletteOutline },
   ];
 
   const isActive = (path) => {
-    if (path === "/dashboard") return location.pathname === path;
+    if (path === "/app/events") return location.pathname === path;
     return location.pathname === path || location.pathname.startsWith(`${path}/`);
   };
 
@@ -163,6 +156,8 @@ export default function HostNav() {
   };
 
   const getNavLabel = (key) => {
+    if (key === "events") return language === "en" ? "My Events" : "កម្មវិធីរបស់ខ្ញុំ";
+    if (key === "createEvent") return language === "en" ? "Create Event" : "បង្កើតកម្មវិធី";
     const requiredLabel = REQUIRED_NAV_LABELS[language]?.[key];
     if (requiredLabel) return requiredLabel;
     if (key === "browseTemplates") return language === "en" ? "Browse Templates" : "ស្វែងរកគំរូ";
@@ -817,7 +812,7 @@ export default function HostNav() {
               {profileOpen && (
                 <div className="host-profile-menu" role="menu">
                   <Link
-                    to="/dashboard/profile"
+                    to="/app/profile"
                     className="host-profile-menu-item"
                     onClick={() => setProfileOpen(false)}
                     role="menuitem"
@@ -848,7 +843,7 @@ export default function HostNav() {
                     <span>{language === "en" ? "Paid Templates" : "គំរូដែលបានទិញ"}</span>
                   </Link>
                   <Link
-                    to="/dashboard/payments"
+                    to="/app/payments"
                     className="host-profile-menu-item"
                     onClick={() => setProfileOpen(false)}
                     role="menuitem"
@@ -927,8 +922,8 @@ export default function HostNav() {
       <nav className={`host-mobile-menu${mobileMenuOpen ? " open" : ""}`} aria-label={language === "en" ? "Main navigation" : "ម៉ឺនុយចម្បង"}>
         {/* Profile section */}
         <Link
-          to="/dashboard/profile"
-          className={`host-mobile-menu-item${isActive("/dashboard/profile") ? " active" : ""}`}
+          to="/app/profile"
+          className={`host-mobile-menu-item${isActive("/app/profile") ? " active" : ""}`}
           style={{ marginBottom: 8 }}
           onClick={closeMobileMenu}
         >
@@ -967,22 +962,15 @@ export default function HostNav() {
         </Link>
 
         <Link
-          to="/dashboard/payments"
-          className={`host-mobile-menu-item${isActive("/dashboard/payments") ? " active" : ""}`}
+          to="/app/payments"
+          className={`host-mobile-menu-item${isActive("/app/payments") ? " active" : ""}`}
           onClick={closeMobileMenu}
         >
           <span className="menu-icon"><IoReceiptOutline aria-hidden="true" /></span>
           <span>{language === "en" ? "Payment History" : "ប្រវត្តិការទូទាត់"}</span>
         </Link>
 
-        <Link
-          to="/dashboard/reports"
-          className={`host-mobile-menu-item${isActive("/dashboard/reports") ? " active" : ""}`}
-          onClick={closeMobileMenu}
-        >
-          <span className="menu-icon"><IoReceiptOutline aria-hidden="true" style={{ color: "#B0926A" }} /></span>
-          <span>{language === "en" ? "Financial Reports" : "របាយការណ៍ហិរញ្ញវត្ថុ"}</span>
-        </Link>
+
 
         <button
           type="button"

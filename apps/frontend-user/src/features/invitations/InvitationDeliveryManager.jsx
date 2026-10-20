@@ -20,7 +20,7 @@ function formatDate(value) {
 }
 
 export default function InvitationDeliveryManager() {
-  const { id } = useParams();
+  const { eventId, id = eventId } = useParams();
   const navigate = useNavigate();
 
   const [invitation, setInvitation] = useState(null);

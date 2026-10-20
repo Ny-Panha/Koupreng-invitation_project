@@ -51,6 +51,15 @@ describe("RequireAdmin", () => {
     expect(screen.getByRole("heading", { name: "Admin users" })).toBeInTheDocument();
   });
 
+  it("denies STAFF access to administrative pages", () => {
+    window.sessionStorage.setItem("koupreng.admin.auth", JSON.stringify({
+      accessToken: futureTestToken(), user: { role: "STAFF" },
+    }));
+    renderProtected();
+    expect(screen.queryByRole("heading", { name: "Admin users" })).not.toBeInTheDocument();
+    expect(screen.getByText("login?next=%2Fusers%3Fstatus%3Dactive")).toBeInTheDocument();
+  });
+
   it("allows role with lowercase admin or SUPER_ADMIN", () => {
     window.sessionStorage.setItem("koupreng.admin.auth", JSON.stringify({
       accessToken: futureTestToken(),

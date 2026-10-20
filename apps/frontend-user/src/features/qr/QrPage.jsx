@@ -7,7 +7,7 @@ import "./QrPage.css";
 
 export default function QrPage({ invitationId: propInvitationId, guestId: propGuestId }) {
   const params = useParams();
-  const invitationId = propInvitationId || params.invitationId || params.id;
+  const invitationId = propInvitationId || params.eventId || params.invitationId || params.id;
   const guestId = propGuestId || params.guestId;
 
   const { qrData, loading, downloading, error, loadQr, downloadPng } = useQrCode(

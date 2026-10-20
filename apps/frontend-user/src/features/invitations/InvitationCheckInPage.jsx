@@ -80,7 +80,7 @@ function SummaryCard({ label, value, subtitle, icon: Icon, theme = "gold" }) {
 }
 
 export default function InvitationCheckInPage() {
-    const { invitationId: rawInvitationId } = useParams();
+    const { eventId, invitationId: rawInvitationId = eventId } = useParams();
     const navigate = useNavigate();
 
     const {

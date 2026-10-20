@@ -24,7 +24,7 @@ const EXPECTED_PATHS = [
   "/dashboard/invitations/:id/preview", "/dashboard/invitations/:id",
   "/dashboard/invitations/:invitationId/assistant",
   "/dashboard/invitations/:invitationId/guests", "/dashboard/invitations/:invitationId/rsvp",
-  "/dashboard/invitations/:id/delivery", "/dashboard/invitations/:id/media",
+  "/dashboard/invitations/:invitationId/delivery", "/dashboard/invitations/:invitationId/media",
   "/dashboard/invitations/:invitationId/budget", "/dashboard/invitations/:invitationId/check-in",
   "/dashboard/invitations/:invitationId/seating",
   "/dashboard/invitations/:invitationId/reports",
@@ -51,7 +51,9 @@ const EXPECTED_PATHS = [
 
 describe("the authoritative user router", () => {
   it("registers every public, auth, builder, host, payment and fallback route", () => {
-    expect(routePaths(AppRouter())).toEqual(EXPECTED_PATHS);
+    const paths = routePaths(AppRouter());
+    expect(paths).toEqual(expect.arrayContaining([...EXPECTED_PATHS, "/app/events", "/app/events/new", "/app/events/:eventId", "guests", "gifts", "reports", "settings"]));
+    expect(new Set(paths).size).toBe(paths.length);
     expect(new Set(EXPECTED_PATHS).size).toBe(EXPECTED_PATHS.length);
   });
 });

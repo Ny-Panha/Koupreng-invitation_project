@@ -1,0 +1,48 @@
+import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
+import EventWorkspace from "./EventWorkspace";
+import { useEventWorkspace } from "./EventContext";
+import { invitationService } from "@/features/invitations/api/invitationApi";
+import { useLanguageStore } from "@/stores/useLanguageStore";
+import InvitationScopedRedirect from "@/app/routes/InvitationScopedRedirect";
+
+vi.mock("@/features/auth/hooks/useAuth", () => ({ useAuth: () => ({ user: { id: 7 } }) }));
+vi.mock("@/features/invitations/api/invitationApi", () => ({ invitationService: { get: vi.fn(), listMine: vi.fn() } }));
+const events = [{ id: 1, title: "Wedding A" }, { id: 2, title: "Birthday B" }];
+function Module() { const { eventId } = useEventWorkspace(); return <p>Module {eventId}</p>; }
+function show(path) {
+  return render(<MemoryRouter initialEntries={[path]}><Routes>
+    <Route path="/app/events/:eventId" element={<EventWorkspace />}><Route path="guests" element={<Module />} /></Route>
+    <Route path="/dashboard/guests" element={<InvitationScopedRedirect targetSubPath="guests" />} />
+    <Route path="/app/events" element={<p>Choose your event</p>} />
+  </Routes></MemoryRouter>);
+}
+afterEach(cleanup);
+beforeEach(() => { vi.clearAllMocks(); useLanguageStore.setState({ lang: "en" }); invitationService.listMine.mockResolvedValue(events); });
+describe("verified event workspace", () => {
+  it("never mounts modules for an unauthorized explicit ID", async () => {
+    invitationService.get.mockRejectedValue(new Error("Access denied"));
+    show("/app/events/99/guests");
+    expect(await screen.findByRole("alert")).toHaveTextContent("Access denied");
+    expect(screen.queryByText(/Module/)).not.toBeInTheDocument();
+    expect(invitationService.get).toHaveBeenCalledWith("99");
+  });
+  it("clears the previous module while switching and preserves the module URL", async () => {
+    let resolveSecond;
+    invitationService.get.mockImplementation(id => id === "1" ? Promise.resolve(events[0]) : new Promise(resolve => { resolveSecond = resolve; }));
+    show("/app/events/1/guests");
+    expect(await screen.findByText("Module 1")).toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText("Switch event"), { target: { value: "2" } });
+    expect(screen.queryByText("Module 1")).not.toBeInTheDocument();
+    await act(async () => resolveSecond(events[1]));
+    expect(await screen.findByText("Module 2")).toBeInTheDocument();
+    await waitFor(() => expect(invitationService.get).toHaveBeenCalledWith("2"));
+  });
+  it("ambiguous legacy routes ignore stored active events", async () => {
+    localStorage.setItem("koupreng.host.activeEventId", "1");
+    show("/dashboard/guests");
+    expect(await screen.findByText("Choose your event")).toBeInTheDocument();
+    expect(invitationService.get).not.toHaveBeenCalled();
+  });
+});

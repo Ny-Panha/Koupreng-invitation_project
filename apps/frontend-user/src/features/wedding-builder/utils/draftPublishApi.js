@@ -240,7 +240,8 @@ export function isBackendUnavailable(error) {
 export async function persistWeddingDraft(draft, { publish = false } = {}) {
   if (publish) validateDraftForPublish(draft);
   const templateId = await resolveBackendTemplateId(draft.templateId);
-  const payload = draftToInvitationPayload(draft, templateId);
+  const payload = { ...draftToInvitationPayload(draft, templateId),
+    ...(draft.clientRequestId ? { clientRequestId: draft.clientRequestId } : {}) };
   const saved = draft.backendInvitationId
     ? await invitationService.update(draft.backendInvitationId, payload)
     : await invitationService.create(payload);

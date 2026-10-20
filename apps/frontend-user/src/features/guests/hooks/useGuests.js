@@ -32,8 +32,6 @@ function pickBackendInvitation(invitations, draft, requestedInvitationId) {
   return (
     invitations.find((invitation) => String(invitationId(invitation)) === String(draftId)) ||
     invitations.find((invitation) => invitation.slug && invitation.slug === draft?.slug) ||
-    invitations.find((invitation) => invitation.status === "PUBLISHED") ||
-    invitations.find((invitation) => invitationId(invitation)) ||
     null
   );
 }
@@ -57,19 +55,19 @@ function pickPublicInvitation(invitations, draft, requestedInvitationId) {
   return (
     published.find((invitation) => String(invitationId(invitation)) === String(draftId)) ||
     published.find((invitation) => invitation.slug === draft?.slug) ||
-    published[0]
+    null
   );
 }
 
 export function useGuests() {
-  const { invitationId: requestedInvitationId = "" } = useParams();
+  const { eventId: routeEventId, invitationId: requestedInvitationId = routeEventId || "" } = useParams();
   const { user } = useAuth();
   const ownerUserId = user?.id || user?.userId;
   const drafts = useMemo(() => listDrafts(ownerUserId), [ownerUserId]);
-  const activeEventId = getActiveEventId();
+  const activeEventId = requestedInvitationId || getActiveEventId();
   const currentDraft =
-    drafts.find((draft) => draft.id === activeEventId) || drafts[0] || null;
-  const eventId = currentDraft?.id || activeEventId || "";
+    drafts.find((draft) => String(draft.id) === String(activeEventId) || String(draft.backendInvitationId) === String(activeEventId)) || null;
+  const eventId = requestedInvitationId || currentDraft?.id || "";
   const backendDraftInvitationId = currentDraft?.backendInvitationId || currentDraft?.id || "";
 
   const draftMatch = useMemo(
@@ -78,7 +76,7 @@ export function useGuests() {
   );
 
   const [manualGuests, setManualGuests] = useState(() =>
-    listManualGuests(eventId).map(normalizeManualGuest)
+    eventId ? listManualGuests(eventId).map(normalizeManualGuest) : []
   );
   const [backendGuests, setBackendGuests] = useState([]);
   const [rsvpGuests, setRsvpGuests] = useState([]);
@@ -88,13 +86,16 @@ export function useGuests() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const loadedBackendInvitationId = useRef(null);
+  const generation = useRef(0);
 
   const refreshData = useCallback(async () => {
+    const request = ++generation.current;
     setLoading(true);
     setError("");
 
     try {
       const myInvitations = await invitationService.listMine();
+      if (request !== generation.current) return;
       const matchedBackend = pickBackendInvitation(
         myInvitations,
         draftMatch,
@@ -138,6 +139,7 @@ export function useGuests() {
             : Promise.resolve([]),
         ]);
 
+        if (request !== generation.current) return;
         if (guestsResult.status === "fulfilled") {
           setBackendGuests((guestsResult.value || []).map(normalizeBackendGuest));
         }
@@ -160,14 +162,16 @@ export function useGuests() {
         setCheckIns([]);
       }
     } catch (err) {
+      if (request !== generation.current) return;
       setError(err?.message || "Failed to load guest data");
     } finally {
-      setLoading(false);
+      if (request === generation.current) setLoading(false);
     }
   }, [draftMatch, requestedInvitationId]);
 
   useEffect(() => {
     refreshData();
+    return () => { generation.current += 1; };
   }, [refreshData]);
 
   const allGuests = useMemo(() => {

@@ -8,7 +8,7 @@ import { ErrorState, SkeletonCard } from "@/shared/ui";
 import "./RsvpDashboardPage.css";
 
 export default function RsvpDashboardPage() {
-  const { invitationId } = useParams();
+  const { eventId, invitationId = eventId } = useParams();
   const {
     invitation,
     statusFilter,

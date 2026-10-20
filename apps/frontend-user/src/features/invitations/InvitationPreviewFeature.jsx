@@ -17,7 +17,7 @@ import { publicInvitationToDraft } from "@/features/wedding-builder/utils/invita
 import { createPreviewSession, postPreviewMessage } from "@/shared/preview/previewMessaging";
 
 export default function InvitationPreviewPage() {
-    const { id } = useParams();
+    const { eventId, id = eventId } = useParams();
     const navigate = useNavigate();
     const [invitation, setInvitation] = useState(null);
     const [media, setMedia] = useState(null);

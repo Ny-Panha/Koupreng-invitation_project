@@ -46,7 +46,9 @@ export default function TemplateDemoPage() {
     }, [targetId]);
 
     const tpl = useMemo(() => {
-        const baseTpl = getTemplateById(remoteTpl?.code || remoteTpl?.slug || targetId);
+        const baseTpl = remoteTpl?.code === "event-essential"
+            ? { design: {}, opening: {} }
+            : getTemplateById(remoteTpl?.code || remoteTpl?.slug || targetId);
         if (!remoteTpl) return baseTpl;
 
         let parsedConfig = {};
@@ -60,6 +62,8 @@ export default function TemplateDemoPage() {
 
         return {
             ...baseTpl,
+            code: remoteTpl.code,
+            slug: remoteTpl.slug || remoteTpl.code,
             id: remoteTpl.code || String(remoteTpl.id) || baseTpl.id,
             name: remoteTpl.name || baseTpl.name,
             style: remoteTpl.name || baseTpl.style,

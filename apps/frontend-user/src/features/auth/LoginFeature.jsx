@@ -1,3 +1,4 @@
+import { safeAuthRedirect } from "./safeRedirect";
 import { useId, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/features/auth/hooks/useAuth";
@@ -9,13 +10,7 @@ import AuthLayout from "./components/AuthLayout";
 import "./AuthPage.css";
 
 function getSafeRedirect(searchParams) {
-  const redirect = searchParams.get("next") || searchParams.get("redirect");
-
-  if (!redirect || !redirect.startsWith("/") || redirect.startsWith("//")) {
-    return "/dashboard/events";
-  }
-
-  return redirect;
+  return safeAuthRedirect(searchParams.get("next") || searchParams.get("redirect"));
 }
 
 function Login() {
@@ -64,10 +59,10 @@ function Login() {
           <p className="auth-subtitle">{auth("loginSubtitle")}</p>
         </div>
 
-        {error && <p className="auth-error">{error}</p>}
+        {error && <p role="alert" className="auth-error">{error}</p>}
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="auth-form">
+        <form onSubmit={handleSubmit} className="auth-form" aria-busy={loading}>
           {/* Email / Phone */}
           <div className="auth-field">
             <label htmlFor={emailId} className="auth-label">
@@ -80,7 +75,7 @@ function Login() {
               onChange={(e) => setIdentifier(e.target.value)}
               placeholder={auth("phoneOrEmailPlaceholder")}
               className="auth-input"
-              autoComplete="username"
+              autoComplete="username" required autoCapitalize="none" spellCheck={false}
             />
           </div>
 
@@ -97,12 +92,12 @@ function Login() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder={auth("passwordPlaceholder")}
                 className="auth-input"
-                autoComplete="current-password"
+                autoComplete="current-password" required
               />
               <button
                 type="button"
                 onClick={togglePassword}
-                aria-label="Toggle password"
+                aria-label={showPassword ? "លាក់ពាក្យសម្ងាត់ / Hide password" : "បង្ហាញពាក្យសម្ងាត់ / Show password"} aria-pressed={showPassword}
                 className="auth-eye-btn"
               >
                 {showPassword ? (
@@ -170,7 +165,7 @@ function Login() {
         {/* Register link */}
         <p className="auth-footer-text">
           {auth("noAccount")}{" "}
-          <Link to={redirectTo && redirectTo !== "/dashboard/events" ? `/register?next=${encodeURIComponent(redirectTo)}` : "/register"}>
+          <Link to={redirectTo && redirectTo !== "/app/events" ? `/register?next=${encodeURIComponent(redirectTo)}` : "/register"}>
             {nav("register")}
           </Link>
         </p>

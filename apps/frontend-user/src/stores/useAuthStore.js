@@ -27,7 +27,7 @@ export function isTokenExpired(token) {
         .join("")
     );
     const { exp } = JSON.parse(jsonPayload);
-    if (!exp) return false;
+    if (typeof exp !== "number" || !Number.isFinite(exp)) return true;
     return Date.now() >= exp * 1000;
   } catch {
     return true;
@@ -108,11 +108,18 @@ export const useAuthStore = create((set, get) => ({
     set({ user });
   },
 
-  logout: async () => {
-    const accessToken = get().accessToken;
+  invalidateSession: () => {
     sessionGeneration += 1;
     clearStoredAuth();
+    localStorage.removeItem("koupreng.host.activeEventId");
     set({ user: null, accessToken: null, isAuthenticated: false, authStatus: "anonymous", sessionError: "" });
+  },
+
+  logout: async () => {
+    const accessToken = get().accessToken;
+    const userId = get().user?.id;
+    get().invalidateSession();
+    localStorage.setItem("koupreng.auth.logout", JSON.stringify({ userId, at: Date.now() }));
     try {
       await authService.logout({ suppressAuthRedirect: true,
         ...(accessToken ? { headers: { Authorization: `Bearer ${accessToken}` } } : {}) });

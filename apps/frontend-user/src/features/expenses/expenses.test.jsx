@@ -1,5 +1,7 @@
 import { render, screen, waitFor, cleanup, fireEvent } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
+
+function BrowserRouter({ children }) { return <MemoryRouter initialEntries={["/app/events/1"]}><Routes><Route path="/app/events/:eventId" element={children} /></Routes></MemoryRouter>; }
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import ExpensesFeature from "./ExpensesFeature";
 import { expensesApi } from "./api/expensesApi";
@@ -17,7 +19,7 @@ describe("Expenses Feature", () => {
 
     it("renders expenses overview with summary totals and expense records", async () => {
         vi.spyOn(expensesApi, "listMineInvitations").mockResolvedValue([
-            { id: "inv-1", name: "Wedding", status: "PUBLISHED" },
+            { id: 1, name: "Wedding", status: "PUBLISHED" },
         ]);
 
         vi.spyOn(expensesApi, "listExpenses").mockResolvedValue([
@@ -59,7 +61,7 @@ describe("Expenses Feature", () => {
 
     it("opens add expense modal on add button click", async () => {
         vi.spyOn(expensesApi, "listMineInvitations").mockResolvedValue([
-            { id: "inv-1", name: "Wedding", status: "PUBLISHED" },
+            { id: 1, name: "Wedding", status: "PUBLISHED" },
         ]);
 
         vi.spyOn(expensesApi, "listExpenses").mockResolvedValue([]);
@@ -84,7 +86,7 @@ describe("Expenses Feature", () => {
 
     it("derives totals and payment progress from installment rows", async () => {
         vi.spyOn(expensesApi, "listMineInvitations").mockResolvedValue([
-            { id: "inv-1", name: "Wedding", status: "PUBLISHED" },
+            { id: 1, name: "Wedding", status: "PUBLISHED" },
         ]);
         vi.spyOn(expensesApi, "listExpenses").mockResolvedValue([]);
 

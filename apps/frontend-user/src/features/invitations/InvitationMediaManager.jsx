@@ -95,7 +95,7 @@ function MediaPreview({ media, type, onReplace, onRemove, busy }) {
 }
 
 export default function InvitationMediaManager() {
-    const { id } = useParams();
+    const { eventId, id = eventId } = useParams();
     const navigate = useNavigate();
     const [media, setMedia] = useState(null);
     const [loadedId, setLoadedId] = useState(null);

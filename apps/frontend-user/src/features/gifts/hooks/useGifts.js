@@ -1,7 +1,7 @@
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import {
     createHostRecordId,
-    getActiveEventId,
     listManualGuests,
     listWeddingGifts,
     saveWeddingGifts,
@@ -51,14 +51,15 @@ export function useGifts() {
     const { user } = useAuth();
     const ownerUserId = user?.id || user?.userId;
     const [backendInvitation, setBackendInvitation] = useState(null);
-    const activeEventId = getActiveEventId();
+    const params = useParams();
+    const activeEventId = params.eventId || params.invitationId || "";
     const drafts = listDrafts(ownerUserId);
-    const currentDraft = drafts.find((draft) => draft.id === activeEventId) || drafts[0] || null;
-    const backendInvitationId = currentDraft?.backendInvitationId || currentDraft?.id || "";
-    const eventId = currentDraft?.id || activeEventId || backendInvitation?.id || "";
+    const currentDraft = drafts.find((draft) => String(draft.id) === String(activeEventId) || String(draft.backendInvitationId) === String(activeEventId)) || null;
+    const backendInvitationId = params.eventId || params.invitationId || currentDraft?.backendInvitationId || "";
+    const eventId = activeEventId;
 
-    const [gifts, setGifts] = useState(() => listWeddingGifts([], eventId).map(normalizeGift));
-    const [guestOptions, setGuestOptions] = useState(() => listManualGuests(eventId));
+    const [gifts, setGifts] = useState([]);
+    const [guestOptions, setGuestOptions] = useState([]);
     const [editingId, setEditingId] = useState(null);
     const [form, setForm] = useState({ name: "", guestId: null, amount: "", currency: "USD", method: "Bakong QR", date: "", note: "" });
     const [saving, setSaving] = useState(false);
@@ -68,16 +69,16 @@ export function useGifts() {
     useEffect(() => {
         let active = true;
         setLoading(true);
+        setBackendInvitation(null);
+        setGifts([]); setGuestOptions([]);
         setError("");
 
         giftsApi.listMineInvitations()
             .then(async (items) => {
                 if (!active) return;
                 const list = Array.isArray(items) ? items : items?.data || [];
-                const selected = list.find(inv => String(inv.id) === String(backendInvitationId))
-                    || list.find(inv => inv.status === "PUBLISHED")
-                    || list[0]
-                    || null;
+                const selected = list.find(inv => String(inv.id) === String(backendInvitationId)) || null;
+                if (!selected) throw new Error("Choose an event you own to manage gifts");
 
                 setBackendInvitation(selected);
 
@@ -135,7 +136,7 @@ export function useGifts() {
 
     const submitGift = async (event) => {
         event.preventDefault();
-        if (!form.name.trim() || !eventId || saving) return;
+        if (!form.name.trim() || !eventId || !backendInvitation?.id || saving) return;
         setSaving(true);
         setError("");
         try {
@@ -174,7 +175,7 @@ export function useGifts() {
 
     const deleteGift = async (giftId, confirmMsg) => {
         if (!window.confirm(confirmMsg || "Are you sure you want to delete this gift?")) return;
-        if (!eventId || saving) return;
+        if (!eventId || !backendInvitation?.id || saving) return;
         setSaving(true);
         setError("");
         try {

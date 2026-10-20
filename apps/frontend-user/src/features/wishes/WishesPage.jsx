@@ -6,7 +6,7 @@ import "./WishesPage.css";
 
 export default function WishesPage({ invitationId: propInvitationId }) {
   const params = useParams();
-  const invitationId = propInvitationId || params.invitationId || params.id;
+  const invitationId = propInvitationId || params.eventId || params.invitationId || params.id;
   const { wishes, loading, error, deletingId, loadWishes, deleteWish } = useWishes(invitationId);
 
   return (

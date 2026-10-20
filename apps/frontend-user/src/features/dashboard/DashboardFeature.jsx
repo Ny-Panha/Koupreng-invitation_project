@@ -1,5 +1,6 @@
+import { useEventWorkspace } from "@/features/events/workspace/EventContext";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useParams, useNavigate } from "react-router-dom";
 
 import {
   IoAddCircle,
@@ -23,12 +24,11 @@ import {
 } from "react-icons/io5";
 
 import { invitationService } from "@/features/invitations/api/invitationApi";
-import { reportsApi } from "@/features/reports/api/reportsApi";
+import { eventPath } from "@/features/events/workspace/eventRoutes";
 import { loadServerDashboard, groupAmounts } from "./dashboardData";
 import { currencyAmounts } from "@/features/budget/currencyTotals";
-import { listDrafts, getDraft, getDraftBySlug, saveDraft } from "../../shared/storage/weddingStorage";
+import { getDraft, getDraftBySlug, saveDraft } from "../../shared/storage/weddingStorage";
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
-import { useAuth } from "@/features/auth/hooks/useAuth";
 import { ErrorState, SkeletonTable } from "@/shared/ui";
 import "./DashboardPage.css";
 
@@ -55,7 +55,9 @@ function eventTitle(inv, lang = "km") {
 
 export default function DashboardFeature() {
   const { lang, text } = useBackendMessages("dashboard");
-  const { user } = useAuth();
+  const { eventId: routeEventId } = useParams();
+  const navigate = useNavigate();
+  const workspace = useEventWorkspace();
 
   const [copied, setCopied] = useState(false);
   const [selectedInvId, setSelectedInvId] = useState(null);
@@ -86,28 +88,17 @@ export default function DashboardFeature() {
   });
 
   const loadGeneration = useRef(0);
-  const [accountSummary, setAccountSummary] = useState(null);
-  useEffect(() => {
-    let active = true;
-    reportsApi.dashboardSummary().then((summary) => { if (active) setAccountSummary(summary); })
-      .catch(() => { if (active) setAccountSummary(null); });
-    return () => { active = false; };
-  }, []);
   const loadData = useCallback(async (targetId = null) => {
     const generation = ++loadGeneration.current;
     try {
       setState((prev) => ({ ...prev, loading: true, error: "" }));
       const invs = asList(await invitationService.listMine());
       if (generation !== loadGeneration.current) return;
-      const drafts = listDrafts(user?.id || user?.userId);
-      const allInvs = [
-        ...invs,
-        ...drafts.filter((d) => !invs.some((i) => (i.id || i.invitationId) === (d.id || d.invitationId))),
-      ];
+      const allInvs = invs;
 
       const activeInv = targetId
-        ? allInvs.find((i) => (i.id || i.invitationId) == targetId) || allInvs[0] || null
-        : allInvs[0] || null;
+        ? allInvs.find((i) => String(i.id || i.invitationId) === String(targetId)) || null
+        : null;
 
       const invId = activeInv?.id || activeInv?.invitationId;
       const isNumericBackendId = Boolean(
@@ -154,18 +145,18 @@ export default function DashboardFeature() {
         error: err.message || "Failed to load dashboard data.",
       }));
     }
-  }, [user?.id, user?.userId]);
+  }, []);
 
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    const targetId = searchParams.get("id") || searchParams.get("invitationId");
+    const targetId = routeEventId || searchParams.get("id") || searchParams.get("invitationId");
     loadData(targetId || null);
-  }, [loadData, searchParams]);
+    return () => { loadGeneration.current += 1; };
+  }, [loadData, searchParams, routeEventId]);
 
   const handleSelectInvitation = (id) => {
-    setSelectedInvId(id);
-    loadData(id);
+    navigate(eventPath(id));
   };
 
   const stats = useMemo(() => {
@@ -323,16 +314,18 @@ export default function DashboardFeature() {
       setPublishing(true);
       // Call the correct API: OFF→ON = publish, ON→OFF = unpublish
       if (wasPublished) {
-        await invitationService.unpublish(stats.id);
+        const updated = await invitationService.unpublish(stats.id);
+        workspace?.updateEvent(updated);
       } else {
-        await invitationService.publish(stats.id);
+        const updated = await invitationService.publish(stats.id);
+        workspace?.updateEvent(updated);
       }
       // Refresh from backend FIRST — this is the source of truth
       await loadData(stats.id);
       // THEN sync localStorage draft so /w/{slug} fallback sees correct status.
       // Without this, getDraftBySlug() returns a stale draft with published:true
       // and the public page renders the invitation even after unpublishing.
-      const newStatus = wasPublished ? "DRAFT" : "PUBLISHED";
+      const newStatus = wasPublished ? "UNPUBLISHED" : "PUBLISHED";
       const newPublished = !wasPublished;
       const localDraft = getDraft(stats.id) || (stats.slug ? getDraftBySlug(stats.slug) : null);
       if (localDraft) {
@@ -375,7 +368,6 @@ export default function DashboardFeature() {
         </div>
       </header>
       {state.error && <ErrorState message={state.error} onRetry={() => loadData(selectedInvId)} />}
-      {accountSummary && <p role="status">Invitations: {accountSummary.totalInvitations} · Published: {accountSummary.publishedInvitations} · Guests across your invitations: {accountSummary.totalGuests}</p>}
 
       {/* =========================================================================
           CASE 1: HOST HAS NO INVITATIONS YET
@@ -537,7 +529,7 @@ export default function DashboardFeature() {
 
                 {(stats.id || stats.slug) && (
                   <Link
-                    to={stats.id ? `/dashboard/invitations/${stats.id}/preview` : `/w/${stats.slug}`}
+                    to={stats.id ? eventPath(stats.id, "preview") : `/w/${stats.slug}`}
                     className="dash-btn-outline"
                     style={{ minHeight: "36px", padding: "0 14px", fontSize: "0.8125rem" }}
                   >
@@ -547,7 +539,7 @@ export default function DashboardFeature() {
                 )}
 
                 {stats.id && (
-                  <Link to={`/dashboard/invitations/${stats.id}/edit`} className="dash-btn-outline" style={{ minHeight: "36px", padding: "0 14px", fontSize: "0.8125rem" }}>
+                  <Link to={eventPath(stats.id, "invitation")} className="dash-btn-outline" style={{ minHeight: "36px", padding: "0 14px", fontSize: "0.8125rem" }}>
                     <IoCreateOutline style={{ color: "var(--brand-primary)" }} />
                     <span>{text("edit")}</span>
                   </Link>
@@ -576,7 +568,7 @@ export default function DashboardFeature() {
 
           {/* 2. 4 Core KPI Stat Cards matching pe-summary-grid of GuestsPage */}
           <section className="pe-summary-grid">
-            <Link to="/dashboard/guests" className="pe-summary-card" style={{ textDecoration: "none", cursor: "pointer", transition: "all 0.2s ease" }}>
+            <Link to={eventPath(stats.id, "guests")} className="pe-summary-card" style={{ textDecoration: "none", cursor: "pointer", transition: "all 0.2s ease" }}>
               <div>
                 <span>{text("statGuests")}</span>
                 <p style={{ margin: "4px 0 0", fontSize: "0.75rem", color: "var(--brand-text-muted)" }}>
@@ -586,7 +578,7 @@ export default function DashboardFeature() {
               <strong>{stats.guestTotal}</strong>
             </Link>
 
-            <Link to={stats.id ? `/dashboard/invitations/${stats.id}/rsvp` : "/dashboard/guests"} className="pe-summary-card" style={{ textDecoration: "none", cursor: "pointer", transition: "all 0.2s ease" }}>
+            <Link to={stats.id ? eventPath(stats.id, "rsvp") : "/app/events"} className="pe-summary-card" style={{ textDecoration: "none", cursor: "pointer", transition: "all 0.2s ease" }}>
               <div>
                 <span>{text("statRsvp")}</span>
                 <p style={{ margin: "4px 0 0", fontSize: "0.75rem", color: "#0f766e" }}>
@@ -596,7 +588,7 @@ export default function DashboardFeature() {
               <strong style={{ color: "#0f766e" }}>{stats.rsvpRate}%</strong>
             </Link>
 
-            <Link to="/dashboard/expenses" className="pe-summary-card" style={{ textDecoration: "none", cursor: "pointer", transition: "all 0.2s ease" }}>
+            <Link to={eventPath(stats.id, "budget")} className="pe-summary-card" style={{ textDecoration: "none", cursor: "pointer", transition: "all 0.2s ease" }}>
               <div>
                 <span>{text("statBudget")}</span>
                 <p style={{ margin: "4px 0 0", fontSize: "0.75rem", color: "var(--brand-text-muted)" }}>
@@ -606,7 +598,7 @@ export default function DashboardFeature() {
               <strong style={{ color: "#e11d48" }}>{currencyAmounts(stats.expenseAmounts)}</strong>
             </Link>
 
-            <Link to="/dashboard/gifts" className="pe-summary-card" style={{ textDecoration: "none", cursor: "pointer", transition: "all 0.2s ease" }}>
+            <Link to={eventPath(stats.id, "gifts")} className="pe-summary-card" style={{ textDecoration: "none", cursor: "pointer", transition: "all 0.2s ease" }}>
               <div>
                 <span>{text("statGifts")}</span>
                 <p style={{ margin: "4px 0 0", fontSize: "0.75rem", color: "var(--brand-text-muted)" }}>
@@ -628,7 +620,7 @@ export default function DashboardFeature() {
                     <IoCheckmarkCircleOutline style={{ color: "#0f766e", fontSize: "1.25rem" }} />
                     <span>{text("rsvpStatsTitle")}</span>
                   </h3>
-                  <Link to={stats.id ? `/dashboard/invitations/${stats.id}/rsvp` : "/dashboard/guests"} className="dash-card-link">
+                  <Link to={stats.id ? eventPath(stats.id, "rsvp") : "/app/events"} className="dash-card-link">
                     <span>{text("viewList")}</span>
                     <IoChevronForwardOutline />
                   </Link>
@@ -682,7 +674,7 @@ export default function DashboardFeature() {
                       </div>
                     </div>
                     {stats.id && (
-                      <Link to={`/dashboard/invitations/${stats.id}/edit`} style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--brand-primary)", textDecoration: "none" }}>
+                      <Link to={eventPath(stats.id, "invitation")} style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--brand-primary)", textDecoration: "none" }}>
                         {text("checkStep1Action")}
                       </Link>
                     )}
@@ -701,7 +693,7 @@ export default function DashboardFeature() {
                         <div style={{ fontSize: "0.75rem", color: "var(--brand-text-muted)" }}>{text("checkStep2Desc")}</div>
                       </div>
                     </div>
-                    <Link to="/dashboard/guests" style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--brand-primary)", textDecoration: "none" }}>
+                    <Link to={eventPath(stats.id, "guests")} style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--brand-primary)", textDecoration: "none" }}>
                       {text("checkStep2Action")}
                     </Link>
                   </div>
@@ -719,7 +711,7 @@ export default function DashboardFeature() {
                         <div style={{ fontSize: "0.75rem", color: "var(--brand-text-muted)" }}>{text("checkStep3Desc")}</div>
                       </div>
                     </div>
-                    <Link to={stats.id ? `/dashboard/invitations/${stats.id}/rsvp` : "/dashboard/guests"} style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0f766e", textDecoration: "none" }}>
+                    <Link to={stats.id ? eventPath(stats.id, "rsvp") : "/app/events"} style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0f766e", textDecoration: "none" }}>
                       {text("checkStep3Action")}
                     </Link>
                   </div>
@@ -737,7 +729,7 @@ export default function DashboardFeature() {
                         <div style={{ fontSize: "0.75rem", color: "var(--brand-text-muted)" }}>{text("checkStep4Desc")}</div>
                       </div>
                     </div>
-                    <Link to="/dashboard/expenses" style={{ fontSize: "0.75rem", fontWeight: 700, color: "#e11d48", textDecoration: "none" }}>
+                    <Link to={eventPath(stats.id, "budget")} style={{ fontSize: "0.75rem", fontWeight: 700, color: "#e11d48", textDecoration: "none" }}>
                       {text("checkStep4Action")}
                     </Link>
                   </div>
@@ -757,56 +749,56 @@ export default function DashboardFeature() {
                 </div>
 
                 <div className="dash-quick-grid">
-                  <Link to={stats.id ? `/dashboard/invitations/${stats.id}/edit` : "/templates/browse"} className="dash-quick-btn">
+                  <Link to={stats.id ? eventPath(stats.id, "invitation") : "/templates/browse"} className="dash-quick-btn">
                     <div className="quick-icon" style={{ background: "rgba(225, 29, 72, 0.12)", color: "#e11d48" }}>
                       <IoSparkles style={{ color: "#e11d48" }} />
                     </div>
                     <span>{text("quickTemplates")}</span>
                   </Link>
 
-                  <Link to="/dashboard/guests" className="dash-quick-btn">
+                  <Link to={eventPath(stats.id, "guests")} className="dash-quick-btn">
                     <div className="quick-icon" style={{ background: "rgba(185, 139, 66, 0.12)", color: "#b98b42" }}>
                       <IoPeopleOutline />
                     </div>
                     <span>{text("quickGuests")}</span>
                   </Link>
 
-                  <Link to={stats.id ? `/dashboard/invitations/${stats.id}/rsvp` : "/dashboard/rsvp"} className="dash-quick-btn">
+                  <Link to={stats.id ? eventPath(stats.id, "rsvp") : "/dashboard/rsvp"} className="dash-quick-btn">
                     <div className="quick-icon" style={{ background: "rgba(15, 118, 110, 0.12)", color: "#0f766e" }}>
                       <IoCheckmarkCircleOutline />
                     </div>
                     <span>{text("quickRsvp")}</span>
                   </Link>
 
-                  <Link to={stats.id ? `/dashboard/invitations/${stats.id}/seating` : "/dashboard/seating"} className="dash-quick-btn">
+                  <Link to={stats.id ? eventPath(stats.id, "seating") : "/dashboard/seating"} className="dash-quick-btn">
                     <div className="quick-icon" style={{ background: "rgba(79, 70, 229, 0.12)", color: "#4f46e5" }}>
                       <IoRestaurantOutline />
                     </div>
                     <span>{text("quickSeating")}</span>
                   </Link>
 
-                  <Link to={stats.id ? `/dashboard/invitations/${stats.id}/delivery` : "/dashboard/delivery"} className="dash-quick-btn">
+                  <Link to={stats.id ? eventPath(stats.id, "delivery") : "/dashboard/delivery"} className="dash-quick-btn">
                     <div className="quick-icon" style={{ background: "rgba(15, 118, 110, 0.12)", color: "#0f766e" }}>
                       <IoShareSocialOutline />
                     </div>
                     <span>{text("quickShare")}</span>
                   </Link>
 
-                  <Link to="/dashboard/expenses" className="dash-quick-btn">
+                  <Link to={eventPath(stats.id, "budget")} className="dash-quick-btn">
                     <div className="quick-icon" style={{ background: "rgba(225, 29, 72, 0.12)", color: "#e11d48" }}>
                       <IoWalletOutline />
                     </div>
                     <span>{text("quickBudget")}</span>
                   </Link>
 
-                  <Link to="/dashboard/gifts" className="dash-quick-btn">
+                  <Link to={eventPath(stats.id, "gifts")} className="dash-quick-btn">
                     <div className="quick-icon" style={{ background: "rgba(124, 58, 237, 0.12)", color: "#7c3aed" }}>
                       <IoGiftOutline />
                     </div>
                     <span>{text("quickGifts")}</span>
                   </Link>
 
-                  <Link to="/dashboard/reports" className="dash-quick-btn">
+                  <Link to={eventPath(stats.id, "reports")} className="dash-quick-btn">
                     <div className="quick-icon" style={{ background: "rgba(14, 116, 144, 0.12)", color: "#0e7490" }}>
                       <IoStatsChartOutline />
                     </div>

@@ -1,3 +1,4 @@
+import { safeAuthRedirect } from "./safeRedirect";
 import { useId, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/features/auth/hooks/useAuth";
@@ -12,13 +13,7 @@ const MIN_PASSWORD_LENGTH = 8;
 const MAX_PASSWORD_LENGTH = 100;
 
 function getSafeRedirect(searchParams) {
-  const redirect = searchParams.get("next") || searchParams.get("redirect");
-
-  if (!redirect || !redirect.startsWith("/") || redirect.startsWith("//")) {
-    return "/dashboard/events";
-  }
-
-  return redirect;
+  return safeAuthRedirect(searchParams.get("next") || searchParams.get("redirect"));
 }
 
 function RequirementIcon({ met }) {
@@ -122,7 +117,7 @@ function Register() {
         {error && <p className="auth-error" role="alert">{error}</p>}
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="auth-form">
+        <form onSubmit={handleSubmit} className="auth-form" aria-busy={loading}>
           {/* Name */}
           <div className="auth-field">
             <label htmlFor={nameId} className="auth-label">{auth("fullName")}</label>
@@ -230,7 +225,7 @@ function Register() {
         {/* Login link */}
         <p className="auth-footer-text" style={{ marginTop: "14px" }}>
           {auth("haveAccount")}{" "}
-          <Link to={redirectTo && redirectTo !== "/dashboard/events" ? `/login?next=${encodeURIComponent(redirectTo)}` : "/login"}>
+          <Link to={redirectTo && redirectTo !== "/app/events" ? `/login?next=${encodeURIComponent(redirectTo)}` : "/login"}>
             {auth("signIn")}
           </Link>
         </p>

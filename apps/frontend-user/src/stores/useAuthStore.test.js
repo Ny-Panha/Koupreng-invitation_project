@@ -68,6 +68,17 @@ describe("FE-001 session restoration", () => {
     expect(store.getState()).toMatchObject({ isAuthenticated: false, user: null, authStatus: "anonymous" });
   });
 
+  it("clears the selected event and session while preserving saved event records", async () => {
+    const store = await load();
+    localStorage.setItem("koupreng.host.activeEventId", "42");
+    localStorage.setItem("koupreng.saved-event-fixture", "preserve");
+    store.getState().login({ user });
+    await store.getState().logout();
+    expect(localStorage.getItem("koupreng.host.activeEventId")).toBeNull();
+    expect(localStorage.getItem("koupreng.saved-event-fixture")).toBe("preserve");
+    expect(localStorage.getItem("koupreng.auth.logout")).toBeTruthy();
+  });
+
   it("preserves valid bearer restoration without a cookie bootstrap request", async () => {
     mocks.cookie = false; const accessToken = token(); mocks.stored = { accessToken, user };
     const store = await load();

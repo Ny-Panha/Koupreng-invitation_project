@@ -30,7 +30,7 @@ function renderRegistration() {
     <MemoryRouter initialEntries={["/register"]}>
       <Routes>
         <Route path="/register" element={<Register />} />
-        <Route path="/dashboard/events" element={<p>Registration complete</p>} />
+        <Route path="/app/events" element={<p>Registration complete</p>} />
       </Routes>
     </MemoryRouter>,
   );

@@ -1,5 +1,7 @@
+/* eslint-disable react-refresh/only-export-components */
 import { PaymentCancelPage, PaymentStatusPage, PaymentSuccessPage, WeddingSite, PublicInvitationPage, WeddingPreviewPage, InvitationEditPage } from "./lazyRoutePages";
-import { Navigate, Route } from "react-router-dom";
+import { Navigate, Route, useParams } from "react-router-dom";
+import InvitationScopedRedirect from "./InvitationScopedRedirect";
 
 
 
@@ -10,18 +12,23 @@ import { Navigate, Route } from "react-router-dom";
 
 import RequireAuth from "./RequireAuth";
 
+function LegacyBuilder() {
+  const { id } = useParams();
+  return /^[1-9]\d*$/.test(String(id || "")) ? <InvitationScopedRedirect targetSubPath="invitation" /> : <InvitationEditPage />;
+}
+
 export function builderRoutes() {
   return (
     <>
       <Route path="/templates/:id/preview" element={<WeddingSite />} />
-      <Route path="/create/wedding" element={<Navigate to="/dashboard/events" replace />} />
-      <Route path="/event/create" element={<Navigate to="/dashboard/events" replace />} />
-      <Route path="/dashboard/events/create" element={<Navigate to="/dashboard/events" replace />} />
+      <Route path="/create/wedding" element={<Navigate to="/app/events/new" replace />} />
+      <Route path="/event/create" element={<Navigate to="/app/events/new" replace />} />
+      <Route path="/dashboard/events/create" element={<Navigate to="/app/events/new" replace />} />
       <Route
         path="/create/wedding/:id"
         element={
           <RequireAuth>
-            <InvitationEditPage />
+            <LegacyBuilder />
           </RequireAuth>
         }
       />
@@ -29,7 +36,7 @@ export function builderRoutes() {
         path="/event/:id/manage"
         element={
           <RequireAuth>
-            <InvitationEditPage />
+            <LegacyBuilder />
           </RequireAuth>
         }
       />
