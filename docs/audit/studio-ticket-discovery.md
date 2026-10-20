@@ -1,0 +1,33 @@
+# Invitation Studio and ticket discovery
+
+Baseline: local `feature/event-first-workspaces` at `715b85ef`, clean working tree; new branch `feature/invitation-studio-tickets`. Source stack: React 19, Vite 8, Router 7, Zustand 5; Java 25 / Spring Boot 4.0.8, JPA, MySQL/Flyway. Latest migration is V37. The existing 30 MySQL skips and provider checks remain release gates.
+
+## Verified existing behavior
+
+1. **Editor persistence:** `InvitationEditFeature` loads the numeric canonical invitation and media, or an explicitly scoped legacy local draft. `InvitationForm.handleSave` serializes `designJson`, `contentJson`, section flags and color settings, calls create/update, uploads pending files, and writes a local draft. It currently navigates away even after an explicit save. A failed API sync is retained locally rather than proving server persistence.
+2. **Implemented customization:** The editor already contains cover/opening/background, groom/bride, family, invitation/closing/apology text, calendar/time/map, gallery, schedule, story, dress code, party, FAQ, KHQR, music and invitation language. These controls must be retained rather than duplicated.
+3. **Preview wiring:** `LivePhoneSimulator` feeds `draftToTemplate` in tests and uses the real `/templates/:id/preview` iframe with trusted preview sessions and `LIVE_PREVIEW_SYNC` in the browser. It sends names, dates, media, section flags, messages and typography. The studio will extend this renderer, not draw a replacement invitation.
+4. **Local-only/transient fields:** File objects, inline upload previews, editor section selection, resize/open states and unsynchronized legacy drafts are browser state. Some typography/design form fields are read by preview but are omitted from the old save whitelist. Those must be serialized explicitly.
+5. **Backend fields:** Canonical invitation records persist event details, language, design/content/custom colors/fonts/enabled sections/layout JSON, publication visibility and password/access credentials. Client JSON limits are already validated. Publishing uses the backend invitation service and entitlements.
+6. **Template sections:** `config/templateFormFlowConfig.js` defines template-specific section order and supported covers/backgrounds/opening gates; section renderers already exist. The new navigator will derive from this contract.
+7. **Media:** `MediaService` associates `MediaFile` rows with the exact invitation, validates signatures/types/extensions, enforces size/quota rules and delegates storage to existing providers. Frontend upload previews use pending files/base64. Only the actual cover should use uploadCover; background/gallery references must not replace its association. Inline previews must not become persisted invitation JSON.
+8. **Guest links:** `GuestService` creates an unpredictable invite token once per guest and constructs `/i/:slug?token=...`; owner queries scope guests to invitation ID. Public guest access validates publication/moderation plus the token under that event.
+9. **QR payload:** `QrCodeService.guestQr` returns the full guest invitation URL as both `invitationUrl` and `qrPayload`, plus an existing ZXing PNG. General invitation QR uses no guest token and may include an invitation access token. Neither is a payment KHQR.
+10. **Scanner:** `CheckInService.extractToken` accepts the raw token or its URL query. Scan first authorizes the authenticated owner (or existing explicit ADMIN exception), checks QR_CHECK_IN entitlement, then finds a locked guest by invitation ID and token. Another event's token is rejected. Active duplicates return the existing attendance record with duplicate metadata; undo/audit behavior is present.
+11. **RSVP:** Token RSVP resolves the existing guest under the event and upserts its response. Viewing a ticket must not submit RSVP or create another guest. Public tokenless RSVP deliberately uses a separate new-guest path.
+12. **Paid QR:** Owner QR generation requires QR_INVITATIONS. Check-in mutation requires QR_CHECK_IN. Ticket endpoints must apply these existing owner entitlements; a rendered QR never grants access or changes payment state.
+13. **Reuse:** Canonical invitation, guest token, event access policy, QR payload, media, RSVP, check-in, shared modal, existing renderers and local-draft support can all be reused. No second event/guest database or scanner identity is needed. Global STAFF still has no event grant; adding collaborator/scanner roles is outside this change.
+
+## Milestone design
+
+1. This discovery/design commit precedes implementation.
+2. Add a three-part studio shell around existing section renderers, approved visual controls and the real preview. Mobile uses Edit/Preview and a section selector.
+3. Add serialized debounced backend saves, explicit retry/status, navigation warning and bounded undo/redo. Keep the editor open; upload media before acknowledging the full revision. Preserve unchanged template sections and publication rules.
+4. Store one versioned ticket-design JSON row per canonical invitation, using forward-only V38 after verifying V37 is latest. DTOs validate layouts/fonts/colors/display flags and event-owned media IDs. Add owner design/data and token-validated public data endpoints; emit no-store/no-referrer responses.
+5. Four deterministic ticket layouts consume the same safe event/guest projection. The designer selects authorized real guests or a clearly labeled sample.
+6. Export the ticket itself at a fixed 2x/3x resolution with bundled Khmer fonts and existing QR, not a screenshot of the application. Evaluate browser DOM shaping versus server fonts before selecting output; expose PDF only if verified. Download/share/copy run only from user actions.
+7. Add ticket actions to existing guest rows and a token-aware public ticket page/card. Default: a valid guest can view the ticket before RSVP; opening it changes no RSVP/attendance state.
+8. Exercise the exported QR payload through the existing authenticated scanner, including duplicate, wrong-event and unauthorized STAFF cases.
+9. Run responsive/keyboard/export/decode and regression checks; retain screenshots, exact commands/results, provider/MySQL limits and rollback guidance. Commit each milestone after its checks.
+
+The general card opens an allowed public invitation and is visibly labeled as not a guest check-in credential. Personalized data includes only the named guest's approved display fields, never phone/email or guest indexes. Bearer URLs are never logged by ticket code, indexed or written to analytics. Public ticket policy follows published invitation visibility and the existing opaque token; exports are not evidence of offline verified check-in.
