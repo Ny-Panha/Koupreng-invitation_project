@@ -1,0 +1,266 @@
+[
+  {
+    "name": "packages",
+    "width": 390,
+    "computed": {
+      "html": {
+        "width": 390,
+        "top": 0,
+        "fontSize": "16px",
+        "lineHeight": "24px",
+        "padding": "0px",
+        "maxWidth": "none",
+        "zoom": "1",
+        "transform": "none"
+      },
+      ".dash-main-scroll": {
+        "width": 390,
+        "top": 0,
+        "fontSize": "16px",
+        "lineHeight": "24px",
+        "padding": "96px 0px 0px",
+        "maxWidth": "none",
+        "zoom": "1",
+        "transform": "none"
+      },
+      ".dash-main": {
+        "width": 390,
+        "top": 96,
+        "fontSize": "16px",
+        "lineHeight": "24px",
+        "padding": "32px 24px 64px",
+        "maxWidth": "1140px",
+        "zoom": "1",
+        "transform": "none"
+      },
+      ".pkg-page-container": {
+        "width": 390,
+        "top": 96,
+        "fontSize": "16px",
+        "lineHeight": "24px",
+        "padding": "32px 24px 64px",
+        "maxWidth": "1140px",
+        "zoom": "1",
+        "transform": "none"
+      },
+      ".pkg-card": {
+        "width": 342,
+        "top": 569.921875,
+        "fontSize": "16px",
+        "lineHeight": "24px",
+        "padding": "32px 28px",
+        "maxWidth": "none",
+        "zoom": "1",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      ".pkg-card-features": {
+        "width": 284,
+        "top": 853,
+        "fontSize": "16px",
+        "lineHeight": "24px",
+        "padding": "0px",
+        "maxWidth": "none",
+        "zoom": "1",
+        "transform": "none"
+      },
+      ".pkg-title": {
+        "width": 342,
+        "top": 168,
+        "fontSize": "28px",
+        "lineHeight": "35px",
+        "padding": "0px",
+        "maxWidth": "none",
+        "zoom": "1",
+        "transform": "none"
+      },
+      "th": {
+        "width": 30.586231231689453,
+        "top": 2540.506103515625,
+        "fontSize": "12px",
+        "lineHeight": "16px",
+        "padding": "0px",
+        "maxWidth": "none",
+        "zoom": "1",
+        "transform": "none"
+      },
+      "td": {
+        "width": 30.586231231689453,
+        "top": 2556.704833984375,
+        "fontSize": "12px",
+        "lineHeight": "16px",
+        "padding": "0px",
+        "maxWidth": "none",
+        "zoom": "1",
+        "transform": "none"
+      }
+    }
+  },
+  {
+    "name": "event-create",
+    "width": 390,
+    "computed": {
+      "html": {
+        "width": 390,
+        "top": 0,
+        "fontSize": "16px",
+        "lineHeight": "24px",
+        "padding": "0px",
+        "maxWidth": "none",
+        "zoom": "1",
+        "transform": "none"
+      },
+      ".dash-main-scroll": {
+        "width": 390,
+        "top": 0,
+        "fontSize": "16px",
+        "lineHeight": "24px",
+        "padding": "96px 0px 0px",
+        "maxWidth": "none",
+        "zoom": "1",
+        "transform": "none"
+      },
+      ".event-wizard": {
+        "width": 390,
+        "top": 96,
+        "fontSize": "16px",
+        "lineHeight": "24px",
+        "padding": "16px",
+        "maxWidth": "900px",
+        "zoom": "1",
+        "transform": "none"
+      }
+    }
+  },
+  {
+    "name": "packages",
+    "width": 1440,
+    "computed": {
+      "html": {
+        "width": 1440,
+        "top": 0,
+        "fontSize": "16px",
+        "lineHeight": "24px",
+        "padding": "0px",
+        "maxWidth": "none",
+        "zoom": "1",
+        "transform": "none"
+      },
+      ".dash-main-scroll": {
+        "width": 1440,
+        "top": 0,
+        "fontSize": "16px",
+        "lineHeight": "24px",
+        "padding": "115.2px 0px 0px",
+        "maxWidth": "none",
+        "zoom": "1",
+        "transform": "none"
+      },
+      ".dash-main": {
+        "width": 1140,
+        "top": 115.1875,
+        "fontSize": "16px",
+        "lineHeight": "24px",
+        "padding": "32px 24px 64px",
+        "maxWidth": "1140px",
+        "zoom": "1",
+        "transform": "none"
+      },
+      ".pkg-page-container": {
+        "width": 1140,
+        "top": 115.1875,
+        "fontSize": "16px",
+        "lineHeight": "24px",
+        "padding": "32px 24px 64px",
+        "maxWidth": "1140px",
+        "zoom": "1",
+        "transform": "none"
+      },
+      ".pkg-card": {
+        "width": 345.328125,
+        "top": 546.6875,
+        "fontSize": "16px",
+        "lineHeight": "24px",
+        "padding": "32px 28px",
+        "maxWidth": "none",
+        "zoom": "1",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      ".pkg-card-features": {
+        "width": 287.328125,
+        "top": 829.765625,
+        "fontSize": "16px",
+        "lineHeight": "24px",
+        "padding": "0px",
+        "maxWidth": "none",
+        "zoom": "1",
+        "transform": "none"
+      },
+      ".pkg-title": {
+        "width": 680,
+        "top": 187.1875,
+        "fontSize": "37.6px",
+        "lineHeight": "47px",
+        "padding": "0px",
+        "maxWidth": "none",
+        "zoom": "1",
+        "transform": "none"
+      },
+      "th": {
+        "width": 84.890625,
+        "top": 1262.296875,
+        "fontSize": "12px",
+        "lineHeight": "16px",
+        "padding": "0px",
+        "maxWidth": "none",
+        "zoom": "1",
+        "transform": "none"
+      },
+      "td": {
+        "width": 84.890625,
+        "top": 1278.796875,
+        "fontSize": "14px",
+        "lineHeight": "20px",
+        "padding": "0px",
+        "maxWidth": "none",
+        "zoom": "1",
+        "transform": "none"
+      }
+    }
+  },
+  {
+    "name": "event-create",
+    "width": 1440,
+    "computed": {
+      "html": {
+        "width": 1440,
+        "top": 0,
+        "fontSize": "16px",
+        "lineHeight": "24px",
+        "padding": "0px",
+        "maxWidth": "none",
+        "zoom": "1",
+        "transform": "none"
+      },
+      ".dash-main-scroll": {
+        "width": 1440,
+        "top": 0,
+        "fontSize": "16px",
+        "lineHeight": "24px",
+        "padding": "115.2px 0px 0px",
+        "maxWidth": "none",
+        "zoom": "1",
+        "transform": "none"
+      },
+      ".event-wizard": {
+        "width": 900,
+        "top": 115.1875,
+        "fontSize": "16px",
+        "lineHeight": "24px",
+        "padding": "24px",
+        "maxWidth": "900px",
+        "zoom": "1",
+        "transform": "none"
+      }
+    }
+  }
+]

@@ -1,5 +1,7 @@
 # Event-first implementation report
 
+UX follow-up: the six-step onboarding described in this historical implementation report has since been replaced by a single-page event form. See the [UX/UI route audit](ux-ui-route-audit.md) for the current package page, creation flow, route findings and verification evidence.
+
 ## A. Executive summary
 
 Implemented the event-first account journey on the local branch `feature/event-first-workspaces`. Managed events reuse `UserInvitation`; no replacement domain model or database rewrite was introduced. Ordinary authentication opens My Events. A selected numeric backend event owns its entire workspace, its module navigation and its data requests. STAFF no longer inherits ADMIN authority.

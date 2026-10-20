@@ -1,0 +1,2636 @@
+[
+  {
+    "path": "/login",
+    "resolved": "/login",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/login-km-390.png",
+    "metrics": {
+      "heading": [
+        "សូមស្វាគមន៍មកវិញ"
+      ],
+      "body": "KOUPRENG\nត្រឡប់ទៅទំព័រដើម\nភាសាខ្មែរ\n/\nEnglish\nសូមស្វាគមន៍មកវិញ\n\nចូលគណនីដើម្បីបន្តរៀបចំធៀបការរបស់អ្នក\n\nលេខទូរស័ព្ទ ឬ អ៊ីមែល\nពាក្យសម្ងាត់\nចូលគណនី\n\nឬបន្តជាមួយ\n\nបន្តជាមួយ Google\nបន្តដោយប្រើ​ Google\nបន្តជាមួយ Telegram\nភ្លេចលេខសម្ងាត់?\n\nមិនទាន់មានគណនីមែនទេ? បង្កើតគណនី\n\nសួស្តី 👋 តើមានអ្វីឱ្យយើងខ្ញុំជួយទេ ថ្ងៃនេះ?",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 2
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/register",
+    "resolved": "/register",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/register-km-390.png",
+    "metrics": {
+      "heading": [
+        "បង្កើតគណនី"
+      ],
+      "body": "ត្រឡប់ទៅទំព័រដើម\nភាសាខ្មែរ\n/\nEnglish\nបង្កើតគណនី\n\nចាប់ផ្ដើមរៀបចំធៀបការរបស់អ្នកនៅទីនេះ\n\nឈ្មោះពេញ\nលេខទូរស័ព្ទ\nពាក្យសម្ងាត់\nបញ្ជាក់ពាក្យសម្ងាត់\nបង្កើតគណនី\n\nឬបន្តជាមួយ\n\nបន្តជាមួយ Google\nបន្តដោយប្រើ​ Google\nបន្តជាមួយ Telegram\n\nមានគណនីរួចហើយ? ចូលគណនី\n\nសួស្តី 👋 តើមានអ្វីឱ្យយើងខ្ញុំជួយទេ ថ្ងៃនេះ?",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 2
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/forgot-password",
+    "resolved": "/forgot-password",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/forgot-password-km-390.png",
+    "metrics": {
+      "heading": [
+        "ភ្លេចលេខសម្ងាត់"
+      ],
+      "body": "ត្រឡប់ទៅទំព័រដើម\nភាសាខ្មែរ\n/\nEnglish\nភ្លេចលេខសម្ងាត់\n\nបញ្ចូលអ៊ីមែលគណនីរបស់អ្នក ដើម្បីទទួលលេខកូដ Reset Token សម្រាប់កំណត់លេខសម្ងាត់ថ្មី។\n\nអាសយដ្ឋានអ៊ីមែល\n\nយើងនឹងផ្ញើតំណ ឬលេខកូដសម្ងាត់ទៅកាន់អ៊ីមែលនេះ។\n\nផ្ញើសំណើកំណត់លេខសម្ងាត់\nត្រឡប់ទៅការចូលគណនី\nសួស្តី 👋 តើមានអ្វីឱ្យយើងខ្ញុំជួយទេ ថ្ងៃនេះ?",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 1
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/reset-password",
+    "resolved": "/reset-password",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/reset-password-km-390.png",
+    "metrics": {
+      "heading": [
+        "កំណត់លេខសម្ងាត់ថ្មី"
+      ],
+      "body": "ត្រឡប់ទៅទំព័រដើម\nភាសាខ្មែរ\n/\nEnglish\nកំណត់លេខសម្ងាត់ថ្មី\n\nសូមបញ្ចូល Reset Token ដែលបានទទួលក្នុងអ៊ីមែលរបស់អ្នក និងបង្កើតលេខសម្ងាត់ថ្មី។\n\nលេខកូដសម្ងាត់ (Reset Token)\nលេខសម្ងាត់ថ្មី\nបញ្ជាក់លេខសម្ងាត់ថ្មី\nកំណត់លេខសម្ងាត់ឡើងវិញ\n← ត្រឡប់ទៅចូលគណនី\nសួស្តី 👋 តើមានអ្វីឱ្យយើងខ្ញុំជួយទេ ថ្ងៃនេះ?",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/profile",
+    "resolved": "/app/profile",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-profile-km-390.png",
+    "metrics": {
+      "heading": [
+        "editTitle",
+        "Linked sign-in identities"
+      ],
+      "body": "A\nកែប្រែប្រវត្តិរូប\nកម្មវិធីរបស់ខ្ញុំ\nបង្កើតកម្មវិធី\nកញ្ចប់សេវាកម្ម\nស្វែងរកគំរូ\nគំរូដែលបានទិញ\nប្រវត្តិការទូទាត់\nចាកចេញ\neditTitle\n\neditSubtitle\n\nA\nchangePhoto\nnewUser\naudit@example.test\nfullNameLabel\nemailLabel\nphoneLabel\nsaveEdit\nLinked sign-in identities\n\nChoose the Google or Telegram identity to link to this signed-in account. No accounts will be merged.\n\nបន្តជាមួយ Google\nបន្តដោយប្រើ​ Google\nបន្តជាមួយ Telegram\nchangePassword\n\nchangePasswordHint\n\ncurrentPassword\nnewPasswordLabel\nconfirmNewPassword\nchangePasswordBtn",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/change-password",
+    "resolved": "/app/change-password",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-change-password-km-390.png",
+    "metrics": {
+      "heading": [
+        "Change password"
+      ],
+      "body": "A\nកែប្រែប្រវត្តិរូប\nកម្មវិធីរបស់ខ្ញុំ\nបង្កើតកម្មវិធី\nកញ្ចប់សេវាកម្ម\nស្វែងរកគំរូ\nគំរូដែលបានទិញ\nប្រវត្តិការទូទាត់\nចាកចេញ\nChange password\n\nប្តូរលេខសម្ងាត់គណនីរបស់អ្នក\n\nCurrent passwordNew passwordConfirm new passwordChange password",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events",
+    "resolved": "/app/events",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-km-390.png",
+    "metrics": {
+      "heading": [
+        "កម្មវិធីអាពាហ៍ពិពាហ៍របស់អ្នក"
+      ],
+      "body": "រូប\nកម្មវិធីរបស់ខ្ញុំ\nបង្កើតកម្មវិធី\nកញ្ចប់សេវាកម្ម\nស្វែងរកគំរូ\nគំរូដែលបានទិញ\nប្រវត្តិការទូទាត់\nចាកចេញ\nគូព្រេង INVITATIONS\nកម្មវិធីអាពាហ៍ពិពាហ៍របស់អ្នក\n\nគ្រប់គ្រង និងកែសម្រួលសន្លឹកការអញ្ជើញរបស់អ្នកនៅទីនេះ\n\n+ បង្កើតកម្មវិធី\nស្វែងរកកម្មវិធី\nស្ថានភាព\nគ្រប់ស្ថានភាព\nព្រាង\nបានផ្សាយ\nផ្អាកផ្សាយ\nតម្រៀប\nថ្មីបំផុត\nកាលបរិច្ឆេទ\nឈ្មោះ\nព្រាង\nDara & Sophea\nDara & Sophea\n2026-12-20 • 17:30:00\n\nអាពាហ៍ពិពាហ៍ · Phnom Penh\n\nផ្ទាំងគ្រប់គ្រង\nបន្តកែសម្រួល / Continue Editing\nមើលជាមុន / Preview\nព្រាង\nSokha’s birthday\n2026-12-22\n\nខួបកំណើត · Garden House\n\nផ្ទាំងគ្រប់គ្រង\nបន្តកែសម្រួល / Continue Editing\nមើលជាមុន / Preview",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/new",
+    "resolved": "/app/events/new",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-new-km-390.png",
+    "metrics": {
+      "heading": [
+        "បង្កើតកម្មវិធីរបស់អ្នក",
+        "ប្រភេទកម្មវិធី",
+        "ព័ត៌មានកម្មវិធី",
+        "រចនាប័ទ្ម និងភាសា",
+        "គំរូដែលសាកសមសម្រាប់កម្មវិធីរបស់អ្នក"
+      ],
+      "body": "មោះកូនក្រមុំ *\nកាលបរិច្ឆេទ *\nម៉ោង *\nទីកន្លែង *\nអាសយដ្ឋាន (អាចបំពេញពេលក្រោយ)\nតំណ Google Maps (មិនបាច់បំពេញ)\nរចនាប័ទ្ម និងភាសា\nរចនាប័ទ្ម\nគ្រប់រចនាប័ទ្ម\nសាមញ្ញ\nភាសាសំបុត្រអញ្ជើញ\nខ្មែរ\nEnglish\nខ្មែរ / English\nតម្លៃគំរូ\nគ្រប់តម្លៃ\nឥតគិតថ្លៃ\nគំរូបង់ប្រាក់\nគំរូដែលសាកសមសម្រាប់កម្មវិធីរបស់អ្នក\n\nគំរូទាំងនេះគាំទ្រប្រភេទកម្មវិធី និងភាសាដែលអ្នកជ្រើសរើស។\n\nEvent Essential\n\nសាមញ្ញ\n\nឥតគិតថ្លៃ\n\nមើលជាមុន\nជ្រើសរើស\nព័ត៌មានបន្ថែម (មិនបាច់បំពេញ)\n\nកម្មវិធីនឹងត្រូវរក្សាទុកជាឯកជន។ បន្ថែមភ្ញៀវ និងផ្សព្វផ្សាយពីកន្លែងគ្រប់គ្រងកម្មវិធី។\n\nរក្សាទុកព្រាង\nបង្កើតកម្មវិធី\n\nព័ត៌មានត្រូវបានរក្សាទុកក្នុងផ្ទាំងនេះ ខណៈអ្នកកំពុងបំពេញ។",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/packages",
+    "resolved": "/app/packages",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-packages-km-390.png",
+    "metrics": {
+      "heading": [
+        "ជ្រើសរើសកញ្ចប់សេវាកម្ម",
+        "Basic",
+        "Pro",
+        "Premium",
+        "ប្រវត្តិជាវកញ្ចប់សេវា"
+      ],
+      "body": "រៀបចំកន្លែងអង្គុយ\nជ្រើសរើសកញ្ចប់\nPremium\nPremium\n\nHigher event and guest limits for frequent hosts.\n\n$499.00\n\n365 ថ្ងៃ · រយៈពេលផ្ទាល់ខ្លួន\n\n999 កម្មវិធី\n5,000 ភ្ញៀវក្នុងមួយកម្មវិធី\nសិទ្ធិប្រើគំរូ Premium\nស្កេន QR ចូលរួមកម្មវិធី\nរៀបចំកន្លែងអង្គុយ\nជ្រើសរើសកញ្ចប់\n\nការប្រើប្រាស់ជាក្រុមមិនទាន់ដំណើរការទេ។ បច្ចុប្បន្ន ម្ចាស់កម្មវិធីជាអ្នកគ្រប់គ្រងកម្មវិធី។\n\nប្រវត្តិជាវកញ្ចប់សេវា\n1 ការទូទាត់\nBasic\nរង់ចាំការទូទាត់\nតម្លៃ\n$0.01\nលេខកូដ\nSUB-AUDIT-041\nកាលបរិច្ឆេទ\nOct 20, 2026\nមើលការទូទាត់\nសំណួរដែលសួរញឹកញាប់\nតើកញ្ចប់មានសុពលភាពប៉ុន្មានថ្ងៃ?\nតើការទូទាត់ត្រូវបានបញ្ជាក់ដូចម្ដេច?\nតើអាចបន្តការទូទាត់ដែលរង់ចាំបានទេ?",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/notifications",
+    "resolved": "/app/notifications",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-notifications-km-390.png",
+    "metrics": {
+      "heading": [
+        "ការជូនដំណឹង"
+      ],
+      "body": "A\nកែប្រែប្រវត្តិរូប\nកម្មវិធីរបស់ខ្ញុំ\nបង្កើតកម្មវិធី\nកញ្ចប់សេវាកម្ម\nស្វែងរកគំរូ\nគំរូដែលបានទិញ\nប្រវត្តិការទូទាត់\nចាកចេញ\nNotifications\nការជូនដំណឹង\n\nមើលស្ថានភាពការផ្ញើ RSVP ការរំលឹក និងសារប្រព័ន្ធរបស់អ្នក។\n\nMark all read\nUNREAD\n0\nSENT\n0\nDELIVERED\n0\nFAILED\n0\nNo notifications\n\nYou are fully caught up with guest RSVPs, deliveries, and wedding activities.",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/organizations",
+    "resolved": "/app/organizations",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-organizations-km-390.png",
+    "metrics": {
+      "heading": [
+        "ក្រុមការងារ & Workspaces",
+        "មិនទាន់មានក្រុមការងារនៅឡើយទេ"
+      ],
+      "body": "A\nកែប្រែប្រវត្តិរូប\nកម្មវិធីរបស់ខ្ញុំ\nបង្កើតកម្មវិធី\nកញ្ចប់សេវាកម្ម\nស្វែងរកគំរូ\nគំរូដែលបានទិញ\nប្រវត្តិការទូទាត់\nចាកចេញ\nផ្ទាំងគ្រប់គ្រង\nក្រុមការងារ & Workspaces\nTEAM COLLABORATION\nក្រុមការងារ\n& Workspaces\n\nគ្រប់គ្រងក្រុមការងារ ដៃគូសហការ អ្នករៀបចំការ (Planners) និងបុគ្គលិកកត់ត្រាលុយចងដៃ ឬ Check-in ភ្ញៀវរួមគ្នា។\n\nបង្កើត Workspace ថ្មី\nមិនទាន់មានក្រុមការងារនៅឡើយទេ\n\nបង្កើត Workspace ដំបូងរបស់អ្នក ដើម្បីអញ្ជើញសហការី ដៃគូ ឬបុគ្គលិក និងរៀបចំការងារមង្គលការរួមគ្នាយ៉ាងរលូន។\n\nបង្កើត Workspace ដំបូង (Create Workspace)",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/organizations/11",
+    "resolved": "/app/organizations/11",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-organizations-11-km-390.png",
+    "metrics": {
+      "heading": [
+        "Audit organization ACTIVE",
+        "បញ្ជីសមាជិកក្រុម (Team Members)"
+      ],
+      "body": "ង្កើតកម្មវិធី\nកញ្ចប់សេវាកម្ម\nស្វែងរកគំរូ\nគំរូដែលបានទិញ\nប្រវត្តិការទូទាត់\nចាកចេញ\nផ្ទាំងគ្រប់គ្រង\nក្រុមការងារ\nAudit organization\nWORKSPACE DETAILS\nAudit organization\nACTIVE\n\nគ្រប់គ្រងសមាជិកក្រុម សិទ្ធិចូលប្រើប្រាស់ និងការងារសហការលើកម្មវិធីការក្នុង Workspace @\n\nសមាជិកសរុប (TOTAL MEMBERS)\n0 នាក់\nសិទ្ធិគ្រប់គ្រង (YOUR ACCESS)\nMember\nបង្កើតនៅថ្ងៃ (CREATED AT)\n—\nបញ្ជីសមាជិកក្រុម (Team Members)\n\nអ្នករៀបចំការ (Planners), បុគ្គលិកកត់ត្រាលុយចងដៃ, និង Staff Check-in ក្នុងក្រុម\n\n0 Members\nមិនទាន់មានសមាជិកក្នុងក្រុមនៅឡើយទេ\n\nអញ្ជើញសហការី ឬបុគ្គលិកដំបូងរបស់អ្នក ដើម្បីចាប់ផ្តើមធ្វើការរួមគ្នា។\n\nអញ្ជើញសមាជិកថ្មី",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101",
+    "resolved": "/app/events/101",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-km-390.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "ផ្ទាំងគ្រប់គ្រងមង្គលការ",
+        "Dara & Sophea"
+      ],
+      "body": "ណងដៃឌីជីថល\n\nកត់ត្រា 1 ចំណងដៃ\n\nUSD 25\nស្ថិតិការឆ្លើយតប RSVP & វត្តមាន\nមើលបញ្ជី\n0\n✓ ចូលរួម (Yes)\n0\n✗ អវត្តមាន (No)\n0\n⏳ រង់ចាំ (Pending)\nតារាងត្រួតពិនិត្យការរៀបចំ (Checklist)\n1/4 រួចរាល់\nរៀបចំព័ត៌មានធៀបការ\nឈ្មោះកូនកំលោះ-ក្រមុំ ទីតាំង និងកាលបរិច្ឆេទ\nកែសម្រួល\nបញ្ចូលបញ្ជីឈ្មោះភ្ញៀវ\nរៀបចំឈ្មោះ ចំនួនមនុស្ស និងលេខតុ\nគ្រប់គ្រងភ្ញៀវ\nផ្ញើធៀប & តាមដាន RSVP\nការឆ្លើយតបបញ្ជាក់វត្តមានពីភ្ញៀវ\nពិនិត្យ RSVP\nគ្រប់គ្រងគម្រោងថវិកា\nកត់ត្រាចំណាយទីតាំង ម្ហូប និងសម្លៀកបំពាក់\nគម្រោងថវិកា\nផ្ទាំងគ្រប់គ្រងរហ័ស\nគំរូធៀប\nបញ្ជីភ្ញៀវ\nRSVP\nរៀបចំតុ\nចែករំលែក\nថវិកា\nចំណងដៃ\nរបាយការណ៍\nការជូនដំណឹង\nមើលទាំងអស់\n\nមិនទាន់មានការជូនដំណឹងថ្មីទេ",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 5
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/invitation",
+    "resolved": "/app/events/101/invitation",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-invitation-km-390.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "ព័ត៌មានកម្មវិធី"
+      ],
+      "body": "ដូរកម្មវិធី\nDara & Sophea\nSokha’s birthday\nទិដ្ឋភាពទូទៅ\nសំបុត្រអញ្ជើញ\nបញ្ជីភ្ញៀវ\nការឆ្លើយតប\nចំណងដៃ\nគម្រោងថវិកា\nរៀបចំកន្លែងអង្គុយ\nវត្តមាន\nរបាយការណ៍\nការផ្ញើ\nរូបភាព\nកូដ QR\nសារជូនពរ\nការកំណត់\nព័ត៌មានកម្មវិធី\nឈ្មោះកម្មវិធី\n*\nឈ្មោះកូនកំលោះ\n*\nឈ្មោះកូនក្រមុំ\n*\nកាលបរិច្ឆេទ\n*\nម៉ោង\n*\nទីកន្លែង\n*\nអាសយដ្ឋាន (អាចបំពេញពេលក្រោយ)\nតំណ Google Maps (មិនបាច់បំពេញ)\nសារអញ្ជើញ ឬការពិពណ៌នា (មិនបាច់បំពេញ)\nភាសាសំបុត្រអញ្ជើញ\nខ្មែរ\nEnglish\nខ្មែរ / English\nទំនាក់ទំនង (មិនបាច់បំពេញ)\nឈ្មោះទំនាក់ទំនង\nលេខទូរស័ព្ទ\nអ៊ីមែល\nកាលវិភាគ (មិនបាច់បំពេញ)\nបន្ថែមសកម្មភាព\nការមើលសំបុត្រអញ្ជើញ\nឯកជន\nសាធារណៈពេលផ្សាយ\nការពារដោយពាក្យសម្ងាត់\nរក្សាទុក",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/preview",
+    "resolved": "/app/events/101/preview",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-preview-km-390.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Phnom Penh"
+      ],
+      "body": "← កម្មវិធីរបស់ខ្ញុំ\nDara & Sophea\n\n2026-12-20 · Phnom Penh · DRAFT\n\nប្ដូរកម្មវិធី\nDara & Sophea\nSokha’s birthday\nទិដ្ឋភាពទូទៅ\nសំបុត្រអញ្ជើញ\nបញ្ជីភ្ញៀវ\nការឆ្លើយតប\nចំណងដៃ\nគម្រោងថវិកា\nរៀបចំកន្លែងអង្គុយ\nវត្តមាន\nរបាយការណ៍\nការផ្ញើ\nរូបភាព\nកូដ QR\nសារជូនពរ\nការកំណត់\nDara & Sophea\nDraft\nគម្រប\n\nWedding\n\nDara & Sophea\nDara & Sophea\n\nPlease join us for our event\n\n2026-12-20 17:30\n\nPhnom Penh\n\nDara & Sophea",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/guests",
+    "resolved": "/app/events/101/guests",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-guests-km-390.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "គ្រប់គ្រងភ្ញៀវកិត្តិយស"
+      ],
+      "body": "AFT\n\nប្ដូរកម្មវិធី\nDara & Sophea\nSokha’s birthday\nទិដ្ឋភាពទូទៅ\nសំបុត្រអញ្ជើញ\nបញ្ជីភ្ញៀវ\nការឆ្លើយតប\nចំណងដៃ\nគម្រោងថវិកា\nរៀបចំកន្លែងអង្គុយ\nវត្តមាន\nរបាយការណ៍\nការផ្ញើ\nរូបភាព\nកូដ QR\nសារជូនពរ\nការកំណត់\nDARA & SOPHEA\nគ្រប់គ្រងភ្ញៀវកិត្តិយស\n\nគ្រប់គ្រងបញ្ជីភ្ញៀវ QR Code ធៀបការ និងស្ថានភាព RSVP របស់អ្នក។\n\n+ បន្ថែមភ្ញៀវ\n+\n+ បន្ថែមភ្ញៀវ\nភ្ញៀវសរុប\n1\nចំនួនកៅអី/មនុស្ស\n2\nបានផ្ញើ\n1\nបានឆ្លើយតប\n1\nគ្រប់ក្រុមទាំងអស់\nGroom Side\nBride Side\nគ្រប់ប្រភេទទាំងអស់\nHigh School Friend\nCollege Friend\nFriend\nFamily\nCoworker\nOther\n+ បន្ថែមភ្ញៀវ\nស្កេន Check-in\nទាញយក CSV\nនាំចូល\nSokha\n—\n012345678\n2\nGroom Side\nRSVP: ATTENDING\nSent\n—",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/rsvp",
+    "resolved": "/app/events/101/rsvp",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-rsvp-km-390.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "គ្រប់គ្រងការឆ្លើយតប (RSVPs)"
+      ],
+      "body": "ព\nកូដ QR\nសារជូនពរ\nការកំណត់\nATTENDANCE & RSVP MANAGEMENT\nគ្រប់គ្រងការឆ្លើយតប (RSVPs)\n\nDara & Sophea\n\nត្រឡប់ទៅវិញ / Back\nចូលរួម / Attending\n1\nភ្ញៀវបានបញ្ជាក់ / Confirmed guests\nអវត្តមាន / Declined\n0\nមិនបានចូលរួម / Not attending\nរង់ចាំ / Pending\n0\nរង់ចាំការឆ្លើយតប / Awaiting reply\nសារជូនពរ / Wishes Wall\nចុចមើល\n0\nពាក្យជូនពរពីភ្ញៀវ / Guest wishes\nគ្រប់ស្ថានភាព / All Status\nចូលរួម (Attending)\nអវត្តមាន (Declined)\nរង់ចាំ (Pending)\nឈ្មោះភ្ញៀវ / Guest\tស្ថានភាព / Status\tចំនួនមនុស្ស / Party\tកាលបរិច្ឆេទ / Date\tសារជូនពរ / Wishes\tManage response\n\nភ\nភ្ញៀវកិត្តិយស\n\t\nAttending\n\t\n2 នាក់\n\t—\t—\tEdit RSVPDelete RSVP",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [
+        {
+          "tag": "TABLE",
+          "class": "rsvp-table",
+          "text": "ឈ្មោះភ្ញៀវ / Guestស្ថានភាព / Statusចំនួនមនុស្ស / Partyកាលបរិច្ឆេទ / Da"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "dash-btn",
+          "text": "Edit RSVP"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "dash-btn",
+          "text": "Delete RSVP"
+        }
+      ],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/gifts",
+    "resolved": "/app/events/101/gifts",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-gifts-km-390.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "កត់ត្រាចំណងដៃមង្គលការ"
+      ],
+      "body": "បានទិញ\nប្រវត្តិការទូទាត់\nចាកចេញ\n← កម្មវិធីរបស់ខ្ញុំ\nDara & Sophea\n\n2026-12-20 · Phnom Penh · DRAFT\n\nប្ដូរកម្មវិធី\nDara & Sophea\nSokha’s birthday\nទិដ្ឋភាពទូទៅ\nសំបុត្រអញ្ជើញ\nបញ្ជីភ្ញៀវ\nការឆ្លើយតប\nចំណងដៃ\nគម្រោងថវិកា\nរៀបចំកន្លែងអង្គុយ\nវត្តមាន\nរបាយការណ៍\nការផ្ញើ\nរូបភាព\nកូដ QR\nសារជូនពរ\nការកំណត់\nHEROTAG\nកត់ត្រាចំណងដៃមង្គលការ\n\nកត់ត្រាប្រាក់ចំណងដៃតាម Bakong QR, ABA និងសាច់ប្រាក់ដោយស្វ័យប្រវត្តិច្បាស់លាស់។\n\n+ កត់ត្រាចំណងដៃ\nចំណងដៃសរុប\n$25\nចំនួនអ្នកចងដៃ\n1 នាក់\nមធ្យមភាគ / ម្នាក់\n$25\nចំណងដៃខ្ពស់បំផុត\n$25\nវាយបញ្ចូល ឬជ្រើសរើសឈ្មោះភ្ញៀវ...\nUSD\nKHR\nBakong QR\nABA\nCash\naddItemBtn\nSokha\n$25\nBakong QR\n—\n—\nកែប្រែ\nលុប",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/budget",
+    "resolved": "/app/events/101/budget",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-budget-km-390.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "គម្រោងថវិកា & កត់ត្រាចំណាយ"
+      ],
+      "body": "· Phnom Penh · DRAFT\n\nប្ដូរកម្មវិធី\nDara & Sophea\nSokha’s birthday\nទិដ្ឋភាពទូទៅ\nសំបុត្រអញ្ជើញ\nបញ្ជីភ្ញៀវ\nការឆ្លើយតប\nចំណងដៃ\nគម្រោងថវិកា\nរៀបចំកន្លែងអង្គុយ\nវត្តមាន\nរបាយការណ៍\nការផ្ញើ\nរូបភាព\nកូដ QR\nសារជូនពរ\nការកំណត់\nBUDGET & EXPENSE PLANNER\nគម្រោងថវិកា & កត់ត្រាចំណាយ\n\nរៀបចំផែនការចំណាយ កត់ត្រាប្រាក់កក់ និងតាមដានថវិកាសរុបនៃមង្គលការរបស់អ្នក។\n\n+ បន្ថែមចំណាយ\nថវិកាគ្រោងសរុប\n$0\nបានចំណាយសរុប\n$0\nថវិកានៅសល់\n$0\nភាគរយចំណាយ\n%\nទាំងអស់\nFood & Catering\nDecor & Flowers\nAttire & Makeup\nVenue & Transport\nOther\nមិនទាន់មានទិន្នន័យចំណាយនៅឡើយ\n\nចាប់ផ្តើមកត់ត្រាការចំណាយដំបូងរបស់អ្នក ដើម្បីគ្រប់គ្រងថវិកាឱ្យកាន់តែច្បាស់លាស់។",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/seating",
+    "resolved": "/app/events/101/seating",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-seating-km-390.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "បង្កើតតុថ្មី (Create Table)",
+        "ចាត់ភ្ញៀវចូលតុ (Assign Guest)"
+      ],
+      "body": "GNED)\n0\nមិនទាន់មានតុ (UNASSIGNED)\n0\n🗺️ ប្លង់សាលការ Canva (Interactive Floor Plan)\n📋 បញ្ជីតុ & ចាត់ភ្ញៀវ (List & Forms)\nបង្កើតតុថ្មី (Create Table)\nឈ្មោះតុ (Table Name) *\nប្រភេទសម្គាល់ (Label)\nចំនួនកៅអី (Capacity)\nលំដាប់ (Sort Order)\n➕ បង្កើតតុ (Create table)\nចាត់ភ្ញៀវចូលតុ (Assign Guest)\nជ្រើសរើសភ្ញៀវ (Select Guest) *\n-- ជ្រើសរើសភ្ញៀវ --\nជ្រើសរើសតុ (Select Table) *\n-- ជ្រើសរើសតុ --\nលេខកៅអី (Seat Label)\nចំនួនកៅអី (Seats)\n👤 ដាក់ភ្ញៀវចូលតុ (Assign guest)\nមិនទាន់មានតុនៅឡើយទេ\n\nសូមបង្កើតតុដំបូងនៅផ្ទាំងខាងឆ្វេង ឬចុចចូល «ប្លង់សាលការ Canva» ដើម្បីគូស និងរៀបចំតុលើប្លង់!\n\nបើកផ្ទាំងគូសប្លង់សាលការ Canva",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/check-in",
+    "resolved": "/app/events/101/check-in",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-check-in-km-390.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        " Scan token",
+        " បញ្ជីភ្ញៀវ & ស្កេនរហ័ស",
+        " Checked-in guests"
+      ],
+      "body": "g checked in\n0%\n0 / 1 នាក់\nស្កេន QR Code កាមេរ៉ាផ្ទាល់ (Live QR Scanner)\nមិនទាន់បើក (Ready)\n\nប្រើកាមេរ៉ាទូរស័ព្ទ ឬ Webcam កុំព្យូទ័រ ដើម្បីស្កេនកាតអញ្ជើញ QR របស់ភ្ញៀវពេលមកដល់មាត់រោងការ\n\nបើកកាមេរ៉ាស្កេន\nScan token\nScanner Gun / Link\nQR link or token\n ចងដៃ (Gift Amount - Optional)\n$\n៛\nNote\nCheck in\n💡 គន្លឹះ: អាចប្រើកាំភ្លើងបាញ់ Barcode/QR (USB Scanner) បាញ់ចូលកន្លែងនេះ ឬបិទភ្ជាប់ Link ធៀបភ្ញៀវ។\nបញ្ជីភ្ញៀវ & ស្កេនរហ័ស\n1 / 1 នាក់\nទាំងអស់ (1)\nរង់ចាំ (1)\nបានចូល (0)\nGUEST\tCONTACT\tSTATUS\t\n\nS\nSokha\n\t\n012345678\n\t\nWaiting\tCheck in\nChecked-in guests\nសរុប 0 នាក់\nGUEST\tSOURCE\tCHECKED IN\t\n\nNo check-ins yet.",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [
+        {
+          "tag": "TABLE",
+          "class": "checkin-guest-table guest-table",
+          "text": "GuestContactStatusSSokha012345678 WaitingCheck in"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "checkin-row-btn inv-secondary-btn action-checkin",
+          "text": "Check in"
+        },
+        {
+          "tag": "TABLE",
+          "class": "checkin-guest-table guest-table",
+          "text": "GuestSourceChecked inNo check-ins yet."
+        }
+      ],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/qr",
+    "resolved": "/app/events/101/qr",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-qr-km-390.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "QR Code សម្រាប់កម្មវិធី"
+      ],
+      "body": "A\nកែប្រែប្រវត្តិរូប\nកម្មវិធីរបស់ខ្ញុំ\nបង្កើតកម្មវិធី\nកញ្ចប់សេវាកម្ម\nស្វែងរកគំរូ\nគំរូដែលបានទិញ\nប្រវត្តិការទូទាត់\nចាកចេញ\n← កម្មវិធីរបស់ខ្ញុំ\nDara & Sophea\n\n2026-12-20 · Phnom Penh · DRAFT\n\nប្ដូរកម្មវិធី\nDara & Sophea\nSokha’s birthday\nទិដ្ឋភាពទូទៅ\nសំបុត្រអញ្ជើញ\nបញ្ជីភ្ញៀវ\nការឆ្លើយតប\nចំណងដៃ\nគម្រោងថវិកា\nរៀបចំកន្លែងអង្គុយ\nវត្តមាន\nរបាយការណ៍\nការផ្ញើ\nរូបភាព\nកូដ QR\nសារជូនពរ\nការកំណត់\nQR Code Management\nQR Code សម្រាប់កម្មវិធី\n\nស្កេន ឬទាញយក QR Code ដើម្បីផ្ញើទៅកាន់ភ្ញៀវ ឬប្រើប្រាស់សម្រាប់ការ Check-in។\n\n📱\n\nQR Code\n\nទាញយក QR Code (PNG)",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/reports",
+    "resolved": "/app/events/101/reports",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-reports-km-390.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "របាយការណ៍សង្ខេបចំណូល និងចំណាយកម្មវិធី",
+        "Guest delivery and attendance reports",
+        "តារាងអំណោយ និងចំណូលផ្សេងៗ",
+        "តារាងចំណាយ"
+      ],
+      "body": " KHQR\n$0.00\n0 ៛\nចំណងដៃតាមធនាគារ និង QR\nសាច់ប្រាក់ / Cash\n$0.00\n0 ៛\nចំណងដៃជាសាច់ប្រាក់\nINCOME\nតារាងអំណោយ និងចំណូលផ្សេងៗ\n1 records\nឈ្មោះអ្នកផ្តល់\tក្រុម/ខាង\tចំនួន\tរូបិយប័ណ្ណ\tវិធីបង់ប្រាក់\tកំណត់សម្គាល់\nSokha\tមិនបានកំណត់\t$25.00\tUSD\t—\t—\nEXPENSES\nតារាងចំណាយ\n0 records\nប្រភេទចំណាយ\tអ្នកផ្គត់ផ្គង់\tថវិកាគ្រោង\tចំណាយពិត\tរូបិយប័ណ្ណ\tថ្ងៃបង់ប្រាក់\nមិនមានទិន្នន័យ / No records\n\nកំណត់ត្រាចាស់ដែលមិនមាន currency ត្រូវបង្ហាញជា USD។ ប្រព័ន្ធមិនបម្លែងរវាង USD និង KHR ហើយចំណូលដែលបង្ហាញមានតែអំណោយដែលបានកត់ត្រាក្នុងប្រព័ន្ធ។\n\nអ្នករៀបចំកម្មវិធី\nហត្ថលេខា / ស្នាមមេដៃអ្នករៀបចំ\nម្ចាស់កម្មវិធី\nហត្ថលេខា / ស្នាមមេដៃម្ចាស់កម្មវិធី",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [
+        {
+          "tag": "TABLE",
+          "class": "report-table",
+          "text": "ឈ្មោះអ្នកផ្តល់ក្រុម/ខាងចំនួនរូបិយប័ណ្ណវិធីបង់ប្រាក់កំណត់សម្គាល់Sokhaមិ"
+        },
+        {
+          "tag": "TABLE",
+          "class": "report-table",
+          "text": "ប្រភេទចំណាយអ្នកផ្គត់ផ្គង់ថវិកាគ្រោងចំណាយពិតរូបិយប័ណ្ណថ្ងៃបង់ប្រាក់មិនម"
+        }
+      ],
+      "smallText": 14
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/settings",
+    "resolved": "/app/events/101/settings",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-settings-km-390.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "ព័ត៌មានកម្មវិធី"
+      ],
+      "body": "ដូរកម្មវិធី\nDara & Sophea\nSokha’s birthday\nទិដ្ឋភាពទូទៅ\nសំបុត្រអញ្ជើញ\nបញ្ជីភ្ញៀវ\nការឆ្លើយតប\nចំណងដៃ\nគម្រោងថវិកា\nរៀបចំកន្លែងអង្គុយ\nវត្តមាន\nរបាយការណ៍\nការផ្ញើ\nរូបភាព\nកូដ QR\nសារជូនពរ\nការកំណត់\nព័ត៌មានកម្មវិធី\nឈ្មោះកម្មវិធី\n*\nឈ្មោះកូនកំលោះ\n*\nឈ្មោះកូនក្រមុំ\n*\nកាលបរិច្ឆេទ\n*\nម៉ោង\n*\nទីកន្លែង\n*\nអាសយដ្ឋាន (អាចបំពេញពេលក្រោយ)\nតំណ Google Maps (មិនបាច់បំពេញ)\nសារអញ្ជើញ ឬការពិពណ៌នា (មិនបាច់បំពេញ)\nភាសាសំបុត្រអញ្ជើញ\nខ្មែរ\nEnglish\nខ្មែរ / English\nទំនាក់ទំនង (មិនបាច់បំពេញ)\nឈ្មោះទំនាក់ទំនង\nលេខទូរស័ព្ទ\nអ៊ីមែល\nកាលវិភាគ (មិនបាច់បំពេញ)\nបន្ថែមសកម្មភាព\nការមើលសំបុត្រអញ្ជើញ\nឯកជន\nសាធារណៈពេលផ្សាយ\nការពារដោយពាក្យសម្ងាត់\nរក្សាទុក",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/delivery",
+    "resolved": "/app/events/101/delivery",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-delivery-km-390.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Email invitation",
+        "Guest delivery",
+        "Audit trail"
+      ],
+      "body": "បចំកន្លែងអង្គុយ\nវត្តមាន\nរបាយការណ៍\nការផ្ញើ\nរូបភាព\nកូដ QR\nសារជូនពរ\nការកំណត់\nDELIVERY MANAGEMENT\nDara & Sophea\n\nPrepare guest links, copy share messages, send email invitations, and track delivery events.\n\nGuests\nBack\nInvitation must be published before delivery can be prepared.\nPrepare delivery\nSend reminders\nTotal\n0\nReady\n0\nNot ready\n0\nLink generated\n0\nSent\n0\nFailed\n0\nOpened\n0\nResponded\n0\nEmail invitation\nSubjectMessageSend email to eligible guests\nGuest delivery\nGUEST\tCONTACT\tSTATUS\tINVITATION URL\tLAST SENT\tACTIONS\nNo delivery guests found. Add guests first.\nAudit trail\nNo delivery events yet.",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [
+        {
+          "tag": "TABLE",
+          "class": "guest-table",
+          "text": "GuestContactStatusInvitation URLLast sentActions"
+        }
+      ],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/media",
+    "resolved": "/app/events/101/media",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-media-km-390.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "Invitation Media",
+        "Cover image",
+        "Gallery images",
+        "Video"
+      ],
+      "body": "៍\nការផ្ញើ\nរូបភាព\nកូដ QR\nសារជូនពរ\nការកំណត់\nMEDIA MANAGEMENT\nInvitation Media\n\nManage the images, video, and music that appear on this invitation.\n\nPreview\nDashboard\nCover image\n\nទំហំដែលណែនាំ: 1920x1080px (16:9) ឬ 900x1200px (3:4) | អតិបរមា 5MB (JPG, PNG, WEBP)\n\nUpload cover\nNo file uploaded\nGallery images\n\nទំហំដែលណែនាំ: 1200x900px (4:3) | អតិបរមា 5MB ក្នុងមួយសន្លឹក (JPG, PNG, WEBP)\n\nUpload images\nNo gallery images uploaded\nVideo\n\nទម្រង់ដែលគាំទ្រ: MP4, WebM | អតិបរមា 50MB\n\nUpload video\nNo file uploaded\nBackground music\n\nទម្រង់ដែលគាំទ្រ: MP3, WAV, OGG | អតិបរមា 15MB\n\nUpload music\nNo file uploaded",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/wishes",
+    "resolved": "/app/events/101/wishes",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-wishes-km-390.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "ពាក្យជូនពរពីភ្ញៀវ"
+      ],
+      "body": "A\nកែប្រែប្រវត្តិរូប\nកម្មវិធីរបស់ខ្ញុំ\nបង្កើតកម្មវិធី\nកញ្ចប់សេវាកម្ម\nស្វែងរកគំរូ\nគំរូដែលបានទិញ\nប្រវត្តិការទូទាត់\nចាកចេញ\n← កម្មវិធីរបស់ខ្ញុំ\nDara & Sophea\n\n2026-12-20 · Phnom Penh · DRAFT\n\nប្ដូរកម្មវិធី\nDara & Sophea\nSokha’s birthday\nទិដ្ឋភាពទូទៅ\nសំបុត្រអញ្ជើញ\nបញ្ជីភ្ញៀវ\nការឆ្លើយតប\nចំណងដៃ\nគម្រោងថវិកា\nរៀបចំកន្លែងអង្គុយ\nវត្តមាន\nរបាយការណ៍\nការផ្ញើ\nរូបភាព\nកូដ QR\nសារជូនពរ\nការកំណត់\nGuest Messages\nពាក្យជូនពរពីភ្ញៀវ\n\nអាន និងគ្រប់គ្រងសារជូនពរដ៏មានអត្ថន័យពីភ្ញៀវកិត្តិយសទាំងអស់។\n\nមិនទាន់មានពាក្យជូនពរពីភ្ញៀវនៅឡើយទេ។",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/assistant",
+    "resolved": "/app/events/101/assistant",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-assistant-km-390.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "ជំនួយការសរសេរខ្លឹមសារធៀបការ"
+      ],
+      "body": "្ជើញ រឿងរ៉ាវស្នេហា និងលិខិតផ្លូវការដោយស្វ័យប្រវត្ត និងងាយស្រួល។\n\nជំនួយការសរសេរ (Feature Action)\n*\nInvitation Copy / ខ្លឹមសារធៀប\nLove Story / រឿងរ៉ាវស្នេហា\nFormal Invitation / លិខិតផ្លូវការ\nKhmer ↔ English / ប្រែភាសា\nTimeline Suggestion / កម្មវិធីបុណ្យ\nឈ្មោះគូស្វាមីភរិយា / Couple Names\nឈ្មោះម្ចាស់ដើមការ / Host Name\nថ្ងៃខែឆ្នាំ / Event Date\nទីតាំង / Venue\nភាសា / Language\nភាសាខ្មែរ (Khmer)\nEnglish\nទម្រង់សំណេរ / Tone\nFormal / ផ្លូវការ\nWarm & Heartfelt / កក់ក្តៅ\nRomantic / រ៉ូមែនទិក\nTraditional Khmer / បុរាណខ្មែរ\nModern & Concise / ទាន់សម័យ\nព័ត៌មានបន្ថែម / Extra Notes\nរៀបចំអត្ថបទ / Generate Content",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/templates",
+    "resolved": "/templates",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/templates-km-390.png",
+    "metrics": {
+      "heading": [
+        "រចនាបទដែលជារបស់អ្នក។"
+      ],
+      "body": "ទៅកាន់មាតិកា\nKoupreng\n\nគំរូសន្លឹកការ\n\nរចនាបទដែលជារបស់អ្នក។\n\nមើលគំរូពេញលេញ រួចជ្រើសរើសគំរូសម្រាប់ថ្ងៃពិសេសរបស់អ្នក។\n\nទាំងអស់\nសាមញ្ញ\nស្វែងរកគំរូ\nមើលគំរូ\n\nសាមញ្ញ\n\nEvent Essential\n\nមើលសន្លឹកការ កម្មវិធីពិធី និងព័ត៌មានភ្ញៀវ ក្នុងគំរូពេញលេញ។\n\nគំរូឥតគិតថ្លៃ\n\nប្រើគំរូនេះ\nមើលគំរូ\nKoupreng\n\nសន្លឹកការឌីជីថល និងការគ្រប់គ្រងភ្ញៀវ សម្រាប់ថ្ងៃពិសេសរបស់អ្នក។\n\nស្វែងរក\n\nគំរូសន្លឹកការ\nកញ្ចប់ និងសិទ្ធិ\nទីកន្លែង\n\nនៅជាមួយអ្នក\n\nទាក់ទងយើង\nជំនួយ\nចូលគណនី\n© 2026 Koupreng. រក្សាសិទ្ធិគ្រប់យ៉ាង។\nរចនាជាមួយក្តីស្រលាញ់ សម្រាប់គូស្វាមីភរិយាខ្មែរ",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 1
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/templates/browse",
+    "resolved": "/templates/browse",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/templates-browse-km-390.png",
+    "metrics": {
+      "heading": [
+        "ស្វែងរកគំរូធៀបការ (Templates)"
+      ],
+      "body": "A\nកែប្រែប្រវត្តិរូប\nកម្មវិធីរបស់ខ្ញុំ\nបង្កើតកម្មវិធី\nកញ្ចប់សេវាកម្ម\nស្វែងរកគំរូ\nគំរូដែលបានទិញ\nប្រវត្តិការទូទាត់\nចាកចេញ\nWEDDING TEMPLATE CATALOG\nស្វែងរកគំរូធៀបការ (Templates)\n\nជ្រើសរើសគំរូធៀបការអាពាហ៍ពិពាហ៍បែបឌីជីថលដែលស្រស់ស្អាត ទាន់សម័យ និងត្រូវចិត្តរបស់អ្នក។\n\nគំរូសរុបទាំងអស់\n1\nគំរូឥតគិតថ្លៃ (Free)\n1\nគំរូ Premium\n0\nលទ្ធផលស្វែងរក\n1\nទាំងអស់\nបានទិញរួច (Paid)\nឥតគិតថ្លៃ (Free)\nPremium\nសម័យទំនើប (Modern)\nប្រពៃណីខ្មែរ (Traditional)\nផ្កាភ្ញី (Floral)\nប្រណិត (Luxury)\nបែបសាមញ្ញ (Minimalist)\nឥតគិតថ្លៃ\nបែបសាមញ្ញ\nEvent Essential\nជ្រើសរើស\nមើលគំរូ\nសួស្តី 👋 តើមានអ្វីឱ្យយើងខ្ញុំជួយទេ ថ្ងៃនេះ?",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [
+        {
+          "tag": "BUTTON",
+          "class": "tb-category-chip ",
+          "text": "Premium"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "tb-category-chip ",
+          "text": "សម័យទំនើប (Modern)"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "tb-category-chip ",
+          "text": "ប្រពៃណីខ្មែរ (Traditional)"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "tb-category-chip ",
+          "text": "ផ្កាភ្ញី (Floral)"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "tb-category-chip ",
+          "text": "ប្រណិត (Luxury)"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "tb-category-chip ",
+          "text": "បែបសាមញ្ញ (Minimalist)"
+        }
+      ],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/templates/event-essential/preview",
+    "resolved": "/templates/event-essential/preview",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/templates-event-essential-preview-km-390.png",
+    "metrics": {
+      "heading": [
+        "Event Essential"
+      ],
+      "body": "← ត្រឡប់\n← ត្រឡប់\n\nផ្សេងៗ\n\nEvent Essential\n\nសូមអញ្ជើញចូលរួមកម្មវិធីរបស់យើង\n\nសូមគោរពអញ្ជើញ ឯកឧត្តម លោកជំទាវ លោក លោកស្រី...\n\nបង្កើតកម្មវិធី",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/templates/30/checkout",
+    "resolved": "/templates/30/checkout",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/templates-30-checkout-km-390.png",
+    "metrics": {
+      "heading": [
+        "ទូទាត់ប្រាក់ គំរូធៀបការពិសេស",
+        "Event Essential"
+      ],
+      "body": "ករ (VAT / Fee 0%)\n$0.00\nទឹកប្រាក់សរុប (Total Due)\nរួមបញ្ចូលទាំងសិទ្ធិប្រើប្រាស់ពេញលេញ\nទូទាត់តាម ABA KHQR ( )\n\nCheckout is not available for this template yet. You can still preview it.\n\nបើកដំណើរការក្រោយផ្ទៀងផ្ទាត់ការទូទាត់ (Access after payment verification)\nសុវត្ថិភាពខ្ពស់ 100% តាមប្រព័ន្ធធនាគារជាតិ Bakong\nKoupreng\n\nសន្លឹកការឌីជីថល និងការគ្រប់គ្រងភ្ញៀវ សម្រាប់ថ្ងៃពិសេសរបស់អ្នក។\n\nស្វែងរក\n\nគំរូសន្លឹកការ\nកញ្ចប់ និងសិទ្ធិ\nទីកន្លែង\n\nនៅជាមួយអ្នក\n\nទាក់ទងយើង\nជំនួយ\nចូលគណនី\n© 2026 Koupreng. រក្សាសិទ្ធិគ្រប់យ៉ាង។\nរចនាជាមួយក្តីស្រលាញ់ សម្រាប់គូស្វាមីភរិយាខ្មែរ\nសួស្តី 👋 តើមានអ្វីឱ្យយើងខ្ញុំជួយទេ ថ្ងៃនេះ?",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/w/audit-event",
+    "resolved": "/w/audit-event",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/w-audit-event-km-390.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Phnom Penh",
+        "Schedule",
+        "Will you attend?"
+      ],
+      "body": "Wedding\n\nDara & Sophea\nDara & Sophea\n\nPlease join us for our event\n\n2026-12-20 17:30\n\nPhnom Penh\n\nPlease join our celebration\n\nSchedule\n\n17:30 · Guest welcome\n\nRSVP\n\nWill you attend?\nGuest name\nPhone\nResponse\nAttending\nNot attending\nMaybe\nAttendee count\nMessage\nSubmit RSVP",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 1
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/i/audit-event?token=audit-guest",
+    "resolved": "/i/audit-event?token=audit-guest",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/i-audit-event-token-audit-guest-km-390.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Phnom Penh",
+        "Schedule",
+        "Will you attend?"
+      ],
+      "body": "Wedding\n\nDara & Sophea\nDara & Sophea\n\nPlease join us for our event\n\n2026-12-20 17:30\n\nPhnom Penh\n\nPlease join our celebration\n\nSchedule\n\n17:30 · Guest welcome\n\nRSVP\n\nWill you attend?\nResponse\nAttending\nNot attending\nMaybe\nAttendee count\nMessage\nSubmit RSVP",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 1
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/payments/AUDIT/status",
+    "resolved": "/payments/AUDIT/status",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/payments-AUDIT-status-km-390.png",
+    "metrics": {
+      "heading": [
+        "ស្កេនទូទាត់ ABA KHQR",
+        "Event Essential"
+      ],
+      "body": "Y\nAUDIT\nInternal checkout ID: —\n\n👉 របៀបទូទាត់៖ Scan this link with your camera or open the ABA PayWay link below.\n\nExpected: $10.00. Include the order code in the remark if the bank offers that field. Fixed links may not retain it.\n\nបន្ទាប់ពីផ្ទេររួច៖ សូមផ្ញើសំណើពិនិត្យការទូទាត់។ សិទ្ធិប្រើគំរូនឹងបើកក្រោយការផ្ទៀងផ្ទាត់ពីប្រព័ន្ធ ឬអ្នកគ្រប់គ្រង។ (Access follows verified payment confirmation.)\n\nផ្ទៀងផ្ទាត់ការទូទាត់ — ស្នើពិនិត្យ (Request payment review)\nCheck Status\nជ្រើសរើសគំរូផ្សេង\n⬅️ ផ្ទាំងគ្រប់គ្រង (Dashboard)•ស្វែងរកគំរូធៀបការ (Browse Templates)\nសួស្តី 👋 តើមានអ្វីឱ្យយើងខ្ញុំជួយទេ ថ្ងៃនេះ?",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 1
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/payments/success",
+    "resolved": "/payments/success",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/payments-success-km-390.png",
+    "metrics": {
+      "heading": [
+        "Payment is being verified. Please wait."
+      ],
+      "body": "PAYMENT RETURN\nPayment is being verified. Please wait.\n\nBackend callback verification is required before access unlocks.\n\nView paid templatesBrowse templates\nសួស្តី 👋 តើមានអ្វីឱ្យយើងខ្ញុំជួយទេ ថ្ងៃនេះ?",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/payments/return",
+    "resolved": "/payments/return",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/payments-return-km-390.png",
+    "metrics": {
+      "heading": [
+        "Payment is being verified. Please wait."
+      ],
+      "body": "PAYMENT RETURN\nPayment is being verified. Please wait.\n\nBackend callback verification is required before access unlocks.\n\nView paid templatesBrowse templates\nសួស្តី 👋 តើមានអ្វីឱ្យយើងខ្ញុំជួយទេ ថ្ងៃនេះ?",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/payments/cancel",
+    "resolved": "/payments/cancel",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/payments-cancel-km-390.png",
+    "metrics": {
+      "heading": [
+        "Payment was cancelled or not completed."
+      ],
+      "body": "PAYMENT CANCELLED\nPayment was cancelled or not completed.\n\nNo template access was unlocked.\n\nBrowse Templates\nសួស្តី 👋 តើមានអ្វីឱ្យយើងខ្ញុំជួយទេ ថ្ងៃនេះ?",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/",
+    "resolved": "/",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/home-km-390.png",
+    "metrics": {
+      "heading": [
+        "ធៀបការដែលបង្ហាញរឿងរ៉ាវរបស់អ្នក។",
+        "ជ្រើសរើសគំរូដែលសាកសមនឹងថ្ងៃពិសេស",
+        "ព័ត៌មានពិធីច្បាស់លាស់\nសម្រាប់ភ្ញៀវរបស់អ្នក។",
+        "សន្លឹកការ និងភ្ញៀវ\nនៅកន្លែងតែមួយ។",
+        "បីជំហាន។\nថ្ងៃពិសេសមួយ។"
+      ],
+      "body": "ៅឯណា?\nការមើលគំរូបើកសិទ្ធិប្រើគំរូប្រណិតទេ?\nតើការទូទាត់ត្រូវបានបញ្ជាក់ដោយរបៀបណា?\nចង់បានការណែនាំបន្ថែម?\n\nសួរអំពីគំរូ កញ្ចប់ ឬរបៀបរៀបចំសន្លឹកការរបស់អ្នក។ ក្រុមការងាររីករាយស្វែងយល់ពីតម្រូវការរបស់អ្នក។\n\nទាក់ទងក្រុមការងារ\nចាប់ផ្តើមថ្ងៃពិសេសរបស់អ្នក\nដោយការអញ្ជើញដ៏មានន័យ។\n\nជ្រើសរើសគំរូដែលអ្នកពេញចិត្ត ហើយបញ្ចូលរឿងរ៉ាវរបស់អ្នក។\n\nមើលគំរូសន្លឹកការ\nចាប់ផ្តើមបង្កើត\nKoupreng\n\nសន្លឹកការឌីជីថល និងការគ្រប់គ្រងភ្ញៀវ សម្រាប់ថ្ងៃពិសេសរបស់អ្នក។\n\nស្វែងរក\n\nគំរូសន្លឹកការ\nកញ្ចប់ និងសិទ្ធិ\nទីកន្លែង\n\nនៅជាមួយអ្នក\n\nទាក់ទងយើង\nជំនួយ\nចូលគណនី\n© 2026 Koupreng. រក្សាសិទ្ធិគ្រប់យ៉ាង។\nរចនាជាមួយក្តីស្រលាញ់ សម្រាប់គូស្វាមីភរិយាខ្មែរ",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 6
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/pricing",
+    "resolved": "/pricing",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/pricing-km-390.png",
+    "metrics": {
+      "heading": [
+        "ស្វែងយល់ពីគំរូ\nកញ្ចប់ និងសិទ្ធិប្រើប្រាស់។",
+        "Basic",
+        "Pro",
+        "Premium",
+        "ប្រៀបធៀបព័ត៌មានលម្អិត"
+      ],
+      "body": "រាស់\n\nមើលគំរូដោយសេរី។\nពិនិត្យសិទ្ធិមុនជ្រើសរើស។\n\nរចនាបទសន្លឹកការ និងកញ្ចប់សេវាកម្មមានព័ត៌មានសិទ្ធិរបស់វា។ ពិនិត្យព័ត៌មានក្នុងគណនី មុនបង្កើត ឬបញ្ជាក់ការទូទាត់។\n\nតើការមើលគំរូផ្តល់សិទ្ធិប្រណិតទេ?\nកញ្ចប់ និងគំរូប្រណិតខុសគ្នាដូចម្តេច?\nពេលណាសិទ្ធិត្រូវបានបើក?\nចង់ជ្រើសរើសឱ្យត្រូវតាមពិធីរបស់អ្នក?\n\nប្រាប់យើងអំពីពិធី និងមុខងារដែលអ្នកត្រូវការ។\n\nទាក់ទងក្រុមការងារ\nKoupreng\n\nសន្លឹកការឌីជីថល និងការគ្រប់គ្រងភ្ញៀវ សម្រាប់ថ្ងៃពិសេសរបស់អ្នក។\n\nស្វែងរក\n\nគំរូសន្លឹកការ\nកញ្ចប់ និងសិទ្ធិ\nទីកន្លែង\n\nនៅជាមួយអ្នក\n\nទាក់ទងយើង\nជំនួយ\nចូលគណនី\n© 2026 Koupreng. រក្សាសិទ្ធិគ្រប់យ៉ាង។\nរចនាជាមួយក្តីស្រលាញ់ សម្រាប់គូស្វាមីភរិយាខ្មែរ",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/contact",
+    "resolved": "/contact",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/contact-km-390.png",
+    "metrics": {
+      "heading": [
+        "មានសំណួរ?\nយើងរីករាយជួយអ្នក។",
+        "ផ្ញើសារមកកាន់យើង",
+        "យើងអាចជួយអ្វីខ្លះ?"
+      ],
+      "body": "ចាំបាច់)\nប្រធានបទ\nសំណួរទូទៅ\nគំរូសន្លឹកការ\nកញ្ចប់សេវាកម្ម\nជំនួយក្នុងការប្រើប្រាស់\nសារ ឬសំណួររបស់អ្នក *\n\nព័ត៌មានអំពីពិធី និងសំណួររបស់អ្នក ជួយឱ្យយើងយល់ពីតម្រូវការបានច្បាស់។\n\nផ្ញើសារ\nយើងអាចជួយអ្វីខ្លះ?\nស្វែងរកគំរូសម្រាប់ពិធី\nមើលរចនាបទ និងគំរូពេញលេញ\nស្វែងយល់ពីកញ្ចប់ និងសិទ្ធិ\nពិនិត្យកម្រិតប្រើប្រាស់ និងមុខងារ\nសួរអំពីការប្រើប្រាស់\nប្រាប់យើងអំពីសំណួររបស់អ្នក\nKoupreng\n\nសន្លឹកការឌីជីថល និងការគ្រប់គ្រងភ្ញៀវ សម្រាប់ថ្ងៃពិសេសរបស់អ្នក។\n\nស្វែងរក\n\nគំរូសន្លឹកការ\nកញ្ចប់ និងសិទ្ធិ\nទីកន្លែង\n\nនៅជាមួយអ្នក\n\nទាក់ទងយើង\nជំនួយ\nចូលគណនី\n© 2026 Koupreng. រក្សាសិទ្ធិគ្រប់យ៉ាង។\nរចនាជាមួយក្តីស្រលាញ់ សម្រាប់គូស្វាមីភរិយាខ្មែរ",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/venues",
+    "resolved": "/venues",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/venues-km-390.png",
+    "metrics": {
+      "heading": [
+        "ស្វែងរកទីកន្លែងមង្គល"
+      ],
+      "body": "📍\nភ្នំពេញ\n\n👥\nចំណុះ: ៣០០ - ១៥០០ នាក់\n\n💰\nកម្រិតតម្លៃ:\n$$$\n\nមើលព័ត៌មានលម្អិត\nLUXURY\nប្រណីត\nសណ្ឋាគារ រ៉េស៊ីដង់ សុខា\n\n📍\nសៀមរាប\n\n👥\nចំណុះ: ២០០ - ៨០០ នាក់\n\n💰\nកម្រិតតម្លៃ:\n$$$$\n\nមើលព័ត៌មានលម្អិត\nបាត់ដំបង\nតម្លៃសមរម្យ\nClassy Hotel & Spa\n\n📍\nបាត់ដំបង\n\n👥\nចំណុះ: ១៥០ - ៥០០ នាក់\n\n💰\nកម្រិតតម្លៃ:\n$$\n\nមើលព័ត៌មានលម្អិត\nKoupreng\n\nសន្លឹកការឌីជីថល និងការគ្រប់គ្រងភ្ញៀវ សម្រាប់ថ្ងៃពិសេសរបស់អ្នក។\n\nស្វែងរក\n\nគំរូសន្លឹកការ\nកញ្ចប់ និងសិទ្ធិ\nទីកន្លែង\n\nនៅជាមួយអ្នក\n\nទាក់ទងយើង\nជំនួយ\nចូលគណនី\n© 2026 Koupreng. រក្សាសិទ្ធិគ្រប់យ៉ាង។\nរចនាជាមួយក្តីស្រលាញ់ សម្រាប់គូស្វាមីភរិយាខ្មែរ\nសួស្តី 👋 តើមានអ្វីឱ្យយើងខ្ញុំជួយទេ ថ្ងៃនេះ?",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/venues/11",
+    "resolved": "/venues/11",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/venues-11-km-390.png",
+    "metrics": {
+      "heading": [
+        "ស្វែងរកទីកន្លែងមង្គល"
+      ],
+      "body": "📍\nភ្នំពេញ\n\n👥\nចំណុះ: ៣០០ - ១៥០០ នាក់\n\n💰\nកម្រិតតម្លៃ:\n$$$\n\nមើលព័ត៌មានលម្អិត\nLUXURY\nប្រណីត\nសណ្ឋាគារ រ៉េស៊ីដង់ សុខា\n\n📍\nសៀមរាប\n\n👥\nចំណុះ: ២០០ - ៨០០ នាក់\n\n💰\nកម្រិតតម្លៃ:\n$$$$\n\nមើលព័ត៌មានលម្អិត\nបាត់ដំបង\nតម្លៃសមរម្យ\nClassy Hotel & Spa\n\n📍\nបាត់ដំបង\n\n👥\nចំណុះ: ១៥០ - ៥០០ នាក់\n\n💰\nកម្រិតតម្លៃ:\n$$\n\nមើលព័ត៌មានលម្អិត\nKoupreng\n\nសន្លឹកការឌីជីថល និងការគ្រប់គ្រងភ្ញៀវ សម្រាប់ថ្ងៃពិសេសរបស់អ្នក។\n\nស្វែងរក\n\nគំរូសន្លឹកការ\nកញ្ចប់ និងសិទ្ធិ\nទីកន្លែង\n\nនៅជាមួយអ្នក\n\nទាក់ទងយើង\nជំនួយ\nចូលគណនី\n© 2026 Koupreng. រក្សាសិទ្ធិគ្រប់យ៉ាង។\nរចនាជាមួយក្តីស្រលាញ់ សម្រាប់គូស្វាមីភរិយាខ្មែរ\nសួស្តី 👋 តើមានអ្វីឱ្យយើងខ្ញុំជួយទេ ថ្ងៃនេះ?",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/dashboard/invitations/101/guests",
+    "resolved": "/app/events/101/guests",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/dashboard-invitations-101-guests-km-390.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "គ្រប់គ្រងភ្ញៀវកិត្តិយស"
+      ],
+      "body": "AFT\n\nប្ដូរកម្មវិធី\nDara & Sophea\nSokha’s birthday\nទិដ្ឋភាពទូទៅ\nសំបុត្រអញ្ជើញ\nបញ្ជីភ្ញៀវ\nការឆ្លើយតប\nចំណងដៃ\nគម្រោងថវិកា\nរៀបចំកន្លែងអង្គុយ\nវត្តមាន\nរបាយការណ៍\nការផ្ញើ\nរូបភាព\nកូដ QR\nសារជូនពរ\nការកំណត់\nDARA & SOPHEA\nគ្រប់គ្រងភ្ញៀវកិត្តិយស\n\nគ្រប់គ្រងបញ្ជីភ្ញៀវ QR Code ធៀបការ និងស្ថានភាព RSVP របស់អ្នក។\n\n+ បន្ថែមភ្ញៀវ\n+\n+ បន្ថែមភ្ញៀវ\nភ្ញៀវសរុប\n1\nចំនួនកៅអី/មនុស្ស\n2\nបានផ្ញើ\n1\nបានឆ្លើយតប\n1\nគ្រប់ក្រុមទាំងអស់\nGroom Side\nBride Side\nគ្រប់ប្រភេទទាំងអស់\nHigh School Friend\nCollege Friend\nFriend\nFamily\nCoworker\nOther\n+ បន្ថែមភ្ញៀវ\nស្កេន Check-in\nទាញយក CSV\nនាំចូល\nSokha\n—\n012345678\n2\nGroom Side\nRSVP: ATTENDING\nSent\n—",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/dashboard/expenses",
+    "resolved": "/app/events?module=budget",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/dashboard-expenses-km-390.png",
+    "metrics": {
+      "heading": [
+        "កម្មវិធីអាពាហ៍ពិពាហ៍របស់អ្នក"
+      ],
+      "body": "រូប\nកម្មវិធីរបស់ខ្ញុំ\nបង្កើតកម្មវិធី\nកញ្ចប់សេវាកម្ម\nស្វែងរកគំរូ\nគំរូដែលបានទិញ\nប្រវត្តិការទូទាត់\nចាកចេញ\nគូព្រេង INVITATIONS\nកម្មវិធីអាពាហ៍ពិពាហ៍របស់អ្នក\n\nគ្រប់គ្រង និងកែសម្រួលសន្លឹកការអញ្ជើញរបស់អ្នកនៅទីនេះ\n\n+ បង្កើតកម្មវិធី\nស្វែងរកកម្មវិធី\nស្ថានភាព\nគ្រប់ស្ថានភាព\nព្រាង\nបានផ្សាយ\nផ្អាកផ្សាយ\nតម្រៀប\nថ្មីបំផុត\nកាលបរិច្ឆេទ\nឈ្មោះ\nព្រាង\nDara & Sophea\nDara & Sophea\n2026-12-20 • 17:30:00\n\nអាពាហ៍ពិពាហ៍ · Phnom Penh\n\nផ្ទាំងគ្រប់គ្រង\nបន្តកែសម្រួល / Continue Editing\nមើលជាមុន / Preview\nព្រាង\nSokha’s birthday\n2026-12-22\n\nខួបកំណើត · Garden House\n\nផ្ទាំងគ្រប់គ្រង\nបន្តកែសម្រួល / Continue Editing\nមើលជាមុន / Preview",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/create/wedding",
+    "resolved": "/app/events/new",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/create-wedding-km-390.png",
+    "metrics": {
+      "heading": [
+        "បង្កើតកម្មវិធីរបស់អ្នក",
+        "ប្រភេទកម្មវិធី",
+        "ព័ត៌មានកម្មវិធី",
+        "រចនាប័ទ្ម និងភាសា",
+        "គំរូដែលសាកសមសម្រាប់កម្មវិធីរបស់អ្នក"
+      ],
+      "body": "មោះកូនក្រមុំ *\nកាលបរិច្ឆេទ *\nម៉ោង *\nទីកន្លែង *\nអាសយដ្ឋាន (អាចបំពេញពេលក្រោយ)\nតំណ Google Maps (មិនបាច់បំពេញ)\nរចនាប័ទ្ម និងភាសា\nរចនាប័ទ្ម\nគ្រប់រចនាប័ទ្ម\nសាមញ្ញ\nភាសាសំបុត្រអញ្ជើញ\nខ្មែរ\nEnglish\nខ្មែរ / English\nតម្លៃគំរូ\nគ្រប់តម្លៃ\nឥតគិតថ្លៃ\nគំរូបង់ប្រាក់\nគំរូដែលសាកសមសម្រាប់កម្មវិធីរបស់អ្នក\n\nគំរូទាំងនេះគាំទ្រប្រភេទកម្មវិធី និងភាសាដែលអ្នកជ្រើសរើស។\n\nEvent Essential\n\nសាមញ្ញ\n\nឥតគិតថ្លៃ\n\nមើលជាមុន\nជ្រើសរើស\nព័ត៌មានបន្ថែម (មិនបាច់បំពេញ)\n\nកម្មវិធីនឹងត្រូវរក្សាទុកជាឯកជន។ បន្ថែមភ្ញៀវ និងផ្សព្វផ្សាយពីកន្លែងគ្រប់គ្រងកម្មវិធី។\n\nរក្សាទុកព្រាង\nបង្កើតកម្មវិធី\n\nព័ត៌មានត្រូវបានរក្សាទុកក្នុងផ្ទាំងនេះ ខណៈអ្នកកំពុងបំពេញ។",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/about",
+    "resolved": "/contact",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/about-km-390.png",
+    "metrics": {
+      "heading": [
+        "មានសំណួរ?\nយើងរីករាយជួយអ្នក។",
+        "ផ្ញើសារមកកាន់យើង",
+        "យើងអាចជួយអ្វីខ្លះ?"
+      ],
+      "body": "ចាំបាច់)\nប្រធានបទ\nសំណួរទូទៅ\nគំរូសន្លឹកការ\nកញ្ចប់សេវាកម្ម\nជំនួយក្នុងការប្រើប្រាស់\nសារ ឬសំណួររបស់អ្នក *\n\nព័ត៌មានអំពីពិធី និងសំណួររបស់អ្នក ជួយឱ្យយើងយល់ពីតម្រូវការបានច្បាស់។\n\nផ្ញើសារ\nយើងអាចជួយអ្វីខ្លះ?\nស្វែងរកគំរូសម្រាប់ពិធី\nមើលរចនាបទ និងគំរូពេញលេញ\nស្វែងយល់ពីកញ្ចប់ និងសិទ្ធិ\nពិនិត្យកម្រិតប្រើប្រាស់ និងមុខងារ\nសួរអំពីការប្រើប្រាស់\nប្រាប់យើងអំពីសំណួររបស់អ្នក\nKoupreng\n\nសន្លឹកការឌីជីថល និងការគ្រប់គ្រងភ្ញៀវ សម្រាប់ថ្ងៃពិសេសរបស់អ្នក។\n\nស្វែងរក\n\nគំរូសន្លឹកការ\nកញ្ចប់ និងសិទ្ធិ\nទីកន្លែង\n\nនៅជាមួយអ្នក\n\nទាក់ទងយើង\nជំនួយ\nចូលគណនី\n© 2026 Koupreng. រក្សាសិទ្ធិគ្រប់យ៉ាង។\nរចនាជាមួយក្តីស្រលាញ់ សម្រាប់គូស្វាមីភរិយាខ្មែរ",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/help",
+    "resolved": "/contact",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/help-km-390.png",
+    "metrics": {
+      "heading": [
+        "មានសំណួរ?\nយើងរីករាយជួយអ្នក។",
+        "ផ្ញើសារមកកាន់យើង",
+        "យើងអាចជួយអ្វីខ្លះ?"
+      ],
+      "body": "ចាំបាច់)\nប្រធានបទ\nសំណួរទូទៅ\nគំរូសន្លឹកការ\nកញ្ចប់សេវាកម្ម\nជំនួយក្នុងការប្រើប្រាស់\nសារ ឬសំណួររបស់អ្នក *\n\nព័ត៌មានអំពីពិធី និងសំណួររបស់អ្នក ជួយឱ្យយើងយល់ពីតម្រូវការបានច្បាស់។\n\nផ្ញើសារ\nយើងអាចជួយអ្វីខ្លះ?\nស្វែងរកគំរូសម្រាប់ពិធី\nមើលរចនាបទ និងគំរូពេញលេញ\nស្វែងយល់ពីកញ្ចប់ និងសិទ្ធិ\nពិនិត្យកម្រិតប្រើប្រាស់ និងមុខងារ\nសួរអំពីការប្រើប្រាស់\nប្រាប់យើងអំពីសំណួររបស់អ្នក\nKoupreng\n\nសន្លឹកការឌីជីថល និងការគ្រប់គ្រងភ្ញៀវ សម្រាប់ថ្ងៃពិសេសរបស់អ្នក។\n\nស្វែងរក\n\nគំរូសន្លឹកការ\nកញ្ចប់ និងសិទ្ធិ\nទីកន្លែង\n\nនៅជាមួយអ្នក\n\nទាក់ទងយើង\nជំនួយ\nចូលគណនី\n© 2026 Koupreng. រក្សាសិទ្ធិគ្រប់យ៉ាង។\nរចនាជាមួយក្តីស្រលាញ់ សម្រាប់គូស្វាមីភរិយាខ្មែរ",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/does-not-exist",
+    "resolved": "/does-not-exist",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/does-not-exist-km-390.png",
+    "metrics": {
+      "heading": [
+        "404"
+      ],
+      "body": "404\n\nមិនមានទំព័រនេះទេ\n\nត្រឡប់ទៅទំព័រដើម\nសួស្តី 👋 តើមានអ្វីឱ្យយើងខ្ញុំជួយទេ ថ្ងៃនេះ?",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/event/ux-local-draft",
+    "resolved": "/event/ux-local-draft",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/event-ux-local-draft-km-390.png",
+    "metrics": {
+      "heading": [
+        "មិនរកឃើញ Draft"
+      ],
+      "body": "មិនរកឃើញ Draft\n\nDraft ID: ux-local-draft\n\nចាប់ផ្ដើមថ្មី",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/preview/ux-local-draft",
+    "resolved": "/preview/ux-local-draft",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/preview-ux-local-draft-km-390.png",
+    "metrics": {
+      "heading": [
+        "មិនរកឃើញ Draft"
+      ],
+      "body": "មិនរកឃើញ Draft\n\nDraft ID: ux-local-draft\n\nចាប់ផ្ដើមថ្មី",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/create/wedding/101",
+    "resolved": "/app/events/101/invitation",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/create-wedding-101-km-390.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "ព័ត៌មានកម្មវិធី"
+      ],
+      "body": "ដូរកម្មវិធី\nDara & Sophea\nSokha’s birthday\nទិដ្ឋភាពទូទៅ\nសំបុត្រអញ្ជើញ\nបញ្ជីភ្ញៀវ\nការឆ្លើយតប\nចំណងដៃ\nគម្រោងថវិកា\nរៀបចំកន្លែងអង្គុយ\nវត្តមាន\nរបាយការណ៍\nការផ្ញើ\nរូបភាព\nកូដ QR\nសារជូនពរ\nការកំណត់\nព័ត៌មានកម្មវិធី\nឈ្មោះកម្មវិធី\n*\nឈ្មោះកូនកំលោះ\n*\nឈ្មោះកូនក្រមុំ\n*\nកាលបរិច្ឆេទ\n*\nម៉ោង\n*\nទីកន្លែង\n*\nអាសយដ្ឋាន (អាចបំពេញពេលក្រោយ)\nតំណ Google Maps (មិនបាច់បំពេញ)\nសារអញ្ជើញ ឬការពិពណ៌នា (មិនបាច់បំពេញ)\nភាសាសំបុត្រអញ្ជើញ\nខ្មែរ\nEnglish\nខ្មែរ / English\nទំនាក់ទំនង (មិនបាច់បំពេញ)\nឈ្មោះទំនាក់ទំនង\nលេខទូរស័ព្ទ\nអ៊ីមែល\nកាលវិភាគ (មិនបាច់បំពេញ)\nបន្ថែមសកម្មភាព\nការមើលសំបុត្រអញ្ជើញ\nឯកជន\nសាធារណៈពេលផ្សាយ\nការពារដោយពាក្យសម្ងាត់\nរក្សាទុក",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/event/101/manage",
+    "resolved": "/app/events/101/invitation",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/event-101-manage-km-390.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "ព័ត៌មានកម្មវិធី"
+      ],
+      "body": "ដូរកម្មវិធី\nDara & Sophea\nSokha’s birthday\nទិដ្ឋភាពទូទៅ\nសំបុត្រអញ្ជើញ\nបញ្ជីភ្ញៀវ\nការឆ្លើយតប\nចំណងដៃ\nគម្រោងថវិកា\nរៀបចំកន្លែងអង្គុយ\nវត្តមាន\nរបាយការណ៍\nការផ្ញើ\nរូបភាព\nកូដ QR\nសារជូនពរ\nការកំណត់\nព័ត៌មានកម្មវិធី\nឈ្មោះកម្មវិធី\n*\nឈ្មោះកូនកំលោះ\n*\nឈ្មោះកូនក្រមុំ\n*\nកាលបរិច្ឆេទ\n*\nម៉ោង\n*\nទីកន្លែង\n*\nអាសយដ្ឋាន (អាចបំពេញពេលក្រោយ)\nតំណ Google Maps (មិនបាច់បំពេញ)\nសារអញ្ជើញ ឬការពិពណ៌នា (មិនបាច់បំពេញ)\nភាសាសំបុត្រអញ្ជើញ\nខ្មែរ\nEnglish\nខ្មែរ / English\nទំនាក់ទំនង (មិនបាច់បំពេញ)\nឈ្មោះទំនាក់ទំនង\nលេខទូរស័ព្ទ\nអ៊ីមែល\nកាលវិភាគ (មិនបាច់បំពេញ)\nបន្ថែមសកម្មភាព\nការមើលសំបុត្រអញ្ជើញ\nឯកជន\nសាធារណៈពេលផ្សាយ\nការពារដោយពាក្យសម្ងាត់\nរក្សាទុក",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/dashboard/invitations/101/edit",
+    "resolved": "/app/events/101/invitation",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/dashboard-invitations-101-edit-km-390.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "ព័ត៌មានកម្មវិធី"
+      ],
+      "body": "ដូរកម្មវិធី\nDara & Sophea\nSokha’s birthday\nទិដ្ឋភាពទូទៅ\nសំបុត្រអញ្ជើញ\nបញ្ជីភ្ញៀវ\nការឆ្លើយតប\nចំណងដៃ\nគម្រោងថវិកា\nរៀបចំកន្លែងអង្គុយ\nវត្តមាន\nរបាយការណ៍\nការផ្ញើ\nរូបភាព\nកូដ QR\nសារជូនពរ\nការកំណត់\nព័ត៌មានកម្មវិធី\nឈ្មោះកម្មវិធី\n*\nឈ្មោះកូនកំលោះ\n*\nឈ្មោះកូនក្រមុំ\n*\nកាលបរិច្ឆេទ\n*\nម៉ោង\n*\nទីកន្លែង\n*\nអាសយដ្ឋាន (អាចបំពេញពេលក្រោយ)\nតំណ Google Maps (មិនបាច់បំពេញ)\nសារអញ្ជើញ ឬការពិពណ៌នា (មិនបាច់បំពេញ)\nភាសាសំបុត្រអញ្ជើញ\nខ្មែរ\nEnglish\nខ្មែរ / English\nទំនាក់ទំនង (មិនបាច់បំពេញ)\nឈ្មោះទំនាក់ទំនង\nលេខទូរស័ព្ទ\nអ៊ីមែល\nកាលវិភាគ (មិនបាច់បំពេញ)\nបន្ថែមសកម្មភាព\nការមើលសំបុត្រអញ្ជើញ\nឯកជន\nសាធារណៈពេលផ្សាយ\nការពារដោយពាក្យសម្ងាត់\nរក្សាទុក",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/dashboard/invitations/101/preview",
+    "resolved": "/app/events/101/preview",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/dashboard-invitations-101-preview-km-390.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Phnom Penh"
+      ],
+      "body": "← កម្មវិធីរបស់ខ្ញុំ\nDara & Sophea\n\n2026-12-20 · Phnom Penh · DRAFT\n\nប្ដូរកម្មវិធី\nDara & Sophea\nSokha’s birthday\nទិដ្ឋភាពទូទៅ\nសំបុត្រអញ្ជើញ\nបញ្ជីភ្ញៀវ\nការឆ្លើយតប\nចំណងដៃ\nគម្រោងថវិកា\nរៀបចំកន្លែងអង្គុយ\nវត្តមាន\nរបាយការណ៍\nការផ្ញើ\nរូបភាព\nកូដ QR\nសារជូនពរ\nការកំណត់\nDara & Sophea\nDraft\nគម្រប\n\nWedding\n\nDara & Sophea\nDara & Sophea\n\nPlease join us for our event\n\n2026-12-20 17:30\n\nPhnom Penh\n\nDara & Sophea",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/dashboard/invitations/design",
+    "resolved": "/dashboard/invitations/design",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/dashboard-invitations-design-km-390.png",
+    "metrics": {
+      "heading": [],
+      "body": " ក្រុមអម (Wedding Party)\n0 នាក់\nបន្ថែមសមាជិក\n\n* បង្ហាញកូនកំលោះកិត្តិយស (Best Man), កូនក្រមុំកិត្តិយស (Maid of Honor), ឬក្រុមគ្រួសារ និងមិត្តភក្ដិជិតស្និទ្ធ\n\nសំណួរញឹកញាប់ (Guest Notes & FAQ)\n0 សំណួរ\nបន្ថែមសំណួរ\n\n* ផ្តល់ព័ត៌មានលម្អិតដូចជាចំណតយានយន្ត ការនាំកុមារតូចៗ ឬពេលវេលាកម្មវិធីដល់ភ្ញៀវ\n\nKHQR ផ្ញើរចំណងដៃ\nKHQR Dollar ($)\nចុចបញ្ចូលរូបភាព\nរូបភាព QR កូដប្រាក់ដុល្លារ ($)\nKHQR Riel (៛)\nចុចបញ្ចូលរូបភាព\nរូបភាព QR កូដប្រាក់រៀល (៛)\nសារអរគុណ\nចំណងជើងសារអរគុណ\nសារអរគុណ\napologyTitle\napologyText\nភាសាធៀបការ\nភាសាបង្ហាញក្នុងសំបុត្រ\nភាសាខ្មែរ (Khmer)\nភាសាអង់គ្លេស (English)\nភាសាទាំងពីរ (Bilingual Khmer + English)",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/dashboard/invitations/edit",
+    "resolved": "/dashboard/invitations/edit",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/dashboard-invitations-edit-km-390.png",
+    "metrics": {
+      "heading": [],
+      "body": " ក្រុមអម (Wedding Party)\n0 នាក់\nបន្ថែមសមាជិក\n\n* បង្ហាញកូនកំលោះកិត្តិយស (Best Man), កូនក្រមុំកិត្តិយស (Maid of Honor), ឬក្រុមគ្រួសារ និងមិត្តភក្ដិជិតស្និទ្ធ\n\nសំណួរញឹកញាប់ (Guest Notes & FAQ)\n0 សំណួរ\nបន្ថែមសំណួរ\n\n* ផ្តល់ព័ត៌មានលម្អិតដូចជាចំណតយានយន្ត ការនាំកុមារតូចៗ ឬពេលវេលាកម្មវិធីដល់ភ្ញៀវ\n\nKHQR ផ្ញើរចំណងដៃ\nKHQR Dollar ($)\nចុចបញ្ចូលរូបភាព\nរូបភាព QR កូដប្រាក់ដុល្លារ ($)\nKHQR Riel (៛)\nចុចបញ្ចូលរូបភាព\nរូបភាព QR កូដប្រាក់រៀល (៛)\nសារអរគុណ\nចំណងជើងសារអរគុណ\nសារអរគុណ\napologyTitle\napologyText\nភាសាធៀបការ\nភាសាបង្ហាញក្នុងសំបុត្រ\nភាសាខ្មែរ (Khmer)\nភាសាអង់គ្លេស (English)\nភាសាទាំងពីរ (Bilingual Khmer + English)",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/login",
+    "resolved": "/login",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/login-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Welcome Back"
+      ],
+      "body": "Back to home\nភាសាខ្មែរ\n/\nEnglish\nWelcome Back\n\nSign in to continue planning your wedding invitations\n\nPhone or Email\nPassword\nSign In\n\nOR CONTINUE WITH\n\nContinue with Google\nបន្តដោយប្រើ​ Google\nContinue with Telegram\nForgot password?\n\nDon't have an account? Create Account\n\nHi there 👋 How can we help you today?",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 2
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/register",
+    "resolved": "/register",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/register-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Create Account"
+      ],
+      "body": "Back to home\nភាសាខ្មែរ\n/\nEnglish\nCreate Account\n\nStart creating your wedding invitations today\n\nFull Name\nPhone Number\nPassword\nConfirm Password\nCreate Account\n\nOR CONTINUE WITH\n\nContinue with Google\nបន្តដោយប្រើ​ Google\nContinue with Telegram\n\nAlready have an account? Sign In\n\nHi there 👋 How can we help you today?",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 2
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/forgot-password",
+    "resolved": "/forgot-password",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/forgot-password-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Forgot your password?"
+      ],
+      "body": "Back to home\nភាសាខ្មែរ\n/\nEnglish\nForgot your password?\n\nEnter your registered email address to receive a reset token.\n\nEmail address\n\nWe will send reset instructions to this email.\n\nSend reset instructions\nBack to sign in\nHi there 👋 How can we help you today?",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 1
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/reset-password",
+    "resolved": "/reset-password",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/reset-password-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Set new password"
+      ],
+      "body": "Back to home\nភាសាខ្មែរ\n/\nEnglish\nSet new password\n\nEnter the reset token from your email and choose a new password.\n\nReset token\nNew password\nConfirm new password\nUpdate password\n← Back to sign in\nHi there 👋 How can we help you today?",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/profile",
+    "resolved": "/app/profile",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-profile-en-1440.png",
+    "metrics": {
+      "heading": [
+        "editTitle",
+        "Linked sign-in identities"
+      ],
+      "body": "My Events\n|\nCreate Event\n|\nPackages\n|\nBrowse Templates\nA\nAudit Host\neditTitle\n\neditSubtitle\n\nA\nchangePhoto\nnewUser\naudit@example.test\nfullNameLabel\nemailLabel\nphoneLabel\nsaveEdit\nLinked sign-in identities\n\nChoose the Google or Telegram identity to link to this signed-in account. No accounts will be merged.\n\nContinue with Google\nបន្តដោយប្រើ​ Google\nContinue with Telegram\nchangePassword\n\nchangePasswordHint\n\ncurrentPassword\nnewPasswordLabel\nconfirmNewPassword\nchangePasswordBtn",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/change-password",
+    "resolved": "/app/change-password",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-change-password-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Change password"
+      ],
+      "body": "My Events\n|\nCreate Event\n|\nPackages\n|\nBrowse Templates\nA\nAudit Host\nChange password\n\nប្តូរលេខសម្ងាត់គណនីរបស់អ្នក\n\nCurrent passwordNew passwordConfirm new passwordChange password",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events",
+    "resolved": "/app/events",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Your Wedding Events"
+      ],
+      "body": "My Events\n|\nCreate Event\n|\nPackages\n|\nBrowse Templates\nA\nAudit Host\nKOUPRENG INVITATIONS\nYour Wedding Events\n\nManage and edit your invitation here\n\n+ Create Event\nSearch events\nStatus\nAll statuses\nDraft\nPublished\nUnpublished\nSort\nNewest\nEvent date\nTitle\nDraft\nDara & Sophea\nDara & Sophea\n2026-12-20 • 17:30:00\n\nអាពាហ៍ពិពាហ៍ · Phnom Penh\n\nDashboard\nបន្តកែសម្រួល / Continue Editing\nមើលជាមុន / Preview\nDraft\nSokha’s birthday\n2026-12-22\n\nខួបកំណើត · Garden House\n\nDashboard\nបន្តកែសម្រួល / Continue Editing\nមើលជាមុន / Preview",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/new",
+    "resolved": "/app/events/new",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-new-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Bring your event together",
+        "What are you celebrating?",
+        "Event essentials",
+        "Make it feel like your event",
+        "Invitations that fit"
+      ],
+      "body": "es\nMinimalist\nInvitation language\nខ្មែរ\nEnglish\nខ្មែរ / English\nTemplate price\nAll prices\nFree\nPremium\nInvitations that fit\n\nThese templates support your event type and invitation language.\n\nEvent Essential\n\nMinimalist\n\nFree\n\nPreview\nSelect\nA personal touch (optional)\n\nYour event starts as a private draft. Add guests and publish from its workspace.\n\nSave draft\nCreate event\n\nYour setup is kept in this tab while you work.\n\nYour event\nType\nWedding\nTitle\nNot added yet\nDate\nNot set yet\nInvitation\nChoose a template\nSubscription\nEligibility checked when saving\n\nOnly a title is needed to save a draft.",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/packages",
+    "resolved": "/app/packages",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-packages-en-1440.png",
+    "metrics": {
+      "heading": [
+        "A plan for your next celebration",
+        "Basic",
+        "Pro",
+        "Premium",
+        "Subscription history"
+      ],
+      "body": "R guest check-in\nSeating arrangements\nChoose plan\nPremium\nPremium\n\nHigher event and guest limits for frequent hosts.\n\n$499.00\n\n365 days · Custom term\n\n999 events\n5,000 guests per event\nPremium templates\nQR guest check-in\nSeating arrangements\nChoose plan\n\nTeam access is not available yet. Events are currently managed by their owner.\n\nSubscription history\n1 orders\nSubscription history\nPackage\tStatus\tAmount\tOrder\tDate\tAction\nBasic\tAwaiting payment\t$0.01\tSUB-AUDIT-041\tOct 20, 2026\tView order\nBefore you choose\nHow long does my plan last?\nHow is payment confirmed?\nCan I continue an existing payment?",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/notifications",
+    "resolved": "/app/notifications",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-notifications-en-1440.png",
+    "metrics": {
+      "heading": [
+        "ការជូនដំណឹង"
+      ],
+      "body": "My Events\n|\nCreate Event\n|\nPackages\n|\nBrowse Templates\nA\nAudit Host\nNotifications\nការជូនដំណឹង\n\nមើលស្ថានភាពការផ្ញើ RSVP ការរំលឹក និងសារប្រព័ន្ធរបស់អ្នក។\n\nMark all read\nUNREAD\n0\nSENT\n0\nDELIVERED\n0\nFAILED\n0\nNo notifications\n\nYou are fully caught up with guest RSVPs, deliveries, and wedding activities.",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/organizations",
+    "resolved": "/app/organizations",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-organizations-en-1440.png",
+    "metrics": {
+      "heading": [
+        "ក្រុមការងារ & Workspaces",
+        "មិនទាន់មានក្រុមការងារនៅឡើយទេ"
+      ],
+      "body": "My Events\n|\nCreate Event\n|\nPackages\n|\nBrowse Templates\nA\nAudit Host\nផ្ទាំងគ្រប់គ្រង\nក្រុមការងារ & Workspaces\nTEAM COLLABORATION\nក្រុមការងារ\n& Workspaces\n\nគ្រប់គ្រងក្រុមការងារ ដៃគូសហការ អ្នករៀបចំការ (Planners) និងបុគ្គលិកកត់ត្រាលុយចងដៃ ឬ Check-in ភ្ញៀវរួមគ្នា។\n\nបង្កើត Workspace ថ្មី\nមិនទាន់មានក្រុមការងារនៅឡើយទេ\n\nបង្កើត Workspace ដំបូងរបស់អ្នក ដើម្បីអញ្ជើញសហការី ដៃគូ ឬបុគ្គលិក និងរៀបចំការងារមង្គលការរួមគ្នាយ៉ាងរលូន។\n\nបង្កើត Workspace ដំបូង (Create Workspace)",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/organizations/11",
+    "resolved": "/app/organizations/11",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-organizations-11-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Audit organization ACTIVE",
+        "បញ្ជីសមាជិកក្រុម (Team Members)"
+      ],
+      "body": "My Events\n|\nCreate Event\n|\nPackages\n|\nBrowse Templates\nA\nAudit Host\nផ្ទាំងគ្រប់គ្រង\nក្រុមការងារ\nAudit organization\nWORKSPACE DETAILS\nAudit organization\nACTIVE\n\nគ្រប់គ្រងសមាជិកក្រុម សិទ្ធិចូលប្រើប្រាស់ និងការងារសហការលើកម្មវិធីការក្នុង Workspace @\n\nសមាជិកសរុប (TOTAL MEMBERS)\n0 នាក់\nសិទ្ធិគ្រប់គ្រង (YOUR ACCESS)\nMember\nបង្កើតនៅថ្ងៃ (CREATED AT)\n—\nបញ្ជីសមាជិកក្រុម (Team Members)\n\nអ្នករៀបចំការ (Planners), បុគ្គលិកកត់ត្រាលុយចងដៃ, និង Staff Check-in ក្នុងក្រុម\n\n0 Members\nមិនទាន់មានសមាជិកក្នុងក្រុមនៅឡើយទេ\n\nអញ្ជើញសហការី ឬបុគ្គលិកដំបូងរបស់អ្នក ដើម្បីចាប់ផ្តើមធ្វើការរួមគ្នា។\n\nអញ្ជើញសមាជិកថ្មី",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101",
+    "resolved": "/app/events/101",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "Wedding Dashboard",
+        "Dara & Sophea"
+      ],
+      "body": "udget & Expenses\n\nUnavailable\n\nUnavailable\nDigital Gifts\n\n1 gifts recorded\n\nUSD 25\nRSVP & Attendance Stats\nView List\n0\n✓ Attending (Yes)\n0\n✗ Declined (No)\n0\n⏳ Pending\nReadiness Checklist\n1/4 Done\nSetup Invitation Details\nCouple names, venue location, and event date\nEdit\nAdd Guest List\nAdd guest names, party count, and table seats\nManage Guests\nSend & Track RSVP\nGuest attendance confirmations\nView RSVP\nManage Wedding Budget\nTrack expenses for venue, catering, and attire\nBudget\nQuick Actions\nTemplates\nGuests\nRSVP\nSeating\nShare\nBudget\nGifts\nReports\nNotifications\nView All\n\nNo new notifications yet",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 5
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/invitation",
+    "resolved": "/app/events/101/invitation",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-invitation-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "Event details"
+      ],
+      "body": "t\n← My Events\nDara & Sophea\n\n2026-12-20 · Phnom Penh · DRAFT\n\nSwitch event\nDara & Sophea\nSokha’s birthday\nOverview\nInvitation\nGuests\nRSVP\nGifts\nBudget\nSeating\nCheck-in\nReports\nDelivery\nMedia\nQR\nWishes\nSettings\nEvent details\nEvent title\n*\nGroom name\n*\nBride name\n*\nEvent date\n*\nEvent time\n*\nVenue\n*\nAddress (optional)\nGoogle Maps link (optional)\nInvitation message or description (optional)\nInvitation language\nខ្មែរ\nEnglish\nខ្មែរ / English\nContact (optional)\nContact name\nPhone\nEmail\nSchedule (optional)\nAdd activity\nInvitation visibility\nPrivate\nPublic when published\nPassword protected\nSave details",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/preview",
+    "resolved": "/app/events/101/preview",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-preview-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Phnom Penh"
+      ],
+      "body": "← My Events\nDara & Sophea\n\n2026-12-20 · Phnom Penh · DRAFT\n\nSwitch event\nDara & Sophea\nSokha’s birthday\nOverview\nInvitation\nGuests\nRSVP\nGifts\nBudget\nSeating\nCheck-in\nReports\nDelivery\nMedia\nQR\nWishes\nSettings\nត្រឡប់\nDara & Sophea\nDraft\nទូរស័ព្ទ\nពេញអេក្រង់\nគម្រប\n\nWedding\n\nDara & Sophea\nDara & Sophea\n\nPlease join us for our event\n\n2026-12-20 17:30\n\nPhnom Penh\n\nDara & Sophea",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/guests",
+    "resolved": "/app/events/101/guests",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-guests-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "Honored Guest Management"
+      ],
+      "body": "eports\nDelivery\nMedia\nQR\nWishes\nSettings\nDARA & SOPHEA\nHonored Guest Management\n\nManage your guest list, personalized invitation QR codes, and RSVP status.\n\n+ Add Guest\n+\n+ Add Guest\nTotal Guests\n1\nTotal Seats / Persons\n2\nSent\n1\nResponded\n1\nAll Groups\nGroom Side\nBride Side\nAll Categories\nHigh School Friend\nCollege Friend\nFriend\nFamily\nCoworker\nOther\n+ Add Guest\nស្កេន Check-in\nExport CSV\nImport\nGUEST NAME *\tCOMPANION NAME\tPHONE\tNUMBER OF SEATS\tSIDE\tSTATUS\tNOTES\tACTIONS\n\t\t\t\t\nGroom Side\nBride Side\n\t\nPending\nSent\nOpened\nResponded\n\t\t\n+ Add\n\n\nSokha\n\t—\t012345678\t2\tGroom Side\t\nRSVP: ATTENDING\nSent\n\t—\t",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 10
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/rsvp",
+    "resolved": "/app/events/101/rsvp",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-rsvp-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "គ្រប់គ្រងការឆ្លើយតប (RSVPs)"
+      ],
+      "body": "y\nMedia\nQR\nWishes\nSettings\nATTENDANCE & RSVP MANAGEMENT\nគ្រប់គ្រងការឆ្លើយតប (RSVPs)\n\nDara & Sophea\n\nត្រឡប់ទៅវិញ / Back\nចូលរួម / Attending\n1\nភ្ញៀវបានបញ្ជាក់ / Confirmed guests\nអវត្តមាន / Declined\n0\nមិនបានចូលរួម / Not attending\nរង់ចាំ / Pending\n0\nរង់ចាំការឆ្លើយតប / Awaiting reply\nសារជូនពរ / Wishes Wall\nចុចមើល\n0\nពាក្យជូនពរពីភ្ញៀវ / Guest wishes\nគ្រប់ស្ថានភាព / All Status\nចូលរួម (Attending)\nអវត្តមាន (Declined)\nរង់ចាំ (Pending)\nឈ្មោះភ្ញៀវ / Guest\tស្ថានភាព / Status\tចំនួនមនុស្ស / Party\tកាលបរិច្ឆេទ / Date\tសារជូនពរ / Wishes\tManage response\n\nភ\nភ្ញៀវកិត្តិយស\n\t\nAttending\n\t\n2 នាក់\n\t—\t—\tEdit RSVPDelete RSVP",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/gifts",
+    "resolved": "/app/events/101/gifts",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-gifts-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "Wedding Gift Records"
+      ],
+      "body": "a\n\n2026-12-20 · Phnom Penh · DRAFT\n\nSwitch event\nDara & Sophea\nSokha’s birthday\nOverview\nInvitation\nGuests\nRSVP\nGifts\nBudget\nSeating\nCheck-in\nReports\nDelivery\nMedia\nQR\nWishes\nSettings\nHEROTAG\nWedding Gift Records\n\nRecord and manage monetary gifts received via Bakong QR, ABA, and Cash accurately.\n\n+ Record New Gift\nTotal Gifts Received\n$25\nTotal Contributors\n1 persons\nAverage per Person\n$25\nHighest Gift Amount\n$25\nContributor Name *\tAmount\tPayment Method\tDate\tWishes / Notes\tActions\n\nType or select guest name...\n\t\nUSD\nKHR\n\t\nBakong QR\nABA\nCash\n\t\t\t\naddItemBtn\n\nSokha\t$25\t\nBakong QR\t—\t—\t\nEdit\nDelete",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/budget",
+    "resolved": "/app/events/101/budget",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-budget-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "Budget Planning & Expenses"
+      ],
+      "body": "ents\nDara & Sophea\n\n2026-12-20 · Phnom Penh · DRAFT\n\nSwitch event\nDara & Sophea\nSokha’s birthday\nOverview\nInvitation\nGuests\nRSVP\nGifts\nBudget\nSeating\nCheck-in\nReports\nDelivery\nMedia\nQR\nWishes\nSettings\nBUDGET & EXPENSE PLANNER\nBudget Planning & Expenses\n\nPlan wedding expenses, record deposits, and monitor your total budget.\n\n+ Add Expense\nTotal Budget Planned\n$0\nTotal Actual Spent\n$0\nRemaining Budget\n$0\nBudget Used %\n%\nAll\nFood & Catering\nDecor & Flowers\nAttire & Makeup\nVenue & Transport\nOther\nNo expense records yet\n\nStart by recording your first wedding expense to track your budget accurately.",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/seating",
+    "resolved": "/app/events/101/seating",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-seating-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "បង្កើតតុថ្មី (Create Table)",
+        "ចាត់ភ្ញៀវចូលតុ (Assign Guest)"
+      ],
+      "body": "GNED)\n0\nមិនទាន់មានតុ (UNASSIGNED)\n0\n🗺️ ប្លង់សាលការ Canva (Interactive Floor Plan)\n📋 បញ្ជីតុ & ចាត់ភ្ញៀវ (List & Forms)\nបង្កើតតុថ្មី (Create Table)\nឈ្មោះតុ (Table Name) *\nប្រភេទសម្គាល់ (Label)\nចំនួនកៅអី (Capacity)\nលំដាប់ (Sort Order)\n➕ បង្កើតតុ (Create table)\nចាត់ភ្ញៀវចូលតុ (Assign Guest)\nជ្រើសរើសភ្ញៀវ (Select Guest) *\n-- ជ្រើសរើសភ្ញៀវ --\nជ្រើសរើសតុ (Select Table) *\n-- ជ្រើសរើសតុ --\nលេខកៅអី (Seat Label)\nចំនួនកៅអី (Seats)\n👤 ដាក់ភ្ញៀវចូលតុ (Assign guest)\nមិនទាន់មានតុនៅឡើយទេ\n\nសូមបង្កើតតុដំបូងនៅផ្ទាំងខាងឆ្វេង ឬចុចចូល «ប្លង់សាលការ Canva» ដើម្បីគូស និងរៀបចំតុលើប្លង់!\n\nបើកផ្ទាំងគូសប្លង់សាលការ Canva",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/check-in",
+    "resolved": "/app/events/101/check-in",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-check-in-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        " Scan token",
+        " បញ្ជីភ្ញៀវ & ស្កេនរហ័ស",
+        " Checked-in guests"
+      ],
+      "body": "g checked in\n0%\n0 / 1 នាក់\nស្កេន QR Code កាមេរ៉ាផ្ទាល់ (Live QR Scanner)\nមិនទាន់បើក (Ready)\n\nប្រើកាមេរ៉ាទូរស័ព្ទ ឬ Webcam កុំព្យូទ័រ ដើម្បីស្កេនកាតអញ្ជើញ QR របស់ភ្ញៀវពេលមកដល់មាត់រោងការ\n\nបើកកាមេរ៉ាស្កេន\nScan token\nScanner Gun / Link\nQR link or token\n ចងដៃ (Gift Amount - Optional)\n$\n៛\nNote\nCheck in\n💡 គន្លឹះ: អាចប្រើកាំភ្លើងបាញ់ Barcode/QR (USB Scanner) បាញ់ចូលកន្លែងនេះ ឬបិទភ្ជាប់ Link ធៀបភ្ញៀវ។\nបញ្ជីភ្ញៀវ & ស្កេនរហ័ស\n1 / 1 នាក់\nទាំងអស់ (1)\nរង់ចាំ (1)\nបានចូល (0)\nGUEST\tCONTACT\tSTATUS\t\n\nS\nSokha\n\t\n012345678\n\t\nWaiting\tCheck in\nChecked-in guests\nសរុប 0 នាក់\nGUEST\tSOURCE\tCHECKED IN\t\n\nNo check-ins yet.",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/qr",
+    "resolved": "/app/events/101/qr",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-qr-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "QR Code សម្រាប់កម្មវិធី"
+      ],
+      "body": "My Events\n|\nCreate Event\n|\nPackages\n|\nBrowse Templates\nA\nAudit Host\n← My Events\nDara & Sophea\n\n2026-12-20 · Phnom Penh · DRAFT\n\nSwitch event\nDara & Sophea\nSokha’s birthday\nOverview\nInvitation\nGuests\nRSVP\nGifts\nBudget\nSeating\nCheck-in\nReports\nDelivery\nMedia\nQR\nWishes\nSettings\nQR Code Management\nQR Code សម្រាប់កម្មវិធី\n\nស្កេន ឬទាញយក QR Code ដើម្បីផ្ញើទៅកាន់ភ្ញៀវ ឬប្រើប្រាស់សម្រាប់ការ Check-in។\n\n📱\n\nQR Code\n\nទាញយក QR Code (PNG)",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/reports",
+    "resolved": "/app/events/101/reports",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-reports-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "របាយការណ៍សង្ខេបចំណូល និងចំណាយកម្មវិធី",
+        "Guest delivery and attendance reports",
+        "តារាងអំណោយ និងចំណូលផ្សេងៗ",
+        "តារាងចំណាយ"
+      ],
+      "body": " KHQR\n$0.00\n0 ៛\nចំណងដៃតាមធនាគារ និង QR\nសាច់ប្រាក់ / Cash\n$0.00\n0 ៛\nចំណងដៃជាសាច់ប្រាក់\nINCOME\nតារាងអំណោយ និងចំណូលផ្សេងៗ\n1 records\nឈ្មោះអ្នកផ្តល់\tក្រុម/ខាង\tចំនួន\tរូបិយប័ណ្ណ\tវិធីបង់ប្រាក់\tកំណត់សម្គាល់\nSokha\tមិនបានកំណត់\t$25.00\tUSD\t—\t—\nEXPENSES\nតារាងចំណាយ\n0 records\nប្រភេទចំណាយ\tអ្នកផ្គត់ផ្គង់\tថវិកាគ្រោង\tចំណាយពិត\tរូបិយប័ណ្ណ\tថ្ងៃបង់ប្រាក់\nមិនមានទិន្នន័យ / No records\n\nកំណត់ត្រាចាស់ដែលមិនមាន currency ត្រូវបង្ហាញជា USD។ ប្រព័ន្ធមិនបម្លែងរវាង USD និង KHR ហើយចំណូលដែលបង្ហាញមានតែអំណោយដែលបានកត់ត្រាក្នុងប្រព័ន្ធ។\n\nអ្នករៀបចំកម្មវិធី\nហត្ថលេខា / ស្នាមមេដៃអ្នករៀបចំ\nម្ចាស់កម្មវិធី\nហត្ថលេខា / ស្នាមមេដៃម្ចាស់កម្មវិធី",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 14
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/settings",
+    "resolved": "/app/events/101/settings",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-settings-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "Event details"
+      ],
+      "body": "t\n← My Events\nDara & Sophea\n\n2026-12-20 · Phnom Penh · DRAFT\n\nSwitch event\nDara & Sophea\nSokha’s birthday\nOverview\nInvitation\nGuests\nRSVP\nGifts\nBudget\nSeating\nCheck-in\nReports\nDelivery\nMedia\nQR\nWishes\nSettings\nEvent details\nEvent title\n*\nGroom name\n*\nBride name\n*\nEvent date\n*\nEvent time\n*\nVenue\n*\nAddress (optional)\nGoogle Maps link (optional)\nInvitation message or description (optional)\nInvitation language\nខ្មែរ\nEnglish\nខ្មែរ / English\nContact (optional)\nContact name\nPhone\nEmail\nSchedule (optional)\nAdd activity\nInvitation visibility\nPrivate\nPublic when published\nPassword protected\nSave details",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/delivery",
+    "resolved": "/app/events/101/delivery",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-delivery-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Email invitation",
+        "Guest delivery",
+        "Audit trail"
+      ],
+      "body": "P\nGifts\nBudget\nSeating\nCheck-in\nReports\nDelivery\nMedia\nQR\nWishes\nSettings\nDELIVERY MANAGEMENT\nDara & Sophea\n\nPrepare guest links, copy share messages, send email invitations, and track delivery events.\n\nGuests\nBack\nInvitation must be published before delivery can be prepared.\nPrepare delivery\nSend reminders\nTotal\n0\nReady\n0\nNot ready\n0\nLink generated\n0\nSent\n0\nFailed\n0\nOpened\n0\nResponded\n0\nEmail invitation\nSubjectMessageSend email to eligible guests\nGuest delivery\nGUEST\tCONTACT\tSTATUS\tINVITATION URL\tLAST SENT\tACTIONS\nNo delivery guests found. Add guests first.\nAudit trail\nNo delivery events yet.",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/media",
+    "resolved": "/app/events/101/media",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-media-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "Invitation Media",
+        "Cover image",
+        "Gallery images",
+        "Video"
+      ],
+      "body": "Reports\nDelivery\nMedia\nQR\nWishes\nSettings\nMEDIA MANAGEMENT\nInvitation Media\n\nManage the images, video, and music that appear on this invitation.\n\nPreview\nDashboard\nCover image\n\nទំហំដែលណែនាំ: 1920x1080px (16:9) ឬ 900x1200px (3:4) | អតិបរមា 5MB (JPG, PNG, WEBP)\n\nUpload cover\nNo file uploaded\nGallery images\n\nទំហំដែលណែនាំ: 1200x900px (4:3) | អតិបរមា 5MB ក្នុងមួយសន្លឹក (JPG, PNG, WEBP)\n\nUpload images\nNo gallery images uploaded\nVideo\n\nទម្រង់ដែលគាំទ្រ: MP4, WebM | អតិបរមា 50MB\n\nUpload video\nNo file uploaded\nBackground music\n\nទម្រង់ដែលគាំទ្រ: MP3, WAV, OGG | អតិបរមា 15MB\n\nUpload music\nNo file uploaded",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/wishes",
+    "resolved": "/app/events/101/wishes",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-wishes-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "ពាក្យជូនពរពីភ្ញៀវ"
+      ],
+      "body": "My Events\n|\nCreate Event\n|\nPackages\n|\nBrowse Templates\nA\nAudit Host\n← My Events\nDara & Sophea\n\n2026-12-20 · Phnom Penh · DRAFT\n\nSwitch event\nDara & Sophea\nSokha’s birthday\nOverview\nInvitation\nGuests\nRSVP\nGifts\nBudget\nSeating\nCheck-in\nReports\nDelivery\nMedia\nQR\nWishes\nSettings\nGuest Messages\nពាក្យជូនពរពីភ្ញៀវ\n\nអាន និងគ្រប់គ្រងសារជូនពរដ៏មានអត្ថន័យពីភ្ញៀវកិត្តិយសទាំងអស់។\n\nមិនទាន់មានពាក្យជូនពរពីភ្ញៀវនៅឡើយទេ។",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/events/101/assistant",
+    "resolved": "/app/events/101/assistant",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-events-101-assistant-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "ជំនួយការសរសេរខ្លឹមសារធៀបការ"
+      ],
+      "body": "្ជើញ រឿងរ៉ាវស្នេហា និងលិខិតផ្លូវការដោយស្វ័យប្រវត្ត និងងាយស្រួល។\n\nជំនួយការសរសេរ (Feature Action)\n*\nInvitation Copy / ខ្លឹមសារធៀប\nLove Story / រឿងរ៉ាវស្នេហា\nFormal Invitation / លិខិតផ្លូវការ\nKhmer ↔ English / ប្រែភាសា\nTimeline Suggestion / កម្មវិធីបុណ្យ\nឈ្មោះគូស្វាមីភរិយា / Couple Names\nឈ្មោះម្ចាស់ដើមការ / Host Name\nថ្ងៃខែឆ្នាំ / Event Date\nទីតាំង / Venue\nភាសា / Language\nភាសាខ្មែរ (Khmer)\nEnglish\nទម្រង់សំណេរ / Tone\nFormal / ផ្លូវការ\nWarm & Heartfelt / កក់ក្តៅ\nRomantic / រ៉ូមែនទិក\nTraditional Khmer / បុរាណខ្មែរ\nModern & Concise / ទាន់សម័យ\nព័ត៌មានបន្ថែម / Extra Notes\nរៀបចំអត្ថបទ / Generate Content",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/templates",
+    "resolved": "/templates",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/templates-en-1440.png",
+    "metrics": {
+      "heading": [
+        "A design that feels like you."
+      ],
+      "body": "shboard\n\nThe invitation collection\n\nA design that feels like you.\n\nPreview the complete invitation, then choose a design for your celebration.\n\nAll\nMinimalist\nSearch designs\nPreview design\n\nMinimalist\n\nEvent Essential\n\nExplore the invitation, celebration program and guest details in the full demo.\n\nFree design\n\nUse design\nPreview\nKoupreng\n\nThoughtful invitations and guest management for your celebration.\n\nExplore\n\nInvitation designs\nPackages & access\nVenues\n\nHere for you\n\nContact us\nHelp with your invitation\nLog in\n© 2026 Koupreng. All rights reserved.\nMade with care for Cambodian celebrations",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 1
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/templates/browse",
+    "resolved": "/templates/browse",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/templates-browse-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Browse Wedding Templates"
+      ],
+      "body": "My Events\n|\nCreate Event\n|\nPackages\n|\nBrowse Templates\nA\nAudit Host\nWEDDING TEMPLATE CATALOG\nBrowse Wedding Templates\n\nChoose from our collection of elegant, modern, and traditional digital wedding invitations.\n\nTotal Templates\n1\nFree Templates\n1\nPremium Templates\n0\nSearch Results\n1\nAll\nPaid Templates\nFree\nPremium\nModern\nTraditional\nFloral\nLuxury\nMinimalist\nFree\nMinimalist\nEvent Essential\nUse Template\nPreview\nHi there 👋 How can we help you today?",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/templates/event-essential/preview",
+    "resolved": "/templates/event-essential/preview",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/templates-event-essential-preview-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Event Essential"
+      ],
+      "body": "← ត្រឡប់\n← ត្រឡប់\n\nផ្សេងៗ\n\nEvent Essential\n\nសូមអញ្ជើញចូលរួមកម្មវិធីរបស់យើង\n\nសូមគោរពអញ្ជើញ ឯកឧត្តម លោកជំទាវ លោក លោកស្រី...\n\nបង្កើតកម្មវិធី",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/templates/30/checkout",
+    "resolved": "/templates/30/checkout",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/templates-30-checkout-en-1440.png",
+    "metrics": {
+      "heading": [
+        "ទូទាត់ប្រាក់ គំរូធៀបការពិសេស",
+        "Event Essential"
+      ],
+      "body": ")\n$0.00\nទឹកប្រាក់សរុប (Total Due)\nរួមបញ្ចូលទាំងសិទ្ធិប្រើប្រាស់ពេញលេញ\nទូទាត់តាម ABA KHQR ( )\n\nCheckout is not available for this template yet. You can still preview it.\n\nបើកដំណើរការក្រោយផ្ទៀងផ្ទាត់ការទូទាត់ (Access after payment verification)\nសុវត្ថិភាពខ្ពស់ 100% តាមប្រព័ន្ធធនាគារជាតិ Bakong\nKoupreng\n\nThoughtful invitations and guest management for your celebration.\n\nExplore\n\nInvitation designs\nPackages & access\nVenues\n\nHere for you\n\nContact us\nHelp with your invitation\nLog in\n© 2026 Koupreng. All rights reserved.\nMade with care for Cambodian celebrations\nHi there 👋 How can we help you today?",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/w/audit-event",
+    "resolved": "/w/audit-event",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/w-audit-event-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Phnom Penh",
+        "Schedule",
+        "Will you attend?"
+      ],
+      "body": "Wedding\n\nDara & Sophea\nDara & Sophea\n\nPlease join us for our event\n\n2026-12-20 17:30\n\nPhnom Penh\n\nPlease join our celebration\n\nSchedule\n\n17:30 · Guest welcome\n\nRSVP\n\nWill you attend?\nGuest name\nPhone\nResponse\nAttending\nNot attending\nMaybe\nAttendee count\nMessage\nSubmit RSVP",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 1
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/i/audit-event?token=audit-guest",
+    "resolved": "/i/audit-event?token=audit-guest",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/i-audit-event-token-audit-guest-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Phnom Penh",
+        "Schedule",
+        "Will you attend?"
+      ],
+      "body": "Wedding\n\nDara & Sophea\nDara & Sophea\n\nPlease join us for our event\n\n2026-12-20 17:30\n\nPhnom Penh\n\nPlease join our celebration\n\nSchedule\n\n17:30 · Guest welcome\n\nRSVP\n\nWill you attend?\nResponse\nAttending\nNot attending\nMaybe\nAttendee count\nMessage\nSubmit RSVP",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 1
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/payments/AUDIT/status",
+    "resolved": "/payments/AUDIT/status",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/payments-AUDIT-status-en-1440.png",
+    "metrics": {
+      "heading": [
+        "ស្កេនទូទាត់ ABA KHQR",
+        "Event Essential"
+      ],
+      "body": "E)\nCOPY\nAUDIT\nInternal checkout ID: —\n\n👉 របៀបទូទាត់៖ Scan this link with your camera or open the ABA PayWay link below.\n\nExpected: $10.00. Include the order code in the remark if the bank offers that field. Fixed links may not retain it.\n\nបន្ទាប់ពីផ្ទេររួច៖ សូមផ្ញើសំណើពិនិត្យការទូទាត់។ សិទ្ធិប្រើគំរូនឹងបើកក្រោយការផ្ទៀងផ្ទាត់ពីប្រព័ន្ធ ឬអ្នកគ្រប់គ្រង។ (Access follows verified payment confirmation.)\n\nផ្ទៀងផ្ទាត់ការទូទាត់ — ស្នើពិនិត្យ (Request payment review)\nCheck Status\nជ្រើសរើសគំរូផ្សេង\n⬅️ ផ្ទាំងគ្រប់គ្រង (Dashboard)•ស្វែងរកគំរូធៀបការ (Browse Templates)\nHi there 👋 How can we help you today?",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 1
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/payments/success",
+    "resolved": "/payments/success",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/payments-success-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Payment is being verified. Please wait."
+      ],
+      "body": "PAYMENT RETURN\nPayment is being verified. Please wait.\n\nBackend callback verification is required before access unlocks.\n\nView paid templatesBrowse templates\nHi there 👋 How can we help you today?",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/payments/return",
+    "resolved": "/payments/return",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/payments-return-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Payment is being verified. Please wait."
+      ],
+      "body": "PAYMENT RETURN\nPayment is being verified. Please wait.\n\nBackend callback verification is required before access unlocks.\n\nView paid templatesBrowse templates\nHi there 👋 How can we help you today?",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/payments/cancel",
+    "resolved": "/payments/cancel",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/payments-cancel-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Payment was cancelled or not completed."
+      ],
+      "body": "PAYMENT CANCELLED\nPayment was cancelled or not completed.\n\nNo template access was unlocked.\n\nBrowse Templates\nHi there 👋 How can we help you today?",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/",
+    "resolved": "/",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/home-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Invitations craftedaround your story.",
+        "Curated designs for your wedding day",
+        "The details they need.\nThe welcome you imagined.",
+        "Your invitation.\nYour guests. Together.",
+        "Three steps.\nOne special day."
+      ],
+      "body": "ium design?\nHow is payment confirmed?\nA little guidance goes a long way.\n\nAsk about designs, packages or setting up your invitation. Tell our team what you’re planning.\n\nContact the team\nBegin your celebration\nwith a thoughtful invitation.\n\nChoose a design you love and make it part of your story.\n\nExplore templates\nStart creating\nKoupreng\n\nThoughtful invitations and guest management for your celebration.\n\nExplore\n\nInvitation designs\nPackages & access\nVenues\n\nHere for you\n\nContact us\nHelp with your invitation\nLog in\n© 2026 Koupreng. All rights reserved.\nMade with care for Cambodian celebrations",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 6
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/pricing",
+    "resolved": "/pricing",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/pricing-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Transparent pricing\nfor memorable celebrations.",
+        "Basic",
+        "Pro",
+        "Premium",
+        "Compare the details"
+      ],
+      "body": "ges have their own access details. Review your account information before creating an invitation or confirming a payment.\n\nDoes a preview include premium access?\nHow do packages and individual designs differ?\nWhen is access activated?\nPlanning something specific?\n\nTell us about your event and the tools you need.\n\nContact the team\nKoupreng\n\nThoughtful invitations and guest management for your celebration.\n\nExplore\n\nInvitation designs\nPackages & access\nVenues\n\nHere for you\n\nContact us\nHelp with your invitation\nLog in\n© 2026 Koupreng. All rights reserved.\nMade with care for Cambodian celebrations",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/contact",
+    "resolved": "/contact",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/contact-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Have a question?\nWe’re happy to help.",
+        "Send us a message",
+        "Where can we help?"
+      ],
+      "body": "ervice packages\nHelp using Koupreng\nMessage *\n\nA little context about your event helps us understand what you need.\n\nSend message\nWhere can we help?\nFind a design for your event\nExplore designs and complete demos\nUnderstand packages & access\nReview limits and included tools\nGet help with Koupreng\nTell us what you need a hand with\nKoupreng\n\nThoughtful invitations and guest management for your celebration.\n\nExplore\n\nInvitation designs\nPackages & access\nVenues\n\nHere for you\n\nContact us\nHelp with your invitation\nLog in\n© 2026 Koupreng. All rights reserved.\nMade with care for Cambodian celebrations",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/venues",
+    "resolved": "/venues",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/venues-en-1440.png",
+    "metrics": {
+      "heading": [
+        "FindYour wedding venue"
+      ],
+      "body": "city: 300?1,500 guests\n\n💰\nPrice range:\n$$$\n\nView details\nLUXURY\nELEGANT\nSokha Residence Hotel\n\n📍\nSiem Reap\n\n👥\nCapacity: 200?800 guests\n\n💰\nPrice range:\n$$$$\n\nView details\nBATTAMBANG\nAFFORDABLE\nClassy Hotel & Spa\n\n📍\nBattambang\n\n👥\nCapacity: 150?500 guests\n\n💰\nPrice range:\n$$\n\nView details\nKoupreng\n\nThoughtful invitations and guest management for your celebration.\n\nExplore\n\nInvitation designs\nPackages & access\nVenues\n\nHere for you\n\nContact us\nHelp with your invitation\nLog in\n© 2026 Koupreng. All rights reserved.\nMade with care for Cambodian celebrations\nHi there 👋 How can we help you today?",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/venues/11",
+    "resolved": "/venues/11",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/venues-11-en-1440.png",
+    "metrics": {
+      "heading": [
+        "FindYour wedding venue"
+      ],
+      "body": "city: 300?1,500 guests\n\n💰\nPrice range:\n$$$\n\nView details\nLUXURY\nELEGANT\nSokha Residence Hotel\n\n📍\nSiem Reap\n\n👥\nCapacity: 200?800 guests\n\n💰\nPrice range:\n$$$$\n\nView details\nBATTAMBANG\nAFFORDABLE\nClassy Hotel & Spa\n\n📍\nBattambang\n\n👥\nCapacity: 150?500 guests\n\n💰\nPrice range:\n$$\n\nView details\nKoupreng\n\nThoughtful invitations and guest management for your celebration.\n\nExplore\n\nInvitation designs\nPackages & access\nVenues\n\nHere for you\n\nContact us\nHelp with your invitation\nLog in\n© 2026 Koupreng. All rights reserved.\nMade with care for Cambodian celebrations\nHi there 👋 How can we help you today?",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/dashboard/invitations/101/guests",
+    "resolved": "/app/events/101/guests",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/dashboard-invitations-101-guests-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "Honored Guest Management"
+      ],
+      "body": "eports\nDelivery\nMedia\nQR\nWishes\nSettings\nDARA & SOPHEA\nHonored Guest Management\n\nManage your guest list, personalized invitation QR codes, and RSVP status.\n\n+ Add Guest\n+\n+ Add Guest\nTotal Guests\n1\nTotal Seats / Persons\n2\nSent\n1\nResponded\n1\nAll Groups\nGroom Side\nBride Side\nAll Categories\nHigh School Friend\nCollege Friend\nFriend\nFamily\nCoworker\nOther\n+ Add Guest\nស្កេន Check-in\nExport CSV\nImport\nGUEST NAME *\tCOMPANION NAME\tPHONE\tNUMBER OF SEATS\tSIDE\tSTATUS\tNOTES\tACTIONS\n\t\t\t\t\nGroom Side\nBride Side\n\t\nPending\nSent\nOpened\nResponded\n\t\t\n+ Add\n\n\nSokha\n\t—\t012345678\t2\tGroom Side\t\nRSVP: ATTENDING\nSent\n\t—\t",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 10
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/dashboard/expenses",
+    "resolved": "/app/events?module=budget",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/dashboard-expenses-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Your Wedding Events"
+      ],
+      "body": "My Events\n|\nCreate Event\n|\nPackages\n|\nBrowse Templates\nA\nAudit Host\nKOUPRENG INVITATIONS\nYour Wedding Events\n\nManage and edit your invitation here\n\n+ Create Event\nSearch events\nStatus\nAll statuses\nDraft\nPublished\nUnpublished\nSort\nNewest\nEvent date\nTitle\nDraft\nDara & Sophea\nDara & Sophea\n2026-12-20 • 17:30:00\n\nអាពាហ៍ពិពាហ៍ · Phnom Penh\n\nDashboard\nបន្តកែសម្រួល / Continue Editing\nមើលជាមុន / Preview\nDraft\nSokha’s birthday\n2026-12-22\n\nខួបកំណើត · Garden House\n\nDashboard\nបន្តកែសម្រួល / Continue Editing\nមើលជាមុន / Preview",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/create/wedding",
+    "resolved": "/app/events/new",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/create-wedding-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Bring your event together",
+        "What are you celebrating?",
+        "Event essentials",
+        "Make it feel like your event",
+        "Invitations that fit"
+      ],
+      "body": "es\nMinimalist\nInvitation language\nខ្មែរ\nEnglish\nខ្មែរ / English\nTemplate price\nAll prices\nFree\nPremium\nInvitations that fit\n\nThese templates support your event type and invitation language.\n\nEvent Essential\n\nMinimalist\n\nFree\n\nPreview\nSelect\nA personal touch (optional)\n\nYour event starts as a private draft. Add guests and publish from its workspace.\n\nSave draft\nCreate event\n\nYour setup is kept in this tab while you work.\n\nYour event\nType\nWedding\nTitle\nNot added yet\nDate\nNot set yet\nInvitation\nChoose a template\nSubscription\nEligibility checked when saving\n\nOnly a title is needed to save a draft.",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/about",
+    "resolved": "/contact",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/about-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Have a question?\nWe’re happy to help.",
+        "Send us a message",
+        "Where can we help?"
+      ],
+      "body": "ervice packages\nHelp using Koupreng\nMessage *\n\nA little context about your event helps us understand what you need.\n\nSend message\nWhere can we help?\nFind a design for your event\nExplore designs and complete demos\nUnderstand packages & access\nReview limits and included tools\nGet help with Koupreng\nTell us what you need a hand with\nKoupreng\n\nThoughtful invitations and guest management for your celebration.\n\nExplore\n\nInvitation designs\nPackages & access\nVenues\n\nHere for you\n\nContact us\nHelp with your invitation\nLog in\n© 2026 Koupreng. All rights reserved.\nMade with care for Cambodian celebrations",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/help",
+    "resolved": "/contact",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/help-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Have a question?\nWe’re happy to help.",
+        "Send us a message",
+        "Where can we help?"
+      ],
+      "body": "ervice packages\nHelp using Koupreng\nMessage *\n\nA little context about your event helps us understand what you need.\n\nSend message\nWhere can we help?\nFind a design for your event\nExplore designs and complete demos\nUnderstand packages & access\nReview limits and included tools\nGet help with Koupreng\nTell us what you need a hand with\nKoupreng\n\nThoughtful invitations and guest management for your celebration.\n\nExplore\n\nInvitation designs\nPackages & access\nVenues\n\nHere for you\n\nContact us\nHelp with your invitation\nLog in\n© 2026 Koupreng. All rights reserved.\nMade with care for Cambodian celebrations",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/does-not-exist",
+    "resolved": "/does-not-exist",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/does-not-exist-en-1440.png",
+    "metrics": {
+      "heading": [
+        "404"
+      ],
+      "body": "404\n\nមិនមានទំព័រនេះទេ\n\nត្រឡប់ទៅទំព័រដើម\nHi there 👋 How can we help you today?",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/event/ux-local-draft",
+    "resolved": "/event/ux-local-draft",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/event-ux-local-draft-en-1440.png",
+    "metrics": {
+      "heading": [
+        "មិនរកឃើញ Draft"
+      ],
+      "body": "មិនរកឃើញ Draft\n\nDraft ID: ux-local-draft\n\nចាប់ផ្ដើមថ្មី",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/preview/ux-local-draft",
+    "resolved": "/preview/ux-local-draft",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/preview-ux-local-draft-en-1440.png",
+    "metrics": {
+      "heading": [
+        "មិនរកឃើញ Draft"
+      ],
+      "body": "មិនរកឃើញ Draft\n\nDraft ID: ux-local-draft\n\nចាប់ផ្ដើមថ្មី",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/create/wedding/101",
+    "resolved": "/app/events/101/invitation",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/create-wedding-101-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "Event details"
+      ],
+      "body": "t\n← My Events\nDara & Sophea\n\n2026-12-20 · Phnom Penh · DRAFT\n\nSwitch event\nDara & Sophea\nSokha’s birthday\nOverview\nInvitation\nGuests\nRSVP\nGifts\nBudget\nSeating\nCheck-in\nReports\nDelivery\nMedia\nQR\nWishes\nSettings\nEvent details\nEvent title\n*\nGroom name\n*\nBride name\n*\nEvent date\n*\nEvent time\n*\nVenue\n*\nAddress (optional)\nGoogle Maps link (optional)\nInvitation message or description (optional)\nInvitation language\nខ្មែរ\nEnglish\nខ្មែរ / English\nContact (optional)\nContact name\nPhone\nEmail\nSchedule (optional)\nAdd activity\nInvitation visibility\nPrivate\nPublic when published\nPassword protected\nSave details",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/event/101/manage",
+    "resolved": "/app/events/101/invitation",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/event-101-manage-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "Event details"
+      ],
+      "body": "t\n← My Events\nDara & Sophea\n\n2026-12-20 · Phnom Penh · DRAFT\n\nSwitch event\nDara & Sophea\nSokha’s birthday\nOverview\nInvitation\nGuests\nRSVP\nGifts\nBudget\nSeating\nCheck-in\nReports\nDelivery\nMedia\nQR\nWishes\nSettings\nEvent details\nEvent title\n*\nGroom name\n*\nBride name\n*\nEvent date\n*\nEvent time\n*\nVenue\n*\nAddress (optional)\nGoogle Maps link (optional)\nInvitation message or description (optional)\nInvitation language\nខ្មែរ\nEnglish\nខ្មែរ / English\nContact (optional)\nContact name\nPhone\nEmail\nSchedule (optional)\nAdd activity\nInvitation visibility\nPrivate\nPublic when published\nPassword protected\nSave details",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/dashboard/invitations/101/edit",
+    "resolved": "/app/events/101/invitation",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/dashboard-invitations-101-edit-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "Event details"
+      ],
+      "body": "t\n← My Events\nDara & Sophea\n\n2026-12-20 · Phnom Penh · DRAFT\n\nSwitch event\nDara & Sophea\nSokha’s birthday\nOverview\nInvitation\nGuests\nRSVP\nGifts\nBudget\nSeating\nCheck-in\nReports\nDelivery\nMedia\nQR\nWishes\nSettings\nEvent details\nEvent title\n*\nGroom name\n*\nBride name\n*\nEvent date\n*\nEvent time\n*\nVenue\n*\nAddress (optional)\nGoogle Maps link (optional)\nInvitation message or description (optional)\nInvitation language\nខ្មែរ\nEnglish\nខ្មែរ / English\nContact (optional)\nContact name\nPhone\nEmail\nSchedule (optional)\nAdd activity\nInvitation visibility\nPrivate\nPublic when published\nPassword protected\nSave details",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/dashboard/invitations/101/preview",
+    "resolved": "/app/events/101/preview",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/dashboard-invitations-101-preview-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Phnom Penh"
+      ],
+      "body": "← My Events\nDara & Sophea\n\n2026-12-20 · Phnom Penh · DRAFT\n\nSwitch event\nDara & Sophea\nSokha’s birthday\nOverview\nInvitation\nGuests\nRSVP\nGifts\nBudget\nSeating\nCheck-in\nReports\nDelivery\nMedia\nQR\nWishes\nSettings\nត្រឡប់\nDara & Sophea\nDraft\nទូរស័ព្ទ\nពេញអេក្រង់\nគម្រប\n\nWedding\n\nDara & Sophea\nDara & Sophea\n\nPlease join us for our event\n\n2026-12-20 17:30\n\nPhnom Penh\n\nDara & Sophea",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/dashboard/invitations/design",
+    "resolved": "/dashboard/invitations/design",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/dashboard-invitations-design-en-1440.png",
+    "metrics": {
+      "heading": [],
+      "body": "Maid of Honor), ឬក្រុមគ្រួសារ និងមិត្តភក្ដិជិតស្និទ្ធ\n\nសំណួរញឹកញាប់ (Guest Notes & FAQ)\n0 សំណួរ\nបន្ថែមសំណួរ\n\n* ផ្តល់ព័ត៌មានលម្អិតដូចជាចំណតយានយន្ត ការនាំកុមារតូចៗ ឬពេលវេលាកម្មវិធីដល់ភ្ញៀវ\n\nDigital Gift KHQR\nKHQR Dollar ($)\nចុចបញ្ចូលរូបភាព\nរូបភាព QR កូដប្រាក់ដុល្លារ ($)\nKHQR Riel (៛)\nចុចបញ្ចូលរូបភាព\nរូបភាព QR កូដប្រាក់រៀល (៛)\nThank You Message\nThank You Title\nThank You Body\napologyTitle\napologyText\nInvitation Display Language\nភាសាបង្ហាញក្នុងសំបុត្រ\nភាសាខ្មែរ (Khmer)\nភាសាអង់គ្លេស (English)\nភាសាទាំងពីរ (Bilingual Khmer + English)\n◀\nLive Preview\nសួនរាជហង្សខ្មែរ\nស្រោមសំបុត្រ (Cover)\nមាតិកាពេញ (Full)",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/dashboard/invitations/edit",
+    "resolved": "/dashboard/invitations/edit",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/dashboard-invitations-edit-en-1440.png",
+    "metrics": {
+      "heading": [],
+      "body": "Maid of Honor), ឬក្រុមគ្រួសារ និងមិត្តភក្ដិជិតស្និទ្ធ\n\nសំណួរញឹកញាប់ (Guest Notes & FAQ)\n0 សំណួរ\nបន្ថែមសំណួរ\n\n* ផ្តល់ព័ត៌មានលម្អិតដូចជាចំណតយានយន្ត ការនាំកុមារតូចៗ ឬពេលវេលាកម្មវិធីដល់ភ្ញៀវ\n\nDigital Gift KHQR\nKHQR Dollar ($)\nចុចបញ្ចូលរូបភាព\nរូបភាព QR កូដប្រាក់ដុល្លារ ($)\nKHQR Riel (៛)\nចុចបញ្ចូលរូបភាព\nរូបភាព QR កូដប្រាក់រៀល (៛)\nThank You Message\nThank You Title\nThank You Body\napologyTitle\napologyText\nInvitation Display Language\nភាសាបង្ហាញក្នុងសំបុត្រ\nភាសាខ្មែរ (Khmer)\nភាសាអង់គ្លេស (English)\nភាសាទាំងពីរ (Bilingual Khmer + English)\n◀\nLive Preview\nសួនរាជហង្សខ្មែរ\nស្រោមសំបុត្រ (Cover)\nមាតិកាពេញ (Full)",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/templates/browse/event-essential",
+    "resolved": "/templates/browse/event-essential",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/templates-browse-event-essential-km-390.png",
+    "metrics": {
+      "heading": [
+        "សូមអញ្ជើញចូលរួម"
+      ],
+      "body": "← ត្រឡប់\n\nផ្សេងៗ\n\nសូមអញ្ជើញចូលរួម\n\nសូមអញ្ជើញចូលរួមកម្មវិធីរបស់យើង\n\nបង្កើតកម្មវិធី\nសួស្តី 👋 តើមានអ្វីឱ្យយើងខ្ញុំជួយទេ ថ្ងៃនេះ?",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/templates/event-essential",
+    "resolved": "/templates/event-essential",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/templates-event-essential-km-390.png",
+    "metrics": {
+      "heading": [
+        "សូមអញ្ជើញចូលរួម"
+      ],
+      "body": "← ត្រឡប់\n\nផ្សេងៗ\n\nសូមអញ្ជើញចូលរួម\n\nសូមអញ្ជើញចូលរួមកម្មវិធីរបស់យើង\n\nបង្កើតកម្មវិធី",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/templates/event-essential/demo",
+    "resolved": "/templates/event-essential/demo",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/templates-event-essential-demo-km-390.png",
+    "metrics": {
+      "heading": [
+        "សូមអញ្ជើញចូលរួម"
+      ],
+      "body": "← ត្រឡប់\n\nផ្សេងៗ\n\nសូមអញ្ជើញចូលរួម\n\nសូមអញ្ជើញចូលរួមកម្មវិធីរបស់យើង\n\nបង្កើតកម្មវិធី",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/templates/paid",
+    "resolved": "/app/templates/paid",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-templates-paid-km-390.png",
+    "metrics": {
+      "heading": [
+        "គំរូធៀបការ បានទិញរួច",
+        "មិនទាន់មានគំរូដែលបានទិញនៅឡើយទេ"
+      ],
+      "body": "TIME ACCESS\nគំរូធៀបការ\nបានទិញរួច\n\nបញ្ជីគំរូ Premium ដែលអ្នកបានទូទាត់ប្រាក់ជោគជ័យ។ អ្នកអាចជ្រើសរើសដើម្បីចាប់ផ្តើមបង្កើតធៀបការមង្គលការបានគ្រប់ពេលវេលា។\n\nស្វែងរកគំរូថ្មីៗ\nមិនទាន់មានគំរូដែលបានទិញនៅឡើយទេ\n\nលោកអ្នកមិនទាន់មានគំរូ Premium ណាមួយឡើយ។ លោកអ្នកអាចជ្រើសរើស គំរូឥតគិតថ្លៃ (Free) ដើម្បីចាប់ផ្តើមបង្កើតធៀបការភ្លាមៗ ឬជ្រើសរើសទិញ គំរូ Premium ខាងក្រោម៖\n\nមើលគំរូទាំងអស់ក្នុង Catalog (Browse All)\n✨ គំរូធៀបការណែនាំសម្រាប់អ្នក (Suggested Templates)\n\nជ្រើសរើសគំរូឥតគិតថ្លៃ (Free) ឬគំរូ Premium ដើម្បីចាប់ផ្តើម\n\nមើលទាំងអស់ក្នុង Catalog →\nFREE\nMINIMALIST\nMINIMALIST\nEvent Essential\nប្រើគំរូឥតគិតថ្លៃ (Free)\nមើល",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/payments",
+    "resolved": "/app/payments",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-payments-km-390.png",
+    "metrics": {
+      "heading": [
+        "Payment history"
+      ],
+      "body": "A\nកែប្រែប្រវត្តិរូប\nកម្មវិធីរបស់ខ្ញុំ\nបង្កើតកម្មវិធី\nកញ្ចប់សេវាកម្ម\nស្វែងរកគំរូ\nគំរូដែលបានទិញ\nប្រវត្តិការទូទាត់\nចាកចេញ\nPAYMENTS\nPayment history\n\nReview template payments, pending orders, and receipts.\n\nORDER\tITEM\tSTATUS\tAMOUNT\tCREATED\t\nAUDIT\tEvent Essential\nTemplate\n\t\nPaid\n\t$10.00\tOct 20, 2026, 3:30 PM\tReceipt",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [
+        {
+          "tag": "TABLE",
+          "class": "enterprise-table",
+          "text": "OrderItemStatusAmountCreatedAUDITEvent EssentialTemplatePaid$10.00Oct "
+        }
+      ],
+      "smallText": 6
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/payments/AUDIT",
+    "resolved": "/app/payments/AUDIT",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-ui/routes/app-payments-AUDIT-km-390.png",
+    "metrics": {
+      "heading": [
+        "RECEIPT-AUDIT",
+        "Event Essential"
+      ],
+      "body": "A\nកែប្រែប្រវត្តិរូប\nកម្មវិធីរបស់ខ្ញុំ\nបង្កើតកម្មវិធី\nកញ្ចប់សេវាកម្ម\nស្វែងរកគំរូ\nគំរូដែលបានទិញ\nប្រវត្តិការទូទាត់\nចាកចេញ\nRECEIPT\nRECEIPT-AUDIT\n\nReceipt generated from the verified payment order.\n\nPayment history\nEvent Essential\n\nTemplate\n\nOrder code\nAUDIT\nStatus\nPAID\nCustomer\nAudit Host\nAmount\n$10.00\nProvider\nABA_PAYWAY\nPaid at\nOct 20, 2026, 3:35 PM\nIssued at\nOct 20, 2026, 3:35 PM",
+      "documentWidth": 390,
+      "width": 390,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/templates/browse/event-essential",
+    "resolved": "/templates/browse/event-essential",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/templates-browse-event-essential-en-1440.png",
+    "metrics": {
+      "heading": [
+        "You are invited"
+      ],
+      "body": "← Back\n\nOther\n\nYou are invited\n\nPlease join us for our event\n\nCreate event\nHi there 👋 How can we help you today?",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/templates/event-essential",
+    "resolved": "/templates/event-essential",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/templates-event-essential-en-1440.png",
+    "metrics": {
+      "heading": [
+        "You are invited"
+      ],
+      "body": "← Back\n\nOther\n\nYou are invited\n\nPlease join us for our event\n\nCreate event",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/templates/event-essential/demo",
+    "resolved": "/templates/event-essential/demo",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/templates-event-essential-demo-en-1440.png",
+    "metrics": {
+      "heading": [
+        "You are invited"
+      ],
+      "body": "← Back\n\nOther\n\nYou are invited\n\nPlease join us for our event\n\nCreate event",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/templates/paid",
+    "resolved": "/app/templates/paid",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-templates-paid-en-1440.png",
+    "metrics": {
+      "heading": [
+        "គំរូធៀបការ បានទិញរួច",
+        "មិនទាន់មានគំរូដែលបានទិញនៅឡើយទេ"
+      ],
+      "body": "TIME ACCESS\nគំរូធៀបការ\nបានទិញរួច\n\nបញ្ជីគំរូ Premium ដែលអ្នកបានទូទាត់ប្រាក់ជោគជ័យ។ អ្នកអាចជ្រើសរើសដើម្បីចាប់ផ្តើមបង្កើតធៀបការមង្គលការបានគ្រប់ពេលវេលា។\n\nស្វែងរកគំរូថ្មីៗ\nមិនទាន់មានគំរូដែលបានទិញនៅឡើយទេ\n\nលោកអ្នកមិនទាន់មានគំរូ Premium ណាមួយឡើយ។ លោកអ្នកអាចជ្រើសរើស គំរូឥតគិតថ្លៃ (Free) ដើម្បីចាប់ផ្តើមបង្កើតធៀបការភ្លាមៗ ឬជ្រើសរើសទិញ គំរូ Premium ខាងក្រោម៖\n\nមើលគំរូទាំងអស់ក្នុង Catalog (Browse All)\n✨ គំរូធៀបការណែនាំសម្រាប់អ្នក (Suggested Templates)\n\nជ្រើសរើសគំរូឥតគិតថ្លៃ (Free) ឬគំរូ Premium ដើម្បីចាប់ផ្តើម\n\nមើលទាំងអស់ក្នុង Catalog →\nFREE\nMINIMALIST\nMINIMALIST\nEvent Essential\nប្រើគំរូឥតគិតថ្លៃ (Free)\nមើល",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/payments",
+    "resolved": "/app/payments",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-payments-en-1440.png",
+    "metrics": {
+      "heading": [
+        "Payment history"
+      ],
+      "body": "My Events\n|\nCreate Event\n|\nPackages\n|\nBrowse Templates\nA\nAudit Host\nPAYMENTS\nPayment history\n\nReview template payments, pending orders, and receipts.\n\nORDER\tITEM\tSTATUS\tAMOUNT\tCREATED\t\nAUDIT\tEvent Essential\nTemplate\n\t\nPaid\n\t$10.00\tOct 20, 2026, 3:30 PM\tReceipt",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 6
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "path": "/app/payments/AUDIT",
+    "resolved": "/app/payments/AUDIT",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-ui/routes/app-payments-AUDIT-en-1440.png",
+    "metrics": {
+      "heading": [
+        "RECEIPT-AUDIT",
+        "Event Essential"
+      ],
+      "body": "My Events\n|\nCreate Event\n|\nPackages\n|\nBrowse Templates\nA\nAudit Host\nRECEIPT\nRECEIPT-AUDIT\n\nReceipt generated from the verified payment order.\n\nPayment history\nEvent Essential\n\nTemplate\n\nOrder code\nAUDIT\nStatus\nPAID\nCustomer\nAudit Host\nAmount\n$10.00\nProvider\nABA_PAYWAY\nPaid at\nOct 20, 2026, 3:35 PM\nIssued at\nOct 20, 2026, 3:35 PM",
+      "documentWidth": 1440,
+      "width": 1440,
+      "overflow": [],
+      "smallText": 0
+    },
+    "errors": [],
+    "failed": []
+  }
+]
