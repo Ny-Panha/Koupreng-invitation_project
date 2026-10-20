@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import StudioSections from "./studio/StudioSections";
+import { useStudioPersistence } from "./studio/useStudioPersistence";
 import "./studio/InvitationStudio.css";
 import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import {
@@ -64,7 +65,7 @@ function CleanImageUploadField({
     onUpload,
     onRemove,
     inputRef,
-    hint = "PNG, JPG, WebP (ក្រោម 10MB)",
+    hint = "PNG, JPG, WebP (ក្រោម 5MB)",
     onRestoreDefault,
     hasDefault = false,
 }) {
@@ -827,6 +828,7 @@ export default function InvitationForm({ invitation }) {
     const [leftPercent, setLeftPercent] = useState(52);
     const [isDragging, setIsDragging] = useState(false);
     const containerRef = useRef(null);
+    const savedBackendId = useRef(invitation?.backendInvitationId || (/^[1-9]\d*$/.test(String(invitationId)) ? invitationId : null));
 
     const handleChangeTemplate = async (template) => {
         if (!template) return;
@@ -918,45 +920,7 @@ export default function InvitationForm({ invitation }) {
         setForm(nextForm);
         setCatalogVersion(getCatalogVersion());
 
-        if (isEdit && !isNaN(Number(invitationId))) {
-            try {
-                const numericTemplateId = resolveNumericTemplateId(nextForm.templateId);
-                await invitationService.update(invitationId, {
-                    title: nextForm.title || "សិរីមង្គលអាពាហ៍ពិពាហ៍",
-                    eventType: "WEDDING",
-                    eventDate: nextForm.eventDate || null,
-                    eventTime: nextForm.eventTime || null,
-                    venueName: nextForm.venueName || "",
-                    venueAddress: nextForm.venueAddress || "",
-                    googleMapUrl: nextForm.googleMapUrl || "",
-                    hostName: nextForm.hostName || "",
-                    partnerName: nextForm.partnerName || "",
-                    groomName: nextForm.groomName || "",
-                    brideName: nextForm.brideName || "",
-                    storyText: nextForm.messageText || "",
-                    languageMode: nextForm.languageMode || "KH",
-                    visibility: nextForm.visibility || "PUBLIC",
-                    templateId: numericTemplateId,
-                    designJson: JSON.stringify({
-                        templateId: String(numericTemplateId || nextForm.templateId),
-                        presetId: nextForm.presetId || "",
-                        theme: nextForm.theme,
-                        fontFamily: nextForm.fontFamily,
-                        layoutStyles: nextForm.layoutStyles,
-                        coverImage: uploadedCoverUrl || undefined,
-                    }),
-                    contentJson: JSON.stringify({
-                        templateId: String(numericTemplateId || nextForm.templateId),
-                        theme: nextForm.theme,
-                        fontFamily: nextForm.fontFamily,
-                        layoutStyles: nextForm.layoutStyles,
-                    }),
-                });
-                saveDraft({ ...invitation, ...nextForm, id: invitationId, backendInvitationId: invitationId });
-            } catch (error) {
-                console.warn("Template selection backend sync failed:", error);
-            }
-        }
+        // The studio writer persists the full template selection with the other changes.
         setIsTemplateModalOpen(false);
     };
 
@@ -1303,7 +1267,7 @@ export default function InvitationForm({ invitation }) {
         window.open(searchUrl, "_blank", "noopener,noreferrer");
     };
     // Save action
-    const handleSave = async ({ redirectToPreview = false } = {}) => {
+    const handleSave = async ({ redirectToPreview = false, stayInStudio = false, quiet = false } = {}) => {
         if (!redirectToPreview && /^https?:\/\//i.test(form.googleMapUrl || "") && !isGoogleMapsUrl(form.googleMapUrl)) {
             setLocationError("សូមបញ្ចូល Google Maps Link ត្រឹមត្រូវ (maps.google.com ឬ maps.app.goo.gl)។");
             return;
@@ -1330,6 +1294,11 @@ export default function InvitationForm({ invitation }) {
         try {
             let savedPhotos = form.photos || [];
             const designPayload = {
+                fontKhmer: form.fontKhmer,
+                fontLatin: form.fontLatin,
+                elementFonts: form.elementFonts,
+                backgroundColor: form.backgroundColor,
+                sectionOrder: form.sectionOrder,
                 templateId: form.templateId,
                 presetId: form.presetId || "",
                 theme: form.theme || "",
@@ -1368,6 +1337,11 @@ export default function InvitationForm({ invitation }) {
             };
 
             const contentPayload = {
+                fontKhmer: form.fontKhmer,
+                fontLatin: form.fontLatin,
+                elementFonts: form.elementFonts,
+                backgroundColor: form.backgroundColor,
+                sectionOrder: form.sectionOrder,
                 templateId: form.templateId,
                 presetId: form.presetId || "",
                 theme: form.theme || "",
@@ -1453,16 +1427,17 @@ export default function InvitationForm({ invitation }) {
 
             let saved;
             let apiSyncFailed = false;
-            const effectiveBackendId = (!isNaN(Number(invitationId)) ? invitationId : (invitation?.backendInvitationId || (!isNaN(Number(invitation?.id)) ? invitation.id : null)));
+            const effectiveBackendId = savedBackendId.current;
             try {
                 if (effectiveBackendId) {
                     saved = await invitationService.update(effectiveBackendId, payload);
                 } else {
                     saved = await invitationService.create(payload);
                 }
+                if (saved?.id) savedBackendId.current = saved.id;
             } catch (apiErr) {
                 apiSyncFailed = true;
-                console.warn("Backend sync failed, saved locally:", apiErr);
+                void apiErr;
             }
 
             let savedCoverUrl = form.uploadedCoverUrl || "";
@@ -1521,7 +1496,8 @@ export default function InvitationForm({ invitation }) {
             const coverBgFile = pendingCoverBgFile || dataUrlToFile(form.coverBackgroundImage, "cover-bg.jpg");
             if (coverBgFile && backendId) {
                 try {
-                    const uploadedCoverBg = await mediaService.uploadCover(backendId, coverBgFile);
+                    const items = await mediaService.uploadGallery(backendId, [coverBgFile]);
+                    const uploadedCoverBg = (Array.isArray(items) ? items : items?.items || items?.data || [])[0];
                     savedCoverBgUrl = uploadedCoverBg?.fileUrl || uploadedCoverBg?.data?.fileUrl || form.coverBackgroundImage;
                     setPendingCoverBgFile(null);
                     update("coverBackgroundImage", savedCoverBgUrl);
@@ -1534,7 +1510,8 @@ export default function InvitationForm({ invitation }) {
             const bgFile = pendingBackgroundFile || dataUrlToFile(form.backgroundImage, "background.jpg");
             if (bgFile && backendId) {
                 try {
-                    const uploadedBg = await mediaService.uploadCover(backendId, bgFile);
+                    const items = await mediaService.uploadGallery(backendId, [bgFile]);
+                    const uploadedBg = (Array.isArray(items) ? items : items?.items || items?.data || [])[0];
                     savedBgUrl = uploadedBg?.fileUrl || uploadedBg?.data?.fileUrl || form.backgroundImage;
                     setPendingBackgroundFile(null);
                     update("backgroundImage", savedBgUrl);
@@ -1544,11 +1521,17 @@ export default function InvitationForm({ invitation }) {
             }
 
             const hasMediaUpdates = backendId && (
+                savedCoverUrl ||
+                savedPhotos.some((photo, index) => photo?.url !== form.photos?.[index]?.url) ||
                 savedInvitationUrl ||
                 savedInvitationUrl2 ||
                 (savedCoverBgUrl && savedCoverBgUrl !== form.coverBackgroundImage) ||
                 (savedBgUrl && savedBgUrl !== form.backgroundImage)
             );
+
+            if (savedPhotos.some((photo, index) => photo?.url !== form.photos?.[index]?.url)) {
+                setForm(previous => ({ ...previous, photos: previous.photos.map((photo, index) => photo?.url === form.photos?.[index]?.url ? savedPhotos[index] : photo) }));
+            }
 
             if (hasMediaUpdates) {
                 try {
@@ -1556,6 +1539,8 @@ export default function InvitationForm({ invitation }) {
                         ...payload,
                         designJson: JSON.stringify(stripInlineMedia({
                             ...designPayload,
+                            coverImage: savedCoverUrl || designPayload.coverImage,
+                            photos: savedPhotos,
                             coverBackgroundImage: savedCoverBgUrl || form.coverBackgroundImage || null,
                             backgroundImage: savedBgUrl || form.backgroundImage || null,
                             invitationImage: savedInvitationUrl || form.invitationImage || null,
@@ -1563,6 +1548,8 @@ export default function InvitationForm({ invitation }) {
                         })),
                         contentJson: JSON.stringify(stripInlineMedia({
                             ...contentPayload,
+                            coverImage: savedCoverUrl || contentPayload.coverImage,
+                            gallery: savedPhotos.filter(photo => photo?.url).map(({ id, url }) => ({ id, preview: url, type: "image" })),
                             coverBackgroundImage: savedCoverBgUrl || form.coverBackgroundImage || null,
                             backgroundImage: savedBgUrl || form.backgroundImage || null,
                             invitationImage: savedInvitationUrl || form.invitationImage || null,
@@ -1577,7 +1564,7 @@ export default function InvitationForm({ invitation }) {
             const targetDraftId = invitationId || saved?.id || `wed-${Date.now().toString(36)}`;
 
             // Always persist to local wedding draft storage
-            saveDraft({
+            saveDraft(stripInlineMedia({
                 ownerUserId: user?.id || user?.userId,
                 id: targetDraftId,
                 slug: saved?.slug || invitation?.slug || form.slug || "wedding",
@@ -1664,8 +1651,8 @@ export default function InvitationForm({ invitation }) {
                 thankYouText: form.thankYouText || "",
                 apologyTitle: form.apologyTitle || "",
                 apologyText: form.apologyText || "",
-                designJson: JSON.stringify(designPayload),
-                contentJson: JSON.stringify(contentPayload),
+                designJson: JSON.stringify(stripInlineMedia(designPayload)),
+                contentJson: JSON.stringify(stripInlineMedia(contentPayload)),
                 languageMode: form.languageMode || "KH",
                 enabledSections: {
                     countdown: form.showCountdown !== false,
@@ -1680,7 +1667,7 @@ export default function InvitationForm({ invitation }) {
                     rsvp: true,
                     music: Boolean(form.musicUrl),
                 },
-            });
+            }));
 
             const successMsg = apiSyncFailed
                 ? effectiveBackendId
@@ -1691,6 +1678,10 @@ export default function InvitationForm({ invitation }) {
                 : t("savedSuccess") || "បានរក្សាទុកដោយជោគជ័យ!";
 
             const finalSavedId = saved?.id || targetDraftId;
+            if (stayInStudio) {
+                if (!quiet) toast(successMsg, apiSyncFailed || mediaSyncError ? "warning" : "success");
+                return { id: finalSavedId, synced: !apiSyncFailed && !mediaSyncError, error: mediaSyncError || (apiSyncFailed ? "The server could not save these changes. Retry saving." : "") };
+            }
             if (redirectToPreview && finalSavedId) {
                 toast(successMsg, apiSyncFailed || mediaSyncError ? "warning" : "success");
                 navigate(`/dashboard/invitations/${finalSavedId}/preview`);
@@ -1708,6 +1699,12 @@ export default function InvitationForm({ invitation }) {
             setIsSaving(false);
         }
     };
+
+    const studio = useStudioPersistence({ value: form, onRestore: value => {
+        setPendingCoverFile(null); setPendingCoverBgFile(null); setPendingBackgroundFile(null);
+        setPendingInvitationFile(null); setPendingInvitation2File(null); setForm(value);
+    }, persist: () => handleSave({ stayInStudio: true, quiet: true }),
+        enabled: Boolean(invitationId && /^[1-9]\d*$/.test(String(invitationId))) && !pendingCoverFile && !pendingCoverBgFile && !pendingBackgroundFile && !pendingInvitationFile && !pendingInvitation2File && !JSON.stringify(form).includes("data:") });
 
     // --- Dynamic Section Renderers (Driven by templateFormFlowConfig) ---
 
@@ -3126,6 +3123,7 @@ export default function InvitationForm({ invitation }) {
                         type="button"
                         className="pe-btn-back"
                         onClick={() => {
+                            if (studio.dirty && !window.confirm("Changes have not reached the server. Leave this editor?")) return;
                             if (location.state?.from) {
                                 navigate(location.state.from);
                             } else {
@@ -3174,7 +3172,7 @@ export default function InvitationForm({ invitation }) {
                     <button
                         type="button"
                         className="pe-save-main-btn"
-                        onClick={handleSave}
+                        onClick={() => studio.save()}
                         disabled={isSaving}
                     >
                         {isSaving ? (t("saving") || "កំពុងរក្សា...") : (t("saveBtn") || "រក្សាទុក")}
@@ -3182,6 +3180,13 @@ export default function InvitationForm({ invitation }) {
                 </div>
             </div>
 
+            <div className="studio-history">
+                <span role="status" aria-live="polite">{{ saved: "បានរក្សាទុក · Saved to server", unsaved: "មិនទាន់រក្សាទុក · Unsaved changes", saving: "កំពុងរក្សាទុក · Saving…", failed: "រក្សាទុកបរាជ័យ · Save failed", offline: "គ្មានអ៊ីនធឺណិត · Offline" }[studio.phase]}</span>
+                <button type="button" disabled={!studio.canUndo} onClick={studio.undo}>Undo</button>
+                <button type="button" disabled={!studio.canRedo} onClick={studio.redo}>Redo</button>
+                <button type="button" disabled={isSaving} onClick={studio.reset}>Reset changes</button>
+                {studio.error && <><span role="alert">{studio.error}</span><button type="button" onClick={() => studio.save()} disabled={isSaving}>Retry save</button></>}
+            </div>
             <div className="studio-mobile-tabs" aria-label="Studio view">
                 <button type="button" aria-pressed={mobileView === "edit"} onClick={() => setMobileView("edit")}>កែសម្រួល · Edit</button>
                 <button type="button" aria-pressed={mobileView === "preview"} onClick={() => setMobileView("preview")}>មើលជាមុន · Preview</button>
