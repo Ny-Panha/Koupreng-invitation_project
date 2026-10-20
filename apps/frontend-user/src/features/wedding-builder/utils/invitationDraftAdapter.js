@@ -282,8 +282,11 @@ function titleForDraft(draft) {
 }
 
 function normalizeTime(value) {
-  const trimmed = timeValue(value);
-  return trimmed || null;
+  const normalized = String(value || "")
+    .replace(/[០-៩]/g, (digit) => String(digit.charCodeAt(0) - 0x17E0))
+    .trim();
+  const match = normalized.match(/^(\d{1,2}):(\d{2})/);
+  return match ? `${match[1].padStart(2, "0")}:${match[2]}` : normalized || null;
 }
 
 function serializableGallery(gallery = []) {

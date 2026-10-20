@@ -349,7 +349,7 @@ export default function DashboardFeature() {
   // Loading Skeleton matching host pages
   if (state.loading) {
     return (
-      <main className="dash-main pe-guests-page pe-dashboard-page">
+      <main className="dash-main pe-dashboard-page">
         <header className="dash-page-header">
           <div>
             <span className="dash-kicker">{text("kicker")}</span>
@@ -363,7 +363,7 @@ export default function DashboardFeature() {
   }
 
   return (
-    <main className="dash-main pe-guests-page pe-dashboard-page">
+    <main className="dash-main pe-dashboard-page">
       {/* Page Header (Matching /dashboard/guests) */}
       <header className="dash-page-header">
         <div>

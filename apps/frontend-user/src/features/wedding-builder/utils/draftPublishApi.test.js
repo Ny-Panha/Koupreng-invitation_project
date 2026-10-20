@@ -86,6 +86,20 @@ describe("real backend publishing", () => {
         expect(invitationService.create).toHaveBeenCalledWith(expect.objectContaining({ templateId: 9 }));
     });
 
+    it("syncs the Garden Royal draft with Khmer reception time in a backend-compatible format", async () => {
+        const localDraft = {
+            ...validDraft(),
+            event: { date: "2026-11-28", receptionTime: "១៧:០០" },
+        };
+
+        await persistWeddingDraft(localDraft);
+
+        expect(templateService.getPublicBySlug).toHaveBeenCalledWith("garden-royal-khmer-wedding");
+        expect(invitationService.create).toHaveBeenCalledWith(expect.objectContaining({ eventTime: "17:00" }));
+        expect(invitationService.update).toHaveBeenCalledWith(42, expect.objectContaining({ eventTime: "17:00" }));
+        expect(invitationService.saveDraft).toHaveBeenCalledWith(42);
+    });
+
     it("preserves a missing-template failure without saving with another template", async () => {
         templateService.getPublicBySlug.mockRejectedValueOnce(new Error("Template not found"));
 

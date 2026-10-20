@@ -103,7 +103,7 @@ export function useEvents(t) {
             };
             saveDraft(failedDraft);
             setDrafts((current) => current.map((item) => String(item.id) === String(draft.id) ? failedDraft : item));
-            toast.warning(`មិនអាច sync បានទេ: ${failedDraft.syncError}`);
+            if (!silent) toast.warning(`មិនអាច sync បានទេ: ${failedDraft.syncError}`);
         } finally {
             syncInFlight.current.delete(draftId);
             setSyncingDraftId("");

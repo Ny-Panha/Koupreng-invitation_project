@@ -1,4 +1,4 @@
-import { render, renderHook, screen, waitFor, cleanup } from "@testing-library/react";
+import { act, render, renderHook, screen, waitFor, cleanup } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import EventsFeature from "./EventsFeature";
@@ -6,6 +6,7 @@ import { useEvents } from "./hooks/useEvents";
 import { eventsApi } from "./api/eventsApi";
 import { getDraft, saveDraft } from "../../shared/storage/weddingStorage";
 import { persistWeddingDraft } from "../wedding-builder/utils/draftPublishApi";
+import { toast } from "../../shared/ui/toast";
 
 vi.mock("../../shared/i18n/useBackendMessages", () => ({
     useBackendMessages: () => ({ text: () => "" }),
@@ -22,6 +23,7 @@ describe("Events Feature", () => {
 
     afterEach(() => {
         cleanup();
+        vi.restoreAllMocks();
     });
 
     it("renders events list with wedding invitations", async () => {
@@ -51,6 +53,7 @@ describe("Events Feature", () => {
 
     it("automatically syncs browser-only drafts without adding sync controls to the card", async () => {
         vi.spyOn(eventsApi, "listMine").mockResolvedValue([]);
+        const warning = vi.spyOn(toast, "warning");
         persistWeddingDraft.mockRejectedValueOnce(new Error("template unavailable"));
         saveDraft({ id: "wed-local-only", title: "Khmer Celestial", status: "DRAFT", syncStatus: "LOCAL_ONLY" });
 
@@ -62,8 +65,31 @@ describe("Events Feature", () => {
 
         expect(await screen.findByText("Khmer Celestial")).toBeInTheDocument();
     await waitFor(() => expect(persistWeddingDraft).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(getDraft("wed-local-only")?.syncError).toBe("template unavailable"));
+    expect(getDraft("wed-local-only")).toMatchObject({
+        title: "Khmer Celestial",
+        syncStatus: "LOCAL_ONLY",
+    });
+    expect(warning).not.toHaveBeenCalled();
     expect(screen.queryByRole("button", { name: /Sync now|សាកម្ដងទៀត/ })).not.toBeInTheDocument();
     expect(screen.queryByText(/Not in Admin yet|Changes not synced/)).not.toBeInTheDocument();
+    });
+
+    it("warns when an explicitly requested draft sync fails and retains the draft", async () => {
+        vi.spyOn(eventsApi, "listMine").mockResolvedValue([]);
+        const warning = vi.spyOn(toast, "warning");
+        persistWeddingDraft.mockRejectedValueOnce(new Error("Template not found"));
+        const draft = { id: "wed-manual-sync", title: "Wedding draft", templateId: "removed-template" };
+        const { result } = renderHook(() => useEvents());
+
+        await act(async () => { await result.current.syncDraft(draft); });
+
+        expect(warning).toHaveBeenCalledWith("មិនអាច sync បានទេ: Template not found");
+        expect(getDraft(draft.id)).toMatchObject({
+            ...draft,
+            syncStatus: "LOCAL_ONLY",
+            syncError: "Template not found",
+        });
     });
 
     it("marks a local draft as synced when it appears in the backend list", async () => {

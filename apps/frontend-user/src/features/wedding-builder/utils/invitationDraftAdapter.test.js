@@ -45,6 +45,30 @@ function draft() {
 }
 
 describe("invitation draft adapters", () => {
+    it.each([
+        ["១៧:០០", "17:00"],
+        ["០៧:០០ ព្រឹក", "07:00"],
+        [" ១៧:០០ ", "17:00"],
+        ["17:00", "17:00"],
+        ["07:00:00", "07:00"],
+        ["7:05", "07:05"],
+        ["", null],
+    ])("normalizes the saved event time %j for the backend", (receptionTime, expected) => {
+        const localDraft = { ...draft(), event: { date: "2026-11-28", receptionTime } };
+
+        const payload = draftToInvitationPayload(localDraft, 2);
+
+        expect(payload.eventTime).toBe(expected);
+        expect(JSON.parse(payload.contentJson).event.receptionTime).toBe(receptionTime);
+        expect(localDraft.event.receptionTime).toBe(receptionTime);
+    });
+
+    it("normalizes Khmer ceremony times before falling back to reception time", () => {
+        const localDraft = { ...draft(), event: { ceremonyTime: "០៧:០០", receptionTime: "១៧:០០" } };
+
+        expect(draftToInvitationPayload(localDraft, 2).eventTime).toBe("07:00");
+    });
+
     it("preserves every supported disabled section and opening configuration in backend JSON", () => {
         const payload = draftToInvitationPayload(draft(), 99);
         const content = JSON.parse(payload.contentJson);
