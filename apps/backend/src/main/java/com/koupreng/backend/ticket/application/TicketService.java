@@ -51,7 +51,7 @@ public class TicketService {
         requireFeature(event);
         requireImage(eventId, request.backgroundMediaId()); requireImage(eventId, request.coverMediaId());
         var row = designs.findById(eventId).orElseGet(() -> {
-            var created = new InvitationTicketDesign(); created.setInvitationId(eventId); return created;
+            var created = new InvitationTicketDesign(); created.setInvitationId(eventId); created.setInvitation(event); return created;
         });
         long current = row.getVersion() == null ? 0 : row.getVersion() + 1;
         if (request.version() != current) throw new ApiException(HttpStatus.CONFLICT, "Ticket design changed. Reload before saving.");
@@ -104,7 +104,9 @@ public class TicketService {
         var appearance = appearance(event.getId());
         var config = appearance.design();
         var seat = guest == null ? null : seating.findByInvitationIdAndGuestId(event.getId(), guest.getId()).orElse(null);
-        return new TicketResponse(guest == null ? "GENERAL" : "GUEST", event.getTitle(), event.getHostName(), event.getPartnerName(),
+        String host = event.getHostName() == null || event.getHostName().isBlank() ? event.getGroomName() : event.getHostName();
+        String partner = event.getPartnerName() == null || event.getPartnerName().isBlank() ? event.getBrideName() : event.getPartnerName();
+        return new TicketResponse(guest == null ? "GENERAL" : "GUEST", event.getTitle(), host, partner,
                 event.getEventDate(), event.getEventTime(), event.getVenueName(), guest == null ? null : guest.getGuestName(),
                 guest != null && config.showGroup() ? guest.getGuestGroup() : null,
                 guest != null && config.showTable() ? (seat == null ? guest.getTableNumber() : seat.getTable().getTableName()) : null,

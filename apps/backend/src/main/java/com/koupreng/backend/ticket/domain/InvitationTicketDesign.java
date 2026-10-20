@@ -11,6 +11,11 @@ import java.time.Instant;
 public class InvitationTicketDesign {
     @Id @Column(name = "invitation_id")
     private Long invitationId;
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @MapsId
+    @JoinColumn(name = "invitation_id")
+    @org.hibernate.annotations.OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
+    private com.koupreng.backend.invitation.domain.UserInvitation invitation;
     @Column(name = "design_json", nullable = false, columnDefinition = "TEXT")
     private String designJson;
     @Version @Column(nullable = false)

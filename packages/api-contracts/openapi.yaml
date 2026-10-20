@@ -73,6 +73,9 @@ tags:
   description: "Current-user profile, password, and validated profile-image operations."
 - name: Templates
   description: Public active invitation template catalog.
+- name: Invitation Tickets
+  description: Event-owned ticket appearance and minimal personalized guest display.
+    Existing guest invite tokens remain the check-in identity.
 - name: Management reporting
   description: Read-only ADMIN reports. Calendar dates use Asia/Phnom_Penh; from inclusive
     / to exclusive. No settlement operations.
@@ -897,6 +900,73 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ApiResponseInvitationCustomizationResponse"
+      security:
+      - bearerAuth: []
+  /api/v1/invitations/{eventId}/ticket-design:
+    get:
+      tags:
+      - Invitation Tickets
+      summary: Design
+      operationId: design
+      parameters:
+      - name: eventId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponseTicketDesignResponse"
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - Invitation Tickets
+      summary: Save
+      operationId: save
+      parameters:
+      - name: eventId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TicketDesignRequest"
+            examples:
+              ticketDesign:
+                description: ticketDesign
+                value:
+                  version: 0
+                  layout: GOLD
+                  accent: "#956d2c"
+                  font: MOUL
+                  frame: DOUBLE
+                  header: សូមគោរពអញ្ជើញ
+                  footer: Present this ticket at the entrance
+                  backgroundMediaId: null
+                  coverMediaId: null
+                  showGroup: false
+                  showTable: true
+                  showSeatCount: true
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponseTicketDesignResponse"
       security:
       - bearerAuth: []
   /api/v1/events/{id}:
@@ -5095,6 +5165,38 @@ paths:
               schema:
                 $ref: "#/components/schemas/ApiResponseListWishResponse"
       security: []
+  /api/v1/public/invitations/{slug}/ticket:
+    get:
+      tags:
+      - Invitation Tickets
+      summary: Public Ticket
+      operationId: publicTicket
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+        example: demo-wedding
+      - name: token
+        in: query
+        required: false
+        schema:
+          type: string
+        example: demo-guest-attending-token
+      - name: accessToken
+        in: query
+        required: false
+        schema:
+          type: string
+        example: demo-invitation-access-token
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponseTicketResponse"
   /api/v1/public/invitations/{slug}/rsvp-summary-public:
     get:
       tags:
@@ -6091,6 +6193,59 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ApiResponseInvitationResponse"
+      security:
+      - bearerAuth: []
+  /api/v1/invitations/{eventId}/ticket:
+    get:
+      tags:
+      - Invitation Tickets
+      summary: General
+      operationId: general
+      parameters:
+      - name: eventId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponseTicketResponse"
+      security:
+      - bearerAuth: []
+  /api/v1/invitations/{eventId}/guests/{guestId}/ticket:
+    get:
+      tags:
+      - Invitation Tickets
+      summary: Guest
+      operationId: guest
+      parameters:
+      - name: eventId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      - name: guestId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponseTicketResponse"
       security:
       - bearerAuth: []
   /api/v1/invitations/my:
@@ -8213,6 +8368,90 @@ components:
           type: string
         layoutSettings:
           type: string
+    TicketDesignRequest:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+        layout:
+          type: string
+          enum:
+          - GOLD
+          - MINIMAL
+          - FLORAL
+          - IVORY
+        accent:
+          type: string
+          minLength: 1
+          pattern: "#[0-9a-fA-F]{6}"
+        font:
+          type: string
+          enum:
+          - MOUL
+          - KANTUMRUY
+          - CORMORANT
+        frame:
+          type: string
+          enum:
+          - DOUBLE
+          - SINGLE
+          - NONE
+        header:
+          type: string
+          maxLength: 100
+          minLength: 0
+        footer:
+          type: string
+          maxLength: 200
+          minLength: 0
+        backgroundMediaId:
+          type: integer
+          format: int64
+          exclusiveMinimum: 0
+        coverMediaId:
+          type: integer
+          format: int64
+          exclusiveMinimum: 0
+        showGroup:
+          type: boolean
+        showTable:
+          type: boolean
+        showSeatCount:
+          type: boolean
+      required:
+      - accent
+      - font
+      - footer
+      - frame
+      - header
+      - layout
+      - version
+    ApiResponseTicketDesignResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/TicketDesignResponse"
+        timestamp:
+          type: string
+          format: date-time
+    TicketDesignResponse:
+      type: object
+      properties:
+        schemaVersion:
+          type: integer
+          format: int32
+        design:
+          $ref: "#/components/schemas/TicketDesignRequest"
+        backgroundUrl:
+          type: string
+        coverUrl:
+          type: string
     EventRequest:
       type: object
       properties:
@@ -8310,9 +8549,9 @@ components:
         publishedAt:
           type: string
           format: date-time
-        published:
-          type: boolean
         draft:
+          type: boolean
+        published:
           type: boolean
     UpdateProfileRequest:
       type: object
@@ -10600,6 +10839,56 @@ components:
         respondedAt:
           type: string
           format: date-time
+    ApiResponseTicketResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/TicketResponse"
+        timestamp:
+          type: string
+          format: date-time
+    TicketResponse:
+      type: object
+      properties:
+        kind:
+          type: string
+        title:
+          type: string
+        hostName:
+          type: string
+        partnerName:
+          type: string
+        eventDate:
+          type: string
+          format: date
+        eventTime:
+          type: string
+          format: time-local
+        venueName:
+          type: string
+        guestName:
+          type: string
+        group:
+          type: string
+        tableName:
+          type: string
+        seatNumber:
+          type: string
+        seatCount:
+          type: integer
+          format: int32
+        invitationUrl:
+          type: string
+        qrPayload:
+          type: string
+        qrCodeDataUri:
+          type: string
+        appearance:
+          $ref: "#/components/schemas/TicketDesignResponse"
     ApiResponseRsvpSummaryResponse:
       type: object
       properties:

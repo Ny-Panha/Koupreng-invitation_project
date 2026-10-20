@@ -44,13 +44,17 @@ import static org.mockito.Mockito.*;
 })
 @ActiveProfiles("test")
 @Transactional
+@org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc
 class TicketIntegrationTests {
     @Autowired EntityManager em;
     @Autowired TicketService tickets;
+    @Autowired com.koupreng.backend.invitation.application.InvitationService invitations;
+    @Autowired com.koupreng.backend.ticket.infrastructure.persistence.InvitationTicketDesignRepository designs;
     @Autowired CheckInService checkIn;
     @Autowired GuestRepository guests;
     @Autowired RsvpRepository rsvps;
     @Autowired Validator validator;
+    @Autowired org.springframework.test.web.servlet.MockMvc mvc;
     @MockitoBean CurrentUserService currentUser;
     @MockitoBean EntitlementService entitlements;
     Authentication auth;
@@ -87,7 +91,7 @@ class TicketIntegrationTests {
         assertNull(guest.getInvitationViewedAt());
         var png = Base64.getDecoder().decode(ticket.qrCodeDataUri().split(",", 2)[1]);
         var bitmap = new BinaryBitmap(new HybridBinarizer(new BufferedImageLuminanceSource(ImageIO.read(new ByteArrayInputStream(png)))));
-        assertEquals(ticket.qrPayload(), new MultiFormatReader().decode(bitmap).getText());
+        assertEquals(ticket.qrPayload(), new MultiFormatReader().decode(bitmap, Map.of(DecodeHintType.PURE_BARCODE, true)).getText());
         assertTrue(ticket.qrPayload().contains("?token=" + guest.getInviteToken()));
         var scan = new CheckInScanRequest(); scan.setToken(ticket.qrPayload());
         assertEquals("CHECKED_IN", checkIn.scan(auth, event.getId(), scan.getToken(), null).getResult());
@@ -134,7 +138,9 @@ class TicketIntegrationTests {
     @Test void validatesUntrustedDesignAndDistinguishesGeneralQrPurpose() {
         var d = TicketDesignRequest.defaults();
         assertTrue(validator.validate(new TicketDesignRequest(-1L, d.layout(), "url(javascript:x)", d.font(), d.frame(), "x".repeat(101), d.footer(), -5L, null, false, false, false)).size() >= 4);
+        event.setGroomName("Saved groom"); event.setBrideName("Saved bride"); event.setHostName(null); event.setPartnerName(null);
         var general = tickets.ownerTicket(auth, event.getId(), null);
+        assertEquals("Saved groom", general.hostName()); assertEquals("Saved bride", general.partnerName());
         assertEquals("GENERAL", general.kind()); assertNull(general.guestName());
         assertFalse(general.qrPayload().contains("token="));
         var scan = new CheckInScanRequest(); scan.setToken(general.qrPayload());
@@ -143,9 +149,29 @@ class TicketIntegrationTests {
 
     @Test void writesSyntheticQrFixtureForExportVerification() throws Exception {
         var matrix = new com.google.zxing.qrcode.QRCodeWriter().encode(
-                "https://koupreng.example/i/qa-event?token=qa-guest-ticket", BarcodeFormat.QR_CODE, 320, 320);
+                "https://koupreng.example/i/wedding-sok-sophea-2026-12-20-phnom-penh?token=59d9cb1e-86b4-4d38-b531-d6c9034a17ea", BarcodeFormat.QR_CODE, 320, 320);
         var destination = java.nio.file.Path.of("../../.cache/studio-ticket-fixture.png");
         java.nio.file.Files.createDirectories(destination.getParent());
         com.google.zxing.client.j2se.MatrixToImageWriter.writeToPath(matrix, "PNG", destination);
+    }
+    @Test void publicHttpContractHasPrivateCachingHeadersAndNoGuestContactFields() throws Exception {
+        mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get(
+                        "/api/v1/public/invitations/" + event.getSlug() + "/ticket").param("token", guest.getInviteToken()))
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.status().isOk())
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.header().string("Cache-Control", "no-store, private"))
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.header().string("Referrer-Policy", "no-referrer"))
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath("$.data.kind").value("GUEST"))
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath("$.data.email").doesNotExist())
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath("$.data.phone").doesNotExist());
+        mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get(
+                        "/api/v1/invitations/" + event.getId() + "/ticket-design"))
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.status().isUnauthorized());
+    }
+    @Test void deletingAnOwnedEventAlsoDeletesItsTicketDesign() {
+        tickets.save(auth, event.getId(), TicketDesignRequest.defaults());
+        Long id = event.getId();
+        assertTrue(designs.existsById(id));
+        invitations.delete(auth, id); em.flush(); em.clear();
+        assertFalse(designs.existsById(id));
     }
 }
