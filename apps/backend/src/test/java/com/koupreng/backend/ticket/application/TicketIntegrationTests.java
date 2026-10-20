@@ -147,12 +147,11 @@ class TicketIntegrationTests {
         assertThrows(ApiException.class, () -> checkIn.scan(auth, event.getId(), scan.getToken(), null));
     }
 
-    @Test void writesSyntheticQrFixtureForExportVerification() throws Exception {
-        var matrix = new com.google.zxing.qrcode.QRCodeWriter().encode(
-                "https://koupreng.example/i/wedding-sok-sophea-2026-12-20-phnom-penh?token=59d9cb1e-86b4-4d38-b531-d6c9034a17ea", BarcodeFormat.QR_CODE, 320, 320);
-        var destination = java.nio.file.Path.of("../../.cache/studio-ticket-fixture.png");
-        java.nio.file.Files.createDirectories(destination.getParent());
-        com.google.zxing.client.j2se.MatrixToImageWriter.writeToPath(matrix, "PNG", destination);
+    @Test void frontendExportFixtureContainsARealisticGuestUrl() throws Exception {
+        var fixture = java.nio.file.Path.of("../frontend-user/tests/e2e/support/fixtures/ticket-qr.png");
+        var pixels = new BinaryBitmap(new HybridBinarizer(new BufferedImageLuminanceSource(ImageIO.read(fixture.toFile()))));
+        assertEquals("https://koupreng.example/i/wedding-sok-sophea-2026-12-20-phnom-penh?token=59d9cb1e-86b4-4d38-b531-d6c9034a17ea",
+                new MultiFormatReader().decode(pixels, Map.of(DecodeHintType.PURE_BARCODE, true)).getText());
     }
     @Test void publicHttpContractHasPrivateCachingHeadersAndNoGuestContactFields() throws Exception {
         mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get(

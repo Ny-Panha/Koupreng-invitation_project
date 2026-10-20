@@ -33,9 +33,11 @@ import { templateIcons } from "./config/templateIcons";
 import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
 import { isTrustedPreviewMessage, postPreviewMessage, readEmbeddedPreviewChannel } from "@/shared/preview/previewMessaging";
 import "./template-experience.css";
+import "./studio-fonts.css";
 
 const ensureGoogleFontLoaded = (fontFamily) => {
     if (!fontFamily || typeof document === "undefined") return;
+    if (["Moul", "Bayon", "Kantumruy Pro", "Cormorant Garamond", "DM Sans"].includes(fontFamily)) return;
     const cleanName = fontFamily.trim().replace(/^['"]|['"]$/g, "");
     const fontId = `gfont-${cleanName.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
     if (document.getElementById(fontId)) return;
@@ -110,8 +112,10 @@ function WeddingTemplateExperience({
 
     const content = useMemo(() => {
         if (!liveData) return baseContent;
+        const liveMessage = liveData.messageText ?? liveData.blessingMessage ?? liveData.message;
         return {
             ...baseContent,
+            studioStyle: liveData.studioStyle || baseContent.studioStyle,
             fontKhmer: liveData.fontKhmer !== undefined ? liveData.fontKhmer : baseContent.fontKhmer,
             fontLatin: liveData.fontLatin !== undefined ? liveData.fontLatin : baseContent.fontLatin,
             elementFonts: liveData.elementFonts || baseContent.elementFonts || {},
@@ -121,10 +125,10 @@ function WeddingTemplateExperience({
             secondaryColor: liveData.secondaryColor || baseContent.secondaryColor,
             backgroundColor: liveData.backgroundColor || baseContent.backgroundColor,
             ampSymbol: liveData.ampSymbol || baseContent.ampSymbol,
-            groom: liveData.groomName || baseContent.groom,
-            bride: liveData.brideName || baseContent.bride,
-            title: liveData.invitationTitle || liveData.title || baseContent.title,
-            invitationTitle: liveData.invitationTitle || liveData.title || baseContent.invitationTitle,
+            groom: liveData.groomName ?? baseContent.groom,
+            bride: liveData.brideName ?? baseContent.bride,
+            title: liveData.invitationTitle ?? liveData.title ?? baseContent.title,
+            invitationTitle: liveData.invitationTitle ?? liveData.title ?? baseContent.invitationTitle,
             subtitle: liveData.invitationSubtitle !== undefined ? liveData.invitationSubtitle : (liveData.subtitle !== undefined ? liveData.subtitle : baseContent.subtitle),
             invitationSubtitle: liveData.invitationSubtitle !== undefined ? liveData.invitationSubtitle : (liveData.subtitle !== undefined ? liveData.subtitle : baseContent.invitationSubtitle),
             messageTitle: liveData.messageTitle !== undefined ? liveData.messageTitle : baseContent.messageTitle,
@@ -133,36 +137,18 @@ function WeddingTemplateExperience({
             monogramText: liveData.groomName && liveData.brideName
                 ? `${liveData.groomName[0]} & ${liveData.brideName[0]}`
                 : baseContent.monogramText,
-            venue: liveData.venueName ? {
+            venue: liveData.venueName !== undefined ? {
                 ...baseContent.venue,
                 name: liveData.venueName,
                 hall: liveData.venueHall,
-                address: liveData.venueAddress || baseContent.venue?.address,
+                address: liveData.venueAddress ?? baseContent.venue?.address,
             } : baseContent.venue,
-            coverImage: liveData.coverImage || baseContent.coverImage,
+            coverImage: liveData.coverImage !== undefined ? liveData.coverImage : baseContent.coverImage,
             invitationImage: liveData.invitationImage !== undefined ? liveData.invitationImage : baseContent.invitationImage,
             invitationImage2: liveData.invitationImage2 !== undefined ? liveData.invitationImage2 : baseContent.invitationImage2,
-            messageText: (typeof liveData.messageText === "string" && liveData.messageText.trim())
-                ? liveData.messageText
-                : ((typeof liveData.blessingMessage === "string" && liveData.blessingMessage.trim())
-                    ? liveData.blessingMessage
-                    : ((typeof liveData.message === "string" && liveData.message.trim())
-                        ? liveData.message
-                        : (baseContent.messageText || baseContent.message || ""))),
-            message: (typeof liveData.messageText === "string" && liveData.messageText.trim())
-                ? liveData.messageText
-                : ((typeof liveData.blessingMessage === "string" && liveData.blessingMessage.trim())
-                    ? liveData.blessingMessage
-                    : ((typeof liveData.message === "string" && liveData.message.trim())
-                        ? liveData.message
-                        : (typeof baseContent.message === "string" ? baseContent.message : (baseContent.message?.text || "")))),
-            blessingMessage: (typeof liveData.messageText === "string" && liveData.messageText.trim())
-                ? liveData.messageText
-                : ((typeof liveData.blessingMessage === "string" && liveData.blessingMessage.trim())
-                    ? liveData.blessingMessage
-                    : ((typeof liveData.message === "string" && liveData.message.trim())
-                        ? liveData.message
-                        : (baseContent.blessingMessage || baseContent.message || ""))),
+            messageText: liveMessage ?? baseContent.messageText ?? baseContent.message ?? "",
+            message: liveMessage ?? (typeof baseContent.message === "string" ? baseContent.message : baseContent.message?.text || ""),
+            blessingMessage: liveMessage ?? baseContent.blessingMessage ?? baseContent.message ?? "",
             couple: (liveData.groomFather || liveData.brideFather || liveData.groomMother || liveData.brideMother || liveData.couple) ? {
                 ...baseContent.couple,
                 groomParents: [liveData.groomFather, liveData.groomMother].filter(Boolean).join(" និង ") || liveData.couple?.groomParents || baseContent.couple?.groomParents,

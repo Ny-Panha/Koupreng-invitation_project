@@ -22,6 +22,7 @@ export async function installUxFixtures(page, lang = "en") {
   await page.route("**/api/**", async route => {
     const request = route.request();
     const path = new URL(request.url()).pathname;
+    if (!path.startsWith("/api/")) return route.fallback();
     calls.push({ path, method: request.method(), body: request.postData() });
     const reply = (data, status = 200) => route.fulfill({ status, contentType: "application/json", body: JSON.stringify({ data }) });
     if (path.endsWith("/i18n/messages")) return reply({ messages: {} });

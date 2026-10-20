@@ -1,0 +1,124 @@
+import { expect, test } from "@playwright/test";
+import { readFile, mkdir } from "node:fs/promises";
+import path from "node:path";
+import { fixtures, qrPayload } from "./support/studioFixtures.js";
+
+const evidence = path.resolve("../../docs/qa/studio-tickets");
+for (const lang of ["en", "km"]) {
+  test(`studio and designer fit eight viewports (${lang})`, async ({ page }, info) => {
+    test.setTimeout(240_000);
+    await mkdir(evidence, { recursive: true });
+    await fixtures(page, lang);
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    const errors = []; page.on("pageerror", error => errors.push(error.message));
+    for (const width of [320, 375, 390, 430, 768, 1024, 1440, 1920]) {
+      await page.setViewportSize({ width, height: 1000 });
+      for (const [name, route] of [["editor", "invitation"], ["designer", "tickets/design"]]) {
+        await page.goto(`/app/events/101/${route}`);
+        await expect(page.locator(name === "editor" ? ".invitation-studio" : ".ticket-studio")).toBeVisible();
+        if (name === "designer") await expect(page.getByRole("button", { name: /ទាញយក PNG/ })).toBeEnabled();
+        else await expect(page.locator(".studio-sections")).toBeVisible();
+        expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+        if (info.project.name === "desktop-chromium") await page.screenshot({ path: path.join(evidence, `${name}-${lang}-${width}.png`), fullPage: true });
+      }
+    }
+    expect(errors).toEqual([]);
+  });
+}
+test("exports exact 2x/3x personalized canvases with decodable QR for every layout", async ({ page }, info) => {
+  test.setTimeout(120_000);
+  await mkdir(path.join(evidence, "exports"), { recursive: true });
+  await fixtures(page);
+  await page.goto("/app/events/101/tickets/design");
+  await page.getByLabel(/Preview recipient/).selectOption("501");
+  for (const layout of ["GOLD", "MINIMAL", "FLORAL", "IVORY"]) {
+    await page.getByLabel(/Layout/).selectOption(layout);
+    const save = page.getByRole("button", { name: /Save design/ });
+    if (await save.isEnabled()) await save.click();
+    const download = page.getByRole("button", { name: /ទាញយក PNG/ });
+    await expect(download).toBeEnabled();
+    for (const scale of [2, 3]) {
+      const waiting = page.waitForEvent("download");
+      await page.getByRole("button", { name: scale === 2 ? /ទាញយក PNG/ : "PNG · 3×", exact: scale === 3 }).click();
+      const file = await waiting;
+      const output = path.join(evidence, "exports", `${layout.toLowerCase()}-${scale}x-${info.project.name}.png`);
+      await file.saveAs(output);
+      await page.addScriptTag({ path: "node_modules/jsqr/dist/jsQR.js" });
+      const decoded = await page.evaluate(async data => {
+        const image = new Image(); image.src = data; await image.decode();
+        const canvas = document.createElement("canvas"); canvas.width = image.width; canvas.height = image.height;
+        const ctx = canvas.getContext("2d"); ctx.drawImage(image, 0, 0);
+        const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        return { width: image.width, height: image.height, qr: window.jsQR(pixels.data, image.width, image.height)?.data };
+      }, `data:image/png;base64,${(await readFile(output)).toString("base64")}`);
+      expect(decoded).toEqual({ width: 600 * scale, height: 900 * scale, qr: qrPayload });
+    }
+  }
+});
+test("autosaves real editor payloads without navigation and restores edits with undo", async ({ page }) => {
+  const { writes } = await fixtures(page);
+  await page.goto("/app/events/101/invitation");
+  const title = page.locator('input[placeholder="សិរីមង្គលអាពាហ៍ពិពាហ៍"]');
+  await title.fill("Saved studio title");
+  await expect.poll(() => writes.filter(write => write.kind === "invitation").length).toBeGreaterThan(0);
+  expect(writes.findLast(write => write.kind === "invitation").event.title).toBe("Saved studio title");
+  await expect(page).toHaveURL(/\/app\/events\/101\/invitation$/);
+  await expect(page.locator(".studio-history")).toContainText("Saved to server");
+  await title.fill("Another edit");
+  await page.getByRole("button", { name: "Undo", exact: true }).click();
+  await expect(title).toHaveValue("Saved studio title");
+});
+test("personal public ticket opens without submitting RSVP and modal restores focus", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await fixtures(page);
+  const writes = [];
+  page.on("request", request => { if (["POST", "PUT", "PATCH"].includes(request.method())) writes.push(new URL(request.url()).pathname); });
+  await page.goto("/i/audit-event?token=qa-guest-ticket");
+  await page.locator(".kc-opening button").first().click();
+  const trigger = page.getByRole("button", { name: /My ticket/ });
+  await trigger.click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await expect(page.getByRole("button", { name: /ទាញយក PNG/ })).toBeEnabled();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await expect(trigger).toBeFocused();
+  expect(writes).toEqual([]);
+});
+
+test("failed saves retain changes and guard route links and browser back", async ({ page }) => {
+  await fixtures(page);
+  await page.route("**/api/v1/invitations/101", async route => {
+    if (route.request().method() === "PUT") return route.fulfill({ status: 503, contentType: "application/json", body: JSON.stringify({ message: "Save temporarily unavailable" }) });
+    return route.fallback();
+  });
+  await page.goto("/app/events/101");
+  await page.locator('.event-workspace-nav a[href$="/invitation"]').click();
+  const title = page.locator('input[placeholder="សិរីមង្គលអាពាហ៍ពិពាហ៍"]');
+  await title.fill("Keep this unsaved change");
+  await expect(page.locator(".studio-history")).toContainText("Save failed");
+  const dialogs = [];
+  page.on("dialog", dialog => { dialogs.push(dialog.message()); return dialog.dismiss(); });
+  await page.locator('.event-workspace-nav a[href$="/guests"]').click();
+  await expect(page).toHaveURL(/\/invitation$/);
+  await page.evaluate(() => window.history.back());
+  await expect.poll(() => dialogs.length).toBe(2);
+  await expect(page).toHaveURL(/\/invitation$/);
+  await expect(title).toHaveValue("Keep this unsaved change");
+});
+
+test("appearance, schedule and media controls persist through the existing editor API", async ({ page }) => {
+  const { writes } = await fixtures(page);
+  await page.goto("/app/events/101/invitation");
+  await page.getByLabel(/Palette/).selectOption("2");
+  await page.getByLabel(/Khmer heading/).selectOption("Kantumruy Pro");
+  await expect.poll(() => writes.filter(write => write.kind === "invitation").length).toBeGreaterThan(0);
+  const saved = writes.findLast(write => write.kind === "invitation").event;
+  expect(JSON.parse(saved.contentJson).studioStyle.primary).toBe("#164637");
+  expect(JSON.parse(saved.contentJson).fontKhmer).toBe("Kantumruy Pro");
+  if (page.viewportSize().width < 1024) await page.locator('.studio-section-select select').selectOption("schedule");
+  else await page.locator('.studio-section-list button').filter({ hasText: /កាលវិភាគ|Schedule/ }).click();
+  await expect(page.getByRole("button", { name: /Move schedule 1 down/ })).toBeVisible();
+  if (page.viewportSize().width < 1024) await page.locator('.studio-section-select select').selectOption("gallery");
+  else await page.locator('.studio-section-list button').filter({ hasText: /វិចិត្រសាល|Gallery/ }).click();
+  await expect(page.getByRole("button", { name: "Move photo 1 down", exact: true })).toBeVisible();
+});

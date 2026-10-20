@@ -1,6 +1,8 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import StudioSections from "./studio/StudioSections";
+import StudioAppearance from "./studio/StudioAppearance";
 import { useStudioPersistence } from "./studio/useStudioPersistence";
+import { replaceMediaReferences, uploadInlineReferences } from "./studio/studioMedia";
 import "./studio/InvitationStudio.css";
 import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import {
@@ -36,6 +38,7 @@ import {
 
 
 import { toast } from "../../shared/ui/toast";
+import Modal from "@/shared/ui/Modal";
 import { invitationService } from "@/features/invitations/api/invitationApi";
 import { mediaService } from "@/features/invitations/api/mediaApi";
 import { saveDraft } from "@/shared/storage/weddingStorage";
@@ -588,6 +591,7 @@ export default function InvitationForm({ invitation }) {
         }
 
         const activeTplId = invitation?.templateId || customParsed.templateId || searchParams.get("templateId") || DEFAULT_STATE.templateId;
+        const canonicalEvent = /^[1-9]\d*$/.test(String(invitation?.id || ""));
         const tpl = getTemplateById(activeTplId);
         const preset = getTemplatePreset(tpl) || {};
 
@@ -616,13 +620,13 @@ export default function InvitationForm({ invitation }) {
         const backgroundColor = customParsed.backgroundColor || invitation?.backgroundColor || tpl?.backgroundColor || preset.backgroundColor || DEFAULT_STATE.backgroundColor;
         const openingStyle = (!isDefaultOpening && (customParsed.openingStyle || invitation?.openingStyle)) || preset.openingStyle || DEFAULT_STATE.openingStyle;
         const coverImage = uploadedCoverFromDraft || templateDefaultCover;
-        const title = (!isDefaultTitle && (invitation?.title || customParsed.title)) ? (invitation?.title || customParsed.title) : (preset.title || DEFAULT_STATE.title);
-        const groomName = (!isDefaultCouple && (invitation?.groomName || customParsed.groomName)) ? (invitation?.groomName || customParsed.groomName) : "";
-        const brideName = (!isDefaultCouple && (invitation?.brideName || customParsed.brideName)) ? (invitation?.brideName || customParsed.brideName) : "";
-        const venueName = (invitation?.venueName || customParsed.venueName) && (invitation?.venueName !== "The Premier Center Sen Sok" && customParsed.venueName !== "The Premier Center Sen Sok")
+        const title = canonicalEvent ? (invitation.title || customParsed.title || "") : ((!isDefaultTitle && (invitation?.title || customParsed.title)) ? (invitation?.title || customParsed.title) : (preset.title || DEFAULT_STATE.title));
+        const groomName = canonicalEvent ? (invitation.groomName || invitation.hostName || customParsed.groomName || "") : ((!isDefaultCouple && (invitation?.groomName || customParsed.groomName)) ? (invitation?.groomName || customParsed.groomName) : "");
+        const brideName = canonicalEvent ? (invitation.brideName || invitation.partnerName || customParsed.brideName || "") : ((!isDefaultCouple && (invitation?.brideName || customParsed.brideName)) ? (invitation?.brideName || customParsed.brideName) : "");
+        const venueName = canonicalEvent ? (invitation.venueName || customParsed.venueName || "") : (invitation?.venueName || customParsed.venueName) && (invitation?.venueName !== "The Premier Center Sen Sok" && customParsed.venueName !== "The Premier Center Sen Sok")
             ? (invitation?.venueName || customParsed.venueName)
             : "";
-        const venueAddress = (invitation?.venueAddress || customParsed.venueAddress) && (invitation?.venueAddress !== "អគារ A, សែនសុខ, ភ្នំពេញ" && customParsed.venueAddress !== "អគារ A, សែនសុខ, ភ្នំពេញ")
+        const venueAddress = canonicalEvent ? (invitation.venueAddress || customParsed.venueAddress || "") : (invitation?.venueAddress || customParsed.venueAddress) && (invitation?.venueAddress !== "អគារ A, សែនសុខ, ភ្នំពេញ" && customParsed.venueAddress !== "អគារ A, សែនសុខ, ភ្នំពេញ")
             ? (invitation?.venueAddress || customParsed.venueAddress)
             : "";
         const isEmptyDraft = Boolean(
@@ -679,7 +683,7 @@ export default function InvitationForm({ invitation }) {
                 : ((customParsed.messageText && customParsed.messageText !== DEFAULT_INVITATION_TEXT)
                     ? customParsed.messageText
                     : (preset.messageText || DEFAULT_STATE.messageText)),
-            schedule: (customParsed.schedule && customParsed.schedule.length > 0)
+            schedule: Array.isArray(customParsed.schedule)
                 ? customParsed.schedule
                 : (preset.schedule?.length ? preset.schedule : (tpl?.schedule || [])),
             dressCode: customParsed.dressCode || preset.dressCode || tpl?.dressCode || {
@@ -687,7 +691,7 @@ export default function InvitationForm({ invitation }) {
                 description: "សូមជ្រើសរើសសម្លៀកបំពាក់តាមពណ៌ដែលបានកំណត់ ដើម្បីបង្កើនភាពស្រស់ស្អាតនៃពិធី។",
                 colors: preset.dressColors?.length ? preset.dressColors : (tpl?.dressColors || []),
             },
-            dressColors: (customParsed.dressColors && customParsed.dressColors.length > 0)
+            dressColors: Array.isArray(customParsed.dressColors)
                 ? customParsed.dressColors
                 : (customParsed.dressCode?.colors?.length
                     ? customParsed.dressCode.colors
@@ -697,7 +701,7 @@ export default function InvitationForm({ invitation }) {
             languageMode: invitation?.languageMode || customParsed.languageMode || "KH",
             visibility: invitation?.visibility || "PUBLIC",
             photos: (() => {
-                let list = (customParsed.photos && customParsed.photos.length > 0 && customParsed.photos.some(p => p.url))
+                let list = Array.isArray(customParsed.photos)
                     ? [...customParsed.photos]
                     : (preset.photos && preset.photos.length > 0
                         ? preset.photos
@@ -715,7 +719,7 @@ export default function InvitationForm({ invitation }) {
                 return list;
             })(),
             showStory: customParsed.showStory !== undefined ? customParsed.showStory : (tpl?.enabledSections?.story !== false),
-            storyChapters: (customParsed.storyChapters && customParsed.storyChapters.length > 0)
+            storyChapters: Array.isArray(customParsed.storyChapters)
                 ? customParsed.storyChapters
                 : (preset.storyChapters?.length
                     ? preset.storyChapters
@@ -723,13 +727,13 @@ export default function InvitationForm({ invitation }) {
                         ? tpl.storyChapters
                         : (tpl?.storyText ? [{ id: "story-1", kicker: "រឿងរ៉ាវស្នេហា", title: "ដំណើររបស់យើង", date: tpl.dateText || "", text: tpl.storyText, image: tpl.phoneCoverImage || tpl.mainImage || "" }] : []))),
             showParty: customParsed.showParty !== undefined ? customParsed.showParty : (tpl?.enabledSections?.party !== false),
-            party: (customParsed.party && customParsed.party.length > 0)
+            party: Array.isArray(customParsed.party)
                 ? customParsed.party
                 : (invitation?.party && invitation.party.length > 0
                     ? invitation.party
                     : (preset.party?.length ? preset.party : (tpl?.party || []))),
             showFaq: customParsed.showFaq !== undefined ? customParsed.showFaq : (tpl?.enabledSections?.faq !== false),
-            faq: (customParsed.faq && customParsed.faq.length > 0)
+            faq: Array.isArray(customParsed.faq)
                 ? customParsed.faq
                 : (preset.faq?.length ? preset.faq : (tpl?.faq || [])),
             ...(isEmptyDraft ? {
@@ -814,6 +818,8 @@ export default function InvitationForm({ invitation }) {
 
     const [activeLangTab, setActiveLangTab] = useState("KH");
     const [isSaving, setIsSaving] = useState(false);
+    const [isPublishing, setIsPublishing] = useState(false);
+    const [published, setPublished] = useState(invitation?.status === "PUBLISHED");
     const [isExpanded, setIsExpanded] = useState(false);
     const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
 
@@ -974,10 +980,22 @@ export default function InvitationForm({ invitation }) {
     const update = (field, value) => {
         setForm((prev) => ({ ...prev, [field]: value }));
     };
+    const moveItem = (field, index, direction) => {
+        const items = [...(form[field] || [])];
+        const target = index + direction;
+        if (target < 0 || target >= items.length) return;
+        [items[index], items[target]] = [items[target], items[index]];
+        update(field, items);
+    };
 
     const handleFileUpload = (e, callback) => {
         const file = e.target.files?.[0];
         if (!file) return;
+
+        if (!["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size > 5 * 1024 * 1024) {
+            toast("សូមជ្រើសរូប JPEG, PNG ឬ WebP ក្រោម 5 MB។", "warning");
+            return;
+        }
 
         if (file.type?.startsWith("image/")) {
             const reader = new FileReader();
@@ -1076,6 +1094,9 @@ export default function InvitationForm({ invitation }) {
     const handleBatchGalleryUpload = (e) => {
         const files = Array.from(e.target.files || []);
         if (!files.length) return;
+        if (files.some(file => !["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size > 5 * 1024 * 1024)) {
+            toast("Choose JPEG, PNG or WebP images under 5 MB.", "warning"); return;
+        }
 
         const selectedFiles = files.slice(0, 10);
         const readers = selectedFiles.map((file) => {
@@ -1277,9 +1298,9 @@ export default function InvitationForm({ invitation }) {
         const activePreset = getTemplatePreset(activeTpl) || {};
         const finalGroom = String(form.groomName || "").trim();
         const finalBride = String(form.brideName || "").trim();
-        const finalDate = String(form.eventDate || "").trim() || (activeTpl?.targetDate ? activeTpl.targetDate.split("T")[0] : "");
+        const finalDate = String(form.eventDate || "").trim();
         const finalTitle = String(form.title || "").trim() || activePreset.title || activeTpl?.name || "សិរីមង្គលអាពាហ៍ពិពាហ៍";
-        const finalTime = String(form.eventTime || "").trim() || activeTpl?.receptionTime || "17:00";
+        const finalTime = String(form.eventTime || "").trim();
         const finalVenueName = String(form.venueName || "").trim();
         const finalVenueAddress = String(form.venueAddress || "").trim();
 
@@ -1294,6 +1315,7 @@ export default function InvitationForm({ invitation }) {
         try {
             let savedPhotos = form.photos || [];
             const designPayload = {
+                studioStyle: form.studioStyle,
                 fontKhmer: form.fontKhmer,
                 fontLatin: form.fontLatin,
                 elementFonts: form.elementFonts,
@@ -1337,6 +1359,7 @@ export default function InvitationForm({ invitation }) {
             };
 
             const contentPayload = {
+                studioStyle: form.studioStyle,
                 fontKhmer: form.fontKhmer,
                 fontLatin: form.fontLatin,
                 elementFonts: form.elementFonts,
@@ -1520,7 +1543,20 @@ export default function InvitationForm({ invitation }) {
                 }
             }
 
+            const finalDesign = { ...designPayload, coverImage: savedCoverUrl || designPayload.coverImage,
+                photos: savedPhotos, coverBackgroundImage: savedCoverBgUrl || null, backgroundImage: savedBgUrl || null,
+                invitationImage: savedInvitationUrl || designPayload.invitationImage, invitationImage2: savedInvitationUrl2 || designPayload.invitationImage2 };
+            const finalContent = { ...contentPayload, ...Object.fromEntries(["coverImage", "coverBackgroundImage", "backgroundImage", "invitationImage", "invitationImage2"].map(key => [key, finalDesign[key]])),
+                gallery: savedPhotos.filter(photo => photo?.url).map(({ id, url }) => ({ id, preview: url, type: "image" })) };
+            let extraMedia = new globalThis.Map();
+            if (backendId && !apiSyncFailed) {
+                try {
+                    extraMedia = await uploadInlineReferences([finalDesign, finalContent], files => mediaService.uploadGallery(backendId, files));
+                    if (extraMedia.size) setForm(previous => replaceMediaReferences(previous, extraMedia));
+                } catch (error) { mediaSyncError ||= error.message; }
+            }
             const hasMediaUpdates = backendId && (
+                extraMedia.size ||
                 savedCoverUrl ||
                 savedPhotos.some((photo, index) => photo?.url !== form.photos?.[index]?.url) ||
                 savedInvitationUrl ||
@@ -1537,7 +1573,7 @@ export default function InvitationForm({ invitation }) {
                 try {
                     saved = await invitationService.update(backendId, {
                         ...payload,
-                        designJson: JSON.stringify(stripInlineMedia({
+                        designJson: JSON.stringify(stripInlineMedia(replaceMediaReferences({
                             ...designPayload,
                             coverImage: savedCoverUrl || designPayload.coverImage,
                             photos: savedPhotos,
@@ -1545,8 +1581,8 @@ export default function InvitationForm({ invitation }) {
                             backgroundImage: savedBgUrl || form.backgroundImage || null,
                             invitationImage: savedInvitationUrl || form.invitationImage || null,
                             invitationImage2: savedInvitationUrl2 || form.invitationImage2 || null,
-                        })),
-                        contentJson: JSON.stringify(stripInlineMedia({
+                        }, extraMedia))),
+                        contentJson: JSON.stringify(stripInlineMedia(replaceMediaReferences({
                             ...contentPayload,
                             coverImage: savedCoverUrl || contentPayload.coverImage,
                             gallery: savedPhotos.filter(photo => photo?.url).map(({ id, url }) => ({ id, preview: url, type: "image" })),
@@ -1554,7 +1590,7 @@ export default function InvitationForm({ invitation }) {
                             backgroundImage: savedBgUrl || form.backgroundImage || null,
                             invitationImage: savedInvitationUrl || form.invitationImage || null,
                             invitationImage2: savedInvitationUrl2 || form.invitationImage2 || null,
-                        })),
+                        }, extraMedia))),
                     });
                 } catch (updateError) {
                     mediaSyncError ||= updateError?.message || "Invitation photo references could not be saved";
@@ -1564,12 +1600,12 @@ export default function InvitationForm({ invitation }) {
             const targetDraftId = invitationId || saved?.id || `wed-${Date.now().toString(36)}`;
 
             // Always persist to local wedding draft storage
-            saveDraft(stripInlineMedia({
+            saveDraft(stripInlineMedia(replaceMediaReferences({
                 ownerUserId: user?.id || user?.userId,
                 id: targetDraftId,
                 slug: saved?.slug || invitation?.slug || form.slug || "wedding",
                 backendInvitationId: saved?.id || invitation?.backendInvitationId || (!isNaN(Number(invitationId)) ? Number(invitationId) : null),
-                syncStatus: apiSyncFailed ? (effectiveBackendId || saved?.id ? "SYNC_FAILED" : "LOCAL_ONLY") : "SYNCED",
+                syncStatus: apiSyncFailed || mediaSyncError ? (effectiveBackendId || saved?.id ? "SYNC_FAILED" : "LOCAL_ONLY") : "SYNCED",
                 syncError: apiSyncFailed ? "មិនអាចភ្ជាប់ទៅ server បានទេ។" : (mediaSyncError || ""),
                 templateId: form.templateId || "garden-royal-khmer-wedding",
                 presetId: form.presetId || "",
@@ -1651,8 +1687,8 @@ export default function InvitationForm({ invitation }) {
                 thankYouText: form.thankYouText || "",
                 apologyTitle: form.apologyTitle || "",
                 apologyText: form.apologyText || "",
-                designJson: JSON.stringify(stripInlineMedia(designPayload)),
-                contentJson: JSON.stringify(stripInlineMedia(contentPayload)),
+                designJson: JSON.stringify(stripInlineMedia(replaceMediaReferences(finalDesign, extraMedia))),
+                contentJson: JSON.stringify(stripInlineMedia(replaceMediaReferences(finalContent, extraMedia))),
                 languageMode: form.languageMode || "KH",
                 enabledSections: {
                     countdown: form.showCountdown !== false,
@@ -1667,7 +1703,7 @@ export default function InvitationForm({ invitation }) {
                     rsvp: true,
                     music: Boolean(form.musicUrl),
                 },
-            }));
+            }, extraMedia)));
 
             const successMsg = apiSyncFailed
                 ? effectiveBackendId
@@ -1700,11 +1736,24 @@ export default function InvitationForm({ invitation }) {
         }
     };
 
-    const studio = useStudioPersistence({ value: form, onRestore: value => {
+    const studio = useStudioPersistence({ value: form, initialSaved: /^[1-9]\d*$/.test(String(invitationId || "")), onRestore: value => {
         setPendingCoverFile(null); setPendingCoverBgFile(null); setPendingBackgroundFile(null);
         setPendingInvitationFile(null); setPendingInvitation2File(null); setForm(value);
     }, persist: () => handleSave({ stayInStudio: true, quiet: true }),
         enabled: Boolean(invitationId && /^[1-9]\d*$/.test(String(invitationId))) && !pendingCoverFile && !pendingCoverBgFile && !pendingBackgroundFile && !pendingInvitationFile && !pendingInvitation2File && !JSON.stringify(form).includes("data:") });
+
+    async function publishInvitation() {
+        if (isPublishing) return;
+        setIsPublishing(true);
+        try {
+            if (!await studio.save()) return;
+            const result = await invitationService.publish(savedBackendId.current);
+            if (result?.status !== "PUBLISHED") throw new Error("The server has not confirmed publication. Please retry.");
+            setPublished(true);
+            toast("បានផ្សព្វផ្សាយ · Invitation published", "success");
+        } catch (error) { toast(error.message || "Publication failed. Please retry.", "warning"); }
+        finally { setIsPublishing(false); }
+    }
 
     // --- Dynamic Section Renderers (Driven by templateFormFlowConfig) ---
 
@@ -1871,7 +1920,7 @@ export default function InvitationForm({ invitation }) {
                 {form.showBrandMark !== false && (
                     <div style={{ marginTop: 12, display: "flex", flexDirection: "column", gap: 10 }}>
                         {form.brandMarkUrl ? (
-                            <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 12px", background: "#fff", borderRadius: 8, border: "1px solid #e2e8f0" }}>
+                            <div className="studio-brand-mark-row" style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 12px", background: "#fff", borderRadius: 8, border: "1px solid #e2e8f0" }}>
                                 <img
                                     src={form.brandMarkUrl}
                                     alt="Custom Logo"
@@ -1922,7 +1971,7 @@ export default function InvitationForm({ invitation }) {
                                 </div>
                             </div>
                         ) : (
-                            <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 12px", background: "#fff", borderRadius: 8, border: "1px solid #e8decb" }}>
+                            <div className="studio-brand-mark-row" style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 12px", background: "#fff", borderRadius: 8, border: "1px solid #e8decb" }}>
                                 <img
                                     src="/invitations/khmer-celestial/koupreng-gold-mark.webp"
                                     alt="Template Default Logo"
@@ -2244,6 +2293,7 @@ export default function InvitationForm({ invitation }) {
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                 {form.schedule?.map((item, idx) => (
                     <div key={item.id || idx} className="pe-grid-2" style={{ alignItems: "center", background: "#f8f6f0", padding: "10px 12px", borderRadius: "8px", border: "1px solid #e8e2d8", marginBottom: 0 }}>
+                        <label className="pe-label">កាលបរិច្ឆេទ · Date<input type="date" className="pe-input" value={item.date || ""} onChange={e => handleScheduleChange(idx, "date", e.target.value)} /></label>
                         <TimePicker
                             value={item.time}
                             onChange={(val) => handleScheduleChange(idx, "time", val)}
@@ -2267,6 +2317,8 @@ export default function InvitationForm({ invitation }) {
                                 <Trash2 size={13} />
                             </button>
                         </div>
+                        <label className="pe-label">ពិពណ៌នា · Description<textarea className="pe-input" value={item.description || ""} onChange={e => handleScheduleChange(idx, "description", e.target.value)} /></label>
+                        <div className="studio-reorder"><button type="button" disabled={idx === 0} onClick={() => moveItem("schedule", idx, -1)} aria-label={`Move schedule ${idx + 1} up`}>↑</button><button type="button" disabled={idx === form.schedule.length - 1} onClick={() => moveItem("schedule", idx, 1)} aria-label={`Move schedule ${idx + 1} down`}>↓</button></div>
                     </div>
                 ))}
             </div>
@@ -2477,6 +2529,7 @@ export default function InvitationForm({ invitation }) {
 
             <div className="pe-gallery-grid-clean">
                 {form.photos.map((photo, idx) => (
+                    <div key={photo.id || idx}>
                     <CleanGalleryItem
                         key={photo.id || `photo-${idx}`}
                         idx={idx}
@@ -2486,6 +2539,8 @@ export default function InvitationForm({ invitation }) {
                         canDeleteSlot={form.photos.length > 5}
                         onDeleteSlot={() => removePhotoSlot(idx)}
                     />
+                    <div className="studio-reorder"><button type="button" disabled={idx === 0} onClick={() => moveItem("photos", idx, -1)} aria-label={`Move photo ${idx + 1} up`}>↑</button><button type="button" disabled={idx === form.photos.length - 1} onClick={() => moveItem("photos", idx, 1)} aria-label={`Move photo ${idx + 1} down`}>↓</button></div>
+                    </div>
                 ))}
             </div>
         </div>
@@ -3123,7 +3178,6 @@ export default function InvitationForm({ invitation }) {
                         type="button"
                         className="pe-btn-back"
                         onClick={() => {
-                            if (studio.dirty && !window.confirm("Changes have not reached the server. Leave this editor?")) return;
                             if (location.state?.from) {
                                 navigate(location.state.from);
                             } else {
@@ -3152,6 +3206,7 @@ export default function InvitationForm({ invitation }) {
                     </button>
                 </div>
                 <div className="pe-sub-header-actions">
+                    {(invitation?.backendInvitationId || /^[1-9]\d*$/.test(String(invitationId || ""))) && !published && <button type="button" className="pe-btn-switch-tpl" disabled={isSaving || isPublishing} onClick={publishInvitation}>{isPublishing ? "Publishing…" : "ផ្សព្វផ្សាយ · Publish invitation"}</button>}
                     <button
                         type="button"
                         className="pe-btn-expand-editor"
@@ -3231,6 +3286,24 @@ export default function InvitationForm({ invitation }) {
                     </div>
 
                     <div className="pe-editor-scroll-body">
+                        {["invitation", "closing"].includes(activeSection) && <div className="studio-message-presets">
+                            <p>ឃ្លាអញ្ជើញ · Wording preset ({activeLangTab})</p>
+                            <button type="button" onClick={() => {
+                                if (!window.confirm("Replace the wording in this section with the selected preset?")) return;
+                                const en = activeLangTab === "EN";
+                                if (activeSection === "invitation") {
+                                    update("messageTitle", en ? "Together with our families" : "យើងខ្ញុំ និងក្រុមគ្រួសារទាំងសងខាង");
+                                    update("messageText", en ? "We warmly invite you to celebrate our wedding. Your presence will make our day complete." : "យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ លោក លោកស្រី និងក្រុមគ្រួសារ ចូលរួមជាភ្ញៀវកិត្តិយសក្នុងពិធីមង្គលការរបស់យើងខ្ញុំ។");
+                                } else {
+                                    update("thankYouTitle", en ? "With heartfelt thanks" : "សូមថ្លែងអំណរគុណ");
+                                    update("thankYouText", en ? "Thank you for sharing this special day with us and for your warm wishes." : "សូមអរគុណចំពោះវត្តមានដ៏មានតម្លៃ និងការជូនពរដ៏ល្អប្រពៃរបស់លោកអ្នក។");
+                                    update("apologyTitle", en ? "Our sincere apologies" : "សូមអភ័យទោស");
+                                    update("apologyText", en ? "Please accept our apologies for any unintentional omission or inconvenience." : "យើងខ្ញុំសូមអភ័យទោសចំពោះកំហុសឆ្គង ឬការខ្វះខាតដោយអចេតនា។");
+                                }
+                            }}>ប្រើឃ្លាសុភាព · Apply formal wording</button>
+                        </div>}
+                        {activeSection === "cover" && <StudioAppearance form={form} update={update}
+                            supportsPalette={/^(1|10|khmer-celestial|KHMER_CELESTIAL|royal-khmer-wedding)$/.test(String(form.templateId)) || /^(khmer-celestial|royal-khmer-wedding)$/i.test(String(getTemplateById(form.templateId)?.code || getTemplateById(form.templateId)?.slug || ""))} />}
                         {flowConfig.sectionOrder.map((sectionKey) => {
                             const renderer = sectionRenderers[sectionKey];
                             if (!renderer) return null;
@@ -3276,12 +3349,7 @@ export default function InvitationForm({ invitation }) {
 
             {/* Mobile Live Phone Simulator Overlay */}
             {isMobilePreviewOpen && (
-                <div
-                    className="pe-mobile-preview-overlay"
-                    role="dialog"
-                    aria-modal="true"
-                    aria-label="មើលគំរូការ (Mobile Preview)"
-                >
+                <Modal isOpen onClose={() => setIsMobilePreviewOpen(false)} size="full" title="មើលជាមុន · Invitation preview">
                     <div className="pe-mobile-preview-drawer">
                         <div className="pe-mobile-preview-drawer-header">
                             <span className="pe-mobile-preview-drawer-title">
@@ -3308,12 +3376,12 @@ export default function InvitationForm({ invitation }) {
                             />
                         </div>
                     </div>
-                </div>
+                </Modal>
             )}
 
             {/* Template Selection Modal */}
             {isTemplateModalOpen && (
-                <div className="pe-modal-overlay" onClick={() => setIsTemplateModalOpen(false)}>
+                <Modal isOpen onClose={() => setIsTemplateModalOpen(false)} size="xl" title="ប្តូរគំរូ · Change template">
                     <div className="pe-modal-card pe-tpl-modal-card" onClick={(e) => e.stopPropagation()}>
                         <div className="pe-modal-header">
                             <div>
@@ -3444,7 +3512,7 @@ export default function InvitationForm({ invitation }) {
                             </div>
                         </div>
                     </div>
-                </div>
+                </Modal>
             )}
 
         </div>

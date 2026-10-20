@@ -9,6 +9,7 @@ import "./EventWorkspace.css";
 
 const MODULE_LABELS = [
   ["", "ទិដ្ឋភាពទូទៅ", "Overview"], ["invitation", "សំបុត្រអញ្ជើញ", "Invitation"],
+  ["tickets/design", "រចនាកាតអញ្ជើញ", "Ticket designer"],
   ["guests", "បញ្ជីភ្ញៀវ", "Guests"], ["rsvp", "ការឆ្លើយតប", "RSVP"],
   ["gifts", "ចំណងដៃ", "Gifts"], ["budget", "គម្រោងថវិកា", "Budget"],
   ["seating", "រៀបចំកន្លែងអង្គុយ", "Seating"], ["check-in", "វត្តមាន", "Check-in"],
@@ -38,7 +39,7 @@ function VerifiedWorkspace({ eventId }) {
   if (!/^[1-9]\d*$/.test(eventId)) return <div className="event-workspace" role="alert">{en ? "Choose a synchronized event to manage it." : "សូមជ្រើសរើសកម្មវិធីដែលបានរក្សាទុកលើម៉ាស៊ីនមេ។"}<Link to="/app/events">{en ? "My Events" : "កម្មវិធីរបស់ខ្ញុំ"}</Link></div>;
   if (state.loading) return <p className="event-workspace" role="status">{en ? "Loading event…" : "កំពុងទាញយកកម្មវិធី…"}</p>;
   if (state.error) return <div className="event-workspace" role="alert"><p>{state.error}</p><button onClick={() => setRetry(n => n + 1)}>{en ? "Try again" : "ព្យាយាមម្ដងទៀត"}</button> <Link to="/app/events">{en ? "My Events" : "កម្មវិធីរបស់ខ្ញុំ"}</Link></div>;
-  const module = location.pathname.slice(eventPath(eventId).length).split("/")[1] || "";
+  const module = location.pathname.slice(eventPath(eventId).length).replace(/^\//, "");
   return <EventContext.Provider value={{ eventId, event: state.event, events: state.events,
     updateEvent: event => setState(current => ({ ...current, event })) }}>
     <section className="event-workspace" aria-label={en ? "Event workspace" : "គ្រប់គ្រងកម្មវិធី"}>

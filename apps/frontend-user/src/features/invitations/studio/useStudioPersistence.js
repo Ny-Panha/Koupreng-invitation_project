@@ -1,15 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { UNSAFE_NavigationContext } from "react-router-dom";
+import { registerUnsavedHistoryGuard } from "@/shared/navigation/unsavedHistoryGuard";
 
 // One writer per mounted editor. A completion only acknowledges the snapshot it sent.
-export function useStudioPersistence({ value, onRestore, persist, enabled, delay = 1500 }) {
+export function useStudioPersistence({ value, onRestore, persist, enabled, initialSaved = true, delay = 1500 }) {
+  const navigation = useContext(UNSAFE_NavigationContext);
   const serialized = JSON.stringify(value);
   const initial = useRef(serialized);
-  const acknowledged = useRef(serialized);
+  const acknowledged = useRef(initialSaved ? serialized : null);
   const latest = useRef({ serialized, persist });
   const running = useRef(null);
   const mounted = useRef(true);
   const history = useRef({ entries: [serialized], index: 0, restoring: false });
-  const [state, setState] = useState({ phase: "saved", error: "", version: 0 });
+  const [state, setState] = useState({ phase: initialSaved ? "saved" : "unsaved", error: "", version: 0 });
   latest.current = { serialized, persist };
   const dirty = serialized !== acknowledged.current;
 
@@ -59,8 +62,27 @@ export function useStudioPersistence({ value, onRestore, persist, enabled, delay
   }, [serialized, dirty, enabled, delay, state.phase, state.version]);
 
   useEffect(() => {
+    const navigator = navigation?.navigator;
+    const originals = {};
+    const wrappers = {};
+    const changed = () => latest.current.serialized !== acknowledged.current;
+    const mayLeave = () => !changed() || window.confirm("Changes have not reached the server. Leave this editor?");
+    const historyGuard = registerUnsavedHistoryGuard(mayLeave);
+    // BrowserRouter has no data-router blocker. Guard its shared navigation adapter,
+    // including imperative event switching, and restore it when this editor unmounts.
+    if (navigator) for (const method of ["push", "replace", "go"]) {
+      originals[method] = navigator[method];
+      wrappers[method] = function (...args) {
+        if (!mayLeave()) return;
+        const result = originals[method].apply(navigator, args);
+        historyGuard.updateIndex();
+        return result;
+      };
+      navigator[method] = wrappers[method];
+    }
     function warn(event) { if (latest.current.serialized !== acknowledged.current) { event.preventDefault(); event.returnValue = ""; } }
     function guardLink(event) {
+      if (navigator) return;
       const anchor = event.target.closest?.("a[href]");
       if (!anchor || event.defaultPrevented || anchor.target === "_blank" || latest.current.serialized === acknowledged.current) return;
       if (!window.confirm("Changes have not reached the server. Leave this editor?")) { event.preventDefault(); event.stopPropagation(); }
@@ -69,8 +91,12 @@ export function useStudioPersistence({ value, onRestore, persist, enabled, delay
     window.addEventListener("beforeunload", warn);
     document.addEventListener("click", guardLink, true);
     window.addEventListener("offline", offline);
-    return () => { window.removeEventListener("beforeunload", warn); document.removeEventListener("click", guardLink, true); window.removeEventListener("offline", offline); };
-  }, []);
+    return () => {
+      window.removeEventListener("beforeunload", warn); historyGuard.release();
+      document.removeEventListener("click", guardLink, true); window.removeEventListener("offline", offline);
+      if (navigator) for (const method of Object.keys(originals)) if (navigator[method] === wrappers[method]) navigator[method] = originals[method];
+    };
+  }, [navigation]);
 
   function restore(index) {
     const h = history.current;

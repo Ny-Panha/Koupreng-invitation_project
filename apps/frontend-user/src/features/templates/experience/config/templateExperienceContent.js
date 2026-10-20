@@ -594,6 +594,7 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
     const hostSchedule = nonEmpty(host.schedule)
         ? host.schedule.map((s, index) => ({
             id: s.id || `sched-${index}`,
+            date: s.date || "",
             time: s.time || "",
             title: s.title || "",
             titleEn: s.titleEn || "",
@@ -680,6 +681,7 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         sectionOrder: host.sectionOrder || tpl.sectionOrder || [],
         hasHostContent,
         fontKhmer: host.fontKhmer || tpl.fontKhmer || tpl.design?.fontKhmer || "",
+        studioStyle: host.studioStyle || tpl.studioStyle || {},
         fontLatin: host.fontLatin || tpl.fontLatin || tpl.design?.fontLatin || "",
         elementFonts: host.elementFonts || tpl.elementFonts || tpl.design?.elementFonts || {},
         backgroundColor: host.backgroundColor || tpl.backgroundColor || tpl.design?.backgroundColor || "",

@@ -37,6 +37,7 @@ import {
 import { KHMER_CELESTIAL_ASSETS } from "./khmerCelestialAssets";
 import { celestialElementFont, celestialFont } from "./celestialTypography";
 import "./khmer-celestial.css";
+import { celestialStudioStyle } from "../../experience/studioStyle";
 
 const PROGRAM_ICONS = [
   Sparkles,
@@ -264,7 +265,11 @@ export default function KhmerCelestialLayout({
   const invitationImage = firstImage(galleryImages[1]) || firstImage(galleryImages[0]) || content.coverImage;
 
   return (
-    <div className={`kc-root${preview ? " kc-root--preview" : ""}`} data-variant="khmer-celestial" style={{
+    <div className={`kc-root${preview ? " kc-root--preview" : ""}`} data-variant="khmer-celestial"
+      data-studio-message-size={content.studioStyle?.messageSize || undefined}
+      data-studio-message-align={content.studioStyle?.align || undefined}
+      data-studio-portrait={Number.isFinite(content.studioStyle?.portraitY) ? true : undefined} style={{
+      ...celestialStudioStyle(content.studioStyle),
       "--kc-khmer-display": celestialFont(content.fontKhmer),
       "--kc-english-display": content.fontLatin ? `${JSON.stringify(content.fontLatin)}, Georgia, serif` : undefined,
     }}>
@@ -475,7 +480,7 @@ export default function KhmerCelestialLayout({
                   const ProgrammeIcon = PROGRAM_ICONS[index % PROGRAM_ICONS.length];
                   return (
                     <CelestialReveal as="article" className="kc-schedule__item" key={item.id || `${item.time}-${index}`} delay={(index % 3) * 0.04}>
-                      <time>{item.time}</time>
+                      <time>{item.date ? <><span>{item.date}</span><br /></> : null}{item.time}</time>
                       <span className="kc-schedule__marker" aria-hidden="true"><ProgrammeIcon /></span>
                       <div>
                         <h3>{item.title}</h3>

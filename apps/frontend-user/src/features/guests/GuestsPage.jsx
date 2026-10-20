@@ -11,6 +11,7 @@ import GuestFilters from "./components/GuestFilters";
 import GuestTable from "./components/GuestTable";
 import GuestDeleteDialog from "./components/GuestDeleteDialog";
 import GuestQrModal from "./components/GuestQrModal";
+import TicketModal from "@/features/tickets/TicketModal";
 import GuestImportModal from "./components/GuestImportModal";
 import GroupCategoryModal from "./components/GroupCategoryModal";
 import GuestFormModal from "./components/GuestFormModal";
@@ -111,6 +112,7 @@ export default function GuestsPage() {
 
   const [deleteGuestTarget, setDeleteGuestTarget] = useState(null);
   const [qrGuestTarget, setQrGuestTarget] = useState(null);
+  const [ticketGuest, setTicketGuest] = useState(null);
   const [importModalOpen, setImportModalOpen] = useState(false);
   const [groupModalOpen, setGroupModalOpen] = useState(false);
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
@@ -319,6 +321,7 @@ export default function GuestsPage() {
             onEdit={handleOpenEditGuest}
             onDelete={(g) => setDeleteGuestTarget(g)}
             onShowQr={(g) => setQrGuestTarget(g)}
+            onShowTicket={backendInvitationId ? guest => setTicketGuest(guest) : undefined}
             onCopyLink={handleCopyLink}
             onMarkAsSent={handleMarkAsSent}
             onOpenAddGuest={handleOpenAddGuest}
@@ -360,6 +363,8 @@ export default function GuestsPage() {
         onCopyLink={handleCopyLink}
         t={t}
       />
+
+      {ticketGuest && <TicketModal eventId={backendInvitationId} guestId={ticketGuest.backendId || ticketGuest.id} onClose={() => setTicketGuest(null)} />}
 
       <GuestImportModal
         invitationId={backendInvitationId}

@@ -1,4 +1,4 @@
-export const STUDIO_SECTIONS = {
+const STUDIO_SECTIONS = {
   cover: ["ក្រប និងរចនា", "Cover & design"], family: ["មាតាបិតា", "Families"],
   invitation: ["សារអញ្ជើញ", "Invitation message"], couplePhoto: ["រូបគូស្វាមីភរិយា", "Couple photos"],
   countdown: ["រាប់ថយក្រោយ", "Countdown"], schedule: ["កាលវិភាគ", "Schedule"],

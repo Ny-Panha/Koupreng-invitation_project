@@ -3,6 +3,11 @@ import { describe, expect, it, vi } from "vitest";
 import { useStudioPersistence } from "./useStudioPersistence";
 
 describe("studio server persistence", () => {
+  it("does not label a browser-only draft as saved to the server", () => {
+    const { result } = renderHook(() => useStudioPersistence({ value: { title: "Local draft" }, initialSaved: false, enabled: false, persist: vi.fn(), onRestore: vi.fn() }));
+    expect(result.current.phase).toBe("unsaved");
+    expect(result.current.dirty).toBe(true);
+  });
   it("does not acknowledge edits made while the first request is pending", async () => {
     let complete;
     const persist = vi.fn(() => new Promise(resolve => { complete = resolve; }));

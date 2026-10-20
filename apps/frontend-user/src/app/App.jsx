@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import "@/shared/navigation/unsavedHistoryGuard";
 import { BrowserRouter as Router } from "react-router-dom";
 import AppRouter from "./router";
 import ScrollToTop from "./ScrollToTop";

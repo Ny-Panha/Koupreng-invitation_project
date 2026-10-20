@@ -33,6 +33,7 @@ vi.mock("@/features/invitations/api/mediaApi", () => ({
 }));
 
 import { templateCatalogService } from "../templates/api/templateCatalogApi";
+import { invitationService } from "./api/invitationApi";
 
 beforeEach(() => {
   localStorage.clear();
@@ -84,6 +85,24 @@ describe("Dynamic Templates & Presets", () => {
 });
 
 describe("InvitationForm render test", () => {
+    it("keeps intentionally emptied collections empty after reopening and saving", async () => {
+        invitationService.update.mockClear();
+        const { container } = render(<MemoryRouter><InvitationForm invitation={{ id: 101, templateId: 10, title: "Saved event", status: "DRAFT", designJson: JSON.stringify({ photos: [], dressColors: [] }), contentJson: JSON.stringify({ schedule: [], storyChapters: [], party: [], faq: [] }) }} /></MemoryRouter>);
+        await act(async () => { container.querySelector(".pe-save-main-btn").click(); });
+        await waitFor(() => expect(invitationService.update).toHaveBeenCalled());
+        const payload = invitationService.update.mock.calls.at(-1)[1];
+        const content = JSON.parse(payload.contentJson);
+        expect(content.schedule).toEqual([]); expect(content.storyChapters).toEqual([]);
+        expect(content.party).toEqual([]); expect(content.faq).toEqual([]);
+        expect(JSON.parse(payload.designJson).photos.every(photo => !photo.url)).toBe(true);
+    });
+    it("prefills real backend event details before any customization JSON exists", () => {
+        render(<MemoryRouter><InvitationForm invitation={{ id: 101, templateId: 10, status: "DRAFT", title: "Our saved event", hostName: "Actual host", partnerName: "Actual partner", eventDate: "2027-01-12", venueName: "The Premier Center Sen Sok" }} /></MemoryRouter>);
+        expect(screen.getByDisplayValue("Our saved event")).toBeInTheDocument();
+        expect(screen.getByDisplayValue("Actual host")).toBeInTheDocument();
+        expect(screen.getByDisplayValue("Actual partner")).toBeInTheDocument();
+        expect(screen.getByDisplayValue("The Premier Center Sen Sok")).toBeInTheDocument();
+    });
     it("renders InvitationForm with form inputs and simulator", () => {
         const mockInvitation = {
             id: "wed-mu589vhe",

@@ -42,6 +42,7 @@ export default function GuestTable({
   onEdit,
   onDelete,
   onShowQr,
+  onShowTicket,
   onCopyLink,
   onMarkAsSent,
   onOpenAddGuest,
@@ -334,6 +335,7 @@ export default function GuestTable({
               )}
               <td data-label={t ? t("thActions") : "Actions"}>
                 <div className="pe-guest-inline-actions">
+                  {onShowTicket && guest.source === "backend" && <button type="button" className="guest-action-btn" title="កាតអញ្ជើញ · Ticket" onClick={() => onShowTicket(guest)}>Ticket</button>}
                   {onShowQr && (
                     <button
                       type="button"

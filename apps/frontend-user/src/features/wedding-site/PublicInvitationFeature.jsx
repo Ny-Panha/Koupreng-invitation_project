@@ -16,6 +16,7 @@ import { invitationService } from "@/features/invitations/api/invitationApi";
 import { mediaService } from "@/features/invitations/api/mediaApi";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { resolveInviteToken } from "./publicInvitationQuery";
+import PublicTicketAccess from "@/features/tickets/PublicTicketAccess";
 
 function publicStateCopy(languageMode, stateType = "UNPUBLISHED") {
     const mode = String(languageMode || "").toUpperCase();
@@ -300,6 +301,7 @@ export default function PublicInvitationPage() {
 
         if (mergedPublicGarden) {
             return (
+                <>
                 <TemplateExperience
                     tpl={mergedPublicGarden.tpl}
                     variant={mergedPublicGarden.variant}
@@ -316,6 +318,8 @@ export default function PublicInvitationPage() {
                         />
                     )}
                 </TemplateExperience>
+                <PublicTicketAccess slug={slug} token={inviteToken} accessToken={effectiveAccessToken} />
+                </>
             );
         }
     }

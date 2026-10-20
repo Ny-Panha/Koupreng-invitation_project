@@ -8,7 +8,7 @@ import { buildPreviewUrl, createPreviewSession, iframePreviewChannel, isTrustedP
 import { usePreviewSyncRetries } from "@/shared/hooks/usePreviewSyncRetries";
 
 function displayKhmerDate(dateStr) {
-    if (!dateStr) return "ថ្ងៃពុធ ២៨ មករា ២០២៦";
+    if (!dateStr) return "";
     try {
         const clean = dateStr.includes("T") ? dateStr.split("T")[0] : dateStr;
         const d = new Date(`${clean}T00:00:00`);
@@ -78,33 +78,33 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
     const broadcastSync = useCallback(() => {
         if (!iframeRef.current?.contentWindow) return;
         try {
-            const rawDate = data.eventDate || data.event?.date || data.weddingDate;
+            const rawDate = data.eventDate ?? data.event?.date ?? data.weddingDate;
             const livePayload = {
                 ...data,
                 templateId: templateSlug,
-                groomName: data.groomName || data.couple?.groom,
-                brideName: data.brideName || data.couple?.bride,
-                groom: data.groomName || data.couple?.groom,
-                bride: data.brideName || data.couple?.bride,
-                invitationTitle: data.title || data.invitationTitle,
-                title: data.title || data.invitationTitle,
-                invitationSubtitle: data.subtitle || data.invitationSubtitle || "យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ",
-                subtitle: data.subtitle || data.invitationSubtitle || "យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ",
+                groomName: data.groomName ?? data.couple?.groom,
+                brideName: data.brideName ?? data.couple?.bride,
+                groom: data.groomName ?? data.couple?.groom,
+                bride: data.brideName ?? data.couple?.bride,
+                invitationTitle: data.title ?? data.invitationTitle,
+                title: data.title ?? data.invitationTitle,
+                invitationSubtitle: data.subtitle ?? data.invitationSubtitle ?? "យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ",
+                subtitle: data.subtitle ?? data.invitationSubtitle ?? "យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ",
                 messageTitle: data.messageTitle || "",
                 messageText: data.messageText || data.message || "",
                 message: data.messageText || data.message || "",
                 blessingMessage: data.messageText || data.message || "",
                 weddingDate: rawDate,
-                dateText: (rawDate ? displayKhmerDate(rawDate) : "") || (data.eventDateText && !/^\d{4}-\d{2}-\d{2}$/.test(data.eventDateText) ? data.eventDateText : "") || (data.dateText && !/^\d{4}-\d{2}-\d{2}$/.test(data.dateText) ? data.dateText : "") || "ថ្ងៃពុធ ២៨ មករា ២០២៦",
-                weddingTime: formatTime24toKhmer(data.eventTime || data.event?.ceremonyTime || data.weddingTime || "17:00") || "05:00 ល្ងាច",
-                receptionTime: formatTime24toKhmer(data.event?.receptionTime || data.eventTime || data.weddingTime || "17:00") || "05:00 ល្ងាច",
-                eventTime: formatTime24toKhmer(data.eventTime || data.event?.ceremonyTime || data.weddingTime || "17:00") || "05:00 ល្ងាច",
-                venueName: data.venueName || data.event?.venueName,
-                venueAddress: data.venueAddress || data.event?.venueAddress,
+                dateText: rawDate !== undefined ? displayKhmerDate(rawDate) : (data.eventDateText || data.dateText || ""),
+                weddingTime: formatTime24toKhmer(data.eventTime ?? data.event?.ceremonyTime ?? data.weddingTime ?? "") || "",
+                receptionTime: formatTime24toKhmer(data.event?.receptionTime ?? data.eventTime ?? data.weddingTime ?? "") || "",
+                eventTime: formatTime24toKhmer(data.eventTime ?? data.event?.ceremonyTime ?? data.weddingTime ?? "") || "",
+                venueName: data.venueName ?? data.event?.venueName,
+                venueAddress: data.venueAddress ?? data.event?.venueAddress,
                 googleMapUrl: data.googleMapUrl,
                 googleMapsUrl: data.googleMapUrl,
-                fontKhmer: data.fontKhmer || "Bayon",
-                fontLatin: data.fontLatin || "Cinzel Decorative",
+                fontKhmer: data.fontKhmer || "",
+                fontLatin: data.fontLatin || "",
                 elementFonts: data.elementFonts,
                 brandMark: data.brandMarkUrl || data.brandMark,
                 showBrandMark: data.showBrandMark !== false,
