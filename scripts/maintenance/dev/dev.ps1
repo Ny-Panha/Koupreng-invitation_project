@@ -284,7 +284,7 @@ try {
     Free-Port 8080
     Write-Host "`n[2/4] Starting Backend (Spring Boot on :8080)..." -ForegroundColor White
     $backendDir = Join-Path $RootDir "apps\backend"
-    $backendCmd = "mvnw.cmd spring-boot:run -Dspring-boot.run.profiles=$($env:SPRING_PROFILES_ACTIVE)"
+    $backendCmd = ".\mvnw.cmd spring-boot:run -Dspring-boot.run.profiles=$($env:SPRING_PROFILES_ACTIVE)"
     $backendProcess = Start-DevProcess -Title "[Koupreng] Backend API" -WorkingDir $backendDir -Command $backendCmd
 
     Write-Host "  Waiting for Backend to initialize..." -ForegroundColor Cyan
