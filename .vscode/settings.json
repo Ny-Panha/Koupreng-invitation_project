@@ -5,12 +5,14 @@
     "**/.metadata/**",
     "**/archetype-resources/**",
     "**/META-INF/maven/**",
+    "**/output/**",
     "**/.cache/**"
   ],
   "java.project.resourceFilters": [
     "node_modules",
     "\\.git",
     "\\.cache",
+    "output",
     "target"
   ],
   "files.watcherExclude": {

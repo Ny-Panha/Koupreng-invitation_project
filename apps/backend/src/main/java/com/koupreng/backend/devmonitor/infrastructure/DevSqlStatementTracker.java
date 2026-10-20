@@ -19,7 +19,6 @@ public final class DevSqlStatementTracker {
     }
 
     private static final class TraceState {
-        final long startNano = System.nanoTime();
         final List<String> queries = new ArrayList<>();
         final Map<String, Integer> normalizedQueryCounts = new HashMap<>();
         boolean nPlusOneDetected = false;

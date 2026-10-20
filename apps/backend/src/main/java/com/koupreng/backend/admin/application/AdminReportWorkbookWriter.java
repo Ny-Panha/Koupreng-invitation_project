@@ -18,9 +18,8 @@ final class AdminReportWorkbookWriter {
     AdminReportWorkbookWriter(AdminReportingService reporting) { this(reporting, 1_048_500); }
     AdminReportWorkbookWriter(AdminReportingService reporting, int sheetCapacity) { this.reporting = reporting; this.sheetCapacity = sheetCapacity; }
     void write(AdminReportExportService.Plan plan, OutputStream output) throws IOException {
-        SXSSFWorkbook workbook = new SXSSFWorkbook(100);
-        workbook.setCompressTempFiles(true);
-        try {
+        try (SXSSFWorkbook workbook = new SXSSFWorkbook(100)) {
+            workbook.setCompressTempFiles(true);
             var styles = new Styles(workbook);
             var definitions = plan.report().equals("all") ? AdminReportCatalog.DEFINITIONS
                 : List.of(AdminReportCatalog.definition(plan.report()));
@@ -52,8 +51,6 @@ final class AdminReportWorkbookWriter {
             meta.setColumnWidth(0,24*256); meta.setColumnWidth(1,26*256); meta.setColumnWidth(2,90*256); meta.createFreezePane(0,1);
             workbook.setForceFormulaRecalculation(true);
             workbook.write(output);
-        } finally {
-            try { workbook.close(); } finally { workbook.dispose(); }
         }
     }
     private AdminReportFilter worksheetFilter(AdminReportExportService.Plan plan, Definition definition) {

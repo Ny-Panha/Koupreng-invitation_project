@@ -6,6 +6,8 @@ import java.util.List;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import jakarta.servlet.Filter;
+
 import com.koupreng.backend.auth.infrastructure.security.AuthRateLimitFilter;
 import com.koupreng.backend.auth.infrastructure.security.AppJwtAuthenticationConverter;
 import com.koupreng.backend.shared.security.AdminPaymentSecretFilter;
@@ -167,12 +169,14 @@ public class SecurityConfig {
                         csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                                 .csrfTokenRequestHandler(handler)
                                 .ignoringRequestMatchers(CSRF_PUBLIC_PATHS)
-                                .withObjectPostProcessor(new ObjectPostProcessor<CsrfFilter>() {
+                                .withObjectPostProcessor(new ObjectPostProcessor<Filter>() {
                                     @Override
-                                    public <O extends CsrfFilter> O postProcess(O filter) {
+                                    public <O extends Filter> O postProcess(O filter) {
                                         // OAuth resource-server defaults exempt every token resolved by our
                                         // cookie-aware resolver. Replace that matcher after configuration.
-                                        filter.setRequireCsrfProtectionMatcher(new CookieCsrfProtectionMatcher(CSRF_PUBLIC_PATHS));
+                                        if (filter instanceof CsrfFilter csrfFilter) {
+                                            csrfFilter.setRequireCsrfProtectionMatcher(new CookieCsrfProtectionMatcher(CSRF_PUBLIC_PATHS));
+                                        }
                                         return filter;
                                     }
                                 });

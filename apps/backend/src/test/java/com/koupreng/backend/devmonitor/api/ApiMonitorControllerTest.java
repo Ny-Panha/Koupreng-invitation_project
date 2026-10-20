@@ -1,7 +1,5 @@
 package com.koupreng.backend.devmonitor.api;
 
-import java.util.List;
-
 import com.koupreng.backend.devmonitor.application.ApiMonitorProperties;
 import com.koupreng.backend.devmonitor.application.ApiMonitorService;
 import com.koupreng.backend.devmonitor.infrastructure.ApiMonitorEventStore;

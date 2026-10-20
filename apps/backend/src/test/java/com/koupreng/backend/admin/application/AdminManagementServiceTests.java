@@ -42,7 +42,6 @@ import com.koupreng.backend.invitation.domain.EventType;
 import com.koupreng.backend.invitation.domain.InvitationModerationStatus;
 import com.koupreng.backend.payment.domain.PaymentStatus;
 import com.koupreng.backend.payment.domain.TemplatePaymentOrder;
-import com.koupreng.backend.subscription.domain.Subscription;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import java.math.BigDecimal;
