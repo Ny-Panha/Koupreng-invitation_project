@@ -1,7 +1,7 @@
 import { api } from "../../shared/api/httpClient";
 
 function unwrap(response) {
-	return response?.data ?? response;
+	return response && Object.hasOwn(response, "data") ? response.data : response;
 }
 
 export const subscriptionApi = {

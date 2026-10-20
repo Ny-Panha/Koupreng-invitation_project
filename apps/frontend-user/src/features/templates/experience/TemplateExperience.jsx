@@ -629,7 +629,7 @@ const EventEssentialLayout = lazy(() => import("../layouts/EventEssentialLayout"
 export default function TemplateExperience(props) {
     const tpl = props.tpl;
     if ([tpl?.code, tpl?.slug, tpl?.templateCode, tpl?.templateId].includes("event-essential")) {
-        return <Suspense fallback={<p role="status">??????????? / Loading?</p>}><EventEssentialLayout {...props} /></Suspense>;
+        return <Suspense fallback={<p role="status">កំពុងផ្ទុក… / Loading…</p>}><EventEssentialLayout {...props} /></Suspense>;
     }
     return <WeddingTemplateExperience {...props} />;
 }

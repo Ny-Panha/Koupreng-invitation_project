@@ -964,6 +964,7 @@
 }
 
 .payment-qr-info-lux {
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -1155,8 +1156,8 @@
     grid-template-columns: 120px 1fr;
   }
 
-  .payment-qr-layout {
-    grid-template-columns: 1fr;
+  .payment-qr-layout, .payment-qr-grid-lux {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 

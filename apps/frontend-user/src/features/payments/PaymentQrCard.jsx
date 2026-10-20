@@ -15,6 +15,7 @@ import { paymentService } from "./paymentService";
 import { isTerminalStatus, statusMessage } from "./paymentStatus";
 import { toast } from "../../shared/ui/toast";
 import { getPaymentQrValue } from "./khqr";
+import { packagePrice } from "../marketing/model/packagePresentation";
 import "./PaymentPages.css";
 
 function getSessionSecondsRemaining(expiresAt, now = Date.now()) {
@@ -43,6 +44,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
   const status = order?.status || "PENDING";
   const waitingForPayment = !isTerminalStatus(status);
   const orderCode = order?.orderCode || "";
+  const amountLabel = packagePrice({ price: order?.amount, currency: order?.currency }, "en") || "Amount unavailable";
   const qrValue = useMemo(() => {
     return getPaymentQrValue(order);
   }, [order]);
@@ -149,10 +151,10 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
       <div className="payment-summary-lux">
         <div>
           <span className="checkout-template-cat">
-            {order?.packageName || "Premium"} Plan • {order?.currency || "USD"} {order?.amount || "0.01"}
+            {[order?.packageName, amountLabel].filter(Boolean).join(" · ")}
           </span>
           <h2 className="payment-title-lux">
-            {order?.templateName || "Garden Royal Khmer Wedding"}
+            {order?.templateName || "Template payment"}
           </h2>
         </div>
 
@@ -212,7 +214,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
             {isExpired ? (
               <span style={{ color: "#ef4444", fontWeight: 700, fontSize: "0.8rem" }}>Expired</span>
             ) : (
-              <span>{order?.currency || "USD"} {Number(order?.amount || 0.01).toFixed(2)}</span>
+              <span>{amountLabel}</span>
             )}
           </div>
 
@@ -257,7 +259,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
               👉 <strong>របៀបទូទាត់៖</strong> Scan this link with your camera or open the ABA PayWay link below.
             </p>
             <p className="payment-muted-lux">
-              Expected: <strong>{order?.currency || "USD"} {Number(order?.amount || 0).toFixed(2)}</strong>.
+              Expected: <strong>{amountLabel}</strong>.
               Include the order code in the remark if the bank offers that field. Fixed links may not retain it.
             </p>
             <p style={{ marginTop: "6px", color: "#059669", fontWeight: 600 }}>

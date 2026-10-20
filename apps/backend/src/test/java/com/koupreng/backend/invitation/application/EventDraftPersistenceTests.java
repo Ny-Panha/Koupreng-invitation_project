@@ -108,6 +108,24 @@ class EventDraftPersistenceTests {
         http.perform(get(firstPath).header("Authorization", "Bearer " + token)).andExpect(status().isUnauthorized());
     }
 
+    @Test
+    void partialDraftNeedsOnlyTitleAndReusesItsRequestIdentity() throws Exception {
+        String token = register("partial-draft@example.test");
+        String payload = "{\"title\":\"Details later\",\"eventType\":\"BIRTHDAY\",\"visibility\":\"PRIVATE\",\"clientRequestId\":\"" + UUID.randomUUID() + "\"}";
+        var first = http.perform(post("/api/v1/invitations").header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON).content(payload))
+                .andExpect(status().isCreated()).andExpect(jsonPath("$.data.title").value("Details later"))
+                .andExpect(jsonPath("$.data.status").value("DRAFT"))
+                .andExpect(jsonPath("$.data.eventDate").doesNotExist()).andReturn();
+        long id = json.readTree(first.getResponse().getContentAsString()).path("data").path("id").asLong();
+        http.perform(post("/api/v1/invitations").header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON).content(payload))
+                .andExpect(status().isCreated()).andExpect(jsonPath("$.data.id").value(id));
+        http.perform(post("/api/v1/invitations").header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON).content("{\"eventType\":\"BIRTHDAY\"}"))
+                .andExpect(status().isBadRequest());
+    }
+
     private String register(String email) throws Exception {
         var result = http.perform(post("/api/v1/auth/register").contentType(MediaType.APPLICATION_JSON)
                 .content("{\"fullName\":\"Journey owner\",\"email\":\"" + email + "\",\"password\":\"JourneyPass123\"}"))

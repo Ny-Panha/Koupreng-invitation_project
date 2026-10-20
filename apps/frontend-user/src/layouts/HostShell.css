@@ -15,6 +15,9 @@
   overflow-x: hidden;
 }
 
+/* These pages already sit below the fixed host header. */
+.dash-main-scroll .enterprise-page { margin-top: 28px; }
+
 .dash-main {
   --dash-gold: #b98b42;
   --dash-teal: #0f766e;

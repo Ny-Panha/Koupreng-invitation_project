@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "../enterprise/EnterprisePages.css";
 import paymentService from "./paymentService";
+import { packagePrice } from "../marketing/model/packagePresentation";
 
-function money(amount, currency = "USD") {
-    return new Intl.NumberFormat("en", { style: "currency", currency }).format(Number(amount || 0));
+function money(amount, currency) {
+    return packagePrice({ price: amount, currency }, "en") || "Amount unavailable";
 }
 
 function dateTime(value) {
@@ -24,6 +25,7 @@ export default function PaymentReceiptPage() {
         setError("");
         paymentService.paymentReceipt(orderCode)
             .then((data) => {
+                if (!data || Array.isArray(data) || data.orderCode !== orderCode || data.status !== "PAID") throw new Error("A receipt is available after payment has been verified.");
                 if (active) setReceipt(data);
             })
             .catch((err) => {
@@ -52,7 +54,7 @@ export default function PaymentReceiptPage() {
                 <Link className="enterprise-btn secondary" to="/dashboard/payments">Payment history</Link>
             </header>
 
-            {error && <div className="enterprise-error">{error}</div>}
+            {error && <div className="enterprise-error" role="alert">{error}</div>}
 
             {receipt && (
                 <section className="enterprise-panel receipt-box">
@@ -62,7 +64,7 @@ export default function PaymentReceiptPage() {
                         <div><span>Order code</span><strong>{receipt.orderCode}</strong></div>
                         <div><span>Status</span><strong>{receipt.status}</strong></div>
                         <div><span>Customer</span><strong>{receipt.customerName || receipt.customerEmail || "—"}</strong></div>
-                        <div><span>Amount</span><strong>{money(receipt.paidAmount || receipt.amount, receipt.currency)}</strong></div>
+                        <div><span>Amount</span><strong>{money(receipt.paidAmount ?? receipt.amount, receipt.currency)}</strong></div>
                         <div><span>Provider</span><strong>{receipt.provider || "—"}</strong></div>
                         <div><span>Paid at</span><strong>{dateTime(receipt.paidAt)}</strong></div>
                         <div><span>Issued at</span><strong>{dateTime(receipt.issuedAt)}</strong></div>

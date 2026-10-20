@@ -2,6 +2,7 @@ import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-libra
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import SubscriptionPackagesPage from "./SubscriptionPackagesPage";
 import subscriptionService from "./subscriptionService";
+import { useLanguageStore } from "../../stores/useLanguageStore";
 
 vi.mock("./subscriptionService", () => ({
   default: {
@@ -29,6 +30,7 @@ const basicPlan = {
 describe("SubscriptionPackagesPage", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    useLanguageStore.setState({ lang: "en" });
     subscriptionService.packages.mockResolvedValue([basicPlan]);
     subscriptionService.current.mockResolvedValue(null);
     subscriptionService.history.mockResolvedValue([]);
@@ -151,5 +153,62 @@ describe("SubscriptionPackagesPage", () => {
     fireEvent.click(screen.getByRole("button", { name: /continue to aba payway/i }));
     await screen.findByText("Payment received but needs administrator review.");
     expect(screen.queryByText("Subscription activated successfully.")).not.toBeInTheDocument();
+  });
+
+  it("uses actual backend prices and quotas without inventing unlimited or team access", async () => {
+    subscriptionService.packages.mockResolvedValue([{ ...basicPlan, price: 12345, currency: "KHR", maxInvitations: 999, maxGuestsPerInvitation: 5000, durationDays: 90, billingInterval: "CUSTOM", maxTeamMembers: 25 }]);
+    render(<SubscriptionPackagesPage />);
+    await screen.findByText("999 events");
+    expect(screen.getByText("5,000 guests per event")).toBeInTheDocument();
+    expect(screen.getByText(/90 days/)).toBeInTheDocument();
+    expect(screen.queryByText(/unlimited|lifetime|25 members/i)).not.toBeInTheDocument();
+    expect(screen.getByText("No active subscription")).toBeInTheDocument();
+    expect(screen.getByText(/12,345/)).toBeInTheDocument();
+  });
+
+  it("shows a verified current plan and its real expiry", async () => {
+    subscriptionService.current.mockResolvedValue({ packagePlan: basicPlan, active: true, status: "ACTIVE", paymentStatus: "PAID", endDate: "2027-01-15T00:00:00Z" });
+    render(<SubscriptionPackagesPage />);
+    expect(await screen.findByRole("button", { name: "Current plan" })).toBeDisabled();
+    expect(screen.getByText(/Expires.*Jan 15, 2027/)).toBeInTheDocument();
+  });
+
+  it("resumes a pending order instead of requesting another payment", async () => {
+    subscriptionService.history.mockResolvedValue([{ id: 41, packagePlan: basicPlan, orderCode: "SUB-PENDING", amount: .01, currency: "USD", active: false, status: "PENDING_PAYMENT", paymentStatus: "PENDING", createdAt: "2026-10-20T00:00:00Z" }]);
+    subscriptionService.order.mockResolvedValue({ orderCode: "SUB-PENDING", active: false, status: "PENDING_PAYMENT", paymentStatus: "PENDING" });
+    render(<SubscriptionPackagesPage />);
+    fireEvent.click(await screen.findByRole("button", { name: "View pending order" }));
+    await screen.findByRole("dialog", { name: "Payment details" });
+    expect(subscriptionService.order).toHaveBeenCalledWith("SUB-PENDING");
+    expect(subscriptionService.purchase).not.toHaveBeenCalled();
+  });
+
+  it("rechecks history before purchase to catch an order created in another tab", async () => {
+    subscriptionService.history.mockResolvedValueOnce([]).mockResolvedValue([{ packagePlan: basicPlan, orderCode: "SUB-OTHER-TAB", active: false, status: "PENDING_PAYMENT", paymentStatus: "PENDING" }]);
+    render(<SubscriptionPackagesPage />);
+    fireEvent.click(await screen.findByRole("button", { name: /subscribe \/ upgrade/i }));
+    fireEvent.change(screen.getByLabelText(/aba account holder name/i), { target: { value: "Dara" } });
+    fireEvent.change(screen.getByLabelText(/last 3 digits/i), { target: { value: "247" } });
+    fireEvent.click(screen.getByRole("button", { name: /continue to aba payway/i }));
+    await screen.findByRole("dialog", { name: "Payment details" });
+    expect(subscriptionService.purchase).not.toHaveBeenCalled();
+  });
+
+  it("does not trust active=true without the backend paid and active states", async () => {
+    subscriptionService.purchase.mockResolvedValue({ orderCode: "SUB-UNVERIFIED", active: true, status: "PENDING_PAYMENT", paymentStatus: "PENDING" });
+    render(<SubscriptionPackagesPage />);
+    fireEvent.click(await screen.findByRole("button", { name: /subscribe \/ upgrade/i }));
+    fireEvent.change(screen.getByLabelText(/aba account holder name/i), { target: { value: "Dara" } });
+    fireEvent.change(screen.getByLabelText(/last 3 digits/i), { target: { value: "247" } });
+    fireEvent.click(screen.getByRole("button", { name: /continue to aba payway/i }));
+    await screen.findByRole("dialog", { name: "Payment details" });
+    expect(screen.queryByText("Subscription activated successfully.")).not.toBeInTheDocument();
+  });
+
+  it("keeps package discovery usable and blocks duplicate-risk checkout when history fails", async () => {
+    subscriptionService.history.mockRejectedValue(new Error("Offline"));
+    render(<SubscriptionPackagesPage />);
+    expect(await screen.findByRole("alert")).toHaveTextContent("Could not verify your plan or payment history");
+    expect(screen.getByRole("button", { name: /subscribe \/ upgrade/i })).toBeDisabled();
   });
 });

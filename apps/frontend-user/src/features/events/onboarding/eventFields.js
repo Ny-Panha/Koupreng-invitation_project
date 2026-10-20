@@ -15,7 +15,8 @@ export function eventFields(type) {
     : [["hostName", "ម្ចាស់កម្មវិធី", "Host name"]];
   return [["title", "ឈ្មោះកម្មវិធី", "Event title"], ...participants,
     ["eventDate", "កាលបរិច្ឆេទ", "Event date", "date"], ["eventTime", "ម៉ោង", "Event time", "time"],
-    ["venueName", "ទីកន្លែង", "Venue"], ["venueAddress", "អាសយដ្ឋាន (អាចបំពេញពេលក្រោយ)", "Address (optional)", "text", false]];
+    ["venueName", "ទីកន្លែង", "Venue"], ["venueAddress", "អាសយដ្ឋាន (អាចបំពេញពេលក្រោយ)", "Address (optional)", "text", false],
+    ["googleMapUrl", "តំណ Google Maps (មិនបាច់បំពេញ)", "Google Maps link (optional)", "url", false]];
 }
 export function eventPayload(form, type) {
   const fields = ["templateId", "organizationId", "title", "eventDate", "eventTime", "venueName", "venueAddress",

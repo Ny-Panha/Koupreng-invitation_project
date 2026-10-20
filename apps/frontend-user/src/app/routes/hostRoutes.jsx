@@ -6,7 +6,7 @@ import RequireAuth from "./RequireAuth";
 import InvitationScopedRedirect from "./InvitationScopedRedirect";
 const HostShell = lazy(() => import("../../layouts/HostShell"));
 const EventWorkspace = lazy(() => import("../../features/events/workspace/EventWorkspace"));
-const EventWizard = lazy(() => import("../../features/events/onboarding/EventWizard"));
+const EventCreatePage = lazy(() => import("../../features/events/onboarding/EventCreatePage"));
 const EventDetails = lazy(() => import("../../features/events/onboarding/EventDetails"));
 const EventInvitation = lazy(() => import("../../features/events/workspace/EventInvitation"));
 
@@ -31,7 +31,7 @@ export function hostRoutes() {
   return <>
     <Route element={<RequireAuth><HostShell /></RequireAuth>}>
       <Route path="/app/events" element={<EventsPage />} />
-      <Route path="/app/events/new" element={<EventWizard />} />
+      <Route path="/app/events/new" element={<EventCreatePage />} />
       <Route path="/app/events/:eventId" element={<EventWorkspace />}>
         <Route index element={<DashboardPage />} />
         <Route path="invitation" element={<EventInvitation />} />

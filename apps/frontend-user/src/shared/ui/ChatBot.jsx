@@ -203,7 +203,7 @@ export default function ChatBot() {
 
       {/* Floating Greeting Bubble */}
       <AnimatePresence>
-        {!isOpen && showGreeting && !["/", "/pricing", "/contact", "/templates"].includes(location.pathname) && (
+        {!isOpen && showGreeting && !location.pathname.startsWith("/app/") && !location.pathname.startsWith("/dashboard") && !["/", "/pricing", "/contact", "/templates"].includes(location.pathname) && (
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}

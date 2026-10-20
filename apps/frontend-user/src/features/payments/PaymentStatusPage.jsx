@@ -6,6 +6,7 @@ import { statusMessage } from "./paymentStatus";
 import { paymentService } from "./paymentService";
 import heroBg from "../../assets/icons/background.png";
 import "./PaymentPages.css";
+import { packagePrice } from "../marketing/model/packagePresentation";
 
 export default function PaymentStatusPage() {
   const navigate = useNavigate();
@@ -15,14 +16,18 @@ export default function PaymentStatusPage() {
   const [error, setError] = useState("");
 
   const handleRetry = async () => {
+    if (!order?.templateId || !order.templateName || !order.packageName || packagePrice({ price: order.amount, currency: order.currency }, "en") === null) {
+      setError("Could not verify this offer. Open the template catalog before starting another order.");
+      return;
+    }
     try {
       setLoading(true);
       const response = await paymentService.createStaticPaymentOrder({
-        templateId: order?.templateId || "garden-royal-khmer-wedding",
-        templateName: order?.templateName || "Garden Royal Khmer Wedding",
-        packageName: order?.packageName || "Premium",
-        amount: order?.amount || "0.01",
-        currency: order?.currency || "USD",
+        templateId: order.templateId,
+        templateName: order.templateName,
+        packageName: order.packageName,
+        amount: order.amount,
+        currency: order.currency,
       });
       navigate(`/payments/${response.orderCode}/status`, { replace: true });
       setOrder(response);
@@ -35,9 +40,11 @@ export default function PaymentStatusPage() {
 
   useEffect(() => {
     let active = true;
+    setLoading(true); setOrder(null); setError("");
     paymentService
       .getTemplateOrder(orderCode)
       .then((data) => {
+        if (!data || Array.isArray(data) || data.orderCode !== orderCode || !data.status) throw new Error("Payment details are unavailable. Check your payment history or try again.");
         if (active) {
           setOrder(data);
           setError("");
@@ -97,7 +104,7 @@ export default function PaymentStatusPage() {
           <p className="checkout-subtitle">
             {order
               ? statusMessage(order.status)
-              : "សូមស្កេន QR Code ខាងក្រោមដើម្បីបញ្ចប់ការទូទាត់ប្រាក់"}
+              : "សូមពិនិត្យព័ត៌មានការទូទាត់ / Check your payment details"}
           </p>
         </header>
 
@@ -109,8 +116,9 @@ export default function PaymentStatusPage() {
         )}
 
         {error && (
-          <div className="checkout-alert-error">
+          <div className="checkout-alert-error" role="alert">
             <span>⚠️ {error}</span>
+            <Link to="/app/payments">ប្រវត្តិការទូទាត់ / Payment history</Link>
           </div>
         )}
 

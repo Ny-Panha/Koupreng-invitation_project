@@ -902,7 +902,9 @@ export default function HostNav() {
               type="button"
               className={`host-hamburger-btn${mobileMenuOpen ? " open" : ""}`}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="បើកម៉ឺនុយ"
+              aria-label={language === "en" ? "Main menu" : "ម៉ឺនុយចម្បង"}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="host-mobile-navigation"
             >
               <span></span>
               <span></span>
@@ -919,7 +921,7 @@ export default function HostNav() {
       />
 
       {/* Mobile slide-out menu */}
-      <nav className={`host-mobile-menu${mobileMenuOpen ? " open" : ""}`} aria-label={language === "en" ? "Main navigation" : "ម៉ឺនុយចម្បង"}>
+      <nav id="host-mobile-navigation" className={`host-mobile-menu${mobileMenuOpen ? " open" : ""}`} inert={!mobileMenuOpen} aria-hidden={!mobileMenuOpen} aria-label={language === "en" ? "Main navigation" : "ម៉ឺនុយចម្បង"}>
         {/* Profile section */}
         <Link
           to="/app/profile"
@@ -953,8 +955,8 @@ export default function HostNav() {
         <div className="host-mobile-menu-divider" />
 
         <Link
-          to="/dashboard/templates/paid"
-          className={`host-mobile-menu-item${isActive("/dashboard/templates/paid") ? " active" : ""}`}
+          to="/app/templates/paid"
+          className={`host-mobile-menu-item${isActive("/app/templates/paid") ? " active" : ""}`}
           onClick={closeMobileMenu}
         >
           <span className="menu-icon"><IoDiamondOutline aria-hidden="true" style={{ color: "#B0926A" }} /></span>

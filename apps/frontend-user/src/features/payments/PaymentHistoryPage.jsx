@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import "../enterprise/EnterprisePages.css";
 import paymentService from "./paymentService";
 import { StatusBadge } from "@/shared/ui";
+import { packagePrice } from "../marketing/model/packagePresentation";
 
-function money(amount, currency = "USD") {
-    return new Intl.NumberFormat("en", { style: "currency", currency }).format(Number(amount || 0));
+function money(amount, currency) {
+    return packagePrice({ price: amount, currency }, "en") || "Amount unavailable";
 }
 
 function dateTime(value) {

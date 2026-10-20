@@ -68,13 +68,12 @@ test("explicit event, switching, refresh, legacy links and denial preserve isola
   await page.screenshot({ path: testInfo.outputPath("my-events.png"), fullPage: true });
 });
 
-test("wizard creates a typed backend draft once and opens its exact workspace", async ({ page }, testInfo) => {
+test("single form creates a typed backend draft once and opens its exact workspace", async ({ page }, testInfo) => {
   const { created } = await setup(page);
   await page.goto("/app/events/new");
   await page.getByRole("button", { name: /Birthday|ខួបកំណើត/ }).click();
-  for (let i = 0; i < 4; i++) await page.getByRole("button", { name: /Continue|បន្ត/, exact: true }).click();
   await page.getByRole("button", { name: /Select.*Event Essential|ជ្រើសរើស.*Event Essential/ }).click();
-  await page.getByRole("button", { name: /Continue|បន្ត/, exact: true }).click();
+  await expect(page.getByRole("button", { name: /Continue|បន្ត/, exact: true })).toHaveCount(0);
   await expect(page.getByLabel(/Groom|កូនកំលោះ/)).toHaveCount(0);
   await page.locator('[name="title"]').fill("Birthday C");
   await page.locator('[name="hostName"]').fill("Sokha");
@@ -90,7 +89,7 @@ test("wizard creates a typed backend draft once and opens its exact workspace", 
   expect(created[0].clientRequestId).toMatch(/^[a-f0-9-]{36}$/);
 });
 
-test("workspace and wizard fit supported mobile and desktop widths", async ({ page }, testInfo) => {
+test("workspace and event form fit supported mobile and desktop widths", async ({ page }, testInfo) => {
   test.setTimeout(120_000);
   await setup(page);
   for (const width of [320, 375, 390, 430, 768, 1024, 1440]) {

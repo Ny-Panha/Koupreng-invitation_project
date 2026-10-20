@@ -187,6 +187,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  min-width: 0;
 }
 
 .seating-card-panel {
@@ -224,6 +225,8 @@
 
 .seating-form input,
 .seating-form select {
+  min-width: 0;
+  width: 100%;
   height: 42px;
   padding: 0 14px;
   border-radius: 10px;
@@ -234,6 +237,13 @@
   color: var(--brand-text, #1f2937);
   outline: none;
   transition: all 0.2s ease;
+}
+
+.seating-layout > *, .seating-form > *, .seating-form label { min-width: 0; }
+.seating-form label { font-size: 16px; line-height: 1.8; }
+.seating-form :is(input, select) { min-height: 48px; font-size: 16px; }
+@media (max-width: 1080px) {
+  .seating-layout { grid-template-columns: minmax(0, 1fr); }
 }
 
 .seating-form input:focus,
