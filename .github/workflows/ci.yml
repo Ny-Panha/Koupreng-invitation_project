@@ -352,15 +352,32 @@ jobs:
           distribution: temurin
           cache: maven
 
-      - name: Verify official NVD feed freshness
-        run: node scripts/ci/check-nvd-feed.mjs
+      - name: Select a current official NVD source
+        id: nvd-source
+        run: node scripts/ci/check-nvd-feed.mjs --select-source
 
       - name: Audit Java dependencies
         working-directory: apps/backend
+        env:
+          NVD_SOURCE: ${{ steps.nvd-source.outputs.source }}
+        shell: bash
         run: |
+          set -euo pipefail
           chmod +x mvnw
+          audit_args=()
+          case "$NVD_SOURCE" in
+            feed) ;;
+            api)
+              # Bootstrap all historical records efficiently, even when feeds are
+              # stale. This is not an audit; the following verify must refresh
+              # from the live API with nvdValidForHours=0 before scanning.
+              ./mvnw --batch-mode --update-snapshots -Pdependency-security -DskipTests dependency-check:update-only
+              audit_args+=("-DnvdDatafeedUrl=")
+              ;;
+            *) echo "Invalid NVD audit source" >&2; exit 1 ;;
+          esac
           # Recheck missing artifacts instead of retaining failures from the restored Maven cache.
-          ./mvnw --batch-mode --update-snapshots -Pdependency-security -DskipTests verify
+          ./mvnw --batch-mode --update-snapshots -Pdependency-security -DskipTests "${audit_args[@]}" verify
 
   deployment-config:
     name: Deployment Configuration & Docker Applicability

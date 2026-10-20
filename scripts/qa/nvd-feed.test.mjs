@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { assertFreshMetadata, checkFeedFreshness } from '../ci/check-nvd-feed.mjs';
+import { assertFreshMetadata, checkFeedFreshness, selectAuditSource } from '../ci/check-nvd-feed.mjs';
 
 const now = Date.parse('2026-10-03T06:00:00Z');
 
@@ -35,4 +35,31 @@ test('NVD metadata download checks freshness after a successful HTTP response', 
   assert.equal(await checkFeedFreshness(async () => ({
     ok: true, text: async () => `lastModifiedDate:${current}`,
   })), current);
+});
+
+test('NVD source selection permits feed auditing only with current metadata', async () => {
+  const current = new Date().toISOString();
+  assert.deepEqual(await selectAuditSource(async () => ({
+    ok: true, text: async () => `lastModifiedDate:${current}`,
+  })), { source: 'feed', timestamp: current });
+});
+
+test('NVD source selection requires live API auditing for stale or invalid metadata', async () => {
+  for (const metadata of ['lastModifiedDate:2002-01-01T00:00:00Z', '<html>error</html>']) {
+    const result = await selectAuditSource(async () => ({ ok: true, text: async () => metadata }));
+    assert.equal(result.source, 'api');
+    assert.ok(result.reason);
+    assert.equal(result.timestamp, undefined);
+  }
+});
+
+test('NVD source selection requires live API auditing when the feed is unavailable', async () => {
+  for (const fetchMetadata of [
+    async () => ({ ok: false, status: 429 }),
+    async () => { throw new Error('Network unavailable'); },
+  ]) {
+    const result = await selectAuditSource(fetchMetadata);
+    assert.equal(result.source, 'api');
+    assert.ok(result.reason);
+  }
 });
