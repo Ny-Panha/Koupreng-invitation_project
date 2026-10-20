@@ -544,9 +544,7 @@ public class InvitationService {
         AppUser user = currentUserService.currentUser(authentication);
         UserInvitation invitation = invitationRepository.findByIdAndDeletedFalse(id)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Invitation not found"));
-        if (invitation.getUser() == null || !invitation.getUser().getId().equals(user.getId())) {
-            throw new ApiException(HttpStatus.FORBIDDEN, "You do not have access to this invitation");
-        }
+        EventAccessPolicy.requireOwner(user, invitation, EventAccessPolicy.Permission.VIEW_EVENT);
         return invitation;
     }
 

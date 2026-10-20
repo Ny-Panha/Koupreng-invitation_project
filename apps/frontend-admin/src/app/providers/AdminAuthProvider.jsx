@@ -33,7 +33,7 @@ export function AuthProvider({ children }) {
     const login = useCallback(async (identifier, password) => {
         const res = await authService.login(identifier, password);
         const role = res?.user?.role;
-        if (role !== "ADMIN" && role !== "STAFF") {
+        if (role !== "ADMIN") {
             throw new Error("គណនីនេះមិនមែនជា Admin ទេ។ សូមប្រើគណនី Admin ដើម្បីចូល។");
         }
         const session = {

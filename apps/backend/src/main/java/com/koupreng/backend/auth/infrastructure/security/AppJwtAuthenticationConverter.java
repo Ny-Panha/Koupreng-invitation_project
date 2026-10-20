@@ -39,9 +39,7 @@ public class AppJwtAuthenticationConverter implements Converter<Jwt, JwtAuthenti
                 .ifPresent(cached -> userAuthCacheService.evict(userId));
         validateTokenVersion(jwt, authInfo);
 
-        String authority = authInfo.role() == com.koupreng.backend.user.domain.Role.STAFF
-            ? "ROLE_ADMIN"
-            : "ROLE_" + authInfo.role().name();
+        String authority = "ROLE_" + authInfo.role().name();
         List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(authority));
         return new JwtAuthenticationToken(jwt, authorities, userId.toString());
     }

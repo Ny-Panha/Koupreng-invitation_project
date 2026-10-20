@@ -43,14 +43,14 @@ class AppJwtAuthenticationConverterTests {
     }
 
     @Test
-    void staffAuthorityMappingIsPreserved() {
+    void staffCannotAcquireAdminAuthority() {
         AppUserRepository repository = mock(AppUserRepository.class);
         AppUser user = user(AppUser.STATUS_ACTIVE);
         user.setRole(Role.STAFF);
         when(repository.findById(1L)).thenReturn(Optional.of(user));
         JwtAuthenticationToken authentication = new AppJwtAuthenticationConverter(new UserAuthCacheService(repository), repository)
                 .convert(jwtWithTokenVersion(0));
-        assertEquals("ROLE_ADMIN", authentication.getAuthorities().iterator().next().getAuthority());
+        assertEquals("ROLE_STAFF", authentication.getAuthorities().iterator().next().getAuthority());
     }
 
     @Test

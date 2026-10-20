@@ -41,6 +41,15 @@ class AuthEndpointSecurityTests {
     private UserService userService;
 
     @Test
+    void staffCannotUseAdminOrLegacyEventEndpoints() throws Exception {
+        for (String path : new String[]{"/api/v1/admin/users", "/api/v1/events", "/actuator/env"}) {
+            mockMvc.perform(get(path).with(org.springframework.security.test.web.servlet.request
+                            .SecurityMockMvcRequestPostProcessors.user("1").roles("STAFF")))
+                    .andExpect(status().isForbidden());
+        }
+    }
+
+    @Test
     void forgotPasswordIsPublic() throws Exception {
         mockMvc.perform(post("/api/auth/forgot-password")
                         .contentType(MediaType.APPLICATION_JSON)

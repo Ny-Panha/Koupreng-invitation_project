@@ -273,9 +273,7 @@ public class SecurityConfig {
 
             return User.withUsername(user.getEmail() != null ? user.getEmail() : user.getPhone())
                     .password(user.getPasswordHash())
-                    .authorities(user.getRole() == com.koupreng.backend.user.domain.Role.STAFF
-                            ? "ROLE_ADMIN"
-                            : "ROLE_" + user.getRole().name())
+                    .authorities("ROLE_" + user.getRole().name())
                     .accountLocked(!user.isActive())
                     .disabled(!user.isActive())
                     .build();
