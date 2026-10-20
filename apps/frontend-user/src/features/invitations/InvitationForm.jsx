@@ -1,4 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import StudioSections from "./studio/StudioSections";
+import "./studio/InvitationStudio.css";
 import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import {
     Music,
@@ -755,6 +757,9 @@ export default function InvitationForm({ invitation }) {
     });
 
     const flowConfig = useMemo(() => getTemplateFormFlow(form.templateId), [form.templateId]);
+    const [selectedSection, setSelectedSection] = useState("cover");
+    const [mobileView, setMobileView] = useState("edit");
+    const activeSection = flowConfig.sectionOrder.includes(selectedSection) ? selectedSection : flowConfig.sectionOrder[0];
 
     // Mirrors the module-level catalog counter so the live preview recomputes
     // once the async catalog fetch registers the Admin-created templates.
@@ -3112,7 +3117,7 @@ export default function InvitationForm({ invitation }) {
     };
 
     return (
-        <div className="pe-editor-root">
+        <div className="pe-editor-root invitation-studio" data-mobile-view={mobileView}>
 
             {/* Unified Studio Header */}
             <div className="pe-sub-header-banner">
@@ -3177,7 +3182,11 @@ export default function InvitationForm({ invitation }) {
                 </div>
             </div>
 
-            {/* Split-Screen Main Workspace */}
+            <div className="studio-mobile-tabs" aria-label="Studio view">
+                <button type="button" aria-pressed={mobileView === "edit"} onClick={() => setMobileView("edit")}>កែសម្រួល · Edit</button>
+                <button type="button" aria-pressed={mobileView === "preview"} onClick={() => setMobileView("preview")}>មើលជាមុន · Preview</button>
+            </div>
+            {/* The controls and preview continue to use the original template engine. */}
             <div
                 ref={containerRef}
                 className={`pe-workspace-grid ${isDragging ? "is-resizing" : ""}`}
@@ -3187,7 +3196,9 @@ export default function InvitationForm({ invitation }) {
                         : `${leftPercent}% 24px 1fr`,
                 }}
             >
-                {/* LEFT COLUMN: Customizer Form */}
+                <StudioSections sections={flowConfig.sectionOrder} active={activeSection}
+                    onChange={setSelectedSection} english={activeLangTab === "EN"} />
+                {/* CENTER COLUMN: Existing template controls */}
                 <div className="pe-editor-column">
 
 
@@ -3218,7 +3229,7 @@ export default function InvitationForm({ invitation }) {
                         {flowConfig.sectionOrder.map((sectionKey) => {
                             const renderer = sectionRenderers[sectionKey];
                             if (!renderer) return null;
-                            return <React.Fragment key={sectionKey}>{renderer()}</React.Fragment>;
+                            return <div key={sectionKey} hidden={sectionKey !== activeSection}>{renderer()}</div>;
                         })}
                     </div>
                 </div>

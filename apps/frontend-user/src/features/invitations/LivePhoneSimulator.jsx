@@ -54,6 +54,9 @@ function resolveTemplateSlug(data, merged) {
 export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
     const { text: t } = useBackendMessages("invitations");
     const iframeRef = useRef(null);
+    const previewRef = useRef(null);
+    const [device, setDevice] = useState("mobile");
+    const [zoom, setZoom] = useState(100);
     const [previewSession] = useState(createPreviewSession);
     const sendPreview = useCallback((message) => postPreviewMessage(message,
         iframePreviewChannel(iframeRef.current, previewSession)), [previewSession]);
@@ -179,7 +182,7 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
     const isTest = import.meta.env.MODE === "test" || Boolean(globalThis.__vitest_worker__);
 
     return (
-        <aside className="pe-preview-column">
+        <aside ref={previewRef} className="pe-preview-column" aria-label="Live invitation preview">
             {/* Clean Studio Preview Top Bar */}
             <div className="pe-preview-top-bar">
                 <div className="pe-preview-status-row">
@@ -220,8 +223,21 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
                 </div>
             </div>
 
-            {/* Interactive Phone Frame */}
-            <div className="pe-phone-frame h-full flex flex-col rounded-[36px] border-4 border-zinc-800/90 bg-zinc-950 shadow-2xl overflow-hidden transition-all duration-300 relative w-[380px] max-w-full">
+            <div className="studio-preview-tools" aria-label="Preview controls">
+                <button type="button" aria-pressed={device === "mobile"} onClick={() => setDevice("mobile")}>Mobile</button>
+                <button type="button" aria-pressed={device === "desktop"} onClick={() => setDevice("desktop")}>Desktop</button>
+                <label>Zoom <select aria-label="Preview zoom" value={zoom} onChange={event => setZoom(Number(event.target.value))}>
+                    {[35, 50, 75, 100, 125].map(value => <option key={value} value={value}>{value}%</option>)}
+                </select></label>
+                <button type="button" onClick={() => { setZoom(100); setDevice("mobile"); handleSetGate(false); }}>Reset view</button>
+                {typeof document !== "undefined" && document.fullscreenEnabled && <button type="button" onClick={() => {
+                    if (document.fullscreenElement) document.exitFullscreen();
+                    else previewRef.current?.requestFullscreen();
+                }}>Fullscreen</button>}
+            </div>
+            <div className="studio-preview-viewport">
+            <div className="pe-phone-frame h-full flex flex-col rounded-[36px] border-4 border-zinc-800/90 bg-zinc-950 shadow-2xl overflow-hidden transition-all duration-300 relative w-[380px] max-w-full"
+                style={{ width: device === "desktop" ? 1200 : 380, zoom: zoom / 100 }}>
                 {/* Real-time Isolated Live Preview using exact same engine as Admin */}
                 <div className="pe-canvas-wrapper flex-1 w-full h-full relative bg-zinc-950 overflow-hidden">
                     {isTest ? (
@@ -258,6 +274,7 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
                         />
                     )}
                 </div>
+            </div>
             </div>
         </aside>
     );

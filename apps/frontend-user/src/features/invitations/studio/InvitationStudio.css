@@ -1,0 +1,56 @@
+.pe-editor-root.invitation-studio { --studio-gold: #956d2c; --studio-ink: #292c28; background: #f7f5f0; color: var(--studio-ink); border: 1px solid #e5e0d5; border-radius: 16px; overflow: clip; }
+.invitation-studio .pe-sub-header-banner { position: relative; top: auto; padding: 18px 20px; height: auto; flex-wrap: wrap; gap: 12px; background: #fffdf8; border-bottom: 1px solid #e5e0d5; }
+.invitation-studio .pe-sub-header-left { flex-wrap: wrap; gap: 10px; min-width: 0; }
+.invitation-studio .pe-template-tag { white-space: normal; }
+.invitation-studio .pe-sub-header-actions { flex-wrap: wrap; gap: 8px; }
+.invitation-studio .pe-workspace-grid { display: grid; grid-template-columns: 185px minmax(290px, 1fr) minmax(300px, 1fr) !important; height: min(920px, calc(100dvh - 120px)); min-height: 600px; padding: 0; gap: 0; }
+.invitation-studio .pe-workspace-divider { display: none; }
+.invitation-studio .pe-editor-column { min-width: 0; height: 100%; border: 0; border-radius: 0; background: #fff; }
+.invitation-studio .pe-editor-scroll-body { padding: 20px; overflow-y: auto; }
+.invitation-studio .pe-section-card { margin: 0 0 20px; box-shadow: none; }
+.invitation-studio .pe-lang-sub-banner { padding: 12px; flex-wrap: wrap; height: auto; gap: 8px; }
+.invitation-studio .pe-lang-editing-indicator { display: none; }
+.studio-sections { padding: 20px 10px; border-right: 1px solid #e5e0d5; overflow-y: auto; background: #fbfaf6; }
+.studio-section-list p { padding: 0 10px 12px; font-size: 11px; font-weight: 700; letter-spacing: .08em; color: #756f60; }
+.studio-section-list button { display: flex; align-items: center; width: 100%; gap: 10px; padding: 10px; margin: 2px 0; text-align: left; border: 1px solid transparent; border-radius: 8px; font-size: 13px; line-height: 1.8; background: transparent; cursor: pointer; }
+.studio-section-list button span { color: #847e70; font-size: 11px; }
+.studio-section-list button[aria-current] { color: #715019; background: #eee7d9; border-color: #dacfba; font-weight: 700; }
+.studio-section-select, .studio-mobile-tabs { display: none; }
+.invitation-studio .pe-preview-column { min-width: 0; height: 100%; margin: 0; border-radius: 0; padding: 16px; background: #eae8e1; overflow: auto; }
+.invitation-studio .pe-preview-top-bar { width: 100%; flex-shrink: 0; }
+.studio-preview-tools { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; padding: 10px 0; }
+.studio-preview-tools button, .studio-history button { min-height: 36px; padding: 5px 10px; border: 1px solid #d6d1c5; border-radius: 6px; background: #fffdf8; font-size: 12px; cursor: pointer; }
+.studio-preview-tools button[aria-pressed=true] { background: #292c28; color: white; }
+.studio-preview-viewport { overflow: auto; min-height: 400px; flex: 1; width: 100%; }
+.invitation-studio .pe-phone-frame { height: 680px; min-height: 680px; margin: 0 auto; max-width: none; transform-origin: top center; }
+.invitation-studio .pe-canvas-wrapper iframe { width: 100%; height: 100%; }
+.studio-history { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 20px; background: #fffdf8; align-items: center; border-bottom: 1px solid #e5e0d5; font-size: 13px; line-height: 1.8; }
+.studio-history [role=status] { margin-inline-end: auto; }
+.studio-history button:disabled { opacity: .45; cursor: default; }
+.invitation-studio:has(.pe-btn-expand-editor) .pe-btn-expand-editor { display: none; }
+.invitation-studio .pe-preview-column:fullscreen { padding: 24px; display: flex; flex-direction: column; align-items: center; background: #eae8e1; }
+.invitation-studio .pe-preview-column:fullscreen .studio-preview-viewport { width: 100%; }
+@media (max-width: 1199px) {
+  .invitation-studio .pe-workspace-grid { grid-template-columns: 150px minmax(270px, 1fr) minmax(280px, 1fr) !important; }
+  .invitation-studio .pe-editor-scroll-body { padding: 12px; }
+  .studio-section-list button { font-size: 12px; gap: 5px; }
+}
+@media (max-width: 1023px) {
+  .invitation-studio .pe-workspace-grid { grid-template-columns: minmax(0, 1fr) !important; height: auto; min-height: 0; }
+  .studio-section-list { display: none; }
+  .studio-section-select { display: flex; flex-direction: column; gap: 6px; font-size: 13px; }
+  .studio-section-select select { padding: 10px; border: 1px solid #d6d1c5; border-radius: 8px; background: white; min-height: 44px; }
+  .studio-sections { padding: 12px; border: 0; }
+  .studio-mobile-tabs { display: flex; padding: 10px; gap: 8px; background: #fffdf8; }
+  .studio-mobile-tabs button { flex: 1; min-height: 44px; border-radius: 8px; border: 1px solid #d6d1c5; background: white; }
+  .studio-mobile-tabs button[aria-pressed=true] { color: white; background: #292c28; }
+  .invitation-studio .pe-editor-column { height: auto; }
+  .invitation-studio .pe-editor-scroll-body { overflow: visible; }
+  .invitation-studio[data-mobile-view=edit] .pe-preview-column { display: none; }
+  .invitation-studio[data-mobile-view=preview] .pe-editor-column, .invitation-studio[data-mobile-view=preview] .studio-sections { display: none; }
+  .invitation-studio .pe-preview-column { display: flex; height: 850px; }
+  .invitation-studio .pe-sub-header-banner { padding: 12px; }
+  .invitation-studio .pe-sub-header-actions { width: 100%; }
+  .invitation-studio .pe-btn-mobile-preview, .invitation-studio .pe-status-badge, .invitation-studio .pe-sub-header-label { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .invitation-studio *, .invitation-studio *::before, .invitation-studio *::after { animation: none !important; transition: none !important; } }
