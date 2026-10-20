@@ -36,4 +36,8 @@
 .event-wizard [role=alert] { color:#8a3434; }
 .events-filters { display:flex; flex-wrap:wrap; gap:12px; margin-bottom:24px; }
 .events-filters label { flex:1 1 180px; display:grid; gap:6px; }
-@media(max-width:600px) { .event-workspace,.event-wizard { padding:16px; } .event-workspace-header label,.event-workspace select { width:100%; } }
+@media(max-width:600px) {
+  .event-workspace,.event-wizard { padding:16px; }
+  .event-workspace-header label,.event-workspace select { width:100%; }
+  .event-wizard-actions { padding-inline-end:80px; margin-bottom:90px; }
+}
