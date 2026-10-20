@@ -33,6 +33,23 @@ public interface RsvpRepository extends JpaRepository<Rsvp, Long> {
 
     long countByInvitationIdAndResponseStatus(Long invitationId, RsvpStatus responseStatus);
 
+    @Query("""
+            select
+              coalesce(sum(case when r.responseStatus = com.koupreng.backend.rsvp.domain.RsvpStatus.ATTENDING then 1 else 0 end), 0) as attending,
+              coalesce(sum(case when r.responseStatus = com.koupreng.backend.rsvp.domain.RsvpStatus.NOT_ATTENDING then 1 else 0 end), 0) as notAttending,
+              coalesce(sum(case when r.responseStatus = com.koupreng.backend.rsvp.domain.RsvpStatus.MAYBE then 1 else 0 end), 0) as maybe,
+              coalesce(sum(case when r.responseStatus = com.koupreng.backend.rsvp.domain.RsvpStatus.ATTENDING then r.attendeeCount else 0 end), 0) as totalAttendeeCount
+            from Rsvp r where r.invitation.id = :invitationId
+            """)
+    SummaryCounts summarizeByInvitationId(@Param("invitationId") Long invitationId);
+
+    interface SummaryCounts {
+        long getAttending();
+        long getNotAttending();
+        long getMaybe();
+        long getTotalAttendeeCount();
+    }
+
     @Query("select count(c) from GuestCheckIn c "
             + "where c.invitation.id = :invitationId and c.active = true "
             + "and exists (select 1 from Rsvp r where r.invitation.id = :invitationId "

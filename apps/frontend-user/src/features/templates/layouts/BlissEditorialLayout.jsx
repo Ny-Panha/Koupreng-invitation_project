@@ -42,7 +42,7 @@ export default function BlissEditorialLayout({
     hall: "",
     address: "",
   };
-  const coverImage = effectiveContent.coverImage || "/facebook/all/03-card/cover-card.jpg";
+  const coverImage = effectiveContent.coverImage || "/images/wedding/couple-hero-meadow.webp";
   const musicUrl = effectiveContent.music?.url || effectiveContent.music || defaultMusicUrl;
 
   // Audio Control
@@ -76,12 +76,16 @@ export default function BlissEditorialLayout({
     setRsvpState((prev) => ({ ...prev, submitted: true }));
   };
 
-  const galleryImages = [
-    "/facebook/all/03-card/cover-card.jpg",
-    "/facebook/all/03-card/03-01.jpg",
-    "/facebook/all/03-card/03-02.jpg",
-    "/facebook/all/03-card/03-03.jpg",
+  const defaultGallery = [
+    "/images/wedding/couple-hero-meadow.webp",
+    "/images/wedding/couple-celebration-confetti.webp",
+    "/images/wedding/couple-studio-bow.webp",
+    "/images/wedding/couple-garden-rings.webp",
   ];
+
+  const galleryImages = (effectiveContent.gallery && effectiveContent.gallery.length)
+    ? effectiveContent.gallery.map(img => typeof img === "string" ? img : img.src || img.url)
+    : defaultGallery;
 
   const isEnabled = (key) => content.enabledSections?.[key] !== false;
   const dressColors = Array.isArray(content.dressCode)

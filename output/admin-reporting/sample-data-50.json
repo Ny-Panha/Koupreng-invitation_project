@@ -1,0 +1,42 @@
+{
+  "dataset": "QA_ADMIN_REPORTS_50",
+  "database": "koupreng_db",
+  "asOf": "2026-10-16",
+  "scenarios": 50,
+  "paymentRecords": 50,
+  "templatePayments": 25,
+  "subscriptions": 25,
+  "users": 50,
+  "invitations": 50,
+  "templates": 6,
+  "guests": 250,
+  "rsvps": 200,
+  "checkInRecords": 100,
+  "activeCheckIns": 66,
+  "auditEvents": 50,
+  "notifications": 50,
+  "statuses": {
+    "PAID": 25,
+    "PENDING": 5,
+    "PAID_PENDING_REVIEW": 5,
+    "FAILED": 5,
+    "REJECTED": 5,
+    "EXPIRED": 5
+  },
+  "expectedVerifiedReceiptsByCurrency": {
+    "USD": "2129.04",
+    "KHR": "200000.00"
+  },
+  "createdFrom": "2026-09-04",
+  "createdTo": "2026-10-16",
+  "search": "QA Reports 50",
+  "provider": "QA_REPORT_FIXTURE",
+  "notes": [
+    "Fictional records for local admin-report testing only.",
+    "No existing account, plan price, or customer record is updated.",
+    "Synthetic users have no password; invitations are private; templates are inactive.",
+    "No payment APIs, merchant alerts, or outbound notifications are invoked.",
+    "Use All time to include expired subscription history; USD and KHR remain separate.",
+    "Rerunning inserts only missing fixtures and never refreshes their original dates."
+  ]
+}

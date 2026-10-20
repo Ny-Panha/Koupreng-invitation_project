@@ -1,0 +1,258 @@
+{
+  "rsvp": [
+    {
+      "guests": 0,
+      "before": {
+        "p50Ms": 9.1433,
+        "p95Ms": 14.6912,
+        "p99Ms": 15.2106,
+        "statementsPerCall": 7.0
+      },
+      "after": {
+        "p50Ms": 6.0074,
+        "p95Ms": 10.7979,
+        "p99Ms": 11.2225,
+        "statementsPerCall": 4.0
+      },
+      "p95ReductionPercent": 26.500898497059467
+    },
+    {
+      "guests": 100,
+      "before": {
+        "p50Ms": 8.6486,
+        "p95Ms": 11.1497,
+        "p99Ms": 11.4318,
+        "statementsPerCall": 7.0
+      },
+      "after": {
+        "p50Ms": 5.508,
+        "p95Ms": 7.85,
+        "p99Ms": 9.8632,
+        "statementsPerCall": 4.0
+      },
+      "p95ReductionPercent": 29.594518238158873
+    },
+    {
+      "guests": 1000,
+      "before": {
+        "p50Ms": 17.4758,
+        "p95Ms": 18.8908,
+        "p99Ms": 19.6358,
+        "statementsPerCall": 7.0
+      },
+      "after": {
+        "p50Ms": 10.6443,
+        "p95Ms": 11.6241,
+        "p99Ms": 12.1618,
+        "statementsPerCall": 4.0
+      },
+      "p95ReductionPercent": 38.466872763461566
+    },
+    {
+      "guests": 10000,
+      "before": {
+        "p50Ms": 104.7717,
+        "p95Ms": 117.8509,
+        "p99Ms": 132.2431,
+        "statementsPerCall": 7.0
+      },
+      "after": {
+        "p50Ms": 65.5035,
+        "p95Ms": 72.5521,
+        "p99Ms": 77.2657,
+        "statementsPerCall": 4.0
+      },
+      "p95ReductionPercent": 38.43738147099428
+    },
+    {
+      "guests": 100000,
+      "before": {
+        "p50Ms": 1024.6493,
+        "p95Ms": 1274.7955,
+        "p99Ms": 1281.9751,
+        "statementsPerCall": 7.0
+      },
+      "after": {
+        "p50Ms": 631.556,
+        "p95Ms": 724.3248,
+        "p99Ms": 764.1215,
+        "statementsPerCall": 4.0
+      },
+      "p95ReductionPercent": 43.18109845853707
+    }
+  ],
+  "http": [
+    {
+      "concurrency": 1,
+      "before": {
+        "p50Ms": 51.4971000000005,
+        "p95Ms": 74.92489999999998,
+        "p99Ms": 86.15120000000024,
+        "requestsPerSecond": 18.103983888468157,
+        "errorRate": 0,
+        "p95RangeMs": [
+          71.01980000000003,
+          75.92919999999958
+        ]
+      },
+      "after": {
+        "p50Ms": 57.830700000000434,
+        "p95Ms": 71.28279999999995,
+        "p99Ms": 81.36030000000028,
+        "requestsPerSecond": 17.474047762688453,
+        "errorRate": 0,
+        "p95RangeMs": [
+          55.94810000000143,
+          73.13850000000002
+        ]
+      }
+    },
+    {
+      "concurrency": 4,
+      "before": {
+        "p50Ms": 66.23340000000098,
+        "p95Ms": 84.34890000000087,
+        "p99Ms": 95.20060000000012,
+        "requestsPerSecond": 57.58818493155615,
+        "errorRate": 0,
+        "p95RangeMs": [
+          75.08590000000186,
+          103.09159999999974
+        ]
+      },
+      "after": {
+        "p50Ms": 61.84730000000127,
+        "p95Ms": 71.54219999999987,
+        "p99Ms": 74.27920000000086,
+        "requestsPerSecond": 63.70799922734926,
+        "errorRate": 0,
+        "p95RangeMs": [
+          68.08559999999852,
+          78.48319999999876
+        ]
+      }
+    },
+    {
+      "concurrency": 8,
+      "before": {
+        "p50Ms": 99.05919999999969,
+        "p95Ms": 117.37069999999949,
+        "p99Ms": 120.52160000000003,
+        "requestsPerSecond": 78.71442963799795,
+        "errorRate": 0,
+        "p95RangeMs": [
+          114.1935999999987,
+          119.61390000000029
+        ]
+      },
+      "after": {
+        "p50Ms": 94.95420000000013,
+        "p95Ms": 111.69020000000091,
+        "p99Ms": 115.82719999999972,
+        "requestsPerSecond": 81.8237331865523,
+        "errorRate": 0,
+        "p95RangeMs": [
+          108.85710000000108,
+          113.08309999999983
+        ]
+      }
+    }
+  ],
+  "jfr": {
+    "before": {
+      "gcCollections": 3,
+      "gcDurationSeconds": 0.0722195,
+      "cpuSamples": 26,
+      "medianJvmCpuFractionOfHost": 0.0220223795
+    },
+    "after": {
+      "gcCollections": 2,
+      "gcDurationSeconds": 0.0123575,
+      "cpuSamples": 24,
+      "medianJvmCpuFractionOfHost": 0.0186912422
+    }
+  },
+  "rsvpInstrumented": [
+    {
+      "guests": 0,
+      "before": {
+        "p50Ms": 15.9252,
+        "p95Ms": 20.5907,
+        "p99Ms": 20.7533,
+        "statementsPerCall": 7.0
+      },
+      "after": {
+        "p50Ms": 10.4674,
+        "p95Ms": 12.6892,
+        "p99Ms": 15.4745,
+        "statementsPerCall": 4.0
+      },
+      "p95ReductionPercent": 38.37412035530603
+    },
+    {
+      "guests": 100,
+      "before": {
+        "p50Ms": 10.519,
+        "p95Ms": 12.9647,
+        "p99Ms": 13.796,
+        "statementsPerCall": 7.0
+      },
+      "after": {
+        "p50Ms": 6.7543,
+        "p95Ms": 8.2104,
+        "p99Ms": 8.4867,
+        "statementsPerCall": 4.0
+      },
+      "p95ReductionPercent": 36.67111464206654
+    },
+    {
+      "guests": 1000,
+      "before": {
+        "p50Ms": 21.7343,
+        "p95Ms": 23.6026,
+        "p99Ms": 23.6361,
+        "statementsPerCall": 7.0
+      },
+      "after": {
+        "p50Ms": 12.8029,
+        "p95Ms": 15.2758,
+        "p99Ms": 15.9105,
+        "statementsPerCall": 4.0
+      },
+      "p95ReductionPercent": 35.27916415988068
+    },
+    {
+      "guests": 10000,
+      "before": {
+        "p50Ms": 43.9546,
+        "p95Ms": 60.7093,
+        "p99Ms": 69.7258,
+        "statementsPerCall": 7.0
+      },
+      "after": {
+        "p50Ms": 26.2541,
+        "p95Ms": 36.8232,
+        "p99Ms": 37.5847,
+        "statementsPerCall": 4.0
+      },
+      "p95ReductionPercent": 39.34504268703477
+    },
+    {
+      "guests": 100000,
+      "before": {
+        "p50Ms": 386.1077,
+        "p95Ms": 458.122,
+        "p99Ms": 524.8856,
+        "statementsPerCall": 7.0
+      },
+      "after": {
+        "p50Ms": 231.0595,
+        "p95Ms": 284.719,
+        "p99Ms": 319.4625,
+        "statementsPerCall": 4.0
+      },
+      "p95ReductionPercent": 37.85083449386845
+    }
+  ],
+  "rsvpSource": "rsvp-paired-quiet.json"
+}

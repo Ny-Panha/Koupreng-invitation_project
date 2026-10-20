@@ -19,6 +19,30 @@ export const TEMPLATE_CATEGORIES = [
 
 const STORY_IMAGE_CLASSES = ["tpl-gallery-a", "tpl-gallery-b", "tpl-gallery-c", "tpl-gallery-d"];
 
+export const WEDDING_COUPLE_PHOTOS = {
+    heroMeadow: "/images/wedding/couple-hero-meadow.webp",
+    celebrationConfetti: "/images/wedding/couple-celebration-confetti.webp",
+    studioCake: "/images/wedding/couple-studio-cake.webp",
+    studioBow: "/images/wedding/couple-studio-bow.webp",
+    banquetNight: "/images/wedding/couple-banquet-night.webp",
+    gardenRings: "/images/wedding/couple-garden-rings.webp",
+    bouquetWarmth: "/images/wedding/couple-bouquet-warmth.webp",
+    walkCandid: "/images/wedding/couple-walk-candid.webp",
+    studioEmbrace: "/images/wedding/couple-studio-embrace.webp",
+};
+
+export const WEDDING_COUPLE_GALLERY = [
+    { src: "/images/wedding/couple-hero-meadow.webp", alt: "ពិធីមង្គលការនៅសួនផ្កា", caption: "សេចក្តីស្រឡាញ់ក្រោមពន្លឺថ្ងៃ / Outdoor celebration", span: "tall" },
+    { src: "/images/wedding/couple-celebration-confetti.webp", alt: "ភាពរីករាយនៃថ្ងៃជ័យមង្គល", caption: "ពេលវេលានៃភាពត្រេកអរ / Confetti celebration", span: "wide" },
+    { src: "/images/wedding/couple-studio-cake.webp", alt: "អនុស្សាវរីយ៍ស្ទូឌីយោ", caption: "ផ្អែមល្ហែមដូចនំមង្គល / Studio memories", span: "small" },
+    { src: "/images/wedding/couple-studio-bow.webp", alt: "រូបថតផ្លូវការស្ទូឌីយោ", caption: "កូនក្រមុំនិងកូនកំលោះ / Formal bridal portrait", span: "small" },
+    { src: "/images/wedding/couple-banquet-night.webp", alt: "ពិធីជប់លៀងពេលរាត្រី", caption: "រាត្រីដ៏អស្ចារ្យ / Luxury evening banquet", span: "tall" },
+    { src: "/images/wedding/couple-garden-rings.webp", alt: "ពិធីបំពាក់ចិញ្ចៀន", caption: "សន្យាមួយជីវិត / Ring of promise", span: "wide" },
+    { src: "/images/wedding/couple-bouquet-warmth.webp", alt: "បាច់ផ្កាមង្គល", caption: "ស្នាមញញឹមដ៏កក់ក្តៅ / Warm bridal bouquet", span: "small" },
+    { src: "/images/wedding/couple-walk-candid.webp", alt: "ដំណើរជាមួយគ្នា", caption: "រួមដំណើរសាងអនាគត / Walking together", span: "small" },
+    { src: "/images/wedding/couple-studio-embrace.webp", alt: "ភាពកក់ក្តៅនៃគូស្វាមីភរិយា", caption: "សុភមង្គលជារៀងរហូត / Forever romance", span: "tall" },
+];
+
 function getSourceMedia(cardFolder = "03-card") {
     const prefix = cardFolder.slice(0, 2);
     return Array.from(
@@ -29,11 +53,12 @@ function getSourceMedia(cardFolder = "03-card") {
 
 function withTemplateMedia(template, cardFolder = "03-card") {
     const primaryImages = getSourceMedia(cardFolder);
-    const coverImage = `/facebook/all/${cardFolder}/cover-card.jpg`;
+    const coverImage = template.mainImage || `/images/wedding/couple-hero-meadow.webp`;
     const fallbackMedia = [coverImage, ...primaryImages];
 
     return {
         ...template,
+        gallery: template.gallery || WEDDING_COUPLE_GALLERY,
         mainImage: template.mainImage || coverImage,
         phoneCoverImage: template.phoneCoverImage || coverImage,
         slideshowImages: template.slideshowImages || fallbackMedia,
@@ -92,9 +117,10 @@ export const KHMER_CELESTIAL_TEMPLATE = withTemplateMedia({
     premium: false,
     isPremium: false,
     image: "/facebook/all/06-card/cover-card.jpg",
-    mainImage: "/facebook/all/06-card/cover-card.jpg",
-    phoneCoverImage: "/facebook/all/06-card/cover-card.jpg",
+    mainImage: "/images/wedding/couple-hero-meadow.webp",
+    phoneCoverImage: "/images/wedding/couple-hero-meadow.webp",
     backgroundImage: "/invitations/khmer-celestial/botanical-frame.jpg",
+    gallery: WEDDING_COUPLE_GALLERY,
     music: { url: musicWaitingDay },
     openingVideo: null,
     groom: "កឿង វីរៈ",
@@ -366,8 +392,9 @@ export const THE_DIGITAL_YES_TEMPLATE = withTemplateMedia({
     category: "modern",
     popular: true,
     image: "/templates/canva-luxury/emerald-luxury.jpg",
-    mainImage: "/templates/canva-luxury/emerald-luxury.jpg",
-    phoneCoverImage: "/templates/canva-luxury/emerald-luxury.jpg",
+    mainImage: "/images/wedding/couple-hero-meadow.webp",
+    phoneCoverImage: "/images/wedding/couple-hero-meadow.webp",
+    gallery: WEDDING_COUPLE_GALLERY,
     music: { url: musicInstrumental },
     groom: "",
     groomEn: "",
@@ -404,8 +431,9 @@ export const EMERALD_CANVA_LUXE_TEMPLATE = withTemplateMedia({
     category: "modern",
     popular: true,
     image: "/templates/canva-luxury/emerald-luxury.jpg",
-    mainImage: "/templates/canva-luxury/emerald-luxury.jpg",
-    phoneCoverImage: "/templates/canva-luxury/emerald-luxury.jpg",
+    mainImage: "/images/wedding/couple-banquet-night.webp",
+    phoneCoverImage: "/images/wedding/couple-banquet-night.webp",
+    gallery: WEDDING_COUPLE_GALLERY,
     music: { url: musicInstrumental },
     groom: "",
     groomEn: "",
@@ -440,8 +468,9 @@ export const WITHJOY_PORTAL_TEMPLATE = withTemplateMedia({
     category: "modern",
     popular: true,
     image: "/facebook/all/03-card/cover-card.jpg",
-    mainImage: "/facebook/all/03-card/cover-card.jpg",
-    phoneCoverImage: "/facebook/all/03-card/cover-card.jpg",
+    mainImage: "/images/wedding/couple-hero-meadow.webp",
+    phoneCoverImage: "/images/wedding/couple-hero-meadow.webp",
+    gallery: WEDDING_COUPLE_GALLERY,
     music: { url: musicWaitingDay },
     groom: "",
     bride: "",
@@ -460,8 +489,9 @@ export const BLISS_EDITORIAL_TEMPLATE = withTemplateMedia({
     category: "modern",
     popular: true,
     image: "/facebook/all/03-card/03-01.jpg",
-    mainImage: "/facebook/all/03-card/03-01.jpg",
-    phoneCoverImage: "/facebook/all/03-card/03-01.jpg",
+    mainImage: "/images/wedding/couple-hero-meadow.webp",
+    phoneCoverImage: "/images/wedding/couple-hero-meadow.webp",
+    gallery: WEDDING_COUPLE_GALLERY,
     music: { url: musicInstrumental },
     groom: "",
     groomEn: "",
@@ -494,6 +524,7 @@ export const SILK_HERITAGE_TEMPLATE = {
     music: { url: musicWaitingDay },
     openingVideo: null,
     coverBackgroundImage: "/templates/silk-heritage/cover.svg",
+    gallery: WEDDING_COUPLE_GALLERY,
     storyImages: [
         { src: "/templates/silk-heritage/portrait.webp", alt: "Demo couple holding hands in a garden", caption: "រូបភាពគំរូ / Demo portrait" },
         { src: "/templates/silk-heritage/together.webp", alt: "Demo newlyweds smiling together outdoors", caption: "រូបភាពគំរូ / Demo photograph" },

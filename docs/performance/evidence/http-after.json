@@ -1,0 +1,122 @@
+{
+  "path": "/api/v1/public/invitations/performance-http-fixture/rsvp-summary-public",
+  "warmup": 20,
+  "expected": {
+    "totalGuests": 10000,
+    "attending": 2500,
+    "notAttending": 2500,
+    "maybe": 2500,
+    "pending": 2500,
+    "totalAttendeeCount": 5000
+  },
+  "measurements": [
+    {
+      "concurrency": 1,
+      "round": 0,
+      "requests": 100,
+      "durationSeconds": 6.1057448999999995,
+      "requestsPerSecond": 16.378018020372913,
+      "p50Ms": 62.01249999999982,
+      "p95Ms": 73.13850000000002,
+      "p99Ms": 88.32519999999977,
+      "errorRate": 0,
+      "errors": []
+    },
+    {
+      "concurrency": 1,
+      "round": 1,
+      "requests": 100,
+      "durationSeconds": 5.7227725,
+      "requestsPerSecond": 17.474047762688453,
+      "p50Ms": 57.830700000000434,
+      "p95Ms": 71.28279999999995,
+      "p99Ms": 81.36030000000028,
+      "errorRate": 0,
+      "errors": []
+    },
+    {
+      "concurrency": 1,
+      "round": 2,
+      "requests": 100,
+      "durationSeconds": 4.7701769999999994,
+      "requestsPerSecond": 20.963582693053112,
+      "p50Ms": 46.83609999999862,
+      "p95Ms": 55.94810000000143,
+      "p99Ms": 62.742199999998775,
+      "errorRate": 0,
+      "errors": []
+    },
+    {
+      "concurrency": 4,
+      "round": 0,
+      "requests": 100,
+      "durationSeconds": 1.5648045999999995,
+      "requestsPerSecond": 63.905742608374254,
+      "p50Ms": 61.03850000000239,
+      "p95Ms": 71.54219999999987,
+      "p99Ms": 74.27920000000086,
+      "errorRate": 0,
+      "errors": []
+    },
+    {
+      "concurrency": 4,
+      "round": 1,
+      "requests": 100,
+      "durationSeconds": 1.6419896999999983,
+      "requestsPerSecond": 60.901721856111585,
+      "p50Ms": 63.99499999999898,
+      "p95Ms": 78.48319999999876,
+      "p99Ms": 85.32179999999789,
+      "errorRate": 0,
+      "errors": []
+    },
+    {
+      "concurrency": 4,
+      "round": 2,
+      "requests": 100,
+      "durationSeconds": 1.569661600000003,
+      "requestsPerSecond": 63.70799922734926,
+      "p50Ms": 61.84730000000127,
+      "p95Ms": 68.08559999999852,
+      "p99Ms": 68.92819999999847,
+      "errorRate": 0,
+      "errors": []
+    },
+    {
+      "concurrency": 8,
+      "round": 0,
+      "requests": 100,
+      "durationSeconds": 1.1873650999999992,
+      "requestsPerSecond": 84.22009371843595,
+      "p50Ms": 90.9367999999995,
+      "p95Ms": 108.85710000000108,
+      "p99Ms": 110.80420000000231,
+      "errorRate": 0,
+      "errors": []
+    },
+    {
+      "concurrency": 8,
+      "round": 1,
+      "requests": 100,
+      "durationSeconds": 1.2221393000000025,
+      "requestsPerSecond": 81.8237331865523,
+      "p50Ms": 94.95420000000013,
+      "p95Ms": 113.08309999999983,
+      "p99Ms": 116.28809999999794,
+      "errorRate": 0,
+      "errors": []
+    },
+    {
+      "concurrency": 8,
+      "round": 2,
+      "requests": 100,
+      "durationSeconds": 1.2355323000000025,
+      "requestsPerSecond": 80.93677518588531,
+      "p50Ms": 95.21789999999964,
+      "p95Ms": 111.69020000000091,
+      "p99Ms": 115.82719999999972,
+      "errorRate": 0,
+      "errors": []
+    }
+  ]
+}

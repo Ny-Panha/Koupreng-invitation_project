@@ -26,17 +26,28 @@ import {
 } from "./openingConfig";
 import defaultMusicUrl from "@/assets/music/Instrumental Wedding Music (VioSounds Cover).m4a";
 
+export const WEDDING_COUPLE_PHOTOS = {
+    heroMeadow: "/images/wedding/couple-hero-meadow.webp",
+    celebrationConfetti: "/images/wedding/couple-celebration-confetti.webp",
+    studioCake: "/images/wedding/couple-studio-cake.webp",
+    studioBow: "/images/wedding/couple-studio-bow.webp",
+    banquetNight: "/images/wedding/couple-banquet-night.webp",
+    gardenRings: "/images/wedding/couple-garden-rings.webp",
+    bouquetWarmth: "/images/wedding/couple-bouquet-warmth.webp",
+    walkCandid: "/images/wedding/couple-walk-candid.webp",
+    studioEmbrace: "/images/wedding/couple-studio-embrace.webp",
+};
+
 const DEMO_GALLERY = [
-    { src: "/facebook/all/01-card/01-01.jpg", span: "tall" },
-    { src: "/facebook/all/02-card/02-01.jpg", span: "wide" },
-    { src: "/facebook/all/01-card/01-02.jpg", span: "small" },
-    { src: "/facebook/all/03-card/03-01.jpg", span: "small" },
-    { src: "/facebook/all/02-card/02-03.jpg", span: "tall" },
-    { src: "/facebook/all/01-card/01-03.jpg", span: "small" },
-    { src: "/facebook/all/03-card/03-02.jpg", span: "wide" },
-    { src: "/facebook/all/02-card/02-05.jpg", span: "small" },
-    { src: "/facebook/all/01-card/01-04.jpg", span: "small" },
-    { src: "/facebook/all/03-card/03-04.jpg", span: "tall" },
+    { src: "/images/wedding/couple-hero-meadow.webp", span: "tall" },
+    { src: "/images/wedding/couple-celebration-confetti.webp", span: "wide" },
+    { src: "/images/wedding/couple-studio-cake.webp", span: "small" },
+    { src: "/images/wedding/couple-studio-bow.webp", span: "small" },
+    { src: "/images/wedding/couple-banquet-night.webp", span: "tall" },
+    { src: "/images/wedding/couple-garden-rings.webp", span: "wide" },
+    { src: "/images/wedding/couple-bouquet-warmth.webp", span: "small" },
+    { src: "/images/wedding/couple-walk-candid.webp", span: "small" },
+    { src: "/images/wedding/couple-studio-embrace.webp", span: "tall" },
 ];
 
 const DEMO_STORY = [
@@ -46,7 +57,7 @@ const DEMO_STORY = [
         title: "ថ្ងៃដែលយើងជួបគ្នា",
         date: "មករា ២០២១",
         text: "ក្នុងពិធីបុណ្យមួយនៅទីក្រុង ភ្នែកទាំងពីរបានជួបគ្នាដំបូង ដោយមិននឹកស្មានថានឹងក្លាយជារឿងរ៉ាវមួយជីវិត។",
-        image: "/facebook/all/01-card/01-01.jpg",
+        image: "/images/wedding/couple-bouquet-warmth.webp",
     },
     {
         id: "first-date",
@@ -54,7 +65,7 @@ const DEMO_STORY = [
         title: "ការណាត់ជួបលើកដំបូង",
         date: "មីនា ២០២១",
         text: "កាហ្វេមួយពែង ការសន្ទនាមួយយប់ ហើយយើងដឹងថា នេះគឺជាមនុស្សដែលយើងចង់នៅជាមួយ។",
-        image: "/facebook/all/02-card/02-02.jpg",
+        image: "/images/wedding/couple-studio-cake.webp",
     },
     {
         id: "proposal",
@@ -62,7 +73,7 @@ const DEMO_STORY = [
         title: "ថ្ងៃសុំដៃ",
         date: "ធ្នូ ២០២៥",
         text: "នៅក្រោមពន្លឺថ្ងៃលិច ជាមួយចិត្តញាប់ញ័រ សំណួរមួយត្រូវបានសួរ ហើយចម្លើយគឺ បាទ/ចាស។",
-        image: "/facebook/all/03-card/03-01.jpg",
+        image: "/images/wedding/couple-garden-rings.webp",
     },
     {
         id: "wedding",
@@ -70,7 +81,7 @@ const DEMO_STORY = [
         title: "ថ្ងៃមង្គលការ",
         date: "ធ្នូ ២០២៦",
         text: "ថ្ងៃនេះ យើងសូមអញ្ជើញអ្នកមកចែករំលែកនូវការចាប់ផ្ដើមនៃជីវិតថ្មីរបស់យើងទាំងពីរ។",
-        image: "/facebook/all/01-card/01-03.jpg",
+        image: "/images/wedding/couple-celebration-confetti.webp",
     },
 ];
 
@@ -274,6 +285,11 @@ function getTemplateOwnImages(tpl) {
 
 /** Build the gallery from the template's own images (no cross-card mixing). */
 function buildGallery(tpl) {
+    if (Array.isArray(tpl.gallery) && tpl.gallery.length) {
+        return tpl.gallery.map((image, index) => typeof image === "string"
+            ? { src: image, alt: `Wedding photo ${index + 1}`, span: GALLERY_SPANS[index % GALLERY_SPANS.length] }
+            : { ...image, span: image.span || GALLERY_SPANS[index % GALLERY_SPANS.length] });
+    }
     if (Array.isArray(tpl.storyImages) && tpl.storyImages.length && !tpl.storyCards?.length) {
         return tpl.storyImages.map((image, index) => typeof image === "string"
             ? { src: image, alt: `Wedding photo ${index + 1}`, span: GALLERY_SPANS[index % GALLERY_SPANS.length] }
@@ -286,6 +302,9 @@ function buildGallery(tpl) {
 
 /** Build the story timeline using the template's own images, demo copy intact. */
 function buildStory(tpl, variant) {
+    if (Array.isArray(tpl.story) && tpl.story.length) {
+        return tpl.story;
+    }
     const own = getTemplateOwnImages(tpl);
     const story = VARIANT_STORY[variant] || DEMO_STORY;
     const storyWithTemplateText = tpl.storyText && story.length
