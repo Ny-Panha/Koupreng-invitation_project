@@ -1,0 +1,14 @@
+{
+  "oldStatusCount" : [ {
+    "EXPLAIN" : "-> Aggregate: count(0)  (cost=1098 rows=1) (actual time=53.8..53.8 rows=1 loops=1)\n    -> Filter: (rsvps.response_status = 'ATTENDING')  (cost=682 rows=4169) (actual time=0.0836..53.1 rows=25001 loops=1)\n        -> Index lookup on rsvps using idx_rsvps_invitation_id (invitation_id=55)  (cost=682 rows=41685) (actual time=0.0801..48.9 rows=75002 loops=1)\n"
+  } ],
+  "oldAttendeeSum" : [ {
+    "EXPLAIN" : "-> Aggregate: sum(rsvps.attendee_count)  (cost=1098 rows=1) (actual time=57.9..57.9 rows=1 loops=1)\n    -> Filter: (rsvps.response_status = 'ATTENDING')  (cost=682 rows=4169) (actual time=0.0699..56.6 rows=25001 loops=1)\n        -> Index lookup on rsvps using idx_rsvps_invitation_id (invitation_id=55)  (cost=682 rows=41685) (actual time=0.067..52.1 rows=75002 loops=1)\n"
+  } ],
+  "combinedCounts" : [ {
+    "EXPLAIN" : "-> Aggregate: sum((case when (rsvps.response_status = 'ATTENDING') then rsvps.attendee_count else 0 end)), sum((case when (rsvps.response_status = 'MAYBE') then 1 else 0 end)), sum((case when (rsvps.response_status = 'NOT_ATTENDING') then 1 else 0 end)), sum((case when (rsvps.response_status = 'ATTENDING') then 1 else 0 end))  (cost=8602 rows=1) (actual time=91.2..91.2 rows=1 loops=1)\n    -> Index lookup on rsvps using idx_rsvps_invitation_id (invitation_id=55)  (cost=4433 rows=41685) (actual time=0.0764..66.7 rows=75002 loops=1)\n"
+  } ],
+  "pendingGuests" : [ {
+    "EXPLAIN" : "-> Aggregate: count(0)  (cost=30477 rows=1) (actual time=396..396 rows=1 loops=1)\n    -> Nested loop antijoin  (cost=24941 rows=55363) (actual time=0.0303..391 rows=25000 loops=1)\n        -> Covering index lookup on g using idx_guests_invitation_id (invitation_id=55)  (cost=5564 rows=55363) (actual time=0.0195..42.3 rows=100000 loops=1)\n        -> Single-row covering index lookup on r using uk_rsvps_guest_id (guest_id=g.guest_id)  (cost=0.25 rows=1) (actual time=0.00325..0.00325 rows=0.75 loops=100000)\n"
+  } ]
+}

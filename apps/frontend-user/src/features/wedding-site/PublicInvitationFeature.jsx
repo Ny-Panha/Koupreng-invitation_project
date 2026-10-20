@@ -4,7 +4,8 @@ import { IoHomeOutline, IoLockClosedOutline, IoSearchOutline } from "react-icons
 
 import PublicRsvpForm from "../invitations/PublicRsvpForm";
 import "../invitations/InvitationPages.css";
-import { TemplateExperience, registerDynamicTemplates } from "@/features/templates";
+import TemplateExperience from "@/features/templates/experience/TemplateExperience";
+import { registerDynamicTemplates } from "@/features/templates/data/templatesData";
 import { templateCatalogService } from "@/features/templates/api/templateCatalogApi";
 import { draftToTemplate } from "../wedding-builder/utils/draftToTemplate";
 import { publicInvitationToDraft } from "../wedding-builder/utils/invitationDraftAdapter";

@@ -1,0 +1,24 @@
+{
+  "java.compile.nullAnalysis.mode": "disabled",
+  "java.import.exclusions": [
+    "**/node_modules/**",
+    "**/.metadata/**",
+    "**/archetype-resources/**",
+    "**/META-INF/maven/**",
+    "**/.cache/**"
+  ],
+  "java.project.resourceFilters": [
+    "node_modules",
+    "\\.git",
+    "\\.cache",
+    "target"
+  ],
+  "files.watcherExclude": {
+    "**/.cache/**": true,
+    "**/target/**": true,
+    "**/node_modules/**": true
+  },
+  "files.exclude": {
+    "**/.cache": true
+  }
+}

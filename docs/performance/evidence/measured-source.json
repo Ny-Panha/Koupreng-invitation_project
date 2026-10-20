@@ -1,0 +1,11 @@
+{
+  "baseCommit": "751eabdc98555c57a58ae6c5051ce4b59dda597c",
+  "optimizedFiles": {
+    "apps/backend/src/main/java/com/koupreng/backend/rsvp/application/RsvpService.java": "8169cddff99b24ae58541b3b9c48e7c07c9b55a08a52b832fdd54b4ec67582e2",
+    "apps/backend/src/main/java/com/koupreng/backend/rsvp/infrastructure/persistence/RsvpRepository.java": "0ae81b2b79b1e5ac065ae35180ab33167b192c40fb249a59dc23d9cfa5732941",
+    "apps/frontend-user/src/features/wedding-site/PublicInvitationFeature.jsx": "eeea8a999a55007e091e38acc4d2c1725a55c31734d95f7f9fe587144a8e4d62",
+    "apps/frontend-user/src/features/wedding-builder/utils/draftToTemplate.js": "dd0c8106784cf069f65dcaf899d13a1263bfa4d12733f1e87d882f8237a83839",
+    "apps/frontend-user/src/features/wedding-builder/utils/invitationDraftAdapter.js": "a478c80ff908b9ec398cd262522ce424b2049b0ecac7755d414221a04892fb7f"
+  },
+  "frontendCaveat": "Subsequent concurrent template and image edits were preserved; the recorded frontend build was measured before those changes."
+}

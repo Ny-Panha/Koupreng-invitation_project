@@ -185,18 +185,25 @@ class RsvpServiceTests {
         Fixture fixture = fixture();
         Authentication authentication = mock(Authentication.class);
         when(fixture.guestRepository.countByInvitationId(10L)).thenReturn(5L);
-        when(fixture.rsvpRepository.countByInvitationIdAndResponseStatus(10L, RsvpStatus.ATTENDING)).thenReturn(2L);
-        when(fixture.rsvpRepository.countByInvitationIdAndResponseStatus(10L, RsvpStatus.NOT_ATTENDING)).thenReturn(1L);
-        when(fixture.rsvpRepository.countByInvitationIdAndResponseStatus(10L, RsvpStatus.MAYBE)).thenReturn(1L);
+        RsvpRepository.SummaryCounts counts = mock(RsvpRepository.SummaryCounts.class);
+        when(fixture.rsvpRepository.summarizeByInvitationId(10L)).thenReturn(counts);
+        when(counts.getAttending()).thenReturn(2L);
+        when(counts.getNotAttending()).thenReturn(1L);
+        when(counts.getMaybe()).thenReturn(1L);
+        when(counts.getTotalAttendeeCount()).thenReturn(4L);
         when(fixture.rsvpRepository.countPendingGuests(10L)).thenReturn(1L);
-        when(fixture.rsvpRepository.sumAttendeeCountByInvitationIdAndStatus(10L, RsvpStatus.ATTENDING)).thenReturn(4L);
 
         RsvpSummaryResponse response = fixture.service.summary(authentication, 10L);
 
         assertEquals(5, response.getTotalGuests());
         assertEquals(2, response.getAttending());
+        assertEquals(1, response.getNotAttending());
+        assertEquals(1, response.getMaybe());
         assertEquals(1, response.getPending());
         assertEquals(4, response.getTotalAttendeeCount());
+        verify(fixture.invitationService).requireOwnedInvitationEntity(authentication, 10L);
+        verify(fixture.rsvpRepository, never()).countByInvitationIdAndResponseStatus(any(), any());
+        verify(fixture.rsvpRepository, never()).sumAttendeeCountByInvitationIdAndStatus(any(), any());
     }
 
     @Test

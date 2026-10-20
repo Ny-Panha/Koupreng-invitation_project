@@ -1,0 +1,7 @@
+{
+    "cpuSeconds":  12.453125,
+    "durationSeconds":  26.3735346,
+    "workingSetAfterBytes":  600264704,
+    "heapMaxMiB":  512,
+    "includesWarmup":  true
+}

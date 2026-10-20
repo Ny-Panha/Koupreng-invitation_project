@@ -1,4 +1,5 @@
-import { getTemplateById, resolveVariant } from "@/features/templates";
+import { getTemplateById } from "@/features/templates/data/templatesData";
+import { resolveVariant } from "@/features/templates/experience/config/templateExperienceThemes";
 
 
 function displayDate(date) {

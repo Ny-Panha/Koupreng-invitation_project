@@ -6,7 +6,17 @@ const derivatives = {
     sizes: "(max-width: 600px) 450px, 510px",
     compactSizes: "(max-width: 600px) 240px, 510px",
   },
+  "/images/wedding/couple-hero-meadow.webp": {
+    name: "khmer-celestial", widths: [320, 640, 1280],
+    sizes: "(max-width: 600px) 450px, 510px",
+    compactSizes: "(max-width: 600px) 240px, 510px",
+  },
   "/templates/canva-luxury/emerald-luxury.jpg": {
+    name: "emerald-luxe", widths: [240, 480, 768],
+    sizes: "(max-width: 600px) 168px, 190px",
+    compactSizes: "(max-width: 600px) 90px, 190px",
+  },
+  "/images/wedding/couple-banquet-night.webp": {
     name: "emerald-luxe", widths: [240, 480, 768],
     sizes: "(max-width: 600px) 168px, 190px",
     compactSizes: "(max-width: 600px) 90px, 190px",

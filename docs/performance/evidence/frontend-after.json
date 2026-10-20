@@ -1,0 +1,2542 @@
+{
+  "browser": "153.0.8010.12",
+  "fixture": "silk-heritage; mocked API; local assets; external requests blocked; reduced motion; cold browser contexts; no throttling",
+  "samples": [
+    {
+      "lcp": 1004,
+      "cls": 0.0037102802412027976,
+      "longTasks": 2,
+      "navigationMs": 110.39999997615814,
+      "resources": [
+        {
+          "path": "/js/telegram-web-app.js",
+          "bytes": 0,
+          "durationMs": 13.300000011920929
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 8901,
+          "durationMs": 21.69999998807907
+        },
+        {
+          "path": "/assets/index-BZ0f0nvE.js",
+          "bytes": 423858,
+          "durationMs": 35.59999996423721
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "durationMs": 25.399999976158142
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 3100,
+          "durationMs": 26.900000035762787
+        },
+        {
+          "path": "/assets/index-4qYAKNCO.css",
+          "bytes": 151272,
+          "durationMs": 29.600000023841858
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 54180,
+          "durationMs": 29.80000001192093
+        },
+        {
+          "path": "/assets/SiteAnimations-BtFGTWaV.js",
+          "bytes": 3455,
+          "durationMs": 42.5
+        },
+        {
+          "path": "/assets/logo-CnrSq6bR.js",
+          "bytes": 49,
+          "durationMs": 41.39999997615814
+        },
+        {
+          "path": "/assets/proxy-CKUgvGHl.js",
+          "bytes": 127460,
+          "durationMs": 45.80000001192093
+        },
+        {
+          "path": "/assets/SiteAnimations-DnKXCQkx.css",
+          "bytes": 2577,
+          "durationMs": 47.40000003576279
+        },
+        {
+          "path": "/assets/PublicInvitationPage-Db7wmkf1.js",
+          "bytes": 20687,
+          "durationMs": 42.89999997615814
+        },
+        {
+          "path": "/assets/TemplateExperience-BEmcj3Br.js",
+          "bytes": 138936,
+          "durationMs": 43.5
+        },
+        {
+          "path": "/assets/calendar-CHV7X8-b.js",
+          "bytes": 295,
+          "durationMs": 40.10000002384186
+        },
+        {
+          "path": "/assets/khmer-celestial-B-1vrurs.js",
+          "bytes": 23984,
+          "durationMs": 49.80000001192093
+        },
+        {
+          "path": "/assets/khmer-celestial-ByXmsOKT.css",
+          "bytes": 40712,
+          "durationMs": 41.10000002384186
+        },
+        {
+          "path": "/assets/circle-check-BYAeGLgB.js",
+          "bytes": 250,
+          "durationMs": 48.90000003576279
+        },
+        {
+          "path": "/assets/clock-CtOF574V.js",
+          "bytes": 209,
+          "durationMs": 52.10000002384186
+        },
+        {
+          "path": "/assets/mail-CyiK-806.js",
+          "bytes": 253,
+          "durationMs": 53
+        },
+        {
+          "path": "/assets/rotate-ccw-BSUgv9bz.js",
+          "bytes": 240,
+          "durationMs": 54.799999952316284
+        },
+        {
+          "path": "/assets/sparkles-D4u1jxD4.js",
+          "bytes": 552,
+          "durationMs": 54.80000001192093
+        },
+        {
+          "path": "/assets/lib-S-OCrmWQ.js",
+          "bytes": 23926,
+          "durationMs": 56.59999996423721
+        },
+        {
+          "path": "/assets/TimePicker-Dl-JTwja.js",
+          "bytes": 7249,
+          "durationMs": 57.5
+        },
+        {
+          "path": "/assets/TimePicker-WdylPF6N.css",
+          "bytes": 5265,
+          "durationMs": 43.09999996423721
+        },
+        {
+          "path": "/assets/openingConfig-C4xyyN7b.js",
+          "bytes": 2097,
+          "durationMs": 59.80000001192093
+        },
+        {
+          "path": "/assets/TemplateImage-bCmXREGx.js",
+          "bytes": 567,
+          "durationMs": 58.80000001192093
+        },
+        {
+          "path": "/assets/TemplateGift-hesgfDbw.js",
+          "bytes": 5504,
+          "durationMs": 61.69999998807907
+        },
+        {
+          "path": "/assets/use-in-view-B5LGy31y.js",
+          "bytes": 856,
+          "durationMs": 61
+        },
+        {
+          "path": "/assets/SeatingFloorPlan-jcLRP23i.js",
+          "bytes": 20265,
+          "durationMs": 65.20000004768372
+        },
+        {
+          "path": "/assets/SeatingFloorPlan-C8rBCXbf.css",
+          "bytes": 16267,
+          "durationMs": 43.89999997615814
+        },
+        {
+          "path": "/assets/TemplateExperience-CdcXAu6q.css",
+          "bytes": 182257,
+          "durationMs": 48
+        },
+        {
+          "path": "/assets/weddingStorage-5kKkCd94.js",
+          "bytes": 3040,
+          "durationMs": 66.60000002384186
+        },
+        {
+          "path": "/assets/invitationApi-FkTburlh.js",
+          "bytes": 1582,
+          "durationMs": 67.59999996423721
+        },
+        {
+          "path": "/assets/rsvpApi-D48RH6c5.js",
+          "bytes": 1337,
+          "durationMs": 68
+        },
+        {
+          "path": "/assets/mediaApi-CJj611lg.js",
+          "bytes": 2558,
+          "durationMs": 70.20000004768372
+        },
+        {
+          "path": "/assets/galleryStorage-hdbuO4NG.js",
+          "bytes": 668,
+          "durationMs": 68.80000001192093
+        },
+        {
+          "path": "/assets/invitationDraftAdapter-No7EQ-e6.js",
+          "bytes": 9142,
+          "durationMs": 70.30000001192093
+        },
+        {
+          "path": "/assets/draftToTemplate-BRzWK6mc.js",
+          "bytes": 9495,
+          "durationMs": 70.39999997615814
+        },
+        {
+          "path": "/assets/useWeddingStore-CB1dI8J4.js",
+          "bytes": 894,
+          "durationMs": 72.60000002384186
+        },
+        {
+          "path": "/assets/InvitationPages-CyFdEHSW.css",
+          "bytes": 30207,
+          "durationMs": 45.30000001192093
+        },
+        {
+          "path": "/assets/ChatBot-DlmSiTRG.js",
+          "bytes": 7889,
+          "durationMs": 71
+        },
+        {
+          "path": "/assets/ChatBot-BEe5qxCi.css",
+          "bytes": 3744,
+          "durationMs": 42
+        },
+        {
+          "path": "/css2",
+          "bytes": 0,
+          "durationMs": 6
+        },
+        {
+          "path": "/css2",
+          "bytes": 0,
+          "durationMs": 11.199999988079071
+        },
+        {
+          "path": "/css2",
+          "bytes": 0,
+          "durationMs": 12
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 116,
+          "durationMs": 8.300000011920929
+        },
+        {
+          "path": "/assets/logo-HJEElCDm.png",
+          "bytes": 384504,
+          "durationMs": 7
+        },
+        {
+          "path": "/api/v1/public/invitations/performance-fixture",
+          "bytes": 371,
+          "durationMs": 3.699999988079071
+        },
+        {
+          "path": "/api/v1/public/invitations/performance-fixture/media",
+          "bytes": 44,
+          "durationMs": 3.800000011920929
+        },
+        {
+          "path": "/assets/SilkHeritageLayout-CzuejiTI.js",
+          "bytes": 23653,
+          "durationMs": 9.600000023841858
+        },
+        {
+          "path": "/assets/SilkHeritageLayout-DeLoFewM.css",
+          "bytes": 25312,
+          "durationMs": 8.600000023841858
+        },
+        {
+          "path": "/templates/silk-heritage/cover.svg",
+          "bytes": 1066,
+          "durationMs": 7.900000035762787
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "durationMs": 63.90000003576279
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "durationMs": 63.10000002384186
+        }
+      ],
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "run": 0,
+      "errors": []
+    },
+    {
+      "lcp": 788,
+      "cls": 0.0027847129473328345,
+      "longTasks": 0,
+      "navigationMs": 70,
+      "resources": [
+        {
+          "path": "/js/telegram-web-app.js",
+          "bytes": 0,
+          "durationMs": 8
+        },
+        {
+          "path": "/assets/index-BZ0f0nvE.js",
+          "bytes": 423858,
+          "durationMs": 38.799999952316284
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 8901,
+          "durationMs": 25.80000001192093
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "durationMs": 26.600000023841858
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 3100,
+          "durationMs": 27
+        },
+        {
+          "path": "/assets/index-4qYAKNCO.css",
+          "bytes": 151272,
+          "durationMs": 30.099999964237213
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 54180,
+          "durationMs": 29
+        },
+        {
+          "path": "/assets/SiteAnimations-BtFGTWaV.js",
+          "bytes": 3455,
+          "durationMs": 14.899999976158142
+        },
+        {
+          "path": "/assets/proxy-CKUgvGHl.js",
+          "bytes": 127460,
+          "durationMs": 23.599999964237213
+        },
+        {
+          "path": "/assets/SiteAnimations-DnKXCQkx.css",
+          "bytes": 2577,
+          "durationMs": 21
+        },
+        {
+          "path": "/assets/logo-CnrSq6bR.js",
+          "bytes": 49,
+          "durationMs": 21.399999976158142
+        },
+        {
+          "path": "/assets/PublicInvitationPage-Db7wmkf1.js",
+          "bytes": 20687,
+          "durationMs": 17.899999976158142
+        },
+        {
+          "path": "/assets/calendar-CHV7X8-b.js",
+          "bytes": 295,
+          "durationMs": 16.80000001192093
+        },
+        {
+          "path": "/assets/TemplateExperience-BEmcj3Br.js",
+          "bytes": 138936,
+          "durationMs": 19.900000035762787
+        },
+        {
+          "path": "/assets/khmer-celestial-B-1vrurs.js",
+          "bytes": 23984,
+          "durationMs": 26.700000047683716
+        },
+        {
+          "path": "/assets/khmer-celestial-ByXmsOKT.css",
+          "bytes": 40712,
+          "durationMs": 21.19999998807907
+        },
+        {
+          "path": "/assets/circle-check-BYAeGLgB.js",
+          "bytes": 250,
+          "durationMs": 25.399999976158142
+        },
+        {
+          "path": "/assets/clock-CtOF574V.js",
+          "bytes": 209,
+          "durationMs": 25.400000035762787
+        },
+        {
+          "path": "/assets/mail-CyiK-806.js",
+          "bytes": 253,
+          "durationMs": 28.100000023841858
+        },
+        {
+          "path": "/assets/rotate-ccw-BSUgv9bz.js",
+          "bytes": 240,
+          "durationMs": 28.80000001192093
+        },
+        {
+          "path": "/assets/sparkles-D4u1jxD4.js",
+          "bytes": 552,
+          "durationMs": 28.80000001192093
+        },
+        {
+          "path": "/assets/lib-S-OCrmWQ.js",
+          "bytes": 23926,
+          "durationMs": 29
+        },
+        {
+          "path": "/assets/TimePicker-WdylPF6N.css",
+          "bytes": 5265,
+          "durationMs": 20.700000047683716
+        },
+        {
+          "path": "/assets/TimePicker-Dl-JTwja.js",
+          "bytes": 7249,
+          "durationMs": 28.80000001192093
+        },
+        {
+          "path": "/assets/openingConfig-C4xyyN7b.js",
+          "bytes": 2097,
+          "durationMs": 28.80000001192093
+        },
+        {
+          "path": "/assets/TemplateImage-bCmXREGx.js",
+          "bytes": 567,
+          "durationMs": 31.69999998807907
+        },
+        {
+          "path": "/assets/TemplateGift-hesgfDbw.js",
+          "bytes": 5504,
+          "durationMs": 32.19999998807907
+        },
+        {
+          "path": "/assets/use-in-view-B5LGy31y.js",
+          "bytes": 856,
+          "durationMs": 32.19999998807907
+        },
+        {
+          "path": "/assets/SeatingFloorPlan-jcLRP23i.js",
+          "bytes": 20265,
+          "durationMs": 33.80000001192093
+        },
+        {
+          "path": "/assets/SeatingFloorPlan-C8rBCXbf.css",
+          "bytes": 16267,
+          "durationMs": 19.80000001192093
+        },
+        {
+          "path": "/assets/TemplateExperience-CdcXAu6q.css",
+          "bytes": 182257,
+          "durationMs": 23.5
+        },
+        {
+          "path": "/assets/weddingStorage-5kKkCd94.js",
+          "bytes": 3040,
+          "durationMs": 32.19999998807907
+        },
+        {
+          "path": "/assets/invitationApi-FkTburlh.js",
+          "bytes": 1582,
+          "durationMs": 32.59999996423721
+        },
+        {
+          "path": "/assets/mediaApi-CJj611lg.js",
+          "bytes": 2558,
+          "durationMs": 36.09999996423721
+        },
+        {
+          "path": "/assets/rsvpApi-D48RH6c5.js",
+          "bytes": 1337,
+          "durationMs": 36.5
+        },
+        {
+          "path": "/assets/galleryStorage-hdbuO4NG.js",
+          "bytes": 668,
+          "durationMs": 35.90000003576279
+        },
+        {
+          "path": "/assets/invitationDraftAdapter-No7EQ-e6.js",
+          "bytes": 9142,
+          "durationMs": 36.5
+        },
+        {
+          "path": "/assets/draftToTemplate-BRzWK6mc.js",
+          "bytes": 9495,
+          "durationMs": 37.5
+        },
+        {
+          "path": "/assets/useWeddingStore-CB1dI8J4.js",
+          "bytes": 894,
+          "durationMs": 36.39999997615814
+        },
+        {
+          "path": "/assets/InvitationPages-CyFdEHSW.css",
+          "bytes": 30207,
+          "durationMs": 23.19999998807907
+        },
+        {
+          "path": "/assets/ChatBot-DlmSiTRG.js",
+          "bytes": 7889,
+          "durationMs": 37.10000002384186
+        },
+        {
+          "path": "/assets/ChatBot-BEe5qxCi.css",
+          "bytes": 3744,
+          "durationMs": 20.69999998807907
+        },
+        {
+          "path": "/css2",
+          "bytes": 0,
+          "durationMs": 7.699999988079071
+        },
+        {
+          "path": "/css2",
+          "bytes": 0,
+          "durationMs": 7.899999976158142
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 116,
+          "durationMs": 5.199999988079071
+        },
+        {
+          "path": "/css2",
+          "bytes": 0,
+          "durationMs": 4.800000011920929
+        },
+        {
+          "path": "/assets/logo-HJEElCDm.png",
+          "bytes": 384504,
+          "durationMs": 5
+        },
+        {
+          "path": "/api/v1/public/invitations/performance-fixture",
+          "bytes": 371,
+          "durationMs": 3.5
+        },
+        {
+          "path": "/api/v1/public/invitations/performance-fixture/media",
+          "bytes": 44,
+          "durationMs": 3.700000047683716
+        },
+        {
+          "path": "/assets/SilkHeritageLayout-CzuejiTI.js",
+          "bytes": 23653,
+          "durationMs": 4.5
+        },
+        {
+          "path": "/assets/SilkHeritageLayout-DeLoFewM.css",
+          "bytes": 25312,
+          "durationMs": 4.599999964237213
+        },
+        {
+          "path": "/templates/silk-heritage/cover.svg",
+          "bytes": 1066,
+          "durationMs": 3.099999964237213
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "durationMs": 36.5
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "durationMs": 37.10000002384186
+        }
+      ],
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "run": 1,
+      "errors": []
+    },
+    {
+      "lcp": 764,
+      "cls": 0.0027847129473328345,
+      "longTasks": 0,
+      "navigationMs": 57.19999998807907,
+      "resources": [
+        {
+          "path": "/js/telegram-web-app.js",
+          "bytes": 0,
+          "durationMs": 5.5
+        },
+        {
+          "path": "/assets/index-BZ0f0nvE.js",
+          "bytes": 423858,
+          "durationMs": 19.900000035762787
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 8901,
+          "durationMs": 10.300000011920929
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "durationMs": 9.699999988079071
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 3100,
+          "durationMs": 11
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 54180,
+          "durationMs": 13.099999964237213
+        },
+        {
+          "path": "/assets/index-4qYAKNCO.css",
+          "bytes": 151272,
+          "durationMs": 12.800000011920929
+        },
+        {
+          "path": "/assets/SiteAnimations-BtFGTWaV.js",
+          "bytes": 3455,
+          "durationMs": 17.19999998807907
+        },
+        {
+          "path": "/assets/proxy-CKUgvGHl.js",
+          "bytes": 127460,
+          "durationMs": 28
+        },
+        {
+          "path": "/assets/logo-CnrSq6bR.js",
+          "bytes": 49,
+          "durationMs": 23.5
+        },
+        {
+          "path": "/assets/SiteAnimations-DnKXCQkx.css",
+          "bytes": 2577,
+          "durationMs": 25.30000001192093
+        },
+        {
+          "path": "/assets/PublicInvitationPage-Db7wmkf1.js",
+          "bytes": 20687,
+          "durationMs": 25.5
+        },
+        {
+          "path": "/assets/TemplateExperience-BEmcj3Br.js",
+          "bytes": 138936,
+          "durationMs": 28.19999998807907
+        },
+        {
+          "path": "/assets/calendar-CHV7X8-b.js",
+          "bytes": 295,
+          "durationMs": 24
+        },
+        {
+          "path": "/assets/khmer-celestial-B-1vrurs.js",
+          "bytes": 23984,
+          "durationMs": 26.900000035762787
+        },
+        {
+          "path": "/assets/khmer-celestial-ByXmsOKT.css",
+          "bytes": 40712,
+          "durationMs": 26.5
+        },
+        {
+          "path": "/assets/circle-check-BYAeGLgB.js",
+          "bytes": 250,
+          "durationMs": 33.39999997615814
+        },
+        {
+          "path": "/assets/clock-CtOF574V.js",
+          "bytes": 209,
+          "durationMs": 35.299999952316284
+        },
+        {
+          "path": "/assets/mail-CyiK-806.js",
+          "bytes": 253,
+          "durationMs": 35.69999998807907
+        },
+        {
+          "path": "/assets/sparkles-D4u1jxD4.js",
+          "bytes": 552,
+          "durationMs": 38.30000001192093
+        },
+        {
+          "path": "/assets/rotate-ccw-BSUgv9bz.js",
+          "bytes": 240,
+          "durationMs": 38.89999997615814
+        },
+        {
+          "path": "/assets/lib-S-OCrmWQ.js",
+          "bytes": 23926,
+          "durationMs": 38.90000003576279
+        },
+        {
+          "path": "/assets/TimePicker-WdylPF6N.css",
+          "bytes": 5265,
+          "durationMs": 29.69999998807907
+        },
+        {
+          "path": "/assets/TimePicker-Dl-JTwja.js",
+          "bytes": 7249,
+          "durationMs": 39.69999998807907
+        },
+        {
+          "path": "/assets/TemplateImage-bCmXREGx.js",
+          "bytes": 567,
+          "durationMs": 39.39999997615814
+        },
+        {
+          "path": "/assets/openingConfig-C4xyyN7b.js",
+          "bytes": 2097,
+          "durationMs": 40.299999952316284
+        },
+        {
+          "path": "/assets/TemplateGift-hesgfDbw.js",
+          "bytes": 5504,
+          "durationMs": 44.5
+        },
+        {
+          "path": "/assets/use-in-view-B5LGy31y.js",
+          "bytes": 856,
+          "durationMs": 44.10000002384186
+        },
+        {
+          "path": "/assets/SeatingFloorPlan-jcLRP23i.js",
+          "bytes": 20265,
+          "durationMs": 48.39999997615814
+        },
+        {
+          "path": "/assets/SeatingFloorPlan-C8rBCXbf.css",
+          "bytes": 16267,
+          "durationMs": 29.30000001192093
+        },
+        {
+          "path": "/assets/TemplateExperience-CdcXAu6q.css",
+          "bytes": 182257,
+          "durationMs": 31.19999998807907
+        },
+        {
+          "path": "/assets/weddingStorage-5kKkCd94.js",
+          "bytes": 3040,
+          "durationMs": 44.69999998807907
+        },
+        {
+          "path": "/assets/invitationApi-FkTburlh.js",
+          "bytes": 1582,
+          "durationMs": 45.19999998807907
+        },
+        {
+          "path": "/assets/rsvpApi-D48RH6c5.js",
+          "bytes": 1337,
+          "durationMs": 45.40000003576279
+        },
+        {
+          "path": "/assets/galleryStorage-hdbuO4NG.js",
+          "bytes": 668,
+          "durationMs": 50.700000047683716
+        },
+        {
+          "path": "/assets/mediaApi-CJj611lg.js",
+          "bytes": 2558,
+          "durationMs": 52.30000001192093
+        },
+        {
+          "path": "/assets/invitationDraftAdapter-No7EQ-e6.js",
+          "bytes": 9142,
+          "durationMs": 52
+        },
+        {
+          "path": "/assets/draftToTemplate-BRzWK6mc.js",
+          "bytes": 9495,
+          "durationMs": 52
+        },
+        {
+          "path": "/assets/useWeddingStore-CB1dI8J4.js",
+          "bytes": 894,
+          "durationMs": 51.5
+        },
+        {
+          "path": "/assets/InvitationPages-CyFdEHSW.css",
+          "bytes": 30207,
+          "durationMs": 32
+        },
+        {
+          "path": "/assets/ChatBot-DlmSiTRG.js",
+          "bytes": 7889,
+          "durationMs": 50.10000002384186
+        },
+        {
+          "path": "/assets/ChatBot-BEe5qxCi.css",
+          "bytes": 3744,
+          "durationMs": 29.099999964237213
+        },
+        {
+          "path": "/css2",
+          "bytes": 0,
+          "durationMs": 8.699999988079071
+        },
+        {
+          "path": "/css2",
+          "bytes": 0,
+          "durationMs": 9.700000047683716
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 116,
+          "durationMs": 11.300000011920929
+        },
+        {
+          "path": "/css2",
+          "bytes": 0,
+          "durationMs": 5
+        },
+        {
+          "path": "/assets/logo-HJEElCDm.png",
+          "bytes": 384504,
+          "durationMs": 11.300000011920929
+        },
+        {
+          "path": "/api/v1/public/invitations/performance-fixture",
+          "bytes": 371,
+          "durationMs": 3.100000023841858
+        },
+        {
+          "path": "/api/v1/public/invitations/performance-fixture/media",
+          "bytes": 44,
+          "durationMs": 3.299999952316284
+        },
+        {
+          "path": "/assets/SilkHeritageLayout-CzuejiTI.js",
+          "bytes": 23653,
+          "durationMs": 4.899999976158142
+        },
+        {
+          "path": "/assets/SilkHeritageLayout-DeLoFewM.css",
+          "bytes": 25312,
+          "durationMs": 4.699999988079071
+        },
+        {
+          "path": "/templates/silk-heritage/cover.svg",
+          "bytes": 1066,
+          "durationMs": 2.699999988079071
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "durationMs": 23.400000035762787
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "durationMs": 23.700000047683716
+        }
+      ],
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "run": 2,
+      "errors": []
+    },
+    {
+      "lcp": 432,
+      "cls": 0.0012774997454775376,
+      "longTasks": 0,
+      "navigationMs": 52.5,
+      "resources": [
+        {
+          "path": "/js/telegram-web-app.js",
+          "bytes": 0,
+          "durationMs": 5
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "durationMs": 9.800000011920929
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 8901,
+          "durationMs": 10.699999988079071
+        },
+        {
+          "path": "/assets/index-BZ0f0nvE.js",
+          "bytes": 423858,
+          "durationMs": 21.600000023841858
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 3100,
+          "durationMs": 10.5
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 54180,
+          "durationMs": 13.799999952316284
+        },
+        {
+          "path": "/assets/index-4qYAKNCO.css",
+          "bytes": 151272,
+          "durationMs": 13.5
+        },
+        {
+          "path": "/assets/SiteAnimations-BtFGTWaV.js",
+          "bytes": 3455,
+          "durationMs": 27.80000001192093
+        },
+        {
+          "path": "/assets/proxy-CKUgvGHl.js",
+          "bytes": 127460,
+          "durationMs": 39.40000003576279
+        },
+        {
+          "path": "/assets/logo-CnrSq6bR.js",
+          "bytes": 49,
+          "durationMs": 39.5
+        },
+        {
+          "path": "/assets/SiteAnimations-DnKXCQkx.css",
+          "bytes": 2577,
+          "durationMs": 43
+        },
+        {
+          "path": "/assets/PublicInvitationPage-Db7wmkf1.js",
+          "bytes": 20687,
+          "durationMs": 35.19999998807907
+        },
+        {
+          "path": "/assets/TemplateExperience-BEmcj3Br.js",
+          "bytes": 138936,
+          "durationMs": 41.5
+        },
+        {
+          "path": "/assets/calendar-CHV7X8-b.js",
+          "bytes": 295,
+          "durationMs": 35.5
+        },
+        {
+          "path": "/assets/khmer-celestial-B-1vrurs.js",
+          "bytes": 23984,
+          "durationMs": 46.10000002384186
+        },
+        {
+          "path": "/assets/khmer-celestial-ByXmsOKT.css",
+          "bytes": 40712,
+          "durationMs": 38
+        },
+        {
+          "path": "/assets/circle-check-BYAeGLgB.js",
+          "bytes": 250,
+          "durationMs": 45.69999998807907
+        },
+        {
+          "path": "/assets/clock-CtOF574V.js",
+          "bytes": 209,
+          "durationMs": 45.59999996423721
+        },
+        {
+          "path": "/assets/mail-CyiK-806.js",
+          "bytes": 253,
+          "durationMs": 47.200000047683716
+        },
+        {
+          "path": "/assets/rotate-ccw-BSUgv9bz.js",
+          "bytes": 240,
+          "durationMs": 47.60000002384186
+        },
+        {
+          "path": "/assets/sparkles-D4u1jxD4.js",
+          "bytes": 552,
+          "durationMs": 49.39999997615814
+        },
+        {
+          "path": "/assets/lib-S-OCrmWQ.js",
+          "bytes": 23926,
+          "durationMs": 50.5
+        },
+        {
+          "path": "/assets/TimePicker-WdylPF6N.css",
+          "bytes": 5265,
+          "durationMs": 37
+        },
+        {
+          "path": "/assets/TimePicker-Dl-JTwja.js",
+          "bytes": 7249,
+          "durationMs": 49.60000002384186
+        },
+        {
+          "path": "/assets/TemplateImage-bCmXREGx.js",
+          "bytes": 567,
+          "durationMs": 50
+        },
+        {
+          "path": "/assets/openingConfig-C4xyyN7b.js",
+          "bytes": 2097,
+          "durationMs": 50.69999998807907
+        },
+        {
+          "path": "/assets/TemplateGift-hesgfDbw.js",
+          "bytes": 5504,
+          "durationMs": 51.19999998807907
+        },
+        {
+          "path": "/assets/use-in-view-B5LGy31y.js",
+          "bytes": 856,
+          "durationMs": 54.5
+        },
+        {
+          "path": "/assets/SeatingFloorPlan-C8rBCXbf.css",
+          "bytes": 16267,
+          "durationMs": 38.200000047683716
+        },
+        {
+          "path": "/assets/SeatingFloorPlan-jcLRP23i.js",
+          "bytes": 20265,
+          "durationMs": 56.10000002384186
+        },
+        {
+          "path": "/assets/TemplateExperience-CdcXAu6q.css",
+          "bytes": 182257,
+          "durationMs": 44.60000002384186
+        },
+        {
+          "path": "/assets/weddingStorage-5kKkCd94.js",
+          "bytes": 3040,
+          "durationMs": 55.60000002384186
+        },
+        {
+          "path": "/assets/invitationApi-FkTburlh.js",
+          "bytes": 1582,
+          "durationMs": 55.90000003576279
+        },
+        {
+          "path": "/assets/rsvpApi-D48RH6c5.js",
+          "bytes": 1337,
+          "durationMs": 56.10000002384186
+        },
+        {
+          "path": "/assets/mediaApi-CJj611lg.js",
+          "bytes": 2558,
+          "durationMs": 57.5
+        },
+        {
+          "path": "/assets/galleryStorage-hdbuO4NG.js",
+          "bytes": 668,
+          "durationMs": 57.80000001192093
+        },
+        {
+          "path": "/assets/invitationDraftAdapter-No7EQ-e6.js",
+          "bytes": 9142,
+          "durationMs": 60.09999996423721
+        },
+        {
+          "path": "/assets/draftToTemplate-BRzWK6mc.js",
+          "bytes": 9495,
+          "durationMs": 59.10000002384186
+        },
+        {
+          "path": "/assets/useWeddingStore-CB1dI8J4.js",
+          "bytes": 894,
+          "durationMs": 58.69999998807907
+        },
+        {
+          "path": "/assets/InvitationPages-CyFdEHSW.css",
+          "bytes": 30207,
+          "durationMs": 40.60000002384186
+        },
+        {
+          "path": "/assets/ChatBot-DlmSiTRG.js",
+          "bytes": 7889,
+          "durationMs": 57.80000001192093
+        },
+        {
+          "path": "/assets/ChatBot-BEe5qxCi.css",
+          "bytes": 3744,
+          "durationMs": 39.59999996423721
+        },
+        {
+          "path": "/css2",
+          "bytes": 0,
+          "durationMs": 10.600000023841858
+        },
+        {
+          "path": "/css2",
+          "bytes": 0,
+          "durationMs": 10.699999988079071
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 116,
+          "durationMs": 5.900000035762787
+        },
+        {
+          "path": "/css2",
+          "bytes": 0,
+          "durationMs": 6.5
+        },
+        {
+          "path": "/assets/logo-HJEElCDm.png",
+          "bytes": 384504,
+          "durationMs": 10
+        },
+        {
+          "path": "/api/v1/public/invitations/performance-fixture",
+          "bytes": 371,
+          "durationMs": 5.100000023841858
+        },
+        {
+          "path": "/api/v1/public/invitations/performance-fixture/media",
+          "bytes": 44,
+          "durationMs": 5.199999988079071
+        },
+        {
+          "path": "/assets/SilkHeritageLayout-CzuejiTI.js",
+          "bytes": 23653,
+          "durationMs": 5.700000047683716
+        },
+        {
+          "path": "/assets/SilkHeritageLayout-DeLoFewM.css",
+          "bytes": 25312,
+          "durationMs": 5.600000023841858
+        },
+        {
+          "path": "/templates/silk-heritage/cover.svg",
+          "bytes": 1066,
+          "durationMs": 3.099999964237213
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "durationMs": 39.200000047683716
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "durationMs": 39.89999997615814
+        }
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "run": 0,
+      "errors": []
+    },
+    {
+      "lcp": 488,
+      "cls": 0.0014232302651320302,
+      "longTasks": 0,
+      "navigationMs": 70.39999997615814,
+      "resources": [
+        {
+          "path": "/js/telegram-web-app.js",
+          "bytes": 0,
+          "durationMs": 6.300000011920929
+        },
+        {
+          "path": "/assets/index-BZ0f0nvE.js",
+          "bytes": 423858,
+          "durationMs": 26.5
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 8901,
+          "durationMs": 11.899999976158142
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "durationMs": 13.399999976158142
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 3100,
+          "durationMs": 14.5
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 54180,
+          "durationMs": 16.19999998807907
+        },
+        {
+          "path": "/assets/index-4qYAKNCO.css",
+          "bytes": 151272,
+          "durationMs": 17.80000001192093
+        },
+        {
+          "path": "/assets/SiteAnimations-BtFGTWaV.js",
+          "bytes": 3455,
+          "durationMs": 17
+        },
+        {
+          "path": "/assets/proxy-CKUgvGHl.js",
+          "bytes": 127460,
+          "durationMs": 30.899999976158142
+        },
+        {
+          "path": "/assets/logo-CnrSq6bR.js",
+          "bytes": 49,
+          "durationMs": 30.5
+        },
+        {
+          "path": "/assets/SiteAnimations-DnKXCQkx.css",
+          "bytes": 2577,
+          "durationMs": 30.30000001192093
+        },
+        {
+          "path": "/assets/PublicInvitationPage-Db7wmkf1.js",
+          "bytes": 20687,
+          "durationMs": 27.599999964237213
+        },
+        {
+          "path": "/assets/TemplateExperience-BEmcj3Br.js",
+          "bytes": 138936,
+          "durationMs": 31.099999964237213
+        },
+        {
+          "path": "/assets/calendar-CHV7X8-b.js",
+          "bytes": 295,
+          "durationMs": 26
+        },
+        {
+          "path": "/assets/khmer-celestial-ByXmsOKT.css",
+          "bytes": 40712,
+          "durationMs": 33.30000001192093
+        },
+        {
+          "path": "/assets/khmer-celestial-B-1vrurs.js",
+          "bytes": 23984,
+          "durationMs": 39.60000002384186
+        },
+        {
+          "path": "/assets/circle-check-BYAeGLgB.js",
+          "bytes": 250,
+          "durationMs": 39.19999998807907
+        },
+        {
+          "path": "/assets/clock-CtOF574V.js",
+          "bytes": 209,
+          "durationMs": 41.69999998807907
+        },
+        {
+          "path": "/assets/mail-CyiK-806.js",
+          "bytes": 253,
+          "durationMs": 41.80000001192093
+        },
+        {
+          "path": "/assets/rotate-ccw-BSUgv9bz.js",
+          "bytes": 240,
+          "durationMs": 42
+        },
+        {
+          "path": "/assets/sparkles-D4u1jxD4.js",
+          "bytes": 552,
+          "durationMs": 43.5
+        },
+        {
+          "path": "/assets/TimePicker-Dl-JTwja.js",
+          "bytes": 7249,
+          "durationMs": 44
+        },
+        {
+          "path": "/assets/lib-S-OCrmWQ.js",
+          "bytes": 23926,
+          "durationMs": 44.30000001192093
+        },
+        {
+          "path": "/assets/TimePicker-WdylPF6N.css",
+          "bytes": 5265,
+          "durationMs": 29.69999998807907
+        },
+        {
+          "path": "/assets/TemplateImage-bCmXREGx.js",
+          "bytes": 567,
+          "durationMs": 45.80000001192093
+        },
+        {
+          "path": "/assets/openingConfig-C4xyyN7b.js",
+          "bytes": 2097,
+          "durationMs": 47.5
+        },
+        {
+          "path": "/assets/use-in-view-B5LGy31y.js",
+          "bytes": 856,
+          "durationMs": 47.5
+        },
+        {
+          "path": "/assets/TemplateGift-hesgfDbw.js",
+          "bytes": 5504,
+          "durationMs": 47.700000047683716
+        },
+        {
+          "path": "/assets/SeatingFloorPlan-jcLRP23i.js",
+          "bytes": 20265,
+          "durationMs": 48.80000001192093
+        },
+        {
+          "path": "/assets/SeatingFloorPlan-C8rBCXbf.css",
+          "bytes": 16267,
+          "durationMs": 30.599999964237213
+        },
+        {
+          "path": "/assets/TemplateExperience-CdcXAu6q.css",
+          "bytes": 182257,
+          "durationMs": 34.09999996423721
+        },
+        {
+          "path": "/assets/weddingStorage-5kKkCd94.js",
+          "bytes": 3040,
+          "durationMs": 48.09999996423721
+        },
+        {
+          "path": "/assets/invitationApi-FkTburlh.js",
+          "bytes": 1582,
+          "durationMs": 52
+        },
+        {
+          "path": "/assets/rsvpApi-D48RH6c5.js",
+          "bytes": 1337,
+          "durationMs": 52.09999996423721
+        },
+        {
+          "path": "/assets/mediaApi-CJj611lg.js",
+          "bytes": 2558,
+          "durationMs": 52.19999998807907
+        },
+        {
+          "path": "/assets/galleryStorage-hdbuO4NG.js",
+          "bytes": 668,
+          "durationMs": 50.30000001192093
+        },
+        {
+          "path": "/assets/invitationDraftAdapter-No7EQ-e6.js",
+          "bytes": 9142,
+          "durationMs": 52.39999997615814
+        },
+        {
+          "path": "/assets/useWeddingStore-CB1dI8J4.js",
+          "bytes": 894,
+          "durationMs": 54.299999952316284
+        },
+        {
+          "path": "/assets/draftToTemplate-BRzWK6mc.js",
+          "bytes": 9495,
+          "durationMs": 53.59999996423721
+        },
+        {
+          "path": "/assets/InvitationPages-CyFdEHSW.css",
+          "bytes": 30207,
+          "durationMs": 33
+        },
+        {
+          "path": "/assets/ChatBot-DlmSiTRG.js",
+          "bytes": 7889,
+          "durationMs": 53.40000003576279
+        },
+        {
+          "path": "/assets/ChatBot-BEe5qxCi.css",
+          "bytes": 3744,
+          "durationMs": 35.19999998807907
+        },
+        {
+          "path": "/css2",
+          "bytes": 0,
+          "durationMs": 12.300000011920929
+        },
+        {
+          "path": "/css2",
+          "bytes": 0,
+          "durationMs": 12.900000035762787
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 116,
+          "durationMs": 7.199999988079071
+        },
+        {
+          "path": "/css2",
+          "bytes": 0,
+          "durationMs": 5.300000011920929
+        },
+        {
+          "path": "/assets/logo-HJEElCDm.png",
+          "bytes": 384504,
+          "durationMs": 4.899999976158142
+        },
+        {
+          "path": "/api/v1/public/invitations/performance-fixture",
+          "bytes": 371,
+          "durationMs": 2.200000047683716
+        },
+        {
+          "path": "/api/v1/public/invitations/performance-fixture/media",
+          "bytes": 44,
+          "durationMs": 2.399999976158142
+        },
+        {
+          "path": "/assets/SilkHeritageLayout-CzuejiTI.js",
+          "bytes": 23653,
+          "durationMs": 6.600000023841858
+        },
+        {
+          "path": "/assets/SilkHeritageLayout-DeLoFewM.css",
+          "bytes": 25312,
+          "durationMs": 6.699999988079071
+        },
+        {
+          "path": "/templates/silk-heritage/cover.svg",
+          "bytes": 1066,
+          "durationMs": 3.800000011920929
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "durationMs": 26.5
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "durationMs": 27.19999998807907
+        }
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "run": 1,
+      "errors": []
+    },
+    {
+      "lcp": 568,
+      "cls": 0.0014232302651320302,
+      "longTasks": 0,
+      "navigationMs": 53.40000003576279,
+      "resources": [
+        {
+          "path": "/js/telegram-web-app.js",
+          "bytes": 0,
+          "durationMs": 4.899999976158142
+        },
+        {
+          "path": "/assets/jsx-runtime-D3jfb0Ew.js",
+          "bytes": 8901,
+          "durationMs": 9.399999976158142
+        },
+        {
+          "path": "/assets/index-BZ0f0nvE.js",
+          "bytes": 423858,
+          "durationMs": 19.69999998807907
+        },
+        {
+          "path": "/assets/react-1SDRmDo0.js",
+          "bytes": 651,
+          "durationMs": 9.199999988079071
+        },
+        {
+          "path": "/assets/createLucideIcon-q3MZMmnf.js",
+          "bytes": 3100,
+          "durationMs": 10.199999988079071
+        },
+        {
+          "path": "/assets/httpClient-oM6DHhph.js",
+          "bytes": 54180,
+          "durationMs": 11.5
+        },
+        {
+          "path": "/assets/index-4qYAKNCO.css",
+          "bytes": 151272,
+          "durationMs": 13.199999988079071
+        },
+        {
+          "path": "/assets/SiteAnimations-BtFGTWaV.js",
+          "bytes": 3455,
+          "durationMs": 18.100000023841858
+        },
+        {
+          "path": "/assets/proxy-CKUgvGHl.js",
+          "bytes": 127460,
+          "durationMs": 24.69999998807907
+        },
+        {
+          "path": "/assets/logo-CnrSq6bR.js",
+          "bytes": 49,
+          "durationMs": 25.900000035762787
+        },
+        {
+          "path": "/assets/SiteAnimations-DnKXCQkx.css",
+          "bytes": 2577,
+          "durationMs": 26.399999976158142
+        },
+        {
+          "path": "/assets/PublicInvitationPage-Db7wmkf1.js",
+          "bytes": 20687,
+          "durationMs": 23.19999998807907
+        },
+        {
+          "path": "/assets/TemplateExperience-BEmcj3Br.js",
+          "bytes": 138936,
+          "durationMs": 25.600000023841858
+        },
+        {
+          "path": "/assets/calendar-CHV7X8-b.js",
+          "bytes": 295,
+          "durationMs": 21.5
+        },
+        {
+          "path": "/assets/khmer-celestial-ByXmsOKT.css",
+          "bytes": 40712,
+          "durationMs": 28.69999998807907
+        },
+        {
+          "path": "/assets/khmer-celestial-B-1vrurs.js",
+          "bytes": 23984,
+          "durationMs": 37.19999998807907
+        },
+        {
+          "path": "/assets/circle-check-BYAeGLgB.js",
+          "bytes": 250,
+          "durationMs": 34.5
+        },
+        {
+          "path": "/assets/clock-CtOF574V.js",
+          "bytes": 209,
+          "durationMs": 34.5
+        },
+        {
+          "path": "/assets/mail-CyiK-806.js",
+          "bytes": 253,
+          "durationMs": 36.40000003576279
+        },
+        {
+          "path": "/assets/rotate-ccw-BSUgv9bz.js",
+          "bytes": 240,
+          "durationMs": 36.700000047683716
+        },
+        {
+          "path": "/assets/sparkles-D4u1jxD4.js",
+          "bytes": 552,
+          "durationMs": 37.60000002384186
+        },
+        {
+          "path": "/assets/lib-S-OCrmWQ.js",
+          "bytes": 23926,
+          "durationMs": 42.30000001192093
+        },
+        {
+          "path": "/assets/TimePicker-WdylPF6N.css",
+          "bytes": 5265,
+          "durationMs": 26.69999998807907
+        },
+        {
+          "path": "/assets/TimePicker-Dl-JTwja.js",
+          "bytes": 7249,
+          "durationMs": 40.89999997615814
+        },
+        {
+          "path": "/assets/openingConfig-C4xyyN7b.js",
+          "bytes": 2097,
+          "durationMs": 49.5
+        },
+        {
+          "path": "/assets/TemplateImage-bCmXREGx.js",
+          "bytes": 567,
+          "durationMs": 43.19999998807907
+        },
+        {
+          "path": "/assets/use-in-view-B5LGy31y.js",
+          "bytes": 856,
+          "durationMs": 50.30000001192093
+        },
+        {
+          "path": "/assets/TemplateGift-hesgfDbw.js",
+          "bytes": 5504,
+          "durationMs": 51.5
+        },
+        {
+          "path": "/assets/SeatingFloorPlan-jcLRP23i.js",
+          "bytes": 20265,
+          "durationMs": 53.10000002384186
+        },
+        {
+          "path": "/assets/SeatingFloorPlan-C8rBCXbf.css",
+          "bytes": 16267,
+          "durationMs": 26.399999976158142
+        },
+        {
+          "path": "/assets/TemplateExperience-CdcXAu6q.css",
+          "bytes": 182257,
+          "durationMs": 28.299999952316284
+        },
+        {
+          "path": "/assets/invitationApi-FkTburlh.js",
+          "bytes": 1582,
+          "durationMs": 51.30000001192093
+        },
+        {
+          "path": "/assets/weddingStorage-5kKkCd94.js",
+          "bytes": 3040,
+          "durationMs": 52.69999998807907
+        },
+        {
+          "path": "/assets/rsvpApi-D48RH6c5.js",
+          "bytes": 1337,
+          "durationMs": 55.09999996423721
+        },
+        {
+          "path": "/assets/mediaApi-CJj611lg.js",
+          "bytes": 2558,
+          "durationMs": 56.09999996423721
+        },
+        {
+          "path": "/assets/galleryStorage-hdbuO4NG.js",
+          "bytes": 668,
+          "durationMs": 55.200000047683716
+        },
+        {
+          "path": "/assets/invitationDraftAdapter-No7EQ-e6.js",
+          "bytes": 9142,
+          "durationMs": 57.39999997615814
+        },
+        {
+          "path": "/assets/draftToTemplate-BRzWK6mc.js",
+          "bytes": 9495,
+          "durationMs": 57.80000001192093
+        },
+        {
+          "path": "/assets/useWeddingStore-CB1dI8J4.js",
+          "bytes": 894,
+          "durationMs": 57.40000003576279
+        },
+        {
+          "path": "/assets/InvitationPages-CyFdEHSW.css",
+          "bytes": 30207,
+          "durationMs": 27.69999998807907
+        },
+        {
+          "path": "/assets/ChatBot-DlmSiTRG.js",
+          "bytes": 7889,
+          "durationMs": 58.200000047683716
+        },
+        {
+          "path": "/assets/ChatBot-BEe5qxCi.css",
+          "bytes": 3744,
+          "durationMs": 29.100000023841858
+        },
+        {
+          "path": "/css2",
+          "bytes": 0,
+          "durationMs": 10.199999988079071
+        },
+        {
+          "path": "/css2",
+          "bytes": 0,
+          "durationMs": 10.100000023841858
+        },
+        {
+          "path": "/api/v1/templates",
+          "bytes": 116,
+          "durationMs": 8.5
+        },
+        {
+          "path": "/css2",
+          "bytes": 0,
+          "durationMs": 7.399999976158142
+        },
+        {
+          "path": "/assets/logo-HJEElCDm.png",
+          "bytes": 384504,
+          "durationMs": 9
+        },
+        {
+          "path": "/api/v1/public/invitations/performance-fixture",
+          "bytes": 371,
+          "durationMs": 50.90000003576279
+        },
+        {
+          "path": "/api/v1/public/invitations/performance-fixture/media",
+          "bytes": 44,
+          "durationMs": 51.10000002384186
+        },
+        {
+          "path": "/assets/SilkHeritageLayout-CzuejiTI.js",
+          "bytes": 23653,
+          "durationMs": 45.799999952316284
+        },
+        {
+          "path": "/assets/SilkHeritageLayout-DeLoFewM.css",
+          "bytes": 25312,
+          "durationMs": 44.799999952316284
+        },
+        {
+          "path": "/templates/silk-heritage/cover.svg",
+          "bytes": 1066,
+          "durationMs": 18.19999998807907
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "bytes": 24320,
+          "durationMs": 28.80000001192093
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "bytes": 76848,
+          "durationMs": 29.400000035762787
+        }
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "run": 2,
+      "errors": []
+    }
+  ],
+  "assets": [
+    {
+      "file": "AiAssistantPage-CbaqwFwC.css",
+      "bytes": 3508,
+      "gzipBytes": 1041
+    },
+    {
+      "file": "AiAssistantPage-GR54wK3v.js",
+      "bytes": 13748,
+      "gzipBytes": 4818
+    },
+    {
+      "file": "arrow-left-hTN1VoH1.js",
+      "bytes": 205,
+      "gzipBytes": 188
+    },
+    {
+      "file": "arrow-right-6FyN3e7D.js",
+      "bytes": 205,
+      "gzipBytes": 185
+    },
+    {
+      "file": "AuthLayout-Dc-TYMae.css",
+      "bytes": 10469,
+      "gzipBytes": 2604
+    },
+    {
+      "file": "AuthLayout-DP29QHb4.js",
+      "bytes": 1425,
+      "gzipBytes": 590
+    },
+    {
+      "file": "background-Dt0NvFi2.js",
+      "bytes": 55,
+      "gzipBytes": 75
+    },
+    {
+      "file": "BlissEditorialLayout-C7aOJuW8.js",
+      "bytes": 15709,
+      "gzipBytes": 4455
+    },
+    {
+      "file": "BlissEditorialLayout-niKU5hMI.css",
+      "bytes": 5192,
+      "gzipBytes": 1539
+    },
+    {
+      "file": "BrowseTemplatesPage-CekeWpla.js",
+      "bytes": 156,
+      "gzipBytes": 143
+    },
+    {
+      "file": "budgetApi-CYCgDjdt.js",
+      "bytes": 1419,
+      "gzipBytes": 528
+    },
+    {
+      "file": "BudgetPage-alpvHvIn.js",
+      "bytes": 15579,
+      "gzipBytes": 4551
+    },
+    {
+      "file": "BudgetPage-CJWQtRWI.css",
+      "bytes": 2159,
+      "gzipBytes": 711
+    },
+    {
+      "file": "calendar-CHV7X8-b.js",
+      "bytes": 295,
+      "gzipBytes": 229
+    },
+    {
+      "file": "CanvaKhmerWeddingTemplate-B-yWSGM5.css",
+      "bytes": 23062,
+      "gzipBytes": 5827
+    },
+    {
+      "file": "CanvaKhmerWeddingTemplate-BP_ZsNKU.js",
+      "bytes": 23964,
+      "gzipBytes": 7442
+    },
+    {
+      "file": "ChangePasswordPage-joH_XdAt.js",
+      "bytes": 1965,
+      "gzipBytes": 841
+    },
+    {
+      "file": "ChatBot-BEe5qxCi.css",
+      "bytes": 3744,
+      "gzipBytes": 1161
+    },
+    {
+      "file": "ChatBot-DlmSiTRG.js",
+      "bytes": 7889,
+      "gzipBytes": 2671
+    },
+    {
+      "file": "circle-check-BYAeGLgB.js",
+      "bytes": 250,
+      "gzipBytes": 215
+    },
+    {
+      "file": "clock-CtOF574V.js",
+      "bytes": 209,
+      "gzipBytes": 190
+    },
+    {
+      "file": "ContactPage-BUUhbSgV.js",
+      "bytes": 9922,
+      "gzipBytes": 3647
+    },
+    {
+      "file": "createLucideIcon-q3MZMmnf.js",
+      "bytes": 3100,
+      "gzipBytes": 1488
+    },
+    {
+      "file": "currencyTotals-CpX6dh_3.js",
+      "bytes": 380,
+      "gzipBytes": 288
+    },
+    {
+      "file": "DashboardPage-BQV6s8RD.js",
+      "bytes": 25586,
+      "gzipBytes": 5471
+    },
+    {
+      "file": "DashboardPage-Dafa6Nxr.css",
+      "bytes": 9904,
+      "gzipBytes": 2260
+    },
+    {
+      "file": "DatePicker-7mPUsDoq.js",
+      "bytes": 5813,
+      "gzipBytes": 2313
+    },
+    {
+      "file": "DatePicker-CmASfBZO.css",
+      "bytes": 3396,
+      "gzipBytes": 1123
+    },
+    {
+      "file": "DigitalYesLayout-CfCCX-0s.js",
+      "bytes": 36238,
+      "gzipBytes": 9455
+    },
+    {
+      "file": "DigitalYesLayout-prUyICB7.css",
+      "bytes": 5915,
+      "gzipBytes": 1825
+    },
+    {
+      "file": "draftMediaStorage-DTubrHY0.js",
+      "bytes": 984,
+      "gzipBytes": 501
+    },
+    {
+      "file": "draftToTemplate-BRzWK6mc.js",
+      "bytes": 9495,
+      "gzipBytes": 2833
+    },
+    {
+      "file": "EmeraldLuxeLayout-9wGkRmvx.js",
+      "bytes": 17584,
+      "gzipBytes": 5189
+    },
+    {
+      "file": "EmeraldLuxeLayout-t-wl7iBo.css",
+      "bytes": 5179,
+      "gzipBytes": 1718
+    },
+    {
+      "file": "EnterprisePages-CaLKO3tt.css",
+      "bytes": 3237,
+      "gzipBytes": 1103
+    },
+    {
+      "file": "EventsFeature-D8zgd2Oz.css",
+      "bytes": 15491,
+      "gzipBytes": 3476
+    },
+    {
+      "file": "EventsPage-C1iF2l7F.js",
+      "bytes": 16649,
+      "gzipBytes": 5835
+    },
+    {
+      "file": "ExpensesPage-B5MicnRa.js",
+      "bytes": 23355,
+      "gzipBytes": 6610
+    },
+    {
+      "file": "ExpensesPage-G_pvR_co.css",
+      "bytes": 18141,
+      "gzipBytes": 4068
+    },
+    {
+      "file": "external-link-MAL7vJYj.js",
+      "bytes": 291,
+      "gzipBytes": 227
+    },
+    {
+      "file": "eye-Bxz0_nzC.js",
+      "bytes": 296,
+      "gzipBytes": 228
+    },
+    {
+      "file": "FinancialReport-B4kqwp-z.js",
+      "bytes": 21763,
+      "gzipBytes": 6974
+    },
+    {
+      "file": "FinancialReport-ZN5ujVH5.css",
+      "bytes": 15813,
+      "gzipBytes": 3181
+    },
+    {
+      "file": "ForgotPasswordPage-DW6iEvs_.js",
+      "bytes": 5052,
+      "gzipBytes": 1864
+    },
+    {
+      "file": "galleryStorage-hdbuO4NG.js",
+      "bytes": 668,
+      "gzipBytes": 358
+    },
+    {
+      "file": "gift-C3g_xBtV.js",
+      "bytes": 389,
+      "gzipBytes": 276
+    },
+    {
+      "file": "giftsApi-CEDLevTB.js",
+      "bytes": 368,
+      "gzipBytes": 228
+    },
+    {
+      "file": "guestApi-DLMzQeR2.js",
+      "bytes": 1991,
+      "gzipBytes": 672
+    },
+    {
+      "file": "GuestsPage-BKSuBKW4.css",
+      "bytes": 27436,
+      "gzipBytes": 5916
+    },
+    {
+      "file": "GuestsPage-DDrLSo5s.js",
+      "bytes": 68353,
+      "gzipBytes": 18527
+    },
+    {
+      "file": "hostPlanningStorage-CKPT5Ef4.js",
+      "bytes": 1768,
+      "gzipBytes": 684
+    },
+    {
+      "file": "HostShell-BvlBDL32.js",
+      "bytes": 27485,
+      "gzipBytes": 5606
+    },
+    {
+      "file": "HostShell-DUYuP00d.css",
+      "bytes": 858,
+      "gzipBytes": 433
+    },
+    {
+      "file": "HostTemplateDemoPage-2WdUtXjE.js",
+      "bytes": 156,
+      "gzipBytes": 146
+    },
+    {
+      "file": "httpClient-oM6DHhph.js",
+      "bytes": 54180,
+      "gzipBytes": 19973
+    },
+    {
+      "file": "index-4qYAKNCO.css",
+      "bytes": 151272,
+      "gzipBytes": 27371
+    },
+    {
+      "file": "index-BZ0f0nvE.js",
+      "bytes": 423858,
+      "gzipBytes": 122821
+    },
+    {
+      "file": "invitationApi-FkTburlh.js",
+      "bytes": 1582,
+      "gzipBytes": 691
+    },
+    {
+      "file": "InvitationCheckInPage-CT2S1B2z.js",
+      "bytes": 173603,
+      "gzipBytes": 58690
+    },
+    {
+      "file": "InvitationCreatePage-BVMRBaGY.js",
+      "bytes": 25716,
+      "gzipBytes": 6647
+    },
+    {
+      "file": "InvitationCreatePage-DfKoFnW2.css",
+      "bytes": 14967,
+      "gzipBytes": 3442
+    },
+    {
+      "file": "InvitationDeliveryPage-BH3LzwRh.js",
+      "bytes": 7631,
+      "gzipBytes": 2287
+    },
+    {
+      "file": "invitationDraftAdapter-No7EQ-e6.js",
+      "bytes": 9142,
+      "gzipBytes": 2987
+    },
+    {
+      "file": "InvitationEditPage-CclyOI2c.css",
+      "bytes": 35881,
+      "gzipBytes": 6799
+    },
+    {
+      "file": "InvitationEditPage-CqOGDxds.js",
+      "bytes": 123565,
+      "gzipBytes": 29874
+    },
+    {
+      "file": "InvitationMediaPage-Dx4OytLT.js",
+      "bytes": 7152,
+      "gzipBytes": 2328
+    },
+    {
+      "file": "InvitationPages-CyFdEHSW.css",
+      "bytes": 30207,
+      "gzipBytes": 6194
+    },
+    {
+      "file": "InvitationPreviewPage-Dwnmt2rq.js",
+      "bytes": 5434,
+      "gzipBytes": 2201
+    },
+    {
+      "file": "InvitationScopedRedirect-NyusH5H4.js",
+      "bytes": 1021,
+      "gzipBytes": 641
+    },
+    {
+      "file": "jsx-runtime-D3jfb0Ew.js",
+      "bytes": 8901,
+      "gzipBytes": 3382
+    },
+    {
+      "file": "khmer-celestial-B-1vrurs.js",
+      "bytes": 23984,
+      "gzipBytes": 7426
+    },
+    {
+      "file": "khmer-celestial-ByXmsOKT.css",
+      "bytes": 40712,
+      "gzipBytes": 8872
+    },
+    {
+      "file": "KhmerCelestialLayout-C_AC50gs.js",
+      "bytes": 37752,
+      "gzipBytes": 12452
+    },
+    {
+      "file": "layers-CDzX37ft.js",
+      "bytes": 482,
+      "gzipBytes": 278
+    },
+    {
+      "file": "lib-S-OCrmWQ.js",
+      "bytes": 23926,
+      "gzipBytes": 8488
+    },
+    {
+      "file": "localDate-B9RESVsC.js",
+      "bytes": 146,
+      "gzipBytes": 129
+    },
+    {
+      "file": "LoginPage-3w6DDrEF.js",
+      "bytes": 3602,
+      "gzipBytes": 1471
+    },
+    {
+      "file": "logo-CnrSq6bR.js",
+      "bytes": 49,
+      "gzipBytes": 69
+    },
+    {
+      "file": "mail-CyiK-806.js",
+      "bytes": 253,
+      "gzipBytes": 224
+    },
+    {
+      "file": "mediaApi-CJj611lg.js",
+      "bytes": 2558,
+      "gzipBytes": 937
+    },
+    {
+      "file": "Modal-D30wvxe3.css",
+      "bytes": 2040,
+      "gzipBytes": 813
+    },
+    {
+      "file": "Modal-KHThlCTE.js",
+      "bytes": 3227,
+      "gzipBytes": 1350
+    },
+    {
+      "file": "music-BdDQxgGl.js",
+      "bytes": 259,
+      "gzipBytes": 209
+    },
+    {
+      "file": "notificationsApi-CCPR3eVN.js",
+      "bytes": 459,
+      "gzipBytes": 278
+    },
+    {
+      "file": "NotificationsPage-CHAlT3AJ.css",
+      "bytes": 2135,
+      "gzipBytes": 816
+    },
+    {
+      "file": "NotificationsPage-CiqsstEI.js",
+      "bytes": 4115,
+      "gzipBytes": 1652
+    },
+    {
+      "file": "openingConfig-C4xyyN7b.js",
+      "bytes": 2097,
+      "gzipBytes": 991
+    },
+    {
+      "file": "OrganizationDetailPage-XwAxhaap.js",
+      "bytes": 13204,
+      "gzipBytes": 3974
+    },
+    {
+      "file": "OrganizationPage-Bc9Y-NaS.css",
+      "bytes": 7848,
+      "gzipBytes": 1913
+    },
+    {
+      "file": "OrganizationPage-DADWU9IL.js",
+      "bytes": 6230,
+      "gzipBytes": 2099
+    },
+    {
+      "file": "OrganizationPage-ztTqBD3Y.js",
+      "bytes": 393,
+      "gzipBytes": 242
+    },
+    {
+      "file": "packagePresentation-BtnvzTlb.js",
+      "bytes": 1039,
+      "gzipBytes": 577
+    },
+    {
+      "file": "PaidTemplatesPage-DsBCbS2A.js",
+      "bytes": 8137,
+      "gzipBytes": 2469
+    },
+    {
+      "file": "PaymentCancelPage-DjGm1MkQ.js",
+      "bytes": 947,
+      "gzipBytes": 435
+    },
+    {
+      "file": "PaymentHistoryPage-CLuw9sIC.js",
+      "bytes": 2485,
+      "gzipBytes": 922
+    },
+    {
+      "file": "PaymentPages-DCVLLcPw.css",
+      "bytes": 23391,
+      "gzipBytes": 4754
+    },
+    {
+      "file": "PaymentReceiptPage-XZ72hiky.js",
+      "bytes": 2563,
+      "gzipBytes": 894
+    },
+    {
+      "file": "paymentService-ukJMISZh.js",
+      "bytes": 1007,
+      "gzipBytes": 352
+    },
+    {
+      "file": "paymentStatus-BxUf9ylN.js",
+      "bytes": 778,
+      "gzipBytes": 429
+    },
+    {
+      "file": "PaymentStatusPage-DGK0W-QH.js",
+      "bytes": 13113,
+      "gzipBytes": 4360
+    },
+    {
+      "file": "PaymentSuccessPage-qATomKKm.js",
+      "bytes": 1697,
+      "gzipBytes": 781
+    },
+    {
+      "file": "planningApi-VOvU4dI0.js",
+      "bytes": 770,
+      "gzipBytes": 291
+    },
+    {
+      "file": "PricingPage-2TFHtZE5.js",
+      "bytes": 12674,
+      "gzipBytes": 3951
+    },
+    {
+      "file": "ProfilePage-Bc-Oo5V6.js",
+      "bytes": 12257,
+      "gzipBytes": 3225
+    },
+    {
+      "file": "proxy-CKUgvGHl.js",
+      "bytes": 127460,
+      "gzipBytes": 41237
+    },
+    {
+      "file": "PublicInvitationPage-Db7wmkf1.js",
+      "bytes": 20687,
+      "gzipBytes": 6894
+    },
+    {
+      "file": "qr-code-C8YN7MO2.js",
+      "bytes": 690,
+      "gzipBytes": 334
+    },
+    {
+      "file": "QrPage-BNKtD63O.css",
+      "bytes": 1025,
+      "gzipBytes": 466
+    },
+    {
+      "file": "QrPage-C7-46Ue7.js",
+      "bytes": 3924,
+      "gzipBytes": 1712
+    },
+    {
+      "file": "react-1SDRmDo0.js",
+      "bytes": 651,
+      "gzipBytes": 399
+    },
+    {
+      "file": "RegisterPage-C6dB13fx.js",
+      "bytes": 6177,
+      "gzipBytes": 2207
+    },
+    {
+      "file": "reportsApi-BcLueQgY.js",
+      "bytes": 873,
+      "gzipBytes": 526
+    },
+    {
+      "file": "ResetPasswordPage-BnBsNR-1.js",
+      "bytes": 6800,
+      "gzipBytes": 2414
+    },
+    {
+      "file": "rotate-ccw-BSUgv9bz.js",
+      "bytes": 240,
+      "gzipBytes": 210
+    },
+    {
+      "file": "rotate-cw-D-SeaHYT.js",
+      "bytes": 241,
+      "gzipBytes": 212
+    },
+    {
+      "file": "rsvpApi-D48RH6c5.js",
+      "bytes": 1337,
+      "gzipBytes": 538
+    },
+    {
+      "file": "RsvpDashboardPage-DMdtfJvX.css",
+      "bytes": 7574,
+      "gzipBytes": 1915
+    },
+    {
+      "file": "RsvpDashboardPage-NxeARKi6.js",
+      "bytes": 14559,
+      "gzipBytes": 4118
+    },
+    {
+      "file": "search-CBncK8aW.js",
+      "bytes": 214,
+      "gzipBytes": 192
+    },
+    {
+      "file": "SeatingFloorPlan-C8rBCXbf.css",
+      "bytes": 16267,
+      "gzipBytes": 3721
+    },
+    {
+      "file": "SeatingFloorPlan-jcLRP23i.js",
+      "bytes": 20265,
+      "gzipBytes": 6386
+    },
+    {
+      "file": "SeatingPage-BpReS0SM.js",
+      "bytes": 17426,
+      "gzipBytes": 4934
+    },
+    {
+      "file": "SeatingPage-Cplehtyd.css",
+      "bytes": 8192,
+      "gzipBytes": 1977
+    },
+    {
+      "file": "SilkHeritageLayout-CzuejiTI.js",
+      "bytes": 23653,
+      "gzipBytes": 7661
+    },
+    {
+      "file": "SilkHeritageLayout-DeLoFewM.css",
+      "bytes": 25312,
+      "gzipBytes": 5281
+    },
+    {
+      "file": "SiteAnimations-BtFGTWaV.js",
+      "bytes": 3455,
+      "gzipBytes": 1505
+    },
+    {
+      "file": "SiteAnimations-DnKXCQkx.css",
+      "bytes": 2577,
+      "gzipBytes": 1106
+    },
+    {
+      "file": "SocialAuthButtons-BRe4GyE6.js",
+      "bytes": 13746,
+      "gzipBytes": 5520
+    },
+    {
+      "file": "sparkles-D4u1jxD4.js",
+      "bytes": 552,
+      "gzipBytes": 319
+    },
+    {
+      "file": "SubscriptionPackagesPage-C7b8Ns1W.css",
+      "bytes": 4239,
+      "gzipBytes": 1276
+    },
+    {
+      "file": "SubscriptionPackagesPage-PjLFVgIT.js",
+      "bytes": 25642,
+      "gzipBytes": 7761
+    },
+    {
+      "file": "TemplateBoilerplateLayout-D4gEbjbX.js",
+      "bytes": 13828,
+      "gzipBytes": 4279
+    },
+    {
+      "file": "TemplateBoilerplateLayout-KsL0tCMp.css",
+      "bytes": 4380,
+      "gzipBytes": 1441
+    },
+    {
+      "file": "TemplateCheckoutPage-DWWm7tLF.js",
+      "bytes": 11412,
+      "gzipBytes": 3633
+    },
+    {
+      "file": "TemplateDemoPage-BqN7AJUE.js",
+      "bytes": 151,
+      "gzipBytes": 144
+    },
+    {
+      "file": "TemplateExperience-BEmcj3Br.js",
+      "bytes": 138936,
+      "gzipBytes": 35254
+    },
+    {
+      "file": "TemplateExperience-CdcXAu6q.css",
+      "bytes": 182257,
+      "gzipBytes": 30813
+    },
+    {
+      "file": "TemplateGift-hesgfDbw.js",
+      "bytes": 5504,
+      "gzipBytes": 2635
+    },
+    {
+      "file": "TemplateImage-bCmXREGx.js",
+      "bytes": 567,
+      "gzipBytes": 407
+    },
+    {
+      "file": "templates-BAa7_sk_.js",
+      "bytes": 11383,
+      "gzipBytes": 4075
+    },
+    {
+      "file": "templates-CFCVfUoY.css",
+      "bytes": 7049,
+      "gzipBytes": 2029
+    },
+    {
+      "file": "TemplatesFeature-8SM3NYAZ.js",
+      "bytes": 147,
+      "gzipBytes": 136
+    },
+    {
+      "file": "TemplatesPage-CpjI_-ml.js",
+      "bytes": 158,
+      "gzipBytes": 153
+    },
+    {
+      "file": "TimePicker-Dl-JTwja.js",
+      "bytes": 7249,
+      "gzipBytes": 2241
+    },
+    {
+      "file": "TimePicker-WdylPF6N.css",
+      "bytes": 5265,
+      "gzipBytes": 1504
+    },
+    {
+      "file": "toast-BNSoQ1dn.js",
+      "bytes": 292,
+      "gzipBytes": 206
+    },
+    {
+      "file": "ui-CFSZmd0R.js",
+      "bytes": 6920,
+      "gzipBytes": 2251
+    },
+    {
+      "file": "ui-DMSoRkEV.css",
+      "bytes": 10943,
+      "gzipBytes": 2530
+    },
+    {
+      "file": "use-in-view-B5LGy31y.js",
+      "bytes": 856,
+      "gzipBytes": 494
+    },
+    {
+      "file": "useBackendMessages-6-Ilq5Gf.js",
+      "bytes": 57497,
+      "gzipBytes": 14847
+    },
+    {
+      "file": "useClickOutside-CNvDkIFz.js",
+      "bytes": 287,
+      "gzipBytes": 212
+    },
+    {
+      "file": "users-BuT8YFfQ.js",
+      "bytes": 346,
+      "gzipBytes": 248
+    },
+    {
+      "file": "useT-C4q6Mx1Q.js",
+      "bytes": 399,
+      "gzipBytes": 296
+    },
+    {
+      "file": "useWeddingStore-CB1dI8J4.js",
+      "bytes": 894,
+      "gzipBytes": 404
+    },
+    {
+      "file": "VenuesPage-CaesulIg.js",
+      "bytes": 18166,
+      "gzipBytes": 4952
+    },
+    {
+      "file": "WeddingGiftPage-Bkw3xYGa.css",
+      "bytes": 13592,
+      "gzipBytes": 3187
+    },
+    {
+      "file": "WeddingGiftPage-Bp_3xEMe.js",
+      "bytes": 17406,
+      "gzipBytes": 5605
+    },
+    {
+      "file": "WeddingPreviewPage-B7_cT9_p.js",
+      "bytes": 2540,
+      "gzipBytes": 1296
+    },
+    {
+      "file": "WeddingSite-C0z-pJuy.js",
+      "bytes": 801,
+      "gzipBytes": 533
+    },
+    {
+      "file": "WeddingSite-CFf-xRSx.css",
+      "bytes": 60931,
+      "gzipBytes": 12525
+    },
+    {
+      "file": "weddingStorage-5kKkCd94.js",
+      "bytes": 3040,
+      "gzipBytes": 1454
+    },
+    {
+      "file": "WishesPage-BOASiNOX.css",
+      "bytes": 1273,
+      "gzipBytes": 535
+    },
+    {
+      "file": "WishesPage-DzmSSoPA.js",
+      "bytes": 3241,
+      "gzipBytes": 1340
+    },
+    {
+      "file": "WithJoyPortalLayout-BsQE5YfX.js",
+      "bytes": 22707,
+      "gzipBytes": 6272
+    },
+    {
+      "file": "WithJoyPortalLayout-dwHc30St.css",
+      "bytes": 7989,
+      "gzipBytes": 2178
+    },
+    {
+      "file": "zap-3pVFEERn.js",
+      "bytes": 927,
+      "gzipBytes": 488
+    }
+  ]
+}

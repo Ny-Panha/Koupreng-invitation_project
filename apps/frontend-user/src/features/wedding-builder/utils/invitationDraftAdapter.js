@@ -1,9 +1,9 @@
+import { KEEP_TEMPLATE_CODE } from "@/features/templates/data/templatesData";
 import {
-  KEEP_TEMPLATE_CODE,
   normalizeOpeningCopy,
   normalizeOpeningDesign,
   resolveOpeningVideo,
-} from "@/features/templates";
+} from "@/features/templates/experience/config/openingConfig";
 
 
 export function safeJson(value, fallback = {}) {

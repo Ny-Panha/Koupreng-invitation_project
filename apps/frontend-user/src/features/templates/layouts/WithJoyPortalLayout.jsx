@@ -50,7 +50,7 @@ export default function WithJoyPortalLayout({
     hall: "",
     address: "",
   };
-  const coverImage = effectiveContent.coverImage || "/facebook/all/03-card/cover-card.jpg";
+  const coverImage = effectiveContent.coverImage || "/images/wedding/couple-hero-meadow.webp";
   const musicUrl = effectiveContent.music?.url || effectiveContent.music || defaultMusicUrl;
 
   // Audio Control
@@ -135,14 +135,20 @@ export default function WithJoyPortalLayout({
   ];
 
   // Gallery items
-  const galleryImages = [
-    "/facebook/all/03-card/cover-card.jpg",
-    "/facebook/all/03-card/03-01.jpg",
-    "/facebook/all/03-card/03-02.jpg",
-    "/facebook/all/03-card/03-03.jpg",
-    "/facebook/all/03-card/03-04.jpg",
-    "/templates/canva-luxury/emerald-luxury.jpg",
+  const defaultGallery = [
+    "/images/wedding/couple-hero-meadow.webp",
+    "/images/wedding/couple-celebration-confetti.webp",
+    "/images/wedding/couple-studio-cake.webp",
+    "/images/wedding/couple-studio-bow.webp",
+    "/images/wedding/couple-banquet-night.webp",
+    "/images/wedding/couple-garden-rings.webp",
+    "/images/wedding/couple-bouquet-warmth.webp",
+    "/images/wedding/couple-walk-candid.webp",
+    "/images/wedding/couple-studio-embrace.webp",
   ];
+  const galleryImages = (effectiveContent.gallery && effectiveContent.gallery.length)
+    ? effectiveContent.gallery.map(img => typeof img === "string" ? img : img.src || img.url)
+    : defaultGallery;
 
   const isEnabled = (key) => content.enabledSections?.[key] !== false;
   const dressColors = Array.isArray(content.dressCode)

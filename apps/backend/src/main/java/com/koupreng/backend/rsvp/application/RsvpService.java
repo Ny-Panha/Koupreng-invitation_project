@@ -203,18 +203,15 @@ public class RsvpService {
 
     private RsvpSummaryResponse summaryForInvitation(Long invitationId) {
         long totalGuests = guestRepository.countByInvitationId(invitationId);
-        long attending = rsvpRepository.countByInvitationIdAndResponseStatus(invitationId, RsvpStatus.ATTENDING);
-        long notAttending = rsvpRepository.countByInvitationIdAndResponseStatus(invitationId, RsvpStatus.NOT_ATTENDING);
-        long maybe = rsvpRepository.countByInvitationIdAndResponseStatus(invitationId, RsvpStatus.MAYBE);
+        RsvpRepository.SummaryCounts counts = rsvpRepository.summarizeByInvitationId(invitationId);
         long pending = rsvpRepository.countPendingGuests(invitationId);
-        long totalAttendeeCount = rsvpRepository.sumAttendeeCountByInvitationIdAndStatus(invitationId, RsvpStatus.ATTENDING);
         return RsvpSummaryResponse.builder()
                 .totalGuests(totalGuests)
-                .attending(attending)
-                .notAttending(notAttending)
-                .maybe(maybe)
+                .attending(counts.getAttending())
+                .notAttending(counts.getNotAttending())
+                .maybe(counts.getMaybe())
                 .pending(pending)
-                .totalAttendeeCount(totalAttendeeCount)
+                .totalAttendeeCount(counts.getTotalAttendeeCount())
                 .build();
     }
 
