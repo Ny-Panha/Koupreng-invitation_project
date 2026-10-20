@@ -424,10 +424,15 @@ public class InvitationService {
 
     @Transactional(readOnly = true)
     public UserInvitation requirePublicInvitationForView(String slug, String inviteToken) {
+        return requirePublicInvitationForView(slug, inviteToken, null);
+    }
+
+    @Transactional(readOnly = true)
+    public UserInvitation requirePublicInvitationForView(String slug, String inviteToken, String accessToken) {
         UserInvitation invitation = findPublicInvitationEntity(slug);
 
         requirePubliclyVisibleByModeration(invitation);
-        requirePublicInvitationAccess(invitation, null, inviteToken);
+        requirePublicInvitationAccess(invitation, accessToken, inviteToken);
         return invitation;
     }
 
