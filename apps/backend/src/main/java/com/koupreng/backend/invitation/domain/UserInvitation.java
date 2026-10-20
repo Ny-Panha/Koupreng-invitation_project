@@ -18,6 +18,9 @@ public class UserInvitation {
     @Column(name = "invitation_id")
     private Long id;
 
+    @Column(name = "client_request_id", length = 36, updatable = false)
+    private String clientRequestId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private AppUser user;

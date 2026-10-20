@@ -11,6 +11,11 @@ import java.time.LocalTime;
 public class InvitationRequest {
 
     private Long templateId;
+    @jakarta.validation.constraints.Pattern(regexp = "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}")
+    private String clientRequestId;
+
+    public String getClientRequestId() { return clientRequestId; }
+    public void setClientRequestId(String clientRequestId) { this.clientRequestId = clientRequestId; }
     private Long organizationId;
 
     @NotBlank(message = "Invitation title is required")

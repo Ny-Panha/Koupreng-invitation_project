@@ -34,6 +34,8 @@ public class PublicTemplateResponse {
     private BigDecimal checkoutAmount;
     private String checkoutCurrency;
     private String checkoutPolicy;
+    private java.util.List<String> supportedEventTypes;
+    private java.util.List<String> supportedLanguages;
 
     public static PublicTemplateResponse from(InvitationTemplate template) {
         var offer = com.koupreng.backend.payment.application.TemplateCheckoutPolicy.offer(template);
@@ -57,6 +59,8 @@ public class PublicTemplateResponse {
                 .checkoutAmount(offer.amount())
                 .checkoutCurrency(offer.currency())
                 .checkoutPolicy(offer.policy())
+                .supportedEventTypes(template.getSupportedEventTypes().stream().map(Enum::name).sorted().toList())
+                .supportedLanguages(template.getSupportedLanguages().stream().sorted().toList())
                 .build();
     }
 }

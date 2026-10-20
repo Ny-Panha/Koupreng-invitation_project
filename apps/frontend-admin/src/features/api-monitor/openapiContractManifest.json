@@ -980,6 +980,13 @@
     "isLegacy": false
   },
   {
+    "path": "/api/v1/admin/packages/{packageId}/toggle-visibility",
+    "method": "PATCH",
+    "tag": "Administration",
+    "summary": "Toggle Visibility",
+    "isLegacy": false
+  },
+  {
     "path": "/api/v1/admin/packages/{packageId}/deactivate",
     "method": "PATCH",
     "tag": "Administration",
@@ -1050,10 +1057,24 @@
     "isLegacy": false
   },
   {
+    "path": "/api/v1/templates/recommendations",
+    "method": "GET",
+    "tag": "Templates",
+    "summary": "Recommendations",
+    "isLegacy": false
+  },
+  {
     "path": "/api/v1/template-payments/{orderCode}",
     "method": "GET",
     "tag": "Payments",
     "summary": "Get an owned template payment order",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/public/packages",
+    "method": "GET",
+    "tag": "Subscriptions",
+    "summary": "Public pricing package catalog without authentication",
     "isLegacy": false
   },
   {
@@ -1512,10 +1533,45 @@
     "isLegacy": false
   },
   {
+    "path": "/api/v1/admin/reports/payments/export",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "Export Payments Csv",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/reports/management/{report}",
+    "method": "GET",
+    "tag": "Management reporting",
+    "summary": "Filtered, sorted report page",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/reports/management/{report}/export/{format}",
+    "method": "GET",
+    "tag": "Management reporting",
+    "summary": "Complete filtered CSV, XLSX or print HTML",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/reports/management/definitions",
+    "method": "GET",
+    "tag": "Management reporting",
+    "summary": "Report schemas and KPI dictionary",
+    "isLegacy": false
+  },
+  {
     "path": "/api/v1/admin/reports/invitations",
     "method": "GET",
     "tag": "Administration",
-    "summary": "Invitations Report",
+    "summary": "Invitation report",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/admin/reports/invitations/export",
+    "method": "GET",
+    "tag": "Administration",
+    "summary": "Export Invitations Csv",
     "isLegacy": false
   },
   {

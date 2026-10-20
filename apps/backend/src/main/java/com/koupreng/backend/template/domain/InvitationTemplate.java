@@ -5,6 +5,9 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Locale;
+import java.util.Set;
+import java.util.HashSet;
+import com.koupreng.backend.invitation.domain.EventType;
 
 @Data
 @Entity
@@ -20,6 +23,17 @@ public class InvitationTemplate {
 
     @Column(nullable = false, unique = true, length = 120)
     private String code;
+
+    @ElementCollection
+    @CollectionTable(name = "template_event_types", joinColumns = @JoinColumn(name = "template_id"))
+    @Column(name = "event_type", nullable = false, length = 50)
+    @Enumerated(EnumType.STRING)
+    private Set<EventType> supportedEventTypes = new HashSet<>();
+
+    @ElementCollection
+    @CollectionTable(name = "template_languages", joinColumns = @JoinColumn(name = "template_id"))
+    @Column(name = "language_mode", nullable = false, length = 20)
+    private Set<String> supportedLanguages = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
     @Column(length = 50)

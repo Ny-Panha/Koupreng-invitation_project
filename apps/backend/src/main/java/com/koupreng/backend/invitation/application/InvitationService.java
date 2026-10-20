@@ -63,6 +63,8 @@ import java.util.UUID;
 
 @Service
 public class InvitationService {
+    @jakarta.persistence.PersistenceContext
+    private jakarta.persistence.EntityManager entityManager;
 
     private final UserInvitationRepository invitationRepository;
     private final InvitationTemplateRepository templateRepository;
@@ -202,10 +204,22 @@ public class InvitationService {
     @Transactional(isolation = org.springframework.transaction.annotation.Isolation.READ_COMMITTED)
     public InvitationResponse create(Authentication authentication, InvitationRequest request) {
         AppUser user = currentUserService.currentUser(authentication);
+        if (request.getClientRequestId() != null) {
+            // Serialize retryable creates for one owner across application instances.
+            entityManager.lock(user, jakarta.persistence.LockModeType.PESSIMISTIC_WRITE);
+            var existing = invitationRepository.findByUserIdAndClientRequestId(user.getId(), request.getClientRequestId());
+            if (existing.isPresent()) {
+                if (existing.get().isDeleted()) {
+                    throw new ApiException(HttpStatus.CONFLICT, "This draft was deleted; start a new event");
+                }
+                return toResponse(existing.get());
+            }
+        }
         if (entitlementService != null) {
             entitlementService.requireInvitationCreation(user);
         }
         UserInvitation invitation = new UserInvitation();
+        invitation.setClientRequestId(request.getClientRequestId());
         invitation.setUser(user);
         invitation.setStatus(InvitationStatus.DRAFT);
         applyRequest(invitation, request, user);
@@ -561,8 +575,25 @@ public class InvitationService {
     }
 
     private void applyRequest(UserInvitation invitation, InvitationRequest request, AppUser user) {
+        Long previousTemplateId = invitation.getTemplate() == null ? null : invitation.getTemplate().getId();
         invitation.setTitle(trimToNull(request.getTitle()));
         invitation.setTemplate(resolveTemplate(request.getTemplateId(), user));
+        var selectedTemplate = invitation.getTemplate();
+        if (selectedTemplate != null) {
+            if (!java.util.Objects.equals(previousTemplateId, selectedTemplate.getId())
+                    && !"ACTIVE".equalsIgnoreCase(selectedTemplate.getStatus())) {
+                throw new ApiException(HttpStatus.BAD_REQUEST, "Template is not active");
+            }
+            if (!selectedTemplate.getSupportedEventTypes().isEmpty() && request.getEventType() != null
+                    && !selectedTemplate.getSupportedEventTypes().contains(request.getEventType())) {
+                throw new ApiException(HttpStatus.BAD_REQUEST, "Template does not support this event type");
+            }
+            if (!selectedTemplate.getSupportedLanguages().isEmpty() && request.getLanguageMode() != null
+                    && !selectedTemplate.getSupportedLanguages().contains(
+                            "BILINGUAL".equalsIgnoreCase(request.getLanguageMode()) ? "BOTH" : request.getLanguageMode().toUpperCase(Locale.ROOT))) {
+                throw new ApiException(HttpStatus.BAD_REQUEST, "Template does not support this language");
+            }
+        }
         invitation.setOrganization(resolveOrganization(request.getOrganizationId(), user));
         invitation.setEventType(request.getEventType());
         invitation.setEventDate(request.getEventDate());

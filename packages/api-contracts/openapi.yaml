@@ -4932,6 +4932,63 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ApiResponsePublicTemplateResponse"
+  /api/v1/templates/recommendations:
+    get:
+      tags:
+      - Templates
+      summary: Recommendations
+      operationId: recommendations
+      parameters:
+      - name: eventType
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - WEDDING
+          - ENGAGEMENT
+          - BIRTHDAY
+          - ANNIVERSARY
+          - CORPORATE
+          - OTHER
+      - name: style
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - TRADITIONAL
+          - MODERN
+          - MINIMALIST
+          - FLORAL
+          - LUXURY
+          - OTHER
+      - name: language
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - KH
+          - EN
+          - BOTH
+        example: KH
+      - name: pricePreference
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - ALL
+          - FREE
+          - PREMIUM
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseListTemplateRecommendationResponse"
   /api/v1/template-payments/{orderCode}:
     get:
       tags:
@@ -7883,6 +7940,9 @@ components:
         templateId:
           type: integer
           format: int64
+        clientRequestId:
+          type: string
+          pattern: "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
         organizationId:
           type: integer
           format: int64
@@ -8250,9 +8310,9 @@ components:
         publishedAt:
           type: string
           format: date-time
-        draft:
-          type: boolean
         published:
+          type: boolean
+        draft:
           type: boolean
     UpdateProfileRequest:
       type: object
@@ -10230,6 +10290,14 @@ components:
           type: string
         checkoutPolicy:
           type: string
+        supportedEventTypes:
+          type: array
+          items:
+            type: string
+        supportedLanguages:
+          type: array
+          items:
+            type: string
     ApiResponsePublicTemplateResponse:
       type: object
       properties:
@@ -10242,6 +10310,30 @@ components:
         timestamp:
           type: string
           format: date-time
+    ApiResponseListTemplateRecommendationResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/TemplateRecommendationResponse"
+        timestamp:
+          type: string
+          format: date-time
+    TemplateRecommendationResponse:
+      type: object
+      properties:
+        template:
+          $ref: "#/components/schemas/PublicTemplateResponse"
+        score:
+          type: integer
+          format: int32
+        styleMatch:
+          type: boolean
     ApiResponseTemplatePaymentStatusResponse:
       type: object
       properties:

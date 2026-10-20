@@ -16,6 +16,7 @@ import java.util.Optional;
 import java.time.Instant;
 
 public interface UserInvitationRepository extends JpaRepository<UserInvitation, Long> {
+    Optional<UserInvitation> findByUserIdAndClientRequestId(Long userId, String clientRequestId);
 
     long countByModerationStatusAndDeletedFalse(InvitationModerationStatus status);
 

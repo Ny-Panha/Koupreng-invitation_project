@@ -12,6 +12,7 @@ public interface InvitationTemplateRepository extends JpaRepository<InvitationTe
 
     List<InvitationTemplate> findAllByCodeIgnoreCaseOrderByCreatedAtDesc(String code);
 
+    @org.springframework.data.jpa.repository.EntityGraph(attributePaths = {"supportedEventTypes", "supportedLanguages"})
     List<InvitationTemplate> findAllByStatusIgnoreCaseOrderBySortOrderAscCreatedAtDesc(String status);
 
     List<InvitationTemplate> findAllByCodeIgnoreCaseAndStatusIgnoreCaseOrderBySortOrderAscCreatedAtDesc(String code, String status);
