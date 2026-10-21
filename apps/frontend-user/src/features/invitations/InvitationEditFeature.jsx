@@ -28,11 +28,11 @@ export default function InvitationEditPage() {
             setInvitation(null);
             setTemplateError(false);
             // 0. Fetch dynamic catalog from backend to register any admin-created templates
+            let catalogItems;
             try {
-                const catalogItems = await templateCatalogService.list();
-                if (catalogItems && catalogItems.length > 0) {
-                    registerDynamicTemplates(catalogItems);
-                }
+                catalogItems = await templateCatalogService.list();
+                registerDynamicTemplates(catalogItems || []);
+                if (!catalogItems?.length) throw new Error("Template catalog unavailable");
             } catch {
                 if (active) { setTemplateError(true); setLoading(false); }
                 return;
@@ -145,8 +145,9 @@ export default function InvitationEditPage() {
                         mediaService.list(id).catch(() => null),
                     ]);
                     if (active && data) {
-                        const assigned = getTemplateById(data.templateCode || data.templateId);
-                        if (!assigned || !resolveTemplateRenderer(assigned).available) {
+                        const catalogRow = catalogItems.find(item => String(item.id) === String(data.templateId));
+                        const assigned = catalogRow && getTemplateById(catalogRow.code || catalogRow.id);
+                        if (!assigned || (data.templateCode && assigned.code !== data.templateCode) || !resolveTemplateRenderer(assigned).available) {
                             setTemplateError(true); setLoading(false); return;
                         }
                         setInvitation({

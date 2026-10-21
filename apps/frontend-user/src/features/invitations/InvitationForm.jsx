@@ -789,8 +789,8 @@ export default function InvitationForm({ invitation }) {
             .then((items) => {
                 if (active && items && items.length > 0) {
                     const activeTemplates = items.filter((item) => String(item.status || "ACTIVE").toUpperCase() === "ACTIVE");
-                    registerDynamicTemplates(activeTemplates);
-                    setCatalogTemplates(getAllTemplates());
+                    registerDynamicTemplates(items);
+                    setCatalogTemplates(getAllTemplates().filter(template => activeTemplates.some(item => String(item.id) === String(template.backendId))));
                     setCatalogVersion(getCatalogVersion());
                 }
             })
@@ -1412,6 +1412,7 @@ export default function InvitationForm({ invitation }) {
             let apiSyncFailed = false;
             const effectiveBackendId = savedBackendId.current;
             try {
+                if (!payload.templateId) throw new Error("The selected template is unavailable in the catalog. Choose an available template before saving online.");
                 if (effectiveBackendId) {
                     saved = await invitationService.update(effectiveBackendId, payload);
                 } else {

@@ -118,7 +118,8 @@ export function getDedicatedTemplateComponent(tpl, variant, useFallback = false)
 export function resolveTemplateRenderer(tpl, variant) {
   const component = getDedicatedTemplateComponent(tpl, variant);
   const id = tpl?.code || tpl?.slug || tpl?.templateCode || tpl?.variant || tpl?.id || variant;
-  const shared = ["garden-royal-khmer-wedding", "koupreng-demo-wedding", "event-essential"].includes(id);
+  const shared = ["garden-royal-khmer-wedding", "koupreng-demo-wedding", "event-essential"].includes(id)
+    || [tpl?.presetId, tpl?.design?.presetId].includes("GARDEN_ROYAL");
   return { id, component, available: Boolean(component || shared) };
 }
 

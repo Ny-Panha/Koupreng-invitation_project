@@ -69,6 +69,15 @@ test("invalid assigned template blocks editing rather than selecting a fallback"
   await page.goto("/app/events/101/invitation");
   await expect(page.getByRole("alert").filter({hasText:"Template unavailable"})).toBeVisible();
   await expect(page.locator(".invitation-studio")).toHaveCount(0);
+  await page.goto("/i/review-celestial");
+  await expect(page.getByRole("alert").filter({hasText:"Template unavailable"})).toBeVisible();
+});
+
+test("empty catalog blocks editing instead of reusing historical database IDs", async ({page})=>{
+  await installIdentityFixtures(page,{catalog:[]});
+  await page.goto("/app/events/101/invitation");
+  await expect(page.getByRole("alert").filter({hasText:"Template unavailable"})).toBeVisible();
+  await expect(page.locator(".invitation-studio")).toHaveCount(0);
 });
 
 test("missing template image reports a recovery state without substituting designs", async ({ page }) => {

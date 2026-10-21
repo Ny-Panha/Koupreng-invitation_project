@@ -681,6 +681,9 @@ export function resolveNumericTemplateId(id) {
         return Number(dynamic.backendId);
     }
 
+    // An authoritative catalog must never be overridden by historical seed IDs.
+    if (dynamicTemplates.length) return null;
+
     if (rawId === KEEP_TEMPLATE_CODE) return 2;
 
     const mappedEntry = Object.entries(DB_TEMPLATE_ID_MAP).find(([, code]) => code === rawId);

@@ -37,6 +37,7 @@ import { invitationService } from "./api/invitationApi";
 
 beforeEach(() => {
   localStorage.clear();
+  registerDynamicTemplates([]);
   templateCatalogService.list.mockReset();
   // Empty by default: InvitationForm skips registration when the list is empty,
   // so tests that call registerDynamicTemplates() directly stay in control.

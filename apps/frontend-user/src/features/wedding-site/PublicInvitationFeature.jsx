@@ -5,6 +5,7 @@ import { IoHomeOutline, IoLockClosedOutline, IoSearchOutline } from "react-icons
 import PublicRsvpForm from "../invitations/PublicRsvpForm";
 import "../invitations/InvitationPages.css";
 import TemplateExperience from "@/features/templates/experience/TemplateExperience";
+import { TemplateUnavailable } from "@/features/templates/experience/TemplateRenderGuard";
 import { registerDynamicTemplates } from "@/features/templates/data/templatesData";
 import { templateCatalogService } from "@/features/templates/api/templateCatalogApi";
 import { draftToTemplate } from "../wedding-builder/utils/draftToTemplate";
@@ -297,6 +298,7 @@ export default function PublicInvitationPage() {
         }
 
         const mergedPublicGarden = draftToTemplate(publicDraft, publicDraft.gallery);
+        if (!mergedPublicGarden) return <TemplateUnavailable />;
         const showRsvp = publicDraft.enabledSections?.rsvp !== false;
 
         if (mergedPublicGarden) {
