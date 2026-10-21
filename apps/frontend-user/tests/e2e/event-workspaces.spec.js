@@ -18,9 +18,11 @@ async function setup(page) {
   }, { fixtureToken, host });
   await page.route("**/api/**", async route => {
     const path = new URL(route.request().url()).pathname;
+    if (!path.startsWith("/api/")) return route.fallback();
     requests.push(path);
     const reply = (data, status = 200) => route.fulfill({ status, contentType: "application/json", body: JSON.stringify({ data }) });
     if (path.endsWith("/i18n/messages")) return reply({ messages: {} });
+    if (path.endsWith("/me")) return reply(host);
     if (path === "/api/v1/templates/recommendations") return reply(templates.map(template => ({ template, score: 100, styleMatch: true })));
     if (path === "/api/v1/templates") return reply(templates);
     if (path === "/api/v1/invitations/my") return reply([...events, ...created]);

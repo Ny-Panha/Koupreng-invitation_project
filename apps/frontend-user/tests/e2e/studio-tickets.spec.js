@@ -63,8 +63,9 @@ test("autosaves real editor payloads without navigation and restores edits with 
   await expect.poll(() => writes.filter(write => write.kind === "invitation").length).toBeGreaterThan(0);
   expect(writes.findLast(write => write.kind === "invitation").event.title).toBe("Saved studio title");
   await expect(page).toHaveURL(/\/app\/events\/101\/invitation$/);
-  await expect(page.locator(".studio-history")).toContainText("Saved to server");
+  await expect(page.locator(".studio-save-status")).toContainText("Saved to server");
   await title.fill("Another edit");
+  await page.getByLabel("More studio actions").click();
   await page.getByRole("button", { name: "Undo", exact: true }).click();
   await expect(title).toHaveValue("Saved studio title");
 });
@@ -93,15 +94,14 @@ test("failed saves retain changes and guard route links and browser back", async
   });
   await page.goto("/app/events/101");
   const menu = page.getByRole("button", { name: "Toggle modules menu" });
-  if (await menu.isVisible()) await menu.click();
+  if (page.viewportSize().width < 1100) await menu.click();
   await page.locator('.event-workspace-nav a[href$="/invitation"]').click();
   const title = page.locator('input[placeholder="សិរីមង្គលអាពាហ៍ពិពាហ៍"]');
   await title.fill("Keep this unsaved change");
-  await expect(page.locator(".studio-history")).toContainText("Save failed");
+  await expect(page.locator(".studio-save-status")).toContainText("Save failed");
   const dialogs = [];
   page.on("dialog", dialog => { dialogs.push(dialog.message()); return dialog.dismiss(); });
-  await page.getByRole("button", { name: "Toggle modules menu" }).click();
-  await page.locator('.event-workspace-nav a[href$="/guests"]').click();
+  await page.getByRole("button", { name: "Back to Event", exact: true }).click();
   await expect(page).toHaveURL(/\/invitation$/);
   await page.evaluate(() => window.history.back());
   await expect.poll(() => dialogs.length).toBe(2);
@@ -112,6 +112,8 @@ test("failed saves retain changes and guard route links and browser back", async
 test("appearance, schedule and media controls persist through the existing editor API", async ({ page }) => {
   const { writes } = await fixtures(page);
   await page.goto("/app/events/101/invitation");
+  if (page.viewportSize().width < 1024) await page.locator('.studio-section-select select').selectOption("appearance");
+  else await page.locator('.studio-section-list button').filter({ hasText: "Colors & typography" }).click();
   await page.getByLabel(/Palette/).selectOption("2");
   await page.getByLabel(/Khmer heading/).selectOption("Kantumruy Pro");
   await expect.poll(() => writes.filter(write => write.kind === "invitation").length).toBeGreaterThan(0);

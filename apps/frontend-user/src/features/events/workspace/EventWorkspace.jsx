@@ -70,7 +70,7 @@ const MODULE_GROUPS = [
   {
     key: "operations",
     labelKh: "ប្រតិបត្តិការ",
-    labelEn: "Operations",
+    labelEn: "Management",
     items: [
       { path: "delivery", labelKh: "ការផ្ញើ", labelEn: "Delivery", Icon: Send },
       { path: "gifts", labelKh: "ចំណងដៃ", labelEn: "Gifts", Icon: Gift },
@@ -194,7 +194,7 @@ function VerifiedWorkspace({ eventId }) {
     }}>
       <section className={`event-workspace${collapsed ? " is-collapsed" : ""}${focusedStudio ? " is-studio" : ""}`} aria-label={en ? "Event workspace" : "គ្រប់គ្រងកម្មវិធី"}>
         {/* Top Control Bar: Breadcrumb, Event Identity, Switcher */}
-        <header className="event-workspace-header">
+        {focusedStudio ? <div id="invitation-studio-toolbar" className="studio-toolbar-mount" /> : <header className="event-workspace-header">
           <div className="event-workspace-meta-col">
             <Link to={focusedStudio ? eventPath(eventId) : "/app/events"} className="event-back-link">
               <ArrowLeft size={16} aria-hidden="true" />
@@ -261,7 +261,7 @@ function VerifiedWorkspace({ eventId }) {
               {collapsed ? <PanelLeftOpen size={20} /> : <PanelLeftClose size={20} />}
             </button>}
           </div>
-        </header>
+        </header>}
 
         {/* Structured Categorized Module Navigation */}
         <nav
@@ -283,10 +283,12 @@ function VerifiedWorkspace({ eventId }) {
                     to={eventPath(eventId, path)}
                     className={({ isActive }) => `event-nav-tab ${isActive ? "active" : ""}`}
                     title={en ? labelEn : labelKh}
+                    aria-label={en ? labelEn : labelKh}
                     onClick={() => setMobileDrawerOpen(false)}
                   >
                     <Icon size={16} className="event-nav-tab-icon" aria-hidden="true" />
                     <span className="event-nav-tab-text">{en ? labelEn : labelKh}</span>
+                    <span className="event-nav-tooltip" aria-hidden="true">{en ? labelEn : labelKh}</span>
                   </NavLink>
                 ))}
               </div>

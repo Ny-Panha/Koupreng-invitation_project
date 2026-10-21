@@ -1,19 +1,27 @@
-.pe-editor-root.invitation-studio { --studio-gold: #956d2c; --studio-ink: #292c28; background: #f7f5f0; color: var(--studio-ink); border: 1px solid #e5e0d5; border-radius: 16px; overflow: clip; }
+.pe-editor-root.invitation-studio { --studio-gold: var(--ws-gold, #926c34); --studio-ink: var(--ws-ink, #292c28); width: 100%; max-width: none; min-height: 0; margin: 0; padding: 0; background: var(--ws-canvas, #fbf6ee); color: var(--studio-ink); border: 1px solid var(--ws-border, #e5e0d5); border-radius: 12px; overflow: clip; }
 .invitation-studio .pe-sub-header-banner { position: relative; top: auto; padding: 18px 20px; height: auto; flex-wrap: wrap; gap: 12px; background: #fffdf8; border-bottom: 1px solid #e5e0d5; }
 .invitation-studio .pe-sub-header-left { flex-wrap: wrap; gap: 10px; min-width: 0; }
 .invitation-studio .pe-template-tag { white-space: normal; }
 .invitation-studio .pe-sub-header-actions { flex-wrap: wrap; gap: 8px; }
-.invitation-studio .pe-workspace-grid { display: grid; grid-template-columns: 220px minmax(340px, .95fr) minmax(360px, 1.1fr) !important; height: min(920px, calc(100dvh - 250px)); min-height: 600px; padding: 0; gap: 0; }
+.invitation-studio .pe-workspace-grid { display: grid; width: 100%; grid-template-columns: 208px clamp(340px, 29vw, 440px) minmax(0, 1fr); height: calc(100dvh - 104px); min-height: 580px; padding: 0; gap: 0; }
 .invitation-studio .studio-heading { font-size: 20px; line-height: 1.7; font-weight: 700; margin: 0; }
-.studio-section-group + .studio-section-group { margin-top: 24px; }
+.studio-section-group + .studio-section-group { margin-top: 20px; }
 .studio-section-list button svg { flex-shrink: 0; }
+.studio-section-list a { display: flex; align-items: center; gap: 10px; padding: 10px; min-height: 44px; color: inherit; text-decoration: none; font-size: 14px; }
+.studio-section-list a:hover { background: var(--ws-gold-light); border-radius: 8px; }
+.invitation-studio .studio-appearance .pe-label { text-align: left; align-items: stretch; }
 .invitation-studio .pe-save-main-btn { background: var(--ws-gold, #926c34); border-radius: 10px; box-shadow: none; min-height: 44px; }
 .invitation-studio .pe-btn-switch-tpl { background: white; color: #76572d; border: 1px solid #d5c5ad; border-radius: 10px; box-shadow: none; min-height: 44px; }
 .invitation-studio :where(button,input,select,textarea):focus-visible { outline: 3px solid #0f766e; outline-offset: 2px; }
 .invitation-studio .pe-workspace-divider { display: none; }
-.invitation-studio .pe-editor-column { min-width: 0; height: 100%; border: 0; border-radius: 0; background: #fff; }
-.invitation-studio .pe-editor-scroll-body { padding: 20px; overflow-y: auto; }
-.invitation-studio .pe-section-card { margin: 0 0 20px; box-shadow: none; }
+.invitation-studio .pe-editor-column { display: flex; flex-direction: column; min-width: 0; height: 100%; border: 0; border-radius: 0; background: #fff; container-type: inline-size; }
+.invitation-studio .pe-editor-scroll-body { flex: 1; min-height: 0; max-height: none; padding: 24px; overflow-y: auto; scrollbar-width: thin; }
+.invitation-studio .pe-section-card { padding: 0; margin: 0 0 28px; border: 0; border-radius: 0; box-shadow: none; }
+.invitation-studio .pe-input { min-width: 0; width: 100%; min-height: 44px; font-size: 15px; }
+.invitation-studio .pe-label { font-size: 14px; line-height: 1.8; }
+.invitation-studio .pe-lang-pill-btn { min-height: 40px; }
+.invitation-studio .pe-lang-pill-btn.is-active { color: var(--ws-gold-dark, #76572d); }
+@container (max-width: 400px) { .pe-form-row, .pe-grid-2 { grid-template-columns: minmax(0, 1fr); } }
 .invitation-studio .pe-lang-sub-banner { padding: 12px; flex-wrap: wrap; height: auto; gap: 8px; }
 .invitation-studio .pe-lang-editing-indicator { display: none; }
 .studio-sections { padding: 20px 10px; border-right: 1px solid #e5e0d5; overflow-y: auto; background: #fbfaf6; }
@@ -22,12 +30,12 @@
 .studio-section-list button span { color: #847e70; font-size: 11px; }
 .studio-section-list button[aria-current] { color: #715019; background: #eee7d9; border-color: #dacfba; font-weight: 700; }
 .studio-section-select, .studio-mobile-tabs { display: none; }
-.invitation-studio .pe-preview-column { min-width: 0; height: 100%; margin: 0; border-radius: 0; padding: 16px; background: #eae8e1; overflow: auto; }
+.invitation-studio .pe-preview-column { position: relative; top: auto; width: 100%; min-width: 0; height: 100%; margin: 0; border-radius: 0; padding: 16px 20px; background: #eeece5; overflow: hidden; }
 .invitation-studio .pe-preview-top-bar { width: 100%; flex-shrink: 0; }
 .studio-preview-tools { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; padding: 10px 0; }
 .studio-preview-tools button, .studio-history button { min-height: 44px; padding: 6px 12px; border: 1px solid #d6d1c5; border-radius: 10px; background: #fffdf8; font-size: 13px; cursor: pointer; }
 .studio-preview-tools button[aria-pressed=true] { background: #292c28; color: white; }
-.studio-preview-viewport { overflow: auto; min-height: 400px; flex: 1; width: 100%; }
+.studio-preview-viewport { overflow: auto; min-height: 0; flex: 1; width: 100%; scrollbar-width: thin; }
 .invitation-studio .pe-canvas-wrapper iframe { width: 100%; height: 100%; }
 .studio-history { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 20px; background: #fffdf8; align-items: center; border-bottom: 1px solid #e5e0d5; font-size: 13px; line-height: 1.8; }
 .studio-history [role=status] { margin-inline-end: auto; }
@@ -47,12 +55,12 @@
 .invitation-studio .pe-preview-column:fullscreen { padding: 24px; display: flex; flex-direction: column; align-items: center; background: #eae8e1; }
 .invitation-studio .pe-preview-column:fullscreen .studio-preview-viewport { width: 100%; }
 @media (max-width: 1199px) {
-  .invitation-studio .pe-workspace-grid { grid-template-columns: 180px minmax(300px, 1fr) minmax(300px, 1fr) !important; }
+  .invitation-studio .pe-workspace-grid { grid-template-columns: 180px 340px minmax(0, 1fr); }
   .invitation-studio .pe-editor-scroll-body { padding: 12px; }
   .studio-section-list button { font-size: 14px; gap: 8px; }
 }
 @media (max-width: 1023px) {
-  .invitation-studio .pe-workspace-grid { grid-template-columns: minmax(0, 1fr) !important; height: auto; min-height: 0; }
+  .invitation-studio .pe-workspace-grid { grid-template-columns: minmax(0, 1fr); height: auto; min-height: 0; }
   .studio-section-list { display: none; }
   .studio-section-select { display: flex; flex-direction: column; gap: 6px; font-size: 13px; }
   .studio-section-select select { padding: 10px; border: 1px solid #d6d1c5; border-radius: 8px; background: white; min-height: 44px; }
@@ -64,9 +72,60 @@
   .invitation-studio .pe-editor-scroll-body { overflow: visible; }
   .invitation-studio[data-mobile-view=edit] .pe-preview-column { display: none; }
   .invitation-studio[data-mobile-view=preview] .pe-editor-column, .invitation-studio[data-mobile-view=preview] .studio-sections { display: none; }
-  .invitation-studio .pe-preview-column { display: flex; height: 850px; }
+  .invitation-studio .pe-preview-column { display: flex; height: min(960px, calc(100dvh - 180px)); min-height: 560px; padding: 12px; }
   .invitation-studio .pe-sub-header-banner { padding: 12px; }
   .invitation-studio .pe-sub-header-actions { width: 100%; }
   .invitation-studio .pe-btn-mobile-preview, .invitation-studio .pe-status-badge, .invitation-studio .pe-sub-header-label { display: none; }
+}
+.studio-toolbar-mount { position: relative; z-index: 20; }
+.studio-toolbar { display: flex; align-items: center; gap: 14px; min-height: 72px; padding: 8px 4px; color: var(--ws-ink, #292c28); }
+.studio-back, .studio-action, .studio-more summary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 8px 14px; border: 1px solid var(--ws-border-strong, #d5c5ad); background: white; border-radius: 9px; color: inherit; font: 600 14px/1.8 var(--font-sans, sans-serif); cursor: pointer; text-decoration: none; }
+.studio-back { flex-shrink: 0; padding: 10px; }
+.studio-document { min-width: 0; flex: 1; }
+.studio-document h1 { margin: 0; font: 700 18px/1.8 var(--font-sans, sans-serif); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.studio-template-button { display: inline-flex; gap: 6px; align-items: center; max-width: 100%; border: 0; padding: 0; background: transparent; color: var(--ws-gold-dark, #76572d); cursor: pointer; font: 500 13px/1.8 var(--font-sans, sans-serif); }
+.studio-toolbar .pe-template-tag { border: 0; border-radius: 0; padding: 0; background: none; color: inherit; font: inherit; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.studio-save-status { display: inline-flex; gap: 6px; align-items: center; flex-shrink: 0; font-size: 13px; color: var(--ws-muted, #59615c); }
+.studio-save-status[data-phase=saved] { color: var(--ws-teal, #0f766e); }
+.studio-save-status[data-phase=failed], .studio-save-status[data-phase=offline] { color: #a52838; }
+.studio-toolbar-actions { display: flex; align-items: center; gap: 8px; }
+.studio-toolbar .studio-action--save { min-width: 0; height: auto; min-height: 44px; padding: 8px 14px; color: white; background: var(--ws-gold, #926c34); border: 1px solid var(--ws-gold, #926c34); box-shadow: none; font: 600 14px/1.8 var(--font-sans, sans-serif); }
+.invitation-studio .pe-label-icon { color: var(--ws-gold-dark, #76572d); }
+.studio-action:disabled, .studio-more button:disabled { opacity: .45; cursor: default; }
+.studio-more { position: relative; }
+.studio-more summary { list-style: none; padding: 10px; }
+.studio-more summary::-webkit-details-marker { display: none; }
+.studio-more-panel { position: absolute; z-index: 40; top: calc(100% + 8px); right: 0; width: 256px; padding: 8px; border: 1px solid var(--ws-border, #e5e0d5); border-radius: 12px; background: #fff; box-shadow: var(--ws-shadow, 0 8px 24px #33221115); }
+.studio-more-panel button { width: 100%; display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 12px; border: 0; background: transparent; border-radius: 6px; color: inherit; text-align: left; font: inherit; cursor: pointer; }
+.studio-more-panel button:hover { background: var(--ws-surface-subtle, #f6f1e9); }
+.studio-more-panel label { display: grid; gap: 6px; padding: 10px; font-size: 13px; }
+.studio-more-panel select { width: 100%; }
+.studio-toolbar :focus-visible { outline: 3px solid var(--ws-teal, #0f766e); outline-offset: 2px; }
+.studio-save-error { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 12px 20px; background: #fff3ed; color: #a52838; font-size: 14px; }
+.studio-save-error button { min-height: 44px; padding: 8px 12px; border: 1px solid currentColor; border-radius: 8px; cursor: pointer; }
+.invitation-studio .pe-preview-top-bar { flex-direction: row; align-items: center; gap: 16px; margin: 0; }
+.invitation-studio .pe-preview-status-row { width: auto; flex: 1; }
+.invitation-studio .pe-preview-tag { display: none; }
+.invitation-studio .pe-sim-gate-switcher { width: auto; box-shadow: none; padding: 3px; border-radius: 10px; }
+.invitation-studio .pe-sim-gate-btn { min-height: 40px; padding: 8px 12px; font-size: 13px; }
+.invitation-studio .pe-sim-gate-btn.is-active { background: var(--ws-gold, #926c34); }
+.studio-preview-tools { width: 100%; justify-content: center; }
+.studio-preview-tools select { min-height: 40px; }
+.studio-device-caption { padding-bottom: 0; }
+.pe-mobile-preview-drawer-body .pe-preview-column { width: 100%; height: calc(100dvh - 160px); min-height: 560px; }
+@media (max-width: 767px) {
+  .studio-toolbar { flex-wrap: wrap; gap: 8px; padding: 8px 0; }
+  .studio-document { flex-basis: calc(100% - 58px); }
+  .studio-document h1 { font-size: 17px; }
+  .studio-save-status { flex: 1; font-size: 13px; }
+  .studio-toolbar-actions { gap: 4px; }
+  .studio-action { padding: 7px 10px; font-size: 13px; }
+  .studio-action svg + span { display: none; }
+  .invitation-studio .pe-preview-top-bar { flex-wrap: wrap; gap: 8px; }
+  .invitation-studio .pe-preview-status-row { flex-basis: 100%; }
+}
+@media (max-width: 430px) {
+  .studio-toolbar-actions { width: 100%; justify-content: flex-end; }
+  .studio-save-status { order: 3; flex-basis: 100%; white-space: nowrap; }
 }
 @media (prefers-reduced-motion: reduce) { .invitation-studio *, .invitation-studio *::before, .invitation-studio *::after { animation: none !important; transition: none !important; } }

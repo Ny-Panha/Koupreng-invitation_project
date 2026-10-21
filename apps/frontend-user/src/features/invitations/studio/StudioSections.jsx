@@ -1,11 +1,14 @@
-import { Palette, Users, Mail, Images, Timer, CalendarDays, MapPin, BookOpen, Shirt, CircleHelp, QrCode, Heart, Languages } from "lucide-react";
+import { Palette, Users, Mail, Images, Timer, CalendarDays, MapPin, BookOpen, Shirt, CircleHelp, QrCode, Heart, Languages, Music, Ticket, Eye } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useEventWorkspace } from "../../events/workspace/EventContext";
 
 const GROUPS = [
-  { labels: ["រចនា", "Design"], keys: ["cover", "couplePhoto", "gallery"], icons: [Palette, Images, Images] },
-  { labels: ["មាតិកា", "Content"], keys: ["family", "invitation", "schedule", "venue", "story", "closing"], icons: [Users, Mail, CalendarDays, MapPin, BookOpen, Heart] },
-  { labels: ["បទពិសោធន៍ភ្ញៀវ", "Guest experience"], keys: ["countdown", "dressCode", "party", "faq", "khqr", "languageMode"], icons: [Timer, Shirt, Users, CircleHelp, QrCode, Languages] },
+  { labels: ["មាតិកា", "Content"], keys: ["eventInfo", "family", "invitation", "schedule", "venue", "story", "closing"], icons: [CalendarDays, Users, Mail, CalendarDays, MapPin, BookOpen, Heart] },
+  { labels: ["រចនា", "Appearance"], keys: ["cover", "appearance", "couplePhoto", "gallery"], icons: [Palette, Palette, Images, Images] },
+  { labels: ["បទពិសោធន៍ភ្ញៀវ", "Experience"], keys: ["music", "countdown", "dressCode", "party", "faq", "khqr", "languageMode"], icons: [Music, Timer, Shirt, Users, CircleHelp, QrCode, Languages] },
 ];
 const STUDIO_SECTIONS = {
+  eventInfo: ["ព័ត៌មានកម្មវិធី", "Event information"], appearance: ["ពណ៌ និងអក្សរ", "Colors & typography"], music: ["តន្ត្រី", "Music"],
   cover: ["ក្រប និងរចនា", "Cover & design"], family: ["មាតាបិតា", "Families"],
   invitation: ["សារអញ្ជើញ", "Invitation message"], couplePhoto: ["រូបគូស្វាមីភរិយា", "Couple photos"],
   countdown: ["រាប់ថយក្រោយ", "Countdown"], schedule: ["កាលវិភាគ", "Schedule"],
@@ -17,6 +20,7 @@ const STUDIO_SECTIONS = {
 };
 
 export default function StudioSections({ sections, active, onChange, english }) {
+  const workspace = useEventWorkspace();
   const label = key => STUDIO_SECTIONS[key]?.[english ? 1 : 0] || key;
   return <nav className="studio-sections" aria-label={english ? "Invitation sections" : "ផ្នែកធៀបការ"}>
     <label className="studio-section-select">{english ? "Edit section" : "កែសម្រួលផ្នែក"}
@@ -32,6 +36,10 @@ export default function StudioSections({ sections, active, onChange, english }) 
             onClick={() => onChange(key)}><Icon size={18} aria-hidden="true" />{label(key)}</button>; })}
         </div>;
       })}
+      {workspace?.eventId && <div className="studio-section-group"><p>{english ? "Tickets" : "កាតអញ្ជើញ"}</p>
+        <Link to={`/app/events/${workspace.eventId}/tickets/design`}><Ticket size={18} aria-hidden="true" />{english ? "Ticket design" : "រចនាកាត"}</Link>
+        <Link to={`/app/events/${workspace.eventId}/guests`}><Eye size={18} aria-hidden="true" />{english ? "Guest tickets" : "កាតភ្ញៀវ"}</Link>
+      </div>}
     </div>
   </nav>;
 }

@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import StudioSections from "./studio/StudioSections";
+import StudioToolbar from "./studio/StudioToolbar";
+import { createPortal } from "react-dom";
 import StudioAppearance from "./studio/StudioAppearance";
 import { useStudioPersistence } from "./studio/useStudioPersistence";
 import { replaceMediaReferences, uploadInlineReferences } from "./studio/studioMedia";
 import "./studio/InvitationStudio.css";
-import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import {
     Music,
     Sparkles,
@@ -31,7 +33,6 @@ import {
     Zap,
     X,
     Search,
-    ArrowLeft,
     RotateCcw,
     AlertCircle,
 } from "lucide-react";
@@ -569,7 +570,6 @@ export default function InvitationForm({ invitation }) {
     const englishUI = uiLanguage === "en";
     const { user } = useAuth();
     const navigate = useNavigate();
-    const location = useLocation();
     const params = useParams();
     const [searchParams] = useSearchParams();
     const invitationId = invitation?.id || params.id;
@@ -765,13 +765,19 @@ export default function InvitationForm({ invitation }) {
         };
     });
 
-    const [selectedSection, setSelectedSection] = useState("cover");
+    const [selectedSection, setSelectedSection] = useState("eventInfo");
     const [mobileView, setMobileView] = useState("edit");
 
     // Mirrors the module-level catalog counter so the live preview recomputes
     // once the async catalog fetch registers the Admin-created templates.
     const [catalogVersion, setCatalogVersion] = useState(getCatalogVersion());
-    const flowConfig = useMemo(() => { void catalogVersion; return getTemplateFormFlow(getTemplateById(form.templateId) || form.templateId); }, [form.templateId, catalogVersion]);
+    const flowConfig = useMemo(() => {
+        void catalogVersion;
+        const template = getTemplateById(form.templateId);
+        const config = getTemplateFormFlow(template || form.templateId);
+        const appearance = ["khmer-celestial", "royal-khmer-wedding"].includes(template?.code || template?.id);
+        return { ...config, sectionOrder: ["eventInfo", ...config.sectionOrder.flatMap(key => key === "cover" && appearance ? [key, "appearance"] : [key]), "music"] };
+    }, [form.templateId, catalogVersion]);
     const activeSection = flowConfig.sectionOrder.includes(selectedSection) ? selectedSection : flowConfig.sectionOrder[0];
     const [catalogTemplates, setCatalogTemplates] = useState(() => getAllTemplates());
     const [templateSearchQuery, setTemplateSearchQuery] = useState("");
@@ -824,7 +830,6 @@ export default function InvitationForm({ invitation }) {
     const [isSaving, setIsSaving] = useState(false);
     const [isPublishing, setIsPublishing] = useState(false);
     const [published, setPublished] = useState(invitation?.status === "PUBLISHED");
-    const [isExpanded, setIsExpanded] = useState(false);
     const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
 
     const [isMobilePreviewOpen, setIsMobilePreviewOpen] = useState(false);
@@ -835,9 +840,6 @@ export default function InvitationForm({ invitation }) {
     const [pendingInvitation2File, setPendingInvitation2File] = useState(null);
     const [locationError, setLocationError] = useState("");
     const [isLocating, setIsLocating] = useState(false);
-    const [leftPercent, setLeftPercent] = useState(52);
-    const [isDragging, setIsDragging] = useState(false);
-    const containerRef = useRef(null);
     const savedBackendId = useRef(invitation?.backendInvitationId || (/^[1-9]\d*$/.test(String(invitationId)) ? invitationId : null));
 
     const handleChangeTemplate = async (template) => {
@@ -863,24 +865,7 @@ export default function InvitationForm({ invitation }) {
             ? "Change invitation template? Your event details and uploaded images will stay. Template-specific appearance and optional sections may change; unsupported customizations remain saved for recovery."
             : "ប្ដូរគំរូធៀប? ព័ត៌មានកម្មវិធី និងរូបភាពផ្ទាល់ខ្លួនត្រូវបានរក្សា។ រចនាបថ និងផ្នែកពិសេសមួយចំនួនអាចផ្លាស់ប្ដូរ។")) return;
         const preset = getTemplatePreset(template) || {};
-        const currentTpl = getTemplateById(form.templateId);
         const uploadedCoverUrl = form.uploadedCoverUrl || "";
-
-        const isPrevDefaultTitle = !form.title ||
-            form.title === "សួនរាជហង្សខ្មែរ" ||
-            form.title === "Garden Royal Khmer Wedding" ||
-            form.title === "គំរូធៀបការ" ||
-            form.title === "សិរីមង្គលអាពាហ៍ពិពាហ៍" ||
-            (currentTpl && (form.title === currentTpl.name || form.title === currentTpl.style || form.title === currentTpl.title));
-
-        const nextTitle = isPrevDefaultTitle
-            ? (template.name || template.style || preset.title || "សិរីមង្គលអាពាហ៍ពិពាហ៍")
-            : form.title;
-
-        const isPrevDefaultDate = !form.eventDate || form.eventDate === "2026-11-28" || (currentTpl?.targetDate && form.eventDate === currentTpl.targetDate.split("T")[0]);
-        const nextDate = isPrevDefaultDate
-            ? (template.targetDate ? template.targetDate.split("T")[0] : form.eventDate || "2026-12-20")
-            : form.eventDate;
 
         const nextForm = {
             ...form,
@@ -897,24 +882,20 @@ export default function InvitationForm({ invitation }) {
             frontColor: template.primaryColor || preset.frontColor || template.frontColor || form.frontColor,
             bottomColor: template.secondaryColor || preset.bottomColor || template.bottomColor || form.bottomColor,
             backgroundColor: template.backgroundColor || preset.backgroundColor || template.bgColor || form.backgroundColor,
-            title: form.title || nextTitle,
+            title: form.title,
             groomName: form.groomName || "",
             brideName: form.brideName || "",
-            groomFather: form.groomFather || template.family?.groomParents?.[0] || "",
-            groomMother: form.groomMother || template.family?.groomParents?.[1] || "",
-            brideFather: form.brideFather || template.family?.brideParents?.[0] || "",
-            brideMother: form.brideMother || template.family?.brideParents?.[1] || "",
-            eventDate: form.eventDate || nextDate,
-            eventTime: form.eventTime || template.receptionTime || "17:00",
+            groomFather: form.groomFather,
+            groomMother: form.groomMother,
+            brideFather: form.brideFather,
+            brideMother: form.brideMother,
+            eventDate: form.eventDate,
+            eventTime: form.eventTime,
             venueName: form.venueName || "",
             venueAddress: form.venueAddress || "",
-            schedule: form.schedule?.length ? form.schedule : (template.schedule && template.schedule.length > 0)
-                ? template.schedule
-                : (preset.schedule?.length ? preset.schedule : form.schedule),
-            dressCode: template.dressCode || preset.dressCode || form.dressCode,
-            dressColors: (template.dressColors && template.dressColors.length > 0)
-                ? template.dressColors
-                : (preset.dressColors?.length ? preset.dressColors : form.dressColors),
+            schedule: form.schedule,
+            dressCode: form.dressCode,
+            dressColors: form.dressColors,
             // Sync ALL section toggles from template.enabledSections so the form
             // adapts its visible sections when the user switches templates.
             showDressCode: template.enabledSections?.dressCode !== undefined
@@ -932,17 +913,9 @@ export default function InvitationForm({ invitation }) {
             showFaq: template.enabledSections?.faq !== undefined
                 ? (template.enabledSections.faq !== false)
                 : form.showFaq,
-            storyChapters: (template.storyChapters && template.storyChapters.length > 0)
-                ? template.storyChapters
-                : (template.storyText
-                    ? [{ id: "story-1", kicker: "រឿងរ៉ាវស្នេហា", title: "ដំណើររបស់យើង", date: template.dateText || "", text: template.storyText, image: template.phoneCoverImage || template.mainImage || "" }]
-                    : form.storyChapters),
-            party: (template.party && template.party.length > 0)
-                ? template.party
-                : (preset.party?.length ? preset.party : form.party),
-            faq: (template.faq && template.faq.length > 0)
-                ? template.faq
-                : (preset.faq?.length ? preset.faq : form.faq),
+            storyChapters: form.storyChapters,
+            party: form.party,
+            faq: form.faq,
         };
         nextForm.hostName = nextForm.groomName;
         nextForm.partnerName = nextForm.brideName;
@@ -954,44 +927,6 @@ export default function InvitationForm({ invitation }) {
         // The studio writer persists the full template selection with the other changes.
         setIsTemplateModalOpen(false);
     };
-
-    // Draggable Resizer Handler
-    const handleMouseDown = (e) => {
-        e.preventDefault();
-        setIsDragging(true);
-    };
-
-    useEffect(() => {
-        const handleMouseMove = (e) => {
-            if (!isDragging || !containerRef.current) return;
-            const rect = containerRef.current.getBoundingClientRect();
-            const offset = e.clientX - rect.left;
-            const newPercent = (offset / rect.width) * 100;
-            const clamped = Math.min(Math.max(newPercent, 28), 76);
-            setLeftPercent(clamped);
-        };
-
-        const handleMouseUp = () => {
-            setIsDragging(false);
-        };
-
-        if (isDragging) {
-            window.addEventListener("mousemove", handleMouseMove);
-            window.addEventListener("mouseup", handleMouseUp);
-            document.body.style.userSelect = "none";
-            document.body.style.cursor = "col-resize";
-        } else {
-            document.body.style.userSelect = "";
-            document.body.style.cursor = "";
-        }
-
-        return () => {
-            window.removeEventListener("mousemove", handleMouseMove);
-            window.removeEventListener("mouseup", handleMouseUp);
-            document.body.style.userSelect = "";
-            document.body.style.cursor = "";
-        };
-    }, [isDragging]);
 
     // File input refs
     const coverInputRef = useRef(null);
@@ -1782,6 +1717,101 @@ export default function InvitationForm({ invitation }) {
 
     // --- Dynamic Section Renderers (Driven by templateFormFlowConfig) ---
 
+    const renderEventInfoSection = () => <section className="pe-section-card" aria-label="Event information">
+        <h2 className="pe-section-heading">{englishUI ? "Event information" : "ព័ត៌មានកម្មវិធី"}</h2>
+            {/* Main Title on Cover */}
+            <div className="pe-form-group">
+                <label className="pe-label">
+                    <span className="pe-label-icon"><FileText size={15} /></span>
+                    {t("mainTitle") || "ចំណងជើងធំលើក្រប"}
+                </label>
+                <input
+                    type="text"
+                    className="pe-input"
+                    value={form.title}
+                    onChange={(e) => update("title", e.target.value)}
+                    placeholder="សិរីមង្គលអាពាហ៍ពិពាហ៍"
+                />
+            </div>
+
+            {/* Couple Names on Cover */}
+            <div className="pe-grid-2">
+                <div className="pe-form-group">
+                    <label className="pe-label">
+                        <span className="pe-label-icon"><User size={15} /></span>
+                        {t("groom") || "កូនប្រុស (Groom Name)"}
+                    </label>
+                    <input
+                        type="text"
+                        className="pe-input"
+                        value={form.groomName}
+                        onChange={(e) => update("groomName", e.target.value)}
+                        placeholder="វណ្ណដា"
+                    />
+                </div>
+                <div className="pe-form-group">
+                    <label className="pe-label">
+                        <span className="pe-label-icon"><Heart size={15} /></span>
+                        {t("bride") || "កូនស្រី (Bride Name)"}
+                    </label>
+                    <input
+                        type="text"
+                        className="pe-input"
+                        value={form.brideName}
+                        onChange={(e) => update("brideName", e.target.value)}
+                        placeholder="ស្រីពេជ្រ"
+                    />
+                </div>
+            </div>
+
+            {/* Event Date & Time on Cover */}
+            <div className="pe-grid-2">
+                <div className="pe-form-group">
+                    <label className="pe-label">
+                        <span className="pe-label-icon"><Calendar size={15} /></span>
+                        {t("dateTime") || "កាលបរិច្ឆេទ (Event Date)"}
+                    </label>
+                    <DatePicker
+                        value={form.eventDate}
+                        onChange={(val) => {
+                            update("eventDate", val);
+                            update("eventDateText", val);
+                        }}
+                        placeholder="ជ្រើសកាលបរិច្ឆេទ"
+                    />
+                </div>
+                <div className="pe-form-group">
+                    <label className="pe-label">
+                        <span className="pe-label-icon"><Clock size={15} /></span>
+                        {t("timePicker") || "ម៉ោងទទួលភ្ញៀវ (Event Time)"}
+                    </label>
+                    <TimePicker
+                        value={form.eventTime}
+                        onChange={(val) => update("eventTime", val)}
+                        placeholder="ជ្រើសម៉ោង"
+                    />
+                </div>
+            </div>
+
+    </section>;
+    const renderMusicSection = () => <section className="pe-section-card" aria-label="Music">
+        <h2 className="pe-section-heading">{englishUI ? "Music" : "តន្ត្រី"}</h2>
+            {/* Spotify-style Music Selector & Player */}
+            <div className="pe-form-group">
+                <label className="pe-label">
+                    <span className="pe-label-icon"><Music size={15} /></span>
+                    {t("labelMusic") || "ជ្រើសរើសបទភ្លេង / Music Track"}
+                </label>
+                <SpotifyMusicPicker
+                    value={form.musicTrackId || "waiting-day"}
+                    onChange={(trackId, trackUrl) => {
+                        update("musicTrackId", trackId);
+                        update("musicUrl", trackUrl || "");
+                    }}
+                />
+            </div>
+    </section>;
+
     const renderCoverSection = () => (
         <div className="pe-section-card" key="cover">
             <h4 className="pe-section-heading">
@@ -1874,51 +1904,6 @@ export default function InvitationForm({ invitation }) {
                     />
                 </div>
             )}
-
-            {/* Main Title on Cover */}
-            <div className="pe-form-group">
-                <label className="pe-label">
-                    <span className="pe-label-icon"><FileText size={15} /></span>
-                    {t("mainTitle") || "ចំណងជើងធំលើក្រប"}
-                </label>
-                <input
-                    type="text"
-                    className="pe-input"
-                    value={form.title}
-                    onChange={(e) => update("title", e.target.value)}
-                    placeholder="សិរីមង្គលអាពាហ៍ពិពាហ៍"
-                />
-            </div>
-
-            {/* Couple Names on Cover */}
-            <div className="pe-grid-2">
-                <div className="pe-form-group">
-                    <label className="pe-label">
-                        <span className="pe-label-icon"><User size={15} /></span>
-                        {t("groom") || "កូនប្រុស (Groom Name)"}
-                    </label>
-                    <input
-                        type="text"
-                        className="pe-input"
-                        value={form.groomName}
-                        onChange={(e) => update("groomName", e.target.value)}
-                        placeholder="វណ្ណដា"
-                    />
-                </div>
-                <div className="pe-form-group">
-                    <label className="pe-label">
-                        <span className="pe-label-icon"><Heart size={15} /></span>
-                        {t("bride") || "កូនស្រី (Bride Name)"}
-                    </label>
-                    <input
-                        type="text"
-                        className="pe-input"
-                        value={form.brideName}
-                        onChange={(e) => update("brideName", e.target.value)}
-                        placeholder="ស្រីពេជ្រ"
-                    />
-                </div>
-            </div>
 
             {/* Wedding Logo / Calligraphy Mark Controls (Turn On / Turn Off / Custom Upload) */}
             <div style={{ padding: "14px 16px", background: "#fdfbf7", border: "1px solid #f0e6d6", borderRadius: 10, margin: "14px 0" }}>
@@ -2090,49 +2075,6 @@ export default function InvitationForm({ invitation }) {
                 />
             </div>
 
-            {/* Event Date & Time on Cover */}
-            <div className="pe-grid-2">
-                <div className="pe-form-group">
-                    <label className="pe-label">
-                        <span className="pe-label-icon"><Calendar size={15} /></span>
-                        {t("dateTime") || "កាលបរិច្ឆេទ (Event Date)"}
-                    </label>
-                    <DatePicker
-                        value={form.eventDate}
-                        onChange={(val) => {
-                            update("eventDate", val);
-                            update("eventDateText", val);
-                        }}
-                        placeholder="ជ្រើសកាលបរិច្ឆេទ"
-                    />
-                </div>
-                <div className="pe-form-group">
-                    <label className="pe-label">
-                        <span className="pe-label-icon"><Clock size={15} /></span>
-                        {t("timePicker") || "ម៉ោងទទួលភ្ញៀវ (Event Time)"}
-                    </label>
-                    <TimePicker
-                        value={form.eventTime}
-                        onChange={(val) => update("eventTime", val)}
-                        placeholder="ជ្រើសម៉ោង"
-                    />
-                </div>
-            </div>
-
-            {/* Spotify-style Music Selector & Player */}
-            <div className="pe-form-group">
-                <label className="pe-label">
-                    <span className="pe-label-icon"><Music size={15} /></span>
-                    {t("labelMusic") || "ជ្រើសរើសបទភ្លេង / Music Track"}
-                </label>
-                <SpotifyMusicPicker
-                    value={form.musicTrackId || "waiting-day"}
-                    onChange={(trackId, trackUrl) => {
-                        update("musicTrackId", trackId);
-                        update("musicUrl", trackUrl || "");
-                    }}
-                />
-            </div>
         </div>
     );
 
@@ -3176,6 +3118,8 @@ export default function InvitationForm({ invitation }) {
     );
 
     const sectionRenderers = {
+        eventInfo: renderEventInfoSection,
+        music: renderMusicSection,
         cover: renderCoverSection,
         family: renderFamilySection,
         invitation: renderInvitationSection,
@@ -3196,88 +3140,22 @@ export default function InvitationForm({ invitation }) {
     return (
         <div className="pe-editor-root invitation-studio" data-mobile-view={mobileView}>
 
-            {/* Unified Studio Header */}
-            <div className="pe-sub-header-banner">
-                <div className="pe-sub-header-left">
-                    {!params.eventId && <button
-                        type="button"
-                        className="pe-btn-back"
-                        onClick={() => {
-                            if (location.state?.from) {
-                                navigate(location.state.from);
-                            } else {
-                                if (invitationId) { navigate(`/app/events/${invitationId}`); } else { navigate("/app/events"); }
-                            }
-                        }}
-                        title={t("backBtn") || "ត្រឡប់ក្រោយ"}
-                    >
-                        <ArrowLeft size={16} />
-                        <span>{t("backBtn") || "ត្រឡប់ក្រោយ"}</span>
-                    </button>}
-                    <span className="pe-header-divider" />
-                    <h1 className="studio-heading">{englishUI ? "Invitation studio" : "រចនាធៀបអញ្ជើញ"}</h1>
-                    <span className="pe-template-tag">
-                        {getTemplateById(form.templateId)?.name || form.title || "គម្រោងអាពាហ៍ពិពាហ៍ W01"}
-                    </span>
-                    <button
-                        type="button"
-                        className="pe-btn-switch-tpl"
-                        onClick={() => setIsTemplateModalOpen(true)}
-                    >
-                        <Sparkles size={14} /> {englishUI ? "Change template" : "ប្ដូរគំរូ"}
-                    </button>
-                </div>
-                <div className="pe-sub-header-actions">
-                    {(invitation?.backendInvitationId || /^[1-9]\d*$/.test(String(invitationId || ""))) && !published && <button type="button" className="pe-btn-switch-tpl" disabled={isSaving || isPublishing} onClick={publishInvitation}>{isPublishing ? (englishUI ? "Publishing…" : "កំពុងផ្សាយ…") : (englishUI ? "Publish invitation" : "ផ្សព្វផ្សាយធៀប")}</button>}
-                    <button
-                        type="button"
-                        className="pe-btn-expand-editor"
-                        onClick={() => setIsExpanded((prev) => !prev)}
-                        title={isExpanded ? "មើលធម្មតា (Normal View)" : "ពង្រីកពេញ (Fullscreen View)"}
-                    >
-                        <Maximize2 size={15} />
-                        <span>{isExpanded ? "បង្រួម" : "ពង្រីក"}</span>
-                    </button>
-                    <button
-                        type="button"
-                        className="pe-btn-mobile-preview"
-                        onClick={() => setIsMobilePreviewOpen(true)}
-                        aria-label="មើលគំរូ Preview"
-                    >
-                        <Maximize2 size={14} /> {t("previewBtn") || "មើលគំរូ"}
-                    </button>
-                    <button
-                        type="button"
-                        className="pe-save-main-btn"
-                        onClick={() => studio.save()}
-                        disabled={isSaving}
-                    >
-                        {isSaving ? (t("saving") || "កំពុងរក្សា...") : (t("saveBtn") || "រក្សាទុក")}
-                    </button>
-                </div>
-            </div>
-
-            <div className="studio-history">
-                <span role="status" aria-live="polite">{(englishUI ? { saved: "Saved to server", unsaved: "Unsaved changes", saving: "Saving…", failed: "Save failed", offline: "Offline" } : { saved: "បានរក្សាទុក", unsaved: "មិនទាន់រក្សាទុក", saving: "កំពុងរក្សាទុក…", failed: "រក្សាទុកបរាជ័យ", offline: "គ្មានអ៊ីនធឺណិត" })[studio.phase]}</span>
-                <button type="button" disabled={!studio.canUndo} onClick={studio.undo}>{englishUI ? "Undo" : "ត្រឡប់វិញ"}</button>
-                <button type="button" disabled={!studio.canRedo} onClick={studio.redo}>{englishUI ? "Redo" : "ធ្វើឡើងវិញ"}</button>
-                <button type="button" disabled={isSaving} onClick={studio.reset}>{englishUI ? "Reset changes" : "កំណត់ឡើងវិញ"}</button>
-                {studio.error && <><span role="alert">{studio.error}</span><button type="button" onClick={() => studio.save()} disabled={isSaving}>Retry save</button></>}
-            </div>
+            {(() => {
+                const toolbar = <StudioToolbar title={form.title} templateName={getTemplateById(form.templateId)?.name || form.templateId}
+                    english={englishUI} studio={studio} saving={isSaving} publishing={isPublishing} published={published}
+                    canPublish={Boolean(invitation?.backendInvitationId || /^[1-9]\d*$/.test(String(invitationId || "")))}
+                    onTemplate={() => setIsTemplateModalOpen(true)} onPreview={() => setIsMobilePreviewOpen(true)} onPublish={publishInvitation}
+                    onBack={() => navigate(params.eventId ? `/app/events/${params.eventId}` : invitationId ? `/app/events/${invitationId}` : "/app/events")} />;
+                const mount = params.eventId && document.getElementById("invitation-studio-toolbar");
+                return mount ? createPortal(toolbar, mount) : toolbar;
+            })()}
+            {studio.error && <div className="studio-save-error" role="alert"><span>{studio.error}</span><button type="button" onClick={() => studio.save()} disabled={isSaving}>Retry save</button></div>}
             <div className="studio-mobile-tabs" aria-label="Studio view">
                 <button type="button" aria-pressed={mobileView === "edit"} onClick={() => setMobileView("edit")}>{englishUI ? "Edit" : "កែសម្រួល"}</button>
                 <button type="button" aria-pressed={mobileView === "preview"} onClick={() => setMobileView("preview")}>{englishUI ? "Preview" : "មើលជាមុន"}</button>
             </div>
             {/* The controls and preview continue to use the original template engine. */}
-            <div
-                ref={containerRef}
-                className={`pe-workspace-grid ${isDragging ? "is-resizing" : ""}`}
-                style={{
-                    gridTemplateColumns: isExpanded
-                        ? "1fr"
-                        : `${leftPercent}% 24px 1fr`,
-                }}
-            >
+            <div className="pe-workspace-grid">
                 <StudioSections sections={flowConfig.sectionOrder} active={activeSection}
                     onChange={setSelectedSection} english={englishUI} />
                 {/* CENTER COLUMN: Existing template controls */}
@@ -3324,7 +3202,7 @@ export default function InvitationForm({ invitation }) {
                                 }
                             }}>ប្រើឃ្លាសុភាព · Apply formal wording</button>
                         </div>}
-                        {activeSection === "cover" && <StudioAppearance form={form} update={update}
+                        {activeSection === "appearance" && <StudioAppearance form={form} update={update}
                             supportsPalette={/^(1|10|khmer-celestial|KHMER_CELESTIAL|royal-khmer-wedding)$/.test(String(form.templateId)) || /^(khmer-celestial|royal-khmer-wedding)$/i.test(String(getTemplateById(form.templateId)?.code || getTemplateById(form.templateId)?.slug || ""))} />}
                         {flowConfig.sectionOrder.map((sectionKey) => {
                             const renderer = sectionRenderers[sectionKey];
@@ -3334,39 +3212,7 @@ export default function InvitationForm({ invitation }) {
                     </div>
                 </div>
 
-                {/* CENTER DIVIDER / RESIZER */}
-                {!isExpanded && (
-                    <div
-                        className={`pe-workspace-divider ${isDragging ? "is-active" : ""}`}
-                        onMouseDown={handleMouseDown}
-                        title="អូសទៅឆ្វេង ឬស្តាំដើម្បីប្តូរទំហំ (Drag left/right to resize)"
-                    >
-                        <div className="pe-divider-line">
-                            <button
-                                type="button"
-                                className="pe-divider-toggle-btn"
-                                title={isExpanded ? "បង្រួម / Normal View" : "ពង្រីក / Full View"}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    setIsExpanded((prev) => !prev);
-                                }}
-                            >
-                                {isExpanded ? "▶" : "◀"}
-                            </button>
-                        </div>
-                    </div>
-                )}
-
-                {/* RIGHT COLUMN: Live Mobile Phone Simulation */}
-                {!isExpanded && (
-                    <LivePhoneSimulator
-                        data={{
-                            ...form,
-                            googleMapUrl: previewMapUrl(form.googleMapUrl, form.venueName),
-                        }}
-                        catalogVersion={catalogVersion}
-                    />
-                )}
+                <LivePhoneSimulator data={{ ...form, googleMapUrl: previewMapUrl(form.googleMapUrl, form.venueName) }} catalogVersion={catalogVersion} />
             </div>
 
             {/* Mobile Live Phone Simulator Overlay */}

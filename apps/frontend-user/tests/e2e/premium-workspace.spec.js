@@ -118,6 +118,9 @@ test("iPhone 18 Pro Max preview keeps its viewport when fitted or zoomed", async
   await expect(page.getByRole("button", { name: "iPhone 18 Pro Max", exact: true })).toHaveAttribute("aria-pressed", "true");
   await expect.poll(() => iframe.evaluate(node => node.contentWindow.innerWidth)).toBe(440);
   await expect.poll(() => iframe.evaluate(node => node.contentWindow.innerHeight)).toBe(860);
+  await page.getByRole("button", { name: "Zoom in", exact: true }).click();
+  await expect(page.getByLabel("Preview zoom").locator("option:checked")).toHaveText(/\d+%/);
+  await expect.poll(() => iframe.evaluate(node => node.contentWindow.innerWidth)).toBe(440);
   await page.screenshot({ path: info.outputPath("iphone-18-pro-max-preview.png"), fullPage: true });
   await page.getByLabel("Preview zoom").selectOption("100");
   await expect.poll(() => iframe.evaluate(node => node.contentWindow.innerWidth)).toBe(440);
