@@ -1847,7 +1847,7 @@
     }
 
     /* LivePhoneSimulator: hide on mobile so editor is full-width */
-    .pe-preview-column {
+    .pe-editor-root:not(.invitation-studio) .pe-preview-column {
         display: none !important;
     }
 

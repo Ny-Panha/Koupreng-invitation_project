@@ -1,0 +1,12 @@
+.studio-device-caption { color: #59615c; text-align: center; font-size: 13px; line-height: 1.8; padding-bottom: 10px; }
+.studio-device-stage { position: relative; margin: 12px auto 20px; flex-shrink: 0; }
+.pe-preview-column .pe-phone-frame.pe-device-frame { position: absolute; inset: 0 auto auto 0; min-height: 0; max-height: none; max-width: none; margin: 0; display: flex; flex-direction: column; border: 8px solid #252625; border-radius: 62px; background: #faf8f2; overflow: hidden; isolation: isolate; transform-origin: top left; box-shadow: 0 0 0 2px #9b9c97, 0 0 0 4px #444642, 0 20px 50px #1b201d30; }
+.pe-preview-column .pe-device-frame[data-device=desktop] { border-radius: 16px; }
+.pe-preview-column .pe-device-frame .pe-canvas-wrapper { flex: 1; min-height: 0; height: auto; width: 100%; overflow: hidden; }
+.pe-preview-column .pe-device-frame .pe-canvas-wrapper iframe { display: block; width: 100%; height: 100%; border: 0; }
+.pe-device-status { position: relative; display: flex; justify-content: space-between; align-items: center; flex: 0 0 62px; padding: 6px 28px 0; background: #faf8f2; color: #20231f; font: 600 16px/1.2 system-ui, sans-serif; user-select: none; }
+.pe-dynamic-island { position: absolute; width: 84px; height: 28px; top: 12px; left: 50%; transform: translateX(-50%); background: #101110; border: 1px solid #252825; border-radius: 30px; }
+.pe-dynamic-island::after { content: ""; position: absolute; right: 10px; top: 8px; width: 9px; height: 9px; border-radius: 50%; background: radial-gradient(circle at 40% 40%, #173144, #080a0c 70%); }
+.pe-device-status-icons { display: flex; align-items: center; gap: 5px; }
+.pe-device-home { display: grid; place-items: center; flex: 0 0 34px; background: #faf8f2; pointer-events: none; }
+.pe-device-home span { width: 138px; height: 5px; border-radius: 10px; background: #20231f; }

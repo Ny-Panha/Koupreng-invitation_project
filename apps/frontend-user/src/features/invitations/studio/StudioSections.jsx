@@ -1,3 +1,10 @@
+import { Palette, Users, Mail, Images, Timer, CalendarDays, MapPin, BookOpen, Shirt, CircleHelp, QrCode, Heart, Languages } from "lucide-react";
+
+const GROUPS = [
+  { labels: ["រចនា", "Design"], keys: ["cover", "couplePhoto", "gallery"], icons: [Palette, Images, Images] },
+  { labels: ["មាតិកា", "Content"], keys: ["family", "invitation", "schedule", "venue", "story", "closing"], icons: [Users, Mail, CalendarDays, MapPin, BookOpen, Heart] },
+  { labels: ["បទពិសោធន៍ភ្ញៀវ", "Guest experience"], keys: ["countdown", "dressCode", "party", "faq", "khqr", "languageMode"], icons: [Timer, Shirt, Users, CircleHelp, QrCode, Languages] },
+];
 const STUDIO_SECTIONS = {
   cover: ["ក្រប និងរចនា", "Cover & design"], family: ["មាតាបិតា", "Families"],
   invitation: ["សារអញ្ជើញ", "Invitation message"], couplePhoto: ["រូបគូស្វាមីភរិយា", "Couple photos"],
@@ -18,9 +25,13 @@ export default function StudioSections({ sections, active, onChange, english }) 
       </select>
     </label>
     <div className="studio-section-list">
-      <p>{english ? "YOUR INVITATION" : "ធៀបការរបស់អ្នក"}</p>
-      {sections.map((key, index) => <button type="button" key={key} aria-current={active === key ? "step" : undefined}
-        onClick={() => onChange(key)}><span>{String(index + 1).padStart(2, "0")}</span>{label(key)}</button>)}
+      {GROUPS.map(group => {
+        const visible = group.keys.filter(key => sections.includes(key));
+        return visible.length > 0 && <div className="studio-section-group" key={group.labels[1]}><p>{group.labels[english ? 1 : 0]}</p>
+          {visible.map(key => { const Icon = group.icons[group.keys.indexOf(key)]; return <button type="button" key={key} aria-current={active === key ? "step" : undefined}
+            onClick={() => onChange(key)}><Icon size={18} aria-hidden="true" />{label(key)}</button>; })}
+        </div>;
+      })}
     </div>
   </nav>;
 }

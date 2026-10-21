@@ -563,7 +563,8 @@ const DEFAULT_STATE = {
 };
 
 export default function InvitationForm({ invitation }) {
-    const { text: t } = useBackendMessages("invitations");
+    const { text: t, lang: uiLanguage } = useBackendMessages("invitations");
+    const englishUI = uiLanguage === "en";
     const { user } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
@@ -3174,39 +3175,36 @@ export default function InvitationForm({ invitation }) {
             {/* Unified Studio Header */}
             <div className="pe-sub-header-banner">
                 <div className="pe-sub-header-left">
-                    <button
+                    {!params.eventId && <button
                         type="button"
                         className="pe-btn-back"
                         onClick={() => {
                             if (location.state?.from) {
                                 navigate(location.state.from);
                             } else {
-                                navigate("/dashboard/events");
+                                if (invitationId) { navigate(`/app/events/${invitationId}`); } else { navigate("/app/events"); }
                             }
                         }}
                         title={t("backBtn") || "ត្រឡប់ក្រោយ"}
                     >
                         <ArrowLeft size={16} />
                         <span>{t("backBtn") || "ត្រឡប់ក្រោយ"}</span>
-                    </button>
+                    </button>}
                     <span className="pe-header-divider" />
-                    <span className="pe-sub-header-label">{t("myTemplate") || "គំរូ:"}</span>
+                    <h1 className="studio-heading">{englishUI ? "Invitation studio" : "រចនាធៀបអញ្ជើញ"}</h1>
                     <span className="pe-template-tag">
                         {getTemplateById(form.templateId)?.name || form.title || "គម្រោងអាពាហ៍ពិពាហ៍ W01"}
-                    </span>
-                    <span className="pe-status-badge">
-                        <CheckCircle2 size={13} /> {t("activeBadge") || "កំពុងប្រើ"}
                     </span>
                     <button
                         type="button"
                         className="pe-btn-switch-tpl"
                         onClick={() => setIsTemplateModalOpen(true)}
                     >
-                        <Sparkles size={14} /> {t("changeTemplateBtn") || "ប្តូរគំរូធៀប (Change Template)"}
+                        <Sparkles size={14} /> {englishUI ? "Change template" : "ប្ដូរគំរូ"}
                     </button>
                 </div>
                 <div className="pe-sub-header-actions">
-                    {(invitation?.backendInvitationId || /^[1-9]\d*$/.test(String(invitationId || ""))) && !published && <button type="button" className="pe-btn-switch-tpl" disabled={isSaving || isPublishing} onClick={publishInvitation}>{isPublishing ? "Publishing…" : "ផ្សព្វផ្សាយ · Publish invitation"}</button>}
+                    {(invitation?.backendInvitationId || /^[1-9]\d*$/.test(String(invitationId || ""))) && !published && <button type="button" className="pe-btn-switch-tpl" disabled={isSaving || isPublishing} onClick={publishInvitation}>{isPublishing ? (englishUI ? "Publishing…" : "កំពុងផ្សាយ…") : (englishUI ? "Publish invitation" : "ផ្សព្វផ្សាយធៀប")}</button>}
                     <button
                         type="button"
                         className="pe-btn-expand-editor"
@@ -3236,15 +3234,15 @@ export default function InvitationForm({ invitation }) {
             </div>
 
             <div className="studio-history">
-                <span role="status" aria-live="polite">{{ saved: "បានរក្សាទុក · Saved to server", unsaved: "មិនទាន់រក្សាទុក · Unsaved changes", saving: "កំពុងរក្សាទុក · Saving…", failed: "រក្សាទុកបរាជ័យ · Save failed", offline: "គ្មានអ៊ីនធឺណិត · Offline" }[studio.phase]}</span>
-                <button type="button" disabled={!studio.canUndo} onClick={studio.undo}>Undo</button>
-                <button type="button" disabled={!studio.canRedo} onClick={studio.redo}>Redo</button>
-                <button type="button" disabled={isSaving} onClick={studio.reset}>Reset changes</button>
+                <span role="status" aria-live="polite">{(englishUI ? { saved: "Saved to server", unsaved: "Unsaved changes", saving: "Saving…", failed: "Save failed", offline: "Offline" } : { saved: "បានរក្សាទុក", unsaved: "មិនទាន់រក្សាទុក", saving: "កំពុងរក្សាទុក…", failed: "រក្សាទុកបរាជ័យ", offline: "គ្មានអ៊ីនធឺណិត" })[studio.phase]}</span>
+                <button type="button" disabled={!studio.canUndo} onClick={studio.undo}>{englishUI ? "Undo" : "ត្រឡប់វិញ"}</button>
+                <button type="button" disabled={!studio.canRedo} onClick={studio.redo}>{englishUI ? "Redo" : "ធ្វើឡើងវិញ"}</button>
+                <button type="button" disabled={isSaving} onClick={studio.reset}>{englishUI ? "Reset changes" : "កំណត់ឡើងវិញ"}</button>
                 {studio.error && <><span role="alert">{studio.error}</span><button type="button" onClick={() => studio.save()} disabled={isSaving}>Retry save</button></>}
             </div>
             <div className="studio-mobile-tabs" aria-label="Studio view">
-                <button type="button" aria-pressed={mobileView === "edit"} onClick={() => setMobileView("edit")}>កែសម្រួល · Edit</button>
-                <button type="button" aria-pressed={mobileView === "preview"} onClick={() => setMobileView("preview")}>មើលជាមុន · Preview</button>
+                <button type="button" aria-pressed={mobileView === "edit"} onClick={() => setMobileView("edit")}>{englishUI ? "Edit" : "កែសម្រួល"}</button>
+                <button type="button" aria-pressed={mobileView === "preview"} onClick={() => setMobileView("preview")}>{englishUI ? "Preview" : "មើលជាមុន"}</button>
             </div>
             {/* The controls and preview continue to use the original template engine. */}
             <div
@@ -3257,7 +3255,7 @@ export default function InvitationForm({ invitation }) {
                 }}
             >
                 <StudioSections sections={flowConfig.sectionOrder} active={activeSection}
-                    onChange={setSelectedSection} english={activeLangTab === "EN"} />
+                    onChange={setSelectedSection} english={englishUI} />
                 {/* CENTER COLUMN: Existing template controls */}
                 <div className="pe-editor-column">
 

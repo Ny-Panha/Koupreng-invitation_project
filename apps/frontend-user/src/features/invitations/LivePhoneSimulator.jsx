@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState, useCallback } from "react";
-import { Eye, Layers } from "lucide-react";
+import { Eye, Layers, Signal, Wifi, BatteryFull } from "lucide-react";
+import "./LivePhoneSimulator.css";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
 import { formatTime24toKhmer } from "@/shared/ui/TimePicker";
 import { TemplateExperience } from "@/features/templates";
@@ -52,11 +53,28 @@ function resolveTemplateSlug(data, merged) {
 }
 
 export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
-    const { text: t } = useBackendMessages("invitations");
+    const { text: t, lang } = useBackendMessages("invitations");
+    const en = lang === "en";
     const iframeRef = useRef(null);
     const previewRef = useRef(null);
+    const viewportRef = useRef(null);
     const [device, setDevice] = useState("mobile");
-    const [zoom, setZoom] = useState(100);
+    const [zoom, setZoom] = useState("fit");
+    const [availableSpace, setAvailableSpace] = useState({ width: 480, height: 720 });
+    // 1320 × 2868 physical display pixels at 3x -> 440 × 956 logical screen.
+    // This is a framed web preview; it does not emulate Safari or iOS hardware.
+    const deviceSize = device === "mobile" ? { width: 456, height: 972 } : { width: 1216, height: 816 };
+    const fitScale = Math.max(.2, Math.min(1, (availableSpace.width - 24) / deviceSize.width, (availableSpace.height - 24) / deviceSize.height));
+    const scale = zoom === "fit" ? fitScale : Number(zoom) / 100;
+
+    useEffect(() => {
+        if (!viewportRef.current || typeof ResizeObserver === "undefined") return;
+        const observer = new ResizeObserver(([entry]) => {
+            if (entry.contentRect.width && entry.contentRect.height) setAvailableSpace({ width: entry.contentRect.width, height: entry.contentRect.height });
+        });
+        observer.observe(viewportRef.current);
+        return () => observer.disconnect();
+    }, []);
     const [previewSession] = useState(createPreviewSession);
     const sendPreview = useCallback((message) => postPreviewMessage(message,
         iframePreviewChannel(iframeRef.current, previewSession)), [previewSession]);
@@ -207,7 +225,7 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
                         title="មើលស្រោមសំបុត្រ / ក្របទំព័រដើម (Cover)"
                     >
                         <Layers size={16} />
-                        <span>ស្រោមសំបុត្រ (Cover)</span>
+                        <span>{en ? "Cover" : "ស្រោមសំបុត្រ"}</span>
                     </button>
                     <button
                         type="button"
@@ -218,26 +236,30 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
                         title="មើលមាតិកាធៀបពេញ (Full Template Content)"
                     >
                         <Eye size={16} />
-                        <span>មាតិកាពេញ (Full)</span>
+                        <span>{en ? "Full invitation" : "មាតិកាពេញ"}</span>
                     </button>
                 </div>
             </div>
 
             <div className="studio-preview-tools" aria-label="Preview controls">
-                <button type="button" aria-pressed={device === "mobile"} onClick={() => setDevice("mobile")}>Mobile</button>
-                <button type="button" aria-pressed={device === "desktop"} onClick={() => setDevice("desktop")}>Desktop</button>
-                <label>Zoom <select aria-label="Preview zoom" value={zoom} onChange={event => setZoom(Number(event.target.value))}>
+                <button type="button" aria-pressed={device === "mobile"} onClick={() => setDevice("mobile")}>iPhone 18 Pro Max</button>
+                <button type="button" aria-pressed={device === "desktop"} onClick={() => setDevice("desktop")}>{en ? "Desktop" : "កុំព្យូទ័រ"}</button>
+                <label>{en ? "Zoom" : "ទំហំ"} <select aria-label="Preview zoom" value={zoom} onChange={event => setZoom(event.target.value)}>
+                    <option value="fit">{en ? "Fit" : "សមនឹងផ្ទៃ"}</option>
                     {[35, 50, 75, 100, 125].map(value => <option key={value} value={value}>{value}%</option>)}
                 </select></label>
-                <button type="button" onClick={() => { setZoom(100); setDevice("mobile"); handleSetGate(false); }}>Reset view</button>
+                <button type="button" onClick={() => { setZoom("fit"); setDevice("mobile"); handleSetGate(false); }}>{en ? "Reset view" : "កំណត់ទិដ្ឋភាពដើម"}</button>
                 {typeof document !== "undefined" && document.fullscreenEnabled && <button type="button" onClick={() => {
                     if (document.fullscreenElement) document.exitFullscreen();
                     else previewRef.current?.requestFullscreen();
-                }}>Fullscreen</button>}
+                }}>{en ? "Fullscreen" : "ពេញអេក្រង់"}</button>}
             </div>
-            <div className="studio-preview-viewport">
-            <div className="pe-phone-frame h-full flex flex-col rounded-[36px] border-4 border-zinc-800/90 bg-zinc-950 shadow-2xl overflow-hidden transition-all duration-300 relative w-[380px] max-w-full"
-                style={{ width: device === "desktop" ? 1200 : 380, zoom: zoom / 100 }}>
+            <div className="studio-device-caption">{device === "mobile" ? "iPhone 18 Pro Max · 440 × 956" : "Desktop · 1200 × 800"}</div>
+            <div ref={viewportRef} className="studio-preview-viewport">
+            <div className="studio-device-stage" style={{ width: deviceSize.width * scale, height: deviceSize.height * scale }}>
+            <div className="pe-phone-frame pe-device-frame" data-device={device}
+                style={{ width: deviceSize.width, height: deviceSize.height, transform: `scale(${scale})` }}>
+                {device === "mobile" && <div className="pe-device-status" aria-hidden="true"><span>9:41</span><span className="pe-dynamic-island" /><span className="pe-device-status-icons"><Signal size={17} /><Wifi size={17} /><BatteryFull size={23} /></span></div>}
                 {/* Real-time Isolated Live Preview using exact same engine as Admin */}
                 <div className="pe-canvas-wrapper flex-1 w-full h-full relative bg-zinc-950 overflow-hidden">
                     {isTest ? (
@@ -274,6 +296,8 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
                         />
                     )}
                 </div>
+                {device === "mobile" && <div className="pe-device-home" aria-hidden="true"><span /></div>}
+            </div>
             </div>
             </div>
         </aside>

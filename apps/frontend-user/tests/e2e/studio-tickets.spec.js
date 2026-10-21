@@ -3,7 +3,7 @@ import { readFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 import { fixtures, qrPayload } from "./support/studioFixtures.js";
 
-const evidence = path.resolve("../../docs/qa/studio-tickets");
+const evidence = path.resolve("../../docs/qa/ux-overhaul/studio-tickets");
 for (const lang of ["en", "km"]) {
   test(`studio and designer fit eight viewports (${lang})`, async ({ page }, info) => {
     test.setTimeout(240_000);
@@ -16,7 +16,7 @@ for (const lang of ["en", "km"]) {
       for (const [name, route] of [["editor", "invitation"], ["designer", "tickets/design"]]) {
         await page.goto(`/app/events/101/${route}`);
         await expect(page.locator(name === "editor" ? ".invitation-studio" : ".ticket-studio")).toBeVisible();
-        if (name === "designer") await expect(page.getByRole("button", { name: /ទាញយក PNG/ })).toBeEnabled();
+        if (name === "designer") await expect(page.getByRole("button", { name: /ទាញយក PNG|Download PNG/ })).toBeEnabled();
         else await expect(page.locator(".studio-sections")).toBeVisible();
         expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
         if (info.project.name === "desktop-chromium") await page.screenshot({ path: path.join(evidence, `${name}-${lang}-${width}.png`), fullPage: true });
@@ -35,11 +35,11 @@ test("exports exact 2x/3x personalized canvases with decodable QR for every layo
     await page.getByLabel(/Layout/).selectOption(layout);
     const save = page.getByRole("button", { name: /Save design/ });
     if (await save.isEnabled()) await save.click();
-    const download = page.getByRole("button", { name: /ទាញយក PNG/ });
+    const download = page.getByRole("button", { name: /ទាញយក PNG|Download PNG/ });
     await expect(download).toBeEnabled();
     for (const scale of [2, 3]) {
       const waiting = page.waitForEvent("download");
-      await page.getByRole("button", { name: scale === 2 ? /ទាញយក PNG/ : "PNG · 3×", exact: scale === 3 }).click();
+      await page.getByRole("button", { name: scale === 2 ? /ទាញយក PNG|Download PNG/ : "PNG · 3×", exact: scale === 3 }).click();
       const file = await waiting;
       const output = path.join(evidence, "exports", `${layout.toLowerCase()}-${scale}x-${info.project.name}.png`);
       await file.saveAs(output);
@@ -78,7 +78,7 @@ test("personal public ticket opens without submitting RSVP and modal restores fo
   const trigger = page.getByRole("button", { name: /My ticket/ });
   await trigger.click();
   await expect(page.getByRole("dialog")).toBeVisible();
-  await expect(page.getByRole("button", { name: /ទាញយក PNG/ })).toBeEnabled();
+  await expect(page.getByRole("button", { name: /ទាញយក PNG|Download PNG/ })).toBeEnabled();
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog")).toHaveCount(0);
   await expect(trigger).toBeFocused();
@@ -92,12 +92,15 @@ test("failed saves retain changes and guard route links and browser back", async
     return route.fallback();
   });
   await page.goto("/app/events/101");
+  const menu = page.getByRole("button", { name: "Toggle modules menu" });
+  if (await menu.isVisible()) await menu.click();
   await page.locator('.event-workspace-nav a[href$="/invitation"]').click();
   const title = page.locator('input[placeholder="សិរីមង្គលអាពាហ៍ពិពាហ៍"]');
   await title.fill("Keep this unsaved change");
   await expect(page.locator(".studio-history")).toContainText("Save failed");
   const dialogs = [];
   page.on("dialog", dialog => { dialogs.push(dialog.message()); return dialog.dismiss(); });
+  await page.getByRole("button", { name: "Toggle modules menu" }).click();
   await page.locator('.event-workspace-nav a[href$="/guests"]').click();
   await expect(page).toHaveURL(/\/invitation$/);
   await page.evaluate(() => window.history.back());
