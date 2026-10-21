@@ -1,15 +1,15 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import {
-  IoCalendarClearOutline,
-  IoCheckmarkOutline,
-  IoChevronDownOutline,
-  IoColorPaletteOutline,
-  IoDiamondOutline,
-  IoLogOutOutline,
-  IoPersonOutline,
-  IoReceiptOutline,
-} from "react-icons/io5";
+  CalendarDays as IoCalendarClearOutline,
+  Check as IoCheckmarkOutline,
+  ChevronDown as IoChevronDownOutline,
+  Palette as IoColorPaletteOutline,
+  Gem as IoDiamondOutline,
+  LogOut as IoLogOutOutline,
+  UserRound as IoPersonOutline,
+  Receipt as IoReceiptOutline,
+} from "lucide-react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
 import { useLanguageStore } from "../../stores/useLanguageStore";
@@ -85,6 +85,8 @@ export default function HostNav() {
   const language = useLanguageStore((state) => state.lang);
   const setLanguage = useLanguageStore((state) => state.setLang);
   const profileRef = useRef(null);
+  const mobileNavRef = useRef(null);
+  const hamburgerRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
   const { logout, user } = useAuth();
@@ -118,6 +120,10 @@ export default function HostNav() {
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
         setProfileOpen(false);
+        if (hamburgerRef.current?.getAttribute("aria-expanded") === "true") {
+          setMobileMenuOpen(false);
+          hamburgerRef.current.focus();
+        }
       }
     };
 
@@ -133,6 +139,7 @@ export default function HostNav() {
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = "hidden";
+      mobileNavRef.current?.querySelector("a")?.focus();
     } else {
       document.body.style.overflow = "";
     }
@@ -901,6 +908,7 @@ export default function HostNav() {
             <button
               type="button"
               className={`host-hamburger-btn${mobileMenuOpen ? " open" : ""}`}
+              ref={hamburgerRef}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label={language === "en" ? "Main menu" : "ម៉ឺនុយចម្បង"}
               aria-expanded={mobileMenuOpen}
@@ -921,7 +929,7 @@ export default function HostNav() {
       />
 
       {/* Mobile slide-out menu */}
-      <nav id="host-mobile-navigation" className={`host-mobile-menu${mobileMenuOpen ? " open" : ""}`} inert={!mobileMenuOpen} aria-hidden={!mobileMenuOpen} aria-label={language === "en" ? "Main navigation" : "ម៉ឺនុយចម្បង"}>
+      <nav ref={mobileNavRef} id="host-mobile-navigation" className={`host-mobile-menu${mobileMenuOpen ? " open" : ""}`} inert={!mobileMenuOpen} aria-hidden={!mobileMenuOpen} aria-label={language === "en" ? "Main navigation" : "ម៉ឺនុយចម្បង"}>
         {/* Profile section */}
         <Link
           to="/app/profile"

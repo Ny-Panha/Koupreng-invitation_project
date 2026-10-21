@@ -1,30 +1,13 @@
 import { useEventWorkspace } from "@/features/events/workspace/EventContext";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Link, useSearchParams, useParams, useNavigate } from "react-router-dom";
+import { Link, useSearchParams, useParams } from "react-router-dom";
 
-import {
-  IoAddCircle,
-  IoCalendarClearOutline,
-  IoCheckmarkCircle,
-  IoCheckmarkCircleOutline,
-  IoChevronForwardOutline,
-  IoCopyOutline,
-  IoCreateOutline,
-  IoGiftOutline,
-  IoGlobeOutline,
-  IoLocationOutline,
-  IoNotificationsOutline,
-  IoPeopleOutline,
-  IoQrCodeOutline,
-  IoRestaurantOutline,
-  IoSparkles,
-  IoStatsChartOutline,
-  IoWalletOutline,
-  IoShareSocialOutline,
-} from "react-icons/io5";
+
 
 import { invitationService } from "@/features/invitations/api/invitationApi";
 import { eventPath } from "@/features/events/workspace/eventRoutes";
+import { CalendarDays, CheckCircle2, Circle, ArrowRight, Eye, Palette, Send, Users, ScanLine, Wallet, Gift, ChartColumn, ClipboardCheck } from "lucide-react";
+import { formatLocalDate } from "@/shared/utils/localDate";
 import { loadServerDashboard, groupAmounts } from "./dashboardData";
 import { currencyAmounts } from "@/features/budget/currencyTotals";
 import { getDraft, getDraftBySlug, saveDraft } from "../../shared/storage/weddingStorage";
@@ -56,12 +39,12 @@ function eventTitle(inv, lang = "km") {
 export default function DashboardFeature() {
   const { lang, text } = useBackendMessages("dashboard");
   const { eventId: routeEventId } = useParams();
-  const navigate = useNavigate();
   const workspace = useEventWorkspace();
 
   const [copied, setCopied] = useState(false);
   const [selectedInvId, setSelectedInvId] = useState(null);
   const [publishing, setPublishing] = useState(false);
+  const [actionError, setActionError] = useState("");
 
   const [state, setState] = useState({
     loading: true,
@@ -92,7 +75,7 @@ export default function DashboardFeature() {
     const generation = ++loadGeneration.current;
     try {
       setState((prev) => ({ ...prev, loading: true, error: "" }));
-      const invs = asList(await invitationService.listMine());
+      const invs = workspace?.event ? [workspace.event] : asList(await invitationService.listMine());
       if (generation !== loadGeneration.current) return;
       const allInvs = invs;
 
@@ -145,7 +128,7 @@ export default function DashboardFeature() {
         error: err.message || "Failed to load dashboard data.",
       }));
     }
-  }, []);
+  }, [workspace?.event]);
 
   const [searchParams] = useSearchParams();
 
@@ -155,14 +138,10 @@ export default function DashboardFeature() {
     return () => { loadGeneration.current += 1; };
   }, [loadData, searchParams, routeEventId]);
 
-  const handleSelectInvitation = (id) => {
-    navigate(eventPath(id));
-  };
-
   const stats = useMemo(() => {
     const inv = state.selectedInvitation;
     const guestTotal = state.guests.reduce((sum, g) => sum + (Number(g.count) || 1), 0);
-    const totalGuestsCount = state.dashboard?.totalInvited ?? Math.max(guestTotal, state.guests.length);
+    const totalGuestsCount = state.dashboard?.totalGuests ?? state.checkInSummary?.totalGuests ?? Math.max(guestTotal, state.guests.length);
 
     // 1. Check summary from backend API (matching /dashboard/invitations/:id/rsvp)
     const summaryAttending =
@@ -225,9 +204,8 @@ export default function DashboardFeature() {
     const hasBudget = [...Object.values(expenseAmounts), ...Object.values(estimatedAmounts)].some((amount) => amount > 0);
 
     const checkedInCount =
-      state.checkInSummary?.totalCheckedIn ||
-      state.guests.filter((g) => g.checkedIn).length ||
-      0;
+      state.checkInSummary?.checkedIn ?? state.checkInSummary?.totalCheckedIn ??
+      state.guests.filter((g) => g.checkedIn).length;
 
     const rsvpRate = totalGuestsCount > 0 ? Math.min(100, Math.round((rsvpYes / totalGuestsCount) * 100)) : 0;
 
@@ -237,7 +215,7 @@ export default function DashboardFeature() {
         eventTitle(inv, lang),
       couple: inv?.groomName && inv?.brideName ? `${inv.groomName} & ${inv.brideName}` : "",
       eventDate: inv?.eventDate || inv?.weddingDate || "",
-      venue: inv?.venue || inv?.location || "",
+      venue: inv?.venueName || inv?.venue || inv?.location || "",
       slug: inv?.slug || "",
       status: inv?.status || (inv?.published ? "PUBLISHED" : "DRAFT"),
       id: inv?.id || inv?.invitationId,
@@ -255,14 +233,17 @@ export default function DashboardFeature() {
     };
   }, [lang, state]);
 
-  const completedSteps = useMemo(() => {
-    return [
-      Boolean(stats.id),
-      stats.guestTotal > 0,
-      stats.rsvpYes > 0 || stats.rsvpNo > 0,
-      stats.hasBudget,
-    ].filter(Boolean).length;
-  }, [stats]);
+  const english = lang === "en";
+  const label = (en, km) => english ? en : km;
+  const invitation = state.selectedInvitation;
+  const preparation = [
+    { done: Boolean(invitation?.title && stats.eventDate && stats.venue && invitation?.eventTime), module: "settings", title: label("Complete event details", "បំពេញព័ត៌មានកម្មវិធី"), description: label("Set the date, time and venue.", "កំណត់កាលបរិច្ឆេទ ម៉ោង និងទីកន្លែង។") },
+    { done: Boolean(invitation?.templateId || invitation?.templateCode), module: "invitation", title: label("Choose your invitation", "ជ្រើសរើសធៀបអញ្ជើញ"), description: label("Review your template, wording and photos.", "ពិនិត្យគំរូ អត្ថបទ និងរូបភាពរបស់អ្នក។") },
+    { done: stats.status === "PUBLISHED", module: "invitation", title: label("Review and publish", "ពិនិត្យ និងផ្សព្វផ្សាយ"), description: label("Publish before sharing guest links.", "ផ្សព្វផ្សាយធៀបមុនពេលចែករំលែកតំណទៅភ្ញៀវ។") },
+    { done: stats.guestTotal > 0, module: "guests", title: label("Add your guests", "បន្ថែមបញ្ជីភ្ញៀវ"), description: label("Keep guest details and personal tickets together.", "រៀបចំព័ត៌មានភ្ញៀវ និងកាតផ្ទាល់ខ្លួន។") },
+    { done: Number(state.dashboard?.deliverySent) > 0, module: "delivery", title: label("Send invitations", "ផ្ញើធៀបអញ្ជើញ"), description: label("Prepare, share and track your invitations.", "រៀបចំ ចែករំលែក និងតាមដានការផ្ញើធៀប។") },
+  ];
+  const nextStep = preparation.find(step => !step.done);
 
   // Live Countdown Effect
   useEffect(() => {
@@ -299,12 +280,11 @@ export default function DashboardFeature() {
     return () => clearInterval(interval);
   }, [stats.eventDate]);
 
-  const handleCopyLink = (slug) => {
+  const handleCopyLink = async (slug) => {
     if (!slug) return;
     const url = `${window.location.origin}/w/${slug}`;
-    navigator.clipboard.writeText(url);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2200);
+    try { await navigator.clipboard.writeText(url); setCopied(true); setTimeout(() => setCopied(false), 2200); }
+    catch { setActionError(label("Could not copy the invitation link. Please try again.", "មិនអាចចម្លងតំណធៀបបានទេ។ សូមព្យាយាមម្ដងទៀត។")); }
   };
 
   const handlePublishToggle = async () => {
@@ -312,6 +292,7 @@ export default function DashboardFeature() {
     const wasPublished = stats.status === "PUBLISHED";
     try {
       setPublishing(true);
+      setActionError("");
       // Call the correct API: OFF→ON = publish, ON→OFF = unpublish
       if (wasPublished) {
         const updated = await invitationService.unpublish(stats.id);
@@ -333,512 +314,68 @@ export default function DashboardFeature() {
       }
     } catch (err) {
       // On failure: keep previous toggle position, show error
-      alert(err?.response?.data?.message || err?.message || "Failed to update publication status.");
+      setActionError(err?.response?.data?.message || err?.message || "Failed to update publication status.");
     } finally {
       setPublishing(false);
     }
   };
 
-  // Loading Skeleton matching host pages
-  if (state.loading) {
-    return (
-      <main className="dash-main pe-dashboard-page">
-        <header className="dash-page-header">
-          <div>
-            <span className="dash-kicker">{text("kicker")}</span>
-            <h1>{text("title")}</h1>
-            <p>{text("loadingText")}</p>
-          </div>
-        </header>
-        <SkeletonTable rows={4} columns={4} />
-      </main>
-    );
-  }
-
-  return (
-    <main className="dash-main pe-dashboard-page">
-      {/* Page Header (Matching /dashboard/guests) */}
-      <header className="dash-page-header">
-        <div>
-          <span className="dash-kicker">
-            <IoSparkles /> {text("kicker")}
-          </span>
-          <h1>{text("title")}</h1>
-          <p>{text("subtitle")}</p>
+  if (state.loading) return <main className="dash-main pe-dashboard-page"><header className="dash-page-header"><h1>{text("title")}</h1></header><SkeletonTable rows={4} columns={4} /></main>;
+  if (state.error) return <main className="dash-main pe-dashboard-page"><ErrorState message={state.error} onRetry={() => loadData(selectedInvId)} /></main>;
+  if (!stats.hasInvitation) return <main className="workspace-page"><h1>{text("title")}</h1><Link className="workspace-button primary" to="/app/events">{text("viewList")}</Link></main>;
+  return <main className="dash-main pe-dashboard-page">
+    <header className="dash-page-header"><div><span className="dash-kicker">Koupreng</span><h1>{text("title")}</h1><p>{text("subtitle")}</p></div></header>
+    {actionError && <p className="workspace-notice" role="alert">{actionError}</p>}
+    <section className="overview-hero">
+      <div className="overview-cover" aria-hidden="true">
+        {invitation.coverUrl || invitation.templateThumbnailUrl ? <img src={invitation.coverUrl || invitation.templateThumbnailUrl} alt="" /> : <CalendarDays size={64} strokeWidth={1} />}
+      </div>
+      <div className="overview-hero-content">
+        <span className="workspace-badge">{stats.status === "PUBLISHED" ? label("Published", "បានផ្សាយ") : label("Invitation in preparation", "កំពុងរៀបចំធៀប")}</span>
+        <h2>{stats.title}</h2>
+        <p>{[formatLocalDate(stats.eventDate, english ? "en-US" : "km-KH"), stats.venue].filter(Boolean).join(" · ")}</p>
+        {timeRemaining.hasDate && !timeRemaining.isPast && <p className="workspace-muted">{timeRemaining.days} {label("days to your celebration", "ថ្ងៃទៀតដល់កម្មវិធីរបស់អ្នក")}</p>}
+        <div className="overview-actions">
+          <Link className="workspace-button primary" to={eventPath(stats.id, nextStep?.module || "rsvp")}><ArrowRight size={18} />{nextStep?.title || label("Track responses", "តាមដានការឆ្លើយតប")}</Link>
+          <Link className="workspace-button" to={eventPath(stats.id, "preview")}><Eye size={18} />{label("Preview", "មើលជាមុន")}</Link>
+          <Link className="workspace-button" to={eventPath(stats.id, "invitation")}><Palette size={18} />{text("edit")}</Link>
         </div>
-      </header>
-      {state.error && <ErrorState message={state.error} onRetry={() => loadData(selectedInvId)} />}
-
-      {/* =========================================================================
-          CASE 1: HOST HAS NO INVITATIONS YET
-         ========================================================================= */}
-      {!stats.hasInvitation ? (
-        <>
-          {/* Clean Welcome Board */}
-          <section className="dash-welcome-board">
-            <div className="dash-welcome-badge">
-              <IoSparkles />
-              <span>{text("welcomeBadge")}</span>
-            </div>
-
-            <h2 className="dash-welcome-title">
-              {text("welcomeTitle")}
-            </h2>
-
-            <p className="dash-welcome-desc">
-              {text("welcomeDesc")}
-            </p>
-
-            <div className="dash-welcome-actions">
-              <Link to="/dashboard/invitations/design" className="dash-btn-gold">
-                <IoAddCircle style={{ fontSize: "1.25rem" }} />
-                <span>{text("welcomeCreateBtn")}</span>
-              </Link>
-              <Link to="/templates/browse" className="dash-btn-outline">
-                <span>{text("welcomeBrowseBtn")}</span>
-                <IoChevronForwardOutline />
-              </Link>
-            </div>
-          </section>
-
-          {/* 4 Feature Cards matching Koupreng style */}
-          <section className="dash-features-grid">
-            <div className="dash-feature-card">
-              <div className="dash-feature-icon" style={{ background: "rgba(185, 139, 66, 0.12)", color: "#b98b42" }}>
-                <IoGlobeOutline />
-              </div>
-              <h4>{text("featCard1Title")}</h4>
-              <p>{text("featCard1Desc")}</p>
-            </div>
-
-            <div className="dash-feature-card">
-              <div className="dash-feature-icon" style={{ background: "rgba(15, 118, 110, 0.12)", color: "#0f766e" }}>
-                <IoCheckmarkCircleOutline />
-              </div>
-              <h4>{text("featCard2Title")}</h4>
-              <p>{text("featCard2Desc")}</p>
-            </div>
-
-            <div className="dash-feature-card">
-              <div className="dash-feature-icon" style={{ background: "rgba(124, 58, 237, 0.12)", color: "#7c3aed" }}>
-                <IoQrCodeOutline />
-              </div>
-              <h4>{text("featCard3Title")}</h4>
-              <p>{text("featCard3Desc")}</p>
-            </div>
-
-            <div className="dash-feature-card">
-              <div className="dash-feature-icon" style={{ background: "rgba(225, 29, 72, 0.12)", color: "#e11d48" }}>
-                <IoWalletOutline />
-              </div>
-              <h4>{text("featCard4Title")}</h4>
-              <p>{text("featCard4Desc")}</p>
-            </div>
-          </section>
-        </>
-      ) : (
-        /* =========================================================================
-            CASE 2: HOST HAS INVITATIONS (FULL CONTROL DASHBOARD)
-           ========================================================================= */
-        <>
-          {/* Multi-Event Selector Bar if multiple invitations */}
-          {state.invitations.length > 1 && (
-            <div className="dash-event-tabs">
-              <span style={{ fontSize: "0.75rem", fontWeight: 800, color: "var(--brand-text-muted)", textTransform: "uppercase", letterSpacing: "0.05em", flexShrink: 0 }}>
-                {text("eventLabel")}
-              </span>
-              {state.invitations.map((inv) => {
-                const id = inv.id || inv.invitationId;
-                const isSelected = String(id) === String(selectedInvId);
-                return (
-                  <button
-                    key={id}
-                    type="button"
-                    onClick={() => handleSelectInvitation(id)}
-                    className={`dash-event-tab ${isSelected ? "active" : ""}`}
-                  >
-                    <span>{eventTitle(inv, lang)}</span>
-                  </button>
-                );
-              })}
-            </div>
-          )}
-
-          {/* 1. Grand Event Spotlight Card */}
-          <section className="dash-event-card">
-            <div className="dash-event-info">
-              <div className="dash-event-badges">
-                <span className={`dash-status-pill ${stats.status === "PUBLISHED" ? "live" : "draft"}`}>
-                  {stats.status === "PUBLISHED" ? text("statusLive") : text("statusDraft")}
-                </span>
-                <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--brand-text-muted)" }}>
-                  ID: #{String(stats.id).slice(-6)}
-                </span>
-              </div>
-
-              <h2 className="dash-event-title">{stats.title}</h2>
-
-              <div className="dash-event-meta">
-                {stats.eventDate && (
-                  <div className="dash-meta-item">
-                    <IoCalendarClearOutline style={{ color: "var(--brand-primary)" }} />
-                    <span>{stats.eventDate}</span>
-                  </div>
-                )}
-                {stats.venue && (
-                  <div className="dash-meta-item">
-                    <IoLocationOutline style={{ color: "#0f766e" }} />
-                    <span>{stats.venue}</span>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className="dash-event-aside">
-              {timeRemaining.hasDate && (
-                <div className="dash-countdown">
-                  <div className="dash-count-box">
-                    <div className="dash-count-val">{timeRemaining.days}</div>
-                    <div className="dash-count-lbl">{text("unitDays")}</div>
-                  </div>
-                  <span style={{ color: "var(--brand-primary)", fontWeight: 900 }}>:</span>
-                  <div className="dash-count-box">
-                    <div className="dash-count-val">{String(timeRemaining.hours).padStart(2, "0")}</div>
-                    <div className="dash-count-lbl">{text("unitHours")}</div>
-                  </div>
-                  <span style={{ color: "var(--brand-primary)", fontWeight: 900 }}>:</span>
-                  <div className="dash-count-box">
-                    <div className="dash-count-val">{String(timeRemaining.minutes).padStart(2, "0")}</div>
-                    <div className="dash-count-lbl">{text("unitMins")}</div>
-                  </div>
-                  <span style={{ color: "var(--brand-primary)", fontWeight: 900 }}>:</span>
-                  <div className="dash-count-box">
-                    <div className="dash-count-val">{String(timeRemaining.seconds).padStart(2, "0")}</div>
-                    <div className="dash-count-lbl">{text("unitSecs")}</div>
-                  </div>
-                </div>
-              )}
-
-              <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-                {stats.slug && (
-                  <button type="button" onClick={() => handleCopyLink(stats.slug)} className="dash-btn-outline" style={{ minHeight: "36px", padding: "0 14px", fontSize: "0.8125rem" }}>
-                    <IoCopyOutline style={{ color: "var(--brand-primary)" }} />
-                    <span>{copied ? text("copied") : text("copyLink")}</span>
-                  </button>
-                )}
-
-                {(stats.id || stats.slug) && (
-                  <Link
-                    to={stats.id ? eventPath(stats.id, "preview") : `/w/${stats.slug}`}
-                    className="dash-btn-outline"
-                    style={{ minHeight: "36px", padding: "0 14px", fontSize: "0.8125rem" }}
-                  >
-                    <IoGlobeOutline style={{ color: "#0f766e" }} />
-                    <span>{text("viewLive")}</span>
-                  </Link>
-                )}
-
-                {stats.id && (
-                  <Link to={eventPath(stats.id, "invitation")} className="dash-btn-outline" style={{ minHeight: "36px", padding: "0 14px", fontSize: "0.8125rem" }}>
-                    <IoCreateOutline style={{ color: "var(--brand-primary)" }} />
-                    <span>{text("edit")}</span>
-                  </Link>
-                )}
-
-                {stats.id && (
-                  <div className="dash-publish-toggle-wrap">
-                    <span className="dash-publish-toggle-label">{text("publish")}</span>
-                    <button
-                      type="button"
-                      role="switch"
-                      aria-checked={stats.status === "PUBLISHED"}
-                      onClick={handlePublishToggle}
-                      disabled={publishing}
-                      className={`dash-publish-switch${stats.status === "PUBLISHED" ? " on" : ""}`}
-                    >
-                      <span className="dash-publish-switch-text on-text">{text("toggleOn")}</span>
-                      <span className="dash-publish-switch-text off-text">{text("toggleOff")}</span>
-                      <span className="dash-publish-knob" />
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-          </section>
-
-          {/* 2. 4 Core KPI Stat Cards matching pe-summary-grid of GuestsPage */}
-          <section className="pe-summary-grid">
-            <Link to={eventPath(stats.id, "guests")} className="pe-summary-card" style={{ textDecoration: "none", cursor: "pointer", transition: "all 0.2s ease" }}>
-              <div>
-                <span>{text("statGuests")}</span>
-                <p style={{ margin: "4px 0 0", fontSize: "0.75rem", color: "var(--brand-text-muted)" }}>
-                  {text("statGuestsNote", { count: stats.guestTotal })}
-                </p>
-              </div>
-              <strong>{stats.guestTotal}</strong>
-            </Link>
-
-            <Link to={stats.id ? eventPath(stats.id, "rsvp") : "/app/events"} className="pe-summary-card" style={{ textDecoration: "none", cursor: "pointer", transition: "all 0.2s ease" }}>
-              <div>
-                <span>{text("statRsvp")}</span>
-                <p style={{ margin: "4px 0 0", fontSize: "0.75rem", color: "#0f766e" }}>
-                  {text("statRsvpNote", { yes: stats.rsvpYes, no: stats.rsvpNo })}
-                </p>
-              </div>
-              <strong style={{ color: "#0f766e" }}>{stats.rsvpRate}%</strong>
-            </Link>
-
-            <Link to={eventPath(stats.id, "budget")} className="pe-summary-card" style={{ textDecoration: "none", cursor: "pointer", transition: "all 0.2s ease" }}>
-              <div>
-                <span>{text("statBudget")}</span>
-                <p style={{ margin: "4px 0 0", fontSize: "0.75rem", color: "var(--brand-text-muted)" }}>
-                  {currencyAmounts(stats.estimatedAmounts)}
-                </p>
-              </div>
-              <strong style={{ color: "#e11d48" }}>{currencyAmounts(stats.expenseAmounts)}</strong>
-            </Link>
-
-            <Link to={eventPath(stats.id, "gifts")} className="pe-summary-card" style={{ textDecoration: "none", cursor: "pointer", transition: "all 0.2s ease" }}>
-              <div>
-                <span>{text("statGifts")}</span>
-                <p style={{ margin: "4px 0 0", fontSize: "0.75rem", color: "var(--brand-text-muted)" }}>
-                  {text("statGiftsNote", { count: stats.giftCount })}
-                </p>
-              </div>
-              <strong style={{ color: "#7c3aed" }}>{currencyAmounts(stats.giftAmounts)}</strong>
-            </Link>
-          </section>
-
-          {/* 3. Main 2-Column Grid */}
-          <section className="dash-main-grid">
-            {/* Left Column (Stats & Readiness) */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-              {/* RSVP Breakdown */}
-              <div className="dash-card">
-                <div className="dash-card-header">
-                  <h3>
-                    <IoCheckmarkCircleOutline style={{ color: "#0f766e", fontSize: "1.25rem" }} />
-                    <span>{text("rsvpStatsTitle")}</span>
-                  </h3>
-                  <Link to={stats.id ? eventPath(stats.id, "rsvp") : "/app/events"} className="dash-card-link">
-                    <span>{text("viewList")}</span>
-                    <IoChevronForwardOutline />
-                  </Link>
-                </div>
-
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: "12px" }}>
-                  <div style={{ padding: "16px", borderRadius: "12px", background: "rgba(15, 118, 110, 0.08)", border: "1px solid rgba(15, 118, 110, 0.18)", textAlign: "center" }}>
-                    <div style={{ fontSize: "1.5rem", fontWeight: 900, color: "#0f766e" }}>{stats.rsvpYes}</div>
-                    <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0f766e", marginTop: "4px" }}>{text("rsvpYes")}</div>
-                  </div>
-
-                  <div style={{ padding: "16px", borderRadius: "12px", background: "rgba(225, 29, 72, 0.08)", border: "1px solid rgba(225, 29, 72, 0.18)", textAlign: "center" }}>
-                    <div style={{ fontSize: "1.5rem", fontWeight: 900, color: "#e11d48" }}>{stats.rsvpNo}</div>
-                    <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#e11d48", marginTop: "4px" }}>{text("rsvpNo")}</div>
-                  </div>
-
-                  <div style={{ padding: "16px", borderRadius: "12px", background: "rgba(185, 139, 66, 0.08)", border: "1px solid rgba(185, 139, 66, 0.18)", textAlign: "center" }}>
-                    <div style={{ fontSize: "1.5rem", fontWeight: 900, color: "#b98b42" }}>{stats.rsvpPending}</div>
-                    <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#b98b42", marginTop: "4px" }}>{text("rsvpPending")}</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Readiness Checklist */}
-              <div className="dash-card">
-                <div className="dash-card-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <h3>
-                    <IoCheckmarkCircle style={{ color: "#0f766e", fontSize: "1.25rem" }} />
-                    <span>{text("checklistTitle")}</span>
-                  </h3>
-                  <span style={{
-                    fontSize: "0.75rem",
-                    fontWeight: 800,
-                    color: "#0f766e",
-                    background: "rgba(15, 118, 110, 0.1)",
-                    padding: "3px 10px",
-                    borderRadius: "999px"
-                  }}>
-                    {completedSteps}/4 {lang === "km" ? "រួចរាល់" : "Done"}
-                  </span>
-                </div>
-
-                <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                  {/* Step 1 */}
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 16px", borderRadius: "12px", border: "1px solid rgba(15, 118, 110, 0.2)", background: "rgba(15, 118, 110, 0.04)" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                      <IoCheckmarkCircle style={{ fontSize: "1.4rem", color: "#0f766e", flexShrink: 0 }} />
-                      <div>
-                        <div style={{ fontSize: "0.875rem", fontWeight: 800, color: "var(--brand-text)" }}>{text("checkStep1Title")}</div>
-                        <div style={{ fontSize: "0.75rem", color: "var(--brand-text-muted)" }}>{text("checkStep1Desc")}</div>
-                      </div>
-                    </div>
-                    {stats.id && (
-                      <Link to={eventPath(stats.id, "invitation")} style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--brand-primary)", textDecoration: "none" }}>
-                        {text("checkStep1Action")}
-                      </Link>
-                    )}
-                  </div>
-
-                  {/* Step 2 */}
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 16px", borderRadius: "12px", border: stats.guestTotal > 0 ? "1px solid rgba(15, 118, 110, 0.2)" : "1px solid var(--brand-border)", background: stats.guestTotal > 0 ? "rgba(15, 118, 110, 0.04)" : "#fdfbf7" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                      {stats.guestTotal > 0 ? (
-                        <IoCheckmarkCircle style={{ fontSize: "1.4rem", color: "#0f766e", flexShrink: 0 }} />
-                      ) : (
-                        <IoPeopleOutline style={{ fontSize: "1.4rem", color: "var(--brand-primary)", flexShrink: 0 }} />
-                      )}
-                      <div>
-                        <div style={{ fontSize: "0.875rem", fontWeight: 800, color: "var(--brand-text)" }}>{text("checkStep2Title")}</div>
-                        <div style={{ fontSize: "0.75rem", color: "var(--brand-text-muted)" }}>{text("checkStep2Desc")}</div>
-                      </div>
-                    </div>
-                    <Link to={eventPath(stats.id, "guests")} style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--brand-primary)", textDecoration: "none" }}>
-                      {text("checkStep2Action")}
-                    </Link>
-                  </div>
-
-                  {/* Step 3 */}
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 16px", borderRadius: "12px", border: stats.rsvpYes > 0 ? "1px solid rgba(15, 118, 110, 0.2)" : "1px solid var(--brand-border)", background: stats.rsvpYes > 0 ? "rgba(15, 118, 110, 0.04)" : "#fdfbf7" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                      {stats.rsvpYes > 0 ? (
-                        <IoCheckmarkCircle style={{ fontSize: "1.4rem", color: "#0f766e", flexShrink: 0 }} />
-                      ) : (
-                        <IoCheckmarkCircleOutline style={{ fontSize: "1.4rem", color: "#0f766e", flexShrink: 0 }} />
-                      )}
-                      <div>
-                        <div style={{ fontSize: "0.875rem", fontWeight: 800, color: "var(--brand-text)" }}>{text("checkStep3Title")}</div>
-                        <div style={{ fontSize: "0.75rem", color: "var(--brand-text-muted)" }}>{text("checkStep3Desc")}</div>
-                      </div>
-                    </div>
-                    <Link to={stats.id ? eventPath(stats.id, "rsvp") : "/app/events"} style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0f766e", textDecoration: "none" }}>
-                      {text("checkStep3Action")}
-                    </Link>
-                  </div>
-
-                  {/* Step 4 */}
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 16px", borderRadius: "12px", border: stats.hasBudget ? "1px solid rgba(15, 118, 110, 0.2)" : "1px solid var(--brand-border)", background: stats.hasBudget ? "rgba(15, 118, 110, 0.04)" : "#fdfbf7" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                      {stats.hasBudget ? (
-                        <IoCheckmarkCircle style={{ fontSize: "1.4rem", color: "#0f766e", flexShrink: 0 }} />
-                      ) : (
-                        <IoWalletOutline style={{ fontSize: "1.4rem", color: "#e11d48", flexShrink: 0 }} />
-                      )}
-                      <div>
-                        <div style={{ fontSize: "0.875rem", fontWeight: 800, color: "var(--brand-text)" }}>{text("checkStep4Title")}</div>
-                        <div style={{ fontSize: "0.75rem", color: "var(--brand-text-muted)" }}>{text("checkStep4Desc")}</div>
-                      </div>
-                    </div>
-                    <Link to={eventPath(stats.id, "budget")} style={{ fontSize: "0.75rem", fontWeight: 700, color: "#e11d48", textDecoration: "none" }}>
-                      {text("checkStep4Action")}
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column (Control Hub & Notifications) */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-              {/* Quick Actions 8-Grid */}
-              <div className="dash-card">
-                <div className="dash-card-header">
-                  <h3>
-                    <IoSparkles style={{ color: "var(--brand-primary)", fontSize: "1.2rem" }} />
-                    <span>{text("quickGridTitle")}</span>
-                  </h3>
-                </div>
-
-                <div className="dash-quick-grid">
-                  <Link to={stats.id ? eventPath(stats.id, "invitation") : "/templates/browse"} className="dash-quick-btn">
-                    <div className="quick-icon" style={{ background: "rgba(225, 29, 72, 0.12)", color: "#e11d48" }}>
-                      <IoSparkles style={{ color: "#e11d48" }} />
-                    </div>
-                    <span>{text("quickTemplates")}</span>
-                  </Link>
-
-                  <Link to={eventPath(stats.id, "guests")} className="dash-quick-btn">
-                    <div className="quick-icon" style={{ background: "rgba(185, 139, 66, 0.12)", color: "#b98b42" }}>
-                      <IoPeopleOutline />
-                    </div>
-                    <span>{text("quickGuests")}</span>
-                  </Link>
-
-                  <Link to={stats.id ? eventPath(stats.id, "rsvp") : "/dashboard/rsvp"} className="dash-quick-btn">
-                    <div className="quick-icon" style={{ background: "rgba(15, 118, 110, 0.12)", color: "#0f766e" }}>
-                      <IoCheckmarkCircleOutline />
-                    </div>
-                    <span>{text("quickRsvp")}</span>
-                  </Link>
-
-                  <Link to={stats.id ? eventPath(stats.id, "seating") : "/dashboard/seating"} className="dash-quick-btn">
-                    <div className="quick-icon" style={{ background: "rgba(79, 70, 229, 0.12)", color: "#4f46e5" }}>
-                      <IoRestaurantOutline />
-                    </div>
-                    <span>{text("quickSeating")}</span>
-                  </Link>
-
-                  <Link to={stats.id ? eventPath(stats.id, "delivery") : "/dashboard/delivery"} className="dash-quick-btn">
-                    <div className="quick-icon" style={{ background: "rgba(15, 118, 110, 0.12)", color: "#0f766e" }}>
-                      <IoShareSocialOutline />
-                    </div>
-                    <span>{text("quickShare")}</span>
-                  </Link>
-
-                  <Link to={eventPath(stats.id, "budget")} className="dash-quick-btn">
-                    <div className="quick-icon" style={{ background: "rgba(225, 29, 72, 0.12)", color: "#e11d48" }}>
-                      <IoWalletOutline />
-                    </div>
-                    <span>{text("quickBudget")}</span>
-                  </Link>
-
-                  <Link to={eventPath(stats.id, "gifts")} className="dash-quick-btn">
-                    <div className="quick-icon" style={{ background: "rgba(124, 58, 237, 0.12)", color: "#7c3aed" }}>
-                      <IoGiftOutline />
-                    </div>
-                    <span>{text("quickGifts")}</span>
-                  </Link>
-
-                  <Link to={eventPath(stats.id, "reports")} className="dash-quick-btn">
-                    <div className="quick-icon" style={{ background: "rgba(14, 116, 144, 0.12)", color: "#0e7490" }}>
-                      <IoStatsChartOutline />
-                    </div>
-                    <span>{text("quickReports")}</span>
-                  </Link>
-                </div>
-              </div>
-
-              {/* Recent Notifications */}
-              <div className="dash-card">
-                <div className="dash-card-header">
-                  <h3>
-                    <IoNotificationsOutline style={{ color: "var(--brand-primary)", fontSize: "1.2rem" }} />
-                    <span>{text("notificationsTitle")}</span>
-                  </h3>
-                  <Link to="/dashboard/notifications" className="dash-card-link">
-                    <span>{text("notificationsViewAll")}</span>
-                  </Link>
-                </div>
-
-                <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                  {state.notifications.length > 0 ? (
-                    state.notifications.slice(0, 4).map((n, i) => (
-                      <div key={n.id || i} style={{ padding: "12px", borderRadius: "10px", border: "1px solid var(--brand-border)", background: "#f8fafc" }}>
-                        <div style={{ fontSize: "0.8125rem", fontWeight: 700, color: "var(--brand-text)" }}>{n.title || (lang === "en" ? "New Activity" : "សកម្មភាពថ្មី")}</div>
-                        <div style={{ fontSize: "0.75rem", color: "var(--brand-text-muted)", marginTop: "2px" }}>{n.body || n.message}</div>
-                      </div>
-                    ))
-                  ) : (
-                    <div style={{ padding: "24px 16px", textAlign: "center", border: "1px dashed var(--brand-border)", borderRadius: "12px" }}>
-                      <IoNotificationsOutline style={{ fontSize: "1.5rem", color: "var(--brand-text-muted)", marginBottom: "4px" }} />
-                      <p style={{ margin: 0, fontSize: "0.75rem", color: "var(--brand-text-muted)" }}>{text("notificationsEmpty")}</p>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </section>
-        </>
-      )}
-    </main>
-  );
+        <div className="overview-publication">
+          <button type="button" className="workspace-button" onClick={handlePublishToggle} disabled={publishing}>{publishing ? label("Updating…", "កំពុងកែប្រែ…") : stats.status === "PUBLISHED" ? label("Unpublish invitation", "ផ្អាកផ្សាយធៀប") : label("Publish invitation", "ផ្សព្វផ្សាយធៀប")}</button>
+          {stats.status === "PUBLISHED" && stats.slug && <button className="workspace-button" onClick={() => handleCopyLink(stats.slug)}>{copied ? text("copied") : text("copyLink")}</button>}
+        </div>
+      </div>
+    </section>
+    <section className="overview-columns">
+      <div className="workspace-section overview-preparation">
+        <div className="workspace-section-heading"><h2>{label("Prepare your celebration", "រៀបចំកម្មវិធីរបស់អ្នក")}</h2><span className="workspace-badge">{preparation.filter(step => step.done).length}/{preparation.length}</span></div>
+        <ol className="overview-checklist">{preparation.map(step => <li key={step.module + step.title} className={step.done ? "is-done" : ""}>
+          {step.done ? <CheckCircle2 size={22} aria-label={label("Complete", "រួចរាល់")} /> : <Circle size={22} aria-label={label("To do", "ត្រូវធ្វើ")} />}
+          <Link to={eventPath(stats.id, step.module)}><strong>{step.title}</strong><span>{step.description}</span></Link><ArrowRight size={16} aria-hidden="true" />
+        </li>)}</ol>
+      </div>
+      <div className="workspace-section overview-shortcuts"><h2>{label("Your event tools", "មុខងារកម្មវិធី")}</h2>
+        <div className="overview-tool-grid">{[
+          ["guests", Users, label("Guests", "បញ្ជីភ្ញៀវ")], ["tickets/design", Palette, label("Digital tickets", "កាតឌីជីថល")],
+          ["rsvp", ClipboardCheck, "RSVP"], ["check-in", ScanLine, label("Check-in", "កត់ត្រាវត្តមាន")],
+          ["delivery", Send, label("Delivery", "ការផ្ញើធៀប")], ["seating", Users, label("Seating", "រៀបកៅអី")],
+          ["budget", Wallet, label("Budget", "គម្រោងថវិកា")], ["gifts", Gift, label("Gifts", "ចំណងដៃ")],
+        ].map(([module, Icon, title]) => <Link key={module} to={eventPath(stats.id, module)}><Icon size={20} aria-hidden="true" /><span>{title}</span></Link>)}</div>
+      </div>
+    </section>
+    {(stats.guestTotal > 0 || state.budgetItems.length > 0 || state.gifts.length > 0) && <section className="overview-metrics" aria-label={label("Event activity", "សកម្មភាពកម្មវិធី")}>
+      {stats.guestTotal > 0 && <>
+        <Link to={eventPath(stats.id, "guests")}><span>{text("statGuests")}</span><strong>{stats.guestTotal}</strong></Link>
+        <Link to={eventPath(stats.id, "rsvp")}><span>{label("Confirmed", "បានយល់ព្រម")}</span><strong>{stats.rsvpYes}</strong></Link>
+        <Link to={eventPath(stats.id, "rsvp")}><span>{label("Pending responses", "រង់ចាំការឆ្លើយតប")}</span><strong>{stats.rsvpPending}</strong></Link>
+        <Link to={eventPath(stats.id, "check-in")}><span>{label("Checked in", "បានចូលរួម")}</span><strong>{stats.checkedInCount}</strong></Link>
+      </>}
+      {state.budgetItems.length > 0 && <Link to={eventPath(stats.id, "budget")}><span>{text("statBudget")}</span><strong>{currencyAmounts(stats.expenseAmounts)}</strong></Link>}
+      {state.gifts.length > 0 && <Link to={eventPath(stats.id, "gifts")}><span>{text("statGifts")}</span><strong>{currencyAmounts(stats.giftAmounts)}</strong></Link>}
+    </section>}
+    <section className="workspace-section"><div className="workspace-section-heading"><h2>{text("notificationsTitle")}</h2><Link to="/app/notifications" className="workspace-button">{text("notificationsViewAll")}</Link></div>
+      {state.notifications.length ? <ul className="overview-activity">{state.notifications.slice(0, 4).map((notification, index) => <li key={notification.id || index}><strong>{notification.title || notification.message}</strong>{notification.title && <p>{notification.message}</p>}</li>)}</ul> : <p className="workspace-muted">{text("notificationsEmpty")}</p>}
+      <Link className="overview-report-link" to={eventPath(stats.id, "reports")}><ChartColumn size={18} />{label("View event report", "មើលរបាយការណ៍កម្មវិធី")}</Link>
+    </section>
+  </main>;
 }

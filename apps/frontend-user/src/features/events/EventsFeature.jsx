@@ -30,6 +30,7 @@ export function EventsFeature() {
             navigate(location.pathname, { replace: true, state: {} });
         }
     }, [location.state, navigate, location.pathname]);
+
     const {
         drafts, loading, error, reload,
         draftToDelete,
@@ -57,39 +58,89 @@ export function EventsFeature() {
         : sort === "date" ? String(a.eventDate || "9999").localeCompare(String(b.eventDate || "9999"))
         : 0); // Both providers already return their records in recent-first order.
     const visible = filtered.slice(page * 12, (page + 1) * 12);
-    const createBtnText = (t("createBtn") || "បង្កើតកម្មវិធី").replace(/^\+*\s*/, "");
-    const emptyActionText = (t("goToCreate") || t("createBtn") || "បង្កើតកម្មវិធីថ្មី").replace(/^\+*\s*/, "");
+    const createBtnText = (t("createBtn") || (en ? "Create Event" : "បង្កើតកម្មវិធី")).replace(/^\+*\s*/, "");
+    const emptyActionText = (t("goToCreate") || t("createBtn") || (en ? "Create First Event" : "បង្កើតកម្មវិធីថ្មី")).replace(/^\+*\s*/, "");
 
     return (
-        <main className="events-page">
+        <main className="events-page workspace-page">
             <header className="events-page-header">
                 <div>
-                    <span>{t("brandKicker") || `${tDash("brand")} invitations`}</span>
-                    <h1>{t("title")}</h1>
-                    <p>{t("subtitle")}</p>
+                    <span>{t("brandKicker") || `${tDash("brand") || "Koupreng"} ${en ? "invitations" : "ធៀបអញ្ជើញ"}`}</span>
+                    <h1>{t("title") || (en ? "My Events" : "កម្មវិធីរបស់ខ្ញុំ")}</h1>
+                    <p>{t("subtitle") || (en ? "Manage your weddings, invitations, guest lists, and digital tickets in one place." : "គ្រប់គ្រងកម្មវិធី ធៀបការ បញ្ជីភ្ញៀវ និងកាតអញ្ជើញឌីជីថលរបស់អ្នកនៅកន្លែងតែមួយ។")}</p>
                 </div>
                 <Link to="/app/events/new" state={{ from: "/dashboard/events" }} className="events-create-btn">
                     + {createBtnText}
                 </Link>
             </header>
 
-            {error && <div role="alert"><p>{error}</p><button type="button" onClick={reload}>{en ? "Try again" : "ព្យាយាមម្ដងទៀត"}</button></div>}
+            {error && (
+                <div role="alert" className="workspace-notice" style={{ color: "#a52838", marginBottom: "20px" }}>
+                    <p>{error}</p>
+                    <button type="button" className="workspace-button" style={{ marginTop: "10px" }} onClick={reload}>
+                        {en ? "Try again" : "ព្យាយាមម្ដងទៀត"}
+                    </button>
+                </div>
+            )}
+
             <div className="events-filters">
-              <label>{en ? "Search events" : "ស្វែងរកកម្មវិធី"}<input type="search" value={search} onChange={e => { setSearch(e.target.value); setPage(0); }} /></label>
-              <label>{en ? "Status" : "ស្ថានភាព"}<select value={status} onChange={e => { setStatus(e.target.value); setPage(0); }}><option value="">{en ? "All statuses" : "គ្រប់ស្ថានភាព"}</option><option value="DRAFT">{en ? "Draft" : "ព្រាង"}</option><option value="PUBLISHED">{en ? "Published" : "បានផ្សាយ"}</option><option value="UNPUBLISHED">{en ? "Unpublished" : "ផ្អាកផ្សាយ"}</option></select></label>
-              <label>{en ? "Sort" : "តម្រៀប"}<select value={sort} onChange={e => { setSort(e.target.value); setPage(0); }}><option value="newest">{en ? "Newest" : "ថ្មីបំផុត"}</option><option value="date">{en ? "Event date" : "កាលបរិច្ឆេទ"}</option><option value="title">{en ? "Title" : "ឈ្មោះ"}</option></select></label>
+              <label>
+                {en ? "Search events" : "ស្វែងរកកម្មវិធី"}
+                <input
+                    type="search"
+                    placeholder={en ? "Filter by name or venue…" : "ស្វែងរកតាមឈ្មោះ ឬទីតាំង…"}
+                    value={search}
+                    onChange={e => { setSearch(e.target.value); setPage(0); }}
+                />
+              </label>
+              <label>
+                {en ? "Status" : "ស្ថានភាព"}
+                <select value={status} onChange={e => { setStatus(e.target.value); setPage(0); }}>
+                    <option value="">{en ? "All statuses" : "គ្រប់ស្ថានភាព"}</option>
+                    <option value="DRAFT">{en ? "Draft" : "ព្រាង"}</option>
+                    <option value="PUBLISHED">{en ? "Published" : "បានផ្សាយ"}</option>
+                    <option value="UNPUBLISHED">{en ? "Unpublished" : "ផ្អាកផ្សាយ"}</option>
+                </select>
+              </label>
+              <label>
+                {en ? "Sort" : "តម្រៀប"}
+                <select value={sort} onChange={e => { setSort(e.target.value); setPage(0); }}>
+                    <option value="newest">{en ? "Newest" : "ថ្មីបំផុត"}</option>
+                    <option value="date">{en ? "Event date" : "កាលបរិច្ឆេទ"}</option>
+                    <option value="title">{en ? "Title" : "ឈ្មោះ"}</option>
+                </select>
+              </label>
             </div>
-            {loading && <p role="status">{en ? "Loading your events…" : "កំពុងទាញយកកម្មវិធី…"}</p>}
+
+            {loading && <p role="status" className="workspace-muted">{en ? "Loading your events…" : "កំពុងទាញយកកម្មវិធី…"}</p>}
+
             {!loading && drafts.length === 0 ? (
                 <div className="events-empty-state">
                     <div className="events-empty-icon">
-                        <CalendarHeart size={32} strokeWidth={1.75} aria-hidden="true" />
+                        <CalendarHeart size={36} strokeWidth={1.75} aria-hidden="true" />
                     </div>
-                    <div className="events-empty-title">{t("emptyTitle")}</div>
-                    <div className="events-empty-desc">{t("emptySubtitle")}</div>
+                    <div className="events-empty-title">{t("emptyTitle") || (en ? "No Events Yet" : "មិនទាន់មានកម្មវិធីនៅឡើយទេ")}</div>
+                    <div className="events-empty-desc">{t("emptySubtitle") || (en ? "Create your first digital invitation event to get started." : "ចាប់ផ្ដើមដោយបង្កើតកម្មវិធី និងធៀបអញ្ជើញឌីជីថលដំបូងរបស់អ្នក។")}</div>
                     <Link to="/app/events/new" state={{ from: "/dashboard/events" }} className="events-empty-action">
                         + {emptyActionText}
                     </Link>
+                </div>
+            ) : visible.length === 1 ? (
+                <div className="events-featured-container">
+                    <EventCard
+                        key={visible[0].id}
+                        draft={visible[0]}
+                        onManage={handleDashboard}
+                        onEdit={handleEdit}
+                        onDelete={handleDeleteClick}
+                        onPreview={draft => {
+                            const id = backendEventId(draft);
+                            if (id) navigate(eventPath(id, "preview"));
+                            else navigate(`/preview/${draft.id}`);
+                        }}
+                        t={t}
+                        featured={true}
+                    />
                 </div>
             ) : (
                 <div className="events-grid">
@@ -100,15 +151,36 @@ export function EventsFeature() {
                             onManage={handleDashboard}
                             onEdit={handleEdit}
                             onDelete={handleDeleteClick}
-                            onPreview={draft => { const id = backendEventId(draft); if (id) navigate(eventPath(id, "preview")); else navigate(`/preview/${draft.id}`); }}
+                            onPreview={draft => {
+                                const id = backendEventId(draft);
+                                if (id) navigate(eventPath(id, "preview"));
+                                else navigate(`/preview/${draft.id}`);
+                            }}
                             t={t}
+                            featured={false}
                         />
                     ))}
                 </div>
             )}
 
-            {!loading && drafts.length > 0 && filtered.length === 0 && <p>{en ? "No events match your filters." : "គ្មានកម្មវិធីត្រូវនឹងការស្វែងរក។"}</p>}
-            {filtered.length > 12 && <nav aria-label={en ? "Event pages" : "ទំព័រកម្មវិធី"}><button disabled={page === 0} onClick={() => setPage(p => p - 1)}>{en ? "Previous" : "មុន"}</button> <span>{page + 1} / {Math.ceil(filtered.length / 12)}</span> <button disabled={(page + 1) * 12 >= filtered.length} onClick={() => setPage(p => p + 1)}>{en ? "Next" : "បន្ទាប់"}</button></nav>}
+            {!loading && drafts.length > 0 && filtered.length === 0 && (
+                <div className="workspace-notice" style={{ marginTop: "24px" }}>
+                    <p>{en ? "No events match your search or filter." : "គ្មានកម្មវិធីត្រូវនឹងការស្វែងរក ឬចម្រោះនេះទេ។"}</p>
+                </div>
+            )}
+
+            {filtered.length > 12 && (
+                <nav className="events-pagination" aria-label={en ? "Event pages" : "ទំព័រកម្មវិធី"}>
+                    <button disabled={page === 0} onClick={() => setPage(p => p - 1)} className="workspace-button">
+                        {en ? "Previous" : "មុន"}
+                    </button>
+                    <span className="events-pagination-info">{page + 1} / {Math.ceil(filtered.length / 12)}</span>
+                    <button disabled={(page + 1) * 12 >= filtered.length} onClick={() => setPage(p => p + 1)} className="workspace-button">
+                        {en ? "Next" : "បន្ទាប់"}
+                    </button>
+                </nav>
+            )}
+
             <EventDeleteModal
                 draftToDelete={draftToDelete}
                 onCancel={cancelDelete}
