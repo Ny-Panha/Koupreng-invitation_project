@@ -145,6 +145,7 @@ export function EventsFeature() {
                         onManage={handleDashboard}
                         onEdit={handleEdit}
                         onDelete={handleDeleteClick}
+                        onReviewAccess={() => navigate("/app/packages")}
                         onPreview={draft => {
                             const id = backendEventId(draft);
                             if (id) navigate(eventPath(id, "preview"));
@@ -163,6 +164,7 @@ export function EventsFeature() {
                             onManage={handleDashboard}
                             onEdit={handleEdit}
                             onDelete={handleDeleteClick}
+                            onReviewAccess={() => navigate("/app/packages")}
                             onPreview={draft => {
                                 const id = backendEventId(draft);
                                 if (id) navigate(eventPath(id, "preview"));
