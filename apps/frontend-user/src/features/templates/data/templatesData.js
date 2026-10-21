@@ -890,17 +890,16 @@ export function getTemplateById(id) {
         return null;
     }
 
-    // 2. Fallback only when catalog not yet loaded (e.g. offline unit tests)
+    // Numeric database IDs cannot be resolved until the actual catalog arrives.
     if (!rawId) return null;
-    const mappedCode = DB_TEMPLATE_ID_MAP[rawId];
-    const normalizedId = normalizeTemplateId(mappedCode || rawId);
+    if (/^\d+$/.test(rawId)) return null;
+    const normalizedId = rawId;
     return TEMPLATES.find((template) =>
         template.id === normalizedId ||
         template.code === normalizedId ||
         template.slug === normalizedId ||
         String(template.id) === rawId ||
-        String(template.backendId) === rawId ||
-        (mappedCode && (template.id === mappedCode || template.code === mappedCode || template.slug === mappedCode))
+        String(template.backendId) === rawId
     ) || null;
 }
 

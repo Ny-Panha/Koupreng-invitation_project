@@ -15,6 +15,7 @@ describe("exact template identity across catalog and renderers", () => {
   it("never substitutes a template for an invalid or absent identity", () => {
     expect(getTemplateById("missing-template")).toBeNull();
     expect(getTemplateById(null)).toBeNull();
+    expect(getTemplateById(4)).toBeNull();
     registerDynamicTemplates(catalog);
     expect(getTemplateById("missing-template")).toBeNull();
     expect(getTemplateById(99999)).toBeNull();

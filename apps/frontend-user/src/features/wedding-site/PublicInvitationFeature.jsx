@@ -230,7 +230,7 @@ export default function PublicInvitationPage() {
     const merged = useMemo(() => {
         if (!activeDraft?.id || gallery === null) return null;
 
-        const templateId = activeDraft.templateId || "garden-royal-khmer-wedding";
+        const templateId = activeDraft.templateId;
         return draftToTemplate({ ...activeDraft, templateId }, gallery);
     }, [activeDraft, gallery]);
 

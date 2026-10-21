@@ -49,7 +49,7 @@ afterEach(() => {
 
 describe("Dynamic Templates & Presets", () => {
     it("correctly extracts presets for Emerald Luxe", () => {
-        const tpl = getTemplateById("2");
+        const tpl = getTemplateById("emerald-canva-luxe-wedding");
         expect(tpl).toBeDefined();
         const preset = getTemplatePreset(tpl);
         expect(preset.openingStyle).toBe("curtain");

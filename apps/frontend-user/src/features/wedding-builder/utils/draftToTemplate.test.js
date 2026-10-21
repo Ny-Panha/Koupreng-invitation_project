@@ -10,16 +10,16 @@ const EmeraldLuxeLayout = templateRegistry["emerald-canva-luxe-wedding"];
 import { buildTemplateContent } from "../../templates/experience/config/templateExperienceContent";
 
 describe("draftToTemplate and Dynamic Template Synchronization", () => {
-  it("Scenario A: Built-in 7 resolves to The Digital Yes without fallback", () => {
-    const tpl7 = getTemplateById("7");
+  it("Scenario A: The Digital Yes resolves by stable code without fallback", () => {
+    const tpl7 = getTemplateById("the-digital-yes-wedding");
     expect(tpl7).toBeDefined();
     expect(tpl7.id).toBe("the-digital-yes-wedding");
     const layout = getDedicatedTemplateComponent(tpl7);
     expect(layout).toBe(DigitalYesLayout);
   });
 
-  it("Scenario B: Built-in 2 resolves to Emerald Luxe", () => {
-    const tpl2 = getTemplateById("2");
+  it("Scenario B: Emerald Luxe resolves by stable code", () => {
+    const tpl2 = getTemplateById("emerald-canva-luxe-wedding");
     expect(tpl2).toBeDefined();
     const layout = getDedicatedTemplateComponent(tpl2);
     expect(layout).toBe(EmeraldLuxeLayout);

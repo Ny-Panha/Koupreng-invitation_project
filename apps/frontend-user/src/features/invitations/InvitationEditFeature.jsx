@@ -44,8 +44,12 @@ export default function InvitationEditPage() {
 
             // 1. Check local wedding draft storage first
             if (localDraft) {
-                const chosenTemplateId = localDraft.templateId || "garden-royal-khmer-wedding";
+                const chosenTemplateId = localDraft.templateId;
                 const tpl = getTemplateById(chosenTemplateId);
+                if (!tpl || !resolveTemplateRenderer(tpl).available) {
+                    if (active) { setTemplateError(true); setLoading(false); }
+                    return;
+                }
                 const preset = getTemplatePreset(tpl) || {};
 
                 const isDefaultGold = localDraft.frontColor === "#f9af59" && localDraft.bottomColor === "#B08E4F";
