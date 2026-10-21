@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import {
   IoCheckmarkOutline,
   IoCloseOutline,
@@ -15,20 +15,6 @@ import { SEND_STATUS } from "../model/guestConstants";
 
 const INLINE_INPUT_CLASS =
   "w-full h-10 min-w-0 px-3 py-2 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 bg-white border border-slate-200 rounded-xl shadow-2xs transition-all focus:outline-none focus:ring-2 focus:ring-[#0F766E]/20 focus:border-[#0F766E]";
-
-function emptyGuestForm(groups, categories) {
-  return {
-    name: "",
-    companionName: "",
-    phone: "",
-    count: "1",
-    group: groups[0]?.name || "Groom Side",
-    category: categories[0]?.name || "Friend",
-    note: "",
-    seat: "",
-    sendStatus: SEND_STATUS.pending,
-  };
-}
 
 export default function GuestTable({
   guests = [],
@@ -48,12 +34,8 @@ export default function GuestTable({
   onOpenAddGuest,
   t,
 }) {
-  const nameInputRef = useRef(null);
-  const submittingRef = useRef(false);
-  const [newGuest, setNewGuest] = useState(() => emptyGuestForm(groups, categories));
   const [editingGuestId, setEditingGuestId] = useState(null);
   const [editingGuest, setEditingGuest] = useState(null);
-  const [nameError, setNameError] = useState("");
 
   const labels = {
     name: t ? t("batchFieldName") : "ឈ្មោះ",
@@ -67,35 +49,6 @@ export default function GuestTable({
 
   const updateDraft = (setDraft, field, value) => {
     setDraft((current) => ({ ...current, [field]: value }));
-  };
-
-  const saveNewGuest = async () => {
-    if (submittingRef.current) return false;
-    if (!newGuest.name.trim()) {
-      setNameError(t ? t("batchNameRequired") : "សូមបញ្ចូលឈ្មោះភ្ញៀវ");
-      nameInputRef.current?.focus();
-      return;
-    }
-    submittingRef.current = true;
-    const submittedGuest = { ...newGuest };
-    const pendingSave = onSaveGuest ? onSaveGuest(submittedGuest, null) : Promise.resolve(true);
-    setNewGuest(emptyGuestForm(groups, categories));
-    setNameError("");
-    try {
-      const saved = await pendingSave;
-      if (!saved) {
-        setNewGuest(submittedGuest);
-      }
-      requestAnimationFrame(() => nameInputRef.current?.focus());
-      return saved;
-    } finally {
-      submittingRef.current = false;
-    }
-  };
-
-  const submitNewGuest = (event) => {
-    event.preventDefault();
-    saveNewGuest();
   };
 
   const beginEdit = (guest) => {
@@ -133,26 +86,20 @@ export default function GuestTable({
     }
   };
 
-  const renderEditor = (draft, setDraft, { newRow = false } = {}) => (
+  const renderEditor = (draft, setDraft) => (
     <>
       <td data-label={labels.name}>
         <input
           className={INLINE_INPUT_CLASS}
-          ref={newRow ? nameInputRef : undefined}
-          aria-label={`${labels.name}${newRow ? "" : " " + (editingGuestId ?? "")}`}
+          aria-label={`${labels.name} ${editingGuestId ?? ""}`}
           aria-required="true"
-          aria-invalid={newRow && Boolean(nameError)}
           disabled={saving}
           value={draft.name}
-          onChange={(event) => {
-            updateDraft(setDraft, "name", event.target.value);
-            if (newRow) setNameError("");
-          }}
-          onKeyDown={(event) => handleEnter(event, newRow ? saveNewGuest : saveEdit)}
+          onChange={(event) => updateDraft(setDraft, "name", event.target.value)}
+          onKeyDown={(event) => handleEnter(event, saveEdit)}
           required
           placeholder="ឈ្មោះ..."
         />
-        {newRow && nameError && <small className="pe-inline-field-error" role="alert">{nameError}</small>}
       </td>
       <td data-label={labels.companionName}>
         <input
@@ -162,7 +109,7 @@ export default function GuestTable({
           disabled={saving}
           placeholder="ឈ្មោះអ្នកភ្ជាប់..."
           onChange={(event) => updateDraft(setDraft, "companionName", event.target.value)}
-          onKeyDown={(event) => handleEnter(event, newRow ? saveNewGuest : saveEdit)}
+          onKeyDown={(event) => handleEnter(event, saveEdit)}
         />
       </td>
       <td data-label={labels.phone}>
@@ -174,7 +121,7 @@ export default function GuestTable({
           disabled={saving}
           placeholder="ទូរស័ព្ទ..."
           onChange={(event) => updateDraft(setDraft, "phone", event.target.value)}
-          onKeyDown={(event) => handleEnter(event, newRow ? saveNewGuest : saveEdit)}
+          onKeyDown={(event) => handleEnter(event, saveEdit)}
         />
       </td>
       <td data-label={labels.count}>
@@ -187,7 +134,7 @@ export default function GuestTable({
           disabled={saving}
           placeholder="1"
           onChange={(event) => updateDraft(setDraft, "count", event.target.value)}
-          onKeyDown={(event) => handleEnter(event, newRow ? saveNewGuest : saveEdit)}
+          onKeyDown={(event) => handleEnter(event, saveEdit)}
         />
       </td>
       <td data-label={labels.group}>
@@ -197,7 +144,7 @@ export default function GuestTable({
           value={draft.group}
           disabled={saving}
           onChange={(event) => updateDraft(setDraft, "group", event.target.value)}
-          onKeyDown={(event) => handleEnter(event, newRow ? saveNewGuest : saveEdit)}
+          onKeyDown={(event) => handleEnter(event, saveEdit)}
         >
           {groups.map((group) => (
             <option key={group.id} value={group.name}>
@@ -213,7 +160,7 @@ export default function GuestTable({
           value={draft.sendStatus}
           disabled={saving}
           onChange={(event) => updateDraft(setDraft, "sendStatus", event.target.value)}
-          onKeyDown={(event) => handleEnter(event, newRow ? saveNewGuest : saveEdit)}
+          onKeyDown={(event) => handleEnter(event, saveEdit)}
         >
           <option value={SEND_STATUS.pending}>Pending</option>
           <option value={SEND_STATUS.sent}>Sent</option>
@@ -229,7 +176,7 @@ export default function GuestTable({
           disabled={saving}
           placeholder="កំណត់ចំណាំ..."
           onChange={(event) => updateDraft(setDraft, "note", event.target.value)}
-          onKeyDown={(event) => handleEnter(event, newRow ? saveNewGuest : saveEdit)}
+          onKeyDown={(event) => handleEnter(event, saveEdit)}
         />
       </td>
     </>
@@ -239,7 +186,7 @@ export default function GuestTable({
     <ResponsiveTable ariaLabel="Guests List Table" className="pe-guest-data-table w-full">
       <thead>
         <tr>
-          <th>{t ? t("thGuest") : "ឈ្មោះភ្ញៀវ"} <em aria-label="required">*</em></th>
+          <th>{t ? t("thGuest") : "ឈ្មោះភ្ញៀវ"}</th>
           <th>{labels.companionName}</th>
           <th>{t ? t("thPhone") : "លេខទូរស័ព្ទ"}</th>
           <th>{labels.count}</th>
@@ -250,18 +197,6 @@ export default function GuestTable({
         </tr>
       </thead>
       <tbody>
-        {/* Desktop Quick Add Row */}
-        <tr className="pe-guest-inline-add-row">
-          {renderEditor(newGuest, setNewGuest, { newRow: true })}
-          <td data-label={t ? t("thActions") : "Actions"} className="pe-guest-inline-actions">
-            <form className="pe-guest-inline-form" onSubmit={submitNewGuest}>
-              <button type="submit" className="pe-guest-inline-save" disabled={saving}>
-                {t ? t("inlineAddButton") : "បន្ថែម"}
-              </button>
-            </form>
-          </td>
-        </tr>
-
         {guests.map((guest) => {
           const inviteUrl = guestInviteUrl(currentDraft, guest, publicInvitation);
           const shareMessage = buildShareMessage(guest, currentDraft, publicInvitation);

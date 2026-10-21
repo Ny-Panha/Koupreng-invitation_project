@@ -4,7 +4,6 @@ import {
   IoDownloadOutline,
   IoQrCodeOutline,
   IoSettingsOutline,
-  IoPersonAddOutline,
 } from "react-icons/io5";
 import { SearchInput } from "@/shared/ui";
 
@@ -17,7 +16,6 @@ export default function GuestFilters({
   setCategoryFilter,
   groups,
   categories,
-  onOpenAddGuest,
   onOpenImport,
   onExportCsv,
   onOpenGroupManager,
@@ -28,7 +26,6 @@ export default function GuestFilters({
     ? t("exportBtn")
     : "ទាញយក CSV";
 
-  const addGuestLabel = (t && t("addGuestBtn")) ? t("addGuestBtn") : "+ បន្ថែមភ្ញៀវ";
   const importLabel = (t && t("importBtn")) ? t("importBtn") : "នាំចូល";
 
   return (
@@ -95,18 +92,6 @@ export default function GuestFilters({
 
       {/* Action Buttons Section */}
       <div className="pe-actions">
-        {onOpenAddGuest && (
-          <button
-            type="button"
-            className="pe-primary-add-btn"
-            onClick={onOpenAddGuest}
-            aria-label={addGuestLabel}
-          >
-            <IoPersonAddOutline aria-hidden="true" />
-            <span>{addGuestLabel}</span>
-          </button>
-        )}
-
         <Link
           to="/dashboard/check-in"
           className="pe-secondary-btn"

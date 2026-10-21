@@ -9,10 +9,11 @@ const png = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCA
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.clearAllMocks(); });
 
 describe("FE-002/003 QR DTO and download contracts", () => {
-  it("renders the actual backend QR image and payload", () => {
+  it("renders the backend QR image without displaying its private token as text", () => {
     render(<QrPreview qrData={{ qrCodeDataUri: png, qrPayload: "guest-token", guestName: "Known guest" }} />);
     expect(screen.getByRole("img", { name: "QR Code" })).toHaveAttribute("src", png);
-    expect(screen.getByText("guest-token")).toBeInTheDocument();
+    expect(screen.queryByText("guest-token")).not.toBeInTheDocument();
+    expect(screen.getByText("Known guest")).toBeInTheDocument();
   });
 
   it.each([[null, "qr-invitation-10.png"], [2, "qr-guest-2.png"]])("downloads returned PNG data without an invented endpoint (guest %s)", async (guestId, filename) => {

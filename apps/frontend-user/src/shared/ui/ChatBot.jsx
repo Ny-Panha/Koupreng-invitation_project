@@ -43,6 +43,7 @@ export default function ChatBot() {
   const navigate = useNavigate();
   const lang = useLanguageStore((state) => state.lang) || "en";
   const t = TRANSLATIONS[lang] || TRANSLATIONS.en;
+  const isWorkspace = location.pathname.startsWith("/app/") || location.pathname.startsWith("/dashboard");
   
   const [isOpen, setIsOpen] = useState(false);
   const [showGreeting, setShowGreeting] = useState(true);
@@ -100,7 +101,7 @@ export default function ChatBot() {
   }
 
   return (
-    <div className="chatbot-wrapper">
+    <div className={`chatbot-wrapper${isWorkspace ? " chatbot-wrapper--workspace" : ""}${isOpen ? " is-open" : ""}`}>
       <AnimatePresence>
         {/* Chat Window */}
         {isOpen && (
@@ -233,6 +234,7 @@ export default function ChatBot() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
+        {isWorkspace && !isOpen && <span className="workspace-support-label">{t.support}</span>}
         <AnimatePresence mode="wait">
           {isOpen ? (
             <motion.svg

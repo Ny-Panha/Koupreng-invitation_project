@@ -1659,6 +1659,7 @@
     .pe-filters .k-search-input-wrap,
     .pe-select-wrap {
         width: 100%;
+        flex: 0 0 auto;
     }
 
     .pe-select-wrap .pe-filter-select {
@@ -1712,22 +1713,40 @@
         border-radius: 18px !important;
         padding: 16px !important;
         box-shadow: 0 4px 16px rgba(42, 31, 16, 0.04) !important;
-        gap: 2px;
+        gap: 4px;
+        margin-bottom: 12px;
     }
 
     .pe-guest-data-table td {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 7px 0 !important;
+        padding: 8px 0 !important;
         border-bottom: 1px solid #f4eee2 !important;
         font-size: 0.8125rem;
     }
 
+    .pe-guest-data-table td:first-child {
+        padding-bottom: 10px !important;
+        border-bottom: 1px solid #eadfce !important;
+        margin-bottom: 4px;
+    }
+
+    .pe-guest-data-table td:first-child::before {
+        display: none !important;
+    }
+
+    .pe-guest-data-table td:first-child strong {
+        font-size: 1.05rem;
+        color: #1e293b;
+    }
+
     .pe-guest-data-table td:last-child {
         border-bottom: none !important;
-        padding-top: 10px !important;
+        padding-top: 12px !important;
         justify-content: flex-end;
+        border-top: 1px dashed #eadfce !important;
+        margin-top: 4px;
     }
 
     .pe-guest-data-table td::before {
@@ -1738,6 +1757,23 @@
         text-transform: uppercase;
         margin-right: 12px;
         flex-shrink: 0;
+    }
+
+    .pe-guest-data-table td:last-child::before {
+        display: none !important;
+    }
+
+    .pe-guest-data-table .pe-icon-btn {
+        flex: 0 0 38px;
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+    }
+
+    .pe-guest-data-table .guest-action-btn {
+        min-height: 38px;
+        padding: 0 12px;
+        font-size: 12px;
     }
 
     .pe-guest-table-empty {
@@ -1881,9 +1917,9 @@
 }
 
 .pe-guest-data-table .pe-icon-btn {
-    flex: 0 0 32px;
-    width: 32px;
-    height: 32px;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
 }
 
 .pe-inline-field-error {

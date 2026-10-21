@@ -253,7 +253,7 @@ export default function GuestsPage() {
           <p>{t ? t("subtitle") : "គ្រប់គ្រងបញ្ជីភ្ញៀវ QR Code ធៀបការ និងស្ថានភាព RSVP របស់អ្នក។"}</p>
         </div>
 
-        <div className="dash-header-actions">
+        {(loading || guests.length > 0) && <div className="dash-header-actions">
           <button
             type="button"
             onClick={handleOpenAddGuest}
@@ -263,22 +263,10 @@ export default function GuestsPage() {
             <span className="text-base font-black leading-none"></span>
             <span>{t ? t("addGuestBtn") : "បន្ថែមភ្ញៀវ"}</span>
           </button>
-        </div>
-
-        <div className="dash-header-actions">
-          <button
-            type="button"
-            onClick={handleOpenAddGuest}
-            className="dash-btn-primary"
-            aria-label={t ? t("addGuestBtn") : "+ បន្ថែមភ្ញៀវ"}
-          >
-            <span className="text-base font-black leading-none">+</span>
-            <span>{t ? t("addGuestBtn") : "បន្ថែមភ្ញៀវ"}</span>
-          </button>
-        </div>
+        </div>}
       </header>
 
-      <GuestStats guests={guests} t={t} />
+      {!loading && <GuestStats guests={guests} t={t} />}
 
       <GuestFilters
         search={search}
@@ -289,7 +277,6 @@ export default function GuestsPage() {
         setCategoryFilter={setCategoryFilter}
         groups={groups}
         categories={categories}
-        onOpenAddGuest={handleOpenAddGuest}
         onOpenImport={() => setImportModalOpen(true)}
         onExportCsv={handleExportCsv}
         onOpenGroupManager={() => setGroupModalOpen(true)}
@@ -324,7 +311,7 @@ export default function GuestsPage() {
             onShowTicket={backendInvitationId ? guest => setTicketGuest(guest) : undefined}
             onCopyLink={handleCopyLink}
             onMarkAsSent={handleMarkAsSent}
-            onOpenAddGuest={handleOpenAddGuest}
+            onOpenAddGuest={guests.length === 0 ? handleOpenAddGuest : undefined}
             t={t}
           />
         </div>

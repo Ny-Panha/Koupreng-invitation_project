@@ -4,7 +4,7 @@
 
 .wishes-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
   gap: 16px;
   margin-top: 16px;
 }
@@ -53,7 +53,7 @@
 }
 
 .wish-date {
-  font-size: 12px;
+  font-size: 13px;
   color: #7d6d58;
 }
 
@@ -70,7 +70,8 @@
   border: 1px solid #fecdca;
   color: #b42318;
   border-radius: 6px;
-  padding: 4px 8px;
+  padding: 8px 12px;
+  min-height: 44px;
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
@@ -81,7 +82,7 @@
   cursor: not-allowed;
 }
 
-.wishes-empty {
+.wishes-empty-state {
   text-align: center;
   padding: 48px;
   color: #7d6d58;
@@ -90,10 +91,15 @@
   border-radius: 14px;
   margin-top: 16px;
 }
+.wishes-empty-icon-wrap { display: grid; place-items: center; width: 72px; height: 72px; margin: 0 auto 20px; border-radius: 24px; background: var(--ws-gold-light, #f5efdf); color: var(--ws-gold-dark, #76572d); }
+.wishes-empty-title { font-size: 21px; line-height: 1.8; color: var(--ws-ink, #1f2421); margin: 0 0 12px; }
+.wishes-empty-desc { font-size: 16px; line-height: 1.8; max-width: 580px; margin: 0 auto; }
 
 .wishes-skeleton-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
   gap: 16px;
   margin-top: 16px;
 }
+.wishes-next-action { display: flex; justify-content: center; margin-top: 20px; }
+.wishes-dialog-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }

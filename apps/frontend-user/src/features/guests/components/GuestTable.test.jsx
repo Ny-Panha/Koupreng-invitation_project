@@ -13,24 +13,24 @@ const categories = [
   { id: "family", name: "Family" },
 ];
 
-describe("GuestTable inline guest entry", () => {
-  it("keeps the input row visible and returns focus after Enter saves a guest", async () => {
-    const onSaveGuest = vi.fn().mockResolvedValue(true);
-    render(<GuestTable groups={groups} categories={categories} onSaveGuest={onSaveGuest} />);
+describe("GuestTable", () => {
+  it("renders empty state with call to action when no guests are present", () => {
+    const onOpenAddGuest = vi.fn();
+    render(
+      <GuestTable
+        groups={groups}
+        categories={categories}
+        guests={[]}
+        emptyMessage="មិនទាន់មានឈ្មោះភ្ញៀវទេ។"
+        onOpenAddGuest={onOpenAddGuest}
+      />
+    );
 
-    const nameInput = screen.getByRole("textbox", { name: "ឈ្មោះ" });
-    expect(nameInput).toBeInTheDocument();
-    expect(screen.getByRole("spinbutton", { name: "ចំនួនកៅអី" })).toHaveValue(1);
-    fireEvent.change(nameInput, { target: { value: "Sok Dara" } });
-    fireEvent.change(screen.getByRole("textbox", { name: "ឈ្មោះអ្នកភ្ជាប់" }), { target: { value: "Srey Mom" } });
-    fireEvent.keyDown(screen.getByRole("textbox", { name: "លេខទូរស័ព្ទ" }), { key: "Enter" });
-
-    await waitFor(() => expect(onSaveGuest).toHaveBeenCalledWith(
-      expect.objectContaining({ name: "Sok Dara", companionName: "Srey Mom", count: "1" }),
-      null
-    ));
-    await waitFor(() => expect(nameInput).toHaveValue(""));
-    expect(document.activeElement).toBe(nameInput);
+    expect(screen.getByText("មិនទាន់មានឈ្មោះភ្ញៀវទេ។")).toBeInTheDocument();
+    const addBtn = screen.getByRole("button", { name: "បន្ថែមភ្ញៀវដំបូង" });
+    expect(addBtn).toBeInTheDocument();
+    fireEvent.click(addBtn);
+    expect(onOpenAddGuest).toHaveBeenCalledTimes(1);
   });
 
   it("edits an existing guest in place", async () => {

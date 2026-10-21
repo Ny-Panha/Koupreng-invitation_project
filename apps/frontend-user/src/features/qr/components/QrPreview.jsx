@@ -1,3 +1,5 @@
+import { QrCode, ExternalLink } from "lucide-react";
+
 export function QrPreview({ qrData }) {
   if (!qrData) {
     return (
@@ -17,14 +19,13 @@ export function QrPreview({ qrData }) {
           <img src={qrImageUrl} alt="QR Code" className="qr-image" />
         ) : (
           <div className="qr-placeholder">
-            <span style={{ fontSize: "64px" }}>📱</span>
+            <QrCode size={56} className="qr-icon-placeholder" aria-hidden="true" />
             <p className="qr-code-text">{qrCodeText || "QR Code"}</p>
           </div>
         )}
       </div>
 
       <div className="qr-details">
-        {qrCodeText && qrImageUrl && <p className="qr-code-text">{qrCodeText}</p>}
         {qrData.title && <h3 className="qr-title">{qrData.title}</h3>}
         {qrData.guestName && (
           <p className="qr-guest">
@@ -38,7 +39,8 @@ export function QrPreview({ qrData }) {
             rel="noopener noreferrer"
             className="qr-link"
           >
-            {qrData.invitationUrl}
+            <span>{qrData.invitationUrl}</span>
+            <ExternalLink size={14} aria-hidden="true" />
           </a>
         )}
       </div>
