@@ -87,7 +87,7 @@ describe("GiftsFeature Module", () => {
       expect(screen.getByText("Uncle Sok")).toBeInTheDocument();
     });
 
-    const addBtn = container.querySelector(".wg-add-btn");
+    const addBtn = screen.getByRole("button", { name: /កត់ត្រាចំណងដៃ|Record New Gift/ });
     expect(addBtn).not.toBeNull();
     fireEvent.click(addBtn);
 

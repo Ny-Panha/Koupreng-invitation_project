@@ -37,7 +37,8 @@
 }
 
 .wg-hero-content {
-    flex: 1;
+    flex: 1 1 360px;
+    min-width: 0;
     z-index: 1;
 }
 
@@ -45,11 +46,11 @@
     display: inline-block;
     padding: 4px 12px;
     background: rgba(176, 146, 106, 0.15);
-    color: #B0926A;
-    font-size: 11px;
+    color: var(--ws-gold-dark);
+    font-size: 14px;
     font-weight: 800;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    letter-spacing: normal;
+    text-transform: none;
     border-radius: 50px;
     margin-bottom: 12px;
 }
@@ -62,7 +63,7 @@
     color: #2a1f10;
     font-size: 32px;
     font-weight: 800;
-    line-height: 1.2;
+    line-height: 1.65;
 }
 
 .wg-title svg {
@@ -824,7 +825,7 @@
 
 .wg-inline-amount {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 64px;
+    grid-template-columns: minmax(0, 1fr) 84px;
     gap: 5px;
 }
 
@@ -852,7 +853,7 @@
 }
 
 .wg-inline-save {
-    background: #9a7d5a;
+    background: var(--ws-gold, #926c34);
     color: #fff;
 }
 
@@ -1072,4 +1073,25 @@
         justify-content: flex-end;
         flex-wrap: wrap;
     }
+}
+
+.wg-inline-form-row :is(input, select) { font-size: 16px; min-height: 44px; }
+.wg-inline-actions :is(button) { min-height: 44px; font-size: 14px; }
+.wg-row-actions button { min-height: 44px; }
+
+@media (max-width: 520px) {
+  .wg-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .wg-sum-card { min-width: 0; padding: 14px; align-items: flex-start; }
+  .wg-sum-card > div:last-child { min-width: 0; width: 100%; }
+  .wg-sum-icon { display: none; }
+  .wg-sum-label { font-size: 14px; line-height: 1.7; }
+  .wg-sum-value { font-size: 19px; line-height: 1.5; overflow-wrap: anywhere; }
+}
+
+@media (max-width: 768px) {
+  .wg-table .wg-inline-form-row td { display: block; text-align: left; }
+  .wg-table .wg-inline-form-row td::before { display: block; margin-bottom: 8px; }
+  .wg-inline-form-row .wg-inline-amount { width: 100%; }
+  .wg-inline-form-row .wg-inline-amount select { flex: 0 0 84px; width: 84px; }
+  .wg-inline-actions { justify-content: flex-start; }
 }

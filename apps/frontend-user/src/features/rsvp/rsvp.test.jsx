@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi, beforeEach } from "vitest";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import RsvpDashboardPage from "./RsvpDashboardPage";
 
 vi.mock("./api/rsvpApi", () => {
@@ -30,6 +31,7 @@ vi.mock("@/features/invitations/api/invitationApi", () => ({
 }));
 
 describe("RsvpDashboardPage Module", () => {
+  beforeEach(() => useLanguageStore.setState({ lang: "en" }));
   it("renders host RSVP summary and responses table", async () => {
     render(
       <MemoryRouter initialEntries={["/dashboard/invitations/1/rsvp"]}>

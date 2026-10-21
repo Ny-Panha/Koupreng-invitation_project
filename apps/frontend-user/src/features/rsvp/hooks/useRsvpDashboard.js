@@ -12,10 +12,10 @@ export function useRsvpDashboard(invitationId) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const load = useCallback(() => {
-    setLoading(true);
+  const load = useCallback(({ background = false } = {}) => {
+    if (!background) setLoading(true);
     setError("");
-    Promise.all([
+    return Promise.all([
       invitationService.get(invitationId),
       rsvpService.listByInvitation(invitationId),
       rsvpService.summary(invitationId),
@@ -27,6 +27,7 @@ export function useRsvpDashboard(invitationId) {
       })
       .catch((err) => {
         setError(err.message || "Could not load RSVP records");
+        if (background) throw err;
       })
       .finally(() => {
         setLoading(false);

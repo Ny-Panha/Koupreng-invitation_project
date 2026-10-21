@@ -1,15 +1,19 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Eye, FileDown, Printer, X, ZoomIn, ZoomOut } from "lucide-react";
-import { ErrorState, SkeletonCard } from "@/shared/ui";
+import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
+import { ErrorState, Modal, SkeletonCard } from "@/shared/ui";
 import { buildFinancialReport } from "./model/financialReport";
 import { useActiveEventReport } from "./hooks/useActiveEventReport";
 import OwnerReportSummary from "./components/OwnerReportSummary";
 import "./ReportsPage.css";
 
 export default function FinancialReport() {
+  const { text: t, lang } = useBackendMessages("reports");
   const { sourceData, generatedAt, loading, error, reload } = useActiveEventReport();
   const [isPreviewMode, setIsPreviewMode] = useState(false);
   const [previewZoom, setPreviewZoom] = useState(100);
+  const previewTrigger = useRef(null);
+  const wasPreview = useRef(false);
 
   const report = useMemo(
     () => sourceData ? buildFinancialReport(sourceData) : null,
@@ -26,14 +30,8 @@ export default function FinancialReport() {
   const hasServerInvitation = Number.isInteger(Number(invitationId)) && Number(invitationId) > 0;
 
   useEffect(() => {
-    if (!isPreviewMode) return;
-    const handleKeyDown = (e) => {
-      if (e.key === "Escape") {
-        setIsPreviewMode(false);
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    if (wasPreview.current && !isPreviewMode) previewTrigger.current?.focus();
+    wasPreview.current = isPreviewMode;
   }, [isPreviewMode]);
 
   const handlePrint = () => {
@@ -57,15 +55,15 @@ export default function FinancialReport() {
   };
 
   return (
-    <main className={`dash-main reports-page financial-report-page flex-1 flex justify-center w-full ${isPreviewMode ? "is-print-preview" : ""}`}>
+    <ReportSurface preview={isPreviewMode} onClose={() => setIsPreviewMode(false)} label={t("preview")}>
       {isPreviewMode && (
-        <aside className="report-preview-toolbar reports-screen-only" role="region" aria-label="Print preview controls">
+        <aside className="report-preview-toolbar reports-screen-only" role="region" aria-label={t("previewControls")}>
           <div className="report-preview-toolbar-inner">
             <div className="report-preview-meta">
-              <span className="report-preview-badge">A4 Portrait</span>
-              <strong>ផ្ទាំងមើលគំរូមុនបោះពុម្ព / Print Preview</strong>
+              <span className="report-preview-badge">{t("paper")}</span>
+              <strong>{t("preview")}</strong>
               <span className="report-preview-hint text-xs text-gray-300 hidden md:inline">
-                (ទំហំក្រដាស A4 210 × 297 mm · ចុច Esc ដើម្បីបិទ)
+                {t("previewHint")}
               </span>
             </div>
             <div className="report-preview-controls">
@@ -75,8 +73,8 @@ export default function FinancialReport() {
                   className="report-zoom-btn"
                   onClick={() => setPreviewZoom((z) => Math.max(70, z - 10))}
                   disabled={previewZoom <= 70}
-                  title="បង្រួម / Zoom out"
-                  aria-label="Zoom out"
+                  title={t("zoomOut")}
+                  aria-label={t("zoomOut")}
                 >
                   <ZoomOut size={15} aria-hidden="true" />
                 </button>
@@ -86,8 +84,8 @@ export default function FinancialReport() {
                   className="report-zoom-btn"
                   onClick={() => setPreviewZoom((z) => Math.min(140, z + 10))}
                   disabled={previewZoom >= 140}
-                  title="ពង្រីក / Zoom in"
-                  aria-label="Zoom in"
+                  title={t("zoomIn")}
+                  aria-label={t("zoomIn")}
                 >
                   <ZoomIn size={15} aria-hidden="true" />
                 </button>
@@ -98,7 +96,7 @@ export default function FinancialReport() {
                 onClick={handlePrintPdf}
               >
                 <FileDown size={15} aria-hidden="true" />
-                <span>ទាញយកជា PDF / Save as PDF</span>
+                <span>{t("pdf")}</span>
               </button>
               <button
                 type="button"
@@ -106,16 +104,16 @@ export default function FinancialReport() {
                 onClick={handlePrint}
               >
                 <Printer size={15} aria-hidden="true" />
-                <span>បោះពុម្ព / Print</span>
+                <span>{t("print")}</span>
               </button>
               <button
                 type="button"
                 className="report-preview-close"
                 onClick={() => setIsPreviewMode(false)}
-                aria-label="បិទផ្ទាំងមើលគំរូ / Exit preview"
+                aria-label={t("exit")}
               >
                 <X size={17} aria-hidden="true" />
-                <span>បិទ / Exit</span>
+                <span>{t("exit")}</span>
               </button>
             </div>
           </div>
@@ -123,48 +121,49 @@ export default function FinancialReport() {
       )}
 
       <div
-        className={`reports-content-container ${isPreviewMode ? "report-sheet-simulation" : "min-h-screen bg-[#faf8f5] py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full"}`}
+        className={`reports-content-container ${isPreviewMode ? "report-sheet-simulation" : ""}`}
         style={isPreviewMode && previewZoom !== 100 ? { transform: `scale(${previewZoom / 100})`, transformOrigin: "top center" } : undefined}
       >
         <header className="financial-report-header flex flex-wrap justify-between items-center gap-4 mb-6">
           <div>
-            <span className="dash-kicker reports-screen-only">Event finances</span>
-            <h1 className="font-bold text-gray-800">របាយការណ៍សង្ខេបចំណូល និងចំណាយកម្មវិធី</h1>
+            <span className="dash-kicker reports-screen-only">{t("kicker")}</span>
+            <h1 className="font-bold text-gray-800">{t("title")}</h1>
             <p className="report-event-title">{eventTitle}</p>
             <div className="report-event-meta">
-              {event?.eventType && <span><strong>ប្រភេទ:</strong> {eventTypeLabel(event.eventType)}</span>}
-              {eventPeople && eventPeople !== eventTitle && <span><strong>ម្ចាស់កម្មវិធី:</strong> {eventPeople}</span>}
-              <span><strong>ថ្ងៃកម្មវិធី:</strong> {formatDate(event?.eventDate)}</span>
-              <span><strong>បង្កើតនៅ:</strong> {formatDateTime(generatedAt)}</span>
+              {event?.eventType && <span><strong>{t("type")}</strong> {eventTypeLabel(event.eventType, lang)}</span>}
+              {eventPeople && eventPeople !== eventTitle && <span><strong>{t("host")}</strong> {eventPeople}</span>}
+              <span><strong>{t("date")}</strong> {formatDate(event?.eventDate, lang)}</span>
+              <span><strong>{t("generated")}</strong> {formatDateTime(generatedAt, lang)}</span>
             </div>
           </div>
           <div className="report-header-actions reports-screen-only flex flex-wrap items-center gap-2">
             <button
               type="button"
               className="report-action-btn report-preview-btn"
+              ref={previewTrigger}
               onClick={() => setIsPreviewMode(true)}
-              title="មើលគំរូទម្រង់បោះពុម្ព A4 / View A4 print layout"
+              title={t("preview")}
             >
               <Eye aria-hidden="true" size={16} />
-              មើលគំរូមុនបោះពុម្ព / Print Preview
+              {t("preview")}
             </button>
             <button
               type="button"
               className="report-action-btn report-pdf-btn"
               onClick={handlePrintPdf}
-              title="ទាញយក ឬរក្សាទុកជា PDF / Save report as PDF"
+              title={t("pdf")}
             >
               <FileDown aria-hidden="true" size={16} />
-              ទាញយកជា PDF / Save as PDF
+              {t("pdf")}
             </button>
             <button
               type="button"
               className="report-action-btn report-print-button"
               onClick={handlePrint}
-              title="បោះពុម្ពរបាយការណ៍ / Print report"
+              title={t("print")}
             >
               <Printer aria-hidden="true" size={16} />
-              បោះពុម្ពរបាយការណ៍ / Print Report
+              {t("print")}
             </button>
           </div>
         </header>
@@ -178,43 +177,42 @@ export default function FinancialReport() {
           <SkeletonCard height="120px" />
         </div>
       ) : !report ? (
-        <p className="report-no-event">មិនមានកម្មវិធីសកម្ម / No active event is available for this account.</p>
+        <p className="report-no-event">{t("noEvent")}</p>
       ) : (
         <>
-          <section className="report-summary-grid grid grid-cols-1 md:grid-cols-3 gap-5" aria-label="Financial summary">
-            <MoneyCard label="ចំណូលសរុប / Total Income" amounts={report.totalIncome} tone="income" detail="ចំណងដៃ និងចំណូលដែលមានក្នុងទិន្នន័យ" />
-            <MoneyCard label="ថវិកាប៉ាន់ស្មាន / Estimated Budget" amounts={report.plannedBudget} tone="budget" detail="ថវិកាដែលបានគ្រោងទុក" />
-            <MoneyCard label="ចំណាយពិត / Actual Expenses" amounts={report.totalExpenses} tone="expense" detail="គិតតែចំណាយពិតដែលបានកត់ត្រា" />
-            <MoneyCard label="នៅខ្វះ / Unpaid Balance" amounts={report.unpaidBalance} tone="balance" detail="ថវិកាគ្រោង ដកចំណាយពិត" />
-            <StatCard label="ភ្ញៀវអញ្ជើញ / Total Invited" value={report.guestStats.invited} />
-            <StatCard label="អ្នកចូលរួមបានបញ្ជាក់ / Confirmed Attendees" value={report.guestStats.attending} />
-            <StatCard label="បានស្កេន QR / QR Check-ins" value={report.guestStats.checkedIn} />
-            <StatCard label="អំណោយ / Gifts Recorded" value={report.guestStats.gifted} />
+          <section className="report-summary-grid grid grid-cols-1 md:grid-cols-3 gap-5" aria-label={t("financialSummary")}>
+            <MoneyCard label={t("income")} amounts={report.totalIncome} tone="income" detail={t("incomeDetail")} />
+            <MoneyCard label={t("estimated")} amounts={report.plannedBudget} tone="budget" detail={t("estimatedDetail")} />
+            <MoneyCard label={t("expenses")} amounts={report.totalExpenses} tone="expense" detail={t("expensesDetail")} />
+            <MoneyCard label={t("balance")} amounts={report.unpaidBalance} tone="balance" detail={t("balanceDetail")} />
+            <StatCard label={t("invited")} value={report.guestStats.invited} />
+            <StatCard label={t("attendees")} value={report.guestStats.attending} />
+            <StatCard label={t("checkins")} value={report.guestStats.checkedIn} />
+            <StatCard label={t("gifts")} value={report.guestStats.gifted} />
           </section>
 
-          <section className="report-channel-grid" aria-label="Gift payment channels">
-            <MoneyCard label="ABA / KHQR" amounts={report.digitalIncome} tone="income" detail="ចំណងដៃតាមធនាគារ និង QR" />
-            <MoneyCard label="សាច់ប្រាក់ / Cash" amounts={report.cashIncome} tone="expense" detail="ចំណងដៃជាសាច់ប្រាក់" />
+          <section className="report-channel-grid" aria-label={t("channels")}>
+            <MoneyCard label="ABA / KHQR" amounts={report.digitalIncome} tone="income" detail={t("digitalDetail")} />
+            <MoneyCard label={t("cash")} amounts={report.cashIncome} tone="expense" detail={t("cashDetail")} />
           </section>
 
           <section className="report-section">
             <div className="report-section-heading">
               <div>
-                <span className="report-section-kicker">INCOME</span>
-                <h2>តារាងអំណោយ និងចំណូលផ្សេងៗ</h2>
+                <h2>{t("incomeTable")}</h2>
               </div>
-              <strong>{report.incomeRows.length} records</strong>
+              <strong>{report.incomeRows.length} {t("records")}</strong>
             </div>
             <div className="report-table-wrapper">
               <table className="report-table">
                 <thead>
                   <tr>
-                    <th>ឈ្មោះអ្នកផ្តល់</th>
-                    <th>ក្រុម/ខាង</th>
-                    <th className="is-numeric">ចំនួន</th>
-                    <th>រូបិយប័ណ្ណ</th>
-                    <th>វិធីបង់ប្រាក់</th>
-                    <th>កំណត់សម្គាល់</th>
+                    <th>{t("name")}</th>
+                    <th>{t("group")}</th>
+                    <th className="is-numeric">{t("amount")}</th>
+                    <th>{t("currency")}</th>
+                    <th>{t("method")}</th>
+                    <th>{t("note")}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -227,7 +225,7 @@ export default function FinancialReport() {
                       <td>{row.method}</td>
                       <td>{row.note || "—"}</td>
                     </tr>
-                  )) : <EmptyTableRow columns={6} />}
+                  )) : <EmptyTableRow columns={6} t={t} />}
                 </tbody>
               </table>
             </div>
@@ -236,21 +234,20 @@ export default function FinancialReport() {
           <section className="report-section">
             <div className="report-section-heading">
               <div>
-                <span className="report-section-kicker">EXPENSES</span>
-                <h2>តារាងចំណាយ</h2>
+                <h2>{t("expenseTable")}</h2>
               </div>
-              <strong>{report.expenseRows.length} records</strong>
+              <strong>{report.expenseRows.length} {t("records")}</strong>
             </div>
             <div className="report-table-wrapper">
               <table className="report-table">
                 <thead>
                   <tr>
-                    <th>ប្រភេទចំណាយ</th>
-                    <th>អ្នកផ្គត់ផ្គង់</th>
-                    <th className="is-numeric">ថវិកាគ្រោង</th>
-                    <th className="is-numeric">ចំណាយពិត</th>
-                    <th>រូបិយប័ណ្ណ</th>
-                    <th>ថ្ងៃបង់ប្រាក់</th>
+                    <th>{t("category")}</th>
+                    <th>{t("vendor")}</th>
+                    <th className="is-numeric">{t("planned")}</th>
+                    <th className="is-numeric">{t("actual")}</th>
+                    <th>{t("currency")}</th>
+                    <th>{t("paidDate")}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -261,28 +258,34 @@ export default function FinancialReport() {
                       <td className="is-numeric">{formatAmount(row.budget, row.currency)}</td>
                       <td className="is-numeric">{row.hasActual ? formatAmount(row.amount, row.currency) : "—"}</td>
                       <td>{row.currency}</td>
-                      <td>{formatDate(row.date)}</td>
+                      <td>{formatDate(row.date, lang)}</td>
                     </tr>
-                  )) : <EmptyTableRow columns={6} />}
+                  )) : <EmptyTableRow columns={6} t={t} />}
                 </tbody>
               </table>
             </div>
           </section>
 
           <p className="report-data-note">
-            កំណត់ត្រាចាស់ដែលមិនមាន currency ត្រូវបង្ហាញជា USD។ ប្រព័ន្ធមិនបម្លែងរវាង USD និង KHR ហើយចំណូលដែលបង្ហាញមានតែអំណោយដែលបានកត់ត្រាក្នុងប្រព័ន្ធ។
+            {t("dataNote")}
           </p>
 
           <footer className="report-signatures">
-            <SignatureBlock title="អ្នករៀបចំកម្មវិធី" subtitle="ហត្ថលេខា / ស្នាមមេដៃអ្នករៀបចំ" />
-            <SignatureBlock title="ម្ចាស់កម្មវិធី" subtitle="ហត្ថលេខា / ស្នាមមេដៃម្ចាស់កម្មវិធី" />
+            <SignatureBlock title={t("organizer")} subtitle={t("organizerSignature")} />
+            <SignatureBlock title={t("owner")} subtitle={t("ownerSignature")} />
           </footer>
           <div className="report-page-number" aria-hidden="true" />
         </>
       )}
       </div>
-    </main>
+    </ReportSurface>
   );
+}
+
+function ReportSurface({ preview, onClose, label, children }) {
+  return preview
+    ? <Modal isOpen onClose={onClose} ariaLabel={label} showHeader={false} size="full" className="workspace-dialog reports-page financial-report-page is-print-preview" backdropClassName="report-preview-backdrop">{children}</Modal>
+    : <main className="dash-main reports-page financial-report-page">{children}</main>;
 }
 
 function MoneyCard({ label, amounts, tone, detail }) {
@@ -313,8 +316,8 @@ function StatCard({ label, value }) {
   );
 }
 
-function EmptyTableRow({ columns }) {
-  return <tr><td className="report-table-empty" colSpan={columns}>មិនមានទិន្នន័យ / No records</td></tr>;
+function EmptyTableRow({ columns, t }) {
+  return <tr><td className="report-table-empty" colSpan={columns}>{t("empty")}</td></tr>;
 }
 
 function SignatureBlock({ title, subtitle }) {
@@ -336,17 +339,17 @@ function formatAmount(value, currency) {
   return currency === "KHR" ? `${formatted} ៛` : `$${formatted}`;
 }
 
-function formatDate(value) {
+function formatDate(value, lang) {
   if (!value) return "—";
   const date = new Date(`${value}T00:00:00`);
-  return Number.isNaN(date.getTime()) ? String(value) : new Intl.DateTimeFormat("en-GB", { dateStyle: "medium" }).format(date);
+  return Number.isNaN(date.getTime()) ? String(value) : new Intl.DateTimeFormat(lang === "en" ? "en-GB" : "km-KH", { dateStyle: "medium" }).format(date);
 }
 
-function formatDateTime(value) {
-  return new Intl.DateTimeFormat("en-GB", { dateStyle: "medium", timeStyle: "short" }).format(value);
+function formatDateTime(value, lang) {
+  return new Intl.DateTimeFormat(lang === "en" ? "en-GB" : "km-KH", { dateStyle: "medium", timeStyle: "short" }).format(value);
 }
 
-function eventTypeLabel(type) {
+function eventTypeLabel(type, lang) {
   const labels = {
     WEDDING: "អាពាហ៍ពិពាហ៍",
     ENGAGEMENT: "ពិធីភ្ជាប់ពាក្យ",
@@ -355,5 +358,6 @@ function eventTypeLabel(type) {
     CORPORATE: "កម្មវិធីស្ថាប័ន",
     OTHER: "កម្មវិធីផ្សេងៗ",
   };
-  return labels[type] || String(type || "កម្មវិធីផ្សេងៗ");
+  const en = { WEDDING: "Wedding", ENGAGEMENT: "Engagement", BIRTHDAY: "Birthday", ANNIVERSARY: "Anniversary", CORPORATE: "Corporate event", OTHER: "Other event" };
+  return (lang === "en" ? en[type] : labels[type]) || String(type || "—");
 }

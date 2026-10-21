@@ -1,9 +1,10 @@
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import RsvpOwnerActions from "./components/RsvpOwnerActions";
 import { rsvpService } from "./api/rsvpApi";
 vi.mock("./api/rsvpApi", () => ({ rsvpService: { update: vi.fn(), remove: vi.fn() } }));
-afterEach(cleanup); beforeEach(() => vi.clearAllMocks());
+afterEach(cleanup); beforeEach(() => { vi.clearAllMocks(); useLanguageStore.setState({ lang: "en" }); });
 const record = { id: 3, responseStatus: "ATTENDING", attendeeCount: 2, message: "Best wishes" };
 describe("BG-04 owner RSVP management", () => {
   it("saves status/count/message only after server acknowledgement", async () => {

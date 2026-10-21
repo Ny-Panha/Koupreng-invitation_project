@@ -49,3 +49,5 @@
 .k-search-clear-btn:hover {
   color: var(--brand-text, #1e293b);
 }
+
+.k-search-input::-webkit-search-cancel-button { -webkit-appearance: none; }

@@ -1,8 +1,10 @@
 import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import OwnerReportSummary from "./components/OwnerReportSummary";
 import { reportsApi } from "./api/reportsApi";
 vi.mock("./api/reportsApi", () => ({ reportsApi: { getReport: vi.fn(), exportCsv: vi.fn() } }));
+beforeEach(() => useLanguageStore.setState({ lang: "en" }));
 afterEach(() => { cleanup(); vi.clearAllMocks(); });
 describe("BG-03 mounted owner report summary", () => {
   it("renders authoritative attendance/delivery counts and retains export errors", async () => {

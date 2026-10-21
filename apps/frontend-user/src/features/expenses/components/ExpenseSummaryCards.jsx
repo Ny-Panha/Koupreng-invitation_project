@@ -44,7 +44,7 @@ export function ExpenseSummaryCards({ totalBudget = 0, totalSpent = 0, isOver, d
                 <div className="exp-sum-icon"><IoStatsChartOutline aria-hidden="true" /></div>
                 <div style={{ flex: 1 }}>
                     <span className="exp-sum-label">{t ? t("sumPercent") : "Budget Used %"}</span>
-                    <span className="exp-sum-value">{percent}%</span>
+                    <span className="exp-sum-value">{percent ?? 0}%</span>
                     <div style={{
                         marginTop: "8px",
                         width: "100%",

@@ -34,7 +34,7 @@
   margin: 4px 0 6px;
   max-width: 780px;
   font-size: clamp(1.35rem, 2.4vw, 1.8rem);
-  line-height: 1.45;
+  line-height: 1.65;
   color: #1f2937;
   font-weight: 700;
 }
@@ -71,7 +71,7 @@
   align-items: center;
   gap: 8px;
   flex: 0 0 auto;
-  min-height: 42px;
+  min-height: 44px;
   padding: 0 14px;
   border: 1px solid #e7ded2;
   border-radius: 10px;
@@ -414,7 +414,7 @@
 .owner-report-heading p {
   margin: 4px 0 0;
   color: #6b7280;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
 }
 
 .owner-report-export-actions {
@@ -424,14 +424,14 @@
 }
 
 .owner-report-export-actions button {
-  min-height: 38px;
+  min-height: 44px;
   padding: 0 12px;
   border: 1px solid #e7ded2;
   border-radius: 9px;
   color: #40554c;
   background: #fff;
   font: inherit;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
   transition: background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
@@ -472,7 +472,7 @@
 
 .owner-report-metric span {
   color: #6b7280;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
 }
 
 .owner-report-metric strong {
@@ -717,6 +717,15 @@
   }
 }
 
+/* Fullscreen A4 preview uses the same focus-isolating dialog as other workspaces. */
+.report-preview-backdrop { padding: 0; background: #323639; backdrop-filter: none; }
+.k-modal-container.financial-report-page.is-print-preview { width: 100%; max-width: none; height: 100dvh; max-height: none; min-height: 0; padding: 0 !important; border: 0; border-radius: 0; }
+.financial-report-page.is-print-preview > .k-modal-body { padding: 0 24px 40px; overflow: auto; }
+.financial-report-page.is-print-preview .report-preview-toolbar { position: sticky; top: 0; height: auto; min-height: 64px; padding: 12px 16px; margin: 0 -24px 24px; }
+.financial-report-page.is-print-preview .report-preview-toolbar-inner { flex-wrap: wrap; }
+.financial-report-page.is-print-preview :is(.report-zoom-btn, .report-preview-action, .report-preview-close) { min-width: 44px; min-height: 44px; }
+.financial-report-page.is-print-preview .report-preview-close:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+
 @media print {
   @page {
     size: A4 portrait;
@@ -903,4 +912,14 @@
   .report-page-number::after {
     content: "Page " counter(page) " of " counter(pages);
   }
+}
+
+@media print {
+  body:has(.financial-report-page) .report-preview-backdrop { position: static; display: block; padding: 0; overflow: visible; background: #fff; }
+  .financial-report-page.is-print-preview > .k-modal-body { padding: 0; overflow: visible; height: auto; }
+  body:has(.report-preview-backdrop) #root { display: none !important; }
+  body:has(.financial-report-page) :is(.host-header-wrapper, .event-workspace-header, .event-workspace-nav, .chatbot-wrapper) { display: none !important; }
+  body:has(.financial-report-page) :is(.event-workspace, .event-workspace-content, .dash-main-scroll) { display: block !important; width: 100% !important; max-width: none !important; padding: 0 !important; margin: 0 !important; min-height: 0 !important; }
+  .financial-report-page .reports-content-container { width: 100% !important; max-width: none !important; min-height: 0 !important; padding: 0 !important; margin: 0 !important; transform: none !important; box-shadow: none !important; }
+  .financial-report-page :is(.report-summary-grid, .owner-report-metrics) { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
 }

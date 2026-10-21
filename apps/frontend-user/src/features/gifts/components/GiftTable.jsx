@@ -9,6 +9,7 @@ import {
 } from "react-icons/io5";
 import { GuestSelectField } from "./GuestSelectField";
 import { getGuestLabel } from "./guestLabels";
+import { formatLocalDate } from "@/shared/utils/localDate";
 
 const METHOD_STYLES = {
     "Bakong QR": { bg: "#e0f2fe", color: "#0369a1", Icon: IoPhonePortraitOutline },
@@ -16,14 +17,6 @@ const METHOD_STYLES = {
     Cash: { bg: "#dcfce7", color: "#15803d", Icon: IoCashOutline },
     "សាច់ប្រាក់": { bg: "#dcfce7", color: "#15803d", Icon: IoCashOutline },
 };
-
-function formatDate(dateStr) {
-    if (!dateStr) return "—";
-    const date = new Date(`${dateStr}T00:00:00`);
-    return Number.isNaN(date.getTime())
-        ? dateStr
-        : date.toLocaleDateString("km-KH", { year: "numeric", month: "short", day: "numeric" });
-}
 
 export function GiftTable({
     gifts = [],
@@ -38,6 +31,7 @@ export function GiftTable({
     deleteGift,
     saving,
     t,
+    lang = "en",
 }) {
     const labels = {
         name: t ? t("colName") : "Contributor Name",
@@ -99,7 +93,7 @@ export function GiftTable({
                                     onChange={(event) => updateForm("amount", event.target.value)}
                                     placeholder="0"
                                 />
-                                <select aria-label="Currency" value={form.currency || "USD"} onChange={(event) => updateForm("currency", event.target.value)}>
+                                <select aria-label={lang === "en" ? "Currency" : "រូបិយប័ណ្ណ"} value={form.currency || "USD"} onChange={(event) => updateForm("currency", event.target.value)}>
                                     <option value="USD">USD</option>
                                     <option value="KHR">KHR</option>
                                 </select>
@@ -109,7 +103,7 @@ export function GiftTable({
                             <select aria-label={labels.method} value={form.method} onChange={(event) => updateForm("method", event.target.value)}>
                                 <option value="Bakong QR">Bakong QR</option>
                                 <option value="ABA">ABA</option>
-                                <option value="Cash">Cash</option>
+                                <option value="Cash">{lang === "en" ? "Cash" : "សាច់ប្រាក់"}</option>
                                 {!['Bakong QR', 'ABA', 'Cash'].includes(form.method) && <option value={form.method}>{form.method}</option>}
                             </select>
                         </td>
@@ -139,10 +133,10 @@ export function GiftTable({
                                 <td data-label={labels.amount}><span className="wg-amount">{gift.currency === "KHR" ? `${gift.amount.toLocaleString()} ៛` : `$${gift.amount.toLocaleString()}`}</span></td>
                                 <td data-label={labels.method}>
                                     <span className="wg-method-badge" style={{ background: methodStyle.bg, color: methodStyle.color }}>
-                                        <MethodIcon aria-hidden="true" />{gift.method}
+                                        <MethodIcon aria-hidden="true" />{gift.method === "Cash" ? (lang === "en" ? "Cash" : "សាច់ប្រាក់") : gift.method}
                                     </span>
                                 </td>
-                                <td data-label={labels.date} className="wg-muted"><IoCalendarClearOutline aria-hidden="true" />{formatDate(gift.date)}</td>
+                                <td data-label={labels.date} className="wg-muted"><IoCalendarClearOutline aria-hidden="true" />{formatLocalDate(gift.date, lang)}</td>
                                 <td data-label={labels.note} className="wg-muted wg-note-cell">{gift.note || <span className="wg-dash">—</span>}</td>
                                 <td data-label={labels.actions}>
                                     <div className="wg-row-actions">

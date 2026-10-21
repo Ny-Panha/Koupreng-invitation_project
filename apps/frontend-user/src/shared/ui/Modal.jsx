@@ -10,9 +10,17 @@ let originalFocus = null;
 const focusableSelector = 'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 function focusableElements(dialog) {
-  return Array.from(dialog.querySelectorAll(focusableSelector)).filter((element) =>
-    element.tabIndex >= 0 && !element.closest("[hidden]") && getComputedStyle(element).display !== "none"
-    && getComputedStyle(element).visibility !== "hidden");
+  return Array.from(dialog.querySelectorAll(focusableSelector)).filter((element) => {
+    if (element.tabIndex < 0 || element.matches(":disabled")) return false;
+    // A child can have display:flex while one of its parents has display:none.
+    // Check ancestors too, so hidden sections never enter the dialog's Tab loop.
+    for (let node = element; node && node !== dialog.parentElement; node = node.parentElement) {
+      const style = getComputedStyle(node);
+      if (node.hidden || node.hasAttribute("inert") || style.display === "none"
+        || style.visibility === "hidden" || style.visibility === "collapse") return false;
+    }
+    return true;
+  });
 }
 
 function isolateBackground() {
@@ -43,6 +51,8 @@ export default function Modal({
   closeOnBackdropClick = true,
   closeOnEscape = true,
   ariaLabel,
+  closeLabel = "Close modal",
+  showHeader = true,
   className = "",
   backdropClassName = "",
 }) {
@@ -123,7 +133,7 @@ export default function Modal({
         tabIndex={-1}
         aria-label={ariaLabel || title || "Modal Dialog"}
       >
-        <div className="k-modal-header">
+        {showHeader && <div className="k-modal-header">
           <div className="k-modal-header-text">
             {title && <h2 className="k-modal-title">{title}</h2>}
             {subtitle && <p className="k-modal-subtitle">{subtitle}</p>}
@@ -133,12 +143,12 @@ export default function Modal({
               type="button"
               className="k-modal-close-btn"
               onClick={onClose}
-              aria-label="Close modal"
+              aria-label={closeLabel}
             >
               <IoClose aria-hidden="true" />
             </button>
           )}
-        </div>
+        </div>}
 
         <div className="k-modal-body">{children}</div>
 

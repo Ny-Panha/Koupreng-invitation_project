@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
 import { reportsApi } from "../api/reportsApi";
 
 export default function OwnerReportSummary({ invitationId }) {
+  const { text: t } = useBackendMessages("reports");
   const [state, setState] = useState({ loading: true, error: "", guests: null, rsvp: null });
   const [exporting, setExporting] = useState(false);
   useEffect(() => {
@@ -19,32 +21,32 @@ export default function OwnerReportSummary({ invitationId }) {
     finally { setExporting(false); }
   };
   const metrics = [
-    { label: "Guests", value: state.guests?.totalGuests },
-    { label: "Sent", value: state.guests?.sent },
-    { label: "Opened", value: state.guests?.opened },
-    { label: "RSVP attending", value: state.rsvp?.yesCount },
-    { label: "Attendees", value: state.rsvp?.attendeeTotal },
-    { label: "Pending", value: state.rsvp?.pendingCount },
+    { label: t("guests"), value: state.guests?.totalGuests },
+    { label: t("sent"), value: state.guests?.sent },
+    { label: t("opened"), value: state.guests?.opened },
+    { label: t("yes"), value: state.rsvp?.yesCount },
+    { label: t("attendeeTotal"), value: state.rsvp?.attendeeTotal },
+    { label: t("pending"), value: state.rsvp?.pendingCount },
   ];
 
   return (
-    <section className="owner-report-summary" aria-label="Guest delivery and attendance reports">
+    <section className="owner-report-summary" aria-label={t("attendanceTitle")}>
       <div className="owner-report-heading">
         <div>
-          <h2>Guest delivery and attendance reports</h2>
-          <p>Guest invitation delivery and RSVP totals for this event.</p>
+          <h2>{t("attendanceTitle")}</h2>
+          <p>{t("attendanceText")}</p>
         </div>
         <div className="owner-report-export-actions reports-screen-only">
           <button type="button" disabled={exporting || state.loading} onClick={() => exportCsv("GUEST")}>
-            Export guest report CSV
+            {t("guestCsv")}
           </button>
           <button type="button" disabled={exporting || state.loading} onClick={() => exportCsv("RSVP")}>
-            Export RSVP report CSV
+            {t("rsvpCsv")}
           </button>
         </div>
       </div>
       {state.loading ? (
-        <p className="owner-report-message" role="status">Loading attendance reports…</p>
+        <p className="owner-report-message" role="status">{t("loading")}</p>
       ) : state.error ? (
         <p className="owner-report-message is-error" role="alert">{state.error}</p>
       ) : (
@@ -52,7 +54,7 @@ export default function OwnerReportSummary({ invitationId }) {
           {metrics.map(({ label, value }) => (
             <article className="owner-report-metric" key={label}>
               <span>{label}</span>
-              <strong>{value ?? "Unavailable"}</strong>
+              <strong>{value ?? t("unavailable")}</strong>
             </article>
           ))}
         </div>

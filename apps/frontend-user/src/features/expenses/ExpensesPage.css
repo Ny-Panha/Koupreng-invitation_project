@@ -44,7 +44,8 @@
 
 .exp-hero-content,
 .ep-hero-content {
-    flex: 1;
+    flex: 1 1 360px;
+    min-width: 0;
     z-index: 1;
 }
 
@@ -54,10 +55,10 @@
     padding: 4px 14px;
     background: rgba(176, 146, 106, 0.14);
     color: #8c6f4b;
-    font-size: 11.5px;
+    font-size: 14px;
     font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    letter-spacing: normal;
+    text-transform: none;
     border-radius: 999px;
     margin-bottom: 12px;
 }
@@ -71,7 +72,7 @@
     color: #2a1f10;
     font-size: 30px;
     font-weight: 800;
-    line-height: 1.25;
+    line-height: 1.65;
 }
 
 .exp-title svg,
@@ -1317,4 +1318,30 @@
         text-align: left;
         flex-shrink: 0;
     }
+}
+
+/* The active expense editor uses the shared dialog for focus, isolation and scrolling. */
+.exp-form-dialog { max-width: 860px; }
+.exp-form-dialog .exp-form { padding: 0; }
+.exp-form-dialog .exp-field-full { font-size: 15px; }
+.exp-form-dialog :is(input, select, textarea) { font-size: 16px; min-height: 44px; }
+.exp-form-dialog :is(button, .k-modal-close-btn) { min-width: 44px; min-height: 44px; }
+.exp-form-dialog .exp-form-actions { position: sticky; bottom: -24px; background: var(--ws-surface); padding: 16px 0; border-top: 1px solid var(--ws-border); }
+.exp-form-dialog .exp-add-btn { background: var(--ws-gold); box-shadow: none; border-radius: 10px; }
+.exp-form-dialog .exp-add-btn:hover:not(:disabled) { background: var(--ws-gold-dark); }
+.exp-form-dialog :focus-visible { outline: 3px solid var(--ws-teal); outline-offset: 2px; }
+.exp-form-dialog .exp-alert { margin-bottom: 16px; }
+@media (max-width: 520px) {
+  .exp-form-dialog .exp-budget-grid { grid-template-columns: 1fr; }
+  .exp-form-dialog .k-modal-body { padding: 16px; }
+  .exp-form-dialog .exp-form-actions { bottom: -16px; }
+}
+
+@media (max-width: 520px) {
+  .exp-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .exp-sum-card { min-width: 0; padding: 14px; align-items: flex-start; }
+  .exp-sum-card > div:last-child { min-width: 0; width: 100%; }
+  .exp-sum-icon { display: none; }
+  .exp-sum-label { font-size: 14px; line-height: 1.7; }
+  .exp-sum-value { font-size: 19px; line-height: 1.5; overflow-wrap: anywhere; }
 }

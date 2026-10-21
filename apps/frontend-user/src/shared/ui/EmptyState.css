@@ -5,8 +5,8 @@
   justify-content: center;
   padding: 3rem 1.5rem;
   text-align: center;
-  background: var(--brand-surface, #ffffff);
-  border: 1px dashed var(--brand-border-strong, #d3ccf2);
+  background: var(--ws-surface, var(--brand-surface, #ffffff));
+  border: 1px dashed var(--ws-border-strong, var(--brand-border-strong, #d3ccf2));
   border-radius: var(--radius-xl, 20px);
   line-height: var(--leading-relaxed, 1.65);
   overflow-wrap: anywhere;
@@ -17,8 +17,8 @@
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: var(--brand-surface-3, #eae9f8);
-  color: var(--brand-primary, #6b6bc4);
+  background: var(--ws-gold-light, var(--brand-surface-3, #eae9f8));
+  color: var(--ws-gold, var(--brand-primary, #6b6bc4));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,24 +30,25 @@
   font-family: var(--font-sans);
   font-size: var(--text-lg, 1.125rem);
   font-weight: var(--weight-bold, 700);
-  color: var(--brand-text, #1e293b);
+  color: var(--ws-ink, var(--brand-text, #1e293b));
   margin-bottom: 0.375rem;
 }
 
 .k-empty-description {
-  font-size: var(--text-sm, 0.875rem);
-  color: var(--brand-text-muted, #7a8799);
+  font-size: 1rem;
+  color: var(--ws-muted, var(--brand-text-muted, #7a8799));
   max-width: 380px;
   margin-bottom: 1.25rem;
 }
 
 .k-empty-action-btn {
   font-family: var(--font-sans);
-  font-size: var(--text-sm, 0.875rem);
+  font-size: 1rem;
   font-weight: var(--weight-semibold, 600);
+  min-height: 44px;
   padding: 0.625rem 1.25rem;
   border-radius: var(--radius-md, 10px);
-  background: var(--brand-primary, #6b6bc4);
+  background: var(--ws-gold, var(--brand-primary, #6b6bc4));
   color: var(--brand-on-primary, #ffffff);
   border: none;
   cursor: pointer;
@@ -55,5 +56,8 @@
 }
 
 .k-empty-action-btn:hover {
-  background: var(--brand-primary-hover, #5a55b3);
+  background: var(--ws-gold-dark, var(--brand-primary-hover, #5a55b3));
 }
+
+.k-empty-description:last-child { margin-bottom: 0; }
+.k-empty-action-btn:focus-visible { outline: 3px solid var(--ws-teal, #0f766e); outline-offset: 3px; }

@@ -28,6 +28,19 @@ describe("A11Y-001 modal keyboard and background isolation", () => {
     unmount(); expect(background).not.toHaveAttribute("inert"); background.remove();
   });
 
+  it("skips controls inside hidden sections when wrapping Tab focus", () => {
+    render(<Modal isOpen title="Print preview" showHeader={false}>
+      <button>Zoom</button><button>Exit preview</button>
+      <section style={{ display: "none" }}><button>Hidden export</button></section>
+    </Modal>);
+    const first = screen.getByRole("button", { name: "Zoom" });
+    const last = screen.getByRole("button", { name: "Exit preview" });
+    last.focus(); fireEvent.keyDown(document, { key: "Tab" });
+    expect(first).toHaveFocus();
+    fireEvent.keyDown(document, { key: "Tab", shiftKey: true });
+    expect(last).toHaveFocus();
+  });
+
   it("closes only the top nested dialog on Escape and keeps the background locked", () => {
     const parentClose = vi.fn(); const childClose = vi.fn();
     const { rerender } = render(<><Modal isOpen title="Parent" onClose={parentClose}><button>Parent action</button></Modal><Modal isOpen title="Child" onClose={childClose}><button>Child action</button></Modal></>);

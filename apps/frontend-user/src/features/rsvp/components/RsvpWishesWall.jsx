@@ -1,13 +1,13 @@
 import { EmptyState, StatusBadge } from "@/shared/ui";
-import { IoTimeOutline, IoArrowBackOutline } from "react-icons/io5";
+import { Clock as IoTimeOutline, ArrowLeft as IoArrowBackOutline, MessageCircleHeart } from "lucide-react";
 
-export function RsvpWishesWall({ wishesList = [], setViewMode }) {
+export function RsvpWishesWall({ wishesList = [], setViewMode, t, lang }) {
   return (
     <section className="rsvp-board">
       <div className="rsvp-wishes-head">
         <div>
-          <h2>ផ្ទាំងសារជូនពរមង្គលការ (Guest Wishes Wall)</h2>
-          <p>សារជូនពរដែលបានផ្ញើតាមរយៈទំព័រធៀបឌីជីថល</p>
+          <h2>{t("wishes")}</h2>
+          <p>{t("wishesText")}</p>
         </div>
         <button
           type="button"
@@ -15,27 +15,28 @@ export function RsvpWishesWall({ wishesList = [], setViewMode }) {
           onClick={() => setViewMode("TABLE")}
         >
           <IoArrowBackOutline aria-hidden="true" />
-          <span>ត្រឡប់ទៅតារាង RSVP</span>
+          <span>{t("back")}</span>
         </button>
       </div>
 
       {wishesList.length === 0 ? (
         <div className="rsvp-empty-box">
           <EmptyState
-            title="មិនទាន់មានសារជូនពរនៅឡើយទេ"
-            description="នៅពេលភ្ញៀវឆ្លើយតប RSVP រួចផ្ញើសារជូនពរ វានឹងបង្ហាញនៅទីនេះ។"
+            icon={MessageCircleHeart}
+            title={t("noWishes")}
+            description={t("noWishesText")}
           />
         </div>
       ) : (
         <div className="rsvp-wishes-grid">
-          {wishesList.map((item) => {
-            const author = item.guestName || item.name || "ភ្ញៀវកិត្តិយស";
+          {wishesList.map((item, index) => {
+            const author = item.guestName || item.name || t("unnamed");
             const initial = author.trim().charAt(0).toUpperCase();
             const dateVal = item.createdAt || item.updatedAt;
 
             return (
               <article
-                key={item.id || item.guestId || Math.random()}
+                key={item.id ?? item.guestId ?? index}
                 className="rsvp-wish-card"
               >
                 <div className="rsvp-wish-header">
@@ -45,18 +46,18 @@ export function RsvpWishesWall({ wishesList = [], setViewMode }) {
                     </div>
                     <strong>{author}</strong>
                   </div>
-                  <StatusBadge status={(item.status || "PENDING").toUpperCase()} />
+                  <StatusBadge status={item.responseStatus || item.status || "PENDING"} label={t(({ ATTENDING: "attending", NOT_ATTENDING: "declined", DECLINED: "declined", MAYBE: "maybe" })[item.responseStatus || item.status] || "pending")} />
                 </div>
 
                 <p className="rsvp-wish-quote">
                   “{item.wish || item.message}”
                 </p>
 
-                {dateVal && (
+                {dateVal && !Number.isNaN(new Date(dateVal).getTime()) && (
                   <div className="rsvp-wish-footer">
                     <IoTimeOutline aria-hidden="true" />
                     <span>
-                      {new Intl.DateTimeFormat("km-KH", {
+                      {new Intl.DateTimeFormat(lang === "en" ? "en-GB" : "km-KH", {
                         dateStyle: "medium",
                         timeStyle: "short",
                       }).format(new Date(dateVal))}

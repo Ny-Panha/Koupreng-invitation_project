@@ -7,6 +7,7 @@ export default function SearchInput({
   onClear,
   placeholder = "Search...",
   ariaLabel = "Search input",
+  clearLabel = "Clear search input",
   className = "",
   disabled = false,
 }) {
@@ -14,7 +15,7 @@ export default function SearchInput({
     <div className={`k-search-input-wrap ${className}`}>
       <IoSearchOutline className="k-search-icon" aria-hidden="true" />
       <input
-        type="text"
+        type="search"
         className="k-search-input"
         value={value}
         onChange={onChange}
@@ -27,7 +28,7 @@ export default function SearchInput({
           type="button"
           className="k-search-clear-btn"
           onClick={onClear}
-          aria-label="Clear search input"
+          aria-label={clearLabel}
           disabled={disabled}
         >
           <IoCloseCircleOutline aria-hidden="true" />

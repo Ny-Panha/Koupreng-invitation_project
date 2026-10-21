@@ -2,6 +2,7 @@ import {
     IoAddOutline,
     IoGiftOutline,
 } from "react-icons/io5";
+import { SkeletonCard } from "@/shared/ui";
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
 import { useGifts } from "./hooks/useGifts";
 import { GiftStatsCards } from "./components/GiftStatsCards";
@@ -9,7 +10,7 @@ import { GiftTable } from "./components/GiftTable";
 import "./GiftsFeature.css";
 
 export function GiftsFeature() {
-    const { text: t } = useBackendMessages("gifts");
+    const { text: t, lang } = useBackendMessages("gifts");
     const {
         eventId,
         drafts,
@@ -33,9 +34,7 @@ export function GiftsFeature() {
     if (loading) {
         return (
             <div className="gifts-page">
-                <div className="gifts-empty">
-                    {t("loadingText") || "កំពុងទាញយកទិន្នន័យ..."}
-                </div>
+                <SkeletonCard height="140px" /><SkeletonCard height="260px" />
             </div>
         );
     }
@@ -43,9 +42,9 @@ export function GiftsFeature() {
     return (
         <div className="wg-page">
             {/* Hero */}
-            <div className="wg-hero">
+            <header className="dash-page-header">
                 <div className="wg-hero-content">
-                    <span className="wg-hero-tag">{t("heroTag")}</span>
+                    <span className="wg-hero-tag">{t("kicker")}</span>
                     <h1 className="wg-title">
                         <IoGiftOutline aria-hidden="true" />
                         {t("title")}
@@ -54,7 +53,7 @@ export function GiftsFeature() {
                 </div>
                 <button
                     type="button"
-                    className="wg-add-btn"
+                    className="workspace-button primary"
                     disabled={!eventId || saving}
                     onClick={() => {
                         openAddForm();
@@ -64,7 +63,7 @@ export function GiftsFeature() {
                     <IoAddOutline aria-hidden="true" />
                     {t("addBtn")}
                 </button>
-            </div>
+            </header>
 
             {error && <div className="wg-empty">{error}</div>}
 
@@ -77,7 +76,7 @@ export function GiftsFeature() {
             )}
 
             {/* Stats */}
-            {eventId && <GiftStatsCards gifts={gifts} t={t} />}
+            {eventId && gifts.length > 0 && <GiftStatsCards gifts={gifts} t={t} />}
 
             {/* Table */}
             {eventId && (
@@ -91,9 +90,10 @@ export function GiftsFeature() {
                     resetForm={resetForm}
                     isDuplicateGift={isDuplicateGift}
                     editGift={editGift}
-                    deleteGift={(id) => deleteGift(id, t("deleteConfirm"))}
+                    deleteGift={(id) => deleteGift(id, `${t("deleteConfirmTitle")} ${t("deleteConfirmText")}`)}
                     saving={saving}
                     t={t}
+                    lang={lang}
                 />
             )}
         </div>

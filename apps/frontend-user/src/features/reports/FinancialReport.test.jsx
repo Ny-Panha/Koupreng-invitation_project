@@ -1,6 +1,8 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
+import { useLanguageStore } from "@/stores/useLanguageStore";
+
 const reportState = vi.hoisted(() => ({
   useActiveEventReport: vi.fn(),
 }));
@@ -15,6 +17,7 @@ afterEach(cleanup);
 describe("user financial report", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    useLanguageStore.setState({ lang: "en" });
     reportState.useActiveEventReport.mockReturnValue({
       sourceData: {
         invitation: { id: 88, title: "Sokha's Birthday", eventType: "BIRTHDAY", eventDate: "2027-04-20" },
@@ -38,33 +41,33 @@ describe("user financial report", () => {
     render(<ReportsPage />);
 
     expect(screen.getByText("Sokha's Birthday")).toBeInTheDocument();
-    expect(screen.getByText("ខួបកំណើត")).toBeInTheDocument();
-    expect(screen.getByText("ថវិកាប៉ាន់ស្មាន / Estimated Budget").parentElement).toHaveTextContent("$100.00");
-    expect(screen.getByText("ចំណាយពិត / Actual Expenses").parentElement).toHaveTextContent("$60.00");
-    expect(screen.getByText("នៅខ្វះ / Unpaid Balance").parentElement).toHaveTextContent("$40.00");
+    expect(screen.getByText("Birthday")).toBeInTheDocument();
+    expect(screen.getByText("Estimated Budget").parentElement).toHaveTextContent("$100.00");
+    expect(screen.getByText("Actual Expenses").parentElement).toHaveTextContent("$60.00");
+    expect(screen.getByText("Unpaid Balance").parentElement).toHaveTextContent("$40.00");
     expect(screen.getByText("ABA / KHQR").parentElement).toHaveTextContent("$40.00");
-    expect(screen.getByText("សាច់ប្រាក់ / Cash", { selector: "span" }).parentElement).toHaveTextContent("$15.00");
-    expect(screen.getByText("អ្នកចូលរួមបានបញ្ជាក់ / Confirmed Attendees").parentElement).toHaveTextContent("4");
-    expect(screen.getByText("បានស្កេន QR / QR Check-ins").parentElement).toHaveTextContent("1");
-    expect(screen.getByRole("button", { name: "បោះពុម្ពរបាយការណ៍ / Print Report" })).toBeInTheDocument();
+    expect(screen.getByText("Cash", { selector: "span" }).parentElement).toHaveTextContent("$15.00");
+    expect(screen.getByText("Confirmed Attendees").parentElement).toHaveTextContent("4");
+    expect(screen.getByText("QR Check-ins").parentElement).toHaveTextContent("1");
+    expect(screen.getByRole("button", { name: "Print Report" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Save as PDF/ })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Preview/ })).toBeInTheDocument();
-    expect(screen.getByText("តារាងចំណាយ")).toBeInTheDocument();
+    expect(screen.getByText("Expense records")).toBeInTheDocument();
   });
 
   it("toggles print preview mode and handles escape key to exit", () => {
-    const { container } = render(<ReportsPage />);
+    render(<ReportsPage />);
 
-    expect(container.querySelector(".is-print-preview")).toBeNull();
+    expect(screen.queryByRole("dialog")).toBeNull();
     const previewBtn = screen.getByRole("button", { name: /Preview/ });
     fireEvent.click(previewBtn);
 
-    expect(container.querySelector(".is-print-preview")).toBeInTheDocument();
+    expect(screen.queryByRole("dialog")).toBeInTheDocument();
     expect(screen.getByLabelText("Print preview controls")).toBeInTheDocument();
 
     const exitBtn = screen.getByRole("button", { name: /Exit/ });
     fireEvent.click(exitBtn);
-    expect(container.querySelector(".is-print-preview")).toBeNull();
+    expect(screen.queryByRole("dialog")).toBeNull();
   });
 
   it("triggers window.print with custom document title for PDF export", () => {

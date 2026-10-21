@@ -1,548 +1,76 @@
-/* RSVP Management Dashboard Styles - Koupreng Theme */
-
 .rsvp-page {
-  width: min(1180px, calc(100% - 48px));
-  margin: 0 auto;
-  padding: 28px 0 60px;
-  font-family: "Noto Sans Khmer", "Kantumruy Pro", "DM Sans", sans-serif;
-  color: #2a1f10;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-@media (max-width: 768px) {
-  .rsvp-page {
-    width: calc(100% - 32px);
-    padding: 20px 0 40px;
-    gap: 18px;
-  }
-}
-
-/* Header */
-.rsvp-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.rsvp-kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: #b98b42;
-  font-size: 0.8125rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: 4px;
-}
-
-.rsvp-header h1 {
-  margin: 0 0 6px;
-  color: #2a1f10;
-  font-size: clamp(1.5rem, 2.8vw, 2rem);
-  font-weight: 900;
-  line-height: 1.25;
-}
-
-.rsvp-subtitle {
-  margin: 0;
-  color: #7d6d58;
-  font-size: 0.9375rem;
-  font-weight: 500;
-}
-
-.rsvp-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.rsvp-back-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 40px;
-  padding: 0 16px;
-  border-radius: 10px;
-  border: 1px solid #eadfce;
-  background: #ffffff;
-  color: #4a3b2c;
-  font-size: 0.875rem;
-  font-weight: 700;
-  text-decoration: none;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(93, 67, 32, 0.04);
-  transition: all 0.2s ease;
-}
-
-.rsvp-back-btn:hover {
-  background: #faf6ef;
-  border-color: #b98b42;
-  color: #b98b42;
-  transform: translateY(-1px);
-}
-
-/* KPI Cards Grid */
-.rsvp-kpi-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
-}
-
-@media (max-width: 960px) {
-  .rsvp-kpi-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 520px) {
-  .rsvp-kpi-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.rsvp-kpi-card {
-  position: relative;
-  border: 1px solid #eadfce;
-  border-radius: 16px;
-  background: #ffffff;
-  padding: 18px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  box-shadow: 0 4px 16px rgba(93, 67, 32, 0.04);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-}
-
-.rsvp-kpi-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(93, 67, 32, 0.08);
-}
-
-.rsvp-kpi-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.rsvp-kpi-label {
-  font-size: 0.8125rem;
-  font-weight: 800;
-  color: #7d6d58;
-}
-
-.rsvp-kpi-icon-pill {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.125rem;
-  flex-shrink: 0;
-}
-
-.rsvp-kpi-card.is-attending {
-  border-left: 4px solid #10b981;
-}
-
-.rsvp-kpi-card.is-attending .rsvp-kpi-label {
-  color: #047857;
-}
-
-.rsvp-kpi-card.is-attending .rsvp-kpi-icon-pill {
-  background: #ecfdf5;
-  color: #10b981;
-}
-
-.rsvp-kpi-card.is-declined {
-  border-left: 4px solid #f43f5e;
-}
-
-.rsvp-kpi-card.is-declined .rsvp-kpi-label {
-  color: #be123c;
-}
-
-.rsvp-kpi-card.is-declined .rsvp-kpi-icon-pill {
-  background: #fff1f2;
-  color: #f43f5e;
-}
-
-.rsvp-kpi-card.is-pending {
-  border-left: 4px solid #f59e0b;
-}
-
-.rsvp-kpi-card.is-pending .rsvp-kpi-label {
-  color: #b45309;
-}
-
-.rsvp-kpi-card.is-pending .rsvp-kpi-icon-pill {
-  background: #fef3c7;
-  color: #f59e0b;
-}
-
-.rsvp-kpi-card.is-wishes {
-  border-left: 4px solid #0284c7;
-  cursor: pointer;
-}
-
-.rsvp-kpi-card.is-wishes .rsvp-kpi-label {
-  color: #0369a1;
-}
-
-.rsvp-kpi-card.is-wishes .rsvp-kpi-icon-pill {
-  background: #e0f2fe;
-  color: #0284c7;
-}
-
-.rsvp-kpi-card.is-wishes.is-active {
-  border-color: #0284c7;
-  background: #f0f9ff;
-  box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.25);
-}
-
-.rsvp-wishes-tag {
-  font-size: 0.6875rem;
-  font-weight: 800;
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: #e0f2fe;
-  color: #0284c7;
-}
-
-.rsvp-kpi-card.is-active .rsvp-wishes-tag {
-  background: #0284c7;
-  color: #ffffff;
-}
-
-.rsvp-kpi-value {
-  font-size: 2rem;
-  font-weight: 900;
-  color: #1e293b;
-  line-height: 1.1;
-  margin: 2px 0 0;
-}
-
-.rsvp-kpi-note {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #64748b;
-}
-
-/* Board / Panel */
-.rsvp-board {
-  border: 1px solid #eadfce;
-  border-radius: 20px;
-  background: #ffffff;
-  padding: 24px;
-  box-shadow: 0 10px 30px rgba(93, 67, 32, 0.05);
-}
-
-@media (max-width: 768px) {
-  .rsvp-board {
-    padding: 16px;
-    border-radius: 16px;
-  }
-}
-
-/* Toolbar */
-.rsvp-toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-
-.rsvp-search-wrapper {
-  flex: 1 1 300px;
-  max-width: 420px;
-}
-
-.rsvp-filter-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.rsvp-select {
-  height: 40px;
-  padding: 0 34px 0 14px;
-  border: 1px solid #d8cdb8;
-  border-radius: 10px;
-  background: #faf6ef;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #2a1f10;
-  cursor: pointer;
-  outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  appearance: auto;
-}
-
-.rsvp-select:focus {
-  border-color: #b98b42;
-  box-shadow: 0 0 0 3px rgba(185, 139, 66, 0.15);
-}
-
-.rsvp-toggle-wishes-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 10px;
-  border: 1px solid #bfdbfe;
-  background: #eff6ff;
-  color: #1d4ed8;
-  font-size: 0.875rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.rsvp-toggle-wishes-btn:hover {
-  background: #dbeafe;
-  transform: translateY(-1px);
-}
-
-/* Table */
-.rsvp-table-wrapper {
-  border: 1px solid #eadfce;
-  border-radius: 14px;
-  background: #ffffff;
-  overflow-x: auto;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
-}
-
-.rsvp-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-}
-
-.rsvp-table th {
-  background: #faf6ef;
-  padding: 14px 18px;
-  font-size: 0.8125rem;
-  font-weight: 800;
-  color: #7d6d58;
-  border-bottom: 1px solid #eadfce;
-  white-space: nowrap;
-}
-
-.rsvp-table td {
-  padding: 16px 18px;
-  border-bottom: 1px solid #f3eee6;
-  font-size: 0.875rem;
-  color: #2a1f10;
-  vertical-align: middle;
-}
-
-.rsvp-table tr:last-child td {
-  border-bottom: none;
-}
-
-.rsvp-table tr:hover td {
-  background: #fdfbf7;
-}
-
-.rsvp-guest-cell {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.rsvp-guest-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: #f1ede4;
-  color: #7d6d58;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 0.875rem;
-  flex-shrink: 0;
-  border: 1px solid #eadfce;
-}
-
-.rsvp-guest-name {
-  font-weight: 700;
-  color: #1e293b;
-  margin-bottom: 2px;
-}
-
-.rsvp-guest-phone {
-  font-size: 0.75rem;
-  color: #64748b;
-}
-
-.rsvp-party-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  font-size: 0.8125rem;
-  font-weight: 700;
-  color: #334155;
-  white-space: nowrap;
-}
-
-.rsvp-date-cell {
-  font-size: 0.8125rem;
-  color: #64748b;
-  white-space: nowrap;
-}
-
-.rsvp-wish-text {
-  font-style: italic;
-  color: #334155;
-  background: #fcfaf7;
-  padding: 6px 10px;
-  border-radius: 8px;
-  border-left: 2px solid #b98b42;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  line-height: 1.45;
-}
-
-/* Empty State Box */
-.rsvp-empty-box {
-  padding: 48px 24px;
-  text-align: center;
-  border: 1px dashed #eadfce;
-  border-radius: 14px;
-  background: #fdfbf7;
-}
-
-/* Wishes Wall */
-.rsvp-wishes-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #eadfce;
-}
-
-.rsvp-wishes-head h2 {
-  font-size: 1.1875rem;
-  font-weight: 800;
-  color: #2a1f10;
-  margin: 0 0 4px;
-}
-
-.rsvp-wishes-head p {
-  margin: 0;
-  font-size: 0.875rem;
-  color: #7d6d58;
-}
-
-.rsvp-return-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  height: 38px;
-  padding: 0 14px;
-  border-radius: 10px;
-  border: 1px solid #eadfce;
-  background: #ffffff;
-  color: #2a1f10;
-  font-size: 0.875rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.rsvp-return-btn:hover {
-  background: #faf6ef;
-  border-color: #b98b42;
-}
-
-.rsvp-wishes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 16px;
-}
-
-.rsvp-wish-card {
-  border: 1px solid #eadfce;
-  border-radius: 14px;
-  background: #ffffff;
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  box-shadow: 0 4px 14px rgba(93, 67, 32, 0.04);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.rsvp-wish-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(93, 67, 32, 0.08);
-}
-
-.rsvp-wish-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.rsvp-wish-author {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.rsvp-wish-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: #fdf2e9;
-  color: #b98b42;
-  font-weight: 800;
-  font-size: 0.8125rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #eadfce;
-}
-
-.rsvp-wish-quote {
-  margin: 0;
-  font-size: 0.9375rem;
-  color: #334155;
-  font-style: italic;
-  line-height: 1.6;
-  background: #fcfaf7;
-  padding: 12px 14px;
-  border-radius: 10px;
-  border-left: 3px solid #b98b42;
-}
-
-.rsvp-wish-footer {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.75rem;
-  color: #94a3b8;
-  margin-top: auto;
+  width: 100%; margin: 0; padding: 0; color: var(--ws-ink);
+  display: flex; flex-direction: column; gap: 24px; line-height: 1.7;
+}
+.rsvp-header, .rsvp-toolbar, .rsvp-wishes-head { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: flex-start; }
+.rsvp-header-info { flex: 1; min-width: min(100%, 260px); }
+.rsvp-kicker { display: block; color: var(--ws-gold-dark); font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.rsvp-header h1 { margin: 0 0 6px; font-size: clamp(24px, 2.6vw, 34px); font-weight: 750; line-height: 1.65; }
+.rsvp-subtitle { color: var(--ws-muted); font-size: 16px; margin: 0; }
+.rsvp-back-btn, .rsvp-return-btn { display: inline-flex; gap: 8px; align-items: center; min-height: 44px; padding: 8px 14px; border: 1px solid var(--ws-border-strong); border-radius: 10px; background: var(--ws-surface); color: var(--ws-ink); text-decoration: none; font: inherit; font-size: 14px; cursor: pointer; }
+.rsvp-kpi-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.rsvp-kpi-card { border: 1px solid var(--ws-border); border-radius: 16px; background: var(--ws-surface); padding: 20px; display: flex; flex-direction: column; gap: 8px; text-align: left; font: inherit; color: inherit; }
+.rsvp-kpi-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.rsvp-kpi-label { font-size: 14px; font-weight: 650; color: var(--ws-muted); }
+.rsvp-kpi-icon-pill { color: var(--ws-teal); flex-shrink: 0; }
+.rsvp-kpi-card.is-declined .rsvp-kpi-icon-pill { color: #b42318; }
+.rsvp-kpi-card.is-pending .rsvp-kpi-icon-pill { color: #86540a; }
+.rsvp-kpi-card.is-wishes { cursor: pointer; transition: border-color var(--ws-motion); }
+.rsvp-kpi-card.is-wishes:hover, .rsvp-kpi-card.is-active { border-color: var(--ws-gold); background: var(--ws-gold-light); }
+.rsvp-kpi-value { font-size: 30px; font-weight: 750; line-height: 1.3; }
+.rsvp-kpi-note { color: var(--ws-muted); font-size: 13px; }
+.rsvp-board { border: 1px solid var(--ws-border); border-radius: 18px; background: var(--ws-surface); padding: 24px; min-width: 0; }
+.rsvp-toolbar { align-items: center; margin-bottom: 20px; gap: 12px; }
+.rsvp-search-wrapper { flex: 1 1 240px; min-width: 0; max-width: 460px; }
+.rsvp-select { min-height: 44px; max-width: 100%; padding: 8px 12px; border: 1px solid var(--ws-border-strong); border-radius: 10px; background: var(--ws-surface); color: var(--ws-ink); font: inherit; font-size: 16px; }
+.rsvp-table-wrapper { overflow-x: auto; }
+.rsvp-table { width: 100%; border-collapse: collapse; text-align: left; }
+.rsvp-table th { padding: 12px; font-size: 14px; font-weight: 650; color: var(--ws-muted); background: var(--ws-surface-subtle); }
+.rsvp-table td { padding: 16px 12px; border-bottom: 1px solid var(--ws-border); font-size: 15px; vertical-align: top; }
+.rsvp-table tr:last-child td { border-bottom: 0; }
+.rsvp-table tbody tr:hover { background: #fdfbf7; }
+.rsvp-guest-cell { display: flex; align-items: center; gap: 10px; }
+.rsvp-guest-avatar, .rsvp-wish-avatar { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; background: var(--ws-gold-light); color: var(--ws-gold-dark); display: inline-flex; align-items: center; justify-content: center; font-weight: 700; }
+.rsvp-guest-name { font-size: 16px; font-weight: 650; overflow-wrap: anywhere; }
+.rsvp-guest-phone, .rsvp-date-cell { color: var(--ws-muted); font-size: 14px; }
+.rsvp-party-badge { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.rsvp-wish-text { min-width: 100px; max-width: 280px; overflow-wrap: anywhere; white-space: pre-wrap; }
+.rsvp-owner-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.rsvp-owner-actions > .workspace-button { font-size: 14px; padding: 8px 10px; min-height: 44px; }
+.rsvp-response-form { display: flex; flex-wrap: wrap; gap: 16px; }
+.rsvp-response-form > label, .rsvp-response-form > p { flex: 1 0 100%; }
+.rsvp-response-form label { display: grid; gap: 6px; font-size: 16px; }
+.rsvp-response-form :is(input, select, textarea) { width: 100%; min-height: 44px; border: 1px solid var(--ws-border-strong); border-radius: 10px; padding: 10px 12px; font: inherit; color: var(--ws-ink); background: var(--ws-surface); }
+.rsvp-response-form textarea { min-height: 120px; resize: vertical; }
+.rsvp-response-form [role="alert"] { color: #b42318; }
+.rsvp-wishes-head { margin-bottom: 24px; }
+.rsvp-wishes-head h2 { font-size: 22px; line-height: 1.65; margin: 0 0 4px; }
+.rsvp-wishes-head p { color: var(--ws-muted); margin: 0; }
+.rsvp-wishes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 16px; }
+.rsvp-wish-card { border: 1px solid var(--ws-border); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+.rsvp-wish-header, .rsvp-wish-author { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.rsvp-wish-header { justify-content: space-between; }
+.rsvp-wish-quote { white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; font-size: 16px; }
+.rsvp-wish-footer { display: flex; gap: 8px; align-items: center; font-size: 14px; color: var(--ws-muted); margin-top: auto; }
+.rsvp-wish-footer svg, .rsvp-return-btn svg { width: 18px; height: 18px; }
+.rsvp-page :is(button, a, select):focus-visible { outline: 3px solid var(--ws-teal); outline-offset: 3px; }
+@media (max-width: 1200px) {
+  .rsvp-kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 700px) {
+  .rsvp-page { gap: 20px; }
+  .rsvp-kpi-card { padding: 14px; }
+  .rsvp-kpi-note { display: none; }
+  .rsvp-board { padding: 16px; }
+  .rsvp-search-wrapper { flex: 1 0 100%; max-width: none; }
+  .rsvp-select { width: 100%; }
+  .rsvp-table-wrapper { overflow: visible; }
+  .rsvp-table, .rsvp-table tbody, .rsvp-table tr, .rsvp-table td { display: block; width: 100%; }
+  .rsvp-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .rsvp-table tbody { display: grid; gap: 16px; }
+  .rsvp-table tr { border: 1px solid var(--ws-border); border-radius: 14px; padding: 12px; }
+  .rsvp-table td { padding: 8px 0; border: 0; }
+  .rsvp-table td::before { content: attr(data-label); display: block; color: var(--ws-muted); font-size: 13px; margin-bottom: 4px; }
+  .rsvp-table td:first-child::before { display: none; }
+  .rsvp-wish-text { max-width: none; }
 }

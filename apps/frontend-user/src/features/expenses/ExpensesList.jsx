@@ -3,6 +3,7 @@ import {
     IoWalletOutline,
     IoAlertCircleOutline,
 } from "react-icons/io5";
+import { SkeletonCard } from "@/shared/ui";
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
 import { useExpenses } from "./hooks/useExpenses";
 import { ExpenseSummaryCards } from "./components/ExpenseSummaryCards";
@@ -11,7 +12,7 @@ import { ExpenseFormModal } from "./components/ExpenseFormModal";
 import "./ExpensesPage.css";
 
 export function ExpensesList() {
-    const { text: t } = useBackendMessages("expenses");
+    const { text: t, lang } = useBackendMessages("expenses");
     const {
         eventId,
         drafts,
@@ -48,7 +49,7 @@ export function ExpensesList() {
     if (loading) {
         return (
             <div className="exp-page">
-                <div className="exp-empty">{t ? t("loadingText") || "កំពុងទាញយកទិន្នន័យ..." : "Loading..."}</div>
+                <SkeletonCard height="140px" /><SkeletonCard height="240px" />
             </div>
         );
     }
@@ -56,7 +57,7 @@ export function ExpensesList() {
     return (
         <div className="exp-page">
             {/* Hero */}
-            <div className="exp-hero">
+            <header className="dash-page-header">
                 <div className="exp-hero-content">
                     <span className="exp-hero-tag">{t ? t("kicker") : "Budget & Expense Planner"}</span>
                     <h1 className="exp-title">
@@ -67,14 +68,14 @@ export function ExpensesList() {
                 </div>
                 <button
                     type="button"
-                    className="exp-add-btn"
+                    className="workspace-button primary"
                     disabled={!eventId || saving}
                     onClick={openAddModal}
                 >
                     <IoAddOutline aria-hidden="true" />
                     {t ? t("addBtn") : "+ Add Expense"}
                 </button>
-            </div>
+            </header>
 
             {error && (
                 <div className="exp-alert exp-alert-error" role="alert">
@@ -92,7 +93,7 @@ export function ExpensesList() {
             )}
 
             {/* Stats */}
-            {eventId && (
+            {eventId && expenses.length > 0 && (
                 <ExpenseSummaryCards
                     totalBudget={totalBudget}
                     totalSpent={totalSpent}
@@ -117,6 +118,7 @@ export function ExpensesList() {
                 updatePaymentRow={updatePaymentRow}
                 removePaymentRow={removePaymentRow}
                 saving={saving}
+                error={error ? t("saveError") : ""}
                 t={t}
             />
 
@@ -132,6 +134,7 @@ export function ExpensesList() {
                     deleteExpense={(id) => deleteExpense(id, t ? t("deleteConfirmText") : null)}
                     saving={saving}
                     t={t}
+                    lang={lang}
                 />
             )}
         </div>

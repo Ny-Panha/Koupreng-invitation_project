@@ -1,13 +1,12 @@
 import {
     IoAddOutline,
-    IoCloseOutline,
-    IoCreateOutline,
     IoSaveOutline,
     IoTrashOutline,
 } from "react-icons/io5";
+import { Modal } from "@/shared/ui";
+import { EXPENSE_CATEGORIES, expenseCategoryLabel } from "../expenseCategories";
 import { DatePicker } from "../../../shared/ui/DatePicker";
 
-const CATEGORIES = ["Food & Catering", "Decor & Flowers", "Attire & Makeup", "Venue & Transport", "Other"];
 
 export function ExpenseFormModal({
     show,
@@ -20,6 +19,7 @@ export function ExpenseFormModal({
     updatePaymentRow,
     removePaymentRow,
     saving,
+    error,
     t,
 }) {
     if (!show) return null;
@@ -36,20 +36,10 @@ export function ExpenseFormModal({
     const progress = budget > 0 ? Math.min((sumPayments / budget) * 100, 100) : sumPayments > 0 ? 100 : 0;
 
     return (
-        <div className="exp-modal-layer" onClick={resetForm}>
-            <div className="exp-modal" onClick={(e) => e.stopPropagation()}>
-                <button type="button" className="exp-modal-x" onClick={resetForm}>
-                    <IoCloseOutline aria-hidden="true" />
-                </button>
-                <div className="exp-modal-content">
+        <Modal isOpen={show} onClose={() => !saving && resetForm()} title={t ? t(editingId ? "formTitleEdit" : "formTitleAdd") : editingId ? "Edit Expense" : "Add New Expense"}
+            size="xl" className="workspace-dialog exp-form-dialog" closeLabel={t ? t("close") : "Close"} closeOnEscape={!saving} closeOnBackdropClick={!saving}>
                     <form className="exp-form" onSubmit={submitExpense}>
-                        <h3 className="exp-form-title">
-                            {editingId ? (
-                                <><IoCreateOutline aria-hidden="true" />{t ? t("formTitleEdit") : "Edit Expense"}</>
-                            ) : (
-                                <><IoAddOutline aria-hidden="true" />{t ? t("formTitleAdd") : "Add New Expense"}</>
-                            )}
-                        </h3>
+                        {error && <p className="exp-alert exp-alert-error" role="alert">{error}</p>}
                         <div className="exp-form-body">
                             <div className="exp-form-col">
                                 <label className="exp-field-full">
@@ -68,8 +58,8 @@ export function ExpenseFormModal({
                                         value={form.category}
                                         onChange={(e) => updateForm("category", e.target.value)}
                                     >
-                                        {CATEGORIES.map((cat) => (
-                                            <option key={cat} value={cat}>{cat}</option>
+                                        {EXPENSE_CATEGORIES.map(({ value: cat }) => (
+                                            <option key={cat} value={cat}>{expenseCategoryLabel(cat, t)}</option>
                                         ))}
                                     </select>
                                 </label>
@@ -137,8 +127,8 @@ export function ExpenseFormModal({
                                         <small>{Math.round(progress)}% {t ? t("paidOfBudget") : "paid"}</small>
                                     </div>
                                 <label className="exp-field-full">
-                                    <span>Currency / រូបិយប័ណ្ណ</span>
-                                    <select value={form.currency || "USD"} onChange={(e) => updateForm("currency", e.target.value)}>
+                                    <span>{t ? t("currency") : "Currency"}</span>
+                                    <select aria-label={t ? t("currency") : "Currency"} value={form.currency || "USD"} onChange={(e) => updateForm("currency", e.target.value)}>
                                         <option value="USD">USD ($)</option>
                                         <option value="KHR">KHR (៛)</option>
                                     </select>
@@ -226,8 +216,8 @@ export function ExpenseFormModal({
                                                 <button
                                                     type="button"
                                                     className="exp-payment-del-btn"
-                                                    title="Delete"
-                                                    aria-label="Delete installment"
+                                                    title={t ? t("deleteInstallment") : "Delete installment"}
+                                                    aria-label={`${t ? t("deleteInstallment") : "Delete installment"} ${idx + 1}`}
                                                     onClick={() => removePaymentRow(idx)}
                                                 >
                                                     <IoTrashOutline aria-hidden="true" />
@@ -245,7 +235,7 @@ export function ExpenseFormModal({
                         </div>
 
                         <div className="exp-form-actions">
-                            <button type="button" className="exp-secondary-btn" onClick={resetForm}>
+                            <button type="button" className="exp-secondary-btn" onClick={resetForm} disabled={saving}>
                                 {t ? t("cancelBtn") : "Cancel"}
                             </button>
                             <button type="submit" className="exp-add-btn" disabled={!form.name.trim() || saving}>
@@ -257,9 +247,7 @@ export function ExpenseFormModal({
                             </button>
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
+        </Modal>
     );
 }
 

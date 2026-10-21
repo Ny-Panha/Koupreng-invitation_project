@@ -1,8 +1,13 @@
 import { useState } from "react";
+import { Pencil, Trash2 } from "lucide-react";
+import { useLanguageStore } from "@/stores/useLanguageStore";
+import { OPERATIONS_MESSAGES } from "@/shared/i18n/operationsMessages";
 import { Modal } from "@/shared/ui";
 import { rsvpService } from "../api/rsvpApi";
 
-export default function RsvpOwnerActions({ invitationId, record, onSaved }) {
+export default function RsvpOwnerActions({ invitationId, record, onSaved, text }) {
+  const lang = useLanguageStore(state => state.lang);
+  const t = text || (key => OPERATIONS_MESSAGES.rsvp[lang][key]);
   const [mode, setMode] = useState("");
   const [draft, setDraft] = useState(null);
   const [busy, setBusy] = useState(false);
@@ -18,30 +23,30 @@ export default function RsvpOwnerActions({ invitationId, record, onSaved }) {
     try {
       if (mode === "delete") await rsvpService.remove(invitationId, record.id);
       else await rsvpService.update(invitationId, record.id, { ...draft, attendeeCount: Number(draft.attendeeCount) });
-      setMode(""); setNotice(mode === "delete" ? "RSVP response deleted." : "RSVP response saved.");
+      setMode(""); setNotice(t(mode === "delete" ? "deleted" : "saved"));
       try { await onSaved?.(); }
-      catch { setRefreshFailed(true); setNotice("The RSVP change was saved, but the list could not refresh. Retry refresh before making another change."); }
-    } catch (failure) { setError(failure.message || "Could not save RSVP. Your response is retained."); }
+      catch { setRefreshFailed(true); setNotice(t("refreshError")); }
+    } catch { setError(t("saveError")); }
     finally { setBusy(false); }
   };
-  return <>
+  return <div className="rsvp-owner-actions">
     {notice && <p role="status">{notice}</p>}
-    {refreshFailed && <button type="button" onClick={async () => { setBusy(true); try { await onSaved?.(); setRefreshFailed(false); setNotice("RSVP list refreshed."); } catch { setNotice("The RSVP change remains saved. Refresh is still unavailable."); } finally { setBusy(false); } }} disabled={busy}>Retry RSVP refresh</button>}
-    <button type="button" className="dash-btn" onClick={() => open("edit")}>Edit RSVP</button>
-    <button type="button" className="dash-btn" onClick={() => open("delete")}>Delete RSVP</button>
-    <Modal isOpen={Boolean(mode)} onClose={() => !busy && setMode("")} title={mode === "delete" ? "Delete RSVP response?" : "Edit RSVP response"} closeOnEscape={!busy} closeOnBackdropClick={!busy}>
-      <form onSubmit={submit}>
+    {refreshFailed && <button type="button" onClick={async () => { setBusy(true); try { await onSaved?.(); setRefreshFailed(false); setNotice(t("refreshed")); } catch { setNotice(t("stillSaved")); } finally { setBusy(false); } }} disabled={busy}>{t("retry")}</button>}
+    <button type="button" className="workspace-button" disabled={busy || refreshFailed} onClick={() => open("edit")}><Pencil size={16} aria-hidden="true" />{t("edit")}</button>
+    <button type="button" className="workspace-button danger" disabled={busy || refreshFailed} onClick={() => open("delete")}><Trash2 size={16} aria-hidden="true" />{t("remove")}</button>
+    <Modal isOpen={Boolean(mode)} onClose={() => !busy && setMode("")} title={t(mode === "delete" ? "deleteTitle" : "editTitle")} className="workspace-dialog rsvp-response-dialog" closeLabel={lang === "en" ? "Close" : "បិទ"} closeOnEscape={!busy} closeOnBackdropClick={!busy}>
+      <form className="rsvp-response-form" onSubmit={submit}>
         {error && <p role="alert">{error}</p>}
-        {mode === "delete" ? <p>This removes the attendance response and its wish. The invited guest remains. To remove only a wish, use the Wishes page.</p> : draft && <>
-          <label>Status<select value={draft.responseStatus} onChange={(e) => setDraft({ ...draft, responseStatus: e.target.value })}>
-            <option value="ATTENDING">Attending</option><option value="NOT_ATTENDING">Not attending</option><option value="MAYBE">Maybe</option>
+        {mode === "delete" ? <p>{t("deleteText")}</p> : draft && <>
+          <label>{t("status")}<select value={draft.responseStatus} onChange={(e) => setDraft({ ...draft, responseStatus: e.target.value })}>
+            <option value="ATTENDING">{t("attending")}</option><option value="NOT_ATTENDING">{t("declined")}</option><option value="MAYBE">{t("maybe")}</option>
           </select></label>
-          <label>Attendee count<input type="number" min="0" max="100" required value={draft.attendeeCount} onChange={(e) => setDraft({ ...draft, attendeeCount: e.target.value })} /></label>
-          <label>Wish message<textarea maxLength="2000" value={draft.message} onChange={(e) => setDraft({ ...draft, message: e.target.value })} /></label>
+          <label>{t("count")}<input type="number" min="0" max="100" required value={draft.attendeeCount} onChange={(e) => setDraft({ ...draft, attendeeCount: e.target.value })} /></label>
+          <label>{t("message")}<textarea maxLength="2000" value={draft.message} onChange={(e) => setDraft({ ...draft, message: e.target.value })} /></label>
         </>}
-        <button type="submit" disabled={busy}>{busy ? "Saving…" : mode === "delete" ? "Confirm deletion" : "Save RSVP"}</button>
-        <button type="button" disabled={busy} onClick={() => setMode("")}>Cancel</button>
+        <button type="submit" className={`workspace-button ${mode === "delete" ? "danger" : "primary"}`} disabled={busy}>{t(busy ? "saving" : mode === "delete" ? "confirmDelete" : "save")}</button>
+        <button type="button" className="workspace-button" disabled={busy} onClick={() => setMode("")}>{t("cancel")}</button>
       </form>
     </Modal>
-  </>;
+  </div>;
 }

@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
-import { IoArrowBackOutline } from "react-icons/io5";
+import { Users } from "lucide-react";
+import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
 import { useRsvpDashboard } from "./hooks/useRsvpDashboard";
 import { RsvpKpiCards } from "./components/RsvpKpiCards";
 import { RsvpWishesWall } from "./components/RsvpWishesWall";
@@ -9,6 +10,7 @@ import "./RsvpDashboardPage.css";
 
 export default function RsvpDashboardPage() {
   const { eventId, invitationId = eventId } = useParams();
+  const { text: t, lang } = useBackendMessages("rsvp");
   const {
     invitation,
     statusFilter,
@@ -32,7 +34,7 @@ export default function RsvpDashboardPage() {
       <main className="dash-main">
         <div className="rsvp-page">
           <SkeletonCard height="100px" />
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px" }}>
+          <div className="rsvp-kpi-grid">
             <SkeletonCard height="110px" />
             <SkeletonCard height="110px" />
             <SkeletonCard height="110px" />
@@ -48,34 +50,34 @@ export default function RsvpDashboardPage() {
     return (
       <main className="dash-main">
         <div className="rsvp-page">
-          <ErrorState message={error} onRetry={load} />
+          <ErrorState message={t("loadError")} onRetry={load} />
         </div>
       </main>
     );
   }
 
   const backLink = invitationId
-    ? `/dashboard/invitations/${invitationId}/guests`
-    : "/dashboard/guests";
+    ? `/app/events/${invitationId}/guests`
+    : "/app/events";
 
   return (
     <main className="dash-main">
       <div className="rsvp-page">
         <header className="rsvp-header">
           <div className="rsvp-header-info">
-            <span className="rsvp-kicker">Attendance & RSVP Management</span>
-            <h1>គ្រប់គ្រងការឆ្លើយតប (RSVPs)</h1>
-            <p className="rsvp-subtitle">{invitation?.title || "ព័ត៌មានភ្ញៀវចូលរួម និងសារជូនពរ"}</p>
+            <span className="rsvp-kicker">{t("kicker")}</span>
+            <h1>{t("title")}</h1>
+            <p className="rsvp-subtitle"><strong>{invitation?.title}</strong> · {t("subtitle")}</p>
           </div>
           <div className="rsvp-actions">
             <Link to={backLink} className="rsvp-back-btn">
-              <IoArrowBackOutline aria-hidden="true" />
-              <span>ត្រឡប់ទៅវិញ / Back</span>
+              <Users size={18} aria-hidden="true" />
+              <span>{t("guests")}</span>
             </Link>
           </div>
         </header>
 
-        {error && <ErrorState message={error} />}
+        {error && <ErrorState message={t("loadError")} onRetry={load} />}
 
         {/* Summary KPI Cards */}
         <RsvpKpiCards
@@ -85,15 +87,16 @@ export default function RsvpDashboardPage() {
           wishesCount={wishesList.length}
           viewMode={viewMode}
           setViewMode={setViewMode}
+          t={t}
         />
 
         {/* Conditional: Wishes Wall View or Standard Table */}
         {viewMode === "WISHES" ? (
-          <RsvpWishesWall wishesList={wishesList} setViewMode={setViewMode} />
+          <RsvpWishesWall wishesList={wishesList} setViewMode={setViewMode} t={t} lang={lang} />
         ) : (
           <RsvpGuestTable
             invitationId={invitationId}
-            onSaved={load}
+            onSaved={() => load({ background: true })}
             filteredRsvps={filteredRsvps}
             search={search}
             setSearch={setSearch}
@@ -101,6 +104,8 @@ export default function RsvpDashboardPage() {
             setStatusFilter={setStatusFilter}
             wishesListCount={wishesList.length}
             setViewMode={setViewMode}
+            t={t}
+            lang={lang}
           />
         )}
       </div>

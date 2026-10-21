@@ -1,137 +1,37 @@
 import { EmptyState, SearchInput, StatusBadge } from "@/shared/ui";
-import { IoPeopleOutline } from "react-icons/io5";
+import { Users } from "lucide-react";
 import RsvpOwnerActions from "./RsvpOwnerActions";
 
-export function RsvpGuestTable({
-  filteredRsvps = [],
-  search = "",
-  setSearch,
-  statusFilter = "ALL",
-  setStatusFilter,
-  wishesListCount = 0,
-  setViewMode,
-  invitationId,
-  onSaved,
-}) {
-  return (
-    <section className="rsvp-board">
-      <div className="rsvp-toolbar">
-        <div className="rsvp-search-wrapper">
-          <SearchInput
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            onClear={() => setSearch("")}
-            placeholder="ស្វែងរកតាមឈ្មោះ ឬពាក្យជូនពរ..."
-            ariaLabel="ស្វែងរក RSVP"
-          />
-        </div>
-
-        <div className="rsvp-filter-group">
-          <select
-            className="rsvp-select"
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            aria-label="Filter by status"
-          >
-            <option value="ALL">គ្រប់ស្ថានភាព / All Status</option>
-            <option value="ATTENDING">ចូលរួម (Attending)</option>
-            <option value="DECLINED">អវត្តមាន (Declined)</option>
-            <option value="PENDING">រង់ចាំ (Pending)</option>
-          </select>
-
-          {wishesListCount > 0 && (
-            <button
-              type="button"
-              className="rsvp-toggle-wishes-btn"
-              onClick={() => setViewMode("WISHES")}
-            >
-              💌 មើលផ្ទាំងជូនពរ / Wishes ({wishesListCount})
-            </button>
-          )}
-        </div>
-      </div>
-
-      {filteredRsvps.length === 0 ? (
-        <div className="rsvp-empty-box">
-          <EmptyState
-            title="មិនមានទិន្នន័យ RSVP ទេ"
-            description="មិនទាន់មានការឆ្លើយតបដែលត្រូវគ្នានឹងការស្វែងរក ឬតម្រងនេះនៅឡើយទេ។"
-          />
-        </div>
-      ) : (
-        <div className="rsvp-table-wrapper">
-          <table className="rsvp-table">
-            <thead>
-              <tr>
-                <th>ឈ្មោះភ្ញៀវ / Guest</th>
-                <th>ស្ថានភាព / Status</th>
-                <th>ចំនួនមនុស្ស / Party</th>
-                <th>កាលបរិច្ឆេទ / Date</th>
-                <th>សារជូនពរ / Wishes</th>
-                {invitationId && <th>Manage response</th>}
-              </tr>
-            </thead>
-            <tbody>
-              {filteredRsvps.map((rsvp) => {
-                const guestName = rsvp.guestName || rsvp.name || "ភ្ញៀវកិត្តិយស";
-                const initial = guestName.trim().charAt(0).toUpperCase();
-                const wishText = rsvp.wish || rsvp.message;
-                const partySize = rsvp.attendeeCount ?? rsvp.partySize ?? 1;
-                const dateVal = rsvp.respondedAt || rsvp.updatedAt || rsvp.createdAt;
-
-                return (
-                  <tr key={rsvp.id || rsvp.guestId || Math.random()}>
-                    <td>
-                      <div className="rsvp-guest-cell">
-                        <div className="rsvp-guest-avatar" aria-hidden="true">
-                          {initial}
-                        </div>
-                        <div>
-                          <div className="rsvp-guest-name">{guestName}</div>
-                          {rsvp.phone && (
-                            <div className="rsvp-guest-phone">{rsvp.phone}</div>
-                          )}
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <StatusBadge status={(rsvp.responseStatus || rsvp.status || "PENDING").toUpperCase()} />
-                    </td>
-                    <td>
-                      <span className="rsvp-party-badge">
-                        <IoPeopleOutline aria-hidden="true" />
-                        <span>{partySize} នាក់</span>
-                      </span>
-                    </td>
-                    <td>
-                      <span className="rsvp-date-cell">
-                        {dateVal
-                          ? new Intl.DateTimeFormat("km-KH", {
-                              dateStyle: "medium",
-                              timeStyle: "short",
-                            }).format(new Date(dateVal))
-                          : "—"}
-                      </span>
-                    </td>
-                    <td style={{ maxWidth: "280px" }}>
-                      {wishText ? (
-                        <div className="rsvp-wish-text" title={wishText}>
-                          {wishText}
-                        </div>
-                      ) : (
-                        <span style={{ color: "#94a3b8" }}>—</span>
-                      )}
-                    </td>
-                    {invitationId && <td><RsvpOwnerActions invitationId={invitationId} record={rsvp} onSaved={onSaved} /></td>}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </section>
-  );
+export function RsvpGuestTable({ filteredRsvps = [], search = "", setSearch, statusFilter = "ALL", setStatusFilter, invitationId, onSaved, t, lang }) {
+  const filtered = Boolean(search.trim() || statusFilter !== "ALL");
+  const labels = ["guest", "status", "party", "date", "message", "actions"];
+  const clear = () => { setSearch(""); setStatusFilter("ALL"); };
+  return <section className="rsvp-board">
+    <div className="rsvp-toolbar">
+      <div className="rsvp-search-wrapper"><SearchInput value={search} onChange={e => setSearch(e.target.value)} onClear={() => setSearch("")} placeholder={t("search")} ariaLabel={t("searchLabel")} clearLabel={t("clear")} /></div>
+      <select className="rsvp-select" value={statusFilter} onChange={e => setStatusFilter(e.target.value)} aria-label={t("filter")}>
+        <option value="ALL">{t("all")}</option><option value="ATTENDING">{t("attending")}</option><option value="NOT_ATTENDING">{t("declined")}</option><option value="MAYBE">{t("maybe")}</option><option value="PENDING">{t("pending")}</option>
+      </select>
+    </div>
+    {!filteredRsvps.length ? <EmptyState icon={Users} title={t(filtered ? "noMatches" : "emptyTitle")} description={t(filtered ? "noMatchesText" : "emptyText")} actionLabel={filtered ? t("clear") : undefined} onAction={filtered ? clear : undefined} /> :
+      <div className="rsvp-table-wrapper"><table className="rsvp-table" role="table">
+        <thead><tr>{labels.filter(key => key !== "actions" || invitationId).map(key => <th key={key} scope="col">{t(key)}</th>)}</tr></thead>
+        <tbody>{filteredRsvps.map((rsvp, index) => {
+          const name = rsvp.guestName || rsvp.name || t("unnamed");
+          const status = String(rsvp.responseStatus || rsvp.status || "PENDING").toUpperCase();
+          const statusKey = { ATTENDING: "attending", ACCEPTED: "attending", NOT_ATTENDING: "declined", DECLINED: "declined", MAYBE: "maybe" }[status] || "pending";
+          const date = new Date(rsvp.respondedAt || rsvp.updatedAt || rsvp.createdAt);
+          return <tr key={rsvp.id ?? rsvp.guestId ?? index}>
+            <td data-label={t("guest")}><div className="rsvp-guest-cell"><span className="rsvp-guest-avatar" aria-hidden="true">{name.trim().charAt(0)}</span><div><div className="rsvp-guest-name">{name}</div>{rsvp.phone && <div className="rsvp-guest-phone">{rsvp.phone}</div>}</div></div></td>
+            <td data-label={t("status")}><StatusBadge status={status} label={t(statusKey)} /></td>
+            <td data-label={t("party")}><span className="rsvp-party-badge"><Users size={16} aria-hidden="true" />{rsvp.attendeeCount ?? rsvp.partySize ?? 1} {t("people")}</span></td>
+            <td data-label={t("date")}><span className="rsvp-date-cell">{Number.isNaN(date.getTime()) ? "—" : new Intl.DateTimeFormat(lang === "en" ? "en-GB" : "km-KH", { dateStyle: "medium", timeStyle: "short" }).format(date)}</span></td>
+            <td data-label={t("message")}><div className="rsvp-wish-text">{rsvp.wish || rsvp.message || "—"}</div></td>
+            {invitationId && <td data-label={t("actions")}><RsvpOwnerActions invitationId={invitationId} record={rsvp} onSaved={onSaved} text={t} /></td>}
+          </tr>;
+        })}</tbody>
+      </table></div>}
+  </section>;
 }
 
 export default RsvpGuestTable;

@@ -1,3 +1,5 @@
+import { EXPENSE_CATEGORIES, expenseCategoryLabel } from "../expenseCategories";
+import { formatLocalDate } from "@/shared/utils/localDate";
 import {
     IoCalendarClearOutline,
     IoCarOutline,
@@ -14,8 +16,6 @@ import {
     IoWarningOutline,
 } from "react-icons/io5";
 
-const CATEGORIES = ["Food & Catering", "Decor & Flowers", "Attire & Makeup", "Venue & Transport", "Other"];
-
 const CAT_ICONS = {
     "Food & Catering": IoFastFoodOutline,
     "Decor & Flowers": IoColorPaletteOutline,
@@ -23,34 +23,6 @@ const CAT_ICONS = {
     "Venue & Transport": IoCarOutline,
     "Other": IoCubeOutline,
 };
-
-const KHMER_MONTHS = [
-    "មករា", "កុម្ភៈ", "មីនា", "មេសា", "ឧសភា", "មិថុនា",
-    "កក្កដា", "សីហា", "កញ្ញា", "តុលា", "វិច្ឆិកា", "ធ្នូ",
-];
-
-function formatDate(dateStr) {
-    if (!dateStr) return "—";
-    try {
-        const str = String(dateStr).trim();
-        const parts = str.split("T")[0].split("-");
-        if (parts.length === 3) {
-            const y = parts[0];
-            const m = parseInt(parts[1], 10);
-            const d = parseInt(parts[2], 10);
-            if (m >= 1 && m <= 12 && !isNaN(d)) {
-                return `${d} ${KHMER_MONTHS[m - 1]} ${y}`;
-            }
-        }
-        const d = new Date(str);
-        if (!isNaN(d.getTime())) {
-            return `${d.getDate()} ${KHMER_MONTHS[d.getMonth()]} ${d.getFullYear()}`;
-        }
-        return dateStr;
-    } catch {
-        return dateStr;
-    }
-}
 
 export function ExpenseTable({
     expenses = [],
@@ -62,10 +34,11 @@ export function ExpenseTable({
     deleteExpense,
     saving,
     t,
+    lang = "en",
 }) {
     const filtered = expenses.filter((e) => {
         const matchCat = selectedCat === "All" || e.category === selectedCat;
-        const matchSearch = !search || e.name.toLowerCase().includes(search.toLowerCase()) || e.vendorName.toLowerCase().includes(search.toLowerCase());
+        const matchSearch = !search || (e.name || "").toLowerCase().includes(search.toLowerCase()) || (e.vendorName || "").toLowerCase().includes(search.toLowerCase());
         return matchCat && matchSearch;
     });
 
@@ -77,21 +50,23 @@ export function ExpenseTable({
                     <button
                         type="button"
                         className={`exp-cat-btn ${selectedCat === "All" ? "active" : ""}`}
+                        aria-pressed={selectedCat === "All"}
                         onClick={() => setSelectedCat("All")}
                     >
                         {t ? t("catAll") : "All"}
                     </button>
-                    {CATEGORIES.map((cat) => {
+                    {EXPENSE_CATEGORIES.map(({ value: cat }) => {
                         const Icon = CAT_ICONS[cat];
                         return (
                             <button
                                 key={cat}
                                 type="button"
                                 className={`exp-cat-btn ${selectedCat === cat ? "active" : ""}`}
+                                aria-pressed={selectedCat === cat}
                                 onClick={() => setSelectedCat(cat)}
                             >
                                 <Icon aria-hidden="true" />
-                                {cat}
+                                {expenseCategoryLabel(cat, t)}
                             </button>
                         );
                     })}
@@ -99,7 +74,8 @@ export function ExpenseTable({
                 <div className="exp-search-box">
                     <IoSearchOutline aria-hidden="true" />
                     <input
-                        type="text"
+                        type="search"
+                        aria-label={t ? t("searchPlaceholder") : "Search expenses"}
                         placeholder={t ? t("searchPlaceholder") : "Search expenses..."}
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
@@ -110,8 +86,9 @@ export function ExpenseTable({
             {filtered.length === 0 ? (
                 <div className="exp-empty">
                     <div className="exp-empty-icon"><IoWalletOutline aria-hidden="true" /></div>
-                    <h3>{t ? t("emptyTitle") : "No expense records yet"}</h3>
-                    <p>{t ? t("emptyText") : "Start by recording your first wedding expense."}</p>
+                    <h3>{t ? t(expenses.length ? "noMatches" : "emptyTitle") : "No expense records yet"}</h3>
+                    <p>{t ? t(expenses.length ? "noMatchesText" : "emptyText") : "Start by recording your first wedding expense."}</p>
+                    {expenses.length > 0 && <button type="button" className="workspace-button" onClick={() => { setSelectedCat("All"); setSearch(""); }}>{t ? t("clearFilters") : "Clear filters"}</button>}
                 </div>
             ) : (
                 <div className="exp-table-wrap">
@@ -144,7 +121,7 @@ export function ExpenseTable({
                                         <td data-label={t ? t("colCategory") : "Category"}>
                                             <span className="exp-cat-badge">
                                                 <Icon aria-hidden="true" />
-                                                {item.category}
+                                                {expenseCategoryLabel(item.category, t)}
                                             </span>
                                         </td>
                                         <td data-label={t ? t("colBudget") : "Budget"}>
@@ -164,7 +141,7 @@ export function ExpenseTable({
                                         <td data-label={t ? t("colDate") : "Date"}>
                                             <span className="exp-date-val">
                                                 <IoCalendarClearOutline aria-hidden="true" />
-                                                {formatDate(item.date)}
+                                                {formatLocalDate(item.date, lang)}
                                             </span>
                                         </td>
                                         <td data-label={t ? t("colStatus") : "Status"}>
