@@ -1066,7 +1066,7 @@
 
 .exp-payment-desc {
     min-width: 0;
-    font-size: 13px !important;
+    font-size: 16px !important;
     padding: 9px 12px !important;
     background: #ffffff !important;
     border: 1.5px solid #eadfce !important;
@@ -1094,7 +1094,7 @@
 .exp-payment-amount-wrap input {
     width: 100%;
     min-width: 0;
-    font-size: 13px !important;
+    font-size: 16px !important;
     padding: 9px 10px 9px 24px !important;
     background: #ffffff !important;
     border: 1.5px solid #eadfce !important;
@@ -1326,11 +1326,20 @@
 .exp-form-dialog .exp-field-full { font-size: 15px; }
 .exp-form-dialog :is(input, select, textarea) { font-size: 16px; min-height: 44px; }
 .exp-form-dialog :is(button, .k-modal-close-btn) { min-width: 44px; min-height: 44px; }
-.exp-form-dialog .exp-form-actions { position: sticky; bottom: -24px; background: var(--ws-surface); padding: 16px 0; border-top: 1px solid var(--ws-border); }
+.exp-form-dialog .exp-form-actions { position: sticky; bottom: -24px; display: grid; grid-template-columns: auto minmax(0, 1fr); background: var(--ws-surface); padding: 16px 0; border-top: 1px solid var(--ws-border); }
+.exp-form-dialog .exp-form-actions .exp-secondary-btn { min-width: 88px; width: auto; white-space: nowrap; border-radius: 10px; justify-content: center; }
+.exp-form-dialog .exp-form-actions .exp-add-btn { min-width: 0; width: auto; justify-content: center; }
 .exp-form-dialog .exp-add-btn { background: var(--ws-gold); box-shadow: none; border-radius: 10px; }
 .exp-form-dialog .exp-add-btn:hover:not(:disabled) { background: var(--ws-gold-dark); }
 .exp-form-dialog :focus-visible { outline: 3px solid var(--ws-teal); outline-offset: 2px; }
-.exp-form-dialog .exp-alert { margin-bottom: 16px; }
+.exp-form-dialog .exp-alert { position: sticky; top: 0; z-index: 3; margin-bottom: 16px; }
+.exp-form-dialog .exp-payments-header { flex-wrap: wrap; }
+.exp-form-dialog .exp-payments-title { overflow: visible; white-space: normal; text-overflow: clip; }
+.exp-form-dialog .exp-payment-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 44px; }
+.exp-form-dialog .exp-payment-desc { grid-column: 1 / -1; grid-row: 1; }
+.exp-form-dialog .exp-payment-amount-wrap { grid-column: 1 / 3; grid-row: 2; }
+.exp-form-dialog .exp-payment-date { grid-column: 1 / 3; grid-row: 3; }
+.exp-form-dialog .exp-payment-del-btn { grid-column: 3; grid-row: 2 / 4; align-self: start; width: 44px; height: 44px; }
 @media (max-width: 520px) {
   .exp-form-dialog .exp-budget-grid { grid-template-columns: 1fr; }
   .exp-form-dialog .k-modal-body { padding: 16px; }

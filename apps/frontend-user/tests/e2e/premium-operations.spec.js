@@ -49,11 +49,14 @@ test("expense dialog contains focus, preserves KHR entries after failure and sav
   await dialog.getByLabel(/Estimated Budget/).fill("200000");
   await dialog.getByRole("button", { name: "Add Payment Entry" }).click();
   await dialog.locator(".exp-payment-amount").fill("40000");
+  expect((await dialog.locator(".exp-payment-amount").boundingBox()).width).toBeGreaterThanOrEqual(100);
+  await expect(dialog.locator(".exp-payment-amount")).toHaveCSS("font-size", "16px");
   await expect(dialog.getByLabel("Actual Amount")).toHaveValue("40000");
   await expect(dialog.getByLabel("Remaining Balance")).toHaveValue("160000");
   state.failExpense = true;
   await dialog.getByRole("button", { name: "Save Expense", exact: true }).click();
   await expect(dialog.getByRole("alert")).toContainText("Your entries are retained");
+  await expect(dialog.getByRole("alert")).toBeInViewport();
   await expect(dialog.getByLabel("Expense Item Name")).toHaveValue("KHR meal deposit");
   await page.screenshot({ path: info.outputPath("expense-retained-error.png"), fullPage: true });
   state.failExpense = false;
