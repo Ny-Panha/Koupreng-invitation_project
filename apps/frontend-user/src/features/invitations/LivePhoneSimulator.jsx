@@ -25,33 +25,6 @@ function displayKhmerDate(dateStr) {
     }
 }
 
-function resolveTemplateSlug(data, merged) {
-    const raw = data?.templateId || merged?.tpl?.id || merged?.tpl?.code || merged?.tpl?.slug || "khmer-celestial";
-    const str = String(raw);
-    if (str === "garden-royal-khmer-wedding" || str === "garden_royal") {
-        return "garden-royal-khmer-wedding";
-    }
-    if (str === "10" || str === "khmer-celestial" || str === "KHMER_CELESTIAL" || str === "royal-khmer-wedding" || str === "1") {
-        return "khmer-celestial";
-    }
-    if (str === "7" || str === "the-digital-yes-wedding" || str === "digital-yes") {
-        return "the-digital-yes-wedding";
-    }
-    if (str === "2" || str === "emerald-canva-luxe-wedding" || str === "emerald-royal-luxe" || str === "26") {
-        return "emerald-canva-luxe-wedding";
-    }
-    if (str === "3" || str === "withjoy-modern-portal") {
-        return "withjoy-modern-portal";
-    }
-    if (str === "4" || str === "bliss-editorial-wedding") {
-        return "bliss-editorial-wedding";
-    }
-    if (str === "5" || str === "khmer-golden-canva-inspired-wedding" || str === "cover-khmer-golden-wedding") {
-        return "cover-khmer-golden-wedding";
-    }
-    return merged?.tpl?.slug || merged?.tpl?.code || str;
-}
-
 export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
     const { text: t, lang } = useBackendMessages("invitations");
     const en = lang === "en";
@@ -88,7 +61,7 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
     }, [data, catalogVersion]);
 
     const templateName = merged?.tpl?.name || merged?.tpl?.style || t("previewTopInfo") || "គំរូសន្លឹកការ (Live Preview)";
-    const templateSlug = useMemo(() => resolveTemplateSlug(data, merged), [data, merged]);
+    const templateSlug = merged?.tpl?.code || merged?.tpl?.slug || "";
 
     // Start closed on Cover if template supports gate opening, identical to Admin
     const [isGateOpen, setIsGateOpen] = useState(false);
@@ -198,6 +171,8 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
 
     // Check if running in headless test environment (Vitest / HappyDOM)
     const isTest = import.meta.env.MODE === "test" || Boolean(globalThis.__vitest_worker__);
+
+    if (!templateSlug) return <aside className="pe-preview-column" role="alert">Template unavailable / មិនអាចបើកគំរូបាន។ Please reload the catalog to recover your assigned template.</aside>;
 
     return (
         <aside ref={previewRef} className="pe-preview-column" aria-label="Live invitation preview">

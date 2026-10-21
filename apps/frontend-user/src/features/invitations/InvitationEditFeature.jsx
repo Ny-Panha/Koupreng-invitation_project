@@ -8,6 +8,8 @@ import { getTemplateById, getTemplatePreset, registerDynamicTemplates } from "..
 import { templateCatalogService } from "../templates/api/templateCatalogApi";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { resolveTemplateRenderer } from "../templates/registry/templateRegistry";
+import { TemplateUnavailable } from "../templates/experience/TemplateRenderGuard";
 import "@/features/events/EventsFeature.css";
 
 export default function InvitationEditPage() {
@@ -16,11 +18,15 @@ export default function InvitationEditPage() {
     const { text: t } = useBackendMessages("invitations");
     const [invitation, setInvitation] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [templateError, setTemplateError] = useState(false);
 
     useEffect(() => {
         let active = true;
 
         const loadData = async () => {
+            setLoading(true);
+            setInvitation(null);
+            setTemplateError(false);
             // 0. Fetch dynamic catalog from backend to register any admin-created templates
             try {
                 const catalogItems = await templateCatalogService.list();
@@ -28,7 +34,8 @@ export default function InvitationEditPage() {
                     registerDynamicTemplates(catalogItems);
                 }
             } catch {
-                // Ignore catalog fetch failure
+                if (active) { setTemplateError(true); setLoading(false); }
+                return;
             }
 
             const ownerUserId = user?.id || user?.userId;
@@ -134,6 +141,10 @@ export default function InvitationEditPage() {
                         mediaService.list(id).catch(() => null),
                     ]);
                     if (active && data) {
+                        const assigned = getTemplateById(data.templateCode || data.templateId);
+                        if (!assigned || !resolveTemplateRenderer(assigned).available) {
+                            setTemplateError(true); setLoading(false); return;
+                        }
                         setInvitation({
                             ...data,
                             coverUrl: media?.coverImage?.fileUrl || data.coverUrl || null,
@@ -170,6 +181,7 @@ export default function InvitationEditPage() {
     }
 
     // A route without an id is a local, unsaved editor draft.
+    if (templateError) return <TemplateUnavailable />;
     if (!invitation) {
         return (
             <main className="events-page">
@@ -192,6 +204,6 @@ export default function InvitationEditPage() {
         );
     }
 
-    return <InvitationForm invitation={invitation} />;
+    return <InvitationForm key={invitation.id || "new"} invitation={invitation} />;
 }
 

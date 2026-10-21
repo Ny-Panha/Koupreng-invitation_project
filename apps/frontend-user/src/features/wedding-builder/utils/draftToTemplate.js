@@ -41,7 +41,7 @@ function initials(couple = {}) {
 export function draftToTemplate(draft, gallery = []) {
     if (!draft) return null;
 
-    const templateId = draft.templateId || "garden-royal-khmer-wedding";
+    const templateId = draft.templateCode || draft.templateId;
     const baseTpl = templateId === "event-essential"
         ? { id: "event-essential", code: "event-essential", slug: "event-essential", enabledSections: {} }
         : getTemplateById(templateId);
@@ -228,13 +228,13 @@ export function draftToTemplate(draft, gallery = []) {
             faq: sectionEnabled(draft.showFaq, "faq"),
             rsvp: sectionEnabled(draft.rsvp?.enabled, "rsvp"),
         },
-        presetId: draft.presetId || baseTpl.presetId || baseTpl.design?.presetId || "",
+        presetId: baseTpl.presetId || baseTpl.design?.presetId || draft.presetId || "",
         design: {
             // Level 2 precedence — inherit the base template's design config
             // (ornamentTheme, palettes, accentColor, …) before the host's edits.
             ...(baseTpl.design || {}),
             ...(draft.design || {}),
-            presetId: draft.presetId || draft.design?.presetId || baseTpl.presetId || baseTpl.design?.presetId || "",
+            presetId: baseTpl.presetId || baseTpl.design?.presetId || draft.presetId || draft.design?.presetId || "",
             // Respect the base template's declared gateStyle/openingStyle before
             // falling back to a generic default. This prevents templates that
             // explicitly declare gateStyle:"none" (e.g. Khmer Celestial) from

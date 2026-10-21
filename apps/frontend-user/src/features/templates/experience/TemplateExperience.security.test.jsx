@@ -7,6 +7,7 @@ function DedicatedProbe({ content }) {
 
 vi.mock("../registry/templateRegistry", () => ({
   getDedicatedTemplateComponent: () => DedicatedProbe,
+  resolveTemplateRenderer: () => ({ id: "security-probe", component: DedicatedProbe, available: true }),
 }));
 
 import TemplateExperience from "./TemplateExperience";

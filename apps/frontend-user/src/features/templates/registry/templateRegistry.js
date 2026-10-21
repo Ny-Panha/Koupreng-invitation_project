@@ -82,6 +82,10 @@ export { DefaultTemplateLayout };
  * Returns null if no custom layout is mapped, allowing fallback to default layout engine.
  */
 export function getDedicatedTemplateComponent(tpl, variant, useFallback = false) {
+  const stableKeys = [tpl?.code, tpl?.slug, tpl?.templateCode].filter(Boolean);
+  // Garden Royal deliberately uses the shared engine. Its database id may be
+  // 2 (historically Emerald), so this decision must precede numeric aliases.
+  if (stableKeys.includes("garden-royal-khmer-wedding")) return useFallback ? DefaultTemplateLayout : null;
   // Ordered most-specific first. Exact slug/code and the Admin presetId win over
   // `variant` and the raw numeric DB id, because dynamic templates reuse the
   // backend's auto-increment id — which collides with the static "1"–"7" keys.
@@ -94,8 +98,7 @@ export function getDedicatedTemplateComponent(tpl, variant, useFallback = false)
     tpl?.design?.presetId,
     tpl?.design?.theme,
     tpl?.variant,
-    tpl?.templateId,
-    tpl?.id ? String(tpl.id) : null,
+    ...(stableKeys.length ? [] : [tpl?.templateId, tpl?.id ? String(tpl.id) : null]),
     variant,
   ].filter(Boolean);
 
@@ -110,6 +113,13 @@ export function getDedicatedTemplateComponent(tpl, variant, useFallback = false)
   }
 
   return useFallback ? DefaultTemplateLayout : null;
+}
+
+export function resolveTemplateRenderer(tpl, variant) {
+  const component = getDedicatedTemplateComponent(tpl, variant);
+  const id = tpl?.code || tpl?.slug || tpl?.templateCode || tpl?.variant || tpl?.id || variant;
+  const shared = ["garden-royal-khmer-wedding", "koupreng-demo-wedding", "event-essential"].includes(id);
+  return { id, component, available: Boolean(component || shared) };
 }
 
 export default templateRegistry;

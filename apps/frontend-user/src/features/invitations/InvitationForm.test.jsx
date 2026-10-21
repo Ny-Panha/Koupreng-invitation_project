@@ -204,14 +204,15 @@ describe("P0 — reactive catalog sync (no page reload needed)", () => {
         // Stable object identity — the memo must NOT rely on `data` changing.
         const data = { templateId: "26" };
 
-        // Catalog is empty at first render: "26" is unknown → KEPT_TEMPLATE fallback.
+        // An unresolved backend ID must not show an unrelated template.
         registerDynamicTemplates([]);
         const { container, rerender } = render(
             <MemoryRouter>
                 <LivePhoneSimulator data={data} catalogVersion={getCatalogVersion()} />
             </MemoryRouter>
         );
-        expect(container.textContent).toContain(KEPT_TEMPLATE_NAME);
+        expect(container.textContent).toContain("Template unavailable");
+        expect(container.textContent).not.toContain(KEPT_TEMPLATE_NAME);
 
         // Backend /v1/templates response lands.
         registerDynamicTemplates([ADMIN_EMERALD_CATALOG_ROW]);
@@ -253,8 +254,9 @@ describe("P0 — reactive catalog sync (no page reload needed)", () => {
             </BrowserRouter>
         );
 
-        // Before the catalog lands: stale Garden Royal fallback is on screen.
-        expect(container.textContent).toContain(KEPT_TEMPLATE_NAME);
+        // Before the catalog lands, show recovery instead of Garden Royal.
+        expect(container.textContent).toContain("Template unavailable");
+        expect(container.textContent).not.toContain(KEPT_TEMPLATE_NAME);
 
         // Simulate the backend response arriving after mount.
         await act(async () => {

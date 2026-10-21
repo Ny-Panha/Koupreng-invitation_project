@@ -59,6 +59,8 @@ import { DatePicker } from "../../shared/ui/DatePicker";
 import { TimePicker } from "../../shared/ui/TimePicker";
 import SpotifyMusicPicker from "./components/SpotifyMusicPicker";
 import { getTemplateFormFlow } from "./config/templateFormFlowConfig";
+import { resolveTemplateRenderer } from "../templates/registry/templateRegistry";
+import { paymentService } from "../payments/paymentService";
 import "./InvitationPlanEssentialEditor.css";
 
 function CleanImageUploadField({
@@ -591,7 +593,7 @@ export default function InvitationForm({ invitation }) {
             }
         }
 
-        const activeTplId = invitation?.templateId || customParsed.templateId || searchParams.get("templateId") || DEFAULT_STATE.templateId;
+        const activeTplId = invitation?.templateCode || invitation?.templateId || customParsed.templateId || searchParams.get("templateId") || DEFAULT_STATE.templateId;
         const canonicalEvent = /^[1-9]\d*$/.test(String(invitation?.id || ""));
         const tpl = getTemplateById(activeTplId);
         const preset = getTemplatePreset(tpl) || {};
@@ -651,7 +653,8 @@ export default function InvitationForm({ invitation }) {
             ...DEFAULT_STATE,
             ...customParsed,
             templateId: activeTplId,
-            presetId: customParsed.presetId || invitation?.presetId || preset.presetId || tpl?.presetId || "",
+            templateCode: tpl?.code || tpl?.slug || "",
+            presetId: preset.presetId || tpl?.presetId || invitation?.presetId || "",
             openingStyle,
             frontColor,
             bottomColor,
@@ -762,14 +765,14 @@ export default function InvitationForm({ invitation }) {
         };
     });
 
-    const flowConfig = useMemo(() => getTemplateFormFlow(form.templateId), [form.templateId]);
     const [selectedSection, setSelectedSection] = useState("cover");
     const [mobileView, setMobileView] = useState("edit");
-    const activeSection = flowConfig.sectionOrder.includes(selectedSection) ? selectedSection : flowConfig.sectionOrder[0];
 
     // Mirrors the module-level catalog counter so the live preview recomputes
     // once the async catalog fetch registers the Admin-created templates.
     const [catalogVersion, setCatalogVersion] = useState(getCatalogVersion());
+    const flowConfig = useMemo(() => { void catalogVersion; return getTemplateFormFlow(getTemplateById(form.templateId) || form.templateId); }, [form.templateId, catalogVersion]);
+    const activeSection = flowConfig.sectionOrder.includes(selectedSection) ? selectedSection : flowConfig.sectionOrder[0];
     const [catalogTemplates, setCatalogTemplates] = useState(() => getAllTemplates());
     const [templateSearchQuery, setTemplateSearchQuery] = useState("");
     const [templateCategoryFilter, setTemplateCategoryFilter] = useState("ALL");
@@ -839,6 +842,26 @@ export default function InvitationForm({ invitation }) {
 
     const handleChangeTemplate = async (template) => {
         if (!template) return;
+        if (!resolveTemplateRenderer(template).available) {
+            toast(englishUI ? "This template's renderer is unavailable. Your current design is preserved." : "គំរូនេះមិនអាចបើកបានទេ។ គំរូបច្ចុប្បន្នត្រូវបានរក្សាទុក។", "error");
+            return;
+        }
+        if (template.supportedEventTypes?.length && !template.supportedEventTypes.includes(invitation?.eventType || "WEDDING")) {
+            toast(englishUI ? "This template does not support your event type." : "គំរូនេះមិនគាំទ្រប្រភេទកម្មវិធីនេះទេ។", "error");
+            return;
+        }
+        if (template.premium || template.isPremium || Number(template.price) > 0) {
+            try {
+                const access = await paymentService.templateAccess(resolveNumericTemplateId(template.code || template.id));
+                if (!access?.hasAccess) throw new Error("Premium template access is required");
+            } catch {
+                toast(englishUI ? "Premium access is required. Review your template access in Packages before switching." : "ត្រូវការសិទ្ធិប្រើគំរូបុព្វលាភ។ សូមពិនិត្យសិទ្ធិរបស់អ្នកមុនប្ដូរ។", "error");
+                return;
+            }
+        }
+        if (!window.confirm(englishUI
+            ? "Change invitation template? Your event details and uploaded images will stay. Template-specific appearance and optional sections may change; unsupported customizations remain saved for recovery."
+            : "ប្ដូរគំរូធៀប? ព័ត៌មានកម្មវិធី និងរូបភាពផ្ទាល់ខ្លួនត្រូវបានរក្សា។ រចនាបថ និងផ្នែកពិសេសមួយចំនួនអាចផ្លាស់ប្ដូរ។")) return;
         const preset = getTemplatePreset(template) || {};
         const currentTpl = getTemplateById(form.templateId);
         const uploadedCoverUrl = form.uploadedCoverUrl || "";
@@ -861,7 +884,8 @@ export default function InvitationForm({ invitation }) {
 
         const nextForm = {
             ...form,
-            templateId: template.id || template.code || template.slug || form.templateId,
+            templateId: template.code || template.slug || template.id || form.templateId,
+            templateCode: template.code || template.slug || "",
             presetId: preset.presetId || template.presetId || "",
             templateDefaultCover: preset.coverImage || template.phoneCoverImage || template.mainImage || "",
             templateDefaultCoverBg: preset.coverBackgroundImage || template.coverBackgroundImage || "",
@@ -873,18 +897,18 @@ export default function InvitationForm({ invitation }) {
             frontColor: template.primaryColor || preset.frontColor || template.frontColor || form.frontColor,
             bottomColor: template.secondaryColor || preset.bottomColor || template.bottomColor || form.bottomColor,
             backgroundColor: template.backgroundColor || preset.backgroundColor || template.bgColor || form.backgroundColor,
-            title: nextTitle,
+            title: form.title || nextTitle,
             groomName: form.groomName || "",
             brideName: form.brideName || "",
             groomFather: form.groomFather || template.family?.groomParents?.[0] || "",
             groomMother: form.groomMother || template.family?.groomParents?.[1] || "",
             brideFather: form.brideFather || template.family?.brideParents?.[0] || "",
             brideMother: form.brideMother || template.family?.brideParents?.[1] || "",
-            eventDate: nextDate,
+            eventDate: form.eventDate || nextDate,
             eventTime: form.eventTime || template.receptionTime || "17:00",
             venueName: form.venueName || "",
             venueAddress: form.venueAddress || "",
-            schedule: (template.schedule && template.schedule.length > 0)
+            schedule: form.schedule?.length ? form.schedule : (template.schedule && template.schedule.length > 0)
                 ? template.schedule
                 : (preset.schedule?.length ? preset.schedule : form.schedule),
             dressCode: template.dressCode || preset.dressCode || form.dressCode,

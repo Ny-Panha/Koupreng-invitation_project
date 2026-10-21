@@ -722,7 +722,11 @@ const PRESET_TO_VARIANT = {
 
 export function registerDynamicTemplates(catalogList) {
     if (!Array.isArray(catalogList)) return;
-    dynamicTemplates = catalogList.map((item) => {
+    dynamicTemplates = catalogList.map(templateFromCatalogItem);
+    catalogVersion++;
+}
+
+export function templateFromCatalogItem(item) {
         let parsedConfig = {};
         if (item.description && typeof item.description === "string") {
             try {
@@ -737,16 +741,13 @@ export function registerDynamicTemplates(catalogList) {
         const presetId = parsedConfig.presetId || parsedConfig.theme || "";
         const resolvedVariant = PRESET_TO_VARIANT[presetId] || "";
 
-        const mappedCode = DB_TEMPLATE_ID_MAP[String(item.id)];
-        const baseStatic = TEMPLATES.find((t) =>
-            t.id === item.code ||
-            t.code === item.code ||
-            t.slug === item.code ||
-            (resolvedVariant && (t.id === resolvedVariant || t.code === resolvedVariant || t.slug === resolvedVariant)) ||
-            (mappedCode && (t.id === mappedCode || t.code === mappedCode || t.slug === mappedCode))
-        );
+        // Database IDs are allocation details, never preset identities. Resolve
+        // exact stable codes before an explicitly configured admin preset.
+        const matches = (t, key) => key && [t.id, t.code, t.slug].includes(key);
+        const baseStatic = TEMPLATES.find(t => matches(t, item.code || item.slug))
+            || TEMPLATES.find(t => matches(t, resolvedVariant));
 
-        const cover = parsedConfig.coverImage || baseStatic?.phoneCoverImage || baseStatic?.mainImage || item.thumbnailUrl || "/facebook/all/03-card/cover-card.jpg";
+        const cover = parsedConfig.coverImage || baseStatic?.phoneCoverImage || baseStatic?.mainImage || item.thumbnailUrl || "";
         const primaryColor = parsedConfig.primaryColor || item.primaryColor || baseStatic?.frontColor || baseStatic?.color || "#D4AF37";
         const secondaryColor = parsedConfig.secondaryColor || item.secondaryColor || baseStatic?.bottomColor || baseStatic?.accent || "#F3E5AB";
         const openingStyle = parsedConfig.openingStyle || parsedConfig.gateStyle || baseStatic?.openingStyle || (
@@ -802,7 +803,7 @@ export function registerDynamicTemplates(catalogList) {
             premium: Boolean(item.premium || item.isPremium),
             isPremium: Boolean(item.premium || item.isPremium),
             // Admin preset & variant — critical for layout component resolution
-            presetId,
+            presetId: baseStatic?.presetId || presetId,
             variant: resolvedVariant || undefined,
             openingStyle,
             gateStyle: openingStyle,
@@ -863,10 +864,6 @@ export function registerDynamicTemplates(catalogList) {
                 theme: presetId || parsedConfig.theme || "",
             },
         };
-    });
-
-    // Tell subscribers their cached template lookups are stale.
-    catalogVersion++;
 }
 
 export function getTemplateById(id) {
@@ -874,31 +871,27 @@ export function getTemplateById(id) {
 
     // 1. Check dynamic templates from backend/admin first (100% Admin Catalog)
     if (dynamicTemplates && dynamicTemplates.length > 0) {
-        if (!rawId) return dynamicTemplates[0];
-
-        const mappedCode = DB_TEMPLATE_ID_MAP[rawId];
+        if (!rawId) return null;
         const dyn = dynamicTemplates.find((template) =>
             String(template.id) === rawId ||
             String(template.backendId) === rawId ||
             template.code === rawId ||
-            template.slug === rawId ||
-            (mappedCode && (template.code === mappedCode || template.slug === mappedCode || String(template.id) === mappedCode))
+            template.slug === rawId
         );
         if (dyn) return dyn;
 
         const staticMatch = TEMPLATES.find((template) =>
             template.id === rawId ||
             template.code === rawId ||
-            template.slug === rawId ||
-            (mappedCode && (template.id === mappedCode || template.code === mappedCode))
+            template.slug === rawId
         );
         if (staticMatch) return staticMatch;
 
-        return dynamicTemplates[0];
+        return null;
     }
 
     // 2. Fallback only when catalog not yet loaded (e.g. offline unit tests)
-    if (!rawId) return KEPT_TEMPLATE;
+    if (!rawId) return null;
     const mappedCode = DB_TEMPLATE_ID_MAP[rawId];
     const normalizedId = normalizeTemplateId(mappedCode || rawId);
     return TEMPLATES.find((template) =>
@@ -908,7 +901,7 @@ export function getTemplateById(id) {
         String(template.id) === rawId ||
         String(template.backendId) === rawId ||
         (mappedCode && (template.id === mappedCode || template.code === mappedCode || template.slug === mappedCode))
-    ) || KEPT_TEMPLATE;
+    ) || null;
 }
 
 export function getAllTemplates() {
@@ -933,7 +926,7 @@ export function getAllTemplates() {
 export function getTemplatePreset(tpl) {
     if (!tpl) return null;
 
-    const tplId = String(tpl.id || tpl.code || "").toLowerCase();
+    const tplId = String(tpl.code || tpl.slug || tpl.id || "").toLowerCase();
     const presetCandidate = tpl.presetId || tpl.design?.presetId || tpl.design?.theme || "";
 
     // Opening Style

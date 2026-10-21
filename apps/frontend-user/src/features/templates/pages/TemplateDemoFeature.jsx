@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import TemplateExperience from "../experience/TemplateExperience";
-import { DB_TEMPLATE_ID_MAP, getTemplateById, TEMPLATES } from "../data/templatesData";
+import { DB_TEMPLATE_ID_MAP, getTemplateById, TEMPLATES, templateFromCatalogItem } from "../data/templatesData";
 import { templateService } from "../api/templateService";
 import {
     resolveVariant,
@@ -49,9 +49,7 @@ export default function TemplateDemoPage({ backLink, backLabel, primaryCtaLabel 
     }, [targetId]);
 
     const tpl = useMemo(() => {
-        const baseTpl = remoteTpl?.code === "event-essential"
-            ? { design: {}, opening: {} }
-            : getTemplateById(remoteTpl?.code || remoteTpl?.slug || targetId);
+        const baseTpl = (remoteTpl ? templateFromCatalogItem(remoteTpl) : getTemplateById(targetId)) || { design: {}, opening: {} };
         if (!remoteTpl) return baseTpl;
 
         let parsedConfig = {};

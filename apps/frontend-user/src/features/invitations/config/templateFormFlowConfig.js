@@ -130,9 +130,9 @@ export function getTemplateFormFlow(templateIdOrTpl) {
 
     let matched = TEMPLATE_FORM_FLOWS[key];
     if (!matched) {
-        if (key.includes("garden") || key === "2") {
+        if (key === "garden-royal-khmer-wedding" || key === "garden_royal") {
             matched = TEMPLATE_FORM_FLOWS["garden-royal-khmer-wedding"];
-        } else if (key.includes("celestial") || (key.includes("royal-khmer") && !key.includes("garden")) || key === "10" || key === "6" || key === "1") {
+        } else if (["khmer-celestial", "khmer_celestial", "royal-khmer-wedding", "10", "6", "1"].includes(key)) {
             matched = TEMPLATE_FORM_FLOWS["khmer-celestial"];
         }
     }

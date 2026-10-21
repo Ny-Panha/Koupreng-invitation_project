@@ -8,7 +8,8 @@ import {
     getVariantTheme,
     resolveVariant,
 } from "./config/templateExperienceThemes";
-import { getDedicatedTemplateComponent } from "../registry/templateRegistry";
+import { getDedicatedTemplateComponent, resolveTemplateRenderer } from "../registry/templateRegistry";
+import TemplateRenderGuard, { TemplateUnavailable } from "./TemplateRenderGuard";
 import TemplateOpeningGate from "./components/sections/TemplateOpeningGate";
 import TemplateHero from "./components/sections/TemplateHero";
 import TemplateMessage from "./components/sections/TemplateMessage";
@@ -614,8 +615,10 @@ function WeddingTemplateExperience({
 const EventEssentialLayout = lazy(() => import("../layouts/EventEssentialLayout"));
 export default function TemplateExperience(props) {
     const tpl = props.tpl;
+    const renderer = resolveTemplateRenderer(tpl, props.variant);
+    if (!renderer.available) return <TemplateUnavailable />;
     if ([tpl?.code, tpl?.slug, tpl?.templateCode, tpl?.templateId].includes("event-essential")) {
-        return <Suspense fallback={<p role="status">កំពុងផ្ទុក… / Loading…</p>}><EventEssentialLayout {...props} /></Suspense>;
+        return <TemplateRenderGuard key={renderer.id} id={renderer.id}><Suspense fallback={<p role="status">កំពុងផ្ទុក… / Loading…</p>}><EventEssentialLayout {...props} /></Suspense></TemplateRenderGuard>;
     }
-    return <WeddingTemplateExperience {...props} />;
+    return <TemplateRenderGuard key={renderer.id} id={renderer.id}><WeddingTemplateExperience {...props} /></TemplateRenderGuard>;
 }

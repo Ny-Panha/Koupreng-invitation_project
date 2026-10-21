@@ -158,7 +158,7 @@ export function publicInvitationToDraft(invitation, media) {
     id: invitation?.id || invitation?.slug || "public-invitation",
     backendInvitationId: invitation?.id || null,
     slug: invitation?.slug || "",
-    templateId: invitation?.templateCode || content.templateId || design.templateId || KEEP_TEMPLATE_CODE,
+    templateId: invitation?.templateCode || invitation?.templateId || content.templateId || design.templateId || null,
     templateCode: invitation?.templateCode || "",
     templateThumbnailUrl: invitation?.templateThumbnailUrl || "",
     title: content.title || invitation?.title || "",

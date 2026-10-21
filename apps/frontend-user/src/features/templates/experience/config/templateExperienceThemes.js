@@ -148,7 +148,7 @@ export function resolveVariant(tpl = {}, explicitVariant) {
         if (VARIANT_ROUTE_ALIASES[explicitVariant]) return VARIANT_ROUTE_ALIASES[explicitVariant];
     }
 
-    const candidate = tpl.variant || tpl.templateId || tpl.id || tpl.slug || tpl.code || tpl.templateCode;
+    const candidate = tpl.code || tpl.slug || tpl.templateCode || tpl.variant || tpl.templateId || tpl.id;
     if (candidate) {
         if (TEMPLATE_VARIANTS[candidate]) return candidate;
         if (TEMPLATE_VARIANT_BY_ID[candidate]) return TEMPLATE_VARIANT_BY_ID[candidate];
