@@ -72,7 +72,7 @@ export default function QrPage({ invitationId: propInvitationId, guestId: propGu
             </p>
           </div>
 
-          <QrPreview qrData={qrData} />
+          <QrPreview qrData={qrData} onRetry={loadQr} />
 
           <div className="qr-actions">
             <QrDownloadButton onDownload={downloadPng} downloading={downloading} />

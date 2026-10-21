@@ -1,6 +1,7 @@
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import GuestTable from "./GuestTable";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 afterEach(cleanup);
 
@@ -14,6 +15,15 @@ const categories = [
 ];
 
 describe("GuestTable", () => {
+  it("localizes RSVP and ticket actions without changing the guest passed to the ticket flow", () => {
+    useLanguageStore.setState({ lang: "km" });
+    const guest = { id: 501, name: "Sokha", source: "backend", rsvpStatus: "ATTENDING", count: 2 };
+    const onShowTicket = vi.fn();
+    render(<GuestTable guests={[guest]} onShowTicket={onShowTicket} />);
+    expect(screen.getByText("RSVP: ចូលរួម")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "កាតអញ្ជើញ" }));
+    expect(onShowTicket).toHaveBeenCalledWith(guest);
+  });
   it("renders empty state with call to action when no guests are present", () => {
     const onOpenAddGuest = vi.fn();
     render(

@@ -1,16 +1,17 @@
 import { QrCode, ExternalLink } from "lucide-react";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
-export function QrPreview({ qrData }) {
+export function QrPreview({ qrData, onRetry }) {
+  const en = useLanguageStore(state => state.lang) === "en";
   if (!qrData) {
     return (
       <div className="qr-empty">
-        <p>មិនមានទិន្នន័យ QR Code ទេ</p>
+        <p>{en ? "No QR code is available yet." : "មិនទាន់មានកូដ QR នៅឡើយទេ។"}</p>
       </div>
     );
   }
 
   const qrImageUrl = qrData.qrCodeDataUri || qrData.qrImageUrl || qrData.qrUrl || qrData.imageUrl;
-  const qrCodeText = qrData.qrPayload || qrData.qrCode || qrData.token || qrData.slug;
 
   return (
     <div className="qr-card">
@@ -20,7 +21,8 @@ export function QrPreview({ qrData }) {
         ) : (
           <div className="qr-placeholder">
             <QrCode size={56} className="qr-icon-placeholder" aria-hidden="true" />
-            <p className="qr-code-text">{qrCodeText || "QR Code"}</p>
+            <p>{en ? "The QR image is unavailable. Reload it before printing or sharing." : "មិនមានរូបភាព QR ទេ។ សូមផ្ទុកឡើងវិញ មុនបោះពុម្ព ឬចែករំលែក។"}</p>
+            {onRetry && <button type="button" className="workspace-button" onClick={onRetry}>{en ? "Reload QR" : "ផ្ទុក QR ឡើងវិញ"}</button>}
           </div>
         )}
       </div>
@@ -29,7 +31,7 @@ export function QrPreview({ qrData }) {
         {qrData.title && <h3 className="qr-title">{qrData.title}</h3>}
         {qrData.guestName && (
           <p className="qr-guest">
-            ភ្ញៀវកិត្តិយស: <strong>{qrData.guestName}</strong>
+            {en ? "Guest:" : "ភ្ញៀវកិត្តិយស៖"} <strong>{qrData.guestName}</strong>
           </p>
         )}
         {qrData.invitationUrl && (
@@ -39,7 +41,7 @@ export function QrPreview({ qrData }) {
             rel="noopener noreferrer"
             className="qr-link"
           >
-            <span>{qrData.invitationUrl}</span>
+            <span>{en ? "Open invitation" : "បើកធៀបអញ្ជើញ"}</span>
             <ExternalLink size={14} aria-hidden="true" />
           </a>
         )}

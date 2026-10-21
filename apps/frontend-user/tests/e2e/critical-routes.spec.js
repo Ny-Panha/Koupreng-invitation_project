@@ -130,7 +130,7 @@ test("authenticated guest route renders server authority and RSVP state", async 
     ".pe-desktop-table-wrap:visible, .pe-mobile-cards-wrap:visible",
   );
   await expect(visibleGuestSurface.getByText("Sokha Server Guest")).toBeVisible();
-  await expect(visibleGuestSurface.getByText("RSVP: ATTENDING")).toBeVisible();
+  await expect(visibleGuestSurface.getByText("RSVP: ចូលរួម")).toBeVisible();
   await expect(page.getByText("Stale Local Guest")).toHaveCount(0);
   await expect(page.locator(".kp-site-preloader")).toHaveCount(0, { timeout: 5_000 });
   await page.screenshot({ path: testInfo.outputPath("authenticated-guests.png"), fullPage: true });

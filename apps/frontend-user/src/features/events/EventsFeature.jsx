@@ -57,7 +57,8 @@ export function EventsFeature() {
       .sort((a, b) => sort === "title" ? String(a.title || "").localeCompare(String(b.title || ""))
         : sort === "date" ? String(a.eventDate || "9999").localeCompare(String(b.eventDate || "9999"))
         : 0); // Both providers already return their records in recent-first order.
-    const visible = filtered.slice(page * 12, (page + 1) * 12);
+    const currentPage = Math.min(page, Math.max(0, Math.ceil(filtered.length / 12) - 1));
+    const visible = filtered.slice(currentPage * 12, (currentPage + 1) * 12);
     const createBtnText = (t("createBtn") || (en ? "Create Event" : "បង្កើតកម្មវិធី")).replace(/^\+*\s*/, "");
     const emptyActionText = (t("goToCreate") || t("createBtn") || (en ? "Create First Event" : "បង្កើតកម្មវិធីថ្មី")).replace(/^\+*\s*/, "");
 
@@ -125,7 +126,7 @@ export function EventsFeature() {
                         + {emptyActionText}
                     </Link>
                 </div>
-            ) : visible.length === 1 ? (
+            ) : filtered.length === 1 ? (
                 <div className="events-featured-container">
                     <EventCard
                         key={visible[0].id}
@@ -171,11 +172,11 @@ export function EventsFeature() {
 
             {filtered.length > 12 && (
                 <nav className="events-pagination" aria-label={en ? "Event pages" : "ទំព័រកម្មវិធី"}>
-                    <button disabled={page === 0} onClick={() => setPage(p => p - 1)} className="workspace-button">
+                    <button disabled={currentPage === 0} onClick={() => setPage(currentPage - 1)} className="workspace-button">
                         {en ? "Previous" : "មុន"}
                     </button>
-                    <span className="events-pagination-info">{page + 1} / {Math.ceil(filtered.length / 12)}</span>
-                    <button disabled={(page + 1) * 12 >= filtered.length} onClick={() => setPage(p => p + 1)} className="workspace-button">
+                    <span className="events-pagination-info">{currentPage + 1} / {Math.ceil(filtered.length / 12)}</span>
+                    <button disabled={(currentPage + 1) * 12 >= filtered.length} onClick={() => setPage(currentPage + 1)} className="workspace-button">
                         {en ? "Next" : "បន្ទាប់"}
                     </button>
                 </nav>

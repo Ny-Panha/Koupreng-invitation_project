@@ -1,9 +1,10 @@
-import { act, render, renderHook, screen, waitFor, cleanup } from "@testing-library/react";
+import { act, render, renderHook, screen, waitFor, cleanup, fireEvent, within } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import EventsFeature from "./EventsFeature";
 import { useEvents } from "./hooks/useEvents";
 import { eventsApi } from "./api/eventsApi";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import { getDraft, saveDraft } from "../../shared/storage/weddingStorage";
 import { persistWeddingDraft } from "../wedding-builder/utils/draftPublishApi";
 import { toast } from "../../shared/ui/toast";
@@ -24,6 +25,24 @@ describe("Events Feature", () => {
     afterEach(() => {
         cleanup();
         vi.restoreAllMocks();
+        useLanguageStore.setState({ lang: "km" });
+    });
+
+    it("returns to the remaining page after deleting the last event on a later page", async () => {
+        useLanguageStore.setState({ lang: "en" });
+        vi.spyOn(eventsApi, "listMine").mockResolvedValue(Array.from({ length: 13 }, (_, index) => ({ id: index + 101, title: `Event ${index + 1}`, status: "DRAFT" })));
+        const remove = vi.spyOn(eventsApi, "remove").mockResolvedValue(undefined);
+        render(<BrowserRouter><EventsFeature /></BrowserRouter>);
+        await screen.findByText("Event 1");
+        fireEvent.click(screen.getByRole("button", { name: "Next" }));
+        expect(screen.getByText("Event 13")).toBeInTheDocument();
+        fireEvent.click(screen.getByRole("button", { name: "More options" }));
+        fireEvent.click(screen.getByRole("button", { name: "Delete", exact: true }));
+        fireEvent.click(within(screen.getByRole("dialog")).getByRole("button", { name: "យល់ព្រម" }));
+        await waitFor(() => expect(screen.getByText("Event 1")).toBeInTheDocument());
+        expect(remove).toHaveBeenCalledWith(113);
+        expect(screen.queryByText("Event 13")).not.toBeInTheDocument();
+        expect(screen.queryByRole("navigation", { name: "Event pages" })).not.toBeInTheDocument();
     });
 
     it("renders events list with wedding invitations", async () => {

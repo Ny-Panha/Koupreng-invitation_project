@@ -12,6 +12,8 @@ import {
 import { ResponsiveTable, StatusBadge } from "@/shared/ui";
 import { buildShareMessage, guestInviteUrl } from "../model/guestMappers";
 import { SEND_STATUS } from "../model/guestConstants";
+import { useLanguageStore } from "@/stores/useLanguageStore";
+import { OPERATIONS_MESSAGES } from "@/shared/i18n/operationsMessages";
 
 const INLINE_INPUT_CLASS =
   "w-full h-10 min-w-0 px-3 py-2 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 bg-white border border-slate-200 rounded-xl shadow-2xs transition-all focus:outline-none focus:ring-2 focus:ring-[#0F766E]/20 focus:border-[#0F766E]";
@@ -34,6 +36,9 @@ export default function GuestTable({
   onOpenAddGuest,
   t,
 }) {
+  const lang = useLanguageStore(state => state.lang);
+  const en = lang === "en";
+  const rsvpLabels = OPERATIONS_MESSAGES.rsvp[lang];
   const [editingGuestId, setEditingGuestId] = useState(null);
   const [editingGuest, setEditingGuest] = useState(null);
 
@@ -251,7 +256,7 @@ export default function GuestTable({
                       {guest.rsvpStatus && (
                         <StatusBadge
                           status={guest.rsvpStatus}
-                          label={`RSVP: ${guest.rsvpStatus.replaceAll("_", " ")}`}
+                          label={`RSVP: ${rsvpLabels[({ ATTENDING: "attending", NOT_ATTENDING: "declined", DECLINED: "declined", MAYBE: "maybe", PENDING: "pending" })[guest.rsvpStatus]] || guest.rsvpStatus}`}
                         />
                       )}
                       {!guest.checkedIn && !guest.rsvpStatus && <StatusBadge status={guest.sendStatus} />}
@@ -270,7 +275,7 @@ export default function GuestTable({
               )}
               <td data-label={t ? t("thActions") : "Actions"}>
                 <div className="pe-guest-inline-actions">
-                  {onShowTicket && guest.source === "backend" && <button type="button" className="guest-action-btn" title="កាតអញ្ជើញ · Ticket" onClick={() => onShowTicket(guest)}>Ticket</button>}
+                  {onShowTicket && guest.source === "backend" && <button type="button" className="guest-action-btn" onClick={() => onShowTicket(guest)}>{en ? "Ticket" : "កាតអញ្ជើញ"}</button>}
                   {onShowQr && (
                     <button
                       type="button"
@@ -301,7 +306,7 @@ export default function GuestTable({
                       className="pe-icon-btn text-teal-600 hover:text-teal-700"
                       onClick={() => onMarkAsSent(guest)}
                       title="សម្គាល់ថាបានផ្ញើ"
-                      aria-label="សម្គាល់ថាបានផ្ញើ"
+                      aria-label={en ? "Mark as sent" : "សម្គាល់ថាបានផ្ញើ"}
                     >
                       <IoPaperPlaneOutline aria-hidden="true" />
                     </button>

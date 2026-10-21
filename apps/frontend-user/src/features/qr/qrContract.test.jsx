@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, screen, fireEvent } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { api } from "@/shared/api/httpClient";
 import { qrApi } from "./api/qrApi";
@@ -9,6 +9,15 @@ const png = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCA
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.clearAllMocks(); });
 
 describe("FE-002/003 QR DTO and download contracts", () => {
+  it("keeps a missing QR image recoverable without printing its guest token or token-bearing URL", () => {
+    const reload = vi.fn();
+    const url = "https://koupreng.example/i/event?token=private-guest-token";
+    const { container } = render(<QrPreview qrData={{ qrPayload: "private-guest-token", token: "private-guest-token", invitationUrl: url }} onRetry={reload} />);
+    expect(container.textContent).not.toContain("private-guest-token");
+    expect(screen.getByRole("link")).toHaveAttribute("href", url);
+    fireEvent.click(screen.getByRole("button"));
+    expect(reload).toHaveBeenCalledOnce();
+  });
   it("renders the backend QR image without displaying its private token as text", () => {
     render(<QrPreview qrData={{ qrCodeDataUri: png, qrPayload: "guest-token", guestName: "Known guest" }} />);
     expect(screen.getByRole("img", { name: "QR Code" })).toHaveAttribute("src", png);

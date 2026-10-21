@@ -7,6 +7,7 @@ import { ticketService } from "./ticketApi";
 import TicketPreview from "./TicketPreview";
 import TicketActions from "./TicketActions";
 import { useLanguageStore } from "@/stores/useLanguageStore";
+import { ErrorState, SkeletonCard } from "@/shared/ui";
 import { Save, Ticket, Eye } from "lucide-react";
 
 export default function TicketDesigner() {
@@ -16,6 +17,7 @@ export default function TicketDesigner() {
 function Designer({ eventId }) {
   const en = useLanguageStore(state => state.lang) === "en";
   const text = (english, khmer) => en ? english : khmer;
+  const leaveMessage = text("The ticket design has unsaved changes. Leave this page?", "រចនាកាតមានការកែប្រែមិនទាន់រក្សាទុក។ តើអ្នកចង់ចាកចេញពីទំព័រនេះឬ?");
   const navigation = useContext(UNSAFE_NavigationContext);
   const [state, setState] = useState({ loading: true });
   const [design, setDesign] = useState(null);
@@ -58,7 +60,7 @@ function Designer({ eventId }) {
   useEffect(() => {
     if (!dirty) return;
     const navigator = navigation?.navigator;
-    const mayLeave = () => window.confirm("The ticket design has unsaved changes. Leave this page?");
+    const mayLeave = () => window.confirm(leaveMessage);
     const guard = registerUnsavedHistoryGuard(mayLeave);
     const original = {};
     if (navigator) for (const method of ["push", "replace"]) {
@@ -71,23 +73,23 @@ function Designer({ eventId }) {
       window.removeEventListener("beforeunload", warn); guard.release();
       if (navigator) Object.keys(original).forEach(method => { navigator[method] = original[method]; });
     };
-  }, [dirty, navigation]);
-  if (state.loading) return <p className="ticket-studio" role="status">Loading ticket designer…</p>;
-  if (state.error) return <div className="ticket-studio" role="alert"><p>{state.error}</p><button onClick={() => { setState({ loading: true }); setRetry(n => n + 1); }}>Retry</button></div>;
+  }, [dirty, navigation, leaveMessage]);
+  if (state.loading) return <section className="ticket-studio workspace-page" aria-label={text("Loading ticket designer", "កំពុងទាញយកឧបករណ៍រចនាកាត")}><SkeletonCard height="100px" /><SkeletonCard height="420px" /></section>;
+  if (state.error) return <section className="ticket-studio workspace-page"><ErrorState message={text("Could not load the ticket designer. Check your event access and package, then try again.", "មិនអាចទាញយកឧបករណ៍រចនាកាតបានទេ។ សូមពិនិត្យសិទ្ធិចូលប្រើកម្មវិធី និងកញ្ចប់របស់អ្នក ហើយព្យាយាមម្ដងទៀត។")} onRetry={() => { setState({ loading: true }); setRetry(n => n + 1); }} /></section>;
   const update = (key, value) => { setNotice(""); setDesign(current => ({ ...current, [key]: value })); };
   async function save() {
     if (busy) return;
     setBusy(true); setError("");
     try {
       const saved = await ticketService.save(eventId, design);
-      setBaseline(JSON.stringify(saved.design)); setDesign(saved.design); setNotice("បានរក្សាទុក · Ticket design saved for this event");
+      setBaseline(JSON.stringify(saved.design)); setDesign(saved.design); setNotice(text("Ticket design saved for this event", "បានរក្សាទុករចនាកាតសម្រាប់កម្មវិធីនេះ"));
       setState(value => ({ ...value, appearance: saved }));
     } catch (err) { setError(err.message || "Save failed. Retry. If the design changed elsewhere, reload first."); }
     finally { setBusy(false); }
   }
   async function upload(event, key) {
     const file = event.target.files?.[0]; if (!file) return;
-    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size > 5 * 1024 * 1024) { setError("Choose a JPEG, PNG or WebP under 5 MB."); return; }
+    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size > 5 * 1024 * 1024) { setError(text("Choose a JPEG, PNG or WebP under 5 MB.", "សូមជ្រើសរើសរូបភាព JPEG, PNG ឬ WebP ទំហំក្រោម 5 MB។")); return; }
     setBusy(true); setError("");
     try {
       const uploaded = await mediaService.uploadGallery(eventId, [file]);
@@ -114,7 +116,7 @@ function Designer({ eventId }) {
       <label>{text("Footer", "សារខាងក្រោម")}<textarea maxLength={200} value={design.footer} onChange={e => update("footer", e.target.value)} /></label>
       {[["coverMediaId", text("Cover image", "រូបក្រប")], ["backgroundMediaId", text("Background", "ផ្ទៃខាងក្រោយ")]].map(([key, label]) => <label key={key}>{label}
         <select value={design[key] || ""} onChange={e => update(key, Number(e.target.value) || null)}><option value="">{text("None", "គ្មានរូបភាព")}</option>{items.map(item => <option value={item.id} key={item.id}>{item.originalFilename || `Image ${item.id}`}</option>)}</select>
-        <input type="file" aria-label={`Upload ${label}`} accept="image/jpeg,image/png,image/webp" onChange={e => upload(e, key)} />
+        <input type="file" aria-label={`${text("Upload", "បញ្ចូលរូបភាព")} ${label}`} accept="image/jpeg,image/png,image/webp" onChange={e => upload(e, key)} />
       </label>)}
       {[["showTable", text("Table & seat", "តុ និងកៅអី")], ["showSeatCount", text("Guest count", "ចំនួនភ្ញៀវ")], ["showGroup", text("Guest group", "ក្រុមភ្ញៀវ")]].map(([key, label]) => <label className="ticket-checkbox" key={key}><input type="checkbox" checked={design[key]} onChange={e => update(key, e.target.checked)} />{label}</label>)}
       <button type="button" disabled={!dirty} onClick={() => { if (window.confirm(text("Discard unsaved ticket design changes?", "បោះបង់ការកែប្រែរចនាកាតដែលមិនទាន់រក្សាទុកឬ?"))) setDesign(JSON.parse(baseline)); }}>{text("Reset changes", "កំណត់ឡើងវិញ")}</button>
