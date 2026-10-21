@@ -1,0 +1,564 @@
+[
+  {
+    "path": "/app/events",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/before/my-events-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "កម្មវិធីអាពាហ៍ពិពាហ៍របស់អ្នក",
+        "Dara & Sophea",
+        "Sokha’s birthday"
+      ],
+      "clipped": [],
+      "bodyHeight": 1467
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/before/event-workspace-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Dara & Sophea",
+        "ផ្ទាំងគ្រប់គ្រងមង្គលការ",
+        "Dara & Sophea"
+      ],
+      "clipped": [],
+      "bodyHeight": 2845
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/invitation",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/before/invitation-studio-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "សិរីមង្គលអាពាហ៍ពិពាហ៍"
+      ],
+      "clipped": [],
+      "bodyHeight": 3678
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/tickets/design",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/before/ticket-designer-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "សិរីមង្គលអាពាហ៍ពិពាហ៍",
+        "រចនាកាតអញ្ជើញ · Ticket designer"
+      ],
+      "clipped": [],
+      "bodyHeight": 2736
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/guests",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/before/guests-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Dara & Sophea",
+        "គ្រប់គ្រងភ្ញៀវកិត្តិយស"
+      ],
+      "clipped": [],
+      "bodyHeight": 1747
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/delivery",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/before/delivery-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "រៀបចំតំណភ្ជាប់ភ្ញៀវ",
+        "ផ្ញើការអញ្ជើញ & រំលឹក"
+      ],
+      "clipped": [
+        {
+          "tag": "BUTTON",
+          "class": "inv-primary-btn banner-action-btn",
+          "text": "ទៅកាន់ការបោះផ្សាយធៀប · Publish Invitation"
+        }
+      ],
+      "bodyHeight": 3310
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/qr",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/before/qr-page-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Dara & Sophea",
+        "QR Code សម្រាប់កម្មវិធី"
+      ],
+      "clipped": [],
+      "bodyHeight": 1032
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/wishes",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/before/wishes-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Dara & Sophea",
+        "ពាក្យជូនពរពីភ្ញៀវ"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/before/my-events-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "កម្មវិធីអាពាហ៍ពិពាហ៍របស់អ្នក",
+        "Dara & Sophea",
+        "Sokha’s birthday"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/before/event-workspace-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Dara & Sophea",
+        "ផ្ទាំងគ្រប់គ្រងមង្គលការ",
+        "Dara & Sophea"
+      ],
+      "clipped": [],
+      "bodyHeight": 1837
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/invitation",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/before/invitation-studio-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "សិរីមង្គលអាពាហ៍ពិពាហ៍"
+      ],
+      "clipped": [],
+      "bodyHeight": 1613
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/tickets/design",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/before/ticket-designer-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "សិរីមង្គលអាពាហ៍ពិពាហ៍",
+        "រចនាកាតអញ្ជើញ · Ticket designer"
+      ],
+      "clipped": [],
+      "bodyHeight": 1935
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/guests",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/before/guests-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Dara & Sophea",
+        "គ្រប់គ្រងភ្ញៀវកិត្តិយស"
+      ],
+      "clipped": [],
+      "bodyHeight": 1387
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/delivery",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/before/delivery-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "រៀបចំតំណភ្ជាប់ភ្ញៀវ",
+        "ផ្ញើការអញ្ជើញ & រំលឹក"
+      ],
+      "clipped": [],
+      "bodyHeight": 2411
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/qr",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/before/qr-page-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Dara & Sophea",
+        "QR Code សម្រាប់កម្មវិធី"
+      ],
+      "clipped": [],
+      "bodyHeight": 1143
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/wishes",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/before/wishes-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Dara & Sophea",
+        "ពាក្យជូនពរពីភ្ញៀវ"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/before/my-events-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Your Wedding Events",
+        "Dara & Sophea",
+        "Sokha’s birthday"
+      ],
+      "clipped": [],
+      "bodyHeight": 1475
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/before/event-workspace-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Dara & Sophea",
+        "Wedding Dashboard",
+        "Dara & Sophea"
+      ],
+      "clipped": [],
+      "bodyHeight": 2855
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/invitation",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/before/invitation-studio-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "សិរីមង្គលអាពាហ៍ពិពាហ៍"
+      ],
+      "clipped": [],
+      "bodyHeight": 3678
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/tickets/design",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/before/ticket-designer-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "សិរីមង្គលអាពាហ៍ពិពាហ៍",
+        "រចនាកាតអញ្ជើញ · Ticket designer"
+      ],
+      "clipped": [],
+      "bodyHeight": 2736
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/guests",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/before/guests-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Dara & Sophea",
+        "Honored Guest Management"
+      ],
+      "clipped": [],
+      "bodyHeight": 1782
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/delivery",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/before/delivery-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Prepare Guest Links",
+        "Send Invitations & Reminders"
+      ],
+      "clipped": [],
+      "bodyHeight": 3200
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/qr",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/before/qr-page-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Dara & Sophea",
+        "Event Invitation QR Code"
+      ],
+      "clipped": [],
+      "bodyHeight": 1052
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/wishes",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/before/wishes-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Dara & Sophea",
+        "ពាក្យជូនពរពីភ្ញៀវ"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/before/my-events-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Your Wedding Events",
+        "Dara & Sophea",
+        "Sokha’s birthday"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/before/event-workspace-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Dara & Sophea",
+        "Wedding Dashboard",
+        "Dara & Sophea"
+      ],
+      "clipped": [],
+      "bodyHeight": 1862
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/invitation",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/before/invitation-studio-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "សិរីមង្គលអាពាហ៍ពិពាហ៍"
+      ],
+      "clipped": [],
+      "bodyHeight": 1613
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/tickets/design",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/before/ticket-designer-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "សិរីមង្គលអាពាហ៍ពិពាហ៍",
+        "រចនាកាតអញ្ជើញ · Ticket designer"
+      ],
+      "clipped": [],
+      "bodyHeight": 1935
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/guests",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/before/guests-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Dara & Sophea",
+        "Honored Guest Management"
+      ],
+      "clipped": [],
+      "bodyHeight": 1387
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/delivery",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/before/delivery-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Prepare Guest Links",
+        "Send Invitations & Reminders"
+      ],
+      "clipped": [],
+      "bodyHeight": 2383
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/qr",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/before/qr-page-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Dara & Sophea",
+        "Event Invitation QR Code"
+      ],
+      "clipped": [],
+      "bodyHeight": 1158
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/wishes",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/before/wishes-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Dara & Sophea",
+        "ពាក្យជូនពរពីភ្ញៀវ"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  }
+]

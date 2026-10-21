@@ -1,0 +1,706 @@
+[
+  {
+    "path": "/app/events/101/check-in",
+    "lang": "km",
+    "width": 320,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-check-in-km-320.png",
+    "metrics": {
+      "width": 320,
+      "documentWidth": 320,
+      "heading": [
+        "Dara & Sophea",
+        " Scan token",
+        " បញ្ជីភ្ញៀវ & ស្កេនរហ័ស",
+        " Checked-in guests"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 1,
+      "bodyHeight": 3515
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/media",
+    "lang": "km",
+    "width": 320,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-media-km-320.png",
+    "metrics": {
+      "width": 320,
+      "documentWidth": 320,
+      "heading": [
+        "Invitation Media",
+        "Cover image",
+        "Gallery images",
+        "Video"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 2003
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/check-in",
+    "lang": "km",
+    "width": 375,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-check-in-km-375.png",
+    "metrics": {
+      "width": 375,
+      "documentWidth": 375,
+      "heading": [
+        "Dara & Sophea",
+        " Scan token",
+        " បញ្ជីភ្ញៀវ & ស្កេនរហ័ស",
+        " Checked-in guests"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 1,
+      "bodyHeight": 3213
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/media",
+    "lang": "km",
+    "width": 375,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-media-km-375.png",
+    "metrics": {
+      "width": 375,
+      "documentWidth": 375,
+      "heading": [
+        "Invitation Media",
+        "Cover image",
+        "Gallery images",
+        "Video"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1880
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/check-in",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-check-in-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Dara & Sophea",
+        " Scan token",
+        " បញ្ជីភ្ញៀវ & ស្កេនរហ័ស",
+        " Checked-in guests"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 1,
+      "bodyHeight": 3213
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/media",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-media-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Invitation Media",
+        "Cover image",
+        "Gallery images",
+        "Video"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1880
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/check-in",
+    "lang": "km",
+    "width": 430,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-check-in-km-430.png",
+    "metrics": {
+      "width": 430,
+      "documentWidth": 430,
+      "heading": [
+        "Dara & Sophea",
+        " Scan token",
+        " បញ្ជីភ្ញៀវ & ស្កេនរហ័ស",
+        " Checked-in guests"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 1,
+      "bodyHeight": 3194
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/media",
+    "lang": "km",
+    "width": 430,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-media-km-430.png",
+    "metrics": {
+      "width": 430,
+      "documentWidth": 430,
+      "heading": [
+        "Invitation Media",
+        "Cover image",
+        "Gallery images",
+        "Video"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1880
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/check-in",
+    "lang": "km",
+    "width": 768,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-check-in-km-768.png",
+    "metrics": {
+      "width": 768,
+      "documentWidth": 768,
+      "heading": [
+        "Dara & Sophea",
+        " Scan token",
+        " បញ្ជីភ្ញៀវ & ស្កេនរហ័ស",
+        " Checked-in guests"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 1,
+      "bodyHeight": 2601
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/media",
+    "lang": "km",
+    "width": 768,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-media-km-768.png",
+    "metrics": {
+      "width": 768,
+      "documentWidth": 768,
+      "heading": [
+        "Invitation Media",
+        "Cover image",
+        "Gallery images",
+        "Video"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1528
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/check-in",
+    "lang": "km",
+    "width": 1024,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-check-in-km-1024.png",
+    "metrics": {
+      "width": 1024,
+      "documentWidth": 1024,
+      "heading": [
+        "Dara & Sophea",
+        " Scan token",
+        " បញ្ជីភ្ញៀវ & ស្កេនរហ័ស",
+        " Checked-in guests"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 1,
+      "bodyHeight": 2117
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/media",
+    "lang": "km",
+    "width": 1024,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-media-km-1024.png",
+    "metrics": {
+      "width": 1024,
+      "documentWidth": 1024,
+      "heading": [
+        "Invitation Media",
+        "Cover image",
+        "Gallery images",
+        "Video"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1478
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/check-in",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-check-in-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Dara & Sophea",
+        " Scan token",
+        " បញ្ជីភ្ញៀវ & ស្កេនរហ័ស",
+        " Checked-in guests"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 1,
+      "bodyHeight": 1983
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/media",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-media-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Invitation Media",
+        "Cover image",
+        "Gallery images",
+        "Video"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1438
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/check-in",
+    "lang": "km",
+    "width": 1920,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-check-in-km-1920.png",
+    "metrics": {
+      "width": 1920,
+      "documentWidth": 1920,
+      "heading": [
+        "Dara & Sophea",
+        " Scan token",
+        " បញ្ជីភ្ញៀវ & ស្កេនរហ័ស",
+        " Checked-in guests"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 2000
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/media",
+    "lang": "km",
+    "width": 1920,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-media-km-1920.png",
+    "metrics": {
+      "width": 1920,
+      "documentWidth": 1920,
+      "heading": [
+        "Invitation Media",
+        "Cover image",
+        "Gallery images",
+        "Video"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1455
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/check-in",
+    "lang": "en",
+    "width": 320,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-check-in-en-320.png",
+    "metrics": {
+      "width": 320,
+      "documentWidth": 320,
+      "heading": [
+        "Dara & Sophea",
+        " Scan token",
+        " បញ្ជីភ្ញៀវ & ស្កេនរហ័ស",
+        " Checked-in guests"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 1,
+      "bodyHeight": 3484
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/media",
+    "lang": "en",
+    "width": 320,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-media-en-320.png",
+    "metrics": {
+      "width": 320,
+      "documentWidth": 320,
+      "heading": [
+        "Invitation Media",
+        "Cover image",
+        "Gallery images",
+        "Video"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1973
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/check-in",
+    "lang": "en",
+    "width": 375,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-check-in-en-375.png",
+    "metrics": {
+      "width": 375,
+      "documentWidth": 375,
+      "heading": [
+        "Dara & Sophea",
+        " Scan token",
+        " បញ្ជីភ្ញៀវ & ស្កេនរហ័ស",
+        " Checked-in guests"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 1,
+      "bodyHeight": 3213
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/media",
+    "lang": "en",
+    "width": 375,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-media-en-375.png",
+    "metrics": {
+      "width": 375,
+      "documentWidth": 375,
+      "heading": [
+        "Invitation Media",
+        "Cover image",
+        "Gallery images",
+        "Video"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1880
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/check-in",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-check-in-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Dara & Sophea",
+        " Scan token",
+        " បញ្ជីភ្ញៀវ & ស្កេនរហ័ស",
+        " Checked-in guests"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 1,
+      "bodyHeight": 3213
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/media",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-media-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Invitation Media",
+        "Cover image",
+        "Gallery images",
+        "Video"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1880
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/check-in",
+    "lang": "en",
+    "width": 430,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-check-in-en-430.png",
+    "metrics": {
+      "width": 430,
+      "documentWidth": 430,
+      "heading": [
+        "Dara & Sophea",
+        " Scan token",
+        " បញ្ជីភ្ញៀវ & ស្កេនរហ័ស",
+        " Checked-in guests"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 1,
+      "bodyHeight": 3194
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/media",
+    "lang": "en",
+    "width": 430,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-media-en-430.png",
+    "metrics": {
+      "width": 430,
+      "documentWidth": 430,
+      "heading": [
+        "Invitation Media",
+        "Cover image",
+        "Gallery images",
+        "Video"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1880
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/check-in",
+    "lang": "en",
+    "width": 768,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-check-in-en-768.png",
+    "metrics": {
+      "width": 768,
+      "documentWidth": 768,
+      "heading": [
+        "Dara & Sophea",
+        " Scan token",
+        " បញ្ជីភ្ញៀវ & ស្កេនរហ័ស",
+        " Checked-in guests"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 1,
+      "bodyHeight": 2601
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/media",
+    "lang": "en",
+    "width": 768,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-media-en-768.png",
+    "metrics": {
+      "width": 768,
+      "documentWidth": 768,
+      "heading": [
+        "Invitation Media",
+        "Cover image",
+        "Gallery images",
+        "Video"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1528
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/check-in",
+    "lang": "en",
+    "width": 1024,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-check-in-en-1024.png",
+    "metrics": {
+      "width": 1024,
+      "documentWidth": 1024,
+      "heading": [
+        "Dara & Sophea",
+        " Scan token",
+        " បញ្ជីភ្ញៀវ & ស្កេនរហ័ស",
+        " Checked-in guests"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 1,
+      "bodyHeight": 2117
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/media",
+    "lang": "en",
+    "width": 1024,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-media-en-1024.png",
+    "metrics": {
+      "width": 1024,
+      "documentWidth": 1024,
+      "heading": [
+        "Invitation Media",
+        "Cover image",
+        "Gallery images",
+        "Video"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1478
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/check-in",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-check-in-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Dara & Sophea",
+        " Scan token",
+        " បញ្ជីភ្ញៀវ & ស្កេនរហ័ស",
+        " Checked-in guests"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 1,
+      "bodyHeight": 1983
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/media",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-media-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Invitation Media",
+        "Cover image",
+        "Gallery images",
+        "Video"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1438
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/check-in",
+    "lang": "en",
+    "width": 1920,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-check-in-en-1920.png",
+    "metrics": {
+      "width": 1920,
+      "documentWidth": 1920,
+      "heading": [
+        "Dara & Sophea",
+        " Scan token",
+        " បញ្ជីភ្ញៀវ & ស្កេនរហ័ស",
+        " Checked-in guests"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 2000
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/media",
+    "lang": "en",
+    "width": 1920,
+    "screenshot": "docs/qa/ux-overhaul/followup/app-events-101-media-en-1920.png",
+    "metrics": {
+      "width": 1920,
+      "documentWidth": 1920,
+      "heading": [
+        "Invitation Media",
+        "Cover image",
+        "Gallery images",
+        "Video"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1455
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  }
+]

@@ -1,0 +1,4455 @@
+[
+  {
+    "path": "/app/events",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/my-events-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "កម្មវិធីអាពាហ៍ពិពាហ៍របស់អ្នក",
+        "Dara & Sophea",
+        "Sokha’s birthday"
+      ],
+      "clipped": [],
+      "bodyHeight": 1534
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/event-workspace-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "ផ្ទាំងគ្រប់គ្រងមង្គលការ",
+        "Dara & Sophea",
+        "រៀបចំកម្មវិធីរបស់អ្នក",
+        "មុខងារកម្មវិធី"
+      ],
+      "clipped": [],
+      "bodyHeight": 3058
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/invitation",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/invitation-studio-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "រចនាធៀបអញ្ជើញ"
+      ],
+      "clipped": [],
+      "bodyHeight": 3874
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/tickets/design",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/ticket-designer-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "រចនាកាតអញ្ជើញ",
+        "មើលជាមុន"
+      ],
+      "clipped": [],
+      "bodyHeight": 2747
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/guests",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/guests-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "គ្រប់គ្រងភ្ញៀវកិត្តិយស"
+      ],
+      "clipped": [],
+      "bodyHeight": 1659
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/delivery",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/delivery-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Dara & Sophea",
+        "រៀបចំតំណភ្ជាប់ភ្ញៀវ",
+        "ផ្ញើការអញ្ជើញ & រំលឹក",
+        "តាមដានស្ថានភាពផ្ញើ & ភ្ញៀវ"
+      ],
+      "clipped": [],
+      "bodyHeight": 3663
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/qr",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/qr-page-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "QR Code សម្រាប់កម្មវិធី"
+      ],
+      "clipped": [],
+      "bodyHeight": 1226
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/wishes",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/wishes-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "ពាក្យជូនពរពីភ្ញៀវ"
+      ],
+      "clipped": [],
+      "bodyHeight": 1034
+    },
+    "errors": []
+  },
+  {
+    "path": "/",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/home-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "ធៀបការដែលបង្ហាញរឿងរ៉ាវរបស់អ្នក។",
+        "ជ្រើសរើសគំរូដែលសាកសមនឹងថ្ងៃពិសេស",
+        "ព័ត៌មានពិធីច្បាស់លាស់\nសម្រាប់ភ្ញៀវរបស់អ្នក។",
+        "សន្លឹកការ និងភ្ញៀវ\nនៅកន្លែងតែមួយ។"
+      ],
+      "clipped": [],
+      "bodyHeight": 7455
+    },
+    "errors": []
+  },
+  {
+    "path": "/pricing",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/pricing-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "ស្វែងយល់ពីគំរូ\nកញ្ចប់ និងសិទ្ធិប្រើប្រាស់។",
+        "Basic",
+        "Pro",
+        "Premium"
+      ],
+      "clipped": [],
+      "bodyHeight": 4782
+    },
+    "errors": []
+  },
+  {
+    "path": "/contact",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/contact-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "មានសំណួរ?\nយើងរីករាយជួយអ្នក។",
+        "ផ្ញើសារមកកាន់យើង",
+        "យើងអាចជួយអ្វីខ្លះ?"
+      ],
+      "clipped": [],
+      "bodyHeight": 2434
+    },
+    "errors": []
+  },
+  {
+    "path": "/login",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/login-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "សូមស្វាគមន៍មកវិញ"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/register",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/register-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "បង្កើតគណនី"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/forgot-password",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/forgot-password-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "ភ្លេចលេខសម្ងាត់"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/reset-password",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/reset-password-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "កំណត់លេខសម្ងាត់ថ្មី"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/new",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-new-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "បង្កើតកម្មវិធីរបស់អ្នក",
+        "ប្រភេទកម្មវិធី",
+        "ព័ត៌មានកម្មវិធី",
+        "រចនាប័ទ្ម និងភាសា"
+      ],
+      "clipped": [],
+      "bodyHeight": 3197
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/profile",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-profile-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "editTitle",
+        "Linked sign-in identities"
+      ],
+      "clipped": [],
+      "bodyHeight": 1171
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/change-password",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-change-password-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Change password"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/packages",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-packages-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "ជ្រើសរើសកញ្ចប់សេវាកម្ម",
+        "Basic",
+        "Pro",
+        "Premium"
+      ],
+      "clipped": [],
+      "bodyHeight": 3182
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/payments",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-payments-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Payment history"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/payments/AUDIT",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-payments-AUDIT-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "RECEIPT-AUDIT",
+        "Event Essential"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/notifications",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-notifications-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "ការជូនដំណឹង"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/organizations",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-organizations-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "ក្រុមការងារ & Workspaces",
+        "មិនទាន់មានក្រុមការងារនៅឡើយទេ"
+      ],
+      "clipped": [],
+      "bodyHeight": 1125
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/organizations/11",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-organizations-11-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Audit organization ACTIVE",
+        "បញ្ជីសមាជិកក្រុម (Team Members)"
+      ],
+      "clipped": [],
+      "bodyHeight": 1531
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/templates/paid",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-templates-paid-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "គំរូធៀបការ បានទិញរួច",
+        "មិនទាន់មានគំរូដែលបានទិញនៅឡើយទេ"
+      ],
+      "clipped": [],
+      "bodyHeight": 1672
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/rsvp",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-rsvp-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "គ្រប់គ្រងការឆ្លើយតប (RSVPs)"
+      ],
+      "clipped": [
+        {
+          "tag": "BUTTON",
+          "class": "dash-btn",
+          "text": "Edit RSVP"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "dash-btn",
+          "text": "Delete RSVP"
+        }
+      ],
+      "bodyHeight": 1638
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/gifts",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-gifts-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "កត់ត្រាចំណងដៃមង្គលការ"
+      ],
+      "clipped": [],
+      "bodyHeight": 1726
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/budget",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-budget-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "គម្រោងថវិកា & កត់ត្រាចំណាយ"
+      ],
+      "clipped": [],
+      "bodyHeight": 1694
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/seating",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-seating-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Dara & Sophea",
+        "បង្កើតតុថ្មី (Create Table)",
+        "ចាត់ភ្ញៀវចូលតុ (Assign Guest)"
+      ],
+      "clipped": [],
+      "bodyHeight": 2655
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/check-in",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-check-in-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Dara & Sophea",
+        " Scan token",
+        " បញ្ជីភ្ញៀវ & ស្កេនរហ័ស",
+        " Checked-in guests"
+      ],
+      "clipped": [
+        {
+          "tag": "BUTTON",
+          "class": "checkin-row-btn inv-secondary-btn action-checkin",
+          "text": "Check in"
+        }
+      ],
+      "bodyHeight": 3237
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/reports",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-reports-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "របាយការណ៍សង្ខេបចំណូល និងចំណាយកម្មវិធី",
+        "Guest delivery and attendance reports",
+        "តារាងអំណោយ និងចំណូលផ្សេងៗ",
+        "តារាងចំណាយ"
+      ],
+      "clipped": [],
+      "bodyHeight": 3735
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/settings",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-settings-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "ព័ត៌មានកម្មវិធី"
+      ],
+      "clipped": [],
+      "bodyHeight": 2325
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/media",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-media-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Invitation Media",
+        "Cover image",
+        "Gallery images",
+        "Video"
+      ],
+      "clipped": [],
+      "bodyHeight": 1932
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/assistant",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-assistant-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "ជំនួយការសរសេរខ្លឹមសារធៀបការ"
+      ],
+      "clipped": [],
+      "bodyHeight": 1761
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/preview",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-preview-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Phnom Penh"
+      ],
+      "clipped": [],
+      "bodyHeight": 1436
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "រចនាបទដែលជារបស់អ្នក។"
+      ],
+      "clipped": [],
+      "bodyHeight": 1909
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates/browse",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-browse-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "ស្វែងរកគំរូធៀបការ (Templates)"
+      ],
+      "clipped": [
+        {
+          "tag": "BUTTON",
+          "class": "tb-category-chip ",
+          "text": "Premium"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "tb-category-chip ",
+          "text": "សម័យទំនើប (Modern)"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "tb-category-chip ",
+          "text": "ប្រពៃណីខ្មែរ (Traditional)"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "tb-category-chip ",
+          "text": "ផ្កាភ្ញី (Floral)"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "tb-category-chip ",
+          "text": "ប្រណិត (Luxury)"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "tb-category-chip ",
+          "text": "បែបសាមញ្ញ (Minimalist)"
+        }
+      ],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates/browse/event-essential",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-browse-event-essential-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "សូមអញ្ជើញចូលរួម"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates/event-essential",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-event-essential-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "សូមអញ្ជើញចូលរួម"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates/event-essential/demo",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-event-essential-demo-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "សូមអញ្ជើញចូលរួម"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates/event-essential/preview",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-event-essential-preview-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Event Essential"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates/30/checkout",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-30-checkout-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "ទូទាត់ប្រាក់ គំរូធៀបការពិសេស",
+        "Event Essential"
+      ],
+      "clipped": [],
+      "bodyHeight": 3089
+    },
+    "errors": []
+  },
+  {
+    "path": "/w/audit-event",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/w-audit-event-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Phnom Penh",
+        "Schedule"
+      ],
+      "clipped": [],
+      "bodyHeight": 1369
+    },
+    "errors": []
+  },
+  {
+    "path": "/i/audit-event?token=audit-guest",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/i-audit-event-token-audit-guest-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Phnom Penh",
+        "Schedule"
+      ],
+      "clipped": [],
+      "bodyHeight": 1160
+    },
+    "errors": []
+  },
+  {
+    "path": "/payments/AUDIT/status",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/payments-AUDIT-status-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "ស្កេនទូទាត់ ABA KHQR",
+        "Event Essential"
+      ],
+      "clipped": [],
+      "bodyHeight": 1703
+    },
+    "errors": []
+  },
+  {
+    "path": "/payments/success",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/payments-success-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Payment is being verified. Please wait."
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/payments/return",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/payments-return-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Payment is being verified. Please wait."
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/payments/cancel",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/payments-cancel-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Payment was cancelled or not completed."
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/venues",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/venues-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "ស្វែងរកទីកន្លែងមង្គល"
+      ],
+      "clipped": [],
+      "bodyHeight": 3492
+    },
+    "errors": []
+  },
+  {
+    "path": "/venues/11",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/venues-11-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "ស្វែងរកទីកន្លែងមង្គល"
+      ],
+      "clipped": [],
+      "bodyHeight": 3492
+    },
+    "errors": []
+  },
+  {
+    "path": "/about",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/about-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "មានសំណួរ?\nយើងរីករាយជួយអ្នក។",
+        "ផ្ញើសារមកកាន់យើង",
+        "យើងអាចជួយអ្វីខ្លះ?"
+      ],
+      "clipped": [],
+      "bodyHeight": 2434
+    },
+    "errors": []
+  },
+  {
+    "path": "/help",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/help-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "មានសំណួរ?\nយើងរីករាយជួយអ្នក។",
+        "ផ្ញើសារមកកាន់យើង",
+        "យើងអាចជួយអ្វីខ្លះ?"
+      ],
+      "clipped": [],
+      "bodyHeight": 2434
+    },
+    "errors": []
+  },
+  {
+    "path": "/does-not-exist",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/does-not-exist-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "404"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/dashboard/invitations/101/guests",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/dashboard-invitations-101-guests-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "គ្រប់គ្រងភ្ញៀវកិត្តិយស"
+      ],
+      "clipped": [],
+      "bodyHeight": 1659
+    },
+    "errors": []
+  },
+  {
+    "path": "/dashboard/expenses",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/dashboard-expenses-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "កម្មវិធីអាពាហ៍ពិពាហ៍របស់អ្នក",
+        "Dara & Sophea",
+        "Sokha’s birthday"
+      ],
+      "clipped": [],
+      "bodyHeight": 1534
+    },
+    "errors": []
+  },
+  {
+    "path": "/create/wedding",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/create-wedding-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "បង្កើតកម្មវិធីរបស់អ្នក",
+        "ប្រភេទកម្មវិធី",
+        "ព័ត៌មានកម្មវិធី",
+        "រចនាប័ទ្ម និងភាសា"
+      ],
+      "clipped": [],
+      "bodyHeight": 3197
+    },
+    "errors": []
+  },
+  {
+    "path": "/event/ux-local-draft",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/event-ux-local-draft-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "មិនរកឃើញ Draft"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/preview/ux-local-draft",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/preview-ux-local-draft-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "មិនរកឃើញ Draft"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/create/wedding/101",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/create-wedding-101-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "ព័ត៌មានកម្មវិធី"
+      ],
+      "clipped": [],
+      "bodyHeight": 2325
+    },
+    "errors": []
+  },
+  {
+    "path": "/event/101/manage",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/event-101-manage-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "ព័ត៌មានកម្មវិធី"
+      ],
+      "clipped": [],
+      "bodyHeight": 2325
+    },
+    "errors": []
+  },
+  {
+    "path": "/dashboard/invitations/101/edit",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/dashboard-invitations-101-edit-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "ព័ត៌មានកម្មវិធី"
+      ],
+      "clipped": [],
+      "bodyHeight": 2325
+    },
+    "errors": []
+  },
+  {
+    "path": "/dashboard/invitations/101/preview",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/dashboard-invitations-101-preview-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Phnom Penh"
+      ],
+      "clipped": [],
+      "bodyHeight": 1436
+    },
+    "errors": []
+  },
+  {
+    "path": "/dashboard/invitations/design",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/dashboard-invitations-design-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "រចនាធៀបអញ្ជើញ"
+      ],
+      "clipped": [],
+      "bodyHeight": 2599
+    },
+    "errors": []
+  },
+  {
+    "path": "/dashboard/invitations/edit",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/dashboard-invitations-edit-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "រចនាធៀបអញ្ជើញ"
+      ],
+      "clipped": [],
+      "bodyHeight": 2599
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/my-events-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "កម្មវិធីអាពាហ៍ពិពាហ៍របស់អ្នក",
+        "Dara & Sophea",
+        "Sokha’s birthday"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/event-workspace-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "ផ្ទាំងគ្រប់គ្រងមង្គលការ",
+        "Dara & Sophea",
+        "រៀបចំកម្មវិធីរបស់អ្នក",
+        "មុខងារកម្មវិធី"
+      ],
+      "clipped": [],
+      "bodyHeight": 1855
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/invitation",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/invitation-studio-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "រចនាធៀបអញ្ជើញ"
+      ],
+      "clipped": [],
+      "bodyHeight": 1137
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/tickets/design",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/ticket-designer-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "រចនាកាតអញ្ជើញ",
+        "មើលជាមុន"
+      ],
+      "clipped": [],
+      "bodyHeight": 1652
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/guests",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/guests-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "គ្រប់គ្រងភ្ញៀវកិត្តិយស"
+      ],
+      "clipped": [],
+      "bodyHeight": 1263
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/delivery",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/delivery-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Dara & Sophea",
+        "រៀបចំតំណភ្ជាប់ភ្ញៀវ",
+        "ផ្ញើការអញ្ជើញ & រំលឹក",
+        "តាមដានស្ថានភាពផ្ញើ & ភ្ញៀវ"
+      ],
+      "clipped": [],
+      "bodyHeight": 2258
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/qr",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/qr-page-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "QR Code សម្រាប់កម្មវិធី"
+      ],
+      "clipped": [],
+      "bodyHeight": 1235
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/wishes",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/wishes-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "ពាក្យជូនពរពីភ្ញៀវ"
+      ],
+      "clipped": [],
+      "bodyHeight": 1235
+    },
+    "errors": []
+  },
+  {
+    "path": "/",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/home-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "ធៀបការដែលបង្ហាញរឿងរ៉ាវរបស់អ្នក។",
+        "ជ្រើសរើសគំរូដែលសាកសមនឹងថ្ងៃពិសេស",
+        "ព័ត៌មានពិធីច្បាស់លាស់\nសម្រាប់ភ្ញៀវរបស់អ្នក។",
+        "សន្លឹកការ និងភ្ញៀវ\nនៅកន្លែងតែមួយ។"
+      ],
+      "clipped": [],
+      "bodyHeight": 5706
+    },
+    "errors": []
+  },
+  {
+    "path": "/pricing",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/pricing-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "ស្វែងយល់ពីគំរូ\nកញ្ចប់ និងសិទ្ធិប្រើប្រាស់។",
+        "Basic",
+        "Pro",
+        "Premium"
+      ],
+      "clipped": [],
+      "bodyHeight": 3087
+    },
+    "errors": []
+  },
+  {
+    "path": "/contact",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/contact-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "មានសំណួរ?\nយើងរីករាយជួយអ្នក។",
+        "ផ្ញើសារមកកាន់យើង",
+        "យើងអាចជួយអ្វីខ្លះ?"
+      ],
+      "clipped": [],
+      "bodyHeight": 1384
+    },
+    "errors": []
+  },
+  {
+    "path": "/login",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/login-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "សូមស្វាគមន៍មកវិញ"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/register",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/register-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "បង្កើតគណនី"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/forgot-password",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/forgot-password-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "ភ្លេចលេខសម្ងាត់"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/reset-password",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/reset-password-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "កំណត់លេខសម្ងាត់ថ្មី"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/new",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-new-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "បង្កើតកម្មវិធីរបស់អ្នក",
+        "ប្រភេទកម្មវិធី",
+        "ព័ត៌មានកម្មវិធី",
+        "រចនាប័ទ្ម និងភាសា"
+      ],
+      "clipped": [],
+      "bodyHeight": 2594
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/profile",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-profile-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "editTitle",
+        "Linked sign-in identities"
+      ],
+      "clipped": [],
+      "bodyHeight": 1162
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/change-password",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-change-password-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Change password"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/packages",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-packages-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "ជ្រើសរើសកញ្ចប់សេវាកម្ម",
+        "Basic",
+        "Pro",
+        "Premium"
+      ],
+      "clipped": [],
+      "bodyHeight": 1934
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/payments",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-payments-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Payment history"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/payments/AUDIT",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-payments-AUDIT-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "RECEIPT-AUDIT",
+        "Event Essential"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/notifications",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-notifications-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "ការជូនដំណឹង"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/organizations",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-organizations-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/organizations/11",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-organizations-11-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Audit organization ACTIVE",
+        "បញ្ជីសមាជិកក្រុម (Team Members)"
+      ],
+      "clipped": [],
+      "bodyHeight": 1098
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/templates/paid",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-templates-paid-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "គំរូធៀបការ បានទិញរួច",
+        "មិនទាន់មានគំរូដែលបានទិញនៅឡើយទេ"
+      ],
+      "clipped": [],
+      "bodyHeight": 1467
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/rsvp",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-rsvp-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "គ្រប់គ្រងការឆ្លើយតប (RSVPs)"
+      ],
+      "clipped": [],
+      "bodyHeight": 1235
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/gifts",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-gifts-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "កត់ត្រាចំណងដៃមង្គលការ"
+      ],
+      "clipped": [],
+      "bodyHeight": 1235
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/budget",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-budget-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "គម្រោងថវិកា & កត់ត្រាចំណាយ"
+      ],
+      "clipped": [],
+      "bodyHeight": 1242
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/seating",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-seating-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Dara & Sophea",
+        "បង្កើតតុថ្មី (Create Table)",
+        "ចាត់ភ្ញៀវចូលតុ (Assign Guest)"
+      ],
+      "clipped": [],
+      "bodyHeight": 1647
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/check-in",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-check-in-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Dara & Sophea",
+        " Scan token",
+        " បញ្ជីភ្ញៀវ & ស្កេនរហ័ស",
+        " Checked-in guests"
+      ],
+      "clipped": [
+        {
+          "tag": "BUTTON",
+          "class": "checkin-row-btn inv-secondary-btn action-checkin",
+          "text": "Check in"
+        }
+      ],
+      "bodyHeight": 1979
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/reports",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-reports-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "របាយការណ៍សង្ខេបចំណូល និងចំណាយកម្មវិធី",
+        "Guest delivery and attendance reports",
+        "តារាងអំណោយ និងចំណូលផ្សេងៗ",
+        "តារាងចំណាយ"
+      ],
+      "clipped": [],
+      "bodyHeight": 2401
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/settings",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-settings-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "ព័ត៌មានកម្មវិធី"
+      ],
+      "clipped": [],
+      "bodyHeight": 1551
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/media",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-media-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Invitation Media",
+        "Cover image",
+        "Gallery images",
+        "Video"
+      ],
+      "clipped": [
+        {
+          "tag": "BUTTON",
+          "class": "inv-secondary-btn",
+          "text": "Dashboard"
+        }
+      ],
+      "bodyHeight": 1434
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/assistant",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-assistant-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "ជំនួយការសរសេរខ្លឹមសារធៀបការ"
+      ],
+      "clipped": [],
+      "bodyHeight": 1263
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/preview",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-preview-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Phnom Penh"
+      ],
+      "clipped": [],
+      "bodyHeight": 1321
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "រចនាបទដែលជារបស់អ្នក។"
+      ],
+      "clipped": [],
+      "bodyHeight": 1551
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates/browse",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-browse-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "ស្វែងរកគំរូធៀបការ (Templates)"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates/browse/event-essential",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-browse-event-essential-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "សូមអញ្ជើញចូលរួម"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates/event-essential",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-event-essential-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "សូមអញ្ជើញចូលរួម"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates/event-essential/demo",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-event-essential-demo-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "សូមអញ្ជើញចូលរួម"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates/event-essential/preview",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-event-essential-preview-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Event Essential"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates/30/checkout",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-30-checkout-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "ទូទាត់ប្រាក់ គំរូធៀបការពិសេស",
+        "Event Essential"
+      ],
+      "clipped": [],
+      "bodyHeight": 1677
+    },
+    "errors": []
+  },
+  {
+    "path": "/w/audit-event",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/w-audit-event-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Phnom Penh",
+        "Schedule"
+      ],
+      "clipped": [],
+      "bodyHeight": 1349
+    },
+    "errors": []
+  },
+  {
+    "path": "/i/audit-event?token=audit-guest",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/i-audit-event-token-audit-guest-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Phnom Penh",
+        "Schedule"
+      ],
+      "clipped": [],
+      "bodyHeight": 1245
+    },
+    "errors": []
+  },
+  {
+    "path": "/payments/AUDIT/status",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/payments-AUDIT-status-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "ស្កេនទូទាត់ ABA KHQR",
+        "Event Essential"
+      ],
+      "clipped": [],
+      "bodyHeight": 1074
+    },
+    "errors": []
+  },
+  {
+    "path": "/payments/success",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/payments-success-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Payment is being verified. Please wait."
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/payments/return",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/payments-return-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Payment is being verified. Please wait."
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/payments/cancel",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/payments-cancel-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Payment was cancelled or not completed."
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/venues",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/venues-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "ស្វែងរកទីកន្លែងមង្គល"
+      ],
+      "clipped": [],
+      "bodyHeight": 2057
+    },
+    "errors": []
+  },
+  {
+    "path": "/venues/11",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/venues-11-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "ស្វែងរកទីកន្លែងមង្គល"
+      ],
+      "clipped": [],
+      "bodyHeight": 2057
+    },
+    "errors": []
+  },
+  {
+    "path": "/about",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/about-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "មានសំណួរ?\nយើងរីករាយជួយអ្នក។",
+        "ផ្ញើសារមកកាន់យើង",
+        "យើងអាចជួយអ្វីខ្លះ?"
+      ],
+      "clipped": [],
+      "bodyHeight": 1384
+    },
+    "errors": []
+  },
+  {
+    "path": "/help",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/help-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "មានសំណួរ?\nយើងរីករាយជួយអ្នក។",
+        "ផ្ញើសារមកកាន់យើង",
+        "យើងអាចជួយអ្វីខ្លះ?"
+      ],
+      "clipped": [],
+      "bodyHeight": 1384
+    },
+    "errors": []
+  },
+  {
+    "path": "/does-not-exist",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/does-not-exist-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "404"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/dashboard/invitations/101/guests",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/dashboard-invitations-101-guests-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "គ្រប់គ្រងភ្ញៀវកិត្តិយស"
+      ],
+      "clipped": [],
+      "bodyHeight": 1263
+    },
+    "errors": []
+  },
+  {
+    "path": "/dashboard/expenses",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/dashboard-expenses-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "កម្មវិធីអាពាហ៍ពិពាហ៍របស់អ្នក",
+        "Dara & Sophea",
+        "Sokha’s birthday"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/create/wedding",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/create-wedding-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "បង្កើតកម្មវិធីរបស់អ្នក",
+        "ប្រភេទកម្មវិធី",
+        "ព័ត៌មានកម្មវិធី",
+        "រចនាប័ទ្ម និងភាសា"
+      ],
+      "clipped": [],
+      "bodyHeight": 2594
+    },
+    "errors": []
+  },
+  {
+    "path": "/event/ux-local-draft",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/event-ux-local-draft-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "មិនរកឃើញ Draft"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/preview/ux-local-draft",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/preview-ux-local-draft-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "មិនរកឃើញ Draft"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/create/wedding/101",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/create-wedding-101-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "ព័ត៌មានកម្មវិធី"
+      ],
+      "clipped": [],
+      "bodyHeight": 1436
+    },
+    "errors": []
+  },
+  {
+    "path": "/event/101/manage",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/event-101-manage-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "ព័ត៌មានកម្មវិធី"
+      ],
+      "clipped": [],
+      "bodyHeight": 1436
+    },
+    "errors": []
+  },
+  {
+    "path": "/dashboard/invitations/101/edit",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/dashboard-invitations-101-edit-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "ព័ត៌មានកម្មវិធី"
+      ],
+      "clipped": [],
+      "bodyHeight": 1436
+    },
+    "errors": []
+  },
+  {
+    "path": "/dashboard/invitations/101/preview",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/dashboard-invitations-101-preview-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Phnom Penh"
+      ],
+      "clipped": [],
+      "bodyHeight": 1321
+    },
+    "errors": []
+  },
+  {
+    "path": "/dashboard/invitations/design",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/dashboard-invitations-design-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "រចនាធៀបអញ្ជើញ"
+      ],
+      "clipped": [],
+      "bodyHeight": 1115
+    },
+    "errors": []
+  },
+  {
+    "path": "/dashboard/invitations/edit",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/dashboard-invitations-edit-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "រចនាធៀបអញ្ជើញ"
+      ],
+      "clipped": [],
+      "bodyHeight": 1115
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/my-events-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Your Wedding Events",
+        "Dara & Sophea",
+        "Sokha’s birthday"
+      ],
+      "clipped": [],
+      "bodyHeight": 1543
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/event-workspace-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Wedding Dashboard",
+        "Dara & Sophea",
+        "Prepare your celebration",
+        "Your event tools"
+      ],
+      "clipped": [],
+      "bodyHeight": 3128
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/invitation",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/invitation-studio-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Invitation studio"
+      ],
+      "clipped": [],
+      "bodyHeight": 3874
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/tickets/design",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/ticket-designer-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Ticket designer",
+        "Live preview"
+      ],
+      "clipped": [],
+      "bodyHeight": 2747
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/guests",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/guests-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Honored Guest Management"
+      ],
+      "clipped": [],
+      "bodyHeight": 1694
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/delivery",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/delivery-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Dara & Sophea",
+        "Prepare Guest Links",
+        "Send Invitations & Reminders",
+        "Track Delivery & Guests"
+      ],
+      "clipped": [],
+      "bodyHeight": 3533
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/qr",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/qr-page-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Event Invitation QR Code"
+      ],
+      "clipped": [],
+      "bodyHeight": 1245
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/wishes",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/wishes-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Wishes from your guests"
+      ],
+      "clipped": [],
+      "bodyHeight": 1062
+    },
+    "errors": []
+  },
+  {
+    "path": "/",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/home-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Invitations craftedaround your story.",
+        "Curated designs for your wedding day",
+        "The details they need.\nThe welcome you imagined.",
+        "Your invitation.\nYour guests. Together."
+      ],
+      "clipped": [],
+      "bodyHeight": 7881
+    },
+    "errors": []
+  },
+  {
+    "path": "/pricing",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/pricing-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Transparent pricing\nfor memorable celebrations.",
+        "Basic",
+        "Pro",
+        "Premium"
+      ],
+      "clipped": [],
+      "bodyHeight": 4935
+    },
+    "errors": []
+  },
+  {
+    "path": "/contact",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/contact-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Have a question?\nWe’re happy to help.",
+        "Send us a message",
+        "Where can we help?"
+      ],
+      "clipped": [],
+      "bodyHeight": 2405
+    },
+    "errors": []
+  },
+  {
+    "path": "/login",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/login-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Welcome Back"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/register",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/register-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Create Account"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/forgot-password",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/forgot-password-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Forgot your password?"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/reset-password",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/reset-password-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Set new password"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/new",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-new-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Bring your event together",
+        "What are you celebrating?",
+        "Event essentials",
+        "Make it feel like your event"
+      ],
+      "clipped": [],
+      "bodyHeight": 3245
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/profile",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-profile-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "editTitle",
+        "Linked sign-in identities"
+      ],
+      "clipped": [],
+      "bodyHeight": 1171
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/change-password",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-change-password-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Change password"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/packages",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-packages-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "A plan for your next celebration",
+        "Basic",
+        "Pro",
+        "Premium"
+      ],
+      "clipped": [],
+      "bodyHeight": 3230
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/payments",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-payments-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Payment history"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/payments/AUDIT",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-payments-AUDIT-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "RECEIPT-AUDIT",
+        "Event Essential"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/notifications",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-notifications-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "ការជូនដំណឹង"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/organizations",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-organizations-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "ក្រុមការងារ & Workspaces",
+        "មិនទាន់មានក្រុមការងារនៅឡើយទេ"
+      ],
+      "clipped": [],
+      "bodyHeight": 1125
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/organizations/11",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-organizations-11-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Audit organization ACTIVE",
+        "បញ្ជីសមាជិកក្រុម (Team Members)"
+      ],
+      "clipped": [],
+      "bodyHeight": 1531
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/templates/paid",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-templates-paid-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "គំរូធៀបការ បានទិញរួច",
+        "មិនទាន់មានគំរូដែលបានទិញនៅឡើយទេ"
+      ],
+      "clipped": [],
+      "bodyHeight": 1672
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/rsvp",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-rsvp-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "គ្រប់គ្រងការឆ្លើយតប (RSVPs)"
+      ],
+      "clipped": [
+        {
+          "tag": "BUTTON",
+          "class": "dash-btn",
+          "text": "Edit RSVP"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "dash-btn",
+          "text": "Delete RSVP"
+        }
+      ],
+      "bodyHeight": 1638
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/gifts",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-gifts-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Wedding Gift Records"
+      ],
+      "clipped": [],
+      "bodyHeight": 1828
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/budget",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-budget-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Budget Planning & Expenses"
+      ],
+      "clipped": [],
+      "bodyHeight": 1715
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/seating",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-seating-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Dara & Sophea",
+        "បង្កើតតុថ្មី (Create Table)",
+        "ចាត់ភ្ញៀវចូលតុ (Assign Guest)"
+      ],
+      "clipped": [],
+      "bodyHeight": 2655
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/check-in",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-check-in-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Dara & Sophea",
+        " Scan token",
+        " បញ្ជីភ្ញៀវ & ស្កេនរហ័ស",
+        " Checked-in guests"
+      ],
+      "clipped": [
+        {
+          "tag": "BUTTON",
+          "class": "checkin-row-btn inv-secondary-btn action-checkin",
+          "text": "Check in"
+        }
+      ],
+      "bodyHeight": 3237
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/reports",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-reports-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "របាយការណ៍សង្ខេបចំណូល និងចំណាយកម្មវិធី",
+        "Guest delivery and attendance reports",
+        "តារាងអំណោយ និងចំណូលផ្សេងៗ",
+        "តារាងចំណាយ"
+      ],
+      "clipped": [],
+      "bodyHeight": 3735
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/settings",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-settings-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Event details"
+      ],
+      "clipped": [],
+      "bodyHeight": 2352
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/media",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-media-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Invitation Media",
+        "Cover image",
+        "Gallery images",
+        "Video"
+      ],
+      "clipped": [],
+      "bodyHeight": 1932
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/assistant",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-assistant-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "ជំនួយការសរសេរខ្លឹមសារធៀបការ"
+      ],
+      "clipped": [],
+      "bodyHeight": 1761
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/preview",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-preview-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Phnom Penh"
+      ],
+      "clipped": [],
+      "bodyHeight": 1436
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "A design that feels like you."
+      ],
+      "clipped": [],
+      "bodyHeight": 1930
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates/browse",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-browse-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Browse Wedding Templates"
+      ],
+      "clipped": [
+        {
+          "tag": "BUTTON",
+          "class": "tb-category-chip ",
+          "text": "Premium"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "tb-category-chip ",
+          "text": "Modern"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "tb-category-chip ",
+          "text": "Traditional"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "tb-category-chip ",
+          "text": "Floral"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "tb-category-chip ",
+          "text": "Luxury"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "tb-category-chip ",
+          "text": "Minimalist"
+        }
+      ],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates/browse/event-essential",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-browse-event-essential-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "You are invited"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates/event-essential",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-event-essential-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "You are invited"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates/event-essential/demo",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-event-essential-demo-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "You are invited"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates/event-essential/preview",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-event-essential-preview-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Event Essential"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates/30/checkout",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-30-checkout-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "ទូទាត់ប្រាក់ គំរូធៀបការពិសេស",
+        "Event Essential"
+      ],
+      "clipped": [],
+      "bodyHeight": 3089
+    },
+    "errors": []
+  },
+  {
+    "path": "/w/audit-event",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/w-audit-event-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Phnom Penh",
+        "Schedule"
+      ],
+      "clipped": [],
+      "bodyHeight": 1369
+    },
+    "errors": []
+  },
+  {
+    "path": "/i/audit-event?token=audit-guest",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/i-audit-event-token-audit-guest-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Phnom Penh",
+        "Schedule"
+      ],
+      "clipped": [],
+      "bodyHeight": 1160
+    },
+    "errors": []
+  },
+  {
+    "path": "/payments/AUDIT/status",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/payments-AUDIT-status-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "ស្កេនទូទាត់ ABA KHQR",
+        "Event Essential"
+      ],
+      "clipped": [],
+      "bodyHeight": 1703
+    },
+    "errors": []
+  },
+  {
+    "path": "/payments/success",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/payments-success-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Payment is being verified. Please wait."
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/payments/return",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/payments-return-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Payment is being verified. Please wait."
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/payments/cancel",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/payments-cancel-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Payment was cancelled or not completed."
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/venues",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/venues-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "FindYour wedding venue"
+      ],
+      "clipped": [],
+      "bodyHeight": 3530
+    },
+    "errors": []
+  },
+  {
+    "path": "/venues/11",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/venues-11-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "FindYour wedding venue"
+      ],
+      "clipped": [],
+      "bodyHeight": 3530
+    },
+    "errors": []
+  },
+  {
+    "path": "/about",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/about-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Have a question?\nWe’re happy to help.",
+        "Send us a message",
+        "Where can we help?"
+      ],
+      "clipped": [],
+      "bodyHeight": 2405
+    },
+    "errors": []
+  },
+  {
+    "path": "/help",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/help-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Have a question?\nWe’re happy to help.",
+        "Send us a message",
+        "Where can we help?"
+      ],
+      "clipped": [],
+      "bodyHeight": 2405
+    },
+    "errors": []
+  },
+  {
+    "path": "/does-not-exist",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/does-not-exist-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "404"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/dashboard/invitations/101/guests",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/dashboard-invitations-101-guests-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Honored Guest Management"
+      ],
+      "clipped": [],
+      "bodyHeight": 1694
+    },
+    "errors": []
+  },
+  {
+    "path": "/dashboard/expenses",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/dashboard-expenses-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Your Wedding Events",
+        "Dara & Sophea",
+        "Sokha’s birthday"
+      ],
+      "clipped": [],
+      "bodyHeight": 1543
+    },
+    "errors": []
+  },
+  {
+    "path": "/create/wedding",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/create-wedding-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Bring your event together",
+        "What are you celebrating?",
+        "Event essentials",
+        "Make it feel like your event"
+      ],
+      "clipped": [],
+      "bodyHeight": 3245
+    },
+    "errors": []
+  },
+  {
+    "path": "/event/ux-local-draft",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/event-ux-local-draft-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "មិនរកឃើញ Draft"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/preview/ux-local-draft",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/preview-ux-local-draft-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "មិនរកឃើញ Draft"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/create/wedding/101",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/create-wedding-101-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Event details"
+      ],
+      "clipped": [],
+      "bodyHeight": 2352
+    },
+    "errors": []
+  },
+  {
+    "path": "/event/101/manage",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/event-101-manage-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Event details"
+      ],
+      "clipped": [],
+      "bodyHeight": 2352
+    },
+    "errors": []
+  },
+  {
+    "path": "/dashboard/invitations/101/edit",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/dashboard-invitations-101-edit-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Event details"
+      ],
+      "clipped": [],
+      "bodyHeight": 2352
+    },
+    "errors": []
+  },
+  {
+    "path": "/dashboard/invitations/101/preview",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/dashboard-invitations-101-preview-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Phnom Penh"
+      ],
+      "clipped": [],
+      "bodyHeight": 1436
+    },
+    "errors": []
+  },
+  {
+    "path": "/dashboard/invitations/design",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/dashboard-invitations-design-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Invitation studio"
+      ],
+      "clipped": [],
+      "bodyHeight": 2599
+    },
+    "errors": []
+  },
+  {
+    "path": "/dashboard/invitations/edit",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/routes/dashboard-invitations-edit-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Invitation studio"
+      ],
+      "clipped": [],
+      "bodyHeight": 2599
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/my-events-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Your Wedding Events",
+        "Dara & Sophea",
+        "Sokha’s birthday"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/event-workspace-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Wedding Dashboard",
+        "Dara & Sophea",
+        "Prepare your celebration",
+        "Your event tools"
+      ],
+      "clipped": [],
+      "bodyHeight": 1880
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/invitation",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/invitation-studio-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Invitation studio"
+      ],
+      "clipped": [],
+      "bodyHeight": 1137
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/tickets/design",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/ticket-designer-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Ticket designer",
+        "Live preview"
+      ],
+      "clipped": [],
+      "bodyHeight": 1652
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/guests",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/guests-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Honored Guest Management"
+      ],
+      "clipped": [],
+      "bodyHeight": 1263
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/delivery",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/delivery-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Dara & Sophea",
+        "Prepare Guest Links",
+        "Send Invitations & Reminders",
+        "Track Delivery & Guests"
+      ],
+      "clipped": [],
+      "bodyHeight": 2232
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/qr",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/qr-page-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Event Invitation QR Code"
+      ],
+      "clipped": [],
+      "bodyHeight": 1235
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/wishes",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/wishes-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Wishes from your guests"
+      ],
+      "clipped": [],
+      "bodyHeight": 1235
+    },
+    "errors": []
+  },
+  {
+    "path": "/",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/home-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Invitations craftedaround your story.",
+        "Curated designs for your wedding day",
+        "The details they need.\nThe welcome you imagined.",
+        "Your invitation.\nYour guests. Together."
+      ],
+      "clipped": [],
+      "bodyHeight": 5697
+    },
+    "errors": []
+  },
+  {
+    "path": "/pricing",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/pricing-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Transparent pricing\nfor memorable celebrations.",
+        "Basic",
+        "Pro",
+        "Premium"
+      ],
+      "clipped": [],
+      "bodyHeight": 3042
+    },
+    "errors": []
+  },
+  {
+    "path": "/contact",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/contact-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Have a question?\nWe’re happy to help.",
+        "Send us a message",
+        "Where can we help?"
+      ],
+      "clipped": [],
+      "bodyHeight": 1384
+    },
+    "errors": []
+  },
+  {
+    "path": "/login",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/login-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Welcome Back"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/register",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/register-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Create Account"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/forgot-password",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/forgot-password-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Forgot your password?"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/reset-password",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/reset-password-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Set new password"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/new",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-new-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Bring your event together",
+        "What are you celebrating?",
+        "Event essentials",
+        "Make it feel like your event"
+      ],
+      "clipped": [],
+      "bodyHeight": 2594
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/profile",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-profile-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "editTitle",
+        "Linked sign-in identities"
+      ],
+      "clipped": [],
+      "bodyHeight": 1162
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/change-password",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-change-password-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Change password"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/packages",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-packages-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "A plan for your next celebration",
+        "Basic",
+        "Pro",
+        "Premium"
+      ],
+      "clipped": [],
+      "bodyHeight": 1934
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/payments",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-payments-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Payment history"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/payments/AUDIT",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-payments-AUDIT-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "RECEIPT-AUDIT",
+        "Event Essential"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/notifications",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-notifications-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "ការជូនដំណឹង"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/organizations",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-organizations-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "ក្រុមការងារ & Workspaces",
+        "មិនទាន់មានក្រុមការងារនៅឡើយទេ"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/organizations/11",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-organizations-11-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Audit organization ACTIVE",
+        "បញ្ជីសមាជិកក្រុម (Team Members)"
+      ],
+      "clipped": [],
+      "bodyHeight": 1098
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/templates/paid",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-templates-paid-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "គំរូធៀបការ បានទិញរួច",
+        "មិនទាន់មានគំរូដែលបានទិញនៅឡើយទេ"
+      ],
+      "clipped": [],
+      "bodyHeight": 1467
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/rsvp",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-rsvp-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "គ្រប់គ្រងការឆ្លើយតប (RSVPs)"
+      ],
+      "clipped": [],
+      "bodyHeight": 1235
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/gifts",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-gifts-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Wedding Gift Records"
+      ],
+      "clipped": [],
+      "bodyHeight": 1235
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/budget",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-budget-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Budget Planning & Expenses"
+      ],
+      "clipped": [],
+      "bodyHeight": 1242
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/seating",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-seating-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Dara & Sophea",
+        "បង្កើតតុថ្មី (Create Table)",
+        "ចាត់ភ្ញៀវចូលតុ (Assign Guest)"
+      ],
+      "clipped": [],
+      "bodyHeight": 1647
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/check-in",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-check-in-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Dara & Sophea",
+        " Scan token",
+        " បញ្ជីភ្ញៀវ & ស្កេនរហ័ស",
+        " Checked-in guests"
+      ],
+      "clipped": [
+        {
+          "tag": "BUTTON",
+          "class": "checkin-row-btn inv-secondary-btn action-checkin",
+          "text": "Check in"
+        }
+      ],
+      "bodyHeight": 1979
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/reports",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-reports-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "របាយការណ៍សង្ខេបចំណូល និងចំណាយកម្មវិធី",
+        "Guest delivery and attendance reports",
+        "តារាងអំណោយ និងចំណូលផ្សេងៗ",
+        "តារាងចំណាយ"
+      ],
+      "clipped": [],
+      "bodyHeight": 2401
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/settings",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-settings-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Event details"
+      ],
+      "clipped": [],
+      "bodyHeight": 1551
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/media",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-media-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Invitation Media",
+        "Cover image",
+        "Gallery images",
+        "Video"
+      ],
+      "clipped": [
+        {
+          "tag": "BUTTON",
+          "class": "inv-secondary-btn",
+          "text": "Dashboard"
+        }
+      ],
+      "bodyHeight": 1434
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/assistant",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-assistant-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "ជំនួយការសរសេរខ្លឹមសារធៀបការ"
+      ],
+      "clipped": [],
+      "bodyHeight": 1263
+    },
+    "errors": []
+  },
+  {
+    "path": "/app/events/101/preview",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/app-events-101-preview-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Phnom Penh"
+      ],
+      "clipped": [],
+      "bodyHeight": 1321
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "A design that feels like you."
+      ],
+      "clipped": [],
+      "bodyHeight": 1547
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates/browse",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-browse-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Browse Wedding Templates"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates/browse/event-essential",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-browse-event-essential-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "You are invited"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates/event-essential",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-event-essential-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "You are invited"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates/event-essential/demo",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-event-essential-demo-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "You are invited"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates/event-essential/preview",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-event-essential-preview-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Event Essential"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/templates/30/checkout",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/templates-30-checkout-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "ទូទាត់ប្រាក់ គំរូធៀបការពិសេស",
+        "Event Essential"
+      ],
+      "clipped": [],
+      "bodyHeight": 1677
+    },
+    "errors": []
+  },
+  {
+    "path": "/w/audit-event",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/w-audit-event-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Phnom Penh",
+        "Schedule"
+      ],
+      "clipped": [],
+      "bodyHeight": 1349
+    },
+    "errors": []
+  },
+  {
+    "path": "/i/audit-event?token=audit-guest",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/i-audit-event-token-audit-guest-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Phnom Penh",
+        "Schedule"
+      ],
+      "clipped": [],
+      "bodyHeight": 1245
+    },
+    "errors": []
+  },
+  {
+    "path": "/payments/AUDIT/status",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/payments-AUDIT-status-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "ស្កេនទូទាត់ ABA KHQR",
+        "Event Essential"
+      ],
+      "clipped": [],
+      "bodyHeight": 1074
+    },
+    "errors": []
+  },
+  {
+    "path": "/payments/success",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/payments-success-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Payment is being verified. Please wait."
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/payments/return",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/payments-return-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Payment is being verified. Please wait."
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/payments/cancel",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/payments-cancel-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Payment was cancelled or not completed."
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/venues",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/venues-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "FindYour wedding venue"
+      ],
+      "clipped": [],
+      "bodyHeight": 2057
+    },
+    "errors": []
+  },
+  {
+    "path": "/venues/11",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/venues-11-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "FindYour wedding venue"
+      ],
+      "clipped": [],
+      "bodyHeight": 2057
+    },
+    "errors": []
+  },
+  {
+    "path": "/about",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/about-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Have a question?\nWe’re happy to help.",
+        "Send us a message",
+        "Where can we help?"
+      ],
+      "clipped": [],
+      "bodyHeight": 1384
+    },
+    "errors": []
+  },
+  {
+    "path": "/help",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/help-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Have a question?\nWe’re happy to help.",
+        "Send us a message",
+        "Where can we help?"
+      ],
+      "clipped": [],
+      "bodyHeight": 1384
+    },
+    "errors": []
+  },
+  {
+    "path": "/does-not-exist",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/does-not-exist-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "404"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/dashboard/invitations/101/guests",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/dashboard-invitations-101-guests-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Honored Guest Management"
+      ],
+      "clipped": [],
+      "bodyHeight": 1263
+    },
+    "errors": []
+  },
+  {
+    "path": "/dashboard/expenses",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/dashboard-expenses-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Your Wedding Events",
+        "Dara & Sophea",
+        "Sokha’s birthday"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/create/wedding",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/create-wedding-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Bring your event together",
+        "What are you celebrating?",
+        "Event essentials",
+        "Make it feel like your event"
+      ],
+      "clipped": [],
+      "bodyHeight": 2594
+    },
+    "errors": []
+  },
+  {
+    "path": "/event/ux-local-draft",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/event-ux-local-draft-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "មិនរកឃើញ Draft"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/preview/ux-local-draft",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/preview-ux-local-draft-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "មិនរកឃើញ Draft"
+      ],
+      "clipped": [],
+      "bodyHeight": 1000
+    },
+    "errors": []
+  },
+  {
+    "path": "/create/wedding/101",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/create-wedding-101-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Event details"
+      ],
+      "clipped": [],
+      "bodyHeight": 1436
+    },
+    "errors": []
+  },
+  {
+    "path": "/event/101/manage",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/event-101-manage-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Event details"
+      ],
+      "clipped": [],
+      "bodyHeight": 1436
+    },
+    "errors": []
+  },
+  {
+    "path": "/dashboard/invitations/101/edit",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/dashboard-invitations-101-edit-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Event details"
+      ],
+      "clipped": [],
+      "bodyHeight": 1436
+    },
+    "errors": []
+  },
+  {
+    "path": "/dashboard/invitations/101/preview",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/dashboard-invitations-101-preview-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Dara & Sophea",
+        "Dara & Sophea",
+        "Phnom Penh"
+      ],
+      "clipped": [],
+      "bodyHeight": 1321
+    },
+    "errors": []
+  },
+  {
+    "path": "/dashboard/invitations/design",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/dashboard-invitations-design-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Invitation studio"
+      ],
+      "clipped": [],
+      "bodyHeight": 1115
+    },
+    "errors": []
+  },
+  {
+    "path": "/dashboard/invitations/edit",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/routes/dashboard-invitations-edit-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Invitation studio"
+      ],
+      "clipped": [],
+      "bodyHeight": 1115
+    },
+    "errors": []
+  }
+]
