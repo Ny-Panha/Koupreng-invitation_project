@@ -8,6 +8,8 @@ import authService from "@/features/auth/api/authApi";
 import SocialAuthButtons from "./components/SocialAuthButtons";
 import AuthLayout from "./components/AuthLayout";
 import "./AuthPage.css";
+import { saveTemplateIntent } from "@/features/templates/model/templateIntent";
+import { useEffect } from "react";
 
 function getSafeRedirect(searchParams) {
   return safeAuthRedirect(searchParams.get("next") || searchParams.get("redirect"));
@@ -27,6 +29,23 @@ function Login() {
   const { login } = useAuth();
   const { nav, auth } = useT();
   const redirectTo = getSafeRedirect(searchParams);
+
+  useEffect(() => {
+    const directTemplate = searchParams.get("template") || searchParams.get("templateCode") || searchParams.get("templateId");
+    if (directTemplate) {
+      saveTemplateIntent(directTemplate);
+    } else {
+      try {
+        const nextUrl = new URL(redirectTo, "https://koupreng.invalid");
+        const nextTemplate = nextUrl.searchParams.get("template") || nextUrl.searchParams.get("templateCode") || nextUrl.searchParams.get("templateId");
+        if (nextTemplate) {
+          saveTemplateIntent(nextTemplate);
+        }
+      } catch {
+        // Safe fallback
+      }
+    }
+  }, [searchParams, redirectTo]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

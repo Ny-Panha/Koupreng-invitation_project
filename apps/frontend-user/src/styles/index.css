@@ -121,82 +121,86 @@
   --z-tooltip: 4000;
 
   /* ============================================================
-     LEGACY THEME TOKENS (kept — referenced by older components)
-     Will be migrated to --brand-* / --wed-* progressively.
+     MODERN KHMER PREMIUM DESIGN TOKENS
+     Universal semantic design tokens for Koupreng (ISSUE-P1-03)
      ============================================================ */
-  --color-primary: #7033ff;
+  --kp-canvas: #FBF6EE;
+  --kp-surface: #FFFFFF;
+  --kp-surface-subtle: #F6F1E9;
+  --kp-surface-raised: #FFFFFF;
+  --kp-ink: #1F2421;
+  --kp-muted: #59615C;
+  --kp-subtle: #8A928D;
+  --kp-border: #E6DCCB;
+  --kp-border-strong: #D5C5AD;
+  --kp-gold: #926C34;
+  --kp-gold-dark: #76572D;
+  --kp-gold-light: #F5EFDF;
+  --kp-teal: #0F766E;
+  --kp-emerald: #2E433A;
+  --kp-success: #15803D;
+  --kp-warning: #B45309;
+  --kp-danger: #B91C1C;
+
+  /* Theme tokens mapped to Modern Khmer Premium */
+  --color-primary: var(--kp-gold);
   --color-primary-foreground: #ffffff;
-  --color-secondary: #edf0f4;
-  --color-secondary-foreground: #080808;
-  --color-accent: #e2ebff;
-  --color-accent-foreground: #1e69dc;
-  --color-background: #fdfdfd;
-  --color-foreground: #000000;
-  --color-card: #fdfdfd;
-  --color-card-foreground: #000000;
-  --color-popover: #fcfcfc;
-  --color-popover-foreground: #000000;
-  --color-muted: #f5f5f5;
-  --color-muted-foreground: #525252;
-  --color-destructive: #e54b4f;
+  --color-secondary: var(--kp-surface-subtle);
+  --color-secondary-foreground: var(--kp-ink);
+  --color-accent: var(--kp-gold-light);
+  --color-accent-foreground: var(--kp-gold-dark);
+  --color-background: var(--kp-canvas);
+  --color-foreground: var(--kp-ink);
+  --color-card: var(--kp-surface);
+  --color-card-foreground: var(--kp-ink);
+  --color-popover: var(--kp-surface-raised);
+  --color-popover-foreground: var(--kp-ink);
+  --color-muted: var(--kp-surface-subtle);
+  --color-muted-foreground: var(--kp-muted);
+  --color-destructive: var(--kp-danger);
   --color-destructive-foreground: #ffffff;
-  --color-border: #e7e7ee;
-  --color-input: #ebebeb;
-  --color-ring: #000000;
-  --color-chart-1: #4ac885;
-  --color-chart-2: #7033ff;
-  --color-chart-3: #fd822b;
-  --color-chart-4: #3276e4;
-  --color-chart-5: #747474;
-  --color-sidebar: #f5f8fb;
-  --color-sidebar-foreground: #000000;
-  --color-sidebar-primary: #000000;
+  --color-border: var(--kp-border);
+  --color-input: var(--kp-border-strong);
+  --color-ring: var(--kp-teal);
+  --color-chart-1: var(--kp-success);
+  --color-chart-2: var(--kp-gold);
+  --color-chart-3: var(--kp-warning);
+  --color-chart-4: var(--kp-teal);
+  --color-chart-5: var(--kp-muted);
+  --color-sidebar: var(--kp-surface-subtle);
+  --color-sidebar-foreground: var(--kp-ink);
+  --color-sidebar-primary: var(--kp-gold);
   --color-sidebar-primary-foreground: #ffffff;
-  --color-sidebar-accent: #ebebeb;
-  --color-sidebar-accent-foreground: #000000;
-  --color-sidebar-border: #ebebeb;
-  --color-sidebar-ring: #000000;
+  --color-sidebar-accent: var(--kp-gold-light);
+  --color-sidebar-accent-foreground: var(--kp-gold-dark);
+  --color-sidebar-border: var(--kp-border);
+  --color-sidebar-ring: var(--kp-teal);
 
-  /* ============================================================
-     BRAND PALETTE — Host / Dashboard / Admin
-     Purple SaaS. Use on management surfaces.
-     ============================================================ */
+  /* Host / Workspace Brand Palette mapped to Modern Khmer Gold & Canvas */
+  --brand-bg: var(--kp-canvas);
+  --brand-surface: var(--kp-surface);
+  --brand-surface-2: var(--kp-surface-subtle);
+  --brand-surface-3: var(--kp-gold-light);
+  --brand-overlay: rgba(31, 36, 33, 0.45);
 
-  /* Surfaces */
-  --brand-bg: #f7f5fb;
-  /* page bg */
-  --brand-surface: #ffffff;
-  /* card */
-  --brand-surface-2: #f8f8fd;
-  /* card secondary */
-  --brand-surface-3: #eae9f8;
-  /* tinted card */
-  --brand-overlay: rgba(15, 23, 42, 0.45);
+  --brand-50: #fbf6ee;
+  --brand-100: #f5efdf;
+  --brand-200: #e6dccb;
+  --brand-300: #d5c5ad;
+  --brand-400: #b98b42;
+  --brand-500: #926c34;
+  --brand-600: #76572d;
+  --brand-700: #5c4323;
+  --brand-800: #43311a;
+  --brand-900: #2b1f11;
 
-  /* Brand color (purple) — 50→900 ramp */
-  --brand-50: #f3f1fc;
-  --brand-100: #e9e6f9;
-  --brand-200: #d3ccf2;
-  --brand-300: #b3a8e8;
-  --brand-400: #8e80da;
-  --brand-500: #6b6bc4;
-  /* primary action */
-  --brand-600: #5a55b3;
-  --brand-700: #4b479a;
-  --brand-800: #3d3a7d;
-  --brand-900: #2e2c5d;
-
-  /* Semantic aliases */
-  --brand-primary: var(--brand-500);
-  --brand-primary-hover: var(--brand-600);
-  --brand-primary-active: var(--brand-700);
+  --brand-primary: var(--kp-gold);
+  --brand-primary-hover: var(--kp-gold-dark);
+  --brand-primary-active: var(--kp-gold-dark);
   --brand-on-primary: #ffffff;
-  --brand-ring: rgba(107, 107, 196, 0.40);
-
-  /* Text */
-  --brand-text: #1e293b;
-  /* slate-800 */
-  --brand-text-muted: #7a8799;
+  --brand-ring: rgba(146, 108, 52, 0.40);
+  --brand-text: var(--kp-ink);
+  --brand-text-muted: var(--kp-muted);
   /* used throughout dashboard */
   --brand-text-subtle: #b0b8c4;
   --brand-text-on-tint: #4b479a;

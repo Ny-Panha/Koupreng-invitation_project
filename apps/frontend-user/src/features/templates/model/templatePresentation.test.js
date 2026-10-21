@@ -17,6 +17,20 @@ describe("public template identity and truthful access", () => {
     expect(presentTemplate({ id: 4, code: "silk-heritage", premium: true }, "en")).toMatchObject({ isPremium: true, live: true });
     expect(presentTemplate(TEMPLATES[0], "en", false)).toMatchObject({ name: "Silk Heritage", live: false });
   });
+  it("prefers authentic Khmer template name over remote English name in Khmer mode", () => {
+    const remoteWithEnglishOnly = {
+      id: 9,
+      code: "emerald-canva-luxe-wedding",
+      name: "Emerald Canva Luxe Wedding",
+      description: "English luxury description",
+      premium: true
+    };
+    const presentedKm = presentTemplate(remoteWithEnglishOnly, "km", true);
+    expect(presentedKm.name).toContain("សិរីមង្គលត្បូងមរកត");
+    expect(presentedKm.name).not.toBe("Emerald Canva Luxe Wedding");
+    const presentedEn = presentTemplate(remoteWithEnglishOnly, "en", true);
+    expect(presentedEn.name).toContain("Emerald");
+  });
   it.each([{}, { price: 0, currency: "USD" }, { price: -1, currency: "USD" }, { price: "bad", currency: "USD" }, { price: 12 }, { price: 12, currency: "invalid" }])("does not invent prices for %j", (template) => {
     expect(templatePriceLabel(template, "en")).toBeNull();
   });

@@ -6,6 +6,7 @@ import { templateUsePath } from "../../templates/model/templateIdentity";
 import { usePrefersReducedMotion } from "../../../shared/hooks/usePrefersReducedMotion";
 import { SILK_HERITAGE_TEMPLATE as silk } from "../../templates/data/templatesData";
 import LandingPhoto from "./LandingPhoto";
+import PhoneFrame from "../../../shared/ui/PhoneFrame";
 
 export default function LandingHero({ copy }) {
   const [opened, setOpened] = useState(false);
@@ -55,36 +56,42 @@ export default function LandingHero({ copy }) {
       </div>
       <div className="kp-hero-art kp-enter kp-enter--2" data-opened={opened}>
         <div className="kp-art-index">{copy("សាកមើលសូត្រមង្គល", "Explore Silk Heritage")}</div>
-        <div className="kp-photo-arch">
-          <LandingPhoto src={silk.mainImage} srcSet="/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w" sizes="(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px" priority alt={copy("រូបថតគូស្នេហ៍សម្រាប់គំរូសូត្រមង្គល", "Sample wedding portrait from the Silk Heritage design")} />
-        </div>
-        <div className={`kp-hero-folio${opened ? " kp-hero-folio--open" : ""}`}>
-          <div id="kp-folio-paper" className="kp-folio-paper" inert={!opened} aria-hidden={!opened}>
-            <img className="kp-folio-weave" src="/templates/silk-heritage/woven-ornament.svg" width="360" height="80" alt="" />
-            <p className="kp-folio-ceremony">{copy("សិរីសួស្តីអាពាហ៍ពិពាហ៍", "TOGETHER WITH OUR FAMILIES")}</p>
-            <p className="kp-sample-names">{copy(silk.groom, silk.groomEn)}<span>&</span>{copy(silk.bride, silk.brideEn)}</p>
-            <p className="kp-folio-date">{copy(silk.dateText, silk.dateTextEn)}</p>
-            <Link ref={previewLink} to="/templates/silk-heritage" className="kp-folio-demo">
-              {copy("មើលគំរូពេញលេញ", "View the full demo")}
-              <ArrowUpRight size={16} aria-hidden="true" />
-            </Link>
-          </div>
-          <button
-            type="button"
-            className="kp-folio-cover"
-            aria-expanded={opened}
-            aria-controls="kp-folio-paper"
-            onClick={(event) => {
-              if (opened) closePreview();
-              else { previewOpener.current = event.currentTarget; setOpened(true); }
-            }}
-            aria-label={opened ? copy("បិទសន្លឹកការគំរូ", "Close invitation preview") : copy("បើកសន្លឹកការគំរូ", "Open invitation preview")}
-          >
-            <img src="/templates/silk-heritage/preview.svg" width="720" height="1080" alt="" />
-            <span>
-              {opened ? <X size={18} aria-hidden="true" /> : <><MailOpen size={16} aria-hidden="true" />{copy("បើកសន្លឹកការគំរូ", "Open invitation preview")}</>}
-            </span>
-          </button>
+        <div className="kp-hero-phone-stage">
+          <PhoneFrame className="kp-hero-phone-chassis" islandBadge={copy("គំរូផ្សាយផ្ទាល់", "Live Demo")}>
+            <div className="kp-hero-simulator-content">
+              <div className="kp-photo-arch">
+                <LandingPhoto src={silk.mainImage} srcSet="/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w" sizes="(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px" priority alt={copy("រូបថតគូស្នេហ៍សម្រាប់គំរូសូត្រមង្គល", "Sample wedding portrait from the Silk Heritage design")} />
+              </div>
+              <div className={`kp-hero-folio${opened ? " kp-hero-folio--open" : ""}`}>
+                <div id="kp-folio-paper" className="kp-folio-paper" inert={!opened} aria-hidden={!opened}>
+                  <img className="kp-folio-weave" src="/templates/silk-heritage/woven-ornament.svg" width="360" height="80" alt="" />
+                  <p className="kp-folio-ceremony">{copy("សិរីសួស្តីអាពាហ៍ពិពាហ៍", "TOGETHER WITH OUR FAMILIES")}</p>
+                  <p className="kp-sample-names">{copy(silk.groom, silk.groomEn)}<span>&</span>{copy(silk.bride, silk.brideEn)}</p>
+                  <p className="kp-folio-date">{copy(silk.dateText, silk.dateTextEn)}</p>
+                  <Link ref={previewLink} to="/templates/silk-heritage" className="kp-folio-demo">
+                    {copy("មើលគំរូពេញលេញ", "View the full demo")}
+                    <ArrowUpRight size={16} aria-hidden="true" />
+                  </Link>
+                </div>
+                <button
+                  type="button"
+                  className="kp-folio-cover"
+                  aria-expanded={opened}
+                  aria-controls="kp-folio-paper"
+                  onClick={(event) => {
+                    if (opened) closePreview();
+                    else { previewOpener.current = event.currentTarget; setOpened(true); }
+                  }}
+                  aria-label={opened ? copy("បិទសន្លឹកការគំរូ", "Close invitation preview") : copy("បើកសន្លឹកការគំរូ", "Open invitation preview")}
+                >
+                  <img src="/templates/silk-heritage/preview.svg" width="720" height="1080" alt="" />
+                  <span>
+                    {opened ? <X size={18} aria-hidden="true" /> : <><MailOpen size={16} aria-hidden="true" />{copy("បើកសន្លឹកការគំរូ", "Open invitation preview")}</>}
+                  </span>
+                </button>
+              </div>
+            </div>
+          </PhoneFrame>
         </div>
         <div id="kp-folio-note" className="kp-art-caption">
           <span>{copy("សូត្រមង្គល · គំរូបង្ហាញ", "Silk Heritage · Sample preview")}</span>

@@ -300,6 +300,24 @@ export default function GuestTable({
                     </button>
                   )}
 
+                  {inviteUrl && (
+                    <a
+                      href={`https://t.me/share/url?url=${encodeURIComponent(inviteUrl)}&text=${encodeURIComponent(shareMessage || "")}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="pe-icon-btn text-[#0088cc] hover:text-[#0077b5]"
+                      title={en ? "Send via Telegram" : "ផ្ញើតាម Telegram"}
+                      aria-label={en ? `Send invitation to ${guest.name} via Telegram` : `ផ្ញើធៀបការទៅ ${guest.name} តាម Telegram`}
+                      onClick={() => {
+                        if (isPending && onMarkAsSent) onMarkAsSent(guest);
+                      }}
+                    >
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.07-.18c-.08-.05-.19-.02-.27 0-.11.03-1.84 1.18-5.2 3.45-.49.34-.94.5-1.35.49-.45-.01-1.32-.26-1.96-.47-.79-.26-1.42-.39-1.37-.83.03-.22.33-.44.91-.68 3.56-1.55 5.94-2.58 7.12-3.07 3.39-1.41 4.1-1.65 4.56-1.66.1 0 .32.02.46.12.12.09.15.22.16.32.01.07.02.16.02.24z" />
+                      </svg>
+                    </a>
+                  )}
+
                   {onMarkAsSent && isPending && (
                     <button
                       type="button"

@@ -25,18 +25,28 @@ export function templateDescription(description, lang, fallback = "") {
   return typeof value === "string" && value.trim() ? value.trim() : fallback;
 }
 
+function hasKhmer(str) {
+  return /[\u1780-\u17FF]/.test(String(str || ""));
+}
+
 export function presentTemplate(template, lang, live = true) {
   const local = live ? localTemplateFor(template) : template;
   const note = designNotes[local?.id]?.[lang === "en" ? 1 : 0];
   const category = String(template.category || local?.category || "other").toLowerCase();
+  const fallbackDesc = note || (lang === "en" ? "Explore the invitation, celebration program and guest details in the full demo." : "មើលសន្លឹកការ កម្មវិធីពិធី និងព័ត៌មានភ្ញៀវ ក្នុងគំរូពេញលេញ។");
+  const rawDesc = lang === "en"
+    ? (template.descriptionEn || local?.description)
+    : (template.descriptionKm || (hasKhmer(template.description) ? template.description : (local?.description || template.description)));
+
   return {
     ...template,
     identity: templateIdentity(template),
-    name: lang === "en" ? (template.nameEn || local?.style || template.name || "Invitation design") : (template.nameKm || template.name || local?.name || "គំរូសន្លឹកការ"),
+    name: lang === "en"
+      ? (template.nameEn || local?.style || template.name || "Invitation design")
+      : (template.nameKm || (hasKhmer(template.name) ? template.name : (local?.name || template.name || "គំរូសន្លឹកការ"))),
     category: category === "traditional" ? "ancient" : category,
     image: template.thumbnailUrl || template.image || local?.image,
-    description: templateDescription(lang === "en" ? template.descriptionEn : template.description, lang,
-      note || (lang === "en" ? "Explore the invitation, celebration program and guest details in the full demo." : "មើលសន្លឹកការ កម្មវិធីពិធី និងព័ត៌មានភ្ញៀវ ក្នុងគំរូពេញលេញ។")),
+    description: templateDescription(rawDesc, lang, fallbackDesc),
     isPremium: Boolean(template.premium || template.isPremium || Number(template.price) > 0),
     live,
   };

@@ -16,6 +16,7 @@ import { isTerminalStatus, statusMessage } from "./paymentStatus";
 import { toast } from "../../shared/ui/toast";
 import { getPaymentQrValue } from "./khqr";
 import { packagePrice } from "../marketing/model/packagePresentation";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import "./PaymentPages.css";
 
 function getSessionSecondsRemaining(expiresAt, now = Date.now()) {
@@ -34,6 +35,8 @@ function formatRemaining(seconds) {
 }
 
 export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
+  const lang = useLanguageStore((state) => state.lang);
+  const isKm = lang !== "en";
   const [checking, setChecking] = useState(false);
   const [claiming, setClaiming] = useState(false);
   const [claimFeedback, setClaimFeedback] = useState("");
@@ -253,17 +256,27 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
             </div>
           )}
 
-          {/* Instructions text */}
+          {/* Instructions text (ISSUE-P1-05) */}
           <div className="payment-instructions-lux">
-            <p>
-              👉 <strong>របៀបទូទាត់៖</strong> Scan this link with your camera or open the ABA PayWay link below.
-            </p>
-            <p className="payment-muted-lux">
-              Expected: <strong>{amountLabel}</strong>.
-              Include the order code in the remark if the bank offers that field. Fixed links may not retain it.
-            </p>
-            <p style={{ marginTop: "6px", color: "#059669", fontWeight: 600 }}>
-              <strong>បន្ទាប់ពីផ្ទេររួច៖</strong> សូមផ្ញើសំណើពិនិត្យការទូទាត់។ សិទ្ធិប្រើគំរូនឹងបើកក្រោយការផ្ទៀងផ្ទាត់ពីប្រព័ន្ធ ឬអ្នកគ្រប់គ្រង។ (Access follows verified payment confirmation.)
+            <h4 style={{ margin: "0 0 10px", fontSize: "15px", fontWeight: 700, color: "var(--kp-ink, #1f2421)" }}>
+              {isKm ? "👉 ជំហានទូទាត់ងាយៗ ៤ ជំហាន (Payment steps)៖" : "👉 4 Simple payment steps:"}
+            </h4>
+            <ol style={{ margin: 0, paddingLeft: "20px", display: "flex", flexDirection: "column", gap: "8px", fontSize: "14px", lineHeight: "1.6" }}>
+              <li>
+                <strong>{isKm ? "បើកកម្មវិធីធនាគារចល័ត" : "Open your banking app"}</strong> — {isKm ? "ABA Mobile, Bakong, Wing, ACLEDA ឬកម្មវិធីធនាគារដែលគាំទ្រ KHQR" : "ABA Mobile, Bakong, Wing, ACLEDA, or any KHQR-supported banking app."}
+              </li>
+              <li>
+                <strong>{isKm ? "ស្កេន QR កូដខាងលើ" : "Scan the KHQR code above"}</strong> — {isKm ? "ពិនិត្យចំនួនទឹកប្រាក់ទូទាត់៖ " : "Expected amount: "}<strong>{amountLabel}</strong>
+              </li>
+              <li>
+                <strong>{isKm ? "បញ្ជាក់ការផ្ទេរប្រាក់" : "Confirm the transfer"}</strong> — {isKm ? `បញ្ចូល Order Code (${order.orderCode}) ក្នុង Remark ប្រសិនបើធនាគារអនុញ្ញាត` : `Include order code (${order.orderCode}) in remark if bank supports it.`}
+              </li>
+              <li>
+                <strong>{isKm ? "ចុចប៊ូតុង 'ខ្ញុំបានទូទាត់រួចរាល់'" : "Tap 'I have paid' below"}</strong> — {isKm ? "ប្រព័ន្ធនឹងផ្ទៀងផ្ទាត់ដោយស្វ័យប្រវត្តិជាមួយទិន្នន័យធនាគារ និងបើកសិទ្ធិប្រើប្រាស់ភ្លាមៗ។" : "System reconciles with official bank alerts to activate access."}
+              </li>
+            </ol>
+            <p style={{ marginTop: "12px", color: "var(--kp-teal, #0f766e)", fontWeight: 600, fontSize: "13px" }}>
+              <strong>{isKm ? "ចំណាំ៖" : "Note:"}</strong> {isKm ? "សិទ្ធិប្រើគំរូនឹងបើកក្រោយការផ្ទៀងផ្ទាត់ពីប្រព័ន្ធ ឬអ្នកគ្រប់គ្រង។ (Access follows verified payment confirmation.)" : "Access follows verified payment confirmation from official bank alerts."}
             </p>
           </div>
 

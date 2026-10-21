@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import InvitationForm from "./InvitationForm";
 import { invitationService } from "@/features/invitations/api/invitationApi";
 import { mediaService } from "@/features/invitations/api/mediaApi";
@@ -14,6 +14,8 @@ import "@/features/events/EventsFeature.css";
 
 export default function InvitationEditPage() {
     const { eventId, id = eventId } = useParams();
+    const location = useLocation();
+    const createEventUrl = `/app/events/new${location.search}`;
     const { user } = useAuth();
     const { text: t } = useBackendMessages("invitations");
     const [invitation, setInvitation] = useState(null);
@@ -196,14 +198,18 @@ export default function InvitationEditPage() {
                         <h1>{t("title") || "គម្រូធៀប"}</h1>
                         <p>{t("subtitle") || "គ្រប់គ្រង និងកែសម្រួលគំរូធៀបអាពាហ៍ពិពាហ៍"}</p>
                     </div>
-                    <span>{t("createBtn") || "+ បង្កើតកម្មវិធី"}</span>
+                    <Link to={createEventUrl} className="events-create-btn">
+                        {t("createBtn") || "+ បង្កើតកម្មវិធី"}
+                    </Link>
                 </header>
 
                 <section className="events-empty">
                     <div className="events-empty-icon">{t("emptyIcon") || "គម្រោង"}</div>
                     <h2>{t("emptyTitle") || "មិនទាន់មានកម្មវិធី"}</h2>
                     <p>{t("emptyText") || "សូមចាប់ផ្តើមបង្កើតកម្មវិធីជាមុនសិន ដើម្បីកែសម្រួលគំរូធៀបឌីជីថល។"}</p>
-                    <span>{t("emptyActionBtn") || "+ បង្កើតកម្មវិធី"}</span>
+                    <Link to={createEventUrl} className="events-empty-btn">
+                        {t("emptyActionBtn") || "+ បង្កើតកម្មវិធី"}
+                    </Link>
                 </section>
             </main>
         );

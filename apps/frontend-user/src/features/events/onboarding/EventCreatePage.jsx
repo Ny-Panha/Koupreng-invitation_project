@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useBeforeUnload, useNavigate } from "react-router-dom";
+import { Link, useBeforeUnload, useNavigate, useSearchParams } from "react-router-dom";
 import { ArrowLeft, BriefcaseBusiness, Cake, Check, Heart, PartyPopper, Sparkles, Users } from "lucide-react";
 import { api } from "@/shared/api/httpClient";
 import { unwrap } from "@/shared/api/helpers";
 import { invitationService } from "@/features/invitations/api/invitationApi";
 import { templateCatalogService } from "@/features/templates/api/templateCatalogApi";
+import { getTemplateIntent, clearTemplateIntent, findMatchingTemplate } from "@/features/templates/model/templateIntent";
 import subscriptionService from "@/features/subscriptions/subscriptionService";
 import { paymentService } from "@/features/payments/paymentService";
 import { packagePrice } from "@/features/marketing/model/packagePresentation";
@@ -24,13 +25,17 @@ export default function EventCreatePage() {
   const copy = (kh, english) => en ? english : kh;
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const urlTemplateKey = searchParams.get("template") || searchParams.get("templateCode") || searchParams.get("templateId") || searchParams.get("tpl") || "";
+  const initialIntentKey = useRef(urlTemplateKey || getTemplateIntent() || "");
+  const intentConsumed = useRef(false);
   const storageKey = `koupreng.onboarding.${user?.id}`;
   const [initial] = useState(() => { try { return JSON.parse(sessionStorage.getItem(storageKey)) || {}; } catch { return {}; } });
   const [type, setType] = useState(EVENT_TYPES.some(row => row[0] === initial.type) ? initial.type : "WEDDING");
   const [style, setStyle] = useState(initial.style || "");
   const [language, setLanguage] = useState(initial.language || (en ? "EN" : "KH"));
   const [price, setPrice] = useState(initial.price || "ALL");
-  const [templateId, setTemplateId] = useState(initial.templateId || "");
+  const [templateId, setTemplateId] = useState(initial.templateId || initialIntentKey.current || "");
   const [form, setForm] = useState(initial.form || {});
   const [requestId] = useState(() => initial.requestId || crypto.randomUUID());
   const [catalog, setCatalog] = useState([]);
@@ -68,12 +73,34 @@ export default function EventCreatePage() {
       .then(unwrap).then(items => {
         if (!active) return;
         setRecommendations(items);
-        setTemplateId(current => items.some(row => String(row.template.id) === String(current)) ? current : "");
+        setTemplateId(current => {
+          const target = current || (!intentConsumed.current ? initialIntentKey.current : "");
+          if (!target) return "";
+          const found = items.find(row => String(row.template.id) === String(target) || String(row.template.code || "").toLowerCase() === String(target).toLowerCase() || String(row.template.slug || "").toLowerCase() === String(target).toLowerCase());
+          return found ? found.template.id : (items.some(row => String(row.template.id) === String(current)) ? current : "");
+        });
       })
       .catch(err => { if (active) { setRecommendations([]); setRecommendationError(err.message); } })
       .finally(() => { if (active) setLoading(false); });
     return () => { active = false; };
   }, [type, style, language, price, retry]);
+  useEffect(() => {
+    if (intentConsumed.current || !initialIntentKey.current) return;
+    const all = [...recommendations.map(r => r.template), ...catalog].filter(Boolean);
+    const match = findMatchingTemplate(all, initialIntentKey.current);
+    if (match) {
+      intentConsumed.current = true;
+      clearTemplateIntent();
+      setTemplateId(match.id);
+      if (Array.isArray(match.supportedEventTypes) && match.supportedEventTypes.length > 0 && !match.supportedEventTypes.includes(type)) {
+        setType(match.supportedEventTypes[0]);
+      }
+      setRecommendations(current => {
+        if (current.some(r => String(r.template?.id) === String(match.id))) return current;
+        return [{ template: match, styleMatch: true }, ...current];
+      });
+    }
+  }, [catalog, recommendations, type]);
   useEffect(() => {
     let active = true;
     const premium = recommendations.map(row => row.template).filter(template => template.premium || Number(template.price) > 0);
@@ -86,6 +113,8 @@ export default function EventCreatePage() {
   const allErrors = validateEventForm(form, type, { draft: submitted === "draft", en });
   const errors = Object.fromEntries(Object.entries(allErrors).filter(([key]) => submitted || touched[key]));
   const changeType = value => {
+    intentConsumed.current = true;
+    clearTemplateIntent();
     setType(value); setTemplateId(""); setStyle(""); setTouched({}); setSubmitted(null); setError("");
     // Preserve common details and translate participant fields without discarding prior entries.
     setForm(current => ({ ...current, hostName: current.hostName || current.groomName || "", partnerName: current.partnerName || current.brideName || "", groomName: current.groomName || current.hostName || "", brideName: current.brideName || current.partnerName || "" }));
@@ -118,6 +147,7 @@ export default function EventCreatePage() {
       const event = await invitationService.create({ ...eventPayload(details, type), templateId: selectedTemplate?.id || undefined, languageMode: language, visibility: "PRIVATE", clientRequestId: requestId });
       if (!/^[1-9]\d*$/.test(String(event?.id || ""))) throw new Error(copy("ម៉ាស៊ីនមេមិនបានបញ្ជាក់កម្មវិធី។", "The server did not return an event ID. Retry safely."));
       saved.current = true;
+      clearTemplateIntent();
       try { sessionStorage.removeItem(storageKey); } catch { /* A successful backend save must still open its workspace. */ }
       navigate(eventPath(event.id), { replace: true });
     } catch (err) { setError(err.message || copy("មិនអាចរក្សាទុកកម្មវិធីបានទេ។", "Could not save your event.")); }

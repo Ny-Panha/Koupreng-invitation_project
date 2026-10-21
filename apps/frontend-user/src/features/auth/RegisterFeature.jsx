@@ -8,6 +8,8 @@ import authService from "@/features/auth/api/authApi";
 import SocialAuthButtons from "./components/SocialAuthButtons";
 import AuthLayout from "./components/AuthLayout";
 import "./AuthPage.css";
+import { saveTemplateIntent } from "@/features/templates/model/templateIntent";
+import { useEffect } from "react";
 
 const MIN_PASSWORD_LENGTH = 8;
 const MAX_PASSWORD_LENGTH = 100;
@@ -58,6 +60,23 @@ function Register() {
   const { login } = useAuth();
   const { auth } = useT();
   const redirectTo = getSafeRedirect(searchParams);
+
+  useEffect(() => {
+    const directTemplate = searchParams.get("template") || searchParams.get("templateCode") || searchParams.get("templateId");
+    if (directTemplate) {
+      saveTemplateIntent(directTemplate);
+    } else {
+      try {
+        const nextUrl = new URL(redirectTo, "https://koupreng.invalid");
+        const nextTemplate = nextUrl.searchParams.get("template") || nextUrl.searchParams.get("templateCode") || nextUrl.searchParams.get("templateId");
+        if (nextTemplate) {
+          saveTemplateIntent(nextTemplate);
+        }
+      } catch {
+        // Safe fallback
+      }
+    }
+  }, [searchParams, redirectTo]);
 
   // Match the backend's character checks on UTF-16 code units,
   // including Khmer letters and digits.

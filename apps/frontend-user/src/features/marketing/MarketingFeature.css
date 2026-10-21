@@ -263,11 +263,71 @@
   background: var(--kp-gold);
 }
 
-/* Hero Artwork: Arch Portrait + Balanced Stationery Folio */
+/* Hero Artwork: Flagship iPhone Simulator (ISSUE-P1-01) */
 .kp-hero-art {
   position: relative;
   min-width: 0;
-  height: 540px;
+  height: 620px;
+}
+
+.kp-hero-phone-stage {
+  perspective: 1200px;
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.kp-hero-phone-chassis {
+  max-width: 370px;
+  height: 580px;
+  border: 8px solid #1c1d1a;
+  border-radius: 48px;
+  background: var(--kp-canvas, #fbf6ee);
+  box-shadow: -12px 20px 45px rgba(31, 36, 33, 0.20), 0 0 0 2px #d5c5ad, 0 0 0 4px #2e433a;
+  transform: rotateY(-6deg) rotateX(2deg);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  will-change: transform;
+}
+
+.kp-hero-phone-chassis:hover,
+.kp-hero-phone-chassis:focus-within {
+  transform: rotateY(0deg) rotateX(0deg);
+  box-shadow: 0 24px 60px rgba(31, 36, 33, 0.28), 0 0 0 3px var(--kp-gold, #926c34);
+}
+
+.kp-hero-simulator-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #fbf6ee;
+}
+
+.kp-hero-simulator-content .kp-photo-arch {
+  position: absolute;
+  top: 10px;
+  left: 5%;
+  width: 90%;
+  height: 90%;
+  border-radius: 180px 180px 12px 12px;
+}
+
+@media (max-width: 768px) {
+  .kp-hero-phone-chassis {
+    transform: none !important;
+    max-width: 320px;
+    height: 520px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kp-hero-phone-chassis {
+    transform: none !important;
+  }
 }
 
 .kp-art-index {
@@ -1522,6 +1582,124 @@
 .kp-journey h3 a { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; color: var(--kp-ink); text-decoration: none; }
 .kp-journey p { font-size: 16px; color: var(--kp-muted); line-height: 1.75; }
 .kp-pricing-preview { border-top: 1px solid var(--kp-border); }
+
+/* Transparent Pricing Tiers (ISSUE-P2-02) */
+.kp-pricing-tier-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  margin-block: 40px 32px;
+}
+
+.kp-pricing-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--kp-surface, #ffffff);
+  border: 1px solid var(--kp-border, #e6dccb);
+  border-radius: 20px;
+  padding: 32px 28px;
+  box-shadow: 0 4px 20px rgba(31, 36, 33, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kp-pricing-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(31, 36, 33, 0.08);
+}
+
+.kp-pricing-card--popular {
+  border: 2px solid var(--kp-gold, #926c34);
+  box-shadow: 0 8px 30px rgba(146, 108, 52, 0.12);
+}
+
+.kp-pricing-badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--kp-gold, #926c34);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 650;
+  padding: 4px 14px;
+  border-radius: 99px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.kp-pricing-card-header h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--kp-ink, #1f2421);
+  margin-bottom: 8px;
+}
+
+.kp-pricing-amount {
+  font-size: 38px;
+  font-weight: 750;
+  color: var(--kp-ink, #1f2421);
+  line-height: 1.1;
+  margin: 8px 0 2px;
+}
+
+.kp-pricing-amount small {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--kp-muted, #59615c);
+}
+
+.kp-pricing-khr {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--kp-gold, #926c34);
+  margin-bottom: 12px;
+}
+
+.kp-pricing-desc {
+  font-size: 14px;
+  color: var(--kp-muted, #59615c);
+  line-height: 1.6;
+  margin-bottom: 24px;
+  min-height: 44px;
+}
+
+.kp-pricing-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1 1 auto;
+}
+
+.kp-pricing-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--kp-ink, #1f2421);
+  line-height: 1.5;
+}
+
+.kp-pricing-features li svg {
+  color: var(--kp-teal, #0f766e);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.kp-pricing-card .kp-button {
+  width: 100%;
+  justify-content: center;
+}
+
+@media (max-width: 900px) {
+  .kp-pricing-tier-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
 .kp-pricing-preview-actions { display: flex; align-items: center; justify-content: space-between; gap: 48px; margin-top: 32px; }
 .kp-pricing-preview-actions > p { max-width: 570px; color: var(--kp-muted); font-size: 15px; line-height: 1.8; }
 .kp-pricing-preview-actions .kp-actions { margin: 0; flex-shrink: 0; }

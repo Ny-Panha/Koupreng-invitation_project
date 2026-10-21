@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowUpRight, MessageSquare, Plus } from "lucide-react";
+import { ArrowUpRight, Check, MessageSquare, Plus } from "lucide-react";
 import PricingFactors from "./PricingFactors";
 
 export default function LandingConversion({ copy }) {
@@ -13,6 +13,60 @@ export default function LandingConversion({ copy }) {
   return <>
     <section className="kp-pricing-preview kp-section" aria-labelledby="kp-pricing-title">
       <div className="kp-section-heading"><div><p className="kp-eyebrow">{copy("ស្វែងយល់មុនជ្រើសរើស", "Before you choose")}</p><h2 id="kp-pricing-title">{copy("គំរូដែលអ្នកពេញចិត្ត។\nកញ្ចប់ដែលអ្នកត្រូវការ។", "The design you love.\nThe package you need.")}</h2></div><p>{copy("ស្វែងយល់ពីគំរូ និងកញ្ចប់សេវាកម្ម។ ចូលគណនីដើម្បីមើលតម្លៃ និងសិទ្ធិបច្ចុប្បន្ន។", "Understand designs and service packages. Sign in for current prices and access.")}</p></div>
+
+      <div className="kp-pricing-tier-grid" role="group" aria-label={copy("កញ្ចប់តម្លៃសេវាកម្ម", "Pricing tiers")}>
+        <article className="kp-pricing-card">
+          <div className="kp-pricing-card-header">
+            <h3>{copy("កញ្ចប់សាកល្បង (Basic)", "Basic Starter")}</h3>
+            <p className="kp-pricing-amount">$0.01 <small>/ {copy("កម្មវិធី", "event")}</small></p>
+            <p className="kp-pricing-khr">~40 KHR</p>
+            <p className="kp-pricing-desc">{copy("សាកសមសម្រាប់ការសាកល្បង និងពិធីជួបជុំតូចៗ", "Great for trial setups and small family gatherings")}</p>
+          </div>
+          <ul className="kp-pricing-features">
+            <li><Check size={16} aria-hidden="true" />{copy("១ សន្លឹកការឌីជីថល", "1 Digital Invitation")}</li>
+            <li><Check size={16} aria-hidden="true" />{copy("ភ្ញៀវរហូតដល់ ១០០ នាក់", "Up to 100 Guests")}</li>
+            <li><Check size={16} aria-hidden="true" />{copy("ប្រព័ន្ធឆ្លើយតប RSVP ស្វ័យប្រវត្តិ", "Automated RSVP replies")}</li>
+            <li><Check size={16} aria-hidden="true" />{copy("គំរូសន្លឹកការទូទៅ", "Standard templates")}</li>
+          </ul>
+          <Link to="/pricing" className="kp-button kp-button--outline">{copy("ជ្រើសរើស Basic", "Select Basic")}</Link>
+        </article>
+
+        <article className="kp-pricing-card kp-pricing-card--popular">
+          <div className="kp-pricing-badge">{copy("ពេញនិយមបំផុត", "Most Popular")}</div>
+          <div className="kp-pricing-card-header">
+            <h3>{copy("កញ្ចប់មង្គល (Pro)", "Pro Celebration")}</h3>
+            <p className="kp-pricing-amount">$199 <small>/ {copy("កម្មវិធី", "event")}</small></p>
+            <p className="kp-pricing-khr">~800,000 KHR</p>
+            <p className="kp-pricing-desc">{copy("កញ្ចប់ពេញលេញសម្រាប់ពិធីមង្គលការខ្មែរគ្រប់ទំហំ", "The complete suite for Khmer weddings of any size")}</p>
+          </div>
+          <ul className="kp-pricing-features">
+            <li><Check size={16} aria-hidden="true" />{copy("៥ សន្លឹកការ (ក្រុងពាលី កាត់សក់ មង្គលការ...)", "5 Invitations for all ceremonies")}</li>
+            <li><Check size={16} aria-hidden="true" />{copy("ភ្ញៀវមិនកំណត់ចំនួន", "Unlimited Guests")}</li>
+            <li><Check size={16} aria-hidden="true" />{copy("គ្រប់គ្រងតុ និងកន្លែងអង្គុយ (Seating)", "Visual Table Seating")}</li>
+            <li><Check size={16} aria-hidden="true" />{copy("ស្កេន QR ទទួលភ្ញៀវនៅច្រកចូល", "QR Check-in scanner")}</li>
+            <li><Check size={16} aria-hidden="true" />{copy("ប្រើបានគ្រប់គំរូប្រណិតទាំងអស់", "Access all Premium designs")}</li>
+          </ul>
+          <Link to="/pricing" className="kp-button">{copy("ជ្រើសរើស Pro", "Select Pro")}</Link>
+        </article>
+
+        <article className="kp-pricing-card">
+          <div className="kp-pricing-card-header">
+            <h3>{copy("កញ្ចប់ប្រណិត (Royal Luxury)", "Royal Luxury")}</h3>
+            <p className="kp-pricing-amount">$499 <small>/ {copy("កម្មវិធី", "event")}</small></p>
+            <p className="kp-pricing-khr">~2,000,000 KHR</p>
+            <p className="kp-pricing-desc">{copy("សេវាកម្មរៀបចំពិសេស និងចលនា 3D កម្រិតខ្ពស់", "Bespoke design concierge & 3D cinematic opening")}</p>
+          </div>
+          <ul className="kp-pricing-features">
+            <li><Check size={16} aria-hidden="true" />{copy("សន្លឹកការ និងភ្ញៀវមិនកំណត់", "Unlimited Invitations & Guests")}</li>
+            <li><Check size={16} aria-hidden="true" />{copy("ឈ្មោះគេហទំព័រផ្ទាល់ខ្លួន (Custom Domain)", "Custom Domain & Branding")}</li>
+            <li><Check size={16} aria-hidden="true" />{copy("ជំនួយការផ្ទាល់រៀបចំសន្លឹកការជូន", "Dedicated Concierge Setup")}</li>
+            <li><Check size={16} aria-hidden="true" />{copy("ចលនាបើកស្រោមសំបុត្រ Wax Seal 3D", "3D Wax Seal Animation")}</li>
+            <li><Check size={16} aria-hidden="true" />{copy("គាំទ្រអាទិភាព ២៤/៧", "24/7 Priority Support")}</li>
+          </ul>
+          <Link to="/pricing" className="kp-button kp-button--outline">{copy("ជ្រើសរើស Royal", "Select Royal")}</Link>
+        </article>
+      </div>
+
       <PricingFactors copy={copy} compact />
       <div className="kp-pricing-preview-actions"><p>{copy("ជ្រើសរើសគំរូ ចូលគណនី រួចពិនិត្យតម្លៃ និងសិទ្ធិមុនបង្កើត។ ការមើលគំរូមិនបើកសិទ្ធិប្រណិតទេ។", "Choose a design, sign in, then review its price and your access before creating. A preview does not unlock premium access.")}</p><div className="kp-actions"><Link to="/pricing" className="kp-button">{copy("ស្វែងយល់ពីកញ្ចប់ និងសិទ្ធិ", "Understand packages & access")}<ArrowUpRight size={18} aria-hidden="true" /></Link><Link to="/contact" className="kp-text-link">{copy("សួរអំពីកញ្ចប់", "Ask about packages")}</Link></div></div>
     </section>

@@ -141,6 +141,30 @@ describe("single-page event creation", () => {
     fireEvent.click(screen.getByRole("button", { name: "Select Event Essential" }));
     expect(screen.getByRole("button", { name: "Select Event Essential" })).toHaveAttribute("aria-pressed", "true");
   });
+  it("preserves template intent from query parameters and consumes it", async () => {
+    const celestial = { id: 50, name: "Khmer Celestial", code: "khmer-celestial", category: "TRADITIONAL", price: 0, supportedEventTypes: ["WEDDING"] };
+    templateCatalogService.list.mockResolvedValue([template, celestial]);
+    api.get.mockResolvedValue({ data: [{ template, styleMatch: false }, { template: celestial, styleMatch: true }] });
+    render(
+      <MemoryRouter initialEntries={["/app/events/new?template=khmer-celestial"]}>
+        <Routes>
+          <Route path="/app/events/new" element={<EventCreatePage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+    const selectedBtn = await screen.findByRole("button", { name: "Select Khmer Celestial" });
+    expect(selectedBtn).toHaveAttribute("aria-pressed", "true");
+  });
+  it("preserves transient template intent stored across login in sessionStorage", async () => {
+    const celestial = { id: 50, name: "Khmer Celestial", code: "khmer-celestial", category: "TRADITIONAL", price: 0, supportedEventTypes: ["WEDDING"] };
+    sessionStorage.setItem("koupreng.template_intent", JSON.stringify({ key: "khmer-celestial", timestamp: Date.now() }));
+    templateCatalogService.list.mockResolvedValue([template, celestial]);
+    api.get.mockResolvedValue({ data: [{ template, styleMatch: false }, { template: celestial, styleMatch: true }] });
+    show();
+    const selectedBtn = await screen.findByRole("button", { name: "Select Khmer Celestial" });
+    expect(selectedBtn).toHaveAttribute("aria-pressed", "true");
+    expect(sessionStorage.getItem("koupreng.template_intent")).toBeNull();
+  });
 });
 it("rejects invalid dates, times and unsafe map protocols even on partial drafts", () => {
   expect(validateEventForm({ title: "Draft", eventDate: "2026-02-30", eventTime: "25:01", googleMapUrl: "javascript:alert(1)" }, "OTHER", { draft: true })).toHaveProperty("eventDate");

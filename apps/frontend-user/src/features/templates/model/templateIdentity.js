@@ -1,10 +1,18 @@
+import { saveTemplateIntent } from "./templateIntent";
+
 // Explicit code/slug precedes numeric IDs, which may collide with static presets.
 export function templateIdentity(template) {
   return String(template?.code || template?.slug || template?.id || "").trim();
 }
 
-export function templateUsePath(identity, isAuthenticated) {
-  const path = `/templates/browse?template=${encodeURIComponent(identity)}`;
+export function templateUsePath(identity, isAuthenticated, targetPath = "/templates/browse") {
+  const cleanId = String(identity || "").trim();
+  if (cleanId) {
+    saveTemplateIntent(cleanId);
+  }
+  const basePath = targetPath.startsWith("/") ? targetPath : `/${targetPath}`;
+  const separator = basePath.includes("?") ? "&" : "?";
+  const path = `${basePath}${separator}template=${encodeURIComponent(cleanId)}`;
   return isAuthenticated ? path : `/login?next=${encodeURIComponent(path)}`;
 }
 
