@@ -10,12 +10,14 @@ import "./EventsFeature.css";
 import "./workspace/EventWorkspace.css";
 import { backendEventId, eventPath, EVENT_MODULES } from "./workspace/eventRoutes";
 import { useLanguageStore } from "@/stores/useLanguageStore";
+import { EVENT_TYPES } from "./onboarding/eventFields";
 
 export function EventsFeature() {
     const navigate = useNavigate();
     const en = useLanguageStore(s => s.lang) === "en";
     const [search, setSearch] = useState("");
     const [status, setStatus] = useState("");
+    const [eventType, setEventType] = useState("");
     const [sort, setSort] = useState("newest");
     const [page, setPage] = useState(0);
     const location = useLocation();
@@ -52,7 +54,9 @@ export function EventsFeature() {
         navigate(id ? eventPath(id, "invitation") : `/dashboard/invitations/${draft.id}/edit`);
     };
 
+    const eventTypes = [...new Set(drafts.map(draft => draft.eventType).filter(Boolean))];
     const filtered = drafts.filter(draft => (!status || (draft.status || "DRAFT") === status)
+      && (!eventType || draft.eventType === eventType)
       && [draft.title, draft.venueName, draft.groomName, draft.brideName].filter(Boolean).join(" ").toLocaleLowerCase().includes(search.toLocaleLowerCase()))
       .sort((a, b) => sort === "title" ? String(a.title || "").localeCompare(String(b.title || ""))
         : sort === "date" ? String(a.eventDate || "9999").localeCompare(String(b.eventDate || "9999"))
@@ -67,8 +71,8 @@ export function EventsFeature() {
             <header className="events-page-header">
                 <div>
                     <span>{t("brandKicker") || `${tDash("brand") || "Koupreng"} ${en ? "invitations" : "ធៀបអញ្ជើញ"}`}</span>
-                    <h1>{t("title") || (en ? "My Events" : "កម្មវិធីរបស់ខ្ញុំ")}</h1>
-                    <p>{t("subtitle") || (en ? "Manage your weddings, invitations, guest lists, and digital tickets in one place." : "គ្រប់គ្រងកម្មវិធី ធៀបការ បញ្ជីភ្ញៀវ និងកាតអញ្ជើញឌីជីថលរបស់អ្នកនៅកន្លែងតែមួយ។")}</p>
+                    <h1>{en ? "My Events" : "កម្មវិធីរបស់ខ្ញុំ"}</h1>
+                    <p>{en ? "Your invitations, guests and event plans, together in one place." : "គ្រប់គ្រងកម្មវិធី ធៀបការ បញ្ជីភ្ញៀវ និងកាតអញ្ជើញឌីជីថលរបស់អ្នកនៅកន្លែងតែមួយ។"}</p>
                 </div>
                 <Link to="/app/events/new" state={{ from: "/dashboard/events" }} className="events-create-btn">
                     + {createBtnText}
@@ -101,6 +105,13 @@ export function EventsFeature() {
                     <option value="DRAFT">{en ? "Draft" : "ព្រាង"}</option>
                     <option value="PUBLISHED">{en ? "Published" : "បានផ្សាយ"}</option>
                     <option value="UNPUBLISHED">{en ? "Unpublished" : "ផ្អាកផ្សាយ"}</option>
+                </select>
+              </label>
+              <label>
+                {en ? "Event type" : "ប្រភេទកម្មវិធី"}
+                <select aria-label={en ? "Event type" : "ប្រភេទកម្មវិធី"} value={eventType} onChange={e => { setEventType(e.target.value); setPage(0); }}>
+                    <option value="">{en ? "All event types" : "គ្រប់ប្រភេទកម្មវិធី"}</option>
+                    {eventTypes.map(type => <option key={type} value={type}>{EVENT_TYPES.find(item => item[0] === type)?.[en ? 2 : 1] || type}</option>)}
                 </select>
               </label>
               <label>

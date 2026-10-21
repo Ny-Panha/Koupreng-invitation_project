@@ -58,7 +58,7 @@ export function EventCard({
   }
 
   const template = getTemplateById(
-    draft?.templateId || draft?.templateCode || designTemplateId || draft?.presetId
+    draft?.templateCode || draft?.templateId || designTemplateId || draft?.presetId
   );
 
   const coverImage =
@@ -75,7 +75,7 @@ export function EventCard({
     template?.defaultImage ||
     template?.phoneCoverImage ||
     template?.mainImage ||
-    "/facebook/all/03-card/cover-card.jpg";
+    "/templates/event-essential.svg";
 
   // Clearly separate event title from template style/name
   const title =
@@ -169,7 +169,7 @@ export function EventCard({
         </h2>
 
         {/* Couple Names */}
-        {coupleText && (
+        {coupleText && coupleText !== title && (
           <div className="event-card-couple">
             <Heart size={13} className="event-card-couple-icon" aria-hidden="true" />
             <span>{coupleText}</span>
@@ -189,7 +189,7 @@ export function EventCard({
         {venueText && (
           <div className="event-card-venue">
             <MapPin size={14} aria-hidden="true" />
-            <span className="truncate">{venueText}</span>
+            <span className="truncate" title={venueText}>{venueText}</span>
           </div>
         )}
 
@@ -212,7 +212,7 @@ export function EventCard({
             }}
           >
             <LayoutDashboard size={15} aria-hidden="true" />
-            <span>{(t && t("dashboardBtn")) || (en ? "Manage Event" : "ផ្ទាំងគ្រប់គ្រង")}</span>
+            <span>{en ? "Manage event" : "គ្រប់គ្រងកម្មវិធី"}</span>
           </button>
 
           <button
