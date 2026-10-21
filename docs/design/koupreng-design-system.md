@@ -59,3 +59,14 @@ Workspace transitions use `--ws-motion: 160ms`; reduced-motion preferences disab
 At 320/375/390/430/768/1024/1440/1920 px, check both root geometry and actual essential controls. Guest/delivery data becomes readable mobile rows/cards, with row actions still reachable. Complex legacy tables may keep a named horizontal scroll region; this is distinct from whole-page overflow. Reserve bottom room for the support widget and verify dialogs with the on-screen keyboard on physical devices.
 
 Automated browser and keyboard evidence is recorded in the QA report. This document does not assert assistive-technology certification or native Safari/device verification.
+
+
+## Response and financial operations
+
+RSVP uses the same workspace heading and surface roles, with a four-card summary that becomes two columns on phones. The native wishes button exposes its selected state. Below 700px each response is a labeled card with the guest, response, party size, date, wish and reachable edit/delete actions. Filtered empty results provide a clear-filter action. A saved mutation and a failed list refresh remain distinct states.
+
+Budget and gifts use wrapping page headers and compact currency summaries. USD and KHR stay explicit; no implicit exchange or combined currency balance is introduced. Empty ledgers lead with guidance and one record-creation entry point. On narrow screens decorative summary icons yield room to names and amounts. Gift entry labels stack above controls, while existing records remain readable cards.
+
+Use the shared `Modal` for expense and report editing/preview. It isolates background content, restores the opener, and skips descendants of hidden sections in its Tab loop. Keep save errors inside the dialog and retain input until the server confirms success. Search controls expose the searchbox role and a localized clear action where supplied. Shared empty states prefer workspace gold/cream tokens when within a workspace, preserving their existing defaults elsewhere.
+
+Report preview uses the same dialog, with keyboard-accessible zoom/print/exit controls. Printed A4 output clears screen zoom and application navigation geometry. Currency totals and report calculations remain owned by the existing model and server contracts.

@@ -51,7 +51,7 @@ These are real browser renders using declared browser contract responses, not li
 
 No production backend logic, pricing, payment reconciliation, RBAC, event ownership, migration or invitation template renderer was changed. The template engine and trusted preview messaging remain in use. Publication, guest mutation and saving require service acknowledgements. Currency display retains separate USD/KHR amounts.
 
-Release gates remain: disposable MySQL fresh/upgrade verification including V37-V39; environment-gated integration tests; configured ABA/Telegram/email/social providers; physical Safari/camera/native sharing and keyboard behavior; human Khmer copy/assistive-technology review; deferred collaboration features. The pre-existing missing golden-template `cover-bg.svg` asset must also be resolved with the template owner's intended artwork; it is not replaced with unrelated art.
+Release gates remain: disposable MySQL fresh/upgrade verification including V37-V39; environment-gated integration tests; configured ABA/Telegram/email/social providers; physical Safari/camera/native sharing and keyboard behavior; human Khmer copy/assistive-technology review; deferred collaboration features. The missing golden-template artwork was subsequently recovered exactly from local Git history; see the continuation below.
 
 See the [design system](../design/koupreng-design-system.md) for tokens/component ownership and the [verification report](../qa/koupreng-visual-verification.md) for current results, reproduction instructions and known limitations.
 
@@ -78,3 +78,25 @@ Paths below are relative to `apps/frontend-user/` unless noted.
 | `eslint.config.js`, repository `scripts/qa/capture-ux-overhaul.mjs` | Ignore generated result traversal and reproduce route screenshots/measurements with provenance. |
 
 No new runtime dependency was introduced. Existing lazy page/template loading remains intact. Performance reporting is limited to observed build size/time; native browser/provider performance was not inferred from fixture tests.
+
+
+## Operations continuation — 21 October 2026
+
+The working tree was clean at `6d1a0dbe` on the same feature branch. A new browser audit captured RSVP, gifts, budget and reports before editing. The active budget route uses `ExpensesList`, rather than the older, unused `BudgetPage`; changes target the active route.
+
+| Finding | Root cause | Implemented correction |
+|---|---|---|
+| RSVP stayed bilingual in English mode; editing controls were English-only in Khmer mode. | Static strings across page/table/editor/wishes components. | Existing message dictionary extended with `rsvp` and `reports`; localized response statuses, filters, headings, actions and dates. |
+| Response management required horizontal table scrolling on phones. | Desktop table composition at all widths. | Readable response cards at 700px and below; desktop table retained, native wishes toggle and 44px edit/delete controls. |
+| Expense editor allowed focus outside its overlay; failed-save feedback appeared behind it. | Separate nonsemantic overlay, without shared focus isolation. | Shared dialog, localized close control, focus containment/recovery, busy-state protection and error feedback beside retained fields. |
+| Print preview included hidden export buttons in its focus loop. | Shared dialog checked only a control's own display style. | Ancestor visibility/inert/disabled checks; regression tests cover forward/reverse Tab through visible controls. |
+| A4 print output could retain screen zoom or empty application geometry. | Preview transformations and application containers participated in print layout. | Print-specific shell isolation and sizing; zoom cleared for output; desktop/mobile PDFs both contain two pages for the same fixture. |
+| Budget/gift header actions squeezed Khmer headings into narrow columns. | Header child used zero flex basis beside an unsized action. | Content has an explicit wrapping basis; actions move below the heading on phones. |
+| Mixed-currency summary cards clipped at 320px despite the original control check passing. | Fixed icon/text intrinsic widths expanded summary tracks. | Flexible tracks and compact summaries; decorative icons yield space at small widths. Geometry checks now include summary cards and strong text. |
+| Gift entry showed `addItemBtn`; KHR expense controls displayed dollar-only labels. | Missing local keys and hardcoded currency suffixes. | Added real translated gift actions, localized Cash/currency/date labels; explicit selected currency remains authoritative. |
+| Deleting the last event on a later page left the collection blank. | Pagination index outlived the reduced collection. | Clamp the displayed page to the available collection; navigate from the clamped index. |
+| QR image failure printed a private QR payload as its fallback. | Payload used as placeholder text. | Human-readable unavailable state with actual reload; token-bearing links use a readable action label. Authorized URL/download behavior remains unchanged. |
+| Ticket loading, leave warnings and media labels still mixed languages. | Incomplete state/localization coverage. | Localized loading skeleton/error recovery, leave confirmation and upload feedback. |
+| Golden cover SVGs were missing although their catalog/CSS paths remained. | Original assets deleted in `2ee721af`. | Restore the two original SVGs byte-for-byte from `2ba8578f`; keep the current Canva renderer mapping. No replacement art or template rewrite. |
+
+Comparable captures are in `operations-before/` and `operations-after/`. Populated records are covered separately in `operations-populated/` at all eight requested widths and both languages. They are synthetic browser DTOs, not live customer/provider evidence. See the [QA report](../qa/koupreng-visual-verification.md) and [engineering/design report](koupreng-premium-ux-final-report.md).

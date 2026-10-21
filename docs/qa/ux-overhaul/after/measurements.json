@@ -62,45 +62,6 @@
     "failedRequests": []
   },
   {
-    "path": "/app/events/101/tickets/design",
-    "lang": "km",
-    "width": 390,
-    "screenshot": "docs/qa/ux-overhaul/after/ticket-designer-km-390.png",
-    "metrics": {
-      "width": 390,
-      "documentWidth": 390,
-      "heading": [
-        "រចនាកាតអញ្ជើញ",
-        "មើលជាមុន"
-      ],
-      "clipped": [],
-      "scrollRegionControls": 0,
-      "bodyHeight": 2839
-    },
-    "errors": [],
-    "consoleErrors": [],
-    "failedRequests": []
-  },
-  {
-    "path": "/app/events/101/guests",
-    "lang": "km",
-    "width": 390,
-    "screenshot": "docs/qa/ux-overhaul/after/guests-km-390.png",
-    "metrics": {
-      "width": 390,
-      "documentWidth": 390,
-      "heading": [
-        "គ្រប់គ្រងភ្ញៀវកិត្តិយស"
-      ],
-      "clipped": [],
-      "scrollRegionControls": 0,
-      "bodyHeight": 1751
-    },
-    "errors": [],
-    "consoleErrors": [],
-    "failedRequests": []
-  },
-  {
     "path": "/app/events/101/delivery",
     "lang": "km",
     "width": 390,
@@ -117,25 +78,6 @@
       "clipped": [],
       "scrollRegionControls": 0,
       "bodyHeight": 1950
-    },
-    "errors": [],
-    "consoleErrors": [],
-    "failedRequests": []
-  },
-  {
-    "path": "/app/events/101/qr",
-    "lang": "km",
-    "width": 390,
-    "screenshot": "docs/qa/ux-overhaul/after/qr-page-km-390.png",
-    "metrics": {
-      "width": 390,
-      "documentWidth": 390,
-      "heading": [
-        "QR Code សម្រាប់កម្មវិធី"
-      ],
-      "clipped": [],
-      "scrollRegionControls": 0,
-      "bodyHeight": 1378
     },
     "errors": [],
     "consoleErrors": [],
@@ -223,45 +165,6 @@
     "failedRequests": []
   },
   {
-    "path": "/app/events/101/tickets/design",
-    "lang": "km",
-    "width": 1440,
-    "screenshot": "docs/qa/ux-overhaul/after/ticket-designer-km-1440.png",
-    "metrics": {
-      "width": 1440,
-      "documentWidth": 1440,
-      "heading": [
-        "រចនាកាតអញ្ជើញ",
-        "មើលជាមុន"
-      ],
-      "clipped": [],
-      "scrollRegionControls": 0,
-      "bodyHeight": 1744
-    },
-    "errors": [],
-    "consoleErrors": [],
-    "failedRequests": []
-  },
-  {
-    "path": "/app/events/101/guests",
-    "lang": "km",
-    "width": 1440,
-    "screenshot": "docs/qa/ux-overhaul/after/guests-km-1440.png",
-    "metrics": {
-      "width": 1440,
-      "documentWidth": 1440,
-      "heading": [
-        "គ្រប់គ្រងភ្ញៀវកិត្តិយស"
-      ],
-      "clipped": [],
-      "scrollRegionControls": 0,
-      "bodyHeight": 1355
-    },
-    "errors": [],
-    "consoleErrors": [],
-    "failedRequests": []
-  },
-  {
     "path": "/app/events/101/delivery",
     "lang": "km",
     "width": 1440,
@@ -278,25 +181,6 @@
       "clipped": [],
       "scrollRegionControls": 0,
       "bodyHeight": 1464
-    },
-    "errors": [],
-    "consoleErrors": [],
-    "failedRequests": []
-  },
-  {
-    "path": "/app/events/101/qr",
-    "lang": "km",
-    "width": 1440,
-    "screenshot": "docs/qa/ux-overhaul/after/qr-page-km-1440.png",
-    "metrics": {
-      "width": 1440,
-      "documentWidth": 1440,
-      "heading": [
-        "QR Code សម្រាប់កម្មវិធី"
-      ],
-      "clipped": [],
-      "scrollRegionControls": 0,
-      "bodyHeight": 1327
     },
     "errors": [],
     "consoleErrors": [],
@@ -384,45 +268,6 @@
     "failedRequests": []
   },
   {
-    "path": "/app/events/101/tickets/design",
-    "lang": "en",
-    "width": 390,
-    "screenshot": "docs/qa/ux-overhaul/after/ticket-designer-en-390.png",
-    "metrics": {
-      "width": 390,
-      "documentWidth": 390,
-      "heading": [
-        "Ticket designer",
-        "Live preview"
-      ],
-      "clipped": [],
-      "scrollRegionControls": 0,
-      "bodyHeight": 2839
-    },
-    "errors": [],
-    "consoleErrors": [],
-    "failedRequests": []
-  },
-  {
-    "path": "/app/events/101/guests",
-    "lang": "en",
-    "width": 390,
-    "screenshot": "docs/qa/ux-overhaul/after/guests-en-390.png",
-    "metrics": {
-      "width": 390,
-      "documentWidth": 390,
-      "heading": [
-        "Honored Guest Management"
-      ],
-      "clipped": [],
-      "scrollRegionControls": 0,
-      "bodyHeight": 1786
-    },
-    "errors": [],
-    "consoleErrors": [],
-    "failedRequests": []
-  },
-  {
     "path": "/app/events/101/delivery",
     "lang": "en",
     "width": 390,
@@ -439,25 +284,6 @@
       "clipped": [],
       "scrollRegionControls": 0,
       "bodyHeight": 1948
-    },
-    "errors": [],
-    "consoleErrors": [],
-    "failedRequests": []
-  },
-  {
-    "path": "/app/events/101/qr",
-    "lang": "en",
-    "width": 390,
-    "screenshot": "docs/qa/ux-overhaul/after/qr-page-en-390.png",
-    "metrics": {
-      "width": 390,
-      "documentWidth": 390,
-      "heading": [
-        "Event Invitation QR Code"
-      ],
-      "clipped": [],
-      "scrollRegionControls": 0,
-      "bodyHeight": 1397
     },
     "errors": [],
     "consoleErrors": [],
@@ -545,45 +371,6 @@
     "failedRequests": []
   },
   {
-    "path": "/app/events/101/tickets/design",
-    "lang": "en",
-    "width": 1440,
-    "screenshot": "docs/qa/ux-overhaul/after/ticket-designer-en-1440.png",
-    "metrics": {
-      "width": 1440,
-      "documentWidth": 1440,
-      "heading": [
-        "Ticket designer",
-        "Live preview"
-      ],
-      "clipped": [],
-      "scrollRegionControls": 0,
-      "bodyHeight": 1744
-    },
-    "errors": [],
-    "consoleErrors": [],
-    "failedRequests": []
-  },
-  {
-    "path": "/app/events/101/guests",
-    "lang": "en",
-    "width": 1440,
-    "screenshot": "docs/qa/ux-overhaul/after/guests-en-1440.png",
-    "metrics": {
-      "width": 1440,
-      "documentWidth": 1440,
-      "heading": [
-        "Honored Guest Management"
-      ],
-      "clipped": [],
-      "scrollRegionControls": 0,
-      "bodyHeight": 1355
-    },
-    "errors": [],
-    "consoleErrors": [],
-    "failedRequests": []
-  },
-  {
     "path": "/app/events/101/delivery",
     "lang": "en",
     "width": 1440,
@@ -600,6 +387,162 @@
       "clipped": [],
       "scrollRegionControls": 0,
       "bodyHeight": 1491
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/wishes",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/after/wishes-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Wishes from your guests"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1327
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/tickets/design",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/after/ticket-designer-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "រចនាកាតអញ្ជើញ",
+        "មើលជាមុន"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 2839
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/qr",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/after/qr-page-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "QR Code សម្រាប់កម្មវិធី"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1378
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/tickets/design",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/after/ticket-designer-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "រចនាកាតអញ្ជើញ",
+        "មើលជាមុន"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1744
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/qr",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/after/qr-page-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "QR Code សម្រាប់កម្មវិធី"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1327
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/tickets/design",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/after/ticket-designer-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Ticket designer",
+        "Live preview"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 2839
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/qr",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/after/qr-page-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Event Invitation QR Code"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1397
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/tickets/design",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/after/ticket-designer-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Ticket designer",
+        "Live preview"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1744
     },
     "errors": [],
     "consoleErrors": [],
@@ -625,19 +568,76 @@
     "failedRequests": []
   },
   {
-    "path": "/app/events/101/wishes",
-    "lang": "en",
+    "path": "/app/events/101/guests",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/after/guests-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "គ្រប់គ្រងភ្ញៀវកិត្តិយស"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1801
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/guests",
+    "lang": "km",
     "width": 1440,
-    "screenshot": "docs/qa/ux-overhaul/after/wishes-en-1440.png",
+    "screenshot": "docs/qa/ux-overhaul/after/guests-km-1440.png",
     "metrics": {
       "width": 1440,
       "documentWidth": 1440,
       "heading": [
-        "Wishes from your guests"
+        "គ្រប់គ្រងភ្ញៀវកិត្តិយស"
       ],
       "clipped": [],
       "scrollRegionControls": 0,
-      "bodyHeight": 1327
+      "bodyHeight": 1355
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/guests",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/after/guests-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Honored Guest Management"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1786
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/guests",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/after/guests-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Honored Guest Management"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1355
     },
     "errors": [],
     "consoleErrors": [],

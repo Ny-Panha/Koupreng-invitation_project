@@ -1,0 +1,318 @@
+[
+  {
+    "path": "/app/events/101/rsvp",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/operations-before/app-events-101-rsvp-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "គ្រប់គ្រងការឆ្លើយតប (RSVPs)"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1997
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/gifts",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/operations-before/app-events-101-gifts-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "កត់ត្រាចំណងដៃមង្គលការ"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1818
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/budget",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/operations-before/app-events-101-budget-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "គម្រោងថវិកា & កត់ត្រាចំណាយ"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1786
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/reports",
+    "lang": "km",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/operations-before/app-events-101-reports-km-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "របាយការណ៍សង្ខេបចំណូល និងចំណាយកម្មវិធី",
+        "Guest delivery and attendance reports",
+        "តារាងអំណោយ និងចំណូលផ្សេងៗ",
+        "តារាងចំណាយ"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 3827
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/rsvp",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/operations-before/app-events-101-rsvp-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "គ្រប់គ្រងការឆ្លើយតប (RSVPs)"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1353
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/gifts",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/operations-before/app-events-101-gifts-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "កត់ត្រាចំណងដៃមង្គលការ"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1327
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/budget",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/operations-before/app-events-101-budget-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "គម្រោងថវិកា & កត់ត្រាចំណាយ"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1334
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/reports",
+    "lang": "km",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/operations-before/app-events-101-reports-km-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "របាយការណ៍សង្ខេបចំណូល និងចំណាយកម្មវិធី",
+        "Guest delivery and attendance reports",
+        "តារាងអំណោយ និងចំណូលផ្សេងៗ",
+        "តារាងចំណាយ"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 2493
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/rsvp",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/operations-before/app-events-101-rsvp-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "គ្រប់គ្រងការឆ្លើយតប (RSVPs)"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1997
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/gifts",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/operations-before/app-events-101-gifts-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Wedding Gift Records"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1920
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/budget",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/operations-before/app-events-101-budget-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "Budget Planning & Expenses"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1807
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/reports",
+    "lang": "en",
+    "width": 390,
+    "screenshot": "docs/qa/ux-overhaul/operations-before/app-events-101-reports-en-390.png",
+    "metrics": {
+      "width": 390,
+      "documentWidth": 390,
+      "heading": [
+        "របាយការណ៍សង្ខេបចំណូល និងចំណាយកម្មវិធី",
+        "Guest delivery and attendance reports",
+        "តារាងអំណោយ និងចំណូលផ្សេងៗ",
+        "តារាងចំណាយ"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 3827
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/rsvp",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/operations-before/app-events-101-rsvp-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "គ្រប់គ្រងការឆ្លើយតប (RSVPs)"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1353
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/gifts",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/operations-before/app-events-101-gifts-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Wedding Gift Records"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1327
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/budget",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/operations-before/app-events-101-budget-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "Budget Planning & Expenses"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 1334
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "path": "/app/events/101/reports",
+    "lang": "en",
+    "width": 1440,
+    "screenshot": "docs/qa/ux-overhaul/operations-before/app-events-101-reports-en-1440.png",
+    "metrics": {
+      "width": 1440,
+      "documentWidth": 1440,
+      "heading": [
+        "របាយការណ៍សង្ខេបចំណូល និងចំណាយកម្មវិធី",
+        "Guest delivery and attendance reports",
+        "តារាងអំណោយ និងចំណូលផ្សេងៗ",
+        "តារាងចំណាយ"
+      ],
+      "clipped": [],
+      "scrollRegionControls": 0,
+      "bodyHeight": 2493
+    },
+    "errors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  }
+]

@@ -1,6 +1,7 @@
 import { chromium } from "../../apps/frontend-user/node_modules/@playwright/test/index.mjs";
 import { installOverhaulFixtures } from "../../apps/frontend-user/tests/e2e/support/overhaulFixtures.js";
 import { fixtures as installStudioFixtures } from "../../apps/frontend-user/tests/e2e/support/studioFixtures.js";
+import { installOperationsFixtures } from "../../apps/frontend-user/tests/e2e/support/operationsFixtures.js";
 import fs from "node:fs/promises";
 import process from "node:process";
 
@@ -55,7 +56,7 @@ for (const vp of viewports) {
   page.on("pageerror", error => errors.push(error.message));
   page.on("console", message => { if (message.type() === "error") consoleErrors.push(message.text()); });
   page.on("requestfailed", request => failedRequests.push({ path: new URL(request.url()).pathname, error: request.failure()?.errorText }));
-  await (route.studio ? installStudioFixtures(page, vp.lang) : installOverhaulFixtures(page, vp.lang));
+  await (route.studio ? installStudioFixtures(page, vp.lang) : process.env.UX_OPERATIONS ? installOperationsFixtures(page, vp.lang) : installOverhaulFixtures(page, vp.lang));
 
     try {
       await page.goto(`${base}${route.path}`, { waitUntil: "networkidle", timeout: 25000 });
@@ -66,7 +67,7 @@ for (const vp of viewports) {
         const visible = element => element.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true }) && !element.closest("[inert]") && element.getBoundingClientRect().width > 0;
         const outside = element => { const r = element.getBoundingClientRect(); return r.right > innerWidth + 2 || r.left < -2; };
         const scrollRegion = ".k-responsive-table-container, .guest-table-wrap, .rsvp-table-wrapper, .tb-categories, .studio-preview-viewport";
-        const outsideControls = [...document.querySelectorAll("input,select,textarea,button,h1,h2")].filter(visible).filter(outside);
+        const outsideControls = [...document.querySelectorAll("input,select,textarea,button,h1,h2,strong,.exp-sum-card,.wg-sum-card")].filter(visible).filter(outside);
         const clipped = outsideControls.filter(element => !element.closest(scrollRegion));
         return { width: innerWidth, documentWidth: document.documentElement.scrollWidth, heading: [...document.querySelectorAll("h1,h2")].filter(visible).slice(0, 4).map(element => element.textContent), clipped: clipped.slice(0, 12).map(element => ({ tag: element.tagName, class: element.className, text: element.textContent.slice(0, 80) })), scrollRegionControls: outsideControls.length - clipped.length, bodyHeight: document.body.scrollHeight };
       });
@@ -81,6 +82,13 @@ for (const vp of viewports) {
 }
 
 await browser.close();
-await fs.writeFile(`${targetDir}/measurements.json`, JSON.stringify(results, null, 2));
+let retained = [];
+if (process.env.UX_MERGE) {
+  try { retained = JSON.parse(await fs.readFile(`${targetDir}/measurements.json`, "utf8")); }
+  catch (error) { if (error.code !== "ENOENT") throw error; }
+}
+const key = result => `${result.path}:${result.lang}:${result.width}`;
+const replaced = new Set(results.map(key));
+await fs.writeFile(`${targetDir}/measurements.json`, JSON.stringify([...retained.filter(result => !replaced.has(key(result))), ...results], null, 2));
 if (results.some(result => result.error || result.errors.length)) process.exitCode = 1;
 console.log("Finished all visual overhaul QA captures.");
