@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="1080" viewBox="0 0 720 1080" role="img" aria-label="Cover Khmer Golden Wedding preview">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#fffdf8"/>
+      <stop offset="50%" stop-color="#fff2d1"/>
+      <stop offset="100%" stop-color="#e9c87d"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#fff0ab"/>
+      <stop offset="45%" stop-color="#c89b3c"/>
+      <stop offset="100%" stop-color="#7b4c19"/>
+    </linearGradient>
+    <pattern id="grain" width="64" height="64" patternUnits="userSpaceOnUse">
+      <circle cx="9" cy="12" r="1" fill="#8a5a20" opacity=".1"/>
+      <circle cx="51" cy="34" r="1" fill="#ffffff" opacity=".38"/>
+      <path d="M0 32H64M32 0V64" stroke="#7b4c19" stroke-opacity=".035"/>
+    </pattern>
+    <g id="floral">
+      <ellipse cx="0" cy="-21" rx="12" ry="24" fill="#fff4e8"/>
+      <ellipse cx="0" cy="21" rx="12" ry="24" fill="#fff4e8"/>
+      <ellipse cx="-21" cy="0" rx="24" ry="12" fill="#fff0dd"/>
+      <ellipse cx="21" cy="0" rx="24" ry="12" fill="#fff0dd"/>
+      <circle r="7" fill="#c89b3c"/>
+    </g>
+  </defs>
+  <rect width="720" height="1080" fill="url(#bg)"/>
+  <rect width="720" height="1080" fill="url(#grain)"/>
+  <ellipse cx="360" cy="450" rx="250" ry="360" fill="#fffdf7" opacity=".45"/>
+  <use href="#floral" x="82" y="100" transform="rotate(-18 82 100) scale(1.25)" opacity=".48"/>
+  <use href="#floral" x="640" y="140" transform="rotate(24 640 140) scale(1.1)" opacity=".42"/>
+  <use href="#floral" x="92" y="952" transform="rotate(16 92 952) scale(1.18)" opacity=".42"/>
+  <use href="#floral" x="628" y="916" transform="rotate(-24 628 916) scale(1.2)" opacity=".46"/>
+  <rect x="44" y="44" width="632" height="992" rx="196" fill="none" stroke="url(#gold)" stroke-width="2.8"/>
+  <rect x="68" y="68" width="584" height="944" rx="178" fill="none" stroke="#e7c66f" stroke-width="1.4" opacity=".84"/>
+  <circle cx="360" cy="270" r="67" fill="#fffdf7" stroke="url(#gold)" stroke-width="3"/>
+  <circle cx="360" cy="270" r="52" fill="none" stroke="#ddb963" stroke-width="1.3"/>
+  <text x="360" y="282" text-anchor="middle" fill="#8a5a20" font-family="Moul, Noto Serif Khmer, serif" font-size="34">វ &amp; ព</text>
+  <text x="360" y="390" text-anchor="middle" fill="#3b220f" font-family="Moul, Noto Serif Khmer, serif" font-size="31">សិរីមង្គលអាពាហ៍ពិពាហ៍</text>
+  <text x="360" y="438" text-anchor="middle" fill="#8a5a20" font-family="Noto Sans Khmer, Battambang, sans-serif" font-size="22">សូមគោរពអញ្ជើញ</text>
+  <rect x="113" y="474" width="494" height="112" rx="24" fill="#fffdf7" opacity=".84" stroke="url(#gold)" stroke-width="2"/>
+  <text x="360" y="518" text-anchor="middle" fill="#4b2c13" font-family="Noto Serif Khmer, Battambang, serif" font-size="20">ឯកឧត្តម លោកជំទាវ លោក លោកស្រី</text>
+  <text x="360" y="552" text-anchor="middle" fill="#4b2c13" font-family="Noto Serif Khmer, Battambang, serif" font-size="20">អ្នកនាង កញ្ញា</text>
+  <rect x="190" y="632" width="340" height="66" rx="33" fill="url(#gold)" stroke="#fff1bd" stroke-width="2"/>
+  <text x="360" y="674" text-anchor="middle" fill="#fffdf7" font-family="Noto Sans Khmer, Battambang, sans-serif" font-size="21">បើកសំបុត្រអញ្ជើញ</text>
+  <text x="360" y="780" text-anchor="middle" fill="#3b220f" font-family="Moul, Noto Serif Khmer, serif" font-size="25">វណ្ណដា &amp; ស្រីពេជ្រ</text>
+  <text x="360" y="826" text-anchor="middle" fill="#7b4c19" font-family="Noto Sans Khmer, Battambang, sans-serif" font-size="18">ថ្ងៃពុធ ទី២៨ ខែមករា ឆ្នាំ២០២៦</text>
+</svg>
