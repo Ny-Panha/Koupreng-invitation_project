@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useBeforeUnload, useNavigate, useSearchParams } from "react-router-dom";
 import { ArrowLeft, BriefcaseBusiness, Cake, Check, Heart, PartyPopper, Sparkles, Users } from "lucide-react";
 import { api } from "@/shared/api/httpClient";
 import { unwrap } from "@/shared/api/helpers";
 import { invitationService } from "@/features/invitations/api/invitationApi";
 import { templateCatalogService } from "@/features/templates/api/templateCatalogApi";
-import { getTemplateIntent, clearTemplateIntent, findMatchingTemplate } from "@/features/templates/model/templateIntent";
+import { getTemplateIntent, clearTemplateIntent, findMatchingTemplate, templateIntentFromParams } from "@/features/templates/model/templateIntent";
 import subscriptionService from "@/features/subscriptions/subscriptionService";
 import { paymentService } from "@/features/payments/paymentService";
 import { packagePrice } from "@/features/marketing/model/packagePresentation";
@@ -25,20 +25,33 @@ export default function EventCreatePage() {
   const copy = (kh, english) => en ? english : kh;
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const urlTemplateKey = searchParams.get("template") || searchParams.get("templateCode") || searchParams.get("templateId") || searchParams.get("tpl") || "";
-  const initialIntentKey = useRef(urlTemplateKey || getTemplateIntent() || "");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const hasUrlTemplate = ["template", "templateCode", "templateId", "tpl"].some(name => searchParams.has(name));
+  const urlTemplateKey = templateIntentFromParams(searchParams);
+  const [initialRequestedKey] = useState(() => hasUrlTemplate ? (urlTemplateKey || "") : (getTemplateIntent() || ""));
+  const initialIntentKey = useRef(initialRequestedKey);
   const intentConsumed = useRef(false);
+  const intentTemplate = useRef(null);
+  const clearUrlIntent = useCallback(() => {
+    if (!hasUrlTemplate) return;
+    setSearchParams(current => {
+      const next = new URLSearchParams(current);
+      for (const name of ["template", "templateCode", "templateId", "tpl"]) next.delete(name);
+      return next;
+    }, { replace: true });
+  }, [hasUrlTemplate, setSearchParams]);
   const storageKey = `koupreng.onboarding.${user?.id}`;
   const [initial] = useState(() => { try { return JSON.parse(sessionStorage.getItem(storageKey)) || {}; } catch { return {}; } });
   const [type, setType] = useState(EVENT_TYPES.some(row => row[0] === initial.type) ? initial.type : "WEDDING");
   const [style, setStyle] = useState(initial.style || "");
   const [language, setLanguage] = useState(initial.language || (en ? "EN" : "KH"));
   const [price, setPrice] = useState(initial.price || "ALL");
-  const [templateId, setTemplateId] = useState(initial.templateId || initialIntentKey.current || "");
+  const [templateId, setTemplateId] = useState(initialRequestedKey || (hasUrlTemplate ? "" : initial.templateId) || "");
   const [form, setForm] = useState(initial.form || {});
   const [requestId] = useState(() => initial.requestId || crypto.randomUUID());
   const [catalog, setCatalog] = useState([]);
+  const [catalogLoaded, setCatalogLoaded] = useState(false);
+  const [intentNotice, setIntentNotice] = useState(hasUrlTemplate && !urlTemplateKey ? "invalid" : "");
   const [recommendations, setRecommendations] = useState([]);
   const [plan, setPlan] = useState(null);
   const [access, setAccess] = useState({});
@@ -55,6 +68,9 @@ export default function EventCreatePage() {
   const templateSection = useRef(null);
   const dirty = Object.values(form).some(value => !!value);
 
+  useEffect(() => {
+    if (hasUrlTemplate && !urlTemplateKey) { clearTemplateIntent(); clearUrlIntent(); }
+  }, [hasUrlTemplate, urlTemplateKey, clearUrlIntent]);
   useBeforeUnload(event => { if (dirty && !saved.current) { event.preventDefault(); event.returnValue = ""; } });
   useEffect(() => {
     try { sessionStorage.setItem(storageKey, JSON.stringify({ type, style, language, price, templateId, form, requestId })); setStorageError(false); }
@@ -62,7 +78,7 @@ export default function EventCreatePage() {
   }, [storageKey, type, style, language, price, templateId, form, requestId]);
   useEffect(() => {
     let active = true;
-    templateCatalogService.list().then(items => { if (active) setCatalog(items); }).catch(() => { /* Recommendations remain independently usable. */ });
+    templateCatalogService.list().then(items => { if (active) { setCatalog(items); setCatalogLoaded(true); } }).catch(() => { /* Recommendations remain independently usable. */ });
     subscriptionService.current().then(value => { if (active) setPlan(value); }).catch(() => { /* Do not infer a subscription from unavailable account data. */ });
     return () => { active = false; };
   }, []);
@@ -72,6 +88,12 @@ export default function EventCreatePage() {
     api.get("/v1/templates/recommendations", { skipAuth: true, params: { eventType: type, style: style || undefined, language, pricePreference: price } })
       .then(unwrap).then(items => {
         if (!active) return;
+        const preferred = intentTemplate.current;
+        if (preferred && preferred.supportedEventTypes?.includes(type)
+            && (!preferred.supportedLanguages?.length || preferred.supportedLanguages.includes(language))
+            && price === "ALL" && !items.some(row => String(row.template.id) === String(preferred.id))) {
+          items = [{ template: preferred, styleMatch: true }, ...items];
+        }
         setRecommendations(items);
         setTemplateId(current => {
           const target = current || (!intentConsumed.current ? initialIntentKey.current : "");
@@ -90,17 +112,31 @@ export default function EventCreatePage() {
     const match = findMatchingTemplate(all, initialIntentKey.current);
     if (match) {
       intentConsumed.current = true;
+      intentTemplate.current = match;
       clearTemplateIntent();
+      clearUrlIntent();
       setTemplateId(match.id);
+      setPrice("ALL");
+      setStyle("");
       if (Array.isArray(match.supportedEventTypes) && match.supportedEventTypes.length > 0 && !match.supportedEventTypes.includes(type)) {
         setType(match.supportedEventTypes[0]);
+      }
+      if (match.supportedLanguages?.length && !match.supportedLanguages.includes(language)) {
+        setLanguage(match.supportedLanguages[0]);
       }
       setRecommendations(current => {
         if (current.some(r => String(r.template?.id) === String(match.id))) return current;
         return [{ template: match, styleMatch: true }, ...current];
       });
+    } else if (catalogLoaded && !loading && !recommendationError) {
+      intentConsumed.current = true;
+      initialIntentKey.current = "";
+      setTemplateId("");
+      setIntentNotice("unavailable");
+      clearTemplateIntent();
+      clearUrlIntent();
     }
-  }, [catalog, recommendations, type]);
+  }, [catalog, recommendations, type, language, catalogLoaded, loading, recommendationError, clearUrlIntent]);
   useEffect(() => {
     let active = true;
     const premium = recommendations.map(row => row.template).filter(template => template.premium || Number(template.price) > 0);
@@ -114,10 +150,20 @@ export default function EventCreatePage() {
   const errors = Object.fromEntries(Object.entries(allErrors).filter(([key]) => submitted || touched[key]));
   const changeType = value => {
     intentConsumed.current = true;
+    intentTemplate.current = null;
     clearTemplateIntent();
+    clearUrlIntent();
     setType(value); setTemplateId(""); setStyle(""); setTouched({}); setSubmitted(null); setError("");
     // Preserve common details and translate participant fields without discarding prior entries.
     setForm(current => ({ ...current, hostName: current.hostName || current.groomName || "", partnerName: current.partnerName || current.brideName || "", groomName: current.groomName || current.hostName || "", brideName: current.brideName || current.partnerName || "" }));
+  };
+  const selectTemplate = id => {
+    intentConsumed.current = true;
+    intentTemplate.current = null;
+    clearTemplateIntent();
+    clearUrlIntent();
+    setIntentNotice("");
+    setTemplateId(id);
   };
   const save = async mode => {
     if (submitting.current) return;
@@ -165,19 +211,20 @@ export default function EventCreatePage() {
         })}</div></section>
         <section className="workspace-section" aria-labelledby="event-information-title"><div className="workspace-section-heading"><h2 id="event-information-title">{copy("ព័ត៌មានកម្មវិធី", "Event essentials")}</h2><span className="workspace-muted">{copy("* ត្រូវបំពេញសម្រាប់បង្កើតកម្មវិធី", "* Required to create")}</span></div><EventFields form={form} setForm={setForm} type={type} en={en} errors={errors} onBlur={key => setTouched(current => ({ ...current, [key]: true }))} draft={submitted === "draft"} /></section>
         <section className="workspace-section" aria-labelledby="event-preferences-title"><h2 id="event-preferences-title">{copy("រចនាប័ទ្ម និងភាសា", "Make it feel like your event")}</h2><div className="event-preferences">
-          <label>{copy("រចនាប័ទ្ម", "Design style")}<select value={style} onChange={event => setStyle(event.target.value)}><option value="">{copy("គ្រប់រចនាប័ទ្ម", "All available styles")}</option>{styles.map(value => <option key={value} value={value}>{STYLE_LABELS[value]?.[en ? 1 : 0] || value}</option>)}</select></label>
-          <label>{copy("ភាសាសំបុត្រអញ្ជើញ", "Invitation language")}<select value={language} onChange={event => setLanguage(event.target.value)}><option value="KH">ខ្មែរ</option><option value="EN">English</option><option value="BOTH">ខ្មែរ / English</option></select></label>
-          <label>{copy("តម្លៃគំរូ", "Template price")}<select value={price} onChange={event => setPrice(event.target.value)}><option value="ALL">{copy("គ្រប់តម្លៃ", "All prices")}</option><option value="FREE">{copy("ឥតគិតថ្លៃ", "Free")}</option><option value="PREMIUM">{copy("គំរូបង់ប្រាក់", "Premium")}</option></select></label>
+          <label>{copy("រចនាប័ទ្ម", "Design style")}<select value={style} onChange={event => { intentTemplate.current = null; setStyle(event.target.value); }}><option value="">{copy("គ្រប់រចនាប័ទ្ម", "All available styles")}</option>{styles.map(value => <option key={value} value={value}>{STYLE_LABELS[value]?.[en ? 1 : 0] || value}</option>)}</select></label>
+          <label>{copy("ភាសាសំបុត្រអញ្ជើញ", "Invitation language")}<select value={language} onChange={event => { intentTemplate.current = null; setLanguage(event.target.value); }}><option value="KH">ខ្មែរ</option><option value="EN">English</option><option value="BOTH">ខ្មែរ / English</option></select></label>
+          <label>{copy("តម្លៃគំរូ", "Template price")}<select value={price} onChange={event => { intentTemplate.current = null; setPrice(event.target.value); }}><option value="ALL">{copy("គ្រប់តម្លៃ", "All prices")}</option><option value="FREE">{copy("ឥតគិតថ្លៃ", "Free")}</option><option value="PREMIUM">{copy("គំរូបង់ប្រាក់", "Premium")}</option></select></label>
         </div></section>
         <section ref={templateSection} tabIndex={-1} className="workspace-section event-template-section" aria-labelledby="event-templates-title" aria-busy={loading}>
           <h2 id="event-templates-title">{copy("គំរូដែលសាកសមសម្រាប់កម្មវិធីរបស់អ្នក", "Invitations that fit")}</h2><p className="workspace-muted">{copy("គំរូទាំងនេះគាំទ្រប្រភេទកម្មវិធី និងភាសាដែលអ្នកជ្រើសរើស។", "These templates support your event type and invitation language.")}</p>
+          {intentNotice && <p className="workspace-notice" role="status">{copy("គំរូដែលបានជ្រើសរើសមិនអាចប្រើបានទេ។ សូមជ្រើសរើសគំរូដែលគាំទ្រកម្មវិធីរបស់អ្នក។", "The selected design is unavailable. Choose a compatible design below; your event details are retained.")}</p>}
           {loading ? <div className="event-template-loading" role="status">{copy("កំពុងស្វែងរកគំរូសមស្រប…", "Finding compatible invitations…")}<div className="event-template-skeleton" aria-hidden="true" /></div> : recommendationError ? <div className="workspace-notice" role="alert"><p>{recommendationError}</p><button className="workspace-button" type="button" onClick={() => setRetry(value => value + 1)}>{copy("ទាញយកម្ដងទៀត", "Retry templates")}</button></div> : <>
             {!recommendations.length && <div className="workspace-notice"><p>{copy("មិនមានគំរូគាំទ្រជម្រើសទាំងនេះទេ។ សូមប្ដូរភាសា ឬតម្លៃ។ អ្នកអាចរក្សាទុកព្រាងដោយមិនជ្រើសគំរូ។", "No templates support these preferences. Try another language or price filter, or save a draft without a template.")}</p><button className="workspace-button" type="button" onClick={() => { setStyle(""); setPrice("ALL"); }}>{copy("មើលគ្រប់តម្លៃ និងរចនាប័ទ្ម", "Show all prices and styles")}</button></div>}
             {!!recommendations.length && !recommendations.some(row => row.styleMatch) && <p className="workspace-notice">{copy("មិនមានរចនាប័ទ្មត្រូវគ្នាទេ។ គំរូជំនួសទាំងនេះគាំទ្រកម្មវិធី និងភាសារបស់អ្នក។", "No exact style match. These alternatives support your event and language.")}</p>}
             <div className="event-template-grid">{recommendations.map(({ template }) => <article className={`event-template-card ${String(templateId) === String(template.id) ? "is-selected" : ""}`} key={template.id}>
               <img src={template.thumbnailUrl || "/templates/event-essential.svg"} alt={template.name} loading="lazy" /><div className="event-template-content"><h3>{template.name}</h3><p>{STYLE_LABELS[template.category]?.[en ? 1 : 0] || template.category}</p><p>{template.premium || Number(template.price) > 0 ? `${packagePrice(template, en ? "en" : "km") || copy("តម្លៃមិនបានបញ្ជាក់", "Price not specified")} · Premium` : copy("ឥតគិតថ្លៃ", "Free")}</p>{(template.premium || Number(template.price) > 0) && <small>{copy("សិទ្ធិប្រើប្រាស់នឹងត្រូវពិនិត្យពេលរក្សាទុក។", "Access is verified when you save.")}</small>}
                 {access[template.id] === true && <small>{copy("មានសិទ្ធិប្រើប្រាស់", "Included in your access")}</small>}
-                <div className="event-template-actions"><a href={`/templates/${encodeURIComponent(template.code)}`} target="_blank" rel="noreferrer" aria-label={`${copy("មើលជាមុន", "Preview")} ${template.name} (${copy("ផ្ទាំងថ្មី", "new tab")})`}>{copy("មើលជាមុន", "Preview")}</a>{access[template.id] === false ? <a href={`/templates/${template.id}/checkout`} target="_blank" rel="noreferrer">{copy("ទិញសិទ្ធិ (ផ្ទាំងថ្មី)", "Get access (new tab)")}</a> : <button className="workspace-button" type="button" aria-pressed={String(templateId) === String(template.id)} aria-label={`${copy("ជ្រើសរើស", "Select")} ${template.name}`} onClick={() => setTemplateId(template.id)}>{String(templateId) === String(template.id) ? <><Check size={16} aria-hidden="true" />{copy("បានជ្រើសរើស", "Selected")}</> : copy("ជ្រើសរើស", "Select")}</button>}</div>
+                <div className="event-template-actions"><a href={`/templates/${encodeURIComponent(template.code)}`} target="_blank" rel="noreferrer" aria-label={`${copy("មើលជាមុន", "Preview")} ${template.name} (${copy("ផ្ទាំងថ្មី", "new tab")})`}>{copy("មើលជាមុន", "Preview")}</a>{access[template.id] === false ? <a href={`/templates/${template.id}/checkout`} target="_blank" rel="noreferrer">{copy("ទិញសិទ្ធិ (ផ្ទាំងថ្មី)", "Get access (new tab)")}</a> : <button className="workspace-button" type="button" aria-pressed={String(templateId) === String(template.id)} aria-label={`${copy("ជ្រើសរើស", "Select")} ${template.name}`} onClick={() => selectTemplate(template.id)}>{String(templateId) === String(template.id) ? <><Check size={16} aria-hidden="true" />{copy("បានជ្រើសរើស", "Selected")}</> : copy("ជ្រើសរើស", "Select")}</button>}</div>
               </div></article>)}</div>
           </>}
         </section>

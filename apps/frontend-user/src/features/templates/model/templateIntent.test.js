@@ -30,6 +30,20 @@ describe("templateIntent persistence and matching", () => {
   it("ignores corrupted JSON in sessionStorage", () => {
     sessionStorage.setItem("koupreng.template_intent", "{invalid json");
     expect(getTemplateIntent()).toBeNull();
+    expect(sessionStorage.getItem("koupreng.template_intent")).toBeNull();
+  });
+
+  it.each([Date.now() - 3 * 60 * 60 * 1000, Date.now() + 5 * 60 * 1000, undefined, "yesterday"])("invalidates stale, future or invalid timestamps: %s", timestamp => {
+    sessionStorage.setItem("koupreng.template_intent", JSON.stringify({ key: "khmer-celestial", timestamp }));
+    expect(getTemplateIntent()).toBeNull();
+    expect(sessionStorage.getItem("koupreng.template_intent")).toBeNull();
+  });
+
+  it("stores only a bounded identity, never destination instructions", () => {
+    expect(saveTemplateIntent("khmer-celestial&next=evil")).toBe(false);
+    expect(getTemplateIntent()).toBeNull();
+    saveTemplateIntent(" KHMER-CELESTIAL ");
+    expect(getTemplateIntent()).toBe("khmer-celestial");
   });
 
   it("finds matching template by code, slug, or ID case-insensitively", () => {

@@ -1,3 +1,5 @@
+import { templateIntentFromParams } from "../templates/model/templateIntent";
+
 const DEFAULT_DESTINATION = "/app/events";
 export function safeAuthRedirect(value) {
   if (typeof value !== "string" || !value.startsWith("/") || value.startsWith("//")
@@ -11,4 +13,16 @@ export function safeAuthRedirect(value) {
         || /^\/templates\/browse(?:\/[^/]+)?$/.test(path) || /^\/(?:create\/wedding|event)\/[^/]+(?:\/manage)?$/.test(path))) return DEFAULT_DESTINATION;
     return url.pathname + url.search + url.hash;
   } catch { return DEFAULT_DESTINATION; }
+}
+
+export function resolveAuthDestination(searchParams) {
+  const safe = safeAuthRedirect(searchParams.get("next") || searchParams.get("redirect"));
+  const direct = templateIntentFromParams(searchParams);
+  if (!direct) return safe;
+  const url = new URL(safe, "https://koupreng.invalid");
+  if (!["/app/events", "/app/events/new", "/templates/browse"].includes(url.pathname)) return safe;
+  if (url.pathname === "/app/events") url.pathname = "/app/events/new";
+  for (const alias of ["templateCode", "templateId", "tpl"]) url.searchParams.delete(alias);
+  url.searchParams.set("template", direct);
+  return url.pathname + url.search + url.hash;
 }

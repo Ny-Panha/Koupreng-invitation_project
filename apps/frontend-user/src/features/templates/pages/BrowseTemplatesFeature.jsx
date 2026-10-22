@@ -15,7 +15,7 @@ import { templateCatalogService } from "@/features/templates/api/templateCatalog
 import { paymentService } from "@/features/payments/paymentService";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
 import { SkeletonTable } from "@/shared/ui";
-import { templateIdentity, templatePriceLabel } from "../model/templateIdentity";
+import { templateIdentity, templatePriceLabel, templateUsePath } from "../model/templateIdentity";
 import "./BrowseTemplates.css";
 
 function formatTemplateDescription(description) {
@@ -176,7 +176,7 @@ export default function BrowseTemplatesFeature() {
       return;
     }
 
-    navigate(`/dashboard/invitations/design?templateId=${encodeURIComponent(template.id || templateIdentity(template))}`);
+    navigate(templateUsePath(templateIdentity(template), true));
   };
 
   const handlePreview = (template) => {

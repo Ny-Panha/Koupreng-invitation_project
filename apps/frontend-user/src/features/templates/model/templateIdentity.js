@@ -1,18 +1,22 @@
-import { saveTemplateIntent } from "./templateIntent";
+import { normalizeTemplateIntentKey } from "./templateIntent";
 
 // Explicit code/slug precedes numeric IDs, which may collide with static presets.
 export function templateIdentity(template) {
   return String(template?.code || template?.slug || template?.id || "").trim();
 }
 
-export function templateUsePath(identity, isAuthenticated, targetPath = "/templates/browse") {
-  const cleanId = String(identity || "").trim();
-  if (cleanId) {
-    saveTemplateIntent(cleanId);
+export function templateUsePath(identity, isAuthenticated, targetPath = "/app/events/new") {
+  // Building a link must never change a visitor's selection during React render.
+  const origin = "https://koupreng.invalid";
+  let target;
+  try { target = new URL(targetPath, origin); } catch { /* Use the supported creation entry. */ }
+  if (target?.origin !== origin || !["/app/events/new", "/templates/browse"].includes(target.pathname)) {
+    target = new URL("/app/events/new", origin);
   }
-  const basePath = targetPath.startsWith("/") ? targetPath : `/${targetPath}`;
-  const separator = basePath.includes("?") ? "&" : "?";
-  const path = `${basePath}${separator}template=${encodeURIComponent(cleanId)}`;
+  for (const alias of ["template", "templateCode", "templateId", "tpl"]) target.searchParams.delete(alias);
+  const cleanId = normalizeTemplateIntentKey(identity);
+  if (cleanId) target.searchParams.set("template", cleanId);
+  const path = target.pathname + target.search + target.hash;
   return isAuthenticated ? path : `/login?next=${encodeURIComponent(path)}`;
 }
 

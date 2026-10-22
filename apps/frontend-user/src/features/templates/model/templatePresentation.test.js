@@ -11,7 +11,7 @@ describe("public template identity and truthful access", () => {
     expect(localTemplateFor({ id: 2, code: "new-custom-design" })).toBeUndefined();
     const login = new URL(templateUsePath("silk-heritage", false), "https://example.test");
     expect(login.pathname).toBe("/login");
-    expect(login.searchParams.get("next")).toBe("/templates/browse?template=silk-heritage");
+    expect(login.searchParams.get("next")).toBe("/app/events/new?template=silk-heritage");
   });
   it("retains premium state without a price and labels local fallback as a demo", () => {
     expect(presentTemplate({ id: 4, code: "silk-heritage", premium: true }, "en")).toMatchObject({ isPremium: true, live: true });

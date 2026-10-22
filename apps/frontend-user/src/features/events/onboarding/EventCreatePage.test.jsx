@@ -19,8 +19,8 @@ vi.mock("@/features/auth/hooks/useAuth", () => ({ useAuth: () => ({ user: { id: 
 const template = { id: 30, name: "Event Essential", code: "event-essential", category: "MINIMALIST", thumbnailUrl: "/templates/event-essential.svg", price: 0, currency: "USD", supportedEventTypes: ["WEDDING", "ENGAGEMENT", "BIRTHDAY", "ANNIVERSARY", "CORPORATE", "OTHER"], supportedLanguages: ["KH", "EN", "BOTH"] };
 const recommendations = [{ template, styleMatch: true }];
 const fill = (name, value) => fireEvent.change(document.querySelector(`[name="${name}"]`), { target: { value } });
-function show() {
-  return render(<MemoryRouter initialEntries={["/app/events/new"]}><Routes><Route path="/app/events/new" element={<EventCreatePage />} /><Route path="/app/events/:eventId" element={<p>Exact saved workspace</p>} /></Routes></MemoryRouter>);
+function show(path = "/app/events/new") {
+  return render(<MemoryRouter initialEntries={[path]}><Routes><Route path="/app/events/new" element={<EventCreatePage />} /><Route path="/app/events/:eventId" element={<p>Exact saved workspace</p>} /></Routes></MemoryRouter>);
 }
 beforeEach(() => {
   vi.clearAllMocks(); sessionStorage.clear();
@@ -171,4 +171,42 @@ it("rejects invalid dates, times and unsafe map protocols even on partial drafts
   expect(validateEventForm({ title: "Draft", eventTime: "25:01" }, "OTHER", { draft: true })).toHaveProperty("eventTime");
   expect(validateEventForm({ title: "Draft", googleMapUrl: "javascript:alert(1)" }, "OTHER", { draft: true })).toHaveProperty("googleMapUrl");
   expect(validateEventForm({ title: "Draft" }, "OTHER", { draft: true })).toEqual({});
+});
+
+describe("explicit template intent precedence", () => {
+  const celestial = { ...template, id: 50, name: "Khmer Celestial", code: "khmer-celestial", supportedEventTypes: ["WEDDING"], supportedLanguages: ["KH"] };
+  it("prefers a fresh URL choice over stale draft/session and saves its actual catalog ID", async () => {
+    sessionStorage.setItem("koupreng.onboarding.7", JSON.stringify({ type: "BIRTHDAY", templateId: 30, price: "FREE", form: { title: "Retained details" } }));
+    sessionStorage.setItem("koupreng.template_intent", JSON.stringify({ key: "event-essential", timestamp: Date.now() }));
+    templateCatalogService.list.mockResolvedValue([template, celestial]);
+    show("/app/events/new?template=khmer-celestial");
+    await waitFor(() => expect(screen.getByRole("button", { name: "Select Khmer Celestial" })).toHaveAttribute("aria-pressed", "true"));
+    expect(screen.getByLabelText(/Event title/)).toHaveValue("Retained details");
+    expect(screen.getByRole("button", { name: "Wedding", exact: true })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByLabelText("Invitation language")).toHaveValue("KH");
+    expect(sessionStorage.getItem("koupreng.template_intent")).toBeNull();
+    fill("groomName", "Dara"); fill("brideName", "Sokha"); fill("eventDate", "2026-12-25"); fill("eventTime", "17:30"); fill("venueName", "Garden House");
+    fireEvent.click(screen.getByRole("button", { name: "Create event" }));
+    await screen.findByText("Exact saved workspace");
+    expect(invitationService.create.mock.calls[0][0]).toMatchObject({ templateId: 50, eventType: "WEDDING", languageMode: "KH" });
+    expect(invitationService.create.mock.calls[0][0]).not.toHaveProperty("hasAccess");
+  });
+  it("invalidates an unknown choice without selecting Event Essential", async () => {
+    show("/app/events/new?template=removed-design");
+    await screen.findByText(/The selected design is unavailable/);
+    expect(screen.getByRole("button", { name: "Select Event Essential" })).toHaveAttribute("aria-pressed", "false");
+    fill("title", "Partial draft without a substituted design");
+    fireEvent.click(screen.getByRole("button", { name: "Save draft" }));
+    await screen.findByText("Exact saved workspace");
+    expect(invitationService.create.mock.calls[0][0].templateId).toBeUndefined();
+  });
+  it("does not let a delayed catalog overwrite a newer manual selection", async () => {
+    let resolveCatalog;
+    templateCatalogService.list.mockImplementation(() => new Promise(resolve => { resolveCatalog = resolve; }));
+    show("/app/events/new?template=khmer-celestial");
+    fireEvent.click(await screen.findByRole("button", { name: "Select Event Essential" }));
+    await act(async () => resolveCatalog([template, celestial]));
+    expect(screen.getByRole("button", { name: "Select Event Essential" })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.queryByRole("button", { name: "Select Khmer Celestial" })).not.toBeInTheDocument();
+  });
 });
