@@ -332,6 +332,7 @@
 /* ── Event Featured Single-Card Layout ── */
 .events-featured-container {
     width: 100%;
+    max-width: 1040px;
     margin-bottom: 28px;
 }
 
@@ -349,13 +350,13 @@
 @media (min-width: 768px) {
     .event-card.event-card--featured {
         display: grid;
-        grid-template-columns: minmax(260px, .8fr) minmax(0, 1.4fr);
-        min-height: 290px;
+        grid-template-columns: 260px minmax(0, 1fr);
+        min-height: 260px;
     }
 
     .event-card--featured .event-card-img-wrap {
         height: 100%;
-        min-height: 340px;
+        min-height: 260px;
         border-radius: 0;
     }
     .event-card--featured .event-card-img { position: absolute; inset: 0; }

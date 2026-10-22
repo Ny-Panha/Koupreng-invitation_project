@@ -21,6 +21,13 @@
 .event-preferences { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 20px; }
 .event-template-section > p { margin: 8px 0 20px; }
 .event-template-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.event-preferences-disclosure summary { min-height: 44px; cursor: pointer; font-size: 17px; font-weight: 600; }
+.event-change-design { margin-bottom: 16px; }
+.event-template-grid--selected { grid-template-columns: minmax(0, 1fr); }
+.event-template-grid--selected .event-template-card { display: grid; grid-template-columns: 112px minmax(0, 1fr); align-items: start; }
+.event-template-grid--selected .event-template-card img { height: 168px; object-position: top; }
+.event-template-grid--selected .event-template-content { padding: 12px; }
+.event-template-grid--selected .event-template-actions { margin-top: 8px; gap: 8px; }
 .event-template-card { min-width: 0; border: 1px solid var(--ws-border); border-radius: 14px; overflow: hidden; }
 .event-template-card.is-selected { border: 2px solid var(--ws-gold); }
 .event-template-card img { display: block; width: 100%; height: 190px; object-fit: cover; background: #f9f4ea; }

@@ -53,6 +53,7 @@ export default function EventCreatePage() {
   const [catalogLoaded, setCatalogLoaded] = useState(false);
   const [intentNotice, setIntentNotice] = useState(hasUrlTemplate && !urlTemplateKey ? "invalid" : "");
   const [recommendations, setRecommendations] = useState([]);
+  const [browsingDesigns, setBrowsingDesigns] = useState(false);
   const [plan, setPlan] = useState(null);
   const [access, setAccess] = useState({});
   const [loading, setLoading] = useState(true);
@@ -164,6 +165,7 @@ export default function EventCreatePage() {
     clearUrlIntent();
     setIntentNotice("");
     setTemplateId(id);
+    setBrowsingDesigns(false);
   };
   const save = async mode => {
     if (submitting.current) return;
@@ -210,18 +212,19 @@ export default function EventCreatePage() {
           return <button type="button" className="event-type-option" key={value} aria-pressed={type === value} onClick={() => changeType(value)}><Icon size={24} aria-hidden="true" /><span>{en ? english : kh}</span>{type === value && <Check size={16} aria-hidden="true" />}</button>;
         })}</div></section>
         <section className="workspace-section" aria-labelledby="event-information-title"><div className="workspace-section-heading"><h2 id="event-information-title">{copy("ព័ត៌មានកម្មវិធី", "Event essentials")}</h2><span className="workspace-muted">{copy("* ត្រូវបំពេញសម្រាប់បង្កើតកម្មវិធី", "* Required to create")}</span></div><EventFields form={form} setForm={setForm} type={type} en={en} errors={errors} onBlur={key => setTouched(current => ({ ...current, [key]: true }))} draft={submitted === "draft"} /></section>
-        <section className="workspace-section" aria-labelledby="event-preferences-title"><h2 id="event-preferences-title">{copy("រចនាប័ទ្ម និងភាសា", "Make it feel like your event")}</h2><div className="event-preferences">
+        <details className="workspace-section event-preferences-disclosure"><summary>{copy("រចនាប័ទ្ម ភាសា និងតម្លៃគំរូ", "Design style, language and price preferences")}</summary><div className="event-preferences">
           <label>{copy("រចនាប័ទ្ម", "Design style")}<select value={style} onChange={event => { intentTemplate.current = null; setStyle(event.target.value); }}><option value="">{copy("គ្រប់រចនាប័ទ្ម", "All available styles")}</option>{styles.map(value => <option key={value} value={value}>{STYLE_LABELS[value]?.[en ? 1 : 0] || value}</option>)}</select></label>
           <label>{copy("ភាសាសំបុត្រអញ្ជើញ", "Invitation language")}<select value={language} onChange={event => { intentTemplate.current = null; setLanguage(event.target.value); }}><option value="KH">ខ្មែរ</option><option value="EN">English</option><option value="BOTH">ខ្មែរ / English</option></select></label>
           <label>{copy("តម្លៃគំរូ", "Template price")}<select value={price} onChange={event => { intentTemplate.current = null; setPrice(event.target.value); }}><option value="ALL">{copy("គ្រប់តម្លៃ", "All prices")}</option><option value="FREE">{copy("ឥតគិតថ្លៃ", "Free")}</option><option value="PREMIUM">{copy("គំរូបង់ប្រាក់", "Premium")}</option></select></label>
-        </div></section>
+        </div></details>
         <section ref={templateSection} tabIndex={-1} className="workspace-section event-template-section" aria-labelledby="event-templates-title" aria-busy={loading}>
           <h2 id="event-templates-title">{copy("គំរូដែលសាកសមសម្រាប់កម្មវិធីរបស់អ្នក", "Invitations that fit")}</h2><p className="workspace-muted">{copy("គំរូទាំងនេះគាំទ្រប្រភេទកម្មវិធី និងភាសាដែលអ្នកជ្រើសរើស។", "These templates support your event type and invitation language.")}</p>
           {intentNotice && <p className="workspace-notice" role="status">{copy("គំរូដែលបានជ្រើសរើសមិនអាចប្រើបានទេ។ សូមជ្រើសរើសគំរូដែលគាំទ្រកម្មវិធីរបស់អ្នក។", "The selected design is unavailable. Choose a compatible design below; your event details are retained.")}</p>}
           {loading ? <div className="event-template-loading" role="status">{copy("កំពុងស្វែងរកគំរូសមស្រប…", "Finding compatible invitations…")}<div className="event-template-skeleton" aria-hidden="true" /></div> : recommendationError ? <div className="workspace-notice" role="alert"><p>{recommendationError}</p><button className="workspace-button" type="button" onClick={() => setRetry(value => value + 1)}>{copy("ទាញយកម្ដងទៀត", "Retry templates")}</button></div> : <>
             {!recommendations.length && <div className="workspace-notice"><p>{copy("មិនមានគំរូគាំទ្រជម្រើសទាំងនេះទេ។ សូមប្ដូរភាសា ឬតម្លៃ។ អ្នកអាចរក្សាទុកព្រាងដោយមិនជ្រើសគំរូ។", "No templates support these preferences. Try another language or price filter, or save a draft without a template.")}</p><button className="workspace-button" type="button" onClick={() => { setStyle(""); setPrice("ALL"); }}>{copy("មើលគ្រប់តម្លៃ និងរចនាប័ទ្ម", "Show all prices and styles")}</button></div>}
             {!!recommendations.length && !recommendations.some(row => row.styleMatch) && <p className="workspace-notice">{copy("មិនមានរចនាប័ទ្មត្រូវគ្នាទេ។ គំរូជំនួសទាំងនេះគាំទ្រកម្មវិធី និងភាសារបស់អ្នក។", "No exact style match. These alternatives support your event and language.")}</p>}
-            <div className="event-template-grid">{recommendations.map(({ template }) => <article className={`event-template-card ${String(templateId) === String(template.id) ? "is-selected" : ""}`} key={template.id}>
+            {selectedTemplate && <button className="workspace-button event-change-design" type="button" aria-expanded={browsingDesigns} aria-controls="event-design-options" onClick={() => setBrowsingDesigns(current => !current)}>{browsingDesigns ? copy("រក្សាគំរូដែលបានជ្រើសរើស", "Keep selected design") : copy("ប្ដូរគំរូ", "Change design")}</button>}
+            <div id="event-design-options" className={`event-template-grid${selectedTemplate && !browsingDesigns ? " event-template-grid--selected" : ""}`}>{recommendations.filter(({ template }) => !selectedTemplate || browsingDesigns || String(template.id) === String(templateId)).map(({ template }) => <article className={`event-template-card ${String(templateId) === String(template.id) ? "is-selected" : ""}`} key={template.id}>
               <img src={template.thumbnailUrl || "/templates/event-essential.svg"} alt={template.name} loading="lazy" /><div className="event-template-content"><h3>{template.name}</h3><p>{STYLE_LABELS[template.category]?.[en ? 1 : 0] || template.category}</p><p>{template.premium || Number(template.price) > 0 ? `${packagePrice(template, en ? "en" : "km") || copy("តម្លៃមិនបានបញ្ជាក់", "Price not specified")} · Premium` : copy("ឥតគិតថ្លៃ", "Free")}</p>{(template.premium || Number(template.price) > 0) && <small>{copy("សិទ្ធិប្រើប្រាស់នឹងត្រូវពិនិត្យពេលរក្សាទុក។", "Access is verified when you save.")}</small>}
                 {access[template.id] === true && <small>{copy("មានសិទ្ធិប្រើប្រាស់", "Included in your access")}</small>}
                 <div className="event-template-actions"><a href={`/templates/${encodeURIComponent(template.code)}`} target="_blank" rel="noreferrer" aria-label={`${copy("មើលជាមុន", "Preview")} ${template.name} (${copy("ផ្ទាំងថ្មី", "new tab")})`}>{copy("មើលជាមុន", "Preview")}</a>{access[template.id] === false ? <a href={`/templates/${template.id}/checkout`} target="_blank" rel="noreferrer">{copy("ទិញសិទ្ធិ (ផ្ទាំងថ្មី)", "Get access (new tab)")}</a> : <button className="workspace-button" type="button" aria-pressed={String(templateId) === String(template.id)} aria-label={`${copy("ជ្រើសរើស", "Select")} ${template.name}`} onClick={() => selectTemplate(template.id)}>{String(templateId) === String(template.id) ? <><Check size={16} aria-hidden="true" />{copy("បានជ្រើសរើស", "Selected")}</> : copy("ជ្រើសរើស", "Select")}</button>}</div>

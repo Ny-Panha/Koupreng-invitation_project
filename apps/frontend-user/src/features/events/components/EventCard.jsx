@@ -127,6 +127,7 @@ export function EventCard({
 
   const venueText = draft.venueName || draft.event?.venueName || "";
   const premiumAccessRequired = /premium template access is required/i.test(String(draft.syncError || ""));
+  const needsEditing = !isPublished && draft.status !== "ARCHIVED";
 
   return (
     <article
@@ -210,12 +211,13 @@ export function EventCard({
             className="event-card-btn event-card-btn--primary"
             onClick={(event) => {
               event.stopPropagation();
-              if (onManage) onManage(draft);
+              if (needsEditing && onEdit) onEdit(draft);
+              else if (onManage) onManage(draft);
               else if (onEdit) onEdit(draft);
             }}
           >
-            <LayoutDashboard size={15} aria-hidden="true" />
-            <span>{en ? "Manage event" : "គ្រប់គ្រងកម្មវិធី"}</span>
+            {needsEditing ? <Edit3 size={15} aria-hidden="true" /> : <LayoutDashboard size={15} aria-hidden="true" />}
+            <span>{needsEditing ? (en ? "Continue editing" : "បន្តកែសម្រួល") : (en ? "Manage event" : "គ្រប់គ្រងកម្មវិធី")}</span>
           </button>
 
           <button
@@ -223,15 +225,16 @@ export function EventCard({
             className="event-card-btn event-card-btn--secondary"
             onClick={(event) => {
               event.stopPropagation();
-              if (onEdit) onEdit(draft);
+              if (needsEditing && onManage) onManage(draft);
+              else if (onEdit) onEdit(draft);
             }}
           >
-            <Edit3 size={15} aria-hidden="true" />
+            {needsEditing ? <LayoutDashboard size={15} aria-hidden="true" /> : <Edit3 size={15} aria-hidden="true" />}
             <span>
-              {draft.status === "DRAFT"
+              {needsEditing
                 ? en
-                  ? "Continue"
-                  : "បន្តកែ"
+                  ? "Event overview"
+                  : "ទិដ្ឋភាពកម្មវិធី"
                 : (t && t("editBtn")) || (en ? "Edit" : "កែសម្រួល")}
             </span>
           </button>
