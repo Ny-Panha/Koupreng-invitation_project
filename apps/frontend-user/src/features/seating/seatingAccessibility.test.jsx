@@ -1,10 +1,12 @@
 import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import { SeatingFloorPlan } from "./components/SeatingFloorPlan";
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 const tables = [{ id: 1, tableName: "Family table", capacity: 10, notes: '{"x":20,"y":30}' }];
 
 describe("P2-NEW-007 and A11Y-004 seating edit preservation", () => {
+  beforeEach(() => useLanguageStore.setState({ lang: 'en' }));
   it("retains unsaved table positions while editing walkway orientation", () => {
     const { container } = render(<SeatingFloorPlan tables={tables} onSavePositions={vi.fn()} />);
     const canvas = container.querySelector(".sfp-canvas-wrapper");

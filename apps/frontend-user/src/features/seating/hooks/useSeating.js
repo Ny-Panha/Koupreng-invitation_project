@@ -3,11 +3,13 @@ import { invitationService } from "@/features/invitations/api/invitationApi";
 import { seatingService } from "../seatingService";
 import { toast } from "../../../shared/ui/toast";
 import { writeTablePosition } from "../model/tableNotes";
+import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
 
 const emptyTable = { tableName: "", tableLabel: "", capacity: 10, sortOrder: 0, notes: "" };
 const emptyAssignment = { guestId: "", tableId: "", seatLabel: "", seatCount: 1, notes: "" };
 
 export function useSeating(invitationId) {
+    const { text: t } = useBackendMessages("seating");
     const [invitation, setInvitation] = useState(null);
     const [plan, setPlan] = useState(null);
     const [summary, setSummary] = useState(null);
@@ -90,10 +92,12 @@ export function useSeating(invitationId) {
                 sortOrder: Number(tableForm.sortOrder || 0),
             });
             setTableForm(emptyTable);
-            toast("Table created");
+            toast(t("tableCreated"));
             await load();
+            return true;
         } catch (err) {
             setError(err.message || "Could not create table");
+            return false;
         } finally {
             setSaving(false);
         }
@@ -110,7 +114,7 @@ export function useSeating(invitationId) {
                 sortOrder: Number(payload.sortOrder || 0),
                 notes: payload.notes || JSON.stringify({ x: 50, y: 50 }),
             });
-            toast("បានបន្ថែមតុលើប្លង់ជោគជ័យ (Table added to canvas)");
+            toast(t("tableCreated"));
             await load();
         } catch (err) {
             setError(err.message || "Could not create table");
@@ -131,7 +135,7 @@ export function useSeating(invitationId) {
                 seatCount: Number(assignmentForm.seatCount || 1),
             });
             setAssignmentForm(emptyAssignment);
-            toast("Guest assigned");
+            toast(t("guestAssigned"));
             await load();
         } catch (err) {
             setError(err.message || "Could not assign guest");
@@ -145,7 +149,7 @@ export function useSeating(invitationId) {
         setError("");
         try {
             await seatingService.unassign(invitationId, assignmentId);
-            toast("Guest unassigned");
+            toast(t("guestUnassigned"));
             await load();
         } catch (err) {
             setError(err.message || "Could not unassign guest");
@@ -159,7 +163,7 @@ export function useSeating(invitationId) {
         setError("");
         try {
             await seatingService.deleteTable(invitationId, tableId);
-            toast("Table deleted");
+            toast(t("tableDeleted"));
             await load();
         } catch (err) {
             setError(err.message || "Could not delete table");
@@ -173,7 +177,7 @@ export function useSeating(invitationId) {
         setError("");
         try {
             await seatingService.updateTable(invitationId, tableId, payload);
-            toast("Table updated");
+            toast(t("tableUpdated"));
             await load();
         } catch (err) {
             setError(err.message || "Could not update table");
@@ -203,7 +207,7 @@ export function useSeating(invitationId) {
             }).filter(Boolean);
 
             await Promise.all(updates);
-            toast("បានរក្សាទុកប្លង់សាលការរួចរាល់ (Floor plan saved)");
+            toast(t("planSaved"));
             await load();
             return true;
         } catch (err) {

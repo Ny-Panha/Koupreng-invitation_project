@@ -8,6 +8,7 @@ import {
     IoAddCircleOutline,
 } from "react-icons/io5";
 import "./SeatingFloorPlan.css";
+import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
 
 // Check if candidate position collides with any other table
 function hasCollision(x, y, otherPositions = {}, ignoreId = null, minDistance = 11.5) {
@@ -261,12 +262,14 @@ export function SeatingFloorPlan({
     assignmentsByTable = new Map(),
     onSavePositions,
     onCreateTable,
+    onRequestCreate,
     invitationId = null,
     saving = false,
     readOnly = false,
     highlightTableName = "",
     highlightTableId = null,
 }) {
+    const { text: t } = useBackendMessages('floorPlan');
     const [positions, setPositions] = useState({});
     const [isDirty, setIsDirty] = useState(false);
     const [saveError, setSaveError] = useState("");
@@ -556,18 +559,18 @@ export function SeatingFloorPlan({
                     <div className="sfp-toolbar__left">
                         <div className="sfp-toolbar__title">
                             <IoSparkles style={{ color: "#b98b42" }} />
-                            <span>ប្លង់សាលមង្គលការ (Interactive Ballroom Plan)</span>
+                            <span>{t('title')}</span>
                         </div>
                         {isDirty && (
-                            <span className="sfp-badge-dirty">● មានការកែប្រែទីតាំង (Unsaved changes)</span>
+                            <span className="sfp-badge-dirty">{t('unsaved')}</span>
                         )}
                     </div>
 
                     <div className="sfp-toolbar__actions">
                         {/* Walkway orientation controls */}
-                        <div className="sfp-segmented" title="ទិសដៅផ្លូវដើរ (Walkway layout)">
+                        <div className="sfp-segmented" title={t('walkway')}>
                             <span style={{ fontSize: "0.725rem", fontWeight: 800, color: "#78716c", padding: "0 4px" }}>
-                                ផ្លូវដើរ:
+                                {t('walkway')}
                             </span>
                             <button
                                 type="button"
@@ -585,7 +588,7 @@ export function SeatingFloorPlan({
                                     setIsDirty(true);
                                 }}
                             >
-                                ↕️ បញ្ឈរ
+                                {t('vertical')}
                             </button>
                             <button
                                 type="button"
@@ -603,7 +606,7 @@ export function SeatingFloorPlan({
                                     setIsDirty(true);
                                 }}
                             >
-                                ↔️ ផ្ដេក
+                                {t('horizontal')}
                             </button>
                             <button
                                 type="button"
@@ -616,14 +619,14 @@ export function SeatingFloorPlan({
                                     setIsDirty(true);
                                 }}
                             >
-                                🚫 បិទ
+                                {t('off')}
                             </button>
                         </div>
 
                         {/* Table Density & Counter Badge */}
-                        <div className="sfp-tables-counter-badge" title="ចំនួនតុសរុបក្នុងសាល">
+                        <div className="sfp-tables-counter-badge" title={t('tables')}>
                             <IoRestaurantOutline />
-                            <span>{tables.length} តុ {tables.length >= 60 ? "🔥 (សាលធំ)" : ""}</span>
+                            <span>{tables.length} {t('tables')}</span>
                         </div>
 
                         {/* Canvas Theme Toggle */}
@@ -631,9 +634,9 @@ export function SeatingFloorPlan({
                             type="button"
                             className="sfp-btn sfp-btn--outline sfp-btn--theme"
                             onClick={() => setCanvasTheme((t) => (t === "light" ? "dark" : "light"))}
-                            title="ប្តូរពណ៌ផ្ទៃប្លង់ (Light / Dark Canvas)"
+                            title={t('theme')}
                         >
-                            <span>{canvasTheme === "light" ? "🌙 ផ្ទាំងរាត្រី" : "☀️ ផ្ទាំងស្ថាបត្យកម្ម"}</span>
+                            <span>{t(canvasTheme === 'light' ? 'dark' : 'light')}</span>
                         </button>
 
                         {onCreateTable && (
@@ -641,12 +644,13 @@ export function SeatingFloorPlan({
                                 type="button"
                                 className="sfp-btn sfp-btn--add"
                                 onClick={() => {
+                                    if (onRequestCreate) { onRequestCreate(); return; }
                                     setNewTableName(`តុ ${tables.length + 1}`);
                                     setShowAddModal(true);
                                 }}
                             >
                                 <IoAddCircleOutline style={{ fontSize: "1.15rem" }} />
-                                <span>+ បន្ថែមតុលើប្លង់ (Add Table)</span>
+                                <span>{t('add')}</span>
                             </button>
                         )}
 
@@ -654,11 +658,11 @@ export function SeatingFloorPlan({
                             type="button"
                             className="sfp-btn sfp-btn--outline"
                             onClick={handleAutoArrange}
-                            title="តម្រៀបតុជាពីរជួរសងខាងផ្លូវកណ្ដាលដោយស្វ័យប្រវត្តិ"
+                            title={t('arrange')}
                             disabled={tables.length === 0}
                         >
                             <IoRefreshOutline />
-                            <span>តម្រៀបស្វ័យប្រវត្តិ (Auto-Arrange)</span>
+                            <span>{t('arrange')}</span>
                         </button>
 
                         <button
@@ -668,7 +672,7 @@ export function SeatingFloorPlan({
                             disabled={saving || !isDirty}
                         >
                             <IoSaveOutline />
-                            <span>{saving ? "កំពុងរក្សាទុក..." : "រក្សាទុកប្លង់ (Save Floor Plan)"}</span>
+                            <span>{t(saving ? 'saving' : 'save')}</span>
                         </button>
                     </div>
                 </div>
@@ -676,20 +680,20 @@ export function SeatingFloorPlan({
 
             {!readOnly && (
                 <fieldset className="sfp-position-controls">
-                    <legend>Position controls</legend>
-                    <label>Position element
+                    <legend>{t('positions')}</legend>
+                    <label>{t('element')}
                         <select value={positionElement} onChange={(e) => setPositionElement(e.target.value)}>
-                            <option value="stage">Stage</option>
-                            <option value="entrance">Entrance</option>
-                            <option value="walkway">Walkway</option>
+                            <option value="stage">{t('stage')}</option>
+                            <option value="entrance">{t('entrance')}</option>
+                            <option value="walkway">{t('walkway')}</option>
                             {tables.map((table) => <option key={table.id} value={`table:${table.id}`}>{table.tableName}</option>)}
                         </select>
                     </label>
-                    {["x", "y"].map((axis) => <label key={axis}>{axis.toUpperCase()} position (%)
+                    {["x", "y"].map((axis) => <label key={axis}>{axis.toUpperCase()} {t('position')}
                         <input type="number" step="0.1" min="0" max="100" value={selectedPosition?.[axis] ?? ""}
                             onChange={(e) => { if (e.target.value !== "") moveElement(positionElement, axis, Number(e.target.value)); }} />
                     </label>)}
-                    <small>Arrow keys move a focused element 1%. Shift + arrow moves 5%. Venue decorations are stored on this device.</small>
+                    <small>{t('keys')}</small>
                 </fieldset>
             )}
             {saveError && <p role="alert">{saveError}</p>}
@@ -769,16 +773,16 @@ export function SeatingFloorPlan({
                     }}
                     role={readOnly ? undefined : "button"}
                     tabIndex={readOnly ? undefined : 0}
-                    aria-label={readOnly ? undefined : "Move stage"}
+                    aria-label={readOnly ? undefined : t('moveStage')}
                     onKeyDown={(e) => handlePositionKey(e, "stage")}
                     onMouseDown={(e) => handleStartDragVenue(e, "stage")}
                     onTouchStart={(e) => handleStartDragVenue(e, "stage")}
                 >
                     <span className="sfp-stage__title">
-                        🎤 ឆាកមង្គលការ (Main Wedding Stage)
-                        {!readOnly && <span className="sfp-drag-handle-hint">⋮⋮ អូសបាន</span>}
+                        {t('stage')}
+                        {!readOnly && <span className="sfp-drag-handle-hint">{t('drag')}</span>}
                     </span>
-                    <span className="sfp-stage__sub">ឆាកកិត្តិយស & ភ្លើងលម្អ</span>
+                    <span className="sfp-stage__sub">{t('stageHint')}</span>
                 </div>
 
                 {/* 2. Draggable & Orientable Red Carpet Walkway */}
@@ -797,14 +801,14 @@ export function SeatingFloorPlan({
                         }}
                         role={readOnly ? undefined : "button"}
                         tabIndex={readOnly ? undefined : 0}
-                        aria-label={readOnly ? undefined : "Move walkway"}
+                        aria-label={readOnly ? undefined : t('moveWalkway')}
                         onKeyDown={(e) => handlePositionKey(e, "walkway")}
                         onMouseDown={(e) => handleStartDragVenue(e, "walkway")}
                         onTouchStart={(e) => handleStartDragVenue(e, "walkway")}
                     >
                         <span className="sfp-walkway__label">
-                            ផ្លូវកម្រាលព្រំក្រហម (AISLE)
-                            {!readOnly && <span className="sfp-drag-handle-hint"> ⋮⋮ អូសបាន</span>}
+                            {t('walkway')}
+                            {!readOnly && <span className="sfp-drag-handle-hint">{t('drag')}</span>}
                         </span>
                     </div>
                 )}
@@ -820,14 +824,14 @@ export function SeatingFloorPlan({
                     }}
                     role={readOnly ? undefined : "button"}
                     tabIndex={readOnly ? undefined : 0}
-                    aria-label={readOnly ? undefined : "Move entrance"}
+                    aria-label={readOnly ? undefined : t('moveEntrance')}
                     onKeyDown={(e) => handlePositionKey(e, "entrance")}
                     onMouseDown={(e) => handleStartDragVenue(e, "entrance")}
                     onTouchStart={(e) => handleStartDragVenue(e, "entrance")}
                 >
                     <span>
-                        🚪 ច្រកចូលសាលការ (Main Entrance & Foyer)
-                        {!readOnly && <span className="sfp-drag-handle-hint">⋮⋮ អូសបាន</span>}
+                        {t('entrance')}
+                        {!readOnly && <span className="sfp-drag-handle-hint">{t('drag')}</span>}
                     </span>
                 </div>
 
@@ -888,7 +892,7 @@ export function SeatingFloorPlan({
                             }}
                             role="button"
                             tabIndex={0}
-                            aria-label={`${readOnly ? "View" : "Move"} table ${table.tableName}`}
+                            aria-label={`${t(readOnly ? 'viewTable' : 'moveTable')} ${table.tableName}`}
                             onKeyDown={(e) => {
                                 if (["Enter", " "].includes(e.key)) { e.preventDefault(); setSelectedTableId(table.id); }
                                 else handlePositionKey(e, `table:${table.id}`);
@@ -899,14 +903,14 @@ export function SeatingFloorPlan({
                             {/* Collision Warning Tooltip */}
                             {isColliding && (
                                 <div className="sfp-collision-tooltip">
-                                    ⚠️ ជិតជាន់គ្នា!
+                                    {t('collision')}
                                 </div>
                             )}
 
                             {/* Highlight Badge if this is guest's assigned table */}
                             {isHighlighted && (
                                 <div className="sfp-highlight-badge">
-                                    ⭐ តុរបស់អ្នកនៅត្រង់នេះ!
+                                    {t('yourTable')}
                                 </div>
                             )}
 
@@ -949,14 +953,14 @@ export function SeatingFloorPlan({
                                 <div className="sfp-detail-title">{selectedTable.tableName}</div>
                                 <div className="sfp-detail-sub">
                                     {selectedTable.tableLabel ? `${selectedTable.tableLabel} • ` : ""}
-                                    {selectedTable.assignedSeats || 0}/{selectedTable.capacity} នាក់
+                                    {selectedTable.assignedSeats || 0}/{selectedTable.capacity} {t('seats')}
                                 </div>
                             </div>
                             <button
                                 type="button"
                                 className="sfp-detail-close"
                                 onClick={() => setSelectedTableId(null)}
-                                title="បិទ"
+                                title={t('close')} aria-label={t('close')}
                             >
                                 <IoCloseOutline />
                             </button>
@@ -970,12 +974,12 @@ export function SeatingFloorPlan({
                                             👤 {assignment.guestName || "ភ្ញៀវ"}
                                             {assignment.guestGroup ? ` (${assignment.guestGroup})` : ""}
                                         </span>
-                                        <strong>{assignment.seatCount || 1} កៅអី</strong>
+                                        <strong>{assignment.seatCount || 1} {t('seats')}</strong>
                                     </div>
                                 ))
                             ) : (
                                 <div style={{ fontSize: "0.8rem", color: "#94a3b8", textAlign: "center", padding: "10px" }}>
-                                    មិនទាន់មានភ្ញៀវក្នុងតុនេះទេ
+                                    {t('noGuests')}
                                 </div>
                             )}
                         </div>
@@ -987,24 +991,24 @@ export function SeatingFloorPlan({
             <div className="sfp-legend">
                 <div className="sfp-legend__item">
                     <span className="sfp-legend__dot sfp-legend__dot--stage" />
-                    <span>ឆាកមង្គលការ (អូសប្ដូរទីតាំងបាន)</span>
+                    <span>{t('stage')}</span>
                 </div>
                 <div className="sfp-legend__item">
                     <span className="sfp-legend__dot sfp-legend__dot--aisle" />
-                    <span>ផ្លូវកម្រាលព្រំ (អូសប្ដូរទីតាំងបាន)</span>
+                    <span>{t('walkway')}</span>
                 </div>
                 <div className="sfp-legend__item">
                     <span className="sfp-legend__dot sfp-legend__dot--table" />
-                    <span>តុមានកៅអីទំនេរ</span>
+                    <span>{t('available')}</span>
                 </div>
                 <div className="sfp-legend__item">
                     <span className="sfp-legend__dot sfp-legend__dot--full" />
-                    <span>តុពេញកៅអី</span>
+                    <span>{t('full')}</span>
                 </div>
                 {(highlightTableName || highlightTableId) && (
                     <div className="sfp-legend__item">
                         <span className="sfp-legend__dot sfp-legend__dot--guest" />
-                        <strong>តុរបស់អ្នក (Your Table)</strong>
+                        <strong>{t('yourTable')}</strong>
                     </div>
                 )}
             </div>

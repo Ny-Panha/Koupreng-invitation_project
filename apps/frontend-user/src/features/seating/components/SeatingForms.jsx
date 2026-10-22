@@ -1,163 +1,33 @@
-import { IoAddCircleOutline, IoPersonAddOutline, IoPeopleOutline } from "react-icons/io5";
+import { useState } from 'react';
+import { Search, UserRoundPlus } from 'lucide-react';
 
-export function SeatingForms({
-    tableForm,
-    setTableForm,
-    assignmentForm,
-    setAssignmentForm,
-    createTable,
-    assignGuest,
-    plan,
-    saving,
-}) {
-    const unassigned = plan?.unassignedGuests || [];
-
-    return (
-        <aside className="seating-sidebar">
-            {/* 1. Form Create Table */}
-            <div className="seating-card-panel">
-                <h2>
-                    <IoAddCircleOutline style={{ color: "var(--brand-primary, #b98b42)", fontSize: "1.25rem" }} />
-                    <span>បង្កើតតុថ្មី (Create Table)</span>
-                </h2>
-                <form className="seating-form" onSubmit={createTable}>
-                    <label>
-                        <span>ឈ្មោះតុ (Table Name) *</span>
-                        <input
-                            value={tableForm.tableName}
-                            onChange={(event) => setTableForm({ ...tableForm, tableName: event.target.value })}
-                            placeholder="ឧ. តុ VIP ១, តុសាច់ញាតិ, តុទី ១"
-                            required
-                        />
-                    </label>
-
-                    <label>
-                        <span>ប្រភេទសម្គាល់ (Label)</span>
-                        <input
-                            value={tableForm.tableLabel}
-                            onChange={(event) => setTableForm({ ...tableForm, tableLabel: event.target.value })}
-                            placeholder="ឧ. VIP, សាច់ញាតិ, មិត្តភក្ដិ"
-                        />
-                    </label>
-
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
-                        <label>
-                            <span>ចំនួនកៅអី (Capacity)</span>
-                            <input
-                                type="number"
-                                min="1"
-                                value={tableForm.capacity}
-                                onChange={(event) => setTableForm({ ...tableForm, capacity: event.target.value })}
-                                placeholder="10"
-                            />
-                        </label>
-                        <label>
-                            <span>លំដាប់ (Sort Order)</span>
-                            <input
-                                type="number"
-                                value={tableForm.sortOrder}
-                                onChange={(event) => setTableForm({ ...tableForm, sortOrder: event.target.value })}
-                                placeholder="0"
-                            />
-                        </label>
-                    </div>
-
-                    <button className="seating-form-btn" type="submit" disabled={saving} aria-label="Create table">
-                        {saving ? "កំពុងរក្សាទុក..." : "➕ បង្កើតតុ (Create table)"}
-                    </button>
-                </form>
-            </div>
-
-            {/* 2. Form Assign Guest */}
-            <div className="seating-card-panel">
-                <h2>
-                    <IoPersonAddOutline style={{ color: "#0f766e", fontSize: "1.25rem" }} />
-                    <span>ចាត់ភ្ញៀវចូលតុ (Assign Guest)</span>
-                </h2>
-                <form className="seating-form" onSubmit={assignGuest}>
-                    <label>
-                        <span>ជ្រើសរើសភ្ញៀវ (Select Guest) *</span>
-                        <select
-                            value={assignmentForm.guestId}
-                            onChange={(event) => setAssignmentForm({ ...assignmentForm, guestId: event.target.value })}
-                            required
-                        >
-                            <option value="">-- ជ្រើសរើសភ្ញៀវ --</option>
-                            {unassigned.map((guest) => (
-                                <option key={guest.id} value={guest.id}>
-                                    {guest.guestName} ({guest.seatCount || 1} នាក់)
-                                </option>
-                            ))}
-                        </select>
-                    </label>
-
-                    <label>
-                        <span>ជ្រើសរើសតុ (Select Table) *</span>
-                        <select
-                            value={assignmentForm.tableId}
-                            onChange={(event) => setAssignmentForm({ ...assignmentForm, tableId: event.target.value })}
-                            required
-                        >
-                            <option value="">-- ជ្រើសរើសតុ --</option>
-                            {(plan?.tables || []).map((table) => (
-                                <option key={table.id} value={table.id}>
-                                    {table.tableName} (នៅសល់ {table.remainingSeats} កៅអី)
-                                </option>
-                            ))}
-                        </select>
-                    </label>
-
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
-                        <label>
-                            <span>លេខកៅអី (Seat Label)</span>
-                            <input
-                                value={assignmentForm.seatLabel}
-                                onChange={(event) => setAssignmentForm({ ...assignmentForm, seatLabel: event.target.value })}
-                                placeholder="ឧ. កៅអីលេខ ១"
-                            />
-                        </label>
-                        <label>
-                            <span>ចំនួនកៅអី (Seats)</span>
-                            <input
-                                type="number"
-                                min="1"
-                                value={assignmentForm.seatCount}
-                                onChange={(event) => setAssignmentForm({ ...assignmentForm, seatCount: event.target.value })}
-                            />
-                        </label>
-                    </div>
-
-                    <button
-                        className="seating-form-btn"
-                        type="submit"
-                        disabled={saving || !plan?.tables?.length || !unassigned.length}
-                        aria-label="Assign guest"
-                        style={{ background: "#0f766e" }}
-                    >
-                        {saving ? "កំពុងចាត់ចែង..." : "👤 ដាក់ភ្ញៀវចូលតុ (Assign guest)"}
-                    </button>
-                </form>
-            </div>
-
-            {/* 3. Unassigned Guests Quick List */}
-            {unassigned.length > 0 && (
-                <div className="seating-card-panel">
-                    <h2>
-                        <IoPeopleOutline style={{ color: "#b98b42", fontSize: "1.25rem" }} />
-                        <span>ភ្ញៀវមិនទាន់មានតុ ({unassigned.length})</span>
-                    </h2>
-                    <div className="seating-unassigned-list">
-                        {unassigned.map((guest) => (
-                            <div key={guest.id} className="seating-unassigned-item">
-                                <span className="seating-unassigned-name">{guest.guestName}</span>
-                                <span className="seating-unassigned-seats">{guest.seatCount || 1} កៅអី</span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            )}
-        </aside>
-    );
+export function SeatingForms({ assignmentForm, setAssignmentForm, assignGuest, plan, saving, className, t }) {
+  const [search, setSearch] = useState('');
+  const unassigned = plan?.unassignedGuests || [];
+  const assignments = plan?.assignments || [];
+  const guests = [...unassigned, ...assignments.map(a => ({ id: a.guestId, guestName: a.guestName, seatCount: a.seatCount }))];
+  const current = assignments.find(a => String(a.guestId) === String(assignmentForm.guestId));
+  const selected = plan?.tables?.find(table => String(table.id) === String(assignmentForm.tableId));
+  const remaining = selected ? selected.remainingSeats + (current?.tableId === selected.id ? current.seatCount : 0) : 0;
+  const seats = Number(assignmentForm.seatCount);
+  const fits = Number.isInteger(seats) && seats > 0 && seats <= remaining;
+  const selectGuest = id => {
+    const guest = guests.find(item => String(item.id) === String(id));
+    const existing = assignments.find(item => String(item.guestId) === String(id));
+    setAssignmentForm(previous => ({ ...previous, guestId: id, seatCount: guest?.seatCount || 1, seatLabel: existing?.seatLabel || '', notes: existing?.notes || '' }));
+  };
+  const visible = unassigned.filter(g => g.guestName.toLocaleLowerCase().includes(search.toLocaleLowerCase()));
+  return <aside className={`seating-assignment-panel workspace-section ${className || ''}`}>
+    <h2><UserRoundPlus size={20} aria-hidden="true" />{t('assignment')}</h2>
+    <form className="workspace-form" onSubmit={event => { event.preventDefault(); if (fits) assignGuest(event); }}>
+      <label>{t('selectGuest')}<select id="seating-assignment-guest" aria-label={t('selectGuest')} required value={assignmentForm.guestId} onChange={e => selectGuest(e.target.value)}><option value="">{t('chooseGuest')}</option>{guests.map(g => <option key={g.id} value={g.id}>{g.guestName} · {g.seatCount || 1} {t('seats')}{assignments.some(a => a.guestId === g.id) ? ` · ${t('assigned')}` : ''}</option>)}</select></label>
+      <label>{t('selectTable')}<select aria-label={t('selectTable')} required value={assignmentForm.tableId} onChange={e => setAssignmentForm({ ...assignmentForm, tableId: e.target.value })}><option value="">{t('chooseTable')}</option>{(plan?.tables || []).map(table => <option key={table.id} value={table.id}>{table.tableName} · {table.remainingSeats} {t('remaining')}</option>)}</select></label>
+      <div className="workspace-form-grid"><label>{t('seats')}<input required min="1" step="1" type="number" value={assignmentForm.seatCount} onChange={e => setAssignmentForm({ ...assignmentForm, seatCount: e.target.value })} aria-describedby="seating-capacity-hint" aria-invalid={Boolean(selected && !fits)} /></label><label>{t('seatLabel')}<input value={assignmentForm.seatLabel} onChange={e => setAssignmentForm({ ...assignmentForm, seatLabel: e.target.value })} /></label></div>
+      <p id="seating-capacity-hint" className={selected && !fits ? 'workspace-field-error' : 'workspace-muted'} role={selected && !fits ? 'alert' : undefined}>{!plan?.tables?.length ? t('createFirst') : selected && !fits ? t('capacityExceeded') : t('partyHint')}</p>
+      <button className="workspace-button operational" type="submit" disabled={saving || !assignmentForm.guestId || !selected || !fits}>{saving ? t('saving') : current ? t('moveGuest') : t('assignGuest')}</button>
+    </form>
+    <div className="seating-unassigned-header"><h3>{t('unassigned')} <span>{unassigned.length}</span></h3><label className="workspace-search"><Search size={17} aria-hidden="true" /><input type="search" aria-label={t('search')} placeholder={t('search')} value={search} onChange={e => setSearch(e.target.value)} /></label></div>
+    <ul className="seating-unassigned-list">{visible.map(guest => <li key={guest.id}><button type="button" aria-pressed={String(assignmentForm.guestId) === String(guest.id)} onClick={() => { selectGuest(String(guest.id)); document.getElementById('seating-assignment-guest')?.focus(); }}><span>{guest.guestName}</span><small>{guest.seatCount || 1} {t('seats')}</small></button></li>)}</ul>
+    {!visible.length && <p className="workspace-muted">{t(search ? 'noMatches' : 'allAssigned')}</p>}
+  </aside>;
 }
-
-export default SeatingForms;

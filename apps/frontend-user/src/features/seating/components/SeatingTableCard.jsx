@@ -1,93 +1,13 @@
-import { IoRestaurantOutline, IoPersonOutline } from "react-icons/io5";
+import { Armchair, ArrowRightLeft, Trash2, UserPlus, X } from 'lucide-react';
 
-export function SeatingTableCard({ table, assignments = [], unassign, deleteTable, saving }) {
-    const isFull = table.remainingSeats <= 0;
-    const fillPercent = table.capacity > 0
-        ? Math.min(100, Math.round((table.assignedSeats / table.capacity) * 100))
-        : 0;
-
-    return (
-        <section className="seating-table-card">
-            {/* Header */}
-            <div className="seating-table-head">
-                <div className="seating-table-title-wrap">
-                    <h3>
-                        <IoRestaurantOutline style={{ color: "var(--brand-primary, #b98b42)" }} />
-                        <span>{table.tableName}</span>
-                    </h3>
-                    {table.tableLabel && (
-                        <span className="seating-table-label-badge">{table.tableLabel}</span>
-                    )}
-                </div>
-
-                <span className={`seating-capacity-pill ${isFull ? "full" : "available"}`}>
-                    {table.assignedSeats} / {table.capacity} កៅអី
-                    {isFull ? " (ពេញ)" : ""}
-                </span>
-            </div>
-
-            {/* Capacity Progress Bar */}
-            <div className="seating-progress-bar-bg" title={`${fillPercent}% ពេញ`}>
-                <div
-                    className="seating-progress-bar-fill"
-                    style={{
-                        width: `${fillPercent}%`,
-                        background: isFull ? "#e11d48" : "linear-gradient(90deg, #b98b42, #0f766e)"
-                    }}
-                />
-            </div>
-
-            {/* Guest List in Table */}
-            {assignments.length > 0 ? (
-                <ul className="seating-guest-list">
-                    {assignments.map((assignment) => (
-                        <li key={assignment.id} className="seating-guest-item">
-                            <div style={{ display: "flex", alignItems: "center", gap: "8px", minWidth: 0 }}>
-                                <IoPersonOutline style={{ color: "#0f766e", flexShrink: 0 }} />
-                                <strong style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                                    {assignment.guestName}
-                                </strong>
-                                {assignment.seatLabel && (
-                                    <span style={{ fontSize: "0.75rem", color: "var(--brand-text-muted)" }}>
-                                        - {assignment.seatLabel}
-                                    </span>
-                                )}
-                            </div>
-
-                            <div className="seating-guest-meta">
-                                <span>({assignment.seatCount} កៅអី)</span>
-                                <button
-                                    className="seating-unassign-btn"
-                                    type="button"
-                                    disabled={saving}
-                                    onClick={() => unassign(assignment.id)}
-                                    title="ដកចេញ (Unassign)"
-                                    aria-label="Unassign"
-                                >
-                                    ✕
-                                </button>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <div className="seating-empty-guests">
-                    មិនទាន់មានភ្ញៀវអង្គុយតុនេះទេ (No assigned guests)
-                </div>
-            )}
-
-            {/* Footer / Delete Table */}
-            <button
-                className="seating-del-table-btn"
-                type="button"
-                disabled={saving || table.assignedSeats > 0}
-                onClick={() => deleteTable(table.id)}
-                title={table.assignedSeats > 0 ? "ត្រូវដកភ្ញៀវចេញពីតុជាមុនសិន មុននឹងលុបតុ" : "លុបតុនេះ"}
-            >
-                🗑️ លុបតុនេះ (Delete table)
-            </button>
-        </section>
-    );
+export function SeatingTableCard({ table, assignments = [], unassign, deleteTable, saving, onMove, onAssign, t }) {
+  const full = table.remainingSeats <= 0;
+  return <section className="seating-table-card" aria-label={table.tableName}>
+    <div className="seating-table-head"><div><h3><Armchair size={20} aria-hidden="true" />{table.tableName}</h3>{table.tableLabel && <p className="workspace-muted">{table.tableLabel}</p>}</div><span className={`workspace-badge ${full ? 'is-full' : ''}`}>{full ? t('full') : `${table.remainingSeats} ${t('remaining')}`}</span></div>
+    <div className="seating-capacity"><span>{table.assignedSeats} / {table.capacity} {t('seats')}</span><meter min="0" max={table.capacity} value={table.assignedSeats} aria-label={t('assignedSeats')} /></div>
+    {assignments.length ? <ul className="seating-guest-list">{assignments.map(a => <li key={a.id}><div><strong>{a.guestName}</strong><small>{a.seatCount} {t('seats')}{a.seatLabel ? ` · ${a.seatLabel}` : ''}</small></div><div className="workspace-actions"><button type="button" disabled={saving} className="workspace-icon-button" onClick={() => onMove(a)} aria-label={`${t('moveGuest')}: ${a.guestName}`}><ArrowRightLeft size={17} /></button><button type="button" disabled={saving} className="workspace-icon-button" onClick={() => unassign(a.id)} aria-label={`${t('unassign')}: ${a.guestName}`}><X size={17} /></button></div></li>)}</ul> : <p className="workspace-muted">{t('noAssignments')}</p>}
+    <div className="seating-table-actions"><button type="button" className="workspace-button" disabled={saving || full} onClick={onAssign}><UserPlus size={17} />{t('assignGuest')}</button><button type="button" className="workspace-icon-button" disabled={saving || assignments.length > 0} title={t(assignments.length ? 'removeBeforeDelete' : 'deleteTable')} aria-label={`${t('deleteTable')}: ${table.tableName}`} onClick={() => { if (window.confirm(t('confirmDelete'))) deleteTable(table.id); }}><Trash2 size={17} /></button></div>
+  </section>;
 }
 
 export default SeatingTableCard;
