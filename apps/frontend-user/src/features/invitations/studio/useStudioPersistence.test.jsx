@@ -3,6 +3,20 @@ import { describe, expect, it, vi } from "vitest";
 import { useStudioPersistence } from "./useStudioPersistence";
 
 describe("studio server persistence", () => {
+  it("flushes edits made during an earlier autosave before a dependent publish can proceed", async () => {
+    let complete;
+    const persist = vi.fn().mockImplementationOnce(() => new Promise(resolve => { complete = resolve; })).mockResolvedValue({ synced: true });
+    const { result, rerender } = renderHook(({ value }) => useStudioPersistence({ value, persist, enabled: false, onRestore: vi.fn() }), { initialProps: { value: { venueAddress: "" } } });
+    let first, flushing;
+    act(() => { first = result.current.save(); });
+    rerender({ value: { venueAddress: "New address" } });
+    act(() => { flushing = result.current.flush(); });
+    expect(persist).toHaveBeenCalledTimes(1);
+    await act(async () => { complete({ synced: true }); await first; await flushing; });
+    expect(persist).toHaveBeenCalledTimes(2);
+    expect(result.current.dirty).toBe(false);
+    expect(result.current.phase).toBe("saved");
+  });
   it("does not label a browser-only draft as saved to the server", () => {
     const { result } = renderHook(() => useStudioPersistence({ value: { title: "Local draft" }, initialSaved: false, enabled: false, persist: vi.fn(), onRestore: vi.fn() }));
     expect(result.current.phase).toBe("unsaved");

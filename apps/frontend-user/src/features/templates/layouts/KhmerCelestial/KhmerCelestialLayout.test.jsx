@@ -11,6 +11,7 @@ import { buildTemplateContent } from "../../experience/config/templateExperience
 import { KHMER_CELESTIAL_TEMPLATE } from "../../data/templatesData";
 import { CelestialHeading } from "./components/CelestialSection";
 import { KHMER_CELESTIAL_ASSETS } from "./khmerCelestialAssets";
+import KhmerCelestialLayout from "./KhmerCelestialLayout";
 
 const testDirectory = dirname(fileURLToPath(import.meta.url));
 
@@ -55,6 +56,13 @@ const content = {
 };
 
 describe("KhmerCelestialLayout integration", () => {
+  it("does not take focus from the editor when its live preview mounts", () => {
+    const view = render(<><button type="button">Editor action</button><div /></>);
+    const editorAction = screen.getByRole("button", { name: "Editor action" });
+    editorAction.focus();
+    view.rerender(<><button type="button">Editor action</button><MemoryRouter><KhmerCelestialLayout content={content} preview /></MemoryRouter></>);
+    expect(screen.getByRole("button", { name: "Editor action" })).toHaveFocus();
+  });
   beforeEach(() => {
     window.matchMedia = vi.fn().mockReturnValue({
       matches: true,

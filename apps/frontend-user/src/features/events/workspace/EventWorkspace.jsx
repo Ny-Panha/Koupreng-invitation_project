@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Menu, Sparkles } from "lucide-react";
 import { invitationService } from "@/features/invitations/api/invitationApi";
@@ -17,6 +17,7 @@ function VerifiedWorkspace({ eventId }) {
   const [retry, setRetry] = useState(0);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const menuTrigger = useRef(null);
+  const registerNavigationTrigger = useCallback(node => { menuTrigger.current = node; }, []);
   const { user } = useAuth();
   const navigation = useEventNavigation(user?.id || user?.userId);
   const en = useLanguageStore(s => s.lang) === "en";
@@ -83,6 +84,10 @@ function VerifiedWorkspace({ eventId }) {
   const switchEvent = id => {
     if (events.some(item => String(item.id) === id)) navigate(eventPath(id, EVENT_MODULES.includes(currentModule) ? currentModule : ""));
   };
+  const closeNavigation = () => {
+    setMobileDrawerOpen(false);
+    requestAnimationFrame(() => menuTrigger.current?.focus({ preventScroll: true }));
+  };
   const navProps = { event: state.event, events, eventId, currentModule, en,
     collapsed: navigation.collapsed, groups: navigation.groups,
     onToggleGroup: navigation.toggleGroup, onToggleCollapsed: navigation.toggleCollapsed,
@@ -92,6 +97,7 @@ function VerifiedWorkspace({ eventId }) {
   return <EventContext.Provider value={{ eventId, event: state.event, events: state.events,
     updateEvent: event => setState(current => ({ ...current, event })),
     openNavigation: () => setMobileDrawerOpen(true), navigationOpen: mobileDrawerOpen,
+    registerNavigationTrigger,
   }}>
     <section className={`event-workspace${navigation.collapsed ? " is-collapsed" : ""}${navigation.manual ? " has-nav-preference" : ""}${focusedStudio ? " is-studio" : ""}`} aria-label={en ? "Event workspace" : "គ្រប់គ្រងកម្មវិធី"}>
       {!focusedStudio && <a className="event-skip-link" href="#event-module-content">{en ? "Skip to event content" : "ទៅមាតិកាកម្មវិធី"}</a>}
@@ -107,9 +113,9 @@ function VerifiedWorkspace({ eventId }) {
         <div className="event-workspace-content" id="event-module-content" tabIndex={-1}><Outlet /></div>
       </div>
     </section>
-    <Modal isOpen={overlay && mobileDrawerOpen} onClose={() => setMobileDrawerOpen(false)} showHeader={false}
+    <Modal isOpen={overlay && mobileDrawerOpen} onClose={closeNavigation} showHeader={false}
       ariaLabel={en ? "Event navigation" : "មុខងារកម្មវិធី"} className="workspace-dialog event-navigation-dialog" backdropClassName="event-navigation-backdrop">
-      <EventNavigation {...navProps} overlay onClose={() => setMobileDrawerOpen(false)} />
+      <EventNavigation {...navProps} overlay onClose={closeNavigation} />
     </Modal>
   </EventContext.Provider>;
 }

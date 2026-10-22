@@ -55,6 +55,12 @@ export function useStudioPersistence({ value, onRestore, persist, enabled, initi
   const saveRef = useRef(save);
   saveRef.current = save;
 
+  async function flush() {
+    let saved = await save();
+    while (saved && latest.current.serialized !== acknowledged.current) saved = await save();
+    return saved;
+  }
+
   useEffect(() => {
     if (!enabled || !dirty || state.phase === "failed" || state.phase === "offline") return;
     const timer = setTimeout(() => { void saveRef.current(); }, delay);
@@ -105,7 +111,7 @@ export function useStudioPersistence({ value, onRestore, persist, enabled, initi
     onRestore(JSON.parse(h.entries[index]));
   }
   return { dirty, phase: state.phase === "saved" && dirty ? "unsaved" : state.phase, error: state.error,
-    save, undo: () => restore(history.current.index - 1), redo: () => restore(history.current.index + 1),
+    save, flush, undo: () => restore(history.current.index - 1), redo: () => restore(history.current.index + 1),
     canUndo: (history.current.index > 0 || history.current.entries[history.current.index] !== serialized) && state.phase !== "saving",
     canRedo: history.current.index < history.current.entries.length - 1 && state.phase !== "saving",
     reset: () => { if (state.phase !== "saving" && window.confirm("Restore the version loaded when this editor opened?")) onRestore(JSON.parse(initial.current)); },

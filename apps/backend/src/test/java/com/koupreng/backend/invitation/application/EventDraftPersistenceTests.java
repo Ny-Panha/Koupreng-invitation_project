@@ -6,6 +6,10 @@ import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitation
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -38,8 +42,68 @@ class EventDraftPersistenceTests {
     @Autowired AppUserRepository users;
     @Autowired UserInvitationRepository invitations;
     @Autowired MockMvc http;
+    @Autowired EntityManager entityManager;
     @Autowired com.koupreng.backend.template.infrastructure.persistence.InvitationTemplateRepository templates;
     private final ObjectMapper json = new ObjectMapper();
+
+    @ParameterizedTest
+    @ValueSource(strings = {"khmer-celestial", "silk-heritage"})
+    void addressRoundTripsThroughHttpDtoAndDatabaseBeforePublishing(String code) throws Exception {
+        String token = register(code + "-address@example.test");
+        var template = new com.koupreng.backend.template.domain.InvitationTemplate();
+        template.setName(code); template.setCode(code); template.setStatus("ACTIVE");
+        template.setPrice(java.math.BigDecimal.ZERO);
+        template.setSupportedEventTypes(java.util.Set.of(EventType.WEDDING));
+        templates.saveAndFlush(template);
+        var body = publishableWedding();
+        body.put("templateId", template.getId());
+        body.put("venueAddress", "  Street 2004, Phnom Penh  ");
+        body.put("designJson", "{\"accent\":\"#123456\"}");
+        var created = http.perform(post("/api/v1/invitations").header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON).content(body.toString()))
+                .andExpect(status().isCreated()).andExpect(jsonPath("$.data.venueAddress").value("Street 2004, Phnom Penh"))
+                .andReturn();
+        long id = json.readTree(created.getResponse().getContentAsString()).path("data").path("id").asLong();
+        String path = "/api/v1/invitations/" + id;
+        body.put("venueAddress", "  Riverside Road, Phnom Penh  ");
+        http.perform(put(path).header("Authorization", "Bearer " + token).contentType(MediaType.APPLICATION_JSON).content(body.toString()))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.data.venueAddress").value("Riverside Road, Phnom Penh"));
+        entityManager.flush(); entityManager.clear();
+        assertEquals("Riverside Road, Phnom Penh", entityManager.createNativeQuery(
+                "select venue_address from invitations where invitation_id = :id", String.class).setParameter("id", id).getSingleResult());
+        http.perform(get(path).header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.data.venueAddress").value("Riverside Road, Phnom Penh"))
+                .andExpect(jsonPath("$.data.designJson").value("{\"accent\":\"#123456\"}"));
+        http.perform(patch(path + "/publish").header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.data.status").value("PUBLISHED"))
+                .andExpect(jsonPath("$.data.venueAddress").value("Riverside Road, Phnom Penh"));
+        entityManager.flush(); entityManager.clear();
+        assertEquals("Riverside Road, Phnom Penh", invitations.findById(id).orElseThrow().getVenueAddress());
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = {" \t\n "})
+    void emptyCanonicalAddressCannotBePublishedEvenWhenTemplateContentHasAnAddress(String address) throws Exception {
+        String token = register("blank-address@example.test");
+        var body = publishableWedding();
+        body.put("venueAddress", address);
+        body.put("contentJson", "{\"venue\":{\"address\":\"Address only in template content\"}}");
+        var created = http.perform(post("/api/v1/invitations").header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON).content(body.toString())).andExpect(status().isCreated()).andReturn();
+        long id = json.readTree(created.getResponse().getContentAsString()).path("data").path("id").asLong();
+        entityManager.flush(); entityManager.clear();
+        assertNull(invitations.findById(id).orElseThrow().getVenueAddress());
+        http.perform(patch("/api/v1/invitations/" + id + "/publish").header("Authorization", "Bearer " + token))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("venueAddress")));
+    }
+
+    private com.fasterxml.jackson.databind.node.ObjectNode publishableWedding() {
+        return json.createObjectNode().put("title", "Address persistence wedding").put("eventType", "WEDDING")
+                .put("eventDate", "2027-01-12").put("eventTime", "17:30")
+                .put("venueName", "Celebration Hall").put("groomName", "Dara").put("brideName", "Sophea");
+    }
 
     @Test
     void realCatalogFiltersCompatibilityAndDoesNotGrantPremiumAccess() throws Exception {

@@ -9,7 +9,7 @@ export default function StudioToolbar({ title, templateName, english, studio, sa
   const StatusIcon = studio.phase === "saved" ? Check : studio.phase === "saving" ? LoaderCircle : CloudOff;
   return <header className="studio-toolbar" aria-label={english ? "Invitation studio" : "រចនាធៀបអញ្ជើញ"}>
     <button type="button" className="studio-back" onClick={onBack} aria-label={english ? "Back to Event" : "ត្រឡប់ទៅកម្មវិធី"} title={english ? "Back to Event" : "ត្រឡប់ទៅកម្មវិធី"}><ArrowLeft size={20} /></button>
-    {workspace?.openNavigation && <button type="button" className="studio-back studio-event-menu" onClick={workspace.openNavigation} aria-label={english ? "Open event navigation" : "បើកម៉ឺនុយកម្មវិធី"} aria-haspopup="dialog" aria-expanded={workspace.navigationOpen} title={english ? "Event navigation" : "មុខងារកម្មវិធី"}><Menu size={20} aria-hidden="true" /></button>}
+    {workspace?.openNavigation && <button type="button" ref={node => workspace.registerNavigationTrigger?.(node)} className="studio-back studio-event-menu" onClick={workspace.openNavigation} aria-label={english ? "Open event navigation" : "បើកម៉ឺនុយកម្មវិធី"} aria-haspopup="dialog" aria-expanded={workspace.navigationOpen} title={english ? "Event navigation" : "មុខងារកម្មវិធី"}><Menu size={20} aria-hidden="true" /></button>}
     <div className="studio-document">
       <h1 title={title}>{title || (english ? "Invitation studio" : "រចនាធៀបអញ្ជើញ")}</h1>
       <button type="button" className="studio-template-button" onClick={onTemplate} aria-label={english ? "Change template" : "ប្ដូរគំរូ"}>
@@ -19,7 +19,7 @@ export default function StudioToolbar({ title, templateName, english, studio, sa
     <span className="studio-save-status" data-phase={studio.phase} role="status" aria-live="polite"><StatusIcon size={16} aria-hidden="true" />{labels[studio.phase]}</span>
     <div className="studio-toolbar-actions">
       <button type="button" className="studio-action studio-action--preview" aria-haspopup="dialog" aria-expanded={Boolean(previewOpen)} aria-label={english ? "Preview invitation" : "មើលធៀបជាមុន"} onClick={onPreview}><Eye size={18} aria-hidden="true" /><span>{english ? "Preview" : "មើលជាមុន"}</span></button>
-      <button type="button" className="studio-action studio-action--save pe-save-main-btn" disabled={saving} onClick={() => studio.save()}>{english ? (saving ? "Saving…" : "Save") : (saving ? "កំពុងរក្សាទុក…" : "រក្សាទុក")}</button>
+      <button type="button" className="studio-action studio-action--save pe-save-main-btn" disabled={saving} onClick={() => studio.flush()}>{english ? (saving ? "Saving…" : "Save") : (saving ? "កំពុងរក្សាទុក…" : "រក្សាទុក")}</button>
       {canPublish && !published && <button type="button" className="studio-action" disabled={saving || publishing} onClick={onPublish}>{english ? (publishing ? "Publishing…" : "Publish") : "ផ្សព្វផ្សាយ"}</button>}
       <details className="studio-more" onKeyDown={event => { if (event.key === "Escape") { event.currentTarget.open = false; event.currentTarget.querySelector("summary")?.focus(); } }}>
         <summary aria-label={english ? "More studio actions" : "ជម្រើសបន្ថែម"}><MoreHorizontal size={20} aria-hidden="true" /></summary>

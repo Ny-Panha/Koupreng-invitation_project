@@ -23,7 +23,7 @@ function reveal(reducedMotion, delay, overrides = {}) {
   };
 }
 
-export default function CelestialOpening({ content, onOpen }) {
+export default function CelestialOpening({ content, onOpen, autoFocus = true }) {
   const reducedMotion = usePrefersReducedMotion();
   const [videoFailed, setVideoFailed] = useState(false);
   const openLabel = content.opening?.openButtonText || "Open invitation";
@@ -164,6 +164,7 @@ export default function CelestialOpening({ content, onOpen }) {
         <OpenInvitationCTA
           label={openLabel}
           onOpen={onOpen}
+          autoFocus={autoFocus}
         />
       </div>
     </motion.div>

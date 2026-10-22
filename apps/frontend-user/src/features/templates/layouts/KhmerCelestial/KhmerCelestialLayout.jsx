@@ -206,9 +206,9 @@ export default function KhmerCelestialLayout({
   }, [previewChannel]);
 
   useEffect(() => {
-    if (!opened) return;
+    if (!opened || preview) return;
     window.requestAnimationFrame(() => mainRef.current?.focus({ preventScroll: true }));
-  }, [opened]);
+  }, [opened, preview]);
 
   useEffect(() => {
     if (!openTransitionActive) return undefined;
@@ -286,7 +286,7 @@ export default function KhmerCelestialLayout({
       ) : null}
 
       <AnimatePresence>
-        {!opened ? <CelestialOpening key="opening" content={content} onOpen={handleOpen} /> : null}
+        {!opened ? <CelestialOpening key="opening" content={content} onOpen={handleOpen} autoFocus={!preview} /> : null}
       </AnimatePresence>
 
       {openTransitionActive ? (

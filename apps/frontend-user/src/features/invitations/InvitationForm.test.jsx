@@ -86,6 +86,21 @@ describe("Dynamic Templates & Presets", () => {
 });
 
 describe("InvitationForm render test", () => {
+    it.each([
+        { venueAddress: "Saved flat address" },
+        { event: { venueAddress: "Saved nested address" } },
+        { venue: { address: "Saved venue object address" } },
+    ])("keeps stored address content editable and sends it to the canonical API field: %j", async content => {
+        invitationService.update.mockClear();
+        const address = content.venueAddress || content.event?.venueAddress || content.venue?.address;
+        const { container } = render(<MemoryRouter><InvitationForm invitation={{ id: 101, templateId: 10, templateCode: "khmer-celestial", title: "Saved event", status: "DRAFT", venueAddress: null, contentJson: JSON.stringify(content) }} /></MemoryRouter>);
+        const input = container.querySelector('[name="venueAddress"]');
+        expect(input).not.toBeNull();
+        expect(input).toHaveValue(address);
+        await act(async () => { container.querySelector(".pe-save-main-btn").click(); });
+        await waitFor(() => expect(invitationService.update).toHaveBeenCalled());
+        expect(invitationService.update.mock.calls.at(-1)[1].venueAddress).toBe(address);
+    });
     it("keeps intentionally emptied collections empty after reopening and saving", async () => {
         invitationService.update.mockClear();
         const { container } = render(<MemoryRouter><InvitationForm invitation={{ id: 101, templateId: 10, title: "Saved event", status: "DRAFT", designJson: JSON.stringify({ photos: [], dressColors: [] }), contentJson: JSON.stringify({ schedule: [], storyChapters: [], party: [], faq: [] }) }} /></MemoryRouter>);

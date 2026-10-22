@@ -629,8 +629,9 @@ export default function InvitationForm({ invitation }) {
         const venueName = canonicalEvent ? (invitation.venueName || customParsed.venueName || "") : (invitation?.venueName || customParsed.venueName) && (invitation?.venueName !== "The Premier Center Sen Sok" && customParsed.venueName !== "The Premier Center Sen Sok")
             ? (invitation?.venueName || customParsed.venueName)
             : "";
-        const venueAddress = canonicalEvent ? (invitation.venueAddress || customParsed.venueAddress || "") : (invitation?.venueAddress || customParsed.venueAddress) && (invitation?.venueAddress !== "អគារ A, សែនសុខ, ភ្នំពេញ" && customParsed.venueAddress !== "អគារ A, សែនសុខ, ភ្នំពេញ")
-            ? (invitation?.venueAddress || customParsed.venueAddress)
+        const contentAddress = customParsed.venueAddress || customParsed.event?.venueAddress || customParsed.venue?.address;
+        const venueAddress = canonicalEvent ? (invitation.venueAddress || contentAddress || "") : (invitation?.venueAddress || contentAddress) && (invitation?.venueAddress !== "អគារ A, សែនសុខ, ភ្នំពេញ" && contentAddress !== "អគារ A, សែនសុខ, ភ្នំពេញ")
+            ? (invitation?.venueAddress || contentAddress)
             : "";
         const isEmptyDraft = Boolean(
             invitation
@@ -864,6 +865,11 @@ export default function InvitationForm({ invitation }) {
     const [pendingInvitationFile, setPendingInvitationFile] = useState(null);
     const [pendingInvitation2File, setPendingInvitation2File] = useState(null);
     const [locationError, setLocationError] = useState("");
+    const [venueAddressError, setVenueAddressError] = useState("");
+    const venueAddressInput = useRef(null);
+    useEffect(() => {
+        if (venueAddressError && activeSection === "venue") venueAddressInput.current?.focus();
+    }, [venueAddressError, activeSection]);
     const [isLocating, setIsLocating] = useState(false);
     const savedBackendId = useRef(invitation?.backendInvitationId || (/^[1-9]\d*$/.test(String(invitationId)) ? invitationId : null));
 
@@ -963,6 +969,7 @@ export default function InvitationForm({ invitation }) {
     const qrRielInputRef = useRef(null);
 
     const update = (field, value) => {
+        if (field === "venueAddress" && String(value).trim()) setVenueAddressError("");
         setForm((prev) => ({ ...prev, [field]: value }));
     };
     const moveItem = (field, index, direction) => {
@@ -1730,14 +1737,24 @@ export default function InvitationForm({ invitation }) {
 
     async function publishInvitation() {
         if (isPublishing) return;
+        if (!String(form.venueAddress || "").trim()) {
+            setVenueAddressError(englishUI ? "Enter the venue address before publishing." : "សូមបញ្ចូលអាសយដ្ឋានទីកន្លែងមុនពេលផ្សព្វផ្សាយ។");
+            setSelectedSection("venue");
+            return;
+        }
         setIsPublishing(true);
         try {
-            if (!await studio.save()) return;
+            if (!await studio.flush()) return;
             const result = await invitationService.publish(savedBackendId.current);
             if (result?.status !== "PUBLISHED") throw new Error("The server has not confirmed publication. Please retry.");
             setPublished(true);
             toast("បានផ្សព្វផ្សាយ · Invitation published", "success");
-        } catch (error) { toast(error.message || "Publication failed. Please retry.", "warning"); }
+        } catch (error) {
+            if (/Publish requirements missing:.*\bvenueAddress\b/.test(error.message || "")) {
+                setVenueAddressError(englishUI ? "The server has not saved this venue address. Save it again before publishing." : "ម៉ាស៊ីនមេមិនទាន់រក្សាទុកអាសយដ្ឋាននេះទេ។ សូមរក្សាទុកម្ដងទៀតមុនផ្សព្វផ្សាយ។");
+                setSelectedSection("venue");
+            } else toast(error.message || "Publication failed. Please retry.", "warning");
+        }
         finally { setIsPublishing(false); }
     }
 
@@ -2333,7 +2350,7 @@ export default function InvitationForm({ invitation }) {
             </h4>
 
             <div className="pe-form-group">
-                <label className="pe-label">
+                <label className="pe-label" htmlFor={`${fieldId}-venueName`}>
                     <span className="pe-label-icon"><MapPin size={15} /></span>
                     {t("venue") || "ទីតាំងប្រារព្ធពិធី (Venue Name)"}
                 </label>
@@ -2341,9 +2358,23 @@ export default function InvitationForm({ invitation }) {
                     type="text"
                     className="pe-input"
                     value={form.venueName}
+                    id={`${fieldId}-venueName`}
                     onChange={(e) => update("venueName", e.target.value)}
                     placeholder="The Premier Center Sen Sok"
                 />
+            </div>
+
+            <div className="pe-form-group">
+                <label className="pe-label" htmlFor={`${fieldId}-venueAddress`}>
+                    {englishUI ? "Venue address" : "អាសយដ្ឋានទីកន្លែង"}
+                </label>
+                <input ref={venueAddressInput} id={`${fieldId}-venueAddress`} name="venueAddress" type="text"
+                    className="pe-input" value={form.venueAddress} maxLength={1000} autoComplete="street-address"
+                    aria-required="true" aria-invalid={Boolean(venueAddressError)}
+                    aria-describedby={venueAddressError ? `${fieldId}-venueAddress-error` : `${fieldId}-venueAddress-hint`}
+                    onChange={e => update("venueAddress", e.target.value)} />
+                {venueAddressError ? <p id={`${fieldId}-venueAddress-error`} className="workspace-field-error" role="alert">{venueAddressError}</p>
+                    : <p id={`${fieldId}-venueAddress-hint`} className="workspace-muted">{englishUI ? "Required to publish. Include the street, area and city." : "ត្រូវការសម្រាប់ផ្សព្វផ្សាយ។ សូមបញ្ចូលផ្លូវ តំបន់ និងក្រុង។"}</p>}
             </div>
 
             <div className="pe-form-group">
