@@ -16,7 +16,7 @@ import LiveTickerBanner from "./components/LiveTickerBanner";
 import AnimatedNumber from "./components/AnimatedNumber";
 import AnimatedProgressBar from "./components/AnimatedProgressBar";
 import AnimatedTrendChart from "./components/AnimatedTrendChart";
-import LiveServicePassGrid from "./components/LiveServicePassGrid";
+import RecentInvitationsCard from "./components/RecentInvitationsCard";
 import CoreMetricsBox from "./components/CoreMetricsBox";
 import ConversionHealthBox from "./components/ConversionHealthBox";
 import {
@@ -156,14 +156,14 @@ export default function AdminDashboardPage() {
               </span>
               <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
                 {lang === "en"
-                  ? "Revenue Trend & Live Service Pass"
-                  : "និន្នាការចំណូល និងសកម្មភាពប្រព័ន្ធ (7 ថ្ងៃចុងក្រោយ)"}
+                  ? "Revenue Trend & Recent Invitations"
+                  : "និន្នាការចំណូល និងធៀបការថ្មីៗ (7 ថ្ងៃចុងក្រោយ)"}
               </h2>
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
               {lang === "en"
-                ? "Daily invitation revenue, confirmed RSVPs, and system pass queue"
-                : "ទិន្នន័យចំណូលប្រចាំថ្ងៃ និងកំណើនប្រតិបត្តិការធៀបការ"}
+                ? "Daily invitation revenue, confirmed RSVPs, and recent digital invitations"
+                : "ទិន្នន័យចំណូលប្រចាំថ្ងៃ និងធៀបការឌីជីថលទើបបង្កើតថ្មីៗ"}
             </p>
           </div>
 
@@ -250,10 +250,10 @@ export default function AdminDashboardPage() {
             </div>
           </div>
 
-          {/* Right Column (5 cols): Live Service Pass Grid + Conversion & Health Box directly underneath */}
+          {/* Right Column (5 cols): Recent Invitations Card + Conversion & Health Box directly underneath */}
           <div className="lg:col-span-5 xl:col-span-5 flex flex-col gap-5">
             <div className="animate-cascade" style={{ animationDelay: "0.24s" }}>
-              <LiveServicePassGrid lang={lang} />
+              <RecentInvitationsCard lang={lang} invitations={data.recentInvitations} />
             </div>
             <div className="animate-cascade" style={{ animationDelay: "0.32s" }}>
               <ConversionHealthBox

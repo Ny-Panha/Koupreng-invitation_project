@@ -35,7 +35,13 @@ describe("FE-010 editor protocol", () => {
     { type: "TOGGLE_GATE", sessionId, open: "true" },
     { type: "SELECT_TARGET_ELEMENT", sessionId, elementId: "<script>" },
     { type: "PREVIEW_READY", sessionId, data: {} },
+    { type: "SCROLL_TO_SECTION", sessionId },
   ])("rejects malformed or unexpected messages (%j)", (payload) => expect(isPreviewMessage(payload)).toBe(false));
+
+  it("accepts valid SCROLL_TO_SECTION payload", () => {
+    expect(isPreviewMessage({ type: "SCROLL_TO_SECTION", sessionId, sectionKey: "family" })).toBe(true);
+    expect(isPreviewMessage({ type: "SCROLL_TO_SECTION", sessionId, blockId: "block-1" })).toBe(true);
+  });
 
   it("accepts a valid editor payload only from the expected window and session", () => {
     const source = {};

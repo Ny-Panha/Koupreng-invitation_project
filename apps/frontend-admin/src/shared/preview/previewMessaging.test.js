@@ -19,6 +19,13 @@ describe("FE-010 admin preview boundary", () => {
     expect(source.postMessage).toHaveBeenCalledWith({ type: "LIVE_PREVIEW_SYNC", data: { groom: "Edited host" }, sessionId }, "https://user.example");
   });
 
+  it("sends SCROLL_TO_SECTION to the exact user origin", () => {
+    const source = { postMessage: vi.fn() };
+    const iframe = { src: "https://user.example/templates/default/preview", contentWindow: source };
+    postIframePreview(iframe, sessionId, { type: "SCROLL_TO_SECTION", sectionKey: "family" });
+    expect(source.postMessage).toHaveBeenCalledWith({ type: "SCROLL_TO_SECTION", sectionKey: "family", sessionId }, "https://user.example");
+  });
+
   it("preserves trusted ready and typography selection replies", () => {
     const source = {};
     const iframe = { src: "https://user.example/templates/default/preview", contentWindow: source };

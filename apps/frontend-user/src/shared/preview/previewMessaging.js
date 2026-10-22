@@ -7,6 +7,7 @@ const STRING_FIELDS = new Set([
   "coverImage", "coverBackgroundImage", "openingVideoUrl", "videoUrl", "backgroundImage",
   "guestName", "guestLabel", "primaryColor", "secondaryColor", "bankName", "bankAccountName",
   "bankAccountNumber", "qrGiftUrl", "googleMapUrl", "venueName", "venueAddress", "storyText",
+  "scheduleLayout",
 ]);
 const ARRAY_FIELDS = new Set([
   "photos", "galleryImages", "schedule", "faq", "party", "storyChapters", "sectionOrder",
@@ -36,7 +37,7 @@ function validData(value, depth = 0) {
 
 export function isPreviewMessage(data) {
   if (!isRecord(data) || !NONCE_PATTERN.test(data.sessionId || "")) return false;
-  if (Object.keys(data).some((key) => !["type", "sessionId", "data", "open", "isOpen", "elementId"].includes(key))) return false;
+  if (Object.keys(data).some((key) => !["type", "sessionId", "data", "open", "isOpen", "elementId", "sectionKey", "blockId"].includes(key))) return false;
   switch (data.type) {
     case "LIVE_PREVIEW_SYNC":
       return isRecord(data.data) && validData(data.data) && Object.entries(data.data).every(([key, value]) =>
@@ -49,6 +50,8 @@ export function isPreviewMessage(data) {
       return (typeof data.open === "boolean" || typeof data.isOpen === "boolean")
         && (data.open === undefined || typeof data.open === "boolean")
         && (data.isOpen === undefined || typeof data.isOpen === "boolean");
+    case "SCROLL_TO_SECTION":
+      return (typeof data.sectionKey === "string" || typeof data.blockId === "string");
     case "SELECT_TARGET_ELEMENT":
       return typeof data.elementId === "string" && /^[a-z][a-z0-9_-]{0,80}$/i.test(data.elementId);
     case "PREVIEW_READY":

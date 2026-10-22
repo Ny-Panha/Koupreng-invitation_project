@@ -98,21 +98,46 @@ export default function CelestialOpening({ content, onOpen, autoFocus = true }) 
           {content.opening?.heading || content.title || "សិរីសួស្តីអាពាហ៍ពិពាហ៍"}
         </motion.p>
 
-        <motion.div
-          className="kc-opening__brand-wrap"
-          initial={reducedMotion ? false : { opacity: 0, y: 25, scale: 0.94, filter: "blur(8px)" }}
-          animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-          transition={{ duration: reducedMotion ? 0 : 1.35, delay: reducedMotion ? 0 : 1, ease: EASE }}
-        >
-          <img
-            className="kc-opening__brand"
-            src={KHMER_CELESTIAL_ASSETS.brandMark}
-            alt={logoAlt}
-            width="768"
-            height="512"
-          />
-          <span className="kc-opening__brand-highlight" aria-hidden="true" />
-        </motion.div>
+        {content.showBrandMark !== false && (
+          <motion.div
+            className="kc-opening__brand-wrap"
+            initial={reducedMotion ? false : { opacity: 0, y: 25, scale: 0.94, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+            transition={{ duration: reducedMotion ? 0 : 1.35, delay: reducedMotion ? 0 : 1, ease: EASE }}
+          >
+            {content.brandMark ? (
+              <img
+                className="kc-opening__brand"
+                src={content.brandMark}
+                alt={logoAlt}
+                width="768"
+                height="512"
+              />
+            ) : names.length > 0 ? (
+              <div className="kc-opening__couple-calligraphy text-center py-2">
+                <h1
+                  className="text-2xl sm:text-3xl font-bold tracking-wide"
+                  style={{
+                    color: content.primaryColor || "#D4AF37",
+                    fontFamily: celestialElementFont(content, "couple")?.fontFamily || '"Moul", serif',
+                    textShadow: "0 2px 10px rgba(212, 175, 55, 0.4)",
+                  }}
+                >
+                  {content.groom} {content.amp || "♥"} {content.bride}
+                </h1>
+              </div>
+            ) : (
+              <img
+                className="kc-opening__brand"
+                src={KHMER_CELESTIAL_ASSETS.brandMark}
+                alt={logoAlt}
+                width="768"
+                height="512"
+              />
+            )}
+            <span className="kc-opening__brand-highlight" aria-hidden="true" />
+          </motion.div>
+        )}
 
         <motion.div className="kc-opening__date-block" {...reveal(reducedMotion, 2.18)}>
           {content.dateText ? <p className="kc-opening__date" style={celestialElementFont(content, "date")}>{content.dateText}</p> : null}

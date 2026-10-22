@@ -2,7 +2,7 @@ import { createElement, lazy, Suspense, useCallback, useEffect, useLayoutEffect,
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
-import { IoArrowBackOutline, IoSparkles } from "react-icons/io5";
+import { IoArrowBackOutline, IoSparkles, IoLayersOutline } from "react-icons/io5";
 import { buildTemplateContent } from "./config/templateExperienceContent";
 import {
     getVariantTheme,
@@ -303,6 +303,7 @@ function WeddingTemplateExperience({
             receptionTime: liveData.weddingTime || liveData.receptionTime || baseContent.receptionTime,
             music: liveData.musicUrl || liveData.music || baseContent.music,
             backgroundImage: liveData.backgroundImage || liveData.bgImage || baseContent.backgroundImage,
+            scheduleLayout: liveData.scheduleLayout || baseContent.scheduleLayout || "horizontal",
         };
     }, [baseContent, liveData, tpl.sections]);
     const DedicatedComponent = getDedicatedTemplateComponent(tpl, variant);
@@ -329,6 +330,54 @@ function WeddingTemplateExperience({
                 setPreviewGateCommand({ open: shouldOpen });
                 setGateState(shouldOpen ? "opened" : "closed");
                 setHeroOpened(shouldOpen);
+            }
+            if (event.data?.type === "SCROLL_TO_SECTION") {
+                const { sectionKey, blockId } = event.data;
+                setPreviewGateCommand({ open: true });
+                setGateState("opened");
+                setHeroOpened(true);
+
+                window.setTimeout(() => {
+                    let target = null;
+                    if (blockId) {
+                        target = document.querySelector(`[data-block-id="${blockId}"]`);
+                    }
+                    if (!target && sectionKey) {
+                        target = document.querySelector(`[data-section-key="${sectionKey}"]`);
+                    }
+                    if (!target && sectionKey) {
+                        const selectorMap = {
+                            family: '[data-tx-section="couple"], [data-kc-section="family"], .kc-family',
+                            invitation: '[data-tx-section="message"], .kc-invitation',
+                            countdown: '[data-tx-section="countdown"], .kc-countdown',
+                            schedule: '[data-tx-section="schedule"], .kc-schedule',
+                            map: '[data-tx-section="venue"], [data-tx-section="map"], .kc-venue',
+                            gallery: '[data-tx-section="gallery"], .kc-gallery',
+                            story: '[data-tx-section="story"], .kc-story',
+                            gift: '[data-tx-section="gift"], .kc-gift',
+                            dressCode: '[data-tx-section="dress"], [data-tx-section="dressCode"], .kc-dress',
+                            party: '[data-tx-section="party"], .kc-party',
+                            faq: '[data-tx-section="faq"], .kc-faq',
+                            rsvp: '[data-tx-section="rsvp"], .kc-rsvp',
+                            hero: '[data-tx-section="hero"], .kc-hero',
+                        };
+                        const fallbackSelector = selectorMap[sectionKey];
+                        if (fallbackSelector) {
+                            target = document.querySelector(fallbackSelector);
+                        }
+                    }
+
+                    if (target) {
+                        target.scrollIntoView({ behavior: "smooth", block: "center" });
+                        document.querySelectorAll(".studio-highlight-pulse").forEach((el) => {
+                            el.classList.remove("studio-highlight-pulse");
+                        });
+                        target.classList.add("studio-highlight-pulse");
+                        window.setTimeout(() => {
+                            target.classList.remove("studio-highlight-pulse");
+                        }, 2200);
+                    }
+                }, 120);
             }
         };
         window.addEventListener("message", handleMessage);
@@ -478,22 +527,29 @@ function WeddingTemplateExperience({
     const ornamentTheme = content.design?.ornamentTheme || "royal-floral";
 
     const customSections = useMemo(() => {
-        if (Array.isArray(content?.sections) && content.sections.length > 0) return content.sections;
-        if (Array.isArray(tpl?.sections) && tpl.sections.length > 0) return tpl.sections;
+        if (Array.isArray(liveData?.sections)) return liveData.sections;
+        if (Array.isArray(content?.sections)) return content.sections;
+        if (Array.isArray(tpl?.sections)) return tpl.sections;
         if (typeof tpl?.description === "string" && tpl.description.trim().startsWith("{")) {
             try {
                 const parsed = JSON.parse(tpl.description);
-                if (Array.isArray(parsed.sections) && parsed.sections.length > 0) return parsed.sections;
+                if (Array.isArray(parsed.sections)) return parsed.sections;
             } catch {
                 // ignore
             }
         }
         return [];
-    }, [content?.sections, tpl]);
+    }, [liveData?.sections, content?.sections, tpl]);
+
+    const isExplicitSectionsMode = useMemo(() => {
+        return Array.isArray(liveData?.sections) ||
+            (Array.isArray(content?.sections) && content.sections.length > 0) ||
+            (Array.isArray(tpl?.sections) && tpl.sections.length > 0);
+    }, [liveData?.sections, content?.sections, tpl]);
 
     const unifiedMode = useMemo(
-        () => Array.isArray(customSections) && customSections.some((b) => b?.type === "LEGACY_SECTION"),
-        [customSections]
+        () => isExplicitSectionsMode || (Array.isArray(customSections) && customSections.length > 0),
+        [isExplicitSectionsMode, customSections]
     );
 
     const effectiveEnabledSections = useMemo(() => {
@@ -508,7 +564,7 @@ function WeddingTemplateExperience({
         return map;
     }, [unifiedMode, customSections, content.enabledSections]);
 
-    if (DedicatedComponent) {
+    if (DedicatedComponent && !isExplicitSectionsMode) {
         return <Suspense fallback={<div className="public-state" role="status">កំពុងផ្ទុកសន្លឹកការ… / Loading invitation…</div>}><>{createElement(DedicatedTemplateRenderer, {
             component: DedicatedComponent,
             tpl: content,
@@ -588,24 +644,41 @@ function WeddingTemplateExperience({
                         className={`tx-experience${content.cardMotion ? ` tx-motion--${String(content.cardMotion).toLowerCase().replace(/_/g, "-")}` : ""}`}
                         ref={setContentNode}
                         tabIndex={-1}
-                        initial={reducedMotion ? false : { opacity: 0, y: 18 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: reducedMotion ? 0 : 0.65, ease: [0.22, 1, 0.36, 1] }}
+                        initial={reducedMotion ? false : { opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: reducedMotion ? 0 : 0.4 }}
                     >
                         {unifiedMode ? (
-                            <>
-                                <TemplateHero content={content} onOpen={handleHeroOpen} />
-                                <DynamicTemplateRenderer
-                                    sections={customSections}
-                                    content={content}
-                                    blockProps={{
-                                        onHeroOpen: handleHeroOpen,
-                                        rsvpChildren: children,
-                                        useTemplateLink,
-                                    }}
-                                />
-                                <TemplateFooter content={content} />
-                            </>
+                            customSections.length > 0 ? (
+                                <>
+                                    <TemplateHero content={content} onOpen={handleHeroOpen} />
+                                    <DynamicTemplateRenderer
+                                        sections={customSections}
+                                        content={content}
+                                        blockProps={{
+                                            onHeroOpen: handleHeroOpen,
+                                            rsvpChildren: children,
+                                            useTemplateLink,
+                                            preview,
+                                        }}
+                                    />
+                                    <TemplateFooter content={content} />
+                                </>
+                            ) : (
+                                <div className="py-24 px-6 text-center space-y-4 max-w-sm mx-auto">
+                                    <div className="w-16 h-16 mx-auto rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 shadow-sm">
+                                        <IoLayersOutline className="w-8 h-8" />
+                                    </div>
+                                    <div className="space-y-1.5">
+                                        <h4 className="text-sm font-bold text-zinc-100">
+                                            មិនទាន់មាន Sections នៅលើគំរូនេះទេ
+                                        </h4>
+                                        <p className="text-xs text-zinc-400 leading-relaxed">
+                                            សូមចុច &quot;+ Cinematic Scroll&quot;, &quot;+ Image&quot;, &quot;+ Text&quot; ឬ &quot;+ Section&quot; ក្នុង Studio ខាងឆ្វេង ដើម្បីរៀបចំទំព័រ។
+                                        </p>
+                                    </div>
+                                </div>
+                            )
                         ) : (
                             <>
                                 <TemplateHero content={content} onOpen={handleHeroOpen} />

@@ -85,6 +85,8 @@ export default function TemplateUnifiedSectionsManager({
   onChange,
   onJumpToTab,
   onResetDefault,
+  selectedId,
+  onSelectSection,
   lang = "km",
 }) {
   const [collapsedIds, setCollapsedIds] = useState({});
@@ -414,22 +416,28 @@ export default function TemplateUnifiedSectionsManager({
                         desc: "",
                       };
                       const isEnabled = item.data?.enabled !== false;
+                      const isSelected = selectedId === item.id;
 
                       return (
                         <div
-                          className={`flex items-center justify-between gap-3 rounded-xl border p-2.5 transition-all shadow-sm ${
+                          onClick={() => onSelectSection?.(item)}
+                          className={`group flex items-center justify-between gap-3 rounded-xl border p-2.5 transition-all shadow-sm cursor-pointer ${
                             isDragging
                               ? "border-amber-500 bg-zinc-900 shadow-xl"
+                              : isSelected
+                              ? "border-amber-500/90 bg-amber-500/15 ring-2 ring-amber-400/80 shadow-lg shadow-amber-500/10"
                               : isEnabled
-                              ? "border-zinc-800 bg-zinc-950/70 hover:border-zinc-700"
-                              : "border-zinc-800/40 bg-zinc-950/30 opacity-60"
+                              ? "border-zinc-800 bg-zinc-950/70 hover:border-amber-500/40 hover:bg-zinc-900/60"
+                              : "border-zinc-800/40 bg-zinc-950/30 opacity-60 hover:opacity-85"
                           }`}
+                          title={lang === "en" ? "Click to view and scroll on phone preview" : "ចុចដើម្បីរំកិលមើលផ្នែកនេះលើទូរស័ព្ទ"}
                         >
                           {/* Left: Drag Handle, Toggle eye, Info */}
                           <div className="flex items-center gap-2.5 min-w-0">
                             <div
                               {...attributes}
                               {...listeners}
+                              onClick={(e) => e.stopPropagation()}
                               className="flex items-center gap-1.5 text-zinc-500 hover:text-amber-400 cursor-grab active:cursor-grabbing p-1 -m-1 touch-none"
                               title={lang === "en" ? "Drag to reorder" : "ចាប់ទាញដើម្បីរៀបលំដាប់"}
                             >
@@ -441,7 +449,10 @@ export default function TemplateUnifiedSectionsManager({
 
                             <button
                               type="button"
-                              onClick={() => handleToggleEnabled(item.id)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleToggleEnabled(item.id);
+                              }}
                               className={`rounded-lg p-1.5 transition cursor-pointer ${
                                 isEnabled
                                   ? "text-emerald-400 hover:bg-emerald-500/10"
@@ -455,10 +466,19 @@ export default function TemplateUnifiedSectionsManager({
                             <div className="min-w-0">
                               <div className="flex items-center gap-1.5">
                                 <span className={`block text-xs font-semibold truncate ${
-                                  isEnabled ? "text-zinc-100" : "text-zinc-400 line-through"
+                                  isSelected
+                                    ? "text-amber-300 font-bold"
+                                    : isEnabled
+                                    ? "text-zinc-100"
+                                    : "text-zinc-400 line-through"
                                 }`}>
                                   {info.label}
                                 </span>
+                                {isSelected && (
+                                  <span className="text-[9px] font-bold px-1.5 py-0.2 rounded bg-amber-400 text-zinc-950 animate-pulse">
+                                    {lang === "en" ? "Active" : "មើលលើ Phone"}
+                                  </span>
+                                )}
                                 {item.data?.animation && item.data.animation !== "none" && (
                                   <span className="text-[9px] font-medium px-1.5 py-0.5 rounded-md border border-cyan-500/30 bg-cyan-500/10 text-cyan-300">
                                     ✨ {item.data.animation}
@@ -474,12 +494,15 @@ export default function TemplateUnifiedSectionsManager({
                           </div>
 
                           {/* Right: Jump to tab, Reorder, Delete */}
-                          <div className="flex items-center gap-1 shrink-0">
+                          <div className="flex items-center gap-1 shrink-0" onClick={(e) => e.stopPropagation()}>
                             {info.tabTarget && onJumpToTab && (
                               <button
                                 type="button"
-                                onClick={() => onJumpToTab(info.tabTarget, info.subTab)}
-                                className="flex items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-medium text-zinc-400 hover:bg-zinc-800 hover:text-amber-400 transition cursor-pointer"
+                                onClick={() => {
+                                  onSelectSection?.(item);
+                                  onJumpToTab(info.tabTarget, info.subTab);
+                                }}
+                                className="flex items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-semibold text-amber-300 bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/25 transition cursor-pointer"
                                 title={lang === "en" ? "Edit in tab" : "កែប្រែក្នុង Tab"}
                               >
                                 <ExternalLink className="h-3 w-3" />
@@ -520,6 +543,7 @@ export default function TemplateUnifiedSectionsManager({
 
                     // Custom Block Item
                     const isCollapsed = Boolean(collapsedIds[item.id]);
+                    const isCustomSelected = selectedId === item.id;
                     let typeLabel = "Block";
                     let TypeIcon = Layers;
 
@@ -539,15 +563,22 @@ export default function TemplateUnifiedSectionsManager({
                         className={`rounded-xl border overflow-hidden transition-all shadow-sm ${
                           isDragging
                             ? "border-amber-500 bg-zinc-900 shadow-xl"
-                            : "border-amber-500/30 bg-zinc-950/80"
+                            : isCustomSelected
+                            ? "border-amber-500/90 ring-2 ring-amber-400/80 bg-zinc-950 shadow-lg shadow-amber-500/10"
+                            : "border-amber-500/30 bg-zinc-950/80 hover:border-amber-500/50"
                         }`}
                       >
                         {/* Custom Block Header */}
-                        <div className="flex items-center justify-between px-3.5 py-2.5 bg-zinc-900/80 border-b border-zinc-800/80">
+                        <div
+                          onClick={() => onSelectSection?.(item)}
+                          className="flex items-center justify-between px-3.5 py-2.5 bg-zinc-900/80 border-b border-zinc-800/80 cursor-pointer hover:bg-zinc-800/90 transition"
+                          title={lang === "en" ? "Click to view and scroll on phone preview" : "ចុចដើម្បីរំកិលមើល Block នេះលើទូរស័ព្ទ"}
+                        >
                           <div className="flex items-center gap-2.5 min-w-0">
                             <div
                               {...attributes}
                               {...listeners}
+                              onClick={(e) => e.stopPropagation()}
                               className="flex items-center gap-1.5 text-zinc-500 hover:text-amber-400 cursor-grab active:cursor-grabbing p-1 -m-1 touch-none"
                               title={lang === "en" ? "Drag to reorder" : "ចាប់ទាញដើម្បីរៀបលំដាប់"}
                             >
@@ -557,9 +588,14 @@ export default function TemplateUnifiedSectionsManager({
                               </span>
                             </div>
                             <TypeIcon className="h-3.5 w-3.5 text-amber-400 shrink-0" />
-                            <span className="text-xs font-semibold text-zinc-200 truncate">
+                            <span className={`text-xs font-semibold truncate ${isCustomSelected ? "text-amber-300 font-bold" : "text-zinc-200"}`}>
                               {typeLabel}
                             </span>
+                            {isCustomSelected && (
+                              <span className="text-[9px] font-bold px-1.5 py-0.2 rounded bg-amber-400 text-zinc-950 animate-pulse">
+                                {lang === "en" ? "Active" : "មើលលើ Phone"}
+                              </span>
+                            )}
                             <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 uppercase">
                               CMS Block
                             </span>
@@ -571,7 +607,7 @@ export default function TemplateUnifiedSectionsManager({
                           </div>
 
                           {/* Actions: Reorder, Collapse, Delete */}
-                          <div className="flex items-center gap-1 shrink-0">
+                          <div className="flex items-center gap-1 shrink-0" onClick={(e) => e.stopPropagation()}>
                             <button
                               type="button"
                               disabled={isFirst}

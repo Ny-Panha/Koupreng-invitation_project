@@ -32,6 +32,14 @@ body:has(.tpl-wed-root) {
     scrollbar-width: none !important;
     -ms-overflow-style: none !important;
     background: #090605 !important;
+    overflow-x: clip !important;
+    overflow-y: visible !important;
+}
+
+body:has(.tpl-wed-root) #root {
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
 }
 
 html:has(.tpl-wed-root)::-webkit-scrollbar,
@@ -43,11 +51,10 @@ body:has(.tpl-wed-root)::-webkit-scrollbar {
 
 .tpl-wed-root--embedded {
     min-height: 100vh;
-    height: 100%;
     display: flex;
     flex-direction: column;
     background: #090605;
-    overflow-x: hidden;
+    overflow: visible !important;
     scrollbar-width: none !important;
     -ms-overflow-style: none !important;
 }

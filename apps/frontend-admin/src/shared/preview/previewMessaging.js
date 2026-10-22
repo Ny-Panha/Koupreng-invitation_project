@@ -30,11 +30,15 @@ function iframeChannel(iframe, sessionId) {
 
 export function postIframePreview(iframe, sessionId, message) {
   const channel = iframeChannel(iframe, sessionId);
-  if (!channel || !["LIVE_PREVIEW_SYNC", "TOGGLE_GATE"].includes(message.type)) return false;
+  if (!channel || !["LIVE_PREVIEW_SYNC", "TOGGLE_GATE", "SCROLL_TO_SECTION"].includes(message.type)) return false;
   if (message.type === "TOGGLE_GATE" && typeof message.open !== "boolean") return false;
-  if (message.type === "LIVE_PREVIEW_SYNC" && (!message.data || typeof message.data !== "object" || Array.isArray(message.data))) return false;
-  channel.source.postMessage({ ...message, sessionId }, channel.origin);
-  return true;
+  if (message.type === "SCROLL_TO_SECTION" && (!message.sectionKey && !message.blockId)) return false;
+  try {
+    channel.source.postMessage({ ...message, sessionId }, channel.origin);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 export function isTrustedPreviewReply(event, iframe, sessionId) {
