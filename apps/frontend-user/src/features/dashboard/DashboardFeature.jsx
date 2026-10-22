@@ -7,6 +7,7 @@ import { Link, useSearchParams, useParams } from "react-router-dom";
 import { invitationService } from "@/features/invitations/api/invitationApi";
 import { eventPath } from "@/features/events/workspace/eventRoutes";
 import { eventStatus } from "@/features/events/workspace/eventNavigationModel";
+import { EVENT_TYPES } from "@/features/events/onboarding/eventFields";
 import { CalendarDays, CheckCircle2, Circle, ArrowRight, Eye, Palette, Users, ScanLine, Wallet, ChartColumn } from "lucide-react";
 import { formatLocalDate } from "@/shared/utils/localDate";
 import { loadServerDashboard, groupAmounts } from "./dashboardData";
@@ -337,12 +338,12 @@ export default function DashboardFeature() {
     {actionError && <p className="workspace-notice" role="alert">{actionError}</p>}
     <section className="overview-hero">
       <div className="overview-cover" aria-hidden="true">
-        {invitation.coverUrl || invitation.templateThumbnailUrl ? <img src={invitation.coverUrl || invitation.templateThumbnailUrl} alt="" /> : <CalendarDays size={64} strokeWidth={1} />}
+        {invitation.coverUrl || invitation.templateThumbnailUrl || invitation.templateCode === "event-essential" ? <img src={invitation.coverUrl || invitation.templateThumbnailUrl || "/templates/event-essential.svg"} alt="" /> : <CalendarDays size={64} strokeWidth={1} />}
       </div>
       <div className="overview-hero-content">
-        <span className={`event-status-pill badge-${publicationStatus.tone}`}>{publicationStatus.label}</span>
+        <div className="overview-event-labels"><span className={`event-status-pill badge-${publicationStatus.tone}`}>{publicationStatus.label}</span><span className="workspace-muted">{EVENT_TYPES.find(type => type[0] === invitation.eventType)?.[english ? 2 : 1]}</span></div>
         <h2>{stats.title}</h2>
-        <p>{[formatLocalDate(stats.eventDate, english ? "en-US" : "km-KH"), stats.venue].filter(Boolean).join(" · ")}</p>
+        <p>{[formatLocalDate(stats.eventDate, english ? "en-US" : "km-KH"), invitation.eventTime?.slice(0, 5), stats.venue].filter(Boolean).join(" · ")}</p>
         {timeRemaining.hasDate && !timeRemaining.isPast && <p className="workspace-muted">{timeRemaining.days} {label("days to your celebration", "ថ្ងៃទៀតដល់កម្មវិធីរបស់អ្នក")}</p>}
         <div className="overview-actions">
           <Link className="workspace-button primary" to={eventPath(stats.id, primaryAction.module)}><ArrowRight size={18} />{primaryAction.title}</Link>
@@ -355,10 +356,20 @@ export default function DashboardFeature() {
         </div></details>
       </div>
     </section>
+    {(stats.guestTotal > 0 || state.budgetItems.length > 0 || state.gifts.length > 0) && <section className="overview-metrics" aria-label={label("Event activity", "សកម្មភាពកម្មវិធី")}>
+      {stats.guestTotal > 0 && <>
+        <Link to={eventPath(stats.id, "guests")}><span>{text("statGuests")}</span><strong>{stats.guestTotal}</strong></Link>
+        <Link to={eventPath(stats.id, "rsvp")}><span>{label("Confirmed", "បានយល់ព្រម")}</span><strong>{stats.rsvpYes}</strong></Link>
+        <Link to={eventPath(stats.id, "rsvp")}><span>{label("Pending responses", "រង់ចាំការឆ្លើយតប")}</span><strong>{stats.rsvpPending}</strong></Link>
+        <Link to={eventPath(stats.id, "check-in")}><span>{label("Checked in", "បានចូលរួម")}</span><strong>{stats.checkedInCount}</strong></Link>
+      </>}
+      {state.budgetItems.length > 0 && <Link to={eventPath(stats.id, "budget")}><span>{text("statBudget")}</span><strong>{currencyAmounts(stats.expenseAmounts)}</strong></Link>}
+      {state.gifts.length > 0 && <Link to={eventPath(stats.id, "gifts")}><span>{text("statGifts")}</span><strong>{currencyAmounts(stats.giftAmounts)}</strong></Link>}
+    </section>}
     <section className="overview-columns">
       <div className="workspace-section overview-preparation">
-        <div className="workspace-section-heading"><h2>{label("Prepare your celebration", "រៀបចំកម្មវិធីរបស់អ្នក")}</h2><span className="workspace-badge">{preparation.filter(step => step.done).length}/{preparation.length}</span></div>
-        <ol className="overview-checklist">{preparation.map(step => <li key={step.module + step.title} className={step.done ? "is-done" : ""}>
+        <div className="workspace-section-heading"><h2>{stats.status === "PUBLISHED" ? label("Next steps", "ជំហានបន្ទាប់") : label("Prepare your celebration", "រៀបចំកម្មវិធីរបស់អ្នក")}</h2><span className="workspace-badge">{preparation.filter(step => step.done).length}/{preparation.length}</span></div>
+        <ol className="overview-checklist">{(stats.status === "PUBLISHED" ? [...preparation.slice(3), ...preparation.slice(0, 3)] : preparation).map(step => <li key={step.module + step.title} className={step.done ? "is-done" : ""}>
           {step.done ? <CheckCircle2 size={22} aria-label={label("Complete", "រួចរាល់")} /> : <Circle size={22} aria-label={label("To do", "ត្រូវធ្វើ")} />}
           <Link to={eventPath(stats.id, step.module)}><strong>{step.title}</strong><span>{step.description}</span></Link><ArrowRight size={16} aria-hidden="true" />
         </li>)}</ol>
@@ -370,16 +381,6 @@ export default function DashboardFeature() {
         ].map(([module, Icon, title]) => <Link key={module} to={eventPath(stats.id, module)}><Icon size={20} aria-hidden="true" /><span>{title}</span></Link>)}</div>
       </div>
     </section>
-    {(stats.guestTotal > 0 || state.budgetItems.length > 0 || state.gifts.length > 0) && <section className="overview-metrics" aria-label={label("Event activity", "សកម្មភាពកម្មវិធី")}>
-      {stats.guestTotal > 0 && <>
-        <Link to={eventPath(stats.id, "guests")}><span>{text("statGuests")}</span><strong>{stats.guestTotal}</strong></Link>
-        <Link to={eventPath(stats.id, "rsvp")}><span>{label("Confirmed", "បានយល់ព្រម")}</span><strong>{stats.rsvpYes}</strong></Link>
-        <Link to={eventPath(stats.id, "rsvp")}><span>{label("Pending responses", "រង់ចាំការឆ្លើយតប")}</span><strong>{stats.rsvpPending}</strong></Link>
-        <Link to={eventPath(stats.id, "check-in")}><span>{label("Checked in", "បានចូលរួម")}</span><strong>{stats.checkedInCount}</strong></Link>
-      </>}
-      {state.budgetItems.length > 0 && <Link to={eventPath(stats.id, "budget")}><span>{text("statBudget")}</span><strong>{currencyAmounts(stats.expenseAmounts)}</strong></Link>}
-      {state.gifts.length > 0 && <Link to={eventPath(stats.id, "gifts")}><span>{text("statGifts")}</span><strong>{currencyAmounts(stats.giftAmounts)}</strong></Link>}
-    </section>}
     <section className="workspace-section"><div className="workspace-section-heading"><h2>{text("notificationsTitle")}</h2><Link to="/app/notifications" className="workspace-button">{text("notificationsViewAll")}</Link></div>
       {state.notifications.length ? <ul className="overview-activity">{state.notifications.slice(0, 4).map((notification, index) => <li key={notification.id || index}><strong>{notification.title || notification.message}</strong>{notification.title && <p>{notification.message}</p>}</li>)}</ul> : <p className="workspace-muted">{text("notificationsEmpty")}</p>}
       <Link className="overview-report-link" to={eventPath(stats.id, "reports")}><ChartColumn size={18} />{label("View event report", "មើលរបាយការណ៍កម្មវិធី")}</Link>
