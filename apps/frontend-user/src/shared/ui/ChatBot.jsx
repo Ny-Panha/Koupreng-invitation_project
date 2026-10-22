@@ -15,9 +15,9 @@ const TRANSLATIONS = {
     opt1Title: "Explore Koupreng Templates",
     opt1Desc: "Find the perfect design for your wedding and start customizing.",
     opt2Title: "Looking to upgrade plan",
-    opt2Desc: "Discover Gold or Diamond packages for exclusive features.",
+    opt2Desc: "Review the current packages and their available features.",
     opt3Title: "Telegram Bot Support",
-    opt3Desc: `Chat directly with our support bot on Telegram (@${BOT_USERNAME}).`,
+    opt3Desc: `Open our Telegram bot (@${BOT_USERNAME}).`,
     adminSayHi: "Hi! 👋 How can I help you today?",
     inputPlaceholder: "Enter message to chat with bot...",
     poweredBy: "powered by"
@@ -29,9 +29,9 @@ const TRANSLATIONS = {
     opt1Title: "ស្វែងរកគំរូសន្លឹកការ (Templates)",
     opt1Desc: "ស្វែងរកការរចនាដ៏ស្រស់ស្អាតសម្រាប់ពិធីមង្គលការរបស់អ្នក។",
     opt2Title: "ចង់ដំឡើងកញ្ចប់សេវាកម្ម (Packages)",
-    opt2Desc: "ស្វែងយល់ពីកញ្ចប់ Gold ឬ Diamond សម្រាប់មុខងារពិសេសៗ។",
+    opt2Desc: "ពិនិត្យកញ្ចប់បច្ចុប្បន្ន និងមុខងារដែលមាន។",
     opt3Title: "ជំនួយផ្ទាល់តាម Telegram Bot",
-    opt3Desc: `ជជែកផ្ទាល់ជាមួយ Bot គាំទ្រតាម Telegram (@${BOT_USERNAME})។`,
+    opt3Desc: `បើក Bot របស់យើងតាម Telegram (@${BOT_USERNAME})។`,
     adminSayHi: "សួស្តី! 👋 តើខ្ញុំអាចជួយអ្វីអ្នកបានទេថ្ងៃនេះ?",
     inputPlaceholder: "វាយបញ្ចូលសារដើម្បីសួរ Telegram Bot...",
     poweredBy: "គាំទ្រដោយ"
@@ -44,6 +44,9 @@ export default function ChatBot() {
   const lang = useLanguageStore((state) => state.lang) || "en";
   const t = TRANSLATIONS[lang] || TRANSLATIONS.en;
   const isWorkspace = location.pathname.startsWith("/app/") || location.pathname.startsWith("/dashboard");
+  const allowGreeting = !isWorkspace
+    && !["/", "/pricing", "/contact", "/templates", "/login", "/register", "/forgot-password", "/reset-password"].includes(location.pathname)
+    && !location.pathname.startsWith("/payments/") && !location.pathname.endsWith("/checkout");
   
   const [isOpen, setIsOpen] = useState(false);
   const [showGreeting, setShowGreeting] = useState(true);
@@ -204,7 +207,7 @@ export default function ChatBot() {
 
       {/* Floating Greeting Bubble */}
       <AnimatePresence>
-        {!isOpen && showGreeting && !location.pathname.startsWith("/app/") && !location.pathname.startsWith("/dashboard") && !["/", "/pricing", "/contact", "/templates"].includes(location.pathname) && (
+        {!isOpen && showGreeting && allowGreeting && (
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}

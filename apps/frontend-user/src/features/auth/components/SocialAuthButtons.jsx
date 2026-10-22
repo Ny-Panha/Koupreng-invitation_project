@@ -523,7 +523,7 @@ export default function SocialAuthButtons({ redirectTo = "/app/events", mode = "
 
   return (
     <>
-      {linking && <p className="auth-hint">Choose the Google or Telegram identity to link to this signed-in account. No accounts will be merged.</p>}
+      {linking && <p className="auth-hint">{isKm ? "ជ្រើសគណនី Google ឬ Telegram ដើម្បីភ្ជាប់ទៅគណនីដែលបានចូលនេះ។ គណនីនឹងមិនត្រូវបានបញ្ចូលគ្នាទេ។" : "Choose the Google or Telegram identity to link to this signed-in account. No accounts will be merged."}</p>}
       <div className="auth-socials">
 
         {/* Google */}
