@@ -453,11 +453,18 @@ export default function TemplateUnifiedSectionsManager({
                             </button>
 
                             <div className="min-w-0">
-                              <span className={`block text-xs font-semibold truncate ${
-                                isEnabled ? "text-zinc-100" : "text-zinc-400 line-through"
-                              }`}>
-                                {info.label}
-                              </span>
+                              <div className="flex items-center gap-1.5">
+                                <span className={`block text-xs font-semibold truncate ${
+                                  isEnabled ? "text-zinc-100" : "text-zinc-400 line-through"
+                                }`}>
+                                  {info.label}
+                                </span>
+                                {item.data?.animation && item.data.animation !== "none" && (
+                                  <span className="text-[9px] font-medium px-1.5 py-0.5 rounded-md border border-cyan-500/30 bg-cyan-500/10 text-cyan-300">
+                                    ✨ {item.data.animation}
+                                  </span>
+                                )}
+                              </div>
                               {info.desc && (
                                 <span className="block text-[10px] text-zinc-500 truncate">
                                   {info.desc}
@@ -553,9 +560,14 @@ export default function TemplateUnifiedSectionsManager({
                             <span className="text-xs font-semibold text-zinc-200 truncate">
                               {typeLabel}
                             </span>
-                            <span className="text-[9px] font-bold px-1.5 py-0.2 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 uppercase">
+                            <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 uppercase">
                               CMS Block
                             </span>
+                            {item.data?.animation && item.data.animation !== "none" && (
+                              <span className="text-[9px] font-medium px-1.5 py-0.5 rounded-md border border-cyan-500/30 bg-cyan-500/10 text-cyan-300">
+                                ✨ {item.data.animation}
+                              </span>
+                            )}
                           </div>
 
                           {/* Actions: Reorder, Collapse, Delete */}

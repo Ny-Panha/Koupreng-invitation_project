@@ -1,62 +1,128 @@
 import { RefreshCw, AlertCircle, Inbox } from "lucide-react";
+import AnimatedNumber from "./AnimatedNumber";
+
+export { AnimatedNumber };
 
 export function AdminPageHeader({ title, subtitle, actions, eyebrow }) {
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-      <div>
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 animate-cascade" style={{ animationDelay: "0.04s" }}>
+      <div className="animate-zoom-in" style={{ animationDelay: "0.06s" }}>
         {eyebrow && (
-          <p className="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-1">
+          <p className="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-1 animate-text-reveal" style={{ animationDelay: "0.04s" }}>
             {eyebrow}
           </p>
         )}
-        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-zinc-100 leading-normal">
+        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-zinc-100 leading-normal animate-text-reveal" style={{ animationDelay: "0.08s" }}>
           {title}
         </h2>
         {subtitle && (
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-zinc-400 mt-1">
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-zinc-400 mt-1 animate-text-reveal" style={{ animationDelay: "0.14s" }}>
             {subtitle}
           </p>
         )}
       </div>
-      {actions && <div className="flex items-center gap-2.5 flex-wrap">{actions}</div>}
+      {actions && (
+        <div className="flex items-center gap-2.5 flex-wrap animate-zoom-in" style={{ animationDelay: "0.16s" }}>
+          {actions}
+        </div>
+      )}
     </div>
   );
 }
 
-export function StatCard({ label, value, note, icon: Icon, tone = "amber" }) {
+export function StatCard({
+  label,
+  value,
+  note,
+  icon: Icon,
+  tone = "amber",
+  trend,
+  trendTone = "emerald",
+  badge,
+  progress,
+  progressTone,
+  className = "animate-cascade",
+  style = {},
+}) {
   const toneClasses = {
-    amber: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20",
-    emerald: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
-    cyan: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border-cyan-500/20",
-    purple: "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20",
-    rose: "bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20",
+    amber: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20 group-hover:bg-amber-500/20",
+    emerald: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20 group-hover:bg-emerald-500/20",
+    cyan: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border-cyan-500/20 group-hover:bg-cyan-500/20",
+    purple: "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20 group-hover:bg-purple-500/20",
+    rose: "bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20 group-hover:bg-rose-500/20",
   };
 
   const selectedTone = toneClasses[tone] || toneClasses.amber;
+  const displayValue =
+    typeof value === "number" ? <AnimatedNumber value={value} /> : (value ?? "—");
 
   return (
-    <article className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-xs dark:border-zinc-800 dark:bg-[#111113] transition-all hover:shadow-md hover:border-amber-500/30">
-      <div className="flex items-start justify-between">
-        <span className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-zinc-500">
+    <article
+      style={style}
+      className={`group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/90 p-5 shadow-xs dark:border-zinc-850 dark:bg-[#111114]/90 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-amber-500/40 cursor-default ${className}`.trim()}
+    >
+      {/* Top subtle rim highlight */}
+      <div className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-slate-200/60 dark:via-white/10 to-transparent" />
+      
+      <div className="flex items-start justify-between gap-2">
+        <span className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-zinc-500 truncate animate-text-reveal" style={{ animationDelay: "0.08s" }}>
           {label}
         </span>
         {Icon && (
-          <div className={`flex h-9 w-9 items-center justify-center rounded-xl border ${selectedTone}`}>
+          <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border ${selectedTone} transition-all duration-300 group-hover:scale-110 shadow-xs animate-zoom-in`} style={{ animationDelay: "0.10s" }}>
             <Icon className="h-4 w-4" />
           </div>
         )}
       </div>
-      <strong className="block text-2xl font-black tracking-tight text-slate-900 dark:text-zinc-100 mt-2">
-        {value ?? "—"}
-      </strong>
+
+      <div className="flex items-baseline gap-2 mt-2">
+        <strong className="block text-2xl font-black tracking-tight text-slate-900 dark:text-zinc-100 transition-colors group-hover:text-amber-600 dark:group-hover:text-amber-400 animate-text-reveal" style={{ animationDelay: "0.14s" }}>
+          {displayValue}
+        </strong>
+        {trend && (
+          <span className="inline-flex items-center text-[11px] font-bold text-emerald-600 dark:text-emerald-400 animate-zoom-in" style={{ animationDelay: "0.18s" }}>
+            {trend}
+          </span>
+        )}
+        {badge && (
+          <span className="ml-auto rounded-md bg-amber-500/15 px-1.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-amber-600 dark:text-amber-400 animate-zoom-in" style={{ animationDelay: "0.20s" }}>
+            {badge}
+          </span>
+        )}
+      </div>
+
+      {progress != null && (
+        <div className="mt-2.5">
+          <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-zinc-800">
+            <div
+              className={`h-full rounded-full bg-gradient-to-r ${
+                tone === "cyan"
+                  ? "from-cyan-500 to-blue-500"
+                  : tone === "emerald"
+                  ? "from-emerald-500 to-emerald-600"
+                  : tone === "purple"
+                  ? "from-purple-500 to-indigo-600"
+                  : "from-amber-500 to-amber-600"
+              }`}
+              style={{
+                width: `${Math.min(Math.max(Number(progress) || 0, 0), 100)}%`,
+                transition: "width 1s cubic-bezier(0, 0, 0.2, 1) 0.2s",
+                willChange: "width",
+              }}
+            />
+          </div>
+        </div>
+      )}
+
       {note && (
-        <p className="text-xs text-slate-500 dark:text-zinc-400 mt-1.5 font-medium truncate">
+        <p className="text-xs text-slate-500 dark:text-zinc-400 mt-2 font-medium truncate animate-text-reveal" style={{ animationDelay: "0.22s" }}>
           {note}
         </p>
       )}
     </article>
   );
 }
+
 
 export function StatusBadge({ status, tone }) {
   const value = status || "—";
@@ -155,11 +221,11 @@ export function FilterTabs({ items, active, onChange }) {
   );
 }
 
-export function DataTable({ columns, rows, getRowKey, emptyLabel = "មិនមានទិន្នន័យទេ" }) {
+export function DataTable({ columns, rows, getRowKey, emptyLabel = "មិនមានទិន្នន័យទេ", className = "" }) {
   if (!rows?.length) return <EmptyState label={emptyLabel} />;
 
   return (
-    <div className="overflow-x-auto rounded-2xl border border-slate-200/80 bg-white dark:border-zinc-800 dark:bg-[#111113] shadow-xs">
+    <div className={`overflow-x-auto rounded-2xl border border-slate-200/80 bg-white dark:border-zinc-800 dark:bg-[#111113] shadow-xs animate-cascade ${className}`.trim()} style={{ animationDelay: "0.15s" }}>
       <table className="w-full text-left text-xs sm:text-sm">
         <thead className="border-b border-slate-200 bg-slate-50/75 dark:border-zinc-800 dark:bg-zinc-900/50">
           <tr>
@@ -177,6 +243,7 @@ export function DataTable({ columns, rows, getRowKey, emptyLabel = "មិនម
           {rows.map((row, index) => (
             <tr
               key={getRowKey ? getRowKey(row, index) : row.id ?? index}
+              style={{ animationDelay: `${Math.min(0.06 + index * 0.03, 0.45)}s` }}
               className="hover:bg-slate-50/80 dark:hover:bg-zinc-800/40 transition-colors"
             >
               {columns.map((column) => (

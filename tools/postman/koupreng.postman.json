@@ -1,0 +1,731 @@
+{
+    "version": "0.1",
+    "project": {
+        "name": "Koupreng Backend API",
+        "baseUrl": "http://localhost:8080",
+        "description": "Koupreng wedding invitation platform backend API"
+    },
+    "default": {
+        "workspace": "koupreng-api",
+        "collection": "koupreng-backend",
+        "environment": "local"
+    },
+    "workspaces": {},
+    "collections": {},
+    "environments": {},
+    "pendingCollection": {
+        "info": {
+            "name": "Koupreng Backend API",
+            "description": "API collection for Koupreng wedding invitation platform",
+            "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+        },
+        "item": [
+            {
+                "name": "Health",
+                "item": [
+                    {
+                        "name": "Health Check",
+                        "request": {
+                            "method": "GET",
+                            "header": [],
+                            "url": {
+                                "raw": "{{API_URL}}/api/health",
+                                "host": [
+                                    "{{API_URL}}"
+                                ],
+                                "path": [
+                                    "api",
+                                    "health"
+                                ]
+                            }
+                        },
+                        "event": [
+                            {
+                                "listen": "test",
+                                "script": {
+                                    "type": "text/javascript",
+                                    "exec": [
+                                        "pm.test('Status code is 200', function () {",
+                                        "    pm.response.to.have.status(200);",
+                                        "});",
+                                        "",
+                                        "pm.test('Response has status OK', function () {",
+                                        "    const jsonData = pm.response.json();",
+                                        "    pm.expect(jsonData.status).to.equal('OK');",
+                                        "    pm.expect(jsonData.service).to.equal('Spring Boot Backend');",
+                                        "});",
+                                        "",
+                                        "pm.test('Content-Type is JSON', function () {",
+                                        "    pm.response.to.have.header('Content-Type');",
+                                        "    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+                                        "});",
+                                        "",
+                                        "pm.test('Response time is acceptable', function () {",
+                                        "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                                        "});"
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Auth",
+                "item": [
+                    {
+                        "name": "Register",
+                        "request": {
+                            "method": "POST",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": {
+                                "mode": "raw",
+                                "raw": "{\n  \"fullName\": \"Test User\",\n  \"email\": \"testuser@example.com\",\n  \"phone\": \"012345678\",\n  \"password\": \"Test@1234\"\n}"
+                            },
+                            "url": {
+                                "raw": "{{API_URL}}/api/auth/register",
+                                "host": [
+                                    "{{API_URL}}"
+                                ],
+                                "path": [
+                                    "api",
+                                    "auth",
+                                    "register"
+                                ]
+                            }
+                        },
+                        "event": [
+                            {
+                                "listen": "test",
+                                "script": {
+                                    "type": "text/javascript",
+                                    "exec": [
+                                        "pm.test('Status code is 200', function () {",
+                                        "    pm.response.to.have.status(200);",
+                                        "});",
+                                        "",
+                                        "pm.test('Response has auth token', function () {",
+                                        "    const jsonData = pm.response.json();",
+                                        "    pm.expect(jsonData).to.have.property('accessToken');",
+                                        "    pm.expect(jsonData).to.have.property('tokenType');",
+                                        "    pm.expect(jsonData.tokenType).to.equal('Bearer');",
+                                        "    pm.expect(jsonData).to.have.property('expiresAt');",
+                                        "    pm.expect(jsonData).to.have.property('user');",
+                                        "});",
+                                        "",
+                                        "pm.test('User object has required fields', function () {",
+                                        "    const user = pm.response.json().user;",
+                                        "    pm.expect(user).to.have.property('id');",
+                                        "    pm.expect(user).to.have.property('email');",
+                                        "    pm.expect(user).to.have.property('fullName');",
+                                        "    pm.expect(user).to.have.property('role');",
+                                        "});",
+                                        "",
+                                        "if (pm.response.code === 200) {",
+                                        "    pm.collectionVariables.set('AUTH_TOKEN', pm.response.json().accessToken);",
+                                        "    pm.collectionVariables.set('USER_ID', pm.response.json().user.id);",
+                                        "}"
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Login",
+                        "request": {
+                            "method": "POST",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": {
+                                "mode": "raw",
+                                "raw": "{\n  \"identifier\": \"testuser@example.com\",\n  \"password\": \"Test@1234\"\n}"
+                            },
+                            "url": {
+                                "raw": "{{API_URL}}/api/auth/login",
+                                "host": [
+                                    "{{API_URL}}"
+                                ],
+                                "path": [
+                                    "api",
+                                    "auth",
+                                    "login"
+                                ]
+                            }
+                        },
+                        "event": [
+                            {
+                                "listen": "test",
+                                "script": {
+                                    "type": "text/javascript",
+                                    "exec": [
+                                        "pm.test('Status code is 200', function () {",
+                                        "    pm.response.to.have.status(200);",
+                                        "});",
+                                        "",
+                                        "pm.test('Response has auth token', function () {",
+                                        "    const jsonData = pm.response.json();",
+                                        "    pm.expect(jsonData).to.have.property('accessToken');",
+                                        "    pm.expect(jsonData.tokenType).to.equal('Bearer');",
+                                        "    pm.expect(jsonData).to.have.property('expiresAt');",
+                                        "    pm.expect(jsonData).to.have.property('user');",
+                                        "});",
+                                        "",
+                                        "pm.test('User object is valid', function () {",
+                                        "    const user = pm.response.json().user;",
+                                        "    pm.expect(user).to.have.property('id');",
+                                        "    pm.expect(user).to.have.property('email');",
+                                        "    pm.expect(user).to.have.property('fullName');",
+                                        "    pm.expect(user).to.have.property('role');",
+                                        "    pm.expect(user).to.have.property('status');",
+                                        "});",
+                                        "",
+                                        "if (pm.response.code === 200) {",
+                                        "    pm.collectionVariables.set('AUTH_TOKEN', pm.response.json().accessToken);",
+                                        "    pm.collectionVariables.set('USER_ID', pm.response.json().user.id);",
+                                        "}"
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Login - Invalid Credentials",
+                        "request": {
+                            "method": "POST",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": {
+                                "mode": "raw",
+                                "raw": "{\n  \"identifier\": \"nonexistent@example.com\",\n  \"password\": \"WrongPassword123\"\n}"
+                            },
+                            "url": {
+                                "raw": "{{API_URL}}/api/auth/login",
+                                "host": [
+                                    "{{API_URL}}"
+                                ],
+                                "path": [
+                                    "api",
+                                    "auth",
+                                    "login"
+                                ]
+                            }
+                        },
+                        "event": [
+                            {
+                                "listen": "test",
+                                "script": {
+                                    "type": "text/javascript",
+                                    "exec": [
+                                        "pm.test('Status code is 401 or 400', function () {",
+                                        "    pm.expect(pm.response.code).to.be.oneOf([400, 401]);",
+                                        "});",
+                                        "",
+                                        "pm.test('Response time is acceptable', function () {",
+                                        "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                                        "});"
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Login with Google",
+                        "request": {
+                            "method": "POST",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": {
+                                "mode": "raw",
+                                "raw": "{\n  \"idToken\": \"{{GOOGLE_ID_TOKEN}}\"\n}"
+                            },
+                            "url": {
+                                "raw": "{{API_URL}}/api/auth/google",
+                                "host": [
+                                    "{{API_URL}}"
+                                ],
+                                "path": [
+                                    "api",
+                                    "auth",
+                                    "google"
+                                ]
+                            }
+                        },
+                        "event": [
+                            {
+                                "listen": "test",
+                                "script": {
+                                    "type": "text/javascript",
+                                    "exec": [
+                                        "pm.test('Status code is 200 or 401', function () {",
+                                        "    pm.expect(pm.response.code).to.be.oneOf([200, 401]);",
+                                        "});",
+                                        "",
+                                        "if (pm.response.code === 200) {",
+                                        "    pm.test('Response has auth token', function () {",
+                                        "        const jsonData = pm.response.json();",
+                                        "        pm.expect(jsonData).to.have.property('accessToken');",
+                                        "        pm.expect(jsonData.tokenType).to.equal('Bearer');",
+                                        "    });",
+                                        "}"
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Login with Telegram",
+                        "request": {
+                            "method": "POST",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": {
+                                "mode": "raw",
+                                "raw": "{\n  \"idToken\": \"{{TELEGRAM_ID_TOKEN}}\"\n}"
+                            },
+                            "url": {
+                                "raw": "{{API_URL}}/api/auth/telegram",
+                                "host": [
+                                    "{{API_URL}}"
+                                ],
+                                "path": [
+                                    "api",
+                                    "auth",
+                                    "telegram"
+                                ]
+                            }
+                        },
+                        "event": [
+                            {
+                                "listen": "test",
+                                "script": {
+                                    "type": "text/javascript",
+                                    "exec": [
+                                        "pm.test('Status code is 200 or 401', function () {",
+                                        "    pm.expect(pm.response.code).to.be.oneOf([200, 401]);",
+                                        "});",
+                                        "",
+                                        "if (pm.response.code === 200) {",
+                                        "    pm.test('Response has auth token', function () {",
+                                        "        const jsonData = pm.response.json();",
+                                        "        pm.expect(jsonData).to.have.property('accessToken');",
+                                        "        pm.expect(jsonData.tokenType).to.equal('Bearer');",
+                                        "    });",
+                                        "}"
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Logout",
+                        "request": {
+                            "method": "POST",
+                            "header": [
+                                {
+                                    "key": "Authorization",
+                                    "value": "Bearer {{AUTH_TOKEN}}"
+                                }
+                            ],
+                            "url": {
+                                "raw": "{{API_URL}}/api/auth/logout",
+                                "host": [
+                                    "{{API_URL}}"
+                                ],
+                                "path": [
+                                    "api",
+                                    "auth",
+                                    "logout"
+                                ]
+                            }
+                        },
+                        "event": [
+                            {
+                                "listen": "test",
+                                "script": {
+                                    "type": "text/javascript",
+                                    "exec": [
+                                        "pm.test('Status code is 200', function () {",
+                                        "    pm.response.to.have.status(200);",
+                                        "});",
+                                        "",
+                                        "pm.test('Response has message', function () {",
+                                        "    const jsonData = pm.response.json();",
+                                        "    pm.expect(jsonData).to.have.property('message');",
+                                        "    pm.expect(jsonData.message).to.equal('Logged out');",
+                                        "});"
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "User Profile",
+                "item": [
+                    {
+                        "name": "Get My Profile",
+                        "request": {
+                            "method": "GET",
+                            "header": [
+                                {
+                                    "key": "Authorization",
+                                    "value": "Bearer {{AUTH_TOKEN}}"
+                                }
+                            ],
+                            "url": {
+                                "raw": "{{API_URL}}/api/users/me",
+                                "host": [
+                                    "{{API_URL}}"
+                                ],
+                                "path": [
+                                    "api",
+                                    "users",
+                                    "me"
+                                ]
+                            }
+                        },
+                        "event": [
+                            {
+                                "listen": "test",
+                                "script": {
+                                    "type": "text/javascript",
+                                    "exec": [
+                                        "pm.test('Status code is 200', function () {",
+                                        "    pm.response.to.have.status(200);",
+                                        "});",
+                                        "",
+                                        "pm.test('User profile has required fields', function () {",
+                                        "    const jsonData = pm.response.json();",
+                                        "    pm.expect(jsonData).to.have.property('id');",
+                                        "    pm.expect(jsonData).to.have.property('email');",
+                                        "    pm.expect(jsonData).to.have.property('fullName');",
+                                        "    pm.expect(jsonData).to.have.property('role');",
+                                        "    pm.expect(jsonData).to.have.property('status');",
+                                        "    pm.expect(jsonData).to.have.property('createdAt');",
+                                        "});",
+                                        "",
+                                        "pm.test('Content-Type is JSON', function () {",
+                                        "    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+                                        "});"
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Update My Profile",
+                        "request": {
+                            "method": "PATCH",
+                            "header": [
+                                {
+                                    "key": "Authorization",
+                                    "value": "Bearer {{AUTH_TOKEN}}"
+                                },
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": {
+                                "mode": "raw",
+                                "raw": "{\n  \"fullName\": \"Updated Name\"\n}"
+                            },
+                            "url": {
+                                "raw": "{{API_URL}}/api/users/me",
+                                "host": [
+                                    "{{API_URL}}"
+                                ],
+                                "path": [
+                                    "api",
+                                    "users",
+                                    "me"
+                                ]
+                            }
+                        },
+                        "event": [
+                            {
+                                "listen": "test",
+                                "script": {
+                                    "type": "text/javascript",
+                                    "exec": [
+                                        "pm.test('Status code is 200', function () {",
+                                        "    pm.response.to.have.status(200);",
+                                        "});",
+                                        "",
+                                        "pm.test('Profile was updated', function () {",
+                                        "    const jsonData = pm.response.json();",
+                                        "    pm.expect(jsonData.fullName).to.equal('Updated Name');",
+                                        "});",
+                                        "",
+                                        "pm.test('Response has all user fields', function () {",
+                                        "    const jsonData = pm.response.json();",
+                                        "    pm.expect(jsonData).to.have.property('id');",
+                                        "    pm.expect(jsonData).to.have.property('email');",
+                                        "    pm.expect(jsonData).to.have.property('role');",
+                                        "    pm.expect(jsonData).to.have.property('updatedAt');",
+                                        "});"
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Get Profile - Unauthorized",
+                        "request": {
+                            "method": "GET",
+                            "header": [],
+                            "url": {
+                                "raw": "{{API_URL}}/api/users/me",
+                                "host": [
+                                    "{{API_URL}}"
+                                ],
+                                "path": [
+                                    "api",
+                                    "users",
+                                    "me"
+                                ]
+                            }
+                        },
+                        "event": [
+                            {
+                                "listen": "test",
+                                "script": {
+                                    "type": "text/javascript",
+                                    "exec": [
+                                        "pm.test('Status code is 401', function () {",
+                                        "    pm.response.to.have.status(401);",
+                                        "});",
+                                        "",
+                                        "pm.test('Response time is acceptable', function () {",
+                                        "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                                        "});"
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Admin",
+                "item": [
+                    {
+                        "name": "List All Users (Admin)",
+                        "request": {
+                            "method": "GET",
+                            "header": [
+                                {
+                                    "key": "Authorization",
+                                    "value": "Bearer {{ADMIN_TOKEN}}"
+                                }
+                            ],
+                            "url": {
+                                "raw": "{{API_URL}}/api/admin/users",
+                                "host": [
+                                    "{{API_URL}}"
+                                ],
+                                "path": [
+                                    "api",
+                                    "admin",
+                                    "users"
+                                ]
+                            }
+                        },
+                        "event": [
+                            {
+                                "listen": "test",
+                                "script": {
+                                    "type": "text/javascript",
+                                    "exec": [
+                                        "pm.test('Status code is 200', function () {",
+                                        "    pm.response.to.have.status(200);",
+                                        "});",
+                                        "",
+                                        "pm.test('Response is an array', function () {",
+                                        "    const jsonData = pm.response.json();",
+                                        "    pm.expect(jsonData).to.be.an('array');",
+                                        "});",
+                                        "",
+                                        "pm.test('Each user has required fields', function () {",
+                                        "    const jsonData = pm.response.json();",
+                                        "    if (jsonData.length > 0) {",
+                                        "        const user = jsonData[0];",
+                                        "        pm.expect(user).to.have.property('id');",
+                                        "        pm.expect(user).to.have.property('email');",
+                                        "        pm.expect(user).to.have.property('fullName');",
+                                        "        pm.expect(user).to.have.property('role');",
+                                        "    }",
+                                        "});"
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Update User Role (Admin)",
+                        "request": {
+                            "method": "PATCH",
+                            "header": [
+                                {
+                                    "key": "Authorization",
+                                    "value": "Bearer {{ADMIN_TOKEN}}"
+                                },
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": {
+                                "mode": "raw",
+                                "raw": "{\n  \"role\": \"HOST\"\n}"
+                            },
+                            "url": {
+                                "raw": "{{API_URL}}/api/admin/users/{{USER_ID}}/role",
+                                "host": [
+                                    "{{API_URL}}"
+                                ],
+                                "path": [
+                                    "api",
+                                    "admin",
+                                    "users",
+                                    "{{USER_ID}}",
+                                    "role"
+                                ]
+                            }
+                        },
+                        "event": [
+                            {
+                                "listen": "test",
+                                "script": {
+                                    "type": "text/javascript",
+                                    "exec": [
+                                        "pm.test('Status code is 200', function () {",
+                                        "    pm.response.to.have.status(200);",
+                                        "});",
+                                        "",
+                                        "pm.test('Role was updated', function () {",
+                                        "    const jsonData = pm.response.json();",
+                                        "    pm.expect(jsonData).to.have.property('role');",
+                                        "    pm.expect(jsonData.role).to.equal('HOST');",
+                                        "});",
+                                        "",
+                                        "pm.test('Response has user fields', function () {",
+                                        "    const jsonData = pm.response.json();",
+                                        "    pm.expect(jsonData).to.have.property('id');",
+                                        "    pm.expect(jsonData).to.have.property('email');",
+                                        "    pm.expect(jsonData).to.have.property('fullName');",
+                                        "});"
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "name": "List Users - Forbidden (Non-Admin)",
+                        "request": {
+                            "method": "GET",
+                            "header": [
+                                {
+                                    "key": "Authorization",
+                                    "value": "Bearer {{AUTH_TOKEN}}"
+                                }
+                            ],
+                            "url": {
+                                "raw": "{{API_URL}}/api/admin/users",
+                                "host": [
+                                    "{{API_URL}}"
+                                ],
+                                "path": [
+                                    "api",
+                                    "admin",
+                                    "users"
+                                ]
+                            }
+                        },
+                        "event": [
+                            {
+                                "listen": "test",
+                                "script": {
+                                    "type": "text/javascript",
+                                    "exec": [
+                                        "pm.test('Status code is 403', function () {",
+                                        "    pm.response.to.have.status(403);",
+                                        "});",
+                                        "",
+                                        "pm.test('Response time is acceptable', function () {",
+                                        "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                                        "});"
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "variable": [
+            {
+                "key": "AUTH_TOKEN",
+                "value": "",
+                "description": "JWT access token from login/register"
+            },
+            {
+                "key": "ADMIN_TOKEN",
+                "value": "",
+                "description": "JWT access token for admin user"
+            },
+            {
+                "key": "USER_ID",
+                "value": "",
+                "description": "User ID from registration/login"
+            }
+        ]
+    },
+    "pendingEnvironment": {
+        "name": "Koupreng - Local",
+        "values": [
+            {
+                "key": "API_URL",
+                "value": "http://localhost:8080",
+                "enabled": true,
+                "description": "Base URL for the backend API"
+            },
+            {
+                "key": "GOOGLE_ID_TOKEN",
+                "value": "",
+                "enabled": true,
+                "type": "secret",
+                "description": "Google OAuth ID token for testing"
+            },
+            {
+                "key": "TELEGRAM_ID_TOKEN",
+                "value": "",
+                "enabled": true,
+                "type": "secret",
+                "description": "Telegram OIDC token for testing"
+            }
+        ]
+    }
+}

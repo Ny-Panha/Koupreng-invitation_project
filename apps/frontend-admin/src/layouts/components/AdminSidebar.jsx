@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { useState } from "react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   Users,
@@ -9,192 +9,351 @@ import {
   LineChart,
   Bell,
   Activity,
-  PanelLeftClose,
-  PanelLeftOpen,
+  Terminal,
+  Search,
+  Plus,
+  Settings,
+  X,
   Sparkles,
-  Terminal
 } from "lucide-react";
-import { useAuth } from "../../app/providers/AdminAuthProvider";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 
 export default function AdminSidebar({ isMobileOpen, isExpanded, onToggle, onNavigate }) {
-  const { user, refreshSession } = useAuth();
   const { lang, t } = useAdminLanguage();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [showSearchModal, setShowSearchModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showQuickAdd, setShowQuickAdd] = useState(false);
 
-  useEffect(() => {
-    refreshSession?.();
-  }, [refreshSession]);
-
-  const displayName = user?.fullName || user?.email || "Admin";
-
-  const navSections = [
+  // Left Floating Dock Icons (Tavola-Style Vertical Rail)
+  const dockItems = [
     {
-      key: "overview",
-      label: t("nav.overview", "ទិដ្ឋភាពទូទៅ"),
-      items: [
-        { to: "/dashboard", icon: LayoutDashboard, label: t("nav.dashboard", "ផ្ទាំងគ្រប់គ្រង"), exact: true },
-      ],
+      to: "/dashboard",
+      icon: LayoutDashboard,
+      label: lang === "en" ? "Overview Dashboard" : "ផ្ទាំងគ្រប់គ្រងទូទៅ",
+      exact: true,
     },
     {
-      key: "management",
-      label: t("nav.management", "ការគ្រប់គ្រងទូទៅ"),
-      items: [
-        { to: "/users", icon: Users, label: t("nav.users", "អ្នកប្រើប្រាស់") },
-      ],
+      to: "/users",
+      icon: Users,
+      label: lang === "en" ? "Users Management" : "គ្រប់គ្រងអ្នកប្រើប្រាស់",
     },
     {
-      key: "catalog",
-      label: t("nav.catalog", "គំរូ & កញ្ចប់សេវា"),
-      items: [
-        { to: "/templates", icon: Palette, label: t("nav.templates", "គំរូធៀបការ") },
-        { to: "/packages", icon: Layers, label: t("nav.packages", "កញ្ចប់សេវាកម្ម") },
-      ],
+      to: "/templates",
+      icon: Palette,
+      label: lang === "en" ? "Templates Catalog" : "គំរូធៀបការ",
     },
     {
-      key: "finance",
-      label: t("nav.finance", "ហិរញ្ញវត្ថុ & របាយការណ៍"),
-      items: [
-        { to: "/payments", icon: CreditCard, label: t("nav.payments", "ការទូទាត់ (KHQR)") },
-        { to: "/reports", icon: LineChart, label: t("nav.reports", "របាយការណ៍") },
-      ],
+      to: "/packages",
+      icon: Layers,
+      label: lang === "en" ? "Service Packages" : "កញ្ចប់សេវាកម្ម",
     },
     {
-      key: "system",
-      label: t("nav.system", "ប្រព័ន្ធ & សុវត្ថិភាព"),
-      items: [
-        { to: "/notifications", icon: Bell, label: t("nav.notifications", "ការជូនដំណឹង") },
-        { to: "/system-logs", icon: Activity, label: t("nav.systemLogs", "កំណត់ហេតុប្រព័ន្ធ") },
-        { to: "/dev/api-monitor", icon: Terminal, label: t("nav.apiMonitor", "API Live Monitor") },
-      ],
+      to: "/payments",
+      icon: CreditCard,
+      label: lang === "en" ? "KHQR Payments" : "ការទូទាត់ KHQR",
+    },
+    {
+      to: "/reports",
+      icon: LineChart,
+      label: lang === "en" ? "Financial Reports" : "របាយការណ៍ហិរញ្ញវត្ថុ",
+    },
+    {
+      to: "/notifications",
+      icon: Bell,
+      label: lang === "en" ? "Alerts & Notifications" : "ការជូនដំណឹង",
+      badge: "3",
+    },
+    {
+      to: "/system-logs",
+      icon: Activity,
+      label: lang === "en" ? "System Logs" : "កំណត់ហេតុប្រព័ន្ធ",
+    },
+    {
+      to: "/dev/api-monitor",
+      icon: Terminal,
+      label: "API Live Monitor",
     },
   ];
 
-  const navLinkClass = ({ isActive }) =>
-    `${
-      isActive
-        ? "bg-amber-500/15 text-amber-600 dark:bg-amber-500/20 dark:text-amber-400 font-semibold"
-        : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-zinc-400 dark:hover:bg-zinc-800/60 dark:hover:text-zinc-200 font-medium"
-    } group relative flex h-10 w-full items-center rounded-xl transition-all duration-200 px-3 outline-none focus:outline-none ${
-      !isExpanded ? "justify-center" : ""
-    }`;
-
   return (
-    <aside
-      className={`${
-        isMobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-      } ${
-        isExpanded ? "w-[260px]" : "w-[72px]"
-      } fixed inset-y-0 left-0 z-50 flex h-screen flex-col border-r border-slate-200 bg-white transition-all duration-300 dark:border-zinc-800 dark:bg-[#0c0c0e] print:hidden`}
-    >
-      {/* Brand Header */}
-      <div className="shrink-0 flex items-center h-16 border-b border-slate-200 dark:border-zinc-800 px-4">
-        <div className={`flex items-center gap-3 w-full ${!isExpanded ? "justify-center" : ""}`}>
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-amber-700 text-white shadow-md shadow-amber-500/20">
-            <Sparkles className="h-5 w-5" />
-          </div>
-          <div
-            className={`flex flex-col min-w-0 transition-opacity duration-300 ${
-              isExpanded ? "opacity-100" : "opacity-0 pointer-events-none hidden"
-            }`}
-          >
-            <h1 className="truncate text-sm font-bold tracking-tight text-slate-900 dark:text-zinc-100 font-moul">
-              {t("brandName", "គូព្រេង KOUPRENG")}
-            </h1>
-            <p className="text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
-              {t("brandSub", "ប្រព័ន្ធគ្រប់គ្រងគូព្រេង")}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Collapse Toggle button (Desktop) */}
-      <div className="hidden lg:block px-3 py-2 border-b border-slate-100 dark:border-zinc-800/80 mb-1">
-        <button
-          type="button"
-          onClick={onToggle}
-          className={`group relative flex h-9 w-full items-center rounded-lg transition-colors px-2.5 outline-none focus:outline-none text-slate-500 hover:bg-slate-100 hover:text-slate-800 dark:text-zinc-400 dark:hover:bg-zinc-800/50 dark:hover:text-zinc-200 font-medium cursor-pointer ${
-            !isExpanded ? "justify-center" : ""
-          }`}
-          title={isExpanded ? (lang === "en" ? "Collapse Menu" : "បង្រួម Menu") : (lang === "en" ? "Expand Menu" : "ពង្រីក Menu")}
-        >
-          {isExpanded ? (
-            <PanelLeftClose className="h-4 w-4 shrink-0" />
-          ) : (
-            <PanelLeftOpen className="h-4 w-4 shrink-0" />
-          )}
-          <span
-            className={`ml-3 text-xs whitespace-nowrap transition-opacity duration-200 ${
-              isExpanded ? "opacity-100" : "opacity-0 hidden"
-            }`}
-          >
-            {isExpanded ? (lang === "en" ? "Collapse Menu" : "បង្រួម Menu") : ""}
-          </span>
-          {!isExpanded && (
-            <div className="fixed left-[72px] hidden whitespace-nowrap rounded-md bg-slate-900 px-2.5 py-1.5 text-xs font-semibold text-white opacity-0 shadow-lg transition-opacity group-hover:block group-hover:opacity-100 z-[100] dark:bg-white dark:text-slate-900">
-              {lang === "en" ? "Expand Menu" : "ពង្រីក Menu"}
+    <>
+      {/* ============================================================
+          1. Desktop Tavola Floating Vertical Dock (Slim Pill Rail)
+          ============================================================ */}
+      <aside
+        style={{ animationDelay: "0.04s" }}
+        className="hidden lg:flex fixed left-4 top-20 bottom-6 z-40 w-14 flex-col items-center justify-between rounded-[28px] border border-slate-200/90 bg-white/95 py-3.5 shadow-2xl backdrop-blur-xl transition-all duration-300 dark:border-slate-800/80 dark:bg-[#121622]/95 dark:shadow-[0_12px_40px_rgba(0,0,0,0.5)] animate-cascade print:hidden"
+        aria-label="Sidebar Dock"
+      >
+        {/* Top Dock Tools (Search & Quick Plus Action) */}
+        <div className="flex flex-col items-center gap-2 w-full px-1.5">
+          {/* Quick Search Icon Button */}
+          <div className="group relative flex justify-center">
+            <button
+              type="button"
+              onClick={() => setShowSearchModal(true)}
+              className="flex h-10 w-10 items-center justify-center rounded-2xl text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-zinc-400 dark:hover:bg-zinc-800/80 dark:hover:text-white transition-all cursor-pointer"
+              title="Search"
+            >
+              <Search className="h-4 w-4" />
+            </button>
+            <div className="pointer-events-none fixed left-[72px] hidden whitespace-nowrap rounded-lg bg-slate-900 px-2.5 py-1 text-xs font-semibold text-white shadow-xl group-hover:block z-50 dark:bg-zinc-100 dark:text-slate-900">
+              {lang === "en" ? "Quick Search" : "ស្វែងរកទិន្នន័យ"}
             </div>
-          )}
-        </button>
-      </div>
+          </div>
 
-      {/* Navigation Sections */}
-      <nav className="sidebar-scroll flex-1 space-y-1.5 overflow-y-auto px-3 py-3 flex flex-col">
-        {navSections.map((section) => (
-          <div key={section.key} className="mb-2">
-            {isExpanded && (
-              <p className="px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-zinc-500">
-                {section.label}
-              </p>
-            )}
-            {!isExpanded && (
-              <div className="border-t border-slate-100 dark:border-zinc-800/80 my-2 mx-2" />
-            )}
+          {/* Quick Add Button */}
+          <div className="group relative flex justify-center">
+            <button
+              type="button"
+              onClick={() => setShowQuickAdd((prev) => !prev)}
+              className="flex h-10 w-10 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-600 hover:bg-amber-500 hover:text-white dark:bg-amber-500/20 dark:text-amber-400 dark:hover:bg-amber-500 dark:hover:text-slate-950 transition-all duration-200 shadow-xs cursor-pointer"
+              title="Quick Add"
+            >
+              <Plus className="h-4 w-4" />
+            </button>
+            <div className="pointer-events-none fixed left-[72px] hidden whitespace-nowrap rounded-lg bg-slate-900 px-2.5 py-1 text-xs font-semibold text-white shadow-xl group-hover:block z-50 dark:bg-zinc-100 dark:text-slate-900">
+              {lang === "en" ? "Quick Actions" : "សកម្មភាពរហ័ស"}
+            </div>
+          </div>
 
-            {section.items.map(({ to, label, icon: Icon, exact }) => (
-              <NavLink
-                key={to}
-                to={to}
-                end={exact}
-                className={navLinkClass}
-                onClick={onNavigate}
-              >
-                <Icon className="h-4 w-4 shrink-0" />
-                <span
-                  className={`ml-3 flex-1 text-sm whitespace-nowrap transition-opacity duration-200 ${
-                    isExpanded ? "opacity-100" : "opacity-0 hidden"
+          {/* Thin Divider */}
+          <div className="w-8 h-[1px] bg-slate-200/80 dark:bg-zinc-800/80 my-1" />
+        </div>
+
+        {/* Center: Main Navigation Icons */}
+        <nav className="flex flex-col items-center gap-1.5 w-full px-1.5 overflow-y-auto no-scrollbar py-1">
+          {dockItems.map(({ to, icon: Icon, label, exact, badge }) => {
+            const isActive = exact
+              ? location.pathname === to
+              : location.pathname.startsWith(to);
+
+            return (
+              <div key={to} className="group relative flex justify-center w-full">
+                <NavLink
+                  to={to}
+                  end={exact}
+                  onClick={onNavigate}
+                  className={`relative flex h-10 w-10 items-center justify-center rounded-2xl transition-all duration-200 cursor-pointer ${
+                    isActive
+                      ? "bg-amber-500/15 text-amber-600 shadow-xs dark:bg-amber-500/20 dark:text-amber-400 scale-105"
+                      : "text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-zinc-400 dark:hover:bg-zinc-800/80 dark:hover:text-white"
                   }`}
                 >
-                  {label}
-                </span>
-                {!isExpanded && (
-                  <div className="fixed left-[72px] hidden whitespace-nowrap rounded-md bg-slate-900 px-2.5 py-1.5 text-xs font-semibold text-white opacity-0 shadow-lg transition-opacity group-hover:block group-hover:opacity-100 z-[100] dark:bg-white dark:text-slate-900">
-                    {label}
-                  </div>
-                )}
-              </NavLink>
-            ))}
-          </div>
-        ))}
-      </nav>
+                  <Icon className="h-4 w-4 shrink-0" />
 
-      {/* Footer Info */}
-      {isExpanded && (
-        <div className="p-3 border-t border-slate-200 dark:border-zinc-800">
-          <div className="flex items-center gap-3 px-2 py-1.5 rounded-xl bg-slate-50 dark:bg-zinc-900/60 border border-slate-100 dark:border-zinc-800">
-            <div className="h-8 w-8 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center font-bold text-xs shrink-0">
-              {displayName.charAt(0).toUpperCase()}
+                  {/* Optional Red / Amber Badge (like Tavola badge '3') */}
+                  {badge && (
+                    <span className="absolute top-1.5 right-1.5 flex h-3.5 min-w-[14px] items-center justify-center rounded-full bg-rose-500 px-1 text-[9px] font-black text-white shadow-xs">
+                      {badge}
+                    </span>
+                  )}
+
+                  {/* Active subtle pill bar indicator */}
+                  {isActive && (
+                    <span className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-1 rounded-r-full bg-amber-500" />
+                  )}
+                </NavLink>
+
+                {/* Floating Tooltip to the Right */}
+                <div className="pointer-events-none fixed left-[72px] hidden whitespace-nowrap rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white shadow-xl group-hover:block z-50 dark:bg-zinc-100 dark:text-slate-900">
+                  {label}
+                </div>
+              </div>
+            );
+          })}
+        </nav>
+
+        {/* Bottom Tool: Settings */}
+        <div className="flex flex-col items-center gap-2 w-full px-1.5 pt-1 border-t border-slate-200/80 dark:border-zinc-800/80">
+          <div className="group relative flex justify-center">
+            <button
+              type="button"
+              onClick={() => navigate("/dev/api-monitor")}
+              className="flex h-10 w-10 items-center justify-center rounded-2xl text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-zinc-400 dark:hover:bg-zinc-800/80 dark:hover:text-white transition-all cursor-pointer"
+              title="Settings"
+            >
+              <Settings className="h-4 w-4" />
+            </button>
+            <div className="pointer-events-none fixed left-[72px] hidden whitespace-nowrap rounded-lg bg-slate-900 px-2.5 py-1 text-xs font-semibold text-white shadow-xl group-hover:block z-50 dark:bg-zinc-100 dark:text-slate-900">
+              {lang === "en" ? "System Settings" : "ការកំណត់ប្រព័ន្ធ"}
             </div>
-            <div className="min-w-0 flex-1">
-              <p className="text-xs font-bold text-slate-800 dark:text-zinc-200 truncate">
-                {displayName}
-              </p>
-              <p className="text-[10px] text-amber-600 dark:text-amber-400 font-semibold">
-                Super Admin
-              </p>
+          </div>
+        </div>
+      </aside>
+
+      {/* ============================================================
+          2. Mobile Responsive Slide-Out Drawer (lg:hidden)
+          ============================================================ */}
+      <aside
+        className={`${
+          isMobileOpen ? "translate-x-0" : "-translate-x-full"
+        } fixed inset-y-0 left-0 z-50 w-72 flex-col border-r border-slate-200 bg-white p-4 shadow-2xl transition-transform duration-300 dark:border-zinc-800 dark:bg-[#0c0c0e] lg:hidden print:hidden flex`}
+      >
+        <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-zinc-800">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-amber-700 text-white shadow-sm">
+              <Sparkles className="h-4 w-4" />
+            </div>
+            <span className="font-moul text-xs font-bold text-slate-900 dark:text-white">
+              គូព្រេង KOUPRENG
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={onNavigate}
+            className="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200"
+            aria-label="Close"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+
+        <nav className="mt-4 flex-1 space-y-1 overflow-y-auto">
+          {dockItems.map(({ to, icon: Icon, label, exact, badge }) => (
+            <NavLink
+              key={to}
+              to={to}
+              end={exact}
+              onClick={onNavigate}
+              className={({ isActive }) =>
+                `flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition ${
+                  isActive
+                    ? "bg-amber-500/15 text-amber-600 dark:text-amber-400"
+                    : "text-slate-600 hover:bg-slate-100 dark:text-zinc-400 dark:hover:bg-zinc-800/60"
+                }`
+              }
+            >
+              <div className="flex items-center gap-3">
+                <Icon className="h-4 w-4" />
+                <span>{label}</span>
+              </div>
+              {badge && (
+                <span className="rounded-full bg-rose-500 px-1.5 py-0.5 text-[10px] font-bold text-white">
+                  {badge}
+                </span>
+              )}
+            </NavLink>
+          ))}
+        </nav>
+      </aside>
+
+      {/* Quick Search Modal */}
+      {showSearchModal && (
+        <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-slate-950/50 backdrop-blur-xs">
+          <div className="w-full max-w-lg rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl dark:border-zinc-800 dark:bg-[#121622] animate-in fade-in zoom-in-95">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-zinc-800">
+              <div className="flex items-center gap-2 text-slate-500 dark:text-zinc-400">
+                <Search className="h-4 w-4" />
+                <span className="text-xs font-bold uppercase tracking-wider">
+                  {lang === "en" ? "Search System" : "ស្វែងរកទិន្នន័យ"}
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowSearchModal(false)}
+                className="text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+            <div className="mt-3">
+              <input
+                type="search"
+                autoFocus
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={lang === "en" ? "Type keyword (users, templates, payments)..." : "វាយពាក្យស្វែងរក (អ្នកប្រើ, គំរូ, ការទូទាត់)..."}
+                className="w-full h-11 rounded-xl border border-slate-200 bg-slate-50 px-3.5 text-xs text-slate-900 placeholder:text-slate-400 outline-none focus:border-amber-500 focus:bg-white focus:ring-2 focus:ring-amber-500/20 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100"
+              />
+            </div>
+            <div className="mt-4 flex flex-wrap gap-2 text-xs">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowSearchModal(false);
+                  navigate("/users");
+                }}
+                className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-amber-500/10 hover:text-amber-600 transition"
+              >
+                👥 {lang === "en" ? "Users" : "អ្នកប្រើប្រាស់"}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowSearchModal(false);
+                  navigate("/templates");
+                }}
+                className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-amber-500/10 hover:text-amber-600 transition"
+              >
+                🎨 {lang === "en" ? "Templates" : "គំរូធៀបការ"}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowSearchModal(false);
+                  navigate("/payments");
+                }}
+                className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-amber-500/10 hover:text-amber-600 transition"
+              >
+                💳 {lang === "en" ? "Payments" : "ការទូទាត់"}
+              </button>
             </div>
           </div>
         </div>
       )}
-    </aside>
+
+      {/* Quick Add Popover Modal */}
+      {showQuickAdd && (
+        <div
+          className="fixed inset-0 z-50 bg-transparent"
+          onClick={() => setShowQuickAdd(false)}
+        >
+          <div
+            className="fixed left-20 top-36 w-56 rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl dark:border-zinc-800 dark:bg-[#121622] animate-in fade-in slide-in-from-left-2 z-50"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p className="px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-wider text-amber-600 dark:text-amber-400">
+              {lang === "en" ? "Quick Actions" : "សកម្មភាពរហ័ស"}
+            </p>
+            <button
+              type="button"
+              onClick={() => {
+                setShowQuickAdd(false);
+                navigate("/users");
+              }}
+              className="flex w-full items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 dark:text-zinc-200 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-xl transition"
+            >
+              <Users className="h-3.5 w-3.5 text-amber-500" />
+              <span>{lang === "en" ? "Add New User" : "បង្កើតអ្នកប្រើប្រាស់"}</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setShowQuickAdd(false);
+                navigate("/templates");
+              }}
+              className="flex w-full items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 dark:text-zinc-200 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-xl transition"
+            >
+              <Palette className="h-3.5 w-3.5 text-purple-500" />
+              <span>{lang === "en" ? "Create Template" : "បង្កើតគំរូថ្មី"}</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setShowQuickAdd(false);
+                navigate("/packages");
+              }}
+              className="flex w-full items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 dark:text-zinc-200 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-xl transition"
+            >
+              <Layers className="h-3.5 w-3.5 text-cyan-500" />
+              <span>{lang === "en" ? "New Package" : "បង្កើតកញ្ចប់សេវា"}</span>
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

@@ -11,8 +11,10 @@ const normalizeGuest = (guest) => ({ ...guest, guestName: guest.guestName || gue
 const localSummary = (guests, checkIns) => ({ totalGuests: guests.length, checkedIn: checkIns.length, attendingCheckedIn: checkIns.length, remaining: Math.max(0, guests.length - checkIns.length) });
 
 export function resolveDeskScope(rawId) {
-  const id = String(rawId || "").replace(/^inv-/, "");
-  const draft = /^\d+$/.test(id) ? null : getDraft(id);
+  const cleanId = String(rawId || "").replace(/^inv-/, "").trim();
+  const id = cleanId || (typeof localStorage !== "undefined" ? localStorage.getItem("koupreng.host.activeEventId") : "") || "";
+  const allLocal = typeof localStorage !== "undefined" ? JSON.parse(localStorage.getItem("koupreng.wedding.drafts") || "{}") : {};
+  const draft = /^\d+$/.test(id) ? null : (getDraft(id) || allLocal[id] || null);
   const serverId = draft?.backendInvitationId || id;
   return /^\d+$/.test(String(serverId)) ? { mode: "SERVER_BACKED_INVITATION", id: String(serverId) }
     : draft ? { mode: "LOCAL_DRAFT", id, draft } : { mode: "INVALID", id };

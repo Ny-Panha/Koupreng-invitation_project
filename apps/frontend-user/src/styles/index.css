@@ -517,3 +517,83 @@ body {
 [style*="Noto Serif Khmer"] {
   letter-spacing: normal !important;
 }
+
+/* ============================================================
+   CMS Block Dynamic Animations & Transitions
+   ============================================================ */
+@keyframes cms-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cms-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes cms-zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes cms-slide-up {
+  from {
+    transform: translateY(32px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.cms-anim-fade-up,
+.animate-fade-up {
+  animation: cms-fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.cms-anim-fade-in,
+.animate-fade-in {
+  animation: cms-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.cms-anim-zoom-in,
+.animate-zoom-in {
+  animation: cms-zoom-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.cms-anim-slide-up,
+.animate-slide-up {
+  animation: cms-slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cms-anim-fade-up,
+  .cms-anim-fade-in,
+  .cms-anim-zoom-in,
+  .cms-anim-slide-up,
+  .animate-fade-up,
+  .animate-fade-in,
+  .animate-zoom-in,
+  .animate-slide-up {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

@@ -44,10 +44,11 @@ export default function DynamicTemplateRenderer({
         }
 
         const blockData = block.data && typeof block.data === "object" ? block.data : {};
+        const animation = blockData.animation || block.animation || "fade-up";
 
         return (
           <BlockErrorBoundary key={blockId} blockId={blockId}>
-            <Component {...blockData} content={content} {...blockProps} />
+            <Component {...blockData} animation={animation} content={content} {...blockProps} />
           </BlockErrorBoundary>
         );
       })}

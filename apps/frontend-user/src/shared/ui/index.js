@@ -10,3 +10,5 @@ export { default as ResponsiveTable } from "./ResponsiveTable";
 export { default as FormField } from "./FormField";
 export { default as SearchInput } from "./SearchInput";
 export { default as LoadingButton } from "./LoadingButton";
+export { default as AnimatedNumber } from "./AnimatedNumber";
+export { default as AnimatedProgressBar } from "./AnimatedProgressBar";

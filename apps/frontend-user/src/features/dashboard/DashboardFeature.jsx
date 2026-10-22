@@ -13,7 +13,7 @@ import { loadServerDashboard, groupAmounts } from "./dashboardData";
 import { currencyAmounts } from "@/features/budget/currencyTotals";
 import { getDraft, getDraftBySlug, saveDraft } from "../../shared/storage/weddingStorage";
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
-import { ErrorState, SkeletonTable } from "@/shared/ui";
+import { ErrorState, SkeletonTable, AnimatedNumber, AnimatedProgressBar } from "@/shared/ui";
 import "./DashboardPage.css";
 
 function asList(val) {
@@ -343,7 +343,7 @@ export default function DashboardFeature() {
         <span className={`event-status-pill badge-${publicationStatus.tone}`}>{publicationStatus.label}</span>
         <h2>{stats.title}</h2>
         <p>{[formatLocalDate(stats.eventDate, english ? "en-US" : "km-KH"), stats.venue].filter(Boolean).join(" · ")}</p>
-        {timeRemaining.hasDate && !timeRemaining.isPast && <p className="workspace-muted">{timeRemaining.days} {label("days to your celebration", "ថ្ងៃទៀតដល់កម្មវិធីរបស់អ្នក")}</p>}
+        {timeRemaining.hasDate && !timeRemaining.isPast && <p className="workspace-muted"><AnimatedNumber value={timeRemaining.days} /> {label("days to your celebration", "ថ្ងៃទៀតដល់កម្មវិធីរបស់អ្នក")}</p>}
         <div className="overview-actions">
           <Link className="workspace-button primary" to={eventPath(stats.id, primaryAction.module)}><ArrowRight size={18} />{primaryAction.title}</Link>
           <Link className="workspace-button" to={eventPath(stats.id, "preview")}><Eye size={18} />{label("Preview", "មើលជាមុន")}</Link>
@@ -358,6 +358,12 @@ export default function DashboardFeature() {
     <section className="overview-columns">
       <div className="workspace-section overview-preparation">
         <div className="workspace-section-heading"><h2>{label("Prepare your celebration", "រៀបចំកម្មវិធីរបស់អ្នក")}</h2><span className="workspace-badge">{preparation.filter(step => step.done).length}/{preparation.length}</span></div>
+        <div style={{ marginTop: "10px", marginBottom: "18px" }}>
+          <AnimatedProgressBar
+            percentage={Math.round((preparation.filter(step => step.done).length / preparation.length) * 100)}
+            tone="gold"
+          />
+        </div>
         <ol className="overview-checklist">{preparation.map(step => <li key={step.module + step.title} className={step.done ? "is-done" : ""}>
           {step.done ? <CheckCircle2 size={22} aria-label={label("Complete", "រួចរាល់")} /> : <Circle size={22} aria-label={label("To do", "ត្រូវធ្វើ")} />}
           <Link to={eventPath(stats.id, step.module)}><strong>{step.title}</strong><span>{step.description}</span></Link><ArrowRight size={16} aria-hidden="true" />
@@ -372,10 +378,10 @@ export default function DashboardFeature() {
     </section>
     {(stats.guestTotal > 0 || state.budgetItems.length > 0 || state.gifts.length > 0) && <section className="overview-metrics" aria-label={label("Event activity", "សកម្មភាពកម្មវិធី")}>
       {stats.guestTotal > 0 && <>
-        <Link to={eventPath(stats.id, "guests")}><span>{text("statGuests")}</span><strong>{stats.guestTotal}</strong></Link>
-        <Link to={eventPath(stats.id, "rsvp")}><span>{label("Confirmed", "បានយល់ព្រម")}</span><strong>{stats.rsvpYes}</strong></Link>
-        <Link to={eventPath(stats.id, "rsvp")}><span>{label("Pending responses", "រង់ចាំការឆ្លើយតប")}</span><strong>{stats.rsvpPending}</strong></Link>
-        <Link to={eventPath(stats.id, "check-in")}><span>{label("Checked in", "បានចូលរួម")}</span><strong>{stats.checkedInCount}</strong></Link>
+        <Link to={eventPath(stats.id, "guests")}><span>{text("statGuests")}</span><strong><AnimatedNumber value={stats.guestTotal} /></strong></Link>
+        <Link to={eventPath(stats.id, "rsvp")}><span>{label("Confirmed", "បានយល់ព្រម")}</span><strong><AnimatedNumber value={stats.rsvpYes} /></strong></Link>
+        <Link to={eventPath(stats.id, "rsvp")}><span>{label("Pending responses", "រង់ចាំការឆ្លើយតប")}</span><strong><AnimatedNumber value={stats.rsvpPending} /></strong></Link>
+        <Link to={eventPath(stats.id, "check-in")}><span>{label("Checked in", "បានចូលរួម")}</span><strong><AnimatedNumber value={stats.checkedInCount} /></strong></Link>
       </>}
       {state.budgetItems.length > 0 && <Link to={eventPath(stats.id, "budget")}><span>{text("statBudget")}</span><strong>{currencyAmounts(stats.expenseAmounts)}</strong></Link>}
       {state.gifts.length > 0 && <Link to={eventPath(stats.id, "gifts")}><span>{text("statGifts")}</span><strong>{currencyAmounts(stats.giftAmounts)}</strong></Link>}

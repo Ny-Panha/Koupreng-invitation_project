@@ -146,10 +146,10 @@ export default function InvitationCheckInPage() {
                     type="button"
                     className="checkin-back-nav-btn"
                     onClick={() => {
-                        if (window.history.length > 1) {
+                        if (window.history.length > 2) {
                             navigate(-1);
                         } else {
-                            navigate(`/dashboard/invitations/${invitationId}/guests`);
+                            navigate(invitationId ? `/dashboard/invitations/${invitationId}/guests` : "/dashboard/guests");
                         }
                     }}
                 >
@@ -212,9 +212,9 @@ export default function InvitationCheckInPage() {
                     <button
                         className="checkin-btn-secondary"
                         type="button"
-                        onClick={() => navigate(`/dashboard/invitations/${invitationId}/guests`)}
+                        onClick={() => navigate(invitationId ? `/dashboard/invitations/${invitationId}/guests` : "/dashboard/guests")}
                     >
-                        <Users size={16} /> Guests
+                        <Users size={16} /> បញ្ជីភ្ញៀវ (Guests)
                     </button>
                     <button
                         className="checkin-btn-secondary"
@@ -449,7 +449,7 @@ export default function InvitationCheckInPage() {
                             </thead>
                             <tbody>
                                 {filteredGuests.map((guest) => {
-                                    const checked = checkedGuestIds.has(guest.id);
+                                    const checked = checkedGuestIds.has(String(guest.id));
                                     const initial = (guest.guestName || "G").charAt(0).toUpperCase();
                                     return (
                                         <tr key={guest.id}>

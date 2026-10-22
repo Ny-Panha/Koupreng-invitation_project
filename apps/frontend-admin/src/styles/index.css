@@ -115,10 +115,311 @@ html, body, #root {
   border-radius: 999px;
 }
 
-/* Modern Kambuja-POS UI Utility Classes */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Modern Kambuja-POS & Tavola UI Utility Classes */
 .card {
   @apply rounded-2xl border border-slate-200/80 bg-white p-5 shadow-xs dark:border-zinc-800 dark:bg-[#111113] transition-all;
 }
+
+/* ============================================================
+   Tavola-Inspired Right-to-Left Ticker & Motion Utilities
+   ============================================================ */
+@keyframes marquee-rtl {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-rtl {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: marquee-rtl 28s linear infinite;
+}
+
+.animate-marquee-rtl:hover,
+.animate-marquee-rtl.is-paused {
+  animation-play-state: paused !important;
+}
+
+@keyframes pulse-radar {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 7px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+.live-radar-dot {
+  position: relative;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background-color: #10b981;
+  animation: pulse-radar 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.tavola-glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+}
+
+.dark .tavola-glass {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01)), #111114;
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.tavola-glass-card {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tavola-glass-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.dark .tavola-glass-card:hover {
+  border-color: rgba(245, 158, 11, 0.3);
+  box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.7), 0 0 20px -4px rgba(245, 158, 11, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.marquee-mask {
+  mask-image: linear-gradient(to right, transparent, black 32px, black calc(100% - 32px), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 32px, black calc(100% - 32px), transparent);
+}
+
+/* ============================================================
+   Page-Load Entrance Animation (Staggered Cascade & Zoom In)
+   ============================================================ */
+@keyframes cascade-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.93);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes zoom-in-reveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.88) translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-cascade {
+  opacity: 0;
+  animation: cascade-reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: opacity, transform;
+}
+
+.animate-zoom-in {
+  opacity: 0;
+  animation: zoom-in-reveal 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: opacity, transform;
+}
+
+/* ============================================================
+   Universal Typography Animations (All Titles, Headings & Text)
+   ============================================================ */
+@keyframes text-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes row-cascade {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-text-reveal {
+  opacity: 0;
+  animation: text-reveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: opacity, transform, filter;
+}
+
+.animate-fade-up {
+  opacity: 0;
+  animation: cascade-reveal 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: opacity, transform;
+}
+
+/* Typography elements automatically inherit gentle text-reveal */
+.page-title,
+.page-head h1,
+.page-head h2,
+h1.page-title,
+h2.page-title {
+  display: inline-block;
+  animation: text-reveal 0.52s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+  will-change: opacity, transform, filter;
+}
+
+.page-subtitle,
+.page-head p {
+  animation: text-reveal 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+  will-change: opacity, transform, filter;
+}
+
+.card > h2,
+.card > h3,
+.card-header h2,
+.card-header h3 {
+  animation: text-reveal 0.48s cubic-bezier(0.16, 1, 0.3, 1) 0.14s both;
+}
+
+.admin-feature-card strong,
+.stat-card-value {
+  animation: text-reveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.16s both;
+}
+
+.admin-feature-card span,
+.stat-card-label {
+  animation: text-reveal 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.09s both;
+}
+
+/* ============================================================
+   Universal Page Entrance & Staggered Cascade (All Pages & Screens)
+   ============================================================ */
+.page-transition {
+  width: 100%;
+}
+
+/* Page top-level container entrance */
+.page-transition > * {
+  width: 100%;
+}
+
+/* Automatically cascade sections, feature grids, cards, forms, and tables inside any active page */
+.page-transition > * > *:not(.pointer-events-none):not(dialog):not(.modal-backdrop) {
+  animation: cascade-reveal 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: opacity, transform;
+}
+
+.page-transition > * > *:nth-child(1) { animation-delay: 0.03s; }
+.page-transition > * > *:nth-child(2) { animation-delay: 0.08s; }
+.page-transition > * > *:nth-child(3) { animation-delay: 0.13s; }
+.page-transition > * > *:nth-child(4) { animation-delay: 0.18s; }
+.page-transition > * > *:nth-child(5) { animation-delay: 0.23s; }
+.page-transition > * > *:nth-child(6) { animation-delay: 0.28s; }
+.page-transition > * > *:nth-child(7) { animation-delay: 0.33s; }
+.page-transition > * > *:nth-child(8) { animation-delay: 0.38s; }
+
+/* Micro-stagger for admin feature cards & grid cards */
+.admin-feature-grid > article,
+.grid > .card,
+.grid > .tavola-glass-card {
+  animation: cascade-reveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.admin-feature-grid > article:nth-child(1) { animation-delay: 0.07s; }
+.admin-feature-grid > article:nth-child(2) { animation-delay: 0.11s; }
+.admin-feature-grid > article:nth-child(3) { animation-delay: 0.15s; }
+.admin-feature-grid > article:nth-child(4) { animation-delay: 0.19s; }
+
+/* Micro-stagger for table data rows on page load */
+table.data tbody tr,
+.table-wrap tbody tr,
+table.w-full tbody tr {
+  animation: row-cascade 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+table.data tbody tr:nth-child(1), .table-wrap tbody tr:nth-child(1), table.w-full tbody tr:nth-child(1) { animation-delay: 0.07s; }
+table.data tbody tr:nth-child(2), .table-wrap tbody tr:nth-child(2), table.w-full tbody tr:nth-child(2) { animation-delay: 0.10s; }
+table.data tbody tr:nth-child(3), .table-wrap tbody tr:nth-child(3), table.w-full tbody tr:nth-child(3) { animation-delay: 0.13s; }
+table.data tbody tr:nth-child(4), .table-wrap tbody tr:nth-child(4), table.w-full tbody tr:nth-child(4) { animation-delay: 0.16s; }
+table.data tbody tr:nth-child(5), .table-wrap tbody tr:nth-child(5), table.w-full tbody tr:nth-child(5) { animation-delay: 0.19s; }
+table.data tbody tr:nth-child(6), .table-wrap tbody tr:nth-child(6), table.w-full tbody tr:nth-child(6) { animation-delay: 0.22s; }
+table.data tbody tr:nth-child(7), .table-wrap tbody tr:nth-child(7), table.w-full tbody tr:nth-child(7) { animation-delay: 0.25s; }
+table.data tbody tr:nth-child(8), .table-wrap tbody tr:nth-child(8), table.w-full tbody tr:nth-child(8) { animation-delay: 0.28s; }
+table.data tbody tr:nth-child(9), .table-wrap tbody tr:nth-child(9), table.w-full tbody tr:nth-child(9) { animation-delay: 0.31s; }
+table.data tbody tr:nth-child(10), .table-wrap tbody tr:nth-child(10), table.w-full tbody tr:nth-child(10) { animation-delay: 0.34s; }
+
+/* Accessibility: respect user prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+@keyframes line-reveal {
+  0% {
+    stroke-dashoffset: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-line-reveal {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: line-reveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+  will-change: stroke-dashoffset;
+}
+
+@keyframes area-fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.animate-area-fade {
+  opacity: 0;
+  animation: area-fade 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+  will-change: opacity;
+}
+
+
 
 .page-head {
   @apply flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6;
@@ -572,4 +873,69 @@ table.data tbody tr:hover {
 
 .reports-page.is-print-preview .report-sheet-simulation .reports-screen-only {
   display: none !important;
+}
+
+/* ============================================================
+   CMS Block Dynamic Animations & Transitions
+   ============================================================ */
+@keyframes cms-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cms-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes cms-zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes cms-slide-up {
+  from {
+    transform: translateY(32px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.cms-anim-fade-up,
+.animate-fade-up {
+  animation: cms-fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.cms-anim-fade-in,
+.animate-fade-in {
+  animation: cms-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.cms-anim-zoom-in,
+.animate-zoom-in {
+  animation: cms-zoom-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.cms-anim-slide-up,
+.animate-slide-up {
+  animation: cms-slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
 }

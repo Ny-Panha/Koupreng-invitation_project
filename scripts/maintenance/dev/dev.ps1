@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env pwsh
+#!/usr/bin/env pwsh
 # ==============================================================================
 # Koupreng Project - Full Stack Windows Dev Orchestrator
 # Author: Nha & Antigravity
@@ -19,6 +19,9 @@ param (
 
     [switch]$Bot,
 
+    [Alias("no-install", "fast")]
+    [switch]$SkipInstall,
+
     [Alias("window")]
     [switch]$NewWindow,
 
@@ -37,8 +40,11 @@ foreach ($arg in $args) {
         "--user-only"   { $UserOnly = $true; $AdminOnly = $false }
         "--ngrok"       { $Ngrok = $true }
         "--no-ngrok"    { $NoNgrok = $true }
-        "--bot"         { $Bot = $true }
-        "--new-window"  { $NewWindow = $true }
+        "--bot"          { $Bot = $true }
+        "--skip-install" { $SkipInstall = $true }
+        "--fast"         { $SkipInstall = $true }
+        "--no-install"   { $SkipInstall = $true }
+        "--new-window"   { $NewWindow = $true }
         "--help"        { $Help = $true }
         "-h"            { $Help = $true }
     }
@@ -114,7 +120,7 @@ if ($java25) {
 }
 
 Write-Host "======================================================" -ForegroundColor Cyan
-Write-Host "   ⚜️  KOUPRENG FULL STACK DEV RUNNER (WINDOWS) ⚜️" -ForegroundColor Yellow
+Write-Host "   KOUPRENG FULL STACK DEV RUNNER (WINDOWS)" -ForegroundColor Yellow
 Write-Host "======================================================" -ForegroundColor Cyan
 
 # Function to free busy port
@@ -125,7 +131,7 @@ function Free-Port {
         if ($conns) {
             foreach ($conn in $conns) {
                 if ($conn.OwningProcess -and $conn.OwningProcess -gt 4) {
-                    Write-Host "  ⚡ Freeing busy port :$Port (PID $($conn.OwningProcess))..." -ForegroundColor Yellow
+                    Write-Host "  [*] Freeing busy port :$Port (PID $($conn.OwningProcess))..." -ForegroundColor Yellow
                     Start-Process -FilePath "taskkill.exe" -ArgumentList "/PID $($conn.OwningProcess) /T /F" -NoNewWindow -Wait -ErrorAction SilentlyContinue 2>$null
                 }
             }
@@ -136,12 +142,18 @@ function Free-Port {
         foreach ($line in $lines) {
             $pidMatch = $line.Matches[0].Groups[1].Value
             if ($pidMatch -and [int]$pidMatch -gt 4) {
-                Write-Host "  ⚡ Freeing busy port :$Port (PID $pidMatch)..." -ForegroundColor Yellow
+                Write-Host "  [*] Freeing busy port :$Port (PID $pidMatch)..." -ForegroundColor Yellow
                 Start-Process -FilePath "taskkill.exe" -ArgumentList "/PID $pidMatch /T /F" -NoNewWindow -Wait -ErrorAction SilentlyContinue 2>$null
             }
         }
     }
 }
+
+# Track child process IDs for graceful shutdown
+$ProcessIds = [System.Collections.Generic.List[int]]::new()
+$script:StartedDatabaseByScript = $false
+$script:DatabaseProcId = $null
+$script:DatabaseBinDir = $null
 
 # 1. Database Check & Start
 Write-Host "`n[1/4] Checking Database Service..." -ForegroundColor White
@@ -160,39 +172,92 @@ try {
 }
 
 if ($isPortOpen) {
-    Write-Host "  ✓ MariaDB/MySQL service is active on port 3306" -ForegroundColor Green
+    Write-Host "  [OK] MariaDB/MySQL is already running on port 3306" -ForegroundColor Green
 } else {
     $dbService = Get-Service -Name "MySQL*", "MariaDB*" -ErrorAction SilentlyContinue | Where-Object { $_.Status -eq "Running" }
     if ($dbService) {
-        Write-Host "  ✓ Database service is active ($($dbService[0].DisplayName))" -ForegroundColor Green
+        Write-Host "  [OK] Database service is active ($($dbService[0].DisplayName))" -ForegroundColor Green
     } else {
         $stoppedService = Get-Service -Name "MySQL*", "MariaDB*" -ErrorAction SilentlyContinue | Where-Object { $_.Status -ne "Running" } | Select-Object -First 1
         if ($stoppedService) {
-            Write-Host "  ⚡ Starting database service ($($stoppedService.Name))..." -ForegroundColor Yellow
+            Write-Host "  [*] Starting database service ($($stoppedService.Name))..." -ForegroundColor Yellow
             Start-Service -Name $stoppedService.Name -ErrorAction SilentlyContinue
             Start-Sleep -Seconds 2
-            Write-Host "  ✓ Database started" -ForegroundColor Green
+            Write-Host "  [OK] Database started" -ForegroundColor Green
         } else {
-            Write-Host "  ⚠️  Port 3306 is not open. Ensure MariaDB/MySQL or XAMPP/Laragon is started." -ForegroundColor Yellow
+            # Auto-start Laragon MySQL if available
+            $laragonMysqld = Get-ChildItem "C:\laragon\bin\mysql\*\bin\mysqld.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
+            if ($laragonMysqld) {
+                Write-Host "  [*] Auto-starting Laragon MySQL server..." -ForegroundColor Yellow
+                $binDir = $laragonMysqld.Directory.FullName
+                $baseDir = $laragonMysqld.Directory.Parent.FullName
+                $myIni = Join-Path $baseDir "my.ini"
+                $argList = if (Test-Path $myIni) { "--defaults-file=`"$myIni`"" } else { "" }
+                
+                $proc = Start-Process -FilePath $laragonMysqld.FullName -ArgumentList $argList -PassThru -WindowStyle Hidden
+                if ($proc) {
+                    $script:StartedDatabaseByScript = $true
+                    $script:DatabaseProcId = $proc.Id
+                    $script:DatabaseBinDir = $binDir
+
+                    # Wait up to 10s for port 3306 to become ready
+                    for ($i = 0; $i -lt 20; $i++) {
+                        Start-Sleep -Milliseconds 500
+                        try {
+                            $tcp = New-Object System.Net.Sockets.TcpClient
+                            $ar = $tcp.BeginConnect("127.0.0.1", 3306, $null, $null)
+                            if ($ar.AsyncWaitHandle.WaitOne(500, $false) -and $tcp.Connected) {
+                                $isPortOpen = $true
+                                $tcp.EndConnect($ar)
+                                $tcp.Close()
+                                break
+                            }
+                            $tcp.Close()
+                        } catch {}
+                    }
+
+                    if ($isPortOpen) {
+                        Write-Host "  [OK] MySQL auto-started on port 3306 (PID $($proc.Id))" -ForegroundColor Green
+                    } else {
+                        Write-Host "  [!] MySQL process started but port 3306 not answering yet." -ForegroundColor Yellow
+                    }
+                }
+            } elseif (Test-Path "C:\laragon") {
+                Write-Host "  [!] Port 3306 is not open. Please open Laragon and click 'Start All'!" -ForegroundColor Yellow
+            } else {
+                Write-Host "  [!] Port 3306 is not open. Ensure MariaDB/MySQL or XAMPP/Laragon is started." -ForegroundColor Yellow
+            }
         }
     }
 }
 
-# Track child process IDs for graceful shutdown
-$ProcessIds = [System.Collections.Generic.List[int]]::new()
-
 function Cleanup {
-    Write-Host "`n`n🛑 Shutting down all Koupreng dev services..." -ForegroundColor Yellow
+    Write-Host "`n`n[STOP] Shutting down all Koupreng dev services..." -ForegroundColor Yellow
     foreach ($procId in $ProcessIds) {
         if ($procId -and (Get-Process -Id $procId -ErrorAction SilentlyContinue)) {
             Start-Process -FilePath "taskkill.exe" -ArgumentList "/PID $procId /T /F" -NoNewWindow -Wait -ErrorAction SilentlyContinue 2>$null
         }
     }
+
+    # Auto-stop Database if it was started by this script
+    if ($script:StartedDatabaseByScript) {
+        Write-Host "  [*] Stopping auto-started Database..." -ForegroundColor Yellow
+        if ($script:DatabaseBinDir -and (Test-Path (Join-Path $script:DatabaseBinDir "mysqladmin.exe"))) {
+            $adminExe = Join-Path $script:DatabaseBinDir "mysqladmin.exe"
+            & $adminExe -u root -h 127.0.0.1 shutdown 2>$null
+            Start-Sleep -Seconds 1
+        }
+        if ($script:DatabaseProcId -and (Get-Process -Id $script:DatabaseProcId -ErrorAction SilentlyContinue)) {
+            Start-Process -FilePath "taskkill.exe" -ArgumentList "/PID $($script:DatabaseProcId) /T /F" -NoNewWindow -Wait -ErrorAction SilentlyContinue 2>$null
+        }
+        Write-Host "  [OK] Database stopped cleanly." -ForegroundColor Green
+    }
+
     Free-Port 8080
     if ($RunUser) { Free-Port 5173 }
     if ($RunAdmin) { Free-Port 5174 }
     if ($EnableBot) { Free-Port 8000 }
-    Write-Host "✓ All services stopped cleanly.`n" -ForegroundColor Green
+    Write-Host "[OK] All services stopped cleanly.`n" -ForegroundColor Green
 }
 
 # Helper to start process
@@ -203,10 +268,11 @@ function Start-DevProcess {
         [string]$Command
     )
 
+    $fullCmd = "cd /d `"$WorkingDir`" && $Command"
     if ($NewWindow) {
-        $proc = Start-Process -FilePath "cmd.exe" -ArgumentList "/k title $Title && $Command" -WorkingDirectory $WorkingDir -PassThru
+        $proc = Start-Process -FilePath "cmd.exe" -ArgumentList "/k title $Title && $fullCmd" -WorkingDirectory $WorkingDir -PassThru
     } else {
-        $proc = Start-Process -FilePath "cmd.exe" -ArgumentList "/c $Command" -WorkingDirectory $WorkingDir -PassThru -NoNewWindow
+        $proc = Start-Process -FilePath "cmd.exe" -ArgumentList "/c $fullCmd" -WorkingDirectory $WorkingDir -PassThru -NoNewWindow
     }
     if ($proc -and $proc.Id) {
         $ProcessIds.Add($proc.Id)
@@ -219,6 +285,11 @@ function Ensure-FrontendDependencies {
         [string]$WorkingDir,
         [string]$Name
     )
+
+    if ($SkipInstall) {
+        Write-Host "  [*] Skipping dependency install for $Name (-SkipInstall enabled)." -ForegroundColor Yellow
+        return
+    }
 
     $viteExecutable = Join-Path $WorkingDir "node_modules\.bin\vite.cmd"
     if (Test-Path $viteExecutable) {
@@ -264,7 +335,7 @@ function Wait-ForFrontend {
             if ($page.StatusCode -eq 200) {
                 $entry = Invoke-WebRequest -Uri "$baseUrl/src/main.jsx" -UseBasicParsing -TimeoutSec 2 -ErrorAction Stop
                 if ($entry.StatusCode -eq 200) {
-                    Write-Host "  ✓ $Name is READY at http://localhost:$Port" -ForegroundColor Green
+                    Write-Host "  [OK] $Name is READY at http://localhost:$Port" -ForegroundColor Green
                     return
                 }
                 $lastProbeError = "Entry module returned HTTP $($entry.StatusCode)."
@@ -284,8 +355,15 @@ try {
     Free-Port 8080
     Write-Host "`n[2/4] Starting Backend (Spring Boot on :8080)..." -ForegroundColor White
     $backendDir = Join-Path $RootDir "apps\backend"
-    $backendCmd = ".\mvnw.cmd spring-boot:run -Dspring-boot.run.profiles=$($env:SPRING_PROFILES_ACTIVE)"
-    $backendProcess = Start-DevProcess -Title "[Koupreng] Backend API" -WorkingDir $backendDir -Command $backendCmd
+    $hasWindowsJava = (Get-Command java -ErrorAction SilentlyContinue) -ne $null -or ($env:JAVA_HOME -and (Test-Path (Join-Path $env:JAVA_HOME "bin\java.exe")))
+    if ($hasWindowsJava) {
+        $backendCmd = ".\mvnw.cmd spring-boot:run -Dspring-boot.run.profiles=$($env:SPRING_PROFILES_ACTIVE)"
+        $backendProcess = Start-DevProcess -Title "[Koupreng] Backend API" -WorkingDir $backendDir -Command $backendCmd
+    } else {
+        Write-Host "  [*] Windows Java not found. Using WSL Java 25 runtime for Backend..." -ForegroundColor Cyan
+        $backendCmd = "wsl bash -c `"cd apps/backend && ./mvnw spring-boot:run -Dspring-boot.run.profiles=$($env:SPRING_PROFILES_ACTIVE)`""
+        $backendProcess = Start-DevProcess -Title "[Koupreng] Backend API (WSL)" -WorkingDir $RootDir -Command $backendCmd
+    }
 
     Write-Host "  Waiting for Backend to initialize..." -ForegroundColor Cyan
     $backendReady = $false
@@ -300,7 +378,7 @@ try {
             $resp = Invoke-WebRequest -Uri "http://127.0.0.1:8080/actuator/health/readiness" -UseBasicParsing -TimeoutSec 2 -ErrorAction Stop
             if ($resp.StatusCode -eq 200) {
                 $backendReady = $true
-                Write-Host "  ✓ Backend is READY at http://localhost:8080" -ForegroundColor Green
+                Write-Host "  [OK] Backend is READY at http://localhost:8080" -ForegroundColor Green
                 break
             }
             $backendLastProbeError = "Readiness endpoint returned HTTP $($resp.StatusCode)."
@@ -361,17 +439,17 @@ try {
 
     # Status Banner
     Write-Host "`n======================================================" -ForegroundColor Green
-    Write-Host "   ✨ ALL SERVICES RUNNING SUCCESSFULLY! ✨" -ForegroundColor Green
+    Write-Host "   ALL SERVICES RUNNING SUCCESSFULLY!" -ForegroundColor Green
     Write-Host "======================================================" -ForegroundColor Green
     if ($RunUser) {
-        Write-Host "  🌐 Frontend User:   http://localhost:5173" -ForegroundColor Cyan
+        Write-Host "  - Frontend User:   http://localhost:5173" -ForegroundColor Cyan
     }
     if ($RunAdmin) {
-        Write-Host "  👑 Frontend Admin:  http://localhost:5174" -ForegroundColor Cyan
+        Write-Host "  - Frontend Admin:  http://localhost:5174" -ForegroundColor Cyan
     }
-    Write-Host "  ⚙️  Backend API:     http://localhost:8080" -ForegroundColor Cyan
+    Write-Host "  - Backend API:     http://localhost:8080" -ForegroundColor Cyan
     if ($EnableBot) {
-        Write-Host "  🤖 Telegram Bot:    http://localhost:8000" -ForegroundColor Cyan
+        Write-Host "  - Telegram Bot:    http://localhost:8000" -ForegroundColor Cyan
     }
     Write-Host "------------------------------------------------------"
     Write-Host "  Press [Ctrl + C] anytime to stop all services." -ForegroundColor Yellow

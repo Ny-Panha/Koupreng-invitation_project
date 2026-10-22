@@ -12,6 +12,9 @@ param(
 
     [switch]$Bot,
 
+    [Alias("no-install", "fast")]
+    [switch]$SkipInstall,
+
     [Alias("window")]
     [switch]$NewWindow,
 

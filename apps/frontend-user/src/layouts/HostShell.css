@@ -78,3 +78,34 @@
     --host-nav-offset: 96px;
   }
 }
+
+/* ============================================================
+   Page-Load Entrance Animation (All Pages & All Text)
+   ============================================================ */
+@keyframes user-cascade-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.user-page-transition {
+  width: 100%;
+}
+
+.user-page-transition > * {
+  animation: user-cascade-reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: opacity, transform;
+}
+
+.user-page-transition > *:nth-child(1) { animation-delay: 0.04s; }
+.user-page-transition > *:nth-child(2) { animation-delay: 0.11s; }
+.user-page-transition > *:nth-child(3) { animation-delay: 0.18s; }
+.user-page-transition > *:nth-child(4) { animation-delay: 0.25s; }
+.user-page-transition > *:nth-child(5) { animation-delay: 0.32s; }
+.user-page-transition > *:nth-child(6) { animation-delay: 0.39s; }
+

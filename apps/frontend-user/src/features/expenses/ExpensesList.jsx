@@ -131,7 +131,12 @@ export function ExpensesList() {
                     search={search}
                     setSearch={setSearch}
                     editExpense={editExpense}
-                    deleteExpense={(id) => deleteExpense(id, t ? t("deleteConfirmText") : null)}
+                    deleteExpense={(id) => {
+                        const confirmMsg = t
+                            ? `${t("deleteConfirmTitle")}\n${t("deleteConfirmText")}`
+                            : "តើអ្នកចង់លុបមុខចំណាយនេះមែនទេ?\nការលុបនឹងមិនអាចត្រឡប់វិញបានទេ។";
+                        deleteExpense(id, confirmMsg);
+                    }}
                     saving={saving}
                     t={t}
                     lang={lang}

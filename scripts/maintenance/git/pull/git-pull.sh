@@ -43,6 +43,7 @@ has_local_changes() {
 origin_branch_exists() {
     local remote="$1"
     local branch="$2"
+    git rev-parse --verify --quiet "refs/remotes/$remote/$branch" >/dev/null 2>&1 || \
     git ls-remote --exit-code --heads "$remote" "$branch" >/dev/null 2>&1
 }
 
@@ -182,9 +183,10 @@ echo -e "${GREEN}Pull mode:${NC}      ${YELLOW}rebase${NC}"
 echo ""
 
 echo -e "${BLUE}Fetching latest changes from $TARGET_REMOTE...${NC}"
-git fetch "$TARGET_REMOTE" --prune
+git fetch "$TARGET_REMOTE" --prune --progress
 origin_branch_exists "$TARGET_REMOTE" "$TARGET_BRANCH" || fail "$TARGET_REMOTE/$TARGET_BRANCH was not found."
 
+echo -e "${BLUE}Checking local repository status...${NC}"
 safe_pull "$branch" explicit "$TARGET_REMOTE" "$TARGET_BRANCH"
 
 # ── Step 2: Rebase on origin/main to get latest teammate commits ──────────────

@@ -48,10 +48,10 @@ export function GiftTable({
                 <colgroup>
                     <col className="w-[22%]" />
                     <col className="w-[17%]" />
-                    <col className="w-[16%]" />
+                    <col className="w-[15%]" />
                     <col className="w-[15%]" />
                     <col className="w-[18%]" />
-                    <col className="w-[12%]" />
+                    <col className="w-[13%]" />
                 </colgroup>
                 <thead>
                     <tr>
@@ -77,6 +77,7 @@ export function GiftTable({
                                 existingGifts={gifts.filter((gift) => gift.id !== editingId)}
                                 placeholder={t ? t("placeholderName") : "Search or enter a name"}
                                 ariaLabel={labels.name}
+                                compact={true}
                                 t={t}
                             />
                             {isDuplicateGift && <small className="wg-inline-error" role="status">{t ? t("alreadyGiven") : "This guest already has a gift record."}</small>}
