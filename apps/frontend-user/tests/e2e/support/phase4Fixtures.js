@@ -8,7 +8,7 @@ export async function installPhase4Fixtures(page, { count = 24, lang = 'en' } = 
   await page.route('**/api/v1/invitations/**', async route => {
     const req = route.request(), path = new URL(req.url()).pathname, method = req.method();
     const reply = (data, status = 200) => route.fulfill({ status, contentType: 'application/json', body: JSON.stringify({ data }) });
-    const events = uxEvents.map(e => ({ ...e, status: 'PUBLISHED' }));
+    const events = uxEvents.map(e => ({ ...e, ...(e.id === 101 ? state.eventOverrides : {}), status: 'PUBLISHED', coverUrl: e.id === 101 ? state.media.find(m => m.mediaType === 'COVER_IMAGE')?.fileUrl : null }));
     if (path.endsWith('/invitations/my')) return reply(events);
     if (/\/invitations\/102(?:\/|$)/.test(path)) return reply(path.endsWith('/102') ? events[1] : []);
     if (!path.startsWith('/api/v1/invitations/101')) return reply(null, 403);
@@ -21,7 +21,7 @@ export async function installPhase4Fixtures(page, { count = 24, lang = 'en' } = 
       if (method === 'DELETE') { state.guests = state.guests.filter(g => g.id !== id); return reply(null); }
       return reply(state.guests);
     }
-    if (path.endsWith('/seating/tables') && method === 'POST') { const table = { ...body(), id: 100 + state.tables.length }; state.tables.push(table); return reply(table, 201); }
+    if (path.endsWith('/seating/tables') && method === 'POST') { const table = { ...body(), id: 100 + state.tables.length }; state.tables.push(table); return reply(table); }
     if (/\/seating\/tables\/\d+$/.test(path)) {
       const id = Number(path.split('/').at(-1));
       if (method === 'DELETE') { if (state.assignments.some(a => a.tableId === id)) return reply(null, 409); state.tables = state.tables.filter(t => t.id !== id); return reply(null); }
@@ -44,15 +44,16 @@ export async function installPhase4Fixtures(page, { count = 24, lang = 'en' } = 
     if (path.includes('/media/') && method !== 'GET') {
       const mediaType = path.endsWith('/cover') ? 'COVER_IMAGE' : 'GALLERY_IMAGE';
       if (method === 'DELETE') { state.media = state.media.filter(m => m.id !== Number(path.split('/').at(-1))); return reply(null); }
-      const m = { id: method === 'PUT' ? Number(path.split('/').at(-2)) : 700 + state.media.length, mediaType, fileUrl: '/images/kr_temple_bg_clean.png', originalFilename: 'review-image.png', fileSize: 100, mimeType: 'image/png' };
+      const m = { id: method === 'PUT' ? Number(path.split('/').at(-2)) : 700 + state.media.length, mediaType, fileUrl: '/templates/event-essential.svg', originalFilename: 'review-image.png', fileSize: 100, mimeType: 'image/png' };
       state.media = [...state.media.filter(item => item.id !== m.id), m]; return reply(path.endsWith('/gallery') ? [m] : m);
     }
     if (path.includes('/delivery/')) {
+      if (path.endsWith('/email') || path.endsWith('/reminders')) return reply({ totalTargets: body().guestIds.length, successCount: 0, failedCount: body().guestIds.length });
       if (path.endsWith('/events')) return reply([]);
       if (path.endsWith('/share-message')) return reply({ message: 'Review invitation link', invitationUrl: 'https://koupreng.example/w/review' });
       return reply({ totalGuests: state.guests.length, ready: state.guests.length, sent: 0, failed: 0, guests: state.guests.map(g => ({ ...g, guestId: g.id, invitationUrl: `https://koupreng.example/w/review-${g.id}` })) });
     }
-    if (path.endsWith('/101')) return reply(events[0]);
+    if (path.endsWith('/101')) return reply({ ...events[0], coverUrl: undefined });
     return route.fallback();
   });
   return state;

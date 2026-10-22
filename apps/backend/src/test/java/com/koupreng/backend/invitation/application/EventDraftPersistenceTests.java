@@ -191,10 +191,101 @@ class EventDraftPersistenceTests {
     }
 
     private String register(String email) throws Exception {
-        var result = http.perform(post("/api/v1/auth/register").contentType(MediaType.APPLICATION_JSON)
+        var result = http.perform(post("/api/v1/auth/register")
+                .with(request -> { request.setRemoteAddr("127.0.1." + (Math.floorMod(email.hashCode(), 200) + 1)); return request; })
+                .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"fullName\":\"Journey owner\",\"email\":\"" + email + "\",\"password\":\"JourneyPass123\"}"))
                 .andExpect(status().isOk()).andReturn();
         return json.readTree(result.getResponse().getContentAsString()).path("accessToken").asText();
+    }
+
+    @Test
+    void guestFieldsRoundTripThroughHttpAndJpaWithoutLosingIdentityOrOptionalData() throws Exception {
+        String token = register("phase4-guest@example.test");
+        long eventId = createOverHttp(token, "Phase 4 guest contract", "WEDDING");
+        long otherEvent = createOverHttp(token, "Isolated event", "BIRTHDAY");
+        String base = "/api/v1/invitations/" + eventId + "/guests";
+        var body = json.createObjectNode().put("guestName", "Contract Guest").put("phone", "012345678")
+                .put("email", "guest@example.test").put("companionName", "Companion")
+                .put("guestGroup", "Bride Side").put("sideType", "Family").put("seatCount", 3)
+                .put("note", "Preserve note").put("sendStatus", "PENDING").put("contributionStatus", "NONE")
+                .put("totalContributed", 0);
+        var created = http.perform(post(base).header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON).content(body.toString()))
+                .andExpect(status().isCreated()).andExpect(jsonPath("$.data.phone").value("012345678")).andReturn();
+        var guest = json.readTree(created.getResponse().getContentAsString()).path("data");
+        long guestId = guest.path("id").asLong();
+        String inviteToken = guest.path("inviteToken").asText();
+        entityManager.flush(); entityManager.clear();
+        http.perform(get(base + "/" + guestId).header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.data.email").value("guest@example.test"))
+                .andExpect(jsonPath("$.data.seatCount").value(3)).andExpect(jsonPath("$.data.guestGroup").value("Bride Side"));
+        body.put("phone", "+855 98 765 432").put("guestGroup", "Groom Side").put("seatCount", 4);
+        http.perform(put(base + "/" + guestId).header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON).content(body.toString()))
+                .andExpect(status().isOk());
+        entityManager.flush(); entityManager.clear();
+        http.perform(get(base + "/" + guestId).header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.data.phone").value("+855 98 765 432"))
+                .andExpect(jsonPath("$.data.seatCount").value(4)).andExpect(jsonPath("$.data.guestGroup").value("Groom Side"))
+                .andExpect(jsonPath("$.data.sideType").value("Family")).andExpect(jsonPath("$.data.email").value("guest@example.test"))
+                .andExpect(jsonPath("$.data.note").value("Preserve note")).andExpect(jsonPath("$.data.companionName").value("Companion"))
+                .andExpect(jsonPath("$.data.inviteToken").value(inviteToken));
+        http.perform(put("/api/v1/invitations/" + otherEvent + "/guests/" + guestId)
+                        .header("Authorization", "Bearer " + token).contentType(MediaType.APPLICATION_JSON).content(body.toString()))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void seatingCapacityMovesDeletionAndCrossEventIsolationUseRealPersistence() throws Exception {
+        String token = register("phase4-seating@example.test");
+        long eventId = createOverHttp(token, "Seating persistence", "WEDDING");
+        long otherEvent = createOverHttp(token, "Other seating event", "WEDDING");
+        String base = "/api/v1/invitations/" + eventId;
+        var guestResult = http.perform(post(base + "/guests").header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON).content("{\"guestName\":\"Seating party\",\"seatCount\":3}"))
+                .andExpect(status().isCreated()).andReturn();
+        long guestId = json.readTree(guestResult.getResponse().getContentAsString()).path("data").path("id").asLong();
+        long[] tables = new long[2];
+        for (int index = 0; index < tables.length; index++) {
+            var result = http.perform(post(base + "/seating/tables").header("Authorization", "Bearer " + token)
+                            .contentType(MediaType.APPLICATION_JSON).content("{\"tableName\":\"Table " + index + "\",\"capacity\":3}"))
+                    .andExpect(status().isOk()).andReturn();
+            tables[index] = json.readTree(result.getResponse().getContentAsString()).path("data").path("id").asLong();
+        }
+        var assignment = json.createObjectNode().put("guestId", guestId).put("tableId", tables[0]).put("seatCount", 3);
+        var assigned = http.perform(post(base + "/seating/assignments").header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON).content(assignment.toString()))
+                .andExpect(status().isOk()).andReturn();
+        long assignmentId = json.readTree(assigned.getResponse().getContentAsString()).path("data").path("id").asLong();
+        entityManager.flush(); entityManager.clear();
+        http.perform(get(base + "/seating/summary").header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.data.assignedSeats").value(3));
+        assignment.put("seatCount", 4);
+        http.perform(post(base + "/seating/assignments").header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON).content(assignment.toString()))
+                .andExpect(status().isConflict());
+        assignment.put("seatCount", 3).put("tableId", tables[1]);
+        http.perform(post(base + "/seating/assignments").header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON).content(assignment.toString()))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.data.id").value(assignmentId));
+        entityManager.flush(); entityManager.clear();
+        http.perform(get(base + "/seating").header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.data.assignments.length()").value(1))
+                .andExpect(jsonPath("$.data.assignments[0].tableId").value(tables[1]));
+        http.perform(delete(base + "/seating/tables/" + tables[1]).header("Authorization", "Bearer " + token))
+                .andExpect(status().isConflict());
+        http.perform(post("/api/v1/invitations/" + otherEvent + "/seating/assignments").header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON).content(assignment.toString()))
+                .andExpect(status().isNotFound());
+        http.perform(delete(base + "/seating/assignments/" + assignmentId).header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk());
+        http.perform(delete(base + "/seating/tables/" + tables[1]).header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk());
+        entityManager.flush(); entityManager.clear();
+        http.perform(get(base + "/seating").header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.data.unassignedGuests[0].id").value(guestId))
+                .andExpect(jsonPath("$.data.assignments.length()").value(0));
     }
 
     private long createOverHttp(String token, String title, String type) throws Exception {

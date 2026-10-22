@@ -33,6 +33,11 @@ async function setup(page, { lang = "en", empty = false, rejectFirstSave = false
     ]);
     if (path.endsWith("/42/check-in/list")) return json(empty ? [] : [{ guestId: 503, checkedInAt: "2026-12-15T10:00:00Z" }]);
     if (path.endsWith("/42/guests/export")) return route.fulfill({ contentType: "text/csv", body: "guestName,phone\nSok Dara,012345678\n" });
+    if (/\/42\/delivery\/guests\/\d+\/mark-shared$/.test(path)) {
+      const id = Number(path.split('/').at(-2));
+      state.guests = state.guests.map(guest => guest.id === id ? { ...guest, sendStatus: 'SENT' } : guest);
+      return json(state.guests.find(guest => guest.id === id));
+    }
     if (path.endsWith("/42/guests")) {
       if (route.request().method() === "POST") {
         state.creates++;
@@ -107,9 +112,9 @@ test("editing a guest and marking an invitation sent update the list", async ({ 
   await dialog.getByRole("textbox", { name: "Guest Name", exact: true }).fill("Sok Dara Updated");
   await expect(dialog.getByRole("textbox", { name: "Phone Number" })).toHaveValue("012 345 678");
   await expect(dialog.getByRole("textbox", { name: "Phone Number" })).toBeEnabled();
-  await expect(dialog.getByRole("combobox", { name: "Status", exact: true })).toBeEnabled();
-  await expect(dialog.getByRole("combobox", { name: "Group", exact: true })).toHaveCount(0);
-  await expect(dialog.getByRole("combobox", { name: "Category", exact: true })).toHaveCount(0);
+  await expect(dialog.getByRole("textbox", { name: "Status", exact: true })).toHaveAttribute('readonly', '');
+  await expect(dialog.getByRole("combobox", { name: "Group", exact: true })).toHaveValue('Groom Side');
+  await expect(dialog.getByRole("combobox", { name: "Category", exact: true })).toHaveValue('Family');
   await expect(dialog.getByRole("textbox", { name: "Table / seat", exact: true })).toHaveCount(0);
   await expect(dialog.getByRole("textbox", { name: "Companion / Plus-One" })).toHaveValue("Srey Mom");
   await dialog.getByRole("button", { name: "Save", exact: true }).click();
@@ -132,7 +137,7 @@ test("add guest keeps failed entries, validates seat count, and supports save an
   const dialog = page.getByRole("dialog");
   const name = dialog.getByRole("textbox", { name: "Guest Name", exact: true });
   await expect(name).toBeFocused();
-  await expect(dialog.locator('input[type="tel"]')).toHaveCount(0);
+  await expect(dialog.locator('input[type="tel"]')).toHaveCount(1);
   await dialog.getByRole("combobox", { name: "Group", exact: true }).selectOption("Bride Side");
   await dialog.getByRole("combobox", { name: "Category", exact: true }).selectOption("Family");
   await dialog.locator(".guest-form-details > summary").click();
@@ -155,7 +160,7 @@ test("add guest keeps failed entries, validates seat count, and supports save an
   await page.keyboard.press("Escape");
   await expect(page.locator(".guest-record-row").filter({ hasText: "New Wedding Guest" })).toHaveCount(1);
   expect(state.creates).toBe(2);
-  expect(state.guests.find((guest) => guest.guestName === "New Wedding Guest")).toMatchObject({ phone: null, sendStatus: "មិនទាន់ផ្ញើ", guestGroup: "Bride Side", sideType: "Family" });
+  expect(state.guests.find((guest) => guest.guestName === "New Wedding Guest")).toMatchObject({ phone: null, sendStatus: "PENDING", guestGroup: "Bride Side", sideType: "Family" });
   await noOverflow(page);
 });
 
@@ -176,7 +181,7 @@ test("meeting tables can be assigned when creating and editing a guest", async (
   await row.getByRole("button", { name: "Edit", exact: true }).click();
   await expect(table).toBeEnabled();
   await expect(table).toHaveValue("C-12");
-  await expect(dialog.getByRole("combobox", { name: "Status", exact: true })).toBeEnabled();
+  await expect(dialog.getByRole("textbox", { name: "Status", exact: true })).toHaveAttribute('readonly', '');
   await table.fill("C-14");
   await dialog.getByRole("button", { name: "Save", exact: true }).click();
   await expect(dialog).toHaveCount(0);
