@@ -3,6 +3,8 @@
 ───────────────────────────────────────── */
 
 /* ── Page wrapper ── */
+.auth-shell { font-family: var(--ui-font); color: var(--ui-ink); }
+.auth-shell :where(input, button, select, textarea) { font-family: inherit; }
 .auth-page {
     min-height: 100vh;
     display: flex;
@@ -156,12 +158,12 @@
 }
 
 .auth-title {
-    font-family: 'Moul', serif;
+    font-family: var(--ui-font);
     font-size: clamp(22px, 3vw, 26px);
     font-weight: 700;
     color: var(--kp-ink, #262622);
     margin: 0;
-    line-height: 1.4;
+    line-height: 1.8;
 }
 
 .auth-subtitle {
@@ -231,14 +233,17 @@
 
 .auth-eye-btn {
     position: absolute;
-    right: 10px;
+    right: 4px;
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
     top: 50%;
     transform: translateY(-50%);
     background: none;
     border: none;
     cursor: pointer;
     padding: 0;
-    color: #aaa;
+    color: var(--ui-muted);
     display: flex;
     align-items: center;
     transition: color 0.2s;
@@ -363,7 +368,7 @@
     text-align: center;
     font-size: 10px;
     font-weight: 600;
-    color: #ccc;
+    color: var(--ui-muted);
     letter-spacing: 0.1em;
     text-transform: uppercase;
     margin: 12px 0;
@@ -418,7 +423,7 @@
 
 /* Telegram — Telegram's official brand styling: bright blue gradient, white text */
 .auth-social-btn.telegram {
-    background: linear-gradient(135deg, #0088cc 0%, #006fa3 100%);
+    background: linear-gradient(135deg, #0077b5 0%, #00638e 100%);
     color: #ffffff;
     border: 1px solid transparent;
     box-shadow: 0 2px 8px rgba(0, 136, 204, 0.28);
@@ -544,7 +549,7 @@
 
 .auth-footer-link {
     font-size: 12px;
-    color: #999;
+    color: var(--ui-muted);
     text-decoration: none;
     transition: color 0.2s;
 }
@@ -555,7 +560,7 @@
 
 .auth-footer-text {
     font-size: 11px;
-    color: #aaa;
+    color: var(--ui-muted);
     margin: 6px 0 0;
 }
 
@@ -615,7 +620,7 @@
 
 .auth-step-dot.pending {
     background: rgba(176, 146, 106, 0.2);
-    color: #aaa;
+    color: var(--ui-muted);
 }
 
 .auth-step-line {
@@ -636,7 +641,7 @@
 /* OTP boxes */
 .auth-otp-hint {
     font-size: 11px;
-    color: #aaa;
+    color: var(--ui-muted);
     text-align: center;
     margin: 0 0 4px;
 }
@@ -680,7 +685,7 @@
 
 .auth-resend {
     font-size: 11px;
-    color: #aaa;
+    color: var(--ui-muted);
     text-align: center;
     margin: 4px 0 0;
 }
@@ -733,7 +738,7 @@
 
 .auth-success p {
     font-size: 12px;
-    color: #999;
+    color: var(--ui-muted);
     margin: 2px 0 0;
 }
 
@@ -749,7 +754,7 @@
     border: none;
     cursor: pointer;
     font-size: 12px;
-    color: #aaa;
+    color: var(--ui-muted);
     display: flex;
     align-items: center;
     gap: 4px;
@@ -765,8 +770,9 @@
 
 /* Hint text below input */
 .auth-hint {
-    font-size: 11px;
-    color: #bbb;
+    font-size: 13px;
+    color: var(--ui-muted);
+    line-height: 1.75;
     margin: 2px 0 0;
 }
 
@@ -775,3 +781,9 @@
     opacity: 0.45;
     cursor: not-allowed;
 }
+
+/* Functional focus and copy roles belong to the application contract. */
+.auth-shell :is(a,button,input):focus-visible { outline: 3px solid var(--ui-focus); outline-offset: 3px; }
+.auth-input::placeholder { color: var(--ui-muted); opacity: 1; }
+.auth-footer-text a { color: var(--ui-action); }
+.auth-input { border-color: var(--ui-control-border); }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useId, useState, useEffect } from "react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import SocialAuthButtons from "./components/SocialAuthButtons";
 import { userService } from "@/features/auth/api/userApi";
@@ -9,6 +9,7 @@ import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
  * Maps to `users` table: full_name, email, phone, profile_image, status.
  */
 export default function ProfilePage() {
+  const fieldId = useId();
   const { text: t } = useBackendMessages("profile");
   const { user, logout, updateUser } = useAuth();
 
@@ -151,7 +152,7 @@ export default function ProfilePage() {
 
   if (loading) {
     return (
-      <div style={{ textAlign: "center", padding: "80px 20px", fontFamily: "'Kantumruy Pro', sans-serif", color: "#888" }}>
+      <div style={{ textAlign: "center", padding: "80px 20px", fontFamily: "'Kantumruy Pro', sans-serif", color: "var(--ui-muted)" }}>
         {t("loading")}
       </div>
     );
@@ -173,7 +174,7 @@ export default function ProfilePage() {
         }
         .profile-page .subtitle {
           font-family: 'Kantumruy Pro', sans-serif;
-          color: #888;
+          color: var(--ui-muted);
           font-size: 14px;
           margin-bottom: 32px;
         }
@@ -188,7 +189,7 @@ export default function ProfilePage() {
           width: 80px;
           height: 80px;
           border-radius: 50%;
-          background: #B0926A;
+          background: var(--ui-action);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -232,7 +233,7 @@ export default function ProfilePage() {
           color: #333;
         }
         .profile-info-text span {
-          color: #888;
+          color: var(--ui-muted);
           font-size: 13px;
         }
         .profile-form-group {
@@ -255,13 +256,16 @@ export default function ProfilePage() {
           font-size: 15px;
           background: #fff;
           transition: 0.2s;
-          outline: none;
+          outline-offset: 3px;
           box-sizing: border-box;
         }
         .profile-form-group input:focus {
-          border-color: #B0926A;
+          border-color: var(--ui-action);
           box-shadow: 0 0 0 3px rgba(176, 146, 106, 0.1);
         }
+        .profile-form-group input { border-color: var(--ui-control-border); }
+        .profile-form-group input::placeholder { color: var(--ui-muted); opacity: 1; }
+        .profile-avatar:focus-within { outline: 3px solid var(--ui-focus); outline-offset: 3px; }
         .profile-form-group input:disabled {
           background: #f5f5f5;
           color: #999;
@@ -269,7 +273,7 @@ export default function ProfilePage() {
         .profile-save-btn {
           width: 100%;
           padding: 16px;
-          background: #B0926A;
+          background: var(--ui-action);
           color: white;
           border: none;
           border-radius: 12px;
@@ -281,7 +285,7 @@ export default function ProfilePage() {
           margin-top: 12px;
         }
         .profile-save-btn:hover {
-          background: #9a7d5a;
+          background: var(--ui-action-hover);
         }
         .profile-save-btn:disabled {
           opacity: 0.6;
@@ -338,15 +342,15 @@ export default function ProfilePage() {
         .profile-pw-hint {
           font-family: 'Kantumruy Pro', sans-serif;
           font-size: 13px;
-          color: #888;
+          color: var(--ui-muted);
           margin: 6px 0 20px;
         }
         .profile-pw-btn {
           width: 100%;
           padding: 14px;
           background: transparent;
-          color: #B0926A;
-          border: 2px solid #B0926A;
+          color: var(--ui-action);
+          border: 2px solid var(--ui-action);
           border-radius: 12px;
           font-family: 'Kantumruy Pro', sans-serif;
           font-weight: 700;
@@ -356,13 +360,16 @@ export default function ProfilePage() {
           margin-top: 4px;
         }
         .profile-pw-btn:hover {
-          background: #B0926A;
+          background: var(--ui-action);
           color: #fff;
         }
         .profile-pw-btn:disabled {
           opacity: 0.6;
           cursor: not-allowed;
         }
+
+        .profile-page :is(input, button):focus-visible { outline: 3px solid var(--ui-focus); outline-offset: 3px; }
+        @media (prefers-reduced-motion: reduce) { .profile-page * { animation: none !important; transition: none !important; } }
 
         @keyframes profileFadeIn {
           from { opacity: 0; transform: translateY(-5px); }
@@ -382,7 +389,7 @@ export default function ProfilePage() {
         <div className="profile-avatar-section">
           <div className="profile-avatar">
             {displayImage ? (
-              <img src={displayImage} alt="Profile" />
+              <img src={displayImage} alt={t("profilePhoto")} />
             ) : (
               displayInitial
             )}
@@ -392,6 +399,7 @@ export default function ProfilePage() {
               accept="image/*"
               onChange={handleImageChange}
               title={t("selectImage")}
+              aria-label={t("selectImage")}
             />
           </div>
           <div className="profile-info-text">
@@ -403,8 +411,10 @@ export default function ProfilePage() {
         {/* ── Profile form ── */}
         <form onSubmit={handleSave}>
           <div className="profile-form-group">
-            <label>{t("fullNameLabel")}</label>
+            <label htmlFor={`${fieldId}-name`}>{t("fullNameLabel")}</label>
             <input
+              id={`${fieldId}-name`}
+              autoComplete="name"
               type="text"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
@@ -414,8 +424,10 @@ export default function ProfilePage() {
           </div>
 
           <div className="profile-form-group">
-            <label>{t("emailLabel")}</label>
+            <label htmlFor={`${fieldId}-email`}>{t("emailLabel")}</label>
             <input
+              id={`${fieldId}-email`}
+              autoComplete="email"
               type="email"
               value={user?.email || ""}
               disabled
@@ -424,8 +436,10 @@ export default function ProfilePage() {
           </div>
 
           <div className="profile-form-group">
-            <label>{t("phoneLabel")}</label>
+            <label htmlFor={`${fieldId}-phone`}>{t("phoneLabel")}</label>
             <input
+              id={`${fieldId}-phone`}
+              autoComplete="tel"
               type="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
@@ -446,17 +460,17 @@ export default function ProfilePage() {
           </button>
 
           {saved && (
-            <p className="profile-msg success">{t("savedSuccess")}</p>
+            <p className="profile-msg success" role="status">{t("savedSuccess")}</p>
           )}
           {error && (
-            <p className="profile-msg error">{error}</p>
+            <p className="profile-msg error" role="alert">{error}</p>
           )}
         </form>
 
         {/* ── Change password ── */}
         <hr className="profile-section-divider" />
         <section aria-labelledby="profile-linked-identities">
-          <h2 id="profile-linked-identities">Linked sign-in identities</h2>
+          <h2 id="profile-linked-identities">{t("linkedIdentities")}</h2>
           <SocialAuthButtons mode="link" />
         </section>
         <hr className="profile-section-divider" />
@@ -466,6 +480,7 @@ export default function ProfilePage() {
           className={`profile-pw-toggle${showPasswordSection ? " open" : ""}`}
           onClick={() => setShowPasswordSection((v) => !v)}
           aria-expanded={showPasswordSection}
+          aria-controls={`${fieldId}-password-fields`}
         >
           <span>{t("changePassword")}</span>
           {/* chevron */}
@@ -474,15 +489,16 @@ export default function ProfilePage() {
           </svg>
         </button>
 
-        <div className={`profile-pw-section${showPasswordSection ? " open" : ""}`}>
+        <div id={`${fieldId}-password-fields`} hidden={!showPasswordSection} inert={!showPasswordSection} className={`profile-pw-section${showPasswordSection ? " open" : ""}`}>
           <p className="profile-pw-hint">
             {t("changePasswordHint")}
           </p>
 
           <form onSubmit={handleChangePassword}>
             <div className="profile-form-group">
-              <label>{t("currentPassword")}</label>
+              <label htmlFor={`${fieldId}-current-password`}>{t("currentPassword")}</label>
               <input
+                id={`${fieldId}-current-password`}
                 type="password"
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
@@ -493,8 +509,9 @@ export default function ProfilePage() {
             </div>
 
             <div className="profile-form-group">
-              <label>{t("newPasswordLabel")}</label>
+              <label htmlFor={`${fieldId}-new-password`}>{t("newPasswordLabel")}</label>
               <input
+                id={`${fieldId}-new-password`}
                 type="password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
@@ -506,8 +523,9 @@ export default function ProfilePage() {
             </div>
 
             <div className="profile-form-group">
-              <label>{t("confirmNewPassword")}</label>
+              <label htmlFor={`${fieldId}-confirm-password`}>{t("confirmNewPassword")}</label>
               <input
+                id={`${fieldId}-confirm-password`}
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}

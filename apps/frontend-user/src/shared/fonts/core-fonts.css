@@ -1,0 +1,18 @@
+/* Existing OFL assets; licenses accompany the files in public/fonts.
+   Declaring a face does not fetch it until visible text needs it. Decorative
+   invitation faces remain owned by their template stylesheets. No bulk preload. */
+@font-face {
+  font-family: "DM Sans";
+  src: url("/fonts/marketing/DMSans-Latin.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  unicode-range: U+0000-024F, U+1E00-1EFF, U+2000-206F, U+20A0-20CF;
+}
+@font-face {
+  font-family: "Kantumruy Pro";
+  src: url("/fonts/silk-heritage/KantumruyPro.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}

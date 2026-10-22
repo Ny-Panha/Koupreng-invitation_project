@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
 
 import logo from "../../assets/logo.png";
 import "./siteAnimations.css";
@@ -30,6 +31,7 @@ const REVEAL_SELECTORS = [
 
 function getInitialPreloaderState() {
   if (typeof window === "undefined") return false;
+  if (window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches) return false;
   // If inside Telegram WebApp or previously seen in session, skip preloader for instant load
   if (window.Telegram?.WebApp?.initData) return false;
   try {
@@ -42,7 +44,8 @@ function getInitialPreloaderState() {
 
 function LogoPreloader({ disabled = false }) {
   const [visible, setVisible] = useState(getInitialPreloaderState);
-  const shouldShow = !disabled && visible;
+  const reducedMotion = usePrefersReducedMotion();
+  const shouldShow = !disabled && !reducedMotion && visible;
 
   useEffect(() => {
     if (disabled || !visible) return undefined;

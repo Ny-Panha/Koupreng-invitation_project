@@ -1,19 +1,19 @@
 /* Shared account-page contract. Existing invitation renderers keep their typography. */
 .dash-wrapper, .workspace-page, .workspace-dialog {
-  --ws-canvas: #fbf6ee;
-  --ws-surface: #fff;
-  --ws-ink: #1f2421;
-  --ws-muted: #59615c;
-  --ws-border: #e6dccb;
-  --ws-border-strong: #d5c5ad;
-  --ws-surface-subtle: #f6f1e9;
-  --ws-gold: #926c34;
-  --ws-gold-dark: #76572d;
-  --ws-gold-light: #f5efdf;
-  --ws-teal: #0f766e;
+  --ws-canvas: var(--ui-canvas);
+  --ws-surface: var(--ui-surface);
+  --ws-ink: var(--ui-ink);
+  --ws-muted: var(--ui-muted);
+  --ws-border: var(--ui-border);
+  --ws-border-strong: var(--ui-control-border);
+  --ws-surface-subtle: var(--ui-surface-subtle);
+  --ws-gold: var(--ui-action);
+  --ws-gold-dark: var(--ui-action-hover);
+  --ws-gold-light: var(--ui-action-soft);
+  --ws-teal: var(--ui-focus);
   --ws-radius: 20px;
   --ws-shadow: 0 4px 20px rgb(65 48 24 / 4%);
-  --ws-motion: 160ms;
+  --ws-motion: var(--ui-duration-feedback);
   font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.8;

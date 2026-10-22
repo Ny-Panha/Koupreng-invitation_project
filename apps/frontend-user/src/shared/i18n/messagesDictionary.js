@@ -1,9 +1,11 @@
 import { MARKETING_MESSAGES } from "./marketingMessages";
 import { OPERATIONS_MESSAGES } from "./operationsMessages";
+import { PROFILE_MESSAGES } from "./profileMessages";
 
 export const LOCAL_MESSAGES = {
   ...MARKETING_MESSAGES,
   ...OPERATIONS_MESSAGES,
+  ...PROFILE_MESSAGES,
   hostNav: {
     km: {
       events: "កម្មវិធី",

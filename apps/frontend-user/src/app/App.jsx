@@ -14,12 +14,15 @@ import {
 } from "../shared/telegram/telegramWebApp";
 import { templateCatalogService } from "../features/templates/api/templateCatalogApi";
 import { registerDynamicTemplates } from "../features/templates/data/templatesData";
+import { useLanguageStore } from "../stores/useLanguageStore";
 
 /**
  * App — root component.
  * No more Context providers needed — auth/theme are Zustand stores now.
  */
 function App() {
+  const lang = useLanguageStore(state => state.lang);
+  useEffect(() => { document.documentElement.lang = lang; }, [lang]);
   useEffect(() => {
     initTelegramWebApp();
     window.addEventListener(TELEGRAM_WEB_APP_READY_EVENT, initTelegramWebApp);

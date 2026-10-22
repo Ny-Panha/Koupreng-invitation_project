@@ -1,4 +1,6 @@
 @import "../assets/fonts/fonts.css";
+@import "../shared/fonts/core-fonts.css";
+@import "../shared/styles/semantic-tokens.css";
 @import "tailwindcss";
 
 :root {
@@ -17,7 +19,7 @@
   --planessential-com-moulpali-regular-font-family: 'Noto Sans Khmer', sans-serif;
 
   --font-sans:
-    'Noto Sans Khmer', 'Kantumruy Pro', 'DM Sans',
+    'DM Sans', 'Kantumruy Pro',
     system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-serif:
     'Noto Serif Khmer', 'Playfair Display', Georgia, serif;
@@ -124,20 +126,20 @@
      MODERN KHMER PREMIUM DESIGN TOKENS
      Universal semantic design tokens for Koupreng (ISSUE-P1-03)
      ============================================================ */
-  --kp-canvas: #FBF6EE;
-  --kp-surface: #FFFFFF;
-  --kp-surface-subtle: #F6F1E9;
-  --kp-surface-raised: #FFFFFF;
-  --kp-ink: #1F2421;
-  --kp-muted: #59615C;
-  --kp-subtle: #8A928D;
-  --kp-border: #E6DCCB;
-  --kp-border-strong: #D5C5AD;
-  --kp-gold: #926C34;
-  --kp-gold-dark: #76572D;
-  --kp-gold-light: #F5EFDF;
-  --kp-teal: #0F766E;
-  --kp-emerald: #2E433A;
+  --kp-canvas: var(--ui-canvas);
+  --kp-surface: var(--ui-surface);
+  --kp-surface-subtle: var(--ui-surface-subtle);
+  --kp-surface-raised: var(--ui-surface);
+  --kp-ink: var(--ui-ink);
+  --kp-muted: var(--ui-muted);
+  --kp-subtle: var(--ui-muted);
+  --kp-border: var(--ui-border);
+  --kp-border-strong: var(--ui-control-border);
+  --kp-gold: var(--ui-action);
+  --kp-gold-dark: var(--ui-action-hover);
+  --kp-gold-light: var(--ui-action-soft);
+  --kp-teal: var(--ui-focus);
+  --kp-emerald: var(--ui-forest);
   --kp-success: #15803D;
   --kp-warning: #B45309;
   --kp-danger: #B91C1C;
@@ -202,21 +204,21 @@
   --brand-text: var(--kp-ink);
   --brand-text-muted: var(--kp-muted);
   /* used throughout dashboard */
-  --brand-text-subtle: #b0b8c4;
-  --brand-text-on-tint: #4b479a;
+  --brand-text-subtle: var(--ui-muted);
+  --brand-text-on-tint: var(--ui-action-hover);
 
   /* Borders */
-  --brand-border: #e7e7ee;
-  --brand-border-subtle: #f3e8f0;
-  --brand-border-strong: #d3ccf2;
+  --brand-border: var(--ui-border);
+  --brand-border-subtle: var(--ui-border);
+  --brand-border-strong: var(--ui-control-border);
 
   /* Status (shared semantic — usable in either palette) */
   --status-success-bg: #dcfce7;
-  --status-success-fg: #15803d;
+  --status-success-fg: var(--ui-success);
   --status-warning-bg: #fef3c7;
-  --status-warning-fg: #b45309;
+  --status-warning-fg: var(--ui-warning);
   --status-danger-bg: #fee2e2;
-  --status-danger-fg: #dc2626;
+  --status-danger-fg: var(--ui-danger);
   --status-info-bg: #e0f2fe;
   --status-info-fg: #0369a1;
   --status-neutral-bg: #f1f5f9;
@@ -319,7 +321,7 @@
   --kp-border: var(--kp-public-border);
   --kp-paper: var(--kp-public-surface-warm);
   --kp-burgundy: #672C39;
-  --kp-font: 'Koupreng UI', 'Noto Sans Khmer', sans-serif;
+  --kp-font: 'Kantumruy Pro', sans-serif;
   --kp-display: 'Koupreng Editorial', Georgia, serif;
   --kp-ease: cubic-bezier(.22, 1, .36, 1);
   --site-header-offset: 86px;
@@ -328,7 +330,7 @@
   font-family: var(--kp-font);
 }
 
-.kp-marketing-shell:lang(en) { --kp-font: 'Koupreng Latin', 'Koupreng UI', sans-serif; }
+.kp-marketing-shell:lang(en) { --kp-font: var(--ui-font); }
 
 /* ============================================================
    Reduced motion: zero out transitions for users who request it

@@ -1,4 +1,7 @@
 .k-loading-btn {
+  min-height: 44px;
+  padding: 10px 16px;
+  border-radius: var(--ui-radius-control);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -31,6 +34,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .k-spinner {
-    animation-duration: 1.5s;
+    animation: none;
   }
 }

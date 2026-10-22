@@ -5,9 +5,9 @@
   padding: 0.25rem 0.625rem;
   border-radius: var(--radius-pill, 999px);
   font-family: var(--font-sans);
-  font-size: var(--text-xs, 0.75rem);
+  font-size: var(--text-sm, 0.875rem);
   font-weight: var(--weight-semibold, 600);
-  line-height: 1;
+  line-height: 1.65;
   text-transform: capitalize;
   white-space: nowrap;
 }

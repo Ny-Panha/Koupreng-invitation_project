@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
  */
 export default function AuthShell() {
     return (
-        <main>
+        <main className="auth-shell">
             <Outlet />
         </main>
     );

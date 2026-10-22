@@ -6,6 +6,7 @@ import authService from "@/features/auth/api/authApi";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { buildTelegramOAuthUrl, TELEGRAM_OAUTH_ORIGIN } from "./telegramOAuth";
 import { socialAuthError } from "./socialAuthError";
+import "../AuthPage.css";
 
 const isDev = import.meta.env.DEV;
 

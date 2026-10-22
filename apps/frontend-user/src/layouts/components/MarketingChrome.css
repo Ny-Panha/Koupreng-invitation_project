@@ -1,18 +1,6 @@
 /* Existing locally served OFL fonts, distinct names avoid changing other surfaces.
    Provenance: docs/frontend/user/template-asset-licenses.md. */
 @font-face {
-  font-family: 'Koupreng UI';
-  src: url('/fonts/silk-heritage/KantumruyPro.woff2') format('woff2');
-  font-weight: 100 700;
-  font-display: swap;
-}
-@font-face { 
-  font-family: 'Koupreng Latin'; 
-  src: url('/fonts/marketing/DMSans-Latin.woff2') format('woff2'); 
-  font-weight: 400 700; 
-  font-display: swap; 
-}
-@font-face {
   font-family: 'Koupreng Editorial';
   src: url('/fonts/silk-heritage/CormorantGaramond.woff2') format('woff2');
   font-weight: 600;
@@ -361,10 +349,10 @@
   z-index: 1100; 
   right: max(20px, env(safe-area-inset-right)); 
   bottom: max(20px, env(safe-area-inset-bottom)); 
-  font: 400 15px/1.75 'Koupreng UI', sans-serif; 
+  font: 400 15px/1.75 'Kantumruy Pro', sans-serif;
   color: #262622; 
 }
-.kp-public-support:lang(en) { font-family: 'Koupreng Latin', sans-serif; }
+.kp-public-support:lang(en) { font-family: var(--ui-font); }
 .kp-public-support .kp-support-toggle { 
   display: grid; 
   place-items: center; 

@@ -30,22 +30,23 @@
 .k-form-control-wrap select {
   width: 100%;
   font-family: var(--font-sans);
-  font-size: var(--text-sm, 0.875rem);
+  font-size: var(--text-base, 1rem);
+  min-height: 48px;
   padding: 0.625rem 0.875rem;
   border-radius: var(--radius-md, 10px);
-  border: 1px solid var(--brand-border, #e7e7ee);
+  border: 1px solid var(--ui-control-border);
   background: var(--brand-surface, #ffffff);
   color: var(--brand-text, #1e293b);
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
-  line-height: var(--leading-normal, 1.5);
+  line-height: 1.75;
 }
 
 .k-form-control-wrap input:focus,
 .k-form-control-wrap textarea:focus,
 .k-form-control-wrap select:focus {
-  outline: none;
-  border-color: var(--brand-primary, #6b6bc4);
-  box-shadow: 0 0 0 3px var(--brand-ring, rgba(107, 107, 196, 0.25));
+  outline: 3px solid var(--ui-focus);
+  outline-offset: 2px;
+  border-color: var(--ui-focus);
 }
 
 .k-form-field-has-error .k-form-control-wrap input,

@@ -1652,7 +1652,7 @@
 .kp-pricing-khr {
   font-size: 14px;
   font-weight: 600;
-  color: var(--kp-gold, #926c34);
+  color: var(--kp-gold-ink, var(--ui-action));
   margin-bottom: 12px;
 }
 

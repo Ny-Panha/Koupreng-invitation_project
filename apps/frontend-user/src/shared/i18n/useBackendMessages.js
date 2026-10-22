@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useLanguageStore } from "../../stores/useLanguageStore";
 import { i18nService } from "../api/i18nService";
 import { LOCAL_MESSAGES } from "./messagesDictionary";
+const EMPTY_MESSAGES = Object.freeze({});
 
 export function formatMessage(value, replacements = {}) {
     return Object.entries(replacements).reduce(
@@ -12,7 +13,8 @@ export function formatMessage(value, replacements = {}) {
 
 export function useBackendMessages(namespace) {
     const lang = useLanguageStore((state) => state.lang);
-    const [messages, setMessages] = useState({});
+    const [responseState, setResponseState] = useState(null);
+    const messages = responseState?.namespace === namespace && responseState?.lang === lang ? responseState.messages : EMPTY_MESSAGES;
 
     useEffect(() => {
         let active = true;
@@ -20,12 +22,12 @@ export function useBackendMessages(namespace) {
         i18nService.messages(namespace, lang)
             .then((response) => {
                 if (active) {
-                    setMessages(response?.messages || {});
+                    setResponseState({ namespace, lang, messages: response?.messages || EMPTY_MESSAGES });
                 }
             })
             .catch(() => {
                 if (active) {
-                    setMessages({});
+                    setResponseState({ namespace, lang, messages: EMPTY_MESSAGES });
                 }
             });
 
@@ -44,8 +46,8 @@ export function useBackendMessages(namespace) {
                 serverVal === key ||
                 serverVal.startsWith(`${namespace}.`)
             );
-            const validServerVal = (!isRawKey && serverVal) ? serverVal : null;
-            const finalVal = validServerVal || localVal || serverVal || key;
+            const validServerVal = (!isRawKey && typeof serverVal === "string" && serverVal.trim()) ? serverVal : null;
+            const finalVal = validServerVal || localVal || key;
             return formatMessage(finalVal, replacements);
         },
         [messages, namespace, lang]

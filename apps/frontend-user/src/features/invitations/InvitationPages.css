@@ -2458,7 +2458,7 @@
 }
 
 .checkin-currency-btn.active {
-    background: #B0926A;
+    background: var(--ui-action);
     color: #ffffff;
     box-shadow: 0 2px 6px rgba(176, 146, 106, 0.3);
 }
