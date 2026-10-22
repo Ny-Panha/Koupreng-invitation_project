@@ -24,6 +24,10 @@
 .dash-wrapper--event .host-logo-box img { height: 56px; }
 .dash-wrapper--event .host-logo-box:hover { transform: none; }
 .dash-wrapper.dash-wrapper--event.dash-wrapper--studio { --host-nav-offset: 0px; }
+@media (min-width: 1024px) {
+  .dash-wrapper--event:not(.dash-wrapper--studio) { height: 100dvh; min-height: 0; overflow: hidden; }
+  .dash-wrapper--event:not(.dash-wrapper--studio) > .dash-main-scroll { box-sizing: border-box; overflow: hidden; }
+}
 @media (max-width: 767px) {
   .dash-wrapper--event .host-header-container { width: calc(100% - 16px); padding-inline: 14px; }
   .dash-wrapper--event .host-logo-box img { height: 48px; }
