@@ -31,7 +31,7 @@ export function useEventNavigation(userId) {
   const desktop = useMediaMatch("(min-width: 1024px)");
   const wide = useMediaMatch("(min-width: 1440px)");
   const collapsed = preferences.mode === "auto" ? !wide : preferences.mode === "collapsed";
-  return { desktop, collapsed, groups: preferences.groups,
+  return { desktop, collapsed, manual: preferences.mode !== "auto", groups: preferences.groups,
     toggleCollapsed: () => setPreferences(value => ({ ...value, mode: collapsed ? "expanded" : "collapsed" })),
     expand: () => setPreferences(value => ({ ...value, mode: "expanded" })),
     toggleGroup: name => setPreferences(value => ({ ...value, groups: { ...value.groups, [name]: !value.groups[name] } })),

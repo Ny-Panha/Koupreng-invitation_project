@@ -93,7 +93,7 @@ function VerifiedWorkspace({ eventId }) {
     updateEvent: event => setState(current => ({ ...current, event })),
     openNavigation: () => setMobileDrawerOpen(true), navigationOpen: mobileDrawerOpen,
   }}>
-    <section className={`event-workspace${navigation.collapsed ? " is-collapsed" : ""}${focusedStudio ? " is-studio" : ""}`} aria-label={en ? "Event workspace" : "គ្រប់គ្រងកម្មវិធី"}>
+    <section className={`event-workspace${navigation.collapsed ? " is-collapsed" : ""}${navigation.manual ? " has-nav-preference" : ""}${focusedStudio ? " is-studio" : ""}`} aria-label={en ? "Event workspace" : "គ្រប់គ្រងកម្មវិធី"}>
       {!focusedStudio && <a className="event-skip-link" href="#event-module-content">{en ? "Skip to event content" : "ទៅមាតិកាកម្មវិធី"}</a>}
       {!overlay && <aside className="event-workspace-sidebar"><EventNavigation {...navProps} /></aside>}
       <div className="event-workspace-main">

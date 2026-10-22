@@ -1,6 +1,7 @@
 /* One selected event, one document scroll owner, one independently scrolling menu. */
 .event-workspace { --event-nav-width: 276px; width: 100%; margin: 0; padding: 16px clamp(16px, 2vw, 32px) 64px; display: grid; grid-template-columns: var(--event-nav-width) minmax(0, 1fr); align-items: start; gap: 24px; box-sizing: border-box; }
-.event-workspace { transition: grid-template-columns var(--ui-duration-overlay); }
+.event-workspace.has-nav-preference { transition: grid-template-columns var(--ui-duration-overlay); }
+.event-workspace.workspace-page { display: block; }
 .event-workspace.is-collapsed { --event-nav-width: 72px; }
 .event-workspace-main, .event-workspace-content { min-width: 0; }
 .event-workspace-sidebar { position: sticky; top: calc(var(--host-nav-offset, 0px) + 16px); height: calc(100dvh - var(--host-nav-offset, 0px) - 32px); min-height: 0; display: flex; flex-direction: column; background: var(--ws-surface); border: 1px solid var(--ws-border); border-radius: 18px; transition: width var(--ui-duration-overlay); }
@@ -74,7 +75,7 @@
   .event-workspace-title { font-size: 14px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .event-workspace, .event-workspace-sidebar, .event-nav-tab, .event-nav-group-toggle svg, .k-modal-container.event-navigation-dialog, .k-modal-backdrop.event-navigation-backdrop { animation: none; transition: none; scroll-behavior: auto; }
+  .event-workspace.has-nav-preference, .event-workspace-sidebar, .event-nav-tab, .event-nav-group-toggle svg, .k-modal-container.event-navigation-dialog, .k-modal-backdrop.event-navigation-backdrop { animation: none; transition: none; scroll-behavior: auto; }
 }
 
 .event-wizard {

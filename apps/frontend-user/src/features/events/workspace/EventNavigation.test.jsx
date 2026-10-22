@@ -4,7 +4,7 @@ import { MemoryRouter, Route, Routes } from "react-router-dom";
 import EventWorkspace from "./EventWorkspace";
 import { useEventWorkspace } from "./EventContext";
 import { EVENT_MODULES } from "./eventRoutes";
-import { ALL_EVENT_LINKS } from "./eventNavigationModel";
+import { ALL_EVENT_LINKS, eventStatus } from "./eventNavigationModel";
 import { invitationService } from "@/features/invitations/api/invitationApi";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 
@@ -31,6 +31,10 @@ beforeEach(() => {
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
 
 describe("event navigation", () => {
+  it("keeps status unavailable while the event is still loading", () => {
+    expect(eventStatus(null, true)).toEqual({ label: "Status unavailable", tone: "unknown" });
+    expect(eventStatus(undefined, false).tone).toBe("unknown");
+  });
   it("maps every existing module once and keeps the current route explicit", async () => {
     const view = show(); await screen.findByText("Selected event 101");
     expect(ALL_EVENT_LINKS.map(item => item.path).sort()).toEqual(["", ...EVENT_MODULES].sort());

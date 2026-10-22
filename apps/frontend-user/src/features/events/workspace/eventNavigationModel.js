@@ -38,7 +38,7 @@ export function eventStatus(event, en) {
     PUBLISHED: ["Published", "បានផ្សាយ", "published"],
     DRAFT: ["Draft", "ព្រាង", "draft"],
     UNPUBLISHED: ["Unpublished", "ផ្អាកផ្សាយ", "unpublished"],
-  }[event.status];
+  }[event?.status];
   return known ? { label: known[en ? 0 : 1], tone: known[2] }
-    : { label: event.status || (en ? "Status unavailable" : "មិនទាន់មានស្ថានភាព"), tone: "unknown" };
+    : { label: event?.status || (en ? "Status unavailable" : "មិនទាន់មានស្ថានភាព"), tone: "unknown" };
 }
