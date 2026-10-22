@@ -14,9 +14,12 @@
     "analyze:deps": "node ../../scripts/ci/run-knip.mjs --include dependencies,unlisted,binaries"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "@tailwindcss/vite": "^4.3.3",
     "axios": "^1.19.0",
-    "lucide-react": "^1.34.0",
+    "lucide-react": "^1.49.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router-dom": "^7.18.2",
@@ -30,13 +33,13 @@
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
     "@vitejs/plugin-react": "^6.0.5",
-    "eslint": "^10.8.1",
+    "eslint": "^10.11.0",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.3",
     "globals": "^17.9.0",
     "happy-dom": "^20.11.8",
-    "knip": "^6.32.1",
-    "vite": "^8.2.1",
-    "vitest": "^4.1.10"
+    "knip": "^6.38.0",
+    "vite": "^8.3.1",
+    "vitest": "^5.0.2"
   }
 }

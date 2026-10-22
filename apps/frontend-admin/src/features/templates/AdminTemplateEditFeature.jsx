@@ -41,7 +41,10 @@ import { buildPreviewUrl, createPreviewSession, isTrustedPreviewReply, postIfram
 import {
   TemplateGallerySection,
   TemplateQrSection,
-  TemplateSectionOrderManager,
+  TemplateUnifiedSectionsManager,
+  buildUnifiedSections,
+  parseUnifiedSections,
+  validateBlocks,
   DEFAULT_SECTIONS_LIST,
 } from "./components";
 
@@ -55,6 +58,15 @@ const TEMPLATE_LAYOUT_OPTIONS = [
     badge: "Flagship",
     badgeColor: "bg-amber-500/20 text-amber-300 border-amber-500/30",
     icon: "🌸",
+  },
+  {
+    code: "khmer-royal-lotus",
+    name: "Khmer Royal Lotus",
+    labelKh: "រាជឈូកខ្មែរ · ក្រហមទុំ & មាស",
+    desc: "អារម្មណ៍ធៀបការបោះពុម្ពខ្មែរ ក្រដាសភ្លុក ក្រហមទុំ មាសបុរាណ និងប្លង់ ceremonial mobile-first",
+    badge: "Khmer Luxury",
+    badgeColor: "bg-rose-500/20 text-rose-200 border-rose-400/30",
+    icon: "🪷",
   },
   {
     code: "the-digital-yes-wedding",
@@ -206,6 +218,23 @@ const THEME_PRESETS = [
       { hex: "#FFFAF2", name: "ភ្លុក" },
     ],
     backgroundImage: "/invitations/khmer-celestial/botanical-frame.jpg",
+  },
+  {
+    id: "KHMER_ROYAL_LOTUS",
+    name: "Khmer Royal Lotus (រាជឈូកខ្មែរ)",
+    primary: "#6B1E2B",
+    secondary: "#C8A45D",
+    bg: "#F5EEDF",
+    badge: "Khmer Royal Lotus",
+    amp: "✦",
+    fontKhmer: "Kantumruy Pro",
+    fontLatin: "Cormorant Garamond",
+    dressColors: [
+      { hex: "#6B1E2B", name: "ក្រហមទុំ" },
+      { hex: "#C8A45D", name: "មាសបុរាណ" },
+      { hex: "#F5EEDF", name: "ភ្លុក" },
+      { hex: "#321016", name: "ក្រហមចាស់" },
+    ],
   },
   {
     id: "GARDEN_ROYAL",
@@ -612,6 +641,13 @@ export default function AdminTemplateEditPage() {
   const [saving, setSaving] = useState(false);
   const [newGalleryUrl, setNewGalleryUrl] = useState("");
   const [form, setForm] = useState(DEFAULT_STUDIO_STATE);
+  const [unifiedSections, setUnifiedSections] = useState(() =>
+    buildUnifiedSections({
+      sectionOrder: DEFAULT_STUDIO_STATE.sectionOrder,
+      enabledSections: DEFAULT_STUDIO_STATE.enabledSections,
+      customBlocks: [],
+    })
+  );
   const iframeRef = useRef(null);
   const [previewSession] = useState(createPreviewSession);
   const sendPreview = useCallback((message) => postIframePreview(iframeRef.current, previewSession, message), [previewSession]);
@@ -804,16 +840,26 @@ export default function AdminTemplateEditPage() {
   const broadcastSync = useCallback(() => {
     if (!iframeRef.current?.contentWindow) return;
     try {
+      const { sectionOrder: derivedSectionOrder, enabledSections: derivedEnabledSections } =
+        parseUnifiedSections(unifiedSections, form.sectionOrder, form.enabledSections);
+
       sendPreview(
         {
           type: "LIVE_PREVIEW_SYNC",
-          data: { ...form, customFonts, selectedFontElement },
+          data: {
+            ...form,
+            customFonts,
+            selectedFontElement,
+            sectionOrder: derivedSectionOrder,
+            enabledSections: derivedEnabledSections,
+            sections: unifiedSections,
+          },
         }
       );
     } catch {
       // ignore
     }
-  }, [form, customFonts, selectedFontElement, sendPreview]);
+  }, [form, customFonts, selectedFontElement, unifiedSections, sendPreview]);
   const synchronizeLoadedPreview = usePreviewSyncRetries(broadcastSync);
 
   useEffect(() => {
@@ -895,6 +941,13 @@ export default function AdminTemplateEditPage() {
           // Ignore invalid JSON config
         }
 
+        const parsedUnified = parseUnifiedSections(
+          parsedConfig.sections,
+          parsedConfig.sectionOrder || DEFAULT_STUDIO_STATE.sectionOrder,
+          parsedConfig.enabledSections || DEFAULT_STUDIO_STATE.enabledSections
+        );
+        setUnifiedSections(parsedUnified.unifiedSections);
+
         if (Array.isArray(parsedConfig.customFonts) && parsedConfig.customFonts.length > 0) {
           setCustomFonts((prev) => {
             const map = new Map();
@@ -922,6 +975,8 @@ export default function AdminTemplateEditPage() {
           status: t.status || "ACTIVE",
           price: t.price != null ? String(t.price) : prev.price,
           ...parsedConfig,
+          sectionOrder: parsedUnified.sectionOrder,
+          enabledSections: parsedUnified.enabledSections,
           primaryColor: t.primaryColor || parsedConfig.primaryColor || prev.primaryColor,
           secondaryColor: t.secondaryColor || parsedConfig.secondaryColor || prev.secondaryColor,
           backgroundColor: t.backgroundColor || parsedConfig.backgroundColor || prev.backgroundColor,
@@ -944,6 +999,7 @@ export default function AdminTemplateEditPage() {
   const handleApplyPreset = (preset) => {
     const presetMap = {
       KHMER_CELESTIAL: "khmer-celestial",
+      KHMER_ROYAL_LOTUS: "khmer-royal-lotus",
       GOLD_LUXURY: "the-digital-yes-wedding",
       EMERALD_GREEN: "emerald-canva-luxe-wedding",
       RUBY_RED: "khmer-celestial",
@@ -1228,8 +1284,17 @@ export default function AdminTemplateEditPage() {
       return;
     }
 
+    const blockErrors = validateBlocks(unifiedSections);
+    if (blockErrors.length > 0) {
+      show(blockErrors[0], "error");
+      return;
+    }
+
     setSaving(true);
     try {
+      const { sectionOrder: derivedSectionOrder, enabledSections: derivedEnabledSections } =
+        parseUnifiedSections(unifiedSections, form.sectionOrder, form.enabledSections);
+
       // Serialize full studio config into description JSON
       const fullConfigJson = JSON.stringify({
         code: form.code,
@@ -1283,7 +1348,9 @@ export default function AdminTemplateEditPage() {
         bankName: form.bankName || "ABA Bank",
         bankAccountNumber: form.bankAccountNumber || "",
         bankAccountName: form.bankAccountName || "",
-        enabledSections: form.enabledSections,
+        enabledSections: derivedEnabledSections,
+        sectionOrder: derivedSectionOrder,
+        sections: unifiedSections,
       });
 
       const payload = {
@@ -3394,7 +3461,7 @@ export default function AdminTemplateEditPage() {
                     }`}
                   >
                     <Sliders className="h-3.5 w-3.5" />
-                    <span>គ្រប់គ្រង Sections ទាំង ១០</span>
+                    <span>{lang === "en" ? "Sections & Blocks" : "គ្រប់គ្រង Sections & Blocks"}</span>
                   </button>
                   <button
                     type="button"
@@ -3412,29 +3479,21 @@ export default function AdminTemplateEditPage() {
 
                 {settingsSubTab === "sections" && (
                   <div className="space-y-4">
-                    <TemplateSectionOrderManager
-                      sectionOrder={form.sectionOrder || DEFAULT_SECTIONS_LIST.map((s) => s.key)}
-                      enabledSections={form.enabledSections || {}}
-                      onReorderSections={(newOrder) => setField("sectionOrder", newOrder)}
-                      onToggleSection={(key) => {
-                        const isEnabled = form.enabledSections?.[key] !== false;
-                        setForm((prev) => ({
-                          ...prev,
-                          enabledSections: {
-                            ...prev.enabledSections,
-                            [key]: !isEnabled,
-                          },
-                        }));
-                      }}
-                      onResetDefault={() => {
-                        const defaultKeys = DEFAULT_SECTIONS_LIST.map((s) => s.key);
-                        setField("sectionOrder", defaultKeys);
-                        show(lang === "en" ? "Reset to default order ✓" : "បានកំណត់ទៅលំដាប់ដើមវិញ ✓");
-                      }}
+                    <TemplateUnifiedSectionsManager
+                      sections={unifiedSections}
+                      onChange={setUnifiedSections}
                       onJumpToTab={(tabId, subTabId) => {
                         setActiveTab(tabId);
                         if (tabId === "events" && subTabId) setEventsSubTab(subTabId);
                         if (tabId === "venue" && subTabId) setVenueSubTab(subTabId);
+                      }}
+                      onResetDefault={() => {
+                        const defaultUnified = buildUnifiedSections({
+                          sectionOrder: DEFAULT_SECTIONS_LIST.map((s) => s.key),
+                          enabledSections: DEFAULT_STUDIO_STATE.enabledSections,
+                        });
+                        setUnifiedSections(defaultUnified);
+                        show(lang === "en" ? "Reset to default order ✓" : "បានកំណត់ទៅលំដាប់ដើមវិញ ✓");
                       }}
                       lang={lang}
                     />

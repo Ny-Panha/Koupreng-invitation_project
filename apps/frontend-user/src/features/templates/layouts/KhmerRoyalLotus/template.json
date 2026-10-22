@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "slug": "khmer-royal-lotus",
+  "name": "Khmer Royal Lotus",
+  "version": "1.0.0",
+  "category": "WEDDING",
+  "cover": {
+    "type": "image",
+    "src": "/facebook/all/01-card/cover-card.jpg",
+    "poster": "/facebook/all/01-card/cover-card.jpg",
+    "autoplay": true,
+    "loop": true,
+    "muted": true,
+    "objectFit": "cover"
+  },
+  "tokens": {
+    "--tpl-primary": "#6B1E2B",
+    "--tpl-secondary": "#C8A45D",
+    "--tpl-bg": "#F5EEDF",
+    "--tpl-surface": "#FFF9EE",
+    "--tpl-surface-elevated": "#F2E4CB",
+    "--tpl-border": "rgba(107, 30, 43, 0.20)",
+    "--tpl-text-primary": "#32171C",
+    "--tpl-text-secondary": "#6C5355",
+    "--tpl-text-muted": "#8E7779"
+  },
+  "assetSlots": {
+    "--asset-hero": "none",
+    "--asset-frame": "none",
+    "--asset-ornament": "none",
+    "--asset-hero-ratio": "4 / 5"
+  },
+  "sections": [
+    "hero",
+    "invitation",
+    "couple",
+    "countdown",
+    "schedule",
+    "gallery",
+    "venue",
+    "gift",
+    "rsvp",
+    "closing"
+  ],
+  "editable": {
+    "coverBackground": true,
+    "heroPhoto": true,
+    "gallery": true,
+    "music": true,
+    "colors": ["primary", "secondary", "background"]
+  }
+}

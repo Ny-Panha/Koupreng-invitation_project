@@ -34,7 +34,7 @@
         <postgresql.version>42.7.13</postgresql.version>
         <tomcat.version>11.0.25</tomcat.version>
         <archunit.version>1.5.0</archunit.version>
-        <poi.version>5.4.1</poi.version>
+        <poi.version>5.5.1</poi.version>
         <nimbus-jose-jwt.version>10.4</nimbus-jose-jwt.version>
     </properties>
     <dependencies>
@@ -138,7 +138,7 @@
         <dependency>
             <groupId>com.google.zxing</groupId>
             <artifactId>core</artifactId>
-            <version>3.5.3</version>
+            <version>3.5.4</version>
         </dependency>
         <dependency>
             <groupId>com.google.zxing</groupId>
@@ -239,7 +239,7 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>4.10.3.0</version>
+                <version>4.10.4.1</version>
                 <configuration>
                     <effort>Max</effort>
                     <threshold>High</threshold>
@@ -343,7 +343,7 @@
                     <plugin>
                         <groupId>org.owasp</groupId>
                         <artifactId>dependency-check-maven</artifactId>
-                        <version>12.2.2</version>
+                        <version>13.0.0</version>
                         <configuration>
                             <failBuildOnCVSS>8</failBuildOnCVSS>
                             <skipTestScope>true</skipTestScope>
