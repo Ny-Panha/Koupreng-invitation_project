@@ -1,4 +1,6 @@
 import { useCallback, useState } from "react";
+import { Link } from "react-router-dom";
+import { Download, Plus, QrCode, Upload, Users } from "lucide-react";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
 import { ErrorState, SkeletonTable, toast } from "@/shared/ui";
 import { useGuests } from "./hooks/useGuests";
@@ -6,18 +8,19 @@ import { useGuestMutations } from "./hooks/useGuestMutations";
 import { useGuestFilters } from "./hooks/useGuestFilters";
 import { DEFAULT_CATEGORIES, DEFAULT_GROUPS } from "./model/guestConstants";
 import { copyText } from "./model/guestMappers";
+import { matchesGuestStatus } from "./model/guestStatus";
 import GuestStats from "./components/GuestStats";
 import GuestFilters from "./components/GuestFilters";
 import GuestTable from "./components/GuestTable";
 import GuestDeleteDialog from "./components/GuestDeleteDialog";
 import GuestQrModal from "./components/GuestQrModal";
 import GuestImportModal from "./components/GuestImportModal";
-import GroupCategoryModal from "./components/GroupCategoryModal";
 import GuestFormModal from "./components/GuestFormModal";
 import { guestService } from "./api/guestApi";
 import { exportGuestsToCsv } from "./model/guestCsvUtils";
 import { saveManualGuests } from "@/shared/storage/hostPlanningStorage";
 import "./GuestsPage.css";
+import "./GuestWorkspace.css";
 
 function scopedKey(base, eventId) {
   return eventId ? `${base}.${eventId}` : base;
@@ -32,15 +35,6 @@ function readList(key, fallback) {
     return Array.isArray(parsed) ? parsed : fallback;
   } catch {
     return fallback;
-  }
-}
-
-function writeList(key, list) {
-  if (typeof localStorage === "undefined") return;
-  try {
-    localStorage.setItem(key, JSON.stringify(list));
-  } catch {
-    // localStorage full or unavailable
   }
 }
 
@@ -92,10 +86,10 @@ export default function GuestsPage() {
     refreshData,
   });
 
-  const [groups, setGroups] = useState(() =>
+  const [groups] = useState(() =>
     readList(scopedKey("koupreng.host.guestGroups", eventId), DEFAULT_GROUPS)
   );
-  const [categories, setCategories] = useState(() =>
+  const [categories] = useState(() =>
     readList(scopedKey("koupreng.host.guestCategories", eventId), DEFAULT_CATEGORIES)
   );
 
@@ -106,14 +100,15 @@ export default function GuestsPage() {
     setGroupFilter,
     categoryFilter,
     setCategoryFilter,
+    statusFilter,
+    setStatusFilter,
+    clearFilters,
     filteredGuests,
   } = useGuestFilters(guests);
 
   const [deleteGuestTarget, setDeleteGuestTarget] = useState(null);
   const [qrGuestTarget, setQrGuestTarget] = useState(null);
   const [importModalOpen, setImportModalOpen] = useState(false);
-  const [groupModalOpen, setGroupModalOpen] = useState(false);
-  const [categoryModalOpen, setCategoryModalOpen] = useState(false);
   const [formModalOpen, setFormModalOpen] = useState(false);
   const [formModalGuest, setFormModalGuest] = useState(null);
 
@@ -202,20 +197,6 @@ export default function GuestsPage() {
     [eventId, setBackendGuests, setManualGuests]
   );
 
-  const handleSaveGroups = (nextGroups) => {
-    setGroups(nextGroups);
-    writeList(scopedKey("koupreng.host.guestGroups", eventId), nextGroups);
-    setGroupModalOpen(false);
-    toast.success(t ? t("toastUpdated") : "រក្សាទុកក្រុមបានជោគជ័យ");
-  };
-
-  const handleSaveCategories = (nextCategories) => {
-    setCategories(nextCategories);
-    writeList(scopedKey("koupreng.host.guestCategories", eventId), nextCategories);
-    setCategoryModalOpen(false);
-    toast.success(t ? t("toastUpdated") : "រក្សាទុកប្រភេទបានជោគជ័យ");
-  };
-
   const handleExportCsv = async () => {
     if (backendInvitationId) {
       try {
@@ -238,47 +219,57 @@ export default function GuestsPage() {
   };
 
   const eventTitle = draftMatch?.title || backendInvitation?.title || null;
+  const hasFilters = Boolean(search || groupFilter || categoryFilter || statusFilter);
+  const statusOptions = [
+    { value: "", label: "allGuests" },
+    { value: "pending", label: "toInvite" },
+    { value: "responded", label: "statResponded" },
+    { value: "checkedIn", label: "checkedIn" },
+  ];
+  const checkInUrl = backendInvitationId
+    ? `/dashboard/invitations/${backendInvitationId}/check-in`
+    : "/dashboard/check-in";
 
   return (
-    <main className="dash-main pe-guests-page">
-      <header className="dash-page-header">
+    <main className="dash-main pe-guests-page guest-workspace">
+      <header className="guest-page-header">
         <div>
-          <span className="dash-kicker">
-            <span className="pe-kicker-dot" />
-            {eventTitle || (t ? t("kicker") : "Guest Management")}
-          </span>
+          {eventTitle && <p className="guest-event-name"><span aria-hidden="true" />{eventTitle}</p>}
           <h1>{t ? t("title") : "បញ្ជីភ្ញៀវកិត្តិយស"}</h1>
-          <p>{t ? t("subtitle") : "គ្រប់គ្រងបញ្ជីភ្ញៀវ QR Code ធៀបការ និងស្ថានភាព RSVP របស់អ្នក។"}</p>
+          <p className="guest-page-description">{t("workspaceSubtitle")}</p>
         </div>
-
-        <div className="dash-header-actions">
-          <button
-            type="button"
-            onClick={handleOpenAddGuest}
-            className="dash-btn-primary"
-            aria-label={t ? t("addGuestBtn") : "បន្ថែមភ្ញៀវ"}
-          >
-            <span className="text-base font-black leading-none"></span>
-            <span>{t ? t("addGuestBtn") : "បន្ថែមភ្ញៀវ"}</span>
+        <div className="guest-header-actions">
+          <button type="button" className="guest-button guest-button-secondary" onClick={() => setImportModalOpen(true)}>
+            <Upload size={17} aria-hidden="true" /><span>{t("importBtn")}</span>
           </button>
-        </div>
-
-        <div className="dash-header-actions">
           <button
             type="button"
             onClick={handleOpenAddGuest}
-            className="dash-btn-primary"
-            aria-label={t ? t("addGuestBtn") : "+ បន្ថែមភ្ញៀវ"}
+            className="guest-button guest-button-primary"
           >
-            <span className="text-base font-black leading-none">+</span>
-            <span>{t ? t("addGuestBtn") : "បន្ថែមភ្ញៀវ"}</span>
+            <Plus size={18} aria-hidden="true" /><span>{t("addGuestAction")}</span>
           </button>
         </div>
       </header>
 
       <GuestStats guests={guests} t={t} />
 
-      <GuestFilters
+      <section className="guest-list-panel" aria-labelledby="guest-list-heading" aria-busy={loading}>
+        <div className="guest-list-heading">
+          <div className="guest-list-title"><Users size={20} aria-hidden="true" /><h2 id="guest-list-heading">{t("listTitle")}</h2><span className="guest-total-badge">{guests.length}</span></div>
+          <div className="guest-list-tools">
+            <Link to={checkInUrl} className="guest-text-button"><QrCode size={17} aria-hidden="true" />{t("checkInAction")}</Link>
+            <button type="button" className="guest-text-button" onClick={handleExportCsv}><Download size={17} aria-hidden="true" />{t("exportBtn")}</button>
+          </div>
+        </div>
+        <div className="guest-status-filters" role="group" aria-label={t("filterByStatus")}>
+          {statusOptions.map((option) => (
+            <button key={option.value} type="button" aria-pressed={statusFilter === option.value} onClick={() => setStatusFilter(option.value)}>
+              {t(option.label)}<span>{guests.filter((guest) => matchesGuestStatus(guest, option.value)).length}</span>
+            </button>
+          ))}
+        </div>
+        <GuestFilters
         search={search}
         setSearch={setSearch}
         groupFilter={groupFilter}
@@ -287,11 +278,7 @@ export default function GuestsPage() {
         setCategoryFilter={setCategoryFilter}
         groups={groups}
         categories={categories}
-        onOpenAddGuest={handleOpenAddGuest}
-        onOpenImport={() => setImportModalOpen(true)}
-        onExportCsv={handleExportCsv}
-        onOpenGroupManager={() => setGroupModalOpen(true)}
-        onOpenCategoryManager={() => setCategoryModalOpen(true)}
+        onClear={clearFilters}
         t={t}
       />
 
@@ -299,17 +286,22 @@ export default function GuestsPage() {
         <ErrorState message={error || mutationError} onRetry={refreshData} />
       )}
 
+      <div className="guest-results-summary" role="status" aria-live="polite">{loading ? t("loadingGuests") : t("resultsCount", { shown: filteredGuests.length, total: guests.length })}{hasFilters && <button type="button" className="guest-text-button" onClick={clearFilters}>{t("clearFilters")}</button>}</div>
       {loading ? (
-        <SkeletonTable rows={5} columns={9} />
+        <SkeletonTable rows={5} columns={5} />
       ) : (
-        <div className="pe-desktop-table-wrap w-full max-w-6xl mx-auto">
+        <div className="pe-desktop-table-wrap">
           <GuestTable
             guests={filteredGuests}
             groups={groups}
             categories={categories}
             saving={saving}
+            showQuickAdd={false}
+            isFiltered={hasFilters}
+            onClearFilters={clearFilters}
+            onOpenImport={() => setImportModalOpen(true)}
             emptyMessage={
-              search || groupFilter || categoryFilter
+              hasFilters
                 ? (t ? t("emptySearchDesc") : "មិនមានភ្ញៀវត្រូវនឹងការស្វែងរកនេះទេ")
                 : (t ? t("emptyDesc") : "មិនទាន់មានឈ្មោះភ្ញៀវទេ។ ចាប់ផ្តើមដោយបន្ថែមភ្ញៀវម្នាក់ ឬនាំចូលបញ្ជី។")
             }
@@ -326,6 +318,7 @@ export default function GuestsPage() {
           />
         </div>
       )}
+      </section>
 
       {/* Add / Edit Guest Modal */}
       <GuestFormModal
@@ -336,9 +329,11 @@ export default function GuestsPage() {
         }}
         onSave={handleSaveGuest}
         guest={formModalGuest}
+        eventType={(backendInvitation || publicInvitation || draftMatch)?.eventType || "WEDDING"}
         groups={groups}
         categories={categories}
         saving={saving}
+        error={mutationError}
         t={t}
       />
 
@@ -372,23 +367,6 @@ export default function GuestsPage() {
         t={t}
       />
 
-      <GroupCategoryModal
-        isOpen={groupModalOpen}
-        title={t ? t("manageGroupsTitle") : "គ្រប់គ្រងក្រុមភ្ញៀវ"}
-        items={groups}
-        onClose={() => setGroupModalOpen(false)}
-        onSave={handleSaveGroups}
-        t={t}
-      />
-
-      <GroupCategoryModal
-        isOpen={categoryModalOpen}
-        title={t ? t("manageCategoriesTitle") : "គ្រប់គ្រងប្រភេទភ្ញៀវ"}
-        items={categories}
-        onClose={() => setCategoryModalOpen(false)}
-        onSave={handleSaveCategories}
-        t={t}
-      />
     </main>
   );
 }
