@@ -1265,7 +1265,7 @@
     align-items: center;
     gap: 8px;
     margin-bottom: var(--space-2, 8px);
-    color: #b98b42;
+    color: var(--ui-action-hover);
     font-size: 0.8125rem;
     font-weight: 800;
     letter-spacing: 0.06em;

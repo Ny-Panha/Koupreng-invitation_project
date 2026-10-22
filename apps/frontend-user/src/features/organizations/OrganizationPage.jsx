@@ -44,7 +44,7 @@ export default function OrganizationPage() {
   };
 
   return (
-    <div className="dash-main k-org-page">
+    <div role="main" className="dash-main k-org-page">
       <div className="k-org-container">
         {/* Breadcrumb */}
         <nav className="k-org-breadcrumb">

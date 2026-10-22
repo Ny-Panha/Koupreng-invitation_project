@@ -3169,7 +3169,7 @@ export default function InvitationForm({ invitation }) {
     };
 
     return (
-        <div ref={editorRoot} className="pe-editor-root invitation-studio" onFocusCapture={event => {
+        <div ref={editorRoot} className="pe-editor-root invitation-studio" role="main" onFocusCapture={event => {
             if (event.target.closest(".pe-editor-column") && event.target.matches("input,textarea,select,button")) lastEditorField.current = event.target;
         }} onBlurCapture={event => {
             if (event.target === lastEditorField.current) rememberEditorPosition();

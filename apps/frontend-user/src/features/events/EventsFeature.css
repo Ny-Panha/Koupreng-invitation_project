@@ -27,7 +27,7 @@
 .events-page-header > div > span {
     display: block;
     margin-bottom: 8px;
-    color: #b0926a;
+    color: var(--ui-action-hover);
     font-size: 13px;
     font-weight: 800;
     letter-spacing: 0.08em;
@@ -446,18 +446,18 @@
 }
 
 .event-card-badge--published {
-    background: rgba(22, 163, 74, 0.92);
-    color: #ffffff;
+    background: #dcfce7;
+    color: var(--ui-success);
 }
 
 .event-card-badge--draft {
-    background: rgba(217, 119, 6, 0.92);
-    color: #ffffff;
+    background: #fef3c7;
+    color: var(--ui-warning);
 }
 
 .event-card-badge--unpublished {
-    background: rgba(107, 114, 128, 0.92);
-    color: #ffffff;
+    background: #eceeed;
+    color: var(--ui-muted);
 }
 
 .event-card-body {

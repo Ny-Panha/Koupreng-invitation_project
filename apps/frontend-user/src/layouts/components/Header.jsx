@@ -61,7 +61,7 @@ export default function Header() {
   const account = isAuthenticated ? (
     <><button type="button" className="kp-nav-link" onClick={() => { closeMenu(); logout(); navigate("/"); }}>{copy("ចាកចេញ", "Log out")}</button><Link to="/dashboard" className="kp-nav-cta" onClick={closeMenu}>{copy("ផ្ទាំងគ្រប់គ្រង", "Dashboard")}<ArrowUpRight size={16} aria-hidden="true" /></Link></>
   ) : (
-    <><Link to="/login" className="kp-nav-link" onClick={closeMenu}>{copy("ចូលគណនី", "Log in")}</Link><Link to="/templates/browse" className="kp-nav-cta" onClick={closeMenu}>{copy("បង្កើតសន្លឹកការ", "Create invitation")}<ArrowUpRight size={16} aria-hidden="true" /></Link></>
+    <><Link to="/login" className="kp-nav-link" onClick={closeMenu}>{copy("ចូលគណនី", "Log in")}</Link><Link to="/app/events/new" className="kp-nav-cta" onClick={closeMenu}>{copy("បង្កើតសន្លឹកការ", "Create invitation")}<ArrowUpRight size={16} aria-hidden="true" /></Link></>
   );
 
   return (

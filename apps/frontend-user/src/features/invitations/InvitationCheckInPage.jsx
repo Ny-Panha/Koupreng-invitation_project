@@ -1,4 +1,5 @@
-import { useMemo } from "react";
+import { useId, useMemo } from "react";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import { useNavigate, useParams } from "react-router-dom";
 import {
     ArrowLeft,
@@ -18,6 +19,7 @@ import {
     Check,
 } from "lucide-react";
 import { useCheckInDesk } from "./hooks/useCheckInDesk";
+import Modal from "@/shared/ui/Modal";
 import QrCameraScanner from "./components/QrCameraScanner";
 import "./InvitationPages.css";
 
@@ -80,6 +82,9 @@ function SummaryCard({ label, value, subtitle, icon: Icon, theme = "gold" }) {
 }
 
 export default function InvitationCheckInPage() {
+    const fieldId = useId();
+    const en = useLanguageStore(state => state.lang) === "en";
+    const copy = (kh, english) => en ? english : kh;
     const { eventId, invitationId: rawInvitationId = eventId } = useParams();
     const navigate = useNavigate();
 
@@ -124,17 +129,17 @@ export default function InvitationCheckInPage() {
 
     if (loading) {
         return (
-            <div className="inv-page">
+            <div className="inv-page" role="main">
                 <div className="inv-loading" style={{ padding: "60px 0", textAlign: "center", color: "#64748b" }}>
                     <RefreshCw className="animate-spin" size={28} style={{ margin: "0 auto 12px" }} />
-                    <p style={{ fontWeight: 600 }}>កំពុងដំណើរការទិន្នន័យ Check-in...</p>
+                    <p style={{ fontWeight: 600 }}>{copy("កំពុងផ្ទុកវត្តមាន…", "Loading check-in data…")}</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="inv-page">
+        <div className="inv-page" role="main">
             {/* Back Button Bar */}
             <div style={{ marginBottom: "20px" }}>
                 <button
@@ -148,7 +153,7 @@ export default function InvitationCheckInPage() {
                         }
                     }}
                 >
-                    <ArrowLeft size={16} /> ត្រឡប់ក្រោយ (Back)
+                    <ArrowLeft size={16} /> {copy("ត្រឡប់ក្រោយ", "Back")}
                 </button>
             </div>
 
@@ -168,7 +173,7 @@ export default function InvitationCheckInPage() {
                     <AlertTriangle size={24} color="#d97706" style={{ flexShrink: 0 }} />
                     <div style={{ flex: 1 }}>
                         <div style={{ fontWeight: 800, fontSize: "0.95rem" }}>
-                            ⚠️ ភ្ញៀវនេះបាន Check-in រួចរាល់ហើយ! (Already Checked In)
+                            {copy("ភ្ញៀវនេះបានកត់ត្រាវត្តមានរួចហើយ។", "This guest is already checked in.")}
                         </div>
                         <div style={{ fontSize: "0.84rem", marginTop: "3px", color: "#78350f" }}>
                             ឈ្មោះ: <strong>{duplicateWarning.guestName}</strong> • បានចូលនៅម៉ោង: {duplicateWarning.checkedInAt} ({duplicateWarning.source})
@@ -193,7 +198,7 @@ export default function InvitationCheckInPage() {
                     <h1 className="checkin-hero-title">{invitation?.title || "Invitation check-in"}</h1>
                     <p role="status">{persistenceMode === "LOCAL_DRAFT" ? "Local draft — records stay on this device." : "Server invitation — attendance and gifts are saved to your account."}</p>
                     <p className="checkin-hero-desc">
-                        ស្កេន QR Code កាតអញ្ជើញ ឬស្វែងរកឈ្មោះភ្ញៀវ ដើម្បីកត់ត្រាវត្តមានចូលរួមមង្គលការជាក់ស្តែង
+                        {copy("ស្កេន QR កាតអញ្ជើញ ឬស្វែងរកឈ្មោះភ្ញៀវ ដើម្បីកត់ត្រាវត្តមាន។", "Scan a personal invitation QR or find a guest to record attendance.")}
                     </p>
                 </div>
                 <div className="checkin-hero-actions">
@@ -202,7 +207,7 @@ export default function InvitationCheckInPage() {
                         type="button"
                         onClick={() => setWalkInModalOpen(true)}
                     >
-                        <UserPlus size={16} /> + បន្ថែមភ្ញៀវ (Walk-in)
+                        <UserPlus size={16} /> {copy("បន្ថែមភ្ញៀវបន្ទាន់", "Add walk-in guest")}
                     </button>
                     <button
                         className="checkin-btn-secondary"
@@ -217,7 +222,7 @@ export default function InvitationCheckInPage() {
                         onClick={() => load()}
                         title="ផ្ទុកឡើងវិញ"
                     >
-                        <RefreshCw size={15} /> ផ្ទុកឡើងវិញ
+                        <RefreshCw size={15} /> {copy("ផ្ទុកឡើងវិញ", "Refresh")}
                     </button>
                 </div>
             </div>
@@ -226,28 +231,28 @@ export default function InvitationCheckInPage() {
             {summary && (
                 <div className="checkin-stats-grid guest-stats checkin-stats">
                     <SummaryCard
-                        label="Total guests"
+                        label={copy("ភ្ញៀវសរុប", "Total guests")}
                         value={summary.totalGuests}
-                        subtitle="ភ្ញៀវសរុបក្នុងបញ្ជី"
+                        subtitle={copy("ភ្ញៀវសរុបក្នុងបញ្ជី", "Guests on your list")}
                         icon={Users}
                         theme="gold"
                     />
                     <SummaryCard
-                        label="Checked in"
+                        label={copy("បានចូលរួម", "Checked in")}
                         value={summary.checkedIn}
-                        subtitle="បានស្កេនចូលរួមពិធី"
+                        subtitle={copy("បានកត់ត្រាចូលរួមពិធី", "Recorded as present")}
                         icon={CheckCircle2}
                         theme="green"
                     />
                     <SummaryCard
-                        label="Remaining"
+                        label={copy("នៅសល់", "Remaining")}
                         value={summary.remaining}
-                        subtitle="ភ្ញៀវកំពុងរង់ចាំ"
+                        subtitle={copy("ភ្ញៀវកំពុងរង់ចាំ", "Guests still expected")}
                         icon={Clock}
                         theme="amber"
                     />
                     <SummaryCard
-                        label="Attending checked in"
+                        label={copy("អត្រាវត្តមាន", "Attendance rate")}
                         value={`${turnoutPercentage}%`}
                         subtitle={`${summary.checkedIn} / ${summary.totalGuests} នាក់`}
                         icon={TrendingUp}
@@ -275,8 +280,8 @@ export default function InvitationCheckInPage() {
                     </div>
 
                     <div className="checkin-input-group">
-                        <label>
-                            <span>QR link or token</span>
+                        <label htmlFor={`${fieldId}-token`}>
+                            <span>{copy("តំណ QR ឬលេខសម្គាល់", "QR link or token")}</span>
                             {token && (
                                 <button
                                     type="button"
@@ -297,6 +302,7 @@ export default function InvitationCheckInPage() {
                             )}
                         </label>
                         <textarea
+                            id={`${fieldId}-token`}
                             className="checkin-textarea"
                             value={token}
                             rows="2"
@@ -308,11 +314,12 @@ export default function InvitationCheckInPage() {
 
                     {/* Quick Gift input during manual entry */}
                     <div className="checkin-input-group">
-                        <label>
-                            <span><Gift size={13} style={{ display: "inline", marginRight: "3px" }} /> ចងដៃ (Gift Amount - Optional)</span>
+                        <label htmlFor={`${fieldId}-gift`}>
+                            <span><Gift size={13} style={{ display: "inline", marginRight: "3px" }} /> {copy("ចងដៃ (មិនបាច់បំពេញ)", "Gift amount (optional)")}</span>
                         </label>
                         <div className="checkin-gift-row">
                             <input
+                                id={`${fieldId}-gift`}
                                 type="number"
                                 className="checkin-gift-input"
                                 value={tokenGiftAmount}
@@ -322,14 +329,14 @@ export default function InvitationCheckInPage() {
                             <div className="checkin-gift-currency-toggle">
                                 <button
                                     type="button"
-                                    className={`checkin-currency-btn ${tokenGiftCurrency === "USD" ? "active" : ""}`}
+                                    className={`checkin-currency-btn ${tokenGiftCurrency === "USD" ? "active" : ""}`} aria-label="USD" aria-pressed={tokenGiftCurrency === "USD"}
                                     onClick={() => setTokenGiftCurrency("USD")}
                                 >
                                     $
                                 </button>
                                 <button
                                     type="button"
-                                    className={`checkin-currency-btn ${tokenGiftCurrency === "KHR" ? "active" : ""}`}
+                                    className={`checkin-currency-btn ${tokenGiftCurrency === "KHR" ? "active" : ""}`} aria-label="KHR" aria-pressed={tokenGiftCurrency === "KHR"}
                                     onClick={() => setTokenGiftCurrency("KHR")}
                                 >
                                     ៛
@@ -339,10 +346,11 @@ export default function InvitationCheckInPage() {
                     </div>
 
                     <div className="checkin-input-group">
-                        <label>
-                            <span>Note</span>
+                        <label htmlFor={`${fieldId}-note`}>
+                            <span>{copy("ចំណាំ", "Note")}</span>
                         </label>
                         <input
+                            id={`${fieldId}-note`}
                             className="checkin-input"
                             value={note}
                             onChange={(event) => setNote(event.target.value)}
@@ -360,7 +368,7 @@ export default function InvitationCheckInPage() {
                     </button>
 
                     <div style={{ marginTop: "16px", padding: "12px 16px", background: "#fdfaf5", border: "1px solid #eadfce", borderRadius: "14px", fontSize: "13px", color: "#7d6443", lineHeight: 1.5 }}>
-                        💡 <strong>គន្លឹះ:</strong> អាចប្រើកាំភ្លើងបាញ់ Barcode/QR (USB Scanner) បាញ់ចូលកន្លែងនេះ ឬបិទភ្ជាប់ Link ធៀបភ្ញៀវ។
+                        <strong>{copy("គន្លឹះ៖", "Tip:")}</strong> {copy("ប្រើឧបករណ៍ស្កេន QR ឬបិទភ្ជាប់តំណអញ្ជើញផ្ទាល់ខ្លួនរបស់ភ្ញៀវ។", "Use a USB QR scanner or paste the guest’s personal invitation link.")}
                     </div>
                 </form>
 
@@ -368,7 +376,7 @@ export default function InvitationCheckInPage() {
                 <section className="guest-table-panel checkin-panel-card">
                     <div className="checkin-panel-header">
                         <h2 className="checkin-panel-title">
-                            <Users size={20} color="#B0926A" /> បញ្ជីភ្ញៀវ & ស្កេនរហ័ស
+                            <Users size={20} color="var(--ui-action)" /> {copy("បញ្ជីភ្ញៀវ និងការចូលរួម", "Guest list and attendance")}
                         </h2>
                         <span style={{ fontSize: "0.82rem", color: "#8c6f4b", fontWeight: 700, background: "rgba(176, 146, 106, 0.12)", padding: "3px 12px", borderRadius: "999px" }}>
                             {filteredGuests.length} / {guests.length} នាក់
@@ -379,6 +387,7 @@ export default function InvitationCheckInPage() {
                         <div className="checkin-search-box">
                             <Search className="checkin-search-icon" size={16} />
                             <input
+                                aria-label={copy("ស្វែងរកភ្ញៀវ", "Search guest")}
                                 value={search}
                                 onChange={(event) => setSearch(event.target.value)}
                                 placeholder="Search guest"
@@ -409,21 +418,21 @@ export default function InvitationCheckInPage() {
                                 className={`checkin-tab-btn ${statusFilter === "all" ? "active" : ""}`}
                                 onClick={() => setStatusFilter("all")}
                             >
-                                ទាំងអស់ ({guests.length})
+                                {copy("ទាំងអស់", "All")} ({guests.length})
                             </button>
                             <button
                                 type="button"
                                 className={`checkin-tab-btn ${statusFilter === "pending" ? "active" : ""}`}
                                 onClick={() => setStatusFilter("pending")}
                             >
-                                រង់ចាំ ({Math.max(0, guests.length - checkIns.length)})
+                                {copy("រង់ចាំ", "Pending")} ({Math.max(0, guests.length - checkIns.length)})
                             </button>
                             <button
                                 type="button"
                                 className={`checkin-tab-btn ${statusFilter === "checked" ? "active" : ""}`}
                                 onClick={() => setStatusFilter("checked")}
                             >
-                                បានចូល ({checkIns.length})
+                                {copy("បានចូល", "Checked in")} ({checkIns.length})
                             </button>
                         </div>
                     </div>
@@ -524,7 +533,7 @@ export default function InvitationCheckInPage() {
                     <h2 className="checkin-panel-title">
                         <CheckCircle2 size={20} color="#059669" /> Checked-in guests
                     </h2>
-                    <span style={{ fontSize: "0.82rem", fontWeight: 700, color: "#059669", background: "rgba(16, 185, 129, 0.12)", padding: "3px 12px", borderRadius: "999px" }}>
+                    <span style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--ui-success)", background: "rgba(16, 185, 129, 0.12)", padding: "3px 12px", borderRadius: "999px" }}>
                         សរុប {checkIns.length} នាក់
                     </span>
                 </div>
@@ -629,20 +638,20 @@ export default function InvitationCheckInPage() {
 
             {/* Instant Celebration & Seating Pop-up Modal */}
             {celebrationData && (
-                <div className="checkin-modal-layer" onClick={handleSaveCelebrationAndClose}>
+                <Modal isOpen onClose={handleSaveCelebrationAndClose} showHeader={false} ariaLabel={copy("កត់ត្រាវត្តមាន", "Check-in details")} closeOnBackdropClick={false} closeOnEscape={false} className="checkin-accessible-modal">
                     <div className="checkin-modal" onClick={(e) => e.stopPropagation()}>
                         <button
                             type="button"
                             className="checkin-modal-x"
                             onClick={handleSaveCelebrationAndClose}
-                            aria-label="បិទ (Close)"
+                            aria-label={copy("បិទ", "Close")}
                         >
                             <X size={18} />
                         </button>
 
                         <div className="checkin-modal-inner">
                             <h3 className="checkin-modal-title">
-                                <Sparkles size={22} /> ស្កេនជោគជ័យ (Check-in Success)
+                                <Sparkles size={22} /> {copy("កត់ត្រាវត្តមានបានជោគជ័យ", "Checked in")}
                             </h3>
 
                             <div style={{ textAlign: "center", margin: "14px 0 16px" }}>
@@ -655,7 +664,7 @@ export default function InvitationCheckInPage() {
                             </div>
 
                             <div className="checkin-table-display-card">
-                                <div className="checkin-table-label">កន្លែងអង្គុយ / SEATING TABLE</div>
+                                <div className="checkin-table-label">{copy("កន្លែងអង្គុយ", "Seating table")}</div>
                                 <div className="checkin-table-number-huge">
                                     {celebrationData.tableNumber ? `តុលេខ ${celebrationData.tableNumber}` : "តុភ្ញៀវកិត្តិយស"}
                                 </div>
@@ -672,10 +681,10 @@ export default function InvitationCheckInPage() {
                             {/* Quick Gift Section inside celebration */}
                             <div className="checkin-gift-section">
                                 <div className="checkin-gift-title">
-                                    <Gift size={16} /> កត់ត្រាចងដៃភ្លាមៗ (Quick Gift Recording)
+                                    <Gift size={16} /> {copy("កត់ត្រាចងដៃ", "Record a gift")}
                                 </div>
                                 <div className="checkin-gift-row">
-                                    <input
+                                    <input aria-label={copy("ចំនួនចងដៃ", "Gift amount")}
                                         type="number"
                                         className="checkin-gift-input"
                                         placeholder="ចំនួនទឹកប្រាក់ចងដៃ..."
@@ -686,14 +695,14 @@ export default function InvitationCheckInPage() {
                                     <div className="checkin-gift-currency-toggle">
                                         <button
                                             type="button"
-                                            className={`checkin-currency-btn ${celebrationGiftCurrency === "USD" ? "active" : ""}`}
+                                            className={`checkin-currency-btn ${celebrationGiftCurrency === "USD" ? "active" : ""}`} aria-label="USD" aria-pressed={celebrationGiftCurrency === "USD"}
                                             onClick={() => setCelebrationGiftCurrency("USD")}
                                         >
                                             $
                                         </button>
                                         <button
                                             type="button"
-                                            className={`checkin-currency-btn ${celebrationGiftCurrency === "KHR" ? "active" : ""}`}
+                                            className={`checkin-currency-btn ${celebrationGiftCurrency === "KHR" ? "active" : ""}`} aria-label="KHR" aria-pressed={celebrationGiftCurrency === "KHR"}
                                             onClick={() => setCelebrationGiftCurrency("KHR")}
                                         >
                                             ៛
@@ -714,18 +723,18 @@ export default function InvitationCheckInPage() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </Modal>
             )}
 
             {/* Quick Add Walk-in Guest Modal */}
             {walkInModalOpen && (
-                <div className="checkin-modal-layer" onClick={() => setWalkInModalOpen(false)}>
+                <Modal isOpen onClose={() => setWalkInModalOpen(false)} showHeader={false} ariaLabel={copy("បន្ថែមភ្ញៀវបន្ទាន់", "Walk-in guest")} closeOnBackdropClick={!saving} closeOnEscape={!saving} className="checkin-accessible-modal">
                     <div className="checkin-modal" onClick={(e) => e.stopPropagation()}>
                         <button
                             type="button"
                             className="checkin-modal-x"
                             onClick={() => setWalkInModalOpen(false)}
-                            aria-label="បិទ (Close)"
+                            aria-label={copy("បិទ", "Close")}
                         >
                             <X size={18} />
                         </button>
@@ -734,14 +743,14 @@ export default function InvitationCheckInPage() {
                             <form onSubmit={handleCreateWalkInGuest}>
                                 {pendingWalkIn && <p role="status">{pendingWalkIn.guest.guestName} is registered. {pendingWalkIn.attendance ? "Attendance is saved; retry the gift only." : "Retry attendance without creating another guest."}</p>}
                                 <h3 className="checkin-modal-title">
-                                    <UserPlus size={22} /> បន្ថែមភ្ញៀវបន្ទាន់នៅមាត់រោង (Walk-in Guest)
+                                    <UserPlus size={22} /> {copy("បន្ថែមភ្ញៀវបន្ទាន់", "Walk-in guest")}
                                 </h3>
 
                                 <div className="checkin-field">
-                                    <label>
-                                        <span>ឈ្មោះភ្ញៀវ (Guest Name) <em style={{ color: "#dc2626", fontStyle: "normal" }}>*</em></span>
+                                    <label htmlFor={`${fieldId}-walk-name`}>
+                                        <span>{copy("ឈ្មោះភ្ញៀវ", "Guest name")} <em style={{ color: "#dc2626", fontStyle: "normal" }}>*</em></span>
                                     </label>
-                                    <input
+                                    <input id={`${fieldId}-walk-name`}
                                         required
                                         value={walkInForm.name}
                                         disabled={saving || Boolean(pendingWalkIn)}
@@ -753,20 +762,20 @@ export default function InvitationCheckInPage() {
 
                                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
                                     <div className="checkin-field">
-                                        <label>
-                                            <span>លេខតុ (Table Number)</span>
+                                        <label htmlFor={`${fieldId}-walk-table`}>
+                                            <span>{copy("លេខតុ", "Table number")}</span>
                                         </label>
-                                        <input
+                                        <input id={`${fieldId}-walk-table`}
                                             value={walkInForm.table}
                                             onChange={(e) => setWalkInForm({ ...walkInForm, table: e.target.value })}
                                             placeholder="ឧ. 05 ឬ VIP-01"
                                         />
                                     </div>
                                     <div className="checkin-field">
-                                        <label>
-                                            <span>លេខទូរស័ព្ទ (Phone)</span>
+                                        <label htmlFor={`${fieldId}-walk-phone`}>
+                                            <span>{copy("លេខទូរស័ព្ទ", "Phone")}</span>
                                         </label>
-                                        <input
+                                        <input id={`${fieldId}-walk-phone`}
                                             value={walkInForm.phone}
                                             onChange={(e) => setWalkInForm({ ...walkInForm, phone: e.target.value })}
                                             placeholder="012 345 678"
@@ -776,10 +785,10 @@ export default function InvitationCheckInPage() {
 
                                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
                                     <div className="checkin-field">
-                                        <label>
-                                            <span>ក្រុម (Group)</span>
+                                        <label htmlFor={`${fieldId}-walk-group`}>
+                                            <span>{copy("ក្រុម", "Group")}</span>
                                         </label>
-                                        <select
+                                        <select id={`${fieldId}-walk-group`}
                                             value={walkInForm.group}
                                             onChange={(e) => setWalkInForm({ ...walkInForm, group: e.target.value })}
                                         >
@@ -791,10 +800,10 @@ export default function InvitationCheckInPage() {
                                         </select>
                                     </div>
                                     <div className="checkin-field">
-                                        <label>
-                                            <span>ផ្នែក (Side)</span>
+                                        <label htmlFor={`${fieldId}-walk-side`}>
+                                            <span>{copy("ផ្នែក", "Side")}</span>
                                         </label>
-                                        <select
+                                        <select id={`${fieldId}-walk-side`}
                                             value={walkInForm.side}
                                             onChange={(e) => setWalkInForm({ ...walkInForm, side: e.target.value })}
                                         >
@@ -806,10 +815,10 @@ export default function InvitationCheckInPage() {
 
                                 <div className="checkin-gift-section">
                                     <div className="checkin-gift-title">
-                                        <Gift size={16} /> ចងដៃភ្លាមៗ (Gift Amount - Optional)
+                                        <Gift size={16} /> {copy("ចងដៃ (មិនបាច់បំពេញ)", "Gift amount (optional)")}
                                     </div>
                                     <div className="checkin-gift-row">
-                                        <input
+                                        <input aria-label={copy("ចំនួនចងដៃ", "Gift amount")}
                                             type="number"
                                             className="checkin-gift-input"
                                             placeholder="ទឹកប្រាក់..."
@@ -819,14 +828,14 @@ export default function InvitationCheckInPage() {
                                         <div className="checkin-gift-currency-toggle">
                                             <button
                                                 type="button"
-                                                className={`checkin-currency-btn ${walkInForm.currency === "USD" ? "active" : ""}`}
+                                                className={`checkin-currency-btn ${walkInForm.currency === "USD" ? "active" : ""}`} aria-label="USD" aria-pressed={walkInForm.currency === "USD"}
                                                 onClick={() => setWalkInForm({ ...walkInForm, currency: "USD" })}
                                             >
                                                 $
                                             </button>
                                             <button
                                                 type="button"
-                                                className={`checkin-currency-btn ${walkInForm.currency === "KHR" ? "active" : ""}`}
+                                                className={`checkin-currency-btn ${walkInForm.currency === "KHR" ? "active" : ""}`} aria-label="KHR" aria-pressed={walkInForm.currency === "KHR"}
                                                 onClick={() => setWalkInForm({ ...walkInForm, currency: "KHR" })}
                                             >
                                                 ៛
@@ -848,13 +857,13 @@ export default function InvitationCheckInPage() {
                                         className="checkin-btn-submit"
                                         disabled={saving}
                                     >
-                                        <UserPlus size={18} /> បន្ថែម & Check-in ភ្លាមៗ
+                                        <UserPlus size={18} /> {copy("បន្ថែម និងកត់ត្រាវត្តមាន", "Add and check in")}
                                     </button>
                                 </div>
                             </form>
                         </div>
                     </div>
-                </div>
+                </Modal>
             )}
         </div>
     );

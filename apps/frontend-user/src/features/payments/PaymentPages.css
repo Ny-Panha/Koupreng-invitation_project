@@ -2,7 +2,6 @@
    Koupreng Modern Khmer Gold - Payment & Checkout Design System
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;500;600;700&family=Moul&display=swap');
 
 :root {
   --kp-gold-100: #fbf7ee;
@@ -10,10 +9,10 @@
   --kp-gold-300: #dfc499;
   --kp-gold-400: #c9a36b;
   --kp-gold-500: #b0926a;
-  --kp-gold-600: #9b7133;
+  --kp-gold-600: var(--ui-action-hover);
   --kp-gold-700: #7d6443;
   --kp-dark: #1e293b;
-  --kp-muted: #64748b;
+  --kp-muted: var(--ui-muted);
   --kp-surface: #ffffff;
   --kp-border: rgba(176, 146, 106, 0.2);
   --kp-border-subtle: #e2e8f0;
@@ -26,7 +25,7 @@
   position: relative;
   min-height: 100vh;
   background-color: #fcf8f2;
-  font-family: 'Kantumruy Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--ui-font);
   color: var(--kp-dark);
 }
 
@@ -126,7 +125,7 @@
 }
 
 .checkout-title {
-  font-family: 'Moul', serif;
+  font-family: var(--ui-font);
   font-size: clamp(1.6rem, 3.5vw, 2.4rem);
   color: var(--kp-dark);
   line-height: 1.4;
@@ -286,7 +285,7 @@
 }
 
 .checkout-template-name {
-  font-family: 'Moul', serif;
+  font-family: var(--ui-font);
   font-size: 1.15rem;
   color: var(--kp-gold-700);
   margin: 0;
@@ -558,7 +557,7 @@
   gap: 10px;
   background: linear-gradient(135deg, #b0926a 0%, #7d6443 100%);
   color: #ffffff;
-  font-family: 'Kantumruy Pro', sans-serif;
+  font-family: var(--ui-font);
   font-size: 1rem;
   font-weight: 700;
   border: none;
@@ -632,7 +631,7 @@
   margin: 0 auto;
   padding: 135px 0 80px;
   color: var(--kp-dark);
-  font-family: 'Kantumruy Pro', sans-serif;
+  font-family: var(--ui-font);
 }
 
 .payment-hero {
@@ -651,7 +650,7 @@
 }
 
 .payment-hero h1 {
-  font-family: 'Moul', serif;
+  font-family: var(--ui-font);
   font-size: clamp(1.8rem, 4vw, 2.4rem);
   color: var(--kp-gold-700);
   margin: 6px 0 12px;
@@ -691,7 +690,7 @@
 }
 
 .payment-summary h2 {
-  font-family: 'Moul', serif;
+  font-family: var(--ui-font);
   font-size: 1.2rem;
   color: var(--kp-gold-700);
   margin: 4px 0 0;
@@ -761,7 +760,7 @@
 }
 
 .payment-title-lux {
-  font-family: 'Moul', serif;
+  font-family: var(--ui-font);
   font-size: 1.25rem;
   color: var(--kp-gold-700);
   margin: 4px 0 0;
@@ -1193,7 +1192,7 @@
 .paid-templates-page {
   min-height: calc(100vh - var(--host-nav-offset, 110px));
   padding: 24px 20px 80px;
-  font-family: 'Kantumruy Pro', sans-serif;
+  font-family: var(--ui-font);
   color: var(--kp-dark, #1e293b);
 }
 
@@ -1267,7 +1266,7 @@
 }
 
 .paid-header-title {
-  font-family: 'Moul', serif;
+  font-family: var(--ui-font);
   font-size: clamp(1.4rem, 3.5vw, 1.85rem);
   color: #7d6443;
   margin: 0 0 10px;
@@ -1278,7 +1277,7 @@
 }
 
 .paid-count-badge {
-  font-family: 'Kantumruy Pro', sans-serif;
+  font-family: var(--ui-font);
   font-size: 0.85rem;
   font-weight: 700;
   background: linear-gradient(135deg, #b0926a 0%, #7d6443 100%);
@@ -1364,7 +1363,7 @@
 }
 
 .paid-empty-title {
-  font-family: 'Moul', serif;
+  font-family: var(--ui-font);
   font-size: 1.35rem;
   color: #7d6443;
   margin: 0 0 10px;
@@ -1494,7 +1493,7 @@
 }
 
 .paid-card-title {
-  font-family: 'Moul', serif;
+  font-family: var(--ui-font);
   font-size: 1.15rem;
   color: #7d6443;
   margin: 0 0 14px;

@@ -7,8 +7,8 @@ describe("PAY-003 authoritative checkout offers", () => {
     expect(checkoutOffer({ id: 99, price: 19 }, "99").eligible).toBe(false);
     expect(checkoutOffer(null, "unknown").eligible).toBe(false);
   });
-  it("retains the existing Garden offer only for legacy payloads", () => {
-    expect(checkoutOffer({ id: 2, code: "garden-royal-khmer-wedding" }, "2")).toMatchObject({ eligible: true, amount: "0.01", currency: "USD" });
+  it("requires an explicit server offer even for the historical Garden identity", () => {
+    expect(checkoutOffer({ id: 2, code: "garden-royal-khmer-wedding" }, "2")).toMatchObject({ eligible: false, amount: "", currency: "" });
     expect(checkoutOffer({ id: 99, checkoutEligible: true, checkoutAmount: null, checkoutCurrency: "USD" }, "99").eligible).toBe(false);
   });
 });

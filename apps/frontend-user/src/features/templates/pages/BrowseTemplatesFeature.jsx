@@ -247,6 +247,7 @@ export default function BrowseTemplatesFeature() {
           <IoSearchOutline />
           <input
             type="text"
+            aria-label={t("searchPlaceholder")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={t("searchPlaceholder")}

@@ -92,8 +92,8 @@ export default function InvitationDemo({ copy, deviceName = PHONE_PREVIEW.name }
     setActive(false); requestAnimationFrame(() => opener.current?.focus({ preventScroll: true }));
   }, []);
   return <div className="public-invitation-demo" onKeyDown={event => { if (event.key === "Escape" && active) close(); }}>
-    <div id={regionId}><DemoDevice copy={copy} deviceName={deviceName} interactive={active && !compact} onClose={close} /></div>
     <button ref={opener} className="kp-button public-demo-launch" type="button" aria-controls={!compact ? regionId : undefined} aria-haspopup={compact ? "dialog" : undefined} aria-expanded={active} onClick={() => active ? close() : setActive(true)}>{active ? copy("បិទគំរូ", "Close demo") : copy("សាកប្រើធៀបការគំរូ", "Try the invitation")}</button>
+    <div id={regionId}><DemoDevice copy={copy} deviceName={deviceName} interactive={active && !compact} onClose={close} /></div>
     <p className="public-demo-note">{copy("គំរូបង្ហាញ មិនបង្កើតកម្មវិធី ឬផ្ញើទៅភ្ញៀវទេ។", "Sample event. Exploring it does not create an event or send invitations.")}</p>
     {compact && active && <Modal isOpen onClose={close} size="full" title={copy("សាកប្រើសូត្រមង្គល", "Explore Silk Heritage")} closeLabel={copy("បិទគំរូ", "Close demo")} className="public-demo-modal"><DemoDevice copy={copy} deviceName={deviceName} interactive onClose={close} large /></Modal>}
   </div>;

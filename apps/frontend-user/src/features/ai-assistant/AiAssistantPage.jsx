@@ -1,3 +1,4 @@
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { IoArrowBackOutline, IoSparklesOutline } from "react-icons/io5";
@@ -10,6 +11,8 @@ import { toInvitationStoryUpdate } from "./model/invitationContent";
 import "./AiAssistantPage.css";
 
 export default function AiAssistantPage() {
+  const en = useLanguageStore(state => state.lang) === "en";
+  const copy = (kh, english) => en ? english : kh;
   const { eventId, id = eventId, invitationId: paramInvId } = useParams();
   const invitationId = id || paramInvId;
   const navigate = useNavigate();
@@ -104,7 +107,7 @@ export default function AiAssistantPage() {
           className="pe-ai-back-link"
         >
           <IoArrowBackOutline aria-hidden="true" />
-          <span>ត្រឡប់ទៅការកែប្រែធៀប / Back to Invitation Editor</span>
+          <span>{copy("ត្រឡប់ទៅការកែប្រែធៀប", "Back to invitation editor")}</span>
         </Link>
       </div>
 
@@ -113,8 +116,8 @@ export default function AiAssistantPage() {
           <span className="dash-kicker" style={{ display: "inline-flex", alignItems: "center", gap: "0.375rem" }}>
             <IoSparklesOutline /> AI Writing Helper
           </span>
-          <h1>ជំនួយការសរសេរខ្លឹមសារធៀបការ</h1>
-          <p>បង្កើតអត្ថបទអញ្ជើញ រឿងរ៉ាវស្នេហា និងលិខិតផ្លូវការដោយស្វ័យប្រវត្ត និងងាយស្រួល។</p>
+          <h1>{copy("ជំនួយការសរសេរខ្លឹមសារធៀបការ", "Invitation writing helper")}</h1>
+          <p>{copy("រៀបចំអត្ថបទអញ្ជើញ រឿងរ៉ាវស្នេហា និងលិខិតផ្លូវការ។ ពិនិត្យអត្ថបទមុនប្រើប្រាស់។", "Draft invitation wording, a love story or a formal letter. Review the result before using it.")}</p>
         </div>
       </header>
 

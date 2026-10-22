@@ -55,7 +55,7 @@ for (const lang of ["km", "en"]) for (const path of ["/", "/templates", "/pricin
       const clipped = await page.locator("main h1, main h2, main h3, main p, main button, main a, main label").evaluateAll(nodes => nodes.filter(node => node.getClientRects().length && node.scrollWidth > node.clientWidth + 2).map(node => node.textContent));
       expect(clipped).toEqual([]);
     }
-    expect(state.packageRequests).toBe(0);
+    expect(state.packageRequests).toBe(path === '/' || path === '/pricing' ? 1 : 0);
     expect(state.contactRequests).toHaveLength(0);
     expect(externalFonts).toEqual([]);
     if (path === "/contact") {
@@ -67,12 +67,13 @@ for (const lang of ["km", "en"]) for (const path of ["/", "/templates", "/pricin
   });
 }
 
-test("public discovery stays private even when a fixture endpoint could return prices", async ({ page }) => {
+test("public discovery shows public catalog prices and requires authentication for package selection", async ({ page }) => {
   const state = await fixtures(page);
   await page.goto("/pricing");
-  await expect(page.getByRole("link", { name: "Sign in to view packages" })).toHaveAttribute("href", "/login?next=%2Fdashboard%2Fpackages");
-  await expect(page.locator(".kp-plan-card")).toHaveCount(0);
-  expect(state.packageRequests).toBe(0);
+  await expect(page.locator(".kp-plan-card")).toHaveCount(3);
+  await expect(page.locator('.kp-plan-price').first()).toHaveText('$29.00');
+  await expect(page.getByRole('link',{name:'Sign in to select package'}).first()).toHaveAttribute('href',/\/login\?next=/);
+  expect(state.packageRequests).toBeGreaterThan(0);
 });
 
 test("authenticated offers retain currency, unavailable amounts and exact feature flags", async ({ page }) => {
@@ -97,7 +98,7 @@ test("package loading, failure, retry and empty catalog have recoverable states"
   const state = await fixtures(page, { signedIn: true, packageStatus: 503, packages: "Unavailable" });
   let release;
   const pending = new Promise(resolve => { release = resolve; });
-  await page.route("**/api/v1/packages", async route => { await pending; await route.fallback(); });
+  await page.route("**/api/v1/public/packages", async route => { await pending; await route.fallback(); });
   await page.goto("/pricing");
   await expect(page.getByRole("status")).toHaveText(/Loading current packages/);
   await expect(page.locator(".kp-plan-skeleton")).toHaveCount(3);

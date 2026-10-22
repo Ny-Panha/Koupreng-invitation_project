@@ -137,6 +137,7 @@ test("authenticated guest route renders server authority and RSVP state", async 
 });
 
 test("AI helper discloses local template fallback", async ({ page }, testInfo) => {
+  await page.addInitScript(()=>localStorage.setItem('koupreng.lang','en'));
   await establishUserSession(page);
   await page.route("**/api/**", (route) => {
     const url = new URL(route.request().url());
@@ -169,7 +170,7 @@ test("AI helper discloses local template fallback", async ({ page }, testInfo) =
   });
 
   await page.goto("/dashboard/invitations/42/assistant");
-  await page.getByRole("button", { name: /Generate Content/ }).click();
+  await page.getByRole("button", { name: /Generate content/ }).click();
   await expect(page.getByRole("heading", { name: /Local template draft/ })).toBeVisible();
   await expect(page.getByText(/No external AI provider was used/)).toBeVisible();
   await expect(page.getByText("AI provider adapter is not implemented yet.")).toBeVisible();

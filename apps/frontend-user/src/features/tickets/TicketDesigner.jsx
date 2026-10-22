@@ -74,8 +74,8 @@ function Designer({ eventId }) {
       if (navigator) Object.keys(original).forEach(method => { navigator[method] = original[method]; });
     };
   }, [dirty, navigation, leaveMessage]);
-  if (state.loading) return <section className="ticket-studio workspace-page" aria-label={text("Loading ticket designer", "កំពុងទាញយកឧបករណ៍រចនាកាត")}><SkeletonCard height="100px" /><SkeletonCard height="420px" /></section>;
-  if (state.error) return <section className="ticket-studio workspace-page"><ErrorState message={text("Could not load the ticket designer. Check your event access and package, then try again.", "មិនអាចទាញយកឧបករណ៍រចនាកាតបានទេ។ សូមពិនិត្យសិទ្ធិចូលប្រើកម្មវិធី និងកញ្ចប់របស់អ្នក ហើយព្យាយាមម្ដងទៀត។")} onRetry={() => { setState({ loading: true }); setRetry(n => n + 1); }} /></section>;
+  if (state.loading) return <section role="main" className="ticket-studio workspace-page" aria-label={text("Loading ticket designer", "កំពុងទាញយកឧបករណ៍រចនាកាត")}><SkeletonCard height="100px" /><SkeletonCard height="420px" /></section>;
+  if (state.error) return <section role="main" className="ticket-studio workspace-page"><ErrorState message={text("Could not load the ticket designer. Check your event access and package, then try again.", "មិនអាចទាញយកឧបករណ៍រចនាកាតបានទេ។ សូមពិនិត្យសិទ្ធិចូលប្រើកម្មវិធី និងកញ្ចប់របស់អ្នក ហើយព្យាយាមម្ដងទៀត។")} onRetry={() => { setState({ loading: true }); setRetry(n => n + 1); }} /></section>;
   const update = (key, value) => { setNotice(""); setDesign(current => ({ ...current, [key]: value })); };
   async function save() {
     if (busy) return;
@@ -100,7 +100,7 @@ function Designer({ eventId }) {
     } catch (err) { setError(err.message); }
     finally { setBusy(false); }
   }
-  return <section className="ticket-studio workspace-page">
+  return <section role="main" className="ticket-studio workspace-page">
     <header className="dash-page-header"><div><span className="dash-kicker"><Ticket size={16} />{text("Digital invitations", "ធៀបអញ្ជើញឌីជីថល")}</span><h1>{text("Ticket designer", "រចនាកាតអញ្ជើញ")}</h1><p>{text("One event design, personalized for each saved guest. Publish before sharing guest links.", "រចនាកាតសម្រាប់កម្មវិធី និងកំណត់ឈ្មោះភ្ញៀវម្នាក់ៗ។ ផ្សព្វផ្សាយធៀបមុនចែករំលែកតំណទៅភ្ញៀវ។")}</p></div>
       <button disabled={busy || !dirty} onClick={save}><Save size={18} />{busy ? text("Saving…", "កំពុងរក្សាទុក…") : text("Save design", "រក្សាទុករចនា")}</button></header>
     <p className="ticket-save-status" role="status">{notice ? text("Ticket design saved for this event", "បានរក្សាទុករចនាកាតសម្រាប់កម្មវិធីនេះ") : dirty ? text("Unsaved design", "ការកែប្រែមិនទាន់រក្សាទុក") : text("Saved design", "បានរក្សាទុករចនា")}</p>

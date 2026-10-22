@@ -4,7 +4,7 @@ import path from "node:path";
 import process from "node:process";
 import { installUxFixtures } from "./support/uxFixtures.js";
 
-const evidence = path.resolve("../../docs/qa/ux-ui/responsive");
+const evidence = path.resolve(process.env.UX_EVIDENCE_DIR || "../../docs/qa/ux-ui/responsive");
 const widths = [320, 375, 390, 430, 768, 1024, 1440, 1920];
 async function top(page) { await page.evaluate(() => { window.scrollTo(0, 0); document.querySelector(".dash-main-scroll")?.scrollTo(0, 0); }); }
 async function fits(page, expectedWidth = page.viewportSize().width) {
@@ -96,6 +96,7 @@ test("event form preserves data, validates and creates once at the returned even
   await page.locator('[name="eventDate"]').fill("2026-12-25");
   await page.locator('[name="eventTime"]').fill("17:30");
   await page.locator('[name="venueName"]').fill("Garden House");
+  await page.locator('.event-preferences-disclosure summary').click();
   await page.getByLabel("Invitation language").selectOption("BOTH");
   await page.getByRole("button", { name: "Select Event Essential" }).click();
   await page.reload();

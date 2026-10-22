@@ -1,9 +1,10 @@
 import { expect, test } from "@playwright/test";
 import { readFile, mkdir } from "node:fs/promises";
 import path from "node:path";
+import process from 'node:process';
 import { fixtures, qrPayload } from "./support/studioFixtures.js";
 
-const evidence = path.resolve("../../docs/qa/ux-overhaul/studio-tickets");
+const evidence = path.resolve(process.env.STUDIO_EVIDENCE_DIR || "../../docs/qa/ux-overhaul/studio-tickets");
 for (const lang of ["en", "km"]) {
   test(`studio and designer fit eight viewports (${lang})`, async ({ page }, info) => {
     test.setTimeout(240_000);

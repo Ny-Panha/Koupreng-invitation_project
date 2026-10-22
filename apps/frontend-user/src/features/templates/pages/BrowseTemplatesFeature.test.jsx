@@ -28,12 +28,12 @@ it("uses the actual currency and retains a locked checkout identity", async () =
   fireEvent.click(await screen.findByRole("button", { name: /Buy design.*KHR/ }));
   expect(await screen.findByText("/templates/silk-heritage/checkout")).toBeInTheDocument();
 });
-it.each([false, true])("retains the server editor ID when premium unlocked=%s", async (premium) => {
+it.each([false, true])("retains the explicit creation intent when premium unlocked=%s", async (premium) => {
   templateCatalogService.list.mockResolvedValue([{ ...base, premium }]);
   if (premium) paymentService.paidTemplates.mockResolvedValue([{ templateId: 2 }]);
   show();
   fireEvent.click(await screen.findByRole("button", { name: "Use Template" }));
-  expect(await screen.findByText("/dashboard/invitations/design?templateId=2")).toBeInTheDocument();
+  expect(await screen.findByText("/app/events/new?template=silk-heritage")).toBeInTheDocument();
 });
 it("previews the explicit design rather than the colliding numeric preset", async () => {
   show();

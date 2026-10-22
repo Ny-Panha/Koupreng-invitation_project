@@ -51,7 +51,7 @@ const getVenues = (t) => [
 ];
 
 const VenuesPage = () => {
-  const { text: t } = useBackendMessages("venues");
+  const { text: t, lang } = useBackendMessages("venues");
   const venues = useMemo(() => getVenues(t), [t]);
   const [searchTerm, setSearchTerm] = useState("");
   const { id } = useParams();
@@ -117,7 +117,7 @@ const VenuesPage = () => {
         <div className="bg-gradient-cover"></div>
       </div>
 
-      <main className="venues-content">
+      <section className="venues-content" aria-label={lang === "en" ? "Venues" : "ទីតាំង"}>
         <div className="container">
           <ScrollReveal>
             <div className="header-content">
@@ -280,7 +280,7 @@ const VenuesPage = () => {
             </div>
           )}
         </AnimatePresence>
-      </main>
+      </section>
 
       <style>{`
         .venues-page-wrapper {

@@ -26,6 +26,7 @@ async function fixture(page, { signedIn = false, paid = [], offline = false } = 
     const url = new URL(route.request().url());
     if (url.pathname === "/api/auth/login") { authenticated = true; return route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ accessToken: token, tokenType: "Bearer", user }) }); }
     if (url.pathname === "/api/auth/me") return authenticated ? json(route, user) : json(route, "No session", 401);
+    if (url.pathname === "/api/v1/templates/recommendations") return json(route, catalog.map(template => ({template, styleMatch:true})));
     if (url.pathname === "/api/v1/templates") return unavailable ? json(route, "Collection offline", 503) : json(route, catalog);
     if (url.pathname.includes("/templates/slug/")) {
       const design = catalog.find((item) => item.code === decodeURIComponent(url.pathname.split("/").at(-1)));
@@ -69,29 +70,24 @@ for (const lang of ["km", "en"]) {
   });
 }
 
-test("preview stages, envelope and keyboard FAQ work with reduced motion", async ({ page }) => {
+test("real invitation opens on demand and keyboard FAQ works with reduced motion", async ({ page }) => {
   await fixture(page);
   await page.addInitScript(() => localStorage.setItem("koupreng.lang", "en"));
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
-  const envelope = page.getByRole("button", { name: "Open invitation preview" });
   await expect(page.locator('meta[name="viewport"]')).not.toHaveAttribute("content", /user-scalable=no|maximum-scale=1/);
-  await envelope.focus();
-  await page.keyboard.press("Enter");
-  await expect(page.getByRole("link", { name: "View the full demo" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Close invitation preview" })).toHaveAttribute("aria-expanded", "true");
-  await page.getByRole("button", { name: /The arrival/ }).click();
-  await expect(page.locator(".kp-showcase-frame")).toHaveAttribute("data-stage", "closed");
-  await page.getByRole("button", { name: /Your story/ }).click();
-  await expect(page.getByRole("img", { name: "Sample couple portrait", exact: true })).toBeVisible();
-  await page.getByRole("button", { name: /The details/ }).click();
-  await expect(page.locator("#kp-stage-copy")).toContainText("does not collect responses");
-  const faq = page.locator(".kp-faq summary").first();
-  await faq.focus();
-  await page.keyboard.press("Enter");
-  await expect(page.locator(".kp-faq details").first()).toHaveAttribute("open", "");
-  expect(await page.locator(".kp-enter").first().evaluate((node) => getComputedStyle(node).animationName)).toBe("none");
-  await expect(page.locator(".kp-site-preloader")).toHaveCount(0);
+  await expect(page.locator('iframe')).toHaveCount(0);
+  const open=page.getByRole('button',{name:'Try the invitation',exact:true});
+  await open.focus();await page.keyboard.press('Enter');
+  const frame=page.frameLocator('iframe.public-demo-iframe');
+  await expect(frame.locator('[data-template-renderer="silk-heritage"]')).toBeAttached();
+  await frame.getByRole('button',{name:/Skip opening/}).click();
+  await expect(frame.locator('.sh-hero')).toBeVisible();
+  await page.locator('iframe.public-demo-iframe').focus();await page.keyboard.press('Escape');
+  await expect(open).toBeFocused();await expect(page.locator('iframe')).toHaveCount(0);
+  const faq=page.locator('.kp-faq summary').first();await faq.focus();await page.keyboard.press('Enter');
+  await expect(page.locator('.kp-faq details').first()).toHaveAttribute('open','');
+  await expect(page.locator('.kp-site-preloader')).toHaveCount(0);
 });
 
 test("mobile drawer contains focus, changes language, closes and restores scrolling", async ({ page }) => {
@@ -151,29 +147,19 @@ test("slow catalog shows a stable loading state before live availability", async
   await expect(page.locator(".kp-design-card")).toHaveCount(3);
 });
 
-test("public selection survives demo, real login form, reload and editor handoff", async ({ page }) => {
-  test.setTimeout(60_000);
+test("public demo selection survives the login form and reloads into continuous creation", async ({ page }) => {
   await fixture(page);
-  await page.addInitScript(() => localStorage.setItem("koupreng.lang", "en"));
-  await page.goto("/templates");
-  const card = page.locator('[data-template="silk-heritage"]');
-  await card.getByRole("link", { name: "Preview", exact: true }).click();
-  await expect(page).toHaveURL(/\/templates\/silk-heritage$/);
+  await page.addInitScript(() => localStorage.setItem('koupreng.lang','en'));
+  await page.route('**/api/v1/templates/recommendations**',route=>json(route,catalog.map(template=>({template,styleMatch:true}))));
+  await page.goto('/templates');await page.locator('[data-template="silk-heritage"]').getByRole('link',{name:'Preview',exact:true}).click();
   await page.locator('.sh-toolbar a[href^="/login"]').click();
-  await expect(page).toHaveURL(/next=%2Ftemplates%2Fbrowse%3Ftemplate%3Dsilk-heritage/);
-  await page.locator('input[autocomplete="username"]').fill("host@example.test");
-  await page.locator('input[autocomplete="current-password"]').fill("fixture-password");
-  await page.locator('button[type="submit"]').click();
-  await expect(page).toHaveURL(/\/templates\/browse\?template=silk-heritage$/);
-  await expect(page.locator(".tb-card")).toHaveCount(1);
-  await page.reload();
-  await expect(page.locator(".tb-card-title")).toHaveText("សូត្រមង្គល");
-  await page.getByRole("button", { name: "Use Template", exact: true }).click();
-  await expect(page).toHaveURL(/\/dashboard\/invitations\/design\?templateId=2$/);
-  await expect(page.locator(".pe-editor-root")).toBeVisible();
-  await page.goBack();
-  await expect(page).toHaveURL(/template=silk-heritage$/);
-  await expect(page.locator(".tb-card")).toHaveCount(1);
+  expect(new URL(page.url()).searchParams.get('next')).toBe('/app/events/new?template=silk-heritage');
+  await page.locator('input[autocomplete="username"]').fill('host@example.test');
+  await page.locator('input[autocomplete="current-password"]').fill('fixture-password');
+  await page.locator('button[type="submit"]').click();await expect(page).toHaveURL(/\/app\/events\/new/);
+  const choice=page.getByRole('button',{name:'Select សូត្រមង្គល',exact:true});
+  await expect(choice).toHaveAttribute('aria-pressed','true');await page.reload();
+  await expect(choice).toHaveAttribute('aria-pressed','true');await expect(page.locator('.event-create form')).toHaveCount(1);
 });
 
 test("locked missing price goes to pricing; valid premium remains checkout gated", async ({ page }) => {
@@ -189,12 +175,13 @@ test("locked missing price goes to pricing; valid premium remains checkout gated
   await expect(page.locator("h1")).toBeVisible();
 });
 
-test("paid premium keeps its server editor ID", async ({ page }) => {
+test("paid premium preserves its canonical creation intent", async ({ page }) => {
   await fixture(page, { signedIn: true, paid: [{ templateId: 81 }] });
   await page.addInitScript(() => localStorage.setItem("koupreng.lang", "en"));
   await page.goto("/templates/browse?template=emerald-canva-luxe-wedding");
   await page.getByRole("button", { name: "Use Template", exact: true }).click();
-  await expect(page).toHaveURL(/templateId=81$/);
+  await expect(page).toHaveURL(/\/app\/events\/new/);
+  await expect(page.getByRole("button",{name:"Select Emerald Luxe",exact:true})).toHaveAttribute("aria-pressed","true");
 });
 
 test("broken images and 200 percent CSS zoom preserve readable actions", async ({ page }) => {
@@ -213,14 +200,14 @@ test("broken images and 200 percent CSS zoom preserve readable actions", async (
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
 
-for (const lang of ["km", "en"]) test(`V5 ${lang} hero keeps exploration and manual opening in the mobile fold`, async ({ page }) => {
+for (const lang of ["km", "en"]) test(`${lang} hero keeps creation and opt-in demo controls in the mobile fold`, async ({ page }) => {
   await fixture(page);
   await page.addInitScript(value => localStorage.setItem("koupreng.lang", value), lang);
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
   await page.evaluate(() => document.fonts.ready);
-  for (const selector of [".kp-hero .kp-button", ".kp-folio-cover"]) {
+  for (const selector of [".kp-hero .kp-actions .kp-button", ".public-demo-launch"]) {
     const box = await page.locator(selector).boundingBox();
     expect(box.y).toBeGreaterThan(64);
     expect(box.y + box.height).toBeLessThanOrEqual(844);
@@ -230,16 +217,14 @@ for (const lang of ["km", "en"]) test(`V5 ${lang} hero keeps exploration and man
   await expect(page.locator(".kp-hero-chips")).toHaveCount(0);
 });
 
-for (const signedIn of [false, true]) test(`hero preview preserves Silk selection with signedIn=${signedIn}`, async ({ page }) => {
-  await fixture(page, { signedIn });
-  await page.addInitScript(() => localStorage.setItem("koupreng.lang", "en"));
-  await page.goto("/");
-  await expect(page.locator(".kp-folio-demo")).not.toBeVisible();
-  await page.getByRole("button", { name: "Try the preview" }).click();
-  await expect(page.getByRole("link", { name: "View the full demo" })).toBeFocused();
-  await expect(page.getByRole("link", { name: "View the full demo" })).toHaveAttribute("href", "/templates/silk-heritage");
-  await page.locator("#kp-folio-note").getByRole("link", { name: "Use this design" }).click();
-  await expect(page).toHaveURL(signedIn ? /\/templates\/browse\?template=silk-heritage$/ : /\/login\?next=%2Ftemplates%2Fbrowse%3Ftemplate%3Dsilk-heritage$/);
+for (const signedIn of [false, true]) test(`full demo preserves Silk selection with signedIn=${signedIn}`, async ({ page }) => {
+  await fixture(page,{signedIn});await page.addInitScript(()=>localStorage.setItem('koupreng.lang','en'));
+  await page.goto('/');await expect(page.locator('iframe')).toHaveCount(0);
+  await page.getByRole('link',{name:'View the full demo',exact:true}).click();
+  await expect(page).toHaveURL(/\/templates\/silk-heritage$/);
+  const action=page.locator('.sh-toolbar a').last();
+  const href=await action.getAttribute('href');
+  expect(signedIn?href:new URL(href,page.url()).searchParams.get('next')).toBe('/app/events/new?template=silk-heritage');
 });
 
 test("an empty server catalog stays empty instead of offering demo designs", async ({ page }) => {
@@ -263,24 +248,12 @@ test("premium designs with invalid amounts or currencies keep the pricing gate",
   }
 });
 
-test("folio Escape and closing return focus to the control that opened it", async ({ page }) => {
-  await fixture(page);
-  await page.addInitScript(() => localStorage.setItem("koupreng.lang", "en"));
-  await page.goto("/");
-  const secondary = page.getByRole("button", { name: "Try the preview" });
-  await secondary.focus(); await page.keyboard.press("Enter");
-  await expect(page.locator(".kp-folio-demo")).toBeFocused();
-  await page.keyboard.press("Escape");
-  await expect(secondary).toBeFocused();
-  await expect(page.locator(".kp-folio-paper")).toHaveAttribute("inert", "");
-  await secondary.click();
-  await page.getByRole("button", { name: "Close invitation preview" }).click();
-  await expect(secondary).toBeFocused();
-  const cover = page.getByRole("button", { name: "Open invitation preview" });
-  await cover.focus(); await page.keyboard.press("Enter");
-  await page.keyboard.press("Escape");
-  await expect(cover).toBeFocused();
-  await expect(cover).toHaveAttribute("aria-expanded", "false");
+test("live demo Escape restores the activation control and removes the frame", async ({ page }) => {
+  await fixture(page);await page.addInitScript(()=>localStorage.setItem('koupreng.lang','en'));
+  await page.goto('/');const open=page.getByRole('button',{name:'Try the invitation',exact:true});
+  await open.focus();await page.keyboard.press('Enter');await page.locator('iframe.is-ready').waitFor();
+  await page.locator('iframe').focus();await page.keyboard.press('Escape');
+  await expect(open).toBeFocused();await expect(open).toHaveAttribute('aria-expanded','false');await expect(page.locator('iframe')).toHaveCount(0);
 });
 
 test("public catalog loads responsive local artwork while unknown server URLs stay exact", async ({ page }) => {

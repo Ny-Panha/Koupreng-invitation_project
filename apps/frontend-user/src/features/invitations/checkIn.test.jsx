@@ -1,11 +1,13 @@
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { useLanguageStore } from '@/stores/useLanguageStore';
 import InvitationCheckInPage from "./InvitationCheckInPage";
 
 afterEach(() => {
   cleanup();
 });
+beforeEach(() => useLanguageStore.setState({lang:'en'}));
 
 vi.mock("@/features/guests/api/guestApi", () => {
   const guests = [
@@ -46,6 +48,18 @@ vi.mock("../../shared/ui/toast", () => ({
 }));
 
 describe("InvitationCheckInPage Feature", () => {
+  it('names scanner fields and contains walk-in dialog focus until Escape restores the opener', async () => {
+    render(<MemoryRouter initialEntries={['/app/events/10/check-in']}><Routes><Route path='/app/events/:eventId/check-in' element={<InvitationCheckInPage/>}/></Routes></MemoryRouter>);
+    await screen.findByLabelText('QR link or token');
+    expect(screen.getByLabelText('Gift amount (optional)')).toBeInTheDocument();
+    const opener=screen.getByRole('button',{name:'Add walk-in guest'});
+    opener.focus();fireEvent.click(opener);
+    const dialog=screen.getByRole('dialog',{name:'Walk-in guest'});
+    expect(dialog.contains(document.activeElement)).toBe(true);
+    expect(screen.getByLabelText(/Guest name/)).toBeRequired();
+    fireEvent.keyDown(document,{key:'Escape'});
+    expect(screen.queryByRole('dialog')).toBeNull();expect(opener).toHaveFocus();
+  });
   it("renders summary cards and guest status correctly", async () => {
     render(
       <MemoryRouter initialEntries={["/dashboard/invitations/10/check-in"]}>

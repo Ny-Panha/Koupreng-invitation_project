@@ -208,7 +208,7 @@ export default function InvitationDeliveryManager() {
     : guests;
 
   return (
-    <div className="inv-page delivery-page-container">
+    <div className="inv-page delivery-page-container" role="main">
       {/* Page Header */}
       <header className="inv-page-header delivery-header">
         <div>
@@ -476,6 +476,7 @@ export default function InvitationDeliveryManager() {
           <div className="table-filter-bar">
             <input
               type="search"
+              aria-label={isKm ? "ស្វែងរកភ្ញៀវសម្រាប់ផ្ញើ" : "Search delivery recipients"}
               className="delivery-search-input"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}

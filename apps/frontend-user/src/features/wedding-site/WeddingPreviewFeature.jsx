@@ -102,7 +102,7 @@ export default function WeddingPreviewPage() {
 
     if (gallery === null || draftMedia === null) {
         return (
-            <div style={{ padding: 80, textAlign: "center", color: "#7d6443" }}>
+            <div role="main" style={{ padding: 80, textAlign: "center", color: "#7d6443" }}>
                 កំពុងផ្ទុក...
             </div>
         );
@@ -110,7 +110,7 @@ export default function WeddingPreviewPage() {
 
     if (error || !activeDraft?.id || !merged) {
         return (
-            <div style={{ padding: 80, textAlign: "center" }}>
+            <div role="main" style={{ padding: 80, textAlign: "center" }}>
                 <h2>មិនរកឃើញ Draft</h2>
 
                 <p style={{ color: "#777", marginTop: 12 }}>

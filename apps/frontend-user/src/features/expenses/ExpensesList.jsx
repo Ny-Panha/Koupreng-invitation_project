@@ -48,14 +48,14 @@ export function ExpensesList() {
 
     if (loading) {
         return (
-            <div className="exp-page">
+            <div role="main" className="exp-page">
                 <SkeletonCard height="140px" /><SkeletonCard height="240px" />
             </div>
         );
     }
 
     return (
-        <div className="exp-page">
+        <div role="main" className="exp-page">
             {/* Hero */}
             <header className="dash-page-header">
                 <div className="exp-hero-content">

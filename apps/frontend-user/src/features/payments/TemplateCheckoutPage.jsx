@@ -1,16 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import {
-  IoArrowBackOutline,
-  IoCheckmarkCircle,
-  IoDiamondOutline,
-  IoLockClosedOutline,
-  IoQrCodeOutline,
-  IoShieldCheckmarkOutline,
-  IoSparkles,
-  IoFlashOutline,
-  IoHelpCircleOutline,
-} from "react-icons/io5";
+import { IoArrowBackOutline, IoLockClosedOutline, IoQrCodeOutline, IoShieldCheckmarkOutline } from "react-icons/io5";
+import { useLanguageStore } from "@/stores/useLanguageStore";
+import { packagePrice } from "../marketing/model/packagePresentation";
 
 import { getTemplateById, KEEP_TEMPLATE_CODE } from "../templates/data/templatesData";
 import { templateCatalogService } from "@/features/templates/api/templateCatalogApi";
@@ -19,19 +11,10 @@ import { checkoutOffer } from "./checkoutOffer";
 import heroBg from "../../assets/icons/background.png";
 import "./PaymentPages.css";
 
-const ABA_STATIC_LINK = "https://pay.ababank.com/oRF8/vx2dp884";
-
-const INCLUDED_FEATURES = [
-  "រចនាបែបប្រពៃណីខ្មែរប្រណិត (Royal Khmer Wedding Theme)",
-  "ផ្ញើតាម Telegram, Messenger, WhatsApp មិនដែនកំណត់",
-  "តន្ត្រីពិរោះរណ្តំ និងចលនាបើកធៀបបែប 3D (Music & Animations)",
-  "បង្កើតបញ្ជីភ្ញៀវ និងប្រព័ន្ធទទួលភ្ញៀវ RSVP ឌីជីថល",
-  "កម្រងរូបភាព Pre-Wedding & វីដេអូកម្រិត HD",
-  "ផែនទី Google Maps ទីតាំងពិធីការ និង QR Check-in",
-];
-
 export default function TemplateCheckoutPage() {
   const navigate = useNavigate();
+  const lang = useLanguageStore(state => state.lang);
+  const copy = (kh, en) => lang === "en" ? en : kh;
   const { templateId = KEEP_TEMPLATE_CODE } = useParams();
   const [catalogList, setCatalogList] = useState([]);
   const [catalogLoading, setCatalogLoading] = useState(true);
@@ -114,20 +97,15 @@ export default function TemplateCheckoutPage() {
 
     try {
       const response = await paymentService.createStaticPaymentOrder(checkout);
-      const paymentLink = response?.paymentLink || ABA_STATIC_LINK;
+      if (!response?.orderCode || !/^[A-Za-z0-9_-]{1,100}$/.test(response.orderCode) || Number(response.templateId) !== Number(checkout.templateId) || !response.status) {
+        throw new Error(copy("ម៉ាស៊ីនមេមិនបានបញ្ជាក់ការបញ្ជាទិញទេ។ សូមពិនិត្យប្រវត្តិការទូទាត់ មុនសាកម្ដងទៀត។", "The server did not confirm this order. Check payment history before trying again."));
+      }
+      const paymentLink = response.paymentLink || "";
 
-      const orderSnapshot = {
-        orderCode: response?.orderCode,
-        templateId: response?.templateId || checkout.templateId,
-        templateName: response?.templateName || checkout.templateName,
-        packageName: response?.packageName || checkout.packageName,
-        amount: response?.amount || checkout.amount,
-        currency: response?.currency || checkout.currency,
-        paymentLink,
-        status: response?.status || "PENDING",
-      };
-
-      sessionStorage.setItem("lastTemplatePaymentOrder", JSON.stringify(orderSnapshot));
+      const orderSnapshot = { orderCode: response.orderCode, templateId: response.templateId, templateName: response.templateName,
+        packageName: response.packageName, amount: response.amount, currency: response.currency, paymentLink, status: response.status };
+      try { sessionStorage.setItem("lastTemplatePaymentOrder", JSON.stringify(orderSnapshot)); }
+      catch { /* The confirmed server order remains usable when tab storage is unavailable. */ }
 
       // Navigate to order status page for QR display and polling
       navigate(`/payments/${response.orderCode}/status`);
@@ -140,222 +118,25 @@ export default function TemplateCheckoutPage() {
     }
   };
 
-  return (
-    <div className="checkout-theme-wrapper">
-      {/* Background Decor */}
-      <div
-        className="checkout-bg"
-        style={{ backgroundImage: `url(${heroBg})` }}
-      >
-        <div className="checkout-overlay"></div>
+  const amountLabel = checkout.eligible ? packagePrice({price: checkout.amount, currency: checkout.currency}, lang) : null;
+  const previewPath = `/templates/${encodeURIComponent(matchedTemplate.code || templateId)}`;
+  return <div className="checkout-theme-wrapper">
+    <div className="checkout-bg" style={{backgroundImage:`url(${heroBg})`}} aria-hidden="true"><div className="checkout-overlay"/></div>
+    <section className="checkout-main-container" aria-busy={creating || catalogLoading}>
+      <nav className="checkout-nav-bar" aria-label={copy("ជម្រើសការទូទាត់", "Checkout navigation")}><Link className="checkout-back-btn" to="/templates"><IoArrowBackOutline aria-hidden="true"/>{copy("ត្រឡប់ទៅគំរូ", "Back to designs")}</Link><Link to="/app/payments">{copy("ប្រវត្តិការទូទាត់", "Payment history")}</Link></nav>
+      <header className="checkout-header"><p className="checkout-kicker">{copy("សិទ្ធិប្រើគំរូ", "Template access")}</p><h1 className="checkout-title">{copy("ពិនិត្យមុនទូទាត់", "Review your template order")}</h1><p className="checkout-subtitle">{copy("ពិនិត្យគំរូ តម្លៃ និងរូបិយប័ណ្ណ។ ការបញ្ជាទិញនឹងត្រូវបង្កើតមុនបង្ហាញតំណទូទាត់។", "Check the design, amount and currency. Your order is created before its payment link is shown.")}</p></header>
+      {error && <div className="checkout-alert-error" role="alert">{error}</div>}
+      <div className="checkout-grid-layout">
+        <div className="checkout-left-col">
+          <article className="checkout-card checkout-template-card"><div className="checkout-template-media"><img src={matchedTemplate.image} alt={checkout.templateName} className="checkout-template-thumb"/></div><div className="checkout-template-info"><h2 className="checkout-template-name">{checkout.templateName}</h2><p>{copy("មើលគំរូនេះ និងពិនិត្យព័ត៌មាន មុនស្នើការបញ្ជាទិញ។", "Preview this design and review its details before creating an order.")}</p><Link to={previewPath}>{copy("មើលគំរូ", "Preview design")}</Link></div></article>
+          <article className="checkout-card checkout-method-card"><h2 className="checkout-section-title"><IoQrCodeOutline aria-hidden="true"/>ABA PayWay</h2><p>{copy("QR នៅទំព័របន្ទាប់បើកតំណ PayWay។ វាមិនមែនជា KHQR ផ្ទាល់ខ្លួន ដែលកំណត់ចំនួនទឹកប្រាក់ជាមុនទេ។ សូមពិនិត្យអ្នកទទួល ចំនួនទឹកប្រាក់ និងរូបិយប័ណ្ណក្នុង PayWay។", "The QR on the next page opens a PayWay link. It is not a personalized KHQR payload with a locked amount. Check the recipient, amount and currency in PayWay.")}</p><p>{copy("ការស្នើពិនិត្យមិនបញ្ជាក់ការទូទាត់ទេ។ សិទ្ធិត្រូវបានផ្ដល់ក្រោយម៉ាស៊ីនមេផ្ទៀងផ្ទាត់ប៉ុណ្ណោះ។", "Requesting review does not confirm payment. Access follows verification by the server.")}</p></article>
+        </div>
+        <aside className="checkout-card checkout-summary-card"><h2 className="checkout-summary-heading">{copy("សង្ខេបការបញ្ជាទិញ", "Order summary")}</h2><dl className="checkout-summary-rows"><div className="checkout-summary-row"><dt>{copy("គំរូ", "Design")}</dt><dd>{checkout.templateName}</dd></div><div className="checkout-summary-row"><dt>{copy("តម្លៃដែលបានអនុម័ត", "Approved offer")}</dt><dd>{amountLabel || copy("មិនមានការផ្ដល់ជូនបច្ចុប្បន្ន", "Current offer unavailable")}</dd></div></dl><p>{copy("តម្លៃ និងសិទ្ធិប្រើប្រាស់នឹងត្រូវពិនិត្យម្ដងទៀតពេលម៉ាស៊ីនមេបង្កើតការបញ្ជាទិញ។", "The server checks the amount and eligibility again when creating your order.")}</p>
+          <button type="button" className="checkout-pay-btn" disabled={creating || catalogLoading || !checkout.templateId || !checkout.eligible || !amountLabel} onClick={createOrder}><IoLockClosedOutline aria-hidden="true"/>{creating ? copy("កំពុងបង្កើតការបញ្ជាទិញ…", "Creating order…") : catalogLoading ? copy("កំពុងផ្ទុកការផ្ដល់ជូន…", "Loading offer…") : copy("បង្កើតការបញ្ជាទិញ", "Create payment order")}</button>
+          {!catalogLoading && !checkout.eligible && <p role="status">{copy("មិនទាន់មានការផ្ដល់ជូនដែលបានអនុម័តសម្រាប់គំរូនេះទេ។ សូមត្រឡប់ទៅគំរូ ឬទាក់ទងក្រុមការងារ។", "An approved offer is unavailable for this design. Return to the catalog or contact support.")}</p>}
+          <p className="checkout-guarantee-item"><IoShieldCheckmarkOutline aria-hidden="true"/>{copy("សិទ្ធិត្រូវការការផ្ទៀងផ្ទាត់ការទូទាត់", "Access requires verified payment")}</p><Link to="/contact">{copy("ជំនួយការទូទាត់", "Payment help")}</Link>
+        </aside>
       </div>
-
-      <main className="checkout-main-container">
-        {/* Top Back Navigation */}
-        <div className="checkout-nav-bar">
-          <Link className="checkout-back-btn" to="/templates/browse">
-            <IoArrowBackOutline />
-            <span>ត្រឡប់ទៅមើលគំរូធៀបការ (Back to templates)</span>
-          </Link>
-          <div className="checkout-secure-tag">
-            <IoShieldCheckmarkOutline />
-            <span>100% SSL SECURE CHECKOUT</span>
-          </div>
-        </div>
-
-        {/* Page Hero Header */}
-        <header className="checkout-header">
-          <span className="checkout-kicker">
-            <IoSparkles /> PREMIUM TEMPLATE ACTIVATION
-          </span>
-          <h1 className="checkout-title">
-            ទូទាត់ប្រាក់ <span className="gold-gradient-text">គំរូធៀបការពិសេស</span>
-          </h1>
-          <div className="checkout-divider">
-            <span></span>
-            <div className="diamond"></div>
-            <span></span>
-          </div>
-          <p className="checkout-subtitle">
-            ទូទាត់តាម ABA KHQR។ សិទ្ធិប្រើគំរូនឹងបើកក្រោយការផ្ទៀងផ្ទាត់ការទូទាត់។
-          </p>
-        </header>
-
-        {/* Error Notification */}
-        {error && (
-          <div className="checkout-alert-error">
-            <span>⚠️ {error}</span>
-          </div>
-        )}
-
-        {/* 2-Column Grid */}
-        <div className="checkout-grid-layout">
-          {/* Left Column: Template & Features & Payment Method */}
-          <div className="checkout-left-col">
-            {/* Template Showcase Card */}
-            <article className="checkout-card checkout-template-card">
-              <div className="checkout-template-media">
-                <img
-                  src={matchedTemplate.image}
-                  alt={checkout.templateName}
-                  className="checkout-template-thumb"
-                />
-                <span className="checkout-badge-gold">
-                  <IoDiamondOutline /> PREMIUM
-                </span>
-              </div>
-
-              <div className="checkout-template-info">
-                <span className="checkout-template-cat">
-                  {matchedTemplate.category} TEMPLATE
-                </span>
-                <h2 className="checkout-template-name">{checkout.templateName}</h2>
-                <p className="checkout-template-desc">
-                  {matchedTemplate.description ||
-                    "គំរូសន្លឹកការបែបប្រពៃណីខ្មែរប្រណិត រួចរាល់សម្រាប់បង្ហាញរូបភាព កាលវិភាគកម្មវិធី និង RSVP។"}
-                </p>
-
-                <div className="checkout-price-tag">
-                  <span className="checkout-price-amount">
-                    {checkout.currency} {checkout.amount}
-                  </span>
-                  <span className="checkout-price-period">/ ប្រើប្រាស់រហូតដល់ចប់កម្មវិធី</span>
-                </div>
-              </div>
-            </article>
-
-            {/* Included Features List Card */}
-            <article className="checkout-card checkout-features-card">
-              <h3 className="checkout-section-title">
-                <IoSparkles /> អត្ថប្រយោជន៍ និងមុខងារដែលទទួលបាន (Included Features)
-              </h3>
-              <div className="checkout-features-list">
-                {INCLUDED_FEATURES.map((feat, idx) => (
-                  <div key={idx} className="checkout-feat-item">
-                    <IoCheckmarkCircle className="checkout-feat-icon" />
-                    <span>{feat}</span>
-                  </div>
-                ))}
-              </div>
-            </article>
-
-            {/* Payment Method Selector Card */}
-            <article className="checkout-card checkout-method-card">
-              <h3 className="checkout-section-title">
-                <IoQrCodeOutline /> វិធីសាស្ត្រទូទាត់ប្រាក់ (Payment Method)
-              </h3>
-
-              <div className="checkout-method-option active">
-                <div className="checkout-method-radio">
-                  <span className="checkout-radio-inner"></span>
-                </div>
-                <div className="checkout-method-content">
-                  <div className="checkout-method-head">
-                    <div className="checkout-method-title">
-                      <strong>ABA PAY / KHQR (Bakong Standard)</strong>
-                      <span className="checkout-tag-instant">
-                        <IoFlashOutline /> Verified Activation
-                      </span>
-                    </div>
-                    <span className="checkout-method-badge">ពេញនិយម & ងាយស្រួល</span>
-                  </div>
-                  <p className="checkout-method-sub">
-                    ស្កេនទូទាត់តាមគ្រប់កម្មវិធីធនាគារក្នុងប្រទេសកម្ពុជា (ABA Mobile, ACLEDA, Canadia, Sathapana, etc.)
-                  </p>
-                </div>
-              </div>
-
-              {/* Test Mode Note */}
-              <div className="checkout-test-notice">
-                <div className="checkout-test-icon">
-                  <IoHelpCircleOutline />
-                </div>
-                <div>
-                  <strong>💡 របៀប Test Payment ($0.01 USD):</strong>
-                  <p>
-                    ទឹកប្រាក់កំណត់ត្រឹម $0.01 USD សម្រាប់ធ្វើតេស្តសាកល្បង។ បន្ទាប់ពីចុច Buy Template អ្នកអាចចូលទៅ Admin Dashboard (<code>/payments</code>) រួចចុច Confirm ដើម្បី Unlock គំរូនេះភ្លាមៗ!
-                  </p>
-                </div>
-              </div>
-            </article>
-          </div>
-
-          {/* Right Column: Order Summary & Action */}
-          <div className="checkout-right-col">
-            <aside className="checkout-card checkout-summary-card">
-              <h3 className="checkout-summary-heading">សង្ខេបការបញ្ជាទិញ (Order Summary)</h3>
-
-              <div className="checkout-summary-rows">
-                <div className="checkout-summary-row">
-                  <span>គំរូធៀបការ (Template)</span>
-                  <strong className="text-right">{checkout.templateName}</strong>
-                </div>
-                <div className="checkout-summary-row">
-                  <span>កញ្ចប់សេវា (Plan)</span>
-                  <span>{checkout.packageName} License</span>
-                </div>
-                <div className="checkout-summary-row">
-                  <span>តម្លៃគំរូ (Template Price)</span>
-                  <span>{checkout.currency} {checkout.amount}</span>
-                </div>
-                <div className="checkout-summary-row">
-                  <span>ពន្ធអាករ (VAT / Fee 0%)</span>
-                  <span>$0.00</span>
-                </div>
-              </div>
-
-              <div className="checkout-summary-divider"></div>
-
-              {/* Total Due */}
-              <div className="checkout-total-box">
-                <div>
-                  <span className="checkout-total-label">ទឹកប្រាក់សរុប (Total Due)</span>
-                  <small className="checkout-total-sub">រួមបញ្ចូលទាំងសិទ្ធិប្រើប្រាស់ពេញលេញ</small>
-                </div>
-                <div className="checkout-total-price">
-                  <span>{checkout.currency}</span>
-                  <strong>{checkout.amount}</strong>
-                </div>
-              </div>
-
-              {/* Primary Action Button */}
-              <button
-                type="button"
-                className="checkout-pay-btn"
-                disabled={creating || catalogLoading || !checkout.templateId || !checkout.eligible}
-                onClick={createOrder}
-              >
-                {creating ? (
-                  <>
-                    <span className="checkout-spinner"></span>
-                    <span>កំពុងបង្កើត Order...</span>
-                  </>
-                ) : catalogLoading ? (
-                  <span>Loading Template...</span>
-                ) : (
-                  <>
-                    <IoLockClosedOutline />
-                    <span>ទូទាត់តាម ABA KHQR ({checkout.currency} {checkout.amount})</span>
-                  </>
-                )}
-              </button>
-              {!catalogLoading && checkout.reason && <p role="status">{checkout.reason}</p>}
-
-              {/* Instant Activation Guarantee */}
-              <div className="checkout-guarantee-box">
-                <div className="checkout-guarantee-item">
-                  <IoFlashOutline />
-                  <span>បើកដំណើរការក្រោយផ្ទៀងផ្ទាត់ការទូទាត់ (Access after payment verification)</span>
-                </div>
-                <div className="checkout-guarantee-item">
-                  <IoShieldCheckmarkOutline />
-                  <span>សុវត្ថិភាពខ្ពស់ 100% តាមប្រព័ន្ធធនាគារជាតិ Bakong</span>
-                </div>
-              </div>
-            </aside>
-          </div>
-        </div>
-      </main>
-    </div>
-  );
+    </section>
+  </div>;
 }

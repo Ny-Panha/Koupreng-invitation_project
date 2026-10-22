@@ -17,6 +17,7 @@ import { toast } from "../../shared/ui/toast";
 import { getPaymentQrValue } from "./khqr";
 import { packagePrice } from "../marketing/model/packagePresentation";
 import { useLanguageStore } from "@/stores/useLanguageStore";
+import { templateUsePath } from '../templates/model/templateIdentity';
 import "./PaymentPages.css";
 
 function getSessionSecondsRemaining(expiresAt, now = Date.now()) {
@@ -37,6 +38,7 @@ function formatRemaining(seconds) {
 export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
   const lang = useLanguageStore((state) => state.lang);
   const isKm = lang !== "en";
+  const copy = (kh, english) => isKm ? kh : english;
   const [checking, setChecking] = useState(false);
   const [claiming, setClaiming] = useState(false);
   const [claimFeedback, setClaimFeedback] = useState("");
@@ -47,7 +49,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
   const status = order?.status || "PENDING";
   const waitingForPayment = !isTerminalStatus(status);
   const orderCode = order?.orderCode || "";
-  const amountLabel = packagePrice({ price: order?.amount, currency: order?.currency }, "en") || "Amount unavailable";
+  const amountLabel = packagePrice({ price: order?.amount, currency: order?.currency }, lang) || copy("មិនមានចំនួនទឹកប្រាក់", "Amount unavailable");
   const qrValue = useMemo(() => {
     return getPaymentQrValue(order);
   }, [order]);
@@ -106,10 +108,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
     }
   };
 
-  const remaining = useMemo(
-    () => getSessionSecondsRemaining(order?.expiresAt, now),
-    [order?.expiresAt, now]
-  );
+  const remaining = getSessionSecondsRemaining(order?.expiresAt, now);
 
   const isExpired = status === "EXPIRED" || (waitingForPayment && remaining !== null && remaining <= 0);
 
@@ -163,12 +162,12 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
 
         <span className={`payment-status-badge ${isExpired ? "expired" : status.toLowerCase()}`}>
           {status === "PAID"
-            ? "✓ ទូទាត់ជោគជ័យ (PAID)"
+            ? copy("បានផ្ទៀងផ្ទាត់ការទូទាត់", "Payment verified")
             : isExpired
-            ? "⚠️ ផុតកំណត់ (EXPIRED)"
+            ? copy("ការបញ្ជាទិញផុតកំណត់", "Order expired")
             : isTerminalStatus(status)
             ? statusMessage(status)
-            : "⏳ រង់ចាំការទូទាត់ (PENDING)"}
+            : copy("រង់ចាំការផ្ទៀងផ្ទាត់", "Awaiting verification")}
         </span>
       </div>
 
@@ -179,7 +178,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
           {/* KHQR Card Top Header */}
           <div className="payment-khqr-header">
             <div className="payment-khqr-tag">ABA PAY</div>
-          <div className="payment-khqr-sub">OPEN FIXED PAYWAY LINK</div>
+          <div className="payment-khqr-sub">{copy("តំណទូទាត់ PayWay", "PayWay payment link")}</div>
           </div>
 
           {/* Clean High-Contrast Vector QR */}
@@ -190,7 +189,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
               level="M"
               className="payment-qr-code-svg"
               style={{ height: "auto", maxWidth: "100%", width: "100%", display: "block" }}
-            /> : <p role="alert">Payment link unavailable. Please retry.</p>}
+            /> : <p role="alert">{copy("មិនមានតំណទូទាត់ទេ។ សូមសាកម្ដងទៀត។", "Payment link unavailable. Please retry.")}</p>}
 
             {/* Expired Overlay */}
             {isExpired && (
@@ -222,7 +221,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
           </div>
 
           <span className="payment-qr-brand-label">
-            <IoShieldCheckmarkOutline /> ស្កេនតាម Camera ឬ App ABA Mobile
+            <IoShieldCheckmarkOutline /> {copy("ស្កេនដើម្បីបើកតំណ PayWay", "Scan to open the PayWay link")}
           </span>
         </div>
 
@@ -231,7 +230,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
           {/* Order Code Card */}
           <div className="payment-code-box-lux">
             <div className="payment-code-header">
-              <span>លេខកូដសម្គាល់ការទិញ (Order Code)</span>
+              <span>{copy("លេខកូដសម្គាល់ការទិញ", "Order code")}</span>
               <button
                 type="button"
                 className="payment-copy-btn"
@@ -259,20 +258,20 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
           {/* Instructions text (ISSUE-P1-05) */}
           <div className="payment-instructions-lux">
             <h4 style={{ margin: "0 0 10px", fontSize: "15px", fontWeight: 700, color: "var(--kp-ink, #1f2421)" }}>
-              {isKm ? "👉 ជំហានទូទាត់ងាយៗ ៤ ជំហាន (Payment steps)៖" : "👉 4 Simple payment steps:"}
+              {copy("ជំហានទូទាត់", "Payment steps")}
             </h4>
             <ol style={{ margin: 0, paddingLeft: "20px", display: "flex", flexDirection: "column", gap: "8px", fontSize: "14px", lineHeight: "1.6" }}>
               <li>
-                <strong>{isKm ? "បើកកម្មវិធីធនាគារចល័ត" : "Open your banking app"}</strong> — {isKm ? "ABA Mobile, Bakong, Wing, ACLEDA ឬកម្មវិធីធនាគារដែលគាំទ្រ KHQR" : "ABA Mobile, Bakong, Wing, ACLEDA, or any KHQR-supported banking app."}
+                <strong>{copy("បើកតំណ PayWay", "Open the PayWay link")}</strong> — {copy("ស្កេនដោយកាមេរ៉ា ឬចុចតំណខាងក្រោម។ QR នេះជាតំណទូទាត់ មិនមែន KHQR ផ្ទាល់ខ្លួនទេ។", "Use your camera or the link below. This QR opens a payment link; it is not a personalized KHQR payload.")}
               </li>
               <li>
-                <strong>{isKm ? "ស្កេន QR កូដខាងលើ" : "Scan the KHQR code above"}</strong> — {isKm ? "ពិនិត្យចំនួនទឹកប្រាក់ទូទាត់៖ " : "Expected amount: "}<strong>{amountLabel}</strong>
+                <strong>{copy("ពិនិត្យព័ត៌មានទូទាត់", "Review the payment details")}</strong> — {copy("ផ្ទៀងផ្ទាត់អ្នកទទួល ចំនួនទឹកប្រាក់ និងរូបិយប័ណ្ណក្នុង PayWay។ ចំនួនទឹកប្រាក់នៃការបញ្ជាទិញ៖ ", "Check the recipient, amount and currency in PayWay. Order amount: ")}<strong>{amountLabel}</strong>
               </li>
               <li>
                 <strong>{isKm ? "បញ្ជាក់ការផ្ទេរប្រាក់" : "Confirm the transfer"}</strong> — {isKm ? `បញ្ចូល Order Code (${order.orderCode}) ក្នុង Remark ប្រសិនបើធនាគារអនុញ្ញាត` : `Include order code (${order.orderCode}) in remark if bank supports it.`}
               </li>
               <li>
-                <strong>{isKm ? "ចុចប៊ូតុង 'ខ្ញុំបានទូទាត់រួចរាល់'" : "Tap 'I have paid' below"}</strong> — {isKm ? "ប្រព័ន្ធនឹងផ្ទៀងផ្ទាត់ដោយស្វ័យប្រវត្តិជាមួយទិន្នន័យធនាគារ និងបើកសិទ្ធិប្រើប្រាស់ភ្លាមៗ។" : "System reconciles with official bank alerts to activate access."}
+                <strong>{copy("ស្នើពិនិត្យការទូទាត់", "Request payment review")}</strong> — {copy("សំណើរបស់អ្នកមិនបញ្ជាក់ការទូទាត់ទេ។ សិទ្ធិត្រូវបានផ្ដល់ក្រោយការផ្ទៀងផ្ទាត់ពីម៉ាស៊ីនមេប៉ុណ្ណោះ។", "Your request does not confirm payment. Access follows verification by the server.")}
               </li>
             </ol>
             <p style={{ marginTop: "12px", color: "var(--kp-teal, #0f766e)", fontWeight: 600, fontSize: "13px" }}>
@@ -294,7 +293,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
                 <p>គំរូធៀបការរបស់អ្នកត្រូវបាន Unlock រួចរាល់ហើយ។ អ្នកអាចចាប់ផ្តើមបង្កើតធៀបការបានឥឡូវនេះ។</p>
               </div>
               <Link
-                to="/templates/browse"
+                to={templateUsePath(order.templateId, true)}
                 className="checkout-pay-btn"
                 style={{ marginTop: "12px", width: "100%" }}
               >
@@ -341,7 +340,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
                 disabled={claiming}
                 onClick={handleClaim}
                 style={{
-                  background: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
+                  background: "var(--ui-action)",
                   color: "#ffffff",
                   fontWeight: 700,
                   boxShadow: "0 4px 14px rgba(16, 185, 129, 0.4)",
@@ -350,7 +349,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
                 }}
               >
                 <IoSparkles />
-                <span>{claiming ? "កំពុងផ្ញើសំណើ..." : "ផ្ទៀងផ្ទាត់ការទូទាត់ — ស្នើពិនិត្យ (Request payment review)"}</span>
+                <span>{claiming ? copy("កំពុងផ្ញើសំណើ…", "Requesting review…") : copy("ស្នើពិនិត្យការទូទាត់", "Request payment review")}</span>
               </button>
             )}
 
@@ -361,7 +360,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <IoOpenOutline /> បើកកម្មវិធី ABA Mobile (Open in App)
+                <IoOpenOutline /> {copy("បើកតំណ PayWay", "Open PayWay link")}
               </a>
             )}
 

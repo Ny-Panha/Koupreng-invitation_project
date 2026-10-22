@@ -377,7 +377,7 @@ export default function ProfilePage() {
         }
       `}</style>
 
-      <div className="profile-page">
+    <div className="profile-page" role="main">
         <h1>{hasProfile ? t("editTitle") : t("createTitle")}</h1>
         <p className="subtitle">
           {hasProfile

@@ -60,7 +60,7 @@ export default function PaidTemplatesPage() {
   }, []);
 
   return (
-    <div className="dash-main paid-templates-page">
+    <div role="main" className="dash-main paid-templates-page">
       <div className="paid-templates-container">
         {/* Breadcrumb Navigation */}
         <nav className="paid-breadcrumb">

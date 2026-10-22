@@ -1636,11 +1636,12 @@
 }
 
 .kp-pricing-amount {
-  font-size: 38px;
+  font-size: clamp(24px, 2.6vw, 38px);
   font-weight: 750;
   color: var(--kp-ink, #1f2421);
   line-height: 1.1;
   margin: 8px 0 2px;
+  overflow-wrap: anywhere;
 }
 
 .kp-pricing-amount small {

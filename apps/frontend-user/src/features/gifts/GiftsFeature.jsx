@@ -33,14 +33,14 @@ export function GiftsFeature() {
 
     if (loading) {
         return (
-            <div className="gifts-page">
+            <div role="main" className="gifts-page">
                 <SkeletonCard height="140px" /><SkeletonCard height="260px" />
             </div>
         );
     }
 
     return (
-        <div className="wg-page">
+        <div role="main" className="wg-page">
             {/* Hero */}
             <header className="dash-page-header">
                 <div className="wg-hero-content">

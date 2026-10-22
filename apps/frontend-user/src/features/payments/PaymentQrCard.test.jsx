@@ -57,6 +57,7 @@ describe("PAY-001 payment claim authority", () => {
 
     fireEvent.click(container.querySelector(".payment-claim-btn"));
     expect(await screen.findByRole("link", { name: /Use Template/i })).toBeInTheDocument();
+    expect(screen.getByRole('link',{name:/Use Template/i})).toHaveAttribute('href','/app/events/new?template=2');
     expect(mocks.getOrder).toHaveBeenCalledWith(order.orderCode);
   });
 

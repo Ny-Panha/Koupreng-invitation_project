@@ -1,9 +1,11 @@
 import { cleanup, render, screen, fireEvent } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { useLanguageStore } from '@/stores/useLanguageStore';
 import AssistantComposer from "./components/AssistantComposer";
 import AssistantResult from "./components/AssistantResult";
 import { toInvitationStoryUpdate } from "./model/invitationContent";
 afterEach(cleanup);
+beforeEach(() => useLanguageStore.setState({lang:'en'}));
 
 vi.mock("@/features/invitations/api/invitationApi", () => ({
   invitationService: {
@@ -46,7 +48,7 @@ describe("AI Invitation Assistant Module", () => {
       expect(screen.getByDisplayValue("Dara & Sophea")).toBeInTheDocument();
       expect(screen.getByDisplayValue("Himawari")).toBeInTheDocument();
       
-      const submitBtn = screen.getByRole("button", { name: /Generate Content/ });
+      const submitBtn = screen.getByRole("button", { name: "Generate content" });
       fireEvent.click(submitBtn);
 
       expect(handleSubmit).toHaveBeenCalled();
@@ -69,7 +71,7 @@ describe("AI Invitation Assistant Module", () => {
       expect(screen.getByDisplayValue("សិរីសួស្តី អាពាហ៍ពិពាហ៍ Dara & Sophea")).toBeInTheDocument();
       expect(screen.getByText("Keep short for mobile")).toBeInTheDocument();
 
-      const applyBtn = screen.getByText("យកទៅប្រើក្នុងធៀប / Apply to Invitation");
+      const applyBtn = screen.getByRole('button', {name:'Apply to invitation'});
       fireEvent.click(applyBtn);
 
       expect(handleApply).toHaveBeenCalledWith("សិរីសួស្តី អាពាហ៍ពិពាហ៍ Dara & Sophea");

@@ -4,6 +4,7 @@ import "./wedding-site.css";
 import TemplateExperience from "../templates/experience/TemplateExperience";
 import { getTemplateById } from "../templates/data/templatesData";
 import { resolveVariant } from "../templates/experience/config/templateExperienceThemes";
+import { useLanguageStore } from '@/stores/useLanguageStore';
 
 /**
  * WeddingSite — full-page public wedding invitation viewer.
@@ -21,8 +22,11 @@ export default function WeddingSite({
 }) {
     const { id } = useParams();
     const [searchParams] = useSearchParams();
+    const en = useLanguageStore(state => state.lang) === 'en';
     const tpl = tplProp || getTemplateById(id);
-    const variant = useMemo(() => resolveVariant(tpl), [tpl]);
+    const variant = useMemo(() => tpl ? resolveVariant(tpl) : null, [tpl]);
+
+    if (!tpl) return <main className="public-state template-unavailable"><h1>{en ? 'Template unavailable' : 'មិនមានគំរូនេះទេ'}</h1><p>{en ? 'Choose an available design to continue.' : 'សូមជ្រើសរើសគំរូដែលអាចប្រើបាន ដើម្បីបន្ត។'}</p><Link to="/templates">{en ? 'Browse templates' : 'មើលគំរូសន្លឹកការ'}</Link></main>;
 
     const isEmbedded = typeof window !== "undefined" && (
         window.self !== window.top ||

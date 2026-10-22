@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Check, Minus, ArrowUpRight, Plus, Sparkles } from "lucide-react";
+import { Check, Minus, ArrowUpRight, Plus } from "lucide-react";
 import { useAuth } from "../auth/hooks/useAuth";
 import { useLanguageStore } from "../../stores/useLanguageStore";
 import PricingFactors from "./components/PricingFactors";
@@ -103,15 +103,8 @@ export default function PricingFeature() {
         <div className="kp-plan-grid">
           {plans.map((plan, index) => {
             const price = packagePrice(plan, lang);
-            const isFeatured = plan.code === "PRO";
             return (
-              <article className={`kp-plan-card${isFeatured ? " kp-plan-card--featured" : ""}`} key={plan.id || index}>
-                {isFeatured && (
-                  <div className="kp-plan-badge">
-                    <Sparkles size={14} aria-hidden="true" />
-                    <span>{copy("ពេញនិយមបំផុត", "Most Popular")}</span>
-                  </div>
-                )}
+              <article className="kp-plan-card" key={plan.id || index}>
                 <h2>{plan.packageName || plan.code}</h2>
                 <p className={`kp-plan-price${price === null ? " kp-plan-price--missing" : price.length > 12 ? " kp-plan-price--long" : ""}`}>
                   {price ?? copy("តម្លៃមិនទាន់មាន", "Price unavailable")}
@@ -132,7 +125,7 @@ export default function PricingFeature() {
                 </dl>
                 <Link
                   to={planActionUrl(plan, price)}
-                  className={`kp-button${price === null ? " kp-button--outline" : isFeatured ? " kp-button--primary" : ""}`}
+                  className={`kp-button${price === null ? " kp-button--outline" : ""}`}
                 >
                   {planActionLabel(price)}
                 </Link>

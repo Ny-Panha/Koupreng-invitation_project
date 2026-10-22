@@ -6,6 +6,7 @@ import { invitationService } from "./api/invitationApi";
 import { planningService } from "@/features/planning/api/planningApi";
 import * as storage from "@/shared/storage";
 import InvitationCheckInPage from "./InvitationCheckInPage";
+import { useLanguageStore } from '@/stores/useLanguageStore';
 
 vi.mock("@/features/guests/api/guestApi", () => ({ guestService: {
   listByInvitation: vi.fn(), checkInSummary: vi.fn(), checkInList: vi.fn(), scanCheckIn: vi.fn(), manualCheckIn: vi.fn(), createForInvitation: vi.fn(), undoCheckIn: vi.fn(),
@@ -29,9 +30,9 @@ async function scanToken(container) {
   fireEvent.change(screen.getByPlaceholderText("Paste /i/slug?token=... or token"), { target: { value: "known-token" } });
   fireEvent.submit(container.querySelector("form.guest-form"));
 }
-async function walkIn(container) {
-  fireEvent.click(screen.getByRole("button", { name: /\(Walk-in\)/ }));
-  const form = container.querySelector(".checkin-modal form");
+async function walkIn() {
+  fireEvent.click(screen.getByRole("button", { name: 'Add walk-in guest' }));
+  const form = screen.getByRole('dialog', {name:'Walk-in guest'}).querySelector('form');
   fireEvent.change(form.querySelector("input"), { target: { value: "Walk guest" } });
   fireEvent.submit(form);
   return form;
@@ -39,6 +40,7 @@ async function walkIn(container) {
 
 describe("FE-004/005/006/007 durable check-in desk", () => {
   beforeEach(() => {
+    useLanguageStore.setState({lang:'en'});
     window.confirm = vi.fn(() => true);
     vi.clearAllMocks();
     invitationService.get.mockResolvedValue({ id: 10, title: "Owned wedding" });

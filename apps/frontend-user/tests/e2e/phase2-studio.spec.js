@@ -12,7 +12,13 @@ test('preview retains the form, newest edits, focus and position with one active
  await expect(page.locator('iframe')).toHaveCount(mobile?0:1);
  const scroll=await page.evaluate(()=>scrollY);
  if (mobile) expect(scroll).toBeGreaterThan(0);
- await page.getByRole('button',{name:'Preview invitation',exact:true}).click();
+ const opener=page.getByRole('button',{name:'Preview invitation',exact:true});
+ if (mobile) {
+   const box=await opener.boundingBox();
+   expect(box.y).toBeGreaterThanOrEqual(0);expect(box.y+box.height).toBeLessThanOrEqual(500);
+   // A physical tap does not invoke the automation locator's scrollIntoView.
+   await page.touchscreen.tap(box.x+box.width/2,box.y+box.height/2);
+ } else await opener.click();
  const dialog=page.getByRole('dialog',{name:'Invitation preview'});
  await expect(dialog).toBeVisible();await expect(page.locator('iframe')).toHaveCount(1);
  const frame=page.frameLocator('iframe[title="Live User Template Preview"]');

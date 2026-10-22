@@ -1,3 +1,4 @@
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import { FormField, LoadingButton } from "@/shared/ui";
 import {
   IoCreateOutline,
@@ -23,9 +24,11 @@ export default function AssistantComposer({
   loading,
   onSubmit,
 }) {
+  const en = useLanguageStore(state => state.lang) === "en";
+  const copy = (kh, english) => en ? english : kh;
   return (
     <form onSubmit={onSubmit} className="pe-ai-composer">
-      <FormField label="ជំនួយការសរសេរ (Feature Action)" required>
+      <FormField label={copy("ជំនួយការសរសេរ", "Writing task")} required>
         <div className="pe-ai-actions">
           {AI_ACTIONS.map((act) => {
             const ActionIcon = ACTION_ICONS[act.value] || IoCreateOutline;
@@ -38,7 +41,7 @@ export default function AssistantComposer({
                 aria-pressed={form.action === act.value}
               >
                 <ActionIcon aria-hidden="true" />
-                <span>{act.label}</span>
+                <span>{act.label.split(" / ")[en ? 0 : 1] || act.label}</span>
               </button>
             );
           })}
@@ -46,7 +49,7 @@ export default function AssistantComposer({
       </FormField>
 
       <div className="pe-ai-field-grid">
-        <FormField label="ឈ្មោះគូស្វាមីភរិយា / Couple Names">
+        <FormField label={copy("ឈ្មោះគូស្វាមីភរិយា", "Couple names")}>
           <input
             type="text"
             value={form.coupleNames}
@@ -55,7 +58,7 @@ export default function AssistantComposer({
           />
         </FormField>
 
-        <FormField label="ឈ្មោះម្ចាស់ដើមការ / Host Name">
+        <FormField label={copy("ឈ្មោះម្ចាស់ដើមការ", "Host name")}>
           <input
             type="text"
             value={form.hostName}
@@ -66,7 +69,7 @@ export default function AssistantComposer({
       </div>
 
       <div className="pe-ai-field-grid">
-        <FormField label="ថ្ងៃខែឆ្នាំ / Event Date">
+        <FormField label={copy("កាលបរិច្ឆេទកម្មវិធី", "Event date")}>
           <input
             type="text"
             value={form.eventDate}
@@ -75,7 +78,7 @@ export default function AssistantComposer({
           />
         </FormField>
 
-        <FormField label="ទីតាំង / Venue">
+        <FormField label={copy("ទីតាំង", "Venue")}>
           <input
             type="text"
             value={form.venueName}
@@ -86,34 +89,34 @@ export default function AssistantComposer({
       </div>
 
       <div className="pe-ai-field-grid">
-        <FormField label="ភាសា / Language">
+        <FormField label={copy("ភាសាអត្ថបទ", "Content language")}>
           <select
             value={form.language}
             onChange={(e) => setForm({ ...form, language: e.target.value })}
           >
             {LANGUAGE_OPTIONS.map((l) => (
               <option key={l.value} value={l.value}>
-                {l.label}
+                {l.value === "Khmer" ? copy("ភាសាខ្មែរ", "Khmer") : copy("ភាសាអង់គ្លេស", "English")}
               </option>
             ))}
           </select>
         </FormField>
 
-        <FormField label="ទម្រង់សំណេរ / Tone">
+        <FormField label={copy("ទម្រង់សំណេរ", "Tone")}>
           <select
             value={form.tone}
             onChange={(e) => setForm({ ...form, tone: e.target.value })}
           >
             {TONE_OPTIONS.map((t) => (
               <option key={t.value} value={t.value}>
-                {t.label}
+                {t.label.split(" / ")[en ? 0 : 1] || t.label}
               </option>
             ))}
           </select>
         </FormField>
       </div>
 
-      <FormField label="ព័ត៌មានបន្ថែម / Extra Notes">
+      <FormField label={copy("ព័ត៌មានបន្ថែម", "Extra notes")}>
         <textarea
           rows="3"
           value={form.notes}
@@ -124,7 +127,7 @@ export default function AssistantComposer({
 
       <LoadingButton type="submit" isLoading={loading} className="pe-primary-btn pe-ai-generate">
         <IoSparklesOutline aria-hidden="true" />
-        <span>រៀបចំអត្ថបទ / Generate Content</span>
+        <span>{copy("រៀបចំអត្ថបទ", "Generate content")}</span>
       </LoadingButton>
     </form>
   );

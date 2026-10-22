@@ -7,8 +7,10 @@ import { paymentService } from "./paymentService";
 import heroBg from "../../assets/icons/background.png";
 import "./PaymentPages.css";
 import { packagePrice } from "../marketing/model/packagePresentation";
+import { useLanguageStore } from '@/stores/useLanguageStore';
 
 export default function PaymentStatusPage() {
+  const en = useLanguageStore(state => state.lang) === 'en';
   const navigate = useNavigate();
   const { orderCode } = useParams();
   const [order, setOrder] = useState(null);
@@ -91,10 +93,10 @@ export default function PaymentStatusPage() {
         {/* Hero Header */}
         <header className="checkout-header">
           <span className="checkout-kicker">
-            <IoSparkles /> ABA PAYWAY • KHQR PAYMENT
+            <IoSparkles /> {en ? 'Payment status' : 'ស្ថានភាពការទូទាត់'}
           </span>
           <h1 className="checkout-title">
-            ស្កេនទូទាត់ <span className="gold-gradient-text">ABA KHQR</span>
+            {en ? 'Review your payment' : 'ពិនិត្យការទូទាត់របស់អ្នក'}
           </h1>
           <div className="checkout-divider">
             <span></span>
@@ -111,7 +113,7 @@ export default function PaymentStatusPage() {
         {loading && (
           <div className="checkout-card" style={{ textAlign: "center", padding: "40px" }}>
             <span className="checkout-spinner" style={{ borderColor: "#b0926a", borderTopColor: "transparent", margin: "0 auto 12px" }}></span>
-            <p style={{ margin: 0, fontWeight: 600 }}>កំពុងទាញយកព័ត៌មានការទូទាត់...</p>
+            <p role="status" style={{ margin: 0, fontWeight: 600 }}>{en ? 'Loading payment details…' : 'កំពុងទាញយកព័ត៌មានការទូទាត់…'}</p>
           </div>
         )}
 

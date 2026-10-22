@@ -1,3 +1,4 @@
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import { useEffect, useState } from "react";
 import { IoCheckmark, IoCopyOutline, IoInformationCircleOutline, IoSparklesOutline } from "react-icons/io5";
 import { FormField, LoadingButton, toast } from "@/shared/ui";
@@ -7,6 +8,8 @@ export default function AssistantResult({
   response,
   onApply,
 }) {
+  const en = useLanguageStore(state => state.lang) === "en";
+  const copy = (kh, english) => en ? english : kh;
   const [editedText, setEditedText] = useState(response?.generatedText || "");
   const [copied, setCopied] = useState(false);
 
@@ -38,8 +41,8 @@ export default function AssistantResult({
           <IoSparklesOutline aria-hidden="true" />
           <span>
             {isLocalTemplate
-              ? "ពុម្ពអត្ថបទជំនួយ / Local template draft"
-              : "លទ្ធផលអត្ថបទ AI / AI-generated result"}
+              ? copy("ពុម្ពអត្ថបទជំនួយ", "Local template draft")
+              : copy("លទ្ធផលអត្ថបទ AI", "AI-generated result")}
           </span>
         </h3>
       </div>
@@ -47,20 +50,20 @@ export default function AssistantResult({
       {isLocalTemplate && (
         <div role="status" className="pe-ai-source-notice">
           <IoInformationCircleOutline aria-hidden="true" />
-          <span>This draft was created from Koupreng's built-in template. No external AI provider was used.</span>
+          <span>{copy("អត្ថបទនេះបង្កើតពីពុម្ពក្នុង Koupreng។ មិនបានប្រើសេវា AI ខាងក្រៅទេ។", "This draft was created from Koupreng's built-in template. No external AI provider was used.")}</span>
         </div>
       )}
 
       {response.warnings?.length > 0 && (
         <div role="alert" className="pe-ai-warning-list">
-          <strong>Service notice</strong>
+          <strong>{copy("សេចក្ដីជូនដំណឹងសេវា", "Service notice")}</strong>
           <ul>
             {response.warnings.map((warning) => <li key={warning}>{warning}</li>)}
           </ul>
         </div>
       )}
 
-      <FormField label="អ្នកអាចកែសម្រួលអត្ថបទមុនពេលប្រើប្រាស់ (Editable Content)">
+      <FormField label={copy("កែសម្រួលអត្ថបទមុនប្រើប្រាស់", "Review and edit the draft")}>
         <textarea
           rows="6"
           value={editedText}
@@ -73,7 +76,7 @@ export default function AssistantResult({
         <div className="pe-ai-suggestions">
           <strong>
             <IoInformationCircleOutline aria-hidden="true" />
-            <span>អនុសាសន៍បន្ថែម (Suggestions)</span>
+            <span>{copy("អនុសាសន៍បន្ថែម", "Suggestions")}</span>
           </strong>
           <ul style={{ margin: 0, paddingLeft: "1.25rem", fontSize: "0.875rem", color: "var(--brand-text)" }}>
             {response.suggestions.map((s, idx) => (
@@ -86,7 +89,7 @@ export default function AssistantResult({
       <div className="pe-ai-result-actions">
         <button type="button" className="pe-secondary-btn" onClick={handleCopy}>
           {copied ? <IoCheckmark aria-hidden="true" /> : <IoCopyOutline aria-hidden="true" />}
-          <span>{copied ? "បានចម្លង" : "ចម្លងអត្ថបទ"}</span>
+          <span>{copied ? copy("បានចម្លង", "Copied") : copy("ចម្លងអត្ថបទ", "Copy text")}</span>
         </button>
         {onApply && (
           <LoadingButton
@@ -94,7 +97,7 @@ export default function AssistantResult({
             className="pe-primary-btn"
             onClick={() => onApply(editedText)}
           >
-            យកទៅប្រើក្នុងធៀប / Apply to Invitation
+            {copy("យកទៅប្រើក្នុងធៀប", "Apply to invitation")}
           </LoadingButton>
         )}
       </div>

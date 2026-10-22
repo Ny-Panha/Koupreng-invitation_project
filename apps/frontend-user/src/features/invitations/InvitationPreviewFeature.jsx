@@ -173,7 +173,7 @@ export default function InvitationPreviewPage() {
             </header>
 
             {/* Preview Canvas: supports Full Screen or Phone View */}
-            <main className={`inv-preview-canvas ${viewMode === "full" ? "inv-preview-canvas--full" : ""}`}>
+            <section aria-label="Invitation canvas" className={`inv-preview-canvas ${viewMode === "full" ? "inv-preview-canvas--full" : ""}`}>
                 {rendered ? (
                     <div className={`inv-phone-viewport ${viewMode === "full" ? "inv-phone-viewport--full" : ""}`}>
                         <TemplateExperience
@@ -192,7 +192,7 @@ export default function InvitationPreviewPage() {
                         Could not resolve the selected template.
                     </div>
                 )}
-            </main>
+            </section>
         </div>
     );
 }

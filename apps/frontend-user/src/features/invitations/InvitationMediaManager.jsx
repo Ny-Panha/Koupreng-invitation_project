@@ -205,7 +205,7 @@ export default function InvitationMediaManager() {
     };
 
     return (
-        <div className="inv-page">
+        <div role="main" className="inv-page">
             <header className="inv-page-header">
                 <div>
                     <span className="inv-eyebrow">Media management</span>

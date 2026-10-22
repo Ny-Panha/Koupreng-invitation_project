@@ -70,6 +70,7 @@ export default function TemplateDemoPage({ backLink, backLabel, primaryCtaLabel 
             languageMode: remoteTpl.code === "event-essential" ? (lang === "en" ? "EN" : "KH") : parsedConfig.languageMode || baseTpl.languageMode,
             id: remoteTpl.code || String(remoteTpl.id) || baseTpl.id,
             name: remoteTpl.name || baseTpl.name,
+            title: remoteTpl.code === "event-essential" ? (parsedConfig.invitationTitle || (lang === "en" ? "You are invited" : "សូមអញ្ជើញចូលរួម")) : baseTpl.title,
             style: remoteTpl.name || baseTpl.style,
             description: parsedConfig.blessingMessage || remoteTpl.description || baseTpl.description,
             image: remoteTpl.thumbnailUrl || baseTpl.image,

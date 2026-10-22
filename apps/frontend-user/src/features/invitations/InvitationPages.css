@@ -2228,6 +2228,9 @@
     animation: peFadeIn 0.2s ease-out;
 }
 
+.checkin-accessible-modal.k-modal-container { max-width: 560px; }
+.checkin-accessible-modal .k-modal-body { padding: 0; }
+.checkin-accessible-modal .checkin-modal { width: 100%; max-width: none; max-height: none; margin: 0; box-shadow: none; border: 0; animation: none; }
 .checkin-modal,
 .checkin-modal-content {
     background: #ffffff;
@@ -2549,3 +2552,5 @@
 
 
 
+
+.delivery-page-container .delivery-header > div > p { color: var(--ui-muted); }
