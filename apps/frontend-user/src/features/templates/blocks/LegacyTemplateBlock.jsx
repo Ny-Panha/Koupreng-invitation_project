@@ -1,4 +1,4 @@
-import { createElement } from "react";
+import { createElement, Suspense } from "react";
 import { getDedicatedTemplateComponent } from "../registry/templateRegistry";
 
 /**
@@ -41,7 +41,7 @@ export default function LegacyTemplateBlock({ templateId, content = {} }) {
   const isPreview = content.preview !== undefined ? Boolean(content.preview) : true;
 
   // Exact prop contract matching TemplateExperience
-  return createElement(DedicatedLayout, {
+  return createElement(Suspense, { fallback: <div role="status">Loading invitation…</div> }, createElement(DedicatedLayout, {
     tpl: effectiveContent,
     content: effectiveContent,
     liveData: null,
@@ -56,6 +56,5 @@ export default function LegacyTemplateBlock({ templateId, content = {} }) {
     showActions: true,
     showStickyCta: true,
     isHostedInvitation: false,
-  });
+  }));
 }
-

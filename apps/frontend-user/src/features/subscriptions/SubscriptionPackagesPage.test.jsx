@@ -152,8 +152,8 @@ describe("SubscriptionPackagesPage", () => {
     render(<SubscriptionPackagesPage />);
     expect((await screen.findAllByText(/Under review|កំពុងរង់ចាំការផ្ទៀងផ្ទាត់/)).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/Awaiting payment|រង់ចាំការទូទាត់/).length).toBeGreaterThan(0);
-    expect(screen.getByText("SUB-REVIEW")).toBeInTheDocument();
-    expect(screen.getByText("SUB-PENDING")).toBeInTheDocument();
+    expect(screen.getAllByText("SUB-REVIEW")[0]).toBeInTheDocument();
+    expect(screen.getAllByText("SUB-PENDING")[0]).toBeInTheDocument();
     expect(screen.queryByText("Subscription activated successfully.")).not.toBeInTheDocument();
   });
 
@@ -199,7 +199,7 @@ describe("SubscriptionPackagesPage", () => {
   it("rechecks history before purchase to catch an order created in another tab", async () => {
     subscriptionService.history.mockResolvedValueOnce([]).mockResolvedValue([{ packagePlan: basicPlan, orderCode: "SUB-OTHER-TAB", active: false, status: "PENDING_PAYMENT", paymentStatus: "PENDING" }]);
     render(<SubscriptionPackagesPage />);
-    fireEvent.click(await screen.findByRole("button", { name: /subscribe \/ upgrade/i }));
+    fireEvent.click(await screen.findByRole("button", { name: /Choose this plan/i }));
     fireEvent.change(screen.getByLabelText(/aba account holder name/i), { target: { value: "Dara" } });
     fireEvent.change(screen.getByLabelText(/last 3 digits/i), { target: { value: "247" } });
     fireEvent.click(screen.getByRole("button", { name: /continue to aba payway/i }));
@@ -210,7 +210,7 @@ describe("SubscriptionPackagesPage", () => {
   it("does not trust active=true without the backend paid and active states", async () => {
     subscriptionService.purchase.mockResolvedValue({ orderCode: "SUB-UNVERIFIED", active: true, status: "PENDING_PAYMENT", paymentStatus: "PENDING" });
     render(<SubscriptionPackagesPage />);
-    fireEvent.click(await screen.findByRole("button", { name: /subscribe \/ upgrade/i }));
+    fireEvent.click(await screen.findByRole("button", { name: /Choose this plan/i }));
     fireEvent.change(screen.getByLabelText(/aba account holder name/i), { target: { value: "Dara" } });
     fireEvent.change(screen.getByLabelText(/last 3 digits/i), { target: { value: "247" } });
     fireEvent.click(screen.getByRole("button", { name: /continue to aba payway/i }));
@@ -222,6 +222,6 @@ describe("SubscriptionPackagesPage", () => {
     subscriptionService.history.mockRejectedValue(new Error("Offline"));
     render(<SubscriptionPackagesPage />);
     expect(await screen.findByRole("alert")).toHaveTextContent("Could not verify your plan or payment history");
-    expect(screen.getByRole("button", { name: /subscribe \/ upgrade/i })).toBeDisabled();
+    expect(screen.getByRole("button", { name: /Choose this plan/i })).toBeDisabled();
   });
 });

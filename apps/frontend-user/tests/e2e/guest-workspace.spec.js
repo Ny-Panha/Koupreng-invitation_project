@@ -26,6 +26,7 @@ async function setup(page, { lang = "en", empty = false, rejectFirstSave = false
     if (path.endsWith("/auth/csrf")) return json({ token: "test-csrf-token" });
     if (path.endsWith("/i18n/messages")) return json({ messages: {} });
     if (path.endsWith("/invitations/my")) return json([{ ...invitation, eventType }]);
+    if (path.endsWith("/invitations/42")) return json({ ...invitation, eventType });
     if (path.endsWith("/42/rsvps")) return json(empty ? [] : [
       { id: 901, guestId: 503, responseStatus: "ATTENDING", attendeeCount: 3 },
       { id: 902, guestId: 504, responseStatus: "NOT_ATTENDING", attendeeCount: 0 },
@@ -76,7 +77,7 @@ test("guest list filters intersect and reset; invitation and tools remain usable
   await page.getByRole("combobox", { name: "Group", exact: true }).selectOption("Bride Side");
   await expect(rows).toHaveCount(1);
   await expect(rows.first()).toContainText("សុខ សុភា");
-  await page.getByRole("textbox", { name: "Search name, group, phone..." }).fill("not-in-the-list");
+  await page.getByRole("searchbox", { name: "Search name, group, phone..." }).fill("not-in-the-list");
   await expect(page.getByRole("heading", { name: "No matching guests found" })).toBeVisible();
   await page.locator(".guest-empty-actions").getByRole("button", { name: "Clear filters" }).click();
   await expect(rows).toHaveCount(6);
@@ -119,7 +120,7 @@ test("editing a guest and marking an invitation sent update the list", async ({ 
   await page.keyboard.press("Escape");
   await expect(row.locator(".guest-row-menu")).not.toHaveAttribute("open");
   await row.locator(".guest-row-menu > summary").click();
-  await row.getByRole("button", { name: "Mark as sent" }).click();
+  await row.getByRole("button", { name: "Record manual sharing" }).click();
   await page.getByRole("button", { name: /^To invite/ }).click();
   await expect(page.locator(".guest-record-row")).toHaveCount(1);
   await expect(page.locator(".guest-record-row")).not.toContainText("Sok Dara Updated");

@@ -1,4 +1,3 @@
-import React from "react";
 import TemplateHero from "../experience/components/sections/TemplateHero";
 import TemplateMessage from "../experience/components/sections/TemplateMessage";
 import TemplateCouple from "../experience/components/sections/TemplateCouple";

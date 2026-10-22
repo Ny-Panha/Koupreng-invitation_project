@@ -304,7 +304,7 @@ function WeddingTemplateExperience({
             music: liveData.musicUrl || liveData.music || baseContent.music,
             backgroundImage: liveData.backgroundImage || liveData.bgImage || baseContent.backgroundImage,
         };
-    }, [baseContent, liveData]);
+    }, [baseContent, liveData, tpl.sections]);
     const DedicatedComponent = getDedicatedTemplateComponent(tpl, variant);
 
     const reducedMotion = usePrefersReducedMotion();
@@ -489,7 +489,7 @@ function WeddingTemplateExperience({
             }
         }
         return [];
-    }, [content?.sections, tpl?.sections, tpl?.description]);
+    }, [content?.sections, tpl]);
 
     const unifiedMode = useMemo(
         () => Array.isArray(customSections) && customSections.some((b) => b?.type === "LEGACY_SECTION"),
@@ -509,7 +509,7 @@ function WeddingTemplateExperience({
     }, [unifiedMode, customSections, content.enabledSections]);
 
     if (DedicatedComponent) {
-        return <Suspense fallback={<div className="public-state" role="status">កំពុងផ្ទុកសន្លឹកការ… / Loading invitation…</div>><>{createElement(DedicatedTemplateRenderer, {
+        return <Suspense fallback={<div className="public-state" role="status">កំពុងផ្ទុកសន្លឹកការ… / Loading invitation…</div>}><>{createElement(DedicatedTemplateRenderer, {
             component: DedicatedComponent,
             tpl: content,
             content,

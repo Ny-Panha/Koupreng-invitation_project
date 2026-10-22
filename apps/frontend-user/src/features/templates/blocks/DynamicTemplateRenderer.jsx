@@ -1,4 +1,3 @@
-import React from "react";
 import { BLOCK_COMPONENTS } from "./blockRegistry";
 import BlockErrorBoundary from "./BlockErrorBoundary";
 

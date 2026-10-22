@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
 
-export function useMediaQuery(query) {
+function useMediaQuery(query) {
   const [matches, setMatches] = useState(() => {
     if (typeof window === "undefined" || !window.matchMedia) return false;
     return window.matchMedia(query).matches;

@@ -13,13 +13,13 @@ test('new guest exposes personal actions and enters authoritative delivery witho
   return route.fulfill({contentType:'application/json',body:JSON.stringify({data:{}})});
  });
  await page.goto('/app/events/101/guests');await page.getByRole('button',{name:/Add Guest/i}).click();
- await page.locator('#guestFormName').fill('Phase 2 sample guest');
+ await page.getByRole('dialog').getByRole('textbox',{name:'Guest Name',exact:true}).fill('Phase 2 sample guest');
  await page.getByRole('dialog').locator('button[type="submit"]').click();
  const context=page.getByRole('region',{name:'Saved guest actions'});await expect(context).toBeVisible();
  await expect(context).toContainText('Phase 2 sample guest');await expect(context.getByRole('button',{name:'View personal ticket'})).toBeVisible();
  await expect(context.getByRole('button',{name:'Copy personal invitation link'})).toBeVisible();
  await expect(context.getByRole('link',{name:'Review RSVP'})).toHaveAttribute('href','/app/events/101/rsvp');
- await page.getByText('More actions',{exact:true}).click();
+ await page.getByLabel('More actions: Phase 2 sample guest',{exact:true}).click();
  const share=page.getByRole('link',{name:'Share invitation for Phase 2 sample guest via Telegram'});await expect(share).toHaveAttribute('target','_blank');
  // Opening an external provider is deliberately not part of this fixture journey.
  expect(writes).toEqual(['create']);

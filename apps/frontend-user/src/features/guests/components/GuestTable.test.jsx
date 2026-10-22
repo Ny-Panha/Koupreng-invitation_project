@@ -19,7 +19,7 @@ describe("GuestTable", () => {
     useLanguageStore.setState({ lang: 'en' });
     const onMarkAsSent = vi.fn();
     render(<GuestTable guests={[{id:501,name:'Sample guest',source:'backend',inviteToken:'fixture-link-only',sendStatus:'PENDING'}]} currentDraft={{slug:'sample-event'}} onMarkAsSent={onMarkAsSent} />);
-    fireEvent.click(screen.getByText('More actions'));
+    fireEvent.click(screen.getByLabelText('More actions: Sample guest'));
     const share=screen.getByRole('link',{name:'Share invitation for Sample guest via Telegram'});
     expect(share).toHaveAttribute('target','_blank');
     fireEvent.click(share);
@@ -34,6 +34,7 @@ describe("GuestTable", () => {
     const onShowTicket = vi.fn();
     render(<GuestTable guests={[guest]} onShowTicket={onShowTicket} />);
     expect(screen.getByText("RSVP: ចូលរួម")).toBeInTheDocument();
+    fireEvent.click(screen.getByLabelText("សកម្មភាពផ្សេងទៀត: Sokha"));
     fireEvent.click(screen.getByRole("button", { name: "កាតអញ្ជើញ" }));
     expect(onShowTicket).toHaveBeenCalledWith(guest);
   });
@@ -50,7 +51,7 @@ describe("GuestTable", () => {
     );
 
     expect(screen.getByText("មិនទាន់មានឈ្មោះភ្ញៀវទេ។")).toBeInTheDocument();
-    const addBtn = screen.getByRole("button", { name: "បន្ថែមភ្ញៀវដំបូង" });
+    const addBtn = screen.getByRole("button", { name: "បន្ថែមភ្ញៀវ" });
     expect(addBtn).toBeInTheDocument();
     fireEvent.click(addBtn);
     expect(onOpenAddGuest).toHaveBeenCalledTimes(1);
@@ -75,7 +76,6 @@ describe("GuestTable", () => {
       />
     );
 
-    fireEvent.click(screen.getByText('ជម្រើសបន្ថែម'));
     fireEvent.click(screen.getByRole("button", { name: "កែប្រែ" }));
     fireEvent.change(screen.getByRole("textbox", { name: "ឈ្មោះ 14" }), { target: { value: "New Name" } });
     fireEvent.click(screen.getByRole("button", { name: "រក្សាទុក" }));

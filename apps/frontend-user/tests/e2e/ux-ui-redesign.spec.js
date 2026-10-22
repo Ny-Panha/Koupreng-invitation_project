@@ -63,7 +63,7 @@ test("pending payments resume; validated checkout remains pending and traps keyb
   await expect(dialog).toContainText("SUB-AUDIT-041");
   expect(calls.filter(call => call.path.endsWith("/purchase"))).toHaveLength(0);
   await page.keyboard.press("Escape"); await expect(dialog).toHaveCount(0);
-  await page.getByRole("button", { name: /Subscribe \/ Upgrade/ }).first().click();
+  await page.getByRole("button", { name: /Choose this plan/ }).first().click();
   await page.getByRole("button", { name: "Continue to ABA PayWay" }).click();
   await expect(dialog.getByRole("alert")).toBeVisible();
   await page.getByLabel("ABA Account Holder Name").fill("Audit Host");
@@ -118,7 +118,7 @@ test("200% desktop zoom equivalent keeps form and checkout actions reachable", a
   await page.getByRole("button", { name: "Save draft" }).scrollIntoViewIfNeeded();
   await expect(page.getByRole("button", { name: "Save draft" })).toBeInViewport();
   await page.goto("/app/packages");
-  await page.getByRole("button", { name: /Subscribe \/ Upgrade/ }).first().click();
+  await page.getByRole("button", { name: /Choose this plan/ }).first().click();
   await expect(page.getByRole("dialog")).toBeVisible();
   await page.getByRole("button", { name: "Continue to ABA PayWay" }).scrollIntoViewIfNeeded();
   await expect(page.getByRole("button", { name: "Continue to ABA PayWay" })).toBeInViewport();
@@ -160,7 +160,7 @@ test("Khmer checkout keeps payer labels, validation and pending status readable"
   const { calls } = await installUxFixtures(page, "km");
   page.on("popup", popup => popup.close());
   await page.goto("/app/packages");
-  await page.getByRole("button", { name: /Subscribe \/ Upgrade/ }).first().click();
+  await page.getByRole("button", { name: /ជ្រើសកញ្ចប់នេះ/ }).first().click();
   const dialog = page.getByRole("dialog");
   await page.getByRole("button", { name: /Continue to ABA PayWay/ }).click();
   await expect(dialog.getByRole("alert")).toBeVisible();

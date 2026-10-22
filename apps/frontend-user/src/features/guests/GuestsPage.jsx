@@ -249,13 +249,13 @@ export default function GuestsPage() {
           <button type="button" className="guest-button guest-button-secondary" onClick={() => setImportModalOpen(true)}>
             <Upload size={17} aria-hidden="true" /><span>{t("importBtn")}</span>
           </button>
-          <button
+          {(loading || guests.length > 0) && <button
             type="button"
             onClick={handleOpenAddGuest}
             className="guest-button guest-button-primary"
           >
             <Plus size={18} aria-hidden="true" /><span>{t("addGuestAction")}</span>
-          </button>
+          </button>}
         </div>
       </header>
 

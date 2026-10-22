@@ -1,4 +1,3 @@
-import React from "react";
 
 /**
  * CustomTextBlock — Renders a styled text section with heading and body.

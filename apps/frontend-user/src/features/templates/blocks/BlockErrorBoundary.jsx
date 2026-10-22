@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 
 /**
  * BlockErrorBoundary — Catches errors within an individual block and prevents page crashes.

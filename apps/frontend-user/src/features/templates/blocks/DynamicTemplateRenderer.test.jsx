@@ -1,4 +1,3 @@
-import React from "react";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, cleanup } from "@testing-library/react";
 import DynamicTemplateRenderer from "./DynamicTemplateRenderer";
@@ -119,7 +118,7 @@ describe("DynamicTemplateRenderer", () => {
     expect(screen.queryByTestId("custom-image")).not.toBeInTheDocument();
   });
 
-  it("renders composite JSON with CUSTOM_TEXT, HORIZONTAL_SCROLL_SHOWCASE, and LEGACY_TEMPLATE in order", () => {
+  it("renders composite JSON with CUSTOM_TEXT, HORIZONTAL_SCROLL_SHOWCASE, and LEGACY_TEMPLATE in order", async () => {
     const sections = [
       {
         id: "section-1",
@@ -166,7 +165,6 @@ describe("DynamicTemplateRenderer", () => {
     expect(screen.getByText("Day 3")).toBeInTheDocument();
 
     // 3. LEGACY_TEMPLATE rendered in the same document
-    expect(screen.getByText("សុខ វិបុល")).toBeInTheDocument();
+    expect(await screen.findByText("សុខ វិបុល")).toBeInTheDocument();
   });
 });
-

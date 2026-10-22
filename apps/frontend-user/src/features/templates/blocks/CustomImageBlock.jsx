@@ -1,4 +1,3 @@
-import React from "react";
 
 /**
  * CustomImageBlock — Renders a full-width responsive image with an optional caption overlay.

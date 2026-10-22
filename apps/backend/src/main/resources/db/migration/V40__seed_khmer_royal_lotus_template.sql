@@ -26,3 +26,12 @@ SELECT 'Khmer Royal Lotus',
 WHERE NOT EXISTS (
     SELECT 1 FROM templates WHERE code = 'khmer-royal-lotus'
 );
+
+-- Compatibility metadata introduced by V37 is required by event creation.
+INSERT IGNORE INTO template_event_types (template_id, event_type)
+SELECT template_id, 'WEDDING' FROM templates WHERE code = 'khmer-royal-lotus';
+
+INSERT IGNORE INTO template_languages (template_id, language_mode)
+SELECT t.template_id, l.language_mode FROM templates t
+CROSS JOIN (SELECT 'KH' AS language_mode UNION ALL SELECT 'EN' UNION ALL SELECT 'BOTH') l
+WHERE t.code = 'khmer-royal-lotus';
