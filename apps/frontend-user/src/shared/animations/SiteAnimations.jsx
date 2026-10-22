@@ -161,7 +161,7 @@ function useSiteReveal() {
       const targets = Array.from(document.querySelectorAll(selector)).filter(
         (target) => {
           return !target.closest(
-            ".dashboard-page, .tpl-royal-invitation, .tpl-silk-heritage, .kp-product-page, .kp-site-preloader, .kp-kinetic-grid",
+            ".dashboard-page, .dash-wrapper, .auth-card, .checkout-theme-wrapper, .tpl-royal-invitation, .tpl-silk-heritage, .kp-product-page, .kp-site-preloader, .kp-kinetic-grid",
           );
         },
       );
