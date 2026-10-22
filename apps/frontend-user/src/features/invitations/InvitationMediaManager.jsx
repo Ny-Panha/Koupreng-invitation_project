@@ -1,313 +1,75 @@
-import { useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { mediaService } from "@/features/invitations/api/mediaApi";
-import { toast } from "../../shared/ui/toast";
-import "./InvitationPages.css";
+import { useEffect, useRef, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { Eye, Images, Music, Palette, Upload, Video } from 'lucide-react';
+import { mediaService } from '@/features/invitations/api/mediaApi';
+import { invitationService } from '@/features/invitations/api/invitationApi';
+import { useBackendMessages } from '@/shared/i18n/useBackendMessages';
+import { toast } from '@/shared/ui';
+import { invitationMediaReferences, MEDIA_CATEGORIES, validateLibraryFile } from './mediaLibraryModel';
+import './MediaLibrary.css';
 
-const ACCEPT = {
-    image: "image/jpeg,image/png,image/webp",
-    video: "video/mp4,video/webm",
-    audio: "audio/mpeg,audio/mp3,audio/wav,audio/ogg",
-};
-
-const MAX_FILE_SIZES = {
-    image: 5 * 1024 * 1024,
-    video: 50 * 1024 * 1024,
-    audio: 15 * 1024 * 1024,
-};
-
-function validateMediaFile(file, category = "image") {
-    if (!file) return false;
-    const max = MAX_FILE_SIZES[category] || MAX_FILE_SIZES.image;
-    if (file.size > max) {
-        const limitMb = Math.round(max / (1024 * 1024));
-        throw new Error(`File "${file.name}" លើសទំហំកំណត់ ${limitMb}MB (Exceeds ${limitMb}MB)`);
-    }
-    if (file.name.toLowerCase().endsWith(".svg") || (file.type && file.type.includes("svg"))) {
-        throw new Error("SVG uploads are not permitted for security reasons");
-    }
-    return true;
-}
-
-function MediaFileInput({ accept, multiple = false, disabled, onFiles, label, mediaCategory = "image" }) {
-    const inputRef = useRef(null);
-
-    const handleChange = (event) => {
-        const files = Array.from(event.target.files || []);
-        if (!files.length) return;
-        try {
-            for (const f of files) {
-                validateMediaFile(f, mediaCategory);
-            }
-            onFiles(multiple ? files : files[0]);
-        } catch (err) {
-            toast(err.message, "error");
-        } finally {
-            event.target.value = "";
-        }
-    };
-
-    return (
-        <>
-            <button type="button" className="inv-secondary-btn" disabled={disabled} onClick={() => inputRef.current?.click()}>
-                {label}
-            </button>
-            <input
-                ref={inputRef}
-                className="media-hidden-input"
-                type="file"
-                accept={accept}
-                multiple={multiple}
-                onChange={handleChange}
-            />
-        </>
-    );
-}
-
-function MediaPreview({ media, type, onReplace, onRemove, busy }) {
-    if (!media) {
-        return <div className="media-empty-slot">No file uploaded</div>;
-    }
-
-    return (
-        <div className="media-preview-card">
-            {type === "image" && <img src={media.fileUrl} alt={media.originalFilename || "Invitation media"} />}
-            {type === "video" && <video src={media.fileUrl} controls />}
-            {type === "audio" && <audio src={media.fileUrl} controls />}
-            <div className="media-preview-meta">
-                <strong>{media.originalFilename || "Uploaded media"}</strong>
-                {media.mimeType && <span>{media.mimeType}</span>}
-            </div>
-            <div className="inv-card-actions">
-                <MediaFileInput
-                    accept={type === "video" ? ACCEPT.video : type === "audio" ? ACCEPT.audio : ACCEPT.image}
-                    disabled={busy}
-                    label="Replace"
-                    mediaCategory={type === "video" ? "video" : type === "audio" ? "audio" : "image"}
-                    onFiles={(file) => onReplace(media, file)}
-                />
-                <button type="button" className="danger" disabled={busy} onClick={() => onRemove(media)}>
-                    Remove
-                </button>
-            </div>
-        </div>
-    );
+function Preview({ file, type, title }) {
+  if (type === 'audio') return <audio controls preload="none" src={file.fileUrl} aria-label={title} />;
+  if (type === 'video') return <video controls preload="metadata" src={file.fileUrl} aria-label={title} />;
+  return <img src={file.fileUrl} alt={title} loading="lazy" />;
 }
 
 export default function InvitationMediaManager() {
-    const { eventId, id = eventId } = useParams();
-    const navigate = useNavigate();
-    const [media, setMedia] = useState(null);
-    const [loadedId, setLoadedId] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [busy, setBusy] = useState(false);
-    const [error, setError] = useState("");
-
-    useEffect(() => {
-        let active = true;
-        mediaService.list(id)
-            .then((data) => {
-                if (active) {
-                    setMedia(data);
-                    setError("");
-                }
-            })
-            .catch((err) => {
-                if (active) {
-                    setError(err.message || "Could not load media");
-                }
-            })
-            .finally(() => {
-                if (active) {
-                    setLoadedId(id);
-                    setLoading(false);
-                }
-            });
-        return () => {
-            active = false;
-        };
-    }, [id]);
-
-    const refreshWith = (updater) => {
-        setMedia((current) => updater(current || { galleryImages: [], all: [] }));
-    };
-
-    const upload = async (action, successMessage) => {
-        setBusy(true);
-        try {
-            const response = await action();
-            toast(successMessage);
-            return response;
-        } catch (err) {
-            setError(err.message || "Media action failed");
-            return null;
-        } finally {
-            setBusy(false);
-        }
-    };
-
-    const uploadCover = async (file) => {
-        const response = await upload(() => mediaService.uploadCover(id, file), "Cover image uploaded");
-        if (response) {
-            refreshWith((current) => ({ ...current, coverImage: response }));
-        }
-    };
-
-    const uploadGallery = async (files) => {
-        const response = await upload(() => mediaService.uploadGallery(id, files), "Gallery images uploaded");
-        if (response) {
-            refreshWith((current) => ({
-                ...current,
-                galleryImages: [...(current.galleryImages || []), ...response],
-            }));
-        }
-    };
-
-    const uploadVideo = async (file) => {
-        const response = await upload(() => mediaService.uploadVideo(id, file), "Video uploaded");
-        if (response) {
-            refreshWith((current) => ({ ...current, video: response }));
-        }
-    };
-
-    const uploadMusic = async (file) => {
-        const response = await upload(() => mediaService.uploadMusic(id, file), "Background music uploaded");
-        if (response) {
-            refreshWith((current) => ({ ...current, backgroundMusic: response }));
-        }
-    };
-
-    const replaceMedia = async (item, file) => {
-        const response = await upload(() => mediaService.replace(id, item.id, file), "Media replaced");
-        if (!response) return;
-        refreshWith((current) => ({
-            ...current,
-            coverImage: current.coverImage?.id === response.id ? response : current.coverImage,
-            video: current.video?.id === response.id ? response : current.video,
-            backgroundMusic: current.backgroundMusic?.id === response.id ? response : current.backgroundMusic,
-            galleryImages: (current.galleryImages || []).map((galleryItem) => (
-                galleryItem.id === response.id ? response : galleryItem
-            )),
-        }));
-    };
-
-    const removeMedia = async (item) => {
-        if (!window.confirm("Remove this media file?")) return;
-        const response = await upload(() => mediaService.remove(id, item.id), "Media removed");
-        if (response === null) return;
-        refreshWith((current) => ({
-            ...current,
-            coverImage: current.coverImage?.id === item.id ? null : current.coverImage,
-            video: current.video?.id === item.id ? null : current.video,
-            backgroundMusic: current.backgroundMusic?.id === item.id ? null : current.backgroundMusic,
-            galleryImages: (current.galleryImages || []).filter((galleryItem) => galleryItem.id !== item.id),
-        }));
-    };
-
-    return (
-        <div role="main" className="inv-page">
-            <header className="inv-page-header">
-                <div>
-                    <span className="inv-eyebrow">Media management</span>
-                    <h1>Invitation Media</h1>
-                    <p>Manage the images, video, and music that appear on this invitation.</p>
-                </div>
-                <div className="inv-form-actions">
-                    <button type="button" className="inv-secondary-btn" onClick={() => navigate(`/dashboard/invitations/${id}/preview`)}>
-                        Preview
-                    </button>
-                    <button type="button" className="inv-secondary-btn" onClick={() => navigate("/dashboard")}>
-                        Dashboard
-                    </button>
-                </div>
-            </header>
-
-            {error && <div className="inv-error">{error}</div>}
-            {(loading || loadedId !== id) && <div className="inv-loading">Loading media...</div>}
-
-            {!loading && loadedId === id && (
-                <div className="media-manager">
-                    <section className="inv-form-section">
-                        <div className="media-section-header">
-                            <div>
-                                <h2>Cover image</h2>
-                                <p className="media-size-guide-hint">
-                                    ទំហំដែលណែនាំ: 1920x1080px (16:9) ឬ 900x1200px (3:4) | អតិបរមា 5MB (JPG, PNG, WEBP)
-                                </p>
-                            </div>
-                            <MediaFileInput accept={ACCEPT.image} disabled={busy} label="Upload cover" onFiles={uploadCover} mediaCategory="image" />
-                        </div>
-                        <MediaPreview media={media?.coverImage} type="image" busy={busy} onReplace={replaceMedia} onRemove={removeMedia} />
-                    </section>
-
-                    <section className="inv-form-section">
-                        <div className="media-section-header">
-                            <div>
-                                <h2>Gallery images</h2>
-                                <p className="media-size-guide-hint">
-                                    ទំហំដែលណែនាំ: 1200x900px (4:3) | អតិបរមា 5MB ក្នុងមួយសន្លឹក (JPG, PNG, WEBP)
-                                </p>
-                            </div>
-                            <MediaFileInput
-                                accept={ACCEPT.image}
-                                multiple
-                                disabled={busy}
-                                label="Upload images"
-                                onFiles={uploadGallery}
-                                mediaCategory="image"
-                            />
-                        </div>
-                        {media?.galleryImages?.length ? (
-                            <div className="media-gallery-grid">
-                                {media.galleryImages.map((item) => (
-                                    <MediaPreview
-                                        key={item.id}
-                                        media={item}
-                                        type="image"
-                                        busy={busy}
-                                        onReplace={replaceMedia}
-                                        onRemove={removeMedia}
-                                    />
-                                ))}
-                            </div>
-                        ) : (
-                            <div className="media-empty-slot">No gallery images uploaded</div>
-                        )}
-                    </section>
-
-                    <section className="inv-form-section">
-                        <div className="media-section-header">
-                            <div>
-                                <h2>Video</h2>
-                                <p className="media-size-guide-hint">
-                                    ទម្រង់ដែលគាំទ្រ: MP4, WebM | អតិបរមា 50MB
-                                </p>
-                            </div>
-                            <MediaFileInput accept={ACCEPT.video} disabled={busy} label="Upload video" onFiles={uploadVideo} mediaCategory="video" />
-                        </div>
-                        <MediaPreview media={media?.video} type="video" busy={busy} onReplace={replaceMedia} onRemove={removeMedia} />
-                    </section>
-
-                    <section className="inv-form-section">
-                        <div className="media-section-header">
-                            <div>
-                                <h2>Background music</h2>
-                                <p className="media-size-guide-hint">
-                                    ទម្រង់ដែលគាំទ្រ: MP3, WAV, OGG | អតិបរមា 15MB
-                                </p>
-                            </div>
-                            <MediaFileInput accept={ACCEPT.audio} disabled={busy} label="Upload music" onFiles={uploadMusic} mediaCategory="audio" />
-                        </div>
-                        <MediaPreview
-                            media={media?.backgroundMusic}
-                            type="audio"
-                            busy={busy}
-                            onReplace={replaceMedia}
-                            onRemove={removeMedia}
-                        />
-                    </section>
-                </div>
-            )}
+  const { eventId, id = eventId } = useParams();
+  const { text: t } = useBackendMessages('mediaWorkspace');
+  const [library, setLibrary] = useState(null);
+  const [invitation, setInvitation] = useState(null);
+  const [category, setCategory] = useState('cover');
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
+  const [progress, setProgress] = useState(0);
+  const [retry, setRetry] = useState(null);
+  const picker = useRef(null);
+  const replaceTarget = useRef(null);
+  useEffect(() => {
+    let active = true;
+    Promise.all([mediaService.list(id), invitationService.get(id)]).then(([media, event]) => { if (active) { setLibrary(media); setInvitation(event); } }).catch(e => { if (active) setError(e.message); });
+    return () => { active = false; };
+  }, [id]);
+  const refresh = async () => { const [media, event] = await Promise.all([mediaService.list(id), invitationService.get(id)]); setLibrary(media); setInvitation(event); };
+  const run = async action => {
+    setBusy(true); setError(''); setProgress(0); setRetry(null);
+    try { await action(); await refresh(); toast(t('saved')); }
+    catch (e) { setError(e.message || t('failed')); setRetry(() => action); }
+    finally { setBusy(false); }
+  };
+  const config = MEDIA_CATEGORIES[category];
+  const records = (Array.isArray(library?.[config.field]) ? library[config.field] : [library?.[config.field]]).filter(Boolean);
+  const references = invitationMediaReferences(invitation);
+  const choose = target => { replaceTarget.current = target || null; if (picker.current) picker.current.multiple = category === 'gallery' && !target; picker.current?.click(); };
+  const selectedFiles = event => {
+    const files = Array.from(event.target.files || []);
+    event.target.value = '';
+    if (!files.length) return;
+    for (const file of files) { const failure = validateLibraryFile(file, category); if (failure) { setRetry(null); setError(t(failure, { limit: config.limit })); return; } }
+    const target = replaceTarget.current;
+    const onProgress = e => { if (e.total) setProgress(Math.round(e.loaded / e.total * 100)); };
+    run(() => target ? mediaService.replace(id, target.id, files[0], onProgress) : ({ cover: () => mediaService.uploadCover(id, files[0], onProgress), gallery: () => mediaService.uploadGallery(id, files, undefined, onProgress), video: () => mediaService.uploadVideo(id, files[0], onProgress), music: () => mediaService.uploadMusic(id, files[0], onProgress) })[category]());
+  };
+  const coverReference = (() => { try { const content = typeof invitation?.designJson === 'string' ? JSON.parse(invitation.designJson) : invitation?.designJson; return invitation?.coverUrl || content?.coverImage; } catch { return null; } })();
+  const coverArtwork = coverReference || invitation?.templateThumbnailUrl || (invitation?.templateCode === 'event-essential' ? '/templates/event-essential.svg' : null);
+  const isCoverInUse = category === 'cover' && records.some(file => references.has(file.fileUrl));
+  return <main className="media-library workspace-page" aria-busy={busy}>
+    <header className="workspace-page-heading"><div><h1>{t('title')}</h1><p>{t('subtitle')}</p></div><div className="workspace-actions"><Link className="workspace-button" to={`/app/events/${id}/preview`}><Eye size={18} />{t('preview')}</Link><Link className="workspace-button" to={`/app/events/${id}/invitation`}><Palette size={18} />{t('studio')}</Link></div></header>
+    {error && <div className="workspace-notice" role="alert">{error}<button className="workspace-button" disabled={busy} onClick={() => run(retry || refresh)}>{t('retry')}</button></div>}
+    {!library && !error && <p role="status">{t('loading')}</p>}
+    <div className="workspace-tabs" role="group" aria-label={t('categories')}>{[['cover', Images], ['gallery', Images], ['video', Video], ['music', Music]].map(([key, Icon]) => <button type="button" key={key} aria-pressed={key === category} disabled={busy} onClick={() => { setCategory(key); setError(''); }}><Icon size={18} />{t(key)}</button>)}</div>
+    <section className="workspace-section">
+      <div className="workspace-section-heading"><div><h2>{t(category)}</h2><p className="workspace-muted">{t('formats', { formats: config.extensions.join(', ').toUpperCase(), limit: config.limit })}</p></div>{isCoverInUse ? <Link className="workspace-button" to={`/app/events/${id}/invitation`}>{t('editInStudio')}</Link> : <button className="workspace-button primary" disabled={busy || !library} onClick={() => choose(null)}><Upload size={18} />{t(category === 'gallery' ? 'uploadImages' : 'upload')}</button>}</div>
+      <input ref={picker} hidden type="file" accept={config.accept} multiple={category === 'gallery'} aria-label={t('upload')} onChange={selectedFiles} />
+      {busy && <div className="media-upload-progress" role="status"><span>{t('uploading', { progress })}</span><progress max="100" value={progress} aria-label={t('uploadProgress')} /></div>}
+      {library && records.length > 0 ? <div className="media-library-grid">{records.map(file => <article className="media-asset" key={file.id}>
+        <div className="media-asset-preview"><Preview file={file} type={config.type} title={file.originalFilename || t(category)} /></div>
+        <div className="media-asset-body"><h3>{file.originalFilename || t(category)}</h3><p>{file.mimeType || config.type}{file.fileSize != null ? ` · ${(file.fileSize / 1024 / 1024).toFixed(2)} MB` : ''}</p>
+          {references.has(file.fileUrl) ? <><p>{t('inUse')}</p><Link className="workspace-button" to={`/app/events/${id}/invitation`}>{t('editInStudio')}</Link></> : <div className="workspace-actions"><button className="workspace-button" disabled={busy} onClick={() => choose(file)}>{t('replace')}</button><button className="workspace-button" disabled={busy} onClick={() => { if (window.confirm(t('confirmRemove'))) run(() => mediaService.remove(id, file.id)); }}>{t('remove')}</button></div>}
         </div>
-    );
+      </article>)}</div> : library && category === 'cover' && coverArtwork ? <div className="media-reference-card"><img src={coverArtwork} alt={t('reference')} /><div><h3>{t(coverReference ? 'savedDesign' : 'templateArtwork')}</h3><p>{t(coverReference ? 'savedDesignHint' : 'templateHint')}</p><Link className="workspace-button" to={`/app/events/${id}/invitation`}>{t('editInStudio')}</Link></div></div> : library && <div className="workspace-empty"><Images size={32} /><h2>{t('empty')}</h2><p>{t('emptyHint')}</p></div>}
+    </section>
+    <p className="media-source-note">{t('sourceHint')}</p>
+  </main>;
 }

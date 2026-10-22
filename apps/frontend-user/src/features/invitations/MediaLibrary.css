@@ -1,0 +1,23 @@
+.media-library { display: flex; flex-direction: column; align-items: stretch; gap: 24px; }
+.media-library > .workspace-tabs { align-self: flex-start; }
+.media-library h2 { font-size: 21px; }
+.media-library .workspace-section-heading p { margin: 4px 0 0; font-size: 14px; }
+.media-library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 20px; }
+.media-asset { min-width: 0; border: 1px solid var(--ws-border); border-radius: 14px; overflow: hidden; background: var(--ws-surface); }
+.media-asset-preview { background: var(--ws-surface-subtle); display: grid; place-items: center; min-height: 100px; }
+.media-asset-preview img { width: 100%; height: 220px; object-fit: contain; }
+.media-asset-preview video { width: 100%; max-height: 260px; }
+.media-asset-preview audio { width: 100%; }
+.media-asset-body { padding: 16px; }
+.media-asset-body h3 { font-size: 16px; margin: 0; overflow-wrap: anywhere; }
+.media-asset-body p { font-size: 14px; color: var(--ws-muted); margin: 6px 0 14px; }
+.media-asset-body .workspace-button { min-height: 44px; font-size: 14px; padding: 8px 12px; }
+.media-reference-card { display: flex; align-items: center; flex-wrap: wrap; gap: 24px; padding: 20px; border-radius: 12px; background: var(--ws-surface-subtle); }
+.media-reference-card img { width: 180px; height: 160px; object-fit: contain; }
+.media-reference-card > div { flex: 1 1 200px; }
+.media-reference-card h3 { font-size: 18px; margin: 0; }
+.media-reference-card p { color: var(--ws-muted); font-size: 14px; margin: 8px 0 16px; }
+.media-source-note { color: var(--ws-muted); font-size: 14px; margin: 0; }
+.media-upload-progress { display: grid; gap: 8px; margin-bottom: 16px; }
+.media-upload-progress progress { width: 100%; accent-color: var(--ui-focus); }
+@media(max-width: 600px) { .media-library .workspace-section { padding: 16px; } .media-reference-card { padding: 12px; gap: 12px; } .media-reference-card img { width: 100%; height: 140px; } .media-library > .workspace-tabs { align-self: stretch; } .media-library > .workspace-tabs button { flex: 1 0 40%; } }

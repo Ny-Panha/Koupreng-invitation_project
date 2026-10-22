@@ -80,14 +80,14 @@ export const mediaService = {
     api
       .get(`/v1/public/invitations/${encodeURIComponent(slug)}/media${toQuery(publicParams(params))}`, { skipAuth: true })
       .then(unwrap),
-  uploadCover: (invitationId, file) => {
+  uploadCover: (invitationId, file, onUploadProgress) => {
     if (isLocalDraftId(invitationId)) {
       const fileUrl = typeof file === "string" ? file : URL.createObjectURL(file);
       return Promise.resolve({ id: "local-cover", fileUrl, mediaType: "COVER_IMAGE" });
     }
-    return api.post(`/v1/invitations/${invitationId}/media/cover`, fileForm(file)).then(unwrap);
+    return api.post(`/v1/invitations/${invitationId}/media/cover`, fileForm(file), { onUploadProgress }).then(unwrap);
   },
-  uploadGallery: (invitationId, files, sortOrder) => {
+  uploadGallery: (invitationId, files, sortOrder, onUploadProgress) => {
     if (isLocalDraftId(invitationId)) {
       const list = Array.from(files || []).map((f, idx) => ({
         id: `local-gallery-${Date.now()}-${idx}`,
@@ -96,28 +96,28 @@ export const mediaService = {
       }));
       return Promise.resolve(list);
     }
-    return api.post(`/v1/invitations/${invitationId}/media/gallery`, galleryForm(files, sortOrder)).then(unwrap);
+    return api.post(`/v1/invitations/${invitationId}/media/gallery`, galleryForm(files, sortOrder), { onUploadProgress }).then(unwrap);
   },
-  uploadVideo: (invitationId, file) => {
+  uploadVideo: (invitationId, file, onUploadProgress) => {
     if (isLocalDraftId(invitationId)) {
       const fileUrl = typeof file === "string" ? file : URL.createObjectURL(file);
       return Promise.resolve({ id: "local-video", fileUrl, mediaType: "VIDEO" });
     }
-    return api.post(`/v1/invitations/${invitationId}/media/video`, fileForm(file)).then(unwrap);
+    return api.post(`/v1/invitations/${invitationId}/media/video`, fileForm(file), { onUploadProgress }).then(unwrap);
   },
-  uploadMusic: (invitationId, file) => {
+  uploadMusic: (invitationId, file, onUploadProgress) => {
     if (isLocalDraftId(invitationId)) {
       const fileUrl = typeof file === "string" ? file : URL.createObjectURL(file);
       return Promise.resolve({ id: "local-music", fileUrl, mediaType: "BACKGROUND_MUSIC" });
     }
-    return api.post(`/v1/invitations/${invitationId}/media/music`, fileForm(file)).then(unwrap);
+    return api.post(`/v1/invitations/${invitationId}/media/music`, fileForm(file), { onUploadProgress }).then(unwrap);
   },
-  replace: (invitationId, mediaId, file) => {
+  replace: (invitationId, mediaId, file, onUploadProgress) => {
     if (isLocalDraftId(invitationId)) {
       const fileUrl = typeof file === "string" ? file : URL.createObjectURL(file);
       return Promise.resolve({ id: mediaId, fileUrl });
     }
-    return api.put(`/v1/invitations/${invitationId}/media/${mediaId}/replace`, fileForm(file)).then(unwrap);
+    return api.put(`/v1/invitations/${invitationId}/media/${mediaId}/replace`, fileForm(file), { onUploadProgress }).then(unwrap);
   },
   remove: (invitationId, mediaId) => {
     if (isLocalDraftId(invitationId)) {
