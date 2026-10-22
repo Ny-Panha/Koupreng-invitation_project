@@ -21,9 +21,14 @@ test("studio allocates useful controls and preview space at nine viewport widths
       expect(preview.width).toBeGreaterThan(width>=1366?440:280);
       expect(Math.abs(controls.y-preview.y)).toBeLessThan(2);
     } else {
-      await page.locator(".studio-mobile-tabs button").nth(1).click();
+      await expect(page.locator('iframe')).toHaveCount(0);
+      await page.getByRole('button', { name: 'Preview invitation', exact: true }).click();
       await expect(page.locator(".pe-preview-column")).toBeVisible();
-      await expect(page.locator(".pe-editor-column")).toBeHidden();
+      await expect(page.locator(".pe-editor-column")).toBeAttached();
+      expect(await page.locator('.pe-editor-column').evaluate(e => Boolean(e.closest('[inert]')))).toBe(true);
+      await expect(page.locator('iframe')).toHaveCount(1);
+      await page.getByRole('button', {name:'Return to editing', exact:true}).click();
+      await expect(page.locator('.pe-editor-column')).toBeVisible();
     }
   }
   expect(errors).toEqual([]);

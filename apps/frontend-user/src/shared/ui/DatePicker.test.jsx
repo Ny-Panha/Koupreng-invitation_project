@@ -1,8 +1,18 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { useLanguageStore } from '@/stores/useLanguageStore';
 import DatePicker from "./DatePicker";
 afterEach(cleanup);
+beforeEach(() => useLanguageStore.setState({lang:'en'}));
 describe("A11Y-003 date picker keyboard contract", () => {
+  it('localizes calendar controls without changing the emitted ISO date', () => {
+    useLanguageStore.setState({lang:'km'});
+    const change=vi.fn();const {container}=render(<DatePicker value='2026-10-31' onChange={change}/>);
+    fireEvent.click(container.querySelector('.dp-trigger'));
+    expect(screen.getByRole('button',{name:'ខែមុន'})).toBeInTheDocument();
+    fireEvent.keyDown(document.activeElement,{key:'Enter'});
+    expect(change).toHaveBeenCalledWith('2026-10-31');
+  });
   it("focuses the selected date, moves across month boundaries by keyboard and commits ISO date", () => {
     const change = vi.fn();
     const { container } = render(<DatePicker value="2026-10-31" onChange={change} />);

@@ -7,6 +7,7 @@ import { TemplateExperience } from "@/features/templates";
 import { draftToTemplate } from "../wedding-builder/utils/draftToTemplate";
 import { buildPreviewUrl, createPreviewSession, iframePreviewChannel, isTrustedPreviewMessage, postPreviewMessage } from "@/shared/preview/previewMessaging";
 import { usePreviewSyncRetries } from "@/shared/hooks/usePreviewSyncRetries";
+import { PHONE_PREVIEW } from "@/shared/preview/previewDevices";
 
 function displayKhmerDate(dateStr) {
     if (!dateStr) return "";
@@ -25,7 +26,7 @@ function displayKhmerDate(dateStr) {
     }
 }
 
-export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
+export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, deviceName, onRequestClose }) {
     const { text: t, lang } = useBackendMessages("invitations");
     const en = lang === "en";
     const iframeRef = useRef(null);
@@ -33,10 +34,11 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
     const viewportRef = useRef(null);
     const [device, setDevice] = useState("mobile");
     const [zoom, setZoom] = useState("fit");
+    const [showTools, setShowTools] = useState(() => window.matchMedia("(min-width: 1024px)").matches);
     const [availableSpace, setAvailableSpace] = useState({ width: 480, height: 720 });
     // Keep the 440 × 860 CSS content viewport stable, including during zoom.
     // The frame is a visual simulation; it does not emulate Safari/iOS hardware.
-    const deviceSize = device === "mobile" ? { width: 456, height: 972 } : { width: 1216, height: 816 };
+    const deviceSize = device === "mobile" ? PHONE_PREVIEW : { width: 1216, height: 816 };
     const fitScale = Math.max(.2, Math.min(1, (availableSpace.width - 24) / deviceSize.width, (availableSpace.height - 24) / deviceSize.height));
     const scale = zoom === "fit" ? fitScale : Number(zoom) / 100;
 
@@ -65,6 +67,18 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
 
     // Start closed on Cover if template supports gate opening, identical to Admin
     const [isGateOpen, setIsGateOpen] = useState(false);
+    useEffect(() => {
+        if (!onRequestClose) return;
+        const frame = iframeRef.current;
+        let doc;
+        const escape = event => { if (event.key === "Escape") { event.preventDefault(); onRequestClose(); } };
+        const attach = () => {
+            doc?.removeEventListener("keydown", escape);
+            try { doc = frame?.contentDocument; doc?.addEventListener("keydown", escape); } catch { /* Same-origin preview may be navigating. */ }
+        };
+        attach(); frame?.addEventListener("load", attach);
+        return () => { doc?.removeEventListener("keydown", escape); frame?.removeEventListener("load", attach); };
+    }, [onRequestClose, templateSlug]);
 
     const broadcastSync = useCallback(() => {
         if (!iframeRef.current?.contentWindow) return;
@@ -216,8 +230,9 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
                 </div>
             </div>
 
-            <div className="studio-preview-tools" aria-label="Preview controls">
-                <button type="button" aria-pressed={device === "mobile"} onClick={() => setDevice("mobile")}>iPhone 18 Pro Max</button>
+            <button type="button" className="studio-preview-toggle" aria-expanded={showTools} onClick={() => setShowTools(value => !value)}>{en ? "Device and zoom controls" : "ជម្រើសឧបករណ៍ និងទំហំ"}</button>
+            <div className="studio-preview-tools" hidden={!showTools} aria-label="Preview controls">
+                <button type="button" aria-pressed={device === "mobile"} onClick={() => setDevice("mobile")}>{deviceName || (en ? PHONE_PREVIEW.name : "មើលតាមទូរស័ព្ទ")}</button>
                 <button type="button" aria-pressed={device === "desktop"} onClick={() => setDevice("desktop")}>{en ? "Desktop" : "កុំព្យូទ័រ"}</button>
                 <label>{en ? "Zoom" : "ទំហំ"} <select aria-label="Preview zoom" value={zoom} onChange={event => setZoom(event.target.value)}>
                     <option value="fit">{en ? "Fit" : "សមនឹងផ្ទៃ"}</option>
@@ -231,7 +246,7 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0 }) {
                     else previewRef.current?.requestFullscreen();
                 }}>{en ? "Fullscreen" : "ពេញអេក្រង់"}</button>}
             </div>
-            <div className="studio-device-caption">{device === "mobile" ? "iPhone frame · 440 × 860" : "Desktop · 1200 × 800"} · {Math.round(scale * 100)}%</div>
+            <div className="studio-device-caption">{device === "mobile" ? `${en ? "Phone frame" : "ស៊ុមទូរស័ព្ទ"} · 440 × 860` : "Desktop · 1200 × 800"} · {Math.round(scale * 100)}%</div>
             <div ref={viewportRef} className="studio-preview-viewport">
             <div className="studio-device-stage" style={{ width: deviceSize.width * scale, height: deviceSize.height * scale }}>
             <div className="pe-phone-frame pe-device-frame" data-device={device}

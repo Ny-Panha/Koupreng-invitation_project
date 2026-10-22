@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useId } from "react";
 import { localDateString } from "@/shared/utils/localDate";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import "./DatePicker.css";
 
 const KHMER_MONTHS = [
@@ -21,7 +22,10 @@ function getFirstDayOfMonth(year, month) {
  * DatePicker — Khmer-language date picker that emits "YYYY-MM-DD" string.
  * Same UI style as TimePicker.
  */
-export function DatePicker({ value, onChange, placeholder = "ជ្រើសកាលបរិច្ឆេទ" }) {
+export function DatePicker({ value, onChange, id, placeholder }) {
+    const en = useLanguageStore(state => state.lang) === 'en';
+    const months = en ? Array.from({length:12}, (_, month) => new Intl.DateTimeFormat('en-US', {month:'long'}).format(new Date(2026, month, 1))) : KHMER_MONTHS;
+    const days = en ? ['Su','Mo','Tu','We','Th','Fr','Sa'] : KHMER_DAYS;
     const today = new Date();
     const [open, setOpen] = useState(false);
     const [viewYear, setViewYear] = useState(today.getFullYear());
@@ -66,7 +70,7 @@ export function DatePicker({ value, onChange, placeholder = "ជ្រើសក�
     }, [open]);
 
     const displayValue = value
-        ? `${parseInt(value.split("-")[2], 10)} ${KHMER_MONTHS[parseInt(value.split("-")[1], 10) - 1]} ${value.split("-")[0]}`
+        ? `${parseInt(value.split("-")[2], 10)} ${months[parseInt(value.split("-")[1], 10) - 1]} ${value.split("-")[0]}`
         : "";
 
     const moveFocus = (date) => {
@@ -123,6 +127,7 @@ export function DatePicker({ value, onChange, placeholder = "ជ្រើសក�
             if (event.relatedTarget && !event.currentTarget.contains(event.relatedTarget)) setOpen(false);
         }}>
             <button
+                id={id}
                 type="button"
                 ref={triggerRef}
                 className={`dp-trigger${open ? " open" : ""}`}
@@ -136,7 +141,7 @@ export function DatePicker({ value, onChange, placeholder = "ជ្រើសក�
                         d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
                 <span className={displayValue ? "dp-value" : "dp-placeholder"}>
-                    {displayValue || placeholder}
+                    {displayValue || placeholder || (en ? 'Choose date' : 'ជ្រើសកាលបរិច្ឆេទ')}
                 </span>
                 <svg className={`dp-caret ${open ? "open" : ""}`} width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -144,19 +149,19 @@ export function DatePicker({ value, onChange, placeholder = "ជ្រើសក�
             </button>
 
             {open && (
-                <div id={calendarId} role="dialog" aria-label="Choose date" aria-modal="false" className={`dp-dropdown${dropUp ? " drop-up" : ""}`} onKeyDown={(event) => {
+                <div id={calendarId} role="dialog" aria-label={en ? 'Choose date' : 'ជ្រើសកាលបរិច្ឆេទ'} aria-modal="false" className={`dp-dropdown${dropUp ? " drop-up" : ""}`} onKeyDown={(event) => {
                     if (event.key === "Escape") { event.preventDefault(); event.stopPropagation(); closeCalendar(); }
                 }}>
                     <div className="dp-header">
-                        <button type="button" aria-label="Previous month" className="dp-nav-btn" onClick={prevMonth}>
+                        <button type="button" aria-label={en ? 'Previous month' : 'ខែមុន'} className="dp-nav-btn" onClick={prevMonth}>
                             <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
                             </svg>
                         </button>
                         <span className="dp-month-year" aria-live="polite">
-                            {KHMER_MONTHS[viewMonth]} {viewYear}
+                            {months[viewMonth]} {viewYear}
                         </span>
-                        <button type="button" aria-label="Next month" className="dp-nav-btn" onClick={nextMonth}>
+                        <button type="button" aria-label={en ? 'Next month' : 'ខែបន្ទាប់'} className="dp-nav-btn" onClick={nextMonth}>
                             <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
                             </svg>
@@ -164,12 +169,12 @@ export function DatePicker({ value, onChange, placeholder = "ជ្រើសក�
                     </div>
 
                     <div className="dp-weekdays">
-                        {KHMER_DAYS.map((d) => (
+                        {days.map((d) => (
                             <span key={d} className="dp-weekday">{d}</span>
                         ))}
                     </div>
 
-                    <div className="dp-grid" role="grid" aria-label={`${KHMER_MONTHS[viewMonth]} ${viewYear}`}>
+                    <div className="dp-grid" role="grid" aria-label={`${months[viewMonth]} ${viewYear}`}>
                         {Array.from({ length: Math.ceil((firstDay + daysInMonth) / 7) }, (_, row) => (
                         <div key={row} role="row" style={{ display: "contents" }}>
                         {Array.from({ length: 7 }, (_, column) => row * 7 + column - firstDay + 1).map((day) => day < 1 || day > daysInMonth ? (
@@ -180,7 +185,7 @@ export function DatePicker({ value, onChange, placeholder = "ជ្រើសក�
                                 type="button"
                                 role="gridcell"
                                 data-date={localDateString(new Date(viewYear, viewMonth, day))}
-                                aria-label={new Intl.DateTimeFormat("km-KH", { dateStyle: "full" }).format(new Date(viewYear, viewMonth, day))}
+                                aria-label={new Intl.DateTimeFormat(en ? 'en-US' : 'km-KH', { dateStyle: "full" }).format(new Date(viewYear, viewMonth, day))}
                                 aria-selected={isSelected(day)}
                                 aria-current={isToday(day) ? "date" : undefined}
                                 tabIndex={focusDate.getDate() === day ? 0 : -1}
@@ -202,10 +207,10 @@ export function DatePicker({ value, onChange, placeholder = "ជ្រើសក�
                             onChange(`${today.getFullYear()}-${mm}-${dd}`);
                             closeCalendar();
                         }}>
-                            ថ្ងៃនេះ
+                            {en ? 'Today' : 'ថ្ងៃនេះ'}
                         </button>
                         <button type="button" className="dp-btn-cancel" onClick={closeCalendar}>
-                            បោះបង់
+                            {en ? 'Cancel' : 'បោះបង់'}
                         </button>
                     </div>
                 </div>

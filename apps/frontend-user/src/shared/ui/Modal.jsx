@@ -7,7 +7,7 @@ const modalStack = [];
 const backgroundState = new Map();
 let originalOverflow = "";
 let originalFocus = null;
-const focusableSelector = 'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+const focusableSelector = 'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), iframe, [tabindex]:not([tabindex="-1"])';
 
 function focusableElements(dialog) {
   return Array.from(dialog.querySelectorAll(focusableSelector)).filter((element) => {
@@ -105,7 +105,7 @@ export default function Modal({
       portalRoot.remove(); isolateBackground();
       if (wasTop) {
         const restore = modalStack.length ? previousFocus : originalFocus;
-        if (restore?.isConnected && !restore.closest("[inert]")) restore.focus();
+        if (restore?.isConnected && !restore.closest("[inert]")) restore.focus({ preventScroll: true });
         else if (modalStack.length) (focusableElements(modalStack.at(-1).dialog)[0] || modalStack.at(-1).dialog).focus();
       }
     };

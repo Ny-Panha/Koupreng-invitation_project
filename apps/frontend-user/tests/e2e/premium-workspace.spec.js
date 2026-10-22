@@ -7,7 +7,8 @@ test("single event is featured, searchable and has one management action", async
   await page.goto("/app/events");
   const card = page.locator(".event-card--featured");
   await expect(card).toBeVisible();
-  await expect(card.getByRole("button", { name: /Manage|Dashboard/ })).toHaveCount(1);
+  await expect(card.getByRole("button", { name: 'Continue editing', exact: true })).toHaveCount(1);
+  await expect(card.getByRole("button", { name: 'Event overview', exact: true })).toHaveCount(1);
   if (page.viewportSize().width >= 1024) expect((await card.boundingBox()).width).toBeGreaterThan(900);
   await page.screenshot({ path: info.outputPath("featured-event.png"), fullPage: true });
   await page.getByRole("searchbox").fill("no matching event");
@@ -107,15 +108,17 @@ test("wishes require confirmation before removing a message", async ({ page }) =
   expect(deletes).toEqual(["DELETE"]);
 });
 
-test("iPhone 18 Pro Max preview keeps its viewport when fitted or zoomed", async ({ page }, info) => {
+test("phone preview keeps its logical viewport when fitted or zoomed", async ({ page }, info) => {
   await installStudioFixtures(page, "en");
   await page.goto("/app/events/101/invitation");
   await expect(page.locator(".invitation-studio")).toBeVisible();
-  const previewTab = page.locator(".studio-mobile-tabs").getByRole("button", { name: "Preview", exact: true });
-  if (await previewTab.isVisible()) await previewTab.click();
+  if (page.viewportSize().width < 1024) {
+    await page.getByRole('button',{name:'Preview invitation',exact:true}).click();
+    await page.getByRole('button',{name:'Device and zoom controls',exact:true}).click();
+  }
   const frame = page.locator(".pe-device-frame");
   const iframe = frame.locator("iframe");
-  await expect(page.getByRole("button", { name: "iPhone 18 Pro Max", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("button", { name: "Phone preview", exact: true })).toHaveAttribute("aria-pressed", "true");
   await expect.poll(() => iframe.evaluate(node => node.contentWindow.innerWidth)).toBe(440);
   await expect.poll(() => iframe.evaluate(node => node.contentWindow.innerHeight)).toBe(860);
   await page.getByRole("button", { name: "Zoom in", exact: true }).click();

@@ -27,10 +27,12 @@ for (const [key, name, id] of [["khmer-celestial", "Khmer Celestial", 4], ["silk
     expect(created).toHaveLength(1);
     expect(created[0]).toMatchObject({ templateId: id, templateCode: key });
     await page.goto("/app/events/301/invitation");
+    if (page.viewportSize().width < 1024) await page.getByRole('button', { name: 'Preview invitation', exact: true }).click();
     const marker = page.frameLocator('iframe[title="Live User Template Preview"]').locator(`[data-template-renderer="${key}"]`);
     await expect(marker).toBeAttached({ timeout: 20000 });
     await expect(page.locator(".pe-template-tag")).toHaveText(name);
     await page.reload();
+    if (page.viewportSize().width < 1024) await page.getByRole('button', { name: 'Preview invitation', exact: true }).click();
     await expect(marker).toBeAttached({ timeout: 20000 });
     await expect(page.locator(".pe-template-tag")).toHaveText(name);
   });

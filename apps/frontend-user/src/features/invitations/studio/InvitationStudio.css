@@ -33,6 +33,9 @@
 .invitation-studio .pe-preview-column { position: relative; top: auto; width: 100%; min-width: 0; height: 100%; margin: 0; border-radius: 0; padding: 16px 20px; background: #eeece5; overflow: hidden; }
 .invitation-studio .pe-preview-top-bar { width: 100%; flex-shrink: 0; }
 .studio-preview-tools { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; padding: 10px 0; }
+.studio-preview-tools[hidden] { display: none; }
+.studio-preview-toggle { min-height: 44px; padding: 6px 12px; border: 0; background: transparent; color: var(--ui-action-hover); font: 500 14px/1.7 var(--ui-font); cursor: pointer; }
+@media (min-width: 1024px) { .studio-preview-toggle { display: none; } }
 .studio-preview-tools button, .studio-history button { min-height: 44px; padding: 6px 12px; border: 1px solid #d6d1c5; border-radius: 10px; background: #fffdf8; font-size: 13px; cursor: pointer; }
 .studio-preview-tools button[aria-pressed=true] { background: #292c28; color: white; }
 .studio-preview-viewport { overflow: auto; min-height: 0; flex: 1; width: 100%; scrollbar-width: thin; }
@@ -77,7 +80,11 @@
   .invitation-studio .pe-sub-header-actions { width: 100%; }
   .invitation-studio .pe-btn-mobile-preview, .invitation-studio .pe-status-badge, .invitation-studio .pe-sub-header-label { display: none; }
 }
-.studio-toolbar-mount { position: relative; z-index: 20; }
+.studio-toolbar-mount { position: sticky; top: 0; z-index: 50; background: var(--ui-canvas); }
+/* Clip horizontal paint without creating an unscrolled ancestor scrollport.
+   This keeps the preview action available while mobile fields scroll. */
+html:has(.dash-wrapper--studio), body:has(.dash-wrapper--studio), #root:has(.dash-wrapper--studio), .app-container:has(.dash-wrapper--studio) { overflow-x: clip; }
+.dash-wrapper--studio .dash-main-scroll { overflow-x: clip; overflow-y: visible; }
 .studio-toolbar { display: flex; align-items: center; gap: 14px; min-height: 72px; padding: 8px 4px; color: var(--ws-ink, #292c28); }
 .studio-back, .studio-action, .studio-more summary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 8px 14px; border: 1px solid var(--ws-border-strong, #d5c5ad); background: white; border-radius: 9px; color: inherit; font: 600 14px/1.8 var(--font-sans, sans-serif); cursor: pointer; text-decoration: none; }
 .studio-back { flex-shrink: 0; padding: 10px; }
@@ -112,7 +119,17 @@
 .studio-preview-tools { width: 100%; justify-content: center; }
 .studio-preview-tools select { min-height: 40px; }
 .studio-device-caption { padding-bottom: 0; }
-.pe-mobile-preview-drawer-body .pe-preview-column { width: 100%; height: calc(100dvh - 160px); min-height: 560px; }
+.studio-preview-sheet .k-modal-body { display: flex; min-height: 0; padding: 0; overflow: hidden; }
+.studio-preview-sheet .pe-mobile-preview-drawer, .studio-preview-sheet .pe-mobile-preview-drawer-body { display: flex; flex: 1; min-height: 0; min-width: 0; width: 100%; max-width: none; margin: 0; }
+.studio-preview-sheet .pe-mobile-preview-drawer-header[hidden] { display: none; }
+.studio-preview-sheet .pe-preview-column { display: flex; flex: 1; flex-direction: column; width: 100%; max-width: none; height: 100%; min-height: 0; padding: 12px; border: 0; border-radius: 0; }
+.studio-preview-sheet .studio-preview-tools { flex-shrink: 0; padding: 6px 0; }
+.studio-preview-sheet .pe-preview-top-bar { display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; width: 100%; margin: 0; }
+.studio-preview-sheet .pe-preview-tag { display: none; }
+.studio-preview-sheet .pe-sim-gate-switcher { width: auto; flex-shrink: 0; }
+.studio-preview-sheet .pe-sim-gate-btn.is-active { background: var(--ui-action); }
+.studio-preview-sheet .pe-sim-gate-btn { min-height: 44px; }
+.studio-preview-sheet .studio-preview-viewport { min-height: 0; }
 @media (max-width: 767px) {
   .studio-toolbar { flex-wrap: wrap; gap: 8px; padding: 8px 0; }
   .studio-document { flex-basis: calc(100% - 58px); }
@@ -121,8 +138,15 @@
   .studio-toolbar-actions { gap: 4px; }
   .studio-action { padding: 7px 10px; font-size: 13px; }
   .studio-action svg + span { display: none; }
+  .studio-action--preview svg + span { display: inline; }
   .invitation-studio .pe-preview-top-bar { flex-wrap: wrap; gap: 8px; }
   .invitation-studio .pe-preview-status-row { flex-basis: 100%; }
+}
+@media (max-width: 1023px) {
+  .studio-preview-sheet.k-modal-container { align-self: flex-end; height: calc(100dvh - 12px); max-height: calc(100dvh - 12px); max-width: 100%; border-radius: 20px 20px 0 0; }
+  .k-modal-backdrop:has(.studio-preview-sheet) { padding: 0; }
+  .studio-preview-sheet .k-modal-header { padding: 12px 16px; flex-shrink: 0; }
+  .studio-preview-sheet .k-modal-close-btn { min-height: 44px; min-width: 44px; }
 }
 @media (max-width: 430px) {
   .studio-toolbar-actions { width: 100%; justify-content: flex-end; }

@@ -1,4 +1,5 @@
-import { useCallback, useState, useRef, useEffect } from "react";
+import { useCallback, useId, useState, useRef, useEffect } from "react";
+import { useLanguageStore } from '@/stores/useLanguageStore';
 import { TimePickerDropdown } from "./TimePickerDropdown";
 import "./TimePicker.css";
 
@@ -23,7 +24,9 @@ export function formatTime24toKhmer(val24) {
 /**
  * TimePicker — Khmer-language 12h time picker that emits a 24h "HH:MM" string.
  */
-export function TimePicker({ value, onChange, placeholder = "ជ្រើសម៉ោង" }) {
+export function TimePicker({ value, onChange, id, placeholder }) {
+    const en = useLanguageStore(state => state.lang) === 'en';
+    const dialogId = useId(), triggerRef = useRef(null);
     const [open, setOpen] = useState(false);
     const [hour, setHour] = useState("05");
     const [minute, setMinute] = useState("00");
@@ -89,29 +92,32 @@ export function TimePicker({ value, onChange, placeholder = "ជ្រើសម�
         if (period === "ព្រឹក" && h === 12) h = 0;
         const val24 = `${String(h).padStart(2, "0")}:${minute}`;
         onChange(val24);
-        setOpen(false);
+        setOpen(false); triggerRef.current?.focus();
     };
 
     const handleCancel = () => {
         syncFromValue(value);
-        setOpen(false);
+        setOpen(false); triggerRef.current?.focus();
     };
 
     return (
-        <div className="tp-wrap" ref={ref}>
+        <div className="tp-wrap" ref={ref} onKeyDown={event => { if (event.key === 'Escape' && open) { event.preventDefault(); event.stopPropagation(); handleCancel(); } }} onBlur={event => { if (event.relatedTarget && !event.currentTarget.contains(event.relatedTarget)) setOpen(false); }}>
             <button
+                id={id}
+                ref={triggerRef}
                 type="button"
                 className={`tp-trigger${open ? " open" : ""}`}
                 onClick={handleOpenToggle}
                 aria-haspopup="dialog"
                 aria-expanded={open}
+                aria-controls={open ? dialogId : undefined}
             >
                 <svg className="tp-clock-icon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <circle cx="12" cy="12" r="9" strokeWidth="2" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 7v5l3 3" />
                 </svg>
                 <span className={displayValue ? "tp-value" : "tp-placeholder"}>
-                    {displayValue || placeholder}
+                    {(en ? displayValue.replace('ព្រឹក','AM').replace('ល្ងាច','PM') : displayValue) || placeholder || (en ? 'Choose time' : 'ជ្រើសម៉ោង')}
                 </span>
                 <svg className={`tp-caret ${open ? "open" : ""}`} width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -120,6 +126,8 @@ export function TimePicker({ value, onChange, placeholder = "ជ្រើសម�
 
             {open && (
                 <TimePickerDropdown
+                    id={dialogId}
+                    english={en}
                     hour={hour}
                     setHour={setHour}
                     minute={minute}

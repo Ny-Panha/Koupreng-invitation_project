@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import StudioSections from "./studio/StudioSections";
 import StudioToolbar from "./studio/StudioToolbar";
 import { createPortal } from "react-dom";
@@ -766,7 +766,14 @@ export default function InvitationForm({ invitation }) {
     });
 
     const [selectedSection, setSelectedSection] = useState("eventInfo");
-    const [mobileView, setMobileView] = useState("edit");
+    const fieldId = useId();
+    const [compactPreview, setCompactPreview] = useState(() => window.matchMedia("(max-width: 1023px)").matches);
+    const editorRoot = useRef(null), lastEditorField = useRef(null), previewReturn = useRef(null);
+    useEffect(() => {
+        const media = window.matchMedia("(max-width: 1023px)");
+        const change = event => setCompactPreview(event.matches);
+        media.addEventListener("change", change); return () => media.removeEventListener("change", change);
+    }, []);
 
     // Mirrors the module-level catalog counter so the live preview recomputes
     // once the async catalog fetch registers the Admin-created templates.
@@ -833,6 +840,24 @@ export default function InvitationForm({ invitation }) {
     const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
 
     const [isMobilePreviewOpen, setIsMobilePreviewOpen] = useState(false);
+    const rememberEditorPosition = () => {
+        previewReturn.current = { field: lastEditorField.current, x: window.scrollX, y: window.scrollY,
+            containers: [...editorRoot.current.querySelectorAll(".pe-editor-column,.pe-editor-scroll-body")].map(node => ({ node, top: node.scrollTop })) };
+    };
+    const openPreview = () => {
+        if (!previewReturn.current) rememberEditorPosition();
+        setIsMobilePreviewOpen(true);
+    };
+    const closePreview = useCallback(() => {
+        setIsMobilePreviewOpen(false);
+        requestAnimationFrame(() => {
+            const position = previewReturn.current;
+            if (!position) return;
+            if (position.field?.isConnected) position.field.focus({ preventScroll: true });
+            for (const { node, top } of position.containers) if (node.isConnected) node.scrollTo({ top, behavior: 'instant' });
+            window.scrollTo({ left: position.x, top: position.y, behavior: 'instant' });
+        });
+    }, []);
     const [pendingCoverFile, setPendingCoverFile] = useState(null);
     const [pendingCoverBgFile, setPendingCoverBgFile] = useState(null);
     const [pendingBackgroundFile, setPendingBackgroundFile] = useState(null);
@@ -1722,11 +1747,12 @@ export default function InvitationForm({ invitation }) {
         <h2 className="pe-section-heading">{englishUI ? "Event information" : "ព័ត៌មានកម្មវិធី"}</h2>
             {/* Main Title on Cover */}
             <div className="pe-form-group">
-                <label className="pe-label">
+                <label className="pe-label" htmlFor={`${fieldId}-title`}>
                     <span className="pe-label-icon"><FileText size={15} /></span>
                     {t("mainTitle") || "ចំណងជើងធំលើក្រប"}
                 </label>
                 <input
+                    id={`${fieldId}-title`}
                     type="text"
                     className="pe-input"
                     value={form.title}
@@ -1738,11 +1764,12 @@ export default function InvitationForm({ invitation }) {
             {/* Couple Names on Cover */}
             <div className="pe-grid-2">
                 <div className="pe-form-group">
-                    <label className="pe-label">
+                    <label className="pe-label" htmlFor={`${fieldId}-groom`}>
                         <span className="pe-label-icon"><User size={15} /></span>
                         {t("groom") || "កូនប្រុស (Groom Name)"}
                     </label>
                     <input
+                        id={`${fieldId}-groom`}
                         type="text"
                         className="pe-input"
                         value={form.groomName}
@@ -1751,11 +1778,12 @@ export default function InvitationForm({ invitation }) {
                     />
                 </div>
                 <div className="pe-form-group">
-                    <label className="pe-label">
+                    <label className="pe-label" htmlFor={`${fieldId}-bride`}>
                         <span className="pe-label-icon"><Heart size={15} /></span>
                         {t("bride") || "កូនស្រី (Bride Name)"}
                     </label>
                     <input
+                        id={`${fieldId}-bride`}
                         type="text"
                         className="pe-input"
                         value={form.brideName}
@@ -1768,11 +1796,12 @@ export default function InvitationForm({ invitation }) {
             {/* Event Date & Time on Cover */}
             <div className="pe-grid-2">
                 <div className="pe-form-group">
-                    <label className="pe-label">
+                    <label className="pe-label" htmlFor={`${fieldId}-date`}>
                         <span className="pe-label-icon"><Calendar size={15} /></span>
                         {t("dateTime") || "កាលបរិច្ឆេទ (Event Date)"}
                     </label>
                     <DatePicker
+                        id={`${fieldId}-date`}
                         value={form.eventDate}
                         onChange={(val) => {
                             update("eventDate", val);
@@ -1782,11 +1811,12 @@ export default function InvitationForm({ invitation }) {
                     />
                 </div>
                 <div className="pe-form-group">
-                    <label className="pe-label">
+                    <label className="pe-label" htmlFor={`${fieldId}-time`}>
                         <span className="pe-label-icon"><Clock size={15} /></span>
                         {t("timePicker") || "ម៉ោងទទួលភ្ញៀវ (Event Time)"}
                     </label>
                     <TimePicker
+                        id={`${fieldId}-time`}
                         value={form.eventTime}
                         onChange={(val) => update("eventTime", val)}
                         placeholder="ជ្រើសម៉ោង"
@@ -3139,26 +3169,26 @@ export default function InvitationForm({ invitation }) {
     };
 
     return (
-        <div className="pe-editor-root invitation-studio" data-mobile-view={mobileView}>
+        <div ref={editorRoot} className="pe-editor-root invitation-studio" onFocusCapture={event => {
+            if (event.target.closest(".pe-editor-column") && event.target.matches("input,textarea,select,button")) lastEditorField.current = event.target;
+        }} onBlurCapture={event => {
+            if (event.target === lastEditorField.current) rememberEditorPosition();
+        }}>
 
             {(() => {
                 const toolbar = <StudioToolbar title={form.title} templateName={getTemplateById(form.templateId)?.name || form.templateId}
                     english={englishUI} studio={studio} saving={isSaving} publishing={isPublishing} published={published}
                     canPublish={Boolean(invitation?.backendInvitationId || /^[1-9]\d*$/.test(String(invitationId || "")))}
-                    onTemplate={() => setIsTemplateModalOpen(true)} onPreview={() => setIsMobilePreviewOpen(true)} onPublish={publishInvitation}
+                    onTemplate={() => setIsTemplateModalOpen(true)} onPreview={openPreview} previewOpen={isMobilePreviewOpen} onPublish={publishInvitation}
                     onBack={() => navigate(params.eventId ? `/app/events/${params.eventId}` : invitationId ? `/app/events/${invitationId}` : "/app/events")} />;
                 const mount = params.eventId && document.getElementById("invitation-studio-toolbar");
                 return mount ? createPortal(toolbar, mount) : toolbar;
             })()}
             {studio.error && <div className="studio-save-error" role="alert"><span>{studio.error}</span><button type="button" onClick={() => studio.save()} disabled={isSaving}>Retry save</button></div>}
-            <div className="studio-mobile-tabs" aria-label="Studio view">
-                <button type="button" aria-pressed={mobileView === "edit"} onClick={() => setMobileView("edit")}>{englishUI ? "Edit" : "កែសម្រួល"}</button>
-                <button type="button" aria-pressed={mobileView === "preview"} onClick={() => setMobileView("preview")}>{englishUI ? "Preview" : "មើលជាមុន"}</button>
-            </div>
             {/* The controls and preview continue to use the original template engine. */}
             <div className="pe-workspace-grid">
                 <StudioSections sections={flowConfig.sectionOrder} active={activeSection}
-                    onChange={setSelectedSection} english={englishUI} />
+                    onChange={section => { lastEditorField.current = null; previewReturn.current = null; setSelectedSection(section); }} english={englishUI} />
                 {/* CENTER COLUMN: Existing template controls */}
                 <div className="pe-editor-column">
 
@@ -3213,21 +3243,21 @@ export default function InvitationForm({ invitation }) {
                     </div>
                 </div>
 
-                <LivePhoneSimulator data={{ ...form, googleMapUrl: previewMapUrl(form.googleMapUrl, form.venueName) }} catalogVersion={catalogVersion} />
+                {!compactPreview && !isMobilePreviewOpen && <LivePhoneSimulator data={{ ...form, googleMapUrl: previewMapUrl(form.googleMapUrl, form.venueName) }} catalogVersion={catalogVersion} />}
             </div>
 
             {/* Mobile Live Phone Simulator Overlay */}
             {isMobilePreviewOpen && (
-                <Modal isOpen onClose={() => setIsMobilePreviewOpen(false)} size="full" title="មើលជាមុន · Invitation preview">
+                <Modal isOpen onClose={closePreview} size="full" className="studio-preview-sheet" title={englishUI ? "Invitation preview" : "មើលធៀបជាមុន"} closeLabel={englishUI ? "Return to editing" : "ត្រឡប់ទៅកែសម្រួល"}>
                     <div className="pe-mobile-preview-drawer">
-                        <div className="pe-mobile-preview-drawer-header">
+                        <div className="pe-mobile-preview-drawer-header" hidden>
                             <span className="pe-mobile-preview-drawer-title">
                                 <Maximize2 size={15} /> {t("previewTitle") || "មើលគំរូជាមុន"}
                             </span>
                             <button
                                 type="button"
                                 className="pe-mobile-preview-close-btn"
-                                onClick={() => setIsMobilePreviewOpen(false)}
+                                onClick={closePreview}
                                 aria-label="បិទ Preview"
                             >
                                 <X size={20} />
@@ -3240,8 +3270,7 @@ export default function InvitationForm({ invitation }) {
                                     googleMapUrl: previewMapUrl(form.googleMapUrl, form.venueName),
                                 }}
                                 catalogVersion={catalogVersion}
-                                onSave={handleSave}
-                                isSaving={isSaving}
+                                onRequestClose={closePreview}
                             />
                         </div>
                     </div>

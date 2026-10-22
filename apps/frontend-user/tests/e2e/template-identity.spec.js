@@ -2,14 +2,22 @@ import { expect, test } from "@playwright/test";
 import { installIdentityFixtures, identityCatalog } from "./support/templateIdentityFixtures.js";
 
 const live = page => page.frameLocator('iframe[title="Live User Template Preview"]');
+async function openPreview(page) {
+  if (page.viewportSize().width < 1024) await page.getByRole('button',{name:'Preview invitation',exact:true}).click();
+}
+async function closePreview(page) {
+  if (page.viewportSize().width < 1024) await page.getByRole('button',{name:'Return to editing',exact:true}).click();
+}
 test("cold catalog, refresh, stale draft and public preview keep exact Celestial identity", async ({ page }) => {
   await installIdentityFixtures(page,{delay:350});
   await page.goto("/app/events/101/invitation");
   await expect(page.locator(".pe-template-tag")).toHaveText("Khmer Celestial");
+  await openPreview(page);
   await expect(page.locator('iframe[title="Live User Template Preview"]')).toHaveAttribute("src",/\/templates\/khmer-celestial\/preview/);
   await expect(live(page).locator('[data-template-renderer="khmer-celestial"]')).toBeAttached({timeout:15000});
   await expect(live(page).locator(".kc-root")).toBeAttached({timeout:15000});
   await page.reload();
+  await openPreview(page);
   await expect(live(page).locator(".kc-root")).toBeAttached({timeout:15000});
   await page.goto("/i/review-celestial");
   await expect(page.locator('[data-template-renderer="khmer-celestial"] .kc-root')).toBeAttached({timeout:15000});
@@ -18,14 +26,19 @@ test("cold catalog, refresh, stale draft and public preview keep exact Celestial
 test("switching events remounts controls and uses Garden's shared renderer", async ({ page }) => {
   await installIdentityFixtures(page);
   await page.goto("/app/events/101/invitation");
+  await openPreview(page);
   await expect(live(page).locator(".kc-root")).toBeAttached({timeout:15000});
+  await closePreview(page);
   await page.getByLabel("More studio actions").click();
   await page.locator(".event-switcher-select").selectOption("102");
   await expect(page.locator(".pe-template-tag")).toHaveText("Garden Royal Khmer Wedding");
+  await openPreview(page);
   await expect(live(page).locator('[data-template-renderer="garden-royal-khmer-wedding"] .tx-root')).toBeAttached({timeout:15000});
   await expect(page.locator(".invitation-studio")).not.toContainText("Celestial host");
+  await closePreview(page);
   await page.getByLabel("More studio actions").click();
   await page.locator(".event-switcher-select").selectOption("101");
+  await openPreview(page);
   await expect(live(page).locator(".kc-root")).toBeAttached({timeout:15000});
 });
 
@@ -42,6 +55,7 @@ test("template switch persists the actual association and preserves event detail
   expect(events.get(101).title).toBe("Celestial celebration");
   expect(JSON.parse(writes.at(-1).payload.contentJson).schedule).toEqual(schedule);
   await page.reload();
+  await openPreview(page);
   await expect(live(page).locator('[data-template-renderer="garden-royal-khmer-wedding"]')).toBeAttached({timeout:15000});
 });
 

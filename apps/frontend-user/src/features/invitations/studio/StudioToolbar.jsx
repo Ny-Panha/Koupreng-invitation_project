@@ -2,7 +2,7 @@ import { ArrowLeft, Check, CloudOff, Eye, LoaderCircle, MoreHorizontal, Palette,
 import { useNavigate } from "react-router-dom";
 import { useEventWorkspace } from "../../events/workspace/EventContext";
 
-export default function StudioToolbar({ title, templateName, english, studio, saving, publishing, published, canPublish, onTemplate, onPreview, onPublish, onBack }) {
+export default function StudioToolbar({ title, templateName, english, studio, saving, publishing, published, canPublish, onTemplate, onPreview, previewOpen, onPublish, onBack }) {
   const navigate = useNavigate();
   const workspace = useEventWorkspace();
   const labels = english
@@ -19,7 +19,7 @@ export default function StudioToolbar({ title, templateName, english, studio, sa
     </div>
     <span className="studio-save-status" data-phase={studio.phase} role="status" aria-live="polite"><StatusIcon size={16} aria-hidden="true" />{labels[studio.phase]}</span>
     <div className="studio-toolbar-actions">
-      <button type="button" className="studio-action" aria-label={english ? "Preview invitation" : "មើលធៀបជាមុន"} onClick={onPreview}><Eye size={18} aria-hidden="true" /><span>{english ? "Preview" : "មើលជាមុន"}</span></button>
+      <button type="button" className="studio-action studio-action--preview" aria-haspopup="dialog" aria-expanded={Boolean(previewOpen)} aria-label={english ? "Preview invitation" : "មើលធៀបជាមុន"} onClick={onPreview}><Eye size={18} aria-hidden="true" /><span>{english ? "Preview" : "មើលជាមុន"}</span></button>
       <button type="button" className="studio-action studio-action--save pe-save-main-btn" disabled={saving} onClick={() => studio.save()}>{english ? (saving ? "Saving…" : "Save") : (saving ? "កំពុងរក្សាទុក…" : "រក្សាទុក")}</button>
       {canPublish && !published && <button type="button" className="studio-action" disabled={saving || publishing} onClick={onPublish}>{english ? (publishing ? "Publishing…" : "Publish") : "ផ្សព្វផ្សាយ"}</button>}
       <details className="studio-more" onKeyDown={event => { if (event.key === "Escape") { event.currentTarget.open = false; event.currentTarget.querySelector("summary")?.focus(); } }}>
