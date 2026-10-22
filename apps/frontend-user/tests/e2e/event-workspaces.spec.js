@@ -52,7 +52,10 @@ test("explicit event, switching, refresh, legacy links and denial preserve isola
   await page.goto("/app/events/101/guests");
   await expect(page.getByText("Guest of Wedding A", { exact: true })).toBeVisible();
   await expect(page.getByText("Guest of Birthday B", { exact: true })).toHaveCount(0);
-  await page.getByRole("combobox").first().selectOption("102");
+  const menu = page.getByRole("button", { name: "Toggle modules menu" });
+  if (await menu.isVisible()) await menu.click();
+  else if (await page.getByRole("button", { name: "Expand navigation", exact: true }).isVisible()) await page.getByRole("button", { name: "Expand navigation", exact: true }).click();
+  await page.getByLabel("Switch event").selectOption("102");
   await expect(page).toHaveURL(/\/app\/events\/102\/guests$/);
   await expect(page.getByText("Guest of Birthday B", { exact: true })).toBeVisible();
   await expect(page.getByText("Guest of Wedding A", { exact: true })).toHaveCount(0);

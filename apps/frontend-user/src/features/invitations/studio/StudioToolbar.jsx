@@ -1,9 +1,7 @@
-import { ArrowLeft, Check, CloudOff, Eye, LoaderCircle, MoreHorizontal, Palette, RotateCcw, Undo2, Redo2 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { ArrowLeft, Check, CloudOff, Eye, LoaderCircle, Menu, MoreHorizontal, Palette, RotateCcw, Undo2, Redo2 } from "lucide-react";
 import { useEventWorkspace } from "../../events/workspace/EventContext";
 
 export default function StudioToolbar({ title, templateName, english, studio, saving, publishing, published, canPublish, onTemplate, onPreview, previewOpen, onPublish, onBack }) {
-  const navigate = useNavigate();
   const workspace = useEventWorkspace();
   const labels = english
     ? { saved:"Saved to server", unsaved:"Unsaved changes", saving:"Saving…", failed:"Save failed", offline:"Offline" }
@@ -11,6 +9,7 @@ export default function StudioToolbar({ title, templateName, english, studio, sa
   const StatusIcon = studio.phase === "saved" ? Check : studio.phase === "saving" ? LoaderCircle : CloudOff;
   return <header className="studio-toolbar" aria-label={english ? "Invitation studio" : "រចនាធៀបអញ្ជើញ"}>
     <button type="button" className="studio-back" onClick={onBack} aria-label={english ? "Back to Event" : "ត្រឡប់ទៅកម្មវិធី"} title={english ? "Back to Event" : "ត្រឡប់ទៅកម្មវិធី"}><ArrowLeft size={20} /></button>
+    {workspace?.openNavigation && <button type="button" className="studio-back studio-event-menu" onClick={workspace.openNavigation} aria-label={english ? "Open event navigation" : "បើកម៉ឺនុយកម្មវិធី"} aria-haspopup="dialog" aria-expanded={workspace.navigationOpen} title={english ? "Event navigation" : "មុខងារកម្មវិធី"}><Menu size={20} aria-hidden="true" /></button>}
     <div className="studio-document">
       <h1 title={title}>{title || (english ? "Invitation studio" : "រចនាធៀបអញ្ជើញ")}</h1>
       <button type="button" className="studio-template-button" onClick={onTemplate} aria-label={english ? "Change template" : "ប្ដូរគំរូ"}>
@@ -28,7 +27,6 @@ export default function StudioToolbar({ title, templateName, english, studio, sa
           <button type="button" disabled={!studio.canUndo} onClick={studio.undo}><Undo2 size={17} />{english ? "Undo" : "ត្រឡប់វិញ"}</button>
           <button type="button" disabled={!studio.canRedo} onClick={studio.redo}><Redo2 size={17} />{english ? "Redo" : "ធ្វើឡើងវិញ"}</button>
           <button type="button" disabled={saving} onClick={studio.reset}><RotateCcw size={17} />{english ? "Reset changes" : "កំណត់ឡើងវិញ"}</button>
-          {workspace?.events?.length > 0 && <label>{english ? "Switch event" : "ប្ដូរកម្មវិធី"}<select className="event-switcher-select" value={workspace.eventId} onChange={event => navigate(`/app/events/${event.target.value}/invitation`)}>{workspace.events.map(event => <option key={event.id} value={event.id}>{event.title}</option>)}</select></label>}
         </div>
       </details>
     </div>

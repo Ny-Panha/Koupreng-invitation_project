@@ -1,119 +1,32 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, NavLink, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Menu, Sparkles } from "lucide-react";
 import { invitationService } from "@/features/invitations/api/invitationApi";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useLanguageStore } from "@/stores/useLanguageStore";
+import Modal from "@/shared/ui/Modal";
 import { EventContext } from "./EventContext";
 import { EVENT_MODULES, eventPath } from "./eventRoutes";
-import { EVENT_TYPES } from "../onboarding/eventFields";
-import {
-  LayoutDashboard,
-  Palette,
-  Ticket,
-  Images,
-  Eye,
-  Users,
-  ClipboardCheck,
-  Armchair,
-  ScanLine,
-  Send,
-  Gift,
-  Wallet,
-  ChartColumn,
-  QrCode,
-  MessageCircleHeart,
-  Settings,
-  Calendar,
-  MapPin,
-  ChevronDown,
-  Menu,
-  X,
-  ArrowLeft,
-  Sparkles,
-  PanelLeftClose,
-  PanelLeftOpen,
-} from "lucide-react";
-import { formatLocalDate } from "@/shared/utils/localDate";
+import { ALL_EVENT_LINKS, eventStatus } from "./eventNavigationModel";
+import { useEventNavigation } from "./useEventNavigation";
+import EventNavigation from "./EventNavigation";
 import "./EventWorkspace.css";
-
-const MODULE_GROUPS = [
-  {
-    key: "overview",
-    labelKh: "ទិដ្ឋភាពទូទៅ",
-    labelEn: "Overview",
-    items: [
-      { path: "", labelKh: "ផ្ទាំងគ្រប់គ្រង", labelEn: "Dashboard", Icon: LayoutDashboard },
-    ],
-  },
-  {
-    key: "invitation",
-    labelKh: "ធៀប & កាត",
-    labelEn: "Invitation",
-    items: [
-      { path: "invitation", labelKh: "រចនាធៀប", labelEn: "Invitation Studio", Icon: Palette },
-      { path: "tickets/design", labelKh: "រចនាកាត", labelEn: "Ticket Designer", Icon: Ticket },
-      { path: "media", labelKh: "រូបភាព", labelEn: "Media", Icon: Images },
-      { path: "preview", labelKh: "មើលជាមុន", labelEn: "Preview", Icon: Eye },
-    ],
-  },
-  {
-    key: "guests",
-    labelKh: "ភ្ញៀវ & វត្តមាន",
-    labelEn: "Guests",
-    items: [
-      { path: "guests", labelKh: "បញ្ជីភ្ញៀវ", labelEn: "Guests", Icon: Users },
-      { path: "rsvp", labelKh: "ការឆ្លើយតប", labelEn: "RSVP", Icon: ClipboardCheck },
-      { path: "seating", labelKh: "រៀបកៅអី", labelEn: "Seating", Icon: Armchair },
-      { path: "check-in", labelKh: "វត្តមាន", labelEn: "Check-in", Icon: ScanLine },
-    ],
-  },
-  {
-    key: "operations",
-    labelKh: "ប្រតិបត្តិការ",
-    labelEn: "Management",
-    items: [
-      { path: "delivery", labelKh: "ការផ្ញើ", labelEn: "Delivery", Icon: Send },
-      { path: "gifts", labelKh: "ចំណងដៃ", labelEn: "Gifts", Icon: Gift },
-      { path: "budget", labelKh: "គម្រោងថវិកា", labelEn: "Budget", Icon: Wallet },
-      { path: "reports", labelKh: "របាយការណ៍", labelEn: "Reports", Icon: ChartColumn },
-    ],
-  },
-  {
-    key: "other",
-    labelKh: "ផ្សេងៗ",
-    labelEn: "Other",
-    items: [
-      { path: "qr", labelKh: "កូដ QR", labelEn: "QR Code", Icon: QrCode },
-      { path: "wishes", labelKh: "សារជូនពរ", labelEn: "Wishes", Icon: MessageCircleHeart },
-      { path: "settings", labelKh: "ការកំណត់", labelEn: "Settings", Icon: Settings },
-      { path: "assistant", labelKh: "ជំនួយការ", labelEn: "Assistant", Icon: Sparkles },
-    ],
-  },
-];
 
 function VerifiedWorkspace({ eventId }) {
   const [state, setState] = useState({ loading: true, event: null, events: [], error: "" });
   const [retry, setRetry] = useState(0);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
   const menuTrigger = useRef(null);
-  const navRef = useRef(null);
+  const { user } = useAuth();
+  const navigation = useEventNavigation(user?.id || user?.userId);
   const en = useLanguageStore(s => s.lang) === "en";
   const location = useLocation();
   const navigate = useNavigate();
   const currentModule = location.pathname.slice(eventPath(eventId).length).replace(/^\//, "");
   const focusedStudio = currentModule === "invitation" && state.event?.eventType === "WEDDING" && state.event?.templateCode !== "event-essential";
+  const overlay = !navigation.desktop || focusedStudio;
 
-  useEffect(() => {
-    if (!mobileDrawerOpen) return;
-    (navRef.current?.querySelector('a[aria-current="page"]') || navRef.current?.querySelector("a"))?.focus();
-    const close = event => {
-      if (event.key === "Escape") { setMobileDrawerOpen(false); menuTrigger.current?.focus(); }
-    };
-    document.addEventListener("keydown", close);
-    return () => document.removeEventListener("keydown", close);
-  }, [mobileDrawerOpen]);
-
+  useEffect(() => { setMobileDrawerOpen(false); }, [location.pathname, overlay]);
   useEffect(() => {
     let active = true;
     if (!/^[1-9]\d*$/.test(eventId)) return;
@@ -125,11 +38,6 @@ function VerifiedWorkspace({ eventId }) {
       .catch(error => { if (active) setState({ loading: false, event: null, events: [], error: error.message }); });
     return () => { active = false; };
   }, [eventId, retry]);
-
-  // Close mobile drawer on route navigation
-  useEffect(() => {
-    setMobileDrawerOpen(false);
-  }, [location.pathname]);
 
   if (!/^[1-9]\d*$/.test(eventId)) return (
     <div className="event-workspace workspace-page" role="alert">
@@ -167,140 +75,43 @@ function VerifiedWorkspace({ eventId }) {
     </div>
   );
 
-  const isPublished = state.event.status === "PUBLISHED";
-  const statusLabel = state.event.status === "UNPUBLISHED" ? (en ? "Unpublished" : "ផ្អាកផ្សាយ")
-    : isPublished ? (en ? "Published" : "បានផ្សាយ")
-    : (en ? "Draft" : "ព្រាង");
-  const statusClass = state.event.status === "UNPUBLISHED" ? "badge-unpublished"
-    : isPublished ? "badge-published"
-    : "badge-draft";
 
-  // Find active item label for mobile header
-  let activeModuleLabel = en ? "Dashboard" : "ផ្ទាំងគ្រប់គ្រង";
-  for (const grp of MODULE_GROUPS) {
-    const item = grp.items.find(i => i.path === currentModule);
-    if (item) {
-      activeModuleLabel = en ? item.labelEn : item.labelKh;
-      break;
-    }
-  }
+  const status = eventStatus(state.event, en);
+  const activeItem = ALL_EVENT_LINKS.find(item => item.path === currentModule);
+  const activeModuleLabel = activeItem?.[en ? "en" : "km"] || (en ? "Dashboard" : "ផ្ទាំងគ្រប់គ្រង");
+  const events = state.events.some(item => String(item.id) === eventId) ? state.events : [state.event, ...state.events];
+  const switchEvent = id => {
+    if (events.some(item => String(item.id) === id)) navigate(eventPath(id, EVENT_MODULES.includes(currentModule) ? currentModule : ""));
+  };
+  const navProps = { event: state.event, events, eventId, currentModule, en,
+    collapsed: navigation.collapsed, groups: navigation.groups,
+    onToggleGroup: navigation.toggleGroup, onToggleCollapsed: navigation.toggleCollapsed,
+    onExpand: navigation.expand, onSwitch: switchEvent, onNavigate: () => setMobileDrawerOpen(false),
+  };
 
-  return (
-    <EventContext.Provider value={{
-      eventId,
-      event: state.event,
-      events: state.events,
-      updateEvent: event => setState(current => ({ ...current, event }))
-    }}>
-      <section className={`event-workspace${collapsed ? " is-collapsed" : ""}${focusedStudio ? " is-studio" : ""}`} aria-label={en ? "Event workspace" : "គ្រប់គ្រងកម្មវិធី"}>
-        {/* Top Control Bar: Breadcrumb, Event Identity, Switcher */}
+  return <EventContext.Provider value={{ eventId, event: state.event, events: state.events,
+    updateEvent: event => setState(current => ({ ...current, event })),
+    openNavigation: () => setMobileDrawerOpen(true), navigationOpen: mobileDrawerOpen,
+  }}>
+    <section className={`event-workspace${navigation.collapsed ? " is-collapsed" : ""}${focusedStudio ? " is-studio" : ""}`} aria-label={en ? "Event workspace" : "គ្រប់គ្រងកម្មវិធី"}>
+      {!focusedStudio && <a className="event-skip-link" href="#event-module-content">{en ? "Skip to event content" : "ទៅមាតិកាកម្មវិធី"}</a>}
+      {!overlay && <aside className="event-workspace-sidebar"><EventNavigation {...navProps} /></aside>}
+      <div className="event-workspace-main">
         {focusedStudio ? <div id="invitation-studio-toolbar" className="studio-toolbar-mount" /> : <header className="event-workspace-header">
-          <div className="event-workspace-meta-col">
-            <Link to={focusedStudio ? eventPath(eventId) : "/app/events"} className="event-back-link">
-              <ArrowLeft size={16} aria-hidden="true" />
-              <span>{focusedStudio ? (en ? "Event overview" : "ទិដ្ឋភាពកម្មវិធី") : (en ? "My Events" : "កម្មវិធីរបស់ខ្ញុំ")}</span>
-            </Link>
-            <div className="event-title-row">
-              <p className="event-workspace-title">{state.event.title}</p>
-              <span className={`event-status-pill ${statusClass}`}>{statusLabel}</span>
-            </div>
-            <div className="event-details-row">
-              {state.event.eventDate && (
-                <span className="event-meta-item">
-                  <Calendar size={14} aria-hidden="true" />
-                  <span>{formatLocalDate(state.event.eventDate, en ? "en-US" : "km-KH")}</span>
-                </span>
-              )}
-              {state.event.venueName && (
-                <span className="event-meta-item">
-                  <MapPin size={14} aria-hidden="true" />
-                  <span>{state.event.venueName}</span>
-                </span>
-              )}
-              {state.event.eventType && (
-                <span className="event-meta-item event-type-tag">
-                  {EVENT_TYPES.find(type => type[0] === state.event.eventType)?.[en ? 2 : 1] || state.event.eventType}
-                </span>
-              )}
-            </div>
-          </div>
-
-          <div className="event-workspace-actions-col">
-            <label className="event-switcher-label">
-              <span>{en ? "Switch event" : "ប្ដូរកម្មវិធី"}</span>
-              <div className="event-switcher-select-wrap">
-                <select
-                  value={eventId}
-                  onChange={e => navigate(eventPath(e.target.value, EVENT_MODULES.includes(currentModule) ? currentModule : ""))}
-                  className="event-switcher-select"
-                >
-                  {state.events.map(event => (
-                    <option key={event.id} value={event.id}>{event.title}</option>
-                  ))}
-                </select>
-                <ChevronDown size={16} className="event-switcher-arrow" aria-hidden="true" />
-              </div>
-            </label>
-
-            {/* Mobile menu trigger */}
-            <button
-              type="button"
-              ref={menuTrigger}
-              className="event-mobile-nav-toggle"
-              onClick={() => setMobileDrawerOpen(prev => !prev)}
-              aria-label={en ? "Toggle modules menu" : "បើកម៉ឺនុយមុខងារ"}
-              aria-expanded={mobileDrawerOpen}
-              aria-controls="event-module-navigation"
-            >
-              {mobileDrawerOpen ? <X size={20} /> : <Menu size={20} />}
-              <span className="event-mobile-active-label">{activeModuleLabel}</span>
-            </button>
-            {!focusedStudio && <button type="button" className="event-sidebar-toggle" aria-expanded={!collapsed}
-              aria-controls="event-module-navigation" onClick={() => setCollapsed(value => !value)}
-              aria-label={en ? (collapsed ? "Expand navigation" : "Collapse navigation") : (collapsed ? "ពង្រីកម៉ឺនុយ" : "បង្រួមម៉ឺនុយ")}>
-              {collapsed ? <PanelLeftOpen size={20} /> : <PanelLeftClose size={20} />}
-            </button>}
-          </div>
+          <button type="button" ref={menuTrigger} className="event-mobile-nav-toggle" onClick={() => setMobileDrawerOpen(true)}
+            aria-label={en ? "Toggle modules menu" : "បើកម៉ឺនុយមុខងារ"} aria-expanded={mobileDrawerOpen} aria-haspopup="dialog" aria-controls={mobileDrawerOpen ? "event-module-navigation" : undefined}>
+            <Menu size={20} aria-hidden="true" /><span className="sr-only">{activeModuleLabel}</span>
+          </button>
+          <div className="event-header-identity"><p className="event-workspace-title">{state.event.title}</p><span className={`event-status-pill badge-${status.tone}`}>{status.label}</span></div>
         </header>}
-
-        {/* Structured Categorized Module Navigation */}
-        <nav
-          id="event-module-navigation"
-          ref={navRef}
-          className={`event-workspace-nav ${mobileDrawerOpen ? "is-open-mobile" : ""}`}
-          aria-label={en ? "Event navigation" : "មុខងារកម្មវិធី"}
-        >
-          {MODULE_GROUPS.map((group) => (
-            <div key={group.key} className="event-nav-group">
-              <span className="event-nav-group-title">
-                {en ? group.labelEn : group.labelKh}
-              </span>
-              <div className="event-nav-group-items">
-                {group.items.map(({ path, labelKh, labelEn, Icon }) => (
-                  <NavLink
-                    key={path}
-                    end
-                    to={eventPath(eventId, path)}
-                    className={({ isActive }) => `event-nav-tab ${isActive ? "active" : ""}`}
-                    title={en ? labelEn : labelKh}
-                    aria-label={en ? labelEn : labelKh}
-                    onClick={() => setMobileDrawerOpen(false)}
-                  >
-                    <Icon size={16} className="event-nav-tab-icon" aria-hidden="true" />
-                    <span className="event-nav-tab-text">{en ? labelEn : labelKh}</span>
-                    <span className="event-nav-tooltip" aria-hidden="true">{en ? labelEn : labelKh}</span>
-                  </NavLink>
-                ))}
-              </div>
-            </div>
-          ))}
-        </nav>
-        <div className="event-workspace-content" id="event-module-content">
-          <Outlet />
-        </div>
-      </section>
-    </EventContext.Provider>
-  );
+        <div className="event-workspace-content" id="event-module-content" tabIndex={-1}><Outlet /></div>
+      </div>
+    </section>
+    <Modal isOpen={overlay && mobileDrawerOpen} onClose={() => setMobileDrawerOpen(false)} showHeader={false}
+      ariaLabel={en ? "Event navigation" : "មុខងារកម្មវិធី"} className="workspace-dialog event-navigation-dialog" backdropClassName="event-navigation-backdrop">
+      <EventNavigation {...navProps} overlay onClose={() => setMobileDrawerOpen(false)} />
+    </Modal>
+  </EventContext.Provider>;
 }
 
 export default function EventWorkspace() {

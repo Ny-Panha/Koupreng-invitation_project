@@ -29,6 +29,8 @@ test("event navigation supports collapse, keyboard recovery and explicit switchi
     await expect(page.locator(".event-workspace-nav")).toBeHidden();
     await toggle.click();
   } else {
+    const expand = page.getByRole("button", { name: "Expand navigation", exact: true });
+    if (await expand.isVisible()) await expand.click();
     await page.getByRole("button", { name: "Collapse navigation" }).click();
     await expect(page.locator(".event-workspace")).toHaveClass(/is-collapsed/);
     await page.getByRole("button", { name: "Expand navigation" }).click();
@@ -36,7 +38,8 @@ test("event navigation supports collapse, keyboard recovery and explicit switchi
   await expect(page.locator(".event-workspace-nav a")).toHaveCount(17);
   await page.getByLabel("Switch event").selectOption("102");
   await expect(page).toHaveURL(/\/app\/events\/102\/guests$/);
-  await expect(page.locator(".event-workspace-title")).toHaveText("Sokha’s birthday");
+  if (await toggle.isVisible()) await expect(page.locator(".event-workspace-title")).toHaveText("Sokha’s birthday");
+  else await expect(page.getByLabel("Switch event").locator("option:checked")).toHaveText("Sokha’s birthday");
 });
 
 test("new event prioritizes preparation without empty metrics", async ({ page }) => {

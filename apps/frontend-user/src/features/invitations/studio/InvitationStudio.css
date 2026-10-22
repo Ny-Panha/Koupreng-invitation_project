@@ -133,6 +133,7 @@ html:has(.dash-wrapper--studio), body:has(.dash-wrapper--studio), #root:has(.das
 @media (max-width: 767px) {
   .studio-toolbar { flex-wrap: wrap; gap: 8px; padding: 8px 0; }
   .studio-document { flex-basis: calc(100% - 58px); }
+  .studio-toolbar:has(.studio-event-menu) .studio-document { flex-basis: calc(100% - 110px); }
   .studio-document h1 { font-size: 17px; }
   .studio-save-status { flex: 1; font-size: 13px; }
   .studio-toolbar-actions { gap: 4px; }

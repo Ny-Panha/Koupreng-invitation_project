@@ -7,13 +7,14 @@ export default function HostShell() {
     const location = useLocation();
     const isPreview = location.pathname.endsWith("/preview");
     const isStudio = /^\/app\/events\/\d+\/invitation$/.test(location.pathname);
+    const isEventWorkspace = /^\/app\/events\/\d+(?:\/|$)/.test(location.pathname);
 
     if (isPreview) {
         return <Outlet />;
     }
 
     return (
-        <div className={`dash-wrapper${isStudio ? " dash-wrapper--studio" : ""}`}>
+        <div className={`dash-wrapper${isEventWorkspace ? " dash-wrapper--event" : ""}${isStudio ? " dash-wrapper--studio" : ""}`}>
             {!isStudio && <HostNav />}
             <div className="dash-main-scroll">
                 <Outlet />

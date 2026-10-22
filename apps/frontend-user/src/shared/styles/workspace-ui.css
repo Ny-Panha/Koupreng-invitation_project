@@ -1,5 +1,5 @@
 /* Shared account-page contract. Existing invitation renderers keep their typography. */
-.dash-wrapper, .workspace-page, .workspace-dialog {
+.dash-wrapper, .workspace-page, .workspace-dialog, .event-workspace {
   --ws-canvas: var(--ui-canvas);
   --ws-surface: var(--ui-surface);
   --ws-ink: var(--ui-ink);

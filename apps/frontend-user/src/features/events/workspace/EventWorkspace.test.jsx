@@ -18,8 +18,12 @@ function show(path) {
     <Route path="/app/events" element={<p>Choose your event</p>} />
   </Routes></MemoryRouter>);
 }
-afterEach(cleanup);
-beforeEach(() => { vi.clearAllMocks(); useLanguageStore.setState({ lang: "en" }); invitationService.listMine.mockResolvedValue(events); });
+afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
+beforeEach(() => {
+  vi.clearAllMocks();
+  vi.stubGlobal("matchMedia", vi.fn(query => ({ matches: true, media: query, addEventListener: vi.fn(), removeEventListener: vi.fn() })));
+  useLanguageStore.setState({ lang: "en" }); invitationService.listMine.mockResolvedValue(events);
+});
 describe("verified event workspace", () => {
   it("never mounts modules for an unauthorized explicit ID", async () => {
     invitationService.get.mockRejectedValue(new Error("Access denied"));

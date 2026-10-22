@@ -16,6 +16,19 @@
 }
 .dash-wrapper.dash-wrapper--studio { --host-nav-offset: 0px; }
 
+/* Event management owns one fluid shell; public and account pages keep theirs. */
+.dash-wrapper.dash-wrapper--event { --host-nav-offset: 80px; }
+.dash-wrapper--event > .dash-main-scroll { overflow: visible; }
+.dash-wrapper--event .host-header-wrapper { padding: 8px 0; background: var(--ui-canvas); border: 0; box-shadow: none; }
+.dash-wrapper--event .host-header-container { width: calc(100% - 32px); max-width: none; height: 56px; padding-inline: 20px; border-radius: 16px; background: var(--ui-surface); box-shadow: none; }
+.dash-wrapper--event .host-logo-box img { height: 56px; }
+.dash-wrapper--event .host-logo-box:hover { transform: none; }
+.dash-wrapper.dash-wrapper--event.dash-wrapper--studio { --host-nav-offset: 0px; }
+@media (max-width: 767px) {
+  .dash-wrapper--event .host-header-container { width: calc(100% - 16px); padding-inline: 14px; }
+  .dash-wrapper--event .host-logo-box img { height: 48px; }
+}
+
 /* Module headings must also work when opened directly, before another route's CSS loads. */
 .dash-wrapper .dash-page-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 28px; }
 .dash-wrapper .dash-page-header h1 { margin: 0; font-size: clamp(26px, 3vw, 36px); font-weight: 750; line-height: 1.7; color: var(--ws-ink); }
