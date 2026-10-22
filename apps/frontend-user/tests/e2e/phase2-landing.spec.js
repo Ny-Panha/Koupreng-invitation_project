@@ -5,6 +5,7 @@ import { phase2EvidencePath } from './support/phase2Evidence.js';
 test('public sample is opt-in, uses the real renderer and releases the frame on close', async ({ page }, testInfo) => {
   await installPhase2Fixtures(page, { anonymous: true });
   await page.goto('/');
+  await expect(page.locator('.kp-site-preloader')).toBeHidden();
   const open = page.getByRole('button', { name: 'Try the invitation', exact: true });
   await expect(open).toBeVisible();
   await expect(page.locator('iframe')).toHaveCount(0);

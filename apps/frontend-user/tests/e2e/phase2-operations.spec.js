@@ -23,7 +23,11 @@ test('new guest exposes personal actions and enters authoritative delivery witho
  const share=page.getByRole('link',{name:'Share invitation for Phase 2 sample guest via Telegram'});await expect(share).toHaveAttribute('target','_blank');
  // Opening an external provider is deliberately not part of this fixture journey.
  expect(writes).toEqual(['create']);
+ await expect(page.locator('.kp-site-preloader')).toBeHidden();
+ await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
  await page.screenshot({path:phase2EvidencePath(info,`guests/guest-context-${info.project.name}.png`),fullPage:true});
+ await context.scrollIntoViewIfNeeded();
+ await page.screenshot({path:phase2EvidencePath(info,`guests/guest-context-viewport-${info.project.name}.png`)});
  await context.getByRole('link',{name:'Send / share in Delivery'}).click();await expect(page).toHaveURL(/\/app\/events\/101\/delivery$/);
  await expect(page.getByText('Invitation must be published before delivery can be prepared.')).toBeVisible();expect(writes).toEqual(['create']);
 });

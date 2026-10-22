@@ -5,6 +5,7 @@ test('preview retains the form, newest edits, focus and position with one active
  const fixture=await installIdentityFixtures(page);
  if (page.viewportSize().width < 1024) await page.setViewportSize({width:390,height:500});
  await page.goto('/app/events/101/invitation');
+ await expect(page.locator('.kp-site-preloader')).toBeHidden();
  const groom=page.locator('input[id$="-groom"]'),bride=page.locator('input[id$="-bride"]');
  await expect(groom).toBeVisible();
  expect(await groom.evaluate(e=>e.labels.length)).toBe(1);
@@ -17,6 +18,7 @@ test('preview retains the form, newest edits, focus and position with one active
  if (mobile) {
    const box=await opener.boundingBox();
    expect(box.y).toBeGreaterThanOrEqual(0);expect(box.y+box.height).toBeLessThanOrEqual(500);
+   expect(await opener.evaluate(e=>{const r=e.getBoundingClientRect();return document.elementFromPoint(r.x+r.width/2,r.y+r.height/2)?.closest('button')===e;})).toBe(true);
    // A physical tap does not invoke the automation locator's scrollIntoView.
    await page.touchscreen.tap(box.x+box.width/2,box.y+box.height/2);
  } else await opener.click();

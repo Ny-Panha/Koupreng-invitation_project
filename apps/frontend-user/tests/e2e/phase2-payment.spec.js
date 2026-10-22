@@ -17,6 +17,7 @@ test('approved template offer creates one pending order and only server PAID unl
   return ['GET','HEAD','OPTIONS'].includes(req.method())||path.startsWith('/api/v1/template-payments/')?r.fallback():r.abort('blockedbyclient');
  });
  await page.goto('/templates/garden-royal-khmer-wedding/checkout');
+ await expect(page.locator('.kp-site-preloader')).toBeHidden();
  await expect(page.getByText('$37.50',{exact:true})).toBeVisible();
  await expect(page.getByText(/Test Payment|VAT|100%|Unlimited/)).toHaveCount(0);
  await page.screenshot({path:phase2EvidencePath(info,`payments/approved-checkout-${info.project.name}.png`),fullPage:true});
