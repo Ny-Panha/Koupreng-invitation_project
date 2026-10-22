@@ -9,9 +9,10 @@ export default function PhoneFrame({
   showStatusBar = true,
   showHomeBar = true,
   islandBadge = null,
+  logicalViewport = false,
 }) {
   return (
-    <div className={`kp-phone-frame ${className}`} style={style} tabIndex={-1}>
+    <div className={`kp-phone-frame${logicalViewport ? " kp-phone-frame--logical" : ""} ${className}`} style={style} tabIndex={-1}>
       {showStatusBar && (
         <div className="kp-phone-status-bar" aria-hidden="true">
           <span className="kp-phone-status-time">{time}</span>

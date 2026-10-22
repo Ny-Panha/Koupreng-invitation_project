@@ -63,6 +63,7 @@
 
 .kp-phone-screen {
   flex: 1 1 auto;
+  min-height: 0;
   position: relative;
   overflow-y: auto;
   overflow-x: hidden;
@@ -71,6 +72,13 @@
   background: #ffffff;
   -webkit-overflow-scrolling: touch;
 }
+
+/* Exact 440×860 content viewport inside the optional 456×972 logical frame.
+   Its parent scales the entire presentation without resizing the document. */
+.kp-phone-frame.kp-phone-frame--logical { width: 456px; max-width: none; height: 972px; margin: 0; border-width: 8px; border-radius: 52px; transform-origin: top left; }
+.kp-phone-frame--logical .kp-phone-status-bar { flex-basis: 62px; }
+.kp-phone-frame--logical .kp-phone-home-bar { flex-basis: 34px; }
+.kp-phone-frame--logical .kp-phone-screen { overflow: hidden; }
 
 .kp-phone-home-bar {
   flex: 0 0 24px;

@@ -30,7 +30,8 @@ function PublicSupport() {
 }
 
 export default function SupportWidget() {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
+  if (new URLSearchParams(search).get("embed") === "demo" && /^\/templates\/[^/]+$/.test(pathname)) return null;
   if (pathname.replace(/\/$/, "") === "/contact") return null;
   return publicRoutes.has(pathname.replace(/\/$/, "") || "/")
     ? <PublicSupport /> : <Suspense fallback={null}><LegacyChat /></Suspense>;

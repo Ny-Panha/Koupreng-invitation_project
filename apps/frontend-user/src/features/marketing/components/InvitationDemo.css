@@ -1,0 +1,43 @@
+.public-invitation-demo { min-width: 0; text-align: center; }
+.public-demo-device { margin: 0; min-width: 0; }
+.public-demo-viewport { display: grid; place-items: center; width: 100%; height: 640px; min-width: 0; }
+.public-demo-stage { position: relative; transition: transform var(--ui-duration-overlay) ease; }
+.public-demo-poster { position: absolute; inset: 0; overflow: hidden; background: #f5efe4; }
+.public-demo-poster > picture, .public-demo-poster > img { display: block; width: 100%; height: 100%; }
+.public-demo-poster > picture img, .public-demo-poster > img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 25%; }
+.public-demo-letter { position: absolute; inset: auto 24px 24px; padding: 24px 20px; background: #fffaf2; color: #493725; border: 1px solid #d4bf9a; box-shadow: 0 12px 28px rgb(49 34 17 / 12%); }
+.public-demo-letter > img { display: block; width: 100%; height: 44px; object-fit: contain; }
+.public-demo-letter p { margin: 10px 0; font-size: 18px; line-height: 1.8; }
+.public-demo-letter strong { display: block; font: 600 34px/1.6 "Koupreng Editorial", "Kantumruy Pro", Georgia, serif; }
+.public-demo-letter strong span { display: block; font-size: 22px; line-height: 1.1; }
+.public-demo-iframe { position: absolute; inset: 0; width: 440px; height: 860px; border: 0; background: white; opacity: 0; }
+.public-demo-iframe.is-ready { opacity: 1; }
+.public-demo-state { position: absolute; inset: auto 20px 24px; padding: 18px; border: 1px solid var(--ui-control-border); border-radius: 12px; background: white; color: var(--ui-ink); font: 500 20px/1.7 var(--ui-font); box-shadow: 0 8px 24px rgb(31 36 33 / 12%); }
+.public-demo-state p { margin: 0 0 12px; }
+.public-demo-state button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 20px; min-height: 48px; border: 1px solid var(--ui-action); border-radius: 10px; background: var(--ui-action); color: white; font: inherit; cursor: pointer; }
+.public-demo-caption { display: grid; justify-items: center; gap: 8px; margin-top: 18px; color: var(--ui-muted); font: 400 13px/1.75 var(--ui-font); }
+.public-demo-caption > div { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 16px; }
+.public-demo-caption :is(a,button) { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; padding: 5px 8px; border: 0; background: transparent; color: var(--ui-action-hover); font: 600 14px/1.7 var(--ui-font); text-decoration: none; cursor: pointer; }
+.public-demo-caption :is(a,button):hover { text-decoration: underline; text-underline-offset: 4px; }
+.public-demo-launch { margin-top: 8px; }
+.public-demo-note { max-width: 36ch; margin: 12px auto 0; font-size: 13px; line-height: 1.8; color: var(--ui-muted); }
+.public-demo-caption .public-demo-fullscreen-close { display: none; }
+.public-demo-device:fullscreen { display: flex; flex-direction: column; align-items: center; width: 100vw; height: 100dvh; padding: 20px; background: var(--ui-canvas); overflow: hidden; }
+.public-demo-device:fullscreen .public-demo-viewport { flex: 1; min-height: 0; }
+.public-demo-device:fullscreen .public-demo-fullscreen-close { display: inline-flex; }
+.public-demo-device:fullscreen .public-demo-caption { flex-shrink: 0; }
+.public-demo-modal.k-modal-container { height: 100dvh; max-height: 100dvh; border-radius: 0; }
+.public-demo-modal .k-modal-body { display: flex; flex-direction: column; min-height: 0; padding: 8px 16px 16px; overflow: hidden; }
+.public-demo-device--large { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+.public-demo-device--large .public-demo-viewport { flex: 1; min-height: 0; }
+.public-demo-device--large .public-demo-caption { margin-top: 8px; flex-shrink: 0; }
+@media (min-width: 1024px) and (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .public-demo-device[data-straight="false"] .public-demo-stage { transform: perspective(1100px) rotateY(-7deg) rotateX(2deg); }
+}
+@media (max-width: 767px) {
+  .public-demo-viewport { height: min(620px, 78dvh); }
+  .public-demo-caption { margin-top: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .public-demo-stage { transform: none; transition: none; }
+}

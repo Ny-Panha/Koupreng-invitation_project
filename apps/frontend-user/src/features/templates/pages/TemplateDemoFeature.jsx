@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import TemplateExperience from "../experience/TemplateExperience";
 import { DB_TEMPLATE_ID_MAP, getTemplateById, TEMPLATES, templateFromCatalogItem } from "../data/templatesData";
 import { templateService } from "../api/templateService";
@@ -17,6 +17,8 @@ import { useLanguageStore } from "@/stores/useLanguageStore";
  */
 export default function TemplateDemoPage({ backLink, backLabel, primaryCtaLabel }) {
     const { id } = useParams();
+    const [searchParams] = useSearchParams();
+    const embeddedPublicDemo = searchParams.get("embed") === "demo";
     const aliasTargetId = VARIANT_ROUTE_ALIASES[id];
     const targetId = aliasTargetId || id;
     const [remoteTpl, setRemoteTpl] = useState(null);
@@ -114,6 +116,11 @@ export default function TemplateDemoPage({ backLink, backLabel, primaryCtaLabel 
             backLink={backLink}
             backLabel={backLabel}
             primaryCtaLabel={primaryCtaLabel}
+            preview={embeddedPublicDemo}
+            previewStartClosed={embeddedPublicDemo}
+            showBreadcrumb={!embeddedPublicDemo}
+            showActions={!embeddedPublicDemo}
+            showStickyCta={!embeddedPublicDemo}
         />
     );
 }

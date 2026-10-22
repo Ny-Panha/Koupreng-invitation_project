@@ -1,39 +1,17 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Check, Minus, ArrowUpRight, Plus, Sparkles } from "lucide-react";
-import subscriptionService from "../subscriptions/subscriptionService";
 import { useAuth } from "../auth/hooks/useAuth";
 import { useLanguageStore } from "../../stores/useLanguageStore";
 import PricingFactors from "./components/PricingFactors";
 import { packagePrice, packageLimit } from "./model/packagePresentation";
+import { usePackageCatalog } from "./model/usePackageCatalog";
 import "./MarketingPages.css";
 
 export default function PricingFeature() {
   const lang = useLanguageStore(state => state.lang);
   const copy = (km, en) => lang === "en" ? en : km;
   const { isAuthenticated } = useAuth();
-  const [catalog, setCatalog] = useState({ status: "loading", items: [] });
-  const [reload, setReload] = useState(0);
-
-  useEffect(() => {
-    let active = true;
-    setCatalog({ status: "loading", items: [] });
-    subscriptionService.publicPackages({ suppressAuthRedirect: true }).then(items => {
-      if (active) {
-        setCatalog({
-          status: "ready",
-          items: Array.isArray(items)
-            ? items.filter(plan => plan.active !== false && !["INACTIVE", "DISABLED"].includes(plan.status))
-            : []
-        });
-      }
-    }).catch(failure => {
-      if (active) {
-        setCatalog({ status: [401, 403].includes(failure?.status) ? "restricted" : "error", items: [] });
-      }
-    });
-    return () => { active = false; };
-  }, [reload]);
+  const { catalog, reload } = usePackageCatalog();
 
   const rows = [
     ["maxInvitations", copy("ចំនួនសន្លឹកការ", "Invitations")],
@@ -97,7 +75,7 @@ export default function PricingFeature() {
         <div className="kp-page-state" role="alert">
           <h2>{copy("មិនអាចផ្ទុកកញ្ចប់បាន", "Packages could not be loaded")}</h2>
           <p>{copy("សូមសាកម្ដងទៀត ដើម្បីមើលព័ត៌មានបច្ចុប្បន្ន។", "Try again to load the current offers.")}</p>
-          <button className="kp-button" type="button" onClick={() => setReload(n => n + 1)}>
+          <button className="kp-button" type="button" onClick={reload}>
             {copy("សាកម្ដងទៀត", "Try again")}
           </button>
         </div>
