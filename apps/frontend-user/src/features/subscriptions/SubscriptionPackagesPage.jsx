@@ -23,7 +23,7 @@ function dateLabel(value, lang) {
   return new Intl.DateTimeFormat(lang === "en" ? "en-US" : "km-KH", { dateStyle: "medium" }).format(new Date(value));
 }
 function statusLabel(order, copy) {
-  return ({ success: copy("បានបើកដំណើរការ", "Active / Paid"), waiting: copy("រង់ចាំការទូទាត់", "Awaiting payment"), review: copy("កំពុងពិនិត្យ", "Under review"), expired: copy("ផុតកំណត់", "Expired"), failed: order?.status === "CANCELLED" || order?.paymentStatus === "CANCELLED" ? copy("បានបោះបង់", "Cancelled") : copy("បរាជ័យ", "Failed") })[orderStage(order)];
+  return ({ success: copy("បានបើកដំណើរការ", "Active / Paid"), waiting: copy("រង់ចាំការទូទាត់", "Awaiting payment"), review: copy("កំពុងរង់ចាំការផ្ទៀងផ្ទាត់", "Under review"), expired: copy("ផុតកំណត់", "Expired"), failed: order?.status === "CANCELLED" || order?.paymentStatus === "CANCELLED" ? copy("បានបោះបង់", "Cancelled") : copy("បរាជ័យ", "Failed") })[orderStage(order)];
 }
 function billingLabel(plan, copy) {
   const billing = { MONTHLY: copy("ប្រចាំខែ", "Monthly"), YEARLY: copy("ប្រចាំឆ្នាំ", "Yearly"), CUSTOM: copy("រយៈពេលផ្ទាល់ខ្លួន", "Custom term"), ONE_TIME: copy("បង់ម្តង", "One-time") };
@@ -139,7 +139,7 @@ export default function SubscriptionPackagesPage() {
             {plan.seatingEnabled && <Feature>{copy("រៀបចំកន្លែងអង្គុយ", "Seating arrangements")}</Feature>}
             {plan.advancedAnalyticsEnabled && <Feature>{copy("របាយការណ៍កម្រិតខ្ពស់", "Advanced analytics")}</Feature>}
           </ul>
-          <button className={`workspace-button ${featured ? "pkg-gold-button" : "primary"}`} aria-label={selected ? copy("កញ្ចប់បច្ចុប្បន្ន", "Current plan") : pending ? copy("មើលការទូទាត់ដែលកំពុងរង់ចាំ", "View pending order") : `${copy("ជ្រើសរើសកញ្ចប់", "Choose plan")} (Subscribe / Upgrade)`} disabled={selected || saving || !!accountError || packagePrice(plan, lang) === null} onClick={() => openCheckout(plan)}>{selected ? copy("កញ្ចប់បច្ចុប្បន្ន", "Current plan") : pending ? copy("មើលការទូទាត់ដែលកំពុងរង់ចាំ", "View pending order") : copy("ជ្រើសរើសកញ្ចប់", "Choose plan")}</button>
+          <button className={`workspace-button ${featured ? "pkg-gold-button" : "primary"}`} aria-label={selected ? copy("កញ្ចប់បច្ចុប្បន្ន", "Current plan") : pending ? copy("មើលការទូទាត់ដែលកំពុងរង់ចាំ", "View pending order") : copy("ជ្រើសកញ្ចប់នេះ", "Choose this plan")} disabled={selected || saving || !!accountError || packagePrice(plan, lang) === null} onClick={() => openCheckout(plan)}>{selected ? copy("កញ្ចប់បច្ចុប្បន្ន", "Current plan") : pending ? copy("មើលការទូទាត់ដែលកំពុងរង់ចាំ", "View pending order") : copy("ជ្រើសកញ្ចប់នេះ", "Choose this plan")}</button>
         </article>;
       })}
     </section>

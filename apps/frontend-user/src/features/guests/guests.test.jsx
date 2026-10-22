@@ -10,12 +10,24 @@ import {
 } from "./model/guestMappers";
 import GuestStats from "./components/GuestStats";
 import GuestTable from "./components/GuestTable";
+import { LOCAL_MESSAGES } from "../../shared/i18n/messagesDictionary";
 
 afterEach(() => {
   cleanup();
 });
 
 describe("Guest Domain Module", () => {
+  it("has real translations for every guest dialog action in both languages", () => {
+    const keys = ["addGuestSubtitle", "editGuestSubtitle", "fieldSeat", "saveAndAddAnother",
+      "statusPending", "statusSent", "statusOpened", "statusResponded", "saving"];
+    for (const lang of ["km", "en"]) {
+      for (const key of keys) {
+        expect(LOCAL_MESSAGES.guests[lang][key]).toEqual(expect.any(String));
+        expect(LOCAL_MESSAGES.guests[lang][key]).not.toBe(key);
+      }
+    }
+  });
+
   describe("guestMappers", () => {
     it("normalizes backend guest record correctly", () => {
       const raw = {
