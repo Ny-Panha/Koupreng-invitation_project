@@ -23,10 +23,12 @@ export function useGuestMutations({
 }) {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [lastSavedGuest, setLastSavedGuest] = useState(null);
 
   const saveGuest = async (form, editingId) => {
     setSaving(true);
     setError("");
+    setLastSavedGuest(null);
     let optimisticId = null;
 
     try {
@@ -66,6 +68,7 @@ export function useGuestMutations({
           ...normalizeBackendGuest(savedBackend || { ...(targetBackendGuest || {}), ...payload, id: optimisticId }),
           pending: false,
         };
+        if (/^[1-9]\d*$/.test(String(normalized.id))) setLastSavedGuest(normalized);
 
         setBackendGuests((current) => {
           const index = current.findIndex((item) => String(item.id) === String(optimisticId));
@@ -76,6 +79,7 @@ export function useGuestMutations({
         });
       } else {
         const guestToSave = toManualGuest(form, editingId);
+        setLastSavedGuest(normalizeManualGuest(guestToSave));
         setManualGuests((current) => {
           const next = editingId
             ? current.map((item) => (item.id === editingId ? guestToSave : item))
@@ -256,5 +260,6 @@ export function useGuestMutations({
     deleteGuest,
     importGuests,
     markGuestAsSent,
+    lastSavedGuest,
   };
 }

@@ -15,6 +15,19 @@ const categories = [
 ];
 
 describe("GuestTable", () => {
+  it("opening a sharing provider does not confirm delivery or change send status", () => {
+    useLanguageStore.setState({ lang: 'en' });
+    const onMarkAsSent = vi.fn();
+    render(<GuestTable guests={[{id:501,name:'Sample guest',source:'backend',inviteToken:'fixture-link-only',sendStatus:'PENDING'}]} currentDraft={{slug:'sample-event'}} onMarkAsSent={onMarkAsSent} />);
+    fireEvent.click(screen.getByText('More actions'));
+    const share=screen.getByRole('link',{name:'Share invitation for Sample guest via Telegram'});
+    expect(share).toHaveAttribute('target','_blank');
+    fireEvent.click(share);
+    expect(onMarkAsSent).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button',{name:'Record manual sharing'}));
+    expect(onMarkAsSent).toHaveBeenCalledTimes(1);
+    useLanguageStore.setState({lang:'km'});
+  });
   it("localizes RSVP and ticket actions without changing the guest passed to the ticket flow", () => {
     useLanguageStore.setState({ lang: "km" });
     const guest = { id: 501, name: "Sokha", source: "backend", rsvpStatus: "ATTENDING", count: 2 };
@@ -54,6 +67,7 @@ describe("GuestTable", () => {
       />
     );
 
+    fireEvent.click(screen.getByText('ជម្រើសបន្ថែម'));
     fireEvent.click(screen.getByRole("button", { name: "កែប្រែ" }));
     fireEvent.change(screen.getByRole("textbox", { name: "ឈ្មោះ 14" }), { target: { value: "New Name" } });
     fireEvent.click(screen.getByRole("button", { name: "រក្សាទុក" }));

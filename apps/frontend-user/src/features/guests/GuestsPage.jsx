@@ -1,11 +1,13 @@
 import { useCallback, useState } from "react";
+import { Link } from "react-router-dom";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
 import { ErrorState, SkeletonTable, toast } from "@/shared/ui";
 import { useGuests } from "./hooks/useGuests";
 import { useGuestMutations } from "./hooks/useGuestMutations";
 import { useGuestFilters } from "./hooks/useGuestFilters";
 import { DEFAULT_CATEGORIES, DEFAULT_GROUPS } from "./model/guestConstants";
-import { copyText } from "./model/guestMappers";
+import { copyText, guestInviteUrl } from "./model/guestMappers";
 import GuestStats from "./components/GuestStats";
 import GuestFilters from "./components/GuestFilters";
 import GuestTable from "./components/GuestTable";
@@ -47,6 +49,7 @@ function writeList(key, list) {
 
 export default function GuestsPage() {
   const { text: t } = useBackendMessages("guests");
+  const en = useLanguageStore(state => state.lang) === "en";
 
   const {
     eventId,
@@ -83,6 +86,7 @@ export default function GuestsPage() {
     deleteGuest,
     importGuests,
     markGuestAsSent,
+    lastSavedGuest,
   } = useGuestMutations({
     eventId,
     backendInvitation,
@@ -92,6 +96,8 @@ export default function GuestsPage() {
     setBackendGuests,
     refreshData,
   });
+  const savedGuestLink = lastSavedGuest ? guestInviteUrl(draftMatch, lastSavedGuest, publicInvitation || backendInvitation) : "";
+  const savedPersonalLink = savedGuestLink.includes("?token=") ? savedGuestLink : "";
 
   const [groups, setGroups] = useState(() =>
     readList(scopedKey("koupreng.host.guestGroups", eventId), DEFAULT_GROUPS)
@@ -287,6 +293,16 @@ export default function GuestsPage() {
       {(error || mutationError) && (
         <ErrorState message={error || mutationError} onRetry={refreshData} />
       )}
+      {lastSavedGuest && !formModalOpen && <section className="guest-saved-context workspace-section" aria-label={en ? "Saved guest actions" : "ជម្រើសភ្ញៀវដែលបានរក្សាទុក"}>
+        <p role="status">{en ? "Guest saved:" : "បានរក្សាទុកភ្ញៀវ៖"} <strong>{lastSavedGuest.name}</strong></p>
+        <div className="guest-saved-actions">
+          {backendInvitationId && lastSavedGuest.source === "backend" && <button className="workspace-button" type="button" onClick={() => setTicketGuest(lastSavedGuest)}>{en ? "View personal ticket" : "មើលកាតផ្ទាល់ខ្លួន"}</button>}
+          {savedPersonalLink && <button className="workspace-button" type="button" onClick={() => handleCopyLink(savedPersonalLink)}>{en ? "Copy personal invitation link" : "ចម្លងតំណអញ្ជើញផ្ទាល់ខ្លួន"}</button>}
+          {backendInvitationId && <Link className="workspace-button" to={`/app/events/${backendInvitationId}/delivery`}>{en ? "Send / share in Delivery" : "ផ្ញើ / ចែករំលែកតាមការផ្ញើ"}</Link>}
+          {backendInvitationId && <Link className="workspace-button" to={`/app/events/${backendInvitationId}/rsvp`}>{en ? "Review RSVP" : "ពិនិត្យការឆ្លើយតប"}</Link>}
+        </div>
+        <p className="workspace-muted">{en ? "Sharing a link does not confirm delivery. Review tracked activity in Delivery." : "ការចែករំលែកតំណមិនបញ្ជាក់ថាបានបញ្ជូនទេ។ សូមពិនិត្យសកម្មភាពក្នុងការផ្ញើ។"}</p>
+      </section>}
 
       {loading ? (
         <SkeletonTable rows={5} columns={9} />
@@ -309,6 +325,7 @@ export default function GuestsPage() {
             onDelete={(g) => setDeleteGuestTarget(g)}
             onShowQr={(g) => setQrGuestTarget(g)}
             onShowTicket={backendInvitationId ? guest => setTicketGuest(guest) : undefined}
+            deliveryPath={backendInvitationId ? `/app/events/${backendInvitationId}/delivery` : undefined}
             onCopyLink={handleCopyLink}
             onMarkAsSent={handleMarkAsSent}
             onOpenAddGuest={guests.length === 0 ? handleOpenAddGuest : undefined}

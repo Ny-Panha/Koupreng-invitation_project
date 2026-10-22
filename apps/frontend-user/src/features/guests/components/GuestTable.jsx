@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   IoCheckmarkOutline,
   IoCloseOutline,
@@ -31,6 +32,7 @@ export default function GuestTable({
   onDelete,
   onShowQr,
   onShowTicket,
+  deliveryPath,
   onCopyLink,
   onMarkAsSent,
   onOpenAddGuest,
@@ -276,6 +278,10 @@ export default function GuestTable({
               <td data-label={t ? t("thActions") : "Actions"}>
                 <div className="pe-guest-inline-actions">
                   {onShowTicket && guest.source === "backend" && <button type="button" className="guest-action-btn" onClick={() => onShowTicket(guest)}>{en ? "Ticket" : "កាតអញ្ជើញ"}</button>}
+                  {deliveryPath && guest.source === "backend" && <Link className="guest-action-btn" to={deliveryPath} aria-label={en ? `Send or share for ${guest.name} in Delivery` : `ផ្ញើ ឬចែករំលែកសម្រាប់ ${guest.name}`}>{en ? "Send / share" : "ផ្ញើ / ចែករំលែក"}</Link>}
+                  <details className="guest-row-more" name="guest-row-actions" onKeyDown={event => { if (event.key === 'Escape') { event.currentTarget.open = false; event.currentTarget.querySelector('summary').focus(); } }}>
+                    <summary aria-label={en ? `More actions for ${guest.name}` : `ជម្រើសបន្ថែមសម្រាប់ ${guest.name}`}>{en ? 'More actions' : 'ជម្រើសបន្ថែម'}</summary>
+                    <div className="guest-row-more-content">
                   {onShowQr && (
                     <button
                       type="button"
@@ -306,11 +312,8 @@ export default function GuestTable({
                       target="_blank"
                       rel="noopener noreferrer"
                       className="pe-icon-btn text-[#0088cc] hover:text-[#0077b5]"
-                      title={en ? "Send via Telegram" : "ផ្ញើតាម Telegram"}
-                      aria-label={en ? `Send invitation to ${guest.name} via Telegram` : `ផ្ញើធៀបការទៅ ${guest.name} តាម Telegram`}
-                      onClick={() => {
-                        if (isPending && onMarkAsSent) onMarkAsSent(guest);
-                      }}
+                      title={en ? "Open Telegram sharing (delivery unconfirmed)" : "បើកការចែករំលែក Telegram (មិនបញ្ជាក់ការបញ្ជូន)"}
+                      aria-label={en ? `Share invitation for ${guest.name} via Telegram` : `ចែករំលែកធៀបសម្រាប់ ${guest.name} តាម Telegram`}
                     >
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.07-.18c-.08-.05-.19-.02-.27 0-.11.03-1.84 1.18-5.2 3.45-.49.34-.94.5-1.35.49-.45-.01-1.32-.26-1.96-.47-.79-.26-1.42-.39-1.37-.83.03-.22.33-.44.91-.68 3.56-1.55 5.94-2.58 7.12-3.07 3.39-1.41 4.1-1.65 4.56-1.66.1 0 .32.02.46.12.12.09.15.22.16.32.01.07.02.16.02.24z" />
@@ -324,7 +327,7 @@ export default function GuestTable({
                       className="pe-icon-btn text-teal-600 hover:text-teal-700"
                       onClick={() => onMarkAsSent(guest)}
                       title="សម្គាល់ថាបានផ្ញើ"
-                      aria-label={en ? "Mark as sent" : "សម្គាល់ថាបានផ្ញើ"}
+                      aria-label={en ? "Record manual sharing" : "កត់ត្រាការចែករំលែកដោយផ្ទាល់"}
                     >
                       <IoPaperPlaneOutline aria-hidden="true" />
                     </button>
@@ -378,6 +381,8 @@ export default function GuestTable({
                       <IoTrashOutline aria-hidden="true" />
                     </button>
                   )}
+                    </div>
+                  </details>
                 </div>
               </td>
             </tr>
