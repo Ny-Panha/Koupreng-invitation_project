@@ -478,7 +478,7 @@ export default function HostNav() {
           width: 38px;
           height: 38px;
           border-radius: 50%;
-          background: #B0926A;
+          background: var(--ui-action, #926C34);
           border: 2px solid #fff;
           display: flex;
           align-items: center;

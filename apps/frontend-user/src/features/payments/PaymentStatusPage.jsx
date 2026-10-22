@@ -82,11 +82,11 @@ export default function PaymentStatusPage() {
         <div className="checkout-nav-bar">
           <Link className="checkout-back-btn" to="/templates/browse">
             <IoArrowBackOutline />
-            <span>ត្រឡប់ទៅមើលគំរូ (Back to templates)</span>
+            <span>{en ? 'Back to templates' : 'ត្រឡប់ទៅមើលគំរូ'}</span>
           </Link>
           <div className="checkout-secure-tag">
             <IoShieldCheckmarkOutline />
-            <span>PAYMENT VERIFICATION</span>
+            <span>{en ? 'Payment verification' : 'ការផ្ទៀងផ្ទាត់ការទូទាត់'}</span>
           </div>
         </div>
 
@@ -105,8 +105,8 @@ export default function PaymentStatusPage() {
           </div>
           <p className="checkout-subtitle">
             {order
-              ? statusMessage(order.status)
-              : "សូមពិនិត្យព័ត៌មានការទូទាត់ / Check your payment details"}
+              ? statusMessage(order.status, en ? 'en' : 'km')
+              : en ? 'Check your payment details' : 'សូមពិនិត្យព័ត៌មានការទូទាត់'}
           </p>
         </header>
 
@@ -120,16 +120,16 @@ export default function PaymentStatusPage() {
         {error && (
           <div className="checkout-alert-error" role="alert">
             <span>⚠️ {error}</span>
-            <Link to="/app/payments">ប្រវត្តិការទូទាត់ / Payment history</Link>
+            <Link to="/app/payments">{en ? 'Payment history' : 'ប្រវត្តិការទូទាត់'}</Link>
           </div>
         )}
 
         {order && <PaymentQrCard order={order} onStatusChange={setOrder} onRetry={handleRetry} />}
 
         <div className="payment-footer-links">
-          <Link to="/dashboard">⬅️ ផ្ទាំងគ្រប់គ្រង (Dashboard)</Link>
+          <Link to="/app/events">{en ? 'My events' : 'ព្រឹត្តិការណ៍របស់ខ្ញុំ'}</Link>
           <span>•</span>
-          <Link to="/templates/browse">ស្វែងរកគំរូធៀបការ (Browse Templates)</Link>
+          <Link to="/templates/browse">{en ? 'Browse templates' : 'ស្វែងរកគំរូធៀបការ'}</Link>
         </div>
       </main>
     </div>

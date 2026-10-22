@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -11,6 +11,7 @@ vi.mock("../../shared/ui/toast", () => ({ toast: mocks.toast }));
 vi.mock("react-qr-code", () => ({ default: () => <div aria-label="Payment QR" /> }));
 
 import PaymentQrCard from "./PaymentQrCard";
+import { useLanguageStore } from "../../stores/useLanguageStore";
 
 const pendingOrder = () => ({
   orderCode: "REVIEW-TEST-1",
@@ -32,6 +33,7 @@ describe("PAY-001 payment claim authority", () => {
   afterEach(cleanup);
   beforeEach(() => {
     vi.clearAllMocks();
+    useLanguageStore.setState({ lang: "en" });
     mocks.claim.mockResolvedValue({ status: "PENDING" });
   });
 
@@ -48,6 +50,10 @@ describe("PAY-001 payment claim authority", () => {
     expect(screen.queryByRole("link", { name: /Use Template/i })).not.toBeInTheDocument();
     expect(mocks.toast.mock.calls.flat().join(" ")).not.toMatch(/unlock/i);
     expect(screen.getByRole("status")).toHaveTextContent(/awaiting.*confirmation/i);
+    act(() => useLanguageStore.setState({ lang: "km" }));
+    expect(screen.getByRole("status")).toHaveTextContent("កំពុងរង់ចាំការផ្ទៀងផ្ទាត់");
+    expect(screen.getByRole("button", { name: "ពិនិត្យស្ថានភាព" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Check Status" })).not.toBeInTheDocument();
   });
 
   it("shows access only after the fresh server response is PAID", async () => {

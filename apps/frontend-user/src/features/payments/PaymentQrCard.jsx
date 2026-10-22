@@ -41,7 +41,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
   const copy = (kh, english) => isKm ? kh : english;
   const [checking, setChecking] = useState(false);
   const [claiming, setClaiming] = useState(false);
-  const [claimFeedback, setClaimFeedback] = useState("");
+  const [claimFeedback, setClaimFeedback] = useState(false);
 
   const [now, setNow] = useState(() => Date.now());
   const [copied, setCopied] = useState(false);
@@ -54,12 +54,16 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
     return getPaymentQrValue(order);
   }, [order]);
 
-  const copyOrderCode = () => {
+  const copyOrderCode = async () => {
     if (!orderCode) return;
-    navigator.clipboard.writeText(orderCode);
-    setCopied(true);
-    toast(`បាន Copy Order Code: ${orderCode}`);
-    setTimeout(() => setCopied(false), 2500);
+    try {
+      await navigator.clipboard.writeText(orderCode);
+      setCopied(true);
+      toast(copy("បានចម្លងលេខកូដការបញ្ជាទិញ។", "Order code copied."));
+      setTimeout(() => setCopied(false), 2500);
+    } catch {
+      toast(copy("មិនអាចចម្លងបានទេ។ សូមជ្រើសរើសលេខកូដ ហើយចម្លងដោយខ្លួនឯង។", "Could not copy. Select the order code and copy it manually."));
+    }
   };
 
   const checkStatus = useCallback(
@@ -72,17 +76,17 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
         const latest = await paymentService.getTemplateOrder(orderCode);
         onStatusChange?.(latest);
         if (!quiet && latest.status === "PAID") {
-          toast("ការទូទាត់ជោគជ័យ! Template ត្រូវបាន Unlock រួចរាល់។");
+          toast(isKm ? "បានផ្ទៀងផ្ទាត់ការទូទាត់។ អាចប្រើគំរូបានហើយ។" : "Payment verified. Your template is available.");
         }
       } catch (err) {
         if (!quiet) {
-          toast(err.message || "Could not check payment status");
+          toast(err.message || (isKm ? "មិនអាចពិនិត្យស្ថានភាពការទូទាត់បានទេ។" : "Could not check payment status"));
         }
       } finally {
         setChecking(false);
       }
     },
-    [onStatusChange, orderCode]
+    [onStatusChange, orderCode, isKm]
   );
 
   const handleClaim = async () => {
@@ -91,18 +95,18 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
     try {
       await paymentService.claimPayment(orderCode);
       // PAY-001: a customer claim requests reconciliation; only server PAID grants access.
-      const pendingMessage = "បានផ្ញើសំណើពិនិត្យការទូទាត់។ Awaiting trusted payment confirmation.";
-      setClaimFeedback(pendingMessage);
+      const pendingMessage = copy("បានផ្ញើសំណើពិនិត្យការទូទាត់។ កំពុងរង់ចាំការផ្ទៀងផ្ទាត់។", "Review requested. Awaiting trusted payment confirmation.");
+      setClaimFeedback(true);
       const latest = await paymentService.getTemplateOrder(orderCode);
       onStatusChange?.(latest);
       if (latest.status === "PAID") {
-        setClaimFeedback("");
-        toast("ការទូទាត់ត្រូវបានផ្ទៀងផ្ទាត់។ Template ត្រូវបាន Unlock រួចរាល់។");
+        setClaimFeedback(false);
+        toast(copy("បានផ្ទៀងផ្ទាត់ការទូទាត់។ អាចប្រើគំរូបានហើយ។", "Payment verified. Your template is available."));
       } else {
         toast(pendingMessage);
       }
     } catch (err) {
-      toast(err.message || "មិនអាចផ្ទៀងផ្ទាត់ការទូទាត់បានទេ សូមព្យាយាមម្តងទៀត");
+      toast(err.message || copy("មិនអាចផ្ញើសំណើពិនិត្យបានទេ។ សូមសាកម្ដងទៀត។", "Could not request payment review. Please try again."));
     } finally {
       setClaiming(false);
     }
@@ -113,7 +117,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
   const isExpired = status === "EXPIRED" || (waitingForPayment && remaining !== null && remaining <= 0);
 
   useEffect(() => {
-    setClaimFeedback("");
+    setClaimFeedback(false);
   }, [orderCode]);
 
   useEffect(() => {
@@ -139,13 +143,13 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
   const countdownText = useMemo(() => {
     if (status === "PAID") return "";
     if (isExpired) {
-      return "00:00 • ផុតកំណត់ (Session Expired)";
+      return isKm ? "00:00 • ផុតកំណត់" : "00:00 • Expired";
     }
     if (remaining == null) {
       return "";
     }
     return formatRemaining(remaining);
-  }, [status, isExpired, remaining]);
+  }, [status, isExpired, remaining, isKm]);
 
   return (
     <section className="checkout-card payment-qr-card-lux">
@@ -156,7 +160,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
             {[order?.packageName, amountLabel].filter(Boolean).join(" · ")}
           </span>
           <h2 className="payment-title-lux">
-            {order?.templateName || "Template payment"}
+            {order?.templateName || copy("ការទូទាត់គំរូ", "Template payment")}
           </h2>
         </div>
 
@@ -166,7 +170,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
             : isExpired
             ? copy("ការបញ្ជាទិញផុតកំណត់", "Order expired")
             : isTerminalStatus(status)
-            ? statusMessage(status)
+            ? statusMessage(status, lang)
             : copy("រង់ចាំការផ្ទៀងផ្ទាត់", "Awaiting verification")}
         </span>
       </div>
@@ -194,16 +198,16 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
             {/* Expired Overlay */}
             {isExpired && (
               <div className="payment-qr-expired-overlay">
-                <span className="payment-qr-expired-badge">⚠️ Session Expired</span>
-                <p className="payment-qr-expired-text">Order session expired</p>
-                <p className="payment-qr-expired-sub">The bank link may remain usable. Contact support for late payments.</p>
+                <span className="payment-qr-expired-badge">{copy("ការបញ្ជាទិញផុតកំណត់", "Order expired")}</span>
+                <p className="payment-qr-expired-text">{copy("រយៈពេលនៃការបញ្ជាទិញផុតកំណត់ហើយ", "Order session expired")}</p>
+                <p className="payment-qr-expired-sub">{copy("តំណធនាគារអាចនៅតែប្រើបាន។ សូមទាក់ទងក្រុមការងារសម្រាប់ការទូទាត់យឺត។", "The bank link may remain usable. Contact support for late payments.")}</p>
                 {onRetry && (
                   <button
                     type="button"
                     className="payment-qr-renew-btn"
                     onClick={onRetry}
                   >
-                    <IoRefreshOutline /> បង្កើត QR ថ្មី (New QR)
+                    <IoRefreshOutline /> {copy("បង្កើតការបញ្ជាទិញថ្មី", "Create new order")}
                   </button>
                 )}
               </div>
@@ -214,7 +218,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
           <div className="payment-khqr-footer">
             <strong>ABA PayWay</strong>
             {isExpired ? (
-              <span style={{ color: "#ef4444", fontWeight: 700, fontSize: "0.8rem" }}>Expired</span>
+              <span style={{ color: "var(--ui-danger)", fontWeight: 700, fontSize: "0.8rem" }}>{copy("ផុតកំណត់", "Expired")}</span>
             ) : (
               <span>{amountLabel}</span>
             )}
@@ -235,22 +239,22 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
                 type="button"
                 className="payment-copy-btn"
                 onClick={copyOrderCode}
-                title="Copy Order Code"
+                title={copy("ចម្លងលេខកូដការបញ្ជាទិញ", "Copy order code")}
               >
                 {copied ? <IoCheckmarkCircle style={{ color: "#0f766e" }} /> : <IoCopyOutline />}
-                <span>{copied ? "Copied" : "Copy"}</span>
+                <span>{copied ? copy("បានចម្លង", "Copied") : copy("ចម្លង", "Copy")}</span>
               </button>
             </div>
             <code className="payment-code-number">{orderCode}</code>
             <small className="payment-trx-id">
-              Internal checkout ID: {order?.transactionId || "—"}
+              {copy("លេខសម្គាល់ការបញ្ជាទិញ", "Checkout reference")}: {order?.transactionId || "—"}
             </small>
           </div>
 
           {/* Countdown timer */}
           {countdownText && status !== "PAID" && (
             <div className={`payment-countdown-lux ${isExpired ? "expired" : remaining <= 30 ? "warning" : ""}`}>
-              <span>⏱️ រយៈពេល Session (Expires In):</span>
+              <span>{copy("ផុតកំណត់ក្នុង៖", "Expires in:")}</span>
               <strong>{countdownText}</strong>
             </div>
           )}
@@ -275,13 +279,13 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
               </li>
             </ol>
             <p style={{ marginTop: "12px", color: "var(--kp-teal, #0f766e)", fontWeight: 600, fontSize: "13px" }}>
-              <strong>{isKm ? "ចំណាំ៖" : "Note:"}</strong> {isKm ? "សិទ្ធិប្រើគំរូនឹងបើកក្រោយការផ្ទៀងផ្ទាត់ពីប្រព័ន្ធ ឬអ្នកគ្រប់គ្រង។ (Access follows verified payment confirmation.)" : "Access follows verified payment confirmation from official bank alerts."}
+              <strong>{isKm ? "ចំណាំ៖" : "Note:"}</strong> {isKm ? "សិទ្ធិប្រើគំរូនឹងបើកក្រោយការផ្ទៀងផ្ទាត់ការទូទាត់ដោយប្រព័ន្ធប៉ុណ្ណោះ។" : "Access follows verified payment confirmation from official bank alerts."}
             </p>
           </div>
 
           {/* Success Status Panel */}
           {claimFeedback && status !== "PAID" && (
-            <p className="payment-muted-lux" role="status">{claimFeedback}</p>
+            <p className="payment-muted-lux" role="status">{copy("បានផ្ញើសំណើពិនិត្យការទូទាត់។ កំពុងរង់ចាំការផ្ទៀងផ្ទាត់។", "Review requested. Awaiting trusted payment confirmation.")}</p>
           )}
           {status === "PAID" && (
             <div className="payment-confirmed-lux">
@@ -289,15 +293,15 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
                 <IoCheckmarkCircle />
               </div>
               <div>
-                <strong>ការទូទាត់ត្រូវបានផ្ទៀងផ្ទាត់ជោគជ័យ!</strong>
-                <p>គំរូធៀបការរបស់អ្នកត្រូវបាន Unlock រួចរាល់ហើយ។ អ្នកអាចចាប់ផ្តើមបង្កើតធៀបការបានឥឡូវនេះ។</p>
+                <strong>{copy("បានផ្ទៀងផ្ទាត់ការទូទាត់។", "Payment verified.")}</strong>
+                <p>{copy("អាចប្រើគំរូនេះបានហើយ។ អ្នកអាចចាប់ផ្តើមបង្កើតធៀបការបានឥឡូវនេះ។", "This design is available. You can start creating your invitation.")}</p>
               </div>
               <Link
                 to={templateUsePath(order.templateId, true)}
                 className="checkout-pay-btn"
                 style={{ marginTop: "12px", width: "100%" }}
               >
-                <IoSparkles /> ចាប់ផ្តើមបង្កើតធៀបការ (Use Template)
+                <IoSparkles /> {copy("ប្រើគំរូនេះ", "Use Template")}
               </Link>
             </div>
           )}
@@ -305,8 +309,8 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
           {/* Expired / Failed Panel */}
           {isExpired && (
             <div className="payment-alert-panel expired">
-              <strong>⚠️ Order session expired</strong>
-              <p>Start a new order before paying. Late payment evidence requires manual review; bank link expiry is controlled by ABA.</p>
+              <strong>{copy("ការបញ្ជាទិញផុតកំណត់", "Order session expired")}</strong>
+              <p>{copy("សូមបង្កើតការបញ្ជាទិញថ្មី មុនទូទាត់។ ការទូទាត់យឺតត្រូវការការពិនិត្យដោយក្រុមការងារ។ ABA គ្រប់គ្រងរយៈពេលសុពលភាពតំណធនាគារ។", "Start a new order before paying. Late payment evidence requires manual review; bank link expiry is controlled by ABA.")}</p>
               {onRetry && (
                 <button
                   type="button"
@@ -314,7 +318,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
                   onClick={onRetry}
                   style={{ marginTop: "10px" }}
                 >
-                  <IoRefreshOutline /> បង្កើត QR ថ្មី (Regenerate QR)
+                  <IoRefreshOutline /> {copy("បង្កើតការបញ្ជាទិញថ្មី", "Create new order")}
                 </button>
               )}
             </div>
@@ -322,10 +326,10 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
 
           {isTerminalStatus(status) && status !== "PAID" && !isExpired && (
             <div className="payment-alert-panel" role="status">
-              <strong>{statusMessage(status)}</strong>
+              <strong>{statusMessage(status, lang)}</strong>
               {onRetry && (
                 <button type="button" className="payment-primary-btn" onClick={onRetry}>
-                  <IoRefreshOutline /> បង្កើតការបញ្ជាទិញថ្មី (New order)
+                  <IoRefreshOutline /> {copy("បង្កើតការបញ្ជាទិញថ្មី", "Create new order")}
                 </button>
               )}
             </div>
@@ -371,7 +375,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
                 onClick={onRetry}
                 style={{ background: "#f59e0b", color: "#000" }}
               >
-                <IoRefreshOutline /> បង្កើត QR ថ្មី (Regenerate QR)
+                <IoRefreshOutline /> {copy("បង្កើតការបញ្ជាទិញថ្មី", "Create new order")}
               </button>
             )}
 
@@ -382,7 +386,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
               onClick={() => checkStatus()}
             >
               <IoRefreshOutline className={checking ? "checkout-spinner" : ""} />
-              <span>{checking ? "កំពុងពិនិត្យ..." : "Check Status"}</span>
+              <span>{checking ? copy("កំពុងពិនិត្យ…", "Checking…") : copy("ពិនិត្យស្ថានភាព", "Check Status")}</span>
             </button>
 
             <Link
@@ -390,7 +394,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
               className="payment-action-secondary-btn"
             >
               <IoArrowBackOutline />
-              <span>ជ្រើសរើសគំរូផ្សេង</span>
+              <span>{copy("ជ្រើសរើសគំរូផ្សេង", "Choose another design")}</span>
             </Link>
           </div>
         </div>
