@@ -6,7 +6,8 @@ import { Link, useSearchParams, useParams } from "react-router-dom";
 
 import { invitationService } from "@/features/invitations/api/invitationApi";
 import { eventPath } from "@/features/events/workspace/eventRoutes";
-import { CalendarDays, CheckCircle2, Circle, ArrowRight, Eye, Palette, Send, Users, ScanLine, Wallet, Gift, ChartColumn, ClipboardCheck } from "lucide-react";
+import { eventStatus } from "@/features/events/workspace/eventNavigationModel";
+import { CalendarDays, CheckCircle2, Circle, ArrowRight, Eye, Palette, Users, ScanLine, Wallet, ChartColumn } from "lucide-react";
 import { formatLocalDate } from "@/shared/utils/localDate";
 import { loadServerDashboard, groupAmounts } from "./dashboardData";
 import { currencyAmounts } from "@/features/budget/currencyTotals";
@@ -236,6 +237,7 @@ export default function DashboardFeature() {
   const english = lang === "en";
   const label = (en, km) => english ? en : km;
   const invitation = state.selectedInvitation;
+  const publicationStatus = eventStatus(invitation, english);
   const preparation = [
     { done: Boolean(invitation?.title && stats.eventDate && stats.venue && invitation?.eventTime), module: "settings", title: label("Complete event details", "បំពេញព័ត៌មានកម្មវិធី"), description: label("Set the date, time and venue.", "កំណត់កាលបរិច្ឆេទ ម៉ោង និងទីកន្លែង។") },
     { done: Boolean(invitation?.templateId || invitation?.templateCode), module: "invitation", title: label("Choose your invitation", "ជ្រើសរើសធៀបអញ្ជើញ"), description: label("Review your template, wording and photos.", "ពិនិត្យគំរូ អត្ថបទ និងរូបភាពរបស់អ្នក។") },
@@ -244,6 +246,13 @@ export default function DashboardFeature() {
     { done: Number(state.dashboard?.deliverySent) > 0, module: "delivery", title: label("Send invitations", "ផ្ញើធៀបអញ្ជើញ"), description: label("Prepare, share and track your invitations.", "រៀបចំ ចែករំលែក និងតាមដានការផ្ញើធៀប។") },
   ];
   const nextStep = preparation.find(step => !step.done);
+  const primaryAction = stats.status === "PUBLISHED"
+    ? stats.guestTotal === 0
+      ? { module: "guests", title: label("Add your guests", "បន្ថែមបញ្ជីភ្ញៀវ") }
+      : Number(state.dashboard?.deliverySent) > 0
+        ? { module: "rsvp", title: label("Track responses", "តាមដានការឆ្លើយតប") }
+        : { module: "delivery", title: label("Share invitations", "ចែករំលែកធៀបអញ្ជើញ") }
+    : nextStep || { module: "invitation", title: label("Continue editing", "បន្តកែសម្រួល") };
 
   // Live Countdown Effect
   useEffect(() => {
@@ -324,26 +333,26 @@ export default function DashboardFeature() {
   if (state.error) return <main className="dash-main pe-dashboard-page"><ErrorState message={state.error} onRetry={() => loadData(selectedInvId)} /></main>;
   if (!stats.hasInvitation) return <main className="workspace-page"><h1>{text("title")}</h1><Link className="workspace-button primary" to="/app/events">{text("viewList")}</Link></main>;
   return <main className="dash-main pe-dashboard-page">
-    <header className="dash-page-header"><div><span className="dash-kicker">Koupreng</span><h1>{text("title")}</h1><p>{text("subtitle")}</p></div></header>
+    <header className="dash-page-header"><div><h1>{label("Event overview", "ទិដ្ឋភាពទូទៅនៃកម្មវិធី")}</h1><p>{label("Your preparation, guests and next steps in one place.", "ការរៀបចំ ភ្ញៀវ និងជំហានបន្ទាប់របស់អ្នកនៅកន្លែងតែមួយ។")}</p></div></header>
     {actionError && <p className="workspace-notice" role="alert">{actionError}</p>}
     <section className="overview-hero">
       <div className="overview-cover" aria-hidden="true">
         {invitation.coverUrl || invitation.templateThumbnailUrl ? <img src={invitation.coverUrl || invitation.templateThumbnailUrl} alt="" /> : <CalendarDays size={64} strokeWidth={1} />}
       </div>
       <div className="overview-hero-content">
-        <span className="workspace-badge">{stats.status === "PUBLISHED" ? label("Published", "បានផ្សាយ") : label("Invitation in preparation", "កំពុងរៀបចំធៀប")}</span>
+        <span className={`event-status-pill badge-${publicationStatus.tone}`}>{publicationStatus.label}</span>
         <h2>{stats.title}</h2>
         <p>{[formatLocalDate(stats.eventDate, english ? "en-US" : "km-KH"), stats.venue].filter(Boolean).join(" · ")}</p>
         {timeRemaining.hasDate && !timeRemaining.isPast && <p className="workspace-muted">{timeRemaining.days} {label("days to your celebration", "ថ្ងៃទៀតដល់កម្មវិធីរបស់អ្នក")}</p>}
         <div className="overview-actions">
-          <Link className="workspace-button primary" to={eventPath(stats.id, nextStep?.module || "rsvp")}><ArrowRight size={18} />{nextStep?.title || label("Track responses", "តាមដានការឆ្លើយតប")}</Link>
+          <Link className="workspace-button primary" to={eventPath(stats.id, primaryAction.module)}><ArrowRight size={18} />{primaryAction.title}</Link>
           <Link className="workspace-button" to={eventPath(stats.id, "preview")}><Eye size={18} />{label("Preview", "មើលជាមុន")}</Link>
-          <Link className="workspace-button" to={eventPath(stats.id, "invitation")}><Palette size={18} />{text("edit")}</Link>
+          {primaryAction.module !== "invitation" && <Link className="workspace-button" to={eventPath(stats.id, "invitation")}><Palette size={18} />{text("edit")}</Link>}
         </div>
-        <div className="overview-publication">
+        <details className="overview-publication-controls"><summary>{label("Publication settings", "ការកំណត់ការផ្សព្វផ្សាយ")}</summary><div className="overview-publication">
           <button type="button" className="workspace-button" onClick={handlePublishToggle} disabled={publishing}>{publishing ? label("Updating…", "កំពុងកែប្រែ…") : stats.status === "PUBLISHED" ? label("Unpublish invitation", "ផ្អាកផ្សាយធៀប") : label("Publish invitation", "ផ្សព្វផ្សាយធៀប")}</button>
           {stats.status === "PUBLISHED" && stats.slug && <button className="workspace-button" onClick={() => handleCopyLink(stats.slug)}>{copied ? text("copied") : text("copyLink")}</button>}
-        </div>
+        </div></details>
       </div>
     </section>
     <section className="overview-columns">
@@ -354,12 +363,10 @@ export default function DashboardFeature() {
           <Link to={eventPath(stats.id, step.module)}><strong>{step.title}</strong><span>{step.description}</span></Link><ArrowRight size={16} aria-hidden="true" />
         </li>)}</ol>
       </div>
-      <div className="workspace-section overview-shortcuts"><h2>{label("Your event tools", "មុខងារកម្មវិធី")}</h2>
+      <div className="workspace-section overview-shortcuts"><h2>{label("Plan the event day", "រៀបចំថ្ងៃកម្មវិធី")}</h2><p className="workspace-muted">{label("Prepare tickets, seating and arrival details.", "រៀបចំកាត កន្លែងអង្គុយ និងព័ត៌មានវត្តមាន។")}</p>
         <div className="overview-tool-grid">{[
-          ["guests", Users, label("Guests", "បញ្ជីភ្ញៀវ")], ["tickets/design", Palette, label("Digital tickets", "កាតឌីជីថល")],
-          ["rsvp", ClipboardCheck, "RSVP"], ["check-in", ScanLine, label("Check-in", "កត់ត្រាវត្តមាន")],
-          ["delivery", Send, label("Delivery", "ការផ្ញើធៀប")], ["seating", Users, label("Seating", "រៀបកៅអី")],
-          ["budget", Wallet, label("Budget", "គម្រោងថវិកា")], ["gifts", Gift, label("Gifts", "ចំណងដៃ")],
+          ["tickets/design", Palette, label("Digital tickets", "កាតឌីជីថល")], ["check-in", ScanLine, label("Check-in", "កត់ត្រាវត្តមាន")],
+          ["seating", Users, label("Seating", "រៀបកៅអី")], ["budget", Wallet, label("Budget", "គម្រោងថវិកា")],
         ].map(([module, Icon, title]) => <Link key={module} to={eventPath(stats.id, module)}><Icon size={20} aria-hidden="true" /><span>{title}</span></Link>)}</div>
       </div>
     </section>

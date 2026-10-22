@@ -153,6 +153,20 @@ test("denied owner route never mounts navigation or requests private module data
   expect(requests).toEqual(["/api/v1/invitations/999"]);
 });
 
+test("pending event verification fits a narrow viewport before any task mounts", async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 568 });
+  await installOverhaulFixtures(page);
+  let release;
+  const pending = new Promise(resolve => { release = resolve; });
+  await page.route("**/api/v1/invitations/101", async route => { await pending; return route.fallback(); });
+  await page.goto("/app/events/101/guests");
+  await expect(page.locator(".event-workspace-loading")).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
+  await expect(page.locator(".event-workspace-content")).toHaveCount(0);
+  release();
+  await expect(page.locator(".event-workspace-content main")).toBeVisible();
+});
+
 test("Studio navigation restores toolbar focus and preserves access to editing actions", async ({ page }) => {
   await installStudioFixtures(page); await page.goto("/app/events/101/invitation");
   await expect(page.locator(".invitation-studio")).toBeVisible();
@@ -176,4 +190,24 @@ test("responsive overview fits short viewports and effective 125/200 percent zoo
       expect(footer.y + footer.height).toBeLessThanOrEqual(height);
     }
   }
+});
+
+test("published overview chooses guest, delivery and response actions from server activity", async ({ page }) => {
+  await open(page, { module: "" });
+  const primary = page.locator(".overview-actions .primary");
+  await expect(primary).toHaveText("Share invitations");
+  await expect(primary).toHaveAttribute("href", "/app/events/101/delivery");
+  await expect(page.locator(".overview-tool-grid a")).toHaveCount(4);
+  await page.route("**/api/v1/invitations/101/dashboard", route => json(route, { totalGuests: 0, deliverySent: 0 }));
+  await page.reload();
+  await expect(primary).toHaveText("Add your guests");
+  await expect(primary).toHaveAttribute("href", "/app/events/101/guests");
+  await page.route("**/api/v1/invitations/101/dashboard", route => json(route, { totalGuests: 2, deliverySent: 2 }));
+  await page.reload();
+  await expect(primary).toHaveText("Track responses");
+  await expect(primary).toHaveAttribute("href", "/app/events/101/rsvp");
+  const unpublish = page.getByRole("button", { name: "Unpublish invitation", exact: true });
+  await expect(unpublish).toBeHidden();
+  await page.getByText("Publication settings", { exact: true }).click();
+  await expect(unpublish).toBeVisible();
 });

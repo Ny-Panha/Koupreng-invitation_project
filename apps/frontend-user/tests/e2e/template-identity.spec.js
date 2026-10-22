@@ -29,14 +29,14 @@ test("switching events remounts controls and uses Garden's shared renderer", asy
   await openPreview(page);
   await expect(live(page).locator(".kc-root")).toBeAttached({timeout:15000});
   await closePreview(page);
-  await page.getByLabel("More studio actions").click();
+  await page.getByRole("button", { name: "Open event navigation", exact: true }).click();
   await page.locator(".event-switcher-select").selectOption("102");
   await expect(page.locator(".pe-template-tag")).toHaveText("Garden Royal Khmer Wedding");
   await openPreview(page);
   await expect(live(page).locator('[data-template-renderer="garden-royal-khmer-wedding"] .tx-root')).toBeAttached({timeout:15000});
   await expect(page.locator(".invitation-studio")).not.toContainText("Celestial host");
   await closePreview(page);
-  await page.getByLabel("More studio actions").click();
+  await page.getByRole("button", { name: "Open event navigation", exact: true }).click();
   await page.locator(".event-switcher-select").selectOption("101");
   await openPreview(page);
   await expect(live(page).locator(".kc-root")).toBeAttached({timeout:15000});
