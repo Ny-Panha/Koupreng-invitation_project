@@ -2,6 +2,7 @@ import { render, screen, waitFor, cleanup } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import InvitationDeliveryManager from "./InvitationDeliveryManager";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 vi.mock("@/features/invitations/api/invitationApi", () => ({
   invitationService: {
@@ -27,13 +28,14 @@ import { deliveryService } from "@/features/invitations/api/deliveryApi";
 describe("InvitationDeliveryManager", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    useLanguageStore.setState({ lang: "en" });
   });
 
   afterEach(() => {
     cleanup();
   });
 
-  it("renders the 3-step delivery workflow with metrics and guests", async () => {
+  it("renders recipient selection before delivery methods and server metrics", async () => {
     invitationService.get.mockResolvedValue({
       id: "101",
       title: "ពិធីមង្គលការ សុខ & ចិន្តា",
@@ -83,17 +85,16 @@ describe("InvitationDeliveryManager", () => {
 
     // Verify title and stages render
     await waitFor(() => {
-      expect(screen.getByText("ពិធីមង្គលការ សុខ & ចិន្តា")).toBeInTheDocument();
+      expect(screen.getByText(/ពិធីមង្គលការ សុខ & ចិន្តា/)).toBeInTheDocument();
     });
 
-    // Check 3-stage headings
-    expect(screen.getByText(/Prepare Guest Links|រៀបចំតំណភ្ជាប់ភ្ញៀវ/i)).toBeInTheDocument();
-    expect(screen.getByText(/Send Invitations & Reminders|ផ្ញើការអញ្ជើញ & រំលឹក/i)).toBeInTheDocument();
-    expect(screen.getByText(/Track Delivery & Guests|តាមដានស្ថានភាពផ្ញើ & ភ្ញៀវ/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Recipients' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Share or send' })).toBeInTheDocument();
+    expect(screen.getAllByRole('checkbox', { name: 'Select all visible eligible guests' }).length).toBeGreaterThan(0);
 
     // Check guest row and audit event
     expect(screen.getAllByText("លោកស្រី ម៉ៅ សុខា").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getByText("012345678")).toBeInTheDocument();
+    expect(screen.getByText("sokha@example.com")).toBeInTheDocument();
   });
 
   it("displays actionable unpublished notice when invitation is draft", async () => {
@@ -124,6 +125,7 @@ describe("InvitationDeliveryManager", () => {
       expect(screen.getByText(/Invitation Not Yet Published|ធៀបការមិនទាន់បានបោះផ្សាយនៅឡើយទេ/i)).toBeInTheDocument();
     });
 
-    expect(screen.getByRole("button", { name: /Publish Invitation|ទៅផ្សព្វផ្សាយធៀប/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Publish Invitation|ទៅផ្សព្វផ្សាយធៀប/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Prepare delivery' })).toBeDisabled();
   });
 });

@@ -2125,11 +2125,7 @@
     min-height: 100%;
     min-height: 100vh;
     height: 100%;
-    padding: 2.2rem 1rem 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    padding: 3rem 1rem 2.5rem;
 }
 
 .tx-root .tx-gate.is-opening {
@@ -2139,17 +2135,17 @@
 .tx-root .tx-gate__media {
     inset: 0;
     transform: none;
-    object-position: center 25%;
+    object-position: center;
 }
 
 .tx-root .tx-gate__veil {
     background:
-        radial-gradient(circle at 50% 36%, rgba(255, 239, 201, 0.12), transparent 48%),
+        radial-gradient(circle at 50% 32%, rgba(255, 239, 201, 0.2), transparent 32%),
         linear-gradient(
             180deg,
-            rgba(32, 10, 16, calc(var(--tx-gate-overlay-opacity, 0.48) * 0.72)) 0%,
-            rgba(38, 12, 17, var(--tx-gate-overlay-opacity, 0.48)) 46%,
-            rgba(20, 7, 9, min(0.88, calc(var(--tx-gate-overlay-opacity, 0.48) + 0.22))) 100%
+            rgba(42, 10, 17, calc(var(--tx-gate-overlay-opacity, 0.48) * 0.82)),
+            rgba(48, 13, 18, var(--tx-gate-overlay-opacity, 0.48)) 46%,
+            rgba(27, 9, 8, min(0.88, calc(var(--tx-gate-overlay-opacity, 0.48) + 0.24)))
         );
 }
 
@@ -2215,106 +2211,9 @@
 }
 
 .tx-root .tx-gate__content {
-    position: relative;
     z-index: 4;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin: auto;
-}
-
-.tx-root .tx-gate__card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: min(348px, 92%);
-    margin: 0 auto;
-    padding: 1.65rem 1.35rem 1.5rem;
-    border-radius: 24px;
-    background: linear-gradient(180deg, rgba(28, 14, 18, 0.84) 0%, rgba(18, 9, 12, 0.9) 100%);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1.5px solid rgba(212, 175, 55, 0.55);
-    box-shadow:
-        inset 0 0 0 4px rgba(212, 175, 55, 0.1),
-        0 24px 60px rgba(0, 0, 0, 0.65);
-    text-align: center;
-    box-sizing: border-box;
-}
-
-.tx-root .tx-gate__card-border {
-    position: absolute;
-    inset: 6px;
-    border: 1px solid rgba(212, 175, 55, 0.28);
-    border-radius: 19px;
-    pointer-events: none;
-}
-
-.tx-root .tx-gate__card .tx-gate__crest {
-    width: 66px;
-    height: 66px;
-    min-width: 66px;
-    min-height: 66px;
-    margin: 0 0 0.55rem;
-    border: 1.5px solid color-mix(in srgb, var(--tx-gate-accent, #c99a3d) 86%, #fff);
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(212, 175, 55, 0.24) 0%, rgba(55, 20, 24, 0.85) 100%);
-    box-shadow:
-        0 4px 14px rgba(0, 0, 0, 0.35),
-        inset 0 0 8px rgba(212, 175, 55, 0.25);
-    display: grid;
-    place-items: center;
-}
-
-.tx-root .tx-gate__card .tx-gate__crest strong {
-    font-size: 1.15rem;
-    font-weight: 600;
-    color: #f7ddb0;
-    letter-spacing: 0.05em;
-}
-
-.tx-root .tx-gate__card .tx-gate__eyebrow {
-    margin: 0 0 0.2rem;
-    font-size: clamp(0.95rem, 3.8vw, 1.15rem);
-    line-height: 1.45;
-    color: #fcebc7;
-}
-
-.tx-root .tx-gate__card h1 {
-    margin: 0.1rem 0 0.25rem;
-    font-size: clamp(1.4rem, 5.8vw, 1.95rem);
-    line-height: 1.35;
-}
-
-.tx-root .tx-gate__card .tx-gate__separator {
-    margin: 0.35rem 0;
-    width: min(12rem, 70%);
-}
-
-.tx-root .tx-gate__card .tx-gate__guest {
-    margin: 0.2rem 0 0;
-    font-size: clamp(0.85rem, 3.2vw, 0.95rem);
-    line-height: 1.5;
-    color: #fff9eb;
-}
-
-.tx-root .tx-gate__card .tx-gate__date {
-    margin: 0.35rem 0 0;
-    font-size: 0.85rem;
-    color: #e8caa4;
-}
-
-.tx-root .tx-gate__card .tx-gate__button {
-    margin-top: 1rem;
-    min-height: 44px;
-    padding: 0.55rem 1.6rem;
-    font-size: 0.95rem;
-    width: auto;
-    min-width: min(100%, 14rem);
+    gap: 0.35rem;
+    width: min(100%, 36rem);
 }
 
 .tx-root .tx-gate__eyebrow {
@@ -4043,13 +3942,13 @@
     padding: 3.5rem 1.35rem;
     color: #fffaf0;
     background:
-        radial-gradient(circle at 50% 28%, rgba(212, 175, 55, 0.22), transparent 42%),
-        linear-gradient(155deg, #1f1810 0%, #302416 52%, #182017 100%);
+        radial-gradient(circle at 50% 28%, rgba(234, 214, 170, 0.18), transparent 32%),
+        linear-gradient(150deg, #2e2519, #5c4628 52%, #263225);
 }
 
 .template-experience--garden-royal-khmer-wedding .tx-gate__media {
-    opacity: 0.94;
-    filter: saturate(1.04) contrast(1.02);
+    opacity: 0.72;
+    filter: saturate(0.78) contrast(0.94);
 }
 
 .template-experience--garden-royal-khmer-wedding .tx-gate__media.tx-image-fallback {
@@ -4063,15 +3962,15 @@
 
 .template-experience--garden-royal-khmer-wedding .tx-gate__veil {
     background:
-        radial-gradient(circle at 50% 45%, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.38) 75%),
-        linear-gradient(180deg, rgba(18, 14, 9, 0.45) 0%, rgba(18, 14, 9, 0.16) 35%, rgba(18, 14, 9, 0.2) 65%, rgba(18, 14, 9, 0.68) 100%);
+        radial-gradient(circle at 50% 43%, rgba(255, 248, 237, 0.2), transparent 30%),
+        linear-gradient(180deg, rgba(31, 25, 16, 0.5), rgba(45, 35, 21, 0.76));
 }
 
 .template-experience--garden-royal-khmer-wedding .tx-gate__paper {
     position: absolute;
     inset: 0;
     z-index: 2;
-    opacity: 0.08;
+    opacity: 0.28;
     pointer-events: none;
     mix-blend-mode: screen;
     background: url("../../../assets/invitations/garden-royal/paper-texture.svg") center / 180px;
@@ -4151,18 +4050,13 @@
 .template-experience--garden-royal-khmer-wedding .tx-gate__crest {
     position: relative;
     display: grid;
-    place-items: center;
     gap: 0.1rem;
     width: clamp(96px, 26vw, 132px);
-    aspect-ratio: 1;
-    min-height: 96px;
-    border-radius: 50%;
     border: 1px solid rgba(234, 214, 170, 0.88);
     background:
         url("../../../assets/invitations/garden-royal/monogram-frame.svg") center / 118% no-repeat,
         radial-gradient(circle, rgba(255, 250, 240, 0.98), rgba(234, 214, 170, 0.88));
     color: #8a6324;
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
 }
 
 .template-experience--garden-royal-khmer-wedding .tx-gate__crest::before {
@@ -7239,22 +7133,8 @@
 
 .tx-root.template-experience--garden-royal-khmer-wedding .tx-gate__button {
     min-height: 48px;
-    margin-top: 1.15rem;
-    padding: 0.65rem 1.8rem;
-    border-radius: 9999px;
-    background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
-    color: #1a1205;
-    font-weight: 700;
-    font-size: 0.95rem;
-    border: 1px solid rgba(255, 240, 180, 0.9);
-    box-shadow: 0 6px 20px rgba(184, 134, 11, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.45);
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.tx-root.template-experience--garden-royal-khmer-wedding .tx-gate__button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 26px rgba(184, 134, 11, 0.58);
+    margin-top: 1rem;
+    border-color: #f2d38d;
 }
 
 .tx-root .tx-faq__list {

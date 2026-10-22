@@ -14,8 +14,8 @@
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    margin-bottom: 24px;
-    padding: 8px 0 20px;
+    margin-bottom: 20px;
+    padding: 0 0 16px;
     border-bottom: 1px solid var(--ws-border, #eadfce);
 }
 
@@ -389,15 +389,15 @@
 /* ── Event cards grid ── */
 .events-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
     gap: 24px;
 }
 
 .event-card {
-    background: #ffffff;
-    border: 1px solid #eadfce;
+    background: var(--ws-surface);
+    border: 1px solid var(--ws-border);
     border-radius: 18px;
-    box-shadow: 0 4px 20px rgba(93, 67, 32, 0.06);
+    box-shadow: var(--ws-shadow);
     cursor: default;
     transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
     display: flex;
@@ -503,7 +503,7 @@
     color: #1f2421;
     margin: 0 0 4px;
     line-height: 1.7;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
 }
 
 .event-card-couple {
@@ -1165,13 +1165,11 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 10000;
+    z-index: 1000;
 }
 
 .events-modal {

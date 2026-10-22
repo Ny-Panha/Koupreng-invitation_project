@@ -26,6 +26,7 @@ export default function RsvpDashboardPage() {
     attendingCount,
     declinedCount,
     pendingCount,
+    attendeeCount,
     load,
   } = useRsvpDashboard(invitationId);
 
@@ -89,6 +90,7 @@ export default function RsvpDashboardPage() {
           setViewMode={setViewMode}
           t={t}
         />
+        <p className="rsvp-count-context">{t('countContext', { count: attendeeCount })}</p>
 
         {/* Conditional: Wishes Wall View or Standard Table */}
         {viewMode === "WISHES" ? (

@@ -29,5 +29,5 @@ test('new guest exposes personal actions and enters authoritative delivery witho
  await context.scrollIntoViewIfNeeded();
  await page.screenshot({path:phase2EvidencePath(info,`guests/guest-context-viewport-${info.project.name}.png`)});
  await context.getByRole('link',{name:'Send / share in Delivery'}).click();await expect(page).toHaveURL(/\/app\/events\/101\/delivery$/);
- await expect(page.getByText('Invitation must be published before delivery can be prepared.')).toBeVisible();expect(writes).toEqual(['create']);
+ await expect(page.getByText('Publish the invitation before preparing guest links.').first()).toBeVisible();expect(writes).toEqual(['create']);
 });

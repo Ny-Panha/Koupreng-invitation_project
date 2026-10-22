@@ -379,9 +379,6 @@ function KhmerRoyalGate({
     const lang = useLanguageStore((state) => state.lang);
     const effectiveCoverImage = content.coverBackgroundImage || content.coverImage;
     const effectiveOpeningVideo = content.coverVideoUrl || openingVideoUrl;
-    const groomDisplayName = content.groom || (lang === "en" ? "Groom" : "កូនកំលោះ");
-    const brideDisplayName = content.bride || (lang === "en" ? "Bride" : "កូនក្រមុំ");
-    const monogramDisplay = content.monogramText || (content.groom && content.bride ? `${content.groom.trim().charAt(0).toUpperCase()} & ${content.bride.trim().charAt(0).toUpperCase()}` : "囍");
 
     return (
         <>
@@ -416,33 +413,28 @@ function KhmerRoyalGate({
             <KhmerCornerOrnament position="bottom-right" />
 
             <div className="tx-gate__content">
-                <div className="tx-gate__card">
-                    <div className="tx-gate__card-border" aria-hidden="true" />
-                    <div className="tx-gate__crest" aria-label={`Monogram ${monogramDisplay}`}>
-                        <strong>{monogramDisplay}</strong>
-                    </div>
-                    <p className="tx-gate__eyebrow">{opening.heading || (lang === "en" ? "WEDDING INVITATION" : "សិរីសួស្តី អាពាហ៍ពិពាហ៍")}</p>
-                    {opening.invitationText && opening.invitationText !== "សូមគោរពអញ្ជើញ" && (
-                        <p className="tx-gate__invitation-text">{opening.invitationText}</p>
-                    )}
-                    <h1>
-                        <span className="tx-foil-gold">{groomDisplayName}</span>
-                        <em aria-hidden="true">{content.amp || "♥"}</em>
-                        <span className="tx-foil-gold">{brideDisplayName}</span>
-                    </h1>
-                    <div className="tx-gate__separator" aria-hidden="true"><span /></div>
-                    <p className="tx-gate__guest">{lang === "en" ? `Cordially Inviting ${guestText}` : `សូមគោរពអញ្ជើញ ${guestText}`}</p>
-                    <GuestSeatPill table={content.guestTable} seat={content.guestSeat} />
-                    {content.dateText && <p className="tx-gate__date">{content.dateText}</p>}
-                    <button
-                        type="button"
-                        className="tx-btn tx-btn--solid tx-gate__button"
-                        onClick={onOpen}
-                        disabled={state !== "closed"}
-                    >
-                        {state === "opening" ? (lang === "en" ? "Opening..." : "កំពុងបើក...") : (opening.openButtonText || (lang === "en" ? "Open Invitation" : "ចុចបើកសំបុត្រអញ្ជើញ"))}
-                    </button>
+                <p className="tx-gate__eyebrow">{opening.heading || (lang === "en" ? "WEDDING INVITATION" : "សិរីសួស្តី អាពាហ៍ពិពាហ៍")}</p>
+                <p className="tx-gate__invitation-text">{opening.invitationText || (lang === "en" ? "You are cordially invited to celebrate the wedding of" : "សូមគោរពអញ្ជើញជាអធិបតី និងភ្ញៀវកិត្តិយស")}</p>
+                <div className="tx-gate__crest" aria-label={`Monogram ${content.monogramText}`}>
+                    <strong>{content.monogramText}</strong>
                 </div>
+                <h1>
+                    <span className="tx-foil-gold">{content.groom}</span>
+                    <em aria-hidden="true">{content.amp}</em>
+                    <span className="tx-foil-gold">{content.bride}</span>
+                </h1>
+                <div className="tx-gate__separator" aria-hidden="true"><span /></div>
+                <p className="tx-gate__guest">{lang === "en" ? `Cordially Inviting ${guestText}` : `សូមគោរពអញ្ជើញ ${guestText}`}</p>
+                <GuestSeatPill table={content.guestTable} seat={content.guestSeat} />
+                {content.dateText && <p className="tx-gate__date">{content.dateText}</p>}
+                <button
+                    type="button"
+                    className="tx-btn tx-btn--solid tx-gate__button"
+                    onClick={onOpen}
+                    disabled={state !== "closed"}
+                >
+                    {state === "opening" ? (lang === "en" ? "Opening..." : "កំពុងបើក...") : (opening.openButtonText || (lang === "en" ? "Open Invitation" : "ចុចបើកសំបុត្រអញ្ជើញ"))}
+                </button>
             </div>
         </>
     );

@@ -13,6 +13,7 @@ export function normalizeManualGuest(guest) {
     name,
     companionName: guest.companionName || "",
     phone: guest.phone === "-" ? "" : guest.phone || "",
+    email: guest.email || "",
     group: guest.group || guest.guestGroup || DEFAULT_GROUPS[0].name,
     category:
       guest.category ||
@@ -37,6 +38,7 @@ export function normalizeBackendGuest(guest) {
     name,
     companionName: guest.companionName || "",
     phone: guest.phone === "-" ? "" : guest.phone || "",
+    email: guest.email || "",
     group: guest.guestGroup || DEFAULT_GROUPS[0].name,
     category: guest.sideType || DEFAULT_CATEGORIES[0].name,
     sendStatus: guest.sendStatus || SEND_STATUS.pending,
@@ -116,6 +118,7 @@ export function toManualGuest(form, existingId) {
     name: form.name.trim(),
     companionName: form.companionName.trim(),
     phone: form.phone.trim(),
+    email: cleanText(form.email),
     group: form.group,
     category: form.category,
     sendStatus: form.sendStatus,
@@ -128,17 +131,20 @@ export function toManualGuest(form, existingId) {
   };
 }
 
-export function toBackendGuestPayload(form) {
+export function toBackendGuestPayload(form, existing = form.raw || {}) {
   return {
     guestName: cleanText(form.name),
     companionName: cleanText(form.companionName) || null,
     phone: cleanText(form.phone) || null,
+    email: cleanText(form.email ?? existing.email) || null,
     guestGroup: form.group || null,
     sideType: form.category || null,
     tableNumber: cleanText(form.seat) || null,
-    sendStatus: form.sendStatus || null,
+    sendStatus: existing.sendStatus || Object.entries(SEND_STATUS).find(([key, value]) => form.sendStatus === value || form.sendStatus === key.toUpperCase())?.[0]?.toUpperCase() || form.sendStatus || null,
     seatCount: Math.max(1, Number(form.count) || 1),
     note: cleanText(form.note) || null,
+    contributionStatus: existing.contributionStatus ?? null,
+    totalContributed: existing.totalContributed ?? null,
   };
 }
 

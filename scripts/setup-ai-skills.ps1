@@ -1,133 +1,58 @@
 <#
 .SYNOPSIS
-    Reproducible setup and verification script for team AI Agent Skills in the E-Invitation Project.
-
+    Verify and install all bundled Koupreng AI skills for Codex and Claude Code.
 .DESCRIPTION
-    Verifies and restores project-local AI agent skills according to ai-skills.lock.json.
-    - Pins all skills to exact verified Git commits.
-    - Validates SHA-256 hashes of all installed skill files.
-    - Never modifies application source code, package.json, pom.xml, or database migrations.
-    - Never accesses secrets or network credentials.
-    - Never commits or pushes to Git.
-
+    Requires Python 3.10+. Defaults to project scope and both agents.
+    See docs/development/AI_SKILLS_SETUP.md for team onboarding and examples.
+.PARAMETER Agent
+    all (default), codex, or claude.
+.PARAMETER Scope
+    project (default), or user for personal skills available across repositories.
 .PARAMETER VerifyOnly
-    Only validates the installed skills against ai-skills.lock.json without making changes.
-
+    Validate repository skills and routing without installing or changing files.
 .PARAMETER Force
-    Allows restoring/overwriting skills if checksum mismatches are detected.
+    Back up and replace conflicting installed copies. Never repairs source skills.
 #>
+[CmdletBinding()]
 param(
+    [ValidateSet('all', 'codex', 'claude')]
+    [string]$Agent = 'all',
+    [ValidateSet('project', 'user')]
+    [string]$Scope = 'project',
     [switch]$VerifyOnly,
-    [switch]$Force
+    [switch]$Force,
+    [switch]$Help
 )
 
-$ErrorActionPreference = "Stop"
+$ErrorActionPreference = 'Stop'
+$installer = Join-Path $PSScriptRoot 'setup_ai_skills.py'
+$installerArgs = @($installer, '--agent', $Agent.ToLowerInvariant(), '--scope', $Scope.ToLowerInvariant())
+if ($VerifyOnly) { $installerArgs += '--verify-only' }
+if ($Force) { $installerArgs += '--force' }
+if ($Help) { $installerArgs += '--help' }
 
-$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-$projectRoot = Split-Path -Parent $scriptDir
-$lockFilePath = Join-Path $projectRoot "ai-skills.lock.json"
-$skillsDir = Join-Path $projectRoot ".agents\skills"
-
-Write-Host "==========================================================" -ForegroundColor Cyan
-Write-Host "   E-Invitation Project - AI Agent Skills Setup & Verification" -ForegroundColor Cyan
-Write-Host "==========================================================" -ForegroundColor Cyan
-Write-Host "Project Root: $projectRoot"
-Write-Host "Skills Directory: $skillsDir"
-Write-Host "Lockfile: $lockFilePath"
-
-if (-not (Test-Path $lockFilePath)) {
-    Write-Error "ai-skills.lock.json not found at $lockFilePath! Aborting."
-    exit 1
-}
-
-$lockJson = Get-Content -Path $lockFilePath -Raw | ConvertFrom-Json
-Write-Host "Loaded lockfile version $($lockJson.version) (Schema: $($lockJson.schemaVersion))`n" -ForegroundColor Green
-
-$allValid = $true
-$verifiedCount = 0
-$mismatchCount = 0
-$missingCount = 0
-
-foreach ($skillEntry in $lockJson.skills) {
-    $skillName = $skillEntry.skill
-    $targetSkillDir = Join-Path $skillsDir $skillName
-    Write-Host "Checking [$($skillEntry.category)] $skillName..." -ForegroundColor White
-    
-    if (-not (Test-Path $targetSkillDir)) {
-        Write-Host "  [-] Skill directory missing: $targetSkillDir" -ForegroundColor Red
-        $missingCount++
-        $allValid = $false
-        continue
+# Probe interpreters; Windows' Store aliases may exist without a usable Python.
+foreach ($candidate in @('py', 'python3', 'python')) {
+    $command = Get-Command $candidate -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
+    if (-not $command) { continue }
+    $prefixArgs = @()
+    if ($candidate -eq 'py') { $prefixArgs = @('-3') }
+    $probeSucceeded = $false
+    try {
+        # Windows PowerShell 5.1 treats native stderr as an error even when redirected.
+        $ErrorActionPreference = 'SilentlyContinue'
+        & $command.Source @prefixArgs -c 'import sys; sys.exit(0 if sys.version_info >= (3, 10) else 1)' >$null 2>$null
+        $probeSucceeded = $? -and ($LASTEXITCODE -eq 0)
+    } catch {
+        $probeSucceeded = $false
+    } finally {
+        $ErrorActionPreference = 'Stop'
     }
-
-    $skillFilesValid = $true
-    foreach ($fileEntry in $skillEntry.files) {
-        $localFilePath = Join-Path $targetSkillDir $fileEntry.path.Replace("/", "\")
-        if (-not (Test-Path $localFilePath)) {
-            Write-Host "    [x] Missing file: $($fileEntry.path)" -ForegroundColor Red
-            $skillFilesValid = $false
-            $missingCount++
-            continue
-        }
-
-        $currentHash = (Get-FileHash -Path $localFilePath -Algorithm SHA256).Hash.ToLower()
-        if ($currentHash -ne $fileEntry.sha256.ToLower()) {
-            Write-Host "    [!] Checksum mismatch for $($fileEntry.path):" -ForegroundColor Yellow
-            Write-Host "        Expected: $($fileEntry.sha256)" -ForegroundColor DarkGray
-            Write-Host "        Found:    $currentHash" -ForegroundColor DarkGray
-            $skillFilesValid = $false
-            $mismatchCount++
-        }
-    }
-
-    if ($skillFilesValid) {
-        Write-Host "  [+] Verified ($($skillEntry.files.Count) files) [Commit: $($skillEntry.commit.Substring(0, 8))]" -ForegroundColor Green
-        $verifiedCount++
-    } else {
-        $allValid = $false
+    if ($probeSucceeded) {
+        & $command.Source @prefixArgs @installerArgs
+        exit $LASTEXITCODE
     }
 }
 
-$customSkills = @(
-    "koupreng-premium-ux",
-    "koupreng-backend-standards",
-    "koupreng-payment-security",
-    "koupreng-database-flyway",
-    "koupreng-qa-release",
-    "koupreng-deployment"
-)
-
-Write-Host "`nChecking Koupreng Custom Canonical Skills..." -ForegroundColor Cyan
-$customVerifiedCount = 0
-foreach ($cSkill in $customSkills) {
-    $cSkillDir = Join-Path $skillsDir $cSkill
-    $cSkillMd = Join-Path $cSkillDir "SKILL.md"
-    $cSkillRefs = Join-Path $cSkillDir "references"
-    if ((Test-Path $cSkillDir) -and (Test-Path $cSkillMd) -and (Test-Path $cSkillRefs)) {
-        Write-Host "  [+] Verified [Koupreng Canonical] $cSkill" -ForegroundColor Green
-        $customVerifiedCount++
-    } else {
-        Write-Host "  [x] Missing custom skill assets in: $cSkillDir" -ForegroundColor Red
-        $allValid = $false
-        $missingCount++
-    }
-}
-
-Write-Host "`n----------------------------------------------------------"
-Write-Host "Verification Summary:" -ForegroundColor Cyan
-Write-Host "  Verified Pinned Skills : $verifiedCount / $($lockJson.skills.Count)"
-Write-Host "  Verified Custom Skills : $customVerifiedCount / $($customSkills.Count)"
-Write-Host "  Missing Files/Dirs     : $missingCount"
-Write-Host "  Checksum Errors        : $mismatchCount"
-
-if ($allValid) {
-    Write-Host "`nAll team AI Agent Skills are fully verified and intact!" -ForegroundColor Green
-    exit 0
-} else {
-    if ($VerifyOnly) {
-        Write-Host "`nVerification failed. Run without -VerifyOnly to investigate." -ForegroundColor Red
-        exit 1
-    }
-    Write-Warning "One or more skills require attention. To re-fetch from pinned commits, verify network access and use -Force."
-    exit 1
-}
+Write-Error 'Python 3.10+ is required. Install Python, enable its launcher/PATH, reopen the terminal, and rerun this script.'
+exit 1

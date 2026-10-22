@@ -1,6 +1,7 @@
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import InvitationSeatingPage from "./InvitationSeatingPage";
 import { SeatingFloorPlan, calculateAutoArrangePositions } from "./components/SeatingFloorPlan";
 
@@ -53,6 +54,7 @@ vi.mock("../../shared/ui/toast", () => ({
 }));
 
 describe("InvitationSeatingPage Feature", () => {
+  beforeEach(() => useLanguageStore.setState({ lang: 'en' }));
   it("renders seating plan with tables, assignments, and unassigned guests", async () => {
     render(
       <MemoryRouter initialEntries={["/dashboard/invitations/10/seating"]}>
@@ -63,10 +65,10 @@ describe("InvitationSeatingPage Feature", () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Dara & Sophea Wedding");
+      expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Seating planner");
       expect(screen.getByRole("heading", { level: 3, name: "Table A1" })).toBeInTheDocument();
-      expect(screen.getByText("Sok Dara")).toBeInTheDocument();
-      expect(screen.getByText("Keo Sophea")).toBeInTheDocument();
+      expect(screen.getAllByText("Sok Dara").length).toBeGreaterThan(0);
+      expect(screen.getAllByText("Keo Sophea").length).toBeGreaterThan(0);
     });
   });
 
@@ -86,9 +88,12 @@ describe("InvitationSeatingPage Feature", () => {
     const createTableBtn = screen.getByRole("button", { name: "Create table" });
     fireEvent.click(createTableBtn);
 
-    await waitFor(() => {
-      expect(createTableBtn).toBeInTheDocument();
-    });
+    expect(await screen.findByRole('dialog', { name: 'Create table' })).toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText('Table name'), { target: { value: 'Family table' } });
+    fireEvent.change(screen.getByLabelText('Capacity'), { target: { value: '6' } });
+    fireEvent.submit(screen.getByRole('dialog').querySelector('form'));
+    const { seatingService } = await import('./seatingService');
+    await waitFor(() => expect(seatingService.createTable).toHaveBeenCalledWith('10', expect.objectContaining({ tableName: 'Family table', capacity: 6 })));
   });
 
   it("renders SeatingFloorPlan component directly without error", () => {
@@ -103,8 +108,8 @@ describe("InvitationSeatingPage Feature", () => {
       />
     );
 
-    expect(screen.getAllByText(/ឆាកមង្គលការ/i).length).toBeGreaterThan(0);
-    expect(screen.getByText(/ផ្លូវកម្រាលព្រំក្រហម/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/Main stage|ឆាកមង្គលការ/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Walkway|ផ្លូវកម្រាលព្រំក្រហម/i).length).toBeGreaterThan(0);
   });
 
   it("switches to Canva floor plan view and displays stage and tables", async () => {
@@ -124,8 +129,8 @@ describe("InvitationSeatingPage Feature", () => {
     fireEvent.click(floorPlanTab);
 
     await waitFor(() => {
-      expect(screen.getAllByText(/ឆាកមង្គលការ/i).length).toBeGreaterThan(0);
-      expect(screen.getByText(/ផ្លូវកម្រាលព្រំក្រហម/i)).toBeInTheDocument();
+      expect(screen.getAllByText(/Main stage|ឆាកមង្គលការ/i).length).toBeGreaterThan(0);
+      expect(screen.getAllByText(/Walkway|ផ្លូវកម្រាលព្រំក្រហម/i).length).toBeGreaterThan(0);
     });
   });
 

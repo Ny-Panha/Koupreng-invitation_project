@@ -1,7 +1,7 @@
 .k-modal-backdrop {
   position: fixed;
   inset: 0;
-  z-index: var(--z-modal, 10000);
+  z-index: var(--z-modal, 2000);
   background: var(--brand-overlay, rgba(15, 23, 42, 0.45));
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -100,4 +100,7 @@
 @keyframes k-slide-up {
   from { transform: translateY(12px) scale(0.98); opacity: 0; }
   to { transform: translateY(0) scale(1); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .k-modal-backdrop, .k-modal-container { animation: none; }
 }

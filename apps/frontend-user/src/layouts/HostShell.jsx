@@ -17,9 +17,7 @@ export default function HostShell() {
         <div className={`dash-wrapper${isEventWorkspace ? " dash-wrapper--event" : ""}${isStudio ? " dash-wrapper--studio" : ""}`}>
             {!isStudio && <HostNav />}
             <div className="dash-main-scroll">
-                <div key={location.pathname} className="user-page-transition">
-                    <Outlet />
-                </div>
+                <Outlet />
             </div>
         </div>
     );

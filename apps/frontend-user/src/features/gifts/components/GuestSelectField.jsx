@@ -9,17 +9,7 @@ function isGiftForGuest(gift, guest, guests) {
     return matchingGuests.length === 1 && gift.name === guest.name;
 }
 
-export function GuestSelectField({
-    value,
-    guestId,
-    onChange,
-    options = [],
-    placeholder,
-    existingGifts = [],
-    ariaLabel,
-    compact = false,
-    t,
-}) {
+export function GuestSelectField({ value, guestId, onChange, options = [], placeholder, existingGifts = [], ariaLabel, t }) {
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState("");
     const ref = useRef();
@@ -66,31 +56,15 @@ export function GuestSelectField({
                 data-gift-name-input="true"
                 onClick={() => setOpen(!open)}
                 style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    width: "100%",
-                    padding: compact ? "8px 10px" : "10px 14px",
-                    border: existingGiftForSelected
-                        ? "1.5px solid #FB7185"
-                        : compact
-                            ? "1px solid #d9cbb7"
-                            : "1.5px solid #eadfce",
-                    borderRadius: compact ? "8px" : "10px",
-                    background: "#fff",
-                    fontSize: compact ? "13px" : "14px",
-                    cursor: "pointer",
-                    color: value ? "#2a1f10" : "#a8a096",
-                    textAlign: "left",
-                    fontFamily: "inherit",
-                    height: compact ? "42px" : "auto",
-                    minHeight: compact ? "42px" : "44px",
-                    boxSizing: "border-box",
-                    transition: "border-color 0.2s"
+                    display: "flex", justifyContent: "space-between", alignItems: "center",
+                    width: "100%", padding: "10px 14px", border: existingGiftForSelected ? "1.5px solid #FB7185" : "1.5px solid #eadfce",
+                    borderRadius: "10px", background: "#fdfaf5", fontSize: "14px",
+                    cursor: "pointer", color: value ? "#2a1f10" : "#a8a096", textAlign: "left",
+                    fontFamily: "inherit", minHeight: "44px", transition: "border-color 0.2s"
                 }}
             >
                 {selectedOption ? (
-                    <span style={{ fontWeight: 600, color: "#2a1f10", fontSize: compact ? "13px" : "14px" }}>
+                    <span style={{ fontWeight: 600, color: "#2a1f10", fontSize: "14px" }}>
                         {selectedLabel}
                     </span>
                 ) : (
@@ -103,7 +77,7 @@ export function GuestSelectField({
                 }} />
             </button>
 
-            {!compact && existingGiftForSelected && !open && (
+            {existingGiftForSelected && !open && (
                 <div style={{ marginTop: "12px" }}>
                     <div style={{ color: "#E11D48", fontSize: "13px", marginBottom: "8px" }}>
                         {t ? t("alreadyGiven") || "This guest has already given a gift." : "This guest has already given a gift."}

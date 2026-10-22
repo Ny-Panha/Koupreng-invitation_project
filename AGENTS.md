@@ -12,6 +12,7 @@ This repository defines team-shared engineering standards and architectural rule
 Project-local agent skills live in [`.agents/skills/`](.agents/skills/). For a complete list of capabilities, consult [`.agents/SKILLS_INDEX.md`](.agents/SKILLS_INDEX.md).  
 Pinned external skills and cryptographic hashes are tracked in [`ai-skills.lock.json`](ai-skills.lock.json).  
 For Codex-specific workflow details, see [`CODEX.md`](CODEX.md).
+For one-command teammate installation in Codex or Claude Code, see [team skills setup](docs/development/AI_SKILLS_SETUP.md).
 
 ---
 

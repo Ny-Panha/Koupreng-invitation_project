@@ -48,6 +48,42 @@
 .workspace-notice[role="alert"], .workspace-field-error { color: #a52838; }
 .workspace-field-error { display: block; font-size: 14px; }
 .workspace-badge { display: inline-flex; align-items: center; gap: 6px; background: #f5efdf; color: #76531f; padding: 3px 12px; border-radius: 99px; font-size: 14px; font-weight: 650; }
+.workspace-page-heading { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.workspace-page-heading h1 { margin: 0; font-size: clamp(26px, 2.5vw, 34px); line-height: 1.7; }
+.workspace-page-heading p { color: var(--ws-muted); margin: 4px 0 0; font-size: 15px; }
+.workspace-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.workspace-summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--ws-border); border-radius: 16px; background: var(--ws-surface); overflow: hidden; }
+.workspace-summary article { padding: 16px 20px; border-inline-end: 1px solid var(--ws-border); min-width: 0; }
+.workspace-summary article:last-child { border: 0; }
+.workspace-summary span { display: block; color: var(--ws-muted); font-size: 14px; line-height: 1.8; }
+.workspace-summary strong { display: block; font-size: 28px; line-height: 1.6; }
+.workspace-button.operational { background: var(--ui-focus); border-color: var(--ui-focus); color: white; }
+.workspace-icon-button { min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--ws-border); border-radius: 10px; background: var(--ws-surface); color: var(--ws-muted); cursor: pointer; }
+.workspace-icon-button:disabled { opacity: .45; cursor: default; }
+.workspace-tabs { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px; border: 1px solid var(--ws-border); border-radius: 12px; background: var(--ws-surface); }
+.workspace-tabs button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 8px 12px; border: 0; border-radius: 8px; background: transparent; color: var(--ws-muted); font: inherit; font-size: 14px; cursor: pointer; }
+.workspace-tabs button[aria-pressed=true] { background: var(--ws-surface-subtle); color: var(--ui-forest); font-weight: 700; }
+.workspace-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 32px 20px; border: 1px dashed var(--ws-border-strong); border-radius: 16px; background: var(--ws-surface); text-align: center; }
+.workspace-empty > svg { color: var(--ws-gold); }
+.workspace-empty h2 { font-size: 21px; margin: 0; }
+.workspace-empty p { max-width: 42ch; color: var(--ws-muted); margin: 0; }
+.workspace-form { display: grid; gap: 16px; }
+.workspace-form label { display: grid; gap: 6px; min-width: 0; font-size: 15px; line-height: 1.8; }
+.workspace-form :is(input,select,textarea) { min-width: 0; width: 100%; min-height: 46px; box-sizing: border-box; padding: 8px 12px; border: 1px solid var(--ws-border-strong); border-radius: 10px; background: var(--ws-surface); color: var(--ws-ink); font: inherit; font-size: 16px; }
+.workspace-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.workspace-form summary { cursor: pointer; min-height: 44px; padding-block: 8px; }
+.workspace-form :is(p,small) { margin: 0; font-size: 14px; line-height: 1.8; }
+.workspace-form [role=alert], .workspace-badge.is-full { color: var(--ui-error, #a52838); }
+.workspace-search { display: flex; gap: 8px; align-items: center; padding: 0 12px; border: 1px solid var(--ws-border-strong); border-radius: 10px; background: var(--ws-surface); }
+.workspace-search input { min-width: 0; width: 100%; min-height: 46px; border: 0; background: transparent; font: inherit; font-size: 16px; color: var(--ws-ink); }
+@media (max-width: 600px) {
+  .workspace-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .workspace-summary article { padding: 12px 16px; border-bottom: 1px solid var(--ws-border); }
+  .workspace-summary article:nth-child(even) { border-inline-end: 0; }
+  .workspace-summary article:nth-last-child(-n+2) { border-bottom: 0; }
+  .workspace-page-heading > .workspace-actions { width: 100%; }
+  .workspace-page-heading > .workspace-actions > .primary { flex: 1; }
+}
 @media (max-width: 600px) {
   .workspace-page { padding-top: 16px; }
   .workspace-page h1 { font-size: 28px; }

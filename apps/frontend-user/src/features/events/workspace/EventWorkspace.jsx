@@ -17,6 +17,7 @@ function VerifiedWorkspace({ eventId }) {
   const [retry, setRetry] = useState(0);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const menuTrigger = useRef(null);
+  const mainPanel = useRef(null);
   const registerNavigationTrigger = useCallback(node => { menuTrigger.current = node; }, []);
   const { user } = useAuth();
   const navigation = useEventNavigation(user?.id || user?.userId);
@@ -28,13 +29,16 @@ function VerifiedWorkspace({ eventId }) {
   const overlay = !navigation.desktop || focusedStudio;
 
   useEffect(() => { setMobileDrawerOpen(false); }, [location.pathname, overlay]);
+  useEffect(() => { if (mainPanel.current) mainPanel.current.scrollTop = 0; }, [location.pathname]);
   useEffect(() => {
     let active = true;
     if (!/^[1-9]\d*$/.test(eventId)) return;
     Promise.all([invitationService.get(eventId), invitationService.listMine()])
       .then(([event, events]) => {
         if (!event || String(event.id) !== eventId) throw new Error("Invalid event response");
-        if (active) setState({ loading: false, event, events: Array.isArray(events) ? events : [], error: "" });
+        const eventList = Array.isArray(events) ? events : [];
+        const summary = eventList.find(item => String(item.id) === eventId);
+        if (active) setState({ loading: false, event: { ...event, coverUrl: summary?.coverUrl || null }, events: eventList, error: "" });
       })
       .catch(error => { if (active) setState({ loading: false, event: null, events: [], error: error.message }); });
     return () => { active = false; };
@@ -95,14 +99,14 @@ function VerifiedWorkspace({ eventId }) {
   };
 
   return <EventContext.Provider value={{ eventId, event: state.event, events: state.events,
-    updateEvent: event => setState(current => ({ ...current, event })),
+    updateEvent: event => setState(current => ({ ...current, event: { ...current.event, ...event } })),
     openNavigation: () => setMobileDrawerOpen(true), navigationOpen: mobileDrawerOpen,
     registerNavigationTrigger,
   }}>
     <section className={`event-workspace${navigation.collapsed ? " is-collapsed" : ""}${navigation.manual ? " has-nav-preference" : ""}${focusedStudio ? " is-studio" : ""}`} aria-label={en ? "Event workspace" : "គ្រប់គ្រងកម្មវិធី"}>
       {!focusedStudio && <a className="event-skip-link" href="#event-module-content">{en ? "Skip to event content" : "ទៅមាតិកាកម្មវិធី"}</a>}
       {!overlay && <aside className="event-workspace-sidebar"><EventNavigation {...navProps} /></aside>}
-      <div className="event-workspace-main">
+      <div className="event-workspace-main" ref={mainPanel}>
         {focusedStudio ? <div id="invitation-studio-toolbar" className="studio-toolbar-mount" /> : <header className="event-workspace-header">
           <button type="button" ref={menuTrigger} className="event-mobile-nav-toggle" onClick={() => setMobileDrawerOpen(true)}
             aria-label={en ? "Toggle modules menu" : "បើកម៉ឺនុយមុខងារ"} aria-expanded={mobileDrawerOpen} aria-haspopup="dialog" aria-controls={mobileDrawerOpen ? "event-module-navigation" : undefined}>
