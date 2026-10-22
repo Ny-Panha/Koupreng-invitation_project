@@ -43,3 +43,28 @@ body:has(.guest-qr-backdrop) .host-mobile-overlay {
     width: 100%;
   }
 }
+
+/* Sharing follows the same guest workspace hierarchy. */
+.guest-share-content { display: flex; flex-direction: column; gap: 16px; }
+.guest-share-link-heading { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--guest-green-hover); }
+.guest-share-link-field { display: flex; align-items: stretch; gap: 8px; }
+.guest-share-link-field input { min-width: 0; flex: 1; min-height: 46px; padding: 10px 12px; border: 1px solid var(--guest-line); border-radius: 10px; font: inherit; font-size: 13px; color: var(--guest-muted); background: var(--guest-subtle); }
+.guest-share-link-field .guest-button { flex-shrink: 0; padding-inline: 16px; border-radius: 10px; font-size: 13px; }
+.guest-share-options { display: flex; flex-wrap: wrap; gap: 9px; }
+.guest-share-options .guest-button { font-size: 13px; padding-inline: 15px; }
+.guest-share-qr-section { display: flex; align-items: center; gap: 24px; margin-top: 6px; padding: 24px 0; border-block: 1px solid var(--guest-line); }
+.guest-share-qr-code { flex-shrink: 0; padding: 13px; border: 1px solid var(--guest-line); border-radius: 12px; background: white; }
+.guest-share-qr-code svg { display: block; }
+.guest-share-qr-details h3 { margin: 0 0 8px; font-size: 15px; font-weight: 600; line-height: 1.65; }
+.guest-share-qr-details p { margin: 0 0 14px; color: var(--guest-muted); font-size: 13px; line-height: 1.8; }
+.guest-share-qr-details .guest-button { font-size: 12px; padding-inline: 14px; }
+.guest-share-feedback { min-height: 0; margin: -8px 0 0; color: var(--guest-green-hover); font-size: 12px; }
+.guest-share-feedback:empty { display: none; }
+.guest-share-preview summary { display: flex; justify-content: space-between; align-items: center; min-height: 44px; color: var(--guest-muted); font-size: 13px; list-style: none; cursor: pointer; }
+.guest-share-preview summary::-webkit-details-marker { display: none; }
+.guest-share-preview p { white-space: pre-wrap; overflow-wrap: break-word; font-size: 13px; line-height: 1.8; padding: 16px; border-radius: 10px; background: var(--guest-subtle); }
+@media (max-width: 480px) {
+  .guest-share-link-field { flex-direction: column; }
+  .guest-share-qr-section { flex-direction: column; gap: 18px; text-align: center; }
+  .guest-share-options { display: grid; grid-template-columns: 1fr; }
+}
