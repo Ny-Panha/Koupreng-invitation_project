@@ -329,6 +329,7 @@ The CI workflow also covers secret scanning, dependency audits, fresh-MySQL Flyw
 | --- | --- |
 | [Architecture](architecture/ARCHITECTURE.md) | System boundaries, modules, and target architecture |
 | [Folder Structure](architecture/folder-structure.md) | Package and directory ownership rules |
+| [Team AI Skills Setup](development/AI_SKILLS_SETUP.md) | One-command Codex and Claude Code skill installation |
 | [Database](database/DATABASE.md) | Schema ownership, migrations, and persistence rules |
 | [API Contract](api/API_CONTRACT.md) | Endpoint compatibility and API conventions |
 | [Docker Deployment](deployment/DOCKER.md) | Container topology, gateway, volumes, and operations |

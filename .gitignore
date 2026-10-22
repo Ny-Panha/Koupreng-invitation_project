@@ -58,6 +58,11 @@ apps/telegram-bot/.venv/
 .coverage
 htmlcov/
 
+# Generated Claude Code skill copies and installer backups (canonical skills are in .agents/skills)
+/.claude/skills/
+/.claude/skill-backups/
+/.claude/.ai-skills-stage-*/
+
 # Local test and runtime artifacts
 *.db
 test-results/
