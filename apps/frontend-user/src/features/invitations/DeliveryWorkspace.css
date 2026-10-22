@@ -19,6 +19,22 @@
 .delivery-methods details, .delivery-history { margin-top: 4px; }
 .delivery-methods summary, .delivery-history > summary { min-height: 44px; padding-block: 10px; cursor: pointer; font-weight: 650; }
 .delivery-methods .workspace-form { max-width: 680px; }
+.delivery-select-mobile { display: none; }
+.delivery-methods { scroll-margin-block: 16px; }
 .delivery-history ul { padding: 0; list-style: none; }
 .delivery-history li { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding-block: 12px; border-bottom: 1px solid var(--ws-border); font-size: 14px; }
-@media(max-width: 700px) { .delivery-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; } .delivery-workspace .workspace-section { padding: 16px; } .delivery-filter-bar > select { width: 100%; } .delivery-recipient-table :is(td,th) { padding: 8px; } }
+@media(max-width: 700px) {
+  .delivery-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .delivery-workspace .workspace-section { padding: 16px; }
+  .delivery-filter-bar > select { width: 100%; }
+  .delivery-select-mobile { display: flex; align-items: center; gap: 10px; min-height: 44px; margin-bottom: 12px; font-size: 14px; }
+  .delivery-select-mobile input { width: 20px; height: 20px; accent-color: var(--ui-focus); }
+  .delivery-recipient-table, .delivery-recipient-table tbody, .delivery-recipient-table tr, .delivery-recipient-table td { display: block; width: 100%; }
+  .delivery-recipient-table thead { display: none; }
+  .delivery-recipients .k-responsive-table-container { border: 0; overflow: visible; box-shadow: none; }
+  .delivery-recipient-table tbody { display: grid; gap: 12px; }
+  .delivery-recipient-table tr { padding: 12px; border: 1px solid var(--ws-border); border-radius: 12px; }
+  .delivery-recipient-table td { padding: 6px 0; border: 0; }
+  .delivery-recipient-table td::before { content: attr(data-label); display: inline-block; color: var(--ws-muted); font-size: 13px; margin-right: 10px; }
+  .delivery-recipient-table td:last-child::before, .delivery-recipient-table td:nth-child(2)::before { display: none; }
+}

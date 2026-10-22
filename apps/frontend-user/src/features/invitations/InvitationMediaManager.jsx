@@ -4,6 +4,7 @@ import { Eye, Images, Music, Palette, Upload, Video } from 'lucide-react';
 import { mediaService } from '@/features/invitations/api/mediaApi';
 import { invitationService } from '@/features/invitations/api/invitationApi';
 import { useBackendMessages } from '@/shared/i18n/useBackendMessages';
+import { useEventWorkspace } from '@/features/events/workspace/EventContext';
 import { toast } from '@/shared/ui';
 import { invitationMediaReferences, MEDIA_CATEGORIES, validateLibraryFile } from './mediaLibraryModel';
 import './MediaLibrary.css';
@@ -17,6 +18,7 @@ function Preview({ file, type, title }) {
 export default function InvitationMediaManager() {
   const { eventId, id = eventId } = useParams();
   const { text: t } = useBackendMessages('mediaWorkspace');
+  const workspace = useEventWorkspace();
   const [library, setLibrary] = useState(null);
   const [invitation, setInvitation] = useState(null);
   const [category, setCategory] = useState('cover');
@@ -31,7 +33,7 @@ export default function InvitationMediaManager() {
     Promise.all([mediaService.list(id), invitationService.get(id)]).then(([media, event]) => { if (active) { setLibrary(media); setInvitation(event); } }).catch(e => { if (active) setError(e.message); });
     return () => { active = false; };
   }, [id]);
-  const refresh = async () => { const [media, event] = await Promise.all([mediaService.list(id), invitationService.get(id)]); setLibrary(media); setInvitation(event); };
+  const refresh = async () => { const [media, event] = await Promise.all([mediaService.list(id), invitationService.get(id)]); setLibrary(media); setInvitation(event); workspace?.updateEvent({ ...event, coverUrl: media.coverImage?.fileUrl || null }); };
   const run = async action => {
     setBusy(true); setError(''); setProgress(0); setRetry(null);
     try { await action(); await refresh(); toast(t('saved')); }

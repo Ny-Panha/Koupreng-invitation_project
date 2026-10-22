@@ -90,7 +90,7 @@ describe("InvitationDeliveryManager", () => {
 
     expect(screen.getByRole('heading', { name: 'Recipients' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Share or send' })).toBeInTheDocument();
-    expect(screen.getByRole('checkbox', { name: 'Select all visible eligible guests' })).toBeInTheDocument();
+    expect(screen.getAllByRole('checkbox', { name: 'Select all visible eligible guests' }).length).toBeGreaterThan(0);
 
     // Check guest row and audit event
     expect(screen.getAllByText("លោកស្រី ម៉ៅ សុខា").length).toBeGreaterThanOrEqual(1);

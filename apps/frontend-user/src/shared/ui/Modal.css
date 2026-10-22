@@ -101,3 +101,6 @@
   from { transform: translateY(12px) scale(0.98); opacity: 0; }
   to { transform: translateY(0) scale(1); opacity: 1; }
 }
+@media (prefers-reduced-motion: reduce) {
+  .k-modal-backdrop, .k-modal-container { animation: none; }
+}

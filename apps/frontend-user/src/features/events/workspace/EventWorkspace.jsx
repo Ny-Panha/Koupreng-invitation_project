@@ -36,7 +36,9 @@ function VerifiedWorkspace({ eventId }) {
     Promise.all([invitationService.get(eventId), invitationService.listMine()])
       .then(([event, events]) => {
         if (!event || String(event.id) !== eventId) throw new Error("Invalid event response");
-        if (active) setState({ loading: false, event, events: Array.isArray(events) ? events : [], error: "" });
+        const eventList = Array.isArray(events) ? events : [];
+        const summary = eventList.find(item => String(item.id) === eventId);
+        if (active) setState({ loading: false, event: { ...event, coverUrl: summary?.coverUrl || null }, events: eventList, error: "" });
       })
       .catch(error => { if (active) setState({ loading: false, event: null, events: [], error: error.message }); });
     return () => { active = false; };
@@ -97,7 +99,7 @@ function VerifiedWorkspace({ eventId }) {
   };
 
   return <EventContext.Provider value={{ eventId, event: state.event, events: state.events,
-    updateEvent: event => setState(current => ({ ...current, event })),
+    updateEvent: event => setState(current => ({ ...current, event: { ...current.event, ...event } })),
     openNavigation: () => setMobileDrawerOpen(true), navigationOpen: mobileDrawerOpen,
     registerNavigationTrigger,
   }}>
