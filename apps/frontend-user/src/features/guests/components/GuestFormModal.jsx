@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, LoaderCircle, UserRound } from "lucide-react";
 import Modal from "@/shared/ui/Modal";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import { SEND_STATUS } from "../model/guestConstants";
 
 function initialForm(guest, groups, categories) {
@@ -17,6 +18,7 @@ function Field({ id, label, required, children, hint }) {
 }
 
 export default function GuestFormModal({ isOpen, onClose, onSave, guest = null, eventType = "WEDDING", groups = [], categories = [], saving = false, error, t }) {
+  const english = useLanguageStore(state => state.lang) === 'en';
   const nameInputRef = useRef(null);
   const formRef = useRef(null);
   const submittingRef = useRef(false);
@@ -116,8 +118,8 @@ export default function GuestFormModal({ isOpen, onClose, onSave, guest = null, 
         <Field id="guestForm-count" label={text("fieldSeats", "ចំនួនកៅអី / មនុស្ស")} hint={text("seatsHint", "រួមទាំងអ្នករួមដំណើរ")}><input {...inputProps("count")} type="number" min="1" step="1" required aria-describedby="guestForm-count-hint" /></Field>
       </div>
       <div className="guest-form-grid">
-        <Field id="guestForm-group" label={text("fieldGroup", "ក្រុម")}><select {...inputProps("group")}>{options(groups, form.group).map((group) => <option key={group.id} value={group.name}>{group.name}</option>)}</select></Field>
-        <Field id="guestForm-category" label={text("fieldCategory", "ប្រភេទ")}><select {...inputProps("category")}>{options(categories, form.category).map((category) => <option key={category.id} value={category.name}>{category.name}</option>)}</select></Field>
+        <Field id="guestForm-group" label={text("fieldGroup", "ក្រុម")}><select {...inputProps("group")}>{options(groups, form.group).map((group) => <option key={group.id} value={group.name}>{!english && group.note ? group.note : group.name}</option>)}</select></Field>
+        <Field id="guestForm-category" label={text("fieldCategory", "ប្រភេទ")}><select {...inputProps("category")}>{options(categories, form.category).map((category) => <option key={category.id} value={category.name}>{!english && category.note ? category.note : category.name}</option>)}</select></Field>
       </div>
       <details className="guest-form-details" open={isEditing ? true : undefined}>
         <summary><span>{text("optionalDetails", "ព័ត៌មានបន្ថែម")}<small>{allowsTableAssignment ? text("optionalDetailsHint", "អ្នករួមដំណើរ លេខតុ និងចំណាំ") : text("optionalWeddingDetailsHint", "អ្នករួមដំណើរ និងចំណាំ")}</small></span><ChevronDown size={18} aria-hidden="true" /></summary>

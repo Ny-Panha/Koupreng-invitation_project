@@ -29,6 +29,7 @@ vi.mock("@/features/invitations/api/invitationApi", () => ({
     get: vi.fn().mockResolvedValue({ id: 1, title: "Dara & Sophea Wedding" }),
   },
 }));
+vi.mock("@/features/guests/api/guestApi", () => ({ guestService: { listByInvitation: vi.fn().mockResolvedValue([]) } }));
 
 describe("RsvpDashboardPage Module", () => {
   beforeEach(() => useLanguageStore.setState({ lang: "en" }));

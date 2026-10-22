@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { guestService } from "@/features/guests/api/guestApi";
+import { deliveryService } from "@/features/invitations/api/deliveryApi";
 import { saveManualGuests } from "@/shared/storage/hostPlanningStorage";
 import {
   normalizeBackendGuest,
@@ -189,7 +190,7 @@ export function useGuestMutations({
           return false;
         }
 
-        const payloadList = toImport.map(toBackendGuestPayload);
+        const payloadList = toImport.map(form => toBackendGuestPayload(form));
         await guestService.importForInvitation(backendIdToUse, payloadList);
       } else {
         const normalizedNew = importedList.map(normalizeManualGuest);
@@ -215,37 +216,24 @@ export function useGuestMutations({
   };
 
   const markGuestAsSent = async (guest) => {
-    if (!guest) return;
-    const nextStatus = SEND_STATUS.sent;
-
-    setBackendGuests((current) =>
-      current.map((g) =>
-        String(g.id) === String(guest.id) ? { ...g, sendStatus: nextStatus } : g
-      )
-    );
-    setManualGuests((current) => {
-      const next = current.map((g) =>
-        String(g.id) === String(guest.id) ? { ...g, sendStatus: nextStatus } : g
-      );
-      saveManualGuests(next, eventId);
-      return next;
-    });
-
-    const backendIdToUse = backendInvitation ? invitationId(backendInvitation) : null;
-    if (backendIdToUse && guest.source === "backend" && (guest.backendId || guest.id)) {
-      try {
-        await guestService.updateForInvitation(
-          backendIdToUse,
-          guest.backendId || guest.id,
-          {
-            ...toBackendGuestPayload(guest),
-            sendStatus: "SENT",
-          }
-        );
-      } catch (err) {
-        console.warn("Could not persist sent status to backend:", err);
+    if (!guest || saving) return false;
+    setSaving(true); setError("");
+    try {
+      const backendIdToUse = backendInvitation ? invitationId(backendInvitation) : null;
+      if (backendIdToUse && guest.source === "backend") {
+        await deliveryService.markShared(backendIdToUse, guest.backendId || guest.id);
+        await refreshData();
+      } else {
+        if (/^[1-9]\d*$/.test(String(eventId))) throw new Error("Event data is still loading");
+        setManualGuests(current => {
+          const next = current.map(g => String(g.id) === String(guest.id) ? { ...g, sendStatus: SEND_STATUS.sent } : g);
+          saveManualGuests(next, eventId);
+          return next;
+        });
       }
-    }
+      return true;
+    } catch (err) { setError(err.message || "Could not record manual sharing"); return false; }
+    finally { setSaving(false); }
   };
 
   return {

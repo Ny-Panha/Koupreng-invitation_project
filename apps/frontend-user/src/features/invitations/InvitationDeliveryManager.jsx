@@ -1,660 +1,85 @@
-import { useCallback, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import {
-  IoAlertCircleOutline,
-  IoArrowBackOutline,
-  IoCheckmarkCircleOutline,
-  IoCopyOutline,
-  IoInformationCircleOutline,
-  IoMailOutline,
-  IoPaperPlaneOutline,
-  IoPeopleOutline,
-  IoRefreshOutline,
-  IoShareSocialOutline,
-  IoTimeOutline,
-} from "react-icons/io5";
-import { deliveryService } from "@/features/invitations/api/deliveryApi";
-import { invitationService } from "@/features/invitations/api/invitationApi";
-import { useLanguageStore } from "@/stores/useLanguageStore";
-import { ResponsiveTable, StatusBadge, toast } from "@/shared/ui";
-import "./InvitationPages.css";
-
-function DeliveryMetricCard({ label, kmLabel, value, icon: Icon, variant = "default" }) {
-  const isKm = useLanguageStore((state) => state.lang) === "km";
-  return (
-    <article className={`delivery-metric-card metric-${variant}`}>
-      <div className="metric-header">
-        <span className="metric-label">{isKm && kmLabel ? kmLabel : label}</span>
-        {Icon && <Icon className="metric-icon" aria-hidden="true" />}
-      </div>
-      <strong className="metric-value">{value ?? 0}</strong>
-    </article>
-  );
-}
-
-function formatDate(value, isKm = false) {
-  if (!value) return "—";
-  try {
-    return new Date(value).toLocaleString(isKm ? "km-KH" : "en-US", {
-      dateStyle: "medium",
-      timeStyle: "short",
-    });
-  } catch {
-    return String(value);
-  }
-}
+import { useCallback, useEffect, useState } from 'react';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { Check, Copy, RefreshCw, Search, Send, Share2, Users } from 'lucide-react';
+import { deliveryService } from '@/features/invitations/api/deliveryApi';
+import { invitationService } from '@/features/invitations/api/invitationApi';
+import { useBackendMessages } from '@/shared/i18n/useBackendMessages';
+import { ResponsiveTable, StatusBadge, toast } from '@/shared/ui';
+import './DeliveryWorkspace.css';
 
 export default function InvitationDeliveryManager() {
   const { eventId, id = eventId } = useParams();
-  const navigate = useNavigate();
-  const lang = useLanguageStore((state) => state.lang);
-  const isKm = lang === "km";
-
-  const [invitation, setInvitation] = useState(null);
-  const [summary, setSummary] = useState(null);
-  const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [emailForm, setEmailForm] = useState({
-    subject: isKm ? "លិខិតអញ្ជើញអាពាហ៍ពិពាហ៍" : "Wedding Invitation",
-    message: isKm
-      ? "សូមគោរពអញ្ជើញលោកអ្នកចូលរួមពិធីអាពាហ៍ពិពាហ៍របស់យើងខ្ញុំ ដោយបើកមើលធៀបការតាមរយៈតំណភ្ជាប់ខាងក្រោម។"
-      : "Please open your wedding invitation link.",
-  });
-
-  const loadData = useCallback(() => {
+  const [params] = useSearchParams();
+  const { text: t, lang } = useBackendMessages('deliveryWorkspace');
+  const [data, setData] = useState(null);
+  const [error, setError] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [query, setQuery] = useState('');
+  const [filter, setFilter] = useState('ALL');
+  const [selected, setSelected] = useState(() => new Set(params.get('guestId') ? [params.get('guestId')] : []));
+  const [email, setEmail] = useState({ subject: '', message: '' });
+  const [result, setResult] = useState(null);
+  const load = useCallback(async () => {
+    const [invitation, summary, events] = await Promise.all([invitationService.get(id), deliveryService.summary(id), deliveryService.events(id)]);
+    setData({ invitation, summary, events: events || [] });
+  }, [id]);
+  useEffect(() => {
     let active = true;
-    setLoading(true);
-
-    Promise.all([
-      invitationService.get(id),
-      deliveryService.summary(id),
-      deliveryService.events(id),
-    ])
-      .then(([invitationData, summaryData, eventData]) => {
-        if (!active) return;
-        setInvitation(invitationData);
-        setSummary(summaryData);
-        setEvents(eventData || []);
-        setError("");
-      })
-      .catch((err) => {
-        if (active) setError(err.message || (isKm ? "មិនអាចទាញយកទិន្នន័យការផ្ញើធៀបបានទេ" : "Could not load delivery data"));
-      })
-      .finally(() => {
-        if (active) setLoading(false);
-      });
-
-    return () => {
-      active = false;
-    };
-  }, [id, isKm]);
-
-  useEffect(() => loadData(), [loadData]);
-
-  const prepareDelivery = async () => {
-    setSaving(true);
-    setError("");
-    try {
-      const result = await deliveryService.prepare(id);
-      setSummary(result);
-      toast(isKm ? "បានរៀបចំតំណភ្ជាប់ភ្ញៀវរួចរាល់" : "Delivery prepared");
-      const eventData = await deliveryService.events(id);
-      setEvents(eventData || []);
-    } catch (err) {
-      setError(err.message || (isKm ? "មិនអាចរៀបចំការផ្ញើបានទេ" : "Could not prepare delivery"));
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const copyText = async (text, successMessage) => {
-    if (!text) return;
-    try {
-      await navigator.clipboard.writeText(text);
-      toast(successMessage);
-    } catch (copyError) {
-      setError(copyError.message || (isKm ? "មិនអាចចម្លងអត្ថបទបានទេ" : "Could not copy text"));
-    }
-  };
-
-  const copyShareMessage = async (guestId) => {
-    setSaving(true);
-    setError("");
-    try {
-      const result = await deliveryService.shareMessage(id, guestId);
-      await copyText(result.message, isKm ? "បានចម្លងសារអញ្ជើញសម្រាប់ផ្ញើ" : "Share message copied");
-    } catch (err) {
-      setError(err.message || (isKm ? "មិនអាចទាញយកសារអញ្ជើញបានទេ" : "Could not get share message"));
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const markShared = async (guestId) => {
-    setSaving(true);
-    setError("");
-    try {
-      await deliveryService.markShared(id, guestId);
-      toast(isKm ? "បានសម្គាល់ថាបានផ្ញើរួចរាល់" : "Guest marked as shared");
-      loadData();
-    } catch (err) {
-      setError(err.message || (isKm ? "មិនអាចកត់ត្រាការផ្ញើបានទេ" : "Could not mark guest as shared"));
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const sendEmail = async () => {
-    setSaving(true);
-    setError("");
-    try {
-      await deliveryService.sendEmail(id, {
-        allEligible: true,
-        subject: emailForm.subject,
-        message: emailForm.message,
-      });
-      toast(isKm ? "បានផ្ញើអ៊ីមែលអញ្ជើញជោគជ័យ" : "Email delivery finished");
-      loadData();
-    } catch (err) {
-      setError(err.message || (isKm ? "មិនអាចផ្ញើអ៊ីមែលបានទេ" : "Could not send email invitations"));
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const sendReminders = async () => {
-    setSaving(true);
-    setError("");
-    try {
-      await deliveryService.sendReminders(id, {
-        allEligible: true,
-        subject: isKm ? "សាររំលឹកធៀបការ" : "Invitation Reminder",
-        message: isKm
-          ? "សូមរំលឹកលោកអ្នកមេត្តាបើកមើលធៀបការ និងឆ្លើយតប RSVP ជូនយើងខ្ញុំ។"
-          : "Reminder: please open your invitation and submit RSVP.",
-      });
-      toast(isKm ? "បានផ្ញើសាររំលឹកជោគជ័យ" : "Reminder delivery finished");
-      loadData();
-    } catch (err) {
-      setError(err.message || (isKm ? "មិនអាចផ្ញើសាររំលឹកបានទេ" : "Could not send reminders"));
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  if (loading) {
-    return (
-      <div className="inv-page">
-        <div className="inv-loading">
-          <IoRefreshOutline className="animate-spin text-2xl mb-2 text-[#0F766E]" />
-          <span>{isKm ? "កំពុងទាញយកទិន្នន័យការផ្ញើ..." : "Loading delivery..."}</span>
-        </div>
-      </div>
-    );
-  }
-
+    Promise.all([invitationService.get(id), deliveryService.summary(id), deliveryService.events(id)])
+      .then(([invitation, summary, events]) => { if (active) setData({ invitation, summary, events: events || [] }); })
+      .catch(e => { if (active) setError(e.message); });
+    return () => { active = false; };
+  }, [id]);
+  const act = async action => { setBusy(true); setError(''); try { await action(); } catch (e) { setError(e.message || t('failed')); } finally { setBusy(false); } };
+  if (!data) return <main className="delivery-workspace workspace-page">{error ? <div role="alert">{error}<button className="workspace-button" onClick={() => act(load)}>{t('retry')}</button></div> : <p role="status">{t('loading')}</p>}</main>;
+  const { invitation, summary, events } = data;
+  const published = invitation.status === 'PUBLISHED';
   const guests = summary?.guests || [];
-  const isPublished = invitation?.status === "PUBLISHED";
-
-  const filteredGuests = searchTerm.trim()
-    ? guests.filter((g) =>
-        (g.guestName || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (g.phone || "").includes(searchTerm) ||
-        (g.email || "").toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    : guests;
-
-  return (
-    <div className="inv-page delivery-page-container" role="main">
-      {/* Page Header */}
-      <header className="inv-page-header delivery-header">
-        <div>
-          <span className="inv-eyebrow">
-            {isKm ? "រៀបចំ & តាមដានការផ្ញើធៀប" : "Delivery & Reminders"}
-          </span>
-          <h1>{invitation?.title || (isKm ? "ការផ្ញើធៀបការ" : "Invitation delivery")}</h1>
-          <p>
-            {isKm
-              ? "បង្កើតតំណភ្ជាប់ផ្ទាល់ខ្លួន ផ្ញើសារអញ្ជើញតាម Telegram/Messenger ផ្ញើអ៊ីមែល និងតាមដានស្ថានភាពបើកមើល។"
-              : "Prepare guest links, copy share messages, send email invitations, and track delivery events."}
-          </p>
-        </div>
-        <div className="inv-card-actions">
-          <button
-            className="inv-secondary-btn"
-            type="button"
-            onClick={() => navigate(`/app/events/${id}/guests`)}
-          >
-            <IoPeopleOutline aria-hidden="true" />
-            <span>{isKm ? "បញ្ជីភ្ញៀវ" : "Guests"}</span>
-          </button>
-          <button
-            className="inv-secondary-btn"
-            type="button"
-            onClick={() => navigate(`/app/events/${id}`)}
-          >
-            <IoArrowBackOutline aria-hidden="true" />
-            <span>{isKm ? "ត្រឡប់" : "Back"}</span>
-          </button>
-        </div>
-      </header>
-
-      {/* Unpublished Notice */}
-      {!isPublished && (
-        <div className="delivery-unpublished-banner" role="alert">
-          <div className="banner-content">
-            <IoAlertCircleOutline className="banner-icon" aria-hidden="true" />
-            <div>
-              <h3>{isKm ? "ធៀបការមិនទាន់បានបោះផ្សាយនៅឡើយទេ" : "Invitation Not Yet Published"}</h3>
-              <p>
-                {isKm
-                  ? "លោកអ្នកត្រូវតែបោះផ្សាយធៀបការជាមុនសិន ទើបប្រព័ន្ធអាចបង្កើតតំណភ្ជាប់អញ្ជើញ និងផ្ញើសារទៅកាន់ភ្ញៀវបាន។"
-                  : "Invitation must be published before delivery can be prepared."}
-              </p>
-            </div>
-          </div>
-          <button
-            type="button"
-            className="inv-primary-btn banner-action-btn"
-            onClick={() => navigate(`/app/events/${id}/invitation`)}
-          >
-            {isKm ? "ទៅផ្សព្វផ្សាយធៀប" : "Publish Invitation"}
-          </button>
-        </div>
-      )}
-
-      {error && (
-        <div className="inv-error" role="alert">
-          <IoAlertCircleOutline aria-hidden="true" />
-          <span>{error}</span>
-        </div>
-      )}
-
-      {/* WORKFLOW STAGE 1: PREPARE LINKS */}
-      <section className="delivery-workflow-card stage-prepare">
-        <div className="card-badge-header">
-          <span className="stage-number">1</span>
-          <div>
-            <h2>{isKm ? "រៀបចំតំណភ្ជាប់ភ្ញៀវ" : "Prepare Guest Links"}</h2>
-            <p>
-              {isKm
-                ? "បង្កើតលេខកូដ និងតំណភ្ជាប់ធៀបការផ្ទាល់ខ្លួនសម្រាប់ភ្ញៀវទាំងអស់នៅក្នុងបញ្ជី។"
-                : "Generate personalized invitation tokens and links for all confirmed guests."}
-            </p>
-          </div>
-        </div>
-
-        <div className="stage-body">
-          <div className="delivery-stats">
-            <DeliveryMetricCard
-              label="Total Guests"
-              kmLabel="ភ្ញៀវសរុប"
-              value={summary?.totalGuests}
-              icon={IoPeopleOutline}
-            />
-            <DeliveryMetricCard
-              label="Links Ready"
-              kmLabel="តំណភ្ជាប់រួចរាល់"
-              value={summary?.ready ?? summary?.linkGenerated}
-              icon={IoCheckmarkCircleOutline}
-              variant="success"
-            />
-            <DeliveryMetricCard
-              label="Not Ready"
-              kmLabel="មិនទាន់រួចរាល់"
-              value={summary?.notReady}
-              icon={IoTimeOutline}
-              variant="warning"
-            />
-          </div>
-
-          <div className="stage-actions">
-            <button
-              className="inv-primary-btn"
-              type="button"
-              onClick={prepareDelivery}
-              disabled={saving || !isPublished}
-            >
-              <IoRefreshOutline className={saving ? "animate-spin" : ""} aria-hidden="true" />
-              <span>
-                {saving
-                  ? isKm ? "កំពុងរៀបចំ..." : "Working..."
-                  : isKm ? "បង្កើតតំណភ្ជាប់ភ្ញៀវ" : "Prepare delivery"}
-              </span>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* WORKFLOW STAGE 2: SEND & SHARE */}
-      <details className="delivery-workflow-card stage-send" open={isPublished}>
-        <summary className="card-badge-header">
-          <span className="stage-number">2</span>
-          <div>
-            <h2>{isKm ? "ផ្ញើការអញ្ជើញ & រំលឹក" : "Send Invitations & Reminders"}</h2>
-            <p>
-              {isKm
-                ? "ផ្ញើសារអញ្ជើញផ្ទាល់ខ្លួនតាមបណ្តាញសង្គម ឬផ្ញើអ៊ីមែលជាកញ្ចប់ទៅកាន់ភ្ញៀវទាំងអស់។"
-                : "Share via Messenger/Telegram, or send batch email invitations and reminders."}
-            </p>
-          </div>
-        </summary>
-
-        <div className="send-channels-grid">
-          {/* Channel A: Messenger / Telegram 1-Click Share */}
-          <div className="delivery-channel-box">
-            <div className="channel-box-title">
-              <IoShareSocialOutline className="text-xl text-[#0F766E]" aria-hidden="true" />
-              <h3>{isKm ? "ផ្ញើតាម Telegram / Messenger / SMS" : "Share via Chat / Social"}</h3>
-            </div>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              {isKm
-                ? "ជ្រើសរើសភ្ញៀវក្នុងតារាងខាងក្រោម រួចចុច 'ចម្លងសារ' ដើម្បីទទួលបានសារអញ្ជើញជាភាសាខ្មែរភ្ជាប់ជាមួយឈ្មោះភ្ញៀវ និងតំណភ្ជាប់ផ្ទាល់ខ្លួន សម្រាប់ផ្ញើតាម Telegram ឬ Messenger។"
-                : "Use the guest list below to copy personalized invite messages with 1 click, then paste them directly into your chats."}
-            </p>
-            <div className="channel-hint-pill">
-              <IoInformationCircleOutline aria-hidden="true" />
-              <span>{isKm ? "មានឈ្មោះភ្ញៀវ និងតំណភ្ជាប់ស្វ័យប្រវត្តិ" : "Includes personalized guest token link"}</span>
-            </div>
-          </div>
-
-          {/* Channel B: Batch Email Dispatch */}
-          <div className="delivery-channel-box">
-            <div className="channel-box-title">
-              <IoMailOutline className="text-xl text-[#0F766E]" aria-hidden="true" />
-              <h3>{isKm ? "ផ្ញើអ៊ីមែល & សាររំលឹក" : "Email & Reminders"}</h3>
-            </div>
-
-            <div className="delivery-email-form">
-              <label>
-                <span className="label-text">{isKm ? "ប្រធានបទអ៊ីមែល" : "Subject"}</span>
-                <input
-                  className="delivery-input"
-                  value={emailForm.subject}
-                  onChange={(event) =>
-                    setEmailForm((current) => ({
-                      ...current,
-                      subject: event.target.value,
-                    }))
-                  }
-                  placeholder={isKm ? "ប្រធានបទ..." : "Email subject"}
-                />
-              </label>
-
-              <label>
-                <span className="label-text">{isKm ? "ខ្លឹមសារសារ" : "Message"}</span>
-                <textarea
-                  className="delivery-textarea"
-                  rows="3"
-                  value={emailForm.message}
-                  onChange={(event) =>
-                    setEmailForm((current) => ({
-                      ...current,
-                      message: event.target.value,
-                    }))
-                  }
-                  placeholder={isKm ? "ខ្លឹមសារសារ..." : "Email message"}
-                />
-              </label>
-
-              <div className="email-form-buttons">
-                <button
-                  className="inv-primary-btn"
-                  type="button"
-                  onClick={sendEmail}
-                  disabled={saving || !isPublished}
-                >
-                  <IoPaperPlaneOutline aria-hidden="true" />
-                  <span>{isKm ? "ផ្ញើអ៊ីមែលទៅកាន់ភ្ញៀវ · Send Email" : "Send email to eligible guests"}</span>
-                </button>
-                <button
-                  className="inv-secondary-btn"
-                  type="button"
-                  onClick={sendReminders}
-                  disabled={saving || !isPublished}
-                >
-                  <IoTimeOutline aria-hidden="true" />
-                  <span>{isKm ? "ផ្ញើសាររំលឹក RSVP · Send Reminders" : "Send reminders"}</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </details>
-
-      {/* WORKFLOW STAGE 3: TRACKING & RECONCILIATION */}
-      <details className="delivery-workflow-card stage-track" open={isPublished || Boolean(summary?.sent || summary?.opened || summary?.responded || summary?.failed)}>
-        <summary className="card-badge-header">
-          <span className="stage-number">3</span>
-          <div>
-            <h2>{isKm ? "តាមដានស្ថានភាពផ្ញើ & ភ្ញៀវ" : "Track Delivery & Guests"}</h2>
-            <p>
-              {isKm
-                ? "ពិនិត្យស្ថានភាពនៃការផ្ញើ ការបើកមើល និងការឆ្លើយតបរបស់ភ្ញៀវម្នាក់ៗ។"
-                : "Real-time delivery progress, guest open tracking, and response logs."}
-            </p>
-          </div>
-        </summary>
-
-        {/* Live Tracking Metrics */}
-        <div className="delivery-stats mb-6">
-          <DeliveryMetricCard
-            label="Sent"
-            kmLabel="បានផ្ញើ"
-            value={summary?.sent}
-            icon={IoPaperPlaneOutline}
-            variant="info"
-          />
-          <DeliveryMetricCard
-            label="Opened"
-            kmLabel="បានបើកមើល"
-            value={summary?.opened}
-            icon={IoCheckmarkCircleOutline}
-            variant="success"
-          />
-          <DeliveryMetricCard
-            label="Responded"
-            kmLabel="បានឆ្លើយតប RSVP"
-            value={summary?.responded}
-            icon={IoCheckmarkCircleOutline}
-            variant="gold"
-          />
-          <DeliveryMetricCard
-            label="Failed"
-            kmLabel="បរាជ័យ"
-            value={summary?.failed}
-            icon={IoAlertCircleOutline}
-            variant={summary?.failed > 0 ? "danger" : "default"}
-          />
-        </div>
-
-        {/* Guest Delivery Table */}
-        <div className="delivery-table-panel">
-          <div className="table-filter-bar">
-            <input
-              type="search"
-              aria-label={isKm ? "ស្វែងរកភ្ញៀវសម្រាប់ផ្ញើ" : "Search delivery recipients"}
-              className="delivery-search-input"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder={isKm ? "ស្វែងរកតាមឈ្មោះ ទូរស័ព្ទ ឬអ៊ីមែល..." : "Search guest by name, phone, email..."}
-            />
-            <span className="text-xs text-slate-500 font-medium">
-              {isKm
-                ? `បង្ហាញ ${filteredGuests.length} ក្នុងចំណោម ${guests.length} នាក់`
-                : `Showing ${filteredGuests.length} of ${guests.length} guests`}
-            </span>
-          </div>
-
-          <div className="guest-table-wrap">
-            <ResponsiveTable ariaLabel="Guest Delivery Table" className="delivery-data-table">
-              <thead>
-                <tr>
-                  <th>{isKm ? "ឈ្មោះភ្ញៀវ" : "Guest"}</th>
-                  <th>{isKm ? "ទំនាក់ទំនង" : "Contact"}</th>
-                  <th>{isKm ? "ស្ថានភាពផ្ញើ" : "Status"}</th>
-                  <th>{isKm ? "តំណភ្ជាប់ធៀប" : "Invitation URL"}</th>
-                  <th>{isKm ? "ពេលផ្ញើចុងក្រោយ" : "Last sent"}</th>
-                  <th className="text-right">{isKm ? "សកម្មភាព" : "Actions"}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredGuests.map((guest) => {
-                  const hasUrl = Boolean(guest.invitationUrl);
-                  return (
-                    <tr key={guest.guestId || guest.id}>
-                      <td data-label={isKm ? "ឈ្មោះភ្ញៀវ" : "Guest"}>
-                        <div className="flex flex-col">
-                          <strong className="text-slate-900 font-bold">{guest.guestName}</strong>
-                          <span className="text-[11px] font-medium text-slate-500">
-                            {guest.responded
-                              ? isKm ? "បានឆ្លើយតប RSVP" : "Responded"
-                              : isKm ? "មិនទាន់ RSVP នៅឡើយ" : "No RSVP yet"}
-                          </span>
-                        </div>
-                      </td>
-                      <td data-label={isKm ? "ទំនាក់ទំនង" : "Contact"}>
-                        <div className="flex flex-col text-xs">
-                          <span className="font-mono text-slate-800">{guest.phone || "—"}</span>
-                          {guest.email && <small className="text-slate-500">{guest.email}</small>}
-                        </div>
-                      </td>
-                      <td data-label={isKm ? "ស្ថានភាពផ្ញើ" : "Status"}>
-                        <StatusBadge status={guest.sendStatus || "PENDING"} />
-                        {guest.lastSendError && (
-                          <div className="delivery-error-text text-xs text-rose-600 mt-1">
-                            {guest.lastSendError}
-                          </div>
-                        )}
-                      </td>
-                      <td data-label={isKm ? "តំណភ្ជាប់ធៀប" : "Invitation URL"}>
-                        {hasUrl ? (
-                          <button
-                            type="button"
-                            className="inv-secondary-btn py-1 px-3 text-xs"
-                            onClick={() =>
-                              copyText(
-                                guest.invitationUrl,
-                                isKm ? "បានចម្លងតំណភ្ជាប់ធៀបការ" : "Invitation link copied"
-                              )
-                            }
-                          >
-                            <IoCopyOutline aria-hidden="true" />
-                            <span>{isKm ? "ចម្លងតំណ" : "Copy link"}</span>
-                          </button>
-                        ) : (
-                          <span className="text-xs text-slate-400 italic">
-                            {isKm ? "មិនទាន់បង្កើត" : "Not generated"}
-                          </span>
-                        )}
-                      </td>
-                      <td data-label={isKm ? "ពេលផ្ញើចុងក្រោយ" : "Last sent"}>
-                        <div className="text-xs text-slate-700">{formatDate(guest.lastSentAt, isKm)}</div>
-                        {guest.lastReminderAt && (
-                          <small className="text-[11px] text-slate-500 block">
-                            {isKm ? "រំលឹក៖ " : "Reminder: "}
-                            {formatDate(guest.lastReminderAt, isKm)}
-                          </small>
-                        )}
-                      </td>
-                      <td data-label={isKm ? "សកម្មភាព" : "Actions"}>
-                        <div className="guest-row-actions">
-                          <button
-                            type="button"
-                            className="inv-primary-btn py-1.5 px-3 text-xs"
-                            onClick={() => copyShareMessage(guest.guestId)}
-                            title={isKm ? "ចម្លងសារអញ្ជើញពេញលេញ" : "Copy full message"}
-                          >
-                            <IoCopyOutline aria-hidden="true" />
-                            <span>{isKm ? "ចម្លងសារ" : "Copy message"}</span>
-                          </button>
-                          <button
-                            type="button"
-                            className="inv-secondary-btn py-1.5 px-3 text-xs"
-                            onClick={() => markShared(guest.guestId)}
-                            disabled={!guest.invitationUrl || saving}
-                            title={isKm ? "សម្គាល់ថាបានផ្ញើរួច" : "Mark as shared"}
-                          >
-                            <IoCheckmarkCircleOutline aria-hidden="true" />
-                            <span>{isKm ? "បានផ្ញើ" : "Mark shared"}</span>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </ResponsiveTable>
-
-            {filteredGuests.length === 0 && (
-              <div className="inv-empty py-12 text-center">
-                <IoPeopleOutline className="text-3xl mx-auto mb-2 text-slate-400" />
-                <p className="text-sm font-semibold text-slate-700">
-                  {guests.length === 0
-                    ? isKm
-                      ? "មិនទាន់មានភ្ញៀវនៅក្នុងបញ្ជីផ្ញើនៅឡើយទេ។ សូមបន្ថែមភ្ញៀវជាមុនសិន។"
-                      : "No delivery guests found. Add guests first."
-                    : isKm
-                    ? "មិនមានភ្ញៀវត្រូវនឹងការស្វែងរកនេះទេ។"
-                    : "No guests match your search criteria."}
-                </p>
-                {guests.length === 0 && (
-                  <button
-                    type="button"
-                    className="inv-primary-btn mt-3"
-                    onClick={() => navigate(`/app/events/${id}/guests`)}
-                  >
-                    {isKm ? "បន្ថែមភ្ញៀវឥឡូវនេះ" : "Add Guests"}
-                  </button>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
-      </details>
-
-      {/* AUDIT TRAIL */}
-      <details className="delivery-workflow-card stage-audit" open={events.length > 0}>
-        <summary className="card-badge-header">
-          <IoTimeOutline className="text-xl text-[#0F766E]" aria-hidden="true" />
-          <div>
-            <h2>{isKm ? "កំណត់ត្រាសកម្មភាពផ្ញើធៀប" : "Audit Trail"}</h2>
-            <p className="text-xs text-slate-500">
-              {isKm
-                ? "ប្រវត្តិនៃការបង្កើតតំណភ្ជាប់ ការផ្ញើអ៊ីមែល និងសាររំលឹកទាំងអស់។"
-                : "Timestamped logs of all link generations, batch dispatches, and reminders."}
-            </p>
-          </div>
-        </summary>
-
-        <div className="audit-events-list">
-          {events.length === 0 ? (
-            <div className="inv-empty compact">
-              {isKm ? "មិនទាន់មានកំណត់ត្រាសកម្មភាពនៅឡើយទេ។" : "No delivery events yet."}
-            </div>
-          ) : (
-            events.map((event) => (
-              <div className="delivery-event-card" key={event.id}>
-                <div className="flex items-center justify-between gap-2">
-                  <strong className="text-sm font-bold text-slate-900">{event.eventType}</strong>
-                  <span className="text-xs font-mono text-slate-400">{formatDate(event.createdAt, isKm)}</span>
-                </div>
-                <div className="flex items-center gap-2 text-xs text-slate-600">
-                  <span className="font-semibold text-[#0F766E]">{event.guestName || (isKm ? "ធៀបការទូទៅ" : "Invitation")}</span>
-                  <span>·</span>
-                  <span>{event.channel || "—"}</span>
-                  <span>·</span>
-                  <StatusBadge status={event.status || "INFO"} />
-                </div>
-                {event.errorMessage && <p className="text-xs text-rose-600 mt-1">{event.errorMessage}</p>}
-              </div>
-            ))
-          )}
-        </div>
-      </details>
-    </div>
-  );
+  const guestId = g => String(g.guestId ?? g.id);
+  const visible = guests.filter(g => [g.guestName, g.email, g.phone].filter(Boolean).join(' ').toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()) && (filter === 'ALL' || g.sendStatus === filter));
+  const eligible = visible.filter(g => published && g.invitationUrl);
+  const selectedGuests = guests.filter(g => selected.has(guestId(g)) && g.invitationUrl);
+  const emailTargets = selectedGuests.filter(g => g.email);
+  const toggle = id => setSelected(previous => { const next = new Set(previous); if (next.has(id)) next.delete(id); else next.add(id); return next; });
+  const copy = async text => { await navigator.clipboard.writeText(text); toast(t('copied')); };
+  const share = (guest, method) => act(async () => {
+    const response = await deliveryService.shareMessage(id, guest.guestId ?? guest.id);
+    if (method === 'copy') await copy(response.message);
+    else if (navigator.share) { try { await navigator.share({ title: invitation.title, text: response.message }); } catch (e) { if (e.name !== 'AbortError') throw e; } }
+    else await copy(response.message);
+  });
+  const dispatch = reminders => act(async () => {
+    const targets = emailTargets.filter(g => !reminders || !g.responded);
+    if (!targets.length || !window.confirm(t('confirmEmail', { count: targets.length }))) return;
+    const payload = { guestIds: targets.map(g => Number(guestId(g))), allEligible: false, subject: email.subject, message: email.message };
+    const response = await (reminders ? deliveryService.sendReminders(id, payload) : deliveryService.sendEmail(id, payload));
+    setResult({ success: response.successCount ?? 0, failed: response.failedCount ?? 0 });
+    await load();
+  });
+  const date = value => value ? new Intl.DateTimeFormat(lang === 'en' ? 'en-GB' : 'km-KH', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value)) : '—';
+  const status = value => t(({ SENT: 'sent', FAILED: 'failed', OPENED: 'opened', PENDING: 'pending', LINK_GENERATED: 'ready', NOT_READY: 'notReady', READY: 'ready', RESPONDED: 'responded' })[value] || 'pending');
+  return <main className="delivery-workspace workspace-page" aria-busy={busy}>
+    <header className="workspace-page-heading"><div><h1>{t('title')}</h1><p>{invitation.title} · {t('subtitle')}</p></div><Link className="workspace-button" to={`/app/events/${id}/guests`}><Users size={18} />{t('guests')}</Link></header>
+    <ol className="delivery-steps">{['prepare', 'select', 'share', 'track'].map((key, i) => <li key={key}><span>{i + 1}</span>{t(key)}</li>)}</ol>
+    {error && <div className="workspace-notice" role="alert">{error}<button className="workspace-button" onClick={() => act(load)}>{t('retry')}</button></div>}
+    {!published && <div className="workspace-notice"><strong>{t('draftTitle')}</strong><p>{t('draftHint')}</p><Link className="workspace-button primary" to={`/app/events/${id}/invitation`}>{t('publish')}</Link></div>}
+    <section className="workspace-summary" aria-label={t('summary')}>{[['total', summary?.totalGuests], ['ready', summary?.ready ?? summary?.linkGenerated], ['sent', summary?.sent], ['failed', summary?.failed]].map(([key, count]) => <article key={key}><span>{t(key)}</span><strong>{count ?? 0}</strong></article>)}</section>
+    <div className="delivery-readiness"><p>{t(published ? 'readyHint' : 'draftHint')}</p><button className="workspace-button" disabled={busy || !published} onClick={() => act(async () => { await deliveryService.prepare(id); await load(); toast(t('prepared')); })}><RefreshCw size={17} />{t('prepareAction')}</button></div>
+    <section className="workspace-section delivery-recipients">
+      <div className="workspace-section-heading"><h2>{t('recipients')}</h2><span className="workspace-muted">{t('selected', { count: selectedGuests.length })}</span></div>
+      <div className="delivery-filter-bar"><label className="workspace-search"><Search size={18} aria-hidden="true" /><input type="search" aria-label={t('search')} placeholder={t('search')} value={query} onChange={e => setQuery(e.target.value)} /></label><select aria-label={t('status')} value={filter} onChange={e => setFilter(e.target.value)}><option value="ALL">{t('all')}</option>{['PENDING', 'SENT', 'FAILED', 'OPENED'].map(s => <option key={s} value={s}>{status(s)}</option>)}</select></div>
+      <ResponsiveTable ariaLabel={t('recipients')} className="delivery-recipient-table"><thead><tr><th><input type="checkbox" aria-label={t('selectAll')} checked={eligible.length > 0 && eligible.every(g => selected.has(guestId(g)))} disabled={!eligible.length || busy} onChange={e => { const checked = e.target.checked; setSelected(previous => { const next = new Set(previous); eligible.forEach(g => checked ? next.add(guestId(g)) : next.delete(guestId(g))); return next; }); }} /></th><th>{t('guest')}</th><th>{t('status')}</th><th>{t('lastSent')}</th><th>{t('actions')}</th></tr></thead><tbody>{visible.map(g => <tr key={guestId(g)}>
+        <td data-label={t('select')}><input type="checkbox" aria-label={`${t('select')}: ${g.guestName}`} disabled={busy || !published || !g.invitationUrl} checked={selected.has(guestId(g))} onChange={() => toggle(guestId(g))} /></td>
+        <td data-label={t('guest')}><strong>{g.guestName}</strong><small>{g.email || g.phone || '—'}</small></td><td data-label={t('status')}><StatusBadge status={g.sendStatus || 'PENDING'} label={status(g.sendStatus || 'PENDING')} />{g.lastSendError && <small className="workspace-field-error">{g.lastSendError}</small>}</td><td data-label={t('lastSent')}>{date(g.lastSentAt)}</td>
+        <td data-label={t('actions')}><div className="workspace-actions"><button className="workspace-icon-button" disabled={busy || !published || !g.invitationUrl} onClick={() => act(() => copy(g.invitationUrl))} aria-label={`${t('copyLink')}: ${g.guestName}`}><Copy size={17} /></button><button className="workspace-button" disabled={busy || !published || !g.invitationUrl} onClick={() => share(g, 'copy')}>{t('copyMessage')}</button><button className="workspace-icon-button" disabled={busy || !published || !g.invitationUrl} onClick={() => share(g, 'native')} aria-label={`${t('share')}: ${g.guestName}`}><Share2 size={17} /></button></div></td>
+      </tr>)}</tbody></ResponsiveTable>
+      {!visible.length && <div className="workspace-empty"><h2>{t(guests.length ? 'noMatches' : 'empty')}</h2><Link className="workspace-button" to={`/app/events/${id}/guests`}>{t('guests')}</Link></div>}
+    </section>
+    <section className="workspace-section delivery-methods"><h2>{t('shareTitle')}</h2><p className="workspace-muted">{t('shareHint')}</p>
+      {selectedGuests.length === 1 && <div className="workspace-actions"><button className="workspace-button operational" disabled={busy || !published} onClick={() => share(selectedGuests[0], 'native')}><Share2 size={17} />{t('share')}</button><a className="workspace-button" target="_blank" rel="noopener noreferrer" href={`https://t.me/share/url?url=${encodeURIComponent(selectedGuests[0].invitationUrl)}`}>{t('telegram')}</a><button className="workspace-button" disabled={busy || !published} onClick={() => act(async () => { if (!window.confirm(t('manualConfirm'))) return; await deliveryService.markShared(id, selectedGuests[0].guestId ?? selectedGuests[0].id); await load(); })}><Check size={17} />{t('manual')}</button></div>}
+      <details><summary>{t('emailTitle')} · {emailTargets.length}</summary><form className="workspace-form" onSubmit={e => { e.preventDefault(); dispatch(false); }}><p className="workspace-muted">{t('emailHint')}</p><label>{t('subject')}<input value={email.subject} onChange={e => setEmail({ ...email, subject: e.target.value })} /></label><label>{t('message')}<textarea rows="3" value={email.message} onChange={e => setEmail({ ...email, message: e.target.value })} /></label><div className="workspace-actions"><button type="submit" className="workspace-button operational" disabled={busy || !published || !emailTargets.length}><Send size={17} />{t('sendEmail')}</button><button type="button" className="workspace-button" disabled={busy || !published || !emailTargets.some(g => !g.responded)} onClick={() => dispatch(true)}>{t('remind')}</button></div></form></details>
+      {result && <p role="status">{t('result', result)}</p>}
+    </section>
+    <details className="workspace-section delivery-history"><summary>{t('history')} · {events.length}</summary>{!events.length ? <p className="workspace-muted">{t('noHistory')}</p> : <ul>{events.map(e => <li key={e.id}><strong>{e.guestName || invitation.title}</strong><StatusBadge status={e.status} label={status(e.status)} /><span>{e.channel || '—'}</span><time>{date(e.createdAt)}</time>{e.errorMessage && <p className="workspace-field-error">{e.errorMessage}</p>}</li>)}</ul>}</details>
+  </main>;
 }

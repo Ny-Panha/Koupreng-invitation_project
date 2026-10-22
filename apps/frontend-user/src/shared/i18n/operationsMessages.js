@@ -1,6 +1,7 @@
 export const OPERATIONS_MESSAGES = {
   rsvp: {
     en: {
+      countContext: '{count} confirmed attendees. Status cards count guest records; party size counts people.', invitedSeats: 'invited seats', awaitingResponse: 'Awaiting reply',
       kicker: "Guest responses", title: "RSVP management", subtitle: "Review attendance, update responses and read guest wishes.",
       guests: "Manage guests", summary: "RSVP summary", attending: "Attending", declined: "Not attending", pending: "Pending", maybe: "Maybe",
       confirmed: "Confirmed responses", declinedNote: "Unable to attend", pendingNote: "Awaiting a reply", wishes: "Guest wishes", wishesNote: "Messages from your guests",
@@ -18,6 +19,7 @@ export const OPERATIONS_MESSAGES = {
       noWishesText: "Messages will appear here when guests send a wish with their RSVP.", loadError: "Could not load responses. Please try again.",
     },
     km: {
+      countContext: 'មានអ្នកចូលរួមដែលបានយល់ព្រម {count} នាក់។ ស្ថានភាពរាប់តាមបញ្ជីភ្ញៀវ ឯចំនួនមនុស្សរាប់ទាំងអ្នករួមដំណើរ។', invitedSeats: 'កៅអីបានអញ្ជើញ', awaitingResponse: 'រង់ចាំការឆ្លើយតប',
       kicker: "ការឆ្លើយតបរបស់ភ្ញៀវ", title: "គ្រប់គ្រងការឆ្លើយតប RSVP", subtitle: "ពិនិត្យការចូលរួម កែប្រែការឆ្លើយតប និងអានសារជូនពររបស់ភ្ញៀវ។",
       guests: "គ្រប់គ្រងភ្ញៀវ", summary: "សង្ខេបការឆ្លើយតប RSVP", attending: "ចូលរួម", declined: "មិនចូលរួម", pending: "រង់ចាំ", maybe: "ប្រហែលជាចូលរួម",
       confirmed: "បានបញ្ជាក់ការចូលរួម", declinedNote: "មិនអាចចូលរួមបាន", pendingNote: "រង់ចាំការឆ្លើយតប", wishes: "សារជូនពររបស់ភ្ញៀវ", wishesNote: "សារដែលភ្ញៀវបានផ្ញើមក",

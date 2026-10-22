@@ -24,10 +24,10 @@ export function RsvpGuestTable({ filteredRsvps = [], search = "", setSearch, sta
           return <tr key={rsvp.id ?? rsvp.guestId ?? index}>
             <td data-label={t("guest")}><div className="rsvp-guest-cell"><span className="rsvp-guest-avatar" aria-hidden="true">{name.trim().charAt(0)}</span><div><div className="rsvp-guest-name">{name}</div>{rsvp.phone && <div className="rsvp-guest-phone">{rsvp.phone}</div>}</div></div></td>
             <td data-label={t("status")}><StatusBadge status={status} label={t(statusKey)} /></td>
-            <td data-label={t("party")}><span className="rsvp-party-badge"><Users size={16} aria-hidden="true" />{rsvp.attendeeCount ?? rsvp.partySize ?? 1} {t("people")}</span></td>
+            <td data-label={t("party")}><span className="rsvp-party-badge"><Users size={16} aria-hidden="true" />{rsvp.pendingInvitation ? `${rsvp.invitedSeats || 1} ${t('invitedSeats')}` : `${rsvp.attendeeCount ?? rsvp.partySize ?? 0} ${t("people")}`}</span></td>
             <td data-label={t("date")}><span className="rsvp-date-cell">{Number.isNaN(date.getTime()) ? "—" : new Intl.DateTimeFormat(lang === "en" ? "en-GB" : "km-KH", { dateStyle: "medium", timeStyle: "short" }).format(date)}</span></td>
             <td data-label={t("message")}><div className="rsvp-wish-text">{rsvp.wish || rsvp.message || "—"}</div></td>
-            {invitationId && <td data-label={t("actions")}><RsvpOwnerActions invitationId={invitationId} record={rsvp} onSaved={onSaved} text={t} /></td>}
+            {invitationId && <td data-label={t("actions")}>{rsvp.pendingInvitation ? <span className="workspace-muted">{t('awaitingResponse')}</span> : <RsvpOwnerActions invitationId={invitationId} record={rsvp} onSaved={onSaved} text={t} />}</td>}
           </tr>;
         })}</tbody>
       </table></div>}

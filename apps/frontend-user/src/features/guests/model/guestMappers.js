@@ -140,7 +140,7 @@ export function toBackendGuestPayload(form, existing = form.raw || {}) {
     guestGroup: form.group || null,
     sideType: form.category || null,
     tableNumber: cleanText(form.seat) || null,
-    sendStatus: form.sendStatus || null,
+    sendStatus: existing.sendStatus || Object.entries(SEND_STATUS).find(([key, value]) => form.sendStatus === value || form.sendStatus === key.toUpperCase())?.[0]?.toUpperCase() || form.sendStatus || null,
     seatCount: Math.max(1, Number(form.count) || 1),
     note: cleanText(form.note) || null,
     contributionStatus: existing.contributionStatus ?? null,

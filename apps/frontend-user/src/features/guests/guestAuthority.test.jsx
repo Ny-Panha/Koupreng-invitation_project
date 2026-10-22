@@ -205,12 +205,15 @@ describe("guest state authority", () => {
         guestName: "Sok Dara",
         companionName: "Srey Mom",
         phone: "012345678",
+        email: null,
         guestGroup: "Bride Side",
         sideType: "Family",
         tableNumber: null,
         sendStatus: null,
         seatCount: 2,
         note: "VIP",
+        contributionStatus: null,
+        totalContributed: null,
       },
     ]);
     expect(refreshData).toHaveBeenCalledTimes(1);
