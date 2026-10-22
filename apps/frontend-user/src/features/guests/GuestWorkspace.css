@@ -174,7 +174,7 @@ body:has(.guest-workspace) .chat-greeting-bubble { display: none; }
 .guest-form-details > summary small { display: block; margin-top: 3px; font-size: 12px; font-weight: 400; color: var(--guest-muted); }
 .guest-form-details[open] > summary { padding-bottom: 18px; }
 .guest-form-details[open] > summary svg { transform: rotate(180deg); }
-.guest-form-footer { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 8px; margin-top: 3px; padding-top: 20px; border-top: 1px solid var(--guest-line); }
+.guest-form-footer { position: sticky; bottom: -24px; z-index: 1; background: var(--guest-paper); display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 8px; margin-top: 3px; padding-block: 16px; border-top: 1px solid var(--guest-line); }
 .guest-form-footer .guest-button { font-size: 13px; padding-inline: 16px; }
 .guest-form-footer .guest-cancel-button { margin-right: auto; border-color: transparent; }
 .guest-field-error { margin: 7px 0 0; color: var(--guest-danger); font-size: 13px; line-height: 1.65; }

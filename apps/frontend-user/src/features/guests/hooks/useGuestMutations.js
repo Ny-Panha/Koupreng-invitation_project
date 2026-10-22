@@ -42,7 +42,7 @@ export function useGuestMutations({
         if (editingId && !targetBackendGuest) {
           throw new Error("Guest not found in this invitation");
         }
-        const payload = toBackendGuestPayload(form);
+        const payload = toBackendGuestPayload(form, targetBackendGuest?.raw);
         optimisticId = editingId ? targetBackendGuest.id : `optimistic-${Date.now()}-${Math.random()}`;
         const optimisticGuest = {
           ...normalizeBackendGuest({ ...(targetBackendGuest || {}), ...payload, id: optimisticId }),
@@ -117,14 +117,10 @@ export function useGuestMutations({
         guestToDelete.source === "backend" &&
         (guestToDelete.backendId || guestToDelete.id)
       ) {
-        try {
-          await guestService.removeFromInvitation(
+        await guestService.removeFromInvitation(
             backendIdToUse,
             guestToDelete.backendId || guestToDelete.id
           );
-        } catch (apiErr) {
-          console.warn("Backend remove guest failed, removing locally:", apiErr);
-        }
         setBackendGuests((current) =>
           current.filter((item) => String(item.id) !== String(guestToDelete.id))
         );
