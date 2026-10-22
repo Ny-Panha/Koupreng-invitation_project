@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { installIdentityFixtures } from './support/templateIdentityFixtures.js';
+import { phase2EvidencePath } from './support/phase2Evidence.js';
 test('preview retains the form, newest edits, focus and position with one active frame', async ({page},testInfo)=>{
  const fixture=await installIdentityFixtures(page);
  if (page.viewportSize().width < 1024) await page.setViewportSize({width:390,height:500});
@@ -25,7 +26,7 @@ test('preview retains the form, newest edits, focus and position with one active
  await expect(frame.locator('[data-template-renderer="khmer-celestial"]')).toBeAttached();
  await expect(frame.getByText('Newest groom',{exact:true}).first()).toBeAttached({timeout:20000});
  await expect(frame.getByText('Newest bride',{exact:true}).first()).toBeAttached();
- await page.screenshot({path:`D:/Koupreng-UXUI-Phase2/screenshots/milestone5/studio-sheet-${testInfo.project.name}.png`});
+ await page.screenshot({path:phase2EvidencePath(testInfo,`studio/studio-sheet-${testInfo.project.name}.png`)});
  await page.locator('iframe').focus();await page.keyboard.press('Escape');
  await expect(dialog).toHaveCount(0);await expect(bride).toBeFocused();
  expect(Math.abs(await page.evaluate(()=>scrollY)-scroll)).toBeLessThan(3);

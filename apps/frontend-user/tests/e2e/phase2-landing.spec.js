@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { installPhase2Fixtures } from './support/phase2Fixtures.js';
+import { phase2EvidencePath } from './support/phase2Evidence.js';
 
 test('public sample is opt-in, uses the real renderer and releases the frame on close', async ({ page }, testInfo) => {
   await installPhase2Fixtures(page, { anonymous: true });
@@ -7,7 +8,7 @@ test('public sample is opt-in, uses the real renderer and releases the frame on 
   const open = page.getByRole('button', { name: 'Try the invitation', exact: true });
   await expect(open).toBeVisible();
   await expect(page.locator('iframe')).toHaveCount(0);
-  await page.screenshot({ path: `D:/Koupreng-UXUI-Phase2/screenshots/milestone3/hero-${testInfo.project.name}.png` });
+  await page.screenshot({ path: phase2EvidencePath(testInfo, `landing/hero-${testInfo.project.name}.png`) });
   await open.click();
   const frame = page.locator('iframe.public-demo-iframe');
   await expect(frame).toHaveCount(1);
@@ -15,7 +16,7 @@ test('public sample is opt-in, uses the real renderer and releases the frame on 
   await expect(frame).toHaveClass(/is-ready/);
   expect(await frame.evaluate(e => ({ width: e.offsetWidth, height: e.offsetHeight }))).toEqual({ width: 440, height: 860 });
   expect(await frame.evaluate(e => ({ width: e.parentElement.offsetWidth, height: e.parentElement.offsetHeight }))).toEqual({ width: 440, height: 860 });
-  await page.screenshot({ path: `D:/Koupreng-UXUI-Phase2/screenshots/milestone3/live-${testInfo.project.name}.png` });
+  await page.screenshot({ path: phase2EvidencePath(testInfo, `landing/live-${testInfo.project.name}.png`) });
   await frame.focus();
   await page.keyboard.press('Escape');
   await expect(frame).toHaveCount(0);

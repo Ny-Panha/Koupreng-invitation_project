@@ -3,9 +3,11 @@ import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { afterEach, expect, it, vi } from "vitest";
 import { paymentService } from "./paymentService";
 import PaymentStatusPage from "./PaymentStatusPage";
+import { useLanguageStore } from "../../stores/useLanguageStore";
 vi.mock("./paymentService", () => ({ paymentService: { getTemplateOrder: vi.fn(), createStaticPaymentOrder: vi.fn() } }));
 afterEach(cleanup);
 it.each([null, [], {}, { orderCode: "OTHER", status: "PAID" }])("does not invent a purchasable order from an invalid or mismatched response: %j", async value => {
+  useLanguageStore.setState({ lang: "en" });
   paymentService.getTemplateOrder.mockResolvedValue(value);
   render(<MemoryRouter initialEntries={["/payments/AUDIT/status"]}><Routes><Route path="/payments/:orderCode/status" element={<PaymentStatusPage />} /></Routes></MemoryRouter>);
   expect(await screen.findByRole("alert")).toHaveTextContent("Payment details are unavailable");

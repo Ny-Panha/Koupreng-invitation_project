@@ -1,5 +1,6 @@
 import {expect,test} from '@playwright/test';
 import {installOverhaulFixtures} from './support/overhaulFixtures.js';
+import {phase2EvidencePath} from './support/phase2Evidence.js';
 test('approved template offer creates one pending order and only server PAID unlocks the selected design',async({page},info)=>{
  await installOverhaulFixtures(page,'en');
  const design={id:2,code:'garden-royal-khmer-wedding',name:'Fixture approved design',premium:true,checkoutEligible:true,checkoutAmount:'37.50',checkoutCurrency:'USD',thumbnailUrl:'/templates/event-essential.svg'};
@@ -18,6 +19,7 @@ test('approved template offer creates one pending order and only server PAID unl
  await page.goto('/templates/garden-royal-khmer-wedding/checkout');
  await expect(page.getByText('$37.50',{exact:true})).toBeVisible();
  await expect(page.getByText(/Test Payment|VAT|100%|Unlimited/)).toHaveCount(0);
+ await page.screenshot({path:phase2EvidencePath(info,`payments/approved-checkout-${info.project.name}.png`),fullPage:true});
  await page.getByRole('button',{name:'Create payment order',exact:true}).click();
  await expect(page).toHaveURL(/\/payments\/PHASE2-FIXTURE\/status$/);
  await expect(page.locator('.payment-status-badge')).toHaveText('Awaiting verification');
@@ -25,9 +27,10 @@ test('approved template offer creates one pending order and only server PAID unl
  await page.getByRole('button',{name:'Request payment review',exact:true}).click();
  await expect(page.locator('.payment-status-badge')).toHaveText('Awaiting verification');
  await expect(page.getByRole('link',{name:/Use Template/i})).toHaveCount(0);
- await page.screenshot({path:`D:/Koupreng-UXUI-Phase2/screenshots/payments/verified-flow-pending-${info.project.name}.png`,fullPage:true});
+ await page.screenshot({path:phase2EvidencePath(info,`payments/verified-flow-pending-${info.project.name}.png`),fullPage:true});
  status='PAID';await page.getByRole('button',{name:'Check Status',exact:true}).click();
  await expect(page.locator('.payment-status-badge')).toHaveText('Payment verified');
  await expect(page.getByRole('link',{name:/Use Template/i})).toHaveAttribute('href','/app/events/new?template=2');
+ await page.screenshot({path:phase2EvidencePath(info,`payments/verified-flow-paid-${info.project.name}.png`),fullPage:true});
  expect(writes.map(w=>w.path)).toEqual(['/api/v1/template-payments/static/create','/api/v1/template-payments/PHASE2-FIXTURE/claim']);
 });

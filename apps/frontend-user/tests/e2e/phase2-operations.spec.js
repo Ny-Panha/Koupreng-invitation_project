@@ -1,5 +1,6 @@
 import {expect,test} from '@playwright/test';
 import {installOverhaulFixtures} from './support/overhaulFixtures.js';
+import {phase2EvidencePath} from './support/phase2Evidence.js';
 test('new guest exposes personal actions and enters authoritative delivery without marking a share as sent',async({page},info)=>{
  await installOverhaulFixtures(page,'en');
  let guest=null;const writes=[];
@@ -22,7 +23,7 @@ test('new guest exposes personal actions and enters authoritative delivery witho
  const share=page.getByRole('link',{name:'Share invitation for Phase 2 sample guest via Telegram'});await expect(share).toHaveAttribute('target','_blank');
  // Opening an external provider is deliberately not part of this fixture journey.
  expect(writes).toEqual(['create']);
- await page.screenshot({path:`D:/Koupreng-UXUI-Phase2/screenshots/milestone6/guest-context-${info.project.name}.png`,fullPage:true});
+ await page.screenshot({path:phase2EvidencePath(info,`guests/guest-context-${info.project.name}.png`),fullPage:true});
  await context.getByRole('link',{name:'Send / share in Delivery'}).click();await expect(page).toHaveURL(/\/app\/events\/101\/delivery$/);
  await expect(page.getByText('Invitation must be published before delivery can be prepared.')).toBeVisible();expect(writes).toEqual(['create']);
 });
