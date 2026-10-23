@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "slug": "royal-garden-cinematic",
+  "name": "Royal Garden Cinematic · សួនរាជមង្គល",
+  "version": "1.0.0",
+  "category": "WEDDING",
+  "cover": {
+    "type": "image",
+    "src": "/templates/royal-garden/garden.svg",
+    "poster": "/templates/royal-garden/garden.svg",
+    "objectFit": "cover"
+  },
+  "tokens": {
+    "--tpl-primary": "#823544",
+    "--tpl-secondary": "#d2a864",
+    "--tpl-bg": "#e5e8d7",
+    "--tpl-surface": "#f5f0df",
+    "--tpl-border": "#c9a76d",
+    "--tpl-text-primary": "#5c3e3b",
+    "--tpl-text-secondary": "#74645a"
+  },
+  "assetSlots": {
+    "--asset-hero": "url('/templates/royal-garden/garden.svg')",
+    "--asset-frame": "url('/templates/royal-garden/wallpaper.svg')",
+    "--asset-ornament": "none",
+    "--asset-hero-ratio": "9 / 16"
+  },
+  "sections": [
+    "hero",
+    "family",
+    "invitation",
+    "calendar",
+    "schedule",
+    "venue",
+    "gift",
+    "gallery",
+    "rsvp",
+    "closing"
+  ],
+  "editable": {
+    "coverBackground": true,
+    "heroPhoto": true,
+    "gallery": true,
+    "music": true,
+    "colors": [
+      "primary",
+      "secondary",
+      "background"
+    ],
+    "content": [
+      "names",
+      "parents",
+      "eventDate",
+      "eventTime",
+      "venue",
+      "schedule",
+      "giftQr",
+      "message",
+      "rsvp"
+    ],
+    "sections": true
+  }
+}
