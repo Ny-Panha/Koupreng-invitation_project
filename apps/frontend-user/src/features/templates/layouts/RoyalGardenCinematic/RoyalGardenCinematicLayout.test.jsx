@@ -15,7 +15,7 @@ const content = {
   gift: [],
   music: "",
 };
-const show = (props = {}) => render(<MemoryRouter><RoyalGardenCinematicLayout content={{ ...content, ...props.content }} preview {...props}/></MemoryRouter>);
+const show = (props = {}) => render(<MemoryRouter><RoyalGardenCinematicLayout preview {...props} content={{ ...content, ...props.content }}/></MemoryRouter>);
 beforeEach(() => {
   vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
   vi.spyOn(HTMLMediaElement.prototype, "pause").mockImplementation(() => {});
