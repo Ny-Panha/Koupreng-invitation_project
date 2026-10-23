@@ -22,7 +22,7 @@
   "assetSlots": {
     "--asset-hero": "url('/templates/royal-garden/garden.svg')",
     "--asset-frame": "url('/templates/royal-garden/wallpaper.svg')",
-    "--asset-ornament": "none",
+    "--asset-ornament": "url('/templates/royal-garden/hummingbird.svg')",
     "--asset-hero-ratio": "9 / 16"
   },
   "sections": [
