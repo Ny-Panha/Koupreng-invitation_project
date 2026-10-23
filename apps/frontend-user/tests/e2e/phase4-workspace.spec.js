@@ -24,56 +24,57 @@ test('task scroll leaves desktop context and footer stationary; menu scroll is i
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(1440);
 });
 
-test('create and edit share fields and preserve optional and backend-owned values across refresh', async ({ page }) => {
+test('inline create and edit preserve optional and backend-owned values across refresh', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   const state = await installPhase4Fixtures(page, { count: 1 });
   await page.goto('/app/events/101/guests');
-  await page.getByRole('button', { name: 'Add guest', exact: true }).click();
+  const form = page.locator('.guest-inline-form-row');
   await page.locator('#guestForm-name').fill('Phase 4 Review');
-  await page.locator('#guestForm-phone').fill('012345678');
   await page.locator('#guestForm-count').fill('3');
   await page.locator('#guestForm-group').selectOption('Bride Side');
   await page.locator('#guestForm-category').selectOption('Family');
-  await page.locator('.guest-form-details summary').click();
-  await page.locator('#guestForm-email').fill('phase4@example.test');
-  await page.locator('#guestForm-note').fill('Keep this note');
-  await page.locator('#guestForm-companionName').fill('Review Companion');
-  await page.getByRole('dialog').getByRole('button', { name: 'Add guest', exact: true }).click();
+  await form.getByRole('button', { name: 'Add', exact: true }).click();
   await expect(page.getByRole('dialog')).toHaveCount(0);
+  const row = page.locator('.guest-record-row').filter({ hasText: 'Phase 4 Review' });
+  await expect(row).toBeVisible();
+  // Existing optional details and tracked status come from the server, outside the simple entry row.
+  const savedDetails = { phone: '012345678', email: 'phase4@example.test', note: 'Keep this note', companionName: 'Review Companion', tableNumber: 'A-01', sendStatus: 'OPENED', contributionStatus: 'PARTIAL', totalContributed: 25 };
+  Object.assign(state.guests.find(g => g.guestName === 'Phase 4 Review'), savedDetails);
   await page.reload();
-  const row = page.locator('tr').filter({ hasText: 'Phase 4 Review' });
   await row.getByRole('button', { name: 'Edit', exact: true }).click();
-  for (const [field, value] of Object.entries({ phone: '012345678', count: '3', group: 'Bride Side', category: 'Family', email: 'phase4@example.test', note: 'Keep this note', companionName: 'Review Companion' })) await expect(page.locator(`#guestForm-${field}`)).toHaveValue(value);
-  await page.locator('#guestForm-phone').fill('+855 98 765 432');
+  await expect(page.locator('#guestForm-count')).toHaveValue('3');
+  await expect(form.locator('.guest-group-tag')).toHaveText('Bride Side');
+  await expect(form.locator('.guest-category')).toHaveText('Family');
+  await expect(page.locator('#guestForm-sendStatus')).toHaveAttribute('readonly', '');
+  for (const field of ['phone', 'email', 'note', 'companionName', 'seat']) await expect(page.locator(`#guestForm-${field}`)).toHaveCount(0);
   await page.locator('#guestForm-count').fill('4');
-  await page.locator('#guestForm-group').selectOption('Groom Side');
-  await page.getByRole('dialog').getByRole('button', { name: 'Save', exact: true }).click();
-  await expect(page.getByRole('dialog')).toHaveCount(0);
+  await form.getByRole('button', { name: 'Save', exact: true }).click();
+  await expect(page.locator('#guestForm-name')).toHaveValue('');
   await page.reload(); await row.getByRole('button', { name: 'Edit', exact: true }).click();
-  await expect(page.locator('#guestForm-phone')).toHaveValue('+855 98 765 432');
-  await expect(page.locator('#guestForm-group')).toHaveValue('Groom Side');
   await expect(page.locator('#guestForm-count')).toHaveValue('4');
-  await expect(page.locator('#guestForm-email')).toHaveValue('phase4@example.test');
-  expect(state.guests.find(g => g.guestName === 'Phase 4 Review').note).toBe('Keep this note');
+  await expect(form.locator('.guest-group-tag')).toHaveText('Bride Side');
+  expect(state.guests.find(g => g.guestName === 'Phase 4 Review')).toMatchObject({ ...savedDetails, seatCount: 4, guestGroup: 'Bride Side', sideType: 'Family' });
 });
 
-test('validation, dirty cancellation and API failure keep entered guest data', async ({ page }) => {
-  await installPhase4Fixtures(page, { count: 1 });
+test('inline validation and API failure keep entered guest data', async ({ page }) => {
+  const state = await installPhase4Fixtures(page, { count: 1 });
   await page.goto('/app/events/101/guests');
-  await page.getByRole('button', { name: 'Add guest', exact: true }).click();
+  const form = page.locator('.guest-inline-form-row');
+  await page.locator('#guestForm-name').fill('   ');
+  await expect(form.getByRole('button', { name: 'Add', exact: true })).toBeDisabled();
   await page.locator('#guestForm-name').fill('Keep on failure');
-  await page.locator('#guestForm-phone').fill('123');
-  await page.getByRole('dialog').getByRole('button', { name: 'Add guest', exact: true }).click();
-  await expect(page.locator('#guestForm-phone')).toBeFocused();
-  await expect(page.locator('#guest-phone-error')).toBeVisible();
-  await page.locator('#guestForm-phone').fill('012345678');
+  await page.locator('#guestForm-count').fill('0');
+  await form.getByRole('button', { name: 'Add', exact: true }).click();
+  expect(state.writes).toHaveLength(0);
+  await page.locator('#guestForm-count').fill('2');
   await page.route('**/api/v1/invitations/101/guests', route => route.request().method() === 'POST' ? route.fulfill({ status: 500, contentType: 'application/json', body: JSON.stringify({ message: 'Review save failure' }) }) : route.fallback());
-  await page.getByRole('dialog').getByRole('button', { name: 'Add guest', exact: true }).click();
-  await expect(page.getByRole('dialog').getByRole('alert').first()).toBeVisible();
+  await form.getByRole('button', { name: 'Add', exact: true }).click();
+  await expect(form.getByRole('alert').first()).toContainText('Review save failure');
   await expect(page.locator('#guestForm-name')).toHaveValue('Keep on failure');
-  page.once('dialog', dialog => dialog.dismiss());
+  await expect(page.locator('#guestForm-count')).toHaveValue('2');
   await page.keyboard.press('Escape');
-  await expect(page.getByRole('dialog')).toBeVisible();
+  await expect(page.getByRole('dialog')).toHaveCount(0);
+  await expect(page.locator('#guestForm-name')).toHaveValue('Keep on failure');
 });
 
 test('seating supports full party capacity, moves, unassignment and safe deletion across reload', async ({ page }) => {

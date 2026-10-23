@@ -1,7 +1,4 @@
-import {
-    IoAddOutline,
-    IoGiftOutline,
-} from "react-icons/io5";
+import { IoGiftOutline } from "react-icons/io5";
 import { SkeletonCard } from "@/shared/ui";
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
 import { useGifts } from "./hooks/useGifts";
@@ -17,7 +14,6 @@ export function GiftsFeature() {
         backendInvitation,
         gifts,
         guestOptions,
-        openAddForm,
         editingId,
         form,
         updateForm,
@@ -51,18 +47,6 @@ export function GiftsFeature() {
                     </h1>
                     <p className="wg-subtitle">{t("subtitle")}</p>
                 </div>
-                <button
-                    type="button"
-                    className="workspace-button primary"
-                    disabled={!eventId || saving}
-                    onClick={() => {
-                        openAddForm();
-                        requestAnimationFrame(() => document.querySelector(".wg-inline-form-row [data-gift-name-input]")?.focus());
-                    }}
-                >
-                    <IoAddOutline aria-hidden="true" />
-                    {t("addBtn")}
-                </button>
             </header>
 
             {error && <div className="wg-empty">{error}</div>}

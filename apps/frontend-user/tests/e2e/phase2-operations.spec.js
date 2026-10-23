@@ -1,7 +1,7 @@
 import {expect,test} from '@playwright/test';
 import {installOverhaulFixtures} from './support/overhaulFixtures.js';
 import {phase2EvidencePath} from './support/phase2Evidence.js';
-test('new guest exposes personal actions and enters authoritative delivery without marking a share as sent',async({page},info)=>{
+test('new inline guest keeps personal actions in its row without marking a share as sent',async({page},info)=>{
  await installOverhaulFixtures(page,'en');
  let guest=null;const writes=[];
  await page.route('**/api/v1/invitations/101/guests',async route=>{
@@ -12,22 +12,23 @@ test('new guest exposes personal actions and enters authoritative delivery witho
   if(route.request().method()!=='GET')writes.push(new URL(route.request().url()).pathname);
   return route.fulfill({contentType:'application/json',body:JSON.stringify({data:{}})});
  });
- await page.goto('/app/events/101/guests');await page.getByRole('button',{name:/Add Guest/i}).click();
- await page.getByRole('dialog').getByRole('textbox',{name:'Guest Name',exact:true}).fill('Phase 2 sample guest');
- await page.getByRole('dialog').locator('button[type="submit"]').click();
- const context=page.getByRole('region',{name:'Saved guest actions'});await expect(context).toBeVisible();
- await expect(context).toContainText('Phase 2 sample guest');await expect(context.getByRole('button',{name:'View personal ticket'})).toBeVisible();
- await expect(context.getByRole('button',{name:'Copy personal invitation link'})).toBeVisible();
- await expect(context.getByRole('link',{name:'Review RSVP'})).toHaveAttribute('href','/app/events/101/rsvp');
+ await page.goto('/app/events/101/guests');
+ const form=page.locator('.guest-inline-form-row');
+ await form.getByRole('textbox',{name:'Guest Name',exact:true}).fill('Phase 2 sample guest');
+ await form.locator('button[type="submit"]').click();
+ const row=page.locator('.guest-record-row').filter({hasText:'Phase 2 sample guest'});await expect(row).toBeVisible();
+ await expect(page.getByRole('region',{name:'Saved guest actions'})).toHaveCount(0);
  await page.getByLabel('More actions: Phase 2 sample guest',{exact:true}).click();
+ await expect(row.getByRole('button',{name:'Ticket',exact:true})).toBeVisible();
+ await expect(row.getByRole('button',{name:'Copy invitation message'})).toBeVisible();
  const share=page.getByRole('link',{name:'Share invitation for Phase 2 sample guest via Telegram'});await expect(share).toHaveAttribute('target','_blank');
  // Opening an external provider is deliberately not part of this fixture journey.
  expect(writes).toEqual(['create']);
  await expect(page.locator('.kp-site-preloader')).toBeHidden();
  await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
- await page.screenshot({path:phase2EvidencePath(info,`guests/guest-context-${info.project.name}.png`),fullPage:true});
- await context.scrollIntoViewIfNeeded();
- await page.screenshot({path:phase2EvidencePath(info,`guests/guest-context-viewport-${info.project.name}.png`)});
- await context.getByRole('link',{name:'Send / share in Delivery'}).click();await expect(page).toHaveURL(/\/app\/events\/101\/delivery$/);
+ await page.screenshot({path:phase2EvidencePath(info,`guests/guest-row-${info.project.name}.png`),fullPage:true});
+ await row.scrollIntoViewIfNeeded();
+ await page.screenshot({path:phase2EvidencePath(info,`guests/guest-row-viewport-${info.project.name}.png`)});
+ await row.getByRole('link',{name:'Send or share for Phase 2 sample guest in Delivery'}).click();await expect(page).toHaveURL(/\/app\/events\/101\/delivery\?guestId=503$/);
  await expect(page.getByText('Publish the invitation before preparing guest links.').first()).toBeVisible();expect(writes).toEqual(['create']);
 });

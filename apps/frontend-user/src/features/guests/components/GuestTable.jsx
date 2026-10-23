@@ -14,7 +14,7 @@ function emptyGuestForm(groups, categories) {
 export default function GuestTable({
   guests = [], groups = [], categories = [], saving = false, emptyMessage = "No guests found.",
   currentDraft, publicInvitation, onSaveGuest, onEdit, onDelete, onShowQr, onCopyLink,
-  onShowTicket, deliveryPath, onMarkAsSent, onOpenAddGuest, onOpenImport, onClearFilters, isFiltered = false, showQuickAdd = true, t,
+  onShowTicket, deliveryPath, onMarkAsSent, onOpenAddGuest, onOpenImport, onClearFilters, isFiltered = false, showQuickAdd = true, inlineForm, t,
 }) {
   const lang = useLanguageStore(state => state.lang);
   const rsvpLabels = OPERATIONS_MESSAGES.rsvp[lang];
@@ -81,21 +81,23 @@ export default function GuestTable({
 
   return (
     <ResponsiveTable ariaLabel="Guests List Table" className="guest-table" containerClassName="guest-table-container">
-      <colgroup><col className="guest-col-person" /><col className="guest-col-group" /><col className="guest-col-seats" /><col className="guest-col-status" /><col className="guest-col-actions" /></colgroup>
+      <colgroup><col className="guest-col-person" /><col className="guest-col-group" /><col className="guest-col-category" /><col className="guest-col-seats" /><col className="guest-col-status" /><col className="guest-col-actions" /></colgroup>
       <thead><tr>
-        <th scope="col">{text("thGuest", "ឈ្មោះភ្ញៀវ")}</th>
-        <th scope="col">{text("thGroup", "ក្រុម")} / {text("thCategory", "ប្រភេទ")}</th>
+        <th scope="col">{text("thGuest", "ឈ្មោះភ្ញៀវ")}{inlineForm && <em aria-hidden="true"> *</em>}</th>
+        <th scope="col">{text("thGroup", "ក្រុម")}</th>
+        <th scope="col">{text("thCategory", "ប្រភេទ")}</th>
         <th scope="col">{text("thSeats", "ចំនួនកៅអី")}</th>
         <th scope="col">{labels.status}</th>
         <th scope="col" className="guest-actions-heading">{text("thActions", "Actions")}</th>
       </tr></thead>
       <tbody>
-        {showQuickAdd && !onOpenAddGuest && <tr className="pe-guest-inline-add-row"><td colSpan="5">{editor(newGuest, setNewGuest, true)}</td></tr>}
+        {inlineForm}
+        {!inlineForm && showQuickAdd && !onOpenAddGuest && <tr className="pe-guest-inline-add-row"><td colSpan="6">{editor(newGuest, setNewGuest, true)}</td></tr>}
         {guests.map((guest) => {
           const isEditing = editingGuestId != null && String(editingGuestId) === String(guest.id);
           const actions = <GuestRowActions guest={guest} saving={saving} onShowQr={onShowQr} onShowTicket={onShowTicket} deliveryPath={deliveryPath} inviteUrl={guestInviteUrl(currentDraft, guest, publicInvitation)} onCopyLink={onCopyLink} onMarkAsSent={onMarkAsSent} onEdit={beginEdit} onDelete={onDelete} onSave={saveEdit} onCancel={() => { setEditingGuestId(null); setEditingGuest(null); }} isEditing={isEditing} shareMessage={buildShareMessage(guest, currentDraft, publicInvitation) || guestInviteUrl(currentDraft, guest, publicInvitation)} t={t} />;
           return <tr key={guest.id} className="guest-record-row" onDoubleClick={() => !isEditing && beginEdit(guest)}>
-            {isEditing ? <><td colSpan="4">{editor(editingGuest, setEditingGuest)}</td><td>{actions}</td></> : <>
+            {isEditing ? <><td colSpan="5">{editor(editingGuest, setEditingGuest)}</td><td>{actions}</td></> : <>
               <td className="guest-person-cell" data-label={text("thGuest", "ឈ្មោះភ្ញៀវ")}>
                 <div className="guest-person"><span className={`guest-avatar ${guest.group === groups[1]?.name ? "guest-avatar-bride" : ""}`} aria-hidden="true">{initials(guest.name)}</span>
                   <div className="guest-person-info"><strong>{guest.name}</strong>
@@ -105,7 +107,8 @@ export default function GuestTable({
                   </div>
                 </div>
               </td>
-              <td className="guest-group-cell" data-label={text("fieldGroup", "ក្រុម")}><span className="guest-group-tag">{guest.group || "—"}</span><span className="guest-category">{guest.category || "—"}</span></td>
+              <td className="guest-group-cell" data-label={text("fieldGroup", "ក្រុម")}><span className="guest-group-tag">{guest.group || "—"}</span></td>
+              <td className="guest-category-cell" data-label={text("fieldCategory", "ប្រភេទ")}><span className="guest-category">{guest.category || "—"}</span></td>
               <td className="guest-seat-cell" data-label={text("thSeats", "ចំនួនកៅអី")}><span className="guest-seat-count"><Armchair size={15} aria-hidden="true" />{guest.count || 1}</span><span className="guest-table-number">{guest.seat || text("noTable", "មិនទាន់កំណត់តុ")}</span></td>
               <td className="guest-status-cell" data-label={labels.status}><div className="pe-guest-statuses">
                 {guest.checkedIn && <StatusBadge status="CHECKED_IN" label={text("checkedIn", "Checked in")} variant="success" />}
@@ -117,7 +120,8 @@ export default function GuestTable({
             </>}
           </tr>;
         })}
-        {guests.length === 0 && <tr className="guest-empty-row"><td colSpan="5">
+        {guests.length === 0 && inlineForm && !isFiltered && <tr className="guest-inline-empty-row"><td colSpan="6">{text("inlineEmptyText", "មិនទាន់មានទិន្នន័យភ្ញៀវសម្រាប់ធៀបនេះទេ។")}</td></tr>}
+        {guests.length === 0 && (!inlineForm || isFiltered) && <tr className="guest-empty-row"><td colSpan="6">
           <div className="guest-empty-state"><span className="guest-empty-icon">{isFiltered ? <SearchX size={28} aria-hidden="true" /> : <Users size={28} aria-hidden="true" />}</span>
             <h3>{isFiltered ? text("emptySearchTitle", "មិនមានលទ្ធផលស្វែងរកទេ") : text("emptyTitle", "មិនទាន់មានភ្ញៀវនៅឡើយទេ")}</h3>
             <p>{isFiltered ? emptyMessage : text("emptyListHint", emptyMessage)}</p>
