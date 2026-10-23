@@ -10,7 +10,7 @@
   --tpl-text-secondary: #74645a;
   --asset-hero: url("/templates/royal-garden/garden.svg");
   --asset-frame: url("/templates/royal-garden/wallpaper.svg");
-  --asset-ornament: none;
+  --asset-ornament: url("/templates/royal-garden/hummingbird.svg");
   --rg-khmer-font: "Kantumruy Pro", "Battambang", "Khmer OS Battambang", sans-serif;
   --rg-display-font: "Moul", "Khmer OS Muol Light", "Khmer OS Muol", serif;
   --rg-script-font: "Cormorant Garamond", "Baskerville", Georgia, serif;
@@ -75,6 +75,9 @@
 .rg-down { z-index: 1; animation: rg-down 2s ease-in-out infinite; }
 .rg-section { scroll-margin-top: 1rem; padding: 4.8rem clamp(1rem, 6vw, 2.7rem); min-height: 52svh; text-align: center; position: relative; border-top: 1px solid #bca97642; animation: rg-section-in .65s ease both; }
 .rg-section:nth-of-type(even) { background: #fffdf322; }
+.rg-section::before, .rg-section::after { content: ""; position: absolute; width: 94px; height: 80px; background: var(--asset-ornament) center / contain no-repeat; pointer-events: none; top: .9rem; left: .3rem; opacity: .8; animation: rg-bird 6s ease-in-out infinite; }
+.rg-section::after { left: auto; right: .3rem; transform: scaleX(-1); animation-delay: 1.4s; }
+@keyframes rg-bird { 0%,100% { translate: 0 0; } 50% { translate: 0 -7px; } }
 .rg-heading { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 1.75rem; }
 .rg-heading h2 { font: clamp(1.12rem, 5vw, 1.47rem)/1.85 var(--rg-display-font); color: var(--tpl-primary); max-width: 25ch; }
 .rg-heading p { font: italic 1.65rem/1.3 var(--rg-script-font); color: #9a625f; }
