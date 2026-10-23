@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { CalendarDays, ChevronDown, ChevronLeft, ChevronRight, Download, ExternalLink, Gift, Heart, MapPin, Menu, Music2, Pause, X } from "lucide-react";
+import { ArrowLeft, CalendarDays, ChevronDown, ChevronLeft, ChevronRight, Download, ExternalLink, Gift, Heart, MapPin, Menu, Music2, Pause, X } from "lucide-react";
 import CoverBackground from "../../shared/Openings/CoverBackground";
 import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
 import { isTrustedPreviewMessage, postPreviewMessage, readEmbeddedPreviewChannel } from "@/shared/preview/previewMessaging";
@@ -114,7 +114,7 @@ function Heading({ kh, en }) {
 }
 export default function RoyalGardenCinematicLayout({
   tpl = {}, content = {}, liveData, preview = false, previewStartClosed = false,
-  previewChannel, previewGateCommand, useTemplateLink, primaryCtaLabel = "ប្រើគំរូនេះ",
+  previewChannel, previewGateCommand, showBack = true, backTo = "/templates", useTemplateLink, primaryCtaLabel = "ប្រើគំរូនេះ",
   showActions = true, isHostedInvitation = false, children,
 }) {
   const reduced = usePrefersReducedMotion();
@@ -256,6 +256,7 @@ export default function RoyalGardenCinematicLayout({
     </div> : stage === "save" ? <div className="rg-scene"><div className="rg-scene-copy"><p className="rg-script">Save The Date</p><span>{formattedDate}</span></div><button type="button" onClick={() => setStage("body")}>រំលង / Skip <ChevronRight size={13}/></button></div>
     : stage === "monogram" ? <div className="rg-monogram"><span className="rg-monogram-frame"><i>❧</i><strong>{data.groom.slice(0, 1)} · {data.bride.slice(0, 1)}</strong><i>❧</i></span><h1>{data.title}</h1><button type="button" onClick={() => setStage("body")}>រំលង / Skip <ChevronRight size={13}/></button></div>
     : <div className="rg-paper">
+      {showBack && !preview && !isHostedInvitation && <Link to={backTo} className="rg-back-link"><ArrowLeft size={15} /> គំរូសន្លឹកការ</Link>}
       <div className="rg-lanterns" aria-hidden="true"><span>✧</span><span>✧</span><span>✧</span></div>
       <header id="rg-hero" className="rg-hero"><div className="rg-gold-oval"><span>❧</span><strong>{data.groom.slice(0, 1)} · {data.bride.slice(0, 1)}</strong><span>❧</span></div><span className="rg-script">Wedding Invitation</span><ChevronDown className="rg-down" size={20}/></header>
       <main>{order.map(renderSection)}</main>
