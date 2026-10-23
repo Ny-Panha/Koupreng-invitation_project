@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { lazy, Suspense, useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { Download, Plus, QrCode, Upload, Users } from "lucide-react";
@@ -16,7 +16,7 @@ import GuestTable from "./components/GuestTable";
 import GuestDeleteDialog from "./components/GuestDeleteDialog";
 import GuestQrModal from "./components/GuestQrModal";
 import TicketModal from "@/features/tickets/TicketModal";
-import GuestImportModal from "./components/GuestImportModal";
+const GuestImportModal = lazy(() => import('./components/GuestImportModal'));
 import GuestFormModal from "./components/GuestFormModal";
 import { guestService } from "./api/guestApi";
 import { exportGuestsToCsv } from "./model/guestCsvUtils";
@@ -377,7 +377,8 @@ export default function GuestsPage() {
 
       {ticketGuest && <TicketModal eventId={backendInvitationId} guestId={ticketGuest.backendId || ticketGuest.id} onClose={() => setTicketGuest(null)} />}
 
-      <GuestImportModal
+      {importModalOpen && <Suspense fallback={<p role="status">{en ? 'Loading import…' : 'កំពុងបើកការនាំចូល…'}</p>}><GuestImportModal
+        key={backendInvitationId}
         invitationId={backendInvitationId}
         onFileImported={refreshData}
         isOpen={importModalOpen}
@@ -386,7 +387,7 @@ export default function GuestsPage() {
         onImport={importGuests}
         error={mutationError}
         t={t}
-      />
+      /></Suspense>}
 
     </main>
   );

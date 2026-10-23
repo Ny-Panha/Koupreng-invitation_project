@@ -206,18 +206,19 @@ class GuestImportPreviewTests {
     }
 
     @Test
-    void unmatchedCsvQuoteIsAnErrorRowAndValidEscapedQuotesArePreserved() {
+    void unmatchedCsvQuoteConsumesTheRemainingLogicalRecordAndValidEscapedQuotesArePreserved() {
         String contents = "guestName,note\n\"Valid, Guest\",\"Quoted \"\"note\"\"\"\n\"Unclosed guest,broken\nNext guest,Valid\n";
         Fixture fixture = fixture();
         var preview = fixture.service.previewGuestsFile(fixture.auth, 10L, csv(contents));
-        assertEquals(2, preview.acceptedCount());
+        // A physical newline inside a quoted field is data. Never invent a new record after an unclosed quote.
+        assertEquals(1, preview.acceptedCount());
         assertEquals(1, preview.skippedCount());
         assertEquals(3, preview.errorRows().getFirst().getRowNumber());
         assertEquals("CSV row has an unmatched quote", preview.errorRows().getFirst().getReason());
         assertEquals("Valid, Guest", preview.validRows().getFirst().guest().getGuestName());
         assertEquals("Quoted \"note\"", preview.validRows().getFirst().guest().getNote());
         var committed = fixture.service.importGuestsFile(fixture.auth, 10L, csv(contents));
-        assertEquals(2, committed.getImportedCount());
+        assertEquals(1, committed.getImportedCount());
         assertEquals(1, committed.getSkippedCount());
     }
 

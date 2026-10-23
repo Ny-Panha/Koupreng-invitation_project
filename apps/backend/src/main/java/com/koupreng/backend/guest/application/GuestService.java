@@ -4,10 +4,7 @@ import com.koupreng.backend.invitation.application.InvitationService;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -20,11 +17,6 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import org.apache.poi.ss.usermodel.DataFormatter;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -383,82 +375,19 @@ public class GuestService {
     }
 
     private List<ImportRow> parseImportRows(MultipartFile file) {
-        String filename = safeFilename(file.getOriginalFilename());
-        String extension = extension(filename);
-        try {
-            return ".xlsx".equals(extension) ? parseXlsxRows(file) : parseCsvRows(file);
-        } catch (IOException | IllegalArgumentException exception) {
-            throw new ApiException(HttpStatus.BAD_REQUEST, "Import file could not be parsed");
-        }
-    }
-
-    private List<ImportRow> parseCsvRows(MultipartFile file) throws IOException {
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8)
-        )) {
-            String headerLine = reader.readLine();
-            if (headerLine == null || headerLine.isBlank()) {
-                throw new ApiException(HttpStatus.BAD_REQUEST, "Import file has no header row");
+        var source = new GuestImportFileReader().read(file);
+        var sheet = source.worksheets().getFirst();
+        var headers = headers(sheet.headers());
+        List<ImportRow> rows = new ArrayList<>();
+        for (var row : sheet.rows()) {
+            try {
+                rows.add(new ImportRow(row.rowNumber(), requestFromColumns(headers, row.values()),
+                        row.issues().isEmpty() ? null : String.join("; ", row.issues())));
+            } catch (IllegalArgumentException exception) {
+                rows.add(new ImportRow(row.rowNumber(), null, exception.getMessage()));
             }
-            Map<String, Integer> headers = headers(parseCsvLine(headerLine));
-            List<ImportRow> rows = new ArrayList<>();
-            String line;
-            int rowNumber = 1;
-            while ((line = reader.readLine()) != null) {
-                rowNumber++;
-                if (line.isBlank()) {
-                    continue;
-                }
-                try {
-                    rows.add(new ImportRow(rowNumber, requestFromColumns(headers, parseCsvLine(line)), null));
-                } catch (IllegalArgumentException exception) {
-                    rows.add(new ImportRow(rowNumber, null, exception.getMessage()));
-                }
-            }
-            return rows;
         }
-    }
-
-    private List<ImportRow> parseXlsxRows(MultipartFile file) throws IOException {
-        try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
-            Sheet sheet = workbook.getNumberOfSheets() == 0 ? null : workbook.getSheetAt(0);
-            if (sheet == null || sheet.getPhysicalNumberOfRows() == 0) {
-                throw new ApiException(HttpStatus.BAD_REQUEST, "Import file has no rows");
-            }
-
-            DataFormatter formatter = new DataFormatter();
-            Row headerRow = sheet.getRow(sheet.getFirstRowNum());
-            Map<String, Integer> headers = headers(cells(headerRow, formatter));
-            List<ImportRow> rows = new ArrayList<>();
-            for (int index = sheet.getFirstRowNum() + 1; index <= sheet.getLastRowNum(); index++) {
-                Row row = sheet.getRow(index);
-                if (row == null) {
-                    continue;
-                }
-                List<String> values = cells(row, formatter);
-                if (values.stream().allMatch(value -> value == null || value.isBlank())) {
-                    continue;
-                }
-                try {
-                    rows.add(new ImportRow(index + 1, requestFromColumns(headers, values), null));
-                } catch (IllegalArgumentException exception) {
-                    rows.add(new ImportRow(index + 1, null, exception.getMessage()));
-                }
-            }
-            return rows;
-        }
-    }
-
-    private List<String> cells(Row row, DataFormatter formatter) {
-        List<String> values = new ArrayList<>();
-        if (row == null) {
-            return values;
-        }
-        int last = Math.max(row.getLastCellNum(), (short) 0);
-        for (int index = 0; index < last; index++) {
-            values.add(trimToNull(formatter.formatCellValue(row.getCell(index))));
-        }
-        return values;
+        return rows;
     }
 
     private Map<String, Integer> headers(List<String> rawHeaders) {
@@ -479,6 +408,7 @@ public class GuestService {
         GuestRequest request = new GuestRequest();
         request.setGuestName(firstColumn(headers, values, "guestname", "name"));
         request.setPhone(firstColumn(headers, values, "phone", "tel", "telephone"));
+        request.setCompanionName(firstColumn(headers, values, "companionname"));
         request.setEmail(firstColumn(headers, values, "email"));
         request.setGuestGroup(firstColumn(headers, values, "category", "group", "guestgroup"));
         request.setTableNumber(firstColumn(headers, values, "table", "tablenumber"));
@@ -486,33 +416,6 @@ public class GuestService {
         request.setNote(firstColumn(headers, values, "note", "notes"));
         request.setSeatCount(parseInteger(firstColumn(headers, values, "seatcount", "seats")));
         return request;
-    }
-
-    private List<String> parseCsvLine(String line) {
-        List<String> values = new ArrayList<>();
-        StringBuilder current = new StringBuilder();
-        boolean quoted = false;
-        for (int index = 0; index < line.length(); index++) {
-            char ch = line.charAt(index);
-            if (ch == '"') {
-                if (quoted && index + 1 < line.length() && line.charAt(index + 1) == '"') {
-                    current.append('"');
-                    index++;
-                } else {
-                    quoted = !quoted;
-                }
-            } else if (ch == ',' && !quoted) {
-                values.add(trimToNull(current.toString()));
-                current.setLength(0);
-            } else {
-                current.append(ch);
-            }
-        }
-        if (quoted) {
-            throw new IllegalArgumentException("CSV row has an unmatched quote");
-        }
-        values.add(trimToNull(current.toString()));
-        return values;
     }
 
     private String firstColumn(Map<String, Integer> headers, List<String> values, String... names) {

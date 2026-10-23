@@ -3,6 +3,12 @@ import { unwrap } from "@/shared/api/helpers";
 import { downloadCsv } from "@/shared/api/downloadCsv";
 
 export const guestService = {
+  inspectImport: (invitationId, file) => {
+    const form = new FormData(); form.append('file', file);
+    return api.post(`/v1/invitations/${invitationId}/guests/import-batch/inspect`, form).then(unwrap);
+  },
+  previewBatch: (invitationId, payload) => api.post(`/v1/invitations/${invitationId}/guests/import-batch/preview`, payload).then(unwrap),
+  commitBatch: (invitationId, payload) => api.post(`/v1/invitations/${invitationId}/guests/import-batch`, payload).then(unwrap),
   grouped: (invitationId) => api.get(`/v1/invitations/${invitationId}/guests/grouped`).then(unwrap),
   sendList: (invitationId) => api.get(`/v1/invitations/${invitationId}/guests/send-list`).then(unwrap),
   exportCsv: (invitationId) => downloadCsv(`/v1/invitations/${invitationId}/guests/export`, `guests-${invitationId}.csv`),

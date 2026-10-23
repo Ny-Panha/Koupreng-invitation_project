@@ -1,0 +1,3 @@
+﻿"guestName","phone","email","seatCount","guestGroup","sideType","companionName","tableNumber","note"
+"ភ្ញៀវគំរូ ក","012000001","guest-a@example.test","2","Groom Side","Family","","","គំរូប៉ុណ្ណោះ / Fictional example. Replace before import."
+"Fictional Guest B","098000002","guest-b@example.test","1","Bride Side","Friend","","","Fictional example. Delete before import."
