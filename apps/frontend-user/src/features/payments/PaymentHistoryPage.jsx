@@ -1,3 +1,4 @@
+import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../enterprise/EnterprisePages.css";
@@ -5,16 +6,17 @@ import paymentService from "./paymentService";
 import { StatusBadge } from "@/shared/ui";
 import { packagePrice } from "../marketing/model/packagePresentation";
 
-function money(amount, currency) {
-    return packagePrice({ price: amount, currency }, "en") || "Amount unavailable";
+function money(amount, currency, lang) {
+    return packagePrice({ price: amount, currency }, lang) || (lang === "en" ? "Amount unavailable" : "មិនមានចំនួនទឹកប្រាក់");
 }
 
-function dateTime(value) {
+function dateTime(value, lang) {
     if (!value) return "—";
-    return new Intl.DateTimeFormat("en", { dateStyle: "medium", timeStyle: "short" }).format(new Date(value));
+    return new Intl.DateTimeFormat(lang, { dateStyle: "medium", timeStyle: "short" }).format(new Date(value));
 }
 
 export default function PaymentHistoryPage() {
+  const uiCopy = useUiCopy();
     const [payments, setPayments] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -36,16 +38,16 @@ export default function PaymentHistoryPage() {
     }, [load]);
 
     if (loading) {
-        return <main className="enterprise-page"><div className="enterprise-empty">Loading payments...</div></main>;
+        return <main className="enterprise-page"><div className="enterprise-empty">{uiCopy("កំពុងផ្ទុកការទូទាត់...", "Loading payments...")}</div></main>;
     }
 
     return (
         <main className="enterprise-page">
             <header className="enterprise-head">
                 <div>
-                    <span className="enterprise-eyebrow">Payments</span>
-                    <h1>Payment history</h1>
-                    <p>Review template payments, pending orders, and receipts.</p>
+                    <span className="enterprise-eyebrow">{uiCopy("ការទូទាត់", "Payments")}</span>
+                    <h1>{uiCopy("ប្រវត្តិការទូទាត់", "Payment history")}</h1>
+                    <p>{uiCopy("ពិនិត្យការទូទាត់គំរូ ការបញ្ជាទិញកំពុងរង់ចាំ និងបង្កាន់ដៃ។", "Review template payments, pending orders, and receipts.")}</p>
                 </div>
             </header>
 
@@ -56,7 +58,7 @@ export default function PaymentHistoryPage() {
                     <div className="enterprise-table-wrap">
                         <table className="enterprise-table">
                             <thead>
-                                <tr><th>Order</th><th>Item</th><th>Status</th><th>Amount</th><th>Created</th><th></th></tr>
+                                <tr><th>{uiCopy("ការបញ្ជាទិញ", "Order")}</th><th>{uiCopy("មុខទំនិញ", "Item")}</th><th>{uiCopy("ស្ថានភាព", "Status")}</th><th>{uiCopy("ចំនួនទឹកប្រាក់", "Amount")}</th><th>{uiCopy("បានបង្កើត", "Created")}</th><th></th></tr>
                             </thead>
                             <tbody>
                                 {payments.map((payment) => (
@@ -67,16 +69,16 @@ export default function PaymentHistoryPage() {
                                             <div className="enterprise-muted">{payment.itemType || payment.packageName}</div>
                                         </td>
                                         <td><StatusBadge status={payment.status} /></td>
-                                        <td>{money(payment.paidAmount || payment.amount, payment.currency)}</td>
-                                        <td>{dateTime(payment.createdAt)}</td>
-                                        <td><Link className="enterprise-btn secondary" to={`/dashboard/payments/${payment.orderCode}`}>Receipt</Link></td>
+                                        <td>{money(payment.paidAmount || payment.amount, payment.currency, uiCopy("km", "en"))}</td>
+                                        <td>{dateTime(payment.createdAt, uiCopy("km", "en"))}</td>
+                                        <td><Link className="enterprise-btn secondary" to={`/dashboard/payments/${payment.orderCode}`}>{uiCopy("បង្កាន់ដៃ", "Receipt")}</Link></td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                     </div>
                 ) : (
-                    <div className="enterprise-empty">No payment orders yet.</div>
+                    <div className="enterprise-empty">{uiCopy("មិនទាន់មានការបញ្ជាទិញទេ។", "No payment orders yet.")}</div>
                 )}
             </section>
         </main>

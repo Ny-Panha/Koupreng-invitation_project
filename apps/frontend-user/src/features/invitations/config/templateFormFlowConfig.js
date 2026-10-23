@@ -172,3 +172,35 @@ export function getTemplateFormFlow(templateIdOrTpl) {
     };
 }
 
+const LABEL_COPY = {
+    coverSection: ["ក្រប និងផ្ទៃខាងក្រោយ", "Cover & background"],
+    coverImage: ["រូបភាពក្របខាងមុខ", "Front cover image"],
+    coverBackgroundImage: ["ផ្ទៃខាងក្រោយគ្របមុខ (ពេលមិនទាន់បើក)", "Cover background (closed state)"],
+    backgroundImage: ["ស៊ុមផ្កា ឬរូបភាពផ្ទៃខាងក្រោយ", "Botanical frame / background"],
+    coverSectionDesc: ["ព័ត៌មានលេចធ្លោលើក្រប និងទំព័រដើម", "Featured cover and opening page content"],
+    familySection: ["មាតាបិតាទាំងសងខាង", "Together with our families"],
+    invitationSection: ["សារលិខិតអញ្ជើញ", "The invitation"],
+    scheduleSection: ["កម្មវិធីមង្គលការ", "Wedding programme"],
+    countdownSection: ["រាប់ថយក្រោយដល់ថ្ងៃមង្គល", "Save the date"],
+    venueSection: ["ទីតាំងប្រារព្ធពិធី", "Celebration venue"],
+    gallerySection: ["វិចិត្រសាលរូបថត", "Photo memories"],
+    dressCodeSection: ["សម្លៀកបំពាក់", "Ceremonial palette"],
+    partySection: ["ក្រុមអម និងមនុស្សជាទីស្រឡាញ់", "Wedding party"],
+    faqSection: ["ព័ត៌មានលម្អិត និងសំណួរ", "Details & notes"],
+    khqrSection: ["កូដសម្រាប់ផ្ញើចងដៃ", "Gifts & payment QR"],
+    closingSection: ["សារថ្លែងអំណរគុណ និងសូមអភ័យទោស", "Thanks & apologies"],
+};
+const HINT_COPY = {
+    coverImage: ["បង្ហាញលើក្របទំព័រដើម ឬស្រោមសំបុត្រ", "Shown on the front cover / envelope"],
+    coverBackgroundImage: ["បង្ហាញលើគ្របមុខពេលមិនទាន់បើកធៀបការ", "Shown on the cover before opening"],
+    backgroundImage: ["ស៊ុមផ្កា ឬរូបភាពផ្ទៃខាងក្រោយពេលបើកធៀបការ", "Background or botanical frame shown after opening"],
+};
+
+export function getLocalizedTemplateFormFlow(template, lang) {
+    const flow = getTemplateFormFlow(template);
+    const localize = (values, copy) => Object.fromEntries(Object.entries(values).map(([key, value]) =>
+        [key, copy[key]?.[lang === "en" ? 1 : 0] || value]
+    ));
+    return { ...flow, labels: localize(flow.labels, LABEL_COPY), hints: localize(flow.hints, HINT_COPY) };
+}
+

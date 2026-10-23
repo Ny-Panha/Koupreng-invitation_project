@@ -1,3 +1,4 @@
+import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useId, useMemo } from "react";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { useNavigate, useParams } from "react-router-dom";
@@ -82,6 +83,7 @@ function SummaryCard({ label, value, subtitle, icon: Icon, theme = "gold" }) {
 }
 
 export default function InvitationCheckInPage() {
+  const uiCopy = useUiCopy();
     const fieldId = useId();
     const en = useLanguageStore(state => state.lang) === "en";
     const copy = (kh, english) => en ? english : kh;
@@ -176,7 +178,7 @@ export default function InvitationCheckInPage() {
                             {copy("ភ្ញៀវនេះបានកត់ត្រាវត្តមានរួចហើយ។", "This guest is already checked in.")}
                         </div>
                         <div style={{ fontSize: "0.84rem", marginTop: "3px", color: "#78350f" }}>
-                            ឈ្មោះ: <strong>{duplicateWarning.guestName}</strong> • បានចូលនៅម៉ោង: {duplicateWarning.checkedInAt} ({duplicateWarning.source})
+                            {uiCopy("ឈ្មោះ៖", "Name:")} <strong>{duplicateWarning.guestName}</strong> {uiCopy("• បានចូលនៅម៉ោង៖", "• Checked in at:")} {duplicateWarning.checkedInAt} ({duplicateWarning.source})
                         </div>
                     </div>
                     <button
@@ -214,13 +216,13 @@ export default function InvitationCheckInPage() {
                         type="button"
                         onClick={() => navigate(`/dashboard/invitations/${invitationId}/guests`)}
                     >
-                        <Users size={16} /> Guests
+                        <Users size={16} /> {uiCopy("បញ្ជីភ្ញៀវ", "Guests")}
                     </button>
                     <button
                         className="checkin-btn-secondary"
                         type="button"
                         onClick={() => load()}
-                        title="ផ្ទុកឡើងវិញ"
+                        title={uiCopy("ផ្ទុកឡើងវិញ", "Refresh")}
                     >
                         <RefreshCw size={15} /> {copy("ផ្ទុកឡើងវិញ", "Refresh")}
                     </button>
@@ -272,10 +274,10 @@ export default function InvitationCheckInPage() {
                 <form className="guest-form checkin-panel-card" onSubmit={scan}>
                     <div className="checkin-panel-header">
                         <h2 className="checkin-panel-title">
-                            <QrCode size={20} color="#B0926A" /> Scan token
+                            <QrCode size={20} color="#B0926A" /> {uiCopy("ស្កេនលេខកូដ", "Scan token")}
                         </h2>
                         <span style={{ fontSize: "0.78rem", color: "#8c6f4b", fontWeight: 700, background: "rgba(176, 146, 106, 0.12)", padding: "3px 10px", borderRadius: "999px" }}>
-                            Scanner Gun / Link
+                            {uiCopy("ឧបករណ៍ស្កេន ឬតំណ", "Scanner / Link")}
                         </span>
                     </div>
 
@@ -297,7 +299,7 @@ export default function InvitationCheckInPage() {
                                         gap: "2px",
                                     }}
                                 >
-                                    <X size={12} /> Clear
+                                    <X size={12} /> {uiCopy("សម្អាត", "Clear")}
                                 </button>
                             )}
                         </label>
@@ -307,7 +309,7 @@ export default function InvitationCheckInPage() {
                             value={token}
                             rows="2"
                             onChange={(event) => setToken(event.target.value)}
-                            placeholder="Paste /i/slug?token=... or token"
+                            placeholder={uiCopy("បិទភ្ជាប់តំណធៀបអញ្ជើញ ឬលេខកូដ", "Paste /i/slug?token=... or token")}
                             required
                         />
                     </div>
@@ -324,7 +326,7 @@ export default function InvitationCheckInPage() {
                                 className="checkin-gift-input"
                                 value={tokenGiftAmount}
                                 onChange={(e) => setTokenGiftAmount(e.target.value)}
-                                placeholder="ចំនួនទឹកប្រាក់..."
+                                placeholder={uiCopy("ចំនួនទឹកប្រាក់...", "Amount...")}
                             />
                             <div className="checkin-gift-currency-toggle">
                                 <button
@@ -354,7 +356,7 @@ export default function InvitationCheckInPage() {
                             className="checkin-input"
                             value={note}
                             onChange={(event) => setNote(event.target.value)}
-                            placeholder="ចំណាំ (ឧ. មកជាមួយគូស្នេហ៍...)"
+                            placeholder={uiCopy("ចំណាំ (ឧ. មកជាមួយគូស្នេហ៍...)", "Notes (e.g. bringing a partner...)")}
                         />
                     </div>
 
@@ -362,9 +364,9 @@ export default function InvitationCheckInPage() {
                         className="checkin-submit-btn inv-primary-btn"
                         type="submit"
                         disabled={saving || !token.trim()}
-                        aria-label="Check in"
+                        aria-label={uiCopy("កត់ត្រាវត្តមាន", "Check in")}
                     >
-                        {saving ? "Checking..." : "Check in"}
+                        {saving ? "Checking..." : uiCopy("កត់ត្រាវត្តមាន", "Check in")}
                     </button>
 
                     <div style={{ marginTop: "16px", padding: "12px 16px", background: "#fdfaf5", border: "1px solid #eadfce", borderRadius: "14px", fontSize: "13px", color: "#7d6443", lineHeight: 1.5 }}>
@@ -379,7 +381,7 @@ export default function InvitationCheckInPage() {
                             <Users size={20} color="var(--ui-action)" /> {copy("បញ្ជីភ្ញៀវ និងការចូលរួម", "Guest list and attendance")}
                         </h2>
                         <span style={{ fontSize: "0.82rem", color: "#8c6f4b", fontWeight: 700, background: "rgba(176, 146, 106, 0.12)", padding: "3px 12px", borderRadius: "999px" }}>
-                            {filteredGuests.length} / {guests.length} នាក់
+                            {filteredGuests.length} / {guests.length} {uiCopy("នាក់", "people")}
                         </span>
                     </div>
 
@@ -390,7 +392,7 @@ export default function InvitationCheckInPage() {
                                 aria-label={copy("ស្វែងរកភ្ញៀវ", "Search guest")}
                                 value={search}
                                 onChange={(event) => setSearch(event.target.value)}
-                                placeholder="Search guest"
+                                placeholder={uiCopy("ស្វែងរកភ្ញៀវ", "Search guest")}
                             />
                             {search && (
                                 <button
@@ -441,9 +443,9 @@ export default function InvitationCheckInPage() {
                         <table className="checkin-guest-table guest-table">
                             <thead>
                                 <tr>
-                                    <th>Guest</th>
-                                    <th>Contact</th>
-                                    <th>Status</th>
+                                    <th>{uiCopy("ភ្ញៀវ", "Guest")}</th>
+                                    <th>{uiCopy("ទំនាក់ទំនង", "Contact")}</th>
+                                    <th>{uiCopy("ស្ថានភាព", "Status")}</th>
                                     <th style={{ textAlign: "right" }}></th>
                                 </tr>
                             </thead>
@@ -473,7 +475,7 @@ export default function InvitationCheckInPage() {
                                                         {guest.tableNumber && (
                                                             <div style={{ marginTop: "4px" }}>
                                                                 <span className="checkin-tag-pill table">
-                                                                    តុលេខ {guest.tableNumber}
+                                                                    {uiCopy("តុលេខ", "Table")} {guest.tableNumber}
                                                                 </span>
                                                             </div>
                                                         )}
@@ -482,18 +484,18 @@ export default function InvitationCheckInPage() {
                                             </td>
                                             <td>
                                                 <div>
-                                                    <span style={{ fontWeight: 600, color: "#1f2421" }}>{guest.phone || "No phone"}</span>
+                                                    <span style={{ fontWeight: 600, color: "#1f2421" }}>{guest.phone || copy("មិនមានលេខទូរស័ព្ទ", "No phone")}</span>
                                                     {guest.email ? <small style={{ color: "#8b7a66", display: "block" }}>{guest.email}</small> : null}
                                                 </div>
                                             </td>
                                             <td>
                                                 {checked ? (
                                                     <span className="checkin-status-badge checked">
-                                                        <CheckCircle2 size={13} /> Checked in
+                                                        <CheckCircle2 size={13} /> {uiCopy("បានកត់ត្រាវត្តមាន", "Checked in")}
                                                     </span>
                                                 ) : (
                                                     <span className="checkin-status-badge waiting">
-                                                        <Clock size={13} /> Waiting
+                                                        <Clock size={13} /> {uiCopy("កំពុងរង់ចាំ", "Waiting")}
                                                     </span>
                                                 )}
                                             </td>
@@ -503,9 +505,9 @@ export default function InvitationCheckInPage() {
                                                     type="button"
                                                     disabled={saving || checked}
                                                     onClick={() => manual(guest)}
-                                                    aria-label={checked ? "✓ Checked in" : "Check in"}
+                                                    aria-label={checked ? "✓ Checked in" : uiCopy("កត់ត្រាវត្តមាន", "Check in")}
                                                 >
-                                                    {checked ? "✓ Checked in" : "Check in"}
+                                                    {checked ? "✓ Checked in" : uiCopy("កត់ត្រាវត្តមាន", "Check in")}
                                                 </button>
                                             </td>
                                         </tr>
@@ -516,7 +518,7 @@ export default function InvitationCheckInPage() {
                                         <td colSpan="4" style={{ textAlign: "center", padding: "36px 16px", color: "#8b7a66" }}>
                                             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
                                                 <Search size={28} color="#cbbeaa" />
-                                                <span>No guests found.</span>
+                                                <span>{uiCopy("រកមិនឃើញភ្ញៀវទេ។", "No guests found.")}</span>
                                             </div>
                                         </td>
                                     </tr>
@@ -531,10 +533,10 @@ export default function InvitationCheckInPage() {
             <section className="guest-table-panel checkin-list checkin-panel-card" style={{ marginTop: "24px" }}>
                 <div className="checkin-panel-header">
                     <h2 className="checkin-panel-title">
-                        <CheckCircle2 size={20} color="#059669" /> Checked-in guests
+                        <CheckCircle2 size={20} color="#059669" /> {uiCopy("ភ្ញៀវដែលបានកត់ត្រាវត្តមាន", "Checked-in guests")}
                     </h2>
                     <span style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--ui-success)", background: "rgba(16, 185, 129, 0.12)", padding: "3px 12px", borderRadius: "999px" }}>
-                        សរុប {checkIns.length} នាក់
+                        {uiCopy("សរុប", "Total")} {checkIns.length} {uiCopy("នាក់", "people")}
                     </span>
                 </div>
 
@@ -542,9 +544,9 @@ export default function InvitationCheckInPage() {
                     <table className="checkin-guest-table guest-table">
                         <thead>
                             <tr>
-                                <th>Guest</th>
-                                <th>Source</th>
-                                <th>Checked in</th>
+                                <th>{uiCopy("ភ្ញៀវ", "Guest")}</th>
+                                <th>{uiCopy("ប្រភព", "Source")}</th>
+                                <th>{uiCopy("បានកត់ត្រាវត្តមាន", "Checked in")}</th>
                                 <th style={{ textAlign: "right" }}></th>
                             </tr>
                         </thead>
@@ -553,16 +555,16 @@ export default function InvitationCheckInPage() {
                                 <tr key={item.id}>
                                     <td>
                                         <div style={{ fontWeight: 700, color: "#1f2421" }}>
-                                            {item.guestName || "Guest"}
+                                            {item.guestName || uiCopy("ភ្ញៀវ", "Guest")}
                                             {item.tableNumber && (
                                                 <span className="checkin-tag-pill table" style={{ marginLeft: "8px" }}>
-                                                    តុ {item.tableNumber}
+                                                    {uiCopy("តុ", "Table")} {item.tableNumber}
                                                 </span>
                                             )}
                                         </div>
                                         {item.giftAmount && (
                                             <div style={{ fontSize: "0.8rem", color: "#0f766e", fontWeight: 700, marginTop: "2px" }}>
-                                                🎁 ចងដៃ: {item.giftAmount} {item.giftCurrency || "USD"}
+                                                {uiCopy("🎁 ចងដៃ៖", "🎁 Gift:")} {item.giftAmount} {item.giftCurrency || "USD"}
                                             </div>
                                         )}
                                         {item.note && (
@@ -590,7 +592,7 @@ export default function InvitationCheckInPage() {
                                     <td>
                                         <div style={{ fontSize: "0.82rem", color: "#1f2421", fontWeight: 600 }}>
                                             {item.checkedInAt
-                                                ? new Intl.DateTimeFormat("en", {
+                                                ? new Intl.DateTimeFormat(en ? "en" : "km", {
                                                       dateStyle: "medium",
                                                       timeStyle: "short",
                                                   }).format(new Date(item.checkedInAt))
@@ -601,7 +603,7 @@ export default function InvitationCheckInPage() {
                                         <button
                                             type="button"
                                             onClick={() => undoCheckIn(item)}
-                                            title="ដកការកត់ត្រាវត្តមានវិញ"
+                                            title={uiCopy("ដកការកត់ត្រាវត្តមានវិញ", "Undo check-in")}
                                             style={{
                                                 border: "1px solid #fed7aa",
                                                 background: "#fff7ed",
@@ -616,7 +618,7 @@ export default function InvitationCheckInPage() {
                                                 gap: "3px",
                                             }}
                                         >
-                                            <RotateCcw size={12} /> ដកចេញ
+                                            <RotateCcw size={12} /> {uiCopy("ដកចេញ", "Remove")}
                                         </button>
                                     </td>
                                 </tr>
@@ -626,7 +628,7 @@ export default function InvitationCheckInPage() {
                                     <td colSpan="4" style={{ textAlign: "center", padding: "36px 16px", color: "#64748b" }}>
                                         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
                                             <Clock size={28} color="#cbd5e1" />
-                                            <span>No check-ins yet.</span>
+                                            <span>{uiCopy("មិនទាន់មានការកត់ត្រាវត្តមានទេ។", "No check-ins yet.")}</span>
                                         </div>
                                     </td>
                                 </tr>
@@ -659,21 +661,21 @@ export default function InvitationCheckInPage() {
                                     {celebrationData.guestName}
                                 </div>
                                 <p style={{ margin: "4px 0 0", fontSize: "0.85rem", color: "#8c7a65" }}>
-                                    សូមស្វាគមន៍វត្តមានក្នុងពិធីមង្គលការដ៏សិរីសួស្តី
+                                    {uiCopy("សូមស្វាគមន៍វត្តមានក្នុងពិធីមង្គលការដ៏សិរីសួស្តី", "Welcome to our wedding celebration")}
                                 </p>
                             </div>
 
                             <div className="checkin-table-display-card">
                                 <div className="checkin-table-label">{copy("កន្លែងអង្គុយ", "Seating table")}</div>
                                 <div className="checkin-table-number-huge">
-                                    {celebrationData.tableNumber ? `តុលេខ ${celebrationData.tableNumber}` : "តុភ្ញៀវកិត្តិយស"}
+                                    {celebrationData.tableNumber ? `តុលេខ ${celebrationData.tableNumber}` : uiCopy("តុភ្ញៀវកិត្តិយស", "VIP table")}
                                 </div>
                                 <div className="checkin-meta-tags">
                                     {celebrationData.groupName && (
-                                        <span className="checkin-tag-pill vip">ក្រុម: {celebrationData.groupName}</span>
+                                        <span className="checkin-tag-pill vip">{uiCopy("ក្រុម៖", "Group:")} {celebrationData.groupName}</span>
                                     )}
                                     {celebrationData.side && (
-                                        <span className="checkin-tag-pill">ផ្នែក: {celebrationData.side}</span>
+                                        <span className="checkin-tag-pill">{uiCopy("ផ្នែក៖", "Side:")} {celebrationData.side}</span>
                                     )}
                                 </div>
                             </div>
@@ -687,7 +689,7 @@ export default function InvitationCheckInPage() {
                                     <input aria-label={copy("ចំនួនចងដៃ", "Gift amount")}
                                         type="number"
                                         className="checkin-gift-input"
-                                        placeholder="ចំនួនទឹកប្រាក់ចងដៃ..."
+                                        placeholder={uiCopy("ចំនួនទឹកប្រាក់ចងដៃ...", "Gift amount...")}
                                         value={celebrationGiftAmount}
                                         onChange={(e) => setCelebrationGiftAmount(e.target.value)}
                                         autoFocus
@@ -718,7 +720,7 @@ export default function InvitationCheckInPage() {
                                     disabled={saving}
                                     onClick={handleSaveCelebrationAndClose}
                                 >
-                                    <Check size={18} /> {celebrationGiftAmount ? "កត់ត្រាចងដៃ & រួចរាល់" : "យល់ព្រម (Next Guest)"}
+                                    <Check size={18} /> {celebrationGiftAmount ? uiCopy("កត់ត្រាចងដៃ និងរួចរាល់", "Save gift & finish") : uiCopy("យល់ព្រម ទៅភ្ញៀវបន្ទាប់", "Next guest")}
                                 </button>
                             </div>
                         </div>
@@ -741,7 +743,7 @@ export default function InvitationCheckInPage() {
 
                         <div className="checkin-modal-inner">
                             <form onSubmit={handleCreateWalkInGuest}>
-                                {pendingWalkIn && <p role="status">{pendingWalkIn.guest.guestName} is registered. {pendingWalkIn.attendance ? "Attendance is saved; retry the gift only." : "Retry attendance without creating another guest."}</p>}
+                                {pendingWalkIn && <p role="status">{pendingWalkIn.guest.guestName} {uiCopy("ត្រូវបានកត់ត្រារួចហើយ។", "is registered.")} {pendingWalkIn.attendance ? uiCopy("បានរក្សាទុកវត្តមានរួចហើយ។ សូមកត់ត្រាចងដៃម្ដងទៀតប៉ុណ្ណោះ។", "Attendance is saved; retry the gift only.") : uiCopy("កត់ត្រាវត្តមានម្ដងទៀត ដោយមិនបង្កើតភ្ញៀវថ្មី។", "Retry attendance without creating another guest.")}</p>}
                                 <h3 className="checkin-modal-title">
                                     <UserPlus size={22} /> {copy("បន្ថែមភ្ញៀវបន្ទាន់", "Walk-in guest")}
                                 </h3>
@@ -755,7 +757,7 @@ export default function InvitationCheckInPage() {
                                         value={walkInForm.name}
                                         disabled={saving || Boolean(pendingWalkIn)}
                                         onChange={(e) => setWalkInForm({ ...walkInForm, name: e.target.value })}
-                                        placeholder="ឧ. ឯកឧត្តម ជា សំណាង"
+                                        placeholder={uiCopy("ឧ. ឯកឧត្តម ជា សំណាង", "e.g. Mr. Chea Samnang")}
                                         autoFocus
                                     />
                                 </div>
@@ -768,7 +770,7 @@ export default function InvitationCheckInPage() {
                                         <input id={`${fieldId}-walk-table`}
                                             value={walkInForm.table}
                                             onChange={(e) => setWalkInForm({ ...walkInForm, table: e.target.value })}
-                                            placeholder="ឧ. 05 ឬ VIP-01"
+                                            placeholder={uiCopy("ឧ. 05 ឬ VIP-01", "e.g. 05 or VIP-01")}
                                         />
                                     </div>
                                     <div className="checkin-field">
@@ -792,11 +794,11 @@ export default function InvitationCheckInPage() {
                                             value={walkInForm.group}
                                             onChange={(e) => setWalkInForm({ ...walkInForm, group: e.target.value })}
                                         >
-                                            <option value="ភ្ញៀវទូទៅ">ភ្ញៀវទូទៅ</option>
-                                            <option value="ភ្ញៀវកិត្តិយស VIP">ភ្ញៀវកិត្តិយស VIP</option>
-                                            <option value="មិត្តភក្តិ">មិត្តភក្តិ</option>
-                                            <option value="សាច់ញាតិ">សាច់ញាតិ</option>
-                                            <option value="មិត្តរួមការងារ">មិត្តរួមការងារ</option>
+                                            <option value="ភ្ញៀវទូទៅ">{uiCopy("ភ្ញៀវទូទៅ", "General guest")}</option>
+                                            <option value="ភ្ញៀវកិត្តិយស VIP">{uiCopy("ភ្ញៀវកិត្តិយស", "VIP guest")}</option>
+                                            <option value="មិត្តភក្តិ">{uiCopy("មិត្តភក្តិ", "Friend")}</option>
+                                            <option value="សាច់ញាតិ">{uiCopy("សាច់ញាតិ", "Relative")}</option>
+                                            <option value="មិត្តរួមការងារ">{uiCopy("មិត្តរួមការងារ", "Coworker")}</option>
                                         </select>
                                     </div>
                                     <div className="checkin-field">
@@ -807,8 +809,8 @@ export default function InvitationCheckInPage() {
                                             value={walkInForm.side}
                                             onChange={(e) => setWalkInForm({ ...walkInForm, side: e.target.value })}
                                         >
-                                            <option value="ខាងកូនកំលោះ">ខាងកូនកំលោះ</option>
-                                            <option value="ខាងកូនក្រមុំ">ខាងកូនក្រមុំ</option>
+                                            <option value="ខាងកូនកំលោះ">{uiCopy("ខាងកូនកំលោះ", "Groom Side")}</option>
+                                            <option value="ខាងកូនក្រមុំ">{uiCopy("ខាងកូនក្រមុំ", "Bride Side")}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -821,7 +823,7 @@ export default function InvitationCheckInPage() {
                                         <input aria-label={copy("ចំនួនចងដៃ", "Gift amount")}
                                             type="number"
                                             className="checkin-gift-input"
-                                            placeholder="ទឹកប្រាក់..."
+                                            placeholder={uiCopy("ទឹកប្រាក់...", "Amount...")}
                                             value={walkInForm.gift}
                                             onChange={(e) => setWalkInForm({ ...walkInForm, gift: e.target.value })}
                                         />
@@ -850,7 +852,7 @@ export default function InvitationCheckInPage() {
                                         className="checkin-btn-cancel"
                                         onClick={() => setWalkInModalOpen(false)}
                                     >
-                                        បោះបង់
+                                        {uiCopy("បោះបង់", "Cancel")}
                                     </button>
                                     <button
                                         type="submit"

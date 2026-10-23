@@ -196,23 +196,31 @@ export function guestInviteUrl(draftOrGuest, guestOrDraft, publicInvitation) {
 }
 
 
-export function buildShareMessage(guest, draft, publicInvitation) {
+export function buildShareMessage(guest, draft, publicInvitation, lang = "km") {
   if (!guest) return "";
+  const en = lang === "en";
   const inviteUrl = guestInviteUrl(draft, guest, publicInvitation);
   const groomName = publicInvitation?.groomName || draft?.groomName || "";
   const brideName = publicInvitation?.brideName || draft?.brideName || "";
   const coupleText = groomName && brideName ? `(${groomName} ❤️ ${brideName})` : "";
-  const weddingTitle = publicInvitation?.title || draft?.title || "លិខិតអញ្ជើញអាពាហ៍ពិពាហ៍";
+  const weddingTitle = publicInvitation?.title || draft?.title || (en ? "Wedding invitation" : "លិខិតអញ្ជើញអាពាហ៍ពិពាហ៍");
   const eventDate = publicInvitation?.eventDate || draft?.eventDate || draft?.date || "";
   const venueName = publicInvitation?.venueName || draft?.venueName || draft?.venue || "";
 
+  const salutation = en ? "Dear" : "សូមគោរពអញ្ជើញ៖";
   const guestSalutation = guest.companionName
-    ? `សូមគោរពអញ្ជើញ៖ ${guest.name} និង ${guest.companionName}`
-    : `សូមគោរពអញ្ជើញ៖ ${guest.name}`;
+    ? `${salutation} ${guest.name} ${en ? "and" : "និង"} ${guest.companionName}`
+    : `${salutation} ${guest.name}`;
 
-  const dateText = eventDate ? `\n📅 កាលបរិច្ឆេទ៖ ${eventDate}` : "";
-  const venueText = venueName ? `\n📍 ទីតាំង៖ ${venueName}` : "";
-  const noteText = guest.note?.trim() ? `\n📝 កំណត់ចំណាំ៖ ${guest.note.trim()}` : "";
+  const dateText = eventDate ? `\n📅 ${en ? "Date:" : "កាលបរិច្ឆេទ៖"} ${eventDate}` : "";
+  const venueText = venueName ? `\n📍 ${en ? "Venue:" : "ទីតាំង៖"} ${venueName}` : "";
+  const noteText = guest.note?.trim() ? `\n📝 ${en ? "Note:" : "កំណត់ចំណាំ៖"} ${guest.note.trim()}` : "";
+
+  if (en) return `💌 ${weddingTitle} ${coupleText ? `${coupleText}\n` : ""}${guestSalutation}
+Please join us to celebrate our wedding.${dateText}${venueText}${noteText}
+
+👉 Open your invitation and RSVP:
+${inviteUrl}`;
 
   return `💌 ${weddingTitle} ${coupleText ? `${coupleText}\n` : ""}${guestSalutation}
 ចូលរួមជាអធិបតី និងជាភ្ញៀវកិត្តិយសក្នុងពិធីមង្គលការរបស់យើងខ្ញុំ។${dateText}${venueText}${noteText}

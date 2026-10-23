@@ -141,20 +141,23 @@ export default function GuestsPage() {
   };
 
   const handleCopyLink = async (text) => {
-    const ok = await copyText(text);
-    if (ok) {
-      toast.success(t ? t("messageCopied") : "បានចម្លងសារអញ្ជើញ");
-    } else {
-      toast.error(t ? t("linkCopyFailed") : "មិនអាចចម្លងបានទេ");
-    }
+    try {
+      if (await copyText(text)) {
+        toast.success(t("messageCopied"));
+        return true;
+      }
+    } catch { /* Clipboard access can be denied by the browser. */ }
+    toast.error(t("linkCopyFailed"));
+    return false;
   };
 
   const handleMarkAsSent = async (guest) => {
-    if (!guest) return;
+    if (!guest) return false;
     const success = await markGuestAsSent(guest);
     if (success) {
-      toast.success("បានសម្គាល់ថាបានផ្ញើ");
+      toast.success(t("statusSent"));
     }
+    return success;
   };
 
   const handleGuestSynced = useCallback(
@@ -339,6 +342,8 @@ export default function GuestsPage() {
         onGuestSynced={handleGuestSynced}
         onClose={() => setQrGuestTarget(null)}
         onCopyLink={handleCopyLink}
+        onMarkAsSent={handleMarkAsSent}
+        saving={saving}
         t={t}
       />
 

@@ -15,7 +15,7 @@ const categories = [
 ];
 
 describe("GuestTable", () => {
-  it("opening a sharing provider does not confirm delivery or change send status", () => {
+  it("marks the guest as sent when Telegram sharing is clicked", () => {
     useLanguageStore.setState({ lang: 'en' });
     const onMarkAsSent = vi.fn();
     render(<GuestTable guests={[{id:501,name:'Sample guest',source:'backend',inviteToken:'fixture-link-only',sendStatus:'PENDING'}]} currentDraft={{slug:'sample-event'}} onMarkAsSent={onMarkAsSent} />);
@@ -23,10 +23,22 @@ describe("GuestTable", () => {
     const share=screen.getByRole('link',{name:'Share invitation for Sample guest via Telegram'});
     expect(share).toHaveAttribute('target','_blank');
     fireEvent.click(share);
-    expect(onMarkAsSent).not.toHaveBeenCalled();
-    fireEvent.click(screen.getByRole('button',{name:'Record manual sharing'}));
     expect(onMarkAsSent).toHaveBeenCalledTimes(1);
+    expect(onMarkAsSent).toHaveBeenCalledWith(expect.objectContaining({ id: 501 }));
     useLanguageStore.setState({lang:'km'});
+  });
+
+  it.each([true, false])("updates send status only when copying a message succeeds (%s)", async copied => {
+    useLanguageStore.setState({ lang: "en" });
+    const guest = { id: 501, name: "Sample guest", inviteToken: "fixture-link-only", sendStatus: "PENDING" };
+    const onCopyLink = vi.fn().mockResolvedValue(copied);
+    const onMarkAsSent = vi.fn();
+    render(<GuestTable guests={[guest]} currentDraft={{ slug: "sample-event" }} onCopyLink={onCopyLink} onMarkAsSent={onMarkAsSent} />);
+    fireEvent.click(screen.getByLabelText("More actions: Sample guest"));
+    fireEvent.click(screen.getByRole("button", { name: "Copy invitation message" }));
+    await waitFor(() => expect(onCopyLink).toHaveBeenCalledWith(expect.stringContaining("fixture-link-only"), guest));
+    expect(onMarkAsSent).toHaveBeenCalledTimes(copied ? 1 : 0);
+    useLanguageStore.setState({ lang: "km" });
   });
   it("localizes RSVP and ticket actions without changing the guest passed to the ticket flow", () => {
     useLanguageStore.setState({ lang: "km" });

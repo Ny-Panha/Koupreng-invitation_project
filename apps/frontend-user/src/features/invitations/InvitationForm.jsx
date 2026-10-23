@@ -1,3 +1,4 @@
+import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import StudioSections from "./studio/StudioSections";
 import StudioToolbar from "./studio/StudioToolbar";
@@ -59,7 +60,7 @@ import LivePhoneSimulator from "./LivePhoneSimulator";
 import { DatePicker } from "../../shared/ui/DatePicker";
 import { TimePicker } from "../../shared/ui/TimePicker";
 import SpotifyMusicPicker from "./components/SpotifyMusicPicker";
-import { getTemplateFormFlow } from "./config/templateFormFlowConfig";
+import { getLocalizedTemplateFormFlow } from "./config/templateFormFlowConfig";
 import { resolveTemplateRenderer } from "../templates/registry/templateRegistry";
 import { paymentService } from "../payments/paymentService";
 import "./InvitationPlanEssentialEditor.css";
@@ -75,6 +76,7 @@ function CleanImageUploadField({
     onRestoreDefault,
     hasDefault = false,
 }) {
+  const uiCopy = useUiCopy();
     const internalInputRef = useRef(null);
     const activeRef = inputRef || internalInputRef;
     const [imgError, setImgError] = useState(false);
@@ -108,7 +110,7 @@ function CleanImageUploadField({
                         <div
                             className="pe-clean-preview-box"
                             onClick={() => activeRef.current?.click()}
-                            title="ចុចដើម្បីប្តូររូបភាព (Click to change image)"
+                            title={uiCopy("ចុចដើម្បីប្តូររូបភាព", "Click to change image")}
                         >
                             <img
                                 src={resolvedSrc}
@@ -117,7 +119,7 @@ function CleanImageUploadField({
                             />
                             <div className="pe-clean-preview-hover-overlay">
                                 <UploadCloud size={20} />
-                                <span>ចុចដើម្បីប្តូររូបភាព</span>
+                                <span>{uiCopy("ចុចដើម្បីប្តូររូបភាព", "Click to change image")}</span>
                             </div>
                         </div>
                         <div className="pe-clean-actions-bar">
@@ -126,7 +128,7 @@ function CleanImageUploadField({
                                 className="pe-btn-upload-action"
                                 onClick={() => activeRef.current?.click()}
                             >
-                                <UploadCloud size={14} /> ប្តូររូបភាព
+                                <UploadCloud size={14} /> {uiCopy("ប្តូររូបភាព", "Change image")}
                             </button>
                             <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
                                 {hasDefault && onRestoreDefault && (
@@ -134,9 +136,9 @@ function CleanImageUploadField({
                                         type="button"
                                         className="pe-btn-restore-action"
                                         onClick={onRestoreDefault}
-                                        title="ប្រើរូបដើមរបស់គំរូ (Reset to template default)"
+                                        title={uiCopy("ប្រើរូបដើមរបស់គំរូ", "Reset to template default")}
                                     >
-                                        <RotateCcw size={13} /> រូបដើម
+                                        <RotateCcw size={13} /> {uiCopy("រូបដើម", "Original image")}
                                     </button>
                                 )}
                                 <button
@@ -144,7 +146,7 @@ function CleanImageUploadField({
                                     className="pe-btn-delete-action"
                                     onClick={onRemove}
                                 >
-                                    <Trash2 size={14} /> លុប
+                                    <Trash2 size={14} /> {uiCopy("លុប", "Delete")}
                                 </button>
                             </div>
                         </div>
@@ -154,11 +156,11 @@ function CleanImageUploadField({
                         <div
                             className="pe-clean-error-content"
                             onClick={() => activeRef.current?.click()}
-                            title="ចុចដើម្បីជ្រើសរើសរូបភាពថ្មី"
+                            title={uiCopy("ចុចដើម្បីជ្រើសរើសរូបភាពថ្មី", "Click to choose a new image")}
                         >
                             <AlertCircle size={24} className="pe-clean-error-icon" />
-                            <span className="pe-clean-error-title">មិនអាចទាញយករូបភាពបានទេ</span>
-                            <span className="pe-clean-error-hint">តំណភ្ជាប់រូបភាពអាចខូច ឬមិនមាន។ សូមចុចទីនេះដើម្បីជ្រើសរើសរូបថ្មី</span>
+                            <span className="pe-clean-error-title">{uiCopy("មិនអាចទាញយករូបភាពបានទេ", "Could not load image")}</span>
+                            <span className="pe-clean-error-hint">{uiCopy("តំណភ្ជាប់រូបភាពអាចខូច ឬមិនមាន។ សូមចុចទីនេះដើម្បីជ្រើសរើសរូបថ្មី", "The image link may be broken or unavailable. Click to choose a new image.")}</span>
                         </div>
                         <div className="pe-clean-actions-bar" style={{ marginTop: "4px" }}>
                             <button
@@ -166,7 +168,7 @@ function CleanImageUploadField({
                                 className="pe-btn-upload-action"
                                 onClick={() => activeRef.current?.click()}
                             >
-                                <UploadCloud size={14} /> ជ្រើសរើសរូបភាពថ្មី
+                                <UploadCloud size={14} /> {uiCopy("ជ្រើសរើសរូបភាពថ្មី", "Choose a new image")}
                             </button>
                             <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
                                 {hasDefault && onRestoreDefault && (
@@ -174,9 +176,9 @@ function CleanImageUploadField({
                                         type="button"
                                         className="pe-btn-restore-action"
                                         onClick={onRestoreDefault}
-                                        title="ប្រើរូបដើមរបស់គំរូ"
+                                        title={uiCopy("ប្រើរូបដើមរបស់គំរូ", "Use template image")}
                                     >
-                                        <RotateCcw size={13} /> រូបដើម
+                                        <RotateCcw size={13} /> {uiCopy("រូបដើម", "Original image")}
                                     </button>
                                 )}
                                 <button
@@ -184,7 +186,7 @@ function CleanImageUploadField({
                                     className="pe-btn-delete-action"
                                     onClick={onRemove}
                                 >
-                                    <Trash2 size={14} /> លុបចេញ
+                                    <Trash2 size={14} /> {uiCopy("លុបចេញ", "Remove")}
                                 </button>
                             </div>
                         </div>
@@ -198,7 +200,7 @@ function CleanImageUploadField({
                         onDrop={handleDrop}
                     >
                         <UploadCloud className="pe-clean-dropzone-icon" size={28} />
-                        <span className="pe-clean-dropzone-title">ចុចបញ្ចូលរូបភាព</span>
+                        <span className="pe-clean-dropzone-title">{uiCopy("ចុចបញ្ចូលរូបភាព", "Click to upload image")}</span>
                         <span className="pe-clean-dropzone-hint">{hint}</span>
                         {hasDefault && onRestoreDefault && (
                             <button
@@ -206,7 +208,7 @@ function CleanImageUploadField({
                                 className="pe-btn-restore-inline"
                                 onClick={(e) => { e.stopPropagation(); onRestoreDefault(); }}
                             >
-                                <RotateCcw size={12} /> ប្រើរូបគំរូដើម
+                                <RotateCcw size={12} /> {uiCopy("ប្រើរូបគំរូដើម", "Use template image")}
                             </button>
                         )}
                     </div>
@@ -224,19 +226,20 @@ function CleanImageUploadField({
 }
 
 function CleanGalleryItem({ idx, photo, onUpload, onRemove, onDeleteSlot, canDeleteSlot }) {
+  const uiCopy = useUiCopy();
     const inputRef = useRef(null);
 
     return (
         <div className="pe-gallery-item-card">
             <div className="pe-gallery-item-badge" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
                 <span style={{ display: "inline-flex", alignItems: "center", gap: "5px" }}>
-                    <ImageIcon size={14} /> រូបភាពទី {idx + 1}
+                    <ImageIcon size={14} /> {uiCopy("រូបភាពទី", "Image")} {idx + 1}
                 </span>
                 {canDeleteSlot && (
                     <button
                         type="button"
                         onClick={onDeleteSlot}
-                        title="លុបប្រអប់រូបភាពនេះ (Remove slot)"
+                        title={uiCopy("លុបប្រអប់រូបភាពនេះ", "Remove image slot")}
                         style={{
                             border: "none",
                             background: "transparent",
@@ -263,14 +266,14 @@ function CleanGalleryItem({ idx, photo, onUpload, onRemove, onDeleteSlot, canDel
                             style={{ padding: "5px 8px", fontSize: "0.78rem" }}
                             onClick={() => inputRef.current?.click()}
                         >
-                            <UploadCloud size={13} /> ប្តូរ
+                            <UploadCloud size={13} /> {uiCopy("ប្តូរ", "Change")}
                         </button>
                         <button
                             type="button"
                             className="pe-btn-delete-action"
                             style={{ padding: "5px 8px", fontSize: "0.78rem" }}
                             onClick={onRemove}
-                            title="ដករូបភាពនេះចេញ"
+                            title={uiCopy("ដករូបភាពនេះចេញ", "Remove this image")}
                         >
                             <Trash2 size={13} />
                         </button>
@@ -283,7 +286,7 @@ function CleanGalleryItem({ idx, photo, onUpload, onRemove, onDeleteSlot, canDel
                     onClick={() => inputRef.current?.click()}
                 >
                     <UploadCloud size={24} style={{ color: "#94a3b8" }} />
-                    <span style={{ fontSize: "0.8rem", fontWeight: 700 }}>ដាក់រូបទី {idx + 1}</span>
+                    <span style={{ fontSize: "0.8rem", fontWeight: 700 }}>{uiCopy("ដាក់រូបទី", "Add image")} {idx + 1}</span>
                 </div>
             )}
             <input
@@ -298,6 +301,7 @@ function CleanGalleryItem({ idx, photo, onUpload, onRemove, onDeleteSlot, canDel
 }
 
 function CleanStoryItem({ idx, item, onChange, onUpload, onRemoveImage, onDelete, canDelete }) {
+  const uiCopy = useUiCopy();
     const fileInputRef = useRef(null);
 
     return (
@@ -313,7 +317,7 @@ function CleanStoryItem({ idx, item, onChange, onUpload, onRemoveImage, onDelete
         }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span style={{ fontSize: "0.82rem", fontWeight: 700, color: "#92400e", display: "inline-flex", alignItems: "center", gap: "6px" }}>
-                    <Heart size={14} style={{ color: "#e11d48" }} /> រឿងរ៉ាវ / ដំណាក់កាលទី {idx + 1}
+                    <Heart size={14} style={{ color: "#e11d48" }} /> {uiCopy("រឿងរ៉ាវ / ដំណាក់កាលទី", "Story / chapter")} {idx + 1}
                 </span>
                 {canDelete && (
                     <button
@@ -321,9 +325,9 @@ function CleanStoryItem({ idx, item, onChange, onUpload, onRemoveImage, onDelete
                         onClick={onDelete}
                         className="pe-btn-delete-action"
                         style={{ padding: "4px 8px", fontSize: "0.78rem" }}
-                        title="លុបដំណាក់កាលនេះ"
+                        title={uiCopy("លុបដំណាក់កាលនេះ", "Remove this chapter")}
                     >
-                        <Trash2 size={13} /> លុប
+                        <Trash2 size={13} /> {uiCopy("លុប", "Delete")}
                     </button>
                 )}
             </div>
@@ -343,14 +347,14 @@ function CleanStoryItem({ idx, item, onChange, onUpload, onRemoveImage, onDelete
                                     className="pe-btn-upload-action"
                                     style={{ flex: 1, padding: "4px", fontSize: "0.75rem", justifyContent: "center" }}
                                 >
-                                    <UploadCloud size={12} /> ប្តូរ
+                                    <UploadCloud size={12} /> {uiCopy("ប្តូរ", "Change")}
                                 </button>
                                 <button
                                     type="button"
                                     onClick={onRemoveImage}
                                     className="pe-btn-delete-action"
                                     style={{ padding: "4px 8px", fontSize: "0.75rem" }}
-                                    title="ដករូបភាពចេញ"
+                                    title={uiCopy("ដករូបភាពចេញ", "Remove image")}
                                 >
                                     <Trash2 size={12} />
                                 </button>
@@ -363,7 +367,7 @@ function CleanStoryItem({ idx, item, onChange, onUpload, onRemoveImage, onDelete
                             onClick={() => fileInputRef.current?.click()}
                         >
                             <UploadCloud size={20} style={{ color: "#94a3b8" }} />
-                            <span style={{ fontSize: "0.75rem", fontWeight: 700 }}>ដាក់រូបភាព</span>
+                            <span style={{ fontSize: "0.75rem", fontWeight: 700 }}>{uiCopy("ដាក់រូបភាព", "Add image")}</span>
                         </div>
                     )}
                     <input
@@ -380,7 +384,7 @@ function CleanStoryItem({ idx, item, onChange, onUpload, onRemoveImage, onDelete
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
                         <div>
                             <label style={{ fontSize: "0.75rem", color: "#64748b", fontWeight: 600, display: "block", marginBottom: "3px" }}>
-                                ក្បាលរឿង (Kicker)
+                                {uiCopy("ក្បាលរឿង", "Story kicker")}
                             </label>
                             <input
                                 type="text"
@@ -388,12 +392,12 @@ function CleanStoryItem({ idx, item, onChange, onUpload, onRemoveImage, onDelete
                                 style={{ padding: "6px 10px", fontSize: "0.82rem" }}
                                 value={item.kicker || ""}
                                 onChange={(e) => onChange("kicker", e.target.value)}
-                                placeholder="រឿងរ៉ាវស្នេហា"
+                                placeholder={uiCopy("រឿងរ៉ាវស្នេហា", "Love story")}
                             />
                         </div>
                         <div>
                             <label style={{ fontSize: "0.75rem", color: "#64748b", fontWeight: 600, display: "block", marginBottom: "3px" }}>
-                                កាលបរិច្ឆេទ (Date)
+                                {uiCopy("កាលបរិច្ឆេទ", "Date")}
                             </label>
                             <input
                                 type="text"
@@ -401,14 +405,14 @@ function CleanStoryItem({ idx, item, onChange, onUpload, onRemoveImage, onDelete
                                 style={{ padding: "6px 10px", fontSize: "0.82rem" }}
                                 value={item.date || ""}
                                 onChange={(e) => onChange("date", e.target.value)}
-                                placeholder="28 មករា 2026"
+                                placeholder={uiCopy("28 មករា 2026", "28 January 2026")}
                             />
                         </div>
                     </div>
 
                     <div>
                         <label style={{ fontSize: "0.75rem", color: "#64748b", fontWeight: 600, display: "block", marginBottom: "3px" }}>
-                            ចំណងជើងរឿងរ៉ាវ (Title)
+                            {uiCopy("ចំណងជើងរឿងរ៉ាវ", "Story title")}
                         </label>
                         <input
                             type="text"
@@ -416,13 +420,13 @@ function CleanStoryItem({ idx, item, onChange, onUpload, onRemoveImage, onDelete
                             style={{ padding: "6px 10px", fontSize: "0.82rem" }}
                             value={item.title || ""}
                             onChange={(e) => onChange("title", e.target.value)}
-                            placeholder="ដំណើររបស់យើង"
+                            placeholder={uiCopy("ដំណើររបស់យើង", "Our journey")}
                         />
                     </div>
 
                     <div>
                         <label style={{ fontSize: "0.75rem", color: "#64748b", fontWeight: 600, display: "block", marginBottom: "3px" }}>
-                            អត្ថបទរៀបរាប់ (Description)
+                            {uiCopy("អត្ថបទរៀបរាប់", "Description")}
                         </label>
                         <textarea
                             className="pe-textarea"
@@ -430,7 +434,7 @@ function CleanStoryItem({ idx, item, onChange, onUpload, onRemoveImage, onDelete
                             rows="2"
                             value={item.text || ""}
                             onChange={(e) => onChange("text", e.target.value)}
-                            placeholder="រៀបរាប់ដំណើរនៃក្ដីស្រឡាញ់របស់អ្នកទាំងពីរ..."
+                            placeholder={uiCopy("រៀបរាប់ដំណើរនៃក្ដីស្រឡាញ់របស់អ្នកទាំងពីរ...", "Describe your love story...")}
                         />
                     </div>
                 </div>
@@ -566,6 +570,7 @@ const DEFAULT_STATE = {
 };
 
 export default function InvitationForm({ invitation }) {
+  const uiCopy = useUiCopy();
     const { text: t, lang: uiLanguage } = useBackendMessages("invitations");
     const englishUI = uiLanguage === "en";
     const { user } = useAuth();
@@ -782,10 +787,10 @@ export default function InvitationForm({ invitation }) {
     const flowConfig = useMemo(() => {
         void catalogVersion;
         const template = getTemplateById(form.templateId);
-        const config = getTemplateFormFlow(template || form.templateId);
+        const config = getLocalizedTemplateFormFlow(template || form.templateId, uiLanguage);
         const appearance = ["khmer-celestial", "royal-khmer-wedding"].includes(template?.code || template?.id);
         return { ...config, sectionOrder: ["eventInfo", ...config.sectionOrder.flatMap(key => key === "cover" && appearance ? [key, "appearance"] : [key]), "music"] };
-    }, [form.templateId, catalogVersion]);
+    }, [form.templateId, catalogVersion, uiLanguage]);
     const activeSection = flowConfig.sectionOrder.includes(selectedSection) ? selectedSection : flowConfig.sectionOrder[0];
     const [catalogTemplates, setCatalogTemplates] = useState(() => getAllTemplates());
     const [templateSearchQuery, setTemplateSearchQuery] = useState("");
@@ -985,7 +990,7 @@ export default function InvitationForm({ invitation }) {
         if (!file) return;
 
         if (!["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size > 5 * 1024 * 1024) {
-            toast("សូមជ្រើសរូប JPEG, PNG ឬ WebP ក្រោម 5 MB។", "warning");
+            toast(uiCopy("សូមជ្រើសរូប JPEG, PNG ឬ WebP ក្រោម 5 MB។", "Choose JPEG, PNG or WebP images under 5 MB."), "warning");
             return;
         }
 
@@ -1063,7 +1068,7 @@ export default function InvitationForm({ invitation }) {
     const addPhotoSlot = () => {
         const current = form.photos || [];
         if (current.length >= 10) {
-            toast("អាចបន្ថែមបានអតិបរមាត្រឹម 10 រូបប៉ុណ្ណោះ (Maximum 10 photos)");
+            toast(uiCopy("អាចបន្ថែមបានអតិបរមាត្រឹម 10 រូបប៉ុណ្ណោះ", "You can add up to 10 photos."));
             return;
         }
         const nextPhotos = [
@@ -1087,7 +1092,7 @@ export default function InvitationForm({ invitation }) {
         const files = Array.from(e.target.files || []);
         if (!files.length) return;
         if (files.some(file => !["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size > 5 * 1024 * 1024)) {
-            toast("Choose JPEG, PNG or WebP images under 5 MB.", "warning"); return;
+            toast(uiCopy("សូមជ្រើសរូប JPEG, PNG ឬ WebP ក្រោម 5 MB។", "Choose JPEG, PNG or WebP images under 5 MB."), "warning"); return;
         }
 
         const selectedFiles = files.slice(0, 10);
@@ -1109,7 +1114,7 @@ export default function InvitationForm({ invitation }) {
                 nextPhotos.push({ id: `p${nextPhotos.length + 1}`, url: "" });
             }
             update("photos", nextPhotos);
-            toast(`បានបញ្ចូល ${dataUrls.length} រូបក្នុងវិចិត្រសាល!`);
+            toast(uiCopy(`បានបញ្ចូល ${dataUrls.length} រូបក្នុងវិចិត្រសាល!`, `Added ${dataUrls.length} photos to the gallery.`));
         });
         e.target.value = "";
     };
@@ -1249,7 +1254,7 @@ export default function InvitationForm({ invitation }) {
 
     const handleGetCurrentLocation = () => {
         if (!navigator.geolocation) {
-            setLocationError("ឧបករណ៍នេះមិនគាំទ្រ Location ទេ។ សូម Paste Google Maps Link។");
+            setLocationError(uiCopy("ឧបករណ៍នេះមិនគាំទ្រការកំណត់ទីតាំងទេ។ សូមបិទភ្ជាប់តំណផែនទី។", "This device does not support geolocation. Paste a Google Maps link."));
             return;
         }
         setIsLocating(true);
@@ -1258,13 +1263,13 @@ export default function InvitationForm({ invitation }) {
             ({ coords }) => {
                 update("googleMapUrl", `https://www.google.com/maps?q=${coords.latitude},${coords.longitude}`);
                 setIsLocating(false);
-                toast("បានយកទីតាំងបច្ចុប្បន្នរួចរាល់!");
+                toast(uiCopy("បានយកទីតាំងបច្ចុប្បន្នរួចរាល់!", "Current location found."));
             },
             (error) => {
                 setIsLocating(false);
                 setLocationError(error.code === error.PERMISSION_DENIED
-                    ? "សូមអនុញ្ញាត Location ក្នុង Browser ដើម្បីប្រើមុខងារនេះ។"
-                    : "មិនអាចយកទីតាំងបានទេ។ សូមពិនិត្យ GPS របស់អ្នក ឬ Paste Google Maps Link។");
+                    ? uiCopy("សូមអនុញ្ញាតការកំណត់ទីតាំងក្នុងកម្មវិធីរុករក ដើម្បីប្រើមុខងារនេះ។", "Allow location access in your browser to use this feature.")
+                    : uiCopy("មិនអាចយកទីតាំងបានទេ។ សូមពិនិត្យការកំណត់ទីតាំង ឬបិទភ្ជាប់តំណផែនទី។", "Could not find your location. Check location services or paste a Google Maps link."));
             },
             { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 }
         );
@@ -1444,7 +1449,7 @@ export default function InvitationForm({ invitation }) {
             let apiSyncFailed = false;
             const effectiveBackendId = savedBackendId.current;
             try {
-                if (!payload.templateId) throw new Error("The selected template is unavailable in the catalog. Choose an available template before saving online.");
+                if (!payload.templateId) throw new Error(uiCopy("គំរូដែលបានជ្រើសមិនមានក្នុងបណ្ណាល័យទេ។ សូមជ្រើសគំរូដែលអាចប្រើបាន មុនពេលរក្សាទុកលើម៉ាស៊ីនមេ។", "The selected template is unavailable in the catalog. Choose an available template before saving online."));
                 if (effectiveBackendId) {
                     saved = await invitationService.update(effectiveBackendId, payload);
                 } else {
@@ -1700,16 +1705,16 @@ export default function InvitationForm({ invitation }) {
 
             const successMsg = apiSyncFailed
                 ? effectiveBackendId
-                    ? "បានរក្សាទុកការកែប្រែក្នុង browser ប៉ុណ្ណោះ។ កំណែថ្មីមិនទាន់ sync ទៅ server ទេ; សូមពិនិត្យ internet ហើយរក្សាទុកម្ដងទៀត។"
-                    : "បានរក្សាទុកក្នុង browser ប៉ុណ្ណោះ។ មិនទាន់បង្ហាញក្នុង Admin ទេ; សូមពិនិត្យ internet ហើយកែ/រក្សាទុកម្ដងទៀត។"
+                    ? uiCopy("បានរក្សាទុកការកែប្រែក្នុងឧបករណ៍ប៉ុណ្ណោះ។ មិនទាន់រក្សាទុកលើម៉ាស៊ីនមេទេ។ សូមពិនិត្យអ៊ីនធឺណិត ហើយរក្សាទុកម្ដងទៀត។", "Changes were saved on this device only. Check your connection and save again to sync them.")
+                    : uiCopy("បានរក្សាទុកក្នុងឧបករណ៍ប៉ុណ្ណោះ។ សូមពិនិត្យអ៊ីនធឺណិត ហើយរក្សាទុកម្ដងទៀត។", "Saved on this device only. Check your connection and save again to sync the invitation.")
                 : mediaSyncError
-                    ? "កម្មវិធីត្រូវបានរក្សាទុកហើយ ប៉ុន្តែរូបភាពខ្លះមិនទាន់បានផ្ទុកឡើងទេ។ កម្មវិធីមានក្នុង Admin ហើយ។"
+                    ? uiCopy("កម្មវិធីត្រូវបានរក្សាទុកហើយ ប៉ុន្តែរូបភាពខ្លះមិនទាន់បានផ្ទុកឡើងទេ។", "Your event was saved, but some images have not finished uploading.")
                 : t("savedSuccess") || "បានរក្សាទុកដោយជោគជ័យ!";
 
             const finalSavedId = saved?.id || targetDraftId;
             if (stayInStudio) {
                 if (!quiet) toast(successMsg, apiSyncFailed || mediaSyncError ? "warning" : "success");
-                return { id: finalSavedId, synced: !apiSyncFailed && !mediaSyncError, error: mediaSyncError || (apiSyncFailed ? "The server could not save these changes. Retry saving." : "") };
+                return { id: finalSavedId, synced: !apiSyncFailed && !mediaSyncError, error: mediaSyncError || (apiSyncFailed ? uiCopy("ម៉ាស៊ីនមេមិនអាចរក្សាទុកការកែប្រែបានទេ។ សូមរក្សាទុកម្ដងទៀត។", "The server could not save these changes. Retry saving.") : "") };
             }
             if (redirectToPreview && finalSavedId) {
                 toast(successMsg, apiSyncFailed || mediaSyncError ? "warning" : "success");
@@ -1746,27 +1751,27 @@ export default function InvitationForm({ invitation }) {
         try {
             if (!await studio.flush()) return;
             const result = await invitationService.publish(savedBackendId.current);
-            if (result?.status !== "PUBLISHED") throw new Error("The server has not confirmed publication. Please retry.");
+            if (result?.status !== "PUBLISHED") throw new Error(uiCopy("ម៉ាស៊ីនមេមិនទាន់បានបញ្ជាក់ការផ្សព្វផ្សាយទេ។ សូមព្យាយាមម្ដងទៀត។", "The server has not confirmed publication. Please retry."));
             setPublished(true);
-            toast("បានផ្សព្វផ្សាយ · Invitation published", "success");
+            toast(uiCopy("បានផ្សព្វផ្សាយធៀបអញ្ជើញ", "Invitation published"), "success");
         } catch (error) {
             if (/Publish requirements missing:.*\bvenueAddress\b/.test(error.message || "")) {
                 setVenueAddressError(englishUI ? "The server has not saved this venue address. Save it again before publishing." : "ម៉ាស៊ីនមេមិនទាន់រក្សាទុកអាសយដ្ឋាននេះទេ។ សូមរក្សាទុកម្ដងទៀតមុនផ្សព្វផ្សាយ។");
                 setSelectedSection("venue");
-            } else toast(error.message || "Publication failed. Please retry.", "warning");
+            } else toast(error.message || uiCopy("ការផ្សព្វផ្សាយមិនបានជោគជ័យ។ សូមព្យាយាមម្ដងទៀត។", "Publication failed. Please retry."), "warning");
         }
         finally { setIsPublishing(false); }
     }
 
     // --- Dynamic Section Renderers (Driven by templateFormFlowConfig) ---
 
-    const renderEventInfoSection = () => <section className="pe-section-card" aria-label="Event information">
-        <h2 className="pe-section-heading">{englishUI ? "Event information" : "ព័ត៌មានកម្មវិធី"}</h2>
+    const renderEventInfoSection = () => <section className="pe-section-card" aria-label={uiCopy("ព័ត៌មានកម្មវិធី", "Event information")}>
+        <h2 className="pe-section-heading">{englishUI ? uiCopy("ព័ត៌មានកម្មវិធី", "Event information") : "ព័ត៌មានកម្មវិធី"}</h2>
             {/* Main Title on Cover */}
             <div className="pe-form-group">
                 <label className="pe-label" htmlFor={`${fieldId}-title`}>
                     <span className="pe-label-icon"><FileText size={15} /></span>
-                    {t("mainTitle") || "ចំណងជើងធំលើក្រប"}
+                    {t("mainTitle") || uiCopy("ចំណងជើងធំលើក្រប", "Cover title")}
                 </label>
                 <input
                     id={`${fieldId}-title`}
@@ -1774,7 +1779,7 @@ export default function InvitationForm({ invitation }) {
                     className="pe-input"
                     value={form.title}
                     onChange={(e) => update("title", e.target.value)}
-                    placeholder="សិរីមង្គលអាពាហ៍ពិពាហ៍"
+                    placeholder={uiCopy("សិរីមង្គលអាពាហ៍ពិពាហ៍", "Wedding celebration")}
                 />
             </div>
 
@@ -1783,7 +1788,7 @@ export default function InvitationForm({ invitation }) {
                 <div className="pe-form-group">
                     <label className="pe-label" htmlFor={`${fieldId}-groom`}>
                         <span className="pe-label-icon"><User size={15} /></span>
-                        {t("groom") || "កូនប្រុស (Groom Name)"}
+                        {t("groom") || uiCopy("ឈ្មោះកូនកំលោះ", "Groom name")}
                     </label>
                     <input
                         id={`${fieldId}-groom`}
@@ -1791,13 +1796,13 @@ export default function InvitationForm({ invitation }) {
                         className="pe-input"
                         value={form.groomName}
                         onChange={(e) => update("groomName", e.target.value)}
-                        placeholder="វណ្ណដា"
+                        placeholder={uiCopy("វណ្ណដា", "VannDa")}
                     />
                 </div>
                 <div className="pe-form-group">
                     <label className="pe-label" htmlFor={`${fieldId}-bride`}>
                         <span className="pe-label-icon"><Heart size={15} /></span>
-                        {t("bride") || "កូនស្រី (Bride Name)"}
+                        {t("bride") || uiCopy("ឈ្មោះកូនក្រមុំ", "Bride name")}
                     </label>
                     <input
                         id={`${fieldId}-bride`}
@@ -1805,7 +1810,7 @@ export default function InvitationForm({ invitation }) {
                         className="pe-input"
                         value={form.brideName}
                         onChange={(e) => update("brideName", e.target.value)}
-                        placeholder="ស្រីពេជ្រ"
+                        placeholder={uiCopy("ស្រីពេជ្រ", "Sreypich")}
                     />
                 </div>
             </div>
@@ -1815,7 +1820,7 @@ export default function InvitationForm({ invitation }) {
                 <div className="pe-form-group">
                     <label className="pe-label" htmlFor={`${fieldId}-date`}>
                         <span className="pe-label-icon"><Calendar size={15} /></span>
-                        {t("dateTime") || "កាលបរិច្ឆេទ (Event Date)"}
+                        {t("dateTime") || uiCopy("កាលបរិច្ឆេទកម្មវិធី", "Event date")}
                     </label>
                     <DatePicker
                         id={`${fieldId}-date`}
@@ -1824,31 +1829,31 @@ export default function InvitationForm({ invitation }) {
                             update("eventDate", val);
                             update("eventDateText", val);
                         }}
-                        placeholder="ជ្រើសកាលបរិច្ឆេទ"
+                        placeholder={uiCopy("ជ្រើសកាលបរិច្ឆេទ", "Choose date")}
                     />
                 </div>
                 <div className="pe-form-group">
                     <label className="pe-label" htmlFor={`${fieldId}-time`}>
                         <span className="pe-label-icon"><Clock size={15} /></span>
-                        {t("timePicker") || "ម៉ោងទទួលភ្ញៀវ (Event Time)"}
+                        {t("timePicker") || uiCopy("ម៉ោងទទួលភ្ញៀវ", "Event time")}
                     </label>
                     <TimePicker
                         id={`${fieldId}-time`}
                         value={form.eventTime}
                         onChange={(val) => update("eventTime", val)}
-                        placeholder="ជ្រើសម៉ោង"
+                        placeholder={uiCopy("ជ្រើសម៉ោង", "Choose time")}
                     />
                 </div>
             </div>
 
     </section>;
-    const renderMusicSection = () => <section className="pe-section-card" aria-label="Music">
-        <h2 className="pe-section-heading">{englishUI ? "Music" : "តន្ត្រី"}</h2>
+    const renderMusicSection = () => <section className="pe-section-card" aria-label={uiCopy("តន្ត្រី", "Music")}>
+        <h2 className="pe-section-heading">{englishUI ? uiCopy("តន្ត្រី", "Music") : "តន្ត្រី"}</h2>
             {/* Spotify-style Music Selector & Player */}
             <div className="pe-form-group">
                 <label className="pe-label">
                     <span className="pe-label-icon"><Music size={15} /></span>
-                    {t("labelMusic") || "ជ្រើសរើសបទភ្លេង / Music Track"}
+                    {t("labelMusic") || uiCopy("ជ្រើសរើសបទភ្លេង", "Music track")}
                 </label>
                 <SpotifyMusicPicker
                     value={form.musicTrackId || "waiting-day"}
@@ -1872,7 +1877,7 @@ export default function InvitationForm({ invitation }) {
             {/* Clean Cover Image Upload (Image 1) */}
             {flowConfig.hasCoverImage !== false && (
                 <CleanImageUploadField
-                    label={flowConfig.labels.coverImage || (activeLangTab === "EN" ? (flowConfig.labels.coverImageEn || "Front Cover Image") : (t("coverImage") || "រូបភាពក្របខាងមុខ (Front Cover Image)"))}
+                    label={flowConfig.labels.coverImage || (englishUI ? (flowConfig.labels.coverImageEn || "Front Cover Image") : (t("coverImage") || uiCopy("រូបភាពក្របខាងមុខ", "Front cover image")))}
                     icon={ImageIcon}
                     image={form.coverImage}
                     onUpload={(e) => handleFileUpload(e, (url, file) => {
@@ -1892,7 +1897,7 @@ export default function InvitationForm({ invitation }) {
                     } : undefined}
                     hasDefault={Boolean(form.templateDefaultCover && form.coverImage !== form.templateDefaultCover)}
                     inputRef={coverInputRef}
-                    hint={flowConfig.hints.coverImage || (activeLangTab === "EN" ? (flowConfig.hints.coverImageEn || "Shown on front cover / hero") : "បង្ហាញលើក្របទំព័រដើម (Front Cover / Hero)")}
+                    hint={flowConfig.hints.coverImage || (englishUI ? (flowConfig.hints.coverImageEn || "Shown on front cover / hero") : "បង្ហាញលើក្របទំព័រដើម (Front Cover / Hero)")}
                 />
             )}
 
@@ -1900,7 +1905,7 @@ export default function InvitationForm({ invitation }) {
             {Boolean(flowConfig.hasCoverBackgroundImage) && (
                 <div style={{ marginTop: 12 }}>
                     <CleanImageUploadField
-                        label={activeLangTab === "EN" ? (flowConfig.labels.coverBackgroundImageEn || "Cover background (closed state)") : (flowConfig.labels.coverBackgroundImage || "ផ្ទៃខាងក្រោយគ្របមុខ (ពេលមិនទាន់បើក)")}
+                        label={englishUI ? (flowConfig.labels.coverBackgroundImageEn || "Cover background (closed state)") : (flowConfig.labels.coverBackgroundImage || uiCopy("ផ្ទៃខាងក្រោយគ្របមុខ (ពេលមិនទាន់បើក)", "Cover background (closed state)"))}
                         icon={ImageIcon}
                         image={form.coverBackgroundImage}
                         onUpload={(e) => handleFileUpload(e, (url, file) => {
@@ -1917,7 +1922,7 @@ export default function InvitationForm({ invitation }) {
                         } : undefined}
                         hasDefault={Boolean(form.templateDefaultCoverBg && form.coverBackgroundImage !== form.templateDefaultCoverBg)}
                         inputRef={coverBgInputRef}
-                        hint={activeLangTab === "EN" ? (flowConfig.hints.coverBackgroundImageEn || "Shown on the cover before the invitation is opened") : (flowConfig.hints.coverBackgroundImage || "បង្ហាញលើគ្របមុខពេលមិនទាន់បើកធៀបការ")}
+                        hint={englishUI ? (flowConfig.hints.coverBackgroundImageEn || "Shown on the cover before the invitation is opened") : (flowConfig.hints.coverBackgroundImage || "បង្ហាញលើគ្របមុខពេលមិនទាន់បើកធៀបការ")}
                     />
                 </div>
             )}
@@ -1926,7 +1931,7 @@ export default function InvitationForm({ invitation }) {
             {Boolean(flowConfig.hasBackgroundImage) && (
                 <div style={{ marginTop: 12 }}>
                     <CleanImageUploadField
-                        label={activeLangTab === "EN" ? (flowConfig.labels.backgroundImageEn || "Botanical frame (opened state)") : (flowConfig.labels.backgroundImage || "ស៊ុមផ្កា / រូបភាពផ្ទៃខាងក្រោយ (Botanical Frame)")}
+                        label={englishUI ? (flowConfig.labels.backgroundImageEn || "Botanical frame (opened state)") : (flowConfig.labels.backgroundImage || uiCopy("ស៊ុមផ្កា ឬរូបភាពផ្ទៃខាងក្រោយ", "Botanical frame / background image"))}
                         icon={Sparkles}
                         image={form.backgroundImage || form.templateDefaultBackground || (String(form.templateId).includes("celestial") ? "/invitations/khmer-celestial/botanical-frame.jpg" : "")}
                         onUpload={(e) => handleFileUpload(e, (url, file) => {
@@ -1948,7 +1953,7 @@ export default function InvitationForm({ invitation }) {
                             form.backgroundImage !== (form.templateDefaultBackground || "/invitations/khmer-celestial/botanical-frame.jpg")
                         )}
                         inputRef={bgFrameInputRef}
-                        hint={activeLangTab === "EN" ? (flowConfig.hints.backgroundImageEn || "Shown as background or frame once invitation is opened (Full)") : (flowConfig.hints.backgroundImage || "ស៊ុមផ្កា ឬរូបភាពផ្ទៃខាងក្រោយពេលបើកធៀបការពេញ (Full)")}
+                        hint={englishUI ? (flowConfig.hints.backgroundImageEn || "Shown as background or frame once invitation is opened (Full)") : (flowConfig.hints.backgroundImage || "ស៊ុមផ្កា ឬរូបភាពផ្ទៃខាងក្រោយពេលបើកធៀបការពេញ (Full)")}
                     />
                 </div>
             )}
@@ -1959,10 +1964,10 @@ export default function InvitationForm({ invitation }) {
                     <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
                         <span className="pe-switch-label" style={{ fontWeight: 600, color: "#43250b", display: "flex", alignItems: "center", gap: 6 }}>
                             <Sparkles size={16} color="#b88a3a" />
-                            បង្ហាញស្លាកឈ្មោះមាស / ឡូហ្គោ (Gold Mark / Logo)
+                            {uiCopy("បង្ហាញស្លាកឈ្មោះមាស ឬឡូហ្គោ", "Show gold mark / logo")}
                         </span>
                         <small style={{ color: "#786148", fontSize: "0.76rem" }}>
-                            {form.showBrandMark !== false ? "កំពុងបើកបង្ហាញលើក្របទំព័រ" : "បានបិទ (បង្ហាញតែឈ្មោះគូស្នេហ៍ជាអក្សរមាស)"}
+                            {form.showBrandMark !== false ? uiCopy("កំពុងបើកបង្ហាញលើក្របទំព័រ", "Visible on the cover") : uiCopy("បានបិទ (បង្ហាញតែឈ្មោះគូស្នេហ៍ជាអក្សរមាស)", "Hidden (couple names appear in gold text)")}
                         </small>
                     </div>
                     <label className="pe-toggle">
@@ -1985,12 +1990,12 @@ export default function InvitationForm({ invitation }) {
                                     style={{ width: 48, height: 48, objectFit: "contain", background: "#fafafa", borderRadius: 6, border: "1px solid #cbd5e1" }}
                                 />
                                 <div style={{ flex: 1, minWidth: 0 }}>
-                                    <div style={{ fontSize: "0.84rem", fontWeight: 600, color: "#1e293b" }}>ឡូហ្គោផ្ទាល់ខ្លួន (Custom Logo)</div>
-                                    <div style={{ fontSize: "0.74rem", color: "#64748b" }}>បានបញ្ចូលរូបភាពផ្ទាល់ខ្លួន</div>
+                                    <div style={{ fontSize: "0.84rem", fontWeight: 600, color: "#1e293b" }}>{uiCopy("ឡូហ្គោផ្ទាល់ខ្លួន", "Custom logo")}</div>
+                                    <div style={{ fontSize: "0.74rem", color: "#64748b" }}>{uiCopy("បានបញ្ចូលរូបភាពផ្ទាល់ខ្លួន", "Custom image uploaded")}</div>
                                 </div>
                                 <div style={{ display: "flex", gap: 6 }}>
                                     <label className="pe-btn-upload-cover" style={{ cursor: "pointer", padding: "4px 8px", fontSize: "0.75rem", margin: 0 }}>
-                                        ប្តូរ
+                                        {uiCopy("ប្តូរ", "Change")}
                                         <input
                                             type="file"
                                             accept="image/png,image/webp,image/jpeg"
@@ -2013,18 +2018,18 @@ export default function InvitationForm({ invitation }) {
                                         className="pe-btn-del-item"
                                         style={{ padding: "4px 8px", fontSize: "0.75rem" }}
                                         onClick={() => update("brandMarkUrl", "")}
-                                        title="ប្រើឡូហ្គោគំរូដើមរបស់ Template"
+                                        title={uiCopy("ប្រើឡូហ្គោគំរូដើម", "Use the template’s original logo")}
                                     >
-                                        <RotateCcw size={13} /> គំរូដើម
+                                        <RotateCcw size={13} /> {uiCopy("គំរូដើម", "Template default")}
                                     </button>
                                     <button
                                         type="button"
                                         className="pe-btn-del-item"
                                         style={{ padding: "4px 8px", fontSize: "0.75rem", color: "#dc2626", borderColor: "#fecaca", background: "#fef2f2" }}
                                         onClick={() => update("showBrandMark", false)}
-                                        title="បិទមិនបង្ហាញឡូហ្គោលើក្រប"
+                                        title={uiCopy("បិទមិនបង្ហាញឡូហ្គោលើក្រប", "Hide logo on cover")}
                                     >
-                                        <X size={13} /> បិទ
+                                        <X size={13} /> {uiCopy("បិទ", "Close")}
                                     </button>
                                 </div>
                             </div>
@@ -2036,13 +2041,13 @@ export default function InvitationForm({ invitation }) {
                                     style={{ width: 52, height: 38, objectFit: "contain", background: "#faf7f2", borderRadius: 6, border: "1px solid #e2d7c3" }}
                                 />
                                 <div style={{ flex: 1, minWidth: 0 }}>
-                                    <div style={{ fontSize: "0.84rem", fontWeight: 600, color: "#5c401d" }}>ឡូហ្គោគំរូដើម (Template Preset)</div>
-                                    <div style={{ fontSize: "0.74rem", color: "#8a755d" }}>ស្លាកឈ្មោះមាសរបស់ Template</div>
+                                    <div style={{ fontSize: "0.84rem", fontWeight: 600, color: "#5c401d" }}>{uiCopy("ឡូហ្គោគំរូដើម", "Template logo")}</div>
+                                    <div style={{ fontSize: "0.74rem", color: "#8a755d" }}>{uiCopy("ស្លាកឈ្មោះមាសរបស់គំរូ", "Template gold name mark")}</div>
                                 </div>
                                 <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
                                     <label className="pe-btn-upload-cover" style={{ cursor: "pointer", padding: "6px 10px", fontSize: "0.76rem", margin: 0, display: "inline-flex", alignItems: "center", gap: 5 }}>
                                         <UploadCloud size={14} />
-                                        <span>ប្តូរជារូបផ្ទាល់ខ្លួន</span>
+                                        <span>{uiCopy("ប្តូរជារូបផ្ទាល់ខ្លួន", "Use your own image")}</span>
                                         <input
                                             type="file"
                                             accept="image/png,image/webp,image/jpeg"
@@ -2065,10 +2070,10 @@ export default function InvitationForm({ invitation }) {
                                         className="pe-btn-del-item"
                                         style={{ padding: "6px 10px", fontSize: "0.76rem", display: "inline-flex", alignItems: "center", gap: 4, color: "#dc2626", borderColor: "#fecaca", background: "#fef2f2" }}
                                         onClick={() => update("showBrandMark", false)}
-                                        title="បិទមិនបង្ហាញឡូហ្គោលើក្រប"
+                                        title={uiCopy("បិទមិនបង្ហាញឡូហ្គោលើក្រប", "Hide logo on cover")}
                                     >
                                         <X size={14} />
-                                        <span>បិទ</span>
+                                        <span>{uiCopy("បិទ", "Close")}</span>
                                     </button>
                                 </div>
                             </div>
@@ -2076,8 +2081,8 @@ export default function InvitationForm({ invitation }) {
 
                         <div className="pe-switch-row" style={{ margin: "4px 0 0", padding: "8px 10px", background: "rgba(255,255,255,0.7)", borderRadius: 6 }}>
                             <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
-                                <span className="pe-switch-label" style={{ fontSize: "0.82rem" }}>{t("hideCoupleCover") || "បិទឈ្មោះកូនកំលោះ/កូនក្រមុំ (ក្របខាងលើ)"}</span>
-                                <small style={{ color: "#786148", fontSize: "0.72rem" }}>* ប្រើពេលឡូហ្គោរបស់អ្នកមានឈ្មោះស្រាប់ ដើម្បីកុំឱ្យជាន់ឈ្មោះគ្នា</small>
+                                <span className="pe-switch-label" style={{ fontSize: "0.82rem" }}>{t("hideCoupleCover") || uiCopy("បិទឈ្មោះកូនកំលោះ/កូនក្រមុំ (ក្របខាងលើ)", "Hide couple names on the cover")}</span>
+                                <small style={{ color: "#786148", fontSize: "0.72rem" }}>{uiCopy("* ប្រើពេលឡូហ្គោរបស់អ្នកមានឈ្មោះស្រាប់ ដើម្បីកុំឱ្យជាន់ឈ្មោះគ្នា", "* Use when your logo already includes names to avoid duplicates")}</small>
                             </div>
                             <label className="pe-toggle">
                                 <input
@@ -2094,7 +2099,7 @@ export default function InvitationForm({ invitation }) {
                 {form.showBrandMark === false && (
                     <div style={{ marginTop: 10, padding: "8px 12px", background: "rgba(255,255,255,0.85)", borderRadius: 8, border: "1px dashed #cbd5e1", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
                         <span style={{ fontSize: "0.78rem", color: "#64748b" }}>
-                            🚫 បានបិទឡូហ្គោ (បង្ហាញតែឈ្មោះគូស្នេហ៍ជាអក្សរមាស)
+                            {uiCopy("🚫 បានបិទឡូហ្គោ (បង្ហាញតែឈ្មោះគូស្នេហ៍ជាអក្សរមាស)", "🚫 Logo hidden (couple names appear in gold text)")}
                         </span>
                         <button
                             type="button"
@@ -2102,7 +2107,7 @@ export default function InvitationForm({ invitation }) {
                             style={{ padding: "4px 10px", fontSize: "0.74rem", borderRadius: 6, whiteSpace: "nowrap" }}
                             onClick={() => update("showBrandMark", true)}
                         >
-                            បើកបង្ហាញឡើងវិញ
+                            {uiCopy("បើកបង្ហាញឡើងវិញ", "Show again")}
                         </button>
                     </div>
                 )}
@@ -2112,14 +2117,14 @@ export default function InvitationForm({ invitation }) {
             <div className="pe-form-group">
                 <label className="pe-label">
                     <span className="pe-label-icon"><Sparkles size={15} /></span>
-                    {t("subTitle") || "ចំណងជើងរងលើក្រប (Subtitle / Kicker)"}
+                    {t("subTitle") || uiCopy("ចំណងជើងរងលើក្រប", "Cover subtitle / kicker")}
                 </label>
                 <input
                     type="text"
                     className="pe-input"
                     value={form.subtitle}
                     onChange={(e) => update("subtitle", e.target.value)}
-                    placeholder="សូមគោរពអញ្ជើញ"
+                    placeholder={uiCopy("សូមគោរពអញ្ជើញ", "You are cordially invited")}
                 />
             </div>
 
@@ -2132,38 +2137,36 @@ export default function InvitationForm({ invitation }) {
                 <span className="pe-sec-icon-badge">
                     <Users size={17} />
                 </span>
-                <span>{flowConfig.labels.familySection || "មាតាបិតាទាំងសងខាង (Together with our families)"}</span>
+                <span>{flowConfig.labels.familySection || uiCopy("មាតាបិតាទាំងសងខាង", "Together with our families")}</span>
             </h4>
             <p style={{ margin: "0 0 14px 0", fontSize: "0.8rem", color: "#64748b" }}>
-                {activeLangTab === "KH"
-                    ? "* បញ្ចូលឈ្មោះលោកឪពុក និងអ្នកម្តាយទាំងសងខាងសម្រាប់បង្ហាញក្នុងធៀបការ"
-                    : "* Enter the names of parents of both the groom and bride"}
+                {uiCopy("* បញ្ចូលឈ្មោះលោកឪពុក និងអ្នកម្តាយទាំងសងខាងសម្រាប់បង្ហាញក្នុងធៀបការ", "* Enter the names of parents of both the groom and bride")}
             </p>
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "14px" }}>
                 {/* Groom's Family */}
                 <div style={{ background: "#fdfbf7", border: "1px solid #ebdcc5", borderRadius: "10px", padding: "12px" }}>
                     <h5 style={{ margin: "0 0 10px 0", fontSize: "0.85rem", fontWeight: 700, color: "#8c6b32", display: "flex", alignItems: "center", gap: "6px" }}>
-                        <User size={15} /> ខាងកូនប្រុស (Groom's Side)
+                        <User size={15} /> {uiCopy("ខាងកូនកំលោះ", "Groom’s side")}
                     </h5>
                     <div className="pe-form-group" style={{ marginBottom: "8px" }}>
-                        <label className="pe-label" style={{ fontSize: "0.78rem" }}>លោកឪពុក (Father)</label>
+                        <label className="pe-label" style={{ fontSize: "0.78rem" }}>{uiCopy("លោកឪពុក", "Father")}</label>
                         <input
                             type="text"
                             className="pe-input"
                             value={form.groomFather || ""}
                             onChange={(e) => update("groomFather", e.target.value)}
-                            placeholder="លោក ឃុន ស៊ីវខេង"
+                            placeholder={uiCopy("លោក ឃុន ស៊ីវខេង", "Mr. Khun Sivkheng")}
                         />
                     </div>
                     <div className="pe-form-group" style={{ marginBottom: 0 }}>
-                        <label className="pe-label" style={{ fontSize: "0.78rem" }}>អ្នកម្តាយ (Mother)</label>
+                        <label className="pe-label" style={{ fontSize: "0.78rem" }}>{uiCopy("អ្នកម្តាយ", "Mother")}</label>
                         <input
                             type="text"
                             className="pe-input"
                             value={form.groomMother || ""}
                             onChange={(e) => update("groomMother", e.target.value)}
-                            placeholder="លោកស្រី គុយ ដាលី"
+                            placeholder={uiCopy("លោកស្រី គុយ ដាលី", "Mrs. Kuy Daly")}
                         />
                     </div>
                 </div>
@@ -2171,26 +2174,26 @@ export default function InvitationForm({ invitation }) {
                 {/* Bride's Family */}
                 <div style={{ background: "#fdfbf7", border: "1px solid #ebdcc5", borderRadius: "10px", padding: "12px" }}>
                     <h5 style={{ margin: "0 0 10px 0", fontSize: "0.85rem", fontWeight: 700, color: "#8c6b32", display: "flex", alignItems: "center", gap: "6px" }}>
-                        <Heart size={15} /> ខាងកូនស្រី (Bride's Side)
+                        <Heart size={15} /> {uiCopy("ខាងកូនក្រមុំ", "Bride’s side")}
                     </h5>
                     <div className="pe-form-group" style={{ marginBottom: "8px" }}>
-                        <label className="pe-label" style={{ fontSize: "0.78rem" }}>លោកឪពុក (Father)</label>
+                        <label className="pe-label" style={{ fontSize: "0.78rem" }}>{uiCopy("លោកឪពុក", "Father")}</label>
                         <input
                             type="text"
                             className="pe-input"
                             value={form.brideFather || ""}
                             onChange={(e) => update("brideFather", e.target.value)}
-                            placeholder="លោក ឡាំ គីមឡុង"
+                            placeholder={uiCopy("លោក ឡាំ គីមឡុង", "Mr. Lam Kimlong")}
                         />
                     </div>
                     <div className="pe-form-group" style={{ marginBottom: 0 }}>
-                        <label className="pe-label" style={{ fontSize: "0.78rem" }}>អ្នកម្តាយ (Mother)</label>
+                        <label className="pe-label" style={{ fontSize: "0.78rem" }}>{uiCopy("អ្នកម្តាយ", "Mother")}</label>
                         <input
                             type="text"
                             className="pe-input"
                             value={form.brideMother || ""}
                             onChange={(e) => update("brideMother", e.target.value)}
-                            placeholder="លោកស្រី ឡេង​ យ៉ុងស៊ី"
+                            placeholder={uiCopy("លោកស្រី ឡេង​ យ៉ុងស៊ី", "Mrs. Leng Yongsy")}
                         />
                     </div>
                 </div>
@@ -2204,27 +2207,27 @@ export default function InvitationForm({ invitation }) {
                 <span className="pe-sec-icon-badge">
                     <Mail size={17} />
                 </span>
-                <span>{flowConfig.labels.invitationSection || t("secMessage") || "សារលិខិតអញ្ជើញ (The Invitation)"}</span>
+                <span>{flowConfig.labels.invitationSection || t("secMessage") || uiCopy("សារលិខិតអញ្ជើញ", "The invitation")}</span>
             </h4>
 
             <div className="pe-form-group">
                 <label className="pe-label">
                     <span className="pe-label-icon"><FileText size={15} /></span>
-                    {t("messageTitle") || "ចំណងជើងសារ (Kicker)"}
+                    {t("messageTitle") || uiCopy("ចំណងជើងសារ", "Message kicker")}
                 </label>
                 <input
                     type="text"
                     className="pe-input"
                     value={form.messageTitle}
                     onChange={(e) => update("messageTitle", e.target.value)}
-                    placeholder="ដំណឹងអាពាហ៍ពិពាហ៍"
+                    placeholder={uiCopy("ដំណឹងអាពាហ៍ពិពាហ៍", "Wedding announcement")}
                 />
             </div>
 
             <div className="pe-form-group">
                 <label className="pe-label">
                     <span className="pe-label-icon"><Mail size={15} /></span>
-                    {t("messageText") || "អត្ថបទសារអញ្ជើញ"}
+                    {t("messageText") || uiCopy("អត្ថបទសារអញ្ជើញ", "Invitation message")}
                 </label>
                 <textarea
                     className="pe-textarea"
@@ -2242,11 +2245,11 @@ export default function InvitationForm({ invitation }) {
                 <span className="pe-sec-icon-badge">
                     <Heart size={17} />
                 </span>
-                <span>{t("secCouple") || "រូបថតគូស្នេហ៍ (The Bride & Groom Photo)"}</span>
+                <span>{t("secCouple") || uiCopy("រូបថតគូស្នេហ៍", "Couple photo")}</span>
             </h4>
 
             <CleanImageUploadField
-                label={t("backgroundImage") || "រូបថតគូស្នេហ៍ / ខាងក្នុង (Couple & Inner Photo)"}
+                label={t("backgroundImage") || uiCopy("រូបថតគូស្នេហ៍ខាងក្នុង", "Couple / inner photo")}
                 icon={ImageIcon}
                 image={form.backgroundImage}
                 onUpload={(e) => handleFileUpload(e, (url, file) => {
@@ -2272,7 +2275,7 @@ export default function InvitationForm({ invitation }) {
                     </span>
                     <span>{flowConfig.labels.countdownSection || t("secCountdown") || "នាឡិការាប់ថយក្រោយ (Countdown Timer)"}</span>
                 </h4>
-                <label className="pe-toggle" style={{ flexShrink: 0 }} title="បើក/បិទ រាប់ថយក្រោយ">
+                <label className="pe-toggle" style={{ flexShrink: 0 }} title={uiCopy("បើក/បិទ រាប់ថយក្រោយ", "Toggle countdown")}>
                     <input
                         type="checkbox"
                         checked={form.showCountdown !== false}
@@ -2282,7 +2285,7 @@ export default function InvitationForm({ invitation }) {
                 </label>
             </div>
             <p style={{ fontSize: "12.5px", color: "#64748b", margin: "10px 0 0 0", lineHeight: "1.5" }}>
-                គណនាចំនួន <strong>ថ្ងៃ • ម៉ោង • នាទី • វិនាទី</strong> ដោយស្វ័យប្រវត្តិតាមកាលបរិច្ឆេទនៃពិធីមង្គលការ។ (បើក ឬបិទកាតនេះបាន)
+                {uiCopy("គណនាចំនួន", "Automatically calculate")} <strong>{uiCopy("ថ្ងៃ • ម៉ោង • នាទី • វិនាទី", "days • hours • minutes • seconds")}</strong> {uiCopy("ដោយស្វ័យប្រវត្តិតាមកាលបរិច្ឆេទនៃពិធីមង្គលការ។ (បើក ឬបិទកាតនេះបាន)", "until your wedding date. You can show or hide this card.")}
             </p>
         </div>
     );
@@ -2294,25 +2297,25 @@ export default function InvitationForm({ invitation }) {
                     <span className="pe-sec-icon-badge">
                         <Clock size={17} />
                     </span>
-                    <span>{flowConfig.labels.scheduleSection || t("secSchedule") || "របៀបវារៈកម្មវិធី"}</span>
+                    <span>{flowConfig.labels.scheduleSection || t("secSchedule") || uiCopy("របៀបវារៈកម្មវិធី", "Event schedule")}</span>
                 </h4>
                 <button
                     type="button"
                     className="pe-btn-upload-action"
                     onClick={addScheduleItem}
                 >
-                    <Plus size={14} /> {t("addSchedule") || "បន្ថែមកម្មវិធី"}
+                    <Plus size={14} /> {t("addSchedule") || uiCopy("បន្ថែមកម្មវិធី", "Add schedule item")}
                 </button>
             </div>
 
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                 {form.schedule?.map((item, idx) => (
                     <div key={item.id || idx} className="pe-grid-2" style={{ alignItems: "center", background: "#f8f6f0", padding: "10px 12px", borderRadius: "8px", border: "1px solid #e8e2d8", marginBottom: 0 }}>
-                        <label className="pe-label">កាលបរិច្ឆេទ · Date<input type="date" className="pe-input" value={item.date || ""} onChange={e => handleScheduleChange(idx, "date", e.target.value)} /></label>
+                        <label className="pe-label">{uiCopy("កាលបរិច្ឆេទ", "Date")}<input type="date" className="pe-input" value={item.date || ""} onChange={e => handleScheduleChange(idx, "date", e.target.value)} /></label>
                         <TimePicker
                             value={item.time}
                             onChange={(val) => handleScheduleChange(idx, "time", val)}
-                            placeholder="ជ្រើសម៉ោង"
+                            placeholder={uiCopy("ជ្រើសម៉ោង", "Choose time")}
                         />
                         <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
                             <input
@@ -2320,19 +2323,19 @@ export default function InvitationForm({ invitation }) {
                                 className="pe-input"
                                 value={item.title}
                                 onChange={(e) => handleScheduleChange(idx, "title", e.target.value)}
-                                placeholder="ពិធីហែជំនូន"
+                                placeholder={uiCopy("ពិធីហែជំនូន", "Gift procession ceremony")}
                             />
                             <button
                                 type="button"
                                 className="pe-btn-delete-action"
                                 style={{ padding: "6px 10px" }}
                                 onClick={() => removeScheduleItem(idx)}
-                                title="Delete item"
+                                title={uiCopy("លុបធាតុ", "Delete item")}
                             >
                                 <Trash2 size={13} />
                             </button>
                         </div>
-                        <label className="pe-label">ពិពណ៌នា · Description<textarea className="pe-input" value={item.description || ""} onChange={e => handleScheduleChange(idx, "description", e.target.value)} /></label>
+                        <label className="pe-label">{uiCopy("ពិពណ៌នា", "Description")}<textarea className="pe-input" value={item.description || ""} onChange={e => handleScheduleChange(idx, "description", e.target.value)} /></label>
                         <div className="studio-reorder"><button type="button" disabled={idx === 0} onClick={() => moveItem("schedule", idx, -1)} aria-label={`Move schedule ${idx + 1} up`}>↑</button><button type="button" disabled={idx === form.schedule.length - 1} onClick={() => moveItem("schedule", idx, 1)} aria-label={`Move schedule ${idx + 1} down`}>↓</button></div>
                     </div>
                 ))}
@@ -2346,13 +2349,13 @@ export default function InvitationForm({ invitation }) {
                 <span className="pe-sec-icon-badge">
                     <MapPin size={17} />
                 </span>
-                <span>{flowConfig.labels.venueSection || t("secLocation") || "ទីតាំង & ផែនទី"}</span>
+                <span>{flowConfig.labels.venueSection || t("secLocation") || uiCopy("ទីតាំង និងផែនទី", "Venue & map")}</span>
             </h4>
 
             <div className="pe-form-group">
                 <label className="pe-label" htmlFor={`${fieldId}-venueName`}>
                     <span className="pe-label-icon"><MapPin size={15} /></span>
-                    {t("venue") || "ទីតាំងប្រារព្ធពិធី (Venue Name)"}
+                    {t("venue") || uiCopy("ទីតាំងប្រារព្ធពិធី", "Venue name")}
                 </label>
                 <input
                     type="text"
@@ -2381,14 +2384,14 @@ export default function InvitationForm({ invitation }) {
                 <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginBottom: "8px" }}>
                     <label className="pe-label" style={{ margin: 0 }}>
                         <span className="pe-label-icon"><MapPin size={15} /></span>
-                        {t("mapsUrl") || "Google Maps Link (URL)"}
+                        {t("mapsUrl") || uiCopy("តំណផែនទី Google Maps", "Google Maps link (URL)")}
                     </label>
                     <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "6px" }}>
                         <button
                             type="button"
                             onClick={handleGetCurrentLocation}
                             disabled={isLocating}
-                            title="យកទីតាំងបច្ចុប្បន្នរបស់អ្នក"
+                            title={uiCopy("យកទីតាំងបច្ចុប្បន្នរបស់អ្នក", "Use your current location")}
                             style={{
                                 fontSize: "0.75rem",
                                 padding: "5px 10px",
@@ -2405,12 +2408,12 @@ export default function InvitationForm({ invitation }) {
                             }}
                         >
                             <MapPin size={13} />
-                            {isLocating ? "កំពុងស្វែងរក..." : "យកទីតាំងបច្ចុប្បន្ន"}
+                            {isLocating ? uiCopy("កំពុងស្វែងរក...", "Finding location...") : uiCopy("យកទីតាំងបច្ចុប្បន្ន", "Use current location")}
                         </button>
                         <button
                             type="button"
                             onClick={handleGenerateMapLink}
-                            title="បំលែងឈ្មោះទីតាំងទៅជា Link Google Maps ស្វ័យប្រវត្តិ"
+                            title={uiCopy("បំលែងឈ្មោះទីតាំងទៅជាតំណផែនទីដោយស្វ័យប្រវត្តិ", "Generate a Google Maps link from the venue name")}
                             style={{
                                 fontSize: "0.75rem",
                                 padding: "5px 10px",
@@ -2427,12 +2430,12 @@ export default function InvitationForm({ invitation }) {
                             }}
                         >
                             <Zap size={13} />
-                            បង្កើត Link ស្វ័យប្រវត្តិ
+                            {uiCopy("បង្កើតតំណដោយស្វ័យប្រវត្តិ", "Generate link")}
                         </button>
                         <button
                             type="button"
                             onClick={handleSearchMap}
-                            title="បើកស្វែងរកលើ Google Maps ផ្ទាល់"
+                            title={uiCopy("បើកស្វែងរកលើ Google Maps", "Search on Google Maps")}
                             style={{
                                 fontSize: "0.75rem",
                                 padding: "5px 10px",
@@ -2449,7 +2452,7 @@ export default function InvitationForm({ invitation }) {
                             }}
                         >
                             <ExternalLink size={13} />
-                            ស្វែងរក / តេស្តមើល
+                            {uiCopy("ស្វែងរក / សាកល្បងមើល", "Search / test")}
                         </button>
                     </div>
                 </div>
@@ -2464,7 +2467,7 @@ export default function InvitationForm({ invitation }) {
                             ? "Link នេះមិនមែនជា Google Maps URL ត្រឹមត្រូវទេ។"
                             : "");
                     }}
-                    placeholder="https://maps.app.goo.gl/... ឬ ឈ្មោះទីតាំង"
+                    placeholder={uiCopy("តំណផែនទី ឬឈ្មោះទីតាំង", "Google Maps link or venue name")}
                 />
                 {locationError && (
                     <div role="alert" style={{ fontSize: "0.75rem", color: "#b91c1c", marginTop: "6px" }}>
@@ -2472,13 +2475,13 @@ export default function InvitationForm({ invitation }) {
                     </div>
                 )}
                 <div style={{ fontSize: "0.75rem", color: "#64748b", marginTop: "6px", lineHeight: "1.4" }}>
-                    <span className="pe-location-help-mobile">ចុចប៊ូតុង 📍 ដើម្បីទាញយកទីតាំងបច្ចុប្បន្នរបស់អ្នក ឬ Paste Google Maps Link</span>
-                    <span className="pe-location-help-desktop">បញ្ចូល Google Maps Link ឬស្វែងរកឈ្មោះទីតាំងរោងការ</span>
+                    <span className="pe-location-help-mobile">{uiCopy("ចុចប៊ូតុង 📍 ដើម្បីយកទីតាំងបច្ចុប្បន្ន ឬបិទភ្ជាប់តំណផែនទី", "Tap 📍 to use your current location or paste a Google Maps link")}</span>
+                    <span className="pe-location-help-desktop">{uiCopy("បញ្ចូលតំណផែនទី ឬស្វែងរកឈ្មោះទីតាំងរោងការ", "Paste a Google Maps link or search for your venue")}</span>
                 </div>
             </div>
 
             <CleanImageUploadField
-                label={t("sketchMap") || "រូបគំនូសប្លង់ទីតាំង (Sketch Map)"}
+                label={t("sketchMap") || uiCopy("រូបគំនូសប្លង់ទីតាំង", "Venue sketch map")}
                 icon={Map}
                 image={form.sketchMapImage}
                 onUpload={(e) => handleFileUpload(e, (url) => update("sketchMapImage", url))}
@@ -2496,9 +2499,9 @@ export default function InvitationForm({ invitation }) {
                     <span className="pe-sec-icon-badge">
                         <Images size={17} />
                     </span>
-                    <span>{flowConfig.labels.gallerySection || t("secGallery") || "វិចិត្រសាលរូបថត (Gallery 5-10 រូប)"}</span>
+                    <span>{flowConfig.labels.gallerySection || t("secGallery") || uiCopy("វិចិត្រសាលរូបថត (5–10 រូប)", "Photo gallery (5–10 images)")}</span>
                     <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "#4f46e5", background: "#eef2ff", padding: "2px 8px", borderRadius: "12px", marginLeft: "6px" }}>
-                        {form.photos.filter((p) => Boolean(p?.url)).length} / {form.photos.length} រូប
+                        {form.photos.filter((p) => Boolean(p?.url)).length} / {form.photos.length} {uiCopy("រូប", "images")}
                     </span>
                 </h4>
 
@@ -2515,10 +2518,10 @@ export default function InvitationForm({ invitation }) {
                             gap: "6px",
                             margin: 0
                         }}
-                        title="ជ្រើសរើសរូបថតច្រើនសន្លឹកក្នុងពេលតែមួយ (Upload multiple photos)"
+                        title={uiCopy("ជ្រើសរើសរូបថតច្រើនសន្លឹកក្នុងពេលតែមួយ", "Upload multiple photos")}
                     >
                         <UploadCloud size={14} />
-                        ជ្រើសរើសរូបច្រើនសន្លឹក
+                        {uiCopy("ជ្រើសរើសរូបច្រើនសន្លឹក", "Choose multiple photos")}
                         <input
                             type="file"
                             accept="image/*"
@@ -2544,16 +2547,16 @@ export default function InvitationForm({ invitation }) {
                                 alignItems: "center",
                                 gap: "4px"
                             }}
-                            title="បន្ថែមប្រអប់រូបថតថ្មី (អតិបរមា 10 រូប)"
+                            title={uiCopy("បន្ថែមប្រអប់រូបថតថ្មី (អតិបរមា 10 រូប)", "Add image slot (up to 10 images)")}
                         >
-                            <Plus size={14} /> បន្ថែមរូប ({form.photos.length}/10)
+                            <Plus size={14} /> {uiCopy("បន្ថែមរូប (", "Add image (")}{form.photos.length}/10)
                         </button>
                     )}
                 </div>
             </div>
 
             <p style={{ margin: "0 0 12px 0", fontSize: "0.8rem", color: "#64748b" }}>
-                * លោកអ្នកអាចបញ្ចូលរូបថតពី 5 ដល់ 10 សន្លឹកសម្រាប់បង្ហាញក្នុងវិចិត្រសាលធៀបការ (Can upload 5 to 10 photos)
+                {uiCopy("* លោកអ្នកអាចបញ្ចូលរូបថតពី 5 ដល់ 10 សន្លឹកសម្រាប់បង្ហាញក្នុងវិចិត្រសាលធៀបការ", "* Upload 5 to 10 photos for your invitation gallery")}
             </p>
 
             <div className="pe-gallery-grid-clean">
@@ -2583,10 +2586,10 @@ export default function InvitationForm({ invitation }) {
                         <Heart size={17} />
                     </span>
                     <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                        ដំណើរនៃក្ដីស្រឡាញ់ (Our Love Story)
+                        {uiCopy("ដំណើរនៃក្ដីស្រឡាញ់", "Our love story")}
                     </span>
                 </h4>
-                <label className="pe-toggle" title="បើក/បិទ ដំណើររឿង" style={{ flexShrink: 0 }}>
+                <label className="pe-toggle" title={uiCopy("បើក/បិទ ដំណើររឿង", "Toggle love story")} style={{ flexShrink: 0 }}>
                     <input
                         type="checkbox"
                         checked={form.showStory !== false}
@@ -2598,7 +2601,7 @@ export default function InvitationForm({ invitation }) {
 
             <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", marginBottom: "14px" }}>
                 <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#d97706", background: "#fef3c7", padding: "3px 10px", borderRadius: "12px" }}>
-                    {form.storyChapters?.length || 0} ដំណាក់កាល
+                    {form.storyChapters?.length || 0} {uiCopy("ដំណាក់កាល", "chapters")}
                 </span>
                 <button
                     type="button"
@@ -2615,12 +2618,12 @@ export default function InvitationForm({ invitation }) {
                         gap: "4px"
                     }}
                 >
-                    <Plus size={14} /> បន្ថែមដំណាក់កាល
+                    <Plus size={14} /> {uiCopy("បន្ថែមដំណាក់កាល", "Add chapter")}
                 </button>
             </div>
 
             <p style={{ margin: "0 0 12px 0", fontSize: "0.8rem", color: "#64748b" }}>
-                * បង្ហាញដំណើររឿងស្នេហាជា Timeline ដូចជា ថ្ងៃដំបូងដែលជួបគ្នា, ថ្ងៃសុំស្នេហ៍, ឬដំណាក់កាលសំខាន់ៗ
+                {uiCopy("* បង្ហាញដំណើររឿងស្នេហាតាមពេលវេលា ដូចជាថ្ងៃដំបូងដែលជួបគ្នា ថ្ងៃសុំស្នេហ៍ ឬដំណាក់កាលសំខាន់ៗ", "* Show your love story as a timeline of your first meeting, proposal and other milestones")}
             </p>
 
             {form.showStory !== false && (
@@ -2649,9 +2652,9 @@ export default function InvitationForm({ invitation }) {
                     <span className="pe-sec-icon-badge">
                         <Sparkles size={17} />
                     </span>
-                    <span>{flowConfig.labels.dressCodeSection || "សម្លៀកបំពាក់ (Dress Code)"}</span>
+                    <span>{flowConfig.labels.dressCodeSection || uiCopy("សម្លៀកបំពាក់", "Dress code")}</span>
                 </h4>
-                <label className="pe-toggle" title="បើក/បិទ សម្លៀកបំពាក់" style={{ flexShrink: 0 }}>
+                <label className="pe-toggle" title={uiCopy("បើក/បិទ សម្លៀកបំពាក់", "Toggle dress code")} style={{ flexShrink: 0 }}>
                     <input
                         type="checkbox"
                         checked={form.showDressCode !== false}
@@ -2667,27 +2670,27 @@ export default function InvitationForm({ invitation }) {
                         <div className="pe-form-group">
                             <label className="pe-label">
                                 <span className="pe-label-icon"><FileText size={15} /></span>
-                                ឈ្មោះកូដសម្លៀកបំពាក់ (Name)
+                                {uiCopy("ឈ្មោះកូដសម្លៀកបំពាក់", "Dress code name")}
                             </label>
                             <input
                                 type="text"
                                 className="pe-input"
                                 value={form.dressCode?.name || ""}
                                 onChange={(e) => handleDressCodeFieldChange("name", e.target.value)}
-                                placeholder="ខ្មែរប្រពៃណី / Formal Khmer"
+                                placeholder={uiCopy("ខ្មែរប្រពៃណី", "Formal Khmer")}
                             />
                         </div>
                         <div className="pe-form-group">
                             <label className="pe-label">
                                 <span className="pe-label-icon"><Sparkles size={15} /></span>
-                                រចនាបថ (Style)
+                                {uiCopy("រចនាបថ", "Style")}
                             </label>
                             <input
                                 type="text"
                                 className="pe-input"
                                 value={form.dressCode?.style || ""}
                                 onChange={(e) => handleDressCodeFieldChange("style", e.target.value)}
-                                placeholder="Traditional elegance"
+                                placeholder={uiCopy("ប្រពៃណីដ៏ប្រណិត", "Traditional elegance")}
                             />
                         </div>
                     </div>
@@ -2695,14 +2698,14 @@ export default function InvitationForm({ invitation }) {
                     <div className="pe-form-group">
                         <label className="pe-label">
                             <span className="pe-label-icon"><FileText size={15} /></span>
-                            ការណែនាំសម្លៀកបំពាក់ (Description)
+                            {uiCopy("ការណែនាំសម្លៀកបំពាក់", "Dress code description")}
                         </label>
                         <textarea
                             className="pe-textarea"
                             rows="2"
                             value={form.dressCode?.description || ""}
                             onChange={(e) => handleDressCodeFieldChange("description", e.target.value)}
-                            placeholder="សូមជ្រើសរើសសម្លៀកបំពាក់តាមពណ៌ដែលបានកំណត់ ដើម្បីបង្កើនភាពស្រស់ស្អាតនៃពិធី..."
+                            placeholder={uiCopy("សូមជ្រើសរើសសម្លៀកបំពាក់តាមពណ៌ដែលបានកំណត់ ដើម្បីបង្កើនភាពស្រស់ស្អាតនៃពិធី...", "Please choose clothing in the suggested colors for our celebration...")}
                         />
                     </div>
 
@@ -2710,7 +2713,7 @@ export default function InvitationForm({ invitation }) {
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
                             <label className="pe-label" style={{ margin: 0 }}>
                                 <span className="pe-label-icon"><Sparkles size={15} /></span>
-                                ក្ដារពណ៌សម្លៀកបំពាក់ (Color Palette Swatches)
+                                {uiCopy("ក្ដារពណ៌សម្លៀកបំពាក់", "Dress code color palette")}
                             </label>
                             <button
                                 type="button"
@@ -2718,7 +2721,7 @@ export default function InvitationForm({ invitation }) {
                                 className="pe-btn-upload-action"
                                 style={{ padding: "4px 10px", fontSize: "0.78rem" }}
                             >
-                                <Plus size={13} /> បន្ថែមពណ៌
+                                <Plus size={13} /> {uiCopy("បន្ថែមពណ៌", "Add color")}
                             </button>
                         </div>
 
@@ -2752,7 +2755,7 @@ export default function InvitationForm({ invitation }) {
                                                 padding: 0,
                                                 background: "transparent",
                                             }}
-                                            title="ជ្រើសពណ៌"
+                                            title={uiCopy("ជ្រើសពណ៌", "Choose color")}
                                         />
                                         <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: "2px" }}>
                                             <input
@@ -2761,7 +2764,7 @@ export default function InvitationForm({ invitation }) {
                                                 style={{ padding: "3px 6px", fontSize: "0.75rem", height: "auto" }}
                                                 value={name}
                                                 onChange={(e) => handleDressColorChange(cIdx, "name", e.target.value)}
-                                                placeholder="ឈ្មោះពណ៌ (e.g. មាស)"
+                                                placeholder={uiCopy("ឈ្មោះពណ៌ (ឧ. មាស)", "Color name (e.g. gold)")}
                                             />
                                             <span style={{ fontSize: "0.7rem", color: "#64748b", fontFamily: "monospace" }}>
                                                 {hex}
@@ -2780,7 +2783,7 @@ export default function InvitationForm({ invitation }) {
                                                     display: "flex",
                                                     alignItems: "center",
                                                 }}
-                                                title="លុបពណ៌នេះ"
+                                                title={uiCopy("លុបពណ៌នេះ", "Remove color")}
                                             >
                                                 <Trash2 size={13} />
                                             </button>
@@ -2802,9 +2805,9 @@ export default function InvitationForm({ invitation }) {
                     <span className="pe-sec-icon-badge">
                         <User size={17} />
                     </span>
-                    <span>{flowConfig.labels.partySection || "មនុស្សជាទីស្រឡាញ់ / ក្រុមអម (Wedding Party)"}</span>
+                    <span>{flowConfig.labels.partySection || uiCopy("មនុស្សជាទីស្រឡាញ់ ឬក្រុមអម", "Wedding party")}</span>
                 </h4>
-                <label className="pe-toggle" title="បើក/បិទ ក្រុមអម" style={{ flexShrink: 0 }}>
+                <label className="pe-toggle" title={uiCopy("បើក/បិទ ក្រុមអម", "Toggle wedding party")} style={{ flexShrink: 0 }}>
                     <input
                         type="checkbox"
                         checked={form.showParty !== false}
@@ -2816,7 +2819,7 @@ export default function InvitationForm({ invitation }) {
 
             <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", marginBottom: "14px" }}>
                 <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#0284c7", background: "#e0f2fe", padding: "3px 10px", borderRadius: "12px" }}>
-                    {form.party?.length || 0} នាក់
+                    {form.party?.length || 0} {uiCopy("នាក់", "people")}
                 </span>
                 <button
                     type="button"
@@ -2833,12 +2836,12 @@ export default function InvitationForm({ invitation }) {
                         gap: "4px"
                     }}
                 >
-                    <Plus size={14} /> បន្ថែមសមាជិក
+                    <Plus size={14} /> {uiCopy("បន្ថែមសមាជិក", "Add member")}
                 </button>
             </div>
 
             <p style={{ margin: "0 0 12px 0", fontSize: "0.8rem", color: "#64748b" }}>
-                * បង្ហាញកូនកំលោះកិត្តិយស (Best Man), កូនក្រមុំកិត្តិយស (Maid of Honor), ឬក្រុមគ្រួសារ និងមិត្តភក្ដិជិតស្និទ្ធ
+                {uiCopy("* បង្ហាញកូនកំលោះកិត្តិយស កូនក្រមុំកិត្តិយស ឬក្រុមគ្រួសារ និងមិត្តភក្ដិជិតស្និទ្ធ", "* Introduce your best man, maid of honor, family and close friends")}
             </p>
 
             {form.showParty !== false && (
@@ -2878,7 +2881,7 @@ export default function InvitationForm({ invitation }) {
                                     }}
                                     onMouseEnter={(e) => { e.currentTarget.style.opacity = "1"; }}
                                     onMouseLeave={(e) => { e.currentTarget.style.opacity = member.image ? "0" : "1"; }}
-                                    title="បញ្ចូលរូបថតសមាជិក"
+                                    title={uiCopy("បញ្ចូលរូបថតសមាជិក", "Upload member photo")}
                                 >
                                     <UploadCloud size={16} color="#fff" />
                                     <input
@@ -2892,25 +2895,25 @@ export default function InvitationForm({ invitation }) {
 
                             <div style={{ flex: 1, minWidth: 0, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
                                 <div>
-                                    <label style={{ fontSize: "0.72rem", color: "#64748b", fontWeight: 600, display: "block", marginBottom: "2px" }}>តួនាទី (Role)</label>
+                                    <label style={{ fontSize: "0.72rem", color: "#64748b", fontWeight: 600, display: "block", marginBottom: "2px" }}>{uiCopy("តួនាទី", "Role")}</label>
                                     <input
                                         type="text"
                                         className="pe-input"
                                         style={{ padding: "4px 8px", fontSize: "0.8rem", height: "auto" }}
                                         value={member.role || ""}
                                         onChange={(e) => handlePartyChange(mIdx, "role", e.target.value)}
-                                        placeholder="កូនកំលោះកិត្តិយស"
+                                        placeholder={uiCopy("កូនកំលោះកិត្តិយស", "Best man")}
                                     />
                                 </div>
                                 <div>
-                                    <label style={{ fontSize: "0.72rem", color: "#64748b", fontWeight: 600, display: "block", marginBottom: "2px" }}>ឈ្មោះ (Name)</label>
+                                    <label style={{ fontSize: "0.72rem", color: "#64748b", fontWeight: 600, display: "block", marginBottom: "2px" }}>{uiCopy("ឈ្មោះ", "Name")}</label>
                                     <input
                                         type="text"
                                         className="pe-input"
                                         style={{ padding: "4px 8px", fontSize: "0.8rem", height: "auto" }}
                                         value={member.name || ""}
                                         onChange={(e) => handlePartyChange(mIdx, "name", e.target.value)}
-                                        placeholder="ឈ្មោះសមាជិក"
+                                        placeholder={uiCopy("ឈ្មោះសមាជិក", "Member name")}
                                     />
                                 </div>
                             </div>
@@ -2927,7 +2930,7 @@ export default function InvitationForm({ invitation }) {
                                     display: "flex",
                                     alignItems: "center",
                                 }}
-                                title="លុបសមាជិកនេះ"
+                                title={uiCopy("លុបសមាជិកនេះ", "Remove member")}
                             >
                                 <Trash2 size={16} />
                             </button>
@@ -2945,9 +2948,9 @@ export default function InvitationForm({ invitation }) {
                     <span className="pe-sec-icon-badge">
                         <FileText size={17} />
                     </span>
-                    <span>{flowConfig.labels.faqSection || "សំណួរញឹកញាប់ (Guest Notes & FAQ)"}</span>
+                    <span>{flowConfig.labels.faqSection || uiCopy("សំណួរញឹកញាប់ និងចំណាំសម្រាប់ភ្ញៀវ", "Guest notes & FAQ")}</span>
                 </h4>
-                <label className="pe-toggle" title="បើក/បិទ សំណួរញឹកញាប់" style={{ flexShrink: 0 }}>
+                <label className="pe-toggle" title={uiCopy("បើក/បិទ សំណួរញឹកញាប់", "Toggle frequently asked questions")} style={{ flexShrink: 0 }}>
                     <input
                         type="checkbox"
                         checked={form.showFaq !== false}
@@ -2959,7 +2962,7 @@ export default function InvitationForm({ invitation }) {
 
             <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", marginBottom: "14px" }}>
                 <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#7c3aed", background: "#ede9fe", padding: "3px 10px", borderRadius: "12px" }}>
-                    {form.faq?.length || 0} សំណួរ
+                    {form.faq?.length || 0} {uiCopy("សំណួរ", "questions")}
                 </span>
                 <button
                     type="button"
@@ -2976,12 +2979,12 @@ export default function InvitationForm({ invitation }) {
                         gap: "4px"
                     }}
                 >
-                    <Plus size={14} /> បន្ថែមសំណួរ
+                    <Plus size={14} /> {uiCopy("បន្ថែមសំណួរ", "Add question")}
                 </button>
             </div>
 
             <p style={{ margin: "0 0 12px 0", fontSize: "0.8rem", color: "#64748b" }}>
-                * ផ្តល់ព័ត៌មានលម្អិតដូចជាចំណតយានយន្ត ការនាំកុមារតូចៗ ឬពេលវេលាកម្មវិធីដល់ភ្ញៀវ
+                {uiCopy("* ផ្តល់ព័ត៌មានលម្អិតដូចជាចំណតយានយន្ត ការនាំកុមារតូចៗ ឬពេលវេលាកម្មវិធីដល់ភ្ញៀវ", "* Give guests details about parking, children and the event schedule")}
             </p>
 
             {form.showFaq !== false && (
@@ -3001,7 +3004,7 @@ export default function InvitationForm({ invitation }) {
                         >
                             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                                 <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#64748b" }}>
-                                    សំណួរទី {fIdx + 1}
+                                    {uiCopy("សំណួរទី", "Question")} {fIdx + 1}
                                 </span>
                                 <button
                                     type="button"
@@ -3013,7 +3016,7 @@ export default function InvitationForm({ invitation }) {
                                         cursor: "pointer",
                                         padding: "2px",
                                     }}
-                                    title="លុបសំណួរនេះ"
+                                    title={uiCopy("លុបសំណួរនេះ", "Remove question")}
                                 >
                                     <Trash2 size={14} />
                                 </button>
@@ -3024,7 +3027,7 @@ export default function InvitationForm({ invitation }) {
                                 style={{ padding: "6px 10px", fontSize: "0.82rem" }}
                                 value={faqItem.q || ""}
                                 onChange={(e) => handleFaqChange(fIdx, "q", e.target.value)}
-                                placeholder="តើមានចំណតរថយន្ត និងម៉ូតូដែរឬទេ?"
+                                placeholder={uiCopy("តើមានចំណតរថយន្ត និងម៉ូតូដែរឬទេ?", "Is there parking for cars and motorbikes?")}
                             />
                             <textarea
                                 className="pe-textarea"
@@ -3032,7 +3035,7 @@ export default function InvitationForm({ invitation }) {
                                 rows="2"
                                 value={faqItem.a || ""}
                                 onChange={(e) => handleFaqChange(fIdx, "a", e.target.value)}
-                                placeholder="បាទ/ចាស មានចំណតធំទូលាយដោយឥតគិតថ្លៃ..."
+                                placeholder={uiCopy("បាទ/ចាស មានចំណតធំទូលាយដោយឥតគិតថ្លៃ...", "Yes, free parking is available...")}
                             />
                         </div>
                     ))}
@@ -3047,13 +3050,13 @@ export default function InvitationForm({ invitation }) {
                 <span className="pe-sec-icon-badge">
                     <QrCode size={17} />
                 </span>
-                <span>{flowConfig.labels.khqrSection || t("secKhqr") || "KHQR ផ្ញើរចំណងដៃ"}</span>
+                <span>{flowConfig.labels.khqrSection || t("secKhqr") || uiCopy("កូដសម្រាប់ផ្ញើចងដៃ", "Gift payment QR")}</span>
             </h4>
 
             <div className="pe-grid-2">
                 {/* Dollar QR */}
                 <CleanImageUploadField
-                    label={t("qrDollar") || "KHQR Dollar ($)"}
+                    label={t("qrDollar") || uiCopy("កូដចងដៃជាប្រាក់ដុល្លារ ($)", "USD gift QR ($)")}
                     icon={QrCode}
                     image={form.khqrDollar?.qrUrl}
                     onUpload={(e) =>
@@ -3068,7 +3071,7 @@ export default function InvitationForm({ invitation }) {
 
                 {/* Riel QR */}
                 <CleanImageUploadField
-                    label={t("qrRiel") || "KHQR Riel (៛)"}
+                    label={t("qrRiel") || uiCopy("កូដចងដៃជាប្រាក់រៀល (៛)", "KHR gift QR")}
                     icon={QrCode}
                     image={form.khqrRiel?.qrUrl}
                     onUpload={(e) =>
@@ -3090,34 +3093,34 @@ export default function InvitationForm({ invitation }) {
                 <span className="pe-sec-icon-badge">
                     <Gift size={17} />
                 </span>
-                <span>{flowConfig.labels.closingSection || t("secThankYou") || "សារថ្លែងអំណរគុណ"}</span>
+                <span>{flowConfig.labels.closingSection || t("secThankYou") || uiCopy("សារថ្លែងអំណរគុណ", "Thank-you message")}</span>
             </h4>
 
             <div className="pe-form-group">
                 <label className="pe-label">
                     <span className="pe-label-icon"><FileText size={15} /></span>
-                    {t("thankYouTitle") || "ចំណងជើងសារអរគុណ"}
+                    {t("thankYouTitle") || uiCopy("ចំណងជើងសារអរគុណ", "Thank-you title")}
                 </label>
                 <input
                     type="text"
                     className="pe-input"
                     value={form.thankYouTitle}
                     onChange={(e) => update("thankYouTitle", e.target.value)}
-                    placeholder="សារថ្លែងអំណរគុណ"
+                    placeholder={uiCopy("សារថ្លែងអំណរគុណ", "Thank-you message")}
                 />
             </div>
 
             <div className="pe-form-group">
                 <label className="pe-label">
                     <span className="pe-label-icon"><Gift size={15} /></span>
-                    {t("thankYouText") || "អត្ថបទសារអរគុណ"}
+                    {t("thankYouText") || uiCopy("អត្ថបទសារអរគុណ", "Thank-you message")}
                 </label>
                 <textarea
                     className="pe-textarea"
                     rows="4"
                     value={form.thankYouText}
                     onChange={(e) => update("thankYouText", e.target.value)}
-                    placeholder="វត្តមាន និងពរជ័យរបស់លោកអ្នក គឺជាអំណោយដ៏មានតម្លៃសម្រាប់យើងខ្ញុំ..."
+                    placeholder={uiCopy("វត្តមាន និងពរជ័យរបស់លោកអ្នក គឺជាអំណោយដ៏មានតម្លៃសម្រាប់យើងខ្ញុំ...", "Your presence and blessings are a precious gift to us...")}
                 />
             </div>
 
@@ -3126,28 +3129,28 @@ export default function InvitationForm({ invitation }) {
             <div className="pe-form-group">
                 <label className="pe-label">
                     <span className="pe-label-icon"><FileText size={15} /></span>
-                    {t("apologyTitle") || "ចំណងជើងលិខិតសូមអភ័យទោស"}
+                    {t("apologyTitle") || uiCopy("ចំណងជើងលិខិតសូមអភ័យទោស", "Apology title")}
                 </label>
                 <input
                     type="text"
                     className="pe-input"
                     value={form.apologyTitle}
                     onChange={(e) => update("apologyTitle", e.target.value)}
-                    placeholder="លិខិតសូមអភ័យទោស"
+                    placeholder={uiCopy("លិខិតសូមអភ័យទោស", "Apology message")}
                 />
             </div>
 
             <div className="pe-form-group">
                 <label className="pe-label">
                     <span className="pe-label-icon"><Heart size={15} /></span>
-                    {t("apologyText") || "អត្ថបទសូមអភ័យទោស"}
+                    {t("apologyText") || uiCopy("អត្ថបទសូមអភ័យទោស", "Apology message")}
                 </label>
                 <textarea
                     className="pe-textarea"
                     rows="4"
                     value={form.apologyText}
                     onChange={(e) => update("apologyText", e.target.value)}
-                    placeholder="យើងខ្ញុំសូមអភ័យទោសក្នុងករណីពុំបានជូនសំបុត្រអញ្ជើញដោយផ្ទាល់..."
+                    placeholder={uiCopy("យើងខ្ញុំសូមអភ័យទោសក្នុងករណីពុំបានជូនសំបុត្រអញ្ជើញដោយផ្ទាល់...", "Please accept our apologies if we could not deliver your invitation in person...")}
                 />
             </div>
         </div>
@@ -3159,21 +3162,21 @@ export default function InvitationForm({ invitation }) {
                 <span className="pe-sec-icon-badge">
                     <Globe size={17} />
                 </span>
-                <span>{t("secLangMode") || "ភាសាធៀបការ"}</span>
+                <span>{t("secLangMode") || uiCopy("ភាសាធៀបការ", "Invitation language")}</span>
             </h4>
             <div className="pe-form-group">
                 <label className="pe-label">
                     <span className="pe-label-icon"><Globe size={15} /></span>
-                    ភាសាបង្ហាញក្នុងសំបុត្រ
+                    {uiCopy("ភាសាបង្ហាញក្នុងសំបុត្រ", "Invitation language")}
                 </label>
                 <select
                     className="pe-select"
                     value={form.languageMode}
                     onChange={(e) => update("languageMode", e.target.value)}
                 >
-                    <option value="KH">ភាសាខ្មែរ (Khmer)</option>
-                    <option value="EN">ភាសាអង់គ្លេស (English)</option>
-                    <option value="BILINGUAL">ភាសាទាំងពីរ (Bilingual Khmer + English)</option>
+                    <option value="KH">{uiCopy("ភាសាខ្មែរ", "Khmer")}</option>
+                    <option value="EN">{uiCopy("ភាសាអង់គ្លេស", "English")}</option>
+                    <option value="BILINGUAL">{uiCopy("ភាសាខ្មែរ និងអង់គ្លេស", "Khmer and English")}</option>
                 </select>
             </div>
         </div>
@@ -3215,7 +3218,7 @@ export default function InvitationForm({ invitation }) {
                 const mount = params.eventId && document.getElementById("invitation-studio-toolbar");
                 return mount ? createPortal(toolbar, mount) : toolbar;
             })()}
-            {studio.error && <div className="studio-save-error" role="alert"><span>{studio.error}</span><button type="button" onClick={() => studio.save()} disabled={isSaving}>Retry save</button></div>}
+            {studio.error && <div className="studio-save-error" role="alert"><span>{studio.error}</span><button type="button" onClick={() => studio.save()} disabled={isSaving}>{uiCopy("រក្សាទុកម្ដងទៀត", "Retry save")}</button></div>}
             {/* The controls and preview continue to use the original template engine. */}
             <div className="pe-workspace-grid">
                 <StudioSections sections={flowConfig.sectionOrder} active={activeSection}
@@ -3232,26 +3235,26 @@ export default function InvitationForm({ invitation }) {
                                 className={`pe-lang-pill-btn ${activeLangTab === "KH" ? "is-active" : ""}`}
                                 onClick={() => setActiveLangTab("KH")}
                             >
-                                <Globe size={13} /> {t("langKh") || "ភាសាខ្មែរ"}
+                                <Globe size={13} /> {t("langKh") || uiCopy("ភាសាខ្មែរ", "Khmer")}
                             </button>
                             <button
                                 type="button"
                                 className={`pe-lang-pill-btn ${activeLangTab === "EN" ? "is-active" : ""}`}
                                 onClick={() => setActiveLangTab("EN")}
                             >
-                                <Globe size={13} /> {t("langEn") || "អង់គ្លេស"}
+                                <Globe size={13} /> {t("langEn") || uiCopy("អង់គ្លេស", "English")}
                             </button>
                         </div>
                         <span className="pe-lang-editing-indicator">
-                            {activeLangTab === "KH" ? (t("editingKh") || "កំពុងកែសម្រួល៖ ភាសាខ្មែរ") : (t("editingEn") || "កំពុងកែសម្រួល៖ អង់គ្លេស")}
+                            {activeLangTab === "KH" ? (t("editingKh") || uiCopy("កំពុងកែសម្រួល៖ ភាសាខ្មែរ", "Editing: Khmer")) : (t("editingEn") || uiCopy("កំពុងកែសម្រួល៖ អង់គ្លេស", "Editing: English"))}
                         </span>
                     </div>
 
                     <div className="pe-editor-scroll-body">
                         {["invitation", "closing"].includes(activeSection) && <div className="studio-message-presets">
-                            <p>ឃ្លាអញ្ជើញ · Wording preset ({activeLangTab})</p>
+                            <p>{uiCopy("ឃ្លាអញ្ជើញគំរូ (", "Wording preset (")}{activeLangTab})</p>
                             <button type="button" onClick={() => {
-                                if (!window.confirm("Replace the wording in this section with the selected preset?")) return;
+                                if (!window.confirm(uiCopy("ជំនួសឃ្លានៅក្នុងផ្នែកនេះដោយឃ្លាគំរូដែលបានជ្រើសរើស?", "Replace the wording in this section with the selected preset?"))) return;
                                 const en = activeLangTab === "EN";
                                 if (activeSection === "invitation") {
                                     update("messageTitle", en ? "Together with our families" : "យើងខ្ញុំ និងក្រុមគ្រួសារទាំងសងខាង");
@@ -3262,7 +3265,7 @@ export default function InvitationForm({ invitation }) {
                                     update("apologyTitle", en ? "Our sincere apologies" : "សូមអភ័យទោស");
                                     update("apologyText", en ? "Please accept our apologies for any unintentional omission or inconvenience." : "យើងខ្ញុំសូមអភ័យទោសចំពោះកំហុសឆ្គង ឬការខ្វះខាតដោយអចេតនា។");
                                 }
-                            }}>ប្រើឃ្លាសុភាព · Apply formal wording</button>
+                            }}>{uiCopy("ប្រើឃ្លាសុភាព", "Apply formal wording")}</button>
                         </div>}
                         {activeSection === "appearance" && <StudioAppearance form={form} update={update}
                             supportsPalette={/^(1|10|khmer-celestial|KHMER_CELESTIAL|royal-khmer-wedding)$/.test(String(form.templateId)) || /^(khmer-celestial|royal-khmer-wedding)$/i.test(String(getTemplateById(form.templateId)?.code || getTemplateById(form.templateId)?.slug || ""))} />}
@@ -3283,13 +3286,13 @@ export default function InvitationForm({ invitation }) {
                     <div className="pe-mobile-preview-drawer">
                         <div className="pe-mobile-preview-drawer-header" hidden>
                             <span className="pe-mobile-preview-drawer-title">
-                                <Maximize2 size={15} /> {t("previewTitle") || "មើលគំរូជាមុន"}
+                                <Maximize2 size={15} /> {t("previewTitle") || uiCopy("មើលគំរូជាមុន", "Preview template")}
                             </span>
                             <button
                                 type="button"
                                 className="pe-mobile-preview-close-btn"
                                 onClick={closePreview}
-                                aria-label="បិទ Preview"
+                                aria-label={uiCopy("បិទការមើលជាមុន", "Close preview")}
                             >
                                 <X size={20} />
                             </button>
@@ -3310,22 +3313,22 @@ export default function InvitationForm({ invitation }) {
 
             {/* Template Selection Modal */}
             {isTemplateModalOpen && (
-                <Modal isOpen onClose={() => setIsTemplateModalOpen(false)} size="xl" title="ប្តូរគំរូ · Change template">
+                <Modal isOpen onClose={() => setIsTemplateModalOpen(false)} size="xl" title={uiCopy("ប្តូរគំរូ", "Change template")}>
                     <div className="pe-modal-card pe-tpl-modal-card" onClick={(e) => e.stopPropagation()}>
                         <div className="pe-modal-header">
                             <div>
                                 <h3 className="pe-modal-title">
-                                    <Sparkles size={18} style={{ color: "#d97706", marginRight: 8 }} /> ប្តូរគំរូធៀបការ (Change Template)
+                                    <Sparkles size={18} style={{ color: "#d97706", marginRight: 8 }} /> {uiCopy("ប្តូរគំរូធៀបការ", "Change invitation template")}
                                 </h3>
                                 <p className="pe-modal-subtitle">
-                                    ជ្រើសរើសគំរូរចនាប័ទ្មដែលអ្នកពេញចិត្តសម្រាប់ធៀបការ
+                                    {uiCopy("ជ្រើសរើសគំរូរចនាប័ទ្មដែលអ្នកពេញចិត្តសម្រាប់ធៀបការ", "Choose your preferred invitation design")}
                                 </p>
                             </div>
                             <button
                                 type="button"
                                 className="pe-modal-close-btn"
                                 onClick={() => setIsTemplateModalOpen(false)}
-                                title="បិទ"
+                                title={uiCopy("បិទ", "Close")}
                             >
                                 <X size={20} />
                             </button>
@@ -3338,7 +3341,7 @@ export default function InvitationForm({ invitation }) {
                                 <input
                                     type="text"
                                     className="pe-modal-search-input"
-                                    placeholder="ស្វែងរកតាមឈ្មោះគំរូ..."
+                                    placeholder={uiCopy("ស្វែងរកតាមឈ្មោះគំរូ...", "Search template names...")}
                                     value={templateSearchQuery}
                                     onChange={(e) => setTemplateSearchQuery(e.target.value)}
                                 />
@@ -3354,11 +3357,11 @@ export default function InvitationForm({ invitation }) {
                             </div>
                             <div className="pe-modal-filter-pills">
                                 {[
-                                    { id: "ALL", label: "ទាំងអស់" },
-                                    { id: "ADMIN", label: "គំរូថ្មី Admin" },
-                                    { id: "CURTAIN", label: "វាំងនន (Curtain)" },
-                                    { id: "ENVELOPE", label: "ស្រោមសំបុត្រ 3D" },
-                                    { id: "KHMER", label: "ប្រពៃណីខ្មែរ" },
+                                    { id: "ALL", label: uiCopy("ទាំងអស់", "All") },
+                                    { id: "ADMIN", label: uiCopy("គំរូថ្មីពីអ្នកគ្រប់គ្រង", "New templates") },
+                                    { id: "CURTAIN", label: uiCopy("វាំងនន", "Curtain") },
+                                    { id: "ENVELOPE", label: uiCopy("ស្រោមសំបុត្របីវិមាត្រ", "3D envelope") },
+                                    { id: "KHMER", label: uiCopy("ប្រពៃណីខ្មែរ", "Khmer traditional") },
                                 ].map((cat) => (
                                     <button
                                         key={cat.id}
@@ -3395,17 +3398,17 @@ export default function InvitationForm({ invitation }) {
                                                 />
                                                 {isSelected && (
                                                     <div className="pe-tpl-active-badge">
-                                                        <CheckCircle2 size={15} /> កំពុងប្រើ
+                                                        <CheckCircle2 size={15} /> {uiCopy("កំពុងប្រើ", "In use")}
                                                     </div>
                                                 )}
                                                 <div className="pe-tpl-style-pill">
                                                     {openingStyle === "curtain"
-                                                        ? "Curtain Gate"
+                                                        ? uiCopy("វាំងនន", "Curtain gate")
                                                         : openingStyle === "envelope-3d"
-                                                            ? "Envelope 3D"
+                                                            ? uiCopy("ស្រោមសំបុត្របីវិមាត្រ", "3D envelope")
                                                             : (openingStyle === "celestial-cover" || tpl.code === "khmer-celestial" || tpl.id === "khmer-celestial")
-                                                                ? "Khmer Celestial"
-                                                                : "Khmer Royal"}
+                                                                ? uiCopy("ខ្មែរមេឃា", "Khmer Celestial")
+                                                                : uiCopy("រាជខ្មែរ", "Khmer Royal")}
                                                 </div>
                                             </div>
 
@@ -3424,7 +3427,7 @@ export default function InvitationForm({ invitation }) {
                                                             handleChangeTemplate(tpl);
                                                         }}
                                                     >
-                                                        {isSelected ? "បានជ្រើស ✓" : "ជ្រើសរើស"}
+                                                        {isSelected ? uiCopy("បានជ្រើស ✓", "Selected ✓") : uiCopy("ជ្រើសរើស", "Select")}
                                                     </button>
                                                 </div>
                                             </div>
@@ -3434,8 +3437,8 @@ export default function InvitationForm({ invitation }) {
 
                                 {displayedTemplates.length === 0 && (
                                     <div style={{ padding: "40px 20px", textAlign: "center", color: "#64748b", gridColumn: "1 / -1" }}>
-                                        <p style={{ margin: 0, fontSize: "0.95rem", fontWeight: 600 }}>មិនមានគំរូធៀបការដែលត្រូវគ្នានឹងការស្វែងរកទេ</p>
-                                        <p style={{ margin: "4px 0 0 0", fontSize: "0.8rem" }}>សូមព្យាយាមស្វែងរកដោយពាក្យគន្លឹះផ្សេងទៀត</p>
+                                        <p style={{ margin: 0, fontSize: "0.95rem", fontWeight: 600 }}>{uiCopy("មិនមានគំរូធៀបការដែលត្រូវគ្នានឹងការស្វែងរកទេ", "No invitation templates match your search")}</p>
+                                        <p style={{ margin: "4px 0 0 0", fontSize: "0.8rem" }}>{uiCopy("សូមព្យាយាមស្វែងរកដោយពាក្យគន្លឹះផ្សេងទៀត", "Try searching with different keywords")}</p>
                                     </div>
                                 )}
                             </div>

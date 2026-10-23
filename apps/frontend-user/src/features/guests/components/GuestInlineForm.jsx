@@ -1,3 +1,6 @@
+import { LOCAL_MESSAGES } from "@/shared/i18n/messagesDictionary";
+import { useLanguageStore } from "@/stores/useLanguageStore";
+import { guestOptionLabel } from "../model/guestLabels";
 import { useEffect, useRef, useState } from "react";
 import { LoaderCircle, Save } from "lucide-react";
 import { SEND_STATUS } from "../model/guestConstants";
@@ -12,6 +15,7 @@ function initialForm(guest, groups, categories) {
 }
 
 export default function GuestInlineForm({ onCancel, onSave, guest = null, groups = [], categories = [], saving = false, error, focusRequest = 0, t }) {
+  const lang = useLanguageStore(state => state.lang);
   const nameInputRef = useRef(null);
   const formRef = useRef(null);
   const submittingRef = useRef(false);
@@ -22,7 +26,7 @@ export default function GuestInlineForm({ onCancel, onSave, guest = null, groups
   const [submitting, setSubmitting] = useState(false);
   const isEditing = Boolean(guest);
   const busy = saving || submitting;
-  const text = (key, fallback) => t ? t(key) : fallback;
+  const text = (key, fallback) => t ? t(key) : LOCAL_MESSAGES.guests[lang][key] || fallback;
   const title = isEditing ? text("editGuestTitle", "កែប្រែព័ត៌មានភ្ញៀវ") : text("addGuestTitle", "បន្ថែមភ្ញៀវថ្មី");
   const statusKey = Object.entries(SEND_STATUS).find(([key, value]) => value === form.sendStatus || key.toUpperCase() === form.sendStatus)?.[0];
 
@@ -75,10 +79,10 @@ export default function GuestInlineForm({ onCancel, onSave, guest = null, groups
         {nameError && <p id="guest-name-error" className="guest-field-error" role="alert">{nameError}</p>}
       </td>
       <td data-label={text("fieldGroup", "ក្រុម")}>
-        {isEditing ? <span className="guest-group-tag">{form.group}</span> : <select {...inputProps("group")} aria-label={text("fieldGroup", "ក្រុម")}>{groups.map((group) => <option key={group.id} value={group.name}>{group.name}</option>)}</select>}
+        {isEditing ? <span className="guest-group-tag">{guestOptionLabel(form.group, lang)}</span> : <select {...inputProps("group")} aria-label={text("fieldGroup", "ក្រុម")}>{groups.map((group) => <option key={group.id} value={group.name}>{guestOptionLabel(group.name, lang)}</option>)}</select>}
       </td>
       <td data-label={text("fieldCategory", "ប្រភេទ")}>
-        {isEditing ? <span className="guest-category">{form.category}</span> : <select {...inputProps("category")} aria-label={text("fieldCategory", "ប្រភេទ")}>{categories.map((category) => <option key={category.id} value={category.name}>{category.name}</option>)}</select>}
+        {isEditing ? <span className="guest-category">{guestOptionLabel(form.category, lang)}</span> : <select {...inputProps("category")} aria-label={text("fieldCategory", "ប្រភេទ")}>{categories.map((category) => <option key={category.id} value={category.name}>{guestOptionLabel(category.name, lang)}</option>)}</select>}
       </td>
       <td data-label={text("fieldSeats", "ចំនួនកៅអី / មនុស្ស")}>
         <input {...inputProps("count")} aria-label={text("fieldSeats", "ចំនួនកៅអី / មនុស្ស")} type="number" min="1" step="1" required aria-describedby="guestForm-count-hint" />

@@ -1,3 +1,6 @@
+import { useLanguageStore } from "@/stores/useLanguageStore";
+import { LOCAL_MESSAGES } from "@/shared/i18n/messagesDictionary";
+import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useEffect, useRef, useState } from "react";
 import { IoCloudUploadOutline, IoDownloadOutline, IoDocumentTextOutline } from "react-icons/io5";
 import { FormField, LoadingButton, Modal } from "@/shared/ui";
@@ -10,10 +13,13 @@ export default function GuestImportModal({
   saving,
   onImport,
   error: externalError,
-  t,
+  t: translate,
   invitationId,
   onFileImported,
 }) {
+  const lang = useLanguageStore(state => state.lang);
+  const uiCopy = useUiCopy();
+  const t = translate || ((key) => LOCAL_MESSAGES.guests[lang][key] || key);
   const [activeTab, setActiveTab] = useState("file"); // "file" | "text"
   const [text, setText] = useState("");
   const [parsedGuests, setParsedGuests] = useState([]);
@@ -138,7 +144,7 @@ export default function GuestImportModal({
             disabled={saving || processing}
             style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
           >
-            <IoCloudUploadOutline /> <span>Upload File CSV</span>
+            <IoCloudUploadOutline /> <span>{uiCopy("បញ្ចូលឯកសារ CSV", "Upload CSV file")}</span>
           </button>
           <button
             type="button"
@@ -147,7 +153,7 @@ export default function GuestImportModal({
             disabled={saving || processing}
             style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
           >
-            <IoDocumentTextOutline /> <span>វាយអក្សរដោយដៃ (Paste Text)</span>
+            <IoDocumentTextOutline /> <span>{uiCopy("បិទភ្ជាប់អត្ថបទ", "Paste text")}</span>
           </button>
         </div>
 
@@ -157,18 +163,18 @@ export default function GuestImportModal({
           </div>
         )}
 
-        {processing && <p role="status">Processing file…</p>}
-        {preview && <div role="status"><p>Preview: {preview.acceptedCount} valid rows · {preview.skippedCount} skipped rows. Nothing has been imported yet.</p>
-          <ul>{preview.errorRows?.map((row) => <li key={row.rowNumber}>Row {row.rowNumber}: {row.reason}</li>)}</ul></div>}
-        {importResult && <div role="status"><p>Imported: {importResult.importedCount} · Skipped: {importResult.skippedCount}</p>
-          <ul>{importResult.errorRows?.map((row) => <li key={row.rowNumber}>Row {row.rowNumber}: {row.reason}</li>)}</ul></div>}
+        {processing && <p role="status">{uiCopy("កំពុងដំណើរការឯកសារ…", "Processing file…")}</p>}
+        {preview && <div role="status"><p>{uiCopy("មើលជាមុន៖", "Preview:")} {preview.acceptedCount} {uiCopy("ជួរត្រឹមត្រូវ ·", "valid rows ·")} {preview.skippedCount} {uiCopy("ជួរត្រូវបានរំលង។ មិនទាន់មានទិន្នន័យត្រូវបាននាំចូលទេ។", "skipped rows. Nothing has been imported yet.")}</p>
+          <ul>{preview.errorRows?.map((row) => <li key={row.rowNumber}>{uiCopy("ជួរ", "Row")} {row.rowNumber}: {row.reason}</li>)}</ul></div>}
+        {importResult && <div role="status"><p>{uiCopy("បាននាំចូល៖", "Imported:")} {importResult.importedCount} {uiCopy("· បានរំលង៖", "· Skipped:")} {importResult.skippedCount}</p>
+          <ul>{importResult.errorRows?.map((row) => <li key={row.rowNumber}>{uiCopy("ជួរ", "Row")} {row.rowNumber}: {row.reason}</li>)}</ul></div>}
         {activeTab === "file" ? (
           <div>
             <div
               onClick={() => fileInputRef.current?.click()}
               role="button"
               tabIndex={0}
-              aria-label="Choose guest import file"
+              aria-label={uiCopy("ជ្រើសឯកសារបញ្ជីភ្ញៀវសម្រាប់នាំចូល", "Choose guest import file")}
               onKeyDown={(e) => { if (["Enter", " "].includes(e.key)) { e.preventDefault(); fileInputRef.current?.click(); } }}
               style={{
                 border: "2px dashed #cbd5e1",
@@ -182,16 +188,16 @@ export default function GuestImportModal({
             >
               <IoCloudUploadOutline style={{ fontSize: "2rem", color: "#64748b", marginBottom: "8px" }} />
               <div style={{ fontWeight: 600, color: "#1e293b", marginBottom: "4px" }}>
-                {fileName ? `File ជ្រើសរើស៖ ${fileName}` : "ចុចទីនេះដើម្បីជ្រើសរើស File CSV / Excel"}
+                {fileName ? `${uiCopy("ឯកសារដែលបានជ្រើស៖", "Selected file:")} ${fileName}` : uiCopy("ចុចទីនេះដើម្បីជ្រើសរើសឯកសារ CSV / Excel", "Click to choose a CSV / Excel file")}
               </div>
               <div style={{ fontSize: "0.8rem", color: "#64748b" }}>
-                {invitationId ? "CSV / XLSX · server validation and preview before import" : "CSV / TXT · UTF-8"}
+                {invitationId ? uiCopy("CSV / XLSX · ផ្ទៀងផ្ទាត់ និងមើលជាមុន មុនពេលនាំចូល", "CSV / XLSX · server validation and preview before import") : "CSV / TXT · UTF-8"}
               </div>
               <input
                 ref={fileInputRef}
                 type="file"
                 accept={invitationId ? ".csv,.xlsx,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" : ".csv,text/csv,text/plain"}
-                aria-label="Guest import file"
+                aria-label={uiCopy("ឯកសារបញ្ជីភ្ញៀវសម្រាប់នាំចូល", "Guest import file")}
                 disabled={processing || saving}
                 style={{ display: "none" }}
                 onChange={handleFileChange}
@@ -214,11 +220,11 @@ export default function GuestImportModal({
                   gap: "4px"
                 }}
               >
-                <IoDownloadOutline /> ទាញយកគំរូ File (Sample CSV)
+                <IoDownloadOutline /> {uiCopy("ទាញយកឯកសារគំរូ CSV", "Download sample CSV")}
               </button>
               {parsedGuests.length > 0 && (
                 <span style={{ fontSize: "0.82rem", color: "#16a34a", fontWeight: 700 }}>
-                  ✓ រកឃើញភ្ញៀវចំនួន {parsedGuests.length} នាក់
+                  {uiCopy("✓ រកឃើញភ្ញៀវចំនួន", "✓ Guests found:")} {parsedGuests.length} {uiCopy("នាក់", "people")}
                 </span>
               )}
             </div>
@@ -229,7 +235,7 @@ export default function GuestImportModal({
               rows="6"
               value={text}
               onChange={(e) => handleTextChange(e.target.value)}
-              placeholder={`ជា វណ្ណដា, 012345678, មិត្តភក្តិ, ខាងកូនកំលោះ, 01\nសុខ ស្រីពេជ្រ, 098765432, សាច់ញាតិ, ខាងកូនក្រមុំ, 02`}
+              placeholder={uiCopy("ជា វណ្ណដា, 012345678, មិត្តភក្តិ, ខាងកូនកំលោះ, 01\nសុខ ស្រីពេជ្រ, 098765432, សាច់ញាតិ, ខាងកូនក្រមុំ, 02", "Chea Vanda, 012345678, Friend, Groom Side, 01\nSok Sreypich, 098765432, Family, Bride Side, 02")}
             />
           </FormField>
         )}
@@ -238,15 +244,15 @@ export default function GuestImportModal({
         {parsedGuests.length > 0 && (
           <div style={{ maxHeight: "150px", overflowY: "auto", border: "1px solid #e2e8f0", borderRadius: "8px", padding: "8px" }}>
             <div style={{ fontSize: "0.78rem", fontWeight: 700, color: "#475569", marginBottom: "6px" }}>
-              មើលគំរូទិន្នន័យដែលបានអាន ({parsedGuests.length} នាក់)៖
+              {uiCopy("មើលគំរូទិន្នន័យដែលបានអាន (", "Parsed data preview (")}{parsedGuests.length} {uiCopy("នាក់)៖", "people):")}
             </div>
             <table style={{ width: "100%", fontSize: "0.75rem", borderCollapse: "collapse" }}>
               <thead>
                 <tr style={{ background: "#f1f5f9", textAlign: "left" }}>
-                  <th style={{ padding: "4px 8px" }}>ឈ្មោះ</th>
-                  <th style={{ padding: "4px 8px" }}>ទូរស័ព្ទ</th>
-                  <th style={{ padding: "4px 8px" }}>ក្រុម</th>
-                  <th style={{ padding: "4px 8px" }}>លេខតុ</th>
+                  <th style={{ padding: "4px 8px" }}>{uiCopy("ឈ្មោះ", "Name")}</th>
+                  <th style={{ padding: "4px 8px" }}>{uiCopy("ទូរស័ព្ទ", "Phone")}</th>
+                  <th style={{ padding: "4px 8px" }}>{uiCopy("ក្រុម", "Group")}</th>
+                  <th style={{ padding: "4px 8px" }}>{uiCopy("លេខតុ", "Table number")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -262,7 +268,7 @@ export default function GuestImportModal({
             </table>
             {parsedGuests.length > 5 && (
               <div style={{ fontSize: "0.72rem", color: "#64748b", textAlign: "center", marginTop: "4px" }}>
-                ...និង {parsedGuests.length - 5} នាក់ផ្សេងទៀត
+                {uiCopy("...និង", "...and")} {parsedGuests.length - 5} {uiCopy("នាក់ផ្សេងទៀត", "more people")}
               </div>
             )}
           </div>
@@ -271,7 +277,7 @@ export default function GuestImportModal({
         {/* Action Buttons */}
         <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.75rem", marginTop: "8px" }}>
           <button type="button" className="pe-secondary-btn" onClick={onClose} disabled={saving || processing}>
-            {t ? t("cancel") : "បោះបង់"}
+            {t ? t("cancel") : uiCopy("បោះបង់", "Cancel")}
           </button>
           <LoadingButton
             type="button"

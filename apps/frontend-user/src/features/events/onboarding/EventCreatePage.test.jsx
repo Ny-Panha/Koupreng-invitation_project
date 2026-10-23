@@ -163,7 +163,7 @@ describe("single-page event creation", () => {
     show();
     const selectedBtn = await screen.findByRole("button", { name: "Select Khmer Celestial" });
     expect(selectedBtn).toHaveAttribute("aria-pressed", "true");
-    expect(sessionStorage.getItem("koupreng.template_intent")).toBeNull();
+    await waitFor(() => expect(sessionStorage.getItem("koupreng.template_intent")).toBeNull());
   });
 });
 it("rejects invalid dates, times and unsafe map protocols even on partial drafts", () => {
@@ -184,7 +184,7 @@ describe("explicit template intent precedence", () => {
     expect(screen.getByLabelText(/Event title/)).toHaveValue("Retained details");
     expect(screen.getByRole("button", { name: "Wedding", exact: true })).toHaveAttribute("aria-pressed", "true");
     expect(screen.getByLabelText("Invitation language")).toHaveValue("KH");
-    expect(sessionStorage.getItem("koupreng.template_intent")).toBeNull();
+    await waitFor(() => expect(sessionStorage.getItem("koupreng.template_intent")).toBeNull());
     fill("groomName", "Dara"); fill("brideName", "Sokha"); fill("eventDate", "2026-12-25"); fill("eventTime", "17:30"); fill("venueName", "Garden House");
     fireEvent.click(screen.getByRole("button", { name: "Create event" }));
     await screen.findByText("Exact saved workspace");

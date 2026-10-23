@@ -1,6 +1,9 @@
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+beforeEach(() => useLanguageStore.setState({ lang: "en" }));
 import OrganizationCard from "./components/OrganizationCard";
 import MemberTable from "./components/MemberTable";
 import RoleBadge from "./components/RoleBadge";

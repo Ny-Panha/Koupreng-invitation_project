@@ -48,7 +48,7 @@ it("supports a keyboard-contained venue dialog and restores trigger focus", asyn
   const close = screen.getByRole("button", { name: "Close venue details" });
   await waitFor(() => expect(close).toHaveFocus());
   fireEvent.keyDown(dialog, { key: "Tab", shiftKey: true });
-  expect(screen.getByRole("button", { name: /បិទ \/ Close/ })).toHaveFocus();
+  expect(screen.getByRole("button", { name: "Close", exact: true })).toHaveFocus();
   fireEvent.keyDown(document, { key: "Escape" });
   await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
   expect(trigger).toHaveFocus();

@@ -1,5 +1,8 @@
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, afterEach, describe, expect, it, vi } from "vitest";
+
+beforeEach(() => useLanguageStore.setState({ lang: "en" }));
 import { LOCAL_MESSAGES } from "@/shared/i18n/messagesDictionary";
 import GuestInlineForm from "./GuestInlineForm";
 
@@ -47,7 +50,7 @@ describe("GuestInlineForm", () => {
     onSave.mockResolvedValueOnce(true);
     fireEvent.submit(screen.getByRole("form"));
     await waitFor(() => expect(name).toHaveValue(""));
-    expect(name).toHaveFocus();
+    await waitFor(() => expect(name).toHaveFocus());
     expect(screen.getByLabelText("Group")).toHaveValue("Bride Side");
     expect(screen.getByLabelText("Category")).toHaveValue("Family");
   });

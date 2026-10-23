@@ -1,3 +1,4 @@
+import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useState, useEffect } from "react";
 import { FormField, LoadingButton, Modal } from "@/shared/ui";
 import { ORGANIZATION_ROLES } from "../model/organizationConstants";
@@ -8,6 +9,7 @@ export default function ChangeRoleModal({
   saving,
   onUpdateRole,
 }) {
+  const uiCopy = useUiCopy();
   const [role, setRole] = useState(member?.role || "VIEWER");
 
   useEffect(() => {
@@ -27,14 +29,14 @@ export default function ChangeRoleModal({
     <Modal
       isOpen={Boolean(member)}
       onClose={onClose}
-      title="ផ្លាស់ប្តូរតួនាទីសមាជិក (Change Member Role)"
-      subtitle={`កែប្រែសិទ្ធិ និងតួនាទីសម្រាប់ ${member?.email || ""}`}
+      title={uiCopy("ផ្លាស់ប្តូរតួនាទីសមាជិក", "Change member role")}
+      subtitle={`${uiCopy("កែប្រែសិទ្ធិ និងតួនាទីសម្រាប់", "Edit permissions and role for")} ${member?.email || ""}`}
       size="sm"
       closeOnBackdropClick={!saving}
       closeOnEscape={!saving}
     >
       <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-        <FormField label="តួនាទីថ្មី (New Role)" required>
+        <FormField label={uiCopy("តួនាទីថ្មី", "New role")} required>
           <select
             value={role}
             onChange={(e) => setRole(e.target.value)}
@@ -43,7 +45,7 @@ export default function ChangeRoleModal({
           >
             {ORGANIZATION_ROLES.map((r) => (
               <option key={r.value} value={r.value}>
-                {r.label} — {r.description}
+                {uiCopy(r.labelKm, r.label)} — {uiCopy(r.descriptionKm, r.description)}
               </option>
             ))}
           </select>
@@ -56,10 +58,10 @@ export default function ChangeRoleModal({
             onClick={onClose}
             disabled={saving}
           >
-            បោះបង់ (Cancel)
+            {uiCopy("បោះបង់", "Cancel")}
           </button>
           <LoadingButton type="submit" isLoading={saving} className="k-org-modal-submit-btn">
-            <span>រក្សាទុកតួនាទី</span>
+            <span>{uiCopy("រក្សាទុកតួនាទី", "Save role")}</span>
           </LoadingButton>
         </div>
       </form>

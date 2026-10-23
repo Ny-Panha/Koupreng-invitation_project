@@ -1,3 +1,4 @@
+import { useUiCopy } from "@/shared/i18n/useUiCopy";
 const STATUS_CLASS = {
   PENDING: "notif-badge is-pending",
   SENT: "notif-badge is-sent",
@@ -7,31 +8,41 @@ const STATUS_CLASS = {
   CANCELLED: "notif-badge is-cancelled",
 };
 
-function formatDate(value) {
+const KHMER_METADATA = {
+  PENDING: "រង់ចាំ", SENT: "បានផ្ញើ", DELIVERED: "បានបញ្ជូនដល់", FAILED: "បរាជ័យ", READ: "បានអាន", CANCELLED: "បានបោះបង់",
+  INVITATION_SENT: "បានផ្ញើធៀបអញ្ជើញ", RSVP_CONFIRMATION: "ការបញ្ជាក់ការឆ្លើយតប", RSVP_RECEIVED: "បានទទួលការឆ្លើយតប",
+  REMINDER: "ការរំលឹក", PAYMENT_CONFIRMED: "បានបញ្ជាក់ការទូទាត់", TEMPLATE_UNLOCKED: "បានផ្ដល់សិទ្ធិប្រើគំរូ",
+  SYSTEM_ALERT: "ការជូនដំណឹងប្រព័ន្ធ", ADMIN_NOTICE: "សារពីអ្នកគ្រប់គ្រង",
+  EMAIL: "អ៊ីមែល", TELEGRAM: "Telegram", SYSTEM: "ប្រព័ន្ធ", LINK: "តំណ", SMS: "សារទូរស័ព្ទ",
+};
+
+function formatDate(value, lang) {
   if (!value) return "—";
-  return new Intl.DateTimeFormat("en", {
+  return new Intl.DateTimeFormat(lang, {
     dateStyle: "medium",
     timeStyle: "short",
   }).format(new Date(value));
 }
 
 export function NotificationItem({ notification, onRead, busy }) {
+  const uiCopy = useUiCopy();
+  const metadata = value => uiCopy(KHMER_METADATA[value] || "ការជូនដំណឹង", value);
   const unread = !notification.readAt;
 
   return (
     <article className={`notif-item${unread ? " is-unread" : ""}`}>
       <div className="notif-item-main">
         <div className="notif-item-head">
-          <strong>{notification.title || notification.type || "Notification"}</strong>
+          <strong>{notification.title || (notification.type ? metadata(notification.type) : uiCopy("ការជូនដំណឹង", "Notification"))}</strong>
           <span className={STATUS_CLASS[notification.status] || "notif-badge"}>
-            {notification.status || "PENDING"}
+            {metadata(notification.status || "PENDING")}
           </span>
         </div>
-        <p>{notification.message || "No message provided."}</p>
+        <p>{notification.message || uiCopy("មិនមានសារទេ។", "No message provided.")}</p>
         <div className="notif-meta">
-          <span>{notification.type || "SYSTEM_ALERT"}</span>
-          <span>{notification.channel || "SYSTEM"}</span>
-          <span>{formatDate(notification.createdAt)}</span>
+          <span>{metadata(notification.type || "SYSTEM_ALERT")}</span>
+          <span>{metadata(notification.channel || "SYSTEM")}</span>
+          <span>{formatDate(notification.createdAt, uiCopy("km", "en"))}</span>
         </div>
         {notification.errorMessage && <div className="notif-error">{notification.errorMessage}</div>}
       </div>
@@ -42,7 +53,7 @@ export function NotificationItem({ notification, onRead, busy }) {
           disabled={busy}
           onClick={() => onRead(notification.id)}
         >
-          Mark read
+          {uiCopy("សម្គាល់ថាបានអាន", "Mark read")}
         </button>
       )}
     </article>

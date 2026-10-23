@@ -1,19 +1,21 @@
+import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "../enterprise/EnterprisePages.css";
 import paymentService from "./paymentService";
 import { packagePrice } from "../marketing/model/packagePresentation";
 
-function money(amount, currency) {
-    return packagePrice({ price: amount, currency }, "en") || "Amount unavailable";
+function money(amount, currency, lang) {
+    return packagePrice({ price: amount, currency }, lang) || (lang === "en" ? "Amount unavailable" : "មិនមានចំនួនទឹកប្រាក់");
 }
 
-function dateTime(value) {
+function dateTime(value, lang) {
     if (!value) return "—";
-    return new Intl.DateTimeFormat("en", { dateStyle: "medium", timeStyle: "short" }).format(new Date(value));
+    return new Intl.DateTimeFormat(lang, { dateStyle: "medium", timeStyle: "short" }).format(new Date(value));
 }
 
 export default function PaymentReceiptPage() {
+  const uiCopy = useUiCopy();
     const { orderCode } = useParams();
     const [receipt, setReceipt] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -40,18 +42,18 @@ export default function PaymentReceiptPage() {
     }, [orderCode]);
 
     if (loading) {
-        return <main className="enterprise-page"><div className="enterprise-empty">Loading receipt...</div></main>;
+        return <main className="enterprise-page"><div className="enterprise-empty">{uiCopy("កំពុងផ្ទុកបង្កាន់ដៃ...", "Loading receipt...")}</div></main>;
     }
 
     return (
         <main className="enterprise-page">
             <header className="enterprise-head">
                 <div>
-                    <span className="enterprise-eyebrow">Receipt</span>
-                    <h1>{receipt?.receiptNumber || "Payment receipt"}</h1>
-                    <p>Receipt generated from the verified payment order.</p>
+                    <span className="enterprise-eyebrow">{uiCopy("បង្កាន់ដៃ", "Receipt")}</span>
+                    <h1>{receipt?.receiptNumber || uiCopy("បង្កាន់ដៃទូទាត់", "Payment receipt")}</h1>
+                    <p>{uiCopy("បង្កាន់ដៃសម្រាប់ការបញ្ជាទិញដែលបានផ្ទៀងផ្ទាត់ការទូទាត់។", "Receipt generated from the verified payment order.")}</p>
                 </div>
-                <Link className="enterprise-btn secondary" to="/dashboard/payments">Payment history</Link>
+                <Link className="enterprise-btn secondary" to="/dashboard/payments">{uiCopy("ប្រវត្តិការទូទាត់", "Payment history")}</Link>
             </header>
 
             {error && <div className="enterprise-error" role="alert">{error}</div>}
@@ -61,13 +63,13 @@ export default function PaymentReceiptPage() {
                     <h2>{receipt.itemName}</h2>
                     <p className="enterprise-muted">{receipt.packageName}</p>
                     <div className="receipt-lines">
-                        <div><span>Order code</span><strong>{receipt.orderCode}</strong></div>
-                        <div><span>Status</span><strong>{receipt.status}</strong></div>
-                        <div><span>Customer</span><strong>{receipt.customerName || receipt.customerEmail || "—"}</strong></div>
-                        <div><span>Amount</span><strong>{money(receipt.paidAmount ?? receipt.amount, receipt.currency)}</strong></div>
-                        <div><span>Provider</span><strong>{receipt.provider || "—"}</strong></div>
-                        <div><span>Paid at</span><strong>{dateTime(receipt.paidAt)}</strong></div>
-                        <div><span>Issued at</span><strong>{dateTime(receipt.issuedAt)}</strong></div>
+                        <div><span>{uiCopy("លេខកូដបញ្ជាទិញ", "Order code")}</span><strong>{receipt.orderCode}</strong></div>
+                        <div><span>{uiCopy("ស្ថានភាព", "Status")}</span><strong>{uiCopy("បានបង់ប្រាក់", "Paid")}</strong></div>
+                        <div><span>{uiCopy("អតិថិជន", "Customer")}</span><strong>{receipt.customerName || receipt.customerEmail || "—"}</strong></div>
+                        <div><span>{uiCopy("ចំនួនទឹកប្រាក់", "Amount")}</span><strong>{money(receipt.paidAmount ?? receipt.amount, receipt.currency, uiCopy("km", "en"))}</strong></div>
+                        <div><span>{uiCopy("អ្នកផ្ដល់សេវា", "Provider")}</span><strong>{receipt.provider || "—"}</strong></div>
+                        <div><span>{uiCopy("បានទូទាត់នៅ", "Paid at")}</span><strong>{dateTime(receipt.paidAt, uiCopy("km", "en"))}</strong></div>
+                        <div><span>{uiCopy("បានចេញនៅ", "Issued at")}</span><strong>{dateTime(receipt.issuedAt, uiCopy("km", "en"))}</strong></div>
                     </div>
                 </section>
             )}

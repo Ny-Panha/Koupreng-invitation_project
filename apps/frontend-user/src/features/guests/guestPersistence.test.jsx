@@ -6,6 +6,7 @@ import { saveDraft } from "@/shared/storage/weddingStorage";
 import { useGuests } from "./hooks/useGuests";
 import { useGuestMutations } from "./hooks/useGuestMutations";
 import { EMPTY_GUEST_FORM, SEND_STATUS } from "./model/guestConstants";
+import { deliveryService } from "@/features/invitations/api/deliveryApi";
 
 const invitationService = vi.hoisted(() => ({ listMine: vi.fn() }));
 const guestService = vi.hoisted(() => ({
@@ -20,6 +21,7 @@ vi.mock("@/features/invitations/api/invitationApi", () => ({ invitationService }
 vi.mock("@/features/guests/api/guestApi", () => ({ guestService }));
 vi.mock("@/features/rsvp/api/rsvpApi", () => ({ rsvpService }));
 vi.mock("@/features/auth/hooks/useAuth", () => ({ useAuth: () => ({ user: { id: 77 } }) }));
+vi.mock("@/features/invitations/api/deliveryApi", () => ({ deliveryService: { markShared: vi.fn() } }));
 
 function Wrapper({ children }) {
   return <MemoryRouter initialEntries={["/dashboard/guests"]}>{children}</MemoryRouter>;
@@ -132,6 +134,53 @@ describe("guest persistence after refresh", () => {
     const refreshed = await openGuestPage();
     expect(refreshed.result.current.guests).toEqual([expect.objectContaining({ id: 7, name: "Server guest", source: "backend" })]);
     expect(listManualGuests("wed-1")).toEqual([]);
+  });
+
+  it("persists sharing through the delivery API and reloads the guest as sent", async () => {
+    invitationService.listMine.mockResolvedValue([{ id: 42, slug: "our-day", status: "PUBLISHED" }]);
+    let serverGuest = { id: 7, guestName: "Server guest", sendStatus: "PENDING" };
+    guestService.listByInvitation.mockImplementation(async () => [serverGuest]);
+    deliveryService.markShared.mockImplementation(async () => { serverGuest = { ...serverGuest, sendStatus: "SENT" }; return serverGuest; });
+    const page = await openGuestPage();
+    await act(async () => {
+      expect(await page.result.current.mutations.markGuestAsSent(page.result.current.guests[0])).toBe(true);
+    });
+    expect(deliveryService.markShared).toHaveBeenCalledExactlyOnceWith(42, 7);
+    page.unmount();
+    const refreshed = await openGuestPage();
+    expect(refreshed.result.current.guests[0]).toMatchObject({ id: 7, sendStatus: "SENT" });
+  });
+
+  it("keeps the original status when the delivery API rejects the update", async () => {
+    invitationService.listMine.mockResolvedValue([{ id: 42, slug: "our-day", status: "PUBLISHED" }]);
+    guestService.listByInvitation.mockResolvedValue([{ id: 7, guestName: "Server guest", sendStatus: "PENDING" }]);
+    deliveryService.markShared.mockRejectedValueOnce(new Error("Could not save sharing status"));
+    const page = await openGuestPage();
+    await act(async () => {
+      expect(await page.result.current.mutations.markGuestAsSent(page.result.current.guests[0])).toBe(false);
+    });
+    expect(page.result.current.guests[0]).toMatchObject({ id: 7, sendStatus: "PENDING" });
+    expect(page.result.current.mutations.error).toBe("Could not save sharing status");
+  });
+
+  it.each(["SENT", "OPENED", "RESPONDED"])("preserves server %s status when an invitation is shared again", async sendStatus => {
+    invitationService.listMine.mockResolvedValue([{ id: 42, slug: "our-day", status: "PUBLISHED" }]);
+    guestService.listByInvitation.mockResolvedValue([{ id: 7, guestName: "Server guest", sendStatus }]);
+    const page = await openGuestPage();
+    await act(async () => {
+      await page.result.current.mutations.markGuestAsSent(page.result.current.guests[0]);
+    });
+    expect(deliveryService.markShared).not.toHaveBeenCalled();
+    expect(page.result.current.guests[0].sendStatus).toBe(sendStatus);
+  });
+
+  it.each([SEND_STATUS.opened, SEND_STATUS.responded])("preserves local %s status when sharing again", async sendStatus => {
+    saveManualGuests([{ id: "guest-1", name: "Sok Dara", sendStatus }], "wed-1");
+    const page = await openGuestPage();
+    await act(async () => {
+      await page.result.current.mutations.markGuestAsSent(page.result.current.guests[0]);
+    });
+    expect(listManualGuests("wed-1")[0].sendStatus).toBe(sendStatus);
   });
 
   it.each(["create", "edit"])("reports a failed server %s without claiming a hidden local save", async (operation) => {

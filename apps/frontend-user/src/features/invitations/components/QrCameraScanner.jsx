@@ -1,3 +1,4 @@
+import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Camera, CameraOff, CheckCircle2, RefreshCw } from "lucide-react";
 import jsQR from "jsqr";
@@ -35,6 +36,7 @@ function extractTokenFromQr(text) {
 }
 
 export default function QrCameraScanner({ onScan, disabled }) {
+  const uiCopy = useUiCopy();
   const [isScanning, setIsScanning] = useState(false);
   const [facingMode, setFacingMode] = useState("environment"); // "environment" | "user"
   const [errorMsg, setErrorMsg] = useState("");
@@ -280,7 +282,7 @@ export default function QrCameraScanner({ onScan, disabled }) {
               <span style={{ display: "inline-flex", padding: "8px", background: "rgba(176, 146, 106, 0.14)", borderRadius: "12px", color: "#B0926A" }}>
                 <Camera size={20} />
               </span>
-              ស្កេន QR Code កាមេរ៉ាផ្ទាល់ (Live QR Scanner)
+              {uiCopy("ស្កេនកូដតាមកាមេរ៉ា", "Live QR scanner")}
             </h3>
             {isScanning ? (
               <span style={{
@@ -296,7 +298,7 @@ export default function QrCameraScanner({ onScan, disabled }) {
                 border: "1px solid #a7f3d0"
               }}>
                 <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#10b981", boxShadow: "0 0 8px #10b981" }} />
-                កំពុងដំណើរការ (Scanning Live)
+                {uiCopy("កំពុងស្កេន", "Scanning live")}
               </span>
             ) : (
               <span style={{
@@ -312,12 +314,12 @@ export default function QrCameraScanner({ onScan, disabled }) {
                 border: "1px solid #eadfce"
               }}>
                 <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#a89078" }} />
-                មិនទាន់បើក (Ready)
+                {uiCopy("រួចរាល់សម្រាប់ស្កេន", "Ready")}
               </span>
             )}
           </div>
           <p style={{ margin: "6px 0 0", fontSize: "13.5px", color: "#7d6443", lineHeight: 1.5 }}>
-            ប្រើកាមេរ៉ាទូរស័ព្ទ ឬ Webcam កុំព្យូទ័រ ដើម្បីស្កេនកាតអញ្ជើញ QR របស់ភ្ញៀវពេលមកដល់មាត់រោងការ
+            {uiCopy("ប្រើកាមេរ៉ាទូរស័ព្ទ ឬកុំព្យូទ័រ ដើម្បីស្កេនកូដកាតអញ្ជើញរបស់ភ្ញៀវពេលមកដល់។", "Use your phone or computer camera to scan guests’ invitation QR codes on arrival.")}
           </p>
         </div>
         <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
@@ -325,7 +327,7 @@ export default function QrCameraScanner({ onScan, disabled }) {
             <button
               type="button"
               onClick={toggleFacingMode}
-              title="ប្តូរកាមេរ៉ាមុខ/ក្រោយ"
+              title={uiCopy("ប្តូរកាមេរ៉ាមុខ/ក្រោយ", "Switch front/back camera")}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -341,7 +343,7 @@ export default function QrCameraScanner({ onScan, disabled }) {
                 transition: "all 0.2s ease"
               }}
             >
-              <RefreshCw size={15} /> ប្តូរកាមេរ៉ា
+              <RefreshCw size={15} /> {uiCopy("ប្តូរកាមេរ៉ា", "Switch camera")}
             </button>
           )}
 
@@ -376,7 +378,7 @@ export default function QrCameraScanner({ onScan, disabled }) {
                 e.currentTarget.style.boxShadow = "0 6px 22px rgba(176, 146, 106, 0.35)";
               }}
             >
-              <Camera size={18} /> បើកកាមេរ៉ាស្កេន
+              <Camera size={18} /> {uiCopy("បើកកាមេរ៉ាស្កេន", "Start camera scanner")}
             </button>
           ) : (
             <button
@@ -398,7 +400,7 @@ export default function QrCameraScanner({ onScan, disabled }) {
                 transition: "all 0.2s ease"
               }}
             >
-              <CameraOff size={18} /> បិទកាមេរ៉ា
+              <CameraOff size={18} /> {uiCopy("បិទកាមេរ៉ា", "Stop camera")}
             </button>
           )}
         </div>
@@ -437,7 +439,7 @@ export default function QrCameraScanner({ onScan, disabled }) {
           boxShadow: "0 2px 8px rgba(34, 197, 94, 0.12)"
         }}>
           <CheckCircle2 size={20} color="#16a34a" /> 
-          <span>បានស្កេនដោយជោគជ័យ Token: <code style={{ background: "#dcfce7", padding: "2px 8px", borderRadius: "6px" }}>{lastScanned}</code> (កំពុងកត់ត្រាវត្តមាន...)</span>
+          <span>{uiCopy("បានស្កេនលេខកូដដោយជោគជ័យ៖", "Scanned token:")} <code style={{ background: "#dcfce7", padding: "2px 8px", borderRadius: "6px" }}>{lastScanned}</code> {uiCopy("(កំពុងកត់ត្រាវត្តមាន...)", "(Recording check-in...)")}</span>
         </div>
       )}
 
@@ -512,7 +514,7 @@ export default function QrCameraScanner({ onScan, disabled }) {
               fontWeight: 600,
               border: "1px solid rgba(255, 255, 255, 0.15)"
             }}>
-              🎯 សូមដាក់ QR Code កាតអញ្ជើញក្នុងប្រអប់
+              {uiCopy("🎯 សូមដាក់កូដកាតអញ្ជើញក្នុងប្រអប់", "🎯 Place the invitation QR code inside the frame")}
             </span>
           </div>
         </div>

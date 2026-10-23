@@ -48,6 +48,18 @@ describe("Multi-Language Khmer & English Localization Engine (Feature 30)", () =
         }
     });
 
+    it("has matching keys and interpolation fields in every language namespace", () => {
+        for (const [namespace, messages] of Object.entries(LOCAL_MESSAGES)) {
+            expect(Object.keys(messages.km).sort(), namespace).toEqual(Object.keys(messages.en).sort());
+            for (const [key, english] of Object.entries(messages.en)) {
+                expect(english, `${namespace}.${key}`).not.toMatch(/[\u1780-\u17b3]/);
+                expect(english.trim(), `${namespace}.${key}`).not.toBe("");
+                expect(messages.km[key].trim(), `${namespace}.${key}`).not.toBe("");
+                expect(messages.km[key].match(/\{\w+\}/g) || [], `${namespace}.${key}`).toEqual(english.match(/\{\w+\}/g) || []);
+            }
+        }
+    });
+
     it("renders accurate Khmer and English navigation labels", () => {
         expect(LOCAL_MESSAGES.hostNav.km.events).toBe("កម្មវិធី");
         expect(LOCAL_MESSAGES.hostNav.en.events).toBe("Events");

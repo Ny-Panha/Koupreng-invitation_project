@@ -1,3 +1,4 @@
+import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -15,6 +16,7 @@ import OrganizationCard from "./components/OrganizationCard";
 import "./OrganizationPage.css";
 
 export default function OrganizationPage() {
+  const uiCopy = useUiCopy();
   const {
     organizations,
     loading,
@@ -31,7 +33,7 @@ export default function OrganizationPage() {
   const handleCreate = async (e) => {
     e.preventDefault();
     if (!name.trim()) {
-      setCreateError("សូមបញ្ចូលឈ្មោះ Workspace / ក្រុមការងារ");
+      setCreateError(uiCopy("សូមបញ្ចូលឈ្មោះក្រុមការងារ", "Enter a workspace / team name"));
       return;
     }
 
@@ -39,7 +41,7 @@ export default function OrganizationPage() {
     if (newOrg) {
       setName("");
       setCreateModalOpen(false);
-      toast.success("បានបង្កើត Workspace ជោគជ័យ");
+      toast.success(uiCopy("បានបង្កើតកន្លែងធ្វើការជោគជ័យ", "Workspace created"));
     }
   };
 
@@ -50,10 +52,10 @@ export default function OrganizationPage() {
         <nav className="k-org-breadcrumb">
           <Link to="/dashboard" className="k-org-breadcrumb-link">
             <IoHomeOutline />
-            <span>ផ្ទាំងគ្រប់គ្រង</span>
+            <span>{uiCopy("ផ្ទាំងគ្រប់គ្រង", "Dashboard")}</span>
           </Link>
           <IoChevronForwardOutline className="k-org-breadcrumb-sep" />
-          <span className="k-org-breadcrumb-active">ក្រុមការងារ & Workspaces</span>
+          <span className="k-org-breadcrumb-active">{uiCopy("ក្រុមការងារ និងកន្លែងធ្វើការ", "Teams & workspaces")}</span>
         </nav>
 
         {/* Header Banner */}
@@ -61,16 +63,16 @@ export default function OrganizationPage() {
           <div className="k-org-header-info">
             <div className="k-org-header-tag">
               <IoBriefcaseOutline />
-              <span>TEAM COLLABORATION</span>
+              <span>{uiCopy("សហការជាក្រុម", "TEAM COLLABORATION")}</span>
             </div>
             <h1 className="k-org-header-title">
-              ក្រុមការងារ <span className="gold-text">& Workspaces</span>
+              {uiCopy("ក្រុមការងារ", "Teams")} <span className="gold-text">{uiCopy("និងកន្លែងធ្វើការ", "& Workspaces")}</span>
               {organizations.length > 0 && (
-                <span className="k-org-count-badge">{organizations.length} Workspace</span>
+                <span className="k-org-count-badge">{organizations.length} {uiCopy("កន្លែងធ្វើការ", "Workspace")}</span>
               )}
             </h1>
             <p className="k-org-header-desc">
-              គ្រប់គ្រងក្រុមការងារ ដៃគូសហការ អ្នករៀបចំការ (Planners) និងបុគ្គលិកកត់ត្រាលុយចងដៃ ឬ Check-in ភ្ញៀវរួមគ្នា។
+              {uiCopy("គ្រប់គ្រងក្រុមការងារ ដៃគូសហការ អ្នករៀបចំការ និងបុគ្គលិកកត់ត្រាចងដៃ ឬវត្តមានភ្ញៀវរួមគ្នា។", "Manage your team, collaborators, planners, gift recorders and check-in staff together.")}
             </p>
           </div>
 
@@ -81,7 +83,7 @@ export default function OrganizationPage() {
               onClick={() => setCreateModalOpen(true)}
             >
               <IoAddOutline style={{ fontSize: "1.25rem" }} />
-              <span>បង្កើត Workspace ថ្មី</span>
+              <span>{uiCopy("បង្កើតកន្លែងធ្វើការថ្មី", "Create workspace")}</span>
             </button>
           </div>
         </header>
@@ -100,16 +102,16 @@ export default function OrganizationPage() {
             <div className="k-org-empty-icon">
               <IoPeopleOutline />
             </div>
-            <h2 className="k-org-empty-title">មិនទាន់មានក្រុមការងារនៅឡើយទេ</h2>
+            <h2 className="k-org-empty-title">{uiCopy("មិនទាន់មានក្រុមការងារនៅឡើយទេ", "No teams yet")}</h2>
             <p className="k-org-empty-desc">
-              បង្កើត Workspace ដំបូងរបស់អ្នក ដើម្បីអញ្ជើញសហការី ដៃគូ ឬបុគ្គលិក និងរៀបចំការងារមង្គលការរួមគ្នាយ៉ាងរលូន។
+              {uiCopy("បង្កើតកន្លែងធ្វើការដំបូង ដើម្បីអញ្ជើញសហការី ដៃគូ ឬបុគ្គលិក និងរៀបចំមង្គលការរួមគ្នា។", "Create your first workspace to invite collaborators, partners or staff and organize weddings together.")}
             </p>
             <button
               type="button"
               className="k-org-empty-btn"
               onClick={() => setCreateModalOpen(true)}
             >
-              <IoSparkles /> បង្កើត Workspace ដំបូង (Create Workspace)
+              <IoSparkles /> {uiCopy("បង្កើតកន្លែងធ្វើការដំបូង", "Create your first workspace")}
             </button>
           </section>
         ) : (
@@ -124,20 +126,20 @@ export default function OrganizationPage() {
         <Modal
           isOpen={createModalOpen}
           onClose={() => setCreateModalOpen(false)}
-          title="បង្កើត Team Workspace ថ្មី"
-          subtitle="រៀបចំក្រុមការងារ Planners, Designers, និង Check-in Staff ក្នុង Workspace តែមួយ។"
+          title={uiCopy("បង្កើតកន្លែងធ្វើការក្រុមថ្មី", "Create team workspace")}
+          subtitle={uiCopy("រៀបចំអ្នករៀបចំការ អ្នករចនា និងបុគ្គលិកកត់ត្រាវត្តមានក្នុងកន្លែងធ្វើការតែមួយ។", "Bring planners, designers and check-in staff into one workspace.")}
           size="md"
           closeOnBackdropClick={!creating}
           closeOnEscape={!creating}
         >
           <form onSubmit={handleCreate} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-            <FormField label="ឈ្មោះ Workspace / ក្រុមការងារ (Team Name)" required error={createError}>
+            <FormField label={uiCopy("ឈ្មោះកន្លែងធ្វើការ ឬក្រុមការងារ", "Workspace / team name")} required error={createError}>
               <input
                 type="text"
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="ឧ. Royal Wedding Planners ឬ ក្រុមការងារមង្គលការ"
+                placeholder={uiCopy("ឧ. ក្រុមរៀបចំមង្គលការ", "e.g. Royal Wedding Planners")}
                 className="k-org-input"
               />
             </FormField>
@@ -149,10 +151,10 @@ export default function OrganizationPage() {
                 onClick={() => setCreateModalOpen(false)}
                 disabled={creating}
               >
-                បោះបង់ (Cancel)
+                {uiCopy("បោះបង់", "Cancel")}
               </button>
               <LoadingButton type="submit" isLoading={creating} className="k-org-modal-submit-btn">
-                <span>បង្កើត Workspace</span>
+                <span>{uiCopy("បង្កើតកន្លែងធ្វើការ", "Create workspace")}</span>
               </LoadingButton>
             </div>
           </form>

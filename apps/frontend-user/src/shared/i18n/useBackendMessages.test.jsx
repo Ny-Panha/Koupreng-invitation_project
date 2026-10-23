@@ -30,3 +30,22 @@ it("does not show stale English server copy while Khmer messages are loading", a
   await act(async () => resolveKhmer({ messages: {} }));
   expect(result.current.text("fullNameLabel")).toBe(LOCAL_MESSAGES.profile.km.fullNameLabel);
 });
+
+it.each([
+  ["km", "Guest Management"],
+  ["km", "គ្រប់គ្រងភ្ញៀវ / Guest Management"],
+  ["en", "ការគ្រប់គ្រងភ្ញៀវ"],
+])("uses the selected %s translation when the server returns copy in another language", async (lang, kicker) => {
+  useLanguageStore.setState({ lang });
+  i18nService.messages.mockResolvedValue({ messages: { kicker } });
+  const { result } = renderHook(() => useBackendMessages("guests"));
+  await waitFor(() => expect(result.current.messages.kicker).toBe(kicker));
+  expect(result.current.text("kicker")).toBe(LOCAL_MESSAGES.guests[lang].kicker);
+});
+
+it("ignores a response declared in a different locale", async () => {
+  i18nService.messages.mockResolvedValue({ locale: "km-KH", messages: { kicker: "Wrong locale response" } });
+  const { result } = renderHook(() => useBackendMessages("guests"));
+  await waitFor(() => expect(i18nService.messages).toHaveBeenCalled());
+  expect(result.current.text("kicker")).toBe(LOCAL_MESSAGES.guests.en.kicker);
+});

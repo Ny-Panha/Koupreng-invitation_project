@@ -1,3 +1,5 @@
+import { LOCAL_MESSAGES } from "@/shared/i18n/messagesDictionary";
+import { guestOptionLabel } from "../model/guestLabels";
 import { useRef, useState } from "react";
 import { Armchair, Phone, Plus, SearchX, Upload, Users } from "lucide-react";
 import { ResponsiveTable, StatusBadge } from "@/shared/ui";
@@ -12,7 +14,7 @@ function emptyGuestForm(groups, categories) {
 }
 
 export default function GuestTable({
-  guests = [], groups = [], categories = [], saving = false, emptyMessage = "No guests found.",
+  guests = [], groups = [], categories = [], saving = false, emptyMessage,
   currentDraft, publicInvitation, onSaveGuest, onEdit, onDelete, onShowQr, onCopyLink,
   onShowTicket, deliveryPath, onMarkAsSent, onOpenAddGuest, onOpenImport, onClearFilters, isFiltered = false, showQuickAdd = true, inlineForm, t,
 }) {
@@ -24,7 +26,7 @@ export default function GuestTable({
   const [editingGuestId, setEditingGuestId] = useState(null);
   const [editingGuest, setEditingGuest] = useState(null);
   const [nameError, setNameError] = useState("");
-  const text = (key, fallback) => t ? t(key) : fallback;
+  const text = (key, fallback) => t ? t(key) : LOCAL_MESSAGES.guests[lang][key] || fallback;
   const labels = {
     name: text("batchFieldName", "ឈ្មោះ"), companionName: text("batchFieldCompanion", "ឈ្មោះអ្នកភ្ជាប់"),
     phone: text("batchFieldPhone", "លេខទូរស័ព្ទ"), count: text("batchFieldSeats", "ចំនួនកៅអី"),
@@ -64,7 +66,7 @@ export default function GuestTable({
           <span>{label}</span>
           {field === "group" || field === "status" ? (
             <select aria-label={label} value={draft[field === "status" ? "sendStatus" : field]} disabled={saving} onChange={(event) => setDraft((value) => ({ ...value, [field === "status" ? "sendStatus" : field]: event.target.value }))}>
-              {(field === "group" ? groups.map((g) => [g.name, g.name]) : Object.entries(SEND_STATUS).map(([key, value]) => [value, text(`status${key[0].toUpperCase()}${key.slice(1)}`, key)])).map(([value, name]) => <option key={value} value={value}>{name}</option>)}
+              {(field === "group" ? groups.map((g) => [g.name, guestOptionLabel(g.name, lang)]) : Object.entries(SEND_STATUS).map(([key, value]) => [value, text(`status${key[0].toUpperCase()}${key.slice(1)}`, key)])).map(([value, name]) => <option key={value} value={value}>{name}</option>)}
             </select>
           ) : (
             <input ref={isNew && field === "name" ? nameInputRef : undefined} aria-label={`${label}${!isNew && field === "name" ? ` ${editingGuestId}` : ""}`} type={field === "count" ? "number" : field === "phone" ? "tel" : "text"} min={field === "count" ? "1" : undefined} required={field === "name"} value={draft[field]} disabled={saving}
@@ -80,7 +82,7 @@ export default function GuestTable({
   );
 
   return (
-    <ResponsiveTable ariaLabel="Guests List Table" className="guest-table" containerClassName="guest-table-container">
+    <ResponsiveTable ariaLabel={text("tableLabel")} className="guest-table" containerClassName="guest-table-container">
       <colgroup><col className="guest-col-person" /><col className="guest-col-group" /><col className="guest-col-category" /><col className="guest-col-seats" /><col className="guest-col-status" /><col className="guest-col-actions" /></colgroup>
       <thead><tr>
         <th scope="col">{text("thGuest", "ឈ្មោះភ្ញៀវ")}{inlineForm && <em aria-hidden="true"> *</em>}</th>
@@ -95,7 +97,7 @@ export default function GuestTable({
         {!inlineForm && showQuickAdd && !onOpenAddGuest && <tr className="pe-guest-inline-add-row"><td colSpan="6">{editor(newGuest, setNewGuest, true)}</td></tr>}
         {guests.map((guest) => {
           const isEditing = editingGuestId != null && String(editingGuestId) === String(guest.id);
-          const actions = <GuestRowActions guest={guest} saving={saving} onShowQr={onShowQr} onShowTicket={onShowTicket} deliveryPath={deliveryPath} inviteUrl={guestInviteUrl(currentDraft, guest, publicInvitation)} onCopyLink={onCopyLink} onMarkAsSent={onMarkAsSent} onEdit={beginEdit} onDelete={onDelete} onSave={saveEdit} onCancel={() => { setEditingGuestId(null); setEditingGuest(null); }} isEditing={isEditing} shareMessage={buildShareMessage(guest, currentDraft, publicInvitation) || guestInviteUrl(currentDraft, guest, publicInvitation)} t={t} />;
+          const actions = <GuestRowActions guest={guest} saving={saving} onShowQr={onShowQr} onShowTicket={onShowTicket} deliveryPath={deliveryPath} inviteUrl={guestInviteUrl(currentDraft, guest, publicInvitation)} onCopyLink={onCopyLink} onMarkAsSent={onMarkAsSent} onEdit={beginEdit} onDelete={onDelete} onSave={saveEdit} onCancel={() => { setEditingGuestId(null); setEditingGuest(null); }} isEditing={isEditing} shareMessage={buildShareMessage(guest, currentDraft, publicInvitation, lang) || guestInviteUrl(currentDraft, guest, publicInvitation)} t={t} />;
           return <tr key={guest.id} className="guest-record-row" onDoubleClick={() => !isEditing && beginEdit(guest)}>
             {isEditing ? <><td colSpan="5">{editor(editingGuest, setEditingGuest)}</td><td>{actions}</td></> : <>
               <td className="guest-person-cell" data-label={text("thGuest", "ឈ្មោះភ្ញៀវ")}>
@@ -107,8 +109,8 @@ export default function GuestTable({
                   </div>
                 </div>
               </td>
-              <td className="guest-group-cell" data-label={text("fieldGroup", "ក្រុម")}><span className="guest-group-tag">{guest.group || "—"}</span></td>
-              <td className="guest-category-cell" data-label={text("fieldCategory", "ប្រភេទ")}><span className="guest-category">{guest.category || "—"}</span></td>
+              <td className="guest-group-cell" data-label={text("fieldGroup", "ក្រុម")}><span className="guest-group-tag">{guestOptionLabel(guest.group || "—", lang)}</span></td>
+              <td className="guest-category-cell" data-label={text("fieldCategory", "ប្រភេទ")}><span className="guest-category">{guestOptionLabel(guest.category || "—", lang)}</span></td>
               <td className="guest-seat-cell" data-label={text("thSeats", "ចំនួនកៅអី")}><span className="guest-seat-count"><Armchair size={15} aria-hidden="true" />{guest.count || 1}</span><span className="guest-table-number">{guest.seat || text("noTable", "មិនទាន់កំណត់តុ")}</span></td>
               <td className="guest-status-cell" data-label={labels.status}><div className="pe-guest-statuses">
                 {guest.checkedIn && <StatusBadge status="CHECKED_IN" label={text("checkedIn", "Checked in")} variant="success" />}
@@ -124,7 +126,7 @@ export default function GuestTable({
         {guests.length === 0 && (!inlineForm || isFiltered) && <tr className="guest-empty-row"><td colSpan="6">
           <div className="guest-empty-state"><span className="guest-empty-icon">{isFiltered ? <SearchX size={28} aria-hidden="true" /> : <Users size={28} aria-hidden="true" />}</span>
             <h3>{isFiltered ? text("emptySearchTitle", "មិនមានលទ្ធផលស្វែងរកទេ") : text("emptyTitle", "មិនទាន់មានភ្ញៀវនៅឡើយទេ")}</h3>
-            <p>{isFiltered ? emptyMessage : text("emptyListHint", emptyMessage)}</p>
+            <p>{emptyMessage ?? text(isFiltered ? "emptySearchTitle" : "emptyListHint")}</p>
             <div className="guest-empty-actions">{isFiltered ? <button type="button" className="guest-button guest-button-secondary" onClick={onClearFilters}>{text("clearFilters", "សម្អាតតម្រង")}</button> : <>
               {onOpenAddGuest && <button type="button" className="guest-button guest-button-primary" onClick={onOpenAddGuest}><Plus size={17} aria-hidden="true" />{text("addGuestAction", "បន្ថែមភ្ញៀវ")}</button>}
               {onOpenImport && <button type="button" className="guest-button guest-button-secondary" onClick={onOpenImport}><Upload size={17} aria-hidden="true" />{text("importBtn", "នាំចូល")}</button>}

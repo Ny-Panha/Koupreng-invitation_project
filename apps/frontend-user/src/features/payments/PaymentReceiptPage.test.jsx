@@ -1,6 +1,9 @@
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import { cleanup, render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { afterEach, expect, it, vi } from "vitest";
+import { beforeEach, afterEach, expect, it, vi } from "vitest";
+
+beforeEach(() => useLanguageStore.setState({ lang: "en" }));
 import paymentService from "./paymentService";
 import PaymentReceiptPage from "./PaymentReceiptPage";
 vi.mock("./paymentService", () => ({ default: { paymentReceipt: vi.fn() } }));

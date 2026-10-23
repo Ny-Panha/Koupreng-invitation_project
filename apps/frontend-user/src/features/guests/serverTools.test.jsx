@@ -1,5 +1,8 @@
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+beforeEach(() => useLanguageStore.setState({ lang: "en" }));
 import GuestImportModal from "./components/GuestImportModal";
 import { guestService } from "./api/guestApi";
 vi.mock("./api/guestApi", () => ({ guestService: { previewFile: vi.fn(), importFile: vi.fn() } }));
@@ -13,7 +16,7 @@ describe("BG-05 server guest workflow", () => {
     const file = new File(["PK"], "guests.xlsx");
     fireEvent.change(screen.getByLabelText("Guest import file"), { target: { files: [file] } });
     await screen.findByText(/Nothing has been imported yet/); expect(guestService.importFile).not.toHaveBeenCalled();
-    fireEvent.click(screen.getByRole("button", { name: /នាំចូល \(/ }));
+    fireEvent.click(screen.getByRole("button", { name: "Import guests" }));
     await screen.findByText(/Imported: 1 · Skipped: 1/); expect(refresh).toHaveBeenCalledOnce(); expect(close).not.toHaveBeenCalled();
     expect(guestService.importFile).toHaveBeenCalledWith(42, file);
   });
@@ -25,7 +28,7 @@ describe("BG-05 server guest workflow", () => {
     await screen.findByText("Invalid file"); expect(guestService.importFile).not.toHaveBeenCalled();
     guestService.previewFile.mockResolvedValueOnce(preview); guestService.importFile.mockRejectedValueOnce(new Error("Server unavailable"));
     fireEvent.change(screen.getByLabelText("Guest import file"), { target: { files: [file] } });
-    await screen.findByText(/Nothing has been imported yet/); fireEvent.click(screen.getByRole("button", { name: /នាំចូល \(/ }));
+    await screen.findByText(/Nothing has been imported yet/); fireEvent.click(screen.getByRole("button", { name: "Import guests" }));
     await screen.findByText(/Server unavailable/); expect(screen.getByText("Sok Dara")).toBeInTheDocument();
   });
 });

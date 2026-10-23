@@ -12,7 +12,7 @@ const seedGuests = [
 ].map((guest) => ({ ...guest, inviteToken: `test-guest-${guest.id}` }));
 
 async function setup(page, { lang = "en", empty = false, rejectFirstSave = false, eventType = "WEDDING" } = {}) {
-  const state = { guests: empty ? [] : structuredClone(seedGuests), creates: 0 };
+  const state = { guests: empty ? [] : structuredClone(seedGuests), creates: 0, shares: [] };
   await page.addInitScript(({ user, lang }) => {
     const auth = JSON.stringify({ accessToken: "eyJhbGciOiJub25lIn0.eyJleHAiOjQxMDIyNjg4MDB9.", tokenType: "Bearer", expiresAt: "2100-01-01T00:00:00Z", user });
     sessionStorage.setItem("koupreng.auth", auth);
@@ -35,6 +35,7 @@ async function setup(page, { lang = "en", empty = false, rejectFirstSave = false
     if (path.endsWith("/42/guests/export")) return route.fulfill({ contentType: "text/csv", body: "guestName,phone\nSok Dara,012345678\n" });
     if (/\/42\/delivery\/guests\/\d+\/mark-shared$/.test(path)) {
       const id = Number(path.split('/').at(-2));
+      state.shares.push(id);
       state.guests = state.guests.map(guest => guest.id === id ? { ...guest, sendStatus: 'SENT' } : guest);
       return json(state.guests.find(guest => guest.id === id));
     }
@@ -65,6 +66,78 @@ async function noOverflow(page) {
   const dimensions = await page.locator(".guest-workspace").evaluate((element) => ({ width: element.clientWidth, content: element.scrollWidth }));
   expect(dimensions.content).toBeLessThanOrEqual(dimensions.width + 1);
 }
+
+async function installSharingMocks(page) {
+  await page.addInitScript(() => {
+    window.guestClipboardWrites = [];
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: { writeText: async text => {
+        if (window.denyGuestCopy) throw new Error("Clipboard permission denied");
+        window.guestClipboardWrites.push(text);
+      } },
+    });
+    window.open = url => { window.guestTelegramUrl = url; return null; };
+  });
+}
+
+for (const action of ["Copy Link", "Copy invitation message", "Share on Telegram"]) {
+  test(`${action} marks the guest sent and persists after reload`, async ({ page }) => {
+    await installSharingMocks(page);
+    const state = await setup(page);
+    const row = page.locator(".guest-record-row").filter({ hasText: "Sok Dara" });
+    await row.getByRole("button", { name: "Invitation", exact: true }).click();
+    await page.getByRole("dialog").getByRole("button", { name: action, exact: true }).click();
+    await expect(row.locator(".k-status-badge")).toHaveText("Sent");
+    expect(state.shares).toEqual([501]);
+    if (action === "Share on Telegram") {
+      expect(await page.evaluate(() => window.guestTelegramUrl)).toContain("https://t.me/share/url?");
+    } else {
+      const copies = await page.evaluate(() => window.guestClipboardWrites);
+      expect(copies).toHaveLength(1);
+      expect(copies[0]).toContain("test-guest-501");
+    }
+    await page.reload();
+    await expect(row.locator(".k-status-badge")).toHaveText("Sent");
+    expect(state.shares).toEqual([501]);
+  });
+}
+
+test("row Telegram and copy-message actions mark their own guests sent", async ({ page, context }) => {
+  await installSharingMocks(page);
+  await context.route("https://t.me/**", route => route.fulfill({ contentType: "text/html", body: "<title>Telegram share fixture</title>" }));
+  const state = await setup(page);
+  const telegramGuest = page.locator(".guest-record-row").filter({ hasText: "Sok Dara" });
+  await telegramGuest.locator(".guest-row-menu > summary").click();
+  const opened = page.waitForEvent("popup");
+  await telegramGuest.getByRole("link", { name: "Share invitation for Sok Dara via Telegram" }).click();
+  const popup = await opened;
+  await popup.close();
+  await expect(telegramGuest.locator(".k-status-badge")).toHaveText("Sent");
+  const copiedGuest = page.locator(".guest-record-row").filter({ hasText: "សុខ សុភា" });
+  await copiedGuest.locator(".guest-row-menu > summary").click();
+  await copiedGuest.getByRole("button", { name: "Copy invitation message" }).click();
+  await expect(copiedGuest.locator(".k-status-badge")).toHaveText("Sent");
+  expect(state.shares).toEqual([501, 505]);
+  expect(await page.evaluate(() => window.guestClipboardWrites)).toEqual([expect.stringContaining("test-guest-505")]);
+});
+
+test("a denied copy leaves the guest pending and a successful retry marks sent", async ({ page }) => {
+  await installSharingMocks(page);
+  const state = await setup(page);
+  await page.evaluate(() => { window.denyGuestCopy = true; });
+  const row = page.locator(".guest-record-row").filter({ hasText: "Sok Dara" });
+  await row.getByRole("button", { name: "Invitation", exact: true }).click();
+  const dialog = page.getByRole("dialog");
+  await dialog.getByRole("button", { name: "Copy Link", exact: true }).click();
+  await expect(dialog.getByRole("alert")).toContainText("Failed to copy link");
+  await expect(row.locator(".k-status-badge")).toHaveText("Pending");
+  expect(state.shares).toEqual([]);
+  await page.evaluate(() => { window.denyGuestCopy = false; });
+  await dialog.getByRole("button", { name: "Copy Link", exact: true }).click();
+  await expect(row.locator(".k-status-badge")).toHaveText("Sent");
+  expect(state.shares).toEqual([501]);
+});
 
 test("guest list filters intersect and reset; invitation and tools remain usable", async ({ page }, testInfo) => {
   await setup(page);
