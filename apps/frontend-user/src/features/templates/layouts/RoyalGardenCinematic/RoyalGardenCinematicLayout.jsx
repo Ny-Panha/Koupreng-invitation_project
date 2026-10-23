@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { CalendarDays, ChevronDown, ChevronLeft, ChevronRight, Download, ExternalLink, Gift, Heart, MapPin, Menu, Music2, Pause, Play, VolumeX, X } from "lucide-react";
+import { CalendarDays, ChevronDown, ChevronLeft, ChevronRight, Download, ExternalLink, Gift, Heart, MapPin, Menu, Music2, Pause, X } from "lucide-react";
 import CoverBackground from "../../shared/Openings/CoverBackground";
 import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
 import { isTrustedPreviewMessage, postPreviewMessage, readEmbeddedPreviewChannel } from "@/shared/preview/previewMessaging";
@@ -25,6 +25,7 @@ const validColor = (s) => typeof s === "string" && /^#[a-f\d]{6}$/i.test(s) ? s 
 const dateOf = (value) => { const d = value ? new Date(value) : null; return d && Number.isFinite(d.getTime()) ? d : null; };
 const khNum = (number) => new Intl.NumberFormat("km-KH").format(number);
 function safeLink(raw) {
+  if (typeof raw === "string" && raw.startsWith("/") && !raw.startsWith("//")) return raw;
   try { const u = new URL(raw); return ["https:", "http:"].includes(u.protocol) ? u.href : ""; }
   catch { return ""; }
 }
@@ -241,7 +242,7 @@ export default function RoyalGardenCinematicLayout({
       default: return null;
     }
   };
-  return <div className="tpl-royal-garden" style={palette} ref={undefined} data-stage={stage}>
+  return <div className="tpl-royal-garden" style={palette} data-stage={stage}>
     {data.music && <audio ref={audioRef} src={data.music} loop preload="none" />}
     {stage === "cover" ? <div className="rg-cover">
       <CoverBackground content={merged} templateDefault={manifest.cover}/>
