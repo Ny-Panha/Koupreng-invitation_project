@@ -21,6 +21,8 @@ public class InvitationSummaryResponse {
     private String templateCode;
     private String templateName;
     private String coverUrl;
+    private String coverSource;
+    private String templateThumbnailUrl;
     private String title;
     private String slug;
     private EventType eventType;
@@ -54,6 +56,8 @@ public class InvitationSummaryResponse {
                 .templateCode(templateCode)
                 .templateName(templateName)
                 .coverUrl(resolvedCoverUrl)
+                .coverSource(coverUrl == null || coverUrl.isBlank() ? "template" : "owner")
+                .templateThumbnailUrl(invitation.getTemplate() == null ? null : invitation.getTemplate().getThumbnailUrl())
                 .title(invitation.getTitle())
                 .slug(invitation.getSlug())
                 .eventType(invitation.getEventType())

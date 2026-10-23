@@ -8,7 +8,8 @@ import { invitationService } from "@/features/invitations/api/invitationApi";
 import { eventPath } from "@/features/events/workspace/eventRoutes";
 import { eventStatus } from "@/features/events/workspace/eventNavigationModel";
 import { EVENT_TYPES } from "@/features/events/onboarding/eventFields";
-import { CalendarDays, CheckCircle2, Circle, ArrowRight, Eye, Palette, Users, ScanLine, Wallet, ChartColumn } from "lucide-react";
+import EventCover from '@/features/events/components/EventCover';
+import { CheckCircle2, Circle, ArrowRight, Eye, Palette, Users, ScanLine, Wallet, ChartColumn } from "lucide-react";
 import { formatLocalDate } from "@/shared/utils/localDate";
 import { loadServerDashboard, groupAmounts } from "./dashboardData";
 import { currencyAmounts } from "@/features/budget/currencyTotals";
@@ -338,7 +339,7 @@ export default function DashboardFeature() {
     {actionError && <p className="workspace-notice" role="alert">{actionError}</p>}
     <section className="overview-hero">
       <div className="overview-cover" aria-hidden="true">
-        {invitation.coverUrl || invitation.templateThumbnailUrl || invitation.templateCode === "event-essential" ? <img src={invitation.coverUrl || invitation.templateThumbnailUrl || "/templates/event-essential.svg"} alt="" /> : <CalendarDays size={64} strokeWidth={1} />}
+        <EventCover event={invitation} alt="" />
       </div>
       <div className="overview-hero-content">
         <div className="overview-event-labels"><span className={`event-status-pill badge-${publicationStatus.tone}`}>{publicationStatus.label}</span><span className="workspace-muted">{EVENT_TYPES.find(type => type[0] === invitation.eventType)?.[english ? 2 : 1]}</span></div>

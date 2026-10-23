@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { getTemplateById } from "../../templates/data/templatesData";
+import EventCover from './EventCover';
 import { EVENT_TYPES } from "../onboarding/eventFields";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { formatLocalDate } from "@/shared/utils/localDate";
@@ -43,7 +44,6 @@ export function EventCard({
     return () => { document.removeEventListener("mousedown", handleClickOutside); document.removeEventListener("keydown", escape); };
   }, [isMenuOpen]);
 
-  let designCoverImage = "";
   let designTemplateId = "";
   try {
     if (draft?.designJson) {
@@ -51,32 +51,15 @@ export function EventCard({
         typeof draft.designJson === "string"
           ? JSON.parse(draft.designJson)
           : draft.designJson;
-      designCoverImage = parsed?.coverImage || "";
       designTemplateId = parsed?.templateId || parsed?.presetId || "";
     }
   } catch {
-    designCoverImage = "";
+    designTemplateId = "";
   }
 
   const template = getTemplateById(
     draft?.templateCode || draft?.templateId || designTemplateId || draft?.presetId
   );
-
-  const coverImage =
-    draft?.coverUrl ||
-    draft?.cover_url ||
-    draft?.media?.coverImage?.fileUrl ||
-    draft?.coverImage ||
-    designCoverImage ||
-    draft?.templateThumbnailUrl ||
-    (draft?.templateCode === "event-essential"
-      ? "/templates/event-essential.svg"
-      : "") ||
-    template?.thumbnailUrl ||
-    template?.defaultImage ||
-    template?.phoneCoverImage ||
-    template?.mainImage ||
-    "/templates/event-essential.svg";
 
   // Clearly separate event title from template style/name
   const title =
@@ -127,7 +110,6 @@ export function EventCard({
 
   const venueText = draft.venueName || draft.event?.venueName || "";
   const premiumAccessRequired = /premium template access is required/i.test(String(draft.syncError || ""));
-  const needsEditing = !isPublished && draft.status !== "ARCHIVED";
 
   return (
     <article
@@ -135,8 +117,8 @@ export function EventCard({
       aria-label={title}
     >
       <div className="event-card-img-wrap">
-        <img
-          src={coverImage}
+        <EventCover
+          event={draft}
           alt={title}
           loading="lazy"
           className="event-card-img"
@@ -211,13 +193,12 @@ export function EventCard({
             className="event-card-btn event-card-btn--primary"
             onClick={(event) => {
               event.stopPropagation();
-              if (needsEditing && onEdit) onEdit(draft);
-              else if (onManage) onManage(draft);
+              if (onManage) onManage(draft);
               else if (onEdit) onEdit(draft);
             }}
           >
-            {needsEditing ? <Edit3 size={15} aria-hidden="true" /> : <LayoutDashboard size={15} aria-hidden="true" />}
-            <span>{needsEditing ? (en ? "Continue editing" : "បន្តកែសម្រួល") : (en ? "Manage event" : "គ្រប់គ្រងកម្មវិធី")}</span>
+            <LayoutDashboard size={15} aria-hidden="true" />
+            <span>{en ? "Manage event" : "គ្រប់គ្រងកម្មវិធី"}</span>
           </button>
 
           <button
@@ -225,17 +206,12 @@ export function EventCard({
             className="event-card-btn event-card-btn--secondary"
             onClick={(event) => {
               event.stopPropagation();
-              if (needsEditing && onManage) onManage(draft);
-              else if (onEdit) onEdit(draft);
+              if (onEdit) onEdit(draft);
             }}
           >
-            {needsEditing ? <LayoutDashboard size={15} aria-hidden="true" /> : <Edit3 size={15} aria-hidden="true" />}
+            <Edit3 size={15} aria-hidden="true" />
             <span>
-              {needsEditing
-                ? en
-                  ? "Event overview"
-                  : "ទិដ្ឋភាពកម្មវិធី"
-                : (t && t("editBtn")) || (en ? "Edit" : "កែសម្រួល")}
+              {(t && t("editBtn")) || (en ? "Edit" : "កែសម្រួល")}
             </span>
           </button>
 

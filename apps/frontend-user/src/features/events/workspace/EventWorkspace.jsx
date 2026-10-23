@@ -38,7 +38,7 @@ function VerifiedWorkspace({ eventId }) {
         if (!event || String(event.id) !== eventId) throw new Error("Invalid event response");
         const eventList = Array.isArray(events) ? events : [];
         const summary = eventList.find(item => String(item.id) === eventId);
-        if (active) setState({ loading: false, event: { ...event, coverUrl: summary?.coverUrl || null }, events: eventList, error: "" });
+        if (active) setState({ loading: false, event: { ...event, coverUrl: summary?.coverUrl || null, coverSource: summary?.coverSource, templateThumbnailUrl: summary?.templateThumbnailUrl || event.templateThumbnailUrl }, events: eventList, error: "" });
       })
       .catch(error => { if (active) setState({ loading: false, event: null, events: [], error: error.message }); });
     return () => { active = false; };

@@ -34,7 +34,13 @@ export function useEvents(t) {
                         return {
                             ...apiInv,
                             ...matchingLocal,
+                            coverImage: undefined,
+                            media: undefined,
                             id: apiInv.id,
+                            coverUrl: apiInv.coverUrl,
+                            coverSource: apiInv.coverSource,
+                            templateThumbnailUrl: apiInv.templateThumbnailUrl,
+                            designJson: apiInv.designJson,
                             backendInvitationId: apiInv.id,
                             syncStatus: "SYNC_FAILED",
                             templateId: matchingLocal.templateId || apiInv.templateId,
@@ -43,6 +49,8 @@ export function useEvents(t) {
                     return {
                         ...matchingLocal,
                         ...apiInv,
+                        coverImage: undefined,
+                        media: undefined,
                         syncStatus: "SYNCED",
                         syncError: "",
                         templateId: apiInv.templateId || matchingLocal.templateId,
