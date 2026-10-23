@@ -17,6 +17,8 @@ async function downloadCsv(path, filename) {
 }
 
 export const seatingApi = {
+    layout: invitationId => api.get(`/v1/invitations/${invitationId}/seating/layout`).then(unwrap),
+    saveLayout: (invitationId, payload) => api.put(`/v1/invitations/${invitationId}/seating/layout`, payload).then(unwrap),
     summary: (invitationId) => api.get(`/v1/invitations/${invitationId}/seating/summary`).then(unwrap),
     plan: (invitationId) => api.get(`/v1/invitations/${invitationId}/seating`).then(unwrap),
     createTable: (invitationId, payload) => api.post(`/v1/invitations/${invitationId}/seating/tables`, payload).then(unwrap),

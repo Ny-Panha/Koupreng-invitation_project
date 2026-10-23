@@ -16,7 +16,7 @@ export default function InvitationSeatingPage() {
   const [mobilePanel, setMobilePanel] = useState('tables');
   const [createOpen, setCreateOpen] = useState(false);
   const seating = useSeating(invitationId);
-  const { plan, summary, assignmentsByTable, loading, saving, error, tableForm, setTableForm, createTable, refresh } = seating;
+  const { plan, summary, layout, assignmentsByTable, loading, saving, error, tableForm, setTableForm, createTable, refresh } = seating;
   const tables = plan?.tables || [];
   const stats = [['tables', summary?.totalTables ?? tables.length], ['capacity', summary?.totalCapacity ?? 0], ['assignedSeats', summary?.assignedSeats ?? 0], ['unassigned', plan?.unassignedGuests?.length ?? 0]];
   const focusAssignment = () => { setMobilePanel('guests'); requestAnimationFrame(() => document.getElementById('seating-assignment-guest')?.focus()); };
@@ -39,14 +39,15 @@ export default function InvitationSeatingPage() {
     <div className="seating-mobile-tabs workspace-tabs" role="group" aria-label={t('workspace')}>
       <button type="button" aria-pressed={mobilePanel === 'tables'} onClick={() => setMobilePanel('tables')}>{t('tables')}</button>
       <button type="button" aria-pressed={mobilePanel === 'guests'} onClick={() => setMobilePanel('guests')}>{t('assignment')}</button>
+      <button type="button" aria-pressed={mobilePanel === 'plan'} onClick={() => { setMobilePanel('plan'); setView('plan'); }}>{t('plan')}</button>
     </div>
-    <section className="seating-layout" aria-busy={saving}>
-      <div className={`seating-table-workspace ${mobilePanel === 'tables' ? '' : 'mobile-hidden'}`}>
+    <section className={`seating-layout ${view === 'plan' ? 'seating-layout--plan' : ''}`} aria-busy={saving}>
+      <div className={`seating-table-workspace ${mobilePanel !== 'guests' ? '' : 'mobile-hidden'}`}>
         <div className="workspace-section-heading"><h2>{t('tables')}</h2><div className="workspace-tabs" role="group" aria-label={t('view')}>
           <button type="button" aria-pressed={view === 'list'} onClick={() => setView('list')}><Grid2X2 size={17} />{t('list')}</button>
           <button type="button" data-testid="tab-floor-plan" aria-pressed={view === 'plan'} onClick={() => setView('plan')}><Map size={17} />{t('plan')}</button>
         </div></div>
-        {!tables.length ? <div className="workspace-empty seating-empty-state"><Armchair size={40} strokeWidth={1.5} aria-hidden="true" /><h2>{t('emptyTitle')}</h2><p>{t('emptyText')}</p><button className="workspace-button primary" type="button" onClick={() => setCreateOpen(true)}><Plus size={18} />{t('createTable')}</button></div> : view === 'plan' ? <SeatingFloorPlan tables={tables} assignmentsByTable={assignmentsByTable} onSavePositions={seating.saveTablePositions} onCreateTable={seating.createTableWithData} onRequestCreate={() => setCreateOpen(true)} invitationId={invitationId} saving={saving} /> :
+        {!tables.length ? <div className="workspace-empty seating-empty-state"><Armchair size={40} strokeWidth={1.5} aria-hidden="true" /><h2>{t('emptyTitle')}</h2><p>{t('emptyText')}</p><button className="workspace-button primary" type="button" onClick={() => setCreateOpen(true)}><Plus size={18} />{t('createTable')}</button></div> : view === 'plan' ? <SeatingFloorPlan key={invitationId} tables={tables} layout={layout} assignmentsByTable={assignmentsByTable} onSavePositions={seating.saveTablePositions} onReloadLayout={refresh} onAssignTable={table => { seating.setAssignmentForm(current => ({ ...current, tableId: String(table.id) })); focusAssignment(); }} onCreateTable={seating.createTableWithData} onRequestCreate={() => setCreateOpen(true)} invitationId={invitationId} saving={saving} /> :
           <div className="seating-tables-grid">{tables.map(table => <SeatingTableCard key={table.id} table={table} assignments={assignmentsByTable.get(table.id) || []} unassign={seating.unassign} deleteTable={seating.deleteTable} onMove={openAssignment} onAssign={() => { seating.setAssignmentForm(current => ({ ...current, tableId: String(table.id) })); focusAssignment(); }} saving={saving} t={t} />)}</div>}
       </div>
       <SeatingForms {...seating} className={mobilePanel === 'guests' ? '' : 'mobile-hidden'} t={t} />

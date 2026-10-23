@@ -261,6 +261,9 @@ export function SeatingFloorPlan({
     tables = [],
     assignmentsByTable = new Map(),
     onSavePositions,
+    onReloadLayout,
+    onAssignTable,
+    layout,
     onCreateTable,
     onRequestCreate,
     invitationId = null,
@@ -269,7 +272,8 @@ export function SeatingFloorPlan({
     highlightTableName = "",
     highlightTableId = null,
 }) {
-    const { text: t } = useBackendMessages('floorPlan');
+    const { text: t, lang } = useBackendMessages('floorPlan');
+    const label = (english, khmer) => lang === 'en' ? english : khmer;
     const [positions, setPositions] = useState({});
     const [isDirty, setIsDirty] = useState(false);
     const [saveError, setSaveError] = useState("");
@@ -281,6 +285,10 @@ export function SeatingFloorPlan({
     const [newCapacity, setNewCapacity] = useState(10);
     const [collidingTableId, setCollidingTableId] = useState(null);
     const [canvasTheme, setCanvasTheme] = useState("light"); // "light" (Architectural) | "dark" (Night Ballroom)
+    const [zoom, setZoom] = useState(1);
+    const viewportRef = useRef(null);
+    const dirtyRef = useRef(false);
+    useEffect(() => { dirtyRef.current = isDirty; }, [isDirty]);
 
     // Dynamic Table Scale: 1.0 (<=30 tables), 0.82 (31-50), 0.68 (51-75), 0.54 (76-100+)
     const tableScale = useMemo(() => {
@@ -294,6 +302,7 @@ export function SeatingFloorPlan({
     // Draggable & Customizable Venue Elements (Stage, Walkway, Entrance)
     const [venueLayout, setVenueLayout] = useState(() => {
         try {
+            if (layout?.data?.venue) return layout.data.venue;
             if (invitationId) {
                 const saved = localStorage.getItem(`koupreng_venue_layout_${invitationId}`);
                 if (saved) return JSON.parse(saved);
@@ -335,9 +344,18 @@ export function SeatingFloorPlan({
         tables.forEach((t, i) => {
             init[t.id] = parsePosition(t, i, tables.length, defaultGrid);
         });
-        setPositions(init);
-        setIsDirty(false);
-    }, [tables]);
+        setPositions(current => Object.fromEntries(tables.map(table => [table.id,
+            dirtyRef.current && current[table.id] ? current[table.id] : layout?.data?.positions?.[table.id] || init[table.id]
+        ])));
+        if (!dirtyRef.current && layout?.data?.venue) setVenueLayout(layout.data.venue);
+    }, [tables, layout]);
+
+    useEffect(() => {
+        if (!isDirty) return;
+        const warn = event => { event.preventDefault(); event.returnValue = ''; };
+        window.addEventListener('beforeunload', warn);
+        return () => window.removeEventListener('beforeunload', warn);
+    }, [isDirty]);
 
     const moveElement = (target, coordinate, value) => {
         if (readOnly || !Number.isFinite(value)) return;
@@ -385,7 +403,6 @@ export function SeatingFloorPlan({
             initialY: currentPos.y,
         };
         setDragTarget({ type: "table", id: tableId });
-        setSelectedTableId(tableId);
     };
 
     // Drag start for venue elements (stage, walkway, entrance)
@@ -452,6 +469,7 @@ export function SeatingFloorPlan({
         };
 
         const handleEnd = () => {
+            if (dragTarget?.type === 'table') setSelectedTableId(dragTarget.id);
             // On drop: if table overlaps another table, gently push it to safe clearance
             if (dragTarget?.type === "table") {
                 const currentPos = positionsRef.current[dragTarget.id];
@@ -515,7 +533,7 @@ export function SeatingFloorPlan({
         if (!onSavePositions) return;
         setSaveError("");
         try {
-            if (invitationId) {
+            if (invitationId && layout === undefined) {
                 localStorage.setItem(`koupreng_venue_layout_${invitationId}`, JSON.stringify(venueLayout));
             }
             const saved = await onSavePositions(positions, venueLayout);
@@ -567,6 +585,11 @@ export function SeatingFloorPlan({
                     </div>
 
                     <div className="sfp-toolbar__actions">
+                        <button className="sfp-btn sfp-btn--outline" type="button" aria-label={label('Zoom out', 'បង្រួម')} onClick={() => setZoom(value => Math.max(.5, value - .25))} disabled={zoom <= .5}>−</button>
+                        <span aria-live="polite">{Math.round(zoom * 100)}%</span>
+                        <button className="sfp-btn sfp-btn--outline" type="button" aria-label={label('Zoom in', 'ពង្រីក')} onClick={() => setZoom(value => Math.min(2, value + .25))} disabled={zoom >= 2}>+</button>
+                        <button className="sfp-btn sfp-btn--outline" type="button" onClick={() => { setZoom(1); viewportRef.current?.scrollTo?.(0, 0); }}>{label('Fit view', 'ទិដ្ឋភាពពេញ')}</button>
+                        <details className="sfp-options"><summary>{label('Venue options', 'ជម្រើសសាល')}</summary><div className="sfp-options-content">
                         {/* Walkway orientation controls */}
                         <div className="sfp-segmented" title={t('walkway')}>
                             <span style={{ fontSize: "0.725rem", fontWeight: 800, color: "#78716c", padding: "0 4px" }}>
@@ -639,6 +662,7 @@ export function SeatingFloorPlan({
                             <span>{t(canvasTheme === 'light' ? 'dark' : 'light')}</span>
                         </button>
 
+                        </div></details>
                         {onCreateTable && (
                             <button
                                 type="button"
@@ -669,7 +693,7 @@ export function SeatingFloorPlan({
                             type="button"
                             className={`sfp-btn ${isDirty ? "sfp-btn--save-dirty" : "sfp-btn--primary"}`}
                             onClick={handleSave}
-                            disabled={saving || !isDirty}
+                            disabled={saving || !isDirty || layout === null}
                         >
                             <IoSaveOutline />
                             <span>{t(saving ? 'saving' : 'save')}</span>
@@ -679,7 +703,7 @@ export function SeatingFloorPlan({
             )}
 
             {!readOnly && (
-                <fieldset className="sfp-position-controls">
+                <details className="sfp-advanced"><summary>{label('Advanced positioning', 'កំណត់ទីតាំងលម្អិត')}</summary><fieldset className="sfp-position-controls">
                     <legend>{t('positions')}</legend>
                     <label>{t('element')}
                         <select value={positionElement} onChange={(e) => setPositionElement(e.target.value)}>
@@ -693,9 +717,10 @@ export function SeatingFloorPlan({
                         <input type="number" step="0.1" min="0" max="100" value={selectedPosition?.[axis] ?? ""}
                             onChange={(e) => { if (e.target.value !== "") moveElement(positionElement, axis, Number(e.target.value)); }} />
                     </label>)}
-                    <small>{t('keys')}</small>
-                </fieldset>
+                    <small>{label('Arrow keys move a focused element 1%. Shift + arrow moves 5%.', 'គ្រាប់ចុចព្រួញផ្លាស់ទី ១%។ Shift និងព្រួញផ្លាស់ទី ៥%។')}</small>
+                </fieldset></details>
             )}
+            {!readOnly && <div className="sfp-save-status" role="status"><span>{saving ? label('Saving…', 'កំពុងរក្សាទុក…') : isDirty ? label('Unsaved layout changes', 'ប្លង់មិនទាន់រក្សាទុក') : layout?.version > 0 ? label('Saved to event', 'បានរក្សាទុកទៅកម្មវិធី') : layout === null ? label('Cloud layout unavailable. Reload to retry.', 'មិនអាចទាញយកប្លង់ពីម៉ាស៊ីនមេ។ សូមទាញយកឡើងវិញ។') : layout === undefined ? label('Venue decorations are stored on this device.', 'ការតុបតែងសាលរក្សាទុកក្នុងឧបករណ៍នេះ។') : label('Layout has not been saved to event yet.', 'ប្លង់មិនទាន់បានរក្សាទុកទៅកម្មវិធី។')}</span>{onReloadLayout && <button type="button" className="sfp-btn sfp-btn--outline" disabled={saving} onClick={() => { if (!isDirty || window.confirm(label('Discard local layout edits and reload the saved event layout?', 'បោះបង់ការកែប្លង់ ហើយទាញយកប្លង់ដែលបានរក្សាទុកវិញ?'))) { dirtyRef.current = false; setIsDirty(false); setSaveError(''); onReloadLayout(); } }}>{label('Reload saved layout', 'ទាញយកប្លង់ដែលរក្សាទុក')}</button>}</div>}
             {saveError && <p role="alert">{saveError}</p>}
 
             {/* Quick Add Table Modal */}
@@ -753,8 +778,9 @@ export function SeatingFloorPlan({
             )}
 
             {/* Interactive Ballroom Canvas */}
-            <div
+            <div className={`sfp-studio ${selectedTable ? 'has-selection' : ''}`}><div className="sfp-viewport" ref={viewportRef}><div
                 className={`sfp-canvas-wrapper sfp-canvas--${canvasTheme}`}
+                style={{ transform: `scale(${zoom})`, transformOrigin: 'top left' }}
                 ref={canvasRef}
                 onClick={(e) => {
                     if (e.target === canvasRef.current) {
@@ -891,6 +917,7 @@ export function SeatingFloorPlan({
                                 height: `${Math.round(82 * tableScale)}px`,
                             }}
                             role="button"
+                            aria-pressed={selectedTableId === table.id}
                             tabIndex={0}
                             aria-label={`${t(readOnly ? 'viewTable' : 'moveTable')} ${table.tableName}`}
                             onKeyDown={(e) => {
@@ -945,7 +972,8 @@ export function SeatingFloorPlan({
                     );
                 })}
 
-                {/* Selected Table Detail Drawer */}
+                </div></div>
+                {/* Selected table inspector stays outside the pan/zoom surface. */}
                 {selectedTable && (
                     <div className="sfp-detail-panel">
                         <div className="sfp-detail-header">
@@ -971,7 +999,7 @@ export function SeatingFloorPlan({
                                 selectedGuests.map((assignment) => (
                                     <div key={assignment.id} className="sfp-detail-guest-item">
                                         <span>
-                                            👤 {assignment.guestName || "ភ្ញៀវ"}
+                                            {assignment.guestName || "ភ្ញៀវ"}
                                             {assignment.guestGroup ? ` (${assignment.guestGroup})` : ""}
                                         </span>
                                         <strong>{assignment.seatCount || 1} {t('seats')}</strong>
@@ -983,6 +1011,7 @@ export function SeatingFloorPlan({
                                 </div>
                             )}
                         </div>
+                        {!readOnly && onAssignTable && <button type="button" className="sfp-btn sfp-btn--outline" onClick={() => onAssignTable(selectedTable)}>{label('Assign guests', 'ចាត់កន្លែងភ្ញៀវ')}</button>}
                     </div>
                 )}
             </div>

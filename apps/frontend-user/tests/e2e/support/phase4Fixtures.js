@@ -37,6 +37,14 @@ export async function installPhase4Fixtures(page, { count = 24, lang = 'en' } = 
     if (/\/seating\/assignments\/\d+$/.test(path) && method === 'DELETE') { state.assignments = state.assignments.filter(a => a.id !== Number(path.split('/').at(-1))); return reply(null); }
     if (path.endsWith('/seating')) return reply({ invitationId: 101, tables: tables(), assignments: state.assignments, unassignedGuests: state.guests.filter(g => !state.assignments.some(a => a.guestId === g.id)) });
     if (path.endsWith('/seating/summary')) return reply({ totalTables: state.tables.length, totalCapacity: state.tables.reduce((sum, t) => sum + t.capacity, 0), assignedSeats: state.assignments.reduce((sum, a) => sum + a.seatCount, 0) });
+    if (path.endsWith('/seating/layout')) {
+      if (method === 'PUT') {
+        const request = body(), current = state.layout || { eventId: 101, version: 0, data: null };
+        if (request.version !== current.version) return reply(null, 409);
+        state.layout = { ...request, eventId: 101, version: current.version + 1 }; return reply(state.layout);
+      }
+      return reply(state.layout || { eventId: 101, version: 0, data: null });
+    }
     if (path.endsWith('/rsvps')) return reply(state.rsvps);
     if (/\/rsvps\/\d+$/.test(path)) { const id = Number(path.split('/').at(-1)); if (method === 'DELETE') state.rsvps = state.rsvps.filter(r => r.id !== id); else state.rsvps = state.rsvps.map(r => r.id === id ? { ...r, ...body() } : r); return reply(state.rsvps.find(r => r.id === id)); }
     if (path.endsWith('/rsvps/summary')) return reply({ totalGuests: state.guests.length, attending: state.rsvps.filter(r => r.responseStatus === 'ATTENDING').length, notAttending: state.rsvps.filter(r => r.responseStatus === 'NOT_ATTENDING').length, pending: state.guests.length - state.rsvps.length, totalAttendeeCount: state.rsvps.filter(r => r.responseStatus === 'ATTENDING').reduce((sum, r) => sum + r.attendeeCount, 0) });

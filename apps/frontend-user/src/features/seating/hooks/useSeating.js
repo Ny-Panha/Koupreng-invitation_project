@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { invitationService } from "@/features/invitations/api/invitationApi";
 import { seatingService } from "../seatingService";
 import { toast } from "../../../shared/ui/toast";
-import { writeTablePosition } from "../model/tableNotes";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
 
 const emptyTable = { tableName: "", tableLabel: "", capacity: 10, sortOrder: 0, notes: "" };
@@ -13,6 +12,7 @@ export function useSeating(invitationId) {
     const [invitation, setInvitation] = useState(null);
     const [plan, setPlan] = useState(null);
     const [summary, setSummary] = useState(null);
+    const [layout, setLayout] = useState(null);
     const [tableForm, setTableForm] = useState(emptyTable);
     const [assignmentForm, setAssignmentForm] = useState(emptyAssignment);
     const [loading, setLoading] = useState(true);
@@ -23,14 +23,16 @@ export function useSeating(invitationId) {
         setLoading(true);
         setError("");
         try {
-            const [invitationData, planData, summaryData] = await Promise.all([
+            const [invitationData, planData, summaryData, layoutData] = await Promise.all([
                 invitationService.get(invitationId),
                 seatingService.plan(invitationId),
                 seatingService.summary?.(invitationId) ?? Promise.resolve(null),
+                seatingService.layout?.(invitationId).catch(() => null) ?? Promise.resolve(null),
             ]);
             setInvitation(invitationData);
             setPlan(planData);
             setSummary(summaryData);
+            setLayout(Number.isInteger(layoutData?.version) ? layoutData : null);
         } catch (err) {
             setError(err.message || "Could not load seating plan");
         } finally {
@@ -51,12 +53,14 @@ export function useSeating(invitationId) {
             invitationService.get(invitationId),
             seatingService.plan(invitationId),
             seatingService.summary?.(invitationId) ?? Promise.resolve(null),
+            seatingService.layout?.(invitationId).catch(() => null) ?? Promise.resolve(null),
         ])
-            .then(([invitationData, planData, summaryData]) => {
+            .then(([invitationData, planData, summaryData, layoutData]) => {
                 if (!active) return;
                 setInvitation(invitationData);
                 setPlan(planData);
                 setSummary(summaryData);
+                setLayout(Number.isInteger(layoutData?.version) ? layoutData : null);
                 setError("");
             })
             .catch((err) => {
@@ -186,33 +190,19 @@ export function useSeating(invitationId) {
         }
     };
 
-    const saveTablePositions = async (positionsMap) => {
+    const saveTablePositions = async (positionsMap, venue) => {
         setSaving(true);
         setError("");
         try {
-            const tables = plan?.tables || [];
-            const updates = Object.entries(positionsMap).map(([tableId, pos]) => {
-                const table = tables.find((t) => String(t.id) === String(tableId));
-                if (!table) return null;
-
-                const updatedNotes = writeTablePosition(table.notes, pos);
-
-                return seatingService.updateTable(invitationId, table.id, {
-                    tableName: table.tableName,
-                    tableLabel: table.tableLabel,
-                    capacity: table.capacity,
-                    sortOrder: table.sortOrder,
-                    notes: updatedNotes,
-                });
-            }).filter(Boolean);
-
-            await Promise.all(updates);
+            if (!layout || !seatingService.saveLayout) throw new Error('Saved event layout is unavailable. Reload before saving.');
+            const saved = await seatingService.saveLayout(invitationId, { version: layout.version, data: { schemaVersion: 1, positions: positionsMap, venue } });
+            if (saved?.eventId == null || String(saved.eventId) !== String(invitationId) || saved.version !== layout.version + 1 || !saved.data) throw new Error('Layout save was not confirmed. Reload the saved layout before retrying.');
+            setLayout(saved);
             toast(t("planSaved"));
-            await load();
-            return true;
+            return saved;
         } catch (err) {
             setError(err.message || "Could not save floor plan");
-            return false;
+            throw err;
         } finally {
             setSaving(false);
         }
@@ -222,6 +212,7 @@ export function useSeating(invitationId) {
         invitation,
         plan,
         summary,
+        layout,
         tableForm,
         setTableForm,
         assignmentForm,

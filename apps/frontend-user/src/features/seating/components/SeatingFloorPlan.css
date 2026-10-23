@@ -67,6 +67,7 @@
     cursor: pointer;
     transition: all 0.2s ease;
     border: 1px solid transparent;
+    min-height: 44px;
 }
 
 .sfp-btn--outline {
@@ -110,10 +111,10 @@
 }
 
 .sfp-btn--save-dirty {
-    background: linear-gradient(135deg, #10b981, #059669);
+    background: var(--ws-gold, #926c34);
     color: #ffffff;
-    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
-    animation: sfpSaveGlow 2s infinite ease-in-out;
+    box-shadow: 0 4px 14px rgba(146, 108, 52, 0.14);
+    animation: none;
 }
 
 @keyframes sfpSaveGlow {
@@ -150,8 +151,8 @@
 .sfp-canvas-wrapper {
     position: relative;
     width: 100%;
-    min-height: 680px;
-    height: 740px;
+    min-height: 560px;
+    height: 560px;
     border-radius: 20px;
     overflow: hidden;
     user-select: none;
@@ -188,7 +189,7 @@
     transform: translate(-50%, -50%);
     width: min(440px, 75%);
     height: 60px;
-    background: linear-gradient(135deg, #2a201b, #3d2e24);
+    background: #2e433a;
     border: 1.5px solid #d4a359;
     border-radius: 16px;
     box-shadow: 0 8px 24px rgba(42, 32, 27, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
@@ -239,9 +240,9 @@
 .sfp-walkway {
     position: absolute;
     transform: translate(-50%, -50%);
-    background: linear-gradient(90deg, #78101e 0%, #9e192c 50%, #78101e 100%);
-    border: 2px dashed rgba(212, 163, 89, 0.7);
-    box-shadow: 0 4px 16px rgba(120, 16, 30, 0.22), inset 0 0 12px rgba(0, 0, 0, 0.25);
+    background: #e9dfce;
+    border: 1px dashed #a48a62;
+    box-shadow: none;
     z-index: 3;
     display: flex;
     align-items: center;
@@ -281,10 +282,10 @@
 .sfp-walkway__label {
     font-size: 0.75rem;
     font-weight: 800;
-    color: rgba(255, 245, 235, 0.85);
+    color: #76572d;
     letter-spacing: 0.15em;
     user-select: none;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    text-shadow: none;
 }
 
 .sfp-walkway--vertical .sfp-walkway__label {
@@ -599,15 +600,13 @@
 
 /* Table detail drawer / popover */
 .sfp-detail-panel {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    width: 280px;
-    max-width: calc(100% - 40px);
+    position: relative;
+    width: 100%;
+    max-width: 100%;
     background: #ffffff;
     border: 1px solid rgba(185, 139, 66, 0.3);
     border-radius: 14px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 20px rgba(65, 48, 24, 0.04);
     padding: 16px;
     z-index: 70;
     color: #2c2523;
@@ -961,3 +960,12 @@
 .sfp-position-controls input, .sfp-position-controls select { padding: 8px; border: 1px solid #d6d3d1; border-radius: 8px; background: white; color: #292524; }
 .sfp-position-controls small { width: 100%; color: #57534e; }
 .sfp-table-node:focus-visible, .sfp-stage:focus-visible, .sfp-entrance:focus-visible, .sfp-walkway:focus-visible { outline: 3px solid #a16207; outline-offset: 4px; }
+.sfp-studio { display: grid; gap: 16px; min-width: 0; align-items: start; }
+.sfp-viewport { height: 564px; min-width: 0; overflow: auto; overscroll-behavior: contain; border-radius: 18px; background: var(--ws-canvas, #fbf6ee); }
+.sfp-save-status { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 14px; color: var(--ws-muted, #59615c); }
+.sfp-options { position: relative; }
+.sfp-options > summary, .sfp-advanced > summary { cursor: pointer; padding: 10px 12px; min-height: 44px; border: 1px solid var(--ws-border, #eadfce); border-radius: 10px; font-size: 14px; }
+.sfp-options-content { position: absolute; right: 0; top: calc(100% + 8px); z-index: 90; display: flex; flex-wrap: wrap; gap: 12px; padding: 16px; width: min(380px, calc(100vw - 64px)); background: var(--ws-surface, white); border: 1px solid var(--ws-border, #eadfce); border-radius: 12px; box-shadow: var(--ws-shadow); }
+.sfp-advanced .sfp-position-controls { margin-top: 12px; }
+.sfp-table-node[aria-pressed=true] .sfp-table-circle { outline: 3px solid var(--ws-teal, #0f766e); outline-offset: 5px; }
+@media (min-width: 1100px) { .sfp-studio.has-selection { grid-template-columns: minmax(0, 1fr) 260px; } }

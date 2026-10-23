@@ -1,6 +1,8 @@
 .seating-page { display: flex; flex-direction: column; gap: 24px; }
 .seating-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(290px, 340px); gap: 24px; align-items: start; }
 .seating-layout > *, .seating-table-head > div { min-width: 0; }
+.seating-layout.seating-layout--plan { grid-template-columns: minmax(0, 1fr); }
+.seating-layout--plan .seating-assignment-panel.mobile-hidden { display: none; }
 .seating-table-workspace > .workspace-section-heading h2 { font-size: 20px; }
 .seating-tables-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }
 .seating-table-card { padding: 20px; border: 1px solid var(--ws-border); border-radius: 16px; background: var(--ws-surface); display: grid; gap: 16px; }

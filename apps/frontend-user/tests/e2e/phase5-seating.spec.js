@@ -1,0 +1,51 @@
+import { expect, test } from '@playwright/test';
+import { mkdir } from 'node:fs/promises';
+import process from 'node:process';
+import { installPhase4Fixtures } from './support/phase4Fixtures.js';
+
+test('floor-plan geometry, keyboard controls, save persistence and conflict recovery', async ({ page }) => {
+  test.setTimeout(180000);
+  const state = await installPhase4Fixtures(page, { count: 3 });
+  state.tables = [{ id: 100, tableName: 'Family A', capacity: 10, assignedSeats: 2, notes: '{"x":25,"y":40}' }, { id: 101, tableName: 'Friends', capacity: 8, assignedSeats: 8, notes: '{"x":75,"y":40}' }];
+  state.assignments = [{ id: 1, tableId: 100, guestId: 501, guestName: 'Review Guest 1', seatCount: 2 }, { id: 2, tableId: 101, guestId: 502, guestName: 'Review Guest 2', seatCount: 8 }];
+  const stage = process.env.PHASE5_STAGE || 'after';
+  const folder = `D:/Koupreng-UXUI-Phase5/screenshots/seating/${stage}`;
+  await mkdir(folder, { recursive: true });
+  await page.goto('/app/events/101/seating');
+  await page.getByTestId('tab-floor-plan').click();
+  await expect(page.locator('.sfp-canvas-wrapper')).toBeVisible();
+  for (const width of [320, 375, 390, 430, 768, 1024, 1366, 1440, 1920]) {
+    await page.setViewportSize({ width, height: width === 1366 ? 700 : width < 500 ? 740 : 900 });
+    await page.locator('.sfp-toolbar').scrollIntoViewIfNeeded();
+    await page.screenshot({ path: `${folder}/floor-plan-${width}.png`, fullPage: true });
+  }
+  if (stage === 'before') return;
+  await page.setViewportSize({ width: 1440, height: 900 });
+  const table = page.getByRole('button', { name: 'Move table Family A' });
+  await table.focus(); await page.keyboard.press('ArrowRight'); await page.keyboard.press('Enter');
+  await expect(table).toHaveCSS('left', /./);
+  expect(await table.evaluate(node => node.style.left)).toBe('26%');
+  await page.screenshot({ path: `${folder}/selected-table-1440.png`, fullPage: true });
+  await page.getByRole('button', { name: 'Save floor plan', exact: true }).click();
+  await expect(page.getByText('Saved to event', { exact: true })).toBeVisible();
+  await page.reload(); await page.getByTestId('tab-floor-plan').click();
+  await expect(table).toBeVisible();
+  expect(await table.evaluate(node => node.style.left)).toBe('26%');
+  await table.focus(); await page.keyboard.press('Enter');
+  await page.getByRole('button', { name: 'Zoom in', exact: true }).click();
+  await table.scrollIntoViewIfNeeded();
+  const box = await table.boundingBox(), canvas = await page.locator('.sfp-canvas-wrapper').boundingBox();
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2); await page.mouse.down();
+  await expect(table).toHaveClass(/is-dragging/);
+  await page.mouse.move(box.x + box.width / 2 + canvas.width * .05, box.y + box.height / 2, { steps: 8 }); await page.mouse.up();
+  expect(parseFloat(await table.evaluate(node => node.style.left))).toBeCloseTo(31, 0);
+  state.layout.version++;
+  await page.getByRole('button', { name: 'Save floor plan', exact: true }).click();
+  await expect(page.locator('.sfp-badge-dirty')).toBeVisible();
+  await expect(page.getByRole('alert').first()).toBeVisible();
+  await page.screenshot({ path: `${folder}/conflict-retained-1440.png`, fullPage: true });
+  page.once('dialog', dialog => dialog.accept());
+  await page.getByRole('button', { name: 'Reload saved layout', exact: true }).click();
+  await expect(page.locator('.sfp-badge-dirty')).toHaveCount(0);
+  expect(await table.evaluate(node => node.style.left)).toBe('26%');
+});
