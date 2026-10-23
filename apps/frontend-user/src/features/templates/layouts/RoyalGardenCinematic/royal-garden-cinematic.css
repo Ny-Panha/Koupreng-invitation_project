@@ -64,6 +64,7 @@
 .rg-paper { min-height: 100svh; position: relative; overflow: hidden; background: linear-gradient(180deg, #e5e8d7b8, #e1e5d6a2), var(--asset-frame) center top/360px auto repeat, var(--tpl-bg); }
 .rg-paper::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .28; background: radial-gradient(ellipse at 80% 12%, #fff8e1 0, transparent 33%), radial-gradient(ellipse at 20% 80%, #dbb9b7 0, transparent 38%); }
 .rg-paper > * { position: relative; }
+.rg-back-link { position: absolute; z-index: 8; left: 1rem; top: max(.8rem, env(safe-area-inset-top)); display: inline-flex; align-items: center; gap: .25rem; font-size: .7rem; color: var(--tpl-primary); text-decoration: none; background: #f7f2e5e3; border-radius: 30px; padding: .4rem .75rem; border: 1px solid var(--tpl-border); }
 .rg-lanterns { display: flex; justify-content: space-around; position: absolute; inset: 0 0 auto; height: 74px; z-index: 2; pointer-events: none; }
 .rg-lanterns span { height: 57px; width: 52px; display: grid; place-content: center; border: 3px double #baaf8d; border-radius: 38% 38% 50% 50%; background: #d6d6ba9a; color: #ba9a67; box-shadow: 0 8px 16px #6d806335; animation: rg-sway 5s ease-in-out infinite; transform-origin: center top; }
 .rg-lanterns span:nth-child(2) { animation-delay: 1s; }.rg-lanterns span:nth-child(3) { animation-delay: 2s; }
