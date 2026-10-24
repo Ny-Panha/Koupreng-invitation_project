@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface GuestRepository extends JpaRepository<Guest, Long> {
+    List<Guest> findByInvitationIdAndIdIn(Long invitationId, java.util.Collection<Long> ids);
     @Query("""
             select g from Guest g where g.invitation.id = :invitationId
               and (:search = '' or lower(g.guestName) like lower(concat('%',:search,'%')) escape '!'

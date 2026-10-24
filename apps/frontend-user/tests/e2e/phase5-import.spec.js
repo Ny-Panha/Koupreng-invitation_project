@@ -1,8 +1,7 @@
 import { expect, test } from '@playwright/test';
-import { mkdir } from 'node:fs/promises';
 import { installPhase4Fixtures } from './support/phase4Fixtures.js';
 
-test('CSV/XLSX downloads, mapping, validation, duplicate skip, confirmation and uncertain retry', async ({ page }) => {
+test('CSV/XLSX downloads, mapping, validation, duplicate skip, confirmation and uncertain retry', async ({ page }, info) => {
   const state = await installPhase4Fixtures(page, { count: 1 });
   const receipts = new Map(); let loseResponse = true; const committedIds = [];
   await page.route('**/api/v1/invitations/101/guests/import-batch**', async route => {
@@ -27,11 +26,10 @@ test('CSV/XLSX downloads, mapping, validation, duplicate skip, confirmation and 
   await page.getByRole('button', { name: /Import/ }).first().click();
   const dialog = page.getByRole('dialog', { name: 'Import guests' });
   await expect(dialog).toBeVisible();
-  await mkdir('D:/Koupreng-UXUI-Phase5/screenshots/guest-import', { recursive: true });
   const capture = async state => {
     for (const width of [320, 375, 390, 430, 768, 1024, 1366, 1440, 1920]) {
       await page.setViewportSize({ width, height: width === 1366 ? 700 : width < 500 ? 700 : 900 });
-      await page.screenshot({ path: `D:/Koupreng-UXUI-Phase5/screenshots/guest-import/${state}-${width}.png` });
+      await page.screenshot({ path: info.outputPath(`guest-import-${state}-${width}.png`) });
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
     }
   };
@@ -39,7 +37,7 @@ test('CSV/XLSX downloads, mapping, validation, duplicate skip, confirmation and 
   for (const ext of ['CSV', 'XLSX']) {
     const download = page.waitForEvent('download'); await dialog.getByRole('link', { name: ext, exact: true }).click();
     const file = await download; expect(file.suggestedFilename()).toBe(`Koupreng-Guest-Import-Template.${ext.toLowerCase()}`);
-    await file.saveAs(`D:/Koupreng-UXUI-Phase5/examples/browser-${file.suggestedFilename()}`);
+    await file.saveAs(info.outputPath(`browser-${file.suggestedFilename()}`));
   }
   await dialog.getByLabel('Guest import file').setInputFiles('public/downloads/Koupreng-Guest-Import-Template.xlsx');
   await expect(dialog.getByLabel('Map ឈ្មោះភ្ញៀវ')).toHaveValue('guestName');

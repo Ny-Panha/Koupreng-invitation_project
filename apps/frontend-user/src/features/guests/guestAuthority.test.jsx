@@ -6,6 +6,7 @@ import { useGuestMutations } from "./hooks/useGuestMutations";
 
 const invitationService = vi.hoisted(() => ({ listMine: vi.fn() }));
 const guestService = vi.hoisted(() => ({
+  page: vi.fn(), overview: vi.fn(),
   listByInvitation: vi.fn(),
   importForInvitation: vi.fn(),
   checkInList: vi.fn(),
@@ -41,6 +42,19 @@ function routeWrapper(path = "/dashboard/invitations/42/guests") {
 }
 
 describe("guest state authority", () => {
+  it('loads a bounded server page with authoritative totals without fetching RSVP or check-in collections', async () => {
+    guestService.page.mockResolvedValue({ items: [{ guest: { id: 7, guestName: 'Bounded guest', seatCount: 3 }, rsvpStatus: 'ATTENDING', attendeeCount: 2, checkedIn: true }], page: 0, size: 25, totalElements: 40, totalPages: 2 });
+    guestService.overview.mockResolvedValue({ guestRecords: 40, reservedSeats: 100 });
+    const { result } = renderHook(() => useGuests({ paged: true, query: { page: 0, size: 25 } }), { wrapper: routeWrapper() });
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    expect(result.current.guests).toHaveLength(1);
+    expect(result.current.guests[0]).toMatchObject({ rsvpStatus: 'ATTENDING', rsvpAttendeeCount: 2, checkedIn: true });
+    expect(result.current.overview.guestRecords).toBe(40);
+    expect(result.current.pageInfo.totalPages).toBe(2);
+    expect(guestService.listByInvitation).not.toHaveBeenCalled();
+    expect(rsvpService.listByInvitation).not.toHaveBeenCalled();
+    expect(guestService.checkInList).not.toHaveBeenCalled();
+  });
   beforeEach(() => {
     vi.clearAllMocks();
     planningStorage.getActiveEventId.mockReturnValue("draft-1");

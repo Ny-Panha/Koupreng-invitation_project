@@ -35,6 +35,9 @@ tags:
   description: Current-user and invitation-owner notification views and read state.
 - name: QR Codes
   description: Invitation-owner invitation and personalized guest QR payload generation.
+- name: Guests
+  description: "Permission-checked guest pages, record/seat totals and bounded selection\
+    \ exports."
 - name: Media
   description: Validated invitation-owner uploads and public published-invitation
     media reads.
@@ -2826,6 +2829,42 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ApiResponseGuestImportSourceResponse"
+  /api/v1/invitations/{invitationId}/guests/export-selection:
+    post:
+      tags:
+      - Guests
+      summary: Export guest dashboard data
+      operationId: export
+      parameters:
+      - name: invitationId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GuestSelectionExportRequest"
+            examples:
+              selectedGuests:
+                summary: Export up to 100 selected records from this event
+                value:
+                  guestIds:
+                  - 501
+                  - 502
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            text/csv:
+              schema:
+                type: string
+      security:
+      - bearerAuth: []
   /api/v1/invitations/{invitationId}/gifts:
     get:
       tags:
@@ -5920,7 +5959,7 @@ paths:
       tags:
       - Seating
       summary: Export seating data
-      operationId: export
+      operationId: export_1
       parameters:
       - name: invitationId
         in: path
@@ -6226,6 +6265,92 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ApiResponseListGuestResponse"
+      security:
+      - bearerAuth: []
+  /api/v1/invitations/{invitationId}/guests/page:
+    get:
+      tags:
+      - Guests
+      summary: Page
+      operationId: page
+      parameters:
+      - name: invitationId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        example: 0
+      - name: size
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 25
+        example: 20
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+          default: ""
+      - name: group
+        in: query
+        required: false
+        schema:
+          type: string
+          default: ""
+      - name: category
+        in: query
+        required: false
+        schema:
+          type: string
+          default: ""
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
+          default: ""
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseGuestPageResponse"
+      security:
+      - bearerAuth: []
+  /api/v1/invitations/{invitationId}/guests/overview:
+    get:
+      tags:
+      - Guests
+      summary: Overview
+      operationId: overview
+      parameters:
+      - name: invitationId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseGuestOverviewResponse"
       security:
       - bearerAuth: []
   /api/v1/invitations/{invitationId}/guests/grouped:
@@ -7209,7 +7334,7 @@ paths:
         \ a temporary snapshot file, then stream it after releasing the database transaction.\
         \ html is print content, not a PDF download. report=all supports XLSX and\
         \ common date filters only; individual exports preserve all supported filters."
-      operationId: export_1
+      operationId: export_2
       parameters:
       - name: report
         in: path
@@ -9033,9 +9158,9 @@ components:
         publishedAt:
           type: string
           format: date-time
-        published:
-          type: boolean
         draft:
+          type: boolean
+        published:
           type: boolean
     UpdateProfileRequest:
       type: object
@@ -10220,6 +10345,19 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/SourceRow"
+    GuestSelectionExportRequest:
+      type: object
+      properties:
+        guestIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+            exclusiveMinimum: 0
+          maxItems: 100
+          minItems: 0
+      required:
+      - guestIds
     DeliveryRequest:
       type: object
       properties:
@@ -12255,6 +12393,103 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/GuestSendListItemResponse"
+    ApiResponseGuestPageResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/GuestPageResponse"
+        timestamp:
+          type: string
+          format: date-time
+    GuestPageResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Row"
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    Row:
+      type: object
+      properties:
+        guest:
+          $ref: "#/components/schemas/GuestResponse"
+        rsvpStatus:
+          type: string
+        attendeeCount:
+          type: integer
+          format: int32
+        respondedAt:
+          type: string
+          format: date-time
+        checkedIn:
+          type: boolean
+        checkedInAt:
+          type: string
+          format: date-time
+    ApiResponseGuestOverviewResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/GuestOverviewResponse"
+        timestamp:
+          type: string
+          format: date-time
+    GuestOverviewResponse:
+      type: object
+      properties:
+        guestRecords:
+          type: integer
+          format: int64
+        reservedSeats:
+          type: integer
+          format: int64
+        attendingRecords:
+          type: integer
+          format: int64
+        declinedRecords:
+          type: integer
+          format: int64
+        maybeRecords:
+          type: integer
+          format: int64
+        unansweredRecords:
+          type: integer
+          format: int64
+        respondedRecords:
+          type: integer
+          format: int64
+        toInviteRecords:
+          type: integer
+          format: int64
+        checkedInRecords:
+          type: integer
+          format: int64
+        confirmedAttendees:
+          type: integer
+          format: int64
+        markedSentRecords:
+          type: integer
+          format: int64
     ApiResponseListGuestGroupResponse:
       type: object
       properties:
@@ -12534,21 +12769,6 @@ components:
           type: integer
           format: int64
         totalPages:
-          type: integer
-          format: int32
-    Row:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        guestName:
-          type: string
-        guestGroup:
-          type: string
-        tableNumber:
-          type: string
-        seatCount:
           type: integer
           format: int32
     ApiResponseListCheckInResponse:

@@ -1,0 +1,33 @@
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { MemoryRouter, Routes, Route } from 'react-router-dom';
+import { afterEach, beforeEach, expect, it, vi } from 'vitest';
+import GuestsPage from './GuestsPage';
+import { guestService } from './api/guestApi';
+import { invitationService } from '../invitations/api/invitationApi';
+import { useLanguageStore } from '@/stores/useLanguageStore';
+vi.mock('@/features/auth/hooks/useAuth', () => ({ useAuth: () => ({ user: { id: 7 } }) }));
+vi.mock('./api/guestApi', () => ({ guestService: { page: vi.fn(), overview: vi.fn(), exportSelection: vi.fn(), listByInvitation: vi.fn() } }));
+vi.mock('../invitations/api/invitationApi', () => ({ invitationService: { listMine: vi.fn() } }));
+beforeEach(() => {
+  vi.clearAllMocks(); localStorage.clear(); useLanguageStore.setState({ lang: 'en' });
+  invitationService.listMine.mockResolvedValue([{ id: 10, title: 'Bounded event', status: 'DRAFT' }]);
+  guestService.page.mockImplementation((id, query) => Promise.resolve({ items: [{ guest: { id: query.page + 1, guestName: `Page ${query.page} guest`, seatCount: 2 } }], page: query.page, size: query.size, totalElements: 40, totalPages: 2 }));
+  guestService.overview.mockResolvedValue({ guestRecords: 40, reservedSeats: 80, markedSentRecords: 30, respondedRecords: 25, toInviteRecords: 10, checkedInRecords: 6, confirmedAttendees: 35, attendingRecords: 20, declinedRecords: 3, maybeRecords: 2, unansweredRecords: 15 });
+  guestService.exportSelection.mockResolvedValue(undefined);
+});
+afterEach(cleanup);
+it('shows server-wide totals, selects only the current page, and clears selection on page changes', async () => {
+  render(<MemoryRouter initialEntries={['/app/events/10/guests']}><Routes><Route path="/app/events/:eventId/guests" element={<GuestsPage />} /></Routes></MemoryRouter>);
+  await screen.findByText('Page 0 guest');
+  expect(screen.getByText('80')).toBeInTheDocument();
+  expect(screen.getByText(/35 attendees are confirmed/)).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Export selected (0)' })).toBeDisabled();
+  fireEvent.click(screen.getByRole('checkbox', { name: 'Select guest: Page 0 guest' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Export selected (1)' }));
+  await waitFor(() => expect(guestService.exportSelection).toHaveBeenCalledWith(10, [1]));
+  fireEvent.click(screen.getByRole('button', { name: 'Next page' }));
+  await screen.findByText('Page 1 guest');
+  expect(screen.getByRole('button', { name: 'Export selected (0)' })).toBeDisabled();
+  expect(guestService.listByInvitation).not.toHaveBeenCalled();
+  expect(guestService.page).toHaveBeenCalledWith(10, expect.objectContaining({ page: 1, size: 25 }));
+});

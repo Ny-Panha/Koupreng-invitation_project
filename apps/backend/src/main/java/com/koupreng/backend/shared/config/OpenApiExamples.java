@@ -83,6 +83,9 @@ final class OpenApiExamples {
                     {"token":"0000000000000000000000000000000000000000000000000000000000000000"}
                     """);
             case "InvitationRequest" -> invitationExamples();
+            case "GuestSelectionExportRequest" -> one("selectedGuests", "Export up to 100 selected records from this event", """
+                    {"guestIds":[501,502]}
+                    """);
             case "InvitationCustomizationRequest" -> one("weddingDesign", "Customize a bilingual wedding invitation", """
                     {
                       "templateId": null,

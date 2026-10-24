@@ -1,4 +1,5 @@
 import { installUxFixtures, uxEvents } from './uxFixtures.js';
+import { installGuestDashboardFixtures } from './guestDashboardFixtures.js';
 
 // Stateful browser contract fixtures; mutations never reach a live service.
 export async function installPhase4Fixtures(page, { count = 24, lang = 'en' } = {}) {
@@ -64,5 +65,6 @@ export async function installPhase4Fixtures(page, { count = 24, lang = 'en' } = 
     if (path.endsWith('/101')) return reply({ ...events[0], coverUrl: undefined });
     return route.fallback();
   });
+  await installGuestDashboardFixtures(page, state);
   return state;
 }

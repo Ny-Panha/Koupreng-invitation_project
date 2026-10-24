@@ -2,8 +2,9 @@ import { useMemo } from "react";
 import { Users, Armchair, Send, CheckCircle2 } from "lucide-react";
 import { SEND_STATUS } from "../model/guestConstants";
 
-export default function GuestStats({ guests = [], t }) {
+export default function GuestStats({ guests = [], summary, t }) {
   const stats = useMemo(() => {
+    if (summary) return { totalCount: summary.guestRecords, totalSeats: summary.reservedSeats, sentCount: summary.markedSentRecords, respondedCount: summary.respondedRecords };
     let totalCount = 0;
     let totalSeats = 0;
     let sentCount = 0;
@@ -33,7 +34,7 @@ export default function GuestStats({ guests = [], t }) {
     }
 
     return { totalCount, totalSeats, sentCount, respondedCount };
-  }, [guests]);
+  }, [guests, summary]);
 
   return (
     <section className="pe-summary-grid" aria-label="Guest list statistics">

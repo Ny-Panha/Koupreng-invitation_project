@@ -17,8 +17,12 @@ export default function GuestTable({
   guests = [], groups = [], categories = [], saving = false, emptyMessage,
   currentDraft, publicInvitation, onSaveGuest, onEdit, onDelete, onShowQr, onCopyLink,
   onShowTicket, deliveryPath, onMarkAsSent, onOpenAddGuest, onOpenImport, onClearFilters, isFiltered = false, showQuickAdd = true, inlineForm, t,
+  selectedIds = [], onSelectionChange,
 }) {
   const lang = useLanguageStore(state => state.lang);
+  const selectable = guests.filter(guest => !guest.pending && /^\d+$/.test(String(guest.backendId || guest.id)));
+  const allSelected = selectable.length > 0 && selectable.every(guest => selectedIds.includes(String(guest.backendId || guest.id)));
+  const selectedCount = selectable.filter(guest => selectedIds.includes(String(guest.backendId || guest.id))).length;
   const rsvpLabels = OPERATIONS_MESSAGES.rsvp[lang];
   const nameInputRef = useRef(null);
   const submittingRef = useRef(false);
@@ -85,7 +89,7 @@ export default function GuestTable({
     <ResponsiveTable ariaLabel={text("tableLabel")} className="guest-table" containerClassName="guest-table-container">
       <colgroup><col className="guest-col-person" /><col className="guest-col-group" /><col className="guest-col-category" /><col className="guest-col-seats" /><col className="guest-col-status" /><col className="guest-col-actions" /></colgroup>
       <thead><tr>
-        <th scope="col">{text("thGuest", "ឈ្មោះភ្ញៀវ")}{inlineForm && <em aria-hidden="true"> *</em>}</th>
+        <th scope="col">{onSelectionChange && <label className="guest-select-control"><input type="checkbox" aria-label={lang === 'en' ? 'Select all guests on this page' : 'ជ្រើសរើសភ្ញៀវទាំងអស់លើទំព័រនេះ'} disabled={saving || !selectable.length} checked={allSelected} ref={node => { if (node) node.indeterminate = selectedCount > 0 && !allSelected; }} onChange={() => onSelectionChange(allSelected ? [] : selectable.map(guest => String(guest.backendId || guest.id)))} /></label>}{text("thGuest", "ឈ្មោះភ្ញៀវ")}{inlineForm && <em aria-hidden="true"> *</em>}</th>
         <th scope="col">{text("thGroup", "ក្រុម")}</th>
         <th scope="col">{text("thCategory", "ប្រភេទ")}</th>
         <th scope="col">{text("thSeats", "ចំនួនកៅអី")}</th>
@@ -101,6 +105,7 @@ export default function GuestTable({
           return <tr key={guest.id} className="guest-record-row" onDoubleClick={() => !isEditing && beginEdit(guest)}>
             {isEditing ? <><td colSpan="5">{editor(editingGuest, setEditingGuest)}</td><td>{actions}</td></> : <>
               <td className="guest-person-cell" data-label={text("thGuest", "ឈ្មោះភ្ញៀវ")}>
+                {onSelectionChange && <label className="guest-select-control"><input type="checkbox" aria-label={lang === 'en' ? `Select guest: ${guest.name}` : `ជ្រើសរើសភ្ញៀវ៖ ${guest.name}`} disabled={saving || guest.pending} checked={selectedIds.includes(String(guest.backendId || guest.id))} onDoubleClick={event => event.stopPropagation()} onChange={() => { const id = String(guest.backendId || guest.id); onSelectionChange(selectedIds.includes(id) ? selectedIds.filter(value => value !== id) : [...selectedIds, id]); }} /></label>}
                 <div className="guest-person"><span className={`guest-avatar ${guest.group === groups[1]?.name ? "guest-avatar-bride" : ""}`} aria-hidden="true">{initials(guest.name)}</span>
                   <div className="guest-person-info"><strong>{guest.name}</strong>
                     {guest.companionName && <span className="guest-companion">{guest.companionName}</span>}

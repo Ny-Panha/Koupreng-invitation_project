@@ -288,3 +288,10 @@ body:has(.guest-workspace) .chat-greeting-bubble { display: none; }
 }
 
 .guest-tools-popover a { text-decoration: none; box-sizing: border-box; }
+.guest-count-definitions { margin-block: 16px; line-height: 1.8; color: var(--ws-muted, #59615c); }
+.guest-page-controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 16px 0; }
+.guest-page-controls label { display: inline-flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.guest-page-controls select { min-height: 44px; padding: 8px 12px; border: 1px solid var(--ws-border-strong, #d5c5ad); border-radius: 8px; background: white; }
+.guest-page-controls small { flex-basis: 100%; line-height: 1.8; color: var(--ws-muted, #59615c); }
+.guest-select-control { display: inline-flex; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; vertical-align: middle; cursor: pointer; }
+.guest-select-control input { width: 18px; height: 18px; min-height: 0; accent-color: var(--ws-ink, #292c28); cursor: pointer; }

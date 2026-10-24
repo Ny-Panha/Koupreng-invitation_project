@@ -59,7 +59,9 @@ function pickPublicInvitation(invitations, draft, requestedInvitationId) {
   );
 }
 
-export function useGuests() {
+export function useGuests({ paged = false, query } = {}) {
+  const queryKey = JSON.stringify(query || {});
+  const pageQuery = useMemo(() => JSON.parse(queryKey), [queryKey]);
   const { eventId: routeEventId, invitationId: requestedInvitationId = routeEventId || "" } = useParams();
   const { user } = useAuth();
   const ownerUserId = user?.id || user?.userId;
@@ -85,6 +87,8 @@ export function useGuests() {
   const [backendInvitation, setBackendInvitation] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [pageInfo, setPageInfo] = useState(null);
+  const [overview, setOverview] = useState(null);
   const loadedBackendInvitationId = useRef(null);
   const generation = useRef(0);
 
@@ -109,6 +113,7 @@ export function useGuests() {
 
       if (requestedInvitationId && !matchedBackend) {
         loadedBackendInvitationId.current = null;
+        setOverview(null); setPageInfo(null);
         setBackendInvitation(null);
         setPublicInvitation(null);
         setBackendGuests([]);
@@ -127,10 +132,21 @@ export function useGuests() {
         setBackendGuests([]);
         setRsvpGuests([]);
         setCheckIns([]);
+        setPageInfo(null); setOverview(null);
       }
       loadedBackendInvitationId.current = backendIdToUse;
 
       if (backendIdToUse) {
+        if (paged) {
+          const [page, totals] = await Promise.all([guestService.page(backendIdToUse, pageQuery), guestService.overview(backendIdToUse)]);
+          if (request !== generation.current) return;
+          if (!Array.isArray(page?.items) || !totals) throw new Error('Invalid guest page response');
+          setBackendGuests(page.items.map(row => normalizeBackendGuest({ ...row.guest, rsvpStatus: row.rsvpStatus,
+            rsvpAttendeeCount: row.attendeeCount, rsvpRespondedAt: row.respondedAt, checkedIn: row.checkedIn, checkedInAt: row.checkedInAt })));
+          setPageInfo({ page: page.page, size: page.size, totalElements: page.totalElements, totalPages: page.totalPages });
+          setOverview(totals); setRsvpGuests([]); setCheckIns([]);
+          return;
+        }
         const [guestsResult, rsvpsResult, checkInsResult] = await Promise.allSettled([
           guestService.listByInvitation(backendIdToUse),
           rsvpService.listByInvitation(backendIdToUse),
@@ -167,7 +183,7 @@ export function useGuests() {
     } finally {
       if (request === generation.current) setLoading(false);
     }
-  }, [draftMatch, requestedInvitationId]);
+  }, [draftMatch, requestedInvitationId, paged, pageQuery]);
 
   useEffect(() => {
     refreshData();
@@ -208,6 +224,7 @@ export function useGuests() {
     setBackendGuests,
     loading,
     error,
+    pageInfo, overview,
     refreshData,
   };
 }

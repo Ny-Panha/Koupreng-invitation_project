@@ -48,6 +48,11 @@ export function normalizeBackendGuest(guest) {
     inviteToken: guest.inviteToken || guest.invite_token || guest.token || guest.raw?.inviteToken || guest.raw?.token || "",
     qrCodeUrl: guest.qrCodeUrl || guest.qr_code_url || "",
     source: "backend",
+    rsvpStatus: guest.rsvpStatus,
+    rsvpAttendeeCount: guest.rsvpAttendeeCount,
+    rsvpRespondedAt: guest.rsvpRespondedAt,
+    checkedIn: guest.checkedIn,
+    checkedInAt: guest.checkedInAt,
   };
 }
 

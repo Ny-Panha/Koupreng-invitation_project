@@ -3,6 +3,14 @@ import { unwrap } from "@/shared/api/helpers";
 import { downloadCsv } from "@/shared/api/downloadCsv";
 
 export const guestService = {
+  page: (id, params) => api.get(`/v1/invitations/${id}/guests/page`, { params }).then(unwrap),
+  overview: id => api.get(`/v1/invitations/${id}/guests/overview`).then(unwrap),
+  exportSelection: async (id, guestIds) => {
+    const blob = await api.post(`/v1/invitations/${id}/guests/export-selection`, { guestIds }, { responseType: 'blob' });
+    const url = URL.createObjectURL(blob), link = document.createElement('a');
+    try { link.href = url; link.download = `selected-guests-${id}.csv`; document.body.appendChild(link); link.click(); }
+    finally { link.remove(); URL.revokeObjectURL(url); }
+  },
   checkInRoster: (id, params = {}) => api.get(`/v1/invitations/${id}/check-in/roster`, { params }).then(unwrap),
   inspectImport: (invitationId, file) => {
     const form = new FormData(); form.append('file', file);

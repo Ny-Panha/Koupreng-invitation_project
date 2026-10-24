@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface GuestCheckInRepository extends JpaRepository<GuestCheckIn, Long> {
+    List<GuestCheckIn> findByInvitationIdAndGuestIdInAndActiveTrue(Long invitationId, java.util.Collection<Long> guestIds);
 
     Optional<GuestCheckIn> findByInvitationIdAndGuestId(Long invitationId, Long guestId);
 

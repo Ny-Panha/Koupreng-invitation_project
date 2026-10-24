@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RsvpRepository extends JpaRepository<Rsvp, Long> {
+    @EntityGraph(attributePaths = "guest")
+    List<Rsvp> findByInvitationIdAndGuestIdIn(Long invitationId, java.util.Collection<Long> guestIds);
 
     @org.springframework.data.jpa.repository.Modifying(clearAutomatically = true)
     @Query("update Rsvp r set r.message = null where r.id = :rsvpId and r.invitation.id = :invitationId")

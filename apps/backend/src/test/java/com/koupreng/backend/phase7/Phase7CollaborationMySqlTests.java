@@ -187,11 +187,49 @@ class Phase7CollaborationMySqlTests {
         assertEquals(403, call("PUT", path, f.member, Map.of("guestName", "Forged contribution", "totalContributed", 99)).status);
     }
 
+    @Test void guestOverviewPagesAndSelectionExportReconcileWithoutContactLeaks() throws Exception {
+        Fixture f = fixture(3,10);
+        List<Reply> records = new ArrayList<>();
+        for (int i=0;i<4;i++) {
+            Reply guest = call("POST", eventPath(f)+"/guests", f.owner, Map.of("guestName", i==0?"=1+1":"Fixture guest "+i,
+                    "seatCount", List.of(2,3,1,4).get(i), "phone", "01234000"+i, "email", "private"+i+"@example.test", "guestGroup", "Family"));
+            assertEquals(201, guest.status); records.add(guest);
+        }
+        Reply published=call("PATCH",eventPath(f)+"/publish",f.owner,null); assertEquals(200,published.status);
+        String slug=published.data().path("slug").asText();
+        for (int i=0;i<3;i++) {
+            Reply rsvp=call("POST","/api/v1/public/invitations/"+slug+"/guests/"+records.get(i).data().path("inviteToken").asText()+"/rsvp",null,
+                    Map.of("responseStatus",List.of("ATTENDING","NOT_ATTENDING","MAYBE").get(i),"attendeeCount",List.of(2,0,1).get(i)));
+            assertEquals(201,rsvp.status);
+        }
+        assertEquals(200,call("POST",eventPath(f)+"/guests/"+records.getFirst().data().path("id").asLong()+"/check-in",f.owner,Map.of()).status);
+        Reply overview=call("GET",eventPath(f)+"/guests/overview",f.owner,null); assertEquals(200,overview.status);
+        for(var expected:Map.of("guestRecords",4,"reservedSeats",10,"attendingRecords",1,"declinedRecords",1,"maybeRecords",1,"unansweredRecords",1,"respondedRecords",3,"checkedInRecords",1,"confirmedAttendees",2).entrySet()) {
+            assertEquals(expected.getValue().intValue(),overview.data().path(expected.getKey()).asInt(),expected.getKey());
+        }
+        Reply page=call("GET",eventPath(f)+"/guests/page?size=2&page=0",f.owner,null); assertEquals(200,page.status);
+        assertEquals(2,page.data().path("items").size()); assertEquals(4,page.data().path("totalElements").asInt());
+        Reply declined=call("GET",eventPath(f)+"/guests/page?status=declined",f.owner,null); assertEquals(200,declined.status);
+        assertEquals(1,declined.data().path("totalElements").asInt());
+        assertEquals("NOT_ATTENDING",declined.data().path("items").get(0).path("rsvpStatus").asText());
+        assertEquals(400,call("GET",eventPath(f)+"/guests/page?size=101",f.owner,null).status);
+        assertEquals(403,call("GET",eventPath(f)+"/guests/overview",f.stranger,null).status);
+        List<Long> ids=records.subList(0,2).stream().map(row->row.data().path("id").asLong()).toList();
+        Reply csv=call("POST",eventPath(f)+"/guests/export-selection",f.owner,Map.of("guestIds",ids)); assertEquals(200,csv.status);
+        assertTrue(csv.body.contains("'=1+1")); assertFalse(csv.body.contains("private0@example.test")); assertFalse(csv.body.contains("012340000"));
+        assertFalse(csv.body.contains(records.getFirst().data().path("inviteToken").asText()));
+        assertEquals(404,call("POST",eventPath(f)+"/guests/export-selection",f.owner,Map.of("guestIds",List.of(ids.getFirst(),Long.MAX_VALUE))).status);
+        assertEquals(400,call("POST",eventPath(f)+"/guests/export-selection",f.owner,Map.of("guestIds",List.of(ids.getFirst(),ids.getFirst()))).status);
+    }
+
     private Fixture fixture(int teamLimit) throws Exception {
+        return fixture(teamLimit,1);
+    }
+    private Fixture fixture(int teamLimit,int guestLimit) throws Exception {
         Auth owner = register(), member = register(), stranger = register();
         var plan = new SubscriptionPackage(); plan.setCode("P7-" + UUID.randomUUID()); plan.setPackageName("Phase 7 disposable team fixture");
         plan.setPublicVisible(false);
-        plan.setPrice(BigDecimal.ZERO); plan.setMaxInvitations(3); plan.setMaxGuests(1); plan.setMaxGuestsPerInvitation(1);
+        plan.setPrice(BigDecimal.ZERO); plan.setMaxInvitations(3); plan.setMaxGuests(guestLimit); plan.setMaxGuestsPerInvitation(guestLimit);
         plan.setTeamMembersEnabled(true); plan.setMaxTeamMembers(teamLimit); plan.setAdvancedAnalyticsEnabled(true); plan.setQrCheckInEnabled(true); plan.setSeatingEnabled(true);
         plan = packages.saveAndFlush(plan);
         var grant = new Subscription(); grant.setUser(users.findById(owner.id).orElseThrow()); grant.setSubscriptionPackage(plan);
@@ -222,7 +260,8 @@ class Phase7CollaborationMySqlTests {
         if (user != null) request.header("Authorization", "Bearer " + user.token);
         request.method(method, body == null ? HttpRequest.BodyPublishers.noBody() : HttpRequest.BodyPublishers.ofString(json.writeValueAsString(body)));
         var response = http.send(request.build(), HttpResponse.BodyHandlers.ofString());
-        return new Reply(response.statusCode(), response.body().isBlank() ? json.createObjectNode() : json.readTree(response.body()));
+        boolean csv=response.headers().firstValue("Content-Type").orElse("").startsWith("text/csv");
+        return new Reply(response.statusCode(), csv || response.body().isBlank() ? json.createObjectNode() : json.readTree(response.body()),response.body());
     }
     private List<Reply> race(Callable<Reply> left, Callable<Reply> right) throws Exception {
         var start = new CountDownLatch(1);
@@ -235,5 +274,5 @@ class Phase7CollaborationMySqlTests {
     private static String required(String key) { String value = System.getenv(key); if (value == null || value.isBlank()) throw new IllegalStateException("Missing disposable configuration: " + key); return value; }
     private record Auth(long id, String email, String token) { }
     private record Fixture(Auth owner, Auth member, Auth stranger, long orgId, long eventId, long grantId) { }
-    private record Reply(int status, JsonNode root) { JsonNode data() { return root.path("data"); } }
+    private record Reply(int status, JsonNode root,String body) { JsonNode data() { return root.path("data"); } }
 }
