@@ -335,8 +335,8 @@
 
 .sfp-drag-handle-hint {
     font-size: 0.65rem;
-    color: #ffd700;
-    opacity: 0.75;
+    color: inherit;
+    opacity: 0.85;
     margin-left: 4px;
 }
 
@@ -470,8 +470,8 @@
 
 .sfp-canvas--light .sfp-table-node.status-full .sfp-table-circle,
 .sfp-canvas-wrapper:not(.sfp-canvas--dark) .sfp-table-node.status-full .sfp-table-circle {
-    border-color: #059669;
-    box-shadow: 0 4px 16px rgba(5, 150, 105, 0.25);
+    border-color: var(--ws-forest, #2e433a);
+    box-shadow: 0 4px 14px rgba(44, 37, 35, 0.12);
 }
 
 .sfp-canvas--light .sfp-table-node.status-empty .sfp-table-circle,
@@ -708,7 +708,7 @@
 }
 
 .sfp-legend__dot--full {
-    background: #059669;
+    background: var(--ws-forest, #2e433a);
 }
 
 .sfp-legend__dot--guest {

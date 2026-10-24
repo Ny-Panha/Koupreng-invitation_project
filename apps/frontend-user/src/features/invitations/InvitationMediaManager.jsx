@@ -7,6 +7,8 @@ import { useBackendMessages } from '@/shared/i18n/useBackendMessages';
 import { useEventWorkspace } from '@/features/events/workspace/EventContext';
 import { toast } from '@/shared/ui';
 import { invitationMediaReferences, MEDIA_CATEGORIES, validateLibraryFile } from './mediaLibraryModel';
+import { resolveEventCover } from '@/features/events/model/eventCover';
+import EventCover from '@/features/events/components/EventCover';
 import './MediaLibrary.css';
 
 function Preview({ file, type, title }) {
@@ -53,8 +55,9 @@ export default function InvitationMediaManager() {
     const onProgress = e => { if (e.total) setProgress(Math.round(e.loaded / e.total * 100)); };
     run(() => target ? mediaService.replace(id, target.id, files[0], onProgress) : ({ cover: () => mediaService.uploadCover(id, files[0], onProgress), gallery: () => mediaService.uploadGallery(id, files, undefined, onProgress), video: () => mediaService.uploadVideo(id, files[0], onProgress), music: () => mediaService.uploadMusic(id, files[0], onProgress) })[category]());
   };
-  const coverReference = (() => { try { const content = typeof invitation?.designJson === 'string' ? JSON.parse(invitation.designJson) : invitation?.designJson; return invitation?.coverUrl || content?.coverImage; } catch { return null; } })();
-  const coverArtwork = coverReference || invitation?.templateThumbnailUrl || (invitation?.templateCode === 'event-essential' ? '/templates/event-essential.svg' : null);
+  const resolvedCover = resolveEventCover(invitation || {});
+  const coverReference = ['owner', 'invitation'].includes(resolvedCover.source);
+  const coverArtwork = resolvedCover.url;
   const isCoverInUse = category === 'cover' && records.some(file => references.has(file.fileUrl));
   return <main className="media-library workspace-page" aria-busy={busy}>
     <header className="workspace-page-heading"><div><h1>{t('title')}</h1><p>{t('subtitle')}</p></div><div className="workspace-actions"><Link className="workspace-button" to={`/app/events/${id}/preview`}><Eye size={18} />{t('preview')}</Link><Link className="workspace-button" to={`/app/events/${id}/invitation`}><Palette size={18} />{t('studio')}</Link></div></header>
@@ -70,7 +73,7 @@ export default function InvitationMediaManager() {
         <div className="media-asset-body"><h3>{file.originalFilename || t(category)}</h3><p>{file.mimeType || config.type}{file.fileSize != null ? ` · ${(file.fileSize / 1024 / 1024).toFixed(2)} MB` : ''}</p>
           {references.has(file.fileUrl) ? <><p>{t('inUse')}</p><Link className="workspace-button" to={`/app/events/${id}/invitation`}>{t('editInStudio')}</Link></> : <div className="workspace-actions"><button className="workspace-button" disabled={busy} onClick={() => choose(file)}>{t('replace')}</button><button className="workspace-button" disabled={busy} onClick={() => { if (window.confirm(t('confirmRemove'))) run(() => mediaService.remove(id, file.id)); }}>{t('remove')}</button></div>}
         </div>
-      </article>)}</div> : library && category === 'cover' && coverArtwork ? <div className="media-reference-card"><img src={coverArtwork} alt={t('reference')} /><div><h3>{t(coverReference ? 'savedDesign' : 'templateArtwork')}</h3><p>{t(coverReference ? 'savedDesignHint' : 'templateHint')}</p><Link className="workspace-button" to={`/app/events/${id}/invitation`}>{t('editInStudio')}</Link></div></div> : library && <div className="workspace-empty"><Images size={32} /><h2>{t('empty')}</h2><p>{t('emptyHint')}</p></div>}
+      </article>)}</div> : library && category === 'cover' && coverArtwork ? <div className="media-reference-card"><EventCover event={invitation || {}} alt={t('reference')} /><div><h3>{t(coverReference ? 'savedDesign' : 'templateArtwork')}</h3><p>{t(coverReference ? 'savedDesignHint' : 'templateHint')}</p><Link className="workspace-button" to={`/app/events/${id}/invitation`}>{t('editInStudio')}</Link></div></div> : library && <div className="workspace-empty"><Images size={32} /><h2>{t('empty')}</h2><p>{t('emptyHint')}</p></div>}
     </section>
     <p className="media-source-note">{t('sourceHint')}</p>
   </main>;
