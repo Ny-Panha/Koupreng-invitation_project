@@ -64,3 +64,11 @@
 }
 
 .pkg-usage { display: grid; gap: 16px; margin-bottom: 24px; }.pkg-usage > div { display: grid; grid-template-columns: 1fr auto; gap: 8px; }.pkg-usage progress { width: 100%; accent-color: #214f3b; }.pkg-usage small { text-align: right; }
+.pkg-comparison { margin-block: 24px; }
+.pkg-comparison p { line-height: 1.8; margin-block: 12px; }
+.pkg-comparison-scroll { max-width: 100%; overflow-x: auto; }
+.pkg-comparison table { width: 100%; border-collapse: collapse; text-align: start; }
+.pkg-comparison :is(th,td) { padding: 12px; border-bottom: 1px solid var(--ws-border); min-width: 120px; vertical-align: top; line-height: 1.8; }
+.pkg-comparison th { text-align: start; }
+.pkg-comparison-scroll:focus-visible { outline: 3px solid var(--ws-teal, #0f766e); outline-offset: 2px; }
+.pkg-status.grant { color: #145b42; background: #e9f6ed; }

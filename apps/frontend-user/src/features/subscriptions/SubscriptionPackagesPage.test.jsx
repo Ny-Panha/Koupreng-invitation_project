@@ -59,6 +59,26 @@ describe("SubscriptionPackagesPage", () => {
     vi.restoreAllMocks();
   });
 
+  it("presents a nonrevenue demo grant without payment actions or pending status", async () => {
+    subscriptionService.history.mockResolvedValue([{ id: 7, packagePlan: basicPlan, orderCode: "DEMO-PRIVATE", source: "DEMO_ADMIN_GRANT", status: "ACTIVE", active: true, paymentStatus: "NOT_REQUIRED", amount: 0, currency: "USD" }]);
+    render(<SubscriptionPackagesPage />);
+    await screen.findByRole("heading", { name: "Subscription history" });
+    expect(screen.getAllByText("Active demo grant · no payment")).toHaveLength(2);
+    expect(screen.queryByText("Awaiting payment")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "View order" })).not.toBeInTheDocument();
+    expect(subscriptionService.order).not.toHaveBeenCalled();
+  });
+
+  it("compares actual configured record limits and benefits without inventing higher tier values", async () => {
+    subscriptionService.packages.mockResolvedValue([{ ...basicPlan, maxGuests: 73, maxGuestsPerInvitation: 17, teamMembersEnabled: true, maxTeamMembers: 3 }]);
+    render(<SubscriptionPackagesPage />);
+    const table = await screen.findByRole("table", { name: "Currently configured plan benefits" });
+    expect(table).toHaveTextContent("Guest records across account73");
+    expect(table).toHaveTextContent("Guest records per event17");
+    expect(table).toHaveTextContent("Team members (including owner)3");
+    expect(table).not.toHaveTextContent("Premium plan");
+  });
+
   it("opens payer details before creating a paid checkout", async () => {
     render(<SubscriptionPackagesPage />);
 
@@ -164,7 +184,7 @@ describe("SubscriptionPackagesPage", () => {
     fireEvent.change(screen.getByLabelText(/aba account holder name/i), { target: { value: "KOEURNG VIREAK" } });
     fireEvent.change(screen.getByLabelText(/last 3 digits/i), { target: { value: "247" } });
     fireEvent.click(screen.getByRole("button", { name: /continue to aba payway/i }));
-    await screen.findByText("Payment received but needs administrator review.");
+    await screen.findByText("Payment status needs administrator review.");
     expect(screen.queryByText("Subscription activated successfully.")).not.toBeInTheDocument();
   });
 
@@ -172,11 +192,11 @@ describe("SubscriptionPackagesPage", () => {
     subscriptionService.packages.mockResolvedValue([{ ...basicPlan, price: 12345, currency: "KHR", maxInvitations: 999, maxGuestsPerInvitation: 5000, durationDays: 90, billingInterval: "CUSTOM", maxTeamMembers: 25 }]);
     render(<SubscriptionPackagesPage />);
     await screen.findByText("999 events");
-    expect(screen.getByText("5,000 guests per event")).toBeInTheDocument();
+    expect(screen.getByText("5,000 guest records per event")).toBeInTheDocument();
     expect(screen.getByText(/90 days/)).toBeInTheDocument();
     expect(screen.queryByText(/unlimited|lifetime|25 members/i)).not.toBeInTheDocument();
     expect(screen.getByText("Plan could not be verified")).toBeInTheDocument();
-    expect(screen.getByText(/12,345/)).toBeInTheDocument();
+    expect(screen.getAllByText(/12,345/).length).toBeGreaterThan(0);
   });
 
   it("shows a verified current plan and its real expiry", async () => {

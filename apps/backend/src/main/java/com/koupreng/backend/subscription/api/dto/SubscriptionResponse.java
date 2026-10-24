@@ -25,6 +25,7 @@ public class SubscriptionResponse {
     private String provider;
     private String paymentStatus;
     private String status;
+    private String source;
     private boolean active;
     private String paymentLink;
     private String paymentUrl;
@@ -50,6 +51,7 @@ public class SubscriptionResponse {
                 .provider(subscription.getProvider())
                 .paymentStatus(subscription.getPaymentStatus())
                 .status(subscription.getStatus())
+                .source("DEMO_ADMIN_GRANT".equals(subscription.getConfirmSource()) ? "DEMO_ADMIN_GRANT" : "SUBSCRIPTION_ORDER")
                 .active(subscription.isActive())
                 .paymentLink(subscription.getPaymentLink())
                 .paymentUrl(subscription.getPaymentLink())

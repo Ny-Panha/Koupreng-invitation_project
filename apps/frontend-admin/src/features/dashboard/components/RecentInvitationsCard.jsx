@@ -3,48 +3,7 @@ import { Link } from "react-router-dom";
 import { formatDate } from "../../../shared/utils";
 
 export default function RecentInvitationsCard({ lang = "km", invitations = [] }) {
-  // Fallback demo cards if database has 0 invitations yet
-  const fallbackCards = [
-    {
-      id: 1061,
-      title: lang === "en" ? "Wedding: Sok & Chenda" : "មង្គលការ សុខ & ចិន្តា",
-      templateName: "Khmer Celestial Gold",
-      ownerName: "សុខ វិបុល",
-      eventDate: "2026-11-24",
-      status: "PUBLISHED",
-      eventType: "WEDDING",
-    },
-    {
-      id: 1066,
-      title: lang === "en" ? "Engagement: Piseth & Kalyan" : "ពិធីភ្ជាប់ពាក្យ ពិសិដ្ឋ & កល្យាណ",
-      templateName: "Lotus Blossom Theme",
-      ownerName: "ពិសិដ្ឋ រិទ្ធី",
-      eventDate: "2026-12-05",
-      status: "PUBLISHED",
-      eventType: "ENGAGEMENT",
-    },
-    {
-      id: 1062,
-      title: lang === "en" ? "Wedding: Dara & Sophy" : "មង្គលការ ដារ៉ា & សុភី",
-      templateName: "Royal Gold Elegance",
-      ownerName: "ដារ៉ា ចាន់",
-      eventDate: "2026-11-18",
-      status: "DRAFT",
-      eventType: "WEDDING",
-    },
-    {
-      id: 1063,
-      title: lang === "en" ? "Wedding: Chanthorn & Theary" : "មង្គលការ ចាន់ថន & ធារី",
-      templateName: "Angkor Heritage",
-      ownerName: "ចាន់ថន សុភ័ក្ត្រ",
-      eventDate: "2026-12-28",
-      status: "DRAFT",
-      eventType: "WEDDING",
-    },
-  ];
-
-  const items = Array.isArray(invitations) && invitations.length > 0 ? invitations.slice(0, 4) : fallbackCards;
-  const isDemo = !Array.isArray(invitations) || invitations.length === 0;
+  const items = Array.isArray(invitations) ? invitations.slice(0, 4) : [];
 
   return (
     <div className="relative flex flex-col justify-between overflow-hidden rounded-[24px] border border-slate-200/90 bg-white/95 p-4 sm:p-5 shadow-xs dark:border-slate-800/80 dark:bg-[#121622]/95 dark:shadow-[0_8px_30px_rgb(0,0,0,0.4)] backdrop-blur-xl transition-all duration-300">
@@ -59,11 +18,7 @@ export default function RecentInvitationsCard({ lang = "km", invitations = [] })
               <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white">
                 {lang === "en" ? "Recent Invitations" : "ធៀបការថ្មីៗ (Recent Invitations)"}
               </h3>
-              {isDemo && (
-                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-md bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
-                  {lang === "en" ? "PREVIEW" : "គំរូបង្ហាញ"}
-                </span>
-              )}
+
             </div>
             <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block mt-0.5">
               {lang === "en"
@@ -79,7 +34,7 @@ export default function RecentInvitationsCard({ lang = "km", invitations = [] })
             to="/templates/new"
             className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-200 dark:bg-[#1f2738] dark:text-slate-300 dark:hover:text-white dark:hover:bg-[#2a354d] transition-colors cursor-pointer"
             title={lang === "en" ? "Create New Template" : "បង្កើត Template ថ្មី"}
-            aria-label="Add"
+            aria-label={lang === "en" ? "Create new template" : "បង្កើតគំរូថ្មី"}
           >
             <Plus className="h-3.5 w-3.5" />
           </Link>
@@ -89,14 +44,15 @@ export default function RecentInvitationsCard({ lang = "km", invitations = [] })
             to="/templates"
             className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-200 dark:bg-[#1f2738] dark:text-slate-300 dark:hover:text-white dark:hover:bg-[#2a354d] transition-colors cursor-pointer"
             title={lang === "en" ? "View All Templates" : "មើលគំរូទាំងអស់"}
-            aria-label="Expand"
+            aria-label={lang === "en" ? "View all templates" : "មើលគំរូទាំងអស់"}
           >
             <ArrowUpRight className="h-3.5 w-3.5" />
           </Link>
         </div>
       </div>
 
-      {/* 2x2 Wedding Invitation Cards Grid */}
+      {items.length === 0 && <p role="status">{lang === "en" ? "No recent invitations to display." : "មិនមានធៀបអញ្ជើញថ្មីសម្រាប់បង្ហាញ។"}</p>}
+      {/* Recent invitation records */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {items.map((inv, i) => {
           const isPublished = String(inv.status).toUpperCase() === "PUBLISHED" || inv.published === true;
@@ -146,7 +102,7 @@ export default function RecentInvitationsCard({ lang = "km", invitations = [] })
                   {/* Template */}
                   <div className="flex items-center gap-1.5 truncate">
                     <Sparkles className="h-3 w-3 text-amber-500 shrink-0" />
-                    <span className="truncate">{inv.templateName || inv.templateCode || "Khmer Celestial Theme"}</span>
+                    <span className="truncate">{inv.templateName || inv.templateCode || (lang === "en" ? "Template not specified" : "មិនបានបញ្ជាក់គំរូ")}</span>
                   </div>
 
                   {/* Owner / Host */}

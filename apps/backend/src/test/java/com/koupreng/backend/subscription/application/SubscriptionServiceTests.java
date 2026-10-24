@@ -41,6 +41,22 @@ import static org.mockito.Mockito.when;
 
 class SubscriptionServiceTests {
 
+    @Test
+    void historyExposesDemoGrantSourceWithoutReportingPayment() {
+        Fixture fixture = fixture();
+        Subscription grant = new Subscription();
+        grant.setSubscriptionPackage(plan("PRO", "199.00", 365));
+        grant.setConfirmSource("DEMO_ADMIN_GRANT");
+        grant.setPaymentStatus("NOT_REQUIRED");
+        grant.setStatus("ACTIVE");
+        grant.setActive(true);
+        when(fixture.subscriptionRepository.findByUserIdOrderByCreatedAtDesc(any())).thenReturn(List.of(grant));
+        var response = fixture.service.history(fixture.authentication).getFirst();
+        assertEquals("DEMO_ADMIN_GRANT", response.getSource());
+        assertEquals("NOT_REQUIRED", response.getPaymentStatus());
+        assertTrue(response.isActive());
+    }
+
     @ParameterizedTest
     @CsvSource({
             "BASIC,0.01,https://link.payway.com.kh/ABAPAYMu523385B",
