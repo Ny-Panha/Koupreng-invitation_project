@@ -53,6 +53,9 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, devi
         return () => observer.disconnect();
     }, []);
     const [previewSession] = useState(createPreviewSession);
+    const [previewAttempt, setPreviewAttempt] = useState(0);
+    const [readyPreview, setReadyPreview] = useState("");
+    const [slowPreview, setSlowPreview] = useState("");
     const sendPreview = useCallback((message) => postPreviewMessage(message,
         iframePreviewChannel(iframeRef.current, previewSession)), [previewSession]);
 
@@ -66,6 +69,11 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, devi
 
     const templateName = merged?.tpl?.name || merged?.tpl?.style || t("previewTopInfo") || "គំរូសន្លឹកការ (Live Preview)";
     const templateSlug = merged?.tpl?.code || merged?.tpl?.slug || "";
+    const previewKey = `${templateSlug}:${previewAttempt}`;
+    useEffect(() => {
+        const timer = setTimeout(() => setSlowPreview(previewKey), 12000);
+        return () => clearTimeout(timer);
+    }, [previewKey]);
 
     // Start closed on Cover if template supports gate opening, identical to Admin
     const [isGateOpen, setIsGateOpen] = useState(false);
@@ -178,6 +186,7 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, devi
                 setIsGateOpen(Boolean(event.data.open ?? event.data.isOpen));
             }
             if (event.data?.type === "PREVIEW_READY") {
+                setReadyPreview(previewKey);
                 broadcastSync();
                 if (iframeRef.current?.contentWindow) {
                     try {
@@ -190,7 +199,7 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, devi
         };
         window.addEventListener("message", handleMsg);
         return () => window.removeEventListener("message", handleMsg);
-    }, [broadcastSync, isGateOpen, previewSession, sendPreview]);
+    }, [broadcastSync, isGateOpen, previewSession, sendPreview, previewKey]);
 
     // Check if running in headless test environment (Vitest / HappyDOM)
     const isTest = import.meta.env.MODE === "test" || Boolean(globalThis.__vitest_worker__);
@@ -199,6 +208,10 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, devi
 
     return (
         <aside ref={previewRef} className="pe-preview-column" aria-label={uiCopy("មើលធៀបអញ្ជើញជាមុន", "Live invitation preview")}>
+            {!isTest && readyPreview !== previewKey && <div className="studio-preview-recovery" role="status">
+                <p>{slowPreview === previewKey ? uiCopy("មើលជាមុនមិនទាន់ឆ្លើយតប។ ពង្រាងរបស់អ្នកនៅក្នុងផ្ទាំងកែសម្រួល។", "Preview has not responded. Your draft is still in the editor.") : uiCopy("កំពុងបើកពង្រាងមើលជាមុន…", "Loading draft preview…")}</p>
+                {slowPreview === previewKey && <button type="button" onClick={() => setPreviewAttempt(value => value + 1)}>{uiCopy("ផ្ទុកមើលជាមុនម្ដងទៀត", "Reload preview")}</button>}
+            </div>}
             {/* Clean Studio Preview Top Bar */}
             <div className="pe-preview-top-bar">
                 <div className="pe-preview-status-row">
@@ -278,12 +291,12 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, devi
                         ) : null
                     ) : (
                         <iframe
-                            key={templateSlug}
+                            key={previewKey}
                             ref={iframeRef}
                             allow="clipboard-write; clipboard-read; autoplay"
                             src={buildPreviewUrl(`/templates/${templateSlug}/preview?embed=true`, previewSession)}
                             className="w-full h-full border-0 bg-zinc-950"
-                            title="Live User Template Preview"
+                            title={en ? "Live User Template Preview" : "មើលគំរូធៀបអញ្ជើញផ្ទាល់"}
                             onLoad={() => {
                                 synchronizeLoadedPreview();
                                 if (iframeRef.current?.contentWindow) {

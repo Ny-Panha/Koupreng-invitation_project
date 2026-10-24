@@ -53,4 +53,16 @@ describe("studio server persistence", () => {
     rerender({ value: 1 }); rerender({ value: 2 });
     await waitFor(() => expect(persist).toHaveBeenCalledTimes(1));
   });
+  it.each([[409, "conflict"], [401, "expired"]])("retains edits and suspends writes after HTTP %s", async (status, phase) => {
+    const persist = vi.fn().mockResolvedValue({ synced: false, status, error: "Unsafe to retry" });
+    const { result, rerender } = renderHook(({ value }) => useStudioPersistence({ value, persist, enabled: true, delay: 20, onRestore: vi.fn() }), { initialProps: { value: { title: "Original" } } });
+    rerender({ value: { title: "My draft" } });
+    await act(async () => { await result.current.save(); });
+    expect(result.current.phase).toBe(phase);
+    expect(result.current.dirty).toBe(true);
+    rerender({ value: { title: "Keep editing locally" } });
+    await act(async () => { expect(await result.current.flush()).toBe(false); });
+    expect(persist).toHaveBeenCalledTimes(1);
+    expect(result.current.error).toMatch(status === 409 ? /newer version/ : /session expired/);
+  });
 });

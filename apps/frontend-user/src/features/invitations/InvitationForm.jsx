@@ -5,6 +5,9 @@ import WeddingProgramEditor from "./studio/WeddingProgramEditor";
 import { legacyProgram, normalizeProgram } from "../templates/shared/program";
 import StudioSections from "./studio/StudioSections";
 import StudioToolbar from "./studio/StudioToolbar";
+import StudioGuide from "./studio/StudioGuide";
+import PublishReview from "./studio/PublishReview";
+import { publishReadiness } from "./studio/publishReadiness";
 import { createPortal } from "react-dom";
 import StudioAppearance from "./studio/StudioAppearance";
 import { useStudioPersistence } from "./studio/useStudioPersistence";
@@ -775,6 +778,11 @@ export default function InvitationForm({ invitation }) {
     });
 
     const [selectedSection, setSelectedSection] = useState("eventInfo");
+    const [editorMode, setEditorMode] = useState(searchParams.get("mode") === "guided" ? "guided" : "advanced");
+    const [guideStep, setGuideStep] = useState(0);
+    const [publishReviewOpen, setPublishReviewOpen] = useState(false);
+    const [publishError, setPublishError] = useState("");
+    const [publishedUrl, setPublishedUrl] = useState(invitation?.status === "PUBLISHED" && invitation?.slug ? new URL(`/i/${encodeURIComponent(invitation.slug)}`, window.location.origin).href : "");
     const fieldId = useId();
     const [compactPreview, setCompactPreview] = useState(() => window.matchMedia("(max-width: 1023px)").matches);
     const editorRoot = useRef(null), lastEditorField = useRef(null), previewReturn = useRef(null);
@@ -1398,7 +1406,7 @@ export default function InvitationForm({ invitation }) {
             const payload = {
                 expectedUpdatedAt: serverRevision.current,
                 title: finalTitle,
-                eventType: "WEDDING",
+                eventType: invitation?.eventType || "WEDDING",
                 eventDate: finalDate || null,
                 eventTime: finalTime || null,
                 venueName: finalVenueName || "",
@@ -1433,6 +1441,7 @@ export default function InvitationForm({ invitation }) {
             let saved;
             let apiSyncFailed = false;
             let apiSyncError = "";
+            let apiSyncStatus;
             const effectiveBackendId = savedBackendId.current;
             try {
                 if (!payload.templateId) throw new Error(uiCopy("គំរូដែលបានជ្រើសមិនមានក្នុងបណ្ណាល័យទេ។ សូមជ្រើសគំរូដែលអាចប្រើបាន មុនពេលរក្សាទុកលើម៉ាស៊ីនមេ។", "The selected template is unavailable in the catalog. Choose an available template before saving online."));
@@ -1446,6 +1455,8 @@ export default function InvitationForm({ invitation }) {
             } catch (apiErr) {
                 apiSyncFailed = true;
                 apiSyncError = apiErr?.message || "The server could not save these changes. Retry saving.";
+                apiSyncStatus = apiErr?.status || apiErr?.response?.status;
+                if ([401, 409].includes(apiSyncStatus)) return { synced: false, status: apiSyncStatus, error: apiSyncError };
             }
 
             let savedCoverUrl = form.uploadedCoverUrl || "";
@@ -1580,6 +1591,7 @@ export default function InvitationForm({ invitation }) {
                     });
                 } catch (updateError) {
                     mediaSyncError ||= updateError?.message || "Invitation photo references could not be saved";
+                    apiSyncStatus = updateError?.status || updateError?.response?.status;
                 }
             }
 
@@ -1703,7 +1715,7 @@ export default function InvitationForm({ invitation }) {
             const finalSavedId = saved?.id || targetDraftId;
             if (stayInStudio) {
                 if (!quiet) toast(successMsg, apiSyncFailed || mediaSyncError ? "warning" : "success");
-                return { id: finalSavedId, synced: !apiSyncFailed && !mediaSyncError, error: mediaSyncError || (apiSyncFailed ? (apiSyncError || uiCopy("ម៉ាស៊ីនមេមិនអាចរក្សាទុកការកែប្រែបានទេ។ សូមរក្សាទុកម្ដងទៀត។", "The server could not save these changes. Retry saving.")) : "") };
+                return { id: finalSavedId, synced: !apiSyncFailed && !mediaSyncError, status: apiSyncStatus, error: mediaSyncError || (apiSyncFailed ? (apiSyncError || uiCopy("ម៉ាស៊ីនមេមិនអាចរក្សាទុកការកែប្រែបានទេ។ សូមរក្សាទុកម្ដងទៀត។", "The server could not save these changes. Retry saving.")) : "") };
             }
             if (redirectToPreview && finalSavedId) {
                 toast(successMsg, apiSyncFailed || mediaSyncError ? "warning" : "success");
@@ -1727,7 +1739,51 @@ export default function InvitationForm({ invitation }) {
         setPendingCoverFile(null); setPendingCoverBgFile(null); setPendingBackgroundFile(null);
         setPendingInvitationFile(null); setPendingInvitation2File(null); setForm(value);
     }, persist: () => handleSave({ stayInStudio: true, quiet: true }),
-        enabled: Boolean(invitationId && /^[1-9]\d*$/.test(String(invitationId))) && !pendingCoverFile && !pendingCoverBgFile && !pendingBackgroundFile && !pendingInvitationFile && !pendingInvitation2File && !JSON.stringify(form).includes("data:") });
+        english: englishUI, enabled: Boolean(invitationId && /^[1-9]\d*$/.test(String(invitationId))) && !pendingCoverFile && !pendingCoverBgFile && !pendingBackgroundFile && !pendingInvitationFile && !pendingInvitation2File && !JSON.stringify(form).includes("data:") });
+
+    const readiness = publishReadiness(form, invitation?.eventType || "WEDDING");
+    function goToGuideStep(step) {
+        setGuideStep(step);
+        if (step === 0) setSelectedSection("eventInfo");
+        if (step === 1 && ["eventInfo", "venue"].includes(activeSection)) setSelectedSection(flowConfig.sectionOrder.find(key => !["eventInfo", "venue"].includes(key)) || "eventInfo");
+        requestAnimationFrame(() => document.getElementById("studio-guide-heading")?.focus());
+    }
+    function completePublishField(check) {
+        setPublishReviewOpen(false);
+        setGuideStep(0);
+        setSelectedSection(check.section);
+        requestAnimationFrame(() => document.getElementById(`${fieldId}-${check.field}`)?.focus());
+    }
+    function reviewPublication() {
+        setPublishError("");
+        if (!String(form.venueAddress || "").trim()) {
+            setVenueAddressError(uiCopy("សូមបញ្ចូលអាសយដ្ឋានទីកន្លែងមុនពេលផ្សព្វផ្សាយ។", "Enter the venue address before publishing."));
+            completePublishField({ section: "venue", field: "venueAddress" });
+            return;
+        }
+        setPublishReviewOpen(true);
+    }
+    async function openEventTool(tool) {
+        if (await studio.flush()) navigate(`/app/events/${savedBackendId.current}/${tool}`);
+    }
+    function confirmPublished(result) {
+        if (result.updatedAt) serverRevision.current = result.updatedAt;
+        setPublishedUrl(result.slug ? new URL(`/i/${encodeURIComponent(result.slug)}`, window.location.origin).href : "");
+        setPublished(true);
+        setPublishReviewOpen(false);
+        setEditorMode("guided");
+        setGuideStep(4);
+        toast(uiCopy("បានផ្សព្វផ្សាយធៀបអញ្ជើញ", "Invitation published"), "success");
+    }
+    async function checkPublication() {
+        setIsPublishing(true);
+        try {
+            const result = await invitationService.get(savedBackendId.current);
+            if (result?.status === "PUBLISHED") confirmPublished(result);
+            else setPublishError(uiCopy("ម៉ាស៊ីនមេបង្ហាញថានៅជាពង្រាង។ អ្នកអាចព្យាយាមផ្សព្វផ្សាយម្ដងទៀត។", "The server still reports a draft. You can retry publication."));
+        } catch { setPublishError(uiCopy("មិនអាចពិនិត្យស្ថានភាពបាន។ ពិនិត្យការតភ្ជាប់ រួចព្យាយាមម្ដងទៀត។", "Could not check publication. Reconnect and check again before sharing.")); }
+        finally { setIsPublishing(false); }
+    }
 
     async function publishInvitation() {
         if (isPublishing) return;
@@ -1738,16 +1794,18 @@ export default function InvitationForm({ invitation }) {
         }
         setIsPublishing(true);
         try {
-            if (!await studio.flush()) return;
+            if (!await studio.flush()) {
+                setPublishError(uiCopy("ពង្រាងមិនទាន់បានរក្សាទុក។ ត្រឡប់ទៅកែសម្រួល ដើម្បីពិនិត្យស្ថានភាពរក្សាទុក។", "The draft has not been saved. Keep editing to review the save status before publishing."));
+                return;
+            }
             const result = await invitationService.publish(savedBackendId.current);
             if (result?.status !== "PUBLISHED") throw new Error(uiCopy("ម៉ាស៊ីនមេមិនទាន់បានបញ្ជាក់ការផ្សព្វផ្សាយទេ។ សូមព្យាយាមម្ដងទៀត។", "The server has not confirmed publication. Please retry."));
-            setPublished(true);
-            toast(uiCopy("បានផ្សព្វផ្សាយធៀបអញ្ជើញ", "Invitation published"), "success");
+            confirmPublished(result);
         } catch (error) {
             if (/Publish requirements missing:.*\bvenueAddress\b/.test(error.message || "")) {
                 setVenueAddressError(englishUI ? "The server has not saved this venue address. Save it again before publishing." : "ម៉ាស៊ីនមេមិនទាន់រក្សាទុកអាសយដ្ឋាននេះទេ។ សូមរក្សាទុកម្ដងទៀតមុនផ្សព្វផ្សាយ។");
-                setSelectedSection("venue");
-            } else toast(error.message || uiCopy("ការផ្សព្វផ្សាយមិនបានជោគជ័យ។ សូមព្យាយាមម្ដងទៀត។", "Publication failed. Please retry."), "warning");
+                completePublishField({ section: "venue", field: "venueAddress" });
+            } else setPublishError(error.message || uiCopy("មិនទាន់អាចបញ្ជាក់ការផ្សព្វផ្សាយបានទេ។ ពិនិត្យស្ថានភាពម្ដងទៀត។", "Publication is not confirmed. Check the server status before sharing."));
         }
         finally { setIsPublishing(false); }
     }
@@ -3142,7 +3200,7 @@ export default function InvitationForm({ invitation }) {
     };
 
     return (
-        <div ref={editorRoot} className="pe-editor-root invitation-studio" role="main" onFocusCapture={event => {
+        <div ref={editorRoot} className="pe-editor-root invitation-studio" data-editor-mode={editorMode} data-guide-step={guideStep} role="main" onFocusCapture={event => {
             if (event.target.closest(".pe-editor-column") && event.target.matches("input,textarea,select,button")) lastEditorField.current = event.target;
         }} onBlurCapture={event => {
             if (event.target === lastEditorField.current) rememberEditorPosition();
@@ -3152,16 +3210,18 @@ export default function InvitationForm({ invitation }) {
                 const toolbar = <StudioToolbar title={form.title} templateName={getTemplateById(form.templateId)?.name || form.templateId}
                     english={englishUI} studio={studio} saving={isSaving} publishing={isPublishing} published={published}
                     canPublish={Boolean(invitation?.backendInvitationId || /^[1-9]\d*$/.test(String(invitationId || "")))}
-                    onTemplate={() => setIsTemplateModalOpen(true)} onPreview={openPreview} previewOpen={isMobilePreviewOpen} onPublish={publishInvitation}
+                    onTemplate={() => setIsTemplateModalOpen(true)} onPreview={openPreview} previewOpen={isMobilePreviewOpen} onPublish={reviewPublication}
                     onBack={() => navigate(params.eventId ? `/app/events/${params.eventId}` : invitationId ? `/app/events/${invitationId}` : "/app/events")} />;
                 const mount = params.eventId && document.getElementById("invitation-studio-toolbar");
                 return mount ? createPortal(toolbar, mount) : toolbar;
             })()}
-            {studio.error && <div className="studio-save-error" role="alert"><span>{studio.error}</span><button type="button" onClick={() => studio.save()} disabled={isSaving}>{uiCopy("រក្សាទុកម្ដងទៀត", "Retry save")}</button></div>}
+            {studio.error && <div className="studio-save-error" role="alert"><span>{studio.error}</span>{!["conflict", "expired"].includes(studio.phase) && <button type="button" onClick={() => studio.save()} disabled={isSaving}>{uiCopy("រក្សាទុកម្ដងទៀត", "Retry save")}</button>}{["conflict", "expired"].includes(studio.phase) && <><p>{uiCopy("ចម្លងអត្ថបទសំខាន់ ឬទាញយកពង្រាងនេះ មុនបើកកម្មវិធីម្ដងទៀត។", "Copy important text or download this draft before reopening the event.")}</p><button type="button" onClick={() => { const url = URL.createObjectURL(new Blob([JSON.stringify(form, null, 2)], { type: "application/json" })); const link = document.createElement("a"); link.href = url; link.download = "invitation-unsaved-draft.json"; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }}>{uiCopy("ទាញយកពង្រាងមិនទាន់រក្សាទុក", "Download unsaved draft")}</button></>}</div>}
+            <StudioGuide mode={editorMode} onMode={setEditorMode} step={guideStep} onStep={goToGuideStep} sections={flowConfig.sectionOrder} activeSection={activeSection} onSection={setSelectedSection} english={englishUI} checks={readiness} onField={completePublishField} onPreview={openPreview} onGuests={() => openEventTool("guests")} onRsvp={() => openEventTool("rsvp")} onPublish={reviewPublication} published={published} publishedUrl={publishedUrl} saving={isSaving || isPublishing} />
+            <PublishReview open={publishReviewOpen} onClose={() => setPublishReviewOpen(false)} onConfirm={publishInvitation} onCheck={checkPublication} checks={readiness} onField={completePublishField} english={englishUI} publishing={isPublishing} error={publishError} visibility={form.visibility} published={published} />
             {/* The controls and preview continue to use the original template engine. */}
             <div className="pe-workspace-grid">
-                <StudioSections sections={flowConfig.sectionOrder} active={activeSection}
-                    onChange={section => { lastEditorField.current = null; previewReturn.current = null; setSelectedSection(section); }} english={englishUI} />
+                {editorMode === "advanced" && <StudioSections sections={flowConfig.sectionOrder} active={activeSection}
+                    onChange={section => { lastEditorField.current = null; previewReturn.current = null; setSelectedSection(section); }} english={englishUI} />}
                 {/* CENTER COLUMN: Existing template controls */}
                 <div className="pe-editor-column">
 

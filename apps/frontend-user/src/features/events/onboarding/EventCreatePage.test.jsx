@@ -20,7 +20,7 @@ const template = { id: 30, name: "Event Essential", code: "event-essential", cat
 const recommendations = [{ template, styleMatch: true }];
 const fill = (name, value) => fireEvent.change(document.querySelector(`[name="${name}"]`), { target: { value } });
 function show(path = "/app/events/new") {
-  return render(<MemoryRouter initialEntries={[path]}><Routes><Route path="/app/events/new" element={<EventCreatePage />} /><Route path="/app/events/:eventId" element={<p>Exact saved workspace</p>} /></Routes></MemoryRouter>);
+  return render(<MemoryRouter initialEntries={[path]}><Routes><Route path="/app/events/new" element={<EventCreatePage />} /><Route path="/app/events/:eventId" element={<p>Exact saved workspace</p>} /><Route path="/app/events/:eventId/invitation" element={<><p>Exact saved workspace</p><p>Guided invitation studio</p></>} /></Routes></MemoryRouter>);
 }
 beforeEach(() => {
   vi.clearAllMocks(); sessionStorage.clear();
@@ -54,6 +54,7 @@ describe("single-page event creation", () => {
     fill("eventDate", "2026-12-25"); fill("eventTime", "17:30"); fill("venueName", "Garden House");
     fireEvent.click(screen.getByRole("button", { name: "Create event" }));
     await screen.findByText("Exact saved workspace");
+    expect(screen.getByText("Guided invitation studio")).toBeInTheDocument();
     expect(invitationService.create).toHaveBeenCalledOnce();
     const [payload] = invitationService.create.mock.calls[0];
     expect(payload).toMatchObject({ eventType: type, templateId: 30, visibility: "PRIVATE", eventDate: "2026-12-25", eventTime: "17:30" });

@@ -18,6 +18,7 @@ async function setup(page, { code = "khmer-celestial", address = "", nested = fa
     const message = !saved.venueAddress?.trim() ? "Publish requirements missing: venueAddress" : "Publication temporarily unavailable";
     if (failPublish || !saved.venueAddress?.trim()) return route.fulfill({ status: 400, contentType: "application/json", body: JSON.stringify({ message }) });
     saved.status = "PUBLISHED";
+    saved.updatedAt = "2026-10-24T08:00:00.123456Z";
     return route.fulfill({ contentType: "application/json", body: JSON.stringify({ data: saved }) });
   });
   await page.goto("/app/events/101/invitation", { waitUntil: 'domcontentloaded' });
@@ -41,10 +42,20 @@ for (const code of ["khmer-celestial", "silk-heritage", "garden-royal-khmer-wedd
     expect(JSON.parse(fixture.calls.at(-1).contentJson).venueAddress).toBe("Riverside Road, Phnom Penh");
     await page.reload({ waitUntil: 'domcontentloaded' }); await expect(await venue(page)).toHaveValue("Riverside Road, Phnom Penh");
     await page.getByRole("button", { name: "Publish", exact: true }).click();
+    await expect(page.getByRole("dialog", { name: "Review publication" })).toBeVisible();
+    expect(fixture.published).toEqual([]);
+    await page.getByRole("button", { name: "Confirm publication", exact: true }).click();
     await expect.poll(() => fixture.events.get(101).status).toBe("PUBLISHED");
     expect(fixture.published).toEqual(["Riverside Road, Phnom Penh"]);
     await expect(page.getByRole("button", { name: "Publish", exact: true })).toHaveCount(0);
     await page.screenshot({ path: info.outputPath(`published-address-${code}.png`) });
+    if (code === "khmer-celestial") {
+      await page.getByRole("button", { name: "1 Event details", exact: true }).click();
+      await page.getByRole("textbox", { name: "Main Title", exact: true }).fill("Edit after publication");
+      await page.getByRole("button", { name: "Save", exact: true }).click();
+      await expect(page.locator(".studio-save-status")).toHaveAttribute("data-phase", "saved");
+      expect(fixture.calls.at(-1).expectedUpdatedAt).toBe("2026-10-24T08:00:00.123456Z");
+    }
   });
 }
 
@@ -65,14 +76,19 @@ test("failed autosave preserves the address and blocks publication", async ({ pa
   const input = await venue(page); await input.fill("Keep this address");
   await expect(page.locator(".studio-save-status")).toHaveAttribute("data-phase", "failed");
   await page.getByRole("button", { name: "Publish", exact: true }).click();
+  await page.getByRole("button", { name: "Confirm publication", exact: true }).click();
   await expect(page.locator(".studio-save-status")).toHaveAttribute("data-phase", "failed");
+  await page.getByRole("button", { name: "Keep editing", exact: true }).click();
   await expect(input).toHaveValue("Keep this address"); expect(fixture.published).toEqual([]);
 });
 
 test("failed publish keeps the saved address and never reports publication", async ({ page }) => {
   const fixture = await setup(page, { address: "Persisted address", failPublish: true });
   await page.getByRole("button", { name: "Publish", exact: true }).click();
+  await page.getByRole("button", { name: "Confirm publication", exact: true }).click();
   await expect.poll(() => fixture.published.length).toBe(1);
+  await expect(page.getByRole("alert")).toContainText("Publication temporarily unavailable");
+  await page.getByRole("button", { name: "Keep editing", exact: true }).click();
   await expect(page.getByRole("button", { name: "Publish", exact: true })).toBeEnabled();
   expect(fixture.events.get(101).status).toBe("DRAFT");
   await expect(await venue(page)).toHaveValue("Persisted address");
