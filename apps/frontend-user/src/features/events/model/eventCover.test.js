@@ -2,6 +2,10 @@ import { describe, expect, it } from 'vitest';
 import { resolveEventCover, eventCoverCandidates, EVENT_COVER_FALLBACK } from './eventCover';
 
 describe('canonical event cover', () => {
+  it('reads the saved Studio content cover and its summary projection before template artwork', () => {
+    expect(resolveEventCover({ contentJson: '{"coverImage":"/studio.jpg"}', templateThumbnailUrl: '/template.jpg' })).toEqual({ source: 'invitation', url: '/studio.jpg' });
+    expect(resolveEventCover({ invitationCoverUrl: '/saved-studio.jpg', coverUrl: '/template.jpg', coverSource: 'template' }).url).toBe('/saved-studio.jpg');
+  });
   it('uses the exact selected template artwork for a draft', () => {
     expect(resolveEventCover({ templateCode: 'khmer-celestial' })).toEqual({ source: 'template', url: '/facebook/all/06-card/cover-card.jpg' });
   });

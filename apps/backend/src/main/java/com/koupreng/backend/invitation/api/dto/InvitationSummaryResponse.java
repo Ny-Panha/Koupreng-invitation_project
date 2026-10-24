@@ -23,6 +23,7 @@ public class InvitationSummaryResponse {
     private String coverUrl;
     private String coverSource;
     private String templateThumbnailUrl;
+    private String invitationCoverUrl;
     private String title;
     private String slug;
     private EventType eventType;

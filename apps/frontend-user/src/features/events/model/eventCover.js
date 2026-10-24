@@ -11,12 +11,14 @@ function asset(value) {
 
 export function eventCoverCandidates(event = {}) {
   let design = {};
+  let content = {};
   try { design = typeof event.designJson === 'string' ? JSON.parse(event.designJson) : event.designJson || {}; } catch { /* Invalid legacy design falls back to its template. */ }
+  try { content = typeof event.contentJson === 'string' ? JSON.parse(event.contentJson) : event.contentJson || {}; } catch { /* Legacy content may be malformed. */ }
   const template = getTemplateById(event.templateCode || event.templateId || design.templateId || design.presetId || event.presetId);
   const candidates = [
     { url: event.coverSource === 'template' ? '' : event.coverUrl, source: 'owner' },
     { url: event.media?.coverImage?.fileUrl, source: 'owner' },
-    { url: design.coverImage, source: 'invitation' },
+    { url: event.invitationCoverUrl || content.coverImage || design.coverImage, source: 'invitation' },
     { url: event.templateThumbnailUrl || (event.coverSource === 'template' ? event.coverUrl : ''), source: 'template' },
     { url: template?.thumbnailUrl || template?.image || template?.defaultImage || template?.phoneCoverImage || template?.mainImage, source: 'template' },
     { url: EVENT_COVER_FALLBACK, source: 'fallback' },

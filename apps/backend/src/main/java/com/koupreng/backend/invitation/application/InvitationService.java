@@ -80,6 +80,8 @@ public class InvitationService {
     private final OrganizationRepository organizationRepository;
     private final OrganizationMemberRepository organizationMemberRepository;
     private final InvitationPasswordAttemptLimiter passwordAttemptLimiter;
+    @Autowired
+    private InvitationCoverReader invitationCoverReader;
 
     @Autowired(required = false)
     private com.koupreng.backend.budget.infrastructure.persistence.BudgetRepository budgetRepository;
@@ -246,7 +248,11 @@ public class InvitationService {
                     .forEach(cover -> covers.putIfAbsent(cover.getInvitationId(), cover.getFileUrl()));
         }
         return invitations.stream()
-                .map(invitation -> InvitationSummaryResponse.from(invitation, covers.get(invitation.getId())))
+                .map(invitation -> {
+                    var summary = InvitationSummaryResponse.from(invitation, covers.get(invitation.getId()));
+                    if (invitationCoverReader != null) summary.setInvitationCoverUrl(invitationCoverReader.read(invitation.getContentJson()));
+                    return summary;
+                })
                 .toList();
     }
 

@@ -33,7 +33,7 @@ export default function InvitationMediaManager() {
     Promise.all([mediaService.list(id), invitationService.get(id)]).then(([media, event]) => { if (active) { setLibrary(media); setInvitation(event); } }).catch(e => { if (active) setError(e.message); });
     return () => { active = false; };
   }, [id]);
-  const refresh = async () => { const [media, event] = await Promise.all([mediaService.list(id), invitationService.get(id)]); setLibrary(media); setInvitation(event); workspace?.updateEvent({ ...event, coverUrl: media.coverImage?.fileUrl || null }); };
+  const refresh = async () => { const [media, event] = await Promise.all([mediaService.list(id), invitationService.get(id)]); setLibrary(media); setInvitation(event); workspace?.updateEvent({ ...event, coverUrl: media.coverImage?.fileUrl || null, coverSource: media.coverImage ? 'owner' : 'template' }); };
   const run = async action => {
     setBusy(true); setError(''); setProgress(0); setRetry(null);
     try { await action(); await refresh(); toast(t('saved')); }
