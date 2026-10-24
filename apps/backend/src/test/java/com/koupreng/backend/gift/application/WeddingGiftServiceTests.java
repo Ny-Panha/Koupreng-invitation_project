@@ -56,7 +56,7 @@ class WeddingGiftServiceTests {
     }
 
     @Test
-    void createRejectsNegativeAmountBySettingZero() {
+    void createRejectsNegativeAmountWithoutSilentlyChangingIt() {
         Fixture fixture = fixture();
         Authentication authentication = mock(Authentication.class);
         UserInvitation invitation = new UserInvitation();
@@ -69,9 +69,8 @@ class WeddingGiftServiceTests {
         request.setName("Keo Sophea");
         request.setAmount(new BigDecimal("-20.00"));
 
-        WeddingGiftResponse response = fixture.service.create(authentication, 10L, request);
-
-        assertEquals(BigDecimal.ZERO, response.getAmount());
+        assertEquals(HttpStatus.BAD_REQUEST, assertThrows(ApiException.class,
+                () -> fixture.service.create(authentication, 10L, request)).getStatus());
     }
 
     @Test

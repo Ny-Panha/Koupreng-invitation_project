@@ -125,6 +125,7 @@ export function ExpensesList() {
             {/* Table */}
             {eventId && (
                 <ExpenseTable
+                onAddExpense={openAddModal}
                     expenses={expenses}
                     selectedCat={selectedCat}
                     setSelectedCat={setSelectedCat}

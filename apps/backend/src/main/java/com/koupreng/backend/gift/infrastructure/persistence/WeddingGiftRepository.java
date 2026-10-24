@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface WeddingGiftRepository extends JpaRepository<WeddingGift, Long> {
+    Optional<WeddingGift> findByInvitationIdAndClientRequestId(Long invitationId, String clientRequestId);
 
     @Query("""
             select gift from WeddingGift gift

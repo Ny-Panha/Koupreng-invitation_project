@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { IoAddOutline, IoChevronDownOutline, IoSearchOutline } from "react-icons/io5";
 import { useClickOutside } from "../../../shared/hooks/useClickOutside";
 import { getGuestLabel } from "./guestLabels";
+import { budgetMoney } from '@/features/budget/currencyTotals';
 
 function isGiftForGuest(gift, guest, guests) {
     if (gift.guestId != null) return String(gift.guestId) === String(guest.id);
@@ -53,6 +54,7 @@ export function GuestSelectField({ value, guestId, onChange, options = [], place
             <button
                 type="button"
                 aria-label={ariaLabel}
+                aria-expanded={open}
                 data-gift-name-input="true"
                 onClick={() => setOpen(!open)}
                 style={{
@@ -86,7 +88,7 @@ export function GuestSelectField({ value, guestId, onChange, options = [], place
                         display: "inline-block", background: "#DBEAFE", color: "#1D4ED8", 
                         padding: "4px 10px", borderRadius: "12px", fontSize: "12px", fontWeight: "500"
                     }}>
-                        {existingGiftForSelected.method.toUpperCase()}: ${existingGiftForSelected.amount}
+                        {existingGiftForSelected.method?.toUpperCase() || '—'}: {budgetMoney(existingGiftForSelected.amount, existingGiftForSelected.currency || 'USD')}
                     </div>
                 </div>
             )}
@@ -101,6 +103,7 @@ export function GuestSelectField({ value, guestId, onChange, options = [], place
                     <div style={{ position: "relative" }}>
                         <IoSearchOutline style={{ position: "absolute", left: "10px", top: "50%", transform: "translateY(-50%)", color: "#999", fontSize: "18px" }} />
                         <input 
+                            aria-label={placeholder}
                             type="text" 
                             value={query} 
                             onChange={e => setQuery(e.target.value)} 

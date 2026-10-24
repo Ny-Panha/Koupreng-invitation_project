@@ -37,6 +37,8 @@ public class WeddingGift {
 
     @Column(name = "guest_id")
     private Long guestId;
+    @Column(name = "client_request_id", length = 36)
+    private String clientRequestId;
 
     @Column(precision = 12, scale = 2)
     private BigDecimal amount;

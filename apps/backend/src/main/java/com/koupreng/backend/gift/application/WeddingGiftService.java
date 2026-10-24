@@ -23,15 +23,23 @@ public class WeddingGiftService {
     private final WeddingGiftRepository weddingGiftRepository;
     private final GuestRepository guestRepository;
     private final InvitationService invitationService;
+    private final com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository invitationRepository;
 
+    @org.springframework.beans.factory.annotation.Autowired
     public WeddingGiftService(
             WeddingGiftRepository weddingGiftRepository,
             GuestRepository guestRepository,
-            InvitationService invitationService
+            InvitationService invitationService,
+            com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository invitationRepository
     ) {
         this.weddingGiftRepository = weddingGiftRepository;
         this.guestRepository = guestRepository;
         this.invitationService = invitationService;
+        this.invitationRepository = invitationRepository;
+    }
+
+    public WeddingGiftService(WeddingGiftRepository gifts, GuestRepository guests, InvitationService invitations) {
+        this(gifts, guests, invitations, null);
     }
 
     @Transactional(readOnly = true)
@@ -52,8 +60,25 @@ public class WeddingGiftService {
     @Transactional
     public WeddingGiftResponse create(Authentication authentication, Long invitationId, WeddingGiftRequest request) {
         UserInvitation invitation = invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        String requestId = request.getClientRequestId() == null ? null : request.getClientRequestId().toString();
+        if (requestId != null) {
+            if (invitationRepository != null) invitationRepository.findForUpdateByIdAndUserId(invitationId, invitation.getUser().getId())
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Event not found"));
+            var existing = weddingGiftRepository.findByInvitationIdAndClientRequestId(invitationId, requestId);
+            if (existing.isPresent()) {
+                var prior = existing.get();
+                if (!java.util.Objects.equals(prior.getGuestId(), request.getGuestId()) || !java.util.Objects.equals(prior.getGiverName(), trimToNull(request.getName()))
+                    || prior.getAmount().compareTo(nonNegative(request.getAmount())) != 0 || !prior.getCurrency().equals(normalizeCurrency(request.getCurrency()))
+                    || !java.util.Objects.equals(prior.getMethod(), trimToNull(request.getMethod())) || !java.util.Objects.equals(prior.getNote(), trimToNull(request.getNote()))
+                    || !java.util.Objects.equals(prior.getReceivedDate(), request.getDate() == null ? LocalDate.now() : request.getDate())) {
+                    throw new ApiException(HttpStatus.CONFLICT, "This gift request was already saved with different values. Review the existing record.");
+                }
+                return WeddingGiftResponse.from(prior);
+            }
+        }
         WeddingGift gift = new WeddingGift();
         gift.setInvitation(invitation);
+        gift.setClientRequestId(requestId);
         applyRequest(gift, invitationId, request);
         return WeddingGiftResponse.from(weddingGiftRepository.save(gift));
     }
@@ -105,9 +130,8 @@ public class WeddingGiftService {
     }
 
     private BigDecimal nonNegative(BigDecimal value) {
-        if (value == null || value.signum() < 0) {
-            return BigDecimal.ZERO;
-        }
+        if (value == null) return BigDecimal.ZERO;
+        if (value.signum() < 0 || value.scale() > 2 || value.compareTo(new BigDecimal("9999999999.99")) > 0) throw new ApiException(HttpStatus.BAD_REQUEST, "Gift amount must be nonnegative with at most two decimal places");
         return value;
     }
 

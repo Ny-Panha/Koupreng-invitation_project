@@ -77,7 +77,7 @@ describe("GiftsFeature Module", () => {
   });
 
   it("opens gift record modal on add button click", async () => {
-    const { container } = render(
+    render(
       <BrowserRouter>
         <GiftsFeature />
       </BrowserRouter>
@@ -92,7 +92,7 @@ describe("GiftsFeature Module", () => {
     fireEvent.click(addBtn);
 
     await waitFor(() => {
-      expect(document.activeElement).toBe(container.querySelector("[data-gift-name-input]"));
+      expect(document.activeElement).toBe(document.querySelector("[data-gift-name-input]"));
     });
   });
 });

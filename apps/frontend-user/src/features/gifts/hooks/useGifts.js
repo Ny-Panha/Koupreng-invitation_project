@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
     createHostRecordId,
     listManualGuests,
@@ -15,7 +15,7 @@ export function toGiftPayload(form) {
     return {
         name: form.name.trim(),
         guestId: form.guestId ?? null,
-        amount: Math.max(0, Number(form.amount) || 0),
+        amount: Number(form.amount || 0),
         currency: form.currency || "USD",
         method: form.method,
         date: form.date || localDateString(),
@@ -30,7 +30,7 @@ export function normalizeGift(gift) {
         name: gift.name || gift.giverName || gift.payerName || "",
         amount: Number(gift.amount) || 0,
         currency: gift.currency || gift.currencyCode || "USD",
-        method: gift.method || "Bakong QR",
+        method: gift.method || "",
         date: gift.date || "",
         note: gift.note || "",
     };
@@ -61,7 +61,10 @@ export function useGifts() {
     const [gifts, setGifts] = useState([]);
     const [guestOptions, setGuestOptions] = useState([]);
     const [editingId, setEditingId] = useState(null);
-    const [form, setForm] = useState({ name: "", guestId: null, amount: "", currency: "USD", method: "Bakong QR", date: "", note: "" });
+    const [showForm, setShowForm] = useState(false);
+    const createRequestId = useRef(null);
+    const inFlight = useRef(false);
+    const [form, setForm] = useState({ name: "", guestId: null, amount: "", currency: "USD", method: "Cash", date: localDateString(), note: "" });
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(true);
@@ -70,6 +73,7 @@ export function useGifts() {
         let active = true;
         setLoading(true);
         setBackendInvitation(null);
+        setShowForm(false); setEditingId(null); createRequestId.current = null;
         setGifts([]); setGuestOptions([]);
         setError("");
 
@@ -125,22 +129,31 @@ export function useGifts() {
     });
 
     const resetForm = () => {
+        setShowForm(false); setError(''); createRequestId.current = null;
         setEditingId(null);
-        setForm({ name: "", guestId: null, amount: "", currency: "USD", method: "Bakong QR", date: "", note: "" });
+        setForm({ name: "", guestId: null, amount: "", currency: "USD", method: "Cash", date: localDateString(), note: "" });
     };
 
     const openAddForm = () => {
+        setShowForm(true); setError(''); createRequestId.current = crypto.randomUUID();
         setEditingId(null);
-        setForm({ name: "", guestId: null, amount: "", currency: "USD", method: "Bakong QR", date: "", note: "" });
+        setForm({ name: "", guestId: null, amount: "", currency: "USD", method: "Cash", date: localDateString(), note: "" });
     };
 
     const submitGift = async (event) => {
         event.preventDefault();
-        if (!form.name.trim() || !eventId || !backendInvitation?.id || saving) return;
+        if (!form.name.trim() || !eventId || !backendInvitation?.id || inFlight.current) return false;
+        const amount = Number(form.amount || 0);
+        if (!Number.isFinite(amount) || amount < 0 || amount > 9999999999.99 || !/^\d+(?:\.\d{1,2})?$/.test(form.amount || '0') || !['USD', 'KHR'].includes(form.currency)) {
+            setError('Enter a nonnegative amount with at most two decimal places and choose USD or KHR.'); return false;
+        }
+        if (isDuplicateGift) return false;
+        inFlight.current = true;
         setSaving(true);
         setError("");
         try {
             const payload = toGiftPayload(form);
+            if (!editingId) payload.clientRequestId = createRequestId.current ||= crypto.randomUUID();
             if (backendInvitation?.id) {
                 if (editingId) {
                     const updated = await giftsApi.updateGift(backendInvitation.id, editingId, payload);
@@ -161,14 +174,18 @@ export function useGifts() {
                 saveWeddingGifts(nextGifts, eventId);
             }
             resetForm();
+            return true;
         } catch (err) {
             setError(err.message || "Could not save wedding gift");
+            return false;
         } finally {
             setSaving(false);
+            inFlight.current = false;
         }
     };
 
     const editGift = (gift) => {
+        setShowForm(true); setError('');
         setEditingId(gift.id);
         setForm({ name: gift.name, guestId: gift.guestId || null, amount: String(gift.amount), currency: gift.currency || "USD", method: gift.method, date: gift.date, note: gift.note || "" });
     };
@@ -196,6 +213,7 @@ export function useGifts() {
 
     return {
         eventId,
+        showForm,
         drafts,
         backendInvitation,
         gifts,

@@ -35,6 +35,7 @@ export function ExpenseTable({
     saving,
     t,
     lang = "en",
+    onAddExpense,
 }) {
     const filtered = expenses.filter((e) => {
         const matchCat = selectedCat === "All" || e.category === selectedCat;
@@ -45,7 +46,7 @@ export function ExpenseTable({
     return (
         <div className="exp-content">
             {/* Filter bar */}
-            <div className="exp-filter-bar">
+            {expenses.length > 0 && <div className="exp-filter-bar">
                 <div className="exp-cats">
                     <button
                         type="button"
@@ -81,7 +82,7 @@ export function ExpenseTable({
                         onChange={(e) => setSearch(e.target.value)}
                     />
                 </div>
-            </div>
+            </div>}
 
             {filtered.length === 0 ? (
                 <div className="exp-empty">
@@ -89,6 +90,7 @@ export function ExpenseTable({
                     <h3>{t ? t(expenses.length ? "noMatches" : "emptyTitle") : "No expense records yet"}</h3>
                     <p>{t ? t(expenses.length ? "noMatchesText" : "emptyText") : "Start by recording your first wedding expense."}</p>
                     {expenses.length > 0 && <button type="button" className="workspace-button" onClick={() => { setSelectedCat("All"); setSearch(""); }}>{t ? t("clearFilters") : "Clear filters"}</button>}
+                    {!expenses.length && onAddExpense && <button type="button" className="workspace-button primary" onClick={onAddExpense}>{lang === 'en' ? 'Record first expense' : 'កត់ត្រាចំណាយដំបូង'}</button>}
                 </div>
             ) : (
                 <div className="exp-table-wrap">
