@@ -37,3 +37,7 @@ native MySQL will be initialized under a new private Phase 6 directory, bound
 to loopback on a dedicated port. No outbound email/SMS/payment is authorized.
 Existing V1–V43 migrations, Phase 5 import receipts, covers, seating versions,
 gift identities and address/map semantics remain preserved.
+
+## Concurrent local state
+
+Commit `44c7d1d3cd1c1ec33edb122723d80af0e6b2e85e` appeared during initial inspection, before the first Phase 6 commit. It includes user test work and the previously untracked compiled test directory. It is preserved in the ancestry and is not attributed to Phase 6.
