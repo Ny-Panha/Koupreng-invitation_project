@@ -1,5 +1,6 @@
 package com.koupreng.backend.guest.application;
 
+import com.koupreng.backend.invitation.application.EventAccessPolicy.Permission;
 import com.koupreng.backend.invitation.application.InvitationService;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -89,7 +90,7 @@ public class GuestService {
 
     @Transactional(isolation = org.springframework.transaction.annotation.Isolation.READ_COMMITTED)
     public GuestResponse create(Authentication authentication, Long invitationId, GuestRequest request) {
-        UserInvitation invitation = invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        UserInvitation invitation = invitationService.requireEventPermission(authentication, invitationId, Permission.MANAGE_GUESTS);
         requireGuestCapacity(invitation, 1);
         ensureUniqueGuest(invitationId, null, request);
         Guest guest = new Guest();
@@ -102,7 +103,7 @@ public class GuestService {
 
     @Transactional
     public List<GuestResponse> list(Authentication authentication, Long invitationId) {
-        UserInvitation invitation = invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        UserInvitation invitation = invitationService.requireEventPermission(authentication, invitationId, Permission.MANAGE_GUESTS);
         return guestRepository.findByInvitationIdOrderByCreatedAtDesc(invitationId).stream()
                 .map(guest -> {
                     ensureInvitationLink(invitation, guest);
@@ -113,7 +114,7 @@ public class GuestService {
 
     @Transactional
     public List<GuestGroupResponse> groupedByCategory(Authentication authentication, Long invitationId) {
-        UserInvitation invitation = invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        UserInvitation invitation = invitationService.requireEventPermission(authentication, invitationId, Permission.MANAGE_GUESTS);
         List<Guest> guests = guestRepository.findByInvitationIdOrderByGuestGroupAscTableNumberAscGuestNameAsc(invitationId);
         Map<String, List<GuestResponse>> grouped = new LinkedHashMap<>();
         for (Guest guest : guests) {
@@ -132,7 +133,7 @@ public class GuestService {
 
     @Transactional
     public GuestSendListResponse sendList(Authentication authentication, Long invitationId) {
-        UserInvitation invitation = invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        UserInvitation invitation = invitationService.requireEventPermission(authentication, invitationId, Permission.MANAGE_GUESTS);
         List<Guest> guests = guestRepository.findByInvitationIdOrderByGuestGroupAscTableNumberAscGuestNameAsc(invitationId);
         List<GuestSendListItemResponse> items = guests.stream()
                 .map(guest -> {
@@ -151,13 +152,13 @@ public class GuestService {
 
     @Transactional(readOnly = true)
     public GuestResponse get(Authentication authentication, Long invitationId, Long guestId) {
-        invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        invitationService.requireEventPermission(authentication, invitationId, Permission.MANAGE_GUESTS);
         return GuestResponse.from(requireGuest(invitationId, guestId));
     }
 
     @Transactional
     public GuestResponse update(Authentication authentication, Long invitationId, Long guestId, GuestRequest request) {
-        invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        invitationService.requireEventPermission(authentication, invitationId, Permission.MANAGE_GUESTS);
         Guest guest = requireGuest(invitationId, guestId);
         ensureUniqueGuest(invitationId, guestId, request);
         applyRequest(guest, request);
@@ -169,13 +170,13 @@ public class GuestService {
 
     @Transactional
     public void delete(Authentication authentication, Long invitationId, Long guestId) {
-        invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        invitationService.requireEventPermission(authentication, invitationId, Permission.MANAGE_GUESTS);
         guestRepository.delete(requireGuest(invitationId, guestId));
     }
 
     @Transactional(readOnly = true)
     public List<GuestResponse> search(Authentication authentication, Long invitationId, String keyword) {
-        invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        invitationService.requireEventPermission(authentication, invitationId, Permission.MANAGE_GUESTS);
         if (keyword == null || keyword.isBlank()) {
             return list(authentication, invitationId);
         }
@@ -186,7 +187,7 @@ public class GuestService {
 
     @Transactional(isolation = org.springframework.transaction.annotation.Isolation.READ_COMMITTED)
     public List<GuestResponse> importGuests(Authentication authentication, Long invitationId, GuestImportRequest request) {
-        UserInvitation invitation = invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        UserInvitation invitation = invitationService.requireEventPermission(authentication, invitationId, Permission.MANAGE_GUESTS);
         requireImportFeature(invitation);
         requireGuestCapacity(invitation, (int) request.getGuests().stream()
                 .filter(guest -> guest.getGuestName() != null && !guest.getGuestName().isBlank()).count());
@@ -210,7 +211,7 @@ public class GuestService {
             Long invitationId,
             MultipartFile file
     ) {
-        UserInvitation invitation = invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        UserInvitation invitation = invitationService.requireEventPermission(authentication, invitationId, Permission.MANAGE_GUESTS);
         validateImportFile(file);
         List<GuestImportFilePreviewResponse.ValidRow> accepted = new ArrayList<>();
         List<GuestImportErrorResponse> errors = new ArrayList<>();
@@ -247,7 +248,7 @@ public class GuestService {
             Long invitationId,
             MultipartFile file
     ) {
-        UserInvitation invitation = invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        UserInvitation invitation = invitationService.requireEventPermission(authentication, invitationId, Permission.MANAGE_GUESTS);
         requireImportFeature(invitation);
         validateImportFile(file);
 
@@ -288,7 +289,7 @@ public class GuestService {
     }
 
     public String exportGuestCsv(Authentication authentication, Long invitationId) {
-        invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        invitationService.requireEventPermission(authentication, invitationId, Permission.MANAGE_GUESTS);
         List<Guest> guests = guestRepository.findByInvitationIdOrderByGuestGroupAscTableNumberAscGuestNameAsc(invitationId);
         Map<Long, Rsvp> rsvpsByGuestId = rsvpRepository.findByInvitationIdOrderByRespondedAtDesc(invitationId).stream()
                 .filter(rsvp -> rsvp.getGuest() != null && rsvp.getGuest().getId() != null)

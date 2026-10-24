@@ -12,6 +12,7 @@ import {
 import { ErrorState, FormField, LoadingButton, Modal, SkeletonCard, toast } from "@/shared/ui";
 import { useOrganizations } from "./hooks/useOrganizations";
 import OrganizationCard from "./components/OrganizationCard";
+import AcceptTeamInvitation from "./components/AcceptTeamInvitation";
 
 import "./OrganizationPage.css";
 
@@ -72,7 +73,7 @@ export default function OrganizationPage() {
               )}
             </h1>
             <p className="k-org-header-desc">
-              {uiCopy("គ្រប់គ្រងក្រុមការងារ ដៃគូសហការ អ្នករៀបចំការ និងបុគ្គលិកកត់ត្រាចងដៃ ឬវត្តមានភ្ញៀវរួមគ្នា។", "Manage your team, collaborators, planners, gift recorders and check-in staff together.")}
+              {uiCopy("សហការលើធៀប ភ្ញៀវ និងវត្តមាន តាមតួនាទី និងកញ្ចប់របស់ម្ចាស់។ ការផ្សព្វផ្សាយ ហិរញ្ញវត្ថុ និងសមាជិកស្ថិតក្រោមម្ចាស់។", "Collaborate on invitations, guests and attendance using the owner’s eligible plan. Publishing, finances and membership stay owner-controlled.")}
             </p>
           </div>
 
@@ -88,6 +89,7 @@ export default function OrganizationPage() {
           </div>
         </header>
 
+        <AcceptTeamInvitation onAccepted={loadOrganizations} />
         {/* Content Section */}
         {error ? (
           <ErrorState message={error} onRetry={loadOrganizations} />

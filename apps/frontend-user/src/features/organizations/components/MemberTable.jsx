@@ -50,6 +50,7 @@ export default function MemberTable({
               </td>
               <td>
                 <StatusBadge status={member.status || "ACTIVE"} />
+                {!isMemberOwner && member.status === 'ACTIVE' && !member.inviteAcceptedAt && <p>{uiCopy('សិទ្ធិកម្មវិធីត្រូវការការអញ្ជើញថ្មី និងការទទួលយក។', 'Event access needs a new accepted invitation.')}</p>}
               </td>
               <td style={{ color: "#64748b", fontSize: "0.85rem" }}>
                 {member.joinedAt

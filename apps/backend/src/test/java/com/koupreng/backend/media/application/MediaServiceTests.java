@@ -1,5 +1,6 @@
 package com.koupreng.backend.media.application;
 
+import com.koupreng.backend.invitation.application.EventAccessPolicy.Permission;
 import com.koupreng.backend.invitation.application.InvitationService;
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.media.api.dto.MediaListResponse;
@@ -240,7 +241,7 @@ class MediaServiceTests {
     @Test
     void ownerAuthorizationRunsBeforeUpload() {
         Fixture fixture = fixture();
-        when(fixture.invitationService.requireOwnedInvitationEntity(fixture.authentication, 10L))
+        when(fixture.invitationService.requireEventPermission(fixture.authentication, 10L, Permission.MANAGE_INVITATION))
                 .thenThrow(new ApiException(HttpStatus.FORBIDDEN, "Forbidden"));
 
         ApiException exception = assertThrows(
@@ -314,7 +315,7 @@ class MediaServiceTests {
         UserInvitation invitation = invitation();
         MediaService service = new MediaService(mediaFileRepository, invitationService, storageService);
 
-        when(invitationService.requireOwnedInvitationEntity(authentication, 10L)).thenReturn(invitation);
+        when(invitationService.requireEventPermission(authentication, 10L, Permission.MANAGE_INVITATION)).thenReturn(invitation);
         when(storageService.upload(any(), any(), eq(10L)))
                 .thenReturn(new StorageUploadResult("https://cdn.example/media.png", "new-public-id", "test"));
         when(mediaFileRepository.save(any(MediaFile.class))).thenAnswer(invocation -> {

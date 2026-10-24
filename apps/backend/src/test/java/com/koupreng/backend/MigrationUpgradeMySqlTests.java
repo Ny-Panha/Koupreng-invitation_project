@@ -19,6 +19,32 @@ import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 @EnabledIfEnvironmentVariable(named = "RUN_FLYWAY_INTEGRATION", matches = "true")
 class MigrationUpgradeMySqlTests {
 
+    @Test void organizationUpgradePreservesLegacyMembershipsWithoutInventingConsent() throws Exception {
+        String url = required("FLYWAY_TEST_DB_URL"), username = required("FLYWAY_TEST_DB_USERNAME"), password = required("FLYWAY_TEST_DB_PASSWORD");
+        String schema = "koupreng_upgrade_" + UUID.randomUUID().toString().replace("-", "");
+        if (!url.startsWith("jdbc:mysql://") || !schema.matches("koupreng_upgrade_[a-f0-9]{32}")) throw new IllegalStateException("Disposable MySQL required");
+        int start = url.indexOf('/', "jdbc:mysql://".length()), query = url.indexOf('?');
+        String schemaUrl = url.substring(0, start + 1) + schema + (query < 0 ? "" : url.substring(query));
+        try (var control = DriverManager.getConnection(url, username, password); var admin = control.createStatement()) {
+            admin.execute("CREATE DATABASE `" + schema + "` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+            try {
+                Flyway.configure().dataSource(schemaUrl, username, password).target("46").load().migrate();
+                try (var connection = DriverManager.getConnection(schemaUrl, username, password); var sql = connection.createStatement()) {
+                    var before = checksums(sql);
+                    sql.execute("INSERT INTO users(user_id,full_name,email,role,status,created_at,updated_at) VALUES(900003,'Preserved team owner','team-upgrade@example.test','USER','ACTIVE',NOW(),NOW())");
+                    sql.execute("INSERT INTO organizations(organization_id,name,slug,owner_user_id,status,created_at,updated_at) VALUES(900003,'Preserved team','preserved-team',900003,'ACTIVE',NOW(),NOW())");
+                    sql.execute("INSERT INTO organization_members(member_id,organization_id,user_id,email,role,status,joined_at,created_at,updated_at) VALUES(900003,900003,900003,'team-upgrade@example.test','OWNER','ACTIVE',NOW(),NOW(),NOW())");
+                    sql.execute("INSERT INTO organization_members(member_id,organization_id,email,role,status,invited_at,created_at,updated_at) VALUES(900004,900003,'pending-upgrade@example.test','VIEWER','INVITED',NOW(),NOW(),NOW())");
+                    var upgrade = Flyway.configure().dataSource(schemaUrl, username, password).load(); upgrade.migrate(); upgrade.validate();
+                    var after = checksums(sql); before.forEach((version, checksum) -> assertEquals(checksum, after.get(version)));
+                    assertEquals("ACTIVE", scalar(sql, "SELECT status FROM organization_members WHERE member_id=900003"));
+                    assertEquals("INVITED", scalar(sql, "SELECT status FROM organization_members WHERE member_id=900004"));
+                    assertEquals("2", scalar(sql, "SELECT COUNT(*) FROM organization_members WHERE organization_id=900003 AND invite_token_hash IS NULL AND invite_expires_at IS NULL AND invite_accepted_at IS NULL"));
+                }
+            } finally { admin.execute("DROP DATABASE `" + schema + "`"); }
+        }
+    }
+
     @Test void retiredZeroPriceFreePolicyIsRestoredWithoutChangingItsBenefits() throws Exception {
         String serverUrl = required("FLYWAY_TEST_DB_URL"), username = required("FLYWAY_TEST_DB_USERNAME"), password = required("FLYWAY_TEST_DB_PASSWORD");
         String schema = "koupreng_upgrade_" + UUID.randomUUID().toString().replace("-", "");

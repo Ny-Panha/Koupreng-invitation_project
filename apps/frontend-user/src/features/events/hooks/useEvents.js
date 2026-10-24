@@ -35,6 +35,7 @@ export function useEvents(t) {
                         return {
                             ...apiInv,
                             ...matchingLocal,
+                            shared: apiInv.shared,
                             coverIdentity,
                             id: apiInv.id,
                             coverUrl: apiInv.coverUrl,
@@ -83,6 +84,7 @@ export function useEvents(t) {
     }, [loadDrafts]);
 
     const handleDeleteClick = (draft) => {
+        if (draft.shared) return;
         setDraftToDelete(draft);
     };
 
@@ -140,6 +142,7 @@ export function useEvents(t) {
     useEffect(() => {
         if (!backendListLoaded) return undefined;
         const draftsToSync = drafts.filter((draft) => {
+            if (draft.shared) return false;
             const isLocalOnly = draft.syncStatus === "LOCAL_ONLY"
                 || (!draft.backendInvitationId && typeof draft.id === "string" && draft.id.startsWith("wed-"));
             const isRetry = draft.syncStatus === "SYNC_FAILED";
@@ -163,7 +166,7 @@ export function useEvents(t) {
 
     const confirmDelete = async (directDraft) => {
         const target = (directDraft && directDraft.id) ? directDraft : draftToDelete;
-        if (!target) return;
+        if (!target || target.shared) return;
         setIsDeleting(true);
 
         const targetId = target.id;

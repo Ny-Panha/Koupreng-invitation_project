@@ -2554,3 +2554,4 @@
 
 
 .delivery-page-container .delivery-header > div > p { color: var(--ui-muted); }
+.checkin-input-group[hidden], .checkin-gift-section[hidden], .checkin-field[hidden], .checkin-hero-actions button[hidden] { display: none !important; }

@@ -3,6 +3,7 @@ import { unwrap } from "@/shared/api/helpers";
 import { downloadCsv } from "@/shared/api/downloadCsv";
 
 export const guestService = {
+  checkInRoster: (id, params = {}) => api.get(`/v1/invitations/${id}/check-in/roster`, { params }).then(unwrap),
   inspectImport: (invitationId, file) => {
     const form = new FormData(); form.append('file', file);
     return api.post(`/v1/invitations/${invitationId}/guests/import-batch/inspect`, form).then(unwrap);

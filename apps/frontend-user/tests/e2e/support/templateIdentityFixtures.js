@@ -12,7 +12,7 @@ export const identityCatalog = [
 export async function installIdentityFixtures(page, { catalog = identityCatalog, delay = 0, denyPremium = false } = {}) {
   await fixtures(page);
   const events = new Map([101, 102].map((id, i) => [id, {
-    id, title: i ? "Garden celebration" : "Celestial celebration", eventType: "WEDDING",
+    id, userId: 7, title: i ? "Garden celebration" : "Celestial celebration", eventType: "WEDDING",
     templateId: i ? 2 : 4, templateCode: i ? "garden-royal-khmer-wedding" : "khmer-celestial",
     groomName: i ? "Garden host" : "Celestial host", brideName: "Review partner", hostName: "Review host", partnerName: "Review partner",
     status: "DRAFT", slug: i ? "review-garden" : "review-celestial", languageMode: "EN", visibility: "PUBLIC",

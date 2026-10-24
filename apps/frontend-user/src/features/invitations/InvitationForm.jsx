@@ -1,5 +1,6 @@
 import { templateCapabilities } from "../templates/registry/templateCapabilities";
 import { useUiCopy } from "@/shared/i18n/useUiCopy";
+import { useEventWorkspace } from "../events/workspace/EventContext";
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import WeddingProgramEditor from "./studio/WeddingProgramEditor";
 import { legacyProgram, normalizeProgram } from "../templates/shared/program";
@@ -576,6 +577,7 @@ const DEFAULT_STATE = {
 };
 
 export default function InvitationForm({ invitation }) {
+    const workspace = useEventWorkspace();
   const uiCopy = useUiCopy();
     const { text: t, lang: uiLanguage } = useBackendMessages("invitations");
     const englishUI = uiLanguage === "en";
@@ -1742,6 +1744,7 @@ export default function InvitationForm({ invitation }) {
         english: englishUI, enabled: Boolean(invitationId && /^[1-9]\d*$/.test(String(invitationId))) && !pendingCoverFile && !pendingCoverBgFile && !pendingBackgroundFile && !pendingInvitationFile && !pendingInvitation2File && !JSON.stringify(form).includes("data:") });
 
     const readiness = publishReadiness(form, invitation?.eventType || "WEDDING");
+    const canPublish = (workspace ? workspace.isOwner : true) && Boolean(invitation?.backendInvitationId || /^[1-9]\d*$/.test(String(invitationId || "")));
     function goToGuideStep(step) {
         setGuideStep(step);
         if (step === 0) setSelectedSection("eventInfo");
@@ -3209,14 +3212,14 @@ export default function InvitationForm({ invitation }) {
             {(() => {
                 const toolbar = <StudioToolbar title={form.title} templateName={getTemplateById(form.templateId)?.name || form.templateId}
                     english={englishUI} studio={studio} saving={isSaving} publishing={isPublishing} published={published}
-                    canPublish={Boolean(invitation?.backendInvitationId || /^[1-9]\d*$/.test(String(invitationId || "")))}
+                    canPublish={canPublish}
                     onTemplate={() => setIsTemplateModalOpen(true)} onPreview={openPreview} previewOpen={isMobilePreviewOpen} onPublish={reviewPublication}
                     onBack={() => navigate(params.eventId ? `/app/events/${params.eventId}` : invitationId ? `/app/events/${invitationId}` : "/app/events")} />;
                 const mount = params.eventId && document.getElementById("invitation-studio-toolbar");
                 return mount ? createPortal(toolbar, mount) : toolbar;
             })()}
             {studio.error && <div className="studio-save-error" role="alert"><span>{studio.error}</span>{!["conflict", "expired"].includes(studio.phase) && <button type="button" onClick={() => studio.save()} disabled={isSaving}>{uiCopy("រក្សាទុកម្ដងទៀត", "Retry save")}</button>}{["conflict", "expired"].includes(studio.phase) && <><p>{uiCopy("ចម្លងអត្ថបទសំខាន់ ឬទាញយកពង្រាងនេះ មុនបើកកម្មវិធីម្ដងទៀត។", "Copy important text or download this draft before reopening the event.")}</p><button type="button" onClick={() => { const url = URL.createObjectURL(new Blob([JSON.stringify(form, null, 2)], { type: "application/json" })); const link = document.createElement("a"); link.href = url; link.download = "invitation-unsaved-draft.json"; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }}>{uiCopy("ទាញយកពង្រាងមិនទាន់រក្សាទុក", "Download unsaved draft")}</button></>}</div>}
-            <StudioGuide mode={editorMode} onMode={setEditorMode} step={guideStep} onStep={goToGuideStep} sections={flowConfig.sectionOrder} activeSection={activeSection} onSection={setSelectedSection} english={englishUI} checks={readiness} onField={completePublishField} onPreview={openPreview} onGuests={() => openEventTool("guests")} onRsvp={() => openEventTool("rsvp")} onPublish={reviewPublication} published={published} publishedUrl={publishedUrl} saving={isSaving || isPublishing} />
+            <StudioGuide mode={editorMode} onMode={setEditorMode} step={guideStep} onStep={goToGuideStep} sections={flowConfig.sectionOrder} activeSection={activeSection} onSection={setSelectedSection} english={englishUI} checks={readiness} onField={completePublishField} onPreview={openPreview} onGuests={() => openEventTool("guests")} onRsvp={() => openEventTool("rsvp")} onPublish={reviewPublication} published={published} publishedUrl={publishedUrl} saving={isSaving || isPublishing} canPublish={canPublish} canManageGuests={workspace ? workspace.can?.("MANAGE_GUESTS") : true} />
             <PublishReview open={publishReviewOpen} onClose={() => setPublishReviewOpen(false)} onConfirm={publishInvitation} onCheck={checkPublication} checks={readiness} onField={completePublishField} english={englishUI} publishing={isPublishing} error={publishError} visibility={form.visibility} published={published} />
             {/* The controls and preview continue to use the original template engine. */}
             <div className="pe-workspace-grid">

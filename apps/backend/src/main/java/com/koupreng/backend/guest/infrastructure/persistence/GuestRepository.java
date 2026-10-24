@@ -11,6 +11,17 @@ import java.util.List;
 import java.util.Optional;
 
 public interface GuestRepository extends JpaRepository<Guest, Long> {
+    @Query("""
+            select g from Guest g where g.invitation.id = :invitationId
+              and (:search = '' or lower(g.guestName) like lower(concat('%',:search,'%')) escape '!'
+                   or lower(coalesce(g.tableNumber,'')) like lower(concat('%',:search,'%')) escape '!')
+              and (:status = 'ALL'
+                   or (:status = 'CHECKED_IN' and exists (select 1 from GuestCheckIn c where c.guest = g and c.invitation.id = :invitationId and c.active = true))
+                   or (:status = 'PENDING' and not exists (select 1 from GuestCheckIn c where c.guest = g and c.invitation.id = :invitationId and c.active = true)))
+            order by g.createdAt desc, g.id desc
+            """)
+    org.springframework.data.domain.Page<Guest> findCheckInRoster(@Param("invitationId") Long invitationId,
+            @Param("search") String search, @Param("status") String status, org.springframework.data.domain.Pageable pageable);
 
     List<Guest> findByInvitationIdOrderByCreatedAtDesc(Long invitationId);
 

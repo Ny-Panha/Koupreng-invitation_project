@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus;
 
 import java.util.Objects;
 
-/** Owner-only workspace policy. Organization membership never implies event access.
- * Collaborator grants can be added here once each module enforces a specific permission.
+/** Legacy owner guard stays strict. Participating modules explicitly call
+ * EventCollaborationService through the permission-aware application service.
  */
 public final class EventAccessPolicy {
     public enum Permission {

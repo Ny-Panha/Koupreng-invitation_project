@@ -152,6 +152,7 @@ export function EventCard({
         <h2 className="event-card-title" title={title}>
           {title}
         </h2>
+        {draft.shared && <p className="event-card-owner">{en ? 'Shared by' : 'ចែករំលែកដោយ'} {draft.ownerName || (en ? 'event owner' : 'ម្ចាស់កម្មវិធី')}</p>}
 
         {/* Couple Names */}
         {coupleText && coupleText !== title && (
@@ -201,7 +202,7 @@ export function EventCard({
             <span>{en ? "Manage event" : "គ្រប់គ្រងកម្មវិធី"}</span>
           </button>
 
-          <button
+          {!draft.shared && <button
             type="button"
             className="event-card-btn event-card-btn--secondary"
             onClick={(event) => {
@@ -213,7 +214,7 @@ export function EventCard({
             <span>
               {(t && t("editBtn")) || (en ? "Edit" : "កែសម្រួល")}
             </span>
-          </button>
+          </button>}
 
           {onPreview && (
             <button
@@ -230,7 +231,7 @@ export function EventCard({
           )}
 
           {/* 3-dots overflow menu */}
-          <div className="event-card-menu-wrap" ref={menuRef}>
+          {!draft.shared && <div className="event-card-menu-wrap" ref={menuRef}>
             <button
               type="button"
               className={`event-card-dots-btn ${isMenuOpen ? "is-active" : ""}`}
@@ -276,7 +277,7 @@ export function EventCard({
                 </button>
               </div>
             )}
-          </div>
+          </div>}
         </div>
       </div>
     </article>

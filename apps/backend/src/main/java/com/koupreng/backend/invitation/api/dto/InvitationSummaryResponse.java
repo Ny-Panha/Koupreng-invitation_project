@@ -17,6 +17,9 @@ import java.time.LocalDate;
 public class InvitationSummaryResponse {
 
     private Long id;
+    private Long userId;
+    private String ownerName;
+    private boolean shared;
     private Long templateId;
     private String templateCode;
     private String templateName;
@@ -53,6 +56,8 @@ public class InvitationSummaryResponse {
 
         return InvitationSummaryResponse.builder()
                 .id(invitation.getId())
+                .userId(invitation.getUser() == null ? null : invitation.getUser().getId())
+                .ownerName(invitation.getUser() == null ? null : invitation.getUser().getFullName())
                 .templateId(templateId)
                 .templateCode(templateCode)
                 .templateName(templateName)

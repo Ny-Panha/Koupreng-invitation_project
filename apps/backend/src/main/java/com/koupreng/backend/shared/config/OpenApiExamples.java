@@ -76,6 +76,12 @@ final class OpenApiExamples {
                       "newPassword": "NewExamplePass123!"
                     }
                     """);
+            case "EventTeamLinkRequest" -> one("linkOwnedTeam", "Link a team owned by this event owner", """
+                    {"organizationId":10,"expectedUpdatedAt":"2026-10-24T08:00:00Z"}
+                    """);
+            case "OrganizationInvitationAcceptRequest" -> one("acceptInvitation", "Replace this fictional code with your privately shared one-time invitation code", """
+                    {"token":"0000000000000000000000000000000000000000000000000000000000000000"}
+                    """);
             case "InvitationRequest" -> invitationExamples();
             case "InvitationCustomizationRequest" -> one("weddingDesign", "Customize a bilingual wedding invitation", """
                     {

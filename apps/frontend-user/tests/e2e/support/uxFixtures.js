@@ -8,8 +8,8 @@ export const uxPlans = [
   { id: 3, code: "PREMIUM", packageName: "Premium", description: "Higher event and guest limits for frequent hosts.", price: 499, currency: "USD", durationDays: 365, billingInterval: "CUSTOM", maxInvitations: 999, maxGuestsPerInvitation: 5000, maxTeamMembers: 25, premiumTemplatesEnabled: true, qrCheckInEnabled: true, seatingEnabled: true },
 ];
 export const uxEvents = [
-  { id: 101, title: "Dara & Sophea", eventType: "WEDDING", hostName: "Dara", groomName: "Dara", brideName: "Sophea", status: "DRAFT", templateId: 30, templateCode: "event-essential", eventDate: "2026-12-20", eventTime: "17:30:00", venueName: "Phnom Penh", visibility: "PRIVATE", languageMode: "EN" },
-  { id: 102, title: "Sokha’s birthday", eventType: "BIRTHDAY", hostName: "Sokha", status: "DRAFT", templateId: 30, templateCode: "event-essential", eventDate: "2026-12-22", venueName: "Garden House", languageMode: "EN" },
+  { id: 101, userId: 7, title: "Dara & Sophea", eventType: "WEDDING", hostName: "Dara", groomName: "Dara", brideName: "Sophea", status: "DRAFT", templateId: 30, templateCode: "event-essential", eventDate: "2026-12-20", eventTime: "17:30:00", venueName: "Phnom Penh", visibility: "PRIVATE", languageMode: "EN" },
+  { id: 102, userId: 7, title: "Sokha’s birthday", eventType: "BIRTHDAY", hostName: "Sokha", status: "DRAFT", templateId: 30, templateCode: "event-essential", eventDate: "2026-12-22", venueName: "Garden House", languageMode: "EN" },
 ];
 export async function installUxFixtures(page, lang = "en") {
   const calls = [];

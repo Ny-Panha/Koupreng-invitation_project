@@ -29,6 +29,14 @@ import java.util.List;
 @Tag(name = "Check-In", description = "Invitation-owner guest check-in by QR token or manual selection.")
 @SecurityRequirement(name = "bearerAuth")
 public class CheckInController {
+    @GetMapping("/invitations/{invitationId}/check-in/roster")
+    public ResponseEntity<ApiResponse<com.koupreng.backend.checkin.api.dto.CheckInRosterResponse>> roster(Authentication authentication,
+            @PathVariable Long invitationId, @org.springframework.web.bind.annotation.RequestParam(defaultValue = "0") int page,
+            @org.springframework.web.bind.annotation.RequestParam(defaultValue = "50") int size,
+            @org.springframework.web.bind.annotation.RequestParam(defaultValue = "") String search,
+            @org.springframework.web.bind.annotation.RequestParam(defaultValue = "ALL") String status) {
+        return ResponseEntity.ok(ApiResponse.success("Check-in roster fetched", checkInService.roster(authentication, invitationId, page, size, search, status)));
+    }
 
     private final CheckInService checkInService;
 

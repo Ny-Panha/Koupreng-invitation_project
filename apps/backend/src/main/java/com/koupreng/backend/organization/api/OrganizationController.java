@@ -45,6 +45,15 @@ public class OrganizationController {
         ));
     }
 
+    @PostMapping("/invitations/accept")
+    public ResponseEntity<ApiResponse<OrganizationResponse>> acceptInvitation(
+            Authentication authentication,
+            @Valid @RequestBody com.koupreng.backend.organization.api.dto.OrganizationInvitationAcceptRequest request
+    ) {
+        return ResponseEntity.ok(ApiResponse.success("Organization invitation accepted",
+                organizationService.acceptInvitation(authentication, request.token())));
+    }
+
     @PostMapping
     public ResponseEntity<ApiResponse<OrganizationResponse>> create(
             Authentication authentication,

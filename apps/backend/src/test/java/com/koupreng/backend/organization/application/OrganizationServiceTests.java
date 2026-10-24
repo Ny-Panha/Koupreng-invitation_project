@@ -20,6 +20,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -27,6 +29,46 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class OrganizationServiceTests {
+
+    @Test
+    void existingAccountStillNeedsOneTimeAcceptanceAndTokenIsNotStoredOrListed() {
+        Fixture f = fixture();
+        when(f.userRepository.findByEmailIgnoreCase("member@example.test")).thenReturn(Optional.of(user(2L, "member@example.test")));
+        when(f.memberRepository.save(any())).thenAnswer(call -> { OrganizationMember member = call.getArgument(0); member.setId(20L); return member; });
+        var response = f.service.addMember(f.authentication, 10L, memberRequest("member@example.test", "DESIGNER"));
+        var capture = org.mockito.ArgumentCaptor.forClass(OrganizationMember.class);
+        verify(f.memberRepository).save(capture.capture());
+        OrganizationMember member = capture.getValue();
+        assertEquals("INVITED", member.getStatus());
+        assertNull(member.getUser());
+        assertNotEquals(response.getInvitationToken(), member.getInviteTokenHash());
+        assertEquals(64, response.getInvitationToken().length());
+        assertNull(com.koupreng.backend.organization.api.dto.OrganizationMemberResponse.from(member).getInvitationToken());
+        when(f.memberRepository.findByInviteTokenHash(member.getInviteTokenHash())).thenReturn(Optional.of(member));
+        when(f.memberRepository.findForUpdateByInviteTokenHash(member.getInviteTokenHash())).thenReturn(Optional.of(member));
+        when(f.currentUserService.currentUser(f.authentication)).thenReturn(user(2L, "member@example.test"));
+        f.service.acceptInvitation(f.authentication, response.getInvitationToken());
+        assertEquals("ACTIVE", member.getStatus());
+        assertEquals(2L, member.getUser().getId());
+        assertNull(member.getInviteTokenHash());
+        assertThrows(ApiException.class, () -> f.service.acceptInvitation(f.authentication, response.getInvitationToken()));
+    }
+
+    @Test
+    void expiredOrWrongRecipientAcceptanceNeverActivatesMembership() {
+        Fixture f = fixture();
+        var org = new Organization(); org.setId(10L); org.setOwner(user(1L,"owner@example.test")); org.setStatus("ACTIVE");
+        var member = new OrganizationMember(); member.setOrganization(org); member.setEmail("intended@example.test");
+        member.setInviteExpiresAt(java.time.Instant.now().plusSeconds(60));
+        when(f.memberRepository.findByInviteTokenHash(any())).thenReturn(Optional.of(member));
+        when(f.memberRepository.findForUpdateByInviteTokenHash(any())).thenReturn(Optional.of(member));
+        assertEquals(HttpStatus.NOT_FOUND, assertThrows(ApiException.class, () -> f.service.acceptInvitation(f.authentication, "a".repeat(64))).getStatus());
+        when(f.currentUserService.currentUser(f.authentication)).thenReturn(user(2L,"intended@example.test"));
+        member.setInviteExpiresAt(java.time.Instant.now().minusSeconds(1));
+        assertThrows(ApiException.class, () -> f.service.acceptInvitation(f.authentication, "a".repeat(64)));
+        assertEquals("INVITED", member.getStatus());
+        assertNull(member.getUser());
+    }
 
     @Test
     void ownerRoleCannotBeAssignedThroughMemberEndpoint() {

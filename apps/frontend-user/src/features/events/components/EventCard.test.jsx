@@ -3,6 +3,13 @@ import { afterEach, expect, it, vi } from 'vitest';
 import { EventCard } from './EventCard';
 import { useLanguageStore } from '@/stores/useLanguageStore';
 afterEach(cleanup);
+it('names a shared event owner and keeps owner-only actions out of its card', () => {
+  useLanguageStore.setState({lang:'en'});
+  render(<EventCard draft={{id:9,title:'Shared event',shared:true,ownerName:'Fictional owner'}} onManage={vi.fn()} onDelete={vi.fn()} onEdit={vi.fn()} />);
+  expect(screen.getByText('Shared by Fictional owner')).toBeInTheDocument();
+  expect(screen.queryByRole('button',{name:'Edit',exact:true})).not.toBeInTheDocument();
+  expect(screen.queryByRole('button',{name:'More options'})).not.toBeInTheDocument();
+});
 it.each(['DRAFT', 'PUBLISHED'])('prioritizes management for the %s event and keeps event identity explicit', status => {
   useLanguageStore.setState({lang:'en'});
   const onEdit=vi.fn(), onManage=vi.fn();

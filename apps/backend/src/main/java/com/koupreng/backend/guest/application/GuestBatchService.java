@@ -1,5 +1,6 @@
 package com.koupreng.backend.guest.application;
 
+import com.koupreng.backend.invitation.application.EventAccessPolicy.Permission;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koupreng.backend.guest.api.dto.*;
 import com.koupreng.backend.guest.api.dto.GuestBatchResponse.RowResult;
@@ -35,19 +36,19 @@ public class GuestBatchService {
 
     @Transactional(readOnly = true)
     public GuestImportSourceResponse inspect(Authentication auth, Long eventId, MultipartFile file) {
-        invitations.requireOwnedInvitationEntity(auth, eventId);
+        invitations.requireEventPermission(auth, eventId, Permission.MANAGE_GUESTS);
         return reader.read(file);
     }
 
     @Transactional(readOnly = true)
     public GuestBatchResponse preview(Authentication auth, Long eventId, GuestBatchRequest request) {
-        invitations.requireOwnedInvitationEntity(auth, eventId);
+        invitations.requireEventPermission(auth, eventId, Permission.MANAGE_GUESTS);
         return review(eventId, request);
     }
 
     @Transactional(isolation = org.springframework.transaction.annotation.Isolation.READ_COMMITTED)
     public GuestBatchResponse commit(Authentication auth, Long eventId, GuestBatchRequest request) {
-        var event = invitations.requireOwnedInvitationEntity(auth, eventId);
+        var event = invitations.requireEventPermission(auth, eventId, Permission.MANAGE_GUESTS);
         // One event lock makes receipt lookup, validation, capacity and guest creation one transaction.
         eventRepository.findForUpdateByIdAndUserId(eventId, event.getUser().getId())
             .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Event not found"));

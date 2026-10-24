@@ -1,5 +1,6 @@
 package com.koupreng.backend.rsvp.application;
 
+import com.koupreng.backend.invitation.application.EventAccessPolicy.Permission;
 import com.koupreng.backend.invitation.application.InvitationService;
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.rsvp.api.dto.RsvpRequest;
@@ -139,7 +140,7 @@ public class RsvpService {
 
     @Transactional(readOnly = true)
     public List<RsvpResponse> list(Authentication authentication, Long invitationId) {
-        invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        invitationService.requireEventPermission(authentication, invitationId, Permission.MANAGE_RSVP);
         return rsvpRepository.findByInvitationIdOrderByRespondedAtDesc(invitationId).stream()
                 .map(RsvpResponse::from)
                 .toList();
@@ -147,7 +148,7 @@ public class RsvpService {
 
     @Transactional(readOnly = true)
     public RsvpSummaryResponse summary(Authentication authentication, Long invitationId) {
-        invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        invitationService.requireEventPermission(authentication, invitationId, Permission.MANAGE_RSVP);
         return summaryForInvitation(invitationId);
     }
 
@@ -158,7 +159,7 @@ public class RsvpService {
             Long rsvpId,
             RsvpUpdateRequest request
     ) {
-        invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        invitationService.requireEventPermission(authentication, invitationId, Permission.MANAGE_RSVP);
         Rsvp rsvp = rsvpRepository.findByIdAndInvitationId(rsvpId, invitationId)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "RSVP not found"));
         RsvpStatus status = request.getResponseStatus() == null
@@ -180,7 +181,7 @@ public class RsvpService {
 
     @Transactional
     public void delete(Authentication authentication, Long invitationId, Long rsvpId) {
-        invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        invitationService.requireEventPermission(authentication, invitationId, Permission.MANAGE_RSVP);
         Rsvp rsvp = rsvpRepository.findByIdAndInvitationId(rsvpId, invitationId)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "RSVP not found"));
         rsvpRepository.delete(rsvp);
@@ -188,13 +189,13 @@ public class RsvpService {
 
     @Transactional(readOnly = true)
     public List<WishResponse> wishes(Authentication authentication, Long invitationId) {
-        invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        invitationService.requireEventPermission(authentication, invitationId, Permission.MANAGE_RSVP);
         return wishesForInvitation(invitationId);
     }
 
     @Transactional
     public void moderateWish(Authentication authentication, Long invitationId, Long wishId) {
-        invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        invitationService.requireEventPermission(authentication, invitationId, Permission.MANAGE_RSVP);
         rsvpRepository.findByIdAndInvitationId(wishId, invitationId)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Wish not found"));
         // Bulk update touches only text, preserving attendance and respondedAt.

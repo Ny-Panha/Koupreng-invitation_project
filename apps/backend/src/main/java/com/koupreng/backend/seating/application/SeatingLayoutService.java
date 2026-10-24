@@ -1,5 +1,6 @@
 package com.koupreng.backend.seating.application;
 
+import com.koupreng.backend.invitation.application.EventAccessPolicy.Permission;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koupreng.backend.invitation.application.InvitationService;
 import com.koupreng.backend.invitation.infrastructure.persistence.UserInvitationRepository;
@@ -28,13 +29,13 @@ public class SeatingLayoutService {
 
     @Transactional(readOnly = true)
     public SeatingLayoutResponse get(Authentication auth, Long eventId) {
-        invitations.requireOwnedInvitationEntity(auth, eventId);
+        invitations.requireEventPermission(auth, eventId, Permission.MANAGE_SEATING);
         return layouts.findById(eventId).map(this::response).orElse(new SeatingLayoutResponse(eventId, 0, null, null));
     }
 
     @Transactional
     public SeatingLayoutResponse save(Authentication auth, Long eventId, SeatingLayoutRequest request) {
-        var event = invitations.requireOwnedInvitationEntity(auth, eventId);
+        var event = invitations.requireEventPermission(auth, eventId, Permission.MANAGE_SEATING);
         entitlements.requireFeature(event.getUser(), com.koupreng.backend.entitlement.application.EntitlementService.Feature.SEATING);
         if (!validator.validate(request).isEmpty()) throw new ApiException(HttpStatus.BAD_REQUEST, "Layout coordinates or schema are invalid");
         events.findForUpdateByIdAndUserId(eventId, event.getUser().getId())

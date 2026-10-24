@@ -63,6 +63,8 @@ import java.util.UUID;
 
 @Service
 public class InvitationService {
+    @org.springframework.beans.factory.annotation.Autowired(required = false)
+    private EventCollaborationService collaboration;
     @jakarta.persistence.PersistenceContext
     private jakarta.persistence.EntityManager entityManager;
 
@@ -236,12 +238,19 @@ public class InvitationService {
             InvitationStatusFilter statusFilter
     ) {
         AppUser user = currentUserService.currentUser(authentication);
-        List<UserInvitation> invitations = statusFilter == null
+        List<UserInvitation> invitations = new java.util.ArrayList<>(statusFilter == null
                 ? invitationRepository.findAllByUserIdAndDeletedFalseOrderByCreatedAtDesc(user.getId())
                 : invitationRepository.findAllByUserIdAndStatusAndDeletedFalseOrderByCreatedAtDesc(
                         user.getId(),
                         statusFilter.toDomain()
-                );
+                ));
+        if (collaboration != null) {
+            invitationRepository.findSharedCandidates(user.getId()).stream()
+                    .filter(event -> statusFilter == null || event.getStatus() == statusFilter.toDomain())
+                    .filter(event -> collaboration.permissions(user, event).contains(EventAccessPolicy.Permission.VIEW_EVENT))
+                    .forEach(invitations::add);
+            invitations.sort(java.util.Comparator.comparing(UserInvitation::getCreatedAt, java.util.Comparator.nullsLast(java.util.Comparator.reverseOrder())));
+        }
         java.util.Map<Long, String> covers = new java.util.HashMap<>();
         if (mediaFileRepository != null && !invitations.isEmpty()) {
             mediaFileRepository.findCoversForInvitations(invitations.stream().map(UserInvitation::getId).toList(), MediaType.COVER_IMAGE)
@@ -250,6 +259,7 @@ public class InvitationService {
         return invitations.stream()
                 .map(invitation -> {
                     var summary = InvitationSummaryResponse.from(invitation, covers.get(invitation.getId()));
+                    summary.setShared(invitation.getUser() != null && !user.getId().equals(invitation.getUser().getId()));
                     if (invitationCoverReader != null) summary.setInvitationCoverUrl(invitationCoverReader.read(invitation.getContentJson()));
                     return summary;
                 })
@@ -265,12 +275,14 @@ public class InvitationService {
 
     @Transactional(readOnly = true)
     public InvitationResponse get(Authentication authentication, Long id) {
-        return toResponse(requireOwnedInvitation(authentication, id));
+        return toResponse(requireEventPermission(authentication, id, EventAccessPolicy.Permission.VIEW_EVENT));
     }
 
-    @Transactional
+    @Transactional(isolation = org.springframework.transaction.annotation.Isolation.READ_COMMITTED)
     public InvitationResponse update(Authentication authentication, Long id, InvitationRequest request) {
-        UserInvitation invitation = requireOwnedInvitation(authentication, id);
+        UserInvitation invitation = requireEventPermission(authentication, id, EventAccessPolicy.Permission.EDIT_EVENT);
+        AppUser actor = currentUserService.currentUser(authentication);
+        if (!actor.getId().equals(invitation.getUser().getId())) validateCollaboratorUpdate(invitation, request);
         if (request.getExpectedUpdatedAt() != null) {
             invitation = invitationRepository.findForUpdateByIdAndUserId(id, invitation.getUser().getId())
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Invitation not found"));
@@ -369,7 +381,7 @@ public class InvitationService {
 
     @Transactional(readOnly = true)
     public InvitationResponse preview(Authentication authentication, Long id) {
-        return toResponse(requireOwnedInvitation(authentication, id));
+        return toResponse(requireEventPermission(authentication, id, EventAccessPolicy.Permission.VIEW_EVENT));
     }
 
     @Transactional(readOnly = true)
@@ -487,6 +499,55 @@ public class InvitationService {
     @Transactional(readOnly = true)
     public UserInvitation requireOwnedInvitationEntity(Authentication authentication, Long id) {
         return requireOwnedInvitation(authentication, id);
+    }
+
+    @Transactional(readOnly = true)
+    public UserInvitation requireEventPermission(Authentication authentication, Long id, EventAccessPolicy.Permission permission) {
+        AppUser actor = currentUserService.currentUser(authentication);
+        UserInvitation event = invitationRepository.findByIdAndDeletedFalse(id)
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Invitation not found"));
+        if (collaboration == null) EventAccessPolicy.requireOwner(actor, event, permission);
+        else collaboration.require(actor, event, permission);
+        return event;
+    }
+
+    @Transactional(readOnly = true)
+    public com.koupreng.backend.invitation.api.dto.EventAccessResponse access(Authentication authentication, Long id) {
+        UserInvitation event = requireEventPermission(authentication, id, EventAccessPolicy.Permission.VIEW_EVENT);
+        AppUser actor = currentUserService.currentUser(authentication);
+        var permissions = collaboration == null ? java.util.EnumSet.allOf(EventAccessPolicy.Permission.class) : collaboration.permissions(actor, event);
+        var features = collaboration == null ? java.util.Set.<com.koupreng.backend.entitlement.application.EntitlementService.Feature>of() : collaboration.ownerFeatures(event);
+        return new com.koupreng.backend.invitation.api.dto.EventAccessResponse(actor.getId().equals(event.getUser().getId()),
+                permissions.stream().map(Enum::name).collect(java.util.stream.Collectors.toSet()),
+                features.stream().map(Enum::name).collect(java.util.stream.Collectors.toSet()), event.getOrganization() == null ? null : event.getOrganization().getId());
+    }
+
+    @Transactional(isolation = org.springframework.transaction.annotation.Isolation.READ_COMMITTED)
+    public InvitationResponse linkTeam(Authentication authentication, Long id, com.koupreng.backend.invitation.api.dto.EventTeamLinkRequest request) {
+        UserInvitation event = requireOwnedInvitation(authentication, id);
+        event = invitationRepository.findForUpdateByIdAndUserId(id, event.getUser().getId()).orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Invitation not found"));
+        if (entityManager != null) entityManager.refresh(event, jakarta.persistence.LockModeType.PESSIMISTIC_WRITE);
+        if (event.getUpdatedAt() == null || !event.getUpdatedAt().truncatedTo(java.time.temporal.ChronoUnit.MICROS).equals(request.expectedUpdatedAt().truncatedTo(java.time.temporal.ChronoUnit.MICROS))) {
+            throw new ApiException(HttpStatus.CONFLICT, "INVITATION_VERSION_CONFLICT", "Reload the event before changing its team");
+        }
+        if (request.organizationId() != null && entitlementService != null) entitlementService.requireFeature(event.getUser(), com.koupreng.backend.entitlement.application.EntitlementService.Feature.TEAM_MEMBERS);
+        event.setOrganization(resolveOrganization(request.organizationId(), event.getUser()));
+        return toResponse(save(event));
+    }
+
+    private void validateCollaboratorUpdate(UserInvitation event, InvitationRequest request) {
+        if (request.getExpectedUpdatedAt() == null) throw new ApiException(HttpStatus.BAD_REQUEST, "A version timestamp is required for collaborative editing");
+        Long organizationId = event.getOrganization() == null ? null : event.getOrganization().getId();
+        if ((request.getOrganizationId() != null && !java.util.Objects.equals(request.getOrganizationId(), organizationId))
+                || (request.getVisibility() != null && !event.getVisibility().name().equalsIgnoreCase(request.getVisibility()))
+                || (request.getAccessPassword() != null && !request.getAccessPassword().isBlank())
+                || (request.getEventType() != null && request.getEventType() != event.getEventType())
+                || (request.getRsvpDeadline() != null && !java.util.Objects.equals(request.getRsvpDeadline(), event.getRsvpDeadline()))) {
+            throw new ApiException(HttpStatus.FORBIDDEN, "Only the owner can change event access and team settings");
+        }
+        if (request.getVisibility() == null) request.setVisibility(event.getVisibility().name());
+        if (request.getEventType() == null) request.setEventType(event.getEventType());
+        request.setRsvpDeadline(event.getRsvpDeadline());
     }
 
     @Transactional
@@ -618,7 +679,7 @@ public class InvitationService {
                 throw new ApiException(HttpStatus.BAD_REQUEST, "Template does not support this language");
             }
         }
-        invitation.setOrganization(resolveOrganization(request.getOrganizationId(), user));
+        if (request.getOrganizationId() != null) invitation.setOrganization(resolveOrganization(request.getOrganizationId(), user));
         invitation.setEventType(request.getEventType());
         invitation.setEventDate(request.getEventDate());
         invitation.setEventTime(request.getEventTime());
@@ -679,13 +740,8 @@ public class InvitationService {
         Organization organization = organizationRepository.findById(organizationId)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Organization not found"));
         boolean owner = organization.getOwner() != null && organization.getOwner().getId().equals(user.getId());
-        boolean member = organizationMemberRepository.existsByOrganizationIdAndUserIdAndStatus(
-                organizationId,
-                user.getId(),
-                OrganizationMember.STATUS_ACTIVE
-        );
-        if (!owner && !member) {
-            throw new ApiException(HttpStatus.FORBIDDEN, "Organization access is required");
+        if (!owner) {
+            throw new ApiException(HttpStatus.FORBIDDEN, "The event owner must also own its organization");
         }
         return organization;
     }

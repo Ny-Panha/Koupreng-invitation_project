@@ -1,5 +1,6 @@
 package com.koupreng.backend.media.application;
 
+import com.koupreng.backend.invitation.application.EventAccessPolicy.Permission;
 import com.koupreng.backend.invitation.application.InvitationService;
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.media.api.dto.MediaListResponse;
@@ -161,7 +162,7 @@ public class MediaService {
 
     @Transactional(readOnly = true)
     public MediaListResponse list(Authentication authentication, Long invitationId) {
-        invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        invitationService.requireEventPermission(authentication, invitationId, Permission.VIEW_EVENT);
         return MediaListResponse.from(mediaFileRepository.findByInvitationIdOrderBySortOrderAscCreatedAtAsc(invitationId));
     }
 
@@ -228,7 +229,7 @@ public class MediaService {
     }
 
     private UserInvitation requireMutableInvitation(Authentication authentication, Long invitationId) {
-        UserInvitation invitation = invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        UserInvitation invitation = invitationService.requireEventPermission(authentication, invitationId, Permission.MANAGE_INVITATION);
         if (invitationRepository == null) {
             return invitation;
         }

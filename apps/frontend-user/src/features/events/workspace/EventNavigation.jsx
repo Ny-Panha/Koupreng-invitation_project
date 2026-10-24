@@ -6,7 +6,7 @@ import { EVENT_TYPES } from "../onboarding/eventFields";
 import { PRIMARY_EVENT_LINKS, EVENT_LINK_GROUPS, eventStatus } from "./eventNavigationModel";
 import { eventPath } from "./eventRoutes";
 
-export default function EventNavigation({ event, events, eventId, currentModule, en, collapsed, groups, onToggleGroup, onToggleCollapsed, onExpand, onSwitch, onNavigate, onClose, overlay = false }) {
+export default function EventNavigation({ event, events, eventId, currentModule, en, collapsed, groups, onToggleGroup, onToggleCollapsed, onExpand, onSwitch, onNavigate, onClose, overlay = false, allowed = () => true }) {
   const bodyRef = useRef(null);
   const navRef = useRef(null);
   const tooltipId = useId();
@@ -36,6 +36,7 @@ export default function EventNavigation({ event, events, eventId, currentModule,
     setTooltip({ text, path, left: box.right + 12, top: Math.max(8, Math.min(box.top, window.innerHeight - 60)) });
   };
   const renderLink = ({ path, en: english, km, Icon }) => {
+    if (!allowed(path)) return null;
     const label = en ? english : km;
     return <NavLink key={path} end to={eventPath(eventId, path)}
       className={({ isActive }) => `event-nav-tab${isActive ? " active" : ""}`}
@@ -65,6 +66,7 @@ export default function EventNavigation({ event, events, eventId, currentModule,
       <nav id="event-module-navigation" ref={navRef} className="event-workspace-nav" aria-label={en ? "Event navigation" : "មុខងារកម្មវិធី"}>
         <div className="event-primary-links">{PRIMARY_EVENT_LINKS.map(renderLink)}</div>
         {EVENT_LINK_GROUPS.map(group => {
+          if (!group.items.some(item => allowed(item.path))) return null;
           const active = group.items.some(item => item.path === currentModule);
           const open = active || groups[group.key];
           return <div className={`event-nav-group${active ? " contains-active" : ""}`} key={group.key}>

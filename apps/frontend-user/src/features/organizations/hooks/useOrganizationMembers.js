@@ -30,9 +30,9 @@ export function useOrganizationMembers(organizationId) {
     setSaving(true);
     setError("");
     try {
-      await organizationService.addMember(organizationId, { email, role });
+      const invitation = await organizationService.addMember(organizationId, { email, role });
       await loadOrganization();
-      return true;
+      return invitation;
     } catch (err) {
       setError(err?.message || "Could not add member");
       return false;

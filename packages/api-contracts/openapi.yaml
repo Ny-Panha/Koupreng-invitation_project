@@ -1900,6 +1900,33 @@ paths:
                 $ref: "#/components/schemas/ApiResponseOrganizationMemberResponse"
       security:
       - bearerAuth: []
+  /api/v1/organizations/invitations/accept:
+    post:
+      tags:
+      - Organizations
+      summary: Accept Invitation
+      operationId: acceptInvitation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrganizationInvitationAcceptRequest"
+            examples:
+              acceptInvitation:
+                summary: Replace this fictional code with your privately shared one-time
+                  invitation code
+                value:
+                  token: "0000000000000000000000000000000000000000000000000000000000000000"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseOrganizationResponse"
+      security:
+      - bearerAuth: []
   /api/v1/me/subscriptions/purchase:
     post:
       tags:
@@ -4671,6 +4698,41 @@ paths:
                 $ref: "#/components/schemas/ApiResponseInvitationResponse"
       security:
       - bearerAuth: []
+  /api/v1/invitations/{id}/team:
+    patch:
+      tags:
+      - Invitations
+      summary: Link Team
+      operationId: linkTeam
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EventTeamLinkRequest"
+            examples:
+              linkOwnedTeam:
+                summary: Link a team owned by this event owner
+                value:
+                  organizationId: 10
+                  expectedUpdatedAt: 2026-10-24T08:00:00Z
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseInvitationResponse"
+      security:
+      - bearerAuth: []
   /api/v1/invitations/{id}/publish:
     patch:
       tags:
@@ -6334,6 +6396,57 @@ paths:
                 $ref: "#/components/schemas/ApiResponseCheckInSummaryResponse"
       security:
       - bearerAuth: []
+  /api/v1/invitations/{invitationId}/check-in/roster:
+    get:
+      tags:
+      - Check-In
+      summary: Roster
+      operationId: roster
+      parameters:
+      - name: invitationId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        example: 0
+      - name: size
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 50
+        example: 20
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+          default: ""
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
+          default: ALL
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseCheckInRosterResponse"
+      security:
+      - bearerAuth: []
   /api/v1/invitations/{invitationId}/check-in/list:
     get:
       tags:
@@ -6424,6 +6537,29 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ApiResponseInvitationResponse"
+      security:
+      - bearerAuth: []
+  /api/v1/invitations/{id}/access:
+    get:
+      tags:
+      - Invitations
+      summary: Access
+      operationId: access
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseEventAccessResponse"
       security:
       - bearerAuth: []
   /api/v1/invitations/{eventId}/ticket:
@@ -8897,9 +9033,9 @@ components:
         publishedAt:
           type: string
           format: date-time
-        draft:
-          type: boolean
         published:
+          type: boolean
+        draft:
           type: boolean
     UpdateProfileRequest:
       type: object
@@ -9554,6 +9690,14 @@ components:
         joinedAt:
           type: string
           format: date-time
+        inviteExpiresAt:
+          type: string
+          format: date-time
+        inviteAcceptedAt:
+          type: string
+          format: date-time
+        invitationToken:
+          type: string
     OrganizationResponse:
       type: object
       properties:
@@ -9599,6 +9743,15 @@ components:
         timestamp:
           type: string
           format: date-time
+    OrganizationInvitationAcceptRequest:
+      type: object
+      properties:
+        token:
+          type: string
+          minLength: 1
+          pattern: "[a-f0-9]{64}"
+      required:
+      - token
     SubscriptionPurchaseRequest:
       type: object
       properties:
@@ -10925,6 +11078,18 @@ components:
           minimum: 0
         message:
           type: string
+    EventTeamLinkRequest:
+      type: object
+      properties:
+        organizationId:
+          type: integer
+          format: int64
+          exclusiveMinimum: 0
+        expectedUpdatedAt:
+          type: string
+          format: date-time
+      required:
+      - expectedUpdatedAt
     AdminUpdateUserRoleRequest:
       type: object
       properties:
@@ -12340,6 +12505,52 @@ components:
         attendingCheckedIn:
           type: integer
           format: int64
+    ApiResponseCheckInRosterResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/CheckInRosterResponse"
+        timestamp:
+          type: string
+          format: date-time
+    CheckInRosterResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Row"
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    Row:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        guestName:
+          type: string
+        guestGroup:
+          type: string
+        tableNumber:
+          type: string
+        seatCount:
+          type: integer
+          format: int32
     ApiResponseListCheckInResponse:
       type: object
       properties:
@@ -12434,6 +12645,36 @@ components:
         timestamp:
           type: string
           format: date-time
+    ApiResponseEventAccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/EventAccessResponse"
+        timestamp:
+          type: string
+          format: date-time
+    EventAccessResponse:
+      type: object
+      properties:
+        owner:
+          type: boolean
+        permissions:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+        ownerFeatures:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+        organizationId:
+          type: integer
+          format: int64
     ApiResponseListInvitationSummaryResponse:
       type: object
       properties:
@@ -12454,6 +12695,13 @@ components:
         id:
           type: integer
           format: int64
+        userId:
+          type: integer
+          format: int64
+        ownerName:
+          type: string
+        shared:
+          type: boolean
         templateId:
           type: integer
           format: int64

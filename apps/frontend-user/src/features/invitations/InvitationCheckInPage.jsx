@@ -1,3 +1,4 @@
+import { useEventWorkspace } from "../events/workspace/EventContext";
 import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useId, useMemo } from "react";
 import { useLanguageStore } from "@/stores/useLanguageStore";
@@ -89,18 +90,22 @@ export default function InvitationCheckInPage() {
     const copy = (kh, english) => en ? english : kh;
     const { eventId, invitationId: rawInvitationId = eventId } = useParams();
     const navigate = useNavigate();
+    const workspace = useEventWorkspace();
+    const canRecordGifts = workspace?.isOwner !== false;
+    const canManageGuests = workspace ? Boolean(workspace.can?.("MANAGE_GUESTS")) : true;
+    const limitedRoster = workspace?.isOwner === false && !canManageGuests;
 
     const {
         invitationId, persistenceMode, invitation, guests, summary, checkIns,
         token, setToken, note, setNote, tokenGiftAmount, setTokenGiftAmount,
         tokenGiftCurrency, setTokenGiftCurrency, search, setSearch,
-        statusFilter, setStatusFilter, loading, saving, error,
+        statusFilter, setStatusFilter, rosterPage, setRosterPage, rosterMeta, loading, saving, error,
         celebrationData, celebrationGiftAmount, setCelebrationGiftAmount,
         celebrationGiftCurrency, setCelebrationGiftCurrency, duplicateWarning, setDuplicateWarning,
         walkInModalOpen, setWalkInModalOpen, walkInForm, setWalkInForm, pendingWalkIn,
         load, scan, handleCameraScan, manual, handleSaveCelebrationAndClose,
         handleCreateWalkInGuest, undoCheckIn,
-    } = useCheckInDesk(rawInvitationId, { onCheckIn: playBeep, onDuplicate: playWarningBeep });
+    } = useCheckInDesk(rawInvitationId, { onCheckIn: playBeep, onDuplicate: playWarningBeep, limitedRoster, canRecordGifts, canManageGuests });
 
     const checkedGuestIds = useMemo(() => new Set(checkIns.map((item) => String(item.guestId))), [checkIns]);
 
@@ -207,14 +212,14 @@ export default function InvitationCheckInPage() {
                     <button
                         className="checkin-btn-primary"
                         type="button"
-                        onClick={() => setWalkInModalOpen(true)}
+                        hidden={!canManageGuests} onClick={() => setWalkInModalOpen(true)}
                     >
                         <UserPlus size={16} /> {copy("បន្ថែមភ្ញៀវបន្ទាន់", "Add walk-in guest")}
                     </button>
                     <button
                         className="checkin-btn-secondary"
                         type="button"
-                        onClick={() => navigate(`/dashboard/invitations/${invitationId}/guests`)}
+                        hidden={!canManageGuests} onClick={() => navigate(`/dashboard/invitations/${invitationId}/guests`)}
                     >
                         <Users size={16} /> {uiCopy("បញ្ជីភ្ញៀវ", "Guests")}
                     </button>
@@ -315,7 +320,7 @@ export default function InvitationCheckInPage() {
                     </div>
 
                     {/* Quick Gift input during manual entry */}
-                    <div className="checkin-input-group">
+                    <div className="checkin-input-group" hidden={!canRecordGifts}>
                         <label htmlFor={`${fieldId}-gift`}>
                             <span><Gift size={13} style={{ display: "inline", marginRight: "3px" }} /> {copy("ចងដៃ (មិនបាច់បំពេញ)", "Gift amount (optional)")}</span>
                         </label>
@@ -375,6 +380,7 @@ export default function InvitationCheckInPage() {
                 </form>
 
                 {/* Right Column: Guest List & Quick Check-In */}
+                {limitedRoster && <section className="workspace-section" aria-label={copy("បញ្ជីវត្តមានមានកំណត់", "Limited attendance roster")}><p>{copy("បញ្ជីនេះបង្ហាញតែឈ្មោះ ក្រុម តុ និងកៅអី។ ស្វែងរក ឬប្ដូរទំព័រ ដើម្បីរកភ្ញៀវ។", "This roster contains names, groups, tables and seats. Search or change page to find a guest.")}</p><div className="workspace-actions"><button type="button" className="workspace-button" disabled={rosterPage === 0} onClick={() => setRosterPage(value => value - 1)}>{copy("មុន", "Previous")}</button><span role="status">{rosterPage + 1} / {Math.max(1, rosterMeta.totalPages)} · {rosterMeta.totalElements} {copy("កំណត់ត្រាភ្ញៀវ", "guest records")}</span><button type="button" className="workspace-button" disabled={rosterPage + 1 >= rosterMeta.totalPages} onClick={() => setRosterPage(value => value + 1)}>{copy("បន្ទាប់", "Next")}</button></div></section>}
                 <section className="guest-table-panel checkin-panel-card">
                     <div className="checkin-panel-header">
                         <h2 className="checkin-panel-title">
@@ -681,7 +687,7 @@ export default function InvitationCheckInPage() {
                             </div>
 
                             {/* Quick Gift Section inside celebration */}
-                            <div className="checkin-gift-section">
+                            <div className="checkin-gift-section" hidden={!canRecordGifts}>
                                 <div className="checkin-gift-title">
                                     <Gift size={16} /> {copy("កត់ត្រាចងដៃ", "Record a gift")}
                                 </div>
@@ -815,7 +821,7 @@ export default function InvitationCheckInPage() {
                                     </div>
                                 </div>
 
-                                <div className="checkin-gift-section">
+                                <div className="checkin-gift-section" hidden={!canRecordGifts}>
                                     <div className="checkin-gift-title">
                                         <Gift size={16} /> {copy("ចងដៃ (មិនបាច់បំពេញ)", "Gift amount (optional)")}
                                     </div>

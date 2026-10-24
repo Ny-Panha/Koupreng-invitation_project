@@ -7,6 +7,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OrganizationMemberRepository extends JpaRepository<OrganizationMember, Long> {
+    Optional<OrganizationMember> findByInviteTokenHash(String inviteTokenHash);
+
+    @org.springframework.data.jpa.repository.Lock(jakarta.persistence.LockModeType.PESSIMISTIC_WRITE)
+    @org.springframework.data.jpa.repository.Query("select m from OrganizationMember m where m.inviteTokenHash = :hash")
+    Optional<OrganizationMember> findForUpdateByInviteTokenHash(@org.springframework.data.repository.query.Param("hash") String hash);
+
+    Optional<OrganizationMember> findByOrganizationIdAndUserIdAndStatus(Long organizationId, Long userId, String status);
     long countByOrganizationOwnerIdAndStatusIn(Long ownerId, List<String> statuses);
 
     List<OrganizationMember> findByOrganizationIdOrderByCreatedAtAsc(Long organizationId);

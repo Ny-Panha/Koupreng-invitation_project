@@ -35,6 +35,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class SeatingService {
+    @org.springframework.beans.factory.annotation.Autowired(required = false)
+    private com.koupreng.backend.invitation.application.EventCollaborationService collaboration;
     @org.springframework.beans.factory.annotation.Autowired
     private com.koupreng.backend.entitlement.application.EntitlementService entitlementService;
 
@@ -277,9 +279,11 @@ public class SeatingService {
         AppUser user = currentUserService.currentUser(authentication);
         UserInvitation invitation = invitationRepository.findByIdAndDeletedFalse(invitationId)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Invitation not found"));
-        if (!isAdmin(authentication)
-                && (invitation.getUser() == null || !Objects.equals(invitation.getUser().getId(), user.getId()))) {
-            throw new ApiException(HttpStatus.FORBIDDEN, "You do not have access to this invitation");
+        if (!isAdmin(authentication)) {
+            if (collaboration != null) collaboration.require(user, invitation, com.koupreng.backend.invitation.application.EventAccessPolicy.Permission.MANAGE_SEATING);
+            else if (invitation.getUser() == null || !Objects.equals(invitation.getUser().getId(), user.getId())) {
+                throw new ApiException(HttpStatus.FORBIDDEN, "You do not have access to this invitation");
+            }
         }
         return invitation;
     }

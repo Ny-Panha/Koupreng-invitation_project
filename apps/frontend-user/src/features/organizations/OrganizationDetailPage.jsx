@@ -46,7 +46,7 @@ export default function OrganizationDetailPage() {
   const handleInvite = async (email, role) => {
     const success = await addMember(email, role);
     if (success) {
-      toast.success(uiCopy("បានផ្ញើការអញ្ជើញសមាជិកជោគជ័យ", "Member invitation sent"));
+      toast.success(uiCopy("បានបង្កើតការអញ្ជើញ។ ចែករំលែកកូដជាឯកជន។", "Invitation created. Share the code privately."));
     }
     return success;
   };
@@ -213,6 +213,7 @@ export default function OrganizationDetailPage() {
           onClose={() => setInviteModalOpen(false)}
           saving={saving}
           onInvite={handleInvite}
+          serverError={error}
         />
 
         {/* Change Role Modal */}

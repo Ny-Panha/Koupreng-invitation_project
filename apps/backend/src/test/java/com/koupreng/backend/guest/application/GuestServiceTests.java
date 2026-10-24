@@ -1,5 +1,6 @@
 package com.koupreng.backend.guest.application;
 
+import com.koupreng.backend.invitation.application.EventAccessPolicy.Permission;
 import com.koupreng.backend.invitation.application.InvitationService;
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.guest.api.dto.GuestGroupResponse;
@@ -163,7 +164,7 @@ class GuestServiceTests {
         UserInvitation invitation = invitation();
         GuestService service = new GuestService(guestRepository, invitationService);
 
-        when(invitationService.requireOwnedInvitationEntity(authentication, 10L)).thenReturn(invitation);
+        when(invitationService.requireEventPermission(authentication, 10L, Permission.MANAGE_GUESTS)).thenReturn(invitation);
         when(guestRepository.existsByInviteToken(any())).thenReturn(false);
         when(guestRepository.save(any(Guest.class))).thenAnswer(invocation -> {
             Guest guest = invocation.getArgument(0);

@@ -1,5 +1,6 @@
 package com.koupreng.backend.rsvp.application;
 
+import com.koupreng.backend.invitation.application.EventAccessPolicy.Permission;
 import com.koupreng.backend.invitation.application.InvitationService;
 import com.koupreng.backend.notification.application.NotificationService;
 import com.koupreng.backend.shared.exception.ApiException;
@@ -43,7 +44,7 @@ class RsvpServiceTests {
         existing.setMessage("Wish text");
         when(fixture.rsvpRepository.findByIdAndInvitationId(88L, 10L)).thenReturn(Optional.of(existing));
         fixture.service.moderateWish(authentication, 10L, 88L);
-        verify(fixture.invitationService).requireOwnedInvitationEntity(authentication, 10L);
+        verify(fixture.invitationService).requireEventPermission(authentication, 10L, Permission.MANAGE_RSVP);
         verify(fixture.rsvpRepository).clearWishByIdAndInvitationId(88L, 10L);
         verify(fixture.rsvpRepository, never()).delete(any());
         verify(fixture.rsvpRepository, never()).save(any());
@@ -55,7 +56,7 @@ class RsvpServiceTests {
     void nonOwnerCannotModerateWish() {
         Fixture fixture = fixture();
         Authentication authentication = mock(Authentication.class);
-        when(fixture.invitationService.requireOwnedInvitationEntity(authentication, 10L))
+        when(fixture.invitationService.requireEventPermission(authentication, 10L, Permission.MANAGE_RSVP))
                 .thenThrow(new ApiException(HttpStatus.FORBIDDEN, "Forbidden"));
         assertThrows(ApiException.class, () -> fixture.service.moderateWish(authentication, 10L, 88L));
         verify(fixture.rsvpRepository, never()).clearWishByIdAndInvitationId(any(), any());
@@ -201,7 +202,7 @@ class RsvpServiceTests {
         assertEquals(1, response.getMaybe());
         assertEquals(1, response.getPending());
         assertEquals(4, response.getTotalAttendeeCount());
-        verify(fixture.invitationService).requireOwnedInvitationEntity(authentication, 10L);
+        verify(fixture.invitationService).requireEventPermission(authentication, 10L, Permission.MANAGE_RSVP);
         verify(fixture.rsvpRepository, never()).countByInvitationIdAndResponseStatus(any(), any());
         verify(fixture.rsvpRepository, never()).sumAttendeeCountByInvitationIdAndStatus(any(), any());
     }

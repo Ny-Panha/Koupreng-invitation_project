@@ -100,6 +100,17 @@ public class InvitationController {
         ));
     }
 
+    @GetMapping("/invitations/{id}/access")
+    public ResponseEntity<ApiResponse<com.koupreng.backend.invitation.api.dto.EventAccessResponse>> access(Authentication authentication, @PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success("Event permissions fetched", invitationService.access(authentication, id)));
+    }
+
+    @PatchMapping("/invitations/{id}/team")
+    public ResponseEntity<ApiResponse<InvitationResponse>> linkTeam(Authentication authentication, @PathVariable Long id,
+            @Valid @RequestBody com.koupreng.backend.invitation.api.dto.EventTeamLinkRequest request) {
+        return ResponseEntity.ok(ApiResponse.success("Event team updated", invitationService.linkTeam(authentication, id, request)));
+    }
+
     @DeleteMapping("/invitations/{id}")
     public ResponseEntity<ApiResponse<Void>> delete(
             Authentication authentication,

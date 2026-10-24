@@ -10,7 +10,7 @@ import { useLanguageStore } from "@/stores/useLanguageStore";
 
 vi.mock("@/features/auth/hooks/useAuth", () => ({ useAuth: () => ({ user: { id: 7 } }) }));
 vi.mock("@/features/invitations/api/invitationApi", () => ({ invitationService: { get: vi.fn(), listMine: vi.fn() } }));
-const event = { id: 101, title: "Wedding A", eventType: "WEDDING", status: "DRAFT", templateCode: "event-essential" };
+const event = { id: 101, userId: 7, title: "Wedding A", eventType: "WEDDING", status: "DRAFT", templateCode: "event-essential" };
 function Module() { const workspace = useEventWorkspace(); return <main>Selected event {workspace.eventId}</main>; }
 function show(module = "guests") {
   return render(<MemoryRouter initialEntries={[`/app/events/101${module ? "/" + module : ""}`]}><Routes>
@@ -39,7 +39,7 @@ describe("event navigation", () => {
     const view = show(); await screen.findByText("Selected event 101");
     expect(ALL_EVENT_LINKS.map(item => item.path).sort()).toEqual(["", ...EVENT_MODULES].sort());
     const links = [...view.container.querySelectorAll(".event-workspace-nav a")];
-    expect(links).toHaveLength(17); expect(new Set(links.map(link => link.pathname)).size).toBe(17);
+    expect(links).toHaveLength(ALL_EVENT_LINKS.length); expect(new Set(links.map(link => link.pathname)).size).toBe(ALL_EVENT_LINKS.length);
     expect(screen.getByRole("link", { name: "Guests", exact: true })).toHaveAttribute("aria-current", "page");
     expect(screen.getByRole("combobox", { name: "Switch event" })).toHaveValue("101");
   });

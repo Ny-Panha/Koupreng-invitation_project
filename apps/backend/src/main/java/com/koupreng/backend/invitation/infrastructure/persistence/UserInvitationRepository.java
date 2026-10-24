@@ -16,6 +16,15 @@ import java.util.Optional;
 import java.time.Instant;
 
 public interface UserInvitationRepository extends JpaRepository<UserInvitation, Long> {
+    @EntityGraph(attributePaths = {"template", "user", "organization"})
+    @Query("""
+            select distinct i from UserInvitation i, OrganizationMember m
+            where i.deleted = false and i.organization.id = m.organization.id
+              and i.user.id = m.organization.owner.id and i.user.id <> :userId
+              and m.user.id = :userId and m.status = 'ACTIVE' and m.inviteAcceptedAt is not null and m.organization.status = 'ACTIVE'
+            order by i.createdAt desc
+            """)
+    List<UserInvitation> findSharedCandidates(@Param("userId") Long userId);
     Optional<UserInvitation> findByUserIdAndClientRequestId(Long userId, String clientRequestId);
 
     long countByModerationStatusAndDeletedFalse(InvitationModerationStatus status);

@@ -1,5 +1,6 @@
 package com.koupreng.backend.guest.application;
 
+import com.koupreng.backend.invitation.application.EventAccessPolicy.Permission;
 import com.koupreng.backend.entitlement.application.EntitlementService;
 import com.koupreng.backend.guest.domain.Guest;
 import com.koupreng.backend.guest.infrastructure.persistence.GuestRepository;
@@ -107,7 +108,7 @@ class GuestImportPreviewTests {
     void nonOwnerIsRejectedBeforeReadingTheFileOrGuestData() {
         Fixture fixture = fixture();
         MultipartFile file = mock(MultipartFile.class);
-        when(fixture.invitations.requireOwnedInvitationEntity(fixture.auth, 10L))
+        when(fixture.invitations.requireEventPermission(fixture.auth, 10L, Permission.MANAGE_GUESTS))
                 .thenThrow(new ApiException(HttpStatus.FORBIDDEN, "Invitation access denied"));
         assertEquals(HttpStatus.FORBIDDEN, assertThrows(ApiException.class,
                 () -> fixture.service.previewGuestsFile(fixture.auth, 10L, file)).getStatus());
@@ -234,7 +235,7 @@ class GuestImportPreviewTests {
         UserInvitation invitation = new UserInvitation();
         invitation.setId(10L);
         invitation.setSlug("import-preview");
-        when(invitations.requireOwnedInvitationEntity(auth, 10L)).thenReturn(invitation);
+        when(invitations.requireEventPermission(auth, 10L, Permission.MANAGE_GUESTS)).thenReturn(invitation);
         List<Guest> stored = new ArrayList<>();
         Guest existing = new Guest(); existing.setId(99L); existing.setEmail("existing@example.test"); stored.add(existing);
         when(guests.findByInvitationIdAndEmailIgnoreCase(eq(10L), anyString())).thenAnswer(call -> {

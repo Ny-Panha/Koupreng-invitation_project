@@ -7,7 +7,7 @@ import { useLanguageStore } from "@/stores/useLanguageStore";
 import Modal from "@/shared/ui/Modal";
 import { EventContext } from "./EventContext";
 import { EVENT_MODULES, eventPath } from "./eventRoutes";
-import { ALL_EVENT_LINKS, eventStatus } from "./eventNavigationModel";
+import { ALL_EVENT_LINKS, eventStatus, moduleAllowed } from "./eventNavigationModel";
 import { useEventNavigation } from "./useEventNavigation";
 import EventNavigation from "./EventNavigation";
 import "./EventWorkspace.css";
@@ -33,12 +33,12 @@ function VerifiedWorkspace({ eventId }) {
   useEffect(() => {
     let active = true;
     if (!/^[1-9]\d*$/.test(eventId)) return;
-    Promise.all([invitationService.get(eventId), invitationService.listMine()])
-      .then(([event, events]) => {
+    Promise.all([invitationService.get(eventId), invitationService.listMine(), invitationService.access?.(eventId)?.catch(() => null)])
+      .then(([event, events, access]) => {
         if (!event || String(event.id) !== eventId) throw new Error("Invalid event response");
         const eventList = Array.isArray(events) ? events : [];
         const summary = eventList.find(item => String(item.id) === eventId);
-        if (active) setState({ loading: false, event: { ...event, coverUrl: summary?.coverUrl || null, coverSource: summary?.coverSource, invitationCoverUrl: summary?.invitationCoverUrl, templateThumbnailUrl: summary?.templateThumbnailUrl || event.templateThumbnailUrl }, events: eventList, error: "" });
+        if (active) setState({ loading: false, event: { ...event, coverUrl: summary?.coverUrl || null, coverSource: summary?.coverSource, invitationCoverUrl: summary?.invitationCoverUrl, templateThumbnailUrl: summary?.templateThumbnailUrl || event.templateThumbnailUrl }, events: eventList, access, error: "" });
       })
       .catch(error => { if (active) setState({ loading: false, event: null, events: [], error: error.message }); });
     return () => { active = false; };
@@ -82,6 +82,9 @@ function VerifiedWorkspace({ eventId }) {
 
 
   const status = eventStatus(state.event, en);
+  const actorId = user?.id || user?.userId;
+  const owner = Boolean(actorId && state.event.userId && String(actorId) === String(state.event.userId));
+  const allowed = path => moduleAllowed(path, owner, state.access?.permissions);
   const activeItem = ALL_EVENT_LINKS.find(item => item.path === currentModule);
   const activeModuleLabel = activeItem?.[en ? "en" : "km"] || (en ? "Dashboard" : "ផ្ទាំងគ្រប់គ្រង");
   const events = state.events.some(item => String(item.id) === eventId) ? state.events : [state.event, ...state.events];
@@ -95,10 +98,11 @@ function VerifiedWorkspace({ eventId }) {
   const navProps = { event: state.event, events, eventId, currentModule, en,
     collapsed: navigation.collapsed, groups: navigation.groups,
     onToggleGroup: navigation.toggleGroup, onToggleCollapsed: navigation.toggleCollapsed,
-    onExpand: navigation.expand, onSwitch: switchEvent, onNavigate: () => setMobileDrawerOpen(false),
+    onExpand: navigation.expand, onSwitch: switchEvent, onNavigate: () => setMobileDrawerOpen(false), allowed,
   };
 
   return <EventContext.Provider value={{ eventId, event: state.event, events: state.events,
+    access: state.access, isOwner: owner, can: permission => owner || Boolean(state.access?.permissions?.includes(permission)),
     updateEvent: event => setState(current => ({ ...current, event: { ...current.event, ...event } })),
     openNavigation: () => setMobileDrawerOpen(true), navigationOpen: mobileDrawerOpen,
     registerNavigationTrigger,
@@ -114,7 +118,7 @@ function VerifiedWorkspace({ eventId }) {
           </button>
           <div className="event-header-identity"><p className="event-workspace-title">{state.event.title}</p><span className={`event-status-pill badge-${status.tone}`}>{status.label}</span></div>
         </header>}
-        <div className="event-workspace-content" id="event-module-content" tabIndex={-1}><Outlet /></div>
+        <div className="event-workspace-content" id="event-module-content" tabIndex={-1}>{!allowed(currentModule) ? <div className="workspace-page" role="alert"><p>{en ? 'You do not have permission for this event section.' : 'អ្នកមិនមានសិទ្ធិចូលផ្នែកកម្មវិធីនេះទេ។'}</p><Link className="workspace-button" to={eventPath(eventId)}>{en ? 'Event overview' : 'ទិដ្ឋភាពកម្មវិធី'}</Link></div> : !owner && currentModule === '' ? <main className="workspace-page"><h1>{state.event.title}</h1><p>{en ? 'Shared event. Available tools follow your accepted team role and the owner’s current package.' : 'កម្មវិធីចែករំលែក។ ឧបករណ៍អាស្រ័យលើតួនាទីក្រុម និងកញ្ចប់បច្ចុប្បន្នរបស់ម្ចាស់។'}</p><p>{state.event.eventDate} · {state.event.venueName}</p><div className="workspace-actions">{ALL_EVENT_LINKS.filter(item => item.path && allowed(item.path)).map(item => <Link key={item.path} className="workspace-button" to={eventPath(eventId, item.path)}>{item[en ? 'en' : 'km']}</Link>)}</div></main> : <Outlet />}</div>
       </div>
     </section>
     <Modal isOpen={overlay && mobileDrawerOpen} onClose={closeNavigation} showHeader={false}

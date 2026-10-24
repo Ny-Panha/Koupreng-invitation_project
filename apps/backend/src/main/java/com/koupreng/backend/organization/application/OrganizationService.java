@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.Isolation;
 
 import java.text.Normalizer;
 import java.time.Instant;
@@ -25,6 +26,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.security.SecureRandom;
+import java.security.MessageDigest;
+import java.nio.charset.StandardCharsets;
+import java.util.HexFormat;
+import java.time.temporal.ChronoUnit;
 
 @Service
 public class OrganizationService {
@@ -45,6 +51,7 @@ public class OrganizationService {
             "VIEWER",
             "MEMBER"
     );
+    private static final SecureRandom INVITATION_RANDOM = new SecureRandom();
 
     public OrganizationService(
             OrganizationRepository organizationRepository,
@@ -78,7 +85,7 @@ public class OrganizationService {
                 .toList();
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public OrganizationResponse create(Authentication authentication, String name) {
         AppUser user = currentUserService.currentUser(authentication);
         if (entitlements != null) entitlements.requireTeamCapacity(user, () -> memberRepository.countByOrganizationOwnerIdAndStatusIn(user.getId(), List.of("ACTIVE", "INVITED")), 1);
@@ -105,41 +112,50 @@ public class OrganizationService {
         return toResponse(requireOrganizationAccess(authentication, organizationId));
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public OrganizationMemberResponse addMember(
             Authentication authentication,
             Long organizationId,
             OrganizationMemberRequest request
     ) {
         Organization organization = requireOrganizationOwner(authentication, organizationId);
+        lockOwner(organization.getOwner());
         String email = requireText(request.getEmail(), "Member email is required").toLowerCase(Locale.ROOT);
         String role = normalizeAssignableRole(request.getRole());
         OrganizationMember member = memberRepository.findByOrganizationIdAndEmailIgnoreCase(organizationId, email)
                 .orElseGet(OrganizationMember::new);
+        requireNotOwnerMember(organization, member, email);
+        if (OrganizationMember.STATUS_ACTIVE.equals(member.getStatus()) && member.getInviteAcceptedAt() != null) {
+            throw new ApiException(HttpStatus.CONFLICT, "Member is already active; use the role endpoint to change permissions");
+        }
         if (entitlements != null) entitlements.requireTeamCapacity(organization.getOwner(),
             () -> memberRepository.countByOrganizationOwnerIdAndStatusIn(organization.getOwner().getId(), List.of("ACTIVE", "INVITED")),
             member.getId() == null ? 1 : 0);
-        requireNotOwnerMember(organization, member, email);
         member.setOrganization(organization);
         member.setEmail(email);
         member.setRole(role);
-        userRepository.findByEmailIgnoreCase(email).ifPresent(user -> {
-            member.setUser(user);
-            member.setStatus(OrganizationMember.STATUS_ACTIVE);
-            member.setJoinedAt(Instant.now());
-        });
-        if (member.getUser() == null) {
-            member.setStatus(OrganizationMember.STATUS_INVITED);
-            member.setInvitedAt(Instant.now());
-        }
+        // Email existence must never silently activate membership.
+        member.setUser(null);
+        member.setStatus(OrganizationMember.STATUS_INVITED);
+        member.setJoinedAt(null);
+        member.setInviteAcceptedAt(null);
+        member.setInvitedAt(Instant.now());
+        byte[] random = new byte[32];
+        INVITATION_RANDOM.nextBytes(random);
+        String token = HexFormat.of().formatHex(random);
+        member.setInviteTokenHash(hashToken(token));
+        member.setInviteExpiresAt(Instant.now().plus(7, ChronoUnit.DAYS));
         OrganizationMember saved = memberRepository.save(member);
         logMembershipEvent("ORGANIZATION_MEMBER_SAVED", saved, organization);
-        return OrganizationMemberResponse.from(saved);
+        var response = OrganizationMemberResponse.from(saved);
+        response.setInvitationToken(token);
+        return response;
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public void removeMember(Authentication authentication, Long organizationId, Long memberId) {
         Organization organization = requireOrganizationOwner(authentication, organizationId);
+        lockOwner(organization.getOwner());
         OrganizationMember member = memberRepository.findByIdAndOrganizationId(memberId, organizationId)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Organization member not found"));
         if (member.getUser() != null && organization.getOwner() != null
@@ -148,6 +164,48 @@ public class OrganizationService {
         }
         memberRepository.delete(member);
         logMembershipEvent("ORGANIZATION_MEMBER_REMOVED", member, organization);
+    }
+
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public OrganizationResponse acceptInvitation(Authentication authentication, String token) {
+        AppUser user = currentUserService.currentUser(authentication);
+        String hash = hashToken(token);
+        OrganizationMember candidate = memberRepository.findByInviteTokenHash(hash).orElseThrow(this::invalidInvitation);
+        Organization organization = candidate.getOrganization();
+        lockOwner(organization.getOwner());
+        OrganizationMember member = memberRepository.findForUpdateByInviteTokenHash(hash).orElseThrow(this::invalidInvitation);
+        if (!Organization.STATUS_ACTIVE.equals(organization.getStatus())
+                || !OrganizationMember.STATUS_INVITED.equals(member.getStatus())
+                || member.getInviteExpiresAt() == null || !member.getInviteExpiresAt().isAfter(Instant.now())
+                || user.getEmail() == null || !user.getEmail().equalsIgnoreCase(member.getEmail())) {
+            throw invalidInvitation();
+        }
+        if (entitlements != null) entitlements.requireTeamCapacity(organization.getOwner(),
+                () -> memberRepository.countByOrganizationOwnerIdAndStatusIn(organization.getOwner().getId(), List.of("ACTIVE", "INVITED")), 0);
+        member.setUser(user);
+        member.setStatus(OrganizationMember.STATUS_ACTIVE);
+        member.setJoinedAt(Instant.now());
+        member.setInviteAcceptedAt(Instant.now());
+        member.setInviteTokenHash(null);
+        member.setInviteExpiresAt(null);
+        memberRepository.save(member);
+        logMembershipEvent("ORGANIZATION_MEMBER_ACCEPTED", member, organization);
+        return toResponse(organization);
+    }
+
+    private ApiException invalidInvitation() {
+        return new ApiException(HttpStatus.NOT_FOUND, "Invitation is invalid, expired, or belongs to another account");
+    }
+
+    private String hashToken(String token) {
+        if (token == null || !token.matches("[a-f0-9]{64}")) throw invalidInvitation();
+        try { return HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(token.getBytes(StandardCharsets.US_ASCII))); }
+        catch (java.security.NoSuchAlgorithmException exception) { throw new IllegalStateException("SHA-256 is required", exception); }
+    }
+
+    private void lockOwner(AppUser owner) {
+        if (entitlements != null) userRepository.findForUpdateById(owner.getId())
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Organization owner not found"));
     }
 
     private OrganizationResponse toResponse(Organization organization) {
@@ -201,7 +259,7 @@ public class OrganizationService {
         return normalized;
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public OrganizationMemberResponse updateRole(
             Authentication authentication,
             Long organizationId,
@@ -209,6 +267,7 @@ public class OrganizationService {
             String role
     ) {
         Organization organization = requireOrganizationOwner(authentication, organizationId);
+        lockOwner(organization.getOwner());
         OrganizationMember member = memberRepository.findByIdAndOrganizationId(memberId, organizationId)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Organization member not found"));
 

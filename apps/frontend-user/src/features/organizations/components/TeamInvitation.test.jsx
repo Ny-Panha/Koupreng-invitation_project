@@ -1,0 +1,35 @@
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import { afterEach, beforeEach, expect, it, vi } from 'vitest';
+import { useLanguageStore } from '@/stores/useLanguageStore';
+import InviteMemberModal from './InviteMemberModal';
+import AcceptTeamInvitation from './AcceptTeamInvitation';
+import { organizationService } from '../api/organizationApi';
+vi.mock('../api/organizationApi', () => ({ organizationService: { acceptInvitation: vi.fn() } }));
+beforeEach(() => { useLanguageStore.setState({ lang: 'en' }); vi.clearAllMocks(); });
+afterEach(cleanup);
+it('shows the private one-time code without claiming an email was sent', async () => {
+  const invite = vi.fn().mockResolvedValue({ invitationToken: 'a'.repeat(64) });
+  const close = vi.fn();
+  const { rerender } = render(<InviteMemberModal isOpen onClose={close} onInvite={invite} />);
+  fireEvent.change(screen.getByLabelText('Member email'), { target: { value: 'intended@example.test' } });
+  fireEvent.click(screen.getByRole('button', { name: 'Create invitation code' }));
+  expect(await screen.findByLabelText('One-time invitation code')).toHaveValue('a'.repeat(64));
+  expect(screen.getByText(/No email has been sent/)).toBeInTheDocument();
+  expect(close).not.toHaveBeenCalled();
+  fireEvent.click(screen.getByRole('button', { name: 'Done' }));
+  expect(close).toHaveBeenCalledOnce();
+  rerender(<InviteMemberModal isOpen onClose={close} onInvite={invite} />);
+  expect(screen.queryByLabelText('One-time invitation code')).not.toBeInTheDocument();
+});
+it('accepts with the authenticated API and clears the code after confirmation', async () => {
+  organizationService.acceptInvitation.mockResolvedValue({ id: 10, name: 'Accepted team' });
+  const accepted = vi.fn();
+  render(<MemoryRouter><AcceptTeamInvitation onAccepted={accepted} /></MemoryRouter>);
+  fireEvent.change(screen.getByLabelText('Invitation code'), { target: { value: 'b'.repeat(64) } });
+  fireEvent.click(screen.getByRole('button', { name: 'Accept invitation' }));
+  await waitFor(() => expect(accepted).toHaveBeenCalledOnce());
+  expect(organizationService.acceptInvitation).toHaveBeenCalledWith('b'.repeat(64));
+  expect(screen.getByLabelText('Invitation code')).toHaveValue('');
+  expect(screen.getByRole('link', { name: 'Accepted team' })).toHaveAttribute('href','/app/organizations/10');
+});

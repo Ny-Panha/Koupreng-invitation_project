@@ -21,6 +21,11 @@ public class OrganizationMemberResponse {
     private String status;
     private Instant invitedAt;
     private Instant joinedAt;
+    private Instant inviteExpiresAt;
+    private Instant inviteAcceptedAt;
+    // Returned once to the inviting owner, never populated by list/get mapping.
+    @com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)
+    private String invitationToken;
 
     public static OrganizationMemberResponse from(OrganizationMember member) {
         return OrganizationMemberResponse.builder()
@@ -31,6 +36,8 @@ public class OrganizationMemberResponse {
                 .status(member.getStatus())
                 .invitedAt(member.getInvitedAt())
                 .joinedAt(member.getJoinedAt())
+                .inviteExpiresAt(member.getInviteExpiresAt())
+                .inviteAcceptedAt(member.getInviteAcceptedAt())
                 .build();
     }
 }

@@ -19,7 +19,7 @@ export function resolveDeskScope(rawId) {
 }
 
 /** One desk, two deliberate persistence modes. A server failure never changes mode. */
-export function useCheckInDesk(rawId, { onCheckIn, onDuplicate }) {
+export function useCheckInDesk(rawId, { onCheckIn, onDuplicate, limitedRoster = false, canRecordGifts = true, canManageGuests = true }) {
   const scope = useMemo(() => resolveDeskScope(rawId), [rawId]);
   const invitationId = scope.id;
   const server = scope.mode === "SERVER_BACKED_INVITATION";
@@ -45,11 +45,16 @@ export function useCheckInDesk(rawId, { onCheckIn, onDuplicate }) {
   const [pendingWalkIn, setPendingWalkIn] = useState(null);
   const busy = useRef(false);
   const loadGeneration = useRef(0);
+  const loadedScope = useRef(null);
+  const [rosterPage, setRosterPage] = useState(0);
+  const [rosterMeta, setRosterMeta] = useState({ totalElements: 0, totalPages: 0 });
+  const rosterSearch = limitedRoster ? search : '';
+  const rosterStatus = limitedRoster ? statusFilter : 'all';
 
   const load = useCallback(() => {
     const generation = ++loadGeneration.current;
     let active = true;
-    setLoading(true); setError("");
+    setLoading(loadedScope.current !== invitationId); setError("");
     if (scope.mode === "LOCAL_DRAFT") {
       const localGuests = listManualGuests(invitationId).map(normalizeGuest);
       const localCheckIns = listManualCheckIns(invitationId);
@@ -61,23 +66,33 @@ export function useCheckInDesk(rawId, { onCheckIn, onDuplicate }) {
       setInvitation(null); setError("Choose an existing invitation or local draft."); setLoading(false);
       return () => { active = false; };
     }
-    Promise.all([invitationService.get(invitationId), guestService.listByInvitation(invitationId), guestService.checkInSummary(invitationId), guestService.checkInList(invitationId)])
+    const rosterParams = { page: rosterPage, size: 50, search: rosterSearch, status: { all: 'ALL', checked: 'CHECKED_IN', pending: 'PENDING' }[rosterStatus] || 'ALL' };
+    Promise.all([invitationService.get(invitationId), limitedRoster ? guestService.checkInRoster(invitationId, rosterParams) : guestService.listByInvitation(invitationId), guestService.checkInSummary(invitationId), guestService.checkInList(invitationId)])
       .then(([invitationData, guestData, summaryData, checkInData]) => {
         if (!active || generation !== loadGeneration.current) return;
-        if (!invitationData || !Array.isArray(guestData) || !Array.isArray(checkInData)) throw new Error("Invalid check-in response");
-        setInvitation(invitationData); setGuests(guestData.map(normalizeGuest)); setCheckIns(checkInData); setSummary(summaryData);
+        const items = limitedRoster ? guestData?.items : guestData;
+        if (!invitationData || !Array.isArray(items) || !Array.isArray(checkInData)) throw new Error("Invalid check-in response");
+        if (limitedRoster) setRosterMeta({ totalElements: guestData.totalElements, totalPages: guestData.totalPages });
+        loadedScope.current = invitationId;
+        setInvitation(invitationData); setGuests(items.map(normalizeGuest)); setCheckIns(checkInData); setSummary(summaryData);
       })
       .catch((err) => { if (active && generation === loadGeneration.current) setError(err.message || "Could not load check-in data"); })
       .finally(() => { if (active && generation === loadGeneration.current) setLoading(false); });
     return () => { active = false; };
-  }, [invitationId, scope, server]);
-  useEffect(() => load(), [load]);
+  }, [invitationId, scope, server, limitedRoster, rosterPage, rosterSearch, rosterStatus]);
+  useEffect(() => {
+    if (!limitedRoster) return load();
+    let cancel;
+    const timer = setTimeout(() => { cancel = load(); }, 250);
+    return () => { clearTimeout(timer); cancel?.(); };
+  }, [load, limitedRoster]);
 
   const refreshCheckIns = async () => {
     if (!server) return;
     try {
-      const [nextSummary, items] = await Promise.all([guestService.checkInSummary(invitationId), guestService.checkInList(invitationId)]);
+      const [nextSummary, items, roster] = await Promise.all([guestService.checkInSummary(invitationId), guestService.checkInList(invitationId), limitedRoster ? guestService.checkInRoster(invitationId, { page: rosterPage, size: 50, search: rosterSearch, status: { all: 'ALL', checked: 'CHECKED_IN', pending: 'PENDING' }[rosterStatus] || 'ALL' }) : Promise.resolve(null)]);
       if (!Array.isArray(items)) throw new Error("Invalid attendance response");
+      if (roster) { setGuests(roster.items.map(normalizeGuest)); setRosterMeta({ totalElements: roster.totalElements, totalPages: roster.totalPages }); }
       setSummary(nextSummary); setCheckIns(items);
     } catch (err) {
       setError(`Attendance was saved, but the latest list could not be loaded. Refresh to verify. ${err.message || ""}`);
@@ -85,6 +100,7 @@ export function useCheckInDesk(rawId, { onCheckIn, onDuplicate }) {
   };
 
   const recordGiftItem = async (guestName, amount, currency, noteText) => {
+    if (!canRecordGifts) throw new Error("Only the event owner can record gifts.");
     const value = Number(amount);
     if (!Number.isFinite(value) || value <= 0) throw new Error("Enter a gift amount greater than zero.");
     if (!["USD", "KHR"].includes(currency)) throw new Error("Choose USD or KHR.");
@@ -177,6 +193,7 @@ export function useCheckInDesk(rawId, { onCheckIn, onDuplicate }) {
 
   const handleCreateWalkInGuest = async (event) => {
     event.preventDefault();
+    if (!canManageGuests) return;
     if (!walkInForm.name.trim() || busy.current || !invitation) return;
     busy.current = true; setSaving(true); setError("");
     let stage = pendingWalkIn;
@@ -220,5 +237,5 @@ export function useCheckInDesk(rawId, { onCheckIn, onDuplicate }) {
     finally { busy.current = false; setSaving(false); }
   };
 
-  return { invitationId, persistenceMode: scope.mode, invitation, guests, summary, checkIns, token, setToken, note, setNote, tokenGiftAmount, setTokenGiftAmount, tokenGiftCurrency, setTokenGiftCurrency, search, setSearch, statusFilter, setStatusFilter, loading, saving, error, celebrationData, setCelebrationData, celebrationGiftAmount, setCelebrationGiftAmount, celebrationGiftCurrency, setCelebrationGiftCurrency, duplicateWarning, setDuplicateWarning, walkInModalOpen, setWalkInModalOpen, walkInForm, setWalkInForm, pendingWalkIn, load, scan, handleCameraScan, manual, handleSaveCelebrationAndClose, handleCreateWalkInGuest, undoCheckIn };
+  return { invitationId, persistenceMode: scope.mode, invitation, guests, summary, checkIns, token, setToken, note, setNote, tokenGiftAmount, setTokenGiftAmount, tokenGiftCurrency, setTokenGiftCurrency, search, setSearch: value => { setSearch(value); setRosterPage(0); }, statusFilter, setStatusFilter: value => { setStatusFilter(value); setRosterPage(0); }, rosterPage, setRosterPage, rosterMeta, loading, saving, error, celebrationData, setCelebrationData, celebrationGiftAmount, setCelebrationGiftAmount, celebrationGiftCurrency, setCelebrationGiftCurrency, duplicateWarning, setDuplicateWarning, walkInModalOpen, setWalkInModalOpen, walkInForm, setWalkInForm, pendingWalkIn, load, scan, handleCameraScan, manual, handleSaveCelebrationAndClose, handleCreateWalkInGuest, undoCheckIn };
 }

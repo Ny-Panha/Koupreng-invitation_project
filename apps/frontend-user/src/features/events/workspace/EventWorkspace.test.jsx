@@ -8,8 +8,8 @@ import { useLanguageStore } from "@/stores/useLanguageStore";
 import InvitationScopedRedirect from "@/app/routes/InvitationScopedRedirect";
 
 vi.mock("@/features/auth/hooks/useAuth", () => ({ useAuth: () => ({ user: { id: 7 } }) }));
-vi.mock("@/features/invitations/api/invitationApi", () => ({ invitationService: { get: vi.fn(), listMine: vi.fn() } }));
-const events = [{ id: 1, title: "Wedding A" }, { id: 2, title: "Birthday B" }];
+vi.mock("@/features/invitations/api/invitationApi", () => ({ invitationService: { get: vi.fn(), listMine: vi.fn(), access: vi.fn() } }));
+const events = [{ id: 1, userId: 7, title: "Wedding A" }, { id: 2, userId: 7, title: "Birthday B" }];
 function Module() { const { eventId } = useEventWorkspace(); return <p>Module {eventId}</p>; }
 function show(path) {
   return render(<MemoryRouter initialEntries={[path]}><Routes>
@@ -23,8 +23,18 @@ beforeEach(() => {
   vi.clearAllMocks();
   vi.stubGlobal("matchMedia", vi.fn(query => ({ matches: true, media: query, addEventListener: vi.fn(), removeEventListener: vi.fn() })));
   useLanguageStore.setState({ lang: "en" }); invitationService.listMine.mockResolvedValue(events);
+  invitationService.access.mockResolvedValue(null);
 });
 describe("verified event workspace", () => {
+  it("never mounts private guest tools for a viewer even on a direct URL", async () => {
+    invitationService.get.mockResolvedValue({ ...events[0], userId: 99 });
+    invitationService.access.mockResolvedValue({ owner: false, permissions: ['VIEW_EVENT', 'VIEW_REPORTS'] });
+    show('/app/events/1/guests');
+    expect(await screen.findByRole('alert')).toHaveTextContent('You do not have permission for this event section.');
+    expect(screen.queryByText('Module 1')).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: 'Guests', exact: true })).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: 'Settings', exact: true })).not.toBeInTheDocument();
+  });
   it("never mounts modules for an unauthorized explicit ID", async () => {
     invitationService.get.mockRejectedValue(new Error("Access denied"));
     show("/app/events/99/guests");

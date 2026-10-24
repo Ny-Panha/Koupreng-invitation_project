@@ -33,6 +33,8 @@ import java.util.Objects;
 
 @Service
 public class CheckInService {
+    @org.springframework.beans.factory.annotation.Autowired(required = false)
+    private com.koupreng.backend.invitation.application.EventCollaborationService collaboration;
 
     private final GuestCheckInRepository checkInRepository;
     private final GuestRepository guestRepository;
@@ -132,6 +134,18 @@ public class CheckInService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
+    public com.koupreng.backend.checkin.api.dto.CheckInRosterResponse roster(Authentication authentication, Long invitationId, int page, int size, String search, String status) {
+        requireCheckInInvitation(authentication, invitationId);
+        if (page < 0 || page > 10000 || size < 1 || size > 100 || search.length() > 100 || !java.util.Set.of("ALL", "CHECKED_IN", "PENDING").contains(status)) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Invalid roster page, search, or attendance filter");
+        }
+        String keyword = search.trim().replace("!", "!!").replace("%", "!%").replace("_", "!_");
+        var result = guestRepository.findCheckInRoster(invitationId, keyword, status, org.springframework.data.domain.PageRequest.of(page, size));
+        return new com.koupreng.backend.checkin.api.dto.CheckInRosterResponse(result.stream().map(guest -> new com.koupreng.backend.checkin.api.dto.CheckInRosterResponse.Row(
+                guest.getId(), guest.getGuestName(), guest.getGuestGroup(), guest.getTableNumber(), guest.getSeatCount())).toList(), page, size, result.getTotalElements(), result.getTotalPages());
+    }
+
     private CheckInResponse checkIn(
             Authentication authentication,
             UserInvitation invitation,
@@ -181,9 +195,11 @@ public class CheckInService {
         AppUser user = currentUserService.currentUser(authentication);
         UserInvitation invitation = invitationRepository.findByIdAndDeletedFalse(invitationId)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Invitation not found"));
-        if (!isAdmin(authentication)
-                && (invitation.getUser() == null || !Objects.equals(invitation.getUser().getId(), user.getId()))) {
-            throw new ApiException(HttpStatus.FORBIDDEN, "You do not have access to this invitation");
+        if (!isAdmin(authentication)) {
+            if (collaboration != null) collaboration.require(user, invitation, com.koupreng.backend.invitation.application.EventAccessPolicy.Permission.MANAGE_CHECKIN);
+            else if (invitation.getUser() == null || !Objects.equals(invitation.getUser().getId(), user.getId())) {
+                throw new ApiException(HttpStatus.FORBIDDEN, "You do not have access to this invitation");
+            }
         }
         return invitation;
     }

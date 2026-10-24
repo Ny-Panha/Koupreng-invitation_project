@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { guestService } from "@/features/guests/api/guestApi";
@@ -7,9 +7,10 @@ import { planningService } from "@/features/planning/api/planningApi";
 import * as storage from "@/shared/storage";
 import InvitationCheckInPage from "./InvitationCheckInPage";
 import { useLanguageStore } from '@/stores/useLanguageStore';
+import { EventContext } from '../events/workspace/EventContext';
 
 vi.mock("@/features/guests/api/guestApi", () => ({ guestService: {
-  listByInvitation: vi.fn(), checkInSummary: vi.fn(), checkInList: vi.fn(), scanCheckIn: vi.fn(), manualCheckIn: vi.fn(), createForInvitation: vi.fn(), undoCheckIn: vi.fn(),
+  listByInvitation: vi.fn(), checkInRoster: vi.fn(), checkInSummary: vi.fn(), checkInList: vi.fn(), scanCheckIn: vi.fn(), manualCheckIn: vi.fn(), createForInvitation: vi.fn(), undoCheckIn: vi.fn(),
 } }));
 vi.mock("./api/invitationApi", () => ({ invitationService: { get: vi.fn(), listMine: vi.fn() } }));
 vi.mock("@/features/planning/api/planningApi", () => ({ planningService: { createGift: vi.fn() } }));
@@ -22,8 +23,8 @@ vi.mock("./components/QrCameraScanner", () => ({ default: ({ onScan, disabled })
 const guest = { id: 2, guestName: "Known guest", token: "known-token" };
 const result = { id: 101, guestId: 2, guestName: "Known guest", alreadyCheckedIn: false };
 const originalConfirm = window.confirm;
-function show(id = "10") {
-  return render(<MemoryRouter initialEntries={[`/dashboard/invitations/${id}/check-in`]}><Routes><Route path="/dashboard/invitations/:invitationId/check-in" element={<InvitationCheckInPage />} /></Routes></MemoryRouter>);
+function show(id = "10", workspace = null) {
+  return render(<EventContext.Provider value={workspace}><MemoryRouter initialEntries={[`/dashboard/invitations/${id}/check-in`]}><Routes><Route path="/dashboard/invitations/:invitationId/check-in" element={<InvitationCheckInPage />} /></Routes></MemoryRouter></EventContext.Provider>);
 }
 async function ready() { await screen.findByRole("heading", { name: "Owned wedding" }); }
 async function scanToken(container) {
@@ -39,6 +40,18 @@ async function walkIn() {
 }
 
 describe("FE-004/005/006/007 durable check-in desk", () => {
+  it('uses a limited roster for check-in staff and keeps gifts and guest creation restricted', async () => {
+    guestService.checkInRoster.mockResolvedValue({ items: [{ id: 2, guestName: 'Known guest' }], totalElements: 1, totalPages: 1 });
+    show('10', { isOwner: false, can: permission => permission === 'MANAGE_CHECKIN' });
+    await ready();
+    expect(guestService.listByInvitation).not.toHaveBeenCalled();
+    expect(guestService.checkInRoster).toHaveBeenCalledWith('10', { page: 0, size: 50, search: '', status: 'ALL' });
+    expect(screen.queryByRole('button', { name: 'Add walk-in guest' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('spinbutton', { name: 'Gift amount (optional)' })).not.toBeInTheDocument();
+    fireEvent.click(within(screen.getByRole('row', { name: /Known guest/ })).getByRole('button', { name: 'Check in', exact: true }));
+    await waitFor(() => expect(guestService.manualCheckIn).toHaveBeenCalledWith('10', 2, ''));
+    expect(planningService.createGift).not.toHaveBeenCalled();
+  });
   beforeEach(() => {
     useLanguageStore.setState({lang:'en'});
     window.confirm = vi.fn(() => true);

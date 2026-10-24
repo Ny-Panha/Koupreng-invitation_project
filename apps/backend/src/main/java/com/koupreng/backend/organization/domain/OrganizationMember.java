@@ -56,6 +56,16 @@ public class OrganizationMember {
     @Column(name = "joined_at")
     private Instant joinedAt;
 
+    @lombok.ToString.Exclude
+    @Column(name = "invite_token_hash", length = 64)
+    private String inviteTokenHash;
+
+    @Column(name = "invite_expires_at")
+    private Instant inviteExpiresAt;
+
+    @Column(name = "invite_accepted_at")
+    private Instant inviteAcceptedAt;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 

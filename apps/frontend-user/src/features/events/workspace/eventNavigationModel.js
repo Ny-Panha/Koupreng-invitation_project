@@ -28,10 +28,18 @@ export const EVENT_LINK_GROUPS = [
     { path: "qr", en: "QR Code", km: "កូដ QR", Icon: QrCode },
     { path: "wishes", en: "Wishes", km: "សារជូនពរ", Icon: MessageCircleHeart },
     { path: "settings", en: "Settings", km: "ការកំណត់", Icon: Settings },
+    { path: "team", en: "Event team", km: "ក្រុមកម្មវិធី", Icon: Users },
     { path: "assistant", en: "Assistant", km: "ជំនួយការសរសេរ", Icon: Sparkles },
   ] },
 ];
 export const ALL_EVENT_LINKS = [...PRIMARY_EVENT_LINKS, ...EVENT_LINK_GROUPS.flatMap(group => group.items)];
+
+// UI affordances follow the explicit API grant; the server still authorizes every request.
+export function moduleAllowed(path, owner, permissions = []) {
+  if (owner) return true;
+  const required = { '': 'VIEW_EVENT', invitation: 'EDIT_EVENT', preview: 'VIEW_EVENT', media: 'MANAGE_INVITATION', guests: 'MANAGE_GUESTS', rsvp: 'MANAGE_RSVP', wishes: 'MANAGE_RSVP', seating: 'MANAGE_SEATING', 'check-in': 'MANAGE_CHECKIN', analytics: 'VIEW_REPORTS' }[path];
+  return Boolean(required && permissions.includes(required));
+}
 
 export function eventStatus(event, en) {
   const known = {

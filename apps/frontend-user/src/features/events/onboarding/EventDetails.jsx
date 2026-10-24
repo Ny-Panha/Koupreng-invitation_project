@@ -16,7 +16,7 @@ function readContent(value) {
 
 export default function EventDetails() {
   const uiCopy = useUiCopy();
-  const { event, eventId, updateEvent } = useEventWorkspace();
+  const { event, eventId, updateEvent, isOwner } = useEventWorkspace();
   const [form, setForm] = useState(() => {
     const content = readContent(event.contentJson);
     return { ...event, venueAddress: event.venueAddress ?? content.venueAddress ?? content.event?.venueAddress ?? '',
@@ -35,7 +35,7 @@ export default function EventDetails() {
     e.preventDefault(); if (busy.current) return;
     busy.current = true; setSaving(true); setSaved(false); setError("");
     try {
-      const payload = eventPayload(form, event.eventType);
+      const payload = { ...eventPayload(form, event.eventType), expectedUpdatedAt: form.updatedAt };
       if (generic) payload.contentJson = JSON.stringify({ ...readContent(payload.contentJson), messageText: form.storyText || "", contact, schedule });
       const saved = await invitationService.update(eventId, payload);
       updateEvent(saved); setForm(current => ({ ...current, ...saved, accessPassword: '' })); setSaved(true);
@@ -62,7 +62,7 @@ export default function EventDetails() {
         <button type="button" disabled={schedule.length >= 20} onClick={() => setSchedule(current => [...current, { time: "", title: "" }])}>{en ? "Add activity" : "បន្ថែមសកម្មភាព"}</button>
       </fieldset>
     </>}
-    <fieldset className="event-settings-section"><legend>{en ? 'Invitation visibility' : 'ការមើលធៀបអញ្ជើញ'}</legend><label>{en ? "Invitation visibility" : "ការមើលសំបុត្រអញ្ជើញ"}<select value={form.visibility || "PRIVATE"} onChange={e => setForm(current => ({ ...current, visibility: e.target.value }))}>
+    <fieldset disabled={isOwner === false} className="event-settings-section"><legend>{en ? 'Invitation visibility' : 'ការមើលធៀបអញ្ជើញ'}</legend><label>{en ? "Invitation visibility" : "ការមើលសំបុត្រអញ្ជើញ"}<select value={form.visibility || "PRIVATE"} onChange={e => setForm(current => ({ ...current, visibility: e.target.value }))}>
       <option value="PRIVATE">{en ? "Private" : "ឯកជន"}</option><option value="PUBLIC">{en ? "Public when published" : "សាធារណៈពេលផ្សាយ"}</option><option value="PASSWORD_PROTECTED">{en ? "Password protected" : "ការពារដោយពាក្យសម្ងាត់"}</option>
     </select></label>
     {form.visibility === "PASSWORD_PROTECTED" && <label>{en ? "Invitation password (leave blank to keep the current password)" : "ពាក្យសម្ងាត់សំបុត្រអញ្ជើញ (ទុកទទេដើម្បីរក្សាពាក្យសម្ងាត់ចាស់)"}<input type="password" autoComplete="new-password" value={form.accessPassword || ""} onChange={e => setForm(current => ({ ...current, accessPassword: e.target.value }))} /></label>}
