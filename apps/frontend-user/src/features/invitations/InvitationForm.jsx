@@ -1,4 +1,6 @@
+import { templateCapabilities } from "../templates/registry/templateCapabilities";
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import WeddingProgramEditor from "./studio/WeddingProgramEditor";
 import StudioSections from "./studio/StudioSections";
 import StudioToolbar from "./studio/StudioToolbar";
 import { createPortal } from "react-dom";
@@ -461,7 +463,7 @@ function toStandardTime(val) {
 }
 
 function toStandardDate(val) {
-    if (!val || typeof val !== "string") return "2026-01-28";
+    if (!val || typeof val !== "string") return "";
     const khmerDigits = ["០", "១", "២", "៣", "៤", "៥", "៦", "៧", "៨", "៩"];
     let standard = val;
     khmerDigits.forEach((kd, idx) => {
@@ -469,7 +471,7 @@ function toStandardDate(val) {
     });
     const match = standard.match(/(\d{4})-(\d{2})-(\d{2})/);
     if (match) return match[0];
-    return "2026-01-28";
+    return "";
 }
 
 function isGoogleMapsUrl(value) {
@@ -783,9 +785,11 @@ export default function InvitationForm({ invitation }) {
         void catalogVersion;
         const template = getTemplateById(form.templateId);
         const config = getTemplateFormFlow(template || form.templateId);
+        const capabilities = templateCapabilities(template || { id: form.templateId });
+        config.sectionOrder = config.sectionOrder.filter(key => capabilities[key] !== false && (key !== "story" || !invitation?.eventType || invitation.eventType === "WEDDING"));
         const appearance = ["khmer-celestial", "royal-khmer-wedding"].includes(template?.code || template?.id);
         return { ...config, sectionOrder: ["eventInfo", ...config.sectionOrder.flatMap(key => key === "cover" && appearance ? [key, "appearance"] : [key]), "music"] };
-    }, [form.templateId, catalogVersion]);
+    }, [form.templateId, catalogVersion, invitation?.eventType]);
     const activeSection = flowConfig.sectionOrder.includes(selectedSection) ? selectedSection : flowConfig.sectionOrder[0];
     const [catalogTemplates, setCatalogTemplates] = useState(() => getAllTemplates());
     const [templateSearchQuery, setTemplateSearchQuery] = useState("");
@@ -871,6 +875,7 @@ export default function InvitationForm({ invitation }) {
         if (venueAddressError && activeSection === "venue") venueAddressInput.current?.focus();
     }, [venueAddressError, activeSection]);
     const [isLocating, setIsLocating] = useState(false);
+    const serverRevision = useRef(invitation?.updatedAt || null);
     const savedBackendId = useRef(invitation?.backendInvitationId || (/^[1-9]\d*$/.test(String(invitationId)) ? invitationId : null));
 
     const handleChangeTemplate = async (template) => {
@@ -935,9 +940,7 @@ export default function InvitationForm({ invitation }) {
             showCountdown: template.enabledSections?.countdown !== undefined
                 ? (template.enabledSections.countdown !== false)
                 : form.showCountdown,
-            showStory: template.enabledSections?.story !== undefined
-                ? (template.enabledSections.story !== false)
-                : form.showStory,
+            showStory: form.showStory,
             showParty: template.enabledSections?.party !== undefined
                 ? (template.enabledSections.party !== false)
                 : form.showParty,
@@ -1030,27 +1033,6 @@ export default function InvitationForm({ invitation }) {
         e.target.value = "";
     };
 
-    // Schedule modifiers
-    const handleScheduleChange = (index, key, value) => {
-        const nextSchedule = [...(form.schedule || [])];
-        nextSchedule[index] = { ...nextSchedule[index], [key]: value };
-        update("schedule", nextSchedule);
-    };
-
-    const addScheduleItem = () => {
-        const nextSchedule = [
-            ...(form.schedule || []),
-            { id: String(Date.now()), time: "06:00 ល្ងាច", title: "ពិធីថ្មី" },
-        ];
-        update("schedule", nextSchedule);
-    };
-
-    const removeScheduleItem = (index) => {
-        const nextSchedule = (form.schedule || []).filter((_, i) => i !== index);
-        update("schedule", nextSchedule);
-    };
-
-    // Gallery modifiers (5-10 photos)
     const updatePhoto = (index, url) => {
         const nextPhotos = [...(form.photos || [])];
         if (!nextPhotos[index]) {
@@ -1128,6 +1110,7 @@ export default function InvitationForm({ invitation }) {
     };
 
     const addStoryItem = () => {
+        update("showStory", true);
         const nextStories = [
             ...(form.storyChapters || []),
             {
@@ -1407,6 +1390,7 @@ export default function InvitationForm({ invitation }) {
             };
 
             const payload = {
+                expectedUpdatedAt: serverRevision.current,
                 title: finalTitle,
                 eventType: "WEDDING",
                 eventDate: finalDate || null,
@@ -1442,6 +1426,7 @@ export default function InvitationForm({ invitation }) {
 
             let saved;
             let apiSyncFailed = false;
+            let apiSyncError = "";
             const effectiveBackendId = savedBackendId.current;
             try {
                 if (!payload.templateId) throw new Error("The selected template is unavailable in the catalog. Choose an available template before saving online.");
@@ -1451,9 +1436,10 @@ export default function InvitationForm({ invitation }) {
                     saved = await invitationService.create(payload);
                 }
                 if (saved?.id) savedBackendId.current = saved.id;
+                if (saved?.updatedAt) serverRevision.current = saved.updatedAt;
             } catch (apiErr) {
                 apiSyncFailed = true;
-                void apiErr;
+                apiSyncError = apiErr?.message || "The server could not save these changes. Retry saving.";
             }
 
             let savedCoverUrl = form.uploadedCoverUrl || "";
@@ -1566,6 +1552,7 @@ export default function InvitationForm({ invitation }) {
                 try {
                     saved = await invitationService.update(backendId, {
                         ...payload,
+                        expectedUpdatedAt: serverRevision.current,
                         designJson: JSON.stringify(stripInlineMedia(replaceMediaReferences({
                             ...designPayload,
                             coverImage: savedCoverUrl || designPayload.coverImage,
@@ -1590,6 +1577,7 @@ export default function InvitationForm({ invitation }) {
                 }
             }
 
+            if (saved?.updatedAt) serverRevision.current = saved.updatedAt;
             const targetDraftId = invitationId || saved?.id || `wed-${Date.now().toString(36)}`;
 
             // Always persist to local wedding draft storage
@@ -1709,7 +1697,7 @@ export default function InvitationForm({ invitation }) {
             const finalSavedId = saved?.id || targetDraftId;
             if (stayInStudio) {
                 if (!quiet) toast(successMsg, apiSyncFailed || mediaSyncError ? "warning" : "success");
-                return { id: finalSavedId, synced: !apiSyncFailed && !mediaSyncError, error: mediaSyncError || (apiSyncFailed ? "The server could not save these changes. Retry saving." : "") };
+                return { id: finalSavedId, synced: !apiSyncFailed && !mediaSyncError, error: mediaSyncError || (apiSyncFailed ? apiSyncError : "") };
             }
             if (redirectToPreview && finalSavedId) {
                 toast(successMsg, apiSyncFailed || mediaSyncError ? "warning" : "success");
@@ -2287,58 +2275,8 @@ export default function InvitationForm({ invitation }) {
         </div>
     );
 
-    const renderScheduleSection = () => (
-        <div className="pe-section-card" key="schedule">
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
-                <h4 className="pe-section-heading" style={{ margin: 0 }}>
-                    <span className="pe-sec-icon-badge">
-                        <Clock size={17} />
-                    </span>
-                    <span>{flowConfig.labels.scheduleSection || t("secSchedule") || "របៀបវារៈកម្មវិធី"}</span>
-                </h4>
-                <button
-                    type="button"
-                    className="pe-btn-upload-action"
-                    onClick={addScheduleItem}
-                >
-                    <Plus size={14} /> {t("addSchedule") || "បន្ថែមកម្មវិធី"}
-                </button>
-            </div>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                {form.schedule?.map((item, idx) => (
-                    <div key={item.id || idx} className="pe-grid-2" style={{ alignItems: "center", background: "#f8f6f0", padding: "10px 12px", borderRadius: "8px", border: "1px solid #e8e2d8", marginBottom: 0 }}>
-                        <label className="pe-label">កាលបរិច្ឆេទ · Date<input type="date" className="pe-input" value={item.date || ""} onChange={e => handleScheduleChange(idx, "date", e.target.value)} /></label>
-                        <TimePicker
-                            value={item.time}
-                            onChange={(val) => handleScheduleChange(idx, "time", val)}
-                            placeholder="ជ្រើសម៉ោង"
-                        />
-                        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-                            <input
-                                type="text"
-                                className="pe-input"
-                                value={item.title}
-                                onChange={(e) => handleScheduleChange(idx, "title", e.target.value)}
-                                placeholder="ពិធីហែជំនូន"
-                            />
-                            <button
-                                type="button"
-                                className="pe-btn-delete-action"
-                                style={{ padding: "6px 10px" }}
-                                onClick={() => removeScheduleItem(idx)}
-                                title="Delete item"
-                            >
-                                <Trash2 size={13} />
-                            </button>
-                        </div>
-                        <label className="pe-label">ពិពណ៌នា · Description<textarea className="pe-input" value={item.description || ""} onChange={e => handleScheduleChange(idx, "description", e.target.value)} /></label>
-                        <div className="studio-reorder"><button type="button" disabled={idx === 0} onClick={() => moveItem("schedule", idx, -1)} aria-label={`Move schedule ${idx + 1} up`}>↑</button><button type="button" disabled={idx === form.schedule.length - 1} onClick={() => moveItem("schedule", idx, 1)} aria-label={`Move schedule ${idx + 1} down`}>↓</button></div>
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
+    const renderScheduleSection = () => <WeddingProgramEditor value={form.schedule} masterDate={form.eventDate}
+        onChange={value => update("schedule", value)} english={englishUI} />;
 
     const renderVenueSection = () => (
         <div className="pe-section-card" key="venue">

@@ -7237,3 +7237,5 @@
 .el-container.tx-motion--standard-scroll {
     scroll-behavior: smooth;
 }
+
+.tx-story__text, .kc-story__copy p, .sh-story article > p { white-space: pre-line; overflow-wrap: anywhere; }

@@ -1,3 +1,4 @@
+import ProgramDetails from "../shared/ProgramDetails";
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Music, VolumeX, X, CheckCircle2 } from "lucide-react";
@@ -196,37 +197,7 @@ export default function BlissEditorialLayout({
             <h2 className="bliss-title">កាលវិភាគពិធីមង្គលការ</h2>
           </div>
 
-          <div className="bliss-program-list">
-            <div className="bliss-program-row">
-              <span className="bliss-program-time">07:00 AM</span>
-              <div>
-                <h3 className="bliss-program-title">ពិធីសូត្រមន្តចម្រើនព្រះបរិត្ត</h3>
-                <p className="bliss-program-desc">
-                  ពិធីសាសនាបែបព្រះពុទ្ធសាសនា និមន្តព្រះសង្ឃសូត្រមន្តប្រសិទ្ធពរជ័យសិរីសួស្តី ជ័យមង្គលវិបុលសុខដល់គូស្វាមីភរិយាថ្មី។
-                </p>
-              </div>
-            </div>
-
-            <div className="bliss-program-row">
-              <span className="bliss-program-time">08:30 AM</span>
-              <div>
-                <h3 className="bliss-program-title">ពិធីកាត់សក់បង្កក់សិរី &amp; សំពះផ្ទឹម</h3>
-                <p className="bliss-program-desc">
-                  ពិធីប្រពៃណីខ្មែរដ៏ពិសិដ្ឋ កាត់សក់ជម្រះនូវឧបទ្រពចង្រៃ និងសំពះផ្ទឹមចងដៃប្រសិទ្ធពរជ័យពីសំណាក់មាតាបិតា និងចាស់ទុំទាំងសងខាង។
-                </p>
-              </div>
-            </div>
-
-            <div className="bliss-program-row">
-              <span className="bliss-program-time">05:00 PM</span>
-              <div>
-                <h3 className="bliss-program-title">ពិធីទទួលបដិសណ្ឋារកិច្ច &amp; ពិសាភោជនាហារ</h3>
-                <p className="bliss-program-desc">
-                  ស្វាគមន៍ភ្ញៀវកិត្តិយស ពិសាអាហារពេលល្ងាច និងរាំកម្សាន្តនៅ {venue.name} ({venue.hall})។
-                </p>
-              </div>
-            </div>
-          </div>
+          <div className="bliss-program-list">{(effectiveContent.schedule || []).map((item, i) => <article className="bliss-program-row" key={item.id || i}><div className="bliss-program-time">{item.time}<ProgramDetails item={item} content={effectiveContent} /></div><div><h3 className="bliss-program-title">{item.title}</h3><p className="bliss-program-desc">{item.description}</p></div></article>)}</div>
         </section>
       )}
 

@@ -1,3 +1,4 @@
+import ProgramDetails from "../../shared/ProgramDetails";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -202,6 +203,7 @@ export default function KhmerRoyalLotusLayout({
 
     const schedule = Array.isArray(base.schedule) && base.schedule.length
       ? base.schedule.map((item, index) => ({
+          ...item,
           id: item.id || `programme-${index}`,
           time: item.time || "",
           title: item.title || "កម្មវិធី",
@@ -454,7 +456,7 @@ export default function KhmerRoyalLotusLayout({
               <div className="krl-programme">
                 {content.schedule.map((item, index) => (
                   <article className="krl-programme__item" key={item.id || index}>
-                    <div className="krl-programme__time">{item.time}</div>
+                    <div className="krl-programme__time">{item.time}<ProgramDetails item={item} content={content} /></div>
                     <div className="krl-programme__thread" aria-hidden="true">
                       <span>{index + 1}</span>
                     </div>

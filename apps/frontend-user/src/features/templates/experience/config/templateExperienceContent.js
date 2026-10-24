@@ -1,3 +1,4 @@
+import { normalizeProgram } from "../../shared/program";
 import { normalizeInvitationLanguage } from "@/shared/i18n/invitationLanguage";
 /**
  * templateExperienceContent — builds the full content model for the shared
@@ -321,6 +322,7 @@ function normalizeScheduleItems(schedule) {
     if (!Array.isArray(schedule)) return null;
     const items = schedule
         .map((s, index) => ({
+            ...s,
             id: s.id || `schedule-${index}`,
             time: s.time || s.startTime || s.timeText || "",
             title: s.title || s.name || s.label || "",
@@ -582,7 +584,7 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         : languageMode === "both" && hostStoryTextEn
             ? [hostStoryText, hostStoryTextEn].filter(Boolean).join("\n\n")
             : hostStoryText;
-    const hostStoryChapters = nonEmpty(host.storyChapters);
+    const hostStoryChapters = Array.isArray(host.storyChapters) ? host.storyChapters : null;
     const hostStory = hostStoryChapters
         ? hostStoryChapters.map((c, index) => ({
             id: c.id || `chapter-${index}`,
@@ -603,17 +605,7 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
             }]
         : null;
 
-    const hostSchedule = nonEmpty(host.schedule)
-        ? host.schedule.map((s, index) => ({
-            id: s.id || `sched-${index}`,
-            date: s.date || "",
-            time: s.time || "",
-            title: s.title || "",
-            titleEn: s.titleEn || "",
-            description: s.description || "",
-            location: s.location || "",
-        }))
-        : null;
+    const hostSchedule = normalizeProgram(host.schedule);
 
     const hostParty = nonEmpty(host.party)
         ? host.party.map((m, index) => ({
@@ -736,6 +728,7 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         dateText: hasHostContent ? nonBlank(host.dateText) : (tpl.dateText || "ថ្ងៃពុធ ២៨ មករា ២០២៦"),
         dateTextEn: nonBlank(hasHostContent ? host.dateTextEn : tpl.dateTextEn),
         languageMode,
+        eventDate: host.eventDate || tpl.eventDate || "",
         eventTime: nonBlank(hasHostContent ? host.eventTime : (tpl.eventTime || tpl.ceremonyTime)),
         machineEventDate: hasHostContent
             ? nonBlank(host.machineEventDate || host.targetDate)
@@ -783,8 +776,8 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         gallery: hasHostContent ? (hostGallery || []) : ((hostGallery && hostGallery.length) ? hostGallery : buildGallery(tpl)),
         story: hasHostContent ? (hostStory || []) : ((hostStory && hostStory.length) ? hostStory : buildStory(tpl, variant)),
         schedule: (hostSchedule && hostSchedule.length) ? hostSchedule : (hasHostContent ? (host.schedule || []) : buildSchedule(tpl, variant)),
-        scheduleTitle: nonBlank(tpl.scheduleTitle || host.scheduleTitle) || "កម្មវិធីមង្គលការ",
-        scheduleDate: nonBlank(tpl.scheduleDate || host.scheduleDate) || (hasHostContent ? nonBlank(host.dateText) : tpl.dateText || ""),
+        scheduleTitle: nonBlank(host.scheduleTitle || tpl.scheduleTitle) || "កម្មវិធីមង្គលការ",
+        scheduleDate: nonBlank(host.scheduleDate || tpl.scheduleDate) || (hasHostContent ? nonBlank(host.dateText) : tpl.dateText || ""),
         scheduleEnding: nonBlank(tpl.scheduleEnding || host.scheduleEnding),
         party: (hostParty && hostParty.length) ? hostParty : (hasHostContent ? [] : DEMO_PARTY),
         dressCode,

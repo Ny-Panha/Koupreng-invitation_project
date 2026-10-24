@@ -1,3 +1,4 @@
+import ProgramDetails from "../../../shared/ProgramDetails";
 import { RotateCw, Calendar, Clock, MapPin, QrCode, Sparkles } from "lucide-react";
 
 export default function Card3DFlip({
@@ -86,8 +87,8 @@ export default function Card3DFlip({
           </div>
 
           <div style={{ marginBottom: "1.5rem" }}>
-            {scheduleItems.slice(0, 4).map((item, idx) => (
-              <div key={item.id || idx} className="el-schedule-item">
+            {scheduleItems.map((item, idx) => (
+              <div key={item.id || idx} className="el-schedule-item"><ProgramDetails item={item} content={tpl} />
                 <div className="el-time font-mono">{item.time}</div>
                 <div>
                   <h4 style={{ color: "#fff", fontSize: "0.95rem", fontWeight: "600", margin: 0 }}>{item.title}</h4>

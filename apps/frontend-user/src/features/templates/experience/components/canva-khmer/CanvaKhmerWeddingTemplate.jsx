@@ -1,3 +1,4 @@
+import ProgramDetails from "../../../shared/ProgramDetails";
 import { cloneElement, isValidElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -369,7 +370,7 @@ function CanvaKhmerInvitationDetails({ content, sectionRef, showCountdown, showD
 
 function CanvaKhmerProgram({ content }) {
     const items = useMemo(() => {
-        if (content.schedule?.length) return content.schedule.slice(0, 7);
+        if (content.schedule?.length) return content.schedule;
         return [
             content.ceremonyTime && { id: "ceremony", time: content.ceremonyTime, title: "ពិធីមង្គលការ" },
             content.receptionTime && { id: "reception", time: content.receptionTime, title: "ពិធីជប់លៀង" },
@@ -388,7 +389,7 @@ function CanvaKhmerProgram({ content }) {
                         <article key={item.id || `${scheduleTime(item)}-${index}`}>
                             <div className="ck-program__icon"><IoTimeOutline /></div>
                             <div>
-                                {scheduleTime(item) && <time>{scheduleTime(item)}</time>}
+                                <ProgramDetails item={item} content={content} />{scheduleTime(item) && <time>{scheduleTime(item)}</time>}
                                 {scheduleTitle(item) && <h3>{scheduleTitle(item)}</h3>}
                                 {item.description && <p>{item.description}</p>}
                                 {item.location && <small>{item.location}</small>}

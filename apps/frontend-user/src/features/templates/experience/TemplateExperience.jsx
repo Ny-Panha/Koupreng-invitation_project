@@ -1,3 +1,4 @@
+import { normalizeProgram } from "../shared/program";
 import { createElement, lazy, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -284,17 +285,8 @@ function WeddingTemplateExperience({
                 : (Array.isArray(liveData.galleryImages) && liveData.galleryImages.length
                     ? liveData.galleryImages.map((src, i) => ({ src, span: ["tall", "wide", "small", "small"][i % 4] }))
                     : baseContent.gallery),
-            story: (liveData.storyText) ? (
-                baseContent.story?.map((c, i) => i === 0 ? { ...c, text: liveData.storyText } : c) || baseContent.story
-            ) : baseContent.story,
-            schedule: (liveData.schedule && liveData.schedule.length)
-                ? liveData.schedule.map((s, i) => ({
-                    id: s.id || `schedule-${i}`,
-                    time: s.time || "07:00",
-                    title: s.title || "កម្មវិធី",
-                    description: s.desc || s.description || "",
-                }))
-                : baseContent.schedule,
+            story: Array.isArray(liveData.storyChapters) ? liveData.storyChapters : baseContent.story,
+            schedule: Array.isArray(liveData.schedule) ? normalizeProgram(liveData.schedule) : baseContent.schedule,
             targetDate: liveData.targetDate || liveData.eventDate || baseContent.targetDate,
             weddingDate: liveData.weddingDate || baseContent.weddingDate,
             weddingTime: liveData.weddingTime || baseContent.weddingTime,

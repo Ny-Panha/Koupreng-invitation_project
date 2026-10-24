@@ -1,3 +1,4 @@
+import ProgramDetails from "../shared/ProgramDetails";
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -108,31 +109,8 @@ export default function WithJoyPortalLayout({
   };
 
   // Love Story items
-  const loveStories = [
-    {
-      date: "តុលា ២០២១",
-      title: "ថ្ងៃជួបគ្នាដំបូង",
-      desc: "យើងបានជួបគ្នាក្នុងកម្មវិធីសិក្ខាសាលាបច្ចេកវិទ្យានៅភ្នំពេញ ស្នាមញញឹមដំបូងបានដក់ជាប់ក្នុងចិត្តមិនដែលភ្លេច។",
-    },
-    {
-      date: "ធ្នូ ២០២៣",
-      title: "ដំណើរកម្សាន្តទៅសៀមរាប",
-      desc: "ទស្សនាថ្ងៃលិចនៅប្រាសាទបាខែង និងការសន្យារួមដំណើរសាងអនាគតជាមួយគ្នាក្រោមពន្លឺផ្កាយ។",
-    },
-    {
-      date: "កុម្ភៈ ២០២៥",
-      title: "ថ្ងៃសុំរៀបការ (The Proposal)",
-      desc: "ពាក្យ 'Yes' ដ៏ផ្អែមល្ហែមបំផុតបានបន្លឺឡើង ជាមួយការអបអរសាទរពីក្រុមគ្រួសារ និងមិត្តភក្តិជិតស្និទ្ធ។",
-    },
-  ];
-
-  // Schedule items
-  const scheduleItems = [
-    { time: "០៧:០០ ព្រឹក", title: "ពិធីហែជំនូន & សូត្រមន្ត", desc: "ស្វាគមន៍ភ្ញៀវ និងទទួលពរជ័យពីព្រះសង្ឃ", icon: "ceremony" },
-    { time: "០៨:៣០ ព្រឹក", title: "ពិធីកាត់សក់បង្កក់សិរី", desc: "ពិធីប្រពៃណីកាត់សក់សិរីសួស្តីដល់គូស្វាមីភរិយា", icon: "hair" },
-    { time: "១០:០០ ព្រឹក", title: "ពិធីសំពះផ្ទឹម & ចងដៃ", desc: "មាតាបិតា និងញាតិមិត្តចងដៃប្រសិទ្ធពរជ័យ", icon: "ring" },
-    { time: "០៥:០០ ល្ងាច", title: "ពិធីពិសាភោជនាហារមង្គលការ", desc: "ពិសាអាហារ រាំកម្សាន្ត និងថតរូបអនុស្សាវរីយ៍", icon: "party" },
-  ];
+  const loveStories = (effectiveContent.storyChapters || effectiveContent.story || []).map(s => ({ ...s, desc: s.text || s.desc || "" }));
+  const scheduleItems = (effectiveContent.schedule || []).map(s => ({ ...s, desc: s.description || s.desc || "" }));
 
   // Gallery items
   const defaultGallery = [
@@ -150,7 +128,7 @@ export default function WithJoyPortalLayout({
     ? effectiveContent.gallery.map(img => typeof img === "string" ? img : img.src || img.url)
     : defaultGallery;
 
-  const isEnabled = (key) => content.enabledSections?.[key] !== false;
+  const isEnabled = (key) => effectiveContent.enabledSections?.[key] !== false;
   const dressColors = Array.isArray(content.dressCode)
     ? content.dressCode
     : (Array.isArray(content.dressCode?.colors) ? content.dressCode.colors : (content.dressColors || [
@@ -288,7 +266,7 @@ export default function WithJoyPortalLayout({
                   <Clock className="w-6 h-6" />
                 </div>
                 <span className="wj-schedule-time">{item.time}</span>
-                <h3 className="wj-schedule-title">{item.title}</h3>
+                <ProgramDetails item={item} content={effectiveContent} /><h3 className="wj-schedule-title">{item.title}</h3>
                 <p className="wj-schedule-desc">{item.desc}</p>
               </div>
             ))}

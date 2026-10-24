@@ -58,8 +58,9 @@ export function normalizeTemplateViewModel(tpl = {}, content = {}) {
   });
 
   // Schedule
-  const rawSchedule = merged.schedule || [];
+  const rawSchedule = Array.isArray(merged.schedule) ? merged.schedule.filter(item => item && typeof item === "object") : [];
   const schedule = rawSchedule.map((item, i) => ({
+    ...item,
     id: item.id || `schedule-${i}`,
     time: item.time || "០៧:០០",
     title: item.title || "កម្មវិធីមង្គល",

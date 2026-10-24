@@ -28,6 +28,7 @@ export default function StudioSections({ sections, active, onChange, english }) 
         {sections.map(key => <option key={key} value={key}>{label(key)}</option>)}
       </select>
     </label>
+    {!sections.includes("story") && <p className="studio-capability-note">{english ? "This template has no Love Story layout. Saved stories are kept when switching templates." : "គំរូនេះមិនបង្ហាញរឿងរ៉ាវស្នេហាទេ។ មាតិកាដែលរក្សាទុកនៅតែមានពេលប្ដូរគំរូ។"}</p>}
     <div className="studio-section-list">
       {GROUPS.map(group => {
         const visible = group.keys.filter(key => sections.includes(key));

@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import process from 'node:process';
 import { installIdentityFixtures } from './support/templateIdentityFixtures.js';
 
 test('Phase 6 baseline: saved row dates are invisible and Celestial story editing is missing', async ({ page }) => {

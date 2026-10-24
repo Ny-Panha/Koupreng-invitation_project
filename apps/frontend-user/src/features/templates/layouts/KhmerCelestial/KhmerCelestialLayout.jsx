@@ -1,3 +1,4 @@
+import ProgramDetails from "../../shared/ProgramDetails";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -480,7 +481,7 @@ export default function KhmerCelestialLayout({
                   const ProgrammeIcon = PROGRAM_ICONS[index % PROGRAM_ICONS.length];
                   return (
                     <CelestialReveal as="article" className="kc-schedule__item" key={item.id || `${item.time}-${index}`} delay={(index % 3) * 0.04}>
-                      <time>{item.date ? <><span>{item.date}</span><br /></> : null}{item.time}</time>
+                      <div>{item.time}<ProgramDetails item={item} content={content} /></div>
                       <span className="kc-schedule__marker" aria-hidden="true"><ProgrammeIcon /></span>
                       <div>
                         <h3>{item.title}</h3>

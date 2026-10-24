@@ -1,3 +1,4 @@
+import ProgramDetails from "../../shared/ProgramDetails";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { normalizeTemplateViewModel } from "../../model/templateModel";
@@ -184,7 +185,7 @@ export default function SilkHeritageLayout({
     schedule: enabled("schedule") && vm.schedule.length > 0 && <section className="sh-program sh-section" id="sh-program" key="schedule" aria-labelledby="sh-program-title">
       <div className="sh-section-intro"><SilkOrnament /><p className="sh-kicker">{copy("ថ្ងៃពិសេសរបស់យើង", "THE DAY, BEAUTIFULLY TOGETHER")}</p><h2 id="sh-program-title">{heading(vm.scheduleTitle || "កម្មវិធីមង្គលការ", "The wedding program")}</h2><p>{language === "en" ? date : vm.scheduleDate || date}</p></div>
       <ol>{vm.schedule.map((item, index) => <li key={item.id}>
-        <time>{language === "en" ? latinTime(item.time) : item.time}</time>
+        <div>{language === "en" ? latinTime(item.time) : item.time}<ProgramDetails item={item} content={vm} /></div>
         <span className="sh-timeline-point" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
         <div><h3>{language === "en" ? item.titleEn || item.title : item.title}</h3>{language === "both" && item.titleEn && <p lang="en">{item.titleEn}</p>}{item.description && <p>{item.description}</p>}{item.location && <p>{item.location}</p>}</div>
       </li>)}</ol>
@@ -192,7 +193,7 @@ export default function SilkHeritageLayout({
     </section>,
     story: enabled("story") && vm.story?.length > 0 && <section className="sh-story sh-section" key="story" aria-labelledby="sh-story-title">
       <div className="sh-section-intro"><SilkOrnament /><h2 id="sh-story-title">{heading("រឿងរ៉ាវរបស់យើង", "Our story")}</h2></div>
-      {vm.story.map((chapter, index) => <article key={chapter.id || index}><h3>{chapter.title}</h3>{chapter.date && <p className="sh-story-date">{chapter.date}</p>}<p>{chapter.text}</p></article>)}
+      {vm.story.map((chapter, index) => <article key={chapter.id || index}>{chapter.image && <img src={chapter.image} alt={chapter.title || ""} loading="lazy" style={{ width: "100%", maxHeight: 420, objectFit: "cover" }} />}<h3>{chapter.title}</h3>{chapter.date && <p className="sh-story-date">{chapter.date}</p>}<p>{chapter.text}</p></article>)}
     </section>,
     gallery: enabled("gallery") && vm.gallery.length > 0 && <section className="sh-gallery sh-section" key="gallery" aria-labelledby="sh-gallery-title">
       <div className="sh-section-intro"><p className="sh-kicker">{copy("អនុស្សាវរីយ៍នៃសេចក្តីស្រឡាញ់", "LITTLE MOMENTS, LASTING MEMORIES")}</p><h2 id="sh-gallery-title">{heading("អនុស្សាវរីយ៍របស់យើង", "Moments to keep")}</h2><SilkOrnament /></div>

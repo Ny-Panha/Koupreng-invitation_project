@@ -48,9 +48,8 @@ export function draftToTemplate(draft, gallery = []) {
     if (!baseTpl) return null;
 
     const sectionEnabled = (legacyValue, key, defaultValue = true) => {
-        if (typeof draft.enabledSections?.[key] === "boolean") return draft.enabledSections[key];
-        if (baseTpl.enabledSections?.[key] === false && draft.enabledSections?.[key] === undefined) return false;
         if (typeof legacyValue === "boolean") return legacyValue;
+        if (typeof draft.enabledSections?.[key] === "boolean") return draft.enabledSections[key];
         if (typeof baseTpl.enabledSections?.[key] === "boolean") return baseTpl.enabledSections[key];
         return defaultValue;
     };
@@ -273,6 +272,7 @@ export function draftToTemplate(draft, gallery = []) {
             dateText: eventDate ? displayDate(eventDate) : (draft.eventDateText || ""),
             dateTextEn: draft.extras?.dateTextEn || "",
             targetDate: targetDate || "",
+            eventDate,
             eventTime: draft.eventTime || draft.event?.ceremonyTime || draft.event?.receptionTime || "",
             couple: {
                 groom: groomName,

@@ -1,3 +1,4 @@
+import ProgramDetails from "../ProgramDetails";
 import { Clock, MapPin } from "lucide-react";
 
 export default function ScheduleList({
@@ -22,7 +23,7 @@ export default function ScheduleList({
               <span>{item.time}</span>
             </div>
             <div className="schedule-item-details">
-              <h4 className="schedule-item-title">{item.title}</h4>
+              <ProgramDetails item={item} /><h4 className="schedule-item-title">{item.title}</h4>
               {item.titleEn && <p className="schedule-item-title-en">{item.titleEn}</p>}
               {item.description && <p className="schedule-item-desc">{item.description}</p>}
               {item.location && (

@@ -1,3 +1,4 @@
+import ProgramDetails from "../../../shared/ProgramDetails";
 import TemplateReveal from "../shared/TemplateReveal";
 import TemplateSectionHeader from "../shared/TemplateSectionHeader";
 import { scheduleIcon, templateIcons } from "../../config/templateIcons";
@@ -50,7 +51,7 @@ export default function TemplateSchedule({ content }) {
                             <TemplateReveal as="article" key={item.id} className={`tx-schedule__card ${item.status === 'IN_PROGRESS' ? 'tx-schedule__card--active' : ''}`} delay={index * 0.05}>
                                 <span className="tx-schedule__icon" aria-hidden="true"><ScheduleIcon /></span>
                                 {renderStatusBadge(item.status)}
-                                <span className="tx-schedule__time">{item.time}</span>
+                                <span className="tx-schedule__time">{item.time}<ProgramDetails item={item} content={content} /></span>
                                 <h3 className="tx-schedule__title">{item.title}</h3>
                                 {item.titleEn && <p className="tx-schedule__en">{item.titleEn}</p>}
                                 <p className="tx-schedule__desc">{item.description}</p>

@@ -49,6 +49,7 @@ export const TEMPLATE_FORM_FLOWS = {
             "family",
             "invitation",
             "schedule",
+            "story",
             "countdown",
             "venue",
             "gallery",

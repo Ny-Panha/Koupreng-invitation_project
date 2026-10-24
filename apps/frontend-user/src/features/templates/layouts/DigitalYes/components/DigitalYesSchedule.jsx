@@ -1,3 +1,4 @@
+import ProgramDetails from "../../../shared/ProgramDetails";
 import { Clock, MapPin } from "lucide-react";
 
 export default function DigitalYesSchedule({ schedule = [] }) {
@@ -36,7 +37,7 @@ export default function DigitalYesSchedule({ schedule = [] }) {
             <div className="flex-1 min-w-0 pt-0.5 pb-4">
               <h4 className="text-xs sm:text-sm font-semibold text-white leading-snug">
                 {item.title}
-              </h4>
+              </h4><ProgramDetails item={item} />
               {(item.desc || item.description) && (
                 <p className="text-[11px] sm:text-xs text-amber-100/75 mt-1 leading-relaxed">
                   {item.desc || item.description}
