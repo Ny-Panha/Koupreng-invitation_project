@@ -7,7 +7,7 @@ import { useLanguageStore } from "../../stores/useLanguageStore";
 vi.mock("./subscriptionService", () => ({
   default: {
     packages: vi.fn(),
-    current: vi.fn(),
+    entitlements: vi.fn(),
     history: vi.fn(),
     purchase: vi.fn(),
     order: vi.fn(),
@@ -32,7 +32,7 @@ describe("SubscriptionPackagesPage", () => {
     vi.clearAllMocks();
     useLanguageStore.setState({ lang: "en" });
     subscriptionService.packages.mockResolvedValue([basicPlan]);
-    subscriptionService.current.mockResolvedValue(null);
+    subscriptionService.entitlements.mockResolvedValue(null);
     subscriptionService.history.mockResolvedValue([]);
     subscriptionService.purchase.mockResolvedValue({
       orderCode: "SUB2609151234",
@@ -175,12 +175,12 @@ describe("SubscriptionPackagesPage", () => {
     expect(screen.getByText("5,000 guests per event")).toBeInTheDocument();
     expect(screen.getByText(/90 days/)).toBeInTheDocument();
     expect(screen.queryByText(/unlimited|lifetime|25 members/i)).not.toBeInTheDocument();
-    expect(screen.getByText("No active subscription")).toBeInTheDocument();
+    expect(screen.getByText("Plan could not be verified")).toBeInTheDocument();
     expect(screen.getByText(/12,345/)).toBeInTheDocument();
   });
 
   it("shows a verified current plan and its real expiry", async () => {
-    subscriptionService.current.mockResolvedValue({ packagePlan: basicPlan, active: true, status: "ACTIVE", paymentStatus: "PAID", endDate: "2027-01-15T00:00:00Z" });
+    subscriptionService.entitlements.mockResolvedValue({ packagePlan: basicPlan, active: true, status: "ACTIVE", paymentStatus: "PAID", expiresAt: "2027-01-15T00:00:00Z" });
     render(<SubscriptionPackagesPage />);
     expect(await screen.findByRole("button", { name: "Current plan" })).toBeDisabled();
     expect(screen.getByText(/Expires.*Jan 15, 2027/)).toBeInTheDocument();

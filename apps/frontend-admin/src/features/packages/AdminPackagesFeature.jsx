@@ -459,6 +459,7 @@ export default function AdminPackagesPage() {
 
   const save = async (event) => {
     event?.preventDefault();
+    if (editingId && form.publicVisible && !window.confirm(lang === "en" ? "Publish these package benefits for new orders? Existing purchased benefits stay unchanged." : "ផ្សព្វផ្សាយអត្ថប្រយោជន៍សម្រាប់ការជាវថ្មី? សិទ្ធិដែលបានទិញនៅតែរក្សាទុក។")) return;
     setBusyId(editingId || "new");
     try {
       const payload = toPayload(form);
@@ -531,6 +532,9 @@ export default function AdminPackagesPage() {
             </h1>
             <p className="text-xs sm:text-sm text-slate-500 dark:text-zinc-400 mt-0.5">
               {t("packages.subtitle", lang === "en" ? "Manage package tiers, quotas, and feature access for users" : "កំណត់តម្លៃ កូតា និងសិទ្ធិប្រើប្រាស់មុខងារសម្រាប់ User")}
+            </p>
+            <p className="text-xs text-emerald-800 dark:text-emerald-300 mt-2 leading-relaxed">
+              {lang === "en" ? "Published revisions apply to new orders. Purchased benefits remain frozen. Free is the default; account roles stay separate." : "កំណែថ្មីអនុវត្តចំពោះការជាវថ្មី។ សិទ្ធិដែលបានទិញត្រូវបានរក្សាទុក។ Free ជាកញ្ចប់លំនាំដើម ហើយតួនាទីគណនីនៅដាច់ដោយឡែក។"}
             </p>
           </div>
         </div>
@@ -704,6 +708,7 @@ export default function AdminPackagesPage() {
                           <span className="font-mono text-[10px] font-bold text-slate-500 dark:text-zinc-400 block truncate">
                             {plan.code}
                           </span>
+                          <small className="text-[10px] text-slate-500">{lang === 'en' ? 'Revision' : 'កំណែ'} {plan.revision ?? 0}</small>
                         </div>
                       </div>
 
@@ -915,6 +920,7 @@ export default function AdminPackagesPage() {
                         <p className="font-semibold text-slate-900 dark:text-zinc-100">
                           {plan.packageName}
                         </p>
+                        <small className="text-[10px] text-slate-500">{lang === 'en' ? 'Revision' : 'កំណែ'} {plan.revision ?? 0}</small>
                         {plan.description && (
                           <p className="text-[11px] text-slate-400 dark:text-zinc-500 truncate max-w-xs">
                             {plan.description}

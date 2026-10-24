@@ -45,10 +45,11 @@ export default function SubscriptionPackagesPage() {
   const target = new URLSearchParams(window.location.search).get("package")?.toUpperCase();
   const load = useCallback(async () => {
     setError(""); setAccountError("");
-    const [plans, active, orders] = await Promise.allSettled([subscriptionService.packages(), subscriptionService.current(), subscriptionService.history()]);
+    const [plans, active, orders] = await Promise.allSettled([subscriptionService.packages(), subscriptionService.entitlements(), subscriptionService.history()]);
     if (plans.status === "fulfilled") setPackages(plans.value || []);
     else setError(copy("មិនអាចផ្ទុកកញ្ចប់សេវាកម្មបានទេ។", "Could not load subscription packages."));
     if (active.status === "fulfilled") setCurrent(active.value);
+    else setCurrent(null);
     if (orders.status === "fulfilled") setHistory(orders.value || []);
     if (active.status === "rejected" || orders.status === "rejected") setAccountError(copy("មិនអាចពិនិត្យកញ្ចប់ និងការទូទាត់របស់អ្នកបានទេ។ សូមទាញយកម្ដងទៀតមុនពេលជាវ។", "Could not verify your plan or payment history. Retry before starting another order."));
     setLoading(false);
@@ -118,18 +119,19 @@ export default function SubscriptionPackagesPage() {
     </header>
     {(error || accountError) && <div className="workspace-notice" role="alert"><p>{error || accountError}</p><button className="workspace-button" onClick={load}>{copy("ទាញយកម្ដងទៀត", "Retry")}</button></div>}
     {!loading && <section className="pkg-current" aria-label={copy("កញ្ចប់បច្ចុប្បន្ន", "Current subscription")}>
-      <ShieldCheck size={24} aria-hidden="true" /><div><span className="workspace-muted">{copy("កញ្ចប់បច្ចុប្បន្ន", "Current plan")}</span><strong>{isActivated(current) ? current.packagePlan?.packageName || copy("កញ្ចប់សកម្ម", "Active plan") : copy("មិនមានកញ្ចប់សកម្ម", "No active subscription")}</strong></div>
-      {isActivated(current) ? <p>{current.endDate ? `${copy("ផុតកំណត់", "Expires")} ${dateLabel(current.endDate, lang)}` : copy("កាលបរិច្ឆេទផុតកំណត់មិនបានបញ្ជាក់", "Expiry date not specified")}</p> : <p>{copy("កញ្ចប់នឹងបើកដំណើរការក្រោយការទូទាត់ត្រូវបានផ្ទៀងផ្ទាត់។", "Your plan activates after payment has been verified.")}</p>}
+      <ShieldCheck size={24} aria-hidden="true" /><div><span className="workspace-muted">{copy("កញ្ចប់បច្ចុប្បន្ន", "Current plan")}</span><strong>{current?.packagePlan ? current.packagePlan?.packageName || copy("កញ្ចប់សកម្ម", "Active plan") : copy("មិនអាចផ្ទៀងផ្ទាត់កញ្ចប់", "Plan could not be verified")}</strong>{current?.source === "DEMO_ADMIN_GRANT" && <small>{copy("សិទ្ធិសាកល្បងពីអ្នកគ្រប់គ្រង · មិនមែនការទូទាត់", "Administrator demo grant · nonrevenue")}</small>}</div>
+      {current?.packagePlan ? <p>{current.expiresAt ? `${copy("ផុតកំណត់", "Expires")} ${dateLabel(current.expiresAt, lang)}` : (current.source === "CONFIGURED_FREE_PACKAGE" ? copy("កញ្ចប់ Free លំនាំដើម", "Default Free plan") : copy("កាលបរិច្ឆេទផុតកំណត់មិនបានបញ្ជាក់", "Expiry date not specified"))}</p> : <p>{copy("កញ្ចប់នឹងបើកដំណើរការក្រោយការទូទាត់ត្រូវបានផ្ទៀងផ្ទាត់។", "Your plan activates after payment has been verified.")}</p>}
     </section>}
+    {current?.quotas && <section className="workspace-section pkg-usage" aria-label={copy("ការប្រើប្រាស់", "Plan usage")}><h2>{copy("ការប្រើប្រាស់កញ្ចប់", "Your plan usage")}</h2>{Object.entries(current.quotas).map(([key, quota]) => <div key={key}><strong>{key === "invitations" ? copy("កម្មវិធី", "Events") : copy("ភ្ញៀវ", "Guests")}</strong><span>{quota.used} / {quota.limit ?? copy("គ្មានកំណត់", "Unlimited")}</span>{quota.limit != null && quota.limit > 0 && <progress max={quota.limit} value={Math.min(quota.used, quota.limit)} />}<small>{quota.remaining == null ? copy("គ្មានកំណត់", "Unlimited") : `${quota.remaining} ${copy("នៅសល់", "remaining")}`}</small></div>)}</section>}
     <section className="pkg-grid" aria-label={copy("បញ្ជីកញ្ចប់សេវាកម្ម", "Available subscription plans")} aria-busy={loading}>
       {loading ? <p role="status">{copy("កំពុងទាញយកកញ្ចប់សេវាកម្ម…", "Loading subscription packages…")}</p> : packages.map(plan => {
-        const selected = isActivated(current) && current.packagePlan?.id === plan.id;
+        const selected = current?.packagePlan && current.packagePlan?.code === plan.code;
         const pending = history.find(order => isPending(order) && order.packagePlan?.id === plan.id);
         const featured = plan.code?.toUpperCase() === "PRO";
         return <article className={`pkg-card ${featured ? "is-featured" : ""} ${target === plan.code?.toUpperCase() ? "is-targeted" : ""}`} key={plan.id}>
           <div className="pkg-card-top"><span className="workspace-badge">{featured ? <Crown size={16} aria-hidden="true" /> : <Sparkles size={16} aria-hidden="true" />}{plan.packageName}</span>{selected && <span>{copy("កំពុងប្រើ", "Current")}</span>}</div>
           <h2>{plan.packageName}</h2><p className="pkg-description">{plan.description}</p>
-          <div className="pkg-pricing"><strong>{money(plan.price, plan.currency, lang)}</strong><p>{billingLabel(plan, copy)}</p></div>
+          <div className="pkg-pricing"><strong>{money(plan.price, plan.currency, lang)}</strong><p>{plan.code === "FREE" ? copy("កញ្ចប់លំនាំដើម · មិនត្រូវការទូទាត់", "Default access · no checkout") : billingLabel(plan, copy)}</p></div>
           <ul className="pkg-features">
             <Feature>{packageLimit(plan.maxInvitations, lang)} {copy("កម្មវិធី", "events")}</Feature>
             <Feature>{packageLimit(plan.maxGuestsPerInvitation ?? plan.maxGuests, lang)} {copy("ភ្ញៀវក្នុងមួយកម្មវិធី", "guests per event")}</Feature>
@@ -139,7 +141,7 @@ export default function SubscriptionPackagesPage() {
             {plan.seatingEnabled && <Feature>{copy("រៀបចំកន្លែងអង្គុយ", "Seating arrangements")}</Feature>}
             {plan.advancedAnalyticsEnabled && <Feature>{copy("របាយការណ៍កម្រិតខ្ពស់", "Advanced analytics")}</Feature>}
           </ul>
-          <button className={`workspace-button ${featured ? "pkg-gold-button" : "primary"}`} aria-label={selected ? copy("កញ្ចប់បច្ចុប្បន្ន", "Current plan") : pending ? copy("មើលការទូទាត់ដែលកំពុងរង់ចាំ", "View pending order") : copy("ជ្រើសកញ្ចប់នេះ", "Choose this plan")} disabled={selected || saving || !!accountError || packagePrice(plan, lang) === null} onClick={() => openCheckout(plan)}>{selected ? copy("កញ្ចប់បច្ចុប្បន្ន", "Current plan") : pending ? copy("មើលការទូទាត់ដែលកំពុងរង់ចាំ", "View pending order") : copy("ជ្រើសកញ្ចប់នេះ", "Choose this plan")}</button>
+          <button className={`workspace-button ${featured ? "pkg-gold-button" : "primary"}`} aria-label={selected ? copy("កញ្ចប់បច្ចុប្បន្ន", "Current plan") : plan.code === "FREE" ? copy("អនុវត្តពេលសិទ្ធិបង់ប្រាក់ផុតកំណត់", "Applies when paid access ends") : pending ? copy("មើលការទូទាត់ដែលកំពុងរង់ចាំ", "View pending order") : copy("ជ្រើសកញ្ចប់នេះ", "Choose this plan")} disabled={plan.code === "FREE" || selected || saving || !!accountError || packagePrice(plan, lang) === null} onClick={() => openCheckout(plan)}>{selected ? copy("កញ្ចប់បច្ចុប្បន្ន", "Current plan") : plan.code === "FREE" ? copy("អនុវត្តពេលសិទ្ធិបង់ប្រាក់ផុតកំណត់", "Applies when paid access ends") : pending ? copy("មើលការទូទាត់ដែលកំពុងរង់ចាំ", "View pending order") : copy("ជ្រើសកញ្ចប់នេះ", "Choose this plan")}</button>
         </article>;
       })}
     </section>
