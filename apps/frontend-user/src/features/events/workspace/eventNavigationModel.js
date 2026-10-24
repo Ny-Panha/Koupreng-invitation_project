@@ -18,6 +18,7 @@ export const EVENT_LINK_GROUPS = [
   { key: "attendance", en: "Attendance", km: "ការចូលរួម", items: [
     { path: "seating", en: "Seating", km: "រៀបចំកន្លែងអង្គុយ", Icon: Armchair },
     { path: "check-in", en: "Check-in", km: "កត់ត្រាវត្តមាន", Icon: ScanLine },
+    { path: "analytics", en: "Attendance analytics", km: "វិភាគការចូលរួម", Icon: ChartColumn },
   ] },
   { key: "operations", en: "Management", km: "ការគ្រប់គ្រង", items: [
     { path: "gifts", en: "Gifts", km: "ចំណងដៃ", Icon: Gift },

@@ -1,0 +1,14 @@
+.analytics-range { display:flex; flex-wrap:wrap; align-items:end; gap:16px; }
+.analytics-range p { flex-basis:100%; }
+.analytics-range .workspace-field { min-width:0; flex:1 1 150px; }
+.analytics-totals { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:16px; margin-block:20px; }
+.analytics-totals div { padding:16px; border:1px solid var(--ws-border,#e9dfd0); border-radius:12px; }
+.analytics-totals dd { margin:8px 0 0; font-size:1.6rem; font-weight:700; }
+.analytics-bars { display:flex; height:120px; gap:2px; margin-block:24px; border-bottom:1px solid var(--ws-border,#e9dfd0); }
+.analytics-bars div { flex:1; min-width:0; display:flex; align-items:end; }
+.analytics-bars span { width:100%; background:var(--ws-gold,#967037); }
+.analytics-table-scroll { max-width:100%; overflow:auto; border-radius:8px; }
+.attendance-analytics table { width:100%; border-collapse:collapse; font-variant-numeric:tabular-nums; }
+.attendance-analytics caption { text-align:start; padding-block:12px; font-weight:600; }
+.attendance-analytics th,.attendance-analytics td { text-align:start; padding:12px; border-bottom:1px solid var(--ws-border,#e9dfd0); white-space:nowrap; }
+.attendance-analytics p { line-height:1.8; }

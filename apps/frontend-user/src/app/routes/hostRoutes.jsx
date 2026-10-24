@@ -11,6 +11,7 @@ const EventDetails = lazy(() => import("../../features/events/onboarding/EventDe
 const EventInvitation = lazy(() => import("../../features/events/workspace/EventInvitation"));
 const TicketDesigner = lazy(() => import("../../features/tickets/TicketDesigner"));
 const EventTeamPanel = lazy(() => import("../../features/events/workspace/EventTeamPanel"));
+const AttendanceAnalytics = lazy(() => import("../../features/events/workspace/AttendanceAnalytics"));
 
 function LegacyEditor({ preview = false }) {
   const { id } = useParams();
@@ -40,6 +41,7 @@ export function hostRoutes() {
         <Route path="tickets/design" element={<TicketDesigner />} />
         <Route path="settings" element={<EventDetails />} />
         <Route path="team" element={<EventTeamPanel />} />
+        <Route path="analytics" element={<AttendanceAnalytics />} />
         <Route path="preview" element={<InvitationPreviewPage />} />
         <Route path="guests" element={<GuestsPage />} />
         <Route path="rsvp" element={<RsvpDashboardPage />} />

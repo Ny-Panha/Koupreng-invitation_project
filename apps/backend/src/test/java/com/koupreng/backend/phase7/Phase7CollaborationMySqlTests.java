@@ -40,6 +40,7 @@ class Phase7CollaborationMySqlTests {
     @Autowired SubscriptionPackageRepository packages;
     @Autowired SubscriptionRepository subscriptions;
     @Autowired OrganizationMemberRepository members;
+    @Autowired org.springframework.jdbc.core.JdbcTemplate jdbc;
     private final HttpClient http = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(5)).build();
 
     @DynamicPropertySource static void database(DynamicPropertyRegistry registry) {
@@ -220,6 +221,46 @@ class Phase7CollaborationMySqlTests {
         assertFalse(csv.body.contains(records.getFirst().data().path("inviteToken").asText()));
         assertEquals(404,call("POST",eventPath(f)+"/guests/export-selection",f.owner,Map.of("guestIds",List.of(ids.getFirst(),Long.MAX_VALUE))).status);
         assertEquals(400,call("POST",eventPath(f)+"/guests/export-selection",f.owner,Map.of("guestIds",List.of(ids.getFirst(),ids.getFirst()))).status);
+    }
+
+    @Test void analyticsUseOwnerEntitlementAndBoundedCambodianDatesWithCurrentRecordFacts() throws Exception {
+        Fixture f=fixture(3,10);
+        List<Long> ids=new ArrayList<>(); List<String> tokens=new ArrayList<>();
+        for(int i=0;i<4;i++) {
+            Reply guest=call("POST",eventPath(f)+"/guests",f.owner,Map.of("guestName","Analytics fixture "+i,"seatCount",2));
+            assertEquals(201,guest.status); ids.add(guest.data().path("id").asLong()); tokens.add(guest.data().path("inviteToken").asText());
+        }
+        Reply published=call("PATCH",eventPath(f)+"/publish",f.owner,null); assertEquals(200,published.status);
+        for(int i=0;i<3;i++) {
+            assertEquals(201,call("POST","/api/v1/public/invitations/"+published.data().path("slug").asText()+"/guests/"+tokens.get(i)+"/rsvp",null,
+                    Map.of("responseStatus",List.of("ATTENDING","NOT_ATTENDING","MAYBE").get(i),"attendeeCount",i==0?2:0)).status);
+        }
+        for(int i=0;i<2;i++) assertEquals(200,call("POST",eventPath(f)+"/guests/"+ids.get(i)+"/check-in",f.owner,Map.of()).status);
+        // UTC+07 midnight is 17:00Z on the preceding day. Test both inclusive start and exclusive end.
+        List<String> times=List.of("2026-10-22 16:59:59","2026-10-22 17:00:00","2026-10-23 16:59:59","2026-10-23 17:00:00");
+        for(int i=0;i<4;i++) jdbc.update("UPDATE guests SET created_at=? WHERE guest_id=?",times.get(i),ids.get(i));
+        for(int i=0;i<3;i++) jdbc.update("UPDATE rsvps SET responded_at=? WHERE guest_id=?",times.get(i+1),ids.get(i));
+        jdbc.update("UPDATE guest_check_ins SET checked_in_at=? WHERE guest_id=?",times.get(1),ids.get(0));
+        jdbc.update("UPDATE guest_check_ins SET checked_in_at=? WHERE guest_id=?",times.get(3),ids.get(1));
+        String path=eventPath(f)+"/analytics?from=2026-10-23&to=2026-10-23";
+        Reply report=call("GET",path,f.owner,null); assertEquals(200,report.status);
+        assertEquals("Asia/Phnom_Penh",report.data().path("timezone").asText());
+        assertEquals(4,report.data().path("current").path("guestRecords").asInt());
+        assertEquals(8,report.data().path("current").path("reservedSeats").asInt());
+        var day=report.data().path("days").get(0);
+        assertEquals(2,day.path("guestRecordsCreated").asInt()); assertEquals(2,day.path("latestRsvpRecords").asInt());
+        assertEquals(1,day.path("attendingRecords").asInt()); assertEquals(1,day.path("declinedRecords").asInt());
+        assertEquals(0,day.path("maybeRecords").asInt()); assertEquals(1,day.path("activeCheckInRecords").asInt());
+        assertEquals(403,call("GET",path,f.stranger,null).status);
+        assertEquals(400,call("GET",eventPath(f)+"/analytics?from=2025-01-01&to=2026-10-23",f.owner,null).status);
+        assertEquals(400,call("GET",eventPath(f)+"/analytics?from=2026-10-24&to=2026-10-23",f.owner,null).status);
+        Reply invitation=invite(f,f.member.email,"VIEWER"); assertEquals(200,accept(f.member,invitation.data().path("invitationToken").asText()).status);
+        assertEquals(200,call("GET",path,f.member,null).status); // Personal Free plan does not replace the owner's eligible plan.
+        assertEquals(403,call("GET",eventPath(f)+"/guests/page",f.member,null).status);
+        assertEquals(200,call("DELETE","/api/v1/organizations/"+f.orgId+"/members/"+invitation.data().path("id").asLong(),f.owner,null).status);
+        assertEquals(403,call("GET",path,f.member,null).status);
+        var grant=subscriptions.findById(f.grantId).orElseThrow(); grant.setEndDate(Instant.now().minusSeconds(1)); subscriptions.saveAndFlush(grant);
+        assertEquals(403,call("GET",path,f.owner,null).status);
     }
 
     private Fixture fixture(int teamLimit) throws Exception {

@@ -92,10 +92,19 @@ The first native run failed because the disposable MySQL process was stopped. It
 was restarted on verified loopback port 3416 and its owned data directory checked
 before retries. No regular development or production schema was migrated.
 
-## Remaining Phase 7 work
+## Advanced attendance analytics
 
-Advanced attendance analytics is not yet implemented in this increment. The generic
-event guide/publish path, bounded guest dashboard/bulk operations, full accessibility
-matrix, real-browser/live-backend journeys and final release review remain required.
+`GET /api/v1/invitations/{id}/analytics?from=YYYY-MM-DD&to=YYYY-MM-DD` checks VIEW_REPORTS on every request and ADVANCED_ANALYTICS on the **event owner's current entitlement**. A collaborator's personal tier cannot grant access. The inclusive range is bounded to 366 calendar days, interpreted in Asia/Phnom_Penh (UTC+07), then queried as a half-open UTC interval. No financial or contact information is returned.
+
+The response separates current event totals (the same definitions as the guest dashboard) from daily stored facts: guest creation, latest linked RSVP responses by status, and active check-in rows. Editing a response moves that record to its latest response date; deleting a guest or undoing check-in changes the current facts. This is explicitly not a full historical change log, conversion funnel, individual-arrival count, DAU, recurring revenue or inferred email engagement. No new instrumentation or schema is needed. Queries are scoped by existing invitation indexes and aggregate on the database; the browser receives at most 366 daily rows.
+
+The KH/EN analytics screen has bounded date controls, current units/denominator, source and timezone descriptions, loading/error/denied/empty states, a daily bar chart and a complete accessible data table. The obsolete package banner claiming team access is unavailable was replaced after team integration passed.
+
+Verification: `m5-analytics-api.log` contains 11 real HTTP/MySQL cases plus 5 ArchUnit cases, all passing. The additional analytics case verifies 17:00Z calendar boundaries, current totals, malformed/reversed/oversized ranges, stranger denial, Free viewer access under an eligible owner, removal revocation and owner-plan expiry denial. `m5-analytics-openapi.log`: 14 passing contract checks. `m5-user.log`: 43 passing tests; full user lint/build passed. `m5-analytics-browser.log`: 2 passing KH/EN browser scenarios with nine viewport captures each; 390px reviewed. Browser fixtures remain separate from the real database evidence.
+
+## Remaining Phase 7 work at this increment
+
+The generic event guide/publish path, full accessibility matrix,
+real-browser/live-backend journeys and final release review remain required.
 Email delivery is intentionally outside this implementation; owners privately share
 invitation codes using their chosen channel.

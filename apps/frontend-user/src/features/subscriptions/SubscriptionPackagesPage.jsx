@@ -150,7 +150,7 @@ export default function SubscriptionPackagesPage() {
     </section>
     {!loading && <PackageComparison plans={packages} lang={lang} copy={copy} />}
     {!loading && !error && packages.length === 0 && <p className="workspace-notice">{copy("មិនទាន់មានកញ្ចប់សេវាកម្ម។ សូមព្យាយាមម្ដងទៀតពេលក្រោយ។", "No plans are available. Please check again later.")}</p>}
-    {packages.some(plan => plan.teamMembersEnabled || plan.maxTeamMembers > 1) && <p className="workspace-notice">{copy("ការប្រើប្រាស់ជាក្រុមមិនទាន់ដំណើរការទេ។ បច្ចុប្បន្ន ម្ចាស់កម្មវិធីជាអ្នកគ្រប់គ្រងកម្មវិធី។", "Team access is not available yet. Events are currently managed by their owner.")}</p>}
+    {packages.some(plan => plan.teamMembersEnabled) && <p className="workspace-notice">{copy("កញ្ចប់ដែលមានក្រុម អនុញ្ញាតឱ្យភ្ជាប់ក្រុមទៅកម្មវិធី។ សមាជិកត្រូវទទួលយកការអញ្ជើញមុនពេលទទួលសិទ្ធិតាមតួនាទី។", "Eligible plans let owners link a team to events. Members must accept an invitation before receiving role-based event access.")}</p>}
     <History history={history} lang={lang} copy={copy} resume={resume} />
     <section className="workspace-section pkg-faq" aria-label="FAQ"><h2>{copy("សំណួរដែលសួរញឹកញាប់", "Before you choose")}</h2>
       {[

@@ -45,6 +45,9 @@ tags:
   description: Authenticated organization membership and owner-managed member access.
 - name: Health
   description: Public application liveness endpoint.
+- name: Attendance analytics
+  description: "Owner-entitled, permission-checked attendance facts in bounded Cambodian\
+    \ calendar dates."
 - name: Payment History
   description: Current-user payment orders and receipts with ownership enforcement.
 - name: Check-In
@@ -6641,6 +6644,41 @@ paths:
                 type: string
       security:
       - bearerAuth: []
+  /api/v1/invitations/{invitationId}/analytics:
+    get:
+      tags:
+      - Attendance analytics
+      summary: Report
+      operationId: report
+      parameters:
+      - name: invitationId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      - name: from
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: to
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseAttendanceAnalyticsResponse"
+      security:
+      - bearerAuth: []
   /api/v1/invitations/{id}/preview:
     get:
       tags:
@@ -7202,7 +7240,7 @@ paths:
         \ size 1..200; sort is a schema column; a stable ID tie-breaker is appended.\
         \ Monetary chart groups below five payments are suppressed. Individual ledgers\
         \ are explicitly ADMIN-authorized, not public aggregates."
-      operationId: report
+      operationId: report_1
       parameters:
       - name: report
         in: path
@@ -9158,9 +9196,9 @@ components:
         publishedAt:
           type: string
           format: date-time
-        draft:
-          type: boolean
         published:
+          type: boolean
+        draft:
           type: boolean
     UpdateProfileRequest:
       type: object
@@ -12865,6 +12903,59 @@ components:
         timestamp:
           type: string
           format: date-time
+    ApiResponseAttendanceAnalyticsResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/AttendanceAnalyticsResponse"
+        timestamp:
+          type: string
+          format: date-time
+    AttendanceAnalyticsResponse:
+      type: object
+      properties:
+        from:
+          type: string
+          format: date
+        to:
+          type: string
+          format: date
+        timezone:
+          type: string
+        current:
+          $ref: "#/components/schemas/GuestOverviewResponse"
+        days:
+          type: array
+          items:
+            $ref: "#/components/schemas/Day"
+    Day:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        guestRecordsCreated:
+          type: integer
+          format: int64
+        latestRsvpRecords:
+          type: integer
+          format: int64
+        attendingRecords:
+          type: integer
+          format: int64
+        declinedRecords:
+          type: integer
+          format: int64
+        maybeRecords:
+          type: integer
+          format: int64
+        activeCheckInRecords:
+          type: integer
+          format: int64
     ApiResponseEventAccessResponse:
       type: object
       properties:
