@@ -30,19 +30,17 @@ export function useEvents(t) {
                     String(ld.id) === String(apiInv.id) || String(ld.backendInvitationId) === String(apiInv.id)
                 );
                 if (matchingLocal) {
+                    const coverIdentity = Object.fromEntries(['coverUrl', 'coverSource', 'invitationCoverUrl', 'templateThumbnailUrl', 'templateCode', 'templateId'].map(key => [key, apiInv[key]]));
                     if (matchingLocal.syncStatus === "SYNC_FAILED") {
                         return {
                             ...apiInv,
                             ...matchingLocal,
-                            coverImage: undefined,
-                            media: undefined,
+                            coverIdentity,
                             id: apiInv.id,
                             coverUrl: apiInv.coverUrl,
                             coverSource: apiInv.coverSource,
                             templateThumbnailUrl: apiInv.templateThumbnailUrl,
-                            designJson: apiInv.designJson,
                             invitationCoverUrl: apiInv.invitationCoverUrl,
-                            contentJson: undefined,
                             backendInvitationId: apiInv.id,
                             syncStatus: "SYNC_FAILED",
                             templateId: matchingLocal.templateId || apiInv.templateId,
@@ -51,9 +49,7 @@ export function useEvents(t) {
                     return {
                         ...matchingLocal,
                         ...apiInv,
-                        coverImage: undefined,
-                        media: undefined,
-                        contentJson: undefined,
+                        coverIdentity,
                         syncStatus: "SYNCED",
                         syncError: "",
                         templateId: apiInv.templateId || matchingLocal.templateId,
@@ -97,9 +93,13 @@ export function useEvents(t) {
     const syncDraft = useCallback(async (draft, { silent = false } = {}) => {
         const draftId = String(draft?.id || "");
         if (!draftId || syncInFlight.current.has(draftId)) return;
+        // Display summaries carry server cover identity; retries must use the untouched local payload.
+        const storedDraft = listDrafts(ownerUserId).find(item => String(item.id) === draftId
+            || (item.backendInvitationId && String(item.backendInvitationId) === String(draft.backendInvitationId || draft.id)));
+        if (storedDraft) draft = { ...storedDraft, backendInvitationId: draft.backendInvitationId || storedDraft.backendInvitationId };
         autoSyncAttempted.current.add(draftId);
         syncInFlight.current.add(draftId);
-        setSyncingDraftId(String(draft.id));
+        setSyncingDraftId(draftId);
         try {
             if (!draft.backendInvitationId) {
                 draft = { ...draft, clientRequestId: draft.clientRequestId || crypto.randomUUID(),
@@ -116,7 +116,8 @@ export function useEvents(t) {
                 syncError: "",
             };
             saveDraft(syncedDraft);
-            setDrafts((current) => current.map((item) => String(item.id) === String(draft.id) ? syncedDraft : item));
+            setDrafts((current) => current.map((item) => String(item.id) === draftId ? { ...syncedDraft, id: item.id, coverIdentity: item.coverIdentity } : item));
+            loadDrafts();
             if (!silent) toast("បាន sync កម្មវិធីទៅ server ជោគជ័យ / Event synced to server");
         } catch (error) {
             const partialPatch = error?.partialPatch || {};
@@ -128,13 +129,13 @@ export function useEvents(t) {
                 syncError: error?.message || "មិនអាច sync ទៅ server បានទេ",
             };
             saveDraft(failedDraft);
-            setDrafts((current) => current.map((item) => String(item.id) === String(draft.id) ? failedDraft : item));
+            setDrafts((current) => current.map((item) => String(item.id) === draftId ? { ...failedDraft, id: item.id, coverIdentity: item.coverIdentity } : item));
             if (!silent) toast.warning(`មិនអាច sync បានទេ: ${failedDraft.syncError}`);
         } finally {
             syncInFlight.current.delete(draftId);
             setSyncingDraftId("");
         }
-    }, [ownerUserId]);
+    }, [ownerUserId, loadDrafts]);
 
     useEffect(() => {
         if (!backendListLoaded) return undefined;

@@ -10,6 +10,8 @@ function asset(value) {
 }
 
 export function eventCoverCandidates(event = {}) {
+  // A list projection may share a model with an unsynchronized local draft; keep their purposes separate.
+  if (event.coverIdentity) event = { ...event.coverIdentity, id: event.id };
   let design = {};
   let content = {};
   try { design = typeof event.designJson === 'string' ? JSON.parse(event.designJson) : event.designJson || {}; } catch { /* Invalid legacy design falls back to its template. */ }

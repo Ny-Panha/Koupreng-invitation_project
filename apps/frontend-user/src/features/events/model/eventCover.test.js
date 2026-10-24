@@ -2,6 +2,11 @@ import { describe, expect, it } from 'vitest';
 import { resolveEventCover, eventCoverCandidates, EVENT_COVER_FALLBACK } from './eventCover';
 
 describe('canonical event cover', () => {
+  it('uses the server identity without discarding a local retry payload', () => {
+    const event = { id: 101, contentJson: '{"coverImage":"/unsaved.jpg"}', media: { coverImage: { fileUrl: '/cached.jpg' } }, coverIdentity: { coverSource: 'template', templateThumbnailUrl: '/confirmed-template.jpg' } };
+    expect(resolveEventCover(event).url).toBe('/confirmed-template.jpg');
+    expect(event.contentJson).toContain('/unsaved.jpg');
+  });
   it('reads the saved Studio content cover and its summary projection before template artwork', () => {
     expect(resolveEventCover({ contentJson: '{"coverImage":"/studio.jpg"}', templateThumbnailUrl: '/template.jpg' })).toEqual({ source: 'invitation', url: '/studio.jpg' });
     expect(resolveEventCover({ invitationCoverUrl: '/saved-studio.jpg', coverUrl: '/template.jpg', coverSource: 'template' }).url).toBe('/saved-studio.jpg');

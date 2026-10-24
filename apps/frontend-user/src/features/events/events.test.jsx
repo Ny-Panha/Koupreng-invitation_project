@@ -8,6 +8,7 @@ import { useLanguageStore } from "@/stores/useLanguageStore";
 import { getDraft, saveDraft } from "../../shared/storage/weddingStorage";
 import { persistWeddingDraft } from "../wedding-builder/utils/draftPublishApi";
 import { toast } from "../../shared/ui/toast";
+import { resolveEventCover } from './model/eventCover';
 
 vi.mock("../../shared/i18n/useBackendMessages", () => ({
     useBackendMessages: () => ({ text: () => "" }),
@@ -159,6 +160,18 @@ describe("Events Feature", () => {
         renderHook(() => useEvents());
         await waitFor(() => expect(persistWeddingDraft).toHaveBeenCalledTimes(2));
         expect(persistWeddingDraft.mock.calls[1][0].backendInvitationId).toBe(123);
+    });
+
+    it('preserves complete local design/media payloads during a failed retry while showing the server cover', async () => {
+        vi.spyOn(eventsApi, 'listMine').mockResolvedValue([{ id: 101, title: 'Server title', coverUrl: '/confirmed.jpg', coverSource: 'owner' }]);
+        persistWeddingDraft.mockRejectedValueOnce(new Error('offline'));
+        const local = { id: 'wed-rich-retry', backendInvitationId: 101, title: 'Local edits', syncStatus: 'SYNC_FAILED', coverImage: 'data:image/png;base64,fictional', designJson: '{"coverImage":"/local-design.jpg"}', contentJson: '{"coverImage":"/local-content.jpg","note":"Keep me"}', media: { coverImage: { fileUrl: '/cached.jpg' } } };
+        saveDraft(local);
+        const { result } = renderHook(() => useEvents());
+        await waitFor(() => expect(getDraft(local.id)?.syncError).toBe('offline'));
+        expect(persistWeddingDraft).toHaveBeenCalledWith(expect.objectContaining(local));
+        expect(getDraft(local.id)).toMatchObject(local);
+        expect(resolveEventCover(result.current.drafts[0]).url).toBe('/confirmed.jpg');
     });
 
     it("preserves local edits when updating an existing backend invitation fails", async () => {
