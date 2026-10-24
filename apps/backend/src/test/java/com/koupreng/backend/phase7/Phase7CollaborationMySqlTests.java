@@ -171,6 +171,22 @@ class Phase7CollaborationMySqlTests {
         assertEquals(200, call("GET", eventPath(f), f.member, null).status);
     }
 
+    @Test void managerGuestEditsCannotReadClearOrSetOwnerContributionFields() throws Exception {
+        Fixture f = fixture(3);
+        Reply guest = call("POST", eventPath(f) + "/guests", f.owner, Map.of("guestName", "Contribution fixture", "totalContributed", 25, "contributionStatus", "RECORDED"));
+        assertEquals(201, guest.status);
+        Reply invitation = invite(f, f.member.email, "MANAGER");
+        assertEquals(200, accept(f.member, invitation.data().path("invitationToken").asText()).status);
+        String path = eventPath(f) + "/guests/" + guest.data().path("id").asLong();
+        Reply read = call("GET", path, f.member, null); assertEquals(200, read.status);
+        assertTrue(read.data().path("totalContributed").isNull());
+        assertTrue(read.data().path("contributionStatus").isNull());
+        assertEquals(200, call("PUT", path, f.member, Map.of("guestName", "Edited operational name")).status);
+        Reply ownerView = call("GET", path, f.owner, null); assertEquals(200, ownerView.status);
+        assertEquals(25, ownerView.data().path("totalContributed").decimalValue().intValueExact());
+        assertEquals(403, call("PUT", path, f.member, Map.of("guestName", "Forged contribution", "totalContributed", 99)).status);
+    }
+
     private Fixture fixture(int teamLimit) throws Exception {
         Auth owner = register(), member = register(), stranger = register();
         var plan = new SubscriptionPackage(); plan.setCode("P7-" + UUID.randomUUID()); plan.setPackageName("Phase 7 disposable team fixture");

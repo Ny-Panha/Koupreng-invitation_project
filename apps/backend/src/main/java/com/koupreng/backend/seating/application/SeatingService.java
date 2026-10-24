@@ -83,7 +83,7 @@ public class SeatingService {
                         .toList())
                 .unassignedGuests(guestRepository.findByInvitationIdOrderByGuestGroupAscTableNumberAscGuestNameAsc(invitationId).stream()
                         .filter(guest -> !assignedGuestIds.contains(guest.getId()))
-                        .map(guest -> GuestResponse.from(guest))
+                        .map(guest -> GuestResponse.from(guest, isAdmin(authentication) || Objects.equals(guest.getInvitation().getUser().getId(), currentUserService.currentUser(authentication).getId())))
                         .toList())
                 .build();
     }

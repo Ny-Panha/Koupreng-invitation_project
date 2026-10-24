@@ -96,9 +96,9 @@ public class GuestService {
         Guest guest = new Guest();
         guest.setInvitation(invitation);
         guest.setInviteToken(uniqueInviteToken());
-        applyRequest(guest, request);
+        applyRequest(guest, request, invitationService.isEventOwner(authentication, guest.getInvitation()));
         guest.setQrCodeUrl(tokenUrl(invitation, guest.getInviteToken()));
-        return GuestResponse.from(guestRepository.save(guest));
+        return guestView(authentication, guestRepository.save(guest));
     }
 
     @Transactional
@@ -107,7 +107,7 @@ public class GuestService {
         return guestRepository.findByInvitationIdOrderByCreatedAtDesc(invitationId).stream()
                 .map(guest -> {
                     ensureInvitationLink(invitation, guest);
-                    return GuestResponse.from(guest);
+                    return guestView(authentication, guest);
                 })
                 .toList();
     }
@@ -120,7 +120,7 @@ public class GuestService {
         for (Guest guest : guests) {
             ensureInvitationLink(invitation, guest);
             grouped.computeIfAbsent(category(guest), ignored -> new ArrayList<>())
-                    .add(GuestResponse.from(guest));
+                    .add(guestView(authentication, guest));
         }
         return grouped.entrySet().stream()
                 .map(entry -> GuestGroupResponse.builder()
@@ -153,7 +153,7 @@ public class GuestService {
     @Transactional(readOnly = true)
     public GuestResponse get(Authentication authentication, Long invitationId, Long guestId) {
         invitationService.requireEventPermission(authentication, invitationId, Permission.MANAGE_GUESTS);
-        return GuestResponse.from(requireGuest(invitationId, guestId));
+        return guestView(authentication, requireGuest(invitationId, guestId));
     }
 
     @Transactional
@@ -161,11 +161,11 @@ public class GuestService {
         invitationService.requireEventPermission(authentication, invitationId, Permission.MANAGE_GUESTS);
         Guest guest = requireGuest(invitationId, guestId);
         ensureUniqueGuest(invitationId, guestId, request);
-        applyRequest(guest, request);
+        applyRequest(guest, request, invitationService.isEventOwner(authentication, guest.getInvitation()));
         if (guest.getQrCodeUrl() == null || guest.getQrCodeUrl().isBlank()) {
             guest.setQrCodeUrl(tokenUrl(guest.getInvitation(), guest.getInviteToken()));
         }
-        return GuestResponse.from(guestRepository.save(guest));
+        return guestView(authentication, guestRepository.save(guest));
     }
 
     @Transactional
@@ -181,7 +181,7 @@ public class GuestService {
             return list(authentication, invitationId);
         }
         return guestRepository.search(invitationId, keyword.trim()).stream()
-                .map(GuestResponse::from)
+                .map(guest -> guestView(authentication, guest))
                 .toList();
     }
 
@@ -198,9 +198,9 @@ public class GuestService {
                     Guest guest = new Guest();
                     guest.setInvitation(invitation);
                     guest.setInviteToken(uniqueInviteToken());
-                    applyRequest(guest, guestRequest);
+                    applyRequest(guest, guestRequest, invitationService.isEventOwner(authentication, guest.getInvitation()));
                     guest.setQrCodeUrl(tokenUrl(invitation, guest.getInviteToken()));
-                    return GuestResponse.from(guestRepository.save(guest));
+                    return guestView(authentication, guestRepository.save(guest));
                 })
                 .toList();
     }
@@ -270,9 +270,9 @@ public class GuestService {
             Guest guest = new Guest();
             guest.setInvitation(invitation);
             guest.setInviteToken(uniqueInviteToken());
-            applyRequest(guest, guestRequest);
+            applyRequest(guest, guestRequest, invitationService.isEventOwner(authentication, guest.getInvitation()));
             guest.setQrCodeUrl(tokenUrl(invitation, guest.getInviteToken()));
-            imported.add(GuestResponse.from(guestRepository.save(guest)));
+            imported.add(guestView(authentication, guestRepository.save(guest)));
         }
 
         return GuestImportFileResultResponse.builder()
@@ -335,7 +335,14 @@ public class GuestService {
         }
     }
 
-    private void applyRequest(Guest guest, GuestRequest request) {
+    private GuestResponse guestView(Authentication authentication, Guest guest) {
+        return GuestResponse.from(guest, invitationService.isEventOwner(authentication, guest.getInvitation()));
+    }
+
+    private void applyRequest(Guest guest, GuestRequest request, boolean financeAllowed) {
+        if (!financeAllowed && (request.getContributionStatus() != null || request.getTotalContributed() != null)) {
+            throw new ApiException(HttpStatus.FORBIDDEN, "Only the event owner can change contribution fields");
+        }
         guest.setGuestName(trimToNull(request.getGuestName()));
         guest.setCompanionName(trimToNull(request.getCompanionName()));
         guest.setPhone(trimToNull(request.getPhone()));
@@ -346,8 +353,10 @@ public class GuestService {
         guest.setSendStatus(trimToNull(request.getSendStatus()));
         guest.setSeatCount(request.getSeatCount());
         guest.setNote(trimToNull(request.getNote()));
-        guest.setContributionStatus(trimToNull(request.getContributionStatus()));
-        guest.setTotalContributed(request.getTotalContributed());
+        if (financeAllowed) {
+            guest.setContributionStatus(trimToNull(request.getContributionStatus()));
+            guest.setTotalContributed(request.getTotalContributed());
+        }
     }
 
     private void validateImportFile(MultipartFile file) {

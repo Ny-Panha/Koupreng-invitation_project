@@ -35,6 +35,15 @@ public class GuestResponse {
     private BigDecimal totalContributed;
     private Instant createdAt;
 
+    public static GuestResponse from(Guest guest, boolean includeFinancialFields) {
+        GuestResponse response = from(guest);
+        if (!includeFinancialFields) {
+            response.setContributionStatus(null);
+            response.setTotalContributed(null);
+        }
+        return response;
+    }
+
     public static GuestResponse from(Guest guest) {
         return GuestResponse.builder()
                 .id(guest.getId())

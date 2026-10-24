@@ -43,6 +43,13 @@ server authorization remains mandatory. Shared event cards identify the owner an
 omit owner-only deletion/edit shortcuts. Legacy automatic local-draft retries do
 not submit shared event writes.
 
+A subsequent DTO audit found legacy contribution status/totals in guest and
+unassigned-seating responses. Delegated guest/seating views now redact those fields.
+Delegated guest edits preserve existing contribution values and reject attempts to
+set them. Owner responses and owner financial edits retain their existing behavior.
+The follow-up gate passed 34 service/architecture/MySQL tests, including a real HTTP
+test that verifies redaction, preservation and rejection of a forged contribution.
+
 The staff roster is paged (default 50, maximum 100), searched and filtered on the
 server. It contains names, groups, tables and seats; it omits phone/email, guest
 tokens, QR URLs and private notes. Staff UI does not load the private guest list,

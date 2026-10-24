@@ -502,6 +502,11 @@ public class InvitationService {
     }
 
     @Transactional(readOnly = true)
+    public boolean isEventOwner(Authentication authentication, UserInvitation event) {
+        return event != null && event.getUser() != null && currentUserService.currentUser(authentication).getId().equals(event.getUser().getId());
+    }
+
+    @Transactional(readOnly = true)
     public UserInvitation requireEventPermission(Authentication authentication, Long id, EventAccessPolicy.Permission permission) {
         AppUser actor = currentUserService.currentUser(authentication);
         UserInvitation event = invitationRepository.findByIdAndDeletedFalse(id)
