@@ -4,12 +4,12 @@
 .import-steps li { display: flex; align-items: center; gap: 6px; color: var(--ws-muted); font-size: 12px; }
 .import-steps li[aria-current] { color: var(--ws-gold); font-weight: 700; }
 .import-steps li > span { display: grid; place-items: center; width: 24px; height: 24px; border: 1px solid var(--ws-border); border-radius: 50%; }
-.import-samples { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; padding: 18px; background: var(--ws-bg); border: 1px solid var(--ws-border); border-radius: 14px; }
+.import-samples { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; padding: 18px; background: var(--ws-canvas); border: 1px solid var(--ws-border); border-radius: 14px; }
 .import-samples > div:first-of-type { flex: 1; min-width: 160px; }
 .import-samples p, .import-help, .import-map-row small { color: var(--ws-muted); font-size: 13px; }
 .import-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 .import-actions label { display: flex; gap: 6px; align-items: center; min-height: 44px; }
-.import-upload { display: grid; justify-items: center; gap: 8px; padding: 28px 18px; border: 1px dashed var(--ws-gold); border-radius: 14px; background: var(--ws-bg); text-align: center; }
+.import-upload { display: grid; justify-items: center; gap: 8px; padding: 28px 18px; border: 1px dashed var(--ws-gold); border-radius: 14px; background: var(--ws-canvas); text-align: center; }
 .import-upload input { max-width: 100%; font-size: 14px; min-height: 44px; }
 .import-upload input::file-selector-button { padding: 10px 14px; border: 1px solid var(--ws-border); border-radius: 8px; background: var(--ws-surface); color: var(--ws-ink); cursor: pointer; margin-right: 8px; }
 .import-field { display: grid; gap: 6px; font-size: 14px; }
@@ -27,5 +27,5 @@
 .import-row-issue { color: var(--ws-gold-deep, #76572d); }
 .import-corrections { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
 .import-error { padding: 12px 16px; background: #fff1f0; border: 1px solid #e9b1ac; border-radius: 10px; color: #9b3029; overflow-wrap: anywhere; }
-.import-confirm { display: grid; gap: 16px; padding: 20px; border: 1px solid var(--ws-border); border-radius: 14px; background: var(--ws-bg); }
+.import-confirm { display: grid; gap: 16px; padding: 20px; border: 1px solid var(--ws-border); border-radius: 14px; background: var(--ws-canvas); }
 @media (max-width: 480px) { .import-map-row, .import-corrections { grid-template-columns: minmax(0, 1fr); gap: 6px; } .import-steps li { font-size: 11px; } .import-confirm { padding: 14px; } }

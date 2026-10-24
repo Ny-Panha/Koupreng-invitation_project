@@ -127,6 +127,20 @@ final class OpenApiExamples {
                               "totalContributed": 0
                             }
                             """));
+            case "GuestBatchRequest" -> one("mappedGuestBatch", "Preview or atomically commit reviewed fictional guest rows; reuse batchId only for identical retries", """
+                    {
+                      "batchId": "11111111-1111-4111-8111-111111111111",
+                      "rows": [{"rowNumber": 2, "guest": {"guestName": "Fictional Guest", "phone": "012000001", "seatCount": "2", "guestGroup": "Groom Side", "sideType": "Family"}, "skip": false, "allowNameMatch": false}]
+                    }
+                    """);
+            case "SeatingLayoutRequest" -> one("eventLayout", "Save event-scoped geometry using the last retrieved layout version", """
+                    {
+                      "version": 0,
+                      "data": {"schemaVersion": 1, "positions": {"1": {"x": 25, "y": 40}},
+                        "venue": {"stage": {"x": 50, "y": 9}, "entrance": {"x": 50, "y": 92},
+                          "walkway": {"x": 50, "y": 51, "orientation": "vertical", "enabled": true}}}
+                    }
+                    """);
             case "GuestImportRequest" -> one("guestImport", "Import two fictional guests", """
                     {
                       "guests": [
@@ -186,6 +200,8 @@ final class OpenApiExamples {
                     {
                       "name": "Vanna Keo",
                       "amount": 50.00,
+                      "currency": "USD",
+                      "clientRequestId": "22222222-2222-4222-8222-222222222222",
                       "method": "CASH",
                       "date": "2035-02-17",
                       "note": "With best wishes"

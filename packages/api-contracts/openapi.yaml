@@ -12,6 +12,8 @@ servers:
 - url: http://localhost
   description: Generated server url
 tags:
+- name: Seating
+  description: Event-owned seating assignments and versioned floor-plan geometry.
 - name: Wedding Gifts
   description: Invitation-owner wedding gift records and contribution amounts.
 - name: Subscriptions
@@ -230,6 +232,85 @@ paths:
                 $ref: "#/components/schemas/ApiResponseVoid"
       security:
       - bearerAuth: []
+  /api/v1/invitations/{invitationId}/seating/layout:
+    get:
+      tags:
+      - Seating
+      summary: Retrieve the event floor-plan layout
+      description: Returns version zero when no cloud layout exists. Guest assignments
+        remain separate.
+      operationId: get
+      parameters:
+      - name: invitationId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseSeatingLayoutResponse"
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - Seating
+      summary: Save the event floor-plan layout
+      description: "Requires event ownership, seating entitlement and the last retrieved\
+        \ version. Stale versions return 409 without overwriting edits."
+      operationId: save
+      parameters:
+      - name: invitationId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SeatingLayoutRequest"
+            examples:
+              eventLayout:
+                summary: Save event-scoped geometry using the last retrieved layout
+                  version
+                value:
+                  version: 0
+                  data:
+                    schemaVersion: 1
+                    positions:
+                      "1":
+                        x: 25
+                        "y": 40
+                    venue:
+                      stage:
+                        x: 50
+                        "y": 9
+                      entrance:
+                        x: 50
+                        "y": 92
+                      walkway:
+                        x: 50
+                        "y": 51
+                        orientation: vertical
+                        enabled: true
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseSeatingLayoutResponse"
+      security:
+      - bearerAuth: []
   /api/v1/invitations/{invitationId}/media/{mediaId}/replace:
     put:
       tags:
@@ -275,7 +356,7 @@ paths:
       tags:
       - Guests
       summary: Retrieve a guest record
-      operationId: get
+      operationId: get_1
       parameters:
       - name: invitationId
         in: path
@@ -425,6 +506,8 @@ paths:
                 value:
                   name: Vanna Keo
                   amount: 50.0
+                  currency: USD
+                  clientRequestId: 22222222-2222-4222-8222-222222222222
                   method: CASH
                   date: 2035-02-17
                   note: With best wishes
@@ -681,7 +764,7 @@ paths:
       tags:
       - Invitations
       summary: Retrieve a invitation record
-      operationId: get_1
+      operationId: get_2
       parameters:
       - name: id
         in: path
@@ -929,7 +1012,7 @@ paths:
       tags:
       - Invitation Tickets
       summary: Save
-      operationId: save
+      operationId: save_1
       parameters:
       - name: eventId
         in: path
@@ -2585,6 +2668,134 @@ paths:
                 $ref: "#/components/schemas/ApiResponseGuestImportFilePreviewResponse"
       security:
       - bearerAuth: []
+  /api/v1/invitations/{invitationId}/guests/import-batch:
+    post:
+      tags:
+      - guest-batch-controller
+      summary: Commit a reviewed guest batch
+      description: Owner-authorized event-scoped import. All selected rows and the
+        idempotency receipt commit in one transaction; any unresolved row or capacity
+        failure aborts the transaction. Reusing batchId with identical rows returns
+        the committed receipt; different content returns 409.
+      operationId: commit
+      parameters:
+      - name: invitationId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GuestBatchRequest"
+            examples:
+              mappedGuestBatch:
+                summary: Preview or atomically commit reviewed fictional guest rows;
+                  reuse batchId only for identical retries
+                value:
+                  batchId: 11111111-1111-4111-8111-111111111111
+                  rows:
+                  - rowNumber: 2
+                    guest:
+                      guestName: Fictional Guest
+                      phone: "012000001"
+                      seatCount: "2"
+                      guestGroup: Groom Side
+                      sideType: Family
+                    skip: false
+                    allowNameMatch: false
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseGuestBatchResponse"
+  /api/v1/invitations/{invitationId}/guests/import-batch/preview:
+    post:
+      tags:
+      - guest-batch-controller
+      summary: Validate mapped guest rows
+      description: "No writes. Reports READY, INVALID, DUPLICATE, NAME_MATCH or SKIPPED\
+        \ for every source row. Group and category are free text, not enums. Existing\
+        \ guests are never updated."
+      operationId: preview
+      parameters:
+      - name: invitationId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GuestBatchRequest"
+            examples:
+              mappedGuestBatch:
+                summary: Preview or atomically commit reviewed fictional guest rows;
+                  reuse batchId only for identical retries
+                value:
+                  batchId: 11111111-1111-4111-8111-111111111111
+                  rows:
+                  - rowNumber: 2
+                    guest:
+                      guestName: Fictional Guest
+                      phone: "012000001"
+                      seatCount: "2"
+                      guestGroup: Groom Side
+                      sideType: Family
+                    skip: false
+                    allowNameMatch: false
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseGuestBatchResponse"
+  /api/v1/invitations/{invitationId}/guests/import-batch/inspect:
+    post:
+      tags:
+      - guest-batch-controller
+      summary: Inspect a CSV or XLSX guest source
+      description: "Owner-only, read-only parsing. Limits: 5MB upload, 20MB expanded\
+        \ workbook, 10 sheets, 1000 rows per sheet, 32 columns, 2000 characters per\
+        \ cell. Formula rows are reported without evaluation."
+      operationId: inspect
+      parameters:
+      - name: invitationId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required:
+              - file
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseGuestImportSourceResponse"
   /api/v1/invitations/{invitationId}/gifts:
     get:
       tags:
@@ -2632,6 +2843,8 @@ paths:
                 value:
                   name: Vanna Keo
                   amount: 50.0
+                  currency: USD
+                  clientRequestId: 22222222-2222-4222-8222-222222222222
                   method: CASH
                   date: 2035-02-17
                   note: With best wishes
@@ -5341,7 +5554,7 @@ paths:
       tags:
       - Organizations
       summary: Retrieve a organization record
-      operationId: get_2
+      operationId: get_3
       parameters:
       - name: organizationId
         in: path
@@ -5514,7 +5727,7 @@ paths:
       tags:
       - Payment History
       summary: Retrieve a payment history record
-      operationId: get_3
+      operationId: get_4
       parameters:
       - name: orderCode
         in: path
@@ -6177,7 +6390,7 @@ paths:
       tags:
       - Invitations
       summary: Preview
-      operationId: preview
+      operationId: preview_1
       parameters:
       - name: id
         in: path
@@ -7722,6 +7935,111 @@ components:
           format: int32
         notes:
           type: string
+    LayoutData:
+      type: object
+      properties:
+        schemaVersion:
+          type: integer
+          format: int32
+          maximum: 1
+          minimum: 1
+        positions:
+          type: object
+          additionalProperties:
+            $ref: "#/components/schemas/Point"
+        venue:
+          $ref: "#/components/schemas/Venue"
+      required:
+      - positions
+      - venue
+    Point:
+      type: object
+      properties:
+        x:
+          type: number
+          format: double
+          maximum: 100
+          minimum: 0
+        "y":
+          type: number
+          format: double
+          maximum: 100
+          minimum: 0
+      required:
+      - x
+      - "y"
+    SeatingLayoutRequest:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+        data:
+          $ref: "#/components/schemas/LayoutData"
+      required:
+      - data
+    Venue:
+      type: object
+      properties:
+        stage:
+          $ref: "#/components/schemas/Point"
+        entrance:
+          $ref: "#/components/schemas/Point"
+        walkway:
+          $ref: "#/components/schemas/Walkway"
+      required:
+      - entrance
+      - stage
+      - walkway
+    Walkway:
+      type: object
+      properties:
+        x:
+          type: number
+          format: double
+          maximum: 100
+          minimum: 0
+        "y":
+          type: number
+          format: double
+          maximum: 100
+          minimum: 0
+        orientation:
+          type: string
+          pattern: vertical|horizontal
+        enabled:
+          type: boolean
+      required:
+      - orientation
+      - x
+      - "y"
+    ApiResponseSeatingLayoutResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/SeatingLayoutResponse"
+        timestamp:
+          type: string
+          format: date-time
+    SeatingLayoutResponse:
+      type: object
+      properties:
+        eventId:
+          type: integer
+          format: int64
+        version:
+          type: integer
+          format: int64
+        data:
+          $ref: "#/components/schemas/LayoutData"
+        updatedAt:
+          type: string
+          format: date-time
     ApiResponseMediaResponse:
       type: object
       properties:
@@ -7876,22 +8194,31 @@ components:
       properties:
         name:
           type: string
-          minLength: 1
+          maxLength: 255
+          minLength: 0
         guestId:
           type: integer
           format: int64
           exclusiveMinimum: 0
         amount:
           type: number
+          minimum: 0.00
         currency:
           type: string
         method:
           type: string
+          maxLength: 100
+          minLength: 0
         date:
           type: string
           format: date
         note:
           type: string
+          maxLength: 2000
+          minLength: 0
+        clientRequestId:
+          type: string
+          format: uuid
       required:
       - name
     ApiResponseWeddingGiftResponse:
@@ -8549,9 +8876,9 @@ components:
         publishedAt:
           type: string
           format: date-time
-        draft:
-          type: boolean
         published:
+          type: boolean
+        draft:
           type: boolean
     UpdateProfileRequest:
       type: object
@@ -9547,6 +9874,170 @@ components:
           format: int32
         guest:
           $ref: "#/components/schemas/GuestRequest"
+    Fields:
+      type: object
+      properties:
+        guestName:
+          type: string
+          maxLength: 255
+          minLength: 0
+        phone:
+          type: string
+          maxLength: 50
+          minLength: 0
+        email:
+          type: string
+          maxLength: 255
+          minLength: 0
+        guestGroup:
+          type: string
+          maxLength: 255
+          minLength: 0
+        sideType:
+          type: string
+          maxLength: 255
+          minLength: 0
+        companionName:
+          type: string
+          maxLength: 255
+          minLength: 0
+        tableNumber:
+          type: string
+          maxLength: 255
+          minLength: 0
+        note:
+          type: string
+          maxLength: 2000
+          minLength: 0
+        seatCount:
+          type: string
+          maxLength: 10
+          minLength: 0
+    GuestBatchRequest:
+      type: object
+      properties:
+        batchId:
+          type: string
+          format: uuid
+        rows:
+          type: array
+          items:
+            $ref: "#/components/schemas/ImportRow"
+          maxItems: 1000
+          minItems: 0
+      required:
+      - batchId
+      - rows
+    ImportRow:
+      type: object
+      properties:
+        rowNumber:
+          type: integer
+          format: int32
+          maximum: 1001
+          minimum: 2
+        guest:
+          $ref: "#/components/schemas/Fields"
+        skip:
+          type: boolean
+        allowNameMatch:
+          type: boolean
+      required:
+      - guest
+    ApiResponseGuestBatchResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/GuestBatchResponse"
+        timestamp:
+          type: string
+          format: date-time
+    GuestBatchResponse:
+      type: object
+      properties:
+        batchId:
+          type: string
+          format: uuid
+        importedCount:
+          type: integer
+          format: int32
+        updatedCount:
+          type: integer
+          format: int32
+        skippedCount:
+          type: integer
+          format: int32
+        failedCount:
+          type: integer
+          format: int32
+        committed:
+          type: boolean
+        rows:
+          type: array
+          items:
+            $ref: "#/components/schemas/RowResult"
+    RowResult:
+      type: object
+      properties:
+        rowNumber:
+          type: integer
+          format: int32
+        status:
+          type: string
+        issues:
+          type: array
+          items:
+            type: string
+    ApiResponseGuestImportSourceResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/GuestImportSourceResponse"
+        timestamp:
+          type: string
+          format: date-time
+    GuestImportSourceResponse:
+      type: object
+      properties:
+        worksheets:
+          type: array
+          items:
+            $ref: "#/components/schemas/Worksheet"
+    SourceRow:
+      type: object
+      properties:
+        rowNumber:
+          type: integer
+          format: int32
+        values:
+          type: array
+          items:
+            type: string
+        issues:
+          type: array
+          items:
+            type: string
+    Worksheet:
+      type: object
+      properties:
+        name:
+          type: string
+        headers:
+          type: array
+          items:
+            type: string
+        rows:
+          type: array
+          items:
+            $ref: "#/components/schemas/SourceRow"
     DeliveryRequest:
       type: object
       properties:
@@ -11899,6 +12390,12 @@ components:
         templateName:
           type: string
         coverUrl:
+          type: string
+        coverSource:
+          type: string
+        templateThumbnailUrl:
+          type: string
+        invitationCoverUrl:
           type: string
         title:
           type: string

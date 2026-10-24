@@ -246,7 +246,7 @@ export default function GuestsPage() {
           <p className="guest-page-description">{t("workspaceSubtitle")}</p>
         </div>
         <div className="guest-header-actions">
-          <button type="button" className="guest-button guest-button-secondary" onClick={() => setImportModalOpen(true)}>
+          <button type="button" className="guest-button guest-button-secondary" disabled={loading || !backendInvitationId} onClick={() => setImportModalOpen(true)}>
             <Upload size={17} aria-hidden="true" /><span>{t("importBtn")}</span>
           </button>
           {(loading || guests.length > 0) && <button

@@ -5,8 +5,8 @@ import jakarta.validation.constraints.*;
 import java.util.List;
 import java.util.UUID;
 
-public record GuestBatchRequest(@NotNull UUID batchId, @NotEmpty @Size(max = 1000) List<@Valid ImportRow> rows) {
-    public record ImportRow(@Min(2) @Max(1001) int rowNumber, @NotNull @Valid Fields guest, boolean skip, boolean allowNameMatch) {}
+public record GuestBatchRequest(@NotNull UUID batchId, @NotEmpty @Size(max = 1000) List<@NotNull @Valid ImportRow> rows) {
+    public record ImportRow(@Min(2) @Max(1001) int rowNumber, @NotNull Fields guest, boolean skip, boolean allowNameMatch) {}
     // The import boundary intentionally excludes RSVP, delivery, contribution, seating IDs and bearer credentials.
     public record Fields(
         @Size(max = 255) String guestName, @Size(max = 50) String phone,

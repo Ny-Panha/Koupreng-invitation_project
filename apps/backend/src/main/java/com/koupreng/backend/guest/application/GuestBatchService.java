@@ -97,6 +97,7 @@ public class GuestBatchService {
             if (!numbers.add(row.rowNumber())) throw new ApiException(HttpStatus.BAD_REQUEST, "Source row numbers must be unique");
             if (row.skip()) { results.add(new RowResult(row.rowNumber(), "SKIPPED", List.of("Skipped by host"))); continue; }
             List<String> issues = new ArrayList<>();
+            validator.validate(row.guest()).stream().map(v -> v.getPropertyPath() + ": " + v.getMessage()).sorted().distinct().forEach(issues::add);
             GuestRequest guest = null;
             try { guest = row.guest().toGuestRequest(); }
             catch (NumberFormatException failure) { issues.add("Party size must be a whole number from 1 to 1000"); }

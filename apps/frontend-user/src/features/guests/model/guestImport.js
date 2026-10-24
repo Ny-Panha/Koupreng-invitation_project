@@ -55,3 +55,18 @@ export function downloadImportErrors(rows) {
   const link = document.createElement('a'); link.href = url; link.download = 'Koupreng-Guest-Import-Errors.csv'; link.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
+
+export function importIssueLabel(issue, en) {
+  if (en) return issue;
+  if (/name is required/i.test(issue)) return 'សូមបំពេញឈ្មោះភ្ញៀវ។';
+  if (/email is invalid/i.test(issue)) return 'សូមពិនិត្យទម្រង់អ៊ីមែល។';
+  if (/party size|seat count/i.test(issue)) return 'ចំនួនអ្នកចូលរួមត្រូវជាចំនួនគត់ពី 1 ដល់ 1000។';
+  if (/phone must start/i.test(issue)) return 'លេខទូរស័ព្ទត្រូវចាប់ផ្តើមដោយ 0 ឬ +លេខប្រទេស។ សូមកែបើ Excel បានលុបលេខ 0។';
+  if (/shares this phone|same email or phone|shared contact/i.test(issue)) return 'មានភ្ញៀវប្រើទូរស័ព្ទ ឬអ៊ីមែលដូចគ្នា។ សូមពិនិត្យ ឬរំលង។ មិនបញ្ចូលរួមដោយស្វ័យប្រវត្តិទេ។';
+  if (/name matches/i.test(issue)) return 'មានភ្ញៀវឈ្មោះដូចគ្នា។ រំលង ឬបញ្ជាក់បង្កើតជាភ្ញៀវផ្សេង។';
+  if (/skipped by host/i.test(issue)) return 'បានរំលងតាមជម្រើសរបស់អ្នក។';
+  if (/formula/i.test(issue)) return 'មិននាំចូលរូបមន្តទេ។ សូមជំនួសរូបមន្តដោយតម្លៃអត្ថបទ រួចផ្ទុកឡើងវិញ។';
+  if (/quote/i.test(issue)) return 'សញ្ញាសម្រង់ CSV មិនត្រឹមត្រូវ។ សូមកែឯកសាររួចផ្ទុកឡើងវិញ។';
+  if (/size must be|characters/i.test(issue)) return 'ទិន្នន័យលើសប្រវែងអនុញ្ញាត។ សូមកាត់បន្ថយអត្ថបទ។';
+  return 'សូមពិនិត្យ និងកែទិន្នន័យជួរនេះ មុននាំចូល។';
+}
