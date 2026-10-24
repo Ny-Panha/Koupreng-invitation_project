@@ -34,6 +34,8 @@ public class OrganizationService {
     private final AppUserRepository userRepository;
     private final CurrentUserService currentUserService;
     private final AuditLogService auditLogService;
+    @org.springframework.beans.factory.annotation.Autowired(required = false)
+    private com.koupreng.backend.entitlement.application.EntitlementService entitlements;
 
     private static final Set<String> ASSIGNABLE_ROLES = Set.of(
             "ADMIN",
@@ -79,6 +81,7 @@ public class OrganizationService {
     @Transactional
     public OrganizationResponse create(Authentication authentication, String name) {
         AppUser user = currentUserService.currentUser(authentication);
+        if (entitlements != null) entitlements.requireTeamCapacity(user, () -> memberRepository.countByOrganizationOwnerIdAndStatusIn(user.getId(), List.of("ACTIVE", "INVITED")), 1);
         Organization organization = new Organization();
         organization.setName(requireText(name, "Organization name is required"));
         organization.setSlug(uniqueSlug(slugify(organization.getName())));
@@ -113,6 +116,9 @@ public class OrganizationService {
         String role = normalizeAssignableRole(request.getRole());
         OrganizationMember member = memberRepository.findByOrganizationIdAndEmailIgnoreCase(organizationId, email)
                 .orElseGet(OrganizationMember::new);
+        if (entitlements != null) entitlements.requireTeamCapacity(organization.getOwner(),
+            () -> memberRepository.countByOrganizationOwnerIdAndStatusIn(organization.getOwner().getId(), List.of("ACTIVE", "INVITED")),
+            member.getId() == null ? 1 : 0);
         requireNotOwnerMember(organization, member, email);
         member.setOrganization(organization);
         member.setEmail(email);

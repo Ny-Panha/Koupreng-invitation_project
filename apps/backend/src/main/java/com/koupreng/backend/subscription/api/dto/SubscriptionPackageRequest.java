@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SubscriptionPackageRequest {
+    private Long revision;
     private String packageName;
     private String code;
     private String description;

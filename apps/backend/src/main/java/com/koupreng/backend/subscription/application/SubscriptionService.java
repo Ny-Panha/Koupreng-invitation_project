@@ -7,6 +7,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Set;
 import java.util.Locale;
 import java.util.Map;
 
@@ -114,7 +115,7 @@ public class SubscriptionService {
     @Transactional(readOnly = true)
     public List<SubscriptionPackageResponse> listPackages() {
         return packageRepository.findByActiveTrueOrderBySortOrderAscPriceAsc().stream()
-                .filter(plan -> paymentPlanResolver.supports(plan.getCode()))
+                .filter(plan -> "FREE".equals(plan.getCode()) || paymentPlanResolver.supports(plan.getCode()))
                 .map(this::publicPackageResponse)
                 .toList();
     }
@@ -134,8 +135,7 @@ public class SubscriptionService {
         boolean purchasable = paymentPlanResolver.supports(plan.getCode());
         if (purchasable) {
             SubscriptionPaymentPlan paymentPlan = paymentPlanResolver.resolve(plan.getCode());
-            price = paymentPlan.amount();
-            currency = paymentPlan.currency();
+            purchasable = price != null && price.compareTo(paymentPlan.amount()) == 0 && paymentPlan.currency().equals(currency);
         }
         return PublicPackageResponse.builder()
                 .id(plan.getId())
@@ -164,10 +164,12 @@ public class SubscriptionService {
     }
 
     private SubscriptionPackageResponse publicPackageResponse(SubscriptionPackage plan) {
-        SubscriptionPaymentPlan paymentPlan = paymentPlanResolver.resolve(plan.getCode());
-        SubscriptionPackageResponse response = SubscriptionPackageResponse.from(plan);
-        response.setPrice(paymentPlan.amount());
-        response.setCurrency(paymentPlan.currency());
+        return SubscriptionPackageResponse.from(plan);
+    }
+
+    private SubscriptionResponse subscriptionResponse(Subscription subscription, String message) {
+        var response = SubscriptionResponse.from(subscription, message);
+        response.setPackagePlan(SubscriptionPackageResponse.from(PackageSnapshot.resolve(subscription)));
         return response;
     }
 
@@ -175,8 +177,9 @@ public class SubscriptionService {
     public SubscriptionResponse current(Authentication authentication) {
         AppUser user = currentUserService.currentUser(authentication);
         return subscriptionRepository.findActiveForUser(user.getId(), Instant.now()).stream()
+                .filter(subscription -> PackageSnapshot.eligible(subscription, Instant.now()))
                 .findFirst()
-                .map(subscription -> SubscriptionResponse.from(subscription, "Current subscription is active."))
+                .map(subscription -> subscriptionResponse(subscription, "Current subscription is active."))
                 .orElse(null);
     }
 
@@ -184,7 +187,7 @@ public class SubscriptionService {
     public List<SubscriptionResponse> history(Authentication authentication) {
         AppUser user = currentUserService.currentUser(authentication);
         return subscriptionRepository.findByUserIdOrderByCreatedAtDesc(user.getId()).stream()
-                .map(subscription -> SubscriptionResponse.from(subscription, statusMessage(subscription)))
+                .map(subscription -> subscriptionResponse(subscription, statusMessage(subscription)))
                 .toList();
     }
 
@@ -197,7 +200,7 @@ public class SubscriptionService {
             throw new ApiException(HttpStatus.NOT_FOUND, "Subscription payment order not found");
         }
         expireIfNeeded(subscription, Instant.now());
-        return SubscriptionResponse.from(subscription, statusMessage(subscription));
+        return subscriptionResponse(subscription, statusMessage(subscription));
     }
 
     @Transactional
@@ -210,7 +213,10 @@ public class SubscriptionService {
             throw new ApiException(HttpStatus.BAD_REQUEST, "SUBSCRIPTION_PACKAGE_NOT_AVAILABLE", "Package is not available for purchase");
         }
         SubscriptionPaymentPlan paymentPlan = paymentPlanResolver.resolve(plan.getCode());
-        BigDecimal price = paymentPlan.amount();
+        if (plan.getPrice() == null || plan.getPrice().compareTo(paymentPlan.amount()) != 0 || !paymentPlan.currency().equals(plan.getCurrency())) {
+            throw new ApiException(HttpStatus.CONFLICT, "CHECKOUT_CONFIGURATION_MISMATCH", "The configured price must match the verified fixed bank link before checkout is available");
+        }
+        BigDecimal price = plan.getPrice();
         Instant now = Instant.now();
 
         Subscription subscription = baseSubscription(user, plan, price);
@@ -230,7 +236,7 @@ public class SubscriptionService {
         if (auditLogService != null) {
             auditLogService.logSystemEvent("SUBSCRIPTION_CREATED", "SUBSCRIPTION", saved.getId(), "Subscription payment order created for package: " + plan.getPackageName() + ", code: " + saved.getOrderCode(), Map.of("userId", user.getId(), "packageId", plan.getId()));
         }
-        return SubscriptionResponse.from(
+        return subscriptionResponse(
                 saved,
                 "Subscription payment order created. Continue to ABA PayWay and wait for confirmation."
         );
@@ -240,6 +246,7 @@ public class SubscriptionService {
         Subscription subscription = new Subscription();
         subscription.setUser(user);
         subscription.setSubscriptionPackage(plan);
+        subscription.setBenefitsSnapshot(PackageSnapshot.capture(plan));
         subscription.setAmount(price);
         subscription.setCurrency(normalizeCurrency(plan.getCurrency()));
         return subscription;
@@ -388,7 +395,7 @@ public class SubscriptionService {
         subscription.setPaidAt(now);
         subscription.setConfirmedAt(now);
         subscription.setStartDate(now);
-        subscription.setEndDate(endDate(now, subscription.getSubscriptionPackage().getDurationDays()));
+        subscription.setEndDate(endDate(now, PackageSnapshot.resolve(subscription).getDurationDays()));
         subscription.setStatus(STATUS_ACTIVE);
         subscription.setActive(true);
         Subscription saved = subscriptionRepository.save(subscription);
@@ -581,7 +588,7 @@ public class SubscriptionService {
         subscription.setConfirmedBy(requireText(request.confirmedBy(), "Confirmed by is required"));
         subscription.setConfirmedAt(now);
         subscription.setStartDate(now);
-        subscription.setEndDate(endDate(now, subscription.getSubscriptionPackage().getDurationDays()));
+        subscription.setEndDate(endDate(now, PackageSnapshot.resolve(subscription).getDurationDays()));
         subscription.setStatus(STATUS_ACTIVE);
         subscription.setActive(true);
         subscriptionRepository.save(subscription);
@@ -732,10 +739,14 @@ public class SubscriptionService {
     public SubscriptionPackageResponse updatePackage(Long id, SubscriptionPackageRequest request) {
         SubscriptionPackage plan = packageRepository.findById(id)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Package not found"));
+        if (request.getRevision() != null && request.getRevision() != plan.getRevision()) {
+            throw new ApiException(HttpStatus.CONFLICT, "PACKAGE_REVISION_CONFLICT", "This package changed. Reload before editing");
+        }
+        String before = PackageSnapshot.capture(plan);
         applyPackageRequest(plan, request);
-        SubscriptionPackage saved = packageRepository.save(plan);
+        SubscriptionPackage saved = packageRepository.saveAndFlush(plan);
         if (auditLogService != null) {
-            auditLogService.logSystemEvent("PACKAGE_UPDATED", "PACKAGE", saved.getId(), "Package updated: " + saved.getPackageName(), null);
+            auditLogService.logSystemEvent("PACKAGE_UPDATED", "PACKAGE", saved.getId(), "Package updated: " + saved.getPackageName(), Map.of("previousBenefits", before, "newBenefits", PackageSnapshot.capture(saved), "policy", "NEW_ORDERS_ONLY"));
         }
         return SubscriptionPackageResponse.from(saved);
     }
@@ -756,6 +767,7 @@ public class SubscriptionService {
     public SubscriptionPackageResponse deactivatePackage(Long id) {
         SubscriptionPackage plan = packageRepository.findById(id)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Package not found"));
+        if ("FREE".equals(plan.getCode())) throw new ApiException(HttpStatus.BAD_REQUEST, "The system Free fallback cannot be deactivated");
         plan.setActive(false);
         SubscriptionPackage saved = packageRepository.save(plan);
         if (auditLogService != null) {
@@ -765,6 +777,23 @@ public class SubscriptionService {
     }
 
     private void applyPackageRequest(SubscriptionPackage plan, SubscriptionPackageRequest request) {
+        if (request.getCode() == null || !request.getCode().matches("[A-Z][A-Z0-9_]{0,49}")
+            || request.getPackageName() == null || request.getPackageName().isBlank()
+            || request.getPrice() == null || request.getPrice().signum() < 0
+            || request.getCurrency() == null || !Set.of("USD", "KHR").contains(request.getCurrency())
+            || request.getBillingInterval() == null || !Set.of("ONCE", "MONTHLY", "YEARLY", "CUSTOM").contains(request.getBillingInterval())) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Invalid package name, code, price, currency or billing interval");
+        }
+        for (Integer limit : new Integer[]{request.getDurationDays(), request.getMaxInvitations(), request.getMaxGuests(), request.getMaxGuestsPerInvitation(), request.getMaxTeamMembers()}) {
+            if (limit != null && limit < 0) throw new ApiException(HttpStatus.BAD_REQUEST, "Package limits must be nonnegative or unlimited");
+        }
+        if ("FREE".equals(plan.getCode()) && (!"FREE".equals(request.getCode()) || !request.isActive() || request.getPrice().signum() != 0)) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "The system Free fallback must remain active and zero-priced");
+        }
+        if (request.getFeaturesJson() != null) {
+            try { if (!new com.fasterxml.jackson.databind.ObjectMapper().readTree(request.getFeaturesJson()).isObject()) throw new IllegalArgumentException(); }
+            catch (Exception e) { throw new ApiException(HttpStatus.BAD_REQUEST, "Package features must be a JSON object"); }
+        }
         plan.setPackageName(request.getPackageName());
         plan.setCode(request.getCode());
         plan.setDescription(request.getDescription());

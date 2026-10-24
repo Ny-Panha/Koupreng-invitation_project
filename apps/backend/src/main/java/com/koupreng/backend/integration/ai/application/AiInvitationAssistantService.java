@@ -15,6 +15,10 @@ import java.util.concurrent.ExecutionException;
 @Service
 public class AiInvitationAssistantService {
 
+    @Autowired(required = false)
+    private com.koupreng.backend.entitlement.application.EntitlementService entitlements;
+    @Autowired(required = false)
+    private com.koupreng.backend.user.application.CurrentUserService currentUsers;
     private final boolean enabled;
     private final String provider;
     private final List<AiInvitationProvider> adapters;
@@ -52,6 +56,9 @@ public class AiInvitationAssistantService {
         if (!enabled || provider.isBlank() || adapter == null) {
             return fallback(operation, request, "AI is unavailable. Local template assistance remains available.");
         }
+        if (entitlements != null) entitlements.requireFeature(currentUsers.currentUser(
+            org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication()),
+            com.koupreng.backend.entitlement.application.EntitlementService.Feature.AI_ASSISTANT);
         CompletableFuture<AiInvitationProvider.Result> pending = null;
         try {
             pending = adapter.generate(operation, request == null ? new AiInvitationDraftRequest() : request);

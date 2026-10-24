@@ -24,6 +24,7 @@ class AdminReportingControllerTests {
     @Autowired MockMvc mvc;
     @MockitoBean AdminReportingService reports;
     @MockitoBean AdminReportExportService exports;
+    @MockitoBean com.koupreng.backend.audit.application.AuditLogService audit;
     static final String BASE="/api/v1/admin/reports/management";
     @Test void anonymousCannotReadOrExportReports() throws Exception {
         for(String path:List.of("/definitions","/payments","/payments/export/xlsx","/all/export/xlsx")) mvc.perform(get(BASE+path)).andExpect(status().isUnauthorized());

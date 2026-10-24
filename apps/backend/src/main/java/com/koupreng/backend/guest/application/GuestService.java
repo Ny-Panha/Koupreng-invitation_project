@@ -187,6 +187,7 @@ public class GuestService {
     @Transactional(isolation = org.springframework.transaction.annotation.Isolation.READ_COMMITTED)
     public List<GuestResponse> importGuests(Authentication authentication, Long invitationId, GuestImportRequest request) {
         UserInvitation invitation = invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        requireImportFeature(invitation);
         requireGuestCapacity(invitation, (int) request.getGuests().stream()
                 .filter(guest -> guest.getGuestName() != null && !guest.getGuestName().isBlank()).count());
         return request.getGuests().stream()
@@ -247,6 +248,7 @@ public class GuestService {
             MultipartFile file
     ) {
         UserInvitation invitation = invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        requireImportFeature(invitation);
         validateImportFile(file);
 
         List<ImportRow> rows = parseImportRows(file);
@@ -281,6 +283,10 @@ public class GuestService {
     }
 
     @Transactional(readOnly = true)
+    public void requireImportFeature(UserInvitation invitation) {
+        if (entitlementService != null) entitlementService.requireFeature(invitation.getUser(), com.koupreng.backend.entitlement.application.EntitlementService.Feature.GUEST_IMPORT);
+    }
+
     public String exportGuestCsv(Authentication authentication, Long invitationId) {
         invitationService.requireOwnedInvitationEntity(authentication, invitationId);
         List<Guest> guests = guestRepository.findByInvitationIdOrderByGuestGroupAscTableNumberAscGuestNameAsc(invitationId);

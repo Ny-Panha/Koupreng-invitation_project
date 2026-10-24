@@ -80,16 +80,29 @@ class EntitlementServiceTests {
         when(purchases.existsByUserIdAndTemplateIdAndActiveTrue(1L, 5L)).thenReturn(true);
         assertThat(service(true).hasTemplateAccess(user, template)).isTrue();
         assertThatThrownBy(() -> service(true).requireFeature(user, EntitlementService.Feature.SEATING)).isInstanceOf(ApiException.class);
-        assertThatCode(() -> service(false).requireFeature(user, EntitlementService.Feature.SEATING)).doesNotThrowAnyException();
+        assertThatThrownBy(() -> service(false).requireFeature(user, EntitlementService.Feature.SEATING)).isInstanceOf(ApiException.class);
     }
 
-    @Test void compatibilityPolicyPreservesExistingFeaturesAndDoesNotQueryQuotas() {
-        var service = service(false);
-        assertThat(service.policy(user).source()).isEqualTo("PRODUCT_POLICY_REVIEW_REQUIRED");
-        service.requireInvitationCreation(user);
-        service.requireGuestCreation(invitation(), 1000);
-        verifyNoInteractions(users, invitations, guests);
+    @Test void disablingLegacySwitchCannotBypassConfiguredFreePolicy() {
+        var plan = baseline(); plan.setMaxInvitations(0); configureBaseline(plan);
+        assertThat(service(false).policy(user).source()).isEqualTo("CONFIGURED_FREE_PACKAGE");
+        assertThatThrownBy(() -> service(false).requireInvitationCreation(user)).isInstanceOf(ApiException.class);
     }
+
+    @Test void demoGrantsAreNonrevenueExpiringAndSnapshotBenefitsSurviveCatalogEdits() {
+        var subscription = subscription();
+        subscription.getSubscriptionPackage().setCode("PRO");
+        subscription.setBenefitsSnapshot(com.koupreng.backend.subscription.application.PackageSnapshot.capture(subscription.getSubscriptionPackage()));
+        subscription.setPaymentStatus("NOT_REQUIRED"); subscription.setConfirmSource("DEMO_ADMIN_GRANT");
+        when(subscriptions.findActiveForUser(eq(1L), any())).thenReturn(List.of(subscription));
+        subscription.getSubscriptionPackage().setPremiumTemplatesEnabled(false);
+        assertThat(service(true).hasTemplateAccess(user, premiumTemplate())).isTrue();
+        subscription.setEndDate(Instant.now().minusSeconds(1));
+        assertThat(service(true).hasTemplateAccess(user, premiumTemplate())).isFalse();
+        subscription.setEndDate(Instant.now().plusSeconds(3600)); subscription.setConfirmSource("BROWSER_CLAIM");
+        assertThat(service(true).hasTemplateAccess(user, premiumTemplate())).isFalse();
+    }
+    private InvitationTemplate premiumTemplate() { var template = template(); template.setPremium(true); return template; }
 
     @Test void configuredInvitationQuotaChecksAfterOwnerLock() {
         var plan = baseline(); plan.setMaxInvitations(2);

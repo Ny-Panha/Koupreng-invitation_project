@@ -13,6 +13,11 @@ import com.koupreng.backend.template.domain.InvitationTemplate;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;
 import java.time.Instant;
+import com.koupreng.backend.subscription.application.PackageSnapshot;
+import com.koupreng.backend.entitlement.api.dto.CurrentEntitlementsResponse;
+import com.koupreng.backend.entitlement.api.dto.CurrentEntitlementsResponse.Usage;
+import com.koupreng.backend.subscription.api.dto.SubscriptionPackageResponse;
+import java.util.Map;
 import java.util.EnumSet;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,11 +25,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/** Composes independent purchases and trusted subscriptions without inventing a free-tier policy. */
+/** Backend authority for current benefits; roles never imply a product tier. */
 @Service
 public class EntitlementService {
     public enum Feature { PREMIUM_TEMPLATES, QR_INVITATIONS, QR_CHECK_IN, SEATING, ADVANCED_ANALYTICS,
-        CUSTOM_BRANDING, TEAM_MEMBERS, AI_ASSISTANT }
+        CUSTOM_BRANDING, TEAM_MEMBERS, AI_ASSISTANT, GUEST_IMPORT }
     public record Policy(String source, Set<Feature> features, Integer maxInvitations, Integer maxGuests,
                          Integer maxGuestsPerInvitation, Integer maxTeamMembers) { }
 
@@ -34,20 +39,18 @@ public class EntitlementService {
     private final AppUserRepository users;
     private final UserInvitationRepository invitations;
     private final GuestRepository guests;
-    private final boolean enforce;
     private final String freePackageCode;
 
     public EntitlementService(SubscriptionRepository subscriptions, SubscriptionPackageRepository packages,
             UserTemplateAccessRepository purchases, AppUserRepository users, UserInvitationRepository invitations,
-            GuestRepository guests, @Value("${app.entitlements.enforce-package-policy:false}") boolean enforce,
-            @Value("${app.entitlements.free-package-code:}") String freePackageCode) {
+            GuestRepository guests, @Value("${app.entitlements.enforce-package-policy:true}") boolean enforce,
+            @Value("${app.entitlements.free-package-code:FREE}") String freePackageCode) {
         this.subscriptions = subscriptions;
         this.packages = packages;
         this.purchases = purchases;
         this.users = users;
         this.invitations = invitations;
         this.guests = guests;
-        this.enforce = enforce;
         this.freePackageCode = freePackageCode == null ? "" : freePackageCode.trim();
     }
 
@@ -69,9 +72,6 @@ public class EntitlementService {
         if (paid.isPresent()) {
             return fromPackage("PAID_SUBSCRIPTION", paid.get());
         }
-        if (!enforce) {
-            return new Policy("PRODUCT_POLICY_REVIEW_REQUIRED", Set.copyOf(EnumSet.allOf(Feature.class)), null, null, null, null);
-        }
         SubscriptionPackage baseline = packages.findByCodeAndActiveTrue(freePackageCode)
                 .filter(plan -> plan.getPrice() != null && plan.getPrice().signum() == 0)
                 .orElseThrow(() -> new ApiException(HttpStatus.SERVICE_UNAVAILABLE, "ENTITLEMENT_POLICY_UNCONFIGURED",
@@ -81,7 +81,6 @@ public class EntitlementService {
 
     @Transactional
     public void requireInvitationCreation(AppUser user) {
-        if (!enforce) { return; }
         lockOwner(user);
         Policy policy = policy(user);
         requireCapacity(policy.maxInvitations(), invitations.countByUserIdAndDeletedFalse(user.getId()), 1);
@@ -89,7 +88,6 @@ public class EntitlementService {
 
     @Transactional
     public void requireGuestCreation(UserInvitation invitation, int additional) {
-        if (!enforce) { return; }
         AppUser owner = invitation.getUser();
         lockOwner(owner);
         Policy policy = policy(owner);
@@ -99,14 +97,13 @@ public class EntitlementService {
 
     @Transactional(readOnly = true)
     public void requireFeature(AppUser user, Feature feature) {
-        if (enforce && !policy(user).features().contains(feature)) {
+        if (!policy(user).features().contains(feature)) {
             throw new ApiException(HttpStatus.FORBIDDEN, "PACKAGE_FEATURE_REQUIRED", "This feature requires an eligible package");
         }
     }
 
     @Transactional
     public void requireTeamCapacity(AppUser owner, java.util.function.LongSupplier countMembers, int additional) {
-        if (!enforce) { return; }
         lockOwner(owner);
         requireFeature(owner, Feature.TEAM_MEMBERS);
         requireCapacity(policy(owner).maxTeamMembers(), countMembers.getAsLong(), additional);
@@ -116,12 +113,25 @@ public class EntitlementService {
         if (user == null || user.getId() == null) { return java.util.Optional.empty(); }
         Instant now = Instant.now();
         return subscriptions.findActiveForUser(user.getId(), now).stream()
-                .filter(subscription -> subscription.isActive() && "ACTIVE".equals(subscription.getStatus())
-                        && "PAID".equals(subscription.getPaymentStatus())
-                        && (subscription.getStartDate() == null || !subscription.getStartDate().isAfter(now))
-                        && (subscription.getEndDate() == null || subscription.getEndDate().isAfter(now)))
-                .map(subscription -> subscription.getSubscriptionPackage()).filter(java.util.Objects::nonNull).findFirst();
+                .filter(subscription -> PackageSnapshot.eligible(subscription, now))
+                .map(PackageSnapshot::resolve).filter(java.util.Objects::nonNull).findFirst();
     }
+
+    @Transactional(readOnly = true)
+    public CurrentEntitlementsResponse current(AppUser user) {
+        Instant now = Instant.now();
+        var active = subscriptions.findActiveForUser(user.getId(), now).stream().filter(s -> PackageSnapshot.eligible(s, now)).findFirst();
+        var plan = active.map(PackageSnapshot::resolve).orElseGet(() -> packages.findByCodeAndActiveTrue(freePackageCode)
+            .filter(p -> p.getPrice() != null && p.getPrice().signum() == 0)
+            .orElseThrow(() -> new ApiException(HttpStatus.SERVICE_UNAVAILABLE, "ENTITLEMENT_POLICY_UNCONFIGURED", "The Free policy requires administrator review")));
+        String source = active.map(s -> "DEMO_ADMIN_GRANT".equals(s.getConfirmSource()) ? "DEMO_ADMIN_GRANT" : "PAID_SUBSCRIPTION").orElse("CONFIGURED_FREE_PACKAGE");
+        Policy policy = fromPackage(source, plan);
+        return new CurrentEntitlementsResponse(SubscriptionPackageResponse.from(plan), source,
+            active.map(s -> s.getEndDate()).orElse(null), policy.features().stream().map(Enum::name).collect(java.util.stream.Collectors.toSet()),
+            Map.of("invitations", usage(plan.getMaxInvitations(), invitations.countByUserIdAndDeletedFalse(user.getId())),
+                   "guests", usage(plan.getMaxGuests(), guests.countByInvitationUserId(user.getId()))));
+    }
+    private Usage usage(Integer limit, long used) { return new Usage(limit, used, limit == null ? null : Math.max(0L, limit - used)); }
 
     private Policy fromPackage(String source, SubscriptionPackage plan) {
         EnumSet<Feature> features = EnumSet.noneOf(Feature.class);
@@ -133,6 +143,11 @@ public class EntitlementService {
         if (plan.isCustomBrandingEnabled()) { features.add(Feature.CUSTOM_BRANDING); }
         if (plan.isTeamMembersEnabled()) { features.add(Feature.TEAM_MEMBERS); }
         if (plan.isAiAssistantEnabled()) { features.add(Feature.AI_ASSISTANT); }
+        // Guest import is a core capability unless the admin explicitly disables its existing benefit key.
+        try {
+            var flags = plan.getFeaturesJson() == null ? null : new com.fasterxml.jackson.databind.ObjectMapper().readTree(plan.getFeaturesJson());
+            if (flags == null || !flags.has("guestImport") || flags.path("guestImport").asBoolean()) features.add(Feature.GUEST_IMPORT);
+        } catch (Exception invalid) { throw new ApiException(HttpStatus.SERVICE_UNAVAILABLE, "Invalid package benefit configuration"); }
         return new Policy(source, Set.copyOf(features), plan.getMaxInvitations(), plan.getMaxGuests(),
                 plan.getMaxGuestsPerInvitation(), plan.getMaxTeamMembers());
     }

@@ -10,6 +10,10 @@ import java.time.LocalTime;
 
 public class InvitationRequest {
 
+    private java.time.Instant expectedUpdatedAt;
+    public java.time.Instant getExpectedUpdatedAt() { return expectedUpdatedAt; }
+    public void setExpectedUpdatedAt(java.time.Instant value) { expectedUpdatedAt = value; }
+
     private Long templateId;
     @jakarta.validation.constraints.Pattern(regexp = "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}")
     private String clientRequestId;

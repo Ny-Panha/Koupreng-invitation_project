@@ -19,6 +19,28 @@ import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 @EnabledIfEnvironmentVariable(named = "RUN_FLYWAY_INTEGRATION", matches = "true")
 class MigrationUpgradeMySqlTests {
 
+    @Test void retiredZeroPriceFreePolicyIsRestoredWithoutChangingItsBenefits() throws Exception {
+        String serverUrl = required("FLYWAY_TEST_DB_URL"), username = required("FLYWAY_TEST_DB_USERNAME"), password = required("FLYWAY_TEST_DB_PASSWORD");
+        String schema = "koupreng_upgrade_" + UUID.randomUUID().toString().replace("-", "");
+        int start = serverUrl.indexOf('/', "jdbc:mysql://".length()), query = serverUrl.indexOf('?');
+        if (!serverUrl.startsWith("jdbc:mysql://") || start < 0 || !schema.matches("koupreng_upgrade_[a-f0-9]{32}")) throw new IllegalStateException("Disposable MySQL configuration required");
+        String schemaUrl = serverUrl.substring(0,start+1)+schema+(query<0?"":serverUrl.substring(query));
+        try (var control = DriverManager.getConnection(serverUrl,username,password); var sql = control.createStatement()) {
+            sql.execute("CREATE DATABASE `"+schema+"` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+            try {
+                Flyway.configure().dataSource(schemaUrl,username,password).target("45").load().migrate();
+                try (var connection = DriverManager.getConnection(schemaUrl,username,password); var data = connection.createStatement()) {
+                    String guests = scalar(data,"SELECT max_guests FROM packages WHERE code='FREE'");
+                    data.execute("UPDATE packages SET active=false,status='RETIRED',public_visible=false WHERE code='FREE'");
+                    var upgrade = Flyway.configure().dataSource(schemaUrl,username,password).load(); upgrade.migrate(); upgrade.validate();
+                    assertEquals("1",scalar(data,"SELECT active FROM packages WHERE code='FREE'"));
+                    assertEquals("ACTIVE",scalar(data,"SELECT status FROM packages WHERE code='FREE'"));
+                    assertEquals(guests,scalar(data,"SELECT max_guests FROM packages WHERE code='FREE'"));
+                }
+            } finally { sql.execute("DROP DATABASE `"+schema+"`"); }
+        }
+    }
+
     @Test
     void appendOnlyUpgradePreservesUsersLegacyEventsAndCheckInHistory() throws Exception {
         String serverUrl = required("FLYWAY_TEST_DB_URL");

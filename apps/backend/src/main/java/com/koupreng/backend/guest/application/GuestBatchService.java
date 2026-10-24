@@ -61,6 +61,7 @@ public class GuestBatchService {
             try { return json.readValue(receipt.getResultJson(), GuestBatchResponse.class); }
             catch (Exception failure) { throw new IllegalStateException("Import receipt could not be read", failure); }
         }
+        guestService.requireImportFeature(event);
         var preview = review(eventId, request);
         if (preview.rows().stream().anyMatch(row -> !Set.of("READY", "SKIPPED").contains(row.status()))) {
             throw new ApiException(HttpStatus.CONFLICT, "Import has unresolved rows. Review the preview again; no rows were imported.");

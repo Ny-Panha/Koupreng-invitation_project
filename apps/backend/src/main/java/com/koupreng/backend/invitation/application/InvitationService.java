@@ -271,6 +271,15 @@ public class InvitationService {
     @Transactional
     public InvitationResponse update(Authentication authentication, Long id, InvitationRequest request) {
         UserInvitation invitation = requireOwnedInvitation(authentication, id);
+        if (request.getExpectedUpdatedAt() != null) {
+            invitation = invitationRepository.findForUpdateByIdAndUserId(id, invitation.getUser().getId())
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Invitation not found"));
+            if (entityManager != null) entityManager.refresh(invitation, jakarta.persistence.LockModeType.PESSIMISTIC_WRITE);
+            if (invitation.getUpdatedAt() == null || !invitation.getUpdatedAt().truncatedTo(java.time.temporal.ChronoUnit.MICROS)
+                .equals(request.getExpectedUpdatedAt().truncatedTo(java.time.temporal.ChronoUnit.MICROS))) {
+                throw new ApiException(HttpStatus.CONFLICT, "INVITATION_VERSION_CONFLICT", "This invitation changed in another editor. Reopen it before saving; your local changes are preserved");
+            }
+        }
         applyRequest(invitation, request, invitation.getUser());
         ensureSlug(invitation);
         ensureAccessToken(invitation);
@@ -586,6 +595,10 @@ public class InvitationService {
     }
 
     private void applyRequest(UserInvitation invitation, InvitationRequest request, AppUser user) {
+        InvitationContentPolicy.validate(request.getContentJson());
+        if (entitlementService != null && InvitationContentPolicy.addsCustomBranding(invitation.getContentJson(), request.getContentJson())) {
+            entitlementService.requireFeature(user, com.koupreng.backend.entitlement.application.EntitlementService.Feature.CUSTOM_BRANDING);
+        }
         Long previousTemplateId = invitation.getTemplate() == null ? null : invitation.getTemplate().getId();
         invitation.setTitle(trimToNull(request.getTitle()));
         invitation.setTemplate(resolveTemplate(request.getTemplateId(), user));
@@ -836,7 +849,10 @@ public class InvitationService {
 
     private UserInvitation save(UserInvitation invitation) {
         try {
-            return invitationRepository.save(invitation);
+            UserInvitation saved = invitationRepository.save(invitation);
+            if (entityManager != null) entityManager.flush();
+            if (entityManager != null) entityManager.refresh(saved);
+            return saved;
         } catch (DataIntegrityViolationException ex) {
             throw new ApiException(HttpStatus.CONFLICT, "Invitation slug already exists");
         }

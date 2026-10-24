@@ -49,7 +49,7 @@ class SubscriptionServiceTests {
     })
     void purchaseUsesAuthoritativeServerPlan(String code, String amount, String paymentUrl) {
         Fixture fixture = fixture();
-        SubscriptionPackage plan = plan(code, "9999.99", 365);
+        SubscriptionPackage plan = plan(code, amount, 365);
         when(fixture.packageRepository.findByIdAndActiveTrue(3L)).thenReturn(Optional.of(plan));
 
         var response = fixture.service.purchase(fixture.authentication, purchaseRequest("247"));
@@ -98,7 +98,7 @@ class SubscriptionServiceTests {
     }
 
     @Test
-    void listPublicPackagesFiltersOutDevCodesAndAppliesResolverPrices() {
+    void listPublicPackagesShowsConfiguredPriceAndDisablesMismatchedBankLink() {
         Fixture fixture = fixture();
         SubscriptionPackage basic = plan("BASIC", "999.00", 365);
         basic.setPublicVisible(true);
@@ -114,8 +114,8 @@ class SubscriptionServiceTests {
 
         assertEquals(2, publicPackages.size());
         var basicResp = publicPackages.stream().filter(p -> "BASIC".equals(p.getCode())).findFirst().orElseThrow();
-        assertEquals(new BigDecimal("0.01"), basicResp.getPrice());
-        assertTrue(basicResp.isPurchasable());
+        assertEquals(new BigDecimal("999.00"), basicResp.getPrice());
+        assertFalse(basicResp.isPurchasable());
 
         var customResp = publicPackages.stream().filter(p -> "CUSTOM_ENTERPRISE".equals(p.getCode())).findFirst().orElseThrow();
         assertEquals(new BigDecimal("1000.00"), customResp.getPrice());
@@ -127,6 +127,8 @@ class SubscriptionServiceTests {
         Fixture fixture = fixture();
         fixture.properties.setAutoConfirmTelegramDetected(true);
         Subscription pending = pendingSubscription(fixture.user, "PRO", "199.00", "247");
+        pending.setBenefitsSnapshot(com.koupreng.backend.subscription.application.PackageSnapshot.capture(pending.getSubscriptionPackage()));
+        pending.getSubscriptionPackage().setDurationDays(1);
         when(fixture.subscriptionRepository.findPendingMatchesForUpdate(
                 eq("USD"), eq(new BigDecimal("199.00")), eq("247"), any()))
                 .thenReturn(List.of(pending));
@@ -141,6 +143,7 @@ class SubscriptionServiceTests {
         assertTrue(pending.isActive());
         assertNotNull(pending.getStartDate());
         assertNotNull(pending.getEndDate());
+        assertEquals(365, java.time.temporal.ChronoUnit.DAYS.between(pending.getStartDate(), pending.getEndDate()));
         verify(fixture.subscriptionRepository).save(pending);
     }
 

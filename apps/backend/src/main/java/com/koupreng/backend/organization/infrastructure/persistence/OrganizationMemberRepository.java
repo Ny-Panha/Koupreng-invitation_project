@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OrganizationMemberRepository extends JpaRepository<OrganizationMember, Long> {
+    long countByOrganizationOwnerIdAndStatusIn(Long ownerId, List<String> statuses);
 
     List<OrganizationMember> findByOrganizationIdOrderByCreatedAtAsc(Long organizationId);
 

@@ -23,6 +23,9 @@ public class Subscription {
     @JoinColumn(name = "package_id", nullable = false)
     private SubscriptionPackage subscriptionPackage;
 
+    @Column(name = "benefits_snapshot", columnDefinition = "JSON")
+    private String benefitsSnapshot;
+
     @Column(name = "start_date")
     private Instant startDate;
 

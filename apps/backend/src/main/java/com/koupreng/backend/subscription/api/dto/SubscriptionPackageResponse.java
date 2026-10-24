@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 public class SubscriptionPackageResponse {
 
     private Long id;
+    private long revision;
     private String code;
     private String packageName;
     private String description;
@@ -43,6 +44,7 @@ public class SubscriptionPackageResponse {
     public static SubscriptionPackageResponse from(SubscriptionPackage plan) {
         return SubscriptionPackageResponse.builder()
                 .id(plan.getId())
+                .revision(plan.getRevision())
                 .code(plan.getCode())
                 .packageName(plan.getPackageName())
                 .description(plan.getDescription())

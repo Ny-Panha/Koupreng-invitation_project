@@ -449,12 +449,15 @@ public class AdminManagementController {
     @PutMapping("/packages/{packageId}")
     public ResponseEntity<ApiResponse<SubscriptionPackageResponse>> updatePackage(
             @PathVariable Long packageId,
-            @Valid @RequestBody SubscriptionPackageRequest request
+            @Valid @RequestBody SubscriptionPackageRequest request,
+            Authentication authentication,
+            HttpServletRequest httpRequest
     ) {
-        return ResponseEntity.ok(ApiResponse.success(
-                "Subscription package updated successfully",
-                subscriptionService.updatePackage(packageId, request)
-        ));
+        var saved = subscriptionService.updatePackage(packageId, request);
+        auditLogService.logAdminAction(authentication, "PACKAGE_REVISION_PUBLISHED", "PACKAGE", packageId,
+            "Package revision published for new orders; existing purchased benefits preserved", httpRequest,
+            Map.of("revision",saved.getRevision(),"code",saved.getCode(),"policy","NEW_ORDERS_ONLY"));
+        return ResponseEntity.ok(ApiResponse.success("Subscription package updated successfully", saved));
     }
 
     @PatchMapping("/packages/{packageId}/activate")

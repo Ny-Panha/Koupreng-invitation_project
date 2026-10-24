@@ -30,6 +30,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
         "spring.datasource.driver-class-name=org.h2.Driver",
         "spring.datasource.username=sa", "spring.datasource.password=",
         "app.auth.first-user-admin-enabled=false",
+        "app.entitlements.free-package-code=REGRESSION_FREE",
         "spring.jpa.hibernate.ddl-auto=create-drop",
         "spring.jpa.database-platform=org.hibernate.dialect.H2Dialect",
         "spring.jpa.properties.hibernate.boot.allow_jdbc_metadata_access=true"
@@ -45,6 +46,18 @@ class EventDraftPersistenceTests {
     @Autowired EntityManager entityManager;
     @Autowired com.koupreng.backend.template.infrastructure.persistence.InvitationTemplateRepository templates;
     private final ObjectMapper json = new ObjectMapper();
+
+    @Autowired com.koupreng.backend.subscription.infrastructure.persistence.SubscriptionPackageRepository packages;
+    @org.junit.jupiter.api.BeforeEach void configureExplicitRegressionPolicy() {
+        // These ownership/round-trip scenarios need multiple events and seating.
+        // Actual Free defaults/quotas are verified separately against migrated MySQL.
+        var plan = new com.koupreng.backend.subscription.domain.SubscriptionPackage();
+        plan.setCode("REGRESSION_FREE"); plan.setPackageName("Object isolation test policy");
+        plan.setPrice(java.math.BigDecimal.ZERO); plan.setMaxInvitations(10);
+        plan.setMaxGuests(1000); plan.setMaxGuestsPerInvitation(1000);
+        plan.setQrInvitationsEnabled(true); plan.setQrCheckInEnabled(true); plan.setSeatingEnabled(true);
+        packages.saveAndFlush(plan);
+    }
 
     @ParameterizedTest
     @ValueSource(strings = {"khmer-celestial", "silk-heritage"})

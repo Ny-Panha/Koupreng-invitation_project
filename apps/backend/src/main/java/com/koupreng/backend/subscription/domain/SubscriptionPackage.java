@@ -14,6 +14,10 @@ public class SubscriptionPackage {
     @Column(name = "package_id")
     private Long id;
 
+    @Version
+    @Column(nullable = false)
+    private long revision;
+
     @Column(name = "package_name", nullable = false)
     private String packageName;
 

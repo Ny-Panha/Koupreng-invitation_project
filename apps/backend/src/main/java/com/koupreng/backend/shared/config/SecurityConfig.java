@@ -137,6 +137,7 @@ public class SecurityConfig {
             AppProperties appProperties,
             CorsConfigurationSource corsConfigurationSource,
             BearerTokenResolver bearerTokenResolver,
+            com.koupreng.backend.shared.security.ReportAccessAuditFilter reportAccessAuditFilter,
             AdminPaymentSecretFilter adminPaymentSecretFilter,
             RateLimitService rateLimitService,
             ClientAddressResolver clientAddressResolver,
@@ -206,6 +207,7 @@ public class SecurityConfig {
                 .addFilterAfter(publicRsvpRateLimitFilter, AuthRateLimitFilter.class)
                 .addFilterBefore(apiRequestLoggingFilter, WafFilter.class)
                 .addFilterAfter(uploadSecurityFilter, BearerTokenAuthenticationFilter.class)
+                .addFilterAfter(reportAccessAuditFilter, BearerTokenAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
                         .requestMatchers("/", "/api/health").permitAll()
@@ -292,6 +294,12 @@ public class SecurityConfig {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
         provider.setPasswordEncoder(passwordEncoder);
         return provider;
+    }
+
+    @Bean
+    public FilterRegistrationBean<com.koupreng.backend.shared.security.ReportAccessAuditFilter> reportAuditRegistration(
+            com.koupreng.backend.shared.security.ReportAccessAuditFilter filter) {
+        var registration = new FilterRegistrationBean<>(filter); registration.setEnabled(false); return registration;
     }
 
     @Bean
