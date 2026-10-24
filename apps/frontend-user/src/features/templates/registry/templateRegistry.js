@@ -9,6 +9,7 @@ const CanvaKhmerWeddingTemplate = lazy(() => import("../experience/components/ca
 const KhmerCelestialLayout = lazy(() => import("../layouts/KhmerCelestial/KhmerCelestialLayout"));
 const TemplateBoilerplateLayout = lazy(() => import("../layouts/TemplateBoilerplate/TemplateBoilerplateLayout"));
 const SilkHeritageLayout = lazy(() => import("../layouts/SilkHeritage/SilkHeritageLayout"));
+const RoyalGardenCinematicLayout = lazy(() => import("../layouts/RoyalGardenCinematic/RoyalGardenCinematicLayout"));
 const KhmerRoyalLotusLayout = lazy(() => import("../layouts/KhmerRoyalLotus/KhmerRoyalLotusLayout"));
 
 /**
@@ -16,6 +17,8 @@ const KhmerRoyalLotusLayout = lazy(() => import("../layouts/KhmerRoyalLotus/Khme
  * Maps template slugs, IDs, and codes to their bespoke UI layout components.
  */
 export const templateRegistry = {
+  "royal-garden-cinematic": RoyalGardenCinematicLayout,
+  "ROYAL_GARDEN_CINEMATIC": RoyalGardenCinematicLayout,
   "silk-heritage": SilkHeritageLayout,
   "SILK_HERITAGE": SilkHeritageLayout,
   // Developer Starter Boilerplate
