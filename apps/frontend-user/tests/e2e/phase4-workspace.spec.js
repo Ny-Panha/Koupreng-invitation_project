@@ -193,19 +193,21 @@ test('uploaded cover reaches the dashboard and reload; referenced design assets 
   expect(state.media).toHaveLength(1);
 });
 
-for (const module of ['', 'guests', 'rsvp', 'delivery', 'media', 'seating']) test(`sidebar remains stationary at successive scroll offsets on ${module || 'dashboard'}`, async ({ page }) => {
+for (const module of ['', 'guests', 'rsvp', 'delivery', 'media', 'seating', 'gifts', 'budget', 'settings', 'qr']) test(`sidebar remains stationary at successive scroll offsets on ${module || 'dashboard'}`, async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 460 });
   await installPhase4Fixtures(page);
   await page.goto('/app/events/101' + (module ? '/' + module : ''));
   await expect(page.getByRole('main').first()).toBeVisible();
   await expect(page.locator('.event-workspace-main')).toBeVisible();
   const main = page.locator('.event-workspace-main');
-  await expect.poll(() => main.evaluate(e => e.scrollHeight - e.clientHeight)).toBeGreaterThan(0);
+  if (!['gifts', 'budget', 'settings', 'qr'].includes(module)) await expect.poll(() => main.evaluate(e => e.scrollHeight - e.clientHeight)).toBeGreaterThan(0);
   const start = await page.locator('.event-workspace-sidebar').boundingBox();
   for (const dy of [400, 500, 100000]) {
     await main.evaluate((e, distance) => { e.scrollTop += distance; }, dy);
     expect((await page.locator('.event-workspace-sidebar').boundingBox()).y).toBeCloseTo(start.y, 0);
-    expect(await main.evaluate(e => e.scrollTop)).toBeGreaterThan(0);
+    const geometry = await main.evaluate(e => ({ top: e.scrollTop, max: e.scrollHeight - e.clientHeight }));
+    if (geometry.max > 0) expect(geometry.top).toBeGreaterThan(0);
+    else expect(geometry.top).toBe(0);
   }
   await expect(page.getByRole('button', { name: 'Collapse navigation', exact: true })).toBeInViewport();
   expect(await page.evaluate(() => scrollY)).toBe(0);

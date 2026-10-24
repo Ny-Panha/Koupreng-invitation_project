@@ -23,7 +23,7 @@ test('CSV/XLSX downloads, mapping, validation, duplicate skip, confirmation and 
     if (loseResponse) { loseResponse = false; return route.abort('failed'); }
     return route.fulfill({ json: { data: receipts.get(payload.batchId) } });
   });
-  await page.goto('/app/events/101/guests');
+  await page.goto('/app/events/101/guests', { waitUntil: 'domcontentloaded' });
   await page.getByRole('button', { name: /Import/ }).first().click();
   const dialog = page.getByRole('dialog', { name: 'Import guests' });
   await expect(dialog).toBeVisible();
@@ -65,5 +65,5 @@ test('CSV/XLSX downloads, mapping, validation, duplicate skip, confirmation and 
   const download = page.waitForEvent('download'); await dialog.getByRole('button', { name: 'Download error report' }).click();
   expect((await download).suggestedFilename()).toBe('Koupreng-Guest-Import-Errors.csv');
   await dialog.getByRole('button', { name: 'View guests' }).click();
-  await page.reload(); await expect(page.getByText('ភ្ញៀវគំរូ ក', { exact: true })).toBeVisible();
+  await page.reload({ waitUntil: 'domcontentloaded' }); await expect(page.getByText('ភ្ញៀវគំរូ ក', { exact: true })).toBeVisible();
 });

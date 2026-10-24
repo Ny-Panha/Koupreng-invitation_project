@@ -126,12 +126,20 @@ test("currency summaries and the gift entry form fit a 320px phone", async ({ pa
   for (const module of ["budget", "gifts"]) {
     await page.goto(`/app/events/101/${module}`);
     await expect(page.locator(module === "budget" ? ".exp-summary" : ".wg-summary").first()).toBeVisible();
-    const outside = await page.locator(".exp-sum-card, .wg-sum-card, .wg-inline-form-row input, .wg-inline-form-row select").evaluateAll(elements => elements.filter(element => element.checkVisibility()).filter(element => {
+    const outside = await page.locator(".exp-sum-card, .wg-sum-card").evaluateAll(elements => elements.filter(element => element.checkVisibility()).filter(element => {
       const box = element.getBoundingClientRect();
       const cell = element.closest("td")?.getBoundingClientRect();
       return box.left < -1 || box.right > innerWidth + 1 || (cell && (box.left < cell.left - 1 || box.right > cell.right + 1));
     }).length);
     expect(outside).toBe(0);
   }
-  await expect(page.locator(".wg-inline-save")).toHaveText("កត់ត្រា");
+  await page.locator('.wg-page .dash-page-header button').click();
+  const dialog = page.getByRole('dialog');
+  await expect(dialog).toBeVisible();
+  await expect(dialog.locator('button[type="submit"]')).toHaveText('កត់ត្រា');
+  const outside = await dialog.locator('input, select, textarea, button').evaluateAll(elements => elements.filter(element => element.checkVisibility()).filter(element => {
+    const box = element.getBoundingClientRect();
+    return box.left < -1 || box.right > innerWidth + 1;
+  }).length);
+  expect(outside).toBe(0);
 });

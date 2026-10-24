@@ -11,7 +11,7 @@ test('floor-plan geometry, keyboard controls, save persistence and conflict reco
   const stage = process.env.PHASE5_STAGE || 'after';
   const folder = `D:/Koupreng-UXUI-Phase5/screenshots/seating/${stage}`;
   await mkdir(folder, { recursive: true });
-  await page.goto('/app/events/101/seating');
+  await page.goto('/app/events/101/seating', { waitUntil: 'domcontentloaded' });
   await page.getByTestId('tab-floor-plan').click();
   await expect(page.locator('.sfp-canvas-wrapper')).toBeVisible();
   for (const width of [320, 375, 390, 430, 768, 1024, 1366, 1440, 1920]) {
@@ -28,7 +28,7 @@ test('floor-plan geometry, keyboard controls, save persistence and conflict reco
   await page.screenshot({ path: `${folder}/selected-table-1440.png`, fullPage: true });
   await page.getByRole('button', { name: 'Save floor plan', exact: true }).click();
   await expect(page.getByText('Saved to event', { exact: true })).toBeVisible();
-  await page.reload(); await page.getByTestId('tab-floor-plan').click();
+  await page.reload({ waitUntil: 'domcontentloaded' }); await page.getByTestId('tab-floor-plan').click();
   await expect(table).toBeVisible();
   expect(await table.evaluate(node => node.style.left)).toBe('26%');
   await table.focus(); await page.keyboard.press('Enter');

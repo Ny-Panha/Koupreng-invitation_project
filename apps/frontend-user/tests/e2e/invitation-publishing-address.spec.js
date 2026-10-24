@@ -20,7 +20,7 @@ async function setup(page, { code = "khmer-celestial", address = "", nested = fa
     saved.status = "PUBLISHED";
     return route.fulfill({ contentType: "application/json", body: JSON.stringify({ data: saved }) });
   });
-  await page.goto("/app/events/101/invitation");
+  await page.goto("/app/events/101/invitation", { waitUntil: 'domcontentloaded' });
   await expect(page.locator(".invitation-studio")).toBeVisible();
   return { ...fixture, calls, published };
 }
@@ -39,7 +39,7 @@ for (const code of ["khmer-celestial", "silk-heritage", "garden-royal-khmer-wedd
     await expect(page.locator(".studio-save-status")).toHaveAttribute("data-phase", "saved");
     await expect.poll(() => fixture.calls.at(-1)?.venueAddress).toBe("Riverside Road, Phnom Penh");
     expect(JSON.parse(fixture.calls.at(-1).contentJson).venueAddress).toBe("Riverside Road, Phnom Penh");
-    await page.reload(); await expect(await venue(page)).toHaveValue("Riverside Road, Phnom Penh");
+    await page.reload({ waitUntil: 'domcontentloaded' }); await expect(await venue(page)).toHaveValue("Riverside Road, Phnom Penh");
     await page.getByRole("button", { name: "Publish", exact: true }).click();
     await expect.poll(() => fixture.events.get(101).status).toBe("PUBLISHED");
     expect(fixture.published).toEqual(["Riverside Road, Phnom Penh"]);
