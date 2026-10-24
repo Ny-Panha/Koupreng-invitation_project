@@ -17,7 +17,7 @@ final class AdminReportWorkbookWriter {
     private final int sheetCapacity;
     AdminReportWorkbookWriter(AdminReportingService reporting) { this(reporting, 1_048_500); }
     AdminReportWorkbookWriter(AdminReportingService reporting, int sheetCapacity) { this.reporting = reporting; this.sheetCapacity = sheetCapacity; }
-    void write(AdminReportExportService.Plan plan, OutputStream output) throws IOException {
+    long write(AdminReportExportService.Plan plan, OutputStream output) throws IOException {
         try (SXSSFWorkbook workbook = new SXSSFWorkbook(100)) {
             workbook.setCompressTempFiles(true);
             var styles = new Styles(workbook);
@@ -27,6 +27,7 @@ final class AdminReportWorkbookWriter {
             for (var definition : definitions) {
                 var filter = worksheetFilter(plan, definition);
                 var snapshot = reporting.snapshot(definition.code(), filter, plan.snapshotId()); snapshots.add(snapshot);
+                if (snapshot.getTotalElements() > 100_000) throw new com.koupreng.backend.shared.exception.ApiException(org.springframework.http.HttpStatus.BAD_REQUEST, "Export exceeds 100,000 records per report; narrow filters");
                 writeData(workbook, styles, definition, filter, snapshot);
             }
             if (!plan.report().equals("all")) {
@@ -51,6 +52,7 @@ final class AdminReportWorkbookWriter {
             meta.setColumnWidth(0,24*256); meta.setColumnWidth(1,26*256); meta.setColumnWidth(2,90*256); meta.createFreezePane(0,1);
             workbook.setForceFormulaRecalculation(true);
             workbook.write(output);
+            return snapshots.stream().mapToLong(AdminReportResponse::getTotalElements).sum();
         }
     }
     private AdminReportFilter worksheetFilter(AdminReportExportService.Plan plan, Definition definition) {

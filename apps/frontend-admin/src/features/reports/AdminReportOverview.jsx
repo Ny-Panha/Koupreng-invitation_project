@@ -335,6 +335,10 @@ export default function AdminReportOverview() {
               <p>{text(`${code}Purpose`)}</p>
             </div>
             <ReportExportMenu
+              reportName={reportLabel(definition, lang)}
+              rowCount={report?.totalElements}
+              filters={request}
+              columns={definition.columns}
               disabled={disabled}
               onDownload={download}
               onPageCsv={() => {

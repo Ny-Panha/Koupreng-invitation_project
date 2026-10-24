@@ -90,8 +90,8 @@ final class AdminReportQueries {
         return """
           SELECT s.subscription_id id, s.order_code orderCode, s.user_id userId,
             s.package_id packageId, p.package_name packageName, s.payment_status paymentStatus,
-            s.status, s.provider, s.start_date startDate, s.end_date endDate,
-            CASE WHEN s.is_active=true AND s.status='ACTIVE' AND s.start_date<=:asOf
+            s.status, s.provider, s.confirm_source confirmSource, s.start_date startDate, s.end_date endDate,
+            CASE WHEN s.is_active=true AND s.status='ACTIVE' AND (s.payment_status='PAID' OR (s.payment_status='NOT_REQUIRED' AND s.confirm_source='DEMO_ADMIN_GRANT')) AND s.start_date<=:asOf
               AND (s.end_date IS NULL OR s.end_date>:asOf) THEN 'ACTIVE'
               WHEN s.end_date<=:asOf THEN 'EXPIRED' ELSE 'INACTIVE' END activeState,
             s.amount, CASE WHEN s.payment_status='PAID' AND s.confirmed_at IS NOT NULL
@@ -109,7 +109,7 @@ final class AdminReportQueries {
                 SELECT u.user_id id,u.full_name displayName,u.role,u.status,u.created_at createdAt,
                   COALESCE(i.invitationCount,0) invitationCount,COALESCE(p.confirmedPurchases,0) confirmedPurchases,
                   COALESCE(p.allPaidPurchases,0) allPaidPurchases,
-                  s.packageName currentPackage,s.activeState subscriptionStatus,NULL lastActivityAt
+                  COALESCE(s.packageName,'Free') currentPackage,s.activeState subscriptionStatus,NULL lastActivityAt
                 FROM users u
                 LEFT JOIN (SELECT user_id,COUNT(*) invitationCount FROM invitations WHERE deleted=false GROUP BY user_id) i ON i.user_id=u.user_id
                 LEFT JOIN (SELECT userId,SUM(CASE WHEN productType='TEMPLATE' THEN 1 ELSE 0 END) confirmedPurchases,SUM(CASE WHEN confirmedReceipt>0 THEN 1 ELSE 0 END) allPaidPurchases FROM (

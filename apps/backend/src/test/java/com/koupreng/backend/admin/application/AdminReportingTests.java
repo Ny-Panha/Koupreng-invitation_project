@@ -84,7 +84,7 @@ class AdminReportingTests {
             mapper.writeValue(evidence().resolve("payments-"+currency+"-sorted.json").toFile(),report("payments",query));
             for(String format:List.of("csv","html","xlsx")) try(var file=writer.generate(auth,new AdminReportExportService.Plan("payments",format,filter("payments",query),"currency-fixture"))) {
                 Files.copy(file.path(),evidence().resolve("payments-"+currency+"."+format),StandardCopyOption.REPLACE_EXISTING);
-                if(format.equals("csv")) assertThat(Files.readString(file.path()).split("\r\n\r\n")[1]).doesNotContain(currency.equals("USD") ? ",\"KHR\"," : ",\"USD\",");
+                if(format.equals("csv")) assertThat(Files.readString(file.path())).doesNotContain(currency.equals("USD") ? ",\"KHR\"," : ",\"USD\",");
             }
         }
     }
@@ -213,7 +213,9 @@ class AdminReportingTests {
             Path temporary;
             try(var file=writer.generate(auth,new AdminReportExportService.Plan("invitations",format,filter("invitations",q),"safe-fixture"))) {
                 temporary=file.path();var content=Files.readString(temporary,StandardCharsets.UTF_8);
-                assertThat(content).contains("ALL FILTERED RECORDS").contains("Birthday 100%_fixture");
+                assertThat(content).contains("Birthday 100%_fixture");
+                if(format.equals("html")) assertThat(content).contains("ALL FILTERED RECORDS");
+                else assertThat(content.substring(1).lines().findFirst().orElseThrow()).startsWith("\"Row\",\"id\"");
                 if(format.equals("csv")) { assertThat(content.charAt(0)).isEqualTo('\uFEFF');assertThat(content).contains("'\u200B =HYPERLINK"); }
                 else { assertThat(content).doesNotContain("<script>").contains("&lt;script&gt;").contains("table-header-group"); }
                 Files.copy(temporary,evidence().resolve("invitations."+format),StandardCopyOption.REPLACE_EXISTING);

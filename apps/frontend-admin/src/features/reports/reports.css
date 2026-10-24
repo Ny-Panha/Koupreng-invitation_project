@@ -1357,3 +1357,15 @@
     transition: none !important;
   }
 }
+
+.report-export-dialog { padding: 24px; color: var(--admin-text, #233c32); }
+.report-export-eyebrow { font-size: 11px; letter-spacing: .14em; color: #85682f; font-weight: 700; }
+.report-export-dialog h4 { font-size: 26px; margin: 12px 0 20px; line-height: 1.7; }
+.report-export-scope { display: grid; gap: 12px; background: #f7f5ef; padding: 18px; border-radius: 14px; }
+.report-export-scope div { display: flex; gap: 16px; justify-content: space-between; flex-wrap: wrap; }
+.report-export-scope dt { color: #58675f; }.report-export-scope dd { margin: 0; font-weight: 700; }
+.report-export-dialog p { line-height: 1.9; }.report-export-privacy { display: flex; gap: 10px; align-items: start; background: #edf5ef; padding: 14px; border-radius: 10px; }
+.report-export-privacy svg { flex-shrink: 0; margin-top: 5px; }.report-export-actions { display: grid; gap: 10px; margin: 20px 0; }
+.report-export-actions > button { display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; border: 1px solid #d8dfd6; border-radius: 12px; padding: 16px; background: white; color: #214f3b; cursor: pointer; }
+.report-export-actions > button:first-child { background: #214f3b; color: white; }.report-export-actions > button > span { flex: 1; min-width: 0; }.report-export-actions strong,.report-export-actions small { display: block; line-height: 1.8; }.report-export-actions small { opacity: .85; }.report-export-actions button:disabled { opacity: .45; cursor: default; }.report-export-note { font-size: 12px; color: #58675f; }.report-export-columns { overflow-wrap: anywhere; }
+@media(max-width:430px) { .report-export-dialog { padding: 16px; }.report-export-actions > button { padding: 12px; }.report-export-scope { padding: 12px; } }

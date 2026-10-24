@@ -24,11 +24,14 @@ public class AdminReportSnapshotWriter {
         reporting.requireAdmin(auth);
         Path path = Files.createTempFile("koupreng-report-", "." + plan.format());
         boolean complete = false;
+        long rowCount = 0;
         try {
             if (plan.format().equals("xlsx")) {
-                try (OutputStream output = Files.newOutputStream(path)) { new AdminReportWorkbookWriter(reporting).write(plan, output); }
+                try (OutputStream output = Files.newOutputStream(path)) { rowCount = new AdminReportWorkbookWriter(reporting).write(plan, output); }
             } else {
                 var snapshot = reporting.snapshot(plan.report(), exportFilter(plan.filter(), plan.report()), plan.snapshotId());
+                rowCount = snapshot.getTotalElements();
+                if (rowCount > 100_000) throw new ApiException(HttpStatus.BAD_REQUEST, "Export exceeds 100,000 records; narrow the filters");
                 if (plan.format().equals("html") && snapshot.getTotalElements() > 20_000)
                     throw new ApiException(HttpStatus.BAD_REQUEST, "Print preview exceeds 20,000 records; narrow filters or use complete XLSX/CSV export");
                 try (Writer output = Files.newBufferedWriter(path, StandardCharsets.UTF_8)) {
@@ -37,7 +40,7 @@ public class AdminReportSnapshotWriter {
                     else html(output, plan, snapshot);
                 }
             }
-            complete = true; return new AdminReportExportService.FileResult(path);
+            complete = true; return new AdminReportExportService.FileResult(path, rowCount);
         } finally { if (!complete) Files.deleteIfExists(path); }
     }
     public static AdminReportFilter exportFilter(AdminReportFilter source, String code) {
@@ -74,9 +77,6 @@ public class AdminReportSnapshotWriter {
     }
     private void csv(Writer output, AdminReportExportService.Plan plan, AdminReportResponse snapshot) throws IOException {
         output.write('\uFEFF');
-        for (var row : metadata(plan, snapshot)) output.write(CsvExportUtils.row(row.toArray()) + "\r\n");
-        for (String note : snapshot.getNotices()) output.write(CsvExportUtils.row("Note", note) + "\r\n");
-        output.write("\r\n");
         var headers = new ArrayList<Object>(); headers.add("Row"); snapshot.getDefinition().columns().forEach(c -> headers.add(c.key()));
         output.write(CsvExportUtils.row(headers.toArray()) + "\r\n");
         eachRow(reporting, plan.report(), exportFilter(plan.filter(), plan.report()), snapshot, (row, index) -> {

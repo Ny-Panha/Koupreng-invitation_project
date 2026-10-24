@@ -15,10 +15,13 @@ public class AdminReportExportService {
     public record Plan(String report, String format, AdminReportFilter filter, String snapshotId, boolean legacyCsv) {
         public Plan(String report, String format, AdminReportFilter filter, String snapshotId) { this(report,format,filter,snapshotId,false); }
     }
-    public record FileResult(Path path) implements AutoCloseable {
+    public record FileResult(Path path, long rowCount) implements AutoCloseable {
+        public FileResult(Path path) { this(path, -1); }
         public void copyTo(OutputStream output) throws IOException { Files.copy(path, output); }
         @Override public void close() throws IOException { Files.deleteIfExists(path); }
     }
+    @org.springframework.beans.factory.annotation.Autowired(required = false)
+    private com.koupreng.backend.audit.application.AuditLogService audit;
     private final AdminReportingService reporting;
     private final AdminReportSnapshotWriter writer;
     public AdminReportExportService(AdminReportingService reporting, AdminReportSnapshotWriter writer) {
@@ -42,6 +45,18 @@ public class AdminReportExportService {
     }
     public void stream(Authentication auth, Plan plan, OutputStream output) throws IOException {
         // Generation's transaction ends before a slow client starts consuming.
-        try (var file = writer.generate(auth, plan)) { file.copyTo(output); }
+        if (audit != null) audit.logAdminAction(auth, "REPORT_EXPORT_STARTED", "REPORT", null, "Administrative export requested", null, exportMetadata(plan, -1));
+        try (var file = writer.generate(auth, plan)) {
+            file.copyTo(output);
+            if (audit != null) audit.logAdminAction(auth, "REPORT_EXPORT_COMPLETED", "REPORT", null, "Administrative export completed", null, exportMetadata(plan, file.rowCount()));
+        } catch (IOException | RuntimeException failure) {
+            if (audit != null) audit.logAdminAction(auth, "REPORT_EXPORT_FAILED", "REPORT", null, "Administrative export failed", null, exportMetadata(plan, -1));
+            throw failure;
+        }
+    }
+    private Map<String,Object> exportMetadata(Plan plan, long rows) {
+        return Map.of("report",plan.report(),"format",plan.format(),"snapshotId",plan.snapshotId(),
+            "from",Objects.toString(plan.filter().from(),"ALL"),"to",Objects.toString(plan.filter().to(),"ALL"),
+            "filterKeys",plan.filter().filters().keySet(),"rows",rows,"scope","ALL_FILTERED_RECORDS");
     }
 }

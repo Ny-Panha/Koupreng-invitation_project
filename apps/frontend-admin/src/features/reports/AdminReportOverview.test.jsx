@@ -109,7 +109,7 @@ async function loaded() {
   await screen.findByText("Server row");
 }
 function openExports() {
-  fireEvent.click(screen.getByText("Export report", { selector: "summary" }));
+  fireEvent.click(screen.getByRole("button", { name: "Export report", exact: true }));
 }
 async function chooseReport(code) {
   const group = reportGroups.find((item) => item.codes.includes(code));
