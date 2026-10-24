@@ -1,6 +1,7 @@
 import { templateCapabilities } from "../templates/registry/templateCapabilities";
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import WeddingProgramEditor from "./studio/WeddingProgramEditor";
+import { legacyProgram, normalizeProgram } from "../templates/shared/program";
 import StudioSections from "./studio/StudioSections";
 import StudioToolbar from "./studio/StudioToolbar";
 import { createPortal } from "react-dom";
@@ -691,8 +692,8 @@ export default function InvitationForm({ invitation }) {
                     ? customParsed.messageText
                     : (preset.messageText || DEFAULT_STATE.messageText)),
             schedule: Array.isArray(customParsed.schedule)
-                ? customParsed.schedule
-                : (preset.schedule?.length ? preset.schedule : (tpl?.schedule || [])),
+                ? normalizeProgram(customParsed.schedule)
+                : (Array.isArray(customParsed.agendaDays) ? legacyProgram(customParsed.agendaDays) : (preset.schedule?.length ? preset.schedule : (tpl?.schedule || []))),
             dressCode: customParsed.dressCode || preset.dressCode || tpl?.dressCode || {
                 name: "ខ្មែរប្រពៃណី / សម័យ",
                 description: "សូមជ្រើសរើសសម្លៀកបំពាក់តាមពណ៌ដែលបានកំណត់ ដើម្បីបង្កើនភាពស្រស់ស្អាតនៃពិធី។",

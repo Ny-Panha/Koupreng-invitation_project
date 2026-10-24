@@ -1,3 +1,4 @@
+import { legacyProgram, normalizeProgram } from "../../templates/shared/program";
 import { getTemplateById } from "@/features/templates/data/templatesData";
 import { resolveVariant } from "@/features/templates/experience/config/templateExperienceThemes";
 
@@ -133,16 +134,7 @@ export function draftToTemplate(draft, gallery = []) {
             : (hasGiftData ? true : (baseTpl.enabledSections?.gift ?? true)));
 
     // Schedules
-    let finalSchedule = draft.schedule || [];
-    if ((!finalSchedule || finalSchedule.length === 0) && draft.agendaDays && draft.agendaDays.length > 0) {
-        finalSchedule = draft.agendaDays.flatMap((day, dIdx) =>
-            day.items.map((it) => ({
-                dayTitle: day.title || `ថ្ងៃទី ${dIdx + 1}`,
-                title: it.name || "កម្មវិធី",
-                time: it.time || "07:00",
-            }))
-        );
-    }
+    const finalSchedule = Array.isArray(draft.schedule) ? normalizeProgram(draft.schedule) : legacyProgram(draft.agendaDays);
 
     const rawMapInput = draft.googleMapUrl || draft.event?.mapLink || draft.mapQuery || "";
     const normalizedGoogleMapsUrl = (() => {

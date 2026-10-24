@@ -22,4 +22,13 @@ export function normalizeProgram(value) {
   })) : [];
 }
 
+export function legacyProgram(days) {
+  if (!Array.isArray(days)) return [];
+  return days.flatMap((day, index) => normalizeProgram(day?.items).map(row => ({
+    ...row, id: `agenda-${index}-${row.id}`, day: row.day ?? (index < 2 ? index + 1 : undefined),
+    date: row.date || day.date || '', dayTitle: row.dayTitle || day.title || '',
+    period: row.period || day.period || '',
+  })));
+}
+
 export const PROGRAM_PERIODS = { MORNING: ['ព្រឹក', 'Morning'], DAYTIME: ['ថ្ងៃ / រសៀល', 'Daytime'], EVENING: ['ល្ងាច', 'Evening'] };

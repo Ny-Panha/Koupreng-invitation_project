@@ -1,4 +1,5 @@
 import { KEEP_TEMPLATE_CODE } from "@/features/templates/data/templatesData";
+import { legacyProgram, normalizeProgram } from "../../templates/shared/program";
 import {
   normalizeOpeningCopy,
   normalizeOpeningDesign,
@@ -207,7 +208,7 @@ export function publicInvitationToDraft(invitation, media) {
     venueAddress: content.venueAddress || contentEvent.venueAddress || invitation?.venueAddress || "",
     googleMapUrl: content.googleMapUrl || contentEvent.mapLink || invitation?.googleMapUrl || "",
     contact: content.contact || {},
-    schedule: Array.isArray(content.schedule) ? content.schedule : [],
+    schedule: Array.isArray(content.schedule) ? normalizeProgram(content.schedule) : legacyProgram(content.agendaDays),
     party: Array.isArray(content.party) ? content.party : (Array.isArray(design.party) ? design.party : []),
     gift: resolvedGift,
     khqrDollar,
@@ -319,7 +320,7 @@ export function draftToInvitationPayload(draft, backendTemplateId) {
     story: draft?.story || "",
     storyText: draft?.story || "",
     storyChapters: draft?.storyChapters || [],
-    schedule: draft?.schedule || [],
+    schedule: Array.isArray(draft?.schedule) ? normalizeProgram(draft.schedule) : legacyProgram(draft?.agendaDays),
     party: draft?.party || [],
     gift: draft?.gift || [],
     khqrDollar: draft?.khqrDollar || null,

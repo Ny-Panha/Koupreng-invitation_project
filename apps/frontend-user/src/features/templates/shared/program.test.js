@@ -1,8 +1,14 @@
 import { describe, expect, it } from 'vitest';
-import { normalizeProgram, programDate, validProgramDate } from './program';
+import { legacyProgram, normalizeProgram, programDate, validProgramDate } from './program';
 import { buildTemplateContent } from '../experience/config/templateExperienceContent';
 
 describe('program calendar and serialization contract', () => {
+  it('retains legacy agenda day dates, period labels and ceremony wording', () => {
+    const rows = legacyProgram([{ title: 'ថ្ងៃទី ១', date: '2028-02-29', period: 'MORNING', items: [{ name: 'ពិធី', time: '៧:០០ ព្រឹក' }] },
+      { title: 'ថ្ងៃទី ២', date: '2028-03-02', items: [{ title: 'Reception', time: '17:30' }] }]);
+    expect(rows[0]).toMatchObject({ day: 1, date: '2028-02-29', period: 'MORNING', title: 'ពិធី', time: '៧:០០ ព្រឹក' });
+    expect(rows[1]).toMatchObject({ day: 2, date: '2028-03-02', title: 'Reception' });
+  });
   it('links only empty dates and handles leap/month/year boundaries without UTC conversion', () => {
     expect(programDate({ day: 2 }, '2028-02-28')).toBe('2028-02-29');
     expect(programDate({ day: 2 }, '2027-12-31')).toBe('2028-01-01');
