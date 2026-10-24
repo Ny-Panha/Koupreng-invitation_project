@@ -126,7 +126,7 @@ export function useStudioPersistence({ value, onRestore, persist, enabled, initi
     h.index = index;
     onRestore(JSON.parse(h.entries[index]));
   }
-  return { dirty, phase: state.phase === "saved" && dirty ? "unsaved" : state.phase, error: state.error,
+  return { dirty, version: state.version, phase: state.phase === "saved" && dirty ? "unsaved" : state.phase, error: state.error,
     save, flush, undo: () => restore(history.current.index - 1), redo: () => restore(history.current.index + 1),
     canUndo: (history.current.index > 0 || history.current.entries[history.current.index] !== serialized) && state.phase !== "saving",
     canRedo: history.current.index < history.current.entries.length - 1 && state.phase !== "saving",

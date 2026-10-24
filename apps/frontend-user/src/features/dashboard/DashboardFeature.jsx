@@ -309,8 +309,7 @@ export default function DashboardFeature() {
         const updated = await invitationService.unpublish(stats.id);
         workspace?.updateEvent(updated);
       } else {
-        const updated = await invitationService.publish(stats.id);
-        workspace?.updateEvent(updated);
+        return;
       }
       // Refresh from backend FIRST — this is the source of truth
       await loadData(stats.id);
@@ -352,7 +351,7 @@ export default function DashboardFeature() {
           {primaryAction.module !== "invitation" && <Link className="workspace-button" to={eventPath(stats.id, "invitation")}><Palette size={18} />{text("edit")}</Link>}
         </div>
         <details className="overview-publication-controls"><summary>{label("Publication settings", "ការកំណត់ការផ្សព្វផ្សាយ")}</summary><div className="overview-publication">
-          <button type="button" className="workspace-button" onClick={handlePublishToggle} disabled={publishing}>{publishing ? label("Updating…", "កំពុងកែប្រែ…") : stats.status === "PUBLISHED" ? label("Unpublish invitation", "ផ្អាកផ្សាយធៀប") : label("Publish invitation", "ផ្សព្វផ្សាយធៀប")}</button>
+          {stats.status === "PUBLISHED" ? <button type="button" className="workspace-button" onClick={handlePublishToggle} disabled={publishing}>{publishing ? label("Updating…", "កំពុងកែប្រែ…") : label("Unpublish invitation", "ផ្អាកផ្សាយធៀប")}</button> : <Link className="workspace-button" to={`${eventPath(stats.id,'invitation')}?mode=guided`}>{label("Review and publish", "ពិនិត្យ និងផ្សព្វផ្សាយ")}</Link>}
           {stats.status === "PUBLISHED" && stats.slug && <button className="workspace-button" onClick={() => handleCopyLink(stats.slug)}>{copied ? text("copied") : text("copyLink")}</button>}
         </div></details>
       </div>

@@ -1,4 +1,7 @@
 .event-settings .workspace-page-heading h1 { margin: 0 0 8px; font-size: clamp(24px, 3vw, 32px); }
+.event-settings [hidden] { display:none !important; }
+.event-settings .studio-guide { margin-block:20px; }
+.event-settings .event-settings-save { flex-wrap:wrap; }
 .event-settings form { padding: 24px; background: var(--ws-surface); box-shadow: var(--ws-shadow); }
 .event-settings .event-settings-section { margin: 0 0 24px; padding-bottom: 20px; border-bottom: 1px solid var(--ws-border); }
 .event-settings .event-settings-section legend { font-size: 18px; }
