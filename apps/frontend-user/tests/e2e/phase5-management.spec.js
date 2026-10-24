@@ -7,6 +7,7 @@ test.use({ actionTimeout: 10000 });
 
 async function capture(page, name) {
   await mkdir('D:/Koupreng-UXUI-Phase5/screenshots/after/management', { recursive: true });
+  await expect(page.locator('.kp-site-preloader')).toHaveCount(0);
   for (const width of [320, 375, 390, 430, 768, 1024, 1366, 1440, 1920]) {
     await page.setViewportSize({ width, height: width === 1366 ? 700 : width < 500 ? 700 : 900 });
     await page.screenshot({ path: `D:/Koupreng-UXUI-Phase5/screenshots/after/management/${name}-${width}.png` });

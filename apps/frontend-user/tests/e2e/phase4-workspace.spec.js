@@ -6,7 +6,7 @@ import { Buffer } from 'node:buffer';
 test('task scroll leaves desktop context and footer stationary; menu scroll is independent', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 700 });
   await installPhase4Fixtures(page);
-  await page.goto('/app/events/101/guests');
+  await page.goto('/app/events/101/guests', { waitUntil: 'domcontentloaded' });
   const sidebar = page.locator('.event-workspace-sidebar'), main = page.locator('.event-workspace-main');
   await expect(page.getByText('Review Guest 1', { exact: true })).toBeVisible();
   const start = await sidebar.boundingBox();
@@ -27,7 +27,7 @@ test('task scroll leaves desktop context and footer stationary; menu scroll is i
 test('create and edit share fields and preserve optional and backend-owned values across refresh', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   const state = await installPhase4Fixtures(page, { count: 1 });
-  await page.goto('/app/events/101/guests');
+  await page.goto('/app/events/101/guests', { waitUntil: 'domcontentloaded' });
   await page.getByRole('button', { name: 'Add guest', exact: true }).click();
   await page.locator('#guestForm-name').fill('Phase 4 Review');
   await page.locator('#guestForm-phone').fill('012345678');
@@ -40,7 +40,7 @@ test('create and edit share fields and preserve optional and backend-owned value
   await page.locator('#guestForm-companionName').fill('Review Companion');
   await page.getByRole('dialog').getByRole('button', { name: 'Add guest', exact: true }).click();
   await expect(page.getByRole('dialog')).toHaveCount(0);
-  await page.reload();
+  await page.reload({ waitUntil: 'domcontentloaded' });
   const row = page.locator('tr').filter({ hasText: 'Phase 4 Review' });
   await row.getByRole('button', { name: 'Edit', exact: true }).click();
   for (const [field, value] of Object.entries({ phone: '012345678', count: '3', group: 'Bride Side', category: 'Family', email: 'phase4@example.test', note: 'Keep this note', companionName: 'Review Companion' })) await expect(page.locator(`#guestForm-${field}`)).toHaveValue(value);
@@ -49,7 +49,7 @@ test('create and edit share fields and preserve optional and backend-owned value
   await page.locator('#guestForm-group').selectOption('Groom Side');
   await page.getByRole('dialog').getByRole('button', { name: 'Save', exact: true }).click();
   await expect(page.getByRole('dialog')).toHaveCount(0);
-  await page.reload(); await row.getByRole('button', { name: 'Edit', exact: true }).click();
+  await page.reload({ waitUntil: 'domcontentloaded' }); await row.getByRole('button', { name: 'Edit', exact: true }).click();
   await expect(page.locator('#guestForm-phone')).toHaveValue('+855 98 765 432');
   await expect(page.locator('#guestForm-group')).toHaveValue('Groom Side');
   await expect(page.locator('#guestForm-count')).toHaveValue('4');
@@ -59,7 +59,7 @@ test('create and edit share fields and preserve optional and backend-owned value
 
 test('validation, dirty cancellation and API failure keep entered guest data', async ({ page }) => {
   await installPhase4Fixtures(page, { count: 1 });
-  await page.goto('/app/events/101/guests');
+  await page.goto('/app/events/101/guests', { waitUntil: 'domcontentloaded' });
   await page.getByRole('button', { name: 'Add guest', exact: true }).click();
   await page.locator('#guestForm-name').fill('Keep on failure');
   await page.locator('#guestForm-phone').fill('123');
@@ -79,7 +79,7 @@ test('validation, dirty cancellation and API failure keep entered guest data', a
 test('seating supports full party capacity, moves, unassignment and safe deletion across reload', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   const state = await installPhase4Fixtures(page, { count: 3 });
-  await page.goto('/app/events/101/seating');
+  await page.goto('/app/events/101/seating', { waitUntil: 'domcontentloaded' });
   await expect(page.getByText('Create your first table to start arranging guests.')).toBeVisible();
   await expect(page.locator('.sfp-canvas-wrapper')).toHaveCount(0);
   for (const [name, capacity] of [['Family A', '2'], ['Family B', '4']]) {
@@ -98,7 +98,7 @@ test('seating supports full party capacity, moves, unassignment and safe deletio
   await panel.getByLabel('Table', { exact: true }).selectOption('101');
   await panel.getByRole('button', { name: 'Assign guest', exact: true }).click();
   await expect(page.locator('.seating-table-card').filter({ hasText: 'Family B' }).getByText('Review Guest 3')).toBeVisible();
-  await page.reload();
+  await page.reload({ waitUntil: 'domcontentloaded' });
   await expect(page.getByRole('button', { name: 'Delete table: Family B' })).toBeDisabled();
   await page.getByRole('button', { name: 'Move guest: Review Guest 3' }).click();
   await panel.getByLabel('Table', { exact: true }).selectOption('100');
@@ -112,13 +112,13 @@ test('seating supports full party capacity, moves, unassignment and safe deletio
   page.once('dialog', dialog => dialog.accept());
   await page.getByRole('button', { name: 'Delete table: Family A' }).click();
   await expect(page.getByRole('heading', { name: 'Family A', exact: true })).toHaveCount(0);
-  await page.reload();
+  await page.reload({ waitUntil: 'domcontentloaded' });
   expect(state.tables).toHaveLength(1);
 });
 
 test('RSVP pending guests, confirmed attendee totals, editing and deletion stay consistent', async ({ page }) => {
   const state = await installPhase4Fixtures(page, { count: 3 });
-  await page.goto('/app/events/101/rsvp');
+  await page.goto('/app/events/101/rsvp', { waitUntil: 'domcontentloaded' });
   await expect(page.getByText(/1 confirmed attendees/)).toBeVisible();
   await page.getByLabel('Response status').selectOption('PENDING');
   await expect(page.getByText('Review Guest 2', { exact: true })).toBeVisible();
@@ -137,7 +137,7 @@ test('RSVP pending guests, confirmed attendee totals, editing and deletion stay 
 test('delivery selects recipients, never marks copied shares sent and reports provider failures', async ({ page }) => {
   await page.addInitScript(() => Object.defineProperty(navigator, 'clipboard', { value: { writeText: async () => {} } }));
   const state = await installPhase4Fixtures(page, { count: 3 });
-  await page.goto('/app/events/101/delivery?guestId=502');
+  await page.goto('/app/events/101/delivery?guestId=502', { waitUntil: 'domcontentloaded' });
   await expect(page.getByText('1 selected', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Copy message', exact: true }).first().click();
   expect(state.writes).toHaveLength(0);
@@ -151,7 +151,7 @@ test('delivery selects recipients, never marks copied shares sent and reports pr
 
 test('media validates formats, uploads, replaces, removes and reloads the same library', async ({ page }) => {
   const state = await installPhase4Fixtures(page, { count: 1 });
-  await page.goto('/app/events/101/media');
+  await page.goto('/app/events/101/media', { waitUntil: 'domcontentloaded' });
   await expect(page.getByRole('heading', { name: 'Template artwork', exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Gallery', exact: true }).click();
   const picker = page.locator('input[type=file]');
@@ -161,7 +161,7 @@ test('media validates formats, uploads, replaces, removes and reloads the same l
   const png = await readFile(new URL('./support/fixtures/general-qr.png', import.meta.url));
   await picker.setInputFiles({ name: 'review.png', mimeType: 'image/png', buffer: png });
   await expect(page.getByRole('heading', { name: 'review-image.png', exact: true })).toBeVisible();
-  await page.reload(); await page.getByRole('button', { name: 'Gallery', exact: true }).click();
+  await page.reload({ waitUntil: 'domcontentloaded' }); await page.getByRole('button', { name: 'Gallery', exact: true }).click();
   const chooser = page.waitForEvent('filechooser');
   await page.getByRole('button', { name: 'Replace', exact: true }).click();
   await (await chooser).setFiles({ name: 'replace.png', mimeType: 'image/png', buffer: png });
@@ -170,23 +170,23 @@ test('media validates formats, uploads, replaces, removes and reloads the same l
   page.once('dialog', dialog => dialog.accept());
   await page.getByRole('button', { name: 'Remove', exact: true }).click();
   await expect(page.getByText('No uploaded files here yet', { exact: true })).toBeVisible();
-  await page.reload(); expect(state.media).toHaveLength(0);
+  await page.reload({ waitUntil: 'domcontentloaded' }); expect(state.media).toHaveLength(0);
 });
 
 test('uploaded cover reaches the dashboard and reload; referenced design assets stay managed in Studio', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   const state = await installPhase4Fixtures(page, { count: 1 });
-  await page.goto('/app/events/101/media');
+  await page.goto('/app/events/101/media', { waitUntil: 'domcontentloaded' });
   await expect(page.getByRole('heading', { name: 'Template artwork', exact: true })).toBeVisible();
   const png = await readFile(new URL('./support/fixtures/general-qr.png', import.meta.url));
   await page.locator('input[type=file]').setInputFiles({ name: 'cover.png', mimeType: 'image/png', buffer: png });
   await expect(page.getByRole('heading', { name: 'review-image.png' })).toBeVisible();
   await page.getByRole('navigation', { name: 'Event navigation', exact: true }).getByRole('link', { name: 'Dashboard', exact: true }).click();
   await expect(page.locator('.overview-cover img')).toHaveAttribute('src', '/templates/event-essential.svg');
-  await page.reload();
+  await page.reload({ waitUntil: 'domcontentloaded' });
   await expect(page.locator('.overview-cover img')).toHaveAttribute('src', '/templates/event-essential.svg');
   state.eventOverrides = { designJson: JSON.stringify({ coverImage: '/templates/event-essential.svg' }) };
-  await page.goto('/app/events/101/media');
+  await page.goto('/app/events/101/media', { waitUntil: 'domcontentloaded' });
   await expect(page.getByText(/Used in the invitation design/)).toBeVisible();
   await expect(page.getByRole('button', { name: 'Replace', exact: true })).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Remove', exact: true })).toHaveCount(0);
@@ -196,7 +196,7 @@ test('uploaded cover reaches the dashboard and reload; referenced design assets 
 for (const module of ['', 'guests', 'rsvp', 'delivery', 'media', 'seating', 'gifts', 'budget', 'settings', 'qr']) test(`sidebar remains stationary at successive scroll offsets on ${module || 'dashboard'}`, async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 460 });
   await installPhase4Fixtures(page);
-  await page.goto('/app/events/101' + (module ? '/' + module : ''));
+  await page.goto('/app/events/101' + (module ? '/' + module : ''), { waitUntil: 'domcontentloaded' });
   await expect(page.getByRole('main').first()).toBeVisible();
   await expect(page.locator('.event-workspace-main')).toBeVisible();
   const main = page.locator('.event-workspace-main');
@@ -216,7 +216,7 @@ for (const module of ['', 'guests', 'rsvp', 'delivery', 'media', 'seating', 'gif
 test('event switching clears private module rows and mobile assignment remains reachable', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 667 });
   await installPhase4Fixtures(page, { count: 3 });
-  await page.goto('/app/events/101/seating');
+  await page.goto('/app/events/101/seating', { waitUntil: 'domcontentloaded' });
   await page.getByRole('button', { name: 'Assign guests', exact: true }).click();
   await expect(page.getByLabel('Guest', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Toggle modules menu' }).click();

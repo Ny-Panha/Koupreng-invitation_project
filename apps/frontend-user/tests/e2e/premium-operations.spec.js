@@ -4,7 +4,7 @@ import { installOverhaulFixtures } from "./support/overhaulFixtures.js";
 
 test("RSVP cards filter real responses and retain failed edits", async ({ page }, info) => {
   const state = await installOperationsFixtures(page);
-  await page.goto("/app/events/101/rsvp");
+  await page.goto("/app/events/101/rsvp", { waitUntil: 'domcontentloaded' });
   await expect(page.getByRole("heading", { name: "RSVP management" })).toBeVisible();
   const rows = page.locator(".rsvp-table tbody tr");
   await expect(rows).toHaveCount(2);
@@ -35,7 +35,7 @@ test("RSVP cards filter real responses and retain failed edits", async ({ page }
 
 test("expense dialog contains focus, preserves KHR entries after failure and saves the actual payload", async ({ page }, info) => {
   const state = await installOperationsFixtures(page);
-  await page.goto("/app/events/101/budget");
+  await page.goto("/app/events/101/budget", { waitUntil: 'domcontentloaded' });
   const add = page.getByRole("button", { name: "Add Expense", exact: true });
   await add.click();
   const dialog = page.getByRole("dialog", { name: "Add New Expense" });
@@ -69,7 +69,7 @@ test("expense dialog contains focus, preserves KHR entries after failure and sav
 
 test("financial report preserves currencies and has keyboard-accessible printable preview", async ({ page }, info) => {
   await installOperationsFixtures(page);
-  await page.goto("/app/events/101/reports");
+  await page.goto("/app/events/101/reports", { waitUntil: 'domcontentloaded' });
   const summary = page.getByRole("region", { name: "Financial summary" });
   await expect(summary).toContainText("$25.00");
   await expect(summary).toContainText("40,000 ៛");
@@ -99,7 +99,7 @@ test("empty expense workspace prioritizes one add action and no zero summaries",
   await installOverhaulFixtures(page, "en", { empty: true });
   // The verified event is present; its expense ledger has no records.
   await page.route("**/api/v1/invitations/my", route => route.fulfill({ contentType: "application/json", body: JSON.stringify({ data: [{ id: 101, title: "Dara & Sophea" }] }) }));
-  await page.goto("/app/events/101/budget");
+  await page.goto("/app/events/101/budget", { waitUntil: 'domcontentloaded' });
   await expect(page.getByRole("button", { name: "Add Expense", exact: true })).toHaveCount(1);
   await expect(page.locator(".exp-summary")).toHaveCount(0);
   await expect(page.getByRole("heading", { name: "No expense records yet" })).toBeVisible();
@@ -107,10 +107,10 @@ test("empty expense workspace prioritizes one add action and no zero summaries",
 
 test("Khmer operations use translated labels while preserving category values", async ({ page }) => {
   await installOperationsFixtures(page, "km");
-  await page.goto("/app/events/101/rsvp");
+  await page.goto("/app/events/101/rsvp", { waitUntil: 'domcontentloaded' });
   await expect(page.getByRole("heading", { name: "គ្រប់គ្រងការឆ្លើយតប RSVP" })).toBeVisible();
   await expect(page.getByRole("button", { name: "កែប្រែ RSVP", exact: true })).toHaveCount(2);
-  await page.goto("/app/events/101/budget");
+  await page.goto("/app/events/101/budget", { waitUntil: 'domcontentloaded' });
   await page.getByRole("button", { name: "បន្ថែមចំណាយ", exact: true }).click();
   const dialog = page.getByRole("dialog");
   await expect(dialog.getByRole("option", { name: "Food & Catering", exact: true })).toHaveCount(0);
@@ -124,7 +124,7 @@ test("currency summaries and the gift entry form fit a 320px phone", async ({ pa
   await page.setViewportSize({ width: 320, height: 900 });
   await installOperationsFixtures(page, "km");
   for (const module of ["budget", "gifts"]) {
-    await page.goto(`/app/events/101/${module}`);
+    await page.goto(`/app/events/101/${module}`, { waitUntil: 'domcontentloaded' });
     await expect(page.locator(module === "budget" ? ".exp-summary" : ".wg-summary").first()).toBeVisible();
     const outside = await page.locator(".exp-sum-card, .wg-sum-card").evaluateAll(elements => elements.filter(element => element.checkVisibility()).filter(element => {
       const box = element.getBoundingClientRect();

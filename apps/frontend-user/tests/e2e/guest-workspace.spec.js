@@ -56,7 +56,7 @@ async function setup(page, { lang = "en", empty = false, rejectFirstSave = false
     }
     return json({});
   });
-  await page.goto("/dashboard/invitations/42/guests");
+  await page.goto("/dashboard/invitations/42/guests", { waitUntil: 'domcontentloaded' });
   await expect(page.locator(".guest-results-summary")).toContainText(empty ? "0" : "6");
   return state;
 }

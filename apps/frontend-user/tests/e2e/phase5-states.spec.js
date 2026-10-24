@@ -6,9 +6,16 @@ test.use({ actionTimeout: 10000 });
 const folder = 'D:/Koupreng-UXUI-Phase5/screenshots/after/states';
 async function capture(page, name) {
   await mkdir(folder, { recursive: true });
+  await expect(page.locator('.kp-site-preloader')).toHaveCount(0);
   for (const width of [390, 1440]) {
     await page.setViewportSize({ width, height: width === 390 ? 700 : 900 });
-    await page.screenshot({ path: `${folder}/${name}-${width}.png` });
+    const covers = /cover|one-event/.test(name);
+    if (covers) {
+      await page.locator('.event-card').first().scrollIntoViewIfNeeded();
+      await expect(page.locator('.event-card').first()).toHaveCSS('opacity', '1');
+      await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+    }
+    await page.screenshot({ path: `${folder}/${name}-${width}.png`, fullPage: covers });
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
   }
 }

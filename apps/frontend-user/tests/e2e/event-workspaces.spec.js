@@ -49,7 +49,7 @@ async function setup(page) {
 
 test("explicit event, switching, refresh, legacy links and denial preserve isolation", async ({ page }, testInfo) => {
   const { requests } = await setup(page);
-  await page.goto("/app/events/101/guests");
+  await page.goto("/app/events/101/guests", { waitUntil: 'domcontentloaded' });
   await expect(page.getByText("Guest of Wedding A", { exact: true })).toBeVisible();
   await expect(page.getByText("Guest of Birthday B", { exact: true })).toHaveCount(0);
   const menu = page.getByRole("button", { name: "Toggle modules menu" });
@@ -59,15 +59,15 @@ test("explicit event, switching, refresh, legacy links and denial preserve isola
   await expect(page).toHaveURL(/\/app\/events\/102\/guests$/);
   await expect(page.getByText("Guest of Birthday B", { exact: true })).toBeVisible();
   await expect(page.getByText("Guest of Wedding A", { exact: true })).toHaveCount(0);
-  await page.reload();
+  await page.reload({ waitUntil: 'domcontentloaded' });
   await expect(page.getByText("Guest of Birthday B", { exact: true })).toBeVisible();
-  await page.goto("/dashboard/invitations/101/reports");
+  await page.goto("/dashboard/invitations/101/reports", { waitUntil: 'domcontentloaded' });
   await expect(page).toHaveURL(/\/app\/events\/101\/reports$/);
   await expect.poll(() => requests.includes("/api/v1/invitations/101/gifts")).toBe(true);
-  await page.goto("/app/events/999/guests");
+  await page.goto("/app/events/999/guests", { waitUntil: 'domcontentloaded' });
   await expect(page.getByRole("alert")).toBeVisible();
   expect(requests).not.toContain("/api/v1/invitations/999/guests");
-  await page.goto("/dashboard/guests");
+  await page.goto("/dashboard/guests", { waitUntil: 'domcontentloaded' });
   await expect(page).toHaveURL(/\/app\/events\?module=guests$/);
   await expect(page.getByText("Wedding A", { exact: true })).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath("my-events.png"), fullPage: true });
@@ -75,7 +75,7 @@ test("explicit event, switching, refresh, legacy links and denial preserve isola
 
 test("single form creates a typed backend draft once and opens its exact workspace", async ({ page }, testInfo) => {
   const { created } = await setup(page);
-  await page.goto("/app/events/new");
+  await page.goto("/app/events/new", { waitUntil: 'domcontentloaded' });
   await page.getByRole("button", { name: /Birthday|ខួបកំណើត/ }).click();
   await page.getByRole("button", { name: /Select.*Event Essential|ជ្រើសរើស.*Event Essential/ }).click();
   await expect(page.getByRole("button", { name: /Continue|បន្ត/, exact: true })).toHaveCount(0);
@@ -100,7 +100,7 @@ test("workspace and event form fit supported mobile and desktop widths", async (
   for (const width of [320, 375, 390, 430, 768, 1024, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     for (const path of ["/login", "/register", "/app/events", "/app/events/new", "/app/events/101", "/app/events/101/gifts", "/app/events/101/rsvp", "/app/events/101/guests"]) {
-      await page.goto(path);
+      await page.goto(path, { waitUntil: 'domcontentloaded' });
       if (path.endsWith("/guests")) await expect(page.getByText("Guest of Wedding A", { exact: true })).toBeVisible();
       else if (path.endsWith("/new")) await expect(page.getByRole("button", { name: /Birthday|ខួបកំណើត/ })).toBeVisible();
       else if (path === "/login" || path === "/register") await expect(page.locator('input[type="password"]').first()).toBeVisible();
