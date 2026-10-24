@@ -564,28 +564,28 @@ export default function AdminPackagesPage() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           label={t("packages.allPackages", lang === "en" ? "All Packages" : "កញ្ចប់ទាំងអស់")}
-          value={stats.total}
+          value={String(stats.total)}
           note={lang === "en" ? "Total tiers in system" : "កញ្ចប់សេវាទាំងអស់ក្នុងប្រព័ន្ធ"}
           icon={Layers}
           tone="amber"
         />
         <StatCard
           label={t("packages.activePackages", lang === "en" ? "Active" : "សកម្ម (Active)")}
-          value={stats.active}
+          value={String(stats.active)}
           note={lang === "en" ? "Live & available" : "កំពុងដំណើរការលើគេហទំព័រ"}
           icon={Power}
           tone="emerald"
         />
         <StatCard
           label={t("packages.paidPackages", lang === "en" ? "Paid" : "កញ្ចប់បង់ប្រាក់ (Paid)")}
-          value={stats.paid}
+          value={String(stats.paid)}
           note={lang === "en" ? "Commercial tiers" : "កញ្ចប់បង់ប្រាក់ពាណិជ្ជកម្ម"}
           icon={DollarSign}
           tone="cyan"
         />
         <StatCard
           label={t("packages.freePackages", lang === "en" ? "Free" : "ឥតគិតថ្លៃ (Free)")}
-          value={stats.free}
+          value={String(stats.free)}
           note={lang === "en" ? "Free starter tiers" : "កញ្ចប់ឥតគិតថ្លៃសាកល្បង"}
           icon={Sparkles}
           tone="purple"
