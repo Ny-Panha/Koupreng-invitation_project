@@ -1,3 +1,4 @@
+import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useEffect } from "react";
 import { IoCloseOutline, IoRestaurantOutline, IoSparkles } from "react-icons/io5";
 import { SeatingFloorPlan } from "./SeatingFloorPlan";
@@ -12,6 +13,7 @@ export function SeatingFloorPlanModal({
     venueName = "",
     invitationId = null,
 }) {
+  const uiCopy = useUiCopy();
     useEffect(() => {
         if (!isOpen) return;
         const handleKeyDown = (e) => {
@@ -31,16 +33,16 @@ export function SeatingFloorPlanModal({
                     <div>
                         <h3>
                             <IoSparkles style={{ color: "#b98b42", marginRight: "6px" }} />
-                            ប្លង់ទីតាំងតុក្នុងសាលការ (Venue Seating Plan)
+                            {uiCopy("ប្លង់ទីតាំងតុក្នុងសាលការ", "Venue seating plan")}
                         </h3>
                         <p>
                             {venueName ? `${venueName} • ` : ""}
                             {guestTable ? (
                                 <span style={{ color: "#b98b42", fontWeight: 700 }}>
-                                    តុរបស់អ្នក៖ {guestTable} {guestSeat ? `(${guestSeat})` : ""}
+                                    {uiCopy("តុរបស់អ្នក៖", "Your table:")} {guestTable} {guestSeat ? `(${guestSeat})` : ""}
                                 </span>
                             ) : (
-                                "សូមពិនិត្យមើលទីតាំងតុនីមួយៗក្នុងសាលមង្គលការ"
+                                uiCopy("សូមពិនិត្យមើលទីតាំងតុនីមួយៗក្នុងសាលមង្គលការ", "View table locations in the wedding hall")
                             )}
                         </p>
                     </div>
@@ -48,7 +50,7 @@ export function SeatingFloorPlanModal({
                         type="button"
                         className="sfp-modal-close"
                         onClick={onClose}
-                        aria-label="បិទ"
+                        aria-label={uiCopy("បិទ", "Close")}
                     >
                         <IoCloseOutline />
                     </button>
@@ -59,7 +61,7 @@ export function SeatingFloorPlanModal({
                     {tables.length === 0 ? (
                         <div style={{ textAlign: "center", padding: "60px 20px", color: "#7d6443" }}>
                             <IoRestaurantOutline style={{ fontSize: "2.5rem", opacity: 0.5, marginBottom: "8px" }} />
-                            <p style={{ fontWeight: 700 }}>មិនទាន់មានទិន្នន័យប្លង់តុនៅឡើយទេ</p>
+                            <p style={{ fontWeight: 700 }}>{uiCopy("មិនទាន់មានទិន្នន័យប្លង់តុនៅឡើយទេ", "No floor plan data yet")}</p>
                         </div>
                     ) : (
                         <SeatingFloorPlan

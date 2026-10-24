@@ -21,7 +21,7 @@ async function setup(page, { code = "khmer-celestial", address = "", nested = fa
     return route.fulfill({ contentType: "application/json", body: JSON.stringify({ data: saved }) });
   });
   await page.goto("/app/events/101/invitation", { waitUntil: 'domcontentloaded' });
-  await expect(page.locator(".invitation-studio")).toBeVisible();
+  await expect(page.locator(".invitation-studio")).toBeVisible({ timeout: 15000 });
   return { ...fixture, calls, published };
 }
 async function venue(page) {

@@ -44,10 +44,18 @@ export default function DynamicTemplateRenderer({
         }
 
         const blockData = block.data && typeof block.data === "object" ? block.data : {};
+        const animation = blockData.animation || block.animation || "fade-up";
+        const sectionKey = blockData.sectionKey || (block.type === "LEGACY_SECTION" ? blockData.sectionKey : block.type);
 
         return (
           <BlockErrorBoundary key={blockId} blockId={blockId}>
-            <Component {...blockData} content={content} {...blockProps} />
+            <div
+              data-block-id={blockId}
+              data-section-key={sectionKey}
+              className="w-full relative transition-all duration-300"
+            >
+              <Component {...blockData} animation={animation} content={content} {...blockProps} />
+            </div>
           </BlockErrorBoundary>
         );
       })}

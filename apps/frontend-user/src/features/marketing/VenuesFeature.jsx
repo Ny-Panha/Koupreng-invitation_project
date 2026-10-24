@@ -1,3 +1,4 @@
+import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { ScrollReveal } from "../../shared/ui/ScrollReveal";
 import { motion, AnimatePresence } from "framer-motion";
@@ -51,6 +52,7 @@ const getVenues = (t) => [
 ];
 
 const VenuesPage = () => {
+  const uiCopy = useUiCopy();
   const { text: t, lang } = useBackendMessages("venues");
   const venues = useMemo(() => getVenues(t), [t]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -223,7 +225,7 @@ const VenuesPage = () => {
                   type="button"
                   className="venue-modal-close"
                   onClick={handleCloseVenue}
-                  aria-label="Close venue details"
+                  aria-label={uiCopy("បិទព័ត៌មានទីតាំង", "Close venue details")}
                 >
                   ✕
                 </button>
@@ -242,37 +244,37 @@ const VenuesPage = () => {
                   </div>
                 </div>
                 <div className="venue-modal-body">
-                  <span className="venue-modal-kicker">VENUE DETAIL • ព័ត៌មានលម្អិត</span>
+                  <span className="venue-modal-kicker">{uiCopy("ព័ត៌មានទីតាំងលម្អិត", "VENUE DETAILS")}</span>
                   <h2 id="public-venue-title" className="venue-modal-title">{selectedVenue.name}</h2>
                   <div className="venue-modal-meta-grid">
                     <div className="venue-modal-meta-item">
                       <span className="meta-icon">📍</span>
                       <div>
-                        <small>ទីតាំង / Location</small>
+                        <small>{uiCopy("ទីតាំង", "Location")}</small>
                         <strong>{selectedVenue.location}</strong>
                       </div>
                     </div>
                     <div className="venue-modal-meta-item">
                       <span className="meta-icon">👥</span>
                       <div>
-                        <small>ចំណុះ / Capacity</small>
+                        <small>{uiCopy("ចំណុះ", "Capacity")}</small>
                         <strong>{selectedVenue.capacity}</strong>
                       </div>
                     </div>
                     <div className="venue-modal-meta-item">
                       <span className="meta-icon">💰</span>
                       <div>
-                        <small>តម្លៃ / Price Range</small>
+                        <small>{uiCopy("តម្លៃ", "Price range")}</small>
                         <strong className="gold-text-bold">{selectedVenue.priceRange}</strong>
                       </div>
                     </div>
                   </div>
                   <div className="venue-modal-actions">
                     <Link to="/contact" className="venue-modal-contact-btn" onClick={handleCloseVenue}>
-                      ទំនាក់ទំនងសាកសួរ / Inquire Venue
+                      {uiCopy("ទំនាក់ទំនងសាកសួរ", "Inquire about venue")}
                     </Link>
                     <button type="button" className="venue-modal-secondary-btn" onClick={handleCloseVenue}>
-                      បិទ / Close
+                      {uiCopy("បិទ", "Close")}
                     </button>
                   </div>
                 </div>

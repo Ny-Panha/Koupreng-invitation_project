@@ -1,13 +1,9 @@
-import {
-    IoAddOutline,
-    IoGiftOutline,
-} from "react-icons/io5";
+import { IoGiftOutline } from "react-icons/io5";
 import { SkeletonCard } from "@/shared/ui";
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
 import { useGifts } from "./hooks/useGifts";
 import { GiftStatsCards } from "./components/GiftStatsCards";
 import { GiftTable } from "./components/GiftTable";
-import GiftFormModal from './components/GiftFormModal';
 import { useState } from 'react';
 import "./GiftsFeature.css";
 
@@ -20,7 +16,6 @@ export function GiftsFeature() {
         backendInvitation,
         gifts,
         guestOptions,
-        openAddForm,
         editingId,
         form,
         updateForm,
@@ -32,7 +27,6 @@ export function GiftsFeature() {
         saving,
         error,
         loading,
-        showForm,
     } = useGifts();
 
     if (loading) {
@@ -55,20 +49,9 @@ export function GiftsFeature() {
                     </h1>
                     <p className="wg-subtitle">{t("subtitle")}</p>
                 </div>
-                <button
-                    type="button"
-                    className="workspace-button primary"
-                    disabled={!eventId || saving}
-                    onClick={() => {
-                        openAddForm();
-                    }}
-                >
-                    <IoAddOutline aria-hidden="true" />
-                    {t("addBtn")}
-                </button>
             </header>
 
-            {error && !showForm && <div className="workspace-notice" role="alert">{error}</div>}
+            {error && <div className="workspace-notice" role="alert">{error}</div>}
 
             {!backendInvitation?.id && !drafts.length && (
                 <div className="wg-empty">
@@ -82,7 +65,6 @@ export function GiftsFeature() {
             {eventId && gifts.length > 0 && <GiftStatsCards gifts={gifts} t={t} />}
 
             {/* Table */}
-            {eventId && <GiftFormModal show={showForm} editingId={editingId} form={form} guestOptions={guestOptions} gifts={gifts} updateForm={updateForm} submitGift={submitGift} resetForm={resetForm} isDuplicateGift={isDuplicateGift} saving={saving} error={error} t={t} lang={lang} />}
             {gifts.length > 0 && <div className="gift-filter-toolbar"><label>{lang === 'en' ? 'Search gifts' : 'ស្វែងរកអំណោយ'}<input type="search" value={search} onChange={e => setSearch(e.target.value)} /></label><label>{lang === 'en' ? 'Currency' : 'រូបិយប័ណ្ណ'}<select value={currency} onChange={e => setCurrency(e.target.value)}><option value="">{lang === 'en' ? 'All currencies' : 'គ្រប់រូបិយប័ណ្ណ'}</option><option value="USD">USD</option><option value="KHR">KHR</option></select></label></div>}
             {eventId && (
                 <GiftTable

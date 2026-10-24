@@ -1,3 +1,4 @@
+import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -19,6 +20,7 @@ import { templateCatalogService } from "@/features/templates/api/templateCatalog
 import "./PaymentPages.css";
 
 export default function PaidTemplatesPage() {
+  const uiCopy = useUiCopy();
   const [templates, setTemplates] = useState([]);
   const [catalog, setCatalog] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -66,10 +68,10 @@ export default function PaidTemplatesPage() {
         <nav className="paid-breadcrumb">
           <Link to="/dashboard" className="paid-breadcrumb-link">
             <IoHomeOutline />
-            <span>ផ្ទាំងគ្រប់គ្រង</span>
+            <span>{uiCopy("ផ្ទាំងគ្រប់គ្រង", "Dashboard")}</span>
           </Link>
           <IoChevronForwardOutline className="paid-breadcrumb-sep" />
-          <span className="paid-breadcrumb-active">គំរូដែលបានទិញ</span>
+          <span className="paid-breadcrumb-active">{uiCopy("គំរូដែលបានទិញ", "Purchased templates")}</span>
         </nav>
 
         {/* Page Header */}
@@ -77,23 +79,23 @@ export default function PaidTemplatesPage() {
           <div className="paid-header-info">
             <div className="paid-header-tag">
               <IoDiamondOutline />
-              <span>PREMIUM LIFETIME ACCESS</span>
+              <span>{uiCopy("សិទ្ធិប្រើប្រាស់បុព្វលាភជារៀងរហូត", "PREMIUM LIFETIME ACCESS")}</span>
             </div>
             <h1 className="paid-header-title">
-              គំរូធៀបការ <span className="gold-text">បានទិញរួច</span>
+              {uiCopy("គំរូធៀបការ", "Invitation templates")} <span className="gold-text">{uiCopy("បានទិញរួច", "Purchased")}</span>
               {templates.length > 0 && (
-                <span className="paid-count-badge">{templates.length} គំរូ</span>
+                <span className="paid-count-badge">{templates.length} {uiCopy("គំរូ", "templates")}</span>
               )}
             </h1>
             <p className="paid-header-desc">
-              បញ្ជីគំរូ Premium ដែលអ្នកបានទូទាត់ប្រាក់ជោគជ័យ។ អ្នកអាចជ្រើសរើសដើម្បីចាប់ផ្តើមបង្កើតធៀបការមង្គលការបានគ្រប់ពេលវេលា។
+              {uiCopy("បញ្ជីគំរូបុព្វលាភដែលអ្នកបានទូទាត់ប្រាក់ជោគជ័យ។ អ្នកអាចជ្រើសរើសដើម្បីចាប់ផ្តើមបង្កើតធៀបការមង្គលការបានគ្រប់ពេលវេលា។", "Your purchased premium templates. Choose one to start creating an invitation at any time.")}
             </p>
           </div>
 
           <div className="paid-header-actions">
             <Link to="/templates/browse" className="paid-btn-browse">
               <IoAddCircleOutline />
-              <span>ស្វែងរកគំរូថ្មីៗ</span>
+              <span>{uiCopy("ស្វែងរកគំរូថ្មីៗ", "Browse new templates")}</span>
             </Link>
           </div>
         </header>
@@ -102,7 +104,7 @@ export default function PaidTemplatesPage() {
         {loading && (
           <div className="paid-loading-card">
             <span className="checkout-spinner"></span>
-            <p>កំពុងទាញយកបញ្ជីគំរូដែលបានទិញ...</p>
+            <p>{uiCopy("កំពុងទាញយកបញ្ជីគំរូដែលបានទិញ...", "Loading purchased templates...")}</p>
           </div>
         )}
 
@@ -120,12 +122,12 @@ export default function PaidTemplatesPage() {
               <div className="paid-empty-icon">
                 <IoColorPaletteOutline />
               </div>
-              <h2 className="paid-empty-title">មិនទាន់មានគំរូដែលបានទិញនៅឡើយទេ</h2>
+              <h2 className="paid-empty-title">{uiCopy("មិនទាន់មានគំរូដែលបានទិញនៅឡើយទេ", "No purchased templates yet")}</h2>
               <p className="paid-empty-desc">
-                លោកអ្នកមិនទាន់មានគំរូ Premium ណាមួយឡើយ។ លោកអ្នកអាចជ្រើសរើស <strong>គំរូឥតគិតថ្លៃ (Free)</strong> ដើម្បីចាប់ផ្តើមបង្កើតធៀបការភ្លាមៗ ឬជ្រើសរើសទិញ <strong>គំរូ Premium</strong> ខាងក្រោម៖
+                {uiCopy("លោកអ្នកមិនទាន់មានគំរូបុព្វលាភណាមួយឡើយ។ លោកអ្នកអាចជ្រើសរើស", "You have no premium templates yet. Choose a")} <strong>{uiCopy("គំរូឥតគិតថ្លៃ", "free template")}</strong> {uiCopy("ដើម្បីចាប់ផ្តើមបង្កើតធៀបការភ្លាមៗ ឬជ្រើសរើសទិញ", "to create your invitation immediately, or purchase a")} <strong>{uiCopy("គំរូបុព្វលាភ", "premium template")}</strong> {uiCopy("ខាងក្រោម៖", "below:")}
               </p>
               <Link to="/templates/browse" className="paid-empty-btn">
-                <IoSparkles /> មើលគំរូទាំងអស់ក្នុង Catalog (Browse All)
+                <IoSparkles /> {uiCopy("មើលគំរូទាំងអស់", "Browse all templates")}
               </Link>
             </section>
 
@@ -135,14 +137,14 @@ export default function PaidTemplatesPage() {
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px", flexWrap: "wrap", gap: "10px" }}>
                   <div>
                     <h3 style={{ margin: 0, fontSize: "1.15rem", fontWeight: 800, color: "var(--brand-text, #1e293b)" }}>
-                      ✨ គំរូធៀបការណែនាំសម្រាប់អ្នក (Suggested Templates)
+                      {uiCopy("✨ គំរូធៀបការណែនាំសម្រាប់អ្នក", "✨ Suggested invitation templates")}
                     </h3>
                     <p style={{ margin: "4px 0 0", fontSize: "0.8125rem", color: "var(--brand-text-muted, #7a8799)" }}>
-                      ជ្រើសរើសគំរូឥតគិតថ្លៃ (Free) ឬគំរូ Premium ដើម្បីចាប់ផ្តើម
+                      {uiCopy("ជ្រើសរើសគំរូឥតគិតថ្លៃ ឬគំរូបុព្វលាភដើម្បីចាប់ផ្តើម", "Choose a free or premium template to get started")}
                     </p>
                   </div>
                   <Link to="/templates/browse" style={{ fontSize: "0.875rem", fontWeight: 700, color: "var(--brand-primary, #b98b42)", textDecoration: "none" }}>
-                    មើលទាំងអស់ក្នុង Catalog →
+                    {uiCopy("មើលគំរូទាំងអស់ →", "Browse all templates →")}
                   </Link>
                 </div>
 
@@ -175,7 +177,7 @@ export default function PaidTemplatesPage() {
                                 style={{ background: "linear-gradient(135deg, #b98b42 0%, #8f6424 100%)" }}
                               >
                                 <IoDiamondOutline />
-                                <span>ទិញគំរូ (${Number(item.price || 0.01).toFixed(2)})</span>
+                                <span>{uiCopy("ទិញគំរូ ($", "Buy template ($")}{Number(item.price || 0.01).toFixed(2)})</span>
                               </Link>
                             ) : (
                               <Link
@@ -183,17 +185,17 @@ export default function PaidTemplatesPage() {
                                 className="paid-btn-use"
                               >
                                 <IoSparkles />
-                                <span>ប្រើគំរូឥតគិតថ្លៃ (Free)</span>
+                                <span>{uiCopy("ប្រើគំរូឥតគិតថ្លៃ", "Use free template")}</span>
                               </Link>
                             )}
 
                             <Link
                               to={`/templates/browse/${item.id || item.slug || ""}`}
                               className="paid-btn-preview"
-                              title="មើលគំរូផ្ទាល់"
+                              title={uiCopy("មើលគំរូផ្ទាល់", "Preview template")}
                             >
                               <IoEyeOutline />
-                              <span>មើល</span>
+                              <span>{uiCopy("មើល", "View")}</span>
                             </Link>
                           </div>
                         </div>
@@ -217,7 +219,7 @@ export default function PaidTemplatesPage() {
                 item.templateName || meta?.name || meta?.style || "Garden Royal Khmer Wedding";
               const coverImg =
                 meta?.mainImage || meta?.image || "/facebook/all/03-card/cover-card.jpg";
-              const category = meta?.category === "ancient" ? "បុរាណ / Ancient" : "ទំនើប / Modern";
+              const category = meta?.category === "ancient" ? uiCopy("បុរាណ", "Traditional") : uiCopy("ទំនើប", "Modern");
 
               return (
                 <article className="paid-card-item" key={`${item.templateId}-${item.createdAt}`}>
@@ -226,7 +228,7 @@ export default function PaidTemplatesPage() {
                     <img src={coverImg} alt={displayName} className="paid-card-img" />
                     <div className="paid-card-badge-row">
                       <span className="paid-badge-unlocked">
-                        <IoCheckmarkCircle /> UNLOCKED
+                        <IoCheckmarkCircle /> {uiCopy("មានសិទ្ធិប្រើប្រាស់", "UNLOCKED")}
                       </span>
                       <span className="paid-badge-type">
                         {item.accessType || "LIFETIME"}
@@ -243,12 +245,12 @@ export default function PaidTemplatesPage() {
                       {item.createdAt && (
                         <div className="paid-meta-row">
                           <IoCalendarOutline />
-                          <span>ទិញនៅ៖ {new Date(item.createdAt).toLocaleDateString("km-KH")}</span>
+                          <span>{uiCopy("ទិញនៅ៖", "Purchased:")} {new Date(item.createdAt).toLocaleDateString(uiCopy("km-KH", "en-US"))}</span>
                         </div>
                       )}
                       <div className="paid-meta-row">
                         <IoDiamondOutline />
-                        <span>សិទ្ធិប្រើប្រាស់ពេញលេញ (Unlimited Guests)</span>
+                        <span>{uiCopy("សិទ្ធិប្រើប្រាស់ពេញលេញ មិនកំណត់ចំនួនភ្ញៀវ", "Full access with unlimited guests")}</span>
                       </div>
                     </div>
 
@@ -259,17 +261,17 @@ export default function PaidTemplatesPage() {
                         className="paid-btn-use"
                       >
                         <IoSparkles />
-                        <span>បង្កើតធៀបការ (Use Template)</span>
+                        <span>{uiCopy("បង្កើតធៀបការ", "Use template")}</span>
                         <IoArrowForwardOutline />
                       </Link>
 
                       <Link
                         to={`/templates/${targetCode}`}
                         className="paid-btn-preview"
-                        title="មើលគំរូផ្ទាល់"
+                        title={uiCopy("មើលគំរូផ្ទាល់", "Preview template")}
                       >
                         <IoEyeOutline />
-                        <span>មើលគំរូ</span>
+                        <span>{uiCopy("មើលគំរូ", "Preview")}</span>
                       </Link>
                     </div>
                   </div>

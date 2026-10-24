@@ -1,3 +1,4 @@
+import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { IoPencilOutline, IoTrashOutline, IoPersonOutline } from "react-icons/io5";
 import { ResponsiveTable, StatusBadge } from "@/shared/ui";
 import RoleBadge from "./RoleBadge";
@@ -9,15 +10,16 @@ export default function MemberTable({
   onRemove,
   isOwner,
 }) {
+  const uiCopy = useUiCopy();
   return (
-    <ResponsiveTable ariaLabel="Organization Members Table">
+    <ResponsiveTable ariaLabel={uiCopy("តារាងសមាជិកក្រុម", "Organization members table")}>
       <thead>
         <tr>
-          <th>សមាជិក (Member)</th>
-          <th>តួនាទី (Role)</th>
-          <th>ស្ថានភាព (Status)</th>
-          <th>កាលបរិច្ឆេទចូលរួម (Joined Date)</th>
-          {isOwner && <th>សកម្មភាព (Actions)</th>}
+          <th>{uiCopy("សមាជិក", "Member")}</th>
+          <th>{uiCopy("តួនាទី", "Role")}</th>
+          <th>{uiCopy("ស្ថានភាព", "Status")}</th>
+          <th>{uiCopy("កាលបរិច្ឆេទចូលរួម", "Joined date")}</th>
+          {isOwner && <th>{uiCopy("សកម្មភាព", "Actions")}</th>}
         </tr>
       </thead>
       <tbody>
@@ -37,7 +39,7 @@ export default function MemberTable({
                     <strong style={{ color: "var(--kp-dark)", fontSize: "0.9rem" }}>{member.email}</strong>
                     {isMemberOwner && (
                       <span className="k-org-owner-tag">
-                        👑 Owner
+                        {uiCopy("👑 ម្ចាស់", "👑 Owner")}
                       </span>
                     )}
                   </div>
@@ -51,9 +53,9 @@ export default function MemberTable({
               </td>
               <td style={{ color: "#64748b", fontSize: "0.85rem" }}>
                 {member.joinedAt
-                  ? new Date(member.joinedAt).toLocaleDateString("km-KH")
+                  ? new Date(member.joinedAt).toLocaleDateString(uiCopy("km-KH", "en-US"))
                   : member.invitedAt
-                  ? `បានអញ្ជើញ ${new Date(member.invitedAt).toLocaleDateString("km-KH")}`
+                  ? `${uiCopy("បានអញ្ជើញ", "Invited")} ${new Date(member.invitedAt).toLocaleDateString(uiCopy("km-KH", "en-US"))}`
                   : "—"}
               </td>
               {isOwner && (
@@ -64,25 +66,25 @@ export default function MemberTable({
                         type="button"
                         className="k-org-action-btn edit"
                         onClick={() => onEditRole(member)}
-                        title="ប្តូរតួនាទី (Change role)"
-                        aria-label="Change role"
+                        title={uiCopy("ប្តូរតួនាទី", "Change role")}
+                        aria-label={uiCopy("ប្តូរតួនាទី", "Change role")}
                       >
                         <IoPencilOutline aria-hidden="true" />
-                        <span>Edit Role</span>
+                        <span>{uiCopy("កែប្រែតួនាទី", "Edit role")}</span>
                       </button>
                       <button
                         type="button"
                         className="k-org-action-btn danger"
                         onClick={() => onRemove(member)}
-                        title="ដកសមាជិកចេញ (Remove member)"
-                        aria-label="Remove member"
+                        title={uiCopy("ដកសមាជិកចេញ", "Remove member")}
+                        aria-label={uiCopy("ដកសមាជិកចេញ", "Remove member")}
                       >
                         <IoTrashOutline aria-hidden="true" />
                       </button>
                     </div>
                   ) : (
                     <span style={{ fontSize: "0.75rem", color: "#94a3b8", fontStyle: "italic" }}>
-                      Owner Protected
+                      {uiCopy("មិនអាចដកម្ចាស់ចេញ", "Owner protected")}
                     </span>
                   )}
                 </td>

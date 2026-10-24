@@ -1,5 +1,6 @@
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import { cleanup, render, screen } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, afterEach, describe, expect, it, vi } from "vitest";
 import {
   guestInviteUrl,
   initials,
@@ -11,6 +12,8 @@ import {
 import GuestStats from "./components/GuestStats";
 import GuestTable from "./components/GuestTable";
 import { LOCAL_MESSAGES } from "../../shared/i18n/messagesDictionary";
+
+beforeEach(() => useLanguageStore.setState({ lang: "en" }));
 
 afterEach(() => {
   cleanup();
@@ -156,7 +159,7 @@ describe("Guest Domain Module", () => {
       expect(screen.getByText("012345678")).toBeInTheDocument();
       expect(screen.getByText("Groom Side")).toBeInTheDocument();
       expect(screen.getByText("Published")).toBeInTheDocument();
-      expect(screen.getByText("RSVP: ចូលរួម")).toBeInTheDocument();
+      expect(screen.getByText("RSVP: Attending")).toBeInTheDocument();
     });
 
     it("suppresses pending status and shows checked-in and RSVP badges when guest has responded and checked in", () => {
@@ -186,7 +189,7 @@ describe("Guest Domain Module", () => {
 
       expect(screen.getByText("Eng Thida")).toBeInTheDocument();
       expect(screen.getByText("Checked in")).toBeInTheDocument();
-      expect(screen.getByText("RSVP: ចូលរួម")).toBeInTheDocument();
+      expect(screen.getByText("RSVP: Attending")).toBeInTheDocument();
       expect(screen.queryByText("មិនទាន់ផ្ញើ")).not.toBeInTheDocument();
     });
   });

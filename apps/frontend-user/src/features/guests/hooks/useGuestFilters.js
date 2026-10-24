@@ -1,3 +1,4 @@
+import { guestOptionLabel } from "../model/guestLabels";
 import { useMemo, useState } from "react";
 import { matchesGuestStatus } from "../model/guestStatus";
 
@@ -15,7 +16,7 @@ export function useGuestFilters(guests = []) {
       const group = (guest.group || "").toLowerCase();
 
       const matchesSearch =
-        !term || [name, phone, group, guest.companionName, guest.category, guest.seat]
+        !term || [name, phone, group, guest.companionName, guest.category, guest.seat, guestOptionLabel(guest.group, "km"), guestOptionLabel(guest.category, "km")]
           .some((value) => String(value || "").toLowerCase().includes(term));
       const matchesGroup = !groupFilter || guest.group === groupFilter;
       const matchesCategory = !categoryFilter || guest.category === categoryFilter;

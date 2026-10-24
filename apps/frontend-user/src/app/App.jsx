@@ -22,7 +22,10 @@ import { useLanguageStore } from "../stores/useLanguageStore";
  */
 function App() {
   const lang = useLanguageStore(state => state.lang);
-  useEffect(() => { document.documentElement.lang = lang; }, [lang]);
+  useEffect(() => {
+    document.documentElement.lang = lang;
+    document.title = lang === "en" ? "Koupreng - Digital Invitation" : "គូព្រេង - ធៀបការឌីជីថល";
+  }, [lang]);
   useEffect(() => {
     initTelegramWebApp();
     window.addEventListener(TELEGRAM_WEB_APP_READY_EVENT, initTelegramWebApp);

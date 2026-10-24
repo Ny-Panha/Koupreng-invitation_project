@@ -1,5 +1,8 @@
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, afterEach, describe, expect, it, vi } from "vitest";
+
+beforeEach(() => useLanguageStore.setState({ lang: "en" }));
 import Modal from "./Modal";
 
 afterEach(cleanup);

@@ -1,3 +1,5 @@
+import { useLanguageStore } from "@/stores/useLanguageStore";
+import { LOCAL_MESSAGES } from "@/shared/i18n/messagesDictionary";
 import { useEffect, useState } from "react";
 import { QRCode } from "react-qr-code";
 import { Check, ChevronDown, Copy, Download, Link2, Send } from "lucide-react";
@@ -12,14 +14,18 @@ export default function GuestQrModal({
   publicInvitation,
   onClose,
   onCopyLink,
+  onMarkAsSent,
+  saving = false,
   backendInvitationId = null,
   onGuestSynced,
   t,
 }) {
+  const lang = useLanguageStore(state => state.lang);
   const [copiedMsg, setCopiedMsg] = useState(false);
   const [copiedUrl, setCopiedUrl] = useState(false);
   const [syncedGuest, setSyncedGuest] = useState(null);
   const [syncing, setSyncing] = useState(false);
+  const [shareError, setShareError] = useState("");
 
   useEffect(() => {
     setSyncedGuest(null);
@@ -106,30 +112,39 @@ export default function GuestQrModal({
 
   const inviteUrl = guestInviteUrl(currentDraft, activeGuest, publicInvitation);
 
-  const text = (key, fallback) => t ? t(key) : fallback;
+  const text = (key, fallback) => t ? t(key) : LOCAL_MESSAGES.guests[lang][key] || fallback;
 
-  const shareMessageText = buildShareMessage(activeGuest, currentDraft, publicInvitation);
+  const shareMessageText = buildShareMessage(activeGuest, currentDraft, publicInvitation, lang);
+  const busy = syncing || saving;
 
-  const handleCopyMessage = async () => {
-    const ok = await copyText(shareMessageText);
-    if (ok) {
-      setCopiedMsg(true);
-      setTimeout(() => setCopiedMsg(false), 2500);
+  const recordShare = async () => {
+    if (onMarkAsSent && await onMarkAsSent(activeGuest) === false) {
+      setShareError(text("saveFailed", "មិនអាចរក្សាទុកភ្ញៀវបានទេ។"));
     }
   };
 
-  const handleCopyUrlOnly = async () => {
-    const ok = await copyText(inviteUrl);
-    if (ok) {
-      setCopiedUrl(true);
-      if (onCopyLink) onCopyLink(inviteUrl);
-      setTimeout(() => setCopiedUrl(false), 2500);
+  const handleCopy = async (value, setCopied) => {
+    if (busy) return;
+    setShareError("");
+    let copied = false;
+    try {
+      copied = onCopyLink ? await onCopyLink(value, activeGuest) : await copyText(value);
+    } catch { /* A rejected clipboard request must not mark the guest as sent. */ }
+    if (!copied) {
+      setShareError(text("linkCopyFailed", "មិនអាចចម្លងតំណភ្ជាប់បានទេ"));
+      return;
     }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+    await recordShare();
   };
 
-  const handleShareTelegram = () => {
+  const handleShareTelegram = async () => {
+    if (busy) return;
+    setShareError("");
     const tgUrl = `https://t.me/share/url?url=${encodeURIComponent(inviteUrl)}&text=${encodeURIComponent(shareMessageText)}`;
     window.open(tgUrl, "_blank", "noopener,noreferrer");
+    await recordShare();
   };
 
   const handleDownloadQr = () => {
@@ -166,18 +181,19 @@ export default function GuestQrModal({
       subtitle={text("invitationHint", "ចែករំលែកតំណអញ្ជើញ ឬ QR Code របស់ភ្ញៀវ។")}
       size="md" className="guest-qr-dialog guest-form-modal" backdropClassName="guest-qr-backdrop"
     >
-      <div className="guest-share-content" aria-busy={syncing}>
+      <div className="guest-share-content" aria-busy={busy}>
         <div className="guest-share-link-heading"><Link2 size={17} aria-hidden="true" /><label htmlFor="guest-share-url">{text("copyLink", "តំណភ្ជាប់អញ្ជើញ")}</label></div>
         <div className="guest-share-link-field">
           <input id="guest-share-url" type="text" readOnly value={syncing ? text("preparingLink", "កំពុងរៀបចំ link...") : inviteUrl} onFocus={(event) => event.target.select()} />
-          <button type="button" className="guest-button guest-button-primary" disabled={syncing} onClick={handleCopyUrlOnly}>
+          <button type="button" className="guest-button guest-button-primary" disabled={busy} onClick={() => handleCopy(inviteUrl, setCopiedUrl)}>
             {copiedUrl ? <Check size={17} aria-hidden="true" /> : <Copy size={17} aria-hidden="true" />}{copiedUrl ? text("copied", "បានចម្លង") : text("copyLink", "ចម្លងតំណភ្ជាប់")}
           </button>
         </div>
+        {shareError && <p className="guest-field-error" role="alert">{shareError}</p>}
         <p className="guest-share-feedback" role="status" aria-live="polite">{copiedUrl ? text("linkCopied", "បានចម្លងតំណភ្ជាប់") : copiedMsg ? text("messageCopied", "បានចម្លងសារអញ្ជើញ") : syncing ? text("preparingLink", "កំពុងរៀបចំ link...") : ""}</p>
         <div className="guest-share-options">
-          <button type="button" className="guest-button guest-button-secondary" disabled={syncing} onClick={handleShareTelegram}><Send size={17} aria-hidden="true" />{text("shareTelegram", "ផ្ញើតាម Telegram")}</button>
-          <button type="button" className="guest-button guest-button-secondary" disabled={syncing} onClick={handleCopyMessage}>{copiedMsg ? <Check size={17} aria-hidden="true" /> : <Copy size={17} aria-hidden="true" />}{copiedMsg ? text("copied", "បានចម្លង") : text("copyMessage", "ចម្លងសារអញ្ជើញ")}</button>
+          <button type="button" className="guest-button guest-button-secondary" disabled={busy} onClick={handleShareTelegram}><Send size={17} aria-hidden="true" />{text("shareTelegram", "ផ្ញើតាម Telegram")}</button>
+          <button type="button" className="guest-button guest-button-secondary" disabled={busy} onClick={() => handleCopy(shareMessageText, setCopiedMsg)}>{copiedMsg ? <Check size={17} aria-hidden="true" /> : <Copy size={17} aria-hidden="true" />}{copiedMsg ? text("copied", "បានចម្លង") : text("copyMessage", "ចម្លងសារអញ្ជើញ")}</button>
         </div>
         <div className="guest-share-qr-section">
           <div className="guest-share-qr-code" style={{ opacity: syncing ? 0.5 : 1 }}><QRCode id="guest-qr-svg" value={inviteUrl} size={156} /></div>

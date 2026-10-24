@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 
 function BrowserRouter({ children }) { return <MemoryRouter initialEntries={["/app/events/1"]}><Routes><Route path="/app/events/:eventId" element={children} /></Routes></MemoryRouter>; }
@@ -76,8 +76,8 @@ describe("GiftsFeature Module", () => {
     });
   });
 
-  it("opens gift record modal on add button click", async () => {
-    render(
+  it("keeps gift entry inline without the header add button", async () => {
+    const { container } = render(
       <BrowserRouter>
         <GiftsFeature />
       </BrowserRouter>
@@ -87,12 +87,9 @@ describe("GiftsFeature Module", () => {
       expect(screen.getByText("Uncle Sok")).toBeInTheDocument();
     });
 
-    const addBtn = screen.getByRole("button", { name: /កត់ត្រាចំណងដៃ|Record New Gift/ });
-    expect(addBtn).not.toBeNull();
-    fireEvent.click(addBtn);
-
-    await waitFor(() => {
-      expect(document.activeElement).toBe(document.querySelector("[data-gift-name-input]"));
-    });
+    expect(container.querySelector(".wg-inline-form-row")).toBeInTheDocument();
+    expect(container.querySelector(".dash-page-header button")).not.toBeInTheDocument();
+    expect(container.querySelector(".wg-inline-form-row button[type='submit']")).toBeInTheDocument();
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
 });

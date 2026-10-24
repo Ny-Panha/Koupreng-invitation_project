@@ -29,7 +29,7 @@ for (const [id, code] of [[4, 'khmer-celestial'], [2, 'garden-royal-khmer-weddin
     await page.getByRole('button', { name: 'Schedule', exact: true }).click();
     await expect(page.getByLabel('Date', { exact: true }).nth(1)).toHaveValue('2028-03-02');
     await page.getByRole('button', { name: 'Our story', exact: true }).click();
-    await page.getByRole('button', { name: /បន្ថែមដំណាក់កាល/ }).click();
+    await page.getByRole('button', { name: /បន្ថែមដំណាក់កាល|Add chapter/ }).click();
     const story = page.locator('.pe-story-item-card');
     const text = story.locator('textarea');
     await text.fill('យើងបានជួបគ្នា\nសេចក្ដីស្រឡាញ់ <script>alert(1)</script>');

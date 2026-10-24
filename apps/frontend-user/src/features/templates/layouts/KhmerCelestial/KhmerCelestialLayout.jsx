@@ -201,6 +201,52 @@ export default function KhmerCelestialLayout({
       if (event.data?.type === "TOGGLE_GATE") {
         setOpened(Boolean(event.data.open ?? event.data.isOpen));
       }
+      if (event.data?.type === "SCROLL_TO_SECTION") {
+        const { sectionKey, blockId } = event.data;
+        setOpened(true);
+
+        window.setTimeout(() => {
+          let target = null;
+          if (blockId) {
+            target = document.querySelector(`[data-block-id="${blockId}"]`);
+          }
+          if (!target && sectionKey) {
+            target = document.querySelector(`[data-section-key="${sectionKey}"]`);
+          }
+          if (!target && sectionKey) {
+            const selectorMap = {
+              family: '[data-tx-section="couple"], [data-kc-section="family"], .kc-family',
+              invitation: '[data-tx-section="message"], .kc-invitation',
+              countdown: '[data-tx-section="countdown"], .kc-countdown',
+              schedule: '[data-tx-section="schedule"], .kc-schedule',
+              map: '[data-tx-section="venue"], [data-tx-section="map"], .kc-venue',
+              gallery: '[data-tx-section="gallery"], .kc-gallery',
+              story: '[data-tx-section="story"], .kc-story',
+              gift: '[data-tx-section="gift"], .kc-gift',
+              dressCode: '[data-tx-section="dress"], [data-tx-section="dressCode"], .kc-dress',
+              party: '[data-tx-section="party"], .kc-party',
+              faq: '[data-tx-section="faq"], .kc-faq',
+              rsvp: '[data-tx-section="rsvp"], .kc-rsvp',
+              hero: '[data-tx-section="hero"], .kc-hero',
+            };
+            const fallbackSelector = selectorMap[sectionKey];
+            if (fallbackSelector) {
+              target = document.querySelector(fallbackSelector);
+            }
+          }
+
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth", block: "center" });
+            document.querySelectorAll(".studio-highlight-pulse").forEach((el) => {
+              el.classList.remove("studio-highlight-pulse");
+            });
+            target.classList.add("studio-highlight-pulse");
+            window.setTimeout(() => {
+              target.classList.remove("studio-highlight-pulse");
+            }, 2200);
+          }
+        }, 120);
+      }
     };
     window.addEventListener("message", onMessage);
     return () => window.removeEventListener("message", onMessage);

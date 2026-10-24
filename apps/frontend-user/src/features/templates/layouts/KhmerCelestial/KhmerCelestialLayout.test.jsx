@@ -437,7 +437,7 @@ describe("KhmerCelestialLayout integration", () => {
       <MemoryRouter>
         <TemplateExperience
           tpl={{ id: "khmer-celestial", name: "Khmer Celestial" }}
-          content={{ ...content, design: { openingVideoEnabled: true } }}
+          content={{ ...content, brandMark: "/invitations/khmer-celestial/koupreng-gold-mark.webp", design: { openingVideoEnabled: true } }}
           showBreadcrumb={false}
           showActions={false}
         />

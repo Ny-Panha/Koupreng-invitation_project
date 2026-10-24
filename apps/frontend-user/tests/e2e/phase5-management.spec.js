@@ -15,35 +15,34 @@ async function capture(page, name) {
   }
 }
 
-test('manual gift dialog preserves KHR entries and reuses the retry identity after an uncertain save', async ({ page }) => {
+test('inline manual gift entry preserves KHR entries and reuses the retry identity after an uncertain save', async ({ page }) => {
   test.setTimeout(120000);
   const state = await installPhase5Fixtures(page);
   await page.goto('/app/events/101/gifts', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('.wg-inline-form-row')).toHaveCount(0);
+  await expect(page.locator('.wg-inline-form-row')).toBeVisible();
   await capture(page, 'gifts-populated');
-  await page.getByRole('button', { name: 'Record New Gift', exact: true }).click();
-  const dialog = page.getByRole('dialog');
-  await dialog.getByRole('button', { name: 'Contributor Name', exact: true }).click();
-  await dialog.getByPlaceholder(/Search|enter|name/i).fill('Fictional aunt');
-  await dialog.getByRole('button', { name: /Use new name/ }).click();
-  await dialog.getByLabel('Amount', { exact: true }).fill('40000');
-  await dialog.getByRole('combobox', { name: 'Currency', exact: true }).selectOption('KHR');
-  await dialog.getByRole('combobox', { name: 'Payment Method', exact: true }).selectOption('ABA');
+  const form = page.locator('.wg-inline-form-row');
+  await form.getByRole('button', { name: 'Contributor Name', exact: true }).click();
+  await form.getByPlaceholder(/Search|enter|name/i).fill('Fictional aunt');
+  await form.getByRole('button', { name: /Use new name/ }).click();
+  await form.getByLabel('Amount', { exact: true }).fill('40000');
+  await form.getByRole('combobox', { name: 'Currency', exact: true }).selectOption('KHR');
+  await form.getByRole('combobox', { name: 'Payment Method', exact: true }).selectOption('ABA');
   await capture(page, 'gift-dialog');
   state.loseGiftResponse = true;
-  await dialog.getByRole('button', { name: 'Record gift', exact: true }).click();
-  await expect(dialog.getByRole('alert')).toBeVisible();
-  await expect(dialog.getByLabel('Amount', { exact: true })).toHaveValue('40000');
-  await dialog.getByRole('button', { name: 'Record gift', exact: true }).click();
-  await expect(dialog).toHaveCount(0);
+  await form.getByRole('button', { name: /Record gift|^Add$/, exact: true }).click();
+  await expect(page.getByRole('alert')).toBeVisible();
+  await expect(form.getByLabel('Amount', { exact: true })).toHaveValue('40000');
+  await form.getByRole('button', { name: /Record gift|^Add$/, exact: true }).click();
+  await expect(page.getByRole('dialog')).toHaveCount(0);
   expect(state.giftRequests).toHaveLength(2); expect(state.giftRequests[0].clientRequestId).toBe(state.giftRequests[1].clientRequestId);
   expect(state.gifts.filter(gift => gift.name === 'Fictional aunt')).toHaveLength(1);
   const row = page.locator('.wg-table tbody tr').filter({ hasText: 'Fictional aunt' });
   await expect(row).toContainText('Manual record'); await expect(row).toContainText('៛');
   await row.getByRole('button', { name: 'Edit', exact: true }).click();
-  await dialog.getByLabel('Wishes / Notes').fill('Edited fictional record');
-  await dialog.getByRole('button', { name: 'Save Gift Record', exact: true }).click();
-  await expect(dialog).toHaveCount(0); await expect(row).toContainText('Edited fictional record');
+  await form.getByLabel('Wishes / Notes').fill('Edited fictional record');
+  await form.getByRole('button', { name: 'Save Gift Record', exact: true }).click();
+  await expect(page.getByRole('dialog')).toHaveCount(0); await expect(row).toContainText('Edited fictional record');
   page.once('dialog', dialog => dialog.accept()); await row.getByRole('button', { name: 'Delete', exact: true }).click();
   await expect(row).toHaveCount(0);
 });

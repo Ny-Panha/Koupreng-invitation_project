@@ -1,3 +1,4 @@
+import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
@@ -21,6 +22,7 @@ import { canManageOrganization } from "./model/organizationPermissions";
 import "./OrganizationPage.css";
 
 export default function OrganizationDetailPage() {
+  const uiCopy = useUiCopy();
   const { organizationId } = useParams();
   const { user } = useAuth();
   const {
@@ -44,7 +46,7 @@ export default function OrganizationDetailPage() {
   const handleInvite = async (email, role) => {
     const success = await addMember(email, role);
     if (success) {
-      toast.success("បានផ្ញើការអញ្ជើញសមាជិកជោគជ័យ");
+      toast.success(uiCopy("បានផ្ញើការអញ្ជើញសមាជិកជោគជ័យ", "Member invitation sent"));
     }
     return success;
   };
@@ -53,7 +55,7 @@ export default function OrganizationDetailPage() {
     const success = await updateRole(memberId, role);
     if (success) {
       setEditingMember(null);
-      toast.success("បានផ្លាស់ប្តូរ Role សមាជិកជោគជ័យ");
+      toast.success(uiCopy("បានផ្លាស់ប្តូរតួនាទីសមាជិកជោគជ័យ", "Member role updated"));
     }
     return success;
   };
@@ -63,7 +65,7 @@ export default function OrganizationDetailPage() {
     const success = await removeMember(removingMember.id);
     if (success) {
       setRemovingMember(null);
-      toast.success("បានដកសមាជិកចេញពី Workspace ជោគជ័យ");
+      toast.success(uiCopy("បានដកសមាជិកចេញពីកន្លែងធ្វើការជោគជ័យ", "Member removed from workspace"));
     }
   };
 
@@ -74,15 +76,15 @@ export default function OrganizationDetailPage() {
         <nav className="k-org-breadcrumb">
           <Link to="/dashboard" className="k-org-breadcrumb-link">
             <IoHomeOutline />
-            <span>ផ្ទាំងគ្រប់គ្រង</span>
+            <span>{uiCopy("ផ្ទាំងគ្រប់គ្រង", "Dashboard")}</span>
           </Link>
           <IoChevronForwardOutline className="k-org-breadcrumb-sep" />
           <Link to="/dashboard/organizations" className="k-org-breadcrumb-link">
-            <span>ក្រុមការងារ</span>
+            <span>{uiCopy("ក្រុមការងារ", "Teams")}</span>
           </Link>
           <IoChevronForwardOutline className="k-org-breadcrumb-sep" />
           <span className="k-org-breadcrumb-active">
-            {organization?.name || "Workspace Details"}
+            {organization?.name || uiCopy("ព័ត៌មានកន្លែងធ្វើការ", "Workspace details")}
           </span>
         </nav>
 
@@ -94,8 +96,8 @@ export default function OrganizationDetailPage() {
           </div>
         ) : !organization ? (
           <EmptyState
-            title="រកមិនឃើញ Workspace នេះទេ"
-            description="Workspace ដែលអ្នកបានស្នើសុំមិនមាន ឬអ្នកមិនមានសិទ្ធិចូលមើលឡើយ។"
+            title={uiCopy("រកមិនឃើញកន្លែងធ្វើការនេះទេ", "Workspace not found")}
+            description={uiCopy("កន្លែងធ្វើការដែលអ្នកបានស្នើសុំមិនមាន ឬអ្នកមិនមានសិទ្ធិចូលមើលទេ។", "This workspace does not exist or you do not have access.")}
           />
         ) : (
           <>
@@ -104,7 +106,7 @@ export default function OrganizationDetailPage() {
               <div className="k-org-header-info">
                 <div className="k-org-header-tag">
                   <IoBriefcaseOutline />
-                  <span>WORKSPACE DETAILS</span>
+                  <span>{uiCopy("ព័ត៌មានកន្លែងធ្វើការ", "WORKSPACE DETAILS")}</span>
                 </div>
                 <h1 className="k-org-header-title">
                   {organization.name}
@@ -113,7 +115,7 @@ export default function OrganizationDetailPage() {
                   </span>
                 </h1>
                 <p className="k-org-header-desc">
-                  គ្រប់គ្រងសមាជិកក្រុម សិទ្ធិចូលប្រើប្រាស់ និងការងារសហការលើកម្មវិធីការក្នុង Workspace <strong>@{organization.slug}</strong>
+                  {uiCopy("គ្រប់គ្រងសមាជិកក្រុម សិទ្ធិចូលប្រើប្រាស់ និងការសហការរៀបចំកម្មវិធីក្នុងកន្លែងធ្វើការ", "Manage team members, access permissions and event collaboration in your workspace")} <strong>@{organization.slug}</strong>
                 </p>
               </div>
 
@@ -125,7 +127,7 @@ export default function OrganizationDetailPage() {
                     onClick={() => setInviteModalOpen(true)}
                   >
                     <IoPersonAddOutline style={{ fontSize: "1.2rem" }} />
-                    <span>អញ្ជើញសមាជិក (Invite Member)</span>
+                    <span>{uiCopy("អញ្ជើញសមាជិក", "Invite member")}</span>
                   </button>
                 )}
               </div>
@@ -138,8 +140,8 @@ export default function OrganizationDetailPage() {
                   <IoPeopleOutline />
                 </div>
                 <div>
-                  <span className="k-org-stat-label">សមាជិកសរុប (Total Members)</span>
-                  <strong className="k-org-stat-value">{members.length} នាក់</strong>
+                  <span className="k-org-stat-label">{uiCopy("សមាជិកសរុប", "Total members")}</span>
+                  <strong className="k-org-stat-value">{members.length} {uiCopy("នាក់", "people")}</strong>
                 </div>
               </div>
 
@@ -148,8 +150,8 @@ export default function OrganizationDetailPage() {
                   <IoShieldCheckmarkOutline />
                 </div>
                 <div>
-                  <span className="k-org-stat-label">សិទ្ធិគ្រប់គ្រង (Your Access)</span>
-                  <strong className="k-org-stat-value">{isOwner ? "👑 Workspace Owner" : "Member"}</strong>
+                  <span className="k-org-stat-label">{uiCopy("សិទ្ធិគ្រប់គ្រងរបស់អ្នក", "Your access")}</span>
+                  <strong className="k-org-stat-value">{isOwner ? uiCopy("👑 ម្ចាស់កន្លែងធ្វើការ", "👑 Workspace owner") : "Member"}</strong>
                 </div>
               </div>
 
@@ -158,10 +160,10 @@ export default function OrganizationDetailPage() {
                   <IoCalendarOutline />
                 </div>
                 <div>
-                  <span className="k-org-stat-label">បង្កើតនៅថ្ងៃ (Created At)</span>
+                  <span className="k-org-stat-label">{uiCopy("បង្កើតនៅថ្ងៃ", "Created at")}</span>
                   <strong className="k-org-stat-value">
                     {organization.createdAt
-                      ? new Date(organization.createdAt).toLocaleDateString("km-KH")
+                      ? new Date(organization.createdAt).toLocaleDateString(uiCopy("km-KH", "en-US"))
                       : "—"}
                   </strong>
                 </div>
@@ -173,19 +175,19 @@ export default function OrganizationDetailPage() {
               <div className="k-org-section-header">
                 <div>
                   <h2 className="k-org-section-title">
-                    បញ្ជីសមាជិកក្រុម (Team Members)
+                    {uiCopy("បញ្ជីសមាជិកក្រុម", "Team members")}
                   </h2>
                   <p className="k-org-section-desc">
-                    អ្នករៀបចំការ (Planners), បុគ្គលិកកត់ត្រាលុយចងដៃ, និង Staff Check-in ក្នុងក្រុម
+                    {uiCopy("អ្នករៀបចំការ បុគ្គលិកកត់ត្រាចងដៃ និងបុគ្គលិកកត់ត្រាវត្តមានក្នុងក្រុម", "Planners, gift recorders and check-in staff in your team")}
                   </p>
                 </div>
-                <span className="k-org-count-badge">{members.length} Members</span>
+                <span className="k-org-count-badge">{members.length} {uiCopy("សមាជិក", "Members")}</span>
               </div>
 
               {members.length === 0 ? (
                 <EmptyState
-                  title="មិនទាន់មានសមាជិកក្នុងក្រុមនៅឡើយទេ"
-                  description="អញ្ជើញសហការី ឬបុគ្គលិកដំបូងរបស់អ្នក ដើម្បីចាប់ផ្តើមធ្វើការរួមគ្នា។"
+                  title={uiCopy("មិនទាន់មានសមាជិកក្នុងក្រុមនៅឡើយទេ", "No team members yet")}
+                  description={uiCopy("អញ្ជើញសហការី ឬបុគ្គលិកដំបូងរបស់អ្នក ដើម្បីចាប់ផ្តើមធ្វើការរួមគ្នា។", "Invite your first collaborator or staff member to start working together.")}
                   actionLabel="អញ្ជើញសមាជិកថ្មី"
                   onAction={() => setInviteModalOpen(true)}
                 />
@@ -226,10 +228,10 @@ export default function OrganizationDetailPage() {
           isOpen={Boolean(removingMember)}
           onClose={() => setRemovingMember(null)}
           onConfirm={handleRemoveMember}
-          title="ដកសមាជិកចេញពី Workspace"
-          message={`តើអ្នកពិតជាចង់ដក ${removingMember?.email || "សមាជិកនេះ"} ចេញពីក្រុមការងារពិតមែនទេ?`}
-          confirmLabel="ដកសមាជិកចេញ"
-          cancelLabel="បោះបង់"
+          title={uiCopy("ដកសមាជិកចេញពីកន្លែងធ្វើការ", "Remove workspace member")}
+          message={uiCopy(`តើអ្នកពិតជាចង់ដក ${removingMember?.email || "សមាជិកនេះ"} ចេញពីក្រុមការងារមែនទេ?`, `Remove ${removingMember?.email || "this member"} from the team?`)}
+          confirmLabel={uiCopy("ដកសមាជិកចេញ", "Remove member")}
+          cancelLabel={uiCopy("បោះបង់", "Cancel")}
           isDestructive={true}
           isLoading={saving}
         />

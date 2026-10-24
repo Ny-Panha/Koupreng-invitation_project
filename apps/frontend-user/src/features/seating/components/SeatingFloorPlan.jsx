@@ -1,3 +1,4 @@
+import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
     IoSaveOutline,
@@ -272,6 +273,7 @@ export function SeatingFloorPlan({
     highlightTableName = "",
     highlightTableId = null,
 }) {
+    const uiCopy = useUiCopy();
     const { text: t, lang } = useBackendMessages('floorPlan');
     const label = (english, khmer) => lang === 'en' ? english : khmer;
     const [positions, setPositions] = useState({});
@@ -728,34 +730,34 @@ export function SeatingFloorPlan({
                 <div className="sfp-add-modal-overlay" onClick={() => setShowAddModal(false)}>
                     <div className="sfp-add-modal-box" onClick={(e) => e.stopPropagation()}>
                         <div className="sfp-add-modal-head">
-                            <h4>➕ បន្ថែមតុថ្មីលើប្លង់សាលការ</h4>
+                            <h4>{uiCopy("➕ បន្ថែមតុថ្មីលើប្លង់សាលការ", "➕ Add table to floor plan")}</h4>
                             <button type="button" className="sfp-detail-close" onClick={() => setShowAddModal(false)}>
                                 <IoCloseOutline />
                             </button>
                         </div>
                         <form onSubmit={handleQuickAddTable} className="sfp-add-form">
                             <div className="sfp-field">
-                                <label>ឈ្មោះតុ (Table Name) *</label>
+                                <label>{uiCopy("ឈ្មោះតុ *", "Table name *")}</label>
                                 <input
                                     type="text"
                                     required
-                                    placeholder="ឧ. តុ ១, VIP ១"
+                                    placeholder={uiCopy("ឧ. តុ ១, ភ្ញៀវកិត្តិយស ១", "e.g. Table 1, VIP 1")}
                                     value={newTableName}
                                     onChange={(e) => setNewTableName(e.target.value)}
                                     autoFocus
                                 />
                             </div>
                             <div className="sfp-field">
-                                <label>ប្រភេទសម្គាល់ (Label)</label>
+                                <label>{uiCopy("ស្លាកសម្គាល់", "Label")}</label>
                                 <input
                                     type="text"
-                                    placeholder="ឧ. ក្រុមគ្រួសារ, មិត្តវិទ្យាល័យ"
+                                    placeholder={uiCopy("ឧ. ក្រុមគ្រួសារ មិត្តវិទ្យាល័យ", "e.g. Family, school friends")}
                                     value={newTableLabel}
                                     onChange={(e) => setNewTableLabel(e.target.value)}
                                 />
                             </div>
                             <div className="sfp-field">
-                                <label>ចំនួនកៅអី (Capacity)</label>
+                                <label>{uiCopy("ចំនួនកៅអី", "Capacity")}</label>
                                 <input
                                     type="number"
                                     min="1"
@@ -766,10 +768,10 @@ export function SeatingFloorPlan({
                             </div>
                             <div className="sfp-form-actions">
                                 <button type="button" className="sfp-btn sfp-btn--outline" onClick={() => setShowAddModal(false)}>
-                                    បោះបង់
+                                    {uiCopy("បោះបង់", "Cancel")}
                                 </button>
                                 <button type="submit" className="sfp-btn sfp-btn--primary" disabled={saving || !newTableName.trim()}>
-                                    {saving ? "កំពុងបន្ថែម..." : "ដាក់តុលើប្លង់ភ្លាម"}
+                                    {saving ? uiCopy("កំពុងបន្ថែម...", "Adding...") : uiCopy("ដាក់តុលើប្លង់ភ្លាម", "Add table to plan")}
                                 </button>
                             </div>
                         </form>
@@ -867,9 +869,9 @@ export function SeatingFloorPlan({
                         <div className="sfp-canvas-empty__icon-wrap">
                             <IoRestaurantOutline />
                         </div>
-                        <h3>ផ្ទាំងប្លង់សាលការទទេស្អាត (Empty Canvas)</h3>
+                        <h3>{uiCopy("ប្លង់សាលការទទេ", "Empty floor plan")}</h3>
                         <p>
-                            សូមចុចប៊ូតុងខាងក្រោមដើម្បីបង្កើតតុដំបូង ហើយអូសដាក់ទីតាំងលើកម្រាលរៀបចំអាពាហ៍ពិពាហ៍ដូច Canva!
+                            {uiCopy("សូមចុចប៊ូតុងខាងក្រោមដើម្បីបង្កើតតុដំបូង ហើយអូសដាក់ទីតាំងលើប្លង់សាលការ។", "Create your first table below, then drag it into place on the floor plan.")}
                         </p>
                         <button
                             type="button"
@@ -880,7 +882,7 @@ export function SeatingFloorPlan({
                             }}
                         >
                             <IoAddCircleOutline style={{ fontSize: "1.25rem" }} />
-                            <span>+ បន្ថែមតុដំបូងឥឡូវនេះ</span>
+                            <span>{uiCopy("+ បន្ថែមតុដំបូងឥឡូវនេះ", "+ Add your first table")}</span>
                         </button>
                     </div>
                 )}

@@ -1,3 +1,4 @@
+import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { Eye, Layers, Signal, Wifi, BatteryFull, Minus, Plus } from "lucide-react";
 import "./LivePhoneSimulator.css";
@@ -27,6 +28,7 @@ function displayKhmerDate(dateStr) {
 }
 
 export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, deviceName, onRequestClose }) {
+  const uiCopy = useUiCopy();
     const { text: t, lang } = useBackendMessages("invitations");
     const en = lang === "en";
     const iframeRef = useRef(null);
@@ -193,10 +195,10 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, devi
     // Check if running in headless test environment (Vitest / HappyDOM)
     const isTest = import.meta.env.MODE === "test" || Boolean(globalThis.__vitest_worker__);
 
-    if (!templateSlug) return <aside className="pe-preview-column" role="alert">Template unavailable / មិនអាចបើកគំរូបាន។ Please reload the catalog to recover your assigned template.</aside>;
+    if (!templateSlug) return <aside className="pe-preview-column" role="alert">{uiCopy("មិនអាចបើកគំរូបានទេ។ សូមផ្ទុកបណ្ណាល័យគំរូឡើងវិញ ដើម្បីយកគំរូដែលបានជ្រើសរើស។", "Template unavailable. Reload the catalog to recover your selected template.")}</aside>;
 
     return (
-        <aside ref={previewRef} className="pe-preview-column" aria-label="Live invitation preview">
+        <aside ref={previewRef} className="pe-preview-column" aria-label={uiCopy("មើលធៀបអញ្ជើញជាមុន", "Live invitation preview")}>
             {/* Clean Studio Preview Top Bar */}
             <div className="pe-preview-top-bar">
                 <div className="pe-preview-status-row">
@@ -205,20 +207,20 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, devi
                             <span className="pe-live-dot-ping"></span>
                             <span className="pe-live-dot-solid"></span>
                         </span>
-                        <span className="pe-preview-live-title">{t("previewTitle") || "មើលគំរូជាមុន"}</span>
+                        <span className="pe-preview-live-title">{t("previewTitle") || uiCopy("មើលគំរូជាមុន", "Preview template")}</span>
                     </div>
-                    <span className="pe-preview-tag" title="គំរូនាពេលបច្ចុប្បន្ន">{templateName}</span>
+                    <span className="pe-preview-tag" title={uiCopy("គំរូបច្ចុប្បន្ន", "Current template")}>{templateName}</span>
                 </div>
 
                 {/* Clean, Full-Width Segmented Control - Easy to click */}
-                <div className="pe-sim-gate-switcher" role="tablist" aria-label="ទិដ្ឋភាពធៀបការ">
+                <div className="pe-sim-gate-switcher" role="tablist" aria-label={uiCopy("ទិដ្ឋភាពធៀបការ", "Invitation view")}>
                     <button
                         type="button"
                         role="tab"
                         aria-selected={!isGateOpen}
                         onClick={() => handleSetGate(false)}
                         className={`pe-sim-gate-btn ${!isGateOpen ? "is-active" : ""}`}
-                        title="មើលស្រោមសំបុត្រ / ក្របទំព័រដើម (Cover)"
+                        title={uiCopy("មើលស្រោមសំបុត្រ ឬក្របទំព័រដើម", "View envelope / cover")}
                     >
                         <Layers size={16} />
                         <span>{en ? "Cover" : "ស្រោមសំបុត្រ"}</span>
@@ -229,7 +231,7 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, devi
                         aria-selected={isGateOpen}
                         onClick={() => handleSetGate(true)}
                         className={`pe-sim-gate-btn ${isGateOpen ? "is-active" : ""}`}
-                        title="មើលមាតិកាធៀបពេញ (Full Template Content)"
+                        title={uiCopy("មើលមាតិកាធៀបពេញ", "View full invitation")}
                     >
                         <Eye size={16} />
                         <span>{en ? "Full invitation" : "មាតិកាពេញ"}</span>
@@ -238,22 +240,22 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, devi
             </div>
 
             <button type="button" className="studio-preview-toggle" aria-expanded={showTools} onClick={() => setShowTools(value => !value)}>{en ? "Device and zoom controls" : "ជម្រើសឧបករណ៍ និងទំហំ"}</button>
-            <div className="studio-preview-tools" hidden={!showTools} aria-label="Preview controls">
+            <div className="studio-preview-tools" hidden={!showTools} aria-label={uiCopy("ជម្រើសមើលជាមុន", "Preview controls")}>
                 <button type="button" aria-pressed={device === "mobile"} onClick={() => setDevice("mobile")}>{deviceName || (en ? PHONE_PREVIEW.name : "មើលតាមទូរស័ព្ទ")}</button>
                 <button type="button" aria-pressed={device === "desktop"} onClick={() => setDevice("desktop")}>{en ? "Desktop" : "កុំព្យូទ័រ"}</button>
-                <label>{en ? "Zoom" : "ទំហំ"} <select aria-label="Preview zoom" value={zoom} onChange={event => setZoom(event.target.value)}>
+                <label>{en ? "Zoom" : "ទំហំ"} <select aria-label={uiCopy("ទំហំមើលជាមុន", "Preview zoom")} value={zoom} onChange={event => setZoom(event.target.value)}>
                     <option value="fit">{en ? "Fit" : "សមនឹងផ្ទៃ"}</option>
                     {[...new Set([35, 50, 75, 100, 125, ...(zoom === "fit" ? [] : [Number(zoom)])])].sort((a,b)=>a-b).map(value => <option key={value} value={value}>{value}%</option>)}
                 </select></label>
-                <button type="button" aria-label="Zoom out" onClick={() => setZoom(String(Math.max(35, (zoom === "fit" ? Math.round(fitScale * 100) : Number(zoom)) - 10)))}><Minus size={16} /></button>
-                <button type="button" aria-label="Zoom in" onClick={() => setZoom(String(Math.min(125, (zoom === "fit" ? Math.round(fitScale * 100) : Number(zoom)) + 10)))}><Plus size={16} /></button>
+                <button type="button" aria-label={uiCopy("បង្រួម", "Zoom out")} onClick={() => setZoom(String(Math.max(35, (zoom === "fit" ? Math.round(fitScale * 100) : Number(zoom)) - 10)))}><Minus size={16} /></button>
+                <button type="button" aria-label={uiCopy("ពង្រីក", "Zoom in")} onClick={() => setZoom(String(Math.min(125, (zoom === "fit" ? Math.round(fitScale * 100) : Number(zoom)) + 10)))}><Plus size={16} /></button>
                 <button type="button" onClick={() => { setZoom("fit"); setDevice("mobile"); handleSetGate(false); }}>{en ? "Reset view" : "កំណត់ទិដ្ឋភាពដើម"}</button>
                 {typeof document !== "undefined" && document.fullscreenEnabled && <button type="button" onClick={() => {
                     if (document.fullscreenElement) document.exitFullscreen();
                     else previewRef.current?.requestFullscreen();
-                }}>{en ? "Fullscreen" : "ពេញអេក្រង់"}</button>}
+                }}>{en ? "Fullscreen" : uiCopy("ពេញអេក្រង់", "Full screen")}</button>}
             </div>
-            <div className="studio-device-caption">{device === "mobile" ? `${en ? "Phone frame" : "ស៊ុមទូរស័ព្ទ"} · 440 × 860` : "Desktop · 1200 × 800"} · {Math.round(scale * 100)}%</div>
+            <div className="studio-device-caption">{device === "mobile" ? `${en ? "Phone frame" : "ស៊ុមទូរស័ព្ទ"} · 440 × 860` : uiCopy("កុំព្យូទ័រ · 1200 × 800", "Desktop · 1200 × 800")} · {Math.round(scale * 100)}%</div>
             <div ref={viewportRef} className="studio-preview-viewport">
             <div className="studio-device-stage" style={{ width: deviceSize.width * scale, height: deviceSize.height * scale }}>
             <div className="pe-phone-frame pe-device-frame" data-device={device}

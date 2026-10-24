@@ -1,14 +1,13 @@
 import { lazy, Suspense, useCallback, useState } from "react";
 import { Link } from "react-router-dom";
-import { useLanguageStore } from "@/stores/useLanguageStore";
-import { Download, Plus, QrCode, Upload, Users } from "lucide-react";
+import { Download, QrCode, Upload, Users } from "lucide-react";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
 import { ErrorState, SkeletonTable, toast } from "@/shared/ui";
 import { useGuests } from "./hooks/useGuests";
 import { useGuestMutations } from "./hooks/useGuestMutations";
 import { useGuestFilters } from "./hooks/useGuestFilters";
 import { DEFAULT_CATEGORIES, DEFAULT_GROUPS } from "./model/guestConstants";
-import { copyText, guestInviteUrl } from "./model/guestMappers";
+import { copyText } from "./model/guestMappers";
 import { matchesGuestStatus } from "./model/guestStatus";
 import GuestStats from "./components/GuestStats";
 import GuestFilters from "./components/GuestFilters";
@@ -17,7 +16,7 @@ import GuestDeleteDialog from "./components/GuestDeleteDialog";
 import GuestQrModal from "./components/GuestQrModal";
 import TicketModal from "@/features/tickets/TicketModal";
 const GuestImportModal = lazy(() => import('./components/GuestImportModal'));
-import GuestFormModal from "./components/GuestFormModal";
+import GuestInlineForm from "./components/GuestInlineForm";
 import { guestService } from "./api/guestApi";
 import { exportGuestsToCsv } from "./model/guestCsvUtils";
 import { saveManualGuests } from "@/shared/storage/hostPlanningStorage";
@@ -41,8 +40,8 @@ function readList(key, fallback) {
 }
 
 export default function GuestsPage() {
-  const { text: t } = useBackendMessages("guests");
-  const en = useLanguageStore(state => state.lang) === "en";
+  const { text: t, lang } = useBackendMessages("guests");
+  const en = lang === "en";
 
   const {
     eventId,
@@ -79,7 +78,6 @@ export default function GuestsPage() {
     deleteGuest,
     importGuests,
     markGuestAsSent,
-    lastSavedGuest,
   } = useGuestMutations({
     eventId,
     backendInvitation,
@@ -89,8 +87,6 @@ export default function GuestsPage() {
     setBackendGuests,
     refreshData,
   });
-  const savedGuestLink = lastSavedGuest ? guestInviteUrl(draftMatch, lastSavedGuest, publicInvitation || backendInvitation) : "";
-  const savedPersonalLink = savedGuestLink.includes("?token=") ? savedGuestLink : "";
 
   const [groups] = useState(() =>
     readList(scopedKey("koupreng.host.guestGroups", eventId), DEFAULT_GROUPS)
@@ -116,17 +112,12 @@ export default function GuestsPage() {
   const [qrGuestTarget, setQrGuestTarget] = useState(null);
   const [ticketGuest, setTicketGuest] = useState(null);
   const [importModalOpen, setImportModalOpen] = useState(false);
-  const [formModalOpen, setFormModalOpen] = useState(false);
-  const [formModalGuest, setFormModalGuest] = useState(null);
-
-  const handleOpenAddGuest = () => {
-    setFormModalGuest(null);
-    setFormModalOpen(true);
-  };
+  const [editingGuest, setEditingGuest] = useState(null);
+  const [guestFormFocus, setGuestFormFocus] = useState(0);
 
   const handleOpenEditGuest = (guest) => {
-    setFormModalGuest(guest);
-    setFormModalOpen(true);
+    setEditingGuest(guest);
+    setGuestFormFocus(value => value + 1);
   };
 
   const handleSaveGuest = async (form, editingId = null) => {
@@ -151,20 +142,23 @@ export default function GuestsPage() {
   };
 
   const handleCopyLink = async (text) => {
-    const ok = await copyText(text);
-    if (ok) {
-      toast.success(t ? t("messageCopied") : "បានចម្លងសារអញ្ជើញ");
-    } else {
-      toast.error(t ? t("linkCopyFailed") : "មិនអាចចម្លងបានទេ");
-    }
+    try {
+      if (await copyText(text)) {
+        toast.success(t("messageCopied"));
+        return true;
+      }
+    } catch { /* Clipboard access can be denied by the browser. */ }
+    toast.error(t("linkCopyFailed"));
+    return false;
   };
 
   const handleMarkAsSent = async (guest) => {
-    if (!guest) return;
+    if (!guest) return false;
     const success = await markGuestAsSent(guest);
     if (success) {
-      toast.success("បានសម្គាល់ថាបានផ្ញើ");
+      toast.success(t("statusSent"));
     }
+    return success;
   };
 
   const handleGuestSynced = useCallback(
@@ -249,13 +243,6 @@ export default function GuestsPage() {
           <button type="button" className="guest-button guest-button-secondary" disabled={loading || !backendInvitationId} onClick={() => setImportModalOpen(true)}>
             <Upload size={17} aria-hidden="true" /><span>{t("importBtn")}</span>
           </button>
-          {(loading || guests.length > 0) && <button
-            type="button"
-            onClick={handleOpenAddGuest}
-            className="guest-button guest-button-primary"
-          >
-            <Plus size={18} aria-hidden="true" /><span>{t("addGuestAction")}</span>
-          </button>}
         </div>
       </header>
 
@@ -292,16 +279,6 @@ export default function GuestsPage() {
       {(error || mutationError) && (
         <ErrorState message={error || mutationError} onRetry={refreshData} />
       )}
-      {lastSavedGuest && !formModalOpen && <section className="guest-saved-context workspace-section" aria-label={en ? "Saved guest actions" : "ជម្រើសភ្ញៀវដែលបានរក្សាទុក"}>
-        <p role="status">{en ? "Guest saved:" : "បានរក្សាទុកភ្ញៀវ៖"} <strong>{lastSavedGuest.name}</strong></p>
-        <div className="guest-saved-actions">
-          {backendInvitationId && lastSavedGuest.source === "backend" && <button className="workspace-button" type="button" onClick={() => setTicketGuest(lastSavedGuest)}>{en ? "View personal ticket" : "មើលកាតផ្ទាល់ខ្លួន"}</button>}
-          {savedPersonalLink && <button className="workspace-button" type="button" onClick={() => handleCopyLink(savedPersonalLink)}>{en ? "Copy personal invitation link" : "ចម្លងតំណអញ្ជើញផ្ទាល់ខ្លួន"}</button>}
-          {backendInvitationId && <Link className="workspace-button" to={`/app/events/${backendInvitationId}/delivery`}>{en ? "Send / share in Delivery" : "ផ្ញើ / ចែករំលែកតាមការផ្ញើ"}</Link>}
-          {backendInvitationId && <Link className="workspace-button" to={`/app/events/${backendInvitationId}/rsvp`}>{en ? "Review RSVP" : "ពិនិត្យការឆ្លើយតប"}</Link>}
-        </div>
-        <p className="workspace-muted">{en ? "Sharing a link does not confirm delivery. Review tracked activity in Delivery." : "ការចែករំលែកតំណមិនបញ្ជាក់ថាបានបញ្ជូនទេ។ សូមពិនិត្យសកម្មភាពក្នុងការផ្ញើ។"}</p>
-      </section>}
 
       <div className="guest-results-summary" role="status" aria-live="polite">{loading ? t("loadingGuests") : t("resultsCount", { shown: filteredGuests.length, total: guests.length })}{hasFilters && <button type="button" className="guest-text-button" onClick={clearFilters}>{t("clearFilters")}</button>}</div>
       {loading ? (
@@ -309,6 +286,18 @@ export default function GuestsPage() {
       ) : (
         <div className="pe-desktop-table-wrap">
           <GuestTable
+            inlineForm={<GuestInlineForm
+              key={editingGuest?.id ?? "new"}
+              guest={editingGuest}
+              onCancel={() => setEditingGuest(null)}
+              onSave={handleSaveGuest}
+              groups={groups}
+              categories={categories}
+              saving={saving}
+              error={mutationError}
+              focusRequest={guestFormFocus}
+              t={t}
+            />}
             guests={filteredGuests}
             groups={groups}
             categories={categories}
@@ -332,29 +321,11 @@ export default function GuestsPage() {
             deliveryPath={backendInvitationId ? `/app/events/${backendInvitationId}/delivery` : undefined}
             onCopyLink={handleCopyLink}
             onMarkAsSent={handleMarkAsSent}
-            onOpenAddGuest={guests.length === 0 ? handleOpenAddGuest : undefined}
             t={t}
           />
         </div>
       )}
       </section>
-
-      {/* Add / Edit Guest Modal */}
-      <GuestFormModal
-        isOpen={formModalOpen}
-        onClose={() => {
-          setFormModalOpen(false);
-          setFormModalGuest(null);
-        }}
-        onSave={handleSaveGuest}
-        guest={formModalGuest}
-        eventType={(backendInvitation || publicInvitation || draftMatch)?.eventType || "WEDDING"}
-        groups={groups}
-        categories={categories}
-        saving={saving}
-        error={mutationError}
-        t={t}
-      />
 
       <GuestDeleteDialog
         guest={deleteGuestTarget}
@@ -372,6 +343,8 @@ export default function GuestsPage() {
         onGuestSynced={handleGuestSynced}
         onClose={() => setQrGuestTarget(null)}
         onCopyLink={handleCopyLink}
+        onMarkAsSent={handleMarkAsSent}
+        saving={saving}
         t={t}
       />
 

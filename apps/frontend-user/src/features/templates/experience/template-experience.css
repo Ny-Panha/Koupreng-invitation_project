@@ -50,7 +50,7 @@
     position: relative;
     width: 100%;
     max-width: 100%;
-    overflow-x: clip;
+    overflow: visible;
     background: var(--tpl-surface);
     color: var(--tpl-text);
     font-family: var(--tpl-body-font);
@@ -1133,6 +1133,147 @@
 .tx-schedule__card--active {
     border-color: var(--tpl-accent);
     box-shadow: 0 8px 24px color-mix(in srgb, var(--tpl-accent) 20%, transparent);
+}
+
+.tx-experience {
+    transform: none !important;
+}
+
+/* Scroll-Driven Horizontal Sticky Pinning for Schedule Timeline */
+.tx-schedule--horizontal {
+    position: relative;
+    padding-block: 0 !important;
+}
+
+.tx-schedule__sticky-viewport {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 2;
+    box-sizing: border-box;
+    padding-block: 1.5rem;
+}
+
+/* Compact alignment for mobile & Simulator viewports */
+@media (max-height: 840px) {
+    .tx-schedule__sticky-viewport {
+        justify-content: flex-start;
+        padding-top: 1.8rem;
+        padding-bottom: 0.5rem;
+    }
+    .tx-schedule__sticky-viewport .tx-section__head {
+        margin-bottom: 0.35rem;
+    }
+    .tx-schedule__sticky-viewport .tx-section__icon {
+        width: 36px;
+        height: 36px;
+        margin-bottom: 0.2rem;
+    }
+    .tx-schedule__sticky-viewport .tx-kicker {
+        margin-bottom: 0.2rem;
+    }
+    .tx-schedule__sticky-viewport .tx-section__title {
+        font-size: 1.35rem;
+        margin: 0;
+    }
+    .tx-schedule__sticky-viewport .tx-section__subtitle {
+        margin-top: 0.15rem;
+        font-size: 0.7rem;
+    }
+    .tx-schedule__sticky-viewport .tx-ornament-divider {
+        height: 16px;
+        margin: 0.2rem auto 0;
+    }
+    .tx-schedule__card--horizontal {
+        flex: 0 0 250px;
+        width: 250px;
+        padding: 1rem 1.15rem;
+    }
+}
+
+.tx-schedule__horizontal-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.tx-schedule__progress-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    max-width: 600px;
+    margin: 0 auto 0.75rem auto;
+    padding-inline: 0.5rem;
+    width: 100%;
+}
+
+.tx-schedule__progress-label {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--tpl-accent, #b08a53);
+    letter-spacing: 0.04em;
+    opacity: 0.95;
+}
+
+.tx-schedule__progress-bar {
+    flex: 1;
+    max-width: 130px;
+    height: 3px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--tpl-accent, #b08a53) 22%, transparent);
+    overflow: hidden;
+}
+
+.tx-schedule__progress-fill {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--tpl-accent, #b08a53), #e6ca85);
+    border-radius: 999px;
+}
+
+.tx-schedule__track-viewport {
+    width: 100%;
+    overflow: hidden;
+    padding-block: 0.25rem 0.75rem;
+}
+
+.tx-schedule__motion-strip {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 1.15rem;
+    padding-inline: 0.5rem;
+    will-change: transform;
+}
+
+.tx-schedule__card--horizontal {
+    flex: 0 0 280px;
+    width: 280px;
+    max-width: 82vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.tx-schedule__step-num {
+    position: absolute;
+    top: 12px;
+    left: 14px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--tpl-accent, #b08a53);
+    opacity: 0.85;
 }
 
 .tx-schedule__status {
@@ -7239,3 +7380,23 @@
 }
 
 .tx-story__text, .kc-story__copy p, .sh-story article > p { white-space: pre-line; overflow-wrap: anywhere; }
+
+/* Studio Click-to-Inspect / Scroll Highlight Pulse */
+@keyframes studioHighlightPulse {
+  0% {
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.95), 0 0 30px rgba(245, 158, 11, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(245, 158, 11, 0.4), 0 0 45px rgba(245, 158, 11, 0.9);
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+.studio-highlight-pulse {
+  scroll-margin-top: 60px;
+  border-radius: 16px;
+  animation: studioHighlightPulse 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  z-index: 30;
+}

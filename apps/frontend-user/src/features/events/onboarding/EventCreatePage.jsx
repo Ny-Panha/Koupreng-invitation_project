@@ -1,3 +1,4 @@
+import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useBeforeUnload, useNavigate, useSearchParams } from "react-router-dom";
 import { ArrowLeft, BriefcaseBusiness, Cake, Check, Heart, PartyPopper, Sparkles, Users } from "lucide-react";
@@ -21,6 +22,7 @@ import "./EventCreatePage.css";
 const TYPE_ICONS = { WEDDING: Heart, ENGAGEMENT: Users, BIRTHDAY: Cake, ANNIVERSARY: Sparkles, CORPORATE: BriefcaseBusiness, OTHER: PartyPopper };
 
 export default function EventCreatePage() {
+  const uiCopy = useUiCopy();
   const en = useLanguageStore(state => state.lang) === "en";
   const copy = (kh, english) => en ? english : kh;
   const { user } = useAuth();
@@ -214,7 +216,7 @@ export default function EventCreatePage() {
         <section className="workspace-section" aria-labelledby="event-information-title"><div className="workspace-section-heading"><h2 id="event-information-title">{copy("ព័ត៌មានកម្មវិធី", "Event essentials")}</h2><span className="workspace-muted">{copy("* ត្រូវបំពេញសម្រាប់បង្កើតកម្មវិធី", "* Required to create")}</span></div><EventFields form={form} setForm={setForm} type={type} en={en} errors={errors} onBlur={key => setTouched(current => ({ ...current, [key]: true }))} draft={submitted === "draft"} /></section>
         <details className="workspace-section event-preferences-disclosure"><summary>{copy("រចនាប័ទ្ម ភាសា និងតម្លៃគំរូ", "Design style, language and price preferences")}</summary><div className="event-preferences">
           <label>{copy("រចនាប័ទ្ម", "Design style")}<select value={style} onChange={event => { intentTemplate.current = null; setStyle(event.target.value); }}><option value="">{copy("គ្រប់រចនាប័ទ្ម", "All available styles")}</option>{styles.map(value => <option key={value} value={value}>{STYLE_LABELS[value]?.[en ? 1 : 0] || value}</option>)}</select></label>
-          <label>{copy("ភាសាសំបុត្រអញ្ជើញ", "Invitation language")}<select value={language} onChange={event => { intentTemplate.current = null; setLanguage(event.target.value); }}><option value="KH">ខ្មែរ</option><option value="EN">English</option><option value="BOTH">ខ្មែរ / English</option></select></label>
+          <label>{copy("ភាសាសំបុត្រអញ្ជើញ", "Invitation language")}<select value={language} onChange={event => { intentTemplate.current = null; setLanguage(event.target.value); }}><option value="KH">{uiCopy("ភាសាខ្មែរ", "Khmer")}</option><option value="EN">{uiCopy("ភាសាអង់គ្លេស", "English")}</option><option value="BOTH">{uiCopy("ភាសាខ្មែរ និងអង់គ្លេស", "Khmer and English")}</option></select></label>
           <label>{copy("តម្លៃគំរូ", "Template price")}<select value={price} onChange={event => { intentTemplate.current = null; setPrice(event.target.value); }}><option value="ALL">{copy("គ្រប់តម្លៃ", "All prices")}</option><option value="FREE">{copy("ឥតគិតថ្លៃ", "Free")}</option><option value="PREMIUM">{copy("គំរូបង់ប្រាក់", "Premium")}</option></select></label>
         </div></details>
         <section ref={templateSection} tabIndex={-1} className="workspace-section event-template-section" aria-labelledby="event-templates-title" aria-busy={loading}>

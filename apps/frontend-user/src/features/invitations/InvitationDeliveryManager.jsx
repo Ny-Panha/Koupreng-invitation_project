@@ -43,12 +43,20 @@ export default function InvitationDeliveryManager() {
   const toggle = id => setSelected(previous => { const next = new Set(previous); if (next.has(id)) next.delete(id); else next.add(id); return next; });
   const toggleVisible = event => { const checked = event.target.checked; setSelected(previous => { const next = new Set(previous); eligible.forEach(g => checked ? next.add(guestId(g)) : next.delete(guestId(g))); return next; }); };
   const allSelected = eligible.length > 0 && eligible.every(g => selected.has(guestId(g)));
-  const copy = async text => { await navigator.clipboard.writeText(text); toast(t('copied')); };
+  const recordShare = async guest => {
+    if (['SENT', 'OPENED', 'RESPONDED'].includes(guest.sendStatus)) return;
+    await deliveryService.markShared(id, guest.guestId ?? guest.id);
+    await load();
+  };
+  const copy = async (text, guest) => { await navigator.clipboard.writeText(text); toast(t('copied')); await recordShare(guest); };
   const share = (guest, method) => act(async () => {
     const response = await deliveryService.shareMessage(id, guest.guestId ?? guest.id);
-    if (method === 'copy') await copy(response.message);
-    else if (navigator.share) { try { await navigator.share({ title: invitation.title, text: response.message }); } catch (e) { if (e.name !== 'AbortError') throw e; } }
-    else await copy(response.message);
+    if (method === 'copy') await copy(response.message, guest);
+    else if (navigator.share) {
+      try { await navigator.share({ title: invitation.title, text: response.message }); }
+      catch (e) { if (e.name !== 'AbortError') throw e; return; }
+      await recordShare(guest);
+    } else await copy(response.message, guest);
   });
   const dispatch = reminders => act(async () => {
     const targets = emailTargets.filter(g => !reminders || !g.responded);
@@ -74,12 +82,12 @@ export default function InvitationDeliveryManager() {
       <ResponsiveTable ariaLabel={t('recipients')} className="delivery-recipient-table"><thead><tr><th><input type="checkbox" aria-label={t('selectAll')} checked={allSelected} disabled={!eligible.length || busy} onChange={toggleVisible} /></th><th>{t('guest')}</th><th>{t('status')}</th><th>{t('lastSent')}</th><th>{t('actions')}</th></tr></thead><tbody>{visible.map(g => <tr key={guestId(g)}>
         <td data-label={t('select')}><input type="checkbox" aria-label={`${t('select')}: ${g.guestName}`} disabled={busy || !published || !g.invitationUrl} checked={selected.has(guestId(g))} onChange={() => toggle(guestId(g))} /></td>
         <td data-label={t('guest')}><strong>{g.guestName}</strong><small>{g.email || g.phone || '—'}</small></td><td data-label={t('status')}><StatusBadge status={g.sendStatus || 'PENDING'} label={status(g.sendStatus || 'PENDING')} />{g.lastSendError && <small className="workspace-field-error">{g.lastSendError}</small>}</td><td data-label={t('lastSent')}>{date(g.lastSentAt)}</td>
-        <td data-label={t('actions')}><div className="workspace-actions"><button className="workspace-icon-button" disabled={busy || !published || !g.invitationUrl} onClick={() => act(() => copy(g.invitationUrl))} aria-label={`${t('copyLink')}: ${g.guestName}`}><Copy size={17} /></button><button className="workspace-button" disabled={busy || !published || !g.invitationUrl} onClick={() => share(g, 'copy')}>{t('copyMessage')}</button><button className="workspace-icon-button" disabled={busy || !published || !g.invitationUrl} onClick={() => share(g, 'native')} aria-label={`${t('share')}: ${g.guestName}`}><Share2 size={17} /></button></div></td>
+        <td data-label={t('actions')}><div className="workspace-actions"><button className="workspace-icon-button" disabled={busy || !published || !g.invitationUrl} onClick={() => act(() => copy(g.invitationUrl, g))} aria-label={`${t('copyLink')}: ${g.guestName}`}><Copy size={17} /></button><button className="workspace-button" disabled={busy || !published || !g.invitationUrl} onClick={() => share(g, 'copy')}>{t('copyMessage')}</button><button className="workspace-icon-button" disabled={busy || !published || !g.invitationUrl} onClick={() => share(g, 'native')} aria-label={`${t('share')}: ${g.guestName}`}><Share2 size={17} /></button></div></td>
       </tr>)}</tbody></ResponsiveTable>
       {!visible.length && <div className="workspace-empty"><h2>{t(guests.length ? 'noMatches' : 'empty')}</h2><Link className="workspace-button" to={`/app/events/${id}/guests`}>{t('guests')}</Link></div>}
     </section>
     <section className="workspace-section delivery-methods" id="delivery-methods" tabIndex={-1}><h2>{t('shareTitle')}</h2><p className="workspace-muted">{t('shareHint')}</p>
-      {selectedGuests.length === 1 && <div className="workspace-actions"><button className="workspace-button operational" disabled={busy || !published} onClick={() => share(selectedGuests[0], 'native')}><Share2 size={17} />{t('share')}</button><a className="workspace-button" target="_blank" rel="noopener noreferrer" href={`https://t.me/share/url?url=${encodeURIComponent(selectedGuests[0].invitationUrl)}`}>{t('telegram')}</a><button className="workspace-button" disabled={busy || !published} onClick={() => act(async () => { if (!window.confirm(t('manualConfirm'))) return; await deliveryService.markShared(id, selectedGuests[0].guestId ?? selectedGuests[0].id); await load(); })}><Check size={17} />{t('manual')}</button></div>}
+      {selectedGuests.length === 1 && <div className="workspace-actions"><button className="workspace-button operational" disabled={busy || !published} onClick={() => share(selectedGuests[0], 'native')}><Share2 size={17} />{t('share')}</button><a className="workspace-button" target="_blank" rel="noopener noreferrer" aria-disabled={busy || !published} onClick={event => { if (busy || !published) event.preventDefault(); else act(() => recordShare(selectedGuests[0])); }} href={`https://t.me/share/url?url=${encodeURIComponent(selectedGuests[0].invitationUrl)}`}>{t('telegram')}</a><button className="workspace-button" disabled={busy || !published} onClick={() => act(async () => { if (!window.confirm(t('manualConfirm'))) return; await deliveryService.markShared(id, selectedGuests[0].guestId ?? selectedGuests[0].id); await load(); })}><Check size={17} />{t('manual')}</button></div>}
       <details><summary>{t('emailTitle')} · {emailTargets.length}</summary><form className="workspace-form" onSubmit={e => { e.preventDefault(); dispatch(false); }}><p className="workspace-muted">{t('emailHint')}</p><label>{t('subject')}<input value={email.subject} onChange={e => setEmail({ ...email, subject: e.target.value })} /></label><label>{t('message')}<textarea rows="3" value={email.message} onChange={e => setEmail({ ...email, message: e.target.value })} /></label><div className="workspace-actions"><button type="submit" className="workspace-button operational" disabled={busy || !published || !emailTargets.length}><Send size={17} />{t('sendEmail')}</button><button type="button" className="workspace-button" disabled={busy || !published || !emailTargets.some(g => !g.responded)} onClick={() => dispatch(true)}>{t('remind')}</button></div></form></details>
       {result && <p role="status">{t('result', result)}</p>}
     </section>

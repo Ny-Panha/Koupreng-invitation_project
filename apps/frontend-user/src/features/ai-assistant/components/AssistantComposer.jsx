@@ -54,7 +54,7 @@ export default function AssistantComposer({
             type="text"
             value={form.coupleNames}
             onChange={(e) => setForm({ ...form, coupleNames: e.target.value })}
-            placeholder="សុក ដារ៉ា & កែវ សោភា"
+            placeholder={copy("សុក ដារ៉ា & កែវ សោភា", "Sok Dara & Keo Sophea")}
           />
         </FormField>
 
@@ -63,7 +63,7 @@ export default function AssistantComposer({
             type="text"
             value={form.hostName}
             onChange={(e) => setForm({ ...form, hostName: e.target.value })}
-            placeholder="លោក សុក ចាន់ & លោកស្រី"
+            placeholder={copy("លោក សុក ចាន់ & លោកស្រី", "Mr. and Mrs. Sok Chan")}
           />
         </FormField>
       </div>
@@ -74,7 +74,7 @@ export default function AssistantComposer({
             type="text"
             value={form.eventDate}
             onChange={(e) => setForm({ ...form, eventDate: e.target.value })}
-            placeholder="ថ្ងៃអាទិត្យ ទី១៥ ខែមីនា ឆ្នាំ២០២៦"
+            placeholder={copy("ថ្ងៃអាទិត្យ ទី១៥ ខែមីនា ឆ្នាំ២០២៦", "Sunday, 15 March 2026")}
           />
         </FormField>
 
@@ -83,7 +83,7 @@ export default function AssistantComposer({
             type="text"
             value={form.venueName}
             onChange={(e) => setForm({ ...form, venueName: e.target.value })}
-            placeholder="សណ្ឋាគារ ហ៊ីមវ៉ារី ភ្នំពេញ"
+            placeholder={copy("សណ្ឋាគារ ហ៊ីមវ៉ារី ភ្នំពេញ", "Himawari Hotel, Phnom Penh")}
           />
         </FormField>
       </div>
@@ -121,7 +121,7 @@ export default function AssistantComposer({
           rows="3"
           value={form.notes}
           onChange={(e) => setForm({ ...form, notes: e.target.value })}
-          placeholder="បន្ថែមពាក្យជូនពរ ព័ត៌មានភ្ញៀវ ឬសំណូមពរពិសេស..."
+          placeholder={copy("បន្ថែមពាក្យជូនពរ ព័ត៌មានភ្ញៀវ ឬសំណូមពរពិសេស...", "Add wishes, guest details or special requests...")}
         />
       </FormField>
 

@@ -1,3 +1,4 @@
+import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { safeAuthRedirect } from "../safeRedirect";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -388,6 +389,7 @@ function openTelegramLogin(clientId, onResult, onError) {
 
 /* ─── Main component ─────────────────────────────────────── */
 export default function SocialAuthButtons({ redirectTo = "/app/events", mode = "login", onLinked }) {
+  const uiCopy = useUiCopy();
   const navigate = useNavigate();
   const { login, updateUser, isAuthenticated } = useAuth();
   const lang = useLanguageStore((state) => state.lang);
@@ -617,15 +619,15 @@ export default function SocialAuthButtons({ redirectTo = "/app/events", mode = "
 
       </div>
 
-      {busy && <p className="auth-hint">Completing {busy} login…</p>}
+      {busy && <p className="auth-hint">{uiCopy("កំពុងបញ្ចប់ការចូលតាម", "Completing")} {busy} {uiCopy("…", "login…")}</p>}
       {success && <p role="status" className="auth-hint">{success}</p>}
       {error && (
         <div role="alert" className="auth-error mt-2">
           {error}
           {accountLinkRequired && (
             <p className="auth-link-recovery">
-              <Link to="/forgot-password" className="auth-footer-link">Recover your existing account</Link>
-              {" "}using an email inbox you can access, then sign in and link {accountLinkRequired} from your profile.
+              <Link to="/forgot-password" className="auth-footer-link">{uiCopy("ស្ដារគណនីដែលមានស្រាប់របស់អ្នក", "Recover your existing account")}</Link>
+              {" "}{uiCopy("ដោយប្រើអ៊ីមែលដែលអ្នកអាចចូលបាន បន្ទាប់មកចូលគណនី ហើយភ្ជាប់", "using an email inbox you can access, then sign in and link")} {accountLinkRequired} {uiCopy("ពីប្រវត្តិរូបរបស់អ្នក។", "from your profile.")}
               {accountLinkRequired === "Telegram" && " If you only used Telegram and have no recovery email, contact support to restore account access."}
             </p>
           )}

@@ -1,7 +1,9 @@
+import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useId, useState } from "react";
 import authService from "./api/authApi";
 
 export default function ChangePasswordPage() {
+  const uiCopy = useUiCopy();
   const oldId = useId();
   const newId = useId();
   const confirmId = useId();
@@ -20,23 +22,23 @@ export default function ChangePasswordPage() {
     setMessage("");
 
     if (newPassword.length < 8) {
-      setError("New password must be at least 8 characters.");
+      setError("passwordTooShort");
       return;
     }
     if (mismatch) {
-      setError("Passwords do not match.");
+      setError("passwordMismatch");
       return;
     }
 
     setSaving(true);
     try {
-      const response = await authService.changePassword(oldPassword, newPassword);
-      setMessage(response?.message || "Password changed successfully.");
+      await authService.changePassword(oldPassword, newPassword);
+      setMessage(true);
       setOldPassword("");
       setNewPassword("");
       setConfirm("");
     } catch (err) {
-      setError(err.message || "Could not change password.");
+      setError(err.message || uiCopy("មិនអាចប្តូរពាក្យសម្ងាត់បានទេ។", "Could not change password."));
     } finally {
       setSaving(false);
     }
@@ -47,17 +49,17 @@ export default function ChangePasswordPage() {
       <section className="dash-panel" style={{ maxWidth: 560 }}>
         <div className="dash-section-head">
           <div>
-            <h1>Change password</h1>
-            <p>ប្តូរលេខសម្ងាត់គណនីរបស់អ្នក</p>
+            <h1>{uiCopy("ប្តូរពាក្យសម្ងាត់", "Change password")}</h1>
+            <p>{uiCopy("ប្តូរពាក្យសម្ងាត់គណនីរបស់អ្នក", "Update your account password")}</p>
           </div>
         </div>
 
-        {error && <div className="dash-alert is-error">{error}</div>}
-        {message && <div className="dash-alert">{message}</div>}
+        {error && <div className="dash-alert is-error">{error === "passwordTooShort" ? uiCopy("ពាក្យសម្ងាត់ថ្មីត្រូវមានយ៉ាងតិច ៨ តួអក្សរ។", "New password must be at least 8 characters.") : error === "passwordMismatch" ? uiCopy("ពាក្យសម្ងាត់ទាំងពីរមិនត្រូវគ្នាទេ។", "Passwords do not match.") : error}</div>}
+        {message && <div className="dash-alert">{uiCopy("បានប្តូរពាក្យសម្ងាត់ដោយជោគជ័យ។", "Password changed successfully.")}</div>}
 
         <form onSubmit={submit} className="dash-form">
           <label htmlFor={oldId}>
-            Current password
+            {uiCopy("ពាក្យសម្ងាត់បច្ចុប្បន្ន", "Current password")}
             <input
               id={oldId}
               type="password"
@@ -68,7 +70,7 @@ export default function ChangePasswordPage() {
           </label>
 
           <label htmlFor={newId}>
-            New password
+            {uiCopy("ពាក្យសម្ងាត់ថ្មី", "New password")}
             <input
               id={newId}
               type="password"
@@ -79,7 +81,7 @@ export default function ChangePasswordPage() {
           </label>
 
           <label htmlFor={confirmId}>
-            Confirm new password
+            {uiCopy("បញ្ជាក់ពាក្យសម្ងាត់ថ្មី", "Confirm new password")}
             <input
               id={confirmId}
               type="password"
@@ -89,10 +91,10 @@ export default function ChangePasswordPage() {
             />
           </label>
 
-          {mismatch && <div className="dash-alert is-error">Passwords do not match.</div>}
+          {mismatch && <div className="dash-alert is-error">{uiCopy("ពាក្យសម្ងាត់ទាំងពីរមិនត្រូវគ្នាទេ។", "Passwords do not match.")}</div>}
 
           <button type="submit" className="dash-btn" disabled={saving || !!mismatch}>
-            {saving ? "Saving..." : "Change password"}
+            {saving ? "Saving..." : uiCopy("ប្តូរពាក្យសម្ងាត់", "Change password")}
           </button>
         </form>
       </section>

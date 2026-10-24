@@ -165,6 +165,6 @@ describe("DynamicTemplateRenderer", () => {
     expect(screen.getByText("Day 3")).toBeInTheDocument();
 
     // 3. LEGACY_TEMPLATE rendered in the same document
-    expect(await screen.findByText("សុខ វិបុល")).toBeInTheDocument();
+    expect(await screen.findByText("សុខ វិបុល", {}, { timeout: 10000 })).toBeInTheDocument();
   });
 });

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { IoClose } from "react-icons/io5";
 import "./Modal.css";
+import { useUiCopy } from "../i18n/useUiCopy";
 
 const modalStack = [];
 const backgroundState = new Map();
@@ -51,11 +52,12 @@ export default function Modal({
   closeOnBackdropClick = true,
   closeOnEscape = true,
   ariaLabel,
-  closeLabel = "Close modal",
+  closeLabel,
   showHeader = true,
   className = "",
   backdropClassName = "",
 }) {
+  const copy = useUiCopy();
   const modalRef = useRef(null);
   const closeOptions = useRef({ onClose, closeOnEscape });
   const [portalRoot] = useState(() => document.createElement("div"));
@@ -143,7 +145,7 @@ export default function Modal({
               type="button"
               className="k-modal-close-btn"
               onClick={onClose}
-              aria-label={closeLabel}
+              aria-label={closeLabel ?? copy("បិទប្រអប់", "Close modal")}
             >
               <IoClose aria-hidden="true" />
             </button>

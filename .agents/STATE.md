@@ -1,31 +1,24 @@
 # STATE.md — Koupreng Invitation Project
 
 ## Last Session
-- **Source:** Antigravity IDE (Implemented Schema-Driven Dynamic CMS Enhancements: Tokens, Animations & Builder UI)
-- **Timestamp:** 2026-10-22T22:52:00+07:00
+- **Source:** Antigravity IDE (Replaced Out-of-Scope Restaurant "On The Pass" Grid with Authentic Wedding "Recent Invitations" Component)
+- **Timestamp:** 2026-10-23T01:28:00+07:00
 - **Summary:**
-  - **Dynamic Token / Placeholder Interpolation**:
-    1. Implemented `interpolateTokens` in `CustomTextBlock.jsx` and `CustomImageBlock.jsx` supporting:
-       - `{{groom_name}}` / `{{groom}}`, `{{bride_name}}` / `{{bride}}`
-       - `{{wedding_date}}` / `{{date}}`, `{{venue_name}}` / `{{venue}}`
-       - `{{groom_parents}}`, `{{bride_parents}}`
-    2. Added `DynamicTokenChips` inside `BlockEditors.jsx` allowing Admin to 1-click insert dynamic tags directly into headings, body text, or captions.
-  - **Modular Animation System**:
-    1. Added `@keyframes cms-fade-up`, `cms-fade-in`, `cms-zoom-in`, `cms-slide-up` and CSS animation classes to both `apps/frontend-user/src/styles/index.css` and `apps/frontend-admin/src/styles/index.css`.
-    2. Added `AnimationSelector` component to `BlockEditors.jsx` for easy entrance animation selection.
-    3. Updated `DynamicTemplateRenderer.jsx` to pass `animation` prop into block components and wrap them seamlessly.
-    4. Added visual animation badges (`✨ fade-up`, etc.) to section rows in `TemplateUnifiedSectionsManager.jsx`.
-  - **Verification**:
-    - Vitest `frontend-user`: `DynamicTemplateRenderer.test.jsx` (5 tests) passed.
-    - Vitest `frontend-admin`: 19 test files / 115 tests passed cleanly (`15.47s`).
-    - Vite build `frontend-admin`: passed in 2.68s with 0 errors.
+  - **Removed Restaurant Pass Mockup**:
+    1. Eliminated `LiveServicePassGrid.jsx` which was an out-of-domain restaurant KDS / kitchen pass mockup with fake items (`#INV-1061`, pastel food tickets) and unclickable buttons.
+    2. Created [RecentInvitationsCard.jsx](file:///c:/Users/nhastar/Desktop/Project/Koupreng-invitation_project-backup/apps/frontend-admin/src/features/dashboard/components/RecentInvitationsCard.jsx) tailored specifically to digital wedding invitations.
+    3. Displayed real invitations from backend `data.recentInvitations` with fallback sample previews, showing bride/groom names, template name, owner, event date, and published/draft status.
+    4. Added working navigation links: `+` directs to `/templates/new` and `↗` / `View` directs to `/templates`.
+    5. Updated [AdminDashboardPage.jsx](file:///c:/Users/nhastar/Desktop/Project/Koupreng-invitation_project-backup/apps/frontend-admin/src/features/dashboard/AdminDashboardPage.jsx) header and section labels to match ("Revenue Trend & Recent Invitations" / "និន្នាការចំណូល និងធៀបការថ្មីៗ").
+  - **Verified Quality**:
+    - `npm run build` in `apps/frontend-admin` passed in 2.98s.
+    - All 19 test files (116 tests) passed in Vitest with 0 failures.
 - **Active Environment:**
-  - Frontend Admin Template Builder: `http://localhost:5174/templates/new`
-  - Frontend Admin Dashboard: `http://localhost:5174/dashboard`
-  - Frontend User UI: `http://localhost:5173`
+  - Frontend Admin: `http://localhost:5174`
+  - Frontend User: `http://localhost:5173`
   - Backend API: `http://localhost:8080`
 - **Next Steps:**
-  - Open `http://localhost:5174/templates/new` to test drag-and-drop sections, 1-click dynamic placeholder tags, and animation selection.
+  - User to refresh (`Ctrl + Shift + R`) the Admin dashboard at `http://localhost:5174` to view the new luxury Recent Invitations board.
 
 
 

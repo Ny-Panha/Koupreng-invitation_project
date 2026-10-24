@@ -23,6 +23,7 @@ import {
   Sliders,
   Eye,
   Upload,
+  Download,
   Play,
   Pause,
   VolumeX,
@@ -46,6 +47,7 @@ import {
   parseUnifiedSections,
   validateBlocks,
   DEFAULT_SECTIONS_LIST,
+  CMS_BLOCK_TYPES,
 } from "./components";
 
 // Template UI Layout Options - Only 100% Unique, Fully-functional Layouts
@@ -272,6 +274,82 @@ const THEME_PRESETS = [
   },
 ];
 
+// Curated Decorative Top Arch Frames
+const DECORATIVE_FRAMES = [
+  {
+    id: "none",
+    name: "គ្មានក្បាច់ (None)",
+    desc: "មិនប្រើស៊ុមលើ",
+    icon: "⭕",
+    previewUrl: "",
+  },
+  {
+    id: "lotus-gold",
+    name: "ក្បាច់ផ្កាឈូកមាស (Lotus Gold Arch)",
+    desc: "ក្បាច់រាជឈូកខ្មែរពណ៌មាសឆ្អិនឆ្អៅ",
+    icon: "🪷",
+    previewUrl: "/templates/cover-khmer-golden-wedding/cover-preview.svg",
+  },
+  {
+    id: "celestial-arch",
+    name: "ស៊ុមទេវតាផ្កាយមាស (Celestial Arch)",
+    desc: "ស៊ុមផ្កា & ពន្លឺផ្កាយមាសប្រណិត",
+    icon: "🌸",
+    previewUrl: "/templates/silk-heritage/woven-ornament.svg",
+  },
+  {
+    id: "royal-palace",
+    name: "ក្បាច់ក្បាលរាជរដ្ឋ (Royal Palace Crown)",
+    desc: "ក្បាច់ឆ្លាក់បុរាណបែបព្រះបរមរាជវាំង",
+    icon: "👑",
+    previewUrl: "/templates/cover-khmer-golden-wedding/cover-bg.svg",
+  },
+];
+
+// Curated Background Textures
+const BACKGROUND_TEXTURES = [
+  {
+    id: "none",
+    name: "ពណ៌ធម្មតា (Solid Color)",
+    desc: "ប្រើពណ៌ Background ធម្មតាគ្មាន Texture",
+    icon: "⬜",
+    bgPattern: "",
+    bgSize: "",
+  },
+  {
+    id: "ivory-paper",
+    name: "ក្រដាសភ្លុកបុរាណ (Ivory Paper)",
+    desc: "អារម្មណ៍ក្រដាសធៀបបុរាណបែបធម្មជាតិ",
+    icon: "📜",
+    bgPattern: "radial-gradient(#d4af37 0.75px, transparent 0.75px)",
+    bgSize: "16px 16px",
+  },
+  {
+    id: "silk-texture",
+    name: "សូត្រមង្គលភ្លុក (Silk Heritage)",
+    desc: "ក្បាច់ត្បាញសរសៃសូត្រខ្មែរប្រណិត",
+    icon: "🧵",
+    bgPattern: "linear-gradient(45deg, rgba(212,175,55,0.06) 25%, transparent 25%), linear-gradient(-45deg, rgba(212,175,55,0.06) 25%, transparent 25%)",
+    bgSize: "20px 20px",
+  },
+  {
+    id: "gold-foil-dust",
+    name: "ធូលីមាសចាំង (Gold Dust Sparkle)",
+    desc: "ពន្លឺធូលីមាសរាយប៉ាយលើផ្ទៃខាងក្រោយ",
+    icon: "✨",
+    bgPattern: "radial-gradient(circle at 50% 50%, rgba(212,175,55,0.12) 0%, transparent 60%)",
+    bgSize: "100% 100%",
+  },
+  {
+    id: "velvet-royal",
+    name: "កម្ញីក្រហមរាជវាំង (Royal Velvet)",
+    desc: "ផ្ទៃស្រាលបែបក្រណាត់កម្ញីទន់រលោង",
+    icon: "🍷",
+    bgPattern: "radial-gradient(ellipse at top, rgba(139,30,45,0.18), transparent 70%)",
+    bgSize: "100% 100%",
+  },
+];
+
 const DEFAULT_SCHEDULE = [
   { id: "1", time: "07:00 ព្រឹក", title: "ពិធីសូត្រមន្តចម្រើនព្រះបរិត្ត", desc: "នៅគេហដ្ឋានខាងស្រី" },
   { id: "2", time: "08:30 ព្រឹក", title: "ពិធីហែកំណត់ និងកាត់សក់បង្កក់សិរី", desc: "ជួបជុំញាតិមិត្តទាំងសងខាង" },
@@ -442,6 +520,7 @@ const DEFAULT_STUDIO_STATE = {
     "/facebook/all/03-card/03-03.jpg",
     "/facebook/all/03-card/03-04.jpg",
   ],
+  scheduleLayout: "horizontal", // 'horizontal' (scroll right) | 'vertical' (scroll down)
 
   // Full Template Section Visibility Controls
   enabledSections: {
@@ -621,7 +700,7 @@ function VisualKhmerFontPicker({
 export default function AdminTemplateEditPage() {
   const { lang, t } = useAdminLanguage();
   const { templateId } = useParams();
-  const isNew = templateId === "new";
+  const isNew = !templateId || templateId === "new" || templateId === "undefined";
   const navigate = useNavigate();
   const { toast, show, clear } = useToast();
 
@@ -669,8 +748,69 @@ export default function AdminTemplateEditPage() {
   const [showFontModal, setShowFontModal] = useState(false);
   const [fontModalTab, setFontModalTab] = useState("google"); // 'google' | 'file'
   const [newFontName, setNewFontName] = useState("");
-  const [newFontCategory, setNewFontCategory] = useState("khmer"); // 'khmer' | 'latin'
+  const [newFontCategory, setNewFontCategory] = useState("khmer");
   const fontFileInputRef = useRef(null);
+  const exportFileInputRef = useRef(null);
+
+  // One-Click Template Export JSON
+  const handleExportJson = () => {
+    try {
+      const templateSnapshot = {
+        kouprengVersion: "1.0",
+        exportedAt: new Date().toISOString(),
+        form,
+        unifiedSections,
+      };
+      const jsonString = `data:text/json;charset=utf-8,${encodeURIComponent(
+        JSON.stringify(templateSnapshot, null, 2)
+      )}`;
+      const downloadAnchor = document.createElement("a");
+      downloadAnchor.setAttribute("href", jsonString);
+      const safeName = (form.name || form.code || "koupreng-template")
+        .toLowerCase()
+        .replace(/[^a-z0-9_-]/g, "-");
+      downloadAnchor.setAttribute("download", `${safeName}-preset.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      show("បានទាញយក Template Preset JSON ដោយជោគជ័យ!", "success");
+    } catch (err) {
+      show("មិនអាច Export JSON បានទេ: " + err.message, "error");
+    }
+  };
+
+  // One-Click Template Import JSON
+  const handleImportJson = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const parsed = JSON.parse(event.target.result);
+        if (!parsed || typeof parsed !== "object") {
+          throw new Error("ទម្រង់ File JSON មិនត្រឹមត្រូវ");
+        }
+
+        if (parsed.form && typeof parsed.form === "object") {
+          setForm((prev) => ({
+            ...prev,
+            ...parsed.form,
+          }));
+        }
+
+        if (Array.isArray(parsed.unifiedSections)) {
+          setUnifiedSections(parsed.unifiedSections);
+        }
+
+        show("បានបញ្ចូល Template Configuration ដោយជោគជ័យ!", "success");
+      } catch (err) {
+        show("បរាជ័យក្នុងការ Import: " + (err.message || "File JSON ខូច"), "error");
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = "";
+  };
 
   // Dynamic Font Loading in Admin Studio
   useEffect(() => {
@@ -907,7 +1047,7 @@ export default function AdminTemplateEditPage() {
     return () => window.removeEventListener("message", handlePreviewHandshake);
   }, [broadcastSync, previewGateOpen, previewSession, sendPreview]);
 
-  const handleSetGate = (shouldOpen) => {
+  const handleSetGate = useCallback((shouldOpen) => {
     setPreviewGateOpen(shouldOpen);
     if (iframeRef.current?.contentWindow) {
       try {
@@ -922,11 +1062,43 @@ export default function AdminTemplateEditPage() {
         // ignore
       }
     }
-  };
+  }, [sendPreview]);
+
+  const [selectedSectionId, setSelectedSectionId] = useState(null);
+
+  const handleSelectSection = useCallback(
+    (item) => {
+      if (!item) return;
+      setSelectedSectionId(item.id);
+
+      if (!previewGateOpen) {
+        handleSetGate(true);
+      }
+
+      const isLegacy =
+        item.type === "LEGACY_SECTION" ||
+        (typeof CMS_BLOCK_TYPES !== "undefined" && item.type === CMS_BLOCK_TYPES?.LEGACY_SECTION);
+      const sectionKey = isLegacy ? item.data?.sectionKey : item.type;
+      const blockId = item.id;
+
+      if (iframeRef.current?.contentWindow) {
+        try {
+          sendPreview({
+            type: "SCROLL_TO_SECTION",
+            sectionKey,
+            blockId,
+          });
+        } catch {
+          // ignore
+        }
+      }
+    },
+    [previewGateOpen, sendPreview, handleSetGate]
+  );
 
   // Load existing template data if editing
   useEffect(() => {
-    if (isNew) return;
+    if (isNew || !templateId || templateId === "undefined") return;
     let active = true;
     adminManagementService
       .template(templateId)
@@ -1463,7 +1635,34 @@ export default function AdminTemplateEditPage() {
         </div>
 
         {/* Actions */}
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex items-center gap-2 shrink-0">
+          <button
+            type="button"
+            onClick={handleExportJson}
+            className="flex h-9 items-center gap-1.5 rounded-xl border border-zinc-700 bg-zinc-800/80 px-3 text-xs font-semibold text-zinc-200 transition hover:bg-zinc-700 hover:text-amber-300 cursor-pointer"
+            title="ទាញយក Template ទុកជា File JSON (Export)"
+          >
+            <Download className="h-3.5 w-3.5 text-amber-400" />
+            <span className="hidden sm:inline">Export JSON</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => exportFileInputRef.current?.click()}
+            className="flex h-9 items-center gap-1.5 rounded-xl border border-zinc-700 bg-zinc-800/80 px-3 text-xs font-semibold text-zinc-200 transition hover:bg-zinc-700 hover:text-amber-300 cursor-pointer"
+            title="បញ្ចូល Template ពី File JSON (Import)"
+          >
+            <Upload className="h-3.5 w-3.5 text-amber-400" />
+            <span className="hidden sm:inline">Import JSON</span>
+          </button>
+          <input
+            type="file"
+            ref={exportFileInputRef}
+            accept=".json,application/json"
+            className="hidden"
+            onChange={handleImportJson}
+          />
+
           <a
             href={userTemplateUrl(form.code || form.slug || form.presetId?.toLowerCase() || "the-digital-yes-wedding")}
             target="_blank"
@@ -1471,7 +1670,7 @@ export default function AdminTemplateEditPage() {
             className="flex h-9 items-center gap-1.5 rounded-xl border border-zinc-700 bg-zinc-800/80 px-3.5 text-xs font-semibold text-zinc-200 transition hover:bg-zinc-700"
           >
             <ExternalLink className="h-3.5 w-3.5 text-amber-400" />
-            <span>{t("templateEditor.userTab", "មើល User Tab")}</span>
+            <span className="hidden md:inline">{t("templateEditor.userTab", "មើល User Tab")}</span>
           </a>
           <button
             type="button"
@@ -1518,7 +1717,14 @@ export default function AdminTemplateEditPage() {
                   <button
                     key={tab.id}
                     type="button"
-                    onClick={() => setActiveTab(tab.id)}
+                    onClick={() => {
+                      setActiveTab(tab.id);
+                      if (tab.id === "theme" && themeSubTab === "cover") {
+                        handleSetGate(false);
+                      } else {
+                        handleSetGate(true);
+                      }
+                    }}
                     className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl text-center transition-all cursor-pointer ${
                       active
                         ? "bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold shadow-md shadow-amber-500/20"
@@ -1542,7 +1748,10 @@ export default function AdminTemplateEditPage() {
                 <div className="flex items-center gap-1 rounded-xl border border-zinc-800 bg-zinc-950/80 p-1">
                   <button
                     type="button"
-                    onClick={() => setThemeSubTab("layouts")}
+                    onClick={() => {
+                      setThemeSubTab("layouts");
+                      handleSetGate(true);
+                    }}
                     className={`flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-semibold transition cursor-pointer ${
                       themeSubTab === "layouts"
                         ? "bg-amber-500/20 text-amber-300 border border-amber-500/30 shadow-sm"
@@ -1554,7 +1763,10 @@ export default function AdminTemplateEditPage() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => setThemeSubTab("presets")}
+                    onClick={() => {
+                      setThemeSubTab("presets");
+                      handleSetGate(true);
+                    }}
                     className={`flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-semibold transition cursor-pointer ${
                       themeSubTab === "presets"
                         ? "bg-amber-500/20 text-amber-300 border border-amber-500/30 shadow-sm"
@@ -1566,7 +1778,25 @@ export default function AdminTemplateEditPage() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => setThemeSubTab("cover")}
+                    onClick={() => {
+                      setThemeSubTab("frames");
+                      handleSetGate(true);
+                    }}
+                    className={`flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-semibold transition cursor-pointer ${
+                      themeSubTab === "frames"
+                        ? "bg-amber-500/20 text-amber-300 border border-amber-500/30 shadow-sm"
+                        : "text-zinc-400 hover:text-zinc-200"
+                    }`}
+                  >
+                    <Sparkles className="h-3.5 w-3.5" />
+                    <span>ក្បាច់ & ក្រដាស (Frames & Textures)</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setThemeSubTab("cover");
+                      handleSetGate(false);
+                    }}
                     className={`flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-semibold transition cursor-pointer ${
                       themeSubTab === "cover"
                         ? "bg-amber-500/20 text-amber-300 border border-amber-500/30 shadow-sm"
@@ -2008,6 +2238,149 @@ export default function AdminTemplateEditPage() {
                           </div>
                         </div>
                       )}
+                    </div>
+                  </div>
+                )}
+
+                {themeSubTab === "frames" && (
+                  <div className="space-y-6 animate-in fade-in">
+                    {/* 1. Decorative Top Arch Frames */}
+                    <div className="space-y-3">
+                      <div>
+                        <div className="flex items-center justify-between mb-1">
+                          <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                            <Sparkles className="h-4 w-4 text-amber-500" />
+                            <span>ក្បាច់ក្បាលលើ (Top Arch Frames)</span>
+                          </h3>
+                          <span className="text-[11px] font-mono text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded">
+                            {form.decorativeFrame || "none"}
+                          </span>
+                        </div>
+                        <p className="text-xs text-zinc-400">
+                          ជ្រើសរើសក្បាច់ខ្មែរ ឬស៊ុមផ្កាសម្រាប់តុបតែងក្បាលទំព័រខាងលើ។
+                        </p>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {DECORATIVE_FRAMES.map((frame) => {
+                          const isSelected = (form.decorativeFrame || "none") === frame.id;
+                          return (
+                            <button
+                              key={frame.id}
+                              type="button"
+                              onClick={() => {
+                                setField("decorativeFrame", frame.id);
+                                show(`បានជ្រើសរើសក្បាច់: ${frame.name}`, "success");
+                              }}
+                              className={`group relative text-left p-3.5 rounded-2xl border transition-all cursor-pointer ${
+                                isSelected
+                                  ? "bg-amber-500/10 border-amber-500/60 shadow-lg shadow-amber-500/10 ring-1 ring-amber-500/40"
+                                  : "bg-zinc-900/70 border-zinc-800/80 hover:bg-zinc-850 hover:border-zinc-700"
+                              }`}
+                            >
+                              <div className="flex items-start justify-between gap-2">
+                                <div className="flex items-center gap-3">
+                                  <div className="text-2xl p-2 rounded-xl bg-zinc-800 border border-zinc-700/60">
+                                    {frame.icon}
+                                  </div>
+                                  <div>
+                                    <h4 className={`text-xs font-bold ${isSelected ? "text-amber-300" : "text-zinc-100"}`}>
+                                      {frame.name}
+                                    </h4>
+                                    <p className="text-[11px] text-zinc-400 mt-0.5 leading-snug">
+                                      {frame.desc}
+                                    </p>
+                                  </div>
+                                </div>
+                                {isSelected ? (
+                                  <span className="flex items-center gap-1 text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 rounded-lg shrink-0">
+                                    <Check className="h-3 w-3" />
+                                    <span>ប្រើ</span>
+                                  </span>
+                                ) : (
+                                  <span className="text-[10px] text-zinc-500 group-hover:text-amber-400 px-2 py-0.5 rounded-lg border border-transparent shrink-0">
+                                    ជ្រើស
+                                  </span>
+                                )}
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* 2. Background Textures Library */}
+                    <div className="space-y-3 pt-3 border-t border-zinc-800/80">
+                      <div>
+                        <div className="flex items-center justify-between mb-1">
+                          <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                            <Layers className="h-4 w-4 text-amber-500" />
+                            <span>ក្រដាស និង Texture ផ្ទៃខាងក្រោយ (Background Textures)</span>
+                          </h3>
+                          <span className="text-[11px] font-mono text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded">
+                            {form.backgroundTexture || "none"}
+                          </span>
+                        </div>
+                        <p className="text-xs text-zinc-400">
+                          ប្តូរ Texture ផ្ទៃខាងក្រោយដើម្បីបង្កើនភាពប្រណិតដូចធៀបបោះពុម្ពពិតៗ។
+                        </p>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {BACKGROUND_TEXTURES.map((tex) => {
+                          const isSelected = (form.backgroundTexture || "none") === tex.id;
+                          return (
+                            <button
+                              key={tex.id}
+                              type="button"
+                              onClick={() => {
+                                setField("backgroundTexture", tex.id);
+                                if (tex.bgPattern) {
+                                  setField("bgPattern", tex.bgPattern);
+                                }
+                                show(`បានជ្រើសរើស Texture: ${tex.name}`, "success");
+                              }}
+                              className={`group relative text-left p-3.5 rounded-2xl border transition-all cursor-pointer overflow-hidden ${
+                                isSelected
+                                  ? "bg-amber-500/10 border-amber-500/60 shadow-lg shadow-amber-500/10 ring-1 ring-amber-500/40"
+                                  : "bg-zinc-900/70 border-zinc-800/80 hover:bg-zinc-850 hover:border-zinc-700"
+                              }`}
+                            >
+                              <div className="flex items-start justify-between gap-2 relative z-10">
+                                <div className="flex items-center gap-3">
+                                  <div
+                                    className="h-10 w-10 rounded-xl border border-zinc-700/80 shrink-0 flex items-center justify-center text-lg shadow-inner bg-zinc-950"
+                                    style={{
+                                      backgroundImage: tex.bgPattern || undefined,
+                                      backgroundSize: tex.bgSize || undefined,
+                                    }}
+                                  >
+                                    {tex.icon}
+                                  </div>
+                                  <div>
+                                    <h4 className={`text-xs font-bold ${isSelected ? "text-amber-300" : "text-zinc-100"}`}>
+                                      {tex.name}
+                                    </h4>
+                                    <p className="text-[11px] text-zinc-400 mt-0.5 leading-snug">
+                                      {tex.desc}
+                                    </p>
+                                  </div>
+                                </div>
+                                {isSelected ? (
+                                  <span className="flex items-center gap-1 text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 rounded-lg shrink-0">
+                                    <Check className="h-3 w-3" />
+                                    <span>ប្រើ</span>
+                                  </span>
+                                ) : (
+                                  <span className="text-[10px] text-zinc-500 group-hover:text-amber-400 px-2 py-0.5 rounded-lg border border-transparent shrink-0">
+                                    ជ្រើស
+                                  </span>
+                                )}
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
                   </div>
                 )}
@@ -3157,6 +3530,44 @@ export default function AdminTemplateEditPage() {
                       </button>
                     </div>
 
+                    {/* Display Format Switcher: Scroll Right (Horizontal) vs Scroll Down (Vertical) */}
+                    <div className="flex items-center justify-between p-3 rounded-2xl border border-zinc-800 bg-zinc-900/60 shadow-sm">
+                      <div>
+                        <span className="block text-xs font-bold text-zinc-200">
+                          {lang === "en" ? "Schedule Display Style" : "ទម្រង់រត់កាលវិភាគ (Display Style)"}
+                        </span>
+                        <span className="block text-[11px] text-zinc-400 mt-0.5">
+                          {form.scheduleLayout === "vertical"
+                            ? (lang === "en" ? "Scroll Down (Vertical List)" : "រត់បញ្ឈរ (Scroll Down)")
+                            : (lang === "en" ? "Scroll Right (Horizontal Carousel Cards)" : "រត់ផ្ដេក (Scroll Right / Swipe ទៅស្តាំ)")}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1 bg-zinc-950 p-1 rounded-xl border border-zinc-800 shrink-0">
+                        <button
+                          type="button"
+                          onClick={() => setField("scheduleLayout", "horizontal")}
+                          className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition cursor-pointer flex items-center gap-1.5 ${
+                            form.scheduleLayout !== "vertical"
+                              ? "bg-amber-500 text-slate-950 font-bold shadow-sm"
+                              : "text-zinc-400 hover:text-zinc-200"
+                          }`}
+                        >
+                          <span>📱 {lang === "en" ? "Scroll Right" : "រត់ផ្ដេក (ស្តាំ)"}</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setField("scheduleLayout", "vertical")}
+                          className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition cursor-pointer flex items-center gap-1.5 ${
+                            form.scheduleLayout === "vertical"
+                              ? "bg-amber-500 text-slate-950 font-bold shadow-sm"
+                              : "text-zinc-400 hover:text-zinc-200"
+                          }`}
+                        >
+                          <span>📜 {lang === "en" ? "Scroll Down" : "រត់បញ្ឈរ"}</span>
+                        </button>
+                      </div>
+                    </div>
+
                     <div className="space-y-3">
                       {form.schedule.map((item, index) => (
                         <div
@@ -3453,7 +3864,10 @@ export default function AdminTemplateEditPage() {
                 <div className="flex items-center gap-1 rounded-xl border border-zinc-800 bg-zinc-950/80 p-1">
                   <button
                     type="button"
-                    onClick={() => setSettingsSubTab("sections")}
+                    onClick={() => {
+                      setSettingsSubTab("sections");
+                      handleSetGate(true);
+                    }}
                     className={`flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-semibold transition cursor-pointer ${
                       settingsSubTab === "sections"
                         ? "bg-amber-500/20 text-amber-300 border border-amber-500/30 shadow-sm"
@@ -3482,6 +3896,8 @@ export default function AdminTemplateEditPage() {
                     <TemplateUnifiedSectionsManager
                       sections={unifiedSections}
                       onChange={setUnifiedSections}
+                      selectedId={selectedSectionId}
+                      onSelectSection={handleSelectSection}
                       onJumpToTab={(tabId, subTabId) => {
                         setActiveTab(tabId);
                         if (tabId === "events" && subTabId) setEventsSubTab(subTabId);
@@ -3493,6 +3909,7 @@ export default function AdminTemplateEditPage() {
                           enabledSections: DEFAULT_STUDIO_STATE.enabledSections,
                         });
                         setUnifiedSections(defaultUnified);
+                        handleSetGate(true);
                         show(lang === "en" ? "Reset to default order ✓" : "បានកំណត់ទៅលំដាប់ដើមវិញ ✓");
                       }}
                       lang={lang}

@@ -1,6 +1,9 @@
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import { cleanup, render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes, useLocation } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+beforeEach(() => useLanguageStore.setState({ lang: "en" }));
 
 import RequireAuth from "./RequireAuth";
 

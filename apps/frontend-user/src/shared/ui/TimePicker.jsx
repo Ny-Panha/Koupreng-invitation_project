@@ -77,7 +77,8 @@ export function TimePicker({ value, onChange, id, placeholder }) {
         return () => document.removeEventListener("mousedown", handler);
     }, [value, syncFromValue]);
 
-    const displayValue = formatTime24toKhmer(value);
+    const khmerDisplay = formatTime24toKhmer(value);
+    const displayValue = en ? khmerDisplay.replace("ព្រឹក", "AM").replace("ល្ងាច", "PM") : khmerDisplay;
 
     const handleOpenToggle = () => {
         if (!open) {

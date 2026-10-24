@@ -1,6 +1,9 @@
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+beforeEach(() => useLanguageStore.getState().setLang("en"));
 
 const login = vi.fn();
 const updateUser = vi.fn();

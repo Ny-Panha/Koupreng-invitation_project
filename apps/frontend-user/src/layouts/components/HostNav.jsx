@@ -61,8 +61,8 @@ const REQUIRED_NAV_LABELS = {
 
 const LANGUAGE_OPTIONS = [
 
-  { code: "en", label: "English", buttonLabel: "English", flag: "us", htmlLang: "en" },
-  { code: "km", label: "ភាសាខ្មែរ", buttonLabel: "ភាសាខ្មែរ", flag: "kh", htmlLang: "km" },
+  { code: "en", label: { en: "English", km: "ភាសាអង់គ្លេស" }, flag: "us", htmlLang: "en" },
+  { code: "km", label: { en: "Khmer", km: "ភាសាខ្មែរ" }, flag: "kh", htmlLang: "km" },
 ];
 
 function toAppRelativeUploadUrl(value) {
@@ -882,7 +882,7 @@ export default function HostNav() {
                       style={{ padding: "8px 12px" }}
                     >
                       <span className={`host-language-flag ${option.flag}`} aria-hidden="true" style={{ width: "22px", height: "15px" }} />
-                      <span style={{ flex: 1, textAlign: "left" }}>{option.label}</span>
+                      <span style={{ flex: 1, textAlign: "left" }}>{option.label[language]}</span>
                       {option.code === selectedLanguage.code && (
                         <IoCheckmarkOutline aria-hidden="true" style={{ color: "#B0926A" }} />
                       )}

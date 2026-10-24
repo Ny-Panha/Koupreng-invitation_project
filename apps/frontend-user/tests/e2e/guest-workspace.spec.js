@@ -12,7 +12,7 @@ const seedGuests = [
 ].map((guest) => ({ ...guest, inviteToken: `test-guest-${guest.id}` }));
 
 async function setup(page, { lang = "en", empty = false, rejectFirstSave = false, eventType = "WEDDING" } = {}) {
-  const state = { guests: empty ? [] : structuredClone(seedGuests), creates: 0 };
+  const state = { guests: empty ? [] : structuredClone(seedGuests), creates: 0, shares: [] };
   await page.addInitScript(({ user, lang }) => {
     const auth = JSON.stringify({ accessToken: "eyJhbGciOiJub25lIn0.eyJleHAiOjQxMDIyNjg4MDB9.", tokenType: "Bearer", expiresAt: "2100-01-01T00:00:00Z", user });
     sessionStorage.setItem("koupreng.auth", auth);
@@ -35,6 +35,7 @@ async function setup(page, { lang = "en", empty = false, rejectFirstSave = false
     if (path.endsWith("/42/guests/export")) return route.fulfill({ contentType: "text/csv", body: "guestName,phone\nSok Dara,012345678\n" });
     if (/\/42\/delivery\/guests\/\d+\/mark-shared$/.test(path)) {
       const id = Number(path.split('/').at(-2));
+      state.shares.push(id);
       state.guests = state.guests.map(guest => guest.id === id ? { ...guest, sendStatus: 'SENT' } : guest);
       return json(state.guests.find(guest => guest.id === id));
     }
@@ -66,12 +67,85 @@ async function noOverflow(page) {
   expect(dimensions.content).toBeLessThanOrEqual(dimensions.width + 1);
 }
 
+async function installSharingMocks(page) {
+  await page.addInitScript(() => {
+    window.guestClipboardWrites = [];
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: { writeText: async text => {
+        if (window.denyGuestCopy) throw new Error("Clipboard permission denied");
+        window.guestClipboardWrites.push(text);
+      } },
+    });
+    window.open = url => { window.guestTelegramUrl = url; return null; };
+  });
+}
+
+for (const action of ["Copy Link", "Copy invitation message", "Share on Telegram"]) {
+  test(`${action} marks the guest sent and persists after reload`, async ({ page }) => {
+    await installSharingMocks(page);
+    const state = await setup(page);
+    const row = page.locator(".guest-record-row").filter({ hasText: "Sok Dara" });
+    await row.getByRole("button", { name: "Invitation", exact: true }).click();
+    await page.getByRole("dialog").getByRole("button", { name: action, exact: true }).click();
+    await expect(row.locator(".k-status-badge")).toHaveText("Sent");
+    expect(state.shares).toEqual([501]);
+    if (action === "Share on Telegram") {
+      expect(await page.evaluate(() => window.guestTelegramUrl)).toContain("https://t.me/share/url?");
+    } else {
+      const copies = await page.evaluate(() => window.guestClipboardWrites);
+      expect(copies).toHaveLength(1);
+      expect(copies[0]).toContain("test-guest-501");
+    }
+    await page.reload();
+    await expect(row.locator(".k-status-badge")).toHaveText("Sent");
+    expect(state.shares).toEqual([501]);
+  });
+}
+
+test("row Telegram and copy-message actions mark their own guests sent", async ({ page, context }) => {
+  await installSharingMocks(page);
+  await context.route("https://t.me/**", route => route.fulfill({ contentType: "text/html", body: "<title>Telegram share fixture</title>" }));
+  const state = await setup(page);
+  const telegramGuest = page.locator(".guest-record-row").filter({ hasText: "Sok Dara" });
+  await telegramGuest.locator(".guest-row-menu > summary").click();
+  const opened = page.waitForEvent("popup");
+  await telegramGuest.getByRole("link", { name: "Share invitation for Sok Dara via Telegram" }).click();
+  const popup = await opened;
+  await popup.close();
+  await expect(telegramGuest.locator(".k-status-badge")).toHaveText("Sent");
+  const copiedGuest = page.locator(".guest-record-row").filter({ hasText: "សុខ សុភា" });
+  await copiedGuest.locator(".guest-row-menu > summary").click();
+  await copiedGuest.getByRole("button", { name: "Copy invitation message" }).click();
+  await expect(copiedGuest.locator(".k-status-badge")).toHaveText("Sent");
+  expect(state.shares).toEqual([501, 505]);
+  expect(await page.evaluate(() => window.guestClipboardWrites)).toEqual([expect.stringContaining("test-guest-505")]);
+});
+
+test("a denied copy leaves the guest pending and a successful retry marks sent", async ({ page }) => {
+  await installSharingMocks(page);
+  const state = await setup(page);
+  await page.evaluate(() => { window.denyGuestCopy = true; });
+  const row = page.locator(".guest-record-row").filter({ hasText: "Sok Dara" });
+  await row.getByRole("button", { name: "Invitation", exact: true }).click();
+  const dialog = page.getByRole("dialog");
+  await dialog.getByRole("button", { name: "Copy Link", exact: true }).click();
+  await expect(dialog.getByRole("alert")).toContainText("Failed to copy link");
+  await expect(row.locator(".k-status-badge")).toHaveText("Pending");
+  expect(state.shares).toEqual([]);
+  await page.evaluate(() => { window.denyGuestCopy = false; });
+  await dialog.getByRole("button", { name: "Copy Link", exact: true }).click();
+  await expect(row.locator(".k-status-badge")).toHaveText("Sent");
+  expect(state.shares).toEqual([501]);
+});
+
 test("guest list filters intersect and reset; invitation and tools remain usable", async ({ page }, testInfo) => {
   await setup(page);
   const rows = page.locator(".guest-record-row");
   await expect(rows).toHaveCount(6);
+  await expect(page.locator(".guest-table tbody > tr").first()).toHaveClass("guest-inline-form-row");
   await expect(page.locator(".guest-list-panel")).toHaveCSS("opacity", "1");
-  await expect(page.locator(".guest-header-actions").getByRole("button", { name: "Add guest", exact: true })).toHaveCount(1);
+  await expect(page.locator(".guest-header-actions").getByRole("button", { name: "Add guest", exact: true })).toHaveCount(0);
   await expect(page.getByRole("link", { name: "Guest check-in" })).toHaveAttribute("href", "/dashboard/invitations/42/check-in");
   await page.evaluate(() => document.fonts.ready);
   await expect(page.locator(".guest-invite-button").first()).toHaveCSS("white-space", "nowrap");
@@ -79,7 +153,7 @@ test("guest list filters intersect and reset; invitation and tools remain usable
   await page.screenshot({ path: testInfo.outputPath("guest-workspace.png"), fullPage: true });
   await page.getByRole("button", { name: /^To invite/ }).click();
   await expect(rows).toHaveCount(2);
-  await page.getByRole("combobox", { name: "Group", exact: true }).selectOption("Bride Side");
+  await page.locator(".guest-filters").getByRole("combobox", { name: "Group", exact: true }).selectOption("Bride Side");
   await expect(rows).toHaveCount(1);
   await expect(rows.first()).toContainText("សុខ សុភា");
   await page.getByRole("searchbox", { name: "Search name, group, phone..." }).fill("not-in-the-list");
@@ -108,17 +182,17 @@ test("editing a guest and marking an invitation sent update the list", async ({ 
   const state = await setup(page);
   const row = page.locator(".guest-record-row").filter({ hasText: "Sok Dara" });
   await row.getByRole("button", { name: "Edit", exact: true }).click();
-  const dialog = page.getByRole("dialog");
+  const dialog = page.locator(".guest-table tbody");
+  await expect(page.getByRole("dialog")).toHaveCount(0);
   await dialog.getByRole("textbox", { name: "Guest Name", exact: true }).fill("Sok Dara Updated");
-  await expect(dialog.getByRole("textbox", { name: "Phone Number" })).toHaveValue("012 345 678");
-  await expect(dialog.getByRole("textbox", { name: "Phone Number" })).toBeEnabled();
+  await expect(dialog.getByRole("textbox", { name: "Phone Number" })).toHaveCount(0);
   await expect(dialog.getByRole("textbox", { name: "Status", exact: true })).toHaveAttribute('readonly', '');
-  await expect(dialog.getByRole("combobox", { name: "Group", exact: true })).toHaveValue('Groom Side');
-  await expect(dialog.getByRole("combobox", { name: "Category", exact: true })).toHaveValue('Family');
+  await expect(dialog.getByRole("combobox", { name: "Group", exact: true })).toHaveCount(0);
+  await expect(dialog.getByRole("combobox", { name: "Category", exact: true })).toHaveCount(0);
   await expect(dialog.getByRole("textbox", { name: "Table / seat", exact: true })).toHaveCount(0);
-  await expect(dialog.getByRole("textbox", { name: "Companion / Plus-One" })).toHaveValue("Srey Mom");
+  await expect(dialog.getByRole("textbox", { name: "Companion / Plus-One" })).toHaveCount(0);
   await dialog.getByRole("button", { name: "Save", exact: true }).click();
-  await expect(dialog).toHaveCount(0);
+  await expect(dialog.getByRole("textbox", { name: "Guest Name", exact: true })).toHaveValue("");
   await expect(row).toContainText("Sok Dara Updated");
   expect(state.guests.find((guest) => guest.id === 501)).toMatchObject({ tableNumber: "A-01", guestGroup: "Groom Side", sideType: "Family" });
   await row.locator(".guest-row-menu > summary").click();
@@ -131,61 +205,50 @@ test("editing a guest and marking an invitation sent update the list", async ({ 
   await expect(page.locator(".guest-record-row")).not.toContainText("Sok Dara Updated");
 });
 
-test("add guest keeps failed entries, validates seat count, and supports save and add another", async ({ page }, testInfo) => {
+test("inline guest entry keeps failed entries, validates seats, and stays ready for the next guest", async ({ page }, testInfo) => {
   const state = await setup(page, { rejectFirstSave: true });
-  await page.locator(".guest-header-actions").getByRole("button", { name: "Add guest", exact: true }).click();
-  const dialog = page.getByRole("dialog");
+  const dialog = page.locator(".guest-table tbody");
+  await expect(page.getByRole("dialog")).toHaveCount(0);
   const name = dialog.getByRole("textbox", { name: "Guest Name", exact: true });
+  await name.click();
   await expect(name).toBeFocused();
-  await expect(dialog.locator('input[type="tel"]')).toHaveCount(1);
+  await expect(dialog.locator('input[type="tel"]')).toHaveCount(0);
   await dialog.getByRole("combobox", { name: "Group", exact: true }).selectOption("Bride Side");
   await dialog.getByRole("combobox", { name: "Category", exact: true }).selectOption("Family");
-  await dialog.locator(".guest-form-details > summary").click();
+  await expect(dialog.locator(".guest-inline-details-row")).toHaveCount(0);
   await expect(dialog.getByRole("combobox", { name: "Status", exact: true })).toHaveCount(0);
   await expect(dialog.getByRole("textbox", { name: "Table / seat", exact: true })).toHaveCount(0);
-  await dialog.locator(".guest-form-details > summary").click();
   await name.fill("New Wedding Guest");
   const seats = dialog.getByRole("spinbutton");
   await seats.fill("0");
-  await dialog.getByRole("button", { name: "Save & add another" }).click();
+  await dialog.getByRole("button", { name: /^\+? ?Add$/ }).click();
   expect(state.creates).toBe(0);
   await seats.fill("2");
   await page.screenshot({ path: testInfo.outputPath("guest-add-form.png"), fullPage: true });
-  await dialog.getByRole("button", { name: "Add guest", exact: true }).click();
+  await dialog.getByRole("button", { name: /^\+? ?Add$/ }).click();
   await expect(dialog.getByRole("alert")).toContainText("Guest service unavailable");
   await expect(name).toHaveValue("New Wedding Guest");
-  await dialog.getByRole("button", { name: "Save & add another" }).click();
+  await dialog.getByRole("button", { name: /^\+? ?Add$/ }).click();
   await expect(name).toHaveValue("");
   await expect(name).toBeFocused();
-  await page.keyboard.press("Escape");
+  await expect(dialog).toBeVisible();
   await expect(page.locator(".guest-record-row").filter({ hasText: "New Wedding Guest" })).toHaveCount(1);
   expect(state.creates).toBe(2);
   expect(state.guests.find((guest) => guest.guestName === "New Wedding Guest")).toMatchObject({ phone: null, sendStatus: "PENDING", guestGroup: "Bride Side", sideType: "Family" });
   await noOverflow(page);
 });
 
-test("meeting tables can be assigned when creating and editing a guest", async ({ page }) => {
+test("cancelling a simple inline edit preserves the guest and existing extra details", async ({ page }) => {
   const state = await setup(page, { eventType: "CORPORATE" });
-  await page.locator(".guest-header-actions").getByRole("button", { name: "Add guest", exact: true }).click();
-  const dialog = page.getByRole("dialog");
-  await dialog.getByRole("textbox", { name: "Guest Name", exact: true }).fill("Meeting Guest");
-  await dialog.locator(".guest-form-details > summary").click();
-  const table = dialog.getByRole("textbox", { name: "Table / seat", exact: true });
-  await expect(table).toBeEnabled();
-  await table.fill("C-12");
-  await expect(dialog.getByRole("combobox", { name: "Status", exact: true })).toHaveCount(0);
-  await dialog.getByRole("button", { name: "Add guest", exact: true }).click();
-  await expect(dialog).toHaveCount(0);
-  expect(state.guests.find((guest) => guest.guestName === "Meeting Guest").tableNumber).toBe("C-12");
-  const row = page.locator(".guest-record-row").filter({ hasText: "Meeting Guest" });
+  const row = page.locator(".guest-record-row").filter({ hasText: "Sok Dara" });
   await row.getByRole("button", { name: "Edit", exact: true }).click();
-  await expect(table).toBeEnabled();
-  await expect(table).toHaveValue("C-12");
-  await expect(dialog.getByRole("textbox", { name: "Status", exact: true })).toHaveAttribute('readonly', '');
-  await table.fill("C-14");
-  await dialog.getByRole("button", { name: "Save", exact: true }).click();
-  await expect(dialog).toHaveCount(0);
-  await expect(row).toContainText("C-14");
+  const form = page.locator(".guest-inline-form-row");
+  await expect(page.locator(".guest-inline-details-row")).toHaveCount(0);
+  await form.getByRole("textbox", { name: "Guest Name", exact: true }).fill("Unsaved change");
+  await form.getByRole("button", { name: "Cancel", exact: true }).click();
+  await expect(form.getByRole("textbox", { name: "Guest Name", exact: true })).toHaveValue("");
+  await expect(row).toContainText("Sok Dara");
+  expect(state.guests.find(guest => guest.id === 501)).toMatchObject({ guestName: "Sok Dara", tableNumber: "A-01", companionName: "Srey Mom", seatCount: 2 });
 });
 
 test("Khmer guest list and form remain readable without overflowing", async ({ page }, testInfo) => {
@@ -194,18 +257,23 @@ test("Khmer guest list and form remain readable without overflowing", async ({ p
   await noOverflow(page);
   await page.evaluate(() => document.fonts.ready);
   await page.screenshot({ path: testInfo.outputPath("guest-workspace-khmer.png"), fullPage: true });
-  await page.locator(".guest-header-actions").getByRole("button", { name: "បន្ថែមភ្ញៀវ", exact: true }).click();
-  await expect(page.getByRole("dialog")).toBeVisible();
-  await expect(page.getByRole("dialog").getByRole("textbox", { name: /ឈ្មោះភ្ញៀវ/ })).toBeFocused();
+  await page.locator(".guest-table tbody").getByRole("textbox", { name: /ឈ្មោះភ្ញៀវ/ }).click();
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await expect(page.locator(".guest-table tbody").getByRole("textbox", { name: /ឈ្មោះភ្ញៀវ/ })).toBeFocused();
   await page.screenshot({ path: testInfo.outputPath("guest-add-form-khmer.png"), fullPage: true });
 });
 
-test("empty guest list offers adding and importing", async ({ page }, testInfo) => {
+test("empty guest list matches the gift table with a simple message and header import", async ({ page }, testInfo) => {
   await setup(page, { empty: true });
-  await expect(page.getByRole("heading", { name: "No guests added yet" })).toBeVisible();
-  await expect(page.locator(".guest-empty-actions").getByRole("button", { name: "Add guest" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "No guests added yet" })).toHaveCount(0);
+  await expect(page.locator(".guest-empty-row")).toHaveCount(0);
+  await expect(page.locator(".guest-inline-details-row")).toHaveCount(0);
+  await expect(page.locator(".guest-table tbody > tr")).toHaveCount(2);
+  await expect(page.locator(".guest-inline-empty-row")).toHaveText("No guest data for this invitation.");
+  await expect(page.locator(".guest-inline-form-row")).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath("guest-empty-state.png"), fullPage: true });
-  await page.locator(".guest-empty-actions").getByRole("button", { name: "Import", exact: true }).click();
+  await page.locator(".guest-table-container").screenshot({ path: testInfo.outputPath("guest-empty-table.png") });
+  await page.locator(".guest-header-actions").getByRole("button", { name: "Import", exact: true }).click();
   await expect(page.getByRole("dialog")).toBeVisible();
   await noOverflow(page);
 });

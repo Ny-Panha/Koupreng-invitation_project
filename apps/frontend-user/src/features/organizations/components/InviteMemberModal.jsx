@@ -1,3 +1,4 @@
+import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useState } from "react";
 import { FormField, LoadingButton, Modal } from "@/shared/ui";
 import { ORGANIZATION_ROLES } from "../model/organizationConstants";
@@ -8,6 +9,7 @@ export default function InviteMemberModal({
   saving,
   onInvite,
 }) {
+  const uiCopy = useUiCopy();
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("VIEWER");
   const [error, setError] = useState("");
@@ -15,7 +17,7 @@ export default function InviteMemberModal({
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email.trim()) {
-      setError("សូមបញ្ចូលអ៊ីមែលសមាជិក (Member Email)");
+      setError(uiCopy("សូមបញ្ចូលអ៊ីមែលសមាជិក", "Enter the member’s email"));
       return;
     }
 
@@ -31,14 +33,14 @@ export default function InviteMemberModal({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="អញ្ជើញសមាជិកក្រុមថ្មី (Invite Team Member)"
-      subtitle="បន្ថែមសហការី អ្នករៀបចំការ ឬបុគ្គលិកកត់ត្រាលុយចងដៃទៅកាន់ Workspace របស់អ្នក។"
+      title={uiCopy("អញ្ជើញសមាជិកក្រុមថ្មី", "Invite team member")}
+      subtitle={uiCopy("បន្ថែមសហការី អ្នករៀបចំការ ឬបុគ្គលិកកត់ត្រាចងដៃទៅកាន់កន្លែងធ្វើការរបស់អ្នក។", "Add collaborators, planners or gift recorders to your workspace.")}
       size="md"
       closeOnBackdropClick={!saving}
       closeOnEscape={!saving}
     >
       <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-        <FormField label="អ៊ីមែលសមាជិក (Member Email)" required error={error}>
+        <FormField label={uiCopy("អ៊ីមែលសមាជិក", "Member email")} required error={error}>
           <input
             type="email"
             required
@@ -49,7 +51,7 @@ export default function InviteMemberModal({
           />
         </FormField>
 
-        <FormField label="តួនាទី និងសិទ្ធិ (Role & Permissions)" required>
+        <FormField label={uiCopy("តួនាទី និងសិទ្ធិ", "Role & permissions")} required>
           <select
             value={role}
             onChange={(e) => setRole(e.target.value)}
@@ -58,7 +60,7 @@ export default function InviteMemberModal({
           >
             {ORGANIZATION_ROLES.map((r) => (
               <option key={r.value} value={r.value}>
-                {r.label} — {r.description}
+                {uiCopy(r.labelKm, r.label)} — {uiCopy(r.descriptionKm, r.description)}
               </option>
             ))}
           </select>
@@ -71,10 +73,10 @@ export default function InviteMemberModal({
             onClick={onClose}
             disabled={saving}
           >
-            បោះបង់ (Cancel)
+            {uiCopy("បោះបង់", "Cancel")}
           </button>
           <LoadingButton type="submit" isLoading={saving} className="k-org-modal-submit-btn">
-            <span>ផ្ញើការអញ្ជើញ (Send Invite)</span>
+            <span>{uiCopy("ផ្ញើការអញ្ជើញ", "Send invite")}</span>
           </LoadingButton>
         </div>
       </form>

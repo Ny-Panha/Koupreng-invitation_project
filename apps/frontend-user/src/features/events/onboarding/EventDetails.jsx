@@ -1,3 +1,4 @@
+import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useEventWorkspace } from "../workspace/EventContext";
@@ -14,6 +15,7 @@ function readContent(value) {
 }
 
 export default function EventDetails() {
+  const uiCopy = useUiCopy();
   const { event, eventId, updateEvent } = useEventWorkspace();
   const [form, setForm] = useState(() => {
     const content = readContent(event.contentJson);
@@ -46,7 +48,7 @@ export default function EventDetails() {
     {/https?:\/\//i.test(form.venueAddress || '') && <p className="workspace-notice">{en ? 'The saved address contains a link. Review the address and Maps link separately before changing them.' : 'អាសយដ្ឋានដែលរក្សាទុកមានតំណភ្ជាប់។ សូមពិនិត្យអាសយដ្ឋាន និងតំណផែនទីដោយឡែកមុនកែប្រែ។'}</p>}
     {generic && <>
       <label>{en ? "Invitation message or description (optional)" : "សារអញ្ជើញ ឬការពិពណ៌នា (មិនបាច់បំពេញ)"}<textarea maxLength={5000} value={form.storyText || ""} onChange={e => setForm(current => ({ ...current, storyText: e.target.value }))} /></label>
-      <label>{en ? "Invitation language" : "ភាសាសំបុត្រអញ្ជើញ"}<select value={form.languageMode || "KH"} onChange={e => setForm(current => ({ ...current, languageMode: e.target.value }))}><option value="KH">ខ្មែរ</option><option value="EN">English</option><option value="BOTH">ខ្មែរ / English</option></select></label>
+      <label>{en ? "Invitation language" : "ភាសាសំបុត្រអញ្ជើញ"}<select value={form.languageMode || "KH"} onChange={e => setForm(current => ({ ...current, languageMode: e.target.value }))}><option value="KH">{uiCopy("ភាសាខ្មែរ", "Khmer")}</option><option value="EN">{uiCopy("ភាសាអង់គ្លេស", "English")}</option><option value="BOTH">{uiCopy("ភាសាខ្មែរ និងអង់គ្លេស", "Khmer and English")}</option></select></label>
       <fieldset><legend>{en ? "Contact (optional)" : "ទំនាក់ទំនង (មិនបាច់បំពេញ)"}</legend>
         {[["name", "ឈ្មោះទំនាក់ទំនង", "Contact name", "text"], ["phone", "លេខទូរស័ព្ទ", "Phone", "tel"], ["email", "អ៊ីមែល", "Email", "email"]].map(([key, kh, english, type]) =>
           <label key={key}>{en ? english : kh}<input type={type} maxLength={key === "phone" ? 30 : 255} value={contact[key] || ""} onChange={e => setContact(current => ({ ...current, [key]: e.target.value }))} /></label>)}

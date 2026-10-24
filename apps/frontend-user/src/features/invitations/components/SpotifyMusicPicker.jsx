@@ -1,3 +1,4 @@
+import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useState, useRef, useEffect } from "react";
 import { FaSpotify } from "react-icons/fa6";
 import {
@@ -35,6 +36,7 @@ const TRACK_METADATA = {
 };
 
 export function SpotifyMusicPicker({ value, onChange }) {
+  const uiCopy = useUiCopy();
     const [isOpen, setIsOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [previewTrackId, setPreviewTrackId] = useState(null);
@@ -133,7 +135,7 @@ export function SpotifyMusicPicker({ value, onChange }) {
             <div className="spotify-picker-header">
                 <div className="spotify-brand">
                     <FaSpotify />
-                    <span>តន្ត្រីសាវតារ (Spotify Music)</span>
+                    <span>{uiCopy("តន្ត្រីពី Spotify", "Spotify music")}</span>
                 </div>
                 <div className={`spotify-status-pill ${value === "none" ? "muted" : ""}`}>
                     {value === "none" ? "មិនប្រើតន្ត្រី" : `កំពុងប្រើ: ${selectedTrack.name}`}
@@ -172,7 +174,7 @@ export function SpotifyMusicPicker({ value, onChange }) {
 
                 {/* Animated Equalizer Wave (when selected track is playing) */}
                 {isSelectedPlaying && (
-                    <div className="spotify-equalizer" title="កំពុងលេង...">
+                    <div className="spotify-equalizer" title={uiCopy("កំពុងលេង...", "Playing...")}>
                         <div className="spotify-eq-bar" />
                         <div className="spotify-eq-bar" />
                         <div className="spotify-eq-bar" />
@@ -189,7 +191,7 @@ export function SpotifyMusicPicker({ value, onChange }) {
                         setIsOpen((prev) => !prev);
                     }}
                 >
-                    <span>{isOpen ? "បិទ" : "ប្តូរបទ"}</span>
+                    <span>{isOpen ? uiCopy("បិទ", "Close") : "ប្តូរបទ"}</span>
                     <IoChevronDown
                         style={{
                             transform: isOpen ? "rotate(180deg)" : "none",
@@ -210,7 +212,7 @@ export function SpotifyMusicPicker({ value, onChange }) {
                             className="spotify-search-input"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            placeholder="ស្វែងរកបទចម្រៀង ឬអ្នកច្រៀង..."
+                            placeholder={uiCopy("ស្វែងរកបទចម្រៀង ឬអ្នកច្រៀង...", "Search songs or artists...")}
                             autoFocus
                         />
                     </div>
@@ -218,7 +220,7 @@ export function SpotifyMusicPicker({ value, onChange }) {
                     <div className="spotify-track-list">
                         {filteredTracks.length === 0 ? (
                             <div className="spotify-no-result">
-                                មិនមានបទចម្រៀងត្រូវនឹង "{searchQuery}" ទេ
+                                {uiCopy("មិនមានបទចម្រៀងត្រូវនឹង \"", "No songs match \"")}{searchQuery}{uiCopy("\" ទេ", "\"")}
                             </div>
                         ) : (
                             filteredTracks.map((track) => {
@@ -263,7 +265,7 @@ export function SpotifyMusicPicker({ value, onChange }) {
 
                                 {/* Animated Equalizer Wave (when this song is currently playing) */}
                                 {isCurrentPreview && (
-                                    <div className="spotify-equalizer" title="កំពុងលេង...">
+                                    <div className="spotify-equalizer" title={uiCopy("កំពុងលេង...", "Playing...")}>
                                         <div className="spotify-eq-bar" />
                                         <div className="spotify-eq-bar" />
                                         <div className="spotify-eq-bar" />

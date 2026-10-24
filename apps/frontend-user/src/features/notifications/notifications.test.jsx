@@ -1,5 +1,8 @@
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import { render, screen, waitFor, fireEvent, cleanup } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+
+beforeEach(() => useLanguageStore.setState({ lang: "en" }));
 import NotificationsPage from "./NotificationsPage";
 import { notificationsApi } from "./api/notificationsApi";
 

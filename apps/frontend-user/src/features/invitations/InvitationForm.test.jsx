@@ -227,7 +227,7 @@ describe("P0 — reactive catalog sync (no page reload needed)", () => {
                 <LivePhoneSimulator data={data} catalogVersion={getCatalogVersion()} />
             </MemoryRouter>
         );
-        expect(container.textContent).toContain("Template unavailable");
+        expect(container.textContent).toContain("មិនអាចបើកគំរូបានទេ");
         expect(container.textContent).not.toContain(KEPT_TEMPLATE_NAME);
 
         // Backend /v1/templates response lands.
@@ -271,7 +271,7 @@ describe("P0 — reactive catalog sync (no page reload needed)", () => {
         );
 
         // Before the catalog lands, show recovery instead of Garden Royal.
-        expect(container.textContent).toContain("Template unavailable");
+        expect(container.textContent).toContain("មិនអាចបើកគំរូបានទេ");
         expect(container.textContent).not.toContain(KEPT_TEMPLATE_NAME);
 
         // Simulate the backend response arriving after mount.
@@ -337,7 +337,7 @@ describe("Khmer Celestial Cover Image Fields", () => {
         expect(screen.getAllByText(/ផ្ទៃខាងក្រោយគ្របមុខ \(ពេលមិនទាន់បើក\)/i).length).toBeGreaterThanOrEqual(1);
 
         // 3. Field 2: Botanical frame (opened state)
-        expect(screen.getAllByText(/ស៊ុមផ្កា \/ រូបភាពផ្ទៃខាងក្រោយ/i).length).toBeGreaterThanOrEqual(1);
+        expect(screen.getAllByText(/ស៊ុមផ្កា ឬរូបភាពផ្ទៃខាងក្រោយ/i).length).toBeGreaterThanOrEqual(1);
     }, 15000);
 
     it("renders exactly 2 fields for Garden Royal: Cover and Full Background", () => {
@@ -356,13 +356,13 @@ describe("Khmer Celestial Cover Image Fields", () => {
         );
 
         // 1. Cover field is shown
-        expect(screen.getAllByText(/រូបភាពក្របមុខ/i).length).toBeGreaterThanOrEqual(1);
+        expect(screen.getAllByText(/រូបភាពក្របខាងមុខ/i).length).toBeGreaterThanOrEqual(1);
 
         // 2. Closed-state cover background (the redundant 3rd field) is hidden
         expect(screen.queryAllByText(/ផ្ទៃខាងក្រោយគ្របមុខ \(ពេលមិនទាន់បើក\)/i)).toHaveLength(0);
 
         // 3. Full / Botanical Frame background field is shown
-        expect(screen.getAllByText(/ស៊ុមផ្កា \/ រូបភាពផ្ទៃខាងក្រោយ/i).length).toBeGreaterThanOrEqual(1);
+        expect(screen.getAllByText(/ស៊ុមផ្កា ឬរូបភាពផ្ទៃខាងក្រោយ/i).length).toBeGreaterThanOrEqual(1);
     }, 15000);
 
     it("restores coverBackgroundImage from draft/invitation designJson upon load", () => {

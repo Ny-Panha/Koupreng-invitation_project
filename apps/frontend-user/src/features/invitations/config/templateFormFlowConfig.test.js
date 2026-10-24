@@ -1,7 +1,17 @@
 import { describe, it, expect } from "vitest";
-import { getTemplateFormFlow } from "./templateFormFlowConfig";
+import { getLocalizedTemplateFormFlow, getTemplateFormFlow } from "./templateFormFlowConfig";
 
 describe("templateFormFlowConfig", () => {
+  it.each(["khmer-celestial", "garden-royal-khmer-wedding", "template-boilerplate"])("localizes %s editor labels independently of invitation content", template => {
+    const en = getLocalizedTemplateFormFlow(template, "en");
+    const km = getLocalizedTemplateFormFlow(template, "km");
+    expect(en.sectionOrder).toEqual(km.sectionOrder);
+    for (const [key, value] of Object.entries(en.labels)) {
+      expect(value).not.toMatch(/[\u1780-\u17b3]/);
+      if (!key.endsWith("En")) expect(km.labels[key]).toMatch(/[\u1780-\u17b3]/);
+    }
+    expect(getTemplateFormFlow(template).labels).not.toBe(en.labels);
+  });
   it("defaults hasCoverBackgroundImage to true for unknown / boilerplate templates", () => {
     const config = getTemplateFormFlow("template-boilerplate");
     expect(config.hasCoverBackgroundImage).toBe(true);

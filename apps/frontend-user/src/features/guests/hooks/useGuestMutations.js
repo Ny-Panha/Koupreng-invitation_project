@@ -14,6 +14,11 @@ function invitationId(invitation) {
   return invitation?.id || invitation?.invitationId;
 }
 
+function hasSentStatus(guest) {
+  return ["SENT", "OPENED", "RESPONDED", SEND_STATUS.sent, SEND_STATUS.opened, SEND_STATUS.responded]
+    .includes(String(guest?.sendStatus || "").toUpperCase());
+}
+
 export function useGuestMutations({
   eventId,
   backendInvitation,
@@ -24,12 +29,10 @@ export function useGuestMutations({
 }) {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
-  const [lastSavedGuest, setLastSavedGuest] = useState(null);
 
   const saveGuest = async (form, editingId) => {
     setSaving(true);
     setError("");
-    setLastSavedGuest(null);
     let optimisticId = null;
 
     try {
@@ -69,7 +72,6 @@ export function useGuestMutations({
           ...normalizeBackendGuest(savedBackend || { ...(targetBackendGuest || {}), ...payload, id: optimisticId }),
           pending: false,
         };
-        if (/^[1-9]\d*$/.test(String(normalized.id))) setLastSavedGuest(normalized);
 
         setBackendGuests((current) => {
           const index = current.findIndex((item) => String(item.id) === String(optimisticId));
@@ -80,7 +82,6 @@ export function useGuestMutations({
         });
       } else {
         const guestToSave = toManualGuest(form, editingId);
-        setLastSavedGuest(normalizeManualGuest(guestToSave));
         setManualGuests((current) => {
           const next = editingId
             ? current.map((item) => (item.id === editingId ? guestToSave : item))
@@ -217,6 +218,8 @@ export function useGuestMutations({
 
   const markGuestAsSent = async (guest) => {
     if (!guest || saving) return false;
+    const latestGuest = backendGuests.find(item => String(item.backendId || item.id) === String(guest.backendId || guest.id)) || guest;
+    if (hasSentStatus(latestGuest)) return true;
     setSaving(true); setError("");
     try {
       const backendIdToUse = backendInvitation ? invitationId(backendInvitation) : null;
@@ -226,7 +229,7 @@ export function useGuestMutations({
       } else {
         if (/^[1-9]\d*$/.test(String(eventId))) throw new Error("Event data is still loading");
         setManualGuests(current => {
-          const next = current.map(g => String(g.id) === String(guest.id) ? { ...g, sendStatus: SEND_STATUS.sent } : g);
+          const next = current.map(g => String(g.id) === String(guest.id) && !hasSentStatus(g) ? { ...g, sendStatus: SEND_STATUS.sent } : g);
           saveManualGuests(next, eventId);
           return next;
         });
@@ -244,6 +247,5 @@ export function useGuestMutations({
     deleteGuest,
     importGuests,
     markGuestAsSent,
-    lastSavedGuest,
   };
 }
