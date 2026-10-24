@@ -325,6 +325,13 @@ describe("active Reports route", () => {
         expect.anything(),
       ),
     );
+    openExports();
+    const pageExport = screen.getByRole("button", { name: "CSV · Current page" });
+    await waitFor(() => expect(pageExport).toBeEnabled());
+    fireEvent.click(pageExport);
+    await waitFor(() => expect(service.exportManagementReport).toHaveBeenLastCalledWith(
+      "invitations", "csv-page", expect.objectContaining({ page: 0 }),
+    ));
   });
   it("uses one captured HTML preview and exits without losing scope", async () => {
     // Blob iframe navigation is a real-browser check; about:blank keeps this DOM-only test local.

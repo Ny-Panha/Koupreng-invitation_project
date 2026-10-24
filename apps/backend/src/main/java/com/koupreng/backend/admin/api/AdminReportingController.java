@@ -38,7 +38,7 @@ public class AdminReportingController {
         @io.swagger.v3.oas.annotations.media.Content(mediaType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",schema=@io.swagger.v3.oas.annotations.media.Schema(type="string",format="binary")),
         @io.swagger.v3.oas.annotations.media.Content(mediaType="text/csv",schema=@io.swagger.v3.oas.annotations.media.Schema(type="string",format="binary")),
         @io.swagger.v3.oas.annotations.media.Content(mediaType="text/html",schema=@io.swagger.v3.oas.annotations.media.Schema(type="string"))})
-    @Operation(summary = "Complete filtered CSV, XLSX or print HTML", description = "Page/size do not truncate exports. Bounded batches and SXSSF spill to a temporary snapshot file, then stream it after releasing the database transaction. html is print content, not a PDF download. report=all supports XLSX and common date filters only; individual exports preserve all supported filters.")
+    @Operation(summary = "Filtered CSV, current-page CSV, XLSX or print HTML", description = "csv-page explicitly exports only the requested page/size. Other formats export all matching records. Bounded batches and SXSSF spill to a temporary snapshot file, then stream it after releasing the database transaction. html is print content, not a PDF download. report=all supports XLSX and common date filters only; individual exports preserve all supported filters.")
     public ResponseEntity<StreamingResponseBody> export(Authentication authentication, @PathVariable String report, @PathVariable String format, @org.springdoc.core.annotations.ParameterObject @ModelAttribute AdminReportQuery query) {
         return download(exports, authentication, report, format, query);
     }
@@ -47,13 +47,13 @@ public class AdminReportingController {
     }
     static ResponseEntity<StreamingResponseBody> download(AdminReportExportService exports, Authentication authentication, String report, String format, AdminReportQuery query, boolean legacyCsv) {
         var plan = legacyCsv ? exports.legacyCsvPlan(authentication,report,query) : exports.plan(authentication, report, format, query);
-        String contentType = switch (format) {
+        String contentType = switch (plan.format()) {
             case "xlsx" -> "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
             case "csv" -> "text/csv;charset=UTF-8";
             default -> "text/html;charset=UTF-8";
         };
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, contentType)
-            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"koupreng-" + report + "-" + plan.filter().asOf().atZone(AdminReportFilter.ZONE).toLocalDate() + "." + format + "\"")
+            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"koupreng-" + report + (plan.currentPage() ? "-page-" + (plan.filter().page() + 1) : "") + "-" + plan.filter().asOf().atZone(AdminReportFilter.ZONE).toLocalDate() + "." + plan.format() + "\"")
             .header(HttpHeaders.CACHE_CONTROL, "no-store, private")
             .header("X-Content-Type-Options", "nosniff").header("X-Report-Snapshot-Id", plan.snapshotId())
             .body(output -> exports.stream(authentication, plan, output));

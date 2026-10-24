@@ -29,8 +29,8 @@ public class AdminReportSnapshotWriter {
             if (plan.format().equals("xlsx")) {
                 try (OutputStream output = Files.newOutputStream(path)) { rowCount = new AdminReportWorkbookWriter(reporting).write(plan, output); }
             } else {
-                var snapshot = reporting.snapshot(plan.report(), exportFilter(plan.filter(), plan.report()), plan.snapshotId());
-                rowCount = snapshot.getTotalElements();
+                var snapshot = reporting.snapshot(plan.report(), plan.currentPage() ? plan.filter() : exportFilter(plan.filter(), plan.report()), plan.snapshotId());
+                rowCount = plan.currentPage() ? snapshot.getRows().size() : snapshot.getTotalElements();
                 if (rowCount > 100_000) throw new ApiException(HttpStatus.BAD_REQUEST, "Export exceeds 100,000 records; narrow the filters");
                 if (plan.format().equals("html") && snapshot.getTotalElements() > 20_000)
                     throw new ApiException(HttpStatus.BAD_REQUEST, "Print preview exceeds 20,000 records; narrow filters or use complete XLSX/CSV export");
@@ -70,7 +70,7 @@ public class AdminReportSnapshotWriter {
             List.of("From (inclusive)", Objects.toString(filter.from(), "All time")), List.of("To (exclusive)", Objects.toString(filter.to(), "All time")),
             List.of("Date dimension", snapshot.getMetadata().dateDimension()), List.of("Timezone", AdminReportFilter.ZONE.getId()),
             List.of("Generated at", filter.asOf().atZone(AdminReportFilter.ZONE).toString()), List.of("Snapshot ID", plan.snapshotId()),
-            List.of("Scope", "ALL FILTERED RECORDS"), List.of("Matching records", snapshot.getTotalElements()),
+            List.of("Scope", plan.currentPage() ? "CURRENT PAGE " + (filter.page() + 1) : "ALL FILTERED RECORDS"), List.of("Matching records", snapshot.getTotalElements()),
             List.of("Applied filters", snapshot.getMetadata().filters().toString()), List.of("Sort", snapshot.getMetadata().sort() + " " + snapshot.getMetadata().direction()), List.of("Units", "Counts / fractions; USD and KHR separate"),
             List.of("Classification", "Confidential — authorized administrative use"), List.of("Source", "System-generated persisted projections"),
             List.of("Version", AdminReportCatalog.VERSION));
@@ -79,11 +79,18 @@ public class AdminReportSnapshotWriter {
         output.write('\uFEFF');
         var headers = new ArrayList<Object>(); headers.add("Row"); snapshot.getDefinition().columns().forEach(c -> headers.add(c.key()));
         output.write(CsvExportUtils.row(headers.toArray()) + "\r\n");
-        eachRow(reporting, plan.report(), exportFilter(plan.filter(), plan.report()), snapshot, (row, index) -> {
+        RowWriter writeRow = (row, index) -> {
             var values = new ArrayList<Object>(); values.add(index);
             for (var column : snapshot.getDefinition().columns()) values.add(display(row.get(column.key())));
             output.write(CsvExportUtils.row(values.toArray()) + "\r\n");
-        });
+        };
+        if (plan.currentPage()) {
+            long index = (long) plan.filter().page() * plan.filter().size();
+            for (Object value : snapshot.getRows()) {
+                @SuppressWarnings("unchecked") var row = (Map<String,Object>) value;
+                writeRow.accept(row, ++index);
+            }
+        } else eachRow(reporting, plan.report(), exportFilter(plan.filter(), plan.report()), snapshot, writeRow);
     }
     private void legacyCsv(Writer output, AdminReportExportService.Plan plan, AdminReportResponse snapshot) throws IOException {
         output.write('\uFEFF');boolean invitations=plan.report().equals("invitations");

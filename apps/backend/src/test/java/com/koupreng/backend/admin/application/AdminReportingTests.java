@@ -134,6 +134,21 @@ class AdminReportingTests {
         q.setSearch("' OR 1=1 --");assertThat(report("invitations",q).getTotalElements()).isZero();
         q=query();q.setCurrency("KHR");assertThat(report("payments",q).getTotalElements()).isEqualTo(1);
     }
+    @Test void currentPageCsvUsesTheRequestedPageAndAuditsItsActualCount() throws Exception {
+        var audit = mock(com.koupreng.backend.audit.application.AuditLogService.class);
+        org.springframework.test.util.ReflectionTestUtils.setField(exports, "audit", audit);
+        var q=query(); q.setSize(1); q.setPage(1); q.setSort("id"); q.setDirection("ASC");
+        var plan=exports.plan(auth,"invitations","csv-page",q);
+        assertThat(plan.currentPage()).isTrue();
+        try(var file=writer.generate(auth,plan)) {
+            assertThat(file.rowCount()).isEqualTo(1);
+            var lines=Files.readAllLines(file.path());
+            assertThat(lines).hasSize(2);
+            assertThat(lines.get(1)).startsWith("\"2\",\"2\",");
+        }
+        var output=new ByteArrayOutputStream(); exports.stream(auth,plan,output);
+        verify(audit).logAdminAction(eq(auth),eq("REPORT_EXPORT_COMPLETED"),eq("REPORT"),isNull(),anyString(),isNull(),argThat(values -> values instanceof Map<?,?> data && "CURRENT_PAGE".equals(data.get("scope")) && Long.valueOf(1).equals(data.get("rows"))));
+    }
     @Test void effectiveSubscriptionsAndZeroBaselineGrowthAreTruthful() {
         assertThat(row(report("subscriptions",query()),1).get("activeState")).isEqualTo("ACTIVE");
         assertThat(row(report("subscriptions",query()),2).get("activeState")).isEqualTo("EXPIRED");

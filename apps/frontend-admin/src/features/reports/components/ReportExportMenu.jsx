@@ -22,7 +22,7 @@ export default function ReportExportMenu({ disabled, onDownload, onPageCsv, lang
         <p className="report-export-eyebrow">KOUPRENG · {copy("របាយការណ៍", "REPORT STUDIO")}</p>
         <h4>{reportName}</h4>
         <dl className="report-export-scope"><div><dt>{copy("កំណត់ត្រាដែលត្រូវគ្នា", "Matching records")}</dt><dd>{rowCount ?? "—"}</dd></div><div><dt>{copy("រយៈពេល", "Period")}</dt><dd>{filters?.from || "—"} → {filters?.to || "—"}</dd></div><div><dt>{copy("តំបន់ម៉ោង", "Timezone")}</dt><dd>Asia/Phnom_Penh</dd></div></dl>
-        <p>{copy("CSV និង Excel មានកំណត់ត្រាទាំងអស់តាមលក្ខខណ្ឌ។ ថ្ងៃបញ្ចប់មិនរាប់បញ្ចូលទេ។", "CSV and Excel include all matching records. The end date is exclusive.")}</p>
+        <p>{copy("CSV ពេញលេញ និង Excel មានកំណត់ត្រាទាំងអស់តាមលក្ខខណ្ឌ។ CSV ទំព័រនេះរួមបញ្ចូលតែទំព័រដែលបង្ហាញ។ ថ្ងៃបញ្ចប់មិនរាប់បញ្ចូលទេ។", "Full CSV and Excel include all matching records. Current-page CSV includes the displayed page. The end date is exclusive.")}</p>
         {Object.entries(filters || {}).filter(([key, value]) => filterNames[key] && value != null && value !== '').map(([key, value]) => <p key={key}><strong>{filterNames[key][lang === 'en' ? 1 : 0]}:</strong> {String(value)}</p>)}
         <details className="report-export-columns"><summary>{copy("ជួរឈរដែលរួមបញ្ចូល", "Included columns")} · {columns.length}</summary><p>{columns.map(column => lang === "en" ? column.labelEn : column.labelKm).join(" · ")}</p></details>
         <p className="report-export-privacy"><ShieldCheck size={18} aria-hidden="true" />{copy("ប្រើសម្រាប់អ្នកគ្រប់គ្រងប៉ុណ្ណោះ។ ទិន្នន័យសម្ងាត់ និង QR ឯកជនមិនរួមបញ្ចូលទេ។", "Administrator use. Secrets and private QR credentials are excluded by the server.")}</p>

@@ -4,9 +4,7 @@ import { RefreshCw, CircleAlert } from "lucide-react";
 import { ActionButton, AdminPageHeader } from "../../shared/ui/AdminUI";
 import adminService from "../../shared/api/adminService";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
-import { exportCsv } from "../../shared/utils/csvExport";
 import {
-  columnLabel,
   reportLabel,
   reportPreset,
   reportValue,
@@ -200,7 +198,7 @@ export default function AdminReportOverview() {
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
-        link.download = `koupreng-${captured.code}-${captured.parameters.from}-${captured.parameters.to}.${format}`;
+        link.download = `koupreng-${captured.code}-${captured.parameters.from}-${captured.parameters.to}${format === "csv-page" ? "-page" : ""}.${format === "csv-page" ? "csv" : format}`;
         document.body.append(link);
         link.click();
         link.remove();
@@ -224,32 +222,6 @@ export default function AdminReportOverview() {
       setExporting("");
     }
   };
-  const pageCsv = () =>
-    exportCsv(
-      `koupreng-${code}-page-${report.page + 1}`,
-      report.definition.columns.map((column) => columnLabel(column, lang)),
-      report.rows.map((row) =>
-        report.definition.columns.map((column) =>
-          ["DATETIME", "DATE"].includes(column.type)
-            ? reportValue(row[column.key], column, lang, row)
-            : row[column.key],
-        ),
-      ),
-      [
-        [
-          "Scope",
-          `CURRENT PAGE ${report.page + 1}; ${report.rows.length} of ${report.totalElements} matching records`,
-        ],
-        ["Snapshot", report.metadata.snapshotId],
-        [
-          "Period",
-          `${params.get("from")} inclusive / ${params.get("to")} exclusive`,
-        ],
-        ["Timezone", "Asia/Phnom_Penh"],
-        ["Date dimension", report.metadata.dateDimension],
-        ["Filters", JSON.stringify(report.metadata.filters)],
-      ],
-    );
   let ledger;
   if (report) {
     const props = {
@@ -341,16 +313,7 @@ export default function AdminReportOverview() {
               columns={definition.columns}
               disabled={disabled}
               onDownload={download}
-              onPageCsv={() => {
-                try {
-                  pageCsv();
-                  setExportFailed(false);
-                  setFeedback(text("exported"));
-                } catch {
-                  setExportFailed(true);
-                  setFeedback(text("exportError"));
-                }
-              }}
+              onPageCsv={() => download("csv-page")}
               lang={lang}
             />
           </div>

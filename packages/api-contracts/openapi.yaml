@@ -7067,12 +7067,12 @@ paths:
     get:
       tags:
       - Management reporting
-      summary: "Complete filtered CSV, XLSX or print HTML"
-      description: "Page/size do not truncate exports. Bounded batches and SXSSF spill\
-        \ to a temporary snapshot file, then stream it after releasing the database\
-        \ transaction. html is print content, not a PDF download. report=all supports\
-        \ XLSX and common date filters only; individual exports preserve all supported\
-        \ filters."
+      summary: "Filtered CSV, current-page CSV, XLSX or print HTML"
+      description: "csv-page explicitly exports only the requested page/size. Other\
+        \ formats export all matching records. Bounded batches and SXSSF spill to\
+        \ a temporary snapshot file, then stream it after releasing the database transaction.\
+        \ html is print content, not a PDF download. report=all supports XLSX and\
+        \ common date filters only; individual exports preserve all supported filters."
       operationId: export_1
       parameters:
       - name: report
@@ -8897,9 +8897,9 @@ components:
         publishedAt:
           type: string
           format: date-time
-        published:
-          type: boolean
         draft:
+          type: boolean
+        published:
           type: boolean
     UpdateProfileRequest:
       type: object

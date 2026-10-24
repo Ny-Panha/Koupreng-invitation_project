@@ -35,7 +35,7 @@ production migration or existing user database write was performed.
 
 - User frontend: 691 passed; production build and lint passed.
 - Admin frontend: 115 passed; production build and changed-scope lint passed.
-- Backend full suite: 584 discovered, 537 passed, 47 environment gates skipped.
+- Backend full suite: 585 discovered, 538 passed, 47 environment gates skipped.
 - Separate native MySQL regression: 30 passed; final upgrade run: 4 passed;
   final Phase 6 acceptance: 3 passed. These runs overlap.
 - Worker: 72 passed, two upstream deprecation warnings.
@@ -58,8 +58,8 @@ were not verified. Direct PDF is unavailable; actual print HTML is included.
 Redis production behavior was not exercised. Docker was unavailable; native
 MySQL provided fresh/upgrade evidence. Team co-management UI remains explicitly
 unavailable; advanced analytics is a configured flag without a newly invented
-premium-only product endpoint. Current-page client CSV does not create a server
-export audit event; server full-result formats do. Audit retention scheduling,
+premium-only product endpoint. Current-page CSV now uses an explicit server page scope with an actual-count
+audit record, verified through Chromium and native MySQL. Audit retention scheduling,
 comprehensive accessibility/zoom and other browsers remain follow-up work.
 
 Full admin lint still has 22 pre-existing errors and one warning in unchanged
