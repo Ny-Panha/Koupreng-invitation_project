@@ -25,11 +25,8 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 20px;
-  background: #fbf6ee;
-  border: 1px solid #eadfce;
-  border-radius: 12px;
-  max-width: 520px;
+  padding: 0;
+  flex-wrap: wrap;
   width: 100%;
   box-sizing: border-box;
 }
@@ -57,27 +54,29 @@
   border-radius: 20px;
   background: #ffffff;
   padding: 36px 28px;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+  gap: 32px;
   align-items: center;
-  text-align: center;
+  text-align: start;
   box-shadow: 0 6px 24px rgba(93, 67, 32, 0.06);
   width: 100%;
-  max-width: 480px;
+  max-width: 960px;
   box-sizing: border-box;
 }
 
 .qr-frame {
-  width: 240px;
-  height: 240px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
   border-radius: 16px;
   border: 1.5px solid #e6dccb;
-  background: #fffdf9;
+  background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  margin-bottom: 24px;
+  margin-bottom: 0;
   box-shadow: inset 0 2px 8px rgba(93, 67, 32, 0.04);
   padding: 12px;
 }
@@ -110,8 +109,8 @@
 .qr-details {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 8px;
+  align-items: flex-start;
+  gap: 16px;
   width: 100%;
 }
 
@@ -155,11 +154,14 @@
 .qr-actions {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 12px;
   margin-top: 8px;
   flex-wrap: wrap;
 }
+.qr-destination { overflow-wrap: anywhere; font-size: 14px; color: var(--ws-muted); margin: 0; }
+@media (max-width: 1099px) { .qr-card { grid-template-columns: minmax(0, 1fr); justify-items: center; padding: 24px; gap: 24px; } .qr-frame { max-width: 260px; } .qr-details { align-items: center; text-align: center; } .qr-actions { justify-content: center; } .qr-type-indicator { justify-content: center; } }
+@media (max-width: 399px) { .qr-card { padding: 16px; } .qr-actions { width: 100%; } .qr-actions > * { width: 100%; } }
 
 .qr-empty {
   text-align: center;

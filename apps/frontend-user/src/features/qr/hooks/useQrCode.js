@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { qrApi } from "../api/qrApi";
 
 export function useQrCode(invitationId, guestId = null) {
@@ -6,9 +6,12 @@ export function useQrCode(invitationId, guestId = null) {
   const [loading, setLoading] = useState(true);
   const [downloading, setDownloading] = useState(false);
   const [error, setError] = useState("");
+  const generation = useRef(0);
 
   const loadQr = useCallback(() => {
-    if (!invitationId) return;
+    const current = ++generation.current;
+    setQrData(null);
+    if (!invitationId) { setLoading(false); return; }
     setLoading(true);
     setError("");
 
@@ -18,16 +21,24 @@ export function useQrCode(invitationId, guestId = null) {
 
     fetcher
       .then((data) => {
+        if (current !== generation.current) return;
+        if (!guestId && (data?.guestName || data?.tokenType === 'GUEST')) throw new Error('Guest QR cannot be shown as a general event QR');
+        if (data?.invitationUrl) {
+          let url;
+          try { url = new URL(data.invitationUrl); } catch { throw new Error('Invalid invitation QR destination'); }
+          if (!['http:', 'https:'].includes(url.protocol) || (!guestId && (data.guestName || data.tokenType === 'GUEST' || url.searchParams.has('token'))) || (data.qrPayload && data.qrPayload !== data.invitationUrl)) throw new Error('QR purpose or destination does not match this invitation request');
+        }
         setQrData(data || null);
       })
       .catch((err) => {
-        setError(err?.message || "Could not load QR code");
+        if (current === generation.current) setError(err?.message || "Could not load QR code");
       })
-      .finally(() => setLoading(false));
+      .finally(() => { if (current === generation.current) setLoading(false); });
   }, [invitationId, guestId]);
 
   useEffect(() => {
     loadQr();
+    return () => { generation.current += 1; };
   }, [loadQr]);
 
   const downloadPng = async () => {

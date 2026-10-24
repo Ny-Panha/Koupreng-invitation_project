@@ -32,9 +32,10 @@ export function eventPayload(form, type) {
     try {
       const content = JSON.parse(form.contentJson);
       payload.contentJson = JSON.stringify({ ...content, title: payload.title, venueName: payload.venueName,
+        googleMapUrl: payload.googleMapUrl,
         venueAddress: payload.venueAddress, eventDateText: payload.eventDate,
         couple: { ...content.couple, groom: payload.groomName || payload.hostName, bride: payload.brideName || payload.partnerName },
-        event: { ...content.event, title: payload.title, date: payload.eventDate, receptionTime: payload.eventTime, venueName: payload.venueName, venueAddress: payload.venueAddress } });
+        event: { ...content.event, title: payload.title, date: payload.eventDate, receptionTime: payload.eventTime, venueName: payload.venueName, venueAddress: payload.venueAddress, mapLink: payload.googleMapUrl } });
     } catch { /* Retain legacy content when it cannot be parsed safely. */ }
   }
   return payload;

@@ -6,6 +6,7 @@ import { ErrorState, SkeletonCard } from "@/shared/ui";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { Copy, Check, QrCode } from "lucide-react";
 import { useState } from "react";
+import { useEventWorkspace } from '@/features/events/workspace/EventContext';
 import { toast } from "@/shared/ui/toast";
 import "./QrPage.css";
 
@@ -15,6 +16,7 @@ export default function QrPage({ invitationId: propInvitationId, guestId: propGu
   const guestId = propGuestId || params.guestId;
   const en = useLanguageStore((s) => s.lang) === "en";
   const [copied, setCopied] = useState(false);
+  const workspace = useEventWorkspace();
 
   const { qrData, loading, downloading, error, loadQr, downloadPng } = useQrCode(
     invitationId,
@@ -33,7 +35,7 @@ export default function QrPage({ invitationId: propInvitationId, guestId: propGu
     }
   };
 
-  const isGuestQr = Boolean(guestId || qrData?.guestName);
+  const isGuestQr = Boolean(guestId);
 
   return (
     <main className="dash-main qr-page workspace-page">
@@ -61,7 +63,7 @@ export default function QrPage({ invitationId: propInvitationId, guestId: propGu
       ) : (
         <div className="qr-page-content">
           {/* QR Type Context Box */}
-          <div className="qr-type-indicator">
+          <QrPreview qrData={qrData ? { ...qrData, title: qrData.title || workspace?.event?.title } : null} onRetry={loadQr} context={<div className="qr-type-indicator">
             <span className="qr-type-badge">
               {isGuestQr ? (en ? "Guest QR" : "QR ភ្ញៀវ") : (en ? "General Event QR" : "QR ធៀបទូទៅ")}
             </span>
@@ -70,12 +72,8 @@ export default function QrPage({ invitationId: propInvitationId, guestId: propGu
                 ? (en ? "Linked to specific guest record. Reuses authorized check-in token." : "ភ្ជាប់ជាមួយទិន្នន័យភ្ញៀវជាក់លាក់។ ប្រើប្រាស់សម្រាប់ផ្ទៀងផ្ទាត់វត្តមាន។")
                 : (en ? "Directs scanning guests to the official public invitation page." : "នាំភ្ញៀវដែលស្កេនទៅកាន់ទំព័រធៀបការជាសាធារណៈផ្លូវការ។")}
             </p>
-          </div>
-
-          <QrPreview qrData={qrData} onRetry={loadQr} />
-
-          <div className="qr-actions">
-            <QrDownloadButton onDownload={downloadPng} downloading={downloading} />
+          </div>}>
+            <QrDownloadButton onDownload={downloadPng} downloading={downloading} disabled={!qrData?.qrCodeDataUri} />
             {qrData?.invitationUrl && (
               <button
                 type="button"
@@ -86,7 +84,7 @@ export default function QrPage({ invitationId: propInvitationId, guestId: propGu
                 <span>{copied ? (en ? "Copied" : "បានចម្លង") : (en ? "Copy Link" : "ចម្លងតំណភ្ជាប់")}</span>
               </button>
             )}
-          </div>
+          </QrPreview>
         </div>
       )}
     </main>

@@ -1,7 +1,7 @@
 import { QrCode, ExternalLink } from "lucide-react";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 
-export function QrPreview({ qrData, onRetry }) {
+export function QrPreview({ qrData, onRetry, context, children }) {
   const en = useLanguageStore(state => state.lang) === "en";
   if (!qrData) {
     return (
@@ -28,23 +28,25 @@ export function QrPreview({ qrData, onRetry }) {
       </div>
 
       <div className="qr-details">
+        {context}
         {qrData.title && <h3 className="qr-title">{qrData.title}</h3>}
         {qrData.guestName && (
           <p className="qr-guest">
             {en ? "Guest:" : "ភ្ញៀវកិត្តិយស៖"} <strong>{qrData.guestName}</strong>
           </p>
         )}
-        {qrData.invitationUrl && (
+        {qrData.invitationUrl && <p className="qr-destination">{(() => { try { const url = new URL(qrData.invitationUrl); return `${url.host}${url.pathname}`; } catch { return ''; } })()}</p>}
+        <div className="qr-actions">{children}{qrData.invitationUrl && (
           <a
             href={qrData.invitationUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="qr-link"
+            className="workspace-button"
           >
             <span>{en ? "Open invitation" : "បើកធៀបអញ្ជើញ"}</span>
             <ExternalLink size={14} aria-hidden="true" />
           </a>
-        )}
+        )}</div>
       </div>
     </div>
   );

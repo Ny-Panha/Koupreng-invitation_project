@@ -1,0 +1,11 @@
+.event-settings .workspace-page-heading h1 { margin: 0 0 8px; font-size: clamp(24px, 3vw, 32px); }
+.event-settings form { padding: 24px; background: var(--ws-surface); box-shadow: var(--ws-shadow); }
+.event-settings .event-settings-section { margin: 0 0 24px; padding-bottom: 20px; border-bottom: 1px solid var(--ws-border); }
+.event-settings .event-settings-section legend { font-size: 18px; }
+.event-settings .event-settings-section p { margin: 0 0 16px; color: var(--ws-muted); font-size: 14px; }
+.event-settings .event-wizard-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.event-settings label:has([name=title]), .event-settings label:has([name=venueAddress]), .event-settings label:has([name=googleMapUrl]) { grid-column: 1 / -1; }
+.event-settings :is(input,select,textarea) { width: 100%; min-width: 0; min-height: 48px; padding: 10px 12px; border: 1px solid var(--ws-border-strong); border-radius: 10px; font: inherit; background: var(--ws-surface); color: var(--ws-ink); }
+.event-settings-save { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.event-settings-save [role=status] { font-size: 14px; color: var(--ws-teal); }
+@media (max-width: 599px) { .event-settings form { padding: 16px; } .event-settings .event-wizard-grid { grid-template-columns: minmax(0,1fr); } }

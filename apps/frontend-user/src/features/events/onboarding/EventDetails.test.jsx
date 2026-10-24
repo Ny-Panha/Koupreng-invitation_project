@@ -23,7 +23,7 @@ it("saves birthday details, contact and schedule through the real request contra
   fireEvent.change(screen.getByLabelText("Activity"), { target: { value: "Birthday dinner" } });
   fireEvent.change(screen.getByLabelText("Time", { exact: true }), { target: { value: "18:00" } });
   fireEvent.click(screen.getByRole("button", { name: "Save details" }));
-  await screen.findByText("Saved event");
+  await screen.findByText("Saved to event");
   await waitFor(() => expect(updateEvent).toHaveBeenCalledOnce());
   const [id, payload] = invitationService.update.mock.calls[0];
   expect(id).toBe("42");
