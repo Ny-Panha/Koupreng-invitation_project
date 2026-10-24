@@ -287,6 +287,7 @@ function WeddingTemplateExperience({
                     : baseContent.gallery),
             story: Array.isArray(liveData.storyChapters) ? liveData.storyChapters : baseContent.story,
             schedule: Array.isArray(liveData.schedule) ? normalizeProgram(liveData.schedule) : baseContent.schedule,
+            scheduleDate: liveData.scheduleDate || liveData.dateText || liveData.eventDate || liveData.eventDateText || baseContent.scheduleDate,
             targetDate: liveData.targetDate || liveData.eventDate || baseContent.targetDate,
             weddingDate: liveData.weddingDate || baseContent.weddingDate,
             weddingTime: liveData.weddingTime || baseContent.weddingTime,

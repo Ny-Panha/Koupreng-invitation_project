@@ -777,7 +777,9 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         story: hasHostContent ? (hostStory || []) : ((hostStory && hostStory.length) ? hostStory : buildStory(tpl, variant)),
         schedule: (hostSchedule && hostSchedule.length) ? hostSchedule : (hasHostContent ? (host.schedule || []) : buildSchedule(tpl, variant)),
         scheduleTitle: nonBlank(host.scheduleTitle || tpl.scheduleTitle) || "កម្មវិធីមង្គលការ",
-        scheduleDate: nonBlank(host.scheduleDate || tpl.scheduleDate) || (hasHostContent ? nonBlank(host.dateText) : tpl.dateText || ""),
+        scheduleDate: hasHostContent
+            ? nonBlank(host.scheduleDate || host.dateText)
+            : nonBlank(tpl.scheduleDate || tpl.dateText),
         scheduleEnding: nonBlank(tpl.scheduleEnding || host.scheduleEnding),
         party: (hostParty && hostParty.length) ? hostParty : (hasHostContent ? [] : DEMO_PARTY),
         dressCode,

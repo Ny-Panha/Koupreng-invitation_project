@@ -18,6 +18,7 @@ describe.each(TEMPLATES)('$id editor/storage/preview adapter contract', template
     expect(reopened).not.toBeNull();
     const view = buildTemplateContent(reopened.tpl, reopened.variant);
     expect(view.schedule).toMatchObject(content.schedule);
+    expect(view.scheduleDate).toBe(reopened.tpl.hostContent.dateText);
     expect(view.story).toMatchObject(content.storyChapters);
     const hidden = draftToTemplate({ ...draft, showStory: false }, []);
     const hiddenView = buildTemplateContent(hidden.tpl, hidden.variant);
