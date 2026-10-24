@@ -51,7 +51,8 @@ public class EntitlementService {
         this.users = users;
         this.invitations = invitations;
         this.guests = guests;
-        this.freePackageCode = freePackageCode == null ? "" : freePackageCode.trim();
+        // A legacy .env may explicitly set FREE_PACKAGE_CODE=, bypassing Spring's default.
+        this.freePackageCode = freePackageCode == null || freePackageCode.isBlank() ? "FREE" : freePackageCode.trim();
     }
 
     @Transactional(readOnly = true)

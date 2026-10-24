@@ -20,6 +20,9 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class EntitlementServiceTests {
     private final SubscriptionRepository subscriptions = mock(SubscriptionRepository.class);
@@ -87,6 +90,25 @@ class EntitlementServiceTests {
         var plan = baseline(); plan.setMaxInvitations(0); configureBaseline(plan);
         assertThat(service(false).policy(user).source()).isEqualTo("CONFIGURED_FREE_PACKAGE");
         assertThatThrownBy(() -> service(false).requireInvitationCreation(user)).isInstanceOf(ApiException.class);
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = {" ", "\t\r\n"})
+    void blankLegacyFreeCodeUsesConfiguredFreeBenefitsAndStillEnforcesQuotas(String configuredCode) {
+        var free = baseline(); free.setCode("FREE"); free.setMaxInvitations(1); free.setQrInvitationsEnabled(true);
+        when(packages.findByCodeAndActiveTrue("FREE")).thenReturn(Optional.of(free));
+        when(users.findForUpdateById(1L)).thenReturn(Optional.of(user));
+        when(invitations.countByUserIdAndDeletedFalse(1L)).thenReturn(1L);
+        var service = new EntitlementService(subscriptions, packages, purchases, users, invitations, guests, false, configuredCode);
+
+        var current = service.current(user);
+        assertThat(current.packagePlan().getCode()).isEqualTo("FREE");
+        assertThat(current.source()).isEqualTo("CONFIGURED_FREE_PACKAGE");
+        assertThat(current.features()).contains("QR_INVITATIONS");
+        assertThat(current.quotas().get("invitations").remaining()).isZero();
+        assertThatThrownBy(() -> service.requireInvitationCreation(user)).isInstanceOfSatisfying(ApiException.class,
+            exception -> assertThat(exception.getCode()).isEqualTo("PACKAGE_LIMIT_REACHED"));
     }
 
     @Test void demoGrantsAreNonrevenueExpiringAndSnapshotBenefitsSurviveCatalogEdits() {
