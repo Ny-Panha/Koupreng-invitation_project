@@ -30,10 +30,10 @@ the owner links to that organization**, not an isolated event-only invite.
 | Role | Enabled event tools |
 | --- | --- |
 | Owner | Existing owner tools, publishing, finances, settings and team administration |
-| Manager / legacy organization ADMIN | Invitation editing/media, guests/import, RSVP, seating, check-in; subject to owner benefits |
+| Manager / legacy organization ADMIN | Invitation editing/media, guests/import, RSVP, seating, check-in and attendance reports; subject to owner benefits |
 | Designer | Invitation content/design and media |
 | Check-in staff | Attendance summary, limited roster, scan/manual check-in and undo |
-| Viewer | Event overview and invitation preview; attendance analytics permission reserved for the next increment |
+| Viewer | Event overview, invitation preview and attendance reports; advanced analytics additionally requires the owner's benefit |
 | Legacy MEMBER | Event overview and preview |
 
 No collaborator receives publishing, finance, delivery, ticket design, access-setting

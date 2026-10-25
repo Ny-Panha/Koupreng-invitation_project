@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { installIdentityFixtures } from './support/templateIdentityFixtures.js';
 
 test.use({ reducedMotion: 'reduce' });
-for (const width of [320, 360, 375, 390, 430, 768, 1024, 1440, 1920]) {
+for (const width of [320, 360, 375, 390, 430, 768, 1024, 1366, 1440, 1920]) {
   test(`guided Studio at ${width}px preserves editing and preview focus`, async ({ page }, info) => {
     await page.setViewportSize({ width, height: 900 });
     await installIdentityFixtures(page);
