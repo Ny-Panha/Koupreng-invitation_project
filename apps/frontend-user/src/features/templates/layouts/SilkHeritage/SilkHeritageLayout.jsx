@@ -199,7 +199,7 @@ export default function SilkHeritageLayout({
       <div className="sh-venue-card"><h3>{venueName}</h3>{vm.venueHall && <p>{vm.venueHall}</p>}<p>{venueAddress}</p><p>{date}{vm.eventTime && <> · {language === "en" ? latinTime(vm.eventTime) : vm.eventTime}</>}</p>{vm.googleMapsUrl && <a className="sh-button sh-button-light" href={vm.googleMapsUrl} target="_blank" rel="noopener noreferrer">{copy("បើកផែនទី", "Open Google Maps")}<span aria-hidden="true">↗</span></a>}</div>
       {vm.sketchMapImage && <div className="sh-sketch"><Photo src={vm.sketchMapImage} alt={copy("ផែនទីទីតាំងពិធី", "Venue directions")} /></div>}
     </section>,
-    dressCode: enabled("dressCode") && vm.dressCode?.description && <section className="sh-section sh-dress" key="dressCode"><h2>{heading("សម្លៀកបំពាក់", "Dress code")}</h2><p>{vm.dressCode.description}</p><ul>{vm.dressCode.colors.map((color) => <li key={color.hex}><span style={{ backgroundColor: themeColor(color.hex) }} aria-hidden="true" />{color.name}</li>)}</ul></section>,
+    dressCode: enabled("dressCode") && vm.dressCode?.description && <section className="sh-section sh-dress" key="dressCode"><h2>{vm.dressCode.name || heading("សម្លៀកបំពាក់", "Dress code")}</h2><p>{vm.dressCode.description}</p><ul>{vm.dressCode.colors.map((color) => <li key={color.hex}><span style={{ backgroundColor: themeColor(color.hex) }} aria-hidden="true" />{color.name}</li>)}</ul></section>,
     gift: enabled("gift") && <section className="sh-gift sh-section" key="gift" aria-labelledby="sh-gift-title">
       <div className="sh-section-intro"><SilkOrnament /><h2 id="sh-gift-title">{heading("ចំណងដៃ និងពរជ័យ", "Gifts and blessings")}</h2></div>
       {vm.hasHostContent && vm.gift?.length > 0 ? <TemplateGift content={vm} /> : <p className="sh-demo-note">{copy("វត្តមាន និងពរជ័យរបស់លោកអ្នក ជាអំណោយដ៏មានតម្លៃ។ នេះជាគំរូបង្ហាញ មិនមានព័ត៌មានទូទាត់ប្រាក់ពិតទេ។", "Your presence and blessings are our greatest gifts. This preview contains no real payment details.")}</p>}
@@ -221,7 +221,8 @@ export default function SilkHeritageLayout({
       <div className="sh-folio-leaf sh-folio-leaf-left" aria-hidden="true" /><div className="sh-folio-leaf sh-folio-leaf-right" aria-hidden="true" />
       <div className="sh-cover-content">
         <p className="sh-brand" lang="en">Koupreng</p><SilkOrnament />
-        <h1>{language === "en" ? "Wedding invitation" : vm.title || "សិរីមង្គលអាពាហ៍ពិពាហ៍"}</h1>
+        <h1>{vm.hasHostContent && vm.title ? vm.title : language === "en" ? "Wedding invitation" : vm.title || "សិរីមង្គលអាពាហ៍ពិពាហ៍"}</h1>
+        {vm.hasHostContent && vm.subtitle && <p>{vm.subtitle}</p>}
         {!vm.hideCoupleNameOnCover && <p className="sh-cover-names" style={elementFont("couple")}>{names}</p>}
         <div className="sh-dedication"><p>{copy("សូមគោរពអញ្ជើញ", "With our warm invitation")}</p><p className="sh-guest" style={elementFont("guestName")}>{vm.guestName || copy("លោកអ្នក និងក្រុមគ្រួសារ", "You and your family")}</p></div>
         <p>{date}</p><span className="sh-wax-seal" aria-hidden="true">{monogram || "K"}</span>

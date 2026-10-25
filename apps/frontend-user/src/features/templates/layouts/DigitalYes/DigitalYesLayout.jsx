@@ -1,5 +1,7 @@
 import { useCinematicOpening } from "../../shared/Openings/cinematicOpeningContext";
 import SaveTheDate from '../../shared/SaveTheDate';
+import AuthoredClosing from '../../shared/AuthoredClosing';
+import { authoredHeadingStyle, isLocalTemplateFont } from '../../shared/templateTypography';
 import ProgramTimeline from '../../shared/ProgramTimeline';
 import { useState, useRef, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
@@ -29,6 +31,7 @@ import "./digital-yes.css";
 const ensureGoogleFontLoaded = (fontFamily) => {
   if (!fontFamily || typeof document === "undefined" || (typeof globalThis !== "undefined" && globalThis.process?.env?.NODE_ENV === "test")) return;
   const cleanName = fontFamily.trim().replace(/^['"]|['"]$/g, "");
+  if (isLocalTemplateFont(cleanName)) return;
   const fontId = `gfont-${cleanName.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
   if (document.getElementById(fontId)) return;
   const link = document.createElement("link");
@@ -319,17 +322,17 @@ export default function DigitalYesLayout({
               </div>
 
               <h2 className="text-xl sm:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 tdy-font-moul drop-shadow-sm">
-                សិរីសួស្តីអាពាហ៍ពិពាហ៍
+                {tpl.title || 'សិរីសួស្តីអាពាហ៍ពិពាហ៍'}
               </h2>
               <p className="text-[11px] tracking-[0.3em] text-amber-200/60 uppercase tdy-font-cinzel font-semibold mt-1.5">
-                THE WEDDING CELEBRATION OF
+                {tpl.subtitle || 'THE WEDDING CELEBRATION OF'}
               </p>
             </div>
 
             {/* Couple Names Hero */}
             <div className="space-y-3 py-2">
               <div>
-                <h1 className="text-3xl sm:text-5xl font-bold text-white tdy-font-moul drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)] leading-tight">
+                <h1 className="text-3xl sm:text-5xl font-bold text-white tdy-font-moul drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)] leading-tight" style={authoredHeadingStyle(tpl, tpl.groom)}>
                   {tpl.groom}
                 </h1>
                 {tpl.groomEn && (
@@ -346,7 +349,7 @@ export default function DigitalYesLayout({
               </div>
 
               <div>
-                <h1 className="text-3xl sm:text-5xl font-bold text-white tdy-font-moul drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)] leading-tight">
+                <h1 className="text-3xl sm:text-5xl font-bold text-white tdy-font-moul drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)] leading-tight" style={authoredHeadingStyle(tpl, tpl.bride)}>
                   {tpl.bride}
                 </h1>
                 {tpl.brideEn && (
@@ -383,6 +386,7 @@ export default function DigitalYesLayout({
             {/* Blessing / Invitation Message */}
             {tpl.blessingMessage && (
               <div className="py-2 px-2 text-center">
+                {tpl.messageTitle && <h2 className="tdy-font-moul leading-loose">{tpl.messageTitle}</h2>}
                 <p className="text-xs sm:text-sm text-amber-100/90 leading-loose max-w-lg mx-auto">
                   {tpl.blessingMessage}
                 </p>
@@ -582,6 +586,7 @@ export default function DigitalYesLayout({
             {isEnabled("rsvp") && <DigitalYesRsvpModal children={children} />}
 
             {/* Footer Closing */}
+            <AuthoredClosing content={tpl} />
             <div className="pt-6 border-t border-amber-400/15 text-center">
               <p className="text-xs sm:text-sm text-amber-200/70">
                 សូមថ្លែងអំណរគុណយ៉ាងជ្រាលជ្រៅចំពោះវត្តមានដ៏ឧត្តុង្គឧត្តម

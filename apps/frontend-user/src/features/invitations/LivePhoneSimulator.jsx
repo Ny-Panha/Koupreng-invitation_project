@@ -27,7 +27,7 @@ function displayKhmerDate(dateStr) {
     }
 }
 
-export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, deviceName, onRequestClose }) {
+export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, deviceName, onRequestClose, onEditSection }) {
   const uiCopy = useUiCopy();
     const { text: t, lang } = useBackendMessages("invitations");
     const en = lang === "en";
@@ -36,6 +36,7 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, devi
     const viewportRef = useRef(null);
     const [device, setDevice] = useState("mobile");
     const [zoom, setZoom] = useState("fit");
+    const [clickEditing, setClickEditing] = useState(false);
     const [showTools, setShowTools] = useState(() => window.matchMedia("(min-width: 1024px)").matches);
     const [availableSpace, setAvailableSpace] = useState({ width: 480, height: 720 });
     // Keep the 440 × 860 CSS content viewport stable, including during zoom.
@@ -189,6 +190,7 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, devi
             if (event.data?.type === "PREVIEW_READY") {
                 setReadyPreview(previewKey);
                 broadcastSync();
+                sendPreview({ type: 'PREVIEW_EDIT_MODE', open: clickEditing });
                 if (iframeRef.current?.contentWindow) {
                     try {
                         sendPreview({ type: "TOGGLE_GATE", open: isGateOpen, isOpen: isGateOpen });
@@ -197,10 +199,11 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, devi
                     }
                 }
             }
+            if (event.data?.type === 'EDIT_STUDIO_SECTION' && clickEditing) onEditSection?.(event.data.sectionKey);
         };
         window.addEventListener("message", handleMsg);
         return () => window.removeEventListener("message", handleMsg);
-    }, [broadcastSync, isGateOpen, previewSession, sendPreview, previewKey]);
+    }, [broadcastSync, isGateOpen, previewSession, sendPreview, previewKey, clickEditing, onEditSection]);
 
     // Check if running in headless test environment (Vitest / HappyDOM)
     const isTest = import.meta.env.MODE === "test" || Boolean(globalThis.__vitest_worker__);
@@ -255,6 +258,7 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, devi
 
             <button type="button" className="studio-preview-toggle" aria-expanded={showTools} onClick={() => setShowTools(value => !value)}>{en ? "Device and zoom controls" : "ជម្រើសឧបករណ៍ និងទំហំ"}</button>
             <div className="studio-preview-tools" hidden={!showTools} aria-label={uiCopy("ជម្រើសមើលជាមុន", "Preview controls")}>
+                {onEditSection && <button type="button" aria-pressed={clickEditing} onClick={() => { const next = !clickEditing; setClickEditing(next); sendPreview({ type: 'PREVIEW_EDIT_MODE', open: next }); }}>{en ? 'Click to edit' : 'ចុចដើម្បីកែសម្រួល'}</button>}
                 <button type="button" aria-pressed={device === "mobile"} onClick={() => setDevice("mobile")}>{deviceName || (en ? PHONE_PREVIEW.name : "មើលតាមទូរស័ព្ទ")}</button>
                 <button type="button" aria-pressed={device === "desktop"} onClick={() => setDevice("desktop")}>{en ? "Desktop" : "កុំព្យូទ័រ"}</button>
                 <label>{en ? "Zoom" : "ទំហំ"} <select aria-label={uiCopy("ទំហំមើលជាមុន", "Preview zoom")} value={zoom} onChange={event => setZoom(event.target.value)}>

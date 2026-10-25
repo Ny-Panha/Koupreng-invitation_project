@@ -3,6 +3,13 @@
 @font-face { font-family: "Cormorant Garamond"; src: url("/fonts/silk-heritage/CormorantGaramond.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
 @font-face { font-family: "DM Sans"; src: url("/fonts/marketing/DMSans-Latin.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
 @font-face { font-family: "Bayon"; src: url("/invitations/khmer-celestial/fonts/bayon.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "Cinzel"; src: url("/fonts/template-defaults/Cinzel.woff2") format("woff2"); font-weight: 400 900; font-display: swap; }
+@font-face { font-family: "Playfair Display"; src: url("/fonts/template-defaults/PlayfairDisplay.woff2") format("woff2"); font-weight: 400 900; font-display: swap; }
+@font-face { font-family: "Playfair Display"; src: url("/fonts/template-defaults/PlayfairDisplay-Italic.woff2") format("woff2"); font-weight: 400 900; font-style: italic; font-display: swap; }
+@font-face { font-family: "Koulen"; src: url("/fonts/template-defaults/Koulen-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
 .kc-root[data-studio-message-align] .kc-invitation__copy p, .kc-root[data-studio-message-align] .kc-closing__note p { text-align: var(--studio-message-align); }
 .kc-root[data-studio-message-size] .kc-invitation__copy p, .kc-root[data-studio-message-size] .kc-closing__note p { font-size: var(--studio-message-size); line-height: 1.8; }
 .kc-root[data-studio-portrait] .kc-invitation__portrait .kc-image { object-position: var(--studio-portrait-position); }
+.template-authored-closing { max-width: 680px; margin: 24px auto; padding: 20px; text-align: center; line-height: 1.8; overflow-wrap: anywhere; }
+.template-authored-closing h2 { font: inherit; font-size: 1.2em; margin: 16px 0 8px; }
+.template-authored-families { margin-block: 16px; line-height: 1.8; overflow-wrap: anywhere; }

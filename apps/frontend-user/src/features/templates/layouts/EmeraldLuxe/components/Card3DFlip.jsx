@@ -1,4 +1,5 @@
 import ProgramTimeline from '../../../shared/ProgramTimeline';
+import { authoredHeadingStyle } from '../../../shared/templateTypography';
 import ProgramDetails from "../../../shared/ProgramDetails";
 import { RotateCw, Calendar, Clock, MapPin, QrCode, Sparkles } from "lucide-react";
 
@@ -22,7 +23,7 @@ export default function Card3DFlip({
           <div className="el-card-header">
             <Sparkles className="el-ornament-icon" />
             <p style={{ fontSize: "0.8rem", letterSpacing: "0.25em", color: "var(--el-gold-primary)", textTransform: "uppercase" }}>
-              ROYAL EMERALD INVITATION
+              {tpl.title || 'ROYAL EMERALD INVITATION'}
             </p>
           </div>
 
@@ -44,13 +45,13 @@ export default function Card3DFlip({
 
           <div style={{ textAlign: "center", margin: "1.5rem 0" }}>
             <p style={{ fontSize: "0.85rem", color: "var(--el-gold-primary)", marginBottom: "0.5rem" }}>
-              សូមគោរពអញ្ជើញមកកាន់ពិធីមង្គលការ
+              {tpl.subtitle || 'សូមគោរពអញ្ជើញមកកាន់ពិធីមង្គលការ'}
             </p>
-            <h1 className="el-names-title">{tpl.groom}</h1>
+            <h1 className="el-names-title" style={authoredHeadingStyle(tpl, tpl.groom)}>{tpl.groom}</h1>
             <p style={{ fontFamily: "Cinzel, serif", fontSize: "1.5rem", color: "var(--el-gold-primary)", margin: "0.25rem 0" }}>
               &amp;
             </p>
-            <h1 className="el-names-title">{tpl.bride}</h1>
+            <h1 className="el-names-title" style={authoredHeadingStyle(tpl, tpl.bride)}>{tpl.bride}</h1>
             {(tpl.groomEn || tpl.brideEn) && (
               <p style={{ fontSize: "0.9rem", color: "#e2e8f0", marginTop: "0.75rem" }}>
                 {tpl.groomEn} &amp; {tpl.brideEn}
@@ -64,6 +65,7 @@ export default function Card3DFlip({
               {tpl.dateText}
             </span>
             <p style={{ fontSize: "0.9rem", color: "var(--el-text-muted)", lineHeight: "1.6", maxWidth: "420px", margin: "0 auto" }}>
+              {tpl.messageTitle && <strong>{tpl.messageTitle}<br /></strong>}
               {tpl.blessingMessage || "វត្តមានដ៏ថ្លៃថ្លារបស់លោកអ្នក គឺជាកិត្តិយសដ៏ធំធេងសម្រាប់ក្រុមគ្រួសារយើងខ្ញុំ។"}
             </p>
           </div>

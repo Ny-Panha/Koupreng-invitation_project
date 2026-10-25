@@ -1,4 +1,7 @@
 import SaveTheDate from '../shared/SaveTheDate';
+import AuthoredClosing from '../shared/AuthoredClosing';
+import AuthoredFamilies from '../shared/AuthoredFamilies';
+import { authoredHeadingStyle } from '../shared/templateTypography';
 import ProgramTimeline from '../shared/ProgramTimeline';
 import ProgramDetails from "../shared/ProgramDetails";
 import { useState, useEffect, useRef } from "react";
@@ -176,11 +179,15 @@ export default function WithJoyPortalLayout({
           }}
         />
         <div className="wj-hero-content">
-          <span className="wj-hero-tag">អាពាហ៍ពិពាហ៍ឌីជីថលបែបទំនើប</span>
-          <h1 className="wj-hero-names">
+          <span className="wj-hero-tag">{effectiveContent.title || 'អាពាហ៍ពិពាហ៍ឌីជីថលបែបទំនើប'}</span>
+          {effectiveContent.subtitle && <p>{effectiveContent.subtitle}</p>}
+          <h1 className="wj-hero-names" style={authoredHeadingStyle(effectiveContent, groom + bride, 'Kantumruy Pro')}>
             {groom} <span style={{ color: "var(--wj-accent)" }}>&amp;</span> {bride}
           </h1>
           <p className="wj-hero-date">{dateText}</p>
+          {effectiveContent.messageTitle && <h2>{effectiveContent.messageTitle}</h2>}
+          {effectiveContent.message && <p>{effectiveContent.message}</p>}
+          <AuthoredFamilies content={effectiveContent} />
 
           {isEnabled("countdown") && <SaveTheDate content={effectiveContent} />}
         </div>
@@ -575,6 +582,7 @@ export default function WithJoyPortalLayout({
 
       {/* Footer CTA & Brand */}
       <footer style={{ background: "var(--wj-primary)", color: "#ffffff", padding: "3rem 1.5rem", textAlign: "center" }}>
+        <AuthoredClosing content={effectiveContent} />
         <p style={{ fontFamily: "Cinzel, serif", fontSize: "1.3rem", fontWeight: "700", marginBottom: "0.5rem" }}>
           {groom} &amp; {bride}
         </p>

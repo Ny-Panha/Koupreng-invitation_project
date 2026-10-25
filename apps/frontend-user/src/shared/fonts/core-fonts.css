@@ -16,3 +16,22 @@
   font-weight: 100 900;
   font-display: swap;
 }
+@font-face {
+  font-family: "Battambang";
+  src: url("/fonts/khmer/Battambang-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Battambang";
+  src: url("/fonts/khmer/Battambang-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Noto Sans Khmer";
+  src: url("/fonts/khmer/NotoSansKhmer.woff2") format("woff2");
+  font-weight: 100 900;
+  font-stretch: 62.5% 100%;
+  font-display: swap;
+}

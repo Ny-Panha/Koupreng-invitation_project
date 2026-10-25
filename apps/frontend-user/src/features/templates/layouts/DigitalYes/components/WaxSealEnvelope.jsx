@@ -1,5 +1,6 @@
 import { Sparkles, Heart } from "lucide-react";
 import CoverBackground from "../../../shared/Openings/CoverBackground";
+import { authoredHeadingStyle } from '../../../shared/templateTypography';
 
 export default function WaxSealEnvelope({
   tpl,
@@ -37,9 +38,9 @@ export default function WaxSealEnvelope({
               <Heart className="h-4 w-4 text-amber-700 fill-amber-700/20" />
             </div>
             <span className="text-[10px] tracking-[0.25em] uppercase text-amber-800 tdy-font-cinzel font-bold mb-2">
-              WEDDING INVITATION
+              {tpl.title || 'WEDDING INVITATION'}
             </span>
-            <div className="text-lg sm:text-xl tdy-font-moul text-stone-900 leading-snug">
+            <div className="text-lg sm:text-xl tdy-font-moul text-stone-900 leading-snug" style={authoredHeadingStyle(tpl, tpl.groom + tpl.bride)}>
               {tpl.groom}
               <span className="text-amber-700 tdy-font-playfair italic font-normal mx-1.5">&amp;</span>
               {tpl.bride}

@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
 
+it('uses the canonical Settings RSVP deadline and honors clearing it over stale content', () => {
+    const stored = { templateCode: 'khmer-celestial', contentJson: JSON.stringify({ rsvp: { deadline: '2027-12-04' } }) };
+    expect(publicInvitationToDraft({ ...stored, rsvpDeadline: '2027-12-01' }).rsvp.deadline).toBe('2027-12-01');
+    expect(publicInvitationToDraft({ ...stored, rsvpDeadline: null }).rsvp.deadline).toBe('');
+    expect(publicInvitationToDraft(stored).rsvp.deadline).toBe('2027-12-04');
+});
+
 import { draftToTemplate } from "./draftToTemplate";
 import { buildTemplateContent } from "@/features/templates";
 

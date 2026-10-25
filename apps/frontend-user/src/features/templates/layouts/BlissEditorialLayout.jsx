@@ -1,4 +1,7 @@
 import SaveTheDate from '../shared/SaveTheDate';
+import AuthoredClosing from '../shared/AuthoredClosing';
+import AuthoredFamilies from '../shared/AuthoredFamilies';
+import { authoredHeadingStyle } from '../shared/templateTypography';
 import ProgramTimeline from '../shared/ProgramTimeline';
 import ProgramDetails from "../shared/ProgramDetails";
 import { useState, useRef, useEffect } from "react";
@@ -172,14 +175,17 @@ export default function BlissEditorialLayout({
           />
         </div>
         <div className="bliss-hero-editorial">
-          <span className="bliss-issue-tag">THE WEDDING CELEBRATION • ISSUE 2026</span>
-          <h1 className="bliss-editorial-names">
+          <span className="bliss-issue-tag">{effectiveContent.title || 'THE WEDDING CELEBRATION'}</span>
+          {effectiveContent.subtitle && <p>{effectiveContent.subtitle}</p>}
+          <h1 className="bliss-editorial-names" style={authoredHeadingStyle(effectiveContent, groom + bride)}>
             {groom} &amp;<br />
             {bride}
           </h1>
           <p className="bliss-editorial-date">{dateText}</p>
+          <AuthoredFamilies content={effectiveContent} />
           <blockquote className="bliss-quote">
-            "សេចក្តីស្រឡាញ់ពិតមិនមែនជាការសម្លឹងមើលមុខគ្នានោះទេ ប៉ុន្តែជាការសម្លឹងទៅកាន់ទិសដៅតែមួយរួមគ្នាជាមួយមនុស្សជាទីស្រឡាញ់។"
+            {effectiveContent.messageTitle && <p>{effectiveContent.messageTitle}</p>}
+            {effectiveContent.message || 'សេចក្តីស្រឡាញ់ពិតមិនមែនជាការសម្លឹងមើលមុខគ្នានោះទេ ប៉ុន្តែជាការសម្លឹងទៅកាន់ទិសដៅតែមួយរួមគ្នាជាមួយមនុស្សជាទីស្រឡាញ់។'}
           </blockquote>
           {isEnabled("rsvp") && (
             <div>
@@ -317,6 +323,7 @@ export default function BlissEditorialLayout({
 
       {/* Footer */}
       <footer style={{ padding: "4rem 2rem", textAlign: "center", borderTop: "1px solid var(--bliss-border)" }}>
+        <AuthoredClosing content={effectiveContent} />
         <p style={{ fontFamily: "Cinzel, serif", fontSize: "1.4rem", letterSpacing: "0.15em", marginBottom: "0.5rem" }}>
           {groomEn} &amp; {brideEn}
         </p>

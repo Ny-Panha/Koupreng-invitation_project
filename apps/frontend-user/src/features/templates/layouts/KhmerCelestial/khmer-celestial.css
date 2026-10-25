@@ -95,6 +95,21 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
   width: min(850px, calc(100% - 40px));
 }
 
+/* Original carved-scroll and six-petal Romduol studies, deliberately non-figural. */
+.kc-heritage { position: absolute; inset: clamp(10px, 2vw, 24px); z-index: 2; pointer-events: none; color: var(--kc-gold); opacity: .72; }
+.kc-heritage__corner { position: absolute; width: clamp(58px, 15vw, 132px); height: auto; }
+.kc-heritage__corner--nw { top: 0; left: 0; }
+.kc-heritage__corner--ne { top: 0; right: 0; transform: scaleX(-1); }
+.kc-heritage__corner--sw { bottom: 0; left: 0; transform: scaleY(-1); }
+.kc-heritage__corner--se { bottom: 0; right: 0; transform: scale(-1); }
+.kc-romduol { display: inline-block; width: 36px; height: 36px; flex-shrink: 0; vertical-align: middle; }
+.kc-heritage__flower { position: absolute; left: calc(50% - 20px); top: 4px; width: 40px; height: 40px; }
+.kc-heading__ornament { gap: 14px; }
+.kc-root .kc-family__group h3, .kc-root .kc-hero__eyebrow { text-shadow: 0 1px 0 var(--kc-paper), 0 2px 0 rgb(50 78 57 / 12%); }
+.kc-root .kc-heading__khmer, .kc-root .kc-family__group h3 { line-height: 1.8; overflow-wrap: anywhere; letter-spacing: normal; }
+.kc-root[data-motion=minimal] .kc-live-garden *, .kc-root .kc-live-garden.is-paused * { animation-play-state: paused !important; }
+.kc-root .kc-shell { background-image: radial-gradient(ellipse at 0 0, rgb(167 125 62 / 3%), transparent 70%); }
+
 .kc-section {
   position: relative;
   padding: clamp(96px, 13vw, 168px) 0;

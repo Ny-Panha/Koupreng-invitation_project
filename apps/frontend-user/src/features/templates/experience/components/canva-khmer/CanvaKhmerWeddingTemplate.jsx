@@ -299,9 +299,9 @@ function CanvaKhmerDressCode({ content }) {
 
 function CanvaKhmerInvitationDetails({ content, sectionRef, showCountdown, showDressCode }) {
     const parents = [
-        ["មាតាបិតាកូនកំលោះ", content.couple?.groomParents],
-        ["មាតាបិតាកូនក្រមុំ", content.couple?.brideParents],
-    ].filter(([, value]) => meaningful(value));
+        ["មាតាបិតាកូនកំលោះ", content.groomParents || content.family?.groomParents || content.couple?.groomParents],
+        ["មាតាបិតាកូនក្រមុំ", content.brideParents || content.family?.brideParents || content.couple?.brideParents],
+    ].map(([label, value]) => [label, Array.isArray(value) ? value.filter(Boolean).join(' · ') : value]).filter(([, value]) => meaningful(value));
 
     return (
         <section id="ck-details" className="ck-slice ck-details" ref={sectionRef} data-ck-section="details">
@@ -314,6 +314,7 @@ function CanvaKhmerInvitationDetails({ content, sectionRef, showCountdown, showD
                     </div>
                 )}
                 <p className="ck-details__message">{content.message}</p>
+                {content.messageTitle && <h2>{content.messageTitle}</h2>}
                 <div className="ck-details__names"><strong>{content.groom}</strong><span>❦</span><strong>{content.bride}</strong></div>
                 <div className="ck-details__meta">
                     {content.dateText && <p><IoCalendarOutline />{content.dateText}</p>}
@@ -668,7 +669,10 @@ function CanvaKhmerFooter({ content }) {
             <CanvaArtwork name="footer" />
             <div>
                 <small>WITH LOVE AND GRATITUDE</small>
-                <h2>សូមអរគុណ</h2>
+                <h2>{content.thankYouTitle || 'សូមអរគុណ'}</h2>
+                {content.thankYouText && <p>{content.thankYouText}</p>}
+                {content.apologyTitle && <h3>{content.apologyTitle}</h3>}
+                {content.apologyText && <p>{content.apologyText}</p>}
                 <p>{content.groom} <span>❦</span> {content.bride}</p>
                 {content.dateText && <time>{content.dateText}</time>}
                 <nav aria-label="ទំនាក់ទំនង">

@@ -248,6 +248,7 @@ export default function KhmerRoyalLotusLayout({
       secondaryColor: base.secondaryColor || base.design?.secondaryColor || "",
       backgroundColor: base.backgroundColor || base.bg || "",
       fontKhmer: base.fontKhmer || "",
+      fontLatin: base.fontLatin || '',
       thankYouTitle: base.thankYouTitle || "សូមថ្លែងអំណរគុណ",
       thankYouText: base.thankYouText ||
         "វត្តមានរបស់លោកអ្នក គឺជាកិត្តិយស និងជាពរជ័យដ៏មានតម្លៃសម្រាប់គ្រួសារយើងខ្ញុំ។",
@@ -306,7 +307,9 @@ export default function KhmerRoyalLotusLayout({
     ...(content.backgroundColor ? { "--krl-page": content.backgroundColor } : {}),
     ...(content.fontKhmer ? {
       "--krl-font-khmer": `"${content.fontKhmer}", "Kantumruy Pro", "Battambang", sans-serif`,
+      "--krl-font-display": `${JSON.stringify(content.fontKhmer)}, "Moul", "Noto Sans Khmer", serif`,
     } : {}),
+    ...(content.fontLatin ? { '--krl-font-latin': `${JSON.stringify(content.fontLatin)}, Georgia, serif` } : {}),
   };
 
   return (
@@ -394,6 +397,7 @@ export default function KhmerRoyalLotusLayout({
             </div>
             <div className="krl-hero__content">
               <span className="krl-lotus-mark krl-lotus-mark--hero">✦</span>
+              {content.title && <p className="krl-kicker">{content.title}</p>}
               <p className="krl-kicker">{content.subtitle}</p>
               <h2 className="krl-hero__title">{content.groom}</h2>
               <span className="krl-hero__amp">និង</span>
@@ -540,6 +544,8 @@ export default function KhmerRoyalLotusLayout({
             <span className="krl-lotus-mark">✦</span>
             <h2>{content.thankYouTitle}</h2>
             <p>{content.thankYouText}</p>
+            {content.apologyTitle && <h3>{content.apologyTitle}</h3>}
+            {content.apologyText && <p>{content.apologyText}</p>}
             <div className="krl-closing__names">{content.groom} <span>♥</span> {content.bride}</div>
             <small>KOUPRENG · DIGITAL WEDDING INVITATION</small>
           </footer>

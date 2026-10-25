@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
@@ -6,6 +6,7 @@ import CelestialButterfly from "./CelestialButterfly";
 import CelestialFlower from "./CelestialFlower";
 import CelestialPetal from "./CelestialPetal";
 import CelestialVine from "./CelestialVine";
+import { CelestialMotion, gardenBudget } from '../celestialMotion';
 
 const BUTTERFLIES = [
   { variant: "gold", layer: "background", path: "ltr", left: "-5%", top: "19%", size: 28, duration: 19, delay: 0, opacity: 0.42, wingSpeed: 310 },
@@ -78,6 +79,8 @@ export default function CelestialLiveGarden({ className = "", variant = "normal"
   const tier = viewportTier(width);
   const saveData = typeof navigator !== "undefined" && navigator.connection?.saveData === true;
   const reduced = usePrefersReducedMotion();
+  const intensity = useContext(CelestialMotion);
+  const staticGarden = reduced || saveData || intensity === 'minimal';
 
   useEffect(() => {
     const update = () => setWidth(window.innerWidth);
@@ -92,32 +95,22 @@ export default function CelestialLiveGarden({ className = "", variant = "normal"
   }, []);
 
   useEffect(() => {
-    if (variant !== "closing" || !gardenRef.current || typeof IntersectionObserver === "undefined") return undefined;
+    if (!gardenRef.current || typeof IntersectionObserver === "undefined") return undefined;
     const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { rootMargin: "160px 0px" });
     observer.observe(gardenRef.current);
     return () => observer.disconnect();
   }, [variant]);
 
-  const paused = !documentVisible || (variant === "closing" && !inView);
+  const paused = !documentVisible || !inView;
 
-  const counts = useMemo(() => {
-    if (variant === "transition") return { butterflies: 4, flowers: 4, petals: 10 };
-    if (reduced || saveData) return { butterflies: 4, flowers: 5, petals: reduced ? 0 : 2 };
-    if (variant === "opening") {
-      return tier === "mobile" ? { butterflies: 9, flowers: 10, petals: 8 } : tier === "medium" ? { butterflies: 13, flowers: 13, petals: 12 } : { butterflies: 18, flowers: 16, petals: 16 };
-    }
-    if (variant === "closing") {
-      return tier === "mobile" ? { butterflies: 8, flowers: 9, petals: 7 } : tier === "medium" ? { butterflies: 11, flowers: 12, petals: 10 } : { butterflies: 16, flowers: 15, petals: 14 };
-    }
-    return tier === "mobile" ? { butterflies: 6, flowers: 7, petals: 5 } : tier === "medium" ? { butterflies: 8, flowers: 9, petals: 7 } : { butterflies: 12, flowers: 11, petals: 10 };
-  }, [reduced, saveData, tier, variant]);
+  const counts = gardenBudget({ motion: intensity, tier, reduced, saveData, variant });
 
   const butterflyItems = BUTTERFLIES.slice(0, counts.butterflies);
   const flowerItems = FLOWERS.slice(0, counts.flowers);
   const petalItems = PETALS.slice(0, counts.petals);
 
   return (
-    <div ref={gardenRef} className={`kc-live-garden kc-live-garden--${variant} ${reduced ? "is-reduced" : ""} ${paused ? "is-paused" : ""} ${className}`} aria-hidden="true">
+    <div ref={gardenRef} className={`kc-live-garden kc-live-garden--${variant} ${staticGarden ? "is-reduced" : ""} ${paused ? "is-paused" : ""} ${className}`} aria-hidden="true">
       <div className="kc-live-garden__background">
         {butterflyItems.filter((item) => item.layer === "background").map((item, index) => <GardenButterfly key={`bg-${index}`} item={item} reduced={reduced || paused} />)}
         {flowerItems.slice(0, Math.max(3, Math.floor(counts.flowers * 0.45))).map((item, index) => <GardenFlower key={`bg-flower-${index}`} item={item} />)}
@@ -130,8 +123,8 @@ export default function CelestialLiveGarden({ className = "", variant = "normal"
       </div>
       <div className="kc-live-garden__foreground">
         {butterflyItems.filter((item) => item.layer === "foreground").map((item, index) => <GardenButterfly key={`fg-${index}`} item={item} foreground reduced={reduced || paused} />)}
-        <CelestialVine side="left" variant="arc" reduced={reduced || paused} />
-        <CelestialVine side="right" variant="cascade" reduced={reduced || paused} />
+        <CelestialVine side="left" variant="arc" reduced={staticGarden || paused} />
+        <CelestialVine side="right" variant="cascade" reduced={staticGarden || paused} />
       </div>
     </div>
   );
@@ -143,7 +136,7 @@ function GardenButterfly({ item, foreground = false, reduced = false }) {
     <Wrapper
       className={`kc-garden__butterfly kc-garden__butterfly--${item.path} kc-garden__butterfly--${item.layer}`}
       style={{ left: item.left, top: item.top, opacity: item.opacity, "--kc-flight-duration": `${item.duration}s`, "--kc-flight-delay": `${item.delay}s` }}
-      {...(foreground && !reduced ? { animate: { y: [0, -12, 8, 0], rotate: [-4, 5, -2, -4] }, transition: { duration: item.duration / 2, repeat: Infinity, delay: item.delay, ease: "easeInOut" } } : {})}
+      {...(foreground ? reduced ? { animate: { y: 0, rotate: 0 }, transition: { duration: 0 } } : { animate: { y: [0, -12, 8, 0], rotate: [-4, 5, -2, -4] }, transition: { duration: item.duration / 2, repeat: Infinity, delay: item.delay, ease: "easeInOut" } } : {})}
     >
       <CelestialButterfly variant={item.variant} size={item.size} wingSpeed={item.wingSpeed} reduced={reduced} />
     </Wrapper>

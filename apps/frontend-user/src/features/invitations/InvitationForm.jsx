@@ -9,6 +9,8 @@ import { resolveEvent, validTimezone, wallTimeToInstant } from '../templates/sha
 import { safeJson } from '../wedding-builder/utils/invitationDraftAdapter';
 import { legacyProgram, normalizeProgram } from "../templates/shared/program";
 import StudioSections from "./studio/StudioSections";
+import { useStudioSplit } from './studio/useStudioSplit';
+import StudioSplitControls from './studio/StudioSplitControls';
 import { STUDIO_SECTION_LABELS, studioTabForSection, resolveStudioSection } from "./studio/studioNavigation";
 import PreWeddingVideoEditor from "./studio/PreWeddingVideoEditor";
 import StudioToolbar from "./studio/StudioToolbar";
@@ -797,6 +799,7 @@ export default function InvitationForm({ invitation }) {
         setExpandedSections(current => ({ ...current, [key]: true }));
     };
     const [editorMode, setEditorMode] = useState(searchParams.get("mode") === "guided" ? "guided" : "advanced");
+    const [workspaceGrid, workspaceSplit] = useStudioSplit(editorMode);
     const [guideStep, setGuideStep] = useState(0);
     const [publishReviewOpen, setPublishReviewOpen] = useState(false);
     const [publishError, setPublishError] = useState("");
@@ -816,14 +819,27 @@ export default function InvitationForm({ invitation }) {
     const flowConfig = useMemo(() => {
         void catalogVersion;
         const template = getTemplateById(form.templateId);
-        const config = getLocalizedTemplateFormFlow(template || form.templateId, uiLanguage);
         const capabilities = templateCapabilities(template || { id: form.templateId });
+        const config = getLocalizedTemplateFormFlow(capabilities.appearance ? 'khmer-celestial' : template || form.templateId, uiLanguage);
         config.sectionOrder = config.sectionOrder.filter(key => capabilities[key] !== false && (key !== "story" || !invitation?.eventType || invitation.eventType === "WEDDING"));
-        const appearance = ["khmer-celestial", "royal-khmer-wedding"].includes(template?.code || template?.id);
+        const appearance = capabilities.typography;
         return { ...config, sectionOrder: ["eventInfo", ...config.sectionOrder.flatMap(key => key === "cover" && appearance ? [key, "appearance"] : [key]), "music", "preWeddingVideo"] };
     }, [form.templateId, catalogVersion, invitation?.eventType, uiLanguage]);
     const activeSection = resolveStudioSection(selectedSection, flowConfig.sectionOrder);
     const activeStudioTab = studioTabForSection(activeSection);
+    function editPreviewSection(section) {
+        if (!flowConfig.sectionOrder.includes(section)) return;
+        setSelectedSection(section);
+        if (editorMode === 'guided') setGuideStep(1);
+        requestAnimationFrame(() => {
+            const control = editorRoot.current?.querySelector(`[data-studio-section="${section}"] input, [data-studio-section="${section}"] textarea, [data-studio-section="${section}"] select`);
+            if (!control) return;
+            // Let the native disclosure lay out before moving focus out of the iframe.
+            control.scrollIntoView({ block: 'nearest' });
+            window.focus();
+            requestAnimationFrame(() => { if (control.isConnected) control.focus({ preventScroll: true }); });
+        });
+    }
     const [catalogTemplates, setCatalogTemplates] = useState(() => getAllTemplates());
     const [templateSearchQuery, setTemplateSearchQuery] = useState("");
     const [templateCategoryFilter, setTemplateCategoryFilter] = useState("ALL");
@@ -3198,7 +3214,7 @@ export default function InvitationForm({ invitation }) {
         music: renderMusicSection,
         preWeddingVideo: () => <PreWeddingVideoEditor eventId={invitation?.backendInvitationId || invitationId} value={form.preWeddingVideo} onChange={value => update("preWeddingVideo", value)} english={englishUI} />,
         appearance: () => <StudioAppearance form={form} update={update}
-            supportsPalette={/^(1|10|khmer-celestial|KHMER_CELESTIAL|royal-khmer-wedding)$/.test(String(form.templateId)) || /^(khmer-celestial|royal-khmer-wedding)$/i.test(String(getTemplateById(form.templateId)?.code || getTemplateById(form.templateId)?.slug || ""))} />,
+            supportsPalette={templateCapabilities(getTemplateById(form.templateId) || { id: form.templateId }).appearance} />,
         cover: renderCoverSection,
         family: renderFamilySection,
         invitation: renderInvitationSection,
@@ -3236,7 +3252,8 @@ export default function InvitationForm({ invitation }) {
             <StudioGuide mode={editorMode} onMode={mode => { setEditorMode(mode); if (mode === 'guided') goToGuideStep(guideStep); }} step={guideStep} onStep={goToGuideStep} sections={flowConfig.sectionOrder} activeSection={activeSection} onSection={setSelectedSection} english={englishUI} checks={readiness} onField={completePublishField} onPreview={openPreview} onGuests={() => openEventTool("guests")} onRsvp={() => openEventTool("rsvp")} onPublish={reviewPublication} published={published} publishedUrl={publishedUrl} saving={isSaving || isPublishing} canPublish={canPublish} canManageGuests={workspace ? workspace.can?.("MANAGE_GUESTS") : true} />
             <PublishReview open={publishReviewOpen} onClose={() => setPublishReviewOpen(false)} onConfirm={publishInvitation} onCheck={checkPublication} checks={readiness} onField={completePublishField} english={englishUI} publishing={isPublishing} error={publishError} visibility={form.visibility} published={published} />
             {/* The controls and preview continue to use the original template engine. */}
-            <div className="pe-workspace-grid">
+            {!compactPreview && !isMobilePreviewOpen && <StudioSplitControls split={workspaceSplit} english={englishUI} />}
+            <div className="pe-workspace-grid" ref={workspaceGrid} data-has-preview={!compactPreview && !isMobilePreviewOpen}>
                 {editorMode === "advanced" && <StudioSections sections={flowConfig.sectionOrder} active={activeSection}
                     onChange={section => { lastEditorField.current = null; previewReturn.current = null; setSelectedSection(section); }} english={englishUI} />}
                 {/* CENTER COLUMN: Existing template controls */}
@@ -3284,13 +3301,14 @@ export default function InvitationForm({ invitation }) {
                             }}>{uiCopy("ប្រើឃ្លាសុភាព", "Apply formal wording")}</button>
                         </div>}
                         {editorMode === "advanced" && <h2 className="studio-tab-heading">{activeStudioTab.labels[englishUI ? 1 : 0]}</h2>}
+                        {activeStudioTab.sections.some(key => templateCapabilities(getTemplateById(form.templateId) || { id: form.templateId })[key] === false) && <p className="workspace-notice">{uiCopy('ផ្នែកខ្លះមិនមានក្នុងគំរូនេះទេ។ មាតិកាដែលបានសរសេរត្រូវបានរក្សាទុកសម្រាប់ពេលប្ដូរគំរូ។', 'Some sections are unavailable in this template. Your authored content stays saved for switching templates.')}</p>}
                         {editorMode === "advanced" && activeStudioTab.id !== 'ticketsQr' && !activeStudioTab.sections.some(key => flowConfig.sectionOrder.includes(key)) && <p className="workspace-notice">{uiCopy('គំរូនេះមិនបង្ហាញផ្នែកទាំងនេះទេ។ មាតិកាដែលរក្សាទុកត្រូវបានរក្សាដដែល។', 'This template does not provide these sections. Your saved content is retained.')}</p>}
                         {flowConfig.sectionOrder.map((sectionKey) => {
                             const renderer = sectionRenderers[sectionKey];
                             if (!renderer) return null;
                             const advanced = editorMode === "advanced";
                             const visible = advanced ? activeStudioTab.sections.includes(sectionKey) : sectionKey === activeSection;
-                            return <div key={sectionKey} hidden={!visible}>
+                            return <div key={sectionKey} data-studio-section={sectionKey} hidden={!visible}>
                                 <details className="studio-subsection" open={!advanced || (expandedSections[sectionKey] ?? sectionKey === activeSection)}
                                     onToggle={event => {
                                         if (advanced) {
@@ -3313,7 +3331,14 @@ export default function InvitationForm({ invitation }) {
                     </div>
                 </div>
 
-                {!compactPreview && !isMobilePreviewOpen && <LivePhoneSimulator data={{ ...form, googleMapUrl: previewMapUrl(form.googleMapUrl, form.venueName) }} catalogVersion={catalogVersion} />}
+                {!compactPreview && !isMobilePreviewOpen && <>
+                    <div className="studio-splitter" role="separator" tabIndex={0} aria-orientation="vertical"
+                        aria-label={englishUI ? 'Editor and preview size' : 'ទំហំកន្លែងកែសម្រួល និងមើលជាមុន'}
+                        aria-valuemin={workspaceSplit.min} aria-valuemax={workspaceSplit.max} aria-valuenow={workspaceSplit.value}
+                        aria-valuetext={englishUI ? `${workspaceSplit.value}% editor` : `${workspaceSplit.value}% កន្លែងកែសម្រួល`}
+                        {...workspaceSplit.separator}><span /></div>
+                    <LivePhoneSimulator data={{ ...form, googleMapUrl: previewMapUrl(form.googleMapUrl, form.venueName) }} catalogVersion={catalogVersion} onEditSection={editPreviewSection} />
+                </>}
             </div>
 
             {/* Mobile Live Phone Simulator Overlay */}

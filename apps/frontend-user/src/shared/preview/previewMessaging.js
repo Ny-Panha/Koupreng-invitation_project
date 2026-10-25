@@ -1,4 +1,5 @@
 // FE-010: preview channels are scoped to a deliberate editor session, never public invitations.
+import { STUDIO_EDIT_SECTIONS } from './studioEditTargets';
 const NONCE_PATTERN = /^[A-Za-z0-9_-]{24,128}$/;
 const FORBIDDEN_KEYS = new Set(["__proto__", "prototype", "constructor"]);
 const STRING_FIELDS = new Set([
@@ -45,6 +46,7 @@ export function isPreviewMessage(data) {
           && (!ARRAY_FIELDS.has(key) || Array.isArray(value)))
       );
     case "TOGGLE_GATE":
+    case "PREVIEW_EDIT_MODE":
     case "GATE_STATE_CHANGE":
     case "GATE_OPENED":
       return (typeof data.open === "boolean" || typeof data.isOpen === "boolean")
@@ -52,6 +54,8 @@ export function isPreviewMessage(data) {
         && (data.isOpen === undefined || typeof data.isOpen === "boolean");
     case "SCROLL_TO_SECTION":
       return (typeof data.sectionKey === "string" || typeof data.blockId === "string");
+    case 'EDIT_STUDIO_SECTION':
+      return STUDIO_EDIT_SECTIONS.includes(data.sectionKey) && data.data === undefined && data.blockId === undefined && data.elementId === undefined;
     case "SELECT_TARGET_ELEMENT":
       return typeof data.elementId === "string" && /^[a-z][a-z0-9_-]{0,80}$/i.test(data.elementId);
     case "PREVIEW_READY":

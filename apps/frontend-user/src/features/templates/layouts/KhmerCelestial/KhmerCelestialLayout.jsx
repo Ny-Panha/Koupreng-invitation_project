@@ -44,6 +44,8 @@ import { KHMER_CELESTIAL_ASSETS } from "./khmerCelestialAssets";
 import { celestialElementFont, celestialFont } from "./celestialTypography";
 import "./khmer-celestial.css";
 import { celestialStudioStyle } from "../../experience/studioStyle";
+import CelestialHeritage from './components/CelestialHeritage';
+import { CelestialMotion } from './celestialMotion';
 
 const PROGRAM_ICONS = [
   Sparkles,
@@ -270,7 +272,12 @@ export default function KhmerCelestialLayout({
 
   useEffect(() => {
     if (!opened || preview) return;
-    window.requestAnimationFrame(() => mainRef.current?.focus({ preventScroll: true }));
+    window.requestAnimationFrame(() => {
+      const active = document.activeElement;
+      const awaitingFocus = active === document.body || active === document.documentElement || active?.closest('.kc-opening');
+      // An immediate calendar action or a parent-editor handoff owns its focus.
+      if (awaitingFocus && (window.parent === window || document.hasFocus())) mainRef.current?.focus({ preventScroll: true });
+    });
   }, [opened, preview]);
 
   useEffect(() => {
@@ -328,7 +335,8 @@ export default function KhmerCelestialLayout({
   const invitationImage = firstImage(galleryImages[1]) || firstImage(galleryImages[0]) || content.coverImage;
 
   return (
-    <div className={`kc-root${preview ? " kc-root--preview" : ""}`} data-variant="khmer-celestial"
+    <CelestialMotion value={content.studioStyle?.motion || 'elegant'}><div className={`kc-root${preview ? " kc-root--preview" : ""}`} data-variant="khmer-celestial"
+      data-motion={content.studioStyle?.motion || 'elegant'}
       data-studio-message-size={content.studioStyle?.messageSize || undefined}
       data-studio-message-align={content.studioStyle?.align || undefined}
       data-studio-portrait={Number.isFinite(content.studioStyle?.portraitY) ? true : undefined} style={{
@@ -379,6 +387,7 @@ export default function KhmerCelestialLayout({
       <main ref={mainRef} className="kc-main" tabIndex={-1} aria-hidden={!opened} inert={!opened}>
         <CelestialLiveGarden className="kc-main__garden" variant="normal" />
         <section ref={heroRef} className="kc-hero" data-tx-section="hero" aria-labelledby="kc-hero-title">
+          <CelestialHeritage />
           <motion.img
             className="kc-hero__botanical"
             src={KHMER_CELESTIAL_ASSETS.botanicalFrame}
@@ -684,6 +693,6 @@ export default function KhmerCelestialLayout({
           <span className="kc-sr-only">Wedding music</span>
         </button>
       ) : null}
-    </div>
+    </div></CelestialMotion>
   );
 }

@@ -1,5 +1,6 @@
 import { useCinematicOpening } from "../../shared/Openings/cinematicOpeningContext";
 import SaveTheDate from '../../shared/SaveTheDate';
+import AuthoredClosing from '../../shared/AuthoredClosing';
 import { useState, useRef, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -231,6 +232,7 @@ export default function EmeraldLuxeLayout({
         setIsFlipped={setIsFlipped}
         tpl={tpl}
       />
+      <AuthoredClosing content={tpl} />
 
       {/* Dress Code Section */}
       {isEnabled("dressCode") && dressColors.length > 0 && (

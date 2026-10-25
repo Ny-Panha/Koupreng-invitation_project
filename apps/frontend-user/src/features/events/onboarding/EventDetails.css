@@ -11,6 +11,16 @@
 .event-settings :is(input,select,textarea) { width: 100%; min-width: 0; min-height: 48px; padding: 10px 12px; border: 1px solid var(--ws-border-strong); border-radius: 10px; font: inherit; background: var(--ws-surface); color: var(--ws-ink); }
 .event-settings-save { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
 .event-settings-save [role=status] { font-size: 14px; color: var(--ws-teal); }
+.event-settings-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 20px; }
+.event-settings-nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 16px; border: 1px solid var(--ws-border); border-radius: 24px; background: var(--ws-surface); color: var(--ws-ink); text-decoration: none; }
+.event-settings-nav a:hover { border-color: var(--ws-gold); background: var(--ws-canvas); }
+.event-settings :focus-visible { outline: 3px solid var(--ws-teal); outline-offset: 3px; }
+.event-settings .event-settings-section { scroll-margin-top: 100px; border: 1px solid var(--ws-border); padding: clamp(16px, 3vw, 28px); border-radius: 16px; min-width: 0; }
+.event-settings .event-settings-section legend { padding-inline: 8px; font-weight: 650; }
+.event-settings .event-settings-section h2 { font-size: 18px; line-height: 1.8; margin: 0 0 8px; }
+.event-settings .event-settings-save { position: sticky; bottom: 0; z-index: 5; margin: 12px -24px -24px; padding: 16px 24px max(16px, env(safe-area-inset-bottom)); border-top: 1px solid var(--ws-border); background: var(--ws-surface); box-shadow: 0 -4px 20px rgb(40 35 25 / 4%); }
+.event-settings label { line-height: 1.8; }
+@media (max-width: 599px) { .event-settings .event-settings-save { margin: 12px -16px -16px; padding-inline: 16px; } }
 .event-settings .studio-inline-check input { width:20px; min-height:20px; height:20px; }
 .event-settings .studio-program .pe-grid-2,.event-settings .studio-date-editor .pe-grid-2 { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr)); gap:16px; }
 @media (max-width: 599px) { .event-settings form { padding: 16px; } .event-settings .event-wizard-grid { grid-template-columns: minmax(0,1fr); } }

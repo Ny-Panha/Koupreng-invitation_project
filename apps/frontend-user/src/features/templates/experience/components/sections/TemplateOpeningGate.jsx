@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
+import { DEFAULT_OPENING_COPY } from '../../config/openingConfig';
 import TemplateImage from "../shared/TemplateImage";
 import RibbonOpening from "@/features/templates/shared/Openings/RibbonOpening";
 import CinematicVideoOpening from "@/features/templates/shared/Openings/CinematicVideoOpening";
@@ -454,7 +455,8 @@ export default function TemplateOpeningGate({
     const [videoFailed, setVideoFailed] = useState(false);
     const openingVideoUrl = videoUrl(content.openingVideo);
     const design = content.design || {};
-    const opening = content.opening || {};
+    const opening = { ...content.opening };
+    if (content.hasHostContent && content.title && (!opening.heading || opening.heading === DEFAULT_OPENING_COPY.heading)) opening.heading = content.title;
     const openingStyle = content.gateStyle || content.openingStyle || design.openingStyle || "khmer-royal";
     const frameStyle = design.frameStyle || "double-gold";
     const ornamentStyle = design.ornamentStyle || "khmer-corner-01";

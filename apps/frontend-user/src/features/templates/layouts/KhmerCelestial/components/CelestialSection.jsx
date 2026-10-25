@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
 import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
+import { RomduolEmblem } from './CelestialHeritage';
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -55,7 +56,7 @@ export function CelestialHeading({
           ? <p className="kc-heading__english">{english}</p>
           : <h2 id={id} className="kc-heading__english">{english}</h2>
       ) : null}
-      <span className="kc-heading__ornament" aria-hidden="true"><i />◆<i /></span>
+      <span className="kc-heading__ornament" aria-hidden="true"><i /><RomduolEmblem /><i /></span>
     </CelestialReveal>
   );
 }

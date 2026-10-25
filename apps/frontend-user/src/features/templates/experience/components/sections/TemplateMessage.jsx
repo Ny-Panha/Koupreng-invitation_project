@@ -1,4 +1,5 @@
 import TemplateReveal from "../shared/TemplateReveal";
+import AuthoredFamilies from '../../../shared/AuthoredFamilies';
 import TemplateSectionHeader from "../shared/TemplateSectionHeader";
 import { templateIcons } from "../../config/templateIcons";
 
@@ -18,6 +19,7 @@ export default function TemplateMessage({ content }) {
                 />
 
                 <TemplateReveal delay={0.1} className="tx-message__card">
+                    <AuthoredFamilies content={content} />
                     <span className="tx-message__quote-mark" aria-hidden="true">“</span>
                     <p className="tx-message__text">
                         {content.message}

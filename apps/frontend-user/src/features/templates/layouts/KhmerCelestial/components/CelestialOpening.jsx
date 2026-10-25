@@ -6,6 +6,8 @@ import { KHMER_CELESTIAL_ASSETS } from "../khmerCelestialAssets";
 import CelestialLiveGarden from "./CelestialLiveGarden";
 import OpenInvitationCTA from "./OpenInvitationCTA";
 import { celestialElementFont } from "../celestialTypography";
+import CelestialHeritage from './CelestialHeritage';
+import { authoredHeadingStyle } from '../../../shared/templateTypography';
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -91,12 +93,15 @@ export default function CelestialOpening({ content, onOpen, autoFocus = true }) 
         transition={{ duration: reducedMotion ? 0 : 1.7, delay: reducedMotion ? 0 : 0.2, ease: EASE }}
       />
       <div className="kc-opening__shade" aria-hidden="true" />
+      <CelestialHeritage />
       <CelestialLiveGarden className="kc-opening__garden" variant="opening" />
 
       <div className="kc-opening__content">
         <motion.p id="kc-opening-title" className="kc-opening__eyebrow" style={celestialElementFont(content, "subtitle")} {...reveal(reducedMotion, 0.62)}>
           {content.opening?.heading || content.title || "សិរីសួស្តីអាពាហ៍ពិពាហ៍"}
         </motion.p>
+
+        {content.subtitle && <p className="kc-opening__subtitle">{content.subtitle}</p>}
 
         {content.showBrandMark !== false && (
           <motion.div
@@ -118,9 +123,10 @@ export default function CelestialOpening({ content, onOpen, autoFocus = true }) 
                 <h1
                   className="text-2xl sm:text-3xl font-bold tracking-wide"
                   style={{
-                    color: content.primaryColor || "#D4AF37",
-                    fontFamily: celestialElementFont(content, "couple")?.fontFamily || '"Moul", serif',
-                    textShadow: "0 2px 10px rgba(212, 175, 55, 0.4)",
+                    color: content.primaryColor || 'var(--kc-green)',
+                    fontFamily: content.elementFonts?.couple ? celestialElementFont(content, 'couple').fontFamily : authoredHeadingStyle(content, names.join(' ')).fontFamily || '"Cormorant Garamond", Georgia, serif',
+                    fontWeight: 400, lineHeight: 1.8, letterSpacing: 'normal', overflowWrap: 'anywhere',
+                    textShadow: '0 1px 0 var(--kc-paper), 0 2px 1px rgba(33, 79, 59, .14)',
                   }}
                 >
                   {content.groom} {content.amp || "♥"} {content.bride}

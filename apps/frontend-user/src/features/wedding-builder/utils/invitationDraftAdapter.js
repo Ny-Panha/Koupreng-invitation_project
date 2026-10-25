@@ -239,6 +239,7 @@ export function publicInvitationToDraft(invitation, media) {
     guestName: content.guestName || invitation?.guest?.guestName || "",
     guestLabel: content.guestLabel || "",
     fontKhmer: content.fontKhmer || design.fontKhmer || "",
+    studioStyle: content.studioStyle || design.studioStyle || {},
     sectionOrder: content.sectionOrder || design.sectionOrder || [],
     fontLatin: content.fontLatin || design.fontLatin || "",
     elementFonts: content.elementFonts || design.elementFonts || null,
@@ -253,7 +254,7 @@ export function publicInvitationToDraft(invitation, media) {
     rsvp: {
       ...(content.rsvp || {}),
       enabled: enabled.rsvp !== false,
-      deadline: content.rsvp?.deadline || invitation?.rsvpDeadline || "",
+      deadline: Object.hasOwn(invitation || {}, 'rsvpDeadline') ? invitation.rsvpDeadline || '' : content.rsvp?.deadline || '',
     },
     design: normalizedDesign,
     opening: normalizeOpeningCopy(content.opening),

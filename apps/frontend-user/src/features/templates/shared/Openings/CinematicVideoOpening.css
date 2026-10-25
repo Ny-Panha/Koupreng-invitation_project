@@ -3,7 +3,7 @@
    Inspired by Royal Wedding Stage Architecture with Curtains & Chandeliers
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Kantumruy+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Moul&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,400&display=swap');
+/* Default faces are local; a failed external @import must not reject this CSS chunk. */
 
 /* Top-level overlay container */
 .royal-stage-wrapper {

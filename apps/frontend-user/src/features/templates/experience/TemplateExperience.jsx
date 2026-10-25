@@ -39,11 +39,13 @@ import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion"
 import { isTrustedPreviewMessage, postPreviewMessage, readEmbeddedPreviewChannel } from "@/shared/preview/previewMessaging";
 import "./template-experience.css";
 import "./studio-fonts.css";
+import { useStudioPreviewEditing } from '@/shared/preview/useStudioPreviewEditing';
+import { isLocalTemplateFont } from '../shared/templateTypography';
 
 const ensureGoogleFontLoaded = (fontFamily) => {
     if (!fontFamily || typeof document === "undefined") return;
-    if (["Moul", "Bayon", "Kantumruy Pro", "Cormorant Garamond", "DM Sans"].includes(fontFamily)) return;
     const cleanName = fontFamily.trim().replace(/^['"]|['"]$/g, "");
+    if (isLocalTemplateFont(cleanName)) return;
     const fontId = `gfont-${cleanName.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
     if (document.getElementById(fontId)) return;
     const link = document.createElement("link");
@@ -309,6 +311,7 @@ function WeddingTemplateExperience({
         };
     }, [baseContent, liveData, tpl.sections]);
     const DedicatedComponent = getDedicatedTemplateComponent(tpl, variant);
+    useStudioPreviewEditing(messageChannel);
 
     const reducedMotion = usePrefersReducedMotion();
     const startCinematic = useCinematicOpening();

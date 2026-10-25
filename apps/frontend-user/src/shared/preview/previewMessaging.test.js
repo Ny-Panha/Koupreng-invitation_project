@@ -5,6 +5,12 @@ const sessionId = "test-preview-session-1234567890123456";
 const message = { type: "LIVE_PREVIEW_SYNC", sessionId, data: { groom: "Edited host", photos: [{ url: "/photo.jpg" }] } };
 
 describe("FE-010 editor protocol", () => {
+  it('allows only fixed click-to-edit sections on an authenticated channel', () => {
+    expect(isPreviewMessage({ type: 'EDIT_STUDIO_SECTION', sectionKey: 'family', sessionId })).toBe(true);
+    for (const sectionKey of ['body', 'script', '#event-title', 'https://example.test', '__proto__']) expect(isPreviewMessage({ type: 'EDIT_STUDIO_SECTION', sectionKey, sessionId })).toBe(false);
+    expect(isPreviewMessage({ type: 'PREVIEW_EDIT_MODE', open: true, sessionId })).toBe(true);
+    expect(isPreviewMessage({ type: 'PREVIEW_EDIT_MODE', open: 'yes', sessionId })).toBe(false);
+  });
   afterEach(() => { vi.restoreAllMocks(); window.history.replaceState(null, "", "/"); });
 
   it("creates unguessable sessions and carries the exact parent origin into the preview URL", () => {

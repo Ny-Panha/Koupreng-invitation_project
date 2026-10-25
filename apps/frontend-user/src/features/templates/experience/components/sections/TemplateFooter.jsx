@@ -38,6 +38,8 @@ export default function TemplateFooter({ content }) {
                     <p className="tx-footer__thanks-en">
                         {content.footerThanksEn || "Thank you for joining our special day"}
                     </p>
+                    {content.apologyTitle && <h3>{content.apologyTitle}</h3>}
+                    {content.apologyText && <p className="tx-footer__thanks">{content.apologyText}</p>}
                 </TemplateReveal>
 
                 <TemplateReveal delay={0.12}>
