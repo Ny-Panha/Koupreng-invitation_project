@@ -41,10 +41,10 @@ export default function RecentInvitationsCard({ lang = "km", invitations = [] })
 
           {/* Quick link to templates catalog */}
           <Link
-            to="/templates"
+            to="/reports"
             className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-200 dark:bg-[#1f2738] dark:text-slate-300 dark:hover:text-white dark:hover:bg-[#2a354d] transition-colors cursor-pointer"
-            title={lang === "en" ? "View All Templates" : "មើលគំរូទាំងអស់"}
-            aria-label={lang === "en" ? "View all templates" : "មើលគំរូទាំងអស់"}
+            title={lang === "en" ? "Open reports" : "បើករបាយការណ៍"}
+            aria-label={lang === "en" ? "Open reports" : "បើករបាយការណ៍"}
           >
             <ArrowUpRight className="h-3.5 w-3.5" />
           </Link>
@@ -126,15 +126,15 @@ export default function RecentInvitationsCard({ lang = "km", invitations = [] })
               {/* Card Bottom: Quick Preview Action */}
               <div className="flex items-center justify-between pt-2.5 mt-2 border-t border-black/5 dark:border-white/5">
                 <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400">
-                  {inv.eventType ? String(inv.eventType).toUpperCase() : "WEDDING"}
+                  {inv.eventType ? String(inv.eventType).toUpperCase() : (lang === "en" ? "Event type not specified" : "មិនបានបញ្ជាក់ប្រភេទកម្មវិធី")}
                 </span>
 
                 <Link
-                  to="/templates"
+                  to="/reports"
                   className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-600 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300 transition-colors"
                 >
                   <Eye className="h-3 w-3" />
-                  <span>{lang === "en" ? "View" : "មើល"}</span>
+                  <span>{lang === "en" ? "Reports" : "របាយការណ៍"}</span>
                 </Link>
               </div>
             </div>

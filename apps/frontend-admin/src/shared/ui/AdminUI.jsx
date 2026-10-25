@@ -37,10 +37,8 @@ export function StatCard({
   icon: Icon,
   tone = "amber",
   trend,
-  trendTone = "emerald",
   badge,
   progress,
-  progressTone,
   className = "animate-cascade",
   style = {},
 }) {

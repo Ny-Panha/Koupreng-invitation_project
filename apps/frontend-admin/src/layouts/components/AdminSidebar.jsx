@@ -18,8 +18,8 @@ import {
 } from "lucide-react";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 
-export default function AdminSidebar({ isMobileOpen, isExpanded, onToggle, onNavigate }) {
-  const { lang, t } = useAdminLanguage();
+export default function AdminSidebar({ isMobileOpen, onNavigate }) {
+  const { lang } = useAdminLanguage();
   const location = useLocation();
   const navigate = useNavigate();
   const [showSearchModal, setShowSearchModal] = useState(false);
@@ -63,7 +63,6 @@ export default function AdminSidebar({ isMobileOpen, isExpanded, onToggle, onNav
       to: "/notifications",
       icon: Bell,
       label: lang === "en" ? "Alerts & Notifications" : "ការជូនដំណឹង",
-      badge: "3",
     },
     {
       to: "/system-logs",

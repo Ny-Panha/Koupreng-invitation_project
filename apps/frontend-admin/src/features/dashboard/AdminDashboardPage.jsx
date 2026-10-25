@@ -31,6 +31,8 @@ export default function AdminDashboardPage() {
   const { lang, t } = useAdminLanguage();
   const { data, loading, error, reload } = useResource(dashboardService.summary);
   const [analytics, setAnalytics] = useState({});
+  const [analyticsRefresh, setAnalyticsRefresh] = useState(0);
+  const refresh = () => { setAnalytics({}); setAnalyticsRefresh(value => value + 1); return reload(); };
   const [currentTime, setCurrentTime] = useState(() => new Date());
 
   useEffect(() => {
@@ -65,7 +67,7 @@ export default function AdminDashboardPage() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [analyticsRefresh]);
 
   if (loading) {
     return <LoadingState label={t("dashboard.loading", "កំពុងទាញយកទិន្នន័យផ្ទាំងគ្រប់គ្រង...")} />;
@@ -74,7 +76,7 @@ export default function AdminDashboardPage() {
     return (
       <ErrorStateView
         message={t("dashboard.error", "មិនអាចទាញយកទិន្នន័យ Dashboard បានទេ")}
-        onRetry={reload}
+        onRetry={refresh}
       />
     );
   }
@@ -85,16 +87,6 @@ export default function AdminDashboardPage() {
     second: "2-digit",
   });
 
-  const rsvpPct =
-    typeof analytics.overview?.summary?.rsvpConversion === "number"
-      ? Math.round(analytics.overview.summary.rsvpConversion * 100)
-      : 94;
-  const checkInPct =
-    typeof analytics.checkIn?.summary?.checkInRate === "number"
-      ? Math.round(analytics.checkIn.summary.checkInRate * 100)
-      : 78;
-  const deliveryCount = analytics.delivery?.summary?.opened ?? 342;
-  const isHealthy = (analytics.health?.summary?.status || "OK").toUpperCase() === "OK";
 
   return (
     <div className="relative space-y-6">
@@ -113,11 +105,11 @@ export default function AdminDashboardPage() {
                 <span className="font-mono tracking-tight">{formattedTime}</span>
                 <span className="text-slate-300 dark:text-zinc-700">|</span>
                 <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-extrabold uppercase tracking-wider">
-                  {lang === "en" ? "ONLINE" : "កំពុងដំណើរការ"}
+                  {lang === "en" ? "LOCAL CLOCK" : "ម៉ោងមូលដ្ឋាន"}
                 </span>
               </div>
 
-              <ActionButton variant="ghost" size="sm" onClick={reload}>
+              <ActionButton variant="ghost" size="sm" onClick={refresh}>
                 <RefreshCw className="h-3.5 w-3.5" />
                 <span>{t("dashboard.reload", "ផ្ទុកឡើងវិញ")}</span>
               </ActionButton>
@@ -132,7 +124,7 @@ export default function AdminDashboardPage() {
           data={data}
           analytics={analytics}
           lang={lang}
-          onReload={reload}
+          onReload={refresh}
         />
       </div>
 
@@ -147,14 +139,14 @@ export default function AdminDashboardPage() {
               </span>
               <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
                 {lang === "en"
-                  ? "Revenue Trend & Recent Invitations"
-                  : "និន្នាការចំណូល និងធៀបការថ្មីៗ (7 ថ្ងៃចុងក្រោយ)"}
+                  ? "Recorded receipts & recent invitations"
+                  : "ប្រាក់ទទួលកត់ត្រា និងធៀបអញ្ជើញថ្មីៗ"}
               </h2>
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
               {lang === "en"
-                ? "Daily invitation revenue, confirmed RSVPs, and recent digital invitations"
-                : "ទិន្នន័យចំណូលប្រចាំថ្ងៃ និងធៀបការឌីជីថលទើបបង្កើតថ្មីៗ"}
+                ? "Current recorded totals; use Reports for defined date periods and exports."
+                : "ចំនួនបច្ចុប្បន្ន។ ប្រើរបាយការណ៍សម្រាប់រយៈពេល និងការនាំចេញ។"}
             </p>
           </div>
 
@@ -171,14 +163,14 @@ export default function AdminDashboardPage() {
               <div>
                 <div className="flex items-center gap-1.5">
                   <strong className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white">
-                    <AnimatedNumber value={data.totalRevenue || 4772} prefix="$" decimals={0} />
+                    {formatRevenue(data)}
                   </strong>
                   <span className="text-[10px] font-bold text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded-md">
-                    +16%
+                    {lang === "en" ? "Recorded" : "បានកត់ត្រា"}
                   </span>
                 </div>
                 <span className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 block">
-                  {lang === "en" ? "Revenue today" : "ចំណូលថ្ងៃនេះ"}
+                  {lang === "en" ? "Recorded receipts (all time)" : "ប្រាក់ទទួលកត់ត្រា (ទាំងអស់)"}
                 </span>
               </div>
             </div>
@@ -193,10 +185,10 @@ export default function AdminDashboardPage() {
               </div>
               <div>
                 <strong className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white">
-                  <AnimatedNumber value={data.totalGuests || 86} />
+                  <AnimatedNumber value={data.totalGuests ?? 0} />
                 </strong>
                 <span className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 block">
-                  {lang === "en" ? "RSVP / 180 Goal" : "ឆ្លើយតប RSVP (គោលដៅ 180)"}
+                  {lang === "en" ? "Guest records" : "កំណត់ត្រាភ្ញៀវ"}
                 </span>
               </div>
             </div>
@@ -211,10 +203,10 @@ export default function AdminDashboardPage() {
               </div>
               <div>
                 <strong className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white">
-                  $25.50
+                  {data.totalInvitations ?? 0}
                 </strong>
                 <span className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 block">
-                  {lang === "en" ? "Avg / Invitation" : "ចំណូលមធ្យម / ធៀបការ"}
+                  {lang === "en" ? "Invitation records" : "កំណត់ត្រាធៀបអញ្ជើញ"}
                 </span>
               </div>
             </div>
@@ -228,7 +220,7 @@ export default function AdminDashboardPage() {
             <div className="animate-cascade" style={{ animationDelay: "0.22s" }}>
               <AnimatedTrendChart
                 lang={lang}
-                totalRevenue={data.totalRevenue}
+                report={analytics.revenue}
               />
             </div>
             <div className="animate-cascade" style={{ animationDelay: "0.28s" }}>
@@ -249,10 +241,6 @@ export default function AdminDashboardPage() {
             <div className="animate-cascade" style={{ animationDelay: "0.32s" }}>
               <ConversionHealthBox
                 analytics={analytics}
-                rsvpPct={rsvpPct}
-                checkInPct={checkInPct}
-                deliveryCount={deliveryCount}
-                isHealthy={isHealthy}
                 lang={lang}
                 t={t}
               />

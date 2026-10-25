@@ -254,11 +254,6 @@ export function CustomTextBlockEditor({ data = {}, onChange, lang = "km" }) {
     onChange({ body: current ? `${current} ${token}` : token });
   };
 
-  const insertTokenIntoHeading = (token) => {
-    const current = data.heading || "";
-    onChange({ heading: current ? `${current} ${token}` : token });
-  };
-
   return (
     <div className="space-y-3.5">
       <div>

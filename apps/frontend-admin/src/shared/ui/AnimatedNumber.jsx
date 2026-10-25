@@ -21,8 +21,7 @@ export default function AnimatedNumber({
       ? value
       : parseFloat(String(value ?? 0).replace(/[^0-9.-]/g, "")) || 0;
 
-  const isTestEnv =
-    typeof process !== "undefined" && process.env?.NODE_ENV === "test";
+  const isTestEnv = import.meta.env.MODE === "test" || globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
 
   const [current, setCurrent] = useState(isTestEnv ? target : 0);
   const startTimestampRef = useRef(null);

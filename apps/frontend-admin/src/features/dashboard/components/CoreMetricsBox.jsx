@@ -18,7 +18,6 @@ export default function CoreMetricsBox({ data = {}, lang = "km", t = (k, d) => d
       note: lang === "en" ? `${data.activeUsers ?? 0} Active` : `${data.activeUsers ?? 0} Active`,
       icon: Users,
       tone: "cyan",
-      trend: "+12%",
     },
     {
       id: "templates",
@@ -36,7 +35,6 @@ export default function CoreMetricsBox({ data = {}, lang = "km", t = (k, d) => d
       note: lang === "en" ? `${data.publishedInvitations ?? 0} Published` : `${data.publishedInvitations ?? 0} បានផ្សាយ`,
       icon: Mail,
       tone: "amber",
-      trend: "+8.5%",
     },
     {
       id: "guests",
@@ -54,7 +52,6 @@ export default function CoreMetricsBox({ data = {}, lang = "km", t = (k, d) => d
       note: lang === "en" ? `${data.failedPayments ?? 0} Failed` : `${data.failedPayments ?? 0} បរាជ័យ`,
       icon: CreditCard,
       tone: "rose",
-      trend: "+16%",
     },
     {
       id: "revenue",
@@ -132,11 +129,7 @@ export default function CoreMetricsBox({ data = {}, lang = "km", t = (k, d) => d
                 </span>
                 <strong className="text-lg sm:text-xl font-black text-slate-900 dark:text-white tracking-tight block">
                   {m.isMoney ? (
-                    typeof m.value === "number" ? (
-                      <AnimatedNumber value={m.value} prefix="$" decimals={2} duration={1000} />
-                    ) : (
-                      formatRevenue ? formatRevenue(data) : `$${m.value}`
-                    )
+                    formatRevenue ? formatRevenue(data) : (lang === 'en' ? 'Revenue unavailable' : 'មិនទាន់មានចំណូល')
                   ) : (
                     <AnimatedNumber value={m.value} duration={1000} />
                   )}

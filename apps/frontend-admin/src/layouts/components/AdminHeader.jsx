@@ -12,14 +12,13 @@ import {
   Sparkles,
   Search,
 } from "lucide-react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../app/providers/AdminAuthProvider";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 
-export default function AdminHeader({ title, onShowSidebar, isDark, onToggleTheme }) {
+export default function AdminHeader({ onShowSidebar, isDark, onToggleTheme }) {
   const { user, logout } = useAuth();
   const { lang, setLang, t } = useAdminLanguage();
-  const location = useLocation();
   const navigate = useNavigate();
 
   const [isAccountOpen, setIsAccountOpen] = useState(false);

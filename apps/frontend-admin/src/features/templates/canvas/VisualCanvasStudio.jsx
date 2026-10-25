@@ -82,10 +82,10 @@ export default function VisualCanvasStudio() {
     setHistoryIndex((prev) => prev + 1);
   }, [historyIndex]);
 
-  const updateElements = (newElements) => {
+  const updateElements = useCallback((newElements) => {
     setElements(newElements);
     pushState(newElements);
-  };
+  }, [pushState]);
 
   // Undo
   const handleUndo = () => {
@@ -261,7 +261,7 @@ export default function VisualCanvasStudio() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selectedId, elements, editingTextId, isPreview]);
+  }, [selectedId, elements, editingTextId, isPreview, updateElements]);
 
   // Actions
   const handleAddText = () => {
