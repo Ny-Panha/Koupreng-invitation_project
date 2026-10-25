@@ -133,11 +133,10 @@ test("currency summaries and the gift entry form fit a 320px phone", async ({ pa
     }).length);
     expect(outside).toBe(0);
   }
-  await page.locator('.wg-page .dash-page-header button').click();
-  const dialog = page.getByRole('dialog');
-  await expect(dialog).toBeVisible();
-  await expect(dialog.locator('button[type="submit"]')).toHaveText('កត់ត្រា');
-  const outside = await dialog.locator('input, select, textarea, button').evaluateAll(elements => elements.filter(element => element.checkVisibility()).filter(element => {
+  const form = page.locator('.wg-inline-form-row');
+  await expect(form).toBeVisible();
+  await expect(form.locator('button[type="submit"]')).toHaveText('កត់ត្រា');
+  const outside = await form.locator('input, select, textarea, button').evaluateAll(elements => elements.filter(element => element.checkVisibility()).filter(element => {
     const box = element.getBoundingClientRect();
     return box.left < -1 || box.right > innerWidth + 1;
   }).length);

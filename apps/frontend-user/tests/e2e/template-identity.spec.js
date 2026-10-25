@@ -44,10 +44,10 @@ test("switching events remounts controls and uses Garden's shared renderer", asy
 
 test("template switch persists the actual association and preserves event details", async ({ page }) => {
   const {writes,events}=await installIdentityFixtures(page);
-  const schedule=[{id:"owner-schedule",time:"17:30",title:"Owner ceremony"}];
+  const schedule=[{id:"owner-schedule",time:"17:30",title:"Owner ceremony",description:"Owner-authored ceremony note"}];
   events.set(101,{...events.get(101),contentJson:JSON.stringify({schedule,party:[],faq:[],storyChapters:[]})});
   await page.goto("/app/events/101/invitation");
-  await page.getByRole("button",{name:"Change template",exact:true}).click();
+  await page.getByRole("button",{name:/^Change template:/}).click();
   page.on("dialog",dialog=>dialog.accept());
   await page.locator(".pe-tpl-card-modal").filter({hasText:"Garden Royal Khmer Wedding"}).click();
   await expect.poll(()=>writes.length).toBeGreaterThan(0);
@@ -63,7 +63,7 @@ test("premium denial leaves the assigned template untouched", async ({ page }) =
   const {writes}=await installIdentityFixtures(page,{denyPremium:true});
   await page.route("**/api/v1/me/templates/27/access",route=>route.fulfill({contentType:"application/json",body:JSON.stringify({data:{hasAccess:false}})}));
   await page.goto("/app/events/101/invitation");
-  await page.getByRole("button",{name:"Change template",exact:true}).click();
+  await page.getByRole("button",{name:/^Change template:/}).click();
   await page.locator(".pe-tpl-card-modal").filter({hasText:"Emerald Luxe"}).click();
   await expect(page.getByText(/Premium access is required/)).toBeVisible();
   expect(writes).toEqual([]);

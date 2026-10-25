@@ -113,7 +113,7 @@ class AuthIntegrityMySqlTests {
     }
 
     @Test
-    void staffCreationAndRoleUpdatePersistAndKeepExistingAdminAuthorityMapping() {
+    void staffCreationAndRoleUpdatePersistWithoutGrantingAdminAuthority() {
         AppUser admin = user();
         admin.setRole(Role.ADMIN);
         users.saveAndFlush(admin);
@@ -129,7 +129,11 @@ class AuthIntegrityMySqlTests {
         assertEquals(Role.STAFF, updated.getRole());
         var jwt = org.springframework.security.oauth2.jwt.Jwt.withTokenValue("fixture-jwt").header("alg", "HS256")
                 .subject(updated.getId().toString()).claim("token_version", updated.getTokenVersion()).build();
-        assertEquals("ROLE_ADMIN", jwtConverter.convert(jwt).getAuthorities().iterator().next().getAuthority());
+        // STAFF has been distinct from ADMIN since the existing converter contract.
+        assertEquals("ROLE_STAFF", jwtConverter.convert(jwt).getAuthorities().iterator().next().getAuthority());
+        var adminJwt = org.springframework.security.oauth2.jwt.Jwt.withTokenValue("admin-fixture-jwt").header("alg", "HS256")
+                .subject(admin.getId().toString()).claim("token_version", admin.getTokenVersion()).build();
+        assertEquals("ROLE_ADMIN", jwtConverter.convert(adminJwt).getAuthorities().iterator().next().getAuthority());
     }
 
     private int redeem(CountDownLatch ready, CountDownLatch start, String token, String password) throws Exception {

@@ -39,6 +39,8 @@ class GuestMutationIntegrityMySqlTests {
     @Autowired private AppUserRepository users;
     @Autowired private GuestRepository guests;
     @Autowired private UserInvitationRepository invitations;
+    @Autowired private com.koupreng.backend.subscription.infrastructure.persistence.SubscriptionPackageRepository packages;
+    @Autowired private com.koupreng.backend.subscription.infrastructure.persistence.SubscriptionRepository subscriptions;
 
     @DynamicPropertySource
     static void database(DynamicPropertyRegistry registry) {
@@ -106,6 +108,17 @@ class GuestMutationIntegrityMySqlTests {
 
     private Fixture fixture() {
         AppUser owner = user();
+        // The production entitlement guard remains enabled. This disposable fixture explicitly grants check-in.
+        var plan = new com.koupreng.backend.subscription.domain.SubscriptionPackage();
+        plan.setCode("P7-CHECKIN-" + UUID.randomUUID()); plan.setPackageName("Disposable check-in integrity fixture");
+        plan.setPrice(java.math.BigDecimal.ZERO); plan.setQrCheckInEnabled(true); plan.setPublicVisible(false);
+        plan = packages.saveAndFlush(plan);
+        var grant = new com.koupreng.backend.subscription.domain.Subscription();
+        grant.setUser(owner); grant.setSubscriptionPackage(plan);
+        grant.setBenefitsSnapshot(com.koupreng.backend.subscription.application.PackageSnapshot.capture(plan));
+        grant.setAmount(java.math.BigDecimal.ZERO); grant.setStatus("ACTIVE"); grant.setActive(true);
+        grant.setPaymentStatus("NOT_REQUIRED"); grant.setConfirmSource("DEMO_ADMIN_GRANT");
+        grant.setOrderCode("P7-CHECKIN-" + UUID.randomUUID()); subscriptions.saveAndFlush(grant);
         UserInvitation invitation = new UserInvitation();
         invitation.setUser(owner);
         invitation.setTitle("Guest mutation fixture");

@@ -301,6 +301,7 @@ class AdminReportingTests {
     }
     static Path evidence() throws IOException {
         Path root=Path.of("").toAbsolutePath();while(!Files.isDirectory(root.resolve("apps"))) root=root.getParent();
-        Path directory=root.resolve("output/admin-reporting");Files.createDirectories(directory);return directory;
+        Path directory=Path.of(System.getProperty("koupreng.test.report-output",root.resolve("output/admin-reporting").toString()));
+        Files.createDirectories(directory);return directory;
     }
 }
