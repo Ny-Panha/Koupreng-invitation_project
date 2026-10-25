@@ -1,3 +1,5 @@
+import SaveTheDate from '../../shared/SaveTheDate';
+import ProgramTimeline from '../../shared/ProgramTimeline';
 import ProgramDetails from "../../shared/ProgramDetails";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
@@ -6,7 +8,6 @@ import CoverBackground from "../../shared/Openings/CoverBackground";
 import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
 import { useTemplateMusicController } from "../../experience/hooks/useTemplateMusicController";
 import TemplateGift from "../../experience/components/sections/TemplateGift";
-import useCountdown from "@/features/wedding-site/hooks/useCountdown";
 import { normalizeInvitationLanguage } from "@/shared/i18n/invitationLanguage";
 import { postPreviewMessage } from "@/shared/preview/previewMessaging";
 import manifest from "./template.json";
@@ -55,15 +56,6 @@ function Album({ images, title, viewLabel }) {
   </>;
 }
 
-
-function Countdown({ date, copy }) {
-  const count = useCountdown(date);
-  if (!date || Number.isNaN(new Date(date).getTime()) || new Date(date) <= new Date()) return null;
-  const units = [["d", copy("ថ្ងៃ", "Days")], ["h", copy("ម៉ោង", "Hours")], ["m", copy("នាទី", "Minutes")], ["s", copy("វិនាទី", "Seconds")]];
-  return <div className="sh-countdown" role="timer" aria-live="off" aria-label={copy("រង់ចាំថ្ងៃមង្គល", "Until our wedding")}>
-    {units.map(([key, label]) => <div key={key}><strong>{count[key]}</strong><span>{label}</span></div>)}
-  </div>;
-}
 
 const latinTime = (value = "") => String(value).replace(/[០-៩]/g, (digit) => String("០១២៣៤៥៦៧៨៩".indexOf(digit)))
   .replace("វេលាម៉ោង", "").replaceAll("ព្រឹក", "AM").replaceAll("ល្ងាច", "PM").replaceAll("ថ្ងៃត្រង់", "AM").trim();
@@ -180,15 +172,15 @@ export default function SilkHeritageLayout({
   const sections = {
     countdown: opened && enabled("countdown") && <section className="sh-date-note" key="countdown">
       <p className="sh-kicker">{copy("រង់ចាំថ្ងៃមង្គល", "COUNTING THE DAYS TO OUR CELEBRATION")}</p>
-      <Countdown date={vm.targetDate} copy={copy} />
+      <SaveTheDate content={vm} english={language === "en"} />
     </section>,
     schedule: enabled("schedule") && vm.schedule.length > 0 && <section className="sh-program sh-section" id="sh-program" key="schedule" aria-labelledby="sh-program-title">
       <div className="sh-section-intro"><SilkOrnament /><p className="sh-kicker">{copy("ថ្ងៃពិសេសរបស់យើង", "THE DAY, BEAUTIFULLY TOGETHER")}</p><h2 id="sh-program-title">{heading(vm.scheduleTitle || "កម្មវិធីមង្គលការ", "The wedding program")}</h2><p>{language === "en" ? date : vm.scheduleDate || date}</p></div>
-      <ol>{vm.schedule.map((item, index) => <li key={item.id}>
+      {vm.programDays ? <ProgramTimeline content={vm} english={language === "en"} /> : <ol>{vm.schedule.map((item, index) => <li key={item.id}>
         <div>{language === "en" ? latinTime(item.time) : item.time}<ProgramDetails item={item} content={vm} /></div>
         <span className="sh-timeline-point" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
         <div><h3>{language === "en" ? item.titleEn || item.title : item.title}</h3>{language === "both" && item.titleEn && <p lang="en">{item.titleEn}</p>}{item.description && <p>{item.description}</p>}{item.location && <p>{item.location}</p>}</div>
-      </li>)}</ol>
+      </li>)}</ol>}
       {vm.scheduleEnding && <p className="sh-program-ending">{passage(vm.scheduleEnding, "With gratitude, we look forward to celebrating with you.")}</p>}
     </section>,
     story: enabled("story") && vm.story?.length > 0 && <section className="sh-story sh-section" key="story" aria-labelledby="sh-story-title">

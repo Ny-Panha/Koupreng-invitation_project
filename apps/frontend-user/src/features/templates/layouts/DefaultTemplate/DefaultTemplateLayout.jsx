@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { Calendar, MapPin, Heart } from "lucide-react";
 import { normalizeTemplateViewModel } from "../../model/templateModel";
 import CoverBackground from "../../shared/Openings/CoverBackground";
-import CountdownTimer from "../../shared/Countdown/CountdownTimer";
+import SaveTheDate from '../../shared/SaveTheDate';
+import ProgramTimeline from '../../shared/ProgramTimeline';
 import GalleryGrid from "../../shared/Gallery/GalleryGrid";
 import RsvpContainer from "../../shared/RSVP/RsvpContainer";
 import ScheduleList from "../../shared/EventSchedule/ScheduleList";
@@ -96,16 +97,16 @@ export default function DefaultTemplateLayout({
           <h3 style={{ fontSize: "0.95rem", color: "#4b5563", marginBottom: "1rem", fontWeight: "600" }}>
             រាប់ថយក្រោយដល់ថ្ងៃពិសេស
           </h3>
-          <CountdownTimer targetDate={tpl.targetDate} />
+          {tpl.enabledSections?.countdown !== false && <SaveTheDate content={tpl} />}
         </div>
 
         {/* Schedule */}
-        {tpl.schedule && tpl.schedule.length > 0 && (
+        {tpl.enabledSections?.schedule !== false && tpl.schedule && tpl.schedule.length > 0 && (
           <div style={{ margin: "2rem auto", padding: "1.5rem", background: "#fff", borderRadius: "16px", boxShadow: "0 4px 20px rgba(0,0,0,0.04)", textAlign: "left" }}>
             <h3 style={{ fontSize: "1.1rem", fontWeight: "600", color: "#1f2937", marginBottom: "1rem", textAlign: "center" }}>
               កម្មវិធីពិធីមង្គលការ
             </h3>
-            <ScheduleList items={tpl.schedule} />
+            {tpl.programDays ? <ProgramTimeline content={tpl} /> : <ScheduleList items={tpl.schedule} />}
           </div>
         )}
 

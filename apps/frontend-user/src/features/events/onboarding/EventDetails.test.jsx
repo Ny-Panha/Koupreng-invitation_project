@@ -36,8 +36,8 @@ it("saves birthday details, contact and schedule through the real request contra
 });
 
 const genericEvent = { id: 42, userId: 7, status: 'DRAFT', templateCode: 'event-essential', eventType: 'BIRTHDAY', title: 'Birthday', hostName: 'Sokha', eventDate: '2027-01-10', eventTime: '17:30', venueName: 'Home', venueAddress: 'Phnom Penh', visibility: 'PRIVATE', updatedAt: '2026-10-24T10:00:00Z' };
-function StatefulEditor() {
-  const [event,setEvent] = useState(genericEvent);
+function StatefulEditor({ initialEvent = genericEvent }) {
+  const [event,setEvent] = useState(initialEvent);
   return <EventContext.Provider value={{ event, eventId: '42', updateEvent: setEvent, isOwner: true }}><EventDetails /></EventContext.Provider>;
 }
 it('requires generic-event review, saves first and displays only the confirmed server link', async () => {
@@ -53,7 +53,7 @@ it('requires generic-event review, saves first and displays only the confirmed s
   fireEvent.click(screen.getByRole('button', { name: 'Advanced editor' }));
   fireEvent.change(screen.getByLabelText(/Event title/), { target: { value: 'After publication' } });
   fireEvent.click(screen.getByRole('button', { name: 'Save details' }));
-  await waitFor(() => expect(invitationService.update).toHaveBeenLastCalledWith('42', expect.objectContaining({ expectedUpdatedAt: '2026-10-24T10:02:00Z', title: 'After publication' })));
+  await waitFor(() => expect(invitationService.update).toHaveBeenLastCalledWith('42', expect.objectContaining({ expectedUpdatedAt: '2026-10-24T10:02:00Z', title: 'After publication' }), { suppressAuthRedirect: true }));
 });
 it('retains generic edits after a conflict and suspends repeat saves', async () => {
   invitationService.update.mockRejectedValue({ status: 409, message: 'Newer version' });
@@ -65,4 +65,31 @@ it('retains generic edits after a conflict and suspends repeat saves', async () 
   expect(screen.getByRole('button', { name: 'Save details' })).toBeDisabled();
   expect(screen.getByRole('button', { name: 'Download private unsaved edits' })).toBeEnabled();
   expect(invitationService.publish).not.toHaveBeenCalled();
+});
+
+it('edits a multi-day wedding on Event Essential through the same save queue', async () => {
+  const wedding = { ...genericEvent, eventType: 'WEDDING', groomName: 'Dara', brideName: 'Sophea' };
+  invitationService.update.mockImplementation(async (id, payload) => ({ ...wedding, ...payload, id: Number(id) }));
+  render(<MemoryRouter><StatefulEditor initialEvent={wedding} /></MemoryRouter>);
+  for (let day = 1; day <= 3; day++) fireEvent.click(screen.getByRole('button', { name: 'Add program day' }));
+  expect(screen.getByRole('group', { name: 'Day 3', exact: true })).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Save details', exact: true }));
+  await screen.findByText('Saved to event');
+  const content = JSON.parse(invitationService.update.mock.calls[0][1].contentJson);
+  expect(content.programDays).toHaveLength(3);
+  expect(new Set(content.programDays.map(day => day.id)).size).toBe(3);
+  expect(content.schedule).toEqual([]);
+});
+
+it('enables a neutral event calendar without stale section flags hiding it', async () => {
+  invitationService.update.mockImplementation(async (id, payload) => ({ ...genericEvent, ...payload, id: Number(id) }));
+  render(<MemoryRouter><StatefulEditor initialEvent={{ ...genericEvent, enabledSections: JSON.stringify({ countdown: false, gallery: false }) }} /></MemoryRouter>);
+  expect(screen.getByLabelText('Show Save the Date section')).not.toBeChecked();
+  fireEvent.click(screen.getByLabelText('Show Save the Date section'));
+  fireEvent.click(screen.getByLabelText('Show calendar'));
+  fireEvent.click(screen.getByRole('button', { name: 'Save details', exact: true }));
+  await screen.findByText('Saved to event');
+  const payload = invitationService.update.mock.calls[0][1];
+  expect(JSON.parse(payload.contentJson).saveTheDate).toMatchObject({ enabled: true, showCalendar: true });
+  expect(JSON.parse(payload.enabledSections)).toMatchObject({ countdown: true, gallery: false });
 });

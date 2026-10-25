@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { legacyProgram, normalizeProgram, programDate, validProgramDate } from './program';
+import { groupProgram, legacyProgram, normalizeProgram, programDate, serializeProgramDays, validProgramDate } from './program';
 import { buildTemplateContent } from '../experience/config/templateExperienceContent';
 
 describe('program calendar and serialization contract', () => {
@@ -23,5 +23,14 @@ describe('program calendar and serialization contract', () => {
     expect(vm.schedule[0]).toMatchObject(row);
     expect(vm.story).toEqual([]);
     expect(normalizeProgram({ wrong: [] })).toEqual([]);
+  });
+  it('adapts long legacy day headings to bounded stable identifiers and supports day three', () => {
+    const value = [{ id: 'legacy', dayTitle: 'ពិធីមង្គលការ'.repeat(20), time: '៧:០០', title: 'ពិធី', customField: { keep: true } }];
+    const days = groupProgram(value, '2027-12-31');
+    expect(days[0].id.length).toBeLessThanOrEqual(100);
+    expect(groupProgram(value, '2028-01-01')[0].id).toBe(days[0].id);
+    expect(serializeProgramDays(days).schedule[0].customField).toEqual({ keep: true });
+    expect(programDate({ day: 3 }, '2027-12-31')).toBe('2028-01-02');
+    expect(validProgramDate('2011-12-30')).toBe(true);
   });
 });

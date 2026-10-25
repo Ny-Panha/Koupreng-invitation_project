@@ -1,0 +1,30 @@
+{
+  "filesParsed": 4,
+  "allValid": true,
+  "files": [
+    {
+      "file": "output/playwright/phase8/phase8-functional-guided-m-e57c1-ings-public-display-and-ICS-chromium/celebration.ics",
+      "start": "2027-12-05T22:30:00+00:00",
+      "end": "2027-12-06T00:30:00+00:00",
+      "valid": true
+    },
+    {
+      "file": "output/playwright/phase8/phase8-functional-guided-m-e57c1-ings-public-display-and-ICS-firefox/celebration.ics",
+      "start": "2027-12-05T22:30:00+00:00",
+      "end": "2027-12-06T00:30:00+00:00",
+      "valid": true
+    },
+    {
+      "file": "output/playwright/phase8/phase8-functional-guided-m-e57c1-ings-public-display-and-ICS-webkit/celebration.ics",
+      "start": "2027-12-05T22:30:00+00:00",
+      "end": "2027-12-06T00:30:00+00:00",
+      "valid": true
+    },
+    {
+      "file": "output/playwright/phase8-live/phase8-live-actual-create--586fb-sh-\u2192-public-calendar-export-owned-chromium/actual-celebration.ics",
+      "start": "2027-12-05T22:30:00+00:00",
+      "end": "2027-12-06T00:30:00+00:00",
+      "valid": true
+    }
+  ]
+}

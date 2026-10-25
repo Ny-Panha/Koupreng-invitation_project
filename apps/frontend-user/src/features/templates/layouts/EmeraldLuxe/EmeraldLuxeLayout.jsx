@@ -1,3 +1,4 @@
+import SaveTheDate from '../../shared/SaveTheDate';
 import { useState, useRef, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -262,6 +263,7 @@ export default function EmeraldLuxeLayout({
         </section>
       )}
 
+      {isEnabled("countdown") && <section className="el-section"><SaveTheDate content={tpl} /></section>}
       {/* Photo Gallery Grid */}
       {isEnabled("gallery") && tpl.gallery && tpl.gallery.length > 0 && (
         <section style={{ maxWidth: "560px", margin: "3rem auto 0", padding: "0 1.5rem" }}>

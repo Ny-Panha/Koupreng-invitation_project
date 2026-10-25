@@ -1,3 +1,5 @@
+import SaveTheDate from '../shared/SaveTheDate';
+import ProgramTimeline from '../shared/ProgramTimeline';
 import ProgramDetails from "../shared/ProgramDetails";
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
@@ -70,25 +72,6 @@ export default function WithJoyPortalLayout({
         .catch(() => setIsPlaying(false));
     }
   };
-
-  // Countdown logic
-  const [timeLeft, setTimeLeft] = useState({ days: 48, hours: 14, minutes: 22, seconds: 45 });
-  useEffect(() => {
-    const target = new Date("2026-11-28T17:00:00").getTime();
-    const interval = setInterval(() => {
-      const now = new Date().getTime();
-      const diff = target - now;
-      if (diff > 0) {
-        setTimeLeft({
-          days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-          minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
-          seconds: Math.floor((diff % (1000 * 60)) / 1000),
-        });
-      }
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
 
   // Lightbox modal state
   const [activePhoto, setActivePhoto] = useState(null);
@@ -199,26 +182,7 @@ export default function WithJoyPortalLayout({
           </h1>
           <p className="wj-hero-date">{dateText}</p>
 
-          {isEnabled("countdown") && (
-            <div className="wj-countdown-grid">
-              <div className="wj-countdown-item">
-                <span className="wj-countdown-num">{timeLeft.days}</span>
-                <span className="wj-countdown-label">ថ្ងៃ</span>
-              </div>
-              <div className="wj-countdown-item">
-                <span className="wj-countdown-num">{timeLeft.hours}</span>
-                <span className="wj-countdown-label">ម៉ោង</span>
-              </div>
-              <div className="wj-countdown-item">
-                <span className="wj-countdown-num">{timeLeft.minutes}</span>
-                <span className="wj-countdown-label">នាទី</span>
-              </div>
-              <div className="wj-countdown-item">
-                <span className="wj-countdown-num">{timeLeft.seconds}</span>
-                <span className="wj-countdown-label">វិនាទី</span>
-              </div>
-            </div>
-          )}
+          {isEnabled("countdown") && <SaveTheDate content={effectiveContent} />}
         </div>
       </section>
 
@@ -259,7 +223,7 @@ export default function WithJoyPortalLayout({
             </p>
           </div>
 
-          <div className="wj-schedule-grid">
+          {effectiveContent.programDays ? <ProgramTimeline content={effectiveContent} /> : <div className="wj-schedule-grid">
             {scheduleItems.map((item, i) => (
               <div key={i} className="wj-schedule-card">
                 <div className="wj-schedule-icon">
@@ -270,7 +234,7 @@ export default function WithJoyPortalLayout({
                 <p className="wj-schedule-desc">{item.desc}</p>
               </div>
             ))}
-          </div>
+          </div>}
         </section>
       )}
 

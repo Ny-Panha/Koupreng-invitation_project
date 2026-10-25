@@ -1,0 +1,14 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Koupreng//Invitation Calendar//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+UID:phase8-fictional-event@calendar.koupreng
+DTSTAMP:20261025T025001Z
+DTSTART:20271205T223000Z
+DTEND:20271206T003000Z
+SUMMARY:Celestial celebration
+LOCATION:Review venue\, Fictional Phnom Penh address
+DESCRIPTION:We look forward to celebrating with you.
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,19 @@
+{
+  "parser": "icalendar 7.3.0",
+  "filesParsed": 4,
+  "allEventsParsedWithoutErrors": true,
+  "liveDatabase": {
+    "host": "127.0.0.1:3416",
+    "schema": "phase7_disposable",
+    "invitationId": 214,
+    "eventDate": "2027-12-05",
+    "eventTime": "17:30:00",
+    "status": "PUBLISHED",
+    "visibility": "PUBLIC",
+    "days": 3,
+    "ceremonies": 3,
+    "timezone": "America/New_York",
+    "exportStart": "2027-12-05T22:30:00+00:00",
+    "exportEnd": "2027-12-06T00:30:00+00:00"
+  }
+}

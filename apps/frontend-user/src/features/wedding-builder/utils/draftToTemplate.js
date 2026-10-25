@@ -1,3 +1,5 @@
+import { eventPresentationFields } from '../../templates/shared/eventPresentation';
+import { resolveEvent } from '../../templates/shared/eventDateTime';
 import { legacyProgram, normalizeProgram } from "../../templates/shared/program";
 import { getTemplateById } from "@/features/templates/data/templatesData";
 import { resolveVariant } from "@/features/templates/experience/config/templateExperienceThemes";
@@ -73,21 +75,10 @@ export function draftToTemplate(draft, gallery = []) {
         ? uploadedImages
         : draftPhotos;
 
-    const eventDate = draft.event?.date || draft.eventDate || draft.eventDateText || "";
-    const eventTime = draft.event?.ceremonyTime || draft.event?.receptionTime || draft.eventTime || "17:00";
-    let targetDate = undefined;
-    if (eventDate && typeof eventDate === "string") {
-        try {
-            const timeStr = eventTime && eventTime.length === 5 ? `${eventTime}:00` : (eventTime || "17:00:00");
-            const combined = eventDate.includes("T") ? eventDate : `${eventDate}T${timeStr}`;
-            const parsed = new Date(combined);
-            if (!isNaN(parsed.getTime())) {
-                targetDate = parsed.toISOString();
-            }
-        } catch {
-            targetDate = undefined;
-        }
-    }
+    const eventDate = draft.eventDate ?? draft.event?.date ?? "";
+    const eventTime = draft.eventTime ?? draft.event?.ceremonyTime ?? draft.event?.receptionTime ?? "";
+    const event = resolveEvent({ ...draft, eventDate, eventTime });
+    const targetDate = event.instant === null ? '' : new Date(event.instant).toISOString();
 
     const groomName = draft.couple?.groom || draft.groomName || draft.hostName || "";
     const brideName = draft.couple?.bride || draft.brideName || draft.partnerName || "";
@@ -152,6 +143,7 @@ export function draftToTemplate(draft, gallery = []) {
 
     const tpl = {
         ...baseTpl,
+        ...eventPresentationFields(draft),
         eventType: draft.eventType || "WEDDING",
         languageMode: draft.languageMode || draft.extras?.languageMode || "KH",
         hostName: draft.hostName || groomName,
@@ -181,8 +173,8 @@ export function draftToTemplate(draft, gallery = []) {
         monogramText: draft.design?.monogramText || draft.monogramText || initialsCouple || (groomName && brideName ? `${groomName.trim().charAt(0).toUpperCase()} & ${brideName.trim().charAt(0).toUpperCase()}` : ""),
         shortName: draft.design?.monogramText || draft.monogramText || initialsCouple || (groomName && brideName ? `${groomName.trim().charAt(0).toUpperCase()} & ${brideName.trim().charAt(0).toUpperCase()}` : ""),
         dateText: eventDate ? displayDate(eventDate) : (draft.eventDateText || baseTpl.dateText),
-        targetDate: targetDate || baseTpl.targetDate,
-        eventTime: draft.eventTime || draft.event?.ceremonyTime || draft.event?.receptionTime || "",
+        targetDate,
+        eventTime,
         ceremonyTime: draft.event?.ceremonyTime || draft.eventTime || baseTpl.ceremonyTime || "០៧:០០",
         receptionTime: draft.event?.receptionTime || draft.eventTime || baseTpl.receptionTime || "១៧:០០",
         venueName: draft.event?.venueName || draft.venueName || baseTpl.venueName || "",
@@ -212,6 +204,7 @@ export function draftToTemplate(draft, gallery = []) {
             ...(baseTpl.enabledSections || {}),
             ...(draft.enabledSections || {}),
             countdown: sectionEnabled(draft.showCountdown, "countdown"),
+                schedule: sectionEnabled(draft.showSchedule, "schedule"),
             story: sectionEnabled(draft.showStory, "story"),
             party: sectionEnabled(draft.showParty, "party"),
             dressCode: sectionEnabled(draft.showDressCode, "dressCode"),
@@ -245,6 +238,7 @@ export function draftToTemplate(draft, gallery = []) {
         // Host-authored rich sections. Passed straight through so the content
         // builder can prefer them over its demo fallbacks (see hostContent).
         hostContent: {
+            ...eventPresentationFields(draft),
             sectionOrder: draft.sectionOrder || [],
             fontKhmer: draft.fontKhmer || draft.design?.fontKhmer || "",
             fontLatin: draft.fontLatin || draft.design?.fontLatin || "",
@@ -265,7 +259,7 @@ export function draftToTemplate(draft, gallery = []) {
             dateTextEn: draft.extras?.dateTextEn || "",
             targetDate: targetDate || "",
             eventDate,
-            eventTime: draft.eventTime || draft.event?.ceremonyTime || draft.event?.receptionTime || "",
+            eventTime,
             couple: {
                 groom: groomName,
                 bride: brideName,
@@ -299,6 +293,7 @@ export function draftToTemplate(draft, gallery = []) {
             enabledSections: {
                 ...(draft.enabledSections || {}),
                 countdown: sectionEnabled(draft.showCountdown, "countdown"),
+                schedule: sectionEnabled(draft.showSchedule, "schedule"),
                 story: sectionEnabled(draft.showStory, "story"),
                 party: sectionEnabled(draft.showParty, "party"),
                 dressCode: sectionEnabled(draft.showDressCode, "dressCode"),

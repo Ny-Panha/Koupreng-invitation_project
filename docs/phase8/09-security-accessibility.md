@@ -1,0 +1,9 @@
+# Security and accessibility
+
+All writes still go through existing invitation application services. No payment, gift, authentication, team membership, entitlement or publication authorization model was replaced. Existing expiration and optimistic revision checks remain enforced. A native HTTP/MySQL test exercises Phase 8 payloads through owner save/publication, stale 409, unrelated-user 403 and viewer 403; the full backend suite covers the existing security/payment flows.
+
+The content policy rejects malformed metadata, orphan day references, invalid dates/timezones, DST gaps, invalid flags, oversized known text and excessive entries/days. Unknown extension properties are retained. Plain React text nodes render authored ceremony text; no HTML injection renderer was added. ICS uses an allowlist and escaped/folded values, and never serializes invitation/guest objects or access URLs. Credentials and test JWTs remain outside versioned evidence.
+
+Scoped axe WCAG A/AA/2.1/2.2 checks run on the new public sections in Chromium, Firefox and WebKit with no disabled contrast rule. Existing headings, labeled controls, native confirmations and 44px reorder/navigation controls provide keyboard/touch access. The calendar is a semantic table; dates do not pretend to be selectable buttons. Only genuine navigation actions receive focus. Timers do not announce each second. Reduced-motion mode adds no animation. Static event date/time remains accessible.
+
+Keyboard calendar activation, full-preview behavior, long Khmer wrapping, narrow 320px reflow and doubled text/spacing are automated. Narrow viewport tests approximate high zoom; they are not physical browser zoom or manual screen-reader certification. NVDA/VoiceOver, physical iOS/Android keyboards and cultural/editorial sign-off remain unverified.

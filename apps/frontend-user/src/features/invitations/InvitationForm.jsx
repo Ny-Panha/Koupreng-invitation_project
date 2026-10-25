@@ -3,6 +3,10 @@ import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useEventWorkspace } from "../events/workspace/EventContext";
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import WeddingProgramEditor from "./studio/WeddingProgramEditor";
+import SaveTheDateEditor from "./studio/SaveTheDateEditor";
+import { eventPresentationFields } from '../templates/shared/eventPresentation';
+import { resolveEvent, validTimezone, wallTimeToInstant } from '../templates/shared/eventDateTime';
+import { safeJson } from '../wedding-builder/utils/invitationDraftAdapter';
 import { legacyProgram, normalizeProgram } from "../templates/shared/program";
 import StudioSections from "./studio/StudioSections";
 import StudioToolbar from "./studio/StudioToolbar";
@@ -526,6 +530,8 @@ const DEFAULT_STATE = {
     messageTitle: "",
     messageText: "",
     schedule: [],
+    showSchedule: true,
+    eventTimezone: 'Asia/Phnom_Penh',
     // Styling
     openingStyle: "khmer-royal",
     frontColor: "#f9af59",
@@ -703,7 +709,7 @@ export default function InvitationForm({ invitation }) {
                     : (preset.messageText || DEFAULT_STATE.messageText)),
             schedule: Array.isArray(customParsed.schedule)
                 ? normalizeProgram(customParsed.schedule)
-                : (Array.isArray(customParsed.agendaDays) ? legacyProgram(customParsed.agendaDays) : (preset.schedule?.length ? preset.schedule : (tpl?.schedule || []))),
+                : (Array.isArray(customParsed.agendaDays) ? legacyProgram(customParsed.agendaDays) : []),
             dressCode: customParsed.dressCode || preset.dressCode || tpl?.dressCode || {
                 name: "ខ្មែរប្រពៃណី / សម័យ",
                 description: "សូមជ្រើសរើសសម្លៀកបំពាក់តាមពណ៌ដែលបានកំណត់ ដើម្បីបង្កើនភាពស្រស់ស្អាតនៃពិធី។",
@@ -716,6 +722,8 @@ export default function InvitationForm({ invitation }) {
                     : (preset.dressColors?.length ? preset.dressColors : (tpl?.dressColors || tpl?.dressCode?.colors || []))),
             showDressCode: customParsed.showDressCode !== undefined ? customParsed.showDressCode : (tpl?.enabledSections?.dressCode !== false),
             showCountdown: customParsed.showCountdown !== undefined ? customParsed.showCountdown : (tpl?.enabledSections?.countdown !== false),
+            showSchedule: customParsed.showSchedule ?? safeJson(invitation?.enabledSections).schedule ?? true,
+            calendarUid: customParsed.calendarUid || crypto.randomUUID(),
             languageMode: invitation?.languageMode || customParsed.languageMode || "KH",
             visibility: invitation?.visibility || "PUBLIC",
             photos: (() => {
@@ -953,9 +961,7 @@ export default function InvitationForm({ invitation }) {
             showDressCode: template.enabledSections?.dressCode !== undefined
                 ? (template.enabledSections.dressCode !== false)
                 : form.showDressCode,
-            showCountdown: template.enabledSections?.countdown !== undefined
-                ? (template.enabledSections.countdown !== false)
-                : form.showCountdown,
+            showCountdown: form.showCountdown,
             showStory: form.showStory,
             showParty: template.enabledSections?.party !== undefined
                 ? (template.enabledSections.party !== false)
@@ -1280,6 +1286,13 @@ export default function InvitationForm({ invitation }) {
     };
     // Save action
     const handleSave = async ({ redirectToPreview = false, stayInStudio = false, quiet = false } = {}) => {
+        const event = resolveEvent(form);
+        const end = form.eventEndTime ? wallTimeToInstant(form.eventEndDate || event.date, form.eventEndTime, event.timezone) : null;
+        if (!validTimezone(event.timezone) || (event.validDate && event.time && event.instant === null) || (form.eventEndTime && (end === null || event.instant === null || end <= event.instant))) {
+            toast(uiCopy('សូមពិនិត្យតំបន់ម៉ោង និងម៉ោងបញ្ចប់កម្មវិធី។', 'Check the event timezone and end time before saving.'), 'warning');
+            setSelectedSection('countdown');
+            return;
+        }
         if (!redirectToPreview && /^https?:\/\//i.test(form.googleMapUrl || "") && !isGoogleMapsUrl(form.googleMapUrl)) {
             setLocationError("សូមបញ្ចូល Google Maps Link ត្រឹមត្រូវ (maps.google.com ឬ maps.app.goo.gl)។");
             return;
@@ -1350,6 +1363,10 @@ export default function InvitationForm({ invitation }) {
             };
 
             const contentPayload = {
+                ...safeJson(invitation?.contentJson),
+                ...eventPresentationFields(form),
+                eventDate: finalDate,
+                eventTime: finalTime,
                 studioStyle: form.studioStyle,
                 fontKhmer: form.fontKhmer,
                 fontLatin: form.fontLatin,
@@ -1430,7 +1447,7 @@ export default function InvitationForm({ invitation }) {
                     party: form.showParty !== false,
                     dressCode: form.showDressCode !== false,
                     faq: form.showFaq !== false,
-                    schedule: true,
+                    schedule: form.showSchedule !== false,
                     map: true,
                     gallery: true,
                     gift: Boolean(form.khqrDollar?.qrUrl || form.khqrRiel?.qrUrl),
@@ -1448,7 +1465,7 @@ export default function InvitationForm({ invitation }) {
             try {
                 if (!payload.templateId) throw new Error(uiCopy("គំរូដែលបានជ្រើសមិនមានក្នុងបណ្ណាល័យទេ។ សូមជ្រើសគំរូដែលអាចប្រើបាន មុនពេលរក្សាទុកលើម៉ាស៊ីនមេ។", "The selected template is unavailable in the catalog. Choose an available template before saving online."));
                 if (effectiveBackendId) {
-                    saved = await invitationService.update(effectiveBackendId, payload);
+                    saved = await invitationService.update(effectiveBackendId, payload, { suppressAuthRedirect: true });
                 } else {
                     saved = await invitationService.create(payload);
                 }
@@ -1590,7 +1607,7 @@ export default function InvitationForm({ invitation }) {
                             invitationImage: savedInvitationUrl || form.invitationImage || null,
                             invitationImage2: savedInvitationUrl2 || form.invitationImage2 || null,
                         }, extraMedia))),
-                    });
+                    }, { suppressAuthRedirect: true });
                 } catch (updateError) {
                     mediaSyncError ||= updateError?.message || "Invitation photo references could not be saved";
                     apiSyncStatus = updateError?.status || updateError?.response?.status;
@@ -1663,6 +1680,7 @@ export default function InvitationForm({ invitation }) {
                 message: form.messageText,
                 messageText: form.messageText || "",
                 schedule: form.schedule,
+                ...eventPresentationFields(form),
                 photos: savedPhotos,
                 gallery: (form.photos || [])
                     .filter((photo) => photo?.url)
@@ -1697,7 +1715,7 @@ export default function InvitationForm({ invitation }) {
                     party: form.showParty !== false,
                     dressCode: form.showDressCode !== false,
                     faq: form.showFaq !== false,
-                    schedule: true,
+                    schedule: form.showSchedule !== false,
                     map: true,
                     gallery: true,
                     gift: Boolean(form.khqrDollar?.qrUrl || form.khqrRiel?.qrUrl),
@@ -2316,32 +2334,13 @@ export default function InvitationForm({ invitation }) {
         </div>
     );
 
-    const renderCountdownSection = () => (
-        <div className="pe-section-card" key="countdown">
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
-                <h4 className="pe-section-heading" style={{ margin: 0, flex: "1 1 auto", minWidth: 0 }}>
-                    <span className="pe-sec-icon-badge">
-                        <Clock size={17} />
-                    </span>
-                    <span>{flowConfig.labels.countdownSection || t("secCountdown") || "នាឡិការាប់ថយក្រោយ (Countdown Timer)"}</span>
-                </h4>
-                <label className="pe-toggle" style={{ flexShrink: 0 }} title={uiCopy("បើក/បិទ រាប់ថយក្រោយ", "Toggle countdown")}>
-                    <input
-                        type="checkbox"
-                        checked={form.showCountdown !== false}
-                        onChange={(e) => update("showCountdown", e.target.checked)}
-                    />
-                    <span className="pe-toggle-slider" />
-                </label>
-            </div>
-            <p style={{ fontSize: "12.5px", color: "#64748b", margin: "10px 0 0 0", lineHeight: "1.5" }}>
-                {uiCopy("គណនាចំនួន", "Automatically calculate")} <strong>{uiCopy("ថ្ងៃ • ម៉ោង • នាទី • វិនាទី", "days • hours • minutes • seconds")}</strong> {uiCopy("ដោយស្វ័យប្រវត្តិតាមកាលបរិច្ឆេទនៃពិធីមង្គលការ។ (បើក ឬបិទកាតនេះបាន)", "until your wedding date. You can show or hide this card.")}
-            </p>
-        </div>
-    );
+    const renderCountdownSection = () => <SaveTheDateEditor form={form} english={englishUI}
+        supportsOrdering={templateCapabilities(getTemplateById(form.templateId) || {}).sectionOrdering}
+        onChange={patch => setForm(previous => ({ ...previous, ...patch }))} />;
 
-    const renderScheduleSection = () => <WeddingProgramEditor value={form.schedule} masterDate={form.eventDate}
-        onChange={value => update("schedule", value)} english={englishUI} />;
+    const renderScheduleSection = () => <WeddingProgramEditor value={form.schedule} programDays={form.programDays} masterDate={form.eventDate}
+        enabled={form.showSchedule !== false} onEnabled={value => update("showSchedule", value)}
+        onChange={(schedule, programDays) => setForm(previous => ({ ...previous, schedule, programDays }))} english={englishUI} />;
 
     const renderVenueSection = () => (
         <div className="pe-section-card" key="venue">

@@ -265,6 +265,36 @@ class Phase7CollaborationMySqlTests {
         assertEquals(403,call("GET",path,f.owner,null).status);
     }
 
+    @Test void phase8ProgramRoundTripsThroughHttpMySqlAndPublicationWithConflictAndIdorProtection() throws Exception {
+        Fixture f = fixture(3);
+        var content = json.readTree("""
+            {"programDays":[{"id":"d1","date":"2028-02-29","title":"ពិធីដំបូង"},{"id":"d2"},{"id":"d3"}],
+             "schedule":[{"id":"one","dayId":"d1","day":1,"time":"07:00","title":"ពិធីមង្គលការ","extension":"preserved"},
+                         {"id":"two","dayId":"d3","day":3,"time":"17:00","titleEn":"Reception","enabled":false}],
+             "eventDate":"2027-01-10","eventTime":"17:30","eventTimezone":"America/New_York",
+             "calendarUid":"public-event-id","saveTheDate":{"enabled":true,"showCalendar":true,"showAddToCalendar":true}}
+            """);
+        var current = call("GET", eventPath(f), f.owner, null);
+        var body = eventBody("Phase 8 persistence fixture", current.data().path("updatedAt").asText());
+        body.put("contentJson", json.writeValueAsString(content));
+        body.put("visibility", "PUBLIC");
+        assertEquals(200, call("PUT", eventPath(f), f.owner, body).status);
+        assertEquals(409, call("PUT", eventPath(f), f.owner, body).status);
+        assertEquals(403, call("PUT", eventPath(f), f.stranger, body).status);
+        var loaded = call("GET", eventPath(f), f.owner, null);
+        assertEquals(content, json.readTree(loaded.data().path("contentJson").asText()));
+        assertEquals(200, call("PATCH", eventPath(f) + "/publish", f.owner, null).status);
+        var published = call("GET", "/api/v1/public/invitations/" + loaded.data().path("slug").asText(), null, null);
+        assertEquals(200, published.status);
+        assertEquals(content, json.readTree(published.data().path("contentJson").asText()));
+        assertEquals(1, jdbc.queryForObject("SELECT COUNT(*) FROM invitations WHERE invitation_id=? AND content_json LIKE '%preserved%'", Integer.class, f.eventId));
+        Reply invited = invite(f, f.member.email, "VIEWER");
+        assertEquals(200, accept(f.member, invited.data().path("invitationToken").asText()).status);
+        var latest = call("GET", eventPath(f), f.owner, null);
+        body.put("expectedUpdatedAt", latest.data().path("updatedAt").asText());
+        assertEquals(403, call("PUT", eventPath(f), f.member, body).status);
+    }
+
     private Fixture fixture(int teamLimit) throws Exception {
         return fixture(teamLimit,1);
     }

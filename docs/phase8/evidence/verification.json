@@ -1,0 +1,293 @@
+{
+  "date": "2026-10-25",
+  "timezone": "Asia/Bangkok",
+  "baseCommit": "522e74844c78cbca430e2d73c52258d2c1c75929",
+  "userVitest": {
+    "passed": 895,
+    "failed": 0,
+    "files": 129,
+    "duration": "19.08s"
+  },
+  "adminVitest": {
+    "passed": 121,
+    "failed": 0,
+    "files": 21,
+    "duration": "15.19s"
+  },
+  "backend": {
+    "discovered": 614,
+    "passed": 610,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 4,
+    "duration": "2m44s"
+  },
+  "worker": {
+    "passed": 72,
+    "warnings": 2,
+    "duration": "1.32s"
+  },
+  "browser": {
+    "mainFixtureVisualReferencePassed": 37,
+    "additionalVisibilityOfflinePassed": 6,
+    "eventEssentialWeddingPassed": 3,
+    "editorA11yPassed": 3,
+    "finalFormsRerunPassed": 6,
+    "genuineLivePassed": 1,
+    "distinctCases": 50,
+    "engines": [
+      "Chromium",
+      "Firefox",
+      "WebKit"
+    ],
+    "finalVisualRerunPassed": 2
+  },
+  "calendarParser": {
+    "package": "icalendar 7.3.0",
+    "filesParsed": 4,
+    "passed": 4
+  },
+  "lint": {
+    "user": "passed",
+    "admin": "passed"
+  },
+  "build": {
+    "user": "passed",
+    "admin": "passed"
+  },
+  "routing": {
+    "errors": 0,
+    "validSkills": 58,
+    "verifiedDirectories": 59
+  },
+  "manualUnverified": [
+    "physical mobile devices",
+    "manual screen readers",
+    "family/editorial Khmer review",
+    "external service delivery",
+    "production topology"
+  ],
+  "productionDeployed": false,
+  "sourceFiles": [
+    {
+      "path": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationContentPolicy.java",
+      "sha256": "5e3279119a1bf746103127da2e7d23d179907fa90f05bbbbea2382d886705512"
+    },
+    {
+      "path": "apps/backend/src/test/java/com/koupreng/backend/invitation/application/InvitationContentPolicyTests.java",
+      "sha256": "0f3d84d62a9e1d942fad3ca40b3a8e249f9cf326a20f7ee33a7272517b6c3743"
+    },
+    {
+      "path": "apps/backend/src/test/java/com/koupreng/backend/phase7/Phase7CollaborationMySqlTests.java",
+      "sha256": "e1e6fa65ce6f070f3bf492b71a38870bf4176efecf4e36282f8e9c14d6332f16"
+    },
+    {
+      "path": "apps/frontend-user/playwright.phase8-live.config.js",
+      "sha256": "9075c79902a9bcf889f66a325ce9976360fc4bcf676762633ee2508349e2fb94"
+    },
+    {
+      "path": "apps/frontend-user/playwright.phase8.config.js",
+      "sha256": "88b26bb3d69610421c6c68fb73e2f6e8c45f371853a5ee8c00051c8bea34a688"
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/EventDetails.css",
+      "sha256": "3ce5081f3f9301cbbc9f155a14b9cd4626857eec1906ef29be9b508386fd4311"
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/EventDetails.jsx",
+      "sha256": "908645620a3c4dccfd27b6eb5d1afac0139d7cead3515281177d7e59fd29b0fb"
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/EventDetails.test.jsx",
+      "sha256": "761fca299f72501e66c9d1e8bb2078bc6cddb46bd297c6634642207ec3817cdd"
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/eventFields.js",
+      "sha256": "53eb317db0b9bebfbd978a03f678e91790c216d2e6f5b34ef7f9a7900c190158"
+    },
+    {
+      "path": "apps/frontend-user/src/features/invitations/InvitationForm.jsx",
+      "sha256": "f31f5200b9aeaf1b675f5d0c4615ac49797a65c834694f9220fbe7192c2ac787"
+    },
+    {
+      "path": "apps/frontend-user/src/features/invitations/LivePhoneSimulator.jsx",
+      "sha256": "a2bf2e05f95c052787226be643539ad195b34d25ad49ff9b05c8e5b251abfc6b"
+    },
+    {
+      "path": "apps/frontend-user/src/features/invitations/api/invitationApi.js",
+      "sha256": "ebacc3211da353258843e746996e4671a355291d3005521767caef7e1bf01fec"
+    },
+    {
+      "path": "apps/frontend-user/src/features/invitations/studio/InvitationStudio.css",
+      "sha256": "787b46d38bb3d2a7a5a5c1a8d539c501834331557055034b87649401aacce9da"
+    },
+    {
+      "path": "apps/frontend-user/src/features/invitations/studio/SaveTheDateEditor.jsx",
+      "sha256": "dae9a1f6b6d7f352eea0780a214b39600bbb96127a8341f193f21b539ceb7634"
+    },
+    {
+      "path": "apps/frontend-user/src/features/invitations/studio/StudioGuide.jsx",
+      "sha256": "b0279a55ad98b8389f2978241ea269ca14292e9710529ec170ce758e930fd44a"
+    },
+    {
+      "path": "apps/frontend-user/src/features/invitations/studio/StudioSections.jsx",
+      "sha256": "b1bae28525866ccc412c3b27d23db1157510a0deee551fff2ce9916777795d7e"
+    },
+    {
+      "path": "apps/frontend-user/src/features/invitations/studio/WeddingProgramEditor.jsx",
+      "sha256": "423d83b327ccd6780c099c88d1d7752147a7cd632552ce83373fc17f9e9159c7"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/blocks/StandardBlocks.jsx",
+      "sha256": "775f25f1e22b5c2868339e48aa86815888777bac20da3077467fd6b2a853c4a0"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/experience/TemplateExperience.jsx",
+      "sha256": "272e4fb55be77d0b92ace79176debf9975ac5912b73f8de75011c223b37f4347"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/experience/components/canva-khmer/CanvaKhmerWeddingTemplate.jsx",
+      "sha256": "be4d083bad35876eb0bea778e46148adbcdf9141b4e124ad27661c25277cd79c"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/experience/components/sections/TemplateCountdown.jsx",
+      "sha256": "07f4cb9beebadf29197f39f0546923327ac4dd8c8bfe28b3674c932232071a8c"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/experience/components/sections/TemplateSchedule.jsx",
+      "sha256": "18d72326183bc078d1fe1e6ece30afd845ffc028a2576690156bdcf6fd4c0e65"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/experience/config/templateExperienceContent.js",
+      "sha256": "6b273e90f6bdcd61eaa84522f0974db361221a1d0cc010333c7732c10cb1f614"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/layouts/BlissEditorialLayout.jsx",
+      "sha256": "4f3dc7394211a8d09c35c65d5a9b14823910ddf12ff237e8ae5f1c7b46f6491e"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/layouts/DefaultTemplate/DefaultTemplateLayout.jsx",
+      "sha256": "ef7622b6c0c11b96ca73f9409ff46681db8aff4afb864470a1202f05d8a8ce36"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/layouts/DigitalYes/DigitalYesLayout.jsx",
+      "sha256": "f19015fc41986b9d33cd65d808ee5a376b2692cf625b22792fa36f62a41b65d2"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/layouts/EmeraldLuxe/EmeraldLuxeLayout.jsx",
+      "sha256": "9cfb383f67a39c7ecbc7accb2f7b63326fb5719aa4c8c66c709bd606af4cdec0"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/layouts/EmeraldLuxe/components/Card3DFlip.jsx",
+      "sha256": "8a51d98cf7822c5ed1b077a65245d18505a7d47b41c2a8b0029ede7916af311b"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/layouts/EventEssentialLayout.jsx",
+      "sha256": "241b71e340aca1e8f1cd013b270e47bf2732bd475200fb0d2a7f759b2967f3fb"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/layouts/KhmerCelestial/KhmerCelestialLayout.jsx",
+      "sha256": "8956813c321606620f4dbaaf871cebe6154188bc9db89e0fcdf9bc8dcd5e1ac2"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/layouts/KhmerRoyalLotus/KhmerRoyalLotusLayout.jsx",
+      "sha256": "6b98340c86d370bd3e0cd76fb46858420f34a3bff136b64c96f71530987934d4"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/layouts/SilkHeritage/SilkHeritageLayout.jsx",
+      "sha256": "bd7d2b130b2b1e51a267afc3da9e5610ee727ef5a979133a0e74e36ca713e728"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/layouts/WithJoyPortalLayout.jsx",
+      "sha256": "9ebcee06d1cf6cf784953c273c2550536027b16b6fafc2125165ddf521a7ddca"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/registry/templateCapabilities.js",
+      "sha256": "73846b7f2a6478dea16fd0ff65ffda7bd2716666709d1b0d0cb04cd5a8ded65a"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/shared/ProgramDetails.jsx",
+      "sha256": "2f72a444ecd1e3724b2f2570449152aa7e8ec89247855335bf1afb75dc3e9cb7"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/shared/ProgramTimeline.jsx",
+      "sha256": "55bc23764237a1034795e3eaea001c74ffce06db663533f4b4662d045a7b4b3b"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/shared/SaveTheDate.jsx",
+      "sha256": "0ba1cdd133c300f3f23ba8c930a6883b99d7535d146f9af4682f203b0cc49845"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/shared/event-sections.css",
+      "sha256": "5ab01224824811dff8e7df620536f8c31fbc4ae6867821bddb7cf3fd9fc4de6e"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/shared/eventCalendarExport.js",
+      "sha256": "d474d5edb1874a68b4abaef421589a80538de1706a38208f5e07d3df6575c9b0"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/shared/eventDateTime.js",
+      "sha256": "d3ce27293f1ce425063e7afdf4ae165f00acfc46ffba31ca8b080288db0d9b13"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/shared/eventDateTime.test.js",
+      "sha256": "28da05b35f322213712bf65d75e2d853d6e4320c099941771e69007bd5138bf2"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/shared/eventPresentation.js",
+      "sha256": "63648e4d77f52fbebad28a0605b4439eb23f28bb0ae1f308d51d9bfa826fc374"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/shared/eventSections.test.jsx",
+      "sha256": "4d05fc13ab27741e92dcd87b10c438229ec929c731e677abaf3a6497ba4a7011"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/shared/eventTemplateMatrix.test.jsx",
+      "sha256": "f1b243353e2de2143e08d8ec9e66945b6d27ac224acfcadb7ab266e40a087289"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/shared/program.js",
+      "sha256": "b4b782a88723865571974c23bef8969df7a7f41c1660725efdf75ff0a6b5c08f"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/shared/program.test.js",
+      "sha256": "1f4e4d77b65dd140d2e3f366c0bb74e4c5add77ccdf696660f632209f31558d9"
+    },
+    {
+      "path": "apps/frontend-user/src/features/wedding-builder/utils/draftToTemplate.js",
+      "sha256": "73a66d174639e119828394f2b539bc0f267e30b8fc45d73f4bc9f47d14f97954"
+    },
+    {
+      "path": "apps/frontend-user/src/features/wedding-builder/utils/invitationDraftAdapter.js",
+      "sha256": "527d6d0848aa2baf7f8a1370dddd0d1d93fb3bb991b5310ae968e6ea85304f11"
+    },
+    {
+      "path": "apps/frontend-user/src/features/wedding-site/hooks/useCountdown.js",
+      "sha256": "0bd86acb8df6fdd5c0fca4c3466e977f181451303613102ee04c2c9cedcab100"
+    },
+    {
+      "path": "apps/frontend-user/tests/e2e/phase8-functional.spec.js",
+      "sha256": "2048fd09b65e87231c3a9f1d990779531b80e842f30870554f50d795e92764b0"
+    },
+    {
+      "path": "apps/frontend-user/tests/e2e/phase8-live.spec.js",
+      "sha256": "e2411704a7f9793f6e6b99b5bd2559e45894f7647a5537aa83478cfb070eb8f7"
+    },
+    {
+      "path": "apps/frontend-user/tests/e2e/phase8-reference.spec.js",
+      "sha256": "1a8bbc18ad8e51fe27ea5eaf05dcb7d21920897744903c4033420540f57f219c"
+    },
+    {
+      "path": "apps/frontend-user/tests/e2e/phase8-visual.spec.js",
+      "sha256": "42cc565c421cfdd27b6ebff461b383258a732a6235190d097bc20b64d0d776dd"
+    },
+    {
+      "path": "apps/frontend-user/tests/e2e/support/phase8Fixtures.js",
+      "sha256": "8550452ddc360bd3bffcdd65516a46a475b12cd1b8d50072e1e24571d398be7b"
+    },
+    {
+      "path": "scripts/phase8/verify-calendar-downloads.py",
+      "sha256": "13cf40c81c9a2711f10d683d6b261a422a3234c9a1a2c743674feadff7dad9ad"
+    }
+  ]
+}

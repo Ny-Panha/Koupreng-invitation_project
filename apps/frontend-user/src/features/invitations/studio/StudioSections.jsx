@@ -11,7 +11,7 @@ const STUDIO_SECTIONS = {
   eventInfo: ["ព័ត៌មានកម្មវិធី", "Event information"], appearance: ["ពណ៌ និងអក្សរ", "Colors & typography"], music: ["តន្ត្រី", "Music"],
   cover: ["ក្រប និងរចនា", "Cover & design"], family: ["មាតាបិតា", "Families"],
   invitation: ["សារអញ្ជើញ", "Invitation message"], couplePhoto: ["រូបគូស្វាមីភរិយា", "Couple photos"],
-  countdown: ["រាប់ថយក្រោយ", "Countdown"], schedule: ["កាលវិភាគ", "Schedule"],
+  countdown: ["កំណត់ថ្ងៃ និងប្រតិទិន", "Save the date & calendar"], schedule: ["កាលវិភាគ", "Schedule"],
   venue: ["ទីតាំង", "Venue & map"], gallery: ["វិចិត្រសាល", "Gallery"],
   story: ["រឿងរ៉ាវ", "Our story"], dressCode: ["សម្លៀកបំពាក់", "Dress code"],
   party: ["ក្រុមអម", "Wedding party"], faq: ["សំណួរ និងចម្លើយ", "Guest notes"],

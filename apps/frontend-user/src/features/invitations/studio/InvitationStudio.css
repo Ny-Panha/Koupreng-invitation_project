@@ -194,3 +194,14 @@ html:has(.dash-wrapper--studio), body:has(.dash-wrapper--studio), #root:has(.das
 .studio-program-row { border-bottom: 1px solid #e8e2d8; padding-bottom: 16px; margin-bottom: 16px; }
 .studio-program-row .pe-label { display: grid; gap: 6px; min-width: 0; }
 .studio-program-row small { font-weight: 400; line-height: 1.8; }
+
+.studio-program-day,.studio-program-row { min-width:0; border:1px solid var(--ws-border,#ded7c9); padding:16px; margin:16px 0; border-radius:12px; }
+.studio-program .pe-label,.studio-date-editor .pe-label { display:flex; flex-direction:column; align-items:stretch; gap:6px; min-width:0; line-height:1.8; }
+.studio-program .pe-input,.studio-date-editor .pe-input { max-width:100%; min-width:0; }
+.studio-inline-check { display:flex !important; align-items:center; flex-direction:row !important; gap:10px !important; min-height:44px; }
+.studio-inline-check input { width:20px; height:20px; flex-shrink:0; }
+.studio-date-toggles { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr)); gap:8px; margin:16px 0; }
+.studio-preset { display:flex; flex-wrap:wrap; align-items:end; gap:12px; }
+.studio-preset .pe-label { flex:1 1 200px; }
+.studio-program .studio-reorder { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+.studio-program .studio-reorder button { min-width:44px; min-height:44px; border:1px solid var(--ws-border,#ded7c9); padding:8px 12px; border-radius:8px; }

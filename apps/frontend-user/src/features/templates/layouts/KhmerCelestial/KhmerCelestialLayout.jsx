@@ -1,5 +1,9 @@
+import useEventCountdown from '../../../wedding-site/hooks/useCountdown';
+import { CALENDAR_FALLBACK_MINUTES, resolveEvent, wallTimeToInstant } from '../../shared/eventDateTime';
+import SaveTheDate from '../../shared/SaveTheDate';
+import ProgramTimeline from '../../shared/ProgramTimeline';
 import ProgramDetails from "../../shared/ProgramDetails";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
@@ -59,34 +63,46 @@ const COUNTDOWN_LABELS = [
   ["វិនាទី", "SECONDS"],
 ];
 
-function useCountdown(targetDate) {
-  const [now, setNow] = useState(() => Date.now());
-  const target = useMemo(() => {
-    const parsed = new Date(targetDate || "").getTime();
-    return Number.isNaN(parsed) ? null : parsed;
-  }, [targetDate]);
-
-  useEffect(() => {
-    if (!target) return undefined;
-    const timer = window.setInterval(() => setNow(Date.now()), 1000);
-    return () => window.clearInterval(timer);
-  }, [target]);
-
-  if (!target) return { valid: false, expired: false, values: ["00", "00", "00", "00"] };
-  const remaining = Math.max(0, target - now);
-  const values = [
-    Math.floor(remaining / 86_400_000),
-    Math.floor((remaining % 86_400_000) / 3_600_000),
-    Math.floor((remaining % 3_600_000) / 60_000),
-    Math.floor((remaining % 60_000) / 1000),
-  ].map((value) => String(value).padStart(2, "0"));
-  return { valid: true, expired: remaining === 0, values };
+function LegacyCelestialDate({ content, languageMode }) {
+  const count = useEventCountdown(content.machineEventDate || content.targetDate);
+  const countdown = { ...count, values: [count.d, count.h, count.m, count.s] };
+  const calendarUrl = buildCalendarUrl(content);
+  return <>
+              <CelestialHeading
+                id="kc-countdown-title"
+                khmer={countdown.expired ? "ថ្ងៃមង្គលបានមកដល់" : "រាប់ថយក្រោយដល់ថ្ងៃមង្គល"}
+                english={countdown.expired ? "The celebration has begun" : "Until the wedding day"}
+                eyebrow="SAVE THE DATE"
+                languageMode={languageMode}
+              />
+              <CelestialReveal className="kc-countdown__grid" aria-live="off">
+                {countdown.values.map((value, index) => (
+                  <div key={COUNTDOWN_LABELS[index][1]}>
+                    <strong>{value}</strong>
+                    <span>{COUNTDOWN_LABELS[index][0]}</span>
+                    <small>{COUNTDOWN_LABELS[index][1]}</small>
+                  </div>
+                ))}
+              </CelestialReveal>
+              <CelestialReveal className="kc-countdown__details" delay={0.08}>
+                {content.dateText ? <p><CalendarDays aria-hidden="true" /> {content.dateText}</p> : null}
+                {content.eventTime ? <p><Clock3 aria-hidden="true" /> {content.eventTime}</p> : null}
+                {calendarUrl ? (
+                  <a className="kc-button kc-button--outline" href={calendarUrl} target="_blank" rel="noreferrer">
+                    <CalendarDays aria-hidden="true" /> Add to calendar
+                  </a>
+                ) : null}
+              </CelestialReveal>
+  </>;
 }
 
 function buildCalendarUrl(content) {
-  const start = new Date(content.machineEventDate || content.targetDate || "");
-  if (Number.isNaN(start.getTime())) return "";
-  const end = new Date(start.getTime() + 4 * 60 * 60 * 1000);
+  const event = resolveEvent(content);
+  if (event.instant === null) return '';
+  const start = new Date(event.instant);
+  const endInstant = content.eventEndTime ? wallTimeToInstant(content.eventEndDate || event.date, content.eventEndTime, event.timezone) : event.instant + CALENDAR_FALLBACK_MINUTES * 60000;
+  if (endInstant === null || endInstant <= event.instant) return '';
+  const end = new Date(endInstant);
   const calendarDate = (date) => date.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
   const params = new URLSearchParams({
     action: "TEMPLATE",
@@ -150,7 +166,6 @@ export default function KhmerCelestialLayout({
   const musicUrl = formatMusicSource(content.music)
     || (isHostedInvitation ? "" : KHMER_CELESTIAL_ASSETS.defaultMusic);
   const languageMode = content.languageMode || "both";
-  const countdown = useCountdown(content.machineEventDate || content.targetDate);
   const { scrollYProgress: heroScrollProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
@@ -158,7 +173,6 @@ export default function KhmerCelestialLayout({
   const heroLogoY = useTransform(heroScrollProgress, [0, 1], [0, -12]);
   const heroLogoScale = useTransform(heroScrollProgress, [0, 1], [1, 0.96]);
   const heroLogoOpacity = useTransform(heroScrollProgress, [0, 0.85], [1, 0.88]);
-  const calendarUrl = useMemo(() => buildCalendarUrl(content), [content]);
   const sectionEnabled = useCallback(
     (key) => content.enabledSections?.[key] !== false,
     [content.enabledSections]
@@ -455,33 +469,11 @@ export default function KhmerCelestialLayout({
         </section>
 
         {sectionEnabled("countdown") ? (
-          <section className="kc-section kc-countdown" data-tx-section="countdown" aria-labelledby="kc-countdown-title">
+          <section className="kc-section kc-countdown" data-tx-section="countdown" aria-labelledby={content.saveTheDate ? undefined : 'kc-countdown-title'}>
             <div className="kc-shell kc-shell--narrow">
-              <CelestialHeading
-                id="kc-countdown-title"
-                khmer={countdown.expired ? "ថ្ងៃមង្គលបានមកដល់" : "រាប់ថយក្រោយដល់ថ្ងៃមង្គល"}
-                english={countdown.expired ? "The celebration has begun" : "Until the wedding day"}
-                eyebrow="SAVE THE DATE"
-                languageMode={languageMode}
-              />
-              <CelestialReveal className="kc-countdown__grid" aria-live="polite">
-                {countdown.values.map((value, index) => (
-                  <div key={COUNTDOWN_LABELS[index][1]}>
-                    <strong>{value}</strong>
-                    <span>{COUNTDOWN_LABELS[index][0]}</span>
-                    <small>{COUNTDOWN_LABELS[index][1]}</small>
-                  </div>
-                ))}
-              </CelestialReveal>
-              <CelestialReveal className="kc-countdown__details" delay={0.08}>
-                {content.dateText ? <p><CalendarDays aria-hidden="true" /> {content.dateText}</p> : null}
-                {content.eventTime ? <p><Clock3 aria-hidden="true" /> {content.eventTime}</p> : null}
-                {calendarUrl ? (
-                  <a className="kc-button kc-button--outline" href={calendarUrl} target="_blank" rel="noreferrer">
-                    <CalendarDays aria-hidden="true" /> Add to calendar
-                  </a>
-                ) : null}
-              </CelestialReveal>
+              {content.saveTheDate ? <SaveTheDate content={content} /> : <>
+              <LegacyCelestialDate content={content} languageMode={languageMode} />
+              </>}
             </div>
           </section>
         ) : null}
@@ -522,7 +514,7 @@ export default function KhmerCelestialLayout({
                 languageMode={languageMode}
               />
               {content.scheduleDate ? <CelestialReveal as="p" className="kc-schedule__date">{content.scheduleDate}</CelestialReveal> : null}
-              <div className="kc-schedule__list">
+              {content.programDays ? <ProgramTimeline content={content} /> : <div className="kc-schedule__list">
                 {schedule.map((item, index) => {
                   const ProgrammeIcon = PROGRAM_ICONS[index % PROGRAM_ICONS.length];
                   return (
@@ -539,6 +531,7 @@ export default function KhmerCelestialLayout({
                   );
                 })}
               </div>
+              }
               {content.scheduleEnding ? <CelestialReveal as="p" className="kc-schedule__ending">{content.scheduleEnding}</CelestialReveal> : null}
             </div>
           </section>

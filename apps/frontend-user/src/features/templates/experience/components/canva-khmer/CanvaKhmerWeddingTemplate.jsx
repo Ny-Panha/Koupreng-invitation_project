@@ -1,3 +1,5 @@
+import SaveTheDate from '../../../shared/SaveTheDate';
+import ProgramTimeline from '../../../shared/ProgramTimeline';
 import ProgramDetails from "../../../shared/ProgramDetails";
 import { cloneElement, isValidElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -133,34 +135,6 @@ function SectionTitle({ english, children }) {
     );
 }
 
-function useCountdown(targetDate) {
-    const target = useMemo(() => {
-        const date = targetDate ? new Date(targetDate) : null;
-        return date && !Number.isNaN(date.getTime()) ? date : null;
-    }, [targetDate]);
-    const [remaining, setRemaining] = useState(null);
-
-    useEffect(() => {
-        if (!target) {
-            setRemaining(null);
-            return undefined;
-        }
-        const update = () => {
-            const distance = Math.max(0, target.getTime() - Date.now());
-            setRemaining({
-                days: Math.floor(distance / 86400000),
-                hours: Math.floor((distance / 3600000) % 24),
-                minutes: Math.floor((distance / 60000) % 60),
-                seconds: Math.floor((distance / 1000) % 60),
-            });
-        };
-        update();
-        const timer = window.setInterval(update, 1000);
-        return () => window.clearInterval(timer);
-    }, [target]);
-
-    return remaining;
-}
 
 function CanvaKhmerMusicButton({ src, audioRef }) {
     const [playing, setPlaying] = useState(false);
@@ -282,21 +256,6 @@ function CanvaKhmerGardenHero({ content, sectionRef, onDetails }) {
     );
 }
 
-function CanvaKhmerCountdown({ targetDate }) {
-    const remaining = useCountdown(targetDate);
-    if (!remaining) return null;
-    const units = [
-        [remaining.days, "ថ្ងៃ"],
-        [remaining.hours, "ម៉ោង"],
-        [remaining.minutes, "នាទី"],
-        [remaining.seconds, "វិនាទី"],
-    ];
-    return (
-        <div className="ck-countdown" aria-label="រាប់ថយក្រោយ">
-            {units.map(([value, label]) => <div key={label}><strong>{String(value).padStart(2, "0")}</strong><small>{label}</small></div>)}
-        </div>
-    );
-}
 
 function CanvaKhmerDressCode({ content }) {
     const dress = content.dressCode;
@@ -361,7 +320,7 @@ function CanvaKhmerInvitationDetails({ content, sectionRef, showCountdown, showD
                     {content.receptionTime && <p><IoTimeOutline />ពិធីជប់លៀង {content.receptionTime}</p>}
                     {content.venue?.name && <p><IoLocationOutline />{content.venue.name}</p>}
                 </div>
-                {showCountdown && <CanvaKhmerCountdown targetDate={content.targetDate} />}
+                {showCountdown && <SaveTheDate content={content} />}
                 {showDressCode && <CanvaKhmerDressCode content={content} />}
             </div>
         </section>
@@ -370,12 +329,12 @@ function CanvaKhmerInvitationDetails({ content, sectionRef, showCountdown, showD
 
 function CanvaKhmerProgram({ content }) {
     const items = useMemo(() => {
-        if (content.schedule?.length) return content.schedule;
+        if (content.hasHostContent || content.programDays || content.schedule?.length) return content.schedule || [];
         return [
             content.ceremonyTime && { id: "ceremony", time: content.ceremonyTime, title: "ពិធីមង្គលការ" },
             content.receptionTime && { id: "reception", time: content.receptionTime, title: "ពិធីជប់លៀង" },
         ].filter(Boolean);
-    }, [content.ceremonyTime, content.receptionTime, content.schedule]);
+    }, [content.ceremonyTime, content.receptionTime, content.schedule, content.hasHostContent, content.programDays]);
 
     if (!items.length) return null;
     return (
@@ -384,7 +343,7 @@ function CanvaKhmerProgram({ content }) {
             <div className="ck-program__paper">
                 <SectionTitle english="WEDDING PROGRAM">កម្មវិធីមង្គលការ</SectionTitle>
                 {content.dateText && <time className="ck-program__date">{content.dateText}</time>}
-                <div className="ck-program__list">
+                {content.programDays ? <ProgramTimeline content={content} /> : <div className="ck-program__list">
                     {items.map((item, index) => (
                         <article key={item.id || `${scheduleTime(item)}-${index}`}>
                             <div className="ck-program__icon"><IoTimeOutline /></div>
@@ -396,7 +355,7 @@ function CanvaKhmerProgram({ content }) {
                             </div>
                         </article>
                     ))}
-                </div>
+                </div>}
             </div>
         </section>
     );

@@ -31,11 +31,11 @@ export const invitationService = {
     return api.get(`/v1/invitations/${id}`).then(unwrap);
   },
   create: (data) => api.post("/v1/invitations", data).then(unwrap),
-  update: (id, data) => {
+  update: (id, data, options) => {
     if (isLocalDraftId(id)) {
       return Promise.resolve(saveDraft({ ...data, id }));
     }
-    return api.put(`/v1/invitations/${id}`, data).then(unwrap);
+    return api.put(`/v1/invitations/${id}`, data, options).then(unwrap);
   },
   remove: (id) => {
     if (isLocalDraftId(id)) {

@@ -11,4 +11,6 @@
 .event-settings :is(input,select,textarea) { width: 100%; min-width: 0; min-height: 48px; padding: 10px 12px; border: 1px solid var(--ws-border-strong); border-radius: 10px; font: inherit; background: var(--ws-surface); color: var(--ws-ink); }
 .event-settings-save { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
 .event-settings-save [role=status] { font-size: 14px; color: var(--ws-teal); }
+.event-settings .studio-inline-check input { width:20px; min-height:20px; height:20px; }
+.event-settings .studio-program .pe-grid-2,.event-settings .studio-date-editor .pe-grid-2 { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr)); gap:16px; }
 @media (max-width: 599px) { .event-settings form { padding: 16px; } .event-settings .event-wizard-grid { grid-template-columns: minmax(0,1fr); } }

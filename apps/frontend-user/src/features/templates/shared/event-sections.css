@@ -1,0 +1,45 @@
+.kp-program,.kp-save-date { color: inherit; font-family: inherit; min-width: 0; overflow-wrap: anywhere; }
+.kp-program-day + .kp-program-day { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid currentColor; border-color: color-mix(in srgb, currentColor 25%, transparent); }
+.kp-program-day-title { margin: 0 0 1.5rem; font-family: inherit; font-size: 1.12em; line-height: 1.9; color: var(--kp-heading, inherit); }
+.kp-program-day-title time { display: block; font-size: .86em; font-weight: normal; }
+.kp-program .kp-timeline { list-style: none; margin: 0; padding: 0; }
+.kp-program .kp-timeline li { display: grid; grid-template-columns: minmax(3.5rem, .75fr) 1.25rem minmax(0, 4fr); column-gap: clamp(.4rem, 2vw, 1rem); position: relative; padding: 0 0 1.5rem; margin: 0; align-items: start; }
+.kp-timeline-time { font-variant-numeric: tabular-nums; line-height: 2; text-align: end; white-space: pre-line; }
+.kp-timeline-time small { display: block; font-size: .75em; }
+.kp-timeline-marker { align-self: stretch; position: relative; }
+.kp-timeline-marker::before { content: ''; position: absolute; width: 1px; top: .8rem; bottom: -2rem; left: 50%; background: var(--kp-accent, currentColor); opacity: .45; }
+.kp-timeline-marker::after { content: ''; position: absolute; width: .65rem; height: .65rem; border: 2px solid currentColor; background: var(--kp-accent, currentColor); border-radius: 50%; left: 50%; top: .75rem; transform: translateX(-50%); }
+.kp-timeline li:last-child .kp-timeline-marker::before { bottom: .7rem; }
+.kp-timeline-copy h4,.kp-timeline-copy p { margin: 0; line-height: 1.9; white-space: pre-wrap; font-size: 1em; font-weight: normal; }
+.kp-timeline-copy p { margin-top: .4rem; opacity: .85; }
+.kp-save-date { max-width: 44rem; margin: 0 auto; text-align: center; padding: 1rem clamp(.35rem, 2vw, 1rem); }
+.kp-save-date h2 { font-family: inherit; font-size: clamp(1.3rem, 4cqi, 2rem); line-height: 1.9; margin: 0 0 1rem; color: var(--kp-heading, inherit); }
+.kp-save-date p { line-height: 1.9; white-space: pre-wrap; }
+.kp-save-date-date { font-size: 1.2em; }
+.kp-countdown { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: clamp(.35rem,2cqi,1rem); margin: 1.6rem auto; max-width: 34rem; }
+.kp-countdown-unit { min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid currentColor; border-color: color-mix(in srgb,currentColor 45%,transparent); padding: .75rem .15rem; border-radius: .3rem; }
+.kp-countdown-unit strong { font-family: inherit; font-size: clamp(1rem,5cqi,2rem); line-height: 1.8; font-variant-numeric: tabular-nums; }
+.kp-countdown-unit span { font-size: clamp(.7rem,2.5cqi,1rem); line-height: 1.8; }
+.kp-countdown--circles .kp-countdown-unit { border-radius: 50%; aspect-ratio: 1; padding: .2rem; }
+.kp-countdown--minimal .kp-countdown-unit { border: 0; }
+.kp-calendar { margin: 2rem auto; border-block: 1px solid color-mix(in srgb,currentColor 25%,transparent); padding: 1rem 0; }
+.kp-calendar-nav { display: flex; justify-content: center; align-items: center; gap: .5rem; }
+.kp-calendar-nav h3 { flex: 1; font: inherit; line-height: 1.9; font-size: 1.2em; }
+.kp-calendar button,.kp-add-calendar { min-height: 44px; min-width: 44px; cursor: pointer; font: inherit; color: inherit; background: transparent; border: 1px solid currentColor; border-radius: 999px; padding: .6rem; line-height: 1.8; }
+.kp-calendar table { table-layout: fixed; width: 100%; border-collapse: separate; border-spacing: 0 .45rem; font: inherit; }
+.kp-calendar th,.kp-calendar td { padding: .15rem; text-align: center; height: 2.6rem; }
+.kp-calendar abbr { text-decoration: none; font-weight: normal; }
+.kp-calendar td time { display: inline-flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem; line-height: 1.8; }
+.kp-calendar .kp-calendar-event { border-radius: 50%; background: var(--kp-highlight-bg,#26352f); color: var(--kp-highlight-text,#fff); outline: 1px solid var(--kp-accent,currentColor); outline-offset: 3px; }
+.kp-add-calendar { display: inline-flex; align-items: center; justify-content: center; gap: .6rem; padding: .7rem 1.4rem; }
+.kp-add-calendar:focus-visible,.kp-calendar button:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }
+.kc-root { --kp-accent: var(--kc-gold); --kp-heading: var(--kc-green); --kp-highlight-bg: var(--kc-green); }
+.tpl-silk-heritage { --kp-accent: var(--tpl-secondary); --kp-heading: var(--tpl-primary); --kp-highlight-bg: var(--tpl-primary); }
+.tpl-khmer-royal-lotus { --kp-accent: var(--krl-secondary); --kp-heading: var(--krl-primary); --kp-highlight-bg: var(--krl-primary); }
+.tpl-khmer-royal-lotus .krl-section--burgundy { --kp-heading: var(--krl-white); --kp-highlight-bg: var(--krl-secondary); --kp-highlight-text: var(--krl-ink); }
+.el-container { --kp-accent: var(--el-gold-primary); --kp-highlight-bg: var(--el-gold-primary); --kp-highlight-text: #102c22; }
+.bliss-container { --kp-accent: var(--bliss-charcoal); --kp-highlight-bg: var(--bliss-charcoal); }
+:is(.tpl-silk-heritage,.tpl-khmer-royal-lotus,.kc-root) .kp-countdown--theme .kp-countdown-unit { border-radius: 50%; aspect-ratio: 1; padding: .2rem; }
+.kp-program-day-title > span { display: block; }
+.kp-save-date,.kp-program { container-type: inline-size; }
+@media (max-width: 374px) { .kp-countdown { gap: .3rem; } .kp-program .kp-timeline li { grid-template-columns: 3.4rem 1rem minmax(0,1fr); } }

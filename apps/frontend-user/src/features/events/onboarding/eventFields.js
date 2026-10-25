@@ -31,7 +31,7 @@ export function eventPayload(form, type) {
   if (form.contentJson) {
     try {
       const content = JSON.parse(form.contentJson);
-      payload.contentJson = JSON.stringify({ ...content, title: payload.title, venueName: payload.venueName,
+      payload.contentJson = JSON.stringify({ ...content, title: payload.title, eventDate: payload.eventDate || '', eventTime: payload.eventTime || '', venueName: payload.venueName,
         googleMapUrl: payload.googleMapUrl,
         venueAddress: payload.venueAddress, eventDateText: payload.eventDate,
         couple: { ...content.couple, groom: payload.groomName || payload.hostName, bride: payload.brideName || payload.partnerName },

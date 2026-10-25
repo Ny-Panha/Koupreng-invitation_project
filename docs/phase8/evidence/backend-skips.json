@@ -1,0 +1,26 @@
+{
+  "totals": {
+    "tests": 614,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 4
+  },
+  "skipped": [
+    {
+      "class": "com.koupreng.backend.phase6.Phase6DemoMySqlTests",
+      "method": "freeSignupCalendarPersistencePublishedEditsAndStaleSaveAreEnforcedThroughServlets"
+    },
+    {
+      "class": "com.koupreng.backend.phase6.Phase6DemoMySqlTests",
+      "method": "provisionAndVerifyOnlyTheIsolatedDevelopmentDatabase"
+    },
+    {
+      "class": "com.koupreng.backend.phase6.Phase6DemoMySqlTests",
+      "method": "immutableBenefitsPendingFutureExpiredAndRevokedGrantsResolveSafely"
+    },
+    {
+      "class": "com.koupreng.backend.rsvp.application.RsvpSummaryPerformanceMySqlTests",
+      "method": "benchmarkSummaryAndVerifyCounts"
+    }
+  ]
+}

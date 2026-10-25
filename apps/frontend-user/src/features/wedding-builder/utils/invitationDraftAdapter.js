@@ -1,5 +1,6 @@
 import { KEEP_TEMPLATE_CODE } from "@/features/templates/data/templatesData";
 import { legacyProgram, normalizeProgram } from "../../templates/shared/program";
+import { eventPresentationFields } from '../../templates/shared/eventPresentation';
 import {
   normalizeOpeningCopy,
   normalizeOpeningDesign,
@@ -105,6 +106,8 @@ export function publicInvitationToDraft(invitation, media) {
     ? invitationGallery.map(normalizeGalleryItem).filter(Boolean)
     : [];
   const eventTime = timeValue(invitation?.eventTime);
+  const canonicalDate = Object.hasOwn(invitation || {}, 'eventDate') ? invitation.eventDate || '' : content.eventDate || contentEvent.date || content.eventDateText || '';
+  const canonicalTime = Object.hasOwn(invitation || {}, 'eventTime') ? eventTime : content.eventTime || contentEvent.receptionTime || contentEvent.ceremonyTime || '';
   const mediaCover = media?.coverImage?.fileUrl || "";
   const mediaMusic = media?.backgroundMusic?.fileUrl
     ? {
@@ -157,6 +160,7 @@ export function publicInvitationToDraft(invitation, media) {
 
   return {
     id: invitation?.id || invitation?.slug || "public-invitation",
+    ...eventPresentationFields(content),
     backendInvitationId: invitation?.id || null,
     slug: invitation?.slug || "",
     templateId: invitation?.templateCode || invitation?.templateId || content.templateId || design.templateId || null,
@@ -194,16 +198,16 @@ export function publicInvitationToDraft(invitation, media) {
     event: {
       ...contentEvent,
       title: contentEvent.title || content.title || invitation?.title || "",
-      date: contentEvent.date || content.eventDateText || invitation?.eventDate || "",
-      ceremonyTime: contentEvent.ceremonyTime || eventTime,
-      receptionTime: contentEvent.receptionTime || eventTime,
+      date: canonicalDate,
+      ceremonyTime: canonicalTime,
+      receptionTime: canonicalTime,
       venueName: contentEvent.venueName || content.venueName || invitation?.venueName || "",
       venueAddress: contentEvent.venueAddress || content.venueAddress || invitation?.venueAddress || "",
       mapLink: contentEvent.mapLink || content.googleMapUrl || invitation?.googleMapUrl || "",
     },
-    eventDate: content.eventDateText || contentEvent.date || invitation?.eventDate || "",
+    eventDate: canonicalDate,
     eventDateText: content.eventDateText || "",
-    eventTime: contentEvent.receptionTime || contentEvent.ceremonyTime || eventTime,
+    eventTime: canonicalTime,
     venueName: content.venueName || contentEvent.venueName || invitation?.venueName || "",
     venueAddress: content.venueAddress || contentEvent.venueAddress || invitation?.venueAddress || "",
     googleMapUrl: content.googleMapUrl || contentEvent.mapLink || invitation?.googleMapUrl || "",

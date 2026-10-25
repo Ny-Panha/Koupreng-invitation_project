@@ -16,7 +16,8 @@ import {
 import defaultMusicUrl from "../../../../assets/music/ថ្ងៃដែលរង់ចាំ.mp3";
 import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
 import CoverBackground from "../../shared/Openings/CoverBackground";
-import CountdownTimer from "../../shared/Countdown/CountdownTimer";
+import SaveTheDate from '../../shared/SaveTheDate';
+import ProgramTimeline from '../../shared/ProgramTimeline';
 import GalleryGrid from "../../shared/Gallery/GalleryGrid";
 import RsvpContainer from "../../shared/RSVP/RsvpContainer";
 import {
@@ -209,7 +210,7 @@ export default function KhmerRoyalLotusLayout({
           title: item.title || "កម្មវិធី",
           description: item.description || item.desc || "",
         }))
-      : DEFAULT_SCHEDULE;
+      : (base.hasHostContent || base.programDays ? [] : DEFAULT_SCHEDULE);
 
     const targetDate = base.targetDate || base.machineEventDate || (
       typeof base.weddingDate === "string" && /^\d{4}-\d{2}-\d{2}/.test(base.weddingDate)
@@ -439,10 +440,7 @@ export default function KhmerRoyalLotusLayout({
                 <p>COUNTING DOWN TO OUR DAY</p>
                 <h2>រាប់ថយក្រោយដល់ថ្ងៃមង្គល</h2>
               </header>
-              <CountdownTimer
-                targetDate={content.targetDate}
-                className="krl-countdown"
-              />
+              <SaveTheDate content={content} />
               <p className="krl-blessing-line">សូមប្រសិទ្ធពរជ័យ សិរីសួស្តី មង្គលវិបុលសុខ គ្រប់ប្រការ</p>
             </section>
           )}
@@ -453,7 +451,7 @@ export default function KhmerRoyalLotusLayout({
                 <p>WEDDING PROGRAMME</p>
                 <h2>កម្មវិធីមង្គលការ</h2>
               </header>
-              <div className="krl-programme">
+              {content.programDays ? <ProgramTimeline content={content} /> : <div className="krl-programme">
                 {content.schedule.map((item, index) => (
                   <article className="krl-programme__item" key={item.id || index}>
                     <div className="krl-programme__time">{item.time}<ProgramDetails item={item} content={content} /></div>
@@ -466,7 +464,7 @@ export default function KhmerRoyalLotusLayout({
                     </div>
                   </article>
                 ))}
-              </div>
+              </div>}
             </section>
           )}
 

@@ -1,9 +1,10 @@
 import {
-  CountdownTimer,
   GalleryGrid,
   RsvpContainer,
   ScheduleList,
 } from "../shared";
+import SaveTheDate from '../shared/SaveTheDate';
+import ProgramTimeline from '../shared/ProgramTimeline';
 
 export function HeroCoverBlock({ title, subtitle, coverImage, content }) {
   const heading =
@@ -36,7 +37,7 @@ export function ScheduleBlock({ schedule, content }) {
     <section className="max-w-2xl mx-auto px-4 py-8">
       <div className="p-6 rounded-3xl bg-zinc-900/60 border border-white/10 text-white">
         <h3 className="text-xl font-bold text-center mb-6">កម្មវិធីមង្គលការ</h3>
-        <ScheduleList schedule={list} />
+        {content?.programDays ? <ProgramTimeline content={{ ...content, schedule: list }} /> : <ScheduleList items={list} />}
       </div>
     </section>
   );
@@ -57,7 +58,7 @@ export function CountdownBlock({ targetDate, content }) {
   return (
     <section className="max-w-2xl mx-auto px-4 py-6">
       <div className="p-6 rounded-3xl bg-zinc-900/60 border border-amber-500/20 text-center">
-        <CountdownTimer targetDate={date} />
+        <SaveTheDate content={{ ...content, targetDate: date }} />
       </div>
     </section>
   );

@@ -1,4 +1,5 @@
 import { normalizeProgram } from "../../shared/program";
+import { eventPresentationFields } from '../../shared/eventPresentation';
 import { normalizeInvitationLanguage } from "@/shared/i18n/invitationLanguage";
 /**
  * templateExperienceContent — builds the full content model for the shared
@@ -684,6 +685,7 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         enabledSections: hostEnabledSections,
         sectionOrder: host.sectionOrder || tpl.sectionOrder || [],
         hasHostContent,
+        ...eventPresentationFields(hasHostContent ? host : tpl),
         fontKhmer: host.fontKhmer || tpl.fontKhmer || tpl.design?.fontKhmer || "",
         studioStyle: host.studioStyle || tpl.studioStyle || {},
         fontLatin: host.fontLatin || tpl.fontLatin || tpl.design?.fontLatin || "",

@@ -1,3 +1,4 @@
+import ProgramTimeline from '../../../shared/ProgramTimeline';
 import ProgramDetails from "../../../shared/ProgramDetails";
 import { RotateCw, Calendar, Clock, MapPin, QrCode, Sparkles } from "lucide-react";
 
@@ -87,7 +88,7 @@ export default function Card3DFlip({
           </div>
 
           <div style={{ marginBottom: "1.5rem" }}>
-            {scheduleItems.map((item, idx) => (
+            {tpl.enabledSections?.schedule !== false && (tpl.programDays ? <ProgramTimeline content={tpl} /> : scheduleItems.map((item, idx) => (
               <div key={item.id || idx} className="el-schedule-item"><ProgramDetails item={item} content={tpl} />
                 <div className="el-time font-mono">{item.time}</div>
                 <div>
@@ -95,7 +96,7 @@ export default function Card3DFlip({
                   <p style={{ color: "var(--el-text-muted)", fontSize: "0.8rem", margin: "2px 0 0" }}>{item.description || item.desc}</p>
                 </div>
               </div>
-            ))}
+            )))}
           </div>
 
           <div style={{ background: "rgba(255, 255, 255, 0.04)", borderRadius: "12px", padding: "1rem", border: "1px solid rgba(212, 175, 55, 0.2)", marginBottom: "1.5rem" }}>

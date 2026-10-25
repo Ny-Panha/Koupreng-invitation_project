@@ -1,1 +1,4 @@
 * text=auto eol=lf
+
+# Preserve the required CRLF line endings in exported calendar files.
+*.ics -text whitespace=cr-at-eol

@@ -8,6 +8,9 @@ import { eventPath } from "../workspace/eventRoutes";
 import { eventPayload } from "./eventFields";
 import EventFields from "./EventFields.jsx";
 import StudioGuide from '@/features/invitations/studio/StudioGuide';
+import SaveTheDateEditor from '@/features/invitations/studio/SaveTheDateEditor';
+import WeddingProgramEditor from '@/features/invitations/studio/WeddingProgramEditor';
+import { eventPresentationFields } from '@/features/templates/shared/eventPresentation';
 import PublishReview from '@/features/invitations/studio/PublishReview';
 import { publishReadiness } from '@/features/invitations/studio/publishReadiness';
 import { useStudioPersistence } from '@/features/invitations/studio/useStudioPersistence';
@@ -28,7 +31,7 @@ export default function EventDetails() {
   const revision = useRef(event.updatedAt);
   const [form, setForm] = useState(() => {
     const content = readContent(event.contentJson);
-    return { ...event, venueAddress: event.venueAddress ?? content.venueAddress ?? content.event?.venueAddress ?? '',
+    return { ...event, ...eventPresentationFields(content), saveTheDate: content.saveTheDate || { enabled: false }, venueAddress: event.venueAddress ?? content.venueAddress ?? content.event?.venueAddress ?? '',
       googleMapUrl: event.googleMapUrl ?? content.googleMapUrl ?? content.event?.mapLink ?? '' };
   });
   const [content] = useState(() => readContent(event.contentJson));
@@ -41,8 +44,9 @@ export default function EventDetails() {
     onRestore: value => { setForm(value.form); setContact(value.contact); setSchedule(value.schedule); },
     persist: async () => {
       const payload = { ...eventPayload(form, event.eventType), expectedUpdatedAt: revision.current };
-      if (generic) payload.contentJson = JSON.stringify({ ...readContent(payload.contentJson), messageText: form.storyText || "", contact, schedule });
-      const saved = await invitationService.update(eventId, payload);
+      if (generic) payload.contentJson = JSON.stringify({ ...readContent(payload.contentJson), ...eventPresentationFields(form), eventDate: form.eventDate, eventTime: form.eventTime || '', messageText: form.storyText || "", contact, schedule });
+      if (generic) payload.enabledSections = JSON.stringify({ ...readContent(payload.enabledSections), countdown: form.saveTheDate?.enabled !== false, schedule: form.showSchedule !== false });
+      const saved = await invitationService.update(eventId, payload, { suppressAuthRedirect: true });
       revision.current = saved.updatedAt; updateEvent(saved); return { synced: true };
     },
   });
@@ -82,20 +86,23 @@ export default function EventDetails() {
     <div hidden={mode === 'guided' && step !== 0}><EventFields grouped draft form={form} setForm={setForm} type={event.eventType} en={en} /></div>
     {/https?:\/\//i.test(form.venueAddress || '') && <p className="workspace-notice">{en ? 'The saved address contains a link. Review the address and Maps link separately before changing them.' : 'អាសយដ្ឋានដែលរក្សាទុកមានតំណភ្ជាប់។ សូមពិនិត្យអាសយដ្ឋាន និងតំណផែនទីដោយឡែកមុនកែប្រែ។'}</p>}
     <div hidden={mode === 'guided' && step !== 1}>{generic && <>
+      <SaveTheDateEditor form={form} english={en} showEventFields={false} onChange={patch => setForm(current => ({ ...current, ...patch }))} />
       <label>{en ? "Invitation message or description (optional)" : "សារអញ្ជើញ ឬការពិពណ៌នា (មិនបាច់បំពេញ)"}<textarea maxLength={5000} value={form.storyText || ""} onChange={e => setForm(current => ({ ...current, storyText: e.target.value }))} /></label>
       <label>{en ? "Invitation language" : "ភាសាសំបុត្រអញ្ជើញ"}<select value={form.languageMode || "KH"} onChange={e => setForm(current => ({ ...current, languageMode: e.target.value }))}><option value="KH">{uiCopy("ភាសាខ្មែរ", "Khmer")}</option><option value="EN">{uiCopy("ភាសាអង់គ្លេស", "English")}</option><option value="BOTH">{uiCopy("ភាសាខ្មែរ និងអង់គ្លេស", "Khmer and English")}</option></select></label>
       <fieldset><legend>{en ? "Contact (optional)" : "ទំនាក់ទំនង (មិនបាច់បំពេញ)"}</legend>
         {[["name", "ឈ្មោះទំនាក់ទំនង", "Contact name", "text"], ["phone", "លេខទូរស័ព្ទ", "Phone", "tel"], ["email", "អ៊ីមែល", "Email", "email"]].map(([key, kh, english, type]) =>
           <label key={key}>{en ? english : kh}<input type={type} maxLength={key === "phone" ? 30 : 255} value={contact[key] || ""} onChange={e => setContact(current => ({ ...current, [key]: e.target.value }))} /></label>)}
       </fieldset>
-      <fieldset><legend>{en ? "Schedule (optional)" : "កាលវិភាគ (មិនបាច់បំពេញ)"}</legend>
+      {event.eventType === 'WEDDING' ? <WeddingProgramEditor english={en} value={schedule} programDays={form.programDays} masterDate={form.eventDate}
+        enabled={form.showSchedule !== false} onEnabled={value => setForm(current => ({ ...current, showSchedule: value }))}
+        onChange={(rows, days) => { setSchedule(rows); setForm(current => ({ ...current, programDays: days })); }} /> : <fieldset><legend>{en ? "Schedule (optional)" : "កាលវិភាគ (មិនបាច់បំពេញ)"}</legend>
         {schedule.map((item, index) => <div className="event-wizard-card" key={index}>
           <label>{en ? "Time" : "ម៉ោង"}<input type="time" value={item.time || ""} onChange={e => setSchedule(current => current.map((row, i) => i === index ? { ...row, time: e.target.value } : row))} /></label>
           <label>{en ? "Activity" : "សកម្មភាព"}<input required maxLength={255} value={item.title || ""} onChange={e => setSchedule(current => current.map((row, i) => i === index ? { ...row, title: e.target.value } : row))} /></label>
           <button type="button" onClick={() => setSchedule(current => current.filter((_, i) => i !== index))}>{en ? "Remove activity" : "លុបសកម្មភាព"}</button>
         </div>)}
         <button type="button" disabled={schedule.length >= 20} onClick={() => setSchedule(current => [...current, { time: "", title: "" }])}>{en ? "Add activity" : "បន្ថែមសកម្មភាព"}</button>
-      </fieldset>
+      </fieldset>}
     </>}{!generic && <p>{en ? 'Design artwork and optional media in the invitation and media tools.' : 'រចនារូបភាព និងមាតិកាជាជម្រើសក្នុងឧបករណ៍រចនា និងរូបភាព។'}</p>}<Link className="workspace-button" to={eventPath(eventId,'media')}>{en ? 'Media tools' : 'ឧបករណ៍រូបភាព'}</Link></div>
     <fieldset hidden={mode === 'guided' && step !== 0} disabled={isOwner === false} className="event-settings-section"><legend>{en ? 'Invitation visibility' : 'ការមើលធៀបអញ្ជើញ'}</legend><label>{en ? "Invitation visibility" : "ការមើលសំបុត្រអញ្ជើញ"}<select value={form.visibility || "PRIVATE"} onChange={e => setForm(current => ({ ...current, visibility: e.target.value }))}>
       <option value="PRIVATE">{en ? "Private" : "ឯកជន"}</option><option value="PUBLIC">{en ? "Public when published" : "សាធារណៈពេលផ្សាយ"}</option><option value="PASSWORD_PROTECTED">{en ? "Password protected" : "ការពារដោយពាក្យសម្ងាត់"}</option>

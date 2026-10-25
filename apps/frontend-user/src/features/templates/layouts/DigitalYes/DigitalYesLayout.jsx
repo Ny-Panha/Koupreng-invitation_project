@@ -1,3 +1,5 @@
+import SaveTheDate from '../../shared/SaveTheDate';
+import ProgramTimeline from '../../shared/ProgramTimeline';
 import { useState, useRef, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -78,7 +80,7 @@ export default function DigitalYesLayout({
   const [lightboxImg, setLightboxImg] = useState(null);
 
   // Live Countdown State
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
 
   const gateStyle = tpl.gateStyle || tpl.openingStyle || tpl.design?.openingStyle || "envelope-3d";
   const isCustomGate = Boolean(gateStyle && gateStyle !== "envelope-3d" && gateStyle !== "WAX_ENVELOPE");
@@ -116,33 +118,7 @@ export default function DigitalYesLayout({
     return () => window.removeEventListener("message", handleMessage);
   }, [previewChannel]);
 
-  // Countdown timer calculation
-  useEffect(() => {
-    let target = new Date(tpl.targetDate || "2026-11-28T17:00:00").getTime();
-    if (Number.isNaN(target) || target <= Date.now()) {
-      target = new Date("2026-11-28T17:00:00").getTime();
-      if (target <= Date.now()) {
-        target = Date.now() + 75 * 86400000 + 4 * 3600000 + 30 * 60000;
-      }
-    }
 
-    const updateCountdown = () => {
-      const now = Date.now();
-      const diff = Math.max(0, target - now);
-
-      setTimeLeft({
-        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((diff / 1000 / 60) % 60),
-        seconds: Math.floor((diff / 1000) % 60),
-      });
-    };
-
-    updateCountdown();
-    const interval = setInterval(updateCountdown, 1000);
-
-    return () => clearInterval(interval);
-  }, [tpl.targetDate]);
 
   // Handle Envelope Tap to Open
   const handleOpenEnvelope = () => {
@@ -416,50 +392,13 @@ export default function DigitalYesLayout({
               </div>
             </div>
 
-            {/* Live Countdown Grid */}
-            {isEnabled("countdown") && (
-              <div className="pt-2 text-center">
-                <span className="text-xs text-amber-300/90 block mb-3.5 font-medium">
-                  រាប់ថយក្រោយដល់ថ្ងៃមង្គលការ
-                </span>
-                <div className="grid grid-cols-4 gap-2.5 sm:gap-4 max-w-md mx-auto">
-                  <div className="bg-white/[0.04] rounded-2xl p-3 sm:p-4 border border-amber-400/20 shadow-inner">
-                    <span className="block text-2xl sm:text-4xl font-bold text-amber-300 font-mono">
-                      {String(timeLeft.days).padStart(2, "0")}
-                    </span>
-                    <span className="text-xs text-amber-200/90 block font-medium mt-1">ថ្ងៃ</span>
-                    <span className="text-[9px] text-amber-400/50 uppercase tracking-widest tdy-font-cinzel">DAYS</span>
-                  </div>
-                  <div className="bg-white/[0.04] rounded-2xl p-3 sm:p-4 border border-amber-400/20 shadow-inner">
-                    <span className="block text-2xl sm:text-4xl font-bold text-amber-300 font-mono">
-                      {String(timeLeft.hours).padStart(2, "0")}
-                    </span>
-                    <span className="text-xs text-amber-200/90 block font-medium mt-1">ម៉ោង</span>
-                    <span className="text-[9px] text-amber-400/50 uppercase tracking-widest tdy-font-cinzel">HOURS</span>
-                  </div>
-                  <div className="bg-white/[0.04] rounded-2xl p-3 sm:p-4 border border-amber-400/20 shadow-inner">
-                    <span className="block text-2xl sm:text-4xl font-bold text-amber-300 font-mono">
-                      {String(timeLeft.minutes).padStart(2, "0")}
-                    </span>
-                    <span className="text-xs text-amber-200/90 block font-medium mt-1">នាទី</span>
-                    <span className="text-[9px] text-amber-400/50 uppercase tracking-widest tdy-font-cinzel">MINS</span>
-                  </div>
-                  <div className="bg-white/[0.04] rounded-2xl p-3 sm:p-4 border border-amber-400/20 shadow-inner">
-                    <span className="block text-2xl sm:text-4xl font-bold text-amber-300 font-mono">
-                      {String(timeLeft.seconds).padStart(2, "0")}
-                    </span>
-                    <span className="text-xs text-amber-200/90 block font-medium mt-1">វិនាទី</span>
-                    <span className="text-[9px] text-amber-400/50 uppercase tracking-widest tdy-font-cinzel">SECS</span>
-                  </div>
-                </div>
-              </div>
-            )}
+            {isEnabled("countdown") && <div className="pt-2 text-center"><SaveTheDate content={tpl} /></div>}
 
             {/* Schedule Section */}
             {isEnabled("schedule") && (
               <>
                 <SectionDivider />
-                <DigitalYesSchedule schedule={tpl.schedule} />
+                {tpl.programDays ? <section><h2>{String(tpl.languageMode).toLowerCase() === "en" ? "Wedding program" : "កម្មវិធីមង្គលការ"}</h2><ProgramTimeline content={tpl} /></section> : <DigitalYesSchedule schedule={tpl.schedule} />}
               </>
             )}
 
