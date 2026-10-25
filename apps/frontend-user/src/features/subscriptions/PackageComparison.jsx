@@ -25,5 +25,6 @@ export default function PackageComparison({ plans, lang, copy }) {
         <tbody>{rows.map(([label, value]) => <tr key={label}><th scope="row">{label}</th>{plans.map(p => <td key={p.id}>{value(p)}</td>)}</tr>)}</tbody>
       </table>
     </div>
+    <p>{copy('សមត្ថភាពក្រុមរាប់សមាជិកសកម្ម និងការអញ្ជើញរង់ចាំ ក្នុងក្រុមទាំងអស់របស់ម្ចាស់ រួមទាំងកំណត់ត្រាម្ចាស់ក្នុងក្រុមនីមួយៗ។', 'Team capacity counts active and invited memberships across the owner’s workspaces, including an owner entry in each workspace.')}</p>
   </section>;
 }

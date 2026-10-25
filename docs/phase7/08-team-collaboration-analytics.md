@@ -102,9 +102,8 @@ The KH/EN analytics screen has bounded date controls, current units/denominator,
 
 Verification: `m5-analytics-api.log` contains 11 real HTTP/MySQL cases plus 5 ArchUnit cases, all passing. The additional analytics case verifies 17:00Z calendar boundaries, current totals, malformed/reversed/oversized ranges, stranger denial, Free viewer access under an eligible owner, removal revocation and owner-plan expiry denial. `m5-analytics-openapi.log`: 14 passing contract checks. `m5-user.log`: 43 passing tests; full user lint/build passed. `m5-analytics-browser.log`: 2 passing KH/EN browser scenarios with nine viewport captures each; 390px reviewed. Browser fixtures remain separate from the real database evidence.
 
-## Remaining Phase 7 work at this increment
+## Final integration
 
-The generic event guide/publish path, full accessibility matrix,
-real-browser/live-backend journeys and final release review remain required.
+Generic guided publishing, the bounded guest dashboard and actual browser/API/MySQL journeys were subsequently implemented and tested. See `05`, `07` and the final verification/report documents for the completed matrix and external validation limits.
 Email delivery is intentionally outside this implementation; owners privately share
 invitation codes using their chosen channel.

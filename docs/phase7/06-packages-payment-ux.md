@@ -31,5 +31,4 @@ removed. This is a dashboard correctness fix, independent of payment accounting.
 - No live bank/provider requests or real transactions were performed. Browser,
   responsive and real-HTTP package validation remain part of the final QA gate.
 
-The team-availability notice is deliberately retained until the team authorization
-and acceptance increment is implemented and tested.
+The obsolete team-unavailable notice was removed after explicit acceptance, module permissions and real-browser team integration passed. Team capacity wording now explains active/invited membership entries across owner workspaces. Actual registration-to-Free policy and package rendering passed against the disposable API; no live payment was attempted.
