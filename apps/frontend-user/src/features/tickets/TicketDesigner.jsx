@@ -25,13 +25,16 @@ function Designer({ eventId }) {
   const [guestId, setGuestId] = useState("");
   const [ready, setReady] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false), [uploadProgress, setUploadProgress] = useState(0);
+  const [mobilePanel, setMobilePanel] = useState("edit");
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [retry, setRetry] = useState(0);
   const [baseline, setBaseline] = useState("");
   const serial = JSON.stringify(design);
   const dirty = design !== null && serial !== baseline;
-  const items = useMemo(() => [state.media?.coverImage, ...(state.media?.gallery || state.media?.galleryImages || [])].filter(item => item?.id && item?.mimeType?.startsWith("image/")), [state.media]);
+  const items = useMemo(() => [...new Map([...(state.media?.all || []), state.media?.coverImage, ...(state.media?.gallery || state.media?.galleryImages || [])].filter(item => item?.id && item?.mimeType?.startsWith("image/")).map(item => [item.id, item])).values()], [state.media]);
   const preview = useMemo(() => {
     if (!ticket || !design) return null;
     const mediaUrl = id => items.find(item => String(item.id) === String(id))?.fileUrl || null;
@@ -79,31 +82,32 @@ function Designer({ eventId }) {
   const update = (key, value) => { setNotice(""); setDesign(current => ({ ...current, [key]: value })); };
   async function save() {
     if (busy) return;
-    setBusy(true); setError("");
+    setBusy(true); setSaving(true); setError("");
     try {
       const saved = await ticketService.save(eventId, design);
       setBaseline(JSON.stringify(saved.design)); setDesign(saved.design); setNotice(text("Ticket design saved for this event", "បានរក្សាទុករចនាកាតសម្រាប់កម្មវិធីនេះ"));
       setState(value => ({ ...value, appearance: saved }));
     } catch (err) { setError(err.message || "Save failed. Retry. If the design changed elsewhere, reload first."); }
-    finally { setBusy(false); }
+    finally { setBusy(false); setSaving(false); }
   }
   async function upload(event, key) {
-    const file = event.target.files?.[0]; if (!file) return;
-    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size > 5 * 1024 * 1024) { setError(text("Choose a JPEG, PNG or WebP under 5 MB.", "សូមជ្រើសរើសរូបភាព JPEG, PNG ឬ WebP ទំហំក្រោម 5 MB។")); return; }
-    setBusy(true); setError("");
+    const file = event.target.files?.[0]; event.target.value = ""; if (!file) return;
+    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size === 0 || file.size > 5 * 1024 * 1024) { setError(text("Choose a JPEG, PNG or WebP under 5 MB.", "សូមជ្រើសរើសរូបភាព JPEG, PNG ឬ WebP ទំហំក្រោម 5 MB។")); return; }
+    setBusy(true); setUploading(true); setUploadProgress(0); setError("");
     try {
-      const uploaded = await mediaService.uploadGallery(eventId, [file]);
-      const image = (Array.isArray(uploaded) ? uploaded : uploaded.items || uploaded.data || [])[0];
+      const image = await mediaService.uploadTicketImage(eventId, file, progress => { if (progress.total) setUploadProgress(Math.round(progress.loaded / progress.total * 100)); });
       if (!image?.id) throw new Error("The server did not return the uploaded image.");
-      setState(value => ({ ...value, media: { ...value.media, gallery: [...(value.media?.gallery || value.media?.galleryImages || []), image] } }));
+      setState(value => ({ ...value, media: { ...value.media, all: [...(value.media?.all || []), image] } }));
       update(key, image.id);
     } catch (err) { setError(err.message); }
-    finally { setBusy(false); }
+    finally { setBusy(false); setUploading(false); }
   }
-  return <section role="main" className="ticket-studio workspace-page">
+  return <section role="main" className="ticket-studio workspace-page" data-mobile-panel={mobilePanel}>
     <header className="dash-page-header"><div><span className="dash-kicker"><Ticket size={16} />{text("Digital invitations", "ធៀបអញ្ជើញឌីជីថល")}</span><h1>{text("Ticket designer", "រចនាកាតអញ្ជើញ")}</h1><p>{text("One event design, personalized for each saved guest. Publish before sharing guest links.", "រចនាកាតសម្រាប់កម្មវិធី និងកំណត់ឈ្មោះភ្ញៀវម្នាក់ៗ។ ផ្សព្វផ្សាយធៀបមុនចែករំលែកតំណទៅភ្ញៀវ។")}</p></div>
-      <button disabled={busy || !dirty} onClick={save}><Save size={18} />{busy ? text("Saving…", "កំពុងរក្សាទុក…") : text("Save design", "រក្សាទុករចនា")}</button></header>
+      <button disabled={busy || !dirty} onClick={save}><Save size={18} />{uploading ? text("Uploading…", "កំពុងបញ្ចូល…") : saving ? text("Saving…", "កំពុងរក្សាទុក…") : text("Save design", "រក្សាទុករចនា")}</button></header>
     <p className="ticket-save-status" role="status">{notice ? text("Ticket design saved for this event", "បានរក្សាទុករចនាកាតសម្រាប់កម្មវិធីនេះ") : dirty ? text("Unsaved design", "ការកែប្រែមិនទាន់រក្សាទុក") : text("Saved design", "បានរក្សាទុករចនា")}</p>
+    {uploading && <div role="status">{uploadProgress}%<progress aria-label={text("Image upload progress", "ដំណើរការបញ្ចូលរូបភាព")} value={uploadProgress} max="100" /></div>}
+    <div className="ticket-mobile-switch" role="group" aria-label={text("Ticket workspace", "ផ្ទាំងរចនាកាត")}><button type="button" aria-pressed={mobilePanel === "edit"} onClick={() => setMobilePanel("edit")}>{text("Edit", "កែសម្រួល")}</button><button type="button" aria-pressed={mobilePanel === "preview"} onClick={() => setMobilePanel("preview")}>{text("Preview & export", "មើល និងទាញយក")}</button></div>
     {error && <p role="alert">{error}</p>}
     <div className="ticket-designer-grid"><fieldset disabled={busy} className="ticket-design-controls"><legend>{text("Customize your ticket", "កែសម្រួលកាតរបស់អ្នក")}</legend>
       <label>{text("Layout", "រចនាប័ទ្ម")}<select value={design.layout} onChange={e => update("layout", e.target.value)}>
@@ -114,10 +118,21 @@ function Designer({ eventId }) {
       <label>{text("Heading font", "អក្សរចំណងជើង")}<select value={design.font} onChange={e => update("font", e.target.value)}><option value="MOUL">Moul</option><option value="KANTUMRUY">Kantumruy Pro</option><option value="CORMORANT">Cormorant Garamond</option></select></label>
       <label>{text("Header", "សារខាងលើ")}<input maxLength={100} value={design.header} onChange={e => update("header", e.target.value)} /></label>
       <label>{text("Footer", "សារខាងក្រោម")}<textarea maxLength={200} value={design.footer} onChange={e => update("footer", e.target.value)} /></label>
-      {[["coverMediaId", text("Cover image", "រូបក្រប")], ["backgroundMediaId", text("Background", "ផ្ទៃខាងក្រោយ")]].map(([key, label]) => <label key={key}>{label}
-        <select value={design[key] || ""} onChange={e => update(key, Number(e.target.value) || null)}><option value="">{text("None", "គ្មានរូបភាព")}</option>{items.map(item => <option value={item.id} key={item.id}>{item.originalFilename || `Image ${item.id}`}</option>)}</select>
-        <input type="file" aria-label={`${text("Upload", "បញ្ចូលរូបភាព")} ${label}`} accept="image/jpeg,image/png,image/webp" onChange={e => upload(e, key)} />
-      </label>)}
+      {[["coverMediaId", text("Cover image", "រូបក្រប")], ["backgroundMediaId", text("Background", "ផ្ទៃខាងក្រោយ")]].map(([key, label]) => <div className="ticket-media-control" key={key}>
+        <label>{label}<select value={design[key] || ""} onChange={e => update(key, Number(e.target.value) || null)}><option value="">{text("None", "គ្មានរូបភាព")}</option>{items.map(item => <option value={item.id} key={item.id}>{item.originalFilename || `Image ${item.id}`}</option>)}</select></label>
+        <label>{text('Upload or replace', 'បញ្ចូល ឬប្ដូររូប')}<input type="file" aria-label={`${text("Upload", "បញ្ចូលរូបភាព")} ${label}`} accept="image/jpeg,image/png,image/webp" onChange={e => upload(e, key)} /></label>
+        <button type="button" disabled={!design[key]} onClick={() => update(key, null)}>{text('Remove', 'ដករូបចេញ')} · {label}</button>
+      </div>)}
+      {items.filter(item => item.mediaType === 'TICKET_IMAGE' && ![design.coverMediaId, design.backgroundMediaId, state.appearance?.design?.coverMediaId, state.appearance?.design?.backgroundMediaId].includes(item.id)).map(item => <div className="ticket-unused-asset" key={item.id}><span>{item.originalFilename}</span><button type="button" disabled={busy} onClick={async () => {
+        if (!window.confirm(text('Delete this unused ticket image?', 'លុបរូបកាតដែលមិនប្រើនេះឬ?'))) return;
+        setBusy(true); setError('');
+        try { await mediaService.remove(eventId, item.id); setState(current => ({ ...current, media: { ...current.media, all: current.media.all.filter(asset => asset.id !== item.id) } })); }
+        catch (err) { setError(err.message); } finally { setBusy(false); }
+      }}>{text('Delete unused image', 'លុបរូបមិនប្រើ')}</button></div>)}
+      <label>{text("Cover fit", "របៀបដាក់រូបក្រប")}<select value={design.coverFit || "COVER"} onChange={e => update("coverFit", e.target.value)}><option value="COVER">{text("Fill frame", "បំពេញស៊ុម")}</option><option value="CONTAIN">{text("Show entire image", "បង្ហាញរូបទាំងមូល")}</option></select></label>
+      <label>{text("Horizontal focal point", "ចំណុចរូបផ្ដេក")}<input type="range" min="0" max="100" value={design.coverFocusX ?? 50} onChange={e => update("coverFocusX", Number(e.target.value))} /></label>
+      <label>{text("Vertical focal point", "ចំណុចរូបបញ្ឈរ")}<input type="range" min="0" max="100" value={design.coverFocusY ?? 50} onChange={e => update("coverFocusY", Number(e.target.value))} /></label>
+      <label>{text("Background opacity", "កម្រិតច្បាស់ផ្ទៃខាងក្រោយ")}<input type="range" min="0" max="0.4" step="0.01" value={design.backgroundOpacity ?? .12} onChange={e => update("backgroundOpacity", Number(e.target.value))} /></label>
       {[["showTable", text("Table & seat", "តុ និងកៅអី")], ["showSeatCount", text("Guest count", "ចំនួនភ្ញៀវ")], ["showGroup", text("Guest group", "ក្រុមភ្ញៀវ")]].map(([key, label]) => <label className="ticket-checkbox" key={key}><input type="checkbox" checked={design[key]} onChange={e => update(key, e.target.checked)} />{label}</label>)}
       <button type="button" disabled={!dirty} onClick={() => { if (window.confirm(text("Discard unsaved ticket design changes?", "បោះបង់ការកែប្រែរចនាកាតដែលមិនទាន់រក្សាទុកឬ?"))) setDesign(JSON.parse(baseline)); }}>{text("Reset changes", "កំណត់ឡើងវិញ")}</button>
     </fieldset><div className="ticket-preview-panel"><h2><Eye size={20} />{text("Live preview", "មើលជាមុន")}</h2><label className="ticket-guest-select">{text("Preview recipient", "ភ្ញៀវសម្រាប់មើលជាមុន")}<select value={guestId} onChange={e => setGuestId(e.target.value)}><option value="">{text("General invitation · no guest check-in", "ធៀបទូទៅ · គ្មានការកត់ត្រាវត្តមានភ្ញៀវ")}</option>

@@ -297,6 +297,7 @@ public class InvitationService {
         ensureAccessToken(invitation);
         if (invitation.getStatus() == InvitationStatus.PUBLISHED) {
             validatePublishReady(invitation);
+        if (preWeddingVideoPolicy != null) preWeddingVideoPolicy.validate(invitation, invitation.getContentJson());
         }
         return toResponse(save(invitation));
     }
@@ -446,7 +447,7 @@ public class InvitationService {
         if (guest != null && guest.getInvitationViewedAt() == null) {
             guest.setInvitationViewedAt(Instant.now());
         }
-        return PublicInvitationResponse.from(invitation, guest, assignment);
+        return publicResponse(invitation, guest, assignment);
     }
 
     @Transactional(readOnly = true)
@@ -662,6 +663,9 @@ public class InvitationService {
 
     private void applyRequest(UserInvitation invitation, InvitationRequest request, AppUser user) {
         InvitationContentPolicy.validate(request.getContentJson());
+        if (preWeddingVideoPolicy != null) preWeddingVideoPolicy.validateChange(invitation, invitation.getContentJson(), request.getContentJson());
+        else if (request.getContentJson() != null && request.getContentJson().contains("preWeddingVideo"))
+            throw new ApiException(HttpStatus.SERVICE_UNAVAILABLE, "Cinematic policy is unavailable");
         if (entitlementService != null && InvitationContentPolicy.addsCustomBranding(invitation.getContentJson(), request.getContentJson())) {
             entitlementService.requireFeature(user, com.koupreng.backend.entitlement.application.EntitlementService.Feature.CUSTOM_BRANDING);
         }
@@ -923,6 +927,19 @@ public class InvitationService {
         return InvitationResponse.from(invitation);
     }
 
+    @org.springframework.beans.factory.annotation.Autowired
+    private PreWeddingVideoPolicy preWeddingVideoPolicy;
+
+    private PublicInvitationResponse publicResponse(UserInvitation invitation, Guest guest, GuestSeatAssignment assignment) {
+        var response = PublicInvitationResponse.from(invitation, guest, assignment);
+        if (preWeddingVideoPolicy != null) {
+            var playback = preWeddingVideoPolicy.playback(invitation);
+            if (playback != null) response.setCinematicOpening(new com.koupreng.backend.invitation.api.dto.CinematicOpeningResponse(
+                    true, playback.videoMediaId(), playback.posterUrl()));
+        }
+        return response;
+    }
+
     @Transactional
     public GuestInvitationViewResponse guestView(String slug, String inviteToken) {
         UserInvitation invitation = findPublicInvitationEntity(slug);
@@ -975,7 +992,7 @@ public class InvitationService {
         boolean canRsvp = invitation.getRsvpDeadline() == null || !invitation.getRsvpDeadline().isBefore(LocalDate.now());
 
         return GuestInvitationViewResponse.builder()
-                .invitation(PublicInvitationResponse.from(invitation, guest, assignment))
+                .invitation(publicResponse(invitation, guest, assignment))
                 .guestName(guest.getGuestName())
                 .guestCategory(guestCategory)
                 .seatCount(seatCount)

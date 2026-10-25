@@ -67,6 +67,7 @@ htmlcov/
 *.db
 test-results/
 .cache/
+output/playwright/phase9*/
 
 # Large non-evidence archives, tools, and virtualenvs in output
 output/ci-tools/

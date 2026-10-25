@@ -42,6 +42,10 @@ public class StorageProperties {
 
         @NotBlank
         private String uploadDir = "uploads";
+        private String privateUploadDir = "";
+
+        public String getPrivateUploadDir() { return privateUploadDir; }
+        public void setPrivateUploadDir(String value) { privateUploadDir = value; }
 
         @NotBlank
         private String publicBaseUrl = "/uploads";

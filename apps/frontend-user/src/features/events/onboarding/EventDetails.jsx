@@ -10,6 +10,7 @@ import EventFields from "./EventFields.jsx";
 import StudioGuide from '@/features/invitations/studio/StudioGuide';
 import SaveTheDateEditor from '@/features/invitations/studio/SaveTheDateEditor';
 import WeddingProgramEditor from '@/features/invitations/studio/WeddingProgramEditor';
+import PreWeddingVideoEditor from '@/features/invitations/studio/PreWeddingVideoEditor';
 import { eventPresentationFields } from '@/features/templates/shared/eventPresentation';
 import PublishReview from '@/features/invitations/studio/PublishReview';
 import { publishReadiness } from '@/features/invitations/studio/publishReadiness';
@@ -31,7 +32,7 @@ export default function EventDetails() {
   const revision = useRef(event.updatedAt);
   const [form, setForm] = useState(() => {
     const content = readContent(event.contentJson);
-    return { ...event, ...eventPresentationFields(content), saveTheDate: content.saveTheDate || { enabled: false }, venueAddress: event.venueAddress ?? content.venueAddress ?? content.event?.venueAddress ?? '',
+    return { ...event, ...eventPresentationFields(content), preWeddingVideo: content.preWeddingVideo, saveTheDate: content.saveTheDate || { enabled: false }, venueAddress: event.venueAddress ?? content.venueAddress ?? content.event?.venueAddress ?? '',
       googleMapUrl: event.googleMapUrl ?? content.googleMapUrl ?? content.event?.mapLink ?? '' };
   });
   const [content] = useState(() => readContent(event.contentJson));
@@ -44,7 +45,7 @@ export default function EventDetails() {
     onRestore: value => { setForm(value.form); setContact(value.contact); setSchedule(value.schedule); },
     persist: async () => {
       const payload = { ...eventPayload(form, event.eventType), expectedUpdatedAt: revision.current };
-      if (generic) payload.contentJson = JSON.stringify({ ...readContent(payload.contentJson), ...eventPresentationFields(form), eventDate: form.eventDate, eventTime: form.eventTime || '', messageText: form.storyText || "", contact, schedule });
+      if (generic) payload.contentJson = JSON.stringify({ ...readContent(payload.contentJson), ...eventPresentationFields(form), ...(form.preWeddingVideo ? { preWeddingVideo: form.preWeddingVideo } : {}), eventDate: form.eventDate, eventTime: form.eventTime || '', messageText: form.storyText || "", contact, schedule });
       if (generic) payload.enabledSections = JSON.stringify({ ...readContent(payload.enabledSections), countdown: form.saveTheDate?.enabled !== false, schedule: form.showSchedule !== false });
       const saved = await invitationService.update(eventId, payload, { suppressAuthRedirect: true });
       revision.current = saved.updatedAt; updateEvent(saved); return { synced: true };
@@ -103,6 +104,7 @@ export default function EventDetails() {
         </div>)}
         <button type="button" disabled={schedule.length >= 20} onClick={() => setSchedule(current => [...current, { time: "", title: "" }])}>{en ? "Add activity" : "បន្ថែមសកម្មភាព"}</button>
       </fieldset>}
+      <details className="studio-subsection"><summary>{en ? 'Media & Opening' : 'មេឌៀ និងការបើកធៀប'}</summary><div className="studio-subsection-body"><PreWeddingVideoEditor eventId={eventId} value={form.preWeddingVideo} english={en} onChange={value => setForm(current => ({ ...current, preWeddingVideo: value }))} /></div></details>
     </>}{!generic && <p>{en ? 'Design artwork and optional media in the invitation and media tools.' : 'រចនារូបភាព និងមាតិកាជាជម្រើសក្នុងឧបករណ៍រចនា និងរូបភាព។'}</p>}<Link className="workspace-button" to={eventPath(eventId,'media')}>{en ? 'Media tools' : 'ឧបករណ៍រូបភាព'}</Link></div>
     <fieldset hidden={mode === 'guided' && step !== 0} disabled={isOwner === false} className="event-settings-section"><legend>{en ? 'Invitation visibility' : 'ការមើលធៀបអញ្ជើញ'}</legend><label>{en ? "Invitation visibility" : "ការមើលសំបុត្រអញ្ជើញ"}<select value={form.visibility || "PRIVATE"} onChange={e => setForm(current => ({ ...current, visibility: e.target.value }))}>
       <option value="PRIVATE">{en ? "Private" : "ឯកជន"}</option><option value="PUBLIC">{en ? "Public when published" : "សាធារណៈពេលផ្សាយ"}</option><option value="PASSWORD_PROTECTED">{en ? "Password protected" : "ការពារដោយពាក្យសម្ងាត់"}</option>

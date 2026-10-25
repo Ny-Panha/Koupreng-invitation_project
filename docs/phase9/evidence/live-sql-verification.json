@@ -1,0 +1,73 @@
+{
+  "environment": "Task-owned native MySQL 8.0 on loopback 3416; fictional browser fixture only",
+  "source": "Direct SQL after the passing unmocked UI journey",
+  "invitation": {
+    "video": {
+      "enabled": true,
+      "videoMediaId": 44,
+      "posterMediaId": 43
+    },
+    "family": "Live family name",
+    "status": "PUBLISHED",
+    "closing": "Thank you for joining our fictional celebration.",
+    "eventId": 137,
+    "message": "Authored invitation text survives every tab.",
+    "eventDate": "2027-12-05",
+    "eventTime": "17:30:00.000000",
+    "programDay": "Live saved first day",
+    "saveTheDateSubtitle": "Real API date subtitle"
+  },
+  "ticketDesign": {
+    "design": {
+      "font": "MOUL",
+      "frame": "DOUBLE",
+      "accent": "#956d2c",
+      "footer": "\u179f\u17bc\u1798\u1794\u1784\u17d2\u17a0\u17b6\u1789\u1780\u17b6\u178f\u1793\u17c1\u17c7\u1793\u17c5\u1785\u17d2\u179a\u1780\u1785\u17bc\u179b \u00b7 Present this ticket at the entrance",
+      "header": "\u179f\u17bc\u1798\u1782\u17c4\u179a\u1796\u17a2\u1789\u17d2\u1787\u17be\u1789",
+      "layout": "GOLD",
+      "version": 0,
+      "coverFit": null,
+      "showGroup": false,
+      "showTable": true,
+      "coverFocusX": null,
+      "coverFocusY": null,
+      "coverMediaId": 45,
+      "showSeatCount": true,
+      "backgroundMediaId": 46,
+      "backgroundOpacity": null
+    },
+    "version": 0
+  },
+  "media": [
+    {
+      "id": 43,
+      "bytes": 21554,
+      "purpose": "GALLERY_IMAGE",
+      "mimeType": "image/png",
+      "hasPublicUrl": true
+    },
+    {
+      "id": 44,
+      "bytes": 420975,
+      "purpose": "PRE_WEDDING_VIDEO",
+      "mimeType": "video/mp4",
+      "hasPublicUrl": false
+    },
+    {
+      "id": 45,
+      "bytes": 43136,
+      "purpose": "TICKET_IMAGE",
+      "mimeType": "image/webp",
+      "hasPublicUrl": true
+    },
+    {
+      "id": 46,
+      "bytes": 21554,
+      "purpose": "TICKET_IMAGE",
+      "mimeType": "image/png",
+      "hasPublicUrl": true
+    }
+  ],
+  "assertionsPassed": true,
+  "credentialsAndGuestTokensExcluded": true
+}

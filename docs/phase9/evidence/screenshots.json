@@ -1,0 +1,761 @@
+{
+  "captureDate": "2026-10-25",
+  "timezone": "Asia/Bangkok",
+  "screenshots": 106,
+  "groups": {
+    "after": 55,
+    "before": 32,
+    "live": 19
+  },
+  "totalBytes": 53945914,
+  "provenance": {
+    "before": "Initial retained user production build; fictional API fixtures",
+    "after": "Current production user build; fictional API fixtures",
+    "live": "Task-owned native API/MySQL with fictional accounts. Admin before uses original source archive; admin after uses current source."
+  },
+  "limits": "Representative rendered states with manual image review; no claim of exhaustive route coverage, pixel equality or physical device verification",
+  "files": [
+    {
+      "file": "after/dashboard-en-1440.png",
+      "width": 1440,
+      "height": 1052,
+      "bytes": 271237,
+      "sha256": "443630ca86d7e0adaf8dc94ced15d2dbdc1c50858f47f260836e4f11c97c6fa7"
+    },
+    {
+      "file": "after/dashboard-en-390.png",
+      "width": 390,
+      "height": 2677,
+      "bytes": 194255,
+      "sha256": "8c3cf9630d70bf7681ecb9c61a0223c1f3d3212a0585d29bc3e45347b4148888"
+    },
+    {
+      "file": "after/dashboard-kh-1440.png",
+      "width": 1440,
+      "height": 1052,
+      "bytes": 273961,
+      "sha256": "4fac20216f51386fda19f301900d968aa338bbe025211f6f44738a76c337017e"
+    },
+    {
+      "file": "after/dashboard-kh-390.png",
+      "width": 390,
+      "height": 2629,
+      "bytes": 195020,
+      "sha256": "d45bf0eb5d2331bc9a098719d5cd6b2a7ab3c3e712b08a91d164c0f5e0727608"
+    },
+    {
+      "file": "after/events-en-1440.png",
+      "width": 1440,
+      "height": 1233,
+      "bytes": 898439,
+      "sha256": "1762a55acc4b665a43eae8f05778f3caf9c86b6e9e227669c646bf344ffe5d6d"
+    },
+    {
+      "file": "after/events-en-390.png",
+      "width": 390,
+      "height": 1918,
+      "bytes": 337990,
+      "sha256": "0aedcc23a5a7ff39d2ab358d6052738d5c1d46dfe73f975f2aeca37ffecb3628"
+    },
+    {
+      "file": "after/events-kh-1440.png",
+      "width": 1440,
+      "height": 1233,
+      "bytes": 903667,
+      "sha256": "a726283f2f58634229adfad833f907822dbb1e0abb0993eb30ff0121c67e43ba"
+    },
+    {
+      "file": "after/events-kh-390.png",
+      "width": 390,
+      "height": 1918,
+      "bytes": 343001,
+      "sha256": "c59ecaf2b017398c102cb6d2f49ecf986a61b0b77d9730f2d0ad01eb69447377"
+    },
+    {
+      "file": "after/landing-en-1440.png",
+      "width": 1440,
+      "height": 6497,
+      "bytes": 1072181,
+      "sha256": "c279abd503aaf61cf069bbc9ee867d03fa3cd82a31d8085a2708b58bd07e1db1"
+    },
+    {
+      "file": "after/landing-en-390.png",
+      "width": 390,
+      "height": 9663,
+      "bytes": 750836,
+      "sha256": "0e56dbe44de11a49d418af4b1984fc9cbfc8ca64b4d984b50932d44101fbff7f"
+    },
+    {
+      "file": "after/landing-kh-1440.png",
+      "width": 1440,
+      "height": 6508,
+      "bytes": 1033099,
+      "sha256": "99c3172de0026b9cade0efab9346d191ad5a6f8b32aa5ed2316a11f6b35bb61d"
+    },
+    {
+      "file": "after/landing-kh-390.png",
+      "width": 390,
+      "height": 9238,
+      "bytes": 700520,
+      "sha256": "bf9c584aec92337c979097a39a59bbe3c01bb028a1402068346173d3b902d06e"
+    },
+    {
+      "file": "after/login-en-1440.png",
+      "width": 1440,
+      "height": 960,
+      "bytes": 441931,
+      "sha256": "2b732c532985a92e4e394c72dca447ae5e2f1e148c38e01eb6b419970a43f036"
+    },
+    {
+      "file": "after/login-en-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 145103,
+      "sha256": "1a14a39df3b79985691c4ae77b8812cea6f08e830c8bbefae31ba78ac86f7120"
+    },
+    {
+      "file": "after/login-kh-1440.png",
+      "width": 1440,
+      "height": 960,
+      "bytes": 441526,
+      "sha256": "63153b9ec3341ecc9d6930d855b0f3c6bc6f1f0bf7b5bc8cb732d4fa359fead0"
+    },
+    {
+      "file": "after/login-kh-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 147007,
+      "sha256": "fdc6840c2dbdc34bf7efcede3b529a9d4677f7926ae244a6b4235729e3e1148d"
+    },
+    {
+      "file": "after/marketplace-en-1440.png",
+      "width": 1440,
+      "height": 1547,
+      "bytes": 303719,
+      "sha256": "6c53d9bb9c666625afc842dc1e0b69928332f948cb6c70cf137ec4bf614b2e14"
+    },
+    {
+      "file": "after/marketplace-en-390.png",
+      "width": 390,
+      "height": 1930,
+      "bytes": 227977,
+      "sha256": "bc48eabcb7f236f99e12fc3250df2746db2c852f461fecbde12d08ca2432c020"
+    },
+    {
+      "file": "after/marketplace-kh-1440.png",
+      "width": 1440,
+      "height": 1577,
+      "bytes": 297547,
+      "sha256": "7eb9f4922fad114cf4ab8b8a898763807b5b03e0a5d12fbb538ca53130dbc6dd"
+    },
+    {
+      "file": "after/marketplace-kh-390.png",
+      "width": 390,
+      "height": 1909,
+      "bytes": 218329,
+      "sha256": "bfa016505d7cab78781ee3acea958a326cb0c64c567f80ab37c31aca711d5077"
+    },
+    {
+      "file": "after/packages-en-1440.png",
+      "width": 1440,
+      "height": 2959,
+      "bytes": 244076,
+      "sha256": "5099f5213afc316af462a079d6ad2c634070ea06973285f84ce161bdd6d9863d"
+    },
+    {
+      "file": "after/packages-en-390.png",
+      "width": 390,
+      "height": 4828,
+      "bytes": 236879,
+      "sha256": "45c0b7ba63fdd64f53a71263c8483348f844a9c4ee89d1ec312ae8bbfdffe82d"
+    },
+    {
+      "file": "after/packages-kh-1440.png",
+      "width": 1440,
+      "height": 2930,
+      "bytes": 237166,
+      "sha256": "8287309ff256a6df1ea90710404af0613b4e8464f10e21901575364274bff0c0"
+    },
+    {
+      "file": "after/packages-kh-390.png",
+      "width": 390,
+      "height": 4349,
+      "bytes": 227956,
+      "sha256": "721a7482c27006641e3efb60c9543e230e4c86c1cb4c0477f35e8b9e25c684c3"
+    },
+    {
+      "file": "after/public-en-1440.png",
+      "width": 1440,
+      "height": 7474,
+      "bytes": 3326966,
+      "sha256": "04faea77c03ff3a9c559f7ea3d2242911c2fcc4adeabf7d06750e45c0ab00318"
+    },
+    {
+      "file": "after/public-en-390.png",
+      "width": 390,
+      "height": 7382,
+      "bytes": 1407158,
+      "sha256": "4390107acdb47dae33615c001ac93d1e3437714d62c4624090be934ef2201f59"
+    },
+    {
+      "file": "after/public-kh-1440.png",
+      "width": 1440,
+      "height": 7684,
+      "bytes": 3465543,
+      "sha256": "1b5cecb5d6d1bb68a92dddbc036609ac59ef26c7433d977887f09eb3800d0253"
+    },
+    {
+      "file": "after/public-kh-390.png",
+      "width": 390,
+      "height": 7667,
+      "bytes": 1502622,
+      "sha256": "16046f9656ace60fb3c894f597d002108c8f35a8b8f76d1ea76ed63a1f4f51fb"
+    },
+    {
+      "file": "after/studio-designCover-en-1440.png",
+      "width": 1440,
+      "height": 1123,
+      "bytes": 369257,
+      "sha256": "5e525b5b3ae0b8863638352f2a7fed05666f9e913522044423ee910882eb89d8"
+    },
+    {
+      "file": "after/studio-designCover-en-390.png",
+      "width": 390,
+      "height": 1852,
+      "bytes": 109465,
+      "sha256": "c56b2f6ac742fb7f47db04656b4fdd81b43ea7f008e5d7dfbfafa49fdf82a01e"
+    },
+    {
+      "file": "after/studio-designCover-kh-1440.png",
+      "width": 1440,
+      "height": 1123,
+      "bytes": 371478,
+      "sha256": "fa7fa055d9ee17caa2a042cb3c5589d256b00790acdeb0ca78346a8a92476f74"
+    },
+    {
+      "file": "after/studio-designCover-kh-390.png",
+      "width": 390,
+      "height": 1850,
+      "bytes": 109632,
+      "sha256": "1695c1b0bcdfd5bc4bee6cb25192c2f47332f3d34d642c8b5960e131d1c92288"
+    },
+    {
+      "file": "after/studio-eventInformation-en-1440.png",
+      "width": 1440,
+      "height": 1123,
+      "bytes": 115574,
+      "sha256": "239d6840aa693e37b2b977da0a71c0aba26d0d13d8935ca6708c99296d916f33"
+    },
+    {
+      "file": "after/studio-eventInformation-en-390.png",
+      "width": 390,
+      "height": 1574,
+      "bytes": 67996,
+      "sha256": "95852fe4fc1e21340677e8c2546ce02eb841d686ba44e5df19a9a305662686f6"
+    },
+    {
+      "file": "after/studio-eventInformation-kh-1440.png",
+      "width": 1440,
+      "height": 1123,
+      "bytes": 114310,
+      "sha256": "9a83501b6fd2b0231724a1a50ece89f650888d3ad599e1ea11fdd94a5ee4d62a"
+    },
+    {
+      "file": "after/studio-eventInformation-kh-390.png",
+      "width": 390,
+      "height": 1574,
+      "bytes": 64085,
+      "sha256": "4ced594fc5e5a6b3660f4e35699e533390fbb9b854f2ab40e26bf6969a1aee28"
+    },
+    {
+      "file": "after/studio-guestExperience-en-1440.png",
+      "width": 1440,
+      "height": 1123,
+      "bytes": 107041,
+      "sha256": "2d0e5e319b33a36fe097cde5ab048274487e2cc589903f297b342bf235f76d9a"
+    },
+    {
+      "file": "after/studio-guestExperience-en-390.png",
+      "width": 390,
+      "height": 1197,
+      "bytes": 55366,
+      "sha256": "f4f099221e58a6f9525211834fc10ad2a1f881e59f44e391e29bfab16a0b4056"
+    },
+    {
+      "file": "after/studio-guestExperience-kh-1440.png",
+      "width": 1440,
+      "height": 1123,
+      "bytes": 343104,
+      "sha256": "56a5fbdac44b1f51683337b3fc6e7caa105a925f6f14dbf2ca0fcdce2787515f"
+    },
+    {
+      "file": "after/studio-guestExperience-kh-390.png",
+      "width": 390,
+      "height": 1197,
+      "bytes": 56131,
+      "sha256": "4a97b2e1060048140086f0b12bc100415452a1a52bdf297536a4d586042b5234"
+    },
+    {
+      "file": "after/studio-mediaOpening-en-1440.png",
+      "width": 1440,
+      "height": 1123,
+      "bytes": 471820,
+      "sha256": "3eec1580a8cce0fa6d519019aa1e702420ba358c3d28dee148ab1c21a02141b2"
+    },
+    {
+      "file": "after/studio-mediaOpening-en-390.png",
+      "width": 390,
+      "height": 2460,
+      "bytes": 341594,
+      "sha256": "437b27946d0e178726348688e17444b3ee74b3e3d62f77ae4da8eeca71f9aa7f"
+    },
+    {
+      "file": "after/studio-mediaOpening-kh-1440.png",
+      "width": 1440,
+      "height": 1123,
+      "bytes": 479977,
+      "sha256": "bad5e2da77e94541d86e7c266ff098129f783e5b190f51f87965a83f4c2f26de"
+    },
+    {
+      "file": "after/studio-mediaOpening-kh-390.png",
+      "width": 390,
+      "height": 2438,
+      "bytes": 341017,
+      "sha256": "84fd7be0960093dd1ba923add4ec311d63e3b0c75e8e91f298d5263957aa4465"
+    },
+    {
+      "file": "after/studio-scheduleVenue-en-1440.png",
+      "width": 1440,
+      "height": 1123,
+      "bytes": 123665,
+      "sha256": "0def855bec00c0171294de438b19653c990f70fe332a3ad840fd7e63994702aa"
+    },
+    {
+      "file": "after/studio-scheduleVenue-en-390.png",
+      "width": 390,
+      "height": 4705,
+      "bytes": 213952,
+      "sha256": "f555360a657b6b7d68dc2f2e656d57170b517fee731a0ab34d3cbbeb282143e7"
+    },
+    {
+      "file": "after/studio-scheduleVenue-kh-1440.png",
+      "width": 1440,
+      "height": 1123,
+      "bytes": 358560,
+      "sha256": "ae12f3efe1bf1e62166aa42822324856e6307ffba00e298032341181021f6150"
+    },
+    {
+      "file": "after/studio-scheduleVenue-kh-390.png",
+      "width": 390,
+      "height": 4378,
+      "bytes": 193362,
+      "sha256": "5feb609d1e82d2718d517f07204fd452dda8177866c00e8134179c5f89a4220c"
+    },
+    {
+      "file": "after/studio-ticketsQr-en-1440.png",
+      "width": 1440,
+      "height": 1123,
+      "bytes": 332581,
+      "sha256": "43cbb0bd85547beb77914dfdaed6394c32ea2b6ca6b5b8d0faeb6221dc6d87bd"
+    },
+    {
+      "file": "after/studio-ticketsQr-en-390.png",
+      "width": 390,
+      "height": 1052,
+      "bytes": 52614,
+      "sha256": "2ae95ef0032b625dfce32e9c1765b0e6e52ed0d770627c17a203ca58ecd7267c"
+    },
+    {
+      "file": "after/studio-ticketsQr-kh-1440.png",
+      "width": 1440,
+      "height": 1123,
+      "bytes": 330081,
+      "sha256": "cdf46b4c3bb5007df3c798ff308556bf1696ffb6ebca96dafd3c8613930e8691"
+    },
+    {
+      "file": "after/studio-ticketsQr-kh-390.png",
+      "width": 390,
+      "height": 1052,
+      "bytes": 47333,
+      "sha256": "976992f2726d699892316562d6b1e6d4d1f56ac3056d78a0c878ef775c9b6375"
+    },
+    {
+      "file": "after/ticket-images-en-1440.png",
+      "width": 1280,
+      "height": 812,
+      "bytes": 118223,
+      "sha256": "f2667e13cbe3ad8d01475ad9c30b99aa1a2a01b777984ddf015f8a2802641247"
+    },
+    {
+      "file": "after/video-playing-en-1440.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 191568,
+      "sha256": "2c41570ac9001f721e81f15245ccff3caefc70b8665368c6bedf2a97f9ec6647"
+    },
+    {
+      "file": "after/video-skipped-en-1440.png",
+      "width": 1280,
+      "height": 7234,
+      "bytes": 2482773,
+      "sha256": "2436f8c4838815ac6821fa867af02a2d16b94dea2ff3b4cc0d8ce49a382f2dd5"
+    },
+    {
+      "file": "before/dashboard-en-1440.png",
+      "width": 1440,
+      "height": 1052,
+      "bytes": 271237,
+      "sha256": "443630ca86d7e0adaf8dc94ced15d2dbdc1c50858f47f260836e4f11c97c6fa7"
+    },
+    {
+      "file": "before/dashboard-en-390.png",
+      "width": 390,
+      "height": 2677,
+      "bytes": 194255,
+      "sha256": "8c3cf9630d70bf7681ecb9c61a0223c1f3d3212a0585d29bc3e45347b4148888"
+    },
+    {
+      "file": "before/dashboard-kh-1440.png",
+      "width": 1440,
+      "height": 1052,
+      "bytes": 273961,
+      "sha256": "4fac20216f51386fda19f301900d968aa338bbe025211f6f44738a76c337017e"
+    },
+    {
+      "file": "before/dashboard-kh-390.png",
+      "width": 390,
+      "height": 2629,
+      "bytes": 195020,
+      "sha256": "d45bf0eb5d2331bc9a098719d5cd6b2a7ab3c3e712b08a91d164c0f5e0727608"
+    },
+    {
+      "file": "before/events-en-1440.png",
+      "width": 1440,
+      "height": 1233,
+      "bytes": 898462,
+      "sha256": "842065d1cddbac2d7eaa0df125a026253de9e395be04a9aebf62de89b8596174"
+    },
+    {
+      "file": "before/events-en-390.png",
+      "width": 390,
+      "height": 1918,
+      "bytes": 338107,
+      "sha256": "b8bfd145fb5827fec222b8fe15f9df61c9c90975d7dcc393e3d428b89bbd01a5"
+    },
+    {
+      "file": "before/events-kh-1440.png",
+      "width": 1440,
+      "height": 1233,
+      "bytes": 903658,
+      "sha256": "d0b0ce706b3dc4c0566fbc19d1995088da10ab461383aa787c98fa9685e15e3c"
+    },
+    {
+      "file": "before/events-kh-390.png",
+      "width": 390,
+      "height": 1918,
+      "bytes": 343248,
+      "sha256": "de55a3cdacc7fc6904fae8a4928cc89e0e8df872df4a801d0ec285edb821d751"
+    },
+    {
+      "file": "before/landing-en-1440.png",
+      "width": 1440,
+      "height": 6497,
+      "bytes": 1071666,
+      "sha256": "4edfaf794665e1c0daaff76d16261e3978c4597b64d65b619e28f2dbf1159f14"
+    },
+    {
+      "file": "before/landing-en-390.png",
+      "width": 390,
+      "height": 9663,
+      "bytes": 751014,
+      "sha256": "0120a5603ba2c841d7dc6d9ba7a40e1d18bb80f23e01e569c4da759d33fafcf0"
+    },
+    {
+      "file": "before/landing-kh-1440.png",
+      "width": 1440,
+      "height": 6508,
+      "bytes": 1033075,
+      "sha256": "c234ba1ad739bafa976a769be54c15a309802c2da0a4babab2cba1d0b2bc8361"
+    },
+    {
+      "file": "before/landing-kh-390.png",
+      "width": 390,
+      "height": 9238,
+      "bytes": 700063,
+      "sha256": "540f6d51dc5228efa7d70be8b8e6fbdbb3df5ca85239a1b1e6161290c25fceff"
+    },
+    {
+      "file": "before/login-en-1440.png",
+      "width": 1440,
+      "height": 960,
+      "bytes": 441023,
+      "sha256": "d9c05614d306287432235ee0649e1878dd63b2449d81a5cd5fdd7e3b95440f34"
+    },
+    {
+      "file": "before/login-en-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 145514,
+      "sha256": "24b6b5a9dd7f72d02603320b8c8f0e6b15a3c1eee3cc96d475a9873fa9f75c22"
+    },
+    {
+      "file": "before/login-kh-1440.png",
+      "width": 1440,
+      "height": 960,
+      "bytes": 441500,
+      "sha256": "66fc666a7ad9f54db93892f75eaa7e1d05e25ac6efb6eb2ce647a7dbe548ab5e"
+    },
+    {
+      "file": "before/login-kh-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 146862,
+      "sha256": "1edec7e96aee2cf85b5e49f34869d3e64b3e84afaf026aa53f82f2c4f440a8df"
+    },
+    {
+      "file": "before/marketplace-en-1440.png",
+      "width": 1440,
+      "height": 1547,
+      "bytes": 303719,
+      "sha256": "6c53d9bb9c666625afc842dc1e0b69928332f948cb6c70cf137ec4bf614b2e14"
+    },
+    {
+      "file": "before/marketplace-en-390.png",
+      "width": 390,
+      "height": 1930,
+      "bytes": 227977,
+      "sha256": "bc48eabcb7f236f99e12fc3250df2746db2c852f461fecbde12d08ca2432c020"
+    },
+    {
+      "file": "before/marketplace-kh-1440.png",
+      "width": 1440,
+      "height": 1577,
+      "bytes": 297547,
+      "sha256": "7eb9f4922fad114cf4ab8b8a898763807b5b03e0a5d12fbb538ca53130dbc6dd"
+    },
+    {
+      "file": "before/marketplace-kh-390.png",
+      "width": 390,
+      "height": 1909,
+      "bytes": 218329,
+      "sha256": "bfa016505d7cab78781ee3acea958a326cb0c64c567f80ab37c31aca711d5077"
+    },
+    {
+      "file": "before/packages-en-1440.png",
+      "width": 1440,
+      "height": 2959,
+      "bytes": 244067,
+      "sha256": "039e66147eab6bb830ad4ea8204c0db27c280d44621b26739272e7f82619e941"
+    },
+    {
+      "file": "before/packages-en-390.png",
+      "width": 390,
+      "height": 4828,
+      "bytes": 236710,
+      "sha256": "98f87f86a2339319f2757b1567567aee6dde802f2f7d20d243fddac8d14931ee"
+    },
+    {
+      "file": "before/packages-kh-1440.png",
+      "width": 1440,
+      "height": 2930,
+      "bytes": 237270,
+      "sha256": "0d1b8f05280cb1884f216fa0de3b66927dbdae4a5ae032b0b744eaee5e4fafc0"
+    },
+    {
+      "file": "before/packages-kh-390.png",
+      "width": 390,
+      "height": 4349,
+      "bytes": 227855,
+      "sha256": "23eb9efb398fab6e4b34ba6c4db86b94f4631f923e677ba1b1b4c3d1955d75de"
+    },
+    {
+      "file": "before/public-en-1440.png",
+      "width": 1440,
+      "height": 7474,
+      "bytes": 3327111,
+      "sha256": "ed8018ca0f2992c783347f3964f66602d8c89ac45fe7b442ad2d8f0f636a8e9a"
+    },
+    {
+      "file": "before/public-en-390.png",
+      "width": 390,
+      "height": 7382,
+      "bytes": 1407090,
+      "sha256": "11b950885c64f3c6a93d25b6b08564bdd062b8f30b4a2015e9c84fc30ab561c7"
+    },
+    {
+      "file": "before/public-kh-1440.png",
+      "width": 1440,
+      "height": 7684,
+      "bytes": 3465479,
+      "sha256": "03208b9d6cb672add58feb96a82f11415c161351bc061d48d2057bdc642f5029"
+    },
+    {
+      "file": "before/public-kh-390.png",
+      "width": 390,
+      "height": 7667,
+      "bytes": 1553681,
+      "sha256": "65064ee25091e994d167657804842ac670f2e3c00e2dab088d93c9fbfa8aae92"
+    },
+    {
+      "file": "before/studio-en-1440.png",
+      "width": 1440,
+      "height": 1123,
+      "bytes": 348551,
+      "sha256": "77c282bf0bb314f993fb4e534091f948f370696cf99a53a236019787a83646c0"
+    },
+    {
+      "file": "before/studio-en-390.png",
+      "width": 390,
+      "height": 1137,
+      "bytes": 52173,
+      "sha256": "f93bdd07466aabad790ce848558688b2cb863c06690f053a00a2a2568e9ffb6e"
+    },
+    {
+      "file": "before/studio-kh-1440.png",
+      "width": 1440,
+      "height": 1123,
+      "bytes": 346664,
+      "sha256": "561f655a926748aa8c90073bc0ea19e82d31e4dc946c53224d60cbf8d13d9cbd"
+    },
+    {
+      "file": "before/studio-kh-390.png",
+      "width": 390,
+      "height": 1137,
+      "bytes": 51574,
+      "sha256": "e76cbd9715d8de0339d8af1a009dc00b1dc1236e1367308cd5b77babddb7c921"
+    },
+    {
+      "file": "live/admin-after-dashboard-en-1440.png",
+      "width": 1440,
+      "height": 1659,
+      "bytes": 312342,
+      "sha256": "05ad8bf1f6fc3668e50ba3474c6db2cc24ac09491fe585e57fd26de42e70740e"
+    },
+    {
+      "file": "live/admin-after-dashboard-en-390.png",
+      "width": 390,
+      "height": 3526,
+      "bytes": 276637,
+      "sha256": "30be3c59b5b859c513c84210a4e64d5a589be921a77e15d49a00222b1b406c05"
+    },
+    {
+      "file": "live/admin-after-dashboard-km-1440.png",
+      "width": 1440,
+      "height": 1640,
+      "bytes": 316182,
+      "sha256": "3c6bda334e348ad60500153416e790542101723537033c2762d44905c5d637e0"
+    },
+    {
+      "file": "live/admin-after-dashboard-km-390.png",
+      "width": 390,
+      "height": 3454,
+      "bytes": 280921,
+      "sha256": "ffa11e5d8ddeac694d36b9e67891648ac6bddae7bfcc3f37ec3f08b457f54433"
+    },
+    {
+      "file": "live/admin-after-reports-en-1440.png",
+      "width": 1440,
+      "height": 2111,
+      "bytes": 256914,
+      "sha256": "2a9c55c25bf5feafe66cdaf66be436dabe4f776a4ecf7383a368c721fbb30e08"
+    },
+    {
+      "file": "live/admin-after-reports-en-390.png",
+      "width": 390,
+      "height": 6810,
+      "bytes": 409324,
+      "sha256": "034a6bd9d53891886dc4d2db74b9ea8c08cfa7c1d4406bcd1adee0ab4cdf38e7"
+    },
+    {
+      "file": "live/admin-after-reports-km-1440.png",
+      "width": 1440,
+      "height": 2136,
+      "bytes": 265163,
+      "sha256": "4d6bf39ac18c904da2ea06694b9cd03cfa8e3bab333288986a5ced1ae5a64d3d"
+    },
+    {
+      "file": "live/admin-after-reports-km-390.png",
+      "width": 390,
+      "height": 6931,
+      "bytes": 412586,
+      "sha256": "308784523d4ce4fcbd6afc8fafb7e1b983f4c3aaeba5f5cd0cd763811b0032b9"
+    },
+    {
+      "file": "live/admin-before-dashboard-en-1440.png",
+      "width": 1440,
+      "height": 1652,
+      "bytes": 308339,
+      "sha256": "b124c9a28861f235501c753ee5bea1b88bcda2975e76642b1ef867009be1229a"
+    },
+    {
+      "file": "live/admin-before-dashboard-en-390.png",
+      "width": 390,
+      "height": 3501,
+      "bytes": 272068,
+      "sha256": "dd8191e5c5befd152fbec89907cd345859ad998df35b5abc7474534efe177c88"
+    },
+    {
+      "file": "live/admin-before-dashboard-km-1440.png",
+      "width": 1440,
+      "height": 1633,
+      "bytes": 312942,
+      "sha256": "ac2436d227f8d6cb68f2d79dd0fd15b5af004b28a5a7da9f1eb9ed695a675a89"
+    },
+    {
+      "file": "live/admin-before-dashboard-km-390.png",
+      "width": 390,
+      "height": 3429,
+      "bytes": 276750,
+      "sha256": "fe2d193c180031b7987ff619821824bb64925bd7ecb63331889547ede4489f47"
+    },
+    {
+      "file": "live/admin-before-reports-en-1440.png",
+      "width": 1440,
+      "height": 2108,
+      "bytes": 256370,
+      "sha256": "043f6632a254c0b74fb1dcd62c6858c230f509b08c8747f3b68f4a4363867816"
+    },
+    {
+      "file": "live/admin-before-reports-en-390.png",
+      "width": 390,
+      "height": 6783,
+      "bytes": 407638,
+      "sha256": "0b83067704873c8b8e8cadd0de07fbd18c70cb8d424e8d8506dbfa3b5dae8525"
+    },
+    {
+      "file": "live/admin-before-reports-km-1440.png",
+      "width": 1440,
+      "height": 2133,
+      "bytes": 264770,
+      "sha256": "ce6d5841064bcee1b8ec54da55d68eca7a3a4c8e65bcf019068934fb430412ce"
+    },
+    {
+      "file": "live/admin-before-reports-km-390.png",
+      "width": 390,
+      "height": 6925,
+      "bytes": 411344,
+      "sha256": "447ff027ccef425687bfb6541eb2a45c98e6c6ad85afaf838863bcbc7b2996c1"
+    },
+    {
+      "file": "live/public-video-en-1440.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 143112,
+      "sha256": "db7f5509d35884966e9e1b16a894508d3985eb0f963a580b9d23ed5629b483d0"
+    },
+    {
+      "file": "live/studio-video-en-1440.png",
+      "width": 1280,
+      "height": 883,
+      "bytes": 86675,
+      "sha256": "842c74886472be92d2c1857281ec4af9848c3d17dfe760230f48f09bbd03ca76"
+    },
+    {
+      "file": "live/ticket-images-en-1440.png",
+      "width": 1280,
+      "height": 812,
+      "bytes": 173105,
+      "sha256": "50c921bb8c30f52bddbaff8c79773b994f32066e1f3e833488583970ca2354a9"
+    }
+  ]
+}

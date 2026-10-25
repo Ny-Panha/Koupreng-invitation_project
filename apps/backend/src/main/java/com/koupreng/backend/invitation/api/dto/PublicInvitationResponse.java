@@ -18,6 +18,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PublicInvitationResponse {
+    private CinematicOpeningResponse cinematicOpening;
 
     private Long templateId;
     private String templateCode;

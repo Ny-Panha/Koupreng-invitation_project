@@ -59,6 +59,7 @@ services:
       SPRING_DATA_REDIS_HOST: redis
       SPRING_DATA_REDIS_PORT: "6379"
       LOCAL_UPLOAD_DIR: /app/uploads
+      PRIVATE_UPLOAD_DIR: /app/uploads-private
       PUBLIC_UPLOAD_BASE_URL: /uploads
       FRONTEND_BASE_URL: ${PUBLIC_APP_URL:-http://localhost:8080}
       ABA_PAYWAY_STATIC_LINK: ${ABA_PAYWAY_STATIC_LINK:?Set ABA_PAYWAY_STATIC_LINK in .env}
@@ -71,6 +72,7 @@ services:
       SCALAR_ENABLED: ${SCALAR_ENABLED:-false}
     volumes:
       - uploads:/app/uploads
+      - uploads-private:/app/uploads-private
     depends_on:
       mysql:
         condition: service_healthy
@@ -170,6 +172,7 @@ volumes:
   mysql-data:
   redis-data:
   uploads:
+  uploads-private:
 
 networks:
   app:

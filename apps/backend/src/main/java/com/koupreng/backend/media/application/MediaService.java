@@ -41,12 +41,16 @@ public class MediaService {
     private static final Map<MediaType, Set<String>> ALLOWED_CONTENT_TYPES = Map.of(
             MediaType.COVER_IMAGE, Set.of("image/jpeg", "image/png", "image/webp"),
             MediaType.GALLERY_IMAGE, Set.of("image/jpeg", "image/png", "image/webp"),
+            MediaType.TICKET_IMAGE, Set.of("image/jpeg", "image/png", "image/webp"),
+            MediaType.PRE_WEDDING_VIDEO, Set.of("video/mp4", "video/webm"),
             MediaType.VIDEO, Set.of("video/mp4", "video/webm"),
             MediaType.BACKGROUND_MUSIC, Set.of("audio/mpeg", "audio/mp3", "audio/wav", "audio/ogg")
     );
     private static final Map<MediaType, Set<String>> ALLOWED_EXTENSIONS = Map.of(
             MediaType.COVER_IMAGE, Set.of(".jpg", ".jpeg", ".png", ".webp"),
             MediaType.GALLERY_IMAGE, Set.of(".jpg", ".jpeg", ".png", ".webp"),
+            MediaType.TICKET_IMAGE, Set.of(".jpg", ".jpeg", ".png", ".webp"),
+            MediaType.PRE_WEDDING_VIDEO, Set.of(".mp4", ".webm"),
             MediaType.VIDEO, Set.of(".mp4", ".webm"),
             MediaType.BACKGROUND_MUSIC, Set.of(".mp3", ".wav", ".ogg")
     );
@@ -64,6 +68,8 @@ public class MediaService {
     private static final Map<MediaType, Long> MAX_FILE_SIZES = Map.of(
             MediaType.COVER_IMAGE, 5L * MB,
             MediaType.GALLERY_IMAGE, 5L * MB,
+            MediaType.TICKET_IMAGE, 5L * MB,
+            MediaType.PRE_WEDDING_VIDEO, 50L * MB,
             MediaType.VIDEO, 50L * MB,
             MediaType.BACKGROUND_MUSIC, 15L * MB
     );
@@ -79,6 +85,13 @@ public class MediaService {
             ".scr",
             ".sh"
     );
+
+    @org.springframework.beans.factory.annotation.Autowired
+    private com.koupreng.backend.entitlement.application.EntitlementService entitlements;
+    @org.springframework.beans.factory.annotation.Autowired
+    private com.koupreng.backend.invitation.application.PreWeddingVideoPolicy cinematic;
+    @org.springframework.beans.factory.annotation.Autowired
+    private com.koupreng.backend.ticket.infrastructure.persistence.InvitationTicketDesignRepository ticketDesigns;
 
     private final MediaFileRepository mediaFileRepository;
     private final InvitationService invitationService;
@@ -151,6 +164,52 @@ public class MediaService {
     }
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
+    public MediaResponse uploadTicketImage(Authentication authentication, Long invitationId, MultipartFile file) {
+        UserInvitation ownerEvent = invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        entitlements.requireFeature(ownerEvent.getUser(), com.koupreng.backend.entitlement.application.EntitlementService.Feature.QR_INVITATIONS);
+        return uploadPurpose(authentication, invitationId, file, MediaType.TICKET_IMAGE, 12);
+    }
+
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public MediaResponse uploadPreWeddingVideo(Authentication authentication, Long invitationId, MultipartFile file) {
+        UserInvitation event = invitationService.requireEventPermission(authentication, invitationId, Permission.MANAGE_INVITATION);
+        entitlements.requireFeature(event.getUser(), com.koupreng.backend.entitlement.application.EntitlementService.Feature.PRE_WEDDING_VIDEO);
+        return uploadPurpose(authentication, invitationId, file, MediaType.PRE_WEDDING_VIDEO, 3);
+    }
+
+    private MediaResponse uploadPurpose(Authentication authentication, Long invitationId, MultipartFile file, MediaType type, int limit) {
+        UserInvitation event = requireMutableInvitation(authentication, invitationId);
+        validateFile(file, type);
+        if (mediaFileRepository.countByInvitationIdAndMediaType(invitationId, type) >= limit)
+            throw new ApiException(HttpStatus.CONFLICT, "Remove an unused asset before uploading another");
+        return storageMutation(changes -> MediaResponse.from(mediaFileRepository.save(store(event, file, type, 0, false, changes))));
+    }
+
+    public record PrivateContent(org.springframework.core.io.Resource resource, String mimeType) { }
+
+    @Transactional(readOnly = true)
+    public PrivateContent ownerCinematicContent(Authentication auth, Long invitationId, Long mediaId) {
+        var event = invitationService.requireEventPermission(auth, invitationId, Permission.MANAGE_INVITATION);
+        entitlements.requireFeature(event.getUser(), com.koupreng.backend.entitlement.application.EntitlementService.Feature.PRE_WEDDING_VIDEO);
+        return privateContent(invitationId, mediaId);
+    }
+
+    @Transactional(readOnly = true)
+    public PrivateContent publicCinematicContent(String slug, String accessToken, String inviteToken, Long mediaId) {
+        UserInvitation event = invitationService.requirePublicInvitationForView(slug, inviteToken, accessToken);
+        var authorized = cinematic.playback(event);
+        if (authorized == null || !authorized.videoMediaId().equals(mediaId))
+            throw new ApiException(HttpStatus.NOT_FOUND, "Media file not found");
+        return privateContent(event.getId(), mediaId);
+    }
+
+    private PrivateContent privateContent(Long invitationId, Long mediaId) {
+        var file = requireMedia(invitationId, mediaId);
+        if (file.getMediaType() != MediaType.PRE_WEDDING_VIDEO) throw new ApiException(HttpStatus.NOT_FOUND, "Media file not found");
+        return new PrivateContent(storageService.readPrivate(file.getPublicId(), file.getMimeType()), file.getMimeType());
+    }
+
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public MediaResponse uploadVideo(Authentication authentication, Long invitationId, MultipartFile file) {
         return uploadSingleton(authentication, invitationId, file, MediaType.VIDEO, false);
     }
@@ -169,7 +228,8 @@ public class MediaService {
     @Transactional(readOnly = true)
     public MediaListResponse listPublic(String slug, String token) {
         UserInvitation invitation = invitationService.requirePublicInvitationForView(slug, token);
-        return MediaListResponse.from(mediaFileRepository.findByInvitationIdOrderBySortOrderAscCreatedAtAsc(invitation.getId()));
+        return MediaListResponse.from(mediaFileRepository.findByInvitationIdOrderBySortOrderAscCreatedAtAsc(invitation.getId()).stream()
+                .filter(file -> file.getMediaType() != MediaType.PRE_WEDDING_VIDEO && file.getMediaType() != MediaType.TICKET_IMAGE).toList());
     }
 
     @Transactional(readOnly = true)
@@ -180,7 +240,8 @@ public class MediaService {
                 accessToken,
                 inviteToken
         );
-        return MediaListResponse.from(mediaFileRepository.findByInvitationIdOrderBySortOrderAscCreatedAtAsc(invitation.getId()));
+        return MediaListResponse.from(mediaFileRepository.findByInvitationIdOrderBySortOrderAscCreatedAtAsc(invitation.getId()).stream()
+                .filter(file -> file.getMediaType() != MediaType.PRE_WEDDING_VIDEO && file.getMediaType() != MediaType.TICKET_IMAGE).toList());
     }
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
@@ -190,8 +251,13 @@ public class MediaService {
             Long mediaId,
             MultipartFile file
     ) {
-        requireMutableInvitation(authentication, invitationId);
+        UserInvitation event = requireMutableInvitation(authentication, invitationId);
         MediaFile mediaFile = requireMedia(invitationId, mediaId);
+        if (mediaFile.getMediaType() == MediaType.TICKET_IMAGE) invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        if (mediaFile.getMediaType() == MediaType.PRE_WEDDING_VIDEO)
+            entitlements.requireFeature(event.getUser(), com.koupreng.backend.entitlement.application.EntitlementService.Feature.PRE_WEDDING_VIDEO);
+        if (mediaFile.getMediaType() == MediaType.TICKET_IMAGE)
+            entitlements.requireFeature(event.getUser(), com.koupreng.backend.entitlement.application.EntitlementService.Feature.QR_INVITATIONS);
         validateFile(file, mediaFile.getMediaType());
         return storageMutation(changes -> {
             StorageUploadResult upload = changes.upload(file, mediaFile.getMediaType(), invitationId);
@@ -203,8 +269,14 @@ public class MediaService {
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public void delete(Authentication authentication, Long invitationId, Long mediaId) {
-        requireMutableInvitation(authentication, invitationId);
+        UserInvitation event = requireMutableInvitation(authentication, invitationId);
         MediaFile mediaFile = requireMedia(invitationId, mediaId);
+        if (mediaFile.getMediaType() == MediaType.TICKET_IMAGE) invitationService.requireOwnedInvitationEntity(authentication, invitationId);
+        if (mediaFile.getMediaType() == MediaType.TICKET_IMAGE && ticketDesigns != null) {
+            ticketDesigns.findById(invitationId).ifPresent(design -> requireUnreferenced(design.getDesignJson(), mediaId, "coverMediaId", "backgroundMediaId"));
+        }
+        if (mediaFile.getMediaType() == MediaType.PRE_WEDDING_VIDEO)
+            requireUnreferenced(event.getContentJson(), mediaId, "preWeddingVideo.videoMediaId");
         storageMutation(changes -> {
             changes.removeAfterCommit(mediaFile);
             mediaFileRepository.delete(mediaFile);
@@ -215,6 +287,21 @@ public class MediaService {
     private MediaFile requireMedia(Long invitationId, Long mediaId) {
         return mediaFileRepository.findByIdAndInvitationId(mediaId, invitationId)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Media file not found"));
+    }
+
+    private void requireUnreferenced(String content, Long mediaId, String... paths) {
+        if (content == null || content.isBlank()) return;
+        try {
+            var json = new com.fasterxml.jackson.databind.ObjectMapper().readTree(content);
+            for (String path : paths) {
+                var value = json;
+                for (String key : path.split("\\.")) value = value.path(key);
+                if (value.isIntegralNumber() && value.asLong() == mediaId)
+                    throw new ApiException(HttpStatus.CONFLICT, "Remove this asset from the saved design before deleting it");
+            }
+        } catch (com.fasterxml.jackson.core.JsonProcessingException malformed) {
+            throw new ApiException(HttpStatus.CONFLICT, "The saved design must be repaired before deleting media");
+        }
     }
 
     private MediaResponse uploadSingleton(Authentication authentication, Long invitationId, MultipartFile file,
@@ -303,8 +390,8 @@ public class MediaService {
 
     private String maxSizeMessage(MediaType mediaType) {
         return switch (mediaType) {
-            case COVER_IMAGE, GALLERY_IMAGE, PROFILE_IMAGE -> "Image file must be 5MB or smaller";
-            case VIDEO -> "Video file must be 50MB or smaller";
+            case COVER_IMAGE, GALLERY_IMAGE, TICKET_IMAGE, PROFILE_IMAGE -> "Image file must be 5MB or smaller";
+            case VIDEO, PRE_WEDDING_VIDEO -> "Video file must be 50MB or smaller";
             case BACKGROUND_MUSIC -> "Background music file must be 15MB or smaller";
         };
     }
@@ -384,7 +471,7 @@ public class MediaService {
             if (upload != null && upload.publicId() != null && !upload.publicId().isBlank()) {
                 stagedObjects.add(new StorageObject(upload.publicId(), type));
             }
-            if (upload == null || upload.fileUrl() == null || upload.fileUrl().isBlank()
+            if (upload == null || (type != MediaType.PRE_WEDDING_VIDEO && (upload.fileUrl() == null || upload.fileUrl().isBlank()))
                     || upload.publicId() == null || upload.publicId().isBlank()
                     || upload.storageProvider() == null || upload.storageProvider().isBlank()) {
                 throw new ApiException(HttpStatus.BAD_GATEWAY, "Storage upload did not return a usable media object");

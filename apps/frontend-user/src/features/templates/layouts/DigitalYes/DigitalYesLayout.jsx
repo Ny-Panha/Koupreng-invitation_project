@@ -1,3 +1,4 @@
+import { useCinematicOpening } from "../../shared/Openings/cinematicOpeningContext";
 import SaveTheDate from '../../shared/SaveTheDate';
 import ProgramTimeline from '../../shared/ProgramTimeline';
 import { useState, useRef, useEffect, useMemo } from "react";
@@ -121,16 +122,20 @@ export default function DigitalYesLayout({
 
 
   // Handle Envelope Tap to Open
+  const startCinematic = useCinematicOpening();
   const handleOpenEnvelope = () => {
     if (isFlapOpen) return;
 
     setIsFlapOpen(true);
 
+    const playMusic = () => {
     if (audioRef.current) {
       audioRef.current.play().then(() => {
         setIsPlayingMusic(true);
       }).catch(() => {});
     }
+    };
+    if (!startCinematic(playMusic, 1300)) playMusic();
 
     setTimeout(() => {
       setIsCardEmerging(true);

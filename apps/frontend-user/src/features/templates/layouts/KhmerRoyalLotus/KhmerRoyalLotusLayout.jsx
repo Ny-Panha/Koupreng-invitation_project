@@ -1,3 +1,4 @@
+import { useCinematicOpening } from "../../shared/Openings/cinematicOpeningContext";
 import ProgramDetails from "../../shared/ProgramDetails";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
@@ -258,14 +259,18 @@ export default function KhmerRoyalLotusLayout({
     [content.enabledSections]
   );
 
+  const startCinematic = useCinematicOpening();
   const handleOpen = useCallback(() => {
     if (isOpening) return;
     setIsOpening(true);
+    const playMusic = () => {
     if (audioRef.current && content.musicUrl) {
       audioRef.current.play()
         .then(() => setIsPlaying(true))
         .catch(() => setIsPlaying(false));
     }
+    };
+    if (!startCinematic(playMusic, reducedMotion ? 0 : 1450)) playMusic();
 
     const finishOpening = () => {
       setOpened(true);
@@ -281,7 +286,7 @@ export default function KhmerRoyalLotusLayout({
     }
 
     openingTimerRef.current = window.setTimeout(finishOpening, 1450);
-  }, [content.musicUrl, isOpening, reducedMotion]);
+  }, [content.musicUrl, isOpening, reducedMotion, startCinematic]);
 
   const toggleMusic = useCallback(() => {
     if (!audioRef.current) return;

@@ -47,6 +47,7 @@ The gateway routes `/api/` and `/uploads/` to Spring Boot, `/telegram/webhook` t
 
 - `mysql-data` is authoritative relational data; back it up with `infra/backup/mysql-backup.ps1` or an equivalent provider snapshot.
 - `uploads` contains local media when `STORAGE_PROVIDER=local`; back it up or select Cloudinary before horizontally scaling.
+- `uploads-private` contains Premium cinematic films, mounted at `/app/uploads-private` with application-user ownership. Back it up with the database and ordinary uploads. It is outside the static upload root and is served through checked invitation media endpoints. `PRIVATE_UPLOAD_DIR` may select another separate writable directory outside Docker; overlapping public/private directories are rejected. Rehearse volume restore and container replacement in staging before releasing this feature.
 - `redis-data` contains rate-limit state and is operational rather than authoritative business data.
 - Flyway runs during backend startup. Never edit an applied migration; add a new migration and test both fresh and upgrade paths.
 

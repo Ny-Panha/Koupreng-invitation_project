@@ -33,19 +33,24 @@ public class CloudinaryStorageService implements StorageService {
     private static final Duration CONNECT_TIMEOUT = Duration.ofSeconds(15);
     private static final Duration REQUEST_TIMEOUT = Duration.ofSeconds(60);
     private final StorageProperties.Cloudinary properties;
-    private final HttpClient httpClient = HttpClient.newBuilder()
-            .connectTimeout(CONNECT_TIMEOUT)
-            .build();
+    private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
 
+    @org.springframework.beans.factory.annotation.Autowired
     public CloudinaryStorageService(StorageProperties storageProperties, ObjectMapper objectMapper) {
+        this(storageProperties, objectMapper, HttpClient.newBuilder().connectTimeout(CONNECT_TIMEOUT).build());
+    }
+
+    CloudinaryStorageService(StorageProperties storageProperties, ObjectMapper objectMapper, HttpClient httpClient) {
         this.properties = storageProperties.getCloudinary();
         this.objectMapper = objectMapper;
+        this.httpClient = httpClient;
     }
 
     @Override
     public StorageUploadResult upload(MultipartFile file, MediaType mediaType, Long invitationId) {
         validateConfigured();
+        boolean privateAsset = mediaType == MediaType.PRE_WEDDING_VIDEO;
         String resourceType = resourceType(mediaType);
         String timestamp = String.valueOf(Instant.now().getEpochSecond());
         String publicId = "%s/invitations/%d/%s/%s".formatted(
@@ -60,9 +65,10 @@ public class CloudinaryStorageService implements StorageService {
         HttpRequest request;
         try {
             request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://api.cloudinary.com/v1_1/%s/%s/upload".formatted(
+                    .uri(URI.create("https://api.cloudinary.com/v1_1/%s/%s/%s".formatted(
                             properties.getCloudName(),
-                            resourceType
+                            resourceType,
+                            privateAsset ? "authenticated" : "upload"
                     )))
                     .timeout(REQUEST_TIMEOUT)
                     .header("Content-Type", "multipart/form-data; boundary=" + boundary)
@@ -80,10 +86,11 @@ public class CloudinaryStorageService implements StorageService {
             JsonNode json = objectMapper.readTree(response.body());
             String fileUrl = json.path("secure_url").asText(json.path("url").asText(null));
             String storedPublicId = json.path("public_id").asText(publicId);
-            if (fileUrl == null || fileUrl.isBlank()) {
+            if (privateAsset ? !"authenticated".equals(json.path("type").asText()) || !publicId.equals(storedPublicId)
+                    : fileUrl == null || fileUrl.isBlank()) {
                 throw new ApiException(HttpStatus.BAD_GATEWAY, "Cloud storage upload response is invalid");
             }
-            return new StorageUploadResult(fileUrl, storedPublicId, providerName());
+            return new StorageUploadResult(privateAsset ? null : fileUrl, storedPublicId, providerName());
         } catch (IOException exception) {
             throw new ApiException(HttpStatus.BAD_GATEWAY, "Cloud storage upload response could not be read");
         } catch (InterruptedException exception) {
@@ -100,7 +107,9 @@ public class CloudinaryStorageService implements StorageService {
         validateConfigured();
         String resourceType = resourceType(mediaType);
         String timestamp = String.valueOf(Instant.now().getEpochSecond());
-        String signature = sha1("public_id=%s&timestamp=%s%s".formatted(publicId, timestamp, properties.getApiSecret()));
+        boolean privateAsset = mediaType == MediaType.PRE_WEDDING_VIDEO;
+        String signature = sha1("public_id=%s&timestamp=%s%s%s".formatted(publicId, timestamp,
+                privateAsset ? "&type=authenticated" : "", properties.getApiSecret()));
         String boundary = "----KouprengBoundary" + UUID.randomUUID().toString().replace("-", "");
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -110,7 +119,7 @@ public class CloudinaryStorageService implements StorageService {
                 )))
                 .timeout(REQUEST_TIMEOUT)
                 .header("Content-Type", "multipart/form-data; boundary=" + boundary)
-                .POST(HttpRequest.BodyPublishers.ofByteArray(destroyBody(boundary, publicId, timestamp, signature)))
+                .POST(HttpRequest.BodyPublishers.ofByteArray(destroyBody(boundary, publicId, timestamp, signature, privateAsset)))
                 .build();
 
         try {
@@ -131,6 +140,51 @@ public class CloudinaryStorageService implements StorageService {
         return "cloudinary";
     }
 
+    @Override
+    public org.springframework.core.io.Resource readPrivate(String publicId, String mimeType) {
+        validateConfigured();
+        if (publicId == null || publicId.length() > 255 || !publicId.startsWith(trimSlashes(properties.getFolder()) + "/invitations/")
+                || !publicId.contains("/pre_wedding_video/"))
+            throw new ApiException(HttpStatus.NOT_FOUND, "Media file not found");
+        HttpRequest request = HttpRequest.newBuilder(privateDownloadUri(publicId, mimeType, Instant.now().getEpochSecond()))
+                .timeout(REQUEST_TIMEOUT).GET().build();
+        try {
+            var response = httpClient.send(request, HttpResponse.BodyHandlers.ofInputStream());
+            if (response.statusCode() != 200) {
+                response.body().close();
+                throw new ApiException(HttpStatus.BAD_GATEWAY, "Cinematic playback is temporarily unavailable");
+            }
+            // Spring closes this single-use stream after writing; the signed provider URL stays server-side.
+            return new org.springframework.core.io.InputStreamResource(response.body());
+        } catch (IOException exception) {
+            throw new ApiException(HttpStatus.BAD_GATEWAY, "Cinematic playback is temporarily unavailable");
+        } catch (InterruptedException exception) {
+            Thread.currentThread().interrupt();
+            throw new ApiException(HttpStatus.BAD_GATEWAY, "Cinematic playback was interrupted");
+        }
+    }
+
+    URI privateDownloadUri(String publicId, String mimeType, long timestamp) {
+        String format = switch (mimeType) {
+            case "video/mp4" -> "mp4";
+            case "video/webm" -> "webm";
+            default -> throw new ApiException(HttpStatus.BAD_REQUEST, "Unsupported cinematic video format");
+        };
+        var parameters = new java.util.TreeMap<String, String>();
+        parameters.put("expires_at", String.valueOf(timestamp + 60));
+        parameters.put("format", format);
+        parameters.put("public_id", publicId);
+        parameters.put("timestamp", String.valueOf(timestamp));
+        parameters.put("type", "authenticated");
+        String signed = parameters.entrySet().stream().map(entry -> entry.getKey() + "=" + entry.getValue())
+                .collect(java.util.stream.Collectors.joining("&"));
+        parameters.put("signature", sha1(signed + properties.getApiSecret()));
+        parameters.put("api_key", properties.getApiKey());
+        String query = parameters.entrySet().stream().map(entry -> entry.getKey() + "=" + java.net.URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8))
+                .collect(java.util.stream.Collectors.joining("&"));
+        return URI.create("https://api.cloudinary.com/v1_1/" + properties.getCloudName() + "/video/download?" + query);
+    }
+
     private byte[] uploadBody(
             String boundary,
             MultipartFile file,
@@ -148,12 +202,13 @@ public class CloudinaryStorageService implements StorageService {
         return body.toByteArray();
     }
 
-    private byte[] destroyBody(String boundary, String publicId, String timestamp, String signature) {
+    private byte[] destroyBody(String boundary, String publicId, String timestamp, String signature, boolean privateAsset) {
         ByteArrayOutputStream body = new ByteArrayOutputStream();
         writeFormField(body, boundary, "api_key", properties.getApiKey());
         writeFormField(body, boundary, "timestamp", timestamp);
         writeFormField(body, boundary, "public_id", publicId);
         writeFormField(body, boundary, "signature", signature);
+        if (privateAsset) writeFormField(body, boundary, "type", "authenticated");
         writeClosingBoundary(body, boundary);
         return body.toByteArray();
     }
@@ -186,7 +241,7 @@ public class CloudinaryStorageService implements StorageService {
     }
 
     private String resourceType(MediaType mediaType) {
-        return mediaType == MediaType.VIDEO || mediaType == MediaType.BACKGROUND_MUSIC ? "video" : "image";
+        return mediaType == MediaType.VIDEO || mediaType == MediaType.PRE_WEDDING_VIDEO || mediaType == MediaType.BACKGROUND_MUSIC ? "video" : "image";
     }
 
     private String sha1(String value) {

@@ -10,7 +10,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #FCF8F2;
+    background: var(--ui-canvas);
     position: relative;
     overflow: hidden;
     padding: 2rem 1rem;

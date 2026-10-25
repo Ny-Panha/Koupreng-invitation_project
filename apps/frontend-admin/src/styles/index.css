@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Kantumruy+Pro:wght@300;400;500;600;700&family=Moul&display=swap');
 @import "tailwindcss";
+@import "./application-tokens.css";
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
@@ -28,25 +29,25 @@
 }
 
 :root {
-  --background: #f8fafc;
-  --foreground: #020617;
-  --card: #ffffff;
-  --card-foreground: #020617;
-  --popover: #ffffff;
-  --popover-foreground: #020617;
-  --primary: #d97706;
-  --primary-foreground: #ffffff;
-  --secondary: #f1f5f9;
-  --secondary-foreground: #0f172a;
-  --muted: #f1f5f9;
-  --muted-foreground: #64748b;
-  --accent: #f8fafc;
-  --accent-foreground: #020617;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --border: #e2e8f0;
-  --input: #e2e8f0;
-  --ring: #d97706;
+  --background: var(--ui-canvas);
+  --foreground: var(--ui-ink);
+  --card: var(--ui-surface);
+  --card-foreground: var(--ui-ink);
+  --popover: var(--ui-surface);
+  --popover-foreground: var(--ui-ink);
+  --primary: var(--ui-action);
+  --primary-foreground: var(--ui-on-action);
+  --secondary: var(--ui-surface-subtle);
+  --secondary-foreground: var(--ui-ink);
+  --muted: var(--ui-surface-subtle);
+  --muted-foreground: var(--ui-muted);
+  --accent: var(--ui-action-soft);
+  --accent-foreground: var(--ui-ink);
+  --destructive: var(--ui-danger);
+  --destructive-foreground: var(--ui-on-action);
+  --border: var(--ui-border);
+  --input: var(--ui-control-border);
+  --ring: var(--ui-focus);
 }
 
 .dark {

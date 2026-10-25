@@ -364,6 +364,15 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/api/v1/internal/**", new CorsConfiguration());
         source.registerCorsConfiguration("/api/**", configuration);
+        // Canvas ticket export reads public images anonymously from the configured UI origins.
+        CorsConfiguration assets = new CorsConfiguration();
+        assets.setAllowedOriginPatterns(List.copyOf(corsProperties.getAllowedOrigins()));
+        assets.setAllowedMethods(List.of("GET", "HEAD"));
+        assets.setAllowedHeaders(List.of("Range"));
+        assets.setExposedHeaders(List.of("Content-Length", "Content-Range", "Accept-Ranges"));
+        assets.setAllowCredentials(false);
+        assets.setMaxAge(corsProperties.getMaxAgeSeconds());
+        source.registerCorsConfiguration("/uploads/**", assets);
         return source;
     }
 

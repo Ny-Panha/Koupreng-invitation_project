@@ -1,0 +1,13 @@
+# Findings and verification strategy
+
+| Severity | Actual cause | Affected surfaces | Resolution | Verification |
+| --- | --- | --- | --- | --- |
+| High | Studio sidebar directly exposes every section key, with ticket links outside its groups | Event invitation advanced editor | Six configured parent groups; retain legacy section keys and mounted editors, use internal disclosures | Six-tab count, keyboard/mobile, legacy links, retained edits, Phase 8 persistence |
+| High | Ticket upload calls gallery upload and inherits its capacity check | Ticket designer and media service | Reproduce quota rejection, add bounded ticket-purpose uploads; keep existing gallery IDs valid | Full-gallery failure before/fix after, persisted IDs, cross-event rejection, preview/export |
+| High | Existing cinematic player is a cover style; no dedicated Premium capability or shared post-opening stage | Media, public renderers, invitation saves/publication | Add server-authorized optional configuration and shared stage, preserving cover choreography | Free/paid/Premium, expiry, forged JSON, asset ownership, skip/end/error/reduced motion |
+| Medium | Local uploads and cloud uploads historically publish raw asset URLs | Public media listing/storage | Keep new cinematic assets private and release bytes only after invitation access and entitlement checks | Raw-path denial, private listing redaction, protected invitation access |
+| Medium | Advanced editors have no grouped disclosure structure | Event/family/messages/schedule/media/design/guest content | Reuse each field editor inside a stable collapsible section | Focus/validation, no remount/data loss, language independence |
+| Medium | Admin theme defines its own orange primary and cool surfaces while user UI already uses semantic workspace roles | Admin/account/marketing shared primitives | Consolidate semantic roles and alias existing variables without recoloring template artwork | Contrast calculations, representative desktop/mobile screenshots, both builds |
+| Medium | Ticket uploading and saving share one busy label | Ticket designer | Distinguish upload progress, unsaved association, save confirmation and preview/export failures | Upload failure retry and save/reload/export journeys |
+
+Route families and source owners are listed in `01-route-inventory.md`. Existing loading/error/empty primitives, authentication expiry recovery, concurrency handling, event permissions, financial currency separation and provider flows are preserved. Source review is distinguished from rendered evidence: no route is called visually verified merely because its registry was read.

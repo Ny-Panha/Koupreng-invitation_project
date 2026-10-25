@@ -1,0 +1,248 @@
+{
+  "date": "2026-10-25",
+  "timezone": "Asia/Bangkok",
+  "initialCommit": "3452e436",
+  "branch": "feat/phase9-studio-media-tickets",
+  "recommendation": "Ready for code review",
+  "suites": [
+    {
+      "id": "user-unit",
+      "passed": 896,
+      "failed": 0,
+      "skipped": 0,
+      "log": {
+        "file": ".cache/phase9/user-final-tests.log",
+        "sha256": "f2ac7b8e8f1be9f730b6febce3bbdc5e8932337039fe21fb25b746949ba068ca",
+        "expectedSummaryVerified": true
+      }
+    },
+    {
+      "id": "admin-unit",
+      "passed": 121,
+      "failed": 0,
+      "skipped": 0,
+      "log": {
+        "file": ".cache/phase9/admin-tests.log",
+        "sha256": "32817c46e2e0df5dc5d33252c5b7ad00a4bb6854d8e716ffcdce462f4a2adf82",
+        "expectedSummaryVerified": true
+      }
+    },
+    {
+      "id": "backend-full",
+      "passed": 620,
+      "failed": 0,
+      "skipped": 4,
+      "log": {
+        "file": ".cache/phase9/backend-final.log",
+        "sha256": "d4ced2d8cd545f7ef572e3081866157fdb2c0ffb4281f68603c5365ea6cbf7c8",
+        "expectedSummaryVerified": true
+      }
+    },
+    {
+      "id": "backend-final-package",
+      "passed": 55,
+      "failed": 0,
+      "skipped": 0,
+      "log": {
+        "file": ".cache/phase9/backend-release-focused.log",
+        "sha256": "2c903f787e2a37a64e02dac18df67badd7dcef305d69d94219cefe61063360a4",
+        "expectedSummaryVerified": true
+      }
+    },
+    {
+      "id": "worker",
+      "passed": 72,
+      "failed": 0,
+      "skipped": 0,
+      "log": {
+        "file": ".cache/phase9/baseline-worker.log",
+        "sha256": "53fdab09b0b2107526dc3dc58e04bd90383b3a2f138519ab175716613ae384d0",
+        "expectedSummaryVerified": true
+      }
+    },
+    {
+      "id": "template-targeted",
+      "passed": 40,
+      "failed": 0,
+      "skipped": 0,
+      "log": {
+        "file": ".cache/phase9/template-final-tests.log",
+        "sha256": "ba36cfeb9ff21540cb5994773b01c77b453b45ae2e16f8bd26836bd1069def50",
+        "expectedSummaryVerified": true
+      }
+    },
+    {
+      "id": "phase8-browser",
+      "passed": 45,
+      "failed": 0,
+      "skipped": 4,
+      "log": {
+        "file": ".cache/phase9/phase8-regression.log",
+        "sha256": "5b1562127987fe045e5b41b123622ab37c3dbc6f3cd8d817c39e4eba66370591",
+        "expectedSummaryVerified": true
+      }
+    },
+    {
+      "id": "phase9-browser",
+      "passed": 51,
+      "failed": 0,
+      "skipped": 0,
+      "log": {
+        "file": ".cache/phase9/browser-release.log",
+        "sha256": "d4b1b949d953ca15e7a9a18881c43d2c7262b3c429821ac771ff422eaa468193",
+        "expectedSummaryVerified": true
+      }
+    },
+    {
+      "id": "real-local-browser",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "log": {
+        "file": ".cache/phase9/live-browser-final.log",
+        "sha256": "780a219f142e25b75d36ab6392bd04236a86f0a0a34e7c52acb4bbc4ab24011b",
+        "expectedSummaryVerified": true
+      }
+    },
+    {
+      "id": "original-user-static-captures",
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "log": {
+        "file": ".cache/phase9/baseline-static-final.log",
+        "sha256": "2e1a30b2c1e5e1c52d19ac079882c3ea71fe62c0a3ef8f63ddf1d583fccaad6b",
+        "expectedSummaryVerified": true
+      }
+    },
+    {
+      "id": "global-static-captures-and-admin-axe",
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0,
+      "log": {
+        "file": ".cache/phase9/global-static-final.log",
+        "sha256": "69622996e9a395e1d180e256ab6054fe683251a5f09c5f1f1fe617f558ad8349",
+        "expectedSummaryVerified": true
+      }
+    },
+    {
+      "id": "legacy-original-final-run",
+      "passed": 68,
+      "failed": 4,
+      "skipped": 0,
+      "log": {
+        "file": ".cache/phase9/legacy-release.log",
+        "sha256": "7c6f2e88b6c9619caf0cc6f538221d61b703b5dc3f6145911e87482919721fb2",
+        "expectedSummaryVerified": true
+      }
+    },
+    {
+      "id": "legacy-readiness-followup",
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "log": {
+        "file": ".cache/phase9/legacy-ready-rerun.log",
+        "sha256": "b1b434da3343f5d64db1c45b7a6d5fffee2695c14140cbb54eb3e1dedbc2db82",
+        "expectedSummaryVerified": true
+      }
+    },
+    {
+      "id": "ticket-final-capture",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "log": {
+        "file": ".cache/phase9/ticket-capture-final.log",
+        "sha256": "c042aaa252329c867bc00d6be7ef584a41813ebf58625bcd0ac57ce2b3e965ac",
+        "expectedSummaryVerified": true
+      }
+    }
+  ],
+  "supportingLogs": {
+    "user-release-build.log": {
+      "file": ".cache/phase9/user-release-build.log",
+      "sha256": "49ed7b290e79e31b50b15b63c2027e6694d555e6a8aa365e0e7d5ec1ac7d266b",
+      "expectedSummaryVerified": true
+    },
+    "admin-after-build-final.log": {
+      "file": ".cache/phase9/admin-after-build-final.log",
+      "sha256": "c0e91fa5f83d55779a43e0cc05a8e03aa91b58c26c07bd0a5b29d7ddc7ee0686",
+      "expectedSummaryVerified": true
+    },
+    "user-release-lint.log": {
+      "file": ".cache/phase9/user-release-lint.log",
+      "sha256": "52fffd10a27da7ca85657cb07ca8f4c376d8991bb3efbe96d624f017b515ebf8",
+      "expectedSummaryVerified": true
+    },
+    "admin-style-final-lint.log": {
+      "file": ".cache/phase9/admin-style-final-lint.log",
+      "sha256": "7b0521746442f3a07ba830d3886d680d679002bb88a4358a1cdab4758c0ee841",
+      "expectedSummaryVerified": true
+    },
+    "compose-config.log": {
+      "file": ".cache/phase9/compose-config.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expectedSummaryVerified": true
+    },
+    "docker-engine.log": {
+      "file": ".cache/phase9/docker-engine.log",
+      "sha256": "090b49d31c2975835f5e2646f7abd4a81a6e1d9f73ef4f4733faef3fd1e597d3",
+      "expectedSummaryVerified": true
+    },
+    "routing.log": {
+      "file": ".cache/phase9/routing.log",
+      "sha256": "8e1989b86aee8371561a84cf80cc52dcc92ef113dc617e89aea08d4a47abcc1a",
+      "expectedSummaryVerified": true
+    },
+    "skills.log": {
+      "file": ".cache/phase9/skills.log",
+      "sha256": "42969f18b8c71a19e9e7c0e48c0e5390ee84bc1ae9096cb32f8115f860f730e2",
+      "expectedSummaryVerified": true
+    }
+  },
+  "legacyResolution": "All 72 distinct original cases have passing evidence across the 68-pass full run and the 9-pass follow-up. Four original failures remain recorded; no claim of one clean 72-case run.",
+  "browserCodecLimit": "Chromium/Firefox decode actual MP4. Windows WebKit emits an actual code 3/4 media error; recovery is asserted and decoding is not claimed.",
+  "accessibility": {
+    "automatedScopes": [
+      "Studio navigation/forms",
+      "ticket designer",
+      "cinematic dialog in Chromium/Firefox",
+      "populated real admin dashboard/reports in English/Khmer at 390/1440px"
+    ],
+    "adminScans": 8,
+    "tags": [
+      "wcag2a",
+      "wcag2aa",
+      "wcag21aa",
+      "wcag22aa"
+    ],
+    "limit": "Automated scoped checks, not whole-product WCAG certification or human screen-reader evidence"
+  },
+  "screenshots": {
+    "count": 106,
+    "manifest": "screenshots.json",
+    "sha256": "fd1c1f65bc95aef6604a6bc6d8ea815f1f0558ebf96bc3fa795b383390dc7dc9"
+  },
+  "integrationEvidence": [
+    "live-sql-verification.json",
+    "calendar-verification.json",
+    "ticket-export-verification.json"
+  ],
+  "notRun": [
+    "Live Cloudinary",
+    "Live banking/Telegram/SMTP/OAuth",
+    "Docker image build/container recreation/volume restore: Linux engine unavailable",
+    "Physical Safari/iOS/Android devices",
+    "Human screen readers",
+    "Khmer editorial review"
+  ],
+  "safety": {
+    "productionOperations": false,
+    "pushOrMerge": false,
+    "historicalMigrationsChanged": false,
+    "environmentFilesChanged": false,
+    "temporaryCredentialsCommitted": false
+  }
+}

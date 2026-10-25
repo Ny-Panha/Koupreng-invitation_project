@@ -14,7 +14,7 @@ const resolveMediaSrc = (val) => {
  * CinematicVideoOpening — Fullscreen Pre-wedding Video Reveal
  * Flow: Plays video first, then pops up the invitation card ("show vdo hxx jam popup").
  */
-export default function CinematicVideoOpening({
+function LegacyCinematicVideoOpening({
   content = {},
   videoUrl,
   posterUrl = "/invitations/khmer-celestial/burgundy-bokeh-poster.webp",
@@ -334,4 +334,51 @@ export default function CinematicVideoOpening({
       </div>
     </div>
   );
+}
+
+
+// Reuses the cinematic player for the optional, server-authorized post-cover stage.
+function CinematicPlayback({ loadVideo, videoUrl, posterUrl, english = false, onOpen }) {
+  const video = useRef(null), onFinish = useRef(onOpen), recovery = useRef(null);
+  const [source, setSource] = useState(videoUrl || "");
+  const [muted, setMuted] = useState(true);
+  const [status, setStatus] = useState("loading");
+  useEffect(() => { onFinish.current = onOpen; }, [onOpen]);
+  const copy = (en, kh) => english ? en : kh;
+  useEffect(() => {
+    const controller = new AbortController();
+    let url;
+    if (loadVideo) loadVideo(controller.signal).then(blob => {
+      if (controller.signal.aborted) return;
+      url = URL.createObjectURL(blob); setSource(url);
+    }).catch(() => { if (!controller.signal.aborted) onFinish.current?.(); });
+    return () => { controller.abort(); if (url) URL.revokeObjectURL(url); };
+  }, [loadVideo]);
+  useEffect(() => {
+    const element = video.current;
+    recovery.current = setTimeout(() => onFinish.current?.(), 15000);
+    if (source && element) {
+      element.defaultMuted = true; element.muted = true;
+      element.play().catch(() => setStatus("blocked"));
+    }
+    return () => { clearTimeout(recovery.current); element?.pause(); };
+  }, [source]);
+  const progress = () => {
+    setStatus("playing"); clearTimeout(recovery.current);
+    recovery.current = setTimeout(() => onFinish.current?.(), 15000);
+  };
+  return <div className="cinematic-playback">
+    <div className="cinematic-playback-actions">
+      <button type="button" disabled={!source} onClick={() => setMuted(value => !value)} aria-pressed={!muted}>{muted ? copy("Enable sound", "បើកសំឡេង") : copy("Mute video", "បិទសំឡេង")}</button>
+      <button type="button" onClick={onOpen}>{copy("Skip video", "រំលងវីដេអូ")} <SkipForward size={18} aria-hidden="true" /></button>
+    </div>
+    <video ref={video} src={source || undefined} poster={posterUrl || undefined} muted={muted} playsInline preload="metadata"
+      aria-label={copy("Pre-wedding video", "វីដេអូមុនអាពាហ៍ពិពាហ៍")} onPlaying={progress} onTimeUpdate={progress} onEnded={onOpen} onError={onOpen} />
+    <p role="status">{status === "loading" ? copy("Loading video… You can skip at any time.", "កំពុងផ្ទុកវីដេអូ… អ្នកអាចរំលងបានគ្រប់ពេល។") : status === "blocked" ? copy("Playback was blocked. Play the video or continue to the invitation.", "មិនអាចចាក់វីដេអូបាន។ សូមចាក់ ឬរំលងទៅធៀបអញ្ជើញ។") : ''}</p>
+    {status === "blocked" && <button type="button" onClick={() => video.current?.play().catch(() => onFinish.current?.())}>{copy("Play video", "ចាក់វីដេអូ")}</button>}
+  </div>;
+}
+
+export default function CinematicVideoOpening(props) {
+  return props.stageOnly ? <CinematicPlayback {...props} /> : <LegacyCinematicVideoOpening {...props} />;
 }

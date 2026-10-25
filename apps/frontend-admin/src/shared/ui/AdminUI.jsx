@@ -8,15 +8,15 @@ export function AdminPageHeader({ title, subtitle, actions, eyebrow }) {
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 animate-cascade" style={{ animationDelay: "0.04s" }}>
       <div className="animate-zoom-in" style={{ animationDelay: "0.06s" }}>
         {eyebrow && (
-          <p className="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-1 animate-text-reveal" style={{ animationDelay: "0.04s" }}>
+          <p className="text-sm font-bold text-[var(--ui-action-hover)] dark:text-primary mb-1 animate-text-reveal" style={{ animationDelay: "0.04s" }}>
             {eyebrow}
           </p>
         )}
-        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-zinc-100 leading-normal animate-text-reveal" style={{ animationDelay: "0.08s" }}>
+        <h2 className="text-xl sm:text-2xl font-bold text-foreground leading-relaxed animate-text-reveal" style={{ animationDelay: "0.08s" }}>
           {title}
         </h2>
         {subtitle && (
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-zinc-400 mt-1 animate-text-reveal" style={{ animationDelay: "0.14s" }}>
+          <p className="text-sm text-muted-foreground mt-1 animate-text-reveal" style={{ animationDelay: "0.14s" }}>
             {subtitle}
           </p>
         )}
@@ -63,7 +63,7 @@ export function StatCard({
       <div className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-slate-200/60 dark:via-white/10 to-transparent" />
       
       <div className="flex items-start justify-between gap-2">
-        <span className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-zinc-500 truncate animate-text-reveal" style={{ animationDelay: "0.08s" }}>
+        <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground truncate animate-text-reveal" style={{ animationDelay: "0.08s" }}>
           {label}
         </span>
         {Icon && (
@@ -113,7 +113,7 @@ export function StatCard({
       )}
 
       {note && (
-        <p className="text-xs text-slate-500 dark:text-zinc-400 mt-2 font-medium truncate animate-text-reveal" style={{ animationDelay: "0.22s" }}>
+        <p className="text-xs text-muted-foreground mt-2 font-medium truncate animate-text-reveal" style={{ animationDelay: "0.22s" }}>
           {note}
         </p>
       )}
@@ -159,14 +159,14 @@ export function StatusBadge({ status, tone }) {
 
 export function ActionButton({ variant = "ghost", size, className = "", ...props }) {
   const base =
-    "inline-flex items-center justify-center gap-1.5 font-semibold transition-all rounded-xl cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed";
+    "inline-flex min-h-11 items-center justify-center gap-1.5 font-semibold transition-all rounded-xl cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:opacity-50 disabled:cursor-not-allowed";
   const sizeStyles = size === "sm" ? "px-3 py-1.5 text-xs" : "px-4 py-2 text-xs sm:text-sm";
 
   const variants = {
     primary:
-      "bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold hover:brightness-110 shadow-sm shadow-amber-500/20",
+      "bg-primary text-primary-foreground font-bold hover:brightness-95 shadow-sm",
     ghost:
-      "border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-zinc-200 dark:hover:bg-zinc-800",
+      "border border-border bg-card text-card-foreground hover:bg-secondary",
     danger:
       "bg-rose-500/10 text-rose-600 border border-rose-500/20 hover:bg-rose-500 hover:text-white dark:bg-rose-500/20 dark:text-rose-400",
   };
@@ -186,7 +186,8 @@ export function SearchInput({ value, onChange, placeholder = "ស្វែងរ
       value={value}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
-      className="h-9 w-full min-w-[200px] rounded-xl border border-slate-200 bg-white px-3.5 text-xs text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-zinc-100 dark:placeholder:text-zinc-500"
+      aria-label={placeholder}
+      className="min-h-11 w-full min-w-0 rounded-xl border border-input bg-card px-3.5 text-sm text-foreground placeholder:text-muted-foreground outline-none transition focus:border-ring focus:ring-2 focus:ring-ring/30"
     />
   );
 }
@@ -230,7 +231,7 @@ export function DataTable({ columns, rows, getRowKey, emptyLabel = "មិនម
             {columns.map((column) => (
               <th
                 key={column.key}
-                className="px-4 py-3.5 text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400 whitespace-nowrap"
+                className="px-4 py-3.5 text-[11px] font-bold uppercase tracking-wider text-muted-foreground whitespace-nowrap"
               >
                 {column.header}
               </th>
@@ -261,7 +262,7 @@ export function LoadingState({ label = "កំពុងផ្ទុកទិន�
   return (
     <div className="flex flex-col items-center justify-center p-12 text-center">
       <div className="h-8 w-8 animate-spin rounded-full border-3 border-amber-500/20 border-t-amber-500 mb-3" />
-      <span className="text-xs font-semibold text-slate-500 dark:text-zinc-400">{label}</span>
+      <span className="text-xs font-semibold text-muted-foreground">{label}</span>
     </div>
   );
 }
@@ -290,7 +291,7 @@ export function EmptyState({ label = "មិនមានទិន្នន័យ
   return (
     <div className="flex flex-col items-center justify-center p-10 text-center rounded-2xl border border-dashed border-slate-200 dark:border-zinc-800">
       <Inbox className="h-8 w-8 text-slate-300 dark:text-zinc-600 mb-2" />
-      <span className="text-xs font-semibold text-slate-400 dark:text-zinc-500">{label}</span>
+      <span className="text-xs font-semibold text-muted-foreground">{label}</span>
     </div>
   );
 }

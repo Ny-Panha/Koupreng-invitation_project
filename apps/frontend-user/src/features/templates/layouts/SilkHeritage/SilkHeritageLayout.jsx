@@ -1,3 +1,4 @@
+import { useCinematicOpening } from "../../shared/Openings/cinematicOpeningContext";
 import SaveTheDate from '../../shared/SaveTheDate';
 import ProgramTimeline from '../../shared/ProgramTimeline';
 import ProgramDetails from "../../shared/ProgramDetails";
@@ -122,9 +123,11 @@ export default function SilkHeritageLayout({
     if (previewChannel) postPreviewMessage({ type: "PREVIEW_READY" }, previewChannel);
   }, [opened, preview, previewStartClosed, previewChannel]);
 
+  const startCinematic = useCinematicOpening();
   const open = (skip = false) => {
-    if (skip) { clearTimeout(timer.current); setGate("open"); return; }
+    if (skip) { clearTimeout(timer.current); setGate("open"); startCinematic(); return; }
     if (gate !== "closed") return;
+    startCinematic(undefined, reduced ? 0 : 1100);
     if (reduced) setGate("open");
     else {
       setFolioBounds({ height: cover.current.offsetHeight, top: cover.current.offsetTop });

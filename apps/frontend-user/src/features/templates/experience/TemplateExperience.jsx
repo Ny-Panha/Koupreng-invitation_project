@@ -1,3 +1,5 @@
+import CinematicOpeningProvider from "../shared/Openings/CinematicOpeningProvider";
+import { useCinematicOpening } from "../shared/Openings/cinematicOpeningContext";
 import { normalizeProgram } from "../shared/program";
 import { createElement, lazy, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -309,6 +311,7 @@ function WeddingTemplateExperience({
     const DedicatedComponent = getDedicatedTemplateComponent(tpl, variant);
 
     const reducedMotion = usePrefersReducedMotion();
+    const startCinematic = useCinematicOpening();
     const [musicAudioRef, musicController] = useTemplateMusicController(content.music);
     const rootRef = useRef(null);
     const contentRef = useRef(null);
@@ -422,8 +425,6 @@ function WeddingTemplateExperience({
             document.activeElement.blur();
         }
         setGateState("opening");
-        void musicController.play();
-
         let duration = 460;
         if (openingStyle === "curtain" || openingStyle === "CURTAIN") duration = 1300;
         else if (openingStyle === "envelope-3d" || openingStyle === "WAX_ENVELOPE") duration = 1600;
@@ -432,10 +433,11 @@ function WeddingTemplateExperience({
         else if (openingStyle === "cinematic-video" || openingStyle === "CINEMATIC_VIDEO") duration = 300;
 
         openingTimerRef.current = window.setTimeout(() => {
+            if (!startCinematic(() => void musicController.play())) void musicController.play();
             setGateState("opened");
             setHeroOpened(false);
         }, reducedMotion ? 0 : duration);
-    }, [gateState, musicController, reducedMotion, openingStyle]);
+    }, [gateState, musicController, reducedMotion, openingStyle, startCinematic]);
 
     useEffect(() => () => {
         if (openingTimerRef.current !== null) {
@@ -745,8 +747,12 @@ export default function TemplateExperience(props) {
     const tpl = props.tpl;
     const renderer = resolveTemplateRenderer(tpl, props.variant);
     if (!renderer.available) return <TemplateUnavailable />;
+    const coverless = renderer.id === 'event-essential' || ['withjoy-modern-portal', 'bliss-editorial-wedding', 'template-boilerplate']
+        .map(code => getDedicatedTemplateComponent({ code })).includes(renderer.component);
+    const wrap = node => <CinematicOpeningProvider key={props.cinematicKey || renderer.id} configuration={props.cinematicOpening} loadVideo={props.loadCinematicVideo}
+        english={String(props.cinematicLanguage || tpl?.languageMode || tpl?.hostContent?.languageMode).toUpperCase() === "EN"} fallbackCover={coverless} title={tpl?.title || tpl?.hostContent?.title}>{node}</CinematicOpeningProvider>;
     if ([tpl?.code, tpl?.slug, tpl?.templateCode, tpl?.templateId].includes("event-essential")) {
-        return <TemplateRenderGuard key={renderer.id} id={renderer.id}><Suspense fallback={<p role="status">កំពុងផ្ទុក… / Loading…</p>}><EventEssentialLayout {...props} /></Suspense></TemplateRenderGuard>;
+        return wrap(<TemplateRenderGuard key={renderer.id} id={renderer.id}><Suspense fallback={<p role="status">កំពុងផ្ទុក… / Loading…</p>}><EventEssentialLayout {...props} /></Suspense></TemplateRenderGuard>);
     }
-    return <TemplateRenderGuard key={renderer.id} id={renderer.id}><WeddingTemplateExperience {...props} /></TemplateRenderGuard>;
+    return wrap(<TemplateRenderGuard key={renderer.id} id={renderer.id}><WeddingTemplateExperience {...props} /></TemplateRenderGuard>);
 }

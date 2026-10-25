@@ -55,7 +55,7 @@ export default function AdminLayout() {
   const sidebarPadding = "lg:pl-20";
 
   return (
-    <div className="min-h-screen w-full overflow-x-hidden bg-slate-50 text-slate-900 dark:bg-[#090d16] dark:text-zinc-100 transition-colors duration-300">
+    <div className="min-h-screen w-full overflow-x-hidden bg-background text-foreground transition-colors duration-300">
       {/* Mobile Backdrop Overlay */}
       {isMobileOpen && (
         <button

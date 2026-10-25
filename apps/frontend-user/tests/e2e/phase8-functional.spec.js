@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { phase8Content, phase8Fixtures } from './support/phase8Fixtures';
+import { chooseStudioSection } from './support/studioNavigationActions';
 
 test('guided multi-day editing, save/reload, advanced settings, public display and ICS', async ({ page }, info) => {
   const { events, writes } = await phase8Fixtures(page);
@@ -25,9 +26,9 @@ test('guided multi-day editing, save/reload, advanced settings, public display a
   expect(saved.schedule.filter(row => row.day === 2).map(row => row.titleEn)).toEqual(['Last ceremony', 'Edited ceremony']);
   expect(writes.length).toBeGreaterThan(0);
   await page.reload(); await page.getByRole('button', { name: 'Advanced editor', exact: true }).click();
-  await page.getByRole('button', { name: 'Schedule', exact: true }).click();
+  await chooseStudioSection(page, 'scheduleVenue', 'Schedule');
   await expect(page.getByRole('group', { name: 'Day 3', exact: true })).toBeVisible();
-  await page.getByRole('button', { name: 'Save the date & calendar', exact: true }).click();
+  await chooseStudioSection(page, 'scheduleVenue', 'Save the date & calendar');
   await page.getByLabel('Event timezone', { exact: true }).fill('America/New_York');
   await page.getByRole('button', { name: 'Save', exact: true }).click();
   await expect(page.locator('.studio-save-status')).toHaveAttribute('data-phase', 'saved');

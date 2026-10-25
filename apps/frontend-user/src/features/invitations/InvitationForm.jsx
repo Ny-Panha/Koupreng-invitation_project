@@ -9,6 +9,8 @@ import { resolveEvent, validTimezone, wallTimeToInstant } from '../templates/sha
 import { safeJson } from '../wedding-builder/utils/invitationDraftAdapter';
 import { legacyProgram, normalizeProgram } from "../templates/shared/program";
 import StudioSections from "./studio/StudioSections";
+import { STUDIO_SECTION_LABELS, studioTabForSection, resolveStudioSection } from "./studio/studioNavigation";
+import PreWeddingVideoEditor from "./studio/PreWeddingVideoEditor";
 import StudioToolbar from "./studio/StudioToolbar";
 import StudioGuide from "./studio/StudioGuide";
 import PublishReview from "./studio/PublishReview";
@@ -787,7 +789,13 @@ export default function InvitationForm({ invitation }) {
         };
     });
 
-    const [selectedSection, setSelectedSection] = useState("eventInfo");
+    const initialSection = searchParams.get("section") || searchParams.get("tab") || window.location.hash.slice(1) || "eventInfo";
+    const [selectedSection, setSelectedSectionValue] = useState(initialSection);
+    const [expandedSections, setExpandedSections] = useState({ [initialSection]: true });
+    const setSelectedSection = key => {
+        setSelectedSectionValue(key);
+        setExpandedSections(current => ({ ...current, [key]: true }));
+    };
     const [editorMode, setEditorMode] = useState(searchParams.get("mode") === "guided" ? "guided" : "advanced");
     const [guideStep, setGuideStep] = useState(0);
     const [publishReviewOpen, setPublishReviewOpen] = useState(false);
@@ -812,9 +820,10 @@ export default function InvitationForm({ invitation }) {
         const capabilities = templateCapabilities(template || { id: form.templateId });
         config.sectionOrder = config.sectionOrder.filter(key => capabilities[key] !== false && (key !== "story" || !invitation?.eventType || invitation.eventType === "WEDDING"));
         const appearance = ["khmer-celestial", "royal-khmer-wedding"].includes(template?.code || template?.id);
-        return { ...config, sectionOrder: ["eventInfo", ...config.sectionOrder.flatMap(key => key === "cover" && appearance ? [key, "appearance"] : [key]), "music"] };
+        return { ...config, sectionOrder: ["eventInfo", ...config.sectionOrder.flatMap(key => key === "cover" && appearance ? [key, "appearance"] : [key]), "music", "preWeddingVideo"] };
     }, [form.templateId, catalogVersion, invitation?.eventType, uiLanguage]);
-    const activeSection = flowConfig.sectionOrder.includes(selectedSection) ? selectedSection : flowConfig.sectionOrder[0];
+    const activeSection = resolveStudioSection(selectedSection, flowConfig.sectionOrder);
+    const activeStudioTab = studioTabForSection(activeSection);
     const [catalogTemplates, setCatalogTemplates] = useState(() => getAllTemplates());
     const [templateSearchQuery, setTemplateSearchQuery] = useState("");
     const [templateCategoryFilter, setTemplateCategoryFilter] = useState("ALL");
@@ -1294,7 +1303,8 @@ export default function InvitationForm({ invitation }) {
             return;
         }
         if (!redirectToPreview && /^https?:\/\//i.test(form.googleMapUrl || "") && !isGoogleMapsUrl(form.googleMapUrl)) {
-            setLocationError("សូមបញ្ចូល Google Maps Link ត្រឹមត្រូវ (maps.google.com ឬ maps.app.goo.gl)។");
+            setLocationError(uiCopy("សូមបញ្ចូលតំណ Google Maps ត្រឹមត្រូវ។", "Enter a valid Google Maps link."));
+            setSelectedSection("venue");
             return;
         }
 
@@ -1365,6 +1375,7 @@ export default function InvitationForm({ invitation }) {
             const contentPayload = {
                 ...safeJson(invitation?.contentJson),
                 ...eventPresentationFields(form),
+                ...(form.preWeddingVideo ? { preWeddingVideo: form.preWeddingVideo } : {}),
                 eventDate: finalDate,
                 eventTime: finalTime,
                 studioStyle: form.studioStyle,
@@ -1681,6 +1692,7 @@ export default function InvitationForm({ invitation }) {
                 messageText: form.messageText || "",
                 schedule: form.schedule,
                 ...eventPresentationFields(form),
+                ...(form.preWeddingVideo ? { preWeddingVideo: form.preWeddingVideo } : {}),
                 photos: savedPhotos,
                 gallery: (form.photos || [])
                     .filter((photo) => photo?.url)
@@ -1766,7 +1778,7 @@ export default function InvitationForm({ invitation }) {
     function goToGuideStep(step) {
         setGuideStep(step);
         if (step === 0) setSelectedSection("eventInfo");
-        if (step === 1 && ["eventInfo", "venue"].includes(activeSection)) setSelectedSection(flowConfig.sectionOrder.find(key => !["eventInfo", "venue"].includes(key)) || "eventInfo");
+        if (step === 1 && (!flowConfig.sectionOrder.includes(activeSection) || ["eventInfo", "venue"].includes(activeSection))) setSelectedSection(flowConfig.sectionOrder.find(key => !["eventInfo", "venue"].includes(key)) || "eventInfo");
         requestAnimationFrame(() => document.getElementById("studio-guide-heading")?.focus());
     }
     function completePublishField(check) {
@@ -3184,6 +3196,9 @@ export default function InvitationForm({ invitation }) {
     const sectionRenderers = {
         eventInfo: renderEventInfoSection,
         music: renderMusicSection,
+        preWeddingVideo: () => <PreWeddingVideoEditor eventId={invitation?.backendInvitationId || invitationId} value={form.preWeddingVideo} onChange={value => update("preWeddingVideo", value)} english={englishUI} />,
+        appearance: () => <StudioAppearance form={form} update={update}
+            supportsPalette={/^(1|10|khmer-celestial|KHMER_CELESTIAL|royal-khmer-wedding)$/.test(String(form.templateId)) || /^(khmer-celestial|royal-khmer-wedding)$/i.test(String(getTemplateById(form.templateId)?.code || getTemplateById(form.templateId)?.slug || ""))} />,
         cover: renderCoverSection,
         family: renderFamilySection,
         invitation: renderInvitationSection,
@@ -3218,7 +3233,7 @@ export default function InvitationForm({ invitation }) {
                 return mount ? createPortal(toolbar, mount) : toolbar;
             })()}
             {studio.error && <div className="studio-save-error" role="alert"><span>{studio.error}</span>{!["conflict", "expired"].includes(studio.phase) && <button type="button" onClick={() => studio.save()} disabled={isSaving}>{uiCopy("រក្សាទុកម្ដងទៀត", "Retry save")}</button>}{["conflict", "expired"].includes(studio.phase) && <><p>{uiCopy("ចម្លងអត្ថបទសំខាន់ ឬទាញយកពង្រាងនេះ មុនបើកកម្មវិធីម្ដងទៀត។", "Copy important text or download this draft before reopening the event.")}</p><button type="button" onClick={() => { const url = URL.createObjectURL(new Blob([JSON.stringify(form, null, 2)], { type: "application/json" })); const link = document.createElement("a"); link.href = url; link.download = "invitation-unsaved-draft.json"; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }}>{uiCopy("ទាញយកពង្រាងមិនទាន់រក្សាទុក", "Download unsaved draft")}</button></>}</div>}
-            <StudioGuide mode={editorMode} onMode={setEditorMode} step={guideStep} onStep={goToGuideStep} sections={flowConfig.sectionOrder} activeSection={activeSection} onSection={setSelectedSection} english={englishUI} checks={readiness} onField={completePublishField} onPreview={openPreview} onGuests={() => openEventTool("guests")} onRsvp={() => openEventTool("rsvp")} onPublish={reviewPublication} published={published} publishedUrl={publishedUrl} saving={isSaving || isPublishing} canPublish={canPublish} canManageGuests={workspace ? workspace.can?.("MANAGE_GUESTS") : true} />
+            <StudioGuide mode={editorMode} onMode={mode => { setEditorMode(mode); if (mode === 'guided') goToGuideStep(guideStep); }} step={guideStep} onStep={goToGuideStep} sections={flowConfig.sectionOrder} activeSection={activeSection} onSection={setSelectedSection} english={englishUI} checks={readiness} onField={completePublishField} onPreview={openPreview} onGuests={() => openEventTool("guests")} onRsvp={() => openEventTool("rsvp")} onPublish={reviewPublication} published={published} publishedUrl={publishedUrl} saving={isSaving || isPublishing} canPublish={canPublish} canManageGuests={workspace ? workspace.can?.("MANAGE_GUESTS") : true} />
             <PublishReview open={publishReviewOpen} onClose={() => setPublishReviewOpen(false)} onConfirm={publishInvitation} onCheck={checkPublication} checks={readiness} onField={completePublishField} english={englishUI} publishing={isPublishing} error={publishError} visibility={form.visibility} published={published} />
             {/* The controls and preview continue to use the original template engine. */}
             <div className="pe-workspace-grid">
@@ -3268,13 +3283,33 @@ export default function InvitationForm({ invitation }) {
                                 }
                             }}>{uiCopy("ប្រើឃ្លាសុភាព", "Apply formal wording")}</button>
                         </div>}
-                        {activeSection === "appearance" && <StudioAppearance form={form} update={update}
-                            supportsPalette={/^(1|10|khmer-celestial|KHMER_CELESTIAL|royal-khmer-wedding)$/.test(String(form.templateId)) || /^(khmer-celestial|royal-khmer-wedding)$/i.test(String(getTemplateById(form.templateId)?.code || getTemplateById(form.templateId)?.slug || ""))} />}
+                        {editorMode === "advanced" && <h2 className="studio-tab-heading">{activeStudioTab.labels[englishUI ? 1 : 0]}</h2>}
+                        {editorMode === "advanced" && activeStudioTab.id !== 'ticketsQr' && !activeStudioTab.sections.some(key => flowConfig.sectionOrder.includes(key)) && <p className="workspace-notice">{uiCopy('គំរូនេះមិនបង្ហាញផ្នែកទាំងនេះទេ។ មាតិកាដែលរក្សាទុកត្រូវបានរក្សាដដែល។', 'This template does not provide these sections. Your saved content is retained.')}</p>}
                         {flowConfig.sectionOrder.map((sectionKey) => {
                             const renderer = sectionRenderers[sectionKey];
                             if (!renderer) return null;
-                            return <div key={sectionKey} hidden={sectionKey !== activeSection}>{renderer()}</div>;
+                            const advanced = editorMode === "advanced";
+                            const visible = advanced ? activeStudioTab.sections.includes(sectionKey) : sectionKey === activeSection;
+                            return <div key={sectionKey} hidden={!visible}>
+                                <details className="studio-subsection" open={!advanced || (expandedSections[sectionKey] ?? sectionKey === activeSection)}
+                                    onToggle={event => {
+                                        if (advanced) {
+                                            const open = event.currentTarget.open;
+                                            setExpandedSections(current => current[sectionKey] === open ? current : { ...current, [sectionKey]: open });
+                                        }
+                                    }}>
+                                    <summary hidden={!advanced}>{STUDIO_SECTION_LABELS[sectionKey]?.[englishUI ? 1 : 0] || sectionKey}</summary>
+                                    <div className="studio-subsection-body">{renderer()}</div>
+                                </details>
+                            </div>;
                         })}
+                        <section hidden={activeSection !== "ticketsQr"} className="studio-ticket-entry">
+                            <h3>{uiCopy("រចនាកាត និង QR ភ្ញៀវ", "Ticket design & guest QR")}</h3>
+                            <p>{uiCopy("រក្សាទុកពង្រាង មុនបើករចនាកាត ឬកាតភ្ញៀវ។ QR ប្រើសិទ្ធិចូលរួមកម្មវិធីដដែល។", "Save your draft, then customize tickets or open personalized guest tickets. QR admission keeps the existing guest identity.")}</p>
+                            <button type="button" className="workspace-button primary" disabled={!workspace?.isOwner || isSaving} onClick={() => openEventTool("tickets/design")}>{uiCopy("រក្សាទុក និងរចនាកាត", "Save & open ticket designer")}</button>
+                            <button type="button" className="workspace-button" disabled={!workspace?.can?.("MANAGE_GUESTS") || isSaving} onClick={() => openEventTool("guests")}>{uiCopy("រក្សាទុក និងបើកកាតភ្ញៀវ", "Save & open guest tickets")}</button>
+                            {!workspace?.isOwner && <p>{uiCopy("ម្ចាស់កម្មវិធីគ្រប់គ្រងរចនាកាត។", "The event owner manages ticket appearance.")}</p>}
+                        </section>
                     </div>
                 </div>
 

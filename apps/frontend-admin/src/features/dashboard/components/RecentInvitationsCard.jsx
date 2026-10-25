@@ -20,7 +20,7 @@ export default function RecentInvitationsCard({ lang = "km", invitations = [] })
               </h3>
 
             </div>
-            <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block mt-0.5">
+            <span className="text-[11px] font-semibold text-muted-foreground block mt-0.5">
               {lang === "en"
                 ? `${items.length} recent invitations in system`
                 : `${items.length} ធៀបការចុងក្រោយក្នុងប្រព័ន្ធ`}
@@ -75,17 +75,17 @@ export default function RecentInvitationsCard({ lang = "km", invitations = [] })
               {/* Card Top: ID & Status Badge */}
               <div>
                 <div className="flex items-center justify-between text-xs font-bold mb-2">
-                  <span className="font-mono text-[10px] font-bold text-slate-500 dark:text-slate-400 bg-white/70 dark:bg-black/20 px-1.5 py-0.5 rounded border border-black/5 dark:border-white/5">
+                  <span className="font-mono text-[10px] font-bold text-muted-foreground bg-white/70 dark:bg-black/20 px-1.5 py-0.5 rounded border border-black/5 dark:border-white/5">
                     #INV-{inv.id}
                   </span>
 
                   {isPublished ? (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-800 dark:text-emerald-400 border border-emerald-500/30">
                       <CheckCircle2 className="h-3 w-3" />
                       <span>{lang === "en" ? "Published" : "បានផ្សាយ"}</span>
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/15 text-amber-800 dark:text-amber-400 border border-amber-500/30">
                       <Clock className="h-3 w-3" />
                       <span>{lang === "en" ? "Draft" : "កំពុងរៀបចំ"}</span>
                     </span>
@@ -125,13 +125,13 @@ export default function RecentInvitationsCard({ lang = "km", invitations = [] })
 
               {/* Card Bottom: Quick Preview Action */}
               <div className="flex items-center justify-between pt-2.5 mt-2 border-t border-black/5 dark:border-white/5">
-                <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400">
+                <span className="text-[10px] font-semibold text-muted-foreground">
                   {inv.eventType ? String(inv.eventType).toUpperCase() : (lang === "en" ? "Event type not specified" : "មិនបានបញ្ជាក់ប្រភេទកម្មវិធី")}
                 </span>
 
                 <Link
                   to="/reports"
-                  className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-600 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300 transition-colors"
+                  className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 hover:text-amber-900 dark:text-amber-400 dark:hover:text-amber-300 transition-colors"
                 >
                   <Eye className="h-3 w-3" />
                   <span>{lang === "en" ? "Reports" : "របាយការណ៍"}</span>

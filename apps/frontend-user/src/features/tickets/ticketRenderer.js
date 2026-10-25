@@ -18,8 +18,9 @@ function image(url) {
   if (images.size > 20) images.delete(images.keys().next().value);
   if (!images.has(url)) images.set(url, new Promise((resolve, reject) => {
     const img = new Image(); img.crossOrigin = "anonymous"; img.referrerPolicy = "no-referrer";
-    img.onload = () => resolve(img);
-    img.onerror = () => { images.delete(url); reject(new Error("An image could not be loaded. Check its availability and retry.")); };
+    const timeout = setTimeout(() => img.onerror(), 15000);
+    img.onload = () => { clearTimeout(timeout); resolve(img); };
+    img.onerror = () => { clearTimeout(timeout); images.delete(url); reject(new Error("An image could not be loaded. Check its availability and retry.")); };
     img.src = url;
   }));
   return images.get(url);
@@ -42,11 +43,11 @@ function text(ctx, value, x, y, { size = 18, width = 480, maxLines = 3, lineHeig
   ctx.fillStyle = color; ctx.textAlign = "center"; ctx.textBaseline = "middle";
   lines.forEach((line, index) => ctx.fillText(line, x, y + index * size * lineHeight));
 }
-function crop(ctx, img, x, y, width, height) {
+function crop(ctx, img, x, y, width, height, focusX = 50, focusY = 50, fit = 'COVER') {
   if (!img) return;
-  const scale = Math.max(width / img.width, height / img.height);
+  const scale = (fit === 'CONTAIN' ? Math.min : Math.max)(width / img.width, height / img.height);
   ctx.save(); ctx.beginPath(); ctx.rect(x, y, width, height); ctx.clip();
-  ctx.drawImage(img, x + (width - img.width * scale) / 2, y + (height - img.height * scale) / 2, img.width * scale, img.height * scale); ctx.restore();
+  ctx.drawImage(img, x + (width - img.width * scale) * Math.max(0, Math.min(100, focusX)) / 100, y + (height - img.height * scale) * Math.max(0, Math.min(100, focusY)) / 100, img.width * scale, img.height * scale); ctx.restore();
 }
 
 // The same canvas is the preview and the export. No application chrome is captured.
@@ -58,7 +59,7 @@ export async function renderTicket(canvas, ticket, scale = 2) {
   const target = document.createElement("canvas"); target.width = WIDTH * scale; target.height = HEIGHT * scale;
   const ctx = target.getContext("2d"); ctx.scale(scale, scale);
   ctx.fillStyle = design.layout === "MINIMAL" ? "#ffffff" : design.layout === "FLORAL" ? "#f3f5ee" : "#fffaf0"; ctx.fillRect(0, 0, WIDTH, HEIGHT);
-  if (background) { ctx.save(); ctx.globalAlpha = .12; crop(ctx, background, 0, 0, WIDTH, HEIGHT); ctx.restore(); }
+  if (background) { ctx.save(); ctx.globalAlpha = Math.max(0, Math.min(.4, design.backgroundOpacity ?? .12)); crop(ctx, background, 0, 0, WIDTH, HEIGHT); ctx.restore(); }
   ctx.strokeStyle = design.accent; ctx.lineWidth = 1.5;
   if (design.frame !== "NONE") { ctx.strokeRect(20, 20, 560, 860); if (design.frame === "DOUBLE") ctx.strokeRect(27, 27, 546, 846); }
   if (design.layout === "FLORAL") {
@@ -74,7 +75,7 @@ export async function renderTicket(canvas, ticket, scale = 2) {
   const names = [ticket.hostName, ticket.partnerName].filter(Boolean).join(" & ");
   text(ctx, names || ticket.title, 300, 130, { size: 24, maxLines: 2, family: FONTS[design.font] });
   if (names) text(ctx, ticket.title, 300, 198, { size: 15, maxLines: 2 });
-  if (cover) crop(ctx, cover, 130, 245, 340, 105);
+  if (cover) crop(ctx, cover, 130, 245, 340, 105, design.coverFocusX ?? 50, design.coverFocusY ?? 50, design.coverFit || 'COVER');
   text(ctx, [ticket.eventDate, ticket.eventTime?.slice(0, 5)].filter(Boolean).join(" · "), 300, 382, { size: 18, maxLines: 1 });
   text(ctx, ticket.venueName || "", 300, 414, { size: 16, maxLines: 2 });
   text(ctx, ticket.kind === "GUEST" ? "ជូនចំពោះ · Reserved for" : "ធៀបអញ្ជើញទូទៅ · General invitation", 300, 474, { size: 13, maxLines: 1, color: design.accent });

@@ -1,3 +1,4 @@
+import { useCinematicOpening } from "../../shared/Openings/cinematicOpeningContext";
 import useEventCountdown from '../../../wedding-site/hooks/useCountdown';
 import { CALENDAR_FALLBACK_MINUTES, resolveEvent, wallTimeToInstant } from '../../shared/eventDateTime';
 import SaveTheDate from '../../shared/SaveTheDate';
@@ -157,6 +158,7 @@ export default function KhmerCelestialLayout({
   children,
 }) {
   const reducedMotion = usePrefersReducedMotion();
+  const startCinematic = useCinematicOpening();
   const [opened, setOpened] = useState(preview);
   const [openTransitionActive, setOpenTransitionActive] = useState(false);
   const [musicState, setMusicState] = useState("idle");
@@ -282,16 +284,16 @@ export default function KhmerCelestialLayout({
     try {
       await audioRef.current.play();
       setMusicState("playing");
-    } catch {
-      setMusicState("error");
+    } catch (error) {
+      setMusicState(error?.name === 'NotAllowedError' ? 'paused' : 'error');
     }
   }, [musicEnabled]);
 
   const handleOpen = useCallback(() => {
     if (transitionEnabled) setOpenTransitionActive(true);
     setOpened(true);
-    void startMusic();
-  }, [startMusic, transitionEnabled]);
+    if (!startCinematic(() => void startMusic(), transitionEnabled ? 500 : 0)) void startMusic();
+  }, [startMusic, transitionEnabled, startCinematic]);
 
   const toggleMusic = useCallback(async () => {
     const audio = audioRef.current;

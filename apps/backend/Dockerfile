@@ -19,7 +19,7 @@ RUN apt-get update \
 
 WORKDIR /app
 COPY --from=build --chown=koupreng:koupreng /workspace/target/backend-*.jar app.jar
-RUN mkdir -p /app/uploads && chown koupreng:koupreng /app/uploads
+RUN mkdir -p /app/uploads /app/uploads-private && chown koupreng:koupreng /app/uploads /app/uploads-private
 
 USER koupreng
 EXPOSE 8080

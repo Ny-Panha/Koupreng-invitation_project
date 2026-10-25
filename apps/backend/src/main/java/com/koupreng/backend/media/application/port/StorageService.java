@@ -10,4 +10,13 @@ public interface StorageService {
     void delete(String publicId, MediaType mediaType);
 
     String providerName();
+
+    default org.springframework.core.io.Resource readPrivate(String publicId) {
+        throw new com.koupreng.backend.shared.exception.ApiException(org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE,
+                "Private cinematic storage is not configured for this provider");
+    }
+
+    default org.springframework.core.io.Resource readPrivate(String publicId, String mimeType) {
+        return readPrivate(publicId);
+    }
 }

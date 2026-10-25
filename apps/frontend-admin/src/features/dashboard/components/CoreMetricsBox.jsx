@@ -69,7 +69,7 @@ export default function CoreMetricsBox({ data = {}, lang = "km", t = (k, d) => d
     cyan: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border-cyan-500/20",
     purple: "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20",
     amber: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20",
-    emerald: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
+    emerald: "bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border-emerald-500/20",
     rose: "bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20",
   };
 
@@ -85,7 +85,7 @@ export default function CoreMetricsBox({ data = {}, lang = "km", t = (k, d) => d
             <h3 className="text-sm font-bold text-slate-900 dark:text-white">
               {lang === "en" ? "System Core Metrics" : "ស្ថិតិទូទៅនៃប្រព័ន្ធ"}
             </h3>
-            <span className="text-[11px] text-slate-400 dark:text-slate-500 block">
+            <span className="text-[11px] text-muted-foreground block">
               {lang === "en" ? "Overview of users, invitations & revenue" : "ទិដ្ឋភាពទូទៅនៃអ្នកប្រើប្រាស់ ធៀបការ និងចំណូល"}
             </span>
           </div>
@@ -112,19 +112,19 @@ export default function CoreMetricsBox({ data = {}, lang = "km", t = (k, d) => d
                   <Icon className="h-3.5 w-3.5" />
                 </div>
                 {m.trend && (
-                  <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.2 rounded-md">
+                  <span className="text-[10px] font-bold text-emerald-800 dark:text-emerald-300 bg-emerald-500/10 px-1.5 py-0.2 rounded-md">
                     {m.trend}
                   </span>
                 )}
                 {m.badge && (
-                  <span className="text-[9px] font-extrabold text-slate-500 dark:text-slate-400 bg-slate-200/50 dark:bg-slate-700/50 px-1.5 py-0.2 rounded-md uppercase tracking-wider">
+                  <span className="text-[9px] font-extrabold text-muted-foreground bg-slate-200/50 dark:bg-slate-700/50 px-1.5 py-0.2 rounded-md uppercase tracking-wider">
                     {m.badge}
                   </span>
                 )}
               </div>
 
               <div>
-                <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block truncate">
+                <span className="text-[11px] font-semibold text-muted-foreground block truncate">
                   {m.label}
                 </span>
                 <strong className="text-lg sm:text-xl font-black text-slate-900 dark:text-white tracking-tight block">
@@ -134,7 +134,7 @@ export default function CoreMetricsBox({ data = {}, lang = "km", t = (k, d) => d
                     <AnimatedNumber value={m.value} duration={1000} />
                   )}
                 </strong>
-                <span className="text-[10px] font-medium text-slate-400 dark:text-slate-500 block truncate mt-0.5">
+                <span className="text-[10px] font-medium text-muted-foreground block truncate mt-0.5">
                   {m.note}
                 </span>
               </div>

@@ -29,3 +29,17 @@
 .ticket-actions p { font-size: 13px; margin-top: 12px; }
 .public-ticket-button { position: fixed; bottom: 18px; left: 18px; z-index: 70; border: 1px solid #c8b791; background: #fffdf8; color: #624717; padding: 12px 16px; border-radius: 30px; box-shadow: 0 4px 18px #0002; font-size: 14px; line-height: 1.8; }
 @media(max-width: 899px) { .ticket-studio { margin: 12px; padding: 14px; } .ticket-designer-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; } .ticket-studio header { flex-direction: column; align-items: stretch; } .ticket-design-controls { padding: 16px; } .ticket-preview-panel { padding: 16px; } }
+.ticket-mobile-switch { display: none; }
+.ticket-media-control { padding: 14px; margin-bottom: 18px; border: 1px solid var(--ui-border); border-radius: 12px; background: var(--ui-surface-subtle); }
+.ticket-media-control label { margin-bottom: 10px; }
+.ticket-studio { background: var(--ui-surface); color: var(--ui-ink); border-color: var(--ui-border); }
+.ticket-studio header button { background: var(--ui-action); color: var(--ui-on-action); }
+.ticket-studio :where(button, input, select, textarea):focus-visible { outline: 3px solid var(--ui-focus); outline-offset: 3px; }
+@media (min-width: 900px) { .ticket-preview-panel { position: sticky; top: 24px; } }
+@media (max-width: 899px) {
+  .ticket-mobile-switch { display: flex; gap: 8px; margin-bottom: 16px; }
+  .ticket-mobile-switch button { flex: 1; }
+  .ticket-mobile-switch button[aria-pressed=true] { background: var(--ui-action); color: var(--ui-on-action); }
+  .ticket-studio[data-mobile-panel=edit] .ticket-preview-panel, .ticket-studio[data-mobile-panel=preview] .ticket-design-controls { display: none; }
+  .ticket-studio .dash-page-header { position: sticky; top: 0; z-index: 4; padding: 12px 0; background: var(--ui-surface); }
+}

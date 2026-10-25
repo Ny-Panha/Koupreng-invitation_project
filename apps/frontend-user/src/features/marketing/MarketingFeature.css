@@ -8,12 +8,12 @@
   --kp-gold-ink: #77572C;
   --kp-emerald: #2E433A;
   --kp-emerald-deep: #22332C;
-  --kp-bg: #F8F5EE;
-  --kp-surface: #FFFFFF;
-  --kp-ink: #262622;
-  --kp-muted: #695D50;
-  --kp-border: #E5DED2;
-  --kp-paper: #F2ECE2;
+  --kp-bg: var(--ui-canvas);
+  --kp-surface: var(--ui-surface);
+  --kp-ink: var(--ui-ink);
+  --kp-muted: var(--ui-muted);
+  --kp-border: var(--ui-border);
+  --kp-paper: var(--ui-surface-subtle);
   --kp-gold: #C3A26B;
   color: var(--kp-ink);
   background: var(--kp-bg);
@@ -119,9 +119,9 @@
   gap: 10px;
   min-height: 50px;
   padding: 12px 26px;
-  border: 1px solid var(--kp-deep);
-  background: var(--kp-deep);
-  color: var(--kp-bg);
+  border: 1px solid var(--ui-action);
+  background: var(--ui-action);
+  color: var(--ui-on-action);
   text-decoration: none;
   font-size: 15px;
   font-weight: 500;
@@ -134,8 +134,8 @@
 }
 
 .kp-button:hover {
-  background: #22332C;
-  border-color: #22332C;
+  background: var(--ui-action-hover);
+  border-color: var(--ui-action-hover);
   transform: translateY(-2px);
   box-shadow: 0 8px 22px -4px rgba(46, 67, 58, 0.35);
 }

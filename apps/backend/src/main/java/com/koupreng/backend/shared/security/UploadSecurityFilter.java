@@ -30,6 +30,10 @@ public class UploadSecurityFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
         String path = request.getRequestURI();
+        if (path != null && path.startsWith(UPLOADS_PATH_PREFIX) && path.toLowerCase(java.util.Locale.ROOT).contains(".private")) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
         if (path != null && path.startsWith(UPLOADS_PATH_PREFIX)) {
             response.setHeader("X-Content-Type-Options", "nosniff");
             response.setHeader("Content-Security-Policy", "default-src 'none'; style-src 'unsafe-inline'; sandbox");

@@ -1,3 +1,4 @@
+import { useCinematicOpening } from "../../shared/Openings/cinematicOpeningContext";
 import SaveTheDate from '../../shared/SaveTheDate';
 import { useState, useRef, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
@@ -60,14 +61,18 @@ export default function EmeraldLuxeLayout({
     }
   };
 
+  const startCinematic = useCinematicOpening();
   const handleOpenCurtain = () => {
     setOpened(true);
+    const playMusic = () => {
     if (audioRef.current) {
       audioRef.current
         .play()
         .then(() => setIsPlaying(true))
         .catch(() => setIsPlaying(false));
     }
+    };
+    if (!startCinematic(playMusic, 1300)) playMusic();
   };
 
   const gateStyle = tpl.gateStyle || tpl.openingStyle || tpl.design?.openingStyle || "curtain";

@@ -15,6 +15,9 @@ final class OpenApiExamples {
 
     static List<NamedExample> forRequestType(Class<?> requestType) {
         return switch (requestType.getSimpleName()) {
+            case "CinematicAccess" -> one("invitationAccess", "Use existing invitation access; public invitations accept null tokens", """
+                    {"accessToken":null,"inviteToken":null}
+                    """);
             case "ContactRequest" -> one("contactInquiry", "Send a fictional inquiry using configured SMTP", """
                     {
                       "name": "Sokha Demo",

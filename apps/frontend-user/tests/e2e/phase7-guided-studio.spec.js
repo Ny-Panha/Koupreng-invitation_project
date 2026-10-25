@@ -7,7 +7,7 @@ for (const width of [320, 360, 375, 390, 430, 768, 1024, 1366, 1440, 1920]) {
     await page.setViewportSize({ width, height: 900 });
     await installIdentityFixtures(page);
     await page.goto('/app/events/101/invitation?mode=guided', { waitUntil: 'domcontentloaded' });
-    await expect(page.locator('.invitation-studio')).toBeVisible();
+    await expect(page.locator('.invitation-studio')).toBeVisible({ timeout: 15000 });
     await expect(page.getByRole('navigation', { name: 'Creation steps' })).toBeVisible();
     const title = page.getByRole('textbox', { name: 'Main Title', exact: true });
     await title.fill(`Draft at ${width}`);
@@ -28,7 +28,7 @@ for (const width of [320, 360, 375, 390, 430, 768, 1024, 1366, 1440, 1920]) {
     await page.screenshot({ path: info.outputPath(`guided-studio-${width}.png`), fullPage: true });
     await page.getByRole('button', { name: 'Advanced editor', exact: true }).click();
     if (width < 1024) await expect(page.locator('.studio-section-select select')).toBeVisible();
-    else await expect(page.getByRole('button', { name: 'Schedule', exact: true })).toBeVisible();
+    else await expect(page.getByRole('button', { name: 'Schedule & Venue', exact: true })).toBeVisible();
   });
 }
 

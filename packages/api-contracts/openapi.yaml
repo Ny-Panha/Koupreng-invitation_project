@@ -1718,6 +1718,48 @@ paths:
               schema:
                 $ref: "#/components/schemas/ApiError"
       security: []
+  /api/v1/public/invitations/{slug}/media/{mediaId}/cinematic-content:
+    post:
+      tags:
+      - Media
+      summary: Public Cinematic Content
+      operationId: publicCinematicContent
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+        example: demo-wedding
+      - name: mediaId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CinematicAccess"
+            examples:
+              invitationAccess:
+                summary: Use existing invitation access; public invitations accept
+                  null tokens
+                value:
+                  accessToken: null
+                  inviteToken: null
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+                format: binary
+      security:
+      - bearerAuth: []
   /api/v1/public/invitations/{slug}/guests/{inviteToken}/rsvp:
     post:
       tags:
@@ -2294,6 +2336,74 @@ paths:
       - Media
       summary: Upload Video
       operationId: uploadVideo
+      parameters:
+      - name: invitationId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required:
+              - file
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseMediaResponse"
+      security:
+      - bearerAuth: []
+  /api/v1/invitations/{invitationId}/media/ticket-image:
+    post:
+      tags:
+      - Media
+      summary: Upload Ticket Image
+      operationId: uploadTicketImage
+      parameters:
+      - name: invitationId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required:
+              - file
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseMediaResponse"
+      security:
+      - bearerAuth: []
+  /api/v1/invitations/{invitationId}/media/pre-wedding-video:
+    post:
+      tags:
+      - Media
+      summary: Upload Pre Wedding Video
+      operationId: uploadPreWeddingVideo
       parameters:
       - name: invitationId
         in: path
@@ -6187,6 +6297,36 @@ paths:
                 $ref: "#/components/schemas/ApiResponseMediaListResponse"
       security:
       - bearerAuth: []
+  /api/v1/invitations/{invitationId}/media/{mediaId}/cinematic-content:
+    get:
+      tags:
+      - Media
+      summary: Owner Cinematic Content
+      operationId: ownerCinematicContent
+      parameters:
+      - name: invitationId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      - name: mediaId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+                format: binary
+      security:
+      - bearerAuth: []
   /api/v1/invitations/{invitationId}/guests/{guestId}/qr:
     get:
       tags:
@@ -8383,6 +8523,8 @@ components:
           enum:
           - COVER_IMAGE
           - GALLERY_IMAGE
+          - TICKET_IMAGE
+          - PRE_WEDDING_VIDEO
           - VIDEO
           - BACKGROUND_MUSIC
           - PROFILE_IMAGE
@@ -9067,6 +9209,26 @@ components:
           type: boolean
         showSeatCount:
           type: boolean
+        coverFocusX:
+          type: integer
+          format: int32
+          maximum: 100
+          minimum: 0
+        coverFocusY:
+          type: integer
+          format: int32
+          maximum: 100
+          minimum: 0
+        coverFit:
+          type: string
+          enum:
+          - COVER
+          - CONTAIN
+        backgroundOpacity:
+          type: number
+          format: double
+          maximum: 0.4
+          minimum: 0.0
       required:
       - accent
       - font
@@ -9196,9 +9358,9 @@ components:
         publishedAt:
           type: string
           format: date-time
-        published:
-          type: boolean
         draft:
+          type: boolean
+        published:
           type: boolean
     UpdateProfileRequest:
       type: object
@@ -9734,6 +9896,17 @@ components:
         respondedAt:
           type: string
           format: date-time
+    CinematicAccess:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          maxLength: 512
+          minLength: 0
+        inviteToken:
+          type: string
+          maxLength: 512
+          minLength: 0
     InvitationAccessVerifyRequest:
       type: object
       properties:
@@ -11584,6 +11757,16 @@ components:
         timestamp:
           type: string
           format: date-time
+    CinematicOpeningResponse:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        videoMediaId:
+          type: integer
+          format: int64
+        posterUrl:
+          type: string
     PublicGuestResponse:
       type: object
       properties:
@@ -11607,6 +11790,8 @@ components:
     PublicInvitationResponse:
       type: object
       properties:
+        cinematicOpening:
+          $ref: "#/components/schemas/CinematicOpeningResponse"
         templateId:
           type: integer
           format: int64

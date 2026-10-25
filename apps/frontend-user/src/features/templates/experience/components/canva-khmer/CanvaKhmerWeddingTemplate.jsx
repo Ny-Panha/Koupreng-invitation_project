@@ -1,3 +1,4 @@
+import { useCinematicOpening } from "../../../shared/Openings/cinematicOpeningContext";
 import SaveTheDate from '../../../shared/SaveTheDate';
 import ProgramTimeline from '../../../shared/ProgramTimeline';
 import ProgramDetails from "../../../shared/ProgramDetails";
@@ -709,14 +710,18 @@ export default function CanvaKhmerWeddingTemplate({
     const detailRef = useRef(null);
     const sectionEnabled = useCallback((key) => content.enabledSections?.[key] !== false, [content.enabledSections]);
     const navigateTo = useCallback((id) => canvasRef.current?.querySelector(`#ck-${id}`)?.scrollIntoView({ behavior: "smooth", block: "start" }), []);
+    const startCinematic = useCinematicOpening();
     const handleOpen = useCallback(() => {
         setOpened(true);
+        const playMusic = () => {
         const audio = musicRef.current;
         if (audio && content.music) {
             audio.volume = 0.45;
             audio.play().catch(() => undefined);
         }
-    }, [content.music]);
+        };
+        if (!startCinematic(playMusic)) playMusic();
+    }, [content.music, startCinematic]);
 
     useEffect(() => {
         if (preview) setOpened(true);

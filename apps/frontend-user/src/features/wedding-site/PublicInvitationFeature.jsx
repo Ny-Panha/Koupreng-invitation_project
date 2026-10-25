@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useParams, useSearchParams } from "react-router-dom";
 import { IoHomeOutline, IoLockClosedOutline, IoSearchOutline } from "react-icons/io5";
 
@@ -100,6 +100,8 @@ export default function PublicInvitationPage() {
     const queryAccessToken = searchParams.get("accessToken") || "";
     const accessStorageKey = slug ? `koupreng_invitation_access_${slug}` : "";
     const effectiveAccessToken = queryAccessToken || verifiedAccessToken;
+    const loadCinematicVideo = useCallback(signal => mediaService.publicCinematicContent(slug, invitation?.cinematicOpening?.videoMediaId,
+        { accessToken: effectiveAccessToken || null, inviteToken: inviteToken || null }, signal), [slug, invitation?.cinematicOpening?.videoMediaId, effectiveAccessToken, inviteToken]);
 
     useEffect(() => {
         if (!isAuthenticated) {
@@ -305,6 +307,10 @@ export default function PublicInvitationPage() {
             return (
                 <>
                 <TemplateExperience
+                    cinematicOpening={invitation?.cinematicOpening}
+                    cinematicLanguage={invitation?.languageMode}
+                    cinematicKey={slug}
+                    loadCinematicVideo={loadCinematicVideo}
                     tpl={mergedPublicGarden.tpl}
                     variant={mergedPublicGarden.variant}
                     showActions={false}

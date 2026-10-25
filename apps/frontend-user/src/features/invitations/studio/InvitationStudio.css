@@ -25,6 +25,22 @@
 .invitation-studio .pe-lang-sub-banner { padding: 12px; flex-wrap: wrap; height: auto; gap: 8px; }
 .invitation-studio .pe-lang-editing-indicator { display: none; }
 .studio-sections { padding: 20px 10px; border-right: 1px solid #e5e0d5; overflow-y: auto; background: #fbfaf6; }
+.studio-tab-heading { margin: 0 0 20px; color: var(--ui-ink); font-size: 22px; line-height: 1.8; }
+.studio-subsection { margin-bottom: 14px; border: 1px solid var(--ui-border); border-radius: var(--ui-radius-control); background: var(--ui-surface); }
+.studio-subsection > summary { min-height: 48px; padding: 12px 16px; cursor: pointer; color: var(--ui-ink); font-weight: 650; line-height: 1.8; }
+.studio-subsection > summary:focus-visible { outline: 3px solid var(--ui-focus); outline-offset: 2px; }
+.studio-subsection[open] > summary { border-bottom: 1px solid var(--ui-border); }
+.studio-subsection-body { padding: 16px; }
+.invitation-studio[data-editor-mode=guided] .studio-subsection { border: 0; }
+.invitation-studio[data-editor-mode=guided] .studio-subsection-body { padding: 0; }
+.studio-ticket-entry { line-height: 1.8; }
+.studio-ticket-entry button { margin: 12px 8px 0 0; }
+.studio-video-editor { display: grid; gap: 16px; }
+.studio-video-editor label { display: grid; gap: 8px; line-height: 1.8; }
+.studio-video-editor input[type=checkbox] { width: 22px; height: 22px; }
+.studio-video-editor :where(select, input[type=file]) { width: 100%; min-width: 0; min-height: 44px; }
+.studio-video-editor video { width: 100%; max-height: 360px; background: #151918; border-radius: 12px; }
+.studio-video-editor .workspace-actions { flex-wrap: wrap; }
 .studio-section-list p { padding: 0 10px 8px; font-size: 13px; font-weight: 700; color: #59615c; }
 .studio-section-list button { display: flex; align-items: center; width: 100%; gap: 10px; min-height: 44px; padding: 10px; margin: 2px 0; text-align: left; border: 1px solid transparent; border-radius: 10px; font-size: 14px; line-height: 1.8; background: transparent; cursor: pointer; }
 .studio-section-list button span { color: #847e70; font-size: 11px; }

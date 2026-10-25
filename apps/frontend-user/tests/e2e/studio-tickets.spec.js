@@ -3,6 +3,7 @@ import { readFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 import process from 'node:process';
 import { fixtures, qrPayload } from "./support/studioFixtures.js";
+import { chooseStudioSection } from './support/studioNavigationActions';
 
 const evidence = path.resolve(process.env.STUDIO_EVIDENCE_DIR || "../../docs/qa/ux-overhaul/studio-tickets");
 for (const lang of ["en", "km"]) {
@@ -16,9 +17,17 @@ for (const lang of ["en", "km"]) {
       await page.setViewportSize({ width, height: 1000 });
       for (const [name, route] of [["editor", "invitation"], ["designer", "tickets/design"]]) {
         await page.goto(`/app/events/101/${route}`);
-        await expect(page.locator(name === "editor" ? ".invitation-studio" : ".ticket-studio")).toBeVisible();
-        if (name === "designer") await expect(page.getByRole("button", { name: /ទាញយក PNG|Download PNG/ })).toBeEnabled();
-        else await expect(page.locator(".studio-sections")).toBeVisible();
+        await expect(page.locator(name === "editor" ? ".invitation-studio" : ".ticket-studio")).toBeVisible({ timeout: 15000 });
+        if (name === "designer") {
+          if (width < 900) await page.locator('.ticket-mobile-switch button').nth(1).click();
+          await expect(page.getByRole("button", { name: /ទាញយក PNG|Download PNG/ })).toBeEnabled();
+        }
+        else {
+          await expect(page.locator(".studio-sections")).toBeVisible();
+          // Finish the embedded template import before the next hard navigation aborts its CSS request.
+          const preview = page.locator('.invitation-studio iframe').first();
+          if (await preview.count()) await expect(preview.contentFrame().locator('.kc-root')).toBeAttached({ timeout: 15000 });
+        }
         expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
         if (info.project.name === "desktop-chromium") await page.screenshot({ path: path.join(evidence, `${name}-${lang}-${width}.png`), fullPage: true });
       }
@@ -59,7 +68,7 @@ test("exports exact 2x/3x personalized canvases with decodable QR for every layo
 test("autosaves real editor payloads without navigation and restores edits with undo", async ({ page }) => {
   const { writes } = await fixtures(page);
   await page.goto("/app/events/101/invitation");
-  const title = page.locator('input[placeholder="សិរីមង្គលអាពាហ៍ពិពាហ៍"]');
+  const title = page.getByRole('textbox', { name: 'Main Title', exact: true });
   await title.fill("Saved studio title");
   await expect.poll(() => writes.filter(write => write.kind === "invitation").length).toBeGreaterThan(0);
   expect(writes.findLast(write => write.kind === "invitation").event.title).toBe("Saved studio title");
@@ -97,7 +106,7 @@ test("failed saves retain changes and guard route links and browser back", async
   const menu = page.getByRole("button", { name: "Toggle modules menu" });
   if (page.viewportSize().width < 1100) await menu.click();
   await page.locator('.event-workspace-nav a[href$="/invitation"]').click();
-  const title = page.locator('input[placeholder="សិរីមង្គលអាពាហ៍ពិពាហ៍"]');
+  const title = page.getByRole('textbox', { name: 'Main Title', exact: true });
   await title.fill("Keep this unsaved change");
   await expect(page.locator(".studio-save-status")).toContainText("Save failed");
   const dialogs = [];
@@ -113,18 +122,15 @@ test("failed saves retain changes and guard route links and browser back", async
 test("appearance, schedule and media controls persist through the existing editor API", async ({ page }) => {
   const { writes } = await fixtures(page);
   await page.goto("/app/events/101/invitation");
-  if (page.viewportSize().width < 1024) await page.locator('.studio-section-select select').selectOption("appearance");
-  else await page.locator('.studio-section-list button').filter({ hasText: "Colors & typography" }).click();
+  await chooseStudioSection(page, 'designCover', 'Colors & typography');
   await page.getByLabel(/Palette/).selectOption("2");
   await page.getByLabel(/Khmer heading/).selectOption("Kantumruy Pro");
   await expect.poll(() => writes.filter(write => write.kind === "invitation").length).toBeGreaterThan(0);
   const saved = writes.findLast(write => write.kind === "invitation").event;
   expect(JSON.parse(saved.contentJson).studioStyle.primary).toBe("#164637");
   expect(JSON.parse(saved.contentJson).fontKhmer).toBe("Kantumruy Pro");
-  if (page.viewportSize().width < 1024) await page.locator('.studio-section-select select').selectOption("schedule");
-  else await page.locator('.studio-section-list button').filter({ hasText: /កាលវិភាគ|Schedule/ }).click();
-  await expect(page.getByRole("button", { name: /Move schedule 1 down/ })).toBeVisible();
-  if (page.viewportSize().width < 1024) await page.locator('.studio-section-select select').selectOption("gallery");
-  else await page.locator('.studio-section-list button').filter({ hasText: /វិចិត្រសាល|Gallery/ }).click();
+  await chooseStudioSection(page, 'scheduleVenue', 'Schedule');
+  await expect(page.getByRole("button", { name: 'Add program day', exact: true })).toBeVisible();
+  await chooseStudioSection(page, 'mediaOpening', 'Gallery');
   await expect(page.getByRole("button", { name: "Move photo 1 down", exact: true })).toBeVisible();
 });

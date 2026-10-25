@@ -104,7 +104,7 @@ export default function AdminDashboardPage() {
                 <Clock className="h-3.5 w-3.5 text-amber-500" />
                 <span className="font-mono tracking-tight">{formattedTime}</span>
                 <span className="text-slate-300 dark:text-zinc-700">|</span>
-                <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-extrabold uppercase tracking-wider">
+                <span className="text-[10px] text-emerald-800 dark:text-emerald-300 font-extrabold uppercase tracking-wider">
                   {lang === "en" ? "LOCAL CLOCK" : "ម៉ោងមូលដ្ឋាន"}
                 </span>
               </div>
@@ -143,7 +143,7 @@ export default function AdminDashboardPage() {
                   : "ប្រាក់ទទួលកត់ត្រា និងធៀបអញ្ជើញថ្មីៗ"}
               </h2>
             </div>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+            <p className="text-xs text-muted-foreground mt-1">
               {lang === "en"
                 ? "Current recorded totals; use Reports for defined date periods and exports."
                 : "ចំនួនបច្ចុប្បន្ន។ ប្រើរបាយការណ៍សម្រាប់រយៈពេល និងការនាំចេញ។"}
@@ -157,7 +157,7 @@ export default function AdminDashboardPage() {
               style={{ animationDelay: "0.16s" }}
               className="inline-flex items-center gap-3 px-3.5 py-1.5 rounded-2xl bg-white/90 dark:bg-[#121622]/90 border border-slate-200/80 dark:border-slate-800/80 shadow-xs backdrop-blur-md animate-zoom-in"
             >
-              <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400">
+              <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-amber-500/10 text-amber-800 dark:text-amber-400">
                 <CreditCard className="h-3.5 w-3.5" />
               </div>
               <div>
@@ -165,11 +165,11 @@ export default function AdminDashboardPage() {
                   <strong className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white">
                     {formatRevenue(data)}
                   </strong>
-                  <span className="text-[10px] font-bold text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded-md">
+                  <span className="text-[10px] font-bold text-emerald-800 dark:text-emerald-300 bg-emerald-500/10 px-1.5 py-0.5 rounded-md">
                     {lang === "en" ? "Recorded" : "បានកត់ត្រា"}
                   </span>
                 </div>
-                <span className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 block">
+                <span className="text-[10px] font-semibold text-muted-foreground block">
                   {lang === "en" ? "Recorded receipts (all time)" : "ប្រាក់ទទួលកត់ត្រា (ទាំងអស់)"}
                 </span>
               </div>
@@ -180,14 +180,14 @@ export default function AdminDashboardPage() {
               style={{ animationDelay: "0.20s" }}
               className="inline-flex items-center gap-3 px-3.5 py-1.5 rounded-2xl bg-white/90 dark:bg-[#121622]/90 border border-slate-200/80 dark:border-slate-800/80 shadow-xs backdrop-blur-md animate-zoom-in"
             >
-              <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+              <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-800 dark:text-emerald-300">
                 <Users className="h-3.5 w-3.5" />
               </div>
               <div>
                 <strong className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white">
                   <AnimatedNumber value={data.totalGuests ?? 0} />
                 </strong>
-                <span className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 block">
+                <span className="text-[10px] font-semibold text-muted-foreground block">
                   {lang === "en" ? "Guest records" : "កំណត់ត្រាភ្ញៀវ"}
                 </span>
               </div>
@@ -205,7 +205,7 @@ export default function AdminDashboardPage() {
                 <strong className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white">
                   {data.totalInvitations ?? 0}
                 </strong>
-                <span className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 block">
+                <span className="text-[10px] font-semibold text-muted-foreground block">
                   {lang === "en" ? "Invitation records" : "កំណត់ត្រាធៀបអញ្ជើញ"}
                 </span>
               </div>
@@ -270,14 +270,14 @@ export default function AdminDashboardPage() {
             </div>
             <Link
               to="/users"
-              className="inline-flex items-center gap-1 text-xs font-semibold text-amber-600 hover:text-amber-700 dark:text-amber-400 transition-transform hover:translate-x-0.5"
+              className="inline-flex items-center gap-1 text-xs font-semibold text-amber-800 hover:text-amber-700 dark:text-amber-400 transition-transform hover:translate-x-0.5"
             >
               <span>{t("common.viewAll", "មើលទាំងអស់")}</span>
               <ArrowUpRight className="h-3.5 w-3.5" />
             </Link>
           </div>
 
-          <div className="overflow-x-auto rounded-xl border border-slate-100 dark:border-zinc-800/80">
+          <div className="overflow-x-auto rounded-xl border border-slate-100 dark:border-zinc-800/80" tabIndex={0} role="region" aria-label={t('dashboard.recentUsers', 'Recent users')}>
             <table className="w-full text-left text-xs">
               <thead className="border-b border-slate-100 dark:border-zinc-800 bg-slate-50/80 dark:bg-zinc-900/60">
                 <tr>
@@ -301,7 +301,7 @@ export default function AdminDashboardPage() {
                     <td className="px-3 py-2.5 font-semibold text-slate-900 dark:text-zinc-100">{u.fullName || "—"}</td>
                     <td className="px-3 py-2.5 text-slate-600 dark:text-zinc-400 font-mono text-[11px]">{u.email || "—"}</td>
                     <td className="px-3 py-2.5">
-                      <span className="inline-block rounded-md bg-amber-500/10 px-2 py-0.5 text-[10px] font-bold text-amber-600 dark:text-amber-400">
+                      <span className="inline-block rounded-md bg-amber-500/10 px-2 py-0.5 text-[10px] font-bold text-amber-800 dark:text-amber-400">
                         {u.role}
                       </span>
                     </td>
@@ -312,7 +312,7 @@ export default function AdminDashboardPage() {
                 ))}
                 {!(data.recentUsers?.length) && (
                   <tr>
-                    <td colSpan={4} className="px-3 py-4 text-center text-slate-400">
+                    <td colSpan={4} className="px-3 py-4 text-center text-muted-foreground">
                       {t("dashboard.noUsersData", "មិនទាន់មានទិន្នន័យ")}
                     </td>
                   </tr>
@@ -340,7 +340,7 @@ export default function AdminDashboardPage() {
             </div>
             <Link
               to="/payments"
-              className="inline-flex items-center gap-1 text-xs font-semibold text-amber-600 hover:text-amber-700 dark:text-amber-400 transition-transform hover:translate-x-0.5"
+              className="inline-flex items-center gap-1 text-xs font-semibold text-amber-800 hover:text-amber-700 dark:text-amber-400 transition-transform hover:translate-x-0.5"
             >
               <span>{t("common.viewAll", "មើលទាំងអស់")}</span>
               <ArrowUpRight className="h-3.5 w-3.5" />
@@ -374,7 +374,7 @@ export default function AdminDashboardPage() {
                     <td className="px-3 py-2.5">
                       <StatusBadge status={p.status} />
                     </td>
-                    <td className="px-3 py-2.5 font-semibold text-emerald-600 dark:text-emerald-400">
+                    <td className="px-3 py-2.5 font-semibold text-emerald-800 dark:text-emerald-300">
                       {formatMoney(p.paidAmount ?? p.amount, p.currency)}
                     </td>
                     <td className="px-3 py-2.5 text-slate-500 dark:text-zinc-400 text-[11px]">
@@ -384,7 +384,7 @@ export default function AdminDashboardPage() {
                 ))}
                 {!(data.recentPayments?.length) && (
                   <tr>
-                    <td colSpan={4} className="px-3 py-4 text-center text-slate-400">
+                    <td colSpan={4} className="px-3 py-4 text-center text-muted-foreground">
                       {t("dashboard.noPaymentsData", "មិនទាន់មានទិន្នន័យទូទាត់ទេ")}
                     </td>
                   </tr>

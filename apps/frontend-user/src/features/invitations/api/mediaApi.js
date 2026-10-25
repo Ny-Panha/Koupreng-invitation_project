@@ -42,6 +42,14 @@ function galleryForm(files, sortOrder) {
 }
 
 export const mediaService = {
+  uploadTicketImage: (invitationId, file, onUploadProgress) =>
+    api.post(`/v1/invitations/${invitationId}/media/ticket-image`, fileForm(file), { onUploadProgress }).then(unwrap),
+  uploadPreWeddingVideo: (invitationId, file, onUploadProgress) =>
+    api.post(`/v1/invitations/${invitationId}/media/pre-wedding-video`, fileForm(file), { onUploadProgress }).then(unwrap),
+  ownerCinematicContent: (invitationId, mediaId, signal) =>
+    api.get(`/v1/invitations/${invitationId}/media/${mediaId}/cinematic-content`, { responseType: 'blob', signal }).then(unwrap),
+  publicCinematicContent: (slug, mediaId, access, signal) =>
+    api.post(`/v1/public/invitations/${encodeURIComponent(slug)}/media/${mediaId}/cinematic-content`, access, { skipAuth: true, responseType: 'blob', signal }).then(unwrap),
   list: (invitationId) => {
     if (isLocalDraftId(invitationId)) {
       const draft = typeof invitationId === "string" ? getDraft(invitationId) : null;

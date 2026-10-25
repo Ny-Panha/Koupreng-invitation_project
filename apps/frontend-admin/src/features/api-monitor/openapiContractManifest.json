@@ -28,6 +28,20 @@
     "isLegacy": false
   },
   {
+    "path": "/api/v1/invitations/{invitationId}/seating/layout",
+    "method": "GET",
+    "tag": "Seating",
+    "summary": "Retrieve the event floor-plan layout",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/seating/layout",
+    "method": "PUT",
+    "tag": "Seating",
+    "summary": "Save the event floor-plan layout",
+    "isLegacy": false
+  },
+  {
     "path": "/api/v1/invitations/{invitationId}/media/{mediaId}/replace",
     "method": "PUT",
     "tag": "Media",
@@ -144,6 +158,20 @@
     "method": "PUT",
     "tag": "Invitations",
     "summary": "Update Customization",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{eventId}/ticket-design",
+    "method": "GET",
+    "tag": "Invitation Tickets",
+    "summary": "Design",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{eventId}/ticket-design",
+    "method": "PUT",
+    "tag": "Invitation Tickets",
+    "summary": "Save",
     "isLegacy": false
   },
   {
@@ -294,6 +322,13 @@
     "isLegacy": false
   },
   {
+    "path": "/api/v1/public/invitations/{slug}/media/{mediaId}/cinematic-content",
+    "method": "POST",
+    "tag": "Media",
+    "summary": "Public Cinematic Content",
+    "isLegacy": false
+  },
+  {
     "path": "/api/v1/public/invitations/{slug}/guests/{inviteToken}/rsvp",
     "method": "POST",
     "tag": "RSVP",
@@ -333,6 +368,13 @@
     "method": "POST",
     "tag": "Organizations",
     "summary": "Add Member",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/organizations/invitations/accept",
+    "method": "POST",
+    "tag": "Organizations",
+    "summary": "Accept Invitation",
     "isLegacy": false
   },
   {
@@ -396,6 +438,20 @@
     "method": "POST",
     "tag": "Media",
     "summary": "Upload Video",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/media/ticket-image",
+    "method": "POST",
+    "tag": "Media",
+    "summary": "Upload Ticket Image",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/media/pre-wedding-video",
+    "method": "POST",
+    "tag": "Media",
+    "summary": "Upload Pre Wedding Video",
     "isLegacy": false
   },
   {
@@ -466,6 +522,34 @@
     "method": "POST",
     "tag": "Guests",
     "summary": "Preview a guest import file",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/guests/import-batch",
+    "method": "POST",
+    "tag": "guest-batch-controller",
+    "summary": "Commit a reviewed guest batch",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/guests/import-batch/preview",
+    "method": "POST",
+    "tag": "guest-batch-controller",
+    "summary": "Validate mapped guest rows",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/guests/import-batch/inspect",
+    "method": "POST",
+    "tag": "guest-batch-controller",
+    "summary": "Inspect a CSV or XLSX guest source",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/guests/export-selection",
+    "method": "POST",
+    "tag": "Guests",
+    "summary": "Export guest dashboard data",
     "isLegacy": false
   },
   {
@@ -903,6 +987,13 @@
     "isLegacy": false
   },
   {
+    "path": "/api/v1/invitations/{id}/team",
+    "method": "PATCH",
+    "tag": "Invitations",
+    "summary": "Link Team",
+    "isLegacy": false
+  },
+  {
     "path": "/api/v1/invitations/{id}/publish",
     "method": "PATCH",
     "tag": "Invitations",
@@ -1092,6 +1183,13 @@
     "isLegacy": false
   },
   {
+    "path": "/api/v1/public/invitations/{slug}/ticket",
+    "method": "GET",
+    "tag": "Invitation Tickets",
+    "summary": "Public Ticket",
+    "isLegacy": false
+  },
+  {
     "path": "/api/v1/public/invitations/{slug}/rsvp-summary-public",
     "method": "GET",
     "tag": "RSVP",
@@ -1218,6 +1316,13 @@
     "isLegacy": false
   },
   {
+    "path": "/api/v1/me/entitlements",
+    "method": "GET",
+    "tag": "Entitlements",
+    "summary": "Retrieve the current entitlement",
+    "isLegacy": false
+  },
+  {
     "path": "/api/v1/invitations/{invitationId}/wishes",
     "method": "GET",
     "tag": "RSVP",
@@ -1309,6 +1414,13 @@
     "isLegacy": false
   },
   {
+    "path": "/api/v1/invitations/{invitationId}/media/{mediaId}/cinematic-content",
+    "method": "GET",
+    "tag": "Media",
+    "summary": "Owner Cinematic Content",
+    "isLegacy": false
+  },
+  {
     "path": "/api/v1/invitations/{invitationId}/guests/{guestId}/qr",
     "method": "GET",
     "tag": "QR Codes",
@@ -1327,6 +1439,20 @@
     "method": "GET",
     "tag": "Guests",
     "summary": "Search guest records",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/guests/page",
+    "method": "GET",
+    "tag": "Guests",
+    "summary": "Page",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{invitationId}/guests/overview",
+    "method": "GET",
+    "tag": "Guests",
+    "summary": "Overview",
     "isLegacy": false
   },
   {
@@ -1379,6 +1505,13 @@
     "isLegacy": false
   },
   {
+    "path": "/api/v1/invitations/{invitationId}/check-in/roster",
+    "method": "GET",
+    "tag": "Check-In",
+    "summary": "Roster",
+    "isLegacy": false
+  },
+  {
     "path": "/api/v1/invitations/{invitationId}/check-in/list",
     "method": "GET",
     "tag": "Check-In",
@@ -1400,10 +1533,38 @@
     "isLegacy": false
   },
   {
+    "path": "/api/v1/invitations/{invitationId}/analytics",
+    "method": "GET",
+    "tag": "Attendance analytics",
+    "summary": "Report",
+    "isLegacy": false
+  },
+  {
     "path": "/api/v1/invitations/{id}/preview",
     "method": "GET",
     "tag": "Invitations",
     "summary": "Preview",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{id}/access",
+    "method": "GET",
+    "tag": "Invitations",
+    "summary": "Access",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{eventId}/ticket",
+    "method": "GET",
+    "tag": "Invitation Tickets",
+    "summary": "General",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/invitations/{eventId}/guests/{guestId}/ticket",
+    "method": "GET",
+    "tag": "Invitation Tickets",
+    "summary": "Guest",
     "isLegacy": false
   },
   {
@@ -1550,7 +1711,7 @@
     "path": "/api/v1/admin/reports/management/{report}/export/{format}",
     "method": "GET",
     "tag": "Management reporting",
-    "summary": "Complete filtered CSV, XLSX or print HTML",
+    "summary": "Filtered CSV, current-page CSV, XLSX or print HTML",
     "isLegacy": false
   },
   {

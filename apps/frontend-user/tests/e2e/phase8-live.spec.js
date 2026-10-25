@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
 import process from 'node:process';
+import { chooseStudioSection } from './support/studioNavigationActions';
 
 const fixtureFile = process.env.PHASE8_BROWSER_FIXTURES;
 test.skip(!fixtureFile, 'Requires explicit private credentials for the owned loopback disposable environment.');
@@ -42,9 +43,9 @@ test('actual create → multi-day Studio → SQL-backed reload → publish → p
   const saved = (await (await write).json()).data; expect(JSON.parse(saved.contentJson).programDays).toHaveLength(3);
   await expect(page.locator('.studio-save-status')).toHaveAttribute('data-phase', 'saved');
   await page.reload(); await page.getByRole('button', { name: 'Advanced editor', exact: true }).click();
-  await page.getByRole('button', { name: 'Schedule', exact: true }).click();
+  await chooseStudioSection(page, 'scheduleVenue', 'Schedule');
   await expect(page.getByRole('group', { name: 'Day 3', exact: true })).toBeVisible();
-  await page.getByRole('button', { name: 'Save the date & calendar', exact: true }).click();
+  await chooseStudioSection(page, 'scheduleVenue', 'Save the date & calendar');
   await page.getByLabel('Event timezone', { exact: true }).fill('America/New_York');
   await page.getByLabel('Show calendar', { exact: true }).check(); await page.getByLabel('Show Add to Calendar', { exact: true }).check();
   await page.getByRole('button', { name: 'Save', exact: true }).click(); await expect(page.locator('.studio-save-status')).toHaveAttribute('data-phase', 'saved');

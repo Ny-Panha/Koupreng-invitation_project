@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { phase8Fixtures } from './support/phase8Fixtures';
+import { chooseStudioSection } from './support/studioNavigationActions';
 
 for (const lang of ['en','kh']) for (const width of [320,375,390,430,768,1024,1366,1440,1920]) test(`event sections and Studio ${lang} at ${width}px`, async ({ page }, info) => {
   await page.setViewportSize({ width, height: 950 });
@@ -12,14 +13,12 @@ for (const lang of ['en','kh']) for (const width of [320,375,390,430,768,1024,13
     expect(await page.locator(selector).evaluate(el => el.scrollWidth <= el.clientWidth + 1)).toBe(true);
   }
   await page.goto('/app/events/101/invitation?mode=advanced');
-  if (width < 1024) await page.locator('.studio-section-select select').selectOption('schedule');
-  else await page.locator('.studio-section-list button').filter({ hasText: lang === 'en' ? 'Schedule' : 'កាលវិភាគ' }).click();
+  await chooseStudioSection(page, 'scheduleVenue', lang === 'en' ? 'Schedule' : 'កាលវិភាគ');
   await expect(page.locator('.studio-program')).toBeVisible();
   await expect(page.locator('.studio-preview-recovery')).toHaveCount(0);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await page.screenshot({ path: info.outputPath(`program-editor-${lang}-${width}.png`), fullPage: true });
-  if (width < 1024) await page.locator('.studio-section-select select').selectOption('countdown');
-  else await page.locator('.studio-section-list button').filter({ hasText: lang === 'en' ? 'Save the date & calendar' : 'កំណត់ថ្ងៃ និងប្រតិទិន' }).click();
+  await chooseStudioSection(page, 'scheduleVenue', lang === 'en' ? 'Save the date & calendar' : 'កំណត់ថ្ងៃ និងប្រតិទិន');
   await expect(page.locator('.studio-date-editor')).toBeVisible();
   await expect(page.locator('.studio-preview-recovery')).toHaveCount(0);
   await page.screenshot({ path: info.outputPath(`date-editor-${lang}-${width}.png`), fullPage: true });

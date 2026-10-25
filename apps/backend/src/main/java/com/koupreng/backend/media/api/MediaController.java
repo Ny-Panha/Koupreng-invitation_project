@@ -34,6 +34,40 @@ public class MediaController {
 
     private final MediaService mediaService;
 
+    @PostMapping(value = "/invitations/{invitationId}/media/ticket-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ApiResponse<MediaResponse>> uploadTicketImage(Authentication authentication,
+            @PathVariable Long invitationId, @RequestParam("file") MultipartFile file) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success("Ticket image uploaded", mediaService.uploadTicketImage(authentication, invitationId, file)));
+    }
+
+    @PostMapping(value = "/invitations/{invitationId}/media/pre-wedding-video", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ApiResponse<MediaResponse>> uploadPreWeddingVideo(Authentication authentication,
+            @PathVariable Long invitationId, @RequestParam("file") MultipartFile file) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success("Cinematic video uploaded", mediaService.uploadPreWeddingVideo(authentication, invitationId, file)));
+    }
+
+    @GetMapping("/invitations/{invitationId}/media/{mediaId}/cinematic-content")
+    public ResponseEntity<org.springframework.core.io.Resource> ownerCinematicContent(Authentication authentication,
+            @PathVariable Long invitationId, @PathVariable Long mediaId) {
+        return content(mediaService.ownerCinematicContent(authentication, invitationId, mediaId));
+    }
+
+    public record CinematicAccess(@jakarta.validation.constraints.Size(max = 512) String accessToken,
+            @jakarta.validation.constraints.Size(max = 512) String inviteToken) {
+        @Override public String toString() { return "CinematicAccess[redacted]"; }
+    }
+
+    @PostMapping("/public/invitations/{slug}/media/{mediaId}/cinematic-content")
+    public ResponseEntity<org.springframework.core.io.Resource> publicCinematicContent(@PathVariable String slug,
+            @PathVariable Long mediaId, @jakarta.validation.Valid @org.springframework.web.bind.annotation.RequestBody CinematicAccess access) {
+        return content(mediaService.publicCinematicContent(slug, access.accessToken(), access.inviteToken(), mediaId));
+    }
+
+    private ResponseEntity<org.springframework.core.io.Resource> content(MediaService.PrivateContent content) {
+        return ResponseEntity.ok().header("Cache-Control", "private, no-store").header("X-Content-Type-Options", "nosniff")
+                .contentType(MediaType.parseMediaType(content.mimeType())).body(content.resource());
+    }
+
     public MediaController(MediaService mediaService) {
         this.mediaService = mediaService;
     }
