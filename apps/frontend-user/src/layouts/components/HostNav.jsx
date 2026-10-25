@@ -322,7 +322,7 @@ export default function HostNav() {
         }
         .host-nav-link:hover,
         .host-nav-link.active {
-          color: #B0926A;
+          color: var(--ws-gold-dark, #76572D);
         }
         .host-user-actions {
           display: flex;

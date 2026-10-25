@@ -104,3 +104,4 @@
 @media (prefers-reduced-motion: reduce) {
   .k-modal-backdrop, .k-modal-container { animation: none; }
 }
+.k-modal-focus-guard { position:absolute; width:1px; height:1px; padding:0; overflow:hidden; clip-path:inset(50%); }

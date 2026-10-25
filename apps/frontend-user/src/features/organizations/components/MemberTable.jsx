@@ -71,7 +71,7 @@ export default function MemberTable({
                         aria-label={uiCopy("ប្តូរតួនាទី", "Change role")}
                       >
                         <IoPencilOutline aria-hidden="true" />
-                        <span>{uiCopy("កែប្រែតួនាទី", "Edit role")}</span>
+                        <span>{uiCopy("ប្តូរតួនាទី", "Change role")}</span>
                       </button>
                       <button
                         type="button"

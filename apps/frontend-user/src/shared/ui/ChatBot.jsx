@@ -229,7 +229,7 @@ export default function ChatBot() {
       {/* Chat Toggle Button */}
       <motion.button
         type="button"
-        aria-label={lang === "km" ? (isOpen ? "បិទការជជែក" : "បើកការជជែកជំនួយ") : (isOpen ? "Close support chat" : "Open support chat")}
+        aria-label={isWorkspace && !isOpen ? t.support : lang === "km" ? (isOpen ? "បិទការជជែក" : "បើកការជជែកជំនួយ") : (isOpen ? "Close support chat" : "Open support chat")}
         aria-expanded={isOpen}
         aria-controls="public-support-chat"
         className="chat-toggle-btn"

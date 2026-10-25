@@ -23,13 +23,13 @@ export default function StudioToolbar({ title, templateName, english, studio, sa
     {workspace?.openNavigation && <button type="button" ref={node => workspace.registerNavigationTrigger?.(node)} className="studio-back studio-event-menu" onClick={workspace.openNavigation} aria-label={english ? "Open event navigation" : "បើកម៉ឺនុយកម្មវិធី"} aria-haspopup="dialog" aria-expanded={workspace.navigationOpen} title={english ? "Event navigation" : "មុខងារកម្មវិធី"}><Menu size={20} aria-hidden="true" /></button>}
     <div className="studio-document">
       <h1 title={title}>{title || (english ? "Invitation studio" : "រចនាធៀបអញ្ជើញ")}</h1>
-      <button type="button" className="studio-template-button" onClick={onTemplate} aria-label={english ? "Change template" : "ប្ដូរគំរូ"}>
+      <button type="button" className="studio-template-button" onClick={onTemplate} aria-label={`${english ? "Change template" : "ប្ដូរគំរូ"}: ${templateName || ''}`}>
         <Palette size={14} aria-hidden="true" /><span className="pe-template-tag">{templateName}</span>
       </button>
     </div>
     <span className="studio-save-status" data-phase={studio.phase} role="status" aria-live="polite"><StatusIcon size={16} aria-hidden="true" />{labels[studio.phase]}</span>
     <div className="studio-toolbar-actions" data-keyboard-open={keyboardOpen}>
-      <button type="button" className="studio-action studio-action--preview" aria-haspopup="dialog" aria-expanded={Boolean(previewOpen)} aria-label={english ? "Preview invitation" : "មើលធៀបជាមុន"} onClick={onPreview}><Eye size={18} aria-hidden="true" /><span>{english ? "Preview" : "មើលជាមុន"}</span></button>
+      <button type="button" className="studio-action studio-action--preview" aria-haspopup="dialog" aria-expanded={Boolean(previewOpen)} aria-label={english ? "Preview invitation" : "មើលជាមុន៖ ធៀបអញ្ជើញ"} onClick={onPreview}><Eye size={18} aria-hidden="true" /><span>{english ? "Preview" : "មើលជាមុន"}</span></button>
       <button type="button" className="studio-action studio-action--save pe-save-main-btn" disabled={saving || blocked} onClick={() => studio.flush()}>{english ? (saving ? "Saving…" : "Save") : (saving ? "កំពុងរក្សាទុក…" : "រក្សាទុក")}</button>
       {canPublish && !published && <button type="button" className="studio-action" disabled={saving || publishing || blocked} onClick={onPublish}>{english ? (publishing ? "Publishing…" : "Publish") : "ផ្សព្វផ្សាយ"}</button>}
       <details className="studio-more" onKeyDown={event => { if (event.key === "Escape") { event.currentTarget.open = false; event.currentTarget.querySelector("summary")?.focus(); } }}>

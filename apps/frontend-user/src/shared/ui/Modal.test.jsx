@@ -1,5 +1,5 @@
 import { useLanguageStore } from "@/stores/useLanguageStore";
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, afterEach, describe, expect, it, vi } from "vitest";
 
 beforeEach(() => useLanguageStore.setState({ lang: "en" }));
@@ -7,6 +7,12 @@ import Modal from "./Modal";
 
 afterEach(cleanup);
 describe("A11Y-001 modal keyboard and background isolation", () => {
+  it('recovers logical focus when asynchronous content replaces its focused control', async () => {
+    const { rerender } = render(<Modal isOpen title="Preview" onClose={vi.fn()}><button key="first">Loading control</button></Modal>);
+    screen.getByRole('button',{ name:'Loading control' }).focus();
+    rerender(<Modal isOpen title="Preview" onClose={vi.fn()}><button key="replacement">Ready control</button></Modal>);
+    await waitFor(() => expect(screen.getByRole('dialog').contains(document.activeElement)).toBe(true));
+  });
   it("focuses the dialog, traps forward/reverse Tab, and restores the opener on close", () => {
     const opener = document.createElement("button"); opener.textContent = "Open"; document.body.appendChild(opener); opener.focus();
     const close = vi.fn();

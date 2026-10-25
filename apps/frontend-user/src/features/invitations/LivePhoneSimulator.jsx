@@ -269,7 +269,9 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, devi
                 }}>{en ? "Fullscreen" : uiCopy("ពេញអេក្រង់", "Full screen")}</button>}
             </div>
             <div className="studio-device-caption">{device === "mobile" ? `${en ? "Phone frame" : "ស៊ុមទូរស័ព្ទ"} · 440 × 860` : uiCopy("កុំព្យូទ័រ · 1200 × 800", "Desktop · 1200 × 800")} · {Math.round(scale * 100)}%</div>
-            <div ref={viewportRef} className="studio-preview-viewport">
+            {/* Keep scroll focus stable as the iframe becomes interactive. Firefox's
+                implicit scroll-container tab stop can disappear during that load. */}
+            <div ref={viewportRef} className="studio-preview-viewport" tabIndex={0} role="region" aria-label={uiCopy("ផ្ទៃរំកិលមើលជាមុន", "Preview scroll area")}>
             <div className="studio-device-stage" style={{ width: deviceSize.width * scale, height: deviceSize.height * scale }}>
             <div className="pe-phone-frame pe-device-frame" data-device={device}
                 style={{ width: deviceSize.width, height: deviceSize.height, transform: `scale(${scale})` }}>

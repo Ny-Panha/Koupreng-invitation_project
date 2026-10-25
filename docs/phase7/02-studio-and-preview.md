@@ -4,7 +4,8 @@ The decorated wedding Studio now offers the five-step guide alongside its existi
 advanced section editor. It reuses the original fields, save queue and renderer.
 New event creation opens the invitation route with `mode=guided`; existing links
 keep their advanced editing behavior. Other event types still use `EventDetails`
-and need the corresponding guided integration in a subsequent increment.
+and received the corresponding guided integration in the later publishing increment
+described in `05-publishing-workflow.md`.
 
 Publishing opens a checklist and explicit confirmation. Required fields follow
 the existing server rules; optional story/gallery content does not block it.
@@ -40,6 +41,9 @@ were retained.
 Browser suites use fictional intercepted HTTP fixtures, not a live backend.
 Screenshots and logs live under `D:/Koupreng-Phase7-private/m1-*`; the 320 and 1440
 screens were visually inspected. Real HTTP and broader accessibility/browser gates
-are still required. `playwright.phase7.config.js` uses isolated port 4288 and fails
+were subsequently completed: the real UI/API save/reload/publish journey passed,
+along with the final 72-case three-engine accessibility/keyboard matrix. See
+`10-test-results.md` for the final gates. `playwright.phase7.config.js` uses
+isolated port 4288 and fails
 if that port is occupied. Existing regression screenshots now use each test's
 output directory, avoiding writes to historical Phase 6 evidence.
