@@ -210,6 +210,8 @@ class Phase7CollaborationMySqlTests {
         }
         Reply page=call("GET",eventPath(f)+"/guests/page?size=2&page=0",f.owner,null); assertEquals(200,page.status);
         assertEquals(2,page.data().path("items").size()); assertEquals(4,page.data().path("totalElements").asInt());
+        assertEquals(records.getLast().data().path("id").asLong(),page.data().path("items").get(0).path("guest").path("id").asLong());
+        assertEquals(3,jdbc.queryForObject("SELECT COUNT(*) FROM information_schema.statistics WHERE table_schema=DATABASE() AND table_name='guests' AND index_name='idx_guests_invitation_created_id'",Integer.class));
         Reply declined=call("GET",eventPath(f)+"/guests/page?status=declined",f.owner,null); assertEquals(200,declined.status);
         assertEquals(1,declined.data().path("totalElements").asInt());
         assertEquals("NOT_ATTENDING",declined.data().path("items").get(0).path("rsvpStatus").asText());
