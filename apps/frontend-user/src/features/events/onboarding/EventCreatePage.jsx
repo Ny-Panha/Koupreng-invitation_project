@@ -201,7 +201,7 @@ export default function EventCreatePage() {
       try { sessionStorage.removeItem(storageKey); } catch { /* A successful backend save must still open its workspace. */ }
       navigate(mode === "draft" ? eventPath(event.id) : `${eventPath(event.id)}/invitation?mode=guided`, { replace: true });
     } catch (err) { setError(err.message || copy("មិនអាចរក្សាទុកកម្មវិធីបានទេ។", "Could not save your event.")); }
-    finally { submitting.current = false; setSaving(false); }
+    finally { if (!saved.current) { submitting.current = false; setSaving(false); } }
   };
 
   return <main className="workspace-page event-create" lang={en ? "en" : "km"}>

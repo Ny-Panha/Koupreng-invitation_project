@@ -40,7 +40,7 @@ function VerifiedWorkspace({ eventId }) {
         const summary = eventList.find(item => String(item.id) === eventId);
         if (active) setState({ loading: false, event: { ...event, coverUrl: summary?.coverUrl || null, coverSource: summary?.coverSource, invitationCoverUrl: summary?.invitationCoverUrl, templateThumbnailUrl: summary?.templateThumbnailUrl || event.templateThumbnailUrl }, events: eventList, access, error: "" });
       })
-      .catch(error => { if (active) setState({ loading: false, event: null, events: [], error: error.message }); });
+      .catch(error => { if (active) setState({ loading: false, event: null, events: [], error: error.message, errorStatus: error.status }); });
     return () => { active = false; };
   }, [eventId, retry]);
 
@@ -67,7 +67,7 @@ function VerifiedWorkspace({ eventId }) {
   if (state.error) return (
     <div className="event-workspace workspace-page" role="alert">
       <div className="workspace-notice">
-        <p>{en ? (/access denied|403|forbidden/i.test(state.error) ? "Access denied. Open an event you have permission to manage." : "This event could not be opened. Check your access or try again.") : "មិនអាចបើកកម្មវិធីនេះបានទេ។ សូមពិនិត្យសិទ្ធិរបស់អ្នក ឬព្យាយាមម្ដងទៀត។"}</p>
+        <p>{en ? (state.errorStatus === 403 || /access denied|403|forbidden/i.test(state.error) ? "Access denied. Open an event you have permission to manage." : "This event could not be opened. Check your access or try again.") : "មិនអាចបើកកម្មវិធីនេះបានទេ។ សូមពិនិត្យសិទ្ធិរបស់អ្នក ឬព្យាយាមម្ដងទៀត។"}</p>
         <div style={{ display: "flex", gap: "10px", marginTop: "12px" }}>
           <button type="button" className="workspace-button" onClick={() => setRetry(n => n + 1)}>
             {en ? "Try again" : "ព្យាយាមម្ដងទៀត"}
