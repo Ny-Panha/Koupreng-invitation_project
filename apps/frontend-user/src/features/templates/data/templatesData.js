@@ -4,6 +4,7 @@ import musicInstrumental from "../../../assets/music/Instrumental Wedding Music 
 export const KEEP_TEMPLATE_CODE = "garden-royal-khmer-wedding";
 export const KHMER_CELESTIAL_TEMPLATE_CODE = "khmer-celestial";
 export const SILK_HERITAGE_TEMPLATE_CODE = "silk-heritage";
+export const ROYAL_GARDEN_CINEMATIC_TEMPLATE_CODE = "royal-garden-cinematic";
 export const KHMER_ROYAL_LOTUS_TEMPLATE_CODE = "khmer-royal-lotus";
 export const ROYAL_KHMER_TEMPLATE_CODE = "royal-khmer-wedding";
 export const KHMER_GOLDEN_CANVA_INSPIRED_CODE = "khmer-golden-canva-inspired-wedding";
@@ -706,7 +707,75 @@ export const SILK_HERITAGE_TEMPLATE = {
     },
 };
 
+export const ROYAL_GARDEN_CINEMATIC_TEMPLATE = {
+    id: ROYAL_GARDEN_CINEMATIC_TEMPLATE_CODE,
+    code: ROYAL_GARDEN_CINEMATIC_TEMPLATE_CODE,
+    slug: ROYAL_GARDEN_CINEMATIC_TEMPLATE_CODE,
+    name: "សួនរាជមង្គល · Royal Garden Cinematic",
+    title: "សិរីសួស្តីអាពាហ៍ពិពាហ៍",
+    style: "Royal Garden Cinematic",
+    category: "ancient",
+    popular: true,
+    premium: false,
+    isPremium: false,
+    image: "/templates/royal-garden/garden.svg",
+    mainImage: "/templates/royal-garden/garden.svg",
+    phoneCoverImage: "/templates/royal-garden/garden.svg",
+    coverBackgroundImage: "/templates/royal-garden/garden.svg",
+    backgroundImage: "/templates/royal-garden/wallpaper.svg",
+    music: { url: musicWaitingDay },
+    groom: "ប៊ុន សាយ",
+    bride: "ជា គឹមអិច",
+    groomEn: "Bun Say",
+    brideEn: "Chea Kimech",
+    guestName: "លោកអ្នក និងក្រុមគ្រួសារ",
+    family: {
+        groomParents: ["លោក ប៊ុន ដន", "លោកស្រី ស៊ុន កាង"],
+        brideParents: ["លោក ជា រតនា", "លោកស្រី ព្រហ្ម ផល្លា"],
+    },
+    messageTitle: "យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ",
+    message: "យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញលោកអ្នក និងក្រុមគ្រួសារ ចូលរួមជាភ្ញៀវកិត្តិយស ក្នុងពិធីសិរីមង្គលរបស់យើងខ្ញុំ។",
+    dateText: "ថ្ងៃសៅរ៍ ទី៥ ខែធ្នូ ឆ្នាំ២០២៦",
+    dateTextEn: "05 December 2026",
+    targetDate: "2026-12-05T17:00:00+07:00",
+    machineEventDate: "2026-12-05T17:00:00+07:00",
+    weddingTime: "៥:០០ ល្ងាច",
+    venueName: "សូមបំពេញទីតាំងពិធីមង្គល",
+    venueAddress: "",
+    bg: "#e5e8d7",
+    paper: "#f5f0df",
+    color: "#d2a864",
+    accent: "#823544",
+    label: "ROYAL GARDEN",
+    description: "គំរូធៀបការខ្មែរបែបសួនផ្កាបុរាណ មានផ្ទាំងបើកធៀបការ Save the Date គំនូរមាស កាលវិភាគ ប្រតិទិន ទីតាំង ចំណងដៃ QR រូបភាព និង RSVP។",
+    presetId: "ROYAL_GARDEN_CINEMATIC",
+    openingStyle: "royal-garden-cinematic",
+    gateStyle: "royal-garden-cinematic",
+    hasGate: true,
+    gallery: WEDDING_COUPLE_GALLERY,
+    schedule: [
+      { id: "p1", time: "០៧:០០", title: "ពិធីហែជំនូន" },
+      { id: "p2", time: "០៩:០០", title: "ពិធីកាត់សក់បង្កក់សិរី" },
+      { id: "p3", time: "១១:០០", title: "ពិធីបំពាក់ចិញ្ចៀន" },
+      { id: "p4", time: "១៧:០០", title: "ពិធីទទួលភ្ញៀវកិត្តិយស" },
+    ],
+    enabledSections: {
+      family: true, invitation: true, calendar: true, schedule: true,
+      venue: true, gift: true, gallery: true, rsvp: true, closing: true,
+    },
+    design: {
+      presetId: "ROYAL_GARDEN_CINEMATIC",
+      theme: "ROYAL_GARDEN_CINEMATIC",
+      primaryColor: "#823544",
+      secondaryColor: "#d2a864",
+      backgroundColor: "#e5e8d7",
+      openingStyle: "royal-garden-cinematic",
+      gateStyle: "royal-garden-cinematic",
+    },
+};
+
 export const TEMPLATES = [
+    ROYAL_GARDEN_CINEMATIC_TEMPLATE,
     SILK_HERITAGE_TEMPLATE,
     KHMER_CELESTIAL_TEMPLATE,
     KHMER_ROYAL_LOTUS_TEMPLATE,

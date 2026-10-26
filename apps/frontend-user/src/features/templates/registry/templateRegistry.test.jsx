@@ -10,6 +10,14 @@ const KhmerCelestialLayout = templateRegistry["khmer-celestial"];
 const KhmerRoyalLotusLayout = templateRegistry["khmer-royal-lotus"];
 
 describe("templateRegistry (1 Template = 1 Dedicated UI)", () => {
+  it("resolves Royal Garden Cinematic by canonical slug and admin preset", () => {
+    const layout = templateRegistry["royal-garden-cinematic"];
+    expect(layout).toBeDefined();
+    expect(templateRegistry.ROYAL_GARDEN_CINEMATIC).toBe(layout);
+    expect(getDedicatedTemplateComponent({ code: "royal-garden-cinematic" })).toBe(layout);
+    expect(getDedicatedTemplateComponent({ presetId: "ROYAL_GARDEN_CINEMATIC" })).toBe(layout);
+  });
+
   it("maps Khmer Royal Lotus by slug and admin preset", () => {
     expect(templateRegistry["khmer-royal-lotus"]).toBe(KhmerRoyalLotusLayout);
     expect(templateRegistry.KHMER_ROYAL_LOTUS).toBe(KhmerRoyalLotusLayout);
