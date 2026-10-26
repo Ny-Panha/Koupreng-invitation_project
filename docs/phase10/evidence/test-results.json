@@ -1,6 +1,6 @@
 {
-  "recordedAtUtc": "2026-10-26T01:20:01.319946+00:00",
-  "applicationHead": "707289b406ab4ad385e52385d348e3b0327c0644",
+  "recordedAtUtc": "2026-10-26T01:23:15.102228+00:00",
+  "applicationHead": "2bbbe4d7955b5e77b0339274b89daf9f68262f04",
   "countsAreNotCumulativeAcrossAttempts": true,
   "scope": "Completed selected runs, with actual source/native/fixture distinctions in 10-test-results.md. Raw credentials and logs are excluded from Git.",
   "gates": [

@@ -1,0 +1,86 @@
+{
+  "verifiedAtUtc": "2026-10-26T01:26:44.820341+00:00",
+  "branch": "main",
+  "integratedHead": "2bbbe4d7955b5e77b0339274b89daf9f68262f04",
+  "merge": "fast-forward from 516923b651b33dafc8ee47ecca45fee6b55bb8ce",
+  "applicationChangesSinceFullBrowserBuild": [],
+  "testOnlyChangesSinceFullBrowserBuild": [
+    "apps/frontend-user/src/features/templates/registry/phase10Contract.test.jsx"
+  ],
+  "gates": [
+    {
+      "gate": "user-tests",
+      "command": "npm --prefix apps/frontend-user test",
+      "status": "passed",
+      "passed": 926,
+      "log": ".cache/phase10/main-user-tests.log",
+      "logSha256": "3d14715bcce43420e109e1abf6edc54be03e2db8780a022f4aceff57b846544c",
+      "resultExcerpt": " Test Files  134 passed (134)\n      Tests  926 passed (926)\n   Duration  37.32s (environment 41%, tests 20%, setup 20%, import 16%, transform 3%, worker 1%)"
+    },
+    {
+      "gate": "admin-tests",
+      "command": "npm --prefix apps/frontend-admin test",
+      "status": "passed",
+      "passed": 121,
+      "log": ".cache/phase10/main-admin-tests.log",
+      "logSha256": "3bc0dbc5d75b0e3d9a4ac18d6530d062cf0539b7241a999442644f4e5fbe3aaf",
+      "resultExcerpt": " Test Files  21 passed (21)\n      Tests  121 passed (121)\n   Duration  45.38s (environment 73%, setup 23%, import 2%, tests 1%, transform 1%)"
+    },
+    {
+      "gate": "user-lint",
+      "command": "npm --prefix apps/frontend-user run lint",
+      "status": "passed",
+      "passed": null,
+      "log": ".cache/phase10/main-user-lint.log",
+      "logSha256": "52fffd10a27da7ca85657cb07ca8f4c376d8991bb3efbe96d624f017b515ebf8",
+      "resultExcerpt": "> eslint ."
+    },
+    {
+      "gate": "admin-lint",
+      "command": "npm --prefix apps/frontend-admin run lint",
+      "status": "passed",
+      "passed": null,
+      "log": ".cache/phase10/main-admin-lint.log",
+      "logSha256": "7b0521746442f3a07ba830d3886d680d679002bb88a4358a1cdab4758c0ee841",
+      "resultExcerpt": "> eslint ."
+    },
+    {
+      "gate": "user-build",
+      "command": "npm --prefix apps/frontend-user run build",
+      "status": "passed",
+      "passed": null,
+      "log": ".cache/phase10/main-user-build.log",
+      "logSha256": "8b5ac851e58d92e65a7a0c779e3e10454f6866851e28f6b29f3536455806631c",
+      "resultExcerpt": "✓ built in 2.00s"
+    },
+    {
+      "gate": "admin-build",
+      "command": "npm --prefix apps/frontend-admin run build",
+      "status": "passed",
+      "passed": null,
+      "log": ".cache/phase10/main-admin-build.log",
+      "logSha256": "9137be598eb9dda57e103e0130ed03971e50eed1eb5e4cf01d2be3d662987d40",
+      "resultExcerpt": "✓ built in 7.71s"
+    },
+    {
+      "gate": "browser-smoke",
+      "command": "npm --prefix apps/frontend-user run test:e2e -- --config=playwright.phase10.config.js --grep='split dragging|click-to-edit|settings entry'",
+      "status": "passed",
+      "passed": 9,
+      "log": ".cache/phase10/main-browser-smoke.log",
+      "logSha256": "f783088ad7bed078f957957f10490465c1e448cd9f769a6176d1f5fc4ac42e35",
+      "resultExcerpt": "  9 passed (1.4m)"
+    },
+    {
+      "gate": "generic-event",
+      "command": "npm --prefix apps/frontend-user run test:e2e -- --config=playwright.phase7.config.js --workers=1 phase7-generic-guide.spec.js",
+      "status": "passed",
+      "passed": 8,
+      "log": ".cache/phase10/main-generic-smoke.log",
+      "logSha256": "1dcf2d98df9d29b76a5d438f5082eac2a572ca41585e9ada32ac9d256ce78534",
+      "resultExcerpt": "  8 passed (44.3s)"
+    }
+  ],
+  "artifactVerification": "98 digests, 85 screenshots, 12 x 70 matrix entries, 36 aliases and local report links verified",
+  "productionOperations": []
+}

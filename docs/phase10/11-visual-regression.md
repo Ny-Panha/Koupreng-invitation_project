@@ -6,6 +6,8 @@ The evidence manifest records dimensions, SHA-256 and asset sizes. Paths under b
 
 The final manifest retains 85 PNG captures totaling 49,228,657 bytes, plus font/license/vector digests. Typography captures explicitly use long Khmer names with the Google font servers blocked. Only these selected review artifacts are committed; repeated run logs and inherited export artifacts remain outside Git.
 
+Asset digests use committed Git blob bytes, including repository-normalized line endings for licenses and SVG source. Screenshot hashes describe the PNG bytes directly. This keeps the provenance check stable across Windows checkout line-ending conversion.
+
 Viewport/reflow assertions cover Studio at 320, 375, 390, 430, 768, 1024, 1366, 1440 and 1920px; guest templates at 320, 390, 768 and 1440px. Scoped axe and keyboard checks complement the captures. The source-render contract tests distinguish open-body probes from cover-only text.
 
 Images were visually inspected for form widths, corner placement, name readability and sticky actions. This is a reviewed before/after evidence set, not a claim of a pixel-diff baseline for every animation frame or physical Safari.

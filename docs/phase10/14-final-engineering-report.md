@@ -28,7 +28,9 @@ The [visual manifest](evidence/manifest.json) records image dimensions, hashes a
 
 ## Integration record
 
-Focused application commits: `38c0f32d` (dependency patches), `51d7a77b` (Phase 10 implementation and contracts), and `707289b4` (canonical deadline preservation and browser readiness/pacing). Documentation/evidence are committed separately. The final integration and verified remote receipt are appended after the normal push; no force push or production deployment is authorized by this task.
+Focused application commits: `38c0f32d` (dependency patches), `51d7a77b` (Phase 10 implementation and contracts), and `707289b4` (canonical deadline preservation and browser readiness/pacing). Documentation/evidence commit `2bbbe4d7955b5e77b0339274b89daf9f68262f04` was fast-forwarded into local `main` after fetching an unchanged `origin/main`; no merge conflict or history rewrite occurred.
+
+Post-integration verification passed again: user/admin 926/121, both lint/build gates, nine three-engine Studio/Settings smoke cases, and eight bilingual generic-event cases. [Main verification](evidence/main-verification.json) records exact commands, excerpts and hashes. The subsequent documentation corrections use Git blob bytes for stable license/source digests across checkout line endings; all 98 artifact digests and local report links passed verification. These documentation-only changes do not alter the verified application. The remote push receipt is appended after synchronization.
 
 ## Release recommendation
 

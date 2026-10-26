@@ -21,6 +21,8 @@ Executed on 25–26 October 2026 in the isolated Phase 10 worktree. Counts below
 | Compose syntax | Passed with process-only synthetic required configuration | compose-final.log |
 | Staged secret scans and whitespace checks | Passed before source commits; repeated before final integration | source-secret-scan.log / final-diff-check.log |
 
+After fast-forward integration to local `main` at `2bbbe4d7955b5e77b0339274b89daf9f68262f04`, user/admin suites passed again (926/121), both linters and production builds passed, and all nine selected Studio/Settings browser smoke cases passed across Chromium/Firefox/WebKit. Eight additional bilingual Event Essential guided/reflow/publication cases passed across desktop/mobile Chromium, Firefox and WebKit. These repeated checks are recorded separately in [main-verification.json](evidence/main-verification.json); their counts are not added to earlier suite totals.
+
 Backend skips are the three explicitly gated Phase 6 demo provisioning methods and the opt-in RSVP benchmark. No historical migration was edited. MySQL integration used a task-owned MySQL 8.0.39 process bound to `127.0.0.1:3416`, not an existing application database. The worker used installed Python 3.14 because the default Python 3.15 environment lacked pytest.
 
 ## Reproduction

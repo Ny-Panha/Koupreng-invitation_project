@@ -689,8 +689,8 @@
     },
     {
       "path": "apps/frontend-user/public/fonts/khmer/battambang-OFL.txt",
-      "bytes": 4482,
-      "sha256": "d4f40de8a05b17cc9da67b25e61650acb3c2e13a528a62b7eb03ffa97503367c"
+      "bytes": 4389,
+      "sha256": "cc0752ec9ef04456282bae556408b1188adba61751158c5b290ac737172851e5"
     },
     {
       "path": "apps/frontend-user/public/fonts/khmer/Battambang-Regular.woff2",
@@ -699,8 +699,8 @@
     },
     {
       "path": "apps/frontend-user/public/fonts/khmer/notosanskhmer-OFL.txt",
-      "bytes": 4473,
-      "sha256": "cc68d204625f84eaaaaacd999bfaaa5648700d9bcbf08cbc793e91a70fa37d51"
+      "bytes": 4380,
+      "sha256": "f4eeb765e93996dce10e3db9f8244d64c2052ac6eecb490f0888a2c96e19b483"
     },
     {
       "path": "apps/frontend-user/public/fonts/khmer/NotoSansKhmer.woff2",
@@ -709,8 +709,8 @@
     },
     {
       "path": "apps/frontend-user/public/fonts/template-defaults/cinzel-OFL.txt",
-      "bytes": 4475,
-      "sha256": "e7440e690fe3f0671e13dfc72980d0387e304e3e2673486be0369b4e65323c38"
+      "bytes": 4382,
+      "sha256": "f5a242cf68ad6ebd0603b3359a74c593ca080318a681035be5296ba2c6b04ae6"
     },
     {
       "path": "apps/frontend-user/public/fonts/template-defaults/Cinzel.woff2",
@@ -719,8 +719,8 @@
     },
     {
       "path": "apps/frontend-user/public/fonts/template-defaults/koulen-OFL.txt",
-      "bytes": 4474,
-      "sha256": "26625512eb7c7c424f9c6881b1c828bef48a834b80f2a38166e920b3d116eae4"
+      "bytes": 4381,
+      "sha256": "341692e3bd45580d61a5d84d7561891729c6b3c10108a91605e15afa7c1bd8df"
     },
     {
       "path": "apps/frontend-user/public/fonts/template-defaults/Koulen-Regular.woff2",
@@ -734,8 +734,8 @@
     },
     {
       "path": "apps/frontend-user/public/fonts/template-defaults/playfairdisplay-OFL.txt",
-      "bytes": 4541,
-      "sha256": "a32c1e30554f8227178d1643d182f9328b6529d92c9b43d86a16fb528381d857"
+      "bytes": 4448,
+      "sha256": "0bb2b43ffd21233963b5d0c0eb6f1abffa776ec53c56131b5818708f2730ffd6"
     },
     {
       "path": "apps/frontend-user/public/fonts/template-defaults/PlayfairDisplay.woff2",
@@ -749,6 +749,7 @@
       "provenance": "Original project SVG source"
     }
   ],
+  "assetDigestBasis": "Committed Git blob bytes; text license/source hashes use repository line endings, independent of checkout conversion",
   "screenshotCount": 85,
   "screenshotBytes": 49228657,
   "newWoff2Bytes": 488380
