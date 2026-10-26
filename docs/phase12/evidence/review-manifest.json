@@ -1,0 +1,184 @@
+{
+  "sourceCommit": "27bf32c81f916b065c35ff9851ff325c70e186f8",
+  "initialCommit": "124c7c277a00ecb8043b39b54092a3cce95db60a",
+  "exclusions": [
+    "environment files",
+    "private media",
+    "SQL dumps",
+    "raw logs/traces",
+    "tokens",
+    "real contact details"
+  ],
+  "files": [
+    {
+      "path": "00-audit-and-release-gaps.md",
+      "bytes": 6526,
+      "sha256": "b3234ba4d9cd34b2ceb79973ac4f0efa75a7a2df53c81538b08924ec35c8dddd"
+    },
+    {
+      "path": "01-studio-template-locales-matrix.md",
+      "bytes": 2662,
+      "sha256": "a54f14020f4e295a8155d7fda089ea21301142999fe29ae9fec49c8ac5277e0e"
+    },
+    {
+      "path": "02-khmer-program-icons-and-design.md",
+      "bytes": 1842,
+      "sha256": "c83826102033ca90d2c227715e93858fbb4ddd16b2b6d95a8a2c0d56cbd117c2"
+    },
+    {
+      "path": "03-premium-map-polish-and-export.md",
+      "bytes": 2811,
+      "sha256": "a71ee01c75e815988f1a09a697632960c33002fc69a4ae734a3b02fddecc7f15"
+    },
+    {
+      "path": "04-monogram-family-typography.md",
+      "bytes": 1985,
+      "sha256": "1ed5e907337aadb53e14810f6898c389e94fc4a36707780c4c64824c900c50aa"
+    },
+    {
+      "path": "05-bilingual-guest-and-presets.md",
+      "bytes": 2065,
+      "sha256": "67febf58727393c86169f9a665aabd6af2fead727760d56a4398eada3690fa64"
+    },
+    {
+      "path": "06-template-visual-review.md",
+      "bytes": 1935,
+      "sha256": "f3a402bd50d3319f5ee8421f68f91da7e9962f2f7b417d9fb6a4bdbc607540d5"
+    },
+    {
+      "path": "07-settings-security-data.md",
+      "bytes": 2059,
+      "sha256": "05d2ef5530699abf810a9bf313adc316219d8200ec86671978d73af2343bd174"
+    },
+    {
+      "path": "08-test-results.md",
+      "bytes": 6633,
+      "sha256": "e29cd21a5458fc5d88dd119d2913514b8972c2edd7c736a7ab7b1decf11d62c3"
+    },
+    {
+      "path": "09-visual-regression.md",
+      "bytes": 2171,
+      "sha256": "6cff33841854a8a1aa77de4fa0af638bc32787f79dcd16818bb3edb9f2c07b38"
+    },
+    {
+      "path": "10-open-gates-and-limitations.md",
+      "bytes": 2524,
+      "sha256": "caab6904249383193c586b64d063e509138b152c8d601a7f652589329f363977"
+    },
+    {
+      "path": "11-final-engineering-report.md",
+      "bytes": 3666,
+      "sha256": "40a1d12c4024a743598802deed5356dd8ef1d72cadacc4602b87947565c4963c"
+    },
+    {
+      "path": "12-git-receipt.md",
+      "bytes": 1606,
+      "sha256": "4ed59b35d21b59471758af7806811326c26e75708cb13680686f03bc5b7cf7f4"
+    },
+    {
+      "path": "review.html",
+      "bytes": 4250,
+      "sha256": "9c91cd4953d9493ff4eb2d3f4debe9f556b3ce0183deed42d418fb4c088db03f"
+    },
+    {
+      "path": "evidence/backend-summary.json",
+      "bytes": 3412,
+      "sha256": "801cfd74fc2f3a89f0c24de583e9e633181f4f34905f019fc13a54d6922543af"
+    },
+    {
+      "path": "evidence/studio-template-locales-matrix.json",
+      "bytes": 276995,
+      "sha256": "7928fa7bcd2018bd753cfd40ce09cf335c49597297c426d33c0362a8940432a1"
+    },
+    {
+      "path": "evidence/test-summary.json",
+      "bytes": 2294,
+      "sha256": "63b0186f1a330a4204c85ed8157b047270fabdab16d8e6f3e8c34ef362282448"
+    },
+    {
+      "path": "evidence/source.patch",
+      "bytes": 158414,
+      "sha256": "3d40e22dd85e51db4aa201f7cc57148fa08773bef41d0dd5f969b32090f457ba"
+    },
+    {
+      "path": "evidence/exports/monogram.png",
+      "bytes": 32403,
+      "sha256": "c04c7dac78031e50bee41afb985c5596707b36601d8081e51de718d00d2546ae"
+    },
+    {
+      "path": "evidence/exports/monogram.svg",
+      "bytes": 219318,
+      "sha256": "e1aa901f048ae5319353193683bf040a7f1ca902fe7f847558ac804f7174e5a4"
+    },
+    {
+      "path": "evidence/exports/venue-map.png",
+      "bytes": 93616,
+      "sha256": "54c7ff0689c3fb8b25b80dfa944df4b135a54c0fec7e0f0ccaf9be8717113638"
+    },
+    {
+      "path": "evidence/exports/venue-map.svg",
+      "bytes": 220354,
+      "sha256": "7049621ea3e937d4b93a90c94a7760ff856f68b7f0c9852350c4cf32d4cd17bd"
+    },
+    {
+      "path": "evidence/exports/venue-map.webp",
+      "bytes": 29434,
+      "sha256": "1e37622fdfdfc65354c1b81f8f62c603018f24cd60125921206ab8df745c43b5"
+    },
+    {
+      "path": "evidence/before/celestial-family-km-390.png",
+      "bytes": 107922,
+      "sha256": "9c1b6ef08b7ed9f7c9cf836aa5bf17eca834d978d03b4223bc69af7c30f77dec"
+    },
+    {
+      "path": "evidence/before/celestial-program-km-390.png",
+      "bytes": 25868,
+      "sha256": "a714a41ebd83c14f621b968cc22ac042a6c88983fbecfd3feab0dca68059e0fa"
+    },
+    {
+      "path": "evidence/before/map-editor-1440.png",
+      "bytes": 342012,
+      "sha256": "089e2defb021856a5af2938f24dc70c98af931e10a927ce58c2659c22b911b45"
+    },
+    {
+      "path": "evidence/after/celestial-family-km-390.png",
+      "bytes": 101795,
+      "sha256": "9f833895806977f9480cc2652c5566404ea23e044849af255d2fbc25ce9c9df2"
+    },
+    {
+      "path": "evidence/after/celestial-program-km-390.png",
+      "bytes": 70823,
+      "sha256": "437db6e335f1153a9922ab7878cbbaa86d1f5800bfe320ccc78dfbafd3968036"
+    },
+    {
+      "path": "evidence/after/celestial-program-en-390.png",
+      "bytes": 67540,
+      "sha256": "5b9d7513fd626a975cd190a67ede7f35e2ebc4961a8e4251099da556ac922c43"
+    },
+    {
+      "path": "evidence/after/celestial-map-km-390.png",
+      "bytes": 41105,
+      "sha256": "c4c788a1efa4c35d03a88d3203177620c8eaa1ad4233f73a4dad1491566ab32d"
+    },
+    {
+      "path": "evidence/after/royal-garden-cinematic-en-390.png",
+      "bytes": 342076,
+      "sha256": "24491230e74645451b09d0898da22329b0319887676a4af611d40cc0cb45cf9e"
+    },
+    {
+      "path": "evidence/after/khmer-royal-lotus-en-390.png",
+      "bytes": 997847,
+      "sha256": "0d6ae58e5e27c194567082dad3572ea82f6dfda6f9a5ebebf322537de493f092"
+    },
+    {
+      "path": "evidence/after/silk-heritage-en-390.png",
+      "bytes": 444601,
+      "sha256": "261222282e045ff770b4b9d3e038ced3ca707466dc5c51c2a29636a5212312a5"
+    },
+    {
+      "path": "evidence/after/map-editor-1440.png",
+      "bytes": 75563,
+      "sha256": "6e061ac0b07c532ed5f8bcba21df8f948213869f7f0085572aa67c25efe0821a"
+    }
+  ]
+}

@@ -21,3 +21,5 @@ Existing six-tab Guided/Advanced Studio, trusted preview messaging, split view, 
 User frontend has 1,050 passing tests, admin 121, worker 74, backend 636 passed/four skipped. Browser regressions and recovery runs are detailed in report 08 and the final machine summary. A touch regression was found and repaired; no assertion or accessibility rule was removed to obtain a pass. Current-tree secret scan is clean; final staged/range scans and Git/CI visibility belong to the release receipt.
 
 Production deployment is not performed. Native cultural/editorial, assistive-technology, physical-device and provider acceptance gates remain explicit. The per-field matrix retains unexecuted cells rather than inventing coverage. Source commit, ordinary push confirmation and remote CI visibility are documented in the receipt after integration.
+
+Verified source implementation: `27bf32c81f916b065c35ff9851ff325c70e186f8`. [Git receipt](12-git-receipt.md) records ordinary main push and honest remote CI visibility. [Sanitized review ZIP](Koupreng_Phase12_Review.zip) includes representative evidence and a source patch.
