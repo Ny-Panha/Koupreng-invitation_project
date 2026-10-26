@@ -1,3 +1,4 @@
+import { invitationFeatureFields } from '../../templates/shared/invitationFeatures';
 import { KEEP_TEMPLATE_CODE } from "@/features/templates/data/templatesData";
 import { legacyProgram, normalizeProgram } from "../../templates/shared/program";
 import { eventPresentationFields } from '../../templates/shared/eventPresentation';
@@ -161,7 +162,9 @@ export function publicInvitationToDraft(invitation, media) {
   return {
     id: invitation?.id || invitation?.slug || "public-invitation",
     ...eventPresentationFields(content),
+    ...invitationFeatureFields(content),
     backendInvitationId: invitation?.id || null,
+    localizedContentV1: content.localizedContentV1,
     slug: invitation?.slug || "",
     templateId: invitation?.templateCode || invitation?.templateId || content.templateId || design.templateId || null,
     templateCode: invitation?.templateCode || "",

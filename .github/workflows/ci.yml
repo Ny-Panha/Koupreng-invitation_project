@@ -410,7 +410,7 @@ jobs:
               Path('.github/workflows/ci.yml'),
               Path('docker-compose.yml'),
               Path('infra/monitoring/prometheus.yml'),
-              Path('packages/api-contracts/openapi.yaml'),
+              Path('apps/backend/src/test/resources/contracts/openapi.yaml'),
           ]
           for path in paths:
               with path.open(encoding='utf-8') as handle:

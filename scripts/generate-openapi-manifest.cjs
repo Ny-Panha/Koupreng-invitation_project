@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const openapiPath = path.resolve(__dirname, '../packages/api-contracts/openapi.yaml');
+const openapiPath = path.resolve(__dirname, '../apps/backend/src/test/resources/contracts/openapi.yaml');
 const outputPath = path.resolve(__dirname, '../apps/frontend-admin/src/features/api-monitor/openapiContractManifest.json');
 
 const yaml = fs.readFileSync(openapiPath, 'utf8');

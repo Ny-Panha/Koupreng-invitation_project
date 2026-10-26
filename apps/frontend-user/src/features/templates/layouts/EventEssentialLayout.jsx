@@ -1,3 +1,4 @@
+import IllustratedMap from '../shared/IllustratedMap';
 import SaveTheDate from '../shared/SaveTheDate';
 import ProgramTimeline from '../shared/ProgramTimeline';
 import { Link } from "react-router-dom";
@@ -18,6 +19,7 @@ export default function EventEssentialLayout({ tpl = {}, preview = false, backLi
       {names && <h2>{names}</h2>}
       <p>{copy("សូមអញ្ជើញចូលរួមកម្មវិធីរបស់យើង", "Please join us for our event")}</p>
       <p><time dateTime={tpl.eventDate || undefined}>{tpl.eventDate || tpl.dateText || ""}</time> {tpl.eventTime || ""}</p>
+      <IllustratedMap content={{ ...tpl, ...details }} />
       {tpl.venueName && <h2>{tpl.venueName}</h2>}<p>{tpl.venueAddress || ""}</p>
       {(details.messageText || tpl.message) && <p>{details.messageText || tpl.message}</p>}
       {details.saveTheDate && details.saveTheDate.enabled !== false && details.enabledSections?.countdown !== false && <SaveTheDate content={{ ...tpl, ...details }} english={language === "en"} />}

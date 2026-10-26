@@ -17,6 +17,14 @@ final class InvitationContentPolicy {
 
     private InvitationContentPolicy() { }
 
+    static void validateDirections(String value) {
+        if (value == null || value.isBlank() || !value.matches("^[a-zA-Z][a-zA-Z0-9+.-]*:.*")) return;
+        try {
+            var uri = java.net.URI.create(value);
+            if (!"https".equalsIgnoreCase(uri.getScheme()) || uri.getUserInfo() != null || !Set.of("google.com", "www.google.com", "maps.google.com", "google.com.kh", "www.google.com.kh", "maps.google.com.kh", "goo.gl", "maps.app.goo.gl").contains(uri.getHost())) throw new IllegalArgumentException();
+        } catch (RuntimeException malformed) { throw new ApiException(HttpStatus.BAD_REQUEST, "Use a valid HTTPS Google Maps directions link"); }
+    }
+
     static boolean addsCustomBranding(String previous, String next) {
         if (next == null || next.isBlank()) {
             return false;
@@ -87,9 +95,10 @@ final class InvitationContentPolicy {
                 validateDate(row, "date");
                 if (row.has("day") && (!row.path("day").isIntegralNumber() || row.path("day").asInt() < 1 || row.path("day").asInt() > 30)) throw new IllegalArgumentException();
                 text(row, 100, "id", "dayId", "time", "startTime", "endTime", "period");
-                text(row, 500, "title", "titleKm", "titleEn", "dayTitle", "location");
+                text(row, 500, "title", "titleKm", "titleEn", "dayTitle", "location", "locationEn");
                 text(row, 5000, "description", "descriptionKm", "descriptionEn");
                 flag(row, "enabled");
+                option(row, "iconKey", Set.of("calendar", "gathering", "blessing", "offering", "meal", "reception"));
                 if (row.hasNonNull("dayId") && !dayIds.contains(row.path("dayId").asText())) throw new IllegalArgumentException();
             }
         } catch (JsonProcessingException | RuntimeException e) {

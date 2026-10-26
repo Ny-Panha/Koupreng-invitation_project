@@ -1,3 +1,5 @@
+import InvitationLabel from '@/features/templates/shared/InvitationLabel';
+import IllustratedMap from '@/features/templates/shared/IllustratedMap';
 import SaveTheDate from '../shared/SaveTheDate';
 import AuthoredClosing from '../shared/AuthoredClosing';
 import AuthoredFamilies from '../shared/AuthoredFamilies';
@@ -143,11 +145,11 @@ export default function BlissEditorialLayout({
           {groomEn.charAt(0)} &amp; {brideEn.charAt(0)}
         </div>
         <nav className="bliss-header-nav">
-          <a href="#editorial-hero" className="bliss-header-link">សេចក្តីផ្តើម</a>
-          {isEnabled("schedule") && <a href="#editorial-program" className="bliss-header-link">កម្មវិធី</a>}
-          {isEnabled("gallery") && <a href="#editorial-spread" className="bliss-header-link">កម្រងរូបភាព</a>}
+          <a href="#editorial-hero" className="bliss-header-link"><InvitationLabel value={"សេចក្តីផ្តើម"} /></a>
+          {isEnabled("schedule") && <a href="#editorial-program" className="bliss-header-link"><InvitationLabel value={"កម្មវិធី"} /></a>}
+          {isEnabled("gallery") && <a href="#editorial-spread" className="bliss-header-link"><InvitationLabel value={"កម្រងរូបភាព"} /></a>}
           {isEnabled("dressCode") && <a href="#editorial-dress" className="bliss-header-link">Dress Code</a>}
-          {isEnabled("map") && <a href="#editorial-venue" className="bliss-header-link">ទីតាំង</a>}
+          {isEnabled("map") && <a href="#editorial-venue" className="bliss-header-link"><InvitationLabel value={"ទីតាំង"} /></a>}
           {isEnabled("faq") && <a href="#editorial-faq" className="bliss-header-link">FAQ</a>}
           {isEnabled("rsvp") && (
             <button type="button" className="bliss-rsvp-trigger" onClick={() => setDrawerOpen(true)}>
@@ -189,9 +191,7 @@ export default function BlissEditorialLayout({
           </blockquote>
           {isEnabled("rsvp") && (
             <div>
-              <button type="button" className="bliss-rsvp-trigger" onClick={() => setDrawerOpen(true)}>
-                សូមបញ្ជាក់ការចូលរួម • RSVP NOW
-              </button>
+              <button type="button" className="bliss-rsvp-trigger" onClick={() => setDrawerOpen(true)}><InvitationLabel value={"សូមបញ្ជាក់ការចូលរួម • RSVP NOW"} /></button>
             </div>
           )}
         </div>
@@ -203,7 +203,7 @@ export default function BlissEditorialLayout({
         <section id="editorial-program" className="bliss-section">
           <div className="bliss-section-heading">
             <p className="bliss-kicker">Order of Events</p>
-            <h2 className="bliss-title">កាលវិភាគពិធីមង្គលការ</h2>
+            <h2 className="bliss-title"><InvitationLabel value={"កាលវិភាគពិធីមង្គលការ"} /></h2>
           </div>
 
           {effectiveContent.programDays ? <ProgramTimeline content={effectiveContent} /> : <div className="bliss-program-list">{(effectiveContent.schedule || []).map((item, i) => <article className="bliss-program-row" key={item.id || i}><div className="bliss-program-time">{item.time}<ProgramDetails item={item} content={effectiveContent} /></div><div><h3 className="bliss-program-title">{item.title}</h3><p className="bliss-program-desc">{item.description}</p></div></article>)}</div>}
@@ -245,7 +245,7 @@ export default function BlissEditorialLayout({
         <section id="editorial-spread" className="bliss-section" style={{ borderTop: "1px solid var(--bliss-border)" }}>
           <div className="bliss-section-heading">
             <p className="bliss-kicker">Visual Editorial</p>
-            <h2 className="bliss-title">កម្រងអនុស្សាវរីយ៍</h2>
+            <h2 className="bliss-title"><InvitationLabel value={"កម្រងអនុស្សាវរីយ៍"} /></h2>
           </div>
 
           <div className="bliss-gallery-spread">
@@ -268,6 +268,7 @@ export default function BlissEditorialLayout({
       {/* Venue Information */}
       {isEnabled("map") && (
         <section id="editorial-venue" className="bliss-section" style={{ textAlign: "center", borderTop: "1px solid var(--bliss-border)" }}>
+          <IllustratedMap content={effectiveContent} />
           <p className="bliss-kicker">The Destination</p>
           <h2 className="bliss-title" style={{ marginBottom: "1rem" }}>{venue.name}</h2>
           <p style={{ color: "var(--bliss-taupe)", maxWidth: "500px", margin: "0 auto 2rem", lineHeight: "1.7" }}>
@@ -298,7 +299,7 @@ export default function BlissEditorialLayout({
         <section id="editorial-faq" className="bliss-section" style={{ borderTop: "1px solid var(--bliss-border)" }}>
           <div className="bliss-section-heading">
             <p className="bliss-kicker">Q &amp; A</p>
-            <h2 className="bliss-title">សំណួរដែលសួរញឹកញាប់</h2>
+            <h2 className="bliss-title"><InvitationLabel value={"សំណួរដែលសួរញឹកញាប់"} /></h2>
           </div>
           <div style={{ maxWidth: "650px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "1rem" }}>
             {faqList.map((item) => (
@@ -359,16 +360,12 @@ export default function BlissEditorialLayout({
           <X className="w-6 h-6" />
         </button>
         <h2 className="bliss-drawer-title">RSVP</h2>
-        <p style={{ color: "var(--bliss-taupe)", fontSize: "0.9rem", marginBottom: "2rem" }}>
-          សូមបញ្ជាក់ការចូលរួមរបស់លោកអ្នក
-        </p>
+        <p style={{ color: "var(--bliss-taupe)", fontSize: "0.9rem", marginBottom: "2rem" }}><InvitationLabel value={"សូមបញ្ជាក់ការចូលរួមរបស់លោកអ្នក"} /></p>
 
         {rsvpState.submitted ? (
           <div style={{ textAlign: "center", padding: "3rem 1rem" }}>
             <CheckCircle2 className="w-14 h-14 text-stone-800 mx-auto mb-4" />
-            <h3 style={{ fontSize: "1.2rem", fontWeight: "600", marginBottom: "0.5rem" }}>
-              សូមអរគុណសម្រាប់ការឆ្លើយតប!
-            </h3>
+            <h3 style={{ fontSize: "1.2rem", fontWeight: "600", marginBottom: "0.5rem" }}><InvitationLabel value={"សូមអរគុណសម្រាប់ការឆ្លើយតប!"} /></h3>
             <p style={{ color: "var(--bliss-taupe)", fontSize: "0.9rem" }}>
               យើងខ្ញុំទន្ទឹងរង់ចាំទទួលស្វាគមន៍លោកអ្នកក្នុងថ្ងៃមង្គលការ។
             </p>
@@ -376,9 +373,7 @@ export default function BlissEditorialLayout({
         ) : (
           <form onSubmit={handleRsvpSubmit}>
             <div style={{ marginBottom: "1.5rem" }}>
-              <label style={{ display: "block", fontSize: "0.8rem", letterSpacing: "normal", textTransform: "uppercase", marginBottom: "0.5rem" }}>
-                ឈ្មោះពេញ (Full Name)
-              </label>
+              <label style={{ display: "block", fontSize: "0.8rem", letterSpacing: "normal", textTransform: "uppercase", marginBottom: "0.5rem" }}><InvitationLabel value={"ឈ្មោះពេញ (Full Name)"} /></label>
               <input
                 type="text"
                 required
@@ -389,9 +384,7 @@ export default function BlissEditorialLayout({
             </div>
 
             <div style={{ marginBottom: "1.5rem" }}>
-              <label style={{ display: "block", fontSize: "0.8rem", letterSpacing: "normal", textTransform: "uppercase", marginBottom: "0.5rem" }}>
-                ការចូលរួម (Attendance)
-              </label>
+              <label style={{ display: "block", fontSize: "0.8rem", letterSpacing: "normal", textTransform: "uppercase", marginBottom: "0.5rem" }}><InvitationLabel value={"ការចូលរួម (Attendance)"} /></label>
               <div style={{ display: "flex", gap: "1rem" }}>
                 <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.9rem" }}>
                   <input
@@ -400,9 +393,7 @@ export default function BlissEditorialLayout({
                     value="yes"
                     checked={rsvpState.attending === "yes"}
                     onChange={(e) => setRsvpState({ ...rsvpState, attending: e.target.value })}
-                  />
-                  ចូលរួម (Yes)
-                </label>
+                  /><InvitationLabel value={"ចូលរួម (Yes)"} /></label>
                 <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.9rem" }}>
                   <input
                     type="radio"
@@ -410,16 +401,12 @@ export default function BlissEditorialLayout({
                     value="no"
                     checked={rsvpState.attending === "no"}
                     onChange={(e) => setRsvpState({ ...rsvpState, attending: e.target.value })}
-                  />
-                  មិនអាចចូលរួម (No)
-                </label>
+                  /><InvitationLabel value={"មិនអាចចូលរួម (No)"} /></label>
               </div>
             </div>
 
             <div style={{ marginBottom: "2rem" }}>
-              <label style={{ display: "block", fontSize: "0.8rem", letterSpacing: "normal", textTransform: "uppercase", marginBottom: "0.5rem" }}>
-                ពាក្យជូនពរ (Blessing Note)
-              </label>
+              <label style={{ display: "block", fontSize: "0.8rem", letterSpacing: "normal", textTransform: "uppercase", marginBottom: "0.5rem" }}><InvitationLabel value={"ពាក្យជូនពរ (Blessing Note)"} /></label>
               <textarea
                 rows="4"
                 style={{ width: "100%", padding: "0.75rem", border: "1px solid var(--bliss-border)", background: "var(--bliss-bg)" }}
@@ -442,9 +429,7 @@ export default function BlissEditorialLayout({
                 textTransform: "uppercase",
                 cursor: "pointer",
               }}
-            >
-              ផ្ញើការឆ្លើយតប • SUBMIT
-            </button>
+            ><InvitationLabel value={"ផ្ញើការឆ្លើយតប • SUBMIT"} /></button>
           </form>
         )}
       </div>

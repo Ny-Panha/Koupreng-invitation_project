@@ -1,3 +1,4 @@
+import IllustratedMap from '@/features/templates/shared/IllustratedMap';
 import ProgramTimeline from '../../../shared/ProgramTimeline';
 import { authoredHeadingStyle } from '../../../shared/templateTypography';
 import ProgramDetails from "../../../shared/ProgramDetails";
@@ -134,7 +135,8 @@ export default function Card3DFlip({
                 </a>
               </div>
             )}
-            {tpl.sketchMapImage && (
+            <IllustratedMap content={tpl} />
+                  {tpl.sketchMapImage && (
               <div style={{ marginTop: "0.75rem", borderTop: "1px solid rgba(212,175,55,0.15)", paddingTop: "0.5rem", textAlign: "center" }}>
                 <p style={{ fontSize: "0.75rem", color: "var(--el-gold-light)", margin: "0 0 6px", fontWeight: "600" }}>
                   🗺️ គំនូសប្លង់ទីតាំង (Sketch Map)

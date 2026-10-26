@@ -1,3 +1,4 @@
+import InvitationLabel from '@/features/templates/shared/InvitationLabel';
 import { motion } from "framer-motion";
 import { IoCalendarOutline, IoChevronDown, IoTimeOutline } from "react-icons/io5";
 
@@ -230,7 +231,7 @@ export default function TemplateHero({ content, onOpen }) {
                 onClick={onOpen}
                 aria-label="រំកិលចុះក្រោម"
             >
-                <span>រំកិលចុះក្រោម</span>
+                <span><InvitationLabel value={"រំកិលចុះក្រោម"} /></span>
                 <IoChevronDown aria-hidden="true" />
             </button>
         </section>

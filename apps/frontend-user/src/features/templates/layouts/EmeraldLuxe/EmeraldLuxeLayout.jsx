@@ -1,3 +1,4 @@
+import InvitationLabel from '@/features/templates/shared/InvitationLabel';
 import { useCinematicOpening } from "../../shared/Openings/cinematicOpeningContext";
 import SaveTheDate from '../../shared/SaveTheDate';
 import AuthoredClosing from '../../shared/AuthoredClosing';
@@ -293,9 +294,7 @@ export default function EmeraldLuxeLayout({
             <h3 style={{ fontFamily: "Cinzel, serif", color: "var(--el-gold-light)", fontSize: "1.1rem", margin: "0 0 0.5rem", textAlign: "center" }}>
               FREQUENTLY ASKED QUESTIONS
             </h3>
-            <p style={{ fontSize: "0.8rem", color: "var(--el-text-muted)", margin: "0 0 1rem", textAlign: "center" }}>
-              សំណួរដែលសួរញឹកញាប់
-            </p>
+            <p style={{ fontSize: "0.8rem", color: "var(--el-text-muted)", margin: "0 0 1rem", textAlign: "center" }}><InvitationLabel value={"សំណួរដែលសួរញឹកញាប់"} /></p>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
               {faqList.map((item) => (
                 <details
@@ -347,9 +346,7 @@ export default function EmeraldLuxeLayout({
           <Link
             to={useTemplateLink}
             style={{ background: "linear-gradient(135deg, var(--el-gold-primary), #997320)", color: "#061510", padding: "0.5rem 1.25rem", borderRadius: "9999px", textDecoration: "none", fontWeight: "700", fontSize: "0.85rem" }}
-          >
-            ប្រើគំរូនេះ
-          </Link>
+          ><InvitationLabel value={"ប្រើគំរូនេះ"} /></Link>
         </div>
       )}
     </div>

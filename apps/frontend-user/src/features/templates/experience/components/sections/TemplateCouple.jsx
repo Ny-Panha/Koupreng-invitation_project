@@ -1,3 +1,6 @@
+import InvitationLabel from '@/features/templates/shared/InvitationLabel';
+import FamilyNames from '../../../shared/FamilyNames';
+import { usesFamilyLayout } from '../../../shared/invitationFeatures';
 import TemplateReveal from "../shared/TemplateReveal";
 import TemplateImage from "../shared/TemplateImage";
 import TemplateSectionHeader from "../shared/TemplateSectionHeader";
@@ -9,6 +12,7 @@ import { templateIcons } from "../../config/templateIcons";
  * When only a single couple photo exists, renders a unified couple showcase card.
  */
 export default function TemplateCouple({ content }) {
+    if (usesFamilyLayout(content)) return <section className="tx-section tx-couple" data-tx-section="couple"><div className="tx-shell"><FamilyNames content={content} /></div></section>;
     if (content.hasHostContent && !content.groomImage && !content.brideImage && !content.backgroundImage) {
         return null;
     }
@@ -39,7 +43,7 @@ export default function TemplateCouple({ content }) {
                                 <span className="tx-couple__frame" aria-hidden="true" />
                             </div>
                             <div className="tx-couple__body">
-                                <p className="tx-kicker">កូនកំលោះ</p>
+                                <p className="tx-kicker"><InvitationLabel value={"កូនកំលោះ"} /></p>
                                 <h3 className="tx-couple__name">{content.groom}</h3>
                                 {content.couple.groomIntro && <p className="tx-couple__intro">{content.couple.groomIntro}</p>}
                                 {content.couple.groomParents && <p className="tx-couple__parents">{content.couple.groomParents}</p>}
@@ -51,7 +55,7 @@ export default function TemplateCouple({ content }) {
                                 <span className="tx-couple__frame" aria-hidden="true" />
                             </div>
                             <div className="tx-couple__body">
-                                <p className="tx-kicker">កូនក្រមុំ</p>
+                                <p className="tx-kicker"><InvitationLabel value={"កូនក្រមុំ"} /></p>
                                 <h3 className="tx-couple__name">{content.bride}</h3>
                                 {content.couple.brideIntro && <p className="tx-couple__intro">{content.couple.brideIntro}</p>}
                                 {content.couple.brideParents && <p className="tx-couple__parents">{content.couple.brideParents}</p>}
@@ -66,7 +70,7 @@ export default function TemplateCouple({ content }) {
                         </div>
                         <div className="tx-couple__unified-grid">
                             <div className="tx-couple__person">
-                                <span className="tx-couple__badge">កូនកំលោះ</span>
+                                <span className="tx-couple__badge"><InvitationLabel value={"កូនកំលោះ"} /></span>
                                 <h3 className="tx-couple__name">{content.groom}</h3>
                                 {content.couple.groomIntro && <p className="tx-couple__intro">{content.couple.groomIntro}</p>}
                                 {content.couple.groomParents && <p className="tx-couple__parents">{content.couple.groomParents}</p>}
@@ -75,7 +79,7 @@ export default function TemplateCouple({ content }) {
                                 <span>✦</span>
                             </div>
                             <div className="tx-couple__person">
-                                <span className="tx-couple__badge">កូនក្រមុំ</span>
+                                <span className="tx-couple__badge"><InvitationLabel value={"កូនក្រមុំ"} /></span>
                                 <h3 className="tx-couple__name">{content.bride}</h3>
                                 {content.couple.brideIntro && <p className="tx-couple__intro">{content.couple.brideIntro}</p>}
                                 {content.couple.brideParents && <p className="tx-couple__parents">{content.couple.brideParents}</p>}

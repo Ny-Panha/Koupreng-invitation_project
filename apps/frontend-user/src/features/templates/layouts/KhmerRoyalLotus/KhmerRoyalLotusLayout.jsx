@@ -1,3 +1,7 @@
+import InvitationLabel from '@/features/templates/shared/InvitationLabel';
+import FamilyNames from '@/features/templates/shared/FamilyNames';
+import { usesFamilyLayout } from '@/features/templates/shared/invitationFeatures';
+import IllustratedMap from '@/features/templates/shared/IllustratedMap';
 import { useCinematicOpening } from "../../shared/Openings/cinematicOpeningContext";
 import ProgramDetails from "../../shared/ProgramDetails";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -338,7 +342,7 @@ export default function KhmerRoyalLotusLayout({
               <div className="krl-envelope__card">
                 <span className="krl-lotus-mark">✦</span>
                 <span className="krl-envelope__names">{content.groom}</span>
-                <span className="krl-envelope__amp">និង</span>
+                <span className="krl-envelope__amp"><InvitationLabel value={"និង"} /></span>
                 <span className="krl-envelope__names">{content.bride}</span>
               </div>
               <div className="krl-envelope__pocket krl-envelope__pocket--left" />
@@ -355,14 +359,14 @@ export default function KhmerRoyalLotusLayout({
 
           <div className="krl-opening__action">
             <p className="krl-opening__guest">
-              <span>ជូនចំពោះ</span>
+              <span><InvitationLabel value={"ជូនចំពោះ"} /></span>
               <strong>{content.guestName}</strong>
             </p>
             <button type="button" className="krl-open-button" onClick={handleOpen} disabled={isOpening}>
               <Sparkles size={18} aria-hidden="true" />
               <span>{isOpening ? "កំពុងបើកធៀបការ..." : "បើកធៀបការ"}</span>
             </button>
-            <small>ចុចដើម្បីបើកសំបុត្រ និងចាក់ភ្លេងមង្គលការ</small>
+            <small><InvitationLabel value={"ចុចដើម្បីបើកសំបុត្រ និងចាក់ភ្លេងមង្គលការ"} /></small>
           </div>
         </section>
       ) : (
@@ -400,7 +404,7 @@ export default function KhmerRoyalLotusLayout({
               {content.title && <p className="krl-kicker">{content.title}</p>}
               <p className="krl-kicker">{content.subtitle}</p>
               <h2 className="krl-hero__title">{content.groom}</h2>
-              <span className="krl-hero__amp">និង</span>
+              <span className="krl-hero__amp"><InvitationLabel value={"និង"} /></span>
               <h2 className="krl-hero__title">{content.bride}</h2>
               {(content.groomEn || content.brideEn) && (
                 <p className="krl-hero__english">
@@ -424,7 +428,7 @@ export default function KhmerRoyalLotusLayout({
             </header>
             <p className="krl-invitation-copy">{content.message}</p>
 
-            <div className="krl-family-grid">
+            {usesFamilyLayout(content) ? <FamilyNames content={content} /> : (<div className="krl-family-grid">
               <article>
                 <span className="krl-family-label">មាតាបិតាកូនកំលោះ</span>
                 {content.groomParents.length ? content.groomParents.map((parent, index) => (
@@ -440,7 +444,7 @@ export default function KhmerRoyalLotusLayout({
                 )) : <p>ព័ត៌មានមាតាបិតា</p>}
                 <strong>{content.bride}</strong>
               </article>
-            </div>
+            </div>)}
           </section>
 
           {sectionEnabled("countdown") && (
@@ -458,7 +462,7 @@ export default function KhmerRoyalLotusLayout({
             <section className="krl-section krl-section--paper" data-section="schedule">
               <header className="krl-section-heading">
                 <p>WEDDING PROGRAMME</p>
-                <h2>កម្មវិធីមង្គលការ</h2>
+                <h2><InvitationLabel value={"កម្មវិធីមង្គលការ"} /></h2>
               </header>
               {content.programDays ? <ProgramTimeline content={content} /> : <div className="krl-programme">
                 {content.schedule.map((item, index) => (
@@ -489,6 +493,7 @@ export default function KhmerRoyalLotusLayout({
 
           {sectionEnabled("map") && (content.venueName || content.venueAddress) && (
             <section className="krl-section krl-section--venue" data-section="venue">
+              <IllustratedMap content={content} />
               <div className="krl-venue-card">
                 <MapPin size={30} aria-hidden="true" />
                 <p className="krl-kicker">CEREMONY VENUE</p>

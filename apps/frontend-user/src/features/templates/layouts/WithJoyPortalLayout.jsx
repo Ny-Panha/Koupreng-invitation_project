@@ -1,3 +1,5 @@
+import InvitationLabel from '@/features/templates/shared/InvitationLabel';
+import IllustratedMap from '@/features/templates/shared/IllustratedMap';
 import SaveTheDate from '../shared/SaveTheDate';
 import AuthoredClosing from '../shared/AuthoredClosing';
 import AuthoredFamilies from '../shared/AuthoredFamilies';
@@ -151,12 +153,12 @@ export default function WithJoyPortalLayout({
             {groom} &amp; {bride}
           </a>
           <nav className="wj-nav-links">
-            {isEnabled("story") && <a href="#story" className="wj-nav-link">រឿងរ៉ាវស្នេហា</a>}
-            {isEnabled("schedule") && <a href="#schedule" className="wj-nav-link">កម្មវិធីបុណ្យ</a>}
-            {isEnabled("gallery") && <a href="#gallery" className="wj-nav-link">កម្រងរូបភាព</a>}
+            {isEnabled("story") && <a href="#story" className="wj-nav-link"><InvitationLabel value={"រឿងរ៉ាវស្នេហា"} /></a>}
+            {isEnabled("schedule") && <a href="#schedule" className="wj-nav-link"><InvitationLabel value={"កម្មវិធីបុណ្យ"} /></a>}
+            {isEnabled("gallery") && <a href="#gallery" className="wj-nav-link"><InvitationLabel value={"កម្រងរូបភាព"} /></a>}
             {isEnabled("dressCode") && <a href="#dress-code" className="wj-nav-link">Dress Code</a>}
-            {isEnabled("map") && <a href="#venue" className="wj-nav-link">ទីតាំង</a>}
-            {isEnabled("gift") && <a href="#gift" className="wj-nav-link">ជូនពរ/ចំណងដៃ</a>}
+            {isEnabled("map") && <a href="#venue" className="wj-nav-link"><InvitationLabel value={"ទីតាំង"} /></a>}
+            {isEnabled("gift") && <a href="#gift" className="wj-nav-link"><InvitationLabel value={"ជូនពរ/ចំណងដៃ"} /></a>}
             {isEnabled("faq") && <a href="#faq" className="wj-nav-link">FAQ</a>}
             {isEnabled("rsvp") && <a href="#rsvp" className="wj-nav-link wj-nav-rsvp-btn">ឆ្លើយតប RSVP</a>}
           </nav>
@@ -198,8 +200,8 @@ export default function WithJoyPortalLayout({
         <section id="story" className="wj-section">
           <div className="wj-section-header">
             <p className="wj-section-kicker">Our Journey</p>
-            <h2 className="wj-section-title">រឿងរ៉ាវស្នេហារបស់យើង</h2>
-            <p className="wj-section-sub">ពេលវេលាដ៏មានន័យដែលយើងបានឆ្លងកាត់ជាមួយគ្នា</p>
+            <h2 className="wj-section-title"><InvitationLabel value={"រឿងរ៉ាវស្នេហារបស់យើង"} /></h2>
+            <p className="wj-section-sub"><InvitationLabel value={"ពេលវេលាដ៏មានន័យដែលយើងបានឆ្លងកាត់ជាមួយគ្នា"} /></p>
           </div>
 
           <div className="wj-timeline">
@@ -224,10 +226,8 @@ export default function WithJoyPortalLayout({
         <section id="schedule" className="wj-section" style={{ background: "#edf2f7" }}>
           <div className="wj-section-header">
             <p className="wj-section-kicker">Order of Events</p>
-            <h2 className="wj-section-title">កម្មវិធីពិធីមង្គលការ</h2>
-            <p className="wj-section-sub">
-              សូមអញ្ជើញចូលរួមតាមពេលវេលាកំណត់ ដើម្បីរួមអបអរសាទរ
-            </p>
+            <h2 className="wj-section-title"><InvitationLabel value={"កម្មវិធីពិធីមង្គលការ"} /></h2>
+            <p className="wj-section-sub"><InvitationLabel value={"សូមអញ្ជើញចូលរួមតាមពេលវេលាកំណត់ ដើម្បីរួមអបអរសាទរ"} /></p>
           </div>
 
           {effectiveContent.programDays ? <ProgramTimeline content={effectiveContent} /> : <div className="wj-schedule-grid">
@@ -251,7 +251,7 @@ export default function WithJoyPortalLayout({
           <div className="wj-section-header">
             <p className="wj-section-kicker">Dress Code</p>
             <h2 className="wj-section-title">{content.dressCode?.name || "ពណ៌សម្លៀកបំពាក់ (Dress Code)"}</h2>
-            <p className="wj-section-sub">ពណ៌សម្លៀកបំពាក់សម្រាប់ភ្ញៀវកិត្តិយស</p>
+            <p className="wj-section-sub"><InvitationLabel value={"ពណ៌សម្លៀកបំពាក់សម្រាប់ភ្ញៀវកិត្តិយស"} /></p>
           </div>
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1.25rem", flexWrap: "wrap", maxWidth: "600px", margin: "0 auto" }}>
             {dressColors.map((c, i) => (
@@ -284,7 +284,7 @@ export default function WithJoyPortalLayout({
           <div className="wj-section-header">
             <p className="wj-section-kicker">Moments &amp; Memories</p>
             <h2 className="wj-section-title">កម្រងរូបភាពអនុស្សាវរីយ៍</h2>
-            <p className="wj-section-sub">ចុចលើរូបភាពដើម្បីពង្រីកមើលទំហំធំ</p>
+            <p className="wj-section-sub"><InvitationLabel value={"ចុចលើរូបភាពដើម្បីពង្រីកមើលទំហំធំ"} /></p>
           </div>
 
           <div className="wj-gallery-grid">
@@ -323,6 +323,7 @@ export default function WithJoyPortalLayout({
       {/* Venue Section */}
       {isEnabled("map") && (
         <section id="venue" className="wj-section" style={{ background: "#edf2f7" }}>
+          <IllustratedMap content={effectiveContent} />
           <div className="wj-section-header">
             <p className="wj-section-kicker">Location &amp; Map</p>
             <h2 className="wj-section-title">ទីតាំងប្រារព្ធពិធី</h2>
@@ -358,8 +359,7 @@ export default function WithJoyPortalLayout({
                 textDecoration: "none",
                 fontWeight: "600",
               }}
-            >
-              មើលលើ Google Maps <ExternalLink className="w-4 h-4" />
+            ><InvitationLabel value={"មើលលើ Google Maps"} /><ExternalLink className="w-4 h-4" />
             </a>
           </div>
         </section>
@@ -370,7 +370,7 @@ export default function WithJoyPortalLayout({
         <section id="gift" className="wj-section">
           <div className="wj-section-header">
             <p className="wj-section-kicker">Wedding Gift</p>
-            <h2 className="wj-section-title">ចំណងដៃ &amp; ពាក្យជូនពរ</h2>
+            <h2 className="wj-section-title"><InvitationLabel value={"ចំណងដៃ & ពាក្យជូនពរ"} /></h2>
             <p className="wj-section-sub">វត្តមានដ៏ថ្លៃថ្លារបស់លោកអ្នក គឺជាកាដូដ៏មានតម្លៃបំផុតសម្រាប់យើងខ្ញុំ</p>
           </div>
 
@@ -442,8 +442,8 @@ export default function WithJoyPortalLayout({
         <section id="faq" className="wj-section" style={{ background: "#ffffff" }}>
           <div className="wj-section-header">
             <p className="wj-section-kicker">FAQ</p>
-            <h2 className="wj-section-title">សំណួរដែលសួរញឹកញាប់</h2>
-            <p className="wj-section-sub">ព័ត៌មានលម្អិតបន្ថែមសម្រាប់ភ្ញៀវកិត្តិយស</p>
+            <h2 className="wj-section-title"><InvitationLabel value={"សំណួរដែលសួរញឹកញាប់"} /></h2>
+            <p className="wj-section-sub"><InvitationLabel value={"ព័ត៌មានលម្អិតបន្ថែមសម្រាប់ភ្ញៀវកិត្តិយស"} /></p>
           </div>
           <div style={{ maxWidth: "650px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
             {faqList.map((item) => (
@@ -483,9 +483,7 @@ export default function WithJoyPortalLayout({
             {rsvpState.submitted ? (
               <div style={{ textAlign: "center", padding: "2rem 1rem" }}>
                 <CheckCircle2 className="w-16 h-16 text-emerald-500 mx-auto mb-4" />
-                <h3 style={{ fontSize: "1.4rem", fontWeight: "700", color: "var(--wj-primary)", marginBottom: "0.5rem" }}>
-                  សូមអរគុណសម្រាប់ការឆ្លើយតប!
-                </h3>
+                <h3 style={{ fontSize: "1.4rem", fontWeight: "700", color: "var(--wj-primary)", marginBottom: "0.5rem" }}><InvitationLabel value={"សូមអរគុណសម្រាប់ការឆ្លើយតប!"} /></h3>
                 <p style={{ color: "var(--wj-text-muted)", lineHeight: "1.6" }}>
                   យើងខ្ញុំទទួលបានការបញ្ជាក់របស់លោកអ្នករួចរាល់ហើយ។ រីករាយនឹងជួបលោកអ្នកក្នុងថ្ងៃមង្គលការ!
                 </p>
@@ -493,7 +491,7 @@ export default function WithJoyPortalLayout({
             ) : (
               <form onSubmit={handleRsvpSubmit}>
                 <div className="wj-form-group">
-                  <label className="wj-label">គោត្តនាម និងនាម (Your Name)</label>
+                  <label className="wj-label"><InvitationLabel value={"គោត្តនាម និងនាម (Your Name)"} /></label>
                   <input
                     type="text"
                     required
@@ -505,7 +503,7 @@ export default function WithJoyPortalLayout({
                 </div>
 
                 <div className="wj-form-group">
-                  <label className="wj-label">តើលោកអ្នកអាចចូលរួមបានទេ? (Will you attend?)</label>
+                  <label className="wj-label"><InvitationLabel value={"តើលោកអ្នកអាចចូលរួមបានទេ? (Will you attend?)"} /></label>
                   <div className="wj-radio-group">
                     <label className="wj-radio-label">
                       <input
@@ -514,9 +512,7 @@ export default function WithJoyPortalLayout({
                         value="yes"
                         checked={rsvpState.attending === "yes"}
                         onChange={(e) => setRsvpState({ ...rsvpState, attending: e.target.value })}
-                      />
-                      ចូលរួមដោយក្តីរីករាយ
-                    </label>
+                      /><InvitationLabel value={"ចូលរួមដោយក្តីរីករាយ"} /></label>
                     <label className="wj-radio-label">
                       <input
                         type="radio"
@@ -524,42 +520,40 @@ export default function WithJoyPortalLayout({
                         value="no"
                         checked={rsvpState.attending === "no"}
                         onChange={(e) => setRsvpState({ ...rsvpState, attending: e.target.value })}
-                      />
-                      សោកស្តាយ មិនអាចចូលរួមបាន
-                    </label>
+                      /><InvitationLabel value={"សោកស្តាយ មិនអាចចូលរួមបាន"} /></label>
                   </div>
                 </div>
 
                 {rsvpState.attending === "yes" && (
                   <>
                     <div className="wj-form-group">
-                      <label className="wj-label">ចំនួនភ្ញៀវចូលរួម (Number of Guests)</label>
+                      <label className="wj-label"><InvitationLabel value={"ចំនួនភ្ញៀវចូលរួម (Number of Guests)"} /></label>
                       <select
                         className="wj-select"
                         value={rsvpState.guests}
                         onChange={(e) => setRsvpState({ ...rsvpState, guests: e.target.value })}
                       >
-                        <option value="1">១ នាក់ (1 person)</option>
-                        <option value="2">២ នាក់ (2 persons)</option>
-                        <option value="3">៣ នាក់ ឬគ្រួសារ (3+ persons)</option>
+                        <option value="1"><InvitationLabel value={"១ នាក់ (1 person)"} /></option>
+                        <option value="2"><InvitationLabel value={"២ នាក់ (2 persons)"} /></option>
+                        <option value="3"><InvitationLabel value={"៣ នាក់ ឬគ្រួសារ (3+ persons)"} /></option>
                       </select>
                     </div>
 
                     <div className="wj-form-group">
-                      <label className="wj-label">ជម្រើសមុខម្ហូប (Meal Preference)</label>
+                      <label className="wj-label"><InvitationLabel value={"ជម្រើសមុខម្ហូប (Meal Preference)"} /></label>
                       <select
                         className="wj-select"
                         value={rsvpState.meal}
                         onChange={(e) => setRsvpState({ ...rsvpState, meal: e.target.value })}
                       >
-                        <option value="khmer">ម្ហូបខ្មែរប្រពៃណី (Traditional Khmer Feast)</option>
-                        <option value="western">សាច់គោអាំងបែបបស្ចិមប្រទេស (Western Steak)</option>
-                        <option value="vegetarian">ម្ហូបបួស (Vegetarian)</option>
+                        <option value="khmer"><InvitationLabel value={"ម្ហូបខ្មែរប្រពៃណី (Traditional Khmer Feast)"} /></option>
+                        <option value="western"><InvitationLabel value={"សាច់គោអាំងបែបបស្ចិមប្រទេស (Western Steak)"} /></option>
+                        <option value="vegetarian"><InvitationLabel value={"ម្ហូបបួស (Vegetarian)"} /></option>
                       </select>
                     </div>
 
                     <div className="wj-form-group">
-                      <label className="wj-label">សំណូមពរបទចម្រៀងសម្រាប់ DJ (Song Request)</label>
+                      <label className="wj-label"><InvitationLabel value={"សំណូមពរបទចម្រៀងសម្រាប់ DJ (Song Request)"} /></label>
                       <input
                         type="text"
                         placeholder="ឧ. ថ្ងៃដែលរង់ចាំ ឬ គូព្រេង"
@@ -572,8 +566,7 @@ export default function WithJoyPortalLayout({
                 )}
 
                 <button type="submit" className="wj-btn-submit">
-                  <Send className="w-4 h-4 inline mr-2" /> ផ្ញើការបញ្ជាក់ (Submit RSVP)
-                </button>
+                  <Send className="w-4 h-4 inline mr-2" /><InvitationLabel value={"ផ្ញើការបញ្ជាក់ (Submit RSVP)"} /></button>
               </form>
             )}
           </div>

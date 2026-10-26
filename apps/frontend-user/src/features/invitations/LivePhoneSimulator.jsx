@@ -10,13 +10,13 @@ import { buildPreviewUrl, createPreviewSession, iframePreviewChannel, isTrustedP
 import { usePreviewSyncRetries } from "@/shared/hooks/usePreviewSyncRetries";
 import { PHONE_PREVIEW } from "@/shared/preview/previewDevices";
 
-function displayKhmerDate(dateStr) {
+function displayKhmerDate(dateStr, languageMode) {
     if (!dateStr) return "";
     try {
         const clean = dateStr.includes("T") ? dateStr.split("T")[0] : dateStr;
         const d = new Date(`${clean}T00:00:00`);
         if (isNaN(d.getTime())) return dateStr;
-        return new Intl.DateTimeFormat("km-KH", {
+        return new Intl.DateTimeFormat(String(languageMode).toLowerCase() === "en" ? "en-US" : "km-KH", {
             weekday: "long",
             year: "numeric",
             month: "long",
@@ -111,9 +111,9 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, devi
                 message: data.messageText || data.message || "",
                 blessingMessage: data.messageText || data.message || "",
                 weddingDate: rawDate,
-                dateText: rawDate !== undefined ? displayKhmerDate(rawDate) : (data.eventDateText || data.dateText || ""),
-                weddingTime: formatTime24toKhmer(data.eventTime ?? data.event?.ceremonyTime ?? data.weddingTime ?? "") || "",
-                receptionTime: formatTime24toKhmer(data.event?.receptionTime ?? data.eventTime ?? data.weddingTime ?? "") || "",
+                dateText: rawDate !== undefined ? displayKhmerDate(rawDate, data.languageMode) : (data.eventDateText || data.dateText || ""),
+                weddingTime: String(data.languageMode).toLowerCase() === "en" ? (data.eventTime || "") : formatTime24toKhmer(data.eventTime ?? data.event?.ceremonyTime ?? data.weddingTime ?? "") || "",
+                receptionTime: String(data.languageMode).toLowerCase() === "en" ? (data.eventTime || "") : formatTime24toKhmer(data.event?.receptionTime ?? data.eventTime ?? data.weddingTime ?? "") || "",
                 eventTime: data.eventTime ?? data.event?.ceremonyTime ?? '',
                 venueName: data.venueName ?? data.event?.venueName,
                 venueAddress: data.venueAddress ?? data.event?.venueAddress,

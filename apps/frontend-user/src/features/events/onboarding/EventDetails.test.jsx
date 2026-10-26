@@ -93,3 +93,20 @@ it('enables a neutral event calendar without stale section flags hiding it', asy
   expect(JSON.parse(payload.contentJson).saveTheDate).toMatchObject({ enabled: true, showCalendar: true });
   expect(JSON.parse(payload.enabledSections)).toMatchObject({ countdown: true, gallery: false });
 });
+
+it('edits a neutral English version without changing Khmer content or forcing wedding roles', async () => {
+  invitationService.update.mockImplementation(async (id, payload) => ({ ...genericEvent, ...payload, id: Number(id) }));
+  render(<MemoryRouter><StatefulEditor initialEvent={{ ...genericEvent, languageMode: 'KH', storyText: 'Khmer message' }} /></MemoryRouter>);
+  fireEvent.click(screen.getByRole('button', { name: 'Edit English', exact: true }));
+  for (const [key, value] of Object.entries({ title: 'English birthday', hostName: 'English host', venueName: 'English venue', venueAddress: 'English address', messageText: 'English message' })) fireEvent.change(screen.getByLabelText(`English ${({ title: 'Event title', hostName: 'Host name', venueName: 'Venue name', venueAddress: 'Venue address', messageText: 'Invitation message' })[key]}`, { exact: true }), { target: { value } });
+  fireEvent.click(screen.getByRole('button', { name: 'Edit Khmer', exact: true }));
+  expect(document.getElementById('event-title')).toHaveValue('Birthday');
+  fireEvent.click(screen.getByRole('button', { name: 'Save details', exact: true }));
+  await screen.findByText('Saved to event');
+  const payload = invitationService.update.mock.calls[0][1];
+  const content = JSON.parse(payload.contentJson);
+  expect(content.localizedContentV1.en.title).toBe('English birthday');
+  expect(content.localizedContentV1.km.title).toBe('Birthday');
+  expect(content.messageText).toBe('Khmer message');
+  expect(payload.groomName).toBe(''); expect(payload.brideName).toBe('');
+});

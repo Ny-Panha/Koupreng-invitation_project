@@ -1,3 +1,4 @@
+import { invitationFeatureFields } from '../../templates/shared/invitationFeatures';
 import { eventPresentationFields } from '../../templates/shared/eventPresentation';
 import { resolveEvent } from '../../templates/shared/eventDateTime';
 import { legacyProgram, normalizeProgram } from "../../templates/shared/program";
@@ -5,10 +6,10 @@ import { getTemplateById } from "@/features/templates/data/templatesData";
 import { resolveVariant } from "@/features/templates/experience/config/templateExperienceThemes";
 
 
-function displayDate(date) {
+function displayDate(date, languageMode) {
     if (!date) return "";
     try {
-        return new Intl.DateTimeFormat("km-KH", {
+        return new Intl.DateTimeFormat(String(languageMode).toLowerCase() === "en" ? "en-US" : "km-KH", {
             weekday: "long",
             year: "numeric",
             month: "long",
@@ -144,6 +145,7 @@ export function draftToTemplate(draft, gallery = []) {
     const tpl = {
         ...baseTpl,
         ...eventPresentationFields(draft),
+        ...invitationFeatureFields(draft),
         eventType: draft.eventType || "WEDDING",
         languageMode: draft.languageMode || draft.extras?.languageMode || "KH",
         hostName: draft.hostName || groomName,
@@ -157,22 +159,22 @@ export function draftToTemplate(draft, gallery = []) {
         brandMark: draft.showBrandMark === false ? null : (draft.brandMarkUrl || draft.brandMark || draft.design?.brandMark || null),
         thankYouTitle: draft.thankYouTitle || "",
         thankYouText: draft.thankYouText || "",
-        apologyTitle: draft.apologyTitle || baseTpl.apologyTitle || "",
-        apologyText: draft.apologyText || baseTpl.apologyText || "",
+        apologyTitle: draft.apologyTitle ?? baseTpl.apologyTitle ?? "",
+        apologyText: draft.apologyText ?? baseTpl.apologyText ?? "",
         gift: giftList.length > 0 ? giftList : (baseTpl.gift || []),
         groom: groomName || baseTpl.groom,
         bride: brideName || baseTpl.bride,
-        groomParents: resolvedGroomParents || baseTpl.groomParents || "",
-        brideParents: resolvedBrideParents || baseTpl.brideParents || "",
+        groomParents: resolvedGroomParents || [],
+        brideParents: resolvedBrideParents || [],
         family: {
             ...(baseTpl.family || {}),
             ...(draft.family || {}),
-            ...(resolvedGroomParents ? { groomParents: resolvedGroomParents } : {}),
-            ...(resolvedBrideParents ? { brideParents: resolvedBrideParents } : {}),
+            groomParents: resolvedGroomParents || [],
+            brideParents: resolvedBrideParents || [],
         },
         monogramText: draft.design?.monogramText || draft.monogramText || initialsCouple || (groomName && brideName ? `${groomName.trim().charAt(0).toUpperCase()} & ${brideName.trim().charAt(0).toUpperCase()}` : ""),
         shortName: draft.design?.monogramText || draft.monogramText || initialsCouple || (groomName && brideName ? `${groomName.trim().charAt(0).toUpperCase()} & ${brideName.trim().charAt(0).toUpperCase()}` : ""),
-        dateText: eventDate ? displayDate(eventDate) : (draft.eventDateText || baseTpl.dateText),
+        dateText: eventDate ? displayDate(eventDate, draft.languageMode) : (draft.eventDateText || baseTpl.dateText),
         targetDate,
         eventTime,
         ceremonyTime: draft.event?.ceremonyTime || draft.eventTime || baseTpl.ceremonyTime || "០៧:០០",
@@ -240,6 +242,7 @@ export function draftToTemplate(draft, gallery = []) {
         hostContent: {
             studioStyle: draft.studioStyle || draft.design?.studioStyle || {},
             ...eventPresentationFields(draft),
+        ...invitationFeatureFields(draft),
             sectionOrder: draft.sectionOrder || [],
             fontKhmer: draft.fontKhmer || draft.design?.fontKhmer || "",
             fontLatin: draft.fontLatin || draft.design?.fontLatin || "",
@@ -256,7 +259,7 @@ export function draftToTemplate(draft, gallery = []) {
             thankYouText: draft.thankYouText || "",
             apologyTitle: draft.apologyTitle || "",
             apologyText: draft.apologyText || "",
-            dateText: eventDate ? displayDate(eventDate) : (draft.eventDateText || ""),
+            dateText: eventDate ? displayDate(eventDate, draft.languageMode) : (draft.eventDateText || ""),
             dateTextEn: draft.extras?.dateTextEn || "",
             targetDate: targetDate || "",
             eventDate,
@@ -265,13 +268,13 @@ export function draftToTemplate(draft, gallery = []) {
                 groom: groomName,
                 bride: brideName,
                 ...(draft.couple || {}),
-                ...(resolvedGroomParents ? { groomParents: resolvedGroomParents } : {}),
-                ...(resolvedBrideParents ? { brideParents: resolvedBrideParents } : {}),
+                groomParents: resolvedGroomParents || [],
+                brideParents: resolvedBrideParents || [],
             },
             family: {
                 ...(draft.family || {}),
-                ...(resolvedGroomParents ? { groomParents: resolvedGroomParents } : {}),
-                ...(resolvedBrideParents ? { brideParents: resolvedBrideParents } : {}),
+                groomParents: resolvedGroomParents || [],
+                brideParents: resolvedBrideParents || [],
             },
             contact: draft.contact || {},
             coverImage: draft.coverImage || "",

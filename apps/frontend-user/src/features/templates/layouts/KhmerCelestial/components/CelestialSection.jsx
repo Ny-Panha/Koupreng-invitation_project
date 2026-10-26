@@ -43,8 +43,9 @@ export function CelestialHeading({
   tone = "editorial",
   languageMode = "both",
 }) {
-  const showKhmer = languageMode !== "en";
-  const showEnglish = languageMode !== "km";
+  const mode = String(languageMode).toLowerCase();
+  const showKhmer = mode !== "en";
+  const showEnglish = !['km', 'kh'].includes(mode);
   const hasKhmerHeading = showKhmer && Boolean(khmer);
 
   return (

@@ -4,8 +4,9 @@ import { renderTicket, ticketBlob } from "./ticketRenderer";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { Download, Share2, Copy } from "lucide-react";
 
-export default function TicketActions({ ticket, ready }) {
-  const en = useLanguageStore(state => state.lang) === "en";
+export default function TicketActions({ ticket, ready, languageMode }) {
+  const uiLanguage = useLanguageStore(state => state.lang);
+  const en = languageMode ? String(languageMode).toLowerCase() === "en" : uiLanguage === "en";
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   async function perform(action) {

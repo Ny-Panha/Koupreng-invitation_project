@@ -1,4 +1,4 @@
-import { act, cleanup, render, screen, waitFor } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter, MemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import InvitationForm from "./InvitationForm";
@@ -86,6 +86,24 @@ describe("Dynamic Templates & Presets", () => {
 });
 
 describe("InvitationForm render test", () => {
+    it("keeps the two authored wording versions through language switching and saving", async () => {
+        invitationService.update.mockClear();
+        const { container } = render(<MemoryRouter><InvitationForm invitation={{ id: 101, templateCode: 'khmer-celestial', title: 'Event', status: 'DRAFT', storyText: 'Khmer original', updatedAt: '2026-10-26T00:00:00Z' }} /></MemoryRouter>);
+        const message = () => container.querySelector('[data-studio-section="invitation"] textarea');
+        expect(message()).toHaveValue('Khmer original');
+        fireEvent.click(container.querySelectorAll('.pe-lang-pill-btn')[1]);
+        expect(message()).toHaveValue('');
+        fireEvent.change(message(), { target: { value: 'English authored' } });
+        fireEvent.click(container.querySelectorAll('.pe-lang-pill-btn')[0]);
+        expect(message()).toHaveValue('Khmer original');
+        await act(async () => container.querySelector('.pe-save-main-btn').click());
+        await waitFor(() => expect(invitationService.update).toHaveBeenCalled());
+        const content = JSON.parse(invitationService.update.mock.calls.at(-1)[1].contentJson);
+        expect(content.localizedContentV1.en.messageText).toBe('English authored');
+        expect(content.localizedContentV1.km.messageText).toBe('Khmer original');
+        expect(content.messageText).toBe('Khmer original');
+    });
+
     it.each(['2027-12-01', null])("preserves the canonical Settings RSVP deadline when Studio saves: %s", async rsvpDeadline => {
         invitationService.update.mockClear();
         const { container } = render(<MemoryRouter><InvitationForm invitation={{ id: 101, templateId: 10, templateCode: "khmer-celestial", title: "Saved event", status: "DRAFT", rsvpDeadline, contentJson: JSON.stringify({ rsvp: { deadline: '2027-11-01' } }) }} /></MemoryRouter>);

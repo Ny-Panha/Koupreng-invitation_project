@@ -1,3 +1,6 @@
+import FamilyNames from '@/features/templates/shared/FamilyNames';
+import { usesFamilyLayout } from '@/features/templates/shared/invitationFeatures';
+import IllustratedMap from '@/features/templates/shared/IllustratedMap';
 import { useCinematicOpening } from "../../shared/Openings/cinematicOpeningContext";
 import SaveTheDate from '../../shared/SaveTheDate';
 import ProgramTimeline from '../../shared/ProgramTimeline';
@@ -197,6 +200,7 @@ export default function SilkHeritageLayout({
     map: enabled("map") && enabled("venue") && (venueName || venueAddress) && <section className="sh-venue sh-section" id="sh-venue" key="map" aria-labelledby="sh-venue-title">
       <div className="sh-section-intro"><SilkOrnament /><p className="sh-kicker">{copy("រួមគ្នា នៅថ្ងៃមង្គល", "MEET US WHERE THE MEMORIES BEGIN")}</p><h2 id="sh-venue-title">{heading("ជួបគ្នានៅថ្ងៃមង្គល", "A place to celebrate")}</h2></div>
       <div className="sh-venue-card"><h3>{venueName}</h3>{vm.venueHall && <p>{vm.venueHall}</p>}<p>{venueAddress}</p><p>{date}{vm.eventTime && <> · {language === "en" ? latinTime(vm.eventTime) : vm.eventTime}</>}</p>{vm.googleMapsUrl && <a className="sh-button sh-button-light" href={vm.googleMapsUrl} target="_blank" rel="noopener noreferrer">{copy("បើកផែនទី", "Open Google Maps")}<span aria-hidden="true">↗</span></a>}</div>
+      <IllustratedMap content={vm} />
       {vm.sketchMapImage && <div className="sh-sketch"><Photo src={vm.sketchMapImage} alt={copy("ផែនទីទីតាំងពិធី", "Venue directions")} /></div>}
     </section>,
     dressCode: enabled("dressCode") && vm.dressCode?.description && <section className="sh-section sh-dress" key="dressCode"><h2>{vm.dressCode.name || heading("សម្លៀកបំពាក់", "Dress code")}</h2><p>{vm.dressCode.description}</p><ul>{vm.dressCode.colors.map((color) => <li key={color.hex}><span style={{ backgroundColor: themeColor(color.hex) }} aria-hidden="true" />{color.name}</li>)}</ul></section>,
@@ -223,6 +227,7 @@ export default function SilkHeritageLayout({
         <p className="sh-brand" lang="en">Koupreng</p><SilkOrnament />
         <h1>{vm.hasHostContent && vm.title ? vm.title : language === "en" ? "Wedding invitation" : vm.title || "សិរីមង្គលអាពាហ៍ពិពាហ៍"}</h1>
         {vm.hasHostContent && vm.subtitle && <p>{vm.subtitle}</p>}
+        {vm.title && <p className="sh-kicker" style={{ overflowWrap: "anywhere" }}>{vm.title}</p>}
         {!vm.hideCoupleNameOnCover && <p className="sh-cover-names" style={elementFont("couple")}>{names}</p>}
         <div className="sh-dedication"><p>{copy("សូមគោរពអញ្ជើញ", "With our warm invitation")}</p><p className="sh-guest" style={elementFont("guestName")}>{vm.guestName || copy("លោកអ្នក និងក្រុមគ្រួសារ", "You and your family")}</p></div>
         <p>{date}</p><span className="sh-wax-seal" aria-hidden="true">{monogram || "K"}</span>
@@ -236,11 +241,11 @@ export default function SilkHeritageLayout({
         <figure className="sh-hero-photo"><Photo src={gate !== "closed" ? vm.coverImage : ""} alt={copy("រូបគូស្វាមីភរិយា", "The couple's portrait")} priority />{!vm.hasHostContent && <figcaption>{copy("រូបភាពសម្រាប់គំរូបង្ហាញ", "Demo photography")}</figcaption>}<span className="sh-photo-monogram" aria-hidden="true">{monogram}</span></figure>
       </section>
       <section className="sh-formal sh-section" id="sh-formal" aria-labelledby="sh-formal-title">
-        <div className="sh-section-intro"><SilkOrnament />{(familyGroom || familyBride) && <p className="sh-kicker">{heading(vm.familyHeading || "គ្រួសារទាំងសងខាង", "OUR TWO FAMILIES")}</p>}<h2 id="sh-formal-title">{heading(vm.messageTitle || "សូមគោរពអញ្ជើញ", "You are warmly invited")}</h2></div>
-        {(familyGroom || familyBride) && <div className="sh-families">
+        <div className="sh-section-intro"><SilkOrnament />{(familyGroom || familyBride) && <p className="sh-kicker">{heading(vm.familyHeading || "គ្រួសារទាំងសងខាង", "OUR TWO FAMILIES")}</p>}<h2 id="sh-formal-title">{heading(vm.messageTitle || "សូមគោរពអញ្ជើញ", vm.messageTitle || "You are warmly invited")}</h2></div>
+        {(usesFamilyLayout(vm) || familyGroom || familyBride) && (usesFamilyLayout(vm) ? <FamilyNames content={vm} /> : (<div className="sh-families">
           {familyGroom && <article><p className="sh-family-side">{copy(vm.family?.groomTitle || "ខាងកូនប្រុស", "The groom's family")}</p><p className="sh-parent-names" lang={/[\u1780-\u17ff]/.test(familyGroom) ? "km" : "en"}>{familyGroom}</p><p className="sh-family-label">{copy(vm.family?.groomLabel || "កូនប្រុសនាម", "The groom")}</p><h3>{groom}</h3></article>}
           {familyBride && <article><p className="sh-family-side">{copy(vm.family?.brideTitle || "ខាងកូនស្រី", "The bride's family")}</p><p className="sh-parent-names" lang={/[\u1780-\u17ff]/.test(familyBride) ? "km" : "en"}>{familyBride}</p><p className="sh-family-label">{copy(vm.family?.brideLabel || "កូនស្រីនាម", "The bride")}</p><h3>{bride}</h3></article>}
-        </div>}
+        </div>))}
         <p className="sh-invitation-copy">{passage(vm.messageText, vm.messageEn)}</p>
         <div className="sh-formal-names" style={elementFont("couple")}>{names}</div><p>{date}</p>
         {vm.invitationImage && <div className="sh-invitation-photo"><Photo src={vm.invitationImage} alt={copy("រូបភាពអញ្ជើញ", "Invitation artwork")} /></div>}

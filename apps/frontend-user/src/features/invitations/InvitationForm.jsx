@@ -1,3 +1,8 @@
+import { WORDING_PRESETS, WORDING_PRESET_LABELS, wordingPresetId, interpolateWording } from './studio/wordingPresets';
+import { FamilyDesignEditor, MonogramEditor } from './studio/FamilyDesignEditor';
+import IllustratedMapEditor from './studio/IllustratedMapEditor';
+import { invitationFeatureFields } from '../templates/shared/invitationFeatures';
+import { translationFieldLabel, editLocalizedField, localeContent, projectLocale, translationReadiness } from '../templates/shared/localizedContent';
 import { templateCapabilities } from "../templates/registry/templateCapabilities";
 import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useEventWorkspace } from "../events/workspace/EventContext";
@@ -688,10 +693,10 @@ export default function InvitationForm({ invitation }) {
             brideName,
             hostName: groomName,
             partnerName: brideName,
-            groomFather: customParsed.groomFather || tpl?.family?.groomParents?.[0] || tpl?.groomFather || DEFAULT_STATE.groomFather,
-            groomMother: customParsed.groomMother || tpl?.family?.groomParents?.[1] || tpl?.groomMother || DEFAULT_STATE.groomMother,
-            brideFather: customParsed.brideFather || tpl?.family?.brideParents?.[0] || tpl?.brideFather || DEFAULT_STATE.brideFather,
-            brideMother: customParsed.brideMother || tpl?.family?.brideParents?.[1] || tpl?.brideMother || DEFAULT_STATE.brideMother,
+            groomFather: customParsed.groomFather ?? "",
+            groomMother: customParsed.groomMother ?? "",
+            brideFather: customParsed.brideFather ?? "",
+            brideMother: customParsed.brideMother ?? "",
             eventDate: toStandardDate(rawDate),
             eventDateText: customParsed.eventDateText || tpl?.dateText || DEFAULT_STATE.eventDateText,
             eventTime: toStandardTime(rawTime),
@@ -887,7 +892,11 @@ export default function InvitationForm({ invitation }) {
             return true;
         });
 
-    const [activeLangTab, setActiveLangTab] = useState("KH");
+    const [wordingPreset, setWordingPreset] = useState("formal");
+    const [wordingError, setWordingError] = useState("");
+    const [activeLangTab, setActiveLangTab] = useState(() => form.languageMode === "EN" ? "EN" : "KH");
+    const authoredForm = projectLocale(form, activeLangTab === "EN" ? "en" : "km");
+    const englishReadiness = translationReadiness({ ...form, translationCapabilities: templateCapabilities(getTemplateById(form.templateId) || {}), eventType: invitation?.eventType || "WEDDING" });
     const [isSaving, setIsSaving] = useState(false);
     const [isPublishing, setIsPublishing] = useState(false);
     const [published, setPublished] = useState(invitation?.status === "PUBLISHED");
@@ -979,6 +988,7 @@ export default function InvitationForm({ invitation }) {
             venueName: form.venueName || "",
             venueAddress: form.venueAddress || "",
             schedule: form.schedule,
+                programDays: form.programDays || [],
             dressCode: form.dressCode,
             dressColors: form.dressColors,
             // Sync ALL section toggles from template.enabledSections so the form
@@ -1020,7 +1030,7 @@ export default function InvitationForm({ invitation }) {
 
     const update = (field, value) => {
         if (field === "venueAddress" && String(value).trim()) setVenueAddressError("");
-        setForm((prev) => ({ ...prev, [field]: value }));
+        setForm(prev => editLocalizedField(prev, activeLangTab === "EN" ? "en" : "km", field, value));
     };
     const moveItem = (field, index, direction) => {
         const items = [...(form[field] || [])];
@@ -1389,8 +1399,11 @@ export default function InvitationForm({ invitation }) {
             };
 
             const contentPayload = {
+                ...invitationFeatureFields(form),
+                ...(form.localizedContentV1 ? { localizedContentV1: localeContent(form) } : {}),
                 ...safeJson(invitation?.contentJson),
                 ...eventPresentationFields(form),
+                ...invitationFeatureFields(form),
                 ...(form.preWeddingVideo ? { preWeddingVideo: form.preWeddingVideo } : {}),
                 eventDate: finalDate,
                 eventTime: finalTime,
@@ -1428,6 +1441,7 @@ export default function InvitationForm({ invitation }) {
                 messageTitle: form.messageTitle,
                 messageText: form.messageText,
                 schedule: form.schedule,
+                programDays: form.programDays || [],
                 showCountdown: form.showCountdown !== false,
                 showStory: form.showStory !== false,
                 storyChapters: form.storyChapters || [],
@@ -1471,11 +1485,11 @@ export default function InvitationForm({ invitation }) {
                 contentJson: JSON.stringify(stripInlineMedia(contentPayload)),
                 enabledSections: JSON.stringify({
                     countdown: form.showCountdown !== false,
-                    story: form.showStory !== false,
-                    party: form.showParty !== false,
-                    dressCode: form.showDressCode !== false,
-                    faq: form.showFaq !== false,
-                    schedule: form.showSchedule !== false,
+                    story: form.showStory !== false && templateCapabilities(getTemplateById(form.templateId) || {}).story !== false,
+                    party: form.showParty !== false && templateCapabilities(getTemplateById(form.templateId) || {}).party !== false,
+                    dressCode: form.showDressCode !== false && templateCapabilities(getTemplateById(form.templateId) || {}).dressCode !== false,
+                    faq: form.showFaq !== false && templateCapabilities(getTemplateById(form.templateId) || {}).faq !== false,
+                    schedule: form.showSchedule !== false && templateCapabilities(getTemplateById(form.templateId) || {}).schedule !== false,
                     map: true,
                     gallery: true,
                     gift: Boolean(form.khqrDollar?.qrUrl || form.khqrRiel?.qrUrl),
@@ -1709,7 +1723,9 @@ export default function InvitationForm({ invitation }) {
                 message: form.messageText,
                 messageText: form.messageText || "",
                 schedule: form.schedule,
+                programDays: form.programDays || [],
                 ...eventPresentationFields(form),
+                ...invitationFeatureFields(form),
                 ...(form.preWeddingVideo ? { preWeddingVideo: form.preWeddingVideo } : {}),
                 photos: savedPhotos,
                 gallery: (form.photos || [])
@@ -1734,18 +1750,18 @@ export default function InvitationForm({ invitation }) {
                 brandMark: form.brandMarkUrl || "",
                 thankYouTitle: form.thankYouTitle || "",
                 thankYouText: form.thankYouText || "",
-                apologyTitle: form.apologyTitle || "",
-                apologyText: form.apologyText || "",
+                apologyTitle: form.apologyTitle ?? "",
+                apologyText: form.apologyText ?? "",
                 designJson: JSON.stringify(stripInlineMedia(replaceMediaReferences(finalDesign, extraMedia))),
                 contentJson: JSON.stringify(stripInlineMedia(replaceMediaReferences(finalContent, extraMedia))),
                 languageMode: form.languageMode || "KH",
                 enabledSections: {
                     countdown: form.showCountdown !== false,
-                    story: form.showStory !== false,
-                    party: form.showParty !== false,
-                    dressCode: form.showDressCode !== false,
-                    faq: form.showFaq !== false,
-                    schedule: form.showSchedule !== false,
+                    story: form.showStory !== false && templateCapabilities(getTemplateById(form.templateId) || {}).story !== false,
+                    party: form.showParty !== false && templateCapabilities(getTemplateById(form.templateId) || {}).party !== false,
+                    dressCode: form.showDressCode !== false && templateCapabilities(getTemplateById(form.templateId) || {}).dressCode !== false,
+                    faq: form.showFaq !== false && templateCapabilities(getTemplateById(form.templateId) || {}).faq !== false,
+                    schedule: form.showSchedule !== false && templateCapabilities(getTemplateById(form.templateId) || {}).schedule !== false,
                     map: true,
                     gallery: true,
                     gift: Boolean(form.khqrDollar?.qrUrl || form.khqrRiel?.qrUrl),
@@ -1807,7 +1823,7 @@ export default function InvitationForm({ invitation }) {
     }
     function reviewPublication() {
         setPublishError("");
-        if (!String(form.venueAddress || "").trim()) {
+        if (!String(authoredForm.venueAddress || "").trim()) {
             setVenueAddressError(uiCopy("សូមបញ្ចូលអាសយដ្ឋានទីកន្លែងមុនពេលផ្សព្វផ្សាយ។", "Enter the venue address before publishing."));
             completePublishField({ section: "venue", field: "venueAddress" });
             return;
@@ -1838,7 +1854,7 @@ export default function InvitationForm({ invitation }) {
 
     async function publishInvitation() {
         if (isPublishing) return;
-        if (!String(form.venueAddress || "").trim()) {
+        if (!String(authoredForm.venueAddress || "").trim()) {
             setVenueAddressError(englishUI ? "Enter the venue address before publishing." : "សូមបញ្ចូលអាសយដ្ឋានទីកន្លែងមុនពេលផ្សព្វផ្សាយ។");
             setSelectedSection("venue");
             return;
@@ -1875,7 +1891,7 @@ export default function InvitationForm({ invitation }) {
                     id={`${fieldId}-title`}
                     type="text"
                     className="pe-input"
-                    value={form.title}
+                    value={authoredForm.title}
                     onChange={(e) => update("title", e.target.value)}
                     placeholder={uiCopy("សិរីមង្គលអាពាហ៍ពិពាហ៍", "Wedding celebration")}
                 />
@@ -1892,7 +1908,7 @@ export default function InvitationForm({ invitation }) {
                         id={`${fieldId}-groom`}
                         type="text"
                         className="pe-input"
-                        value={form.groomName}
+                        value={authoredForm.groomName}
                         onChange={(e) => update("groomName", e.target.value)}
                         placeholder={uiCopy("វណ្ណដា", "VannDa")}
                     />
@@ -1906,7 +1922,7 @@ export default function InvitationForm({ invitation }) {
                         id={`${fieldId}-bride`}
                         type="text"
                         className="pe-input"
-                        value={form.brideName}
+                        value={authoredForm.brideName}
                         onChange={(e) => update("brideName", e.target.value)}
                         placeholder={uiCopy("ស្រីពេជ្រ", "Sreypich")}
                     />
@@ -2220,7 +2236,7 @@ export default function InvitationForm({ invitation }) {
                 <input
                     type="text"
                     className="pe-input"
-                    value={form.subtitle}
+                    name="subtitle" value={authoredForm.subtitle}
                     onChange={(e) => update("subtitle", e.target.value)}
                     placeholder={uiCopy("សូមគោរពអញ្ជើញ", "You are cordially invited")}
                 />
@@ -2252,7 +2268,7 @@ export default function InvitationForm({ invitation }) {
                         <input
                             type="text"
                             className="pe-input"
-                            value={form.groomFather || ""}
+                            value={authoredForm.groomFather || ""}
                             onChange={(e) => update("groomFather", e.target.value)}
                             placeholder={uiCopy("លោក ឃុន ស៊ីវខេង", "Mr. Khun Sivkheng")}
                         />
@@ -2262,7 +2278,7 @@ export default function InvitationForm({ invitation }) {
                         <input
                             type="text"
                             className="pe-input"
-                            value={form.groomMother || ""}
+                            value={authoredForm.groomMother || ""}
                             onChange={(e) => update("groomMother", e.target.value)}
                             placeholder={uiCopy("លោកស្រី គុយ ដាលី", "Mrs. Kuy Daly")}
                         />
@@ -2279,7 +2295,7 @@ export default function InvitationForm({ invitation }) {
                         <input
                             type="text"
                             className="pe-input"
-                            value={form.brideFather || ""}
+                            value={authoredForm.brideFather || ""}
                             onChange={(e) => update("brideFather", e.target.value)}
                             placeholder={uiCopy("លោក ឡាំ គីមឡុង", "Mr. Lam Kimlong")}
                         />
@@ -2289,7 +2305,7 @@ export default function InvitationForm({ invitation }) {
                         <input
                             type="text"
                             className="pe-input"
-                            value={form.brideMother || ""}
+                            value={authoredForm.brideMother || ""}
                             onChange={(e) => update("brideMother", e.target.value)}
                             placeholder={uiCopy("លោកស្រី ឡេង​ យ៉ុងស៊ី", "Mrs. Leng Yongsy")}
                         />
@@ -2316,7 +2332,7 @@ export default function InvitationForm({ invitation }) {
                 <input
                     type="text"
                     className="pe-input"
-                    value={form.messageTitle}
+                    name="messageTitle" value={authoredForm.messageTitle}
                     onChange={(e) => update("messageTitle", e.target.value)}
                     placeholder={uiCopy("ដំណឹងអាពាហ៍ពិពាហ៍", "Wedding announcement")}
                 />
@@ -2330,7 +2346,7 @@ export default function InvitationForm({ invitation }) {
                 <textarea
                     className="pe-textarea"
                     rows="6"
-                    value={form.messageText}
+                    name="messageText" value={authoredForm.messageText}
                     onChange={(e) => update("messageText", e.target.value)}
                 />
             </div>
@@ -2364,9 +2380,9 @@ export default function InvitationForm({ invitation }) {
         </div>
     );
 
-    const renderCountdownSection = () => <SaveTheDateEditor form={form} english={englishUI}
+    const renderCountdownSection = () => <SaveTheDateEditor form={authoredForm} english={englishUI}
         supportsOrdering={templateCapabilities(getTemplateById(form.templateId) || {}).sectionOrdering}
-        onChange={patch => setForm(previous => ({ ...previous, ...patch }))} />;
+        onChange={patch => setForm(previous => Object.entries(patch).reduce((next, [key, value]) => editLocalizedField(next, activeLangTab === "EN" ? "en" : "km", key, value), previous))} />;
 
     const renderScheduleSection = () => <WeddingProgramEditor value={form.schedule} programDays={form.programDays} masterDate={form.eventDate}
         enabled={form.showSchedule !== false} onEnabled={value => update("showSchedule", value)}
@@ -2389,7 +2405,7 @@ export default function InvitationForm({ invitation }) {
                 <input
                     type="text"
                     className="pe-input"
-                    value={form.venueName}
+                    value={authoredForm.venueName}
                     id={`${fieldId}-venueName`}
                     onChange={(e) => update("venueName", e.target.value)}
                     placeholder="The Premier Center Sen Sok"
@@ -2401,7 +2417,7 @@ export default function InvitationForm({ invitation }) {
                     {englishUI ? "Venue address" : "អាសយដ្ឋានទីកន្លែង"}
                 </label>
                 <input ref={venueAddressInput} id={`${fieldId}-venueAddress`} name="venueAddress" type="text"
-                    className="pe-input" value={form.venueAddress} maxLength={1000} autoComplete="street-address"
+                    className="pe-input" value={authoredForm.venueAddress} maxLength={1000} autoComplete="street-address"
                     aria-required="true" aria-invalid={Boolean(venueAddressError)}
                     aria-describedby={venueAddressError ? `${fieldId}-venueAddress-error` : `${fieldId}-venueAddress-hint`}
                     onChange={e => update("venueAddress", e.target.value)} />
@@ -2630,7 +2646,7 @@ export default function InvitationForm({ invitation }) {
 
             <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", marginBottom: "14px" }}>
                 <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#d97706", background: "#fef3c7", padding: "3px 10px", borderRadius: "12px" }}>
-                    {form.storyChapters?.length || 0} {uiCopy("ដំណាក់កាល", "chapters")}
+                    {authoredForm.storyChapters?.length || 0} {uiCopy("ដំណាក់កាល", "chapters")}
                 </span>
                 <button
                     type="button"
@@ -2657,7 +2673,7 @@ export default function InvitationForm({ invitation }) {
 
             {form.showStory !== false && (
                 <div className="pe-story-list">
-                    {(form.storyChapters || []).map((item, idx) => (
+                    {(authoredForm.storyChapters || []).map((item, idx) => (
                         <CleanStoryItem
                             key={item.id || `story-${idx}`}
                             idx={idx}
@@ -2666,7 +2682,7 @@ export default function InvitationForm({ invitation }) {
                             onUpload={(e) => handleStoryImageUpload(idx, e)}
                             onRemoveImage={() => handleStoryChange(idx, "image", "")}
                             onDelete={() => removeStoryItem(idx)}
-                            canDelete={(form.storyChapters || []).length > 1}
+                            canDelete={(authoredForm.storyChapters || []).length > 1}
                         />
                     ))}
                 </div>
@@ -2704,7 +2720,7 @@ export default function InvitationForm({ invitation }) {
                             <input
                                 type="text"
                                 className="pe-input"
-                                value={form.dressCode?.name || ""}
+                                value={authoredForm.dressCode?.name || ""}
                                 onChange={(e) => handleDressCodeFieldChange("name", e.target.value)}
                                 placeholder={uiCopy("ខ្មែរប្រពៃណី", "Formal Khmer")}
                             />
@@ -2717,7 +2733,7 @@ export default function InvitationForm({ invitation }) {
                             <input
                                 type="text"
                                 className="pe-input"
-                                value={form.dressCode?.style || ""}
+                                value={authoredForm.dressCode?.style || ""}
                                 onChange={(e) => handleDressCodeFieldChange("style", e.target.value)}
                                 placeholder={uiCopy("ប្រពៃណីដ៏ប្រណិត", "Traditional elegance")}
                             />
@@ -2732,7 +2748,7 @@ export default function InvitationForm({ invitation }) {
                         <textarea
                             className="pe-textarea"
                             rows="2"
-                            value={form.dressCode?.description || ""}
+                            value={authoredForm.dressCode?.description || ""}
                             onChange={(e) => handleDressCodeFieldChange("description", e.target.value)}
                             placeholder={uiCopy("សូមជ្រើសរើសសម្លៀកបំពាក់តាមពណ៌ដែលបានកំណត់ ដើម្បីបង្កើនភាពស្រស់ស្អាតនៃពិធី...", "Please choose clothing in the suggested colors for our celebration...")}
                         />
@@ -2848,7 +2864,7 @@ export default function InvitationForm({ invitation }) {
 
             <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", marginBottom: "14px" }}>
                 <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#0284c7", background: "#e0f2fe", padding: "3px 10px", borderRadius: "12px" }}>
-                    {form.party?.length || 0} {uiCopy("នាក់", "people")}
+                    {authoredForm.party?.length || 0} {uiCopy("នាក់", "people")}
                 </span>
                 <button
                     type="button"
@@ -2875,7 +2891,7 @@ export default function InvitationForm({ invitation }) {
 
             {form.showParty !== false && (
                 <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                    {(form.party || []).map((member, mIdx) => (
+                    {(authoredForm.party || []).map((member, mIdx) => (
                         <div
                             key={member.id || `party-${mIdx}`}
                             style={{
@@ -2991,7 +3007,7 @@ export default function InvitationForm({ invitation }) {
 
             <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", marginBottom: "14px" }}>
                 <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#7c3aed", background: "#ede9fe", padding: "3px 10px", borderRadius: "12px" }}>
-                    {form.faq?.length || 0} {uiCopy("សំណួរ", "questions")}
+                    {authoredForm.faq?.length || 0} {uiCopy("សំណួរ", "questions")}
                 </span>
                 <button
                     type="button"
@@ -3018,7 +3034,7 @@ export default function InvitationForm({ invitation }) {
 
             {form.showFaq !== false && (
                 <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                    {(form.faq || []).map((faqItem, fIdx) => (
+                    {(authoredForm.faq || []).map((faqItem, fIdx) => (
                         <div
                             key={faqItem.id || `faq-${fIdx}`}
                             style={{
@@ -3133,7 +3149,7 @@ export default function InvitationForm({ invitation }) {
                 <input
                     type="text"
                     className="pe-input"
-                    value={form.thankYouTitle}
+                    name="thankYouTitle" value={authoredForm.thankYouTitle}
                     onChange={(e) => update("thankYouTitle", e.target.value)}
                     placeholder={uiCopy("សារថ្លែងអំណរគុណ", "Thank-you message")}
                 />
@@ -3147,7 +3163,7 @@ export default function InvitationForm({ invitation }) {
                 <textarea
                     className="pe-textarea"
                     rows="4"
-                    value={form.thankYouText}
+                    name="thankYouText" value={authoredForm.thankYouText}
                     onChange={(e) => update("thankYouText", e.target.value)}
                     placeholder={uiCopy("វត្តមាន និងពរជ័យរបស់លោកអ្នក គឺជាអំណោយដ៏មានតម្លៃសម្រាប់យើងខ្ញុំ...", "Your presence and blessings are a precious gift to us...")}
                 />
@@ -3163,7 +3179,7 @@ export default function InvitationForm({ invitation }) {
                 <input
                     type="text"
                     className="pe-input"
-                    value={form.apologyTitle}
+                    name="apologyTitle" value={authoredForm.apologyTitle}
                     onChange={(e) => update("apologyTitle", e.target.value)}
                     placeholder={uiCopy("លិខិតសូមអភ័យទោស", "Apology message")}
                 />
@@ -3177,7 +3193,7 @@ export default function InvitationForm({ invitation }) {
                 <textarea
                     className="pe-textarea"
                     rows="4"
-                    value={form.apologyText}
+                    name="apologyText" value={authoredForm.apologyText}
                     onChange={(e) => update("apologyText", e.target.value)}
                     placeholder={uiCopy("យើងខ្ញុំសូមអភ័យទោសក្នុងករណីពុំបានជូនសំបុត្រអញ្ជើញដោយផ្ទាល់...", "Please accept our apologies if we could not deliver your invitation in person...")}
                 />
@@ -3211,6 +3227,31 @@ export default function InvitationForm({ invitation }) {
         </div>
     );
 
+    const renderWordingPresets = wordingSection => (
+<div className="studio-message-presets">
+                            <label>Editable wording preset<select value={wordingPresetId(wordingPreset)} onChange={e => setWordingPreset(e.target.value)}>{Object.entries(WORDING_PRESET_LABELS).map(([id, label]) => <option key={id} value={id}>{label}</option>)}</select></label>
+                            <p>{WORDING_PRESETS[wordingPresetId(wordingPreset)][activeLangTab === 'EN' ? 'en' : 'km'][wordingSection === 'invitation' ? 'messageText' : 'thankYouText']}</p>
+                            {wordingError && <p role="alert">{wordingError}</p>}
+                            <p>{uiCopy("ឃ្លាអញ្ជើញគំរូ (", "Wording preset (")}{activeLangTab})</p>
+                            <button type="button" onClick={() => {
+                                if (!window.confirm(uiCopy("ជំនួសឃ្លានៅក្នុងផ្នែកនេះដោយឃ្លាគំរូដែលបានជ្រើសរើស?", "Replace the wording in this section with the selected preset?"))) return;
+                                const locale = activeLangTab === 'EN' ? 'en' : 'km';
+                                const selected = WORDING_PRESETS[wordingPresetId(wordingPreset)][locale];
+                                const keys = wordingSection === 'invitation' ? ['messageTitle', 'messageText'] : ['thankYouTitle', 'thankYouText', 'apologyTitle', 'apologyText'];
+                                const values = { guest_honorific: '', guest_name: authoredForm.guestName || '', groom_name: authoredForm.groomName, bride_name: authoredForm.brideName, event_date: authoredForm.eventDateText || form.eventDate, event_time: form.eventTime, venue_name: authoredForm.venueName, venue_address: authoredForm.venueAddress };
+                                const resolved = keys.map(key => [key, interpolateWording(selected[key], values)]);
+                                const missing = resolved.flatMap(([, result]) => result.missing);
+                                if (missing.length) { setWordingError('Complete these values before applying: ' + [...new Set(missing)].join(', ')); return; }
+                                setWordingError('');
+                                setForm(previous => {
+                                    let next = previous;
+                                    for (const [key, result] of resolved) next = editLocalizedField(next, locale, key, result.text);
+                                    return { ...next, localizedContentV1: { ...localeContent(next), [locale]: { ...localeContent(next)[locale], presetId: wordingPreset } } };
+                                });
+                            }}>{uiCopy("ប្រើឃ្លាសុភាព", "Apply formal wording")}</button>
+                        </div>
+    );
+
     const sectionRenderers = {
         eventInfo: renderEventInfoSection,
         music: renderMusicSection,
@@ -3242,7 +3283,7 @@ export default function InvitationForm({ invitation }) {
         }}>
 
             {(() => {
-                const toolbar = <StudioToolbar title={form.title} templateName={getTemplateById(form.templateId)?.name || form.templateId}
+                const toolbar = <StudioToolbar title={authoredForm.title} templateName={getTemplateById(form.templateId)?.name || form.templateId}
                     english={englishUI} studio={studio} saving={isSaving} publishing={isPublishing} published={published}
                     canPublish={canPublish}
                     onTemplate={() => setIsTemplateModalOpen(true)} onPreview={openPreview} previewOpen={isMobilePreviewOpen} onPublish={reviewPublication}
@@ -3268,40 +3309,31 @@ export default function InvitationForm({ invitation }) {
                             <button
                                 type="button"
                                 className={`pe-lang-pill-btn ${activeLangTab === "KH" ? "is-active" : ""}`}
-                                onClick={() => setActiveLangTab("KH")}
+                                aria-pressed={activeLangTab === "KH"} onClick={() => { setActiveLangTab("KH"); setWordingPreset(localeContent(form).km.presetId || "formal"); }}
                             >
                                 <Globe size={13} /> {t("langKh") || uiCopy("ភាសាខ្មែរ", "Khmer")}
                             </button>
                             <button
                                 type="button"
                                 className={`pe-lang-pill-btn ${activeLangTab === "EN" ? "is-active" : ""}`}
-                                onClick={() => setActiveLangTab("EN")}
+                                aria-pressed={activeLangTab === "EN"} onClick={() => { setActiveLangTab("EN"); setWordingPreset(localeContent(form).en.presetId || "formal"); }}
                             >
                                 <Globe size={13} /> {t("langEn") || uiCopy("អង់គ្លេស", "English")}
                             </button>
                         </div>
-                        <span className="pe-lang-editing-indicator">
+                        <span className="pe-lang-editing-indicator" role="status">
                             {activeLangTab === "KH" ? (t("editingKh") || uiCopy("កំពុងកែសម្រួល៖ ភាសាខ្មែរ", "Editing: Khmer")) : (t("editingEn") || uiCopy("កំពុងកែសម្រួល៖ អង់គ្លេស", "Editing: English"))}
                         </span>
+                        <small>{activeLangTab}: {JSON.stringify(localeContent(form)[activeLangTab === 'EN' ? 'en' : 'km']) !== JSON.stringify(studio.savedValue ? localeContent(studio.savedValue)[activeLangTab === 'EN' ? 'en' : 'km'] : null) ? uiCopy('មិនទាន់រក្សាទុក', 'Unsaved') : uiCopy('បានរក្សាទុក', 'Saved')} · English: {englishReadiness.complete}/{englishReadiness.total}</small>
+                        <label className="studio-inline-check"><input type="checkbox" checked={localeContent(form).enabledLocales.includes('en')}
+                          disabled={!(workspace ? workspace.isOwner : true) || (!englishReadiness.ready && !localeContent(form).enabledLocales.includes('en'))}
+                          onChange={e => setForm(previous => ({ ...previous, localizedContentV1: { ...localeContent(previous), enabledLocales: e.target.checked ? ['km', 'en'] : ['km'], defaultLocale: e.target.checked ? localeContent(previous).defaultLocale : 'km' } }))} />{uiCopy('ផ្សព្វផ្សាយជាភាសាអង់គ្លេស', 'Publish English version')}</label>
+                        {form.localizedContentV1 && <label>Default guest language<select value={localeContent(form).defaultLocale} onChange={e => setForm(previous => ({ ...previous, localizedContentV1: { ...localeContent(previous), defaultLocale: e.target.value } }))}><option value="km">Khmer</option>{localeContent(form).enabledLocales.includes('en') && <option value="en">English</option>}</select></label>}
+                        {activeLangTab === 'EN' && <button type="button" onClick={() => setForm(previous => { let next = previous; for (const key of ['groomName', 'brideName', 'hostName', 'partnerName']) next = editLocalizedField(next, 'en', key, localeContent(previous).km[key] || ''); return next; })}>Copy names from Khmer</button>}
+                        {activeLangTab === 'EN' && <details><summary>{uiCopy('ត្រូវបំពេញការបកប្រែ', 'Translation fields to complete')}</summary>{englishReadiness.missing.map(key => <button type="button" key={key} onClick={() => { const section = key.startsWith('schedule.') || key.startsWith('programDays.') ? 'schedule' : key.startsWith('map.') ? 'venue' : key.startsWith('family.') || /Father|Mother/.test(key) ? 'family' : /message/i.test(key) ? 'invitation' : /thankYou|apology/.test(key) ? 'closing' : key.split('.')[0] === 'saveTheDate' ? 'countdown' : key.split('.')[0] === 'storyChapters' ? 'story' : ['faq', 'party', 'dressCode'].includes(key.split('.')[0]) ? key.split('.')[0] : 'eventInfo'; setSelectedSection(section); setExpandedSections(current => ({ ...current, [section]: true })); requestAnimationFrame(() => { const node = editorRoot.current?.querySelector(`[data-studio-section="${section}"] [name="${key}"], [data-studio-section="${section}"] input, [data-studio-section="${section}"] textarea`); node?.focus(); }); }}>{translationFieldLabel(key)}</button>)}</details>}
                     </div>
 
                     <div className="pe-editor-scroll-body">
-                        {["invitation", "closing"].includes(activeSection) && <div className="studio-message-presets">
-                            <p>{uiCopy("ឃ្លាអញ្ជើញគំរូ (", "Wording preset (")}{activeLangTab})</p>
-                            <button type="button" onClick={() => {
-                                if (!window.confirm(uiCopy("ជំនួសឃ្លានៅក្នុងផ្នែកនេះដោយឃ្លាគំរូដែលបានជ្រើសរើស?", "Replace the wording in this section with the selected preset?"))) return;
-                                const en = activeLangTab === "EN";
-                                if (activeSection === "invitation") {
-                                    update("messageTitle", en ? "Together with our families" : "យើងខ្ញុំ និងក្រុមគ្រួសារទាំងសងខាង");
-                                    update("messageText", en ? "We warmly invite you to celebrate our wedding. Your presence will make our day complete." : "យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ លោក លោកស្រី និងក្រុមគ្រួសារ ចូលរួមជាភ្ញៀវកិត្តិយសក្នុងពិធីមង្គលការរបស់យើងខ្ញុំ។");
-                                } else {
-                                    update("thankYouTitle", en ? "With heartfelt thanks" : "សូមថ្លែងអំណរគុណ");
-                                    update("thankYouText", en ? "Thank you for sharing this special day with us and for your warm wishes." : "សូមអរគុណចំពោះវត្តមានដ៏មានតម្លៃ និងការជូនពរដ៏ល្អប្រពៃរបស់លោកអ្នក។");
-                                    update("apologyTitle", en ? "Our sincere apologies" : "សូមអភ័យទោស");
-                                    update("apologyText", en ? "Please accept our apologies for any unintentional omission or inconvenience." : "យើងខ្ញុំសូមអភ័យទោសចំពោះកំហុសឆ្គង ឬការខ្វះខាតដោយអចេតនា។");
-                                }
-                            }}>{uiCopy("ប្រើឃ្លាសុភាព", "Apply formal wording")}</button>
-                        </div>}
                         {editorMode === "advanced" && <h2 className="studio-tab-heading">{activeStudioTab.labels[englishUI ? 1 : 0]}</h2>}
                         {activeStudioTab.sections.some(key => templateCapabilities(getTemplateById(form.templateId) || { id: form.templateId })[key] === false) && <p className="workspace-notice">{uiCopy('ផ្នែកខ្លះមិនមានក្នុងគំរូនេះទេ។ មាតិកាដែលបានសរសេរត្រូវបានរក្សាទុកសម្រាប់ពេលប្ដូរគំរូ។', 'Some sections are unavailable in this template. Your authored content stays saved for switching templates.')}</p>}
                         {editorMode === "advanced" && activeStudioTab.id !== 'ticketsQr' && !activeStudioTab.sections.some(key => flowConfig.sectionOrder.includes(key)) && <p className="workspace-notice">{uiCopy('គំរូនេះមិនបង្ហាញផ្នែកទាំងនេះទេ។ មាតិកាដែលរក្សាទុកត្រូវបានរក្សាដដែល។', 'This template does not provide these sections. Your saved content is retained.')}</p>}
@@ -3319,7 +3351,10 @@ export default function InvitationForm({ invitation }) {
                                         }
                                     }}>
                                     <summary hidden={!advanced}>{STUDIO_SECTION_LABELS[sectionKey]?.[englishUI ? 1 : 0] || sectionKey}</summary>
-                                    <div className="studio-subsection-body">{renderer()}</div>
+                                    <div className="studio-subsection-body">{["invitation", "closing"].includes(sectionKey) && renderWordingPresets(sectionKey)}{renderer()}
+                                    {sectionKey === 'family' && <FamilyDesignEditor form={form} locale={activeLangTab === 'EN' ? 'en' : 'km'} onChange={update} supported={templateCapabilities(getTemplateById(form.templateId) || {}).familyLayout} />}
+                                    {sectionKey === 'cover' && <MonogramEditor value={form.coupleMonogram} onChange={value => update('coupleMonogram', value)} entitled={workspace?.access?.ownerFeatures?.includes('COUPLE_MONOGRAM') === true} supported={templateCapabilities(getTemplateById(form.templateId) || {}).monogram} />}
+                                    {sectionKey === 'venue' && <IllustratedMapEditor value={form.illustratedMap} onChange={value => update('illustratedMap', value)} locale={activeLangTab === 'EN' ? 'en' : 'km'} entitled={workspace?.access?.ownerFeatures?.includes('ILLUSTRATED_VENUE_MAP') === true} onUndo={studio.undo} onRedo={studio.redo} />}</div>
                                 </details>
                             </div>;
                         })}
@@ -3339,7 +3374,7 @@ export default function InvitationForm({ invitation }) {
                         aria-valuemin={workspaceSplit.min} aria-valuemax={workspaceSplit.max} aria-valuenow={workspaceSplit.value}
                         aria-valuetext={englishUI ? `${workspaceSplit.value}% editor` : `${workspaceSplit.value}% កន្លែងកែសម្រួល`}
                         {...workspaceSplit.separator}><span /></div>
-                    <LivePhoneSimulator data={{ ...form, googleMapUrl: previewMapUrl(form.googleMapUrl, form.venueName) }} catalogVersion={catalogVersion} onEditSection={editPreviewSection} />
+                    <LivePhoneSimulator data={{ ...authoredForm, googleMapUrl: previewMapUrl(form.googleMapUrl, authoredForm.venueName) }} catalogVersion={catalogVersion} onEditSection={editPreviewSection} />
                 </>}
             </div>
 
@@ -3364,7 +3399,7 @@ export default function InvitationForm({ invitation }) {
                             <LivePhoneSimulator
                                 data={{
                                     ...form,
-                                    googleMapUrl: previewMapUrl(form.googleMapUrl, form.venueName),
+                                    googleMapUrl: previewMapUrl(form.googleMapUrl, authoredForm.venueName),
                                 }}
                                 catalogVersion={catalogVersion}
                                 onRequestClose={closePreview}

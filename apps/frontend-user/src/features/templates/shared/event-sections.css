@@ -43,3 +43,6 @@
 .kp-program-day-title > span { display: block; }
 .kp-save-date,.kp-program { container-type: inline-size; }
 @media (max-width: 374px) { .kp-countdown { gap: .3rem; } .kp-program .kp-timeline li { grid-template-columns: 3.4rem 1rem minmax(0,1fr); } }
+
+.kp-timeline-marker:has(svg) { width: 28px; height: 28px; display: grid; place-items: center; border: 0; background: transparent; }
+.program-details svg { display: inline-block; vertical-align: middle; margin-inline-end: 8px; }

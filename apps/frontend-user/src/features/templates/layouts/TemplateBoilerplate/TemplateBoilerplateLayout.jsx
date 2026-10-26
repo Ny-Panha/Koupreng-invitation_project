@@ -1,3 +1,4 @@
+import InvitationLabel from '@/features/templates/shared/InvitationLabel';
 import { useState, useEffect, useRef, useMemo } from "react";
 import {
   Clock,
@@ -417,7 +418,7 @@ export default function TemplateBoilerplateLayout({
                             className="tpl-btn-primary w-full"
                           >
                             <Send className="h-4 w-4" />
-                            <span>ផ្ញើការបញ្ជាក់ (Confirm RSVP)</span>
+                            <span><InvitationLabel value={"ផ្ញើការបញ្ជាក់ (Confirm RSVP)"} /></span>
                           </button>
                         </div>
                       </div>

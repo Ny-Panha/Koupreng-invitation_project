@@ -1,3 +1,8 @@
+import { LOCALIZED_FIELDS, editLocalizedField, projectLocale } from '../../templates/shared/localizedContent';
+import LocalizedEventEditor from './LocalizedEventEditor';
+import { eventLocaleModel } from './localizedEventModel';
+import { invitationFeatureFields } from '../../templates/shared/invitationFeatures';
+import IllustratedMapEditor from '../../invitations/studio/IllustratedMapEditor';
 import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
@@ -33,9 +38,10 @@ export default function EventDetails() {
   const settingsForm = useRef(null);
   const [form, setForm] = useState(() => {
     const content = readContent(event.contentJson);
-    return { ...event, ...eventPresentationFields(content), preWeddingVideo: content.preWeddingVideo, saveTheDate: content.saveTheDate || { enabled: false }, venueAddress: event.venueAddress ?? content.venueAddress ?? content.event?.venueAddress ?? '',
+    return { ...event, storyText: event.storyText ?? content.messageText ?? "", localizedContentV1: content.localizedContentV1, ...invitationFeatureFields(content), ...eventPresentationFields(content), preWeddingVideo: content.preWeddingVideo, saveTheDate: content.saveTheDate || { enabled: false }, venueAddress: event.venueAddress ?? content.venueAddress ?? content.event?.venueAddress ?? '',
       googleMapUrl: event.googleMapUrl ?? content.googleMapUrl ?? content.event?.mapLink ?? '' };
   });
+  const [authorLocale, setAuthorLocale] = useState(() => form.languageMode === "EN" ? "en" : "km");
   const [content] = useState(() => readContent(event.contentJson));
   const [contact, setContact] = useState(content.contact || {});
   const [schedule, setSchedule] = useState(Array.isArray(content.schedule) ? content.schedule : []);
@@ -49,7 +55,9 @@ export default function EventDetails() {
         return { synced: false, error: en ? 'Access change cancelled. Your edits are still here.' : 'បានបោះបង់ការប្ដូរសិទ្ធិមើល។ ការកែប្រែរបស់អ្នកនៅទីនេះ។' };
       }
       const payload = { ...eventPayload(form, event.eventType), expectedUpdatedAt: revision.current };
-      if (generic) payload.contentJson = JSON.stringify({ ...readContent(payload.contentJson), ...eventPresentationFields(form), ...(form.preWeddingVideo ? { preWeddingVideo: form.preWeddingVideo } : {}), eventDate: form.eventDate, eventTime: form.eventTime || '', messageText: form.storyText || "", contact, schedule });
+      const localized = form.localizedContentV1 ? { localizedContentV1: eventLocaleModel(form, schedule).localizedContentV1 } : {};
+      if (form.localizedContentV1) payload.contentJson = JSON.stringify({ ...readContent(payload.contentJson), ...localized });
+      if (generic) payload.contentJson = JSON.stringify({ ...readContent(payload.contentJson), ...localized, ...invitationFeatureFields(form), ...eventPresentationFields(form), ...(form.preWeddingVideo ? { preWeddingVideo: form.preWeddingVideo } : {}), eventDate: form.eventDate, eventTime: form.eventTime || '', messageText: form.storyText || "", contact, schedule });
       if (generic) payload.enabledSections = JSON.stringify({ ...readContent(payload.enabledSections), countdown: form.saveTheDate?.enabled !== false, schedule: form.showSchedule !== false });
       const saved = await invitationService.update(eventId, payload, { suppressAuthRedirect: true });
       revision.current = saved.updatedAt; updateEvent(saved); return { synced: true };
@@ -93,11 +101,19 @@ export default function EventDetails() {
       <a href="#settings-general">{en ? 'General' : 'ព័ត៌មានទូទៅ'}</a><a href="#settings-access">{en ? 'Privacy & access' : 'ឯកជនភាព និងសិទ្ធិ'}</a><a href="#settings-rsvp">{en ? 'RSVP & guests' : 'ការឆ្លើយតប និងភ្ញៀវ'}</a><a href="#settings-team">{en ? 'Team' : 'ក្រុមការងារ'}</a>
     </nav>
     <form ref={settingsForm} onSubmit={save} aria-busy={saving} noValidate>
-    <div id="settings-general" hidden={mode === 'guided' && step !== 0}><EventFields grouped draft form={form} setForm={setForm} type={event.eventType} en={en} /></div>
+    {generic && <LocalizedEventEditor form={form} schedule={schedule} setForm={setForm} locale={authorLocale} setLocale={setAuthorLocale} isOwner={isOwner} />}
+    <div id="settings-general" hidden={mode === 'guided' && step !== 0}><EventFields grouped draft form={form.localizedContentV1 ? projectLocale(form, 'km') : form} setForm={updater => setForm(previous => {
+      if (!previous.localizedContentV1) return typeof updater === 'function' ? updater(previous) : updater;
+      const current = projectLocale(previous, 'km'), next = typeof updater === 'function' ? updater(current) : updater;
+      let result = { ...previous };
+      for (const key of Object.keys(next)) if (next[key] !== current[key]) result = LOCALIZED_FIELDS.includes(key) ? editLocalizedField(result, 'km', key, next[key]) : { ...result, [key]: next[key] };
+      return result;
+    })} type={event.eventType} en={en} /></div>
     {/https?:\/\//i.test(form.venueAddress || '') && <p className="workspace-notice">{en ? 'The saved address contains a link. Review the address and Maps link separately before changing them.' : 'អាសយដ្ឋានដែលរក្សាទុកមានតំណភ្ជាប់។ សូមពិនិត្យអាសយដ្ឋាន និងតំណផែនទីដោយឡែកមុនកែប្រែ។'}</p>}
     <div hidden={mode === 'guided' && step !== 1}>{generic && <>
+      <IllustratedMapEditor value={form.illustratedMap} onChange={value => setForm(current => ({ ...current, illustratedMap: value }))} entitled={workspace.access?.ownerFeatures?.includes('ILLUSTRATED_VENUE_MAP') === true} locale={authorLocale} onUndo={persistence.undo} onRedo={persistence.redo} />
       <SaveTheDateEditor form={form} english={en} showEventFields={false} onChange={patch => setForm(current => ({ ...current, ...patch }))} />
-      <label>{en ? "Invitation message or description (optional)" : "សារអញ្ជើញ ឬការពិពណ៌នា (មិនបាច់បំពេញ)"}<textarea maxLength={5000} value={form.storyText || ""} onChange={e => setForm(current => ({ ...current, storyText: e.target.value }))} /></label>
+      <label>{en ? "Invitation message or description (optional)" : "សារអញ្ជើញ ឬការពិពណ៌នា (មិនបាច់បំពេញ)"}<textarea maxLength={5000} value={form.localizedContentV1 ? projectLocale(form, "km").messageText : form.storyText || ""} onChange={e => setForm(current => ({ ...editLocalizedField(current, "km", "messageText", e.target.value), storyText: e.target.value }))} /></label>
       <label>{en ? "Invitation language" : "ភាសាសំបុត្រអញ្ជើញ"}<select value={form.languageMode || "KH"} onChange={e => setForm(current => ({ ...current, languageMode: e.target.value }))}><option value="KH">{uiCopy("ភាសាខ្មែរ", "Khmer")}</option><option value="EN">{uiCopy("ភាសាអង់គ្លេស", "English")}</option><option value="BOTH">{uiCopy("ភាសាខ្មែរ និងអង់គ្លេស", "Khmer and English")}</option></select></label>
       <fieldset><legend>{en ? "Contact (optional)" : "ទំនាក់ទំនង (មិនបាច់បំពេញ)"}</legend>
         {[["name", "ឈ្មោះទំនាក់ទំនង", "Contact name", "text"], ["phone", "លេខទូរស័ព្ទ", "Phone", "tel"], ["email", "អ៊ីមែល", "Email", "email"]].map(([key, kh, english, type]) =>
@@ -109,9 +125,10 @@ export default function EventDetails() {
         {schedule.map((item, index) => <div className="event-wizard-card" key={index}>
           <label>{en ? "Time" : "ម៉ោង"}<input type="time" value={item.time || ""} onChange={e => setSchedule(current => current.map((row, i) => i === index ? { ...row, time: e.target.value } : row))} /></label>
           <label>{en ? "Activity" : "សកម្មភាព"}<input required maxLength={255} value={item.title || ""} onChange={e => setSchedule(current => current.map((row, i) => i === index ? { ...row, title: e.target.value } : row))} /></label>
+          <label>Activity in English<input maxLength={255} value={item.titleEn || ''} onChange={e => setSchedule(current => current.map((row, i) => i === index ? { ...row, titleEn: e.target.value } : row))} /></label>
           <button type="button" onClick={() => setSchedule(current => current.filter((_, i) => i !== index))}>{en ? "Remove activity" : "លុបសកម្មភាព"}</button>
         </div>)}
-        <button type="button" disabled={schedule.length >= 20} onClick={() => setSchedule(current => [...current, { time: "", title: "" }])}>{en ? "Add activity" : "បន្ថែមសកម្មភាព"}</button>
+        <button type="button" disabled={schedule.length >= 20} onClick={() => setSchedule(current => [...current, { id: crypto.randomUUID(), time: "", title: "", titleEn: "" }])}>{en ? "Add activity" : "បន្ថែមសកម្មភាព"}</button>
       </fieldset>}
       <details className="studio-subsection"><summary>{en ? 'Media & Opening' : 'មេឌៀ និងការបើកធៀប'}</summary><div className="studio-subsection-body"><PreWeddingVideoEditor eventId={eventId} value={form.preWeddingVideo} english={en} onChange={value => setForm(current => ({ ...current, preWeddingVideo: value }))} /></div></details>
     </>}{!generic && <p>{en ? 'Design artwork and optional media in the invitation and media tools.' : 'រចនារូបភាព និងមាតិកាជាជម្រើសក្នុងឧបករណ៍រចនា និងរូបភាព។'}</p>}<Link className="workspace-button" to={eventPath(eventId,'media')}>{en ? 'Media tools' : 'ឧបករណ៍រូបភាព'}</Link></div>

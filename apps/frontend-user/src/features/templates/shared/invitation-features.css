@@ -1,0 +1,41 @@
+.kp-family-names { color: inherit; text-align: center; margin: 1.5rem auto; max-width: 100%; }
+.kp-family-names__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(16px, 4vw, 56px); align-items: start; }
+.kp-family-names article { min-width: 0; grid-column: 1; grid-row: 1; }
+.kp-family-names article[data-couple-side="bride"] { grid-column: 2; }
+.kp-family-names[data-couple-layout="bride-left"] article[data-couple-side="groom"] { grid-column: 2; }
+.kp-family-names[data-couple-layout="bride-left"] article[data-couple-side="bride"] { grid-column: 1; }
+.kp-family-names[data-couple-layout="stacked"] .kp-family-names__grid { display: flex; flex-direction: column; align-items: center; }
+.kp-family-names h3 { font-family: var(--tpl-heading-font, Moul, Georgia, serif); font-size: clamp(22px, 4vw, 38px); line-height: 1.7; white-space: normal; overflow-wrap: break-word; }
+.kp-family-names p { white-space: pre-line; line-height: 1.8; overflow-wrap: break-word; }
+.kp-family-names small { display: block; font-size: .8em; }
+.kp-monogram { display: block; max-width: 100%; height: auto; margin: 12px auto; overflow: visible; }
+.public-locale-switch { position: sticky; top: 8px; z-index: 80; display: flex; width: max-content; max-width: 95%; margin: 8px auto; padding: 4px; border: 1px solid #a68957; border-radius: 30px; background: #fffaf0; box-shadow: 0 4px 16px #392b1720; }
+.public-locale-switch button { min-height: 44px; min-width: 84px; padding: 8px 16px; color: #47351e; border-radius: 24px; }
+.public-locale-switch button[aria-pressed="true"] { background: #47351e; color: #fffaf0; }
+.kp-illustrated-map { margin: 24px auto; max-width: 960px; color: inherit; }
+.kp-illustrated-map svg { display: block; width: 100%; height: auto; border-radius: 12px; }
+.kp-illustrated-map figcaption { font-size: .875rem; line-height: 1.8; padding: 12px; }
+.studio-map-stage { touch-action: none; overflow: auto; border: 1px solid #baa77b; border-radius: 12px; background: #eee7d8; max-height: 560px; }
+.studio-map-stage svg { width: 100%; display: block; touch-action: none; }
+.studio-design-tools { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.studio-design-tools button, .studio-map-layers button { min-height: 44px; border: 1px solid #baa77b; padding: 8px 12px; border-radius: 8px; }
+.studio-map-layers { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
+.studio-map-layers button[aria-pressed="true"] { background: #47351e; color: #fffaf0; }
+.studio-design-panel { min-width: 0; }
+.studio-design-panel label { display: flex; flex-direction: column; gap: 6px; margin: 12px 0; }
+.studio-design-panel input, .studio-design-panel select, .studio-design-panel textarea { min-height: 44px; max-width: 100%; }
+@media (max-width: 430px) { .kp-family-names__grid { display: flex; flex-direction: column; align-items: center; gap: 24px; } .kp-family-names article { width: 100%; } }
+
+.studio-design-panel { padding: 20px; margin-block: 20px; border: 1px solid #ddcdb3; border-radius: 14px; background: #fffcf6; }
+.studio-design-panel h4 { font-weight: 700; font-size: 1rem; margin-bottom: 12px; }
+.studio-design-panel p { font-size: .875rem; line-height: 1.8; }
+.studio-design-panel input:not([type=checkbox]):not([type=range]):not([type=color]), .studio-design-panel textarea, .studio-design-panel select { border: 1px solid #c6b89d; padding: 10px 12px; border-radius: 8px; background: #fff; color: #342b1d; width: 100%; }
+.studio-design-panel input[type=checkbox] { width: 20px; height: 20px; min-height: 20px; align-self: flex-start; }
+.studio-design-panel input[type=color] { width: 72px; height: 44px; }
+.studio-design-panel label { font-size: .875rem; font-weight: 600; }
+.studio-design-panel fieldset { border: 1px solid #ddcdb3; border-radius: 10px; padding: 12px; margin: 12px 0; }
+.studio-design-panel legend { padding-inline: 6px; }
+
+.kp-family-names[data-couple-layout="centered"] .kp-family-names__grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; }
+.kp-family-names[data-couple-layout="centered"] article { flex: 0 1 20rem; }
+@media (max-width: 430px) { .kp-family-names[data-couple-layout="centered"] .kp-family-names__grid { flex-direction: column; align-items: center; } .kp-family-names[data-couple-layout="centered"] article { flex: auto; } }

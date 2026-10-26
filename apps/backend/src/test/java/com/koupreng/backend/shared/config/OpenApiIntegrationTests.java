@@ -92,7 +92,7 @@ class OpenApiIntegrationTests {
                 .andReturn()
                 .getResponse()
                 .getContentAsString(StandardCharsets.UTF_8));
-        Path contract = Path.of("..", "..", "packages", "api-contracts", "openapi.yaml")
+        Path contract = Path.of("src", "test", "resources", "contracts", "openapi.yaml")
                 .toAbsolutePath()
                 .normalize();
 

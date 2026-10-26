@@ -1,0 +1,42 @@
+import { COUPLE_LAYOUTS } from '../../templates/shared/invitationFeatures';
+import { CoupleMonogram } from '../../templates/shared/FamilyNames';
+const pair = () => ({ km: '', en: '' });
+export function FamilyDesignEditor({ form, locale, onChange, supported }) {
+  const groups = form.familyGroupsV1 || [];
+  const patchGroup = (side, values) => {
+    const group = groups.find(item => item.side === side) || { side, label: pair(), members: [] };
+    onChange('familyGroupsV1', [...groups.filter(item => item.side !== side), { ...group, ...values }]);
+  };
+  if (!supported) return <p>Family placement is unavailable in this template. Your saved layout and family data are retained.</p>;
+  return <section className="studio-design-panel"><h4>Family and name arrangement</h4>
+    <label>Name placement<select value={form.coupleLayout || 'template-default'} onChange={e => onChange('coupleLayout', e.target.value)}>{COUPLE_LAYOUTS.map(key => <option key={key} value={key}>{({ 'template-default': 'Template default', 'groom-left': 'Groom left / bride right', 'bride-left': 'Bride left / groom right', stacked: 'Vertically stacked', centered: 'Centered couple' })[key]}</option>)}</select></label>
+    <p>Optional hosts can be parents, guardians or other family members. Enter honorifics explicitly. Empty members are hidden. Selecting a layout does not change canonical names.</p>
+    {['groom', 'bride'].map(side => {
+      const group = groups.find(item => item.side === side);
+      return <fieldset key={side}><legend>{side === 'groom' ? 'First partner / groom family' : 'Second partner / bride family'}</legend>
+        <label>Partner honorific ({locale})<input maxLength={100} value={form.localizedContentV1?.[locale]?.[`${side}Honorific`] ?? (locale === 'km' ? form[`${side}Honorific`] || '' : '')} onChange={e => onChange(`${side}Honorific`, e.target.value)} /></label>
+        <label>Family label ({locale})<input maxLength={300} value={group?.label?.[locale] || ''} onChange={e => patchGroup(side, { label: { ...group?.label || pair(), [locale]: e.target.value } })} /></label>
+        {group?.members.map(member => <fieldset key={member.id}><legend>Host</legend>{['name', 'honorific', 'relationship'].map(key => <label key={key}>{key} ({locale})<input maxLength={300} value={member[key]?.[locale] || ''} onChange={e => patchGroup(side, { members: group.members.map(item => item.id === member.id ? { ...member, [key]: { ...member[key], [locale]: e.target.value } } : item) })} /></label>)}<button type="button" onClick={() => patchGroup(side, { members: group.members.filter(item => item.id !== member.id) })}>Remove host</button></fieldset>)}
+        <button type="button" disabled={(group?.members.length || 0) >= 8} onClick={() => patchGroup(side, { members: [...group?.members || [], { id: crypto.randomUUID(), name: pair(), honorific: pair(), relationship: pair() }] })}>Add family host</button>
+        {group && <button type="button" onClick={() => onChange('familyGroupsV1', groups.filter(item => item.side !== side))}>Use existing parent fields</button>}
+      </fieldset>;
+    })}
+  </section>;
+}
+export function MonogramEditor({ value, onChange, entitled, supported }) {
+  const config = value || { version: 1, enabled: false, text: '', color: '#8c6932', motif: 'diamond', layout: 'round', size: 100, position: 'above', font: 'MOUL' };
+  if (!supported) return <p>This template keeps the monogram design saved for a compatible template.</p>;
+  if (!entitled) return <section><h4>Couple monogram · Premium</h4><p>A Premium owner package is required to create or edit a decorative monogram.</p>{value?.enabled && <button type="button" onClick={() => onChange({ ...value, enabled: false })}>Disable monogram</button>}</section>;
+  const patch = values => onChange({ ...config, ...values });
+  return <section className="studio-design-panel"><h4>Couple monogram · Premium</h4><p>Decorative artwork stays separate from your names and guest identity. Enter your own initials or text.</p>
+    <label>Enable monogram<input type="checkbox" checked={config.enabled} onChange={e => patch({ enabled: e.target.checked })} /></label>
+    <label>Monogram text<input maxLength={60} value={config.text} onChange={e => patch({ text: e.target.value })} /></label>
+    <label>Monogram color<input type="color" value={config.color} onChange={e => patch({ color: e.target.value })} /></label>
+    <label>Monogram font<select value={config.font || 'MOUL'} onChange={e => patch({ font: e.target.value })}>{['MOUL', 'KANTUMRUY', 'SERIF'].map(key => <option key={key}>{key}</option>)}</select></label>
+    <label>Monogram position<select value={config.position || 'above'} onChange={e => patch({ position: e.target.value })}><option value="above">Above the names</option><option value="below">Below the names</option></select></label>
+    <label>Monogram frame<select value={config.layout} onChange={e => patch({ layout: e.target.value })}>{['round', 'oval', 'plain'].map(key => <option key={key}>{key}</option>)}</select></label>
+    <label>Monogram motif<select value={config.motif} onChange={e => patch({ motif: e.target.value })}>{['none', 'diamond', 'petals'].map(key => <option key={key}>{key}</option>)}</select></label>
+    <label>Monogram size<input type="range" min="60" max="180" step="5" value={config.size} onChange={e => patch({ size: Number(e.target.value) })} /></label>
+    <CoupleMonogram value={{ ...config, enabled: true }} /><button type="button" onClick={() => patch({ enabled: false, text: '', size: 100 })}>Reset monogram</button>
+  </section>;
+}

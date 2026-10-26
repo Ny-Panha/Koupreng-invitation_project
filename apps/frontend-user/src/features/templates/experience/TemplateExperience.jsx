@@ -1,3 +1,5 @@
+import { InvitationLocaleContext } from '../shared/invitationLocaleContext';
+import { invitationFeatureFields } from '../shared/invitationFeatures';
 import CinematicOpeningProvider from "../shared/Openings/CinematicOpeningProvider";
 import { useCinematicOpening } from "../shared/Openings/cinematicOpeningContext";
 import { normalizeProgram } from "../shared/program";
@@ -60,7 +62,7 @@ function DedicatedTemplateRenderer({ component, previewChannel, children, ...pro
     useEffect(() => {
         if (previewChannel) postPreviewMessage({ type: "PREVIEW_READY" }, previewChannel);
     }, [component, previewChannel]);
-    return createElement(component, { ...props, previewChannel }, children);
+    return <InvitationLocaleContext.Provider value={props.content?.languageMode}>{createElement(component, { ...props, previewChannel }, children)}</InvitationLocaleContext.Provider>;
 }
 
 /**
@@ -122,6 +124,8 @@ function WeddingTemplateExperience({
         const liveMessage = liveData.messageText ?? liveData.blessingMessage ?? liveData.message;
         return {
             ...baseContent,
+            languageMode: liveData.languageMode ?? baseContent.languageMode,
+            ...invitationFeatureFields(liveData),
             studioStyle: liveData.studioStyle || baseContent.studioStyle,
             fontKhmer: liveData.fontKhmer !== undefined ? liveData.fontKhmer : baseContent.fontKhmer,
             fontLatin: liveData.fontLatin !== undefined ? liveData.fontLatin : baseContent.fontLatin,
@@ -134,6 +138,14 @@ function WeddingTemplateExperience({
             ampSymbol: liveData.ampSymbol || baseContent.ampSymbol,
             groom: liveData.groomName ?? baseContent.groom,
             bride: liveData.brideName ?? baseContent.bride,
+            // The live payload is already projected into the author's chosen language.
+            // Do not let a catalogue's sample English aliases override these values.
+            groomEn: liveData.groomName ?? baseContent.groomEn,
+            brideEn: liveData.brideName ?? baseContent.brideEn,
+            venueNameEn: liveData.venueName ?? baseContent.venueNameEn,
+            venueAddressEn: liveData.venueAddress ?? baseContent.venueAddressEn,
+            messageEn: liveMessage ?? baseContent.messageEn,
+            dateTextEn: liveData.dateText ?? baseContent.dateTextEn,
             title: liveData.invitationTitle ?? liveData.title ?? baseContent.title,
             invitationTitle: liveData.invitationTitle ?? liveData.title ?? baseContent.invitationTitle,
             subtitle: liveData.invitationSubtitle !== undefined ? liveData.invitationSubtitle : (liveData.subtitle !== undefined ? liveData.subtitle : baseContent.subtitle),
@@ -588,7 +600,7 @@ function WeddingTemplateExperience({
         }, children)}{customSections?.length > 0 && <DynamicTemplateRenderer sections={customSections} content={content} blockProps={{ rsvpChildren: children, preview }} />}</></Suspense>;
     }
 
-    return (
+    const sharedExperience = (
         <div className={`tx-stage tx-stage--${resolvedVariant}${!heroOpened ? " tx-stage--hero-locked" : ""}${preview ? " tx-stage--preview" : ""}`}>
             <div
                 className={`tx-root ${theme.className} tx-ornament--${ornamentTheme}${preview ? " tx-root--preview" : ""}`}
@@ -743,6 +755,7 @@ function WeddingTemplateExperience({
             </div>
         </div>
     );
+    return <InvitationLocaleContext.Provider value={content.languageMode}>{sharedExperience}</InvitationLocaleContext.Provider>;
 }
 
 const EventEssentialLayout = lazy(() => import("../layouts/EventEssentialLayout"));

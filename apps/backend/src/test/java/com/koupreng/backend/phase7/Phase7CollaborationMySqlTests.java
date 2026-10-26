@@ -295,6 +295,87 @@ class Phase7CollaborationMySqlTests {
         assertEquals(403, call("PUT", eventPath(f), f.member, body).status);
     }
 
+    @Test void phase11IndependentLocalesPreserveIdentityAndRejectStaleLegacyWrites() throws Exception {
+        Fixture f = fixture(3);
+        var values = Map.of("title", "Fictional event", "messageText", "Authored invitation", "groomName", "Host A", "brideName", "Host B", "venueName", "Venue", "venueAddress", "Address");
+        var localized = new HashMap<String,Object>(); localized.put("version", 1); localized.put("km", values); localized.put("en", values); localized.put("enabledLocales", List.of("km")); localized.put("defaultLocale", "km");
+        var content = new HashMap<String,Object>(values); content.put("localizedContentV1", localized);
+        var initial = call("GET", eventPath(f), f.owner, null);
+        var body = eventBody("Fictional event", initial.data().path("updatedAt").asText()); body.put("visibility", "PUBLIC"); body.put("contentJson", json.writeValueAsString(content));
+        var saved = call("PUT", eventPath(f), f.owner, body); assertEquals(200, saved.status, saved.body);
+        String slug = saved.data().path("slug").asText();
+        assertEquals(200, call("PATCH", eventPath(f) + "/publish", f.owner, null).status);
+        var published = call("GET", "/api/v1/public/invitations/" + slug, null, null);
+        assertFalse(json.readTree(published.data().path("contentJson").asText()).path("localizedContentV1").has("en"));
+        var latest = call("GET", eventPath(f), f.owner, null);
+        body.put("expectedUpdatedAt", latest.data().path("updatedAt").asText()); localized.put("enabledLocales", List.of("km", "en")); body.put("contentJson", json.writeValueAsString(content));
+        var enabled = call("PUT", eventPath(f), f.owner, body); assertEquals(200, enabled.status, enabled.body);
+        assertEquals(409, call("PUT", eventPath(f), f.owner, body).status);
+        body.remove("expectedUpdatedAt"); body.put("contentJson", "{}");
+        assertEquals(409, call("PUT", eventPath(f), f.owner, body).status);
+        body.put("expectedUpdatedAt", enabled.data().path("updatedAt").asText());
+        assertEquals(200, call("PUT", eventPath(f), f.owner, body).status);
+        assertEquals(403, call("PUT", eventPath(f), f.stranger, body).status);
+        var publicEnabled = call("GET", "/api/v1/public/invitations/" + slug, null, null);
+        assertEquals(1, jdbc.queryForObject("SELECT COUNT(*) FROM invitations WHERE invitation_id=? AND slug=?", Integer.class, f.eventId, slug));
+        assertEquals(slug, publicEnabled.data().path("slug").asText());
+        assertEquals("Authored invitation", json.readTree(publicEnabled.data().path("contentJson").asText()).path("localizedContentV1").path("en").path("messageText").asText());
+        var invitation = invite(f, f.member.email, "DESIGNER");
+        assertEquals(200, accept(f.member, invitation.data().path("invitationToken").asText()).status);
+        var current = call("GET", eventPath(f), f.owner, null).data();
+        var khChange = eventBody("Fictional event", current.path("updatedAt").asText()); khChange.put("visibility", "PUBLIC");
+        var enChange = eventBody("Fictional event", current.path("updatedAt").asText()); enChange.put("visibility", "PUBLIC");
+        khChange.put("contentJson", json.writeValueAsString(Map.of("localizedContentV1", Map.of("km", Map.of("messageText", "New Khmer wording")))));
+        enChange.put("contentJson", json.writeValueAsString(Map.of("localizedContentV1", Map.of("en", Map.of("messageText", "New English wording")))));
+        var raceResults = race(() -> call("PUT", eventPath(f), f.owner, khChange), () -> call("PUT", eventPath(f), f.member, enChange));
+        assertEquals(List.of(200, 409), raceResults.stream().map(Reply::status).sorted().toList());
+        current = call("GET", eventPath(f), f.owner, null).data();
+        enChange.put("expectedUpdatedAt", current.path("updatedAt").asText());
+        enChange.put("contentJson", json.writeValueAsString(Map.of("localizedContentV1", Map.of("enabledLocales", List.of("km")))));
+        assertEquals(403, call("PUT", eventPath(f), f.member, enChange).status);
+        assertEquals(200, call("DELETE", "/api/v1/organizations/" + f.orgId + "/members/" + invitation.data().path("id").asLong(), f.owner, null).status);
+        assertEquals(403, call("PUT", eventPath(f), f.member, enChange).status);
+        String privateToken = jdbc.queryForObject("SELECT access_token FROM invitations WHERE invitation_id=?", String.class, f.eventId);
+        var privatize = eventBody("Fictional event", current.path("updatedAt").asText());
+        assertEquals(200, call("PUT", eventPath(f), f.owner, privatize).status);
+        assertEquals(404, call("GET", "/api/v1/public/invitations/" + slug + "?lang=en", null, null).status);
+        assertEquals(200, call("GET", "/api/v1/public/invitations/" + slug + "?accessToken=" + privateToken + "&lang=en", null, null).status);
+        assertEquals(privateToken, jdbc.queryForObject("SELECT access_token FROM invitations WHERE invitation_id=?", String.class, f.eventId));
+
+    }
+
+    @Test void phase11PremiumDesignsEnforceCurrentOwnerSnapshotAndExpiryOverHttp() throws Exception {
+        Fixture f = fixture(3);
+        var logo = Map.of("version", 1, "enabled", true, "text", "A & B", "color", "#996633", "motif", "diamond", "layout", "round", "size", 100);
+        var map = Map.of("version", 1, "enabled", true, "aspectRatio", "landscape", "theme", "ivory", "description", Map.of("km", "", "en", ""), "nodes", List.of());
+        var initial = call("GET", eventPath(f), f.owner, null);
+        var body = eventBody("Premium design fixture", initial.data().path("updatedAt").asText()); body.put("visibility", "PUBLIC");
+        body.put("contentJson", json.writeValueAsString(Map.of("coupleMonogram", logo)));
+        assertEquals(403, call("PUT", eventPath(f), f.owner, body).status);
+        body.put("contentJson", json.writeValueAsString(Map.of("illustratedMap", map)));
+        assertEquals(403, call("PUT", eventPath(f), f.owner, body).status);
+        var grant = subscriptions.findById(f.grantId).orElseThrow();
+        var basic = packages.findByCodeAndActiveTrue("BASIC").orElseThrow(); grant.setBenefitsSnapshot(PackageSnapshot.capture(basic)); subscriptions.saveAndFlush(grant);
+        assertEquals(403, call("PUT", eventPath(f), f.owner, body).status);
+        var premium = packages.findByCodeAndActiveTrue("PREMIUM").orElseThrow(); grant.setBenefitsSnapshot(PackageSnapshot.capture(premium)); subscriptions.saveAndFlush(grant);
+        body.put("contentJson", json.writeValueAsString(Map.of("coupleMonogram", logo, "illustratedMap", map)));
+        var saved = call("PUT", eventPath(f), f.owner, body); assertEquals(200, saved.status, saved.body);
+        assertEquals(403, call("PUT", eventPath(f), f.stranger, body).status);
+        assertEquals(200, call("PATCH", eventPath(f) + "/publish", f.owner, null).status);
+        String path = "/api/v1/public/invitations/" + saved.data().path("slug").asText();
+        assertTrue(call("GET", path, null, null).data().path("contentJson").asText().contains("coupleMonogram"));
+        grant.setEndDate(Instant.now().minusSeconds(1)); subscriptions.saveAndFlush(grant);
+        String publicContent = call("GET", path, null, null).data().path("contentJson").asText();
+        assertFalse(publicContent.contains("coupleMonogram")); assertFalse(publicContent.contains("illustratedMap"));
+        var latest = call("GET", eventPath(f), f.owner, null);
+        assertTrue(latest.data().path("contentJson").asText().contains("A & B"));
+        body.put("expectedUpdatedAt", latest.data().path("updatedAt").asText());
+        assertEquals(403, call("PUT", eventPath(f), f.owner, body).status);
+        var badMap = json.createObjectNode(); badMap.put("version", 1); badMap.put("enabled", true); badMap.put("aspectRatio", "landscape"); badMap.put("theme", "ivory"); badMap.set("description", json.valueToTree(Map.of("km", "", "en", ""))); badMap.set("nodes", json.valueToTree(List.of(Map.of("id", "bad", "type", "script", "x", 99999))));
+        body.put("contentJson", json.writeValueAsString(Map.of("illustratedMap", badMap)));
+        assertEquals(400, call("PUT", eventPath(f), f.owner, body).status);
+    }
+
     private Fixture fixture(int teamLimit) throws Exception {
         return fixture(teamLimit,1);
     }

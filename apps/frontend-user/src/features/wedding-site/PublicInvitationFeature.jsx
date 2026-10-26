@@ -1,3 +1,4 @@
+import { guestLocale, localeContent, projectLocale } from '../templates/shared/localizedContent';
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useParams, useSearchParams } from "react-router-dom";
 import { IoHomeOutline, IoLockClosedOutline, IoSearchOutline } from "react-icons/io5";
@@ -67,7 +68,7 @@ function publicStateCopy(languageMode, stateType = "UNPUBLISHED") {
 
 export default function PublicInvitationPage() {
     const { slug } = useParams();
-    const [searchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
     const location = useLocation();
     const { user, isAuthenticated } = useAuth();
     const currentUserId = user?.id || user?.userId;
@@ -274,7 +275,9 @@ export default function PublicInvitationPage() {
                 />
             );
         }
-        const publicDraft = publicInvitationToDraft(invitation, media);
+        const rawDraft = publicInvitationToDraft(invitation, media);
+        const displayLocale = guestLocale(rawDraft, searchParams.get("lang"));
+        const publicDraft = rawDraft.localizedContentV1 ? projectLocale(rawDraft, displayLocale) : rawDraft;
 
         // Fallback / merge KHQR and local draft data if remote backend draft is missing them
         if (!publicDraft.khqrDollar?.qrUrl || !publicDraft.khqrRiel?.qrUrl) {
@@ -305,10 +308,12 @@ export default function PublicInvitationPage() {
 
         if (mergedPublicGarden) {
             return (
-                <>
+                <div lang={displayLocale}>
+                {rawDraft.localizedContentV1 && localeContent(rawDraft).enabledLocales.includes('en') && <nav className="public-locale-switch" aria-label="Invitation language">{[['km', '\u1781\u17d2\u1798\u17c2\u179a'], ['en', 'English']].map(([locale, label]) => <button key={locale} type="button" lang={locale} aria-pressed={displayLocale === locale} onClick={() => { const params = new URLSearchParams(searchParams); params.set('lang', locale); setSearchParams(params, { replace: true, preventScrollReset: true }); }}>{label}</button>)}</nav>}
+                {searchParams.get('lang') === 'en' && displayLocale !== 'en' && <p role="status" lang="en">English is not published for this invitation. Showing Khmer.</p>}
                 <TemplateExperience
                     cinematicOpening={invitation?.cinematicOpening}
-                    cinematicLanguage={invitation?.languageMode}
+                    cinematicLanguage={publicDraft.languageMode}
                     cinematicKey={slug}
                     loadCinematicVideo={loadCinematicVideo}
                     tpl={mergedPublicGarden.tpl}
@@ -322,12 +327,12 @@ export default function PublicInvitationPage() {
                             slug={slug}
                             inviteToken={inviteToken}
                             accessToken={effectiveAccessToken}
-                            languageMode={invitation.languageMode}
+                            languageMode={publicDraft.languageMode}
                         />
                     )}
                 </TemplateExperience>
-                <PublicTicketAccess slug={slug} token={inviteToken} accessToken={effectiveAccessToken} />
-                </>
+                <PublicTicketAccess displayContent={publicDraft} languageMode={publicDraft.languageMode} slug={slug} token={inviteToken} accessToken={effectiveAccessToken} />
+                </div>
             );
         }
     }

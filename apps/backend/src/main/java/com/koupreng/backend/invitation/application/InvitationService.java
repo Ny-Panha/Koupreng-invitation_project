@@ -281,7 +281,13 @@ public class InvitationService {
     public InvitationResponse update(Authentication authentication, Long id, InvitationRequest request) {
         UserInvitation invitation = requireEventPermission(authentication, id, EventAccessPolicy.Permission.EDIT_EVENT);
         AppUser actor = currentUserService.currentUser(authentication);
-        if (!actor.getId().equals(invitation.getUser().getId())) validateCollaboratorUpdate(invitation, request);
+        if (request.getExpectedUpdatedAt() == null && (LocalizedInvitationPolicy.hasLocales(invitation.getContentJson()) || LocalizedInvitationPolicy.hasLocales(request.getContentJson())))
+            throw new ApiException(HttpStatus.CONFLICT, "INVITATION_VERSION_REQUIRED", "Reopen this invitation before editing its language versions");
+        if (!actor.getId().equals(invitation.getUser().getId())) {
+            validateCollaboratorUpdate(invitation, request);
+            if (LocalizedInvitationPolicy.changesPublication(invitation.getContentJson(), request.getContentJson()))
+                throw new ApiException(HttpStatus.FORBIDDEN, "Only the owner can approve published invitation languages");
+        }
         if (request.getExpectedUpdatedAt() != null) {
             invitation = invitationRepository.findForUpdateByIdAndUserId(id, invitation.getUser().getId())
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Invitation not found"));
@@ -661,6 +667,9 @@ public class InvitationService {
     }
 
     private void applyRequest(UserInvitation invitation, InvitationRequest request, AppUser user) {
+        InvitationContentPolicy.validateDirections(request.getGoogleMapUrl());
+        if (invitationDesignPolicy != null) request.setContentJson(invitationDesignPolicy.prepare(invitation, request));
+        request.setContentJson(LocalizedInvitationPolicy.merge(invitation.getContentJson(), request));
         InvitationContentPolicy.validate(request.getContentJson());
         if (preWeddingVideoPolicy != null) preWeddingVideoPolicy.validateChange(invitation, invitation.getContentJson(), request.getContentJson());
         else if (request.getContentJson() != null && request.getContentJson().contains("preWeddingVideo"))
@@ -767,6 +776,8 @@ public class InvitationService {
     }
 
     private void validatePublishReady(UserInvitation invitation) {
+        LocalizedInvitationPolicy.validatePublished(invitation);
+        if (invitationDesignPolicy != null) invitationDesignPolicy.validatePublish(invitation);
         List<String> missing = new ArrayList<>();
         requirePresent(invitation.getTitle(), "title", missing);
         if (invitation.getEventType() == null) {
@@ -929,8 +940,13 @@ public class InvitationService {
     @Autowired
     private PreWeddingVideoPolicy preWeddingVideoPolicy;
 
+    @Autowired
+    private InvitationDesignPolicy invitationDesignPolicy;
+
     private PublicInvitationResponse publicResponse(UserInvitation invitation, Guest guest, GuestSeatAssignment assignment) {
         var response = PublicInvitationResponse.from(invitation, guest, assignment);
+        response.setContentJson(LocalizedInvitationPolicy.publicContent(invitation.getContentJson()));
+        if (invitationDesignPolicy != null) response.setContentJson(invitationDesignPolicy.publicContent(invitation, response.getContentJson()));
         if (preWeddingVideoPolicy != null) {
             var playback = preWeddingVideoPolicy.playback(invitation);
             if (playback != null) response.setCinematicOpening(new com.koupreng.backend.invitation.api.dto.CinematicOpeningResponse(

@@ -1,3 +1,7 @@
+import InvitationLabel from '@/features/templates/shared/InvitationLabel';
+import FamilyNames from '@/features/templates/shared/FamilyNames';
+import { usesFamilyLayout } from '@/features/templates/shared/invitationFeatures';
+import IllustratedMap from '@/features/templates/shared/IllustratedMap';
 import { useCinematicOpening } from "../../../shared/Openings/cinematicOpeningContext";
 import SaveTheDate from '../../../shared/SaveTheDate';
 import ProgramTimeline from '../../../shared/ProgramTimeline';
@@ -80,7 +84,7 @@ function CanvaKhmerImage({ src, alt, className = "", loading = "lazy", ...props 
     if (failed) {
         return (
             <span className={`ck-image-fallback${className ? ` ${className}` : ""}`} role="img" aria-label={alt}>
-                <span>រូបភាពអនុស្សាវរីយ៍</span>
+                <span><InvitationLabel value={"រូបភាពអនុស្សាវរីយ៍"} /></span>
             </span>
         );
     }
@@ -211,14 +215,12 @@ function CanvaKhmerOpeningCover({ content, onOpen }) {
                     <strong>{content.bride}</strong>
                 </p>
             )}
-            <button type="button" className="ck-cover__open" onClick={onOpen}>
-                ចុចទីនេះដើម្បីមើលព័ត៌មានលម្អិត
-                <IoChevronDownOutline aria-hidden="true" />
+            <button type="button" className="ck-cover__open" onClick={onOpen}><InvitationLabel value={"ចុចទីនេះដើម្បីមើលព័ត៌មានលម្អិត"} /><IoChevronDownOutline aria-hidden="true" />
             </button>
             {content.dateText && (
                 <time className="ck-cover__date">
                     {content.dateText}
-                    {content.eventTime ? ` • ${formatTime24toKhmer(content.eventTime) || content.eventTime}` : ""}
+                    {content.eventTime ? ` • ${(String(content.languageMode).toLowerCase() === "en" ? content.eventTime : formatTime24toKhmer(content.eventTime)) || content.eventTime}` : ""}
                 </time>
             )}
         </motion.section>
@@ -247,7 +249,7 @@ function CanvaKhmerGardenHero({ content, sectionRef, onDetails }) {
                 {content.dateText && (
                     <time>
                         {content.dateText}
-                        {content.eventTime ? ` • ${formatTime24toKhmer(content.eventTime) || content.eventTime}` : ""}
+                        {content.eventTime ? ` • ${(String(content.languageMode).toLowerCase() === "en" ? content.eventTime : formatTime24toKhmer(content.eventTime)) || content.eventTime}` : ""}
                     </time>
                 )}
                 {content.venue?.name && <b>{content.venue.name}</b>}
@@ -308,18 +310,18 @@ function CanvaKhmerInvitationDetails({ content, sectionRef, showCountdown, showD
             <CanvaArtwork name="details" />
             <div className="ck-details__paper">
                 <SectionTitle english="TOGETHER WITH OUR FAMILIES">{content.subtitle || "សូមគោរពអញ្ជើញ"}</SectionTitle>
-                {parents.length > 0 && (
+                {!usesFamilyLayout(content) && parents.length > 0 && (
                     <div className="ck-details__parents">
                         {parents.map(([label, value]) => <p key={label}><small>{label}</small><strong>{value}</strong></p>)}
                     </div>
                 )}
                 <p className="ck-details__message">{content.message}</p>
                 {content.messageTitle && <h2>{content.messageTitle}</h2>}
-                <div className="ck-details__names"><strong>{content.groom}</strong><span>❦</span><strong>{content.bride}</strong></div>
+                {usesFamilyLayout(content) ? <FamilyNames content={content} /> : (<div className="ck-details__names"><strong>{content.groom}</strong><span>❦</span><strong>{content.bride}</strong></div>)}
                 <div className="ck-details__meta">
                     {content.dateText && <p><IoCalendarOutline />{content.dateText}</p>}
-                    {content.ceremonyTime && <p><IoTimeOutline />ពិធីមង្គលការ {content.ceremonyTime}</p>}
-                    {content.receptionTime && <p><IoTimeOutline />ពិធីជប់លៀង {content.receptionTime}</p>}
+                    {content.ceremonyTime && <p><IoTimeOutline /><InvitationLabel value={"ពិធីមង្គលការ"} />{content.ceremonyTime}</p>}
+                    {content.receptionTime && <p><IoTimeOutline /><InvitationLabel value={"ពិធីជប់លៀង"} />{content.receptionTime}</p>}
                     {content.venue?.name && <p><IoLocationOutline />{content.venue.name}</p>}
                 </div>
                 {showCountdown && <SaveTheDate content={content} />}
@@ -343,7 +345,7 @@ function CanvaKhmerProgram({ content }) {
         <section id="ck-program" className="ck-slice ck-program" data-ck-section="program">
             <CanvaArtwork name="program" />
             <div className="ck-program__paper">
-                <SectionTitle english="WEDDING PROGRAM">កម្មវិធីមង្គលការ</SectionTitle>
+                <SectionTitle english="WEDDING PROGRAM"><InvitationLabel value={"កម្មវិធីមង្គលការ"} /></SectionTitle>
                 {content.dateText && <time className="ck-program__date">{content.dateText}</time>}
                 {content.programDays ? <ProgramTimeline content={content} /> : <div className="ck-program__list">
                     {items.map((item, index) => (
@@ -369,7 +371,7 @@ function CanvaKhmerStory({ content }) {
     if (!chapters.length && !storyText) return null;
     return (
         <div className="ck-story__paper">
-            <SectionTitle english="OUR STORY">រឿងរ៉ាវរបស់យើង</SectionTitle>
+            <SectionTitle english="OUR STORY"><InvitationLabel value={"រឿងរ៉ាវរបស់យើង"} /></SectionTitle>
             <div className="ck-story__chapters">
                 {chapters.length ? chapters.map((chapter, index) => (
                     <article key={chapter.id || index}>
@@ -400,7 +402,8 @@ function CanvaKhmerLocation({ content, showLocation, showStory }) {
             <CanvaArtwork name="location" />
             {hasLocation && (
                 <div className="ck-location__card">
-                    <SectionTitle english="LOCATION">ទីតាំងកម្មវិធី</SectionTitle>
+                    <SectionTitle english="LOCATION"><InvitationLabel value={"ទីតាំងកម្មវិធី"} /></SectionTitle>
+                    <IllustratedMap content={content} />
                     <div className="ck-location__map">
                         {venue.mapEmbedUrl && mapState !== "fallback" ? (
                             <iframe
@@ -412,14 +415,14 @@ function CanvaKhmerLocation({ content, showLocation, showStory }) {
                                 onError={() => setMapState("fallback")}
                             />
                         ) : (
-                            <div className="ck-location__fallback"><IoLocationOutline aria-hidden="true" /><span>មើលទីតាំងនៅលើ Google Maps</span></div>
+                            <div className="ck-location__fallback"><IoLocationOutline aria-hidden="true" /><span><InvitationLabel value={"មើលទីតាំងនៅលើ Google Maps"} /></span></div>
                         )}
-                        {mapState === "loading" && <span className="ck-location__loading">កំពុងផ្ទុកផែនទី...</span>}
+                        {mapState === "loading" && <span className="ck-location__loading"><InvitationLabel value={"កំពុងផ្ទុកផែនទី..."} /></span>}
                     </div>
                     <div className="ck-location__info">
                         {venue.name && <h3>{venue.name}</h3>}
                         {venue.address && <p>{venue.address}</p>}
-                        {venue.mapLink && <a href={venue.mapLink} target="_blank" rel="noopener noreferrer"><IoLocationOutline /> បើក Google Maps</a>}
+                        {venue.mapLink && <a href={venue.mapLink} target="_blank" rel="noopener noreferrer"><IoLocationOutline /><InvitationLabel value={"បើក Google Maps"} /></a>}
                     </div>
                 </div>
             )}
@@ -487,7 +490,7 @@ function CanvaKhmerGallery({ content }) {
                         >
                             <span className="ck-gallery__placeholder-inner">
                                 <IoCameraOutline aria-hidden="true" />
-                                <small>រូបភាពអនុស្សាវរីយ៍</small>
+                                <small><InvitationLabel value={"រូបភាពអនុស្សាវរីយ៍"} /></small>
                             </span>
                         </div>
                     ))}
@@ -548,7 +551,7 @@ function CanvaKhmerGift({ content }) {
         <section id="ck-gift" className="ck-slice ck-gift" data-ck-section="gift">
             <CanvaArtwork name="gift" />
             <div className="ck-gift__card">
-                <SectionTitle english="A GIFT FROM THE HEART">ចំណងដៃ</SectionTitle>
+                <SectionTitle english="A GIFT FROM THE HEART"><InvitationLabel value={"ចំណងដៃ"} /></SectionTitle>
                 <p className="ck-gift__note">{account.note || "វត្តមាន និងពរជ័យរបស់លោកអ្នក គឺជាអំណោយដ៏មានតម្លៃបំផុត"}</p>
                 <h3>{account.bank || "ធនាគារ"}</h3>
                 {accountName && <p>{accountName}</p>}
@@ -569,41 +572,27 @@ function CanvaKhmerDemoRsvp({ useTemplateLink }) {
     return (
         <form className="ck-demo-rsvp" onSubmit={(event) => event.preventDefault()} aria-label="គំរូ RSVP សម្រាប់សន្លឹកការ">
             <div className="ck-demo-rsvp__grid">
-                <label>
-                    ឈ្មោះភ្ញៀវ
-                    <input type="text" placeholder="បញ្ចូលឈ្មោះរបស់អ្នក" />
+                <label><InvitationLabel value={"ឈ្មោះភ្ញៀវ"} /><input type="text" placeholder="បញ្ចូលឈ្មោះរបស់អ្នក" />
                 </label>
-                <label>
-                    លេខទូរស័ព្ទ
-                    <input type="tel" placeholder="012 345 678" />
+                <label><InvitationLabel value={"លេខទូរស័ព្ទ"} /><input type="tel" placeholder="012 345 678" />
                 </label>
-                <label>
-                    ការចូលរួម
-                    <select defaultValue="ATTENDING">
-                        <option value="ATTENDING">ចូលរួម</option>
-                        <option value="NOT_ATTENDING">មិនអាចចូលរួម</option>
-                        <option value="MAYBE">ប្រហែលជាចូលរួម</option>
+                <label><InvitationLabel value={"ការចូលរួម"} /><select defaultValue="ATTENDING">
+                        <option value="ATTENDING"><InvitationLabel value={"ចូលរួម"} /></option>
+                        <option value="NOT_ATTENDING"><InvitationLabel value={"មិនអាចចូលរួម"} /></option>
+                        <option value="MAYBE"><InvitationLabel value={"ប្រហែលជាចូលរួម"} /></option>
                     </select>
                 </label>
-                <label>
-                    ចំនួនភ្ញៀវ
-                    <input type="number" min="0" defaultValue="1" />
+                <label><InvitationLabel value={"ចំនួនភ្ញៀវ"} /><input type="number" min="0" defaultValue="1" />
                 </label>
             </div>
-            <label>
-                សារជូនពរ
-                <textarea rows={3} placeholder="សូមសរសេរពាក្យជូនពរ..." />
+            <label><InvitationLabel value={"សារជូនពរ"} /><textarea rows={3} placeholder="សូមសរសេរពាក្យជូនពរ..." />
             </label>
             {useTemplateLink ? (
                 <Link to={useTemplateLink} className="ck-demo-rsvp__submit">
-                    <IoHeartOutline aria-hidden="true" />
-                    បើក RSVP ពិតប្រាកដ
-                </Link>
+                    <IoHeartOutline aria-hidden="true" /><InvitationLabel value={"បើក RSVP ពិតប្រាកដ"} /></Link>
             ) : (
                 <button type="submit" className="ck-demo-rsvp__submit">
-                    <IoHeartOutline aria-hidden="true" />
-                    ផ្ញើការឆ្លើយតប
-                </button>
+                    <IoHeartOutline aria-hidden="true" /><InvitationLabel value={"ផ្ញើការឆ្លើយតប"} /></button>
             )}
         </form>
     );
@@ -628,7 +617,7 @@ function CanvaKhmerFaq({ items = [] }) {
 
     return (
         <div className="ck-faq">
-            <h3>សំណួរញឹកញាប់ (FAQ)</h3>
+            <h3><InvitationLabel value={"សំណួរញឹកញាប់ (FAQ)"} /></h3>
             {visibleItems.map((item) => (
                 <details key={item.id}>
                     <summary>{item.question}</summary>
@@ -648,11 +637,11 @@ function CanvaKhmerWishRsvp({ content, children, useTemplateLink, showRsvp, show
         <section id="ck-wish" className="ck-slice ck-wish" data-ck-section="wish">
             <CanvaArtwork name="rsvp" />
             <div className="ck-wish__panel">
-                <SectionTitle english="WISHES & RSVP">ជូនពរ</SectionTitle>
+                <SectionTitle english="WISHES & RSVP"><InvitationLabel value={"ជូនពរ"} /></SectionTitle>
                 {content.wish?.message && <blockquote><p>{content.wish.message}</p><cite>{content.groom} ❦ {content.bride}</cite></blockquote>}
                 {showRsvp && (
                     <div className="ck-rsvp">
-                        {content.rsvpDeadline && <p className="ck-rsvp__deadline">សូមឆ្លើយតបមុនថ្ងៃទី {content.rsvpDeadline}</p>}
+                        {content.rsvpDeadline && <p className="ck-rsvp__deadline"><InvitationLabel value={"សូមឆ្លើយតបមុនថ្ងៃទី"} />{content.rsvpDeadline}</p>}
                         {rsvpContent}
                     </div>
                 )}

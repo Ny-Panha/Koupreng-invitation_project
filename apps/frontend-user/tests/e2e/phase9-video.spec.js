@@ -12,7 +12,7 @@ for (const code of ['khmer-celestial', 'garden-royal-khmer-wedding', 'silk-herit
     await page.route('**/cinematic-content', async route => { mediaLoads++; await new Promise(resolve => setTimeout(resolve, 1500)); return route.abort(); });
     await page.goto('/i/review-celestial');
     expect(mediaLoads).toBe(0);
-    const open = page.getByRole('button', { name: /Open invitation|Open Invitation|បើកសំបុត្រ|Tap seal|ចុចបើក|បើកធៀប|ចុចទីនេះដើម្បីមើលព័ត៌មានលម្អិត/ }).first();
+    const open = page.getByRole('button', { name: /Open invitation|View invitation details|Open Invitation|បើកសំបុត្រ|Tap seal|ចុចបើក|បើកធៀប|ចុចទីនេះដើម្បីមើលព័ត៌មានលម្អិត/ }).first();
     await open.focus(); await open.press('Enter');
     const dialog = page.getByRole('dialog', { name: 'Pre-wedding video', exact: true });
     await expect(dialog).toBeVisible();

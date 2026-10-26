@@ -2,7 +2,7 @@ import { act, cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 function DedicatedProbe({ content }) {
-  return <p data-testid="couple-name">{content.groom}</p>;
+  return <p data-testid="couple-name">{content.languageMode === 'EN' ? content.groomEn || content.groom : content.groom}</p>;
 }
 
 vi.mock("../registry/templateRegistry", () => ({
@@ -47,6 +47,14 @@ describe("FE-010 preview message boundaries", () => {
     showPreview({ origin: window.location.origin, source: window, sessionId });
     sendPreview();
     expect(screen.getByTestId("couple-name")).toHaveTextContent("Edited host");
+  });
+
+  it("replaces catalogue English aliases with the selected authored preview text", () => {
+    render(<TemplateExperience tpl={{ id: 'default' }} content={{ ...initialContent, languageMode: 'EN', groomEn: 'Demo English host' }} preview previewChannel={{ origin: window.location.origin, source: window, sessionId }} />);
+    expect(screen.getByTestId('couple-name')).toHaveTextContent('Demo English host');
+    sendPreview({ data: { groomName: 'Authored English host', languageMode: 'EN' } });
+    expect(screen.getByTestId('couple-name')).toHaveTextContent('Authored English host');
+    expect(screen.queryByText('Demo English host')).toBeNull();
   });
 
   it.each([

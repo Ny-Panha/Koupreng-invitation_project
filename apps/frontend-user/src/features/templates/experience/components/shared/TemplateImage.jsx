@@ -1,3 +1,4 @@
+import InvitationLabel from '@/features/templates/shared/InvitationLabel';
 import { useEffect, useState } from "react";
 import { IoImageOutline } from "react-icons/io5";
 
@@ -12,7 +13,7 @@ export default function TemplateImage({ src, alt, className, loading = "lazy", .
         return (
             <span className={`tx-image-fallback${className ? ` ${className}` : ""}`} role="img" aria-label={alt}>
                 <IoImageOutline aria-hidden="true" />
-                <small>រូបភាពអនុស្សាវរីយ៍</small>
+                <small><InvitationLabel value={"រូបភាពអនុស្សាវរីយ៍"} /></small>
             </span>
         );
     }

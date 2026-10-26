@@ -1,3 +1,5 @@
+import InvitationLabel from '@/features/templates/shared/InvitationLabel';
+import IllustratedMap from '../../../shared/IllustratedMap';
 import { useState, useMemo } from "react";
 import { IoLogoFacebook, IoLocationSharp, IoMapOutline, IoNavigate, IoRestaurantOutline } from "react-icons/io5";
 
@@ -39,6 +41,7 @@ export default function TemplateVenue({ content }) {
     return (
         <section className="tx-section tx-venue" data-tx-section="venue" aria-labelledby="tx-venue-title">
             <div className="tx-shell">
+                <IllustratedMap content={content} />
                 <TemplateSectionHeader
                     id="tx-venue-title"
                     icon={templateIcons.venue}
@@ -98,7 +101,7 @@ export default function TemplateVenue({ content }) {
                                     fontWeight: 700,
                                 }}>
                                     <IoRestaurantOutline style={{ fontSize: "1.1rem" }} />
-                                    <span>កន្លែងអង្គុយ៖ {content.guestTable} {content.guestSeat ? `(កៅអី ${content.guestSeat})` : ""}</span>
+                                    <span><InvitationLabel value={"កន្លែងអង្គុយ៖"} />{content.guestTable} {content.guestSeat ? `(កៅអី ${content.guestSeat})` : ""}</span>
                                 </div>
 
                                 <button
@@ -119,7 +122,7 @@ export default function TemplateVenue({ content }) {
                                     onClick={() => setShowFloorPlan(true)}
                                 >
                                     <IoMapOutline />
-                                    <span>🗺️ មើលទីតាំងតុក្នុងសាល</span>
+                                    <span><InvitationLabel value={"🗺️ មើលទីតាំងតុក្នុងសាល"} /></span>
                                 </button>
                             </div>
                         )}
@@ -132,11 +135,10 @@ export default function TemplateVenue({ content }) {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    <IoNavigate aria-hidden="true" />
-                                    បើកផែនទី <span>/ Open Map</span>
+                                    <IoNavigate aria-hidden="true" /><InvitationLabel value={"បើកផែនទី"} /><span>/ Open Map</span>
                                 </a>
                             ) : (
-                                <p className="tx-venue__no-map">ព័ត៌មានទីតាំងលម្អិតនឹងបញ្ជាក់បន្ថែម</p>
+                                <p className="tx-venue__no-map"><InvitationLabel value={"ព័ត៌មានទីតាំងលម្អិតនឹងបញ្ជាក់បន្ថែម"} /></p>
                             )}
                             {(content.sketchMapImage || venue.sketchMapImage) && (
                                 <a
@@ -145,8 +147,7 @@ export default function TemplateVenue({ content }) {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    <IoMapOutline aria-hidden="true" />
-                                    ប្លង់បង្ហាញផ្លូវ <span>/ Sketch Map</span>
+                                    <IoMapOutline aria-hidden="true" /><InvitationLabel value={"ប្លង់បង្ហាញផ្លូវ"} /><span>/ Sketch Map</span>
                                 </a>
                             )}
                             {hasFacebook && (

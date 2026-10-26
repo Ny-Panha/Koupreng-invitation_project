@@ -1,6 +1,7 @@
 import { groupProgram, PROGRAM_PERIODS } from './program';
 import { formatEventDate, formatNumerals } from './eventDateTime';
 import './event-sections.css';
+import CeremonyIcon from './CeremonyIcon';
 
 export default function ProgramTimeline({ content = {}, english = String(content.languageMode).toLowerCase() === 'en' }) {
   const numerals = content.saveTheDate?.numerals || (english ? 'latin' : 'khmer');
@@ -15,7 +16,7 @@ export default function ProgramTimeline({ content = {}, english = String(content
     </h3>
     <ol className="kp-timeline">{day.items.filter(item => item.enabled !== false).map(item => <li key={item.id}>
       <span className="kp-timeline-time">{formatNumerals(item.time || '', numerals)}{item.endTime && <><span aria-hidden="true">–</span>{formatNumerals(item.endTime, numerals)}</>}{item.period && <small>{PROGRAM_PERIODS[item.period]?.[english ? 1 : 0] || item.period}</small>}</span>
-      <span className="kp-timeline-marker" aria-hidden="true" />
+      <span className="kp-timeline-marker" aria-hidden="true"><CeremonyIcon iconKey={item.iconKey} /></span>
       <div className="kp-timeline-copy"><h4>{(english ? item.titleEn : item.titleKm) || item.title || item.titleEn}</h4>
         {bilingual && item.titleEn && <p lang="en">{item.titleEn}</p>}
         {((english ? item.descriptionEn : item.descriptionKm) || item.description) && <p>{(english ? item.descriptionEn : item.descriptionKm) || item.description}</p>}

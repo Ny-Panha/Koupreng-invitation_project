@@ -1,3 +1,5 @@
+import InvitationLabel from '@/features/templates/shared/InvitationLabel';
+import IllustratedMap from '@/features/templates/shared/IllustratedMap';
 import { useCinematicOpening } from "../../shared/Openings/cinematicOpeningContext";
 import SaveTheDate from '../../shared/SaveTheDate';
 import AuthoredClosing from '../../shared/AuthoredClosing';
@@ -448,6 +450,7 @@ export default function DigitalYesLayout({
                     </a>
                   )}
 
+                  <IllustratedMap content={tpl} />
                   {tpl.sketchMapImage && (
                     <div className="mt-5 pt-4 border-t border-amber-500/20">
                       <p className="text-xs text-amber-300 font-medium mb-2.5">
@@ -692,9 +695,7 @@ export default function DigitalYesLayout({
           <Link
             to={useTemplateLink}
             className="px-4 py-2 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold text-xs uppercase tracking-wider hover:brightness-110 shadow-lg transition"
-          >
-            ប្រើគំរូនេះ
-          </Link>
+          ><InvitationLabel value={"ប្រើគំរូនេះ"} /></Link>
         </div>
       )}
     </div>

@@ -6,7 +6,7 @@ import { phase8Content } from './support/phase8Fixtures';
 
 const matrix = JSON.parse(readFileSync(new URL('../../../../docs/phase10/01-studio-template-contract-matrix.json', import.meta.url), 'utf8'));
 async function openPublic(page) {
-  const buttons = page.getByRole('button', { name: /^(Open invitation|បើកសំបុត្រ|បើកធៀប|ចុចទីនេះ|ចុចដើម្បីបើក|សូមចុច)/i });
+  const buttons = page.getByRole('button', { name: /^(Open invitation|View invitation details|បើកសំបុត្រ|បើកធៀប|ចុចទីនេះ|ចុចដើម្បីបើក|សូមចុច)/i });
   for (let index = 0; index < await buttons.count(); index++) if (await buttons.nth(index).isVisible()) { await buttons.nth(index).click(); return; }
 }
 

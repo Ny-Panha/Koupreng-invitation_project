@@ -1,3 +1,4 @@
+import { invitationFeatureFields } from '../../shared/invitationFeatures';
 import { normalizeProgram } from "../../shared/program";
 import { eventPresentationFields } from '../../shared/eventPresentation';
 import { normalizeInvitationLanguage } from "@/shared/i18n/invitationLanguage";
@@ -686,6 +687,7 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         sectionOrder: host.sectionOrder || tpl.sectionOrder || [],
         hasHostContent,
         ...eventPresentationFields(hasHostContent ? host : tpl),
+        ...invitationFeatureFields(hasHostContent ? host : tpl),
         fontKhmer: host.fontKhmer || tpl.fontKhmer || tpl.design?.fontKhmer || "",
         studioStyle: host.studioStyle || tpl.studioStyle || {},
         fontLatin: host.fontLatin || tpl.fontLatin || tpl.design?.fontLatin || "",
@@ -751,15 +753,15 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         message: hasHostContent
             ? nonBlank(host.message)
             : (nonBlank(tpl.message) || nonBlank(tpl.messageText) || nonBlank(tpl.blessingMessage) || copy.message),
-        familyHeading: nonBlank(tpl.familyHeading || host.familyHeading) || "គ្រួសារទាំងសងខាង",
-        families: nonBlank(tpl.subtitle || host.subtitle) || "សូមគោរពអញ្ជើញ លោកអ្នក និងក្រុមគ្រួសារ",
+        familyHeading: nonBlank(tpl.familyHeading || host.familyHeading) || (languageMode === "en" ? 'Together with our families' : "គ្រួសារទាំងសងខាង"),
+        families: nonBlank(tpl.subtitle || host.subtitle) || (languageMode === "en" ? 'You and your family are warmly invited' : "សូមគោរពអញ្ជើញ លោកអ្នក និងក្រុមគ្រួសារ"),
         family: {
-            groomTitle: nonBlank(templateFamily.groomTitle || host.family?.groomTitle) || "ខាងកូនប្រុស",
+            groomTitle: languageMode === 'en' ? 'First partner family' : nonBlank(templateFamily.groomTitle || host.family?.groomTitle) || 'ខាងកូនប្រុស',
             groomParents: host.family?.groomParents || hostCouple.groomParents || templateFamily.groomParents || templateCouple.groomParents || [],
-            groomLabel: nonBlank(templateFamily.groomLabel || host.family?.groomLabel) || "កូនប្រុសនាម",
-            brideTitle: nonBlank(templateFamily.brideTitle || host.family?.brideTitle) || "ខាងកូនស្រី",
+            groomLabel: nonBlank(templateFamily.groomLabel || host.family?.groomLabel) || (languageMode === "en" ? 'First partner' : "កូនប្រុសនាម"),
+            brideTitle: languageMode === 'en' ? 'Second partner family' : nonBlank(templateFamily.brideTitle || host.family?.brideTitle) || 'ខាងកូនស្រី',
             brideParents: host.family?.brideParents || hostCouple.brideParents || templateFamily.brideParents || templateCouple.brideParents || [],
-            brideLabel: nonBlank(templateFamily.brideLabel || host.family?.brideLabel) || "កូនស្រីនាម",
+            brideLabel: nonBlank(templateFamily.brideLabel || host.family?.brideLabel) || (languageMode === "en" ? 'Second partner' : "កូនស្រីនាម"),
         },
         couple: {
             groomIntro: hostCouple.groomIntro || templateCouple.groomIntro || (hasHostContent ? "" : copy.groomIntro),

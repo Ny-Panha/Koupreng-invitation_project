@@ -11,6 +11,7 @@ export function templateCapabilities(template = {}) {
   const typography = [templateRegistry['khmer-celestial'], templateRegistry['silk-heritage'], templateRegistry['khmer-royal-lotus']].includes(renderer);
   const party = renderer === templateRegistry['khmer-celestial'];
   const detailedGuestSections = renderer !== templateRegistry['khmer-royal-lotus'] && !noSchedule;
-  return { appearance, typography, party, faq: detailedGuestSections, dressCode: detailedGuestSections, story: !noStory, schedule: !noSchedule, programDays: !noSchedule, countdown: !noSchedule,
+  const familyLayout = key !== 'event-essential' && (!renderer || [templateRegistry['khmer-celestial'], templateRegistry['silk-heritage'], templateRegistry['khmer-royal-lotus'], templateRegistry['khmer-golden-canva-inspired-wedding']].includes(renderer));
+  return { familyLayout, monogram: familyLayout && key !== 'event-essential', illustratedMap: !noSchedule, appearance, typography, party, faq: detailedGuestSections, dressCode: detailedGuestSections, story: !noStory, schedule: !noSchedule, programDays: !noSchedule, countdown: !noSchedule,
     saveTheDate: !noSchedule, calendar: !noSchedule, sectionOrdering: renderer === templateRegistry['silk-heritage'] };
 }

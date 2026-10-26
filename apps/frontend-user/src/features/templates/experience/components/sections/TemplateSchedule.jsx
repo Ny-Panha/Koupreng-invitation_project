@@ -1,3 +1,4 @@
+import InvitationLabel from '@/features/templates/shared/InvitationLabel';
 import ProgramTimeline from '../../../shared/ProgramTimeline';
 import ProgramDetails from "../../../shared/ProgramDetails";
 import { useEffect, useRef, useState } from "react";
@@ -116,7 +117,7 @@ function ScheduleTimeline({ content }) {
                         <div className="tx-schedule__horizontal-wrapper">
                             <div className="tx-schedule__progress-wrap" aria-hidden="true">
                                 <span className="tx-schedule__progress-label">
-                                    <span>Scroll Down ➔ មើលកម្មវិធី</span>
+                                    <span><InvitationLabel value={"Scroll Down ➔ មើលកម្មវិធី"} /></span>
                                 </span>
                                 <div className="tx-schedule__progress-bar">
                                     <motion.div

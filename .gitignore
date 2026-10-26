@@ -92,3 +92,8 @@ scripts/dev/.bot-state.json
 
 # OAuth & API Secrets
 client_secret*.json
+
+# Local Phase 11 test outputs (reviewed evidence is under docs/phase11)
+/output/playwright/phase11/
+
+/output/playwright/phase11-baseline/

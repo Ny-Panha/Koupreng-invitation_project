@@ -29,8 +29,9 @@ export default function CelestialOpening({ content, onOpen, autoFocus = true }) 
   const reducedMotion = usePrefersReducedMotion();
   const [videoFailed, setVideoFailed] = useState(false);
   const openLabel = content.opening?.openButtonText || "Open invitation";
-  const guestName = content.guestName?.trim() || "ភ្ញៀវកិត្តិយស";
-  const guestLabel = content.isPersonalizedGuest ? "សូមគោរពអញ្ជើញ" : "ជូនចំពោះ";
+  const english = String(content.languageMode).toLowerCase() === "en";
+  const guestName = content.guestName?.trim() || (english ? "Dear guest" : "ភ្ញៀវកិត្តិយស");
+  const guestLabel = english ? "To our guest" : content.isPersonalizedGuest ? "សូមគោរពអញ្ជើញ" : "ជូនចំពោះ";
   const guestNameLength = Array.from(guestName.replace(/\s+/g, "")).length;
   const guestNameClass = [
     "kc-opening__guest-name",

@@ -29,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class EntitlementService {
     public enum Feature { PREMIUM_TEMPLATES, QR_INVITATIONS, QR_CHECK_IN, SEATING, ADVANCED_ANALYTICS,
-        CUSTOM_BRANDING, TEAM_MEMBERS, AI_ASSISTANT, GUEST_IMPORT, PRE_WEDDING_VIDEO }
+        CUSTOM_BRANDING, TEAM_MEMBERS, AI_ASSISTANT, GUEST_IMPORT, PRE_WEDDING_VIDEO, COUPLE_MONOGRAM, ILLUSTRATED_VENUE_MAP }
     public record Policy(String source, Set<Feature> features, Integer maxInvitations, Integer maxGuests,
                          Integer maxGuestsPerInvitation, Integer maxTeamMembers) { }
 
@@ -139,6 +139,8 @@ public class EntitlementService {
         // Resolve the purchased snapshot, never the browser's tier or a generic paid flag.
         if (!"CONFIGURED_FREE_PACKAGE".equals(source) && "PREMIUM".equals(plan.getCode())) {
             features.add(Feature.PRE_WEDDING_VIDEO);
+            features.add(Feature.COUPLE_MONOGRAM);
+            features.add(Feature.ILLUSTRATED_VENUE_MAP);
         }
         if (plan.isPremiumTemplatesEnabled()) { features.add(Feature.PREMIUM_TEMPLATES); }
         if (plan.isQrInvitationsEnabled()) { features.add(Feature.QR_INVITATIONS); }

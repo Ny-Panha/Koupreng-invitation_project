@@ -1,3 +1,4 @@
+import InvitationLabel from '@/features/templates/shared/InvitationLabel';
 import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Calendar, MapPin, Heart } from "lucide-react";
@@ -73,9 +74,7 @@ export default function DefaultTemplateLayout({
             <div style={{ display: "inline-flex", padding: "0.75rem", borderRadius: "50%", background: hasCustomCover ? "rgba(255, 255, 255, 0.9)" : "#ede9fe", color: "#7c3aed", marginBottom: "1rem" }}>
               <Heart size={28} />
             </div>
-            <p style={{ letterSpacing: "normal", textTransform: "uppercase", fontSize: "0.85rem", color: hasCustomCover ? "#f3f4f6" : "#6b7280", margin: 0, textShadow: hasCustomCover ? "0 1px 3px rgba(0,0,0,0.6)" : "none" }}>
-              អាពាហ៍ពិពាហ៍
-            </p>
+            <p style={{ letterSpacing: "normal", textTransform: "uppercase", fontSize: "0.85rem", color: hasCustomCover ? "#f3f4f6" : "#6b7280", margin: 0, textShadow: hasCustomCover ? "0 1px 3px rgba(0,0,0,0.6)" : "none" }}><InvitationLabel value={"អាពាហ៍ពិពាហ៍"} /></p>
             <h1 style={{ fontSize: "2.25rem", fontWeight: "700", color: hasCustomCover ? "#ffffff" : "#1f2937", margin: "0.5rem 0", textShadow: hasCustomCover ? "0 2px 8px rgba(0,0,0,0.7)" : "none" }}>
               {tpl.groom} &amp; {tpl.bride}
             </h1>
@@ -94,18 +93,14 @@ export default function DefaultTemplateLayout({
 
         {/* Countdown */}
         <div style={{ margin: "2rem auto", padding: "1.5rem", background: "#fff", borderRadius: "16px", boxShadow: "0 4px 20px rgba(0,0,0,0.04)" }}>
-          <h3 style={{ fontSize: "0.95rem", color: "#4b5563", marginBottom: "1rem", fontWeight: "600" }}>
-            រាប់ថយក្រោយដល់ថ្ងៃពិសេស
-          </h3>
+          <h3 style={{ fontSize: "0.95rem", color: "#4b5563", marginBottom: "1rem", fontWeight: "600" }}><InvitationLabel value={"រាប់ថយក្រោយដល់ថ្ងៃពិសេស"} /></h3>
           {tpl.enabledSections?.countdown !== false && <SaveTheDate content={tpl} />}
         </div>
 
         {/* Schedule */}
         {tpl.enabledSections?.schedule !== false && tpl.schedule && tpl.schedule.length > 0 && (
           <div style={{ margin: "2rem auto", padding: "1.5rem", background: "#fff", borderRadius: "16px", boxShadow: "0 4px 20px rgba(0,0,0,0.04)", textAlign: "left" }}>
-            <h3 style={{ fontSize: "1.1rem", fontWeight: "600", color: "#1f2937", marginBottom: "1rem", textAlign: "center" }}>
-              កម្មវិធីពិធីមង្គលការ
-            </h3>
+            <h3 style={{ fontSize: "1.1rem", fontWeight: "600", color: "#1f2937", marginBottom: "1rem", textAlign: "center" }}><InvitationLabel value={"កម្មវិធីពិធីមង្គលការ"} /></h3>
             {tpl.programDays ? <ProgramTimeline content={tpl} /> : <ScheduleList items={tpl.schedule} />}
           </div>
         )}
@@ -124,18 +119,14 @@ export default function DefaultTemplateLayout({
         {/* Gallery */}
         {tpl.gallery && tpl.gallery.length > 0 && (
           <div style={{ margin: "2rem auto" }}>
-            <h3 style={{ fontSize: "1.15rem", fontWeight: "600", color: "#1f2937", marginBottom: "1rem" }}>
-              កម្រងរូបភាព
-            </h3>
+            <h3 style={{ fontSize: "1.15rem", fontWeight: "600", color: "#1f2937", marginBottom: "1rem" }}><InvitationLabel value={"កម្រងរូបភាព"} /></h3>
             <GalleryGrid images={tpl.gallery} />
           </div>
         )}
 
         {/* RSVP */}
         <div style={{ margin: "2.5rem auto", padding: "2rem 1.5rem", background: "#fff", borderRadius: "16px", boxShadow: "0 4px 20px rgba(0,0,0,0.04)" }}>
-          <h3 style={{ fontSize: "1.2rem", fontWeight: "600", color: "#1f2937", marginBottom: "0.5rem" }}>
-            ឆ្លើយតបការចូលរួម (RSVP)
-          </h3>
+          <h3 style={{ fontSize: "1.2rem", fontWeight: "600", color: "#1f2937", marginBottom: "0.5rem" }}><InvitationLabel value={"ឆ្លើយតបការចូលរួម (RSVP)"} /></h3>
           <RsvpContainer children={children} />
         </div>
       </main>
@@ -149,9 +140,7 @@ export default function DefaultTemplateLayout({
           <Link
             to={useTemplateLink}
             style={{ padding: "0.5rem 1.25rem", borderRadius: "9999px", background: "#7c3aed", color: "#fff", textDecoration: "none", fontWeight: "600", fontSize: "0.875rem" }}
-          >
-            ប្រើគំរូនេះ
-          </Link>
+          ><InvitationLabel value={"ប្រើគំរូនេះ"} /></Link>
         </div>
       )}
     </div>
