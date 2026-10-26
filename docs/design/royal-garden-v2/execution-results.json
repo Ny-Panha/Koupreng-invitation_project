@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-26",
+  "baseCommit": "be949921",
+  "lint": {
+    "result": "pass",
+    "findings": 0
+  },
+  "unitAndComponent": {
+    "result": "pass",
+    "files": 140,
+    "passed": 1005,
+    "durationSeconds": 60.43
+  },
+  "productionBuild": {
+    "result": "pass",
+    "durationSeconds": 1.31
+  },
+  "browser": {
+    "result": "pass",
+    "startTime": "2026-10-26T09:43:03.702Z",
+    "duration": 159072.947,
+    "expected": 64,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0,
+    "projects": [
+      "desktop-chromium",
+      "mobile-chromium",
+      "firefox",
+      "webkit"
+    ],
+    "viewportWidths": [
+      320,
+      375,
+      390,
+      430,
+      512,
+      768,
+      1024,
+      1440
+    ],
+    "apiMode": "synthetic repository fixtures"
+  },
+  "finalResponsiveReview": {
+    "result": "pass",
+    "passed": 4,
+    "durationSeconds": 41.5,
+    "includesAxe": true
+  },
+  "sampleDemoReview": {
+    "result": "pass",
+    "suppliedNamesVerified": true,
+    "ceremonies": 9,
+    "screenshots": 4
+  },
+  "skillIntegrity": {
+    "result": "pass",
+    "bundledDirectories": 59,
+    "pinnedSkills": 10,
+    "errors": 0
+  },
+  "routing": {
+    "result": "pass",
+    "validSkills": 58,
+    "errors": 0
+  },
+  "liveBackend": {
+    "healthHttpStatus": 503,
+    "status": "DOWN",
+    "databaseMutationsTested": false
+  },
+  "productionDeploymentPerformed": false
+}

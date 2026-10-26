@@ -24,6 +24,7 @@ import PublishReview from "./studio/PublishReview";
 import { publishReadiness } from "./studio/publishReadiness";
 import { createPortal } from "react-dom";
 import StudioAppearance from "./studio/StudioAppearance";
+import CinematicIntroEditor from './studio/CinematicIntroEditor';
 import { useStudioPersistence } from "./studio/useStudioPersistence";
 import { replaceMediaReferences, uploadInlineReferences } from "./studio/studioMedia";
 import "./studio/InvitationStudio.css";
@@ -738,6 +739,8 @@ export default function InvitationForm({ invitation }) {
             photos: (() => {
                 let list = Array.isArray(customParsed.photos)
                     ? [...customParsed.photos]
+                    : Array.isArray(customParsed.gallery)
+                        ? customParsed.gallery.map((photo, i) => ({ ...(typeof photo === 'object' ? photo : {}), id: photo?.id || `p${i + 1}`, url: typeof photo === 'string' ? photo : photo?.url || photo?.src || photo?.preview || '' }))
                     : (preset.photos && preset.photos.length > 0
                         ? preset.photos
                         : (tpl?.galleryImages && tpl.galleryImages.length > 0
@@ -828,7 +831,7 @@ export default function InvitationForm({ invitation }) {
         const config = getLocalizedTemplateFormFlow(capabilities.appearance ? 'khmer-celestial' : template || form.templateId, uiLanguage);
         config.sectionOrder = config.sectionOrder.filter(key => capabilities[key] !== false && (key !== "story" || !invitation?.eventType || invitation.eventType === "WEDDING"));
         const appearance = capabilities.typography;
-        return { ...config, sectionOrder: ["eventInfo", ...config.sectionOrder.flatMap(key => key === "cover" && appearance ? [key, "appearance"] : [key]), "music", "preWeddingVideo"] };
+        return { ...config, sectionOrder: ["eventInfo", ...config.sectionOrder.flatMap(key => key === "cover" && appearance ? [key, "appearance"] : [key]), ...(capabilities.cinematicIntro ? ['cinematicIntro'] : []), "music", "preWeddingVideo"] };
     }, [form.templateId, catalogVersion, invitation?.eventType, uiLanguage]);
     const activeSection = resolveStudioSection(selectedSection, flowConfig.sectionOrder);
     const activeStudioTab = studioTabForSection(activeSection);
@@ -2390,6 +2393,12 @@ export default function InvitationForm({ invitation }) {
 
     const renderVenueSection = () => (
         <div className="pe-section-card" key="venue">
+            {templateCapabilities(getTemplateById(form.templateId) || {}).cinematicIntro && <label className="pe-label">{uiCopy('ការបង្ហាញផែនទី', 'Map presentation')}<select className="pe-input" value={form.venueMapMode || 'auto'} onChange={e => update('venueMapMode', e.target.value)}>
+                <option value="auto">{uiCopy('ប្រើផែនទីដែលបានបន្ថែម', 'Use available map artwork')}</option>
+                <option value="sketch">{uiCopy('រូបភាពផែនទី', 'Uploaded sketch map')}</option>
+                <option value="embed">{uiCopy('ផែនទីអន្តរកម្ម', 'Interactive Google map')}</option>
+                <option value="details">{uiCopy('ព័ត៌មានទីតាំងតែប៉ុណ្ណោះ', 'Venue details only')}</option>
+            </select></label>}
             <h4 className="pe-section-heading">
                 <span className="pe-sec-icon-badge">
                     <MapPin size={17} />
@@ -3256,6 +3265,7 @@ export default function InvitationForm({ invitation }) {
     );
 
     const sectionRenderers = {
+        cinematicIntro: () => <CinematicIntroEditor value={form.cinematicIntro} photos={form.photos} english={englishUI} onChange={change => setForm(previous => ({ ...previous, cinematicIntro: change(previous.cinematicIntro) }))} />,
         eventInfo: renderEventInfoSection,
         music: renderMusicSection,
         preWeddingVideo: () => <PreWeddingVideoEditor eventId={invitation?.backendInvitationId || invitationId} value={form.preWeddingVideo} onChange={value => update("preWeddingVideo", value)} english={englishUI} />,
@@ -3295,10 +3305,12 @@ export default function InvitationForm({ invitation }) {
                 return mount ? createPortal(toolbar, mount) : toolbar;
             })()}
             {studio.error && <div className="studio-save-error" role="alert"><span>{studio.error}</span>{!["conflict", "expired"].includes(studio.phase) && <button type="button" onClick={() => studio.save()} disabled={isSaving}>{uiCopy("រក្សាទុកម្ដងទៀត", "Retry save")}</button>}{["conflict", "expired"].includes(studio.phase) && <><p>{uiCopy("ចម្លងអត្ថបទសំខាន់ ឬទាញយកពង្រាងនេះ មុនបើកកម្មវិធីម្ដងទៀត។", "Copy important text or download this draft before reopening the event.")}</p><button type="button" onClick={() => { const url = URL.createObjectURL(new Blob([JSON.stringify(form, null, 2)], { type: "application/json" })); const link = document.createElement("a"); link.href = url; link.download = "invitation-unsaved-draft.json"; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }}>{uiCopy("ទាញយកពង្រាងមិនទាន់រក្សាទុក", "Download unsaved draft")}</button></>}</div>}
-            <StudioGuide mode={editorMode} onMode={mode => { setEditorMode(mode); if (mode === 'guided') goToGuideStep(guideStep); }} step={guideStep} onStep={goToGuideStep} sections={flowConfig.sectionOrder} activeSection={activeSection} onSection={setSelectedSection} english={englishUI} checks={readiness} onField={completePublishField} onPreview={openPreview} onGuests={() => openEventTool("guests")} onRsvp={() => openEventTool("rsvp")} onPublish={reviewPublication} published={published} publishedUrl={publishedUrl} saving={isSaving || isPublishing} canPublish={canPublish} canManageGuests={workspace ? workspace.can?.("MANAGE_GUESTS") : true} />
+            <div className="studio-workflow-bar">
+                <StudioGuide mode={editorMode} onMode={mode => { setEditorMode(mode); if (mode === 'guided') goToGuideStep(guideStep); }} step={guideStep} onStep={goToGuideStep} sections={flowConfig.sectionOrder} activeSection={activeSection} onSection={setSelectedSection} english={englishUI} checks={readiness} onField={completePublishField} onPreview={openPreview} onGuests={() => openEventTool("guests")} onRsvp={() => openEventTool("rsvp")} onPublish={reviewPublication} published={published} publishedUrl={publishedUrl} saving={isSaving || isPublishing} canPublish={canPublish} canManageGuests={workspace ? workspace.can?.("MANAGE_GUESTS") : true} />
+                {!compactPreview && !isMobilePreviewOpen && <StudioSplitControls split={workspaceSplit} english={englishUI} />}
+            </div>
             <PublishReview open={publishReviewOpen} onClose={() => setPublishReviewOpen(false)} onConfirm={publishInvitation} onCheck={checkPublication} checks={readiness} onField={completePublishField} english={englishUI} publishing={isPublishing} error={publishError} visibility={form.visibility} published={published} />
             {/* The controls and preview continue to use the original template engine. */}
-            {!compactPreview && !isMobilePreviewOpen && <StudioSplitControls split={workspaceSplit} english={englishUI} />}
             <div className="pe-workspace-grid" ref={workspaceGrid} data-has-preview={!compactPreview && !isMobilePreviewOpen}>
                 {editorMode === "advanced" && <StudioSections sections={flowConfig.sectionOrder} active={activeSection}
                     onChange={section => { lastEditorField.current = null; previewReturn.current = null; setSelectedSection(section); }} english={englishUI} />}

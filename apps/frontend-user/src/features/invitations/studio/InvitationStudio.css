@@ -7,6 +7,27 @@
 .invitation-studio .studio-heading { font-size: 20px; line-height: 1.7; font-weight: 700; margin: 0; }
 .studio-section-group + .studio-section-group { margin-top: 20px; }
 .studio-section-list button svg { flex-shrink: 0; }
+.studio-intro-editor { display: grid; gap: 18px; }
+.studio-intro-editor > label, .studio-intro-editor li label, .studio-intro-options label { display: grid; gap: 7px; font-size: 14px; line-height: 1.8; }
+.studio-intro-editor input:not([type=checkbox]):not([type=range]), .studio-intro-editor select { width: 100%; min-width: 0; min-height: 44px; padding: 9px 12px; color: var(--studio-ink); background: #fff; border: 1px solid #d9d3c7; border-radius: 8px; font: inherit; }
+.studio-intro-lead { margin: 0; color: #4f554e; line-height: 1.9; }
+.studio-intro-help { margin: 0; font-size: 13px; color: #676b61; line-height: 1.8; }
+.studio-intro-media-heading { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #e5e0d5; padding-top: 20px; gap: 10px; }
+.studio-intro-media-heading h3 { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 16px; }
+.studio-intro-media-heading > span { font-size: 12px; color: #676b61; white-space: nowrap; }
+.studio-intro-upload { padding: 18px; border: 1px dashed #b9a57e; border-radius: 10px; background: #faf8f2; }
+.studio-intro-slides { display: grid; gap: 14px; list-style: none; margin: 0; padding: 0; }
+.studio-intro-slides li { display: grid; grid-template-columns: 78px minmax(0,1fr); gap: 16px; padding: 14px; border: 1px solid #e5e0d5; border-radius: 10px; background: #fcfbf8; }
+.studio-intro-slides img { width: 78px; height: 110px; object-fit: cover; border-radius: 6px; }
+.studio-intro-slides input[type=range], .studio-intro-options input[type=range] { width: 100%; min-height: 32px; accent-color: var(--studio-gold); }
+.studio-intro-editor .studio-inline-check { display: flex; align-items: center; gap: 10px; min-height: 44px; }
+.studio-intro-editor .studio-inline-check input { width: 20px; height: 20px; flex-shrink: 0; accent-color: var(--studio-gold); }
+.studio-intro-options { display: grid; gap: 18px; }
+.studio-intro-editor [role=alert] { color: #a52838; }
+.invitation-studio .studio-section-list button[aria-current] { box-shadow: inset 3px 0 0 var(--studio-gold); }
+.invitation-studio .studio-subsection { border-radius: 12px; }
+.invitation-studio .studio-tab-heading { border-bottom: 1px solid #e8e2d7; padding-bottom: 16px; }
+@media (max-width: 374px) { .studio-intro-slides li { grid-template-columns: 56px minmax(0,1fr); padding: 10px; gap: 10px; } .studio-intro-slides img { width: 56px; height: 80px; } }
 .studio-section-list a { display: flex; align-items: center; gap: 10px; padding: 10px; min-height: 44px; color: inherit; text-decoration: none; font-size: 14px; }
 .studio-section-list a:hover { background: var(--ws-gold-light); border-radius: 8px; }
 .invitation-studio .studio-appearance .pe-label { text-align: left; align-items: stretch; }
@@ -174,6 +195,11 @@ html:has(.dash-wrapper--studio), body:has(.dash-wrapper--studio), #root:has(.das
 .studio-program-day { min-width: 0; margin: 20px 0; border: 1px solid var(--workspace-border, #e8e2d8); border-radius: 12px; padding: 16px; }
 .studio-program-day legend { padding: 0 8px; font-weight: 700; }
 .studio-guide { padding: 16px 20px; border-bottom: 1px solid var(--ws-border, #e5e0d5); background: var(--ws-canvas, #fbf6ee); line-height: 1.8; }
+.invitation-studio[data-editor-mode=advanced] .studio-workflow-bar { display: flex; align-items: center; flex-wrap: wrap; border-bottom: 1px solid var(--ws-border, #e5e0d5); background: var(--ws-canvas, #fbf6ee); }
+.invitation-studio[data-editor-mode=advanced] .studio-guide { flex: 1; padding: 10px 16px; border: 0; }
+.invitation-studio[data-editor-mode=advanced] .studio-split-controls { padding: 10px 16px; border: 0; background: transparent; }
+.invitation-studio .studio-preview-tools { gap: 4px; padding: 8px 0; }
+.invitation-studio .studio-preview-tools button { padding-inline: 9px; }
 .studio-guide h2, .studio-readiness h2 { font-size: 18px; line-height: 1.8; margin: 16px 0 8px; }
 .studio-guide button, .studio-readiness button, .studio-guide-navigation button, .studio-preview-recovery button { min-height: 44px; padding: 8px 12px; border: 1px solid var(--ws-border-strong, #d5c5ad); border-radius: 9px; background: white; color: var(--ws-ink, #292c28); font: inherit; cursor: pointer; }
 .studio-guide button:disabled { opacity: .5; cursor: default; }

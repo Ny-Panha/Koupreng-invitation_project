@@ -320,6 +320,8 @@ export function draftToInvitationPayload(draft, backendTemplateId) {
   const languageMode = extras.languageMode || "both";
   const coverImage = draft?.coverImage && !isLocalPreviewUrl(draft.coverImage) ? draft.coverImage : "";
   const content = compactObject({
+    ...invitationFeatureFields(draft),
+    ...eventPresentationFields(draft),
     templateId: draft?.templateId || KEEP_TEMPLATE_CODE,
     couple,
     event,

@@ -1,0 +1,20 @@
+[
+  {
+    "path": "apps/frontend-user/public/templates/royal-garden/ivory.svg",
+    "bytes": 267,
+    "sha256": "4931135a88181cb11aa720992ee8c0b9da39408ffd8fced4bf7512d3684c2d68",
+    "origin": "Original project SVG"
+  },
+  {
+    "path": "apps/frontend-user/public/templates/royal-garden/kbach-pattern.svg",
+    "bytes": 878,
+    "sha256": "b9d580d80cd4b34e4c73459b2261ae58c851cbb405faaf284fb29a8390fabb00",
+    "origin": "Original project SVG"
+  },
+  {
+    "path": "apps/frontend-user/public/templates/royal-garden/timeline-curve.svg",
+    "bytes": 215,
+    "sha256": "ef9f4b7a748e2a1b47b93a3beb3a819dc2093f4673b09fd243328f4db8ac200f",
+    "origin": "Original project SVG"
+  }
+]
