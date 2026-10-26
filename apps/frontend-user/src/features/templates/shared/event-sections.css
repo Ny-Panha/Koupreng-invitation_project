@@ -44,5 +44,12 @@
 .kp-save-date,.kp-program { container-type: inline-size; }
 @media (max-width: 374px) { .kp-countdown { gap: .3rem; } .kp-program .kp-timeline li { grid-template-columns: 3.4rem 1rem minmax(0,1fr); } }
 
-.kp-timeline-marker:has(svg) { width: 28px; height: 28px; display: grid; place-items: center; border: 0; background: transparent; }
+.kp-program .kp-timeline li { grid-template-columns: minmax(3.5rem, .75fr) 1.8rem minmax(0, 4fr); }
+.kp-timeline-marker:has(svg) { width: 28px; padding-top: .3rem; border: 0; background: transparent; color: var(--kp-accent, currentColor); }
+.kp-timeline-marker:has(svg)::after { content: none; }
+.kp-timeline-marker:has(svg)::before { top: 2.2rem; bottom: .2rem; }
+.kc-root .kp-program-day-title { font-family: Moul, serif; font-size: 1.05em; line-height: 2; }
+.kc-root .kp-program[lang="en"] .kp-program-day-title { font-family: var(--font-en-romantic, Georgia, serif); }
+.kc-root .kp-timeline-marker svg { transform: scale(1.1); }
+.studio-ceremony-preview { display: flex; gap: .6rem; align-items: center; line-height: 1.8; }
 .program-details svg { display: inline-block; vertical-align: middle; margin-inline-end: 8px; }

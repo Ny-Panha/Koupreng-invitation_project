@@ -25,6 +25,12 @@ beforeEach(() => {
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 
 describe("Royal Garden Cinematic layout", () => {
+  it('uses localized hosted wording instead of inherited Khmer-only system copy in English', () => {
+    const { container } = show({ isHostedInvitation: true, content: { languageMode: 'EN', familyHeading: 'គ្រួសារ', scheduleEnding: 'សូមអរគុណ' } });
+    expect(container.querySelector('.rg-language')).toBeNull();
+    expect(container.querySelector('.rg-family-heading')).toHaveTextContent('Together with our families');
+    expect(container.querySelector('#rg-schedule')).not.toHaveTextContent('សូមអរគុណ');
+  });
   it('renders the supplied sample families, nine ceremonies and closing wording with a valid date', () => {
     const { container } = show({ content: { ...ROYAL_GARDEN_CINEMATIC_TEMPLATE } });
     expect(container.textContent).toContain('លោក ឃុន ស៊ីវខេង');
@@ -70,7 +76,7 @@ describe("Royal Garden Cinematic layout", () => {
     expect(container.querySelectorAll(".rg-gallery img")).toHaveLength(1);
     fireEvent.click(container.querySelector(".rg-gallery button"));
     expect(screen.getByRole("dialog", { name: "វិចិត្រសាលរូបភាព" })).toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", { name: "Close photo" }));
+    fireEvent.click(screen.getByRole("button", { name: "បិទរូបភាព" }));
     expect(screen.queryByRole("dialog", { name: "វិចិត្រសាលរូបភាព" })).toBeNull();
   });
   it("ignores a forged preview message without a trusted channel", () => {

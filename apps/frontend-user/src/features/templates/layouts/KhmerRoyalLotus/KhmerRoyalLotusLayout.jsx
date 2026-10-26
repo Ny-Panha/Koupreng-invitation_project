@@ -198,6 +198,7 @@ export default function KhmerRoyalLotusLayout({
       ...(liveData || {}),
     };
 
+    const en = String(base.languageMode).toLowerCase() === 'en';
     const groomParents = normalizeParentLines(base, "groom");
     const brideParents = normalizeParentLines(base, "bride");
     const venueName = base.venueName || base.venue?.name || "";
@@ -229,10 +230,10 @@ export default function KhmerRoyalLotusLayout({
       groomEn: base.groomEn || "",
       bride: base.brideName || base.bride || "កូនក្រមុំ",
       brideEn: base.brideEn || "",
-      title: base.invitationTitle || base.title || "សិរីសួស្តីអាពាហ៍ពិពាហ៍",
-      subtitle: base.invitationSubtitle || base.subtitle || "យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ",
-      guestName: base.guestName || base.guestNameBanner || "លោកអ្នក និងក្រុមគ្រួសារ",
-      messageTitle: base.messageTitle || "មានកិត្តិយសសូមគោរពអញ្ជើញ",
+      title: base.title ?? base.invitationTitle ?? (en ? 'Wedding invitation' : 'សិរីសួស្តីអាពាហ៍ពិពាហ៍'),
+      subtitle: base.subtitle ?? (en ? 'Together with our families' : 'យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ'),
+      guestName: base.guestName || base.guestNameBanner || (en ? 'You and your family' : 'លោកអ្នក និងក្រុមគ្រួសារ'),
+      messageTitle: base.messageTitle ?? (en ? 'You are warmly invited' : 'មានកិត្តិយសសូមគោរពអញ្ជើញ'),
       message: base.messageText || base.blessingMessage ||
         (typeof base.message === "string" ? base.message : base.message?.text) ||
         "ចូលរួមជាភ្ញៀវកិត្តិយស ដើម្បីប្រសិទ្ធពរជ័យសិរីសួស្តីមង្គល ជូនកូនប្រុស កូនស្រី របស់យើងខ្ញុំ ក្នុងថ្ងៃដ៏វិសេសវិសាលនេះ។",
@@ -253,9 +254,8 @@ export default function KhmerRoyalLotusLayout({
       backgroundColor: base.backgroundColor || base.bg || "",
       fontKhmer: base.fontKhmer || "",
       fontLatin: base.fontLatin || '',
-      thankYouTitle: base.thankYouTitle || "សូមថ្លែងអំណរគុណ",
-      thankYouText: base.thankYouText ||
-        "វត្តមានរបស់លោកអ្នក គឺជាកិត្តិយស និងជាពរជ័យដ៏មានតម្លៃសម្រាប់គ្រួសារយើងខ្ញុំ។",
+      thankYouTitle: base.thankYouTitle ?? (en ? 'Thank you' : 'សូមថ្លែងអំណរគុណ'),
+      thankYouText: base.thankYouText ?? (en ? 'Thank you for celebrating with our families.' : 'វត្តមានរបស់លោកអ្នក គឺជាកិត្តិយស និងជាពរជ័យដ៏មានតម្លៃសម្រាប់គ្រួសារយើងខ្ញុំ។'),
     };
   }, [tplProp, contentProp, liveData]);
 
@@ -364,7 +364,7 @@ export default function KhmerRoyalLotusLayout({
             </p>
             <button type="button" className="krl-open-button" onClick={handleOpen} disabled={isOpening}>
               <Sparkles size={18} aria-hidden="true" />
-              <span>{isOpening ? "កំពុងបើកធៀបការ..." : "បើកធៀបការ"}</span>
+              <span><InvitationLabel value={isOpening ? "កំពុងបើកធៀបការ..." : "បើកធៀបការ"} /></span>
             </button>
             <small><InvitationLabel value={"ចុចដើម្បីបើកសំបុត្រ និងចាក់ភ្លេងមង្គលការ"} /></small>
           </div>
@@ -430,18 +430,18 @@ export default function KhmerRoyalLotusLayout({
 
             {usesFamilyLayout(content) ? <FamilyNames content={content} /> : (<div className="krl-family-grid">
               <article>
-                <span className="krl-family-label">មាតាបិតាកូនកំលោះ</span>
+                <span className="krl-family-label"><InvitationLabel value={"មាតាបិតាកូនកំលោះ"} /></span>
                 {content.groomParents.length ? content.groomParents.map((parent, index) => (
-                  <p key={`groom-parent-${index}`}>{index === 0 ? "លោក " : "និងលោកស្រី "}{parent.replace(/^(លោកស្រី|លោក)\s*/, "")}</p>
-                )) : <p>ព័ត៌មានមាតាបិតា</p>}
+                  <p key={`groom-parent-${index}`}>{parent}</p>
+                )) : null}
                 <strong>{content.groom}</strong>
               </article>
               <div className="krl-family-divider" aria-hidden="true"><Heart size={20} /></div>
               <article>
-                <span className="krl-family-label">មាតាបិតាកូនក្រមុំ</span>
+                <span className="krl-family-label"><InvitationLabel value={"មាតាបិតាកូនក្រមុំ"} /></span>
                 {content.brideParents.length ? content.brideParents.map((parent, index) => (
-                  <p key={`bride-parent-${index}`}>{index === 0 ? "លោក " : "និងលោកស្រី "}{parent.replace(/^(លោកស្រី|លោក)\s*/, "")}</p>
-                )) : <p>ព័ត៌មានមាតាបិតា</p>}
+                  <p key={`bride-parent-${index}`}>{parent}</p>
+                )) : null}
                 <strong>{content.bride}</strong>
               </article>
             </div>)}
@@ -451,10 +451,10 @@ export default function KhmerRoyalLotusLayout({
             <section className="krl-section krl-section--burgundy" data-section="countdown">
               <header className="krl-section-heading krl-section-heading--light">
                 <p>COUNTING DOWN TO OUR DAY</p>
-                <h2>រាប់ថយក្រោយដល់ថ្ងៃមង្គល</h2>
+                <h2><InvitationLabel value={"រាប់ថយក្រោយដល់ថ្ងៃមង្គល"} /></h2>
               </header>
               <SaveTheDate content={content} />
-              <p className="krl-blessing-line">សូមប្រសិទ្ធពរជ័យ សិរីសួស្តី មង្គលវិបុលសុខ គ្រប់ប្រការ</p>
+              <p className="krl-blessing-line"><InvitationLabel value={"សូមប្រសិទ្ធពរជ័យ សិរីសួស្តី មង្គលវិបុលសុខ គ្រប់ប្រការ"} /></p>
             </section>
           )}
 
@@ -485,7 +485,7 @@ export default function KhmerRoyalLotusLayout({
             <section className="krl-section krl-section--gallery" data-section="gallery">
               <header className="krl-section-heading">
                 <p>OUR MEMORIES</p>
-                <h2>កម្រងរូបភាពអនុស្សាវរីយ៍</h2>
+                <h2><InvitationLabel value={"កម្រងរូបភាពអនុស្សាវរីយ៍"} /></h2>
               </header>
               <GalleryGrid images={content.gallery} className="krl-gallery-grid" />
             </section>
@@ -497,13 +497,13 @@ export default function KhmerRoyalLotusLayout({
               <div className="krl-venue-card">
                 <MapPin size={30} aria-hidden="true" />
                 <p className="krl-kicker">CEREMONY VENUE</p>
-                <h2>ទីតាំងប្រារព្ធពិធី</h2>
+                <h2><InvitationLabel value={"ទីតាំងប្រារព្ធពិធី"} /></h2>
                 {content.venueName && <strong>{content.venueName}</strong>}
                 {content.venueAddress && <p>{content.venueAddress}</p>}
                 {content.mapUrl && (
                   <a href={content.mapUrl} target="_blank" rel="noreferrer" className="krl-action-link">
                     <MapPin size={17} aria-hidden="true" />
-                    <span>បើកមើល Google Maps</span>
+                    <span><InvitationLabel value={"បើកមើល Google Maps"} /></span>
                     <ExternalLink size={15} aria-hidden="true" />
                   </a>
                 )}
@@ -515,7 +515,7 @@ export default function KhmerRoyalLotusLayout({
             <section className="krl-section krl-section--paper" data-section="gift">
               <header className="krl-section-heading">
                 <p>WEDDING GIFT</p>
-                <h2>ចំណងដៃឌីជីថល</h2>
+                <h2><InvitationLabel value={"ចំណងដៃឌីជីថល"} /></h2>
               </header>
               <div className="krl-gift-grid">
                 {content.gift.map((item, index) => (
@@ -529,7 +529,7 @@ export default function KhmerRoyalLotusLayout({
                   </article>
                 ))}
               </div>
-              <p className="krl-gift-note">សូមអរគុណចំពោះសេចក្តីស្រឡាញ់ និងពរជ័យរបស់លោកអ្នក</p>
+              <p className="krl-gift-note"><InvitationLabel value={"សូមអរគុណចំពោះសេចក្តីស្រឡាញ់ និងពរជ័យរបស់លោកអ្នក"} /></p>
             </section>
           )}
 
@@ -537,7 +537,7 @@ export default function KhmerRoyalLotusLayout({
             <section className="krl-section krl-section--rsvp" data-section="rsvp">
               <header className="krl-section-heading krl-section-heading--light">
                 <p>RSVP</p>
-                <h2>សូមបញ្ជាក់ការចូលរួម</h2>
+                <h2><InvitationLabel value={"សូមបញ្ជាក់ការចូលរួម"} /></h2>
               </header>
               <div className="krl-rsvp-card">
                 <RsvpContainer themeClass="krl-rsvp" children={children} />

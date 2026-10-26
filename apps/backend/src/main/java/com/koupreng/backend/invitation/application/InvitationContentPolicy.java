@@ -98,7 +98,7 @@ final class InvitationContentPolicy {
                 text(row, 500, "title", "titleKm", "titleEn", "dayTitle", "location", "locationEn");
                 text(row, 5000, "description", "descriptionKm", "descriptionEn");
                 flag(row, "enabled");
-                option(row, "iconKey", Set.of("calendar", "gathering", "blessing", "offering", "meal", "reception"));
+                option(row, "iconKey", Set.of("calendar", "gathering", "blessing", "offering", "meal", "reception", "none"));
                 if (row.hasNonNull("dayId") && !dayIds.contains(row.path("dayId").asText())) throw new IllegalArgumentException();
             }
         } catch (JsonProcessingException | RuntimeException e) {

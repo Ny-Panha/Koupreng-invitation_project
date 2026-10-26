@@ -5,12 +5,16 @@ export function CoupleMonogram({ value }) {
   if (!value?.enabled || !value.text) return null;
   const size = Math.max(60, Math.min(180, Number(value.size) || 100));
   const color = /^#[0-9a-f]{6}$/i.test(value.color) ? value.color : 'currentColor';
-  const font = ({ MOUL: 'Moul, serif', KANTUMRUY: 'Kantumruy Pro, sans-serif', SERIF: 'Georgia, Kantumruy Pro, serif' })[value.font] || 'Moul, serif';
+  const font = ({ MOUL: 'Moul, serif', KANTUMRUY: 'Kantumruy Pro, sans-serif', SERIF: 'Cormorant Garamond, Kantumruy Pro, serif' })[value.font] || 'Moul, serif';
+  const glyphs = typeof Intl.Segmenter === 'function' ? [...new Intl.Segmenter('km', { granularity: 'grapheme' }).segment(value.text)].map(item => item.segment) : Array.from(value.text);
+  const lines = [];
+  for (let i = 0; i < glyphs.length; i += 12) lines.push(glyphs.slice(i, i + 12).join(''));
+  const fontSize = lines.length > 3 ? 16 : lines.length > 1 ? 22 : 30;
   return <svg className="kp-monogram" aria-hidden="true" focusable="false" viewBox="0 0 200 200" style={{ width: size, color }}>
     {value.layout !== 'plain' && <ellipse cx="100" cy="100" rx={value.layout === 'oval' ? 70 : 90} ry="90" fill="none" stroke="currentColor" strokeWidth="2" />}
     {value.motif === 'diamond' && <path d="M100 10 112 24 100 38 88 24Z M100 162 112 176 100 190 88 176Z" fill="currentColor" />}
-    {value.motif === 'petals' && <g fill="none" stroke="currentColor"><ellipse cx="100" cy="25" rx="6" ry="14" /><ellipse cx="100" cy="175" rx="6" ry="14" /></g>}
-    <text x="100" y="108" textAnchor="middle" dominantBaseline="middle" fontFamily={font} fontSize={value.text.length > 12 ? 20 : 30}>{value.text}</text>
+    {value.motif === 'petals' && <g fill="none" stroke="currentColor">{[25, 175].map(y => <g key={y}>{[-45, 0, 45].map(angle => <ellipse key={angle} cx="100" cy={y} rx="5" ry="12" transform={`rotate(${angle} 100 ${y})`} />)}</g>)}</g>}
+    <text x="100" y="100" textAnchor="middle" dominantBaseline="middle" fill="currentColor" fontFamily={font} fontSize={fontSize}>{lines.map((line, index) => <tspan key={index} x="100" y={100 + (index - (lines.length - 1) / 2) * fontSize * 1.65}>{line}</tspan>)}</text>
   </svg>;
 }
 export default function FamilyNames({ content = {} }) {

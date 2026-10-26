@@ -34,15 +34,15 @@ export default function RoyalGardenIntro({ sequence, intro, slides, content, tit
     <div className="rg-particles" aria-hidden="true">{Array.from({ length: 14 }, (_, i) => <i key={i} style={{ '--i': i }} />)}</div>
     {!slideshow && <div className="rg-oval-scene"><OrnamentalOval /><div className="rg-oval-copy">
       {opening ? <><span className="rg-open-symbol" aria-hidden="true">✧</span><h1>{title}</h1><button className="rg-open" type="button" onClick={onOpen}>{english ? 'Open invitation' : 'សូមបើកធៀបការ'}</button></>
-        : <><h1>{intro.heading ?? title}</h1>{sequence.stage !== 'ORNAMENT_REVEAL' && <><p>{intro.subtitle ?? (english ? 'You are warmly invited' : 'សូមគោរពអញ្ជើញ')}</p><strong>{names}</strong></>}</>}
+        : <><h1>{english ? title : intro.heading ?? title}</h1>{sequence.stage !== 'ORNAMENT_REVEAL' && <><p>{english ? 'You are warmly invited' : intro.subtitle ?? 'សូមគោរពអញ្ជើញ'}</p><strong>{names}</strong></>}</>}
     </div></div>}
     {slideshow && <div className="rg-intro-slides">
       {slides.map((slide, i) => i <= sequence.slide + 1 && i >= sequence.slide - 1 ? <Portrait key={`${slide.id}-${slide.src}`} slide={slide} index={i} active={sequence.slide} transition={intro.transition} duration={intro.duration} /> : null)}
       <div className="rg-photo-scrim" style={{ '--rg-overlay': intro.overlay }} />
-      <div className="rg-save-date-overlay" data-position={intro.textPosition}>{intro.showSaveTheDate && <span>Save the Date</span>}<h1>{names}</h1><p>{date}</p></div>
+      <div className="rg-save-date-overlay" data-position={intro.textPosition}>{intro.showSaveTheDate && <span>{english ? 'Save the Date' : 'កាលបរិច្ឆេទកម្មវិធី'}</span>}<h1>{names}</h1><p>{date}</p></div>
     </div>}
     {!opening && <div className="rg-intro-controls">
-      {slideshow && <button type="button" aria-label={sequence.paused ? 'Resume slideshow' : 'Pause slideshow'} aria-pressed={sequence.paused} onClick={() => sequence.setPaused(!sequence.paused)}>{sequence.paused ? <Play size={18} /> : <Pause size={18} />}</button>}
+      {slideshow && <button type="button" aria-label={sequence.paused ? (english ? 'Resume slideshow' : 'បន្តបង្ហាញរូបភាព') : (english ? 'Pause slideshow' : 'ផ្អាកបង្ហាញរូបភាព')} aria-pressed={sequence.paused} onClick={() => sequence.setPaused(!sequence.paused)}>{sequence.paused ? <Play size={18} /> : <Pause size={18} />}</button>}
       <button type="button" onClick={sequence.finish}>{english ? 'Skip intro' : 'រំលង'}<SkipForward size={16} aria-hidden="true" /></button>
     </div>}
   </section>;

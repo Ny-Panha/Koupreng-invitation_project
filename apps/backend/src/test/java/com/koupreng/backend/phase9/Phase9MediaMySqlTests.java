@@ -46,7 +46,7 @@ class Phase9MediaMySqlTests {
 
     @DynamicPropertySource static void database(DynamicPropertyRegistry registry) {
         String url = required("FLYWAY_TEST_DB_URL");
-        if (!url.startsWith("jdbc:mysql://127.0.0.1:3416/phase7_disposable?")) throw new IllegalStateException("Requires task-owned disposable MySQL");
+        if (!url.startsWith("jdbc:mysql://127.0.0.1:3416/phase7_disposable?") && !url.startsWith("jdbc:mysql://127.0.0.1:3420/phase12_disposable?")) throw new IllegalStateException("Requires task-owned disposable MySQL");
         registry.add("spring.datasource.url", () -> url);
         registry.add("spring.datasource.username", () -> required("FLYWAY_TEST_DB_USERNAME"));
         registry.add("spring.datasource.password", () -> required("FLYWAY_TEST_DB_PASSWORD"));

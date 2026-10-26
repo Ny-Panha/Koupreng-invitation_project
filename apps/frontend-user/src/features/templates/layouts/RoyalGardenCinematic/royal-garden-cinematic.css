@@ -72,6 +72,8 @@
 .tpl-royal-garden .kp-timeline > li:nth-child(even) :is(.kp-timeline-time,.kp-timeline-copy) { text-align: right; }
 .tpl-royal-garden .kp-timeline-marker { position: absolute; z-index: 1; left: calc(50% - 5px); top: 0; width: 10px; height: 10px; border: 0; border-radius: 50%; background: var(--rg-gold); box-shadow: 0 0 15px var(--rg-gold-light); }
 .tpl-royal-garden .kp-timeline-marker svg { display: none; }
+.tpl-royal-garden .kp-timeline-marker:has(svg) { display: grid; place-items: center; left: calc(50% - 16px); width: 32px; height: 32px; padding: 0; color: var(--rg-gold-dark); background: var(--rg-bg); box-shadow: none; }
+.tpl-royal-garden .kp-timeline-marker:has(svg) svg { display: block; }
 .tpl-royal-garden .kp-timeline-marker::before, .tpl-royal-garden .kp-timeline-marker::after { display: none; }
 .tpl-royal-garden .kp-countdown-unit:not(:last-child) span::after { content: ''; position: absolute; width: 5px; height: 5px; top: calc(50% - 2px); left: calc(100% + 6px); transform: rotate(45deg); background: var(--rg-border); }
 .tpl-royal-garden .rg-map-image { display: block; width: 100%; height: auto; margin: 30px auto 16px; border: 2px solid var(--rg-border); border-radius: 20px; }

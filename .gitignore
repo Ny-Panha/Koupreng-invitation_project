@@ -97,6 +97,7 @@ client_secret*.json
 /output/playwright/phase11/
 
 /output/playwright/phase11-baseline/
+/output/playwright/phase12/
 
 # Database snapshots may contain guest records and credentials.
 /backups/*.sql

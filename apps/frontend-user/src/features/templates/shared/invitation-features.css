@@ -15,8 +15,11 @@
 .kp-illustrated-map { margin: 24px auto; max-width: 960px; color: inherit; }
 .kp-illustrated-map svg { display: block; width: 100%; height: auto; border-radius: 12px; }
 .kp-illustrated-map figcaption { font-size: .875rem; line-height: 1.8; padding: 12px; }
-.studio-map-stage { touch-action: none; overflow: auto; border: 1px solid #baa77b; border-radius: 12px; background: #eee7d8; max-height: 560px; }
-.studio-map-stage svg { width: 100%; display: block; touch-action: none; }
+.studio-map-stage { touch-action: auto; overflow: auto; border: 1px solid #baa77b; border-radius: 12px; background: #eee7d8; max-height: 560px; }
+.studio-map-stage svg { width: 100%; display: block; touch-action: auto; }
+.studio-map-stage[data-drag="true"] svg { touch-action: none; }
+.studio-map-stage svg:focus-visible { outline: 3px solid #2675bc; outline-offset: -3px; }
+.kp-illustrated-map figcaption ul { display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; padding-inline-start: 1.2rem; overflow-wrap: break-word; }
 .studio-design-tools { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
 .studio-design-tools button, .studio-map-layers button { min-height: 44px; border: 1px solid #baa77b; padding: 8px 12px; border-radius: 8px; }
 .studio-map-layers { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }

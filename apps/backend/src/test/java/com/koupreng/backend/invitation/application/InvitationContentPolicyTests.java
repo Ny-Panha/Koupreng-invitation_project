@@ -4,6 +4,14 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 class InvitationContentPolicyTests {
+    @Test void acceptsExplicitNoIconWithoutChangingStableProgramFields() {
+        assertThatCode(() -> InvitationContentPolicy.validate("""
+            {"schedule":[{"id":"ceremony-stable","title":"Family gathering","iconKey":"none","time":""}]}
+            """)).doesNotThrowAnyException();
+        assertThatThrownBy(() -> InvitationContentPolicy.validate("""
+            {"schedule":[{"id":"ceremony-stable","iconKey":"script"}]}
+            """)).hasMessageContaining("program dates");
+    }
     @Test void downgradePreservesExistingBrandingButNewLogosRequireCapability() {
         String existing = "{\"brandMarkUrl\":\"/uploads/one.png\"}";
         assertThat(InvitationContentPolicy.addsCustomBranding(existing, existing)).isFalse();

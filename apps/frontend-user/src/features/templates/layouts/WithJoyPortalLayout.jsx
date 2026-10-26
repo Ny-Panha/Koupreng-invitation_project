@@ -33,6 +33,7 @@ export default function WithJoyPortalLayout({
   backTo = "/templates",
   backLabel = "ត្រឡប់ទៅគំរូទាំងអស់",
   useTemplateLink,
+  children,
 }) {
   const [liveData, setLiveData] = useState(null);
   const effectiveContent = { ...content, ...liveData };
@@ -160,7 +161,7 @@ export default function WithJoyPortalLayout({
             {isEnabled("map") && <a href="#venue" className="wj-nav-link"><InvitationLabel value={"ទីតាំង"} /></a>}
             {isEnabled("gift") && <a href="#gift" className="wj-nav-link"><InvitationLabel value={"ជូនពរ/ចំណងដៃ"} /></a>}
             {isEnabled("faq") && <a href="#faq" className="wj-nav-link">FAQ</a>}
-            {isEnabled("rsvp") && <a href="#rsvp" className="wj-nav-link wj-nav-rsvp-btn">ឆ្លើយតប RSVP</a>}
+            {isEnabled("rsvp") && <a href="#rsvp" className="wj-nav-link wj-nav-rsvp-btn"><InvitationLabel value={"ឆ្លើយតប RSVP"} /></a>}
           </nav>
           {showBack && (
             <Link to={backTo} className="wj-nav-link text-xs">
@@ -283,7 +284,7 @@ export default function WithJoyPortalLayout({
         <section id="gallery" className="wj-section">
           <div className="wj-section-header">
             <p className="wj-section-kicker">Moments &amp; Memories</p>
-            <h2 className="wj-section-title">កម្រងរូបភាពអនុស្សាវរីយ៍</h2>
+            <h2 className="wj-section-title"><InvitationLabel value={"កម្រងរូបភាពអនុស្សាវរីយ៍"} /></h2>
             <p className="wj-section-sub"><InvitationLabel value={"ចុចលើរូបភាពដើម្បីពង្រីកមើលទំហំធំ"} /></p>
           </div>
 
@@ -326,7 +327,7 @@ export default function WithJoyPortalLayout({
           <IllustratedMap content={effectiveContent} />
           <div className="wj-section-header">
             <p className="wj-section-kicker">Location &amp; Map</p>
-            <h2 className="wj-section-title">ទីតាំងប្រារព្ធពិធី</h2>
+            <h2 className="wj-section-title"><InvitationLabel value={"ទីតាំងប្រារព្ធពិធី"} /></h2>
             <p className="wj-section-sub">{venue.name} — {venue.hall}</p>
           </div>
 
@@ -371,7 +372,7 @@ export default function WithJoyPortalLayout({
           <div className="wj-section-header">
             <p className="wj-section-kicker">Wedding Gift</p>
             <h2 className="wj-section-title"><InvitationLabel value={"ចំណងដៃ & ពាក្យជូនពរ"} /></h2>
-            <p className="wj-section-sub">វត្តមានដ៏ថ្លៃថ្លារបស់លោកអ្នក គឺជាកាដូដ៏មានតម្លៃបំផុតសម្រាប់យើងខ្ញុំ</p>
+            <p className="wj-section-sub"><InvitationLabel value={"វត្តមានដ៏ថ្លៃថ្លារបស់លោកអ្នក គឺជាកាដូដ៏មានតម្លៃបំផុតសម្រាប់យើងខ្ញុំ"} /></p>
           </div>
 
           <div
@@ -473,14 +474,14 @@ export default function WithJoyPortalLayout({
         <section id="rsvp" className="wj-section" style={{ background: "#edf2f7" }}>
           <div className="wj-section-header">
             <p className="wj-section-kicker">RSVP Online</p>
-            <h2 className="wj-section-title">បញ្ជាក់ការចូលរួម</h2>
+            <h2 className="wj-section-title"><InvitationLabel value={"បញ្ជាក់ការចូលរួម"} /></h2>
             <p className="wj-section-sub">
-              សូមជួយឆ្លើយតបមុនថ្ងៃទី ១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦ ដើម្បីឱ្យយើងខ្ញុំរៀបចំទទួលបដិសណ្ឋារកិច្ចឱ្យបានល្អប្រសើរ។
+              <InvitationLabel value="សូមបញ្ជាក់ការចូលរួមរបស់លោកអ្នក" />
             </p>
           </div>
 
           <div className="wj-rsvp-card">
-            {rsvpState.submitted ? (
+            {children || (rsvpState.submitted ? (
               <div style={{ textAlign: "center", padding: "2rem 1rem" }}>
                 <CheckCircle2 className="w-16 h-16 text-emerald-500 mx-auto mb-4" />
                 <h3 style={{ fontSize: "1.4rem", fontWeight: "700", color: "var(--wj-primary)", marginBottom: "0.5rem" }}><InvitationLabel value={"សូមអរគុណសម្រាប់ការឆ្លើយតប!"} /></h3>
@@ -568,7 +569,7 @@ export default function WithJoyPortalLayout({
                 <button type="submit" className="wj-btn-submit">
                   <Send className="w-4 h-4 inline mr-2" /><InvitationLabel value={"ផ្ញើការបញ្ជាក់ (Submit RSVP)"} /></button>
               </form>
-            )}
+            ))}
           </div>
         </section>
       )}

@@ -1,0 +1,97 @@
+{
+  "date": "2026-10-26",
+  "timezone": "Asia/Bangkok",
+  "baseline": "124c7c277a00ecb8043b39b54092a3cce95db60a",
+  "frontendUser": {
+    "files": 143,
+    "passed": 1050,
+    "failed": 0,
+    "seconds": 84.7,
+    "lint": "PASS",
+    "build": "PASS"
+  },
+  "frontendAdmin": {
+    "files": 21,
+    "passed": 121,
+    "failed": 0,
+    "lint": "PASS",
+    "build": "PASS"
+  },
+  "worker": {
+    "passed": 74,
+    "failed": 0,
+    "ruff": "PASS",
+    "bandit": "PASS",
+    "warnings": [
+      "Inherited Starlette TestClient deprecation"
+    ]
+  },
+  "backend": {
+    "discovered": 640,
+    "passed": 636,
+    "skipped": 4,
+    "failed": 0,
+    "verify": "PASS",
+    "spotbugs": "PASS",
+    "pmd": "PASS",
+    "dependencyAnalysis": "PASS with existing warnings"
+  },
+  "browser": {
+    "phase8": {
+      "passed": 45,
+      "skipped": 4
+    },
+    "phase9": {
+      "uniquePassed": 51,
+      "initialFailures": 1,
+      "affectedRerunPassed": 1
+    },
+    "phase10": {
+      "passed": 61,
+      "skipped": 2
+    },
+    "phase11": {
+      "uniquePassed": 94,
+      "skipped": 2,
+      "initialFailures": 1,
+      "affectedRerunPassed": 10
+    },
+    "phase12": {
+      "passed": 87,
+      "skipped": 0,
+      "viewportStates": 936,
+      "seconds": 422.58,
+      "postTouchRerunPassed": 9
+    },
+    "criticalRoutes": {
+      "passed": 56
+    },
+    "provenance": "Browser API fixtures; separately listed HTTP/MySQL tests use a real servlet server and disposable MySQL."
+  },
+  "checks": {
+    "repositoryPolicyTests": 16,
+    "tokenExports": 2,
+    "openapiEndpoints": 269,
+    "routingErrors": 0,
+    "bundledSkillDirectories": 59,
+    "userKnip": "PASS",
+    "adminKnip": "PASS",
+    "userNpmVulnerabilities": 0,
+    "adminNpmVulnerabilities": 0
+  },
+  "buildKB": {
+    "baselineMain": 452.15,
+    "finalMain": 452.05,
+    "baselineStudio": 193.89,
+    "finalStudio": 196.46,
+    "finalMainGzip": 131.54,
+    "finalStudioGzip": 52.19
+  },
+  "manualPending": [
+    "Native Khmer editorial/cultural review",
+    "Physical iOS/Android and lower-power performance",
+    "Full screen-reader journeys",
+    "Production provider/storage/payment acceptance",
+    "Inherited catalogue asset licensing"
+  ]
+}

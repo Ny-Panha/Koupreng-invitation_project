@@ -2,7 +2,9 @@ import { WORDING_PRESETS, WORDING_PRESET_LABELS, wordingPresetId, interpolateWor
 import { FamilyDesignEditor, MonogramEditor } from './studio/FamilyDesignEditor';
 import IllustratedMapEditor from './studio/IllustratedMapEditor';
 import { invitationFeatureFields } from '../templates/shared/invitationFeatures';
-import { translationFieldLabel, editLocalizedField, localeContent, projectLocale, translationReadiness } from '../templates/shared/localizedContent';
+import { editLocalizedField, localeContent, projectLocale, translationReadiness } from '../templates/shared/localizedContent';
+import LocaleChecklist from './studio/LocaleChecklist';
+import { translationSection } from './studio/localeNavigation';
 import { templateCapabilities } from "../templates/registry/templateCapabilities";
 import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useEventWorkspace } from "../events/workspace/EventContext";
@@ -1894,7 +1896,7 @@ export default function InvitationForm({ invitation }) {
                     id={`${fieldId}-title`}
                     type="text"
                     className="pe-input"
-                    value={authoredForm.title}
+                    name="title" value={authoredForm.title}
                     onChange={(e) => update("title", e.target.value)}
                     placeholder={uiCopy("សិរីមង្គលអាពាហ៍ពិពាហ៍", "Wedding celebration")}
                 />
@@ -1911,7 +1913,7 @@ export default function InvitationForm({ invitation }) {
                         id={`${fieldId}-groom`}
                         type="text"
                         className="pe-input"
-                        value={authoredForm.groomName}
+                        name="groomName" value={authoredForm.groomName}
                         onChange={(e) => update("groomName", e.target.value)}
                         placeholder={uiCopy("វណ្ណដា", "VannDa")}
                     />
@@ -1925,7 +1927,7 @@ export default function InvitationForm({ invitation }) {
                         id={`${fieldId}-bride`}
                         type="text"
                         className="pe-input"
-                        value={authoredForm.brideName}
+                        name="brideName" value={authoredForm.brideName}
                         onChange={(e) => update("brideName", e.target.value)}
                         placeholder={uiCopy("ស្រីពេជ្រ", "Sreypich")}
                     />
@@ -2414,7 +2416,7 @@ export default function InvitationForm({ invitation }) {
                 <input
                     type="text"
                     className="pe-input"
-                    value={authoredForm.venueName}
+                    name="venueName" value={authoredForm.venueName}
                     id={`${fieldId}-venueName`}
                     onChange={(e) => update("venueName", e.target.value)}
                     placeholder="The Premier Center Sen Sok"
@@ -3345,7 +3347,15 @@ export default function InvitationForm({ invitation }) {
                           onChange={e => setForm(previous => ({ ...previous, localizedContentV1: { ...localeContent(previous), enabledLocales: e.target.checked ? ['km', 'en'] : ['km'], defaultLocale: e.target.checked ? localeContent(previous).defaultLocale : 'km' } }))} />{uiCopy('ផ្សព្វផ្សាយជាភាសាអង់គ្លេស', 'Publish English version')}</label>
                         {form.localizedContentV1 && <label>Default guest language<select value={localeContent(form).defaultLocale} onChange={e => setForm(previous => ({ ...previous, localizedContentV1: { ...localeContent(previous), defaultLocale: e.target.value } }))}><option value="km">Khmer</option>{localeContent(form).enabledLocales.includes('en') && <option value="en">English</option>}</select></label>}
                         {activeLangTab === 'EN' && <button type="button" onClick={() => setForm(previous => { let next = previous; for (const key of ['groomName', 'brideName', 'hostName', 'partnerName']) next = editLocalizedField(next, 'en', key, localeContent(previous).km[key] || ''); return next; })}>Copy names from Khmer</button>}
-                        {activeLangTab === 'EN' && <details><summary>{uiCopy('ត្រូវបំពេញការបកប្រែ', 'Translation fields to complete')}</summary>{englishReadiness.missing.map(key => <button type="button" key={key} onClick={() => { const section = key.startsWith('schedule.') || key.startsWith('programDays.') ? 'schedule' : key.startsWith('map.') ? 'venue' : key.startsWith('family.') || /Father|Mother/.test(key) ? 'family' : /message/i.test(key) ? 'invitation' : /thankYou|apology/.test(key) ? 'closing' : key.split('.')[0] === 'saveTheDate' ? 'countdown' : key.split('.')[0] === 'storyChapters' ? 'story' : ['faq', 'party', 'dressCode'].includes(key.split('.')[0]) ? key.split('.')[0] : 'eventInfo'; setSelectedSection(section); setExpandedSections(current => ({ ...current, [section]: true })); requestAnimationFrame(() => { const node = editorRoot.current?.querySelector(`[data-studio-section="${section}"] [name="${key}"], [data-studio-section="${section}"] input, [data-studio-section="${section}"] textarea`); node?.focus(); }); }}>{translationFieldLabel(key)}</button>)}</details>}
+                        <LocaleChecklist form={{ ...form, eventType: invitation?.eventType || 'WEDDING', translationCapabilities: templateCapabilities(getTemplateById(form.templateId) || {}) }} locale={activeLangTab === 'EN' ? 'en' : 'km'}
+                          onCopy={key => setForm(previous => editLocalizedField(previous, 'en', key, localeContent(previous).km[key] || ''))}
+                          onField={key => { const section = translationSection(key); setSelectedSection(section); setExpandedSections(current => ({ ...current, [section]: true })); requestAnimationFrame(() => {
+                            const scope = editorRoot.current?.querySelector(`[data-studio-section="${section}"]`);
+                            scope?.querySelectorAll('details').forEach(node => { node.open = true; });
+                            if (key.startsWith('map.') && key.endsWith('.label')) scope?.querySelector(`[data-map-layer="${CSS.escape(key.slice(4, -6))}"]`)?.click();
+                            const escaped = CSS.escape(key);
+                            requestAnimationFrame(() => { const node = scope?.querySelector(`[data-translation-key="${escaped}"], [name="${escaped}"]`) || scope?.querySelector('input:not([type=checkbox]), textarea'); node?.focus(); });
+                          }); }} />
                     </div>
 
                     <div className="pe-editor-scroll-body">

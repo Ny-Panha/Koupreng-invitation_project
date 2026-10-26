@@ -1,5 +1,21 @@
 // System UI labels only. Authored messages and names never enter this dictionary.
 export const INVITATION_LABELS_EN = {
+  "មាតាបិតាកូនកំលោះ": "First partner’s family",
+  "មាតាបិតាកូនក្រមុំ": "Second partner’s family",
+  "រាប់ថយក្រោយដល់ថ្ងៃមង្គល": "Until our celebration",
+  "សូមប្រសិទ្ធពរជ័យ សិរីសួស្តី មង្គលវិបុលសុខ គ្រប់ប្រការ": "With warm wishes for our celebration",
+  "កម្រងរូបភាពអនុស្សាវរីយ៍": "Our memories",
+  "ទីតាំងប្រារព្ធពិធី": "Ceremony venue",
+  "បើកមើល Google Maps": "Open Google Maps",
+  "ចំណងដៃឌីជីថល": "Digital gifts",
+  "សូមអរគុណចំពោះសេចក្តីស្រឡាញ់ និងពរជ័យរបស់លោកអ្នក": "Thank you for your love and warm wishes",
+  "សូមបញ្ជាក់ការចូលរួម": "Please confirm your attendance",
+  "កំពុងបើកធៀបការ...": "Opening invitation…",
+  "ឆ្លើយតប RSVP": "RSVP",
+  "វត្តមានដ៏ថ្លៃថ្លារបស់លោកអ្នក គឺជាកាដូដ៏មានតម្លៃបំផុតសម្រាប់យើងខ្ញុំ": "Your presence means so much to us",
+  "បញ្ជាក់ការចូលរួម": "Confirm attendance",
+
+
   'និង': 'and', 'ជូនចំពោះ': 'To', 'បើកធៀបការ': 'Open invitation', 'ចុចដើម្បីបើកសំបុត្រ និងចាក់ភ្លេងមង្គលការ': 'Open the invitation and music',
   'សេចក្តីផ្តើម': 'Welcome', 'កម្មវិធី': 'Program', 'កម្រងរូបភាព': 'Gallery', 'ទីតាំង': 'Location',
   'កាលវិភាគពិធីមង្គលការ': 'Wedding program', 'កម្មវិធីពិធីមង្គលការ': 'Wedding program', 'កម្មវិធីមង្គលការ': 'Wedding program',

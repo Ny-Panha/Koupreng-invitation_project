@@ -22,6 +22,7 @@ export default function BlissEditorialLayout({
   backTo = "/templates",
   backLabel = "ត្រឡប់ទៅគំរូទាំងអស់",
   useTemplateLink,
+  children,
 }) {
   const [liveData, setLiveData] = useState(null);
   const effectiveContent = { ...content, ...liveData };
@@ -71,6 +72,22 @@ export default function BlissEditorialLayout({
 
   // RSVP Drawer state
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const drawer = useRef(null);
+  useEffect(() => {
+    if (!drawerOpen) return;
+    const previous = document.activeElement, panel = drawer.current;
+    panel?.querySelector('button')?.focus();
+    const keydown = event => {
+      if (event.key === 'Escape') { event.preventDefault(); setDrawerOpen(false); }
+      if (event.key !== 'Tab') return;
+      const controls = [...panel.querySelectorAll('button, input, select, textarea, a[href]')].filter(node => !node.disabled && node.getClientRects().length);
+      const first = controls[0], last = controls.at(-1);
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+    };
+    panel?.addEventListener('keydown', keydown);
+    return () => { panel?.removeEventListener('keydown', keydown); if (previous?.isConnected) previous.focus({ preventScroll: true }); };
+  }, [drawerOpen]);
   const [rsvpState, setRsvpState] = useState({
     name: "",
     attending: "yes",
@@ -355,14 +372,14 @@ export default function BlissEditorialLayout({
         className={`bliss-drawer-backdrop ${drawerOpen ? "open" : ""}`}
         onClick={() => setDrawerOpen(false)}
       />
-      <div className={`bliss-drawer ${drawerOpen ? "open" : ""}`}>
-        <button type="button" className="bliss-drawer-close" onClick={() => setDrawerOpen(false)}>
+      <div ref={drawer} className={`bliss-drawer ${drawerOpen ? "open" : ""}`} role="dialog" aria-label="RSVP" aria-modal={drawerOpen || undefined} inert={!drawerOpen}>
+        <button type="button" className="bliss-drawer-close" aria-label={String(effectiveContent.languageMode).toLowerCase() === 'en' ? 'Close RSVP' : 'បិទ RSVP'} onClick={() => setDrawerOpen(false)}>
           <X className="w-6 h-6" />
         </button>
         <h2 className="bliss-drawer-title">RSVP</h2>
         <p style={{ color: "var(--bliss-taupe)", fontSize: "0.9rem", marginBottom: "2rem" }}><InvitationLabel value={"សូមបញ្ជាក់ការចូលរួមរបស់លោកអ្នក"} /></p>
 
-        {rsvpState.submitted ? (
+        {children || (rsvpState.submitted ? (
           <div style={{ textAlign: "center", padding: "3rem 1rem" }}>
             <CheckCircle2 className="w-14 h-14 text-stone-800 mx-auto mb-4" />
             <h3 style={{ fontSize: "1.2rem", fontWeight: "600", marginBottom: "0.5rem" }}><InvitationLabel value={"សូមអរគុណសម្រាប់ការឆ្លើយតប!"} /></h3>
@@ -431,7 +448,7 @@ export default function BlissEditorialLayout({
               }}
             ><InvitationLabel value={"ផ្ញើការឆ្លើយតប • SUBMIT"} /></button>
           </form>
-        )}
+        ))}
       </div>
     </div>
   );

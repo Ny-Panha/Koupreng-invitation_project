@@ -1,0 +1,78 @@
+{
+  "tests": 640,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 4,
+  "skips": [
+    {
+      "class": "com.koupreng.backend.phase6.Phase6DemoMySqlTests",
+      "test": "freeSignupCalendarPersistencePublishedEditsAndStaleSaveAreEnforcedThroughServlets",
+      "reason": "Environment variable [PHASE6_DEMO_PROVISION] does not exist"
+    },
+    {
+      "class": "com.koupreng.backend.phase6.Phase6DemoMySqlTests",
+      "test": "provisionAndVerifyOnlyTheIsolatedDevelopmentDatabase",
+      "reason": "Environment variable [PHASE6_DEMO_PROVISION] does not exist"
+    },
+    {
+      "class": "com.koupreng.backend.phase6.Phase6DemoMySqlTests",
+      "test": "immutableBenefitsPendingFutureExpiredAndRevokedGrantsResolveSafely",
+      "reason": "Environment variable [PHASE6_DEMO_PROVISION] does not exist"
+    },
+    {
+      "class": "com.koupreng.backend.rsvp.application.RsvpSummaryPerformanceMySqlTests",
+      "test": "benchmarkSummaryAndVerifyCounts",
+      "reason": "Environment variable [RUN_RSVP_PERFORMANCE] does not exist"
+    }
+  ],
+  "httpMySql": [
+    {
+      "class": "com.koupreng.backend.MigrationUpgradeMySqlTests",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "cases": [
+        "retiredZeroPriceFreePolicyIsRestoredWithoutChangingItsBenefits",
+        "v34PreservesAnAlreadyPresentTransactionDateColumn",
+        "originalV33UpgradesWithoutChangingItsChecksumOrEvidence",
+        "organizationUpgradePreservesLegacyMembershipsWithoutInventingConsent",
+        "appendOnlyUpgradePreservesUsersLegacyEventsAndCheckInHistory"
+      ]
+    },
+    {
+      "class": "com.koupreng.backend.phase7.Phase7CollaborationMySqlTests",
+      "tests": 15,
+      "failures": 0,
+      "errors": 0,
+      "cases": [
+        "phase11IndependentLocalesPreserveIdentityAndRejectStaleLegacyWrites",
+        "phase8ProgramRoundTripsThroughHttpMySqlAndPublicationWithConflictAndIdorProtection",
+        "guestOverviewPagesAndSelectionExportReconcileWithoutContactLeaks",
+        "analyticsUseOwnerEntitlementAndBoundedCambodianDatesWithCurrentRecordFacts",
+        "phase12RichProgramFamilyAndRoutePersistWithIndependentWordingAndOwnerBenefits",
+        "phase11PremiumDesignsEnforceCurrentOwnerSnapshotAndExpiryOverHttp",
+        "expiredInvitationAndExpiredOwnerGrantCannotBeUsed",
+        "registrationGetsTheConfiguredFreePlanWithoutCheckout",
+        "checkInStaffUseBoundedRosterWithoutGuestContactsOrSecrets",
+        "legacyActiveMembershipNeedsNewConsentBeforeGainingEventTools",
+        "concurrentInvitationsCannotExceedOwnerCapacity",
+        "acceptanceIsExplicitRecipientBoundOneTimeAndRemovalRevokesAccess",
+        "concurrentCollaborativeSavesHaveOneWinnerAndPreserveTheTeam",
+        "guestWritesUseOwnerQuotaAndRoleChangesTakeEffectOnTheNextRequest",
+        "managerGuestEditsCannotReadClearOrSetOwnerContributionFields"
+      ]
+    },
+    {
+      "class": "com.koupreng.backend.phase9.Phase9MediaMySqlTests",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "cases": [
+        "freeAndProCannotUploadOrForgePremiumConfiguration",
+        "privateInvitationCannotReleaseCinematicBytesWithoutItsAccessToken",
+        "reproduceGalleryQuotaFailureThenPersistIndependentTicketCoverAndBackground",
+        "cinematicBytesRequirePublishedAccessCurrentPremiumAndSelectedOwnedId"
+      ]
+    }
+  ]
+}

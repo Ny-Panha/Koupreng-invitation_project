@@ -45,7 +45,7 @@ class Phase7CollaborationMySqlTests {
 
     @DynamicPropertySource static void database(DynamicPropertyRegistry registry) {
         String url = required("FLYWAY_TEST_DB_URL");
-        if (!url.startsWith("jdbc:mysql://127.0.0.1:3416/phase7_disposable?")) throw new IllegalStateException("Requires the owned loopback Phase 7 disposable database");
+        if (!url.startsWith("jdbc:mysql://127.0.0.1:3416/phase7_disposable?") && !url.startsWith("jdbc:mysql://127.0.0.1:3420/phase12_disposable?")) throw new IllegalStateException("Requires an owned loopback disposable database");
         registry.add("spring.datasource.url", () -> url);
         registry.add("spring.datasource.username", () -> required("FLYWAY_TEST_DB_USERNAME"));
         registry.add("spring.datasource.password", () -> required("FLYWAY_TEST_DB_PASSWORD"));
@@ -374,6 +374,67 @@ class Phase7CollaborationMySqlTests {
         var badMap = json.createObjectNode(); badMap.put("version", 1); badMap.put("enabled", true); badMap.put("aspectRatio", "landscape"); badMap.put("theme", "ivory"); badMap.set("description", json.valueToTree(Map.of("km", "", "en", ""))); badMap.set("nodes", json.valueToTree(List.of(Map.of("id", "bad", "type", "script", "x", 99999))));
         body.put("contentJson", json.writeValueAsString(Map.of("illustratedMap", badMap)));
         assertEquals(400, call("PUT", eventPath(f), f.owner, body).status);
+    }
+
+    @Test void phase12RichProgramFamilyAndRoutePersistWithIndependentWordingAndOwnerBenefits() throws Exception {
+        Fixture f = fixture(3);
+        var grant = subscriptions.findById(f.grantId).orElseThrow();
+        grant.setBenefitsSnapshot(PackageSnapshot.capture(packages.findByCodeAndActiveTrue("PREMIUM").orElseThrow()));
+        subscriptions.saveAndFlush(grant);
+        var km = Map.of("title", "ពិធីសាកល្បង", "messageText", "សូមអញ្ជើញ", "groomName", "ដៃគូទីមួយ", "brideName", "ដៃគូទីពីរ", "venueName", "ទីតាំងសាកល្បង", "venueAddress", "អាសយដ្ឋានសាកល្បង", "apologyText", "");
+        var en = Map.of("title", "Fictional celebration", "messageText", "Please join our celebration", "groomName", "First partner", "brideName", "Second partner", "venueName", "Fictional venue", "venueAddress", "Fictional address", "apologyText", "");
+        var rich = json.createObjectNode();
+        rich.set("localizedContentV1", json.valueToTree(Map.of("version", 1, "km", km, "en", en, "enabledLocales", List.of("km", "en"), "defaultLocale", "km")));
+        rich.set("programDays", json.readTree("""
+            [{"id":"day-a","date":"2027-01-10","title":"ថ្ងៃដំបូង","titleEn":"First day"},
+             {"id":"day-b","date":"2027-01-11","title":"ថ្ងៃទីពីរ","titleEn":"Second day"}]
+            """));
+        rich.set("schedule", json.readTree("""
+            [{"id":"gathering-stable","dayId":"day-a","time":"07:00","title":"ជួបជុំ","titleEn":"Gathering","iconKey":"gathering"},
+             {"id":"reception-stable","dayId":"day-b","time":"","title":"ទទួលភ្ញៀវ","titleEn":"Reception","iconKey":"none"}]
+            """));
+        rich.set("coupleMonogram", json.readTree("""
+            {"version":1,"enabled":true,"text":"A & B","color":"#996633","motif":"petals","layout":"oval","size":120,"font":"KANTUMRUY","position":"below"}
+            """));
+        rich.set("illustratedMap", json.readTree("""
+            {"version":1,"enabled":true,"aspectRatio":"landscape","theme":"ivory","description":{"km":"គំនូរផ្លូវ","en":"Host route schematic"},"nodes":[
+             {"id":"road-stable","type":"road","x":0.45,"y":0.7,"width":0.6,"height":0.035,"rotation":0,"label":{"km":"","en":""}},
+             {"id":"venue-stable","type":"destination","x":0.76,"y":0.3,"width":0.1,"height":0.12,"rotation":0,"label":{"km":"ទីតាំង","en":"Venue"}}]}
+            """));
+        rich.set("familyGroupsV1", json.readTree("""
+            [{"side":"groom","label":{"km":"គ្រួសារ","en":"Family"},"members":[{"id":"guardian-stable","name":{"km":"ម្ចាស់កម្មវិធី","en":"Fictional guardian"},"honorific":{"km":"","en":""},"relationship":{"km":"","en":""}}]}]
+            """));
+        rich.put("coupleLayout", "bride-left"); rich.put("eventTimezone", "Asia/Phnom_Penh");
+        rich.set("saveTheDate", json.valueToTree(Map.of("enabled", false)));
+        var initial = call("GET", eventPath(f), f.owner, null);
+        String identity = jdbc.queryForObject("SELECT access_token FROM invitations WHERE invitation_id=?", String.class, f.eventId);
+        var body = eventBody("Phase 12 fixture", initial.data().path("updatedAt").asText());
+        body.put("visibility", "PUBLIC"); body.put("googleMapUrl", "https://maps.google.com/?q=Fictional+venue");
+        body.put("contentJson", rich.toString());
+        var saved = call("PUT", eventPath(f), f.owner, body); assertEquals(200, saved.status, saved.body);
+        assertEquals(409, call("PUT", eventPath(f), f.owner, body).status);
+        var loaded = call("GET", eventPath(f), f.owner, null);
+        var reopened = json.readTree(loaded.data().path("contentJson").asText());
+        for (String key : List.of("schedule", "programDays", "coupleMonogram", "illustratedMap", "familyGroupsV1")) assertEquals(rich.path(key), reopened.path(key));
+        assertEquals("", reopened.path("localizedContentV1").path("km").path("apologyText").asText());
+        assertEquals(200, call("PATCH", eventPath(f) + "/publish", f.owner, null).status);
+        String path = "/api/v1/public/invitations/" + loaded.data().path("slug").asText();
+        var published = call("GET", path + "?lang=en", null, null);
+        var publicContent = json.readTree(published.data().path("contentJson").asText());
+        assertEquals(en.get("messageText"), publicContent.path("localizedContentV1").path("en").path("messageText").asText());
+        assertEquals("none", publicContent.path("schedule").get(1).path("iconKey").asText());
+        assertEquals(1, jdbc.queryForObject("SELECT COUNT(*) FROM invitations WHERE invitation_id=? AND access_token=?", Integer.class, f.eventId, identity));
+        var invitation = invite(f, f.member.email, "DESIGNER");
+        assertEquals(200, accept(f.member, invitation.data().path("invitationToken").asText()).status);
+        grant.setBenefitsSnapshot(PackageSnapshot.capture(packages.findByCodeAndActiveTrue("BASIC").orElseThrow())); subscriptions.saveAndFlush(grant);
+        loaded = call("GET", eventPath(f), f.owner, null);
+        body.put("expectedUpdatedAt", loaded.data().path("updatedAt").asText());
+        ((com.fasterxml.jackson.databind.node.ObjectNode) rich.path("coupleMonogram")).put("text", "Changed"); body.put("contentJson", rich.toString());
+        assertEquals(403, call("PUT", eventPath(f), f.member, body).status);
+        assertEquals(403, call("PUT", eventPath(f), f.stranger, body).status);
+        publicContent = json.readTree(call("GET", path, null, null).data().path("contentJson").asText());
+        assertFalse(publicContent.has("illustratedMap")); assertFalse(publicContent.has("coupleMonogram"));
+        assertTrue(call("GET", eventPath(f), f.owner, null).data().path("contentJson").asText().contains("venue-stable"));
     }
 
     private Fixture fixture(int teamLimit) throws Exception {

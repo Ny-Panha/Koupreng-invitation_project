@@ -265,3 +265,8 @@ html:has(.dash-wrapper--studio), body:has(.dash-wrapper--studio), #root:has(.das
 .studio-preset .pe-label { flex:1 1 200px; }
 .studio-program .studio-reorder { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
 .studio-program .studio-reorder button { min-width:44px; min-height:44px; border:1px solid var(--ws-border,#ded7c9); padding:8px 12px; border-radius:8px; }
+.studio-locale-checklist { flex-basis: 100%; width: 100%; min-width: 0; font-size: .875rem; line-height: 1.8; }
+.studio-locale-checklist summary { cursor: pointer; padding: 8px 0; }
+.studio-locale-checklist ul { display: grid; gap: 8px; margin: 8px 0; padding: 0; list-style: none; }
+.studio-locale-checklist li { display: flex; flex-wrap: wrap; gap: 8px; }
+.studio-locale-checklist button { min-height: 44px; border: 1px solid var(--color-border, #c6b89d); border-radius: 8px; padding: 8px 12px; text-align: start; }
