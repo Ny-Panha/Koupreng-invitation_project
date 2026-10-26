@@ -22,7 +22,6 @@ import com.koupreng.backend.template.domain.InvitationTemplate;
 import com.koupreng.backend.invitation.domain.UserInvitation;
 import com.koupreng.backend.rsvp.domain.Rsvp;
 import com.koupreng.backend.organization.domain.Organization;
-import com.koupreng.backend.organization.domain.OrganizationMember;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.user.domain.Role;
 import com.koupreng.backend.invitation.domain.InvitationModerationStatus;
@@ -63,7 +62,7 @@ import java.util.UUID;
 
 @Service
 public class InvitationService {
-    @org.springframework.beans.factory.annotation.Autowired(required = false)
+    @Autowired(required = false)
     private EventCollaborationService collaboration;
     @jakarta.persistence.PersistenceContext
     private jakarta.persistence.EntityManager entityManager;
@@ -238,7 +237,7 @@ public class InvitationService {
             InvitationStatusFilter statusFilter
     ) {
         AppUser user = currentUserService.currentUser(authentication);
-        List<UserInvitation> invitations = new java.util.ArrayList<>(statusFilter == null
+        List<UserInvitation> invitations = new ArrayList<>(statusFilter == null
                 ? invitationRepository.findAllByUserIdAndDeletedFalseOrderByCreatedAtDesc(user.getId())
                 : invitationRepository.findAllByUserIdAndStatusAndDeletedFalseOrderByCreatedAtDesc(
                         user.getId(),
@@ -927,7 +926,7 @@ public class InvitationService {
         return InvitationResponse.from(invitation);
     }
 
-    @org.springframework.beans.factory.annotation.Autowired
+    @Autowired
     private PreWeddingVideoPolicy preWeddingVideoPolicy;
 
     private PublicInvitationResponse publicResponse(UserInvitation invitation, Guest guest, GuestSeatAssignment assignment) {

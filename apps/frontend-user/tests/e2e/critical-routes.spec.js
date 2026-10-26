@@ -73,10 +73,43 @@ test("authenticated guest route renders server authority and RSVP state", async 
   await page.route("**/api/**", (route) => {
     const url = new URL(route.request().url());
     if (url.pathname === "/api/v1/invitations/my") {
-      return json(route, [{ id: 42, title: "Dara and Sophea", status: "PUBLISHED", slug: "dara-sophea" }]);
+      return json(route, [{ id: 42, userId: 7, title: "Dara and Sophea", status: "PUBLISHED", slug: "dara-sophea" }]);
     }
     if (url.pathname === "/api/v1/invitations/42") {
-      return json(route, { id: 42, title: "Dara and Sophea", status: "PUBLISHED", slug: "dara-sophea" });
+      return json(route, { id: 42, userId: 7, title: "Dara and Sophea", status: "PUBLISHED", slug: "dara-sophea" });
+    }
+    if (url.pathname === "/api/v1/invitations/42/guests/page") {
+      return json(route, {
+        items: [{
+          guest: {
+            id: 501,
+            guestName: "Sokha Server Guest",
+            phone: "012 345 678",
+            guestGroup: "Family",
+            sideType: "Groom",
+            seatCount: 2,
+            sendStatus: "SENT",
+            inviteToken: "guest-token",
+          },
+          rsvpStatus: "ATTENDING",
+          attendeeCount: 2,
+          checkedIn: false,
+        }],
+        page: 0,
+        size: 25,
+        totalElements: 1,
+        totalPages: 1,
+      });
+    }
+    if (url.pathname === "/api/v1/invitations/42/guests/overview") {
+      return json(route, {
+        totalGuests: 1,
+        totalSeats: 2,
+        totalSent: 1,
+        totalResponded: 1,
+        totalAttending: 1,
+        totalDeclined: 0,
+      });
     }
     if (url.pathname === "/api/v1/invitations/42/guests") {
       return json(route, [{
@@ -142,11 +175,12 @@ test("AI helper discloses local template fallback", async ({ page }, testInfo) =
   await page.route("**/api/**", (route) => {
     const url = new URL(route.request().url());
     if (url.pathname === "/api/v1/invitations/my") {
-      return json(route, [{ id: 42, title: "Dara and Sophea Wedding", status: "DRAFT" }]);
+      return json(route, [{ id: 42, userId: 7, title: "Dara and Sophea Wedding", status: "DRAFT" }]);
     }
     if (url.pathname === "/api/v1/invitations/42") {
       return json(route, {
         id: 42,
+        userId: 7,
         title: "Dara and Sophea Wedding",
         eventType: "WEDDING",
         eventDate: "2026-12-15",
