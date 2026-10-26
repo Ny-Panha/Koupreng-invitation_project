@@ -688,6 +688,7 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         hasHostContent,
         ...eventPresentationFields(hasHostContent ? host : tpl),
         ...invitationFeatureFields(hasHostContent ? host : tpl),
+        localizedContentV1: (hasHostContent ? host : tpl).localizedContentV1,
         fontKhmer: host.fontKhmer || tpl.fontKhmer || tpl.design?.fontKhmer || "",
         studioStyle: host.studioStyle || tpl.studioStyle || {},
         fontLatin: host.fontLatin || tpl.fontLatin || tpl.design?.fontLatin || "",
@@ -710,7 +711,7 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         eventTitle: nonBlank(host.eventTitle || tpl.eventTitle) || "WEDDING INVITATION",
         title: nonBlank(host.title || tpl.title) || "សិរីមង្គលអាពាហ៍ពិពាហ៍",
         subtitle: nonBlank(tpl.subtitle || host.subtitle),
-        messageTitle: nonBlank(tpl.messageTitle || host.messageTitle),
+        messageTitle: hasHostContent ? (host.messageTitle ?? '') : nonBlank(tpl.messageTitle),
         messageEn: nonBlank(hasHostContent ? host.messageEn : tpl.messageEn),
         thankYouTitleEn: nonBlank(hasHostContent ? host.thankYouTitleEn : tpl.thankYouTitleEn),
         thankYouTextEn: nonBlank(hasHostContent ? host.thankYouTextEn : tpl.thankYouTextEn),
@@ -805,7 +806,8 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         opening,
         gateStyle: tpl.gateStyle || tpl.design?.gateStyle || tpl.openingStyle || design.openingStyle,
         openingStyle: tpl.openingStyle || tpl.design?.openingStyle || tpl.gateStyle || design.openingStyle,
-        music: (typeof tpl.music === "string" && tpl.music)
+        music: (tpl.code === 'royal-garden-cinematic' || tpl.presetId === 'ROYAL_GARDEN_CINEMATIC')
+            ? (typeof tpl.music === 'string' ? tpl.music : tpl.music?.url || '') : (typeof tpl.music === "string" && tpl.music)
             ? tpl.music
             : (tpl.music?.url || (hasHostContent ? "" : defaultMusicUrl)),
         openingVideo: resolveOpeningVideo({

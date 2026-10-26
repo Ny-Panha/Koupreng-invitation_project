@@ -1,13 +1,14 @@
 export const STUDIO_TABS = [
   { id: 'eventInformation', labels: ['ព័ត៌មានកម្មវិធី', 'Event Information'], sections: ['eventInfo', 'family', 'invitation', 'closing', 'languageMode'] },
   { id: 'scheduleVenue', labels: ['កម្មវិធី និងទីតាំង', 'Schedule & Venue'], sections: ['schedule', 'countdown', 'venue'] },
-  { id: 'mediaOpening', labels: ['មេឌៀ និងការបើកធៀប', 'Media & Opening'], sections: ['gallery', 'couplePhoto', 'music', 'preWeddingVideo'] },
+  { id: 'mediaOpening', labels: ['មេឌៀ និងការបើកធៀប', 'Media & Opening'], sections: ['cinematicIntro', 'gallery', 'couplePhoto', 'music', 'preWeddingVideo'] },
   { id: 'designCover', labels: ['រចនា និងក្របធៀប', 'Design & Cover'], sections: ['cover', 'appearance'] },
   { id: 'guestExperience', labels: ['បទពិសោធន៍ភ្ញៀវ', 'Guest Experience'], sections: ['story', 'dressCode', 'party', 'faq', 'khqr'] },
   { id: 'ticketsQr', labels: ['កាតអញ្ជើញ និង QR', 'Tickets & QR'], sections: ['ticketsQr'] },
 ];
 
 export const STUDIO_SECTION_LABELS = {
+  cinematicIntro: ['ការបើកធៀបបែបភាពយន្ត', 'Cinematic intro'],
   eventInfo: ['ព័ត៌មានកម្មវិធី', 'Event details'], family: ['មាតាបិតា', 'Families'],
   invitation: ['សារអញ្ជើញ', 'Invitation message'], closing: ['សារបញ្ចប់', 'Closing messages'], languageMode: ['ភាសាមាតិកា', 'Invitation language'],
   schedule: ['កាលវិភាគ', 'Schedule'], countdown: ['កំណត់ថ្ងៃ និងប្រតិទិន', 'Save the date & calendar'], venue: ['ទីតាំង', 'Venue & map'],

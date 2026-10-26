@@ -10,12 +10,15 @@ const KhmerCelestialLayout = lazy(() => import("../layouts/KhmerCelestial/KhmerC
 const TemplateBoilerplateLayout = lazy(() => import("../layouts/TemplateBoilerplate/TemplateBoilerplateLayout"));
 const SilkHeritageLayout = lazy(() => import("../layouts/SilkHeritage/SilkHeritageLayout"));
 const KhmerRoyalLotusLayout = lazy(() => import("../layouts/KhmerRoyalLotus/KhmerRoyalLotusLayout"));
+const RoyalGardenCinematicLayout = lazy(() => import("../layouts/RoyalGardenCinematic/RoyalGardenCinematicLayout"));
 
 /**
  * 1 Template = 1 Dedicated UI Component Registry
  * Maps template slugs, IDs, and codes to their bespoke UI layout components.
  */
 export const templateRegistry = {
+  'royal-garden-cinematic': RoyalGardenCinematicLayout,
+  'ROYAL_GARDEN_CINEMATIC': RoyalGardenCinematicLayout,
   "silk-heritage": SilkHeritageLayout,
   "SILK_HERITAGE": SilkHeritageLayout,
   // Developer Starter Boilerplate

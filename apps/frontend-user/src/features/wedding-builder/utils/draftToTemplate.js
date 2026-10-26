@@ -240,6 +240,7 @@ export function draftToTemplate(draft, gallery = []) {
         // Host-authored rich sections. Passed straight through so the content
         // builder can prefer them over its demo fallbacks (see hostContent).
         hostContent: {
+            localizedContentV1: draft.localizedContentV1,
             studioStyle: draft.studioStyle || draft.design?.studioStyle || {},
             ...eventPresentationFields(draft),
         ...invitationFeatureFields(draft),

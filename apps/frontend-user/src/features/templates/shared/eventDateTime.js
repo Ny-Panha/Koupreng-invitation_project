@@ -90,7 +90,8 @@ export function formatEventDate(date, english = false, numerals = english ? 'lat
     const weekdays = ['ថ្ងៃអាទិត្យ','ថ្ងៃចន្ទ','ថ្ងៃអង្គារ','ថ្ងៃពុធ','ថ្ងៃព្រហស្បតិ៍','ថ្ងៃសុក្រ','ថ្ងៃសៅរ៍'];
     const [year, month, day] = date.split('-').map(Number);
     const weekday = options.weekday ? weekdays[new Date(`${date}T12:00:00Z`).getUTCDay()] + ' ' : '';
-    return formatNumerals(`${weekday}${Object.hasOwn(options, 'day') && options.day === undefined ? '' : `ទី${day} `}ខែ${months[month - 1]} ឆ្នាំ${year}`, numerals);
+    const included = field => !Object.hasOwn(options, field) || options[field] !== undefined;
+    return formatNumerals(`${weekday}${[included('day') ? `ទី${day}` : '', included('month') ? `ខែ${months[month - 1]}` : '', included('year') ? `ឆ្នាំ${year}` : ''].filter(Boolean).join(' ')}`.trim(), numerals);
   }
   return formatNumerals(new Intl.DateTimeFormat(english ? 'en-GB' : 'km-KH', {
     calendar: 'gregory', numberingSystem: 'latn', timeZone: 'UTC', year: 'numeric', month: 'long', day: 'numeric', ...options,

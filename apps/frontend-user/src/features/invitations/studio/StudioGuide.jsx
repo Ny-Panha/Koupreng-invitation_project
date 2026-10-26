@@ -29,7 +29,7 @@ export default function StudioGuide({ mode, onMode, step, onStep, sections, acti
   }
   const stepSections = step === 0 ? sections.filter(key => ['eventInfo', 'venue', 'family'].includes(key))
     : step === 1 ? sections.filter(key => !['eventInfo', 'venue'].includes(key)) : [];
-  const names = { eventInfo: ['Event details','ព័ត៌មានកម្មវិធី'], venue: ['Venue & map','ទីកន្លែង'], family: ['Families','គ្រួសារ'],
+  const names = { cinematicIntro: ['Cinematic intro', 'ការបើកធៀបបែបភាពយន្ត'], eventInfo: ['Event details','ព័ត៌មានកម្មវិធី'], venue: ['Venue & map','ទីកន្លែង'], family: ['Families','គ្រួសារ'],
     cover:['Cover','ក្រប'], appearance:['Appearance','រូបរាង'], invitation:['Invitation message','សារអញ្ជើញ'], schedule:['Program','កម្មវិធី'],
     story:['Our story','រឿងរ៉ាវ'], gallery:['Gallery','រូបភាព'], music:['Music','តន្ត្រី'], couplePhoto:['Couple photos','រូបគូ'],
     countdown:['Save the date & calendar','កំណត់ថ្ងៃ និងប្រតិទិន'], dressCode:['Dress code','សម្លៀកបំពាក់'], party:['Wedding party','ក្រុមអម'], faq:['Guest notes','កំណត់សម្គាល់'],
