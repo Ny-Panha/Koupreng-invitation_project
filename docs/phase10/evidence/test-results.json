@@ -1,0 +1,259 @@
+{
+  "recordedAtUtc": "2026-10-26T01:20:01.319946+00:00",
+  "applicationHead": "707289b406ab4ad385e52385d348e3b0327c0644",
+  "countsAreNotCumulativeAcrossAttempts": true,
+  "scope": "Completed selected runs, with actual source/native/fixture distinctions in 10-test-results.md. Raw credentials and logs are excluded from Git.",
+  "gates": [
+    {
+      "gate": "user-unit",
+      "command": "npm --prefix apps/frontend-user test",
+      "status": "passed",
+      "passed": 926,
+      "skipped": 0,
+      "failures": 0,
+      "localLog": ".cache/phase10/user-release.log",
+      "logBytes": 20924,
+      "logSha256": "60b35370abfe0979b76f11f5c0f4febae70ec096e9694099608fb250bf98c1bc",
+      "resultExcerpt": "(file:///D:/Koupreng-Phase10-worktree/apps/frontend-user/node_modules/happy-dom/lib/nodes/element/Element.js:1118:63)\n\n Test Files  134 passed (134)\n      Tests  926 passed (926)\n   Start at  08:01:10\n   Duration  47.95s (environment 42%, setup 20%, tests 18%, import 15%, transform 5%)\n\nEnvironment  happy-dom was created 134 times · 314.25s total, 42% of tracked time\n             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)\n             learn more: https://vitest.dev/guide/improving-performance#test-environments"
+    },
+    {
+      "gate": "admin-unit",
+      "command": "npm --prefix apps/frontend-admin test",
+      "status": "passed",
+      "passed": 121,
+      "skipped": 0,
+      "failures": 0,
+      "localLog": ".cache/phase10/admin-tests-final.log",
+      "logBytes": 4490,
+      "logSha256": "78d224a96a7966fec83b8f2dbaad7c56b9cae80733e7e00b0b6e2401c4fcbdeb",
+      "resultExcerpt": "(D:\\Koupreng-Phase10-worktree\\apps\\frontend-admin\\node_modules\\react-dom\\cjs\\react-dom-client.development.js:14337:11)\n    at runWithFiberInDEV \n(D:\\Koupreng-Phase10-worktree\\apps\\frontend-admin\\node_modules\\react-dom\\cjs\\react-dom-client.development.js:1048:13)\n    at commitReconciliationEffects \n(D:\\Koupreng-Phase10-worktree\\apps\\frontend-admin\\node_modules\\react-dom\\cjs\\react-dom-client.development.js:16330:11)\n\n Test Files  21 passed (21)\n      Tests  121 passed (121)\n   Start at  19:58:30\n   Duration  11.22s (transform 34%, environment 28%, setup 16%, tests 11%, import 11%)"
+    },
+    {
+      "gate": "user-lint",
+      "command": "npm --prefix apps/frontend-user run lint",
+      "status": "passed",
+      "passed": null,
+      "skipped": 0,
+      "failures": 0,
+      "localLog": ".cache/phase10/lint-release.log",
+      "logBytes": 90,
+      "logSha256": "52fffd10a27da7ca85657cb07ca8f4c376d8991bb3efbe96d624f017b515ebf8",
+      "resultExcerpt": "> frontend-user@0.0.0 lint\n> eslint ."
+    },
+    {
+      "gate": "admin-lint",
+      "command": "npm --prefix apps/frontend-admin run lint",
+      "status": "passed",
+      "passed": null,
+      "skipped": 0,
+      "failures": 0,
+      "localLog": ".cache/phase10/admin-lint-final.log",
+      "logBytes": 92,
+      "logSha256": "7b0521746442f3a07ba830d3886d680d679002bb88a4358a1cdab4758c0ee841",
+      "resultExcerpt": "> frontend-admin@0.0.0 lint\n> eslint ."
+    },
+    {
+      "gate": "user-build",
+      "command": "npm --prefix apps/frontend-user run build",
+      "status": "passed",
+      "passed": null,
+      "skipped": 0,
+      "failures": 0,
+      "localLog": ".cache/phase10/build-release.log",
+      "logBytes": 47742,
+      "logSha256": "a1c0e16de4fb087f3a47f21f312482e4a12428a6567626fc4d8ac3e611c8e5ee",
+      "resultExcerpt": "dist/assets/GuestsPage-DubLok6h.js                                        51.00 kB │ gzip:  15.47 kB\ndist/assets/httpClient-XNbGUmN0.js                                        54.08 kB │ gzip:  20.13 kB\ndist/assets/useBackendMessages-Bxd4eAgq.js                               105.27 kB │ gzip:  26.11 kB\ndist/assets/proxy-BMlQkj0Y.js                                            127.52 kB │ gzip:  41.60 kB\ndist/assets/InvitationEditFeature-DDxQlHgt.js                            169.78 kB │ gzip:  44.70 kB\ndist/assets/TemplateExperience-DndLnGv8.js                               174.61 kB │ gzip:  47.61 kB\ndist/assets/InvitationCheckInPage-Yir4-WOf.js                            180.12 kB │ gzip:  61.48 kB\ndist/assets/index-DvITeTe3.js                                            444.89 kB │ gzip: 130.52 kB\n\n✓ built in 1.44s"
+    },
+    {
+      "gate": "admin-build",
+      "command": "npm --prefix apps/frontend-admin run build",
+      "status": "passed",
+      "passed": null,
+      "skipped": 0,
+      "failures": 0,
+      "localLog": ".cache/phase10/admin-build-final.log",
+      "logBytes": 7126,
+      "logSha256": "7a3e0f5bac49f76b0910bdd1ad499a9b4c18f4f889c5da354050ac8b9910bdff",
+      "resultExcerpt": "dist/assets/AdminDashboardPage-DRTM5zBp.js       33.23 kB │ gzip:  7.58 kB\ndist/assets/AdminTemplatesPage-VnYS2VPz.js       45.51 kB │ gzip: 10.05 kB\ndist/assets/adminService-CUFJ5uGC.js             55.76 kB │ gzip: 20.22 kB\ndist/assets/AdminPackagesPage-DIFGom0L.js        55.83 kB │ gzip: 12.56 kB\ndist/assets/AdminReportsPage-BvD1kfGD.js         68.78 kB │ gzip: 20.61 kB\ndist/assets/ApiMonitorPage-DCNgi1hJ.js          167.56 kB │ gzip: 32.33 kB\ndist/assets/AdminTemplateEditPage-BYPJx05K.js   232.38 kB │ gzip: 54.23 kB\ndist/assets/index-DmFK5Mgw.js                   323.71 kB │ gzip: 98.73 kB\n\n✓ built in 897ms"
+    },
+    {
+      "gate": "backend",
+      "command": "mvn -f apps/backend/pom.xml test; RUN_FLYWAY_INTEGRATION=true, RUN_PHASE7_MYSQL=true; owned disposable MySQL only",
+      "status": "passed",
+      "passed": 620,
+      "skipped": 4,
+      "failures": 0,
+      "localLog": ".cache/phase10/backend-mysql-isolated.log",
+      "logBytes": 20969164,
+      "logSha256": "4c7498cd159a8fc1d0b083162983fa649f44a86469a3287a8432f70e609f57eb",
+      "resultExcerpt": "[INFO] Tests run: 624, Failures: 0, Errors: 0, Skipped: 4\n[INFO] BUILD SUCCESS\n[INFO] Total time:  02:46 min"
+    },
+    {
+      "gate": "worker",
+      "command": "C:/Python314/python.exe -m pytest apps/telegram-bot/tests -q",
+      "status": "passed",
+      "passed": 72,
+      "skipped": 0,
+      "failures": 0,
+      "localLog": ".cache/phase10/worker-final.log",
+      "logBytes": 3646,
+      "logSha256": "608cc26ba524ec216097af7993c2512a261ec2bb2e3d3a31626ba5cd9d5af7e8",
+      "resultExcerpt": "C:\\Users\\ASER Nitro\\AppData\\Roaming\\Python\\Python314\\site-packages\\fastapi\\testclient.py:1\n  C:\\Users\\ASER Nitro\\AppData\\Roaming\\Python\\Python314\\site-packages\\fastapi\\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\nC:\\Users\\ASER Nitro\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\testclient.py:53\n  C:\\Users\\ASER Nitro\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n======================= 72 passed, 2 warnings in 1.55s ========================"
+    },
+    {
+      "gate": "phase7-tickets",
+      "command": "npm --prefix apps/frontend-user run test:e2e -- --config=playwright.phase9-regression.config.js",
+      "status": "passed",
+      "passed": 72,
+      "skipped": 0,
+      "failures": 0,
+      "localLog": ".cache/phase10/phase7-tickets-final.log",
+      "logBytes": 22168,
+      "logSha256": "7e3b107d721072d55682551407db3c51026e9b7f9d02df34dc3501417e6da9f8",
+      "resultExcerpt": "  ok 65 [webkit] › tests\\e2e\\phase7-keyboard-reflow.spec.js:32:1 › text size can double and a dirty generic form can cancel navigation without losing edits (2.9s)\n  ok 66 [webkit] › tests\\e2e\\studio-tickets.spec.js:10:3 › studio and designer fit eight viewports (en) (27.3s)\n  ok 67 [webkit] › tests\\e2e\\studio-tickets.spec.js:10:3 › studio and designer fit eight viewports (km) (28.3s)\n  ok 68 [webkit] › tests\\e2e\\studio-tickets.spec.js:38:1 › exports exact 2x/3x personalized canvases with decodable QR for every layout (9.8s)\n  ok 69 [webkit] › tests\\e2e\\studio-tickets.spec.js:68:1 › autosaves real editor payloads without navigation and restores edits with undo (5.2s)\n  ok 70 [webkit] › tests\\e2e\\studio-tickets.spec.js:82:1 › personal public ticket opens without submitting RSVP and modal restores focus (4.4s)\n  ok 71 [webkit] › tests\\e2e\\studio-tickets.spec.js:99:1 › failed saves retain changes and guard route links and browser back (20.6s)\n  ok 72 [webkit] › tests\\e2e\\studio-tickets.spec.js:122:1 › appearance, schedule and media controls persist through the existing editor API (8.2s)\n\n  72 passed (7.5m)"
+    },
+    {
+      "gate": "phase8",
+      "command": "npm --prefix apps/frontend-user run test:e2e -- --config=playwright.phase8.config.js",
+      "status": "passed",
+      "passed": 45,
+      "skipped": 4,
+      "failures": 0,
+      "localLog": ".cache/phase10/phase8-final.log",
+      "logBytes": 14486,
+      "logSha256": "b0b461f47378e630fc56da40ca05fb1fa6f69dab218af5b3a3158781387f70b5",
+      "resultExcerpt": "  ok 43 [webkit] › tests\\e2e\\phase8-functional.spec.js:67:37 › save 401 retains date/program edits and exposes recovery (4.1s)\n  ok 44 [webkit] › tests\\e2e\\phase8-functional.spec.js:67:37 › save 409 retains date/program edits and exposes recovery (3.7s)\n  ok 45 [webkit] › tests\\e2e\\phase8-functional.spec.js:67:37 › save 503 retains date/program edits and exposes recovery (3.5s)\n  ok 46 [webkit] › tests\\e2e\\phase8-functional.spec.js:79:1 › program visibility round trip keeps saved days and ceremonies (15.0s)\n  ok 47 [webkit] › tests\\e2e\\phase8-functional.spec.js:96:1 › offline retry retains the date settings until the server acknowledges them (3.9s)\n  ok 48 [webkit] › tests\\e2e\\phase8-functional.spec.js:108:1 › Event Essential weddings author multiple days in the existing five-step guide (5.0s)\n  ok 49 [webkit] › tests\\e2e\\phase8-functional.spec.js:122:1 › program and date editor controls pass scoped accessibility checks (6.3s)\n\n  4 skipped\n  45 passed (3.6m)"
+    },
+    {
+      "gate": "phase9",
+      "command": "npm --prefix apps/frontend-user run test:e2e -- --config=playwright.phase9.config.js",
+      "status": "passed",
+      "passed": 51,
+      "skipped": 0,
+      "failures": 0,
+      "localLog": ".cache/phase10/phase9-verified.log",
+      "logBytes": 18458,
+      "logSha256": "90d977df7047cb74092d744ff21725b370d0b98f0cd23561f66133edd6064344",
+      "resultExcerpt": "  ok 44 [webkit] › tests\\e2e\\phase9-video.spec.js:6:3 › optional cinematic stage preserves emerald-canva-luxe-wedding and permits immediate keyboard dismissal (3.8s)\n  ok 45 [webkit] › tests\\e2e\\phase9-video.spec.js:6:3 › optional cinematic stage preserves khmer-royal-lotus and permits immediate keyboard dismissal (4.6s)\n  ok 46 [webkit] › tests\\e2e\\phase9-video.spec.js:6:3 › optional cinematic stage preserves khmer-golden-canva-inspired-wedding and permits immediate keyboard dismissal (1.9s)\n  ok 47 [webkit] › tests\\e2e\\phase9-video.spec.js:6:3 › optional cinematic stage preserves withjoy-modern-portal and permits immediate keyboard dismissal (1.7s)\n  ok 48 [webkit] › tests\\e2e\\phase9-video.spec.js:6:3 › optional cinematic stage preserves bliss-editorial-wedding and permits immediate keyboard dismissal (3.0s)\n  ok 49 [webkit] › tests\\e2e\\phase9-video.spec.js:6:3 › optional cinematic stage preserves event-essential and permits immediate keyboard dismissal (1.4s)\n  ok 50 [webkit] › tests\\e2e\\phase9-video.spec.js:26:1 › real browser video is muted, supports sound, ended/error recovery and scoped axe checks (4.0s)\n  ok 51 [webkit] › tests\\e2e\\phase9-video.spec.js:64:1 › reduced motion bypasses cinematic media entirely (3.8s)\n\n  51 passed (5.0m)"
+    },
+    {
+      "gate": "phase10-remaining-visual",
+      "command": "npm --prefix apps/frontend-user run test:e2e -- --config=playwright.phase10.config.js --project=webkit phase10-visual.spec.js",
+      "status": "passed",
+      "passed": 1,
+      "skipped": 0,
+      "failures": 0,
+      "localLog": ".cache/phase10/browser-final-webkit-visual.log",
+      "logBytes": 2032,
+      "logSha256": "7df5de692a3c51b134dcceb6ea29c0a1143cc501bad4481da464dfa8f3f9ba2e",
+      "resultExcerpt": " \n[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)\n\nRunning 1 test using 1 worker\n\n(node:30288) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n  ok 1 [webkit] › tests\\e2e\\phase10-visual.spec.js:5:1 › Celestial heritage, loaded fonts and scoped concept comparison (23.3s)\n\n  1 passed (24.4s)"
+    },
+    {
+      "gate": "native-http",
+      "command": "PHASE10_BROWSER_FIXTURES=<ignored fictional fixture> npm --prefix apps/frontend-user run test:e2e -- --config=playwright.phase10-live.config.js",
+      "status": "passed",
+      "passed": 2,
+      "skipped": 0,
+      "failures": 0,
+      "localLog": ".cache/phase10/live-release.log",
+      "logBytes": 2376,
+      "logSha256": "ae3256ee8b7a244e6b9e7dce978007ac848f8668a1b4f240d1f76c41ee122001",
+      "resultExcerpt": "[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)\n\nRunning 2 tests using 1 worker\n\n(node:16516) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n  ok 1 [owned-chromium] › tests\\e2e\\phase10-live.spec.js:10:1 › real Settings save/reload shares canonical Studio values and rejects a stale writer (7.4s)\n  ok 2 [owned-chromium] › tests\\e2e\\phase10-live.spec.js:44:1 › actual login → six-group edits → private video → independent ticket images → reload/export → publish/public (1.3m)\n\n  2 passed (1.5m)"
+    },
+    {
+      "gate": "routing",
+      "command": "python scripts/validate-agent-routing.py",
+      "status": "passed",
+      "passed": null,
+      "skipped": 0,
+      "failures": 0,
+      "localLog": ".cache/phase10/routing-final.log",
+      "logBytes": 5970,
+      "logSha256": "99deb40f3de26d1888652c971ce3c7bdfeeb46beba11da43e37b96f46c03de8d",
+      "resultExcerpt": "  [+] All 48 local markdown file links resolved successfully\n\n==========================================================\n   Validation Summary\n==========================================================\n  Pinned Skills Verified : 10\n  Total Valid Skills     : 58\n  Total Errors/Failures  : 0\n\n[+] SUCCESS: All multi-agent skills and routing checks passed cleanly!"
+    },
+    {
+      "gate": "skills",
+      "command": "powershell -ExecutionPolicy Bypass -File scripts/setup-ai-skills.ps1 -VerifyOnly",
+      "status": "passed",
+      "passed": null,
+      "skipped": 0,
+      "failures": 0,
+      "localLog": ".cache/phase10/skills-final.log",
+      "logBytes": 6054,
+      "logSha256": "d2d4cbf9bfdd4961c50575ac93ee3fb13d8ca812af6d925c30963eb1186336fe",
+      "resultExcerpt": "==========================================================\n   Validation Summary\n==========================================================\n  Pinned Skills Verified : 10\n  Total Valid Skills     : 58\n  Total Errors/Failures  : 0\n\n[+] SUCCESS: All multi-agent skills and routing checks passed cleanly!\n\nVerified 59 bundled skill directories."
+    },
+    {
+      "gate": "tokens",
+      "command": "node scripts/sync-design-tokens.cjs --check",
+      "status": "passed",
+      "passed": null,
+      "skipped": 0,
+      "failures": 0,
+      "localLog": ".cache/phase10/tokens-final.log",
+      "logBytes": 80,
+      "logSha256": "1f888bad016bac6c0ba02c73ad57e5b18a5c35c512f24241fbc6cd54ea3f5dd2",
+      "resultExcerpt": "Verified 2 application token exports."
+    },
+    {
+      "gate": "secret-scan",
+      "command": "git diff 516923b6 HEAD | <gitleaks-8.30.1> stdin --redact --no-banner",
+      "status": "passed",
+      "passed": null,
+      "skipped": 0,
+      "failures": 0,
+      "localLog": ".cache/phase10/release-source-secret-scan.log",
+      "logBytes": 872,
+      "logSha256": "1d52b20454bc591764de349a1673a9a94cedf86ef5c1508f0f6be7175d57948a",
+      "resultExcerpt": "gitleaks.exe : 8:04AM INF scanned ~500716 bytes (500.72 KB) in 248ms\nAt line:2 char:26\n+ ... 23b6 HEAD | & 'D:/Koupreng-invitation_project/.cache/gitleaks-8.30.1/ ...\n+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: (8:04AM INF scan...72 KB) in 248ms:String) [], RemoteException\n    + FullyQualifiedErrorId : NativeCommandError\n \n8:04AM INF no leaks found"
+    },
+    {
+      "gate": "phase10-completed-partition",
+      "command": "npm --prefix apps/frontend-user run test:e2e -- --config=playwright.phase10.config.js",
+      "status": "60 completed cases passed; 2 explicit CDP skips; process interrupted before final WebKit visual result",
+      "passed": 60,
+      "skipped": 2,
+      "failuresInCompletedCases": 0,
+      "localLog": ".cache/phase10/browser-integration.log",
+      "logBytes": 21712,
+      "logSha256": "95cbec084ce4959bfc0690fe084468d2fb9dadadbdf846733bac2cc086433ff1",
+      "remainingCase": "phase10-remaining-visual: independently completed with unchanged assertions",
+      "combinedCoverage": "61 passed + 2 explicit engine skips across all 63 unique configured cases; not represented as a single uninterrupted run"
+    },
+    {
+      "gate": "user-npm-audit",
+      "command": "npm --prefix apps/frontend-user audit --json",
+      "status": "passed",
+      "vulnerabilities": {
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "high": 0,
+        "critical": 0,
+        "total": 0
+      },
+      "logSha256": "7b11b7535e99f57c89c806fdb40cc92f641f61016ec3f55146d13d315d9ae7c0"
+    },
+    {
+      "gate": "admin-npm-audit",
+      "command": "npm --prefix apps/frontend-admin audit --json",
+      "status": "passed",
+      "vulnerabilities": {
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "high": 0,
+        "critical": 0,
+        "total": 0
+      },
+      "logSha256": "01703304c4abf815cbc9a9afe19e6a7ebbdb37e2c03ebf9688e856d6fec1ee86"
+    },
+    {
+      "gate": "compose-syntax",
+      "command": "docker compose config --quiet (process-only synthetic required variables)",
+      "status": "passed",
+      "evidence": "Completed exit 0; empty compose-final.log. No Docker engine or production operation."
+    }
+  ]
+}

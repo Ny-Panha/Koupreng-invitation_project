@@ -1,0 +1,39 @@
+{
+  "environment": "Owned native MySQL 8.0.39 on loopback 3416; fictional fixture only",
+  "source": "Direct SQL after final real browser/API journey",
+  "invitation": {
+    "title": "Concurrent authoritative edit",
+    "video": {
+      "enabled": true,
+      "videoMediaId": 43,
+      "posterMediaId": 42
+    },
+    "family": "Live family name",
+    "status": "PUBLISHED",
+    "eventId": 123,
+    "message": "Authored invitation text survives every tab.",
+    "eventDate": "2027-12-05",
+    "eventTime": "17:30:00.000000",
+    "programDay": "Live saved first day",
+    "rsvpDeadline": "2027-12-01",
+    "saveTheDateSubtitle": "Real API date subtitle"
+  },
+  "ticketDesign": {
+    "version": 0,
+    "layout": "GOLD",
+    "accent": "#956d2c",
+    "font": "MOUL",
+    "frame": "DOUBLE",
+    "header": "សូមគោរពអញ្ជើញ",
+    "footer": "សូមបង្ហាញកាតនេះនៅច្រកចូល · Present this ticket at the entrance",
+    "backgroundMediaId": 45,
+    "coverMediaId": 44,
+    "showGroup": false,
+    "showTable": true,
+    "showSeatCount": true,
+    "coverFocusX": null,
+    "coverFocusY": null,
+    "coverFit": null,
+    "backgroundOpacity": null
+  }
+}

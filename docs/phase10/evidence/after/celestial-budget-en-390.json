@@ -1,0 +1,20 @@
+{
+  "svgNodes": 49,
+  "activeAnimations": 0,
+  "gardens": [
+    {
+      "class": "kc-live-garden kc-live-garden--normal is-reduced  kc-main__garden",
+      "butterflies": 0,
+      "flowers": 4,
+      "petals": 0,
+      "svgNodes": 6
+    },
+    {
+      "class": "kc-live-garden kc-live-garden--closing is-reduced is-paused kc-closing__garden",
+      "butterflies": 0,
+      "flowers": 4,
+      "petals": 0,
+      "svgNodes": 6
+    }
+  ]
+}

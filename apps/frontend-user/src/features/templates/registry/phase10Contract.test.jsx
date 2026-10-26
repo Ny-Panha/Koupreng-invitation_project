@@ -97,11 +97,22 @@ it('records every registry alias and actual Studio field without guessing templa
       registryAliasCount: Object.keys(templateRegistry).length, rendererAliases: [...groups.values()], studioFields: fields,
       fieldContracts,
       lifecycleScope: 'Every catalog template: title edit/preview/save/reload/fixture-publication/public DOM; complete native HTTP/MySQL media/ticket/program and Settings journeys separately. Individual atomic HTTP lifecycle for every one of the 70 state properties is not claimed.',
-      templates: output.map(template => ({ ...template, fields: fieldContracts.map(contract => ({ field: contract.field,
-        status: template.capabilities[contract.section] === false ? 'intentionally unsupported' : 'supported',
-        rendererProbe: template.renderedProbes[contract.field] ?? null,
-        evidence: template.capabilities[contract.section] === false ? 'Capability registry exclusion; saved JSON retained' : template.renderedProbes[contract.field] === true ? 'phase10Contract.test.jsx: actual mounted renderer text' : 'Source contract; cover/open-state and per-field browser evidence vary. See lifecycleScope.',
-      })) })),
+      templates: output.map(template => {
+        const generic = template.code === 'event-essential';
+        const eventEditorFields = ['title','hostName','partnerName','groomName','brideName','eventDate','eventTime','eventTimezone','eventEndDate','eventEndTime','calendarUid','saveTheDate','schedule','programDays','showSchedule','messageText','languageMode','preWeddingVideo','venueName','venueAddress','googleMapUrl'];
+        return { ...template, editor: generic ? 'EventDetails / EventFields; participant controls depend on event type; messageText uses storyText' : 'InvitationForm',
+          additionalEditorFields: generic ? ['contact.name','contact.phone','contact.email','visibility','accessPassword','rsvpDeadline'] : [],
+          fields: fieldContracts.map(contract => {
+            const unsupported = generic ? !eventEditorFields.includes(contract.field) : template.capabilities[contract.section] === false;
+            return { field: contract.field,
+              status: unsupported ? 'intentionally unsupported' : 'supported',
+              control: generic ? unsupported ? 'Not offered by the neutral EventDetails editor; legacy JSON is retained' : 'EventDetails / EventFields / SaveTheDateEditor / WeddingProgramEditor / PreWeddingVideoEditor' : contract.control,
+              rendererProbe: template.renderedProbes[contract.field] ?? null,
+              evidence: unsupported ? generic ? 'Neutral event editor exclusion; not a wedding Studio control' : 'Capability registry exclusion; saved JSON retained' : template.renderedProbes[contract.field] === true ? 'phase10Contract.test.jsx: actual mounted renderer text' : 'Source contract; cover/open-state and per-field browser evidence vary. See lifecycleScope.',
+            };
+          }),
+        };
+      }),
     }, null, 2) + '\n');
   }
 });

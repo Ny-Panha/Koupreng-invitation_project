@@ -1,0 +1,755 @@
+{
+  "screenshots": [
+    {
+      "path": "docs/phase10/evidence/after/celestial-calendar-en-1440.png",
+      "width": 1440,
+      "height": 960,
+      "bytes": 270296,
+      "sha256": "ddbcdc368211b79fe9f9fc47f65c3ab3c1c0f65fa0c64b6af92b3a163fbb7f47",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/celestial-calendar-en-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 146564,
+      "sha256": "e338438d662205c6ed33d7595f06a06ee6c1d9adefcf0265cf24d710a0e616e8",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/celestial-calendar-kh-1440.png",
+      "width": 1440,
+      "height": 960,
+      "bytes": 270316,
+      "sha256": "3eb4526a3abcfe996371b3141115f7c8cb7a6390a6294a62884e960bd2a74b44",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/celestial-calendar-kh-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 146108,
+      "sha256": "ff3866e2764b6c68f912ae7a7efaec9b9c83d7ec47a90d52a76e704e73b210fa",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/celestial-cover-en-1440.png",
+      "width": 1440,
+      "height": 960,
+      "bytes": 823540,
+      "sha256": "a293d731ca466daa39936c5725e4705b441cc3e736c534c763368b517ba371f8",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/celestial-cover-en-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 396885,
+      "sha256": "0e3246f1c46ffba46f1ba1ae8de1eec6a7ffbbbb0ca9fbf3745ec927543093a8",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/celestial-cover-kh-1440.png",
+      "width": 1440,
+      "height": 960,
+      "bytes": 823540,
+      "sha256": "a293d731ca466daa39936c5725e4705b441cc3e736c534c763368b517ba371f8",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/celestial-cover-kh-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 396885,
+      "sha256": "0e3246f1c46ffba46f1ba1ae8de1eec6a7ffbbbb0ca9fbf3745ec927543093a8",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/celestial-en-1440.png",
+      "width": 1440,
+      "height": 11276,
+      "bytes": 5723471,
+      "sha256": "4124e462a3e1e011bbe69e2fe6f95e8c03c62b310919620cc7b07c661f99cd00",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/celestial-en-390.png",
+      "width": 390,
+      "height": 11273,
+      "bytes": 2551269,
+      "sha256": "5f8968d44245f09364bac92939bef4523307f7375f86ab9ed84447498bf911bb",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/celestial-kh-1440.png",
+      "width": 1440,
+      "height": 11276,
+      "bytes": 5716946,
+      "sha256": "9545f518b908fdde453dad27e9da93865a5cebcc2a65ac0d8d8bde844536cd56",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/celestial-kh-390.png",
+      "width": 390,
+      "height": 11273,
+      "bytes": 2544977,
+      "sha256": "50abbe0bbc48d12847f1bf36f67d39ceb725c9bbfdbf824cdd34210612709d7d",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/concept-angkor-romduol.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 457157,
+      "sha256": "e91c0d95ea0199a49e25b8a83abd03c86b0e8d4ccbe13cc4cfd6bfdc6452d747",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/concept-ivory-romduol.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 426326,
+      "sha256": "df006ec0ccae87796663243e8286aa2b657c9c1281c91f138b56defc40bd09b7",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/settings-en-1440.png",
+      "width": 1440,
+      "height": 1052,
+      "bytes": 104566,
+      "sha256": "373ef54aaa66cf2a9ead003361f0c9f8d33355753c8c75d1eb69d914697a49f6",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/settings-en-390.png",
+      "width": 390,
+      "height": 3071,
+      "bytes": 147023,
+      "sha256": "97f2c101b6b13eaaa1e77af4485cf7f48b398b73035c627b526331a63547bc50",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/settings-kh-1440.png",
+      "width": 1440,
+      "height": 1052,
+      "bytes": 103808,
+      "sha256": "67778a44a6bbcc7b8e32d1daa80e41d181fbfea3584ba915ee50a993d05eba1b",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/settings-kh-390.png",
+      "width": 390,
+      "height": 2884,
+      "bytes": 143405,
+      "sha256": "75884a40b10dc1cef74548db034340838b597ff61ad0fcda97b16fdeda98b0a4",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-designCover-en-1440.png",
+      "width": 1440,
+      "height": 960,
+      "bytes": 317263,
+      "sha256": "4828b529ebf6b9c8daefbebc158ba9dac37cfc4ad55a91222312144ab393c5e0",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-designCover-en-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 63388,
+      "sha256": "108f4bbcab6a1c3fd0a05658ffcda05a1708a03c23d631d58b3f32e12346ae6c",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-designCover-kh-1440.png",
+      "width": 1440,
+      "height": 960,
+      "bytes": 318257,
+      "sha256": "3310c766f1f418849f5946f6d4fe17638a63522bb1ca09f3d42ce1c575ccce86",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-designCover-kh-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 64833,
+      "sha256": "3c6e674fa4926087bc5034173008182dfd7eaaf09a1c9139015affbaf58d8a2e",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-eventInformation-en-1440.png",
+      "width": 1440,
+      "height": 960,
+      "bytes": 104984,
+      "sha256": "2a06fb88f148f621b30757a640196d14ca6c2606b7c04927435c4ae438e3d7c4",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-eventInformation-en-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 46930,
+      "sha256": "792dd892668fe7ecdcf45f93a433a5c77fbed783744d3c6757067524f916e251",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-eventInformation-kh-1440.png",
+      "width": 1440,
+      "height": 960,
+      "bytes": 107624,
+      "sha256": "aa44aa98adf746d87129f5070b068de6896b28b1e1721cb17a1ddede68962d6e",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-eventInformation-kh-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 46877,
+      "sha256": "65c634a78c808f074187e5a458b1ec5e23130fefd374518f99c5035fefc74c17",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-guestExperience-en-1440.png",
+      "width": 1440,
+      "height": 960,
+      "bytes": 271437,
+      "sha256": "a6121c49148a915aeac6c150787bec3ac0f7b0373da65adda9275d1053c71323",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-guestExperience-en-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 51328,
+      "sha256": "9f2a768cbaf430b1fe41f248d035e02b3665763e1adf9dd5818210c8f33f0280",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-guestExperience-kh-1440.png",
+      "width": 1440,
+      "height": 960,
+      "bytes": 277344,
+      "sha256": "e0c93a098c29c15fbbdbad048ba0402eac2cfa3eac6519013c27db255527dabf",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-guestExperience-kh-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 51729,
+      "sha256": "3c63abd1a54cef7e57716513ac39d5d88db3bd7ce35c260d77d52b830b99a100",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-mediaOpening-en-1440.png",
+      "width": 1440,
+      "height": 960,
+      "bytes": 449487,
+      "sha256": "3f0930054b0968900a38a1c673eebf3fcab3a4c817ea67720ac2dd25cda7fdff",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-mediaOpening-en-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 100208,
+      "sha256": "6704be69440a36f1c25f8680ddcb9e7e41581edb2d8082af654ac22c9c65ae33",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-mediaOpening-kh-1440.png",
+      "width": 1440,
+      "height": 960,
+      "bytes": 516168,
+      "sha256": "bc596ce97c2eaae793d2fc86b2310be6712d5209f0cc9d852f5f6724382cd500",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-mediaOpening-kh-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 101567,
+      "sha256": "2eb8f712203856995350734b5842be646120d2ac71d4436fc85ba23806294d21",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-preset-40.png",
+      "width": 1440,
+      "height": 960,
+      "bytes": 399958,
+      "sha256": "419ba39147d3a48ee66cb9a8927c66a25527b51c440840dbed0d273b37bc7a17",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-preset-50.png",
+      "width": 1440,
+      "height": 960,
+      "bytes": 399484,
+      "sha256": "f6237b0965eb85e08cc5e5da19e4c54f3e1c706da8c5c8a962b7a3cd0e887426",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-preset-60.png",
+      "width": 1440,
+      "height": 960,
+      "bytes": 398144,
+      "sha256": "40b4f33dae438c6be68c11bbb4082a495780f7a95c9ab1e6ddd9f14e15eff488",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-preset-70.png",
+      "width": 1440,
+      "height": 960,
+      "bytes": 343025,
+      "sha256": "f1f37fc65eb5f1c15d9a06586c12831cdf4dea5dde5a532e6e2a1588a927d5b8",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-scheduleVenue-en-1440.png",
+      "width": 1440,
+      "height": 960,
+      "bytes": 289402,
+      "sha256": "638871de932571b0b864a6be8a9c304e51e6ae808702e5f255bb11005e67bb84",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-scheduleVenue-en-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 55768,
+      "sha256": "959587f20daeff6f69aad1dd2711daac1e576e2ca223b7b06aa08ff2b1b3f8db",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-scheduleVenue-kh-1440.png",
+      "width": 1440,
+      "height": 960,
+      "bytes": 279711,
+      "sha256": "8ac15afaeef1c151549f2a4c6ab0d0eeba82a031885cc42f6668844f2663f8a9",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-scheduleVenue-kh-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 53570,
+      "sha256": "873076eb5ca0642d0d99d603a3a6a737876fc393d5459c1bcbba7b87c9a5134d",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-ticketsQr-en-1440.png",
+      "width": 1440,
+      "height": 960,
+      "bytes": 265045,
+      "sha256": "33dac30a21ec2115afe3c8c91d90742b48c5312c9077f3fdfb1a7c21c6d0fe3b",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-ticketsQr-en-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 49879,
+      "sha256": "01d4ae517a9abdb5d038f4439b68d626a2fe7a8ab1c4351a81637278ed2dcd43",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-ticketsQr-kh-1440.png",
+      "width": 1440,
+      "height": 960,
+      "bytes": 264068,
+      "sha256": "ab73c1397664b7af01886d8b2febb1936942a631cc52f4065c0ee903fffac3f7",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/after/studio-ticketsQr-kh-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 44211,
+      "sha256": "0b7e3e869fea55bc0978cbbc155a22863bd850717df87f017874ef34a2e87023",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/before/celestial-en-1440.png",
+      "width": 1440,
+      "height": 11165,
+      "bytes": 4734667,
+      "sha256": "8031acf9d47bb8e88436da6ca54a0fe38e0a12d4301b2fa4d214fc43b30516ac",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/before/celestial-en-390.png",
+      "width": 390,
+      "height": 11211,
+      "bytes": 2071959,
+      "sha256": "ba041fd5c75ae1088611d276431d44cff020bba078ddf1e4811fd249150f3079",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/before/celestial-kh-1440.png",
+      "width": 1440,
+      "height": 11165,
+      "bytes": 4912707,
+      "sha256": "1f6abb48ed5ebc7c7c1ffd4c05c43840079b03c9d6b5b27e11b6cd3cf5cd0894",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/before/celestial-kh-390.png",
+      "width": 390,
+      "height": 11211,
+      "bytes": 2074220,
+      "sha256": "34556df885b3b88fdbef0bc88f0e3449d663b21e7518c0ea0b7ee89f1438a700",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/before/settings-en-1440.png",
+      "width": 1440,
+      "height": 1052,
+      "bytes": 96171,
+      "sha256": "0af4009e64663a444224b0d27cf93f839562f6b4fd8d8865ab6e00978ff44451",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/before/settings-en-390.png",
+      "width": 390,
+      "height": 2313,
+      "bytes": 101422,
+      "sha256": "f17b849beb713433ce1172a202d2a3b42da5e16f153a20cd2399e9546c106216",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/before/settings-kh-1440.png",
+      "width": 1440,
+      "height": 1052,
+      "bytes": 95350,
+      "sha256": "657c6f2a1089be061a2527402fa620117f49d27c742ed92a8835afa2de25653e",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/before/settings-kh-390.png",
+      "width": 390,
+      "height": 2197,
+      "bytes": 101944,
+      "sha256": "e193636906fdfac8c5c0ee6b159bfe079783d6a64f2a0805b3c71189741924d9",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/before/studio-en-1440.png",
+      "width": 1440,
+      "height": 1123,
+      "bytes": 347325,
+      "sha256": "6535984c4d2a44a6829057281fd0f4624a2cc6baf954adad9f1cbbea984d5572",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/before/studio-en-390.png",
+      "width": 390,
+      "height": 1574,
+      "bytes": 67996,
+      "sha256": "95852fe4fc1e21340677e8c2546ce02eb841d686ba44e5df19a9a305662686f6",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/before/studio-kh-1440.png",
+      "width": 1440,
+      "height": 1123,
+      "bytes": 346552,
+      "sha256": "ad69a6ac60fba99365d3ed5fc65e6de09ac210faed52dbd892beebba4b9db578",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/before/studio-kh-390.png",
+      "width": 390,
+      "height": 1574,
+      "bytes": 64085,
+      "sha256": "4ced594fc5e5a6b3660f4e35699e533390fbb9b854f2ab40e26bf6969a1aee28",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/live/public-video-en-1440.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 275445,
+      "sha256": "bd8af45d18d55ffc94167afe19cedda37e4bac9a9f00eac932f745f3c365e6a0",
+      "provenance": "real browser/API/disposable MySQL; fictional account"
+    },
+    {
+      "path": "docs/phase10/evidence/live/studio-video-en-1440.png",
+      "width": 1280,
+      "height": 944,
+      "bytes": 147060,
+      "sha256": "5c6e0de176f1c7e3239de91a26c69e794e0803cb0fcbd66dd73e242eb1384eff",
+      "provenance": "real browser/API/disposable MySQL; fictional account"
+    },
+    {
+      "path": "docs/phase10/evidence/live/ticket-images-en-1440.png",
+      "width": 1280,
+      "height": 812,
+      "bytes": 173025,
+      "sha256": "ae4a5ac51ee05b4b61a7b306e087bf3ffa13f2eedf7b7f3868468dcadf07dd24",
+      "provenance": "real browser/API/disposable MySQL; fictional account"
+    },
+    {
+      "path": "docs/phase10/evidence/templates/bliss-editorial-wedding-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 308381,
+      "sha256": "92fe924d6ee5fe7bd3da041cd0cc0eab453fbeecbbe33851b65a54b911565857",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/templates/cover-khmer-golden-wedding-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 482890,
+      "sha256": "9381bfc3e0b9f646587c135b307373fbde6a16061d2e964f659c33fca545cfc2",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/templates/emerald-canva-luxe-wedding-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 189857,
+      "sha256": "80468171aeaa83b9248cf1e8272911965ac1b417c7a8cbfce33f390c36ca8540",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/templates/event-essential-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 51477,
+      "sha256": "5eebaf1efe65e1e79c3744814d3fa8da478f0f58a835b1d45b07c5956e0ab831",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/templates/garden-royal-khmer-wedding-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 551390,
+      "sha256": "07351bc9554118972f27c16b2be5ea9557e29ac94db9270ea13caa8d30c22044",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/templates/khmer-celestial-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 459369,
+      "sha256": "c550497abdb9d072c70f6d40dbb56b7d1fb13a3eb581bb8a98cedebe6fac83aa",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/templates/khmer-golden-canva-inspired-wedding-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 468132,
+      "sha256": "d0b9ef10353e939a601b8444fe75e91a3ec91e1bd6d7143159379b67c28df72c",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/templates/khmer-royal-lotus-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 387667,
+      "sha256": "499bf2a16f62a047615c7cce003b99855a9793328ac3f5532637f32c0f81f5b9",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/templates/royal-khmer-wedding-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 460073,
+      "sha256": "2324646530b0831290408f94ed6ee684366869326c469c76c7079b3db78c1197",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/templates/silk-heritage-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 193204,
+      "sha256": "37e73afcdba1b6874e687ea481745d0975f634719cd427873214c93d94299ebf",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/templates/the-digital-yes-wedding-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 99162,
+      "sha256": "8eae56c523ae5b6ea97398039f74902002265162aecf4ed54e94cb297d5036a5",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/templates/withjoy-modern-portal-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 356302,
+      "sha256": "84a7c37db13bb57311d8f7b0552b980260fe82d4d07717c979ced2e1b346859a",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/typography/bliss-editorial-wedding-long-khmer-320.png",
+      "width": 320,
+      "height": 960,
+      "bytes": 257914,
+      "sha256": "17a84c4074121fbff95599c8c9671cd293ed2b5addc1b4f3c8e6857f8cdc6ba0",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/typography/cover-khmer-golden-wedding-long-khmer-320.png",
+      "width": 320,
+      "height": 960,
+      "bytes": 258316,
+      "sha256": "ef7dc7a84dc608d93c6cf8736236971ddebac3b267612bd832f0de4ccab53d5a",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/typography/emerald-canva-luxe-wedding-long-khmer-320.png",
+      "width": 320,
+      "height": 960,
+      "bytes": 170126,
+      "sha256": "26f865906c54d9fa1f80535d3aee54d1196ad7f79fb8a7bd8d509631aaa29354",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/typography/event-essential-long-khmer-320.png",
+      "width": 320,
+      "height": 960,
+      "bytes": 53820,
+      "sha256": "d04cc307f91aca8dfb4d36b16b957e7ced1a365d73d85993df3ec99491c66d78",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/typography/garden-royal-khmer-wedding-long-khmer-320.png",
+      "width": 320,
+      "height": 960,
+      "bytes": 319149,
+      "sha256": "3d6eef6e3e6bf26555bc27aa00239249cb20b815726b5fb32cf6279e70caa412",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/typography/khmer-celestial-long-khmer-320.png",
+      "width": 320,
+      "height": 960,
+      "bytes": 305398,
+      "sha256": "ed0f0dd153332e533c9482d7cbeb04cc262d1a895254444daf44881bccb3df4f",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/typography/khmer-golden-canva-inspired-wedding-long-khmer-320.png",
+      "width": 320,
+      "height": 960,
+      "bytes": 267807,
+      "sha256": "03218811a9ee8c351019bfafe7135903ae6b95031999ee596559d7577583f05a",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/typography/khmer-royal-lotus-long-khmer-320.png",
+      "width": 320,
+      "height": 960,
+      "bytes": 262739,
+      "sha256": "7a9a3d571f61562e4a36590afb90826efc5cae3d309fa29b989c43547e5891b9",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/typography/royal-khmer-wedding-long-khmer-320.png",
+      "width": 320,
+      "height": 960,
+      "bytes": 305809,
+      "sha256": "ee196abfa7dd67f83f4fa76cccfbeb23116b76f7d93f602267afd3d6f0bed44f",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/typography/silk-heritage-long-khmer-320.png",
+      "width": 320,
+      "height": 960,
+      "bytes": 137922,
+      "sha256": "e64c7a340c851e4c95fcf11e4a0a3f98ca6c15f9f9a449e62aef894524076d4e",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/typography/the-digital-yes-wedding-long-khmer-320.png",
+      "width": 320,
+      "height": 960,
+      "bytes": 59186,
+      "sha256": "cef90021034b98495b480ac5b95102cd4bc8e9e1232b9be5ff77e66c226d533a",
+      "provenance": "intercepted fictional fixture / local production build"
+    },
+    {
+      "path": "docs/phase10/evidence/typography/withjoy-modern-portal-long-khmer-320.png",
+      "width": 320,
+      "height": 960,
+      "bytes": 287868,
+      "sha256": "f2398e21cc290a3ec8492dcfde25bb947388c91bc92f5d6141d0a96d822b2570",
+      "provenance": "intercepted fictional fixture / local production build"
+    }
+  ],
+  "assets": [
+    {
+      "path": "apps/frontend-user/public/fonts/khmer/Battambang-Bold.woff2",
+      "bytes": 38568,
+      "sha256": "28c3b45b8563b2d557a23ee15f7a72516081a26cc82249f08fc1467c7672c5d0"
+    },
+    {
+      "path": "apps/frontend-user/public/fonts/khmer/battambang-OFL.txt",
+      "bytes": 4482,
+      "sha256": "d4f40de8a05b17cc9da67b25e61650acb3c2e13a528a62b7eb03ffa97503367c"
+    },
+    {
+      "path": "apps/frontend-user/public/fonts/khmer/Battambang-Regular.woff2",
+      "bytes": 39920,
+      "sha256": "75800b53838510b0d08260bc749b0de12e98aa26035cfca0d37e219cbc1a8ae3"
+    },
+    {
+      "path": "apps/frontend-user/public/fonts/khmer/notosanskhmer-OFL.txt",
+      "bytes": 4473,
+      "sha256": "cc68d204625f84eaaaaacd999bfaaa5648700d9bcbf08cbc793e91a70fa37d51"
+    },
+    {
+      "path": "apps/frontend-user/public/fonts/khmer/NotoSansKhmer.woff2",
+      "bytes": 130576,
+      "sha256": "803618d94046dbea6e114d12da3c9532954b53d986a984c6aa9336f39c743094"
+    },
+    {
+      "path": "apps/frontend-user/public/fonts/template-defaults/cinzel-OFL.txt",
+      "bytes": 4475,
+      "sha256": "e7440e690fe3f0671e13dfc72980d0387e304e3e2673486be0369b4e65323c38"
+    },
+    {
+      "path": "apps/frontend-user/public/fonts/template-defaults/Cinzel.woff2",
+      "bytes": 47956,
+      "sha256": "1a247937fe3040567c1122f7098e8d9e57db197b0f38805a434cb66d58290daa"
+    },
+    {
+      "path": "apps/frontend-user/public/fonts/template-defaults/koulen-OFL.txt",
+      "bytes": 4474,
+      "sha256": "26625512eb7c7c424f9c6881b1c828bef48a834b80f2a38166e920b3d116eae4"
+    },
+    {
+      "path": "apps/frontend-user/public/fonts/template-defaults/Koulen-Regular.woff2",
+      "bytes": 20920,
+      "sha256": "81cee1bdbd4bb1aedb75c75c6af1f8bb528a612c7933db30969293eb861c5d52"
+    },
+    {
+      "path": "apps/frontend-user/public/fonts/template-defaults/PlayfairDisplay-Italic.woff2",
+      "bytes": 103828,
+      "sha256": "b6a8d9ec8ec8bf73dccf8ab0325c53e04b8c9e564b6bdb5ebf21e14ca79a92c8"
+    },
+    {
+      "path": "apps/frontend-user/public/fonts/template-defaults/playfairdisplay-OFL.txt",
+      "bytes": 4541,
+      "sha256": "a32c1e30554f8227178d1643d182f9328b6529d92c9b43d86a16fb528381d857"
+    },
+    {
+      "path": "apps/frontend-user/public/fonts/template-defaults/PlayfairDisplay.woff2",
+      "bytes": 106612,
+      "sha256": "05085a802f2b612a7a48a3535a30313c11c9d79c4bad97656092353c9ee57289"
+    },
+    {
+      "path": "apps/frontend-user/src/features/templates/layouts/KhmerCelestial/components/CelestialHeritage.jsx",
+      "bytes": 1739,
+      "sha256": "05b60bbea11072320d50e48a39b5798ece43a56fa53b02ca931a51d273eb6ebd",
+      "provenance": "Original project SVG source"
+    }
+  ],
+  "screenshotCount": 85,
+  "screenshotBytes": 49228657,
+  "newWoff2Bytes": 488380
+}
