@@ -42,6 +42,10 @@ test('real Settings save/reload shares canonical Studio values and rejects a sta
 });
 
 test('actual login → six-group edits → private video → independent ticket images → reload/export → publish/public', async ({ page }, info) => {
+  // Both journeys share one loopback IP and the unchanged 120-request/minute WAF.
+  await test.step('Allow a fresh WAF window before the media journey', async () => {
+    await new Promise(resolve => setTimeout(resolve, 61000));
+  });
   const fixture = JSON.parse(await readFile(fixtureFile, 'utf8'));
   expect(fixture.email).toMatch(/^phase10-browser-.*@example\.test$/);
   // Pass through real responses, but refuse a build accidentally pointed at another API.
@@ -90,6 +94,7 @@ test('actual login → six-group edits → private video → independent ticket 
   await page.reload(); await chooseStudioSection(page, 'mediaOpening', 'Pre-wedding video');
   await expect(page.getByLabel('Enable pre-wedding video', { exact: true })).toBeChecked();
   const stored = (await (await page.request.get(`${api}/invitations/${id}`, { headers })).json()).data;
+  expect(stored.rsvpDeadline).toBe('2027-12-01');
   const content = JSON.parse(stored.contentJson);
   expect(content.preWeddingVideo.enabled).toBe(true); expect(content.saveTheDate.subtitle).toBe('Real API date subtitle');
   expect(content.programDays[0].titleEn).toBe('Live saved first day'); expect(content.groomFather).toBe('Live family name');

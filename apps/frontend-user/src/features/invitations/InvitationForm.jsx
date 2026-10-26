@@ -1465,6 +1465,7 @@ export default function InvitationForm({ invitation }) {
                 storyText: form.messageText || "",
                 languageMode: form.languageMode || "KH",
                 visibility: form.visibility || "PUBLIC",
+                rsvpDeadline: invitation?.rsvpDeadline || null,
                 templateId: resolveNumericTemplateId(form.templateId),
                 designJson: JSON.stringify(stripInlineMedia(designPayload)),
                 contentJson: JSON.stringify(stripInlineMedia(contentPayload)),
@@ -1648,6 +1649,7 @@ export default function InvitationForm({ invitation }) {
             saveDraft(stripInlineMedia(replaceMediaReferences({
                 ownerUserId: user?.id || user?.userId,
                 id: targetDraftId,
+                rsvpDeadline: invitation?.rsvpDeadline || null,
                 slug: saved?.slug || invitation?.slug || form.slug || "wedding",
                 backendInvitationId: saved?.id || invitation?.backendInvitationId || (!isNaN(Number(invitationId)) ? Number(invitationId) : null),
                 syncStatus: apiSyncFailed || mediaSyncError ? (effectiveBackendId || saved?.id ? "SYNC_FAILED" : "LOCAL_ONLY") : "SYNCED",

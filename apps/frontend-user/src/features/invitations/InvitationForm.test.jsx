@@ -86,6 +86,13 @@ describe("Dynamic Templates & Presets", () => {
 });
 
 describe("InvitationForm render test", () => {
+    it.each(['2027-12-01', null])("preserves the canonical Settings RSVP deadline when Studio saves: %s", async rsvpDeadline => {
+        invitationService.update.mockClear();
+        const { container } = render(<MemoryRouter><InvitationForm invitation={{ id: 101, templateId: 10, templateCode: "khmer-celestial", title: "Saved event", status: "DRAFT", rsvpDeadline, contentJson: JSON.stringify({ rsvp: { deadline: '2027-11-01' } }) }} /></MemoryRouter>);
+        await act(async () => { container.querySelector(".pe-save-main-btn").click(); });
+        await waitFor(() => expect(invitationService.update).toHaveBeenCalled());
+        expect(invitationService.update.mock.calls.at(-1)[1].rsvpDeadline).toBe(rsvpDeadline);
+    });
     it.each([
         { venueAddress: "Saved flat address" },
         { event: { venueAddress: "Saved nested address" } },

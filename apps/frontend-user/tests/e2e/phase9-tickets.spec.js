@@ -26,6 +26,11 @@ test('ticket images use independent upload, persist cover/background, transform 
   const pending = page.waitForEvent('download'); await download.click(); const file = await pending;
   await file.saveAs(info.outputPath('ticket-with-independent-images.png'));
   expect(await page.locator('.ticket-preview canvas').evaluate(canvas => [canvas.width, canvas.height])).toEqual([1200,1800]);
+  // The browser download resolves before WebKit finishes restoring action state.
+  await expect(page.locator('.ticket-actions [role="status"]')).toHaveText('PNG ready · 1200 × 1800px');
+  const copy = page.getByRole('button', { name: 'Copy invitation link', exact: true });
+  await expect(copy).toBeEnabled();
+  await expect(copy).toHaveCSS('opacity', '1');
   const axe = await new AxeBuilder({ page }).include('.ticket-studio').withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();
   expect(axe.violations).toEqual([]);
   if (info.project.name === 'chromium') {
