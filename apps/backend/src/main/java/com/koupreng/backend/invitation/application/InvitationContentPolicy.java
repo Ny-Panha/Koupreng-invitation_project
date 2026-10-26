@@ -1,5 +1,6 @@
 package com.koupreng.backend.invitation.application;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koupreng.backend.shared.exception.ApiException;
 import org.springframework.http.HttpStatus;
@@ -12,22 +13,37 @@ import java.util.Set;
 import com.fasterxml.jackson.databind.JsonNode;
 
 final class InvitationContentPolicy {
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
     private InvitationContentPolicy() { }
+
     static boolean addsCustomBranding(String previous, String next) {
+        if (next == null || next.isBlank()) {
+            return false;
+        }
         try {
-            var json = new ObjectMapper();
-            var before = previous == null || previous.isBlank() ? json.createObjectNode() : json.readTree(previous);
-            var after = next == null || next.isBlank() ? json.createObjectNode() : json.readTree(next);
+            var after = OBJECT_MAPPER.readTree(next);
             String logo = after.path("brandMarkUrl").asText("");
-            return !logo.isBlank() && !logo.equals(before.path("brandMarkUrl").asText(""));
-        } catch (Exception malformedLegacy) {
-            return next != null && next.contains("brandMarkUrl");
+            if (logo.isBlank()) {
+                return false;
+            }
+            if (previous == null || previous.isBlank()) {
+                return true;
+            }
+            try {
+                var before = OBJECT_MAPPER.readTree(previous);
+                return !logo.equals(before.path("brandMarkUrl").asText(""));
+            } catch (JsonProcessingException | RuntimeException malformedPrevious) {
+                return true;
+            }
+        } catch (JsonProcessingException | RuntimeException malformedNext) {
+            return next.contains("\"brandMarkUrl\"") && !next.contains("\"brandMarkUrl\":\"\"") && !next.contains("\"brandMarkUrl\": \"\"");
         }
     }
     static void validate(String content) {
         if (content == null || content.isBlank()) return;
         try {
-            var root = new ObjectMapper().readTree(content);
+            var root = OBJECT_MAPPER.readTree(content);
             if (!root.isObject()) throw new IllegalArgumentException();
             var days = root.get("programDays");
             Set<String> dayIds = new HashSet<>();
@@ -76,7 +92,7 @@ final class InvitationContentPolicy {
                 flag(row, "enabled");
                 if (row.hasNonNull("dayId") && !dayIds.contains(row.path("dayId").asText())) throw new IllegalArgumentException();
             }
-        } catch (Exception e) {
+        } catch (JsonProcessingException | RuntimeException e) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "INVITATION_CONTENT_INVALID", "Check program dates, days, text limits and event timezone before saving");
         }
     }

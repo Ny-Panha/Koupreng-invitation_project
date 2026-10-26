@@ -20,7 +20,7 @@ public record GuestBatchRequest(@NotNull UUID batchId, @NotEmpty @Size(max = 100
             result.setGuestName(clean(guestName)); result.setPhone(clean(phone)); result.setEmail(clean(email));
             result.setGuestGroup(clean(guestGroup)); result.setSideType(clean(sideType));
             result.setCompanionName(clean(companionName)); result.setTableNumber(clean(tableNumber)); result.setNote(clean(note));
-            result.setSeatCount(clean(seatCount) == null ? 1 : Integer.valueOf(seatCount.trim()));
+            result.setSeatCount(clean(seatCount) == null ? 1 : Integer.parseInt(seatCount.trim()));
             return result;
         }
         private static String clean(String value) { return value == null || value.isBlank() ? null : value.trim(); }

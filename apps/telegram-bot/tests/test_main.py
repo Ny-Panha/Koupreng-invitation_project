@@ -455,3 +455,38 @@ async def test_telegram_api_exception_log_does_not_contain_token(monkeypatch, ca
     assert token not in caplog.text
     assert "private-chat" not in caplog.text
     assert "secret-bearing-url" not in caplog.text
+
+
+def test_parse_payment_alert_with_khmer_unicode_and_hex_trx():
+    text = "10.00 USD paid by គឹម សុខា (*123). Trx. ID: 0xZZ123 malformed. Remark: អាពាហ៍ពិពាហ៍ EVT123456789"
+    payment = main.parse_payment_alert(text)
+    assert payment is not None
+    assert payment["orderCode"] == "EVT123456789"
+    assert payment["amount"] == "10.00"
+    assert payment["currency"] == "USD"
+    assert payment["paywayTransactionId"] == "0xZZ123"
+    assert payment["payerName"] == "គឹម សុខា"
+    assert payment["payerAccountLast3"] == "123"
+    assert payment["remark"] == "អាពាហ៍ពិពាហ៍"
+
+
+@pytest.mark.asyncio
+async def test_webhook_handles_khmer_multibyte_alert(monkeypatch):
+    posted_payload = None
+
+    async def fake_backend(path, payload, headers=None):
+        nonlocal posted_payload
+        posted_payload = payload
+        return {"ok": True, "data": {"status": "SUCCESS"}}
+
+    monkeypatch.setattr(main, "post_to_backend", fake_backend)
+    text = "10.00 USD paid by គឹម សុខា (*123). Trx. ID: 0xZZ123. Remark: EVT123456789"
+    payload = message_update(201, text, sender_id="200", is_bot=True)
+    res = await main.telegram_webhook(FakeRequest(payload))
+    assert res == {"ok": True}
+    assert posted_payload is not None
+    assert posted_payload["detectedOrderCode"] == "EVT123456789"
+    assert posted_payload["payerName"] == "គឹម សុខា"
+    assert posted_payload["paywayTransactionId"] == "0xZZ123"
+    assert posted_payload["detectedAmount"] == "10.00"
+    assert posted_payload["detectedCurrency"] == "USD"

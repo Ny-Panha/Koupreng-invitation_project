@@ -9,6 +9,8 @@ class InvitationContentPolicyTests {
         assertThat(InvitationContentPolicy.addsCustomBranding(existing, existing)).isFalse();
         assertThat(InvitationContentPolicy.addsCustomBranding(existing, "{}")).isFalse();
         assertThat(InvitationContentPolicy.addsCustomBranding(null, existing)).isTrue();
+        assertThat(InvitationContentPolicy.addsCustomBranding("{malformed-json", "{\"brandMarkUrl\":\"\"}")).isFalse();
+        assertThat(InvitationContentPolicy.addsCustomBranding("{malformed-json", "{\"brandMarkUrl\":\"/uploads/new.png\"}")).isTrue();
     }
     @Test void validatesCalendarDaysWithoutChangingLegacyText() {
         assertThatCode(() -> InvitationContentPolicy.validate("{\"schedule\":[{\"date\":\"2028-02-29\",\"day\":2,\"time\":\"៥:០០ ល្ងាច\"}]}" )).doesNotThrowAnyException();
