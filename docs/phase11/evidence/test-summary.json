@@ -123,7 +123,9 @@
     "routingErrors": 0,
     "bundledSkillDirectoriesVerified": 59,
     "stagedGitleaks": "no leaks",
-    "trackedTreeGitleaks": "no leaks after exact fixture exceptions and private dump untracking"
+    "trackedTreeGitleaks": "no leaks after exact fixture exceptions and private dump untracking",
+    "finalCommitAwareGitleaks": "no leaks",
+    "rawRemovalDiffScan": "flags removed historical dump content; use commit-aware scan and exclude dump from review patch"
   },
   "browserMatrix": {
     "engines": [
