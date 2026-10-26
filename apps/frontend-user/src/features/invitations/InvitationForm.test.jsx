@@ -86,6 +86,20 @@ describe("Dynamic Templates & Presets", () => {
 });
 
 describe("InvitationForm render test", () => {
+    it("applies wording to a legacy English-only invitation without forcing an incomplete Khmer version", async () => {
+        invitationService.update.mockClear();
+        const originalConfirm = window.confirm;
+        window.confirm = vi.fn(() => true);
+        const { container } = render(<MemoryRouter><InvitationForm invitation={{ id: 101, templateCode: 'khmer-celestial', languageMode: 'EN', title: 'Legacy English event', status: 'DRAFT', storyText: 'Legacy English invitation' }} /></MemoryRouter>);
+        const section = container.querySelector('[data-studio-section="invitation"]');
+        fireEvent.change(section.querySelector('.studio-message-presets select'), { target: { value: 'welcome' } });
+        fireEvent.click(section.querySelector('.studio-message-presets button'));
+        expect(section.querySelector('textarea')).toHaveValue('Welcome to our celebration. Thank you for sharing this special day with us.');
+        await act(async () => container.querySelector('.pe-save-main-btn').click());
+        await waitFor(() => expect(invitationService.update).toHaveBeenCalled());
+        expect(JSON.parse(invitationService.update.mock.calls.at(-1)[1].contentJson)).not.toHaveProperty('localizedContentV1');
+        window.confirm = originalConfirm;
+    });
     it("keeps the two authored wording versions through language switching and saving", async () => {
         invitationService.update.mockClear();
         const { container } = render(<MemoryRouter><InvitationForm invitation={{ id: 101, templateCode: 'khmer-celestial', title: 'Event', status: 'DRAFT', storyText: 'Khmer original', updatedAt: '2026-10-26T00:00:00Z' }} /></MemoryRouter>);

@@ -24,7 +24,8 @@ test('separate authored values persist and switching does not replace the iframe
 });
 
 test('wording preview is deliberate and confirmed replacement can be undone', async ({ page }) => {
-  await phase9Fixtures(page, { lang: 'en', content: { messageText: 'My custom invitation', photos: [], schedule: [], storyChapters: [], party: [], faq: [] } });
+  const { events } = await phase9Fixtures(page, { lang: 'en', content: { messageText: 'My custom invitation', photos: [], schedule: [], storyChapters: [], party: [], faq: [] } });
+  events.set(101, { ...events.get(101), languageMode: 'KH' });
   await page.goto('/app/events/101/invitation');
   await page.locator('[data-studio-tab="eventInformation"]').click();
   await page.locator('[data-studio-section="invitation"] details').evaluate(node => { node.open = true; });

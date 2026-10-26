@@ -14,6 +14,7 @@ export function MapDrawing({ value, locale = 'km', selected, svgRef, onPointerDo
       const x = bounded(node.x, .05, .95) * width, y = bounded(node.y, .05, .95) * height;
       const w = bounded(node.width, .02, .8) * width, h = bounded(node.height, .02, .8) * height;
       return <g key={node.id} data-map-node={node.id} transform={`translate(${x} ${y}) rotate(${bounded(node.rotation, -180, 180, 0)})`} stroke={ink} strokeWidth="3" fill="none" style={onPointerDown ? { cursor: 'grab' } : undefined}>
+        {onPointerDown && <rect data-editor-only="true" x={-Math.max(w, 44) / 2} y={-Math.max(h, 80) / 2} width={Math.max(w, 44)} height={Math.max(h, 80)} fill="transparent" stroke="none" pointerEvents="all" />}
         {node.type === 'road' ? <><path d={`M${-w / 2} ${-h / 2}H${w / 2} M${-w / 2} ${h / 2}H${w / 2}`} /><path d={`M${-w / 2} 0H${w / 2}`} strokeDasharray="12 10" strokeWidth="1" /></>
           : node.type === 'arrow' ? <path d={`M${-w / 2} 0H${w / 2}l-16 -12m16 12-16 12`} />
           : node.type === 'intersection' ? <path d={`M${-w / 2} 0H${w / 2} M0 ${-h / 2}V${h / 2}`} strokeWidth="12" />

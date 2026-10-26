@@ -3246,6 +3246,9 @@ export default function InvitationForm({ invitation }) {
                                 setForm(previous => {
                                     let next = previous;
                                     for (const [key, result] of resolved) next = editLocalizedField(next, locale, key, result.text);
+                                    // Legacy English-only rows keep their existing publish contract until
+                                    // the author deliberately starts a separate Khmer version.
+                                    if (!next.localizedContentV1) return next;
                                     return { ...next, localizedContentV1: { ...localeContent(next), [locale]: { ...localeContent(next)[locale], presetId: wordingPreset } } };
                                 });
                             }}>{uiCopy("ប្រើឃ្លាសុភាព", "Apply formal wording")}</button>
