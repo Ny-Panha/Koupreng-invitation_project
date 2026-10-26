@@ -1,0 +1,15 @@
+# Security and integrity review
+
+The access check precedes revision parsing/mutation. Existing `EDIT_EVENT` authorization, accepted collaboration and revoked membership rules remain authoritative. Only owners may change published locales. Concurrent owner/designer saves use the existing locked timestamp check; exactly one wins and the stale writer receives 409. Private invitation access still requires its original server credential; a language query alone cannot grant access.
+
+`COUPLE_MONOGRAM` and `ILLUSTRATED_VENUE_MAP` are independent server feature names granted from the current effective Premium purchased snapshot. Free-package configuration, role labels, paid flags and browser plan values cannot grant them. The API validates create/edit/publish and public delivery. Expired designs are retained privately and hidden publicly; editing and reactivation remain blocked. A disable-only mutation is permitted.
+
+Threats addressed: cross-event/private access (existing policy and real HTTP tests); forged Premium payloads (403); draft English disclosure (public sanitization); stale legacy loss (version required and additive preservation); unsafe resource schemes (directions allowlist); executable SVG/XSS (React text plus bounded original vectors, no arbitrary SVG upload); oversized/non-finite diagram geometry (schema limits); locale credential duplication (credentials remain canonical); QR changes during translation (display-only ticket projection).
+
+Existing event-owned media upload and Premium video checks remain in the original services. Tests include their prior cross-event/private paths as regression coverage. Phase 11 adds no new upload endpoint, public asset namespace, payment route, balance aggregation or reconciliation behaviour. USD/KHR and server-owned payment prices are unchanged.
+
+The OpenAPI test snapshot was relocated to backend test resources after concurrent main cleanup removed the old package directory. CI validation and the manifest generator now read the new path; no new REST endpoint was introduced. The user frontend's token stylesheet is the canonical shared source after that cleanup; the sync/check script generates both frontend exports.
+
+No production container, DNS, real payment, live Telegram message or external provider settlement was used. Local test logs can contain fictional credentials and are intentionally excluded from the review archive. Secret scan, static checks and exact test results are in report 10. Native cultural review and production acceptance remain manual gates in report 12.
+
+Release-tree hygiene: the full tracked scan identified three pre-existing fictitious test-token fingerprints and one tracked SQL guest-data dump. The exact three fixture fingerprints are documented in `.gitleaksignore`; no broad secret rule was disabled. The dump was byte-verified into a private ignored local backup and removed from Git tracking. The original local backup path is retained as an ignored file during integration. Existing remote history was not rewritten; review historical credentials separately if the dump contains live credentials. The review ZIP excludes the dump and all raw logs.

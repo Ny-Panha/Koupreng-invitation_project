@@ -1,0 +1,13 @@
+# Limitations and release gates
+
+Engineering integration may proceed only when the automated results and final Git receipt are green. Production deployment is outside this task. No containers were restarted, no DNS was edited, and no real provider payment/storage/Telegram operation was performed.
+
+Manual customer-release gates remain: native Khmer editorial review of new presets and honorific context; cultural/iconographic approval; physical iOS/Android devices; screen-reader journeys; production provider settlement/storage; and independent inherited catalogue artwork license verification. Automated engines and local OFL inspection do not replace those activities.
+
+Bounded product scope: family placement and monogram controls are intentionally available only for compatible renderers listed in report 08. Unsupported templates retain data. The maker supports original text/vector monograms, not uploaded monogram artwork. Diagram export is safe font-embedded SVG, not PNG/WebP. It is a host-authored schematic with a separate real directions link, not geospatial routing. Guest-specific token substitution is a utility; automated per-recipient message delivery is not included.
+
+Old clients saving a bilingual/designed event without a revision now receive a clear conflict and must reopen. Enabling English requires complete reviewed content; translation is authored, never machine-generated. Legacy single-language events remain valid without forced data conversion. Canonical credential/RSVP identity and all historical migrations are preserved.
+
+Environment caveats: real HTTP integration used owned MySQL 8.0.39 on loopback port 3416 and fictitious data. Redis was unavailable; integration logs report the existing database fallback. Tests deliberately skip four optional external/environment cases (report 10 lists exact names). Missing-browser and stopped-database attempts are recorded as failed attempts, followed by corrected runs. Remote CI visibility must be reported honestly in the Git receipt; absent statuses are not proof of success.
+
+Release-tree hygiene: the full tracked scan identified three pre-existing fictitious test-token fingerprints and one tracked SQL guest-data dump. The exact three fixture fingerprints are documented in `.gitleaksignore`; no broad secret rule was disabled. The dump was byte-verified into a private ignored local backup and removed from Git tracking. The original local backup path is retained as an ignored file during integration. Existing remote history was not rewritten; review historical credentials separately if the dump contains live credentials. The review ZIP excludes the dump and all raw logs.

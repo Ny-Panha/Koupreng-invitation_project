@@ -1,0 +1,225 @@
+{
+  "provenance": "Fictional local browser fixtures; original geometric vectors; inherited local font and Lucide licenses. No supplied screenshot art reused.",
+  "files": [
+    {
+      "path": "evidence/after/celestial-family-en-1440.png",
+      "sha256": "93c4384b1a69527cc9dffa8b19abe813986f61dd2b237d960588306f06afd6a8",
+      "bytes": 234294
+    },
+    {
+      "path": "evidence/after/celestial-family-en-390.png",
+      "sha256": "1781f029a21fff502db66a572fa126cba3b0bc05fd102f2d9d6670868e48fdc2",
+      "bytes": 93121
+    },
+    {
+      "path": "evidence/after/celestial-family-km-1440.png",
+      "sha256": "7db1e0f66016d0588c686f81d399fad05a2607d79e3b4e814a2fbd1ca846ac5f",
+      "bytes": 283748
+    },
+    {
+      "path": "evidence/after/celestial-family-km-390.png",
+      "sha256": "9c1b6ef08b7ed9f7c9cf836aa5bf17eca834d978d03b4223bc69af7c30f77dec",
+      "bytes": 107922
+    },
+    {
+      "path": "evidence/after/celestial-map-en-1440.png",
+      "sha256": "8f26a51c4f7991c9b2371931f8bfdaafcfc13068d47f8a61814a4f2fc754c82b",
+      "bytes": 50547
+    },
+    {
+      "path": "evidence/after/celestial-map-en-390.png",
+      "sha256": "8cdd34baf0fb610e636ac743a73194e9f8116897f6e727f8ac954a5dd49ac044",
+      "bytes": 54491
+    },
+    {
+      "path": "evidence/after/celestial-map-km-1440.png",
+      "sha256": "d9d66fe656236578ff99a5341ac95108e1230b4962732ded0bd2451b252c29d4",
+      "bytes": 48122
+    },
+    {
+      "path": "evidence/after/celestial-map-km-390.png",
+      "sha256": "054e5b836ade8430e5316823627e234c7b5a94db09b607c536e32ee491783da2",
+      "bytes": 39111
+    },
+    {
+      "path": "evidence/after/celestial-program-en-1440.png",
+      "sha256": "1ff2407d6ffaba554a7c37480e9aa61da72f2787b0813b7e35671a8695706e81",
+      "bytes": 35214
+    },
+    {
+      "path": "evidence/after/celestial-program-en-390.png",
+      "sha256": "784f6845cb09a62fb2c70c297abb465d02476086978afd40a49ef96011e8c79c",
+      "bytes": 29158
+    },
+    {
+      "path": "evidence/after/celestial-program-km-1440.png",
+      "sha256": "333922009ff851483b513fcdc7d960ed86ae0881af23cd124124a17a93906af2",
+      "bytes": 29239
+    },
+    {
+      "path": "evidence/after/celestial-program-km-390.png",
+      "sha256": "a714a41ebd83c14f621b968cc22ac042a6c88983fbecfd3feab0dca68059e0fa",
+      "bytes": 25868
+    },
+    {
+      "path": "evidence/after/guest-locale-en-1440.png",
+      "sha256": "7584f2970db68a4446c529aa7fa4113422f730fb0a1b6da111f6dd8c66c6af70",
+      "bytes": 4140
+    },
+    {
+      "path": "evidence/after/guest-locale-en-390.png",
+      "sha256": "6bf1bc638a6bf4d68b56a05e1d6b2c20a78b41dd54d30feea8203c869d7a8cbe",
+      "bytes": 4140
+    },
+    {
+      "path": "evidence/after/guest-locale-km-1440.png",
+      "sha256": "b25679104fca02c8b5074fcb91322e413cd251576f9f6c008111c82e4bbf3301",
+      "bytes": 4141
+    },
+    {
+      "path": "evidence/after/guest-locale-km-390.png",
+      "sha256": "fcb52ffc12c57971889084b3c417869cd60d6cd9b1899e3f50093553f529a2ee",
+      "bytes": 4142
+    },
+    {
+      "path": "evidence/after/map-editor-1440.png",
+      "sha256": "95eab4800a94a5b11c4b19dbb3d1dca093a622fc1ba4e13cdc11e6f1c4072e52",
+      "bytes": 337777
+    },
+    {
+      "path": "evidence/after/monogram-editor-1440.png",
+      "sha256": "411c49d7d004905ce46329a816436274ba0e26eea31b3d28a03b1cc084fd4b8f",
+      "bytes": 305460
+    },
+    {
+      "path": "evidence/before/celestial-family-en-1440.png",
+      "sha256": "1c34532182b51be278242c845b28a6a553a845921ae54dfb1c5c6bb58974e3eb",
+      "bytes": 246237
+    },
+    {
+      "path": "evidence/before/celestial-family-en-390.png",
+      "sha256": "8c2e526032e6db9dd6736d1de61a11aa24a8f59fde9be2e0b7846261806a6028",
+      "bytes": 136092
+    },
+    {
+      "path": "evidence/before/celestial-family-km-1440.png",
+      "sha256": "57399e845385cbe38b2ec474694faa7caeea2877386fa10c304d4276565964e0",
+      "bytes": 283375
+    },
+    {
+      "path": "evidence/before/celestial-family-km-390.png",
+      "sha256": "c2a529bddb54a7928f17a0c50b62e6fd4699f778e5d5e415c8dc211e9b09e6a8",
+      "bytes": 145169
+    },
+    {
+      "path": "evidence/before/celestial-program-en-1440.png",
+      "sha256": "652f762982d32227faea60ccc34adea6d8cf21bc9edb761fedf72eb1e43af03e",
+      "bytes": 124447
+    },
+    {
+      "path": "evidence/before/celestial-program-en-390.png",
+      "sha256": "12718bfd4d9b0611163cf0d052f0de7abed4b80e9b8d9b17eed21d55de876a04",
+      "bytes": 132545
+    },
+    {
+      "path": "evidence/before/celestial-program-km-1440.png",
+      "sha256": "3581348c1235d3bbf3a50fc31015023b4b0966cc9d53a8b69c9409ccca6a7736",
+      "bytes": 127169
+    },
+    {
+      "path": "evidence/before/celestial-program-km-390.png",
+      "sha256": "d46c0dd64e46a7f08693f83f406cb861a2717ff36e666aaf49ba4aed1958bfe0",
+      "bytes": 134773
+    },
+    {
+      "path": "evidence/before/celestial-venue-en-1440.png",
+      "sha256": "fb06bd1f8cc1c3164b938fcf30df8a2c12cfb731e7f78a041c4f4f09344c886d",
+      "bytes": 281741
+    },
+    {
+      "path": "evidence/before/celestial-venue-en-390.png",
+      "sha256": "a623e30aef001349776ab176025595c234a9c622568ff215122efbb1cff9bb68",
+      "bytes": 129720
+    },
+    {
+      "path": "evidence/before/celestial-venue-km-1440.png",
+      "sha256": "d898e53a550581369e8f9de5602d48792efde4ef50cff392407ad65afd0a9778",
+      "bytes": 306885
+    },
+    {
+      "path": "evidence/before/celestial-venue-km-390.png",
+      "sha256": "c40d5b5968fe4b52849bed875707e3055e627e8bd4665ed3e398ac4c30a727bc",
+      "bytes": 155910
+    },
+    {
+      "path": "evidence/catalog/bliss-editorial-wedding-390.png",
+      "sha256": "400278952d1a2f5bf3d063bc4939a7db10e66acd8d96abd988120f4b72a0d083",
+      "bytes": 303437
+    },
+    {
+      "path": "evidence/catalog/cover-khmer-golden-wedding-390.png",
+      "sha256": "0c43a673ea76964313ebd6b41ffe3909f3a456584bdaccdea3668a0cdccbb2a1",
+      "bytes": 482635
+    },
+    {
+      "path": "evidence/catalog/emerald-canva-luxe-wedding-390.png",
+      "sha256": "04c8f1b663f07ebba812592db6f602ebb1b67c16b9536f2b2660d5665f57a740",
+      "bytes": 160586
+    },
+    {
+      "path": "evidence/catalog/event-essential-390.png",
+      "sha256": "bad169f5d123b4af60f4d1dc660b1afa680181c40c60ecf28f988f44d55309c2",
+      "bytes": 51467
+    },
+    {
+      "path": "evidence/catalog/garden-royal-khmer-wedding-390.png",
+      "sha256": "57a9b570f1ccaf85133a48e460cbcf7e2a059dab18afa75029f8293ed6cbe241",
+      "bytes": 551681
+    },
+    {
+      "path": "evidence/catalog/khmer-celestial-390.png",
+      "sha256": "19307798ad838eaf37af8d0b47b2ad87b7e348c9ed199c8ea192f407a9b437a5",
+      "bytes": 459549
+    },
+    {
+      "path": "evidence/catalog/khmer-golden-canva-inspired-wedding-390.png",
+      "sha256": "d0730d308c8c98958e2beded8de0fd247240a01cffe052d6577148390ea2ec33",
+      "bytes": 467868
+    },
+    {
+      "path": "evidence/catalog/khmer-royal-lotus-390.png",
+      "sha256": "99833a423f10fab53c0d308efe629b8307e85ab580a1a4bdb58072a1ab1d7262",
+      "bytes": 387685
+    },
+    {
+      "path": "evidence/catalog/royal-khmer-wedding-390.png",
+      "sha256": "1626eb60733c64c12925d3e11b6c201aed187dd1e9d0bf12b40cc0a615965ae3",
+      "bytes": 460939
+    },
+    {
+      "path": "evidence/catalog/silk-heritage-390.png",
+      "sha256": "37e73afcdba1b6874e687ea481745d0975f634719cd427873214c93d94299ebf",
+      "bytes": 193204
+    },
+    {
+      "path": "evidence/catalog/the-digital-yes-wedding-390.png",
+      "sha256": "e13697d55d41faed1a05fe16082e08f877aa79310525640eb6d7992de4851009",
+      "bytes": 93100
+    },
+    {
+      "path": "evidence/catalog/withjoy-modern-portal-390.png",
+      "sha256": "e6210093af76e7d8b37f2aa5caa369451213edf64155493cb6b8d45d2ac51c3a",
+      "bytes": 356325
+    },
+    {
+      "path": "evidence/licenses/KantumruyPro-OFL.txt",
+      "sha256": "a7389caf38cabd01ff3fc8a92837ae1e8d006daacad929dca106203280fab9ad",
+      "bytes": 4488
+    },
+    {
+      "path": "evidence/licenses/Lucide-ISC.txt",
+      "sha256": "b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57",
+      "bytes": 3208
+    }
+  ]
+}

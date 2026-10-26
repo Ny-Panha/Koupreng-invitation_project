@@ -1,0 +1,11 @@
+# Venue directions and illustrated map
+
+Canonical venue name/address, location query, approved Google Directions link and the existing permitted uploaded map image remain available without the new Premium maker. Phase 11 does not scrape tiles, invent geographic accuracy or reuse Google artwork. Direction URLs accept HTTPS Google Maps host/path forms; other schemes and lookalike hosts are rejected. Ordinary location search text remains supported. Public links use the existing safe link behaviour, with no invitation token appended.
+
+The Premium map is an explicitly labelled schematic. The structured `illustratedMap` v1 config stores an enabled flag, aspect ratio, ivory/ink/rose palette, bilingual description and at most 80 nodes. Nodes use unique IDs, an allowlisted type, bounded normalized coordinates/sizes/rotation and bilingual labels. Types include destination, road, arrow, label, building, intersection, market, school, pagoda and parking. These are simple original vectors, not licensed cartographic tiles.
+
+The Studio supports pointer movement/resizing, snapping, arrow keys, numeric geometry, centre alignment, layer selection/order, duplicate/delete, reset confirmation, zoom with scroll panning and existing undo/redo. A gesture commits through the same form writer; the editor stores no second invitation copy. Text controls provide a drag alternative. The public figure has a description, readable textual landmark legend and separate canonical directions link.
+
+SVG export clones only the generated drawing, strips editor controls and embeds the repository's local Kantumruy Pro WOFF2 with its OFL license metadata. No arbitrary SVG upload, remote image/script reference or arbitrary icon URL is accepted. Export errors have visible status and object URLs are revoked. SVG is the implemented export format; PNG/WebP export is not included.
+
+The backend checks owner Premium for new/changed designs even when a caller forges UI fields. Unchanged designs survive expiry privately; public designs disappear when disabled or expired. Premium is required to edit/reactivate; a disable-only change remains possible after expiry. Existing media ownership checks were retained, not replaced. No live storage operation was performed.

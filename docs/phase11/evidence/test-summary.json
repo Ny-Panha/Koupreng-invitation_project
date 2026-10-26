@@ -1,0 +1,179 @@
+{
+  "date": "2026-10-26",
+  "sourceCommit": "a1fe5ba271adb2fc0680f911bf868501d7d150af",
+  "baselineCommit": "17484e58bba7b211b4ec62a7025a4adde992f20a",
+  "reconciledMain": "0f0b4cb8c3d3722acdbc9688fe571c3be0e73ef1",
+  "results": [
+    {
+      "scope": "User Vitest full",
+      "passed": 969,
+      "failed": 0,
+      "files": 137,
+      "seconds": 65.09,
+      "log": "compatibility-user.log"
+    },
+    {
+      "scope": "Final UI focused after placement correction",
+      "passed": 66,
+      "failed": 0,
+      "files": 4,
+      "seconds": 11.42,
+      "log": "final-ui-focused.log"
+    },
+    {
+      "scope": "Admin Vitest",
+      "passed": 121,
+      "failed": 0,
+      "files": 21,
+      "seconds": 45.22,
+      "log": "final-admin.log"
+    },
+    {
+      "scope": "Worker pytest",
+      "passed": 74,
+      "failed": 0,
+      "warnings": 1,
+      "seconds": 1.54,
+      "log": "release-worker-corrected.log"
+    },
+    {
+      "scope": "Backend Maven verify plus dependency analysis",
+      "discovered": 638,
+      "passed": 634,
+      "failed": 0,
+      "skipped": 4,
+      "seconds": 357,
+      "log": "final-backend-verify.log"
+    },
+    {
+      "scope": "Phase 11 browser unique cases across final sweep and affected rerun",
+      "passed": 94,
+      "failed": 0,
+      "skipped": 2,
+      "note": "93 passed/one diagram hit failure/two skips; final affected bilingual/map run 22 passed/two skips after hit-area fix.",
+      "log": "compatibility-browser.log"
+    },
+    {
+      "scope": "Untouched initial main browser captures",
+      "passed": 2,
+      "failed": 0,
+      "seconds": 6.7,
+      "log": "verified-baseline.log"
+    },
+    {
+      "scope": "Phase 8 regression",
+      "passed": 45,
+      "failed": 0,
+      "skipped": 4,
+      "seconds": 186,
+      "log": "regression-phase8.log"
+    },
+    {
+      "scope": "Phase 9 regression combined unique cases",
+      "passed": 51,
+      "failed": 0,
+      "note": "Initial 47 pass / 4 fail, followed by six passing affected cases (two duplicates).",
+      "log": "phase9-recovery.log"
+    },
+    {
+      "scope": "Phase 10 regression combined unique cases",
+      "passed": 61,
+      "failed": 0,
+      "skipped": 2,
+      "note": "Initial 52 pass / 9 fail / 2 skip; all 36 template cases rerun, then one page-closed WebKit case passed isolated.",
+      "log": "phase10-recovery.log"
+    },
+    {
+      "scope": "Repository Node tests",
+      "passed": 16,
+      "failed": 0,
+      "seconds": 2.163,
+      "log": "repository-gates-final.log"
+    },
+    {
+      "scope": "CI critical routes and route smoke",
+      "passed": 56,
+      "failed": 0,
+      "seconds": 27.9,
+      "log": "critical-route-smoke.log"
+    },
+    {
+      "scope": "Final map hit-area component check",
+      "passed": 33,
+      "failed": 0,
+      "seconds": 4.38,
+      "log": "map-hit-focused.log"
+    }
+  ],
+  "checks": {
+    "frontendLint": "pass",
+    "adminLint": "pass",
+    "frontendBuild": "pass",
+    "adminBuild": "pass",
+    "spotbugs": "pass",
+    "pmd": "pass",
+    "knipUser": "pass",
+    "knipAdmin": "pass",
+    "workerRuff": "pass",
+    "workerBandit": "pass",
+    "npmAuditUserVulnerabilities": 0,
+    "npmAuditAdminVulnerabilities": 0,
+    "tokenExports": 2,
+    "openApiManifestEndpoints": 269,
+    "routingErrors": 0,
+    "bundledSkillDirectoriesVerified": 59,
+    "stagedGitleaks": "no leaks",
+    "trackedTreeGitleaks": "no leaks after exact fixture exceptions and private dump untracking"
+  },
+  "browserMatrix": {
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "catalogAndNeutralPresentations": 12,
+    "locales": [
+      "km",
+      "en"
+    ],
+    "widths": [
+      320,
+      375,
+      390,
+      430,
+      768,
+      1024,
+      1440,
+      1920
+    ],
+    "viewportStates": 576
+  },
+  "limits": [
+    "browser API fixtures are separate from real backend HTTP/MySQL journeys",
+    "Redis unavailable; existing database fallback exercised",
+    "native Khmer/cultural review, physical devices, screen readers, production providers and inherited art license audit remain manual"
+  ],
+  "logHashes": {
+    "compatibility-user.log": "e600c87b1f34b2367078514287b2752cbcf408002f3ac5b002536cac5d567b9f",
+    "compatibility-browser.log": "36d834bbc0d72fa604e41b30f86dca7dd274c501f38045c80f7bb54f72bfa151",
+    "final-ui-focused.log": "bdd8d683c079815e83ce6c1675db6d1cf09ae0e9a55aba6175046fa68ea1bac4",
+    "final-admin.log": "51db6ae51a86f3a950505b52625053b61f6c3e4c6b6b3d5a9e43b9da30d31ef7",
+    "release-worker-corrected.log": "95e9d765b0867ac50fe7deacb03933db24a5e5029c96896f82114cf9b9ea58b3",
+    "final-backend-verify.log": "d3819add7b2ce4504f2067f62867efd420095f7399dcdef00f435accd0fe79e8",
+    "accepted-browser.log": "2d615551928edcca8db7a332ef6a2ba4070f13b5ccdaa812d971a5cb391cc387",
+    "phase9-recovery.log": "935d3763e5f1721e7598428dd8f159f67bfa775425429585baf8128d76084a77",
+    "phase10-recovery.log": "4a1212dca9445ef9fea63c62ba527806b06c54608e7f74a6328e136a9ca97bec",
+    "regression-phase8.log": "cd0b164a0b3141229d270ebb7850103444a36f90fb134590af87628fa79d5094",
+    "repository-gates-final.log": "ca760d95913067381b5283beb535fe0901e6294d51de4a9265eacc71870b7a56",
+    "critical-route-smoke.log": "7852a566c99345f8e111960fefe2128dff188ad8175a3f11cbb33c4057034f73"
+  },
+  "finalBuildAssets": [
+    "dist/assets/InvitationEditFeature-DvDWbZq_.js                            183.58 kB \u2502 gzip:  48.63 kB",
+    "dist/assets/index-B0fRsiCe.js                                            445.17 kB \u2502 gzip: 130.63 kB"
+  ],
+  "releaseHygiene": {
+    "fixtureExceptions": 3,
+    "privateDumpUntracked": 1,
+    "historyRewritten": false
+  }
+}

@@ -1,0 +1,5 @@
+# Exact fingerprints of fictitious credentials used only by local HTTP/browser fixtures.
+# Keep real source and database dumps subject to the full scan.
+apps/backend/src/test/java/com/koupreng/backend/ticket/application/TicketIntegrationTests.java:generic-api-key:153
+apps/frontend-user/tests/e2e/support/studioFixtures.js:generic-api-key:4
+apps/frontend-user/tests/e2e/guest-workspace.spec.js:jwt:17

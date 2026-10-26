@@ -1,0 +1,22 @@
+[
+  {
+    "class": "com.koupreng.backend.phase6.Phase6DemoMySqlTests",
+    "name": "freeSignupCalendarPersistencePublishedEditsAndStaleSaveAreEnforcedThroughServlets",
+    "reason": "Environment variable [PHASE6_DEMO_PROVISION] does not exist"
+  },
+  {
+    "class": "com.koupreng.backend.phase6.Phase6DemoMySqlTests",
+    "name": "provisionAndVerifyOnlyTheIsolatedDevelopmentDatabase",
+    "reason": "Environment variable [PHASE6_DEMO_PROVISION] does not exist"
+  },
+  {
+    "class": "com.koupreng.backend.phase6.Phase6DemoMySqlTests",
+    "name": "immutableBenefitsPendingFutureExpiredAndRevokedGrantsResolveSafely",
+    "reason": "Environment variable [PHASE6_DEMO_PROVISION] does not exist"
+  },
+  {
+    "class": "com.koupreng.backend.rsvp.application.RsvpSummaryPerformanceMySqlTests",
+    "name": "benchmarkSummaryAndVerifyCounts",
+    "reason": "Environment variable [RUN_RSVP_PERFORMANCE] does not exist"
+  }
+]
