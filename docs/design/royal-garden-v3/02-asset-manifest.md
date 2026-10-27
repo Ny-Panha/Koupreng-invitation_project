@@ -18,4 +18,4 @@ The ivory/gold butterfly is an original image-generation-tool asset, reduced to 
 
 All supplied art/video is used at the user's direction for this project; this is provenance, not independent verification of third-party commercial rights. The pre-existing demo photos retain their repository provenance. No Canva generation/export is claimed.
 
-Responsive derivatives use Lanczos resizing and WebP quality 87 (91 for the intricate arch). All eleven production images together total approximately 2.43 MB, before choosing responsive variants. Only entrance assets are mounted initially; film and information assets mount on their scenes. The full source archive is never included in the web payload.
+Responsive derivatives use Lanczos resizing and WebP quality 87 (91 for the intricate arch). All ten production images together total approximately 2.43 MB, before choosing responsive variants. Only entrance assets are mounted initially; film and information assets mount on their scenes. The full source archive is never included in the web payload.
