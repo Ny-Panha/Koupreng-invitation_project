@@ -1,0 +1,135 @@
+{
+  "processing": "Actual browser captures. Mobile PNGs are post-capture CSS-resolution delivery derivatives. Raw DPR originals remain in the ignored local cache; desktop PNGs retain their captured dimensions.",
+  "images": [
+    {
+      "file": "final-375x667-km-cover.png",
+      "capturedPixels": [
+        375,
+        667
+      ],
+      "deliveredPixels": [
+        375,
+        667
+      ],
+      "rawSha256": "e9d37a63f1d704224acb24dbc56d99170e1e54850c5d9a347448d94a32d73aad",
+      "deliveredSha256": "e038288f69227c7659f28aeb5048edd2dac6349d7ba1aba5e02da3aa69684b32"
+    },
+    {
+      "file": "final-375x667-km-ending.png",
+      "capturedPixels": [
+        375,
+        667
+      ],
+      "deliveredPixels": [
+        375,
+        667
+      ],
+      "rawSha256": "1f9029794a2fcb9c12ec766cbac8a2538fb3b9a49d460ad77e6dc7982758ac0f",
+      "deliveredSha256": "03c769801e4832ba8b1272f879ee9a237fe2e78e59605d262d7a2e9bcb91dfb5"
+    },
+    {
+      "file": "final-375x667-km-information-scrolled.png",
+      "capturedPixels": [
+        375,
+        667
+      ],
+      "deliveredPixels": [
+        375,
+        667
+      ],
+      "rawSha256": "7861c71151bd369b693de8e1c3f9875f5d567eba728186f74a860b608c2f3a98",
+      "deliveredSha256": "5fe994f8c568b3fd784a20382388d2cb1a38f1ede0547ad1ec386f1acd6a32dd"
+    },
+    {
+      "file": "final-375x667-km-information.png",
+      "capturedPixels": [
+        375,
+        667
+      ],
+      "deliveredPixels": [
+        375,
+        667
+      ],
+      "rawSha256": "aaacfe7426f12ae6941606961df9c6c6867b22a259dc5b5380e5dea3a4bae6f3",
+      "deliveredSha256": "a6e13bda15640e14452cc7f15dff5639f3f7c78e5c6ba6f34a8fc04397535367"
+    },
+    {
+      "file": "final-375x667-km-video.png",
+      "capturedPixels": [
+        375,
+        667
+      ],
+      "deliveredPixels": [
+        375,
+        667
+      ],
+      "rawSha256": "284531fba535b01d5b2cb156e0dfd5f4818b3588c1fef5d98a8f6a78cb95668c",
+      "deliveredSha256": "e752da6bb8757ed5acc5fc90917319f638e77027700f0559a7100e4b0139bdaf"
+    },
+    {
+      "file": "final-430x932-km-cover.png",
+      "capturedPixels": [
+        430,
+        932
+      ],
+      "deliveredPixels": [
+        430,
+        932
+      ],
+      "rawSha256": "b630d6b264515b4f22672c71850f20cbb44bafc0b40f5f42db1867d94b50c537",
+      "deliveredSha256": "5bb11fd335df35a56d2e59daa82440e6c38fd415083b7069e9bb5885ded94bd3"
+    },
+    {
+      "file": "final-430x932-km-ending.png",
+      "capturedPixels": [
+        430,
+        932
+      ],
+      "deliveredPixels": [
+        430,
+        932
+      ],
+      "rawSha256": "b84f14c8bbf601e1eed87937245ff3e2d2398074f955c862db29ee1a27293803",
+      "deliveredSha256": "9a2ff07f4c761fb20b5dc7f8734f90c934ec04735c5990fe3c7b9788e81d879f"
+    },
+    {
+      "file": "final-430x932-km-information-scrolled.png",
+      "capturedPixels": [
+        430,
+        932
+      ],
+      "deliveredPixels": [
+        430,
+        932
+      ],
+      "rawSha256": "19c15724a0884a5dd62717df9b9312d8ded554e4415a5adc103ab9f68d98fa19",
+      "deliveredSha256": "850a11462b160dbbfecc581b4c0d269d811272e772a1c82c4fcd4131b083f892"
+    },
+    {
+      "file": "final-430x932-km-information.png",
+      "capturedPixels": [
+        430,
+        932
+      ],
+      "deliveredPixels": [
+        430,
+        932
+      ],
+      "rawSha256": "cd419036b3b7daa5fd5f72a230961b38d36cdf16b8fb1722b027ba879c670b61",
+      "deliveredSha256": "f6f25da1e470fbb75112f4c10e37224219b519352ca8077386eab0b321507a1b"
+    },
+    {
+      "file": "final-430x932-km-video.png",
+      "capturedPixels": [
+        430,
+        932
+      ],
+      "deliveredPixels": [
+        430,
+        932
+      ],
+      "rawSha256": "516d457239db79be3c458b9d8f81f7dea8a50a9e6fbaf0ac9d5fcbe759b97dc0",
+      "deliveredSha256": "2a2b649d2208d4bb40665d35f0a7b56ff93bce42bf12f305336845cc13284d95"
+    }
+  ]
+}

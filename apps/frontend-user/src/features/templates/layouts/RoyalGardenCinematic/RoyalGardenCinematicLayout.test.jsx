@@ -25,10 +25,17 @@ beforeEach(() => {
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 
 describe("Royal Garden Cinematic layout", () => {
-  it('uses localized hosted wording instead of inherited Khmer-only system copy in English', () => {
+  it('offers the hosted language selector and preserves owner wording without an English variant', () => {
     const { container } = show({ isHostedInvitation: true, content: { languageMode: 'EN', familyHeading: 'គ្រួសារ', scheduleEnding: 'សូមអរគុណ' } });
-    expect(container.querySelector('.rg-language')).toBeNull();
-    expect(container.querySelector('.rg-family-heading')).toHaveTextContent('Together with our families');
+    expect(container.querySelector('.rg-language select')).toHaveValue('en');
+    expect(container.querySelector('.rg-family-heading')).toHaveTextContent('គ្រួសារ');
+    expect(container.querySelector('#rg-schedule')).toHaveTextContent('សូមអរគុណ');
+    expect(container.querySelector('#rg-schedule h2')).toHaveTextContent('Wedding programme');
+  });
+  it('uses supplied English variants for owner family and programme wording', () => {
+    const { container } = show({ isHostedInvitation: true, content: { languageMode: 'EN', familyHeading: 'គ្រួសារ', familyHeadingEn: 'Our families', scheduleEnding: 'សូមអរគុណ', scheduleEndingEn: 'Thank you for joining us' } });
+    expect(container.querySelector('.rg-family-heading')).toHaveTextContent('Our families');
+    expect(container.querySelector('#rg-schedule')).toHaveTextContent('Thank you for joining us');
     expect(container.querySelector('#rg-schedule')).not.toHaveTextContent('សូមអរគុណ');
   });
   it('renders the supplied sample families, nine ceremonies and closing wording with a valid date', () => {

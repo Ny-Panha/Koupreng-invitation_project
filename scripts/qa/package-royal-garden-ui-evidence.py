@@ -3,11 +3,13 @@ from pathlib import Path
 import hashlib
 import json
 import shutil
+import os
 from PIL import Image
 
 root = Path(__file__).resolve().parents[2]
-evidence = root / 'docs/design/royal-garden-visual-repair/evidence'
-raw = root / '.cache/royal-garden-ui-repair/raw-screenshots'
+relative = os.environ.get('ROYAL_EVIDENCE_DIR', 'docs/design/royal-garden-visual-repair/final-steering')
+evidence = root / relative / 'evidence'
+raw = root / '.cache/royal-garden-ui-repair/raw-screenshots' / Path(relative).name
 raw.mkdir(parents=True, exist_ok=True)
 records = []
 previous_file = evidence / 'screenshot-manifest.json'

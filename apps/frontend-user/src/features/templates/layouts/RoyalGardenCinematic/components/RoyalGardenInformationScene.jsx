@@ -24,6 +24,6 @@ export default function RoyalGardenInformationScene({ presentation, reduced, act
       <RoyalGardenArtworkFrame source={info.background ? ROYAL_ASSETS.information : ''} smallSource={ROYAL_ASSETS.informationSmall} variant="information" className="rg-information-background" fill={info.background === ROYAL_ASSETS.information} />
       {active && <RoyalGardenMotionLayer settings={presentation.motion} reduced={reduced} />}
     </>}
-    {info.enabled ? <div ref={scroll} className="rg-content-scroll" tabIndex={0} aria-label={locale === 'EN' ? 'Invitation content' : 'ព័ត៌មានធៀបអញ្ជើញ'}>{children}{info.footer && <img className="rg-information-footer" src={ROYAL_ASSETS.footer} alt="" width="960" height="320" loading="lazy" onError={event => { event.currentTarget.hidden = true; }} />}</div> : children}
+    {info.enabled ? <div ref={scroll} className="rg-content-scroll" tabIndex={active ? 0 : -1} aria-label={locale === 'EN' ? 'Invitation content' : 'ព័ត៌មានធៀបអញ្ជើញ'}>{children}{active && info.footer && <img className="rg-information-footer" src={ROYAL_ASSETS.footer} alt="" width="960" height="320" loading="lazy" onError={event => { event.currentTarget.hidden = true; }} />}</div> : children}
   </div>;
 }

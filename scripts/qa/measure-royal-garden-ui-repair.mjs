@@ -2,7 +2,7 @@ import { chromium } from '../../apps/frontend-user/node_modules/playwright/index
 import { mkdir, writeFile } from 'node:fs/promises';
 import process from 'node:process';
 
-const output = 'docs/design/royal-garden-visual-repair/evidence/performance.json';
+const output = 'docs/design/royal-garden-visual-repair/final-steering/evidence/performance.json';
 const browser = await chromium.launch();
 const samples = [];
 try {

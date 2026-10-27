@@ -1,0 +1,70 @@
+{
+  "processing": "Actual browser captures. Mobile PNGs are post-capture CSS-resolution delivery derivatives. Raw DPR originals remain in the ignored local cache; desktop PNGs retain their captured dimensions.",
+  "images": [
+    {
+      "file": "final-390x844-km-cover.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "3c14278b8e2b1d4f982b04ae9f3644f58cd7897a4b95e2a324e3087ebdb0d997",
+      "deliveredSha256": "f1eb169c7cb57704e9917c7d3e8a7ad8673a35d9949961fbfb597fb6bde093ec"
+    },
+    {
+      "file": "final-390x844-km-ending.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "122ef218f1aa31468a1da742111d816f3913b717c721bd215ece3d43c9310c02",
+      "deliveredSha256": "2a43c98ea117089fcd025fa06a1270a52c22543e6faa3d41c9ef41b63434a6e6"
+    },
+    {
+      "file": "final-390x844-km-information-scrolled.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "b223a12203c20173438bf06b2d93f0dea89ef0e103d5a36c3ef95b923c563bab",
+      "deliveredSha256": "51426e4b395c6c754ec3326575e994fe91200354d9b75d040d5f941055776615"
+    },
+    {
+      "file": "final-390x844-km-information.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "acb33333bc7bffefe28f709bff79f2605d6d6e875f46571ac93e9e2611aab998",
+      "deliveredSha256": "16a55d6156ff4c38416cf3d2d8fdc8fbd55d5ec38fce9ccfc0f90b3b2a2af358"
+    },
+    {
+      "file": "final-390x844-km-video.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "e966a6cd8505574b1bb426890807344a9f26624ffb615bebb0bcb6d756d3e19f",
+      "deliveredSha256": "e5fa6e61455d5e7c48fb2550ef5ebdf92d24296302d32da693c27f9fc56cad97"
+    }
+  ]
+}

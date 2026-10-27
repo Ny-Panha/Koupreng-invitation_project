@@ -12,17 +12,19 @@ export default function CinematicOpeningProvider({ configuration, loadVideo, dem
   const [coverDismissed, setCoverDismissed] = useState(false);
   const [previewRequested, setPreviewRequested] = useState(false);
   const [completed, setCompleted] = useState(false);
+  const [exiting, setExiting] = useState(false);
   const started = useRef(false), active = useRef(false), timer = useRef(null), resume = useRef(null), content = useRef(null), callbacks = useRef({});
   const [stagePresentation, setStagePresentation] = useState(presentation);
   const enabled = Boolean(demoVideo) || (configuration?.enabled === true && Boolean(configuration.videoMediaId) && typeof loadVideo === 'function');
   const stop = useCallback(() => {
-    clearTimeout(timer.current); active.current = false; started.current = false; resume.current = null; callbacks.current = {}; setOpen(false); setCompleted(false); setPreviewRequested(false);
+    clearTimeout(timer.current); active.current = false; started.current = false; resume.current = null; callbacks.current = {}; setOpen(false); setExiting(false); setCompleted(false); setPreviewRequested(false);
   }, []);
   const start = useCallback((resumeMusic, delay = 0, options = {}) => {
     if (!enabled || reduced || active.current || (started.current && !options.replay)) return false;
     clearTimeout(timer.current); active.current = true;
     started.current = true;
     setCompleted(false);
+    setExiting(false);
     resume.current = resumeMusic;
     callbacks.current = options;
     setStagePresentation(options.presentation || presentation);
@@ -32,16 +34,19 @@ export default function CinematicOpeningProvider({ configuration, loadVideo, dem
   const finish = useCallback(() => {
     if (!active.current) return;
     active.current = false; clearTimeout(timer.current);
-    setOpen(false);
-    setCompleted(true);
-    const restoreMusic = resume.current;
-    resume.current = null;
     const royalStage = callbacks.current.presentation?.royal || presentation?.royal;
-    const onFinish = callbacks.current.onFinish; callbacks.current = {};
-    onFinish?.();
-    restoreMusic?.();
-    if (!royalStage) requestAnimationFrame(() => content.current?.focus({ preventScroll: true }));
-  }, [presentation?.royal]);
+    const complete = () => {
+      setOpen(false); setExiting(false); setCompleted(true);
+      const restoreMusic = resume.current; resume.current = null;
+      const onFinish = callbacks.current.onFinish; callbacks.current = {};
+      onFinish?.(); restoreMusic?.();
+      if (!royalStage) requestAnimationFrame(() => content.current?.focus({ preventScroll: true }));
+    };
+    if (royalStage && !reduced && (callbacks.current.presentation || presentation)?.transition !== 'none') {
+      setExiting(true); callbacks.current.onExit?.();
+      timer.current = window.setTimeout(complete, 750);
+    } else complete();
+  }, [presentation, reduced]);
   useEffect(() => () => { clearTimeout(timer.current); active.current = false; resume.current = null; }, []);
   useEffect(() => { if (!enabled || reduced) { if (active.current) finish(); } }, [enabled, reduced, finish]);
   useEffect(() => {
@@ -63,7 +68,7 @@ export default function CinematicOpeningProvider({ configuration, loadVideo, dem
   const currentPresentation = presentation || stagePresentation;
   const royal = currentPresentation?.royal;
   const poster = safeIntroMedia(demoVideo?.poster || configuration?.posterUrl);
-  const player = open ? <CinematicVideoOpening stageOnly loadVideo={demoVideo ? undefined : loadVideo} videoUrl={demoVideo?.src} posterUrl={poster} presentation={currentPresentation} english={english} onOpen={finish} /> : null;
+  const player = open ? <CinematicVideoOpening stageOnly loadVideo={demoVideo ? undefined : loadVideo} videoUrl={demoVideo?.src} posterUrl={poster} presentation={currentPresentation} exiting={exiting} english={english} onOpen={finish} /> : null;
   // Royal Garden owns the section placement inside its persistent decorative shell.
   // The protected-media loader and completion policy stay here for every template.
   return <CinematicOpeningContext.Provider value={start}><CinematicPlaybackContext.Provider value={{ active: open, stop, stage: royal ? player : null, completed, poster }}>

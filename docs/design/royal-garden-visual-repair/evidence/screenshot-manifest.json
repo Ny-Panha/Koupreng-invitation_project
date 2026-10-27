@@ -1,0 +1,1500 @@
+{
+  "processing": "Actual browser captures. Mobile PNGs are post-capture CSS-resolution delivery derivatives. Raw DPR originals remain in the ignored local cache; desktop PNGs retain their captured dimensions.",
+  "images": [
+    {
+      "file": "before-cover.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "44c2a9c908c09c27c73d7bc1f15520cf24937fb0a9cbca08de9d0266f9a0b85f",
+      "deliveredSha256": "095cc6b6072d3e66572030c7a0541d1050dbda08a303fbb87cceaf11d18ac830"
+    },
+    {
+      "file": "before-information-scrolled.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "bdca6c9eb3d052eb4da592e6c0e7544161c0cf6e325c36a1f06626adabb99d26",
+      "deliveredSha256": "62301369c1f707beee7112d9d95ac675173fb4252fe4113dcd9819ca3322c7f8"
+    },
+    {
+      "file": "before-information.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "adaf0664c9ed13cebd966740fd17ff16fb03e7f252cc4538bec4140e1285c462",
+      "deliveredSha256": "b191ee24973850727a7b529acdff1477ded9aa2e6fb551aa991ae8b0720d50b6"
+    },
+    {
+      "file": "before-video.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "53348558a2467deeaedbe509b113bca433a99e31c0dadcbf7d66405f2371ab73",
+      "deliveredSha256": "776f2066ee1f406030de9193402a2a666e2050a0d1e99e547fbbf75ddc686e5c"
+    },
+    {
+      "file": "chromium-critical-cover-en.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "166a79ec6a1751c42175059111e8d765e0c9d5cc00fc7e5446f6a1cb8759befa",
+      "deliveredSha256": "f53cfae231b3d92b2da8fca49724b44549aec99e863c84a87498403ae5c4fbfc"
+    },
+    {
+      "file": "chromium-critical-cover-km.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "1110c7764e5c86db00e0771893b743bbb0bfffbc213221143c596aa7a66d1218",
+      "deliveredSha256": "d0ce4ec0c95187e525cf75cf8b41b6265596769d0fe54ddd2e41244091a05d0c"
+    },
+    {
+      "file": "chromium-critical-hosted-language-rsvp.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "4e37c61df1a9434f641f44dcef2d663e4eea41e9481d73a1b4034f80c3da5ada",
+      "deliveredSha256": "08e58b06a966cbba5e26e0740af66684d44de5ff6608ec504b7bd533b91dbdb9"
+    },
+    {
+      "file": "chromium-critical-information-ending.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "6a77dcc693e829423c444dfbc4fc08797a7e1e23edbc3308e8bf0c0c9a8d71d1",
+      "deliveredSha256": "163b44fbfc7cdcf80ed87070e30f088437cfe856c974aba4add445676f8fc462"
+    },
+    {
+      "file": "chromium-critical-information-scrolled.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "cab3cd2610be3452d3536d63a154df20cbd0b9601eb3fc47c797a7c56dd0e23e",
+      "deliveredSha256": "590be5e0ef871b1acf449862ab1b170b4574e9e3a3d4782afc34b9fcbc265a11"
+    },
+    {
+      "file": "chromium-critical-information-top.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "64e2fb8ec0ca98e44f1221d16474ca12edc4f3affd93915b57603b94c3defe2a",
+      "deliveredSha256": "2485dd9596614d9194bb1950f26623146a88411e89448304ac7d8d72e0fad9b7"
+    },
+    {
+      "file": "chromium-critical-video.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "b153c87e1fe638757fa0f9f7555b36812a973a0e0183a76502ccd9a7224d7ae1",
+      "deliveredSha256": "a50724fc734a7023bd164232b391b304be5159601947c465e88947465c90886a"
+    },
+    {
+      "file": "chromium-entrance-1024.png",
+      "capturedPixels": [
+        1024,
+        900
+      ],
+      "deliveredPixels": [
+        1024,
+        900
+      ],
+      "rawSha256": "c9e0052363f2d96dc45d34ef11fcc0f5e4e1fdecacac2909ba905b3d647b5688",
+      "deliveredSha256": "045edddf566cf5cbdcc9ef9e45935bf1607befc802d056043eedfbd43d7f8789"
+    },
+    {
+      "file": "chromium-entrance-1440.png",
+      "capturedPixels": [
+        1440,
+        900
+      ],
+      "deliveredPixels": [
+        1440,
+        900
+      ],
+      "rawSha256": "2a49cc0227372957763dc553c916a63be1fade7f2e817548c81369218d569453",
+      "deliveredSha256": "03c6f40db3d9a1eef167b63d2d015b130b992058cd77f1dd2745c7b3a82dc247"
+    },
+    {
+      "file": "chromium-entrance-320.png",
+      "capturedPixels": [
+        320,
+        900
+      ],
+      "deliveredPixels": [
+        320,
+        900
+      ],
+      "rawSha256": "47ac99bc4038feae69256acd89268f8fdc8cbaae0ccf65626416dcbfb13995ae",
+      "deliveredSha256": "4311e053fc9c1ec07ec7f92f1ea64f490868212b86302ad64afd848260e2e9bd"
+    },
+    {
+      "file": "chromium-entrance-375.png",
+      "capturedPixels": [
+        375,
+        900
+      ],
+      "deliveredPixels": [
+        375,
+        900
+      ],
+      "rawSha256": "4157985fab448b4ee6ad84689eb29e6906090d3dc80b1113de274b6d0af8d203",
+      "deliveredSha256": "7835d2faf01ba58fdbfb1a0cd909732ff0b6cf939dbe9b5ee7ad6dfc01aa034d"
+    },
+    {
+      "file": "chromium-entrance-390.png",
+      "capturedPixels": [
+        390,
+        900
+      ],
+      "deliveredPixels": [
+        390,
+        900
+      ],
+      "rawSha256": "0ed64ee641d34c188e19ca1e75eda932675cda5c94d35c430549c2e1ceabfb48",
+      "deliveredSha256": "959e97310b734d5730fc3bf37dae005509366a86f2433f85097c8f17de5d43af"
+    },
+    {
+      "file": "chromium-entrance-430.png",
+      "capturedPixels": [
+        430,
+        900
+      ],
+      "deliveredPixels": [
+        430,
+        900
+      ],
+      "rawSha256": "9f01e5d0f61991d5d6cd7f0f948154027c0d49b02e80078619c20afd06420f83",
+      "deliveredSha256": "401eb55defb4fc9ce4ac55708841b2f7cc43225477cb1b59ae7da28e1b0a5757"
+    },
+    {
+      "file": "chromium-entrance-512.png",
+      "capturedPixels": [
+        512,
+        900
+      ],
+      "deliveredPixels": [
+        512,
+        900
+      ],
+      "rawSha256": "b7166ed213784c3dc5b422efd04d8a441ac585c7261a8b0f29264b79ee5d0960",
+      "deliveredSha256": "865dd90511036defb0b98aa0f927e7d6fecb2a2cc4205e4374c6c005f8481fc4"
+    },
+    {
+      "file": "chromium-entrance-768.png",
+      "capturedPixels": [
+        768,
+        900
+      ],
+      "deliveredPixels": [
+        768,
+        900
+      ],
+      "rawSha256": "ce6b7940b39f13163b113a078f4aa746cf36ae8678baea2eb2a0e3295dddb1b0",
+      "deliveredSha256": "855c461a7f4f784ffa60797d622496b6be9e661b62942608cbc06c3df7ec7a70"
+    },
+    {
+      "file": "chromium-entrance.png",
+      "capturedPixels": [
+        1280,
+        720
+      ],
+      "deliveredPixels": [
+        1280,
+        720
+      ],
+      "rawSha256": "1d3a84e7e37f852b4c2112ee8fdfb3766f083879febe7983f129f30a1f009c2c",
+      "deliveredSha256": "0db4099b1e77b0c7dbf6ed207e8cc7d1949edf09d6cf9368e04e71ba72f5e22b"
+    },
+    {
+      "file": "chromium-hosted-content.png",
+      "capturedPixels": [
+        1280,
+        720
+      ],
+      "deliveredPixels": [
+        1280,
+        720
+      ],
+      "rawSha256": "fc1ec03e7e3960c242a0e365dcb53714941670508943143b525fd21eb6fae827",
+      "deliveredSha256": "81299221398e97588cd8178297e3c40c743431cb958146b3703db9b113fc144c"
+    },
+    {
+      "file": "chromium-information.png",
+      "capturedPixels": [
+        1280,
+        720
+      ],
+      "deliveredPixels": [
+        1280,
+        720
+      ],
+      "rawSha256": "0f96607d65fae0910e61def0277d2d10c877fbdd839d233bffb64156ddf0cff6",
+      "deliveredSha256": "d8072eb24cad19fe097a27d4670eb0839fe9fdc7a295afecfb3acd589dc151f6"
+    },
+    {
+      "file": "chromium-inline-video.png",
+      "capturedPixels": [
+        1280,
+        720
+      ],
+      "deliveredPixels": [
+        1280,
+        720
+      ],
+      "rawSha256": "debda24f199604fefcdb799b0def5ae72496136b69eec79f43d8b44795fcf422",
+      "deliveredSha256": "606788cc45f82aa9e14724e0d9781820fc40f591bc854ab96c90623a0d90772e"
+    },
+    {
+      "file": "chromium-repair-closing.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "f588ed483ad4ad7baa81c3ade4a5f4107ec06e39b84ad898d8a8e1e326379a4b",
+      "deliveredSha256": "5e458135a2f3eaa8e754be5234404eb076c30f471c3f452d2b7d5eea4919bc4d"
+    },
+    {
+      "file": "chromium-repair-cover-1440x960.png",
+      "capturedPixels": [
+        1440,
+        960
+      ],
+      "deliveredPixels": [
+        1440,
+        960
+      ],
+      "rawSha256": "1e7efd9708314b0f401abf25d50398809da82d96769adfeebfe2b815bba8f6c5",
+      "deliveredSha256": "b14ccbc95608736b17547315d2d76fc187802fad9e931e30bcf94fa527837129"
+    },
+    {
+      "file": "chromium-repair-cover-320x568.png",
+      "capturedPixels": [
+        320,
+        568
+      ],
+      "deliveredPixels": [
+        320,
+        568
+      ],
+      "rawSha256": "6fd4465f6ddcc98a7c3126112b1f7f257f48de32111e1597de43a2c5fb4ce2a3",
+      "deliveredSha256": "148c851c8c349fd4257e42d7ea319eff6d54b43939e72da802bde0f521dcda7f"
+    },
+    {
+      "file": "chromium-repair-cover-375x667.png",
+      "capturedPixels": [
+        375,
+        667
+      ],
+      "deliveredPixels": [
+        375,
+        667
+      ],
+      "rawSha256": "a2100f2c262df24f4d72f6e4abfb50937f554002329ec16fb6643c17629af149",
+      "deliveredSha256": "8d1b79edec46ae54a47665fed5e7392226c5f53c4523aef56c367b37938a3f2f"
+    },
+    {
+      "file": "chromium-repair-cover-390x844.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "166a79ec6a1751c42175059111e8d765e0c9d5cc00fc7e5446f6a1cb8759befa",
+      "deliveredSha256": "f53cfae231b3d92b2da8fca49724b44549aec99e863c84a87498403ae5c4fbfc"
+    },
+    {
+      "file": "chromium-repair-cover-430x932.png",
+      "capturedPixels": [
+        430,
+        932
+      ],
+      "deliveredPixels": [
+        430,
+        932
+      ],
+      "rawSha256": "9c4e4501d2ae33dcd749e3ccdf509d4585b2f1fb72a57326b7308374e94780a0",
+      "deliveredSha256": "7ab0e23cdf1bd0df4beccb461961e6806c5bb19de11e8f1a95b734f15f323ab9"
+    },
+    {
+      "file": "chromium-repair-cover-512x910.png",
+      "capturedPixels": [
+        512,
+        910
+      ],
+      "deliveredPixels": [
+        512,
+        910
+      ],
+      "rawSha256": "9afc0340889d5911c93a6a975ec20e60154eac0290984aa9b843c77310925167",
+      "deliveredSha256": "1b704c5c24359f30dd841b404ce7450ba4c2acf949df013960b796eff761800a"
+    },
+    {
+      "file": "chromium-repair-cover-768x1024.png",
+      "capturedPixels": [
+        768,
+        1024
+      ],
+      "deliveredPixels": [
+        768,
+        1024
+      ],
+      "rawSha256": "1b5747bdb1717c3edea048b74bfbc15308896c40bf0a77697ae6c9959f642282",
+      "deliveredSha256": "f787d98a8cd5a92d476d7d34a172b231f0bb22cd3f65e89fe1d86b92dbd955ba"
+    },
+    {
+      "file": "chromium-repair-cover-khmer-375.png",
+      "capturedPixels": [
+        375,
+        667
+      ],
+      "deliveredPixels": [
+        375,
+        667
+      ],
+      "rawSha256": "fe036065ac55896dbf38837b337676ec620448bff50ad3192dfee99c4b7311c5",
+      "deliveredSha256": "9d04c3bc0da852e273921bd36f80848850b2eb121bf6154ee5123a7c89677db0"
+    },
+    {
+      "file": "chromium-repair-family.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "3e0827dd8130fb94d8560f527cc9935c4a90ad7d385fdee96e0ae24fe7fe3d2d",
+      "deliveredSha256": "87fe05fcf60251efc6412ac7f60fd419c694b0675b84af9cc8eb3cc2e2caf1bd"
+    },
+    {
+      "file": "chromium-repair-gallery.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "823a606b3903d07f3182484e650128240be7569cecb2ea9dc496d737d6f6d1b2",
+      "deliveredSha256": "524927116f61458021c0ff0f7a37187dbac1ebf6e88aa9617b2730f3da5a7b70"
+    },
+    {
+      "file": "chromium-repair-hosted-closing.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "4272fcb4ec4703e11f4c72b6626d80b405e7f634d76e25b4061b2d26bff0eda3",
+      "deliveredSha256": "6af4bb97871ace887aa8de0690c945030c5ddb6b479d6a01298671465e255d6f"
+    },
+    {
+      "file": "chromium-repair-hosted-gift.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "d7e01ac9b510e38296cbd69c7b911280e53e089dfdcd1e60663a81579d0e0172",
+      "deliveredSha256": "2721f90b5f9b4bf49e7377d3136fb7d2e3cda51242d89d6629a40741c2b08ec4"
+    },
+    {
+      "file": "chromium-repair-hosted-rsvp.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "bab8fe999c97ca1d9bfb14e8c12efce076db26fa57413bcc8d88fa47b05ad772",
+      "deliveredSha256": "1b33e0f9e6ae238cd8746573569d69f567c889abc29877a6cad72d7cbe8a8cfe"
+    },
+    {
+      "file": "chromium-repair-hosted-wishes.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "83fff7beaae5e07350ea05bca6fd907e4d11df5c54f37b5729b1706a63bcbb80",
+      "deliveredSha256": "7124cacc1367cca011d747b9a5b8370ee1327f6db43957dc6f2e000b48b21ce6"
+    },
+    {
+      "file": "chromium-repair-invitation.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "8eeb1fa1cda2def8bad1af8d2d74e5262e5b599ec36f1b2a27b6b95159ae1985",
+      "deliveredSha256": "770037a18455b4d00a352e3afe2eb2ce10fc6a9a5ebea5e58dfe8adf34d902d1"
+    },
+    {
+      "file": "chromium-repair-rsvp.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "410bc49db95bfa7fc85df2dc48f6da133834f761dc7e510ea19ca88da2572996",
+      "deliveredSha256": "b8ebc9cf9a8b49b98f0b0c5accbc4ed355775495dbd6147ab644a293e973788d"
+    },
+    {
+      "file": "chromium-repair-schedule.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "6cc234d1b5c17b39d804b9dda5a2be667dc3453c1ff3db0a6eb84f27354ef6f2",
+      "deliveredSha256": "b8c58ce1a89c36e9b5fa2008ef5aa1db7b507d68112dcb877989281fb5253d39"
+    },
+    {
+      "file": "chromium-repair-transition.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "748a275c6bc55f5edc6fad007cbc13fa7a59b3586f3f78b21e35090ea7eb14d4",
+      "deliveredSha256": "cc31c53c129486eb3dbccc31f3ad623909f27cf83b74e3e0bee5cfc3886a8d3f"
+    },
+    {
+      "file": "chromium-repair-venue.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "6fbe38e3167548b87426474faa68c2ba65729d3fc30fa2c003a9d652405b8668",
+      "deliveredSha256": "49918ae05d2c3557a1fb6872f63824f367875212dcc0c0b42785678113626d04"
+    },
+    {
+      "file": "chromium-repair-video-beginning.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "fb99b970c4d60ea3e9913ff418634aaa1e86980c7883709a445232127d82aabd",
+      "deliveredSha256": "2014ff6f4e58a61ad14a8e8858abfb6a6fd4ab4d6b1037d872c45eff0dc40bac"
+    },
+    {
+      "file": "chromium-repair-video-footer.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "fb99b970c4d60ea3e9913ff418634aaa1e86980c7883709a445232127d82aabd",
+      "deliveredSha256": "2014ff6f4e58a61ad14a8e8858abfb6a6fd4ab4d6b1037d872c45eff0dc40bac"
+    },
+    {
+      "file": "chromium-soundtrack-gold-exit.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "6b0b9dfc3011809542d9834a5d797797202765d1d4bb6762b15301654da86fc3",
+      "deliveredSha256": "e92411790b2c364b3d73eea19862e848e4805ece7dd4a4e44647007b9be712cd"
+    },
+    {
+      "file": "chromium-soundtrack-information.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "840b68270824dfd0091a818ebacedae2219bcb08d6598b22bfaac3a5fefcd346",
+      "deliveredSha256": "4e1bf6a5f507dfab9bf3605c07964a0000f3151b7ea806fa72739cddd93a590c"
+    },
+    {
+      "file": "chromium-soundtrack-locked-video.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "6ec229828a1529d9b2aa892485c99a109fb842ee369ef22c5703a66615dc88a2",
+      "deliveredSha256": "a126cefc1b48da098a0f593a1ae5e780a535f7ae385ce884bd7c5328a46cb756"
+    },
+    {
+      "file": "chromium-studio.png",
+      "capturedPixels": [
+        1440,
+        960
+      ],
+      "deliveredPixels": [
+        1440,
+        960
+      ],
+      "rawSha256": "a8a6730c146a4d5fdc6454de34e737c889feb7b23aad23b7e75bc6c5c2b1986d",
+      "deliveredSha256": "424c4499c1fbab0093edef3b752481260d526291841ffa325f4c6bfc35d24925"
+    },
+    {
+      "file": "final-390x844-en-cover.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "c85125f2cdf68fff65f723ffd79c073c3564104607e6d0c40f134b02f596f360",
+      "deliveredSha256": "d208bf4ffc9cf11a2b207ad07dfb0ca930e32a4f003821d2ad9970f57ea72c63"
+    },
+    {
+      "file": "final-390x844-en-ending.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "7c3bf0a34bb947b6333a07bce560edd728a5bff9349afb5c5a1008b562f1527d",
+      "deliveredSha256": "d45cac9ebdc752e6b7d213e3f7f58785f079afcad0e2f8ef5024a39c15f0c9ca"
+    },
+    {
+      "file": "final-390x844-en-information-scrolled.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "ff731b28c8137f8c10b8abc2c92376669d105ecbff0af7f196124756c2759ab8",
+      "deliveredSha256": "fc8093d0aece662fbb9b25169196341588afb8d97c0e3831f6d18e3de3e53c3c"
+    },
+    {
+      "file": "final-390x844-en-information.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "64e2fb8ec0ca98e44f1221d16474ca12edc4f3affd93915b57603b94c3defe2a",
+      "deliveredSha256": "2485dd9596614d9194bb1950f26623146a88411e89448304ac7d8d72e0fad9b7"
+    },
+    {
+      "file": "final-390x844-en-video.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "6b528efbd87ef78d0e68cf62244435f139776310cd993b3dee434caa6a6e92ff",
+      "deliveredSha256": "99c81c92b00521e6f8043b6ffd889c043577253f4bb2b7769673cd2d41868401"
+    },
+    {
+      "file": "final-390x844-km-cover.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "91a636a36f9d3a7520f008d7e4b11d97915bc8493a91d362b8ba1d89b682516f",
+      "deliveredSha256": "fd5b5ca2555bab0b81c410bb7a5dbdf9c8de184f808448b1071ac08b6ec3c681"
+    },
+    {
+      "file": "final-390x844-km-ending.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "9962ff9e424cc4984377c7857d1376ebb05a6df27631f803f04c35ea12c065a4",
+      "deliveredSha256": "c085bb97945fac871565b8534d49d77bbf9014df1ac001873c18f50bc6e1532e"
+    },
+    {
+      "file": "final-390x844-km-information-scrolled.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "c3aa81d49c6cbdbc358804c761764c6081921db37d50a93d5ba5df1a3286d0cf",
+      "deliveredSha256": "81c95de3f15f871c14cc7d0e1097726e2dda8b83dc9357516ea27ac32ce6459d"
+    },
+    {
+      "file": "final-390x844-km-information.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "594e03f18121ee5a2641aaedd89f3c54ab46f2dc6f6a21ca1a5bd2cd5630d86c",
+      "deliveredSha256": "c43dae094daeaae628f7d2aeffdd366bd78371213c4db084c91d30e963cfb627"
+    },
+    {
+      "file": "final-390x844-km-video.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "a7b1b2e54a38e74925a86a50be2e9bbc3dfe277811f01aa9e3133187494a02ba",
+      "deliveredSha256": "f74d0d746534edae9c280228ab4775a581346d4b5e3b6fb4f78124f8cc32dd12"
+    },
+    {
+      "file": "final-512x900-en-cover.png",
+      "capturedPixels": [
+        512,
+        900
+      ],
+      "deliveredPixels": [
+        512,
+        900
+      ],
+      "rawSha256": "b50e55079766de564a371d1fb40ee09ef9aee85d465373adde0bcf3bf92cbf50",
+      "deliveredSha256": "eee766a6c834a1cfbdb06b168ea3035eec0bee99d44e84160c1e8143cebde6c3"
+    },
+    {
+      "file": "final-512x900-en-ending.png",
+      "capturedPixels": [
+        512,
+        900
+      ],
+      "deliveredPixels": [
+        512,
+        900
+      ],
+      "rawSha256": "5dc9836cc883eeb0f9d1b6f1181a10fff7ed7a112ff93ed5245a92cdcc3b8988",
+      "deliveredSha256": "2c551ae0a5fd0ee7e76585d217ae7382dee7a8a0044ae7a373eb58ddf8cfb37a"
+    },
+    {
+      "file": "final-512x900-en-information-scrolled.png",
+      "capturedPixels": [
+        512,
+        900
+      ],
+      "deliveredPixels": [
+        512,
+        900
+      ],
+      "rawSha256": "36a84a5df43f5ea6e7924955b97205142390016fdb038d9612c71ec648a1920c",
+      "deliveredSha256": "60c2e8ed8bfa6f3afcba265efbd2f78dab5ae64cb47260203b5d6d71e0fdab88"
+    },
+    {
+      "file": "final-512x900-en-information.png",
+      "capturedPixels": [
+        512,
+        900
+      ],
+      "deliveredPixels": [
+        512,
+        900
+      ],
+      "rawSha256": "de9bcfb0f6cc328a6c259e94b654a0bd536ed5a40b91c1021aae4e32716b7719",
+      "deliveredSha256": "c783c94efbd64f849e0906a879fd32f0f64cfe4706094752e3b3316621fd7ccc"
+    },
+    {
+      "file": "final-512x900-en-video.png",
+      "capturedPixels": [
+        512,
+        900
+      ],
+      "deliveredPixels": [
+        512,
+        900
+      ],
+      "rawSha256": "46d464adb93390972db1c60d20472f4f7fb8dac66ccf05acf0dd4cdc1ce3189c",
+      "deliveredSha256": "4f4212beaf2c7d698ef9d2cbd6a2d931e8ac41b945a91ab6e98bc4000a32e689"
+    },
+    {
+      "file": "final-512x900-km-cover.png",
+      "capturedPixels": [
+        512,
+        900
+      ],
+      "deliveredPixels": [
+        512,
+        900
+      ],
+      "rawSha256": "23fdb5d3cdeffd8999ef5ed0e2d310d21b834f0e2b74b2e08b973cc130431ccf",
+      "deliveredSha256": "9bf3bfb144c143593aad214c1e77143e263ee74b630f311c413537ab2e01d9d4"
+    },
+    {
+      "file": "final-512x900-km-ending.png",
+      "capturedPixels": [
+        512,
+        900
+      ],
+      "deliveredPixels": [
+        512,
+        900
+      ],
+      "rawSha256": "0b1ab8e4d1d8cc5f434eb93ed9f0f01d8bca24d3a1ddfd0e9de376dc5493b6f0",
+      "deliveredSha256": "e5d838f117b337c21b1957fa8871d9bf65c94a6eab07f5216aa5893185f7ed90"
+    },
+    {
+      "file": "final-512x900-km-information-scrolled.png",
+      "capturedPixels": [
+        512,
+        900
+      ],
+      "deliveredPixels": [
+        512,
+        900
+      ],
+      "rawSha256": "336232354afe4a25071b188f5dbed9c38c0821743e27ec0247932fab61e4e150",
+      "deliveredSha256": "8ab2cb7ac424e53d40604a16c9c6735a43bf459ca074805cd16d6ca878a07c6b"
+    },
+    {
+      "file": "final-512x900-km-information.png",
+      "capturedPixels": [
+        512,
+        900
+      ],
+      "deliveredPixels": [
+        512,
+        900
+      ],
+      "rawSha256": "2676995bbede6addb7951cbe7509c7b7715d6b3f426c4cdece8797dfeb128b71",
+      "deliveredSha256": "4d3da23291e05ae7611e4d80c033e4296466d48e57fc926a94d2fd03ddd25214"
+    },
+    {
+      "file": "final-512x900-km-video.png",
+      "capturedPixels": [
+        512,
+        900
+      ],
+      "deliveredPixels": [
+        512,
+        900
+      ],
+      "rawSha256": "203c2e4fcfbb0929a9d181903752b119fbf99a68bbccca9038054196bfbc7f95",
+      "deliveredSha256": "ae5fce8208d2d6d1512855dadce224f94d808e82b00ed6818293995a0fe08e6e"
+    },
+    {
+      "file": "mobile-chromium-critical-cover-en.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "b83f40fa240694e7c6aff06a414dcc694affcea75e16402cb46ecbc9711d4ae3",
+      "deliveredSha256": "6a25f6468e7b85778e55e0785066a75e7f73806471fee4cf424259efa7b2b964"
+    },
+    {
+      "file": "mobile-chromium-critical-cover-km.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "db6799f136f2493cf92e1d624d52e35228f892462fddd96179004a40a5f742d4",
+      "deliveredSha256": "7f2d5a7a86f83bb6a3a99214a7d6bf9aa33365bf1ddd4d79f24bf2fb1d6a40a9"
+    },
+    {
+      "file": "mobile-chromium-critical-hosted-language-rsvp.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "a541250f4f0db7bda72493e02dc43d1a2c63882cd43cd429d5cb1b7e33df0a37",
+      "deliveredSha256": "ea645d08bed2f77254e19f912b9b6078d62a1b39b8889b9e852341d8346577d2"
+    },
+    {
+      "file": "mobile-chromium-critical-information-ending.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "fd375e77d00bf8729e16e18bc28fef08ff3e309be8ed4b7437226f5ccd7f2374",
+      "deliveredSha256": "54d4622125f31c187e3b45f9767719b8b833c49dae68ab237660e4594368c0f6"
+    },
+    {
+      "file": "mobile-chromium-critical-information-scrolled.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "ea658765a3c5cab96eb7d09f043aa1e39220aae860ea21a5adfa004e5e1fbb48",
+      "deliveredSha256": "f58ff6b63fda59d94ed7c69c0028308fd6d6b179d02ee472533b02d957a130a1"
+    },
+    {
+      "file": "mobile-chromium-critical-information-top.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "aeb53dc10fd32a345ce8a72af0ba6fc13fc6de08f84be55bcfd4c07d4ac0df24",
+      "deliveredSha256": "ddf98aa372816eafbf7071b20b55600f91f58c9ae2c3bf2721266851b1f2983a"
+    },
+    {
+      "file": "mobile-chromium-critical-video.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "2f5393b239b5cbc3c499efb070b4c8abacc38c6b6cf49a0b6026be9453bf3273",
+      "deliveredSha256": "30bdba8ccee473ca36ed968677b8d4493961493388af3067317b7cd1e2f7098f"
+    },
+    {
+      "file": "mobile-chromium-entrance.png",
+      "capturedPixels": [
+        1082,
+        2202
+      ],
+      "deliveredPixels": [
+        393,
+        801
+      ],
+      "rawSha256": "400346cc6337615356e9bb4297ec3141982d800f900c17304b318ac3223eaed6",
+      "deliveredSha256": "b914dcac1730e1f673cc4eb85f9c7c6df3ce806b02fd86e52a399014cbe1611b"
+    },
+    {
+      "file": "mobile-chromium-hosted-content.png",
+      "capturedPixels": [
+        1082,
+        2202
+      ],
+      "deliveredPixels": [
+        393,
+        801
+      ],
+      "rawSha256": "ea561fa887e0698118b40db2ff53e8290549b551f361c42e7b882d3772555fe7",
+      "deliveredSha256": "f108fd22831072a835b55cdd8742c779371d670af792d20d8e2734808455a0c0"
+    },
+    {
+      "file": "mobile-chromium-information.png",
+      "capturedPixels": [
+        1082,
+        2202
+      ],
+      "deliveredPixels": [
+        393,
+        801
+      ],
+      "rawSha256": "82c5b5b3ccb84e2c35ebf47cd704871185a0f9cdf0d0730bae538253c3b7efa6",
+      "deliveredSha256": "9edfaaa46cde69ed1bbd8d152b5b27abe7bfff4b2d3a7d86e55c08d358b4ca4f"
+    },
+    {
+      "file": "mobile-chromium-inline-video.png",
+      "capturedPixels": [
+        1082,
+        2202
+      ],
+      "deliveredPixels": [
+        393,
+        801
+      ],
+      "rawSha256": "7c2a48f25ad9e259cb5b3ce100cce7135ea13ce396efc23fa715b282e937d598",
+      "deliveredSha256": "95ded5cbad6caa5a781ffcaf8f7fa5ba3d5fd247b0d90d6ab8a95dd15aa4120a"
+    },
+    {
+      "file": "mobile-chromium-repair-closing.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "abc9bc02bac962d163f4395edfef7cafbcfbbb79250bfa3ed8b2cf0c3aa28211",
+      "deliveredSha256": "83a6f85dbb0addf83ce5847c281ccddb313e02031a3fbedce33ffd6e4ea20793"
+    },
+    {
+      "file": "mobile-chromium-repair-cover-1440x960.png",
+      "capturedPixels": [
+        3780,
+        2520
+      ],
+      "deliveredPixels": [
+        1375,
+        916
+      ],
+      "rawSha256": "a9c8627128153fe2d5d9382b33582e0e8cf9bb7d7aae5b531155d3fb84c23683",
+      "deliveredSha256": "4e95c9e9fbb8b37e47b4aaa7c57e934d67cccd340630a2c5c905293bc53d55d2"
+    },
+    {
+      "file": "mobile-chromium-repair-cover-320x568.png",
+      "capturedPixels": [
+        840,
+        1491
+      ],
+      "deliveredPixels": [
+        305,
+        542
+      ],
+      "rawSha256": "2febb9e4acd8ce19d3e6e423c7fb9db8508b69619cc47a3cfaf2f8025fdc4bec",
+      "deliveredSha256": "535c0678da3f8dc460d59fc4bca3ac28379c653dedbd2e6397660e689634807a"
+    },
+    {
+      "file": "mobile-chromium-repair-cover-375x667.png",
+      "capturedPixels": [
+        984,
+        1751
+      ],
+      "deliveredPixels": [
+        358,
+        637
+      ],
+      "rawSha256": "6e55d76d0a9772da403e90c193e6075d9f32825bc97f0b59dcf8b96c7414f001",
+      "deliveredSha256": "96b48cd474cafc3a11dbbfad4e4cadbb64295934fe646259b45e31d1f902dc33"
+    },
+    {
+      "file": "mobile-chromium-repair-cover-390x844.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "b83f40fa240694e7c6aff06a414dcc694affcea75e16402cb46ecbc9711d4ae3",
+      "deliveredSha256": "6a25f6468e7b85778e55e0785066a75e7f73806471fee4cf424259efa7b2b964"
+    },
+    {
+      "file": "mobile-chromium-repair-cover-430x932.png",
+      "capturedPixels": [
+        1129,
+        2447
+      ],
+      "deliveredPixels": [
+        411,
+        890
+      ],
+      "rawSha256": "8f96011ba9c620cc735203bb1778cfcdb1873e4bb8d1edeb4b5e6f5d5ebd2731",
+      "deliveredSha256": "33ce938753148e26d0a39b2a233ed3d2298cec109b05c78ec524c90a5491930d"
+    },
+    {
+      "file": "mobile-chromium-repair-cover-512x910.png",
+      "capturedPixels": [
+        1344,
+        2389
+      ],
+      "deliveredPixels": [
+        489,
+        869
+      ],
+      "rawSha256": "f29eaf2f2b9968e681a094820106eda3dc520d5ee1a5c224a8573cfded49b351",
+      "deliveredSha256": "e3f9b996a8c9830908ed733cfdba455170ddb7374217f6b129b22bdef01a67c8"
+    },
+    {
+      "file": "mobile-chromium-repair-cover-768x1024.png",
+      "capturedPixels": [
+        2016,
+        2688
+      ],
+      "deliveredPixels": [
+        733,
+        977
+      ],
+      "rawSha256": "78dff8319aeffbe8a7ee7238fda01394beff88d5cabf14c49275fcb090ef9b6e",
+      "deliveredSha256": "b3cb1092f5239415c69218464ba998495aec5cfe536dc00aee8fff38039a5029"
+    },
+    {
+      "file": "mobile-chromium-repair-cover-khmer-375.png",
+      "capturedPixels": [
+        984,
+        1751
+      ],
+      "deliveredPixels": [
+        358,
+        637
+      ],
+      "rawSha256": "381438bc021a8b0db420685dcc46f9065b99ef6d9dc1cc6f5ff19b192d0a52d2",
+      "deliveredSha256": "2a69cd2e5c56d6512f1c5ca6951059965f97f793e69dcc1f59ce869498c208ae"
+    },
+    {
+      "file": "mobile-chromium-repair-family.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "aeb53dc10fd32a345ce8a72af0ba6fc13fc6de08f84be55bcfd4c07d4ac0df24",
+      "deliveredSha256": "ddf98aa372816eafbf7071b20b55600f91f58c9ae2c3bf2721266851b1f2983a"
+    },
+    {
+      "file": "mobile-chromium-repair-gallery.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "470da0dcb420a7856e7fbfc7b2ad5628e6cb19ff34f04ad03ed5ae3aaff232f7",
+      "deliveredSha256": "dfe61217cd70a3bcd031533a5400d263a3f815867bcdd9c6a5d27e4e92fdf6ca"
+    },
+    {
+      "file": "mobile-chromium-repair-hosted-closing.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "4380897f276b4ca81db78bd9e1c05e391bdaa3ca0c8899f86d9aa2c592ffc8e8",
+      "deliveredSha256": "d6012baae86b120f0300ec1f971cbd708b688795659f446c006f3f952a6866f8"
+    },
+    {
+      "file": "mobile-chromium-repair-hosted-gift.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "c13986a7322c6893f419d94988f64ea5813ba878944b3ee857e7a6e28fdf8300",
+      "deliveredSha256": "490c4c09f46b3e060a68d90e27dbc42e8678ef451f4b181611e74274674866ab"
+    },
+    {
+      "file": "mobile-chromium-repair-hosted-rsvp.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "fb34d0336d89f16c06ff15dd5f03a80b7146a4215af174b4489d35178752bcb8",
+      "deliveredSha256": "1d4128eb571da40a9fb693309bcdcd2f5dcf8d6ff52be0abe33fe76ce587a893"
+    },
+    {
+      "file": "mobile-chromium-repair-hosted-wishes.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "b754b4fff3f4451677718e112247b7ed04acfcff1e847cbb2b73d98151df2131",
+      "deliveredSha256": "b766959f468e91efb53867976a9a510f9dd51f8af1e391d1e4a58b1734b35ff0"
+    },
+    {
+      "file": "mobile-chromium-repair-invitation.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "2ebabf9c2ff0096572a9b6c0f5866fbcb5f7be08d8d78e644c1a0a36ad05ffe6",
+      "deliveredSha256": "4b187e27de5dfef1b366c14e834d2cb9a12bd63a1457691167f014f2c7403636"
+    },
+    {
+      "file": "mobile-chromium-repair-rsvp.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "28ad79afab2c8de863294773cd31e820f7abd6b970ee4ff70fb60155ac58fde8",
+      "deliveredSha256": "c8ad8607af15d3ed95e8f541080854f3a2dfe03cb1d396184e031b402f7a9b46"
+    },
+    {
+      "file": "mobile-chromium-repair-schedule.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "aac39793079718aa3d06a51cd2bb10f94ecfe166e73e4860b6104f72b6cc5f95",
+      "deliveredSha256": "e02c29a1a596d7d0b37df726ced44c1821eb7f495ffd5ceeb34204eeae6f0427"
+    },
+    {
+      "file": "mobile-chromium-repair-transition.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "9ede747fdd764adc82108428afe8a4da238dfc3e36b6b174a61f2570826aaf2f",
+      "deliveredSha256": "5e1f5e461422a201638d0da78a2edd8a4fdfb460bee62ba03c87b513c5b2d082"
+    },
+    {
+      "file": "mobile-chromium-repair-venue.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "54532895420d2ab580fca479bf98e35a67bc67410cbef0e7c2c26e4ad1771050",
+      "deliveredSha256": "cd587dbfbd2118113e9fca35e00d769c0b566710b5ca079cddb8cb5afaf78870"
+    },
+    {
+      "file": "mobile-chromium-repair-video-beginning.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "3f8ff524a807160a1e0cdcccb1d0fdbe005eac4b46adc75e86e3083269914505",
+      "deliveredSha256": "678c7f308d9313d87b429e6d653b22d3dbef75cf18fa57abfce39e16be2997c2"
+    },
+    {
+      "file": "mobile-chromium-repair-video-footer.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "3f8ff524a807160a1e0cdcccb1d0fdbe005eac4b46adc75e86e3083269914505",
+      "deliveredSha256": "678c7f308d9313d87b429e6d653b22d3dbef75cf18fa57abfce39e16be2997c2"
+    },
+    {
+      "file": "mobile-chromium-studio.png",
+      "capturedPixels": [
+        3780,
+        2520
+      ],
+      "deliveredPixels": [
+        1375,
+        916
+      ],
+      "rawSha256": "2bd9073b8ef9a01db1e9de7596596c027c4f2e3db43096e9dd50140765fcbada",
+      "deliveredSha256": "17d92c8ba793737777ef1e921d9517de4ecd32da085a9e8d96a3d8f05e943bb6"
+    },
+    {
+      "file": "pass-1-cover.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "5e90453300119c29fe66901cc2d8d89c50e9b47a513fb64be0751f8923c801c0",
+      "deliveredSha256": "b43386983f646f1cdd223915a03ac18bafe8d1baed09f652c901add3fa1bfb91"
+    },
+    {
+      "file": "pass-1-information-scrolled.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "d868d0d4b057ea57b0c30d8de3ac864c195d684e0b349fac4fa8ddde69200904",
+      "deliveredSha256": "a57707c367b5e7c1677d25e207e80bbcfe2639bce5d22d51f51d5342bfddff43"
+    },
+    {
+      "file": "pass-1-information.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "1ab9baacada24cde1b49f77023442e1f2cd0b6495b16d5f04795124412d2c955",
+      "deliveredSha256": "258754fe563aaf2230de66e2f85cf9a4800acdb0eafdbc606c7d956d45729772"
+    },
+    {
+      "file": "pass-1-video.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "df6478e1ea287e197d5570b546229d4711e81a1851a5df0e8b557993bd930340",
+      "deliveredSha256": "5af696b4e932552c8e3d2a5d3b2b631ac01801fc58a4efe224fabce638bb1007"
+    },
+    {
+      "file": "pass-2-cover.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "5e90453300119c29fe66901cc2d8d89c50e9b47a513fb64be0751f8923c801c0",
+      "deliveredSha256": "b43386983f646f1cdd223915a03ac18bafe8d1baed09f652c901add3fa1bfb91"
+    },
+    {
+      "file": "pass-2-information-scrolled.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "e9c2db9f603c44955da0bfb50206ad02104681182c993cdba6285ae378de9a8f",
+      "deliveredSha256": "1ed1e6330e1b9297aa77647e6cf5601f4f89fcd321f975da1403326f49fc5646"
+    },
+    {
+      "file": "pass-2-information.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "9f9a43da5b6d3f52ba4af6f89211a9f0ce7d40ec3a75763224e52367c7bdc041",
+      "deliveredSha256": "d5b493909120f27217f735028574fd910715d9e756f4f822bb3d615ba5d166af"
+    },
+    {
+      "file": "pass-2-video.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "4e0a9c921e543e90249da171851c2bbd765dfbe8687f732b2cc408d46a54ebcf",
+      "deliveredSha256": "6e13a96b5acc8d6c592ed68d2e386bcd1b01e63e3b3499d324117a59bf8cc366"
+    },
+    {
+      "file": "pass-3-cover.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "3d1b9bf6248d394f0861ffaaf9524a27914d4e3a5fa0f4691c9298e5c00dac16",
+      "deliveredSha256": "c7a51db6eb81e662ee54cc64d0fcec82aa5307ab7d51b29d049c64cb9f1eb4f5"
+    },
+    {
+      "file": "pass-3-information-scrolled.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "c3aa81d49c6cbdbc358804c761764c6081921db37d50a93d5ba5df1a3286d0cf",
+      "deliveredSha256": "81c95de3f15f871c14cc7d0e1097726e2dda8b83dc9357516ea27ac32ce6459d"
+    },
+    {
+      "file": "pass-3-information.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "594e03f18121ee5a2641aaedd89f3c54ab46f2dc6f6a21ca1a5bd2cd5630d86c",
+      "deliveredSha256": "c43dae094daeaae628f7d2aeffdd366bd78371213c4db084c91d30e963cfb627"
+    },
+    {
+      "file": "pass-3-video.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "e2765d98929dac041c2f179bda8e453a7bd84f864425649318a83a5a54d88cd6",
+      "deliveredSha256": "98c4902d09e708ac746fe00e44f2ddcd6c08b5a9d4616267979d97971f5e1399"
+    }
+  ]
+}

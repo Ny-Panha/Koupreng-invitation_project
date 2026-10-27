@@ -44,7 +44,7 @@
 .tpl-royal-garden .rg-information-custom-background { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
 .tpl-royal-garden .rg-content-scroll { position:absolute; inset:var(--rg-safe-top) 10% var(--rg-safe-bottom); z-index:2; overflow:auto; overscroll-behavior:contain; scrollbar-width:none; scroll-behavior:smooth; scroll-padding-top:8px; outline-offset:-3px; background:rgb(4 27 57 / calc(var(--rg-information-overlay) * .45 + var(--rg-panel-opacity) * .24)); }
 .tpl-royal-garden .rg-content-scroll::-webkit-scrollbar { display:none; }
-.tpl-royal-garden .rg-paper[data-view=video] .rg-content-scroll { inset:0; }
+.tpl-royal-garden .rg-paper[data-view=video] .rg-content-scroll { inset:0; overflow:hidden; overscroll-behavior:none; }
 .tpl-royal-garden .rg-paper[data-view=video] .rg-information-background { opacity:0; }
 .tpl-royal-garden .rg-paper[data-view=video] :is(.rg-bottom-nav,.rg-use-template,.rg-back-link) { display:none; }
 .tpl-royal-garden .rg-paper[data-royal=true] main { padding:0; scroll-margin:0; }
@@ -86,7 +86,7 @@
 .tpl-royal-garden .rg-video-section { position:relative; container-type:inline-size; width:100%; height:100dvh; min-height:540px; margin:0; padding:0; color:var(--rg-royal-gold); scroll-margin:0; }
 .tpl-royal-garden .rg-video-section:focus { outline:none; }
 .tpl-royal-garden .rg-video-monogram { position:absolute; z-index:4; top:8px; left:50%; transform:translateX(-50%); width:84px; min-height:96px; display:grid; place-content:center; border:2px solid var(--rg-royal-gold); outline:1px solid var(--rg-royal-gold); outline-offset:5px; border-radius:50%; color:var(--rg-royal-gold); font:400 24px/1.7 var(--rg-heading-font); white-space:nowrap; text-shadow:0 1px 3px var(--rg-royal-deep); pointer-events:none; }
-.tpl-royal-garden .rg-video-calligraphy { position:absolute; z-index:4; left:12%; bottom:calc(var(--rg-video-footer-size,100cqw / 3) + 62px); width:76%; height:auto; max-height:12%; object-fit:contain; filter:drop-shadow(0 2px 3px var(--rg-royal-deep)); pointer-events:none; }
+.tpl-royal-garden .rg-video-calligraphy { position:absolute; z-index:4; left:12%; bottom:max(23cqw,90px); width:76%; height:auto; max-height:12%; object-fit:contain; filter:drop-shadow(0 2px 3px var(--rg-royal-deep)); pointer-events:none; }
 .tpl-royal-garden .rg-video-preparing { min-height:100dvh; display:grid; place-content:center; color:var(--rg-royal-gold); }
 .tpl-royal-garden .rg-video-keepsake { padding:20px 0; text-align:center; }
 .tpl-royal-garden .rg-video-keepsake img { width:100%; max-height:50svh; object-fit:contain; }
@@ -110,13 +110,14 @@
 @media(prefers-reduced-motion:reduce) { .tpl-royal-garden .rg-motion-layer { display:none; } .tpl-royal-garden .rg-content-scroll { scroll-behavior:auto; } .tpl-royal-garden :is(.rg-royal-entrance *, .rg-information-background) { animation:none!important; transition:none; } }
 .tpl-royal-garden .rg-royal-entrance[data-reduced=true] *, .tpl-royal-garden .rg-royal-entrance[data-animation=still] * { animation:none!important; }
 
-.tpl-royal-garden[data-video-active=true] .rg-top-controls .rg-music { visibility:hidden; }
+
 .tpl-royal-garden .rg-video-section[data-complete=true] { height:auto; min-height:0; }
 .tpl-royal-garden .rg-entrance-stage[data-frame-position=upper] { --rg-frame-shift:-1.5%; }
 .tpl-royal-garden .rg-entrance-stage[data-frame-position=lower] { --rg-frame-shift:1.5%; }
 .tpl-royal-garden :is(.rg-royal-arch,.rg-entrance-photo) { translate:0 var(--rg-frame-shift,0%); }
 .public-royal-garden { height:100dvh; overflow:hidden; }
 .public-royal-garden .public-ticket-button { bottom:74px; }
+.public-royal-garden:has(.tpl-royal-garden:not([data-stage=CONTENT])) .public-ticket-button { visibility:hidden; pointer-events:none; }
 
 .tpl-royal-garden .rg-paper[data-royal=true] .rg-section--invitation .rg-heading h2 { font-size:clamp(13px,3.7cqw,20px); line-height:1.8; }
 
@@ -130,3 +131,18 @@
 .tpl-royal-garden .rg-paper[data-royal=true][data-fixed=false][data-view=information] { height:auto; min-height:100dvh; overflow:clip; }
 .tpl-royal-garden .rg-paper[data-fixed=false][data-view=information] .rg-content-scroll { position:relative; inset:auto; width:80%; margin:auto; padding:var(--rg-safe-top) 0 var(--rg-safe-bottom); overflow:visible; }
 .public-royal-garden:has(.rg-paper[data-fixed=false][data-view=information]) { height:auto; overflow:visible; }
+
+.tpl-royal-garden .rg-music { width:44px; height:44px; min-width:44px; padding:0; display:grid; place-items:center; }
+.tpl-royal-garden .rg-music[data-playing=true] svg { animation:rg-music-glow 3s ease-in-out infinite; }
+.tpl-royal-garden .rg-royal-entrance[data-scene=COVER] .rg-royal-open { animation:rg-open-pulse 3.6s ease-in-out infinite; }
+.tpl-royal-garden .rg-entrance-lettering { position:relative; overflow:hidden; }
+.tpl-royal-garden .rg-entrance-lettering img { animation:rg-lettering-in 1.4s ease both; }
+.tpl-royal-garden .rg-entrance-lettering::after { content:''; position:absolute; inset:0; pointer-events:none; background:linear-gradient(110deg,transparent 35%,rgb(255 237 174 / .25) 50%,transparent 65%); transform:translateX(-120%); animation:rg-lettering-sweep 7s 1.5s ease-in-out infinite; }
+.tpl-royal-garden .rg-paper[data-view=information] { animation:rg-information-in 450ms ease both; }
+@keyframes rg-lettering-in { from { opacity:0; scale:.96; } to { opacity:1; scale:1; } }
+@keyframes rg-lettering-sweep { 0%,65% { transform:translateX(-120%); } 90%,100% { transform:translateX(120%); } }
+@keyframes rg-open-pulse { 0%,100% { box-shadow:0 0 0 4px rgb(242 214 147 / .12); } 50% { box-shadow:0 0 0 6px rgb(242 214 147 / .28); } }
+@keyframes rg-music-glow { 50% { opacity:.65; } }
+@keyframes rg-information-in { from { opacity:.65; } to { opacity:1; } }
+@media(prefers-reduced-motion:reduce) { .tpl-royal-garden :is(.rg-music svg,.rg-entrance-lettering::after,.rg-paper[data-view=information]) { animation:none!important; } }
+.tpl-royal-garden .rg-royal-entrance[data-reduced=true] .rg-entrance-lettering::after { animation:none; }

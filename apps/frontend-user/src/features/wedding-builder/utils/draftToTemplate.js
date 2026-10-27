@@ -235,6 +235,8 @@ export function draftToTemplate(draft, gallery = []) {
                 draft.openingVideoEnabled !== false && Boolean(draft.openingVideo || draft.design?.openingVideoUrl || baseTpl.openingVideo || baseTpl.design?.openingVideoUrl),
         },
         music: draft.musicUrl ? { url: draft.musicUrl } : (draft.music || null),
+        // Royal's catalog song is a new-invitation default, never an owner fallback.
+        ...(baseTpl.code === 'royal-garden-cinematic' ? { musicUrl: typeof draft.musicUrl === 'string' ? draft.musicUrl : (typeof draft.music === 'string' ? draft.music : draft.music?.url || '') } : {}),
         openingVideo: draft.openingVideoEnabled === false ? null : (draft.openingVideo || baseTpl.openingVideo),
         opening: draft.opening || {},
         // Host-authored rich sections. Passed straight through so the content

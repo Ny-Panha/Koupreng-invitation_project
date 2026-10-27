@@ -1,0 +1,423 @@
+{
+  "config": {
+    "argv": [
+      "C:\\nvm4w\\nodejs\\node.exe",
+      "D:\\Koupreng-invitation_project\\apps\\frontend-user\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "playwright.royal-garden-v3.config.js",
+      "--project",
+      "chromium",
+      "--project",
+      "mobile-chromium",
+      "--grep",
+      "hosted:|soundtrack:"
+    ],
+    "configFile": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\playwright.royal-garden-v3.config.js",
+    "rootDir": "D:/Koupreng-invitation_project/apps/frontend-user/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/Koupreng-invitation_project/.cache/royal-garden-v3/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "D:/Koupreng-invitation_project/apps/frontend-user/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "royal-garden-v3.spec.js"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "D:/Koupreng-invitation_project/.cache/royal-garden-v3/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "mobile-chromium",
+        "name": "mobile-chromium",
+        "testDir": "D:/Koupreng-invitation_project/apps/frontend-user/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "royal-garden-v3.spec.js"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "D:/Koupreng-invitation_project/.cache/royal-garden-v3/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "D:/Koupreng-invitation_project/apps/frontend-user/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "royal-garden-v3.spec.js"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "D:/Koupreng-invitation_project/.cache/royal-garden-v3/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "D:/Koupreng-invitation_project/apps/frontend-user/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "royal-garden-v3.spec.js"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\Koupreng-invitation_project\\.cache\\royal-garden-v3\\playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "chromium",
+        "testDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "snapshotDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "testIgnore": [],
+        "testMatch": "royal-garden-v3.spec.js",
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4186",
+          "trace": "retain-on-failure",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\Koupreng-invitation_project\\.cache\\royal-garden-v3\\playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "mobile-chromium",
+        "testDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "snapshotDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "testIgnore": [],
+        "testMatch": "royal-garden-v3.spec.js",
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4186",
+          "trace": "retain-on-failure",
+          "userAgent": "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Mobile Safari/537.36",
+          "viewport": {
+            "width": 412,
+            "height": 839
+          },
+          "screen": {
+            "width": 412,
+            "height": 915
+          },
+          "deviceScaleFactor": 2.625,
+          "isMobile": true,
+          "hasTouch": true,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "mobile-chromium"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../.cache/royal-garden-v3/browser-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 2,
+    "webServer": {
+      "command": "node ./node_modules/vite/bin/vite.js preview --host 127.0.0.1 --port 4186 --strictPort",
+      "url": "http://127.0.0.1:4186",
+      "reuseExistingServer": true
+    }
+  },
+  "suites": [
+    {
+      "title": "royal-garden-v3.spec.js",
+      "file": "royal-garden-v3.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "hosted: authorized protected film completes, errors recover, and guest text stays live",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8302,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T13:20:14.296Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b33fc2f86ea2f6a11472-ae0b43191771ee59da6b",
+          "file": "royal-garden-v3.spec.js",
+          "line": 68,
+          "column": 1
+        },
+        {
+          "title": "soundtrack: one real song continues through locked video, language, duplicate completion and information",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4328,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T13:20:22.723Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b33fc2f86ea2f6a11472-1a693f2b1b347500df96",
+          "file": "royal-garden-v3.spec.js",
+          "line": 323,
+          "column": 1
+        },
+        {
+          "title": "soundtrack: denied playback is retryable during video and guest-paused music stays paused after ended",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3917,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T13:20:27.068Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b33fc2f86ea2f6a11472-dc6ce832330ca772c101",
+          "file": "royal-garden-v3.spec.js",
+          "line": 365,
+          "column": 1
+        },
+        {
+          "title": "hosted: authorized protected film completes, errors recover, and guest text stays live",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 10340,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T13:20:14.285Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b33fc2f86ea2f6a11472-dd923d01aaa07f66805e",
+          "file": "royal-garden-v3.spec.js",
+          "line": 68,
+          "column": 1
+        },
+        {
+          "title": "soundtrack: one real song continues through locked video, language, duplicate completion and information",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 6436,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T13:20:24.761Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b33fc2f86ea2f6a11472-c7a04cd05e3a8de7f28e",
+          "file": "royal-garden-v3.spec.js",
+          "line": 323,
+          "column": 1
+        },
+        {
+          "title": "soundtrack: denied playback is retryable during video and guest-paused music stays paused after ended",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3875,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T13:20:31.210Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b33fc2f86ea2f6a11472-993a47824a93faa2fc2b",
+          "file": "royal-garden-v3.spec.js",
+          "line": 365,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-27T13:20:12.761Z",
+    "duration": 22739.712,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

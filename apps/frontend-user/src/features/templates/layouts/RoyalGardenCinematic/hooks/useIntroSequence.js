@@ -12,6 +12,7 @@ export default function useIntroSequence({ preview, previewStartClosed, enabled,
   const start = useCallback(() => { remaining.current = null; setState({ stage: reduced || !enabled ? 'CONTENT' : 'ORNAMENT_REVEAL', slide: 0, run: ++run.current }); }, [enabled, reduced]);
   const prepareVideo = useCallback(() => { remaining.current = null; setState({ stage: 'VIDEO_PREPARING', slide: 0, run: ++run.current }); }, []);
   const videoPlaying = useCallback(() => setState(current => current.stage === 'VIDEO_PREPARING' ? { ...current, stage: 'PRE_WEDDING_VIDEO' } : current), []);
+  const exitVideo = useCallback(() => setState(current => ['VIDEO_PREPARING', 'PRE_WEDDING_VIDEO'].includes(current.stage) ? { ...current, stage: 'VIDEO_EXITING' } : current), []);
   const afterVideo = useCallback((photos = false) => {
     remaining.current = null;
     setState({ stage: photos && !reduced && slideCount ? 'PHOTO_SLIDESHOW' : 'CONTENT', slide: 0, run: ++run.current });
@@ -22,12 +23,12 @@ export default function useIntroSequence({ preview, previewStartClosed, enabled,
     return () => document.removeEventListener('visibilitychange', change);
   }, []);
   useEffect(() => {
-    if (['COVER', 'CONTENT', 'VIDEO_PREPARING', 'PRE_WEDDING_VIDEO'].includes(state.stage) || paused || hidden) return;
+    if (['COVER', 'CONTENT', 'VIDEO_PREPARING', 'PRE_WEDDING_VIDEO', 'VIDEO_EXITING'].includes(state.stage) || paused || hidden) return;
     const key = `${state.run}:${state.stage}:${state.slide}`;
     const ms = remaining.current?.key === key ? remaining.current.ms : ({ ORNAMENT_REVEAL: 2400, TITLE_REVEAL: 4200, PHOTO_SLIDESHOW: duration * 1000, INVITATION_REVEAL: 700 })[state.stage];
     const began = performance.now();
     const timer = window.setTimeout(() => { remaining.current = null; setState(current => nextIntroState(current, slideCount)); }, ms);
     return () => { clearTimeout(timer); remaining.current = { key, ms: Math.max(0, ms - (performance.now() - began)) }; };
   }, [state, paused, hidden, duration, slideCount]);
-  return { ...state, paused, hidden, setPaused, finish, restart, start, prepareVideo, videoPlaying, afterVideo };
+  return { ...state, paused, hidden, setPaused, finish, restart, start, prepareVideo, videoPlaying, exitVideo, afterVideo };
 }

@@ -6,7 +6,7 @@ import { phase9Fixtures, chooseStudioSection } from './support/phase9Fixtures';
 
 const code = 'royal-garden-cinematic', base = '/templates/royal-garden/v3';
 const portrait = '/templates/silk-heritage/portrait.webp';
-const evidence = '../../docs/design/royal-garden-visual-repair/evidence';
+const evidence = '../../docs/design/royal-garden-visual-repair/final-steering/evidence';
 const intro = { style: 'royal-arch', titleMode: 'text', duration: 2, slides: [{ id: 'portrait', src: portrait, alt: 'Owner portrait', x: 50, y: 40 }] };
 const information = { enabled: true, fixedBackground: true, motionPreset: 'balanced', effects: { butterfly: true }, video: { footer: true, replay: true } };
 const windowsWebKit = info => info.project.name === 'webkit' && process.platform === 'win32';
@@ -49,14 +49,14 @@ test('catalog: supplied film loads after click, plays inline without a dialog/fo
   await expect.poll(() => video.evaluate(node => node.currentTime)).toBeGreaterThan(0);
   await expect(page.locator('.cinematic-film-footer')).toBeVisible();
   await expect(page.locator('.rg-paper .cinematic-inline-stage')).toBeVisible();
-  await expect(page.locator('#rg-family')).toBeVisible();
+  await expect(page.locator('#rg-family')).toHaveCount(0);
   expect(await page.locator('[data-cinematic-content]').getAttribute('hidden')).toBeNull();
   const filmBounds = await video.boundingBox(), footerBounds = await page.locator('.cinematic-film-footer').boundingBox();
-  expect(footerBounds.y).toBeGreaterThanOrEqual(filmBounds.y + filmBounds.height);
+  expect(Math.abs(footerBounds.y + footerBounds.height - filmBounds.y - filmBounds.height)).toBeLessThanOrEqual(1);
   const bgNode = await page.locator('.rg-information-background').elementHandle();
   await capture(page, 'inline-video', info);
-  await page.getByRole('button', { name: 'Enable sound', exact: true }).click(); await expect(video).toHaveJSProperty('muted', false);
-  await page.getByRole('button', { name: 'Mute video', exact: true }).click();
+  await expect(video).toHaveJSProperty('muted', true);
+  await expect(page.getByRole('button', { name: 'Enable sound', exact: true })).toHaveCount(0);
   await page.getByRole('button', { name: 'Pause video', exact: true }).click(); await expect(video).toHaveJSProperty('paused', true);
   await page.getByRole('button', { name: 'Replay video', exact: true }).click(); await expect(video).toHaveJSProperty('muted', true);
   await skip(page); expect(await bgNode.evaluate(node => node.isConnected)).toBe(true); await capture(page, 'information', info);
@@ -80,6 +80,7 @@ test('hosted: authorized protected film completes, errors recover, and guest tex
     await openVideo(page); await expect.poll(() => calls).toBe(1);
     const video = page.locator('.cinematic-inline-stage video'); await expect(video).toHaveAttribute('src', /^blob:/);
     await expect.poll(() => video.evaluate(node => node.currentTime)).toBeGreaterThan(0);
+    await expect(page.locator('.public-ticket-button')).toBeHidden();
     await video.evaluate(node => { node.currentTime = node.duration - .3; return node.play(); });
   }
   await expect(page.locator('[data-stage=CONTENT]')).toBeVisible(); await expect(page.locator('.public-ticket-button')).toBeVisible();
@@ -95,7 +96,7 @@ test('unavailable video, absent photo, failed artwork, cleared lettering and lon
   await setup(page, { premium: false, content: { preWeddingVideo: { enabled: true, videoMediaId: 107 }, coverBackgroundImage: '', cinematicIntro: { ...intro, artworkSrc: '', entranceFrame: '/missing-frame.webp' } }, guest: { guestName: 'លោកអ្នក និងក្រុមគ្រួសារ '.repeat(20) } });
   let calls = 0; page.on('request', request => { if (request.url().includes('cinematic-content') || request.url().includes('pre-wedding-demo.mp4')) calls++; });
   await page.goto('/i/review-celestial'); await expect(page.locator('.rg-open')).toBeVisible(); await expect(page.locator('.rg-entrance-lettering h1')).toBeVisible();
-  await page.locator('.rg-open').click(); await page.locator('.rg-entrance-skip').click(); await expect(page.locator('[data-stage=CONTENT]')).toBeVisible(); expect(calls).toBe(0);
+  await page.locator('.rg-open').click(); await expect(page.locator('[data-stage=CONTENT]')).toBeVisible(); expect(calls).toBe(0);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
 });
 
@@ -128,7 +129,7 @@ test('Studio settings update the same iframe and survive save/reload/published r
   const identity = await page.locator('iframe').getAttribute('src');
   await chooseStudioSection(page, 'mediaOpening', 'Pre-wedding video');
   await page.getByRole('combobox', { name: 'After the video', exact: true }).selectOption('poster');
-  await page.getByRole('combobox', { name: 'Video sound', exact: true }).selectOption('on');
+  await page.getByRole('slider', { name: 'Video horizontal focus', exact: true }).fill('30');
   if (!windowsWebKit(info)) {
     await page.getByRole('button', { name: 'Preview video scene', exact: true }).click();
     await expect(frame.locator('.cinematic-inline-stage video')).toBeVisible();
@@ -148,7 +149,7 @@ test('Studio settings update the same iframe and survive save/reload/published r
   const editorAudit = await new AxeBuilder({ page }).include('.studio-royal-scenes').withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze(); expect(editorAudit.violations).toEqual([]);
   await page.getByRole('button', { name: 'Save', exact: true }).click(); await expect(page.locator('.studio-save-status')).toHaveAttribute('data-phase', 'saved');
   expect(JSON.parse(events.get(101).contentJson).informationScene).toMatchObject({ motionPreset: 'cinematic', contentOverlay: .4 }); expect(await page.locator('iframe').getAttribute('src')).toBe(identity);
-  expect(JSON.parse(events.get(101).contentJson).informationScene.video).toMatchObject({ endBehavior: 'poster', sound: 'on' });
+  expect(JSON.parse(events.get(101).contentJson).informationScene.video).toMatchObject({ endBehavior: 'poster', positionX: 30 });
   await page.reload(); await expect(page.locator('.invitation-studio')).toBeVisible(); await page.getByRole('button', { name: 'Preview video scene', exact: true }).click();
   if (windowsWebKit(info)) {
     info.annotations.push({ type: 'platform limitation', description: 'Windows WebKit owner MP4 blob preview verifies fallback; native Safari decoding is unverified.' });
@@ -204,8 +205,8 @@ test('repair: short phones retain the complete artwork, safe portrait window and
   await page.getByRole('button', { name: 'Pause video', exact: true }).click(); await film.evaluate(node => { node.currentTime = .5; });
   await capture(page, 'repair-video-beginning', info);
   const footer = page.locator('.cinematic-film-footer'); await footer.evaluate(node => window.scrollTo({ top: node.getBoundingClientRect().bottom + scrollY - innerHeight + 110, behavior: 'instant' })); await capture(page, 'repair-video-footer', info);
-  const fb = await footer.boundingBox(), vb = await film.boundingBox(); expect(fb.y).toBeGreaterThanOrEqual(vb.y + vb.height);
-  await page.getByRole('button', { name: 'Continue to invitation', exact: true }).click();
+  const fb = await footer.boundingBox(), vb = await film.boundingBox(); expect(Math.abs(fb.y + fb.height - vb.y - vb.height)).toBeLessThanOrEqual(1);
+  await page.getByRole('button', { name: 'Skip video', exact: true }).click();
   await expect(page.locator('[data-stage=CONTENT]')).toBeVisible();
   for (const key of ['family','invitation','schedule','venue','gallery','rsvp','closing']) {
     await page.locator(`#rg-${key}`).evaluate(node => node.scrollIntoView({ behavior: 'instant', block: 'start' }));
@@ -250,7 +251,7 @@ test('critical: language changes preserve the active film, authorized guest data
     await expect.poll(() => video.evaluate(node => node.currentTime)).toBeGreaterThan(0);
     await language.selectOption('km'); await expect(page.locator('[data-stage=PRE_WEDDING_VIDEO]')).toBeVisible();
     expect(await element.evaluate(node => node === document.querySelector('.cinematic-inline-stage video'))).toBe(true);
-    await expect(page.locator('.cinematic-playback-actions button').last()).toHaveAccessibleName(/\u179a\u17c6/);
+    await expect(page.locator('.cinematic-playback-actions > button')).toHaveAccessibleName(/\u179a\u17c6/);
     await language.selectOption('en'); await expect(page.getByRole('button', { name: 'Skip video', exact: true })).toBeVisible();
     await skip(page);
   }
@@ -272,7 +273,7 @@ test('critical: immersive media and one inner scroll preserve the complete frame
   await openVideo(page); const film = page.locator('.cinematic-inline-stage video'); await expect.poll(() => film.evaluate(node => node.currentTime)).toBeGreaterThan(0);
   const painted = await film.evaluate(node => { const r = node.getBoundingClientRect(), scale = Math.min(r.width / node.videoWidth, r.height / node.videoHeight); return { width: node.videoWidth * scale, height: node.videoHeight * scale }; });
   expect(painted.width).toBeGreaterThanOrEqual(390 * .9); expect(painted.height).toBeGreaterThanOrEqual(844 * .75);
-  const mediaBounds = await film.boundingBox(), footer = await page.locator('.cinematic-film-footer').boundingBox(); expect(footer.y).toBeGreaterThanOrEqual(mediaBounds.y + mediaBounds.height - 1); expect(footer.width / footer.height).toBeCloseTo(3, 1);
+  const mediaBounds = await film.boundingBox(), footer = await page.locator('.cinematic-film-footer').boundingBox(); expect(Math.abs(footer.y + footer.height - mediaBounds.y - mediaBounds.height)).toBeLessThanOrEqual(1); expect(footer.width / footer.height).toBeCloseTo(3, 1);
   for (const box of await page.locator('.cinematic-playback-actions button,.cinematic-film-controls button').all()) { const r = await box.boundingBox(); expect(r.width).toBeGreaterThanOrEqual(44); expect(r.height).toBeGreaterThanOrEqual(44); expect(r.y + r.height).toBeLessThanOrEqual(footer.y); }
   await page.getByRole('button', { name: 'Pause video', exact: true }).click(); await capture(page, 'critical-video', info); await skip(page);
   const pane = page.locator('.rg-content-scroll'), frame = page.locator('.rg-information-background'); const before = await frame.boundingBox();
@@ -295,4 +296,82 @@ test('compatibility: saved fixed-frame opt-out keeps the hosted ending reachable
   await page.locator('.rg-footer').scrollIntoViewIfNeeded();
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(100);
   const footer = await page.locator('.rg-footer').boundingBox(); expect(footer.y + footer.height).toBeLessThanOrEqual(844);
+});
+
+async function auditedSong(page, rejectOnce = false) {
+  await setup(page);
+  await page.addInitScript(reject => {
+    window.royalAudioAudit = [];
+    const nativePlay = HTMLMediaElement.prototype.play;
+    let blocked = reject;
+    HTMLMediaElement.prototype.play = function () {
+      if (this.tagName === 'AUDIO') {
+        window.royalAudioAudit.push({ source: this.getAttribute('src'), userActivation: navigator.userActivation?.isActive, time: this.currentTime });
+        if (blocked) { blocked = false; return Promise.reject(new DOMException('Synthetic permission denial', 'NotAllowedError')); }
+      }
+      return nativePlay.call(this);
+    };
+  }, rejectOnce);
+  await page.setViewportSize({ width: 390, height: 844 }); await page.goto(`/templates/${code}?lang=en`);
+  await expect(page.locator('.rg-open')).toBeVisible();
+  const song = page.locator('.tpl-royal-garden audio');
+  await expect(song).toHaveCount(1); await expect(song).toHaveJSProperty('paused', true);
+  expect(await page.evaluate(() => window.royalAudioAudit)).toEqual([]);
+  return song;
+}
+
+test('soundtrack: one real song continues through locked video, language, duplicate completion and information', async ({ page }, info) => {
+  const song = await auditedSong(page), audio = await song.elementHandle();
+  await openVideo(page); const video = page.locator('.cinematic-inline-stage video'), film = await video.elementHandle();
+  await expect.poll(() => song.evaluate(node => node.currentTime)).toBeGreaterThan(0);
+  await expect(video).toHaveJSProperty('muted', true); await expect(song).toHaveJSProperty('paused', false);
+  await video.evaluate(node => { node.muted = false; }); await expect(video).toHaveJSProperty('muted', true);
+  await expect(page.getByRole('button', { name: 'Enable sound', exact: true })).toHaveCount(0);
+  await expect(page.locator('.cinematic-film-progress')).toHaveCount(0);
+  await expect(page.locator('#rg-family,.rg-bottom-nav')).toHaveCount(0);
+  await page.mouse.move(190, 600); await page.mouse.wheel(0, 2400);
+  if (info.project.name === 'mobile-chromium') {
+    const touch = await page.context().newCDPSession(page);
+    await touch.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: 190, y: 650 }] });
+    await touch.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: 190, y: 250 }] });
+    await touch.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+    await touch.detach();
+  }
+  await page.locator('.rg-video-section').focus();
+  for (const key of ['PageDown', 'End', 'ArrowDown', 'Space']) await page.keyboard.press(key);
+  await page.evaluate(() => { location.hash = 'rg-rsvp'; });
+  for (let i = 0; i < 9; i++) { await page.keyboard.press('Tab'); expect(await page.evaluate(() => Boolean(document.activeElement?.closest('main,.rg-bottom-nav')))).toBe(false); }
+  await expect(page.locator('#rg-family,#rg-rsvp')).toHaveCount(0);
+  expect(await page.evaluate(() => scrollY)).toBe(0); expect(await page.locator('.rg-content-scroll').evaluate(node => node.scrollTop)).toBe(0);
+  await page.locator('.rg-language select').selectOption('km'); await page.locator('.rg-language select').selectOption('en');
+  expect(await film.evaluate(node => node === document.querySelector('.cinematic-inline-stage video'))).toBe(true);
+  expect(await audio.evaluate(node => node === document.querySelector('.tpl-royal-garden audio'))).toBe(true);
+  await expect(video).toHaveJSProperty('muted', true);
+  const before = await song.evaluate(node => node.currentTime);
+  await capture(page, 'soundtrack-locked-video', info);
+  await page.evaluate(() => { window.exitCount = 0; new MutationObserver(() => { if (document.querySelector('.tpl-royal-garden')?.dataset.stage === 'VIDEO_EXITING') window.exitCount++; }).observe(document.querySelector('.tpl-royal-garden'), { attributes: true, attributeFilter: ['data-stage'] }); });
+  await page.getByRole('button', { name: 'Skip video', exact: true }).click();
+  await expect(page.locator('[data-stage=VIDEO_EXITING]')).toBeVisible(); await film.evaluate(node => node.dispatchEvent(new Event('ended')));
+  await expect(page.locator('#rg-family')).toHaveCount(0); await capture(page, 'soundtrack-gold-exit', info);
+  await expect(page.locator('[data-stage=CONTENT]')).toBeVisible(); await expect(page.locator('#rg-family')).toBeVisible();
+  await expect.poll(() => page.locator('.rg-content-scroll').evaluate(node => node.scrollTop)).toBeLessThan(1);
+  await expect(song).toHaveJSProperty('paused', false); expect(await song.evaluate(node => node.currentTime)).toBeGreaterThan(before);
+  expect(await page.evaluate(() => window.exitCount)).toBe(1);
+  const audit = await page.evaluate(() => window.royalAudioAudit); expect(audit).toHaveLength(1); expect(audit[0].userActivation).toBe(true);
+  await capture(page, 'soundtrack-information', info);
+  if (info.project.name === 'chromium') await fs.writeFile(`${evidence}/soundtrack-and-gate-proof.json`, JSON.stringify({ project: info.project.name, audioPlayCalls: audit, videoForcedMuted: true, onePersistentAudio: true, informationAbsentDuringGate: true, wheelKeyboardHashAndTabCannotExposeInformation: true, exitTransitions: 1, audioTimeBeforeExit: before, audioTimeAfterExit: await song.evaluate(node => node.currentTime), audioPausedAfterExit: await song.evaluate(node => node.paused) }, null, 2));
+});
+
+test('soundtrack: denied playback is retryable during video and guest-paused music stays paused after ended', async ({ page }) => {
+  const song = await auditedSong(page, true);
+  await openVideo(page); await expect(page.getByRole('button', { name: 'Play music', exact: true })).toHaveAttribute('aria-pressed', 'false');
+  await expect(song).toHaveJSProperty('paused', true);
+  await page.getByRole('button', { name: 'Play music', exact: true }).click(); await expect.poll(() => song.evaluate(node => node.currentTime)).toBeGreaterThan(0);
+  await page.getByRole('button', { name: 'Pause music', exact: true }).click(); await expect(song).toHaveJSProperty('paused', true);
+  const stoppedAt = await song.evaluate(node => node.currentTime);
+  await page.locator('.rg-language select').selectOption('km'); await page.locator('.rg-language select').selectOption('en');
+  await page.locator('.cinematic-inline-stage video').evaluate(node => node.dispatchEvent(new Event('ended')));
+  await expect(page.locator('[data-stage=CONTENT]')).toBeVisible(); await expect(song).toHaveJSProperty('paused', true);
+  expect(await song.evaluate(node => node.currentTime)).toBeCloseTo(stoppedAt, 1);
+  await page.getByRole('button', { name: 'Play music', exact: true }).click(); await expect(song).toHaveJSProperty('paused', false);
 });

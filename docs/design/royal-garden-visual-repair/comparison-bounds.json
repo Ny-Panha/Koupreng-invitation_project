@@ -1,0 +1,255 @@
+[
+  {
+    "scene": "cover",
+    "label": "Heading",
+    "referenceCropPercent": [
+      16,
+      15,
+      69,
+      12
+    ],
+    "reference390CanvasRect": [
+      62.4,
+      102.81375,
+      269.09999999999997,
+      82.25099999999999
+    ],
+    "finalSelector": ".rg-entrance-lettering",
+    "final390CanvasRect": [
+      57.484375,
+      144.296875,
+      275.03125,
+      113.09375
+    ]
+  },
+  {
+    "scene": "cover",
+    "label": "Photo region",
+    "referenceCropPercent": [
+      5,
+      14,
+      90,
+      81
+    ],
+    "reference390CanvasRect": [
+      19.5,
+      95.95950000000002,
+      351.0,
+      555.19425
+    ],
+    "finalSelector": ".rg-entrance-photo .cover-bg-root",
+    "final390CanvasRect": [
+      0,
+      97.5,
+      390,
+      746.5
+    ]
+  },
+  {
+    "scene": "cover",
+    "label": "Guest band",
+    "referenceCropPercent": [
+      11,
+      73,
+      78,
+      7
+    ],
+    "reference390CanvasRect": [
+      42.9,
+      500.36024999999995,
+      304.2,
+      47.97975000000001
+    ],
+    "finalSelector": ".rg-guest-frame",
+    "final390CanvasRect": [
+      27.296875,
+      584.609375,
+      335.40625,
+      111.796875
+    ]
+  },
+  {
+    "scene": "cover",
+    "label": "Open",
+    "referenceCropPercent": [
+      46,
+      85,
+      9,
+      5
+    ],
+    "reference390CanvasRect": [
+      179.4,
+      582.6112499999999,
+      35.1,
+      34.271249999999995
+    ],
+    "finalSelector": ".rg-open",
+    "final390CanvasRect": [
+      171,
+      702.40625,
+      48,
+      48
+    ]
+  },
+  {
+    "scene": "video",
+    "label": "Monogram",
+    "referenceCropPercent": [
+      35,
+      7,
+      30,
+      22
+    ],
+    "reference390CanvasRect": [
+      136.5,
+      47.297250000000005,
+      117.0,
+      148.6485
+    ],
+    "finalSelector": ".rg-video-monogram",
+    "final390CanvasRect": [
+      153,
+      8,
+      84,
+      96
+    ]
+  },
+  {
+    "scene": "video",
+    "label": "Calligraphy",
+    "referenceCropPercent": [
+      20,
+      66,
+      60,
+      16
+    ],
+    "reference390CanvasRect": [
+      78.0,
+      445.9455,
+      234.0,
+      108.10799999999999
+    ],
+    "finalSelector": ".rg-video-calligraphy",
+    "final390CanvasRect": [
+      46.796875,
+      550.734375,
+      296.390625,
+      101.265625
+    ]
+  },
+  {
+    "scene": "video",
+    "label": "Footer",
+    "referenceCropPercent": [
+      0,
+      82,
+      100,
+      18
+    ],
+    "reference390CanvasRect": [
+      0.0,
+      554.0535,
+      390.0,
+      121.6215
+    ],
+    "finalSelector": ".cinematic-film-footer",
+    "final390CanvasRect": [
+      0,
+      714,
+      390,
+      130
+    ]
+  },
+  {
+    "scene": "information",
+    "label": "Heading",
+    "referenceCropPercent": [
+      12,
+      13,
+      76,
+      7
+    ],
+    "reference390CanvasRect": [
+      46.8,
+      87.07724999999999,
+      296.4,
+      46.887750000000004
+    ],
+    "finalSelector": "#rg-family h2",
+    "final390CanvasRect": [
+      39,
+      155.6875,
+      312,
+      34.125
+    ]
+  },
+  {
+    "scene": "information",
+    "label": "Parents",
+    "referenceCropPercent": [
+      10,
+      23,
+      80,
+      8
+    ],
+    "reference390CanvasRect": [
+      39.0,
+      154.05975,
+      312.0,
+      53.586
+    ],
+    "finalSelector": ".rg-family",
+    "final390CanvasRect": [
+      39,
+      223.875,
+      312,
+      73.40625
+    ]
+  },
+  {
+    "scene": "information",
+    "label": "Message",
+    "referenceCropPercent": [
+      12,
+      30,
+      76,
+      10
+    ],
+    "reference390CanvasRect": [
+      46.8,
+      200.9475,
+      296.4,
+      66.9825
+    ],
+    "finalSelector": "#rg-invitation .rg-copy",
+    "final390CanvasRect": [
+      39,
+      338.265625,
+      312,
+      103.75
+    ]
+  },
+  {
+    "scene": "information",
+    "label": "Monogram",
+    "referenceCropPercent": [
+      35,
+      43,
+      30,
+      18
+    ],
+    "reference390CanvasRect": [
+      136.5,
+      288.02475,
+      117.0,
+      120.5685
+    ],
+    "finalSelector": ".rg-ceremonial-monogram",
+    "final390CanvasRect": [
+      163,
+      446.015625,
+      64,
+      93.78125
+    ]
+  }
+]

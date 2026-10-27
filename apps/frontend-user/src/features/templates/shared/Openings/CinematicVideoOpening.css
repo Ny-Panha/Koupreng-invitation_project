@@ -1010,25 +1010,22 @@
 .cinematic-film-controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .cinematic-film-controls progress { flex: 1; min-width: 100px; accent-color: #f2d693; }
 .cinematic-inline-stage:focus { outline: none; }
-/* Royal Garden owns a source-proportional film canvas; other players keep their UI. */
-.tpl-royal-garden .cinematic-playback--royal { --film-footer-height:calc(100cqw / 3); position:relative; width:100%; max-width:none; height:100%; margin:0; display:grid; grid-template-rows:minmax(0,1fr) auto; gap:0; background:transparent; color:var(--rg-royal-gold); }
-.tpl-royal-garden .cinematic-playback--royal[data-footer=false] { --film-footer-height:0px; }
-.tpl-royal-garden .cinematic-playback--royal .cinematic-film-frame { position:relative; grid-row:1; width:100%; height:100%; min-height:0; border:0; padding:clamp(0px,calc(100dvh - 211.111cqw),48px) 0 0; background:none; }
-.tpl-royal-garden .cinematic-playback--royal video { display:block; width:100%; height:100%; max-height:none; min-height:0; background:none; }
+/* Royal-only immersive stage. Original footer overlays the full-height film. */
+.tpl-royal-garden .cinematic-playback--royal { position:relative; width:100%; max-width:none; height:100%; margin:0; display:block; background:var(--rg-royal-deep); color:var(--rg-royal-gold); overflow:hidden; isolation:isolate; }
+.tpl-royal-garden .cinematic-playback--royal .cinematic-film-frame { position:absolute; inset:0; width:100%; height:100%; border:1px solid var(--rg-royal-gold); padding:0; overflow:hidden; }
+.tpl-royal-garden .cinematic-playback--royal video { position:relative; z-index:1; display:block; width:100%; height:100%; max-height:none; min-height:0; background:none; }
+.tpl-royal-garden .cinematic-film-backdrop { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:blur(18px); transform:scale(1.08); opacity:.75; }
 .tpl-royal-garden .cinematic-playback--royal button { display:grid; place-items:center; width:44px; height:44px; min-width:44px; min-height:44px; padding:0; border:1px solid var(--rg-royal-gold); border-radius:50%; color:var(--rg-royal-gold); background:var(--rg-royal-deep); font:400 13px/1.7 var(--rg-body-font); box-shadow:0 2px 8px rgb(0 0 0 / .15); }
 .tpl-royal-garden .cinematic-playback--royal button:focus-visible { outline:3px solid var(--rg-royal-white); outline-offset:3px; }
-.tpl-royal-garden .cinematic-playback--royal .cinematic-playback-actions { position:absolute; top:max(8px,env(safe-area-inset-top)); right:10px; z-index:6; display:flex; gap:6px; }
-.tpl-royal-garden .cinematic-playback--royal .cinematic-film-controls { position:absolute; left:18px; right:18px; bottom:calc(var(--film-footer-height) + 18px); z-index:6; display:flex; gap:6px; }
-.tpl-royal-garden .cinematic-playback--royal .cinematic-continue { margin-left:auto; }
-.tpl-royal-garden .cinematic-playback--royal .cinematic-film-progress { position:absolute; left:18px; bottom:calc(var(--film-footer-height) + 7px); z-index:6; width:calc(100% - 36px); height:3px; accent-color:var(--rg-royal-gold); }
-.tpl-royal-garden .cinematic-playback--royal .cinematic-film-footer { grid-row:2; display:block; position:static; width:100%; height:auto; aspect-ratio:3/1; max-height:none; object-fit:contain; pointer-events:none; }
-.tpl-royal-garden .cinematic-playback--royal .cinematic-film-status { position:absolute; z-index:6; left:12%; right:12%; bottom:calc(var(--film-footer-height) + 76px); width:auto; margin:0; padding:6px; background:var(--rg-royal-deep); color:var(--rg-royal-white); font:400 13px/1.8 var(--rg-body-font); text-align:center; }
-.tpl-royal-garden .cinematic-playback--royal .cinematic-film-play { position:absolute; z-index:7; top:45%; left:calc(50% - 30px); width:60px; height:60px; }
+.tpl-royal-garden .cinematic-playback--royal .cinematic-playback-actions { position:absolute; top:max(8px,env(safe-area-inset-top)); right:64px; z-index:6; display:block; }
+.tpl-royal-garden .cinematic-playback--royal .cinematic-film-controls { position:absolute; top:54px; right:-54px; display:flex; justify-content:flex-end; flex-wrap:nowrap; gap:6px; }
+.tpl-royal-garden .cinematic-playback--royal .cinematic-film-footer { position:absolute; z-index:3; bottom:0; left:0; display:block; width:100%; height:auto; aspect-ratio:3/1; max-height:none; object-fit:contain; pointer-events:none; }
+.tpl-royal-garden .cinematic-playback--royal .cinematic-film-status { position:absolute; z-index:6; left:12%; right:12%; bottom:calc(100cqw / 3 + 24px); width:auto; margin:0; padding:6px; background:var(--rg-royal-deep); color:var(--rg-royal-white); font:400 13px/1.8 var(--rg-body-font); text-align:center; }
+.tpl-royal-garden .cinematic-playback--royal .cinematic-film-play { position:absolute; z-index:6; top:45%; left:calc(50% - 26px); width:52px; height:52px; }
 .tpl-royal-garden .cinematic-playback--royal[data-transition=fade] .cinematic-film-frame { animation:cinematic-film-in 350ms ease both; }
+.tpl-royal-garden .cinematic-playback--royal[data-exiting=true] .cinematic-film-frame { animation:cinematic-film-out 750ms ease both; }
+.tpl-royal-garden .cinematic-gold-reveal { position:absolute; z-index:8; inset:0; background:linear-gradient(110deg,transparent 20%,rgb(242 214 147 / .4) 48%,transparent 75%),radial-gradient(ellipse at center,rgb(242 214 147 / .2),transparent 75%); animation:cinematic-gold-light 750ms ease both; pointer-events:none; }
 @keyframes cinematic-film-in { from { opacity:.6; } to { opacity:1; } }
-@media(prefers-reduced-motion:reduce) { .tpl-royal-garden .cinematic-playback--royal[data-transition=fade] .cinematic-film-frame { animation:none; } }
-
-.tpl-royal-garden .cinematic-film-progress { appearance:none; border:0; background:rgb(242 214 147 / .16); }
-.tpl-royal-garden .cinematic-film-progress::-webkit-progress-bar { background:rgb(242 214 147 / .16); }
-.tpl-royal-garden .cinematic-film-progress::-webkit-progress-value { background:var(--rg-royal-gold); }
-.tpl-royal-garden .cinematic-film-progress::-moz-progress-bar { background:var(--rg-royal-gold); }
+@keyframes cinematic-film-out { to { opacity:.28; transform:scale(1.015); } }
+@keyframes cinematic-gold-light { 0% { opacity:0; transform:translateX(-80%); } 65% { opacity:1; } 100% { opacity:0; transform:translateX(80%); } }
+@media(prefers-reduced-motion:reduce) { .tpl-royal-garden .cinematic-playback--royal :is(.cinematic-film-frame,.cinematic-gold-reveal) { animation:none!important; } }

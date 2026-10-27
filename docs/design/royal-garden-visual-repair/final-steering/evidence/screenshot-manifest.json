@@ -1,0 +1,1331 @@
+{
+  "processing": "Actual browser captures. Mobile PNGs are post-capture CSS-resolution delivery derivatives. Raw DPR originals remain in the ignored local cache; desktop PNGs retain their captured dimensions.",
+  "images": [
+    {
+      "file": "chromium-critical-cover-en.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "166a79ec6a1751c42175059111e8d765e0c9d5cc00fc7e5446f6a1cb8759befa",
+      "deliveredSha256": "f53cfae231b3d92b2da8fca49724b44549aec99e863c84a87498403ae5c4fbfc"
+    },
+    {
+      "file": "chromium-critical-cover-km.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "72b1bcc51ee4eba7dd6ba21efaf6e747af0cb0ced14b36e64cb07710d9cf7e9c",
+      "deliveredSha256": "9bb9055ea7b95b0c4a87b9b4f7dde89479f4958dd4b4a5fcccf75762c9f6c2ba"
+    },
+    {
+      "file": "chromium-critical-hosted-language-rsvp.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "2b2ba84f898962550d82f19ca92cb84624651803c176fc859644673f8ec400e3",
+      "deliveredSha256": "61fb9918cb94bd8c205c3bf847482a7bf245af51c0e058079b06eb0f4eb92120"
+    },
+    {
+      "file": "chromium-critical-information-ending.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "6c1aeab68355c02d308931ca8de4e82e09f085b9eb983893cc2ced4cfa356bb4",
+      "deliveredSha256": "f33c425779a8258983e0f232415ca435dbaba9a4fa6aababe74d1a0a8a8baa6b"
+    },
+    {
+      "file": "chromium-critical-information-scrolled.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "469160fb036388d845bdbd2272c6edcb98373372b82a90a25b5ab3e5c052766d",
+      "deliveredSha256": "e959ff1dfee13a92803c9a0fd868b160fd42e534b766c6c62c775f988fae0cc7"
+    },
+    {
+      "file": "chromium-critical-information-top.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "840b68270824dfd0091a818ebacedae2219bcb08d6598b22bfaac3a5fefcd346",
+      "deliveredSha256": "4e1bf6a5f507dfab9bf3605c07964a0000f3151b7ea806fa72739cddd93a590c"
+    },
+    {
+      "file": "chromium-critical-video.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "fb99b970c4d60ea3e9913ff418634aaa1e86980c7883709a445232127d82aabd",
+      "deliveredSha256": "2014ff6f4e58a61ad14a8e8858abfb6a6fd4ab4d6b1037d872c45eff0dc40bac"
+    },
+    {
+      "file": "chromium-entrance-1024.png",
+      "capturedPixels": [
+        1024,
+        900
+      ],
+      "deliveredPixels": [
+        1024,
+        900
+      ],
+      "rawSha256": "0aa65995825e4a4653fcd2868722edc5d9c83fff9431d0ebad8b023f7ea3c7f5",
+      "deliveredSha256": "ef78119cc186575df57646f1c2787868842deb1965115ab97e4696ff981776e4"
+    },
+    {
+      "file": "chromium-entrance-1440.png",
+      "capturedPixels": [
+        1440,
+        900
+      ],
+      "deliveredPixels": [
+        1440,
+        900
+      ],
+      "rawSha256": "b22b6d41349b224f058b85f52db5b972cc900d62dee66868661f683af5b12b3c",
+      "deliveredSha256": "38282039e9d72d5c3c0fb41bbe7eb634dd93db5015af9e3d6d6cc8d3bac8cf12"
+    },
+    {
+      "file": "chromium-entrance-320.png",
+      "capturedPixels": [
+        320,
+        900
+      ],
+      "deliveredPixels": [
+        320,
+        900
+      ],
+      "rawSha256": "47ac99bc4038feae69256acd89268f8fdc8cbaae0ccf65626416dcbfb13995ae",
+      "deliveredSha256": "4311e053fc9c1ec07ec7f92f1ea64f490868212b86302ad64afd848260e2e9bd"
+    },
+    {
+      "file": "chromium-entrance-375.png",
+      "capturedPixels": [
+        375,
+        900
+      ],
+      "deliveredPixels": [
+        375,
+        900
+      ],
+      "rawSha256": "4157985fab448b4ee6ad84689eb29e6906090d3dc80b1113de274b6d0af8d203",
+      "deliveredSha256": "7835d2faf01ba58fdbfb1a0cd909732ff0b6cf939dbe9b5ee7ad6dfc01aa034d"
+    },
+    {
+      "file": "chromium-entrance-390.png",
+      "capturedPixels": [
+        390,
+        900
+      ],
+      "deliveredPixels": [
+        390,
+        900
+      ],
+      "rawSha256": "0ed64ee641d34c188e19ca1e75eda932675cda5c94d35c430549c2e1ceabfb48",
+      "deliveredSha256": "959e97310b734d5730fc3bf37dae005509366a86f2433f85097c8f17de5d43af"
+    },
+    {
+      "file": "chromium-entrance-430.png",
+      "capturedPixels": [
+        430,
+        900
+      ],
+      "deliveredPixels": [
+        430,
+        900
+      ],
+      "rawSha256": "9f01e5d0f61991d5d6cd7f0f948154027c0d49b02e80078619c20afd06420f83",
+      "deliveredSha256": "401eb55defb4fc9ce4ac55708841b2f7cc43225477cb1b59ae7da28e1b0a5757"
+    },
+    {
+      "file": "chromium-entrance-512.png",
+      "capturedPixels": [
+        512,
+        900
+      ],
+      "deliveredPixels": [
+        512,
+        900
+      ],
+      "rawSha256": "d7dac2ee7640d1e06a8f4df3f64770900646a9467f9cac6fe8dcee98f1dab8cf",
+      "deliveredSha256": "e516da065b0dc46e191e514ea00c23adc6f0f380f8bf627d0cd042a7c7ee192e"
+    },
+    {
+      "file": "chromium-entrance-768.png",
+      "capturedPixels": [
+        768,
+        900
+      ],
+      "deliveredPixels": [
+        768,
+        900
+      ],
+      "rawSha256": "ce6b7940b39f13163b113a078f4aa746cf36ae8678baea2eb2a0e3295dddb1b0",
+      "deliveredSha256": "855c461a7f4f784ffa60797d622496b6be9e661b62942608cbc06c3df7ec7a70"
+    },
+    {
+      "file": "chromium-entrance.png",
+      "capturedPixels": [
+        1280,
+        720
+      ],
+      "deliveredPixels": [
+        1280,
+        720
+      ],
+      "rawSha256": "8d34137566e7d8be3fe59d08304e75f9ac1e24793e9705cf57a63b1c1bb21dd3",
+      "deliveredSha256": "00e0546fa7ff405afd67945892c8335f11dc0c66809c6ef55d42b71d7d737cd6"
+    },
+    {
+      "file": "chromium-hosted-content.png",
+      "capturedPixels": [
+        1280,
+        720
+      ],
+      "deliveredPixels": [
+        1280,
+        720
+      ],
+      "rawSha256": "fc1ec03e7e3960c242a0e365dcb53714941670508943143b525fd21eb6fae827",
+      "deliveredSha256": "81299221398e97588cd8178297e3c40c743431cb958146b3703db9b113fc144c"
+    },
+    {
+      "file": "chromium-information.png",
+      "capturedPixels": [
+        1280,
+        720
+      ],
+      "deliveredPixels": [
+        1280,
+        720
+      ],
+      "rawSha256": "e0a40280d8a6e6f6f6221f5bf0849b51f4cebc54a403c25092d86cd01c7ccf89",
+      "deliveredSha256": "0b8c6211305d2b0d6163b402be0b76f2a86427b1fecd3b39035c9d115cbe503e"
+    },
+    {
+      "file": "chromium-inline-video.png",
+      "capturedPixels": [
+        1280,
+        720
+      ],
+      "deliveredPixels": [
+        1280,
+        720
+      ],
+      "rawSha256": "5b9fb63cf275aa9cf065446409c1971802ddf509f058428e3fd37e7ebc9eee3d",
+      "deliveredSha256": "d34aeaf272895a869810276a52f984e314f8935973992462a84f2d2826aa0561"
+    },
+    {
+      "file": "chromium-repair-closing.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "82affa50c27833e4df503d37c903975f7533d14580e2738de109e06f21e6f1ef",
+      "deliveredSha256": "44a893a288437cbf82499178728813e8b28e396e5b587f152a708fc0e00ccef6"
+    },
+    {
+      "file": "chromium-repair-cover-1440x960.png",
+      "capturedPixels": [
+        1440,
+        960
+      ],
+      "deliveredPixels": [
+        1440,
+        960
+      ],
+      "rawSha256": "ea5072f6aba05102814b4a999d67488c67c6a657bbbbd0d79019abb118e5aee5",
+      "deliveredSha256": "78b2b7f1615002b6d2f4ee32b257433a78fbf23dae1948de1605afc3e0d3af3d"
+    },
+    {
+      "file": "chromium-repair-cover-320x568.png",
+      "capturedPixels": [
+        320,
+        568
+      ],
+      "deliveredPixels": [
+        320,
+        568
+      ],
+      "rawSha256": "6fd4465f6ddcc98a7c3126112b1f7f257f48de32111e1597de43a2c5fb4ce2a3",
+      "deliveredSha256": "148c851c8c349fd4257e42d7ea319eff6d54b43939e72da802bde0f521dcda7f"
+    },
+    {
+      "file": "chromium-repair-cover-375x667.png",
+      "capturedPixels": [
+        375,
+        667
+      ],
+      "deliveredPixels": [
+        375,
+        667
+      ],
+      "rawSha256": "a2100f2c262df24f4d72f6e4abfb50937f554002329ec16fb6643c17629af149",
+      "deliveredSha256": "8d1b79edec46ae54a47665fed5e7392226c5f53c4523aef56c367b37938a3f2f"
+    },
+    {
+      "file": "chromium-repair-cover-390x844.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "6c61f0e1c1e87cb2db939e72db7ba7e2b241a72cd8e218d277491f8a39924f44",
+      "deliveredSha256": "74a098e86c2060757c9ba20d20c2004c604b969a308a209d721d3c73047fe258"
+    },
+    {
+      "file": "chromium-repair-cover-430x932.png",
+      "capturedPixels": [
+        430,
+        932
+      ],
+      "deliveredPixels": [
+        430,
+        932
+      ],
+      "rawSha256": "a875e5dca6af41568b9c5801ad6df7ea4fa72e20236df504b313bc70e4cbe924",
+      "deliveredSha256": "75b7f9e797af7bebad2b20a95f1f2af1fcf6738b3db971d513562cf13d0f33a9"
+    },
+    {
+      "file": "chromium-repair-cover-512x910.png",
+      "capturedPixels": [
+        512,
+        910
+      ],
+      "deliveredPixels": [
+        512,
+        910
+      ],
+      "rawSha256": "9afc0340889d5911c93a6a975ec20e60154eac0290984aa9b843c77310925167",
+      "deliveredSha256": "1b704c5c24359f30dd841b404ce7450ba4c2acf949df013960b796eff761800a"
+    },
+    {
+      "file": "chromium-repair-cover-768x1024.png",
+      "capturedPixels": [
+        768,
+        1024
+      ],
+      "deliveredPixels": [
+        768,
+        1024
+      ],
+      "rawSha256": "1b5747bdb1717c3edea048b74bfbc15308896c40bf0a77697ae6c9959f642282",
+      "deliveredSha256": "f787d98a8cd5a92d476d7d34a172b231f0bb22cd3f65e89fe1d86b92dbd955ba"
+    },
+    {
+      "file": "chromium-repair-cover-khmer-375.png",
+      "capturedPixels": [
+        375,
+        667
+      ],
+      "deliveredPixels": [
+        375,
+        667
+      ],
+      "rawSha256": "fe036065ac55896dbf38837b337676ec620448bff50ad3192dfee99c4b7311c5",
+      "deliveredSha256": "9d04c3bc0da852e273921bd36f80848850b2eb121bf6154ee5123a7c89677db0"
+    },
+    {
+      "file": "chromium-repair-family.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "7075aead6338ce0b05abd1561118bcab93426a650d5024cb45b9f6789e704906",
+      "deliveredSha256": "7b64acfa1eae7123b495c543b5ce54d07df43737a1c0ead13ba8beef3d4d8eae"
+    },
+    {
+      "file": "chromium-repair-gallery.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "0fb6b2e88ce84a9abe0a6bf451b576a59ca90c9e6dd61b39a6cd2ccfd19f714a",
+      "deliveredSha256": "c3f2b6c1ed9bbdfe1de52727c0554d909e3114d138b97165ac0742e22004441d"
+    },
+    {
+      "file": "chromium-repair-hosted-closing.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "4272fcb4ec4703e11f4c72b6626d80b405e7f634d76e25b4061b2d26bff0eda3",
+      "deliveredSha256": "6af4bb97871ace887aa8de0690c945030c5ddb6b479d6a01298671465e255d6f"
+    },
+    {
+      "file": "chromium-repair-hosted-gift.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "d7e01ac9b510e38296cbd69c7b911280e53e089dfdcd1e60663a81579d0e0172",
+      "deliveredSha256": "2721f90b5f9b4bf49e7377d3136fb7d2e3cda51242d89d6629a40741c2b08ec4"
+    },
+    {
+      "file": "chromium-repair-hosted-rsvp.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "bab8fe999c97ca1d9bfb14e8c12efce076db26fa57413bcc8d88fa47b05ad772",
+      "deliveredSha256": "1b33e0f9e6ae238cd8746573569d69f567c889abc29877a6cad72d7cbe8a8cfe"
+    },
+    {
+      "file": "chromium-repair-hosted-wishes.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "01228977a6c95c762f2e33070d1bf7c06f33d761dbeaa7b392ab98271d248879",
+      "deliveredSha256": "20a9d0f2013157d14e1b6aa6ced325db7c132eef7f79c69781a10369cab2c4ae"
+    },
+    {
+      "file": "chromium-repair-invitation.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "a7e2ff9110f9a3e23c4e39453a1c5e53735cb239d3bb9a8af10c87bf8152fc54",
+      "deliveredSha256": "2598563a2f58226fa028ff18c96ca55f23ce09d3b440de35d09c7b8ba6dc16e4"
+    },
+    {
+      "file": "chromium-repair-rsvp.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "193b3ab53ecd5e8418dfbfd75bf588c53be49b318313984e20911537054763ea",
+      "deliveredSha256": "d12452eda6b2eeac87f17039f97031faddee5d316dc4e129c75f8272573883ec"
+    },
+    {
+      "file": "chromium-repair-schedule.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "e4b49cc05e0efe52d6b64e9ba7bab4e1777dad6719a0e115fa14ecaab5bdb1c7",
+      "deliveredSha256": "cec42cab5d61023e38e9cc4e3ee4309950452a037b540ad1dc1039aa3cf356d1"
+    },
+    {
+      "file": "chromium-repair-transition.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "748a275c6bc55f5edc6fad007cbc13fa7a59b3586f3f78b21e35090ea7eb14d4",
+      "deliveredSha256": "cc31c53c129486eb3dbccc31f3ad623909f27cf83b74e3e0bee5cfc3886a8d3f"
+    },
+    {
+      "file": "chromium-repair-venue.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "26d46f953e3f4049f20209b8a9956daeab24573f75594ae76fb9d62e29752fd1",
+      "deliveredSha256": "d4d93a560ca2330873520ad9c2974561aa8b923539caaa194eff173ddedfa3b9"
+    },
+    {
+      "file": "chromium-repair-video-beginning.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "fb99b970c4d60ea3e9913ff418634aaa1e86980c7883709a445232127d82aabd",
+      "deliveredSha256": "2014ff6f4e58a61ad14a8e8858abfb6a6fd4ab4d6b1037d872c45eff0dc40bac"
+    },
+    {
+      "file": "chromium-repair-video-footer.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "fb99b970c4d60ea3e9913ff418634aaa1e86980c7883709a445232127d82aabd",
+      "deliveredSha256": "2014ff6f4e58a61ad14a8e8858abfb6a6fd4ab4d6b1037d872c45eff0dc40bac"
+    },
+    {
+      "file": "chromium-soundtrack-gold-exit.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "6b0b9dfc3011809542d9834a5d797797202765d1d4bb6762b15301654da86fc3",
+      "deliveredSha256": "e92411790b2c364b3d73eea19862e848e4805ece7dd4a4e44647007b9be712cd"
+    },
+    {
+      "file": "chromium-soundtrack-information.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "840b68270824dfd0091a818ebacedae2219bcb08d6598b22bfaac3a5fefcd346",
+      "deliveredSha256": "4e1bf6a5f507dfab9bf3605c07964a0000f3151b7ea806fa72739cddd93a590c"
+    },
+    {
+      "file": "chromium-soundtrack-locked-video.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "36010770a69ddc515a69cbefac364c4f386650b4dbc10b91c7b3ccdbea6210ac",
+      "deliveredSha256": "ba2a23b18f011d80988576609426317d55002e8db0fd63e2153a09fa3a2487c1"
+    },
+    {
+      "file": "chromium-studio.png",
+      "capturedPixels": [
+        1440,
+        960
+      ],
+      "deliveredPixels": [
+        1440,
+        960
+      ],
+      "rawSha256": "07b7fe86db511d8796bc9fe252c3ac393f4f3c8420f93b6c20d2819f8fb9374b",
+      "deliveredSha256": "794d33060c6f204e90d18f9df9d2573d2319daa51a34cd5df940e684f1ce8875"
+    },
+    {
+      "file": "final-390x844-en-cover.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "6c61f0e1c1e87cb2db939e72db7ba7e2b241a72cd8e218d277491f8a39924f44",
+      "deliveredSha256": "74a098e86c2060757c9ba20d20c2004c604b969a308a209d721d3c73047fe258"
+    },
+    {
+      "file": "final-390x844-en-ending.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "5659ecd6dc1f220cb19e90e97602f7b74ea1919d9c77736c51ee3b9623e12556",
+      "deliveredSha256": "0625575b9e4e013a86bf9676145a2db333047f76e159b605e7239a22b6228f32"
+    },
+    {
+      "file": "final-390x844-en-information-scrolled.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "26d46f953e3f4049f20209b8a9956daeab24573f75594ae76fb9d62e29752fd1",
+      "deliveredSha256": "d4d93a560ca2330873520ad9c2974561aa8b923539caaa194eff173ddedfa3b9"
+    },
+    {
+      "file": "final-390x844-en-information.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "840b68270824dfd0091a818ebacedae2219bcb08d6598b22bfaac3a5fefcd346",
+      "deliveredSha256": "4e1bf6a5f507dfab9bf3605c07964a0000f3151b7ea806fa72739cddd93a590c"
+    },
+    {
+      "file": "final-390x844-en-video.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "fb99b970c4d60ea3e9913ff418634aaa1e86980c7883709a445232127d82aabd",
+      "deliveredSha256": "2014ff6f4e58a61ad14a8e8858abfb6a6fd4ab4d6b1037d872c45eff0dc40bac"
+    },
+    {
+      "file": "final-390x844-km-cover.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "3c14278b8e2b1d4f982b04ae9f3644f58cd7897a4b95e2a324e3087ebdb0d997",
+      "deliveredSha256": "f1eb169c7cb57704e9917c7d3e8a7ad8673a35d9949961fbfb597fb6bde093ec"
+    },
+    {
+      "file": "final-390x844-km-ending.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "122ef218f1aa31468a1da742111d816f3913b717c721bd215ece3d43c9310c02",
+      "deliveredSha256": "2a43c98ea117089fcd025fa06a1270a52c22543e6faa3d41c9ef41b63434a6e6"
+    },
+    {
+      "file": "final-390x844-km-information-scrolled.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "b223a12203c20173438bf06b2d93f0dea89ef0e103d5a36c3ef95b923c563bab",
+      "deliveredSha256": "51426e4b395c6c754ec3326575e994fe91200354d9b75d040d5f941055776615"
+    },
+    {
+      "file": "final-390x844-km-information.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "acb33333bc7bffefe28f709bff79f2605d6d6e875f46571ac93e9e2611aab998",
+      "deliveredSha256": "16a55d6156ff4c38416cf3d2d8fdc8fbd55d5ec38fce9ccfc0f90b3b2a2af358"
+    },
+    {
+      "file": "final-390x844-km-video.png",
+      "capturedPixels": [
+        390,
+        844
+      ],
+      "deliveredPixels": [
+        390,
+        844
+      ],
+      "rawSha256": "e966a6cd8505574b1bb426890807344a9f26624ffb615bebb0bcb6d756d3e19f",
+      "deliveredSha256": "e5fa6e61455d5e7c48fb2550ef5ebdf92d24296302d32da693c27f9fc56cad97"
+    },
+    {
+      "file": "final-512x900-en-cover.png",
+      "capturedPixels": [
+        512,
+        900
+      ],
+      "deliveredPixels": [
+        512,
+        900
+      ],
+      "rawSha256": "d7dac2ee7640d1e06a8f4df3f64770900646a9467f9cac6fe8dcee98f1dab8cf",
+      "deliveredSha256": "e516da065b0dc46e191e514ea00c23adc6f0f380f8bf627d0cd042a7c7ee192e"
+    },
+    {
+      "file": "final-512x900-en-ending.png",
+      "capturedPixels": [
+        512,
+        900
+      ],
+      "deliveredPixels": [
+        512,
+        900
+      ],
+      "rawSha256": "f1aadcb9d8f7783e095dc3e246e1ab265aac552b9729745d08d254facf24b1e8",
+      "deliveredSha256": "96e0dea2b5f00c578018df0470a3c3e695d4c1c33d7be7370e5a918347fdaf8e"
+    },
+    {
+      "file": "final-512x900-en-information-scrolled.png",
+      "capturedPixels": [
+        512,
+        900
+      ],
+      "deliveredPixels": [
+        512,
+        900
+      ],
+      "rawSha256": "6fd0ab2d11d42a9e33492ba934bab4e8536342cc1a3506204fd1b9277c0f4161",
+      "deliveredSha256": "22f838f77240c14bd630d077be4bfb238f4440b39196d85e2714c8d382f2b68f"
+    },
+    {
+      "file": "final-512x900-en-information.png",
+      "capturedPixels": [
+        512,
+        900
+      ],
+      "deliveredPixels": [
+        512,
+        900
+      ],
+      "rawSha256": "090aac76743a115ee077a3aa75d21fd98c23f222dedfd6730ca4d2a2da157122",
+      "deliveredSha256": "38b46d2180b40c17226808b7e85b116f003ad3152ffaef87e2e9a25286a2e4b3"
+    },
+    {
+      "file": "final-512x900-en-video.png",
+      "capturedPixels": [
+        512,
+        900
+      ],
+      "deliveredPixels": [
+        512,
+        900
+      ],
+      "rawSha256": "5d61922c7a2313c9bfae134e5292e08d4bd87f86e5fe0130ed985589ba1d7da1",
+      "deliveredSha256": "500bab31166c562d3aaccd222f2e67594bcfa1fc8abcae27aa5b6953f07eb6f4"
+    },
+    {
+      "file": "final-512x900-km-cover.png",
+      "capturedPixels": [
+        512,
+        900
+      ],
+      "deliveredPixels": [
+        512,
+        900
+      ],
+      "rawSha256": "4ceef26d27dc8f8b058fadd87782cab7626e6602046716cd867c5f11a5b628ee",
+      "deliveredSha256": "817fedf94bb349d666959d6100bf99809e09d3e4ded3c7781ed4bfc9782ed8c9"
+    },
+    {
+      "file": "final-512x900-km-ending.png",
+      "capturedPixels": [
+        512,
+        900
+      ],
+      "deliveredPixels": [
+        512,
+        900
+      ],
+      "rawSha256": "29aef802b0116e2c3dd73ce467d31e111ac630ff9908e6d15057900e72724706",
+      "deliveredSha256": "9f8cc1b2e2def00460ae3152e84897133ed51bb79293b10f4211dabcb29a1d2d"
+    },
+    {
+      "file": "final-512x900-km-information-scrolled.png",
+      "capturedPixels": [
+        512,
+        900
+      ],
+      "deliveredPixels": [
+        512,
+        900
+      ],
+      "rawSha256": "b21ab241d5f7323998f2fa451cf028cf4b638f35564583d1d927bb992416614d",
+      "deliveredSha256": "b11ccf04d6408eba9911ab1f0cb99403a1021583bd097f01b1df0fa73d2fbb40"
+    },
+    {
+      "file": "final-512x900-km-information.png",
+      "capturedPixels": [
+        512,
+        900
+      ],
+      "deliveredPixels": [
+        512,
+        900
+      ],
+      "rawSha256": "d66410b3f5d920459c76948b2983fcc18cac670fdd6263489065f65a6054456c",
+      "deliveredSha256": "192718683583edcff1e8e3d0a40d3fe30f82f520683ad49da3b541fe8493af26"
+    },
+    {
+      "file": "final-512x900-km-video.png",
+      "capturedPixels": [
+        512,
+        900
+      ],
+      "deliveredPixels": [
+        512,
+        900
+      ],
+      "rawSha256": "3082770194d44584ace5c6a25cad4ee5cd1cb43ef944f993a6a0a27752b5c464",
+      "deliveredSha256": "aaefff7a843f95ec3fac3907bfc1d1c36da79c84b460c158eb7ab0b3f78db865"
+    },
+    {
+      "file": "mobile-chromium-critical-cover-en.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "db187926b6f746aafb278d6cee02c0cd3e1189985ab72c6024a545f8e9ed4ba8",
+      "deliveredSha256": "9dfb7960c82308c224b49c7d0dd7078cc857175bf85108feb96fe5739430644b"
+    },
+    {
+      "file": "mobile-chromium-critical-cover-km.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "4bfdb72c1205cc5f88cefa8f086c74c62dbdc2d7935de951f7cfb4b7b078ff1d",
+      "deliveredSha256": "9c606f14363bc01eff44a243bf3099029f632d18061f22462e5096e13ba1a1c3"
+    },
+    {
+      "file": "mobile-chromium-critical-hosted-language-rsvp.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "7562cd8757ae59d4a210545a85edf68905bdd42cac3bde67005a420da92f25e7",
+      "deliveredSha256": "b57cbbcdc1f2234773288b8ff10888d1f232a92fe32e92aaca0e50495afdcd1d"
+    },
+    {
+      "file": "mobile-chromium-critical-information-ending.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "9fdc3c6806e0374363e8a2b217e2eef2a59113850da6be05340e057a22ca4027",
+      "deliveredSha256": "9f648630a657b00595bc2226fdde5a3d30eab4e9b930378c982b9f8f2ac43687"
+    },
+    {
+      "file": "mobile-chromium-critical-information-scrolled.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "0ccd36d16ec74d1c333848d4372df17f963ffb878519f7fd50eb4e20fe76cc08",
+      "deliveredSha256": "07332337a3de29ce112335afa1741b71f8195318986f5bc695cc4faf1caedbee"
+    },
+    {
+      "file": "mobile-chromium-critical-information-top.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "22e679d381ec85b14427e62da8e6f7547393345aa180b651d0111cde6e97008d",
+      "deliveredSha256": "8db0af87a68d01c18f5fa87e5a3e38427b6cf6ca8e624e83ab57105c642adc94"
+    },
+    {
+      "file": "mobile-chromium-critical-video.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "12313b2409e9edfbc84bfe42289c845547020bc0c6feb49d7b2d194ce2439427",
+      "deliveredSha256": "40551f85349cc053ecadd7c208365d6bef058aca5b8f067c0ddb63d2576a9536"
+    },
+    {
+      "file": "mobile-chromium-entrance.png",
+      "capturedPixels": [
+        1082,
+        2202
+      ],
+      "deliveredPixels": [
+        393,
+        801
+      ],
+      "rawSha256": "f2cd399768119c926cef1a313bf20511aae47fb49a9b611c79b25f50cbfda2ea",
+      "deliveredSha256": "83f07ece2fb22326d12a9eee3f9a043cd1ccede3a0576f74ad9c0eca46404377"
+    },
+    {
+      "file": "mobile-chromium-hosted-content.png",
+      "capturedPixels": [
+        1082,
+        2202
+      ],
+      "deliveredPixels": [
+        393,
+        801
+      ],
+      "rawSha256": "8f9c06d857b15de0fbddd78297ac04a78f58ed42a1eedfdea00d34c512a67b25",
+      "deliveredSha256": "e075a0611061b0917d56df7657199f8a9ad01f16ddbf006ce55547976106df23"
+    },
+    {
+      "file": "mobile-chromium-information.png",
+      "capturedPixels": [
+        1082,
+        2202
+      ],
+      "deliveredPixels": [
+        393,
+        801
+      ],
+      "rawSha256": "c70494ac4a71f8612df40d8a01798bfaab184e44cf38c2512ea73b3150175c96",
+      "deliveredSha256": "e54a6f37dade95829ab181f5f692ba926218cb7761385009926e50325d47986a"
+    },
+    {
+      "file": "mobile-chromium-inline-video.png",
+      "capturedPixels": [
+        1082,
+        2202
+      ],
+      "deliveredPixels": [
+        393,
+        801
+      ],
+      "rawSha256": "3b193f14f1046e902f0de58ea000663cb50383ac2aa44b1f4bb645b9fcf3859a",
+      "deliveredSha256": "e7e7f9d7d48b3324062ce8132e2c1a3939a501e0c54b81425d2836ca7d4e6632"
+    },
+    {
+      "file": "mobile-chromium-repair-closing.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "51df20faca54cfc861f3967bfcdb04b675a33e2b331b5ab650028e0260e5b6e9",
+      "deliveredSha256": "71939506ee1f5b148e18c5b306470b29daa271e5f50309847b2455848e5593c7"
+    },
+    {
+      "file": "mobile-chromium-repair-cover-1440x960.png",
+      "capturedPixels": [
+        3780,
+        2520
+      ],
+      "deliveredPixels": [
+        1375,
+        916
+      ],
+      "rawSha256": "13947de326a35076cc513fdaf6c490f443023a9498c3b6021e3fbbc40e03e4fc",
+      "deliveredSha256": "6ba4bcac09dcfcbe7560647dcd3ee80c5c6db7e887792838c06b5310d3cbc4cd"
+    },
+    {
+      "file": "mobile-chromium-repair-cover-320x568.png",
+      "capturedPixels": [
+        840,
+        1491
+      ],
+      "deliveredPixels": [
+        305,
+        542
+      ],
+      "rawSha256": "0b574924f136aa2a95b3d75bd2f9cba2d0a5406ee3d5835621801854e0cffd6c",
+      "deliveredSha256": "2c76fe799a3e09ae9e4d860825ef24782c200c0910308bf2cba45c626079d680"
+    },
+    {
+      "file": "mobile-chromium-repair-cover-375x667.png",
+      "capturedPixels": [
+        984,
+        1751
+      ],
+      "deliveredPixels": [
+        358,
+        637
+      ],
+      "rawSha256": "b518c500c6b59646b9d15c13b2fe27a3861c3e3de1d7ee08ff7a5292069eb74d",
+      "deliveredSha256": "16814259dcd38d94dea83a73bbca58d8cbeb5b514d6abaaa111ec61ab4621842"
+    },
+    {
+      "file": "mobile-chromium-repair-cover-390x844.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "7ea24d130713a02a024c3e102dda4327b3d0e542e51dc9d4e2384adeb51cc88e",
+      "deliveredSha256": "cd9f200638c15b22dea64cb812be8c4469dc3f3e5d7498cd296111d2009e59ed"
+    },
+    {
+      "file": "mobile-chromium-repair-cover-430x932.png",
+      "capturedPixels": [
+        1129,
+        2447
+      ],
+      "deliveredPixels": [
+        411,
+        890
+      ],
+      "rawSha256": "538cf004078c0c06b5c79e7ba6f5588fb9f4c3d4be917e862dc3b9f5eebb72ca",
+      "deliveredSha256": "60ce1683699c019ac8ed96dce01e0adc61e77b166743fe05972b9728493a4261"
+    },
+    {
+      "file": "mobile-chromium-repair-cover-512x910.png",
+      "capturedPixels": [
+        1344,
+        2389
+      ],
+      "deliveredPixels": [
+        489,
+        869
+      ],
+      "rawSha256": "059a17ff0690c7e42be98b79bdbf968b80497000fa3a5662f170ef24fc126e13",
+      "deliveredSha256": "d2f511bb2feea09ab240bb1c68b43038311550e331091f02ebcbe3b18fd9b4ac"
+    },
+    {
+      "file": "mobile-chromium-repair-cover-768x1024.png",
+      "capturedPixels": [
+        2016,
+        2688
+      ],
+      "deliveredPixels": [
+        733,
+        977
+      ],
+      "rawSha256": "5d2098dfd88ef8546b3c6c0fcdb7ea78a8c4c59c746645aa61051be7bbf5b073",
+      "deliveredSha256": "cfa979fec15c96da61f6ee6ddfd54cde94694731fd08828acc02791fdab39194"
+    },
+    {
+      "file": "mobile-chromium-repair-cover-khmer-375.png",
+      "capturedPixels": [
+        984,
+        1751
+      ],
+      "deliveredPixels": [
+        358,
+        637
+      ],
+      "rawSha256": "c903eb5b547f900dc9b1e3d84e01a64f21c8fe41e2b07397f870b7fbc293479a",
+      "deliveredSha256": "9cbc50456d25c4ac4975d4ff3c785f70f10e5af8ce690cff5e0fde5023f6ae7f"
+    },
+    {
+      "file": "mobile-chromium-repair-family.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "4626415c1d31d5da9add6063c79b3abfd957ff8debd400eed7b478ca66d79f1d",
+      "deliveredSha256": "ff941746f3cdae79f2bd709f60d45147907b84deeec80b219fb8be0e79f74a37"
+    },
+    {
+      "file": "mobile-chromium-repair-gallery.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "eec37bd92ca9cf892bec89d1b354f926e5e34f25318a4689353b6c401e21e2be",
+      "deliveredSha256": "eb6795c4edb03d0fa9145b5f78f14124f4c902e60c895da666033b5d2b7c7d8e"
+    },
+    {
+      "file": "mobile-chromium-repair-hosted-closing.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "baf9cc416bbe4d5a99342d22713f7b6933c26f9dad3e612a18a3e3d4efe12ada",
+      "deliveredSha256": "cd9e952c4754f0005684de5daa04086cc0756ad9dbc10e9033e8aabeb41a257f"
+    },
+    {
+      "file": "mobile-chromium-repair-hosted-gift.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "fcdca4904473d0e0b507fa156cb709f87e176082a64e1f2a2269f57715ee2c90",
+      "deliveredSha256": "5e949b8961c7fc8a0eca33c7114e0f0a38262690be643a0f62e6b82bb5005e73"
+    },
+    {
+      "file": "mobile-chromium-repair-hosted-rsvp.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "7a1d8234f1e5fda9b7e9be396b70710d3e66ea73a290107eea1b3517c8dc9f02",
+      "deliveredSha256": "48b35bad4f0119696920f5d9a9bd7e52605d72452b174496c626cf90c1b0d43c"
+    },
+    {
+      "file": "mobile-chromium-repair-hosted-wishes.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "c2ea18cc0cf7ba121d727ae62b0ed6d91d0e907a32616b12a43c417cfdc4fd5d",
+      "deliveredSha256": "8c9437413c3f76513ffe7a5d8a3fb8f171b58e0b36dc07f1c5e44314a7edff7d"
+    },
+    {
+      "file": "mobile-chromium-repair-invitation.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "a0c354e493f22a867f98b199708df2b0434825fca9143819f306adfcd245d2b6",
+      "deliveredSha256": "16997146c8a55822594d921df58ca377bc2bb870cd147c7592950c7641c9b229"
+    },
+    {
+      "file": "mobile-chromium-repair-rsvp.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "10574660047fa5844b560772eb735a93fe6bcf98b778e6c5be41448fd6de515c",
+      "deliveredSha256": "a908aae3e754b69970286c00d0ea0412ec6fcd70c3327c38b4edaaf9ad38b0db"
+    },
+    {
+      "file": "mobile-chromium-repair-schedule.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "6d40921f2e27e94fed67b5e1360611f7d68384d4a9d4cb2a2993920b22cbf867",
+      "deliveredSha256": "a5f97348b7752a133a5da8d154132e1f31b35a85fca8048c562c5a93f4dfa0df"
+    },
+    {
+      "file": "mobile-chromium-repair-transition.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "0291d3347c3cd5658cd5250b7b0d84cf9c9d7a04c2c8af5cf778193229b04e83",
+      "deliveredSha256": "68b7217c454bba4cc68832025f7ae97b03f74790e21af49234f54d9a63fb0a7b"
+    },
+    {
+      "file": "mobile-chromium-repair-venue.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "71ee1393e43f1d2345b3a08b83e594a98e23983e674a399fe05df463ed32c83a",
+      "deliveredSha256": "cb7dc30d1e255287d7fe45fa65fc0eca9559ad8aaacd97bd75bbdabaa43a7d62"
+    },
+    {
+      "file": "mobile-chromium-repair-video-beginning.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "94444fa6d6ff3f22ca9d78efd94a0b60d15433d39284ae7606935bdd6f3a490a",
+      "deliveredSha256": "25da5d327287dbd27a2846442c896f901267d63f313a84ce3b87c833e49c8f9b"
+    },
+    {
+      "file": "mobile-chromium-repair-video-footer.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "94444fa6d6ff3f22ca9d78efd94a0b60d15433d39284ae7606935bdd6f3a490a",
+      "deliveredSha256": "25da5d327287dbd27a2846442c896f901267d63f313a84ce3b87c833e49c8f9b"
+    },
+    {
+      "file": "mobile-chromium-soundtrack-gold-exit.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "7c0d13d83eb5ab7e084ce43ba74b8ce432a389a5b50092fc60042829f7eca7f2",
+      "deliveredSha256": "96d8c4ffb73890bd8868db9205aa30d5f36c6f7a163445aacdc79d88dc9bfa1c"
+    },
+    {
+      "file": "mobile-chromium-soundtrack-information.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "22e679d381ec85b14427e62da8e6f7547393345aa180b651d0111cde6e97008d",
+      "deliveredSha256": "8db0af87a68d01c18f5fa87e5a3e38427b6cf6ca8e624e83ab57105c642adc94"
+    },
+    {
+      "file": "mobile-chromium-soundtrack-locked-video.png",
+      "capturedPixels": [
+        1024,
+        2216
+      ],
+      "deliveredPixels": [
+        372,
+        806
+      ],
+      "rawSha256": "415381e1eac5956b059d1cd27a19cad964f048973688cd79a3196e74f0feed52",
+      "deliveredSha256": "a59882c45a87af4ae4ed2bd8b5b1945784530ff1d695afaa43e6172c1a0c8414"
+    },
+    {
+      "file": "mobile-chromium-studio.png",
+      "capturedPixels": [
+        3780,
+        2520
+      ],
+      "deliveredPixels": [
+        1375,
+        916
+      ],
+      "rawSha256": "a57e056ed61683cf6c745075b26350481699cb6a52b1eafee29e20f2e844739a",
+      "deliveredSha256": "3ca3271c46c3e91e1988379ae1fcba0cd19c109e404ac9bf6e6e88788b9a52b6"
+    }
+  ]
+}

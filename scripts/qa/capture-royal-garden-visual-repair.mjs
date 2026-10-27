@@ -4,14 +4,14 @@ import process from 'node:process';
 
 // Catalog geometry evidence only. Protected media and persistence use the E2E
 // fixtures in royal-garden-v3.spec.js, not this empty-catalog route fallback.
-const out = 'docs/design/royal-garden-visual-repair';
+const out = process.env.ROYAL_EVIDENCE_DIR || 'docs/design/royal-garden-visual-repair/final-steering';
 await mkdir(`${out}/evidence`, { recursive: true });
 const browser = await chromium.launch();
 const records = [];
 const selectors = {
   cover: ['.rg-entrance-stage', '.rg-entrance-photo', '.rg-entrance-photo .cover-bg-root', '.rg-entrance-lettering', '.rg-entrance-names', '.rg-royal-guest', '.rg-guest-frame', '.rg-open'],
   video: ['.rg-video-section', '.cinematic-film-frame', '.cinematic-film-frame video', '.rg-video-monogram', '.rg-video-calligraphy', '.cinematic-playback-actions', '.cinematic-film-controls', '.cinematic-film-footer'],
-  information: ['.rg-information-background', '.rg-content-scroll', '.rg-section--family', '.rg-section--invitation', '.rg-ceremonial-monogram', '.rg-bottom-nav'],
+  information: ['.rg-information-background', '.rg-content-scroll', '.rg-section--family', '#rg-family h2', '.rg-family', '.rg-section--invitation', '#rg-invitation .rg-copy', '.rg-ceremonial-monogram', '.rg-bottom-nav'],
 };
 try {
   for (const [width, height] of [[390, 844], [512, 900]]) for (const lang of ['km', 'en']) {
@@ -22,6 +22,9 @@ try {
     async function capture(name, list) {
       await page.evaluate(() => document.fonts.ready);
       await page.locator('.rg-royal-arch img,.rg-information-background img,.rg-entrance-photo img,.cinematic-film-footer img').evaluateAll(images => Promise.all(images.map(img => img.decode().catch(() => {}))));
+      // Finish finite Web Animations before measuring; CSS screenshot handling
+      // alone does not settle the section observer's native animate() reveal.
+      await page.evaluate(() => document.getAnimations().filter(animation => Number.isFinite(animation.effect?.getTiming().iterations)).forEach(animation => animation.finish()));
       record.scenes[name] = await page.evaluate(sels => Object.fromEntries(sels.map(selector => {
         const element = document.querySelector(selector); if (!element) return [selector, null];
         const r = element.getBoundingClientRect(), s = getComputedStyle(element);
@@ -39,7 +42,7 @@ try {
       await new Promise(resolve => { video.addEventListener('seeked', resolve, { once: true }); video.currentTime = .5; });
     });
     await capture('video', selectors.video);
-    await page.locator('.cinematic-playback-actions button').last().click();
+    await page.locator('.cinematic-playback-actions > button').click();
     await page.locator('[data-stage=CONTENT]').waitFor();
     await page.locator('.rg-content-scroll').evaluate(node => node.scrollTo({ top: 0, behavior: 'instant' }));
     await capture('information', selectors.information);

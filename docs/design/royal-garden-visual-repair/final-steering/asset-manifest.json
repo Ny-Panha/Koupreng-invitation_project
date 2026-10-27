@@ -1,0 +1,197 @@
+{
+  "preservation": "All supplied source art remains unchanged in the committed original ZIP. No AI regeneration, recoloring, erasure, or source-background removal in this repair.",
+  "archive": {
+    "path": "docs/design/royal-garden-v3/sources/royal-garden-cinematic.zip",
+    "sha256": "0365d8117bd5f8fbe63c72741a5550a88848da5bd5d672e5adcab762fdead514"
+  },
+  "originalArtwork": [
+    {
+      "path": ".cache/royal-garden-v3/sources/ornate_golden_khmer_wedding_frame.webp",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "bytes": 2081186,
+      "sha256": "d3aff3cf60a18f4b559d9a05f7b72f7fd2c6663e8027ca87ea1e5862518753ed",
+      "hasTransparentPixels": false
+    },
+    {
+      "path": ".cache/royal-garden-v3/sources/royal-blue-golden-khmer-footer-4k.webp",
+      "dimensions": [
+        3840,
+        1280
+      ],
+      "bytes": 2616090,
+      "sha256": "2a7e6d62508386442b9014795dd58f1d3c82fa6d01a815d2256b346fa0167102",
+      "hasTransparentPixels": true
+    },
+    {
+      "path": ".cache/royal-garden-v3/sources/royal-blue-golden-khmer-guest-name-frame-4k.webp",
+      "dimensions": [
+        3840,
+        1280
+      ],
+      "bytes": 2549654,
+      "sha256": "b25f940b9ba5a97ac66228f7c0c623b9d579c60222390ef9e81210e76f2816f8",
+      "hasTransparentPixels": true
+    },
+    {
+      "path": ".cache/royal-garden-v3/sources/royal-blue-golden-khmer-information-background-4k.webp",
+      "dimensions": [
+        2160,
+        3840
+      ],
+      "bytes": 8610534,
+      "sha256": "39abb0f508167e27672f7adc148c1c5dbf14a4cde72a97fc3239c933fac96d4f",
+      "hasTransparentPixels": false
+    },
+    {
+      "path": ".cache/royal-garden-v3/sources/royal-garden-golden-save-the-date.webp",
+      "dimensions": [
+        3840,
+        2160
+      ],
+      "bytes": 5949486,
+      "sha256": "3367feb43d8e3f1760a29937098540d58bf8d6fedc1008036b828225ff179a3f",
+      "hasTransparentPixels": true
+    }
+  ],
+  "productionImages": [
+    {
+      "path": "apps/frontend-user/public/templates/royal-garden/v3/effects/butterfly.webp",
+      "dimensions": [
+        160,
+        160
+      ],
+      "bytes": 10580,
+      "sha256": "0fcc192393f7c81f65467dc48d0205350b6b087252ac52487f6c61021ca713f5",
+      "hasTransparentPixels": true
+    },
+    {
+      "path": "apps/frontend-user/public/templates/royal-garden/v3/information/background-640.webp",
+      "dimensions": [
+        640,
+        1138
+      ],
+      "bytes": 282950,
+      "sha256": "9a7801e875302d094cb999a68ba19ebc2314592ac926b92e0d9fc338263a4a01",
+      "hasTransparentPixels": false
+    },
+    {
+      "path": "apps/frontend-user/public/templates/royal-garden/v3/information/background.webp",
+      "dimensions": [
+        1200,
+        2133
+      ],
+      "bytes": 696258,
+      "sha256": "2304ea81c7b12c3b79b290be20e9288a9f483e1830472eb8d4377a527e104e8e",
+      "hasTransparentPixels": false
+    },
+    {
+      "path": "apps/frontend-user/public/templates/royal-garden/v3/opening/arch-640.webp",
+      "dimensions": [
+        640,
+        1137
+      ],
+      "bytes": 166806,
+      "sha256": "5ec54fd91e9b2215de56c3f886c2a08ebb61b169a318975b85688c0758d5bbee",
+      "hasTransparentPixels": false
+    },
+    {
+      "path": "apps/frontend-user/public/templates/royal-garden/v3/opening/arch.webp",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "bytes": 301712,
+      "sha256": "bce4eef06d5d265cac332d70bc88aa4776f0754e610834f65b7456b8d564874e",
+      "hasTransparentPixels": false
+    },
+    {
+      "path": "apps/frontend-user/public/templates/royal-garden/v3/opening/calligraphy-640.webp",
+      "dimensions": [
+        640,
+        360
+      ],
+      "bytes": 138822,
+      "sha256": "ee00c33fbdc0dc4515df7ecf649d940ad382baa99570533dedf8d41121f69c61",
+      "hasTransparentPixels": true
+    },
+    {
+      "path": "apps/frontend-user/public/templates/royal-garden/v3/opening/calligraphy.webp",
+      "dimensions": [
+        1100,
+        619
+      ],
+      "bytes": 333246,
+      "sha256": "7830c98d9f72a569d8d8170685feb10f02bcd3891b7b49248039cbcd6076c340",
+      "hasTransparentPixels": true
+    },
+    {
+      "path": "apps/frontend-user/public/templates/royal-garden/v3/opening/demo-portrait-640.webp",
+      "dimensions": [
+        640,
+        853
+      ],
+      "bytes": 96678,
+      "sha256": "ed603ff9c7efa2fba0ac822f03e03138caee63fb2eeaf4d584ac34b854743e9d",
+      "hasTransparentPixels": false
+    },
+    {
+      "path": "apps/frontend-user/public/templates/royal-garden/v3/ornaments/guest-frame.webp",
+      "dimensions": [
+        960,
+        320
+      ],
+      "bytes": 68856,
+      "sha256": "8176fa6ff650639d260a1852f580c998eaa72186edd6512c433173add128b554",
+      "hasTransparentPixels": true
+    },
+    {
+      "path": "apps/frontend-user/public/templates/royal-garden/v3/video/footer.webp",
+      "dimensions": [
+        960,
+        320
+      ],
+      "bytes": 76036,
+      "sha256": "f00624271fb06f5e938c6d9c7588c1e683fe05f8266304dfc1a537f9afecfc6d",
+      "hasTransparentPixels": true
+    },
+    {
+      "path": "apps/frontend-user/public/templates/royal-garden/v3/video/poster.webp",
+      "dimensions": [
+        576,
+        1024
+      ],
+      "bytes": 47182,
+      "sha256": "ebd25e004806e8aab51074fabe25d8b2b72331ac505f9841fe5ef9b19e0514c7",
+      "hasTransparentPixels": false
+    }
+  ],
+  "processing": {
+    "opening/arch.webp": "Original opaque 941x1672, RGB WebP quality 88, method 6. Entire image retained.",
+    "opening/arch-640.webp": "Same original, Lanczos 640x1137, RGB WebP quality 88, method 6. Entire image retained.",
+    "otherProductionImages": "Retained PR #74 derivatives unchanged. Existing butterfly is original project-generated decorative art, not a replacement for user artwork.",
+    "flowerAndPetals": "CSS samples a floral texture from the intact arch derivative. No source pixel mutation or new generated asset.",
+    "rights": "User-supplied artwork and recording, used as requested. Independent commercial rights are not asserted."
+  },
+  "archQuality": [
+    {
+      "file": "arch.webp",
+      "psnrDb": 33.9,
+      "reference": "Full original at matching delivery size; PSNR is compression evidence, not a visual-fidelity score."
+    },
+    {
+      "file": "arch-640.webp",
+      "psnrDb": 31.69,
+      "reference": "Full original at matching delivery size; PSNR is compression evidence, not a visual-fidelity score."
+    }
+  ],
+  "soundtrack": {
+    "path": "apps/frontend-user/src/assets/music/ថ្ងៃដែលរង់ចាំ.mp3",
+    "bytes": 2704609,
+    "sha256": "35c435374ea9a98a1af1b7f7840d4e2054a959709e96c4a0277d6b16ccb2f27c",
+    "origin": "Existing MUSIC_TRACKS waiting-day entry. User confirmed public-distribution permission on 2026-10-27; independent license verification is not asserted. New defaults only; owner choices and explicit silence preserved."
+  },
+  "framing": "CSS nine-slice of full originals; proportional top/bottom, straight-side repetition; no erasure or regenerated user artwork. Full-stage video cover uses an owner-editable focal position; 3:1 footer overlays the lower stage intact."
+}

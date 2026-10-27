@@ -40,8 +40,13 @@ describe('Royal Garden V3 presentation and compatibility', () => {
     expect(normalizeIntro(input.cinematicIntro)).toMatchObject({ entranceFrame: '', entranceFrameScale: 1.1, coverX: 0 });
     const value = royalGardenPresentation(input);
     expect(value.information).toMatchObject({ background: '', panelOpacity: 0 });
-    expect(value.video).toMatchObject({ fit: 'contain' }); expect(value.video).not.toHaveProperty('src');
+    expect(value.video).toMatchObject({ fit: 'cover' }); expect(value.video).not.toHaveProperty('src');
     expect(value.motion.preset).toBe('subtle');
+  });
+  it.each(['', '/owner-song.mp3'])('keeps an owner music choice %s instead of inheriting the catalog song', musicUrl => {
+    const draft = { templateCode: 'royal-garden-cinematic', couple: { groom: 'Owner', bride: 'Partner' }, musicUrl };
+    expect(draftToTemplate(draft).tpl.musicUrl).toBe(musicUrl);
+    expect(draftToTemplate({ ...draft, musicUrl: undefined, music: musicUrl ? { url: musicUrl } : null }).tpl.musicUrl).toBe(musicUrl);
   });
   it('only takes personalized text from authorized guest context, without retaining a prior guest', () => {
     expect(guestFrameText({ isPersonalizedGuest: true, guestName: 'Guest A' }, true)).toBe('Guest A');
@@ -90,13 +95,20 @@ describe('royal entrance and video recovery', () => {
     expect(screen.queryByRole('dialog')).toBeNull(); expect(stage.querySelector('form')).toBeNull();
     expect(container.querySelector('[data-stage=PRE_WEDDING_VIDEO]')).toBeInTheDocument();
     expect(stage.closest('.rg-paper')).toBeInTheDocument();
-    expect(container.querySelector('#rg-family')).toBeVisible();
+    expect(container.querySelector('#rg-family')).toBeNull();
     expect(container.querySelector('[data-cinematic-content]')).not.toHaveAttribute('hidden');
     expect(stage.querySelector('.cinematic-film-frame .cinematic-film-footer')).toBeNull();
-    expect(within(stage).getByRole('button', { name: 'Continue to invitation' })).toBeEnabled();
-    expect(HTMLMediaElement.prototype.pause).toHaveBeenCalled();
+    expect(within(stage).getByRole('button', { name: 'Skip video' })).toBeEnabled();
+    expect(stage.querySelector('video').muted).toBe(true);
+    const song = container.querySelector('audio'); song.currentTime = 42;
+    expect(container.querySelectorAll('audio')).toHaveLength(1);
+    expect(HTMLMediaElement.prototype.pause.mock.contexts.filter(node => node.tagName === 'AUDIO')).toHaveLength(0);
     if (path === 'skip') fireEvent.click(within(stage).getByRole('button', { name: 'Skip video' }));
     else fireEvent[path](stage.querySelector('video'));
+    expect(container.querySelector('[data-stage=VIDEO_EXITING]')).toBeInTheDocument();
+    expect(container.querySelector('#rg-family')).toBeNull();
+    await act(async () => vi.advanceTimersByTime(750));
+    expect(container.querySelector('audio')).toBe(song); expect(song.currentTime).toBe(42);
     expect(screen.queryByRole('dialog')).toBeNull(); expect(container.querySelector('[data-stage=CONTENT]')).toBeInTheDocument();
     await act(async () => vi.advanceTimersByTime(30000)); expect(screen.queryByRole('dialog')).toBeNull();
   });
@@ -111,18 +123,21 @@ describe('royal entrance and video recovery', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Open invitation' }));
     await act(async () => vi.advanceTimersByTime(900));
     const background = container.querySelector('.rg-information-background');
-    expect(container.querySelector('video').muted).toBe(false);
+    expect(container.querySelector('video').muted).toBe(true);
     fireEvent.ended(container.querySelector('video'));
+    await act(async () => vi.advanceTimersByTime(750));
     expect(container.querySelector('.rg-information-background')).toBe(background);
     fireEvent.click(screen.getByRole('button', { name: 'Replay video' }));
     await act(async () => vi.advanceTimersByTime(1));
     expect(container.querySelector('video')).toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: 'Continue to invitation' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Skip video' }));
+    await act(async () => vi.advanceTimersByTime(750));
     expect(container.querySelector('[data-stage=CONTENT]')).toBeInTheDocument();
   });
   it('uses the optional photo follow-up only when configured', async () => {
     vi.useFakeTimers(); const { container } = show({ followUpPhotos: true }); fireEvent.click(screen.getByRole('button', { name: 'Open invitation' }));
     await act(async () => vi.advanceTimersByTime(900)); fireEvent.ended(screen.getByRole('region', { name: 'Pre-wedding video' }).querySelector('video'));
+    await act(async () => vi.advanceTimersByTime(750));
     expect(container.querySelector('[data-stage=PHOTO_SLIDESHOW]')).toBeInTheDocument();
   });
   it('does not request protected media when reduced motion bypasses the intro', () => {
@@ -133,6 +148,7 @@ describe('royal entrance and video recovery', () => {
     vi.useFakeTimers(); const loadVideo = vi.fn().mockRejectedValue(new Error('403'));
     const { container } = show({ loadVideo }); fireEvent.click(screen.getByRole('button', { name: 'Open invitation' }));
     await act(async () => vi.advanceTimersByTime(900));
+    await act(async () => vi.advanceTimersByTime(750));
     expect(loadVideo).toHaveBeenCalledTimes(1); expect(screen.queryByRole('dialog')).toBeNull(); expect(container.querySelector('[data-stage=CONTENT]')).toBeInTheDocument();
   });
   it('times out an unresolved protected request and aborts it on exit', async () => {
@@ -140,13 +156,14 @@ describe('royal entrance and video recovery', () => {
     const loadVideo = vi.fn(value => { signal = value; return new Promise(() => {}); });
     const { container } = show({ loadVideo }); fireEvent.click(screen.getByRole('button', { name: 'Open invitation' }));
     await act(async () => vi.advanceTimersByTime(900)); await act(async () => vi.advanceTimersByTime(15000));
+    await act(async () => vi.advanceTimersByTime(750));
     expect(signal.aborted).toBe(true); expect(container.querySelector('[data-stage=CONTENT]')).toBeInTheDocument();
   });
   it('waits for a visible tab before starting a prepared film', async () => {
     vi.useFakeTimers(); const hidden = vi.spyOn(document, 'hidden', 'get').mockReturnValue(true);
     show(); fireEvent.click(screen.getByRole('button', { name: 'Open invitation' }));
-    await act(async () => vi.advanceTimersByTime(900)); expect(HTMLMediaElement.prototype.play).not.toHaveBeenCalled();
+    await act(async () => vi.advanceTimersByTime(900)); expect(HTMLMediaElement.prototype.play.mock.contexts.filter(node => node.tagName === 'VIDEO')).toHaveLength(0);
     hidden.mockReturnValue(false); act(() => document.dispatchEvent(new Event('visibilitychange')));
-    expect(HTMLMediaElement.prototype.play).toHaveBeenCalledTimes(1);
+    expect(HTMLMediaElement.prototype.play.mock.contexts.filter(node => node.tagName === 'VIDEO')).toHaveLength(1);
   });
 });

@@ -339,11 +339,12 @@ function LegacyCinematicVideoOpening({
 
 
 // Reuses the cinematic player for the optional, server-authorized post-cover stage.
-function CinematicPlayback({ loadVideo, videoUrl, posterUrl, presentation, english = false, onOpen }) {
+function CinematicPlayback({ loadVideo, videoUrl, posterUrl, presentation, exiting = false, alwaysMuted = false, english = false, onOpen }) {
   const locale = useInvitationLocale();
   const video = useRef(null), onFinish = useRef(onOpen), recovery = useRef(null);
   const [source, setSource] = useState(videoUrl || "");
-  const [muted, setMuted] = useState(presentation?.sound !== 'on'), [paused, setPaused] = useState(false);
+  const lockSound = presentation?.royal === true || alwaysMuted;
+  const [muted, setMuted] = useState(lockSound || presentation?.sound !== 'on'), [paused, setPaused] = useState(false);
   const [status, setStatus] = useState("loading"), [progressValue, setProgressValue] = useState(0);
   useEffect(() => { onFinish.current = onOpen; }, [onOpen]);
   const royal = presentation?.royal === true;
@@ -361,11 +362,12 @@ function CinematicPlayback({ loadVideo, videoUrl, posterUrl, presentation, engli
     const element = video.current;
     recovery.current = setTimeout(() => onFinish.current?.(), 15000);
     if (source && element) {
-      element.defaultMuted = presentation?.sound !== 'on'; element.muted = presentation?.sound !== 'on';
+      element.defaultMuted = lockSound || presentation?.sound !== 'on'; element.muted = lockSound || presentation?.sound !== 'on';
       if (!document.hidden) element.play().catch(error => { clearTimeout(recovery.current); if (error?.name === 'AbortError' && element.paused) { setPaused(true); setStatus('ready'); } else setStatus('blocked'); });
     }
     return () => { clearTimeout(recovery.current); element?.pause(); };
-  }, [source, presentation?.sound]);
+  }, [source, presentation?.sound, lockSound]);
+  useEffect(() => { if (exiting) { video.current?.pause(); clearTimeout(recovery.current); } }, [exiting]);
   useEffect(() => {
     const element = video.current;
     let resumeOnVisible = Boolean(source && document.hidden);
@@ -386,22 +388,30 @@ function CinematicPlayback({ loadVideo, videoUrl, posterUrl, presentation, engli
     if (video.current?.paused) video.current.play().then(() => setPaused(false)).catch(() => setStatus('blocked'));
     else { video.current?.pause(); clearTimeout(recovery.current); setPaused(true); }
   };
-  if (royal) return <div className="cinematic-playback cinematic-playback--royal" data-footer={presentation.footer !== false} data-transition={presentation?.transition}>
-    <div className="cinematic-film-frame"><video ref={video} src={source || undefined} poster={posterUrl || undefined} muted={muted} playsInline preload="metadata" style={{ objectFit: presentation.fit === 'cover' ? 'cover' : 'contain' }} aria-label={copy('Pre-wedding video', 'វីដេអូមុនអាពាហ៍ពិពាហ៍')} onPlaying={progress} onTimeUpdate={progress} onEnded={onOpen} onError={onOpen} onPause={() => setPaused(true)} /></div>
-    <div className="cinematic-playback-actions"><button type="button" disabled={!source} onClick={() => setMuted(value => !value)} aria-pressed={!muted} aria-label={muted ? copy('Enable sound', 'បើកសំឡេង') : copy('Mute video', 'បិទសំឡេង')} title={muted ? copy('Enable sound', 'បើកសំឡេង') : copy('Mute video', 'បិទសំឡេង')}>{muted ? <VolumeX size={19} aria-hidden="true" /> : <Volume2 size={19} aria-hidden="true" />}</button><button type="button" onClick={onOpen} aria-label={copy('Skip video', 'រំលងវីដេអូ')} title={copy('Skip video', 'រំលងវីដេអូ')}><SkipForward size={19} aria-hidden="true" /></button></div>
-    <div className="cinematic-film-controls"><button type="button" disabled={!source} onClick={togglePause} aria-label={paused ? copy('Play video', 'ចាក់វីដេអូ') : copy('Pause video', 'ផ្អាកវីដេអូ')} title={paused ? copy('Play video', 'ចាក់វីដេអូ') : copy('Pause video', 'ផ្អាកវីដេអូ')}>{paused ? <Play size={19} aria-hidden="true" /> : <Pause size={19} aria-hidden="true" />}</button>{presentation.replay && <button type="button" disabled={!source} aria-label={copy('Replay video', 'ចាក់វីដេអូឡើងវិញ')} title={copy('Replay video', 'ចាក់វីដេអូឡើងវិញ')} onClick={() => { if (video.current) { video.current.currentTime = 0; setProgressValue(0); video.current.play().catch(() => setStatus('blocked')); } }}><RotateCcw size={19} aria-hidden="true" /></button>}<button type="button" className="cinematic-continue" onClick={onOpen} aria-label={copy('Continue to invitation', 'បន្តទៅធៀបអញ្ជើញ')} title={copy('Continue to invitation', 'បន្តទៅធៀបអញ្ជើញ')}><ChevronRight size={20} aria-hidden="true" /></button></div>
-    <progress className="cinematic-film-progress" max="1" value={progressValue} aria-label={copy('Video progress', 'ដំណើរការវីដេអូ')} />
-    {['loading', 'blocked'].includes(status) && <p className="cinematic-film-status" role="status">{status === 'blocked' ? copy('Tap play, or continue to the invitation.', 'សូមចុចចាក់ ឬបន្តទៅធៀបអញ្ជើញ។') : copy('Preparing your film…', 'កំពុងរៀបចំវីដេអូ…')}</p>}
-    {status === 'blocked' && <button className="cinematic-film-play" type="button" aria-label={copy('Play video', 'ចាក់វីដេអូ')} onClick={() => video.current?.play().catch(() => onFinish.current?.())}><Play size={28} aria-hidden="true" /></button>}
+  if (royal) return <div className="cinematic-playback cinematic-playback--royal" data-footer={presentation.footer !== false} data-transition={presentation?.transition} data-exiting={exiting}>
+    <div className="cinematic-film-frame">
+      {posterUrl && presentation.fit === 'contain' && <img className="cinematic-film-backdrop" src={posterUrl} alt="" aria-hidden="true" />}
+      <video ref={video} src={source || undefined} poster={posterUrl || undefined} muted playsInline preload="metadata" style={{ objectFit: presentation.fit === 'contain' ? 'contain' : 'cover', objectPosition: `${presentation.positionX ?? 50}% ${presentation.positionY ?? 40}%` }} aria-label={copy('Pre-wedding video', 'វីដេអូមុនអាពាហ៍ពិពាហ៍')} onPlaying={progress} onTimeUpdate={progress} onEnded={onOpen} onError={onOpen} onPause={() => setPaused(true)} onVolumeChange={event => { if (!event.currentTarget.muted) event.currentTarget.muted = true; }} />
+    </div>
+    <div className="cinematic-playback-actions" inert={exiting || undefined}>
+      <button type="button" onClick={onOpen} aria-label={copy('Skip video', 'រំលងវីដេអូ')} title={copy('Skip video', 'រំលងវីដេអូ')}><SkipForward size={19} aria-hidden="true" /></button>
+      {status !== 'blocked' && <div className="cinematic-film-controls">
+        <button type="button" disabled={!source} onClick={togglePause} aria-label={paused ? copy('Play video', 'ចាក់វីដេអូ') : copy('Pause video', 'ផ្អាកវីដេអូ')} title={paused ? copy('Play video', 'ចាក់វីដេអូ') : copy('Pause video', 'ផ្អាកវីដេអូ')}>{paused ? <Play size={19} aria-hidden="true" /> : <Pause size={19} aria-hidden="true" />}</button>
+        {paused && presentation.replay && <button type="button" disabled={!source} aria-label={copy('Replay video', 'ចាក់វីដេអូឡើងវិញ')} title={copy('Replay video', 'ចាក់វីដេអូឡើងវិញ')} onClick={() => { if (video.current) { video.current.muted = true; video.current.currentTime = 0; setProgressValue(0); video.current.play().catch(() => setStatus('blocked')); } }}><RotateCcw size={19} aria-hidden="true" /></button>}
+      </div>}
+    </div>
+    {['loading', 'blocked'].includes(status) && !exiting && <p className="cinematic-film-status" role="status">{status === 'blocked' ? copy('Tap Play video, or Skip.', 'សូមចុចចាក់វីដេអូ ឬរំលង។') : copy('Preparing your film…', 'កំពុងរៀបចំវីដេអូ…')}</p>}
+    {status === 'blocked' && !exiting && <button className="cinematic-film-play" type="button" aria-label={copy('Play video', 'ចាក់វីដេអូ')} onClick={() => video.current?.play().catch(() => onFinish.current?.())}><Play size={28} aria-hidden="true" /></button>}
     {presentation.footer && <img className="cinematic-film-footer" src={presentation.footerSrc} alt="" width="960" height="320" onError={event => { event.currentTarget.hidden = true; }} />}
+    {exiting && <div className="cinematic-gold-reveal" aria-hidden="true" />}
   </div>;
   return <div className={`cinematic-playback${royal ? ' cinematic-playback--royal' : ''}`} data-transition={presentation?.transition}>
     <div className="cinematic-playback-actions">
-      <button type="button" disabled={!source} onClick={() => setMuted(value => !value)} aria-pressed={!muted}>{muted ? copy("Enable sound", "បើកសំឡេង") : copy("Mute video", "បិទសំឡេង")}</button>
+      {!lockSound && <button type="button" disabled={!source} onClick={() => setMuted(value => !value)} aria-pressed={!muted}>{muted ? copy("Enable sound", "បើកសំឡេង") : copy("Mute video", "បិទសំឡេង")}</button>}
       <button type="button" onClick={onOpen}>{copy("Skip video", "រំលងវីដេអូ")} <SkipForward size={18} aria-hidden="true" /></button>
     </div>
     <div className="cinematic-film-frame">
-      <video ref={video} src={source || undefined} poster={posterUrl || undefined} muted={muted} playsInline preload="metadata"
+      <video ref={video} src={source || undefined} poster={posterUrl || undefined} muted={lockSound || muted} playsInline preload="metadata"
         style={{ objectFit: presentation?.fit === 'cover' ? 'cover' : 'contain' }}
         aria-label={copy("Pre-wedding video", "វីដេអូមុនអាពាហ៍ពិពាហ៍")} onPlaying={progress} onTimeUpdate={progress} onEnded={onOpen} onError={onOpen} onPause={() => setPaused(true)} />
     </div>

@@ -50,10 +50,11 @@ export function royalGardenPresentation(content = {}) {
       butterfly: effects.butterfly === true, goldDust: effects.goldDust !== false,
     },
     video: {
-      royal, fit: pick(video.fit, ['contain', 'cover'], 'contain'), footerSrc: ROYAL_ASSETS.footer,
+      royal, fit: pick(video.fit, ['contain', 'cover'], 'cover'), footerSrc: ROYAL_ASSETS.footer,
+      positionX: bounded(video.positionX, 0, 100, 50), positionY: bounded(video.positionY, 0, 100, 40),
       footer: video.footer !== false, replay: video.replay !== false,
       transition: pick(video.transition, ['fade', 'none'], 'fade'),
-      sound: pick(video.sound, ['muted', 'on'], 'muted'),
+      sound: royal ? 'muted' : pick(video.sound, ['muted', 'on'], 'muted'),
       endBehavior: pick(video.endBehavior, ['collapse', 'poster'], 'collapse'),
       followUpPhotos: video.followUpPhotos === true,
       resumeMusic: video.resumeMusic !== false,

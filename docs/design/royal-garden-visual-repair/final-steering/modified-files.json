@@ -1,0 +1,24 @@
+{
+  "testedStartingMain": "0a3f167bd7973ac54bb7ab4b8fe0b19f1f85bce6",
+  "files": [
+    "apps/frontend-user/src/features/invitations/studio/CinematicIntroEditor.jsx",
+    "apps/frontend-user/src/features/invitations/studio/PreWeddingVideoEditor.jsx",
+    "apps/frontend-user/src/features/templates/data/templatesData.js",
+    "apps/frontend-user/src/features/templates/layouts/RoyalGardenCinematic/RoyalGardenCinematicLayout.jsx",
+    "apps/frontend-user/src/features/templates/layouts/RoyalGardenCinematic/RoyalGardenCinematicLayout.test.jsx",
+    "apps/frontend-user/src/features/templates/layouts/RoyalGardenCinematic/RoyalGardenV3.test.jsx",
+    "apps/frontend-user/src/features/templates/layouts/RoyalGardenCinematic/components/RoyalGardenInformationScene.jsx",
+    "apps/frontend-user/src/features/templates/layouts/RoyalGardenCinematic/hooks/useIntroSequence.js",
+    "apps/frontend-user/src/features/templates/layouts/RoyalGardenCinematic/model/royalGardenPresentation.js",
+    "apps/frontend-user/src/features/templates/layouts/RoyalGardenCinematic/royal-garden-scenes.css",
+    "apps/frontend-user/src/features/templates/shared/Openings/CinematicOpeningProvider.jsx",
+    "apps/frontend-user/src/features/templates/shared/Openings/CinematicVideoOpening.css",
+    "apps/frontend-user/src/features/templates/shared/Openings/CinematicVideoOpening.jsx",
+    "apps/frontend-user/src/features/wedding-builder/utils/draftToTemplate.js",
+    "apps/frontend-user/tests/e2e/royal-garden-v3.spec.js",
+    "scripts/qa/capture-royal-garden-visual-repair.mjs",
+    "scripts/qa/compare-royal-garden-visual-repair.py",
+    "scripts/qa/measure-royal-garden-ui-repair.mjs",
+    "scripts/qa/package-royal-garden-ui-evidence.py"
+  ]
+}

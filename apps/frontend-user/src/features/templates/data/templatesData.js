@@ -1,5 +1,6 @@
 import musicWaitingDay from "../../../assets/music/ថ្ងៃដែលរង់ចាំ.mp3";
 import musicInstrumental from "../../../assets/music/Instrumental Wedding Music (VioSounds Cover).m4a";
+import { getMusicTrack } from '../../../shared/data/musicTracks';
 
 export const KEEP_TEMPLATE_CODE = "silk-heritage";
 export const KHMER_CELESTIAL_TEMPLATE_CODE = "khmer-celestial";
@@ -622,7 +623,7 @@ export const ROYAL_GARDEN_CINEMATIC_TEMPLATE = {
     mainImage: '/templates/silk-heritage/portrait.webp', phoneCoverImage: '/templates/silk-heritage/portrait.webp',
     image: '/templates/royal-garden/ivory.svg', coverBackgroundImage: '',
     gallery: [{ src: '/templates/silk-heritage/portrait.webp', alt: 'Licensed demonstration wedding portrait' }, { src: '/templates/silk-heritage/together.webp', alt: 'Licensed demonstration newlyweds outdoors' }],
-    music: { url: '' }, musicUrl: '', openingStyle: 'royal-garden-oval', bg: '#f1ede6', paper: '#f1ede6', color: '#98703a', accent: '#c7984d',
+    music: { url: getMusicTrack('waiting-day').url }, musicUrl: getMusicTrack('waiting-day').url, openingStyle: 'royal-garden-oval', bg: '#f1ede6', paper: '#f1ede6', color: '#98703a', accent: '#c7984d',
     description: 'ធៀបអញ្ជើញខ្មែរពណ៌ភ្លុក និងមាស ជាមួយការបើកធៀបរាងពងក្រពើ រូបភាពបែបភាពយន្ត និងកម្មវិធីមង្គលការ។',
     schedule: [
       { id: 'blessings', time: '05:00', title: 'ពិធីក្រុងពាលី', titleEn: 'Traditional blessing' },
@@ -641,7 +642,7 @@ export const ROYAL_GARDEN_CINEMATIC_TEMPLATE = {
     apologyTitle: 'លិខិតសូមអភ័យទោស',
     apologyText: 'យើងខ្ញុំជាមាតាបិតា កូនប្រុស - កូនស្រី សូមអភ័យទោសក្នុងករណីពុំបានជូនសំបុត្រអញ្ជើញដោយផ្ទាល់។ សូមឯកឧត្តម លោកជំទាវ លោកអ្នកឧកញ៉ា អ្នកឧកញ៉ា លោក លោកស្រី អ្នកនាង កញ្ញា អញ្ជើញចូលរួមជាអធិបតី និងជាភ្ញៀវកិត្តិយស ក្នុងពិធីរៀបអាពាហ៍ពិពាហ៍ កូនប្រុស - កូនស្រី របស់យើងខ្ញុំ ដោយមេត្រីភាព។',
     saveTheDate: { enabled: true, heading: 'រាប់ថយក្រោយដល់ថ្ងៃមង្គល', showCountdown: true, showAddToCalendar: true, showCalendar: false, showTime: false, countdownStyle: 'circles' },
-    cinematicIntro: { version: 1, style: 'royal-arch', titleMode: 'text', duration: 4.3 },
+    cinematicIntro: { version: 1, style: 'royal-arch', titleMode: 'artwork', duration: 4.3 },
     informationScene: { enabled: true, fixedBackground: true, motionPreset: 'subtle', effects: { sparkles: true, petals: true, goldDust: true, butterfly: true } },
     enabledSections: { story: false, party: false, faq: false, dressCode: false, gift: false, countdown: true, schedule: true, gallery: true, rsvp: true },
     design: { presetId: 'ROYAL_GARDEN_CINEMATIC', primaryColor: '#98703a', secondaryColor: '#c7984d', backgroundColor: '#f1ede6', openingStyle: 'royal-garden-oval' },
