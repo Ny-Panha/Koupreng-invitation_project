@@ -18,7 +18,7 @@ import {
 function draft() {
     return {
         id: "draft-1",
-        templateId: "garden-royal-khmer-wedding",
+        templateId: "silk-heritage",
         couple: { groom: "សុវណ្ណ", bride: "មាលា" },
         event: { date: "2026-12-12", ceremonyTime: "07:00", venueName: "ភ្នំពេញ" },
         opening: {
@@ -129,7 +129,7 @@ describe("invitation draft adapters", () => {
             eventDate: "2026-12-12",
             venueName: "ភ្នំពេញ",
             designJson: JSON.stringify({
-                templateId: "garden-royal-khmer-wedding",
+                templateId: "silk-heritage",
                 openingStyle: "paper",
                 openingVideoUrl: "https://configured.example/opening.mp4",
                 openingOverlayOpacity: 0.62,

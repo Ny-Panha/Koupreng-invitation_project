@@ -16,7 +16,7 @@ function setReducedMotion(matches) {
 
 function content(overrides = {}) {
     return {
-        variant: "garden-royal-khmer-wedding",
+        variant: "silk-heritage",
         amp: "&",
         badge: "",
         enabledSections: {
@@ -68,7 +68,7 @@ function content(overrides = {}) {
     };
 }
 
-const tpl = { id: "garden-royal-khmer-wedding", name: "Garden Royal" };
+const tpl = { id: "koupreng-demo-wedding", name: "Koupreng Demo" };
 
 function renderExperience(props = {}) {
     return render(
@@ -455,7 +455,7 @@ describe("Modular Block CMS appending in TemplateExperience", () => {
         const view = render(
             <MemoryRouter>
                 <TemplateExperience
-                    tpl={{ id: "garden-royal-khmer-wedding", sections: customBlocks }}
+                    tpl={{ id: "koupreng-demo-wedding", sections: customBlocks }}
                     content={content({ sections: customBlocks })}
                     preview={true}
                 />
@@ -488,7 +488,7 @@ describe("Modular Block CMS appending in TemplateExperience", () => {
         const view = render(
             <MemoryRouter>
                 <TemplateExperience
-                    tpl={{ id: "garden-royal-khmer-wedding", description: jsonDescription }}
+                    tpl={{ id: "koupreng-demo-wedding", description: jsonDescription }}
                     preview={true}
                 />
             </MemoryRouter>
@@ -528,7 +528,7 @@ describe("Modular Block CMS appending in TemplateExperience", () => {
         const view = render(
             <MemoryRouter>
                 <TemplateExperience
-                    tpl={{ id: "garden-royal-khmer-wedding", sections: unifiedSections }}
+                    tpl={{ id: "koupreng-demo-wedding", sections: unifiedSections }}
                     content={content({
                         sections: unifiedSections,
                         gallery: testGallery,

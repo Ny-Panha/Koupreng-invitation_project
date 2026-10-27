@@ -1,0 +1,68 @@
+[
+  {
+    "comparison": "intro page.jpg",
+    "pixels": [
+      820,
+      940
+    ],
+    "cropBoxes": {
+      "left": [
+        0,
+        38,
+        400,
+        741
+      ],
+      "right": [
+        410,
+        38,
+        810,
+        749
+      ]
+    },
+    "normalization": "Proportional fit into 390x844; no stretched source geometry. Bounding percentages use each cropped scene."
+  },
+  {
+    "comparison": "pre-wedding.jpg",
+    "pixels": [
+      820,
+      940
+    ],
+    "cropBoxes": {
+      "left": [
+        0,
+        38,
+        400,
+        731
+      ],
+      "right": [
+        410,
+        38,
+        810,
+        904
+      ]
+    },
+    "normalization": "Proportional fit into 390x844; no stretched source geometry. Bounding percentages use each cropped scene."
+  },
+  {
+    "comparison": "more info page.jpg",
+    "pixels": [
+      820,
+      940
+    ],
+    "cropBoxes": {
+      "left": [
+        0,
+        38,
+        400,
+        725
+      ],
+      "right": [
+        410,
+        38,
+        810,
+        904
+      ]
+    },
+    "normalization": "Proportional fit into 390x844; no stretched source geometry. Bounding percentages use each cropped scene."
+  }
+]

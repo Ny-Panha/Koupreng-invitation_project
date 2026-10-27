@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { getLocalizedTemplateFormFlow, getTemplateFormFlow } from "./templateFormFlowConfig";
 
 describe("templateFormFlowConfig", () => {
-  it.each(["khmer-celestial", "garden-royal-khmer-wedding", "template-boilerplate"])("localizes %s editor labels independently of invitation content", template => {
+  it.each(["khmer-celestial", "template-boilerplate"])("localizes %s editor labels independently of invitation content", template => {
     const en = getLocalizedTemplateFormFlow(template, "en");
     const km = getLocalizedTemplateFormFlow(template, "km");
     expect(en.sectionOrder).toEqual(km.sectionOrder);
@@ -35,12 +35,5 @@ describe("templateFormFlowConfig", () => {
     expect(celestialConfig.hasBackgroundImage).toBe(true);
     expect(celestialConfig.hasCoverImage).toBe(false);
     expect(celestialConfig.hasGate).toBe(false);
-  });
-
-  it("configures garden-royal-khmer-wedding with 2 fields: Cover and Full Background", () => {
-    const gardenConfig = getTemplateFormFlow("garden-royal-khmer-wedding");
-    expect(gardenConfig.hasCoverImage).toBe(true);
-    expect(gardenConfig.hasCoverBackgroundImage).toBe(false);
-    expect(gardenConfig.hasBackgroundImage).toBe(true);
   });
 });

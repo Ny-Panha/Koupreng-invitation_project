@@ -1,10 +1,9 @@
 import musicWaitingDay from "../../../assets/music/ថ្ងៃដែលរង់ចាំ.mp3";
 import musicInstrumental from "../../../assets/music/Instrumental Wedding Music (VioSounds Cover).m4a";
 
-export const KEEP_TEMPLATE_CODE = "garden-royal-khmer-wedding";
+export const KEEP_TEMPLATE_CODE = "silk-heritage";
 export const KHMER_CELESTIAL_TEMPLATE_CODE = "khmer-celestial";
 export const SILK_HERITAGE_TEMPLATE_CODE = "silk-heritage";
-export const KHMER_ROYAL_LOTUS_TEMPLATE_CODE = "khmer-royal-lotus";
 export const ROYAL_KHMER_TEMPLATE_CODE = "royal-khmer-wedding";
 export const KHMER_GOLDEN_CANVA_INSPIRED_CODE = "khmer-golden-canva-inspired-wedding";
 export const COVER_KHMER_GOLDEN_CODE = "cover-khmer-golden-wedding";
@@ -78,33 +77,6 @@ function withTemplateMedia(template, cardFolder = "03-card") {
     };
 }
 
-const KEPT_TEMPLATE = withTemplateMedia({
-    id: KEEP_TEMPLATE_CODE,
-    name: "សួនរាជហង្សខ្មែរ",
-    style: "Garden Royal Khmer Wedding",
-    category: "ancient",
-    popular: true,
-    image: "/facebook/all/03-card/cover-card.jpg",
-    mainImage: "/facebook/all/03-card/cover-card.jpg",
-    phoneCoverImage: "/facebook/all/03-card/cover-card.jpg",
-    music: { url: musicWaitingDay },
-    groom: "",
-    bride: "",
-    dateText: "ថ្ងៃសៅរ៍ ទី២៨ ខែវិច្ឆិកា ឆ្នាំ២០២៦",
-    targetDate: "2026-11-28T17:00:00+07:00",
-    ceremonyTime: "០៧:០០",
-    receptionTime: "១៧:០០",
-    venueName: "ដឹប្រីមៀលែនដ៍ សែនសុខ",
-    venueAddress: "អគារ A ភ្នំពេញ",
-    mapQuery: "The Premier Land Sen Sok Phnom Penh Cambodia",
-    bg: "#DFF4FF",
-    paper: "#FFFDF7",
-    color: "#D6A63C",
-    accent: "#2D7FA6",
-    dark: "#253F57",
-    label: "GARDEN ROYAL KHMER",
-    description: "គំរូសន្លឹកការរចនាបថសួនផ្កា និងទឹកពណ៌បែបព្រះរាជវង្សខ្មែរ ពណ៌ខៀវស្រាល បៃតង និងមាស។",
-}, "03-card");
 
 export const KHMER_CELESTIAL_TEMPLATE = withTemplateMedia({
     id: KHMER_CELESTIAL_TEMPLATE_CODE,
@@ -221,76 +193,6 @@ export const KHMER_CELESTIAL_TEMPLATE = withTemplateMedia({
     },
 }, "06-card");
 
-export const KHMER_ROYAL_LOTUS_TEMPLATE = withTemplateMedia({
-    id: KHMER_ROYAL_LOTUS_TEMPLATE_CODE,
-    code: KHMER_ROYAL_LOTUS_TEMPLATE_CODE,
-    slug: KHMER_ROYAL_LOTUS_TEMPLATE_CODE,
-    name: "រាជឈូកខ្មែរ",
-    title: "សិរីសួស្តីអាពាហ៍ពិពាហ៍",
-    style: "Khmer Royal Lotus",
-    category: "ancient",
-    popular: true,
-    premium: false,
-    isPremium: false,
-    image: "/facebook/all/01-card/cover-card.jpg",
-    mainImage: "/facebook/all/01-card/cover-card.jpg",
-    phoneCoverImage: "/facebook/all/01-card/cover-card.jpg",
-    music: { url: musicWaitingDay },
-    groom: "",
-    groomEn: "",
-    bride: "",
-    brideEn: "",
-    guestName: "លោកអ្នក និងក្រុមគ្រួសារ",
-    messageTitle: "មានកិត្តិយសសូមគោរពអញ្ជើញ",
-    message: "ចូលរួមជាភ្ញៀវកិត្តិយស ដើម្បីប្រសិទ្ធពរជ័យសិរីសួស្តីមង្គល ជូនកូនប្រុស កូនស្រី របស់យើងខ្ញុំ ក្នុងថ្ងៃដ៏វិសេសវិសាលនេះ។",
-    dateText: "ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦",
-    targetDate: "2026-12-20T17:00:00+07:00",
-    ceremonyTime: "០៦:៣០",
-    receptionTime: "១៧:០០",
-    venueName: "រាជធានីភ្នំពេញ",
-    venueAddress: "សូមកែប្រែទីតាំងក្នុង Wedding Builder",
-    mapQuery: "Phnom Penh Cambodia",
-    bg: "#F5EEDF",
-    paper: "#FFF9EE",
-    color: "#6B1E2B",
-    accent: "#C8A45D",
-    dark: "#321016",
-    label: "KHMER ROYAL LOTUS",
-    description: "គំរូធៀបការខ្មែរបែបប្រណិត ដោយបញ្ចូលអារម្មណ៍ក្រដាសធៀបការបោះពុម្ព ពណ៌ក្រហមទុំ មាសបុរាណ និងភ្លុក ជាមួយប្លង់អានងាយសម្រាប់ទូរសព្ទ។",
-    presetId: "KHMER_ROYAL_LOTUS",
-    openingStyle: "royal-lotus-envelope",
-    gateStyle: "royal-lotus-envelope",
-    hasGate: true,
-    enabledSections: {
-        countdown: true,
-        story: false,
-        schedule: true,
-        map: true,
-        gallery: true,
-        party: false,
-        dressCode: false,
-        gift: true,
-        faq: false,
-        rsvp: true,
-        music: true,
-    },
-    schedule: [
-        { id: "procession", time: "៦:៣០ ព្រឹក", title: "ពិធីហែជំនូន", description: "ជួបជុំញាតិមិត្ត និងហែជំនូនចូលរោងជ័យ" },
-        { id: "rings", time: "៨:០០ ព្រឹក", title: "ពិធីបំពាក់ចិញ្ចៀន", description: "គូស្វាមីភរិយាប្តូរចិញ្ចៀន និងទទួលពរជ័យ" },
-        { id: "hair", time: "៩:៣០ ព្រឹក", title: "ពិធីកាត់សក់បង្កក់សិរី", description: "ទទួលពរជ័យពីមាតាបិតា និងចាស់ទុំ" },
-        { id: "reception", time: "៥:០០ ល្ងាច", title: "ពិធីពិសាភោជនាហារ", description: "ទទួលបដិសណ្ឋារកិច្ចភ្ញៀវកិត្តិយស" },
-    ],
-    design: {
-        presetId: "KHMER_ROYAL_LOTUS",
-        theme: "KHMER_ROYAL_LOTUS",
-        openingStyle: "royal-lotus-envelope",
-        gateStyle: "royal-lotus-envelope",
-        primaryColor: "#6B1E2B",
-        secondaryColor: "#C8A45D",
-        backgroundColor: "#F5EEDF",
-        ornamentTheme: "royal-lotus",
-    },
-}, "01-card");
 
 const ROYAL_KHMER_TEMPLATE = withTemplateMedia({
     id: ROYAL_KHMER_TEMPLATE_CODE,
@@ -739,7 +641,7 @@ export const ROYAL_GARDEN_CINEMATIC_TEMPLATE = {
     apologyTitle: 'លិខិតសូមអភ័យទោស',
     apologyText: 'យើងខ្ញុំជាមាតាបិតា កូនប្រុស - កូនស្រី សូមអភ័យទោសក្នុងករណីពុំបានជូនសំបុត្រអញ្ជើញដោយផ្ទាល់។ សូមឯកឧត្តម លោកជំទាវ លោកអ្នកឧកញ៉ា អ្នកឧកញ៉ា លោក លោកស្រី អ្នកនាង កញ្ញា អញ្ជើញចូលរួមជាអធិបតី និងជាភ្ញៀវកិត្តិយស ក្នុងពិធីរៀបអាពាហ៍ពិពាហ៍ កូនប្រុស - កូនស្រី របស់យើងខ្ញុំ ដោយមេត្រីភាព។',
     saveTheDate: { enabled: true, heading: 'រាប់ថយក្រោយដល់ថ្ងៃមង្គល', showCountdown: true, showAddToCalendar: true, showCalendar: false, showTime: false, countdownStyle: 'circles' },
-    cinematicIntro: { version: 1, style: 'royal-arch', duration: 4.3 },
+    cinematicIntro: { version: 1, style: 'royal-arch', titleMode: 'text', duration: 4.3 },
     informationScene: { enabled: true, fixedBackground: true, motionPreset: 'subtle', effects: { sparkles: true, petals: true, goldDust: true, butterfly: true } },
     enabledSections: { story: false, party: false, faq: false, dressCode: false, gift: false, countdown: true, schedule: true, gallery: true, rsvp: true },
     design: { presetId: 'ROYAL_GARDEN_CINEMATIC', primaryColor: '#98703a', secondaryColor: '#c7984d', backgroundColor: '#f1ede6', openingStyle: 'royal-garden-oval' },
@@ -749,12 +651,10 @@ export const TEMPLATES = [
     SILK_HERITAGE_TEMPLATE,
     ROYAL_GARDEN_CINEMATIC_TEMPLATE,
     KHMER_CELESTIAL_TEMPLATE,
-    KHMER_ROYAL_LOTUS_TEMPLATE,
     THE_DIGITAL_YES_TEMPLATE,
     EMERALD_CANVA_LUXE_TEMPLATE,
     WITHJOY_PORTAL_TEMPLATE,
     BLISS_EDITORIAL_TEMPLATE,
-    KEPT_TEMPLATE,
     ROYAL_KHMER_TEMPLATE,
     COVER_KHMER_GOLDEN_TEMPLATE,
     KHMER_GOLDEN_CANVA_INSPIRED_TEMPLATE,
@@ -797,8 +697,6 @@ export function resolveNumericTemplateId(id) {
     // An authoritative catalog must never be overridden by historical seed IDs.
     if (dynamicTemplates.length) return null;
 
-    if (rawId === KEEP_TEMPLATE_CODE) return 2;
-
     const mappedEntry = Object.entries(DB_TEMPLATE_ID_MAP).find(([, code]) => code === rawId);
     return mappedEntry ? Number(mappedEntry[0]) : null;
 }
@@ -827,19 +725,20 @@ export function getCatalogVersion() {
 const PRESET_TO_VARIANT = {
     SILK_HERITAGE: SILK_HERITAGE_TEMPLATE_CODE,
     KHMER_CELESTIAL: KHMER_CELESTIAL_TEMPLATE_CODE,
-    KHMER_ROYAL_LOTUS: KHMER_ROYAL_LOTUS_TEMPLATE_CODE,
     EMERALD_GREEN: "emerald-canva-luxe-wedding",
     RUBY_RED: KHMER_CELESTIAL_TEMPLATE_CODE,
     ROYAL_KHMER: KHMER_CELESTIAL_TEMPLATE_CODE,
     GOLD_LUXURY: "the-digital-yes-wedding",
     CHAMPAGNE: "cover-khmer-golden-wedding",
     KHMER_GOLDEN: "khmer-golden-canva-inspired-wedding",
-    GARDEN_ROYAL: "garden-royal-khmer-wedding",
 };
 
 export function registerDynamicTemplates(catalogList) {
     if (!Array.isArray(catalogList)) return;
-    dynamicTemplates = catalogList.map(templateFromCatalogItem);
+    const RETIRED_CODES = new Set(["garden-royal-khmer-wedding", "khmer-royal-lotus"]);
+    dynamicTemplates = catalogList
+        .filter((item) => item && !RETIRED_CODES.has(item.code) && !RETIRED_CODES.has(item.slug))
+        .map(templateFromCatalogItem);
     catalogVersion++;
 }
 

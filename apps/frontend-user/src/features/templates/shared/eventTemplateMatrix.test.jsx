@@ -43,6 +43,6 @@ describe('every available template through the public/draft renderer boundary', 
   it('keeps the developer boilerplate explicitly unsupported and preset aliases consistent', () => {
     expect(templateCapabilities({ code: 'template-boilerplate' })).toMatchObject({ schedule: false, saveTheDate: false, calendar: false });
     expect(templateCapabilities({ presetId: 'SILK_HERITAGE' })).toMatchObject({ schedule: true, sectionOrdering: true });
-    expect(templateCapabilities({ code: 'garden-royal-khmer-wedding', id: 2 }).schedule).toBe(true);
+    expect(templateCapabilities({ code: 'silk-heritage', id: 5 }).schedule).toBe(true);
   });
 });

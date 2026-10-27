@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { phase9Fixtures } from './support/phase9Fixtures';
 
-for (const code of ['khmer-celestial', 'garden-royal-khmer-wedding', 'silk-heritage', 'the-digital-yes-wedding', 'emerald-canva-luxe-wedding', 'khmer-royal-lotus', 'khmer-golden-canva-inspired-wedding', 'withjoy-modern-portal', 'bliss-editorial-wedding', 'event-essential']) {
+for (const code of ['khmer-celestial', 'silk-heritage', 'the-digital-yes-wedding', 'emerald-canva-luxe-wedding', 'khmer-golden-canva-inspired-wedding', 'withjoy-modern-portal', 'bliss-editorial-wedding', 'event-essential']) {
   test(`optional cinematic stage preserves ${code} and permits immediate keyboard dismissal`, async ({ page }, info) => {
     const state = await phase9Fixtures(page, { code });
     state.events.set(101, { ...state.events.get(101), cinematicOpening: { enabled: true, videoMediaId: 400 }, status: 'PUBLISHED' });
@@ -62,6 +62,7 @@ test('real browser video is muted, supports sound, ended/error recovery and scop
 });
 
 test('reduced motion bypasses cinematic media entirely', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   const state = await phase9Fixtures(page);
   state.events.set(101, { ...state.events.get(101), cinematicOpening: { enabled: true, videoMediaId: 400 }, status: 'PUBLISHED' });
   const requests = []; page.on('request', request => { if (request.url().endsWith('cinematic-content')) requests.push(request.url()); });

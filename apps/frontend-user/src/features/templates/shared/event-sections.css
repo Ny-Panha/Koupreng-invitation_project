@@ -35,11 +35,9 @@
 .kp-add-calendar:focus-visible,.kp-calendar button:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }
 .kc-root { --kp-accent: var(--kc-gold); --kp-heading: var(--kc-green); --kp-highlight-bg: var(--kc-green); }
 .tpl-silk-heritage { --kp-accent: var(--tpl-secondary); --kp-heading: var(--tpl-primary); --kp-highlight-bg: var(--tpl-primary); }
-.tpl-khmer-royal-lotus { --kp-accent: var(--krl-secondary); --kp-heading: var(--krl-primary); --kp-highlight-bg: var(--krl-primary); }
-.tpl-khmer-royal-lotus .krl-section--burgundy { --kp-heading: var(--krl-white); --kp-highlight-bg: var(--krl-secondary); --kp-highlight-text: var(--krl-ink); }
 .el-container { --kp-accent: var(--el-gold-primary); --kp-highlight-bg: var(--el-gold-primary); --kp-highlight-text: #102c22; }
 .bliss-container { --kp-accent: var(--bliss-charcoal); --kp-highlight-bg: var(--bliss-charcoal); }
-:is(.tpl-silk-heritage,.tpl-khmer-royal-lotus,.kc-root) .kp-countdown--theme .kp-countdown-unit { border-radius: 50%; aspect-ratio: 1; padding: .2rem; }
+:is(.tpl-silk-heritage,.kc-root) .kp-countdown--theme .kp-countdown-unit { border-radius: 50%; aspect-ratio: 1; padding: .2rem; }
 .kp-program-day-title > span { display: block; }
 .kp-save-date,.kp-program { container-type: inline-size; }
 @media (max-width: 374px) { .kp-countdown { gap: .3rem; } .kp-program .kp-timeline li { grid-template-columns: 3.4rem 1rem minmax(0,1fr); } }

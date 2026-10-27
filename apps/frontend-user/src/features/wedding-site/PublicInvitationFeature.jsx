@@ -307,10 +307,11 @@ export default function PublicInvitationPage() {
         const showRsvp = publicDraft.enabledSections?.rsvp !== false;
 
         if (mergedPublicGarden) {
+            const royalGarden = [mergedPublicGarden.tpl?.code, mergedPublicGarden.tpl?.slug, mergedPublicGarden.tpl?.templateCode].includes('royal-garden-cinematic');
             return (
-                <div lang={displayLocale}>
-                {rawDraft.localizedContentV1 && localeContent(rawDraft).enabledLocales.includes('en') && <nav className="public-locale-switch" aria-label="Invitation language">{[['km', '\u1781\u17d2\u1798\u17c2\u179a'], ['en', 'English']].map(([locale, label]) => <button key={locale} type="button" lang={locale} aria-pressed={displayLocale === locale} onClick={() => { const params = new URLSearchParams(searchParams); params.set('lang', locale); setSearchParams(params, { replace: true, preventScrollReset: true }); }}>{label}</button>)}</nav>}
-                {searchParams.get('lang') === 'en' && displayLocale !== 'en' && <p role="status" lang="en">English is not published for this invitation. Showing Khmer.</p>}
+                <div lang={displayLocale} className={royalGarden ? 'public-royal-garden' : undefined}>
+                {!royalGarden && rawDraft.localizedContentV1 && localeContent(rawDraft).enabledLocales.includes('en') && <nav className="public-locale-switch" aria-label="Invitation language">{[['km', '\u1781\u17d2\u1798\u17c2\u179a'], ['en', 'English']].map(([locale, label]) => <button key={locale} type="button" lang={locale} aria-pressed={displayLocale === locale} onClick={() => { const params = new URLSearchParams(searchParams); params.set('lang', locale); setSearchParams(params, { replace: true, preventScrollReset: true }); }}>{label}</button>)}</nav>}
+                {!royalGarden && searchParams.get('lang') === 'en' && displayLocale !== 'en' && <p role="status" lang="en">English is not published for this invitation. Showing Khmer.</p>}
                 <TemplateExperience
                     cinematicOpening={invitation?.cinematicOpening}
                     cinematicLanguage={publicDraft.languageMode}

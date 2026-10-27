@@ -379,31 +379,6 @@ describe("Khmer Celestial Cover Image Fields", () => {
         expect(screen.getAllByText(/ស៊ុមផ្កា ឬរូបភាពផ្ទៃខាងក្រោយ/i).length).toBeGreaterThanOrEqual(1);
     }, 15000);
 
-    it("renders exactly 2 fields for Garden Royal: Cover and Full Background", () => {
-        const gardenInvitation = {
-            id: "wed-garden-test",
-            templateId: "garden-royal-khmer-wedding",
-            title: "Garden Royal Wedding",
-            groomName: "វណ្ណដា",
-            brideName: "ស្រីពេជ្រ",
-        };
-
-        render(
-            <BrowserRouter>
-                <InvitationForm invitation={gardenInvitation} />
-            </BrowserRouter>
-        );
-
-        // 1. Cover field is shown
-        expect(screen.getAllByText(/រូបភាពក្របខាងមុខ/i).length).toBeGreaterThanOrEqual(1);
-
-        // 2. Closed-state cover background (the redundant 3rd field) is hidden
-        expect(screen.queryAllByText(/ផ្ទៃខាងក្រោយគ្របមុខ \(ពេលមិនទាន់បើក\)/i)).toHaveLength(0);
-
-        // 3. Full / Botanical Frame background field is shown
-        expect(screen.getAllByText(/ស៊ុមផ្កា ឬរូបភាពផ្ទៃខាងក្រោយ/i).length).toBeGreaterThanOrEqual(1);
-    }, 15000);
-
     it("restores coverBackgroundImage from draft/invitation designJson upon load", () => {
         const invitationWithCoverBg = {
             id: "wed-cover-bg-test",

@@ -29,6 +29,8 @@ export function normalizeIntro(value = {}) {
     entranceFrameScale: value => bounded(value, .85, 1.1, 1),
     entranceFramePosition: value => ['upper', 'center', 'lower'].includes(value) ? value : 'center',
     guestFrameEnabled: value => value !== false, coverX: value => bounded(value, 0, 100, 50), coverY: value => bounded(value, 0, 100, 40),
+    coverZoom: value => bounded(value, 1, 1.4, 1.1),
+    titleMode: value => value === 'artwork' ? 'artwork' : 'text',
     titlePlacement: value => value === 'upper' ? 'upper' : 'center',
     openButtonText: value => typeof value === 'string' ? value.slice(0, 100) : undefined,
     buttonArtwork: value => value !== false,

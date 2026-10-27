@@ -47,7 +47,7 @@ import { persistWeddingDraft, validateDraftForPublish } from "./draftPublishApi"
 function validDraft() {
     return {
         id: "draft-1",
-        templateId: "garden-royal-khmer-wedding",
+        templateId: "silk-heritage",
         couple: { groom: "សុវណ្ណ", bride: "មាលា" },
         event: { date: "2026-12-12", ceremonyTime: "07:00", venueName: "ភ្នំពេញ" },
         enabledSections: { rsvp: true },
@@ -62,9 +62,9 @@ describe("real backend publishing", () => {
     });
 
     it("validates required fields before any backend mutation", async () => {
-        expect(() => validateDraftForPublish({ templateId: "garden-royal-khmer-wedding", couple: {}, event: {} }))
+        expect(() => validateDraftForPublish({ templateId: "silk-heritage", couple: {}, event: {} }))
             .toThrow("សូមបំពេញព័ត៌មានចាំបាច់");
-        await expect(persistWeddingDraft({ templateId: "garden-royal-khmer-wedding", couple: {}, event: {} }, { publish: true }))
+        await expect(persistWeddingDraft({ templateId: "silk-heritage", couple: {}, event: {} }, { publish: true }))
             .rejects.toThrow("សូមបំពេញព័ត៌មានចាំបាច់");
         expect(invitationService.create).not.toHaveBeenCalled();
     });
@@ -86,7 +86,7 @@ describe("real backend publishing", () => {
         expect(invitationService.create).toHaveBeenCalledWith(expect.objectContaining({ templateId: 9 }));
     });
 
-    it("syncs the Garden Royal draft with Khmer reception time in a backend-compatible format", async () => {
+    it("syncs the Silk Heritage draft with Khmer reception time in a backend-compatible format", async () => {
         const localDraft = {
             ...validDraft(),
             event: { date: "2026-11-28", receptionTime: "១៧:០០" },
@@ -94,7 +94,7 @@ describe("real backend publishing", () => {
 
         await persistWeddingDraft(localDraft);
 
-        expect(templateService.getPublicBySlug).toHaveBeenCalledWith("garden-royal-khmer-wedding");
+        expect(templateService.getPublicBySlug).toHaveBeenCalledWith("silk-heritage");
         expect(invitationService.create).toHaveBeenCalledWith(expect.objectContaining({ eventTime: "17:00" }));
         expect(invitationService.update).toHaveBeenCalledWith(42, expect.objectContaining({ eventTime: "17:00" }));
         expect(invitationService.saveDraft).toHaveBeenCalledWith(42);

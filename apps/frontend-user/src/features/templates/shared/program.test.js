@@ -19,7 +19,7 @@ describe('program calendar and serialization contract', () => {
   it('preserves legacy wording and independent day, period, end time and extension fields', () => {
     const row = { day: 2, date: '2028-02-29', time: '៥:០០ ល្ងាច', endTime: '20:00', period: 'EVENING', title: 'ពិធី', note: 'keep' };
     expect(normalizeProgram([null, row])[0]).toMatchObject(row);
-    const vm = buildTemplateContent({ id: 'garden-royal-khmer-wedding', hostContent: { schedule: [row], storyChapters: [] } });
+    const vm = buildTemplateContent({ id: 'royal-khmer-wedding', hostContent: { schedule: [row], storyChapters: [] } });
     expect(vm.schedule[0]).toMatchObject(row);
     expect(vm.story).toEqual([]);
     expect(normalizeProgram({ wrong: [] })).toEqual([]);

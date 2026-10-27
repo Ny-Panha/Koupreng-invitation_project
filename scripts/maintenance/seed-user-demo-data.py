@@ -118,7 +118,7 @@ def build_seed_sql(target_user_id: int) -> tuple[str, dict[str, int]]:
         "START TRANSACTION;",
         f"SET @user_id = {target_user_id};",
         "SET @tpl_wedding = (SELECT template_id FROM templates WHERE code = 'silk-heritage' LIMIT 1);",
-        "SET @tpl_engagement = (SELECT template_id FROM templates WHERE code = 'garden-royal-khmer-wedding' LIMIT 1);",
+        "SET @tpl_engagement = (SELECT template_id FROM templates WHERE code = 'khmer-celestial' LIMIT 1);",
         "SET @tpl_birthday = (SELECT template_id FROM templates WHERE code = 'event-essential' LIMIT 1);",
     ]
 
@@ -194,7 +194,7 @@ def build_seed_sql(target_user_id: int) -> tuple[str, dict[str, int]]:
         "ក្នុងការប្រារព្ធពិធីភ្ជាប់ពាក្យតាមប្រពៃណីខ្មែរ។"
     )
     design_engagement = json.dumps({
-        "theme": "garden-royal-khmer-wedding",
+        "theme": "khmer-celestial",
         "coverImage": "/facebook/all/03-card/cover-card.jpg"
     })
     content_engagement = json.dumps({
@@ -505,7 +505,7 @@ def main():
             },
             {
                 "type": "ENGAGEMENT",
-                "template": "garden-royal-khmer-wedding",
+                "template": "khmer-celestial",
                 "slug": SLUG_ENGAGEMENT,
                 "title": "ពិធីភ្ជាប់ពាក្យ រតនា & គន្ធា (Rattana & Kunthea Engagement)",
                 "guestsCount": 7,

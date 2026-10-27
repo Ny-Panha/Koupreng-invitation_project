@@ -76,7 +76,7 @@ export default function WeddingBuilderFeature() {
       description: initialDesc,
       coverImage: initialCover,
       quality: true,
-      templateId: templateIdParam || "garden-royal-khmer-wedding",
+      templateId: templateIdParam || "silk-heritage",
       presetId: preset.presetId || tpl?.presetId || "",
       openingStyle: preset.openingStyle || "khmer-royal",
       frontColor: preset.frontColor || "#D4AF37",
@@ -323,12 +323,12 @@ export default function WeddingBuilderFeature() {
         bottomColor: form.bottomColor || preset.bottomColor || "#F3E5AB",
         openingStyle: form.openingStyle || preset.openingStyle || "khmer-royal",
         hideNamesOnCover: false,
-        templateId: form.templateId || "garden-royal-khmer-wedding",
+        templateId: form.templateId || "silk-heritage",
         presetId: preset.presetId || selectedTpl?.presetId || "",
       };
 
       const contentPayload = {
-        templateId: form.templateId || "garden-royal-khmer-wedding",
+        templateId: form.templateId || "silk-heritage",
         presetId: preset.presetId || selectedTpl?.presetId || "",
         title: form.title || preset.title || "សិរីមង្គលអាពាហ៍ពិពាហ៍",
         subtitle: "សូមគោរពអញ្ជើញ",
@@ -374,7 +374,7 @@ export default function WeddingBuilderFeature() {
         ownerUserId: user?.id || user?.userId,
         id: invitationId,
         backendInvitationId: savedResult?.id || null,
-        templateId: form.templateId || "garden-royal-khmer-wedding",
+        templateId: form.templateId || "silk-heritage",
         presetId: preset.presetId || selectedTpl?.presetId || "",
         openingStyle: designPayload.openingStyle,
         frontColor: designPayload.frontColor,

@@ -9,7 +9,6 @@ const CanvaKhmerWeddingTemplate = lazy(() => import("../experience/components/ca
 const KhmerCelestialLayout = lazy(() => import("../layouts/KhmerCelestial/KhmerCelestialLayout"));
 const TemplateBoilerplateLayout = lazy(() => import("../layouts/TemplateBoilerplate/TemplateBoilerplateLayout"));
 const SilkHeritageLayout = lazy(() => import("../layouts/SilkHeritage/SilkHeritageLayout"));
-const KhmerRoyalLotusLayout = lazy(() => import("../layouts/KhmerRoyalLotus/KhmerRoyalLotusLayout"));
 const RoyalGardenCinematicLayout = lazy(() => import("../layouts/RoyalGardenCinematic/RoyalGardenCinematicLayout"));
 
 /**
@@ -24,10 +23,6 @@ export const templateRegistry = {
   // Developer Starter Boilerplate
   "template-boilerplate": TemplateBoilerplateLayout,
   "custom-starter": TemplateBoilerplateLayout,
-
-  // Khmer Royal Lotus (printed-card inspired Khmer ceremonial invitation)
-  "khmer-royal-lotus": KhmerRoyalLotusLayout,
-  "KHMER_ROYAL_LOTUS": KhmerRoyalLotusLayout,
 
   // Flagship Khmer Celestial (cinematic Cambodian editorial invitation)
   "khmer-celestial": KhmerCelestialLayout,
@@ -75,7 +70,6 @@ export const templateRegistry = {
   "GOLD_LUXURY": DigitalYesLayout,
   "CHAMPAGNE": CanvaKhmerWeddingTemplate,
   "KHMER_GOLDEN": CanvaKhmerWeddingTemplate,
-  // GARDEN_ROYAL intentionally omitted — renders through default TemplateExperience engine
 };
 
 // Alias for backward compatibility
@@ -91,9 +85,6 @@ export { DefaultTemplateLayout };
  */
 export function getDedicatedTemplateComponent(tpl, variant, useFallback = false) {
   const stableKeys = [tpl?.code, tpl?.slug, tpl?.templateCode].filter(Boolean);
-  // Garden Royal deliberately uses the shared engine. Its database id may be
-  // 2 (historically Emerald), so this decision must precede numeric aliases.
-  if (stableKeys.includes("garden-royal-khmer-wedding")) return useFallback ? DefaultTemplateLayout : null;
   // Ordered most-specific first. Exact slug/code and the Admin presetId win over
   // `variant` and the raw numeric DB id, because dynamic templates reuse the
   // backend's auto-increment id — which collides with the static "1"–"7" keys.
@@ -116,18 +107,13 @@ export function getDedicatedTemplateComponent(tpl, variant, useFallback = false)
     }
   }
 
-  if (tpl?.code === "garden-royal-khmer-wedding" || tpl?.slug === "garden-royal-khmer-wedding" || variant === "garden-royal-khmer-wedding") {
-    return useFallback ? DefaultTemplateLayout : null;
-  }
-
   return useFallback ? DefaultTemplateLayout : null;
 }
 
 export function resolveTemplateRenderer(tpl, variant) {
   const component = getDedicatedTemplateComponent(tpl, variant);
   const id = tpl?.code || tpl?.slug || tpl?.templateCode || tpl?.variant || tpl?.id || variant;
-  const shared = ["garden-royal-khmer-wedding", "koupreng-demo-wedding", "event-essential"].includes(id)
-    || [tpl?.presetId, tpl?.design?.presetId].includes("GARDEN_ROYAL");
+  const shared = ["koupreng-demo-wedding", "event-essential"].includes(id);
   return { id, component, available: Boolean(component || shared) };
 }
 

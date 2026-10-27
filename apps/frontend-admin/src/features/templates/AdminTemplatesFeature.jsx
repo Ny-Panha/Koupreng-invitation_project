@@ -133,7 +133,8 @@ export default function AdminTemplatesPage() {
 
   // Raw templates list
   const templatesList = useMemo(() => {
-    return Array.isArray(data) ? data : [];
+    const list = Array.isArray(data) ? data : [];
+    return list.filter((t) => !["garden-royal-khmer-wedding", "khmer-royal-lotus"].includes(t.code) && !["garden-royal-khmer-wedding", "khmer-royal-lotus"].includes(t.slug));
   }, [data]);
 
   // Statistics calculation

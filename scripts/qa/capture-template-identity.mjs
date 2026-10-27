@@ -24,8 +24,8 @@ try {
   await page.screenshot({path:`${dir}/khmer-celestial-public-preview.png`,fullPage:true});
   if(phase==="after") {
     await page.goto(`${base}/app/events/102/invitation`,{waitUntil:"networkidle"});
-    await page.frameLocator('iframe[title="Live User Template Preview"]').locator('[data-template-renderer="garden-royal-khmer-wedding"] .tx-root').waitFor();
-    await page.screenshot({path:`${dir}/garden-royal-editor.png`,fullPage:true});
+    await page.frameLocator('iframe[title="Live User Template Preview"]').locator('[data-template-renderer="the-digital-yes-wedding"]').waitFor();
+    await page.screenshot({path:`${dir}/digital-yes-editor.png`,fullPage:true});
     await page.goto(`${base}/templates/silk-heritage/preview`,{waitUntil:"networkidle"});
     await page.locator('[data-template-renderer="silk-heritage"]').waitFor({state:"attached"});
     await page.screenshot({path:`${dir}/silk-heritage-preview.png`,fullPage:true});

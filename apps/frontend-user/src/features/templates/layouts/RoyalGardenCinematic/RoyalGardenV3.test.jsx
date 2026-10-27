@@ -25,7 +25,7 @@ describe('Royal Garden V3 presentation and compatibility', () => {
     expect(royalGardenPresentation({ cinematicIntro: { style: 'royal-arch' } }).information).toMatchObject({ enabled: true, fixed: true });
   });
   it.each(['', null, '/uploads/owner.webp'])('preserves explicit presentation values %s across both save/render pipelines', source => {
-    const cinematicIntro = { style: 'royal-arch', artworkSrc: source, entranceFrame: source, coverX: 25, guestFrameEnabled: false, slides: [] };
+    const cinematicIntro = { style: 'royal-arch', artworkSrc: source, entranceFrame: source, coverX: 25, coverZoom: 1.25, titleMode: 'text', guestFrameEnabled: false, slides: [] };
     const informationScene = { backgroundAsset: source, fixedBackground: false, effects: { butterfly: true }, video: { fit: 'cover', followUpPhotos: true } };
     const payload = draftToInvitationPayload({ templateId: 'royal-garden-cinematic', couple: { groom: 'Owner', bride: 'Partner' }, event: { date: '2027-12-05' }, cinematicIntro, informationScene, gallery: [] });
     const draft = publicInvitationToDraft({ ...payload, templateCode: 'royal-garden-cinematic' });
@@ -39,7 +39,7 @@ describe('Royal Garden V3 presentation and compatibility', () => {
     const input = { cinematicIntro: { entranceFrame: 'javascript:alert(1)', entranceFrameScale: 100, coverX: -30 }, informationScene: { backgroundAsset: 'data:text/html,bad', panelOpacity: 0, motionPreset: 'huge', video: { fit: 'script', src: 'https://untrusted.invalid/private.mp4' } } };
     expect(normalizeIntro(input.cinematicIntro)).toMatchObject({ entranceFrame: '', entranceFrameScale: 1.1, coverX: 0 });
     const value = royalGardenPresentation(input);
-    expect(value.information).toMatchObject({ background: '', panelOpacity: .65 });
+    expect(value.information).toMatchObject({ background: '', panelOpacity: 0 });
     expect(value.video).toMatchObject({ fit: 'contain' }); expect(value.video).not.toHaveProperty('src');
     expect(value.motion.preset).toBe('subtle');
   });
@@ -59,17 +59,24 @@ describe('Royal Garden V3 presentation and compatibility', () => {
 
 describe('royal entrance and video recovery', () => {
   it('retains the real photo, live names and safe text if decorative assets fail', () => {
-    const content = { coverBackgroundImage: '/owner.webp', isPersonalizedGuest: true, guestName: '<script>guest</script>', cinematicIntro: { style: 'royal-arch' } };
+    const content = { coverBackgroundImage: '/owner.webp', isPersonalizedGuest: true, guestName: '<script>guest</script>', cinematicIntro: { style: 'royal-arch', titleMode: 'artwork' } };
     const { container } = render(<RoyalGardenEntranceScene content={content} intro={normalizeIntro(content.cinematicIntro)} presentation={royalGardenPresentation(content)} sequence={{ stage: 'COVER' }} title="Our day" names="Owner & Partner" date="5 December" english onOpen={vi.fn()} />);
     expect(container.querySelector('.cover-bg-media')).toHaveAttribute('src', '/owner.webp');
+    expect(container.querySelector('.cover-bg-media')).not.toHaveAttribute('srcset');
     expect(container.querySelector('.rg-guest-frame')).toHaveTextContent('<script>guest</script>'); expect(container.querySelector('script')).toBeNull();
     fireEvent.error(container.querySelector('.rg-royal-arch img')); fireEvent.error(container.querySelector('.rg-entrance-lettering img'));
     expect(screen.getByRole('heading', { name: 'Our day' })).toBeVisible();
     expect(screen.getByRole('button', { name: 'Open invitation' })).toBeEnabled();
     expect(container.querySelector('.rg-entrance-names')).toHaveTextContent('Owner & Partner');
   });
-  function show({ loadVideo, reduced = false, followUpPhotos = false } = {}) {
-    const content = { hasHostContent: true, groomName: 'Owner', brideName: 'Partner', languageMode: 'EN', musicUrl: '/music.mp3', cinematicIntro: { style: 'royal-arch', reducedMotion: reduced, slides: [{ id: 'one', src: '/owner.webp' }] }, informationScene: { video: { followUpPhotos } } };
+  it('uses the catalog portrait variant without changing the canonical source', () => {
+    const content = { mainImage: ROYAL_ASSETS.demoPortrait, cinematicIntro: { style: 'royal-arch' } };
+    const { container } = render(<RoyalGardenEntranceScene content={content} intro={normalizeIntro(content.cinematicIntro)} presentation={royalGardenPresentation(content)} sequence={{ stage: 'COVER' }} title="Our day" names="Owner & Partner" english onOpen={vi.fn()} />);
+    expect(container.querySelector('.cover-bg-media')).toHaveAttribute('src', ROYAL_ASSETS.demoPortrait);
+    expect(container.querySelector('.cover-bg-media')).toHaveAttribute('srcset', expect.stringContaining(ROYAL_ASSETS.demoPortraitSmall));
+  });
+  function show({ loadVideo, reduced = false, followUpPhotos = false, endBehavior = 'collapse', sound = 'muted' } = {}) {
+    const content = { hasHostContent: true, groomName: 'Owner', brideName: 'Partner', languageMode: 'EN', musicUrl: '/music.mp3', cinematicIntro: { style: 'royal-arch', reducedMotion: reduced, slides: [{ id: 'one', src: '/owner.webp' }] }, informationScene: { video: { followUpPhotos, endBehavior, sound } } };
     return render(<MemoryRouter><CinematicOpeningProvider configuration={{ enabled: true, videoMediaId: 42 }} loadVideo={loadVideo} demoVideo={loadVideo ? undefined : { src: '/sample.mp4' }} english>
       <RoyalGardenCinematicLayout content={content} />
     </CinematicOpeningProvider></MemoryRouter>);
@@ -82,6 +89,11 @@ describe('royal entrance and video recovery', () => {
     const stage = screen.getByRole('region', { name: 'Pre-wedding video' });
     expect(screen.queryByRole('dialog')).toBeNull(); expect(stage.querySelector('form')).toBeNull();
     expect(container.querySelector('[data-stage=PRE_WEDDING_VIDEO]')).toBeInTheDocument();
+    expect(stage.closest('.rg-paper')).toBeInTheDocument();
+    expect(container.querySelector('#rg-family')).toBeVisible();
+    expect(container.querySelector('[data-cinematic-content]')).not.toHaveAttribute('hidden');
+    expect(stage.querySelector('.cinematic-film-frame .cinematic-film-footer')).toBeNull();
+    expect(within(stage).getByRole('button', { name: 'Continue to invitation' })).toBeEnabled();
     expect(HTMLMediaElement.prototype.pause).toHaveBeenCalled();
     if (path === 'skip') fireEvent.click(within(stage).getByRole('button', { name: 'Skip video' }));
     else fireEvent[path](stage.querySelector('video'));
@@ -93,6 +105,20 @@ describe('royal entrance and video recovery', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Skip intro' }));
     await act(async () => vi.advanceTimersByTime(30000));
     expect(screen.queryByRole('dialog')).toBeNull(); expect(container.querySelector('[data-stage=CONTENT]')).toBeInTheDocument();
+  });
+  it('keeps the same information shell and offers a fresh replay after completion when configured', async () => {
+    vi.useFakeTimers(); const { container } = show({ endBehavior: 'poster', sound: 'on' });
+    fireEvent.click(screen.getByRole('button', { name: 'Open invitation' }));
+    await act(async () => vi.advanceTimersByTime(900));
+    const background = container.querySelector('.rg-information-background');
+    expect(container.querySelector('video').muted).toBe(false);
+    fireEvent.ended(container.querySelector('video'));
+    expect(container.querySelector('.rg-information-background')).toBe(background);
+    fireEvent.click(screen.getByRole('button', { name: 'Replay video' }));
+    await act(async () => vi.advanceTimersByTime(1));
+    expect(container.querySelector('video')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Continue to invitation' }));
+    expect(container.querySelector('[data-stage=CONTENT]')).toBeInTheDocument();
   });
   it('uses the optional photo follow-up only when configured', async () => {
     vi.useFakeTimers(); const { container } = show({ followUpPhotos: true }); fireEvent.click(screen.getByRole('button', { name: 'Open invitation' }));

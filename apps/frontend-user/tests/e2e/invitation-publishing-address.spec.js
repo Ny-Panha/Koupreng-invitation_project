@@ -31,7 +31,7 @@ async function venue(page) {
   return page.getByRole("textbox", { name: "Venue address", exact: true });
 }
 
-for (const code of ["khmer-celestial", "silk-heritage", "garden-royal-khmer-wedding"]) {
+for (const code of ["khmer-celestial", "silk-heritage"]) {
   test(`address saves, refreshes and publishes with ${code}`, async ({ page }, info) => {
     const fixture = await setup(page, { code, address: "Old nested address", nested: true });
     const input = await venue(page); await expect(input).toHaveValue("Old nested address");

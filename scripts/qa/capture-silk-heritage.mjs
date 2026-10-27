@@ -7,7 +7,7 @@ const dir = `docs/qa/silk-heritage/${phase}`;
 await mkdir(dir, { recursive: true });
 const browser = await chromium.launch({ headless: true });
 const routes = phase === 'baseline'
-  ? ['/', '/templates', '/templates/khmer-celestial', '/templates/the-digital-yes-wedding', '/templates/emerald-canva-luxe-wedding', '/templates/bliss-editorial-wedding', '/templates/withjoy-modern-portal', '/templates/khmer-golden-canva-inspired-wedding', '/templates/garden-royal-khmer-wedding']
+  ? ['/', '/templates', '/templates/khmer-celestial', '/templates/the-digital-yes-wedding', '/templates/emerald-canva-luxe-wedding', '/templates/bliss-editorial-wedding', '/templates/withjoy-modern-portal', '/templates/khmer-golden-canva-inspired-wedding']
   : ['/', '/templates', '/templates/silk-heritage'];
 const findings = [];
 for (const path of routes) {

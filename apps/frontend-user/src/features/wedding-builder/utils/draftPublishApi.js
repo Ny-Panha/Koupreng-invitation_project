@@ -48,7 +48,7 @@ function localGalleryFiles(gallery = []) {
 }
 
 async function resolveBackendTemplateId(templateReference) {
-  const templateKey = String(templateReference || "garden-royal-khmer-wedding").trim();
+  const templateKey = String(templateReference || "silk-heritage").trim();
   const template = /^\d+$/.test(templateKey)
     ? await templateService.getPublic(templateKey)
     : await templateService.getPublicBySlug(templateKey);

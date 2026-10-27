@@ -1,8 +1,7 @@
 import { ROYAL_ASSETS } from '../model/royalGardenPresentation';
+import RoyalGardenArtworkFrame from './RoyalGardenArtworkFrame';
 
 export default function RoyalGardenRoyalArch({ entrance }) {
   if (!entrance.frameEnabled || !entrance.frame) return null;
-  return <div className="rg-royal-arch" data-position={entrance.framePosition} style={{ '--rg-frame-scale': entrance.frameScale }} aria-hidden="true">
-    <img key={entrance.frame} src={entrance.frame} srcSet={entrance.frame === ROYAL_ASSETS.arch ? `${ROYAL_ASSETS.archSmall} 640w, ${ROYAL_ASSETS.arch} 941w` : undefined} sizes="(max-width: 600px) 100vw, 560px" alt="" width="941" height="1672" decoding="async" onError={event => { event.currentTarget.hidden = true; }} />
-  </div>;
+  return <RoyalGardenArtworkFrame key={entrance.frame} source={entrance.frame} smallSource={entrance.frame === ROYAL_ASSETS.arch ? ROYAL_ASSETS.archSmall : undefined} variant="opening" className="rg-royal-arch" style={{ '--rg-frame-scale': entrance.frameScale }} />;
 }

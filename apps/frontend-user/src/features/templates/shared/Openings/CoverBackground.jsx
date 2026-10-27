@@ -28,6 +28,7 @@ export default function CoverBackground({
   content = {},
   templateDefault = { src: "", type: "image", poster: "" },
   className = "",
+  priority = false,
   children = null,
 }) {
   const prefersReduced = usePrefersReducedMotion();
@@ -104,7 +105,11 @@ export default function CoverBackground({
         <img
           className="cover-bg-media"
           src={mediaSrc}
+          srcSet={mediaSrc === defaultSrc ? templateDefault.srcSet : undefined}
+          sizes={mediaSrc === defaultSrc ? templateDefault.sizes : undefined}
           alt=""
+          fetchPriority={priority ? 'high' : undefined}
+          decoding="async"
           onError={() => failImage(mediaSrc)}
         />
       ) : posterSrc ? (
@@ -132,7 +137,10 @@ CoverBackground.propTypes = {
     src: PropTypes.string,
     type: PropTypes.oneOf(["image", "video"]),
     poster: PropTypes.string,
+    srcSet: PropTypes.string,
+    sizes: PropTypes.string,
   }),
   className: PropTypes.string,
+  priority: PropTypes.bool,
   children: PropTypes.node,
 };

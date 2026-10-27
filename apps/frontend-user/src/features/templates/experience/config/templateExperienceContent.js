@@ -135,15 +135,6 @@ const DEMO_FAQ = [
  * routing now resolves every template/demo alias to this kept template.
  */
 const VARIANT_COPY = {
-    "garden-royal-khmer-wedding": {
-        message:
-            "ដោយក្តីសោមនស្សរីករាយ និងសេចក្ដីស្រឡាញ់ដ៏ជ្រាលជ្រៅ យើងខ្ញុំសូមគោរពអញ្ជើញលោកអ្នកមកចូលរួមជាភ្ញៀវកិត្តិយសក្នុងពិធីមង្គលការរបស់យើងទាំងពីរ។",
-        groomIntro: "កូនកំលោះដ៏សុភាពរាបសា ស្រឡាញ់គ្រួសារ និងត្រៀមចាប់ផ្តើមជីវិតថ្មីដោយក្តីទទួលខុសត្រូវ។",
-        brideIntro: "កូនក្រមុំដ៏ទន់ភ្លន់ មានស្នាមញញឹមកក់ក្ដៅ និងសេចក្តីស្រឡាញ់ចំពោះគ្រួសារ។",
-        dressName: "ខៀវផ្កា បៃតងស្លឹក ស និងមាស",
-        dressStyle: "ខ្មែរផ្លូវការ / Garden formal",
-        dressNote: "ពណ៌ខៀវ ស បៃតងស្លឹក និងមាសស្រាល សមរម្យសម្រាប់បរិយាកាសសួនផ្កាផ្លូវការនិងរូបថតអនុស្សាវរីយ៍។",
-    },
     [ROYAL_KHMER_TEMPLATE_CODE]: {
         message:
             "ដោយក្តីសោមនស្សរីករាយ និងកិត្តិយសដ៏ខ្ពង់ខ្ពស់ យើងខ្ញុំសូមគោរពអញ្ជើញលោកអ្នកមកចូលរួមជាភ្ញៀវកិត្តិយសក្នុងពិធីមង្គលការប្រពៃណីបុរាណខ្មែររបស់យើងខ្ញុំ។",
@@ -264,7 +255,7 @@ const VARIANT_STORY = {
     ],
 };
 
-const DEFAULT_CONTENT_VARIANT = "garden-royal-khmer-wedding";
+const DEFAULT_CONTENT_VARIANT = ROYAL_KHMER_TEMPLATE_CODE;
 
 const GALLERY_SPANS = ["tall", "wide", "small", "small", "small"];
 

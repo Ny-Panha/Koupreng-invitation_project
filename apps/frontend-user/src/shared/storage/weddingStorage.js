@@ -32,8 +32,22 @@ function generateId() {
   return `wed-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
+const RETIRED_TEMPLATE_CODES = new Set(["garden-royal-khmer-wedding", "khmer-royal-lotus"]);
+
+function normalizeDraftTemplate(draft) {
+  if (!draft) return draft;
+  if (RETIRED_TEMPLATE_CODES.has(draft.templateId) || RETIRED_TEMPLATE_CODES.has(draft.templateCode)) {
+    return {
+      ...draft,
+      ...(draft.templateId && RETIRED_TEMPLATE_CODES.has(draft.templateId) ? { templateId: "silk-heritage" } : {}),
+      ...(draft.templateCode && RETIRED_TEMPLATE_CODES.has(draft.templateCode) ? { templateCode: "silk-heritage" } : {}),
+    };
+  }
+  return draft;
+}
+
 export function listDrafts(ownerUserId = null) {
-  const drafts = Object.values(readAll());
+  const drafts = Object.values(readAll()).map(normalizeDraftTemplate);
   const resolvedOwnerUserId = resolveOwnerUserId(ownerUserId);
   const scoped = resolvedOwnerUserId == null
     ? drafts
@@ -50,7 +64,7 @@ export function getDraft(draftId, ownerUserId = null) {
   if (resolvedOwnerUserId != null && draft.ownerUserId != null && String(draft.ownerUserId) !== String(resolvedOwnerUserId)) {
     return null;
   }
-  return draft;
+  return normalizeDraftTemplate(draft);
 }
 
 export function getDraftBySlug(slug, ownerUserId = null) {
@@ -59,7 +73,7 @@ export function getDraftBySlug(slug, ownerUserId = null) {
   const resolvedOwnerUserId = resolveOwnerUserId(ownerUserId);
   const normalized = String(slug).trim().toLowerCase();
   const values = Object.values(all);
-  return values.find((draft) => {
+  const match = values.find((draft) => {
     if (resolvedOwnerUserId != null && draft.ownerUserId != null && String(draft.ownerUserId) !== String(resolvedOwnerUserId)) {
       return false;
     }
@@ -69,6 +83,7 @@ export function getDraftBySlug(slug, ownerUserId = null) {
     const dTitleSlug = dTitle.replace(/\s+/g, "-");
     return dSlug === normalized || dId === normalized || dTitle === normalized || dTitleSlug === normalized;
   }) || null;
+  return normalizeDraftTemplate(match);
 }
 
 export function saveDraft(draft) {
@@ -89,7 +104,7 @@ export function deleteDraft(draftId) {
 
 export function createDraft(initial = {}) {
   return saveDraft({
-    templateId: initial.templateId || "garden-royal-khmer-wedding",
+    templateId: initial.templateId || "silk-heritage",
     slug: initial.slug || "",
     couple: {
       groom: "",

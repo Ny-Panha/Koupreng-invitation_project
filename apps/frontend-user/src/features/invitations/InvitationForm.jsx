@@ -523,7 +523,7 @@ function previewMapUrl(value, venueName = "") {
 }
 
 const DEFAULT_STATE = {
-    templateId: "garden-royal-khmer-wedding",
+    templateId: "silk-heritage",
     language: "KH",
     title: "",
     subtitle: "",
@@ -1673,7 +1673,7 @@ export default function InvitationForm({ invitation }) {
                 backendInvitationId: saved?.id || invitation?.backendInvitationId || (!isNaN(Number(invitationId)) ? Number(invitationId) : null),
                 syncStatus: apiSyncFailed || mediaSyncError ? (effectiveBackendId || saved?.id ? "SYNC_FAILED" : "LOCAL_ONLY") : "SYNCED",
                 syncError: apiSyncFailed ? "មិនអាចភ្ជាប់ទៅ server បានទេ។" : (mediaSyncError || ""),
-                templateId: form.templateId || "garden-royal-khmer-wedding",
+                templateId: form.templateId || "silk-heritage",
                 presetId: form.presetId || "",
                 couple: {
                     groom: finalGroom,

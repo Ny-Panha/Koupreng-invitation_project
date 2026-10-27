@@ -37,6 +37,9 @@ export default function TemplateDemoPage({ backLink, backLabel, primaryCtaLabel 
         fetcher
             .then((res) => {
                 if (!res || Array.isArray(res) || !res.id || !res.code) throw new Error("Invalid template response");
+                if (["garden-royal-khmer-wedding", "khmer-royal-lotus"].includes(res.code) || ["garden-royal-khmer-wedding", "khmer-royal-lotus"].includes(res.slug)) {
+                    throw new Error("Template retired");
+                }
                 if (active && res) {
                     setRemoteTpl(res);
                 }

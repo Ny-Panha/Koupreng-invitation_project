@@ -18,3 +18,10 @@ it("shows recovery for an unknown host template without borrowing another templa
   show("unavailable-design");
   expect(await screen.findByRole("heading", { name: /Template unavailable/ })).toBeInTheDocument();
 });
+
+it("rejects retired template codes even if backend returns them", async () => {
+  templateService.getPublicBySlug.mockResolvedValue({ id: 2, code: "garden-royal-khmer-wedding", name: "Garden Royal" });
+  show("garden-royal-khmer-wedding");
+  expect(await screen.findByRole("heading", { name: /Template unavailable/ })).toBeInTheDocument();
+});
+

@@ -3,8 +3,8 @@ import {installOverhaulFixtures} from './support/overhaulFixtures.js';
 import {phase2EvidencePath} from './support/phase2Evidence.js';
 test('approved template offer creates one pending order and only server PAID unlocks the selected design',async({page},info)=>{
  await installOverhaulFixtures(page,'en');
- const design={id:2,code:'garden-royal-khmer-wedding',name:'Fixture approved design',premium:true,checkoutEligible:true,checkoutAmount:'37.50',checkoutCurrency:'USD',thumbnailUrl:'/templates/event-essential.svg'};
- const order={orderCode:'PHASE2-FIXTURE',templateId:2,templateName:design.name,packageName:'Fixture offer',amount:'37.50',currency:'USD',paymentLink:'https://pay.ababank.com/phase2-fixture',status:'PENDING',expiresAt:new Date(Date.now()+600000).toISOString()};
+ const design={id:5,code:'silk-heritage',name:'Fixture approved design',premium:true,checkoutEligible:true,checkoutAmount:'37.50',checkoutCurrency:'USD',thumbnailUrl:'/templates/event-essential.svg'};
+ const order={orderCode:'PHASE2-FIXTURE',templateId:5,templateName:design.name,packageName:'Fixture offer',amount:'37.50',currency:'USD',paymentLink:'https://pay.ababank.com/phase2-fixture',status:'PENDING',expiresAt:new Date(Date.now()+600000).toISOString()};
  let status='PENDING';const writes=[];
  await page.route('**/api/v1/templates',r=>r.fulfill({contentType:'application/json',body:JSON.stringify({data:[design]})}));
  await page.route('**/api/v1/template-payments/**',route=>{
@@ -16,7 +16,7 @@ test('approved template offer creates one pending order and only server PAID unl
   const req=r.request(),path=new URL(req.url()).pathname;
   return ['GET','HEAD','OPTIONS'].includes(req.method())||path.startsWith('/api/v1/template-payments/')?r.fallback():r.abort('blockedbyclient');
  });
- await page.goto('/templates/garden-royal-khmer-wedding/checkout');
+ await page.goto('/templates/silk-heritage/checkout');
  await expect(page.locator('.kp-site-preloader')).toBeHidden();
  await expect(page.getByText('$37.50',{exact:true})).toBeVisible();
  await expect(page.locator('.checkout-method-card')).toHaveCSS('opacity','1');

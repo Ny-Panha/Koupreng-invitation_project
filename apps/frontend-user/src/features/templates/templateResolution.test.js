@@ -6,7 +6,7 @@ import { draftToTemplate } from "../wedding-builder/utils/draftToTemplate";
 
 const catalog = [
   { id: 4, code: "khmer-celestial", name: "Khmer Celestial", description: '{"presetId":"KHMER_CELESTIAL"}' },
-  { id: 2, code: "garden-royal-khmer-wedding", name: "Garden Royal" },
+  { id: 7, code: "the-digital-yes-wedding", name: "The Digital Yes" },
   { id: 5, code: "silk-heritage", name: "Silk Heritage", description: '{"presetId":"SILK_HERITAGE"}' },
 ];
 afterEach(() => registerDynamicTemplates([]));
@@ -30,26 +30,12 @@ describe("exact template identity across catalog and renderers", () => {
   });
   it("does not save a historical ID for a stable code absent from the catalog", () => {
     registerDynamicTemplates([catalog[0]]);
-    expect(resolveNumericTemplateId("garden-royal-khmer-wedding")).toBeNull();
+    expect(resolveNumericTemplateId("the-digital-yes-wedding")).toBeNull();
     expect(resolveNumericTemplateId("silk-heritage")).toBeNull();
-  });
-  it("keeps Garden Royal on its own shared renderer despite numeric ID 2", () => {
-    registerDynamicTemplates(catalog);
-    const garden = getTemplateById(2);
-    expect(garden.code).toBe("garden-royal-khmer-wedding");
-    expect(getDedicatedTemplateComponent(garden)).toBeNull();
-    expect(garden.presetId).not.toBe("EMERALD_GREEN");
   });
   it("preserves Silk Heritage despite its database ID colliding with golden", () => {
     registerDynamicTemplates(catalog);
     expect(getDedicatedTemplateComponent(getTemplateById(5))).toBe(templateRegistry["silk-heritage"]);
-  });
-  it("retains explicitly configured admin Garden presets on the shared engine", () => {
-    registerDynamicTemplates([{ id: 45, code: "custom-garden", description: '{"presetId":"GARDEN_ROYAL"}' }]);
-    const template=getTemplateById(45);
-    expect(resolveTemplateRenderer(template).available).toBe(true);
-    expect(getDedicatedTemplateComponent(template)).toBeNull();
-    expect(template.variant).toBe("garden-royal-khmer-wedding");
   });
   it("does not infer the renderer of an unregistered stable code from its database ID", () => {
     registerDynamicTemplates([{ id: 4, code: "unregistered-wedding", name: "Khmer Celestial" }]);
@@ -64,4 +50,16 @@ describe("exact template identity across catalog and renderers", () => {
     expect(getDedicatedTemplateComponent(numeric.tpl)).toBe(getDedicatedTemplateComponent(code.tpl));
     expect(draftToTemplate({ templateId: "missing-template" })).toBeNull();
   });
+  it("filters out retired templates (garden-royal-khmer-wedding and khmer-royal-lotus) from dynamic catalog", () => {
+    registerDynamicTemplates([
+      ...catalog,
+      { id: 2, code: "garden-royal-khmer-wedding", name: "Garden Royal" },
+      { id: 3, code: "khmer-royal-lotus", name: "Khmer Royal Lotus" },
+    ]);
+    expect(getTemplateById("garden-royal-khmer-wedding")).toBeNull();
+    expect(getTemplateById("khmer-royal-lotus")).toBeNull();
+    expect(getTemplateById(2)).toBeNull();
+    expect(getTemplateById(3)).toBeNull();
+  });
 });
+

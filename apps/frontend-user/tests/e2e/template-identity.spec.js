@@ -23,7 +23,7 @@ test("cold catalog, refresh, stale draft and public preview keep exact Celestial
   await expect(page.locator('[data-template-renderer="khmer-celestial"] .kc-root')).toBeAttached({timeout:15000});
 });
 
-test("switching events remounts controls and uses Garden's shared renderer", async ({ page }) => {
+test("switching events remounts controls and uses Digital Yes renderer", async ({ page }) => {
   await installIdentityFixtures(page);
   await page.goto("/app/events/101/invitation");
   await openPreview(page);
@@ -31,9 +31,9 @@ test("switching events remounts controls and uses Garden's shared renderer", asy
   await closePreview(page);
   await page.getByRole("button", { name: "Open event navigation", exact: true }).click();
   await page.locator(".event-switcher-select").selectOption("102");
-  await expect(page.locator(".pe-template-tag")).toHaveText("Garden Royal Khmer Wedding");
+  await expect(page.locator(".pe-template-tag")).toHaveText("The Digital Yes");
   await openPreview(page);
-  await expect(live(page).locator('[data-template-renderer="garden-royal-khmer-wedding"] .tx-root')).toBeAttached({timeout:15000});
+  await expect(live(page).locator('[data-template-renderer="the-digital-yes-wedding"]')).toBeAttached({timeout:15000});
   await expect(page.locator(".invitation-studio")).not.toContainText("Celestial host");
   await closePreview(page);
   await page.getByRole("button", { name: "Open event navigation", exact: true }).click();
@@ -49,14 +49,14 @@ test("template switch persists the actual association and preserves event detail
   await page.goto("/app/events/101/invitation");
   await page.getByRole("button",{name:/^Change template:/}).click();
   page.on("dialog",dialog=>dialog.accept());
-  await page.locator(".pe-tpl-card-modal").filter({hasText:"Garden Royal Khmer Wedding"}).click();
+  await page.locator(".pe-tpl-card-modal").filter({hasText:"The Digital Yes"}).click();
   await expect.poll(()=>writes.length).toBeGreaterThan(0);
-  expect(writes.at(-1).payload.templateId).toBe(2);
+  expect(writes.at(-1).payload.templateId).toBe(7);
   expect(events.get(101).title).toBe("Celestial celebration");
   expect(JSON.parse(writes.at(-1).payload.contentJson).schedule).toEqual(schedule);
   await page.reload();
   await openPreview(page);
-  await expect(live(page).locator('[data-template-renderer="garden-royal-khmer-wedding"]')).toBeAttached({timeout:15000});
+  await expect(live(page).locator('[data-template-renderer="the-digital-yes-wedding"]')).toBeAttached({timeout:15000});
 });
 
 test("premium denial leaves the assigned template untouched", async ({ page }) => {

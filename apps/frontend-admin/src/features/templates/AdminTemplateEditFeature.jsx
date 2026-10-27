@@ -62,15 +62,6 @@ const TEMPLATE_LAYOUT_OPTIONS = [
     icon: "🌸",
   },
   {
-    code: "khmer-royal-lotus",
-    name: "Khmer Royal Lotus",
-    labelKh: "រាជឈូកខ្មែរ · ក្រហមទុំ & មាស",
-    desc: "អារម្មណ៍ធៀបការបោះពុម្ពខ្មែរ ក្រដាសភ្លុក ក្រហមទុំ មាសបុរាណ និងប្លង់ ceremonial mobile-first",
-    badge: "Khmer Luxury",
-    badgeColor: "bg-rose-500/20 text-rose-200 border-rose-400/30",
-    icon: "🪷",
-  },
-  {
     code: "the-digital-yes-wedding",
     name: "The Digital Yes",
     labelKh: "ស្រោមសំបុត្រ 3D & ផ្កាធ្លាក់",
@@ -220,40 +211,6 @@ const THEME_PRESETS = [
       { hex: "#FFFAF2", name: "ភ្លុក" },
     ],
     backgroundImage: "/invitations/khmer-celestial/botanical-frame.jpg",
-  },
-  {
-    id: "KHMER_ROYAL_LOTUS",
-    name: "Khmer Royal Lotus (រាជឈូកខ្មែរ)",
-    primary: "#6B1E2B",
-    secondary: "#C8A45D",
-    bg: "#F5EEDF",
-    badge: "Khmer Royal Lotus",
-    amp: "✦",
-    fontKhmer: "Kantumruy Pro",
-    fontLatin: "Cormorant Garamond",
-    dressColors: [
-      { hex: "#6B1E2B", name: "ក្រហមទុំ" },
-      { hex: "#C8A45D", name: "មាសបុរាណ" },
-      { hex: "#F5EEDF", name: "ភ្លុក" },
-      { hex: "#321016", name: "ក្រហមចាស់" },
-    ],
-  },
-  {
-    id: "GARDEN_ROYAL",
-    name: "Garden Royal (សួនផ្កា)",
-    primary: "#2D7FA6",
-    secondary: "#6F9E2E",
-    bg: "#FFFDF7",
-    badge: "Garden Royal",
-    amp: "❀",
-    fontKhmer: "Moul",
-    fontLatin: "Playfair Display",
-    dressColors: [
-      { hex: "#2D7FA6", name: "ខៀវផ្កា" },
-      { hex: "#6F9E2E", name: "បៃតងស្លឹក" },
-      { hex: "#FFFDF7", name: "ស" },
-      { hex: "#D6A63C", name: "មាស" },
-    ],
   },
   {
     id: "MODERN_MINIMAL",
@@ -1171,13 +1128,11 @@ export default function AdminTemplateEditPage() {
   const handleApplyPreset = (preset) => {
     const presetMap = {
       KHMER_CELESTIAL: "khmer-celestial",
-      KHMER_ROYAL_LOTUS: "khmer-royal-lotus",
       GOLD_LUXURY: "the-digital-yes-wedding",
       EMERALD_GREEN: "emerald-canva-luxe-wedding",
       RUBY_RED: "khmer-celestial",
       CHAMPAGNE: "cover-khmer-golden-wedding",
       ROYAL_KHMER: "khmer-celestial",
-      GARDEN_ROYAL: "garden-royal-khmer-wedding",
       KHMER_GOLDEN: "cover-khmer-golden-wedding",
       SILK_HERITAGE: "silk-heritage",
       MODERN_MINIMAL: "the-digital-yes-wedding",
@@ -4138,8 +4093,6 @@ export default function AdminTemplateEditPage() {
                   form.code ||
                   (form.presetId === "KHMER_CELESTIAL"
                     ? "khmer-celestial"
-                    : form.presetId === "GARDEN_ROYAL"
-                    ? "garden-royal-khmer-wedding"
                     : form.presetId === "KHMER_GOLDEN" || form.presetId === "CHAMPAGNE"
                     ? "cover-khmer-golden-wedding"
                     : form.presetId === "ROYAL_KHMER" || form.presetId === "RUBY_RED"

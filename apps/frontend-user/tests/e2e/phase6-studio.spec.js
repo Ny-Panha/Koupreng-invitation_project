@@ -3,7 +3,7 @@ test.setTimeout(60000);
 test.use({ reducedMotion: 'reduce' });
 import { installIdentityFixtures } from './support/templateIdentityFixtures.js';
 
-for (const [id, code] of [[4, 'khmer-celestial'], [2, 'garden-royal-khmer-wedding'], [5, 'silk-heritage']]) {
+for (const [id, code] of [[4, 'khmer-celestial'], [5, 'silk-heritage']]) {
   test(`${code}: two days and Khmer story survive save/reopen and public rendering`, async ({ page }, info) => {
     const fixture = await installIdentityFixtures(page);
     Object.assign(fixture.events.get(101), { templateId: id, templateCode: code, contentJson: JSON.stringify({ schedule: [{ id: 'one', time: '07:00', title: 'ពិធីមង្គល', day: 1 }], storyChapters: [] }) });

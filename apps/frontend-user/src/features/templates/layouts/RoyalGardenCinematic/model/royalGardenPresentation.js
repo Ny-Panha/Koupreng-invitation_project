@@ -8,6 +8,7 @@ export const ROYAL_ASSETS = Object.freeze({
   information: `${ROOT}/information/background.webp`, informationSmall: `${ROOT}/information/background-640.webp`,
   butterfly: `${ROOT}/effects/butterfly.webp`,
   demoVideo: `${ROOT}/video/pre-wedding-demo.mp4`, poster: `${ROOT}/video/poster.webp`,
+  demoPortrait: '/templates/silk-heritage/portrait.webp', demoPortraitSmall: `${ROOT}/opening/demo-portrait-640.webp`,
 });
 export const MOTION_PRESETS = ['off', 'subtle', 'balanced', 'cinematic'];
 export const bounded = (value, min, max, fallback) => value == null || value === '' || !Number.isFinite(Number(value)) ? fallback : Math.min(max, Math.max(min, Number(value)));
@@ -28,6 +29,7 @@ export function royalGardenPresentation(content = {}) {
       framePosition: pick(intro.entranceFramePosition, ['upper', 'center', 'lower'], 'center'),
       guestFrameEnabled: intro.guestFrameEnabled !== false,
       coverX: bounded(intro.coverX, 0, 100, 50), coverY: bounded(intro.coverY, 0, 100, 40),
+      coverZoom: bounded(intro.coverZoom, 1, 1.4, 1.1),
       titlePlacement: pick(intro.titlePlacement, ['upper', 'center'], 'center'),
       openButtonText: typeof intro.openButtonText === 'string' ? intro.openButtonText.slice(0, 100) : undefined,
       buttonArtwork: intro.buttonArtwork !== false,
@@ -38,7 +40,7 @@ export function royalGardenPresentation(content = {}) {
       fixed: information.fixedBackground !== false,
       position: pick(information.backgroundPosition, ['center', 'top', 'bottom'], 'center'),
       overlay: bounded(information.contentOverlay, 0, .8, .2),
-      panelOpacity: bounded(information.panelOpacity, .65, 1, .88),
+      panelOpacity: bounded(information.panelOpacity, 0, 1, 0),
       reveal: pick(information.sectionReveal, ['fade', 'rise', 'none'], 'rise'),
       footer: information.footerEnabled !== false,
     },
@@ -51,6 +53,8 @@ export function royalGardenPresentation(content = {}) {
       royal, fit: pick(video.fit, ['contain', 'cover'], 'contain'), footerSrc: ROYAL_ASSETS.footer,
       footer: video.footer !== false, replay: video.replay !== false,
       transition: pick(video.transition, ['fade', 'none'], 'fade'),
+      sound: pick(video.sound, ['muted', 'on'], 'muted'),
+      endBehavior: pick(video.endBehavior, ['collapse', 'poster'], 'collapse'),
       followUpPhotos: video.followUpPhotos === true,
       resumeMusic: video.resumeMusic !== false,
     },

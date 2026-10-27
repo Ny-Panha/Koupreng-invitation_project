@@ -7,16 +7,7 @@ import {
 const DigitalYesLayout = templateRegistry["the-digital-yes-wedding"];
 const EmeraldLuxeLayout = templateRegistry["emerald-canva-luxe-wedding"];
 const KhmerCelestialLayout = templateRegistry["khmer-celestial"];
-const KhmerRoyalLotusLayout = templateRegistry["khmer-royal-lotus"];
-
 describe("templateRegistry (1 Template = 1 Dedicated UI)", () => {
-  it("maps Khmer Royal Lotus by slug and admin preset", () => {
-    expect(templateRegistry["khmer-royal-lotus"]).toBe(KhmerRoyalLotusLayout);
-    expect(templateRegistry.KHMER_ROYAL_LOTUS).toBe(KhmerRoyalLotusLayout);
-    expect(getDedicatedTemplateComponent({ slug: "khmer-royal-lotus" })).toBe(KhmerRoyalLotusLayout);
-    expect(getDedicatedTemplateComponent({ presetId: "KHMER_ROYAL_LOTUS" })).toBe(KhmerRoyalLotusLayout);
-  });
-
   it("maps Khmer Celestial by slug and admin preset", () => {
     expect(templateRegistry["khmer-celestial"]).toBe(KhmerCelestialLayout);
     expect(templateRegistry.KHMER_CELESTIAL).toBe(KhmerCelestialLayout);
@@ -56,7 +47,7 @@ describe("templateRegistry (1 Template = 1 Dedicated UI)", () => {
     expect(typeof DefaultTemplateLayout).toBe("function");
   });
 
-  it("resolves dynamic admin template by presetId without falling back to Garden Royal Khmer", () => {
+  it("resolves dynamic admin template by presetId", () => {
     const adminTpl = {
       id: "26",
       name: "Emerald Custom VIP",

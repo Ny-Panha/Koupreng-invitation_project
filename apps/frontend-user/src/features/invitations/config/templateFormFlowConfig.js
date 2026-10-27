@@ -91,28 +91,6 @@ export const TEMPLATE_FORM_FLOWS = {
         },
         placePhotoInInvitation: false,
     },
-    // Garden Royal Khmer Wedding (2 Fields: Cover & Full Background)
-    "garden-royal-khmer-wedding": {
-        hasCoverImage: true,
-        hasCoverBackgroundImage: false,
-        hasBackgroundImage: true,
-        hasGate: true,
-        sectionOrder: DEFAULT_SECTION_ORDER,
-        labels: {
-            coverSection: "ក្រប និងផ្ទៃខាងក្រោយ (Cover & Background)",
-            coverImage: "រូបភាពក្របមុខ (Cover Image)",
-            coverImageEn: "Cover / Envelope Image",
-            backgroundImage: "ស៊ុមផ្កា / រូបភាពផ្ទៃខាងក្រោយ (Full / Frame)",
-            backgroundImageEn: "Full Background / Botanical Frame",
-        },
-        hints: {
-            coverImage: "រូបភាពបង្ហាញលើស្រោមសំបុត្រ ឬក្របទំព័រដើម (Cover)",
-            coverImageEn: "Shown on front cover / envelope (Cover)",
-            backgroundImage: "ស៊ុមផ្កា ឬរូបភាពផ្ទៃខាងក្រោយពេលបើកធៀបការពេញ (Full)",
-            backgroundImageEn: "Shown as botanical frame / background once invitation is opened (Full)",
-        },
-        placePhotoInInvitation: false,
-    },
 };
 
 /**
@@ -131,9 +109,7 @@ export function getTemplateFormFlow(templateIdOrTpl) {
 
     let matched = TEMPLATE_FORM_FLOWS[key];
     if (!matched) {
-        if (key === "garden-royal-khmer-wedding" || key === "garden_royal") {
-            matched = TEMPLATE_FORM_FLOWS["garden-royal-khmer-wedding"];
-        } else if (["khmer-celestial", "khmer_celestial", "royal-khmer-wedding", "10", "6", "1"].includes(key)) {
+        if (["khmer-celestial", "khmer_celestial", "royal-khmer-wedding", "10", "6", "1"].includes(key)) {
             matched = TEMPLATE_FORM_FLOWS["khmer-celestial"];
         }
     }

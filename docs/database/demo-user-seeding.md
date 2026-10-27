@@ -23,7 +23,7 @@ The script seeds **52 realistic records** across 9 database tables:
 
 | Module | Table | Records | Details |
 | :--- | :--- | :--- | :--- |
-| **Events** | `invitations` | **3** | **Wedding** (`silk-heritage`), **Engagement** (`garden-royal-khmer-wedding`), **Birthday** (`event-essential`) |
+| **Events** | `invitations` | **3** | **Wedding** (`silk-heritage`), **Engagement** (`khmer-celestial`), **Birthday** (`event-essential`) |
 | **Guests** | `guests` | **25** | 14 Wedding guests, 7 Engagement guests, 4 Birthday guests (VIP, Family, Friends, Colleagues) |
 | **RSVP** | `rsvps` | **8** | 5 Wedding, 2 Engagement, 1 Birthday (Attending & Polite Declines) |
 | **Wishes** | `rsvps` | **4** | Heartfelt Khmer blessings and birthday wishes (filtered by `message IS NOT NULL`) |

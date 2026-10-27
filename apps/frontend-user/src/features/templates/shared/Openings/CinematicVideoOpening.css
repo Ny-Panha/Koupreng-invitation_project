@@ -1009,14 +1009,26 @@
 .cinematic-film-frame { position: relative; min-height: 0; }
 .cinematic-film-controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .cinematic-film-controls progress { flex: 1; min-width: 100px; accent-color: #f2d693; }
-.cinematic-inline-stage { --film-blue: #041b39; --film-gold: #f2d693; min-height: 100vh; min-height: 100dvh; display: grid; place-items: center; padding: max(16px, env(safe-area-inset-top)) 12px max(16px, env(safe-area-inset-bottom)); background: var(--film-blue); color: #fff; }
 .cinematic-inline-stage:focus { outline: none; }
-.cinematic-playback--royal { max-width: 600px; gap: 10px; }
-.cinematic-playback--royal .cinematic-film-frame { background: var(--film-blue); }
-.cinematic-playback--royal video { max-height: calc(100dvh - 190px); min-height: 200px; aspect-ratio: 9/16; width: 100%; background: var(--film-blue); }
-.cinematic-playback--royal button { background: var(--film-blue); color: var(--film-gold); border-color: var(--film-gold); padding: 8px 12px; }
-.cinematic-playback--royal p { min-height: 3.6em; margin: 0; font-size: 13px; }
-.cinematic-film-footer { position: absolute; bottom: 0; left: 0; width: 100%; max-height: 24%; object-fit: contain; object-position: bottom; pointer-events: none; }
-.cinematic-playback--royal[data-transition=fade] { animation: cinematic-film-in 350ms ease both; }
-@keyframes cinematic-film-in { from { opacity: .2; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-@media (prefers-reduced-motion: reduce) { .cinematic-playback--royal[data-transition=fade] { animation: none; } }
+/* Royal Garden owns a source-proportional film canvas; other players keep their UI. */
+.tpl-royal-garden .cinematic-playback--royal { --film-footer-height:calc(100cqw / 3); position:relative; width:100%; max-width:none; height:100%; margin:0; display:grid; grid-template-rows:minmax(0,1fr) auto; gap:0; background:transparent; color:var(--rg-royal-gold); }
+.tpl-royal-garden .cinematic-playback--royal[data-footer=false] { --film-footer-height:0px; }
+.tpl-royal-garden .cinematic-playback--royal .cinematic-film-frame { position:relative; grid-row:1; width:100%; height:100%; min-height:0; border:0; padding:clamp(0px,calc(100dvh - 211.111cqw),48px) 0 0; background:none; }
+.tpl-royal-garden .cinematic-playback--royal video { display:block; width:100%; height:100%; max-height:none; min-height:0; background:none; }
+.tpl-royal-garden .cinematic-playback--royal button { display:grid; place-items:center; width:44px; height:44px; min-width:44px; min-height:44px; padding:0; border:1px solid var(--rg-royal-gold); border-radius:50%; color:var(--rg-royal-gold); background:var(--rg-royal-deep); font:400 13px/1.7 var(--rg-body-font); box-shadow:0 2px 8px rgb(0 0 0 / .15); }
+.tpl-royal-garden .cinematic-playback--royal button:focus-visible { outline:3px solid var(--rg-royal-white); outline-offset:3px; }
+.tpl-royal-garden .cinematic-playback--royal .cinematic-playback-actions { position:absolute; top:max(8px,env(safe-area-inset-top)); right:10px; z-index:6; display:flex; gap:6px; }
+.tpl-royal-garden .cinematic-playback--royal .cinematic-film-controls { position:absolute; left:18px; right:18px; bottom:calc(var(--film-footer-height) + 18px); z-index:6; display:flex; gap:6px; }
+.tpl-royal-garden .cinematic-playback--royal .cinematic-continue { margin-left:auto; }
+.tpl-royal-garden .cinematic-playback--royal .cinematic-film-progress { position:absolute; left:18px; bottom:calc(var(--film-footer-height) + 7px); z-index:6; width:calc(100% - 36px); height:3px; accent-color:var(--rg-royal-gold); }
+.tpl-royal-garden .cinematic-playback--royal .cinematic-film-footer { grid-row:2; display:block; position:static; width:100%; height:auto; aspect-ratio:3/1; max-height:none; object-fit:contain; pointer-events:none; }
+.tpl-royal-garden .cinematic-playback--royal .cinematic-film-status { position:absolute; z-index:6; left:12%; right:12%; bottom:calc(var(--film-footer-height) + 76px); width:auto; margin:0; padding:6px; background:var(--rg-royal-deep); color:var(--rg-royal-white); font:400 13px/1.8 var(--rg-body-font); text-align:center; }
+.tpl-royal-garden .cinematic-playback--royal .cinematic-film-play { position:absolute; z-index:7; top:45%; left:calc(50% - 30px); width:60px; height:60px; }
+.tpl-royal-garden .cinematic-playback--royal[data-transition=fade] .cinematic-film-frame { animation:cinematic-film-in 350ms ease both; }
+@keyframes cinematic-film-in { from { opacity:.6; } to { opacity:1; } }
+@media(prefers-reduced-motion:reduce) { .tpl-royal-garden .cinematic-playback--royal[data-transition=fade] .cinematic-film-frame { animation:none; } }
+
+.tpl-royal-garden .cinematic-film-progress { appearance:none; border:0; background:rgb(242 214 147 / .16); }
+.tpl-royal-garden .cinematic-film-progress::-webkit-progress-bar { background:rgb(242 214 147 / .16); }
+.tpl-royal-garden .cinematic-film-progress::-webkit-progress-value { background:var(--rg-royal-gold); }
+.tpl-royal-garden .cinematic-film-progress::-moz-progress-bar { background:var(--rg-royal-gold); }

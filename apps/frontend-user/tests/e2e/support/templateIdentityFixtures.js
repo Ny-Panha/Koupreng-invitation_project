@@ -4,7 +4,7 @@ import { fixtures } from "./studioFixtures.js";
 // All events, names, writes and sessions remain synthetic browser fixtures.
 export const identityCatalog = [
   { id: 4, code: "khmer-celestial", name: "Khmer Celestial", description: '{"presetId":"KHMER_CELESTIAL"}' },
-  { id: 2, code: "garden-royal-khmer-wedding", name: "Garden Royal Khmer Wedding" },
+  { id: 7, code: "the-digital-yes-wedding", name: "The Digital Yes" },
   { id: 5, code: "silk-heritage", name: "Silk Heritage", description: '{"presetId":"SILK_HERITAGE"}' },
   { id: 27, code: "emerald-canva-luxe-wedding", name: "Emerald Luxe", premium: true },
 ].map(t => ({ status: "ACTIVE", supportedEventTypes: ["WEDDING"], supportedLanguages: ["KH", "EN", "BOTH"], ...t }));
@@ -12,13 +12,13 @@ export const identityCatalog = [
 export async function installIdentityFixtures(page, { catalog = identityCatalog, delay = 0, denyPremium = false } = {}) {
   await fixtures(page);
   const events = new Map([101, 102].map((id, i) => [id, {
-    id, userId: 7, title: i ? "Garden celebration" : "Celestial celebration", eventType: "WEDDING",
-    templateId: i ? 2 : 4, templateCode: i ? "garden-royal-khmer-wedding" : "khmer-celestial",
-    groomName: i ? "Garden host" : "Celestial host", brideName: "Review partner", hostName: "Review host", partnerName: "Review partner",
-    status: "DRAFT", slug: i ? "review-garden" : "review-celestial", languageMode: "EN", visibility: "PUBLIC",
+    id, userId: 7, title: i ? "Digital Yes celebration" : "Celestial celebration", eventType: "WEDDING",
+    templateId: i ? 7 : 4, templateCode: i ? "the-digital-yes-wedding" : "khmer-celestial",
+    groomName: i ? "Digital Yes host" : "Celestial host", brideName: "Review partner", hostName: "Review host", partnerName: "Review partner",
+    status: "DRAFT", slug: i ? "review-digital-yes" : "review-celestial", languageMode: "EN", visibility: "PUBLIC",
     eventDate: "2026-12-20", eventTime: "17:30", venueName: "Review venue",
     // Deliberately stale customization must not override the server association.
-    designJson: JSON.stringify({ templateId: "garden-royal-khmer-wedding", presetId: "GARDEN_ROYAL" }),
+    designJson: JSON.stringify({ templateId: "the-digital-yes-wedding", presetId: "GOLD_LUXURY" }),
   }]));
   const writes = [];
   await page.route("**/api/v1/**", async route => {
