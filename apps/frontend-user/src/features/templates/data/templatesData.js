@@ -739,7 +739,8 @@ export const ROYAL_GARDEN_CINEMATIC_TEMPLATE = {
     apologyTitle: 'លិខិតសូមអភ័យទោស',
     apologyText: 'យើងខ្ញុំជាមាតាបិតា កូនប្រុស - កូនស្រី សូមអភ័យទោសក្នុងករណីពុំបានជូនសំបុត្រអញ្ជើញដោយផ្ទាល់។ សូមឯកឧត្តម លោកជំទាវ លោកអ្នកឧកញ៉ា អ្នកឧកញ៉ា លោក លោកស្រី អ្នកនាង កញ្ញា អញ្ជើញចូលរួមជាអធិបតី និងជាភ្ញៀវកិត្តិយស ក្នុងពិធីរៀបអាពាហ៍ពិពាហ៍ កូនប្រុស - កូនស្រី របស់យើងខ្ញុំ ដោយមេត្រីភាព។',
     saveTheDate: { enabled: true, heading: 'រាប់ថយក្រោយដល់ថ្ងៃមង្គល', showCountdown: true, showAddToCalendar: true, showCalendar: false, showTime: false, countdownStyle: 'circles' },
-    cinematicIntro: { version: 1, duration: 4.3 },
+    cinematicIntro: { version: 1, style: 'royal-arch', duration: 4.3 },
+    informationScene: { enabled: true, fixedBackground: true, motionPreset: 'subtle', effects: { sparkles: true, petals: true, goldDust: true, butterfly: true } },
     enabledSections: { story: false, party: false, faq: false, dressCode: false, gift: false, countdown: true, schedule: true, gallery: true, rsvp: true },
     design: { presetId: 'ROYAL_GARDEN_CINEMATIC', primaryColor: '#98703a', secondaryColor: '#c7984d', backgroundColor: '#f1ede6', openingStyle: 'royal-garden-oval' },
 };

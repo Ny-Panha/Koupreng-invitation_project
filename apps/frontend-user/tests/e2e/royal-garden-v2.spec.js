@@ -36,17 +36,17 @@ async function save(page) { await page.getByRole('button', { name: 'Save', exact
 async function shot(page, name, info) { const dir = '../../docs/design/royal-garden-v2/evidence'; await fs.mkdir(dir, { recursive: true }); await page.screenshot({ path: `${dir}/${info.project.name}-${name}.png`, fullPage: false }); }
 
 test('E2E-01 complete the cinematic sequence and capture its stages', async ({ page }, info) => {
-  await setup(page); await page.clock.install(); await page.goto(`/templates/${code}`);
+  await setup(page, { cinematicIntro: { ...content.cinematicIntro, duration: 4.3 } }); await page.clock.install(); await page.goto('/i/review-celestial');
   await expect(page.locator('[data-stage=COVER]')).toBeVisible(); await shot(page, 'intro-cover', info);
   await page.locator('.rg-open').click(); await page.clock.runFor(2400);
   await expect(page.locator('[data-stage=TITLE_REVEAL]')).toBeVisible(); await shot(page, 'intro-title', info);
   await page.clock.runFor(4200); await expect(page.locator('[data-stage=PHOTO_SLIDESHOW]')).toBeVisible(); await page.clock.runFor(1100); await shot(page, 'intro-photo-1', info);
   await page.clock.runFor(4300); await shot(page, 'intro-photo-2', info);
-  await page.clock.runFor(4300); await page.clock.runFor(700);
+  await page.clock.runFor(4400); await expect(page.locator('[data-stage=INVITATION_REVEAL]')).toBeVisible(); await page.clock.runFor(800);
   await expect(page.locator('[data-stage=CONTENT]')).toBeVisible();
 });
 test('E2E-02 skip the intro without a stale timer reopening it', async ({ page }) => {
-  await setup(page); await page.clock.install(); await page.goto(`/templates/${code}`); await page.locator('.rg-open').click();
+  await setup(page); await page.clock.install(); await page.goto('/i/review-celestial'); await page.locator('.rg-open').click();
   await page.locator('.rg-intro-controls button').last().click(); await page.clock.runFor(40000);
   await expect(page.locator('[data-stage=CONTENT]')).toBeVisible();
 });

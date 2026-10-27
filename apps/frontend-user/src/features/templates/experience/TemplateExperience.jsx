@@ -42,6 +42,8 @@ import { isTrustedPreviewMessage, postPreviewMessage, readEmbeddedPreviewChannel
 import "./template-experience.css";
 import "./studio-fonts.css";
 import { useStudioPreviewEditing } from '@/shared/preview/useStudioPreviewEditing';
+import { mediaService } from '@/features/invitations/api/mediaApi';
+import { ROYAL_ASSETS, royalGardenPresentation } from '../layouts/RoyalGardenCinematic/model/royalGardenPresentation';
 import { isLocalTemplateFont } from '../shared/templateTypography';
 
 const ensureGoogleFontLoaded = (fontFamily) => {
@@ -761,12 +763,30 @@ function WeddingTemplateExperience({
 const EventEssentialLayout = lazy(() => import("../layouts/EventEssentialLayout"));
 export default function TemplateExperience(props) {
     const tpl = props.tpl;
+    const channel = useMemo(() => props.previewChannel || readEmbeddedPreviewChannel(), [props.previewChannel]);
+    const [previewContent, setPreviewContent] = useState(null);
+    useEffect(() => {
+        if (!channel) return;
+        const message = event => {
+            if (isTrustedPreviewMessage(event, channel) && event.data.type === 'LIVE_PREVIEW_SYNC') setPreviewContent(event.data.data);
+        };
+        window.addEventListener('message', message);
+        return () => window.removeEventListener('message', message);
+    }, [channel]);
+    const ownerLoad = useCallback(signal => mediaService.ownerCinematicContent(previewContent?.previewEventId, previewContent?.preWeddingVideo?.videoMediaId, signal), [previewContent?.previewEventId, previewContent?.preWeddingVideo?.videoMediaId]);
+    const previewConfiguration = previewContent?.previewVideoEntitled === true && /^[1-9]\d*$/.test(String(previewContent?.previewEventId)) ? previewContent.preWeddingVideo : null;
+    const royal = [tpl?.code, tpl?.slug, tpl?.templateCode].includes('royal-garden-cinematic');
+    const videoPresentation = useMemo(() => royal ? { ...royalGardenPresentation(previewContent || tpl?.hostContent || props.content || tpl).video, royal: true } : undefined, [royal, previewContent, tpl, props.content]);
+    // A public catalog sample is never inherited by owner drafts or public invitations.
+    const demoVideo = royal && !channel && !previewContent && !tpl?.hostContent && !props.isHostedInvitation && !props.content?.hasHostContent
+        ? { src: ROYAL_ASSETS.demoVideo, poster: ROYAL_ASSETS.poster } : undefined;
     const renderer = resolveTemplateRenderer(tpl, props.variant);
     if (!renderer.available) return <TemplateUnavailable />;
     const coverless = renderer.id === 'event-essential' || ['withjoy-modern-portal', 'bliss-editorial-wedding', 'template-boilerplate']
         .map(code => getDedicatedTemplateComponent({ code })).includes(renderer.component);
-    const wrap = node => <CinematicOpeningProvider key={props.cinematicKey || renderer.id} configuration={props.cinematicOpening} loadVideo={props.loadCinematicVideo}
-        english={String(props.cinematicLanguage || tpl?.languageMode || tpl?.hostContent?.languageMode).toUpperCase() === "EN"} fallbackCover={coverless} title={tpl?.title || tpl?.hostContent?.title}>{node}</CinematicOpeningProvider>;
+    const wrap = node => <CinematicOpeningProvider key={props.cinematicKey || renderer.id} configuration={channel ? previewConfiguration : props.cinematicOpening} loadVideo={channel ? ownerLoad : props.loadCinematicVideo}
+        demoVideo={demoVideo} presentation={videoPresentation} previewChannel={channel}
+        english={String(previewContent?.languageMode || props.cinematicLanguage || tpl?.languageMode || tpl?.hostContent?.languageMode || new URLSearchParams(window.location.search).get('lang')).toUpperCase() === "EN"} fallbackCover={coverless} title={tpl?.title || tpl?.hostContent?.title}>{node}</CinematicOpeningProvider>;
     if ([tpl?.code, tpl?.slug, tpl?.templateCode, tpl?.templateId].includes("event-essential")) {
         return wrap(<TemplateRenderGuard key={renderer.id} id={renderer.id}><Suspense fallback={<p role="status">កំពុងផ្ទុក… / Loading…</p>}><EventEssentialLayout {...props} /></Suspense></TemplateRenderGuard>);
     }

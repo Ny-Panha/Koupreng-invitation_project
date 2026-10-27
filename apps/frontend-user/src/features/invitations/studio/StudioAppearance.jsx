@@ -1,5 +1,6 @@
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import StudioFontPreview from './StudioFontPreview';
+import RoyalGardenSceneEditor from './RoyalGardenSceneEditor';
 
 const PALETTES = [
   ["Heritage gold", "#214f3b", "#a77d3e", "#2d332c", "#f7f2e8", "#c7aa71"],
@@ -34,6 +35,7 @@ export default function StudioAppearance({ form, update, supportsPalette }) {
       <label className="pe-label">{text("Portrait focal point", "ចំណុចរូបគូស្វាមីភរិយា")}<input type="range" min="0" max="100" value={style.portraitY ?? 50} onChange={e => set("portraitY", Number(e.target.value))} /></label>
       <label className="pe-label">{text('Garden motion', 'ចលនាលម្អសួន')}<select className="pe-input" value={style.motion || 'elegant'} onChange={e => set('motion', e.target.value)}><option value="minimal">{text('Minimal', 'តិចបំផុត')}</option><option value="elegant">{text('Elegant', 'ស្រទន់')}</option><option value="cinematic">{text('Cinematic', 'បែបភាពយន្ត')}</option></select></label>
       {form.templateCode === 'royal-garden-cinematic' || form.templateId === 'royal-garden-cinematic' ? <>
+        <RoyalGardenSceneEditor form={form} update={update} english={en} />
         <label className="pe-label">{text('Pattern visibility', 'កម្រិតលំនាំផ្ទៃក្រោយ')}<input type="range" min="0" max="1" step=".05" value={style.patternOpacity ?? .8} onChange={e => set('patternOpacity', Number(e.target.value))} /></label>
         <label className="pe-label">{text('Ornament scale', 'ទំហំលំនាំលម្អ')}<input type="range" min=".6" max="1.5" step=".1" value={style.ornamentScale ?? 1} onChange={e => set('ornamentScale', Number(e.target.value))} /></label>
       </> : null}

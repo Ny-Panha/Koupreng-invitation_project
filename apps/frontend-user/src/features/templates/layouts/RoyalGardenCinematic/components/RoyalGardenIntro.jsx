@@ -25,7 +25,7 @@ export default function RoyalGardenIntro({ sequence, intro, slides, content, tit
   const slideshow = sequence.stage === 'PHOTO_SLIDESHOW';
   const portraitScene = slideshow || (sequence.stage === 'INVITATION_REVEAL' && slides.length > 0);
   const portraitIndex = sequence.stage === 'INVITATION_REVEAL' ? Math.max(0, slides.length - 1) : sequence.slide;
-  const golden = intro.style === 'golden-calligraphy';
+  const golden = ['golden-calligraphy', 'royal-arch'].includes(intro.style);
   const arriving = golden && sequence.stage === 'TITLE_REVEAL' && slides.length > 0;
   const artwork = golden ? introArtwork(intro) : '';
   const [failedArtwork, setFailedArtwork] = useState('');
@@ -42,7 +42,7 @@ export default function RoyalGardenIntro({ sequence, intro, slides, content, tit
   return <section ref={root} className="rg-intro" data-scene={sequence.stage} data-style={intro.style} data-palette={intro.palette} data-animation={intro.animationPreset} data-reduced={reducedMotion || undefined} data-paused={sequence.paused || sequence.hidden} aria-label={english ? 'Invitation opening' : 'ការបើកធៀបអញ្ជើញ'}>
     <CoverBackground content={content} templateDefault={manifest.cover} /><div className="rg-intro-wash" />
     {golden && <div className="rg-golden-backdrop" aria-hidden="true" />}
-    <div className="rg-particles" aria-hidden="true">{Array.from({ length: 14 }, (_, i) => <i key={i} style={{ '--i': i }} />)}</div>
+    {intro.style !== 'royal-arch' && <div className="rg-particles" aria-hidden="true">{Array.from({ length: 14 }, (_, i) => <i key={i} style={{ '--i': i }} />)}</div>}
     {!portraitScene && golden && <div className="rg-calligraphy-scene" data-position={intro.artworkPosition} style={{ '--rg-artwork-scale': intro.artworkScale }}>
       {hasArtwork && <div className="rg-golden-artwork" style={{ '--rg-calligraphy-image': artworkMask.source === artwork ? `url(${JSON.stringify(artworkMask.url)})` : 'none' }}>
         <img className="rg-calligraphy-image" src={artwork} srcSet={artwork === DEFAULT_INTRO_ARTWORK ? `${manifest.openingArtwork.smallSrc} 960w, ${artwork} 1600w` : undefined} sizes="(max-width: 767px) 88vw, 600px" width="1600" height="900" alt={intro.artworkAlt || (english ? 'Golden wedding calligraphy with flowers and a butterfly: Save the Date' : 'អក្សរផ្ចង់មង្គលការពណ៌មាស មានផ្កា និងមេអំបៅ')} fetchPriority="high" decoding="async" onLoad={event => setArtworkMask({ source: artwork, url: event.currentTarget.currentSrc || artwork })} onError={() => setFailedArtwork(artwork)} />

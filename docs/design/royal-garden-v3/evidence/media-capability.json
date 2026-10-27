@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-27",
+  "environment": "Installed Playwright WebKit on Windows",
+  "sample": {
+    "type": "video/mp4",
+    "bytes": 6457854,
+    "durationSeconds": 44.373991,
+    "video": "H.264",
+    "audio": "AAC-LC"
+  },
+  "httpSample": "Decoded and advanced currentTime in the catalog browser test",
+  "standaloneBlobProbe": {
+    "canPlayType": "probably",
+    "errorCode": 4,
+    "readyState": 0,
+    "error": "MEDIA_ERR_SRC_NOT_SUPPORTED"
+  },
+  "probe": "Fetch the same MP4, await response.blob(), assign URL.createObjectURL(blob) to a new muted playsInline video, append it to document.body and attempt play. This reproduces without React, the provider, entitlement code or preview messaging.",
+  "browserTests": "Windows WebKit protected-film cases assert authorized retrieval and usable-content fallback. Chromium and Firefox verify real blob decoding and completion.",
+  "nativeSafari": "Not verified on macOS or iOS; remains a release gate",
+  "reference": "https://playwright.dev/docs/browsers#webkit"
+}

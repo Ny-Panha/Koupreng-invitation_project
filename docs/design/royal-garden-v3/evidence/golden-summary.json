@@ -1,0 +1,11 @@
+{
+  "stats": {
+    "startTime": "2026-10-27T03:20:03.521Z",
+    "duration": 229540.522,
+    "expected": 36,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "scope": "Unchanged golden-opening suite across desktop/mobile Chromium, Firefox and WebKit."
+}
