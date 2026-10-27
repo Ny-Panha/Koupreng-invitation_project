@@ -93,9 +93,10 @@ test('hosted: authorized protected film completes, errors recover, and guest tex
 });
 
 test('unavailable video, absent photo, failed artwork, cleared lettering and long names stay usable', async ({ page }) => {
-  await setup(page, { premium: false, content: { preWeddingVideo: { enabled: true, videoMediaId: 107 }, coverBackgroundImage: '', cinematicIntro: { ...intro, artworkSrc: '', entranceFrame: '/missing-frame.webp' } }, guest: { guestName: 'លោកអ្នក និងក្រុមគ្រួសារ '.repeat(20) } });
+  await setup(page, { premium: false, content: { preWeddingVideo: { enabled: true, videoMediaId: 107 }, coverBackgroundImage: '', cinematicIntro: { ...intro, animationPreset: 'still', artworkSrc: '', entranceFrame: '/missing-frame.webp' } }, guest: { guestName: 'លោកអ្នក និងក្រុមគ្រួសារ '.repeat(20) } });
   let calls = 0; page.on('request', request => { if (request.url().includes('cinematic-content') || request.url().includes('pre-wedding-demo.mp4')) calls++; });
   await page.goto('/i/review-celestial'); await expect(page.locator('.rg-open')).toBeVisible(); await expect(page.locator('.rg-entrance-lettering h1')).toBeVisible();
+  expect(await page.locator('.rg-entrance-lettering').evaluate(node => getComputedStyle(node, '::after').animationName)).toBe('none');
   await page.locator('.rg-open').click(); await expect(page.locator('[data-stage=CONTENT]')).toBeVisible(); expect(calls).toBe(0);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
 });

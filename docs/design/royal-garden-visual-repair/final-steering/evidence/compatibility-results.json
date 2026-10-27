@@ -1,0 +1,559 @@
+{
+  "config": {
+    "argv": [
+      "C:\\nvm4w\\nodejs\\node.exe",
+      "D:\\Koupreng-invitation_project\\apps\\frontend-user\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "playwright.royal-garden-v3.config.js",
+      "--grep",
+      "unavailable video|reduced motion"
+    ],
+    "configFile": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\playwright.royal-garden-v3.config.js",
+    "rootDir": "D:/Koupreng-invitation_project/apps/frontend-user/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/Koupreng-invitation_project/.cache/royal-garden-v3/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "D:/Koupreng-invitation_project/apps/frontend-user/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "royal-garden-v3.spec.js"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "D:/Koupreng-invitation_project/.cache/royal-garden-v3/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "mobile-chromium",
+        "name": "mobile-chromium",
+        "testDir": "D:/Koupreng-invitation_project/apps/frontend-user/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "royal-garden-v3.spec.js"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "D:/Koupreng-invitation_project/.cache/royal-garden-v3/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "D:/Koupreng-invitation_project/apps/frontend-user/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "royal-garden-v3.spec.js"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "D:/Koupreng-invitation_project/.cache/royal-garden-v3/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "D:/Koupreng-invitation_project/apps/frontend-user/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "royal-garden-v3.spec.js"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\Koupreng-invitation_project\\.cache\\royal-garden-v3\\playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "chromium",
+        "testDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "snapshotDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "testIgnore": [],
+        "testMatch": "royal-garden-v3.spec.js",
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4186",
+          "trace": "retain-on-failure",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\Koupreng-invitation_project\\.cache\\royal-garden-v3\\playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "mobile-chromium",
+        "testDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "snapshotDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "testIgnore": [],
+        "testMatch": "royal-garden-v3.spec.js",
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4186",
+          "trace": "retain-on-failure",
+          "userAgent": "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Mobile Safari/537.36",
+          "viewport": {
+            "width": 412,
+            "height": 839
+          },
+          "screen": {
+            "width": 412,
+            "height": 915
+          },
+          "deviceScaleFactor": 2.625,
+          "isMobile": true,
+          "hasTouch": true,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "mobile-chromium"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\Koupreng-invitation_project\\.cache\\royal-garden-v3\\playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "firefox",
+        "testDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "snapshotDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "testIgnore": [],
+        "testMatch": "royal-garden-v3.spec.js",
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4186",
+          "trace": "retain-on-failure",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:157.0) Gecko/20100101 Firefox/157.0",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "firefox"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "firefox"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\Koupreng-invitation_project\\.cache\\royal-garden-v3\\playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "webkit",
+        "testDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "snapshotDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "testIgnore": [],
+        "testMatch": "royal-garden-v3.spec.js",
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4186",
+          "trace": "retain-on-failure",
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Safari/605.1.15",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1792,
+            "height": 1120
+          },
+          "deviceScaleFactor": 2,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "webkit"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "webkit"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../.cache/royal-garden-v3/browser-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 2,
+    "webServer": {
+      "command": "node ./node_modules/vite/bin/vite.js preview --host 127.0.0.1 --port 4186 --strictPort",
+      "url": "http://127.0.0.1:4186",
+      "reuseExistingServer": true
+    }
+  },
+  "suites": [
+    {
+      "title": "royal-garden-v3.spec.js",
+      "file": "royal-garden-v3.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "unavailable video, absent photo, failed artwork, cleared lettering and long names stay usable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10236,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T13:40:15.535Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b33fc2f86ea2f6a11472-8de8b0ba30ee751ea881",
+          "file": "royal-garden-v3.spec.js",
+          "line": 95,
+          "column": 1
+        },
+        {
+          "title": "reduced motion skips video, disables effects, and keeps keyboard access",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1835,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T13:40:26.046Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b33fc2f86ea2f6a11472-fc339af4b363be35b9b6",
+          "file": "royal-garden-v3.spec.js",
+          "line": 116,
+          "column": 1
+        },
+        {
+          "title": "unavailable video, absent photo, failed artwork, cleared lettering and long names stay usable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 10811,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T13:40:15.538Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b33fc2f86ea2f6a11472-e26368cb9a9d0fa4afbd",
+          "file": "royal-garden-v3.spec.js",
+          "line": 95,
+          "column": 1
+        },
+        {
+          "title": "reduced motion skips video, disables effects, and keeps keyboard access",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1970,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T13:40:26.599Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b33fc2f86ea2f6a11472-62813204c0261bc0ba32",
+          "file": "royal-garden-v3.spec.js",
+          "line": 116,
+          "column": 1
+        },
+        {
+          "title": "unavailable video, absent photo, failed artwork, cleared lettering and long names stay usable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4233,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T13:40:28.926Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b33fc2f86ea2f6a11472-6ccc2693bfb588784ff7",
+          "file": "royal-garden-v3.spec.js",
+          "line": 95,
+          "column": 1
+        },
+        {
+          "title": "reduced motion skips video, disables effects, and keeps keyboard access",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1384,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T13:40:33.808Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b33fc2f86ea2f6a11472-90a8fe9b3fcbd94683c6",
+          "file": "royal-garden-v3.spec.js",
+          "line": 116,
+          "column": 1
+        },
+        {
+          "title": "unavailable video, absent photo, failed artwork, cleared lettering and long names stay usable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2634,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T13:40:29.411Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b33fc2f86ea2f6a11472-3a4bd943487d39dfc1fc",
+          "file": "royal-garden-v3.spec.js",
+          "line": 95,
+          "column": 1
+        },
+        {
+          "title": "reduced motion skips video, disables effects, and keeps keyboard access",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1979,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T13:40:32.147Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b33fc2f86ea2f6a11472-52739ea4d397fad2ea98",
+          "file": "royal-garden-v3.spec.js",
+          "line": 116,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-27T13:40:14.397Z",
+    "duration": 21175.235,
+    "expected": 8,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

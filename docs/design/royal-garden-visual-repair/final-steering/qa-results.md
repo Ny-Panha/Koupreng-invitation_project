@@ -8,9 +8,10 @@
 | Targeted Royal/provider/intro Vitest run | 4 files / 46 tests passed, 1.15s before the two additional music-precedence cases; the final full run includes those cases |
 | `npm --prefix apps/frontend-user run lint` | Passed, exit 0 |
 | `npm --prefix apps/frontend-user run analyze:knip` | Passed, exit 0 |
-| `npm --prefix apps/frontend-user run build` | Passed, final build 1.55s |
+| `npm --prefix apps/frontend-user run build` | Passed, final compatibility build 3.53s |
 | From `apps/frontend-user`: `npx playwright test --config playwright.royal-garden-v3.config.js` | **56 passed**, 0 failed/skipped, 4.2m; Chromium, mobile Chromium, Firefox and Windows WebKit |
 | Same config: `--project chromium --project mobile-chromium --grep 'hosted:\|soundtrack:'` | **6 passed**, 22.7s after final ticket gate/touch/hash-start checks |
+| Same config: `--grep 'unavailable video\|reduced motion'` | **8 passed**, 21.2s after viewport-height fallbacks and still/hidden title-shimmer compatibility correction |
 | Default config: critical-routes, route-smoke and phase9-video, `--workers=2 --reporter=list,json` | **74 passed / 2 failed**, 3.5m; failures investigated below |
 | Default config: `phase9-video.spec.js --project mobile-chromium --grep 'khmer-golden-canva-inspired-wedding\|real browser video' --workers=1 --reporter=list,json` | Both failing cases **passed**, 6.0s, unchanged assertions/timeouts |
 | `powershell -ExecutionPolicy Bypass -File scripts/setup-ai-skills.ps1 -VerifyOnly` | Passed; 59 bundled skill directories |
@@ -19,6 +20,8 @@
 | Staged diff through `output/ci-tools/gitleaks.exe stdin --redact --no-banner` | Passed, no leaks found |
 
 [Complete Royal browser report](evidence/browser-results.json), [final six-case gate report](evidence/gate-final-results.json), [broader regression report](evidence/regression-results.json), [isolated regression recheck](evidence/regression-recheck-results.json). The broader run is reported as 74+2 rechecked, not falsely presented as one clean 76-case invocation.
+
+The [eight-case final compatibility report](evidence/compatibility-results.json) verifies still mode, reduced motion, unavailable media and keyboard access across the four browser projects. The CSS follow-up adds `100vh` before `100dvh` and pauses/disables the title's pseudo-element sweep for hidden/still settings. It does not change the measured modern-browser canvas geometry or audio/data implementation.
 
 ## Audio, scene gate and persistence proof
 
