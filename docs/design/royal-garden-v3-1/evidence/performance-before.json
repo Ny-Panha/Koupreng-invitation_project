@@ -1,0 +1,2584 @@
+{
+  "recordedAt": "2026-10-27T14:22:03.134Z",
+  "environment": {
+    "os": "win32",
+    "browser": "156.0.8078.4",
+    "viewport": "390x844",
+    "dpr": 1,
+    "cpuSlowdown": 4,
+    "downstreamBitsPerSecond": 1600000,
+    "upstreamBitsPerSecond": 750000,
+    "latencyMs": 150,
+    "server": "local Vite production preview",
+    "api": "synthetic empty catalog API; local template fallback",
+    "cache": "disabled; three fresh contexts"
+  },
+  "samples": [
+    {
+      "run": 1,
+      "entrance": {
+        "lcp": 6964,
+        "cls": 0.0005531522883323859,
+        "events": [],
+        "longTasks": [
+          152,
+          73
+        ],
+        "lcpDetails": {
+          "url": "http://127.0.0.1:4186/templates/royal-garden/v3/opening/demo-portrait-640.webp",
+          "element": "cover-bg-media",
+          "loadTime": 6933.800000011921,
+          "renderTime": 6964,
+          "size": 198065
+        },
+        "resources": [
+          {
+            "name": "/js/telegram-web-app.js",
+            "startTime": 186.60000002384186,
+            "responseStart": 0,
+            "responseEnd": 8763.100000023842,
+            "duration": 8576.5,
+            "initiator": "script",
+            "encoded": 0,
+            "transferred": 0
+          },
+          {
+            "name": "/assets/index-BaRQOMsF.js",
+            "startTime": 187.39999997615814,
+            "responseStart": 207.5,
+            "responseEnd": 1325.3999999761581,
+            "duration": 1138,
+            "initiator": "script",
+            "encoded": 130003,
+            "transferred": 130303
+          },
+          {
+            "name": "/assets/jsx-runtime-Wy9s6hX0.js",
+            "startTime": 187.89999997615814,
+            "responseStart": 206.80000001192093,
+            "responseEnd": 455,
+            "duration": 267.10000002384186,
+            "initiator": "other",
+            "encoded": 3383,
+            "transferred": 3683
+          },
+          {
+            "name": "/assets/useLanguageStore-mmn9Okko.js",
+            "startTime": 188.30000001192093,
+            "responseStart": 206.5,
+            "responseEnd": 375.69999998807907,
+            "duration": 187.39999997615814,
+            "initiator": "other",
+            "encoded": 1006,
+            "transferred": 1306
+          },
+          {
+            "name": "/assets/createLucideIcon-iAjGl61D.js",
+            "startTime": 188.69999998807907,
+            "responseStart": 206.89999997615814,
+            "responseEnd": 423.39999997615814,
+            "duration": 234.69999998807907,
+            "initiator": "other",
+            "encoded": 1480,
+            "transferred": 1780
+          },
+          {
+            "name": "/assets/httpClient-CUjnEakX.js",
+            "startTime": 189.10000002384186,
+            "responseStart": 208.30000001192093,
+            "responseEnd": 724.6000000238419,
+            "duration": 535.5,
+            "initiator": "other",
+            "encoded": 19949,
+            "transferred": 20249
+          },
+          {
+            "name": "/assets/index-CFCCisHt.css",
+            "startTime": 189.5,
+            "responseStart": 207.30000001192093,
+            "responseEnd": 820.3000000119209,
+            "duration": 630.8000000119209,
+            "initiator": "link",
+            "encoded": 29941,
+            "transferred": 30241
+          },
+          {
+            "name": "/assets/SiteAnimations-YCMz9XfH.js",
+            "startTime": 1508.699999988079,
+            "responseStart": 1570,
+            "responseEnd": 1767.800000011921,
+            "duration": 259.10000002384186,
+            "initiator": "script",
+            "encoded": 1565,
+            "transferred": 1865
+          },
+          {
+            "name": "/assets/proxy-CC7m1GcZ.js",
+            "startTime": 1509.3999999761581,
+            "responseStart": 1572.199999988079,
+            "responseEnd": 2178.699999988079,
+            "duration": 669.3000000119209,
+            "initiator": "script",
+            "encoded": 45113,
+            "transferred": 45413
+          },
+          {
+            "name": "/assets/logo-CnrSq6bR.js",
+            "startTime": 1509.8999999761581,
+            "responseStart": 1571.3999999761581,
+            "responseEnd": 1737.199999988079,
+            "duration": 227.30000001192093,
+            "initiator": "script",
+            "encoded": 49,
+            "transferred": 349
+          },
+          {
+            "name": "/assets/SiteAnimations-DnKXCQkx.css",
+            "startTime": 1510.6000000238419,
+            "responseStart": 1571.3999999761581,
+            "responseEnd": 1751.8999999761581,
+            "duration": 241.29999995231628,
+            "initiator": "link",
+            "encoded": 1106,
+            "transferred": 1406
+          },
+          {
+            "name": "/assets/TemplateDemoPage-B-QJRKnZ.js",
+            "startTime": 1531.8999999761581,
+            "responseStart": 1571.3999999761581,
+            "responseEnd": 1736.1000000238419,
+            "duration": 204.20000004768372,
+            "initiator": "script",
+            "encoded": 156,
+            "transferred": 456
+          },
+          {
+            "name": "/assets/templates-GykQu1Rp.js",
+            "startTime": 1532.800000011921,
+            "responseStart": 1571.699999988079,
+            "responseEnd": 1815.699999988079,
+            "duration": 282.89999997615814,
+            "initiator": "script",
+            "encoded": 4296,
+            "transferred": 4596
+          },
+          {
+            "name": "/assets/KhmerCelestialLayout-XABWWHsu.js",
+            "startTime": 1533.300000011921,
+            "responseStart": 2228,
+            "responseEnd": 2635.899999976158,
+            "duration": 1102.5999999642372,
+            "initiator": "script",
+            "encoded": 10159,
+            "transferred": 10459
+          },
+          {
+            "name": "/assets/arrow-left-Co9bFwqD.js",
+            "startTime": 1533.8999999761581,
+            "responseStart": 2244.100000023842,
+            "responseEnd": 2414.300000011921,
+            "duration": 880.4000000357628,
+            "initiator": "script",
+            "encoded": 205,
+            "transferred": 505
+          },
+          {
+            "name": "/assets/TemplateExperience-D5FTh5KA.js",
+            "startTime": 1534.300000011921,
+            "responseStart": 2290.800000011921,
+            "responseEnd": 3330.300000011921,
+            "duration": 1796,
+            "initiator": "script",
+            "encoded": 52490,
+            "transferred": 52790
+          },
+          {
+            "name": "/assets/openingConfig-4--OkjJT.js",
+            "startTime": 1534.8999999761581,
+            "responseStart": 2336.899999976158,
+            "responseEnd": 2572.800000011921,
+            "duration": 1037.9000000357628,
+            "initiator": "script",
+            "encoded": 1150,
+            "transferred": 1450
+          },
+          {
+            "name": "/assets/CinematicVideoOpening-DrrnOoVX.js",
+            "startTime": 1535.300000011921,
+            "responseStart": 2415.899999976158,
+            "responseEnd": 2840.100000023842,
+            "duration": 1304.800000011921,
+            "initiator": "script",
+            "encoded": 10489,
+            "transferred": 10789
+          },
+          {
+            "name": "/assets/mail-BEvm0P9D.js",
+            "startTime": 1535.800000011921,
+            "responseStart": 2573.899999976158,
+            "responseEnd": 2761.800000011921,
+            "duration": 1226,
+            "initiator": "script",
+            "encoded": 253,
+            "transferred": 553
+          },
+          {
+            "name": "/assets/sparkles-CQxlGWHq.js",
+            "startTime": 1536.199999988079,
+            "responseStart": 2637.199999988079,
+            "responseEnd": 2809.899999976158,
+            "duration": 1273.699999988079,
+            "initiator": "script",
+            "encoded": 552,
+            "transferred": 852
+          },
+          {
+            "name": "/assets/eventPresentation-RRyBrHb4.js",
+            "startTime": 1536.699999988079,
+            "responseStart": 2763.199999988079,
+            "responseEnd": 2967.100000023842,
+            "duration": 1430.4000000357628,
+            "initiator": "script",
+            "encoded": 1436,
+            "transferred": 1736
+          },
+          {
+            "name": "/assets/CinematicVideoOpening-BYV-m3AB.css",
+            "startTime": 1537.300000011921,
+            "responseStart": 1738.6000000238419,
+            "responseEnd": 2020.8999999761581,
+            "duration": 483.5999999642372,
+            "initiator": "link",
+            "encoded": 5471,
+            "transferred": 5771
+          },
+          {
+            "name": "/assets/circle-check-DGgvMsbA.js",
+            "startTime": 1537.699999988079,
+            "responseStart": 2811.399999976158,
+            "responseEnd": 2983.399999976158,
+            "duration": 1445.699999988079,
+            "initiator": "script",
+            "encoded": 250,
+            "transferred": 550
+          },
+          {
+            "name": "/assets/clock-CYcN1Ohb.js",
+            "startTime": 1538.1000000238419,
+            "responseStart": 2841.399999976158,
+            "responseEnd": 3015.5,
+            "duration": 1477.3999999761581,
+            "initiator": "script",
+            "encoded": 209,
+            "transferred": 509
+          },
+          {
+            "name": "/assets/ui-DzTS81Rm.js",
+            "startTime": 1538.5,
+            "responseStart": 2953.600000023842,
+            "responseEnd": 3187.199999988079,
+            "duration": 1648.699999988079,
+            "initiator": "script",
+            "encoded": 3354,
+            "transferred": 3654
+          },
+          {
+            "name": "/assets/toast-BNSoQ1dn.js",
+            "startTime": 1538.8999999761581,
+            "responseStart": 2968.5,
+            "responseEnd": 3140.600000023842,
+            "duration": 1601.7000000476837,
+            "initiator": "script",
+            "encoded": 292,
+            "transferred": 592
+          },
+          {
+            "name": "/assets/ui-v9maAeT-.css",
+            "startTime": 1539.6000000238419,
+            "responseStart": 1738.800000011921,
+            "responseEnd": 1988.800000011921,
+            "duration": 449.19999998807907,
+            "initiator": "link",
+            "encoded": 2731,
+            "transferred": 3031
+          },
+          {
+            "name": "/assets/mediaApi-CcAvY6oE.js",
+            "startTime": 1540,
+            "responseStart": 2984.899999976158,
+            "responseEnd": 3171.399999976158,
+            "duration": 1631.3999999761581,
+            "initiator": "script",
+            "encoded": 1072,
+            "transferred": 1372
+          },
+          {
+            "name": "/assets/weddingStorage-DPw_jadI.js",
+            "startTime": 1540.3999999761581,
+            "responseStart": 3016.899999976158,
+            "responseEnd": 3235.300000011921,
+            "duration": 1694.9000000357628,
+            "initiator": "script",
+            "encoded": 1558,
+            "transferred": 1858
+          },
+          {
+            "name": "/assets/InvitationLabel-DAMaM8Xi.js",
+            "startTime": 1540.800000011921,
+            "responseStart": 3142.199999988079,
+            "responseEnd": 3376.600000023842,
+            "duration": 1835.800000011921,
+            "initiator": "script",
+            "encoded": 2686,
+            "transferred": 2986
+          },
+          {
+            "name": "/assets/invitationLanguage-BwEdAu9z.js",
+            "startTime": 1541.199999988079,
+            "responseStart": 3172.800000011921,
+            "responseEnd": 3346,
+            "duration": 1804.800000011921,
+            "initiator": "script",
+            "encoded": 216,
+            "transferred": 516
+          },
+          {
+            "name": "/assets/lib-l5Ry_C1A.js",
+            "startTime": 1541.6000000238419,
+            "responseStart": 3188.699999988079,
+            "responseEnd": 3471.800000011921,
+            "duration": 1930.199999988079,
+            "initiator": "script",
+            "encoded": 8489,
+            "transferred": 8789
+          },
+          {
+            "name": "/assets/khmer-celestial-CD6n1oJL.js",
+            "startTime": 1542,
+            "responseStart": 3237,
+            "responseEnd": 3519.800000011921,
+            "duration": 1977.800000011921,
+            "initiator": "script",
+            "encoded": 8251,
+            "transferred": 8551
+          },
+          {
+            "name": "/assets/templateTypography-D2aSXzJ5.js",
+            "startTime": 1542.5,
+            "responseStart": 3331.600000023842,
+            "responseEnd": 3504,
+            "duration": 1961.5,
+            "initiator": "script",
+            "encoded": 461,
+            "transferred": 761
+          },
+          {
+            "name": "/assets/khmer-celestial-BhHWmCfe.css",
+            "startTime": 1543.300000011921,
+            "responseStart": 1753.699999988079,
+            "responseEnd": 2099.699999988079,
+            "duration": 556.3999999761581,
+            "initiator": "link",
+            "encoded": 9189,
+            "transferred": 9489
+          },
+          {
+            "name": "/assets/TimePicker-RNOEeQRY.js",
+            "startTime": 1543.800000011921,
+            "responseStart": 3347.300000011921,
+            "responseEnd": 3552.199999988079,
+            "duration": 2008.3999999761581,
+            "initiator": "script",
+            "encoded": 2852,
+            "transferred": 3152
+          },
+          {
+            "name": "/assets/TimePicker-WdylPF6N.css",
+            "startTime": 1544.3999999761581,
+            "responseStart": 1768.8999999761581,
+            "responseEnd": 2004.800000011921,
+            "duration": 460.4000000357628,
+            "initiator": "link",
+            "encoded": 1504,
+            "transferred": 1804
+          },
+          {
+            "name": "/assets/use-in-view-CdNeqcoa.js",
+            "startTime": 1544.8999999761581,
+            "responseStart": 3377.600000023842,
+            "responseEnd": 3551,
+            "duration": 2006.1000000238419,
+            "initiator": "script",
+            "encoded": 968,
+            "transferred": 1268
+          },
+          {
+            "name": "/assets/TemplateImage-C6djQEE1.js",
+            "startTime": 1545.300000011921,
+            "responseStart": 3473,
+            "responseEnd": 3647,
+            "duration": 2101.699999988079,
+            "initiator": "script",
+            "encoded": 639,
+            "transferred": 939
+          },
+          {
+            "name": "/assets/SeatingFloorPlan-C8A4t5kH.js",
+            "startTime": 1545.699999988079,
+            "responseStart": 3506,
+            "responseEnd": 3709.800000011921,
+            "duration": 2164.100000023842,
+            "initiator": "script",
+            "encoded": 7070,
+            "transferred": 7370
+          },
+          {
+            "name": "/assets/useBackendMessages-Df7DFV7v.js",
+            "startTime": 1546,
+            "responseStart": 3522.199999988079,
+            "responseEnd": 3914.800000011921,
+            "duration": 2368.800000011921,
+            "initiator": "script",
+            "encoded": 26197,
+            "transferred": 26497
+          },
+          {
+            "name": "/assets/SeatingFloorPlan-zRUjaJBF.css",
+            "startTime": 1546.800000011921,
+            "responseStart": 1817.300000011921,
+            "responseEnd": 2055.199999988079,
+            "duration": 508.39999997615814,
+            "initiator": "link",
+            "encoded": 4049,
+            "transferred": 4349
+          },
+          {
+            "name": "/assets/TemplateExperience-B4iHK-6L.css",
+            "startTime": 1547.300000011921,
+            "responseStart": 1991.199999988079,
+            "responseEnd": 2335.699999988079,
+            "duration": 788.3999999761581,
+            "initiator": "link",
+            "encoded": 20907,
+            "transferred": 21207
+          },
+          {
+            "name": "/assets/eighth-note-DwLY30UA.js",
+            "startTime": 1547.699999988079,
+            "responseStart": 3552.199999988079,
+            "responseEnd": 3725.100000023842,
+            "duration": 2177.400000035763,
+            "initiator": "script",
+            "encoded": 254,
+            "transferred": 554
+          },
+          {
+            "name": "/assets/external-link-Cyqe121L.js",
+            "startTime": 1548.1000000238419,
+            "responseStart": 3553,
+            "responseEnd": 3725.399999976158,
+            "duration": 2177.2999999523163,
+            "initiator": "script",
+            "encoded": 291,
+            "transferred": 591
+          },
+          {
+            "name": "/assets/gem-BgV0Nu7W.js",
+            "startTime": 1548.300000011921,
+            "responseStart": 3584.100000023842,
+            "responseEnd": 3756.800000011921,
+            "duration": 2208.5,
+            "initiator": "script",
+            "encoded": 374,
+            "transferred": 674
+          },
+          {
+            "name": "/assets/EmeraldLuxeLayout-DwgZIBoB.js",
+            "startTime": 1548.8999999761581,
+            "responseStart": 3648.600000023842,
+            "responseEnd": 3866.899999976158,
+            "duration": 2318,
+            "initiator": "script",
+            "encoded": 5578,
+            "transferred": 5878
+          },
+          {
+            "name": "/assets/eighth-notes-ldlrLYQV.js",
+            "startTime": 1549.300000011921,
+            "responseStart": 3711.199999988079,
+            "responseEnd": 3883,
+            "duration": 2333.699999988079,
+            "initiator": "script",
+            "encoded": 326,
+            "transferred": 626
+          },
+          {
+            "name": "/assets/qr-code-BkWIctgA.js",
+            "startTime": 1549.699999988079,
+            "responseStart": 3726.300000011921,
+            "responseEnd": 3898.899999976158,
+            "duration": 2349.199999988079,
+            "initiator": "script",
+            "encoded": 690,
+            "transferred": 990
+          },
+          {
+            "name": "/assets/AuthoredClosing-D5vcxWy8.js",
+            "startTime": 1550.1000000238419,
+            "responseStart": 3726.5,
+            "responseEnd": 3899.100000023842,
+            "duration": 2349,
+            "initiator": "script",
+            "encoded": 465,
+            "transferred": 765
+          },
+          {
+            "name": "/assets/EmeraldLuxeLayout-t-wl7iBo.css",
+            "startTime": 1550.699999988079,
+            "responseStart": 2005.8999999761581,
+            "responseEnd": 2210.699999988079,
+            "duration": 660,
+            "initiator": "link",
+            "encoded": 1718,
+            "transferred": 2018
+          },
+          {
+            "name": "/assets/paymentService-B9EnQFEa.js",
+            "startTime": 1551.1000000238419,
+            "responseStart": 3757.800000011921,
+            "responseEnd": 3930.899999976158,
+            "duration": 2379.7999999523163,
+            "initiator": "script",
+            "encoded": 1007,
+            "transferred": 1307
+          },
+          {
+            "name": "/assets/TemplatesFeature-BiYeYDYH.js",
+            "startTime": 1551.5,
+            "responseStart": 3868.199999988079,
+            "responseEnd": 4040.899999976158,
+            "duration": 2489.399999976158,
+            "initiator": "script",
+            "encoded": 146,
+            "transferred": 446
+          },
+          {
+            "name": "/assets/DigitalYesLayout-jDaZr2_D.js",
+            "startTime": 1552,
+            "responseStart": 3884.600000023842,
+            "responseEnd": 4135.800000011921,
+            "duration": 2583.800000011921,
+            "initiator": "script",
+            "encoded": 9186,
+            "transferred": 9486
+          },
+          {
+            "name": "/assets/copy-DXssfycg.js",
+            "startTime": 1552.300000011921,
+            "responseStart": 3899.800000011921,
+            "responseEnd": 4072.800000011921,
+            "duration": 2520.5,
+            "initiator": "script",
+            "encoded": 276,
+            "transferred": 576
+          },
+          {
+            "name": "/assets/DigitalYesLayout-By6oAR9f.css",
+            "startTime": 1552.800000011921,
+            "responseStart": 2022,
+            "responseEnd": 2226.399999976158,
+            "duration": 673.5999999642372,
+            "initiator": "link",
+            "encoded": 1713,
+            "transferred": 2013
+          },
+          {
+            "name": "/assets/templates-CFCVfUoY.css",
+            "startTime": 1553.300000011921,
+            "responseStart": 2056.699999988079,
+            "responseEnd": 2242.899999976158,
+            "duration": 689.5999999642372,
+            "initiator": "link",
+            "encoded": 2029,
+            "transferred": 2329
+          },
+          {
+            "name": "/assets/ChatBot-CYoD_hZ1.js",
+            "startTime": 1557.6000000238419,
+            "responseStart": 3900.199999988079,
+            "responseEnd": 4104.800000011921,
+            "duration": 2547.199999988079,
+            "initiator": "script",
+            "encoded": 2805,
+            "transferred": 3105
+          },
+          {
+            "name": "/assets/ChatBot-DwJfFoO9.css",
+            "startTime": 1558.199999988079,
+            "responseStart": 2101.300000011921,
+            "responseEnd": 2288.699999988079,
+            "duration": 730.5,
+            "initiator": "link",
+            "encoded": 1285,
+            "transferred": 1585
+          },
+          {
+            "name": "/fonts/marketing/DMSans-Latin.woff2",
+            "startTime": 1590.3999999761581,
+            "responseStart": 2180.600000023842,
+            "responseEnd": 2952.100000023842,
+            "duration": 1361.7000000476837,
+            "initiator": "css",
+            "encoded": 36932,
+            "transferred": 37232
+          },
+          {
+            "name": "/fonts/silk-heritage/KantumruyPro.woff2",
+            "startTime": 1599.8999999761581,
+            "responseStart": 2211.899999976158,
+            "responseEnd": 3582.800000011921,
+            "duration": 1982.9000000357628,
+            "initiator": "css",
+            "encoded": 76848,
+            "transferred": 77148
+          },
+          {
+            "name": "/api/v1/templates",
+            "startTime": 1636.3999999761581,
+            "responseStart": 1638.300000011921,
+            "responseEnd": 1638.300000011921,
+            "duration": 1.9000000357627869,
+            "initiator": "xmlhttprequest",
+            "encoded": 11,
+            "transferred": 311
+          },
+          {
+            "name": "/assets/RoyalGardenCinematicLayout-nOzJouNg.js",
+            "startTime": 4170.5,
+            "responseStart": 4176.699999988079,
+            "responseEnd": 4497.899999976158,
+            "duration": 327.39999997615814,
+            "initiator": "script",
+            "encoded": 13244,
+            "transferred": 13544
+          },
+          {
+            "name": "/assets/images-DptK46fJ.js",
+            "startTime": 4171.699999988079,
+            "responseStart": 4176.300000011921,
+            "responseEnd": 4356.100000023842,
+            "duration": 184.4000000357628,
+            "initiator": "script",
+            "encoded": 410,
+            "transferred": 710
+          },
+          {
+            "name": "/assets/message-circle-heart-DlGxIvU_.js",
+            "startTime": 4171.899999976158,
+            "responseStart": 4176.300000011921,
+            "responseEnd": 4356.300000011921,
+            "duration": 184.4000000357628,
+            "initiator": "script",
+            "encoded": 423,
+            "transferred": 723
+          },
+          {
+            "name": "/assets/RoyalGardenCinematicLayout-Buvg9vPe.css",
+            "startTime": 4172.699999988079,
+            "responseStart": 4176.899999976158,
+            "responseEnd": 4466.100000023842,
+            "duration": 293.4000000357628,
+            "initiator": "link",
+            "encoded": 9544,
+            "transferred": 9844
+          },
+          {
+            "name": "/api/v1/templates/slug/royal-garden-cinematic",
+            "startTime": 4436.100000023842,
+            "responseStart": 4437.699999988079,
+            "responseEnd": 4437.699999988079,
+            "duration": 1.5999999642372131,
+            "initiator": "xmlhttprequest",
+            "encoded": 11,
+            "transferred": 311
+          },
+          {
+            "name": "/templates/royal-garden/v3/opening/arch-640.webp",
+            "startTime": 4579.100000023842,
+            "responseStart": 4583.399999976158,
+            "responseEnd": 7503.300000011921,
+            "duration": 2924.199999988079,
+            "initiator": "img",
+            "encoded": 166806,
+            "transferred": 167106
+          },
+          {
+            "name": "/templates/royal-garden/v3/opening/demo-portrait-640.webp",
+            "startTime": 4579.899999976158,
+            "responseStart": 4589.899999976158,
+            "responseEnd": 6933.100000023842,
+            "duration": 2353.2000000476837,
+            "initiator": "img",
+            "encoded": 96678,
+            "transferred": 96978
+          },
+          {
+            "name": "/templates/royal-garden/v3/opening/calligraphy-640.webp",
+            "startTime": 4580.300000011921,
+            "responseStart": 4590,
+            "responseEnd": 7360.300000011921,
+            "duration": 2780,
+            "initiator": "img",
+            "encoded": 138822,
+            "transferred": 139122
+          },
+          {
+            "name": "/templates/royal-garden/v3/ornaments/guest-frame.webp",
+            "startTime": 4580.699999988079,
+            "responseStart": 4583.699999988079,
+            "responseEnd": 6521.600000023842,
+            "duration": 1940.9000000357628,
+            "initiator": "img",
+            "encoded": 68856,
+            "transferred": 69156
+          },
+          {
+            "name": "/templates/royal-garden/v3/effects/butterfly.webp",
+            "startTime": 4587,
+            "responseStart": 4589.600000023842,
+            "responseEnd": 5052.100000023842,
+            "duration": 465.10000002384186,
+            "initiator": "img",
+            "encoded": 10580,
+            "transferred": 10880
+          },
+          {
+            "name": "/fonts/khmer/Battambang-Regular.woff2",
+            "startTime": 4780.5,
+            "responseStart": 4831.100000023842,
+            "responseEnd": 6128.399999976158,
+            "duration": 1347.8999999761581,
+            "initiator": "css",
+            "encoded": 39920,
+            "transferred": 40220
+          },
+          {
+            "name": "/fonts/silk-heritage/CormorantGaramond.woff2",
+            "startTime": 4794,
+            "responseStart": 5053.300000011921,
+            "responseEnd": 5970.399999976158,
+            "duration": 1176.3999999761581,
+            "initiator": "css",
+            "encoded": 24320,
+            "transferred": 24620
+          }
+        ],
+        "images": [
+          {
+            "source": "http://127.0.0.1:4186/templates/royal-garden/v3/opening/arch-640.webp",
+            "width": 1,
+            "height": 1,
+            "naturalWidth": 390,
+            "priority": "high"
+          },
+          {
+            "source": "http://127.0.0.1:4186/templates/royal-garden/v3/opening/demo-portrait-640.webp",
+            "width": 390,
+            "height": 747,
+            "naturalWidth": 304,
+            "priority": "high"
+          },
+          {
+            "source": "http://127.0.0.1:4186/templates/royal-garden/v3/opening/calligraphy-640.webp",
+            "width": 275,
+            "height": 152,
+            "naturalWidth": 210,
+            "priority": "auto"
+          },
+          {
+            "source": "http://127.0.0.1:4186/templates/royal-garden/v3/ornaments/guest-frame.webp",
+            "width": 335,
+            "height": 112,
+            "naturalWidth": 960,
+            "priority": "auto"
+          },
+          {
+            "source": "http://127.0.0.1:4186/templates/royal-garden/v3/effects/butterfly.webp",
+            "width": 40,
+            "height": 40,
+            "naturalWidth": 160,
+            "priority": "auto"
+          }
+        ]
+      },
+      "interaction": {
+        "events": [
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          16,
+          16,
+          16,
+          16,
+          16,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24
+        ],
+        "longTasks": [
+          152,
+          73,
+          53
+        ]
+      }
+    },
+    {
+      "run": 2,
+      "entrance": {
+        "lcp": 6888,
+        "cls": 0.0005360471365716783,
+        "events": [],
+        "longTasks": [
+          114,
+          75
+        ],
+        "lcpDetails": {
+          "url": "http://127.0.0.1:4186/templates/royal-garden/v3/opening/demo-portrait-640.webp",
+          "element": "cover-bg-media",
+          "loadTime": 6854.699999988079,
+          "renderTime": 6888,
+          "size": 198065
+        },
+        "resources": [
+          {
+            "name": "/js/telegram-web-app.js",
+            "startTime": 184.5999999642372,
+            "responseStart": 0,
+            "responseEnd": 1617.2999999523163,
+            "duration": 1432.699999988079,
+            "initiator": "script",
+            "encoded": 0,
+            "transferred": 0
+          },
+          {
+            "name": "/assets/index-BaRQOMsF.js",
+            "startTime": 185.0999999642372,
+            "responseStart": 197.39999997615814,
+            "responseEnd": 1338.3999999761581,
+            "duration": 1153.300000011921,
+            "initiator": "script",
+            "encoded": 130003,
+            "transferred": 130303
+          },
+          {
+            "name": "/assets/jsx-runtime-Wy9s6hX0.js",
+            "startTime": 185.39999997615814,
+            "responseStart": 197.39999997615814,
+            "responseEnd": 434.5999999642372,
+            "duration": 249.19999998807907,
+            "initiator": "other",
+            "encoded": 3383,
+            "transferred": 3683
+          },
+          {
+            "name": "/assets/useLanguageStore-mmn9Okko.js",
+            "startTime": 185.79999995231628,
+            "responseStart": 197.29999995231628,
+            "responseEnd": 371.19999998807907,
+            "duration": 185.4000000357628,
+            "initiator": "other",
+            "encoded": 1006,
+            "transferred": 1306
+          },
+          {
+            "name": "/assets/createLucideIcon-iAjGl61D.js",
+            "startTime": 186.29999995231628,
+            "responseStart": 197.69999998807907,
+            "responseEnd": 419.0999999642372,
+            "duration": 232.80000001192093,
+            "initiator": "other",
+            "encoded": 1480,
+            "transferred": 1780
+          },
+          {
+            "name": "/assets/httpClient-CUjnEakX.js",
+            "startTime": 186.5999999642372,
+            "responseStart": 198.5,
+            "responseEnd": 714.3999999761581,
+            "duration": 527.8000000119209,
+            "initiator": "other",
+            "encoded": 19949,
+            "transferred": 20249
+          },
+          {
+            "name": "/assets/index-CFCCisHt.css",
+            "startTime": 187,
+            "responseStart": 198.39999997615814,
+            "responseEnd": 823.0999999642372,
+            "duration": 636.0999999642372,
+            "initiator": "link",
+            "encoded": 29941,
+            "transferred": 30241
+          },
+          {
+            "name": "/assets/SiteAnimations-YCMz9XfH.js",
+            "startTime": 1485.7999999523163,
+            "responseStart": 1546.699999988079,
+            "responseEnd": 1759.5999999642372,
+            "duration": 273.80000001192093,
+            "initiator": "script",
+            "encoded": 1565,
+            "transferred": 1865
+          },
+          {
+            "name": "/assets/proxy-CC7m1GcZ.js",
+            "startTime": 1486.5999999642372,
+            "responseStart": 1547.8999999761581,
+            "responseEnd": 2151.599999964237,
+            "duration": 665,
+            "initiator": "script",
+            "encoded": 45113,
+            "transferred": 45413
+          },
+          {
+            "name": "/assets/logo-CnrSq6bR.js",
+            "startTime": 1487.2999999523163,
+            "responseStart": 1546.699999988079,
+            "responseEnd": 1712.2999999523163,
+            "duration": 225,
+            "initiator": "script",
+            "encoded": 49,
+            "transferred": 349
+          },
+          {
+            "name": "/assets/SiteAnimations-DnKXCQkx.css",
+            "startTime": 1487.8999999761581,
+            "responseStart": 1547.5999999642372,
+            "responseEnd": 1728.0999999642372,
+            "duration": 240.19999998807907,
+            "initiator": "link",
+            "encoded": 1106,
+            "transferred": 1406
+          },
+          {
+            "name": "/assets/TemplateDemoPage-B-QJRKnZ.js",
+            "startTime": 1507.5,
+            "responseStart": 1547.0999999642372,
+            "responseEnd": 1727.7999999523163,
+            "duration": 220.29999995231628,
+            "initiator": "script",
+            "encoded": 156,
+            "transferred": 456
+          },
+          {
+            "name": "/assets/templates-GykQu1Rp.js",
+            "startTime": 1508.5,
+            "responseStart": 1547.5999999642372,
+            "responseEnd": 1791.8999999761581,
+            "duration": 283.39999997615814,
+            "initiator": "script",
+            "encoded": 4296,
+            "transferred": 4596
+          },
+          {
+            "name": "/assets/KhmerCelestialLayout-XABWWHsu.js",
+            "startTime": 1509.0999999642372,
+            "responseStart": 2200.7999999523163,
+            "responseEnd": 2603.699999988079,
+            "duration": 1094.6000000238419,
+            "initiator": "script",
+            "encoded": 10159,
+            "transferred": 10459
+          },
+          {
+            "name": "/assets/arrow-left-Co9bFwqD.js",
+            "startTime": 1509.8999999761581,
+            "responseStart": 2231.2999999523163,
+            "responseEnd": 2400.2999999523163,
+            "duration": 890.3999999761581,
+            "initiator": "script",
+            "encoded": 205,
+            "transferred": 505
+          },
+          {
+            "name": "/assets/TemplateExperience-D5FTh5KA.js",
+            "startTime": 1510.5,
+            "responseStart": 2264.099999964237,
+            "responseEnd": 3305.699999988079,
+            "duration": 1795.199999988079,
+            "initiator": "script",
+            "encoded": 52490,
+            "transferred": 52790
+          },
+          {
+            "name": "/assets/openingConfig-4--OkjJT.js",
+            "startTime": 1511.0999999642372,
+            "responseStart": 2325.2999999523163,
+            "responseEnd": 2557.099999964237,
+            "duration": 1046,
+            "initiator": "script",
+            "encoded": 1150,
+            "transferred": 1450
+          },
+          {
+            "name": "/assets/CinematicVideoOpening-DrrnOoVX.js",
+            "startTime": 1511.5,
+            "responseStart": 2401.699999988079,
+            "responseEnd": 2821.599999964237,
+            "duration": 1310.0999999642372,
+            "initiator": "script",
+            "encoded": 10489,
+            "transferred": 10789
+          },
+          {
+            "name": "/assets/mail-BEvm0P9D.js",
+            "startTime": 1511.8999999761581,
+            "responseStart": 2558.2999999523163,
+            "responseEnd": 2743.399999976158,
+            "duration": 1231.5,
+            "initiator": "script",
+            "encoded": 253,
+            "transferred": 553
+          },
+          {
+            "name": "/assets/sparkles-CQxlGWHq.js",
+            "startTime": 1512.5,
+            "responseStart": 2604.899999976158,
+            "responseEnd": 2790.2999999523163,
+            "duration": 1277.7999999523163,
+            "initiator": "script",
+            "encoded": 552,
+            "transferred": 852
+          },
+          {
+            "name": "/assets/eventPresentation-RRyBrHb4.js",
+            "startTime": 1513,
+            "responseStart": 2745.099999964237,
+            "responseEnd": 2943.599999964237,
+            "duration": 1430.5999999642372,
+            "initiator": "script",
+            "encoded": 1436,
+            "transferred": 1736
+          },
+          {
+            "name": "/assets/CinematicVideoOpening-BYV-m3AB.css",
+            "startTime": 1513.5999999642372,
+            "responseStart": 1714.5,
+            "responseEnd": 1997.0999999642372,
+            "duration": 483.5,
+            "initiator": "link",
+            "encoded": 5471,
+            "transferred": 5771
+          },
+          {
+            "name": "/assets/circle-check-DGgvMsbA.js",
+            "startTime": 1514.199999988079,
+            "responseStart": 2791.399999976158,
+            "responseEnd": 2959.7999999523163,
+            "duration": 1445.5999999642372,
+            "initiator": "script",
+            "encoded": 250,
+            "transferred": 550
+          },
+          {
+            "name": "/assets/clock-CYcN1Ohb.js",
+            "startTime": 1514.699999988079,
+            "responseStart": 2822.699999988079,
+            "responseEnd": 2992,
+            "duration": 1477.300000011921,
+            "initiator": "script",
+            "encoded": 209,
+            "transferred": 509
+          },
+          {
+            "name": "/assets/ui-DzTS81Rm.js",
+            "startTime": 1515.199999988079,
+            "responseStart": 2945.099999964237,
+            "responseEnd": 3180.699999988079,
+            "duration": 1665.5,
+            "initiator": "script",
+            "encoded": 3354,
+            "transferred": 3654
+          },
+          {
+            "name": "/assets/toast-BNSoQ1dn.js",
+            "startTime": 1515.5999999642372,
+            "responseStart": 2960.7999999523163,
+            "responseEnd": 3133,
+            "duration": 1617.4000000357628,
+            "initiator": "script",
+            "encoded": 292,
+            "transferred": 592
+          },
+          {
+            "name": "/assets/ui-v9maAeT-.css",
+            "startTime": 1516.2999999523163,
+            "responseStart": 1729.2999999523163,
+            "responseEnd": 1965.5,
+            "duration": 449.2000000476837,
+            "initiator": "link",
+            "encoded": 2731,
+            "transferred": 3031
+          },
+          {
+            "name": "/assets/mediaApi-CcAvY6oE.js",
+            "startTime": 1516.5999999642372,
+            "responseStart": 2976.599999964237,
+            "responseEnd": 3149,
+            "duration": 1632.4000000357628,
+            "initiator": "script",
+            "encoded": 1072,
+            "transferred": 1372
+          },
+          {
+            "name": "/assets/weddingStorage-DPw_jadI.js",
+            "startTime": 1517,
+            "responseStart": 2993.199999988079,
+            "responseEnd": 3211.199999988079,
+            "duration": 1694.199999988079,
+            "initiator": "script",
+            "encoded": 1558,
+            "transferred": 1858
+          },
+          {
+            "name": "/assets/InvitationLabel-DAMaM8Xi.js",
+            "startTime": 1517.5999999642372,
+            "responseStart": 3134.5,
+            "responseEnd": 3357.399999976158,
+            "duration": 1839.800000011921,
+            "initiator": "script",
+            "encoded": 2686,
+            "transferred": 2986
+          },
+          {
+            "name": "/assets/invitationLanguage-BwEdAu9z.js",
+            "startTime": 1518.0999999642372,
+            "responseStart": 3150.399999976158,
+            "responseEnd": 3322,
+            "duration": 1803.9000000357628,
+            "initiator": "script",
+            "encoded": 216,
+            "transferred": 516
+          },
+          {
+            "name": "/assets/lib-l5Ry_C1A.js",
+            "startTime": 1518.5,
+            "responseStart": 3182.899999976158,
+            "responseEnd": 3463.7999999523163,
+            "duration": 1945.2999999523163,
+            "initiator": "script",
+            "encoded": 8489,
+            "transferred": 8789
+          },
+          {
+            "name": "/assets/khmer-celestial-CD6n1oJL.js",
+            "startTime": 1518.7999999523163,
+            "responseStart": 3212.699999988079,
+            "responseEnd": 3510.2999999523163,
+            "duration": 1991.5,
+            "initiator": "script",
+            "encoded": 8251,
+            "transferred": 8551
+          },
+          {
+            "name": "/assets/templateTypography-D2aSXzJ5.js",
+            "startTime": 1519.3999999761581,
+            "responseStart": 3307.099999964237,
+            "responseEnd": 3480.099999964237,
+            "duration": 1960.699999988079,
+            "initiator": "script",
+            "encoded": 461,
+            "transferred": 761
+          },
+          {
+            "name": "/assets/khmer-celestial-BhHWmCfe.css",
+            "startTime": 1520.199999988079,
+            "responseStart": 1729.5999999642372,
+            "responseEnd": 2074.099999964237,
+            "duration": 553.8999999761581,
+            "initiator": "link",
+            "encoded": 9189,
+            "transferred": 9489
+          },
+          {
+            "name": "/assets/TimePicker-RNOEeQRY.js",
+            "startTime": 1520.699999988079,
+            "responseStart": 3323.2999999523163,
+            "responseEnd": 3540.399999976158,
+            "duration": 2019.699999988079,
+            "initiator": "script",
+            "encoded": 2852,
+            "transferred": 3152
+          },
+          {
+            "name": "/assets/TimePicker-WdylPF6N.css",
+            "startTime": 1521.5,
+            "responseStart": 1761,
+            "responseEnd": 1981.5,
+            "duration": 460,
+            "initiator": "link",
+            "encoded": 1504,
+            "transferred": 1804
+          },
+          {
+            "name": "/assets/use-in-view-CdNeqcoa.js",
+            "startTime": 1521.8999999761581,
+            "responseStart": 3358.599999964237,
+            "responseEnd": 3525.699999988079,
+            "duration": 2003.800000011921,
+            "initiator": "script",
+            "encoded": 968,
+            "transferred": 1268
+          },
+          {
+            "name": "/assets/TemplateImage-C6djQEE1.js",
+            "startTime": 1522.2999999523163,
+            "responseStart": 3465.7999999523163,
+            "responseEnd": 3634.099999964237,
+            "duration": 2111.800000011921,
+            "initiator": "script",
+            "encoded": 639,
+            "transferred": 939
+          },
+          {
+            "name": "/assets/SeatingFloorPlan-C8A4t5kH.js",
+            "startTime": 1522.8999999761581,
+            "responseStart": 3481.399999976158,
+            "responseEnd": 3665.099999964237,
+            "duration": 2142.199999988079,
+            "initiator": "script",
+            "encoded": 7070,
+            "transferred": 7370
+          },
+          {
+            "name": "/assets/useBackendMessages-Df7DFV7v.js",
+            "startTime": 1523.2999999523163,
+            "responseStart": 3512.699999988079,
+            "responseEnd": 3867.399999976158,
+            "duration": 2344.100000023842,
+            "initiator": "script",
+            "encoded": 26197,
+            "transferred": 26497
+          },
+          {
+            "name": "/assets/SeatingFloorPlan-zRUjaJBF.css",
+            "startTime": 1523.8999999761581,
+            "responseStart": 1793.5,
+            "responseEnd": 2043.0999999642372,
+            "duration": 519.1999999880791,
+            "initiator": "link",
+            "encoded": 4049,
+            "transferred": 4349
+          },
+          {
+            "name": "/assets/TemplateExperience-B4iHK-6L.css",
+            "startTime": 1524.5,
+            "responseStart": 1968.5999999642372,
+            "responseEnd": 2323.899999976158,
+            "duration": 799.3999999761581,
+            "initiator": "link",
+            "encoded": 20907,
+            "transferred": 21207
+          },
+          {
+            "name": "/assets/eighth-note-DwLY30UA.js",
+            "startTime": 1524.8999999761581,
+            "responseStart": 3526.7999999523163,
+            "responseEnd": 3696,
+            "duration": 2171.100000023842,
+            "initiator": "script",
+            "encoded": 254,
+            "transferred": 554
+          },
+          {
+            "name": "/assets/external-link-Cyqe121L.js",
+            "startTime": 1525.2999999523163,
+            "responseStart": 3541.2999999523163,
+            "responseEnd": 3711,
+            "duration": 2185.7000000476837,
+            "initiator": "script",
+            "encoded": 291,
+            "transferred": 591
+          },
+          {
+            "name": "/assets/gem-BgV0Nu7W.js",
+            "startTime": 1525.8999999761581,
+            "responseStart": 3573.399999976158,
+            "responseEnd": 3741.599999964237,
+            "duration": 2215.699999988079,
+            "initiator": "script",
+            "encoded": 374,
+            "transferred": 674
+          },
+          {
+            "name": "/assets/EmeraldLuxeLayout-DwgZIBoB.js",
+            "startTime": 1526.2999999523163,
+            "responseStart": 3635.699999988079,
+            "responseEnd": 3867,
+            "duration": 2340.7000000476837,
+            "initiator": "script",
+            "encoded": 5578,
+            "transferred": 5878
+          },
+          {
+            "name": "/assets/eighth-notes-ldlrLYQV.js",
+            "startTime": 1526.699999988079,
+            "responseStart": 3666.399999976158,
+            "responseEnd": 3835.199999988079,
+            "duration": 2308.5,
+            "initiator": "script",
+            "encoded": 326,
+            "transferred": 626
+          },
+          {
+            "name": "/assets/qr-code-BkWIctgA.js",
+            "startTime": 1527.0999999642372,
+            "responseStart": 3697.099999964237,
+            "responseEnd": 3867.599999964237,
+            "duration": 2340.5,
+            "initiator": "script",
+            "encoded": 690,
+            "transferred": 990
+          },
+          {
+            "name": "/assets/AuthoredClosing-D5vcxWy8.js",
+            "startTime": 1527.5,
+            "responseStart": 3711.899999976158,
+            "responseEnd": 3883.199999988079,
+            "duration": 2355.699999988079,
+            "initiator": "script",
+            "encoded": 465,
+            "transferred": 765
+          },
+          {
+            "name": "/assets/EmeraldLuxeLayout-t-wl7iBo.css",
+            "startTime": 1528.0999999642372,
+            "responseStart": 1983.199999988079,
+            "responseEnd": 2183.7999999523163,
+            "duration": 655.6999999880791,
+            "initiator": "link",
+            "encoded": 1718,
+            "transferred": 2018
+          },
+          {
+            "name": "/assets/paymentService-B9EnQFEa.js",
+            "startTime": 1528.5,
+            "responseStart": 3742.7999999523163,
+            "responseEnd": 3914.7999999523163,
+            "duration": 2386.2999999523163,
+            "initiator": "script",
+            "encoded": 1007,
+            "transferred": 1307
+          },
+          {
+            "name": "/assets/TemplatesFeature-BiYeYDYH.js",
+            "startTime": 1529,
+            "responseStart": 3836.399999976158,
+            "responseEnd": 4010.399999976158,
+            "duration": 2481.399999976158,
+            "initiator": "script",
+            "encoded": 146,
+            "transferred": 446
+          },
+          {
+            "name": "/assets/DigitalYesLayout-jDaZr2_D.js",
+            "startTime": 1529.3999999761581,
+            "responseStart": 3869.2999999523163,
+            "responseEnd": 4121.299999952316,
+            "duration": 2591.899999976158,
+            "initiator": "script",
+            "encoded": 9186,
+            "transferred": 9486
+          },
+          {
+            "name": "/assets/copy-DXssfycg.js",
+            "startTime": 1529.699999988079,
+            "responseStart": 3868.7999999523163,
+            "responseEnd": 4041.399999976158,
+            "duration": 2511.699999988079,
+            "initiator": "script",
+            "encoded": 276,
+            "transferred": 576
+          },
+          {
+            "name": "/assets/DigitalYesLayout-By6oAR9f.css",
+            "startTime": 1530.5999999642372,
+            "responseStart": 1998.199999988079,
+            "responseEnd": 2198.099999964237,
+            "duration": 667.5,
+            "initiator": "link",
+            "encoded": 1713,
+            "transferred": 2013
+          },
+          {
+            "name": "/assets/templates-CFCVfUoY.css",
+            "startTime": 1531.199999988079,
+            "responseStart": 2044.5,
+            "responseEnd": 2230.099999964237,
+            "duration": 698.8999999761581,
+            "initiator": "link",
+            "encoded": 2029,
+            "transferred": 2329
+          },
+          {
+            "name": "/assets/ChatBot-CYoD_hZ1.js",
+            "startTime": 1535.8999999761581,
+            "responseStart": 3869.5,
+            "responseEnd": 4089.199999988079,
+            "duration": 2553.300000011921,
+            "initiator": "script",
+            "encoded": 2805,
+            "transferred": 3105
+          },
+          {
+            "name": "/assets/ChatBot-DwJfFoO9.css",
+            "startTime": 1536.3999999761581,
+            "responseStart": 2075.599999964237,
+            "responseEnd": 2262.199999988079,
+            "duration": 725.8000000119209,
+            "initiator": "link",
+            "encoded": 1285,
+            "transferred": 1585
+          },
+          {
+            "name": "/fonts/marketing/DMSans-Latin.woff2",
+            "startTime": 1559.0999999642372,
+            "responseStart": 2152.699999988079,
+            "responseEnd": 2975.599999964237,
+            "duration": 1416.5,
+            "initiator": "css",
+            "encoded": 36932,
+            "transferred": 37232
+          },
+          {
+            "name": "/fonts/silk-heritage/KantumruyPro.woff2",
+            "startTime": 1567.8999999761581,
+            "responseStart": 2184.7999999523163,
+            "responseEnd": 3572.2999999523163,
+            "duration": 2004.3999999761581,
+            "initiator": "css",
+            "encoded": 76848,
+            "transferred": 77148
+          },
+          {
+            "name": "/api/v1/templates",
+            "startTime": 1606.2999999523163,
+            "responseStart": 1607.5999999642372,
+            "responseEnd": 1607.5999999642372,
+            "duration": 1.300000011920929,
+            "initiator": "xmlhttprequest",
+            "encoded": 11,
+            "transferred": 311
+          },
+          {
+            "name": "/assets/RoyalGardenCinematicLayout-nOzJouNg.js",
+            "startTime": 4151,
+            "responseStart": 4157.5,
+            "responseEnd": 4468,
+            "duration": 317,
+            "initiator": "script",
+            "encoded": 13244,
+            "transferred": 13544
+          },
+          {
+            "name": "/assets/images-DptK46fJ.js",
+            "startTime": 4152.099999964237,
+            "responseStart": 4156.699999988079,
+            "responseEnd": 4332.599999964237,
+            "duration": 180.5,
+            "initiator": "script",
+            "encoded": 410,
+            "transferred": 710
+          },
+          {
+            "name": "/assets/message-circle-heart-DlGxIvU_.js",
+            "startTime": 4152.5,
+            "responseStart": 4157.099999964237,
+            "responseEnd": 4332.799999952316,
+            "duration": 180.29999995231628,
+            "initiator": "script",
+            "encoded": 423,
+            "transferred": 723
+          },
+          {
+            "name": "/assets/RoyalGardenCinematicLayout-Buvg9vPe.css",
+            "startTime": 4153.299999952316,
+            "responseStart": 4158.199999988079,
+            "responseEnd": 4437,
+            "duration": 283.7000000476837,
+            "initiator": "link",
+            "encoded": 9544,
+            "transferred": 9844
+          },
+          {
+            "name": "/api/v1/templates/slug/royal-garden-cinematic",
+            "startTime": 4419.599999964237,
+            "responseStart": 4421.099999964237,
+            "responseEnd": 4421.099999964237,
+            "duration": 1.5,
+            "initiator": "xmlhttprequest",
+            "encoded": 11,
+            "transferred": 311
+          },
+          {
+            "name": "/templates/royal-garden/v3/opening/arch-640.webp",
+            "startTime": 4497.299999952316,
+            "responseStart": 4501.099999964237,
+            "responseEnd": 7436,
+            "duration": 2938.7000000476837,
+            "initiator": "img",
+            "encoded": 166806,
+            "transferred": 167106
+          },
+          {
+            "name": "/templates/royal-garden/v3/opening/demo-portrait-640.webp",
+            "startTime": 4497.799999952316,
+            "responseStart": 4501.199999988079,
+            "responseEnd": 6852.5,
+            "duration": 2354.7000000476837,
+            "initiator": "img",
+            "encoded": 96678,
+            "transferred": 96978
+          },
+          {
+            "name": "/templates/royal-garden/v3/opening/calligraphy-640.webp",
+            "startTime": 4498.199999988079,
+            "responseStart": 4501.199999988079,
+            "responseEnd": 7293.299999952316,
+            "duration": 2795.099999964237,
+            "initiator": "img",
+            "encoded": 138822,
+            "transferred": 139122
+          },
+          {
+            "name": "/templates/royal-garden/v3/ornaments/guest-frame.webp",
+            "startTime": 4498.5,
+            "responseStart": 4501.299999952316,
+            "responseEnd": 6475.099999964237,
+            "duration": 1976.5999999642372,
+            "initiator": "img",
+            "encoded": 68856,
+            "transferred": 69156
+          },
+          {
+            "name": "/templates/royal-garden/v3/effects/butterfly.webp",
+            "startTime": 4505,
+            "responseStart": 4769,
+            "responseEnd": 5255.399999976158,
+            "duration": 750.3999999761581,
+            "initiator": "img",
+            "encoded": 10580,
+            "transferred": 10880
+          },
+          {
+            "name": "/fonts/khmer/Battambang-Regular.woff2",
+            "startTime": 4733.699999988079,
+            "responseStart": 4777.5,
+            "responseEnd": 6109.799999952316,
+            "duration": 1376.0999999642372,
+            "initiator": "css",
+            "encoded": 39920,
+            "transferred": 40220
+          },
+          {
+            "name": "/fonts/silk-heritage/CormorantGaramond.woff2",
+            "startTime": 4742.099999964237,
+            "responseStart": 5256.799999952316,
+            "responseEnd": 6173.799999952316,
+            "duration": 1431.699999988079,
+            "initiator": "css",
+            "encoded": 24320,
+            "transferred": 24620
+          }
+        ],
+        "images": [
+          {
+            "source": "http://127.0.0.1:4186/templates/royal-garden/v3/opening/arch-640.webp",
+            "width": 1,
+            "height": 1,
+            "naturalWidth": 390,
+            "priority": "high"
+          },
+          {
+            "source": "http://127.0.0.1:4186/templates/royal-garden/v3/opening/demo-portrait-640.webp",
+            "width": 390,
+            "height": 747,
+            "naturalWidth": 304,
+            "priority": "high"
+          },
+          {
+            "source": "http://127.0.0.1:4186/templates/royal-garden/v3/opening/calligraphy-640.webp",
+            "width": 275,
+            "height": 152,
+            "naturalWidth": 210,
+            "priority": "auto"
+          },
+          {
+            "source": "http://127.0.0.1:4186/templates/royal-garden/v3/ornaments/guest-frame.webp",
+            "width": 335,
+            "height": 112,
+            "naturalWidth": 960,
+            "priority": "auto"
+          },
+          {
+            "source": "http://127.0.0.1:4186/templates/royal-garden/v3/effects/butterfly.webp",
+            "width": 40,
+            "height": 40,
+            "naturalWidth": 160,
+            "priority": "auto"
+          }
+        ]
+      },
+      "interaction": {
+        "events": [
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          48,
+          48,
+          48,
+          48,
+          48,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          16,
+          16,
+          16,
+          16,
+          16
+        ],
+        "longTasks": [
+          114,
+          75
+        ]
+      }
+    },
+    {
+      "run": 3,
+      "entrance": {
+        "lcp": 6968,
+        "cls": 0.0005360471365716783,
+        "events": [],
+        "longTasks": [
+          109,
+          84
+        ],
+        "lcpDetails": {
+          "url": "http://127.0.0.1:4186/templates/royal-garden/v3/opening/demo-portrait-640.webp",
+          "element": "cover-bg-media",
+          "loadTime": 6949.600000023842,
+          "renderTime": 6968,
+          "size": 198065
+        },
+        "resources": [
+          {
+            "name": "/js/telegram-web-app.js",
+            "startTime": 188,
+            "responseStart": 0,
+            "responseEnd": 2196.600000023842,
+            "duration": 2008.6000000238419,
+            "initiator": "script",
+            "encoded": 0,
+            "transferred": 0
+          },
+          {
+            "name": "/assets/useLanguageStore-mmn9Okko.js",
+            "startTime": 188.19999998807907,
+            "responseStart": 194.30000001192093,
+            "responseEnd": 362.9000000357628,
+            "duration": 174.70000004768372,
+            "initiator": "other",
+            "encoded": 1006,
+            "transferred": 1306
+          },
+          {
+            "name": "/assets/jsx-runtime-Wy9s6hX0.js",
+            "startTime": 188.19999998807907,
+            "responseStart": 194.4000000357628,
+            "responseEnd": 442.5,
+            "duration": 254.30000001192093,
+            "initiator": "other",
+            "encoded": 3383,
+            "transferred": 3683
+          },
+          {
+            "name": "/assets/index-BaRQOMsF.js",
+            "startTime": 188.19999998807907,
+            "responseStart": 194.4000000357628,
+            "responseEnd": 1311,
+            "duration": 1122.800000011921,
+            "initiator": "script",
+            "encoded": 130003,
+            "transferred": 130303
+          },
+          {
+            "name": "/assets/createLucideIcon-iAjGl61D.js",
+            "startTime": 188.30000001192093,
+            "responseStart": 198.9000000357628,
+            "responseEnd": 426.5,
+            "duration": 238.19999998807907,
+            "initiator": "other",
+            "encoded": 1480,
+            "transferred": 1780
+          },
+          {
+            "name": "/assets/httpClient-CUjnEakX.js",
+            "startTime": 188.30000001192093,
+            "responseStart": 199.60000002384186,
+            "responseEnd": 711.5,
+            "duration": 523.1999999880791,
+            "initiator": "other",
+            "encoded": 19949,
+            "transferred": 20249
+          },
+          {
+            "name": "/assets/index-CFCCisHt.css",
+            "startTime": 188.30000001192093,
+            "responseStart": 198.9000000357628,
+            "responseEnd": 821.3000000119209,
+            "duration": 633,
+            "initiator": "link",
+            "encoded": 29941,
+            "transferred": 30241
+          },
+          {
+            "name": "/assets/SiteAnimations-YCMz9XfH.js",
+            "startTime": 1464.199999988079,
+            "responseStart": 1521.4000000357628,
+            "responseEnd": 1739.5,
+            "duration": 275.30000001192093,
+            "initiator": "script",
+            "encoded": 1565,
+            "transferred": 1865
+          },
+          {
+            "name": "/assets/proxy-CC7m1GcZ.js",
+            "startTime": 1465,
+            "responseStart": 1522.4000000357628,
+            "responseEnd": 2495.300000011921,
+            "duration": 1030.300000011921,
+            "initiator": "script",
+            "encoded": 45113,
+            "transferred": 45413
+          },
+          {
+            "name": "/assets/logo-CnrSq6bR.js",
+            "startTime": 1465.800000011921,
+            "responseStart": 1521.4000000357628,
+            "responseEnd": 1692.300000011921,
+            "duration": 226.5,
+            "initiator": "script",
+            "encoded": 49,
+            "transferred": 349
+          },
+          {
+            "name": "/assets/SiteAnimations-DnKXCQkx.css",
+            "startTime": 1467,
+            "responseStart": 1522.4000000357628,
+            "responseEnd": 1719,
+            "duration": 252,
+            "initiator": "link",
+            "encoded": 1106,
+            "transferred": 1406
+          },
+          {
+            "name": "/assets/TemplateDemoPage-B-QJRKnZ.js",
+            "startTime": 1483.5,
+            "responseStart": 1522.4000000357628,
+            "responseEnd": 1708.300000011921,
+            "duration": 224.80000001192093,
+            "initiator": "script",
+            "encoded": 156,
+            "transferred": 456
+          },
+          {
+            "name": "/assets/templates-GykQu1Rp.js",
+            "startTime": 1484.199999988079,
+            "responseStart": 1522.699999988079,
+            "responseEnd": 1787.6000000238419,
+            "duration": 303.4000000357628,
+            "initiator": "script",
+            "encoded": 4296,
+            "transferred": 4596
+          },
+          {
+            "name": "/assets/KhmerCelestialLayout-XABWWHsu.js",
+            "startTime": 1484.800000011921,
+            "responseStart": 2262.199999988079,
+            "responseEnd": 2638.699999988079,
+            "duration": 1153.8999999761581,
+            "initiator": "script",
+            "encoded": 10159,
+            "transferred": 10459
+          },
+          {
+            "name": "/assets/arrow-left-Co9bFwqD.js",
+            "startTime": 1485.199999988079,
+            "responseStart": 2323.300000011921,
+            "responseEnd": 2511.5,
+            "duration": 1026.300000011921,
+            "initiator": "script",
+            "encoded": 205,
+            "transferred": 505
+          },
+          {
+            "name": "/assets/TemplateExperience-D5FTh5KA.js",
+            "startTime": 1485.6000000238419,
+            "responseStart": 2498.5,
+            "responseEnd": 3522.600000023842,
+            "duration": 2037,
+            "initiator": "script",
+            "encoded": 52490,
+            "transferred": 52790
+          },
+          {
+            "name": "/assets/openingConfig-4--OkjJT.js",
+            "startTime": 1486,
+            "responseStart": 2512.900000035763,
+            "responseEnd": 2732.400000035763,
+            "duration": 1246.4000000357628,
+            "initiator": "script",
+            "encoded": 1150,
+            "transferred": 1450
+          },
+          {
+            "name": "/assets/CinematicVideoOpening-DrrnOoVX.js",
+            "startTime": 1486.300000011921,
+            "responseStart": 2528.300000011921,
+            "responseEnd": 2955.100000023842,
+            "duration": 1468.800000011921,
+            "initiator": "script",
+            "encoded": 10489,
+            "transferred": 10789
+          },
+          {
+            "name": "/assets/mail-BEvm0P9D.js",
+            "startTime": 1486.9000000357628,
+            "responseStart": 2639.900000035763,
+            "responseEnd": 2827.699999988079,
+            "duration": 1340.7999999523163,
+            "initiator": "script",
+            "encoded": 253,
+            "transferred": 553
+          },
+          {
+            "name": "/assets/sparkles-CQxlGWHq.js",
+            "startTime": 1487.300000011921,
+            "responseStart": 2733.699999988079,
+            "responseEnd": 2907.5,
+            "duration": 1420.199999988079,
+            "initiator": "script",
+            "encoded": 552,
+            "transferred": 852
+          },
+          {
+            "name": "/assets/eventPresentation-RRyBrHb4.js",
+            "startTime": 1488,
+            "responseStart": 2829.100000023842,
+            "responseEnd": 3033.400000035763,
+            "duration": 1545.4000000357628,
+            "initiator": "script",
+            "encoded": 1436,
+            "transferred": 1736
+          },
+          {
+            "name": "/assets/CinematicVideoOpening-BYV-m3AB.css",
+            "startTime": 1488.6000000238419,
+            "responseStart": 1693.699999988079,
+            "responseEnd": 2006.1000000238419,
+            "duration": 517.5,
+            "initiator": "link",
+            "encoded": 5471,
+            "transferred": 5771
+          },
+          {
+            "name": "/assets/circle-check-DGgvMsbA.js",
+            "startTime": 1489.199999988079,
+            "responseStart": 2908.600000023842,
+            "responseEnd": 3081.699999988079,
+            "duration": 1592.5,
+            "initiator": "script",
+            "encoded": 250,
+            "transferred": 550
+          },
+          {
+            "name": "/assets/clock-CYcN1Ohb.js",
+            "startTime": 1489.6000000238419,
+            "responseStart": 2956.800000011921,
+            "responseEnd": 3129.400000035763,
+            "duration": 1639.800000011921,
+            "initiator": "script",
+            "encoded": 209,
+            "transferred": 509
+          },
+          {
+            "name": "/assets/ui-DzTS81Rm.js",
+            "startTime": 1490.199999988079,
+            "responseStart": 3035.100000023842,
+            "responseEnd": 3270.900000035763,
+            "duration": 1780.7000000476837,
+            "initiator": "script",
+            "encoded": 3354,
+            "transferred": 3654
+          },
+          {
+            "name": "/assets/toast-BNSoQ1dn.js",
+            "startTime": 1490.6000000238419,
+            "responseStart": 3050.5,
+            "responseEnd": 3224.400000035763,
+            "duration": 1733.800000011921,
+            "initiator": "script",
+            "encoded": 292,
+            "transferred": 592
+          },
+          {
+            "name": "/assets/ui-v9maAeT-.css",
+            "startTime": 1491.199999988079,
+            "responseStart": 1709.4000000357628,
+            "responseEnd": 1974.9000000357628,
+            "duration": 483.7000000476837,
+            "initiator": "link",
+            "encoded": 2731,
+            "transferred": 3031
+          },
+          {
+            "name": "/assets/mediaApi-CcAvY6oE.js",
+            "startTime": 1491.699999988079,
+            "responseStart": 3083,
+            "responseEnd": 3255.800000011921,
+            "duration": 1764.1000000238419,
+            "initiator": "script",
+            "encoded": 1072,
+            "transferred": 1372
+          },
+          {
+            "name": "/assets/weddingStorage-DPw_jadI.js",
+            "startTime": 1492,
+            "responseStart": 3130.800000011921,
+            "responseEnd": 3333.300000011921,
+            "duration": 1841.300000011921,
+            "initiator": "script",
+            "encoded": 1558,
+            "transferred": 1858
+          },
+          {
+            "name": "/assets/InvitationLabel-DAMaM8Xi.js",
+            "startTime": 1492.4000000357628,
+            "responseStart": 3225.800000011921,
+            "responseEnd": 3459.699999988079,
+            "duration": 1967.2999999523163,
+            "initiator": "script",
+            "encoded": 2686,
+            "transferred": 2986
+          },
+          {
+            "name": "/assets/invitationLanguage-BwEdAu9z.js",
+            "startTime": 1493.1000000238419,
+            "responseStart": 3257,
+            "responseEnd": 3427.900000035763,
+            "duration": 1934.800000011921,
+            "initiator": "script",
+            "encoded": 216,
+            "transferred": 516
+          },
+          {
+            "name": "/assets/lib-l5Ry_C1A.js",
+            "startTime": 1493.4000000357628,
+            "responseStart": 3272.300000011921,
+            "responseEnd": 3584.199999988079,
+            "duration": 2090.7999999523163,
+            "initiator": "script",
+            "encoded": 8489,
+            "transferred": 8789
+          },
+          {
+            "name": "/assets/khmer-celestial-CD6n1oJL.js",
+            "startTime": 1493.9000000357628,
+            "responseStart": 3335,
+            "responseEnd": 3630.600000023842,
+            "duration": 2136.699999988079,
+            "initiator": "script",
+            "encoded": 8251,
+            "transferred": 8551
+          },
+          {
+            "name": "/assets/templateTypography-D2aSXzJ5.js",
+            "startTime": 1494.300000011921,
+            "responseStart": 3429.199999988079,
+            "responseEnd": 3600.300000011921,
+            "duration": 2106,
+            "initiator": "script",
+            "encoded": 461,
+            "transferred": 761
+          },
+          {
+            "name": "/assets/khmer-celestial-BhHWmCfe.css",
+            "startTime": 1494.9000000357628,
+            "responseStart": 1720.199999988079,
+            "responseEnd": 2117.199999988079,
+            "duration": 622.2999999523163,
+            "initiator": "link",
+            "encoded": 9189,
+            "transferred": 9489
+          },
+          {
+            "name": "/assets/TimePicker-RNOEeQRY.js",
+            "startTime": 1495.199999988079,
+            "responseStart": 3460.900000035763,
+            "responseEnd": 3662.800000011921,
+            "duration": 2167.600000023842,
+            "initiator": "script",
+            "encoded": 2852,
+            "transferred": 3152
+          },
+          {
+            "name": "/assets/TimePicker-WdylPF6N.css",
+            "startTime": 1495.9000000357628,
+            "responseStart": 1740.699999988079,
+            "responseEnd": 1975,
+            "duration": 479.0999999642372,
+            "initiator": "link",
+            "encoded": 1504,
+            "transferred": 1804
+          },
+          {
+            "name": "/assets/use-in-view-CdNeqcoa.js",
+            "startTime": 1496.300000011921,
+            "responseStart": 3523.900000035763,
+            "responseEnd": 3694.900000035763,
+            "duration": 2198.600000023842,
+            "initiator": "script",
+            "encoded": 968,
+            "transferred": 1268
+          },
+          {
+            "name": "/assets/TemplateImage-C6djQEE1.js",
+            "startTime": 1496.9000000357628,
+            "responseStart": 3585.300000011921,
+            "responseEnd": 3758.300000011921,
+            "duration": 2261.399999976158,
+            "initiator": "script",
+            "encoded": 639,
+            "transferred": 939
+          },
+          {
+            "name": "/assets/SeatingFloorPlan-C8A4t5kH.js",
+            "startTime": 1497.5,
+            "responseStart": 3601.699999988079,
+            "responseEnd": 3805.699999988079,
+            "duration": 2308.199999988079,
+            "initiator": "script",
+            "encoded": 7070,
+            "transferred": 7370
+          },
+          {
+            "name": "/assets/useBackendMessages-Df7DFV7v.js",
+            "startTime": 1497.699999988079,
+            "responseStart": 3632.5,
+            "responseEnd": 3994.199999988079,
+            "duration": 2496.5,
+            "initiator": "script",
+            "encoded": 26197,
+            "transferred": 26497
+          },
+          {
+            "name": "/assets/SeatingFloorPlan-zRUjaJBF.css",
+            "startTime": 1498.4000000357628,
+            "responseStart": 1789,
+            "responseEnd": 2053.5,
+            "duration": 555.0999999642372,
+            "initiator": "link",
+            "encoded": 4049,
+            "transferred": 4349
+          },
+          {
+            "name": "/assets/TemplateExperience-B4iHK-6L.css",
+            "startTime": 1498.9000000357628,
+            "responseStart": 1977.300000011921,
+            "responseEnd": 2526.699999988079,
+            "duration": 1027.7999999523163,
+            "initiator": "link",
+            "encoded": 20907,
+            "transferred": 21207
+          },
+          {
+            "name": "/assets/eighth-note-DwLY30UA.js",
+            "startTime": 1499.4000000357628,
+            "responseStart": 3664.699999988079,
+            "responseEnd": 3837.100000023842,
+            "duration": 2337.699999988079,
+            "initiator": "script",
+            "encoded": 254,
+            "transferred": 554
+          },
+          {
+            "name": "/assets/external-link-Cyqe121L.js",
+            "startTime": 1499.699999988079,
+            "responseStart": 3664.900000035763,
+            "responseEnd": 3837.300000011921,
+            "duration": 2337.600000023842,
+            "initiator": "script",
+            "encoded": 291,
+            "transferred": 591
+          },
+          {
+            "name": "/assets/gem-BgV0Nu7W.js",
+            "startTime": 1500.1000000238419,
+            "responseStart": 3696.100000023842,
+            "responseEnd": 3868.600000023842,
+            "duration": 2368.5,
+            "initiator": "script",
+            "encoded": 374,
+            "transferred": 674
+          },
+          {
+            "name": "/assets/EmeraldLuxeLayout-DwgZIBoB.js",
+            "startTime": 1500.5,
+            "responseStart": 3760,
+            "responseEnd": 3979.5,
+            "duration": 2479,
+            "initiator": "script",
+            "encoded": 5578,
+            "transferred": 5878
+          },
+          {
+            "name": "/assets/eighth-notes-ldlrLYQV.js",
+            "startTime": 1501,
+            "responseStart": 3806.699999988079,
+            "responseEnd": 3979.199999988079,
+            "duration": 2478.199999988079,
+            "initiator": "script",
+            "encoded": 326,
+            "transferred": 626
+          },
+          {
+            "name": "/assets/qr-code-BkWIctgA.js",
+            "startTime": 1501.1000000238419,
+            "responseStart": 3838.300000011921,
+            "responseEnd": 3995.199999988079,
+            "duration": 2494.099999964237,
+            "initiator": "script",
+            "encoded": 690,
+            "transferred": 990
+          },
+          {
+            "name": "/assets/AuthoredClosing-D5vcxWy8.js",
+            "startTime": 1501.5,
+            "responseStart": 3838.400000035763,
+            "responseEnd": 4009.900000035763,
+            "duration": 2508.400000035763,
+            "initiator": "script",
+            "encoded": 465,
+            "transferred": 765
+          },
+          {
+            "name": "/assets/EmeraldLuxeLayout-t-wl7iBo.css",
+            "startTime": 1502.199999988079,
+            "responseStart": 1976.6000000238419,
+            "responseEnd": 2164.699999988079,
+            "duration": 662.5,
+            "initiator": "link",
+            "encoded": 1718,
+            "transferred": 2018
+          },
+          {
+            "name": "/assets/paymentService-B9EnQFEa.js",
+            "startTime": 1502.800000011921,
+            "responseStart": 3869.600000023842,
+            "responseEnd": 4040.900000035763,
+            "duration": 2538.100000023842,
+            "initiator": "script",
+            "encoded": 1007,
+            "transferred": 1307
+          },
+          {
+            "name": "/assets/TemplatesFeature-BiYeYDYH.js",
+            "startTime": 1503.300000011921,
+            "responseStart": 3980.5,
+            "responseEnd": 4151.400000035763,
+            "duration": 2648.100000023842,
+            "initiator": "script",
+            "encoded": 146,
+            "transferred": 446
+          },
+          {
+            "name": "/assets/DigitalYesLayout-jDaZr2_D.js",
+            "startTime": 1503.699999988079,
+            "responseStart": 3981.199999988079,
+            "responseEnd": 4229.5,
+            "duration": 2725.800000011921,
+            "initiator": "script",
+            "encoded": 9186,
+            "transferred": 9486
+          },
+          {
+            "name": "/assets/copy-DXssfycg.js",
+            "startTime": 1504.1000000238419,
+            "responseStart": 3995.5,
+            "responseEnd": 4152.100000023842,
+            "duration": 2648,
+            "initiator": "script",
+            "encoded": 276,
+            "transferred": 576
+          },
+          {
+            "name": "/assets/DigitalYesLayout-By6oAR9f.css",
+            "startTime": 1504.699999988079,
+            "responseStart": 2007.800000011921,
+            "responseEnd": 2212.699999988079,
+            "duration": 708,
+            "initiator": "link",
+            "encoded": 1713,
+            "transferred": 2013
+          },
+          {
+            "name": "/assets/templates-CFCVfUoY.css",
+            "startTime": 1505.199999988079,
+            "responseStart": 2054.699999988079,
+            "responseEnd": 2260.199999988079,
+            "duration": 755,
+            "initiator": "link",
+            "encoded": 2029,
+            "transferred": 2329
+          },
+          {
+            "name": "/assets/ChatBot-CYoD_hZ1.js",
+            "startTime": 1510,
+            "responseStart": 3996.400000035763,
+            "responseEnd": 4197.600000023842,
+            "duration": 2687.600000023842,
+            "initiator": "script",
+            "encoded": 2805,
+            "transferred": 3105
+          },
+          {
+            "name": "/assets/ChatBot-DwJfFoO9.css",
+            "startTime": 1510.699999988079,
+            "responseStart": 2119.100000023842,
+            "responseEnd": 2322.199999988079,
+            "duration": 811.5,
+            "initiator": "link",
+            "encoded": 1285,
+            "transferred": 1585
+          },
+          {
+            "name": "/fonts/marketing/DMSans-Latin.woff2",
+            "startTime": 1543.1000000238419,
+            "responseStart": 2165.699999988079,
+            "responseEnd": 3049.5,
+            "duration": 1506.3999999761581,
+            "initiator": "css",
+            "encoded": 36932,
+            "transferred": 37232
+          },
+          {
+            "name": "/fonts/silk-heritage/KantumruyPro.woff2",
+            "startTime": 1551.199999988079,
+            "responseStart": 2213.800000011921,
+            "responseEnd": 3662.699999988079,
+            "duration": 2111.5,
+            "initiator": "css",
+            "encoded": 76848,
+            "transferred": 77148
+          },
+          {
+            "name": "/api/v1/templates",
+            "startTime": 1586.4000000357628,
+            "responseStart": 1587.6000000238419,
+            "responseEnd": 1587.6000000238419,
+            "duration": 1.199999988079071,
+            "initiator": "xmlhttprequest",
+            "encoded": 11,
+            "transferred": 311
+          },
+          {
+            "name": "/assets/RoyalGardenCinematicLayout-nOzJouNg.js",
+            "startTime": 4259.199999988079,
+            "responseStart": 4264.699999988079,
+            "responseEnd": 4559.900000035763,
+            "duration": 300.7000000476837,
+            "initiator": "script",
+            "encoded": 13244,
+            "transferred": 13544
+          },
+          {
+            "name": "/assets/images-DptK46fJ.js",
+            "startTime": 4260.100000023842,
+            "responseStart": 4264.100000023842,
+            "responseEnd": 4433.900000035763,
+            "duration": 173.80000001192093,
+            "initiator": "script",
+            "encoded": 410,
+            "transferred": 710
+          },
+          {
+            "name": "/assets/message-circle-heart-DlGxIvU_.js",
+            "startTime": 4260.699999988079,
+            "responseStart": 4264.600000023842,
+            "responseEnd": 4434.100000023842,
+            "duration": 173.4000000357628,
+            "initiator": "script",
+            "encoded": 423,
+            "transferred": 723
+          },
+          {
+            "name": "/assets/RoyalGardenCinematicLayout-Buvg9vPe.css",
+            "startTime": 4261.199999988079,
+            "responseStart": 4265,
+            "responseEnd": 4543.800000011921,
+            "duration": 282.60000002384186,
+            "initiator": "link",
+            "encoded": 9544,
+            "transferred": 9844
+          },
+          {
+            "name": "/api/v1/templates/slug/royal-garden-cinematic",
+            "startTime": 4525.800000011921,
+            "responseStart": 4527.300000011921,
+            "responseEnd": 4527.300000011921,
+            "duration": 1.5,
+            "initiator": "xmlhttprequest",
+            "encoded": 11,
+            "transferred": 311
+          },
+          {
+            "name": "/templates/royal-garden/v3/opening/arch-640.webp",
+            "startTime": 4589.800000011921,
+            "responseStart": 4593.800000011921,
+            "responseEnd": 7516.400000035763,
+            "duration": 2926.600000023842,
+            "initiator": "img",
+            "encoded": 166806,
+            "transferred": 167106
+          },
+          {
+            "name": "/templates/royal-garden/v3/opening/demo-portrait-640.webp",
+            "startTime": 4590.5,
+            "responseStart": 4593.800000011921,
+            "responseEnd": 6948.600000023842,
+            "duration": 2358.100000023842,
+            "initiator": "img",
+            "encoded": 96678,
+            "transferred": 96978
+          },
+          {
+            "name": "/templates/royal-garden/v3/opening/calligraphy-640.webp",
+            "startTime": 4590.699999988079,
+            "responseStart": 4594,
+            "responseEnd": 7373.600000023842,
+            "duration": 2782.900000035763,
+            "initiator": "img",
+            "encoded": 138822,
+            "transferred": 139122
+          },
+          {
+            "name": "/templates/royal-garden/v3/ornaments/guest-frame.webp",
+            "startTime": 4590.900000035763,
+            "responseStart": 4594.699999988079,
+            "responseEnd": 6556.699999988079,
+            "duration": 1965.7999999523163,
+            "initiator": "img",
+            "encoded": 68856,
+            "transferred": 69156
+          },
+          {
+            "name": "/templates/royal-garden/v3/effects/butterfly.webp",
+            "startTime": 4598.300000011921,
+            "responseStart": 4863.800000011921,
+            "responseEnd": 5375.600000023842,
+            "duration": 777.3000000119209,
+            "initiator": "img",
+            "encoded": 10580,
+            "transferred": 10880
+          },
+          {
+            "name": "/fonts/khmer/Battambang-Regular.woff2",
+            "startTime": 4827.400000035763,
+            "responseStart": 4873,
+            "responseEnd": 6212.5,
+            "duration": 1385.0999999642372,
+            "initiator": "css",
+            "encoded": 39920,
+            "transferred": 40220
+          },
+          {
+            "name": "/fonts/silk-heritage/CormorantGaramond.woff2",
+            "startTime": 4837.100000023842,
+            "responseStart": 5376.699999988079,
+            "responseEnd": 6290,
+            "duration": 1452.8999999761581,
+            "initiator": "css",
+            "encoded": 24320,
+            "transferred": 24620
+          }
+        ],
+        "images": [
+          {
+            "source": "http://127.0.0.1:4186/templates/royal-garden/v3/opening/arch-640.webp",
+            "width": 1,
+            "height": 1,
+            "naturalWidth": 390,
+            "priority": "high"
+          },
+          {
+            "source": "http://127.0.0.1:4186/templates/royal-garden/v3/opening/demo-portrait-640.webp",
+            "width": 390,
+            "height": 747,
+            "naturalWidth": 304,
+            "priority": "high"
+          },
+          {
+            "source": "http://127.0.0.1:4186/templates/royal-garden/v3/opening/calligraphy-640.webp",
+            "width": 275,
+            "height": 152,
+            "naturalWidth": 210,
+            "priority": "auto"
+          },
+          {
+            "source": "http://127.0.0.1:4186/templates/royal-garden/v3/ornaments/guest-frame.webp",
+            "width": 335,
+            "height": 112,
+            "naturalWidth": 960,
+            "priority": "auto"
+          },
+          {
+            "source": "http://127.0.0.1:4186/templates/royal-garden/v3/effects/butterfly.webp",
+            "width": 40,
+            "height": 40,
+            "naturalWidth": 160,
+            "priority": "auto"
+          }
+        ]
+      },
+      "interaction": {
+        "events": [
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          88,
+          24,
+          24,
+          24,
+          24,
+          24,
+          16,
+          16,
+          16,
+          16,
+          16,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24
+        ],
+        "longTasks": [
+          109,
+          84,
+          65
+        ]
+      }
+    }
+  ],
+  "limits": [
+    "Local laboratory measurements, not field INP or physical-device FPS.",
+    "Before/after use the same explicit profile; provider/network environment may still vary."
+  ]
+}

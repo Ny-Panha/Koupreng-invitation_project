@@ -623,7 +623,7 @@ export const ROYAL_GARDEN_CINEMATIC_TEMPLATE = {
     mainImage: '/templates/silk-heritage/portrait.webp', phoneCoverImage: '/templates/silk-heritage/portrait.webp',
     image: '/templates/royal-garden/ivory.svg', coverBackgroundImage: '',
     gallery: [{ src: '/templates/silk-heritage/portrait.webp', alt: 'Licensed demonstration wedding portrait' }, { src: '/templates/silk-heritage/together.webp', alt: 'Licensed demonstration newlyweds outdoors' }],
-    music: { url: getMusicTrack('waiting-day').url }, musicUrl: getMusicTrack('waiting-day').url, openingStyle: 'royal-garden-oval', bg: '#f1ede6', paper: '#f1ede6', color: '#98703a', accent: '#c7984d',
+    music: { url: getMusicTrack('nisai').url }, musicUrl: getMusicTrack('nisai').url, openingStyle: 'royal-garden-oval', bg: '#f1ede6', paper: '#f1ede6', color: '#98703a', accent: '#c7984d',
     description: 'ធៀបអញ្ជើញខ្មែរពណ៌ភ្លុក និងមាស ជាមួយការបើកធៀបរាងពងក្រពើ រូបភាពបែបភាពយន្ត និងកម្មវិធីមង្គលការ។',
     schedule: [
       { id: 'blessings', time: '05:00', title: 'ពិធីក្រុងពាលី', titleEn: 'Traditional blessing' },

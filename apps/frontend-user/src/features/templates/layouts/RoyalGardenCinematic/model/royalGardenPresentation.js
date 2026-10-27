@@ -1,15 +1,23 @@
 import { safeIntroMedia } from '../../../shared/cinematicIntro';
 
 const ROOT = '/templates/royal-garden/v3';
+const REFINEMENT = '/templates/royal-garden/v3-1';
 export const ROYAL_ASSETS = Object.freeze({
-  arch: `${ROOT}/opening/arch.webp`, archSmall: `${ROOT}/opening/arch-640.webp`,
+  arch: `${REFINEMENT}/opening-frame-1200.webp`, archSmall: `${REFINEMENT}/opening-frame-640.webp`,
   calligraphy: `${ROOT}/opening/calligraphy.webp`, calligraphySmall: `${ROOT}/opening/calligraphy-640.webp`,
   guest: `${ROOT}/ornaments/guest-frame.webp`, footer: `${ROOT}/video/footer.webp`,
   information: `${ROOT}/information/background.webp`, informationSmall: `${ROOT}/information/background-640.webp`,
   butterfly: `${ROOT}/effects/butterfly.webp`,
   demoVideo: `${ROOT}/video/pre-wedding-demo.mp4`, poster: `${ROOT}/video/poster.webp`,
   demoPortrait: '/templates/silk-heritage/portrait.webp', demoPortraitSmall: `${ROOT}/opening/demo-portrait-640.webp`,
+  monogram: `${REFINEMENT}/monogram-256.webp`, monogramSmall: `${REFINEMENT}/monogram-128.webp`, monogramLarge: `${REFINEMENT}/monogram-512.webp`,
+  videoCalligraphy: `${REFINEMENT}/video-calligraphy-480.webp`, videoCalligraphyLarge: `${REFINEMENT}/video-calligraphy-960.webp`,
+  openButton: `${REFINEMENT}/open-button-480.webp`, openButtonLarge: `${REFINEMENT}/open-button-960.webp`,
+  brand: '/branding/koupreng-mark.png',
+  archTiny: `${REFINEMENT}/opening-frame-480.webp`, demoPortraitTiny: `${REFINEMENT}/demo-portrait-480.webp`,
+  calligraphyTiny: `${REFINEMENT}/opening-calligraphy-320.webp`, calligraphyMedium: `${REFINEMENT}/opening-calligraphy-800.webp`, guestSmall: `${REFINEMENT}/guest-frame-480.webp`,
 });
+export const ROYAL_CANVAS_SIZES = '(max-width: 639px) 100vw, (max-width: 1023px) min(88vw, 62vh), min(600px, 58vh)';
 export const MOTION_PRESETS = ['off', 'subtle', 'balanced', 'cinematic'];
 export const bounded = (value, min, max, fallback) => value == null || value === '' || !Number.isFinite(Number(value)) ? fallback : Math.min(max, Math.max(min, Number(value)));
 const pick = (value, options, fallback) => options.includes(value) ? value : fallback;
@@ -17,14 +25,15 @@ const record = value => value && typeof value === 'object' && !Array.isArray(val
 const asset = (value, fallback) => value === undefined ? fallback : safeIntroMedia(value);
 
 // Presentation only. Never stores canonical names, dates, guest identity or private video URLs.
-export function royalGardenPresentation(content = {}) {
+export function royalGardenPresentation(content = {}, { hosted = content.hasHostContent === true } = {}) {
   const intro = record(content.cinematicIntro), information = record(content.informationScene);
   const royal = intro.style === 'royal-arch';
   const video = record(information.video), effects = record(information.effects);
+  const monogram = record(information.monogram), monogramMode = pick(monogram.mode, ['auto', 'artwork', 'custom', 'initials', 'hidden'], 'auto');
   return {
     royal,
     entrance: {
-      frame: asset(intro.entranceFrame, ROYAL_ASSETS.arch), frameEnabled: intro.entranceFrameEnabled !== false,
+      frame: asset(intro.entranceFrame === `${ROOT}/opening/arch.webp` ? undefined : intro.entranceFrame, ROYAL_ASSETS.arch), frameEnabled: intro.entranceFrameEnabled !== false,
       frameScale: bounded(intro.entranceFrameScale, .85, 1.1, 1),
       framePosition: pick(intro.entranceFramePosition, ['upper', 'center', 'lower'], 'center'),
       guestFrameEnabled: intro.guestFrameEnabled !== false,
@@ -33,6 +42,12 @@ export function royalGardenPresentation(content = {}) {
       titlePlacement: pick(intro.titlePlacement, ['upper', 'center'], 'center'),
       openButtonText: typeof intro.openButtonText === 'string' ? intro.openButtonText.slice(0, 100) : undefined,
       buttonArtwork: intro.buttonArtwork !== false,
+      buttonStyle: pick(intro.buttonStyle, ['artwork', 'circle', 'text'], intro.buttonArtwork === false ? 'circle' : 'artwork'),
+    },
+    monogram: {
+      mode: monogramMode, hidden: monogramMode === 'hidden',
+      source: monogramMode === 'custom' ? asset(monogram.asset, '') : monogramMode === 'artwork' || (monogramMode === 'auto' && !hosted) ? ROYAL_ASSETS.monogram : '',
+      scale: bounded(monogram.scale, .7, 1.2, 1), positionY: bounded(monogram.positionY, 0, 18, 1),
     },
     information: {
       enabled: information.enabled === undefined ? royal : information.enabled === true,
@@ -42,7 +57,9 @@ export function royalGardenPresentation(content = {}) {
       overlay: bounded(information.contentOverlay, 0, .8, .2),
       panelOpacity: bounded(information.panelOpacity, 0, 1, 0),
       reveal: pick(information.sectionReveal, ['fade', 'rise', 'none'], 'rise'),
-      footer: information.footerEnabled !== false,
+      footer: false,
+      spacing: pick(information.spacing, ['compact', 'balanced', 'airy'], 'balanced'),
+      brandStyle: pick(information.brandStyle, ['logo', 'text'], 'logo'),
     },
     motion: {
       preset: pick(information.motionPreset, MOTION_PRESETS, 'subtle'),
@@ -58,6 +75,9 @@ export function royalGardenPresentation(content = {}) {
       endBehavior: pick(video.endBehavior, ['collapse', 'poster'], 'collapse'),
       followUpPhotos: video.followUpPhotos === true,
       resumeMusic: video.resumeMusic !== false,
+      artwork: asset(video.artworkSrc, ROYAL_ASSETS.videoCalligraphy), artworkEnabled: video.artworkEnabled !== false,
+      dateEnabled: video.dateEnabled !== false, dateFont: pick(video.dateFont, ['moul', 'battambang', 'kantumruy'], 'moul'),
+      showTime: video.showTime === undefined ? content.saveTheDate?.showTime === true : video.showTime === true,
     },
   };
 }

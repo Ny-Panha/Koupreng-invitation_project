@@ -14,7 +14,7 @@ export default function RoyalGallery({ photos, english }) {
     onTouchStart={event => setTouch(event.touches[0].clientX)} onTouchCancel={() => setTouch(null)} onTouchEnd={event => { if (touch !== null && Math.abs(touch - event.changedTouches[0].clientX) > 40) move(touch > event.changedTouches[0].clientX ? 1 : -1); setTouch(null); }}>
     <div className="rg-gallery">
       {photos.length > 1 && <img className="rg-side-photo rg-side-photo--left" src={photos[(active + photos.length - 1) % photos.length].src} alt="" loading="lazy" aria-hidden="true" />}
-      <button type="button" className="rg-current-photo" onClick={() => setExpanded(true)} aria-label={english ? 'Enlarge photo' : 'ពង្រីករូបភាព'}><img src={photos[active].src} alt={photos[active].alt} loading="lazy" decoding="async" /></button>
+      <button type="button" className="rg-current-photo" onClick={() => setExpanded(true)} aria-label={english ? 'Enlarge photo' : 'ពង្រីករូបភាព'}><img key={photos[active].src} src={photos[active].src} alt={photos[active].alt} loading="lazy" decoding="async" onLoad={event => { event.currentTarget.dataset.ready = 'true'; }} /></button>
       {photos.length > 1 && <img className="rg-side-photo rg-side-photo--right" src={photos[(active + 1) % photos.length].src} alt="" loading="lazy" aria-hidden="true" />}
       {photos.length > 1 && <><button className="rg-gallery-prev" type="button" onClick={() => move(-1)} aria-label={english ? 'Previous photo' : 'រូបភាពមុន'}><ChevronLeft /></button><button className="rg-gallery-next" type="button" onClick={() => move(1)} aria-label={english ? 'Next photo' : 'រូបភាពបន្ទាប់'}><ChevronRight /></button></>}
     </div>

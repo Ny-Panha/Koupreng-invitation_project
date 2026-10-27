@@ -1,0 +1,227 @@
+{
+  "rights": "User-supplied artwork used as instructed. Source originals preserved unchanged. Resize/compression only; no recoloring or alpha reconstruction.",
+  "assets": [
+    {
+      "original": "C:/Users/ASER Nitro/Downloads/khmer_gold_monogram_ra_lo_4k_transparent.webp",
+      "dimensions": [
+        4096,
+        4096
+      ],
+      "mode": "RGBA",
+      "bytes": 7028276,
+      "sha256": "7949469855d7c1ff02278f39f91ccf1af7d63f7c1dfcc31c642a65f09930d97a",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "paintedBounds": [
+        0,
+        87,
+        4070,
+        4073
+      ],
+      "derivatives": [
+        {
+          "path": "apps/frontend-user/public/templates/royal-garden/v3-1/monogram-128.webp",
+          "dimensions": [
+            128,
+            128
+          ],
+          "bytes": 10958,
+          "sha256": "d982352b0e6d0668ef8f562e0851867b771920466f953a9d7e873baa42069c83"
+        },
+        {
+          "path": "apps/frontend-user/public/templates/royal-garden/v3-1/monogram-256.webp",
+          "dimensions": [
+            256,
+            256
+          ],
+          "bytes": 29364,
+          "sha256": "a3985e06d4c1ba79c81b99d7472033e287912b679de82709b5079aee6c9576a9"
+        },
+        {
+          "path": "apps/frontend-user/public/templates/royal-garden/v3-1/monogram-512.webp",
+          "dimensions": [
+            512,
+            512
+          ],
+          "bytes": 87802,
+          "sha256": "44b15646d44f890078bc8e2719031da1f0b411d861facec2703d4be34cf78041"
+        }
+      ]
+    },
+    {
+      "original": "C:/Users/ASER Nitro/Downloads/khmer_gold_pre_wedding_calligraphy_4k_wide.webp",
+      "dimensions": [
+        3840,
+        1313
+      ],
+      "mode": "RGBA",
+      "bytes": 958716,
+      "sha256": "a301a78f15fc530d68ef65d5d9df0ae76ec0593a3e86e62f2b21b0d991e59074",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "paintedBounds": [
+        48,
+        48,
+        3792,
+        1265
+      ],
+      "derivatives": [
+        {
+          "path": "apps/frontend-user/public/templates/royal-garden/v3-1/video-calligraphy-480.webp",
+          "dimensions": [
+            480,
+            164
+          ],
+          "bytes": 29822,
+          "sha256": "d2f3fede92a83c1c93c5b0f3faf871e361fe4502852a18e81ebc0372beb6d97e"
+        },
+        {
+          "path": "apps/frontend-user/public/templates/royal-garden/v3-1/video-calligraphy-960.webp",
+          "dimensions": [
+            960,
+            328
+          ],
+          "bytes": 87396,
+          "sha256": "441bbca1760414efe4f58b163743ea36dcd407ebc25d07a53e30a6f022d0e074"
+        }
+      ]
+    },
+    {
+      "original": "apps/frontend-user/public/invitations/khmer-celestial/butto_invitation.webp",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "mode": "RGBA",
+      "bytes": 1200030,
+      "sha256": "a7d8bd8c3077adfcd2aa94a740a2cccf57563b679e8933a803df77617e1a797e",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "paintedBounds": [
+        55,
+        37,
+        2115,
+        690
+      ],
+      "derivatives": [
+        {
+          "path": "apps/frontend-user/public/templates/royal-garden/v3-1/open-button-480.webp",
+          "dimensions": [
+            480,
+            160
+          ],
+          "bytes": 53214,
+          "sha256": "9e195746832e74515b2d8814fc1c8c90a13b4b8e3aeaf80b6cca81810b33a677"
+        },
+        {
+          "path": "apps/frontend-user/public/templates/royal-garden/v3-1/open-button-960.webp",
+          "dimensions": [
+            960,
+            320
+          ],
+          "bytes": 152514,
+          "sha256": "ee2814bd8e5bbd72257044522e3a97615ebdf306f28211e6f9123d4ce330c1d2"
+        }
+      ]
+    }
+  ],
+  "criticalResponsiveDerivatives": [
+    {
+      "original": "apps/frontend-user/public/templates/silk-heritage/portrait.webp",
+      "path": "apps/frontend-user/public/templates/royal-garden/v3-1/demo-portrait-480.webp",
+      "dimensions": [
+        480,
+        640
+      ],
+      "bytes": 63230,
+      "sha256": "afe7ab6bbd4c4825afdb41b1a1a239700dedbe8338f4ee1c97a6f65b6f91fb58"
+    },
+    {
+      "original": ".cache/royal-garden-v3/sources/royal-garden-golden-save-the-date.webp",
+      "path": "apps/frontend-user/public/templates/royal-garden/v3-1/opening-calligraphy-320.webp",
+      "dimensions": [
+        320,
+        180
+      ],
+      "bytes": 45822,
+      "sha256": "9dfca1dea818db426f455cc77723b96f80d96f7d646fe8b74abfdf670a5692d8"
+    },
+    {
+      "original": ".cache/royal-garden-v3/sources/royal-garden-golden-save-the-date.webp",
+      "path": "apps/frontend-user/public/templates/royal-garden/v3-1/opening-calligraphy-800.webp",
+      "dimensions": [
+        800,
+        450
+      ],
+      "bytes": 201784,
+      "sha256": "2af7793a1f07c5650fbe994a4a8e2b3a2a4a0d9e74997cf05f249fe34552e45b"
+    },
+    {
+      "original": ".cache/royal-garden-v3/sources/royal-blue-golden-khmer-guest-name-frame-4k.webp",
+      "path": "apps/frontend-user/public/templates/royal-garden/v3-1/guest-frame-480.webp",
+      "dimensions": [
+        480,
+        160
+      ],
+      "bytes": 24156,
+      "sha256": "11a0c40c5fc91ccf7f5bee204aa24dd79209e13b6dd54b97b7be8fc549950681"
+    }
+  ],
+  "transparentOpeningFrame": {
+    "original": "C:/Users/ASER Nitro/Downloads/ornate_golden_khmer_wedding_frame_4K.webp",
+    "bytes": 4561248,
+    "dimensions": [
+      2160,
+      3840
+    ],
+    "sha256": "c128125dc0cf83801d56f3d9f6dd5a711f3b9ae3b1694d6f0bdc3388f5c6dc67",
+    "alphaRange": [
+      0,
+      255
+    ],
+    "processing": "Full-source resize and WebP compression only. Existing transparent interior and original blue/gold pixels retained. No background removal or segmentation.",
+    "derivatives": [
+      {
+        "path": "apps/frontend-user/public/templates/royal-garden/v3-1/opening-frame-480.webp",
+        "dimensions": [
+          480,
+          853
+        ],
+        "bytes": 128132,
+        "sha256": "51061be4a2d9d50e777e0e02f1047fe831edb3249d0273db7381271931414f97"
+      },
+      {
+        "path": "apps/frontend-user/public/templates/royal-garden/v3-1/opening-frame-640.webp",
+        "dimensions": [
+          640,
+          1138
+        ],
+        "bytes": 205234,
+        "sha256": "0f013373e1302ca6a2ed88052baed3ac6596d85c490c70840cab537d835ce7c6"
+      },
+      {
+        "path": "apps/frontend-user/public/templates/royal-garden/v3-1/opening-frame-1200.webp",
+        "dimensions": [
+          1200,
+          2133
+        ],
+        "bytes": 485280,
+        "sha256": "9d5477d306e2ba3750f305e741ee5e31c3b0bdf2b24968a7cc0673cd33341bd2"
+      }
+    ]
+  },
+  "music": {
+    "path": "apps/frontend-user/public/music/Nisai-និស្ស័យ.mp3",
+    "bytes": 3949021,
+    "sha256": "305c96e9977f68aaf28493c552b7ccec88c5601977f76507eb26b616be5f77ab",
+    "origin": "User supplied local file; requested as Royal Garden soundtrack in this session. Copied as provided, no transcoding.",
+    "productionUse": "Royal Garden catalog default and existing music picker; preload none, starts on guest gesture; owner overrides and explicit silence preserved.",
+    "browserDurationSeconds": 246.747959
+  }
+}

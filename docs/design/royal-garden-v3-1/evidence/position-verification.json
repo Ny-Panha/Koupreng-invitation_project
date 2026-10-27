@@ -1,0 +1,125 @@
+{
+  "note": "Measured browser boxes and original-source alpha-derived painted references; Khmer glyph ink is checked visually in screenshots. Latest user annotation compared directly in conversation.",
+  "records": [
+    {
+      "viewport": {
+        "width": 375,
+        "height": 667
+      },
+      "artwork": {
+        "x": 53.1953125,
+        "y": 497.765625,
+        "width": 268.609375,
+        "height": 91.765625,
+        "fontSize": "17px",
+        "lineHeight": "34px",
+        "overflow": "clip"
+      },
+      "date": {
+        "x": 121.7421875,
+        "y": 575.53125,
+        "width": 131.5,
+        "height": 23.390625,
+        "fontSize": "13px",
+        "lineHeight": "23.4px",
+        "overflow": "visible"
+      },
+      "approxArtworkAlpha128": {
+        "top": 513.7704445925361,
+        "bottom": 577.3004926694592
+      },
+      "centralFooterCrestTop": 602.9078125,
+      "lineBoxGapToGoldPx": 4
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "artwork": {
+        "x": 36.2421875,
+        "y": 653.609375,
+        "width": 317.515625,
+        "height": 108.484375,
+        "fontSize": "17px",
+        "lineHeight": "34px",
+        "overflow": "clip"
+      },
+      "date": {
+        "x": 124.2890625,
+        "y": 748.09375,
+        "width": 141.40625,
+        "height": 25.171875,
+        "fontSize": "13.986px",
+        "lineHeight": "25.1748px",
+        "overflow": "visible"
+      },
+      "approxArtworkAlpha128": {
+        "top": 672.5301075780656,
+        "bottom": 747.6346748857578
+      },
+      "centralFooterCrestTop": 777.259375,
+      "lineBoxGapToGoldPx": 4
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "artwork": {
+        "x": 154,
+        "y": 729.078125,
+        "width": 460,
+        "height": 157.15625,
+        "fontSize": "17px",
+        "lineHeight": "34px",
+        "overflow": "clip"
+      },
+      "date": {
+        "x": 277.796875,
+        "y": 872.234375,
+        "width": 212.40625,
+        "height": 37.796875,
+        "fontSize": "21px",
+        "lineHeight": "37.8px",
+        "overflow": "visible"
+      },
+      "approxArtworkAlpha128": {
+        "top": 756.4877070639757,
+        "bottom": 865.2881878332064
+      },
+      "centralFooterCrestTop": 914.0236328125,
+      "lineBoxGapToGoldPx": 4
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "artwork": {
+        "x": 501.1015625,
+        "y": 613.703125,
+        "width": 437.796875,
+        "height": 149.578125,
+        "fontSize": "17px",
+        "lineHeight": "34px",
+        "overflow": "clip"
+      },
+      "date": {
+        "x": 622.4921875,
+        "y": 749.28125,
+        "width": 195.015625,
+        "height": 34.703125,
+        "fontSize": "19.2839px",
+        "lineHeight": "34.7111px",
+        "overflow": "visible"
+      },
+      "approxArtworkAlpha128": {
+        "top": 639.7910081873572,
+        "bottom": 743.3450947258187
+      },
+      "centralFooterCrestTop": 787.97783203125,
+      "lineBoxGapToGoldPx": 4
+    }
+  ]
+}

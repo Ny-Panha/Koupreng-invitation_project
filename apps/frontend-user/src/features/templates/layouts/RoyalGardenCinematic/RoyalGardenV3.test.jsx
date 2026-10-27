@@ -5,6 +5,8 @@ import { normalizeIntro, introArtwork, DEFAULT_INTRO_ARTWORK } from '../../share
 import { guestFrameText, motionBudget, ROYAL_ASSETS, royalGardenPresentation } from './model/royalGardenPresentation';
 import RoyalGardenEntranceScene from './components/RoyalGardenEntranceScene';
 import RoyalGardenCinematicLayout from './RoyalGardenCinematicLayout';
+import RoyalGardenMonogram from './components/RoyalGardenMonogram';
+import RoyalGardenCeremonialLetter from './components/RoyalGardenCeremonialLetter';
 import CinematicOpeningProvider from '../../shared/Openings/CinematicOpeningProvider';
 import { publicInvitationToDraft, draftToInvitationPayload } from '../../../wedding-builder/utils/invitationDraftAdapter';
 import { draftToTemplate } from '../../../wedding-builder/utils/draftToTemplate';
@@ -17,6 +19,38 @@ beforeEach(() => {
 afterEach(() => { cleanup(); vi.useRealTimers(); vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 
 describe('Royal Garden V3 presentation and compatibility', () => {
+  it('uses the transparent frame for new and former built-in covers while retaining owner media and explicit clearing', () => {
+    expect(royalGardenPresentation({}).entrance.frame).toBe(ROYAL_ASSETS.arch);
+    expect(royalGardenPresentation({ cinematicIntro: { entranceFrame: '/templates/royal-garden/v3/opening/arch.webp' } }).entrance.frame).toBe(ROYAL_ASSETS.arch);
+    expect(royalGardenPresentation({ cinematicIntro: { entranceFrame: '/owner.webp' } }).entrance.frame).toBe('/owner.webp');
+    expect(royalGardenPresentation({ cinematicIntro: { entranceFrame: '' } }).entrance.frame).toBe('');
+  });
+  it('reserves the fixed supplied monogram for demos or explicit owner choice', () => {
+    expect(royalGardenPresentation({}).monogram.source).toBe(ROYAL_ASSETS.monogram);
+    expect(royalGardenPresentation({ hasHostContent: true }).monogram.source).toBe('');
+    expect(royalGardenPresentation({ informationScene: { monogram: { mode: 'artwork' } } }, { hosted: true }).monogram.source).toBe(ROYAL_ASSETS.monogram);
+    expect(royalGardenPresentation({ informationScene: { monogram: { mode: 'custom', asset: 'javascript:alert(1)', scale: 20 } } }).monogram).toMatchObject({ source: '', scale: 1.2 });
+    const { container, rerender } = render(<RoyalGardenMonogram settings={royalGardenPresentation({ hasHostContent: true }).monogram} initials="A · B" />);
+    expect(container).toHaveTextContent('A · B'); expect(container.querySelector('img')).toBeNull();
+    rerender(<RoyalGardenMonogram settings={royalGardenPresentation({ informationScene: { monogram: { mode: 'custom', asset: '' } } }).monogram} initials="A · B" />);
+    expect(container).toBeEmptyDOMElement();
+  });
+  it('round-trips refinement settings without introducing competing wedding date or private media fields', () => {
+    const informationScene = { spacing: 'compact', brandStyle: 'text', monogram: { mode: 'custom', asset: '', scale: .9, positionY: 7 }, video: { artworkSrc: '', dateEnabled: true, dateFont: 'battambang', showTime: true } };
+    const cinematicIntro = { style: 'royal-arch', buttonStyle: 'artwork', coverX: 25, coverY: 60 };
+    const payload = draftToInvitationPayload({ templateId: 'royal-garden-cinematic', couple: { groom: 'Owner', bride: 'Partner' }, event: { date: '2027-12-05' }, cinematicIntro, informationScene });
+    const draft = publicInvitationToDraft({ ...payload, templateCode: 'royal-garden-cinematic' });
+    expect(draft.informationScene).toEqual(informationScene); expect(draft.cinematicIntro).toEqual(cinematicIntro);
+    expect(draftToTemplate(draft).tpl.hostContent.informationScene).toEqual(informationScene);
+    expect(royalGardenPresentation(draft).video).toMatchObject({ artwork: '', dateFont: 'battambang', showTime: true });
+    expect(normalizeIntro(cinematicIntro).buttonStyle).toBe('artwork');
+  });
+  it('gives the closing letters matching semantic markup and omits empty letters', () => {
+    const { container } = render(<><RoyalGardenCeremonialLetter variant="thanks" title="Thank you" body="Our thanks" /><RoyalGardenCeremonialLetter variant="apology" title="Our apology" body="Our apology text" /><RoyalGardenCeremonialLetter variant="thanks" title="" body="" /></>);
+    expect(container.querySelectorAll('.rg-ceremonial-letter')).toHaveLength(2);
+    expect(screen.getAllByRole('heading', { level: 2 })).toHaveLength(2);
+    expect(container.querySelectorAll('.rg-ceremonial-letter .rg-copy')).toHaveLength(2);
+  });
   it('keeps existing openings ivory and opts the new arch into the royal information scene', () => {
     expect(royalGardenPresentation({}).information.enabled).toBe(false);
     expect(royalGardenPresentation({ cinematicIntro: { style: 'golden-calligraphy' } }).royal).toBe(false);
@@ -68,8 +102,11 @@ describe('royal entrance and video recovery', () => {
     const { container } = render(<RoyalGardenEntranceScene content={content} intro={normalizeIntro(content.cinematicIntro)} presentation={royalGardenPresentation(content)} sequence={{ stage: 'COVER' }} title="Our day" names="Owner & Partner" date="5 December" english onOpen={vi.fn()} />);
     expect(container.querySelector('.cover-bg-media')).toHaveAttribute('src', '/owner.webp');
     expect(container.querySelector('.cover-bg-media')).not.toHaveAttribute('srcset');
+    expect(container.querySelector('.rg-entrance-photo').nextElementSibling).toHaveClass('rg-royal-arch');
+    expect(container.querySelector('.rg-entrance-photo')).toHaveAttribute('data-frame-ready', 'false');
     expect(container.querySelector('.rg-guest-frame')).toHaveTextContent('<script>guest</script>'); expect(container.querySelector('script')).toBeNull();
     fireEvent.error(container.querySelector('.rg-royal-arch img')); fireEvent.error(container.querySelector('.rg-entrance-lettering img'));
+    expect(container.querySelector('.rg-entrance-photo')).toHaveAttribute('data-frame-ready', 'true');
     expect(screen.getByRole('heading', { name: 'Our day' })).toBeVisible();
     expect(screen.getByRole('button', { name: 'Open invitation' })).toBeEnabled();
     expect(container.querySelector('.rg-entrance-names')).toHaveTextContent('Owner & Partner');
@@ -81,7 +118,7 @@ describe('royal entrance and video recovery', () => {
     expect(container.querySelector('.cover-bg-media')).toHaveAttribute('srcset', expect.stringContaining(ROYAL_ASSETS.demoPortraitSmall));
   });
   function show({ loadVideo, reduced = false, followUpPhotos = false, endBehavior = 'collapse', sound = 'muted' } = {}) {
-    const content = { hasHostContent: true, groomName: 'Owner', brideName: 'Partner', languageMode: 'EN', musicUrl: '/music.mp3', cinematicIntro: { style: 'royal-arch', reducedMotion: reduced, slides: [{ id: 'one', src: '/owner.webp' }] }, informationScene: { video: { followUpPhotos, endBehavior, sound } } };
+    const content = { hasHostContent: true, groomName: 'Owner', brideName: 'Partner', eventDate: '2028-02-29', eventTime: '17:30', languageMode: 'EN', musicUrl: '/music.mp3', cinematicIntro: { style: 'royal-arch', reducedMotion: reduced, slides: [{ id: 'one', src: '/owner.webp' }] }, informationScene: { video: { followUpPhotos, endBehavior, sound, showTime: true } } };
     return render(<MemoryRouter><CinematicOpeningProvider configuration={{ enabled: true, videoMediaId: 42 }} loadVideo={loadVideo} demoVideo={loadVideo ? undefined : { src: '/sample.mp4' }} english>
       <RoyalGardenCinematicLayout content={content} />
     </CinematicOpeningProvider></MemoryRouter>);
@@ -100,6 +137,9 @@ describe('royal entrance and video recovery', () => {
     expect(stage.querySelector('.cinematic-film-frame .cinematic-film-footer')).toBeNull();
     expect(within(stage).getByRole('button', { name: 'Skip video' })).toBeEnabled();
     expect(stage.querySelector('video').muted).toBe(true);
+    expect(stage.querySelector('.rg-video-date')).toHaveAttribute('datetime', '2028-02-29');
+    expect(stage.querySelector('.rg-video-date')).toHaveTextContent('29 February 2028 · 17:30');
+    expect(stage.querySelector('.rg-video-calligraphy')).toHaveAttribute('src', ROYAL_ASSETS.videoCalligraphy);
     const song = container.querySelector('audio'); song.currentTime = 42;
     expect(container.querySelectorAll('audio')).toHaveLength(1);
     expect(HTMLMediaElement.prototype.pause.mock.contexts.filter(node => node.tagName === 'AUDIO')).toHaveLength(0);

@@ -13,6 +13,12 @@ export const MUSIC_TRACKS = [
         url: waitingDay,
     },
     {
+        id: "nisai",
+        name: "Nisai — និស្ស័យ",
+        description: "Royal Garden Cinematic soundtrack",
+        url: "/music/Nisai-និស្ស័យ.mp3",
+    },
+    {
         id: "instrumental-wedding",
         name: "Instrumental Wedding (VioSounds)",
         description: "តន្ត្រី violin កក់ក្ដៅ សមរម្យសម្រាប់ពិធីបុរាណ",

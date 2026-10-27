@@ -27,6 +27,24 @@
     </script>
 
     <!-- Telegram WebApp SDK -->
+    <script>
+      // Only this known catalog cover is safe to discover before owner/API data.
+      // Hosted invitations keep their authorized, owner-selected media pipeline.
+      if (location.pathname === "/templates/royal-garden-cinematic") {
+        const royalPortrait = document.createElement("link");
+        royalPortrait.rel = "preload"; royalPortrait.as = "image"; royalPortrait.fetchPriority = "high";
+        royalPortrait.href = "/templates/royal-garden/v3-1/demo-portrait-480.webp";
+        royalPortrait.imageSrcset = "/templates/royal-garden/v3-1/demo-portrait-480.webp 480w, /templates/royal-garden/v3/opening/demo-portrait-640.webp 640w, /templates/silk-heritage/portrait.webp 960w";
+        royalPortrait.imageSizes = "(max-width: 639px) 100vw, (max-width: 1023px) min(88vw, 62vh), min(600px, 58vh)";
+        document.head.appendChild(royalPortrait);
+        const royalFrame = document.createElement("link");
+        royalFrame.rel = "preload"; royalFrame.as = "image";
+        royalFrame.href = "/templates/royal-garden/v3-1/opening-frame-480.webp";
+        royalFrame.imageSrcset = "/templates/royal-garden/v3-1/opening-frame-480.webp 480w, /templates/royal-garden/v3-1/opening-frame-640.webp 640w, /templates/royal-garden/v3-1/opening-frame-1200.webp 1200w";
+        royalFrame.imageSizes = royalPortrait.imageSizes;
+        document.head.appendChild(royalFrame);
+      }
+    </script>
     <script async src="https://telegram.org/js/telegram-web-app.js" onload="window.dispatchEvent(new Event('telegram-web-app-ready'))"></script>
 
     <!-- Open Graph / Telegram / Facebook / Messenger -->

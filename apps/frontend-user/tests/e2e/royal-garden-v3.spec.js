@@ -6,7 +6,7 @@ import { phase9Fixtures, chooseStudioSection } from './support/phase9Fixtures';
 
 const code = 'royal-garden-cinematic', base = '/templates/royal-garden/v3';
 const portrait = '/templates/silk-heritage/portrait.webp';
-const evidence = '../../docs/design/royal-garden-visual-repair/final-steering/evidence';
+const evidence = '../../docs/design/royal-garden-v3-1/evidence/browser';
 const intro = { style: 'royal-arch', titleMode: 'text', duration: 2, slides: [{ id: 'portrait', src: portrait, alt: 'Owner portrait', x: 50, y: 40 }] };
 const information = { enabled: true, fixedBackground: true, motionPreset: 'balanced', effects: { butterfly: true }, video: { footer: true, replay: true } };
 const windowsWebKit = info => info.project.name === 'webkit' && process.platform === 'win32';
@@ -31,7 +31,7 @@ async function capture(page, name, info) {
     await page.locator('.rg-royal-arch img, .rg-entrance-lettering img, .rg-information-background img').evaluateAll(items => Promise.all(items.map(image => image.decode().catch(() => {}))));
     // Retain device scale: forcing CSS scale can switch srcset density during
     // Chromium's screenshot and capture an undecoded replacement image.
-    await page.screenshot({ path: `${evidence}/${info.project.name}-${name}.png`, animations: 'disabled', scale: 'device' });
+    await page.screenshot({ path: `${evidence}/${info.project.name}-${name}.jpg`, type: 'jpeg', quality: 90, animations: 'disabled', scale: 'device' });
   }
 }
 async function openVideo(page) { await page.locator('.rg-open').click(); await expect(page.locator('.cinematic-inline-stage')).toBeVisible(); }
@@ -42,7 +42,7 @@ test('catalog: supplied film loads after click, plays inline without a dialog/fo
   await page.goto(`/templates/${code}?lang=en`); await expect(page.locator('[data-stage=COVER]')).toBeVisible();
   await expect.poll(() => page.locator('.rg-royal-arch img').evaluate(node => node.naturalWidth)).toBeGreaterThan(0);
   await expect(page.locator('.rg-entrance-photo img')).toHaveAttribute('src', portrait);
-  if (info.project.name === 'chromium') await expect.poll(() => page.locator('.rg-entrance-photo img').evaluate(node => node.currentSrc)).toContain('demo-portrait-640.webp');
+  if (info.project.name === 'chromium') await expect.poll(() => page.locator('.rg-entrance-photo img').evaluate(node => node.currentSrc)).toContain('demo-portrait-480.webp');
   expect(requests).toHaveLength(0); await capture(page, 'entrance', info);
   await openVideo(page); await expect(page.getByRole('dialog')).toHaveCount(0); await expect(page.locator('.cinematic-inline-stage form')).toHaveCount(0);
   const video = page.locator('.cinematic-inline-stage video'); await expect(video).toHaveAttribute('src', `${base}/video/pre-wedding-demo.mp4`);
@@ -125,8 +125,12 @@ test('Studio settings update the same iframe and survive save/reload/published r
   const { events } = await setup(page, { authorized: true }); await page.setViewportSize({ width: 1440, height: 960 });
   await page.goto('/app/events/101/invitation'); await expect(page.locator('.invitation-studio')).toBeVisible(); await page.getByRole('button', { name: 'Advanced editor', exact: true }).click();
   await chooseStudioSection(page, 'mediaOpening', 'Cinematic intro'); await page.getByRole('combobox', { name: 'Opening style', exact: true }).selectOption('royal-arch');
+  await page.getByRole('combobox', { name: 'Cover button style', exact: true }).selectOption('text');
   await page.getByLabel('Opening button label', { exact: true }).fill('Join our celebration');
   const frame = page.frameLocator('iframe'); await expect(frame.locator('.rg-open')).toHaveAccessibleName('Join our celebration');
+  await expect(frame.locator('.rg-open')).toHaveAttribute('data-button-style', 'text');
+  await page.getByRole('combobox', { name: 'Cover button style', exact: true }).selectOption('artwork');
+  await expect(frame.locator('.rg-open img')).toBeVisible();
   const identity = await page.locator('iframe').getAttribute('src');
   await chooseStudioSection(page, 'mediaOpening', 'Pre-wedding video');
   await page.getByRole('combobox', { name: 'After the video', exact: true }).selectOption('poster');
@@ -141,21 +145,33 @@ test('Studio settings update the same iframe and survive save/reload/published r
     await frame.getByRole('button', { name: 'Skip video', exact: true }).click();
   }
   await chooseStudioSection(page, 'designCover', 'Colors & typography'); await page.getByRole('combobox', { name: 'Effect intensity', exact: true }).selectOption('cinematic');
+  await page.getByRole('combobox', { name: 'Monogram mode', exact: true }).selectOption('artwork');
+  await page.getByRole('slider', { name: 'Monogram scale', exact: true }).fill('0.9');
+  await page.getByRole('combobox', { name: 'Information spacing', exact: true }).selectOption('compact');
+  await page.getByRole('combobox', { name: 'Closing signature', exact: true }).selectOption('text');
+  await page.getByRole('combobox', { name: 'Film date typography', exact: true }).selectOption('battambang');
+  await page.getByRole('checkbox', { name: 'Include event time', exact: true }).check();
   await page.getByRole('slider', { name: 'Background shade', exact: true }).fill('0.4');
   await page.getByLabel('Accent', { exact: true }).fill('#edcd88');
   await page.getByRole('button', { name: 'Preview information', exact: true }).click(); await expect(frame.locator('[data-stage=CONTENT]')).toBeVisible();
   await expect(frame.locator('.rg-paper')).toHaveCSS('--rg-information-overlay', '0.4');
+  await expect(frame.locator('.rg-paper')).toHaveAttribute('data-spacing', 'compact');
+  await expect(frame.locator('.rg-ceremonial-monogram img')).toBeVisible();
   await expect(frame.locator('.rg-names')).toHaveCSS('color', 'rgb(237, 205, 136)');
   await expect(frame.locator('.rg-motion-layer i')).toHaveCount(16);
   const editorAudit = await new AxeBuilder({ page }).include('.studio-royal-scenes').withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze(); expect(editorAudit.violations).toEqual([]);
   await page.getByRole('button', { name: 'Save', exact: true }).click(); await expect(page.locator('.studio-save-status')).toHaveAttribute('data-phase', 'saved');
   expect(JSON.parse(events.get(101).contentJson).informationScene).toMatchObject({ motionPreset: 'cinematic', contentOverlay: .4 }); expect(await page.locator('iframe').getAttribute('src')).toBe(identity);
   expect(JSON.parse(events.get(101).contentJson).informationScene.video).toMatchObject({ endBehavior: 'poster', positionX: 30 });
+  expect(JSON.parse(events.get(101).contentJson).cinematicIntro.buttonStyle).toBe('artwork');
+  expect(JSON.parse(events.get(101).contentJson).informationScene).toMatchObject({ spacing:'compact', brandStyle:'text', monogram:{mode:'artwork',scale:.9},video:{dateFont:'battambang',showTime:true} });
   await page.reload(); await expect(page.locator('.invitation-studio')).toBeVisible(); await page.getByRole('button', { name: 'Preview video scene', exact: true }).click();
   if (windowsWebKit(info)) {
     info.annotations.push({ type: 'platform limitation', description: 'Windows WebKit owner MP4 blob preview verifies fallback; native Safari decoding is unverified.' });
   } else {
     await expect(frame.locator('.cinematic-inline-stage')).toBeVisible(); await expect(frame.getByRole('dialog')).toHaveCount(0);
+    await expect(frame.locator('.rg-video-lettering')).toHaveAttribute('data-date-font', 'battambang');
+    await expect(frame.locator('.rg-video-date')).toContainText('17:30');
     await frame.getByRole('button', { name: 'Skip video', exact: true }).click();
   }
   await expect(frame.locator('[data-stage=CONTENT]')).toBeVisible();
@@ -165,6 +181,39 @@ test('Studio settings update the same iframe and survive save/reload/published r
   if (windowsWebKit(info)) { await page.locator('.rg-open').click(); await expect(page.locator('[data-stage=CONTENT]')).toBeVisible(); }
   else { await openVideo(page); await skip(page); }
   await expect(page.locator('.rg-paper')).toHaveCSS('--rg-information-overlay', '0.4');
+  await expect(page.locator('.rg-paper')).toHaveAttribute('data-spacing', 'compact');
+  await expect(page.locator('.rg-ceremonial-monogram img')).toBeVisible();
+});
+
+test('refinement: new transparent foreground, shadow-free artwork control and larger inner scroll stay inside the frame', async ({ page }, info) => {
+  await setup(page);
+  for (const [width,height] of [[375,667],[390,844],[768,1024],[1440,900]]) {
+    await page.setViewportSize({width,height}); await page.goto(`/templates/${code}?lang=en`);
+    const photo = page.locator('.rg-entrance-photo'), action=page.locator('.rg-open');
+    await expect(photo).toHaveAttribute('data-frame-ready','true');
+    await expect(page.locator('.rg-royal-arch img')).toHaveAttribute('src',/v3-1\/opening-frame-1200.webp$/);
+    await expect(photo).toHaveCSS('clip-path','none'); await expect(photo.locator('img')).toHaveCSS('object-fit','cover');
+    expect(await photo.evaluate(n=>Number(getComputedStyle(n).zIndex))).toBeLessThan(await page.locator('.rg-royal-arch').evaluate(n=>Number(getComputedStyle(n).zIndex)));
+    await expect(action).toHaveCSS('box-shadow','none'); await expect(action).toHaveCSS('filter','none'); await expect(action).toHaveCSS('background-image','none');
+    await action.hover(); await expect(action).toHaveCSS('box-shadow','none'); await page.mouse.move(0,0);
+    const [stage,button,guest]=await Promise.all(['.rg-entrance-stage','.rg-open','.rg-royal-guest'].map(s=>page.locator(s).boundingBox()));
+    expect(button.y).toBeGreaterThan(guest.y+guest.height);
+    expect(button.x-stage.x).toBeGreaterThan(stage.width*.19); expect(stage.x+stage.width-button.x-button.width).toBeGreaterThan(stage.width*.19);
+    expect(stage.y+stage.height-button.y-button.height).toBeGreaterThan(stage.width*.25); expect(button.height).toBeGreaterThanOrEqual(44);
+    await capture(page,`v31-cover-${width}`,info);
+    await openVideo(page); await skip(page);
+    const pane=page.locator('.rg-content-scroll'), background=page.locator('.rg-information-background'), border=await background.boundingBox();
+    const safe=await pane.boundingBox(); expect(safe.height).toBeGreaterThan(stage.height-stage.width*.63-50);
+    expect(stage.y+stage.height-safe.y-safe.height).toBeLessThan(stage.width*.35);
+    await expect(page.locator('.rg-information-footer')).toHaveCount(0);
+    await pane.evaluate(n=>n.scrollTo({top:0,behavior:'instant'}));
+    expect((await page.locator('#rg-family h2').boundingBox()).y).toBeGreaterThanOrEqual(safe.y-1);
+    await capture(page,`v31-information-top-${width}`,info);
+    await pane.evaluate(n=>n.scrollTo({top:n.scrollHeight,behavior:'instant'}));
+    expect(await background.boundingBox()).toEqual(border); const end=await page.locator('.rg-footer').boundingBox();
+    expect(end.y+end.height).toBeLessThanOrEqual(safe.y+safe.height+1); expect(await page.evaluate(()=>scrollY)).toBe(0);
+    await capture(page,`v31-information-ending-${width}`,info);
+  }
 });
 
 test('responsive references and scoped accessibility', async ({ page }, info) => {
@@ -179,6 +228,34 @@ test('responsive references and scoped accessibility', async ({ page }, info) =>
   const content = await new AxeBuilder({ page }).include('.rg-paper').withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze(); expect(content.violations).toEqual([]);
 });
 
+test('refinement: lower film lettering, live date and two separated top controls across responsive canvases', async ({ page }, info) => {
+  await setup(page);
+  for (const [width,height] of [[375,667],[390,844],[768,1024],[1440,900]]) {
+    await page.setViewportSize({width,height}); await page.goto(`/templates/${code}?lang=km`); await openVideo(page);
+    const film=page.locator('.cinematic-inline-stage video'), audio=page.locator('.tpl-royal-garden audio');
+    await expect.poll(()=>film.evaluate(n=>n.currentTime)).toBeGreaterThan(0);
+    await expect(page.locator('.rg-music')).toHaveCount(1); await expect(page.locator('.cinematic-playback-actions > button')).toHaveCount(1);
+    await expect(page.locator('.cinematic-film-controls')).toHaveCount(0);
+    await expect(page.locator('.cinematic-film-toggle-icon')).toHaveCSS('opacity','0');
+    await page.locator('.rg-video-calligraphy').evaluate(n=>n.decode());
+    // Measure the settled composition, after its finite entrance crossfades.
+    await page.evaluate(()=>document.getAnimations().filter(a=>Number.isFinite(a.effect?.getTiming().iterations)).forEach(a=>a.finish()));
+    const boxes=await Promise.all(['.rg-music','.cinematic-playback-actions > button','.rg-language'].map(s=>page.locator(s).boundingBox()));
+    for(let i=0;i<boxes.length;i++) for(let j=i+1;j<boxes.length;j++) { const a=boxes[i],b=boxes[j]; expect(a.x+a.width<=b.x || b.x+b.width<=a.x || a.y+a.height<=b.y || b.y+b.height<=a.y).toBe(true); }
+    const art=await page.locator('.rg-video-calligraphy').boundingBox(), date=await page.locator('.rg-video-date').boundingBox(), footer=await page.locator('.cinematic-film-footer').boundingBox();
+    expect(art.width/art.height).toBeCloseTo(3840/1313,1); expect(art.y).toBeGreaterThan(height*.5);
+    const crestTop=footer.y+footer.width*(602/3840), artworkGoldBottom=art.y+art.height*(1138/1313);
+    const fontSize=await page.locator('.rg-video-date').evaluate(n=>parseFloat(getComputedStyle(n).fontSize));
+    expect(date.y+fontSize*.4-artworkGoldBottom).toBeGreaterThan(2);
+    expect(crestTop-date.y-date.height).toBeCloseTo(4,0);
+    const node=await film.elementHandle(), song=await audio.elementHandle();
+    await page.locator('.rg-language select').selectOption('en'); await expect(page.locator('.rg-video-date')).toContainText('31 December 2026');
+    expect(await node.evaluate(n=>n===document.querySelector('.cinematic-inline-stage video'))).toBe(true); expect(await song.evaluate(n=>n===document.querySelector('audio'))).toBe(true);
+    await expect(film).toHaveJSProperty('muted',true); await expect(page.locator('.rg-music')).toHaveAttribute('data-state','playing');
+    await capture(page,`v31-playing-video-${width}`,info); await skip(page);
+  }
+});
+
 test('repair: short phones retain the complete artwork, safe portrait window and separate video footer', async ({ page }, info) => {
   await setup(page);
   for (const [width, height] of [[320,568],[375,667],[390,844],[430,932],[512,910],[768,1024],[1440,960]]) {
@@ -188,7 +265,8 @@ test('repair: short phones retain the complete artwork, safe portrait window and
     expect(action.y + action.height).toBeLessThanOrEqual(height);
     expect(guest.y + guest.height).toBeLessThanOrEqual(action.y + 1);
     await expect(page.locator('.rg-royal-arch')).toHaveCSS('border-image-repeat', 'stretch repeat');
-    const circle = await page.locator('.rg-open').boundingBox(); expect(circle.width).toBe(circle.height); expect(circle.width).toBeGreaterThanOrEqual(44); await expect(page.locator('.rg-open svg')).toBeVisible();
+    const button = page.locator('.rg-open'), artwork = await button.locator('img').boundingBox(); expect(artwork.width / artwork.height).toBeCloseTo(3, 1); expect((await button.boundingBox()).height).toBeGreaterThanOrEqual(44);
+    await expect(button).toHaveCSS('box-shadow', 'none'); await expect(button).toHaveCSS('filter', 'none'); await expect(button).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
     expect((await page.locator('.rg-entrance-photo .cover-bg-root').boundingBox()).height).toBeGreaterThan(height * .75);
     await capture(page, `repair-cover-${width}x${height}`, info);
   }
@@ -267,7 +345,7 @@ test('critical: language changes preserve the active film, authorized guest data
 
 test('critical: immersive media and one inner scroll preserve the complete frame and reachable ending', async ({ page }, info) => {
   await setup(page); await page.setViewportSize({ width: 390, height: 844 }); await page.goto(`/templates/${code}?lang=km`);
-  const button = await page.locator('.rg-open').boundingBox(); expect(button.width).toBe(button.height); expect(button.width).toBeGreaterThanOrEqual(44);
+  const button = await page.locator('.rg-open').boundingBox(); expect(button.width / button.height).toBeCloseTo(3, 1); expect(button.height).toBeGreaterThanOrEqual(44);
   const band = await page.locator('.rg-guest-frame img').boundingBox(); expect(band.width / band.height).toBeCloseTo(3, 1);
   const guest = await page.locator('.rg-royal-guest').boundingBox(); expect(guest.y + guest.height).toBeLessThan(button.y);
   await capture(page, 'critical-cover-km', info); await page.locator('.rg-language select').selectOption('en'); await capture(page, 'critical-cover-en', info);
@@ -316,6 +394,7 @@ async function auditedSong(page, rejectOnce = false) {
   await page.setViewportSize({ width: 390, height: 844 }); await page.goto(`/templates/${code}?lang=en`);
   await expect(page.locator('.rg-open')).toBeVisible();
   const song = page.locator('.tpl-royal-garden audio');
+  await expect(song).toHaveAttribute('src', '/music/Nisai-និស្ស័យ.mp3');
   await expect(song).toHaveCount(1); await expect(song).toHaveJSProperty('paused', true);
   expect(await page.evaluate(() => window.royalAudioAudit)).toEqual([]);
   return song;
@@ -366,9 +445,11 @@ test('soundtrack: one real song continues through locked video, language, duplic
 test('soundtrack: denied playback is retryable during video and guest-paused music stays paused after ended', async ({ page }) => {
   const song = await auditedSong(page, true);
   await openVideo(page); await expect(page.getByRole('button', { name: 'Play music', exact: true })).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.locator('.rg-music')).toHaveAttribute('data-state','blocked'); await expect(page.locator('.rg-music .lucide-circle-alert')).toBeVisible();
   await expect(song).toHaveJSProperty('paused', true);
   await page.getByRole('button', { name: 'Play music', exact: true }).click(); await expect.poll(() => song.evaluate(node => node.currentTime)).toBeGreaterThan(0);
   await page.getByRole('button', { name: 'Pause music', exact: true }).click(); await expect(song).toHaveJSProperty('paused', true);
+  await expect(page.locator('.rg-music')).toHaveAttribute('data-state','idle');
   const stoppedAt = await song.evaluate(node => node.currentTime);
   await page.locator('.rg-language select').selectOption('km'); await page.locator('.rg-language select').selectOption('en');
   await page.locator('.cinematic-inline-stage video').evaluate(node => node.dispatchEvent(new Event('ended')));

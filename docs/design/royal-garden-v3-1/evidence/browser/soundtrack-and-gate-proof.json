@@ -1,0 +1,18 @@
+{
+  "project": "chromium",
+  "audioPlayCalls": [
+    {
+      "source": "/music/Nisai-និស្ស័យ.mp3",
+      "userActivation": true,
+      "time": 0
+    }
+  ],
+  "videoForcedMuted": true,
+  "onePersistentAudio": true,
+  "informationAbsentDuringGate": true,
+  "wheelKeyboardHashAndTabCannotExposeInformation": true,
+  "exitTransitions": 1,
+  "audioTimeBeforeExit": 1.562271,
+  "audioTimeAfterExit": 2.68043,
+  "audioPausedAfterExit": false
+}
