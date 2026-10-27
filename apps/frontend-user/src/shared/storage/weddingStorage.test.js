@@ -1,10 +1,8 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import {
-  createDraft,
   getDraft,
   getDraftBySlug,
   listDrafts,
-  saveDraft,
 } from "./weddingStorage";
 
 describe("weddingStorage retirement of legacy templates", () => {

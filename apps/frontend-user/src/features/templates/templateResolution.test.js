@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it } from "vitest";
 import { getTemplateById, registerDynamicTemplates, resolveNumericTemplateId } from "./data/templatesData";
-import { getDedicatedTemplateComponent, templateRegistry, resolveTemplateRenderer } from "./registry/templateRegistry";
+import { getDedicatedTemplateComponent, templateRegistry } from "./registry/templateRegistry";
 import { getTemplateFormFlow } from "../invitations/config/templateFormFlowConfig";
 import { draftToTemplate } from "../wedding-builder/utils/draftToTemplate";
 

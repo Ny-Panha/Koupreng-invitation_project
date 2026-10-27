@@ -18,7 +18,7 @@ export default function RoyalGardenInformationScene({ presentation, reduced, act
     root.current?.querySelectorAll('.rg-section').forEach(section => observer.observe(section));
     return () => observer.disconnect();
   }, [active, info.enabled, info.reveal, reduced]);
-  return <div ref={root} className="rg-paper" data-royal={info.enabled} data-view={active ? 'information' : 'video'} data-reveal={info.reveal} style={{ '--rg-information-overlay': info.overlay, '--rg-panel-opacity': info.panelOpacity }}>
+  return <div ref={root} className="rg-paper" data-royal={info.enabled} data-fixed={info.fixed} data-view={active ? 'information' : 'video'} data-reveal={info.reveal} style={{ '--rg-information-overlay': info.overlay, '--rg-panel-opacity': info.panelOpacity }}>
     {info.enabled && <>
       {info.background && info.background !== ROYAL_ASSETS.information && <img className="rg-information-custom-background" src={info.background} alt="" style={{ objectPosition: info.position }} />}
       <RoyalGardenArtworkFrame source={info.background ? ROYAL_ASSETS.information : ''} smallSource={ROYAL_ASSETS.informationSmall} variant="information" className="rg-information-background" fill={info.background === ROYAL_ASSETS.information} />

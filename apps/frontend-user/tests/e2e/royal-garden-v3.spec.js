@@ -230,3 +230,69 @@ test('repair: real public section contracts retain gift, private wishes and RSVP
   await expect(page.locator('#rg-wishes')).toContainText('private');
   await expect(page.locator('#rg-rsvp form')).toBeVisible();
 });
+
+test('critical: language changes preserve the active film, authorized guest data and private RSVP wording', async ({ page }, info) => {
+  const { events } = await setup(page, { authorized: true, guest: { guestName: 'Authorized guest', seatCount: 2 } });
+  const saved = events.get(101).contentJson;
+  await page.setViewportSize({ width: 390, height: 844 }); await page.goto('/i/review-celestial?token=fictional-guest');
+  const language = page.locator('.rg-language select');
+  await expect(language).toBeVisible(); await language.selectOption('km');
+  await expect(page.locator('.tpl-royal-garden')).toHaveAttribute('lang', 'km');
+  await expect(page.locator('.rg-guest-frame')).toContainText('Authorized guest');
+  await language.selectOption('en');
+  if (windowsWebKit(info)) {
+    await page.locator('.rg-open').click();
+    info.annotations.push({ type: 'platform limitation', description: 'Windows WebKit protected MP4 blob path tests safe fallback; native Safari still needs device verification.' });
+    await expect(page.locator('[data-stage=CONTENT]')).toBeVisible();
+  } else {
+    await openVideo(page);
+    const video = page.locator('.cinematic-inline-stage video'), element = await video.elementHandle();
+    await expect.poll(() => video.evaluate(node => node.currentTime)).toBeGreaterThan(0);
+    await language.selectOption('km'); await expect(page.locator('[data-stage=PRE_WEDDING_VIDEO]')).toBeVisible();
+    expect(await element.evaluate(node => node === document.querySelector('.cinematic-inline-stage video'))).toBe(true);
+    await expect(page.locator('.cinematic-playback-actions button').last()).toHaveAccessibleName(/\u179a\u17c6/);
+    await language.selectOption('en'); await expect(page.getByRole('button', { name: 'Skip video', exact: true })).toBeVisible();
+    await skip(page);
+  }
+  await language.selectOption('km'); await expect(page.locator('.tpl-royal-garden')).toHaveAttribute('lang', 'km');
+  await page.locator('#rg-rsvp').evaluate(node => node.scrollIntoView({ behavior: 'instant' }));
+  await expect(page.locator('#rg-rsvp form')).toBeVisible();
+  await page.locator('#rg-rsvp textarea').fill('A private wish');
+  await language.selectOption('en'); await expect(page.getByRole('textbox', { name: 'Message', exact: true })).toHaveValue('A private wish');
+  expect(events.get(101).contentJson).toBe(saved); expect(new URL(page.url()).searchParams.get('token')).toBe('fictional-guest');
+  await capture(page, 'critical-hosted-language-rsvp', info);
+});
+
+test('critical: immersive media and one inner scroll preserve the complete frame and reachable ending', async ({ page }, info) => {
+  await setup(page); await page.setViewportSize({ width: 390, height: 844 }); await page.goto(`/templates/${code}?lang=km`);
+  const button = await page.locator('.rg-open').boundingBox(); expect(button.width).toBe(button.height); expect(button.width).toBeGreaterThanOrEqual(44);
+  const band = await page.locator('.rg-guest-frame img').boundingBox(); expect(band.width / band.height).toBeCloseTo(3, 1);
+  const guest = await page.locator('.rg-royal-guest').boundingBox(); expect(guest.y + guest.height).toBeLessThan(button.y);
+  await capture(page, 'critical-cover-km', info); await page.locator('.rg-language select').selectOption('en'); await capture(page, 'critical-cover-en', info);
+  await openVideo(page); const film = page.locator('.cinematic-inline-stage video'); await expect.poll(() => film.evaluate(node => node.currentTime)).toBeGreaterThan(0);
+  const painted = await film.evaluate(node => { const r = node.getBoundingClientRect(), scale = Math.min(r.width / node.videoWidth, r.height / node.videoHeight); return { width: node.videoWidth * scale, height: node.videoHeight * scale }; });
+  expect(painted.width).toBeGreaterThanOrEqual(390 * .9); expect(painted.height).toBeGreaterThanOrEqual(844 * .75);
+  const mediaBounds = await film.boundingBox(), footer = await page.locator('.cinematic-film-footer').boundingBox(); expect(footer.y).toBeGreaterThanOrEqual(mediaBounds.y + mediaBounds.height - 1); expect(footer.width / footer.height).toBeCloseTo(3, 1);
+  for (const box of await page.locator('.cinematic-playback-actions button,.cinematic-film-controls button').all()) { const r = await box.boundingBox(); expect(r.width).toBeGreaterThanOrEqual(44); expect(r.height).toBeGreaterThanOrEqual(44); expect(r.y + r.height).toBeLessThanOrEqual(footer.y); }
+  await page.getByRole('button', { name: 'Pause video', exact: true }).click(); await capture(page, 'critical-video', info); await skip(page);
+  const pane = page.locator('.rg-content-scroll'), frame = page.locator('.rg-information-background'); const before = await frame.boundingBox();
+  await pane.evaluate(node => node.scrollTo({ top: 0, behavior: 'instant' }));
+  const paneTop = await pane.boundingBox(), heading = await page.locator('#rg-family h2').boundingBox(); expect(heading.y).toBeGreaterThanOrEqual(paneTop.y - 1);
+  await capture(page, 'critical-information-top', info);
+  await page.getByRole('button', { name: 'Venue', exact: true }).click(); await expect.poll(() => pane.evaluate(node => node.scrollTop)).toBeGreaterThan(100);
+  expect(await frame.boundingBox()).toEqual(before); await capture(page, 'critical-information-scrolled', info);
+  await pane.focus(); await page.keyboard.press('End'); await expect.poll(() => pane.evaluate(node => Math.abs(node.scrollHeight - node.clientHeight - node.scrollTop))).toBeLessThan(2);
+  const end = await page.locator('.rg-footer').boundingBox(), safe = await pane.boundingBox(); expect(end.y + end.height).toBeLessThanOrEqual(safe.y + safe.height + 1);
+  expect(await page.evaluate(() => window.scrollY)).toBe(0); await capture(page, 'critical-information-ending', info);
+});
+
+test('compatibility: saved fixed-frame opt-out keeps the hosted ending reachable', async ({ page }) => {
+  await setup(page, { content: { cinematicIntro: { ...intro, enabled: false }, informationScene: { ...information, fixedBackground: false } } });
+  await page.setViewportSize({ width: 390, height: 844 }); await page.goto('/i/review-celestial');
+  await expect(page.locator('[data-stage=CONTENT]')).toBeVisible();
+  await expect(page.locator('.rg-paper')).toHaveAttribute('data-fixed', 'false');
+  await expect(page.locator('.public-royal-garden')).toHaveCSS('overflow', 'visible');
+  await page.locator('.rg-footer').scrollIntoViewIfNeeded();
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(100);
+  const footer = await page.locator('.rg-footer').boundingBox(); expect(footer.y + footer.height).toBeLessThanOrEqual(844);
+});

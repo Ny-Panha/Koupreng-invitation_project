@@ -15,7 +15,7 @@
 .tpl-royal-garden .rg-entrance-photo .cover-bg-scrim { opacity:0; }
 .tpl-royal-garden .rg-entrance-vignette { position:absolute; inset:45% 11% 24cqw; z-index:3; pointer-events:none; background:linear-gradient(transparent,rgb(4 27 57 / .78)); }
 .tpl-royal-garden .rg-entrance-composition { position:absolute; inset:0; z-index:4; display:grid; grid-template-rows:var(--rg-heading-band,29cqw) minmax(0,1fr) auto auto auto; gap:6px; padding:37cqw 7% 24cqw; text-align:center; color:var(--rg-royal-gold); }
-.tpl-royal-garden .rg-entrance-lettering { display:grid; place-items:center; min-height:0; min-width:0; align-self:stretch; transform:scale(var(--rg-artwork-scale)); }
+.tpl-royal-garden .rg-entrance-lettering { width:82%; justify-self:center; background:radial-gradient(ellipse,rgb(4 27 57 / .3),transparent 72%); display:grid; place-items:center; min-height:0; min-width:0; align-self:stretch; transform:scale(var(--rg-artwork-scale)); }
 .tpl-royal-garden .rg-entrance-lettering img { width:100%; height:100%; min-width:0; min-height:0; object-fit:contain; filter:drop-shadow(0 2px 3px var(--rg-royal-deep)); }
 .tpl-royal-garden .rg-entrance-lettering h1:not(.rg-sr-only) { font-size:clamp(24px,7cqw,34px); line-height:1.75; text-shadow:0 2px 3px var(--rg-royal-deep); }
 .tpl-royal-garden .rg-entrance-lettering[data-position=upper] { align-content:start; }
@@ -125,3 +125,8 @@
 .tpl-royal-garden .rg-entrance-stage[data-title-mode=artwork] { --rg-heading-band:min(39cqw,18dvh); }
 
 .tpl-royal-garden .rg-video-section[data-footer=false] { --rg-video-footer-size:0px; }
+
+/* Explicit owner opt-out retains the former document-scrolling presentation. */
+.tpl-royal-garden .rg-paper[data-royal=true][data-fixed=false][data-view=information] { height:auto; min-height:100dvh; overflow:clip; }
+.tpl-royal-garden .rg-paper[data-fixed=false][data-view=information] .rg-content-scroll { position:relative; inset:auto; width:80%; margin:auto; padding:var(--rg-safe-top) 0 var(--rg-safe-bottom); overflow:visible; }
+.public-royal-garden:has(.rg-paper[data-fixed=false][data-view=information]) { height:auto; overflow:visible; }

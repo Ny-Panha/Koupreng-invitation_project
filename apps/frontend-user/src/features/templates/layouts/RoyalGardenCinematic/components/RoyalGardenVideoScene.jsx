@@ -11,7 +11,7 @@ export default function RoyalGardenVideoScene({ english, names, monogram, intro,
     root.current?.scrollIntoView({ behavior: 'auto', block: 'start' });
   }, [active]);
   if (!active && !(completed && presentation.endBehavior === 'poster')) return null;
-  return <section ref={root} tabIndex={-1} className="rg-video-section cinematic-inline-stage" data-complete={!active} aria-label={english ? 'Pre-wedding video' : 'វីដេអូមុនអាពាហ៍ពិពាហ៍'}>
+  return <section ref={root} tabIndex={-1} className="rg-video-section cinematic-inline-stage" data-complete={!active} data-footer={presentation.footer !== false} aria-label={english ? 'Pre-wedding video' : 'វីដេអូមុនអាពាហ៍ពិពាហ៍'}>
     <h2 className="rg-sr-only">{names}</h2>
     {active && monogram && <div className="rg-video-monogram" lang={/[\u1780-\u17ff]/.test(monogram) ? 'km' : undefined} aria-hidden="true">{monogram}</div>}
     {active && introArtwork(intro) && <img className="rg-video-calligraphy" src={introArtwork(intro)} alt="" width="1100" height="619" onError={event => { event.currentTarget.hidden = true; }} />}
