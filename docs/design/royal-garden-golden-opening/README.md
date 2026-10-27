@@ -1,6 +1,6 @@
 # Royal Garden V2 — golden calligraphy opening
 
-Engineering review, 27 October 2026. Review the [comparison gallery](review.html) and [QA record](qa.md).
+Engineering review, 27 October 2026. Review the [comparison gallery](review.html), [QA record](qa.md) and [draft PR delivery receipt](delivery.md).
 
 Phase 12 was completed first on `main`: source commit `27bf32c81f916b065c35ff9851ff325c70e186f8`, report/package commit `556101b4ac1cc79ecb95dbfc733afdbcd0a6c92c`. The golden opening is a separate change on `feature/royal-garden-golden-calligraphy`, based on that verified current main. No worktree was created. [PR #72](https://github.com/Ny-Panha/Koupreng-invitation_project/pull/72) was inspected: its Royal Garden implementation was already present on main, so no duplicate merge was needed. This branch is for a new draft PR; it must not be merged automatically.
 
