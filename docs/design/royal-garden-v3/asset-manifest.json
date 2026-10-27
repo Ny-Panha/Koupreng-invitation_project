@@ -1,0 +1,89 @@
+[
+  {
+    "file": "opening/calligraphy-640.webp",
+    "width": 640,
+    "height": 360,
+    "bytes": 138822,
+    "source": "royal-garden-golden-save-the-date.webp",
+    "sha256": "ee00c33fbdc0dc4515df7ecf649d940ad382baa99570533dedf8d41121f69c61"
+  },
+  {
+    "file": "opening/calligraphy.webp",
+    "width": 1100,
+    "height": 619,
+    "bytes": 333246,
+    "source": "royal-garden-golden-save-the-date.webp",
+    "sha256": "7830c98d9f72a569d8d8170685feb10f02bcd3891b7b49248039cbcd6076c340"
+  },
+  {
+    "file": "ornaments/guest-frame.webp",
+    "width": 960,
+    "height": 320,
+    "bytes": 68856,
+    "source": "royal-blue-golden-khmer-guest-name-frame-4k.webp",
+    "sha256": "8176fa6ff650639d260a1852f580c998eaa72186edd6512c433173add128b554"
+  },
+  {
+    "file": "video/footer.webp",
+    "width": 960,
+    "height": 320,
+    "bytes": 76036,
+    "source": "royal-blue-golden-khmer-footer-4k.webp",
+    "sha256": "f00624271fb06f5e938c6d9c7588c1e683fe05f8266304dfc1a537f9afecfc6d"
+  },
+  {
+    "file": "information/background-640.webp",
+    "width": 640,
+    "height": 1138,
+    "bytes": 282950,
+    "source": "royal-blue-golden-khmer-information-background-4k.webp",
+    "sha256": "9a7801e875302d094cb999a68ba19ebc2314592ac926b92e0d9fc338263a4a01"
+  },
+  {
+    "file": "information/background.webp",
+    "width": 1200,
+    "height": 2133,
+    "bytes": 696258,
+    "source": "royal-blue-golden-khmer-information-background-4k.webp",
+    "sha256": "2304ea81c7b12c3b79b290be20e9288a9f483e1830472eb8d4377a527e104e8e"
+  },
+  {
+    "file": "opening/arch-640.webp",
+    "width": 640,
+    "height": 1137,
+    "bytes": 272152,
+    "source": "exec-489d8e58-7649-44c1-b294-e86e5e347541.png",
+    "sha256": "5cb7d938388d28baaddc47080777bf443fba9792c28fe4126f3efaae2e02e862"
+  },
+  {
+    "file": "opening/arch.webp",
+    "width": 941,
+    "height": 1672,
+    "bytes": 501606,
+    "source": "exec-489d8e58-7649-44c1-b294-e86e5e347541.png",
+    "sha256": "e3aa93511338fd029bebb4644e336dc58ef643a9df0cd3c2750318113528b623"
+  },
+  {
+    "file": "video/pre-wedding-demo.mp4",
+    "bytes": 6457854,
+    "durationSeconds": 44.37,
+    "width": 576,
+    "height": 1024,
+    "source": "oglqWtgfFAz6QRMIgIFx2aUDvfTFwP2EBEBnbE.mp4",
+    "sha256": "255ef2620b0f9f2cb840884d34b2fd3f1656669a4ded56312632b553e2c14fa1"
+  },
+  {
+    "file": "effects/butterfly.webp",
+    "width": 160,
+    "height": 160,
+    "bytes": 10580,
+    "sha256": "0fcc192393f7c81f65467dc48d0205350b6b087252ac52487f6c61021ca713f5"
+  },
+  {
+    "file": "video/poster.webp",
+    "width": 576,
+    "height": 1024,
+    "bytes": 47182,
+    "sha256": "ebd25e004806e8aab51074fabe25d8b2b72331ac505f9841fe5ef9b19e0514c7"
+  }
+]

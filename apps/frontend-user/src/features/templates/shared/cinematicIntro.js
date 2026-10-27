@@ -2,7 +2,7 @@
 export const INTRO_STAGES = ['COVER', 'ORNAMENT_REVEAL', 'TITLE_REVEAL', 'PHOTO_SLIDESHOW', 'INVITATION_REVEAL', 'CONTENT'];
 export const DEFAULT_INTRO_ARTWORK = '/templates/royal-garden/golden-calligraphy.webp';
 export const INTRO_PALETTES = ['ivory-royal', 'emerald-gold', 'burgundy-romance'];
-export function introArtwork(intro) { return intro.artworkSrc === undefined ? DEFAULT_INTRO_ARTWORK : intro.artworkSrc; }
+export function introArtwork(intro) { return intro.artworkSrc === undefined ? (intro.style === 'royal-arch' ? '/templates/royal-garden/v3/opening/calligraphy.webp' : DEFAULT_INTRO_ARTWORK) : intro.artworkSrc; }
 export async function normalizeIntroUpload(file) {
   if (!file || file.size > 5 * 1024 * 1024) throw new Error('Choose a JPEG, PNG or WebP image under 5 MB.');
   const bytes = new Uint8Array(await file.slice(0, 12).arrayBuffer());
@@ -23,7 +23,18 @@ export function safeIntroMedia(value) {
 }
 export function normalizeIntro(value = {}) {
   const input = value && typeof value === 'object' ? value : {};
-  return { version: 1, enabled: input.enabled !== false, style: ['oval', 'minimal', 'golden-calligraphy'].includes(input.style) ? input.style : 'golden-calligraphy',
+  const entrance = {
+    entranceFrame: value => value === undefined ? undefined : safeIntroMedia(value),
+    entranceFrameEnabled: value => value !== false,
+    entranceFrameScale: value => bounded(value, .85, 1.1, 1),
+    entranceFramePosition: value => ['upper', 'center', 'lower'].includes(value) ? value : 'center',
+    guestFrameEnabled: value => value !== false, coverX: value => bounded(value, 0, 100, 50), coverY: value => bounded(value, 0, 100, 40),
+    titlePlacement: value => value === 'upper' ? 'upper' : 'center',
+    openButtonText: value => typeof value === 'string' ? value.slice(0, 100) : undefined,
+    buttonArtwork: value => value !== false,
+  };
+  return { version: 1, enabled: input.enabled !== false, style: ['oval', 'minimal', 'golden-calligraphy', 'royal-arch'].includes(input.style) ? input.style : 'golden-calligraphy',
+    ...Object.entries(entrance).filter(([key]) => Object.hasOwn(input, key)).map(([key, normalize]) => [key, normalize(input[key])]).reduce((fields, [key, value]) => ({ ...fields, [key]: value }), {}),
     artworkSrc: input.artworkSrc === undefined ? undefined : safeIntroMedia(input.artworkSrc),
     artworkAlt: typeof input.artworkAlt === 'string' ? input.artworkAlt.slice(0, 300) : '',
     artworkScale: bounded(input.artworkScale, .65, 1.2, 1),

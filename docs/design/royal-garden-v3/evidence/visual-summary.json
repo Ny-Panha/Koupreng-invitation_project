@@ -1,0 +1,11 @@
+{
+  "stats": {
+    "startTime": "2026-10-27T05:50:15.764Z",
+    "duration": 19989.122,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "scope": "Final catalog/responsive captures after constraining the lettering grid image minimum size; device-scale image decoding retained."
+}

@@ -9,6 +9,7 @@ import { draftToTemplate } from "../wedding-builder/utils/draftToTemplate";
 import { buildPreviewUrl, createPreviewSession, iframePreviewChannel, isTrustedPreviewMessage, postPreviewMessage } from "@/shared/preview/previewMessaging";
 import { usePreviewSyncRetries } from "@/shared/hooks/usePreviewSyncRetries";
 import { PHONE_PREVIEW } from "@/shared/preview/previewDevices";
+import { useEventWorkspace } from '@/features/events/workspace/EventContext';
 
 function displayKhmerDate(dateStr, languageMode) {
     if (!dateStr) return "";
@@ -27,10 +28,13 @@ function displayKhmerDate(dateStr, languageMode) {
     }
 }
 
-export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, deviceName, onRequestClose, onEditSection }) {
+export default function LivePhoneSimulator({ data = {}, eventId, catalogVersion = 0, deviceName, onRequestClose, onEditSection }) {
   const uiCopy = useUiCopy();
     const { text: t, lang } = useBackendMessages("invitations");
     const en = lang === "en";
+    const workspace = useEventWorkspace();
+    const videoEntitled = workspace?.access?.ownerFeatures?.includes('PRE_WEDDING_VIDEO') === true;
+    const [scene, setScene] = useState('entrance');
     const iframeRef = useRef(null);
     const previewRef = useRef(null);
     const viewportRef = useRef(null);
@@ -56,6 +60,7 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, devi
     const [previewSession] = useState(createPreviewSession);
     const [previewAttempt, setPreviewAttempt] = useState(0);
     const [readyPreview, setReadyPreview] = useState("");
+    const handshakenPreview = useRef('');
     const [slowPreview, setSlowPreview] = useState("");
     const sendPreview = useCallback((message) => postPreviewMessage(message,
         iframePreviewChannel(iframeRef.current, previewSession)), [previewSession]);
@@ -97,6 +102,8 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, devi
             const rawDate = data.eventDate ?? data.event?.date ?? data.weddingDate;
             const livePayload = {
                 ...data,
+                previewEventId: eventId,
+                previewVideoEntitled: videoEntitled,
                 templateId: templateSlug,
                 groomName: data.groomName ?? data.couple?.groom,
                 brideName: data.brideName ?? data.couple?.bride,
@@ -163,7 +170,7 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, devi
         } catch {
             // ignore
         }
-    }, [data, templateSlug, sendPreview]);
+    }, [data, eventId, videoEntitled, templateSlug, sendPreview]);
     const synchronizeLoadedPreview = usePreviewSyncRetries(broadcastSync);
 
     useEffect(() => {
@@ -191,7 +198,8 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, devi
                 setReadyPreview(previewKey);
                 broadcastSync();
                 sendPreview({ type: 'PREVIEW_EDIT_MODE', open: clickEditing });
-                if (iframeRef.current?.contentWindow) {
+                if (iframeRef.current?.contentWindow && handshakenPreview.current !== previewKey) {
+                    handshakenPreview.current = previewKey;
                     try {
                         sendPreview({ type: "TOGGLE_GATE", open: isGateOpen, isOpen: isGateOpen });
                     } catch {
@@ -200,6 +208,7 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, devi
                 }
             }
             if (event.data?.type === 'EDIT_STUDIO_SECTION' && clickEditing) onEditSection?.(event.data.sectionKey);
+            if (event.data?.type === 'PREVIEW_SCENE_STATE') setScene(event.data.data.scene);
         };
         window.addEventListener("message", handleMsg);
         return () => window.removeEventListener("message", handleMsg);
@@ -256,6 +265,12 @@ export default function LivePhoneSimulator({ data = {}, catalogVersion = 0, devi
                 </div>
             </div>
 
+            {templateSlug === 'royal-garden-cinematic' && <div className="studio-scene-preview" aria-label={en ? 'Royal scene preview' : 'មើលទិដ្ឋភាពរាជជាមុន'}>
+                <p role="status">{en ? 'Current scene' : 'ទិដ្ឋភាពបច្ចុប្បន្ន'}: {en ? ({ entrance: 'Entrance', video: 'Video', information: 'Information' })[scene] : ({ entrance: 'បើកធៀប', video: 'វីដេអូ', information: 'ព័ត៌មាន' })[scene]}</p>
+                <div>{[['entrance', 'Preview entrance', 'មើលទំព័របើក'], ['video', 'Preview video scene', 'មើលទិដ្ឋភាពវីដេអូ'], ['information', 'Preview information', 'មើលព័ត៌មាន']].map(([key, english, khmer]) => <button type="button" key={key} disabled={(!isTest && readyPreview !== previewKey) || (key === 'video' && (!videoEntitled || data.preWeddingVideo?.enabled !== true || !data.preWeddingVideo?.videoMediaId))} onClick={() => { broadcastSync(); sendPreview({ type: 'PREVIEW_SCENE', data: { scene: key } }); }}>{en ? english : khmer}</button>)}
+                <button type="button" onClick={() => handleSetGate(false)}>{en ? 'Restart animation' : 'ចាប់ផ្ដើមចលនាឡើងវិញ'}</button></div>
+                {(!videoEntitled || !data.preWeddingVideo?.videoMediaId) && <small>{en ? (!videoEntitled ? 'Video preview requires the owner’s Premium package.' : 'Choose a video in Media & Opening to preview it.') : 'សូមជ្រើសរើសវីដេអូ និងមានកញ្ចប់ Premium ដើម្បីមើលវីដេអូជាមុន។'}</small>}
+            </div>}
             <button type="button" className="studio-preview-toggle" aria-expanded={showTools} onClick={() => setShowTools(value => !value)}>{en ? "Device and zoom controls" : "ជម្រើសឧបករណ៍ និងទំហំ"}</button>
             <div className="studio-preview-tools" hidden={!showTools} aria-label={uiCopy("ជម្រើសមើលជាមុន", "Preview controls")}>
                 {onEditSection && <button type="button" aria-pressed={clickEditing} onClick={() => { const next = !clickEditing; setClickEditing(next); sendPreview({ type: 'PREVIEW_EDIT_MODE', open: next }); }}>{en ? 'Click to edit' : 'ចុចដើម្បីកែសម្រួល'}</button>}

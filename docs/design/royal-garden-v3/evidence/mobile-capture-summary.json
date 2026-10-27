@@ -1,0 +1,11 @@
+{
+  "stats": {
+    "startTime": "2026-10-27T05:44:50.211Z",
+    "duration": 23368.192000000003,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "scope": "Refreshed three mobile captures at device scale after visual inspection; all assertions retained."
+}

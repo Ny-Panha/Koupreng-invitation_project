@@ -61,6 +61,9 @@ export function isPreviewMessage(data) {
     case "PREVIEW_READY":
     case "REQUEST_PREVIEW_SYNC":
       return data.data === undefined && data.open === undefined && data.elementId === undefined;
+    case 'PREVIEW_SCENE':
+    case 'PREVIEW_SCENE_STATE':
+      return isRecord(data.data) && Object.keys(data.data).length === 1 && ['entrance', 'video', 'information'].includes(data.data.scene);
     default:
       return false;
   }

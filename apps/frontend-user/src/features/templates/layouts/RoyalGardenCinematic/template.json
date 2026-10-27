@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "slug": "royal-garden-cinematic",
   "name": "Royal Garden Cinematic · សួនរាជមង្គល",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "category": "WEDDING",
   "cover": {
     "type": "image",
@@ -27,6 +27,9 @@
     "containsSaveTheDate": true
   },
   "assetSlots": {
+    "--asset-royal-arch": "url('/templates/royal-garden/v3/opening/arch.webp')",
+    "--asset-information": "url('/templates/royal-garden/v3/information/background.webp')",
+    "--asset-guest-frame": "url('/templates/royal-garden/v3/ornaments/guest-frame.webp')",
     "--asset-hero": "url('/templates/royal-garden/ivory.svg')",
     "--asset-pattern": "url('/templates/royal-garden/kbach-pattern.svg')",
     "--asset-timeline": "url('/templates/royal-garden/timeline-curve.svg')",
@@ -46,6 +49,7 @@
     "closing"
   ],
   "editable": {
+    "informationScene": true,
     "cinematicIntro": true,
     "openingArtwork": ["image", "scale", "position", "animation", "palette"],
     "coverBackground": true,

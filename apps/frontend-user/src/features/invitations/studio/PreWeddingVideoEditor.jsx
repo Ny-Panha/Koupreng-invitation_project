@@ -5,7 +5,7 @@ import { mediaService } from '../api/mediaApi';
 import { validateLibraryFile } from '../mediaLibraryModel';
 import CinematicVideoOpening from '@/features/templates/shared/Openings/CinematicVideoOpening';
 
-export default function PreWeddingVideoEditor({ eventId, value, onChange, english }) {
+export default function PreWeddingVideoEditor({ eventId, value, onChange, english, presentation, onPresentationChange }) {
   const workspace = useEventWorkspace();
   const entitled = workspace?.access?.ownerFeatures?.includes('PRE_WEDDING_VIDEO') === true;
   const text = (en, kh) => english ? en : kh;
@@ -39,6 +39,12 @@ export default function PreWeddingVideoEditor({ eventId, value, onChange, englis
     <p>{text('An optional video after guests open your existing invitation cover. Starts muted and can be skipped immediately.', 'វីដេអូជាជម្រើស បន្ទាប់ពីភ្ញៀវបើកក្របធៀបដើម។ វីដេអូចាប់ផ្ដើមដោយបិទសំឡេង ហើយអាចរំលងបានភ្លាមៗ។')}</p>
     {!entitled && <div className="workspace-notice"><strong>Premium</strong><p>{text('The event owner needs an active Premium package for this opening. Gallery, photos and music keep their existing access.', 'ម្ចាស់កម្មវិធីត្រូវមានកញ្ចប់ Premium ដែលកំពុងដំណើរការ សម្រាប់ការបើកនេះ។ រូបភាព និងតន្ត្រីនៅតែអាចប្រើតាមសិទ្ធិដដែល។')}</p><Link className="workspace-button" to="/app/packages">{text('View packages', 'មើលកញ្ចប់')}</Link></div>}
     {error && <p role="alert">{error}</p>}
+    {presentation && <fieldset className="studio-royal-video" disabled={!entitled || busy}><legend>{text('Video scene', 'ទិដ្ឋភាពវីដេអូ')}</legend>
+      <label>{text('Video fit', 'ទំហំវីដេអូ')}<select value={presentation.fit || 'contain'} onChange={e => onPresentationChange({ ...presentation, fit: e.target.value })}><option value="contain">{text('Show full video', 'បង្ហាញវីដេអូពេញ')}</option><option value="cover">{text('Fill frame', 'បំពេញស៊ុម')}</option></select></label>
+      <label>{text('Video transition', 'ចលនាប្ដូរវីដេអូ')}<select value={presentation.transition || 'fade'} onChange={e => onPresentationChange({ ...presentation, transition: e.target.value })}><option value="fade">{text('Soft fade', 'ប្ដូរស្រាល')}</option><option value="none">{text('Immediate', 'ភ្លាមៗ')}</option></select></label>
+      {[['footer', 'Show royal footer', 'បង្ហាញលម្អខាងក្រោម'], ['replay', 'Allow video replay', 'អនុញ្ញាតចាក់ឡើងវិញ'], ['resumeMusic', 'Resume music after video', 'បន្តតន្ត្រីក្រោយវីដេអូ'], ['followUpPhotos', 'Show portraits after video', 'បង្ហាញរូបថតក្រោយវីដេអូ']].map(([key, en, kh]) => <label className="studio-inline-check" key={key}><input type="checkbox" checked={key === 'followUpPhotos' ? presentation[key] === true : presentation[key] !== false} onChange={e => onPresentationChange({ ...presentation, [key]: e.target.checked })} />{text(en, kh)}</label>)}
+      <p>{text('Video starts muted. Guests can enable sound, pause, replay or skip. Background music pauses during the film.', 'វីដេអូចាប់ផ្ដើមដោយបិទសំឡេង។ ភ្ញៀវអាចបើកសំឡេង ផ្អាក ចាក់ឡើងវិញ ឬរំលង។ តន្ត្រីផ្អាកពេលចាក់វីដេអូ។')}</p>
+    </fieldset>}
     <label><input type="checkbox" checked={config.enabled === true} disabled={busy || (!entitled && !config.enabled) || (entitled && !config.videoMediaId && !config.enabled)} onChange={event => onChange({ ...config, enabled: event.target.checked })} />{text('Enable pre-wedding video', 'បើកវីដេអូមុនអាពាហ៍ពិពាហ៍')}</label>
     {entitled && <>
       <label>{text('Pre-wedding video', 'វីដេអូមុនអាពាហ៍ពិពាហ៍')}<select disabled={busy} value={config.videoMediaId || ''} onChange={event => { setPreview(false); onChange({ ...config, videoMediaId: Number(event.target.value) || null, enabled: event.target.value ? config.enabled : false }); }}><option value="">{text('No video', 'គ្មានវីដេអូ')}</option>{videos.map(item => <option key={item.id} value={item.id}>{item.originalFilename}</option>)}</select></label>

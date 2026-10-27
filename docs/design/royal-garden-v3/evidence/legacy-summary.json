@@ -1,0 +1,17 @@
+{
+  "initialRun": {
+    "passed": 63,
+    "failed": 1,
+    "reportedTotalDuration": "5.5m"
+  },
+  "exitCorrectionRun": {
+    "startTime": "2026-10-27T05:40:04.377Z",
+    "duration": 39721.484,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "uniqueCasesVerified": 64,
+  "scope": "Legacy opening fixture and explicit exit-stage clock synchronization; no failing assertion was removed."
+}

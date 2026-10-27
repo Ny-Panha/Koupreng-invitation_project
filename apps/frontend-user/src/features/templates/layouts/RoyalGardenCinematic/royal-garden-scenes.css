@@ -1,0 +1,73 @@
+/* Royal Garden V3. Legacy ivory, oval and calligraphy compositions retain their tokens. */
+.tpl-royal-garden[data-royal=true] {
+  --rg-royal-blue: #072750; --rg-royal-deep: #041b39; --rg-royal-panel: #08274b;
+  --rg-royal-gold: #f2d693; --rg-royal-white: #fff6df; --rg-royal-muted: #d7d9e1;
+  --asset-open-button: url('/invitations/khmer-celestial/butto_invitation.webp');
+}
+.tpl-royal-garden .rg-royal-entrance { display: grid; place-items: center; min-height: 540px; height: 100svh; height: 100dvh; background: var(--rg-royal-deep); }
+.tpl-royal-garden .rg-entrance-stage { position: relative; width: min(100%, calc(max(100dvh, 540px) * .5628), 560px); aspect-ratio: 941 / 1672; margin-inline: auto; isolation: isolate; overflow: hidden; background: var(--rg-royal-blue); }
+.tpl-royal-garden .rg-entrance-photo { position: absolute; inset: 0; clip-path: polygon(5% 31%, 15% 21%, 30% 15%, 50% 9%, 70% 15%, 85% 21%, 95% 31%, 95% 84%, 84% 93%, 16% 93%, 5% 84%); }
+.tpl-royal-garden .rg-entrance-photo .cover-bg-media { object-position: var(--rg-cover-x) var(--rg-cover-y); }
+.tpl-royal-garden .rg-entrance-photo .cover-bg-scrim { opacity: .35; }
+.tpl-royal-garden .rg-entrance-vignette { position: absolute; inset: 0; background: linear-gradient(180deg, var(--rg-royal-deep) 2%, transparent 42%, rgb(4 27 57 / .35) 58%, var(--rg-royal-deep) 95%); pointer-events: none; }
+.tpl-royal-garden .rg-royal-arch { position: absolute; inset: 0; pointer-events: none; z-index: 2; transform: scale(var(--rg-frame-scale)); transform-origin: center; }
+.tpl-royal-garden .rg-royal-arch[data-position=upper] { transform: translateY(-1.5%) scale(var(--rg-frame-scale)); transform-origin: top; }
+.tpl-royal-garden .rg-royal-arch[data-position=lower] { transform: translateY(1.5%) scale(var(--rg-frame-scale)); transform-origin: bottom; }
+.tpl-royal-garden .rg-royal-arch img { width: 100%; height: 100%; object-fit: contain; }
+.tpl-royal-garden .rg-entrance-lettering { position: absolute; z-index: 3; top: 17%; left: 18%; width: 64%; height: 15%; display: grid; place-items: center; text-align: center; color: var(--rg-royal-gold); transform: scale(var(--rg-artwork-scale)); }
+.tpl-royal-garden .rg-entrance-lettering[data-position=upper] { top: 15%; }
+.tpl-royal-garden .rg-entrance-lettering[data-position=lower] { top: 23%; }
+.tpl-royal-garden .rg-entrance-stage[data-title-placement=upper] .rg-entrance-lettering { top: 15%; }
+.tpl-royal-garden .rg-entrance-lettering img { display: block; min-width: 0; min-height: 0; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 2px 4px var(--rg-royal-deep)); animation: rg-royal-sheen 8s ease infinite; }
+.tpl-royal-garden .rg-entrance-lettering h1:not(.rg-sr-only) { font-size: clamp(17px, 4.5vw, 28px); line-height: 1.8; }
+.tpl-royal-garden .rg-entrance-names { position: absolute; z-index: 3; top: 61%; left: 14%; right: 14%; color: var(--rg-royal-gold); text-align: center; text-shadow: 0 2px 3px var(--rg-royal-deep); }
+.tpl-royal-garden .rg-entrance-names h2 { font-size: clamp(16px, 4vw, 23px); line-height: 1.9; }
+.tpl-royal-garden .rg-entrance-names p { font-size: clamp(12px, 3.1vw, 15px); color: var(--rg-royal-white); }
+.tpl-royal-garden .rg-royal-guest { position: absolute; z-index: 3; top: 73%; left: 12%; right: 12%; text-align: center; color: var(--rg-royal-gold); }
+.tpl-royal-garden .rg-royal-guest > p { font-size: clamp(12px, 3vw, 15px); margin-bottom: 4px; }
+.tpl-royal-garden .rg-guest-frame { background-image: var(--asset-guest-frame); background-size: 100% 100%; background-repeat: no-repeat; min-height: 56px; display: grid; place-items: center; padding: 12px 17%; }
+.tpl-royal-garden .rg-guest-frame span { color: var(--rg-royal-deep); font: 400 clamp(12px, 3.1vw, 17px)/1.8 var(--rg-heading-font); overflow-wrap: anywhere; max-height: 4.8em; overflow: auto; scrollbar-width: thin; }
+.tpl-royal-garden .rg-entrance-action { position: absolute; z-index: 5; left: 20%; right: 20%; bottom: 8%; text-align: center; }
+.tpl-royal-garden .rg-royal-open { width: 100%; min-height: 52px; border: 1px solid var(--rg-royal-gold); border-radius: 4px; padding: 10px 12px; background: var(--rg-royal-blue); color: var(--rg-royal-gold); font: 400 clamp(13px, 3.3vw, 17px)/1.8 var(--rg-heading-font); }
+.tpl-royal-garden .rg-royal-open[data-artwork=true] { background: var(--asset-open-button) center / 100% 100% no-repeat; color: transparent; font-size: 0; border: 0; min-height: clamp(52px, 14vw, 74px); filter: drop-shadow(0 3px 4px var(--rg-royal-deep)); }
+.tpl-royal-garden .rg-royal-open:focus-visible { outline: 3px solid var(--rg-royal-white); outline-offset: 5px; }
+.tpl-royal-garden .rg-entrance-skip { position: absolute; z-index: 8; top: max(16px, env(safe-area-inset-top)); right: max(16px, calc((100% - 560px) / 2 + 16px)); min-height: 44px; padding: 6px 18px; border: 1px solid var(--rg-royal-gold); border-radius: 30px; color: var(--rg-royal-white); background: var(--rg-royal-deep); }
+.tpl-royal-garden .rg-entrance-skip:focus-visible { outline-color: var(--rg-royal-white); }
+.tpl-royal-garden .rg-royal-entrance[data-scene=VIDEO_PREPARING] .rg-entrance-stage { animation: rg-royal-away 900ms ease both; }
+.tpl-royal-garden .rg-royal-entrance[data-scene=ORNAMENT_REVEAL] .rg-entrance-lettering { animation: rg-royal-lettering 2.4s ease both; }
+.tpl-royal-garden .rg-royal-entrance[data-scene=TITLE_REVEAL] .rg-entrance-names { animation: rg-title-in 1s ease both; }
+.tpl-royal-garden .rg-royal-entrance[data-scene=PRE_WEDDING_VIDEO] { visibility: hidden; }
+.tpl-royal-garden .rg-paper[data-royal=true] { --rg-bg: var(--rg-royal-deep); --rg-surface: var(--rg-royal-panel); --rg-ink: var(--rg-royal-white); --rg-gold-dark: var(--rg-royal-gold); --rg-gold: var(--rg-royal-gold); --rg-muted: var(--rg-royal-muted); --rg-green: var(--rg-royal-deep); --rg-border: var(--rg-royal-border, #bc995b); --rg-white: var(--rg-royal-white); color: var(--rg-ink); background-color: var(--rg-royal-deep); isolation: isolate; background-image: none; padding-top: 100px; }
+.tpl-royal-garden .rg-paper[data-royal=true]::before { content: none; }
+.tpl-royal-garden .rg-information-background { position: absolute; inset: 0; z-index: 0; pointer-events: none; background: var(--rg-royal-blue); }
+.tpl-royal-garden .rg-information-background[data-fixed=true] { position: fixed; height: 100vh; height: 100dvh; }
+.tpl-royal-garden .rg-information-background img { display: block; width: min(100%, 680px); height: 100%; margin: auto; object-fit: contain; object-position: var(--rg-information-position); }
+.tpl-royal-garden .rg-information-background::after { content: ''; position: absolute; inset: 0; background: rgb(4 27 57 / var(--rg-information-overlay)); }
+.tpl-royal-garden .rg-paper[data-royal=true] > :is(main,.rg-footer,.rg-back-link,.rg-information-footer) { position: relative; z-index: 2; }
+.tpl-royal-garden .rg-paper[data-royal=true] .rg-section { width: min(82%, calc(100dvh * .45), 550px); padding: 28px 16px; margin-bottom: 28px; background: color-mix(in srgb, var(--rg-royal-panel) calc(var(--rg-panel-opacity) * 100%), transparent); border: 1px solid color-mix(in srgb, var(--rg-border) 55%, transparent); border-radius: 12px; }
+.tpl-royal-garden .rg-paper[data-royal=true] .rg-section--family { padding-top: 36px; }
+.tpl-royal-garden .rg-paper[data-royal=true] .rg-section--family .rg-heading h2 { font-size: clamp(21px, 5vw, 30px); }
+.tpl-royal-garden .rg-paper[data-royal=true] .rg-copy { font-size: var(--rg-message-size, 16px); }
+.tpl-royal-garden .rg-paper[data-royal=true] :is(.rg-button,.kp-add-calendar) { background: var(--rg-royal-deep); color: var(--rg-royal-white); text-shadow: none; clip-path: none; border-width: 1px; min-width: 0; }
+.tpl-royal-garden .rg-paper[data-royal=true] :is(button,a):focus-visible { outline-color: var(--rg-royal-white); }
+.tpl-royal-garden .rg-paper[data-royal=true] .rg-footer { color: var(--rg-royal-white); }
+.tpl-royal-garden .rg-information-footer { display: block; width: min(100%, 680px); height: auto; margin: 20px auto 0; pointer-events: none; }
+.tpl-royal-garden .rg-motion-layer { position: absolute; inset: 0; overflow: hidden; z-index: 4; pointer-events: none; contain: strict; }
+.tpl-royal-garden .rg-paper > .rg-motion-layer { position: fixed; height: 100vh; height: 100dvh; z-index: 1; }
+.tpl-royal-garden .rg-motion-layer i { position: absolute; left: var(--rg-x); top: 105%; width: 3px; height: 3px; background: var(--rg-royal-gold); opacity: 0; border-radius: 50%; animation: rg-gold-flight var(--rg-flight) var(--rg-delay) linear infinite; }
+.tpl-royal-garden .rg-motion-layer i[data-effect=star] { width: 10px; height: 10px; clip-path: polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%); }
+.tpl-royal-garden .rg-motion-layer i[data-effect=petal] { width: 9px; height: 13px; background: var(--rg-royal-white); border-radius: 70% 20% 70% 20%; }
+.tpl-royal-garden .rg-butterfly-flight { position: absolute; right: 0; top: 37%; width: 55px; animation: rg-butterfly-path 28s ease-in-out infinite; }
+.tpl-royal-garden .rg-butterfly-flight img { display: block; width: 100%; height: auto; animation: rg-butterfly-flutter 3s ease-in-out infinite; }
+.tpl-royal-garden .rg-motion-layer[data-paused=true] * { animation-play-state: paused; }
+.tpl-royal-garden .rg-royal-entrance[data-paused=true] *, .tpl-royal-garden .rg-royal-entrance[data-paused=true] *::after { animation-play-state: paused; }
+.tpl-royal-garden .rg-royal-entrance[data-animation=still] *, .tpl-royal-garden .rg-royal-entrance[data-animation=still] *::after { animation: none; }
+@keyframes rg-royal-sheen { 0%,35%,100% { opacity: .92; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-2px); } }
+@keyframes rg-gold-flight { 0% { opacity: 0; transform: translate(0,0) rotate(0); } 12%,75% { opacity: .55; } 100% { opacity: 0; transform: translate(var(--rg-drift), -105dvh) rotate(90deg); } }
+@keyframes rg-butterfly-path { 0%,100% { transform: translate(5px, 30px) rotate(-10deg); } 50% { transform: translate(-24px, -60px) rotate(15deg); } }
+@keyframes rg-butterfly-flutter { 0%,100% { transform: scaleX(.7); } 50% { transform: scaleX(1); } }
+@keyframes rg-royal-away { to { opacity: .25; transform: scale(1.025); } }
+@keyframes rg-royal-lettering { 0% { opacity: .5; transform: translateY(10px) scale(.94); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+@media (max-width: 374px) { .tpl-royal-garden .rg-guest-frame { min-height: 50px; } .tpl-royal-garden .rg-entrance-names { top: 59%; } .tpl-royal-garden .rg-royal-guest { top: 71%; } .tpl-royal-garden .rg-entrance-action { bottom: 7%; } }
+@media (prefers-reduced-motion: reduce) { .tpl-royal-garden .rg-motion-layer { display: none; } .tpl-royal-garden .rg-royal-entrance * { animation: none !important; } }
+.tpl-royal-garden .rg-royal-entrance[data-reduced=true] * { animation: none !important; }

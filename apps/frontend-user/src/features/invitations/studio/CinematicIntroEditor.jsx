@@ -4,6 +4,7 @@ import { introArtwork, INTRO_PALETTES, normalizeIntro, normalizeIntroUpload } fr
 
 export default function CinematicIntroEditor({ value, onChange, photos = [], english }) {
   const intro = normalizeIntro(value);
+  const artworkStyle = ['golden-calligraphy', 'royal-arch'].includes(intro.style);
   const [error, setError] = useState('');
   const [reading, setReading] = useState(false);
   const [readingArtwork, setReadingArtwork] = useState(false);
@@ -41,8 +42,19 @@ export default function CinematicIntroEditor({ value, onChange, photos = [], eng
   return <section className="studio-intro-editor" aria-label={t('Cinematic intro', 'ការបើកធៀបបែបភាពយន្ត')}>
     <p className="studio-intro-lead">{t('Create a quiet ceremonial opening, followed by your own wedding portraits. Names and date follow Event Information.', 'រចនាការបើកធៀបជាមួយរូបភាពមង្គលការរបស់អ្នក។ ឈ្មោះ និងថ្ងៃខែយកតាមព័ត៌មានកម្មវិធី។')}</p>
     <label className="studio-inline-check"><input type="checkbox" checked={intro.enabled} onChange={e => set({ enabled: e.target.checked })} />{t('Enable cinematic intro', 'បើកការបើកធៀបបែបភាពយន្ត')}</label>
-    <label>{t('Opening style', 'រចនាប័ទ្មការបើក')}<select value={intro.style} onChange={e => set({ style: e.target.value })}><option value="golden-calligraphy">{t('Golden calligraphy', 'អក្សរផ្ចង់ពណ៌មាស')}</option><option value="oval">{t('Carved ivory oval', 'ស៊ុមពងក្រពើភ្លុក')}</option><option value="minimal">{t('Typography only', 'អក្សរតែប៉ុណ្ណោះ')}</option></select></label>
-    {intro.style === 'golden-calligraphy' && <fieldset className="studio-opening-artwork"><legend>{t('Opening artwork', 'រូបសិល្បៈការបើក')}</legend>
+    <label>{t('Opening style', 'រចនាប័ទ្មការបើក')}<select value={intro.style} onChange={e => set({ style: e.target.value })}><option value="royal-arch">{t('Royal photographic arch', 'ស៊ុមមាសរាជជាមួយរូបថត')}</option><option value="golden-calligraphy">{t('Golden calligraphy', 'អក្សរផ្ចង់ពណ៌មាស')}</option><option value="oval">{t('Carved ivory oval', 'ស៊ុមពងក្រពើភ្លុក')}</option><option value="minimal">{t('Typography only', 'អក្សរតែប៉ុណ្ណោះ')}</option></select></label>
+    {intro.style === 'royal-arch' && <fieldset className="studio-opening-artwork"><legend>{t('Entrance', 'ទំព័របើកធៀប')}</legend>
+      <img className="studio-opening-artwork-preview" src="/templates/royal-garden/v3/opening/arch-640.webp" alt={t('Royal arch preset', 'គំរូស៊ុមរាជ')} />
+      <p>{t('Choose your photograph or muted cover video in Design & Cover. Couple names and date follow Event Information.', 'ជ្រើសរើសរូបថត ឬវីដេអូក្របក្នុងផ្នែករចនា និងក្របធៀប។ ឈ្មោះ និងកាលបរិច្ឆេទយកតាមព័ត៌មានកម្មវិធី។')}</p>
+      {[['entranceFrameEnabled', 'Show gold arch', 'បង្ហាញស៊ុមមាស'], ['guestFrameEnabled', 'Show guest-name frame', 'បង្ហាញស៊ុមឈ្មោះភ្ញៀវ'], ['buttonArtwork', 'Use gold button artwork', 'ប្រើរូបប៊ូតុងមាស']].map(([key, en, km]) => <label className="studio-inline-check" key={key}><input type="checkbox" checked={intro[key] !== false} onChange={e => set({ [key]: e.target.checked })} />{t(en, km)}</label>)}
+      <label>{t('Arch scale', 'ទំហំស៊ុម')}<input type="range" min=".85" max="1.1" step=".05" value={intro.entranceFrameScale ?? 1} onChange={e => set({ entranceFrameScale: Number(e.target.value) })} /></label>
+      <label>{t('Arch alignment', 'តម្រឹមស៊ុម')}<select value={intro.entranceFramePosition || 'center'} onChange={e => set({ entranceFramePosition: e.target.value })}>{['upper', 'center', 'lower'].map((value, i) => <option key={value} value={value}>{t(['Upper', 'Center', 'Lower'][i], ['ខាងលើ', 'កណ្ដាល', 'ខាងក្រោម'][i])}</option>)}</select></label>
+      <label>{t('Cover horizontal focal point', 'ចំណុចផ្ដេករូបក្រប')}<input type="range" min="0" max="100" value={intro.coverX ?? 50} onChange={e => set({ coverX: Number(e.target.value) })} /></label>
+      <label>{t('Cover vertical focal point', 'ចំណុចបញ្ឈររូបក្រប')}<input type="range" min="0" max="100" value={intro.coverY ?? 40} onChange={e => set({ coverY: Number(e.target.value) })} /></label>
+      <label>{t('Title placement', 'ទីតាំងចំណងជើង')}<select value={intro.titlePlacement || 'center'} onChange={e => set({ titlePlacement: e.target.value })}><option value="upper">{t('Upper', 'ខាងលើ')}</option><option value="center">{t('Center', 'កណ្ដាល')}</option></select></label>
+      <label>{t('Opening button label', 'អក្សរប៊ូតុងបើក')}<input maxLength={100} value={intro.openButtonText ?? ''} placeholder={t('Open invitation', 'បើកធៀបអញ្ជើញ')} onChange={e => set({ openButtonText: e.target.value, buttonArtwork: false })} /></label>
+    </fieldset>}
+    {artworkStyle && <fieldset className="studio-opening-artwork"><legend>{t('Opening artwork', 'រូបសិល្បៈការបើក')}</legend>
       {introArtwork(intro) ? <img className="studio-opening-artwork-preview" src={introArtwork(intro)} alt={intro.artworkAlt || t('Golden opening artwork preview', 'មើលរូបសិល្បៈពណ៌មាសជាមុន')} /> : <p>{t('Artwork is cleared. Your names and date still appear as editable text.', 'បានលុបរូបសិល្បៈ។ ឈ្មោះ និងកាលបរិច្ឆេទនៅតែបង្ហាញជាអក្សរដែលអាចកែបាន។')}</p>}
       <label className="studio-intro-upload">{readingArtwork ? t('Reading artwork…', 'កំពុងអានរូបសិល្បៈ…') : t('Upload opening artwork', 'បញ្ចូលរូបសិល្បៈការបើក')}<input type="file" accept="image/jpeg,image/png,image/webp" disabled={readingArtwork} onChange={e => { replaceArtwork(e.target.files?.[0]); e.target.value = ''; }} /></label>
       <label>{t('Artwork description', 'ពិពណ៌នារូបសិល្បៈ')}<input maxLength={300} value={intro.artworkAlt} onChange={e => set({ artworkAlt: e.target.value })} /></label>
@@ -53,7 +65,7 @@ export default function CinematicIntroEditor({ value, onChange, photos = [], eng
       <p>{t('The supplied artwork already includes Save the Date. Portraits show your live names and date without repeating that wording. Replacements use the existing image upload when saved.', 'រូបសិល្បៈមានពាក្យ Save the Date រួចហើយ។ រូបថតបង្ហាញឈ្មោះ និងកាលបរិច្ឆេទដោយមិនសរសេរពាក្យនេះម្ដងទៀត។')}</p>
     </fieldset>}
     {intro.style === 'golden-calligraphy' && <label>{t('Opening palette', 'ពណ៌ការបើក')}<select value={intro.palette} onChange={e => set({ palette: e.target.value })}>{INTRO_PALETTES.map((key, i) => <option key={key} value={key}>{t(['Ivory Royal', 'Emerald Gold', 'Burgundy Romance'][i], ['ភ្លុករាជ', 'បៃតងនិងមាស', 'ក្រហមប៊ឺហ្គុនឌី'][i])}</option>)}</select></label>}
-    {(intro.style !== 'golden-calligraphy' || !introArtwork(intro)) && <label>{t('Intro heading', 'ចំណងជើងការបើក')}<input maxLength={300} value={intro.heading ?? ''} placeholder={t('Use invitation title', 'តាមចំណងជើងធៀប')} onChange={e => set({ heading: e.target.value })} /></label>}
+    {(!artworkStyle || !introArtwork(intro)) && <label>{t('Intro heading', 'ចំណងជើងការបើក')}<input maxLength={300} value={intro.heading ?? ''} placeholder={t('Use invitation title', 'តាមចំណងជើងធៀប')} onChange={e => set({ heading: e.target.value })} /></label>}
     <label>{t('Intro subtitle', 'ចំណងជើងរង')}<input maxLength={500} value={intro.subtitle ?? ''} onChange={e => set({ subtitle: e.target.value })} /></label>
     <p className="studio-intro-help">{t('Cover artwork and video use the existing Design & Cover upload. Music uses the Music section.', 'រូបភាព និងវីដេអូក្របធៀបប្រើផ្នែករចនា និងក្របធៀប។ តន្ត្រីប្រើផ្នែកតន្ត្រី។')}</p>
     <div className="studio-intro-media-heading"><h3><Images size={18} aria-hidden="true" />{t('Portrait sequence', 'លំដាប់រូបភាព')}</h3><span>{slides.length} / 24</span></div>
@@ -73,6 +85,6 @@ export default function CinematicIntroEditor({ value, onChange, photos = [], eng
       <label>{t('Portrait shade', 'ស្រមោលរូបភាព')}<input type="range" min="0" max=".75" step=".05" value={intro.overlay} onChange={e => set({ overlay: Number(e.target.value) })} /></label>
       <label>{t('Text position', 'ទីតាំងអក្សរ')}<select value={intro.textPosition} onChange={e => set({ textPosition: e.target.value })}><option value="bottom">{t('Lower portrait', 'ខាងក្រោមរូបភាព')}</option><option value="center">{t('Center', 'កណ្ដាល')}</option></select></label>
     </div>
-    {[...((intro.style !== 'golden-calligraphy' || !introArtwork(intro)) ? [['showSaveTheDate', 'Show Save the Date', 'បង្ហាញ Save the Date']] : []), ['music', 'Start selected music when opened', 'ចាប់ផ្ដើមតន្ត្រីនៅពេលបើក'], ['reducedMotion', 'Preview with reduced motion', 'មើលជាមុនដោយកាត់បន្ថយចលនា']].map(([key, en, km]) => <label className="studio-inline-check" key={key}><input type="checkbox" checked={intro[key]} onChange={e => set({ [key]: e.target.checked })} />{t(en, km)}</label>)}
+    {[...((!artworkStyle || !introArtwork(intro)) ? [['showSaveTheDate', 'Show Save the Date', 'បង្ហាញ Save the Date']] : []), ['music', 'Start selected music when opened', 'ចាប់ផ្ដើមតន្ត្រីនៅពេលបើក'], ['reducedMotion', 'Preview with reduced motion', 'មើលជាមុនដោយកាត់បន្ថយចលនា']].map(([key, en, km]) => <label className="studio-inline-check" key={key}><input type="checkbox" checked={intro[key]} onChange={e => set({ [key]: e.target.checked })} />{t(en, km)}</label>)}
   </section>;
 }

@@ -3270,7 +3270,9 @@ export default function InvitationForm({ invitation }) {
         cinematicIntro: () => <CinematicIntroEditor value={form.cinematicIntro} photos={form.photos} english={englishUI} onChange={change => setForm(previous => ({ ...previous, cinematicIntro: change(previous.cinematicIntro) }))} />,
         eventInfo: renderEventInfoSection,
         music: renderMusicSection,
-        preWeddingVideo: () => <PreWeddingVideoEditor eventId={invitation?.backendInvitationId || invitationId} value={form.preWeddingVideo} onChange={value => update("preWeddingVideo", value)} english={englishUI} />,
+        preWeddingVideo: () => <PreWeddingVideoEditor eventId={invitation?.backendInvitationId || invitationId} value={form.preWeddingVideo} onChange={value => update("preWeddingVideo", value)} english={englishUI}
+            presentation={templateCapabilities(getTemplateById(form.templateId) || {}).cinematicIntro ? form.informationScene?.video || {} : undefined}
+            onPresentationChange={video => update('informationScene', { ...form.informationScene, video })} />,
         appearance: () => <StudioAppearance form={form} update={update}
             supportsPalette={templateCapabilities(getTemplateById(form.templateId) || { id: form.templateId }).appearance} />,
         cover: renderCoverSection,
@@ -3399,7 +3401,7 @@ export default function InvitationForm({ invitation }) {
                         aria-valuemin={workspaceSplit.min} aria-valuemax={workspaceSplit.max} aria-valuenow={workspaceSplit.value}
                         aria-valuetext={englishUI ? `${workspaceSplit.value}% editor` : `${workspaceSplit.value}% កន្លែងកែសម្រួល`}
                         {...workspaceSplit.separator}><span /></div>
-                    <LivePhoneSimulator data={{ ...authoredForm, googleMapUrl: previewMapUrl(form.googleMapUrl, authoredForm.venueName) }} catalogVersion={catalogVersion} onEditSection={editPreviewSection} />
+                    <LivePhoneSimulator data={{ ...authoredForm, googleMapUrl: previewMapUrl(form.googleMapUrl, authoredForm.venueName) }} eventId={invitation?.backendInvitationId || invitationId} catalogVersion={catalogVersion} onEditSection={editPreviewSection} />
                 </>}
             </div>
 
@@ -3422,6 +3424,7 @@ export default function InvitationForm({ invitation }) {
                         </div>
                         <div className="pe-mobile-preview-drawer-body">
                             <LivePhoneSimulator
+                                eventId={invitation?.backendInvitationId || invitationId}
                                 data={{
                                     ...form,
                                     googleMapUrl: previewMapUrl(form.googleMapUrl, authoredForm.venueName),

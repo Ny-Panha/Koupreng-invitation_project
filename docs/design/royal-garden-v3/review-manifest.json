@@ -1,0 +1,121 @@
+{
+  "baseline": "7f0d293509f320fc2d1638f43fbb08aba795aa40",
+  "branch": "feature/royal-garden-v3-royal-motion-experience",
+  "files": [
+    {
+      "path": "evidence/chromium-entrance-1024.png",
+      "bytes": 796172,
+      "sha256": "16e842fa3551d355055e0ad805c40cb8c9cd657e2d02a9714b9b94bbb2d58b20"
+    },
+    {
+      "path": "evidence/chromium-entrance-1440.png",
+      "bytes": 807149,
+      "sha256": "d64bab0ffef8fe03f125105123d15f54e9954bcb89db3b87a7fe2aea125a3274"
+    },
+    {
+      "path": "evidence/chromium-entrance-320.png",
+      "bytes": 333214,
+      "sha256": "a1ad75e9c2ebde0f63bf79cac93478295021dede8be7bdd4b4edf9a206300360"
+    },
+    {
+      "path": "evidence/chromium-entrance-375.png",
+      "bytes": 457036,
+      "sha256": "8570c6e31d4f356bb1864ec470b118323df40e52e198aa89fe6a29f698b29897"
+    },
+    {
+      "path": "evidence/chromium-entrance-390.png",
+      "bytes": 489074,
+      "sha256": "43c8d5638093e009f749fdb1876b3eee50aec635bbe6688348503efd968f65cb"
+    },
+    {
+      "path": "evidence/chromium-entrance-430.png",
+      "bytes": 578994,
+      "sha256": "f75c3e210ef10f292d0a2971410002fa09dfc259a3cda9184d5719191cca5a63"
+    },
+    {
+      "path": "evidence/chromium-entrance-512.png",
+      "bytes": 772035,
+      "sha256": "7ada9d8fd04db103c264ff76219ed199102ac20febda4144537f2564dc3eefe4"
+    },
+    {
+      "path": "evidence/chromium-entrance-768.png",
+      "bytes": 788138,
+      "sha256": "959197d659636678c095aa074f4ad14bebb61b3c9aaa56235d0e3b6c0532f6af"
+    },
+    {
+      "path": "evidence/chromium-entrance.png",
+      "bytes": 551527,
+      "sha256": "9b11b98eb84e383b30dbbc597bdf3cd1856704ed48621af6c3c4a4036883fb54"
+    },
+    {
+      "path": "evidence/chromium-hosted-content.png",
+      "bytes": 61972,
+      "sha256": "ea69cdb6328bcfdf7ee994a5beb5a0763017bf1bc9361c33c792d8767ac17322"
+    },
+    {
+      "path": "evidence/chromium-information.png",
+      "bytes": 453242,
+      "sha256": "8e988a5fe962102e0dc0f3ac43f55a2136dadde622595e04522d917df4e56585"
+    },
+    {
+      "path": "evidence/chromium-inline-video.png",
+      "bytes": 280657,
+      "sha256": "fdc4fc9e6cd67dbd586fd1e0b8919f597737e741be580160734fec77b1fab866"
+    },
+    {
+      "path": "evidence/chromium-studio.png",
+      "bytes": 273254,
+      "sha256": "b05dd97115b00293be8b3f3ba23b374832fdb8bc9bacd89f9891a952fdfd4188"
+    },
+    {
+      "path": "evidence/frame-proof.jpg",
+      "bytes": 134534,
+      "sha256": "d36b733745b3504d6371d3152646bc17a30fff7fae2d79bd0b5ed2ff1e30b031"
+    },
+    {
+      "path": "evidence/mobile-chromium-entrance.png",
+      "bytes": 2904814,
+      "sha256": "c0334a1a7f2536331c588c45fa06c8b31853662587aca57a81fe7d2fc2f6cab8"
+    },
+    {
+      "path": "evidence/mobile-chromium-hosted-content.png",
+      "bytes": 2268125,
+      "sha256": "25fff8eaea824644af48161412f6ec5db31bb2187828280ec26b30dd61d74ebc"
+    },
+    {
+      "path": "evidence/mobile-chromium-information.png",
+      "bytes": 2453760,
+      "sha256": "02edce13ae1bb513e2e55de33f16b2e50ef3ed669c0602e39460c67d1d9c9903"
+    },
+    {
+      "path": "evidence/mobile-chromium-inline-video.png",
+      "bytes": 1604187,
+      "sha256": "494ebbe53ab530b19a778c6cabc7246ffa545db4298b38d01ca7ab645a3621d5"
+    },
+    {
+      "path": "evidence/mobile-chromium-studio.png",
+      "bytes": 1333102,
+      "sha256": "9b7255ff4945542ed032acc4d72310e63ac40bdc8288321b82ec379a96606e67"
+    },
+    {
+      "path": "references/IMG_0214.jpg",
+      "bytes": 250667,
+      "sha256": "3cdc9332d397ab0e564b9ec77291b6cd87303bd5686622c29f135b4f56a3f040"
+    },
+    {
+      "path": "references/IMG_0215.jpg",
+      "bytes": 167778,
+      "sha256": "987260aa7b78276950373b613e04f8a15b6af415ecfe21b6bd2d117c010f2a6f"
+    },
+    {
+      "path": "references/IMG_0216.jpg",
+      "bytes": 306362,
+      "sha256": "4dc2fc15d94c0780455bbd01eefd09decbb3798d0c61f3f6eca8c8737425ce84"
+    },
+    {
+      "path": "sources/royal-garden-cinematic.zip",
+      "bytes": 26843923,
+      "sha256": "0365d8117bd5f8fbe63c72741a5550a88848da5bd5d672e5adcab762fdead514"
+    }
+  ]
+}

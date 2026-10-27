@@ -1,0 +1,479 @@
+{
+  "recordedAt": "2026-10-27T05:38:57.670Z",
+  "environment": {
+    "os": "win32",
+    "browser": "156.0.8078.4",
+    "viewport": "390x844",
+    "dpr": 1,
+    "cpuSlowdown": 4,
+    "downstreamBitsPerSecond": 1600000,
+    "upstreamBitsPerSecond": 750000,
+    "latencyMs": 150,
+    "server": "local Vite production preview",
+    "api": "synthetic catalog responses"
+  },
+  "entrance": {
+    "lcp": 9776,
+    "cls": 0.0006202525284812295,
+    "eventDurations": [],
+    "longTasks": [
+      148,
+      86
+    ],
+    "resources": [
+      {
+        "name": "/js/telegram-web-app.js",
+        "transferred": 0,
+        "encoded": 0
+      },
+      {
+        "name": "/assets/index-Dg-1tsQz.js",
+        "transferred": 130813,
+        "encoded": 130513
+      },
+      {
+        "name": "/assets/jsx-runtime-Wy9s6hX0.js",
+        "transferred": 3683,
+        "encoded": 3383
+      },
+      {
+        "name": "/assets/useLanguageStore-mmn9Okko.js",
+        "transferred": 1306,
+        "encoded": 1006
+      },
+      {
+        "name": "/assets/createLucideIcon-iAjGl61D.js",
+        "transferred": 1780,
+        "encoded": 1480
+      },
+      {
+        "name": "/assets/httpClient-CUjnEakX.js",
+        "transferred": 20249,
+        "encoded": 19949
+      },
+      {
+        "name": "/assets/index-CFCCisHt.css",
+        "transferred": 30241,
+        "encoded": 29941
+      },
+      {
+        "name": "/assets/SiteAnimations-BeAO9vrR.js",
+        "transferred": 1863,
+        "encoded": 1563
+      },
+      {
+        "name": "/assets/proxy-CC7m1GcZ.js",
+        "transferred": 45413,
+        "encoded": 45113
+      },
+      {
+        "name": "/assets/logo-CnrSq6bR.js",
+        "transferred": 349,
+        "encoded": 49
+      },
+      {
+        "name": "/assets/SiteAnimations-DnKXCQkx.css",
+        "transferred": 1406,
+        "encoded": 1106
+      },
+      {
+        "name": "/assets/TemplateDemoPage-DLg4Elqh.js",
+        "transferred": 456,
+        "encoded": 156
+      },
+      {
+        "name": "/assets/templates-CNFu3d4D.js",
+        "transferred": 4557,
+        "encoded": 4257
+      },
+      {
+        "name": "/assets/KhmerCelestialLayout-qX4iYA9P.js",
+        "transferred": 10442,
+        "encoded": 10142
+      },
+      {
+        "name": "/assets/arrow-left-Co9bFwqD.js",
+        "transferred": 505,
+        "encoded": 205
+      },
+      {
+        "name": "/assets/TemplateExperience-BLADifdJ.js",
+        "transferred": 53026,
+        "encoded": 52726
+      },
+      {
+        "name": "/assets/openingConfig-4--OkjJT.js",
+        "transferred": 1450,
+        "encoded": 1150
+      },
+      {
+        "name": "/assets/CinematicVideoOpening-cwKNHBVe.js",
+        "transferred": 10061,
+        "encoded": 9761
+      },
+      {
+        "name": "/assets/mail-BEvm0P9D.js",
+        "transferred": 553,
+        "encoded": 253
+      },
+      {
+        "name": "/assets/sparkles-CQxlGWHq.js",
+        "transferred": 852,
+        "encoded": 552
+      },
+      {
+        "name": "/assets/eventPresentation-RRyBrHb4.js",
+        "transferred": 1736,
+        "encoded": 1436
+      },
+      {
+        "name": "/assets/CinematicVideoOpening-ws0v22SR.css",
+        "transferred": 5431,
+        "encoded": 5131
+      },
+      {
+        "name": "/assets/circle-check-DGgvMsbA.js",
+        "transferred": 550,
+        "encoded": 250
+      },
+      {
+        "name": "/assets/clock-CYcN1Ohb.js",
+        "transferred": 509,
+        "encoded": 209
+      },
+      {
+        "name": "/assets/ui-BoTdk2Xt.js",
+        "transferred": 3654,
+        "encoded": 3354
+      },
+      {
+        "name": "/assets/toast-BNSoQ1dn.js",
+        "transferred": 592,
+        "encoded": 292
+      },
+      {
+        "name": "/assets/ui-v9maAeT-.css",
+        "transferred": 3031,
+        "encoded": 2731
+      },
+      {
+        "name": "/assets/mediaApi-BmC26N-W.js",
+        "transferred": 1372,
+        "encoded": 1072
+      },
+      {
+        "name": "/assets/weddingStorage-BjjpQeLZ.js",
+        "transferred": 1753,
+        "encoded": 1453
+      },
+      {
+        "name": "/assets/invitationLocaleContext-DoL1HuvV.js",
+        "transferred": 446,
+        "encoded": 146
+      },
+      {
+        "name": "/assets/InvitationLabel-DASvRbr3.js",
+        "transferred": 2983,
+        "encoded": 2683
+      },
+      {
+        "name": "/assets/invitationLanguage-BwEdAu9z.js",
+        "transferred": 516,
+        "encoded": 216
+      },
+      {
+        "name": "/assets/lib-l5Ry_C1A.js",
+        "transferred": 8789,
+        "encoded": 8489
+      },
+      {
+        "name": "/assets/khmer-celestial-C41xrtCy.js",
+        "transferred": 8549,
+        "encoded": 8249
+      },
+      {
+        "name": "/assets/templateTypography-D2aSXzJ5.js",
+        "transferred": 761,
+        "encoded": 461
+      },
+      {
+        "name": "/assets/khmer-celestial-BhHWmCfe.css",
+        "transferred": 9489,
+        "encoded": 9189
+      },
+      {
+        "name": "/assets/TimePicker-BY9Qo3ig.js",
+        "transferred": 3151,
+        "encoded": 2851
+      },
+      {
+        "name": "/assets/TimePicker-WdylPF6N.css",
+        "transferred": 1804,
+        "encoded": 1504
+      },
+      {
+        "name": "/assets/use-in-view-CdNeqcoa.js",
+        "transferred": 1268,
+        "encoded": 968
+      },
+      {
+        "name": "/assets/TemplateImage-BWddPf0g.js",
+        "transferred": 939,
+        "encoded": 639
+      },
+      {
+        "name": "/assets/SeatingFloorPlan-BBizEH1w.js",
+        "transferred": 7367,
+        "encoded": 7067
+      },
+      {
+        "name": "/assets/useBackendMessages-Df7DFV7v.js",
+        "transferred": 26497,
+        "encoded": 26197
+      },
+      {
+        "name": "/assets/SeatingFloorPlan-zRUjaJBF.css",
+        "transferred": 4349,
+        "encoded": 4049
+      },
+      {
+        "name": "/assets/TemplateExperience-B3EnDbJx.css",
+        "transferred": 30457,
+        "encoded": 30157
+      },
+      {
+        "name": "/assets/clock-3-B7QKIK3n.js",
+        "transferred": 509,
+        "encoded": 209
+      },
+      {
+        "name": "/assets/eighth-note-DwLY30UA.js",
+        "transferred": 554,
+        "encoded": 254
+      },
+      {
+        "name": "/assets/external-link-Cyqe121L.js",
+        "transferred": 591,
+        "encoded": 291
+      },
+      {
+        "name": "/assets/gem-BgV0Nu7W.js",
+        "transferred": 674,
+        "encoded": 374
+      },
+      {
+        "name": "/assets/EmeraldLuxeLayout-CtNSp7bz.js",
+        "transferred": 5877,
+        "encoded": 5577
+      },
+      {
+        "name": "/assets/eighth-notes-ldlrLYQV.js",
+        "transferred": 626,
+        "encoded": 326
+      },
+      {
+        "name": "/assets/qr-code-BkWIctgA.js",
+        "transferred": 990,
+        "encoded": 690
+      },
+      {
+        "name": "/assets/AuthoredClosing-D5vcxWy8.js",
+        "transferred": 765,
+        "encoded": 465
+      },
+      {
+        "name": "/assets/EmeraldLuxeLayout-t-wl7iBo.css",
+        "transferred": 2018,
+        "encoded": 1718
+      },
+      {
+        "name": "/assets/paymentService-B9EnQFEa.js",
+        "transferred": 1307,
+        "encoded": 1007
+      },
+      {
+        "name": "/assets/TemplatesFeature-B3kKYfd_.js",
+        "transferred": 446,
+        "encoded": 146
+      },
+      {
+        "name": "/assets/DigitalYesLayout-D46jPVNZ.js",
+        "transferred": 9487,
+        "encoded": 9187
+      },
+      {
+        "name": "/assets/copy-DXssfycg.js",
+        "transferred": 576,
+        "encoded": 276
+      },
+      {
+        "name": "/assets/DigitalYesLayout-By6oAR9f.css",
+        "transferred": 2013,
+        "encoded": 1713
+      },
+      {
+        "name": "/assets/KhmerRoyalLotusLayout-DcMNedvd.js",
+        "transferred": 6064,
+        "encoded": 5764
+      },
+      {
+        "name": "/assets/chevron-down-DxRDuKka.js",
+        "transferred": 468,
+        "encoded": 168
+      },
+      {
+        "name": "/assets/gift-BCi0GZxU.js",
+        "transferred": 689,
+        "encoded": 389
+      },
+      {
+        "name": "/assets/KhmerRoyalLotusLayout-DcpQOoD5.css",
+        "transferred": 5659,
+        "encoded": 5359
+      },
+      {
+        "name": "/assets/templates-CFCVfUoY.css",
+        "transferred": 2329,
+        "encoded": 2029
+      },
+      {
+        "name": "/assets/ChatBot-D1Vjbbkk.js",
+        "transferred": 3104,
+        "encoded": 2804
+      },
+      {
+        "name": "/assets/ChatBot-DwJfFoO9.css",
+        "transferred": 1585,
+        "encoded": 1285
+      },
+      {
+        "name": "/fonts/marketing/DMSans-Latin.woff2",
+        "transferred": 37232,
+        "encoded": 36932
+      },
+      {
+        "name": "/fonts/silk-heritage/KantumruyPro.woff2",
+        "transferred": 77148,
+        "encoded": 76848
+      },
+      {
+        "name": "/api/v1/templates",
+        "transferred": 475,
+        "encoded": 175
+      },
+      {
+        "name": "/assets/RoyalGardenCinematicLayout-BnQvgAhl.js",
+        "transferred": 12185,
+        "encoded": 11885
+      },
+      {
+        "name": "/assets/images-DptK46fJ.js",
+        "transferred": 710,
+        "encoded": 410
+      },
+      {
+        "name": "/assets/message-circle-heart-DlGxIvU_.js",
+        "transferred": 723,
+        "encoded": 423
+      },
+      {
+        "name": "/assets/RoyalGardenCinematicLayout-C6YmBxx5.css",
+        "transferred": 8029,
+        "encoded": 7729
+      },
+      {
+        "name": "/api/v1/templates/slug/royal-garden-cinematic",
+        "transferred": 473,
+        "encoded": 173
+      },
+      {
+        "name": "/templates/silk-heritage/portrait.webp",
+        "transferred": 180678,
+        "encoded": 180378
+      },
+      {
+        "name": "/templates/royal-garden/v3/opening/arch-640.webp",
+        "transferred": 272452,
+        "encoded": 272152
+      },
+      {
+        "name": "/templates/royal-garden/v3/effects/butterfly.webp",
+        "transferred": 10880,
+        "encoded": 10580
+      },
+      {
+        "name": "/templates/royal-garden/v3/opening/calligraphy-640.webp",
+        "transferred": 139122,
+        "encoded": 138822
+      },
+      {
+        "name": "/fonts/khmer/Battambang-Regular.woff2",
+        "transferred": 40220,
+        "encoded": 39920
+      },
+      {
+        "name": "/templates/royal-garden/v3/ornaments/guest-frame.webp",
+        "transferred": 69156,
+        "encoded": 68856
+      },
+      {
+        "name": "/fonts/silk-heritage/CormorantGaramond.woff2",
+        "transferred": 24620,
+        "encoded": 24320
+      }
+    ],
+    "navigation": [
+      {
+        "domContentLoaded": 1616.3999999761581,
+        "load": 1620.1000000238419
+      }
+    ]
+  },
+  "interaction": {
+    "eventDurations": [
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      24,
+      24,
+      24,
+      24,
+      24,
+      24,
+      24,
+      24,
+      24,
+      24,
+      24,
+      24,
+      24,
+      24,
+      24
+    ],
+    "longTasks": [
+      148,
+      86
+    ]
+  },
+  "limits": [
+    "One cold local lab sample, not production field data.",
+    "No physical mid-range device, INP percentile or battery/frame-rate certification.",
+    "Event Timing entries are individual observed event durations, not field INP."
+  ]
+}

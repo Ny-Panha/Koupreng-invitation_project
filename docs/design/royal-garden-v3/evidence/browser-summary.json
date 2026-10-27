@@ -1,0 +1,234 @@
+{
+  "source": "Playwright list reporter output in browser-review.log; per-case times are rounded as printed. The raw JSON reporter was overwritten by the later three-case capture refresh.",
+  "passed": 28,
+  "failed": 0,
+  "skipped": 0,
+  "retries": 0,
+  "reportedTotalDuration": "2.0m",
+  "cases": [
+    {
+      "number": 1,
+      "project": "mobile-chromium",
+      "title": "catalog: supplied film loads after click, plays inline without a dialog/form, then reveals fixed information",
+      "status": "passed",
+      "reportedDurationSeconds": 4.7,
+      "platformNote": null
+    },
+    {
+      "number": 2,
+      "project": "chromium",
+      "title": "catalog: supplied film loads after click, plays inline without a dialog/form, then reveals fixed information",
+      "status": "passed",
+      "reportedDurationSeconds": 4.7,
+      "platformNote": null
+    },
+    {
+      "number": 4,
+      "project": "chromium",
+      "title": "hosted: authorized protected film completes, errors recover, and guest text stays live",
+      "status": "passed",
+      "reportedDurationSeconds": 8.2,
+      "platformNote": null
+    },
+    {
+      "number": 3,
+      "project": "mobile-chromium",
+      "title": "hosted: authorized protected film completes, errors recover, and guest text stays live",
+      "status": "passed",
+      "reportedDurationSeconds": 8.3,
+      "platformNote": null
+    },
+    {
+      "number": 5,
+      "project": "chromium",
+      "title": "unavailable video, absent photo, failed artwork, cleared lettering and long names stay usable",
+      "status": "passed",
+      "reportedDurationSeconds": 2.1,
+      "platformNote": null
+    },
+    {
+      "number": 6,
+      "project": "mobile-chromium",
+      "title": "unavailable video, absent photo, failed artwork, cleared lettering and long names stay usable",
+      "status": "passed",
+      "reportedDurationSeconds": 2.6,
+      "platformNote": null
+    },
+    {
+      "number": 7,
+      "project": "chromium",
+      "title": "legacy calligraphy covers also use the inline film rather than a popup",
+      "status": "passed",
+      "reportedDurationSeconds": 2.4,
+      "platformNote": null
+    },
+    {
+      "number": 8,
+      "project": "mobile-chromium",
+      "title": "legacy calligraphy covers also use the inline film rather than a popup",
+      "status": "passed",
+      "reportedDurationSeconds": 2.8,
+      "platformNote": null
+    },
+    {
+      "number": 9,
+      "project": "chromium",
+      "title": "reduced motion skips video, disables effects, and keeps keyboard access",
+      "status": "passed",
+      "reportedDurationSeconds": 1.9,
+      "platformNote": null
+    },
+    {
+      "number": 10,
+      "project": "mobile-chromium",
+      "title": "reduced motion skips video, disables effects, and keeps keyboard access",
+      "status": "passed",
+      "reportedDurationSeconds": 2.1,
+      "platformNote": null
+    },
+    {
+      "number": 11,
+      "project": "chromium",
+      "title": "Studio settings update the same iframe and survive save/reload/published rendering",
+      "status": "passed",
+      "reportedDurationSeconds": 15.3,
+      "platformNote": null
+    },
+    {
+      "number": 12,
+      "project": "mobile-chromium",
+      "title": "Studio settings update the same iframe and survive save/reload/published rendering",
+      "status": "passed",
+      "reportedDurationSeconds": 15.0,
+      "platformNote": null
+    },
+    {
+      "number": 14,
+      "project": "mobile-chromium",
+      "title": "responsive references and scoped accessibility",
+      "status": "passed",
+      "reportedDurationSeconds": 9.5,
+      "platformNote": null
+    },
+    {
+      "number": 13,
+      "project": "chromium",
+      "title": "responsive references and scoped accessibility",
+      "status": "passed",
+      "reportedDurationSeconds": 10.7,
+      "platformNote": null
+    },
+    {
+      "number": 15,
+      "project": "firefox",
+      "title": "catalog: supplied film loads after click, plays inline without a dialog/form, then reveals fixed information",
+      "status": "passed",
+      "reportedDurationSeconds": 6.3,
+      "platformNote": null
+    },
+    {
+      "number": 16,
+      "project": "webkit",
+      "title": "catalog: supplied film loads after click, plays inline without a dialog/form, then reveals fixed information",
+      "status": "passed",
+      "reportedDurationSeconds": 12.1,
+      "platformNote": null
+    },
+    {
+      "number": 17,
+      "project": "firefox",
+      "title": "hosted: authorized protected film completes, errors recover, and guest text stays live",
+      "status": "passed",
+      "reportedDurationSeconds": 7.8,
+      "platformNote": null
+    },
+    {
+      "number": 19,
+      "project": "firefox",
+      "title": "unavailable video, absent photo, failed artwork, cleared lettering and long names stay usable",
+      "status": "passed",
+      "reportedDurationSeconds": 2.2,
+      "platformNote": null
+    },
+    {
+      "number": 20,
+      "project": "firefox",
+      "title": "legacy calligraphy covers also use the inline film rather than a popup",
+      "status": "passed",
+      "reportedDurationSeconds": 2.4,
+      "platformNote": null
+    },
+    {
+      "number": 18,
+      "project": "webkit",
+      "title": "hosted: authorized protected film completes, errors recover, and guest text stays live",
+      "status": "passed",
+      "reportedDurationSeconds": 8.7,
+      "platformNote": "Windows WebKit protected MP4 blob fallback only; native Safari remains unverified"
+    },
+    {
+      "number": 21,
+      "project": "firefox",
+      "title": "reduced motion skips video, disables effects, and keeps keyboard access",
+      "status": "passed",
+      "reportedDurationSeconds": 1.7,
+      "platformNote": null
+    },
+    {
+      "number": 22,
+      "project": "webkit",
+      "title": "unavailable video, absent photo, failed artwork, cleared lettering and long names stay usable",
+      "status": "passed",
+      "reportedDurationSeconds": 3.5,
+      "platformNote": null
+    },
+    {
+      "number": 24,
+      "project": "webkit",
+      "title": "legacy calligraphy covers also use the inline film rather than a popup",
+      "status": "passed",
+      "reportedDurationSeconds": 3.2,
+      "platformNote": "Windows WebKit protected MP4 blob fallback only; native Safari remains unverified"
+    },
+    {
+      "number": 25,
+      "project": "webkit",
+      "title": "reduced motion skips video, disables effects, and keeps keyboard access",
+      "status": "passed",
+      "reportedDurationSeconds": 2.5,
+      "platformNote": null
+    },
+    {
+      "number": 23,
+      "project": "firefox",
+      "title": "Studio settings update the same iframe and survive save/reload/published rendering",
+      "status": "passed",
+      "reportedDurationSeconds": 11.2,
+      "platformNote": null
+    },
+    {
+      "number": 27,
+      "project": "firefox",
+      "title": "responsive references and scoped accessibility",
+      "status": "passed",
+      "reportedDurationSeconds": 13.2,
+      "platformNote": null
+    },
+    {
+      "number": 26,
+      "project": "webkit",
+      "title": "Studio settings update the same iframe and survive save/reload/published rendering",
+      "status": "passed",
+      "reportedDurationSeconds": 25.2,
+      "platformNote": "Windows WebKit protected MP4 blob fallback only; native Safari remains unverified"
+    },
+    {
+      "number": 28,
+      "project": "webkit",
+      "title": "responsive references and scoped accessibility",
+      "status": "passed",
+      "reportedDurationSeconds": 13.1,
+      "platformNote": null
+    }
+  ]
+}

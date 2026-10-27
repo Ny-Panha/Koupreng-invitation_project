@@ -1,0 +1,157 @@
+import { test, expect } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
+import fs from 'node:fs/promises';
+import process from 'node:process';
+import { phase9Fixtures, chooseStudioSection } from './support/phase9Fixtures';
+
+const code = 'royal-garden-cinematic', base = '/templates/royal-garden/v3';
+const portrait = '/templates/silk-heritage/portrait.webp';
+const evidence = '../../docs/design/royal-garden-v3/evidence';
+const intro = { style: 'royal-arch', duration: 2, slides: [{ id: 'portrait', src: portrait, alt: 'Owner portrait', x: 50, y: 40 }] };
+const information = { enabled: true, fixedBackground: true, motionPreset: 'balanced', effects: { butterfly: true }, video: { footer: true, replay: true } };
+const windowsWebKit = info => info.project.name === 'webkit' && process.platform === 'win32';
+async function setup(page, { authorized = false, premium = true, content = {}, guest = null } = {}) {
+  const state = await phase9Fixtures(page, { code, premium, content: { cinematicIntro: intro, informationScene: information, coverBackgroundImage: portrait, messageText: 'Please join our fictional celebration.', messageTitle: 'With our families',
+    gallery: [{ id: 'one', preview: portrait }], schedule: [{ id: 'one', time: '07:00', title: 'Family ceremony', titleEn: 'Family ceremony' }], saveTheDate: { enabled: true, showCountdown: true, showCalendar: true, showAddToCalendar: true },
+    ...(authorized ? { preWeddingVideo: { enabled: true, videoMediaId: 107, posterMediaId: null } } : {}), ...content } });
+  state.events.set(101, { ...state.events.get(101), designJson: JSON.stringify({ coverBackgroundImage: portrait }), groomName: 'Fictional groom', brideName: 'Fictional bride', hostName: 'Fictional groom', partnerName: 'Fictional bride', googleMapUrl: 'https://maps.google.com/?q=Phnom+Penh', enabledSections: JSON.stringify({ gallery: true, schedule: true, countdown: true, rsvp: true, gift: false }) });
+  state.media.push({ id: 107, mediaType: 'PRE_WEDDING_VIDEO', mimeType: 'video/mp4', fileUrl: null, originalFilename: 'Owner film.mp4' });
+  await page.route('**/api/v1/public/invitations/review-celestial?*', route => route.fulfill({ json: { data: { ...state.events.get(101), status: 'PUBLISHED', guest, cinematicOpening: authorized && premium ? { enabled: true, videoMediaId: 107, posterUrl: portrait } : null } } }));
+  await page.route('**/api/v1/public/invitations/review-celestial', route => route.fulfill({ json: { data: { ...state.events.get(101), status: 'PUBLISHED', guest, cinematicOpening: authorized && premium ? { enabled: true, videoMediaId: 107, posterUrl: portrait } : null } } }));
+  await page.route('**/api/v1/invitations/101/media/gallery', route => route.fulfill({ json: { data: [{ id: 501, fileUrl: '/templates/silk-heritage/together.webp', mediaType: 'GALLERY_IMAGE', mimeType: 'image/webp' }] } }));
+  await page.route('**/api/v1/invitations/101/media/107/cinematic-content', async route => route.fulfill({ contentType: 'video/mp4', body: await fs.readFile('public/templates/royal-garden/v3/video/pre-wedding-demo.mp4') }));
+  return state;
+}
+async function capture(page, name, info) {
+  if (['chromium', 'mobile-chromium'].includes(info.project.name)) {
+    await fs.mkdir(evidence, { recursive: true });
+    await page.evaluate(() => document.fonts.ready);
+    const background = page.locator('.rg-information-background img');
+    if (await background.count()) await expect.poll(() => background.evaluate(node => node.naturalWidth)).toBeGreaterThan(0);
+    await page.locator('.rg-royal-arch img, .rg-entrance-lettering img, .rg-information-background img').evaluateAll(items => Promise.all(items.map(image => image.decode().catch(() => {}))));
+    // Retain device scale: forcing CSS scale can switch srcset density during
+    // Chromium's screenshot and capture an undecoded replacement image.
+    await page.screenshot({ path: `${evidence}/${info.project.name}-${name}.png`, animations: 'disabled', scale: 'device' });
+  }
+}
+async function openVideo(page) { await page.locator('.rg-open').click(); await expect(page.locator('.cinematic-inline-stage')).toBeVisible(); }
+async function skip(page) { await page.locator('.cinematic-inline-stage').getByRole('button', { name: 'Skip video', exact: true }).click(); await expect(page.locator('.tpl-royal-garden[data-stage=CONTENT]')).toBeVisible(); }
+
+test('catalog: supplied film loads after click, plays inline without a dialog/form, then reveals fixed information', async ({ page }, info) => {
+  await setup(page); const requests = []; page.on('request', request => { if (request.url().includes('pre-wedding-demo.mp4')) requests.push(request.url()); });
+  await page.goto(`/templates/${code}?lang=en`); await expect(page.locator('[data-stage=COVER]')).toBeVisible();
+  await expect.poll(() => page.locator('.rg-royal-arch img').evaluate(node => node.naturalWidth)).toBeGreaterThan(0);
+  await expect(page.locator('.rg-entrance-photo img')).toHaveAttribute('src', portrait);
+  expect(requests).toHaveLength(0); await capture(page, 'entrance', info);
+  await openVideo(page); await expect(page.getByRole('dialog')).toHaveCount(0); await expect(page.locator('.cinematic-inline-stage form')).toHaveCount(0);
+  const video = page.locator('.cinematic-inline-stage video'); await expect(video).toHaveAttribute('src', `${base}/video/pre-wedding-demo.mp4`);
+  await expect.poll(() => video.evaluate(node => node.currentTime)).toBeGreaterThan(0);
+  await expect(page.locator('.cinematic-film-footer')).toBeVisible(); await capture(page, 'inline-video', info);
+  await page.getByRole('button', { name: 'Enable sound', exact: true }).click(); await expect(video).toHaveJSProperty('muted', false);
+  await page.getByRole('button', { name: 'Mute video', exact: true }).click();
+  await page.getByRole('button', { name: 'Pause video', exact: true }).click(); await expect(video).toHaveJSProperty('paused', true);
+  await page.getByRole('button', { name: 'Replay video', exact: true }).click(); await expect(video).toHaveJSProperty('muted', true);
+  await skip(page); await capture(page, 'information', info);
+  const background = page.locator('.rg-information-background'); const before = await background.boundingBox();
+  await page.evaluate(() => window.scrollTo(0, 850)); const after = await background.boundingBox(); expect(after.y).toBe(before.y);
+  await expect(background).toHaveCSS('position', 'fixed'); await expect(page.locator('#rg-schedule .kp-timeline li')).toHaveCount(9);
+});
+
+test('hosted: authorized protected film completes, errors recover, and guest text stays live', async ({ page }, info) => {
+  const { events } = await setup(page, { authorized: true, guest: { guestName: 'លោក សុខ និងក្រុមគ្រួសារ', guestGroup: 'Family', seatCount: 2 } });
+  let calls = 0; await page.route('**/cinematic-content', async route => { calls++; expect(route.request().method()).toBe('POST'); return route.fulfill({ contentType: 'video/mp4', body: await fs.readFile('public/templates/royal-garden/v3/video/pre-wedding-demo.mp4') }); });
+  await page.goto('/i/review-celestial?token=fictional-guest'); await expect(page.locator('.rg-guest-frame')).toContainText('លោក សុខ');
+  await expect(page.locator('.public-ticket-button')).toBeHidden();
+  if (windowsWebKit(info)) {
+    // This installed Windows WebKit rejects even a standalone valid MP4 blob
+    // (MEDIA_ERR_SRC_NOT_SUPPORTED). Exercise its required error recovery;
+    // do not claim that this verifies protected-film decoding on native Safari.
+    info.annotations.push({ type: 'platform limitation', description: 'Windows WebKit MP4 blob decoding unavailable; verified authorized request and graceful fallback. Native Safari playback remains unverified.' });
+    await page.locator('.rg-open').click(); await expect.poll(() => calls).toBe(1);
+  } else {
+    await openVideo(page); await expect.poll(() => calls).toBe(1);
+    const video = page.locator('.cinematic-inline-stage video'); await expect(video).toHaveAttribute('src', /^blob:/);
+    await expect.poll(() => video.evaluate(node => node.currentTime)).toBeGreaterThan(0);
+    await video.evaluate(node => { node.currentTime = node.duration - .3; return node.play(); });
+  }
+  await expect(page.locator('[data-stage=CONTENT]')).toBeVisible(); await expect(page.locator('.public-ticket-button')).toBeVisible();
+  await expect(page.locator('#rg-invitation')).toContainText('Fictional groom'); await expect(page.locator('#rg-venue a')).toHaveAttribute('href', /maps.google.com/);
+  await page.goto('/i/review-celestial');
+  if (windowsWebKit(info)) await page.locator('.rg-open').click();
+  else { await openVideo(page); await page.locator('.cinematic-inline-stage video').evaluate(node => node.dispatchEvent(new Event('error'))); }
+  await expect(page.locator('[data-stage=CONTENT]')).toBeVisible(); expect(JSON.parse(events.get(101).contentJson).preWeddingVideo).toEqual({ enabled: true, videoMediaId: 107, posterMediaId: null });
+  await capture(page, 'hosted-content', info);
+});
+
+test('unavailable video, absent photo, failed artwork, cleared lettering and long names stay usable', async ({ page }) => {
+  await setup(page, { premium: false, content: { preWeddingVideo: { enabled: true, videoMediaId: 107 }, coverBackgroundImage: '', cinematicIntro: { ...intro, artworkSrc: '', entranceFrame: '/missing-frame.webp' } }, guest: { guestName: 'លោកអ្នក និងក្រុមគ្រួសារ '.repeat(20) } });
+  let calls = 0; page.on('request', request => { if (request.url().includes('cinematic-content') || request.url().includes('pre-wedding-demo.mp4')) calls++; });
+  await page.goto('/i/review-celestial'); await expect(page.locator('.rg-open')).toBeVisible(); await expect(page.locator('.rg-entrance-lettering h1')).toBeVisible();
+  await page.locator('.rg-open').click(); await page.locator('.rg-entrance-skip').click(); await expect(page.locator('[data-stage=CONTENT]')).toBeVisible(); expect(calls).toBe(0);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+});
+
+test('legacy calligraphy covers also use the inline film rather than a popup', async ({ page }, info) => {
+  await setup(page, { authorized: true, content: { cinematicIntro: { ...intro, style: 'golden-calligraphy' } } });
+  await page.goto('/i/review-celestial'); await page.locator('.rg-open').click();
+  if (windowsWebKit(info)) {
+    info.annotations.push({ type: 'platform limitation', description: 'Windows WebKit MP4 blob decoding unavailable; legacy opening verifies safe content fallback.' });
+    await expect(page.locator('[data-stage=CONTENT]')).toBeVisible();
+  } else {
+    await expect(page.locator('.cinematic-inline-stage')).toBeVisible(); await expect(page.getByRole('dialog')).toHaveCount(0);
+    await expect(page.locator('.cinematic-inline-stage form')).toHaveCount(0); await skip(page);
+  }
+});
+
+test('reduced motion skips video, disables effects, and keeps keyboard access', async ({ page }) => {
+  await setup(page, { authorized: true }); await page.emulateMedia({ reducedMotion: 'reduce' });
+  let calls = 0; page.on('request', request => { if (request.url().includes('cinematic-content')) calls++; });
+  await page.goto('/i/review-celestial'); await expect(page.locator('.rg-motion-layer')).toHaveCount(0);
+  await page.locator('.rg-open').focus(); await page.keyboard.press('Enter'); await expect(page.locator('[data-stage=CONTENT]')).toBeVisible(); expect(calls).toBe(0);
+  await expect(page.locator('.rg-motion-layer')).toHaveCount(0); await page.keyboard.press('Tab'); expect(await page.evaluate(() => document.activeElement !== document.body)).toBe(true);
+});
+
+test('Studio settings update the same iframe and survive save/reload/published rendering', async ({ page }, info) => {
+  const { events } = await setup(page, { authorized: true }); await page.setViewportSize({ width: 1440, height: 960 });
+  await page.goto('/app/events/101/invitation'); await expect(page.locator('.invitation-studio')).toBeVisible(); await page.getByRole('button', { name: 'Advanced editor', exact: true }).click();
+  await chooseStudioSection(page, 'mediaOpening', 'Cinematic intro'); await page.getByRole('combobox', { name: 'Opening style', exact: true }).selectOption('royal-arch');
+  await page.getByLabel('Opening button label', { exact: true }).fill('Join our celebration');
+  const frame = page.frameLocator('iframe'); await expect(frame.locator('.rg-open')).toContainText('Join our celebration');
+  const identity = await page.locator('iframe').getAttribute('src');
+  await chooseStudioSection(page, 'designCover', 'Colors & typography'); await page.getByRole('combobox', { name: 'Effect intensity', exact: true }).selectOption('cinematic');
+  await page.getByRole('slider', { name: 'Background shade', exact: true }).fill('0.4');
+  await page.getByLabel('Accent', { exact: true }).fill('#edcd88');
+  await page.getByRole('button', { name: 'Preview information', exact: true }).click(); await expect(frame.locator('[data-stage=CONTENT]')).toBeVisible();
+  await expect(frame.locator('.rg-paper')).toHaveCSS('--rg-information-overlay', '0.4');
+  await expect(frame.locator('.rg-names')).toHaveCSS('color', 'rgb(237, 205, 136)');
+  await expect(frame.locator('.rg-motion-layer i')).toHaveCount(16);
+  const editorAudit = await new AxeBuilder({ page }).include('.studio-royal-scenes').withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze(); expect(editorAudit.violations).toEqual([]);
+  await page.getByRole('button', { name: 'Save', exact: true }).click(); await expect(page.locator('.studio-save-status')).toHaveAttribute('data-phase', 'saved');
+  expect(JSON.parse(events.get(101).contentJson).informationScene).toMatchObject({ motionPreset: 'cinematic', contentOverlay: .4 }); expect(await page.locator('iframe').getAttribute('src')).toBe(identity);
+  await page.reload(); await expect(page.locator('.invitation-studio')).toBeVisible(); await page.getByRole('button', { name: 'Preview video scene', exact: true }).click();
+  if (windowsWebKit(info)) {
+    info.annotations.push({ type: 'platform limitation', description: 'Windows WebKit owner MP4 blob preview verifies fallback; native Safari decoding is unverified.' });
+  } else {
+    await expect(frame.locator('.cinematic-inline-stage')).toBeVisible(); await expect(frame.getByRole('dialog')).toHaveCount(0);
+    await frame.getByRole('button', { name: 'Skip video', exact: true }).click();
+  }
+  await expect(frame.locator('[data-stage=CONTENT]')).toBeVisible();
+  await page.getByRole('button', { name: 'Restart animation', exact: true }).click(); await expect(frame.locator('[data-stage=COVER]')).toBeVisible();
+  await capture(page, 'studio', info);
+  await page.goto('/i/review-celestial'); await expect(page.locator('.rg-open')).toContainText('Join our celebration');
+  if (windowsWebKit(info)) { await page.locator('.rg-open').click(); await expect(page.locator('[data-stage=CONTENT]')).toBeVisible(); }
+  else { await openVideo(page); await skip(page); }
+  await expect(page.locator('.rg-paper')).toHaveCSS('--rg-information-overlay', '0.4');
+});
+
+test('responsive references and scoped accessibility', async ({ page }, info) => {
+  await setup(page); for (const width of [320,375,390,430,512,768,1024,1440]) {
+    await page.setViewportSize({ width, height: 900 }); await page.goto(`/templates/${code}?lang=en`); await expect(page.locator('.rg-royal-arch img')).toBeVisible();
+    const bounds = await page.locator('.rg-open').boundingBox(); expect(bounds.y + bounds.height).toBeLessThan(900);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+    if (info.project.name === 'chromium') await capture(page, `entrance-${width}`, info);
+  }
+  const entrance = await new AxeBuilder({ page }).include('.rg-royal-entrance').withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze(); expect(entrance.violations).toEqual([]);
+  await openVideo(page); const video = await new AxeBuilder({ page }).include('.cinematic-inline-stage').withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze(); expect(video.violations).toEqual([]); await skip(page);
+  const content = await new AxeBuilder({ page }).include('.rg-paper').withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze(); expect(content.violations).toEqual([]);
+});
