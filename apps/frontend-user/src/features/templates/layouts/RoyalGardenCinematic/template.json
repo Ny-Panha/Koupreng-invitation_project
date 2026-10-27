@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "slug": "royal-garden-cinematic",
   "name": "Royal Garden Cinematic · សួនរាជមង្គល",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "category": "WEDDING",
   "cover": {
     "type": "image",
@@ -17,6 +17,14 @@
     "--rg-surface": "#e8dcc4",
     "--rg-border": "#d2b17a",
     "--rg-ink": "#4b361e"
+  },
+  "openingArtwork": {
+    "src": "/templates/royal-garden/golden-calligraphy.webp",
+    "smallSrc": "/templates/royal-garden/golden-calligraphy-960.webp",
+    "objectFit": "contain",
+    "role": "transparent-overlay",
+    "source": "Owner-supplied golden calligraphy artwork",
+    "containsSaveTheDate": true
   },
   "assetSlots": {
     "--asset-hero": "url('/templates/royal-garden/ivory.svg')",
@@ -39,6 +47,7 @@
   ],
   "editable": {
     "cinematicIntro": true,
+    "openingArtwork": ["image", "scale", "position", "animation", "palette"],
     "coverBackground": true,
     "heroPhoto": true,
     "gallery": true,

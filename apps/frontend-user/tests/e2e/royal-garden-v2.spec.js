@@ -7,7 +7,7 @@ const code = 'royal-garden-cinematic';
 const image = '/templates/silk-heritage/portrait.webp', second = '/templates/silk-heritage/together.webp';
 const content = {
   messageText: 'A fictional wedding invitation.', messageTitle: 'With our families',
-  cinematicIntro: { version: 1, duration: 2, slides: [{ id: 'first', src: image, alt: 'First portrait', x: 50, y: 50 }, { id: 'second', src: second, alt: 'Second portrait', x: 50, y: 50 }] },
+  cinematicIntro: { version: 1, style: 'oval', duration: 2, slides: [{ id: 'first', src: image, alt: 'First portrait', x: 50, y: 50 }, { id: 'second', src: second, alt: 'Second portrait', x: 50, y: 50 }] },
   gallery: [{ id: 'a', preview: image }, { id: 'b', preview: second }],
   schedule: [{ id: 'one', time: '07:00', title: 'First ceremony', titleEn: 'First ceremony' }, { id: 'two', time: '08:00', title: 'Second ceremony', titleEn: 'Second ceremony' }],
   saveTheDate: { enabled: true, showCountdown: true, showCalendar: true, showAddToCalendar: true },
@@ -102,7 +102,7 @@ test('E2E-09 language switching keeps authored names and the guest token', async
   const en = { title: 'Our wedding', groomName: 'Sovann', brideName: 'Sophea', messageText: 'Please join us', venueName: 'Venue', venueAddress: 'Phnom Penh' };
   await setup(page, { ...km, schedule: [], gallery: [], cinematicIntro: { enabled: false }, localizedContentV1: { version: 1, km, en, enabledLocales: ['km','en'], defaultLocale: 'km' } });
   await page.goto('/i/review-celestial?token=fictional-guest&lang=km'); await expect(page.locator('.rg-names')).toContainText('សុវណ្ណ');
-  await page.locator('.rg-language select').selectOption('en'); await expect(page.locator('.rg-names')).toContainText('Sovann');
+  await page.getByRole('navigation', { name: 'Invitation language' }).getByRole('button', { name: 'English', exact: true }).click(); await expect(page.locator('.rg-names')).toContainText('Sovann');
   expect(new URL(page.url()).searchParams.get('token')).toBe('fictional-guest');
 });
 test('E2E-10 save and reload retain intro customization', async ({ page }, info) => {

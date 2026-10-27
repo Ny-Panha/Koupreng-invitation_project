@@ -1,5 +1,8 @@
 // Presentation only. Event identity, date and audio stay in canonical fields.
 export const INTRO_STAGES = ['COVER', 'ORNAMENT_REVEAL', 'TITLE_REVEAL', 'PHOTO_SLIDESHOW', 'INVITATION_REVEAL', 'CONTENT'];
+export const DEFAULT_INTRO_ARTWORK = '/templates/royal-garden/golden-calligraphy.webp';
+export const INTRO_PALETTES = ['ivory-royal', 'emerald-gold', 'burgundy-romance'];
+export function introArtwork(intro) { return intro.artworkSrc === undefined ? DEFAULT_INTRO_ARTWORK : intro.artworkSrc; }
 export async function normalizeIntroUpload(file) {
   if (!file || file.size > 5 * 1024 * 1024) throw new Error('Choose a JPEG, PNG or WebP image under 5 MB.');
   const bytes = new Uint8Array(await file.slice(0, 12).arrayBuffer());
@@ -20,7 +23,13 @@ export function safeIntroMedia(value) {
 }
 export function normalizeIntro(value = {}) {
   const input = value && typeof value === 'object' ? value : {};
-  return { version: 1, enabled: input.enabled !== false, style: input.style === 'minimal' ? 'minimal' : 'oval',
+  return { version: 1, enabled: input.enabled !== false, style: ['oval', 'minimal', 'golden-calligraphy'].includes(input.style) ? input.style : 'golden-calligraphy',
+    artworkSrc: input.artworkSrc === undefined ? undefined : safeIntroMedia(input.artworkSrc),
+    artworkAlt: typeof input.artworkAlt === 'string' ? input.artworkAlt.slice(0, 300) : '',
+    artworkScale: bounded(input.artworkScale, .65, 1.2, 1),
+    artworkPosition: ['upper', 'center', 'lower'].includes(input.artworkPosition) ? input.artworkPosition : 'center',
+    animationPreset: ['gentle', 'shimmer', 'still'].includes(input.animationPreset) ? input.animationPreset : 'gentle',
+    palette: INTRO_PALETTES.includes(input.palette) ? input.palette : 'ivory-royal',
     heading: typeof input.heading === 'string' ? input.heading.slice(0, 300) : undefined,
     subtitle: typeof input.subtitle === 'string' ? input.subtitle.slice(0, 500) : undefined,
     slides: Array.isArray(input.slides) ? input.slides.slice(0, 24).map((slide, index) => ({

@@ -1,13 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ArrowDown, ArrowUp, Images, Trash2 } from 'lucide-react';
-import { normalizeIntro, normalizeIntroUpload } from '../../templates/shared/cinematicIntro';
+import { introArtwork, INTRO_PALETTES, normalizeIntro, normalizeIntroUpload } from '../../templates/shared/cinematicIntro';
 
 export default function CinematicIntroEditor({ value, onChange, photos = [], english }) {
   const intro = normalizeIntro(value);
   const [error, setError] = useState('');
   const [reading, setReading] = useState(false);
+  const [readingArtwork, setReadingArtwork] = useState(false);
+  const artworkRequest = useRef(0);
+  useEffect(() => () => { artworkRequest.current++; }, []);
   const t = (en, km) => english ? en : km;
   const set = patch => onChange(previous => ({ ...normalizeIntro(previous), ...patch }));
+  const changeArtwork = patch => { artworkRequest.current++; setReadingArtwork(false); setError(''); set(patch); };
   const slides = intro.slides || [];
   const updateSlide = (index, patch) => onChange(previous => { const current = normalizeIntro(previous); return { ...current, slides: (current.slides || []).map((slide, i) => i === index ? { ...slide, ...patch } : slide) }; });
   const move = (index, delta) => { const next = [...slides]; [next[index], next[index + delta]] = [next[index + delta], next[index]]; set({ slides: next }); };
@@ -23,11 +27,33 @@ export default function CinematicIntroEditor({ value, onChange, photos = [], eng
     } catch { setError(t('Choose a readable JPEG, PNG or WebP image under 5 MB.', 'សូមជ្រើសរើសរូបភាព JPEG, PNG ឬ WebP ដែលអាចអានបាន និងតូចជាង 5 MB។')); }
     finally { setReading(false); }
   }
+  async function replaceArtwork(source) {
+    if (!source) return;
+    const request = ++artworkRequest.current;
+    setReadingArtwork(true); setError('');
+    try {
+      const file = await normalizeIntroUpload(source);
+      const src = await new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.onerror = () => reject(new Error('Could not read artwork')); reader.readAsDataURL(file); });
+      if (request === artworkRequest.current) set({ artworkSrc: src });
+    } catch { if (request === artworkRequest.current) setError(t('Choose a readable JPEG, PNG or WebP artwork under 5 MB. Transparent PNG or WebP is best.', 'សូមជ្រើសរើសរូបភាព JPEG, PNG ឬ WebP ក្រោម 5 MB។ រូបភាព PNG ឬ WebP ដែលមានផ្ទៃថ្លាគឺល្អបំផុត។')); }
+    finally { if (request === artworkRequest.current) setReadingArtwork(false); }
+  }
   return <section className="studio-intro-editor" aria-label={t('Cinematic intro', 'ការបើកធៀបបែបភាពយន្ត')}>
     <p className="studio-intro-lead">{t('Create a quiet ceremonial opening, followed by your own wedding portraits. Names and date follow Event Information.', 'រចនាការបើកធៀបជាមួយរូបភាពមង្គលការរបស់អ្នក។ ឈ្មោះ និងថ្ងៃខែយកតាមព័ត៌មានកម្មវិធី។')}</p>
     <label className="studio-inline-check"><input type="checkbox" checked={intro.enabled} onChange={e => set({ enabled: e.target.checked })} />{t('Enable cinematic intro', 'បើកការបើកធៀបបែបភាពយន្ត')}</label>
-    <label>{t('Opening style', 'រចនាប័ទ្មការបើក')}<select value={intro.style} onChange={e => set({ style: e.target.value })}><option value="oval">{t('Carved ivory oval', 'ស៊ុមពងក្រពើភ្លុក')}</option><option value="minimal">{t('Typography only', 'អក្សរតែប៉ុណ្ណោះ')}</option></select></label>
-    <label>{t('Intro heading', 'ចំណងជើងការបើក')}<input maxLength={300} value={intro.heading ?? ''} placeholder={t('Use invitation title', 'តាមចំណងជើងធៀប')} onChange={e => set({ heading: e.target.value })} /></label>
+    <label>{t('Opening style', 'រចនាប័ទ្មការបើក')}<select value={intro.style} onChange={e => set({ style: e.target.value })}><option value="golden-calligraphy">{t('Golden calligraphy', 'អក្សរផ្ចង់ពណ៌មាស')}</option><option value="oval">{t('Carved ivory oval', 'ស៊ុមពងក្រពើភ្លុក')}</option><option value="minimal">{t('Typography only', 'អក្សរតែប៉ុណ្ណោះ')}</option></select></label>
+    {intro.style === 'golden-calligraphy' && <fieldset className="studio-opening-artwork"><legend>{t('Opening artwork', 'រូបសិល្បៈការបើក')}</legend>
+      {introArtwork(intro) ? <img className="studio-opening-artwork-preview" src={introArtwork(intro)} alt={intro.artworkAlt || t('Golden opening artwork preview', 'មើលរូបសិល្បៈពណ៌មាសជាមុន')} /> : <p>{t('Artwork is cleared. Your names and date still appear as editable text.', 'បានលុបរូបសិល្បៈ។ ឈ្មោះ និងកាលបរិច្ឆេទនៅតែបង្ហាញជាអក្សរដែលអាចកែបាន។')}</p>}
+      <label className="studio-intro-upload">{readingArtwork ? t('Reading artwork…', 'កំពុងអានរូបសិល្បៈ…') : t('Upload opening artwork', 'បញ្ចូលរូបសិល្បៈការបើក')}<input type="file" accept="image/jpeg,image/png,image/webp" disabled={readingArtwork} onChange={e => { replaceArtwork(e.target.files?.[0]); e.target.value = ''; }} /></label>
+      <label>{t('Artwork description', 'ពិពណ៌នារូបសិល្បៈ')}<input maxLength={300} value={intro.artworkAlt} onChange={e => set({ artworkAlt: e.target.value })} /></label>
+      <div className="studio-reorder"><button type="button" onClick={() => changeArtwork({ artworkSrc: '', artworkAlt: '' })}>{t('Remove opening artwork', 'លុបរូបសិល្បៈការបើក')}</button><button type="button" onClick={() => changeArtwork({ artworkSrc: undefined, artworkAlt: '' })}>{t('Use default golden artwork', 'ប្រើរូបសិល្បៈពណ៌មាសដើម')}</button></div>
+      <label>{t('Artwork scale', 'ទំហំរូបសិល្បៈ')}<input type="range" min=".65" max="1.2" step=".05" value={intro.artworkScale} onChange={e => set({ artworkScale: Number(e.target.value) })} /></label>
+      <label>{t('Artwork position', 'ទីតាំងរូបសិល្បៈ')}<select value={intro.artworkPosition} onChange={e => set({ artworkPosition: e.target.value })}><option value="upper">{t('Upper', 'ខាងលើ')}</option><option value="center">{t('Center', 'កណ្ដាល')}</option><option value="lower">{t('Lower', 'ខាងក្រោម')}</option></select></label>
+      <label>{t('Opening animation', 'ចលនាការបើក')}<select value={intro.animationPreset} onChange={e => set({ animationPreset: e.target.value })}><option value="gentle">{t('Gentle butterfly float', 'ចលនាមេអំបៅស្រាល')}</option><option value="shimmer">{t('Soft light sweep', 'ពន្លឺឆ្លុះស្រាល')}</option><option value="still">{t('Still reveal', 'បង្ហាញស្ងប់')}</option></select></label>
+      <p>{t('The supplied artwork already includes Save the Date. Portraits show your live names and date without repeating that wording. Replacements use the existing image upload when saved.', 'រូបសិល្បៈមានពាក្យ Save the Date រួចហើយ។ រូបថតបង្ហាញឈ្មោះ និងកាលបរិច្ឆេទដោយមិនសរសេរពាក្យនេះម្ដងទៀត។')}</p>
+    </fieldset>}
+    {intro.style === 'golden-calligraphy' && <label>{t('Opening palette', 'ពណ៌ការបើក')}<select value={intro.palette} onChange={e => set({ palette: e.target.value })}>{INTRO_PALETTES.map((key, i) => <option key={key} value={key}>{t(['Ivory Royal', 'Emerald Gold', 'Burgundy Romance'][i], ['ភ្លុករាជ', 'បៃតងនិងមាស', 'ក្រហមប៊ឺហ្គុនឌី'][i])}</option>)}</select></label>}
+    {(intro.style !== 'golden-calligraphy' || !introArtwork(intro)) && <label>{t('Intro heading', 'ចំណងជើងការបើក')}<input maxLength={300} value={intro.heading ?? ''} placeholder={t('Use invitation title', 'តាមចំណងជើងធៀប')} onChange={e => set({ heading: e.target.value })} /></label>}
     <label>{t('Intro subtitle', 'ចំណងជើងរង')}<input maxLength={500} value={intro.subtitle ?? ''} onChange={e => set({ subtitle: e.target.value })} /></label>
     <p className="studio-intro-help">{t('Cover artwork and video use the existing Design & Cover upload. Music uses the Music section.', 'រូបភាព និងវីដេអូក្របធៀបប្រើផ្នែករចនា និងក្របធៀប។ តន្ត្រីប្រើផ្នែកតន្ត្រី។')}</p>
     <div className="studio-intro-media-heading"><h3><Images size={18} aria-hidden="true" />{t('Portrait sequence', 'លំដាប់រូបភាព')}</h3><span>{slides.length} / 24</span></div>
@@ -47,6 +73,6 @@ export default function CinematicIntroEditor({ value, onChange, photos = [], eng
       <label>{t('Portrait shade', 'ស្រមោលរូបភាព')}<input type="range" min="0" max=".75" step=".05" value={intro.overlay} onChange={e => set({ overlay: Number(e.target.value) })} /></label>
       <label>{t('Text position', 'ទីតាំងអក្សរ')}<select value={intro.textPosition} onChange={e => set({ textPosition: e.target.value })}><option value="bottom">{t('Lower portrait', 'ខាងក្រោមរូបភាព')}</option><option value="center">{t('Center', 'កណ្ដាល')}</option></select></label>
     </div>
-    {[['showSaveTheDate', 'Show Save the Date', 'បង្ហាញ Save the Date'], ['music', 'Start selected music when opened', 'ចាប់ផ្ដើមតន្ត្រីនៅពេលបើក'], ['reducedMotion', 'Preview with reduced motion', 'មើលជាមុនដោយកាត់បន្ថយចលនា']].map(([key, en, km]) => <label className="studio-inline-check" key={key}><input type="checkbox" checked={intro[key]} onChange={e => set({ [key]: e.target.checked })} />{t(en, km)}</label>)}
+    {[...((intro.style !== 'golden-calligraphy' || !introArtwork(intro)) ? [['showSaveTheDate', 'Show Save the Date', 'បង្ហាញ Save the Date']] : []), ['music', 'Start selected music when opened', 'ចាប់ផ្ដើមតន្ត្រីនៅពេលបើក'], ['reducedMotion', 'Preview with reduced motion', 'មើលជាមុនដោយកាត់បន្ថយចលនា']].map(([key, en, km]) => <label className="studio-inline-check" key={key}><input type="checkbox" checked={intro[key]} onChange={e => set({ [key]: e.target.checked })} />{t(en, km)}</label>)}
   </section>;
 }
