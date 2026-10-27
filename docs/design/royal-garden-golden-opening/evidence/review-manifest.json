@@ -1,0 +1,187 @@
+{
+  "reportDate": "2026-10-27",
+  "baseMain": "556101b4ac1cc79ecb95dbfc733afdbcd0a6c92c",
+  "branch": "feature/royal-garden-golden-calligraphy",
+  "screenshots": [
+    {
+      "path": "chromium-burgundy-romance-cover.png",
+      "bytes": 338732,
+      "sha256": "ce3bfe7ae589014a886477fdf75307e07c1b5f2106b57f7ff1fbdf5a5eed73e9"
+    },
+    {
+      "path": "chromium-burgundy-romance-lettering.png",
+      "bytes": 336904,
+      "sha256": "8b4a00ba2186c6a31bdd9267d109ab6fc6ec1e8ceb43fa66f694dafb682ed8b1"
+    },
+    {
+      "path": "chromium-burgundy-romance-names.png",
+      "bytes": 336912,
+      "sha256": "e32a8286869d11561288d473b2c59c8510acddff4213854ca9769ab23d858456"
+    },
+    {
+      "path": "chromium-burgundy-romance-portrait.png",
+      "bytes": 545345,
+      "sha256": "44c25ea360836eae45e14ac6dab091a07707918e62c7585a6ab4bb85f9d9128c"
+    },
+    {
+      "path": "chromium-comparison-golden.png",
+      "bytes": 572441,
+      "sha256": "f21df285f79036611ae53480e86a008a51e80de634d8d4638e6c59401bf6543e"
+    },
+    {
+      "path": "chromium-comparison-oval.png",
+      "bytes": 238070,
+      "sha256": "75702e16c87c7f98b69ade4aafd83d734b855c2bb1a11a29dae43d07ad463074"
+    },
+    {
+      "path": "chromium-emerald-gold-cover.png",
+      "bytes": 343162,
+      "sha256": "c7b42784735068bef41f3e462868ab39e29aa887c9d4f5f09d592789003c1bc6"
+    },
+    {
+      "path": "chromium-emerald-gold-lettering.png",
+      "bytes": 341432,
+      "sha256": "b45f9d814890d7f9fe1f73fc639782f2202baf12c553b7696382469dd28e1f3b"
+    },
+    {
+      "path": "chromium-emerald-gold-names.png",
+      "bytes": 344888,
+      "sha256": "4fa90dcf6322b5b4c594de6d69a4bfe8cef4f8e840ac53666d48ea44392fcd02"
+    },
+    {
+      "path": "chromium-emerald-gold-portrait.png",
+      "bytes": 545354,
+      "sha256": "b0a396d234df010d7954d7f848f614eaa5652e992d69226d29b29d0204a98a1a"
+    },
+    {
+      "path": "chromium-ivory-royal-cover.png",
+      "bytes": 108985,
+      "sha256": "97aa9d697e922f45aa6b5ac0e535ab5226e23e519171ee36b9a4c2f6b1b442f5"
+    },
+    {
+      "path": "chromium-ivory-royal-lettering.png",
+      "bytes": 342266,
+      "sha256": "9d5d71027bb255b905406815bed2d70cfff2f150ac5768cb6aac1e6771af3907"
+    },
+    {
+      "path": "chromium-ivory-royal-names.png",
+      "bytes": 344028,
+      "sha256": "4523f49bd5719ba6f8e3d9af2716f9539c7b2aac4ab3503842c932749a74cb61"
+    },
+    {
+      "path": "chromium-ivory-royal-portrait.png",
+      "bytes": 545491,
+      "sha256": "8c7d2217fec6edd78acbd7f520cf81cd886ffe2ebb925b643a447d5080c4520c"
+    },
+    {
+      "path": "chromium-natural-names.png",
+      "bytes": 329512,
+      "sha256": "c2e369e6e356acfff7df9256af02845a00743d8fc0f9ca36f056bf5bfb449c15"
+    },
+    {
+      "path": "chromium-restored-default.png",
+      "bytes": 289708,
+      "sha256": "8de8d9cd4588062901349ae0a23094359b5023e5ac7f335904e912e34e969324"
+    },
+    {
+      "path": "chromium-studio-artwork.png",
+      "bytes": 206123,
+      "sha256": "0690566a6f6e06e66b0f4b3d0c627934089f0dae1f7c1f012fe40755221b4d5b"
+    },
+    {
+      "path": "chromium-studio-controls.png",
+      "bytes": 207191,
+      "sha256": "3e79ab730cfd93c1fbc7c7c445073b0f8c5868e9977e09bc0bc940047410c6cb"
+    },
+    {
+      "path": "mobile-chromium-burgundy-romance-cover.png",
+      "bytes": 900742,
+      "sha256": "a0fdfe90764d61810996366f850aab0d386514211c86e4f0f9ee02543e3e2a09"
+    },
+    {
+      "path": "mobile-chromium-burgundy-romance-lettering.png",
+      "bytes": 898298,
+      "sha256": "2885d9a6a52efb5436f529c7bbd52658fe656a8aa83416fe7281fa0ae1f2f238"
+    },
+    {
+      "path": "mobile-chromium-burgundy-romance-names.png",
+      "bytes": 889998,
+      "sha256": "82b4388884efa3c2a10fdfa93cc6448b4b349a7ce2b1acf5cf1bd8dd0a6c6fa0"
+    },
+    {
+      "path": "mobile-chromium-burgundy-romance-portrait.png",
+      "bytes": 1702270,
+      "sha256": "8ea32f3dfcaf172b9ced8cdbdda6767deca3f2e1ea8f338a221c0f9b8d5bc5bb"
+    },
+    {
+      "path": "mobile-chromium-comparison-golden.png",
+      "bytes": 1605732,
+      "sha256": "e168023a87ea5675edf735fbe6e557224db0df2d4fd0a4c7cac20eb7011483cb"
+    },
+    {
+      "path": "mobile-chromium-comparison-oval.png",
+      "bytes": 700480,
+      "sha256": "3218981254e216bf7d6ea97914dcf5352ba0810bd252b92e14b439c5fef31326"
+    },
+    {
+      "path": "mobile-chromium-emerald-gold-cover.png",
+      "bytes": 904463,
+      "sha256": "01aa4669912214fd7cefedf10006ed518f183d576a131fbc39750b1e47ebd087"
+    },
+    {
+      "path": "mobile-chromium-emerald-gold-lettering.png",
+      "bytes": 902700,
+      "sha256": "260af50844ae11f48e405bfbb780e8d197604c843dc584138fd4d9cb00046182"
+    },
+    {
+      "path": "mobile-chromium-emerald-gold-names.png",
+      "bytes": 898375,
+      "sha256": "8fc021e5dbe39d1463e7d60715d4bcdf3a28fb85715f888c70ab7a42612bfeb2"
+    },
+    {
+      "path": "mobile-chromium-emerald-gold-portrait.png",
+      "bytes": 1702167,
+      "sha256": "6bbd876be82504c3b05a8576391dd768e6a840ab03b60c6eb91f4c146fb0244f"
+    },
+    {
+      "path": "mobile-chromium-ivory-royal-cover.png",
+      "bytes": 912217,
+      "sha256": "a99c2dc2ca51d5ebc315dc5ae76154a9476e53e0c3af317915f637eed6f3e285"
+    },
+    {
+      "path": "mobile-chromium-ivory-royal-lettering.png",
+      "bytes": 905691,
+      "sha256": "08152d61a3c301a46be21442d413188eec536ae6687d3ed065784e38dcc6bc11"
+    },
+    {
+      "path": "mobile-chromium-ivory-royal-names.png",
+      "bytes": 904416,
+      "sha256": "7f404d8586ce57debf3b87929e2575caa4399bd539f311590fff284550b740c2"
+    },
+    {
+      "path": "mobile-chromium-ivory-royal-portrait.png",
+      "bytes": 1703349,
+      "sha256": "467a3bbbf015458d0003b4ba2d958224988366461576337c2f6ae8f623d96c25"
+    },
+    {
+      "path": "mobile-chromium-natural-names.png",
+      "bytes": 850771,
+      "sha256": "db641f9b2cbe3a6dfed493dcf2546642403f392ec27d2b6550c02567a355d295"
+    },
+    {
+      "path": "mobile-chromium-restored-default.png",
+      "bytes": 782627,
+      "sha256": "71f0290693aefcf6052c460a7ff84208909f71f570b1fd324ee3de2ca8e481e0"
+    },
+    {
+      "path": "mobile-chromium-studio-artwork.png",
+      "bytes": 891456,
+      "sha256": "e68dc34abea4225ebaf8dedb838f0f93bb9a8aee54f2e7f72c229da687abc889"
+    },
+    {
+      "path": "mobile-chromium-studio-controls.png",
+      "bytes": 873661,
+      "sha256": "5eda33e6adae3d274ba29af6de1805ac4cf30e83040c64c219865b59684c3821"
+    }
+  ]
+}

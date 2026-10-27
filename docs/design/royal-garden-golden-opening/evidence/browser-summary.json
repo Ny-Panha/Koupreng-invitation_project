@@ -1,0 +1,273 @@
+{
+  "suite": "golden-opening",
+  "stats": {
+    "startTime": "2026-10-27T02:11:27.559Z",
+    "duration": 222889.233,
+    "expected": 36,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "projects": {
+    "chromium": [
+      {
+        "title": "ivory-royal: independent artwork, reveal, readable text and portrait handoff",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "emerald-gold: independent artwork, reveal, readable text and portrait handoff",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "burgundy-romance: independent artwork, reveal, readable text and portrait handoff",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "owner artwork upload, replacement, clear and default restore survive save/reload and public rendering",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "keyboard skip, reduced motion, stable live preview and responsive canvas",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "controlled oval and golden comparisons preserve owner cover media",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "owner video remains a muted background and reduced motion uses its poster",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "large artwork leaves room for Skip and text on short and narrow screens",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "real-time title reveal paints editable names without a mocked animation clock",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      }
+    ],
+    "mobile-chromium": [
+      {
+        "title": "ivory-royal: independent artwork, reveal, readable text and portrait handoff",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "emerald-gold: independent artwork, reveal, readable text and portrait handoff",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "burgundy-romance: independent artwork, reveal, readable text and portrait handoff",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "owner artwork upload, replacement, clear and default restore survive save/reload and public rendering",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "keyboard skip, reduced motion, stable live preview and responsive canvas",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "controlled oval and golden comparisons preserve owner cover media",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "owner video remains a muted background and reduced motion uses its poster",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "large artwork leaves room for Skip and text on short and narrow screens",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "real-time title reveal paints editable names without a mocked animation clock",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      }
+    ],
+    "firefox": [
+      {
+        "title": "ivory-royal: independent artwork, reveal, readable text and portrait handoff",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "emerald-gold: independent artwork, reveal, readable text and portrait handoff",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "burgundy-romance: independent artwork, reveal, readable text and portrait handoff",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "owner artwork upload, replacement, clear and default restore survive save/reload and public rendering",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "keyboard skip, reduced motion, stable live preview and responsive canvas",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "controlled oval and golden comparisons preserve owner cover media",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "owner video remains a muted background and reduced motion uses its poster",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "large artwork leaves room for Skip and text on short and narrow screens",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "real-time title reveal paints editable names without a mocked animation clock",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      }
+    ],
+    "webkit": [
+      {
+        "title": "ivory-royal: independent artwork, reveal, readable text and portrait handoff",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "emerald-gold: independent artwork, reveal, readable text and portrait handoff",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "burgundy-romance: independent artwork, reveal, readable text and portrait handoff",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "owner artwork upload, replacement, clear and default restore survive save/reload and public rendering",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "keyboard skip, reduced motion, stable live preview and responsive canvas",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "controlled oval and golden comparisons preserve owner cover media",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "owner video remains a muted background and reduced motion uses its poster",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "large artwork leaves room for Skip and text on short and narrow screens",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      },
+      {
+        "title": "real-time title reveal paints editable names without a mocked animation clock",
+        "status": "expected",
+        "attempts": [
+          "passed"
+        ]
+      }
+    ]
+  }
+}
