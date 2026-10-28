@@ -34,6 +34,33 @@ import static org.mockito.Mockito.never;
 class RsvpServiceTests {
 
     @Test
+    void publicWishOverloadsNeverReadPrivateMessagesEvenWithGuestAccess() {
+        Fixture fixture = fixture();
+        assertEquals(List.of(), fixture.service.publicWishes("wedding"));
+        assertEquals(List.of(), fixture.service.publicWishes("wedding", "access", "guest"));
+        assertEquals(List.of(), fixture.service.publicWishes("wedding", "guest"));
+        verify(fixture.invitationService).requirePublishedInvitationForRsvp("wedding", false);
+        verify(fixture.invitationService).requirePublishedInvitationForRsvp("wedding", false, "access", "guest");
+        verify(fixture.invitationService).requirePublicInvitationForView("wedding", "guest");
+        verify(fixture.rsvpRepository, never()).findByInvitationIdAndMessageIsNotNullOrderByRespondedAtDesc(any());
+        verify(fixture.rsvpRepository, never()).findByInvitationIdOrderByRespondedAtDesc(any());
+    }
+
+    @Test
+    void privateWishesRemainAvailableToAuthorizedOrganizers() {
+        Fixture fixture = fixture();
+        Authentication organizer = mock(Authentication.class);
+        Rsvp rsvp = new Rsvp();
+        rsvp.setId(88L);
+        rsvp.setGuest(guest(invitation(null)));
+        rsvp.setMessage("Private family message");
+        when(fixture.rsvpRepository.findByInvitationIdAndMessageIsNotNullOrderByRespondedAtDesc(10L)).thenReturn(List.of(rsvp));
+        var wishes = fixture.service.wishes(organizer, 10L);
+        assertEquals("Private family message", wishes.getFirst().getMessage());
+        verify(fixture.invitationService).requireEventPermission(organizer, 10L, Permission.MANAGE_RSVP);
+    }
+
+    @Test
     void wishModerationUsesTextOnlyUpdateInsteadOfDeletingAttendance() {
         Fixture fixture = fixture();
         Authentication authentication = mock(Authentication.class);
