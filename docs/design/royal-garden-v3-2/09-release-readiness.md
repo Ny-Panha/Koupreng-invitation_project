@@ -1,0 +1,15 @@
+# Release readiness
+
+Delivered P0 calendar/program/export and P1 dress-code/guest-service synchronization on `main`, preserving the cinematic architecture and original assets. Exact test, visual and performance evidence is linked in the numbered reports. Code is suitable for review with the limitations below; this is not a production-deployment authorization or a claim that every aspirational feature shipped.
+
+Implemented: Royal multi-day calendar, four responsive countdown rings, date selection and program anchors; shared enabled-day projection; natural localized time labels; main/safe multi-event ICS export; full existing dress editor and renderer; preserved USD/KHR gift labels, recipient details, clipboard fallback and QR enlargement; empty map/section guards; a compact accessible ticket action; canonical clearing/order fixes; bilingual dress-style preservation and public translation readiness; English closing-letter synchronization; legacy day/extension compatibility; server-enforced RSVP-message privacy with organizer access retained.
+
+Reused: existing date/time/countdown utilities, schedule model/editor, API persistence, public invitation/guest access, RSVP submission/editing and QR passes, media validation, protected pre-wedding-video provider, one music controller, original opening and fixed information frame. No new endpoint, database migration, payment state or production configuration was introduced.
+
+Deferred: optional Royal FAQ, love story and wedding party renderers. Their capability flags remain false and stored records survive template selection/save/reload. The generic couple-photo capability remains false because the cover editor already has an independent working meaning. Per-day RSVP requires a separately designed backend attendance contract and is deferred.
+
+Release limitations: the throttled mobile LCP remains above 2.5s (actual before/after values in `06-performance-report.md`); real MySQL-backed Studio publication and conditional integration suites were not verified; native Safari/iOS remains unverified. These are explicit follow-up gates before claiming unrestricted production readiness. Public RSVP messages now remain private across templates; organizers retain authorized access.
+
+Commits are logical and pushed normally to `origin/main`; the final response supplies the verified remote SHA, avoiding a self-referential commit hash in this document. No branch/PR was created, no history was reset or force-pushed, and no production deployment, container restart or DNS change was made. Full-size generated captures remain local; only compact review images and measured JSON evidence are committed.
+
+[Complete changed-file manifest](evidence/changed-files.txt). Main implementation areas: Royal layout/calendar/dress/gift components and scoped CSS; shared program/date/calendar export utilities; template capabilities/content projection; Studio dress controls and defaults; draft serialization; public RSVP/ticket presentation; backend `RsvpService` privacy and tests; focused Vitest/Playwright coverage and reproducible QA scripts. Original production artwork files are unchanged.

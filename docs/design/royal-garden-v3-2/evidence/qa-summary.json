@@ -1,0 +1,922 @@
+{
+  "note": "Latest result per project/file/title across recorded runs; not one monolithic invocation.",
+  "counts": {
+    "passed": 89,
+    "skipped": 3
+  },
+  "runs": [
+    {
+      "source": "browser-regression-results.json",
+      "stats": {
+        "startTime": "2026-10-28T01:33:19.705Z",
+        "duration": 1600257.092,
+        "expected": 84,
+        "skipped": 3,
+        "unexpected": 1,
+        "flaky": 0
+      }
+    },
+    {
+      "source": "browser-release-results.json",
+      "stats": {
+        "startTime": "2026-10-28T02:01:52.635Z",
+        "duration": 106017.467,
+        "expected": 25,
+        "skipped": 3,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "source": "browser-results.json",
+      "stats": {
+        "startTime": "2026-10-28T02:09:21.610Z",
+        "duration": 12679.679999999998,
+        "expected": 4,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    }
+  ],
+  "cases": [
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "catalog: supplied film loads after click, plays inline without a dialog/form, then reveals fixed information",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 5732,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "hosted: authorized protected film completes, errors recover, and guest text stays live",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 8658,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "unavailable video, absent photo, failed artwork, cleared lettering and long names stay usable",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 2859,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "legacy calligraphy covers also use the inline film rather than a popup",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 3268,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "reduced motion skips video, disables effects, and keeps keyboard access",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1899,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "Studio settings update the same iframe and survive save/reload/published rendering",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 20067,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "refinement: new transparent foreground, shadow-free artwork control and larger inner scroll stay inside the frame",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 20155,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "responsive references and scoped accessibility",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 19303,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "refinement: lower film lettering, live date and two separated top controls across responsive canvases",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 20173,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "repair: short phones retain the complete artwork, safe portrait window and separate video footer",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 19716,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "repair: real public section contracts retain gift, private wishes and RSVP within the same shell",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 6135,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "critical: language changes preserve the active film, authorized guest data and private RSVP wording",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 5752,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "critical: immersive media and one inner scroll preserve the complete frame and reachable ending",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 4386,
+      "source": "browser-release-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "compatibility: saved fixed-frame opt-out keeps the hosted ending reachable",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 3775,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "soundtrack: one real song continues through locked video, language, duplicate completion and information",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 6520,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "soundtrack: denied playback is retryable during video and guest-paused music stays paused after ended",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 5315,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "catalog: supplied film loads after click, plays inline without a dialog/form, then reveals fixed information",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 10395,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "hosted: authorized protected film completes, errors recover, and guest text stays live",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 13997,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "unavailable video, absent photo, failed artwork, cleared lettering and long names stay usable",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 2662,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "legacy calligraphy covers also use the inline film rather than a popup",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 3250,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "reduced motion skips video, disables effects, and keeps keyboard access",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 3365,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "Studio settings update the same iframe and survive save/reload/published rendering",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 26545,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "refinement: new transparent foreground, shadow-free artwork control and larger inner scroll stay inside the frame",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 35735,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "responsive references and scoped accessibility",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 19352,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "refinement: lower film lettering, live date and two separated top controls across responsive canvases",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 23098,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "repair: short phones retain the complete artwork, safe portrait window and separate video footer",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 30494,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "repair: real public section contracts retain gift, private wishes and RSVP within the same shell",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 5941,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "critical: language changes preserve the active film, authorized guest data and private RSVP wording",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 6525,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "critical: immersive media and one inner scroll preserve the complete frame and reachable ending",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 5083,
+      "source": "browser-release-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "compatibility: saved fixed-frame opt-out keeps the hosted ending reachable",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 4824,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "soundtrack: one real song continues through locked video, language, duplicate completion and information",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 7482,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "soundtrack: denied playback is retryable during video and guest-paused music stays paused after ended",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 5715,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "catalog: supplied film loads after click, plays inline without a dialog/form, then reveals fixed information",
+      "project": "firefox",
+      "status": "passed",
+      "durationMs": 11611,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "hosted: authorized protected film completes, errors recover, and guest text stays live",
+      "project": "firefox",
+      "status": "passed",
+      "durationMs": 13552,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "unavailable video, absent photo, failed artwork, cleared lettering and long names stay usable",
+      "project": "firefox",
+      "status": "passed",
+      "durationMs": 3461,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "legacy calligraphy covers also use the inline film rather than a popup",
+      "project": "firefox",
+      "status": "passed",
+      "durationMs": 4622,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "reduced motion skips video, disables effects, and keeps keyboard access",
+      "project": "firefox",
+      "status": "passed",
+      "durationMs": 3030,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "Studio settings update the same iframe and survive save/reload/published rendering",
+      "project": "firefox",
+      "status": "passed",
+      "durationMs": 33754,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "refinement: new transparent foreground, shadow-free artwork control and larger inner scroll stay inside the frame",
+      "project": "firefox",
+      "status": "passed",
+      "durationMs": 23221,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "responsive references and scoped accessibility",
+      "project": "firefox",
+      "status": "passed",
+      "durationMs": 26175,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "refinement: lower film lettering, live date and two separated top controls across responsive canvases",
+      "project": "firefox",
+      "status": "passed",
+      "durationMs": 19527,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "repair: short phones retain the complete artwork, safe portrait window and separate video footer",
+      "project": "firefox",
+      "status": "passed",
+      "durationMs": 13337,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "repair: real public section contracts retain gift, private wishes and RSVP within the same shell",
+      "project": "firefox",
+      "status": "passed",
+      "durationMs": 2169,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "critical: language changes preserve the active film, authorized guest data and private RSVP wording",
+      "project": "firefox",
+      "status": "passed",
+      "durationMs": 4581,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "critical: immersive media and one inner scroll preserve the complete frame and reachable ending",
+      "project": "firefox",
+      "status": "passed",
+      "durationMs": 5466,
+      "source": "browser-release-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "compatibility: saved fixed-frame opt-out keeps the hosted ending reachable",
+      "project": "firefox",
+      "status": "passed",
+      "durationMs": 2911,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "soundtrack: one real song continues through locked video, language, duplicate completion and information",
+      "project": "firefox",
+      "status": "passed",
+      "durationMs": 6683,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "soundtrack: denied playback is retryable during video and guest-paused music stays paused after ended",
+      "project": "firefox",
+      "status": "passed",
+      "durationMs": 5290,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "catalog: supplied film loads after click, plays inline without a dialog/form, then reveals fixed information",
+      "project": "webkit",
+      "status": "passed",
+      "durationMs": 12955,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "hosted: authorized protected film completes, errors recover, and guest text stays live",
+      "project": "webkit",
+      "status": "passed",
+      "durationMs": 11431,
+      "source": "browser-regression-results.json",
+      "annotations": [
+        {
+          "type": "platform limitation",
+          "description": "Windows WebKit MP4 blob decoding unavailable; verified authorized request and graceful fallback. Native Safari playback remains unverified."
+        }
+      ]
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "unavailable video, absent photo, failed artwork, cleared lettering and long names stay usable",
+      "project": "webkit",
+      "status": "passed",
+      "durationMs": 3528,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "legacy calligraphy covers also use the inline film rather than a popup",
+      "project": "webkit",
+      "status": "passed",
+      "durationMs": 5481,
+      "source": "browser-regression-results.json",
+      "annotations": [
+        {
+          "type": "platform limitation",
+          "description": "Windows WebKit MP4 blob decoding unavailable; legacy opening verifies safe content fallback."
+        }
+      ]
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "reduced motion skips video, disables effects, and keeps keyboard access",
+      "project": "webkit",
+      "status": "passed",
+      "durationMs": 2315,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "Studio settings update the same iframe and survive save/reload/published rendering",
+      "project": "webkit",
+      "status": "passed",
+      "durationMs": 38741,
+      "source": "browser-regression-results.json",
+      "annotations": [
+        {
+          "type": "platform limitation",
+          "description": "Windows WebKit owner MP4 blob preview verifies fallback; native Safari decoding is unverified."
+        }
+      ]
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "refinement: new transparent foreground, shadow-free artwork control and larger inner scroll stay inside the frame",
+      "project": "webkit",
+      "status": "passed",
+      "durationMs": 42094,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "responsive references and scoped accessibility",
+      "project": "webkit",
+      "status": "passed",
+      "durationMs": 28422,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "refinement: lower film lettering, live date and two separated top controls across responsive canvases",
+      "project": "webkit",
+      "status": "passed",
+      "durationMs": 29414,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "repair: short phones retain the complete artwork, safe portrait window and separate video footer",
+      "project": "webkit",
+      "status": "passed",
+      "durationMs": 19084,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "repair: real public section contracts retain gift, private wishes and RSVP within the same shell",
+      "project": "webkit",
+      "status": "passed",
+      "durationMs": 2296,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "critical: language changes preserve the active film, authorized guest data and private RSVP wording",
+      "project": "webkit",
+      "status": "passed",
+      "durationMs": 5342,
+      "source": "browser-regression-results.json",
+      "annotations": [
+        {
+          "type": "platform limitation",
+          "description": "Windows WebKit protected MP4 blob path tests safe fallback; native Safari still needs device verification."
+        }
+      ]
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "critical: immersive media and one inner scroll preserve the complete frame and reachable ending",
+      "project": "webkit",
+      "status": "passed",
+      "durationMs": 6180,
+      "source": "browser-release-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "compatibility: saved fixed-frame opt-out keeps the hosted ending reachable",
+      "project": "webkit",
+      "status": "passed",
+      "durationMs": 2982,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "soundtrack: one real song continues through locked video, language, duplicate completion and information",
+      "project": "webkit",
+      "status": "passed",
+      "durationMs": 5044,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v3.spec.js",
+      "title": "soundtrack: denied playback is retryable during video and guest-paused music stays paused after ended",
+      "project": "webkit",
+      "status": "passed",
+      "durationMs": 5593,
+      "source": "browser-regression-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32-01–25: Studio edits canonical dates, two program days and dress code through preview, save, reload and publication",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 16842,
+      "source": "browser-release-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32-09–14,19–20: selected days, program navigation, localized controls and export share the saved program",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 3378,
+      "source": "browser-release-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32-26–29: gift currency/enlargement and real RSVP form keep private wishes out of public content",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 3790,
+      "source": "browser-release-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32-30–34: fixed frame and all enabled sections fit nine responsive viewports; capture real browser evidence",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 13797,
+      "source": "browser-release-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32: Khmer authored content and numerals remain readable with the same machine dates",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1801,
+      "source": "browser-release-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32: new guest sections pass scoped WCAG checks and empty optional destinations stay out of navigation",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 5232,
+      "source": "browser-release-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32-01–25: Studio edits canonical dates, two program days and dress code through preview, save, reload and publication",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 10394,
+      "source": "browser-release-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32-09–14,19–20: selected days, program navigation, localized controls and export share the saved program",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 3357,
+      "source": "browser-release-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32-26–29: gift currency/enlargement and real RSVP form keep private wishes out of public content",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 4287,
+      "source": "browser-release-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32-30–34: fixed frame and all enabled sections fit nine responsive viewports; capture real browser evidence",
+      "project": "mobile-chromium",
+      "status": "skipped",
+      "durationMs": 81,
+      "source": "browser-release-results.json",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Nine viewport evidence uses Chromium; functional cases run in every engine.",
+          "location": {
+            "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\royal-garden-v32.spec.js",
+            "line": 124,
+            "column": 8
+          }
+        }
+      ]
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32: Khmer authored content and numerals remain readable with the same machine dates",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 1607,
+      "source": "browser-release-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32: new guest sections pass scoped WCAG checks and empty optional destinations stay out of navigation",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 5269,
+      "source": "browser-release-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32-01–25: Studio edits canonical dates, two program days and dress code through preview, save, reload and publication",
+      "project": "firefox",
+      "status": "passed",
+      "durationMs": 11525,
+      "source": "browser-release-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32-09–14,19–20: selected days, program navigation, localized controls and export share the saved program",
+      "project": "firefox",
+      "status": "passed",
+      "durationMs": 2901,
+      "source": "browser-release-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32-26–29: gift currency/enlargement and real RSVP form keep private wishes out of public content",
+      "project": "firefox",
+      "status": "passed",
+      "durationMs": 4257,
+      "source": "browser-release-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32-30–34: fixed frame and all enabled sections fit nine responsive viewports; capture real browser evidence",
+      "project": "firefox",
+      "status": "skipped",
+      "durationMs": 162,
+      "source": "browser-release-results.json",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Nine viewport evidence uses Chromium; functional cases run in every engine.",
+          "location": {
+            "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\royal-garden-v32.spec.js",
+            "line": 124,
+            "column": 8
+          }
+        }
+      ]
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32: Khmer authored content and numerals remain readable with the same machine dates",
+      "project": "firefox",
+      "status": "passed",
+      "durationMs": 1701,
+      "source": "browser-release-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32: new guest sections pass scoped WCAG checks and empty optional destinations stay out of navigation",
+      "project": "firefox",
+      "status": "passed",
+      "durationMs": 5102,
+      "source": "browser-release-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32-01–25: Studio edits canonical dates, two program days and dress code through preview, save, reload and publication",
+      "project": "webkit",
+      "status": "passed",
+      "durationMs": 32700,
+      "source": "browser-release-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32-09–14,19–20: selected days, program navigation, localized controls and export share the saved program",
+      "project": "webkit",
+      "status": "passed",
+      "durationMs": 4735,
+      "source": "browser-release-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32-26–29: gift currency/enlargement and real RSVP form keep private wishes out of public content",
+      "project": "webkit",
+      "status": "passed",
+      "durationMs": 5905,
+      "source": "browser-release-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32-30–34: fixed frame and all enabled sections fit nine responsive viewports; capture real browser evidence",
+      "project": "webkit",
+      "status": "skipped",
+      "durationMs": 114,
+      "source": "browser-release-results.json",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Nine viewport evidence uses Chromium; functional cases run in every engine.",
+          "location": {
+            "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\royal-garden-v32.spec.js",
+            "line": 124,
+            "column": 8
+          }
+        }
+      ]
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32: Khmer authored content and numerals remain readable with the same machine dates",
+      "project": "webkit",
+      "status": "passed",
+      "durationMs": 2181,
+      "source": "browser-release-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32: new guest sections pass scoped WCAG checks and empty optional destinations stay out of navigation",
+      "project": "webkit",
+      "status": "passed",
+      "durationMs": 7014,
+      "source": "browser-release-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32-01: choosing Royal Garden from the Studio selector retains authored optional data",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 2899,
+      "source": "browser-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32-01: choosing Royal Garden from the Studio selector retains authored optional data",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 3223,
+      "source": "browser-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32-01: choosing Royal Garden from the Studio selector retains authored optional data",
+      "project": "firefox",
+      "status": "passed",
+      "durationMs": 5068,
+      "source": "browser-results.json",
+      "annotations": []
+    },
+    {
+      "file": "royal-garden-v32.spec.js",
+      "title": "RG32-01: choosing Royal Garden from the Studio selector retains authored optional data",
+      "project": "webkit",
+      "status": "passed",
+      "durationMs": 8238,
+      "source": "browser-results.json",
+      "annotations": []
+    }
+  ]
+}

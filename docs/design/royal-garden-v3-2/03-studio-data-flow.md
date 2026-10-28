@@ -1,0 +1,11 @@
+# Studio data flow
+
+`InvitationForm` owns canonical edits. Existing `WeddingProgramEditor` and `SaveTheDateEditor` operate on the same event/program fields; no new schedule or manual calendar-date model was added. Preview sync remains on the existing trusted origin/channel. `useStudioPersistence` continues to acknowledge only the sent snapshot, preserves undo/redo and reports server errors/conflicts.
+
+The dress-code renderer now consumes `dressCode` (name/style/description), `dressColors` (hex/name records) and the existing visibility flag. The shared content adapter preserves authored Royal wording without synthesizing a dress paragraph. Invalid/missing color values are omitted safely. Explicitly cleared dress-code JSON wins over old design data. Optional dress-code content remains off for old invitations and is enabled through its existing Studio control. The separate generic couple-photo capability remains false: Royal already has an independent cover editor.
+
+Shared draft serialization now retains `sectionOrder` and gives explicit top-level event date/time/venue clears precedence over stale nested fields. Hidden FAQ, story and party records remain stored; these optional Royal renderers are deferred and their capability flags remain false. Existing optional editors therefore stay unavailable for this template instead of offering ignored controls.
+
+Khmer/English authored content uses the existing `localizedContentV1` registry and readiness rules. Dress style joins name/description in the localized collection. The editor starts each dress edit from the active authored locale, preserving its other translated fields. Calendar headings, weekday labels, actions, accessible names and time-of-day labels are localized. Configured numerals override the language default without modifying machine dates. Owners must author translations; none are generated.
+
+`draftToTemplate` maps content into `hostContent`; `buildTemplateContent` prepares the renderer model. The gift projection now retains `currency`, so USD/KHR remain distinct after public rehydration. Royal KHQR uses the existing media pipeline and gift fields, with currency choice, account details, clipboard fallback and accessible image enlargement. It creates no payment state.
