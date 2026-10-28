@@ -39,6 +39,10 @@ describe("public template identity and truthful access", () => {
     expect(templatePriceLabel({ price: 48000, currency: "KHR" }, "en")).toContain("KHR");
     expect(templatePriceLabel({ price: 48000, currency: "KHR" }, "en")).not.toContain("$");
   });
+  it("displays a server-owned checkout offer without turning Premium plan access into a sale", () => {
+    expect(templatePriceLabel({ price: 0, currency: "KHR", checkoutEligible: true, checkoutAmount: 0.01, checkoutCurrency: "USD" }, "en")).toBe("$0.01");
+    expect(templatePriceLabel({ premium: true, price: 0, currency: "USD", checkoutEligible: false }, "en")).toBeNull();
+  });
 });
 
 describe("static demo dates", () => {

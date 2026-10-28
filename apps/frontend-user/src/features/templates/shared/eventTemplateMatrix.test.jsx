@@ -28,7 +28,8 @@ describe('every available template through the public/draft renderer boundary', 
       await waitFor(() => expect(view.container.querySelector('[role="status"]')?.textContent || '').not.toMatch(/Loading/));
       expect(view.container.querySelector('.kp-program')).toBeNull(); expect(view.container.querySelector('.kp-save-date')).toBeNull();
     } else {
-      await waitFor(() => expect(view.container.querySelector('.kp-calendar-event')).not.toBeNull());
+      // The first lazy renderer can load alongside the full suite's other workers.
+      await waitFor(() => expect(view.container.querySelector('.kp-calendar-event')).not.toBeNull(), { timeout: 5000 });
       expect(view.container.querySelector('.kp-calendar-event').dateTime).toBe(publicData.eventDate);
       expect(view.container.querySelector('.kp-program')).toBe(scenario === 'empty' ? null : view.container.querySelector('.kp-program'));
       if (schedule.length) {

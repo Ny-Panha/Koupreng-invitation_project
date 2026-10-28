@@ -41,7 +41,7 @@ it("defers the real invitation frame until requested and closes the mobile dialo
   fireEvent.keyDown(document, { key: "Escape" });
   expect(document.querySelector("iframe")).toBeNull();
   expect(screen.getByRole("link", { name: "View the full demo" })).toHaveAttribute("href", "/templates/silk-heritage");
-  await waitFor(() => expect(screen.getByText(/Premium · Access required/)).toBeInTheDocument());
+  await waitFor(() => expect(screen.getByText(/Premium · Included with Premium access/)).toBeInTheDocument());
 });
 it("labels offline fallback as demo and retries the actual service", async () => {
   templateService.listPublic.mockRejectedValueOnce(new Error("offline")).mockResolvedValueOnce([]);
@@ -54,7 +54,7 @@ it("labels offline fallback as demo and retries the actual service", async () =>
 });
 it("shows a labeled guest fixture, lazy featured images and connected pricing/help destinations", async () => {
   const { container } = show();
-  await screen.findByText(/Premium · Access required/);
+  await screen.findByText(/Premium · Included with Premium access/);
   expect(screen.getByText(/names and responses below are sample data/)).toBeVisible();
   fireEvent.click(screen.getByRole("button", { name: "Pending", exact: true }));
   expect(screen.getByRole("table", { name: "Illustrative guest response data" }).querySelectorAll("tbody tr")).toHaveLength(1);

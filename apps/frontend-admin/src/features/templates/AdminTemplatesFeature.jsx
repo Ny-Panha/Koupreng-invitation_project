@@ -134,7 +134,14 @@ export default function AdminTemplatesPage() {
   // Raw templates list
   const templatesList = useMemo(() => {
     const list = Array.isArray(data) ? data : [];
-    return list.filter((t) => !["garden-royal-khmer-wedding", "khmer-royal-lotus"].includes(t.code) && !["garden-royal-khmer-wedding", "khmer-royal-lotus"].includes(t.slug));
+    const retiredCodes = new Set(["garden-royal-khmer-wedding", "khmer-royal-lotus"]);
+    const retiredNames = new Set(["garden royal khmer wedding", "khmer royal lotus"]);
+    return list.filter((t) => {
+      const code = String(t.code || "").toLowerCase();
+      const slug = String(t.slug || "").toLowerCase();
+      const name = String(t.name || "").toLowerCase();
+      return !retiredCodes.has(code) && !retiredCodes.has(slug) && !retiredNames.has(name);
+    });
   }, [data]);
 
   // Statistics calculation

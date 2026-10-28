@@ -4,6 +4,7 @@ import com.koupreng.backend.invitation.domain.EventType;
 import com.koupreng.backend.shared.exception.ApiException;
 import com.koupreng.backend.template.api.dto.PublicTemplateResponse;
 import com.koupreng.backend.template.api.dto.TemplateRecommendationResponse;
+import com.koupreng.backend.template.domain.InvitationTemplate;
 import com.koupreng.backend.template.domain.TemplateCategory;
 import com.koupreng.backend.template.infrastructure.persistence.InvitationTemplateRepository;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,18 @@ public class TemplateRecommendationService {
             "garden-royal-khmer-wedding",
             "khmer-royal-lotus"
     );
+    private static final Set<String> RETIRED_NAMES = Set.of(
+            "garden royal khmer wedding",
+            "khmer royal lotus"
+    );
+
+    private static boolean isRetired(InvitationTemplate t) {
+        if (t == null) return false;
+        if (t.getCode() != null && RETIRED_CODES.contains(t.getCode().toLowerCase())) return true;
+        if (t.getName() != null && RETIRED_NAMES.contains(t.getName().toLowerCase())) return true;
+        return false;
+    }
+
     private final InvitationTemplateRepository repository;
     public TemplateRecommendationService(InvitationTemplateRepository repository) { this.repository = repository; }
 
@@ -34,7 +47,7 @@ public class TemplateRecommendationService {
         }
         return repository.findAllByStatusIgnoreCaseOrderBySortOrderAscCreatedAtDesc("ACTIVE").stream()
                 .filter(t -> "ACTIVE".equalsIgnoreCase(t.getStatus()))
-                .filter(t -> t.getCode() == null || !RETIRED_CODES.contains(t.getCode().toLowerCase()))
+                .filter(t -> !isRetired(t))
                 .filter(t -> t.getSupportedEventTypes().contains(type) && t.getSupportedLanguages().contains(mode))
                 .filter(t -> price.equals("ALL") || (price.equals("PREMIUM") == (t.isPremium()
                         || t.getPrice() != null && t.getPrice().signum() > 0)))

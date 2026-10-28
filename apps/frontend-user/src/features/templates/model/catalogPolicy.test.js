@@ -28,8 +28,9 @@ describe("authoritative catalog selection", () => {
     expect(isPublicCatalogTemplate({ ...royal, id: royal.code })).toBe(false);
   });
   it("keeps backend business fields authoritative over description configuration", () => {
-    registerDynamicTemplates([{ ...royal, description: JSON.stringify({ premium: false, price: 0.01, status: "INACTIVE", supportedEventTypes: ["BIRTHDAY"], supportedLanguages: ["XX"] }) }]);
+    registerDynamicTemplates([{ ...royal, description: JSON.stringify({ premium: false, price: 0.01, status: "INACTIVE", descriptionEn: "Blue and gold Khmer ornaments", supportedEventTypes: ["BIRTHDAY"], supportedLanguages: ["XX"] }) }]);
     expect(getTemplateById(614)).toMatchObject({ premium: true, price: 0, status: "ACTIVE", supportedEventTypes: ["WEDDING"], supportedLanguages: ["KH", "EN", "BOTH"] });
+    expect(matchesTemplateSearch(getTemplateById(614), "blue and gold")).toBe(true);
   });
   it("searches stable code and style regardless of numeric IDs and aliases traditional categories", () => {
     expect(matchesTemplateSearch({ ...royal, name: "ព្រះរាជសួន", style: "Blue and gold Khmer" }, "garden-cinematic")).toBe(true);
@@ -42,6 +43,14 @@ describe("authoritative catalog selection", () => {
     expect(isPublicCatalogTemplate({ id: 13, backendId: 13, code: "khmer-royal-lotus", status: "ACTIVE" })).toBe(false);
     expect(isPublicCatalogTemplate({ id: 2, backendId: 2, slug: "garden-royal-khmer-wedding", status: "ACTIVE" })).toBe(false);
     expect(isPublicCatalogTemplate({ id: 13, backendId: 13, slug: "khmer-royal-lotus", status: "ACTIVE" })).toBe(false);
+    expect(isPublicCatalogTemplate({ id: 2, backendId: 2, code: "other", name: "Garden Royal Khmer Wedding", status: "ACTIVE" })).toBe(false);
+    expect(isPublicCatalogTemplate({ id: 13, backendId: 13, code: "other", name: "Khmer Royal Lotus", status: "ACTIVE" })).toBe(false);
+  });
+  it.each([2, 13])("preserves an unrelated ACTIVE template allocated backend ID %s", id => {
+    expect(isPublicCatalogTemplate({ ...royal, id, backendId: id })).toBe(true);
+    registerDynamicTemplates([{ ...royal, id, backendId: id }]);
+    expect(resolveNumericTemplateId(royal.code)).toBe(id);
+    expect(getDedicatedTemplateComponent(getTemplateById(id))).toBe(templateRegistry[royal.code]);
   });
 });
 

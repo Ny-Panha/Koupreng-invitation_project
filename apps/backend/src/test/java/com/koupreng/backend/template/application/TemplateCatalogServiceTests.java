@@ -95,9 +95,11 @@ class TemplateCatalogServiceTests {
         InvitationTemplateRepository repository = mock(InvitationTemplateRepository.class);
         InvitationTemplate garden = template(2L, "garden-royal-khmer-wedding", false);
         InvitationTemplate lotus = template(13L, "khmer-royal-lotus", false);
+        InvitationTemplate byNameOnly = template(99L, "legacy-custom", false);
+        byNameOnly.setName("Garden Royal Khmer Wedding");
         InvitationTemplate active = template(4L, "khmer-celestial", false);
         when(repository.findAllByStatusIgnoreCaseOrderBySortOrderAscCreatedAtDesc(ACTIVE))
-                .thenReturn(List.of(garden, lotus, active));
+                .thenReturn(List.of(garden, lotus, byNameOnly, active));
 
         List<PublicTemplateResponse> result = new TemplateCatalogService(repository).listActiveTemplates();
 
@@ -113,6 +115,18 @@ class TemplateCatalogServiceTests {
                 new TemplateCatalogService(repository).getActiveTemplateByCode("garden-royal-khmer-wedding"));
         assertThrows(ApiException.class, () ->
                 new TemplateCatalogService(repository).getActiveTemplateByCode("khmer-royal-lotus"));
+        assertThrows(ApiException.class, () ->
+                new TemplateCatalogService(repository).getActiveTemplateByCode("Garden Royal Khmer Wedding"));
+    }
+
+    @Test
+    void getActiveTemplateByIdRejectsRetiredTemplates() {
+        InvitationTemplateRepository repository = mock(InvitationTemplateRepository.class);
+        InvitationTemplate garden = template(2L, "garden-royal-khmer-wedding", false);
+        when(repository.findByIdAndStatusIgnoreCase(2L, ACTIVE)).thenReturn(java.util.Optional.of(garden));
+
+        assertThrows(ApiException.class, () ->
+                new TemplateCatalogService(repository).getActiveTemplate(2L));
     }
 
     private InvitationTemplate template(Long id, String code, boolean premium) {

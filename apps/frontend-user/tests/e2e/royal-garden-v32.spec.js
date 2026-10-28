@@ -121,7 +121,7 @@ test('RG32-26–29: gift currency/enlargement and real RSVP form keep private wi
 });
 
 test('RG32-30–34: fixed frame and all enabled sections fit nine responsive viewports; capture real browser evidence', async ({ page }, info) => {
-  test.skip(info.project.name !== 'chromium', 'Nine viewport evidence uses Chromium; functional cases run in every engine.');
+  test.skip(info.project.name !== 'desktop-chromium', 'Nine viewport evidence runs once; functional cases run in both projects.');
   test.setTimeout(180000); await setup(page); await open(page);
   for (const [width, height] of [[320,568],[375,667],[390,844],[430,932],[768,1024],[834,1194],[1024,768],[1440,900],[1920,1080]]) {
     await page.setViewportSize({ width, height });

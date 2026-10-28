@@ -118,6 +118,11 @@ test('real local MySQL catalog reaches landing, browsing and responsive Studio w
     const { dialog } = await chooser(page);
     const card = dialog.locator(`[data-template="${code}"]`);
     await expect(card.getByRole('button', { name: 'Select', exact: true })).toBeEnabled();
+    if (name === 'desktop') {
+      await dialog.getByRole('searchbox').fill('blue and gold');
+      await expect(card).toBeVisible();
+      await dialog.getByRole('searchbox').clear();
+    }
     if (name === 'mobile') await dialog.getByRole('searchbox').fill('Royal Garden');
     await card.scrollIntoViewIfNeeded();
     await page.evaluate(() => document.fonts.ready);
