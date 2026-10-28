@@ -39,8 +39,8 @@ test('ACTIVE Royal is searchable in public catalog and Studio, previews the actu
   await expect(popup.locator('.tpl-royal-garden .rg-entrance-stage')).toBeVisible(); await popup.close();
   await card.getByRole('button', { name: 'Select', exact: true }).click();
   await expect(dialog.getByRole('button', { name: 'Use selected design' })).toBeEnabled();
-  page.once('dialog', confirmation => confirmation.accept());
   await dialog.getByRole('button', { name: 'Use selected design' }).click();
+  await page.getByRole('dialog', { name: 'Confirm template change' }).getByRole('button', { name: 'Confirm', exact:true }).click();
   await expect(dialog).toBeHidden();
   const mobile = page.viewportSize().width < 1100;
   if (mobile) await page.getByRole('button', { name: 'Preview invitation', exact: true }).click();
@@ -81,7 +81,8 @@ test('Premium denial and publication changes preserve the current template', asy
   await card.getByRole('button', { name: 'Select', exact: true }).click();
   await dialog.getByRole('button', { name: 'Use selected design' }).click();
   await expect(dialog).toBeVisible();
-  await expect(page.getByText(/Premium access is required\. Review/)).toBeVisible();
+  await expect(page.getByRole('dialog', { name:'Explore eligible packages' })).toBeVisible();
+  await page.keyboard.press('Escape');
   await page.route(`**/api/v1/templates/slug/${code}`, route => route.fulfill({ status: 404, json: { message: 'Template not found' } }));
   await dialog.getByRole('button', { name: 'Use selected design' }).click();
   await expect(page.getByText('This design is unavailable. Refresh the collection and try again.')).toBeVisible();

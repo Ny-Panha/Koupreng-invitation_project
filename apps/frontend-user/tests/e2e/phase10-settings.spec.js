@@ -17,11 +17,11 @@ test('settings entry is read-only, edits persist, and access changes need confir
   await expect(page.locator('#event-title')).toHaveValue('Phase 10 settings title');
   const savedVisibility = events.get(101).visibility;
   await page.getByRole('combobox', { name: 'Invitation visibility', exact: true }).selectOption(savedVisibility === 'PUBLIC' ? 'PRIVATE' : 'PUBLIC');
-  page.once('dialog', dialog => dialog.dismiss());
   await page.getByRole('button', { name: 'Save details', exact: true }).click();
+  await page.locator('.k-confirm-dialog').getByRole('button',{name:'Cancel',exact:true}).click();
   expect(events.get(101).visibility).toBe(savedVisibility);
-  page.once('dialog', dialog => dialog.accept());
   await page.getByRole('button', { name: 'Save details', exact: true }).click();
+  await page.locator('.k-confirm-dialog').getByRole('button',{name:'Confirm',exact:true}).click();
   await expect(page.getByText('Saved to event', { exact: true })).toBeVisible();
   expect(events.get(101).visibility).not.toBe(savedVisibility);
   const axe = await new AxeBuilder({ page }).include('.event-settings').withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();

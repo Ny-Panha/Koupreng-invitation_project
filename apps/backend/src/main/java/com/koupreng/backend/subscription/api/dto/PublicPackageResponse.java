@@ -34,6 +34,7 @@ public class PublicPackageResponse {
     private boolean teamMembersEnabled;
     private boolean aiAssistantEnabled;
     private boolean purchasable;
+    private java.util.Set<String> eligibleFeatures;
     private Integer sortOrder;
 }
 

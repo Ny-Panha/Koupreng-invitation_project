@@ -18,6 +18,7 @@ async function section(page, tab, key) {
 test('Premium diagram drag, keyboard, layer edits, undo, export and reopen use saved structured data', async ({ page }, info) => {
   const { events } = await setup(page);
   await section(page, 'scheduleVenue', 'venue');
+  await page.getByRole('checkbox', { name: 'Drag elements (turn off to scroll)', exact: true }).check();
   await page.getByLabel('Show diagram publicly').check();
   await page.getByLabel('Map description (km)').fill('Fictional venue route illustration');
   await page.getByRole('button', { name: 'Add element', exact: true }).click();
@@ -51,7 +52,7 @@ test('family layout, custom host and decorative monogram retain canonical identi
   const { events } = await setup(page);
   await section(page, 'eventInformation', 'family');
   await page.getByLabel('Name placement').selectOption('bride-left');
-  await page.getByRole('button', { name: 'Add family host', exact: true }).first().click();
+  await page.getByRole('button', { name: 'Add host', exact: true }).first().click();
   await page.getByLabel('name (km)', { exact: true }).fill('Fictional guardian');
   await page.getByLabel('honorific (km)', { exact: true }).fill('Dr');
   await section(page, 'designCover', 'cover');
@@ -72,6 +73,7 @@ test('unentitled Studio has no Premium canvas or monogram activation', async ({ 
 test('native touch moves a diagram node and cancellation preserves the last committed position', async ({ page, browserName }) => {
   test.skip(browserName !== 'chromium', 'Native touch injection uses Chromium CDP; other engines cover pointer and keyboard.');
   await setup(page); await section(page, 'scheduleVenue', 'venue');
+  await page.getByRole('checkbox', { name: 'Drag elements (turn off to scroll)', exact: true }).check();
   await page.getByRole('button', { name: 'Add element', exact: true }).click();
   const node = page.locator('.studio-map-stage [data-map-node]').first();
   await node.scrollIntoViewIfNeeded();

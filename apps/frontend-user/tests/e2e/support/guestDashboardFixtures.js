@@ -1,5 +1,5 @@
 // Browser UI contracts only. Actual SQL/authorization/export checks run over HTTP/MySQL.
-export async function installGuestDashboardFixtures(page, state) {
+export async function installGuestDashboardFixtures(page, state, eventId = 101) {
   const rows = () => state.guests.map(guest => {
     const rsvp = state.rsvps?.find(response => response.guestId === guest.id);
     const checkIn = state.checkIns?.find(item => item.guestId === guest.id);
@@ -7,7 +7,7 @@ export async function installGuestDashboardFixtures(page, state) {
       respondedAt: rsvp?.respondedAt, checkedIn: Boolean(checkIn), checkedInAt: checkIn?.checkedInAt };
   });
   const needsInvite = row => !row.rsvpStatus && !row.checkedIn && [undefined,null,'','PENDING','មិនទាន់ផ្ញើ'].includes(row.guest.sendStatus);
-  await page.route('**/api/v1/invitations/101/guests/*', async route => {
+  await page.route(`**/api/v1/invitations/${eventId}/guests/*`, async route => {
     const url = new URL(route.request().url()), path = url.pathname;
     const reply = data => route.fulfill({ json: { data } });
     if (path.endsWith('/overview')) {
@@ -34,7 +34,7 @@ export async function installGuestDashboardFixtures(page, state) {
       const selected = rows().filter(row => guestIds.includes(row.guest.id));
       const cell = value => `"${String(value ?? '').replaceAll('"','""')}"`;
       const csv = 'guestName,reservedSeats,rsvpStatus\n' + selected.map(row => [row.guest.guestName,row.guest.seatCount,row.rsvpStatus].map(cell).join(',')).join('\n');
-      return route.fulfill({ contentType: 'text/csv;charset=UTF-8', headers: { 'Content-Disposition': 'attachment; filename="selected-guests-101.csv"' }, body: csv });
+      return route.fulfill({ contentType: 'text/csv;charset=UTF-8', headers: { 'Content-Disposition': `attachment; filename="selected-guests-${eventId}.csv"` }, body: csv });
     }
     return route.fallback();
   });

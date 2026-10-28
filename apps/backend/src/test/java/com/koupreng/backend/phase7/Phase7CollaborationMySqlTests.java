@@ -10,6 +10,8 @@ import com.koupreng.backend.subscription.infrastructure.persistence.Subscription
 import com.koupreng.backend.subscription.infrastructure.persistence.SubscriptionRepository;
 import com.koupreng.backend.user.infrastructure.persistence.AppUserRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,6 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
         "app.security.logging.enabled=false"
 })
 @ActiveProfiles("test")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @EnabledIfEnvironmentVariable(named = "RUN_PHASE7_MYSQL", matches = "true")
 class Phase7CollaborationMySqlTests {
     @LocalServerPort int port;
@@ -41,11 +44,14 @@ class Phase7CollaborationMySqlTests {
     @Autowired SubscriptionRepository subscriptions;
     @Autowired OrganizationMemberRepository members;
     @Autowired org.springframework.jdbc.core.JdbcTemplate jdbc;
+    @Autowired com.koupreng.backend.template.infrastructure.persistence.InvitationTemplateRepository templates;
+    @Autowired com.koupreng.backend.payment.infrastructure.persistence.UserTemplateAccessRepository purchases;
     private final HttpClient http = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(5)).build();
 
     @DynamicPropertySource static void database(DynamicPropertyRegistry registry) {
         String url = required("FLYWAY_TEST_DB_URL");
-        if (!url.startsWith("jdbc:mysql://127.0.0.1:3416/phase7_disposable?") && !url.startsWith("jdbc:mysql://127.0.0.1:3420/phase12_disposable?")) throw new IllegalStateException("Requires an owned loopback disposable database");
+        boolean ownedStudio = url.matches("jdbc:mysql://127\\.0\\.0\\.1:3306/koupreng_studio_[a-f0-9]{32}\\?.*");
+        if (!url.startsWith("jdbc:mysql://127.0.0.1:3416/phase7_disposable?") && !url.startsWith("jdbc:mysql://127.0.0.1:3420/phase12_disposable?") && !ownedStudio) throw new IllegalStateException("Requires an owned loopback disposable database");
         registry.add("spring.datasource.url", () -> url);
         registry.add("spring.datasource.username", () -> required("FLYWAY_TEST_DB_USERNAME"));
         registry.add("spring.datasource.password", () -> required("FLYWAY_TEST_DB_PASSWORD"));
@@ -55,6 +61,18 @@ class Phase7CollaborationMySqlTests {
         registry.add("spring.jpa.database-platform", () -> "org.hibernate.dialect.MySQLDialect");
         registry.add("spring.jpa.properties.hibernate.dialect", () -> "org.hibernate.dialect.MySQLDialect");
         registry.add("spring.jpa.properties.hibernate.boot.allow_jdbc_metadata_access", () -> true);
+    }
+
+    @BeforeAll void reviewedProductPolicy() throws Exception {
+        String file = System.getenv("STUDIO_PACKAGE_CONFIG");
+        if (file == null || file.isBlank()) return;
+        for (JsonNode node : json.readTree(java.nio.file.Path.of(file).toFile())) {
+            String code = node.path("code").asText();
+            if (!Set.of("FREE", "BASIC", "PRO", "PREMIUM").contains(code)) throw new IllegalStateException("Unexpected reviewed policy code");
+            var plan = packages.findAll().stream().filter(p -> code.equals(p.getCode())).findFirst().orElseGet(SubscriptionPackage::new);
+            json.readerForUpdating(plan).readValue(node.toString());
+            packages.saveAndFlush(plan);
+        }
     }
 
     @Test void registrationGetsTheConfiguredFreePlanWithoutCheckout() throws Exception {
@@ -435,6 +453,96 @@ class Phase7CollaborationMySqlTests {
         publicContent = json.readTree(call("GET", path, null, null).data().path("contentJson").asText());
         assertFalse(publicContent.has("illustratedMap")); assertFalse(publicContent.has("coupleMonogram"));
         assertTrue(call("GET", eventPath(f), f.owner, null).data().path("contentJson").asText().contains("venue-stable"));
+    }
+
+    @Test
+    @EnabledIfEnvironmentVariable(named = "STUDIO_PACKAGE_CONFIG", matches = ".+")
+    void phase14ActualConfiguredPoliciesProjectOnlyVerifiedPurchasableBenefits() throws Exception {
+        var observed = json.readTree(java.nio.file.Path.of(required("STUDIO_PACKAGE_CONFIG")).toFile());
+        for (JsonNode node : observed) {
+            String code = node.path("code").asText();
+            Auth actor = register();
+            var plan = packages.findByCodeAndActiveTrue(code).orElseThrow();
+            if (!"FREE".equals(code)) paidFixture(actor, plan);
+            Reply response = call("GET", "/api/v1/me/entitlements", actor, null);
+            assertEquals(200, response.status);
+            assertEquals(code, response.data().path("packagePlan").path("code").asText());
+            Set<String> features = new HashSet<>(); response.data().path("features").forEach(value -> features.add(value.asText()));
+            assertEquals(plan.isQrInvitationsEnabled(), features.contains("QR_INVITATIONS"));
+            assertEquals(plan.isQrCheckInEnabled(), features.contains("QR_CHECK_IN"));
+            assertEquals(plan.isPremiumTemplatesEnabled(), features.contains("PREMIUM_TEMPLATES"));
+            for (String premium : List.of("PRE_WEDDING_VIDEO", "COUPLE_MONOGRAM", "ILLUSTRATED_VENUE_MAP")) assertEquals("PREMIUM".equals(code), features.contains(premium));
+            assertEquals(plan.getMaxGuests().longValue(), response.data().path("quotas").path("guests").path("limit").asLong());
+            if ("FREE".equals(code)) {
+                var admin = users.findById(actor.id).orElseThrow(); admin.setRole(com.koupreng.backend.user.domain.Role.ADMIN); users.saveAndFlush(admin);
+                var policy = new HashSet<String>(); call("GET", "/api/v1/me/entitlements", actor, null).data().path("features").forEach(value -> policy.add(value.asText()));
+                assertEquals(features, policy, "A platform role change must not grant a subscriber tier");
+            }
+        }
+        Reply catalog = call("GET", "/api/v1/public/packages", null, null); assertEquals(200, catalog.status);
+        for (JsonNode row : catalog.data()) {
+            var plan = packages.findByCodeAndActiveTrue(row.path("code").asText()).orElseThrow();
+            assertEquals(0, plan.getPrice().compareTo(row.path("price").decimalValue()));
+            Set<String> features = new HashSet<>(); row.path("eligibleFeatures").forEach(value -> features.add(value.asText()));
+            assertEquals(plan.isQrInvitationsEnabled(), features.contains("QR_INVITATIONS"));
+            assertEquals(plan.isQrCheckInEnabled(), features.contains("QR_CHECK_IN"));
+            assertEquals("PREMIUM".equals(plan.getCode()) && row.path("purchasable").asBoolean(), features.contains("PRE_WEDDING_VIDEO"));
+        }
+    }
+
+    @Test void phase14TemplateAccessUsesOwnerPurchasesAfterPermissionAndNeverTheCollaboratorsTier() throws Exception {
+        Fixture f = fixture(3);
+        Reply invitation = invite(f, f.member.email, "DESIGNER"); assertEquals(201, invitation.status);
+        String token = invitation.data().path("invitationToken").asText();
+        var template = new com.koupreng.backend.template.domain.InvitationTemplate();
+        template.setCode("phase14-template-" + UUID.randomUUID()); template.setName("Fictional Premium design");
+        template.setCategory(com.koupreng.backend.template.domain.TemplateCategory.TRADITIONAL); template.setPremium(true);
+        template.setPrice(BigDecimal.ZERO); template.setCurrency("USD"); template.setStatus("ACTIVE"); template = templates.saveAndFlush(template);
+        String path = eventPath(f) + "/templates/" + template.getId() + "/access";
+        assertEquals(403, call("GET", path, f.member, null).status, "Unaccepted membership cannot inspect owner access");
+        assertEquals(200, accept(f.member, token).status);
+        Reply denied = call("GET", path, f.member, null); assertEquals(200, denied.status); assertFalse(denied.data().path("hasAccess").asBoolean());
+        var purchase = new com.koupreng.backend.payment.domain.UserTemplateAccess();
+        purchase.setUser(users.findById(f.owner.id).orElseThrow()); purchase.setTemplateId(template.getId()); purchase.setActive(true); purchases.saveAndFlush(purchase);
+        assertTrue(call("GET", path, f.member, null).data().path("hasAccess").asBoolean(), "The owner's individual purchase is distinct from the editor's account");
+        assertFalse(call("GET", "/api/v1/me/templates/" + template.getId() + "/access", f.member, null).data().path("hasAccess").asBoolean());
+        paidFixture(f.stranger, packages.findByCodeAndActiveTrue("PREMIUM").orElseThrow());
+        assertEquals(403, call("GET", path, f.stranger, null).status, "An outsider's paid package cannot grant event permission");
+        assertEquals(403, call("GET", eventPath(f) + "/templates/999999999/access", f.stranger, null).status, "Permission is checked before template existence");
+        var member = members.findById(invitation.data().path("id").asLong()).orElseThrow(); member.setRole("VIEWER"); members.saveAndFlush(member);
+        assertEquals(403, call("GET", path, f.member, null).status);
+        member.setRole("DESIGNER"); members.saveAndFlush(member);
+        var grant = subscriptions.findById(f.grantId).orElseThrow(); grant.setEndDate(Instant.now().minusSeconds(1)); subscriptions.saveAndFlush(grant);
+        assertEquals(403, call("GET", path, f.member, null).status, "Expired owner benefits revoke team access on the next request");
+        assertTrue(call("GET", path, f.owner, null).data().path("hasAccess").asBoolean(), "Expiry must not delete an individual template purchase");
+        template.setStatus("INACTIVE"); templates.saveAndFlush(template);
+        assertEquals(404, call("GET", path, f.owner, null).status);
+    }
+
+    @Test void phase14GuestQuotaDetailsAreEventScopedAndOnlyFollowAuthorization() throws Exception {
+        Fixture f = fixture(3, 10);
+        var grant = subscriptions.findById(f.grantId).orElseThrow();
+        var plan = packages.findById(grant.getSubscriptionPackage().getId()).orElseThrow(); plan.setMaxGuestsPerInvitation(1); packages.saveAndFlush(plan);
+        grant.setBenefitsSnapshot(PackageSnapshot.capture(plan)); subscriptions.saveAndFlush(grant);
+        assertEquals(201, call("POST", eventPath(f) + "/guests", f.owner, Map.of("guestName", "Fictional quota guest")).status);
+        Reply failure = call("POST", eventPath(f) + "/guests", f.owner, Map.of("guestName", "Must remain unsaved"));
+        assertEquals(403, failure.status); assertEquals("PACKAGE_LIMIT_REACHED", failure.root.path("code").asText());
+        var detail = failure.root.path("details"); assertEquals("guestsPerInvitation", detail.path("resource").asText());
+        assertEquals("EVENT", detail.path("scope").asText()); assertEquals(1, detail.path("limit").asInt()); assertEquals(1, detail.path("used").asInt());
+        Reply access = call("GET", eventPath(f) + "/access", f.owner, null);
+        assertEquals(1, access.data().path("quotas").path("guestsPerInvitation").path("used").asInt());
+        assertFalse(access.data().path("quotas").has("guests"), "Event access must not expose account-wide guest usage");
+        Reply forbidden = call("POST", eventPath(f) + "/guests", f.stranger, Map.of("guestName", "Forbidden guest"));
+        assertEquals(403, forbidden.status); assertTrue(forbidden.root.path("details").isMissingNode());
+    }
+
+    private void paidFixture(Auth actor, SubscriptionPackage plan) {
+        var subscription = new Subscription(); subscription.setUser(users.findById(actor.id).orElseThrow()); subscription.setSubscriptionPackage(plan);
+        subscription.setBenefitsSnapshot(PackageSnapshot.capture(plan)); subscription.setStatus("ACTIVE"); subscription.setActive(true);
+        subscription.setPaymentStatus("PAID"); subscription.setConfirmSource("INTEGRATION_FIXTURE");
+        subscription.setAmount(plan.getPrice()); subscription.setCurrency(plan.getCurrency());
+        subscription.setOrderCode("P14-" + UUID.randomUUID()); subscription.setStartDate(Instant.now().minusSeconds(60)); subscription.setEndDate(Instant.now().plusSeconds(3600));
+        subscriptions.saveAndFlush(subscription);
     }
 
     private Fixture fixture(int teamLimit) throws Exception {

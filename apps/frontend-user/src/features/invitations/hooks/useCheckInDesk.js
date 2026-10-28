@@ -1,3 +1,5 @@
+import { feedback } from "@/shared/feedback/feedback";
+import { useAccessError } from "@/shared/access/useAccessError";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { guestService } from "@/features/guests/api/guestApi";
 import { invitationService } from "../api/invitationApi";
@@ -29,7 +31,7 @@ export function useCheckInDesk(rawId, { onCheckIn, onDuplicate, limitedRoster = 
   const [checkIns, setCheckIns] = useState([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError, failure] = useAccessError();
   const [token, setToken] = useState("");
   const [note, setNote] = useState("");
   const [tokenGiftAmount, setTokenGiftAmount] = useState("");
@@ -76,10 +78,10 @@ export function useCheckInDesk(rawId, { onCheckIn, onDuplicate, limitedRoster = 
         loadedScope.current = invitationId;
         setInvitation(invitationData); setGuests(items.map(normalizeGuest)); setCheckIns(checkInData); setSummary(summaryData);
       })
-      .catch((err) => { if (active && generation === loadGeneration.current) setError(err.message || "Could not load check-in data"); })
+      .catch((err) => { if (active && generation === loadGeneration.current) setError(err); })
       .finally(() => { if (active && generation === loadGeneration.current) setLoading(false); });
     return () => { active = false; };
-  }, [invitationId, scope, server, limitedRoster, rosterPage, rosterSearch, rosterStatus]);
+  }, [invitationId, scope, server, limitedRoster, rosterPage, rosterSearch, rosterStatus, setError]);
   useEffect(() => {
     if (!limitedRoster) return load();
     let cancel;
@@ -164,7 +166,7 @@ export function useCheckInDesk(rawId, { onCheckIn, onDuplicate, limitedRoster = 
         }
       }
       if (withGift) { setToken(""); setNote(""); setTokenGiftAmount(""); }
-    } catch (err) { setError(err.message || "Could not check in guest"); }
+    } catch (err) { setError(err); }
     finally { busy.current = false; setSaving(false); }
   };
   const scan = (event) => { event?.preventDefault(); return performScan(token, true); };
@@ -177,7 +179,7 @@ export function useCheckInDesk(rawId, { onCheckIn, onDuplicate, limitedRoster = 
       const result = server ? await guestService.manualCheckIn(invitationId, guest.id, note) : localResult(guest, "Manual Desk");
       applyCheckIn(result, guest);
       if (server) await refreshCheckIns();
-    } catch (err) { setError(err.message || "Could not check in guest"); }
+    } catch (err) { setError(err); }
     finally { busy.current = false; setSaving(false); }
   };
 
@@ -187,7 +189,7 @@ export function useCheckInDesk(rawId, { onCheckIn, onDuplicate, limitedRoster = 
     try {
       if (celebrationData && celebrationGiftAmount) await recordGiftItem(celebrationData.guestName, celebrationGiftAmount, celebrationGiftCurrency, "Gift recorded at check-in");
       setCelebrationData(null); setCelebrationGiftAmount("");
-    } catch (err) { setError(err.message || "Gift was not saved"); }
+    } catch (err) { setError(err); }
     finally { busy.current = false; setSaving(false); }
   };
 
@@ -223,7 +225,7 @@ export function useCheckInDesk(rawId, { onCheckIn, onDuplicate, limitedRoster = 
   };
 
   const undoCheckIn = async (item) => {
-    if (busy.current || !window.confirm(`Remove attendance for "${item.guestName}"?`)) return;
+    if (busy.current || !await feedback.confirm({ message: `Remove attendance for "${item.guestName}"?`, destructive: true })) return;
     busy.current = true; setSaving(true); setError("");
     try {
       if (server) await guestService.undoCheckIn(invitationId, item.guestId);
@@ -233,9 +235,9 @@ export function useCheckInDesk(rawId, { onCheckIn, onDuplicate, limitedRoster = 
       if (server) await refreshCheckIns();
       else setSummary(localSummary(guests, next));
       toast("Attendance removed; gifts and guest registration are retained.");
-    } catch (err) { setError(err.message || "Could not remove attendance"); }
+    } catch (err) { setError(err); }
     finally { busy.current = false; setSaving(false); }
   };
 
-  return { invitationId, persistenceMode: scope.mode, invitation, guests, summary, checkIns, token, setToken, note, setNote, tokenGiftAmount, setTokenGiftAmount, tokenGiftCurrency, setTokenGiftCurrency, search, setSearch: value => { setSearch(value); setRosterPage(0); }, statusFilter, setStatusFilter: value => { setStatusFilter(value); setRosterPage(0); }, rosterPage, setRosterPage, rosterMeta, loading, saving, error, celebrationData, setCelebrationData, celebrationGiftAmount, setCelebrationGiftAmount, celebrationGiftCurrency, setCelebrationGiftCurrency, duplicateWarning, setDuplicateWarning, walkInModalOpen, setWalkInModalOpen, walkInForm, setWalkInForm, pendingWalkIn, load, scan, handleCameraScan, manual, handleSaveCelebrationAndClose, handleCreateWalkInGuest, undoCheckIn };
+  return { invitationId, persistenceMode: scope.mode, invitation, guests, summary, checkIns, token, setToken, note, setNote, tokenGiftAmount, setTokenGiftAmount, tokenGiftCurrency, setTokenGiftCurrency, search, setSearch: value => { setSearch(value); setRosterPage(0); }, statusFilter, setStatusFilter: value => { setStatusFilter(value); setRosterPage(0); }, rosterPage, setRosterPage, rosterMeta, loading, saving, error, failure, celebrationData, setCelebrationData, celebrationGiftAmount, setCelebrationGiftAmount, celebrationGiftCurrency, setCelebrationGiftCurrency, duplicateWarning, setDuplicateWarning, walkInModalOpen, setWalkInModalOpen, walkInForm, setWalkInForm, pendingWalkIn, load, scan, handleCameraScan, manual, handleSaveCelebrationAndClose, handleCreateWalkInGuest, undoCheckIn };
 }

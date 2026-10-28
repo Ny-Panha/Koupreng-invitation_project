@@ -15,7 +15,8 @@ function isLocalDraftId(id) {
 
 export const invitationService = {
   listMine: (status) => api.get(`/v1/invitations/my${toQuery({ status })}`).then(unwrap),
-  access: id => api.get(`/v1/invitations/${id}/access`).then(unwrap),
+  access: (id, options) => api.get(`/v1/invitations/${id}/access`, options).then(unwrap),
+  templateAccess: (id, templateId) => api.get(`/v1/invitations/${encodeURIComponent(id)}/templates/${encodeURIComponent(templateId)}/access`).then(unwrap),
   linkTeam: (id, organizationId, expectedUpdatedAt) => api.patch(`/v1/invitations/${id}/team`, { organizationId, expectedUpdatedAt }).then(unwrap),
   createDraft: (templateId = null) => api.post("/v1/invitations", {
     title: "សិរីមង្គលអាពាហ៍ពិពាហ៍ថ្មី",

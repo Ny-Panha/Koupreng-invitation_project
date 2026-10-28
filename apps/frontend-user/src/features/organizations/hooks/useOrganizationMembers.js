@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { organizationService } from "../api/organizationApi";
+import { feedback, refreshAccess } from '@/shared/feedback/feedback';
 
 export function useOrganizationMembers(organizationId) {
   const [organization, setOrganization] = useState(null);
@@ -31,10 +32,12 @@ export function useOrganizationMembers(organizationId) {
     setError("");
     try {
       const invitation = await organizationService.addMember(organizationId, { email, role });
+      refreshAccess();
       await loadOrganization();
       return invitation;
     } catch (err) {
       setError(err?.message || "Could not add member");
+      feedback.explain(err, { feature:'TEAM_MEMBERS', ownerOnly:true });
       return false;
     } finally {
       setSaving(false);
@@ -47,10 +50,12 @@ export function useOrganizationMembers(organizationId) {
     setError("");
     try {
       await organizationService.updateMemberRole(organizationId, memberId, role);
+      refreshAccess();
       await loadOrganization();
       return true;
     } catch (err) {
       setError(err?.message || "Could not update member role");
+      feedback.explain(err, { ownerOnly:true });
       return false;
     } finally {
       setSaving(false);
@@ -63,10 +68,12 @@ export function useOrganizationMembers(organizationId) {
     setError("");
     try {
       await organizationService.removeMember(organizationId, memberId);
+      refreshAccess();
       await loadOrganization();
       return true;
     } catch (err) {
       setError(err?.message || "Could not remove member");
+      feedback.explain(err, { ownerOnly:true });
       return false;
     } finally {
       setSaving(false);

@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it } from "vitest";
 import { getTemplateById, registerDynamicTemplates, resolveNumericTemplateId } from "./data/templatesData";
-import { getDedicatedTemplateComponent, templateRegistry } from "./registry/templateRegistry";
+import { getDedicatedTemplateComponent, resolveTemplateRenderer, templateRegistry } from "./registry/templateRegistry";
 import { getTemplateFormFlow } from "../invitations/config/templateFormFlowConfig";
 import { draftToTemplate } from "../wedding-builder/utils/draftToTemplate";
 
@@ -40,6 +40,8 @@ describe("exact template identity across catalog and renderers", () => {
   it("does not infer the renderer of an unregistered stable code from its database ID", () => {
     registerDynamicTemplates([{ id: 4, code: "unregistered-wedding", status: "ACTIVE", name: "Khmer Celestial" }]);
     expect(getDedicatedTemplateComponent(getTemplateById(4))).toBeNull();
+    expect(resolveTemplateRenderer(getTemplateById(4), 'silk-heritage').available).toBe(false);
+    expect(resolveTemplateRenderer({ code: 'admin-design', id: 4, presetId: 'SILK_HERITAGE' }, 'silk-heritage').available).toBe(true);
     expect(getTemplateById(4).mainImage).not.toBe(getTemplateById("bliss-editorial-wedding").mainImage);
   });
   it("uses catalog mapping consistently for draft and public rendering", () => {

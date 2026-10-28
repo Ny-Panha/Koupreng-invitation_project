@@ -44,7 +44,7 @@ export default function RoyalGardenSceneEditor({ form, update, english }) {
     </fieldset>
     <fieldset><legend>{t('Wedding monogram', 'រូបសញ្ញាគូស្វាមីភរិយា')}</legend>
       <label>{t('Monogram mode', 'របៀបរូបសញ្ញា')}<select value={settings.monogram.mode} onChange={e => set({ monogram: { ...value.monogram, mode: e.target.value } })}>{[['auto','Automatic: owner initials / approved demo art','ស្វ័យប្រវត្តិ៖ អក្សរដើមឈ្មោះម្ចាស់ធៀប'],['artwork','Supplied gold រ ល artwork','រូបអក្សរមាស រ ល'],['custom','Uploaded monogram','រូបសញ្ញាដែលបានបញ្ចូល'],['initials','Live initials','អក្សរដើមឈ្មោះ'],['hidden','Hidden','លាក់']].map(([mode,en,km]) => <option value={mode} key={mode}>{t(en,km)}</option>)}</select></label>
-      <p>{t('The supplied crest contains fixed រ ល initials. Other couples use their own initials unless they deliberately choose that artwork.', 'រូបសញ្ញាដើមមានអក្សរ រ ល ជាប់លាប់។ គូផ្សេងប្រើអក្សរដើមឈ្មោះរបស់ខ្លួន លុះត្រាតែជ្រើសរើសរូបនេះដោយចេតនា។')}</p>
+      <p>{t('Artwork initials: រ ល', 'អក្សរកាត់លើរូប៖ រ ល')}</p>
       <label>{t('Upload custom monogram', 'បញ្ចូលរូបសញ្ញាផ្ទាល់ខ្លួន')}<input type="file" accept="image/jpeg,image/png,image/webp" disabled={reading} onChange={event => { upload(event.target.files?.[0], 'monogram'); event.target.value=''; }} /></label>
       <button type="button" onClick={() => cancelUpload({ monogram: { ...value.monogram, mode:'custom', asset:'' } })}>{t('Clear custom monogram', 'លុបរូបសញ្ញាផ្ទាល់ខ្លួន')}</button>
       <label>{t('Monogram scale', 'ទំហំរូបសញ្ញា')}<input type="range" min=".7" max="1.2" step=".05" value={settings.monogram.scale} onChange={e => set({ monogram: { ...value.monogram, scale:Number(e.target.value) } })} /></label>
@@ -57,10 +57,8 @@ export default function RoyalGardenSceneEditor({ form, update, english }) {
       <label className="studio-inline-check"><input type="checkbox" checked={settings.video.dateEnabled} onChange={e => set({ video:{...value.video,dateEnabled:e.target.checked} })} />{t('Show event date beneath calligraphy','បង្ហាញកាលបរិច្ឆេទក្រោមអក្សរផ្ចង់')}</label>
       <label>{t('Film date typography','ពុម្ពអក្សរកាលបរិច្ឆេទវីដេអូ')}<select value={settings.video.dateFont} onChange={e => set({ video:{...value.video,dateFont:e.target.value} })}><option value="moul">Moul</option><option value="battambang">Battambang</option><option value="kantumruy">Kantumruy Pro</option></select></label>
       <label className="studio-inline-check"><input type="checkbox" checked={settings.video.showTime} onChange={e => set({ video:{...value.video,showTime:e.target.checked} })} />{t('Include event time','បង្ហាញម៉ោងកម្មវិធី')}</label>
-      <p>{t('Date and time follow Event Information; there is no separate film date.', 'កាលបរិច្ឆេទ និងម៉ោងយកតាមព័ត៌មានកម្មវិធី។ គ្មានកាលបរិច្ឆេទវីដេអូដាច់ដោយឡែកទេ។')}</p>
     </fieldset>
     <fieldset><legend>{t('Motion', 'ចលនា')}</legend>
-      <p>{t('Shared by the entrance and information scenes. Motion pauses in hidden tabs and is disabled for reduced motion or Save-Data.', 'ប្រើសម្រាប់ទំព័របើក និងព័ត៌មាន។ ចលនាផ្អាកពេលប្ដូរផ្ទាំង និងបិទពេលកាត់បន្ថយចលនា ឬសន្សំទិន្នន័យ។')}</p>
       <label>{t('Effect intensity', 'កម្រិតចលនាលម្អ')}<select value={settings.motion.preset} onChange={e => set({ motionPreset: e.target.value })}>{MOTION_PRESETS.map((key, i) => <option key={key} value={key}>{t(['Off', 'Subtle', 'Balanced', 'Cinematic'][i], ['បិទ', 'ស្រាល', 'មធ្យម', 'បែបភាពយន្ត'][i])}</option>)}</select></label>
       {[['sparkles', 'Gold sparkles', 'ផ្កាយមាស'], ['petals', 'Floating petals', 'ផ្កាអណ្ដែត'], ['goldDust', 'Gold dust', 'លម្អមាស'], ['butterfly', 'Butterfly', 'មេអំបៅ']].map(([key, en, km]) => <label className="studio-inline-check" key={key}><input type="checkbox" checked={settings.motion[key]} onChange={e => set({ effects: { ...value.effects, [key]: e.target.checked } })} />{t(en, km)}</label>)}
     </fieldset>

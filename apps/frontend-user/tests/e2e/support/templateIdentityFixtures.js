@@ -9,8 +9,8 @@ export const identityCatalog = [
   { id: 27, code: "emerald-canva-luxe-wedding", name: "Emerald Luxe", premium: true },
 ].map(t => ({ status: "ACTIVE", supportedEventTypes: ["WEDDING"], supportedLanguages: ["KH", "EN", "BOTH"], ...t }));
 
-export async function installIdentityFixtures(page, { catalog = identityCatalog, delay = 0, denyPremium = false } = {}) {
-  await fixtures(page);
+export async function installIdentityFixtures(page, { catalog = identityCatalog, delay = 0, denyPremium = false, lang = 'en', preservePreferences = false } = {}) {
+  await fixtures(page, lang, { preservePreferences });
   const events = new Map([101, 102].map((id, i) => [id, {
     id, userId: 7, title: i ? "Digital Yes celebration" : "Celestial celebration", eventType: "WEDDING",
     templateId: i ? 7 : 4, templateCode: i ? "the-digital-yes-wedding" : "khmer-celestial",

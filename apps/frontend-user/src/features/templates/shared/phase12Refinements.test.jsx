@@ -1,6 +1,7 @@
+import { feedback } from "@/shared/feedback/feedback";
 import { useState } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
 import IllustratedMapEditor from '../../invitations/studio/IllustratedMapEditor';
 import { MonogramEditor } from '../../invitations/studio/FamilyDesignEditor';
 import LocaleChecklist from '../../invitations/studio/LocaleChecklist';
@@ -9,6 +10,8 @@ import ProgramTimeline from './ProgramTimeline';
 import CeremonyIcon from './CeremonyIcon';
 import { MAP_PRESETS, createMapPreset } from './mapPresets';
 import { cleanVector } from './vectorExport';
+
+vi.mock("@/shared/feedback/feedback", () => ({ feedback: { confirm: vi.fn().mockResolvedValue(false) } }));
 
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 const blank = { version: 1, enabled: true, aspectRatio: 'landscape', theme: 'ivory', description: { km: '', en: '' }, nodes: [] };
@@ -22,19 +25,19 @@ describe('Phase 12 route, program and authoring refinements', () => {
     one[0].label.en = 'Authored label'; expect(two[0].label.en).not.toBe('Authored label');
     for (const node of two) { expect(node.x).toBeGreaterThanOrEqual(.05); expect(node.x).toBeLessThanOrEqual(.95); expect(node.rotation).toBeGreaterThanOrEqual(-180); expect(node.rotation).toBeLessThanOrEqual(180); }
   });
-  it('confirms preset replacement and keeps keyboard editing available when drag is disabled', () => {
+  it('confirms preset replacement and keeps keyboard editing available when drag is disabled', async () => {
     render(<MapEditor />);
     fireEvent.click(screen.getByRole('button', { name: 'Add element', exact: true }));
     fireEvent.change(screen.getByLabelText('Element label (en)'), { target: { value: 'My venue' } });
-    vi.stubGlobal('confirm', vi.fn().mockReturnValue(false));
-    fireEvent.click(screen.getByRole('button', { name: 'Apply diagram preset' }));
+    feedback.confirm.mockResolvedValue(false);
+    await act(async () => fireEvent.click(screen.getByRole('button', { name: 'Apply diagram preset' })));
     expect(screen.getByLabelText('Element label (en)')).toHaveValue('My venue');
     fireEvent.click(screen.getByLabelText('Drag elements (turn off to scroll)'));
     expect(screen.getByRole('img').closest('.studio-map-stage')).toHaveAttribute('data-drag', 'false');
     fireEvent.keyDown(screen.getByRole('img'), { key: 'ArrowRight' });
     expect(screen.getByLabelText('x', { exact: true })).toHaveValue(.525);
-    window.confirm.mockReturnValue(true);
-    fireEvent.click(screen.getByRole('button', { name: 'Apply diagram preset' }));
+    feedback.confirm.mockResolvedValue(true);
+    await act(async () => fireEvent.click(screen.getByRole('button', { name: 'Apply diagram preset' })));
     expect(screen.queryByDisplayValue('My venue')).toBeNull();
     expect(screen.getByRole('button', { name: /destination Event venue/ })).toBeInTheDocument();
   });

@@ -98,7 +98,9 @@ export function getDedicatedTemplateComponent(tpl, variant, useFallback = false)
     tpl?.design?.theme,
     tpl?.variant,
     ...(stableKeys.length ? [] : [tpl?.templateId, tpl?.id ? String(tpl.id) : null]),
-    variant,
+    // A theme's default variant is not evidence for an unknown stable code.
+    // Explicit Admin preset/variant metadata above remains supported.
+    ...(stableKeys.length ? [] : [variant]),
   ].filter(Boolean);
 
   for (const key of keysToCheck) {

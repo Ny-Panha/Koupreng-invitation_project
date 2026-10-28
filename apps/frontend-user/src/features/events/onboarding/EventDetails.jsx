@@ -1,3 +1,4 @@
+import { feedback } from "@/shared/feedback/feedback";
 import { LOCALIZED_FIELDS, editLocalizedField, projectLocale } from '../../templates/shared/localizedContent';
 import LocalizedEventEditor from './LocalizedEventEditor';
 import { eventLocaleModel } from './localizedEventModel';
@@ -51,7 +52,7 @@ export default function EventDetails() {
   const persistence = useStudioPersistence({ value: { form, contact, schedule }, enabled: false, english: en,
     onRestore: value => { setForm(value.form); setContact(value.contact); setSchedule(value.schedule); },
     persist: async () => {
-      if (form.visibility !== event.visibility && !window.confirm(en ? 'Change who can access this invitation?' : 'ប្ដូរសិទ្ធិមើលសំបុត្រអញ្ជើញនេះឬ?')) {
+      if (form.visibility !== event.visibility && !await feedback.confirm({ message: en ? 'Change who can access this invitation?' : 'ប្ដូរសិទ្ធិមើលសំបុត្រអញ្ជើញនេះឬ?', destructive: true })) {
         return { synced: false, error: en ? 'Access change cancelled. Your edits are still here.' : 'បានបោះបង់ការប្ដូរសិទ្ធិមើល។ ការកែប្រែរបស់អ្នកនៅទីនេះ។' };
       }
       const payload = { ...eventPayload(form, event.eventType), expectedUpdatedAt: revision.current };

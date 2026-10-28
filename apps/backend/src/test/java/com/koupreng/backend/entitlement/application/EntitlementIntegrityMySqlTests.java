@@ -116,19 +116,26 @@ class EntitlementIntegrityMySqlTests {
         assertEquals(0, guests.countByInvitationId(fixture.invitation().getId()));
     }
 
-    @Test void existingStaticOfferCannotBeUsedBeforeTrustedConfirmation() {
+    @Test void legacyStaticOfferFixtureCannotBeUsedBeforeTrustedConfirmation() {
         var fixture = fixture();
-        var template = templates.findByCodeIgnoreCaseAndStatusIgnoreCase("garden-royal-khmer-wedding", "ACTIVE")
-                .orElseThrow();
-        assertFalse(template.isPremium());
-        assertEquals(0, BigDecimal.ZERO.compareTo(template.getPrice()));
-        assertFalse(paymentService.hasTemplateAccess(fixture.auth(), template.getId()).isHasAccess());
-        var request = new InvitationRequest();
-        request.setTitle("Unpaid static offer " + UUID.randomUUID());
-        request.setTemplateId(template.getId());
-        assertEquals(HttpStatus.FORBIDDEN,
-                assertThrows(ApiException.class, () -> invitationService.create(fixture.auth(), request)).getStatus());
-        assertEquals(1, invitations.countByUserIdAndDeletedFalse(fixture.owner().getId()));
+        // V50 intentionally retires this design. Exercise the legacy active-offer
+        // rule only in this disposable database, then restore publication state.
+        var template = templates.findAllByCodeIgnoreCaseOrderByCreatedAtDesc("garden-royal-khmer-wedding").getFirst();
+        String publication = template.getStatus();
+        try {
+            template.setStatus("ACTIVE"); templates.saveAndFlush(template);
+            assertFalse(template.isPremium());
+            assertEquals(0, BigDecimal.ZERO.compareTo(template.getPrice()));
+            assertFalse(paymentService.hasTemplateAccess(fixture.auth(), template.getId()).isHasAccess());
+            var request = new InvitationRequest();
+            request.setTitle("Unpaid static offer " + UUID.randomUUID());
+            request.setTemplateId(template.getId());
+            assertEquals(HttpStatus.FORBIDDEN,
+                    assertThrows(ApiException.class, () -> invitationService.create(fixture.auth(), request)).getStatus());
+            assertEquals(1, invitations.countByUserIdAndDeletedFalse(fixture.owner().getId()));
+        } finally {
+            template.setStatus(publication); templates.saveAndFlush(template);
+        }
     }
 
     private int race(Callable<?> first, Callable<?> second) throws Exception {

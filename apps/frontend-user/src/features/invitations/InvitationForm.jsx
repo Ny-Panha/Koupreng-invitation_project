@@ -1,3 +1,9 @@
+import StudioUploadField from "./studio/StudioUploadField";
+import StudioEventFields from "./studio/StudioEventFields";
+import { StudioSectionPanel, StudioValidationSummary, StudioTextEditor } from "./studio/StudioFields";
+import { feedback } from "@/shared/feedback/feedback";
+import FeatureAccessCard from "@/shared/access/FeatureAccessCard";
+import { useFeatureAccess } from '@/shared/access/useFeatureAccess';
 import TemplateChooser from "./studio/TemplateChooser";
 import { templateService } from "../templates/api/templateService";
 import { isPublicCatalogTemplate, requiresTemplateAccess } from "../templates/model/catalogPolicy";
@@ -33,14 +39,13 @@ import CinematicIntroEditor from './studio/CinematicIntroEditor';
 import { useStudioPersistence } from "./studio/useStudioPersistence";
 import { replaceMediaReferences, uploadInlineReferences } from "./studio/studioMedia";
 import "./studio/InvitationStudio.css";
+import "./studio/StudioChrome.css";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import {
     Music,
     Sparkles,
     Heart,
     Mail,
-    Calendar,
-    Clock,
     MapPin,
     Images,
     Image as ImageIcon,
@@ -59,7 +64,6 @@ import {
     Zap,
     X,
     RotateCcw,
-    AlertCircle,
 } from "lucide-react";
 
 
@@ -81,173 +85,12 @@ import { templateCatalogService } from "../templates/api/templateCatalogApi";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import LivePhoneSimulator from "./LivePhoneSimulator";
-import { DatePicker } from "../../shared/ui/DatePicker";
-import { TimePicker } from "../../shared/ui/TimePicker";
 import SpotifyMusicPicker from "./components/SpotifyMusicPicker";
 import { getLocalizedTemplateFormFlow } from "./config/templateFormFlowConfig";
 import { resolveTemplateRenderer } from "../templates/registry/templateRegistry";
 import { paymentService } from "../payments/paymentService";
 import "./InvitationPlanEssentialEditor.css";
 
-function CleanImageUploadField({
-    label,
-    icon: Icon,
-    image,
-    onUpload,
-    onRemove,
-    inputRef,
-    hint = "PNG, JPG, WebP (ក្រោម 5MB)",
-    onRestoreDefault,
-    hasDefault = false,
-}) {
-  const uiCopy = useUiCopy();
-    const internalInputRef = useRef(null);
-    const activeRef = inputRef || internalInputRef;
-    const [imgError, setImgError] = useState(false);
-    const [isDragging, setIsDragging] = useState(false);
-
-    const resolvedSrc = typeof image === "string" ? image : (image?.url || image?.preview || image?.src || image?.fileUrl || "");
-    const hasImage = Boolean(resolvedSrc && resolvedSrc.trim() && resolvedSrc !== "null" && resolvedSrc !== "undefined");
-
-    useEffect(() => {
-        setImgError(false);
-    }, [resolvedSrc]);
-
-    const handleDrop = (e) => {
-        e.preventDefault();
-        setIsDragging(false);
-        const file = e.dataTransfer?.files?.[0];
-        if (file && onUpload) {
-            onUpload({ target: { files: [file] } });
-        }
-    };
-
-    return (
-        <div className="pe-form-group">
-            <label className="pe-label">
-                {Icon && <span className="pe-label-icon"><Icon size={16} /></span>}
-                {label}
-            </label>
-            <div className="pe-clean-upload-card">
-                {hasImage && !imgError ? (
-                    <>
-                        <div
-                            className="pe-clean-preview-box"
-                            onClick={() => activeRef.current?.click()}
-                            title={uiCopy("ចុចដើម្បីប្តូររូបភាព", "Click to change image")}
-                        >
-                            <img
-                                src={resolvedSrc}
-                                alt={label}
-                                onError={() => setImgError(true)}
-                            />
-                            <div className="pe-clean-preview-hover-overlay">
-                                <UploadCloud size={20} />
-                                <span>{uiCopy("ចុចដើម្បីប្តូររូបភាព", "Click to change image")}</span>
-                            </div>
-                        </div>
-                        <div className="pe-clean-actions-bar">
-                            <button
-                                type="button"
-                                className="pe-btn-upload-action"
-                                onClick={() => activeRef.current?.click()}
-                            >
-                                <UploadCloud size={14} /> {uiCopy("ប្តូររូបភាព", "Change image")}
-                            </button>
-                            <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
-                                {hasDefault && onRestoreDefault && (
-                                    <button
-                                        type="button"
-                                        className="pe-btn-restore-action"
-                                        onClick={onRestoreDefault}
-                                        title={uiCopy("ប្រើរូបដើមរបស់គំរូ", "Reset to template default")}
-                                    >
-                                        <RotateCcw size={13} /> {uiCopy("រូបដើម", "Original image")}
-                                    </button>
-                                )}
-                                <button
-                                    type="button"
-                                    className="pe-btn-delete-action"
-                                    onClick={onRemove}
-                                >
-                                    <Trash2 size={14} /> {uiCopy("លុប", "Delete")}
-                                </button>
-                            </div>
-                        </div>
-                    </>
-                ) : hasImage && imgError ? (
-                    <div className="pe-clean-error-card">
-                        <div
-                            className="pe-clean-error-content"
-                            onClick={() => activeRef.current?.click()}
-                            title={uiCopy("ចុចដើម្បីជ្រើសរើសរូបភាពថ្មី", "Click to choose a new image")}
-                        >
-                            <AlertCircle size={24} className="pe-clean-error-icon" />
-                            <span className="pe-clean-error-title">{uiCopy("មិនអាចទាញយករូបភាពបានទេ", "Could not load image")}</span>
-                            <span className="pe-clean-error-hint">{uiCopy("តំណភ្ជាប់រូបភាពអាចខូច ឬមិនមាន។ សូមចុចទីនេះដើម្បីជ្រើសរើសរូបថ្មី", "The image link may be broken or unavailable. Click to choose a new image.")}</span>
-                        </div>
-                        <div className="pe-clean-actions-bar" style={{ marginTop: "4px" }}>
-                            <button
-                                type="button"
-                                className="pe-btn-upload-action"
-                                onClick={() => activeRef.current?.click()}
-                            >
-                                <UploadCloud size={14} /> {uiCopy("ជ្រើសរើសរូបភាពថ្មី", "Choose a new image")}
-                            </button>
-                            <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
-                                {hasDefault && onRestoreDefault && (
-                                    <button
-                                        type="button"
-                                        className="pe-btn-restore-action"
-                                        onClick={onRestoreDefault}
-                                        title={uiCopy("ប្រើរូបដើមរបស់គំរូ", "Use template image")}
-                                    >
-                                        <RotateCcw size={13} /> {uiCopy("រូបដើម", "Original image")}
-                                    </button>
-                                )}
-                                <button
-                                    type="button"
-                                    className="pe-btn-delete-action"
-                                    onClick={onRemove}
-                                >
-                                    <Trash2 size={14} /> {uiCopy("លុបចេញ", "Remove")}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                ) : (
-                    <div
-                        className={`pe-clean-dropzone ${isDragging ? "pe-clean-dropzone-dragging" : ""}`}
-                        onClick={() => activeRef.current?.click()}
-                        onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
-                        onDragLeave={() => setIsDragging(false)}
-                        onDrop={handleDrop}
-                    >
-                        <UploadCloud className="pe-clean-dropzone-icon" size={28} />
-                        <span className="pe-clean-dropzone-title">{uiCopy("ចុចបញ្ចូលរូបភាព", "Click to upload image")}</span>
-                        <span className="pe-clean-dropzone-hint">{hint}</span>
-                        {hasDefault && onRestoreDefault && (
-                            <button
-                                type="button"
-                                className="pe-btn-restore-inline"
-                                onClick={(e) => { e.stopPropagation(); onRestoreDefault(); }}
-                            >
-                                <RotateCcw size={12} /> {uiCopy("ប្រើរូបគំរូដើម", "Use template image")}
-                            </button>
-                        )}
-                    </div>
-                )}
-                <input
-                    ref={activeRef}
-                    type="file"
-                    accept="image/png,image/jpeg,image/webp,image/gif"
-                    style={{ display: "none" }}
-                    onChange={onUpload}
-                />
-            </div>
-        </div>
-    );
-}
 
 function CleanGalleryItem({ idx, photo, onUpload, onRemove, onDeleteSlot, canDeleteSlot }) {
   const uiCopy = useUiCopy();
@@ -873,6 +716,12 @@ export default function InvitationForm({ invitation }) {
         return () => { active = false; };
     }, [isTemplateModalOpen, catalogRetry]);
 
+    const canEdit = workspace ? workspace.can?.("MANAGE_INVITATION") === true : true;
+    const editAccess = useRef(canEdit);
+    useEffect(() => { editAccess.current = canEdit; }, [canEdit]);
+    const brandingAccess = useFeatureAccess({ feature: 'CUSTOM_BRANDING', permission: 'MANAGE_INVITATION' });
+    const [focusEditor, setFocusEditor] = useState(false);
+    const [validationIssues, setValidationIssues] = useState([]);
     const [wordingPreset, setWordingPreset] = useState("formal");
     const [wordingError, setWordingError] = useState("");
     const [activeLangTab, setActiveLangTab] = useState(() => form.languageMode === "EN" ? "EN" : "KH");
@@ -945,16 +794,24 @@ export default function InvitationForm({ invitation }) {
         }
         if (requiresTemplateAccess(template)) {
             try {
-                const access = await paymentService.templateAccess(resolveNumericTemplateId(template.code || template.id));
-                if (!access?.hasAccess) throw new Error("Premium template access is required");
-            } catch {
-                toast(englishUI ? "Premium access is required. Review your template access in Packages before switching." : "ត្រូវការសិទ្ធិប្រើគំរូបុព្វលាភ។ សូមពិនិត្យសិទ្ធិរបស់អ្នកមុនប្ដូរ។", "error");
+                const access = workspace?.isOwner === false
+                    ? await invitationService.templateAccess(workspace.eventId, template.backendId)
+                    : await paymentService.templateAccess(resolveNumericTemplateId(template.code || template.id));
+                if (!access?.hasAccess) {
+                    void feedback.upgrade({ feature: "PREMIUM_TEMPLATES", template, event: workspace, permission: "MANAGE_INVITATION" });
+                    return;
+                }
+            } catch (error) {
+                if (!feedback.explain(error, { event: workspace, permission: "MANAGE_INVITATION", feature: "PREMIUM_TEMPLATES" })) {
+                    toast.error(englishUI ? "Could not verify template access. Try again." : "មិនអាចផ្ទៀងផ្ទាត់សិទ្ធិគំរូបានទេ។ សូមសាកម្តងទៀត។");
+                }
                 return;
             }
         }
-        if (!window.confirm(englishUI
+        if (!await feedback.confirm({ title: uiCopy("បញ្ជាក់ការប្តូរគំរូ", "Confirm template change"), message: englishUI
             ? "Change invitation template? Your event details and uploaded images will stay. Template-specific appearance and optional sections may change; unsupported customizations remain saved for recovery."
-            : "ប្ដូរគំរូធៀប? ព័ត៌មានកម្មវិធី និងរូបភាពផ្ទាល់ខ្លួនត្រូវបានរក្សា។ រចនាបថ និងផ្នែកពិសេសមួយចំនួនអាចផ្លាស់ប្ដូរ។")) return;
+            : "ប្ដូរគំរូធៀប? ព័ត៌មានកម្មវិធី និងរូបភាពផ្ទាល់ខ្លួនត្រូវបានរក្សា។ រចនាបថ និងផ្នែកពិសេសមួយចំនួនអាចផ្លាស់ប្ដូរ។"})) return;
+        if (!editAccess.current) { void feedback.permissionDenied({ event: workspace }); return; }
         const preset = getTemplatePreset(template) || {};
         const uploadedCoverUrl = form.uploadedCoverUrl || "";
 
@@ -1026,6 +883,11 @@ export default function InvitationForm({ invitation }) {
     const qrRielInputRef = useRef(null);
 
     const update = (field, value) => {
+        if (!canEdit) return;
+        if (field === 'brandMarkUrl' && value && value !== form.brandMarkUrl && !brandingAccess.allowed) {
+            brandingAccess.explain(); return;
+        }
+        setValidationIssues(current => current.some(issue => issue.field === field) ? current.filter(issue => issue.field !== field) : current);
         if (field === "venueAddress" && String(value).trim()) setVenueAddressError("");
         setForm(prev => editLocalizedField(prev, activeLangTab === "EN" ? "en" : "km", field, value));
     };
@@ -1099,7 +961,7 @@ export default function InvitationForm({ invitation }) {
     const addPhotoSlot = () => {
         const current = form.photos || [];
         if (current.length >= 10) {
-            toast(uiCopy("អាចបន្ថែមបានអតិបរមាត្រឹម 10 រូបប៉ុណ្ណោះ", "You can add up to 10 photos."));
+            toast(uiCopy("អាចបន្ថែមបានអតិបរមាត្រឹម 10 រូបប៉ុណ្ណោះ", "You can add up to 10 photos."), 'warning');
             return;
         }
         const nextPhotos = [
@@ -1145,7 +1007,7 @@ export default function InvitationForm({ invitation }) {
                 nextPhotos.push({ id: `p${nextPhotos.length + 1}`, url: "" });
             }
             update("photos", nextPhotos);
-            toast(uiCopy(`បានបញ្ចូល ${dataUrls.length} រូបក្នុងវិចិត្រសាល!`, `Added ${dataUrls.length} photos to the gallery.`));
+            feedback.info(uiCopy(`រូប ${dataUrls.length} ត្រៀមរួច។ ចុចរក្សាទុក ដើម្បីបញ្ចូលទៅម៉ាស៊ីនមេ។`, `${dataUrls.length} photos ready. Save to upload them to the server.`));
         });
         e.target.value = "";
     };
@@ -1317,18 +1179,29 @@ export default function InvitationForm({ invitation }) {
         window.open(searchUrl, "_blank", "noopener,noreferrer");
     };
     // Save action
-    const handleSave = async ({ redirectToPreview = false, stayInStudio = false, quiet = false } = {}) => {
+    const focusValidationIssue = issue => {
+        setSelectedSection(issue.section);
+        setExpandedSections(current => ({ ...current, [issue.section]: true }));
+        requestAnimationFrame(() => {
+            const section = editorRoot.current?.querySelector(`[data-studio-section="${issue.section}"]`);
+            const control = [...(section?.querySelectorAll('[name]') || [])].find(node => node.name === issue.field) || section?.querySelector('input,select,textarea');
+            control?.scrollIntoView({ block: 'center' }); control?.focus({ preventScroll: true });
+        });
+    };
+    const handleSave = async ({ redirectToPreview = false, stayInStudio = false, quiet = false, deliberate = false } = {}) => {
         const event = resolveEvent(form);
         const end = form.eventEndTime ? wallTimeToInstant(form.eventEndDate || event.date, form.eventEndTime, event.timezone) : null;
         if (!validTimezone(event.timezone) || (event.validDate && event.time && event.instant === null) || (form.eventEndTime && (end === null || event.instant === null || end <= event.instant))) {
-            toast(uiCopy('សូមពិនិត្យតំបន់ម៉ោង និងម៉ោងបញ្ចប់កម្មវិធី។', 'Check the event timezone and end time before saving.'), 'warning');
-            setSelectedSection('countdown');
-            return;
+            const field = !validTimezone(event.timezone) ? 'eventTimezone' : event.validDate && event.time && event.instant === null ? 'eventTime' : 'eventEndTime';
+            const issue = { field, section: field === 'eventEndTime' ? 'countdown' : 'eventInfo', message: uiCopy('សូមពិនិត្យតំបន់ម៉ោង និងម៉ោងបញ្ចប់កម្មវិធី។', 'Check the event timezone and end time before saving.') };
+            if (!quiet || deliberate) setValidationIssues([issue]);
+            return stayInStudio ? { synced: false, status: 400, error: issue.message } : null;
         }
         if (!redirectToPreview && /^https?:\/\//i.test(form.googleMapUrl || "") && !isGoogleMapsUrl(form.googleMapUrl)) {
             setLocationError(uiCopy("សូមបញ្ចូលតំណ Google Maps ត្រឹមត្រូវ។", "Enter a valid Google Maps link."));
-            setSelectedSection("venue");
-            return;
+            if (!quiet || deliberate) setValidationIssues([{ field: 'googleMapUrl', section: 'venue', message: englishUI ? 'Enter a valid Google Maps link.' : 'សូមបញ្ចូលតំណ Google Maps ត្រឹមត្រូវ។' }]);
+            if (!quiet || deliberate) setSelectedSection("venue");
+            return stayInStudio ? { synced: false, status: 400, error: uiCopy('សូមបញ្ចូលតំណ Google Maps ត្រឹមត្រូវ។', 'Enter a valid Google Maps link.') } : null;
         }
 
         const activeTpl = getTemplateById(form.templateId);
@@ -1499,6 +1372,7 @@ export default function InvitationForm({ invitation }) {
             let saved;
             let apiSyncFailed = false;
             let apiSyncError = "";
+            let apiFailure;
             let apiSyncStatus;
             const effectiveBackendId = savedBackendId.current;
             try {
@@ -1511,10 +1385,12 @@ export default function InvitationForm({ invitation }) {
                 if (saved?.id) savedBackendId.current = saved.id;
                 if (saved?.updatedAt) serverRevision.current = saved.updatedAt;
             } catch (apiErr) {
+                apiFailure = apiErr;
+                if (!quiet || deliberate) feedback.explain(apiErr, { event: workspace, permission: "MANAGE_INVITATION" });
                 apiSyncFailed = true;
                 apiSyncError = apiErr?.message || "The server could not save these changes. Retry saving.";
                 apiSyncStatus = apiErr?.status || apiErr?.response?.status;
-                if ([401, 409].includes(apiSyncStatus)) return { synced: false, status: apiSyncStatus, error: apiSyncError };
+                if ([401, 409].includes(apiSyncStatus)) return { synced: false, status: apiSyncStatus, error: apiSyncError, failure: apiErr };
             }
 
             let savedCoverUrl = form.uploadedCoverUrl || "";
@@ -1523,7 +1399,7 @@ export default function InvitationForm({ invitation }) {
             let mediaSyncError = "";
             const backendId = saved?.id || (isEdit && !isNaN(Number(invitationId)) ? invitationId : (invitation?.backendInvitationId || null));
             const coverFile = pendingCoverFile || dataUrlToFile(form.coverImage, "cover.jpg");
-            if (coverFile && backendId) {
+            if (coverFile && backendId && !apiSyncFailed) {
                 try {
                     const uploaded = await mediaService.uploadCover(backendId, coverFile);
                     savedCoverUrl = uploaded?.fileUrl || uploaded?.data?.fileUrl || savedCoverUrl;
@@ -1533,7 +1409,7 @@ export default function InvitationForm({ invitation }) {
                     mediaSyncError = uploadError?.message || "Cover image upload failed";
                 }
             }
-            if (backendId) {
+            if (backendId && !apiSyncFailed) {
                 const photoUploads = savedPhotos
                     .map((photo, index) => ({ index, file: dataUrlToFile(photo?.url, `gallery-${index + 1}.jpg`) }))
                     .filter((item) => item.file);
@@ -1571,7 +1447,7 @@ export default function InvitationForm({ invitation }) {
 
             let savedCoverBgUrl = form.coverBackgroundImage || "";
             const coverBgFile = pendingCoverBgFile || dataUrlToFile(form.coverBackgroundImage, "cover-bg.jpg");
-            if (coverBgFile && backendId) {
+            if (coverBgFile && backendId && !apiSyncFailed) {
                 try {
                     const items = await mediaService.uploadGallery(backendId, [coverBgFile]);
                     const uploadedCoverBg = (Array.isArray(items) ? items : items?.items || items?.data || [])[0];
@@ -1585,7 +1461,7 @@ export default function InvitationForm({ invitation }) {
 
             let savedBgUrl = form.backgroundImage || "";
             const bgFile = pendingBackgroundFile || dataUrlToFile(form.backgroundImage, "background.jpg");
-            if (bgFile && backendId) {
+            if (bgFile && backendId && !apiSyncFailed) {
                 try {
                     const items = await mediaService.uploadGallery(backendId, [bgFile]);
                     const uploadedBg = (Array.isArray(items) ? items : items?.items || items?.data || [])[0];
@@ -1778,7 +1654,7 @@ export default function InvitationForm({ invitation }) {
             const finalSavedId = saved?.id || targetDraftId;
             if (stayInStudio) {
                 if (!quiet) toast(successMsg, apiSyncFailed || mediaSyncError ? "warning" : "success");
-                return { id: finalSavedId, synced: !apiSyncFailed && !mediaSyncError, status: apiSyncStatus, error: mediaSyncError || (apiSyncFailed ? (apiSyncError || uiCopy("ម៉ាស៊ីនមេមិនអាចរក្សាទុកការកែប្រែបានទេ។ សូមរក្សាទុកម្ដងទៀត។", "The server could not save these changes. Retry saving.")) : "") };
+                return { id: finalSavedId, synced: !apiSyncFailed && !mediaSyncError, status: apiSyncStatus, failure: apiFailure, error: mediaSyncError || (apiSyncFailed ? (apiSyncError || uiCopy("ម៉ាស៊ីនមេមិនអាចរក្សាទុកការកែប្រែបានទេ។ សូមរក្សាទុកម្ដងទៀត។", "The server could not save these changes. Retry saving.")) : "") };
             }
             if (redirectToPreview && finalSavedId) {
                 toast(successMsg, apiSyncFailed || mediaSyncError ? "warning" : "success");
@@ -1791,7 +1667,7 @@ export default function InvitationForm({ invitation }) {
             }
             return finalSavedId;
         } catch (err) {
-            toast(err.message || (t("savedError") || "មិនអាចរក្សាទុកបានទេ (Save error)"));
+            toast.error(err.message || (t("savedError") || "មិនអាចរក្សាទុកបានទេ (Save error)"));
             return null;
         } finally {
             setIsSaving(false);
@@ -1801,11 +1677,11 @@ export default function InvitationForm({ invitation }) {
     const studio = useStudioPersistence({ value: form, initialSaved: /^[1-9]\d*$/.test(String(invitationId || "")), onRestore: value => {
         setPendingCoverFile(null); setPendingCoverBgFile(null); setPendingBackgroundFile(null);
         setPendingInvitationFile(null); setPendingInvitation2File(null); setForm(value);
-    }, persist: () => handleSave({ stayInStudio: true, quiet: true }),
-        english: englishUI, enabled: Boolean(invitationId && /^[1-9]\d*$/.test(String(invitationId))) && !pendingCoverFile && !pendingCoverBgFile && !pendingBackgroundFile && !pendingInvitationFile && !pendingInvitation2File && !JSON.stringify(form).includes("data:") });
+    }, persist: ({ deliberate = false } = {}) => handleSave({ stayInStudio: true, quiet: true, deliberate }),
+        english: englishUI, enabled: canEdit && Boolean(invitationId && /^[1-9]\d*$/.test(String(invitationId))) && !pendingCoverFile && !pendingCoverBgFile && !pendingBackgroundFile && !pendingInvitationFile && !pendingInvitation2File && !JSON.stringify(form).includes("data:") });
 
     const readiness = publishReadiness(form, invitation?.eventType || "WEDDING");
-    const canPublish = (workspace ? workspace.isOwner : true) && Boolean(invitation?.backendInvitationId || /^[1-9]\d*$/.test(String(invitationId || "")));
+    const canPublish = canEdit && (workspace ? workspace.isOwner : true) && Boolean(invitation?.backendInvitationId || /^[1-9]\d*$/.test(String(invitationId || "")));
     function goToGuideStep(step) {
         setGuideStep(step);
         if (step === 0) setSelectedSection("eventInfo");
@@ -1876,88 +1752,8 @@ export default function InvitationForm({ invitation }) {
 
     // --- Dynamic Section Renderers (Driven by templateFormFlowConfig) ---
 
-    const renderEventInfoSection = () => <section className="pe-section-card" aria-label={uiCopy("ព័ត៌មានកម្មវិធី", "Event information")}>
-        <h2 className="pe-section-heading">{englishUI ? uiCopy("ព័ត៌មានកម្មវិធី", "Event information") : "ព័ត៌មានកម្មវិធី"}</h2>
-            {/* Main Title on Cover */}
-            <div className="pe-form-group">
-                <label className="pe-label" htmlFor={`${fieldId}-title`}>
-                    <span className="pe-label-icon"><FileText size={15} /></span>
-                    {t("mainTitle") || uiCopy("ចំណងជើងធំលើក្រប", "Cover title")}
-                </label>
-                <input
-                    id={`${fieldId}-title`}
-                    type="text"
-                    className="pe-input"
-                    name="title" value={authoredForm.title}
-                    onChange={(e) => update("title", e.target.value)}
-                    placeholder={uiCopy("សិរីមង្គលអាពាហ៍ពិពាហ៍", "Wedding celebration")}
-                />
-            </div>
-
-            {/* Couple Names on Cover */}
-            <div className="pe-grid-2">
-                <div className="pe-form-group">
-                    <label className="pe-label" htmlFor={`${fieldId}-groom`}>
-                        <span className="pe-label-icon"><User size={15} /></span>
-                        {t("groom") || uiCopy("ឈ្មោះកូនកំលោះ", "Groom name")}
-                    </label>
-                    <input
-                        id={`${fieldId}-groom`}
-                        type="text"
-                        className="pe-input"
-                        name="groomName" value={authoredForm.groomName}
-                        onChange={(e) => update("groomName", e.target.value)}
-                        placeholder={uiCopy("វណ្ណដា", "VannDa")}
-                    />
-                </div>
-                <div className="pe-form-group">
-                    <label className="pe-label" htmlFor={`${fieldId}-bride`}>
-                        <span className="pe-label-icon"><Heart size={15} /></span>
-                        {t("bride") || uiCopy("ឈ្មោះកូនក្រមុំ", "Bride name")}
-                    </label>
-                    <input
-                        id={`${fieldId}-bride`}
-                        type="text"
-                        className="pe-input"
-                        name="brideName" value={authoredForm.brideName}
-                        onChange={(e) => update("brideName", e.target.value)}
-                        placeholder={uiCopy("ស្រីពេជ្រ", "Sreypich")}
-                    />
-                </div>
-            </div>
-
-            {/* Event Date & Time on Cover */}
-            <div className="pe-grid-2">
-                <div className="pe-form-group">
-                    <label className="pe-label" htmlFor={`${fieldId}-date`}>
-                        <span className="pe-label-icon"><Calendar size={15} /></span>
-                        {t("dateTime") || uiCopy("កាលបរិច្ឆេទកម្មវិធី", "Event date")}
-                    </label>
-                    <DatePicker
-                        id={`${fieldId}-date`}
-                        value={form.eventDate}
-                        onChange={(val) => {
-                            update("eventDate", val);
-                            update("eventDateText", val);
-                        }}
-                        placeholder={uiCopy("ជ្រើសកាលបរិច្ឆេទ", "Choose date")}
-                    />
-                </div>
-                <div className="pe-form-group">
-                    <label className="pe-label" htmlFor={`${fieldId}-time`}>
-                        <span className="pe-label-icon"><Clock size={15} /></span>
-                        {t("timePicker") || uiCopy("ម៉ោងទទួលភ្ញៀវ", "Event time")}
-                    </label>
-                    <TimePicker
-                        id={`${fieldId}-time`}
-                        value={form.eventTime}
-                        onChange={(val) => update("eventTime", val)}
-                        placeholder={uiCopy("ជ្រើសម៉ោង", "Choose time")}
-                    />
-                </div>
-            </div>
-
-    </section>;
+    const renderEventInfoSection = () => <StudioEventFields form={form} authoredForm={authoredForm} fieldId={fieldId}
+        update={update} english={englishUI} t={t} copy={uiCopy} errors={Object.fromEntries(validationIssues.map(issue => [issue.field, issue.message]))} />;
     const renderMusicSection = () => <section className="pe-section-card" aria-label={uiCopy("តន្ត្រី", "Music")}>
         <h2 className="pe-section-heading">{englishUI ? uiCopy("តន្ត្រី", "Music") : "តន្ត្រី"}</h2>
             {/* Spotify-style Music Selector & Player */}
@@ -1987,7 +1783,7 @@ export default function InvitationForm({ invitation }) {
 
             {/* Clean Cover Image Upload (Image 1) */}
             {flowConfig.hasCoverImage !== false && (
-                <CleanImageUploadField
+                <StudioUploadField
                     label={flowConfig.labels.coverImage || (englishUI ? (flowConfig.labels.coverImageEn || "Front Cover Image") : (t("coverImage") || uiCopy("រូបភាពក្របខាងមុខ", "Front cover image")))}
                     icon={ImageIcon}
                     image={form.coverImage}
@@ -2015,7 +1811,7 @@ export default function InvitationForm({ invitation }) {
             {/* Cover Background (Closed State) Image Upload (Field 1 for Celestial / Royal Khmer) */}
             {Boolean(flowConfig.hasCoverBackgroundImage) && (
                 <div style={{ marginTop: 12 }}>
-                    <CleanImageUploadField
+                    <StudioUploadField
                         label={englishUI ? (flowConfig.labels.coverBackgroundImageEn || "Cover background (closed state)") : (flowConfig.labels.coverBackgroundImage || uiCopy("ផ្ទៃខាងក្រោយគ្របមុខ (ពេលមិនទាន់បើក)", "Cover background (closed state)"))}
                         icon={ImageIcon}
                         image={form.coverBackgroundImage}
@@ -2041,7 +1837,7 @@ export default function InvitationForm({ invitation }) {
             {/* Background Frame / Botanical Image Upload (Opened State) (Field 2 for Full / Botanical Frame) */}
             {Boolean(flowConfig.hasBackgroundImage) && (
                 <div style={{ marginTop: 12 }}>
-                    <CleanImageUploadField
+                    <StudioUploadField
                         label={englishUI ? (flowConfig.labels.backgroundImageEn || "Botanical frame (opened state)") : (flowConfig.labels.backgroundImage || uiCopy("ស៊ុមផ្កា ឬរូបភាពផ្ទៃខាងក្រោយ", "Botanical frame / background image"))}
                         icon={Sparkles}
                         image={form.backgroundImage || form.templateDefaultBackground || (String(form.templateId).includes("celestial") ? "/invitations/khmer-celestial/botanical-frame.jpg" : "")}
@@ -2340,7 +2136,7 @@ export default function InvitationForm({ invitation }) {
                     <span className="pe-label-icon"><Mail size={15} /></span>
                     {t("messageText") || uiCopy("អត្ថបទសារអញ្ជើញ", "Invitation message")}
                 </label>
-                <textarea
+                <StudioTextEditor english={englishUI}
                     className="pe-textarea"
                     rows="6"
                     name="messageText" value={authoredForm.messageText}
@@ -2359,7 +2155,7 @@ export default function InvitationForm({ invitation }) {
                 <span>{t("secCouple") || uiCopy("រូបថតគូស្នេហ៍", "Couple photo")}</span>
             </h4>
 
-            <CleanImageUploadField
+            <StudioUploadField
                 label={t("backgroundImage") || uiCopy("រូបថតគូស្នេហ៍ខាងក្នុង", "Couple / inner photo")}
                 icon={ImageIcon}
                 image={form.backgroundImage}
@@ -2507,7 +2303,7 @@ export default function InvitationForm({ invitation }) {
                 <input
                     type="text"
                     className="pe-input"
-                    value={form.googleMapUrl}
+                    name="googleMapUrl" value={form.googleMapUrl}
                     onChange={(e) => {
                         const value = e.target.value;
                         update("googleMapUrl", value);
@@ -2528,7 +2324,7 @@ export default function InvitationForm({ invitation }) {
                 </div>
             </div>
 
-            <CleanImageUploadField
+            <StudioUploadField
                 label={t("sketchMap") || uiCopy("រូបគំនូសប្លង់ទីតាំង", "Venue sketch map")}
                 icon={Map}
                 image={form.sketchMapImage}
@@ -3108,7 +2904,7 @@ export default function InvitationForm({ invitation }) {
 
             <div className="pe-grid-2">
                 {/* Dollar QR */}
-                <CleanImageUploadField
+                <StudioUploadField
                     label={t("qrDollar") || uiCopy("កូដចងដៃជាប្រាក់ដុល្លារ ($)", "USD gift QR ($)")}
                     icon={QrCode}
                     image={form.khqrDollar?.qrUrl}
@@ -3123,7 +2919,7 @@ export default function InvitationForm({ invitation }) {
                 />
 
                 {/* Riel QR */}
-                <CleanImageUploadField
+                <StudioUploadField
                     label={t("qrRiel") || uiCopy("កូដចងដៃជាប្រាក់រៀល (៛)", "KHR gift QR")}
                     icon={QrCode}
                     image={form.khqrRiel?.qrUrl}
@@ -3241,8 +3037,8 @@ export default function InvitationForm({ invitation }) {
                             <p>{WORDING_PRESETS[wordingPresetId(wordingPreset)][activeLangTab === 'EN' ? 'en' : 'km'][wordingSection === 'invitation' ? 'messageText' : 'thankYouText']}</p>
                             {wordingError && <p role="alert">{wordingError}</p>}
                             <p>{uiCopy("ឃ្លាអញ្ជើញគំរូ (", "Wording preset (")}{activeLangTab})</p>
-                            <button type="button" onClick={() => {
-                                if (!window.confirm(uiCopy("ជំនួសឃ្លានៅក្នុងផ្នែកនេះដោយឃ្លាគំរូដែលបានជ្រើសរើស?", "Replace the wording in this section with the selected preset?"))) return;
+                             <button type="button" onClick={async () => {
+                                 if (!await feedback.confirm({ title: uiCopy('ប្ដូរឃ្លាអញ្ជើញ', 'Replace invitation wording'), message: uiCopy("ជំនួសឃ្លានៅក្នុងផ្នែកនេះដោយឃ្លាគំរូដែលបានជ្រើសរើស?", "Replace the wording in this section with the selected preset?") })) return;
                                 const locale = activeLangTab === 'EN' ? 'en' : 'km';
                                 const selected = WORDING_PRESETS[wordingPresetId(wordingPreset)][locale];
                                 const keys = wordingSection === 'invitation' ? ['messageTitle', 'messageText'] : ['thankYouTitle', 'thankYouText', 'apologyTitle', 'apologyText'];
@@ -3290,14 +3086,14 @@ export default function InvitationForm({ invitation }) {
     };
 
     return (
-        <div ref={editorRoot} className="pe-editor-root invitation-studio" data-editor-mode={editorMode} data-guide-step={guideStep} role="main" onFocusCapture={event => {
+        <div ref={editorRoot} className="pe-editor-root invitation-studio" data-focus-editor={focusEditor} data-editor-mode={editorMode} data-guide-step={guideStep} role="main" onFocusCapture={event => {
             if (event.target.closest(".pe-editor-column") && event.target.matches("input,textarea,select,button")) lastEditorField.current = event.target;
         }} onBlurCapture={event => {
             if (event.target === lastEditorField.current) rememberEditorPosition();
         }}>
 
             {(() => {
-                const toolbar = <StudioToolbar title={authoredForm.title} templateName={getTemplateById(form.templateId)?.name || form.templateId}
+                const toolbar = <StudioToolbar canEdit={canEdit} title={authoredForm.title} templateName={getTemplateById(form.templateId)?.name || form.templateId}
                     english={englishUI} studio={studio} saving={isSaving} publishing={isPublishing} published={published}
                     canPublish={canPublish}
                     onTemplate={() => setIsTemplateModalOpen(true)} onPreview={openPreview} previewOpen={isMobilePreviewOpen} onPublish={reviewPublication}
@@ -3305,10 +3101,10 @@ export default function InvitationForm({ invitation }) {
                 const mount = params.eventId && document.getElementById("invitation-studio-toolbar");
                 return mount ? createPortal(toolbar, mount) : toolbar;
             })()}
-            {studio.error && <div className="studio-save-error" role="alert"><span>{studio.error}</span>{!["conflict", "expired"].includes(studio.phase) && <button type="button" onClick={() => studio.save()} disabled={isSaving}>{uiCopy("រក្សាទុកម្ដងទៀត", "Retry save")}</button>}{["conflict", "expired"].includes(studio.phase) && <><p>{uiCopy("ចម្លងអត្ថបទសំខាន់ ឬទាញយកពង្រាងនេះ មុនបើកកម្មវិធីម្ដងទៀត។", "Copy important text or download this draft before reopening the event.")}</p><button type="button" onClick={() => { const url = URL.createObjectURL(new Blob([JSON.stringify(form, null, 2)], { type: "application/json" })); const link = document.createElement("a"); link.href = url; link.download = "invitation-unsaved-draft.json"; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }}>{uiCopy("ទាញយកពង្រាងមិនទាន់រក្សាទុក", "Download unsaved draft")}</button></>}</div>}
+            {studio.error && <div className="studio-save-error" role="alert"><span>{studio.error}</span>{studio.failure?.status === 403 && <button type="button" onClick={() => feedback.explain(studio.failure, { event: workspace, permission: "MANAGE_INVITATION" })}>{uiCopy('\u1796\u17b7\u1793\u17b7\u178f\u17d2\u1799\u179f\u17b7\u1791\u17d2\u1792\u17b7', 'Review access')}</button>}{!["conflict", "expired"].includes(studio.phase) && <button type="button" onClick={() => studio.save({ deliberate: true })} disabled={isSaving || !canEdit}>{uiCopy("រក្សាទុកម្ដងទៀត", "Retry save")}</button>}{["conflict", "expired"].includes(studio.phase) && <><p>{uiCopy("ចម្លងអត្ថបទសំខាន់ ឬទាញយកពង្រាងនេះ មុនបើកកម្មវិធីម្ដងទៀត។", "Copy important text or download this draft before reopening the event.")}</p><button type="button" onClick={() => { const url = URL.createObjectURL(new Blob([JSON.stringify(form, null, 2)], { type: "application/json" })); const link = document.createElement("a"); link.href = url; link.download = "invitation-unsaved-draft.json"; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }}>{uiCopy("ទាញយកពង្រាងមិនទាន់រក្សាទុក", "Download unsaved draft")}</button></>}</div>}
             <div className="studio-workflow-bar">
                 <StudioGuide mode={editorMode} onMode={mode => { setEditorMode(mode); if (mode === 'guided') goToGuideStep(guideStep); }} step={guideStep} onStep={goToGuideStep} sections={flowConfig.sectionOrder} activeSection={activeSection} onSection={setSelectedSection} english={englishUI} checks={readiness} onField={completePublishField} onPreview={openPreview} onGuests={() => openEventTool("guests")} onRsvp={() => openEventTool("rsvp")} onPublish={reviewPublication} published={published} publishedUrl={publishedUrl} saving={isSaving || isPublishing} canPublish={canPublish} canManageGuests={workspace ? workspace.can?.("MANAGE_GUESTS") : true} />
-                {!compactPreview && !isMobilePreviewOpen && <StudioSplitControls split={workspaceSplit} english={englishUI} />}
+                {!compactPreview && !isMobilePreviewOpen && <StudioSplitControls split={workspaceSplit} english={englishUI} focusEditor={focusEditor} onFocusEditor={() => setFocusEditor(value => !value)} />}
             </div>
             <PublishReview open={publishReviewOpen} onClose={() => setPublishReviewOpen(false)} onConfirm={publishInvitation} onCheck={checkPublication} checks={readiness} onField={completePublishField} english={englishUI} publishing={isPublishing} error={publishError} visibility={form.visibility} published={published} />
             {/* The controls and preview continue to use the original template engine. */}
@@ -3340,6 +3136,7 @@ export default function InvitationForm({ invitation }) {
                         <span className="pe-lang-editing-indicator" role="status">
                             {activeLangTab === "KH" ? (t("editingKh") || uiCopy("កំពុងកែសម្រួល៖ ភាសាខ្មែរ", "Editing: Khmer")) : (t("editingEn") || uiCopy("កំពុងកែសម្រួល៖ អង់គ្លេស", "Editing: English"))}
                         </span>
+                        <details className="studio-authoring-options"><summary>{uiCopy('ភាសា និងការផ្សព្វផ្សាយ', 'Language & publishing')}</summary><fieldset className="studio-authoring-options-body" disabled={!canEdit}>
                         <small>{activeLangTab}: {JSON.stringify(localeContent(form)[activeLangTab === 'EN' ? 'en' : 'km']) !== JSON.stringify(studio.savedValue ? localeContent(studio.savedValue)[activeLangTab === 'EN' ? 'en' : 'km'] : null) ? uiCopy('មិនទាន់រក្សាទុក', 'Unsaved') : uiCopy('បានរក្សាទុក', 'Saved')} · English: {englishReadiness.complete}/{englishReadiness.total}</small>
                         <label className="studio-inline-check"><input type="checkbox" checked={localeContent(form).enabledLocales.includes('en')}
                           disabled={!(workspace ? workspace.isOwner : true) || (!englishReadiness.ready && !localeContent(form).enabledLocales.includes('en'))}
@@ -3355,9 +3152,13 @@ export default function InvitationForm({ invitation }) {
                             const escaped = CSS.escape(key);
                             requestAnimationFrame(() => { const node = scope?.querySelector(`[data-translation-key="${escaped}"], [name="${escaped}"]`) || scope?.querySelector('input:not([type=checkbox]), textarea'); node?.focus(); });
                           }); }} />
+                        </fieldset></details>
                     </div>
 
                     <div className="pe-editor-scroll-body">
+                        {!canEdit && <div className="workspace-notice" role="alert"><p>{uiCopy('សិទ្ធិបានផ្លាស់ប្ដូរ ឬមិនអាចផ្ទៀងផ្ទាត់បាន។ ការកែប្រែនៅទីនេះ ប៉ុន្តែមិនអាចរក្សាទុក ឬផ្សព្វផ្សាយបានទេ។','Access changed or could not be verified. Your edits remain here; saving and publishing are disabled.')}</p><button type="button" className="workspace-button" onClick={() => { const url = URL.createObjectURL(new Blob([JSON.stringify(form, null, 2)], { type: 'application/json' })); const link = document.createElement('a'); link.href = url; link.download = 'invitation-unsaved-draft.json'; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }}>{uiCopy('ទាញយកពង្រាង','Download recovery draft')}</button><button type="button" className="workspace-button" onClick={() => window.dispatchEvent(new Event('koupreng:access-refresh'))}>{uiCopy('ពិនិត្យសិទ្ធិម្ដងទៀត','Recheck access')}</button></div>}
+                        <fieldset className="studio-editable-fields" aria-label={uiCopy('វាលធៀបអញ្ជើញ','Invitation fields')} disabled={!canEdit}>
+                        <StudioValidationSummary issues={validationIssues} onField={focusValidationIssue} english={englishUI} />
                         {editorMode === "advanced" && <h2 className="studio-tab-heading">{activeStudioTab.labels[englishUI ? 1 : 0]}</h2>}
                         {activeStudioTab.sections.some(key => templateCapabilities(getTemplateById(form.templateId) || { id: form.templateId })[key] === false) && <p className="workspace-notice">{uiCopy('ផ្នែកខ្លះមិនមានក្នុងគំរូនេះទេ។ មាតិកាដែលបានសរសេរត្រូវបានរក្សាទុកសម្រាប់ពេលប្ដូរគំរូ។', 'Some sections are unavailable in this template. Your authored content stays saved for switching templates.')}</p>}
                         {editorMode === "advanced" && activeStudioTab.id !== 'ticketsQr' && !activeStudioTab.sections.some(key => flowConfig.sectionOrder.includes(key)) && <p className="workspace-notice">{uiCopy('គំរូនេះមិនបង្ហាញផ្នែកទាំងនេះទេ។ មាតិកាដែលរក្សាទុកត្រូវបានរក្សាដដែល។', 'This template does not provide these sections. Your saved content is retained.')}</p>}
@@ -3367,28 +3168,29 @@ export default function InvitationForm({ invitation }) {
                             const advanced = editorMode === "advanced";
                             const visible = advanced ? activeStudioTab.sections.includes(sectionKey) : sectionKey === activeSection;
                             return <div key={sectionKey} data-studio-section={sectionKey} hidden={!visible}>
-                                <details className="studio-subsection" open={!advanced || (expandedSections[sectionKey] ?? sectionKey === activeSection)}
+                                <StudioSectionPanel label={STUDIO_SECTION_LABELS[sectionKey]?.[englishUI ? 1 : 0] || sectionKey} english={englishUI} advanced={advanced} optional={["story","party","faq","dressCode","gift","gallery"].includes(sectionKey)} expanded={!advanced || (expandedSections[sectionKey] ?? sectionKey === activeSection)}
                                     onToggle={event => {
                                         if (advanced) {
                                             const open = event.currentTarget.open;
                                             setExpandedSections(current => current[sectionKey] === open ? current : { ...current, [sectionKey]: open });
                                         }
                                     }}>
-                                    <summary hidden={!advanced}>{STUDIO_SECTION_LABELS[sectionKey]?.[englishUI ? 1 : 0] || sectionKey}</summary>
-                                    <div className="studio-subsection-body">{["invitation", "closing"].includes(sectionKey) && renderWordingPresets(sectionKey)}{renderer()}
+                                    <div>{["invitation", "closing"].includes(sectionKey) && renderWordingPresets(sectionKey)}{renderer()}
                                     {sectionKey === 'family' && <FamilyDesignEditor form={form} locale={activeLangTab === 'EN' ? 'en' : 'km'} onChange={update} supported={templateCapabilities(getTemplateById(form.templateId) || {}).familyLayout} />}
                                     {sectionKey === 'cover' && <MonogramEditor value={form.coupleMonogram} onChange={value => update('coupleMonogram', value)} entitled={workspace?.access?.ownerFeatures?.includes('COUPLE_MONOGRAM') === true} supported={templateCapabilities(getTemplateById(form.templateId) || {}).monogram} />}
                                     {sectionKey === 'venue' && <IllustratedMapEditor value={form.illustratedMap} onChange={value => update('illustratedMap', value)} locale={activeLangTab === 'EN' ? 'en' : 'km'} entitled={workspace?.access?.ownerFeatures?.includes('ILLUSTRATED_VENUE_MAP') === true} onUndo={studio.undo} onRedo={studio.redo} />}</div>
-                                </details>
+                                </StudioSectionPanel>
                             </div>;
                         })}
                         <section hidden={activeSection !== "ticketsQr"} className="studio-ticket-entry">
+                            <FeatureAccessCard feature="QR_INVITATIONS" permission="MANAGE_INVITATION" ownerOnly />
                             <h3>{uiCopy("រចនាកាត និង QR ភ្ញៀវ", "Ticket design & guest QR")}</h3>
                             <p>{uiCopy("រក្សាទុកពង្រាង មុនបើករចនាកាត ឬកាតភ្ញៀវ។ QR ប្រើសិទ្ធិចូលរួមកម្មវិធីដដែល។", "Save your draft, then customize tickets or open personalized guest tickets. QR admission keeps the existing guest identity.")}</p>
                             <button type="button" className="workspace-button primary" disabled={!workspace?.isOwner || isSaving} onClick={() => openEventTool("tickets/design")}>{uiCopy("រក្សាទុក និងរចនាកាត", "Save & open ticket designer")}</button>
                             <button type="button" className="workspace-button" disabled={!workspace?.can?.("MANAGE_GUESTS") || isSaving} onClick={() => openEventTool("guests")}>{uiCopy("រក្សាទុក និងបើកកាតភ្ញៀវ", "Save & open guest tickets")}</button>
                             {!workspace?.isOwner && <p>{uiCopy("ម្ចាស់កម្មវិធីគ្រប់គ្រងរចនាកាត។", "The event owner manages ticket appearance.")}</p>}
                         </section>
+                        </fieldset>
                     </div>
                 </div>
 
@@ -3434,7 +3236,7 @@ export default function InvitationForm({ invitation }) {
                 </Modal>
             )}
 
-            {isTemplateModalOpen && <TemplateChooser templates={catalogTemplates} status={catalogStatus}
+            {isTemplateModalOpen && <TemplateChooser selectionAllowed={canEdit} templates={catalogTemplates} status={catalogStatus}
                 onRetry={() => setCatalogRetry(value => value + 1)} currentId={form.templateId}
                 eventType={invitation?.eventType || "WEDDING"} language={form.languageMode || "KH"}
                 english={englishUI} onSelect={handleChangeTemplate} onClose={() => setIsTemplateModalOpen(false)} />}

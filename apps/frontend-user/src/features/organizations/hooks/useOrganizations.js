@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { organizationService } from "../api/organizationApi";
+import { feedback, refreshAccess } from '@/shared/feedback/feedback';
 
 export function useOrganizations() {
   const [organizations, setOrganizations] = useState([]);
@@ -29,10 +30,12 @@ export function useOrganizations() {
     setError("");
     try {
       const newOrg = await organizationService.create(name);
+      refreshAccess();
       await loadOrganizations();
       return newOrg;
     } catch (err) {
       setError(err?.message || "Could not create organization");
+      feedback.explain(err, { feature:'TEAM_MEMBERS' });
       return null;
     } finally {
       setCreating(false);

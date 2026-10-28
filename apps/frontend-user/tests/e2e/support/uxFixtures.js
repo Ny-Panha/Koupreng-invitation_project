@@ -11,14 +11,14 @@ export const uxEvents = [
   { id: 101, userId: 7, title: "Dara & Sophea", eventType: "WEDDING", hostName: "Dara", groomName: "Dara", brideName: "Sophea", status: "DRAFT", templateId: 30, templateCode: "event-essential", eventDate: "2026-12-20", eventTime: "17:30:00", venueName: "Phnom Penh", visibility: "PRIVATE", languageMode: "EN" },
   { id: 102, userId: 7, title: "Sokha’s birthday", eventType: "BIRTHDAY", hostName: "Sokha", status: "DRAFT", templateId: 30, templateCode: "event-essential", eventDate: "2026-12-22", venueName: "Garden House", languageMode: "EN" },
 ];
-export async function installUxFixtures(page, lang = "en") {
+export async function installUxFixtures(page, lang = "en", { preservePreferences = false } = {}) {
   const calls = [];
   const created = [];
   const purchased = [];
-  await page.addInitScript(({ token, lang }) => {
+  await page.addInitScript(({ token, lang, preservePreferences }) => {
     sessionStorage.setItem("koupreng.auth", JSON.stringify({ accessToken: token, user: { id: 7, fullName: "Audit Host", email: "audit@example.test", role: "USER" } }));
-    localStorage.setItem("koupreng.lang", lang);
-  }, { token: fixtureToken, lang });
+    if (!preservePreferences || !localStorage.getItem("koupreng.lang")) localStorage.setItem("koupreng.lang", lang);
+  }, { token: fixtureToken, lang, preservePreferences });
   await page.route("**/api/**", async route => {
     const request = route.request();
     const path = new URL(request.url()).pathname;
@@ -64,6 +64,7 @@ export async function installUxFixtures(page, lang = "en") {
     if (match) {
       const event = [...uxEvents, ...created].find(event => String(event.id) === match[1]);
       if (!event) return reply(null, 404);
+      if (match[2] === "access") return reply({ owner: true, permissions: [], ownerFeatures: ["QR_INVITATIONS", "SEATING", "QR_CHECK_IN", "ADVANCED_ANALYTICS", "TEAM_MEMBERS"] });
       if (!match[2] || match[2] === "preview") return reply(event);
       if (match[2] === "guests") return reply([{ id: 501, guestName: "Sokha", phone: "012345678", seatCount: 2, sendStatus: "SENT", inviteToken: "audit-guest" }]);
       if (match[2] === "gifts") return reply([{ id: 601, name: "Sokha", amount: 25, currency: "USD" }]);

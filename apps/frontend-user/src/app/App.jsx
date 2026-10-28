@@ -8,6 +8,8 @@ import RouteMotion from "../shared/animations/RouteMotion";
 import SupportWidget from "../shared/ui/SupportWidget";
 import RouteFontLoader from "../shared/fonts/RouteFontLoader";
 import ToastContainer from "../shared/ui/ToastContainer";
+import FeedbackHost from "../shared/feedback/FeedbackHost";
+import EntitlementProvider from "../shared/access/EntitlementProvider";
 import {
   initTelegramWebApp,
   TELEGRAM_WEB_APP_READY_EVENT,
@@ -44,6 +46,7 @@ function App() {
       <QueryProvider>
         <ThemeProvider>
           <Router>
+            <EntitlementProvider>
             <RouteFontLoader />
             <ScrollToTop />
             <RouteMotion />
@@ -51,7 +54,9 @@ function App() {
               <AppRouter />
             </div>
             <ToastContainer />
+            <FeedbackHost />
             <SupportWidget />
+            </EntitlementProvider>
           </Router>
         </ThemeProvider>
       </QueryProvider>

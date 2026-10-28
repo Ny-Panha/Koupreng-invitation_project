@@ -4,6 +4,7 @@ import { ArrowUpRight, Menu, X } from "lucide-react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useLanguageStore } from "../../stores/useLanguageStore";
 import "./MarketingChrome.css";
+import DisplayPreferences from '@/shared/preferences/DisplayPreferences';
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -75,7 +76,8 @@ export default function Header() {
           <nav className="kp-desktop-nav" aria-label={copy("ម៉ឺនុយចម្បង", "Main navigation")}>
             {items.map(([path, label]) => <Link key={path} to={path} className="kp-nav-link" aria-current={active(path) ? "page" : undefined}>{label}</Link>)}
           </nav>
-          <div className="kp-desktop-actions">{languageControl}{account}</div>
+          <div className="kp-desktop-actions">{languageControl}<DisplayPreferences language={false}/>{account}</div>
+          <div className="kp-mobile-preferences"><DisplayPreferences compact /></div>
           <button className="kp-menu-trigger" type="button" aria-label={copy("បើកម៉ឺនុយ", "Open navigation menu")} aria-expanded={menuOpen} aria-controls="public-mobile-navigation" onClick={() => { dialog.current.showModal(); setMenuOpen(true); }}><Menu size={22} aria-hidden="true" /></button>
         </div>
       </header>

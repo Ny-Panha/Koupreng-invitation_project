@@ -72,7 +72,6 @@ export function EventsFeature() {
                 <div>
                     <span>{t("brandKicker") || `${tDash("brand") || "Koupreng"} ${en ? "invitations" : "ធៀបអញ្ជើញ"}`}</span>
                     <h1>{en ? "My Events" : "កម្មវិធីរបស់ខ្ញុំ"}</h1>
-                    <p>{en ? "Your invitations, guests and event plans, together in one place." : "គ្រប់គ្រងកម្មវិធី ធៀបការ បញ្ជីភ្ញៀវ និងកាតអញ្ជើញឌីជីថលរបស់អ្នកនៅកន្លែងតែមួយ។"}</p>
                 </div>
                 <Link to="/app/events/new" state={{ from: "/dashboard/events" }} className="events-create-btn">
                     + {createBtnText}
@@ -145,7 +144,7 @@ export function EventsFeature() {
                         onManage={handleDashboard}
                         onEdit={handleEdit}
                         onDelete={handleDeleteClick}
-                        onReviewAccess={() => navigate("/app/packages")}
+                        onReviewAccess={handleEdit}
                         onPreview={draft => {
                             const id = backendEventId(draft);
                             if (id) navigate(eventPath(id, "preview"));
@@ -164,7 +163,7 @@ export function EventsFeature() {
                             onManage={handleDashboard}
                             onEdit={handleEdit}
                             onDelete={handleDeleteClick}
-                            onReviewAccess={() => navigate("/app/packages")}
+                            onReviewAccess={handleEdit}
                             onPreview={draft => {
                                 const id = backendEventId(draft);
                                 if (id) navigate(eventPath(id, "preview"));

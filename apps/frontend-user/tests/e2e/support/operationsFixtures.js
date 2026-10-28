@@ -1,8 +1,8 @@
 import { installOverhaulFixtures } from "./overhaulFixtures.js";
 
 // Synthetic browser DTOs for the populated management screens. These do not test live HTTP providers.
-export async function installOperationsFixtures(page, lang = "en") {
-  await installOverhaulFixtures(page, lang);
+export async function installOperationsFixtures(page, lang = "en", { installBase=true } = {}) {
+  if(installBase) await installOverhaulFixtures(page, lang);
   const state = { failExpense: false, failRsvp: false, calls: [] };
   const guests = [
     { id: 501, guestName: "Sokha", seatCount: 2, rsvpStatus: "ATTENDING", sendStatus: "SENT" },

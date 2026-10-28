@@ -33,11 +33,11 @@ test('wording preview is deliberate and confirmed replacement can be undone', as
   await expect(field).toHaveValue('My custom invitation');
   await page.locator('[data-studio-section="invitation"]').getByLabel('Editable wording preset').selectOption('welcome');
   await expect(field).toHaveValue('My custom invitation');
-  page.once('dialog', dialog => dialog.dismiss());
   await page.locator('[data-studio-section="invitation"]').getByRole('button', { name: 'Apply formal wording', exact: true }).click();
+  await page.getByRole('dialog', { name:'Replace invitation wording' }).getByRole('button', { name:'Cancel', exact:true }).click();
   await expect(field).toHaveValue('My custom invitation');
-  page.once('dialog', dialog => dialog.accept());
   await page.locator('[data-studio-section="invitation"]').getByRole('button', { name: 'Apply formal wording', exact: true }).click();
+  await page.getByRole('dialog', { name:'Replace invitation wording' }).getByRole('button', { name:'Confirm', exact:true }).click();
   await expect(field).not.toHaveValue('My custom invitation');
   // UI stays English while authored text remains on the independent Khmer tab.
   await expect(page.locator('.pe-lang-pill-btn').nth(0)).toHaveAttribute('aria-pressed', 'true');

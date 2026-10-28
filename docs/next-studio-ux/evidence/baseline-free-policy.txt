@@ -1,0 +1,2 @@
+code	price	currency	active	public_visible	status	max_invitations	max_guests	max_guests_per_invitation	qr_invitations_enabled	qr_check_in_enabled	premium_templates_enabled
+FREE	0.00	USD	1	0	ACTIVE	1	20	20	1	0	0

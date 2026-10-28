@@ -355,7 +355,10 @@
     }
 
     .event-card--featured .event-card-img-wrap {
-        height: 100%;
+        width: 100%;
+        min-width: 0;
+        height: auto;
+        aspect-ratio: auto;
         min-height: 260px;
         border-radius: 0;
     }

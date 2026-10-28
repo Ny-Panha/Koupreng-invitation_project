@@ -1,3 +1,5 @@
+import { feedback, refreshAccess } from "@/shared/feedback/feedback";
+import { useEventWorkspace } from "@/features/events/workspace/EventContext";
 import { useState } from "react";
 import { guestService } from "@/features/guests/api/guestApi";
 import { deliveryService } from "@/features/invitations/api/deliveryApi";
@@ -27,6 +29,7 @@ export function useGuestMutations({
   setBackendGuests,
   refreshData,
 }) {
+  const workspace = useEventWorkspace();
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
@@ -91,8 +94,10 @@ export function useGuestMutations({
         });
       }
 
+      refreshAccess();
       return true;
     } catch (err) {
+      feedback.explain(err, { event: workspace, permission: "MANAGE_GUESTS" });
       if (backendInvitation) {
         setBackendGuests((current) => editingId
           ? current.map((item) => String(item.id) === String(editingId) ? backendGuests.find((guest) => String(guest.id) === String(editingId)) || item : item)
@@ -135,8 +140,10 @@ export function useGuestMutations({
       });
 
       await refreshData();
+      refreshAccess();
       return true;
     } catch (err) {
+      feedback.explain(err, { event: workspace, permission: "MANAGE_GUESTS" });
       setError(err?.message || "Could not remove guest");
       return false;
     } finally {
@@ -203,8 +210,10 @@ export function useGuestMutations({
       }
 
       await refreshData();
+      refreshAccess();
       return true;
     } catch (err) {
+      feedback.explain(err, { event: workspace, permission: "MANAGE_GUESTS" });
       const is409 = err?.status === 409 || err?.data?.code === "GUEST_DUPLICATE";
       const errorMsg = is409
         ? "មានភ្ញៀវដែលមានលេខទូរស័ព្ទ ឬ Email ដូចគ្នានៅក្នុងប្រព័ន្ធរួចហើយ (Conflict 409)"
@@ -234,8 +243,10 @@ export function useGuestMutations({
           return next;
         });
       }
+      refreshAccess();
       return true;
-    } catch (err) { setError(err.message || "Could not record manual sharing"); return false; }
+    } catch (err) {
+      feedback.explain(err, { event: workspace, permission: "MANAGE_GUESTS" }); setError(err.message || "Could not record manual sharing"); return false; }
     finally { setSaving(false); }
   };
 

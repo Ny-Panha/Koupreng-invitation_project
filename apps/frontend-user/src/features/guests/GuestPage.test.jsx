@@ -20,7 +20,7 @@ it('shows server-wide totals, selects only the current page, and clears selectio
   render(<MemoryRouter initialEntries={['/app/events/10/guests']}><Routes><Route path="/app/events/:eventId/guests" element={<GuestsPage />} /></Routes></MemoryRouter>);
   await screen.findByText('Page 0 guest');
   expect(screen.getByText('80')).toBeInTheDocument();
-  expect(screen.getByText(/35 attendees are confirmed/)).toBeInTheDocument();
+  expect(document.querySelector('.guest-count-definitions')).toBeNull();
   expect(screen.getByRole('button', { name: 'Export selected (0)' })).toBeDisabled();
   fireEvent.click(screen.getByRole('checkbox', { name: 'Select guest: Page 0 guest' }));
   fireEvent.click(screen.getByRole('button', { name: 'Export selected (1)' }));

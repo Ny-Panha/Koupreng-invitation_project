@@ -1,3 +1,4 @@
+import { useAccessError } from "@/shared/access/useAccessError";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { invitationService } from "@/features/invitations/api/invitationApi";
 import { seatingService } from "../seatingService";
@@ -17,7 +18,7 @@ export function useSeating(invitationId) {
     const [assignmentForm, setAssignmentForm] = useState(emptyAssignment);
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
-    const [error, setError] = useState("");
+    const [error, setError, failure] = useAccessError();
 
     const load = useCallback(async () => {
         setLoading(true);
@@ -34,11 +35,11 @@ export function useSeating(invitationId) {
             setSummary(summaryData);
             setLayout(Number.isInteger(layoutData?.version) ? layoutData : null);
         } catch (err) {
-            setError(err.message || "Could not load seating plan");
+            setError(err);
         } finally {
             setLoading(false);
         }
-    }, [invitationId]);
+    }, [invitationId, setError]);
 
     useEffect(() => {
         let active = true;
@@ -64,7 +65,7 @@ export function useSeating(invitationId) {
                 setError("");
             })
             .catch((err) => {
-                if (active) setError(err.message || "Could not load seating plan");
+                if (active) setError(err);
             })
             .finally(() => {
                 if (active) setLoading(false);
@@ -73,7 +74,7 @@ export function useSeating(invitationId) {
         return () => {
             active = false;
         };
-    }, [invitationId]);
+    }, [invitationId, setError]);
 
     const assignmentsByTable = useMemo(() => {
         const grouped = new Map();
@@ -100,7 +101,7 @@ export function useSeating(invitationId) {
             await load();
             return true;
         } catch (err) {
-            setError(err.message || "Could not create table");
+            setError(err);
             return false;
         } finally {
             setSaving(false);
@@ -121,7 +122,7 @@ export function useSeating(invitationId) {
             toast(t("tableCreated"));
             await load();
         } catch (err) {
-            setError(err.message || "Could not create table");
+            setError(err);
         } finally {
             setSaving(false);
         }
@@ -142,7 +143,7 @@ export function useSeating(invitationId) {
             toast(t("guestAssigned"));
             await load();
         } catch (err) {
-            setError(err.message || "Could not assign guest");
+            setError(err);
         } finally {
             setSaving(false);
         }
@@ -156,7 +157,7 @@ export function useSeating(invitationId) {
             toast(t("guestUnassigned"));
             await load();
         } catch (err) {
-            setError(err.message || "Could not unassign guest");
+            setError(err);
         } finally {
             setSaving(false);
         }
@@ -170,7 +171,7 @@ export function useSeating(invitationId) {
             toast(t("tableDeleted"));
             await load();
         } catch (err) {
-            setError(err.message || "Could not delete table");
+            setError(err);
         } finally {
             setSaving(false);
         }
@@ -184,7 +185,7 @@ export function useSeating(invitationId) {
             toast(t("tableUpdated"));
             await load();
         } catch (err) {
-            setError(err.message || "Could not update table");
+            setError(err);
         } finally {
             setSaving(false);
         }
@@ -201,7 +202,7 @@ export function useSeating(invitationId) {
             toast(t("planSaved"));
             return saved;
         } catch (err) {
-            setError(err.message || "Could not save floor plan");
+            setError(err);
             throw err;
         } finally {
             setSaving(false);
@@ -220,7 +221,7 @@ export function useSeating(invitationId) {
         assignmentsByTable,
         loading,
         saving,
-        error,
+        error, failure,
         createTable,
         createTableWithData,
         updateTable,

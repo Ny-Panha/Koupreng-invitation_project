@@ -14,6 +14,7 @@ import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
 import { useLanguageStore } from "../../stores/useLanguageStore";
 import logo from "../../assets/logo.png";
+import DisplayPreferences from '@/shared/preferences/DisplayPreferences';
 
 const NAV_LABELS = {
   km: {
@@ -801,6 +802,7 @@ export default function HostNav() {
           </nav>
 
           <div className="host-user-actions">
+            <DisplayPreferences compact />
             <div className="host-profile-selector" ref={profileRef}>
               <button
                 type="button"

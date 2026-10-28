@@ -99,5 +99,12 @@ client_secret*.json
 /output/playwright/phase11-baseline/
 /output/playwright/phase12/
 
+# Browser traces are local; reviewed Studio screenshots live under output/playwright/next-studio-ux.
+/apps/frontend-user/test-results-studio/
+/apps/frontend-user/test-results-polish/
+/apps/frontend-user/test-results-live-studio/
+/apps/frontend-user/test-results-identity-final/
+/apps/frontend-user/test-results-operations-final/
+
 # Database snapshots may contain guest records and credentials.
 /backups/*.sql

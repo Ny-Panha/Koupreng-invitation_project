@@ -17,7 +17,7 @@ function Thumbnail({ template }) {
     : <span><ImageOff aria-hidden="true" />Preview image unavailable</span>}</div>;
 }
 
-export default function TemplateChooser({ templates, status, onRetry, currentId, eventType = "WEDDING", language = "KH", onSelect, onClose, english = false }) {
+export default function TemplateChooser({ templates, status, onRetry, currentId, eventType = "WEDDING", language = "KH", onSelect, onClose, english = false, selectionAllowed = true }) {
   const copy = (km, en) => english ? en : km;
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("ALL");
@@ -30,7 +30,7 @@ export default function TemplateChooser({ templates, status, onRetry, currentId,
   const filtered = source.filter(template => (category === "ALL" || templateCategory(template) === category) && matchesTemplateSearch(template, query));
   const compatible = template => (!template.supportedEventTypes?.length || template.supportedEventTypes.includes(eventType))
     && (!template.supportedLanguages?.length || template.supportedLanguages.includes(language));
-  const available = template => status === "ready" && isPublicCatalogTemplate(template) && resolveTemplateRenderer(template).available && compatible(template);
+  const available = template => selectionAllowed && status === "ready" && isPublicCatalogTemplate(template) && resolveTemplateRenderer(template).available && compatible(template);
   const selected = templates.find(template => templateIdentity(template) === candidate);
   const confirm = async () => {
     if (!selected || !available(selected)) return;

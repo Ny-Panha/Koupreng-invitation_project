@@ -13,16 +13,24 @@ public class ApiException extends RuntimeException {
 
     private final HttpStatus status;
     private final String code;
+    private final java.util.Map<String, Object> details;
 
     public ApiException(HttpStatus status, String message) {
         this(status, defaultCode(status), message);
     }
 
     public ApiException(HttpStatus status, String code, String message) {
+        this(status, code, message, java.util.Map.of());
+    }
+
+    public ApiException(HttpStatus status, String code, String message, java.util.Map<String, Object> details) {
         super(message);
         this.status = status == null ? HttpStatus.INTERNAL_SERVER_ERROR : status;
         this.code = code == null || code.isBlank() ? defaultCode(this.status) : code;
+        this.details = details == null ? java.util.Map.of() : java.util.Map.copyOf(details);
     }
+
+    public java.util.Map<String, Object> getDetails() { return details; }
 
     public HttpStatus getStatus() {
         return status;

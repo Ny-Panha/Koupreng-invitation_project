@@ -1,3 +1,4 @@
+import { chooseStudioSection } from "./support/studioNavigationActions";
 import { expect, test } from "@playwright/test";
 import { installIdentityFixtures, identityCatalog } from "./support/templateIdentityFixtures.js";
 
@@ -26,8 +27,7 @@ async function setup(page, { code = "khmer-celestial", address = "", nested = fa
   return { ...fixture, calls, published };
 }
 async function venue(page) {
-  if (page.viewportSize().width < 1024) await page.locator(".studio-section-select select").selectOption("venue");
-  else await page.getByRole("button", { name: "Venue & map", exact: true }).click();
+  await chooseStudioSection(page,'scheduleVenue','Venue & map');
   return page.getByRole("textbox", { name: "Venue address", exact: true });
 }
 
@@ -50,7 +50,7 @@ for (const code of ["khmer-celestial", "silk-heritage"]) {
     await expect(page.getByRole("button", { name: "Publish", exact: true })).toHaveCount(0);
     await page.screenshot({ path: info.outputPath(`published-address-${code}.png`) });
     if (code === "khmer-celestial") {
-      await page.getByRole("button", { name: "1 Event details", exact: true }).click();
+      await chooseStudioSection(page,'eventInformation','Event details');
       await page.getByRole("textbox", { name: "Main Title", exact: true }).fill("Edit after publication");
       await page.getByRole("button", { name: "Save", exact: true }).click();
       await expect(page.locator(".studio-save-status")).toHaveAttribute("data-phase", "saved");

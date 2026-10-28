@@ -22,7 +22,7 @@ function getFirstDayOfMonth(year, month) {
  * DatePicker — Khmer-language date picker that emits "YYYY-MM-DD" string.
  * Same UI style as TimePicker.
  */
-export function DatePicker({ value, onChange, id, placeholder }) {
+export function DatePicker({ value, onChange, id, placeholder, 'aria-describedby': describedBy, 'aria-invalid': invalid }) {
     const en = useLanguageStore(state => state.lang) === 'en';
     const months = en ? Array.from({length:12}, (_, month) => new Intl.DateTimeFormat('en-US', {month:'long'}).format(new Date(2026, month, 1))) : KHMER_MONTHS;
     const days = en ? ['Su','Mo','Tu','We','Th','Fr','Sa'] : KHMER_DAYS;
@@ -128,6 +128,8 @@ export function DatePicker({ value, onChange, id, placeholder }) {
         }}>
             <button
                 id={id}
+                aria-describedby={describedBy}
+                aria-invalid={invalid}
                 type="button"
                 ref={triggerRef}
                 className={`dp-trigger${open ? " open" : ""}`}

@@ -1,3 +1,4 @@
+import { feedback } from "@/shared/feedback/feedback";
 import { useState } from 'react';
 import { groupProgram, serializeProgramDays, PROGRAM_PERIODS } from '../../templates/shared/program';
 import CeremonyIcon from '../../templates/shared/CeremonyIcon';
@@ -19,9 +20,9 @@ export default function WeddingProgramEditor({ value, programDays, masterDate, o
   const editDay = (index, key, next) => commit(days.map((day, i) => i === index ? { ...day, [key]: next, ...(key === 'title' && day.titleKm !== undefined ? { titleKm: next } : {}) } : day));
   const editRow = (dayIndex, rowIndex, key, next) => commit(days.map((day, i) => i === dayIndex ? { ...day, items: day.items.map((row, j) => j === rowIndex ? { ...row, [key]: next, ...(['title','description'].includes(key) && row[key + 'Km'] !== undefined ? { [key + 'Km']: next } : {}) } : row) } : day));
   const move = (items, index, delta) => { const next = [...items]; [next[index], next[index + delta]] = [next[index + delta], next[index]]; return next; };
-  const confirm = () => window.confirm(copy('លុបមាតិកានេះ?', 'Remove this content?'));
-  const applyPreset = () => {
-    if (!preset || (days.some(day => day.items.length || day.title || day.date) && !window.confirm(copy('ជំនួសកម្មវិធីដែលមានស្រាប់ដោយគំរូ?', 'Replace the existing program with this preset?')))) return;
+  const confirm = async () => await feedback.confirm({ message: copy('លុបមាតិកានេះ?', 'Remove this content?'), destructive: true });
+  const applyPreset = async () => {
+    if (!preset || (days.some(day => day.items.length || day.title || day.date) && !await feedback.confirm({ message: copy('ជំនួសកម្មវិធីដែលមានស្រាប់ដោយគំរូ?', 'Replace the existing program with this preset?'), destructive: true }))) return;
     const day = blankDay();
     const ceremony = (time, title, titleEn) => ({ ...emptyRow(), time, title, titleEn });
     const traditional = () => [
@@ -70,10 +71,10 @@ export default function WeddingProgramEditor({ value, programDays, masterDate, o
         <label className="pe-label">{copy('ពិពណ៌នា', 'Description')}<textarea className="pe-input" maxLength={5000} value={row.description} onChange={e => editRow(dayIndex, rowIndex, 'description', e.target.value)} /></label>
         <label className="pe-label">{copy('ពិពណ៌នាជាអង់គ្លេស', 'Description in English')}<textarea className="pe-input" maxLength={5000} data-translation-key={`schedule.${row.id}.descriptionEn`} value={row.descriptionEn || ''} onChange={e => editRow(dayIndex, rowIndex, 'descriptionEn', e.target.value)} /></label>
         <label className="pe-label studio-inline-check"><input type="checkbox" checked={row.enabled !== false} onChange={e => editRow(dayIndex, rowIndex, 'enabled', e.target.checked)} />{copy('បង្ហាញពិធីនេះ', 'Show this ceremony')}</label>
-        <div className="studio-reorder">{[-1, 1].map(delta => <button key={delta} type="button" disabled={!day.items[rowIndex + delta]} aria-label={copy('ផ្លាស់ទីពិធី ', 'Move ceremony ') + (rowIndex + 1) + (delta < 0 ? copy(' ឡើង', ' up') : copy(' ចុះ', ' down'))} onClick={() => editDay(dayIndex, 'items', move(day.items, rowIndex, delta))}>{delta < 0 ? '↑' : '↓'}</button>)}<button type="button" onClick={() => { if (confirm()) editDay(dayIndex, 'items', day.items.filter((_, i) => i !== rowIndex)); }}>{copy('លុបពិធី', 'Remove ceremony')}</button></div>
+        <div className="studio-reorder">{[-1, 1].map(delta => <button key={delta} type="button" disabled={!day.items[rowIndex + delta]} aria-label={copy('ផ្លាស់ទីពិធី ', 'Move ceremony ') + (rowIndex + 1) + (delta < 0 ? copy(' ឡើង', ' up') : copy(' ចុះ', ' down'))} onClick={() => editDay(dayIndex, 'items', move(day.items, rowIndex, delta))}>{delta < 0 ? '↑' : '↓'}</button>)}<button type="button" onClick={async () => { if (await confirm()) editDay(dayIndex, 'items', day.items.filter((_, i) => i !== rowIndex)); }}>{copy('លុបពិធី', 'Remove ceremony')}</button></div>
       </fieldset>)}
       <button type="button" className="pe-btn-upload-action" onClick={() => editDay(dayIndex, 'items', [...day.items, emptyRow()])}>{copy('បន្ថែមពិធី', 'Add ceremony')}</button>
-      <div className="studio-reorder">{[-1, 1].map(delta => <button key={delta} type="button" disabled={!days[dayIndex + delta]} aria-label={copy('ផ្លាស់ទីថ្ងៃទី ', 'Move day ') + (dayIndex + 1) + (delta < 0 ? copy(' ឡើង', ' up') : copy(' ចុះ', ' down'))} onClick={() => commit(move(days, dayIndex, delta))}>{delta < 0 ? '↑' : '↓'}</button>)}<button type="button" onClick={() => { if (confirm()) commit(days.filter((_, i) => i !== dayIndex)); }}>{copy('លុបថ្ងៃ', 'Remove program day')}</button></div>
+      <div className="studio-reorder">{[-1, 1].map(delta => <button key={delta} type="button" disabled={!days[dayIndex + delta]} aria-label={copy('ផ្លាស់ទីថ្ងៃទី ', 'Move day ') + (dayIndex + 1) + (delta < 0 ? copy(' ឡើង', ' up') : copy(' ចុះ', ' down'))} onClick={() => commit(move(days, dayIndex, delta))}>{delta < 0 ? '↑' : '↓'}</button>)}<button type="button" onClick={async () => { if (await confirm()) commit(days.filter((_, i) => i !== dayIndex)); }}>{copy('លុបថ្ងៃ', 'Remove program day')}</button></div>
     </fieldset>)}
     <button type="button" className="pe-btn-upload-action" onClick={() => commit([...days, blankDay()])}>{copy('បន្ថែមថ្ងៃកម្មវិធី', 'Add program day')}</button>
     {error && <p role="alert">{error}</p>}

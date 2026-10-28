@@ -1,8 +1,9 @@
+import AccessFailureState from "@/shared/access/AccessFailureState";
 import { useParams } from "react-router-dom";
 import { useQrCode } from "./hooks/useQrCode";
 import { QrPreview } from "./components/QrPreview";
 import { QrDownloadButton } from "./components/QrDownloadButton";
-import { ErrorState, SkeletonCard } from "@/shared/ui";
+import { SkeletonCard } from "@/shared/ui";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { Copy, Check, QrCode } from "lucide-react";
 import { useState } from "react";
@@ -18,7 +19,7 @@ export default function QrPage({ invitationId: propInvitationId, guestId: propGu
   const [copied, setCopied] = useState(false);
   const workspace = useEventWorkspace();
 
-  const { qrData, loading, downloading, error, loadQr, downloadPng } = useQrCode(
+  const { qrData, loading, downloading, error, failure, loadQr, downloadPng } = useQrCode(
     invitationId,
     guestId
   );
@@ -55,7 +56,7 @@ export default function QrPage({ invitationId: propInvitationId, guestId: propGu
       </header>
 
       {error ? (
-        <ErrorState message={error} onRetry={loadQr} />
+        <AccessFailureState error={failure || error} feature="QR_INVITATIONS" permission="MANAGE_INVITATION" onRetry={loadQr} />
       ) : loading ? (
         <div className="qr-skeleton-wrapper">
           <SkeletonCard height="360px" />

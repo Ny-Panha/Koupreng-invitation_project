@@ -10,7 +10,7 @@
     margin: 0 auto;
     padding: 32px 0 64px;
     font-family: 'Kantumruy Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    color: #2a1f10;
+    color: var(--app-ink);
 }
 
 /* ─── Hero Header ─── */
@@ -23,7 +23,7 @@
     margin-bottom: 24px;
     padding: 32px 36px;
     background: linear-gradient(135deg, #ffffff 0%, #fdf8f0 60%, #faede0 100%);
-    border: 1px solid #eadfce;
+    border: 1px solid var(--app-border);
     border-radius: 24px;
     box-shadow: 0 12px 40px rgba(93, 67, 32, 0.06);
     position: relative;
@@ -54,7 +54,7 @@
     display: inline-block;
     padding: 4px 14px;
     background: rgba(176, 146, 106, 0.14);
-    color: #8c6f4b;
+    color: var(--app-gold);
     font-size: 14px;
     font-weight: 800;
     letter-spacing: normal;
@@ -69,7 +69,7 @@
     align-items: center;
     gap: 12px;
     margin: 0 0 8px;
-    color: #2a1f10;
+    color: var(--app-ink);
     font-size: 30px;
     font-weight: 800;
     line-height: 1.65;
@@ -79,14 +79,14 @@
 .ep-title svg {
     width: 32px;
     height: 32px;
-    color: #B0926A;
+    color: var(--app-gold);
     flex-shrink: 0;
 }
 
 .exp-subtitle,
 .ep-subtitle {
     margin: 0;
-    color: #7d6443;
+    color: var(--app-muted);
     font-size: 14.5px;
     line-height: 1.6;
     max-width: 580px;
@@ -149,8 +149,8 @@
     align-items: center;
     gap: 16px;
     padding: 20px 22px;
-    background: #ffffff;
-    border: 1px solid #eadfce;
+    background: var(--app-surface);
+    border: 1px solid var(--app-border);
     border-radius: 20px;
     box-shadow: 0 6px 20px rgba(93, 67, 32, 0.04);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -165,8 +165,8 @@
 .exp-sum-total,
 .ep-sum-total {
     background: linear-gradient(135deg, #fdfaf4 0%, #f8f1e5 100%);
-    border-color: #d8c4ab;
-    color: #2a1f10;
+    border-color: var(--app-border);
+    color: var(--app-ink);
 }
 
 .exp-sum-icon,
@@ -175,7 +175,7 @@
     height: 50px;
     border-radius: 14px;
     background: rgba(176, 146, 106, 0.12);
-    color: #B0926A;
+    color: var(--app-gold);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -199,7 +199,7 @@
 .exp-sum-label,
 .ep-sum-label {
     display: block;
-    color: #7d6443;
+    color: var(--app-muted);
     font-size: 12.5px;
     font-weight: 600;
     margin-bottom: 4px;
@@ -210,13 +210,13 @@
     display: block;
     font-size: 24px;
     font-weight: 800;
-    color: #2a1f10;
+    color: var(--app-ink);
     line-height: 1.2;
 }
 
 .exp-sum-total .exp-sum-value,
 .ep-sum-total .ep-sum-value {
-    color: #8c6f4b;
+    color: var(--app-gold);
 }
 
 /* ─── Content Section ─── */
@@ -236,9 +236,9 @@
     justify-content: space-between;
     gap: 16px;
     flex-wrap: wrap;
-    background: #ffffff;
+    background: var(--app-surface);
     padding: 16px 20px;
-    border: 1px solid #eadfce;
+    border: 1px solid var(--app-border);
     border-radius: 18px;
     box-shadow: 0 4px 18px rgba(93, 67, 32, 0.04);
 }
@@ -259,9 +259,9 @@
     align-items: center;
     gap: 7px;
     padding: 8px 16px;
-    background: #fcf9f4;
-    color: #7d6443;
-    border: 1.5px solid #eadfce;
+    background: var(--app-subtle);
+    color: var(--app-muted);
+    border: 1.5px solid var(--app-border);
     border-radius: 999px;
     font-size: 13px;
     font-weight: 700;
@@ -274,9 +274,9 @@
 .exp-cat-btn:hover,
 .ep-cat-btn:hover,
 .ep-filter-btn:hover {
-    background: #ffffff;
+    background: var(--app-surface);
     border-color: #B0926A;
-    color: #B0926A;
+    color: var(--app-gold);
     transform: translateY(-1px);
 }
 
@@ -315,7 +315,7 @@
     left: 14px;
     width: 17px;
     height: 17px;
-    color: #8c6f4b;
+    color: var(--app-gold);
     pointer-events: none;
 }
 
@@ -324,12 +324,12 @@
 .ep-search input {
     width: 100%;
     padding: 10px 14px 10px 40px;
-    background: #fdfaf5;
-    border: 1.5px solid #eadfce;
+    background: var(--app-subtle);
+    border: 1.5px solid var(--app-border);
     border-radius: 999px;
     font-size: 13.5px;
     font-family: inherit;
-    color: #2a1f10;
+    color: var(--app-ink);
     outline: none;
     transition: all 0.2s ease;
 }
@@ -337,7 +337,7 @@
 .exp-search-box input:focus,
 .ep-search-box input:focus,
 .ep-search input:focus {
-    background: #ffffff;
+    background: var(--app-surface);
     border-color: #B0926A;
     box-shadow: 0 0 0 3.5px rgba(176, 146, 106, 0.15);
 }
@@ -345,8 +345,8 @@
 /* ─── Table Wrapper & Table ─── */
 .exp-table-wrap,
 .ep-table-wrap {
-    background: #ffffff;
-    border: 1px solid #eadfce;
+    background: var(--app-surface);
+    border: 1px solid var(--app-border);
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 8px 30px rgba(93, 67, 32, 0.05);
@@ -362,7 +362,7 @@
 .exp-table thead,
 .ep-table thead {
     background: linear-gradient(135deg, #fbf7f0 0%, #f6eee2 100%);
-    border-bottom: 2px solid #eadfce;
+    border-bottom: 2px solid var(--app-border);
 }
 
 .exp-table th,
@@ -370,7 +370,7 @@
     padding: 16px 20px;
     font-size: 12.5px;
     font-weight: 700;
-    color: #7d6443;
+    color: var(--app-muted);
     letter-spacing: 0.02em;
     white-space: nowrap;
 }
@@ -389,7 +389,7 @@
 
 .exp-table tbody tr:hover,
 .ep-table tbody tr:hover {
-    background: #fdfaf4;
+    background: var(--app-subtle);
 }
 
 .exp-table tbody tr:last-child,
@@ -401,7 +401,7 @@
 .ep-table td {
     padding: 16px 20px;
     font-size: 14px;
-    color: #2a1f10;
+    color: var(--app-ink);
     vertical-align: middle;
 }
 
@@ -427,14 +427,14 @@
 .exp-name-text,
 .ep-name-text {
     font-weight: 700;
-    color: #2a1f10;
+    color: var(--app-ink);
     font-size: 14.5px;
 }
 
 .exp-vendor-sub,
 .ep-vendor-sub {
     font-size: 12px;
-    color: #8c7a65;
+    color: var(--app-muted);
 }
 
 /* Category Badge */
@@ -448,7 +448,7 @@
     font-size: 11.5px;
     font-weight: 700;
     background: rgba(176, 146, 106, 0.12);
-    color: #8c6f4b;
+    color: var(--app-gold);
 }
 
 .exp-cat-badge svg,
@@ -462,7 +462,7 @@
 .ep-amount {
     font-size: 15.5px;
     font-weight: 800;
-    color: #8c6f4b;
+    color: var(--app-gold);
 }
 
 .exp-over-tag,
@@ -489,7 +489,7 @@
 .ep-budget-val {
     font-size: 15px;
     font-weight: 700;
-    color: #4a3821;
+    color: var(--app-ink);
 }
 
 .exp-date-val,
@@ -498,20 +498,20 @@
     align-items: center;
     gap: 7px;
     font-size: 13.5px;
-    color: #5c472c;
+    color: var(--app-ink);
     font-weight: 600;
 }
 
 .exp-date-val svg,
 .ep-date-val svg {
-    color: #B0926A;
+    color: var(--app-gold);
     font-size: 15px;
     flex-shrink: 0;
 }
 
 .exp-muted,
 .ep-muted {
-    color: #8c7a65;
+    color: var(--app-muted);
     font-size: 13.5px;
 }
 
@@ -564,9 +564,9 @@
     align-items: center;
     gap: 5px;
     padding: 7px 14px;
-    background: #fbf7f0;
-    color: #7d6443;
-    border: 1px solid #eadfce;
+    background: var(--app-subtle);
+    color: var(--app-muted);
+    border: 1px solid var(--app-border);
     border-radius: 8px;
     font-size: 12.5px;
     font-weight: 700;
@@ -577,8 +577,8 @@
 
 .exp-action-btn:hover,
 .ep-action-btn:hover {
-    background: #f3e9db;
-    color: #2a1f10;
+    background: var(--app-subtle);
+    color: var(--app-ink);
     border-color: #B0926A;
 }
 
@@ -632,8 +632,8 @@
 .ep-empty {
     text-align: center;
     padding: 32px 24px;
-    background: #ffffff;
-    border: 2px dashed #eadfce;
+    background: var(--app-surface);
+    border: 2px dashed var(--app-border);
     border-radius: 24px;
     margin-top: 12px;
 }
@@ -644,7 +644,7 @@
     height: 64px;
     border-radius: 18px;
     background: rgba(176, 146, 106, 0.12);
-    color: #B0926A;
+    color: var(--app-gold);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -657,14 +657,14 @@
     margin: 0 0 8px;
     font-size: 18px;
     font-weight: 800;
-    color: #2a1f10;
+    color: var(--app-ink);
 }
 
 .exp-empty p,
 .ep-empty p {
     margin: 0;
     font-size: 14px;
-    color: #8c7a65;
+    color: var(--app-muted);
 }
 
 /* ─── Modal Layer & Content ─── */
@@ -687,14 +687,14 @@
 
 .exp-modal,
 .ep-modal {
-    background: #ffffff;
+    background: var(--app-surface);
     width: 100%;
     max-width: 780px;
     max-height: 90vh;
     border-radius: 24px;
     position: relative;
     box-shadow: 0 25px 70px rgba(42, 31, 16, 0.25);
-    border: 1px solid #eadfce;
+    border: 1px solid var(--app-border);
     display: flex;
     flex-direction: column;
     animation: expModalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -723,10 +723,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #fdfaf5;
-    border: 1px solid #eadfce;
+    background: var(--app-subtle);
+    border: 1px solid var(--app-border);
     border-radius: 50%;
-    color: #7d6443;
+    color: var(--app-muted);
     cursor: pointer;
     transition: all 0.2s ease;
     z-index: 10;
@@ -734,8 +734,8 @@
 
 .exp-modal-x:hover,
 .ep-modal-x:hover {
-    background: #f5efe5;
-    color: #2a1f10;
+    background: var(--app-subtle);
+    color: var(--app-ink);
 }
 
 .exp-modal-x svg,
@@ -770,16 +770,16 @@
     margin: 0 0 22px;
     font-size: 20px;
     font-weight: 800;
-    color: #2a1f10;
+    color: var(--app-ink);
     padding-bottom: 14px;
-    border-bottom: 1.5px solid #eadfce;
+    border-bottom: 1.5px solid var(--app-border);
 }
 
 .exp-form-title svg,
 .ep-form-title svg {
     width: 22px;
     height: 22px;
-    color: #B0926A;
+    color: var(--app-gold);
 }
 
 .exp-form-body,
@@ -838,7 +838,7 @@
     gap: 7px;
     font-size: 13px;
     font-weight: 700;
-    color: #4a3821;
+    color: var(--app-ink);
     min-width: 0;
     width: 100%;
     box-sizing: border-box;
@@ -868,12 +868,12 @@
 .ep-field-full select,
 .ep-field-full textarea {
     padding: 11px 14px;
-    background: #fdfaf5;
-    border: 1.5px solid #eadfce;
+    background: var(--app-subtle);
+    border: 1.5px solid var(--app-border);
     border-radius: 12px;
     font-size: 13.5px;
     font-family: inherit;
-    color: #2a1f10;
+    color: var(--app-ink);
     outline: none;
     transition: border 0.2s, box-shadow 0.2s;
     box-sizing: border-box;
@@ -887,7 +887,7 @@
 .ep-field-full input:focus,
 .ep-field-full select:focus,
 .ep-field-full textarea:focus {
-    background: #ffffff;
+    background: var(--app-surface);
     border-color: #B0926A;
     box-shadow: 0 0 0 3px rgba(176, 146, 106, 0.15);
 }
@@ -905,7 +905,7 @@
 .ep-input-prefix {
     position: absolute;
     left: 14px;
-    color: #8c6f4b;
+    color: var(--app-gold);
     font-weight: 800;
     font-size: 14px;
     z-index: 1;
@@ -936,8 +936,8 @@
     display: grid;
     gap: 7px;
     padding: 11px 12px;
-    background: #fff;
-    border: 1px solid #eadfce;
+    background: var(--app-surface);
+    border: 1px solid var(--app-border);
     border-radius: 10px;
     color: #62584c;
     font-size: 12px;
@@ -956,7 +956,7 @@
     font-size: 11px;
 }
 
-.exp-payment-status-unpaid { background: #f1f2f3; color: #555; }
+.exp-payment-status-unpaid { background: #f1f2f3; color: var(--app-ink); }
 .exp-payment-status-partial { background: #fff2cc; color: #825b00; }
 .exp-payment-status-paid { background: #e4f3e8; color: #27633a; }
 
@@ -989,8 +989,8 @@
 /* Payments / Installments section */
 .exp-payments-section,
 .ep-payments-section {
-    background: #fbf8f2;
-    border: 1px solid #eadfce;
+    background: var(--app-subtle);
+    border: 1px solid var(--app-border);
     border-radius: 16px;
     padding: 14px 16px;
     min-width: 0;
@@ -1010,7 +1010,7 @@
 .exp-payments-title {
     font-size: 13px;
     font-weight: 700;
-    color: #4a3821;
+    color: var(--app-ink);
     min-width: 0;
     white-space: nowrap;
     overflow: hidden;
@@ -1042,11 +1042,11 @@
 .exp-payments-empty {
     padding: 14px;
     text-align: center;
-    background: #ffffff;
-    border: 1px dashed #eadfce;
+    background: var(--app-surface);
+    border: 1px dashed var(--app-border);
     border-radius: 10px;
     font-size: 12.5px;
-    color: #8c7a65;
+    color: var(--app-muted);
 }
 
 .exp-payment-row {
@@ -1069,7 +1069,7 @@
     font-size: 16px !important;
     padding: 9px 12px !important;
     background: #ffffff !important;
-    border: 1.5px solid #eadfce !important;
+    border: 1.5px solid var(--app-border) !important;
     border-radius: 10px !important;
     box-sizing: border-box;
 }
@@ -1085,7 +1085,7 @@
     left: 10px;
     font-size: 13px;
     font-weight: 700;
-    color: #8c6f4b;
+    color: var(--app-gold);
     position: absolute;
     z-index: 1;
     pointer-events: none;
@@ -1097,7 +1097,7 @@
     font-size: 16px !important;
     padding: 9px 10px 9px 24px !important;
     background: #ffffff !important;
-    border: 1.5px solid #eadfce !important;
+    border: 1.5px solid var(--app-border) !important;
     border-radius: 10px !important;
     box-sizing: border-box;
 }
@@ -1106,10 +1106,10 @@
     width: 100%;
     min-width: 0;
     padding: 9px 8px;
-    background: #fff;
-    border: 1.5px solid #eadfce;
+    background: var(--app-surface);
+    border: 1.5px solid var(--app-border);
     border-radius: 10px;
-    color: #2a1f10;
+    color: var(--app-ink);
     font: inherit;
     font-size: 12px;
     box-sizing: border-box;
@@ -1163,7 +1163,7 @@
     justify-content: flex-end;
     gap: 12px;
     padding-top: 20px;
-    border-top: 1.5px solid #eadfce;
+    border-top: 1.5px solid var(--app-border);
 }
 
 .exp-secondary-btn,
@@ -1172,9 +1172,9 @@
     align-items: center;
     gap: 6px;
     padding: 12px 22px;
-    background: #f5efe5;
-    color: #7d6443;
-    border: 1px solid #eadfce;
+    background: var(--app-subtle);
+    color: var(--app-muted);
+    border: 1px solid var(--app-border);
     border-radius: 999px;
     font-size: 13.5px;
     font-weight: 700;
@@ -1186,7 +1186,7 @@
 .exp-secondary-btn:hover,
 .ep-secondary-btn:hover {
     background: #eadfce;
-    color: #2a1f10;
+    color: var(--app-ink);
 }
 
 /* ─── Mobile Responsiveness ─── */
@@ -1283,8 +1283,8 @@
     .exp-table tr,
     .ep-table tr {
         display: block;
-        background: #ffffff;
-        border: 1px solid #eadfce;
+        background: var(--app-surface);
+        border: 1px solid var(--app-border);
         border-radius: 18px;
         padding: 16px;
         margin-bottom: 12px;
@@ -1313,7 +1313,7 @@
     .ep-table td::before {
         content: attr(data-label);
         font-weight: 700;
-        color: #7d6443;
+        color: var(--app-muted);
         font-size: 12px;
         text-align: left;
         flex-shrink: 0;

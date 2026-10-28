@@ -48,8 +48,9 @@ test("template switch persists the actual association and preserves event detail
   events.set(101,{...events.get(101),contentJson:JSON.stringify({schedule,party:[],faq:[],storyChapters:[]})});
   await page.goto("/app/events/101/invitation");
   await page.getByRole("button",{name:/^Change template:/}).click();
-  page.on("dialog",dialog=>dialog.accept());
-  await page.locator(".pe-tpl-card-modal").filter({hasText:"The Digital Yes"}).click();
+  await page.locator('.tc-card[data-template="the-digital-yes-wedding"]').getByRole('button', { name:'Select',exact:true }).click();
+  await page.getByRole('button', { name:'Use selected design' }).click();
+  await page.getByRole('dialog', { name:'Confirm template change' }).getByRole('button', { name:'Confirm',exact:true }).click();
   await expect.poll(()=>writes.length).toBeGreaterThan(0);
   expect(writes.at(-1).payload.templateId).toBe(7);
   expect(events.get(101).title).toBe("Celestial celebration");
@@ -64,8 +65,9 @@ test("premium denial leaves the assigned template untouched", async ({ page }) =
   await page.route("**/api/v1/me/templates/27/access",route=>route.fulfill({contentType:"application/json",body:JSON.stringify({data:{hasAccess:false}})}));
   await page.goto("/app/events/101/invitation");
   await page.getByRole("button",{name:/^Change template:/}).click();
-  await page.locator(".pe-tpl-card-modal").filter({hasText:"Emerald Luxe"}).click();
-  await expect(page.getByText(/Premium access is required/)).toBeVisible();
+  await page.locator('.tc-card[data-template="emerald-canva-luxe-wedding"]').getByRole('button', { name:'Select',exact:true }).click();
+  await page.getByRole('button', { name:'Use selected design' }).click();
+  await expect(page.getByRole("dialog", { name:"Explore eligible packages" })).toBeVisible();
   expect(writes).toEqual([]);
   await expect(page.locator(".pe-template-tag")).toHaveText("Khmer Celestial");
 });
@@ -73,7 +75,8 @@ test("premium denial leaves the assigned template untouched", async ({ page }) =
 test("unregistered template does not fall back through a colliding ID", async ({ page }) => {
   await installIdentityFixtures(page,{catalog:identityCatalog.map(t=>t.id===4?{...t,code:"unregistered-design",description:null}:t)});
   await page.goto("/templates/unregistered-design/preview");
-  await expect(page.getByRole("alert").filter({hasText:"Template unavailable"})).toBeVisible();
+  await expect(page.locator(".public-state").getByRole("heading")).toBeVisible();
+  await expect(page.locator("[data-template-renderer]")).toHaveCount(0);
   await expect(page.locator(".kc-root,.tx-root")).toHaveCount(0);
 });
 

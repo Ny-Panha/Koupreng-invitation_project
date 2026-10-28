@@ -1,3 +1,5 @@
+import { feedback, refreshAccess } from "@/shared/feedback/feedback";
+import { useEventWorkspace } from "@/features/events/workspace/EventContext";
 import { useRef, useState } from 'react';
 import { Download, FileSpreadsheet, Upload, Check } from 'lucide-react';
 import { Modal } from '@/shared/ui';
@@ -18,6 +20,7 @@ async function batchIdentity(eventId, rows) {
 }
 
 export default function GuestImportModal({ isOpen, onClose, invitationId, onFileImported }) {
+  const workspace = useEventWorkspace();
   const en = useLanguageStore(state => state.lang) === 'en';
   const L = (english, khmer) => en ? english : khmer;
   const [step, setStep] = useState(0), [source, setSource] = useState(null), [sheetIndex, setSheetIndex] = useState(0);
@@ -29,9 +32,9 @@ export default function GuestImportModal({ isOpen, onClose, invitationId, onFile
   const sheet = source?.worksheets[sheetIndex];
   const steps = [L('Choose source', 'ជ្រើសប្រភព'), L('Map columns', 'ផ្គូផ្គងជួរឈរ'), L('Review rows', 'ពិនិត្យជួរដេក'), L('Confirm', 'បញ្ជាក់'), L('Results', 'លទ្ធផល')];
   const reset = () => { setStep(0); setSource(null); setRows([]); setPreview(null); setResult(null); setError(''); setUncertain(false); payload.current = null; setPage(0); };
-  const close = () => {
+  const close = async () => {
     if (inFlight.current) return;
-    if (uncertain && !window.confirm(L('The result is uncertain. Keep this dialog open to retry safely. Close anyway?', 'មិនទាន់ដឹងលទ្ធផល។ សូមសាកល្បងបាច់ដដែលនៅទីនេះ។ តើបិទមែនទេ?'))) return;
+    if (uncertain && !await feedback.confirm({ message: L('The result is uncertain. Keep this dialog open to retry safely. Close anyway?', 'មិនទាន់ដឹងលទ្ធផល។ សូមសាកល្បងបាច់ដដែលនៅទីនេះ។ តើបិទមែនទេ?'), destructive: true })) return;
     onClose();
   };
   const inspect = async file => {
@@ -45,7 +48,7 @@ export default function GuestImportModal({ isOpen, onClose, invitationId, onFile
       if (!Array.isArray(data?.worksheets) || !data.worksheets.length || data.worksheets.some(s => !Array.isArray(s.headers) || !Array.isArray(s.rows))) throw new Error(L('Invalid file inspection response.', 'មិនអាចអានលទ្ធផលឯកសារ។'));
       const index = Math.max(0, data.worksheets.findIndex(s => s.name === 'Guests'));
       setSource(data); setSheetIndex(index); setMapping(proposeImportMapping(data.worksheets[index].headers)); setFileName(file.name); setStep(1); setPreview(null); setPage(0);
-    } catch (failure) { setError(failure.message); }
+    } catch (failure) { feedback.explain(failure, { event: workspace, permission: "MANAGE_GUESTS", feature: "GUEST_IMPORT" }); setError(failure.message); }
     finally { inFlight.current = false; setBusy(false); }
   };
   const validate = async proposed => {
@@ -56,7 +59,7 @@ export default function GuestImportModal({ isOpen, onClose, invitationId, onFile
       const data = await guestService.previewBatch(invitationId, request);
       if (data?.committed !== false || !Array.isArray(data.rows) || data.rows.length !== proposed.length) throw new Error(L('Invalid preview response. No import confirmed.', 'លទ្ធផលពិនិត្យមិនត្រឹមត្រូវ។ មិនបានបញ្ជាក់ការនាំចូល។'));
       payload.current = request; setPreview(data); setRows(proposed); setStep(2); setEditing(null); setPage(0);
-    } catch (failure) { setError(failure.message); }
+    } catch (failure) { feedback.explain(failure, { event: workspace, permission: "MANAGE_GUESTS", feature: "GUEST_IMPORT" }); setError(failure.message); }
     finally { inFlight.current = false; setBusy(false); }
   };
   const commit = async () => {
@@ -65,9 +68,11 @@ export default function GuestImportModal({ isOpen, onClose, invitationId, onFile
     try {
       const data = await guestService.commitBatch(invitationId, payload.current);
       if (data?.committed !== true || data.batchId !== payload.current.batchId || ['importedCount', 'updatedCount', 'skippedCount', 'failedCount'].some(key => !Number.isInteger(data[key]) || data[key] < 0) || data.importedCount + data.updatedCount + data.skippedCount + data.failedCount !== payload.current.rows.length || !Array.isArray(data.rows) || data.rows.length !== payload.current.rows.length) throw new Error(L('Unconfirmed server result. Retry this same batch safely.', 'មិនអាចបញ្ជាក់លទ្ធផល។ សូមសាកល្បងបាច់ដដែល។'));
+      refreshAccess();
       setResult(data); setStep(4); setUncertain(false);
       try { await onFileImported?.(); } catch { setError(L('Import committed. Reopen Guests to refresh the list.', 'បាននាំចូល។ សូមបើកបញ្ជីភ្ញៀវឡើងវិញ។')); }
     } catch (failure) {
+      feedback.explain(failure, { event: workspace, permission: "MANAGE_GUESTS", feature: "GUEST_IMPORT" });
       const status = failure.response?.status;
       setUncertain(!status || status >= 500);
       setError(`${failure.message} ${L('No success is assumed. Retry this batch to retrieve its saved result.', 'មិនសន្មតថាជោគជ័យទេ។ សាកល្បងបាច់ដដែលដើម្បីពិនិត្យលទ្ធផល។')}`);

@@ -1,3 +1,4 @@
+import { feedback } from "@/shared/feedback/feedback";
 import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { useState } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -14,6 +15,8 @@ function Editor() {
   return <><WeddingProgramEditor english masterDate={state.eventDate} value={state.schedule} programDays={state.programDays} onChange={(schedule, programDays) => setState({ ...state, schedule, programDays })} /><output data-testid="state">{JSON.stringify(state)}</output></>;
 }
 
+vi.mock("@/shared/feedback/feedback", () => ({ feedback: { confirm: vi.fn().mockResolvedValue(false) } }));
+
 describe('multi-day editing and preservation', () => {
   it('adds arbitrary days/ceremonies, edits and reorders while retaining extensions', () => {
     render(<Editor />);
@@ -28,7 +31,7 @@ describe('multi-day editing and preservation', () => {
     expect(groupProgram(saved.schedule, saved.eventDate, saved.programDays)[1].resolvedDate).toBe('2027-12-06');
   });
   it('requires confirmation to replace authored content or remove a day', () => {
-    const confirm = vi.fn(() => false); window.confirm = confirm; render(<Editor />);
+    const confirm = feedback.confirm; confirm.mockClear(); render(<Editor />);
     fireEvent.change(screen.getByLabelText('Program preset'), { target: { value: 'two-day' } });
     fireEvent.click(screen.getByRole('button', { name: 'Apply preset' }));
     expect(JSON.parse(screen.getByTestId('state').textContent).schedule[0].id).toBe('a');

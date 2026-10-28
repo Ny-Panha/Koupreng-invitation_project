@@ -10,7 +10,7 @@ import { marketingRoutes } from "./routes/marketingRoutes";
 
 function RouteLoading() {
   const uiCopy = useUiCopy();
-  return <main role="status" aria-live="polite">{uiCopy("កំពុងផ្ទុកទំព័រ...", "Loading page...")}</main>;
+  return <main className="app-route-loading" role="status" aria-live="polite">{uiCopy("កំពុងផ្ទុកទំព័រ...", "Loading page...")}</main>;
 }
 
 export default function AppRouter() {

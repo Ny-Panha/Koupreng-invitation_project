@@ -105,6 +105,13 @@ public class InvitationController {
         return ResponseEntity.ok(ApiResponse.success("Event permissions fetched", invitationService.access(authentication, id)));
     }
 
+    @GetMapping("/invitations/{id}/templates/{templateId}/access")
+    public ResponseEntity<ApiResponse<com.koupreng.backend.invitation.api.dto.EventTemplateAccessResponse>> templateAccess(
+            Authentication authentication, @PathVariable Long id, @PathVariable Long templateId) {
+        return ResponseEntity.ok().cacheControl(org.springframework.http.CacheControl.noStore()).body(
+                ApiResponse.success("Event template access", invitationService.templateAccess(authentication, id, templateId)));
+    }
+
     @PatchMapping("/invitations/{id}/team")
     public ResponseEntity<ApiResponse<InvitationResponse>> linkTeam(Authentication authentication, @PathVariable Long id,
             @Valid @RequestBody com.koupreng.backend.invitation.api.dto.EventTeamLinkRequest request) {

@@ -530,7 +530,18 @@ public class InvitationService {
         var features = collaboration == null ? java.util.Set.<com.koupreng.backend.entitlement.application.EntitlementService.Feature>of() : collaboration.ownerFeatures(event);
         return new com.koupreng.backend.invitation.api.dto.EventAccessResponse(actor.getId().equals(event.getUser().getId()),
                 permissions.stream().map(Enum::name).collect(java.util.stream.Collectors.toSet()),
-                features.stream().map(Enum::name).collect(java.util.stream.Collectors.toSet()), event.getOrganization() == null ? null : event.getOrganization().getId());
+                features.stream().map(Enum::name).collect(java.util.stream.Collectors.toSet()), event.getOrganization() == null ? null : event.getOrganization().getId(),
+                entitlementService == null ? java.util.Map.of() : entitlementService.eventQuotas(event));
+    }
+
+    @Transactional(readOnly = true)
+    public com.koupreng.backend.invitation.api.dto.EventTemplateAccessResponse templateAccess(Authentication authentication, Long id, Long templateId) {
+        UserInvitation event = requireEventPermission(authentication, id, EventAccessPolicy.Permission.MANAGE_INVITATION);
+        InvitationTemplate template = templateRepository.findById(templateId)
+                .filter(value -> "ACTIVE".equalsIgnoreCase(value.getStatus()))
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Template not found"));
+        if (entitlementService == null) throw new ApiException(HttpStatus.SERVICE_UNAVAILABLE, "Template policy is unavailable");
+        return new com.koupreng.backend.invitation.api.dto.EventTemplateAccessResponse(template.getId(), entitlementService.hasTemplateAccess(event.getUser(), template));
     }
 
     @Transactional(isolation = org.springframework.transaction.annotation.Isolation.READ_COMMITTED)
@@ -737,12 +748,14 @@ public class InvitationService {
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Template not found"));
         if (entitlementService != null) {
             if (!entitlementService.hasTemplateAccess(user, template)) {
-                throw new ApiException(HttpStatus.FORBIDDEN, "Premium template access is required");
+                throw new ApiException(HttpStatus.FORBIDDEN, "PACKAGE_FEATURE_REQUIRED", "Premium template access is required",
+                        java.util.Map.of("feature", "PREMIUM_TEMPLATES", "templateId", templateId));
             }
         } else if (template.isPremium()
                 && (user == null
                 || !templateAccessRepository.existsByUserIdAndTemplateIdAndActiveTrue(user.getId(), templateId))) {
-            throw new ApiException(HttpStatus.FORBIDDEN, "Premium template access is required");
+            throw new ApiException(HttpStatus.FORBIDDEN, "PACKAGE_FEATURE_REQUIRED", "Premium template access is required",
+                    java.util.Map.of("feature", "PREMIUM_TEMPLATES", "templateId", templateId));
         }
         return template;
     }

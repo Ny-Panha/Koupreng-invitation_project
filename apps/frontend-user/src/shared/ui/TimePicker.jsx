@@ -24,7 +24,7 @@ export function formatTime24toKhmer(val24) {
 /**
  * TimePicker — Khmer-language 12h time picker that emits a 24h "HH:MM" string.
  */
-export function TimePicker({ value, onChange, id, placeholder }) {
+export function TimePicker({ value, onChange, id, placeholder, 'aria-describedby': describedBy, 'aria-invalid': invalid }) {
     const en = useLanguageStore(state => state.lang) === 'en';
     const dialogId = useId(), triggerRef = useRef(null);
     const [open, setOpen] = useState(false);
@@ -105,6 +105,8 @@ export function TimePicker({ value, onChange, id, placeholder }) {
         <div className="tp-wrap" ref={ref} onKeyDown={event => { if (event.key === 'Escape' && open) { event.preventDefault(); event.stopPropagation(); handleCancel(); } }} onBlur={event => { if (event.relatedTarget && !event.currentTarget.contains(event.relatedTarget)) setOpen(false); }}>
             <button
                 id={id}
+                aria-describedby={describedBy}
+                aria-invalid={invalid}
                 ref={triggerRef}
                 type="button"
                 className={`tp-trigger${open ? " open" : ""}`}

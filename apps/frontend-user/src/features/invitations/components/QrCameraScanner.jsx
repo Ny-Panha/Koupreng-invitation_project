@@ -267,10 +267,10 @@ export default function QrCameraScanner({ onScan, disabled }) {
   }, [stopCamera]);
 
   return (
-    <div style={{
-      background: "#ffffff",
+    <div className="checkin-camera-panel" style={{
+      background: "var(--app-surface)",
       borderRadius: "20px",
-      border: "1px solid #eadfce",
+      border: "1px solid var(--app-border)",
       padding: "24px 28px",
       marginBottom: "24px",
       boxShadow: "0 6px 20px rgba(93, 67, 32, 0.04)"
@@ -278,7 +278,7 @@ export default function QrCameraScanner({ onScan, disabled }) {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px", flexWrap: "wrap", gap: "14px" }}>
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
-            <h3 style={{ margin: 0, fontSize: "1.15rem", color: "#2a1f10", fontWeight: 800, display: "flex", alignItems: "center", gap: "10px" }}>
+            <h3 style={{ margin: 0, fontSize: "1.15rem", color: "var(--app-ink)", fontWeight: 800, display: "flex", alignItems: "center", gap: "10px" }}>
               <span style={{ display: "inline-flex", padding: "8px", background: "rgba(176, 146, 106, 0.14)", borderRadius: "12px", color: "#B0926A" }}>
                 <Camera size={20} />
               </span>
@@ -309,16 +309,16 @@ export default function QrCameraScanner({ onScan, disabled }) {
                 borderRadius: "999px",
                 fontSize: "12px",
                 fontWeight: 700,
-                background: "#f5efe5",
-                color: "#7d6443",
-                border: "1px solid #eadfce"
+                background: "var(--app-subtle)",
+                color: "var(--app-muted)",
+                border: "1px solid var(--app-border)"
               }}>
                 <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#a89078" }} />
                 {uiCopy("រួចរាល់សម្រាប់ស្កេន", "Ready")}
               </span>
             )}
           </div>
-          <p style={{ margin: "6px 0 0", fontSize: "13.5px", color: "#7d6443", lineHeight: 1.5 }}>
+          <p style={{ margin: "6px 0 0", fontSize: "13.5px", color: "var(--app-muted)", lineHeight: 1.5 }}>
             {uiCopy("ប្រើកាមេរ៉ាទូរស័ព្ទ ឬកុំព្យូទ័រ ដើម្បីស្កេនកូដកាតអញ្ជើញរបស់ភ្ញៀវពេលមកដល់។", "Use your phone or computer camera to scan guests’ invitation QR codes on arrival.")}
           </p>
         </div>
@@ -332,9 +332,9 @@ export default function QrCameraScanner({ onScan, disabled }) {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "6px",
-                background: "#f5efe5",
-                color: "#7d6443",
-                border: "1px solid #eadfce",
+                background: "var(--app-subtle)",
+                color: "var(--app-muted)",
+                border: "1px solid var(--app-border)",
                 borderRadius: "999px",
                 padding: "11px 20px",
                 fontWeight: 700,

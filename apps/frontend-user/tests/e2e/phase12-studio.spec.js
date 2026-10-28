@@ -31,10 +31,10 @@ test('original route presets confirm replacement, undo, fit, lock, save and expo
   await expect(page.locator('.studio-map-layers button')).toHaveCount(5);
   await page.locator('.studio-map-layers button').filter({ hasText: 'destination' }).click();
   await page.getByLabel('Element label (km)').fill('ទីតាំងកម្មវិធីសាកល្បង');
-  page.once('dialog', dialog => dialog.dismiss()); await page.getByRole('button', { name: 'Apply diagram preset' }).click();
+  await page.getByRole('button', { name: 'Apply diagram preset' }).click(); await page.locator('.k-confirm-dialog').getByRole('button', { name:'Cancel',exact:true }).click();
   await expect(page.getByLabel('Element label (km)')).toHaveValue('ទីតាំងកម្មវិធីសាកល្បង');
-  await page.getByLabel('Diagram starting point').selectOption('landmarks'); page.once('dialog', dialog => dialog.accept());
-  await page.getByRole('button', { name: 'Apply diagram preset' }).click(); await page.getByRole('button', { name: 'Undo design', exact: true }).click();
+  await page.getByLabel('Diagram starting point').selectOption('landmarks');
+  await page.getByRole('button', { name: 'Apply diagram preset' }).click(); await page.locator('.k-confirm-dialog').getByRole('button', { name:'Confirm',exact:true }).click(); await page.getByRole('button', { name: 'Undo design', exact: true }).click();
   await page.locator('.studio-map-layers button').filter({ hasText: 'destination' }).click();
   await expect(page.getByLabel('Element label (km)')).toHaveValue('ទីតាំងកម្មវិធីសាកល្បង');
   await page.getByLabel('Drag elements (turn off to scroll)').uncheck();
@@ -63,6 +63,7 @@ test('monogram starting styles and local font exports preserve names', async ({ 
 
 test('locale checklist opens and focuses missing venue wording without changing the account language', async ({ page }) => {
   await setup(page); await page.locator('.pe-lang-pill-btn').nth(1).click();
+  await page.locator('.studio-authoring-options > summary').click();
   await page.locator('.studio-locale-checklist summary').click();
   await page.getByRole('button', { name: 'Copy Khmer value: Event title', exact: true }).click();
   await page.locator('.studio-locale-checklist').getByRole('button', { name: 'Venue address', exact: true }).click();

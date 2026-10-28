@@ -9,7 +9,7 @@ import { invitationService } from "@/features/invitations/api/invitationApi";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 
 vi.mock("@/features/auth/hooks/useAuth", () => ({ useAuth: () => ({ user: { id: 7 } }) }));
-vi.mock("@/features/invitations/api/invitationApi", () => ({ invitationService: { get: vi.fn(), listMine: vi.fn() } }));
+vi.mock("@/features/invitations/api/invitationApi", () => ({ invitationService: { get: vi.fn(), listMine: vi.fn(), access: vi.fn() } }));
 const event = { id: 101, userId: 7, title: "Wedding A", eventType: "WEDDING", status: "DRAFT", templateCode: "event-essential" };
 function Module() { const workspace = useEventWorkspace(); return <main>Selected event {workspace.eventId}</main>; }
 function show(module = "guests") {
@@ -25,6 +25,7 @@ function media(desktop = true) {
 }
 beforeEach(() => {
   vi.clearAllMocks(); media(); useLanguageStore.setState({ lang: "en" });
+  invitationService.access.mockResolvedValue({ owner: true, permissions: [], ownerFeatures: [] });
   invitationService.get.mockResolvedValue(event);
   invitationService.listMine.mockResolvedValue([event]);
 });

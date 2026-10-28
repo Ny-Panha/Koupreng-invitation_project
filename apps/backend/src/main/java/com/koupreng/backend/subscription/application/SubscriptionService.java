@@ -159,6 +159,8 @@ public class SubscriptionService {
                 .teamMembersEnabled(plan.isTeamMembersEnabled())
                 .aiAssistantEnabled(plan.isAiAssistantEnabled())
                 .purchasable(purchasable)
+                .eligibleFeatures(com.koupreng.backend.entitlement.application.EntitlementService.featuresForPackage(plan, purchasable)
+                        .stream().map(Enum::name).collect(java.util.stream.Collectors.toSet()))
                 .sortOrder(plan.getSortOrder())
                 .build();
     }

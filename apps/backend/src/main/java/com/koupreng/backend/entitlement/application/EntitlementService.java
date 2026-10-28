@@ -84,7 +84,7 @@ public class EntitlementService {
     public void requireInvitationCreation(AppUser user) {
         lockOwner(user);
         Policy policy = policy(user);
-        requireCapacity(policy.maxInvitations(), invitations.countByUserIdAndDeletedFalse(user.getId()), 1);
+        requireCapacity(policy.maxInvitations(), invitations.countByUserIdAndDeletedFalse(user.getId()), 1, "invitations", "ACCOUNT");
     }
 
     @Transactional
@@ -92,14 +92,14 @@ public class EntitlementService {
         AppUser owner = invitation.getUser();
         lockOwner(owner);
         Policy policy = policy(owner);
-        requireCapacity(policy.maxGuests(), guests.countByInvitationUserId(owner.getId()), additional);
-        requireCapacity(policy.maxGuestsPerInvitation(), guests.countByInvitationId(invitation.getId()), additional);
+        requireCapacity(policy.maxGuests(), guests.countByInvitationUserId(owner.getId()), additional, "guests", "ACCOUNT");
+        requireCapacity(policy.maxGuestsPerInvitation(), guests.countByInvitationId(invitation.getId()), additional, "guestsPerInvitation", "EVENT");
     }
 
     @Transactional(readOnly = true)
     public void requireFeature(AppUser user, Feature feature) {
         if (!policy(user).features().contains(feature)) {
-            throw new ApiException(HttpStatus.FORBIDDEN, "PACKAGE_FEATURE_REQUIRED", "This feature requires an eligible package");
+            throw new ApiException(HttpStatus.FORBIDDEN, "PACKAGE_FEATURE_REQUIRED", "This feature requires an eligible package", Map.of("feature", feature.name()));
         }
     }
 
@@ -107,7 +107,7 @@ public class EntitlementService {
     public void requireTeamCapacity(AppUser owner, java.util.function.LongSupplier countMembers, int additional) {
         lockOwner(owner);
         requireFeature(owner, Feature.TEAM_MEMBERS);
-        requireCapacity(policy(owner).maxTeamMembers(), countMembers.getAsLong(), additional);
+        requireCapacity(policy(owner).maxTeamMembers(), countMembers.getAsLong(), additional, "teamMembers", "ACCOUNT");
     }
 
     private java.util.Optional<SubscriptionPackage> paidPackage(AppUser user) {
@@ -135,9 +135,15 @@ public class EntitlementService {
     private Usage usage(Integer limit, long used) { return new Usage(limit, used, limit == null ? null : Math.max(0L, limit - used)); }
 
     private Policy fromPackage(String source, SubscriptionPackage plan) {
+        return new Policy(source, featuresForPackage(plan, !"CONFIGURED_FREE_PACKAGE".equals(source)),
+                plan.getMaxInvitations(), plan.getMaxGuests(), plan.getMaxGuestsPerInvitation(), plan.getMaxTeamMembers());
+    }
+
+    /** Catalog projection and enforcement share the same policy; projections never activate benefits. */
+    public static Set<Feature> featuresForPackage(SubscriptionPackage plan, boolean activatedPurchase) {
         EnumSet<Feature> features = EnumSet.noneOf(Feature.class);
         // Resolve the purchased snapshot, never the browser's tier or a generic paid flag.
-        if (!"CONFIGURED_FREE_PACKAGE".equals(source) && "PREMIUM".equals(plan.getCode())) {
+        if (activatedPurchase && "PREMIUM".equals(plan.getCode())) {
             features.add(Feature.PRE_WEDDING_VIDEO);
             features.add(Feature.COUPLE_MONOGRAM);
             features.add(Feature.ILLUSTRATED_VENUE_MAP);
@@ -155,8 +161,13 @@ public class EntitlementService {
             var flags = plan.getFeaturesJson() == null ? null : new com.fasterxml.jackson.databind.ObjectMapper().readTree(plan.getFeaturesJson());
             if (flags == null || !flags.has("guestImport") || flags.path("guestImport").asBoolean()) features.add(Feature.GUEST_IMPORT);
         } catch (Exception invalid) { throw new ApiException(HttpStatus.SERVICE_UNAVAILABLE, "Invalid package benefit configuration"); }
-        return new Policy(source, Set.copyOf(features), plan.getMaxInvitations(), plan.getMaxGuests(),
-                plan.getMaxGuestsPerInvitation(), plan.getMaxTeamMembers());
+        return Set.copyOf(features);
+    }
+
+    /** Caller must first authorize access to this event. No other events' usage is exposed. */
+    @Transactional(readOnly = true)
+    public Map<String, Usage> eventQuotas(UserInvitation event) {
+        return Map.of("guestsPerInvitation", usage(policy(event.getUser()).maxGuestsPerInvitation(), guests.countByInvitationId(event.getId())));
     }
 
     private void lockOwner(AppUser user) {
@@ -164,12 +175,13 @@ public class EntitlementService {
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Account not found"));
     }
 
-    private void requireCapacity(Integer limit, long current, int additional) {
+    private void requireCapacity(Integer limit, long current, int additional, String resource, String scope) {
         if (additional < 0 || (limit != null && limit < 0)) {
             throw new ApiException(HttpStatus.SERVICE_UNAVAILABLE, "ENTITLEMENT_POLICY_INVALID", "Package limits require review");
         }
         if (limit != null && current + additional > limit) {
-            throw new ApiException(HttpStatus.FORBIDDEN, "PACKAGE_LIMIT_REACHED", "The configured package limit has been reached");
+            throw new ApiException(HttpStatus.FORBIDDEN, "PACKAGE_LIMIT_REACHED", "The configured package limit has been reached",
+                    Map.of("resource", resource, "scope", scope, "limit", limit, "used", current, "requested", additional));
         }
     }
 }

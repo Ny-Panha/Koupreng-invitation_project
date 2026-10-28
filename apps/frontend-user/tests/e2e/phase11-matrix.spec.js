@@ -19,6 +19,7 @@ async function openPublic(page) {
   for (let i = 0; i < await buttons.count(); i++) if (await buttons.nth(i).isVisible()) { await buttons.nth(i).click(); return; }
 }
 for (const template of matrix.templates) for (const locale of ['km', 'en']) test(`${template.code} approved ${locale} across eight viewport widths`, async ({ page }, info) => {
+  test.skip(['garden-royal-khmer-wedding','khmer-royal-lotus'].includes(template.code), 'Retired by V50; inactive exclusion is tested separately');
   test.setTimeout(120000);
   const { events } = await phase9Fixtures(page, { code: template.code, content: { ...km, ...features, studioStyle: { motion: 'minimal' },
     localizedContentV1: { version: 1, km, en, enabledLocales: ['km', 'en'], defaultLocale: 'km' },

@@ -1,3 +1,5 @@
+import { feedback } from "@/shared/feedback/feedback";
+import AccessFailureState from "@/shared/access/AccessFailureState";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { UNSAFE_NavigationContext, useParams } from "react-router-dom";
 import { registerUnsavedHistoryGuard } from "@/shared/navigation/unsavedHistoryGuard";
@@ -7,7 +9,7 @@ import { ticketService } from "./ticketApi";
 import TicketPreview from "./TicketPreview";
 import TicketActions from "./TicketActions";
 import { useLanguageStore } from "@/stores/useLanguageStore";
-import { ErrorState, SkeletonCard } from "@/shared/ui";
+import { SkeletonCard } from "@/shared/ui";
 import { Save, Ticket, Eye } from "lucide-react";
 
 export default function TicketDesigner() {
@@ -49,7 +51,7 @@ function Designer({ eventId }) {
         if (!active) return;
         setBaseline(JSON.stringify(appearance.design));
         setDesign(appearance.design); setTicket(initial); setState({ guests, media, appearance });
-      }).catch(err => { if (active) setState({ error: err.message || "The ticket designer is unavailable for this event or package." }); });
+      }).catch(err => { if (active) setState({ error: err.message || "The ticket designer is unavailable for this event or package.", failure: err }); });
     return () => { active = false; };
   }, [eventId, retry]);
   useEffect(() => {
@@ -78,7 +80,7 @@ function Designer({ eventId }) {
     };
   }, [dirty, navigation, leaveMessage]);
   if (state.loading) return <section role="main" className="ticket-studio workspace-page" aria-label={text("Loading ticket designer", "កំពុងទាញយកឧបករណ៍រចនាកាត")}><SkeletonCard height="100px" /><SkeletonCard height="420px" /></section>;
-  if (state.error) return <section role="main" className="ticket-studio workspace-page"><ErrorState message={text("Could not load the ticket designer. Check your event access and package, then try again.", "មិនអាចទាញយកឧបករណ៍រចនាកាតបានទេ។ សូមពិនិត្យសិទ្ធិចូលប្រើកម្មវិធី និងកញ្ចប់របស់អ្នក ហើយព្យាយាមម្ដងទៀត។")} onRetry={() => { setState({ loading: true }); setRetry(n => n + 1); }} /></section>;
+  if (state.error) return <section role="main" className="ticket-studio workspace-page"><AccessFailureState error={state.failure || state.error} feature="QR_INVITATIONS" permission="MANAGE_INVITATION" ownerOnly onRetry={() => { setState({ loading: true }); setRetry(n => n + 1); }} /></section>;
   const update = (key, value) => { setNotice(""); setDesign(current => ({ ...current, [key]: value })); };
   async function save() {
     if (busy) return;
@@ -124,7 +126,7 @@ function Designer({ eventId }) {
         <button type="button" disabled={!design[key]} onClick={() => update(key, null)}>{text('Remove', 'ដករូបចេញ')} · {label}</button>
       </div>)}
       {items.filter(item => item.mediaType === 'TICKET_IMAGE' && ![design.coverMediaId, design.backgroundMediaId, state.appearance?.design?.coverMediaId, state.appearance?.design?.backgroundMediaId].includes(item.id)).map(item => <div className="ticket-unused-asset" key={item.id}><span>{item.originalFilename}</span><button type="button" disabled={busy} onClick={async () => {
-        if (!window.confirm(text('Delete this unused ticket image?', 'លុបរូបកាតដែលមិនប្រើនេះឬ?'))) return;
+        if (!await feedback.confirm({ message: text('Delete this unused ticket image?', 'លុបរូបកាតដែលមិនប្រើនេះឬ?'), destructive: true })) return;
         setBusy(true); setError('');
         try { await mediaService.remove(eventId, item.id); setState(current => ({ ...current, media: { ...current.media, all: current.media.all.filter(asset => asset.id !== item.id) } })); }
         catch (err) { setError(err.message); } finally { setBusy(false); }
@@ -134,7 +136,7 @@ function Designer({ eventId }) {
       <label>{text("Vertical focal point", "ចំណុចរូបបញ្ឈរ")}<input type="range" min="0" max="100" value={design.coverFocusY ?? 50} onChange={e => update("coverFocusY", Number(e.target.value))} /></label>
       <label>{text("Background opacity", "កម្រិតច្បាស់ផ្ទៃខាងក្រោយ")}<input type="range" min="0" max="0.4" step="0.01" value={design.backgroundOpacity ?? .12} onChange={e => update("backgroundOpacity", Number(e.target.value))} /></label>
       {[["showTable", text("Table & seat", "តុ និងកៅអី")], ["showSeatCount", text("Guest count", "ចំនួនភ្ញៀវ")], ["showGroup", text("Guest group", "ក្រុមភ្ញៀវ")]].map(([key, label]) => <label className="ticket-checkbox" key={key}><input type="checkbox" checked={design[key]} onChange={e => update(key, e.target.checked)} />{label}</label>)}
-      <button type="button" disabled={!dirty} onClick={() => { if (window.confirm(text("Discard unsaved ticket design changes?", "បោះបង់ការកែប្រែរចនាកាតដែលមិនទាន់រក្សាទុកឬ?"))) setDesign(JSON.parse(baseline)); }}>{text("Reset changes", "កំណត់ឡើងវិញ")}</button>
+      <button type="button" disabled={!dirty} onClick={async () => { if (await feedback.confirm({ message: text("Discard unsaved ticket design changes?", "បោះបង់ការកែប្រែរចនាកាតដែលមិនទាន់រក្សាទុកឬ?"), destructive: true })) setDesign(JSON.parse(baseline)); }}>{text("Reset changes", "កំណត់ឡើងវិញ")}</button>
     </fieldset><div className="ticket-preview-panel"><h2><Eye size={20} />{text("Live preview", "មើលជាមុន")}</h2><label className="ticket-guest-select">{text("Preview recipient", "ភ្ញៀវសម្រាប់មើលជាមុន")}<select value={guestId} onChange={e => setGuestId(e.target.value)}><option value="">{text("General invitation · no guest check-in", "ធៀបទូទៅ · គ្មានការកត់ត្រាវត្តមានភ្ញៀវ")}</option>
       {state.guests.map(guest => <option key={guest.id} value={guest.id}>{guest.guestName}</option>)}</select></label>
       {preview && <><TicketPreview ticket={preview} onReady={setReady} /><TicketActions ticket={preview} ready={ready && !dirty} />{dirty && <p className="workspace-notice">{text("Save the design before downloading or sharing.", "រក្សាទុករចនាមុនទាញយក ឬចែករំលែក។")}</p>}</>}

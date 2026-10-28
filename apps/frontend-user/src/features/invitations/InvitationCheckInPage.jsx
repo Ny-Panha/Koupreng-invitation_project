@@ -1,3 +1,4 @@
+import AccessFailureState from "@/shared/access/AccessFailureState";
 import { useEventWorkspace } from "../events/workspace/EventContext";
 import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useId, useMemo } from "react";
@@ -66,7 +67,7 @@ function SummaryCard({ label, value, subtitle, icon: Icon, theme = "gold" }) {
         gold: { bg: "rgba(176, 146, 106, 0.14)", color: "#B0926A" },
         green: { bg: "rgba(16, 185, 129, 0.12)", color: "#059669" },
         amber: { bg: "rgba(245, 158, 11, 0.12)", color: "#d97706" },
-        emerald: { bg: "rgba(176, 146, 106, 0.18)", color: "#8c6f4b" },
+        emerald: { bg: "rgba(176, 146, 106, 0.18)", color: "var(--app-gold)" },
     }[theme] || { bg: "rgba(176, 146, 106, 0.14)", color: "#B0926A" };
 
     return (
@@ -99,7 +100,7 @@ export default function InvitationCheckInPage() {
         invitationId, persistenceMode, invitation, guests, summary, checkIns,
         token, setToken, note, setNote, tokenGiftAmount, setTokenGiftAmount,
         tokenGiftCurrency, setTokenGiftCurrency, search, setSearch,
-        statusFilter, setStatusFilter, rosterPage, setRosterPage, rosterMeta, loading, saving, error,
+        statusFilter, setStatusFilter, rosterPage, setRosterPage, rosterMeta, loading, saving, error, failure,
         celebrationData, celebrationGiftAmount, setCelebrationGiftAmount,
         celebrationGiftCurrency, setCelebrationGiftCurrency, duplicateWarning, setDuplicateWarning,
         walkInModalOpen, setWalkInModalOpen, walkInForm, setWalkInForm, pendingWalkIn,
@@ -268,7 +269,7 @@ export default function InvitationCheckInPage() {
                 </div>
             )}
 
-            {error && <div role="alert" className="inv-error" style={{ marginBottom: "20px" }}>{error}</div>}
+            {error && <AccessFailureState error={failure || error} feature="QR_CHECK_IN" permission="MANAGE_CHECKIN" />}
 
             {/* Live Camera Scanner */}
             <QrCameraScanner onScan={handleCameraScan} disabled={saving} />
@@ -281,7 +282,7 @@ export default function InvitationCheckInPage() {
                         <h2 className="checkin-panel-title">
                             <QrCode size={20} color="#B0926A" /> {uiCopy("ស្កេនលេខកូដ", "Scan token")}
                         </h2>
-                        <span style={{ fontSize: "0.78rem", color: "#8c6f4b", fontWeight: 700, background: "rgba(176, 146, 106, 0.12)", padding: "3px 10px", borderRadius: "999px" }}>
+                        <span style={{ fontSize: "0.78rem", color: "var(--app-gold)", fontWeight: 700, background: "rgba(176, 146, 106, 0.12)", padding: "3px 10px", borderRadius: "999px" }}>
                             {uiCopy("ឧបករណ៍ស្កេន ឬតំណ", "Scanner / Link")}
                         </span>
                     </div>
@@ -386,7 +387,7 @@ export default function InvitationCheckInPage() {
                         <h2 className="checkin-panel-title">
                             <Users size={20} color="var(--ui-action)" /> {copy("បញ្ជីភ្ញៀវ និងការចូលរួម", "Guest list and attendance")}
                         </h2>
-                        <span style={{ fontSize: "0.82rem", color: "#8c6f4b", fontWeight: 700, background: "rgba(176, 146, 106, 0.12)", padding: "3px 12px", borderRadius: "999px" }}>
+                        <span style={{ fontSize: "0.82rem", color: "var(--app-gold)", fontWeight: 700, background: "rgba(176, 146, 106, 0.12)", padding: "3px 12px", borderRadius: "999px" }}>
                             {filteredGuests.length} / {guests.length} {uiCopy("នាក់", "people")}
                         </span>
                     </div>

@@ -1,3 +1,4 @@
+import { useAccessError } from "@/shared/access/useAccessError";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { qrApi } from "../api/qrApi";
 
@@ -5,7 +6,7 @@ export function useQrCode(invitationId, guestId = null) {
   const [qrData, setQrData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [downloading, setDownloading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError, failure] = useAccessError();
   const generation = useRef(0);
 
   const loadQr = useCallback(() => {
@@ -31,10 +32,10 @@ export function useQrCode(invitationId, guestId = null) {
         setQrData(data || null);
       })
       .catch((err) => {
-        if (current === generation.current) setError(err?.message || "Could not load QR code");
+        if (current === generation.current) setError(err);
       })
       .finally(() => { if (current === generation.current) setLoading(false); });
-  }, [invitationId, guestId]);
+  }, [invitationId, guestId, setError]);
 
   useEffect(() => {
     loadQr();
@@ -48,13 +49,13 @@ export function useQrCode(invitationId, guestId = null) {
     try {
       await qrApi.downloadQrPng(invitationId, guestId, qrData);
     } catch (err) {
-      setError(err?.message || "Could not download QR code");
+      setError(err);
     } finally {
       setDownloading(false);
     }
   };
 
-  return { qrData, loading, downloading, error, loadQr, downloadPng };
+  return { qrData, loading, downloading, error, failure, loadQr, downloadPng };
 }
 
 export default useQrCode;

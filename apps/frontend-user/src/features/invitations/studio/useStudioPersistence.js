@@ -1,3 +1,4 @@
+import { feedback } from "@/shared/feedback/feedback";
 import { useContext, useEffect, useRef, useState } from "react";
 import { UNSAFE_NavigationContext } from "react-router-dom";
 import { registerUnsavedHistoryGuard } from "@/shared/navigation/unsavedHistoryGuard";
@@ -41,7 +42,7 @@ export function useStudioPersistence({ value, onRestore, persist, enabled, initi
     h.index = h.entries.length - 1;
   }, [serialized]);
 
-  async function save() {
+  async function save(options = {}) {
     if (running.current) return running.current;
     if (blocked.current) return false;
     if (globalThis.navigator?.onLine === false) {
@@ -52,15 +53,15 @@ export function useStudioPersistence({ value, onRestore, persist, enabled, initi
     setState(s => ({ ...s, phase: "saving", error: "" }));
     running.current = (async () => {
       try {
-        const result = await latest.current.persist();
-        if (!result?.synced) throw Object.assign(new Error(result?.error || copy.current.failed), { status: result?.status });
+        const result = await latest.current.persist(options);
+        if (!result?.synced) throw Object.assign(new Error(result?.error || copy.current.failed), result?.failure || {}, { status: result?.status });
         acknowledged.current = snapshot;
         if (mounted.current) setState(s => ({ phase: "saved", error: "", version: s.version + 1 }));
         return true;
       } catch (error) {
         const phase = error.status === 409 ? "conflict" : error.status === 401 ? "expired" : "failed";
         blocked.current = phase === "conflict" || phase === "expired";
-        if (mounted.current) setState(s => ({ ...s, phase, error: blocked.current ? copy.current[phase] : error.message || copy.current.failed }));
+        if (mounted.current) setState(s => ({ ...s, phase, error: blocked.current ? copy.current[phase] : error.message || copy.current.failed, failure: error }));
         return false;
       } finally {
         running.current = null;
@@ -71,9 +72,9 @@ export function useStudioPersistence({ value, onRestore, persist, enabled, initi
   const saveRef = useRef(save);
   saveRef.current = save;
 
-  async function flush() {
-    let saved = await save();
-    while (saved && latest.current.serialized !== acknowledged.current) saved = await save();
+  async function flush(options = {}) {
+    let saved = await save(options);
+    while (saved && latest.current.serialized !== acknowledged.current) saved = await save(options);
     return saved;
   }
 
@@ -126,10 +127,10 @@ export function useStudioPersistence({ value, onRestore, persist, enabled, initi
     h.index = index;
     onRestore(JSON.parse(h.entries[index]));
   }
-  return { dirty, savedValue: acknowledged.current ? JSON.parse(acknowledged.current) : null, version: state.version, phase: state.phase === "saved" && dirty ? "unsaved" : state.phase, error: state.error,
+  return { dirty, savedValue: acknowledged.current ? JSON.parse(acknowledged.current) : null, version: state.version, phase: state.phase === "saved" && dirty ? "unsaved" : state.phase, error: state.error, failure: state.failure,
     save, flush, undo: () => restore(history.current.index - 1), redo: () => restore(history.current.index + 1),
     canUndo: (history.current.index > 0 || history.current.entries[history.current.index] !== serialized) && state.phase !== "saving",
     canRedo: history.current.index < history.current.entries.length - 1 && state.phase !== "saving",
-    reset: () => { if (state.phase !== "saving" && window.confirm(copy.current.reset)) onRestore(JSON.parse(initial.current)); },
+    reset: async () => { if (state.phase !== "saving" && !running.current && await feedback.confirm({ title: copy.current.reset, destructive: true })) onRestore(JSON.parse(initial.current)); },
   };
 }

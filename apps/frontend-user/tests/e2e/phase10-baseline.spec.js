@@ -1,8 +1,10 @@
+import process from 'node:process';
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs/promises';
 import { phase9Fixtures } from './support/phase9Fixtures';
 
 test('original Phase 9 build with identical Phase 10 fixtures', async ({ page }) => {
+  test.skip(process.env.PHASE10_CAPTURE_BASELINE !== 'true','Historical baseline capture is opt-in');
   test.setTimeout(180000);
   await fs.mkdir('../../docs/phase10/evidence/before', { recursive: true });
   for (const lang of ['en', 'kh']) {

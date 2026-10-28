@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import AccessFailureState from '@/shared/access/AccessFailureState';
 import { api } from '@/shared/api/httpClient';
 import { unwrap } from '@/shared/api/helpers';
 import { useUiCopy } from '@/shared/i18n/useUiCopy';
@@ -18,7 +18,7 @@ export default function AttendanceAnalytics() {
     setState({ loading: true, data: null, error: '' });
     api.get(`/v1/invitations/${eventId}/analytics`, { params: range }).then(unwrap)
       .then(data => { if (!Array.isArray(data?.days) || !data.current) throw new Error('Invalid analytics response'); if (active) setState({ loading: false, data, error: '' }); })
-      .catch(error => { if (active) setState({ loading: false, data: null, error: error.message, denied: error.status === 403 }); });
+      .catch(error => { if (active) setState({ loading: false, data: null, error: error.message, failure: error }); });
     return () => { active = false; };
   }, [eventId, range, retry]);
   const data = state.data, current = data?.current;
@@ -34,7 +34,7 @@ export default function AttendanceAnalytics() {
       <button className="workspace-button primary" type="submit" disabled={state.loading}>{copy('មើលរបាយការណ៍', 'Apply dates')}</button><p>{copy('១–៣៦៦ ថ្ងៃ។ កាលបរិច្ឆេទទាំងពីរត្រូវបានរាប់បញ្ចូល តាមម៉ោងកម្ពុជា UTC+07។', '1–366 days, inclusive calendar dates in Asia/Phnom_Penh (UTC+07).')}</p>
     </form>
     {state.loading && <p role="status">{copy('កំពុងផ្ទុកទិន្នន័យ…', 'Loading attendance facts…')}</p>}
-    {state.error && <div className="workspace-notice" role="alert"><p>{state.denied ? copy('គ្មានសិទ្ធិវិភាគសម្រាប់កម្មវិធីនេះ។ ពិនិត្យតួនាទីក្រុម និងកញ្ចប់ម្ចាស់។', 'Analytics access is unavailable for this event. Check your team role and the owner’s package.') : state.error}</p><button type="button" className="workspace-button" onClick={() => setRetry(value => value + 1)}>{copy('ព្យាយាមម្ដងទៀត', 'Retry')}</button>{state.denied && <Link className="workspace-button" to="/app/packages">{copy('មើលកញ្ចប់', 'View packages')}</Link>}</div>}
+    {state.error && <AccessFailureState error={state.failure || state.error} feature="ADVANCED_ANALYTICS" permission="VIEW_REPORTS" onRetry={() => setRetry(value => value + 1)} />}
     {data && <>
       <section className="workspace-section"><h2>{copy('ស្ថានភាពបច្ចុប្បន្នទាំងកម្មវិធី', 'Current event totals')}</h2><p>{copy('ទាំងអស់នៅពេលផ្ទុក មិនត្រូវបានកំណត់ដោយកាលបរិច្ឆេទខាងលើ។', 'All current records when loaded; these totals are independent of the selected dates.')}</p>
         <dl className="analytics-totals">{[[copy('កំណត់ត្រាភ្ញៀវ', 'Guest records'), current.guestRecords], [copy('កៅអីកក់', 'Reserved seats'), current.reservedSeats], [copy('អត្រាឆ្លើយតប RSVP', 'RSVP response rate'), responseRate], [copy('អ្នកចូលរួមបញ្ជាក់', 'Confirmed attendees'), current.confirmedAttendees], [copy('កំណត់ត្រាវត្តមាន', 'Checked-in guest records'), current.checkedInRecords]].map(([label,value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>

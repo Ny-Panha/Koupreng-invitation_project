@@ -6819,6 +6819,36 @@ paths:
                 $ref: "#/components/schemas/ApiResponseAttendanceAnalyticsResponse"
       security:
       - bearerAuth: []
+  /api/v1/invitations/{id}/templates/{templateId}/access:
+    get:
+      tags:
+      - Invitations
+      summary: Template Access
+      operationId: templateAccess_1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      - name: templateId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseEventTemplateAccessResponse"
+      security:
+      - bearerAuth: []
   /api/v1/invitations/{id}/preview:
     get:
       tags:
@@ -9358,9 +9388,9 @@ components:
         publishedAt:
           type: string
           format: date-time
-        draft:
-          type: boolean
         published:
+          type: boolean
+        draft:
           type: boolean
     UpdateProfileRequest:
       type: object
@@ -9447,6 +9477,28 @@ components:
           type: string
         backgroundColor:
           type: string
+        supportedEventTypes:
+          type: array
+          items:
+            type: string
+            enum:
+            - WEDDING
+            - ENGAGEMENT
+            - BIRTHDAY
+            - ANNIVERSARY
+            - CORPORATE
+            - OTHER
+          maxItems: 6
+          minItems: 0
+          uniqueItems: true
+        supportedLanguages:
+          type: array
+          items:
+            type: string
+            pattern: KH|EN|BOTH
+          maxItems: 3
+          minItems: 0
+          uniqueItems: true
       required:
       - name
     AdminTemplateResponse:
@@ -9497,6 +9549,14 @@ components:
         updatedAt:
           type: string
           format: date-time
+        supportedEventTypes:
+          type: array
+          items:
+            type: string
+        supportedLanguages:
+          type: array
+          items:
+            type: string
     ApiResponseAdminTemplateResponse:
       type: object
       properties:
@@ -11742,6 +11802,11 @@ components:
           type: boolean
         purchasable:
           type: boolean
+        eligibleFeatures:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
         sortOrder:
           type: integer
           format: int32
@@ -13141,6 +13206,26 @@ components:
         activeCheckInRecords:
           type: integer
           format: int64
+    ApiResponseEventTemplateAccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/EventTemplateAccessResponse"
+        timestamp:
+          type: string
+          format: date-time
+    EventTemplateAccessResponse:
+      type: object
+      properties:
+        templateId:
+          type: integer
+          format: int64
+        hasAccess:
+          type: boolean
     ApiResponseEventAccessResponse:
       type: object
       properties:
@@ -13171,6 +13256,10 @@ components:
         organizationId:
           type: integer
           format: int64
+        quotas:
+          type: object
+          additionalProperties:
+            $ref: "#/components/schemas/Usage"
     ApiResponseListInvitationSummaryResponse:
       type: object
       properties:

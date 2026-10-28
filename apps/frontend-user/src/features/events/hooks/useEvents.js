@@ -128,6 +128,7 @@ export function useEvents(t) {
                 ...partialPatch,
                 id: draft.id,
                 syncStatus: partialPatch.backendInvitationId || draft.backendInvitationId ? "SYNC_FAILED" : "LOCAL_ONLY",
+                syncFailure: { status: error?.status, code: error?.code, details: error?.details },
                 syncError: error?.message || "មិនអាច sync ទៅ server បានទេ",
             };
             saveDraft(failedDraft);

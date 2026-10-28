@@ -11,6 +11,7 @@ async function openPublic(page) {
 }
 
 for (const template of matrix.templates) test(`${template.code}: edit, actual preview, authoritative save/reload, publish and guest DOM`, async ({ page }, info) => {
+  test.skip(['garden-royal-khmer-wedding','khmer-royal-lotus'].includes(template.code), 'Retired by V50; inactive exclusion is tested separately');
   test.setTimeout(90000);
   const generic = template.code === 'event-essential';
   const { events } = await phase9Fixtures(page, { code: template.code, content: { ...phase8Content,

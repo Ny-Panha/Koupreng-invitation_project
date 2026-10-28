@@ -1,3 +1,4 @@
+import { MemoryRouter } from "react-router-dom";
 import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import SubscriptionPackagesPage from "./SubscriptionPackagesPage";
@@ -61,7 +62,7 @@ describe("SubscriptionPackagesPage", () => {
 
   it("presents a nonrevenue demo grant without payment actions or pending status", async () => {
     subscriptionService.history.mockResolvedValue([{ id: 7, packagePlan: basicPlan, orderCode: "DEMO-PRIVATE", source: "DEMO_ADMIN_GRANT", status: "ACTIVE", active: true, paymentStatus: "NOT_REQUIRED", amount: 0, currency: "USD" }]);
-    render(<SubscriptionPackagesPage />);
+    render(<MemoryRouter initialEntries={[window.location.pathname + window.location.search]}><SubscriptionPackagesPage /></MemoryRouter>);
     await screen.findByRole("heading", { name: "Subscription history" });
     expect(screen.getAllByText("Active demo grant · no payment")).toHaveLength(2);
     expect(screen.queryByText("Awaiting payment")).not.toBeInTheDocument();
@@ -71,7 +72,7 @@ describe("SubscriptionPackagesPage", () => {
 
   it("compares actual configured record limits and benefits without inventing higher tier values", async () => {
     subscriptionService.packages.mockResolvedValue([{ ...basicPlan, maxGuests: 73, maxGuestsPerInvitation: 17, teamMembersEnabled: true, maxTeamMembers: 3 }]);
-    render(<SubscriptionPackagesPage />);
+    render(<MemoryRouter initialEntries={[window.location.pathname + window.location.search]}><SubscriptionPackagesPage /></MemoryRouter>);
     const table = await screen.findByRole("table", { name: "Currently configured plan benefits" });
     expect(table).toHaveTextContent("Guest records across account73");
     expect(table).toHaveTextContent("Guest records per event17");
@@ -80,7 +81,7 @@ describe("SubscriptionPackagesPage", () => {
   });
 
   it("opens payer details before creating a paid checkout", async () => {
-    render(<SubscriptionPackagesPage />);
+    render(<MemoryRouter initialEntries={[window.location.pathname + window.location.search]}><SubscriptionPackagesPage /></MemoryRouter>);
 
     fireEvent.click(await screen.findByRole("button", { name: /ជ្រើសកញ្ចប់នេះ|Choose this plan/i }));
 
@@ -90,7 +91,7 @@ describe("SubscriptionPackagesPage", () => {
   });
 
   it("validates last3 and sends only package and payer inputs", async () => {
-    render(<SubscriptionPackagesPage />);
+    render(<MemoryRouter initialEntries={[window.location.pathname + window.location.search]}><SubscriptionPackagesPage /></MemoryRouter>);
     fireEvent.click(await screen.findByRole("button", { name: /ជ្រើសកញ្ចប់នេះ|Choose this plan/i }));
     fireEvent.change(screen.getByLabelText(/aba account holder name/i), { target: { value: "KOEURNG VIREAK" } });
     fireEvent.change(screen.getByLabelText(/last 3 digits/i), { target: { value: "12" } });
@@ -121,7 +122,7 @@ describe("SubscriptionPackagesPage", () => {
       paymentStatus: "PAID",
       active: true,
     });
-    render(<SubscriptionPackagesPage />);
+    render(<MemoryRouter initialEntries={[window.location.pathname + window.location.search]}><SubscriptionPackagesPage /></MemoryRouter>);
     fireEvent.click(await screen.findByRole("button", { name: /ជ្រើសកញ្ចប់នេះ|Choose this plan/i }));
     fireEvent.change(screen.getByLabelText(/aba account holder name/i), { target: { value: "KOEURNG VIREAK" } });
     fireEvent.change(screen.getByLabelText(/last 3 digits/i), { target: { value: "247" } });
@@ -137,7 +138,7 @@ describe("SubscriptionPackagesPage", () => {
 
   it("cleans up polling when unmounted", async () => {
     vi.useFakeTimers();
-    const view = render(<SubscriptionPackagesPage />);
+    const view = render(<MemoryRouter initialEntries={[window.location.pathname + window.location.search]}><SubscriptionPackagesPage /></MemoryRouter>);
     await act(async () => Promise.resolve());
     fireEvent.click(screen.getByRole("button", { name: /ជ្រើសកញ្ចប់នេះ|Choose this plan/i }));
     fireEvent.change(screen.getByLabelText(/aba account holder name/i), { target: { value: "KOEURNG VIREAK" } });
@@ -155,7 +156,7 @@ describe("SubscriptionPackagesPage", () => {
   it("continues polling through review and displays success only after activation", async () => {
     subscriptionService.order.mockResolvedValueOnce({ status: "REVIEW_REQUIRED", paymentStatus: "PENDING", active: false })
       .mockResolvedValue({ status: "ACTIVE", paymentStatus: "PAID", active: true });
-    render(<SubscriptionPackagesPage />);
+    render(<MemoryRouter initialEntries={[window.location.pathname + window.location.search]}><SubscriptionPackagesPage /></MemoryRouter>);
     fireEvent.click(await screen.findByRole("button", { name: /ជ្រើសកញ្ចប់នេះ|Choose this plan/i }));
     fireEvent.change(screen.getByLabelText(/aba account holder name/i), { target: { value: "KOEURNG VIREAK" } });
     fireEvent.change(screen.getByLabelText(/last 3 digits/i), { target: { value: "247" } });
@@ -169,7 +170,7 @@ describe("SubscriptionPackagesPage", () => {
       { id: 10, orderCode: "SUB-REVIEW", packagePlan: basicPlan, amount: 0.01, currency: "USD", status: "REVIEW_REQUIRED", paymentStatus: "PAID", active: false },
       { id: 11, orderCode: "SUB-PENDING", packagePlan: basicPlan, amount: 0.01, currency: "USD", status: "PENDING_PAYMENT", paymentStatus: "PENDING", active: false },
     ]);
-    render(<SubscriptionPackagesPage />);
+    render(<MemoryRouter initialEntries={[window.location.pathname + window.location.search]}><SubscriptionPackagesPage /></MemoryRouter>);
     expect((await screen.findAllByText(/Under review|កំពុងរង់ចាំការផ្ទៀងផ្ទាត់/)).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/Awaiting payment|រង់ចាំការទូទាត់/).length).toBeGreaterThan(0);
     expect(screen.getAllByText("SUB-REVIEW")[0]).toBeInTheDocument();
@@ -179,7 +180,7 @@ describe("SubscriptionPackagesPage", () => {
 
   it("does not announce activation for a paid order without active entitlement", async () => {
     subscriptionService.order.mockResolvedValue({ status: "REVIEW_REQUIRED", paymentStatus: "PAID", active: false });
-    render(<SubscriptionPackagesPage />);
+    render(<MemoryRouter initialEntries={[window.location.pathname + window.location.search]}><SubscriptionPackagesPage /></MemoryRouter>);
     fireEvent.click(await screen.findByRole("button", { name: /ជ្រើសកញ្ចប់នេះ|Choose this plan/i }));
     fireEvent.change(screen.getByLabelText(/aba account holder name/i), { target: { value: "KOEURNG VIREAK" } });
     fireEvent.change(screen.getByLabelText(/last 3 digits/i), { target: { value: "247" } });
@@ -190,7 +191,7 @@ describe("SubscriptionPackagesPage", () => {
 
   it("uses actual backend prices and quotas without inventing unlimited or team access", async () => {
     subscriptionService.packages.mockResolvedValue([{ ...basicPlan, price: 12345, currency: "KHR", maxInvitations: 999, maxGuestsPerInvitation: 5000, durationDays: 90, billingInterval: "CUSTOM", maxTeamMembers: 25 }]);
-    render(<SubscriptionPackagesPage />);
+    render(<MemoryRouter initialEntries={[window.location.pathname + window.location.search]}><SubscriptionPackagesPage /></MemoryRouter>);
     await screen.findByText("999 events");
     expect(screen.getByText("5,000 guest records per event")).toBeInTheDocument();
     expect(screen.getByText(/90 days/)).toBeInTheDocument();
@@ -201,7 +202,7 @@ describe("SubscriptionPackagesPage", () => {
 
   it("shows a verified current plan and its real expiry", async () => {
     subscriptionService.entitlements.mockResolvedValue({ packagePlan: basicPlan, active: true, status: "ACTIVE", paymentStatus: "PAID", expiresAt: "2027-01-15T00:00:00Z" });
-    render(<SubscriptionPackagesPage />);
+    render(<MemoryRouter initialEntries={[window.location.pathname + window.location.search]}><SubscriptionPackagesPage /></MemoryRouter>);
     expect(await screen.findByRole("button", { name: "Current plan" })).toBeDisabled();
     expect(screen.getByText(/Expires.*Jan 15, 2027/)).toBeInTheDocument();
   });
@@ -209,7 +210,7 @@ describe("SubscriptionPackagesPage", () => {
   it("resumes a pending order instead of requesting another payment", async () => {
     subscriptionService.history.mockResolvedValue([{ id: 41, packagePlan: basicPlan, orderCode: "SUB-PENDING", amount: .01, currency: "USD", active: false, status: "PENDING_PAYMENT", paymentStatus: "PENDING", createdAt: "2026-10-20T00:00:00Z" }]);
     subscriptionService.order.mockResolvedValue({ orderCode: "SUB-PENDING", active: false, status: "PENDING_PAYMENT", paymentStatus: "PENDING" });
-    render(<SubscriptionPackagesPage />);
+    render(<MemoryRouter initialEntries={[window.location.pathname + window.location.search]}><SubscriptionPackagesPage /></MemoryRouter>);
     fireEvent.click(await screen.findByRole("button", { name: "View pending order" }));
     await screen.findByRole("dialog", { name: "Payment details" });
     expect(subscriptionService.order).toHaveBeenCalledWith("SUB-PENDING");
@@ -218,7 +219,7 @@ describe("SubscriptionPackagesPage", () => {
 
   it("rechecks history before purchase to catch an order created in another tab", async () => {
     subscriptionService.history.mockResolvedValueOnce([]).mockResolvedValue([{ packagePlan: basicPlan, orderCode: "SUB-OTHER-TAB", active: false, status: "PENDING_PAYMENT", paymentStatus: "PENDING" }]);
-    render(<SubscriptionPackagesPage />);
+    render(<MemoryRouter initialEntries={[window.location.pathname + window.location.search]}><SubscriptionPackagesPage /></MemoryRouter>);
     fireEvent.click(await screen.findByRole("button", { name: /Choose this plan/i }));
     fireEvent.change(screen.getByLabelText(/aba account holder name/i), { target: { value: "Dara" } });
     fireEvent.change(screen.getByLabelText(/last 3 digits/i), { target: { value: "247" } });
@@ -229,7 +230,7 @@ describe("SubscriptionPackagesPage", () => {
 
   it("does not trust active=true without the backend paid and active states", async () => {
     subscriptionService.purchase.mockResolvedValue({ orderCode: "SUB-UNVERIFIED", active: true, status: "PENDING_PAYMENT", paymentStatus: "PENDING" });
-    render(<SubscriptionPackagesPage />);
+    render(<MemoryRouter initialEntries={[window.location.pathname + window.location.search]}><SubscriptionPackagesPage /></MemoryRouter>);
     fireEvent.click(await screen.findByRole("button", { name: /Choose this plan/i }));
     fireEvent.change(screen.getByLabelText(/aba account holder name/i), { target: { value: "Dara" } });
     fireEvent.change(screen.getByLabelText(/last 3 digits/i), { target: { value: "247" } });
@@ -240,7 +241,7 @@ describe("SubscriptionPackagesPage", () => {
 
   it("keeps package discovery usable and blocks duplicate-risk checkout when history fails", async () => {
     subscriptionService.history.mockRejectedValue(new Error("Offline"));
-    render(<SubscriptionPackagesPage />);
+    render(<MemoryRouter initialEntries={[window.location.pathname + window.location.search]}><SubscriptionPackagesPage /></MemoryRouter>);
     expect(await screen.findByRole("alert")).toHaveTextContent("Could not verify your plan or payment history");
     expect(screen.getByRole("button", { name: /Choose this plan/i })).toBeDisabled();
   });

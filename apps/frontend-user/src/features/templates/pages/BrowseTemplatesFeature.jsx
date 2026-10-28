@@ -17,6 +17,7 @@ import { templateCatalogService } from "@/features/templates/api/templateCatalog
 import { paymentService } from "@/features/payments/paymentService";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
 import { SkeletonTable } from "@/shared/ui";
+import { feedback } from '@/shared/feedback/feedback';
 import { templateIdentity, templatePriceLabel, templateUsePath } from "../model/templateIdentity";
 import "./BrowseTemplates.css";
 
@@ -165,9 +166,11 @@ export default function BrowseTemplatesFeature() {
       try {
         const access = await paymentService.templateAccess(template.id);
         if (access?.hasAccess) { navigate(templateUsePath(templateIdentity(template), true)); return; }
-      } catch { /* The server must grant access before selection. */ }
-      navigate(template.checkoutEligible === true
-        ? `/templates/${encodeURIComponent(templateIdentity(template))}/checkout` : "/pricing");
+      } catch (error) {
+        if (!feedback.explain(error, { feature: 'PREMIUM_TEMPLATES' })) feedback.error(lang === 'en' ? 'Could not verify template access. Try again.' : 'មិនអាចផ្ទៀងផ្ទាត់សិទ្ធិគំរូបានទេ។ សូមសាកម្តងទៀត។');
+        return;
+      }
+      void feedback.upgrade({ feature: 'PREMIUM_TEMPLATES', template, returnTo: `/templates/browse?template=${encodeURIComponent(templateIdentity(template))}` });
       return;
     }
     navigate(templateUsePath(templateIdentity(template), true));

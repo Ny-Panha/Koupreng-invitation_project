@@ -9,10 +9,9 @@ export const phase8Content = {
     { id: 'second-ceremony', day: 2, dayId: 'second', time: '06:30', title: 'ពិធីហែជំនូន', titleEn: 'Wedding ceremony', description: 'សូមអញ្ជើញភ្ញៀវកិត្តិយសចូលរួមពិធី។', descriptionEn: 'Please join our celebration.' },
   ],
 };
-export async function phase8Fixtures(page, { lang = 'en', code = 'khmer-celestial', content = phase8Content } = {}) {
+export async function phase8Fixtures(page, { lang = 'en', code = 'khmer-celestial', content = phase8Content, preservePreferences = false } = {}) {
   const catalog = [{ id: 4, code, name: code, status: 'ACTIVE', supportedEventTypes: ['WEDDING'], supportedLanguages: ['KH','EN','BOTH'] }];
-  const state = await installIdentityFixtures(page, { catalog });
-  await page.addInitScript(lang => localStorage.setItem('koupreng.lang', lang), lang);
+  const state = await installIdentityFixtures(page, { catalog, lang, preservePreferences });
   state.events.set(101, { ...state.events.get(101), templateCode: code, venueAddress: 'Fictional Phnom Penh address', eventDate: '2027-12-05', languageMode: lang === 'en' ? 'EN' : 'KH', contentJson: JSON.stringify(content), enabledSections: JSON.stringify({ story: false, gallery: false, gift: false, dressCode: false, faq: false, rsvp: false }) });
   return state;
 }

@@ -1,5 +1,6 @@
+import FeatureAccessCard from "@/shared/access/FeatureAccessCard";
+import { feedback } from '@/shared/feedback/feedback';
 import { useCallback, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useEventWorkspace } from '@/features/events/workspace/EventContext';
 import { mediaService } from '../api/mediaApi';
 import { validateLibraryFile } from '../mediaLibraryModel';
@@ -32,12 +33,12 @@ export default function PreWeddingVideoEditor({ eventId, value, onChange, englis
       const uploaded = await mediaService.uploadPreWeddingVideo(eventId, file, event => { if (event.total) setProgress(Math.round(event.loaded / event.total * 100)); });
       setLibrary(current => ({ ...current, all: [...(current?.all || []), uploaded] }));
       onChange({ ...config, videoMediaId: uploaded.id });
-    } catch (err) { setError(err.message || text('Upload failed. Try again.', 'មិនអាចបញ្ចូលបាន។ សូមព្យាយាមម្ដងទៀត។')); }
+    } catch (err) { setError(err.message || text('Upload failed. Try again.', 'មិនអាចបញ្ចូលបាន។ សូមព្យាយាមម្ដងទៀត។')); feedback.explain(err, { event:workspace,feature:'PRE_WEDDING_VIDEO',permission:'MANAGE_INVITATION' }); }
     finally { setBusy(false); }
   }
   return <section className="studio-video-editor" aria-label={text('Premium cinematic opening', 'ការបើកវីដេអូ Premium')}>
     <p>{text('An optional video after guests open your existing invitation cover. Starts muted and can be skipped immediately.', 'វីដេអូជាជម្រើស បន្ទាប់ពីភ្ញៀវបើកក្របធៀបដើម។ វីដេអូចាប់ផ្ដើមដោយបិទសំឡេង ហើយអាចរំលងបានភ្លាមៗ។')}</p>
-    {!entitled && <div className="workspace-notice"><strong>Premium</strong><p>{text('The event owner needs an active Premium package for this opening. Gallery, photos and music keep their existing access.', 'ម្ចាស់កម្មវិធីត្រូវមានកញ្ចប់ Premium ដែលកំពុងដំណើរការ សម្រាប់ការបើកនេះ។ រូបភាព និងតន្ត្រីនៅតែអាចប្រើតាមសិទ្ធិដដែល។')}</p><Link className="workspace-button" to="/app/packages">{text('View packages', 'មើលកញ្ចប់')}</Link></div>}
+    {!entitled && <FeatureAccessCard feature="PRE_WEDDING_VIDEO" permission="MANAGE_INVITATION" />}
     {error && <p role="alert">{error}</p>}
     {presentation && <fieldset className="studio-royal-video" disabled={!entitled || busy}><legend>{text('Video scene', 'ទិដ្ឋភាពវីដេអូ')}</legend>
       <label>{text('Video fit', 'ទំហំវីដេអូ')}<select value={presentation.fit || 'cover'} onChange={e => onPresentationChange({ ...presentation, fit: e.target.value })}><option value="contain">{text('Show full video', 'បង្ហាញវីដេអូពេញ')}</option><option value="cover">{text('Fill frame', 'បំពេញស៊ុម')}</option></select></label>

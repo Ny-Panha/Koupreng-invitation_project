@@ -1,3 +1,4 @@
+import FeedbackHost from "@/shared/feedback/FeedbackHost";
 import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter, MemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -93,10 +94,11 @@ describe("InvitationForm render test", () => {
         invitationService.update.mockClear();
         const originalConfirm = window.confirm;
         window.confirm = vi.fn(() => true);
-        const { container } = render(<MemoryRouter><InvitationForm invitation={{ id: 101, templateCode: 'khmer-celestial', languageMode: 'EN', title: 'Legacy English event', status: 'DRAFT', storyText: 'Legacy English invitation' }} /></MemoryRouter>);
+        const { container } = render(<MemoryRouter><FeedbackHost /><InvitationForm invitation={{ id: 101, templateCode: 'khmer-celestial', languageMode: 'EN', title: 'Legacy English event', status: 'DRAFT', storyText: 'Legacy English invitation' }} /></MemoryRouter>);
         const section = container.querySelector('[data-studio-section="invitation"]');
         fireEvent.change(section.querySelector('.studio-message-presets select'), { target: { value: 'welcome' } });
         fireEvent.click(section.querySelector('.studio-message-presets button'));
+        await act(async () => fireEvent.click(document.querySelector('.k-confirm-btn-primary')));
         expect(section.querySelector('textarea')).toHaveValue('Welcome to our celebration. Thank you for sharing this special day with us.');
         await act(async () => container.querySelector('.pe-save-main-btn').click());
         await waitFor(() => expect(invitationService.update).toHaveBeenCalled());
@@ -105,7 +107,7 @@ describe("InvitationForm render test", () => {
     });
     it("keeps the two authored wording versions through language switching and saving", async () => {
         invitationService.update.mockClear();
-        const { container } = render(<MemoryRouter><InvitationForm invitation={{ id: 101, templateCode: 'khmer-celestial', title: 'Event', status: 'DRAFT', storyText: 'Khmer original', updatedAt: '2026-10-26T00:00:00Z' }} /></MemoryRouter>);
+        const { container } = render(<MemoryRouter><FeedbackHost /><InvitationForm invitation={{ id: 101, templateCode: 'khmer-celestial', title: 'Event', status: 'DRAFT', storyText: 'Khmer original', updatedAt: '2026-10-26T00:00:00Z' }} /></MemoryRouter>);
         const message = () => container.querySelector('[data-studio-section="invitation"] textarea');
         expect(message()).toHaveValue('Khmer original');
         fireEvent.click(container.querySelectorAll('.pe-lang-pill-btn')[1]);
@@ -123,7 +125,7 @@ describe("InvitationForm render test", () => {
 
     it.each(['2027-12-01', null])("preserves the canonical Settings RSVP deadline when Studio saves: %s", async rsvpDeadline => {
         invitationService.update.mockClear();
-        const { container } = render(<MemoryRouter><InvitationForm invitation={{ id: 101, templateId: 10, templateCode: "khmer-celestial", title: "Saved event", status: "DRAFT", rsvpDeadline, contentJson: JSON.stringify({ rsvp: { deadline: '2027-11-01' } }) }} /></MemoryRouter>);
+        const { container } = render(<MemoryRouter><FeedbackHost /><InvitationForm invitation={{ id: 101, templateId: 10, templateCode: "khmer-celestial", title: "Saved event", status: "DRAFT", rsvpDeadline, contentJson: JSON.stringify({ rsvp: { deadline: '2027-11-01' } }) }} /></MemoryRouter>);
         await act(async () => { container.querySelector(".pe-save-main-btn").click(); });
         await waitFor(() => expect(invitationService.update).toHaveBeenCalled());
         expect(invitationService.update.mock.calls.at(-1)[1].rsvpDeadline).toBe(rsvpDeadline);
@@ -135,7 +137,7 @@ describe("InvitationForm render test", () => {
     ])("keeps stored address content editable and sends it to the canonical API field: %j", async content => {
         invitationService.update.mockClear();
         const address = content.venueAddress || content.event?.venueAddress || content.venue?.address;
-        const { container } = render(<MemoryRouter><InvitationForm invitation={{ id: 101, templateId: 10, templateCode: "khmer-celestial", title: "Saved event", status: "DRAFT", venueAddress: null, contentJson: JSON.stringify(content) }} /></MemoryRouter>);
+        const { container } = render(<MemoryRouter><FeedbackHost /><InvitationForm invitation={{ id: 101, templateId: 10, templateCode: "khmer-celestial", title: "Saved event", status: "DRAFT", venueAddress: null, contentJson: JSON.stringify(content) }} /></MemoryRouter>);
         const input = container.querySelector('[name="venueAddress"]');
         expect(input).not.toBeNull();
         expect(input).toHaveValue(address);
@@ -145,7 +147,7 @@ describe("InvitationForm render test", () => {
     });
     it("keeps intentionally emptied collections empty after reopening and saving", async () => {
         invitationService.update.mockClear();
-        const { container } = render(<MemoryRouter><InvitationForm invitation={{ id: 101, templateId: 10, title: "Saved event", status: "DRAFT", designJson: JSON.stringify({ photos: [], dressColors: [] }), contentJson: JSON.stringify({ schedule: [], storyChapters: [], party: [], faq: [] }) }} /></MemoryRouter>);
+        const { container } = render(<MemoryRouter><FeedbackHost /><InvitationForm invitation={{ id: 101, templateId: 10, title: "Saved event", status: "DRAFT", designJson: JSON.stringify({ photos: [], dressColors: [] }), contentJson: JSON.stringify({ schedule: [], storyChapters: [], party: [], faq: [] }) }} /></MemoryRouter>);
         await act(async () => { container.querySelector(".pe-save-main-btn").click(); });
         await waitFor(() => expect(invitationService.update).toHaveBeenCalled());
         const payload = invitationService.update.mock.calls.at(-1)[1];
@@ -155,7 +157,7 @@ describe("InvitationForm render test", () => {
         expect(JSON.parse(payload.designJson).photos.every(photo => !photo.url)).toBe(true);
     });
     it("prefills real backend event details before any customization JSON exists", () => {
-        render(<MemoryRouter><InvitationForm invitation={{ id: 101, templateId: 10, status: "DRAFT", title: "Our saved event", hostName: "Actual host", partnerName: "Actual partner", eventDate: "2027-01-12", venueName: "The Premier Center Sen Sok" }} /></MemoryRouter>);
+        render(<MemoryRouter><FeedbackHost /><InvitationForm invitation={{ id: 101, templateId: 10, status: "DRAFT", title: "Our saved event", hostName: "Actual host", partnerName: "Actual partner", eventDate: "2027-01-12", venueName: "The Premier Center Sen Sok" }} /></MemoryRouter>);
         expect(screen.getByDisplayValue("Our saved event")).toBeInTheDocument();
         expect(screen.getByDisplayValue("Actual host")).toBeInTheDocument();
         expect(screen.getByDisplayValue("Actual partner")).toBeInTheDocument();

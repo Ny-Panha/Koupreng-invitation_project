@@ -1,3 +1,5 @@
+import { feedback } from "@/shared/feedback/feedback";
+import FeatureAccessCard from "@/shared/access/FeatureAccessCard";
 import { useRef, useState } from 'react';
 import { MapDrawing } from '../../templates/shared/IllustratedMap';
 import { MAP_NODE_TYPES, mapSize, bounded, fitMapNode } from '../../templates/shared/illustratedMapModel';
@@ -41,22 +43,21 @@ export default function IllustratedMapEditor({ value, onChange, entitled, locale
     setExportStatus(`${format.toUpperCase()} exported with the local Khmer font.`);
     } catch (error) { setExportStatus(error.message); }
   };
-  if (!entitled) return <section className="studio-design-panel"><h4>Illustrated venue map · Premium</h4><p>Create an editable diagram with a Premium owner package. Existing designs stay saved.</p>{value?.enabled && <button type="button" onClick={() => onChange({ ...value, enabled: false })}>Disable public diagram</button>}</section>;
+  if (!entitled) return <FeatureAccessCard feature="ILLUSTRATED_VENUE_MAP" permission="MANAGE_INVITATION" lockedContent={value?.enabled && <button type="button" onClick={() => onChange({ ...value, enabled: false })}>Disable public diagram</button>} />;
   const display = drag ? { ...config, nodes: config.nodes.map(node => node.id === drag.id ? drag : node) } : config;
   const [width, height] = mapSize(config);
   return <section className="studio-design-panel" aria-label="Illustrated venue map editor">
-    <h4>Illustrated venue map · Premium</h4><p>This is an illustration, not a geographic map. Add your own landmarks and keep the official directions link.</p>
+    <h4>Illustrated venue map · Premium</h4>
     <label><span>Show diagram publicly</span><input type="checkbox" checked={config.enabled} onChange={e => patch({ enabled: e.target.checked })} /></label>
     <div className="pe-grid-2"><label>Aspect ratio<select value={config.aspectRatio} onChange={e => patch({ aspectRatio: e.target.value })}>{['landscape', 'portrait', 'square'].map(key => <option key={key}>{key}</option>)}</select></label><label>Map palette<select value={config.theme} onChange={e => patch({ theme: e.target.value })}>{['ivory', 'ink', 'rose'].map(key => <option key={key}>{key}</option>)}</select></label></div>
     <label>Map description ({locale})<textarea maxLength={1500} data-translation-key="map.description" value={config.description[locale]} onChange={e => patch({ description: { ...config.description, [locale]: e.target.value } })} /></label>
     <label>Diagram starting point<select value={preset} onChange={e => setPreset(e.target.value)}>{MAP_PRESETS.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label>
-    <button type="button" onClick={() => { if (config.nodes.length && !window.confirm('Replace your diagram with this starting point? Undo design restores your work.')) return; patch({ nodes: createMapPreset(preset) }); setSelection(''); }}>Apply diagram preset</button>
-    <p>These fictional routes are editable starting points. Replace the labels and geometry with your own wayfinding details.</p>
-    <div className="studio-design-tools"><select aria-label="Map element type" value={type} onChange={e => setType(e.target.value)}>{MAP_NODE_TYPES.map(key => <option key={key}>{key}</option>)}</select><button type="button" disabled={config.nodes.length >= 80} onClick={add}>Add element</button><button type="button" onClick={onUndo}>Undo design</button><button type="button" onClick={onRedo}>Redo design</button><button type="button" onClick={() => { if (window.confirm('Clear the illustrated map? Undo can restore it.')) onChange(blank()); }}>Reset map</button><button type="button" onClick={() => exportImage('svg')}>Export safe SVG</button><button type="button" onClick={() => exportImage('png')}>Export PNG</button><button type="button" onClick={() => exportImage('webp')}>Export WebP</button></div>
+    <button type="button" onClick={async () => { if (config.nodes.length && !await feedback.confirm({ message: 'Replace your diagram with this starting point? Undo design restores your work.', destructive: true })) return; patch({ nodes: createMapPreset(preset) }); setSelection(''); }}>Apply diagram preset</button>
+    <div className="studio-design-tools"><select aria-label="Map element type" value={type} onChange={e => setType(e.target.value)}>{MAP_NODE_TYPES.map(key => <option key={key}>{key}</option>)}</select><button type="button" disabled={config.nodes.length >= 80} onClick={add}>Add element</button><button type="button" onClick={onUndo}>Undo design</button><button type="button" onClick={onRedo}>Redo design</button><button type="button" onClick={async () => { if (await feedback.confirm({ message: 'Clear the illustrated map? Undo can restore it.', destructive: true })) onChange(blank()); }}>Reset map</button><button type="button" onClick={() => exportImage('svg')}>Export safe SVG</button><button type="button" onClick={() => exportImage('png')}>Export PNG</button><button type="button" onClick={() => exportImage('webp')}>Export WebP</button></div>
     <div className="studio-design-tools"><label><input type="checkbox" checked={snapping} onChange={e => setSnapping(e.target.checked)} />Snap to grid</label><label><input type="checkbox" checked={dragEnabled} onChange={e => { setDragEnabled(e.target.checked); gesture.current = null; setDrag(null); }} />Drag elements (turn off to scroll)</label><button type="button" onClick={() => { setZoom(1); svg.current?.parentElement?.parentElement?.scrollTo({ left: 0, top: 0 }); }}>Fit canvas</button></div>
     <label>Editor zoom<input type="range" min="1" max="3" step=".25" value={zoom} onChange={e => setZoom(Number(e.target.value))} /></label>
+    <p id="map-keyboard-help">{locale === 'km' ? 'ប្រើគ្រាប់ចុចព្រួញ ដើម្បីផ្លាស់ទីធាតុដែលបានជ្រើស។' : 'Use arrow keys to move the selected element.'}</p>
     {exportStatus && <p role="status">{exportStatus}</p>}
-    <p id="map-keyboard-help">Select an element in the layer list. Use arrow keys on the canvas, or edit its position, size and rotation below. The scrollable canvas supports panning when zoomed.</p>
     <div className="studio-map-stage" data-drag={dragEnabled} aria-describedby="map-keyboard-help"><div style={{ width: `${zoom * 100}%`, aspectRatio: `${width}/${height}` }}>
       <MapDrawing svgRef={svg} value={display} locale={locale} selected={selection} grid={snapping} onPointerDown={dragEnabled ? down : undefined} onPointerMove={move} onPointerUp={finish} onPointerCancel={() => { gesture.current = null; setDrag(null); }} onKeyDown={event => {
         if (!selected || !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) return;

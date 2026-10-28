@@ -23,6 +23,7 @@ async function open(page) {
   for (let i = 0; i < await controls.count(); i++) if (await controls.nth(i).isVisible()) { await controls.nth(i).click(); return; }
 }
 for (const template of matrix.presentations) for (const bilingual of [false, true]) test(`${template.code} ${bilingual ? 'approved bilingual' : 'Khmer only with draft suppression'} current catalogue and eight widths`, async ({ page }, info) => {
+  test.skip(['garden-royal-khmer-wedding','khmer-royal-lotus'].includes(template.code), 'Retired by V50; inactive exclusion is tested separately');
   test.setTimeout(120000);
   const neutral = template.code === 'event-essential';
   const { events } = await phase9Fixtures(page, { code: template.code, content: { ...km, ...features, cinematicIntro: { version: 1, enabled: true, reducedMotion: true }, studioStyle: { motion: 'minimal' },

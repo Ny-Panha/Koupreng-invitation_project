@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { feedback } from '@/shared/feedback/feedback';
+import { useEventWorkspace } from '@/features/events/workspace/EventContext';
 import { aiAssistantService } from "../api/aiAssistantApi";
 import { isVerifiedAiResponse } from "../model/responseSource";
 
@@ -41,6 +43,7 @@ function buildLocalTemplateText(action, request) {
 }
 
 export function useAiAssistant() {
+  const event = useEventWorkspace();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [response, setResponse] = useState(null);
@@ -87,6 +90,7 @@ export function useAiAssistant() {
       setResponse(finalResponse);
       return finalResponse;
     } catch (err) {
+      if ([401,403].includes(err?.status)) feedback.explain(err, { event, feature: 'AI_ASSISTANT', permission: 'MANAGE_INVITATION' });
       setError(err?.message || "Could not generate text suggestions");
       const fallback = { enabled: false, source: "LOCAL_TEMPLATE", provider: "local-template",
         generatedText: buildLocalTemplateText(action, request), suggestions: [],

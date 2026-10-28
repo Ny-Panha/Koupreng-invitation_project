@@ -16,6 +16,7 @@ import { TemplateExperience, registerDynamicTemplates } from "@/features/templat
 import { draftToTemplate } from "@/features/wedding-builder/utils/draftToTemplate";
 import { publicInvitationToDraft } from "@/features/wedding-builder/utils/invitationDraftAdapter";
 import { createPreviewSession, postPreviewMessage } from "@/shared/preview/previewMessaging";
+import DisplayPreferences from '@/shared/preferences/DisplayPreferences';
 
 export default function InvitationPreviewPage() {
   const uiCopy = useUiCopy();
@@ -141,6 +142,7 @@ export default function InvitationPreviewPage() {
                 </div>
 
                 <div className="inv-preview-header__right">
+                    <DisplayPreferences compact />
                     <div className="inv-preview-view-toggle" role="group" aria-label={uiCopy("ប្តូរទិដ្ឋភាព", "Switch view")}>
                         <button
                             type="button"

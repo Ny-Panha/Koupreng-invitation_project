@@ -2,8 +2,8 @@ import { readFile } from "node:fs/promises";
 import { installUxFixtures, uxEvents } from "./uxFixtures.js";
 
 export const qrPayload = "https://koupreng.example/i/wedding-sok-sophea-2026-12-20-phnom-penh?token=59d9cb1e-86b4-4d38-b531-d6c9034a17ea";
-export async function fixtures(page, lang = "en") {
-  await installUxFixtures(page, lang);
+export async function fixtures(page, lang = "en", options = {}) {
+  await installUxFixtures(page, lang, options);
   const qrCodeDataUri = `data:image/png;base64,${(await readFile(new URL("./fixtures/ticket-qr.png", import.meta.url))).toString("base64")}`;
   let design = { version: 0, layout: "GOLD", accent: "#956d2c", font: "MOUL", frame: "DOUBLE", header: "សូមគោរពអញ្ជើញ", footer: "សូមបង្ហាញកាតនេះនៅច្រកចូល · Present at the entrance", backgroundMediaId: null, coverMediaId: null, showGroup: false, showTable: true, showSeatCount: true };
   const template = { id: 10, code: "khmer-celestial", name: "Khmer Celestial", status: "ACTIVE", premium: false, supportedEventTypes: ["WEDDING"], supportedLanguages: ["KH", "EN", "BOTH"] };

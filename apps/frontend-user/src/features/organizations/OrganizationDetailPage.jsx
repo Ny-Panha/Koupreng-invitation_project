@@ -14,6 +14,8 @@ import {
 
 import { ConfirmDialog, EmptyState, ErrorState, SkeletonTable, toast } from "@/shared/ui";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import QuotaProgress from '@/shared/access/QuotaProgress';
+import { useAccountEntitlements } from '@/shared/access/entitlementContext';
 import { useOrganizationMembers } from "./hooks/useOrganizationMembers";
 import MemberTable from "./components/MemberTable";
 import InviteMemberModal from "./components/InviteMemberModal";
@@ -25,6 +27,7 @@ export default function OrganizationDetailPage() {
   const uiCopy = useUiCopy();
   const { organizationId } = useParams();
   const { user } = useAuth();
+  const account = useAccountEntitlements();
   const {
     organization,
     members,
@@ -72,6 +75,7 @@ export default function OrganizationDetailPage() {
   return (
     <div role="main" className="dash-main k-org-page">
       <div className="k-org-container">
+        {isOwner && account.verified && <QuotaProgress usage={account.value?.quotas?.teamMembers} resource="teamMembers" scope="ACCOUNT" />}
         {/* Breadcrumb Navigation */}
         <nav className="k-org-breadcrumb">
           <Link to="/dashboard" className="k-org-breadcrumb-link">

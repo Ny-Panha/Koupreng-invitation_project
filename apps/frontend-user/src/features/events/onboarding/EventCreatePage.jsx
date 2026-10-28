@@ -1,3 +1,6 @@
+import { feedback } from "@/shared/feedback/feedback";
+import QuotaProgress from '@/shared/access/QuotaProgress';
+import { useAccountEntitlements } from '@/shared/access/entitlementContext';
 import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useBeforeUnload, useNavigate, useSearchParams } from "react-router-dom";
@@ -26,6 +29,7 @@ export default function EventCreatePage() {
   const en = useLanguageStore(state => state.lang) === "en";
   const copy = (kh, english) => en ? english : kh;
   const { user } = useAuth();
+  const account = useAccountEntitlements();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const hasUrlTemplate = ["template", "templateCode", "templateId", "tpl"].some(name => searchParams.has(name));
@@ -200,13 +204,14 @@ export default function EventCreatePage() {
       clearTemplateIntent();
       try { sessionStorage.removeItem(storageKey); } catch { /* A successful backend save must still open its workspace. */ }
       navigate(mode === "draft" ? eventPath(event.id) : `${eventPath(event.id)}/invitation?mode=guided`, { replace: true });
-    } catch (err) { setError(err.message || copy("មិនអាចរក្សាទុកកម្មវិធីបានទេ។", "Could not save your event.")); }
+    } catch (err) { feedback.explain(err); setError(err.message || copy("មិនអាចរក្សាទុកកម្មវិធីបានទេ។", "Could not save your event.")); }
     finally { if (!saved.current) { submitting.current = false; setSaving(false); } }
   };
 
   return <main className="workspace-page event-create" lang={en ? "en" : "km"}>
     <Link className="event-create-back" to="/app/events"><ArrowLeft size={18} aria-hidden="true" />{copy("កម្មវិធីរបស់ខ្ញុំ", "My Events")}</Link>
-    <header className="workspace-heading"><h1>{copy("បង្កើតកម្មវិធីរបស់អ្នក", "Bring your event together")}</h1><p>{copy("បំពេញព័ត៌មានសំខាន់ៗ និងជ្រើសរើសគំរូនៅក្នុងទំព័រតែមួយ។ អ្នកអាចកែប្រែបន្ថែមនៅពេលក្រោយ។", "Add the essentials and choose an invitation, all in one place. You can refine the details later.")}</p></header>
+    <header className="workspace-heading"><h1>{copy("បង្កើតកម្មវិធីរបស់អ្នក", "Bring your event together")}</h1></header>
+    {account.verified && <QuotaProgress usage={account.value?.quotas?.invitations} resource="invitations" scope="ACCOUNT" />}
     <form noValidate onSubmit={event => { event.preventDefault(); save("create"); }} aria-busy={saving} className="event-create-layout">
       <fieldset disabled={saving} className="event-create-sections">
         <section className="workspace-section" aria-labelledby="event-type-title"><h2 id="event-type-title">{copy("ប្រភេទកម្មវិធី", "What are you celebrating?")}</h2><div className="event-type-grid">{EVENT_TYPES.map(([value, kh, english]) => {

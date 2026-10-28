@@ -18,7 +18,7 @@
     margin-bottom: 24px;
     padding: 32px 36px;
     background: linear-gradient(135deg, #fff 0%, #fdf6ec 100%);
-    border: 1px solid #eadfce;
+    border: 1px solid var(--app-border);
     border-radius: 24px;
     box-shadow: 0 18px 50px rgba(93, 67, 32, 0.08);
     position: relative;
@@ -60,7 +60,7 @@
     align-items: center;
     gap: 10px;
     margin: 0 0 8px;
-    color: #2a1f10;
+    color: var(--app-ink);
     font-size: 32px;
     font-weight: 800;
     line-height: 1.65;
@@ -69,13 +69,13 @@
 .wg-title svg {
     width: 30px;
     height: 30px;
-    color: #B0926A;
+    color: var(--app-gold);
     flex-shrink: 0;
 }
 
 .wg-subtitle {
     margin: 0;
-    color: #7d6443;
+    color: var(--app-muted);
     font-size: 14px;
     line-height: 1.6;
     max-width: 540px;
@@ -130,8 +130,8 @@
     align-items: center;
     gap: 14px;
     padding: 20px;
-    background: #fff;
-    border: 1px solid #eadfce;
+    background: var(--app-surface);
+    border: 1px solid var(--app-border);
     border-radius: 16px;
     box-shadow: 0 4px 16px rgba(93, 67, 32, 0.05);
     transition: transform 0.2s, box-shadow 0.2s;
@@ -166,7 +166,7 @@
 
 .wg-sum-label {
     display: block;
-    color: #7d6443;
+    color: var(--app-muted);
     font-size: 12px;
     font-weight: 600;
     margin-bottom: 4px;
@@ -180,7 +180,7 @@
     display: block;
     font-size: 22px;
     font-weight: 800;
-    color: #2a1f10;
+    color: var(--app-ink);
 }
 
 .wg-sum-total .wg-sum-value {
@@ -204,7 +204,7 @@
 }
 
 .wg-modal {
-    background: #fff;
+    background: var(--app-surface);
     width: 100%;
     max-width: 580px;
     border-radius: 24px;
@@ -233,15 +233,15 @@
     background: transparent;
     border: none;
     border-radius: 50%;
-    color: #999;
+    color: var(--app-muted);
     cursor: pointer;
     transition: background 0.15s, color 0.15s;
     z-index: 1;
 }
 
 .wg-modal-x:hover {
-    background: #f5efe5;
-    color: #333;
+    background: var(--app-subtle);
+    color: var(--app-ink);
 }
 
 .wg-modal-x svg { width: 20px; height: 20px; }
@@ -270,13 +270,13 @@
     margin: 0 0 20px;
     font-size: 16px;
     font-weight: 700;
-    color: #2a1f10;
+    color: var(--app-ink);
 }
 
 .wg-form-title svg {
     width: 18px;
     height: 18px;
-    color: #B0926A;
+    color: var(--app-gold);
     flex-shrink: 0;
 }
 
@@ -293,7 +293,7 @@
     gap: 6px;
     font-size: 13px;
     font-weight: 600;
-    color: #555;
+    color: var(--app-ink);
 }
 
 .wg-form label span em {
@@ -304,20 +304,20 @@
 .wg-form input,
 .wg-form select {
     padding: 12px 14px;
-    border: 1.5px solid #eadfce;
+    border: 1.5px solid var(--app-border);
     border-radius: 10px;
     font-size: 14px;
     font-family: inherit;
-    background: #fdfaf5;
+    background: var(--app-subtle);
     transition: border 0.2s, box-shadow 0.2s;
     outline: none;
-    color: #333;
+    color: var(--app-ink);
 }
 
 .wg-form input:focus,
 .wg-form select:focus {
     border-color: #B0926A;
-    background: #fff;
+    background: var(--app-surface);
     box-shadow: 0 0 0 3px rgba(176, 146, 106, 0.12);
 }
 
@@ -341,7 +341,7 @@
 .wg-input-prefix {
     position: absolute;
     left: 14px;
-    color: #7d6443;
+    color: var(--app-muted);
     font-weight: bold;
     z-index: 1;
     pointer-events: none;
@@ -355,14 +355,14 @@
 
 .wg-form textarea {
     padding: 12px 14px;
-    border: 1.5px solid #eadfce;
+    border: 1.5px solid var(--app-border);
     border-radius: 10px;
     font-size: 14px;
     font-family: inherit;
-    background: #fdfaf5;
+    background: var(--app-subtle);
     transition: border 0.2s, box-shadow 0.2s;
     outline: none;
-    color: #333;
+    color: var(--app-ink);
     resize: vertical;
     width: 100%;
     box-sizing: border-box;
@@ -370,7 +370,7 @@
 
 .wg-form textarea:focus {
     border-color: #B0926A;
-    background: #fff;
+    background: var(--app-surface);
     box-shadow: 0 0 0 3px rgba(176, 146, 106, 0.12);
 }
 
@@ -379,7 +379,7 @@
     justify-content: flex-end;
     gap: 12px;
     padding-top: 16px;
-    border-top: 1px solid #eadfce;
+    border-top: 1px solid var(--app-border);
 }
 
 .wg-secondary-btn {
@@ -387,8 +387,8 @@
     align-items: center;
     gap: 6px;
     padding: 12px 22px;
-    background: #f5efe5;
-    color: #7d6443;
+    background: var(--app-subtle);
+    color: var(--app-muted);
     border: none;
     border-radius: 50px;
     font-size: 13px;
@@ -427,7 +427,7 @@
     justify-content: center;
     font-size: 14px;
     pointer-events: none;
-    color: #B0926A;
+    color: var(--app-gold);
 }
 
 .wg-search-icon svg {
@@ -439,12 +439,12 @@
 .wg-search select {
     width: 100%;
     padding: 12px 14px 12px 42px;
-    border: 1.5px solid #eadfce;
+    border: 1.5px solid var(--app-border);
     border-radius: 50px;
     font-size: 14px;
     font-family: inherit;
-    background: #fff;
-    color: #333;
+    background: var(--app-surface);
+    color: var(--app-ink);
     outline: none;
     transition: border 0.2s, box-shadow 0.2s;
     box-sizing: border-box;
@@ -474,9 +474,9 @@
     align-items: center;
     gap: 6px;
     padding: 10px 16px;
-    background: #fff;
-    color: #7d6443;
-    border: 1.5px solid #eadfce;
+    background: var(--app-surface);
+    color: var(--app-muted);
+    border: 1.5px solid var(--app-border);
     border-radius: 50px;
     font-size: 13px;
     font-weight: 600;
@@ -488,7 +488,7 @@
 
 .wg-filter-btn:hover {
     border-color: #B0926A;
-    color: #B0926A;
+    color: var(--app-gold);
 }
 
 .wg-filter-btn.active {
@@ -505,7 +505,7 @@
     height: 22px;
     padding: 0 7px;
     background: rgba(176, 146, 106, 0.15);
-    color: #B0926A;
+    color: var(--app-gold);
     border-radius: 50px;
     font-size: 11px;
     font-weight: 800;
@@ -524,8 +524,8 @@
 }
 
 .wg-card {
-    background: #fff;
-    border: 1px solid #eadfce;
+    background: var(--app-surface);
+    border: 1px solid var(--app-border);
     border-radius: 18px;
     padding: 20px;
     box-shadow: 0 4px 16px rgba(93, 67, 32, 0.05);
@@ -569,7 +569,7 @@
     margin: 0 0 4px;
     font-size: 15px;
     font-weight: 700;
-    color: #2a1f10;
+    color: var(--app-ink);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -577,7 +577,7 @@
 
 .wg-card-date {
     font-size: 11px;
-    color: #999;
+    color: var(--app-muted);
     font-weight: 500;
 }
 
@@ -585,7 +585,7 @@
     display: flex;
     align-items: baseline;
     gap: 2px;
-    color: #B0926A;
+    color: var(--app-gold);
     font-weight: 800;
 }
 
@@ -620,11 +620,11 @@
 .wg-card-note {
     margin: 0 0 14px;
     padding: 10px 12px;
-    background: #fdf6ec;
+    background: var(--app-subtle);
     border-left: 3px solid #B0926A;
     border-radius: 8px;
     font-size: 12.5px;
-    color: #7d6443;
+    color: var(--app-muted);
     line-height: 1.5;
 }
 
@@ -642,8 +642,8 @@
     gap: 5px;
     flex: 1;
     padding: 8px 12px;
-    background: #f5efe5;
-    color: #7d6443;
+    background: var(--app-subtle);
+    color: var(--app-muted);
     border: none;
     border-radius: 8px;
     font-size: 12px;
@@ -670,8 +670,8 @@
 .wg-empty {
     text-align: center;
     padding: 60px 20px;
-    background: #fff;
-    border: 2px dashed #eadfce;
+    background: var(--app-surface);
+    border: 2px dashed var(--app-border);
     border-radius: 20px;
 }
 
@@ -682,7 +682,7 @@
     align-items: center;
     justify-content: center;
     margin: 0 auto 12px;
-    color: #B0926A;
+    color: var(--app-gold);
     opacity: 0.5;
 }
 
@@ -700,13 +700,13 @@
     margin: 0 0 6px;
     font-size: 16px;
     font-weight: 700;
-    color: #555;
+    color: var(--app-ink);
 }
 
 .wg-empty p {
     margin: 0;
     font-size: 13px;
-    color: #999;
+    color: var(--app-muted);
 }
 
 /* ─── Responsive ─── */
@@ -794,7 +794,7 @@
 }
 
 .wg-inline-form-row {
-    background: #fffdf7;
+    background: var(--app-subtle);
 }
 
 .wg-inline-form-row td {
@@ -808,10 +808,10 @@
     min-width: 0;
     min-height: 42px;
     padding: 8px 9px;
-    border: 1px solid #d9cbb7;
+    border: 1px solid var(--app-border);
     border-radius: 8px;
-    background: #fff;
-    color: #2a1f10;
+    background: var(--app-surface);
+    color: var(--app-ink);
     font: inherit;
     font-size: 13px;
 }
@@ -863,9 +863,9 @@
 }
 
 .wg-inline-cancel {
-    border-color: #d9cbb7;
-    background: #fff;
-    color: #6b5840;
+    border-color: var(--app-border);
+    background: var(--app-surface);
+    color: var(--app-muted);
 }
 
 .wg-inline-error {
@@ -891,8 +891,8 @@
 
 /* ─── Table layout ─── */
 .wg-table-wrap {
-    background: #fff;
-    border: 1px solid #eadfce;
+    background: var(--app-surface);
+    border: 1px solid var(--app-border);
     border-radius: 18px;
     overflow: hidden;
     box-shadow: 0 4px 16px rgba(93, 67, 32, 0.05);
@@ -906,7 +906,7 @@
 
 .wg-table thead {
     background: linear-gradient(135deg, #fdf6ec, #f5efe5);
-    border-bottom: 2px solid #eadfce;
+    border-bottom: 2px solid var(--app-border);
 }
 
 .wg-table th {
@@ -914,7 +914,7 @@
     text-align: left;
     font-size: 12px;
     font-weight: 700;
-    color: #7d6443;
+    color: var(--app-muted);
     letter-spacing: 0.02em;
     white-space: nowrap;
 }
@@ -929,7 +929,7 @@
 }
 
 .wg-table tbody tr:hover {
-    background: #fdfaf5;
+    background: var(--app-subtle);
 }
 
 .wg-table tbody tr:last-child {
@@ -939,7 +939,7 @@
 .wg-table td {
     padding: 14px 16px;
     font-size: 13.5px;
-    color: #2a1f10;
+    color: var(--app-ink);
     vertical-align: middle;
 }
 
@@ -952,17 +952,17 @@
 
 .wg-name-text {
     font-weight: 600;
-    color: #2a1f10;
+    color: var(--app-ink);
 }
 
 .wg-amount {
     font-size: 15px;
     font-weight: 800;
-    color: #B0926A;
+    color: var(--app-gold);
 }
 
 .wg-muted {
-    color: #888;
+    color: var(--app-muted);
     font-size: 12.5px;
 }
 
@@ -972,7 +972,7 @@
     height: 14px;
     margin-right: 6px;
     vertical-align: -2px;
-    color: #B0926A;
+    color: var(--app-gold);
 }
 
 .wg-note-cell {
@@ -1025,8 +1025,8 @@
 
     .wg-table tr {
         display: block;
-        background: #fff;
-        border: 1px solid #eadfce;
+        background: var(--app-surface);
+        border: 1px solid var(--app-border);
         border-radius: 14px;
         padding: 14px;
         margin-bottom: 12px;
@@ -1034,7 +1034,7 @@
     }
 
     .wg-table tr:hover {
-        background: #fff;
+        background: var(--app-surface);
     }
 
     .wg-table td {
@@ -1059,7 +1059,7 @@
     .wg-table td::before {
         content: attr(data-label);
         font-weight: 700;
-        color: #7d6443;
+        color: var(--app-muted);
         font-size: 11.5px;
         text-align: left;
         flex-shrink: 0;

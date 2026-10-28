@@ -1,3 +1,4 @@
+import { installGuestDashboardFixtures } from "./support/guestDashboardFixtures";
 import { expect, test } from "@playwright/test";
 
 const user = { id: 7, fullName: "Dara Sok", email: "host@example.test", role: "USER" };
@@ -25,6 +26,7 @@ async function setup(page, { lang = "en", empty = false, rejectFirstSave = false
     if (path.endsWith("/auth/me")) return json(user);
     if (path.endsWith("/auth/csrf")) return json({ token: "test-csrf-token" });
     if (path.endsWith("/i18n/messages")) return json({ messages: {} });
+    if (path.endsWith("/invitations/42/access")) return json({ owner:true,permissions:[],ownerFeatures:["QR_INVITATIONS","GUEST_IMPORT"] });
     if (path.endsWith("/invitations/my")) return json([{ ...invitation, eventType }]);
     if (path.endsWith("/invitations/42")) return json({ ...invitation, eventType });
     if (path.endsWith("/42/rsvps")) return json(empty ? [] : [
@@ -57,6 +59,9 @@ async function setup(page, { lang = "en", empty = false, rejectFirstSave = false
     }
     return json({});
   });
+  state.rsvps = empty ? [] : [{ guestId:503,responseStatus:'ATTENDING',attendeeCount:3 },{ guestId:504,responseStatus:'NOT_ATTENDING',attendeeCount:0 }];
+  state.checkIns = empty ? [] : [{ guestId:503,checkedInAt:'2026-12-15T10:00:00Z' }];
+  await installGuestDashboardFixtures(page,state,42);
   await page.goto("/dashboard/invitations/42/guests", { waitUntil: 'domcontentloaded' });
   await expect(page.locator(".guest-results-summary")).toContainText(empty ? "0" : "6");
   return state;
@@ -173,9 +178,10 @@ test("guest list filters intersect and reset; invitation and tools remain usable
   await page.keyboard.press("Escape");
   await expect(page.getByRole("button", { name: "Manage Groups" })).toHaveCount(0);
   await expect(page.getByRole("button", { name: "Manage Categories" })).toHaveCount(0);
+  await page.getByRole('checkbox',{ name:'Select all guests on this page' }).check();
   const download = page.waitForEvent("download");
-  await page.getByRole("button", { name: "Export CSV" }).click();
-  expect((await download).suggestedFilename()).toBe("guests-42.csv");
+  await page.getByRole("button", { name: "Export selected (6)" }).click();
+  expect((await download).suggestedFilename()).toBe("selected-guests-42.csv");
 });
 
 test("editing a guest and marking an invitation sent update the list", async ({ page }) => {

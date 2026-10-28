@@ -1,3 +1,4 @@
+import { feedback } from "@/shared/feedback/feedback";
 import { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Eye, Images, Music, Palette, Upload, Video } from 'lucide-react';
@@ -39,7 +40,7 @@ export default function InvitationMediaManager() {
   const run = async action => {
     setBusy(true); setError(''); setProgress(0); setRetry(null);
     try { await action(); await refresh(); toast(t('saved')); }
-    catch (e) { setError(e.message || t('failed')); setRetry(() => action); }
+    catch (e) { setError(e.message || t('failed')); setRetry(() => action); feedback.explain(e, { event:workspace,permission:'MANAGE_INVITATION',feature:category === 'video' ? 'PRE_WEDDING_VIDEO' : undefined }); }
     finally { setBusy(false); }
   };
   const config = MEDIA_CATEGORIES[category];
@@ -71,7 +72,7 @@ export default function InvitationMediaManager() {
       {library && records.length > 0 ? <div className="media-library-grid">{records.map(file => <article className="media-asset" key={file.id}>
         <div className="media-asset-preview"><Preview file={file} type={config.type} title={file.originalFilename || t(category)} /></div>
         <div className="media-asset-body"><h3>{file.originalFilename || t(category)}</h3><p>{file.mimeType || config.type}{file.fileSize != null ? ` · ${(file.fileSize / 1024 / 1024).toFixed(2)} MB` : ''}</p>
-          {references.has(file.fileUrl) ? <><p>{t('inUse')}</p><Link className="workspace-button" to={`/app/events/${id}/invitation`}>{t('editInStudio')}</Link></> : <div className="workspace-actions"><button className="workspace-button" disabled={busy} onClick={() => choose(file)}>{t('replace')}</button><button className="workspace-button" disabled={busy} onClick={() => { if (window.confirm(t('confirmRemove'))) run(() => mediaService.remove(id, file.id)); }}>{t('remove')}</button></div>}
+          {references.has(file.fileUrl) ? <><p>{t('inUse')}</p><Link className="workspace-button" to={`/app/events/${id}/invitation`}>{t('editInStudio')}</Link></> : <div className="workspace-actions"><button className="workspace-button" disabled={busy} onClick={() => choose(file)}>{t('replace')}</button><button className="workspace-button" disabled={busy} onClick={async () => { if (await feedback.confirm({ message: t('confirmRemove'), destructive: true })) run(() => mediaService.remove(id, file.id)); }}>{t('remove')}</button></div>}
         </div>
       </article>)}</div> : library && category === 'cover' && coverArtwork ? <div className="media-reference-card"><EventCover event={invitation || {}} alt={t('reference')} /><div><h3>{t(coverReference ? 'savedDesign' : 'templateArtwork')}</h3><p>{t(coverReference ? 'savedDesignHint' : 'templateHint')}</p><Link className="workspace-button" to={`/app/events/${id}/invitation`}>{t('editInStudio')}</Link></div></div> : library && <div className="workspace-empty"><Images size={32} /><h2>{t('empty')}</h2><p>{t('emptyHint')}</p></div>}
     </section>

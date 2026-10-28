@@ -6,6 +6,11 @@ import subscriptionService from "./subscriptionService";
 import PackageComparison from "./PackageComparison";
 import { useLanguageStore } from "../../stores/useLanguageStore";
 import { packagePrice, packageLimit } from "../marketing/model/packagePresentation";
+import { Link, useSearchParams } from 'react-router-dom';
+import { FEATURES, eligiblePlans, safeReturnTo } from '@/shared/access/accessDecision';
+import { featureNames, quotaNames } from '@/shared/access/accessCopy';
+import { refreshAccess } from '@/shared/feedback/feedback';
+import { invitationService } from '@/features/invitations/api/invitationApi';
 import "../../shared/styles/workspace-ui.css";
 import "./SubscriptionPackagesPage.css";
 
@@ -37,6 +42,14 @@ export default function SubscriptionPackagesPage() {
   const lang = useLanguageStore(state => state.lang);
   const copy = useCallback((km, en) => lang === "en" ? en : km, [lang]);
   const [packages, setPackages] = useState([]);
+  const [publicCatalog, setPublicCatalog] = useState([]);
+  const [eventQuota, setEventQuota] = useState(null);
+  const [searchParams] = useSearchParams();
+  const feature = FEATURES.includes(searchParams.get('feature')) ? searchParams.get('feature') : '';
+  const resource = Object.hasOwn(quotaNames, searchParams.get('resource') || '') ? searchParams.get('resource') : '';
+  const returnTo = safeReturnTo(searchParams.get('returnTo'));
+  const quotaEventId = resource === 'guestsPerInvitation' ? returnTo.match(/^\/app\/events\/([1-9]\d*)(?:\/|$)/)?.[1] : null;
+  const lastBenefits = useRef('');
   const [current, setCurrent] = useState(null);
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -45,18 +58,26 @@ export default function SubscriptionPackagesPage() {
   const [accountError, setAccountError] = useState("");
   const [checkout, setCheckout] = useState(null);
   const submitting = useRef(false);
-  const target = new URLSearchParams(window.location.search).get("package")?.toUpperCase();
+  const target = searchParams.get("package")?.toUpperCase();
   const load = useCallback(async () => {
     setError(""); setAccountError("");
-    const [plans, active, orders] = await Promise.allSettled([subscriptionService.packages(), subscriptionService.entitlements(), subscriptionService.history()]);
+    const [plans, active, orders, catalog, event] = await Promise.allSettled([subscriptionService.packages(), subscriptionService.entitlements(), subscriptionService.history(),
+      (feature || resource) && subscriptionService.publicPackages ? subscriptionService.publicPackages() : Promise.resolve([]),
+      quotaEventId ? invitationService.access(quotaEventId) : Promise.resolve(null)]);
+    setPublicCatalog(catalog.status === 'fulfilled' && Array.isArray(catalog.value) ? catalog.value : []);
+    setEventQuota(event.status === 'fulfilled' && event.value?.owner ? event.value.quotas?.guestsPerInvitation : null);
     if (plans.status === "fulfilled") setPackages(plans.value || []);
     else setError(copy("មិនអាចផ្ទុកកញ្ចប់សេវាកម្មបានទេ។", "Could not load subscription packages."));
-    if (active.status === "fulfilled") setCurrent(active.value);
+    if (active.status === "fulfilled") {
+      setCurrent(active.value);
+      const benefits = JSON.stringify([active.value?.packagePlan?.id, active.value?.features, active.value?.source, active.value?.expiresAt]);
+      if (benefits !== lastBenefits.current) { lastBenefits.current = benefits; refreshAccess(); }
+    }
     else setCurrent(null);
     if (orders.status === "fulfilled") setHistory(orders.value || []);
     if (active.status === "rejected" || orders.status === "rejected") setAccountError(copy("មិនអាចពិនិត្យកញ្ចប់ និងការទូទាត់របស់អ្នកបានទេ។ សូមទាញយកម្ដងទៀតមុនពេលជាវ។", "Could not verify your plan or payment history. Retry before starting another order."));
     setLoading(false);
-  }, [copy]);
+  }, [copy, feature, resource, quotaEventId]);
   useEffect(() => { load(); }, [load]);
 
   const resume = async order => {
@@ -115,11 +136,15 @@ export default function SubscriptionPackagesPage() {
     return () => { cancelled = true; window.clearInterval(timer); };
   }, [checkout?.orderCode, checkout?.stage, load]);
 
+  const usage = resource === 'guestsPerInvitation' ? eventQuota : current?.quotas?.[resource];
+  const contextual = Boolean(feature || resource);
+  const displayedPackages = contextual ? eligiblePlans(publicCatalog, { feature: feature || undefined, quota: resource ? { ...usage, resource, requested: 1 } : undefined, currentPlan: current?.packagePlan, usage: { ...current?.quotas, ...(eventQuota ? { guestsPerInvitation: eventQuota } : {}) } }) : packages;
   return <main className="workspace-page pkg-page" lang={lang}>
     <header className="workspace-heading">
       <h1>{copy("ជ្រើសរើសកញ្ចប់សេវាកម្ម", "A plan for your next celebration")}</h1>
       <p>{copy("ប្រៀបធៀបកញ្ចប់ និងជ្រើសរើសតាមចំនួនកម្មវិធី និងភ្ញៀវរបស់អ្នក។", "Compare event and guest limits, then choose the plan that fits your invitations.")}</p>
     </header>
+    {contextual && <section className="workspace-notice"><h2>{feature ? featureNames[feature][lang === 'en' ? 1 : 0] : quotaNames[resource][lang === 'en' ? 1 : 0]}</h2><p>{copy('បង្ហាញតែកញ្ចប់សាធារណៈដែលម៉ាស៊ីនមេបញ្ជាក់ថាគាំទ្រសកម្មភាពនេះ។ ការទូទាត់ដែលកំពុងរង់ចាំមិនបើកសិទ្ធិទេ។','Showing public packages with verified eligibility for this action. Pending payment does not unlock access.')}</p><Link className="workspace-button" to={returnTo}>{copy('ត្រឡប់ទៅការងាររបស់អ្នក','Return to your work')}</Link></section>}
     {(error || accountError) && <div className="workspace-notice" role="alert"><p>{error || accountError}</p><button className="workspace-button" onClick={load}>{copy("ទាញយកម្ដងទៀត", "Retry")}</button></div>}
     {!loading && <section className="pkg-current" aria-label={copy("កញ្ចប់បច្ចុប្បន្ន", "Current subscription")}>
       <ShieldCheck size={24} aria-hidden="true" /><div><span className="workspace-muted">{copy("កញ្ចប់បច្ចុប្បន្ន", "Current plan")}</span><strong>{current?.packagePlan ? current.packagePlan?.packageName || copy("កញ្ចប់សកម្ម", "Active plan") : copy("មិនអាចផ្ទៀងផ្ទាត់កញ្ចប់", "Plan could not be verified")}</strong>{current?.source === "DEMO_ADMIN_GRANT" && <small>{copy("សិទ្ធិសាកល្បងពីអ្នកគ្រប់គ្រង · មិនមែនការទូទាត់", "Administrator demo grant · nonrevenue")}</small>}</div>
@@ -127,7 +152,7 @@ export default function SubscriptionPackagesPage() {
     </section>}
     {current?.quotas && <section className="workspace-section pkg-usage" aria-label={copy("ការប្រើប្រាស់", "Plan usage")}><h2>{copy("ការប្រើប្រាស់កញ្ចប់", "Your plan usage")}</h2>{Object.entries(current.quotas).map(([key, quota]) => <div key={key}><strong>{key === "invitations" ? copy("កម្មវិធី", "Events") : copy("កំណត់ត្រាភ្ញៀវ", "Guest records")}</strong><span>{quota.used} / {quota.limit ?? copy("គ្មានកំណត់", "Unlimited")}</span>{quota.limit != null && quota.limit > 0 && <progress aria-label={key === "invitations" ? copy("ការប្រើប្រាស់កម្មវិធី", "Event record usage") : copy("ការប្រើប្រាស់កំណត់ត្រាភ្ញៀវ", "Guest record usage")} max={quota.limit} value={Math.min(quota.used, quota.limit)} />}<small>{quota.remaining == null ? copy("គ្មានកំណត់", "Unlimited") : `${quota.remaining} ${copy("នៅសល់", "remaining")}`}</small></div>)}</section>}
     <section className="pkg-grid" aria-label={copy("បញ្ជីកញ្ចប់សេវាកម្ម", "Available subscription plans")} aria-busy={loading}>
-      {loading ? <p role="status">{copy("កំពុងទាញយកកញ្ចប់សេវាកម្ម…", "Loading subscription packages…")}</p> : packages.map(plan => {
+      {loading ? <p role="status">{copy("កំពុងទាញយកកញ្ចប់សេវាកម្ម…", "Loading subscription packages…")}</p> : displayedPackages.map(plan => {
         const selected = current?.packagePlan && current.packagePlan?.code === plan.code;
         const pending = history.find(order => isPending(order) && order.packagePlan?.id === plan.id);
         const featured = plan.code?.toUpperCase() === "PRO";
@@ -148,7 +173,8 @@ export default function SubscriptionPackagesPage() {
         </article>;
       })}
     </section>
-    {!loading && <PackageComparison plans={packages} lang={lang} copy={copy} />}
+    {!loading && <PackageComparison plans={displayedPackages} lang={lang} copy={copy} />}
+    {!loading && contextual && displayedPackages.length === 0 && <p role="status" className="workspace-notice">{copy('មិនមានជម្រើសកញ្ចប់ដែលអាចផ្ទៀងផ្ទាត់សម្រាប់សកម្មភាពនេះទេ។ សូមផ្ទុកឡើងវិញ ឬទាក់ទងជំនួយ។','No eligible package option could be verified for this action. Retry or contact support.')}</p>}
     {!loading && !error && packages.length === 0 && <p className="workspace-notice">{copy("មិនទាន់មានកញ្ចប់សេវាកម្ម។ សូមព្យាយាមម្ដងទៀតពេលក្រោយ។", "No plans are available. Please check again later.")}</p>}
     {packages.some(plan => plan.teamMembersEnabled) && <p className="workspace-notice">{copy("កញ្ចប់ដែលមានក្រុម អនុញ្ញាតឱ្យភ្ជាប់ក្រុមទៅកម្មវិធី។ សមាជិកត្រូវទទួលយកការអញ្ជើញមុនពេលទទួលសិទ្ធិតាមតួនាទី។", "Eligible plans let owners link a team to events. Members must accept an invitation before receiving role-based event access.")}</p>}
     <History history={history} lang={lang} copy={copy} resume={resume} />

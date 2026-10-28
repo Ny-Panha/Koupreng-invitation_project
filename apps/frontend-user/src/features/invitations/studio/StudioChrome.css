@@ -1,0 +1,101 @@
+/* Management chrome only. Public invitation artwork owns its own theme. */
+:is(.invitation-studio,.event-workspace.is-studio) {
+  --studio-ink: #17372d;
+  --studio-gold: #98743b;
+  --ws-border: #e0e7e2;
+  --ws-border-strong: #cbd6ce;
+  --ws-ink: #17372d;
+  --ws-muted: #627168;
+  color: var(--studio-ink);
+}
+#invitation-studio-toolbar .studio-toolbar { background: #f4f6f5; min-height: 80px; gap: 12px; }
+#invitation-studio-toolbar .studio-back { background: transparent; border-color: transparent; }
+#invitation-studio-toolbar .studio-back:hover { background: #e5ede7; }
+#invitation-studio-toolbar .studio-action, #invitation-studio-toolbar .studio-more summary { border-color: #d7e2d9; border-radius: 10px; }
+#invitation-studio-toolbar .studio-action--save { background: #245740; border-color: #245740; color: white; padding-inline: 22px; border-radius: 10px; }
+#invitation-studio-toolbar .studio-action--publish { background: #fffdf8; border-color: #d9c8a9; color: #775623; }
+#invitation-studio-toolbar .studio-document h1 { color: #17372d; font-weight: 650; letter-spacing: -.25px; }
+.invitation-studio .studio-toolbar { gap: 12px; min-height: 80px; padding: 12px 0; }
+.invitation-studio .studio-document h1 { font-size: 18px; font-weight: 650; letter-spacing: -.25px; }
+.invitation-studio .studio-back { border-color: transparent; background: transparent; border-radius: 10px; }
+.invitation-studio .studio-back:hover { background: #e6ede8; }
+.invitation-studio .studio-action, .invitation-studio .studio-more summary { border-color: #dce4de; border-radius: 10px; background: white; font-weight: 600; }
+.invitation-studio .studio-action--save { background: #245740; border-color: #245740; color: white; padding-inline: 22px; }
+.invitation-studio .studio-action--save:hover { background: #183e2c; }
+.invitation-studio .studio-action--publish { color: #775623; border-color: #d9c8a9; background: #fffcf5; }
+.invitation-studio .studio-save-status { font-size: 12px; }
+.invitation-studio .pe-main-editor-card { border: 1px solid #e0e7e2; border-radius: 16px; box-shadow: 0 5px 32px rgb(22 55 37 / 4%); }
+.invitation-studio .studio-workflow-bar { background: #fff; border-color: #e8ece8; min-height: 66px; }
+.invitation-studio[data-editor-mode=advanced] .studio-workflow-bar { background: #fff; }
+.invitation-studio .studio-guide { padding: 12px 20px; background: transparent; }
+.invitation-studio .studio-guide-modes { display: inline-flex; background: #f0f4f1; border-radius: 10px; padding: 4px; gap: 2px; }
+.invitation-studio .studio-guide-modes button { padding: 8px 16px; border: 0; background: transparent; color: #627168; font-size: 13px; border-radius: 7px; }
+.invitation-studio .studio-guide-modes button[aria-pressed=true] { background: white; color: #214d38; box-shadow: 0 1px 5px rgb(25 55 35 / 9%); }
+.invitation-studio .studio-split-controls { gap: 14px; }
+.invitation-studio .studio-editing-focus { border: 0; color: #45634e; background: #f0f5f1; font-size: 13px; }
+.invitation-studio .studio-split-controls label { gap: 8px; color: #627168; font-size: 12px; }
+.invitation-studio .studio-split-controls select { border-color: #dfe6e0; background: white; border-radius: 8px; font-size: 13px; }
+.invitation-studio .studio-sections { background: #f8faf8; border-color: #e8ece8; padding: 22px 12px; }
+.invitation-studio .studio-section-list { display: grid; gap: 6px; }
+.invitation-studio .studio-section-list button { min-height: 48px; padding: 12px; border: 0; border-radius: 9px; color: #5d6c62; font-size: 13px; font-weight: 500; }
+.invitation-studio .studio-section-list button:hover { background: #edf3ee; }
+.invitation-studio .studio-section-list button[aria-current] { background: #e6efe8; color: #24543b; box-shadow: none; font-weight: 650; }
+.invitation-studio .pe-lang-sub-banner { padding: 12px 24px; margin: 0; flex-direction: row; justify-content: space-between; align-items: center; gap: 12px; border-bottom: 1px solid #edf0ed; border-radius: 0; }
+.invitation-studio .pe-lang-switch-pills { padding: 3px; background: #f0f4f1; border-radius: 8px; gap: 2px; }
+.invitation-studio .pe-lang-pill-btn { min-height: 38px; border: 0; border-radius: 6px; padding: 6px 11px; font-size: 12px; background: transparent; color: #627168; box-shadow: none; }
+.invitation-studio .pe-lang-pill-btn.is-active { background: white; color: #24543b; box-shadow: 0 1px 4px rgb(25 55 35 / 8%); }
+.studio-authoring-options { flex: 0 1 auto; min-width: 0; font-size: 12px; color: #627168; }
+.studio-authoring-options > summary { min-height: 44px; display: flex; align-items: center; gap: 8px; cursor: pointer; list-style: none; }
+.studio-authoring-options > summary::after { content: '+'; font-size: 18px; color: #426b4f; }
+.studio-authoring-options[open] > summary::after { content: '−'; }
+.studio-authoring-options > summary::-webkit-details-marker { display: none; }
+.studio-authoring-options[open] { flex-basis: 100%; }
+.studio-authoring-options-body { display: grid; gap: 12px; margin: 0; min-width: 0; padding: 14px 0 8px; border: 0; border-top: 1px solid #e8eee9; line-height: 1.85; }
+.studio-authoring-options-body > button { justify-self: start; min-height: 44px; padding: 8px 12px; border: 1px solid #d6e2d8; border-radius: 8px; color: #295a3e; background: #f5f9f5; }
+.studio-authoring-options-body .studio-locale-checklist { margin: 0; }
+.invitation-studio .pe-editor-scroll-body { padding: 28px; background: white; }
+.invitation-studio .studio-tab-heading { margin: 0 0 24px; padding: 0; border: 0; font-size: 25px; font-weight: 650; letter-spacing: -.5px; line-height: 1.6; }
+.invitation-studio .studio-subsection { margin: 0 0 20px; border: 0; border-bottom: 1px solid #e4eae5; border-radius: 0; }
+.invitation-studio .studio-subsection > summary { display: list-item; padding: 14px 0; border: 0; font-size: 16px; font-weight: 600; color: #28523b; }
+.invitation-studio .studio-subsection > summary[hidden] { display: none; }
+.invitation-studio .studio-subsection-body { padding: 4px 0 28px; }
+.invitation-studio .studio-section-guidance { margin-bottom: 24px; max-width: 64ch; color: #68786d; font-size: 13px; line-height: 1.85; }
+.invitation-studio .pe-section-heading { border: 0; padding: 0; margin: 4px 0 20px; font-weight: 600; }
+.invitation-studio .pe-label { gap: 8px; color: #344f3e; font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+.invitation-studio .studio-field-state { font-size: 11px; font-weight: 400; color: #6a786e; }
+.invitation-studio :is(.pe-input,.pe-select,.pe-textarea) { border: 1px solid #dce5de; background: #fcfdfb; border-radius: 9px; padding: 12px 14px; box-shadow: none; color: #203f2f; font-size: 14px; min-height: 48px; }
+.invitation-studio :is(.pe-input,.pe-select,.pe-textarea):hover { border-color: #b7cabb; }
+.invitation-studio :is(.pe-input,.pe-select,.pe-textarea):focus { border-color: #6c9574; background: white; box-shadow: 0 0 0 3px rgb(79 130 89 / 8%); }
+.invitation-studio .studio-field-help { color: #6b796f; font-size: 12px; line-height: 1.85; margin-top: 8px; }
+.invitation-studio .studio-message-presets { background: #f5f8f4; border-color: #e3eae0; border-radius: 10px; }
+.invitation-studio .pe-preview-column { background: #edf1ee; padding: 18px 22px; border-left: 1px solid #e4eae4; }
+.invitation-studio .pe-preview-top-bar { gap: 12px; }
+.invitation-studio .pe-sim-gate-switcher { background: #e2e9e3; padding: 3px; }
+.invitation-studio .pe-sim-gate-btn { border-radius: 7px; color: #4b6150; }
+.invitation-studio .pe-sim-gate-btn.is-active { background: white; color: #284d37; box-shadow: 0 1px 4px rgb(25 55 35 / 7%); }
+.invitation-studio .studio-preview-tools button { background: #f9fbf8; border-color: #d8e2d9; color: #59705d; border-radius: 8px; }
+.invitation-studio .studio-preview-tools button[aria-pressed=true] { background: #2c5940; border-color: #2c5940; color: white; }
+@media (max-width: 1023px) {
+  .invitation-studio .studio-section-list { display: none; }
+  .invitation-studio .studio-sections { padding: 12px 16px; background: #f5f8f5; }
+  .invitation-studio .studio-section-select { flex-direction: row; align-items: center; gap: 12px; color: #637367; }
+  .invitation-studio .studio-section-select select { flex: 1; min-width: 0; border-color: #dce5de; font-size: 13px; }
+  .invitation-studio .pe-lang-sub-banner { padding: 10px 16px; }
+  .invitation-studio .pe-editor-scroll-body { padding: 22px 18px 104px; }
+  .invitation-studio .studio-tab-heading { font-size: 23px; margin-bottom: 14px; }
+  .invitation-studio .studio-subsection > summary { padding-block: 12px; }
+  .invitation-studio .studio-section-guidance { margin-bottom: 20px; }
+  .invitation-studio .studio-toolbar-actions { padding: 10px 16px; background: #fff; border-color: #e1e8e2; gap: 8px; }
+  .invitation-studio .studio-toolbar-actions .studio-action--save { flex: 1; max-width: 180px; }
+  #invitation-studio-toolbar .studio-toolbar-actions { padding: 10px 16px; background: white; border-color: #e1e8e2; gap: 8px; }
+  #invitation-studio-toolbar .studio-action--save { flex: 1; max-width: 180px; }
+}
+@media (max-width: 430px) {
+  .invitation-studio .studio-document h1 { font-size: 16px; }
+  .invitation-studio .studio-toolbar { min-height: 72px; padding: 8px 0; }
+  .invitation-studio .studio-guide-modes { width: 100%; }
+  .invitation-studio .studio-guide-modes button { flex: 1; padding-inline: 8px; }
+  .invitation-studio .studio-section-select { font-size: 12px; }
+  .invitation-studio .pe-lang-sub-banner { gap: 8px; }
+  .studio-authoring-options { font-size: 11px; }
+}

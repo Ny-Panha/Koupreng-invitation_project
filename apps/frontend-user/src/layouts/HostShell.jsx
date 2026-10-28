@@ -10,7 +10,7 @@ export default function HostShell() {
     const isEventWorkspace = /^\/app\/events\/\d+(?:\/|$)/.test(location.pathname);
 
     if (isPreview) {
-        return <Outlet />;
+        return <div className="dash-wrapper dash-wrapper--preview"><Outlet /></div>;
     }
 
     return (

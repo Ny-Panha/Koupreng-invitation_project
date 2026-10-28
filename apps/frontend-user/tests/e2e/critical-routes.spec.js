@@ -72,6 +72,7 @@ test("authenticated guest route renders server authority and RSVP state", async 
   });
   await page.route("**/api/**", (route) => {
     const url = new URL(route.request().url());
+    if (url.pathname === "/api/v1/invitations/42/access") return json(route, { owner:true,permissions:[],ownerFeatures:["AI_ASSISTANT","QR_INVITATIONS"] });
     if (url.pathname === "/api/v1/invitations/my") {
       return json(route, [{ id: 42, userId: 7, title: "Dara and Sophea", status: "PUBLISHED", slug: "dara-sophea" }]);
     }
@@ -174,6 +175,7 @@ test("AI helper discloses local template fallback", async ({ page }, testInfo) =
   await establishUserSession(page);
   await page.route("**/api/**", (route) => {
     const url = new URL(route.request().url());
+    if (url.pathname === "/api/v1/invitations/42/access") return json(route, { owner:true,permissions:[],ownerFeatures:["AI_ASSISTANT","QR_INVITATIONS"] });
     if (url.pathname === "/api/v1/invitations/my") {
       return json(route, [{ id: 42, userId: 7, title: "Dara and Sophea Wedding", status: "DRAFT" }]);
     }

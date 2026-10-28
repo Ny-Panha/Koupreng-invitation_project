@@ -1,0 +1,297 @@
+/* Application chrome. Public invitation renderers keep their authored palette. */
+:root {
+  --app-canvas: #f6f7f3;
+  --app-surface: #ffffff;
+  --app-subtle: #f0f4ed;
+  --app-raised: #ffffff;
+  --app-ink: #233f30;
+  --app-muted: #586954;
+  --app-border: #e1e7dc;
+  --app-control-border: #c4d0bf;
+  --app-accent: #345e42;
+  --app-on-accent: #ffffff;
+  --app-accent-soft: #e6efe1;
+  --app-gold: #80602f;
+  --app-gold-soft: #faf2e4;
+  --app-focus: #367969;
+  --app-danger: #a73537;
+  --app-shadow: 0 4px 22px rgb(28 52 31 / 4%);
+}
+:root[data-color-mode=dark] {
+  --app-canvas: #111a16;
+  --app-surface: #1a2620;
+  --app-subtle: #213027;
+  --app-raised: #26372c;
+  --app-ink: #e7eee5;
+  --app-muted: #b2c1ad;
+  --app-border: #344639;
+  --app-control-border: #53694f;
+  --app-accent: #b1cc9c;
+  --app-on-accent: #142219;
+  --app-accent-soft: #2a3e2b;
+  --app-gold: #dbc18d;
+  --app-gold-soft: #382e20;
+  --app-focus: #92d9bf;
+  --app-danger: #ffb4ab;
+  --app-shadow: 0 5px 24px rgb(0 0 0 / 12%);
+}
+.app-preferences { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.app-language-control { display: block; margin: 0; min-width: 0; }
+.app-language-control select, .app-theme-toggle { min-height: 44px; border: 1px solid var(--app-border); border-radius: 10px; background: var(--app-surface); color: var(--app-ink); font: 500 13px/1.8 var(--font-sans); }
+.app-language-control select { width: 76px; padding: 7px; cursor: pointer; }
+.app-theme-toggle { display: grid; place-items: center; width: 44px; padding: 8px; cursor: pointer; }
+.app-theme-toggle:hover { color: var(--app-gold); background: var(--app-subtle); }
+.app-preferences :is(button,select):focus-visible { outline: 3px solid var(--app-focus); outline-offset: 3px; }
+.app-preferences.is-compact { gap: 4px; }
+.app-preferences.is-compact select { width: 64px; }
+.kp-mobile-preferences { display: none; }
+.app-route-loading { min-height: 100dvh; padding: 32px; background: var(--app-canvas); color: var(--app-ink); font: 500 16px/1.8 var(--font-sans); }
+
+/* One management vocabulary for all event modules and account pages. */
+.dash-wrapper, .dash-wrapper .workspace-page, .dash-wrapper .event-workspace,
+.k-modal-container, .k-toast-wrapper {
+  --ui-canvas: var(--app-canvas);
+  --ui-surface: var(--app-surface);
+  --ui-surface-subtle: var(--app-subtle);
+  --ui-ink: var(--app-ink);
+  --ui-muted: var(--app-muted);
+  --ui-action: var(--app-accent);
+  --ui-action-hover: var(--app-accent);
+  --ui-action-soft: var(--app-accent-soft);
+  --ui-on-action: var(--app-on-accent);
+  --ui-forest: var(--app-ink);
+  --ui-focus: var(--app-focus);
+  --ui-border: var(--app-border);
+  --ui-control-border: var(--app-control-border);
+  --ui-danger: var(--app-danger);
+  --ws-canvas: var(--app-canvas);
+  --ws-surface: var(--app-surface);
+  --ws-surface-subtle: var(--app-subtle);
+  --ws-ink: var(--app-ink);
+  --ws-muted: var(--app-muted);
+  --ws-border: var(--app-border);
+  --ws-border-strong: var(--app-control-border);
+  --ws-gold: var(--app-accent);
+  --ws-gold-dark: var(--app-gold);
+  --ws-gold-light: var(--app-gold-soft);
+  --ws-teal: var(--app-focus);
+  --ws-radius: 16px;
+  --ws-shadow: var(--app-shadow);
+}
+:root .dash-wrapper { background: var(--app-canvas); color: var(--app-ink); }
+.dash-wrapper .dash-main { background: transparent; color: var(--app-ink); }
+.dash-wrapper .event-workspace, .dash-wrapper .event-workspace.is-studio { background: var(--app-canvas); }
+.dash-wrapper .event-workspace-sidebar { box-shadow: var(--app-shadow); }
+.dash-wrapper .event-nav-tab.active { background: var(--app-accent-soft); color: var(--app-ink); }
+.dash-wrapper .event-workspace .workspace-heading h1, .dash-wrapper .dash-page-header h1,
+.dash-wrapper .workspace-page-heading h1 { font-size: clamp(24px,2.5vw,32px); font-weight: 650; letter-spacing: -.3px; }
+.dash-wrapper .workspace-section { box-shadow: var(--app-shadow); border-radius: 16px; }
+.dash-wrapper :is(.workspace-button,.guest-button,.rsvp-back-btn,.ticket-designer button) { transition: background-color 160ms ease,border-color 160ms ease,color 160ms ease,box-shadow 160ms ease; }
+.dash-wrapper .workspace-button { background: var(--app-surface); border-color: var(--app-border); color: var(--app-ink); border-radius: 10px; font-size: 14px; }
+.dash-wrapper .workspace-button.primary { background: var(--app-accent); color: var(--app-on-accent); border-color: var(--app-accent); }
+.dash-wrapper .workspace-button:hover:not(:disabled) { background: var(--app-subtle); border-color: var(--app-control-border); }
+.dash-wrapper .workspace-button.primary:hover:not(:disabled) { background: var(--app-accent); filter: brightness(.94); }
+.dash-wrapper .event-workspace-content > main { animation: app-page-enter 180ms cubic-bezier(.2,.7,.3,1) both; }
+@keyframes app-page-enter { from { opacity: .85; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+.dash-wrapper .host-nav-divider { display: none; }
+.dash-wrapper .host-nav-link { border-radius: 8px; padding: 8px 11px; }
+.dash-wrapper .host-nav-link.active { background: var(--app-accent-soft); color: var(--app-ink); }
+.dash-wrapper .host-header-container { background: var(--app-surface); border-color: var(--app-border); }
+.dash-wrapper .host-profile-pill { border-radius: 10px; }
+.dash-wrapper .host-profile-name, .dash-wrapper .host-nav-link { color: var(--app-ink); }
+.dash-wrapper .host-profile-avatar { background: var(--app-gold); color: var(--app-canvas); }
+.inv-preview-workspace { background: var(--app-canvas); }
+.inv-preview-header { background: var(--app-surface); border-color: var(--app-border); color: var(--app-ink); }
+.inv-preview-header :is(.inv-preview-title,.inv-preview-back-btn,.inv-preview-toggle-btn) { color: var(--app-ink); }
+.inv-preview-header :is(.inv-preview-back-btn,.inv-preview-view-toggle,.inv-preview-btn) { background: var(--app-subtle); border-color: var(--app-border); }
+.inv-preview-header :is(button,select) { min-height: 44px; }
+:root[data-color-mode=dark] .inv-preview-header { background: var(--app-surface); border-color: var(--app-border); color: var(--app-ink); }
+:root[data-color-mode=dark] .inv-preview-header :is(.inv-preview-title,.inv-preview-toggle-btn,.inv-preview-btn) { color: var(--app-ink); }
+
+/* These features already publish local tokens; bind those roles to the theme. */
+.dash-wrapper .guest-workspace, .guest-form-modal {
+  --guest-canvas: var(--app-canvas); --guest-paper: var(--app-surface); --guest-ink: var(--app-ink);
+  --guest-muted: var(--app-muted); --guest-line: var(--app-border); --guest-subtle: var(--app-subtle);
+  --guest-green: var(--app-accent); --guest-green-hover: var(--app-accent); --guest-green-tint: var(--app-accent-soft);
+  --guest-gold: var(--app-gold); --guest-danger: var(--app-danger);
+}
+.dash-wrapper .guest-list-panel { box-shadow: var(--app-shadow); border-radius: 16px; }
+.dash-wrapper .guest-workspace .guest-page-header h1 { font-weight: 650; }
+.dash-wrapper .pe-summary-grid, .dash-wrapper .workspace-summary { border-color: var(--app-border); box-shadow: none; }
+.dash-wrapper .guest-tabs { gap: 4px; }
+.dash-wrapper .guest-tabs button { min-height: 44px; }
+.dash-wrapper .rsvp-page, .dash-wrapper .enterprise-page, .dash-wrapper .pe-dashboard-page {
+  --brand-text: var(--app-ink); --brand-text-muted: var(--app-muted); --brand-border: var(--app-border);
+  --brand-surface: var(--app-surface); --brand-primary: var(--app-accent); --brand-primary-hover: var(--app-accent);
+}
+
+/* Dark surfaces are scoped to management chrome, never to invitation/QR artwork. */
+:root[data-color-mode=dark] :is(.dash-wrapper,.k-modal-container,.k-toast) { color-scheme: dark; }
+:root[data-color-mode=dark] .dash-wrapper :is(.host-header-wrapper,.host-header-container,.host-mobile-menu,.host-profile-menu) { background: var(--app-surface); border-color: var(--app-border); color: var(--app-ink); }
+:root[data-color-mode=dark] .dash-wrapper :is(.host-profile-menu-item,.host-mobile-nav-link,.host-mobile-menu-title) { color: var(--app-ink); }
+:root[data-color-mode=dark] .dash-wrapper :is(.host-hamburger-btn,.event-workspace-mobile-trigger) { background: var(--app-surface); color: var(--app-ink); border-color: var(--app-border); }
+:root[data-color-mode=dark] .dash-wrapper :is(.events-page-header h1,.events-empty-title) { color: var(--app-ink); }
+:root .dash-wrapper .events-page .events-create-btn { background: var(--app-accent); color: var(--app-on-accent); border-radius: 10px; box-shadow: none; }
+:root .dash-wrapper :is(.event-card-date,.event-card-venue) { color: var(--app-muted); }
+:root .dash-wrapper .event-card-couple { color: var(--app-ink); }
+:root[data-color-mode=dark] .dash-wrapper :is(.event-status-pill,.workspace-badge) { background: var(--app-accent-soft); color: #c5dcb5; }
+:root[data-color-mode=dark] .dash-wrapper :is(.overview-hero,.overview-metrics>a,.overview-preparation,.overview-shortcuts,.overview-notifications,.overview-tool-grid a) { background: var(--app-surface); border-color: var(--app-border); }
+:root[data-color-mode=dark] .dash-wrapper .event-overview { --overview-muted: var(--app-muted); --overview-border: var(--app-border); }
+:root[data-color-mode=dark] .event-overview :is(h1,h2,h3,strong,.overview-checklist strong) { color: var(--app-ink); }
+:root[data-color-mode=dark] .event-overview :is(.overview-metrics span,.overview-event-meta,.overview-publication-controls summary) { color: var(--app-muted); }
+:root[data-color-mode=dark] .event-overview :is(.overview-metric-icon,.overview-metric-heading svg,.workspace-badge) { background: var(--app-subtle); color: var(--app-gold); }
+:root[data-color-mode=dark] .event-overview .overview-checklist li { border-color: var(--app-border); }
+:root[data-color-mode=dark] .event-overview .overview-tool-grid a { color: var(--app-ink); }
+:root[data-color-mode=dark] .event-overview .overview-hero-content>.workspace-muted { background: var(--app-gold-soft); color: var(--app-gold); }
+:root[data-color-mode=dark] .dash-wrapper :is(.event-card,.event-card--featured,.event-card-body,.event-search,.event-filter-toolbar,.event-filters) { background: var(--app-surface); border-color: var(--app-border); color: var(--app-ink); }
+:root[data-color-mode=dark] .dash-wrapper :is(.event-card-title,.event-card-eyebrow,.event-card-couple,.event-card-meta,.event-card-btn) { color: var(--app-ink); }
+:root[data-color-mode=dark] .dash-wrapper :is(.event-card-btn,.event-card-dropdown,.event-card-menu) { background: var(--app-subtle); border-color: var(--app-border); }
+:root[data-color-mode=dark] .dash-wrapper :is(.guest-filter-row,.guest-inline-form-row,.guest-table thead th,.guest-table tbody tr,.guest-record-row) { background: var(--app-surface); color: var(--app-ink); border-color: var(--app-border); }
+:root[data-color-mode=dark] .dash-wrapper .guest-inline-status { color: var(--app-muted); }
+:root[data-color-mode=dark] .dash-wrapper .guest-action-cell button { background: var(--app-subtle); color: var(--app-ink); border-color: var(--app-border); }
+:root[data-color-mode=dark] .dash-wrapper :is(.guest-group-tag,.guest-row-action) { background: var(--app-subtle); color: var(--app-ink); border-color: var(--app-border); }
+:root[data-color-mode=dark] .dash-wrapper :is(.rsvp-kpi-card,.rsvp-card,.rsvp-table-card,.rsvp-table-wrap,.rsvp-filters,.rsvp-toolbar,.rsvp-table th,.rsvp-table td) { background: var(--app-surface); color: var(--app-ink); border-color: var(--app-border); }
+:root[data-color-mode=dark] .dash-wrapper :is(.rsvp-header h1,.rsvp-header h2,.rsvp-kpi-value,.rsvp-kpi-label,.rsvp-back-btn,.rsvp-kicker) { color: var(--app-ink); }
+:root[data-color-mode=dark] .dash-wrapper :is(.pe-summary-card,.pe-panel,.pe-table-card,.pe-stat-card,.pe-table-container,.k-org-card,.k-org-section,.financial-report-card,.expense-card,.gift-card,.wishes-card,.ticket-controls,.ticket-preview-panel,.seating-table-card,.media-asset,.media-reference-card,.media-asset-body) { background: var(--app-surface); border-color: var(--app-border); color: var(--app-ink); }
+:root[data-color-mode=dark] .dash-wrapper :is(.checkin-main-card,.checkin-panel,.checkin-stats,.checkin-stat-card,.checkin-table-card,.checkin-search,.checkin-scanner-card,.checkin-action-card,.checkin-card) { background: var(--app-surface); color: var(--app-ink); border-color: var(--app-border); }
+:root[data-color-mode=dark] .dash-wrapper :is(.checkin-title,.checkin-stat-value,.checkin-stat-label,.checkin-label,.checkin-heading,.checkin-subtitle) { color: var(--app-ink); }
+:root[data-color-mode=dark] .dash-wrapper :is(.checkin-hero-title,.checkin-kpi-value) { color: var(--app-ink); }
+:root[data-color-mode=dark] .dash-wrapper :is(.checkin-hero-desc,.checkin-kpi-label,.checkin-kpi-sub) { color: var(--app-muted); }
+:root[data-color-mode=dark] .dash-wrapper .checkin-panel-title { color: var(--app-ink); }
+:root[data-color-mode=dark] .dash-wrapper .checkin-hero-banner>div>p { color: var(--app-muted); }
+:root[data-color-mode=dark] .dash-wrapper :is(table,thead,tbody,tr,th,td) { border-color: var(--app-border); }
+:root[data-color-mode=dark] .dash-wrapper :is(th,td) { color: var(--app-ink); }
+:root[data-color-mode=dark] .dash-wrapper :is(input,select,textarea) { background-color: var(--app-subtle); border-color: var(--app-control-border); color: var(--app-ink); }
+:root[data-color-mode=dark] .dash-wrapper :is(input,textarea)::placeholder { color: #a1b29a; opacity: 1; }
+:root[data-color-mode=dark] .dash-wrapper :is(.workspace-notice,.feature-access-card,.access-quota) { background: var(--app-subtle); border-color: var(--app-border); color: var(--app-ink); }
+:root[data-color-mode=dark] :is(.k-modal-container,.k-modal-header,.k-modal-body,.k-modal-footer,.k-confirm-dialog,.access-plan) { background: var(--app-surface); border-color: var(--app-border); color: var(--app-ink); }
+:root[data-color-mode=dark] .k-modal-container :is(h2,h3,p,label,.access-note,.access-heading h3) { color: var(--app-ink); }
+:root[data-color-mode=dark] .k-modal-container :is(input,select,textarea) { background: var(--app-subtle); border-color: var(--app-control-border); color: var(--app-ink); }
+:root[data-color-mode=dark] .access-dialog :is(.access-plan,.k-modal-footer) { background: var(--app-subtle); }
+:root[data-color-mode=dark] .feature-access-card :is(h3,p,button) { color: var(--app-ink); }
+:root[data-color-mode=dark] :is(.feature-access-card button,.access-dialog .access-actions>button,.access-dialog .access-actions>a) { background: var(--app-raised); border-color: var(--app-control-border); color: var(--app-ink); }
+
+/* The Studio iframe and authoring canvases remain faithful to the invitation. */
+:root[data-color-mode=dark] :is(.invitation-studio,.event-workspace.is-studio) { --studio-ink: var(--app-ink); --studio-gold: var(--app-gold); }
+:root[data-color-mode=dark] #invitation-studio-toolbar .studio-toolbar { background: var(--app-canvas); color: var(--app-ink); }
+:root[data-color-mode=dark] #invitation-studio-toolbar :is(.studio-action,.studio-more summary,.studio-more-panel) { background: var(--app-surface); border-color: var(--app-border); color: var(--app-ink); }
+:root[data-color-mode=dark] #invitation-studio-toolbar .studio-document h1 { color: var(--app-ink); }
+:root[data-color-mode=dark] #invitation-studio-toolbar .studio-action--save { background: var(--app-accent); color: var(--app-on-accent); }
+:root[data-color-mode=dark] .invitation-studio :is(.pe-main-editor-card,.pe-editor-column,.pe-editor-scroll-body,.studio-workflow-bar,.studio-subsection,.studio-subsection-body,.pe-section-card,.pe-lang-sub-banner) { background: var(--app-surface); border-color: var(--app-border); color: var(--app-ink); }
+:root[data-color-mode=dark] .invitation-studio :is(.studio-sections,.pe-preview-column,.studio-guide-modes,.pe-lang-switch-pills,.studio-message-presets,.pe-sim-gate-switcher) { background: var(--app-subtle); border-color: var(--app-border); }
+:root[data-color-mode=dark] .invitation-studio :is(.studio-tab-heading,.studio-subsection>summary,.pe-label,.studio-section-list button,.studio-field-help,.studio-field-state,.studio-authoring-options,.studio-character-count) { color: var(--app-ink); }
+:root[data-color-mode=dark] .invitation-studio :is(.studio-section-list button[aria-current],.studio-guide-modes button[aria-pressed=true],.pe-lang-pill-btn.is-active,.pe-sim-gate-btn.is-active) { background: var(--app-accent-soft); color: var(--app-ink); }
+:root[data-color-mode=dark] .invitation-studio :is(.pe-input,.pe-select,.pe-textarea,.studio-editing-focus,.studio-preview-tools button) { background: var(--app-subtle); border-color: var(--app-control-border); color: var(--app-ink); }
+:root[data-color-mode=dark] .invitation-studio :is(.studio-guide-modes button,.studio-split-controls label,.pe-lang-pill-btn,.pe-preview-live-title,.pe-preview-action-group button,.studio-device-caption) { color: var(--app-muted); }
+:root[data-color-mode=dark] .invitation-studio .pe-preview-column button { color: var(--app-ink); }
+:root[data-color-mode=dark] .dash-wrapper .event-settings :is(h1,legend) { color: var(--app-ink); }
+:root[data-color-mode=dark] .dash-wrapper .event-settings-nav button { background: var(--app-surface); color: var(--app-ink); border-color: var(--app-border); }
+:root[data-color-mode=dark] .dash-wrapper .event-settings-nav button[aria-pressed=true] { background: var(--app-accent-soft); color: var(--app-ink); }
+:root[data-color-mode=dark] .dash-wrapper .event-settings .studio-guide-modes { background: var(--app-subtle); border-color: var(--app-border); }
+:root[data-color-mode=dark] .dash-wrapper .event-settings .studio-guide-modes button { background: var(--app-surface); color: var(--app-ink); }
+:root[data-color-mode=dark] .dash-wrapper .event-settings .studio-guide-modes button[aria-pressed=true] { background: var(--app-accent-soft); color: var(--app-ink); }
+
+/* Public marketing owns the same light/dark intent, without repainting artwork. */
+:root[data-color-mode=dark] .kp-marketing-shell {
+  color-scheme: dark;
+  --ui-canvas: var(--app-canvas); --ui-surface: var(--app-surface); --ui-surface-subtle: var(--app-subtle);
+  --ui-ink: var(--app-ink); --ui-muted: var(--app-muted); --ui-border: var(--app-border);
+  --kp-page: var(--app-canvas); --kp-bg: var(--app-canvas); --kp-canvas: var(--app-canvas);
+  --kp-surface: var(--app-surface); --kp-paper: var(--app-subtle); --kp-surface-soft: var(--app-subtle);
+  --kp-public-bg: var(--app-canvas); --kp-public-surface: var(--app-surface); --kp-public-surface-warm: var(--app-subtle);
+  --kp-public-ink: var(--app-ink); --kp-public-muted: var(--app-muted); --kp-ink: var(--app-ink); --kp-muted: var(--app-muted);
+  --kp-public-border: var(--app-border); --kp-border: var(--app-border);
+  --kp-gold: var(--app-gold); --kp-gold-ink: var(--app-gold); --kp-gold-deep: var(--app-gold); --kp-public-gold-ink: var(--app-gold);
+  --kp-deep: #9eb890; --kp-deep-hover: #bfd4b2; --kp-brand: #9eb890; --kp-brand-hover: #bfd4b2;
+  --kp-focus: var(--app-focus);
+  background: var(--app-canvas); color: var(--app-ink);
+}
+:root[data-color-mode=dark] .kp-marketing-shell .kp-landing { --kp-deep: var(--app-accent); --kp-deep-hover: #c9debb; --kp-emerald: var(--app-accent); --kp-emerald-deep: #c9debb; --kp-gold-ink: var(--app-gold); }
+:root[data-color-mode=dark] .kp-marketing-shell .kp-landing { --kp-gold-text: var(--app-gold); }
+:root[data-color-mode=dark] .kp-marketing-shell .kp-mini-names { color: var(--app-gold); }
+:root[data-color-mode=dark] .kp-marketing-shell .public-demo-caption :is(a,button) { color: var(--app-gold); }
+:root[data-color-mode=dark] .kp-marketing-shell .kp-final { --kp-bg: #f5f4e9; color: #f5f4e9; }
+:root[data-color-mode=dark] .kp-marketing-shell .kp-button { background: var(--app-accent); color: var(--app-on-accent); border-color: var(--app-accent); }
+:root[data-color-mode=dark] .kp-marketing-shell :is(.kp-header-inner,.kp-header--scrolled .kp-header-inner,.kp-mobile-dialog,.kp-mobile-inner,.kp-footer,.kp-price-card,.kp-design-card,.kp-trust-card,.kp-contact-card) { background: var(--app-surface); color: var(--app-ink); border-color: var(--app-border); }
+:root[data-color-mode=dark] .kp-marketing-shell :is(.kp-nav-link,.kp-brand,.kp-language button,.kp-menu-trigger,.kp-menu-close,.kp-mobile-dialog nav a) { color: var(--app-ink); }
+:root[data-color-mode=dark] .kp-marketing-shell .kp-language { background: var(--app-subtle); }
+:root[data-color-mode=dark] .kp-marketing-shell .kp-language button[aria-pressed=true] { background: var(--app-raised); color: var(--app-ink); }
+:root[data-color-mode=dark] .kp-marketing-shell .kp-hero-demo-links a { color: var(--app-gold); }
+:root[data-color-mode=dark] .kp-marketing-shell :is(.kp-nav-cta,.kp-button--primary,.kp-btn-primary) { background: var(--app-accent); color: var(--app-on-accent); }
+
+/* Finance and the entrance desk share the same restrained management surfaces. */
+.dash-wrapper :is(.wg-hero,.exp-hero,.ep-hero,.checkin-hero-banner) { background: var(--app-surface); border-color: var(--app-border); border-radius: 16px; padding: 24px; box-shadow: var(--app-shadow); }
+.dash-wrapper :is(.wg-hero,.exp-hero,.ep-hero,.checkin-hero-banner)::before { display: none; }
+.dash-wrapper :is(.wg-title,.exp-title,.ep-title,.checkin-hero-title) { font-size: clamp(24px,2.5vw,32px); font-weight: 650; }
+.dash-wrapper :is(.wg-sum-card,.exp-sum-card,.ep-sum-card,.checkin-kpi-card) { box-shadow: var(--app-shadow); transform: none; }
+.dash-wrapper :is(.wg-sum-total,.exp-sum-total,.ep-sum-total) { background: var(--app-subtle); border-color: var(--app-border); }
+.dash-wrapper .wg-sum-total :is(.wg-sum-label,.wg-sum-value) { color: var(--app-ink); }
+.dash-wrapper :is(.wg-sum-total .wg-sum-icon,.exp-sum-total .exp-sum-icon,.ep-sum-total .ep-sum-icon) { background: var(--app-accent-soft); color: var(--app-ink); }
+.dash-wrapper :is(.wg-add-btn,.exp-add-btn,.ep-add-btn,.wg-filter-btn.active,.ep-filter-btn.active,.exp-cat-btn.active,.ep-cat-btn.active,.checkin-btn-primary,.checkin-submit-btn,.checkin-row-btn.action-checkin,.checkin-btn-submit,.checkin-btn-full,.checkin-btn-done,.checkin-currency-btn.active) { min-height: 44px; border-radius: 10px; background: var(--app-accent); color: var(--app-on-accent); border-color: var(--app-accent); box-shadow: none; }
+.dash-wrapper :is(.wg-secondary-btn,.exp-action-btn,.ep-action-btn,.checkin-btn-secondary,.checkin-back-nav-btn,.checkin-tab-btn,.wg-action-btn) { min-height: 44px; border-radius: 10px; }
+.dash-wrapper :is(.wg-table thead,.ep-table thead,.exp-table thead,.checkin-filter-tabs,.checkin-avatar) { background: var(--app-subtle); }
+.dash-wrapper .wg-avatar { background: var(--app-accent-soft); color: var(--app-ink); }
+:root[data-color-mode=dark] .dash-wrapper :is(.delivery-workflow-card,.delivery-channel-box,.delivery-metric-card,.delivery-event-card,.wish-card,.wishes-empty-state,.checkin-modal,.checkin-modal-content) { background: var(--app-surface); color: var(--app-ink); border-color: var(--app-border); }
+:root[data-color-mode=dark] .dash-wrapper :is(.card-badge-header h2,.channel-box-title h3,.delivery-metric-card .metric-value,.delivery-email-form .label-text) { color: var(--app-ink); }
+:root[data-color-mode=dark] .dash-wrapper :is(.delivery-metric-card .metric-label,.card-badge-header p) { color: var(--app-muted); }
+:root[data-color-mode=dark] .dash-wrapper :is(.delivery-unpublished-banner,.checkin-duplicate-banner) { background: var(--app-gold-soft); border-color: var(--app-gold); color: var(--app-gold); }
+:root[data-color-mode=dark] .dash-wrapper .delivery-unpublished-banner :is(h3,p) { color: var(--app-gold); }
+:root[data-color-mode=dark] .dash-wrapper :is(.wg-danger-btn,.ep-danger-btn,.exp-danger-btn,.wish-delete-btn) { background: #402826; color: var(--app-danger); border-color: #80504a; }
+
+/* Theme financial controls on screen. Printed and exported paper stays white. */
+@media screen {
+  .dash-wrapper .financial-report-page:not(.is-print-preview) { --report-ink: var(--app-ink); --report-muted: var(--app-muted); --report-line: var(--app-border); --report-paper: var(--app-surface); --report-green: var(--app-accent); --report-gold: var(--app-gold); }
+  :root[data-color-mode=dark] .financial-report-page:not(.is-print-preview) :is(.financial-report-header h1,.report-section-heading h2,.report-money-card strong,.report-stat-card strong) { color: var(--app-ink); }
+  :root[data-color-mode=dark] .financial-report-page:not(.is-print-preview) :is(.report-summary-card,.owner-report-summary,.report-section,.report-action-btn,.owner-report-export-actions button) { background: var(--app-surface); color: var(--app-ink); border-color: var(--app-border); }
+  :root[data-color-mode=dark] .financial-report-page:not(.is-print-preview) .owner-report-metric { background: var(--app-subtle); color: var(--app-ink); border-color: var(--app-border); }
+  :root[data-color-mode=dark] .financial-report-page:not(.is-print-preview) :is(.owner-report-heading h2,.owner-report-metric strong,.report-section-heading strong,.stat-card>strong) { color: var(--app-ink); }
+  :root[data-color-mode=dark] .financial-report-page:not(.is-print-preview) :is(.owner-report-heading p,.owner-report-metric span,.money-card>small) { color: var(--app-muted); }
+  :root[data-color-mode=dark] .financial-report-page:not(.is-print-preview) :is(thead,tr:hover) { background: var(--app-subtle); }
+  :root[data-color-mode=dark] .financial-report-page:not(.is-print-preview) .money-card-amounts strong { color: var(--app-gold); }
+}
+
+/* Shared date/time controls and catalog dialogs also render in portals. */
+:root[data-color-mode=dark] :is(.dash-wrapper,.k-modal-container) :is(.dp-trigger,.tp-trigger,.dp-dropdown,.tp-dropdown,.dp-nav-btn,.dp-cell,.dp-btn-today,.dp-btn-cancel,.tp-preset-card,.tp-btn-cancel,.tp-tab) { background: var(--app-subtle); color: var(--app-ink); border-color: var(--app-control-border); }
+:root[data-color-mode=dark] :is(.dash-wrapper,.k-modal-container) :is(.dp-value,.tp-value,.dp-month-year,.tp-label,.tp-section-label,.tp-preset-time,.tp-preset-desc) { color: var(--app-ink); }
+:root[data-color-mode=dark] :is(.dash-wrapper,.k-modal-container) :is(.dp-day.selected,.dp-btn-today,.tp-btn-confirm) { background: var(--app-accent); color: var(--app-on-accent); border-color: var(--app-accent); }
+:root[data-color-mode=dark] .tc-modal { --brand-text: var(--app-ink); --brand-text-muted: var(--app-muted); --brand-surface: var(--app-surface); --brand-border: var(--app-border); }
+:root[data-color-mode=dark] .tc-modal :is(.tc-filters button[aria-pressed=true],.tc-actions button) { background: var(--app-accent-soft); color: var(--app-ink); border-color: var(--app-control-border); }
+:root[data-color-mode=dark] .tc-modal :is(.tc-access,.tc-category span) { color: var(--app-gold); }
+:root[data-color-mode=dark] .tc-modal .tc-unavailable { color: var(--app-danger); }
+:root[data-color-mode=dark] .dash-wrapper .qr-card { background: var(--app-surface); border-color: var(--app-border); }
+:root[data-color-mode=dark] .dash-wrapper .qr-frame:has(.qr-placeholder) { background: var(--app-subtle); border-color: var(--app-border); }
+:root[data-color-mode=dark] .dash-wrapper :is(.qr-title,.qr-guest,.qr-destination,.qr-type-indicator p) { color: var(--app-ink); }
+:root[data-color-mode=dark] .dash-wrapper .qr-type-badge { background: var(--app-accent-soft); color: var(--app-ink); }
+:root[data-color-mode=dark] :is(.dash-wrapper,.k-modal-container) :is(.tp-title,.tp-preview-num,.tp-preview-period,.tp-col-header,.tp-presets-title,.tp-item,.tp-quick-label,.dp-weekday) { color: var(--app-ink); }
+:root[data-color-mode=dark] :is(.dash-wrapper,.k-modal-container) :is(.tp-digital-preview,.tp-columns-wrap,.tp-period-segmented,.tp-quick-chip,.tp-period-btn) { background: var(--app-subtle); border-color: var(--app-border); color: var(--app-ink); }
+:root[data-color-mode=dark] :is(.dash-wrapper,.k-modal-container) :is(.tp-item.active,.tp-period-btn.active,.tp-quick-chip.active) { background: var(--app-accent-soft); color: var(--app-ink); }
+
+@media(max-width:1100px) {
+  .kp-mobile-preferences { display: block; margin-inline-start: auto; }
+  .kp-header-inner { gap: 10px; }
+}
+@media(max-width:500px) {
+  .dash-wrapper .host-header-container { padding-inline: 10px; gap: 8px; }
+  .dash-wrapper .host-logo-box { flex: 0 0 64px; min-width: 0; }
+  .dash-wrapper .host-logo-box img { width: 64px; max-width: 64px; height: 42px; object-fit: contain; }
+  .dash-wrapper .host-user-actions { gap: 6px; }
+  .dash-wrapper .host-profile-pill,.dash-wrapper .host-hamburger-btn { min-width: 44px; min-height: 44px; }
+  .kp-brand { min-width: 0; }
+  .kp-brand>span { display: none; }
+  .kp-brand img { width: 60px; height: 44px; object-fit: contain; }
+  .kp-mobile-preferences .app-language-control select { width: 64px; }
+  .inv-preview-header { flex-wrap: wrap; padding: 10px 12px; gap: 10px; }
+  .inv-preview-header__right { flex-wrap: wrap; width: 100%; justify-content: space-between; gap: 8px; }
+}
+@media(max-width:767px) {
+  #invitation-studio-toolbar .studio-toolbar { display: grid; grid-template-columns: 44px minmax(0,1fr) auto; gap: 6px; }
+  #invitation-studio-toolbar .studio-toolbar:has(.studio-event-menu) { grid-template-columns: 44px 44px minmax(0,1fr) auto; }
+  #invitation-studio-toolbar .studio-document { min-width: 0; }
+  #invitation-studio-toolbar .studio-save-status { grid-column: 1/-1; }
+  #invitation-studio-toolbar .studio-navbar-preferences { min-width: 0; }
+  :root[data-color-mode=dark] #invitation-studio-toolbar .studio-toolbar-actions { background: var(--app-surface); border-color: var(--app-border); }
+}
+@media(prefers-reduced-motion:reduce) {
+  .dash-wrapper .event-workspace-content>main { animation: none; }
+  .app-preferences *, .dash-wrapper :is(button,a,input,select,textarea) { transition: none; }
+}

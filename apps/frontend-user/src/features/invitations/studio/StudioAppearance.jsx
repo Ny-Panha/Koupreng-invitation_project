@@ -1,3 +1,4 @@
+import { feedback } from "@/shared/feedback/feedback";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import StudioFontPreview from './StudioFontPreview';
 import RoyalGardenSceneEditor from './RoyalGardenSceneEditor';
@@ -40,6 +41,6 @@ export default function StudioAppearance({ form, update, supportsPalette }) {
         <label className="pe-label">{text('Ornament scale', 'ទំហំលំនាំលម្អ')}<input type="range" min=".6" max="1.5" step=".1" value={style.ornamentScale ?? 1} onChange={e => set('ornamentScale', Number(e.target.value))} /></label>
       </> : null}
     </>}
-    <button type="button" className="pe-btn-upload-action" onClick={() => { if (window.confirm(text("Restore the template's original appearance?", "ស្ដាររចនាដើមរបស់គំរូនេះឬ?"))) { update("studioStyle", {}); update("fontKhmer", ""); update("fontLatin", ""); } }}>{text("Reset appearance", "ស្ដាររចនាដើម")}</button>
+    <button type="button" className="pe-btn-upload-action" onClick={async () => { if (await feedback.confirm({ message: text("Restore the template's original appearance?", "ស្ដាររចនាដើមរបស់គំរូនេះឬ?"), destructive: true })) { update("studioStyle", {}); update("fontKhmer", ""); update("fontLatin", ""); } }}>{text("Reset appearance", "ស្ដាររចនាដើម")}</button>
   </section>;
 }

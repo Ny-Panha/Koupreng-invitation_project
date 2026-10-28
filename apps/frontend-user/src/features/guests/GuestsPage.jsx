@@ -264,7 +264,6 @@ export default function GuestsPage() {
         <div>
           {eventTitle && <p className="guest-event-name"><span aria-hidden="true" />{eventTitle}</p>}
           <h1>{t ? t("title") : "បញ្ជីភ្ញៀវកិត្តិយស"}</h1>
-          <p className="guest-page-description">{t("workspaceSubtitle")}</p>
         </div>
         <div className="guest-header-actions">
           <button type="button" className="guest-button guest-button-secondary" disabled={loading || !backendInvitationId} onClick={() => setImportModalOpen(true)}>
@@ -274,7 +273,6 @@ export default function GuestsPage() {
       </header>
 
       {(!serverMode || overview) && <GuestStats guests={guests} summary={serverMode ? overview : undefined} t={key => serverMode ? ({ statTotalGuests: en ? 'Guest records' : 'កំណត់ត្រាភ្ញៀវ', statTotalSeats: en ? 'Reserved seats' : 'កៅអីកក់', statSent: en ? 'Marked sent / opened' : 'បានសម្គាល់ផ្ញើ / បើក' })[key] || t(key) : t(key)} />}
-      {serverMode && overview && <p className="guest-count-definitions">{en ? `One guest record can reserve several seats. ${overview.confirmedAttendees} attendees are confirmed in stored RSVPs; ${overview.checkedInRecords} guest records are checked in. Check-in records do not measure individual arrivals.` : `កំណត់ត្រាភ្ញៀវមួយអាចកក់ច្រើនកៅអី។ RSVP បញ្ជាក់ ${overview.confirmedAttendees} នាក់ និងកំណត់ត្រាភ្ញៀវ ${overview.checkedInRecords} បានចូលរួម។ កំណត់ត្រាវត្តមានមិនមែនចំនួនអ្នកមកដល់ម្នាក់ៗទេ។`}</p>}
 
       <section className="guest-list-panel" aria-labelledby="guest-list-heading" aria-busy={loading || queryPending}>
         <div className="guest-list-heading">

@@ -1,3 +1,4 @@
+import AccessFailureState from "@/shared/access/AccessFailureState";
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Armchair, Download, Grid2X2, Map, Plus, Users } from 'lucide-react';
@@ -34,7 +35,7 @@ export default function InvitationSeatingPage() {
       </div>
     </header>
     {loading && !plan && <p role="status">{t('loading')}</p>}
-    {error && <div className="workspace-notice" role="alert">{error}<button className="workspace-button" type="button" onClick={refresh}>{t('retry')}</button></div>}
+    {error && <AccessFailureState error={seating.failure || error} feature="SEATING" permission="MANAGE_SEATING" onRetry={refresh} />}
     <section className="workspace-summary" aria-label={t('summary')}>{stats.map(([key, value]) => <article key={key}><span>{t(key)}</span><strong>{value}</strong></article>)}</section>
     <div className="seating-mobile-tabs workspace-tabs" role="group" aria-label={t('workspace')}>
       <button type="button" aria-pressed={mobilePanel === 'tables'} onClick={() => setMobilePanel('tables')}>{t('tables')}</button>

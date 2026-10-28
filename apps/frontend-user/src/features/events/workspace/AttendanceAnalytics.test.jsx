@@ -25,7 +25,8 @@ it('shows current totals separately from dates with a truthful accessible chart 
 });
 it('fails closed on permission denial without showing previous data', async () => {
   api.get.mockRejectedValue({ status: 403, message: 'Forbidden' }); mount();
-  expect(await screen.findByRole('alert')).toHaveTextContent('Check your team role');
+  expect(await screen.findByRole('button', { name: 'Event permission required' })).toBeVisible();
+  expect(screen.queryByRole('link', { name: 'View packages' })).not.toBeInTheDocument();
   expect(screen.queryByRole('table')).not.toBeInTheDocument();
 });
 it('has an empty state with a zero-record denominator', async () => {

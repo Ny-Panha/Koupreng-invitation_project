@@ -1,0 +1,9 @@
+{
+  "scope": "930 scheduled historical and current Chromium cases; interrupted after user requested further UI changes; not a final green gate",
+  "completedStatuses": {
+    "ok": 286,
+    "x": 101,
+    "-": 19
+  },
+  "highestReportedIndex": 407
+}

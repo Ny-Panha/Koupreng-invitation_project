@@ -1,12 +1,12 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link, NavLink } from "react-router-dom";
-import { ArrowLeft, CalendarDays, ChevronDown, PanelLeftClose, PanelLeftOpen, X } from "lucide-react";
+import { ArrowLeft, CalendarDays, ChevronDown, LockKeyhole, PanelLeftClose, PanelLeftOpen, X } from "lucide-react";
 import { EVENT_TYPES } from "../onboarding/eventFields";
 import { PRIMARY_EVENT_LINKS, EVENT_LINK_GROUPS, eventStatus } from "./eventNavigationModel";
 import { eventPath } from "./eventRoutes";
 
-export default function EventNavigation({ event, events, eventId, currentModule, en, collapsed, groups, onToggleGroup, onToggleCollapsed, onExpand, onSwitch, onNavigate, onClose, overlay = false, allowed = () => true }) {
+export default function EventNavigation({ event, events, eventId, currentModule, en, collapsed, groups, onToggleGroup, onToggleCollapsed, onExpand, onSwitch, onNavigate, onClose, overlay = false, allowed = () => true, features }) {
   const bodyRef = useRef(null);
   const navRef = useRef(null);
   const tooltipId = useId();
@@ -38,6 +38,8 @@ export default function EventNavigation({ event, events, eventId, currentModule,
   const renderLink = ({ path, en: english, km, Icon }) => {
     if (!allowed(path)) return null;
     const label = en ? english : km;
+    const feature = { qr: 'QR_INVITATIONS', seating: 'SEATING', 'check-in': 'QR_CHECK_IN', analytics: 'ADVANCED_ANALYTICS', team: 'TEAM_MEMBERS', assistant: 'AI_ASSISTANT' }[path];
+    const locked = feature && Array.isArray(features) && !features.includes(feature);
     return <NavLink key={path} end to={eventPath(eventId, path)}
       className={({ isActive }) => `event-nav-tab${isActive ? " active" : ""}`}
       aria-label={label} aria-describedby={rail && tooltip?.path === path ? tooltipId : undefined}
@@ -47,6 +49,7 @@ export default function EventNavigation({ event, events, eventId, currentModule,
       onKeyDown={e => { if (e.key === "Escape") setTooltip(null); }}>
       <Icon size={20} strokeWidth={1.75} className="event-nav-tab-icon" aria-hidden="true" />
       <span className="event-nav-tab-text">{label}</span>
+      {locked && <LockKeyhole size={14} aria-label={en ? 'Owner package access required' : 'ត្រូវការសិទ្ធិកញ្ចប់ម្ចាស់កម្មវិធី'} />}
     </NavLink>;
   };
 

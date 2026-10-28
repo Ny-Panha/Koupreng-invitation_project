@@ -167,7 +167,8 @@ test('RG32-01: choosing Royal Garden from the Studio selector retains authored o
   await page.getByRole('button', { name: /^Change template:/ }).click();
   const card = page.locator(`.tc-card[data-template="${code}"]`); await expect(card).toHaveCount(1);
   await card.getByRole('button', { name: 'Select', exact: true }).click();
-  page.once('dialog', dialog => dialog.accept()); await page.getByRole('button', { name: 'Use selected design' }).click();
+  await page.getByRole('button', { name: 'Use selected design' }).click();
+  await page.getByRole('dialog', { name: 'Confirm template change' }).getByRole('button', { name: 'Confirm', exact:true }).click();
   await expect(page.getByRole('dialog', { name: 'Change template', exact: true })).toBeHidden();
   const frame = page.frameLocator('iframe'); await expect(frame.locator('.tpl-royal-garden')).toBeVisible();
   await chooseStudioSection(page, 'scheduleVenue', 'Save the date & calendar');

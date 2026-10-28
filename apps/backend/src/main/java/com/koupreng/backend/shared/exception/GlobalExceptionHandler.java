@@ -46,7 +46,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleApiException(ApiException exception) {
         HttpStatus status = exception == null ? HttpStatus.INTERNAL_SERVER_ERROR : exception.getStatus();
         String code = exception == null ? "INTERNAL_ERROR" : exception.getCode();
-        return error(status, code, messageOrDefault(exception, msg.get("error.bad-request")));
+        var response = error(status, code, messageOrDefault(exception, msg.get("error.bad-request")));
+        if (exception != null && !exception.getDetails().isEmpty() && response.getBody() != null) {
+            response.getBody().put("details", exception.getDetails());
+        }
+        return response;
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

@@ -60,20 +60,20 @@ export function GuestSelectField({ value, guestId, onChange, options = [], place
                 style={{
                     display: "flex", justifyContent: "space-between", alignItems: "center",
                     width: "100%", padding: "10px 14px", border: existingGiftForSelected ? "1.5px solid #FB7185" : "1.5px solid #eadfce",
-                    borderRadius: "10px", background: "#fdfaf5", fontSize: "14px",
-                    cursor: "pointer", color: value ? "#2a1f10" : "#a8a096", textAlign: "left",
+                    borderRadius: "10px", background: "var(--app-subtle)", fontSize: "14px",
+                    cursor: "pointer", color: value ? "var(--app-ink)" : "var(--app-muted)", textAlign: "left",
                     fontFamily: "inherit", minHeight: "44px", transition: "border-color 0.2s"
                 }}
             >
                 {selectedOption ? (
-                    <span style={{ fontWeight: 600, color: "#2a1f10", fontSize: "14px" }}>
+                    <span style={{ fontWeight: 600, color: "var(--app-ink)", fontSize: "14px" }}>
                         {selectedLabel}
                     </span>
                 ) : (
-                    <span style={{ color: "#a8a096" }}>{placeholder}</span>
+                    <span style={{ color: "var(--app-muted)" }}>{placeholder}</span>
                 )}
                 <IoChevronDownOutline style={{ 
-                    fontSize: "15px", color: "#a8a096", 
+                    fontSize: "15px", color: "var(--app-muted)",
                     transform: open ? "rotate(180deg)" : "none", 
                     transition: "transform 0.2s ease" 
                 }} />
@@ -96,7 +96,7 @@ export function GuestSelectField({ value, guestId, onChange, options = [], place
             {open && (
                 <div style={{
                     position: "absolute", top: "calc(100% + 4px)", left: 0, right: 0,
-                    background: "#fff", border: "1px solid #eadfce", borderRadius: "10px",
+                    background: "var(--app-surface)", border: "1px solid #eadfce", borderRadius: "10px",
                     boxShadow: "0 10px 24px rgba(80,55,20,0.12)", zIndex: 10,
                     padding: "8px", display: "flex", flexDirection: "column", gap: "8px"
                 }}>
@@ -133,7 +133,7 @@ export function GuestSelectField({ value, guestId, onChange, options = [], place
                                 onClick={() => selectCustomName(query.trim())}
                                 style={{
                                     display: "flex", alignItems: "center", gap: "10px", width: "100%", 
-                                    padding: "12px 14px", border: "none", background: "#fdfaf5",
+                                    padding: "12px 14px", border: "none", background: "var(--app-subtle)",
                                     textAlign: "left", cursor: "pointer", fontSize: "14px", color: "#B0926A",
                                     borderRadius: "8px", fontWeight: "bold", marginBottom: "4px",
                                     fontFamily: "inherit"
@@ -158,11 +158,11 @@ export function GuestSelectField({ value, guestId, onChange, options = [], place
                                     style={{
                                         display: "flex", alignItems: "center", gap: "10px", width: "100%", 
                                         padding: "10px 14px", border: "none", background: "transparent",
-                                        textAlign: "left", cursor: "pointer", fontSize: "14px", color: "#2a1f10",
+                                        textAlign: "left", cursor: "pointer", fontSize: "14px", color: "var(--app-ink)",
                                         borderBottom: "1px solid #f9f9f9", transition: "background 0.2s",
                                         fontFamily: "inherit"
                                     }}
-                                    onMouseOver={(e) => e.currentTarget.style.background = "#fdfaf5"}
+                                    onMouseOver={(e) => e.currentTarget.style.background = "var(--app-subtle)"}
                                     onMouseOut={(e) => e.currentTarget.style.background = "transparent"}
                                 >
                                     <span style={{ flexGrow: 1, display: "flex", alignItems: "center", gap: "8px", fontWeight: 500 }}>

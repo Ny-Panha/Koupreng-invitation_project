@@ -109,7 +109,7 @@ export function EventCard({
     draft.templateName || template?.name || template?.style || "";
 
   const venueText = draft.venueName || draft.event?.venueName || "";
-  const premiumAccessRequired = /premium template access is required/i.test(String(draft.syncError || ""));
+  const premiumAccessRequired = draft.syncFailure?.status === 403 && draft.syncFailure?.code === "PACKAGE_FEATURE_REQUIRED";
 
   return (
     <article
@@ -183,7 +183,7 @@ export function EventCard({
         {draft.syncError && (
           <p className="event-card-sync-error" role="status">
             {premiumAccessRequired ? (en ? "Premium access required to save this template." : "ត្រូវការសិទ្ធិបុព្វលាភ ដើម្បីរក្សាទុកគំរូនេះ។") : (en ? "Changes are stored on this device. Open the invitation to review and save them online." : "ការកែប្រែបានរក្សាទុកក្នុងឧបករណ៍នេះ។ បើកធៀបដើម្បីពិនិត្យ និងរក្សាទុកលើអ៊ីនធឺណិត។")}
-            {premiumAccessRequired && onReviewAccess && <button type="button" className="event-card-btn event-card-btn--secondary" onClick={onReviewAccess}>{en ? "Review access" : "ពិនិត្យសិទ្ធិ"}</button>}
+            {onReviewAccess && <button type="button" className="event-card-btn event-card-btn--secondary" onClick={() => onReviewAccess(draft)}>{en ? "Review access" : "ពិនិត្យសិទ្ធិ"}</button>}
           </p>
         )}
 

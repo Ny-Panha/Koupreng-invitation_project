@@ -1,0 +1,15 @@
+{
+  "engine": "MySQL 8.0.39 on loopback",
+  "exitCode": 0,
+  "ownedDisposableSchemasRemoved": true,
+  "reports": [
+    {
+      "name": "com.koupreng.backend.phase7.Phase7CollaborationMySqlTests",
+      "tests": "18",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "25.907"
+    }
+  ]
+}

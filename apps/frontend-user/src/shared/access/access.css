@@ -1,0 +1,31 @@
+.access-heading { display: flex; align-items: start; gap: 16px; }
+.access-heading > span { display: grid; place-items: center; flex-shrink: 0; width: 48px; height: 48px; border-radius: 14px; color: #81581d; background: #faf0df; }
+.access-heading h3 { margin: 0 0 8px; font-size: 1.125rem; line-height: 1.7; }
+.access-dialog p, .feature-access-card p { line-height: 1.85; }
+.access-plan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 14px; margin: 18px 0; }
+.access-plan { padding: 20px; border: 1px solid var(--brand-border, #ddd7cc); background: var(--brand-surface, #fff); border-radius: 14px; }
+.access-plan h3 { margin: 0; line-height: 1.7; font-size: 1.125rem; }
+.access-plan .access-price { font-size: 1.5rem; font-weight: 700; margin: 8px 0; }
+.access-dialog :is(button, a), .feature-access-card button { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid #c4a46c; border-radius: 9px; color: #694715; background: #fffaf0; padding: 9px 16px; font: inherit; text-decoration: none; cursor: pointer; }
+.access-dialog :is(button,a):focus-visible, .feature-access-card button:focus-visible { outline: 3px solid #916725; outline-offset: 3px; }
+.access-quota { padding: 14px 18px; background: #fff5e6; border-radius: 10px; color: #694715; }
+.access-note { font-size: .875rem; color: var(--brand-text-muted, #60675d); }
+.access-actions { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; width: 100%; }
+.feature-access-card { padding: 20px; margin-block: 16px; border: 1px solid var(--brand-border, #ded7cb); border-radius: 12px; background: var(--brand-surface, #fff); }
+.feature-access-card h3 { display: flex; gap: 10px; align-items: center; font-size: 1rem; line-height: 1.8; margin: 0; }
+.feature-access-card > p { margin: 10px 0 16px; color: #555e53; }
+.access-dialog.k-modal-container { border-radius: 20px; border-color: #e0e8e1; box-shadow: 0 24px 80px rgb(17 39 25 / 18%); }
+.access-dialog .k-modal-header { padding: 22px 26px; border-color: #e8eee8; }
+.access-dialog .k-modal-body { padding: 24px 26px; }
+.access-dialog .k-modal-footer { background: #f8faf7; border-color: #e8eee8; padding: 16px 26px; }
+.access-dialog .k-modal-close-btn { width: 44px; padding: 8px; border: 0; background: #f0f5f0; color: #57705d; }
+.access-dialog .access-plan { padding: 22px; border-color: #dce7dd; border-radius: 12px; background: #fcfefb; }
+.access-dialog .access-plan h3 { font-weight: 600; font-size: 16px; color: #294d35; }
+.access-dialog .access-plan > a { background: #29583d; border-color: #29583d; color: #fff; width: 100%; }
+.access-dialog .access-actions > button { border-color: transparent; background: transparent; color: #5b6d60; }
+.access-dialog .access-actions > a { border-color: #c6d7c9; color: #2f5c3e; background: #fff; }
+.feature-access-card { background: #f5f9f3; border-color: #dae5d8; border-radius: 12px; }
+.feature-access-card h3 { color: #35583d; font-weight: 600; }
+.feature-access-card button { border-color: #c6d6c5; color: #335c3d; background: #fff; }
+@media(max-width:480px) { .access-dialog .k-modal-header { padding: 16px 20px; } .access-dialog .k-modal-body { padding: 20px; } .access-dialog .k-modal-footer { padding: 12px 20px; } }
+@media(max-width: 480px) { .access-heading { flex-direction: column; } .access-actions { flex-direction: column-reverse; } .access-actions > * { width: 100%; } }

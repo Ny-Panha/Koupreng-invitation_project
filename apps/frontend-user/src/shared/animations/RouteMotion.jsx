@@ -9,5 +9,6 @@ export default function RouteMotion() {
   // Public marketing has its own bounded CSS/observer motion. The existing
   // Framer route engine is fetched when a legacy surface actually needs it.
   if (nativeMarketing.has(pathname.replace(/\/$/, "") || "/")) return null;
+  if (/^\/(app|dashboard)(\/|$)/.test(pathname)) return null;
   return <Suspense fallback={null}><LegacySiteAnimations /></Suspense>;
 }

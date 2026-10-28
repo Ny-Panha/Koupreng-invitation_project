@@ -56,6 +56,7 @@ export default function Modal({
   showHeader = true,
   className = "",
   backdropClassName = "",
+  initialFocusRef,
 }) {
   const copy = useUiCopy();
   const modalRef = useRef(null);
@@ -73,7 +74,7 @@ export default function Modal({
     document.body.appendChild(portalRoot);
     const entry = { root: portalRoot, dialog };
     modalStack.push(entry); isolateBackground();
-    const focusFirst = () => (focusableElements(dialog)[0] || dialog).focus();
+    const focusFirst = () => (dialog.contains(initialFocusRef?.current) ? initialFocusRef.current : focusableElements(dialog)[0] || dialog).focus();
     if (!dialog.contains(document.activeElement)) focusFirst();
 
     const handleKeyDown = (event) => {
@@ -150,7 +151,7 @@ export default function Modal({
         else if (modalStack.length) (focusableElements(modalStack.at(-1).dialog)[0] || modalStack.at(-1).dialog).focus();
       }
     };
-  }, [isOpen, portalRoot]);
+  }, [isOpen, portalRoot, initialFocusRef]);
 
   if (!isOpen) return null;
 

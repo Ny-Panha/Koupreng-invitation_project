@@ -11,7 +11,7 @@ const catalog = [
   { id: 2, code: "silk-heritage", slug: "silk-heritage", name: "សូត្រមង្គល", nameEn: "Silk Heritage", category: "TRADITIONAL", premium: false, price: 0, currency: "USD", thumbnailUrl: "/templates/silk-heritage/preview.svg", description: JSON.stringify({ presetId: "SILK_HERITAGE", coverImage: "/templates/silk-heritage/portrait.webp" }) },
   { id: 80, code: "khmer-celestial", name: "ខ្មែរចន្ទតារា", nameEn: "Khmer Celestial", category: "TRADITIONAL", premium: true, price: null, currency: "USD", thumbnailUrl: "/facebook/all/06-card/cover-card.jpg" },
   { id: 81, code: "emerald-canva-luxe-wedding", name: "Emerald Luxe", category: "MODERN", premium: true, price: 20, currency: "USD", thumbnailUrl: "/templates/canva-luxury/emerald-luxury.jpg" },
-];
+].map(template => ({ status: "ACTIVE", featured: true, ...template }));
 const json = (route, data, status = 200) => route.fulfill({ status, contentType: "application/json", body: JSON.stringify(status >= 400 ? { message: data } : { data }) });
 
 async function fixture(page, { signedIn = false, paid = [], offline = false } = {}) {

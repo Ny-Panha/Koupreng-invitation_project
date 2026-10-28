@@ -19,6 +19,7 @@ test('ticket images use independent upload, persist cover/background, transform 
   await page.reload();
   await expect(page.getByRole('combobox', { name: 'Cover fit', exact: true })).toHaveValue('CONTAIN');
   await expect(page.getByLabel('Vertical focal point', { exact: true })).toHaveValue('75');
+  if (!await page.getByRole('combobox', { name: 'Preview recipient', exact: true }).isVisible()) await page.getByRole('button', { name: 'Preview & export', exact: true }).click();
   await page.getByRole('combobox', { name: 'Preview recipient', exact: true }).selectOption('501');
   await expect(page.locator('.ticket-text-equivalent')).toContainText('Personal guest');
   const download = page.getByRole('button', { name: 'Download PNG · 2×', exact: true });

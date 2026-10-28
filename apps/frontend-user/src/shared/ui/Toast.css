@@ -53,6 +53,9 @@
   flex-shrink: 0;
 }
 
+.k-toast-message { display: grid; gap: 5px; min-width: 0; overflow-wrap: anywhere; }
+.k-toast-message button { min-height: 44px; border: 1px solid currentColor; background: transparent; border-radius: 7px; padding: 6px 12px; color: inherit; cursor: pointer; justify-self: start; }
+.k-toast-close { min-width: 44px; min-height: 44px; }
 .k-toast-success .k-toast-icon-wrapper {
   background: #dcfce7;
   border: 1.5px solid #bbf7d0;

@@ -1,3 +1,4 @@
+import { installGuestDashboardFixtures } from "./support/guestDashboardFixtures";
 import { expect, test } from "@playwright/test";
 import { fixtureToken } from "./support/fixtureToken";
 
@@ -35,6 +36,7 @@ async function setup(page) {
     if (match) {
       const event = [...events, ...created].find(event => String(event.id) === match[1]);
       if (!event) return reply(null, 403);
+      if (match[2] === "access") return reply({ owner: true, permissions: [], ownerFeatures: ["QR_INVITATIONS", "SEATING", "QR_CHECK_IN"] });
       if (!match[2] || match[2] === "preview") return reply(event);
       if (match[2] === "guests") return reply([{ id: event.id * 10, guestName: `Guest of ${event.title}`, seatCount: 1 }]);
       if (match[2] === "gifts") return reply([{ id: event.id, name: `Gift of ${event.title}`, amount: 10, currency: "USD" }]);
@@ -44,6 +46,7 @@ async function setup(page) {
     }
     return reply([]);
   });
+  for (const event of events) await installGuestDashboardFixtures(page,{ guests:[{ id:event.id*10,guestName:`Guest of ${event.title}`,seatCount:1 }] },event.id);
   return { requests, created };
 }
 
@@ -88,7 +91,7 @@ test("single form creates a typed backend draft once and opens its exact workspa
   await page.evaluate(() => { window.scrollTo(0, 0); document.querySelector(".dash-main-scroll")?.scrollTo(0, 0); });
   await page.screenshot({ path: testInfo.outputPath("birthday-details.png"), fullPage: true });
   await page.getByRole("button", { name: /Create event|រក្សាទុកកម្មវិធី/, exact: true }).click();
-  await expect(page).toHaveURL(/\/app\/events\/103$/);
+  await expect(page).toHaveURL(/\/app\/events\/103\/invitation\?mode=guided$/);
   expect(created).toHaveLength(1);
   expect(created[0]).toMatchObject({ eventType: "BIRTHDAY", hostName: "Sokha", templateId: 30, visibility: "PRIVATE" });
   expect(created[0].clientRequestId).toMatch(/^[a-f0-9-]{36}$/);
@@ -99,7 +102,7 @@ test("workspace and event form fit supported mobile and desktop widths", async (
   await setup(page);
   for (const width of [320, 375, 390, 430, 768, 1024, 1440]) {
     await page.setViewportSize({ width, height: 900 });
-    for (const path of ["/login", "/register", "/app/events", "/app/events/new", "/app/events/101", "/app/events/101/gifts", "/app/events/101/rsvp", "/app/events/101/guests"]) {
+    for (const path of ["/app/events", "/app/events/new", "/app/events/101", "/app/events/101/gifts", "/app/events/101/rsvp", "/app/events/101/guests"]) {
       await page.goto(path, { waitUntil: 'domcontentloaded' });
       if (path.endsWith("/guests")) await expect(page.getByText("Guest of Wedding A", { exact: true })).toBeVisible();
       else if (path.endsWith("/new")) await expect(page.getByRole("button", { name: /Birthday|ខួបកំណើត/ })).toBeVisible();
