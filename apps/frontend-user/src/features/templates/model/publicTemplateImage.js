@@ -1,6 +1,11 @@
 // Exact local source URLs only. Uploaded/server images retain their original URL;
 // no assumed CDN transformations or template-ID-based artwork substitution.
 const derivatives = {
+  "/images/marketing/catalog/royal-garden-cinematic-640.webp": {
+    name: "royal-garden-cinematic", widths: [320, 640, 960],
+    sizes: "(max-width: 600px) 85vw, 300px",
+    compactSizes: "(max-width: 600px) 85vw, 300px",
+  },
   "/facebook/all/06-card/cover-card.jpg": {
     name: "khmer-celestial", widths: [320, 640, 1280],
     sizes: "(max-width: 600px) 450px, 510px",

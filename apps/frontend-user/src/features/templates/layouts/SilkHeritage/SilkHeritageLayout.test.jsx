@@ -57,7 +57,7 @@ describe("Silk Heritage integration", () => {
     expect(published.venueNameEn).toBe("");
   });
   it("uses the catalog's actual ID despite legacy numeric collisions", () => {
-    registerDynamicTemplates([{ id: 2, code: "silk-heritage", description: JSON.stringify({ presetId: "SILK_HERITAGE", coverImage: "/saved-portrait.jpg" }), thumbnailUrl: "/thumbnail.svg", premium: true, price: 12 }]);
+    registerDynamicTemplates([{ id: 2, code: "silk-heritage", status: "ACTIVE", description: JSON.stringify({ presetId: "SILK_HERITAGE", coverImage: "/saved-portrait.jpg" }), thumbnailUrl: "/thumbnail.svg", premium: true, price: 12 }]);
     const template = getTemplateById("silk-heritage");
     expect(resolveNumericTemplateId("silk-heritage")).toBe(2);
     expect(getDedicatedTemplateComponent(template)).toBe(templateRegistry["silk-heritage"]);

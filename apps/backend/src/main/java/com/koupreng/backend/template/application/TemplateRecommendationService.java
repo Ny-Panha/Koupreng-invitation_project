@@ -16,6 +16,10 @@ import java.util.Set;
 
 @Service
 public class TemplateRecommendationService {
+    private static final Set<String> RETIRED_CODES = Set.of(
+            "garden-royal-khmer-wedding",
+            "khmer-royal-lotus"
+    );
     private final InvitationTemplateRepository repository;
     public TemplateRecommendationService(InvitationTemplateRepository repository) { this.repository = repository; }
 
@@ -30,6 +34,7 @@ public class TemplateRecommendationService {
         }
         return repository.findAllByStatusIgnoreCaseOrderBySortOrderAscCreatedAtDesc("ACTIVE").stream()
                 .filter(t -> "ACTIVE".equalsIgnoreCase(t.getStatus()))
+                .filter(t -> t.getCode() == null || !RETIRED_CODES.contains(t.getCode().toLowerCase()))
                 .filter(t -> t.getSupportedEventTypes().contains(type) && t.getSupportedLanguages().contains(mode))
                 .filter(t -> price.equals("ALL") || (price.equals("PREMIUM") == (t.isPremium()
                         || t.getPrice() != null && t.getPrice().signum() > 0)))

@@ -9,11 +9,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class TemplateCatalogService {
 
     private static final String STATUS_ACTIVE = "ACTIVE";
+    private static final Set<String> RETIRED_CODES = Set.of(
+            "garden-royal-khmer-wedding",
+            "khmer-royal-lotus"
+    );
     private final InvitationTemplateRepository templateRepository;
 
     public TemplateCatalogService(InvitationTemplateRepository templateRepository) {
@@ -23,6 +28,7 @@ public class TemplateCatalogService {
     @Transactional(readOnly = true)
     public List<PublicTemplateResponse> listActiveTemplates() {
         return templateRepository.findAllByStatusIgnoreCaseOrderBySortOrderAscCreatedAtDesc(STATUS_ACTIVE).stream()
+                .filter(t -> t.getCode() == null || !RETIRED_CODES.contains(t.getCode().toLowerCase()))
                 .map(PublicTemplateResponse::from)
                 .toList();
     }
@@ -30,13 +36,18 @@ public class TemplateCatalogService {
     @Transactional(readOnly = true)
     public PublicTemplateResponse getActiveTemplate(Long templateId) {
         return templateRepository.findByIdAndStatusIgnoreCase(templateId, STATUS_ACTIVE)
+                .filter(t -> t.getCode() == null || !RETIRED_CODES.contains(t.getCode().toLowerCase()))
                 .map(PublicTemplateResponse::from)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Template not found"));
     }
 
     @Transactional(readOnly = true)
     public PublicTemplateResponse getActiveTemplateByCode(String code) {
+        if (code != null && RETIRED_CODES.contains(code.toLowerCase())) {
+            throw new ApiException(HttpStatus.NOT_FOUND, "Template not found");
+        }
         return templateRepository.findByCodeIgnoreCaseAndStatusIgnoreCase(code, STATUS_ACTIVE)
+                .filter(t -> t.getCode() == null || !RETIRED_CODES.contains(t.getCode().toLowerCase()))
                 .map(PublicTemplateResponse::from)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Template not found"));
     }

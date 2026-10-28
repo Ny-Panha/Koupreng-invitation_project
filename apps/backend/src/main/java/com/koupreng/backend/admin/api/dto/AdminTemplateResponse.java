@@ -33,6 +33,8 @@ public class AdminTemplateResponse {
     private String backgroundColor;
     private Instant createdAt;
     private Instant updatedAt;
+    private java.util.List<String> supportedEventTypes;
+    private java.util.List<String> supportedLanguages;
 
     public static AdminTemplateResponse from(InvitationTemplate template) {
         return AdminTemplateResponse.builder()
@@ -53,6 +55,8 @@ public class AdminTemplateResponse {
                 .backgroundColor(template.getBackgroundColor())
                 .createdAt(template.getCreatedAt())
                 .updatedAt(template.getUpdatedAt())
+                .supportedEventTypes(template.getSupportedEventTypes().stream().map(Enum::name).sorted().toList())
+                .supportedLanguages(template.getSupportedLanguages().stream().sorted().toList())
                 .build();
     }
 }

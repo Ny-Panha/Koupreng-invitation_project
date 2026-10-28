@@ -28,7 +28,7 @@ describe("draftToTemplate and Dynamic Template Synchronization", () => {
   it("Scenario C: Dynamic Admin template preserves presetId, colors, and openingStyle", () => {
     registerDynamicTemplates([
       {
-        id: 26,
+        id: 26, code: "admin-emerald", status: "ACTIVE",
         name: "Emerald Royal Luxe VIP",
         description: JSON.stringify({
           presetId: "EMERALD_GREEN",
@@ -77,7 +77,7 @@ describe("draftToTemplate and Dynamic Template Synchronization", () => {
   it("Scenario F: inherits base template design config (level-2 precedence)", () => {
     registerDynamicTemplates([
       {
-        id: 31,
+        id: 31, code: "admin-31", status: "ACTIVE",
         name: "Ornament Inheritance Check",
         description: JSON.stringify({
           presetId: "EMERALD_GREEN",
@@ -107,7 +107,7 @@ describe("draftToTemplate and Dynamic Template Synchronization", () => {
   it("Scenario G: draft.design overrides inherited base template design", () => {
     registerDynamicTemplates([
       {
-        id: 32,
+        id: 32, code: "admin-32", status: "ACTIVE",
         name: "Ornament Override Check",
         description: JSON.stringify({
           presetId: "EMERALD_GREEN",

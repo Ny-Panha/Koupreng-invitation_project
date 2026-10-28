@@ -1074,6 +1074,13 @@ public class AdminManagementService {
         if (requestBody.getBackgroundColor() != null) {
             template.setBackgroundColor(trimToNull(requestBody.getBackgroundColor()));
         }
+        // Omitted compatibility metadata must not clear existing associations.
+        if (requestBody.getSupportedEventTypes() != null) {
+            template.setSupportedEventTypes(new java.util.HashSet<>(requestBody.getSupportedEventTypes()));
+        }
+        if (requestBody.getSupportedLanguages() != null) {
+            template.setSupportedLanguages(new java.util.HashSet<>(requestBody.getSupportedLanguages()));
+        }
     }
 
     private AppUser requireUser(Long userId) {

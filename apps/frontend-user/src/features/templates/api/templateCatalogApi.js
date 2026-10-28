@@ -1,5 +1,6 @@
 import { api } from "@/shared/api/httpClient";
 import { getStoredLang, unwrap } from "@/shared/api/helpers";
+import { isPublicCatalogTemplate, requiresTemplateAccess } from "../model/catalogPolicy";
 
 const catalogCache = new Map();
 const TTL_MS = 30_000;
@@ -24,8 +25,8 @@ export const templateCatalogService = {
                                 ? items.content
                                 : null;
                 if (!list) throw new Error("Invalid template catalog response");
-                return list.map((t) => {
-                    const isPrem = Boolean(t.premium || t.isPremium || (Number(t.price) > 0));
+                return list.filter(isPublicCatalogTemplate).map((t) => {
+                    const isPrem = requiresTemplateAccess(t);
                     return {
                         ...t,
                         premium: isPrem,

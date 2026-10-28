@@ -1,3 +1,5 @@
+import { isPublicCatalogTemplate, matchesTemplateSearch, requiresTemplateAccess, templateCategory } from "../model/catalogPolicy";
+import { publicTemplateImage } from "../model/publicTemplateImage";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -50,6 +52,7 @@ export default function BrowseTemplatesFeature() {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedTemplate = searchParams.get("template");
   const [templates, setTemplates] = useState([]);
+  const [revision, setRevision] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [activeCategory, setActiveCategory] = useState("ALL");
@@ -71,10 +74,10 @@ export default function BrowseTemplatesFeature() {
     let active = true;
     setLoading(true);
     templateCatalogService
-      .list()
+      .list({ force: revision > 0 })
       .then((items) => {
         if (active) {
-          setTemplates(items || []);
+          setTemplates((items || []).filter(isPublicCatalogTemplate));
           setError("");
         }
       })
@@ -89,7 +92,7 @@ export default function BrowseTemplatesFeature() {
     return () => {
       active = false;
     };
-  }, [t]);
+  }, [t, revision]);
 
   const [paidIds, setPaidIds] = useState(new Set());
 
@@ -113,7 +116,7 @@ export default function BrowseTemplatesFeature() {
     };
   }, []);
 
-  const isPremium = useCallback((tpl) => Boolean(tpl?.premium || tpl?.isPremium || Number(tpl?.price) > 0), []);
+  const isPremium = useCallback((tpl) => requiresTemplateAccess(tpl), []);
   const isUnlocked = useCallback((tpl) => !isPremium(tpl) || paidIds.has(String(tpl.id)) || paidIds.has(String(tpl.slug)), [isPremium, paidIds]);
   const categoryLabel = useCallback((template) => {
     const category = String(template?.category || "OTHER").toUpperCase();
@@ -133,24 +136,17 @@ export default function BrowseTemplatesFeature() {
       if (selectedTemplate && ![tpl.code, tpl.slug, String(tpl.id)].includes(selectedTemplate)) return false;
       const prem = isPremium(tpl);
       // Category filter
-      if (activeCategory === "PAID") return prem && isUnlocked(tpl);
+      if (activeCategory === "PAID" && !(prem && isUnlocked(tpl))) return false;
       if (activeCategory === "FREE" && prem) return false;
       if (activeCategory === "PREMIUM" && !prem) return false;
       if (
         !["ALL", "PAID", "FREE", "PREMIUM"].includes(activeCategory) &&
-        String(tpl.category || "").toUpperCase() !== activeCategory
+        templateCategory(tpl) !== activeCategory
       ) {
         return false;
       }
 
-      // Search query
-      if (searchQuery.trim()) {
-        const query = searchQuery.toLowerCase();
-        const nameMatch = String(tpl.name || "").toLowerCase().includes(query);
-        const descMatch = String(formatTemplateDescription(tpl.description) || "").toLowerCase().includes(query);
-        const catMatch = String(tpl.category || "").toLowerCase().includes(query);
-        if (!nameMatch && !descMatch && !catMatch) return false;
-      }
+      if (!matchesTemplateSearch(tpl, searchQuery)) return false;
 
       return true;
     });
@@ -163,25 +159,23 @@ export default function BrowseTemplatesFeature() {
     return { total, free, premium };
   }, [templates, isPremium]);
 
-  const handleSelect = (template) => {
-    const prem = isPremium(template);
-    const unlocked = isUnlocked(template);
-
-    if (prem && !unlocked) {
-      if (!templatePriceLabel(template, lang)) {
-        navigate("/pricing");
-        return;
-      }
-      navigate(`/templates/${encodeURIComponent(templateIdentity(template))}/checkout`);
+  const handleSelect = async (template) => {
+    if (!isPublicCatalogTemplate(template)) return;
+    if (isPremium(template) && !isUnlocked(template)) {
+      try {
+        const access = await paymentService.templateAccess(template.id);
+        if (access?.hasAccess) { navigate(templateUsePath(templateIdentity(template), true)); return; }
+      } catch { /* The server must grant access before selection. */ }
+      navigate(template.checkoutEligible === true
+        ? `/templates/${encodeURIComponent(templateIdentity(template))}/checkout` : "/pricing");
       return;
     }
-
     navigate(templateUsePath(templateIdentity(template), true));
   };
 
   const handlePreview = (template) => {
     const tplId = templateIdentity(template);
-    if (template.previewUrl) {
+    if (template.previewUrl && /^(\/(?!\/)|https?:\/\/)/.test(template.previewUrl)) {
       if (template.previewUrl.startsWith("/")) {
         navigate(template.previewUrl);
       } else {
@@ -234,6 +228,7 @@ export default function BrowseTemplatesFeature() {
               key={cat.id}
               type="button"
               onClick={() => setActiveCategory(cat.id)}
+              aria-pressed={activeCategory === cat.id}
               className={`tb-category-chip ${activeCategory === cat.id ? "active" : ""}`}
             >
               {cat.id === "PREMIUM" && <IoDiamondOutline />}
@@ -260,7 +255,7 @@ export default function BrowseTemplatesFeature() {
       {loading ? (
         <SkeletonTable rows={4} columns={4} />
       ) : error ? (
-        <div className="tb-empty">{error}</div>
+        <div className="tb-empty" role="status"><p>{error}</p><button type="button" className="inv-secondary-btn" onClick={() => setRevision(value => value + 1)}>{lang === "en" ? "Try again" : "សាកម្តងទៀត"}</button></div>
       ) : filteredTemplates.length === 0 ? (
         <div className="tb-empty">
           <h3>{t("emptyTitle")}</h3>
@@ -290,7 +285,7 @@ export default function BrowseTemplatesFeature() {
                 </div>
 
                 {template.thumbnailUrl ? (
-                  <img className="tb-card-thumb" src={template.thumbnailUrl} alt={template.name} loading="lazy" />
+                  <img className="tb-card-thumb" {...publicTemplateImage(template.thumbnailUrl)} alt={template.name} loading="lazy" />
                 ) : (
                   <div className="tb-card-empty-thumb">
                     <IoImageOutline style={{ fontSize: "2.4rem" }} />
@@ -316,7 +311,7 @@ export default function BrowseTemplatesFeature() {
                     {isPremium(template) && !isUnlocked(template) ? (
                       <>
                         <IoDiamondOutline />
-                        <span>{templatePriceLabel(template, lang)
+                        <span>{template.checkoutEligible && templatePriceLabel(template, lang)
                           ? `${lang === "en" ? "Buy design" : "ទិញគំរូ"} (${templatePriceLabel(template, lang)})`
                           : (lang === "en" ? "View pricing — price unavailable" : "មើលតម្លៃ — មិនមានតម្លៃគំរូ")}</span>
                       </>

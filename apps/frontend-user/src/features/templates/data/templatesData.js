@@ -1,3 +1,4 @@
+import { isPublicCatalogTemplate, requiresTemplateAccess } from "../model/catalogPolicy";
 import musicWaitingDay from "../../../assets/music/ថ្ងៃដែលរង់ចាំ.mp3";
 import musicInstrumental from "../../../assets/music/Instrumental Wedding Music (VioSounds Cover).m4a";
 import { getMusicTrack } from '../../../shared/data/musicTracks';
@@ -621,7 +622,7 @@ export const ROYAL_GARDEN_CINEMATIC_TEMPLATE = {
     dateText: new Intl.DateTimeFormat('km-KH', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC', numberingSystem: 'khmr' }).format(new Date('2026-12-31T12:00:00Z')),
     venueName: 'សាលពិធីមង្គល', venueAddress: 'រាជធានីភ្នំពេញ', venueNameEn: 'Wedding venue', venueAddressEn: 'Phnom Penh',
     mainImage: '/templates/silk-heritage/portrait.webp', phoneCoverImage: '/templates/silk-heritage/portrait.webp',
-    image: '/templates/royal-garden/ivory.svg', coverBackgroundImage: '',
+    image: "/images/marketing/catalog/royal-garden-cinematic-640.webp", coverBackgroundImage: '',
     gallery: [{ src: '/templates/silk-heritage/portrait.webp', alt: 'Licensed demonstration wedding portrait' }, { src: '/templates/silk-heritage/together.webp', alt: 'Licensed demonstration newlyweds outdoors' }],
     music: { url: getMusicTrack('nisai').url }, musicUrl: getMusicTrack('nisai').url, openingStyle: 'royal-garden-oval', bg: '#f1ede6', paper: '#f1ede6', color: '#98703a', accent: '#c7984d',
     description: 'ធៀបអញ្ជើញខ្មែរពណ៌ភ្លុក និងមាស ជាមួយការបើកធៀបរាងពងក្រពើ រូបភាពបែបភាពយន្ត និងកម្មវិធីមង្គលការ។',
@@ -695,14 +696,12 @@ export function resolveNumericTemplateId(id) {
         return Number(dynamic.backendId);
     }
 
-    // An authoritative catalog must never be overridden by historical seed IDs.
-    if (dynamicTemplates.length) return null;
-
-    const mappedEntry = Object.entries(DB_TEMPLATE_ID_MAP).find(([, code]) => code === rawId);
-    return mappedEntry ? Number(mappedEntry[0]) : null;
+    // A stable code requires a real catalog allocation; historical seeds are not IDs.
+    return null;
 }
 
 let dynamicTemplates = [];
+let dynamicCatalogLoaded = false;
 
 /**
  * Bumped every time registerDynamicTemplates() replaces the catalog.
@@ -724,6 +723,7 @@ export function getCatalogVersion() {
  * component and theme variant (CSS class, colors, opening gate style, etc.).
  */
 const PRESET_TO_VARIANT = {
+    ROYAL_GARDEN_CINEMATIC: "royal-garden-cinematic",
     SILK_HERITAGE: SILK_HERITAGE_TEMPLATE_CODE,
     KHMER_CELESTIAL: KHMER_CELESTIAL_TEMPLATE_CODE,
     EMERALD_GREEN: "emerald-canva-luxe-wedding",
@@ -736,9 +736,10 @@ const PRESET_TO_VARIANT = {
 
 export function registerDynamicTemplates(catalogList) {
     if (!Array.isArray(catalogList)) return;
+    dynamicCatalogLoaded = true;
     const RETIRED_CODES = new Set(["garden-royal-khmer-wedding", "khmer-royal-lotus"]);
     dynamicTemplates = catalogList
-        .filter((item) => item && !RETIRED_CODES.has(item.code) && !RETIRED_CODES.has(item.slug))
+        .filter((item) => isPublicCatalogTemplate(item) && !RETIRED_CODES.has(item.code) && !RETIRED_CODES.has(item.slug))
         .map(templateFromCatalogItem);
     catalogVersion++;
 }
@@ -815,10 +816,17 @@ export function templateFromCatalogItem(item) {
             mainImage: cover,
             phoneCoverImage: cover,
             thumbnailUrl: item.thumbnailUrl || cover,
-            price: item.price ?? 0,
+            status: item.status,
+            supportedEventTypes: item.supportedEventTypes || [],
+            supportedLanguages: item.supportedLanguages || [],
+            checkoutEligible: item.checkoutEligible,
+            checkoutAmount: item.checkoutAmount,
+            checkoutCurrency: item.checkoutCurrency,
+            checkoutPolicy: item.checkoutPolicy,
+            price: item.price,
             currency: item.currency || "USD",
-            premium: Boolean(item.premium || item.isPremium),
-            isPremium: Boolean(item.premium || item.isPremium),
+            premium: requiresTemplateAccess(item),
+            isPremium: requiresTemplateAccess(item),
             // Admin preset & variant — critical for layout component resolution
             presetId: baseStatic?.presetId || presetId,
             variant: resolvedVariant || undefined,
@@ -888,7 +896,7 @@ export function getTemplateById(id) {
     const rawId = String(id || "").trim();
 
     // 1. Check dynamic templates from backend/admin first (100% Admin Catalog)
-    if (dynamicTemplates && dynamicTemplates.length > 0) {
+    if (dynamicCatalogLoaded) {
         if (!rawId) return null;
         const dyn = dynamicTemplates.find((template) =>
             String(template.id) === rawId ||
@@ -923,7 +931,7 @@ export function getTemplateById(id) {
 
 export function getAllTemplates() {
     // 100% Admin Templates: when admin templates are loaded, return only Admin templates
-    if (dynamicTemplates && dynamicTemplates.length > 0) {
+    if (dynamicCatalogLoaded) {
         const seen = new Set();
         const result = [];
         for (const t of dynamicTemplates) {
@@ -936,8 +944,8 @@ export function getAllTemplates() {
         return result;
     }
 
-    // Fallback for tests before mock fetch lands
-    return TEMPLATES;
+    // Static designs are preview fixtures, never selectable catalog inventory.
+    return [];
 }
 
 export function getTemplatePreset(tpl) {

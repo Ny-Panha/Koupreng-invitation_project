@@ -165,8 +165,9 @@ test('RG32-01: choosing Royal Garden from the Studio selector retains authored o
   const { events } = await setup(page, retained);
   await page.setViewportSize({ width: 1440, height: 900 }); await page.goto('/app/events/101/invitation');
   await page.getByRole('button', { name: /^Change template:/ }).click();
-  const card = page.locator('.pe-tpl-card-modal').filter({ hasText: code }); await expect(card).toHaveCount(1);
-  page.once('dialog', dialog => dialog.accept()); await card.getByRole('button').click();
+  const card = page.locator(`.tc-card[data-template="${code}"]`); await expect(card).toHaveCount(1);
+  await card.getByRole('button', { name: 'Select', exact: true }).click();
+  page.once('dialog', dialog => dialog.accept()); await page.getByRole('button', { name: 'Use selected design' }).click();
   await expect(page.getByRole('dialog', { name: 'Change template', exact: true })).toBeHidden();
   const frame = page.frameLocator('iframe'); await expect(frame.locator('.tpl-royal-garden')).toBeVisible();
   await chooseStudioSection(page, 'scheduleVenue', 'Save the date & calendar');

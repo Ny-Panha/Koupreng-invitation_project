@@ -21,8 +21,9 @@ export function templateUsePath(identity, isAuthenticated, targetPath = "/app/ev
 }
 
 export function templatePriceLabel(template, lang) {
-  const price = Number(template?.price);
-  const currency = String(template?.currency || "").toUpperCase();
+  const offer = template?.checkoutEligible === true && template?.checkoutAmount != null;
+  const price = Number(offer ? template.checkoutAmount : template?.price);
+  const currency = String((offer ? template.checkoutCurrency : template?.currency) || "").toUpperCase();
   if (!Number.isFinite(price) || price <= 0 || !/^[A-Z]{3}$/.test(currency)) return null;
   try {
     return new Intl.NumberFormat(lang === "en" ? "en-US" : "km-KH", {

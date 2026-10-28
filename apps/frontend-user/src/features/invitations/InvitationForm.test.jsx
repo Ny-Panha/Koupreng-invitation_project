@@ -4,6 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import InvitationForm from "./InvitationForm";
 import LivePhoneSimulator from "./LivePhoneSimulator";
 import {
+  getAllTemplates,
   getTemplateById,
   getTemplatePreset,
   getCatalogVersion,
@@ -37,11 +38,13 @@ import { invitationService } from "./api/invitationApi";
 
 beforeEach(() => {
   localStorage.clear();
-  registerDynamicTemplates([]);
+  registerDynamicTemplates([{ id: 4, code: "khmer-celestial", status: "ACTIVE" }, { id: 5, code: "silk-heritage", status: "ACTIVE" }]);
   templateCatalogService.list.mockReset();
-  // Empty by default: InvitationForm skips registration when the list is empty,
-  // so tests that call registerDynamicTemplates() directly stay in control.
-  templateCatalogService.list.mockResolvedValue([]);
+  // Model the real public contract; an authoritative empty catalog cannot authorize saving.
+  templateCatalogService.list.mockImplementation(async () => getAllTemplates().length ? getAllTemplates() : [
+    { id: 4, code: "khmer-celestial", status: "ACTIVE", price: 0, currency: "USD", premium: false },
+    { id: 5, code: "silk-heritage", status: "ACTIVE", price: 0, currency: "USD", premium: false },
+  ]);
 });
 
 afterEach(() => {
@@ -61,7 +64,7 @@ describe("Dynamic Templates & Presets", () => {
     it("registers dynamic templates created by admin in backend", () => {
         const mockAdminTemplate = {
             id: 999,
-            code: "admin-ruby-custom",
+            code: "admin-ruby-custom", status: "ACTIVE",
             name: "Royal Ruby Custom (រាជវាំងត្បូងទទឹម)",
             thumbnailUrl: "/uploads/ruby-card.jpg",
             description: JSON.stringify({
@@ -193,7 +196,7 @@ describe("InvitationForm render test", () => {
     it("correctly resolves dynamic admin emerald template with dedicated layout and colors", () => {
         const mockAdminTemplate = {
             id: 888,
-            code: "admin-emerald-custom",
+            code: "admin-emerald-custom", status: "ACTIVE",
             name: "Emerald Luxury Admin Template",
             thumbnailUrl: "/uploads/emerald-card.jpg",
             description: JSON.stringify({
@@ -235,7 +238,7 @@ describe("InvitationForm render test", () => {
  * forever, because its useMemo depends only on `data`.
  */
 const ADMIN_EMERALD_CATALOG_ROW = {
-    id: 26,
+    id: 26, code: "admin-emerald", status: "ACTIVE",
     name: "Emerald Royal Luxe VIP",
     description: JSON.stringify({
         presetId: "EMERALD_GREEN",

@@ -1,3 +1,6 @@
+import TemplateChooser from "./studio/TemplateChooser";
+import { templateService } from "../templates/api/templateService";
+import { isPublicCatalogTemplate, requiresTemplateAccess } from "../templates/model/catalogPolicy";
 import { WORDING_PRESETS, WORDING_PRESET_LABELS, wordingPresetId, interpolateWording } from './studio/wordingPresets';
 import { FamilyDesignEditor, MonogramEditor } from './studio/FamilyDesignEditor';
 import IllustratedMapEditor from './studio/IllustratedMapEditor';
@@ -52,11 +55,9 @@ import {
     User,
     Users,
     Map,
-    CheckCircle2,
     ExternalLink,
     Zap,
     X,
-    Search,
     RotateCcw,
     AlertCircle,
 } from "lucide-react";
@@ -850,52 +851,27 @@ export default function InvitationForm({ invitation }) {
             requestAnimationFrame(() => { if (control.isConnected) control.focus({ preventScroll: true }); });
         });
     }
-    const [catalogTemplates, setCatalogTemplates] = useState(() => getAllTemplates());
-    const [templateSearchQuery, setTemplateSearchQuery] = useState("");
-    const [templateCategoryFilter, setTemplateCategoryFilter] = useState("ALL");
-
+    const [catalogTemplates, setCatalogTemplates] = useState([]);
+    const [catalogStatus, setCatalogStatus] = useState("loading");
+    const [catalogRetry, setCatalogRetry] = useState(0);
+    const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
     useEffect(() => {
         let active = true;
-        templateCatalogService.list()
+        setCatalogStatus("loading");
+        templateCatalogService.list({ force: isTemplateModalOpen || catalogRetry > 0 })
             .then((items) => {
-                if (active && items && items.length > 0) {
-                    const activeTemplates = items.filter((item) => String(item.status || "ACTIVE").toUpperCase() === "ACTIVE");
-                    registerDynamicTemplates(items);
-                    setCatalogTemplates(getAllTemplates().filter(template => activeTemplates.some(item => String(item.id) === String(template.backendId))));
-                    setCatalogVersion(getCatalogVersion());
-                }
-            })
-            .catch(() => {
-                // Ignore catalog fetch failure
+                if (!active) return;
+                registerDynamicTemplates(items);
+                setCatalogTemplates(getAllTemplates());
+                setCatalogVersion(getCatalogVersion());
+                setCatalogStatus("ready");
+            }).catch(() => {
+                if (!active) return;
+                setCatalogTemplates([]);
+                setCatalogStatus("error");
             });
-        return () => {
-            active = false;
-        };
-    }, []);
-
-    const displayedTemplates = (catalogTemplates && catalogTemplates.length > 0 ? catalogTemplates : getAllTemplates())
-        .filter((tpl) => {
-            const query = templateSearchQuery.trim().toLowerCase();
-            if (query) {
-                const matchName = String(tpl.name || "").toLowerCase().includes(query);
-                const matchStyle = String(tpl.style || "").toLowerCase().includes(query);
-                const matchCode = String(tpl.code || tpl.id || "").toLowerCase().includes(query);
-                if (!matchName && !matchStyle && !matchCode) return false;
-            }
-            if (templateCategoryFilter === "ADMIN") {
-                return Boolean(tpl.backendId || !isNaN(Number(tpl.id)));
-            }
-            if (templateCategoryFilter === "CURTAIN") {
-                return tpl.openingStyle === "curtain" || String(tpl.id || tpl.code).includes("emerald");
-            }
-            if (templateCategoryFilter === "ENVELOPE") {
-                return tpl.openingStyle === "envelope-3d" || String(tpl.id || tpl.code).includes("yes");
-            }
-            if (templateCategoryFilter === "KHMER") {
-                return tpl.openingStyle === "khmer-royal" || String(tpl.id || tpl.code).includes("khmer") || String(tpl.id || tpl.code).includes("garden");
-            }
-            return true;
-        });
+        return () => { active = false; };
+    }, [isTemplateModalOpen, catalogRetry]);
 
     const [wordingPreset, setWordingPreset] = useState("formal");
     const [wordingError, setWordingError] = useState("");
@@ -905,7 +881,6 @@ export default function InvitationForm({ invitation }) {
     const [isSaving, setIsSaving] = useState(false);
     const [isPublishing, setIsPublishing] = useState(false);
     const [published, setPublished] = useState(invitation?.status === "PUBLISHED");
-    const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
 
     const [isMobilePreviewOpen, setIsMobilePreviewOpen] = useState(false);
     const rememberEditorPosition = () => {
@@ -941,8 +916,21 @@ export default function InvitationForm({ invitation }) {
     const serverRevision = useRef(invitation?.updatedAt || null);
     const savedBackendId = useRef(invitation?.backendInvitationId || (/^[1-9]\d*$/.test(String(invitationId)) ? invitationId : null));
 
-    const handleChangeTemplate = async (template) => {
-        if (!template) return;
+    const handleChangeTemplate = async (candidate) => {
+        if (!candidate) return;
+        let template;
+        try {
+            const fresh = await templateService.getPublicBySlug(candidate.code || candidate.slug);
+            if (!isPublicCatalogTemplate(fresh)) throw new Error("Template is unavailable");
+            const nextCatalog = catalogTemplates.map(item => String(item.backendId) === String(fresh.id) ? fresh : item);
+            registerDynamicTemplates(nextCatalog);
+            template = getTemplateById(fresh.code);
+            if (!template || Number(template.backendId) !== Number(fresh.id)) throw new Error("Template identity changed");
+        } catch {
+            toast(englishUI ? "This design is unavailable. Refresh the collection and try again." : "គំរូនេះមិនអាចប្រើបានទេ។ សូមផ្ទុកបញ្ជីឡើងវិញ។", "error");
+            setCatalogRetry(value => value + 1);
+            return;
+        }
         if (!resolveTemplateRenderer(template).available) {
             toast(englishUI ? "This template's renderer is unavailable. Your current design is preserved." : "គំរូនេះមិនអាចបើកបានទេ។ គំរូបច្ចុប្បន្នត្រូវបានរក្សាទុក។", "error");
             return;
@@ -951,7 +939,11 @@ export default function InvitationForm({ invitation }) {
             toast(englishUI ? "This template does not support your event type." : "គំរូនេះមិនគាំទ្រប្រភេទកម្មវិធីនេះទេ។", "error");
             return;
         }
-        if (template.premium || template.isPremium || Number(template.price) > 0) {
+        if (template.supportedLanguages?.length && !template.supportedLanguages.includes(form.languageMode || "KH")) {
+            toast(englishUI ? "This template does not support the selected language." : "គំរូនេះមិនគាំទ្រភាសាដែលបានជ្រើសរើសទេ។", "error");
+            return;
+        }
+        if (requiresTemplateAccess(template)) {
             try {
                 const access = await paymentService.templateAccess(resolveNumericTemplateId(template.code || template.id));
                 if (!access?.hasAccess) throw new Error("Premium template access is required");
@@ -3442,141 +3434,11 @@ export default function InvitationForm({ invitation }) {
                 </Modal>
             )}
 
-            {/* Template Selection Modal */}
-            {isTemplateModalOpen && (
-                <Modal isOpen onClose={() => setIsTemplateModalOpen(false)} size="xl" title={uiCopy("ប្តូរគំរូ", "Change template")}>
-                    <div className="pe-modal-card pe-tpl-modal-card" onClick={(e) => e.stopPropagation()}>
-                        <div className="pe-modal-header">
-                            <div>
-                                <h3 className="pe-modal-title">
-                                    <Sparkles size={18} style={{ color: "#d97706", marginRight: 8 }} /> {uiCopy("ប្តូរគំរូធៀបការ", "Change invitation template")}
-                                </h3>
-                                <p className="pe-modal-subtitle">
-                                    {uiCopy("ជ្រើសរើសគំរូរចនាប័ទ្មដែលអ្នកពេញចិត្តសម្រាប់ធៀបការ", "Choose your preferred invitation design")}
-                                </p>
-                            </div>
-                            <button
-                                type="button"
-                                className="pe-modal-close-btn"
-                                onClick={() => setIsTemplateModalOpen(false)}
-                                title={uiCopy("បិទ", "Close")}
-                            >
-                                <X size={20} />
-                            </button>
-                        </div>
+            {isTemplateModalOpen && <TemplateChooser templates={catalogTemplates} status={catalogStatus}
+                onRetry={() => setCatalogRetry(value => value + 1)} currentId={form.templateId}
+                eventType={invitation?.eventType || "WEDDING"} language={form.languageMode || "KH"}
+                english={englishUI} onSelect={handleChangeTemplate} onClose={() => setIsTemplateModalOpen(false)} />}
 
-                        {/* Search and Filters */}
-                        <div className="pe-modal-toolbar">
-                            <div className="pe-modal-search-box">
-                                <Search size={16} className="pe-modal-search-icon" />
-                                <input
-                                    type="text"
-                                    className="pe-modal-search-input"
-                                    placeholder={uiCopy("ស្វែងរកតាមឈ្មោះគំរូ...", "Search template names...")}
-                                    value={templateSearchQuery}
-                                    onChange={(e) => setTemplateSearchQuery(e.target.value)}
-                                />
-                                {templateSearchQuery && (
-                                    <button
-                                        type="button"
-                                        className="pe-search-clear-btn"
-                                        onClick={() => setTemplateSearchQuery("")}
-                                    >
-                                        <X size={14} />
-                                    </button>
-                                )}
-                            </div>
-                            <div className="pe-modal-filter-pills">
-                                {[
-                                    { id: "ALL", label: uiCopy("ទាំងអស់", "All") },
-                                    { id: "ADMIN", label: uiCopy("គំរូថ្មីពីអ្នកគ្រប់គ្រង", "New templates") },
-                                    { id: "CURTAIN", label: uiCopy("វាំងនន", "Curtain") },
-                                    { id: "ENVELOPE", label: uiCopy("ស្រោមសំបុត្របីវិមាត្រ", "3D envelope") },
-                                    { id: "KHMER", label: uiCopy("ប្រពៃណីខ្មែរ", "Khmer traditional") },
-                                ].map((cat) => (
-                                    <button
-                                        key={cat.id}
-                                        type="button"
-                                        className={`pe-filter-pill ${templateCategoryFilter === cat.id ? "is-active" : ""}`}
-                                        onClick={() => setTemplateCategoryFilter(cat.id)}
-                                    >
-                                        {cat.label}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Templates Grid */}
-                        <div className="pe-tpl-grid-scroll">
-                            <div className="pe-tpl-modal-grid">
-                                {displayedTemplates.map((tpl) => {
-                                    const isSelected = String(form.templateId) === String(tpl.id) || String(form.templateId) === String(tpl.code) || String(form.templateId) === String(tpl.slug);
-                                    const preset = getTemplatePreset(tpl) || {};
-                                    const cover = tpl.phoneCoverImage || tpl.mainImage || tpl.thumbnailUrl || preset.coverImage || tpl.image;
-                                    const openingStyle = preset.openingStyle || tpl.openingStyle;
-                                    return (
-                                        <div
-                                            key={tpl.id || tpl.code}
-                                            className={`pe-tpl-card-modal ${isSelected ? "is-active" : ""}`}
-                                            onClick={() => handleChangeTemplate(tpl)}
-                                        >
-                                            <div className="pe-tpl-thumb-box">
-                                                <img
-                                                    src={cover || "/facebook/all/03-card/cover-card.jpg"}
-                                                    alt={tpl.name || tpl.style}
-                                                    className="pe-tpl-thumb-img"
-                                                    loading="lazy"
-                                                />
-                                                {isSelected && (
-                                                    <div className="pe-tpl-active-badge">
-                                                        <CheckCircle2 size={15} /> {uiCopy("កំពុងប្រើ", "In use")}
-                                                    </div>
-                                                )}
-                                                <div className="pe-tpl-style-pill">
-                                                    {openingStyle === "curtain"
-                                                        ? uiCopy("វាំងនន", "Curtain gate")
-                                                        : openingStyle === "envelope-3d"
-                                                            ? uiCopy("ស្រោមសំបុត្របីវិមាត្រ", "3D envelope")
-                                                            : (openingStyle === "celestial-cover" || tpl.code === "khmer-celestial" || tpl.id === "khmer-celestial")
-                                                                ? uiCopy("ខ្មែរមេឃា", "Khmer Celestial")
-                                                                : uiCopy("រាជខ្មែរ", "Khmer Royal")}
-                                                </div>
-                                            </div>
-
-                                            <div className="pe-tpl-card-details">
-                                                <h5 className="pe-tpl-name">{tpl.name || tpl.style}</h5>
-                                                <div className="pe-tpl-footer">
-                                                    <div className="pe-tpl-dots">
-                                                        <span className="pe-dot" style={{ background: preset.frontColor || "#D4AF37" }} />
-                                                        <span className="pe-dot" style={{ background: preset.bottomColor || "#F3E5AB" }} />
-                                                    </div>
-                                                    <button
-                                                        type="button"
-                                                        className={`pe-btn-select-tpl ${isSelected ? "is-selected" : ""}`}
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            handleChangeTemplate(tpl);
-                                                        }}
-                                                    >
-                                                        {isSelected ? uiCopy("បានជ្រើស ✓", "Selected ✓") : uiCopy("ជ្រើសរើស", "Select")}
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
-
-                                {displayedTemplates.length === 0 && (
-                                    <div style={{ padding: "40px 20px", textAlign: "center", color: "#64748b", gridColumn: "1 / -1" }}>
-                                        <p style={{ margin: 0, fontSize: "0.95rem", fontWeight: 600 }}>{uiCopy("មិនមានគំរូធៀបការដែលត្រូវគ្នានឹងការស្វែងរកទេ", "No invitation templates match your search")}</p>
-                                        <p style={{ margin: "4px 0 0 0", fontSize: "0.8rem" }}>{uiCopy("សូមព្យាយាមស្វែងរកដោយពាក្យគន្លឹះផ្សេងទៀត", "Try searching with different keywords")}</p>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                </Modal>
-            )}
 
         </div>
     );

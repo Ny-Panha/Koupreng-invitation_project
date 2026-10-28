@@ -90,6 +90,31 @@ class TemplateCatalogServiceTests {
         assertEquals(template.getCreatedAt(), result.getFirst().getCreatedAt());
     }
 
+    @Test
+    void listActiveTemplatesExcludesRetiredTemplates() {
+        InvitationTemplateRepository repository = mock(InvitationTemplateRepository.class);
+        InvitationTemplate garden = template(2L, "garden-royal-khmer-wedding", false);
+        InvitationTemplate lotus = template(13L, "khmer-royal-lotus", false);
+        InvitationTemplate active = template(4L, "khmer-celestial", false);
+        when(repository.findAllByStatusIgnoreCaseOrderBySortOrderAscCreatedAtDesc(ACTIVE))
+                .thenReturn(List.of(garden, lotus, active));
+
+        List<PublicTemplateResponse> result = new TemplateCatalogService(repository).listActiveTemplates();
+
+        assertEquals(1, result.size());
+        assertEquals("khmer-celestial", result.getFirst().getCode());
+    }
+
+    @Test
+    void getActiveTemplateByCodeRejectsRetiredTemplates() {
+        InvitationTemplateRepository repository = mock(InvitationTemplateRepository.class);
+
+        assertThrows(ApiException.class, () ->
+                new TemplateCatalogService(repository).getActiveTemplateByCode("garden-royal-khmer-wedding"));
+        assertThrows(ApiException.class, () ->
+                new TemplateCatalogService(repository).getActiveTemplateByCode("khmer-royal-lotus"));
+    }
+
     private InvitationTemplate template(Long id, String code, boolean premium) {
         InvitationTemplate template = new InvitationTemplate();
         template.setId(id);

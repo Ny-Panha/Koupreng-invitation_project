@@ -7,9 +7,9 @@ import { useLanguageStore } from "../../../stores/useLanguageStore";
 import { usePublicTemplateCatalog } from "../hooks/usePublicTemplateCatalog";
 import { presentTemplate } from "../model/templatePresentation";
 import PublicTemplateCard from "./PublicTemplateCard";
+import { FEATURED_TEMPLATE_CODES as FEATURED, matchesTemplateSearch } from "../model/catalogPolicy";
 import "./templates.css";
 
-const FEATURED = ["silk-heritage", "khmer-celestial", "emerald-canva-luxe-wedding"];
 
 export default function TemplateGrid({ featured = false }) {
   const { isAuthenticated } = useAuth();
@@ -29,9 +29,9 @@ export default function TemplateGrid({ featured = false }) {
     const rank = (tpl) => { const index = FEATURED.indexOf(tpl.identity); return index < 0 ? FEATURED.length : index; };
     return rank(a) - rank(b);
   });
-  const filtered = featured ? sorted.slice(0, 3) : presented.filter((tpl) =>
+  const filtered = featured ? sorted.filter((tpl) => FEATURED.includes(tpl.identity)).slice(0, 3) : presented.filter((tpl) =>
     (category === "all" || category === tpl.category) &&
-    (!search.trim() || (tpl.name + " " + tpl.description).toLocaleLowerCase().includes(search.trim().toLocaleLowerCase()))
+    matchesTemplateSearch(tpl, search)
   );
   const content = (
     <>

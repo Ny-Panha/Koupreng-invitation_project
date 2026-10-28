@@ -5,9 +5,9 @@ import { getTemplateFormFlow } from "../invitations/config/templateFormFlowConfi
 import { draftToTemplate } from "../wedding-builder/utils/draftToTemplate";
 
 const catalog = [
-  { id: 4, code: "khmer-celestial", name: "Khmer Celestial", description: '{"presetId":"KHMER_CELESTIAL"}' },
-  { id: 7, code: "the-digital-yes-wedding", name: "The Digital Yes" },
-  { id: 5, code: "silk-heritage", name: "Silk Heritage", description: '{"presetId":"SILK_HERITAGE"}' },
+  { id: 4, code: "khmer-celestial", status: "ACTIVE", name: "Khmer Celestial", description: '{"presetId":"KHMER_CELESTIAL"}' },
+  { id: 7, code: "the-digital-yes-wedding", status: "ACTIVE", name: "The Digital Yes" },
+  { id: 5, code: "silk-heritage", status: "ACTIVE", name: "Silk Heritage", description: '{"presetId":"SILK_HERITAGE"}' },
 ];
 afterEach(() => registerDynamicTemplates([]));
 
@@ -38,7 +38,7 @@ describe("exact template identity across catalog and renderers", () => {
     expect(getDedicatedTemplateComponent(getTemplateById(5))).toBe(templateRegistry["silk-heritage"]);
   });
   it("does not infer the renderer of an unregistered stable code from its database ID", () => {
-    registerDynamicTemplates([{ id: 4, code: "unregistered-wedding", name: "Khmer Celestial" }]);
+    registerDynamicTemplates([{ id: 4, code: "unregistered-wedding", status: "ACTIVE", name: "Khmer Celestial" }]);
     expect(getDedicatedTemplateComponent(getTemplateById(4))).toBeNull();
     expect(getTemplateById(4).mainImage).not.toBe(getTemplateById("bliss-editorial-wedding").mainImage);
   });
@@ -53,8 +53,8 @@ describe("exact template identity across catalog and renderers", () => {
   it("filters out retired templates (garden-royal-khmer-wedding and khmer-royal-lotus) from dynamic catalog", () => {
     registerDynamicTemplates([
       ...catalog,
-      { id: 2, code: "garden-royal-khmer-wedding", name: "Garden Royal" },
-      { id: 3, code: "khmer-royal-lotus", name: "Khmer Royal Lotus" },
+      { id: 2, code: "garden-royal-khmer-wedding", status: "ACTIVE", name: "Garden Royal" },
+      { id: 3, code: "khmer-royal-lotus", status: "ACTIVE", name: "Khmer Royal Lotus" },
     ]);
     expect(getTemplateById("garden-royal-khmer-wedding")).toBeNull();
     expect(getTemplateById("khmer-royal-lotus")).toBeNull();

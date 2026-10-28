@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface InvitationTemplateRepository extends JpaRepository<InvitationTemplate, Long> {
 
+    @org.springframework.data.jpa.repository.EntityGraph(attributePaths = {"supportedEventTypes", "supportedLanguages"})
     List<InvitationTemplate> findAllByOrderByCreatedAtDesc();
 
     List<InvitationTemplate> findAllByCodeIgnoreCaseOrderByCreatedAtDesc(String code);

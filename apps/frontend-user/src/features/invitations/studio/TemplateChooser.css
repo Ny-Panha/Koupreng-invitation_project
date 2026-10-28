@@ -1,0 +1,48 @@
+.tc-modal { max-width: 1080px; max-height: min(94dvh, 1050px); color: var(--brand-text, #1e293b); }
+.tc-modal .k-modal-body { padding: 0 24px 24px; overflow-y: auto; min-height: 0; overscroll-behavior: contain; }
+.tc-modal .k-modal-footer { flex-shrink: 0; background: var(--brand-surface, #fff); border-top: 1px solid var(--brand-border, #e7e7ee); }
+.tc-modal .k-modal-close-btn { min-width: 44px; min-height: 44px; }
+.tc-controls { position: sticky; top: 0; z-index: 1; background: var(--brand-surface, #fff); padding: 20px 0 16px; }
+.tc-search { display: grid; gap: 6px; font-size: .875rem; font-weight: 600; }
+.tc-search div { display: flex; align-items: center; gap: 10px; padding: 0 12px; border: 1px solid var(--brand-border, #d7dce4); border-radius: 10px; }
+.tc-search input { width: 100%; min-width: 0; border: 0; background: transparent; color: inherit; padding: 12px 0; font: inherit; outline-offset: 3px; }
+.tc-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.tc-filters button, .tc-state button { min-height: 44px; padding: 7px 14px; border: 1px solid var(--brand-border, #d7dce4); border-radius: 24px; background: var(--brand-surface, #fff); color: inherit; cursor: pointer; font: inherit; font-size: .875rem; }
+.tc-filters button[aria-pressed=true] { background: #f8edd8; color: #704b13; border-color: #bb8b40; }
+.tc-count { font-size: .875rem; color: var(--brand-text-muted, #64748b); margin: 0 0 12px; }
+.tc-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: start; }
+.tc-card { min-width: 0; overflow: hidden; border: 1px solid var(--brand-border, #d7dce4); border-radius: 14px; background: var(--brand-surface, #fff); }
+.tc-card.is-selected { outline: 3px solid #a97a32; outline-offset: 1px; }
+.tc-thumbnail { width: min(100%, 24dvh); aspect-ratio: 9 / 16; margin-inline: auto; overflow: hidden; background: #f3f0e9; display: grid; place-items: center; }
+.tc-thumbnail img { width: 100%; height: 100%; object-fit: contain; }
+.tc-thumbnail > span { display: grid; justify-items: center; gap: 10px; padding: 20px; text-align: center; color: #64748b; font-size: .875rem; }
+.tc-card-body { padding: 14px; }
+.tc-category { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; color: var(--brand-text-muted, #64748b); font-size: .75rem; margin: 0 0 6px; }
+.tc-category span { display: inline-flex; align-items: center; gap: 4px; color: #23664e; }
+.tc-card h3 { font-size: 1rem; line-height: 1.65; margin: 0; }
+.tc-access, .tc-unavailable { font-size: .8125rem; line-height: 1.65; margin: 8px 0 12px; }
+.tc-access { color: #785116; }
+.tc-unavailable { color: #9b3434; }
+.tc-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.tc-actions a, .tc-actions button { display: flex; align-items: center; justify-content: center; gap: 4px; min-height: 44px; padding: 8px; border: 1px solid var(--brand-border, #d7dce4); border-radius: 8px; font: inherit; font-size: .875rem; color: inherit; text-decoration: none; cursor: pointer; background: transparent; }
+.tc-actions button { background: #faf4e9; border-color: #cba15e; color: #704b13; }
+.tc-actions button:disabled { opacity: .5; cursor: not-allowed; }
+.tc-modal :is(button, a, input):focus-visible { outline: 3px solid #8b6024; outline-offset: 3px; }
+.tc-confirm { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; }
+.tc-confirm p { margin: 0; font-size: .875rem; }
+.tc-confirm button { min-height: 44px; padding: 10px 18px; border: 1px solid #916725; border-radius: 10px; background: #916725; color: #fff; font: inherit; cursor: pointer; }
+.tc-confirm button:disabled { background: #f0f0ed; color: #69716c; border-color: #d7dce4; cursor: not-allowed; }
+.tc-state { text-align: center; padding: 28px 12px; line-height: 1.7; }
+.tc-state button { margin: 8px 4px; }
+@media (max-width: 900px) { .tc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) {
+  .tc-modal { max-height: 96dvh; }
+  .tc-modal .k-modal-header { padding: 14px 16px; }
+  .tc-modal .k-modal-body { padding: 0 16px 20px; }
+  .tc-modal .k-modal-footer { padding: 12px 16px max(12px, env(safe-area-inset-bottom)); }
+  .tc-grid { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .tc-controls { padding-top: 12px; }
+  .tc-filters { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; }
+  .tc-filters button { flex-shrink: 0; }
+  .tc-confirm { align-items: stretch; flex-direction: column; gap: 8px; }
+}

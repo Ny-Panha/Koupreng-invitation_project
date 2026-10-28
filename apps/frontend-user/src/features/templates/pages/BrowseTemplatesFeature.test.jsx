@@ -10,7 +10,7 @@ vi.mock("../../payments/paymentService", () => ({ paymentService: { paidTemplate
 vi.mock("@/shared/i18n/useBackendMessages", () => ({ useBackendMessages: () => ({ lang: "en", text: stableText }) }));
 function stableText(key) { return key; }
 function Destination() { const location = useLocation(); return <p>{location.pathname + location.search}</p>; }
-const base = { id: 2, code: "silk-heritage", slug: "silk-heritage", name: "Silk Heritage", category: "TRADITIONAL", premium: true, price: null, currency: "USD" };
+const base = { id: 2, code: "silk-heritage", status: "ACTIVE", slug: "silk-heritage", name: "Silk Heritage", category: "TRADITIONAL", premium: true, price: null, currency: "USD" };
 const show = (path = "/templates/browse?template=silk-heritage") => render(<MemoryRouter initialEntries={[path]}><Routes><Route path="/templates/browse" element={<Browse />} /><Route path="*" element={<Destination />} /></Routes></MemoryRouter>);
 beforeEach(() => { templateCatalogService.list.mockReset().mockResolvedValue([base]); paymentService.paidTemplates.mockReset().mockResolvedValue([]); });
 afterEach(cleanup);
@@ -23,7 +23,7 @@ it("routes a locked premium design with no price to pricing without inventing a 
   expect(await screen.findByText("/pricing")).toBeInTheDocument();
 });
 it("uses the actual currency and retains a locked checkout identity", async () => {
-  templateCatalogService.list.mockResolvedValue([{ ...base, price: 48000, currency: "KHR" }]);
+  templateCatalogService.list.mockResolvedValue([{ ...base, price: 48000, currency: "KHR", checkoutEligible: true }]);
   show();
   fireEvent.click(await screen.findByRole("button", { name: /Buy design.*KHR/ }));
   expect(await screen.findByText("/templates/silk-heritage/checkout")).toBeInTheDocument();

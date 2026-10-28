@@ -2,6 +2,9 @@ package com.koupreng.backend.admin.api.dto;
 
 import com.koupreng.backend.template.domain.TemplateCategory;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import com.koupreng.backend.invitation.domain.EventType;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -25,4 +28,8 @@ public class AdminTemplateRequest {
     private String primaryColor;
     private String secondaryColor;
     private String backgroundColor;
+    @Size(max = 6)
+    private java.util.Set<EventType> supportedEventTypes;
+    @Size(max = 3)
+    private java.util.Set<@Pattern(regexp = "KH|EN|BOTH") String> supportedLanguages;
 }
