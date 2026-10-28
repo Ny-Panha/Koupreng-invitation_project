@@ -722,7 +722,7 @@ export default function InvitationForm({ invitation }) {
             schedule: Array.isArray(customParsed.schedule)
                 ? normalizeProgram(customParsed.schedule)
                 : (Array.isArray(customParsed.agendaDays) ? legacyProgram(customParsed.agendaDays) : []),
-            dressCode: customParsed.dressCode || preset.dressCode || tpl?.dressCode || {
+            dressCode: Object.hasOwn(customParsed, 'dressCode') ? customParsed.dressCode : templateCapabilities(tpl || {}).cinematicIntro ? null : preset.dressCode || tpl?.dressCode || {
                 name: "ខ្មែរប្រពៃណី / សម័យ",
                 description: "សូមជ្រើសរើសសម្លៀកបំពាក់តាមពណ៌ដែលបានកំណត់ ដើម្បីបង្កើនភាពស្រស់ស្អាតនៃពិធី។",
                 colors: preset.dressColors?.length ? preset.dressColors : (tpl?.dressColors || []),
@@ -732,7 +732,7 @@ export default function InvitationForm({ invitation }) {
                 : (customParsed.dressCode?.colors?.length
                     ? customParsed.dressCode.colors
                     : (preset.dressColors?.length ? preset.dressColors : (tpl?.dressColors || tpl?.dressCode?.colors || []))),
-            showDressCode: customParsed.showDressCode !== undefined ? customParsed.showDressCode : (tpl?.enabledSections?.dressCode !== false),
+            showDressCode: customParsed.showDressCode ?? safeJson(invitation?.enabledSections).dressCode ?? (tpl?.enabledSections?.dressCode !== false),
             showCountdown: customParsed.showCountdown !== undefined ? customParsed.showCountdown : (tpl?.enabledSections?.countdown !== false),
             showSchedule: customParsed.showSchedule ?? safeJson(invitation?.enabledSections).schedule ?? true,
             calendarUid: customParsed.calendarUid || crypto.randomUUID(),
@@ -1194,7 +1194,7 @@ export default function InvitationForm({ invitation }) {
 
     // Dress Code modifiers
     const handleDressCodeFieldChange = (key, value) => {
-        const nextDressCode = { ...(form.dressCode || {}), [key]: value };
+        const nextDressCode = { ...(authoredForm.dressCode || {}), [key]: value };
         update("dressCode", nextDressCode);
     };
 
@@ -2710,10 +2710,11 @@ export default function InvitationForm({ invitation }) {
                     </span>
                     <span>{flowConfig.labels.dressCodeSection || uiCopy("សម្លៀកបំពាក់", "Dress code")}</span>
                 </h4>
-                <label className="pe-toggle" title={uiCopy("បើក/បិទ សម្លៀកបំពាក់", "Toggle dress code")} style={{ flexShrink: 0 }}>
+                <label className="pe-toggle pe-dress-toggle" title={uiCopy("បើក/បិទ សម្លៀកបំពាក់", "Toggle dress code")} style={{ flexShrink: 0 }}>
                     <input
                         type="checkbox"
                         checked={form.showDressCode !== false}
+                        aria-label={uiCopy("បង្ហាញសម្លៀកបំពាក់", "Show dress code")}
                         onChange={(e) => update("showDressCode", e.target.checked)}
                     />
                     <span className="pe-toggle-slider" />
@@ -2724,12 +2725,13 @@ export default function InvitationForm({ invitation }) {
                 <>
                     <div className="pe-grid-2">
                         <div className="pe-form-group">
-                            <label className="pe-label">
+                            <label className="pe-label" htmlFor={`${fieldId}-dress-name`}>
                                 <span className="pe-label-icon"><FileText size={15} /></span>
                                 {uiCopy("ឈ្មោះកូដសម្លៀកបំពាក់", "Dress code name")}
                             </label>
                             <input
                                 type="text"
+                                id={`${fieldId}-dress-name`}
                                 className="pe-input"
                                 value={authoredForm.dressCode?.name || ""}
                                 onChange={(e) => handleDressCodeFieldChange("name", e.target.value)}
@@ -2737,7 +2739,7 @@ export default function InvitationForm({ invitation }) {
                             />
                         </div>
                         <div className="pe-form-group">
-                            <label className="pe-label">
+                            <label className="pe-label" htmlFor={`${fieldId}-dress-style`}>
                                 <span className="pe-label-icon"><Sparkles size={15} /></span>
                                 {uiCopy("រចនាបថ", "Style")}
                             </label>
@@ -2745,6 +2747,7 @@ export default function InvitationForm({ invitation }) {
                                 type="text"
                                 className="pe-input"
                                 value={authoredForm.dressCode?.style || ""}
+                                id={`${fieldId}-dress-style`}
                                 onChange={(e) => handleDressCodeFieldChange("style", e.target.value)}
                                 placeholder={uiCopy("ប្រពៃណីដ៏ប្រណិត", "Traditional elegance")}
                             />
@@ -2752,7 +2755,7 @@ export default function InvitationForm({ invitation }) {
                     </div>
 
                     <div className="pe-form-group">
-                        <label className="pe-label">
+                        <label className="pe-label" htmlFor={`${fieldId}-dress-description`}>
                             <span className="pe-label-icon"><FileText size={15} /></span>
                             {uiCopy("ការណែនាំសម្លៀកបំពាក់", "Dress code description")}
                         </label>
@@ -2760,6 +2763,7 @@ export default function InvitationForm({ invitation }) {
                             className="pe-textarea"
                             rows="2"
                             value={authoredForm.dressCode?.description || ""}
+                            id={`${fieldId}-dress-description`}
                             onChange={(e) => handleDressCodeFieldChange("description", e.target.value)}
                             placeholder={uiCopy("សូមជ្រើសរើសសម្លៀកបំពាក់តាមពណ៌ដែលបានកំណត់ ដើម្បីបង្កើនភាពស្រស់ស្អាតនៃពិធី...", "Please choose clothing in the suggested colors for our celebration...")}
                         />
@@ -2819,6 +2823,7 @@ export default function InvitationForm({ invitation }) {
                                                 className="pe-input"
                                                 style={{ padding: "3px 6px", fontSize: "0.75rem", height: "auto" }}
                                                 value={name}
+                                                aria-label={uiCopy("ឈ្មោះពណ៌", "Color name") + ` ${cIdx + 1}`}
                                                 onChange={(e) => handleDressColorChange(cIdx, "name", e.target.value)}
                                                 placeholder={uiCopy("ឈ្មោះពណ៌ (ឧ. មាស)", "Color name (e.g. gold)")}
                                             />

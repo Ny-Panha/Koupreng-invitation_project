@@ -4,6 +4,7 @@ import { resolveEvent, validTimezone } from '../../templates/shared/eventDateTim
 export default function SaveTheDateEditor({ form, onChange, english, supportsOrdering = false, showEventFields = true }) {
   const copy = (km, en) => english ? en : km;
   const settings = form.saveTheDate || {};
+  const royalGarden = (form.templateCode || form.templateId) === 'royal-garden-cinematic';
   const event = resolveEvent(form);
   const id = useId();
   const set = (key, value) => onChange({ saveTheDate: { enabled: settings.enabled ?? form.showCountdown !== false, ...settings, [key]: value } });
@@ -26,7 +27,7 @@ export default function SaveTheDateEditor({ form, onChange, english, supportsOrd
     {error && <p role="alert">{error}</p>}
     <div className="studio-date-toggles">{[
       ['showCountdown', 'បង្ហាញរាប់ថយក្រោយ', 'Show countdown', true], ['showCalendar', 'បង្ហាញប្រតិទិន', 'Show calendar', false], ['showAddToCalendar', 'បង្ហាញប៊ូតុងប្រតិទិន', 'Show Add to Calendar', false], ['calendarNavigation', 'បើកប្ដូរខែ', 'Allow month navigation', false], ['showTime', 'បង្ហាញម៉ោង', 'Show event time', true], ['showVenue', 'បង្ហាញទីកន្លែង', 'Show venue summary', false],
-    ].map(([key, km, en, fallback]) => <label className="pe-label studio-inline-check" key={key}><input type="checkbox" checked={settings[key] ?? fallback} onChange={e => set(key, e.target.checked)} />{copy(km, en)}</label>)}</div>
+    ].map(([key, km, en, fallback]) => <label className="pe-label studio-inline-check" key={key}><input type="checkbox" checked={settings[key] ?? (royalGarden && ['showAddToCalendar', 'calendarNavigation'].includes(key) ? true : fallback)} onChange={e => set(key, e.target.checked)} />{copy(km, en)}</label>)}</div>
     <div className="pe-grid-2"><label className="pe-label">{copy('ថ្ងៃបញ្ចប់ (ជាជម្រើស)', 'End date (optional)')}<input className="pe-input" type="date" value={form.eventEndDate || ''} onChange={e => onChange({ eventEndDate: e.target.value })} /></label><label className="pe-label">{copy('ម៉ោងបញ្ចប់ (ជាជម្រើស)', 'End time (optional)')}<input className="pe-input" type="time" value={form.eventEndTime || ''} onChange={e => onChange({ eventEndTime: e.target.value })} /></label></div>
     <p>{copy('ប្រតិទិនប្រើរយៈពេល ២ ម៉ោង បើមិនបានកំណត់ម៉ោងបញ្ចប់។ កម្មវិធីគ្មានម៉ោងត្រូវនាំចេញជាពេញមួយថ្ងៃ។', 'Calendar exports use a two-hour duration unless you set an end time. Events without a time export as all-day events.')}</p>
     {supportsOrdering && <button type="button" className="pe-btn-upload-action" onClick={() => { const order = form.sectionOrder?.length ? form.sectionOrder : ['family', 'invitation', 'countdown', 'schedule', 'map', 'gallery', 'story', 'dressCode', 'gift', 'faq', 'rsvp']; const next = [...order]; const a = next.indexOf('countdown'), b = next.indexOf('schedule'); if (a >= 0 && b >= 0) { [next[a], next[b]] = [next[b], next[a]]; onChange({ sectionOrder: next }); } }}>{copy('ប្ដូរលំដាប់ថ្ងៃ និងកម្មវិធី', 'Swap date and program sections')}</button>}

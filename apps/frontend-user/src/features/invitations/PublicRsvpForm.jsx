@@ -73,6 +73,7 @@ export default function PublicRsvpForm({
     inviteToken,
     accessToken,
     languageMode,
+    showPublicWishes = true,
     khmerLabels: useKhmerLabels = false,
 }) {
     const language = languageMode ? normalizeInvitationLanguage(languageMode) : useKhmerLabels ? "kh" : "en";
@@ -89,11 +90,11 @@ export default function PublicRsvpForm({
     const [wishes, setWishes] = useState([]);
 
     const loadWishes = useCallback(() => {
-        if (!slug) return;
+        if (!slug || !showPublicWishes) return;
         rsvpService.publicWishes(slug, { token: inviteToken, accessToken })
             .then((items) => setWishes(Array.isArray(items) ? items : []))
             .catch(() => setWishes([]));
-    }, [slug, inviteToken, accessToken]);
+    }, [slug, inviteToken, accessToken, showPublicWishes]);
 
     useEffect(() => {
         loadWishes();
@@ -435,7 +436,7 @@ export default function PublicRsvpForm({
                 </form>
             )}
 
-            {wishes.length > 0 && (
+            {showPublicWishes && wishes.length > 0 && (
                 <div className="pub-wishes-wall">
                     <p className="pub-kicker">{labels.wishes}</p>
                     <h2>{labels.blessings}</h2>

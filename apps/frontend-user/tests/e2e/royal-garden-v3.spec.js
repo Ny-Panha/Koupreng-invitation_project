@@ -6,7 +6,7 @@ import { phase9Fixtures, chooseStudioSection } from './support/phase9Fixtures';
 
 const code = 'royal-garden-cinematic', base = '/templates/royal-garden/v3';
 const portrait = '/templates/silk-heritage/portrait.webp';
-const evidence = '../../docs/design/royal-garden-v3-1/evidence/browser';
+const evidence = process.env.ROYAL_EVIDENCE_DIR || '../../docs/design/royal-garden-v3-1/evidence/browser';
 const intro = { style: 'royal-arch', titleMode: 'text', duration: 2, slides: [{ id: 'portrait', src: portrait, alt: 'Owner portrait', x: 50, y: 40 }] };
 const information = { enabled: true, fixedBackground: true, motionPreset: 'balanced', effects: { butterfly: true }, video: { footer: true, replay: true } };
 const windowsWebKit = info => info.project.name === 'webkit' && process.platform === 'win32';
@@ -344,7 +344,8 @@ test('critical: language changes preserve the active film, authorized guest data
 });
 
 test('critical: immersive media and one inner scroll preserve the complete frame and reachable ending', async ({ page }, info) => {
-  await setup(page); await page.setViewportSize({ width: 390, height: 844 }); await page.goto(`/templates/${code}?lang=km`);
+  await setup(page); await page.setViewportSize({ width: 390, height: 844 }); await page.goto(`/templates/${code}?lang=km`, { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('.rg-open')).toBeVisible();
   const button = await page.locator('.rg-open').boundingBox(); expect(button.width / button.height).toBeCloseTo(3, 1); expect(button.height).toBeGreaterThanOrEqual(44);
   const band = await page.locator('.rg-guest-frame img').boundingBox(); expect(band.width / band.height).toBeCloseTo(3, 1);
   const guest = await page.locator('.rg-royal-guest').boundingBox(); expect(guest.y + guest.height).toBeLessThan(button.y);

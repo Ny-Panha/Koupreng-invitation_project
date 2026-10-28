@@ -11,7 +11,7 @@ export function WeddingCountdown({ instant, english, numerals, style = 'theme' }
   if (count.expired) return <p className="kp-event-started" role="status">{english ? 'The celebration has begun.' : 'កម្មវិធីបានចាប់ផ្ដើមហើយ។'}</p>;
   const labels = english ? ['Days', 'Hours', 'Minutes', 'Seconds'] : ['ថ្ងៃ', 'ម៉ោង', 'នាទី', 'វិនាទី'];
   return <div className={`kp-countdown kp-countdown--${style}`} role="timer" aria-live="off" aria-label={english ? 'Time until the celebration' : 'ពេលវេលារហូតដល់កម្មវិធី'}>
-    {[count.d, count.h, count.m, count.s].map((value, index) => <div className="kp-countdown-unit" key={labels[index]}><strong>{formatNumerals(value, numerals)}</strong><span>{labels[index]}</span></div>)}
+    {[count.d, count.h, count.m, count.s].map((value, index) => <div className="kp-countdown-unit" key={labels[index]}><strong style={{ '--kp-countdown-digits': value.length }}>{formatNumerals(value, numerals)}</strong><span>{labels[index]}</span></div>)}
   </div>;
 }
 

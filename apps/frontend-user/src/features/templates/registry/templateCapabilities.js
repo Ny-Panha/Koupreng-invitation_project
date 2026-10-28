@@ -6,7 +6,7 @@ export function templateCapabilities(template = {}) {
   const renderer = getDedicatedTemplateComponent(template);
   if (renderer === templateRegistry['royal-garden-cinematic']) return {
     cinematicIntro: true, familyLayout: true, monogram: true, illustratedMap: true, appearance: true, typography: true,
-    party: false, faq: false, dressCode: false, story: false, couplePhoto: false, schedule: true, programDays: true,
+    party: false, faq: false, dressCode: true, story: false, couplePhoto: false, schedule: true, programDays: true,
     countdown: true, saveTheDate: true, calendar: true, sectionOrdering: true,
   };
   const withoutStory = ['the-digital-yes-wedding', 'emerald-canva-luxe-wedding', 'bliss-editorial-wedding', 'template-boilerplate'].map(code => templateRegistry[code]);

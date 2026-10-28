@@ -25,7 +25,7 @@ export function editLocalizedField(form, locale, key, value) {
   if (!form.localizedContentV1 && String(form.languageMode).toUpperCase() === 'EN' && locale === 'en') return { ...form, [key]: value };
   if (LOCALIZED_COLLECTIONS[key] || ['dressCode', 'saveTheDate'].includes(key)) {
     const content = localeContent(form);
-    const fields = LOCALIZED_COLLECTIONS[key] || (key === 'saveTheDate' ? ['heading', 'subtitle'] : ['name', 'description']);
+    const fields = LOCALIZED_COLLECTIONS[key] || (key === 'saveTheDate' ? ['heading', 'subtitle'] : ['name', 'style', 'description']);
     const rows = ['dressCode', 'saveTheDate'].includes(key) ? [value || {}] : value || [];
     const translated = Object.fromEntries(rows.map((row, i) => [rowKey(row, i), Object.fromEntries(fields.map(field => [field, text(row[field])]))]));
     return { ...form, ...(locale === 'km' ? { [key]: value } : {}), localizedContentV1: { ...content, [locale]: { ...content[locale], collections: { ...content[locale]?.collections, [key]: translated } } } };
@@ -46,7 +46,7 @@ export function translationReadiness(form, locale = 'en') {
   for (const key of LOCALIZED_FIELDS) if (text(content.km[key]).trim() && !['eventDateText', ...(wedding ? ['hostName', 'partnerName'] : ['groomName', 'brideName'])].includes(key)) required.add(key);
   const missing = [...required].filter(key => !text(content[locale][key]).trim() || /^(?:todo|tbd|placeholder|translation pending)$/i.test(text(content[locale][key]).trim()));
   const checks = [];
-  if (locale === 'en') for (const [key, fields] of Object.entries({ ...LOCALIZED_COLLECTIONS, dressCode: ['name', 'description'], saveTheDate: ['heading', 'subtitle'] })) {
+  if (locale === 'en') for (const [key, fields] of Object.entries({ ...LOCALIZED_COLLECTIONS, dressCode: ['name', 'style', 'description'], saveTheDate: ['heading', 'subtitle'] })) {
     if (!sectionVisible(form, key)) continue;
     const rows = ['dressCode', 'saveTheDate'].includes(key) ? [form[key] || {}] : form[key] || [];
     rows.forEach((row, i) => fields.forEach(field => {
@@ -85,7 +85,7 @@ export function projectLocale(form, locale) {
   const content = localeContent(form);
   const values = Object.fromEntries(LOCALIZED_FIELDS.map(key => [key, text(content[locale]?.[key])]));
   const collections = {};
-  if (locale === 'en') for (const [key, fields] of Object.entries({ ...LOCALIZED_COLLECTIONS, dressCode: ['name', 'description'], saveTheDate: ['heading', 'subtitle'] })) {
+  if (locale === 'en') for (const [key, fields] of Object.entries({ ...LOCALIZED_COLLECTIONS, dressCode: ['name', 'style', 'description'], saveTheDate: ['heading', 'subtitle'] })) {
     const rows = ['dressCode', 'saveTheDate'].includes(key) ? [form[key] || {}] : form[key] || [];
     const projected = rows.map((row, i) => ({ ...row, ...Object.fromEntries(fields.map(field => [field, text(content.en.collections?.[key]?.[rowKey(row, i)]?.[field])])) }));
     collections[key] = ['dressCode', 'saveTheDate'].includes(key) ? projected[0] : projected;

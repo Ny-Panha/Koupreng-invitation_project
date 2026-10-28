@@ -332,7 +332,7 @@ export default function PublicInvitationPage() {
                         />
                     )}
                 </TemplateExperience>
-                <PublicTicketAccess displayContent={publicDraft} languageMode={publicDraft.languageMode} slug={slug} token={inviteToken} accessToken={effectiveAccessToken} />
+                <PublicTicketAccess compact={royalGarden} displayContent={publicDraft} languageMode={publicDraft.languageMode} slug={slug} token={inviteToken} accessToken={effectiveAccessToken} />
                 </div>
             );
         }

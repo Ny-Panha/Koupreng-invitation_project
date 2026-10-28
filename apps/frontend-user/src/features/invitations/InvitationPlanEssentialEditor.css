@@ -496,6 +496,9 @@
     height: 0;
 }
 
+.pe-dress-toggle input { position:absolute; inset:0; width:100%; height:100%; margin:0; z-index:1; cursor:pointer; }
+.pe-dress-toggle:focus-within { outline:3px solid #926c34; outline-offset:3px; border-radius:20px; }
+
 .pe-toggle-slider {
     position: absolute;
     cursor: pointer;

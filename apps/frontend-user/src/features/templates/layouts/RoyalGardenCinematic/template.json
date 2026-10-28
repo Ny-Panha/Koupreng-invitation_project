@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "slug": "royal-garden-cinematic",
   "name": "Royal Garden Cinematic · សួនរាជមង្គល",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "category": "WEDDING",
   "cover": {
     "type": "image",
@@ -42,6 +42,7 @@
     "countdown",
     "schedule",
     "venue",
+    "dressCode",
     "gift",
     "gallery",
     "wishes",

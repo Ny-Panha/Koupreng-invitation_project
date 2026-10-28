@@ -8,7 +8,7 @@ export function validProgramDate(value) {
 }
 
 export function programDate(item, master = '') {
-  if (validProgramDate(item?.date)) return item.date;
+  if (item?.date) return validProgramDate(item.date) ? item.date : '';
   const base = String(master || '').slice(0, 10);
   if (!validProgramDate(base)) return '';
   const [y, m, d] = base.split('-').map(Number);
@@ -34,10 +34,12 @@ export function legacyProgram(days) {
 }
 
 export function groupProgram(value, master = '', metadata = []) {
-  const days = (Array.isArray(metadata) ? metadata : []).filter(day => day && typeof day === 'object' && typeof day.id === 'string').map(day => ({ ...day, items: [] }));
-  for (const row of normalizeProgram(value)) {
+  const sources = (Array.isArray(metadata) ? metadata : []).filter(day => day && typeof day === 'object' && !Array.isArray(day));
+  const days = sources.map((day, index) => ({ ...day, id: day.id || `legacy-day-${index + 1}`, day: day.day || index + 1, items: [] }));
+  const rows = Array.isArray(value) ? normalizeProgram(value) : sources.flatMap((day, index) => normalizeProgram(day.items).map(row => ({ ...row, dayId: days[index].id })));
+  for (const row of rows) {
     const titleHash = Array.from(String(row.dayTitle || '')).reduce((hash, char) => Math.imul(hash ^ char.codePointAt(0), 16777619), 2166136261) >>> 0;
-    const id = row.dayId || `legacy-${row.day || 1}-${row.date || ''}-${titleHash.toString(16)}`;
+    const id = row.dayId || days.slice(0, sources.length).find(day => day.day === (row.day || 1))?.id || `legacy-${row.day || 1}-${row.date || ''}-${titleHash.toString(16)}`;
     let day = days.find(item => item.id === id);
     if (!day) {
       day = { id, date: row.date || '', title: row.dayTitle || '', day: row.day || 1, items: [] };
@@ -55,5 +57,20 @@ export function serializeProgramDays(days) {
     schedule: days.flatMap((day, index) => day.items.map(row => ({ ...row, dayId: day.id, day: index + 1, date: day.date || '', dayTitle: day.title || '' }))),
   };
 }
+
+// The calendar, timeline and ceremony export share this public projection.
+// Filtering never mutates the editable records or changes their array order.
+export function visibleProgramDays(content = {}) {
+  if (content.showSchedule === false || content.enabledSections?.schedule === false) return [];
+  return groupProgram(content.schedule, content.eventDate || content.machineEventDate || content.targetDate, content.programDays)
+    .filter(day => day.enabled !== false)
+    .map(day => ({ ...day, items: day.items.filter(item => item.enabled !== false) }))
+    .filter(day => day.items.length);
+}
+
+export const programDayHeading = (day, index, english, numeral = String) =>
+  (english ? day.titleEn : day.titleKm) || day.title || (english ? `Day ${day.day || index + 1}` : `ថ្ងៃទី ${numeral(day.day || index + 1)}`);
+
+export const programDayAnchor = (prefix, id) => `${prefix}-${encodeURIComponent(id)}`;
 
 export const PROGRAM_PERIODS = { MORNING: ['ព្រឹក', 'Morning'], DAYTIME: ['ថ្ងៃ / រសៀល', 'Daytime'], EVENING: ['ល្ងាច', 'Evening'] };

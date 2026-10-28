@@ -1,27 +1,27 @@
-import { groupProgram, PROGRAM_PERIODS } from './program';
-import { formatEventDate, formatNumerals } from './eventDateTime';
+import { programDayAnchor, programDayHeading, visibleProgramDays, PROGRAM_PERIODS } from './program';
+import { formatEventDate, formatEventTime, formatNumerals } from './eventDateTime';
 import './event-sections.css';
 import CeremonyIcon from './CeremonyIcon';
 
-export default function ProgramTimeline({ content = {}, english = String(content.languageMode).toLowerCase() === 'en' }) {
+export default function ProgramTimeline({ content = {}, english = String(content.languageMode).toLowerCase() === 'en', days: suppliedDays, idPrefix, naturalTime = false }) {
   const numerals = content.saveTheDate?.numerals || (english ? 'latin' : 'khmer');
   const bilingual = ['both', 'bilingual'].includes(String(content.languageMode).toLowerCase());
-  const days = groupProgram(content.schedule, content.eventDate || content.machineEventDate || content.targetDate, content.programDays)
-    .filter(day => day.enabled !== false && day.items.some(item => item.enabled !== false));
+  const days = suppliedDays || visibleProgramDays(content);
+  const time = value => naturalTime ? formatEventTime(value, english, numerals) : formatNumerals(value, numerals);
   if (!days.length) return null;
-  return <div className="kp-program" lang={english ? 'en' : 'km'}>{days.map((day, index) => <div className="kp-program-day" key={day.id}>
-    <h3 className="kp-program-day-title">{(english ? day.titleEn : day.titleKm) || day.title || (english ? `Day ${index + 1}` : `ថ្ងៃទី ${formatNumerals(index + 1, numerals)}`)}
+  return <div className="kp-program" lang={english ? 'en' : 'km'}>{days.map((day, index) => <div className="kp-program-day" key={day.id} id={idPrefix ? programDayAnchor(idPrefix, day.id) : undefined} tabIndex={idPrefix ? -1 : undefined}>
+    <h3 className="kp-program-day-title">{programDayHeading(day, index, english, value => formatNumerals(value, numerals))}
       {day.resolvedDate && <time dateTime={day.resolvedDate}>{formatEventDate(day.resolvedDate, english, numerals, { weekday: 'long' })}</time>}
-      {bilingual && day.titleEn && <span lang="en">{day.titleEn}</span>}
+      {bilingual && !english && day.titleEn && <span lang="en">{day.titleEn}</span>}
     </h3>
     <ol className="kp-timeline">{day.items.filter(item => item.enabled !== false).map(item => <li key={item.id}>
-      <span className="kp-timeline-time">{formatNumerals(item.time || '', numerals)}{item.endTime && <><span aria-hidden="true">–</span>{formatNumerals(item.endTime, numerals)}</>}{item.period && <small>{PROGRAM_PERIODS[item.period]?.[english ? 1 : 0] || item.period}</small>}</span>
+      <span className="kp-timeline-time">{time(item.time || '')}{item.endTime && <><span aria-hidden="true">–</span>{time(item.endTime)}</>}{item.period && <small>{PROGRAM_PERIODS[item.period]?.[english ? 1 : 0] || item.period}</small>}</span>
       <span className="kp-timeline-marker" aria-hidden="true"><CeremonyIcon iconKey={item.iconKey} /></span>
       <div className="kp-timeline-copy"><h4>{(english ? item.titleEn : item.titleKm) || item.title || item.titleEn}</h4>
-        {bilingual && item.titleEn && <p lang="en">{item.titleEn}</p>}
+        {bilingual && !english && item.titleEn && <p lang="en">{item.titleEn}</p>}
         {((english ? item.descriptionEn : item.descriptionKm) || item.description) && <p>{(english ? item.descriptionEn : item.descriptionKm) || item.description}</p>}
-        {item.location && <p>{item.location}</p>}
-        {bilingual && item.descriptionEn && <p lang="en">{item.descriptionEn}</p>}
+        {(english ? item.locationEn || item.location : item.location) && <p>{english ? item.locationEn || item.location : item.location}</p>}
+        {bilingual && !english && item.descriptionEn && <p lang="en">{item.descriptionEn}</p>}
       </div>
     </li>)}</ol>
   </div>)}</div>;

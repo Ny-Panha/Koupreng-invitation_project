@@ -33,4 +33,12 @@ describe('program calendar and serialization contract', () => {
     expect(programDate({ day: 3 }, '2027-12-31')).toBe('2028-01-02');
     expect(validProgramDate('2011-12-30')).toBe(true);
   });
+  it('rehydrates old day objects without regenerating existing IDs or reviving explicitly cleared rows', () => {
+    const old = [{ date: '2028-02-29', title: 'Old day', extension: 'keep', items: [{ id: 'old-ceremony', time: '07:00', title: 'Old ceremony' }] }];
+    const days = groupProgram(undefined, '', old);
+    expect(days[0]).toMatchObject({ id: 'legacy-day-1', resolvedDate: '2028-02-29', extension: 'keep' });
+    expect(serializeProgramDays(days).schedule[0]).toMatchObject({ id: 'old-ceremony', dayId: 'legacy-day-1' });
+    expect(groupProgram([], '', old)[0].items).toEqual([]);
+    expect(groupProgram([{ id: 'row', day: 2, title: 'Second' }], '2027-12-31', [{ id: 'one' }, { id: 'two' }])[1].items[0].id).toBe('row');
+  });
 });

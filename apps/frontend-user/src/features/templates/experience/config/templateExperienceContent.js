@@ -369,6 +369,7 @@ function normalizeGiftAccounts(gift) {
     return accounts
         .map((g, index) => ({
             id: g.id || `gift-${index}`,
+            currency: g.currency || "",
             bank: g.bank || "",
             account: g.account || g.accountName || g.name || "",
             number: g.number || g.accountNumber || g.phone || "",
@@ -461,6 +462,7 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
     // real values are preferred over the demo fallbacks below. The demo pages
     // pass no hostContent, so they keep showing tasteful sample data.
     const host = tpl.hostContent || {};
+    const royalGarden = (tpl.code || tpl.slug || tpl.id) === 'royal-garden-cinematic';
     const hostCouple = host.couple || {};
     const templateCouple = tpl.couple || {};
     const templateFamily = tpl.family || {};
@@ -514,7 +516,7 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
     ];
 
     const hostedDressCode = host.dressCode || {};
-    const rawDressColors = hasHostContent
+    const rawDressColors = royalGarden && hasHostContent && Array.isArray(host.dressColors) ? host.dressColors : hasHostContent
         ? ((Array.isArray(hostedDressCode.colors) && hostedDressCode.colors.length)
             ? hostedDressCode.colors
             : (Array.isArray(host.dressColors) && host.dressColors.length ? host.dressColors : null))
@@ -538,7 +540,7 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         : "";
 
     const dressCodeSource = hasHostContent ? hostedDressCode : (tpl.dressCode || {});
-    const dressCode = {
+    const dressCode = royalGarden && hasHostContent ? { ...hostedDressCode, colors: resolvedColors } : {
         name: dressCodeSource.name || (hasAdminColors && dynamicDressName ? dynamicDressName : (hasHostContent ? "" : copy.dressName || "ពណ៌សម្លៀកបំពាក់ (Dress Code)")),
         description: dressCodeSource.description || (hasAdminColors && dynamicDressNote ? dynamicDressNote : (hasHostContent ? "" : copy.dressNote || "សូមស្លៀកសម្លៀកបំពាក់ពណ៌តាមប្រធានបទ ឬពណ៌សមរម្យ")),
         style: dressCodeSource.style || (hasHostContent ? "" : (tpl.style && tpl.style !== "Wedding Template" ? tpl.style : copy.dressStyle) || "ខ្មែរប្រពៃណី / សម័យ"),
@@ -615,6 +617,7 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
     const hostGift = nonEmpty(host.gift)
         ? host.gift.map((g, index) => ({
             id: g.id || `gift-${index}`,
+            currency: g.currency || "",
             bank: g.bank || "",
             account: g.account || g.accountName || g.name || "",
             number: g.number || g.accountNumber || "",

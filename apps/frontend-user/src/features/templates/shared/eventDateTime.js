@@ -81,6 +81,20 @@ export function formatNumerals(value, numerals = 'latin') {
   return numerals === 'khmer' ? String(value).replace(/\d/g, digit => '០១២៣៤៥៦៧៨៩'[Number(digit)]) : String(value);
 }
 
+// Format a saved wall time without involving the device timezone. Legacy time
+// wording remains authored text; midnight is a real time, not a missing value.
+export function formatEventTime(time, english = false, numerals = english ? 'latin' : 'khmer') {
+  if (!validEventTime(time)) return formatNumerals(time || '', numerals);
+  const [hour, minute] = time.split(':').map(Number);
+  const period = english ? (hour < 12 ? 'AM' : 'PM') : hour < 12 ? 'ព្រឹក' : hour < 17 ? 'រសៀល' : 'ល្ងាច';
+  return formatNumerals(`${hour % 12 || 12}:${String(minute).padStart(2, '0')} ${period}`, numerals);
+}
+
+export function eventToday(timezone = DEFAULT_EVENT_TIMEZONE, now = Date.now()) {
+  const p = zonedParts(now, validTimezone(timezone) ? timezone : DEFAULT_EVENT_TIMEZONE);
+  return `${p.year}-${p.month}-${p.day}`;
+}
+
 export function formatEventDate(date, english = false, numerals = english ? 'latin' : 'khmer', options = {}) {
   if (!validProgramDate(date)) return '';
   if (!english) {
