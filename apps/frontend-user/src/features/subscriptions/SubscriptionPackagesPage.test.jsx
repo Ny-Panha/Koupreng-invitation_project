@@ -245,4 +245,59 @@ describe("SubscriptionPackagesPage", () => {
     expect(await screen.findByRole("alert")).toHaveTextContent("Could not verify your plan or payment history");
     expect(screen.getByRole("button", { name: /Choose this plan/i })).toBeDisabled();
   });
+
+  it("focuses the invalid field and prevents closing or resubmitting while creating an order", async () => {
+    let finish;
+    subscriptionService.purchase.mockImplementation(() => new Promise(resolve => { finish = resolve; }));
+    render(<MemoryRouter><SubscriptionPackagesPage /></MemoryRouter>);
+    fireEvent.click(await screen.findByRole('button', { name: 'Choose this plan' }));
+    const submit = screen.getByRole('button', { name: 'Continue to ABA PayWay' });
+    fireEvent.click(submit);
+    await waitFor(() => expect(screen.getByLabelText('ABA Account Holder Name')).toHaveFocus());
+    expect(screen.getByLabelText('ABA Account Holder Name')).toHaveAttribute('aria-invalid', 'true');
+    fireEvent.change(screen.getByLabelText('ABA Account Holder Name'), { target: { value: 'Example payer' } });
+    fireEvent.change(screen.getByLabelText('Last 3 digits of ABA account'), { target: { value: '24' } });
+    fireEvent.click(submit);
+    await waitFor(() => expect(screen.getByLabelText('Last 3 digits of ABA account')).toHaveFocus());
+    fireEvent.change(screen.getByLabelText('Last 3 digits of ABA account'), { target: { value: '247' } });
+    fireEvent.click(submit);
+    await waitFor(() => expect(subscriptionService.purchase).toHaveBeenCalledTimes(1));
+    expect(screen.getByRole('button', { name: 'Close modal' })).toBeDisabled();
+    expect(submit).toBeDisabled();
+    expect(screen.getByLabelText('ABA Account Holder Name')).toBeDisabled();
+    await act(async () => finish({ orderCode: 'SUB-ONE', amount: .02, currency: 'USD', status: 'PENDING_PAYMENT', paymentStatus: 'PENDING', active: false }));
+    expect(screen.getByRole('complementary', { name: 'Order summary' })).toHaveTextContent('$0.02');
+    expect(screen.queryByText('Subscription activated successfully.')).not.toBeInTheDocument();
+  });
+
+  it("keeps activation incomplete during paid review and refreshes benefits only after verified activation", async () => {
+    subscriptionService.history.mockResolvedValue([{ packagePlan: basicPlan, orderCode: 'SUB-REVIEW', status: 'REVIEW_REQUIRED', paymentStatus: 'PAID', active: false }]);
+    subscriptionService.order.mockResolvedValue({ orderCode: 'SUB-REVIEW', status: 'REVIEW_REQUIRED', paymentStatus: 'PAID', active: false });
+    render(<MemoryRouter><SubscriptionPackagesPage /></MemoryRouter>);
+    fireEvent.click(await screen.findByRole('button', { name: 'View pending order' }));
+    await screen.findByText('Payment status needs administrator review.');
+    const progress = screen.getByRole('list', { name: 'Package purchase progress' });
+    expect(progress.lastElementChild).not.toHaveAttribute('data-complete');
+    const loads = subscriptionService.entitlements.mock.calls.length;
+    subscriptionService.order.mockResolvedValue({ orderCode: 'SUB-REVIEW', status: 'ACTIVE', paymentStatus: 'PAID', active: true });
+    fireEvent.click(screen.getByRole('button', { name: 'Check payment status' }));
+    await screen.findByText('Subscription activated successfully.');
+    await waitFor(() => expect(subscriptionService.entitlements.mock.calls.length).toBeGreaterThan(loads));
+    expect(progress.lastElementChild).toHaveAttribute('data-complete', 'true');
+    expect(subscriptionService.purchase).not.toHaveBeenCalled();
+  });
+
+  it("keeps a created order and its payment link available when the browser rejects a popup", async () => {
+    window.open.mockImplementation(() => { throw new Error('Popup blocked'); });
+    render(<MemoryRouter><SubscriptionPackagesPage /></MemoryRouter>);
+    fireEvent.click(await screen.findByRole('button', { name: 'Choose this plan' }));
+    fireEvent.change(screen.getByLabelText('ABA Account Holder Name'), { target: { value: 'Example payer' } });
+    fireEvent.change(screen.getByLabelText('Last 3 digits of ABA account'), { target: { value: '247' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Continue to ABA PayWay' }));
+    const bank = await screen.findByRole('link', { name: 'Open ABA PayWay' });
+    expect(bank).toHaveAttribute('href', 'https://pay.example.test/basic');
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    expect(screen.getByRole('dialog')).toHaveTextContent('SUB2609151234');
+    expect(subscriptionService.purchase).toHaveBeenCalledTimes(1);
+  });
 });

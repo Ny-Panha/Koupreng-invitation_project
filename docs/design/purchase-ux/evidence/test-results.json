@@ -1,0 +1,500 @@
+{
+  "baseCommit": "18bfb1aa2a075a571c632d5504555edcf990d418",
+  "branch": "main",
+  "date": "2026-10-29",
+  "productionDeployment": false,
+  "fullUserSuite": {
+    "command": "npm --prefix apps/frontend-user test -- --maxWorkers=2",
+    "files": 162,
+    "passed": 1189,
+    "failed": 0,
+    "durationSeconds": 138.47,
+    "exitCode": 0
+  },
+  "focusedFinal": {
+    "command": "npm --prefix apps/frontend-user test -- --maxWorkers=2 src/features/subscriptions/SubscriptionPackagesPage.test.jsx src/shared/access/UpgradeFeatureDialog.test.jsx",
+    "files": 2,
+    "passed": 21,
+    "failed": 0,
+    "durationSeconds": 2.42,
+    "exitCode": 0,
+    "overlap": "Included in the full suite; repeated after final UI wording changes"
+  },
+  "browser": {
+    "command": "playwright test tests/e2e/map-studio-upgrade-ux.spec.js tests/e2e/package-purchase-ux.spec.js tests/e2e/royal-garden-v33.spec.js tests/e2e/royal-garden-v33-visual.spec.js tests/e2e/phase11-features.spec.js tests/e2e/phase12-studio.spec.js tests/e2e/next-studio-ux.spec.js tests/e2e/ux-ui-redesign.spec.js --workers=2",
+    "passed": 64,
+    "skipped": 12,
+    "failed": 0,
+    "duration": "4.8m",
+    "exitCode": 0,
+    "cases": [
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "upgrade recommendations retain verified plans and checkout context in en (12.2s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "refined Map Studio fits mobile/tablet/desktop with readable properties and canvas (19.2s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "upgrade recommendations retain verified plans and checkout context in km (10.4s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "six Studio tabs retain rendered mobile and desktop evidence (7.8s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "role revocation keeps mounted edits, disables mutation and offers recovery without an upsell (3.7s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "contextual Premium video offers, cancel, keyboard focus and responsive reflow retain the Studio draft (9.8s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "confirmation cancellation, honest failed save and one confirmed-save toast preserve authored data (4.3s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "package purchase: en details, pending resume, review and verified activation (8.1s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "package purchase: km details, pending resume, review and verified activation (6.6s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "package purchase: EXPIRED offers recovery without another payment (2.5s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "package purchase: FAILED offers recovery without another payment (2.7s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "family layout, custom host and decorative monogram retain canonical identities (4.2s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "unentitled Studio has no Premium canvas or monogram activation (3.0s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "Premium diagram drag, keyboard, layer edits, undo, export and reopen use saved structured data (12.8s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "native touch moves a diagram node and cancellation preserves the last committed position (6.6s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "monogram starting styles and local font exports preserve names (4.0s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "locale checklist opens and focuses missing venue wording without changing the account language (3.4s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "original route presets confirm replacement, undo, fit, pan, save and export local Khmer (12.0s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "V33 visual baseline: map designer at 375px (2.7s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "V33 visual baseline: clean Royal Garden demo at 375px (1.7s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "V33 visual baseline: map designer at 1440px (3.4s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "V33 visual baseline: clean Royal Garden demo at 1440px (2.3s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "V33 preset replacement, undo/redo and unsaved modal confirmation (6.7s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "V33 map modal: V1 editing, pointer/keyboard, history, exports and save/reload/public synchronization (13.9s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "V33 Free upgrade and unverified entitlement fail closed (8.1s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "V33 public demo navigation exposes sample calendar and map without the removed overlay, sample detail card or export controls (1.9s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "V33 locked entry and upgrade dialog remain usable at all eight viewport sizes (19.5s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "V33 bilingual dark designer uses accessible theme tokens (6.0s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "V33 calendar export uses saved ceremony dates and respects the Studio visibility setting (3.3s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "V33 calendar, map and designer visual coverage at all eight requested viewport sizes (42.9s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "packages and single form remain usable across eight widths: en (49.4s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "pending payments resume; validated checkout remains pending and traps keyboard focus (2.1s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "event form preserves data, validates and creates once at the returned event ID (1.9s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "200% desktop zoom equivalent keeps form and checkout actions reachable (2.9s)"
+      },
+      {
+        "result": "skipped",
+        "project": "desktop-chromium",
+        "test": "real local backend accepts a partial draft and preserves exact event navigation"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "packages and single form remain usable across eight widths: km (45.4s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "Khmer checkout keeps payer labels, validation and pending status readable (2.2s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "neutral catalog previews preserve their identity on public and cold host routes (4.5s)"
+      },
+      {
+        "result": "skipped",
+        "project": "mobile-chromium",
+        "test": "refined Map Studio fits mobile/tablet/desktop with readable properties and canvas"
+      },
+      {
+        "result": "skipped",
+        "project": "mobile-chromium",
+        "test": "upgrade recommendations retain verified plans and checkout context in km"
+      },
+      {
+        "result": "skipped",
+        "project": "mobile-chromium",
+        "test": "six Studio tabs retain rendered mobile and desktop evidence"
+      },
+      {
+        "result": "skipped",
+        "project": "mobile-chromium",
+        "test": "upgrade recommendations retain verified plans and checkout context in en"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "role revocation keeps mounted edits, disables mutation and offers recovery without an upsell (1.9s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "contextual Premium video offers, cancel, keyboard focus and responsive reflow retain the Studio draft (3.8s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "confirmation cancellation, honest failed save and one confirmed-save toast preserve authored data (2.7s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "package purchase: en details, pending resume, review and verified activation (5.9s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "package purchase: EXPIRED offers recovery without another payment (2.8s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "package purchase: km details, pending resume, review and verified activation (7.4s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "package purchase: FAILED offers recovery without another payment (4.0s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "family layout, custom host and decorative monogram retain canonical identities (3.7s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "unentitled Studio has no Premium canvas or monogram activation (2.9s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "Premium diagram drag, keyboard, layer edits, undo, export and reopen use saved structured data (10.8s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "native touch moves a diagram node and cancellation preserves the last committed position (5.9s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "monogram starting styles and local font exports preserve names (4.3s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "original route presets confirm replacement, undo, fit, pan, save and export local Khmer (11.9s)"
+      },
+      {
+        "result": "skipped",
+        "project": "mobile-chromium",
+        "test": "V33 visual baseline: map designer at 375px"
+      },
+      {
+        "result": "skipped",
+        "project": "mobile-chromium",
+        "test": "V33 visual baseline: clean Royal Garden demo at 375px"
+      },
+      {
+        "result": "skipped",
+        "project": "mobile-chromium",
+        "test": "V33 visual baseline: map designer at 1440px"
+      },
+      {
+        "result": "skipped",
+        "project": "mobile-chromium",
+        "test": "V33 visual baseline: clean Royal Garden demo at 1440px"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "locale checklist opens and focuses missing venue wording without changing the account language (3.7s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "V33 preset replacement, undo/redo and unsaved modal confirmation (5.0s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "V33 Free upgrade and unverified entitlement fail closed (4.3s)"
+      },
+      {
+        "result": "skipped",
+        "project": "mobile-chromium",
+        "test": "V33 calendar, map and designer visual coverage at all eight requested viewport sizes"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "V33 map modal: V1 editing, pointer/keyboard, history, exports and save/reload/public synchronization (10.6s)"
+      },
+      {
+        "result": "skipped",
+        "project": "mobile-chromium",
+        "test": "V33 locked entry and upgrade dialog remain usable at all eight viewport sizes"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "V33 public demo navigation exposes sample calendar and map without the removed overlay, sample detail card or export controls (2.5s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "V33 bilingual dark designer uses accessible theme tokens (3.4s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "V33 calendar export uses saved ceremony dates and respects the Studio visibility setting (4.0s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "packages and single form remain usable across eight widths: en (44.5s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "packages and single form remain usable across eight widths: km (43.8s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "pending payments resume; validated checkout remains pending and traps keyboard focus (2.2s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "event form preserves data, validates and creates once at the returned event ID (2.3s)"
+      },
+      {
+        "result": "skipped",
+        "project": "mobile-chromium",
+        "test": "real local backend accepts a partial draft and preserves exact event navigation"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "200% desktop zoom equivalent keeps form and checkout actions reachable (2.7s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "Khmer checkout keeps payer labels, validation and pending status readable (1.9s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "neutral catalog previews preserve their identity on public and cold host routes (3.2s)"
+      }
+    ],
+    "skipReasons": [
+      "Three duplicate explicit viewport runs",
+      "Four duplicate visual reference runs",
+      "One duplicate Studio tab evidence run",
+      "Two duplicate V33 viewport sweeps",
+      "Two optional live backend runs without a disposable backend configured"
+    ]
+  },
+  "visual": {
+    "normalComparisonsPassed": 8,
+    "snapshotUpdatesDuringVerification": false,
+    "environment": "Chromium on Windows",
+    "maxDiffPixelRatio": 0.005,
+    "views": [
+      "map designer 375/1440",
+      "upgrade dialog 375/1440",
+      "checkout 390/1440",
+      "unchanged demo calendar 375/1440"
+    ]
+  },
+  "accessibility": {
+    "tool": "@axe-core/playwright",
+    "tags": [
+      "wcag2a",
+      "wcag2aa",
+      "wcag21aa",
+      "wcag22aa"
+    ],
+    "violationsInTestedScopes": 0,
+    "scopes": [
+      "map designer",
+      "upgrade dialog",
+      "recommended package page",
+      "checkout details and each payment state"
+    ],
+    "interactionChecks": [
+      "keyboard focus/trap/return",
+      "focused invalid fields",
+      "200% zoom",
+      "320px short phone",
+      "native touch and pointer cancellation"
+    ]
+  },
+  "otherChecks": {
+    "lint": {
+      "command": "npm --prefix apps/frontend-user run lint",
+      "exitCode": 0
+    },
+    "productionBuild": {
+      "command": "npm --prefix apps/frontend-user run build",
+      "exitCode": 0,
+      "durationSeconds": 1.86
+    },
+    "routing": {
+      "command": "python scripts/validate-agent-routing.py",
+      "exitCode": 0
+    },
+    "skills": {
+      "command": "powershell -ExecutionPolicy Bypass -File scripts/setup-ai-skills.ps1 -VerifyOnly",
+      "exitCode": 0
+    }
+  },
+  "paymentContracts": [
+    "Only packageId, payerName and payerAccountLast3 are submitted",
+    "One purchase across resume/retry/review/activation",
+    "No activation for PAID without ACTIVE and active=true",
+    "Manual status recovery clears stale errors and refreshes verified benefits",
+    "Blocked popup preserves created order and payment link",
+    "Expired/failed/review states offer no new payment action"
+  ],
+  "limits": [
+    "Browser API fixtures only; no live bank payments or live database changes",
+    "Chromium Windows emulation, not Safari/Firefox or mobile hardware",
+    "Backend unchanged and not rerun for this frontend task",
+    "No new production performance benchmark; guest tests assert no designer loading"
+  ],
+  "testMaintenance": [
+    "Tablet grid expectation follows two-column breakpoint; ignore collapsed auto-fit tracks",
+    "Event creation expectation follows the existing guided Studio destination, verified in base commit"
+  ],
+  "sourceLogSha256": {
+    "purchase-ux-release.log": "71da225e74b51418329ae566781a89378e40844bc53718796727e888dca98cea",
+    "package-ux-full-unit-final.log": "301c2214f40fa6b7c2bb9e87cff5d49668bcfdbaeb6c5b5c8b4dabae83e7ebab",
+    "package-ux-focused-final.log": "a04d3340900ed0a4d2d5b3da59e745a5f19b30596375c9485493820c8bc5ce66",
+    "package-ux-build.log": "5b6105415fdee690870a79bfc2e6b43542fdaa935cd1b442e1e5572cbfe3891a",
+    "package-ux-lint-final.log": "52fffd10a27da7ca85657cb07ca8f4c376d8991bb3efbe96d624f017b515ebf8",
+    "purchase-ux-skills.log": "42969f18b8c71a19e9e7c0e48c0e5390ee84bc1ae9096cb32f8115f860f730e2"
+  }
+}

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { LockKeyhole, ShieldCheck } from 'lucide-react';
+import { ArrowUpRight, Check, Crown, LockKeyhole, MapPinned, ShieldCheck } from 'lucide-react';
 import Modal from '../ui/Modal';
+import { CardGridSkeleton } from '../ui/LoadingState';
 import { useLanguageStore } from '@/stores/useLanguageStore';
 import subscriptionService from '@/features/subscriptions/subscriptionService';
 import { eligiblePlans, FEATURES, safeReturnTo } from './accessDecision';
@@ -40,32 +41,36 @@ export default function UpgradeFeatureDialog({ request, onClose }) {
   const name = (featureNames[feature] || [feature, feature])[en ? 1 : 0];
   const purchase = offer && request.template?.checkoutEligible === true && request.template?.checkoutAmount > 0 && /^[A-Z]{3}$/.test(request.template.checkoutCurrency || '');
   const billing = { MONTHLY:L('ប្រចាំខែ','Monthly'),YEARLY:L('ប្រចាំឆ្នាំ','Yearly'),CUSTOM:L('រយៈពេលផ្ទាល់ខ្លួន','Custom term'),ONE_TIME:L('បង់ម្តង','One-time') };
-  return <Modal isOpen onClose={onClose} title={mapOffer ? L('រចនាផែនទីពិសេស','Premium Map Designer') : accessTitle(decision.reason, en)} size="lg" className="access-dialog"
+  return <Modal isOpen onClose={onClose} title={mapOffer ? L('រចនាផែនទីពិសេស','Premium Map Designer') : accessTitle(decision.reason, en)} size="lg" className={`access-dialog ${offer ? 'access-upgrade-dialog' : ''}`}
     footer={<div className="access-actions"><button type="button" onClick={onClose}>{L('មិនមែនឥឡូវនេះ','Not now')}</button>{offer && !state.failed && !state.loading && plans.length > 0 && <Link to={compare} onClick={onClose}>{L('ប្រៀបធៀបកញ្ចប់','Compare packages')}</Link>}</div>}>
-    <div className="access-heading"><span aria-hidden="true">{permission ? <ShieldCheck /> : <LockKeyhole />}</span><div>{name && <h3>{name}</h3>}
+    {mapOffer ? <div className="access-map-intro"><span className="access-map-mark" aria-hidden="true"><MapPinned size={32}/></span><div><h3>{L('ផ្លូវដ៏ច្បាស់ទៅកាន់ថ្ងៃមង្គល','A clear route to your celebration')}</h3><p>{L('ផ្លូវ សញ្ញាសម្គាល់ និងអក្សរខ្មែរ ឬអង់គ្លេស។ សម្រាប់ Pro ឬ Premium។','Roads, landmarks and Khmer or English labels. Available with Pro or Premium.')}</p></div></div> : <div className="access-heading"><span aria-hidden="true">{permission ? <ShieldCheck /> : <LockKeyhole />}</span><div>{name && <h3>{name}</h3>}
       <p>{permission ? L('សិទ្ធិក្រុមរបស់អ្នកមិនអនុញ្ញាតសកម្មភាពនេះទេ។ សូមទាក់ទងម្ចាស់កម្មវិធី ដើម្បីពិនិត្យសិទ្ធិ។ ការជាវកញ្ចប់មិនផ្ដល់សិទ្ធិចូលកម្មវិធីទេ។','Your event role does not allow this action. Ask the event owner to review your access. Buying a package does not grant event permission.')
         : collaborator ? L('មុខងារនេះអាស្រ័យលើកញ្ចប់របស់ម្ចាស់កម្មវិធី។ សូមទាក់ទងម្ចាស់កម្មវិធី។ កញ្ចប់ផ្ទាល់ខ្លួនរបស់អ្នកមិនអាចផ្លាស់ប្ដូរសិទ្ធិនេះបានទេ។','This feature follows the event owner’s package. Contact the owner; upgrading your own account cannot unlock this shared event.')
         : offer ? null
         : decision.reason === 'NOT_AUTHENTICATED' ? L('ការកែប្រែរបស់អ្នកនៅតែនៅទីនេះ។ រក្សាច្បាប់ចម្លងសិន ហើយចូលប្រើម្ដងទៀត។','Your edits remain here. Keep a recovery copy, then sign in again.')
-        : L('មិនទាន់អាចផ្ទៀងផ្ទាត់សិទ្ធិនេះបានទេ។ ការកែប្រែរបស់អ្នកត្រូវបានរក្សាដដែល។','This access cannot currently be verified. Your edits have been preserved.')}</p></div></div>
-    {mapOffer && <p className="access-map-description">{L('បង្កើតផែនទីទីតាំងកម្មវិធី ជាមួយផ្លូវ សញ្ញាសម្គាល់ និងអក្សរខ្មែរ។ សម្រាប់កញ្ចប់ Pro ឬ Premium។','Create a personalized venue map with roads, landmarks and Khmer labels. Available with Pro or Premium.')}</p>}
+        : L('មិនទាន់អាចផ្ទៀងផ្ទាត់សិទ្ធិនេះបានទេ។ ការកែប្រែរបស់អ្នកត្រូវបានរក្សាដដែល។','This access cannot currently be verified. Your edits have been preserved.')}</p></div></div>}
     {quota?.used != null && quota?.limit != null && <p className="access-quota">{(quotaNames[quota.resource] || [quota.resource,quota.resource])[en ? 1 : 0]}: <strong>{quota.used} / {quota.limit}</strong> · {quota.scope === 'EVENT' ? L('ក្នុងកម្មវិធីនេះ','This event') : L('ក្នុងគណនី','Account-wide')}</p>}
-    {offer && state.loading && <p role="status">{L('កំពុងពិនិត្យជម្រើសកញ្ចប់…','Checking eligible packages…')}</p>}
+    {offer && state.loading && <CardGridSkeleton variant="pricing" count={2} label={L('កំពុងពិនិត្យជម្រើសកញ្ចប់…','Checking eligible packages…')}/>}
     {offer && state.failed && <div role="status"><p>{L('មិនអាចផ្ទៀងផ្ទាត់កញ្ចប់ និងស្ថានភាពគណនីបានទេ។ មិនទាន់មានជម្រើសជាវដែលអាចបញ្ជាក់បាន។','Could not verify package options and your current plan. No purchase recommendation is available yet.')}</p><button type="button" onClick={() => setRevision(value => value + 1)}>{L('សាកម្តងទៀត','Try again')}</button></div>}
     {offer && !state.loading && !state.failed && <>
-      <p>{L('កញ្ចប់បច្ចុប្បន្ន','Current plan')}: <strong>{state.current?.packagePlan?.packageName}</strong>{state.current?.expiresAt && <> · <time dateTime={state.current.expiresAt}>{new Date(state.current.expiresAt).toLocaleDateString(en ? 'en-GB' : 'km-KH')}</time></>}</p>
-      {alreadyEnabled ? <p role="status">{L('កញ្ចប់បច្ចុប្បន្នមានមុខងារនេះរួចហើយ។ សូមបិទប្រអប់ ហើយពិនិត្យសិទ្ធិម្ដងទៀត ឬទាក់ទងជំនួយ។', 'Your current verified plan already includes this feature. Close this dialog and recheck access, or contact support.')}</p> : plans.length ? <div className="access-plan-grid">{plans.map(plan => {
+      <div className="access-current"><span>{L('កញ្ចប់បច្ចុប្បន្ន','Current plan')}</span><strong>{state.current?.packagePlan?.packageName}</strong>{state.current?.expiresAt && Number.isFinite(new Date(state.current.expiresAt).getTime()) && <time dateTime={state.current.expiresAt}>{new Date(state.current.expiresAt).toLocaleDateString(en ? 'en-GB' : 'km-KH')}</time>}</div>
+      {alreadyEnabled ? <p role="status">{L('កញ្ចប់បច្ចុប្បន្នមានមុខងារនេះរួចហើយ។ សូមបិទប្រអប់ ហើយពិនិត្យសិទ្ធិម្ដងទៀត ឬទាក់ទងជំនួយ។', 'Your current verified plan already includes this feature. Close this dialog and recheck access, or contact support.')}</p> : plans.length ? <div className="access-plan-grid">{plans.map((plan,index) => {
         const query = new URLSearchParams(context); query.set('package', plan.code);
-        return <article className="access-plan" key={plan.id}><h3>{plan.packageName}</h3><p className="access-price">{new Intl.NumberFormat(en ? 'en-US' : 'km-KH', { style: 'currency', currency: plan.currency }).format(plan.price)}</p>
-          <p>{plan.durationDays != null ? `${plan.durationDays} ${L('ថ្ងៃ','days')}` : L('រយៈពេលមិនបានបញ្ជាក់','Term not specified')} · {billing[plan.billingInterval] || plan.billingInterval}</p>
+        const benefits = [...new Set([feature,...(plan.eligibleFeatures || [])])].filter(key=>FEATURES.includes(key)&&plan.eligibleFeatures?.includes(key)).slice(0,4);
+        const term = [plan.durationDays != null ? `${plan.durationDays} ${L('ថ្ងៃ','days')}` : null,billing[plan.billingInterval] || plan.billingInterval].filter(Boolean).join(' · ');
+        return <article className="access-plan" data-recommended={index===0 || undefined} key={plan.id}>
+          <div className="access-plan-heading"><Crown size={20} aria-hidden="true"/>{index===0 && <span className="access-plan-match">{L('សម្រាប់តម្រូវការរបស់អ្នក','For your needs')}</span>}</div>
+          <h3>{plan.packageName}</h3><p className="access-price">{new Intl.NumberFormat(en ? 'en-US' : 'km-KH', { style: 'currency', currency: plan.currency }).format(plan.price)}</p>
+          <p className="access-term">{term || L('រយៈពេលមិនបានបញ្ជាក់','Term not specified')}</p>
+          <ul className="access-benefits">{benefits.map(key=><li key={key}><Check size={16} aria-hidden="true"/><span>{featureNames[key]?.[en?1:0] || key}</span></li>)}</ul>
           {quota && <p>{(quotaNames[quota.resource] || [quota.resource,quota.resource])[en ? 1 : 0]}: {plan[{ invitations:'maxInvitations', guests:'maxGuests', guestsPerInvitation:'maxGuestsPerInvitation', teamMembers:'maxTeamMembers' }[quota.resource]] ?? L('មិនកំណត់','Unlimited')}</p>}
-          <Link to={`/app/packages?${query}`} onClick={onClose}>{L('ជ្រើសរើសកញ្ចប់','Choose package')}</Link></article>;
+          <Link to={`/app/packages?${query}`} onClick={onClose}>{L('ជ្រើសរើសកញ្ចប់','Choose package')}<ArrowUpRight size={17} aria-hidden="true"/></Link></article>;
       })}</div> : <p role="status">{L('មិនមានកញ្ចប់សាធារណៈដែលអាចជាវដើម្បីបើកមុខងារនេះទេ។ សូមពិនិត្យម្ដងទៀត ឬទាក់ទងជំនួយ។','No eligible purchasable public package is available. Check again or contact support.')}</p>}
       {purchase && <Link to={`/templates/${encodeURIComponent(request.template.code)}/checkout`} onClick={onClose}>{L('ទិញគំរូនេះ','Purchase this template')} · {new Intl.NumberFormat(en ? 'en-US' : 'km-KH', { style: 'currency', currency: request.template.checkoutCurrency }).format(request.template.checkoutAmount)}</Link>}
       {!plans.length && <button type="button" onClick={() => setRevision(value => value + 1)}>{L('ពិនិត្យម្ដងទៀត','Check again')}</button>}
-      <p className="access-note">{L('ការទូទាត់ដែលកំពុងរង់ចាំមិនបើកសិទ្ធិទេ។ ត្រូវរង់ចាំការផ្ទៀងផ្ទាត់ និងការបើកសិទ្ធិពីម៉ាស៊ីនមេ។','Pending payments do not unlock features. Access changes only after verified activation on the server.')}</p>
+      <p className="access-note"><ShieldCheck size={16} aria-hidden="true"/>{L('ការទូទាត់ដែលកំពុងរង់ចាំមិនបើកសិទ្ធិទេ។ ត្រូវរង់ចាំការផ្ទៀងផ្ទាត់ និងការបើកសិទ្ធិពីម៉ាស៊ីនមេ។','Pending payments do not unlock features. Access changes only after verified activation on the server.')}</p>
     </>}
     {decision.reason === 'NOT_AUTHENTICATED' && <Link to={`/login?next=${encodeURIComponent(returnTo)}`} onClick={onClose}>{L('ចូលប្រើម្ដងទៀត','Sign in again')}</Link>}
-    {!permission && !state.loading && <Link to="/contact" onClick={onClose}>{L('ទាក់ទងជំនួយ','Contact support')}</Link>}
+    {!permission && !state.loading && <Link className="access-support" to="/contact" onClick={onClose}>{L('ទាក់ទងជំនួយ','Contact support')}</Link>}
   </Modal>;
 }

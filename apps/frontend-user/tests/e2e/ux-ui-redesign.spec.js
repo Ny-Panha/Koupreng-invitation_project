@@ -31,7 +31,8 @@ for (const lang of ["en", "km"]) {
         if (name === "packages") {
           await expect(page.locator(".pkg-card")).toHaveCount(3);
           expect(await page.locator(".pkg-features").first().evaluate(node => parseFloat(getComputedStyle(node).fontSize))).toBeGreaterThanOrEqual(16);
-          if (width >= 1024) expect(await page.locator(".pkg-grid").evaluate(node => getComputedStyle(node).gridTemplateColumns.split(" ").length)).toBe(3);
+          // auto-fit retains collapsed 0px tracks in computed styles; count visible columns.
+          if (width >= 1024) expect(await page.locator(".pkg-grid").evaluate(node => getComputedStyle(node).gridTemplateColumns.split(" ").filter(track => parseFloat(track) > 0).length)).toBe(width < 1200 ? 2 : 3);
           if (width < 768) await expect(page.locator(".pkg-history-mobile")).toBeVisible();
           else await expect(page.locator(".pkg-history-table")).toBeVisible();
         } else {
@@ -103,7 +104,7 @@ test("event form preserves data, validates and creates once at the returned even
   await expect(page.locator('[name="title"]')).toHaveValue("Sokha birthday");
   await expect(page.getByRole("button", { name: "Select Event Essential" })).toHaveAttribute("aria-pressed", "true");
   await page.getByRole("button", { name: "Create event", exact: true }).click();
-  await expect(page).toHaveURL(/\/app\/events\/103$/);
+  await expect(page).toHaveURL(/\/app\/events\/103\/invitation\?mode=guided$/);
   expect(created).toHaveLength(1);
   expect(created[0]).toMatchObject({ title: "Sokha birthday", eventType: "BIRTHDAY", hostName: "Sokha", languageMode: "BOTH", templateId: 30 });
 });

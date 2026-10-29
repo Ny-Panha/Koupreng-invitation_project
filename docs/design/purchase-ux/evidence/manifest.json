@@ -1,0 +1,58 @@
+{
+  "checkout-desktop.jpg": {
+    "bytes": 88579,
+    "sha256": "53b18cdf93fe54b7f87157547a1aff2e2fedd535923f7ffc434610d65e8f6cf1"
+  },
+  "checkout-khmer-mobile.jpg": {
+    "bytes": 40265,
+    "sha256": "dfab04ac1d318370c8ed9620d9d6cf02ecfdb9757210ae0e78121c73313b9cb5"
+  },
+  "map-desktop.jpg": {
+    "bytes": 161784,
+    "sha256": "ed29cc470a0cd06d2f67f5fe6175910c58df913a7910aaa2be1c7c673b0ecb62"
+  },
+  "map-mobile.jpg": {
+    "bytes": 44898,
+    "sha256": "3d146962247ffae81d42e991693e2daf9827501243d8d0c657014311f8162a07"
+  },
+  "payment-active.jpg": {
+    "bytes": 71175,
+    "sha256": "52a1130d7d0c6de1ff62efe817c6abb8dd898707f9f064654362ea570784b7bb"
+  },
+  "payment-expired.jpg": {
+    "bytes": 67440,
+    "sha256": "c03a86c127c7b7ee15dd7f9e694b98443f8f5cdcb8cbc99fd4885f23e236052a"
+  },
+  "payment-failed.jpg": {
+    "bytes": 65986,
+    "sha256": "60fc8290ad807d0014866966f204f60bd2e09f7a0c7ed49a88182224aed086bf"
+  },
+  "payment-review.jpg": {
+    "bytes": 83466,
+    "sha256": "abe3d43d36505327fa4f1dfc6ee898e19c1f7b6dcdbb062bf6c2663425c9af80"
+  },
+  "payment-waiting.jpg": {
+    "bytes": 91227,
+    "sha256": "767051f38f57e82e0267b78e3693cc8d64e7797a4fed6f98b8579c77e7f06762"
+  },
+  "plans-desktop.jpg": {
+    "bytes": 75715,
+    "sha256": "a641d378f08a3ec04b2d6bcd229d74bfed1f7914a6e941853b08345bd9169fad"
+  },
+  "properties-mobile.jpg": {
+    "bytes": 33931,
+    "sha256": "e3a9455115012740c4db0f158c07a32e654a64a6c0a365b3a5a4e07ac47d1435"
+  },
+  "test-results.json": {
+    "bytes": 18439,
+    "sha256": "b9afa343226395f9ae381c2cf96ffc5d6c4f824ff34763d500a3032530d26880"
+  },
+  "upgrade-desktop.jpg": {
+    "bytes": 116274,
+    "sha256": "b8fab47a587905daab9f56e8da2210528fca08bd5d115d1638e71c5a7c112197"
+  },
+  "upgrade-khmer.jpg": {
+    "bytes": 41952,
+    "sha256": "eeb1251086a1d10726964d357237aa45c80291be12782faf7e3a26d703150472"
+  }
+}

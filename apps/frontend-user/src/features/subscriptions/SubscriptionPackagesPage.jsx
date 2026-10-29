@@ -1,8 +1,7 @@
 import { CardGridSkeleton, LoadingRegion } from '@/shared/ui/LoadingState';
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Check, Crown, ExternalLink, ShieldCheck, Sparkles } from "lucide-react";
+import { AlertCircle, ArrowLeft, ArrowRight, Check, CheckCircle2, Clock3, Crown, ExternalLink, LockKeyhole, MapPinned, RefreshCw, ShieldCheck, Sparkles, X } from "lucide-react";
 import Modal from "../../shared/ui/Modal";
-import { toast } from "../../shared/ui/toast";
 import subscriptionService from "./subscriptionService";
 import PackageComparison from "./PackageComparison";
 import { useLanguageStore } from "../../stores/useLanguageStore";
@@ -14,6 +13,7 @@ import { refreshAccess } from '@/shared/feedback/feedback';
 import { invitationService } from '@/features/invitations/api/invitationApi';
 import "../../shared/styles/workspace-ui.css";
 import "./SubscriptionPackagesPage.css";
+import "./PackageCheckout.css";
 
 const isActivated = order => order?.active === true && order.status === "ACTIVE" && order.paymentStatus === "PAID";
 const isGrant = order => order?.source === "DEMO_ADMIN_GRANT" && order.paymentStatus === "NOT_REQUIRED";
@@ -91,7 +91,8 @@ export default function SubscriptionPackagesPage() {
     setCheckout({ ...order, plan: order.packagePlan, stage: orderStage(order) });
     try {
       const latest = await subscriptionService.order(order.orderCode);
-      setCheckout(value => value?.orderCode === order.orderCode ? { ...value, ...latest, stage: orderStage(latest) } : value);
+      setCheckout(value => value?.orderCode === order.orderCode ? { ...value, ...latest, stage: orderStage(latest), validationError: "" } : value);
+      if (isActivated(latest)) await load();
     } catch (err) { setCheckout(value => value?.orderCode === order.orderCode ? { ...value, validationError: err.message } : value); }
   };
   const openCheckout = plan => {
@@ -116,8 +117,10 @@ export default function SubscriptionPackagesPage() {
       setHistory(orders => [{ ...order, packagePlan: order.packagePlan || checkout.plan }, ...orders]);
       setCheckout(value => ({ ...value, ...order, stage: orderStage(order), validationError: "" }));
       if (order.paymentUrl && !isActivated(order)) {
-        const opened = window.open(order.paymentUrl, "_blank", "noopener,noreferrer");
-        if (!opened) toast.info(copy("សូមចុចប៊ូតុង ABA PayWay ដើម្បីបន្ត។", "Click the ABA PayWay button to continue."));
+        // noopener can return null even when the window opens. The persistent
+        // PayWay action also works when a browser blocks this automatic attempt.
+        try { window.open(order.paymentUrl, "_blank", "noopener,noreferrer"); }
+        catch { /* The created order and its explicit payment link stay available. */ }
       }
       if (isActivated(order)) await load();
     } catch (err) { setCheckout(value => ({ ...value, validationError: err.message || copy("មិនអាចបង្កើតការទូទាត់បានទេ។ សូមពិនិត្យប្រវត្តិមុនព្យាយាមម្ដងទៀត។", "Could not create the order. Check history before retrying.") })); }
@@ -146,28 +149,32 @@ export default function SubscriptionPackagesPage() {
   const usage = resource === 'guestsPerInvitation' ? eventQuota : current?.quotas?.[resource];
   const contextual = Boolean(feature || resource);
   const displayedPackages = contextual ? eligiblePlans(publicCatalog, { feature: feature || undefined, quota: resource ? { ...usage, resource, requested: 1 } : undefined, currentPlan: current?.packagePlan, usage: { ...current?.quotas, ...(eventQuota ? { guestsPerInvitation: eventQuota } : {}) } }) : packages;
-  return <main className="workspace-page pkg-page" lang={lang}>
-    <header className="workspace-heading">
-      <h1>{copy("ជ្រើសរើសកញ្ចប់សេវាកម្ម", "A plan for your next celebration")}</h1>
+  const usagePanel = current?.quotas && <section className="workspace-section pkg-usage" aria-label={copy("ការប្រើប្រាស់", "Plan usage")}><h2>{copy("ការប្រើប្រាស់កញ្ចប់", "Your plan usage")}</h2>{Object.entries(current.quotas).map(([key, quota]) => <div key={key}><strong>{key === "invitations" ? copy("កម្មវិធី", "Events") : copy("កំណត់ត្រាភ្ញៀវ", "Guest records")}</strong><span>{quota.used} / {quota.limit ?? copy("គ្មានកំណត់", "Unlimited")}</span>{quota.limit != null && quota.limit > 0 && <progress aria-label={key === "invitations" ? copy("ការប្រើប្រាស់កម្មវិធី", "Event record usage") : copy("ការប្រើប្រាស់កំណត់ត្រាភ្ញៀវ", "Guest record usage")} max={quota.limit} value={Math.min(quota.used, quota.limit)} />}<small>{quota.remaining == null ? copy("គ្មានកំណត់", "Unlimited") : `${quota.remaining} ${copy("នៅសល់", "remaining")}`}</small></div>)}</section>;
+  return <main className={`workspace-page pkg-page ${contextual ? 'is-contextual' : ''}`} lang={lang}>
+    <header className="workspace-heading pkg-page-heading">
+      <div><h1>{contextual ? copy('កញ្ចប់សម្រាប់តម្រូវការរបស់អ្នក','Plans for what you need') : copy("ជ្រើសរើសកញ្ចប់សេវាកម្ម", "A plan for your next celebration")}</h1>
+      {contextual && <p>{copy('ប្រៀបធៀបកញ្ចប់ដែលរួមបញ្ចូលមុខងារដែលអ្នកត្រូវការ។','Compare plans that include the feature you need.')}</p>}</div>
+      {contextual && <Link className="workspace-button pkg-return" to={returnTo}><ArrowLeft size={16} aria-hidden="true"/>{copy('ត្រឡប់ទៅការងាររបស់អ្នក','Return to your work')}</Link>}
     </header>
-    {contextual && <section className="workspace-notice"><h2>{feature ? featureNames[feature][lang === 'en' ? 1 : 0] : quotaNames[resource][lang === 'en' ? 1 : 0]}</h2><p>{copy('បង្ហាញតែកញ្ចប់សាធារណៈដែលម៉ាស៊ីនមេបញ្ជាក់ថាគាំទ្រសកម្មភាពនេះ។ ការទូទាត់ដែលកំពុងរង់ចាំមិនបើកសិទ្ធិទេ។','Showing public packages with verified eligibility for this action. Pending payment does not unlock access.')}</p><Link className="workspace-button" to={returnTo}>{copy('ត្រឡប់ទៅការងាររបស់អ្នក','Return to your work')}</Link></section>}
+    {contextual && <section className="pkg-context"><span className="pkg-context-icon" aria-hidden="true">{feature==='ILLUSTRATED_VENUE_MAP' ? <MapPinned size={24}/> : <Sparkles size={24}/>}</span><div><span>{copy('កំពុងស្វែងរក','You’re exploring')}</span><h2>{feature ? featureNames[feature][lang === 'en' ? 1 : 0] : quotaNames[resource][lang === 'en' ? 1 : 0]}</h2></div>{!loading && !accountError && displayedPackages.length>0 && <ShieldCheck size={20} className="pkg-context-verified" aria-hidden="true"/>}</section>}
     {refreshing && !loading && <LoadingRegion label={copy("កំពុងធ្វើបច្ចុប្បន្នភាព…", "Refreshing…")} />}
     {(error || accountError) && <div className="workspace-notice" role="alert"><p>{error || accountError}</p><button className="workspace-button" onClick={load}>{copy("ទាញយកម្ដងទៀត", "Retry")}</button></div>}
     {!loading && <section className="pkg-current" aria-label={copy("កញ្ចប់បច្ចុប្បន្ន", "Current subscription")}>
       <ShieldCheck size={24} aria-hidden="true" /><div><span className="workspace-muted">{copy("កញ្ចប់បច្ចុប្បន្ន", "Current plan")}</span><strong>{current?.packagePlan ? current.packagePlan?.packageName || copy("កញ្ចប់សកម្ម", "Active plan") : copy("មិនអាចផ្ទៀងផ្ទាត់កញ្ចប់", "Plan could not be verified")}</strong>{current?.source === "DEMO_ADMIN_GRANT" && <small>{copy("សិទ្ធិសាកល្បងពីអ្នកគ្រប់គ្រង · មិនមែនការទូទាត់", "Administrator demo grant · nonrevenue")}</small>}</div>
       {current?.packagePlan ? <p>{current.expiresAt ? `${copy("ផុតកំណត់", "Expires")} ${dateLabel(current.expiresAt, lang)}` : (current.source === "CONFIGURED_FREE_PACKAGE" ? copy("កញ្ចប់ Free លំនាំដើម", "Default Free plan") : copy("កាលបរិច្ឆេទផុតកំណត់មិនបានបញ្ជាក់", "Expiry date not specified"))}</p> : <p>{copy("កញ្ចប់នឹងបើកដំណើរការក្រោយការទូទាត់ត្រូវបានផ្ទៀងផ្ទាត់។", "Your plan activates after payment has been verified.")}</p>}
     </section>}
-    {current?.quotas && <section className="workspace-section pkg-usage" aria-label={copy("ការប្រើប្រាស់", "Plan usage")}><h2>{copy("ការប្រើប្រាស់កញ្ចប់", "Your plan usage")}</h2>{Object.entries(current.quotas).map(([key, quota]) => <div key={key}><strong>{key === "invitations" ? copy("កម្មវិធី", "Events") : copy("កំណត់ត្រាភ្ញៀវ", "Guest records")}</strong><span>{quota.used} / {quota.limit ?? copy("គ្មានកំណត់", "Unlimited")}</span>{quota.limit != null && quota.limit > 0 && <progress aria-label={key === "invitations" ? copy("ការប្រើប្រាស់កម្មវិធី", "Event record usage") : copy("ការប្រើប្រាស់កំណត់ត្រាភ្ញៀវ", "Guest record usage")} max={quota.limit} value={Math.min(quota.used, quota.limit)} />}<small>{quota.remaining == null ? copy("គ្មានកំណត់", "Unlimited") : `${quota.remaining} ${copy("នៅសល់", "remaining")}`}</small></div>)}</section>}
+    {!contextual && usagePanel}
     <section className="pkg-grid" aria-label={copy("បញ្ជីកញ្ចប់សេវាកម្ម", "Available subscription plans")} aria-busy={loading}>
       {loading ? <CardGridSkeleton variant="pricing" label={copy("កំពុងទាញយកកញ្ចប់សេវាកម្ម…", "Loading subscription packages…")} /> : displayedPackages.map(plan => {
         const selected = current?.packagePlan && current.packagePlan?.code === plan.code;
         const pending = history.find(order => isPending(order) && order.packagePlan?.id === plan.id);
         const featured = plan.code?.toUpperCase() === "PRO";
         return <article className={`pkg-card ${featured ? "is-featured" : ""} ${target === plan.code?.toUpperCase() ? "is-targeted" : ""}`} key={plan.id}>
-          <div className="pkg-card-top"><span className="workspace-badge">{featured ? <Crown size={16} aria-hidden="true" /> : <Sparkles size={16} aria-hidden="true" />}{plan.packageName}</span>{selected && <span>{copy("កំពុងប្រើ", "Current")}</span>}</div>
+          <div className="pkg-card-top"><span className="pkg-plan-icon">{featured ? <Crown size={22} aria-hidden="true" /> : <Sparkles size={22} aria-hidden="true" />}</span>{selected ? <span>{copy("កំពុងប្រើ", "Current")}</span> : target === plan.code?.toUpperCase() && <span className="pkg-selected-badge">{copy('ជម្រើសរបស់អ្នក','Your selection')}</span>}</div>
           <h2>{plan.packageName}</h2><p className="pkg-description">{plan.description}</p>
           <div className="pkg-pricing"><strong>{money(plan.price, plan.currency, lang)}</strong><p>{plan.code === "FREE" ? copy("កញ្ចប់លំនាំដើម · មិនត្រូវការទូទាត់", "Default access · no checkout") : billingLabel(plan, copy)}</p></div>
           <ul className="pkg-features">
+            {feature && plan.eligibleFeatures?.includes(feature) && <Feature>{featureNames[feature][lang==='en'?1:0]}</Feature>}
             <Feature>{packageLimit(plan.maxInvitations, lang)} {copy("កម្មវិធី", "events")}</Feature>
             <Feature>{packageLimit(plan.maxGuestsPerInvitation ?? plan.maxGuests, lang)} {copy("កំណត់ត្រាភ្ញៀវក្នុងមួយកម្មវិធី", "guest records per event")}</Feature>
             {plan.premiumTemplatesEnabled && <Feature>{copy("សិទ្ធិប្រើគំរូ Premium", "Premium templates")}</Feature>}
@@ -180,6 +187,7 @@ export default function SubscriptionPackagesPage() {
         </article>;
       })}
     </section>
+    {contextual && usagePanel}
     {!loading && <PackageComparison plans={displayedPackages} lang={lang} copy={copy} />}
     {!loading && contextual && displayedPackages.length === 0 && <p role="status" className="workspace-notice">{copy('មិនមានជម្រើសកញ្ចប់ដែលអាចផ្ទៀងផ្ទាត់សម្រាប់សកម្មភាពនេះទេ។ សូមផ្ទុកឡើងវិញ ឬទាក់ទងជំនួយ។','No eligible package option could be verified for this action. Retry or contact support.')}</p>}
     {!loading && !error && packages.length === 0 && <p className="workspace-notice">{copy("មិនទាន់មានកញ្ចប់សេវាកម្ម។ សូមព្យាយាមម្ដងទៀតពេលក្រោយ។", "No plans are available. Please check again later.")}</p>}
@@ -192,7 +200,7 @@ export default function SubscriptionPackagesPage() {
         [copy("តើអាចបន្តការទូទាត់ដែលរង់ចាំបានទេ?", "Can I continue an existing payment?"), copy("អាច។ ចុចមើលការទូទាត់ក្នុងប្រវត្តិខាងលើ។ សូមពិនិត្យស្ថានភាពមុនបង្កើតការទូទាត់ថ្មី ឬផ្ទេរប្រាក់ម្ដងទៀត។", "Yes. Open the order in your history to check its status and continue an available payment link. Check before starting or paying another order.")],
       ].map(([question, answer]) => <details key={question}><summary>{question}</summary><p>{answer}</p></details>)}
     </section>
-    <Checkout checkout={checkout} saving={saving} copy={copy} lang={lang} onChange={setCheckout} onSubmit={createCheckout} onClose={() => { if (!saving) { setCheckout(null); load(); } }} />
+    <Checkout checkout={checkout} saving={saving} copy={copy} lang={lang} onChange={setCheckout} onSubmit={createCheckout} onRefresh={() => resume({ ...checkout, packagePlan: checkout.plan || checkout.packagePlan })} returnTo={contextual ? returnTo : '/app/events'} onClose={() => { if (!saving) { setCheckout(null); load(); } }} />
   </main>;
 }
 
@@ -205,25 +213,75 @@ function History({ history, lang, copy, resume }) {
     </>}
   </section>;
 }
-function Checkout({ checkout, saving, copy, lang, onChange, onSubmit, onClose }) {
+function Checkout({ checkout, saving, copy, lang, onChange, onSubmit, onRefresh, returnTo, onClose }) {
+  const nameInput = useRef(null), suffixInput = useRef(null), errorMessage = useRef(null);
+  const [checking, setChecking] = useState(false);
+  useEffect(() => {
+    if (!checkout?.validationError || checkout.stage !== 'details') return;
+    if (!checkout.payerName?.trim()) nameInput.current?.focus();
+    else if (!/^\d{3}$/.test(checkout.payerAccountLast3 || '')) suffixInput.current?.focus();
+    else errorMessage.current?.focus();
+  }, [checkout?.validationError, checkout?.stage, checkout?.payerName, checkout?.payerAccountLast3]);
   if (!checkout) return null;
-  const details = checkout.stage === "details";
-  return <Modal isOpen onClose={onClose} className="workspace-dialog pkg-checkout" size="md" title={details ? `${copy("ជាវកញ្ចប់", "Subscribe to")} ${checkout.plan?.packageName || ""}` : copy("ព័ត៌មានការទូទាត់", "Payment details")} subtitle={money(checkout.amount ?? checkout.plan?.price, checkout.currency ?? checkout.plan?.currency, lang)} closeOnBackdropClick={!saving} closeOnEscape={!saving}>
-    <p className="pkg-checkout-plan">{checkout.plan?.packageName} · {billingLabel(checkout.plan || {}, copy)}</p>
-    {details ? <form onSubmit={event => { event.preventDefault(); onSubmit(); }} noValidate>
-      <label htmlFor="payerNameInput">{copy("ឈ្មោះម្ចាស់គណនី ABA", "ABA account holder name")}<input id="payerNameInput" aria-label={copy("ឈ្មោះម្ចាស់គណនី ABA / ABA Account Holder Name", "ABA Account Holder Name")} autoComplete="name" autoFocus value={checkout.payerName} onChange={event => onChange(value => ({ ...value, payerName: event.target.value, validationError: "" }))} maxLength={120} placeholder={copy("ឈ្មោះក្នុងគណនី ABA របស់អ្នក", "Name shown in your ABA account")} aria-describedby="payer-help checkout-error" /></label>
-      <label htmlFor="payerLast3Input">{copy("លេខ ៣ ខ្ទង់ចុងក្រោយនៃគណនី ABA", "Last 3 digits of ABA account")}<input id="payerLast3Input" aria-label={copy("លេខ ៣ ខ្ទង់ចុងក្រោយនៃគណនី ABA / Last 3 digits of ABA account", "Last 3 digits of ABA account")} inputMode="numeric" value={checkout.payerAccountLast3} onChange={event => onChange(value => ({ ...value, payerAccountLast3: event.target.value.replace(/\D/g, "").slice(0, 3), validationError: "" }))} maxLength={3} placeholder="247" aria-describedby="payer-help checkout-error" /></label>
-      <p id="payer-help" className="workspace-muted">{copy("ប្រើគណនី ABA ដូចគ្នាពេលទូទាត់។ កញ្ចប់នៅមិនទាន់សកម្ម រហូតដល់ការទូទាត់ត្រូវបានផ្ទៀងផ្ទាត់។", "Pay using the same ABA account. Your plan stays pending until payment is verified.")}</p>
-      {checkout.validationError && <p id="checkout-error" role="alert">{checkout.validationError}</p>}
-      <div className="pkg-checkout-actions"><button type="button" className="workspace-button" disabled={saving} onClick={onClose}>{copy("បោះបង់", "Cancel")}</button><button type="submit" className="workspace-button primary" disabled={saving} aria-label={copy("បន្តទៅ ABA PayWay / Continue to ABA PayWay", "Continue to ABA PayWay")}>{saving ? copy("កំពុងរៀបចំ…", "Creating order…") : copy("បន្តទៅ ABA PayWay", "Continue to ABA PayWay")}</button></div>
-    </form> : <div className="pkg-checkout-status">
-      <dl><div><dt>{copy("លេខកូដ", "Order")}</dt><dd>{checkout.orderCode}</dd></div><div><dt>{copy("ស្ថានភាព", "Status")}</dt><dd><span className={`pkg-status ${checkout.stage}`}>{statusLabel(checkout, copy)}</span></dd></div></dl>
-      <p role="status">{checkout.stage === "success" ? copy("កញ្ចប់ត្រូវបានបើកដំណើរការដោយជោគជ័យ។", "Subscription activated successfully.") : checkout.stage === "review" ? copy("ត្រូវការអ្នកគ្រប់គ្រងពិនិត្យស្ថានភាពទូទាត់។", "Payment status needs administrator review.") : checkout.stage === "expired" ? copy("ការទូទាត់នេះផុតកំណត់។ សូមពិនិត្យប្រវត្តិមុនបង្កើតការទូទាត់ថ្មី។", "This order has expired. Check your history before starting another payment.") : checkout.stage === "failed" ? copy("ការទូទាត់នេះមិនបានបញ្ចប់។ សូមពិនិត្យស្ថានភាពមុនព្យាយាមម្ដងទៀត។", "This order did not complete. Check its status before retrying.") : copy("កំពុងរង់ចាំការបញ្ជាក់ការទូទាត់។ ការផ្ញើព័ត៌មានមិនធ្វើឱ្យកញ្ចប់សកម្មភ្លាមៗទេ។", "Waiting for payment confirmation. Submitting payer details does not activate your plan.")}</p>
-      {checkout.stage === "review" && lang !== "en" && <p>ការទូទាត់ត្រូវការការពិនិត្យពីអ្នកគ្រប់គ្រង។</p>}
-      {checkout.stage === "success" && lang !== "en" && <p>កញ្ចប់សេវាកម្មត្រូវបានបើកដំណើរការ។</p>}
-      {checkout.validationError && <p role="alert">{checkout.validationError}</p>}
-      {checkout.paymentUrl && checkout.stage === "waiting" && <a className="workspace-button primary" href={checkout.paymentUrl} target="_blank" rel="noreferrer">ABA PayWay <ExternalLink size={18} aria-hidden="true" /></a>}
-      <button className="workspace-button" onClick={onClose}>{copy("បិទ", "Close")}</button>
-    </div>}
+  const details = checkout.stage === 'details', success = checkout.stage === 'success';
+  const grant = ['grant', 'grant-ended'].includes(checkout.stage);
+  const waiting = checkout.stage === 'waiting', reviewing = checkout.stage === 'review';
+  const terminal = ['expired', 'failed'].includes(checkout.stage);
+  const paid = checkout.paymentStatus === 'PAID';
+  const activeStep = details ? 0 : paid ? 2 : 1;
+  const title = details ? `${copy('ជាវកញ្ចប់', 'Subscribe to')} ${checkout.plan?.packageName || ''}` : copy('ព័ត៌មានការទូទាត់', 'Payment details');
+  const invalidName = Boolean(checkout.validationError && !checkout.payerName?.trim());
+  const invalidSuffix = Boolean(checkout.validationError && !/^\d{3}$/.test(checkout.payerAccountLast3 || ''));
+  const headline = success ? copy('កញ្ចប់របស់អ្នករួចរាល់ហើយ', 'Your plan is ready')
+    : reviewing ? copy('យើងកំពុងពិនិត្យការទូទាត់របស់អ្នក', 'We’re reviewing your payment')
+    : checkout.stage === 'expired' ? copy('ការទូទាត់នេះផុតកំណត់ហើយ', 'This payment window has ended')
+    : checkout.stage === 'failed' ? copy('ការទូទាត់មិនបានបញ្ចប់', 'Payment wasn’t completed')
+    : grant ? copy('សិទ្ធិពីអ្នកគ្រប់គ្រង', 'Administrator access')
+    : copy('បន្តការទូទាត់តាម ABA', 'Complete your payment with ABA');
+  const message = success ? copy('កញ្ចប់ត្រូវបានបើកដំណើរការដោយជោគជ័យ។', 'Subscription activated successfully.')
+    : reviewing ? copy('ត្រូវការអ្នកគ្រប់គ្រងពិនិត្យស្ថានភាពទូទាត់។', 'Payment status needs administrator review.')
+    : checkout.stage === 'expired' ? copy('ការទូទាត់នេះផុតកំណត់។ សូមពិនិត្យប្រវត្តិមុនបង្កើតការទូទាត់ថ្មី។', 'This order has expired. Check your history before starting another payment.')
+    : checkout.stage === 'failed' ? copy('ការទូទាត់នេះមិនបានបញ្ចប់។ សូមពិនិត្យស្ថានភាពមុនព្យាយាមម្ដងទៀត។', 'This order did not complete. Check its status before retrying.')
+    : grant ? copy('សិទ្ធិសាកល្បងពីអ្នកគ្រប់គ្រង មិនមែនជាការទូទាត់ទេ។', 'Administrator demo access is not a payment.')
+    : copy('កំពុងរង់ចាំការបញ្ជាក់ការទូទាត់។ ការផ្ញើព័ត៌មានមិនធ្វើឱ្យកញ្ចប់សកម្មភ្លាមៗទេ។', 'Waiting for payment confirmation. Submitting payer details does not activate your plan.');
+  const StatusIcon = success ? CheckCircle2 : terminal ? AlertCircle : grant ? ShieldCheck : Clock3;
+  const refresh = async () => { setChecking(true); try { await onRefresh(); } finally { setChecking(false); } };
+  const expiry = checkout.expiresAt && Number.isFinite(new Date(checkout.expiresAt).getTime()) ? new Date(checkout.expiresAt) : null;
+  return <Modal isOpen onClose={onClose} showHeader={false} ariaLabel={title} initialFocusRef={nameInput} className="workspace-dialog pkg-checkout" size="lg" closeOnBackdropClick={!saving} closeOnEscape={!saving}
+    footer={<div className="pkg-checkout-actions">
+      {details ? <><button type="button" className="workspace-button" disabled={saving} onClick={onClose}>{copy('បោះបង់', 'Cancel')}</button><button type="submit" form="package-checkout-form" className="workspace-button primary" disabled={saving} aria-label={copy('បន្តទៅ ABA PayWay / Continue to ABA PayWay', 'Continue to ABA PayWay')}>{saving ? <><RefreshCw size={17} aria-hidden="true"/>{copy('កំពុងរៀបចំ…', 'Creating order…')}</> : <>{copy('បន្តទៅ ABA PayWay', 'Continue to ABA PayWay')}<ArrowRight size={17} aria-hidden="true"/></>}</button></>
+        : success ? <Link className="workspace-button primary" to={returnTo} onClick={onClose}>{copy('ត្រឡប់ទៅការងាររបស់អ្នក', 'Return to your work')}<ArrowRight size={17} aria-hidden="true"/></Link>
+        : <><button type="button" className="workspace-button" onClick={onClose}>{terminal ? copy('មើលកញ្ចប់សេវាកម្ម', 'Back to plans') : copy('បិទ', 'Close')}</button>{waiting && checkout.paymentUrl && <a className="workspace-button primary" href={checkout.paymentUrl} target="_blank" rel="noreferrer">{copy('បើក ABA PayWay', 'Open ABA PayWay')}<ExternalLink size={17} aria-hidden="true"/></a>}</>}
+    </div>}>
+    <header className="pkg-checkout-heading"><span className="pkg-checkout-mark" aria-hidden="true"><LockKeyhole size={21}/></span><h2>{title}</h2><button type="button" className="pkg-close" onClick={onClose} disabled={saving} aria-label={copy('បិទប្រអប់', 'Close modal')}><X size={20} aria-hidden="true"/></button></header>
+    {!grant && <ol className="pkg-checkout-steps" aria-label={copy('ជំហាននៃការជាវកញ្ចប់', 'Package purchase progress')}>
+      {[copy('ព័ត៌មាន', 'Details'),copy('ទូទាត់', 'Payment'),copy('បើកសិទ្ធិ', 'Activation')].map((label,index)=>{
+        const complete = success || (index === 0 && Boolean(checkout.orderCode)) || (index === 1 && paid);
+        return <li key={label} data-complete={complete || undefined} aria-current={!success && index===activeStep?'step':undefined}><span aria-hidden="true">{complete?<Check size={15}/>:index+1}</span><strong>{label}</strong></li>;
+      })}
+    </ol>}
+    <div className="pkg-checkout-layout">
+      <aside className="pkg-order-summary" aria-label={copy('សង្ខេបការជាវកញ្ចប់', 'Order summary')}>
+        <span className="pkg-summary-icon" aria-hidden="true"><Crown size={24}/></span><h3>{checkout.plan?.packageName || checkout.packagePlan?.packageName}</h3>
+        <p className="pkg-order-term">{billingLabel(checkout.plan || checkout.packagePlan || {}, copy)}</p>
+        <dl><div><dt>{grant ? copy('សិទ្ធិប្រើប្រាស់','Access') : success ? copy('ចំនួនបានទូទាត់','Amount paid') : terminal ? copy('តម្លៃការជាវ','Order amount') : paid ? copy('ចំនួនទូទាត់','Payment amount') : copy('សរុបត្រូវបង់', 'Total to pay')}</dt><dd className="pkg-order-total">{grant ? copy('មិនត្រូវការទូទាត់', 'No payment required') : money(checkout.amount ?? checkout.plan?.price, checkout.currency ?? checkout.plan?.currency, lang)}</dd></div></dl>
+        {!grant && <span className="pkg-order-currency">{checkout.currency ?? checkout.plan?.currency}</span>}
+        {checkout.orderCode && <div className="pkg-order-reference"><span>{copy('លេខកូដ', 'Order')}</span><strong>{checkout.orderCode}</strong></div>}
+        <p className="pkg-checkout-trust"><ShieldCheck size={16} aria-hidden="true"/>{grant ? copy('សិទ្ធិផ្ដល់ដោយអ្នកគ្រប់គ្រង', 'Access granted by an administrator') : success ? copy('ការទូទាត់ត្រូវបានផ្ទៀងផ្ទាត់','Payment verified') : copy('សិទ្ធិបើកក្រោយការផ្ទៀងផ្ទាត់ការទូទាត់', 'Access starts after payment verification')}</p>
+      </aside>
+      {details ? <form id="package-checkout-form" className="pkg-payer-form" onSubmit={event=>{event.preventDefault();onSubmit();}} noValidate aria-busy={saving}>
+        <h3>{copy('ព័ត៌មានអ្នកទូទាត់', 'Your payment details')}</h3><p className="pkg-form-intro">{copy('ប្រើព័ត៌មានពីគណនី ABA ដែលអ្នកនឹងប្រើទូទាត់។', 'Use the ABA account you’ll pay from.')}</p>
+        <label htmlFor="payerNameInput">{copy('ឈ្មោះម្ចាស់គណនី ABA', 'ABA account holder name')}<input ref={nameInput} id="payerNameInput" required aria-label={copy('ឈ្មោះម្ចាស់គណនី ABA / ABA Account Holder Name', 'ABA Account Holder Name')} autoComplete="name" value={checkout.payerName} onChange={event=>onChange(value=>({...value,payerName:event.target.value,validationError:''}))} maxLength={120} placeholder={copy('ឈ្មោះក្នុងគណនី ABA របស់អ្នក', 'Name shown in your ABA account')} disabled={saving} aria-invalid={invalidName || undefined} aria-describedby={checkout.validationError?'payer-help checkout-error':'payer-help'}/></label>
+        <label htmlFor="payerLast3Input">{copy('លេខ ៣ ខ្ទង់ចុងក្រោយនៃគណនី ABA', 'Last 3 digits of ABA account')}<input ref={suffixInput} id="payerLast3Input" required aria-label={copy('លេខ ៣ ខ្ទង់ចុងក្រោយនៃគណនី ABA / Last 3 digits of ABA account', 'Last 3 digits of ABA account')} inputMode="numeric" autoComplete="off" className="pkg-account-suffix" value={checkout.payerAccountLast3} onChange={event=>onChange(value=>({...value,payerAccountLast3:event.target.value.replace(/\D/g,'').slice(0,3),validationError:''}))} maxLength={3} placeholder="247" disabled={saving} aria-invalid={invalidSuffix || undefined} aria-describedby={checkout.validationError?'payer-help checkout-error':'payer-help'}/></label>
+        <p id="payer-help" className="pkg-field-help">{copy('ត្រូវការតែ ៣ ខ្ទង់ចុងក្រោយប៉ុណ្ណោះ។', 'Only the last 3 digits are needed.')}</p>
+        {checkout.validationError && <p id="checkout-error" ref={errorMessage} tabIndex={-1} className="pkg-checkout-error" role="alert"><AlertCircle size={16} aria-hidden="true"/>{checkout.validationError}</p>}
+      </form> : <section className="pkg-checkout-status" data-stage={checkout.stage} aria-label={copy('ស្ថានភាពការទូទាត់', 'Payment status')}>
+        <span className="pkg-state-icon" aria-hidden="true"><StatusIcon size={30}/></span><h3>{headline}</h3><span className={`pkg-status ${checkout.stage}`}>{statusLabel(checkout, copy)}</span><p role="status">{message}</p>
+        {waiting && expiry && <p className="pkg-payment-deadline">{copy('សុពលភាពការទូទាត់ដល់', 'Payment window ends')} <time dateTime={checkout.expiresAt}>{new Intl.DateTimeFormat(lang==='en'?'en-GB':'km-KH',{dateStyle:'medium',timeStyle:'short'}).format(expiry)}</time></p>}
+        {checkout.validationError && <p className="pkg-checkout-error" role="alert">{checkout.validationError}</p>}
+        {(waiting || reviewing) && <button type="button" className="pkg-refresh-status" onClick={refresh} disabled={checking}><RefreshCw size={16} aria-hidden="true"/>{checking ? copy('កំពុងពិនិត្យ…', 'Checking…') : copy('ពិនិត្យស្ថានភាពទូទាត់', 'Check payment status')}</button>}
+        {terminal && <Link className="pkg-status-support" to="/contact" onClick={onClose}>{copy('ទាក់ទងជំនួយ', 'Contact support')}</Link>}
+      </section>}
+    </div>
   </Modal>;
 }
