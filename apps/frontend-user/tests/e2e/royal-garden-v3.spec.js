@@ -62,7 +62,7 @@ test('catalog: supplied film loads after click, plays inline without a dialog/fo
   await skip(page); expect(await bgNode.evaluate(node => node.isConnected)).toBe(true); await capture(page, 'information', info);
   const background = page.locator('.rg-information-background'); const before = await background.boundingBox();
   await page.locator('.rg-content-scroll').evaluate(node => node.scrollTo({ top: 850, behavior: 'instant' })); const after = await background.boundingBox(); expect(after.y).toBe(before.y);
-  expect(await page.locator('.rg-content-scroll').evaluate(node => node.scrollTop)).toBeGreaterThan(0); expect(await page.evaluate(() => window.scrollY)).toBe(0); await expect(background).toHaveCSS('border-image-repeat', 'stretch repeat'); await expect(page.locator('#rg-schedule .kp-timeline li')).toHaveCount(9);
+  expect(await page.locator('.rg-content-scroll').evaluate(node => node.scrollTop)).toBeGreaterThan(0); expect(await page.evaluate(() => window.scrollY)).toBe(0); await expect(background).toHaveCSS('border-image-repeat', 'stretch repeat'); await expect(page.locator('#rg-schedule .kp-timeline li')).toHaveCount(4);
 });
 
 test('hosted: authorized protected film completes, errors recover, and guest text stays live', async ({ page }, info) => {

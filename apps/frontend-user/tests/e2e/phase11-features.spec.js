@@ -15,39 +15,35 @@ async function section(page, tab, key) {
   await page.locator(`[data-studio-tab="${tab}"]`).click();
   await page.locator(`[data-studio-section="${key}"] details`).evaluate(node => { node.open = true; });
 }
-test('Premium diagram drag, keyboard, layer edits, undo, export and reopen use saved structured data', async ({ page }, info) => {
+async function openMap(page) {
+  await page.locator('.pe-lang-pill-btn').nth(1).click();
+  await page.locator('[data-map-entry]').getByRole('button', { name:'Edit map',exact:true }).click();
+  await expect(page.getByRole('dialog', { name:'Illustrated map designer' })).toBeVisible();
+}
+test('Premium diagram drag, keyboard, layer edits, undo, export and reopen use saved structured data', async ({ page }) => {
   const { events } = await setup(page);
-  await section(page, 'scheduleVenue', 'venue');
-  await page.getByRole('checkbox', { name: 'Drag elements (turn off to scroll)', exact: true }).check();
-  await page.getByLabel('Show diagram publicly').check();
-  await page.getByLabel('Map description (km)').fill('Fictional venue route illustration');
-  await page.getByRole('button', { name: 'Add element', exact: true }).click();
-  await page.getByLabel('Element label (km)').fill('Our venue');
-  const canvas = page.locator('.studio-map-stage svg');
-  await canvas.focus(); await canvas.press('ArrowRight');
-  await expect(page.getByLabel('x', { exact: true })).toHaveValue('0.525');
-  const node = canvas.locator('[data-map-node]').first(); const box = await node.boundingBox();
-  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2); await page.mouse.down(); await page.mouse.move(box.x + box.width / 2 + 45, box.y + box.height / 2 + 20, { steps: 5 }); await page.mouse.up();
-  expect(Number(await page.getByLabel('x', { exact: true }).inputValue())).toBeGreaterThan(.525);
-  await page.getByRole('button', { name: 'Duplicate element' }).click();
-  await expect(page.locator('.studio-map-layers button')).toHaveCount(2);
-  await page.getByRole('button', { name: 'Undo design', exact: true }).click();
-  await expect(page.locator('.studio-map-layers button')).toHaveCount(1);
-  await page.getByRole('button', { name: 'Redo design', exact: true }).click();
-  await expect(page.locator('.studio-map-layers button')).toHaveCount(2);
-  const download = page.waitForEvent('download'); await page.getByRole('button', { name: 'Export safe SVG' }).click();
-  const asset = await download; const bytes = await fs.readFile(await asset.path(), 'utf8');
-  expect(bytes).toContain('Our venue'); expect(bytes).not.toMatch(/<script|onpointer|data-editor-only/);
-  await page.getByRole('button', { name: 'Save', exact: true }).click();
-  await expect(page.locator('.studio-save-status')).toHaveAttribute('data-phase', 'saved');
-  const saved = JSON.parse(events.get(101).contentJson).illustratedMap;
-  expect(saved.nodes).toHaveLength(2); expect(saved.version).toBe(1);
-  await page.reload(); await section(page, 'scheduleVenue', 'venue');
-  await expect(page.locator('.studio-map-layers button')).toHaveCount(2);
-  const results = await new AxeBuilder({ page }).include('.studio-map-stage').include('.studio-map-layers').withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();
-  expect(results.violations).toEqual([]);
-  if (info.project.name === 'chromium') { await page.frameLocator('iframe').locator('.kc-root').waitFor(); await page.getByRole('region', { name: 'Illustrated venue map editor', exact: true }).scrollIntoViewIfNeeded(); await fs.mkdir('../../docs/phase11/evidence/after', { recursive: true }); await page.screenshot({ path: '../../docs/phase11/evidence/after/map-editor-1440.png' }); }
+  await section(page,'scheduleVenue','venue'); await openMap(page);
+  await page.getByLabel('English directions note').fill('Fictional venue route illustration');
+  await page.getByRole('button',{name:'Landmarks',exact:true}).click();
+  await page.getByRole('button',{name:'Destination pin',exact:true}).click();
+  await page.getByLabel('English label',{exact:true}).fill('Our venue');
+  const canvas=page.locator('.map-canvas-sheet svg');await canvas.focus();await canvas.press('ArrowRight');
+  await expect(page.getByLabel('Position X',{exact:true})).toHaveValue('0.505');
+  const node=canvas.locator('[data-map-node] > rect[data-editor-only]').first(),box=await node.boundingBox();
+  await page.mouse.move(box.x+box.width/2,box.y+box.height/2);await page.mouse.down();await page.mouse.move(box.x+box.width/2+45,box.y+box.height/2+20,{steps:5});await page.mouse.up();
+  expect(Number(await page.getByLabel('Position X',{exact:true}).inputValue())).toBeGreaterThan(.505);
+  await page.getByRole('button',{name:'Duplicate',exact:true}).click();await expect(page.locator('.map-layer-list button')).toHaveCount(2);
+  await page.getByRole('button',{name:'Undo design',exact:true}).click();await expect(page.locator('.map-layer-list button')).toHaveCount(1);
+  await page.getByRole('button',{name:'Redo design',exact:true}).click();await expect(page.locator('.map-layer-list button')).toHaveCount(2);
+  const pending=page.waitForEvent('download');await page.getByRole('button',{name:'SVG',exact:true}).click();const file=await pending,text=await fs.readFile(await file.path(),'utf8');
+  expect(text).toContain('Our venue');expect(text).not.toMatch(/<script|onpointer|data-editor-only/);
+  await page.getByRole('button',{name:'Save design',exact:true}).click();await expect(page.locator('.map-save-state')).toHaveText('Saved to server');
+  expect(JSON.parse(events.get(101).contentJson).illustratedMap).toMatchObject({version:2});
+  await page.getByRole('button',{name:'Close designer',exact:true}).click();await page.reload();await section(page,'scheduleVenue','venue');await openMap(page);
+  await expect(page.locator('.map-layer-list button')).toHaveCount(2);
+  const axe=await new AxeBuilder({page}).include('.map-designer-modal').withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();expect(axe.violations).toEqual([]);
 });
+
 test('family layout, custom host and decorative monogram retain canonical identities', async ({ page }, info) => {
   const { events } = await setup(page);
   await section(page, 'eventInformation', 'family');
@@ -66,16 +62,16 @@ test('family layout, custom host and decorative monogram retain canonical identi
 });
 test('unentitled Studio has no Premium canvas or monogram activation', async ({ page }) => {
   await setup(page, false); await section(page, 'scheduleVenue', 'venue');
-  await expect(page.locator('.studio-map-stage')).toHaveCount(0);
+  await expect(page.locator('.map-designer-modal')).toHaveCount(0);
   await section(page, 'designCover', 'cover'); await expect(page.getByLabel('Enable monogram')).toHaveCount(0);
 });
 
 test('native touch moves a diagram node and cancellation preserves the last committed position', async ({ page, browserName }) => {
   test.skip(browserName !== 'chromium', 'Native touch injection uses Chromium CDP; other engines cover pointer and keyboard.');
   await setup(page); await section(page, 'scheduleVenue', 'venue');
-  await page.getByRole('checkbox', { name: 'Drag elements (turn off to scroll)', exact: true }).check();
-  await page.getByRole('button', { name: 'Add element', exact: true }).click();
-  const node = page.locator('.studio-map-stage [data-map-node]').first();
+  await openMap(page); await page.getByRole('button',{name:'Landmarks',exact:true}).click();
+  await page.getByRole('button', { name: 'Destination pin', exact: true }).click();
+  const node = page.locator('.map-canvas-sheet [data-map-node] > rect[data-editor-only]').first();
   await node.scrollIntoViewIfNeeded();
   const box = await node.boundingBox();
   const client = await page.context().newCDPSession(page);
@@ -84,12 +80,12 @@ test('native touch moves a diagram node and cancellation preserves the last comm
   await client.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [start] });
   await client.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: start.x + 45, y: start.y }] });
   await client.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
-  expect(Number(await page.getByLabel('x', { exact: true }).inputValue())).toBeGreaterThan(.5);
-  const committed = await page.getByLabel('x', { exact: true }).inputValue();
+  expect(Number(await page.getByLabel('Position X', { exact: true }).inputValue())).toBeGreaterThan(.5);
+  const committed = await page.getByLabel('Position X', { exact: true }).inputValue();
   const nextBox = await node.boundingBox();
   const next = { x: Math.round(nextBox.x + nextBox.width / 2), y: Math.round(nextBox.y + nextBox.height / 2) };
   await client.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [next] });
   await client.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: next.x + 30, y: next.y }] });
   await client.send('Input.dispatchTouchEvent', { type: 'touchCancel', touchPoints: [] });
-  await expect(page.getByLabel('x', { exact: true })).toHaveValue(committed);
+  await expect(page.getByLabel('Position X', { exact: true })).toHaveValue(committed);
 });

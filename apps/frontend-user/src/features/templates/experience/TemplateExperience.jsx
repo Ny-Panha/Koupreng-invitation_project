@@ -129,6 +129,8 @@ function WeddingTemplateExperience({
             ...baseContent,
             languageMode: liveData.languageMode ?? baseContent.languageMode,
             ...invitationFeatureFields(liveData),
+            isTemplateDemo: false,
+            illustratedMap: liveData.illustratedMap ?? null,
             studioStyle: liveData.studioStyle || baseContent.studioStyle,
             fontKhmer: liveData.fontKhmer !== undefined ? liveData.fontKhmer : baseContent.fontKhmer,
             fontLatin: liveData.fontLatin !== undefined ? liveData.fontLatin : baseContent.fontLatin,

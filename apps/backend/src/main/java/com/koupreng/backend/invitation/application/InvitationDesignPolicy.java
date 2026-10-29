@@ -83,16 +83,41 @@ public class InvitationDesignPolicy {
         number(node, "size", 60, 180);
     }
     private void validateMap(JsonNode node) {
-        version(node); option(node, "aspectRatio", Set.of("landscape", "portrait", "square")); option(node, "theme", Set.of("ivory", "ink", "rose"));
+        if (!node.isObject() || !node.path("version").isIntegralNumber()
+                || !Set.of(1, 2).contains(node.path("version").asInt()) || !node.path("enabled").isBoolean()) throw invalid();
+        boolean v2 = node.path("version").asInt() == 2;
+        option(node, "aspectRatio", Set.of("landscape", "portrait", "square"));
+        option(node, "theme", v2 ? Set.of("ivory", "ink", "rose", "royal-gold", "botanical", "royal-blue") : Set.of("ivory", "ink", "rose"));
         localizedText(node.path("description"), 1500);
+        if (v2 && node.has("settings")) {
+            var settings = node.path("settings");
+            if (!settings.isObject()) throw invalid();
+            settings.fieldNames().forEachRemaining(key -> {
+                if (!Set.of("showLegend", "showDirectionsButton").contains(key) || !settings.path(key).isBoolean()) throw invalid();
+            });
+        }
         var nodes = node.path("nodes"); if (!nodes.isArray() || nodes.size() > 80) throw invalid();
         Set<String> ids = new java.util.HashSet<>();
         for (var item : nodes) {
             if (!item.isObject()) throw invalid(); string(item, "id", 100);
             if (item.path("id").asText().isBlank() || !ids.add(item.path("id").asText())) throw invalid();
-            option(item, "type", Set.of("destination", "road", "arrow", "label", "building", "intersection", "market", "school", "pagoda", "parking"));
+            var legacyTypes = Set.of("destination", "road", "arrow", "label", "building", "intersection", "market", "school", "pagoda", "parking");
+            if (!legacyTypes.contains(item.path("type").asText()) && (!v2 || !Set.of("curve", "t-junction", "roundabout", "venue", "house", "hotel", "restaurant", "hospital", "gas", "bank", "bridge", "landmark", "info", "decoration").contains(item.path("type").asText()))) throw invalid();
             number(item, "x", .05, .95); number(item, "y", .05, .95); number(item, "width", .02, .8); number(item, "height", .02, .8); number(item, "rotation", -180, 180);
             localizedText(item.path("label"), 150);
+            if (v2) {
+                if (item.has("color")) color(item, "color");
+                if (item.has("textColor")) color(item, "textColor");
+                if (item.has("labelBackground")) color(item, "labelBackground");
+                if (item.has("fontSize")) number(item, "fontSize", 12, 60);
+                if (item.has("labelX")) number(item, "labelX", -.3, .3);
+                if (item.has("labelY")) number(item, "labelY", -.3, .3);
+                if (item.has("labelRotation")) number(item, "labelRotation", -180, 180);
+                if (item.has("font")) option(item, "font", Set.of("KANTUMRUY", "MOUL", "SERIF"));
+                if (item.has("textAlign")) option(item, "textAlign", Set.of("start", "middle", "end"));
+                if (item.has("roadStyle")) option(item, "roadStyle", Set.of("lanes", "solid", "boundary"));
+                if (item.has("curvature")) number(item, "curvature", -1, 1);
+            }
         }
     }
     private void version(JsonNode node) {

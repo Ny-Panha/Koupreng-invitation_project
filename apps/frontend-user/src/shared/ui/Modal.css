@@ -1,3 +1,8 @@
+.k-modal-portal {
+  position: relative;
+  z-index: var(--z-modal-layer, 12000);
+}
+
 .k-modal-backdrop {
   position: fixed;
   inset: 0;

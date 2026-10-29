@@ -1,6 +1,7 @@
 import { invitationFeatureFields } from '../../shared/invitationFeatures';
 import { normalizeProgram } from "../../shared/program";
 import { eventPresentationFields } from '../../shared/eventPresentation';
+import { royalGardenDemoContent } from '../../shared/royalGardenDemo';
 import { normalizeInvitationLanguage } from "@/shared/i18n/invitationLanguage";
 /**
  * templateExperienceContent — builds the full content model for the shared
@@ -673,7 +674,7 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         24
     ) || computedInitials || "N & P";
 
-    return {
+    const result = {
         variant,
         amp: theme.amp,
         badge: theme.badge,
@@ -812,4 +813,5 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         rsvpDeadline: nonBlank(host.rsvp?.deadline),
         sections: templateSections,
     };
+    return royalGarden && !hasHostContent ? { ...result, ...royalGardenDemoContent(result) } : result;
 }

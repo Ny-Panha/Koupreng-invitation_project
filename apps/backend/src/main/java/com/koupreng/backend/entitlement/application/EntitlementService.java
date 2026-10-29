@@ -33,6 +33,12 @@ public class EntitlementService {
     public record Policy(String source, Set<Feature> features, Integer maxInvitations, Integer maxGuests,
                          Integer maxGuestsPerInvitation, Integer maxTeamMembers) { }
 
+    // Server-owned product benefits, applied only after activation of a valid snapshot.
+    // Template ownership and package price never imply design-tool access.
+    private static final Map<String, Set<Feature>> ACTIVATED_DESIGN_BENEFITS = Map.of(
+            "PRO", Set.of(Feature.ILLUSTRATED_VENUE_MAP),
+            "PREMIUM", Set.of(Feature.PRE_WEDDING_VIDEO, Feature.COUPLE_MONOGRAM, Feature.ILLUSTRATED_VENUE_MAP));
+
     private final SubscriptionRepository subscriptions;
     private final SubscriptionPackageRepository packages;
     private final UserTemplateAccessRepository purchases;
@@ -143,11 +149,7 @@ public class EntitlementService {
     public static Set<Feature> featuresForPackage(SubscriptionPackage plan, boolean activatedPurchase) {
         EnumSet<Feature> features = EnumSet.noneOf(Feature.class);
         // Resolve the purchased snapshot, never the browser's tier or a generic paid flag.
-        if (activatedPurchase && "PREMIUM".equals(plan.getCode())) {
-            features.add(Feature.PRE_WEDDING_VIDEO);
-            features.add(Feature.COUPLE_MONOGRAM);
-            features.add(Feature.ILLUSTRATED_VENUE_MAP);
-        }
+        if (activatedPurchase && plan.getCode() != null) features.addAll(ACTIVATED_DESIGN_BENEFITS.getOrDefault(plan.getCode(), Set.of()));
         if (plan.isPremiumTemplatesEnabled()) { features.add(Feature.PREMIUM_TEMPLATES); }
         if (plan.isQrInvitationsEnabled()) { features.add(Feature.QR_INVITATIONS); }
         if (plan.isQrCheckInEnabled()) { features.add(Feature.QR_CHECK_IN); }

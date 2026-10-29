@@ -5,7 +5,7 @@ import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/re
 import { MemoryRouter } from 'react-router-dom';
 import FamilyNames from './FamilyNames';
 import IllustratedMap from './IllustratedMap';
-import IllustratedMapEditor from '../../invitations/studio/IllustratedMapEditor';
+import IllustratedMapDesignerModal from '../../invitations/studio/IllustratedMapDesignerModal';
 import { COUPLE_LAYOUTS, safeDirections } from './invitationFeatures';
 import { WORDING_PRESETS, wordingPresetId, interpolateWording } from '../../invitations/studio/wordingPresets';
 import { TEMPLATES } from '../data/templatesData';
@@ -46,11 +46,11 @@ describe('portable invitation features', () => {
   });
   it('supports keyboard and numeric map edits and the existing history callbacks', () => {
     const onChange = vi.fn(), undo = vi.fn();
-    render(<IllustratedMapEditor value={diagram} locale="en" entitled onChange={onChange} onUndo={undo} onRedo={() => {}} />);
-    fireEvent.click(screen.getByRole('button', { name: '1. destination Venue' }));
+    render(<IllustratedMapDesignerModal value={diagram} locale="en" allowed onChange={onChange} onUndo={undo} onRedo={() => {}} />);
+    fireEvent.click(screen.getByRole('button', { name: '1. Venue' }));
     fireEvent.keyDown(screen.getByRole('img'), { key: 'ArrowRight' });
-    expect(onChange.mock.calls.at(-1)[0].nodes[0].x).toBe(.625);
-    fireEvent.change(screen.getByLabelText('rotation'), { target: { value: '999' } });
+    expect(onChange.mock.calls.at(-1)[0].nodes[0].x).toBe(.605);
+    fireEvent.change(screen.getByLabelText('Rotation', { exact: true }), { target: { value: '999' } });
     expect(onChange.mock.calls.at(-1)[0].nodes[0].rotation).toBe(180);
     fireEvent.click(screen.getByRole('button', { name: 'Undo design' })); expect(undo).toHaveBeenCalledOnce();
   });

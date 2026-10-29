@@ -25,31 +25,22 @@ async function download(page, button, format, info, name) {
   if (info.project.name === 'chromium') { await fs.mkdir('../../docs/phase12/evidence/exports', { recursive: true }); await fs.writeFile(`../../docs/phase12/evidence/exports/${name}.${format}`, bytes); }
 }
 
-test('original route presets confirm replacement, undo, fit, lock, save and export local Khmer', async ({ page }, info) => {
-  const { events } = await setup(page); await section(page, 'scheduleVenue', 'venue');
-  await page.getByLabel('Show diagram publicly').check(); await page.getByRole('button', { name: 'Apply diagram preset' }).click();
-  await expect(page.locator('.studio-map-layers button')).toHaveCount(5);
-  await page.locator('.studio-map-layers button').filter({ hasText: 'destination' }).click();
-  await page.getByLabel('Element label (km)').fill('ទីតាំងកម្មវិធីសាកល្បង');
-  await page.getByRole('button', { name: 'Apply diagram preset' }).click(); await page.locator('.k-confirm-dialog').getByRole('button', { name:'Cancel',exact:true }).click();
-  await expect(page.getByLabel('Element label (km)')).toHaveValue('ទីតាំងកម្មវិធីសាកល្បង');
-  await page.getByLabel('Diagram starting point').selectOption('landmarks');
-  await page.getByRole('button', { name: 'Apply diagram preset' }).click(); await page.locator('.k-confirm-dialog').getByRole('button', { name:'Confirm',exact:true }).click(); await page.getByRole('button', { name: 'Undo design', exact: true }).click();
-  await page.locator('.studio-map-layers button').filter({ hasText: 'destination' }).click();
-  await expect(page.getByLabel('Element label (km)')).toHaveValue('ទីតាំងកម្មវិធីសាកល្បង');
-  await page.getByLabel('Drag elements (turn off to scroll)').uncheck();
-  const canvas = page.locator('.studio-map-stage svg'); await canvas.focus(); await canvas.press('ArrowLeft');
-  const x = await page.getByLabel('x', { exact: true }).inputValue();
-  const element = canvas.locator('[data-map-node]').filter({ has: page.locator('text', { hasText: 'ទីតាំងកម្មវិធីសាកល្បង' }) });
-  const box = await element.boundingBox(); await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2); await page.mouse.down(); await page.mouse.move(box.x + box.width / 2 + 30, box.y + box.height / 2); await page.mouse.up();
-  await expect(page.getByLabel('x', { exact: true })).toHaveValue(x);
-  await page.getByLabel('Editor zoom').fill('2'); await page.getByRole('button', { name: 'Fit canvas' }).click(); await expect(page.getByLabel('Editor zoom')).toHaveValue('1');
-  await download(page, 'Export safe SVG', 'svg', info, 'venue-map'); await download(page, 'Export PNG', 'png', info, 'venue-map'); await download(page, 'Export WebP', 'webp', info, 'venue-map');
-  await page.getByRole('button', { name: 'Save', exact: true }).click(); await expect(page.locator('.studio-save-status')).toHaveAttribute('data-phase', 'saved');
-  expect(JSON.parse(events.get(101).contentJson).illustratedMap.nodes).toHaveLength(5);
-  await page.reload(); await section(page, 'scheduleVenue', 'venue'); await expect(page.locator('.studio-map-layers button')).toHaveCount(5);
-  const axe = await new AxeBuilder({ page }).include('.studio-map-stage').include('.studio-map-layers').withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze(); expect(axe.violations).toEqual([]);
-  if (info.project.name === 'chromium') { await fs.mkdir('../../docs/phase12/evidence/after', { recursive: true }); await page.getByRole('region', { name: 'Illustrated venue map editor' }).screenshot({ path: '../../docs/phase12/evidence/after/map-editor-1440.png' }); }
+test('original route presets confirm replacement, undo, fit, pan, save and export local Khmer', async ({ page }, info) => {
+  const { events }=await setup(page);await section(page,'scheduleVenue','venue');
+  await page.locator('.pe-lang-pill-btn').nth(1).click();await page.locator('[data-map-entry]').getByRole('button',{name:'Edit map',exact:true}).click();
+  await page.getByRole('button',{name:'Presets',exact:true}).click();await page.getByRole('button',{name:/Main road to venue/}).click();
+  await expect(page.locator('.map-layer-list button')).toHaveCount(5);await page.locator('.map-layer-list button').filter({hasText:'Event venue'}).click();
+  await page.getByLabel('អក្សរខ្មែរ',{exact:true}).fill('ទីតាំងកម្មវិធីសាកល្បង');
+  await page.getByRole('button',{name:/Main road to venue/}).click();await page.locator('.k-confirm-dialog').getByRole('button',{name:'Cancel',exact:true}).click();
+  await expect(page.getByLabel('អក្សរខ្មែរ',{exact:true})).toHaveValue('ទីតាំងកម្មវិធីសាកល្បង');
+  await page.getByRole('button',{name:/Landmark route/}).click();await page.locator('.k-confirm-dialog').getByRole('button',{name:'Confirm',exact:true}).click();await page.getByRole('button',{name:'Undo design',exact:true}).click();
+  await page.locator('.map-layer-list button').filter({hasText:'Event venue'}).click();await expect(page.getByLabel('អក្សរខ្មែរ',{exact:true})).toHaveValue('ទីតាំងកម្មវិធីសាកល្បង');
+  const canvas=page.locator('.map-canvas-sheet svg');await canvas.focus();await canvas.press('ArrowLeft');const x=await page.getByLabel('Position X',{exact:true}).inputValue();
+  await page.getByRole('button',{name:'Pan canvas',exact:true}).click();const box=await canvas.boundingBox();await page.mouse.move(box.x+50,box.y+50);await page.mouse.down();await page.mouse.move(box.x+80,box.y+50);await page.mouse.up();
+  await expect(page.getByLabel('Position X',{exact:true})).toHaveValue(x);await page.locator('.map-canvas-toolbar').getByRole('button',{name:'Zoom in',exact:true}).click();await page.getByRole('button',{name:'Fit canvas',exact:true}).click();await expect(page.locator('.map-canvas-toolbar output')).toHaveText('100%');
+  await download(page,'SVG','svg',info,'venue-map');await download(page,'PNG','png',info,'venue-map');await download(page,'WEBP','webp',info,'venue-map');
+  await page.getByRole('button',{name:'Save design',exact:true}).click();await expect(page.locator('.map-save-state')).toHaveText('Saved to server');expect(JSON.parse(events.get(101).contentJson).illustratedMap.nodes).toHaveLength(5);
+  const axe=await new AxeBuilder({page}).include('.map-designer-modal').withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();expect(axe.violations).toEqual([]);
 });
 
 test('monogram starting styles and local font exports preserve names', async ({ page }, info) => {

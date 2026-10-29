@@ -1,0 +1,32 @@
+/* Royal Garden V3.3: the existing information frame remains the outer boundary. */
+.tpl-royal-garden .rg-wedding-calendar { position:relative; container-type:inline-size; isolation:isolate; padding:clamp(12px,4cqi,26px); border:1px solid var(--rg-border); border-radius:120px 120px 18px 18px / 45px 45px 18px 18px; background:linear-gradient(150deg,color-mix(in srgb,var(--rg-gold-light) 8%,var(--rg-bg)),var(--rg-bg) 45%,color-mix(in srgb,var(--rg-gold) 5%,var(--rg-bg))); box-shadow:inset 0 0 0 5px color-mix(in srgb,var(--rg-bg) 80%,transparent); }
+.tpl-royal-garden .rg-wedding-calendar::before { content:'✧'; display:block; color:var(--rg-gold); font:26px/1.6 Georgia,serif; margin-bottom:8px; }
+.tpl-royal-garden .rg-calendar-kicker { display:block; color:var(--rg-muted); font:11px/2 var(--rg-body-font); letter-spacing:.08em; margin-bottom:8px; }
+.tpl-royal-garden .rg-wedding-calendar .rg-heading { margin-bottom:18px; }
+.tpl-royal-garden .rg-wedding-calendar .rg-heading h2 { color:var(--rg-gold); font-size:clamp(18px,6.5cqi,28px); line-height:1.9; }
+.tpl-royal-garden .rg-wedding-calendar .rg-divider { width:58%; margin-top:15px; }
+.tpl-royal-garden .rg-wedding-calendar .rg-calendar-date { color:var(--rg-ink); font-size:clamp(13px,4.7cqi,18px); line-height:2; }
+.tpl-royal-garden .rg-wedding-calendar .kp-countdown { width:100%; gap:clamp(6px,2.6cqi,15px); margin:26px auto 30px; max-width:420px; }
+.tpl-royal-garden .rg-wedding-calendar .kp-countdown-unit { background:radial-gradient(circle at 30% 20%,color-mix(in srgb,var(--rg-gold-light) 16%,var(--rg-bg)),var(--rg-bg) 70%); box-shadow:inset 0 0 0 4px var(--rg-bg),inset 0 0 0 5px color-mix(in srgb,var(--rg-gold) 35%,transparent); border:1px solid var(--rg-gold); padding:4px 1px; }
+.tpl-royal-garden .rg-wedding-calendar .kp-countdown-unit strong { color:var(--rg-gold); font-size:clamp(16px,7.7cqi,31px); line-height:1.65; font-variant-numeric:tabular-nums; letter-spacing:-.02em; }
+.tpl-royal-garden .rg-wedding-calendar .kp-countdown-unit span { color:var(--rg-ink); font-size:clamp(9px,3.3cqi,12px); line-height:1.9; }
+.tpl-royal-garden .rg-wedding-calendar .rg-month-calendar { border-top:1px solid var(--rg-border); padding-top:20px; margin:20px 0 0; }
+.tpl-royal-garden .rg-wedding-calendar .rg-month-navigation { gap:2px; }
+.tpl-royal-garden .rg-wedding-calendar .rg-month-navigation h3 { font-size:clamp(16px,5.5cqi,23px); }
+.tpl-royal-garden .rg-wedding-calendar .rg-month-navigation button { min-width:36px; width:36px; height:44px; flex-basis:36px; border-color:transparent; }
+.tpl-royal-garden .rg-wedding-calendar .rg-month-calendar table { border-spacing:0 6px; }
+.tpl-royal-garden .rg-wedding-calendar .rg-month-calendar th { padding:8px 0; font-size:clamp(10px,3.6cqi,14px); color:var(--rg-muted); }
+.tpl-royal-garden .rg-wedding-calendar .rg-month-calendar td button { min-width:22px; min-height:42px; font-size:clamp(12px,4.3cqi,18px); border-radius:50%; padding-bottom:9px; }
+.tpl-royal-garden .rg-wedding-calendar .rg-month-calendar td button[data-main] { box-shadow:0 2px 10px color-mix(in srgb,var(--rg-gold) 20%,transparent); }
+.tpl-royal-garden .rg-wedding-calendar .rg-selected-day { background:color-mix(in srgb,var(--rg-gold) 5%,transparent); border-radius:10px; padding:16px 10px; border-block:1px solid var(--rg-border); }
+.tpl-royal-garden .rg-wedding-calendar .rg-selected-day :is(p,h4) { font-size:clamp(12px,4.7cqi,17px); }
+.tpl-royal-garden .rg-wedding-calendar .rg-selected-day li { font-size:clamp(12px,4.2cqi,15px); grid-template-columns:minmax(42px,.65fr) minmax(0,2fr); gap:8px; }
+.tpl-royal-garden .rg-wedding-calendar .rg-calendar-export { margin-top:22px; gap:12px; }
+.tpl-royal-garden .rg-calendar-export .rg-button { min-width:0; width:100%; margin:0; min-height:54px; clip-path:none; border:1px solid var(--rg-border); border-radius:10px; box-shadow:none; text-shadow:none; background:var(--rg-gold); color:var(--rg-bg); padding:12px 8px; font:inherit; font-size:clamp(12px,4.5cqi,17px); }
+.tpl-royal-garden .rg-calendar-primary > span { display:grid; gap:2px; text-align:start; }
+.tpl-royal-garden .rg-calendar-primary strong { font-weight:600; line-height:1.8; }
+.tpl-royal-garden .rg-calendar-primary small { font-size:10px; line-height:1.8; }
+.tpl-royal-garden .rg-calendar-export .rg-calendar-secondary { background:transparent; color:var(--rg-ink); font-size:clamp(11px,4cqi,14px); min-height:44px; }
+.tpl-royal-garden .kp-illustrated-map { border:1px solid var(--rg-border); border-radius:14px; max-width:100%; overflow:hidden; }
+.tpl-royal-garden .kp-illustrated-map figcaption { text-align:start; font-size:12px; line-height:1.9; }
+.tpl-royal-garden .kp-illustrated-map figcaption ul { gap:6px 18px; }

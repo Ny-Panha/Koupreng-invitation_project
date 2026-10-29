@@ -1,0 +1,70 @@
+{
+  "demo-calendar-desktop.png": {
+    "bytes": 1079727,
+    "sha256": "5e8af4be7157a558b10fc59fe306e2f328b4945655616fd0b712aac9c7a26942"
+  },
+  "demo-calendar-mobile.png": {
+    "bytes": 461614,
+    "sha256": "3dbff8bb4c4034b29a461d8725b3ee387255dc40371146a7310304087127bce4"
+  },
+  "demo-cover-desktop.jpg": {
+    "bytes": 114021,
+    "sha256": "31992358f21dae4dd6f65e1f6859f65faf01df757797673831a1386c1ac0cd09"
+  },
+  "demo-cover-mobile.jpg": {
+    "bytes": 463605,
+    "sha256": "d37ac71d75e3a6ca155a627e46e251cc8c57cb93d4c547b1adaa6fd97b7fe0d5"
+  },
+  "designer-dark.jpg": {
+    "bytes": 85948,
+    "sha256": "e2601763d28b6c358b6897471fc854c34b8d4feaa727f094ef487172b2146bcf"
+  },
+  "designer-desktop.jpg": {
+    "bytes": 96668,
+    "sha256": "cf7ec24d9102fcbedad574d2a3b88d95af3a117a746c33dbe53342ce313b40ae"
+  },
+  "designer-mobile.jpg": {
+    "bytes": 27391,
+    "sha256": "ecffa3bb5c293e53073a48256646e88a02506e99829ff23439c30a7bb52a82e0"
+  },
+  "guest-calendar-mobile.jpg": {
+    "bytes": 79199,
+    "sha256": "80cdf13f8286bc03b18bf7bd3eac52d1f642e97dfec7e99b02c0ee8cc8a4199f"
+  },
+  "guest-map-desktop.jpg": {
+    "bytes": 139501,
+    "sha256": "a3448ce683e28c7409f9c86d34022d090534db1e21b399334518996ef2619480"
+  },
+  "locked-entry-mobile.jpg": {
+    "bytes": 29592,
+    "sha256": "717ac53dfa9d3c2b74a18c621fafc3efc7698ce2c367eba805073fe3404c13e5"
+  },
+  "performance.json": {
+    "bytes": 3906,
+    "sha256": "5af88be93bcd4f9fe2f89a2771d85011edfc37860bb9b573310809e2828e9d41"
+  },
+  "responsive-contact-sheet.jpg": {
+    "bytes": 611035,
+    "sha256": "174f48b470313180252836c40f21f192dac0bf2e9ff25144b83c67188f0e1662"
+  },
+  "test-results.json": {
+    "bytes": 24376,
+    "sha256": "7509f1b0ca662639cf2ed92b5e46b1e88437ef926e17689dc5747d2535ec3d58"
+  },
+  "upgrade-mobile.jpg": {
+    "bytes": 22095,
+    "sha256": "bf9693e0930ada189add0bdcdb4fa1d9ed4c642a4ffc4c4be8c41647002fa5ec"
+  },
+  "exports/venue-map.png": {
+    "bytes": 100240,
+    "sha256": "3eea8ee8f044f161e68572481c8554c29defd8e358a7f9ab3f057e740470f4d2"
+  },
+  "exports/venue-map.svg": {
+    "bytes": 219380,
+    "sha256": "2341d1be9ac85fb8d51e3f7f847c2cd81f98ec135ccebc154d4ee5aa3d548974"
+  },
+  "exports/venue-map.webp": {
+    "bytes": 28950,
+    "sha256": "c12c4e038db3053decc00d98cf16c6c6acc31637b23389e216ec39d5d881c3bb"
+  }
+}

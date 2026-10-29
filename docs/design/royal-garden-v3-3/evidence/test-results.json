@@ -1,0 +1,663 @@
+{
+  "auditedBase": "cf586813385471dc311d64ea840684441c52cf25",
+  "date": "2026-10-29",
+  "platform": "Windows Chromium",
+  "branch": "main",
+  "productionDeployment": false,
+  "unitAndIntegration": [
+    {
+      "command": "npm --prefix apps/frontend-user test -- --maxWorkers=2",
+      "passed": 1183,
+      "files": 161,
+      "durationSeconds": 84.96,
+      "exitCode": 0
+    },
+    {
+      "command": "npm --prefix apps/frontend-admin test -- --maxWorkers=2",
+      "passed": 128,
+      "files": 22,
+      "durationSeconds": 30.81,
+      "exitCode": 0
+    },
+    {
+      "command": "apps/backend/mvnw.cmd -f apps/backend/pom.xml test",
+      "discovered": 657,
+      "passed": 582,
+      "skipped": 75,
+      "failed": 0,
+      "errors": 0,
+      "durationSeconds": 162,
+      "exitCode": 0
+    },
+    {
+      "command": "apps/backend/mvnw.cmd -f apps/backend/pom.xml test -Dtest=RoyalGardenMapMySqlTests,InvitationDesignPolicyTests,EntitlementServiceTests,ArchitectureRulesTests",
+      "environment": "RUN_FLYWAY_INTEGRATION=true; FLYWAY_TEST_DB_* set to task-owned isolated loopback MySQL database",
+      "passed": 33,
+      "skipped": 0,
+      "realMySqlCases": 6,
+      "durationSeconds": 46.009,
+      "exitCode": 0,
+      "cleanup": "Task-owned isolated database removed; application database untouched by test runner",
+      "overlap": "27 unit/policy/architecture cases overlap the full backend suite"
+    },
+    {
+      "command": "apps/telegram-bot/.venv/Scripts/python.exe -m pytest apps/telegram-bot/tests",
+      "passed": 74,
+      "warnings": 1,
+      "durationSeconds": 2.31,
+      "exitCode": 0
+    }
+  ],
+  "staticChecks": {
+    "userLint": "passed",
+    "userProductionBuild": "passed",
+    "agentRouting": "passed",
+    "skillIntegrity": "passed; zero failures"
+  },
+  "playwright": {
+    "command": "playwright test tests/e2e/royal-garden-v33.spec.js tests/e2e/royal-garden-v33-visual.spec.js tests/e2e/royal-garden-v32.spec.js tests/e2e/royal-garden-v3.spec.js tests/e2e/royal-garden-catalog.spec.js tests/e2e/phase11-features.spec.js tests/e2e/phase12-studio.spec.js tests/e2e/next-studio-ux.spec.js --workers=2",
+    "passed": 90,
+    "skipped": 10,
+    "failed": 0,
+    "durationMinutes": 4.7,
+    "exitCode": 0,
+    "cases": [
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "six Studio tabs retain rendered mobile and desktop evidence (7.7s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "contextual Premium video offers, cancel, keyboard focus and responsive reflow retain the Studio draft (9.0s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "role revocation keeps mounted edits, disables mutation and offers recovery without an upsell (3.5s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "confirmation cancellation, honest failed save and one confirmed-save toast preserve authored data (5.0s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "family layout, custom host and decorative monogram retain canonical identities (3.9s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "unentitled Studio has no Premium canvas or monogram activation (3.1s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "Premium diagram drag, keyboard, layer edits, undo, export and reopen use saved structured data (11.9s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "native touch moves a diagram node and cancellation preserves the last committed position (4.9s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "monogram starting styles and local font exports preserve names (3.6s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "locale checklist opens and focuses missing venue wording without changing the account language (2.9s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "original route presets confirm replacement, undo, fit, pan, save and export local Khmer (9.4s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "inactive Royal stays out of selection and catalog failures offer retry and preview only (3.9s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "ACTIVE Royal is searchable in public catalog and Studio, previews the actual design, and preserves authored data on switching (5.7s)"
+      },
+      {
+        "result": "skipped",
+        "project": "desktop-chromium",
+        "test": "real local MySQL catalog reaches landing, browsing and responsive Studio without a catalog fixture"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "Premium denial and publication changes preserve the current template (2.8s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "catalog: supplied film loads after click, plays inline without a dialog/form, then reveals fixed information (4.0s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "unavailable video, absent photo, failed artwork, cleared lettering and long names stay usable (1.7s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "legacy calligraphy covers also use the inline film rather than a popup (2.5s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "hosted: authorized protected film completes, errors recover, and guest text stays live (8.3s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "reduced motion skips video, disables effects, and keeps keyboard access (1.2s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "Studio settings update the same iframe and survive save/reload/published rendering (11.1s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "refinement: new transparent foreground, shadow-free artwork control and larger inner scroll stay inside the frame (13.8s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "responsive references and scoped accessibility (9.8s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "refinement: lower film lettering, live date and two separated top controls across responsive canvases (13.9s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "repair: real public section contracts retain gift, private wishes and RSVP within the same shell (2.4s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "repair: short phones retain the complete artwork, safe portrait window and separate video footer (10.0s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "critical: language changes preserve the active film, authorized guest data and private RSVP wording (4.0s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "critical: immersive media and one inner scroll preserve the complete frame and reachable ending (3.6s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "compatibility: saved fixed-frame opt-out keeps the hosted ending reachable (3.7s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "soundtrack: one real song continues through locked video, language, duplicate completion and information (3.8s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "soundtrack: denied playback is retryable during video and guest-paused music stays paused after ended (4.2s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "RG32-09–14,19–20: selected days, program navigation, localized controls and export share the saved program (3.5s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "RG32-01–25: Studio edits canonical dates, two program days and dress code through preview, save, reload and publication (10.7s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "RG32-26–29: gift currency/enlargement and real RSVP form keep private wishes out of public content (5.0s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "RG32: Khmer authored content and numerals remain readable with the same machine dates (1.6s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "RG32: new guest sections pass scoped WCAG checks and empty optional destinations stay out of navigation (5.7s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "RG32-01: choosing Royal Garden from the Studio selector retains authored optional data (4.0s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "V33 visual baseline: map designer at 375px (2.0s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "RG32-30–34: fixed frame and all enabled sections fit nine responsive viewports; capture real browser evidence (15.9s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "V33 visual baseline: clean Royal Garden demo at 375px (1.4s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "V33 visual baseline: clean Royal Garden demo at 1440px (1.8s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "V33 visual baseline: map designer at 1440px (2.8s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "V33 preset replacement, undo/redo and unsaved modal confirmation (5.4s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "V33 map modal: V1 editing, pointer/keyboard, history, exports and save/reload/public synchronization (11.3s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "V33 Free upgrade and unverified entitlement fail closed (6.6s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "V33 public demo navigation exposes sample calendar and map without the removed overlay, sample detail card or export controls (1.7s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "V33 locked entry and upgrade dialog remain usable at all eight viewport sizes (17.7s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "V33 bilingual dark designer uses accessible theme tokens (4.7s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "V33 calendar export uses saved ceremony dates and respects the Studio visibility setting (2.8s)"
+      },
+      {
+        "result": "skipped",
+        "project": "mobile-chromium",
+        "test": "six Studio tabs retain rendered mobile and desktop evidence"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "contextual Premium video offers, cancel, keyboard focus and responsive reflow retain the Studio draft (2.9s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "role revocation keeps mounted edits, disables mutation and offers recovery without an upsell (2.1s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "confirmation cancellation, honest failed save and one confirmed-save toast preserve authored data (2.4s)"
+      },
+      {
+        "result": "passed",
+        "project": "desktop-chromium",
+        "test": "V33 calendar, map and designer visual coverage at all eight requested viewport sizes (39.5s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "family layout, custom host and decorative monogram retain canonical identities (3.9s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "Premium diagram drag, keyboard, layer edits, undo, export and reopen use saved structured data (9.5s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "unentitled Studio has no Premium canvas or monogram activation (3.4s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "native touch moves a diagram node and cancellation preserves the last committed position (4.0s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "monogram starting styles and local font exports preserve names (4.1s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "locale checklist opens and focuses missing venue wording without changing the account language (2.8s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "original route presets confirm replacement, undo, fit, pan, save and export local Khmer (9.7s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "inactive Royal stays out of selection and catalog failures offer retry and preview only (2.8s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "Premium denial and publication changes preserve the current template (1.7s)"
+      },
+      {
+        "result": "skipped",
+        "project": "mobile-chromium",
+        "test": "real local MySQL catalog reaches landing, browsing and responsive Studio without a catalog fixture"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "ACTIVE Royal is searchable in public catalog and Studio, previews the actual design, and preserves authored data on switching (5.3s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "catalog: supplied film loads after click, plays inline without a dialog/form, then reveals fixed information (5.6s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "unavailable video, absent photo, failed artwork, cleared lettering and long names stay usable (2.1s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "hosted: authorized protected film completes, errors recover, and guest text stays live (8.2s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "reduced motion skips video, disables effects, and keeps keyboard access (1.2s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "legacy calligraphy covers also use the inline film rather than a popup (3.1s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "Studio settings update the same iframe and survive save/reload/published rendering (13.3s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "refinement: new transparent foreground, shadow-free artwork control and larger inner scroll stay inside the frame (20.4s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "responsive references and scoped accessibility (10.7s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "refinement: lower film lettering, live date and two separated top controls across responsive canvases (15.5s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "repair: short phones retain the complete artwork, safe portrait window and separate video footer (13.3s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "repair: real public section contracts retain gift, private wishes and RSVP within the same shell (3.1s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "critical: language changes preserve the active film, authorized guest data and private RSVP wording (4.7s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "compatibility: saved fixed-frame opt-out keeps the hosted ending reachable (2.5s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "critical: immersive media and one inner scroll preserve the complete frame and reachable ending (5.4s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "soundtrack: one real song continues through locked video, language, duplicate completion and information (4.6s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "soundtrack: denied playback is retryable during video and guest-paused music stays paused after ended (4.1s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "RG32-09–14,19–20: selected days, program navigation, localized controls and export share the saved program (3.6s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "RG32-26–29: gift currency/enlargement and real RSVP form keep private wishes out of public content (4.9s)"
+      },
+      {
+        "result": "skipped",
+        "project": "mobile-chromium",
+        "test": "RG32-30–34: fixed frame and all enabled sections fit nine responsive viewports; capture real browser evidence"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "RG32: Khmer authored content and numerals remain readable with the same machine dates (2.5s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "RG32-01–25: Studio edits canonical dates, two program days and dress code through preview, save, reload and publication (12.9s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "RG32-01: choosing Royal Garden from the Studio selector retains authored optional data (3.8s)"
+      },
+      {
+        "result": "skipped",
+        "project": "mobile-chromium",
+        "test": "V33 visual baseline: map designer at 375px"
+      },
+      {
+        "result": "skipped",
+        "project": "mobile-chromium",
+        "test": "V33 visual baseline: clean Royal Garden demo at 375px"
+      },
+      {
+        "result": "skipped",
+        "project": "mobile-chromium",
+        "test": "V33 visual baseline: map designer at 1440px"
+      },
+      {
+        "result": "skipped",
+        "project": "mobile-chromium",
+        "test": "V33 visual baseline: clean Royal Garden demo at 1440px"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "RG32: new guest sections pass scoped WCAG checks and empty optional destinations stay out of navigation (6.5s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "V33 preset replacement, undo/redo and unsaved modal confirmation (3.8s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "V33 Free upgrade and unverified entitlement fail closed (4.0s)"
+      },
+      {
+        "result": "skipped",
+        "project": "mobile-chromium",
+        "test": "V33 calendar, map and designer visual coverage at all eight requested viewport sizes"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "V33 map modal: V1 editing, pointer/keyboard, history, exports and save/reload/public synchronization (9.3s)"
+      },
+      {
+        "result": "skipped",
+        "project": "mobile-chromium",
+        "test": "V33 locked entry and upgrade dialog remain usable at all eight viewport sizes"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "V33 public demo navigation exposes sample calendar and map without the removed overlay, sample detail card or export controls (2.0s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "V33 bilingual dark designer uses accessible theme tokens (2.8s)"
+      },
+      {
+        "result": "passed",
+        "project": "mobile-chromium",
+        "test": "V33 calendar export uses saved ceremony dates and respects the Studio visibility setting (2.9s)"
+      }
+    ]
+  },
+  "visual": {
+    "comparisonsPassed": 4,
+    "updateSnapshotsDuringVerification": false,
+    "widths": [
+      375,
+      1440
+    ],
+    "platform": "Windows Chromium",
+    "maxDiffPixelRatio": 0.005,
+    "references": "apps/frontend-user/tests/e2e/royal-garden-v33-visual.spec.js-snapshots"
+  },
+  "coverEvidence": {
+    "passed": 2,
+    "exitCode": 0,
+    "durationSeconds": 4.9,
+    "scope": "Additional desktop/mobile demo cover capture after adding screenshot capture only"
+  },
+  "accessibility": {
+    "tool": "@axe-core/playwright",
+    "tags": [
+      "wcag2a",
+      "wcag2aa",
+      "wcag21aa",
+      "wcag22aa"
+    ],
+    "violationsInAssertedScopes": 0,
+    "scopes": [
+      "map modal at 320/1440",
+      "map modal light/dark",
+      "upgrade dialog",
+      "Royal Garden guest sections"
+    ],
+    "manualAutomatedInteractions": [
+      "keyboard focus trap and return",
+      "Escape/cancel",
+      "native touch and pointer cancellation",
+      "responsive horizontal overflow",
+      "SVG labels and local Khmer text"
+    ]
+  },
+  "viewports": [
+    [
+      320,
+      568
+    ],
+    [
+      375,
+      667
+    ],
+    [
+      390,
+      844
+    ],
+    [
+      430,
+      932
+    ],
+    [
+      768,
+      1024
+    ],
+    [
+      1024,
+      768
+    ],
+    [
+      1440,
+      900
+    ],
+    [
+      1920,
+      1080
+    ]
+  ],
+  "performance": {
+    "passed": 1,
+    "durationSeconds": 20.5,
+    "exitCode": 0,
+    "data": "performance.json",
+    "method": "Local API fixtures; warmup excluded and median five runs per build; no concurrent test load"
+  },
+  "limits": [
+    "Chromium on Windows only; no real mobile hardware, Safari or Firefox run",
+    "Browser API fixtures and real MySQL service tests are separate evidence",
+    "Local performance does not establish production Core Web Vitals"
+  ],
+  "sourceLogSha256": {
+    "v33-vitest-verified.log": "a283972192bed17ccfe2099724eff6a7a652aeeccab8ac28a26ba41ccc87c3da",
+    "v33-admin-test.log": "fd1fa632a28b10de3b51bdd0da8d7546dc64d4894335bd6a82d5d1a78067a83e",
+    "v33-backend-final.log": "14e735db3705104290b3b73730cc06bdc0dc3c215fbcf060cefb1ca512162ac9",
+    "v33-mysql.log": "ebb62aeb31b6c2c678148d5af7e51ee48b6f5cf1b8e7bcba7ac8509f1c68dd64",
+    "v33-worker-test.log": "1edf3ed1f62a8177decc2042da3880a1ff5610d1a097843f5465a9e025fa2fcc",
+    "v33-playwright-verified.log": "ee7d3a77d9558901b3aa1a9145bd5fb4f2596b20d40026fcf07e145d2417ef19",
+    "v33-performance-verified.log": "bdb8ec937cf447f70ba6e225f79c8988bed93d03175950c4a50d8d41a0a0e3d7",
+    "v33-cover-evidence.log": "63342c63cef4a2f354e07675ef5686b594b6cf9c0357deb0e1cdf3aa015a69a2"
+  }
+}

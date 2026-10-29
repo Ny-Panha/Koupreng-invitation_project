@@ -17,6 +17,7 @@ export default function UpgradeFeatureDialog({ request, onClose }) {
   const quota = decision.quota || request.quota;
   const collaborator = request.event?.access?.owner === false;
   const offer = !collaborator && ['PACKAGE_FEATURE_REQUIRED','PACKAGE_LIMIT_REACHED','TEMPLATE_PURCHASE_OR_PACKAGE_REQUIRED'].includes(decision.reason);
+  const mapOffer = offer && feature === 'ILLUSTRATED_VENUE_MAP';
   const [state, setState] = useState({ loading: offer, plans: [], current: null, failed: false });
   const [revision, setRevision] = useState(0);
   useEffect(() => {
@@ -39,7 +40,7 @@ export default function UpgradeFeatureDialog({ request, onClose }) {
   const name = (featureNames[feature] || [feature, feature])[en ? 1 : 0];
   const purchase = offer && request.template?.checkoutEligible === true && request.template?.checkoutAmount > 0 && /^[A-Z]{3}$/.test(request.template.checkoutCurrency || '');
   const billing = { MONTHLY:L('ប្រចាំខែ','Monthly'),YEARLY:L('ប្រចាំឆ្នាំ','Yearly'),CUSTOM:L('រយៈពេលផ្ទាល់ខ្លួន','Custom term'),ONE_TIME:L('បង់ម្តង','One-time') };
-  return <Modal isOpen onClose={onClose} title={accessTitle(decision.reason, en)} size="lg" className="access-dialog"
+  return <Modal isOpen onClose={onClose} title={mapOffer ? L('រចនាផែនទីពិសេស','Premium Map Designer') : accessTitle(decision.reason, en)} size="lg" className="access-dialog"
     footer={<div className="access-actions"><button type="button" onClick={onClose}>{L('មិនមែនឥឡូវនេះ','Not now')}</button>{offer && !state.failed && !state.loading && plans.length > 0 && <Link to={compare} onClick={onClose}>{L('ប្រៀបធៀបកញ្ចប់','Compare packages')}</Link>}</div>}>
     <div className="access-heading"><span aria-hidden="true">{permission ? <ShieldCheck /> : <LockKeyhole />}</span><div>{name && <h3>{name}</h3>}
       <p>{permission ? L('សិទ្ធិក្រុមរបស់អ្នកមិនអនុញ្ញាតសកម្មភាពនេះទេ។ សូមទាក់ទងម្ចាស់កម្មវិធី ដើម្បីពិនិត្យសិទ្ធិ។ ការជាវកញ្ចប់មិនផ្ដល់សិទ្ធិចូលកម្មវិធីទេ។','Your event role does not allow this action. Ask the event owner to review your access. Buying a package does not grant event permission.')
@@ -47,6 +48,7 @@ export default function UpgradeFeatureDialog({ request, onClose }) {
         : offer ? null
         : decision.reason === 'NOT_AUTHENTICATED' ? L('ការកែប្រែរបស់អ្នកនៅតែនៅទីនេះ។ រក្សាច្បាប់ចម្លងសិន ហើយចូលប្រើម្ដងទៀត។','Your edits remain here. Keep a recovery copy, then sign in again.')
         : L('មិនទាន់អាចផ្ទៀងផ្ទាត់សិទ្ធិនេះបានទេ។ ការកែប្រែរបស់អ្នកត្រូវបានរក្សាដដែល។','This access cannot currently be verified. Your edits have been preserved.')}</p></div></div>
+    {mapOffer && <p className="access-map-description">{L('បង្កើតផែនទីទីតាំងកម្មវិធី ជាមួយផ្លូវ សញ្ញាសម្គាល់ និងអក្សរខ្មែរ។ សម្រាប់កញ្ចប់ Pro ឬ Premium។','Create a personalized venue map with roads, landmarks and Khmer labels. Available with Pro or Premium.')}</p>}
     {quota?.used != null && quota?.limit != null && <p className="access-quota">{(quotaNames[quota.resource] || [quota.resource,quota.resource])[en ? 1 : 0]}: <strong>{quota.used} / {quota.limit}</strong> · {quota.scope === 'EVENT' ? L('ក្នុងកម្មវិធីនេះ','This event') : L('ក្នុងគណនី','Account-wide')}</p>}
     {offer && state.loading && <p role="status">{L('កំពុងពិនិត្យជម្រើសកញ្ចប់…','Checking eligible packages…')}</p>}
     {offer && state.failed && <div role="status"><p>{L('មិនអាចផ្ទៀងផ្ទាត់កញ្ចប់ និងស្ថានភាពគណនីបានទេ។ មិនទាន់មានជម្រើសជាវដែលអាចបញ្ជាក់បាន។','Could not verify package options and your current plan. No purchase recommendation is available yet.')}</p><button type="button" onClick={() => setRevision(value => value + 1)}>{L('សាកម្តងទៀត','Try again')}</button></div>}

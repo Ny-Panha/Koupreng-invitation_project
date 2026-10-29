@@ -2185,6 +2185,7 @@ export default function InvitationForm({ invitation }) {
         <div className="pe-section-card" key="venue">
             {templateCapabilities(getTemplateById(form.templateId) || {}).cinematicIntro && <label className="pe-label">{uiCopy('ការបង្ហាញផែនទី', 'Map presentation')}<select className="pe-input" value={form.venueMapMode || 'auto'} onChange={e => update('venueMapMode', e.target.value)}>
                 <option value="auto">{uiCopy('ប្រើផែនទីដែលបានបន្ថែម', 'Use available map artwork')}</option>
+                <option value="illustrated">{uiCopy('ផែនទីគំនូរទីតាំង', 'Illustrated venue map')}</option>
                 <option value="sketch">{uiCopy('រូបភាពផែនទី', 'Uploaded sketch map')}</option>
                 <option value="embed">{uiCopy('ផែនទីអន្តរកម្ម', 'Interactive Google map')}</option>
                 <option value="details">{uiCopy('ព័ត៌មានទីតាំងតែប៉ុណ្ណោះ', 'Venue details only')}</option>
@@ -3178,7 +3179,7 @@ export default function InvitationForm({ invitation }) {
                                     <div>{["invitation", "closing"].includes(sectionKey) && renderWordingPresets(sectionKey)}{renderer()}
                                     {sectionKey === 'family' && <FamilyDesignEditor form={form} locale={activeLangTab === 'EN' ? 'en' : 'km'} onChange={update} supported={templateCapabilities(getTemplateById(form.templateId) || {}).familyLayout} />}
                                     {sectionKey === 'cover' && <MonogramEditor value={form.coupleMonogram} onChange={value => update('coupleMonogram', value)} entitled={workspace?.access?.ownerFeatures?.includes('COUPLE_MONOGRAM') === true} supported={templateCapabilities(getTemplateById(form.templateId) || {}).monogram} />}
-                                    {sectionKey === 'venue' && <IllustratedMapEditor value={form.illustratedMap} onChange={value => update('illustratedMap', value)} locale={activeLangTab === 'EN' ? 'en' : 'km'} entitled={workspace?.access?.ownerFeatures?.includes('ILLUSTRATED_VENUE_MAP') === true} onUndo={studio.undo} onRedo={studio.redo} />}</div>
+                                    {sectionKey === 'venue' && <IllustratedMapEditor value={form.illustratedMap} onChange={value => update('illustratedMap', value)} locale={activeLangTab === 'EN' ? 'en' : 'km'} onUndo={studio.undo} onRedo={studio.redo} canUndo={studio.canUndo} canRedo={studio.canRedo} onSave={() => studio.flush({ deliberate: true })} savedValue={studio.savedValue?.illustratedMap ?? null} savePhase={studio.phase} saveError={studio.error} />}</div>
                                 </StudioSectionPanel>
                             </div>;
                         })}

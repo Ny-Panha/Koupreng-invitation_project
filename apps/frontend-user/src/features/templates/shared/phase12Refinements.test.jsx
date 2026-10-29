@@ -2,7 +2,7 @@ import { feedback } from "@/shared/feedback/feedback";
 import { useState } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
-import IllustratedMapEditor from '../../invitations/studio/IllustratedMapEditor';
+import IllustratedMapEditor from '../../invitations/studio/IllustratedMapDesignerModal';
 import { MonogramEditor } from '../../invitations/studio/FamilyDesignEditor';
 import LocaleChecklist from '../../invitations/studio/LocaleChecklist';
 import { translationSection } from '../../invitations/studio/localeNavigation';
@@ -15,7 +15,7 @@ vi.mock("@/shared/feedback/feedback", () => ({ feedback: { confirm: vi.fn().mock
 
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 const blank = { version: 1, enabled: true, aspectRatio: 'landscape', theme: 'ivory', description: { km: '', en: '' }, nodes: [] };
-function MapEditor() { const [value, change] = useState(blank); return <IllustratedMapEditor value={value} locale="en" entitled onChange={change} onUndo={() => {}} onRedo={() => {}} />; }
+function MapEditor() { const [value, change] = useState(blank); return <IllustratedMapEditor value={value} locale="en" allowed onChange={change} onUndo={() => {}} onRedo={() => {}} />; }
 
 describe('Phase 12 route, program and authoring refinements', () => {
   it.each(MAP_PRESETS)('$name creates independent bounded editable nodes without shared labels', preset => {
@@ -27,19 +27,20 @@ describe('Phase 12 route, program and authoring refinements', () => {
   });
   it('confirms preset replacement and keeps keyboard editing available when drag is disabled', async () => {
     render(<MapEditor />);
-    fireEvent.click(screen.getByRole('button', { name: 'Add element', exact: true }));
-    fireEvent.change(screen.getByLabelText('Element label (en)'), { target: { value: 'My venue' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Straight road', exact: true }));
+    fireEvent.change(screen.getByLabelText('English label'), { target: { value: 'My venue' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Presets', exact: true }));
     feedback.confirm.mockResolvedValue(false);
-    await act(async () => fireEvent.click(screen.getByRole('button', { name: 'Apply diagram preset' })));
-    expect(screen.getByLabelText('Element label (en)')).toHaveValue('My venue');
-    fireEvent.click(screen.getByLabelText('Drag elements (turn off to scroll)'));
-    expect(screen.getByRole('img').closest('.studio-map-stage')).toHaveAttribute('data-drag', 'false');
+    await act(async () => fireEvent.click(screen.getByRole('button', { name: /Main road to venue/ })));
+    expect(screen.getByLabelText('English label')).toHaveValue('My venue');
+    fireEvent.click(screen.getByRole('button', { name: 'Pan canvas' }));
+    expect(screen.getByRole('button', { name: 'Pan canvas' })).toHaveAttribute('aria-pressed', 'true');
     fireEvent.keyDown(screen.getByRole('img'), { key: 'ArrowRight' });
-    expect(screen.getByLabelText('x', { exact: true })).toHaveValue(.525);
+    expect(screen.getByLabelText('Position X', { exact: true })).toHaveValue(.505);
     feedback.confirm.mockResolvedValue(true);
-    await act(async () => fireEvent.click(screen.getByRole('button', { name: 'Apply diagram preset' })));
+    await act(async () => fireEvent.click(screen.getByRole('button', { name: /Main road to venue/ })));
     expect(screen.queryByDisplayValue('My venue')).toBeNull();
-    expect(screen.getByRole('button', { name: /destination Event venue/ })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Event venue/ })).toBeInTheDocument();
   });
   it('keeps original day/ceremony order, multiline copy and explicit icon opt-out', () => {
     const { container } = render(<ProgramTimeline content={{ eventDate: '2027-01-10', languageMode: 'EN', programDays: [{ id: 'two', titleEn: 'Second day', date: '2027-01-11' }], schedule: [{ id: 'stable', dayId: 'two', title: 'Reception\nwith family', titleEn: 'Reception\nwith family', iconKey: 'none' }] }} />);

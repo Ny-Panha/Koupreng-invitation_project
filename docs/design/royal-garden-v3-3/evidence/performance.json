@@ -1,0 +1,158 @@
+{
+  "baseline": "cf586813385471dc311d64ea840684441c52cf25",
+  "method": "Chromium, 1440x900, localhost preview builds, same V1 80-node hosted fixture, reduced motion, one warmup excluded, median of five runs; API fixtures mocked",
+  "summary": {
+    "audited-main": {
+      "domContentLoaded": 56,
+      "lcp": 928,
+      "cls": 0.002,
+      "jsBytes": 398941,
+      "svgElements": 622,
+      "taskMs": 339.675,
+      "scriptMs": 121.614,
+      "heapBytes": 9801104
+    },
+    "v3.3": {
+      "domContentLoaded": 57.1,
+      "lcp": 900,
+      "cls": 0.002,
+      "jsBytes": 405937,
+      "svgElements": 590,
+      "taskMs": 342.295,
+      "scriptMs": 117.544,
+      "heapBytes": 9161044
+    }
+  },
+  "runs": [
+    {
+      "build": "audited-main",
+      "iteration": 1,
+      "domContentLoaded": 57.200000000186265,
+      "cls": 0.0015955209405006858,
+      "lcp": 928,
+      "jsBytes": 398941,
+      "svgElements": 622,
+      "editorLoaded": false,
+      "taskMs": 331.515,
+      "scriptMs": 121.859,
+      "heapBytes": 9722916
+    },
+    {
+      "build": "audited-main",
+      "iteration": 2,
+      "domContentLoaded": 54.200000000186265,
+      "cls": 0.0015955209405006858,
+      "lcp": 872,
+      "jsBytes": 398941,
+      "svgElements": 622,
+      "editorLoaded": false,
+      "taskMs": 384.853,
+      "scriptMs": 115.458,
+      "heapBytes": 9853512
+    },
+    {
+      "build": "audited-main",
+      "iteration": 3,
+      "domContentLoaded": 54.5,
+      "cls": 0.0015955209405006858,
+      "lcp": 892,
+      "jsBytes": 398941,
+      "svgElements": 622,
+      "editorLoaded": false,
+      "taskMs": 335.451,
+      "scriptMs": 118.541,
+      "heapBytes": 9856036
+    },
+    {
+      "build": "audited-main",
+      "iteration": 4,
+      "domContentLoaded": 59.40000000037253,
+      "cls": 0.0015955209405006858,
+      "lcp": 940,
+      "jsBytes": 398941,
+      "svgElements": 622,
+      "editorLoaded": false,
+      "taskMs": 339.675,
+      "scriptMs": 121.614,
+      "heapBytes": 9718016
+    },
+    {
+      "build": "audited-main",
+      "iteration": 5,
+      "domContentLoaded": 56,
+      "cls": 0.0015955209405006858,
+      "lcp": 948,
+      "jsBytes": 398941,
+      "svgElements": 622,
+      "editorLoaded": false,
+      "taskMs": 357.043,
+      "scriptMs": 124.36999999999999,
+      "heapBytes": 9801104
+    },
+    {
+      "build": "v3.3",
+      "iteration": 1,
+      "domContentLoaded": 53,
+      "cls": 0.0015955209405006858,
+      "lcp": 888,
+      "jsBytes": 405937,
+      "svgElements": 590,
+      "editorLoaded": false,
+      "taskMs": 327.138,
+      "scriptMs": 113.262,
+      "heapBytes": 9162784
+    },
+    {
+      "build": "v3.3",
+      "iteration": 2,
+      "domContentLoaded": 57.10000000055879,
+      "cls": 0.0015955209405006858,
+      "lcp": 904,
+      "jsBytes": 405937,
+      "svgElements": 590,
+      "editorLoaded": false,
+      "taskMs": 337.75899999999996,
+      "scriptMs": 121.787,
+      "heapBytes": 9161044
+    },
+    {
+      "build": "v3.3",
+      "iteration": 3,
+      "domContentLoaded": 56.69999999925494,
+      "cls": 0.0015955209405006858,
+      "lcp": 900,
+      "jsBytes": 405937,
+      "svgElements": 590,
+      "editorLoaded": false,
+      "taskMs": 354.114,
+      "scriptMs": 120.974,
+      "heapBytes": 9044628
+    },
+    {
+      "build": "v3.3",
+      "iteration": 4,
+      "domContentLoaded": 62.799999999813735,
+      "cls": 0.0015955209405006858,
+      "lcp": 888,
+      "jsBytes": 405937,
+      "svgElements": 590,
+      "editorLoaded": false,
+      "taskMs": 342.295,
+      "scriptMs": 113.29899999999999,
+      "heapBytes": 9207136
+    },
+    {
+      "build": "v3.3",
+      "iteration": 5,
+      "domContentLoaded": 58.69999999925494,
+      "cls": 0.0010248912837443201,
+      "lcp": 924,
+      "jsBytes": 405937,
+      "svgElements": 590,
+      "editorLoaded": false,
+      "taskMs": 430.45,
+      "scriptMs": 117.544,
+      "heapBytes": 9079020
+    }
+  ]
+}

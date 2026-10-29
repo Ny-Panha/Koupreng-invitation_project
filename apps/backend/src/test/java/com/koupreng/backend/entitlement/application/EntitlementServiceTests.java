@@ -25,6 +25,27 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class EntitlementServiceTests {
+    @Test void mapDesignerUsesActivatedServerPackageCodesAndNotOtherPremiumBenefits() {
+        for (String code : List.of("FREE", "BASIC", "PRO", "PREMIUM", "custom-expensive-package")) {
+            var plan = baseline(); plan.setCode(code); plan.setPrice(new BigDecimal("999"));
+            plan.setPremiumTemplatesEnabled(true);
+            assertThat(EntitlementService.featuresForPackage(plan, false)).doesNotContain(EntitlementService.Feature.ILLUSTRATED_VENUE_MAP);
+            assertThat(EntitlementService.featuresForPackage(plan, true).contains(EntitlementService.Feature.ILLUSTRATED_VENUE_MAP))
+                    .as(code).isEqualTo(List.of("PRO", "PREMIUM").contains(code));
+            if (!"PREMIUM".equals(code)) assertThat(EntitlementService.featuresForPackage(plan, true))
+                    .doesNotContain(EntitlementService.Feature.COUPLE_MONOGRAM, EntitlementService.Feature.PRE_WEDDING_VIDEO);
+        }
+    }
+
+    @Test void expiredProSnapshotDoesNotGrantNewMapEdits() {
+        configureBaseline(baseline());
+        var paid = subscription(); paid.getSubscriptionPackage().setCode("PRO");
+        paid.setBenefitsSnapshot(com.koupreng.backend.subscription.application.PackageSnapshot.capture(paid.getSubscriptionPackage()));
+        when(subscriptions.findActiveForUser(eq(1L), any())).thenReturn(List.of(paid));
+        assertThatCode(() -> service(true).requireFeature(user, EntitlementService.Feature.ILLUSTRATED_VENUE_MAP)).doesNotThrowAnyException();
+        paid.setEndDate(Instant.now().minusSeconds(1));
+        assertThatThrownBy(() -> service(true).requireFeature(user, EntitlementService.Feature.ILLUSTRATED_VENUE_MAP)).isInstanceOf(ApiException.class);
+    }
     private final SubscriptionRepository subscriptions = mock(SubscriptionRepository.class);
     private final SubscriptionPackageRepository packages = mock(SubscriptionPackageRepository.class);
     private final UserTemplateAccessRepository purchases = mock(UserTemplateAccessRepository.class);

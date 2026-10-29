@@ -29,6 +29,7 @@ import useIntroSequence from './hooks/useIntroSequence';
 import './royal-garden-cinematic.css';
 import './royal-garden-scenes.css';
 import './royal-garden-guest.css';
+import './royal-garden-v33.css';
 
 const ORDER = ['family', 'invitation', 'countdown', 'schedule', 'venue', 'dressCode', 'gallery', 'wishes', 'gift', 'rsvp', 'closing'];
 const DEMO_PHOTOS = ['/templates/silk-heritage/portrait.webp', '/templates/silk-heritage/together.webp'];
@@ -43,7 +44,11 @@ function Heading({ children }) { return <div className="rg-heading"><h2 lang={/[
 export default function RoyalGardenCinematicLayout({ tpl = {}, content = {}, liveData, preview = false, previewStartClosed = false, previewChannel, previewGateCommand,
   showBack = true, backTo = '/templates', useTemplateLink, primaryCtaLabel = 'ប្រើគំរូនេះ', showActions = true, isHostedInvitation = false, children }) {
   const [sync, setSync] = useState(null);
-  const base = useMemo(() => ({ ...tpl, ...content, ...liveData, ...sync }), [tpl, content, liveData, sync]);
+  const base = useMemo(() => {
+    const result = { ...tpl, ...content, ...liveData, ...sync };
+    if (isHostedInvitation || result.hasHostContent || liveData || sync) result.isTemplateDemo = false;
+    return result;
+  }, [tpl, content, liveData, sync, isHostedInvitation]);
   const hosted = isHostedInvitation || base.hasHostContent;
   const [search, setSearch] = useSearchParams();
   const englishAvailable = !hosted || preview || !base.localizedContentV1 || guestLocale(base, 'en') === 'en';
@@ -157,7 +162,8 @@ export default function RoyalGardenCinematicLayout({ tpl = {}, content = {}, liv
     node?.focus({ preventScroll: true }); setActive('schedule');
   };
   const order = [...new Set([...(base.sectionOrder || []).map(key => ({ calendar: 'countdown', map: 'venue' })[key] || key).filter(key => ORDER.includes(key)), ...ORDER])];
-  const mapMode = ['sketch', 'embed', 'details'].includes(base.venueMapMode) ? base.venueMapMode : 'auto';
+  const mapMode = ['sketch', 'embed', 'details', 'illustrated'].includes(base.venueMapMode) ? base.venueMapMode : 'auto';
+  const illustratedVisible = ['auto','illustrated'].includes(mapMode) && base.illustratedMap?.enabled && base.illustratedMap?.nodes?.length > 0;
   const style = base.studioStyle || {};
   const font = (key, fallback) => base.elementFonts?.[key] ? { fontFamily: `${JSON.stringify(base.elementFonts[key])}, var(--rg-heading-font)` } : fallback;
   const palette = { '--rg-gold': color(style.accent || base.secondaryColor), '--rg-gold-dark': color(style.primary), '--rg-ink': color(style.text), '--rg-bg': color(style.background || base.backgroundColor), '--rg-border': color(style.border),
@@ -184,8 +190,8 @@ export default function RoyalGardenCinematicLayout({ tpl = {}, content = {}, liv
       case 'countdown': section = <RoyalGardenWeddingCalendar content={base} days={programDays} english={english} onProgramDay={goToProgramDay} />; break;
       case 'schedule': section = <><Heading>{t('កម្មវិធីមង្គលការ', 'Wedding programme')}</Heading><div className="rg-program"><ProgramTimeline content={base} days={programDays} english={english} idPrefix="rg-program-day" naturalTime /></div>{base.scheduleEnding && <p>{english ? (base.scheduleEndingEn || base.scheduleEnding) : base.scheduleEnding}</p>}</>; break;
       case 'venue': section = <><Heading>{t('ទីតាំងកម្មវិធី', 'Venue & directions')}</Heading><p className="rg-copy">{venueName}<br />{address}</p>
-        {mapMode === 'auto' && base.illustratedMap?.enabled && base.illustratedMap?.nodes?.length > 0 ? <IllustratedMap content={{ ...base, languageMode: english ? 'EN' : 'KH' }} /> : ['auto', 'sketch'].includes(mapMode) && mapImage ? <img className="rg-map-image" src={mapImage} alt={t('ផែនទីទីតាំងមង្គលការ', 'Wedding venue sketch map')} loading="lazy" /> : ['auto', 'embed'].includes(mapMode) && directions && (venueName || address) ? <iframe className="rg-map-image" title={t('ផែនទីទីតាំងកម្មវិធី', 'Wedding venue map')} loading="lazy" referrerPolicy="no-referrer" src={`https://maps.google.com/maps?q=${encodeURIComponent([venueName, address].filter(Boolean).join(' '))}&output=embed`} /> : !venueName && <p className="rg-muted"><MapPin aria-hidden="true" />{t('ទីតាំងនឹងត្រូវបានបញ្ជាក់។', 'Venue details will be confirmed.')}</p>}
-        {directions && <a className="rg-button" href={directions} target="_blank" rel="noopener noreferrer">{t('មើលទីតាំង Google Map', 'Open Google Maps')}</a>}</>; break;
+        {illustratedVisible ? <IllustratedMap content={{ ...base, languageMode: english ? 'EN' : 'KH' }} /> : ['auto', 'sketch'].includes(mapMode) && mapImage ? <img className="rg-map-image" src={mapImage} alt={t('ផែនទីទីតាំងមង្គលការ', 'Wedding venue sketch map')} loading="lazy" /> : ['auto', 'embed'].includes(mapMode) && directions && (venueName || address) ? <iframe className="rg-map-image" title={t('ផែនទីទីតាំងកម្មវិធី', 'Wedding venue map')} loading="lazy" referrerPolicy="no-referrer" src={`https://maps.google.com/maps?q=${encodeURIComponent([venueName, address].filter(Boolean).join(' '))}&output=embed`} /> : !venueName && <p className="rg-muted"><MapPin aria-hidden="true" />{t('ទីតាំងនឹងត្រូវបានបញ្ជាក់។', 'Venue details will be confirmed.')}</p>}
+        {directions && !illustratedVisible && <a className="rg-button" href={directions} target="_blank" rel="noopener noreferrer">{t('មើលទីតាំង Google Map', 'Open Google Maps')}</a>}</>; break;
       case 'gallery': section = <><Heading>{t('កម្រងរូបភាព', 'Our memories')}</Heading><RoyalGallery photos={gallery} english={english} /></>; break;
       case 'dressCode': section = <><Heading>{t('សម្លៀកបំពាក់ចូលរួមពិធី', 'Dress code')}</Heading><RoyalGardenDressCode content={base} english={english} /></>; break;
       case 'wishes': section = <><Heading>{t('សារជូនពរ', 'Wedding wishes')}</Heading><p className="rg-muted">{t('សូមផ្ញើពាក្យជូនពរជាមួយការបញ្ជាក់វត្តមានខាងក្រោម។ សារជូនពររបស់ភ្ញៀវជាព័ត៌មានឯកជន។', 'Send a personal wish with your RSVP below. Guest messages are private.')}</p></>; break;
