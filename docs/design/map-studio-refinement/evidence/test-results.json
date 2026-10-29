@@ -1,0 +1,98 @@
+{
+  "baseCommit": "9d3008f4970cd7666b3049b0394a9796b0f39bba",
+  "date": "2026-10-29",
+  "branch": "main",
+  "productionDeployment": false,
+  "unit": {
+    "command": "npm --prefix apps/frontend-user test -- --maxWorkers=2 src/features/invitations/studio/IllustratedMapDesignerModal.test.jsx src/features/templates/shared/illustratedMapModel.test.js src/features/templates/shared/invitationFeatures.test.jsx src/features/templates/shared/phase12Refinements.test.jsx src/shared/access/UpgradeFeatureDialog.test.jsx src/shared/access/accessDecision.test.js src/features/subscriptions/SubscriptionPackagesPage.test.jsx",
+    "passed": 108,
+    "files": 7,
+    "failed": 0,
+    "durationSeconds": 6.23,
+    "exitCode": 0
+  },
+  "finalFocusUnit": {
+    "command": "npm --prefix apps/frontend-user test -- --maxWorkers=2 src/features/invitations/studio/IllustratedMapDesignerModal.test.jsx",
+    "passed": 8,
+    "failed": 0,
+    "durationSeconds": 28.52,
+    "exitCode": 0,
+    "overlap": "Subset of the 108 focused tests; repeated for final clear-search focus handling"
+  },
+  "browser": {
+    "command": "npm --prefix apps/frontend-user run test:e2e -- tests/e2e/map-studio-upgrade-ux.spec.js tests/e2e/royal-garden-v33.spec.js tests/e2e/royal-garden-v33-visual.spec.js tests/e2e/phase11-features.spec.js tests/e2e/phase12-studio.spec.js tests/e2e/next-studio-ux.spec.js tests/e2e/package-purchase-ux.spec.js --workers=2",
+    "passed": 50,
+    "skipped": 10,
+    "failed": 0,
+    "durationMinutes": 2.7,
+    "exitCode": 0
+  },
+  "finalBrowser": {
+    "command": "npm --prefix apps/frontend-user run test:e2e -- tests/e2e/map-studio-upgrade-ux.spec.js tests/e2e/royal-garden-v33-visual.spec.js --project=desktop-chromium --workers=1",
+    "passed": 7,
+    "skipped": 0,
+    "failed": 0,
+    "durationSeconds": 43.9,
+    "exitCode": 0,
+    "overlap": "Subset of the broader browser run; final built search-focus interaction and six screenshot references rechecked"
+  },
+  "visual": {
+    "normalComparisonsPassed": 8,
+    "updateSnapshotsDuringVerification": false,
+    "environment": "Windows Chromium",
+    "maxDiffPixelRatio": 0.005,
+    "references": [
+      "map designer 375/1440",
+      "upgrade dialog 375/1440",
+      "checkout 390/1440",
+      "demo calendar 375/1440"
+    ],
+    "finalOverlapComparisons": 6
+  },
+  "accessibility": {
+    "tool": "@axe-core/playwright",
+    "tags": [
+      "wcag2a",
+      "wcag2aa",
+      "wcag21aa",
+      "wcag22aa"
+    ],
+    "violationsInTestedScopes": 0,
+    "scopes": [
+      "map modal",
+      "visible mobile/desktop element library",
+      "light/dark upgrade dialog",
+      "package page",
+      "checkout states"
+    ]
+  },
+  "build": {
+    "command": "npm --prefix apps/frontend-user run build",
+    "exitCode": 0,
+    "durationSeconds": 10.5
+  },
+  "lint": {
+    "command": "npm --prefix apps/frontend-user run lint",
+    "exitCode": 0
+  },
+  "skipReasons": [
+    "Three duplicate explicit viewport runs",
+    "Four duplicate visual reference runs",
+    "One duplicate Studio-tab evidence run",
+    "Two duplicate V33 viewport sweeps"
+  ],
+  "limits": [
+    "Browser API fixtures, not live bank transactions",
+    "Chromium on Windows with mobile emulation; Safari/Firefox/hardware not run",
+    "No backend/database changes or production deployment",
+    "No new production performance benchmark"
+  ],
+  "sourceLogSha256": {
+    "map-polish-unit.log": "30fd87c5cedd4c260205c88e50a60c0aaf4a7fefc5f76ea6489297cd98d081af",
+    "map-polish-focus.log": "47fb81ff8951e656bb42afb82e99b92dfaa1c4a568a7b40b2ac847cf81819c8a",
+    "map-polish-browser.log": "96418ff21518b0108b3f6554749015430d812fb54b2913a24d6ff47c5063ee02",
+    "map-polish-browser-final.log": "2173cb6e888e7ebe5b1486940a5bd8de66a8101cbb23a2e4b3c65c10486d0aee",
+    "map-polish-build-final.log": "e6997e6d9b4dc9c6aab2300e907d13d9dc9e5182bc135bee6b4d32824dc69aeb",
+    "map-polish-lint-final.log": "52fffd10a27da7ca85657cb07ca8f4c376d8991bb3efbe96d624f017b515ebf8"
+  }
+}

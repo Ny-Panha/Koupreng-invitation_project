@@ -9,6 +9,18 @@ import { eligiblePlans, FEATURES, safeReturnTo } from './accessDecision';
 import { accessTitle, featureNames, quotaNames } from './accessCopy';
 import './access.css';
 
+function VenueMapPreview() {
+  return <svg className="access-map-preview" viewBox="0 0 210 130" aria-hidden="true" focusable="false">
+    <rect x="1" y="1" width="208" height="128" rx="13" fill="#102c4c"/>
+    <rect x="8" y="8" width="194" height="114" rx="8" fill="none" stroke="#9b8050"/>
+    <path d="M22 94h132V42" fill="none" stroke="#d5b575" strokeWidth="11" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M22 94h132V42" fill="none" stroke="#102c4c" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M22 94h132V42" fill="none" stroke="#e9d3a3" strokeWidth="1" strokeDasharray="4 5"/>
+    <path d="m86 90 8 4-8 4" fill="none" stroke="#f4e3bf" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <g fill="none" stroke="#e9d3a3" strokeWidth="1.8" strokeLinejoin="round"><path d="m137 32 17-12 17 12v18h-34V32Zm11 18V38h12v12M35 60h29l-15-10-14 10Zm4 0v16h21V60M32 76h34"/><rect x="89" y="47" width="18" height="21" rx="3"/><path d="M95 63V52h4a3 3 0 0 1 0 6h-4"/></g>
+  </svg>;
+}
+
 export default function UpgradeFeatureDialog({ request, onClose }) {
   const en = useLanguageStore(state => state.lang) === 'en';
   const L = (km, english) => en ? english : km;
@@ -43,7 +55,7 @@ export default function UpgradeFeatureDialog({ request, onClose }) {
   const billing = { MONTHLY:L('ប្រចាំខែ','Monthly'),YEARLY:L('ប្រចាំឆ្នាំ','Yearly'),CUSTOM:L('រយៈពេលផ្ទាល់ខ្លួន','Custom term'),ONE_TIME:L('បង់ម្តង','One-time') };
   return <Modal isOpen onClose={onClose} title={mapOffer ? L('រចនាផែនទីពិសេស','Premium Map Designer') : accessTitle(decision.reason, en)} size="lg" className={`access-dialog ${offer ? 'access-upgrade-dialog' : ''}`}
     footer={<div className="access-actions"><button type="button" onClick={onClose}>{L('មិនមែនឥឡូវនេះ','Not now')}</button>{offer && !state.failed && !state.loading && plans.length > 0 && <Link to={compare} onClick={onClose}>{L('ប្រៀបធៀបកញ្ចប់','Compare packages')}</Link>}</div>}>
-    {mapOffer ? <div className="access-map-intro"><span className="access-map-mark" aria-hidden="true"><MapPinned size={32}/></span><div><h3>{L('ផ្លូវដ៏ច្បាស់ទៅកាន់ថ្ងៃមង្គល','A clear route to your celebration')}</h3><p>{L('ផ្លូវ សញ្ញាសម្គាល់ និងអក្សរខ្មែរ ឬអង់គ្លេស។ សម្រាប់ Pro ឬ Premium។','Roads, landmarks and Khmer or English labels. Available with Pro or Premium.')}</p></div></div> : <div className="access-heading"><span aria-hidden="true">{permission ? <ShieldCheck /> : <LockKeyhole />}</span><div>{name && <h3>{name}</h3>}
+    {mapOffer ? <div className="access-map-intro"><div><h3>{L('ជួយភ្ញៀវរកទីតាំងបានងាយ','Make your venue easy to find')}</h3><p>{L('ផ្លូវ សញ្ញាសម្គាល់ និងអក្សរខ្មែរ ឬអង់គ្លេស។ សម្រាប់ Pro ឬ Premium។','Roads, landmarks and Khmer or English labels. Available with Pro or Premium.')}</p></div><VenueMapPreview/></div> : <div className="access-heading"><span aria-hidden="true">{permission ? <ShieldCheck /> : <LockKeyhole />}</span><div>{name && <h3>{name}</h3>}
       <p>{permission ? L('សិទ្ធិក្រុមរបស់អ្នកមិនអនុញ្ញាតសកម្មភាពនេះទេ។ សូមទាក់ទងម្ចាស់កម្មវិធី ដើម្បីពិនិត្យសិទ្ធិ។ ការជាវកញ្ចប់មិនផ្ដល់សិទ្ធិចូលកម្មវិធីទេ។','Your event role does not allow this action. Ask the event owner to review your access. Buying a package does not grant event permission.')
         : collaborator ? L('មុខងារនេះអាស្រ័យលើកញ្ចប់របស់ម្ចាស់កម្មវិធី។ សូមទាក់ទងម្ចាស់កម្មវិធី។ កញ្ចប់ផ្ទាល់ខ្លួនរបស់អ្នកមិនអាចផ្លាស់ប្ដូរសិទ្ធិនេះបានទេ។','This feature follows the event owner’s package. Contact the owner; upgrading your own account cannot unlock this shared event.')
         : offer ? null
@@ -59,7 +71,7 @@ export default function UpgradeFeatureDialog({ request, onClose }) {
         const benefits = [...new Set([feature,...(plan.eligibleFeatures || [])])].filter(key=>FEATURES.includes(key)&&plan.eligibleFeatures?.includes(key)).slice(0,4);
         const term = [plan.durationDays != null ? `${plan.durationDays} ${L('ថ្ងៃ','days')}` : null,billing[plan.billingInterval] || plan.billingInterval].filter(Boolean).join(' · ');
         return <article className="access-plan" data-recommended={index===0 || undefined} key={plan.id}>
-          <div className="access-plan-heading"><Crown size={20} aria-hidden="true"/>{index===0 && <span className="access-plan-match">{L('សម្រាប់តម្រូវការរបស់អ្នក','For your needs')}</span>}</div>
+          <div className="access-plan-heading">{mapOffer&&index===0?<MapPinned size={21} aria-hidden="true"/>:<Crown size={21} aria-hidden="true"/>}{index===0 && <span className="access-plan-match">{L('កញ្ចប់ណែនាំ','Suggested plan')}</span>}</div>
           <h3>{plan.packageName}</h3><p className="access-price">{new Intl.NumberFormat(en ? 'en-US' : 'km-KH', { style: 'currency', currency: plan.currency }).format(plan.price)}</p>
           <p className="access-term">{term || L('រយៈពេលមិនបានបញ្ជាក់','Term not specified')}</p>
           <ul className="access-benefits">{benefits.map(key=><li key={key}><Check size={16} aria-hidden="true"/><span>{featureNames[key]?.[en?1:0] || key}</span></li>)}</ul>

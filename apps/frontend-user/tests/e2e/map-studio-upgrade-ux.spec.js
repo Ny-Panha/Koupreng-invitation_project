@@ -36,6 +36,11 @@ test('refined Map Studio fits mobile/tablet/desktop with readable properties and
     await expect(page.getByRole('heading',{name:'Map Studio',exact:true})).toBeVisible();
     await fits(page,'.map-designer-modal');await capture(page,`map-${width}`);
     const audit=await new AxeBuilder({page}).include('.map-designer-modal').withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();expect(audit.violations).toEqual([]);
+    if(width<=900)await page.locator('.map-mobile-tabs').getByRole('button',{name:'Elements',exact:true}).click();
+    await page.getByRole('searchbox',{name:'Search elements'}).fill('វត្ត');
+    await expect(page.locator('.map-element-grid > button')).toHaveCount(1);await expect(page.getByRole('button',{name:'Pagoda',exact:true})).toBeVisible();
+    await page.getByRole('button',{name:'Clear search'}).click();await expect(page.getByRole('searchbox',{name:'Search elements'})).toBeFocused();await expect(page.getByRole('button',{name:'Straight road',exact:true})).toBeVisible();await capture(page,`library-${width}`);
+    const libraryAudit=await new AxeBuilder({page}).include('.map-library').withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();expect(libraryAudit.violations).toEqual([]);
     if(width<=900)await page.locator('.map-mobile-tabs').getByRole('button',{name:'Properties',exact:true}).click();
     await page.locator('.map-layer-list button').nth(2).click();
     await expect(page.getByLabel('English label',{exact:true})).toBeVisible();

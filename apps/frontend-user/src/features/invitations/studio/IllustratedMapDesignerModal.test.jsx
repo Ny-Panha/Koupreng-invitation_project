@@ -6,11 +6,29 @@ import IllustratedMapDesignerModal from './IllustratedMapDesignerModal';
 import { blankMap } from '../../templates/shared/illustratedMapModel';
 
 afterEach(()=>{cleanup();vi.restoreAllMocks();});
-function Harness({ initial, onClose=vi.fn(), persist=async()=>true, allowed=true }){
+function Harness({ initial, onClose=vi.fn(), persist=async()=>true, allowed=true, locale='en' }){
   const [value,setValue]=useState(initial||blankMap()),[saved,setSaved]=useState(initial||blankMap());
-  return <IllustratedMapDesignerModal value={value} onChange={setValue} savedValue={saved} locale="en" allowed={allowed} onClose={onClose} onSave={async()=>{const ok=await persist();if(ok)setSaved(value);return ok;}}/>;
+  return <IllustratedMapDesignerModal value={value} onChange={setValue} savedValue={saved} locale={locale} allowed={allowed} onClose={onClose} onSave={async()=>{const ok=await persist();if(ok)setSaved(value);return ok;}}/>;
 }
 describe('Studio map designer',()=>{
+  it.each([['en','វត្ត','Pagoda'],['km','school','សាលារៀន']])('finds a landmark across categories and languages in %s', (locale,query,name)=>{
+    render(<Harness locale={locale}/>);
+    fireEvent.change(screen.getByRole('searchbox'),{target:{value:query}});
+    const library=screen.getByRole('complementary',{name:locale==='en'?'Element library':'បណ្ណាល័យធាតុ'});
+    expect(library.querySelectorAll('.map-element-grid > button')).toHaveLength(1);
+    fireEvent.click(within(library).getByRole('button',{name,exact:true}));
+    expect(document.querySelector('.map-layer-list')).toHaveTextContent(name);
+    fireEvent.change(screen.getByRole('searchbox'),{target:{value:'no-such-map-tool'}});
+    expect(library.querySelectorAll('.map-element-grid > button')).toHaveLength(0);
+    expect(document.querySelectorAll('.map-layer-list button')).toHaveLength(1);
+  });
+  it('keeps library searching out of the saved map and draft confirmation',()=>{
+    const change=vi.fn(),close=vi.fn();
+    render(<IllustratedMapDesignerModal value={blankMap()} onChange={change} locale="en" allowed onClose={close}/>);
+    fireEvent.change(screen.getByRole('searchbox',{name:'Search elements'}),{target:{value:'hotel'}});
+    fireEvent.click(screen.getByRole('button',{name:'Clear search'}));expect(screen.getByRole('searchbox',{name:'Search elements'})).toHaveFocus();
+    expect(change).not.toHaveBeenCalled();fireEvent.click(screen.getByRole('button',{name:'Close designer'}));expect(close).toHaveBeenCalledOnce();
+  });
   it('adds roads, intersections and roundabouts, edits both labels and moves with the keyboard',()=>{
     render(<Harness/>);
     fireEvent.click(screen.getByRole('button',{name:'Straight road',exact:true}));

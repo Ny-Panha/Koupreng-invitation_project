@@ -1,11 +1,12 @@
 import { useRef, useState } from 'react';
-import { ArrowDown, ArrowUp, Check, Copy, Download, Eye, Hand, Layers, MapPinned, Minus, MousePointer2, Plus, Redo2, Route, Save, Scan, Shapes, SlidersHorizontal, Trash2, Undo2, X } from 'lucide-react';
+import { ArrowDown, ArrowUp, Check, Copy, Download, Eye, Hand, Layers, MapPinned, Minus, MousePointer2, Plus, Redo2, Route, Save, Scan, Search, Shapes, SlidersHorizontal, Trash2, Undo2, X } from 'lucide-react';
 import Modal from '@/shared/ui/Modal';
 import { feedback } from '@/shared/feedback/feedback';
 import { MapDrawing } from '../../templates/shared/IllustratedMap';
 import { MAP_TOOL_GROUPS, MAP_TYPE_NAMES, MAP_THEME_TOKENS, MAP_LIMIT, MAP_FONTS, blankMap, mapSize, normalizeMap, newMapNode, bounded, fitMapNode, moveMapNode, connectMapNodes } from '../../templates/shared/illustratedMapModel';
 import { MAP_PRESETS, MAP_EXAMPLE_DESCRIPTION, MAP_PRESET_NAMES_KM, createMapPreset } from '../../templates/shared/mapPresets';
 import { exportVector } from '../../templates/shared/vectorExport';
+import MapToolIcon from './MapToolIcon';
 
 const rotation = value => ((value + 540) % 360) - 180;
 
@@ -13,10 +14,11 @@ export default function IllustratedMapDesignerModal({ value, onChange, locale = 
   const en = locale === 'en', L = (km, english) => en ? english : km;
   const config = normalizeMap(value);
   const [selection, setSelection] = useState(''), [tab, setTab] = useState('roads'), [mobilePanel, setMobilePanel] = useState('canvas');
+  const [toolSearch, setToolSearch] = useState('');
   const [zoom, setZoom] = useState(1), [tool, setTool] = useState('select'), [snapping, setSnapping] = useState(true), [transparent, setTransparent] = useState(false);
   const [guides, setGuides] = useState([]), [targetId, setTargetId] = useState('');
   const [preview, setPreview] = useState(previewOnly), [busy, setBusy] = useState(false), [status, setStatus] = useState('');
-  const svg = useRef(null), viewport = useRef(null), gesture = useRef(null);
+  const svg = useRef(null), viewport = useRef(null), gesture = useRef(null), searchInput = useRef(null);
   const [opened, setOpened] = useState(() => JSON.stringify(value ?? null));
   const selected = config.nodes.find(node => node.id === selection);
   const target = config.nodes.find(node => node.id === targetId && node.id !== selection);
@@ -104,12 +106,18 @@ export default function IllustratedMapDesignerModal({ value, onChange, locale = 
   const display=config;
   const theme=MAP_THEME_TOKENS[config.theme] || MAP_THEME_TOKENS['royal-blue'];
   const statusLabel=busy ? L('កំពុងដំណើរការ…','Working…') : savePhase==='saving' ? L('កំពុងរក្សាទុក…','Saving…') : saved && value ? L('បានរក្សាទុក','Saved to server') : L('ពង្រាង Studio','Studio draft');
+  const query = toolSearch.trim().toLocaleLowerCase();
+  const toolTypes = (query ? MAP_TOOL_GROUPS.flatMap(group=>group.types) : MAP_TOOL_GROUPS.find(group=>group.id===tab)?.types || [])
+    .filter(type=>!query || [type,...MAP_TYPE_NAMES[type]].some(name=>name.toLocaleLowerCase().includes(query)));
+  const presets = MAP_PRESETS.filter(preset=>!query || [preset.name,MAP_PRESET_NAMES_KM[preset.id]].some(name=>name.toLocaleLowerCase().includes(query)));
   const library = <aside className="map-library" aria-label={L('បណ្ណាល័យធាតុ','Element library')}>
     <div className="map-panel-heading"><h3>{L('បន្ថែមធាតុ','Add elements')}</h3><span>{config.nodes.length}/{MAP_LIMIT}</span></div>
-    <div className="map-library-tabs">{[...MAP_TOOL_GROUPS,{ id:'presets',km:'គំរូ',en:'Presets' }].map(group=><button type="button" key={group.id} aria-pressed={tab===group.id} onClick={()=>setTab(group.id)}>{en?group.en:group.km}</button>)}</div>
-    {tab==='roads' && <div className="map-road-directions">{[[0,L('ផ្ដេក','Horizontal road')],[90,L('បញ្ឈរ','Vertical road')],[35,L('បញ្ឆិត','Diagonal road')]].map(([angle,label])=><button key={angle} type="button" disabled={config.nodes.length>=MAP_LIMIT} onClick={()=>add('road',{rotation:angle})}><Route size={16} style={{transform:`rotate(${angle}deg)`}}/>{label}</button>)}</div>}
-    {tab==='presets' ? <div className="map-presets">{MAP_PRESETS.map(preset=><button key={preset.id} type="button" onClick={()=>applyPreset(preset)}><MapDrawing ariaHidden value={{ ...config,theme:preset.theme||'royal-gold',nodes:preset.nodes.map((node,i)=>({...node,id:`thumb-${i}`})) }} locale={locale}/><span>{en ? preset.name : MAP_PRESET_NAMES_KM[preset.id]}</span><small>{L('ផែនទីគំរូ','Example layout')}</small></button>)}</div> : <div className="map-element-grid">{MAP_TOOL_GROUPS.find(group=>group.id===tab)?.types.map(type=><button type="button" key={type} disabled={config.nodes.length>=MAP_LIMIT} onClick={()=>add(type)}><MapDrawing ariaHidden value={{version:2,theme:config.theme,aspectRatio:'square',nodes:[{id:'icon',type,x:.5,y:.5,width:['road','curve','arrow','bridge'].includes(type)?.65:.5,height:type==='curve'?.3:['road','arrow','bridge'].includes(type)?.07:.5,rotation:0,label:{km:'',en:''}}]}}/><span>{MAP_TYPE_NAMES[type][en?1:0]}</span></button>)}</div>}
-    <p className="map-object-count">{config.nodes.length} / {MAP_LIMIT} {L('ធាតុ','elements')}</p>
+    <div className="map-tool-search"><Search size={16} aria-hidden="true"/><label className="sr-only" htmlFor="map-tool-search">{tab==='presets'?L('ស្វែងរកគំរូ','Search presets'):L('ស្វែងរកធាតុ','Search elements')}</label><input ref={searchInput} id="map-tool-search" type="search" autoComplete="off" value={toolSearch} onChange={event=>setToolSearch(event.target.value)} placeholder={tab==='presets'?L('ស្វែងរកគំរូ…','Search presets…'):L('ស្វែងរកធាតុ…','Search elements…')}/>{toolSearch && <button type="button" onClick={()=>{setToolSearch('');searchInput.current?.focus();}} aria-label={L('សម្អាតការស្វែងរក','Clear search')}><X size={15}/></button>}</div>
+    <div className="map-library-tabs">{[...MAP_TOOL_GROUPS,{ id:'presets',km:'គំរូ',en:'Presets' }].map(group=><button type="button" key={group.id} aria-pressed={tab===group.id&&(!query||tab==='presets')} onClick={()=>{setTab(group.id);setToolSearch('');}}>{en?group.en:group.km}</button>)}</div>
+    {query && tab!=='presets' && <p className="map-search-heading" role="status">{L('លទ្ធផលស្វែងរក','Search results')} <span>{toolTypes.length}</span></p>}
+    {tab==='roads' && !query && <div className="map-road-directions">{[[0,L('ផ្ដេក','Horizontal road')],[90,L('បញ្ឈរ','Vertical road')],[35,L('បញ្ឆិត','Diagonal road')]].map(([angle,label])=><button key={angle} type="button" disabled={config.nodes.length>=MAP_LIMIT} onClick={()=>add('road',{rotation:angle})}><Route size={16} style={{transform:`rotate(${angle}deg)`}}/>{label}</button>)}</div>}
+    {tab==='presets' ? <div className="map-presets">{presets.map(preset=><button key={preset.id} type="button" onClick={()=>applyPreset(preset)}><MapDrawing ariaHidden value={{ ...config,theme:preset.theme||'royal-gold',nodes:preset.nodes.map((node,i)=>({...node,id:`thumb-${i}`})) }} locale={locale}/><span>{en ? preset.name : MAP_PRESET_NAMES_KM[preset.id]}</span><small>{L('ផែនទីគំរូ','Example layout')}</small></button>)}</div> : <div className="map-element-grid">{toolTypes.map(type=><button type="button" key={type} disabled={config.nodes.length>=MAP_LIMIT} onClick={()=>add(type)}><span className="map-tool-glyph"><MapToolIcon type={type}/></span><span>{MAP_TYPE_NAMES[type][en?1:0]}</span></button>)}</div>}
+    {(tab==='presets'?presets:toolTypes).length===0 && <p className="map-no-results" role="status">{L('មិនមានលទ្ធផលត្រូវគ្នាទេ','No matching elements')}</p>}
   </aside>;
   const properties = <aside className="map-properties" aria-label={L('លក្ខណៈសម្បត្តិផែនទី','Map properties')}>
     <h3><SlidersHorizontal size={16}/>{selected ? MAP_TYPE_NAMES[selected.type]?.[en?1:0] : L('ការកំណត់ផែនទី','Map settings')}</h3>
@@ -139,7 +147,7 @@ export default function IllustratedMapDesignerModal({ value, onChange, locale = 
       {['showLegend','showDirectionsButton'].map(key=><label key={key} className="map-checkbox"><input type="checkbox" checked={config.settings[key]} onChange={e=>patch({settings:{...config.settings,[key]:e.target.checked}})}/>{key==='showLegend'?L('បង្ហាញស្លាកទីតាំង','Show landmark legend'):L('បង្ហាញប៊ូតុងទីតាំង','Show directions button')}</label>)}
       <button type="button" className="map-danger" onClick={async()=>{if(await feedback.confirm({title:L('លុបផែនទីបច្ចុប្បន្ន?','Reset this map?'),message:L('អាចប្រើមិនធ្វើវិញ ដើម្បីស្ដារផែនទី។','Undo can restore the current design.'),destructive:true})){onChange(blankMap());setSelection('');}}}>{L('កំណត់ផែនទីឡើងវិញ','Reset map')}</button>
     </>}
-    <h3><Layers size={16}/>{L('ស្រទាប់','Layers')}</h3><div className="map-layer-list">{config.nodes.map((node,i)=><button key={node.id} type="button" aria-pressed={selection===node.id} onClick={()=>setSelection(node.id)}>{i+1}. {node.label[locale]||MAP_TYPE_NAMES[node.type]?.[en?1:0]}</button>)}</div>
+    <h3><Layers size={16}/>{L('ស្រទាប់','Layers')}</h3><div className="map-layer-list">{config.nodes.map((node,i)=><button key={node.id} type="button" aria-pressed={selection===node.id} onClick={()=>setSelection(node.id)}><MapToolIcon type={node.type}/><span>{i+1}. {node.label[locale]||MAP_TYPE_NAMES[node.type]?.[en?1:0]}</span></button>)}</div>
     {selected && <button type="button" onClick={()=>setSelection('')}>{L('ការកំណត់ផែនទី','Map settings')}</button>}
   </aside>;
   return <Modal isOpen onClose={close} showHeader={false} ariaLabel={L('រចនាផែនទីទីតាំងកម្មវិធី','Illustrated map designer')} size="full" className="map-designer-modal" backdropClassName="map-designer-backdrop" closeOnBackdropClick={false} footer={<>
@@ -149,7 +157,7 @@ export default function IllustratedMapDesignerModal({ value, onChange, locale = 
     <button type="button" className="map-primary" disabled={busy||!editable||!onSave||!value} onClick={save}><Save size={16}/>{L('រក្សាទុកការរចនា','Save design')}</button>
   </>}>
     <div className="map-designer" data-panel={mobilePanel} data-preview={preview||undefined} onKeyDown={keydown}>
-      <header className="map-designer-header"><span className="map-studio-mark" aria-hidden="true"><MapPinned size={24}/></span><div><h2>{L('ស្ទូឌីយោផែនទី','Map Studio')}</h2><span className="map-studio-subtitle">{L('ផែនទីទីតាំងកម្មវិធីរបស់អ្នក','Your celebration, mapped beautifully')}</span></div><span className="map-save-state" role="status" data-saved={saved&&value?true:undefined}><Check size={14}/>{statusLabel}</span>
+      <header className="map-designer-header"><span className="map-studio-mark" aria-hidden="true"><MapPinned size={24}/></span><div><h2>{L('ស្ទូឌីយោផែនទី','Map Studio')}</h2><span className="map-studio-subtitle">{L('រចនាផែនទីទីតាំង','Venue map designer')}</span></div><span className="map-save-state" role="status" data-saved={saved&&value?true:undefined}><Check size={14}/>{statusLabel}</span>
         {editable && <><button type="button" title={L('មិនធ្វើវិញ','Undo design')} aria-label={L('មិនធ្វើវិញ','Undo design')} disabled={canUndo===false||busy} onClick={onUndo}><Undo2 size={18}/></button><button type="button" title={L('ធ្វើឡើងវិញ','Redo design')} aria-label={L('ធ្វើឡើងវិញ','Redo design')} disabled={canRedo===false||busy} onClick={onRedo}><Redo2 size={18}/></button></>}
         <button type="button" aria-label={L('បិទកម្មវិធីរចនា','Close designer')} onClick={close}><X size={20}/></button>
       </header>

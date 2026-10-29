@@ -1,0 +1,30 @@
+{
+  "library-mobile.jpg": {
+    "bytes": 38272,
+    "sha256": "447f04337b26eebfcf8d96cbbe3ffd445bbad87e9e9ee37f1fabbde02e59b3e4"
+  },
+  "map-desktop.jpg": {
+    "bytes": 158375,
+    "sha256": "24dbdbc4206c6c042814b5d400fa58e0b94bc4264503fa63c3eca50df01f6658"
+  },
+  "plans-desktop.jpg": {
+    "bytes": 82541,
+    "sha256": "0277cb79cfe1a055c05ed8db77782e0d77ba536345c95268b47b59aaefd33df8"
+  },
+  "properties-mobile.jpg": {
+    "bytes": 33926,
+    "sha256": "65b6b9d21d065d23a134b36c8c057e04349eb095fd0a2a229bebb718b67150ee"
+  },
+  "test-results.json": {
+    "bytes": 3980,
+    "sha256": "53ec10a17958ff09b8cd1229142ed0bc98178547cb073e70285baacd4b553ee8"
+  },
+  "upgrade-desktop.jpg": {
+    "bytes": 99629,
+    "sha256": "23b351bf41d91e84ae93ea7528371bf8a01baf2a768190ff38f9e3c2fae0bb74"
+  },
+  "upgrade-khmer.jpg": {
+    "bytes": 40457,
+    "sha256": "cd07f0f94a577d10441a16e912c1800a109d087f942fdf8018e3b09024aaf685"
+  }
+}

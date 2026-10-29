@@ -19,23 +19,23 @@
 .access-heading > span { display:grid; place-items:center; flex-shrink:0; width:48px; height:48px; border-radius:14px; color:var(--access-accent); background:var(--access-soft); }
 .access-heading h3 { margin:0 0 8px; font-size:18px; line-height:1.8; }
 .access-heading p:empty { display:none; }
-.access-map-intro { display:flex; align-items:center; gap:18px; margin-bottom:24px; }
-.access-map-mark { display:grid; place-items:center; width:72px; height:80px; border-radius:18px 18px 26px 18px; color:var(--access-accent); background:var(--access-soft); border:1px solid var(--access-line); flex:none; }
+.access-map-intro { display:grid; grid-template-columns:minmax(0,1fr) 166px; align-items:center; gap:24px; margin-bottom:18px; padding:18px 20px; border:1px solid var(--access-line); border-radius:14px; background:var(--access-soft); }
+.access-map-preview { display:block; width:100%; height:auto; border-radius:12px; box-shadow:0 6px 15px rgb(15 35 52 / 10%); }
 .access-map-intro h3 { font-size:21px; font-weight:600; line-height:1.8; letter-spacing:-.3px; margin:0 0 5px; }
 .access-map-intro p { color:var(--access-muted); font-size:13px; margin:0; max-width:52ch; }
-.access-current { display:flex; align-items:center; gap:10px; flex-wrap:wrap; padding:12px 0; margin:12px 0 20px; border-block:1px solid var(--access-line); font-size:13px; }
+.access-current { display:flex; align-items:center; gap:10px; flex-wrap:wrap; padding:4px 0; margin:12px 0 18px; font-size:13px; }
 .access-current > span { color:var(--access-muted); }
 .access-current > strong { background:var(--access-soft); border-radius:6px; padding:2px 9px; font-size:12px; font-weight:600; }
 .access-current > time { color:var(--access-muted); margin-left:auto; }
 .access-plan-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr)); gap:16px; margin:20px 0; }
-.access-plan { position:relative; display:flex; flex-direction:column; min-width:0; padding:22px; border:1px solid var(--access-line); background:var(--access-surface); border-radius:16px; }
-.access-plan[data-recommended] { border-color:var(--access-accent); box-shadow:inset 0 0 0 1px var(--access-accent); }
-.access-plan-heading { display:flex; align-items:center; justify-content:space-between; gap:8px; min-height:28px; margin-bottom:14px; color:var(--access-muted); }
-.access-plan-match { font-size:11px; font-weight:600; color:var(--access-accent); background:var(--access-soft); border-radius:6px; padding:3px 8px; }
+.access-plan { position:relative; display:flex; flex-direction:column; min-width:0; padding:20px; border:1px solid var(--access-line); background:var(--access-surface); border-radius:16px; }
+.access-plan[data-recommended] { border-color:var(--access-accent); background:color-mix(in srgb,var(--access-accent) 3%,var(--access-surface)); box-shadow:inset 0 0 0 1px var(--access-accent); }
+.access-plan-heading { display:flex; align-items:center; justify-content:space-between; gap:8px; min-height:28px; margin-bottom:10px; color:var(--access-accent); }
+.access-plan-match { font-size:11px; font-weight:600; color:var(--access-on-accent); background:var(--access-accent); border-radius:6px; padding:3px 8px; }
 .access-plan h3 { margin:0; line-height:1.8; font-size:18px; font-weight:650; overflow-wrap:anywhere; }
-.access-plan .access-price { font-size:36px; line-height:1.6; letter-spacing:-1px; font-weight:650; font-variant-numeric:tabular-nums; margin:8px 0 0; overflow-wrap:anywhere; }
+.access-plan .access-price { font-size:40px; line-height:1.4; letter-spacing:-1.2px; font-weight:650; font-variant-numeric:tabular-nums; margin:5px 0 2px; overflow-wrap:anywhere; }
 .access-plan .access-term { margin:0; font-size:12px; color:var(--access-muted); }
-.access-benefits { list-style:none; padding:18px 0; margin:16px 0 20px; border-top:1px solid var(--access-line); flex:1; display:grid; align-content:start; gap:12px; }
+.access-benefits { list-style:none; padding:14px 0; margin:14px 0 16px; border-top:1px solid var(--access-line); flex:1; display:grid; align-content:start; gap:9px; }
 .access-benefits li { display:flex; align-items:start; gap:8px; font-size:13px; line-height:1.8; }
 .access-benefits svg { flex:none; color:var(--access-accent); margin-top:4px; }
 .access-dialog :is(button,a), .feature-access-card button { min-height:44px; display:inline-flex; align-items:center; justify-content:center; gap:8px; border:1px solid var(--access-line,var(--ui-border,#e1e7dc)); border-radius:10px; color:var(--access-ink,var(--ui-ink,#233f30)); background:var(--access-surface,var(--ui-surface,#fff)); padding:9px 16px; font:inherit; font-size:13px; text-decoration:none; cursor:pointer; }
@@ -60,9 +60,8 @@
   .access-dialog .k-modal-title { font-size:18px; }
   .access-dialog .k-modal-body { padding:20px 18px; }
   .access-dialog .k-modal-footer { padding:12px 18px; }
-  .access-map-intro { gap:12px; align-items:start; margin-bottom:20px; }
-  .access-map-mark { width:46px; height:52px; border-radius:12px; }
-  .access-map-mark svg { width:25px; }
+  .access-map-intro { display:block; padding:16px; margin-bottom:18px; }
+  .access-map-preview { display:none; }
   .access-map-intro h3 { font-size:18px; letter-spacing:0; }
   .access-map-intro p { font-size:12px; }
   .access-plan-grid { grid-template-columns:1fr; gap:14px; }

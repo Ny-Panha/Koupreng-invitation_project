@@ -29,8 +29,12 @@
 .pkg-selected-badge { padding:4px 10px; border-radius:6px; background:var(--ws-surface-subtle); font-weight:600; }
 .pkg-page .pkg-card h2 { font-size: 24px; font-weight:650; margin-bottom: 6px; }
 .pkg-description { color: var(--ws-muted); min-height: 58px; font-size:14px; }
+.pkg-description:empty { display:none; }
 .pkg-pricing { border-bottom: 1px solid var(--ws-border); padding-block: 16px 22px; margin-block: 10px 22px; }
 .pkg-pricing strong { display: block; font-size: clamp(32px, 3vw, 42px); line-height: 1.4; font-weight: 750; font-variant-numeric: tabular-nums; }
+.pkg-page.is-contextual .pkg-card { padding:28px; }
+.pkg-page.is-contextual .pkg-plan-icon { border:1px solid var(--ws-border); }
+.pkg-page.is-contextual .pkg-card.is-targeted { background:color-mix(in srgb,var(--ws-gold) 3%,var(--ws-surface)); }
 .pkg-pricing p { color: var(--ws-muted); font-size: 14px; }
 .pkg-features { list-style: none; padding: 0; margin: 0 0 28px; flex: 1; }
 .pkg-features li { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; font-size:14px; }
