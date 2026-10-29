@@ -1,3 +1,4 @@
+import { RefreshStatus } from '../../shared/ui/AdminSkeleton';
 import { useMemo, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -111,7 +112,7 @@ function TemplateThumbnail({ src, alt, category }) {
 export default function AdminTemplatesPage() {
   const { lang, t } = useAdminLanguage();
   const navigate = useNavigate();
-  const { data, setData, loading, error, reload } = useResource(adminManagementService.templates);
+  const { data, setData, loading, refreshing, error, reload } = useResource(adminManagementService.templates);
   const { toast, show, clear } = useToast();
   const fileInputRef = useRef(null);
 
@@ -328,6 +329,7 @@ export default function AdminTemplatesPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
+      <RefreshStatus active={refreshing} error={Boolean(error && data)} onRetry={reload} />
       <AdminPageHeader
         eyebrow={lang === "en" ? "Catalog & Templates" : "គំរូ & កាតាឡុក"}
         title={t("nav.templates", "គំរូធៀបការ")}
@@ -469,8 +471,8 @@ export default function AdminTemplatesPage() {
 
       {/* Main Content Area */}
       {loading ? (
-        <Loading label="កំពុងទាញយកបញ្ជីគំរូធៀបការ..." />
-      ) : error ? (
+        <Loading layout="template" label="កំពុងទាញយកបញ្ជីគំរូធៀបការ..." />
+      ) : error && !data ? (
         <ErrorState message={error} onRetry={reload} />
       ) : filteredTemplates.length === 0 ? (
         <div className="rounded-3xl border border-dashed border-slate-200 p-12 text-center dark:border-zinc-800 dark:bg-[#111113]/50">

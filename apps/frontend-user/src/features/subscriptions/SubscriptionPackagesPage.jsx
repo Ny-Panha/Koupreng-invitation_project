@@ -1,3 +1,4 @@
+import { CardGridSkeleton, LoadingRegion } from '@/shared/ui/LoadingState';
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Check, Crown, ExternalLink, ShieldCheck, Sparkles } from "lucide-react";
 import Modal from "../../shared/ui/Modal";
@@ -50,6 +51,8 @@ export default function SubscriptionPackagesPage() {
   const returnTo = safeReturnTo(searchParams.get('returnTo'));
   const quotaEventId = resource === 'guestsPerInvitation' ? returnTo.match(/^\/app\/events\/([1-9]\d*)(?:\/|$)/)?.[1] : null;
   const lastBenefits = useRef('');
+  const loadGeneration = useRef(0);
+  const [refreshing, setRefreshing] = useState(false);
   const [current, setCurrent] = useState(null);
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -60,10 +63,14 @@ export default function SubscriptionPackagesPage() {
   const submitting = useRef(false);
   const target = searchParams.get("package")?.toUpperCase();
   const load = useCallback(async () => {
+    const generation = ++loadGeneration.current;
+    setRefreshing(true);
     setError(""); setAccountError("");
     const [plans, active, orders, catalog, event] = await Promise.allSettled([subscriptionService.packages(), subscriptionService.entitlements(), subscriptionService.history(),
       (feature || resource) && subscriptionService.publicPackages ? subscriptionService.publicPackages() : Promise.resolve([]),
       quotaEventId ? invitationService.access(quotaEventId) : Promise.resolve(null)]);
+    if (generation !== loadGeneration.current) return;
+    setRefreshing(false);
     setPublicCatalog(catalog.status === 'fulfilled' && Array.isArray(catalog.value) ? catalog.value : []);
     setEventQuota(event.status === 'fulfilled' && event.value?.owner ? event.value.quotas?.guestsPerInvitation : null);
     if (plans.status === "fulfilled") setPackages(plans.value || []);
@@ -78,7 +85,7 @@ export default function SubscriptionPackagesPage() {
     if (active.status === "rejected" || orders.status === "rejected") setAccountError(copy("មិនអាចពិនិត្យកញ្ចប់ និងការទូទាត់របស់អ្នកបានទេ។ សូមទាញយកម្ដងទៀតមុនពេលជាវ។", "Could not verify your plan or payment history. Retry before starting another order."));
     setLoading(false);
   }, [copy, feature, resource, quotaEventId]);
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => { load(); return () => { loadGeneration.current += 1; }; }, [load]);
 
   const resume = async order => {
     setCheckout({ ...order, plan: order.packagePlan, stage: orderStage(order) });
@@ -142,9 +149,9 @@ export default function SubscriptionPackagesPage() {
   return <main className="workspace-page pkg-page" lang={lang}>
     <header className="workspace-heading">
       <h1>{copy("ជ្រើសរើសកញ្ចប់សេវាកម្ម", "A plan for your next celebration")}</h1>
-      <p>{copy("ប្រៀបធៀបកញ្ចប់ និងជ្រើសរើសតាមចំនួនកម្មវិធី និងភ្ញៀវរបស់អ្នក។", "Compare event and guest limits, then choose the plan that fits your invitations.")}</p>
     </header>
     {contextual && <section className="workspace-notice"><h2>{feature ? featureNames[feature][lang === 'en' ? 1 : 0] : quotaNames[resource][lang === 'en' ? 1 : 0]}</h2><p>{copy('បង្ហាញតែកញ្ចប់សាធារណៈដែលម៉ាស៊ីនមេបញ្ជាក់ថាគាំទ្រសកម្មភាពនេះ។ ការទូទាត់ដែលកំពុងរង់ចាំមិនបើកសិទ្ធិទេ។','Showing public packages with verified eligibility for this action. Pending payment does not unlock access.')}</p><Link className="workspace-button" to={returnTo}>{copy('ត្រឡប់ទៅការងាររបស់អ្នក','Return to your work')}</Link></section>}
+    {refreshing && !loading && <LoadingRegion label={copy("កំពុងធ្វើបច្ចុប្បន្នភាព…", "Refreshing…")} />}
     {(error || accountError) && <div className="workspace-notice" role="alert"><p>{error || accountError}</p><button className="workspace-button" onClick={load}>{copy("ទាញយកម្ដងទៀត", "Retry")}</button></div>}
     {!loading && <section className="pkg-current" aria-label={copy("កញ្ចប់បច្ចុប្បន្ន", "Current subscription")}>
       <ShieldCheck size={24} aria-hidden="true" /><div><span className="workspace-muted">{copy("កញ្ចប់បច្ចុប្បន្ន", "Current plan")}</span><strong>{current?.packagePlan ? current.packagePlan?.packageName || copy("កញ្ចប់សកម្ម", "Active plan") : copy("មិនអាចផ្ទៀងផ្ទាត់កញ្ចប់", "Plan could not be verified")}</strong>{current?.source === "DEMO_ADMIN_GRANT" && <small>{copy("សិទ្ធិសាកល្បងពីអ្នកគ្រប់គ្រង · មិនមែនការទូទាត់", "Administrator demo grant · nonrevenue")}</small>}</div>
@@ -152,7 +159,7 @@ export default function SubscriptionPackagesPage() {
     </section>}
     {current?.quotas && <section className="workspace-section pkg-usage" aria-label={copy("ការប្រើប្រាស់", "Plan usage")}><h2>{copy("ការប្រើប្រាស់កញ្ចប់", "Your plan usage")}</h2>{Object.entries(current.quotas).map(([key, quota]) => <div key={key}><strong>{key === "invitations" ? copy("កម្មវិធី", "Events") : copy("កំណត់ត្រាភ្ញៀវ", "Guest records")}</strong><span>{quota.used} / {quota.limit ?? copy("គ្មានកំណត់", "Unlimited")}</span>{quota.limit != null && quota.limit > 0 && <progress aria-label={key === "invitations" ? copy("ការប្រើប្រាស់កម្មវិធី", "Event record usage") : copy("ការប្រើប្រាស់កំណត់ត្រាភ្ញៀវ", "Guest record usage")} max={quota.limit} value={Math.min(quota.used, quota.limit)} />}<small>{quota.remaining == null ? copy("គ្មានកំណត់", "Unlimited") : `${quota.remaining} ${copy("នៅសល់", "remaining")}`}</small></div>)}</section>}
     <section className="pkg-grid" aria-label={copy("បញ្ជីកញ្ចប់សេវាកម្ម", "Available subscription plans")} aria-busy={loading}>
-      {loading ? <p role="status">{copy("កំពុងទាញយកកញ្ចប់សេវាកម្ម…", "Loading subscription packages…")}</p> : displayedPackages.map(plan => {
+      {loading ? <CardGridSkeleton variant="pricing" label={copy("កំពុងទាញយកកញ្ចប់សេវាកម្ម…", "Loading subscription packages…")} /> : displayedPackages.map(plan => {
         const selected = current?.packagePlan && current.packagePlan?.code === plan.code;
         const pending = history.find(order => isPending(order) && order.packagePlan?.id === plan.id);
         const featured = plan.code?.toUpperCase() === "PRO";

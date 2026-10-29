@@ -1,3 +1,4 @@
+import { RefreshStatus } from '../../shared/ui/AdminSkeleton';
 import { useCallback } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Loading, ErrorState, Empty } from "../../shared/ui";
@@ -16,15 +17,16 @@ export default function AdminUserDetailPage() {
     ]);
     return { user, invitations };
   }, [userId]);
-  const { data, loading, error, reload } = useResource(load);
+  const { data, loading, refreshing, error, reload } = useResource(load);
 
   if (loading) return <Loading />;
-  if (error || !data) return <ErrorState onRetry={reload} />;
+  if (!data) return <ErrorState onRetry={reload} />;
 
   const { user, invitations } = data;
 
   return (
     <div>
+      <RefreshStatus active={refreshing} error={Boolean(error && data)} onRetry={reload} />
       <div className="page-head">
         <div>
           <h2 className="page-title">{user.fullName || user.email || `User #${user.id}`}</h2>

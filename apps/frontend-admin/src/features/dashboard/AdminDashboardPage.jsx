@@ -1,3 +1,4 @@
+import { RefreshStatus } from '../../shared/ui/AdminSkeleton';
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
@@ -29,10 +30,10 @@ import {
 
 export default function AdminDashboardPage() {
   const { lang, t } = useAdminLanguage();
-  const { data, loading, error, reload } = useResource(dashboardService.summary);
+  const { data, loading, refreshing, error, reload } = useResource(dashboardService.summary);
   const [analytics, setAnalytics] = useState({});
   const [analyticsRefresh, setAnalyticsRefresh] = useState(0);
-  const refresh = () => { setAnalytics({}); setAnalyticsRefresh(value => value + 1); return reload(); };
+  const refresh = () => { setAnalyticsRefresh(value => value + 1); return reload(); };
   const [currentTime, setCurrentTime] = useState(() => new Date());
 
   useEffect(() => {
@@ -42,27 +43,16 @@ export default function AdminDashboardPage() {
 
   useEffect(() => {
     let active = true;
-    Promise.allSettled([
-      dashboardService.analyticsOverview(),
-      dashboardService.analyticsRevenue(),
-      dashboardService.analyticsTemplates(),
-      dashboardService.analyticsDelivery(),
-      dashboardService.analyticsRsvp(),
-      dashboardService.analyticsCheckIn(),
-      dashboardService.systemHealth(),
-      dashboardService.alerts(),
-    ]).then((results) => {
-      if (!active) return;
-      setAnalytics({
-        overview: results[0].status === "fulfilled" ? results[0].value : null,
-        revenue: results[1].status === "fulfilled" ? results[1].value : null,
-        templates: results[2].status === "fulfilled" ? results[2].value : null,
-        delivery: results[3].status === "fulfilled" ? results[3].value : null,
-        rsvp: results[4].status === "fulfilled" ? results[4].value : null,
-        checkIn: results[5].status === "fulfilled" ? results[5].value : null,
-        health: results[6].status === "fulfilled" ? results[6].value : null,
-        alerts: results[7].status === "fulfilled" ? results[7].value : null,
-      });
+    const requests = {
+      overview: dashboardService.analyticsOverview, revenue: dashboardService.analyticsRevenue,
+      templates: dashboardService.analyticsTemplates, delivery: dashboardService.analyticsDelivery,
+      rsvp: dashboardService.analyticsRsvp, checkIn: dashboardService.analyticsCheckIn,
+      health: dashboardService.systemHealth, alerts: dashboardService.alerts,
+    };
+    // Each independent region resolves without waiting for the slowest report.
+    Object.entries(requests).forEach(([key, fetcher]) => {
+      fetcher().then(value => { if (active) setAnalytics(current => ({ ...current, [key]: value })); })
+        .catch(() => { if (active) setAnalytics(current => ({ ...current, [key]: null })); });
     });
     return () => {
       active = false;
@@ -70,9 +60,9 @@ export default function AdminDashboardPage() {
   }, [analyticsRefresh]);
 
   if (loading) {
-    return <LoadingState label={t("dashboard.loading", "កំពុងទាញយកទិន្នន័យផ្ទាំងគ្រប់គ្រង...")} />;
+    return <LoadingState layout="dashboard" label={t("dashboard.loading", "កំពុងទាញយកទិន្នន័យផ្ទាំងគ្រប់គ្រង...")} />;
   }
-  if (error || !data) {
+  if (!data) {
     return (
       <ErrorStateView
         message={t("dashboard.error", "មិនអាចទាញយកទិន្នន័យ Dashboard បានទេ")}
@@ -92,7 +82,8 @@ export default function AdminDashboardPage() {
     <div className="relative space-y-6">
       {/* 1. Page Header with Realtime Service Clock (Cascade Delay: 0s) */}
       <div className="animate-cascade" style={{ animationDelay: "0s" }}>
-        <AdminPageHeader
+        <RefreshStatus active={refreshing} error={Boolean(error && data)} onRetry={reload} />
+      <AdminPageHeader
           eyebrow={t("dashboard.eyebrow", "ទិដ្ឋភាពទូទៅនៃប្រព័ន្ធ")}
           title={t("dashboard.title", "ផ្ទាំងគ្រប់គ្រង")}
           subtitle={t("dashboard.subtitle", "ការវិភាគទិន្នន័យទូទៅ សកម្មភាពអ្នកប្រើប្រាស់ និងសុខភាពប្រព័ន្ធ")}
@@ -221,6 +212,7 @@ export default function AdminDashboardPage() {
               <AnimatedTrendChart
                 lang={lang}
                 report={analytics.revenue}
+                loading={analytics.revenue === undefined}
               />
             </div>
             <div className="animate-cascade" style={{ animationDelay: "0.28s" }}>
@@ -240,6 +232,7 @@ export default function AdminDashboardPage() {
             </div>
             <div className="animate-cascade" style={{ animationDelay: "0.32s" }}>
               <ConversionHealthBox
+                loading
                 analytics={analytics}
                 lang={lang}
                 t={t}

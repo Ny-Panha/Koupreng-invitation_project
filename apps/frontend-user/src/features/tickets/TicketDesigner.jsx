@@ -1,3 +1,4 @@
+import { PageSkeleton } from '@/shared/ui/LoadingState';
 import { feedback } from "@/shared/feedback/feedback";
 import AccessFailureState from "@/shared/access/AccessFailureState";
 import { useContext, useEffect, useMemo, useState } from "react";
@@ -9,8 +10,8 @@ import { ticketService } from "./ticketApi";
 import TicketPreview from "./TicketPreview";
 import TicketActions from "./TicketActions";
 import { useLanguageStore } from "@/stores/useLanguageStore";
-import { SkeletonCard } from "@/shared/ui";
-import { Save, Ticket, Eye } from "lucide-react";
+
+import { Save, Ticket, Eye, Palette, Type, ImagePlus, UsersRound, Check } from "lucide-react";
 
 export default function TicketDesigner() {
   const { eventId } = useParams();
@@ -79,7 +80,7 @@ function Designer({ eventId }) {
       if (navigator) Object.keys(original).forEach(method => { navigator[method] = original[method]; });
     };
   }, [dirty, navigation, leaveMessage]);
-  if (state.loading) return <section role="main" className="ticket-studio workspace-page" aria-label={text("Loading ticket designer", "កំពុងទាញយកឧបករណ៍រចនាកាត")}><SkeletonCard height="100px" /><SkeletonCard height="420px" /></section>;
+  if (state.loading) return <section role="main" className="ticket-studio workspace-page" aria-label={text("Loading ticket designer", "កំពុងទាញយកឧបករណ៍រចនាកាត")}><PageSkeleton layout="ticket" /></section>;
   if (state.error) return <section role="main" className="ticket-studio workspace-page"><AccessFailureState error={state.failure || state.error} feature="QR_INVITATIONS" permission="MANAGE_INVITATION" ownerOnly onRetry={() => { setState({ loading: true }); setRetry(n => n + 1); }} /></section>;
   const update = (key, value) => { setNotice(""); setDesign(current => ({ ...current, [key]: value })); };
   async function save() {
@@ -105,21 +106,23 @@ function Designer({ eventId }) {
     finally { setBusy(false); setUploading(false); }
   }
   return <section role="main" className="ticket-studio workspace-page" data-mobile-panel={mobilePanel}>
-    <header className="dash-page-header"><div><span className="dash-kicker"><Ticket size={16} />{text("Digital invitations", "ធៀបអញ្ជើញឌីជីថល")}</span><h1>{text("Ticket designer", "រចនាកាតអញ្ជើញ")}</h1><p>{text("One event design, personalized for each saved guest. Publish before sharing guest links.", "រចនាកាតសម្រាប់កម្មវិធី និងកំណត់ឈ្មោះភ្ញៀវម្នាក់ៗ។ ផ្សព្វផ្សាយធៀបមុនចែករំលែកតំណទៅភ្ញៀវ។")}</p></div>
-      <button disabled={busy || !dirty} onClick={save}><Save size={18} />{uploading ? text("Uploading…", "កំពុងបញ្ចូល…") : saving ? text("Saving…", "កំពុងរក្សាទុក…") : text("Save design", "រក្សាទុករចនា")}</button></header>
-    <p className="ticket-save-status" role="status">{notice ? text("Ticket design saved for this event", "បានរក្សាទុករចនាកាតសម្រាប់កម្មវិធីនេះ") : dirty ? text("Unsaved design", "ការកែប្រែមិនទាន់រក្សាទុក") : text("Saved design", "បានរក្សាទុករចនា")}</p>
+    <header className="dash-page-header ticket-designer-header"><div><span className="dash-kicker"><Ticket size={16} aria-hidden="true" />{text("Digital invitations", "ធៀបអញ្ជើញឌីជីថល")}</span><h1>{text("Ticket designer", "រចនាកាតអញ្ជើញ")}</h1><p>{ticket?.title}</p></div>
+      <div className="ticket-header-actions"><p className="ticket-save-status" role="status" data-dirty={dirty}>{!dirty && <Check size={14} aria-hidden="true" />}{notice ? text("Saved", "បានរក្សាទុក") : dirty ? text("Unsaved design", "ការកែប្រែមិនទាន់រក្សាទុក") : text("Saved design", "បានរក្សាទុករចនា")}</p><button className="ticket-save-button" disabled={busy || !dirty} onClick={save}><Save size={18} aria-hidden="true" />{uploading ? text("Uploading…", "កំពុងបញ្ចូល…") : saving ? text("Saving…", "កំពុងរក្សាទុក…") : text("Save design", "រក្សាទុករចនា")}</button></div></header>
     {uploading && <div role="status">{uploadProgress}%<progress aria-label={text("Image upload progress", "ដំណើរការបញ្ចូលរូបភាព")} value={uploadProgress} max="100" /></div>}
     <div className="ticket-mobile-switch" role="group" aria-label={text("Ticket workspace", "ផ្ទាំងរចនាកាត")}><button type="button" aria-pressed={mobilePanel === "edit"} onClick={() => setMobilePanel("edit")}>{text("Edit", "កែសម្រួល")}</button><button type="button" aria-pressed={mobilePanel === "preview"} onClick={() => setMobilePanel("preview")}>{text("Preview & export", "មើល និងទាញយក")}</button></div>
     {error && <p role="alert">{error}</p>}
     <div className="ticket-designer-grid"><fieldset disabled={busy} className="ticket-design-controls"><legend>{text("Customize your ticket", "កែសម្រួលកាតរបស់អ្នក")}</legend>
+      <section className="ticket-control-section"><h2><Palette size={18} aria-hidden="true" />{text("Style", "រចនាប័ទ្ម")}</h2>
       <label>{text("Layout", "រចនាប័ទ្ម")}<select value={design.layout} onChange={e => update("layout", e.target.value)}>
         {[["GOLD", "Royal Gold"], ["MINIMAL", "Modern Minimal"], ["FLORAL", "Botanical Floral"], ["IVORY", "Ivory Seal"]].map(([value, name]) => <option key={value} value={value}>{name}</option>)}
       </select></label>
       <div className="ticket-control-pair"><label>{text("Accent", "ពណ៌លម្អ")}<input type="color" value={design.accent} onChange={e => update("accent", e.target.value)} /></label>
       <label>{text("Frame", "ស៊ុម")}<select value={design.frame} onChange={e => update("frame", e.target.value)}>{[["DOUBLE", text("Double", "ស៊ុមពីរជាន់")], ["SINGLE", text("Single", "ស៊ុមមួយជាន់")], ["NONE", text("None", "គ្មានស៊ុម")]].map(([value, label]) => <option value={value} key={value}>{label}</option>)}</select></label></div>
       <label>{text("Heading font", "អក្សរចំណងជើង")}<select value={design.font} onChange={e => update("font", e.target.value)}><option value="MOUL">Moul</option><option value="KANTUMRUY">Kantumruy Pro</option><option value="CORMORANT">Cormorant Garamond</option></select></label>
+      </section><section className="ticket-control-section"><h2><Type size={18} aria-hidden="true" />{text("Wording", "អត្ថបទ")}</h2>
       <label>{text("Header", "សារខាងលើ")}<input maxLength={100} value={design.header} onChange={e => update("header", e.target.value)} /></label>
       <label>{text("Footer", "សារខាងក្រោម")}<textarea maxLength={200} value={design.footer} onChange={e => update("footer", e.target.value)} /></label>
+      </section><section className="ticket-control-section"><h2><ImagePlus size={18} aria-hidden="true" />{text("Artwork", "រូបភាព")}</h2>
       {[["coverMediaId", text("Cover image", "រូបក្រប")], ["backgroundMediaId", text("Background", "ផ្ទៃខាងក្រោយ")]].map(([key, label]) => <div className="ticket-media-control" key={key}>
         <label>{label}<select value={design[key] || ""} onChange={e => update(key, Number(e.target.value) || null)}><option value="">{text("None", "គ្មានរូបភាព")}</option>{items.map(item => <option value={item.id} key={item.id}>{item.originalFilename || `Image ${item.id}`}</option>)}</select></label>
         <label>{text('Upload or replace', 'បញ្ចូល ឬប្ដូររូប')}<input type="file" aria-label={`${text("Upload", "បញ្ចូលរូបភាព")} ${label}`} accept="image/jpeg,image/png,image/webp" onChange={e => upload(e, key)} /></label>
@@ -135,11 +138,12 @@ function Designer({ eventId }) {
       <label>{text("Horizontal focal point", "ចំណុចរូបផ្ដេក")}<input type="range" min="0" max="100" value={design.coverFocusX ?? 50} onChange={e => update("coverFocusX", Number(e.target.value))} /></label>
       <label>{text("Vertical focal point", "ចំណុចរូបបញ្ឈរ")}<input type="range" min="0" max="100" value={design.coverFocusY ?? 50} onChange={e => update("coverFocusY", Number(e.target.value))} /></label>
       <label>{text("Background opacity", "កម្រិតច្បាស់ផ្ទៃខាងក្រោយ")}<input type="range" min="0" max="0.4" step="0.01" value={design.backgroundOpacity ?? .12} onChange={e => update("backgroundOpacity", Number(e.target.value))} /></label>
+      </section><section className="ticket-control-section"><h2><UsersRound size={18} aria-hidden="true" />{text("Guest details", "ព័ត៌មានភ្ញៀវ")}</h2>
       {[["showTable", text("Table & seat", "តុ និងកៅអី")], ["showSeatCount", text("Guest count", "ចំនួនភ្ញៀវ")], ["showGroup", text("Guest group", "ក្រុមភ្ញៀវ")]].map(([key, label]) => <label className="ticket-checkbox" key={key}><input type="checkbox" checked={design[key]} onChange={e => update(key, e.target.checked)} />{label}</label>)}
-      <button type="button" disabled={!dirty} onClick={async () => { if (await feedback.confirm({ message: text("Discard unsaved ticket design changes?", "បោះបង់ការកែប្រែរចនាកាតដែលមិនទាន់រក្សាទុកឬ?"), destructive: true })) setDesign(JSON.parse(baseline)); }}>{text("Reset changes", "កំណត់ឡើងវិញ")}</button>
-    </fieldset><div className="ticket-preview-panel"><h2><Eye size={20} />{text("Live preview", "មើលជាមុន")}</h2><label className="ticket-guest-select">{text("Preview recipient", "ភ្ញៀវសម្រាប់មើលជាមុន")}<select value={guestId} onChange={e => setGuestId(e.target.value)}><option value="">{text("General invitation · no guest check-in", "ធៀបទូទៅ · គ្មានការកត់ត្រាវត្តមានភ្ញៀវ")}</option>
+      </section><button type="button" className="ticket-reset-button" disabled={!dirty} onClick={async () => { if (await feedback.confirm({ message: text("Discard unsaved ticket design changes?", "បោះបង់ការកែប្រែរចនាកាតដែលមិនទាន់រក្សាទុកឬ?"), destructive: true })) setDesign(JSON.parse(baseline)); }}>{text("Reset changes", "កំណត់ឡើងវិញ")}</button>
+    </fieldset><div className="ticket-preview-panel"><h2><Eye size={20} aria-hidden="true" />{text("Live preview", "មើលជាមុន")}</h2><label className="ticket-guest-select">{text("Preview recipient", "ភ្ញៀវសម្រាប់មើលជាមុន")}<select value={guestId} onChange={e => setGuestId(e.target.value)}><option value="">{text("General invitation · no guest check-in", "ធៀបទូទៅ · គ្មានការកត់ត្រាវត្តមានភ្ញៀវ")}</option>
       {state.guests.map(guest => <option key={guest.id} value={guest.id}>{guest.guestName}</option>)}</select></label>
-      {preview && <><TicketPreview ticket={preview} onReady={setReady} /><TicketActions ticket={preview} ready={ready && !dirty} />{dirty && <p className="workspace-notice">{text("Save the design before downloading or sharing.", "រក្សាទុករចនាមុនទាញយក ឬចែករំលែក។")}</p>}</>}
+      {preview && <><div className="ticket-preview-stage"><TicketPreview ticket={preview} onReady={setReady} /></div><TicketActions ticket={preview} ready={ready && !dirty} />{dirty && <p className="workspace-notice">{text("Save the design before downloading or sharing.", "រក្សាទុករចនាមុនទាញយក ឬចែករំលែក។")}</p>}</>}
     </div></div>
   </section>;
 }

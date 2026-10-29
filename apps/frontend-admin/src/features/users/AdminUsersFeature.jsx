@@ -1,3 +1,4 @@
+import { RefreshStatus } from '../../shared/ui/AdminSkeleton';
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { AlertTriangle, CheckCircle2, Shield } from "lucide-react";
@@ -34,7 +35,7 @@ function calculatePasswordStrength(password) {
 
 export default function AdminUsersPage() {
   const { lang, t } = useAdminLanguage();
-  const { data, setData, loading, error, reload } = useResource(adminManagementService.users);
+  const { data, setData, loading, refreshing, error, reload } = useResource(adminManagementService.users);
   const [query, setQuery] = useState("");
   const [busyId, setBusyId] = useState(null);
   const [busyCreate, setBusyCreate] = useState(false);
@@ -138,6 +139,7 @@ export default function AdminUsersPage() {
 
   return (
     <div>
+      <RefreshStatus active={refreshing} error={Boolean(error && data)} onRetry={reload} />
       <div className="page-head">
         <div>
           <h2 className="page-title">{t("users.title", "Users")}</h2>
@@ -256,7 +258,7 @@ export default function AdminUsersPage() {
 
         {loading ? (
           <Loading />
-        ) : error ? (
+        ) : error && !data ? (
           <ErrorState onRetry={reload} />
         ) : users.length === 0 ? (
           <Empty />

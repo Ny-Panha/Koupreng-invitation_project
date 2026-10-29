@@ -1,3 +1,4 @@
+import { PageSkeleton, LoadingRegion } from '@/shared/ui/LoadingState';
 import { Link, useParams } from "react-router-dom";
 import { Users } from "lucide-react";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
@@ -5,7 +6,7 @@ import { useRsvpDashboard } from "./hooks/useRsvpDashboard";
 import { RsvpKpiCards } from "./components/RsvpKpiCards";
 import { RsvpWishesWall } from "./components/RsvpWishesWall";
 import { RsvpGuestTable } from "./components/RsvpGuestTable";
-import { ErrorState, SkeletonCard } from "@/shared/ui";
+import { ErrorState } from "@/shared/ui";
 import "./RsvpDashboardPage.css";
 
 export default function RsvpDashboardPage() {
@@ -30,26 +31,12 @@ export default function RsvpDashboardPage() {
     load,
   } = useRsvpDashboard(invitationId);
 
-  if (loading) {
-    return (
-      <main className="dash-main">
-        <div className="rsvp-page">
-          <SkeletonCard height="100px" />
-          <div className="rsvp-kpi-grid">
-            <SkeletonCard height="110px" />
-            <SkeletonCard height="110px" />
-            <SkeletonCard height="110px" />
-            <SkeletonCard height="110px" />
-          </div>
-          <SkeletonCard height="320px" />
-        </div>
-      </main>
-    );
-  }
+  if (loading && !invitation) return <PageSkeleton layout="dashboard" />;
 
   if (error && !invitation) {
     return (
-      <main className="dash-main">
+      <main className="dash-main" aria-busy={loading}>
+        {loading && invitation && <LoadingRegion />}
         <div className="rsvp-page">
           <ErrorState message={t("loadError")} onRetry={load} />
         </div>
@@ -62,13 +49,14 @@ export default function RsvpDashboardPage() {
     : "/app/events";
 
   return (
-    <main className="dash-main">
+    <main className="dash-main" aria-busy={loading}>
+        {loading && invitation && <LoadingRegion />}
       <div className="rsvp-page">
         <header className="rsvp-header">
           <div className="rsvp-header-info">
             <span className="rsvp-kicker">{t("kicker")}</span>
             <h1>{t("title")}</h1>
-            <p className="rsvp-subtitle"><strong>{invitation?.title}</strong> · {t("subtitle")}</p>
+            <p className="rsvp-subtitle">{invitation?.title}</p>
           </div>
           <div className="rsvp-actions">
             <Link to={backLink} className="rsvp-back-btn">

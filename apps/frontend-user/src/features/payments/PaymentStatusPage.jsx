@@ -1,3 +1,4 @@
+import { PageSkeleton, LoadingRegion } from '@/shared/ui/LoadingState';
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { IoArrowBackOutline, IoSparkles, IoShieldCheckmarkOutline } from "react-icons/io5";
@@ -110,12 +111,7 @@ export default function PaymentStatusPage() {
           </p>
         </header>
 
-        {loading && (
-          <div className="checkout-card" style={{ textAlign: "center", padding: "40px" }}>
-            <span className="checkout-spinner" style={{ borderColor: "#b0926a", borderTopColor: "transparent", margin: "0 auto 12px" }}></span>
-            <p role="status" style={{ margin: 0, fontWeight: 600 }}>{en ? 'Loading payment details…' : 'កំពុងទាញយកព័ត៌មានការទូទាត់…'}</p>
-          </div>
-        )}
+        {loading && (!order ? <PageSkeleton /> : <LoadingRegion label={en ? 'Updating payment details…' : 'កំពុងធ្វើបច្ចុប្បន្នភាពការទូទាត់…'} />)}
 
         {error && (
           <div className="checkout-alert-error" role="alert">

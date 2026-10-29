@@ -1,3 +1,4 @@
+import { CardGridSkeleton } from '@/shared/ui/LoadingState';
 import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -101,12 +102,7 @@ export default function PaidTemplatesPage() {
         </header>
 
         {/* Loading State */}
-        {loading && (
-          <div className="paid-loading-card">
-            <span className="checkout-spinner"></span>
-            <p>{uiCopy("កំពុងទាញយកបញ្ជីគំរូដែលបានទិញ...", "Loading purchased templates...")}</p>
-          </div>
-        )}
+        {loading && <CardGridSkeleton variant="template" />}
 
         {/* Error Alert */}
         {error && (

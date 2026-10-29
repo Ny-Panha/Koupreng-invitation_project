@@ -1,3 +1,4 @@
+import { PageSkeleton } from '@/shared/ui/LoadingState';
 import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -42,7 +43,7 @@ export default function PaymentReceiptPage() {
     }, [orderCode]);
 
     if (loading) {
-        return <main className="enterprise-page"><div className="enterprise-empty">{uiCopy("កំពុងផ្ទុកបង្កាន់ដៃ...", "Loading receipt...")}</div></main>;
+        return <main className="enterprise-page"><PageSkeleton layout="form" /></main>;
     }
 
     return (

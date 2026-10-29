@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { AdminSkeleton } from '../shared/ui/AdminSkeleton';
+import { Suspense, useState, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import AdminSidebar from "./components/AdminSidebar";
 import AdminHeader from "./components/AdminHeader";
@@ -98,7 +99,7 @@ export default function AdminLayout() {
             key={location.pathname}
             className="w-full max-w-full min-w-0 page-transition"
           >
-            <Outlet />
+            <Suspense fallback={<AdminSkeleton />}><Outlet /></Suspense>
           </div>
         </main>
       </div>

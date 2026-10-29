@@ -1,3 +1,4 @@
+import { RefreshStatus } from '../../shared/ui/AdminSkeleton';
 import { useMemo, useState } from "react";
 import { Loading, ErrorState, Empty } from "../../shared/ui";
 import { useResource } from "../../shared/hooks";
@@ -16,7 +17,7 @@ function money(amount, currency = "USD") {
 
 export default function AdminPaymentsPage() {
   const { lang, t } = useAdminLanguage();
-  const { data, loading, error, reload } = useResource(adminManagementService.payments);
+  const { data, loading, refreshing, error, reload } = useResource(adminManagementService.payments);
   const [query, setQuery] = useState("");
   const [confirmingCode, setConfirmingCode] = useState(null);
   const [actionMessage, setActionMessage] = useState("");
@@ -85,6 +86,7 @@ export default function AdminPaymentsPage() {
 
   return (
     <div>
+      <RefreshStatus active={refreshing} error={Boolean(error && data)} onRetry={reload} />
       <div className="page-head">
         <div>
           <h2 className="page-title">{t("payments.title", "Payments")}</h2>
@@ -143,7 +145,7 @@ export default function AdminPaymentsPage() {
 
         {loading ? (
           <Loading />
-        ) : error ? (
+        ) : error && !data ? (
           <ErrorState onRetry={reload} />
         ) : payments.length === 0 ? (
           <Empty label={t("payments.empty", "រកមិនឃើញទិន្នន័យការទូទាត់ទេ")} />

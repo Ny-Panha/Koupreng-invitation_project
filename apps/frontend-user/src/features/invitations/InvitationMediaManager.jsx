@@ -1,3 +1,5 @@
+import { CardGridSkeleton } from '@/shared/ui/LoadingState';
+import MediaImage from '@/shared/ui/MediaImage';
 import { feedback } from "@/shared/feedback/feedback";
 import { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
@@ -15,7 +17,7 @@ import './MediaLibrary.css';
 function Preview({ file, type, title }) {
   if (type === 'audio') return <audio controls preload="none" src={file.fileUrl} aria-label={title} />;
   if (type === 'video') return <video controls preload="metadata" src={file.fileUrl} aria-label={title} />;
-  return <img src={file.fileUrl} alt={title} loading="lazy" />;
+  return <MediaImage src={file.fileUrl} alt={title} />;
 }
 
 export default function InvitationMediaManager() {
@@ -61,9 +63,9 @@ export default function InvitationMediaManager() {
   const coverArtwork = resolvedCover.url;
   const isCoverInUse = category === 'cover' && records.some(file => references.has(file.fileUrl));
   return <main className="media-library workspace-page" aria-busy={busy}>
-    <header className="workspace-page-heading"><div><h1>{t('title')}</h1><p>{t('subtitle')}</p></div><div className="workspace-actions"><Link className="workspace-button" to={`/app/events/${id}/preview`}><Eye size={18} />{t('preview')}</Link><Link className="workspace-button" to={`/app/events/${id}/invitation`}><Palette size={18} />{t('studio')}</Link></div></header>
+    <header className="workspace-page-heading"><div><h1>{t('title')}</h1></div><div className="workspace-actions"><Link className="workspace-button" to={`/app/events/${id}/preview`}><Eye size={18} />{t('preview')}</Link><Link className="workspace-button" to={`/app/events/${id}/invitation`}><Palette size={18} />{t('studio')}</Link></div></header>
     {error && <div className="workspace-notice" role="alert">{error}<button className="workspace-button" disabled={busy} onClick={() => run(retry || refresh)}>{t('retry')}</button></div>}
-    {!library && !error && <p role="status">{t('loading')}</p>}
+    {!library && !error && <CardGridSkeleton variant="gallery" label={t('loading')} />}
     <div className="workspace-tabs" role="group" aria-label={t('categories')}>{[['cover', Images], ['gallery', Images], ['video', Video], ['music', Music]].map(([key, Icon]) => <button type="button" key={key} aria-pressed={key === category} disabled={busy} onClick={() => { setCategory(key); setError(''); }}><Icon size={18} />{t(key)}</button>)}</div>
     <section className="workspace-section">
       <div className="workspace-section-heading"><div><h2>{t(category)}</h2><p className="workspace-muted">{t('formats', { formats: config.extensions.join(', ').toUpperCase(), limit: config.limit })}</p></div>{isCoverInUse ? <Link className="workspace-button" to={`/app/events/${id}/invitation`}>{t('editInStudio')}</Link> : <button className="workspace-button primary" disabled={busy || !library} onClick={() => choose(null)}><Upload size={18} />{t(category === 'gallery' ? 'uploadImages' : 'upload')}</button>}</div>
@@ -76,6 +78,5 @@ export default function InvitationMediaManager() {
         </div>
       </article>)}</div> : library && category === 'cover' && coverArtwork ? <div className="media-reference-card"><EventCover event={invitation || {}} alt={t('reference')} /><div><h3>{t(coverReference ? 'savedDesign' : 'templateArtwork')}</h3><p>{t(coverReference ? 'savedDesignHint' : 'templateHint')}</p><Link className="workspace-button" to={`/app/events/${id}/invitation`}>{t('editInStudio')}</Link></div></div> : library && <div className="workspace-empty"><Images size={32} /><h2>{t('empty')}</h2><p>{t('emptyHint')}</p></div>}
     </section>
-    <p className="media-source-note">{t('sourceHint')}</p>
   </main>;
 }

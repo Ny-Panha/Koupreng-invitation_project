@@ -1,3 +1,4 @@
+import { PageSkeleton } from '@/shared/ui/LoadingState';
 import AccessFailureState from "@/shared/access/AccessFailureState";
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
@@ -27,14 +28,14 @@ export default function InvitationSeatingPage() {
   };
   return <main className="seating-page workspace-page">
     <header className="workspace-page-heading">
-      <div><h1>{t('title')}</h1><p>{t('subtitle')}</p></div>
+      <div><h1>{t('title')}</h1></div>
       <div className="workspace-actions">
         <Link className="workspace-button" to={`/app/events/${invitationId}/guests`}><Users size={18} />{t('guests')}</Link>
         <button className="workspace-button" type="button" disabled={!tables.length || saving} onClick={seating.exportCsv}><Download size={18} />{t('export')}</button>
         <button className="workspace-button primary" type="button" onClick={() => setCreateOpen(true)} disabled={saving}><Plus size={18} />{t('createTable')}</button>
       </div>
     </header>
-    {loading && !plan && <p role="status">{t('loading')}</p>}
+    {loading && !plan && <PageSkeleton layout="chart" label={t('loading')} />}
     {error && <AccessFailureState error={seating.failure || error} feature="SEATING" permission="MANAGE_SEATING" onRetry={refresh} />}
     <section className="workspace-summary" aria-label={t('summary')}>{stats.map(([key, value]) => <article key={key}><span>{t(key)}</span><strong>{value}</strong></article>)}</section>
     <div className="seating-mobile-tabs workspace-tabs" role="group" aria-label={t('workspace')}>

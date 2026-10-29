@@ -1,3 +1,4 @@
+import { chooseStudioSection } from './support/studioNavigationActions';
 import { test, expect } from '@playwright/test';
 import { phase9Fixtures } from './support/phase9Fixtures';
 
@@ -5,20 +6,22 @@ test('separate authored values persist and switching does not replace the iframe
   const { events } = await phase9Fixtures(page, { content: { messageText: 'Khmer authored message', photos: [], schedule: [], storyChapters: [], party: [], faq: [] } });
   events.set(101, { ...events.get(101), storyText: 'Khmer authored message', languageMode: 'KH' });
   await page.goto('/app/events/101/invitation');
-  await page.locator('[data-studio-tab="eventInformation"]').click(); await page.locator('[data-studio-section="invitation"] details').evaluate(node => { node.open = true; });
+  await chooseStudioSection(page, 'eventInformation'); await page.locator('[data-studio-section="invitation"] details').evaluate(node => { node.open = true; });
   const field = page.locator('[data-studio-section="invitation"] textarea');
   await expect(field).toHaveValue('Khmer authored message');
   const preview = page.locator('iframe');
-  await preview.evaluate(node => { node.dataset.phase11Identity = 'retained'; });
+  // Mobile mounts a preview only when its full-screen sheet is opened.
+  const embeddedPreview = page.viewportSize().width >= 1024;
+  if (embeddedPreview) await preview.evaluate(node => { node.dataset.phase11Identity = 'retained'; });
   await page.locator('.pe-lang-pill-btn').nth(1).click();
   await expect(field).toHaveValue(''); await field.fill('English authored message');
   await page.locator('.pe-lang-pill-btn').nth(0).click();
   await expect(field).toHaveValue('Khmer authored message');
-  await expect(preview).toHaveAttribute('data-phase11-identity', 'retained');
+  if (embeddedPreview) await expect(preview).toHaveAttribute('data-phase11-identity', 'retained');
   await page.getByRole('button', { name: 'Save', exact: true }).click();
   await expect(page.locator('.studio-save-status')).toHaveAttribute('data-phase', 'saved');
   expect(JSON.parse(events.get(101).contentJson).localizedContentV1.en.messageText).toBe('English authored message');
-  await page.reload(); await page.locator('[data-studio-tab="eventInformation"]').click(); await page.locator('[data-studio-section="invitation"] details').evaluate(node => { node.open = true; });
+  await page.reload(); await chooseStudioSection(page, 'eventInformation'); await page.locator('[data-studio-section="invitation"] details').evaluate(node => { node.open = true; });
   await expect(field).toHaveValue('Khmer authored message');
   await page.locator('.pe-lang-pill-btn').nth(1).click(); await expect(field).toHaveValue('English authored message');
 });
@@ -27,7 +30,7 @@ test('wording preview is deliberate and confirmed replacement can be undone', as
   const { events } = await phase9Fixtures(page, { lang: 'en', content: { messageText: 'My custom invitation', photos: [], schedule: [], storyChapters: [], party: [], faq: [] } });
   events.set(101, { ...events.get(101), languageMode: 'KH' });
   await page.goto('/app/events/101/invitation');
-  await page.locator('[data-studio-tab="eventInformation"]').click();
+  await chooseStudioSection(page, 'eventInformation');
   await page.locator('[data-studio-section="invitation"] details').evaluate(node => { node.open = true; });
   const field = page.locator('[data-studio-section="invitation"] textarea');
   await expect(field).toHaveValue('My custom invitation');

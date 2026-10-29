@@ -1,7 +1,8 @@
+import { PageSkeleton, LoadingRegion } from '@/shared/ui/LoadingState';
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Eye, FileDown, Printer, X, ZoomIn, ZoomOut } from "lucide-react";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
-import { ErrorState, Modal, SkeletonCard } from "@/shared/ui";
+import { ErrorState, Modal } from "@/shared/ui";
 import { buildFinancialReport } from "./model/financialReport";
 import { useActiveEventReport } from "./hooks/useActiveEventReport";
 import OwnerReportSummary from "./components/OwnerReportSummary";
@@ -142,6 +143,7 @@ export default function FinancialReport() {
               className="report-action-btn report-preview-btn"
               ref={previewTrigger}
               onClick={() => setIsPreviewMode(true)}
+              disabled={loading || !report}
               title={t("preview")}
             >
               <Eye aria-hidden="true" size={16} />
@@ -151,6 +153,7 @@ export default function FinancialReport() {
               type="button"
               className="report-action-btn report-pdf-btn"
               onClick={handlePrintPdf}
+              disabled={loading || !report}
               title={t("pdf")}
             >
               <FileDown aria-hidden="true" size={16} />
@@ -160,6 +163,7 @@ export default function FinancialReport() {
               type="button"
               className="report-action-btn report-print-button"
               onClick={handlePrint}
+              disabled={loading || !report}
               title={t("print")}
             >
               <Printer aria-hidden="true" size={16} />
@@ -169,12 +173,13 @@ export default function FinancialReport() {
         </header>
       {hasServerInvitation && <OwnerReportSummary invitationId={invitationId} />}
 
-      {error ? (
+      {loading && sourceData && <LoadingRegion />}
+      {error && sourceData && <ErrorState message={error} onRetry={reload} />}
+      {error && !sourceData ? (
         <ErrorState message={error} onRetry={reload} />
-      ) : loading ? (
+      ) : loading && !sourceData ? (
         <div className="report-loading reports-screen-only">
-          <SkeletonCard height="60px" />
-          <SkeletonCard height="120px" />
+          <PageSkeleton layout="dashboard" />
         </div>
       ) : !report ? (
         <p className="report-no-event">{t("noEvent")}</p>

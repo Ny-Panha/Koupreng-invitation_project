@@ -82,4 +82,19 @@ describe("useActiveEventReport", () => {
     expect(services.listGuests).not.toHaveBeenCalled();
     expect(services.listGifts).not.toHaveBeenCalled();
   });
+
+  it('retains the verified report during refresh but hides it immediately on event changes', async () => {
+    const { result, rerender } = renderHook(() => useActiveEventReport());
+    await act(async () => { await result.current.reload(); });
+    let release;
+    services.get.mockImplementation(() => new Promise(resolve => { release = resolve; }));
+    let refresh;
+    act(() => { refresh = result.current.reload(); });
+    expect(result.current.loading).toBe(true);
+    expect(result.current.sourceData.invitation.id).toBe(51);
+    await act(async () => { release({ id: 51 }); await refresh; });
+    services.params = { eventId: '52' };
+    rerender();
+    expect(result.current.sourceData).toBeNull();
+  });
 });

@@ -94,7 +94,7 @@
 .dash-wrapper .event-workspace-content > main { animation: app-page-enter 180ms cubic-bezier(.2,.7,.3,1) both; }
 @keyframes app-page-enter { from { opacity: .85; transform: translateY(5px); } to { opacity: 1; transform: none; } }
 .dash-wrapper .host-nav-divider { display: none; }
-.dash-wrapper .host-nav-link { border-radius: 8px; padding: 8px 11px; }
+.dash-wrapper .host-nav-link { border-radius: 8px; padding: 8px 11px; transition: transform 150ms ease; }
 .dash-wrapper .host-nav-link.active { background: var(--app-accent-soft); color: var(--app-ink); }
 .dash-wrapper .host-header-container { background: var(--app-surface); border-color: var(--app-border); }
 .dash-wrapper .host-profile-pill { border-radius: 10px; }
@@ -294,4 +294,19 @@
 @media(prefers-reduced-motion:reduce) {
   .dash-wrapper .event-workspace-content>main { animation: none; }
   .app-preferences *, .dash-wrapper :is(button,a,input,select,textarea) { transition: none; }
+}
+/* Compact language switch shared by application chrome. */
+.app-language-toggle { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; padding: 4px 6px; border: 1px solid var(--app-border); border-radius: 12px; background: var(--app-surface); color: var(--app-muted); cursor: pointer; font: 600 13px/1.8 var(--font-sans); }
+.app-language-options { display: inline-flex; align-items: center; gap: 2px; padding: 2px; border-radius: 8px; background: var(--app-subtle); }
+.app-language-options > span { display: grid; place-items: center; min-width: 30px; padding: 2px 5px; border-radius: 6px; }
+.app-language-options > span[data-active=true] { background: var(--app-accent); color: var(--app-on-accent); }
+.app-language-toggle:hover { border-color: var(--app-control-border); }
+@media(max-width:420px) {
+  .app-preferences.is-compact .app-language-toggle { width: 60px; padding: 4px; gap: 3px; font-size: 12px; }
+  .app-preferences.is-compact .app-language-toggle > svg { width: 15px; flex-shrink: 0; }
+  .app-preferences.is-compact .app-language-options { padding: 0; background: transparent; }
+  .app-preferences.is-compact .app-language-options > span { min-width: 0; padding: 2px 3px; }
+  .app-preferences.is-compact .app-language-options > span[data-active=false] { display: none; }
+  .dash-wrapper .host-logo-box { flex-basis: 48px; }
+  .dash-wrapper .host-logo-box img { width: 48px; max-width: 48px; }
 }

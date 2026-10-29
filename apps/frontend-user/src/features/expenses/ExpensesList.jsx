@@ -3,7 +3,7 @@ import {
     IoWalletOutline,
     IoAlertCircleOutline,
 } from "react-icons/io5";
-import { SkeletonCard } from "@/shared/ui";
+import { LoadingRegion, PageSkeleton } from "@/shared/ui/LoadingState";
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
 import { useExpenses } from "./hooks/useExpenses";
 import { ExpenseSummaryCards } from "./components/ExpenseSummaryCards";
@@ -46,16 +46,17 @@ export function ExpensesList() {
         loading,
     } = useExpenses();
 
-    if (loading) {
+    if (loading && !backendInvitation) {
         return (
             <div role="main" className="exp-page">
-                <SkeletonCard height="140px" /><SkeletonCard height="240px" />
+                <PageSkeleton layout="dashboard" />
             </div>
         );
     }
 
     return (
-        <div role="main" className="exp-page">
+        <div role="main" className="exp-page" aria-busy={loading}>
+            {loading && <LoadingRegion />}
             {/* Hero */}
             <header className="dash-page-header">
                 <div className="exp-hero-content">

@@ -1,3 +1,4 @@
+import { RefreshStatus } from '../../shared/ui/AdminSkeleton';
 import { useMemo, useState } from "react";
 import { Loading, ErrorState, Empty, Toast } from "../../shared/ui";
 import { useResource, useToast } from "../../shared/hooks";
@@ -16,7 +17,7 @@ const EMPTY_FORM = {
 
 export default function AdminNotificationsPage() {
   const { lang, t } = useAdminLanguage();
-  const { data, setData, loading, error, reload } = useResource(adminManagementService.notifications);
+  const { data, setData, loading, refreshing, error, reload } = useResource(adminManagementService.notifications);
   const [form, setForm] = useState(EMPTY_FORM);
   const [query, setQuery] = useState("");
   const [busy, setBusy] = useState(false);
@@ -55,6 +56,7 @@ export default function AdminNotificationsPage() {
 
   return (
     <div>
+      <RefreshStatus active={refreshing} error={Boolean(error && data)} onRetry={reload} />
       <div className="page-head">
         <div>
           <h2 className="page-title">{t("notifications.title", "Notifications")}</h2>
@@ -150,7 +152,7 @@ export default function AdminNotificationsPage() {
 
         {loading ? (
           <Loading />
-        ) : error ? (
+        ) : error && !data ? (
           <ErrorState onRetry={reload} />
         ) : notifications.length === 0 ? (
           <Empty label={lang === "en" ? "No notifications" : "មិនមានការជូនដំណឹងទេ"} />

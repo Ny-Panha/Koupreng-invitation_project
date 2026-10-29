@@ -1,5 +1,6 @@
 import { RefreshCw, AlertCircle, Inbox } from "lucide-react";
 import AnimatedNumber from "./AnimatedNumber";
+import { AdminSkeleton } from './AdminSkeleton';
 
 export { AnimatedNumber };
 
@@ -258,13 +259,8 @@ export function DataTable({ columns, rows, getRowKey, emptyLabel = "មិនម
   );
 }
 
-export function LoadingState({ label = "កំពុងផ្ទុកទិន្នន័យ..." }) {
-  return (
-    <div className="flex flex-col items-center justify-center p-12 text-center">
-      <div className="h-8 w-8 animate-spin rounded-full border-3 border-amber-500/20 border-t-amber-500 mb-3" />
-      <span className="text-xs font-semibold text-muted-foreground">{label}</span>
-    </div>
-  );
+export function LoadingState({ label, layout = 'table' }) {
+  return <AdminSkeleton label={label} layout={layout} />;
 }
 
 export function ErrorStateView({ message = "មិនអាចទាញយកទិន្នន័យបានទេ", onRetry }) {

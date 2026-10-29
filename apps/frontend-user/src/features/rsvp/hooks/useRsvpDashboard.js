@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import rsvpService from "../api/rsvpApi";
 import { invitationService } from "@/features/invitations/api/invitationApi";
 import { guestService } from "@/features/guests/api/guestApi";
 
 export function useRsvpDashboard(invitationId) {
+  const generation = useRef(0);
   const [invitation, setInvitation] = useState(null);
   const [rsvps, setRsvps] = useState([]);
   const [summary, setSummary] = useState(null);
@@ -15,6 +16,7 @@ export function useRsvpDashboard(invitationId) {
   const [error, setError] = useState("");
 
   const load = useCallback(({ background = false } = {}) => {
+    const request = ++generation.current;
     if (!background) setLoading(true);
     setError("");
     return Promise.all([
@@ -24,22 +26,26 @@ export function useRsvpDashboard(invitationId) {
       guestService.listByInvitation(invitationId),
     ])
       .then(([invData, rsvpData, summaryData, guestData]) => {
+        if (request !== generation.current) return;
         setInvitation(invData);
         setRsvps(rsvpData || []);
         setSummary(summaryData);
         setGuests(guestData || []);
       })
       .catch((err) => {
+        if (request !== generation.current) return;
+        if ([401, 403, 404].includes(err?.status ?? err?.response?.status)) { setInvitation(null); setRsvps([]); setSummary(null); setGuests([]); }
         setError(err.message || "Could not load RSVP records");
         if (background) throw err;
       })
       .finally(() => {
-        setLoading(false);
+        if (request === generation.current) setLoading(false);
       });
   }, [invitationId]);
 
   useEffect(() => {
     load();
+    return () => { generation.current += 1; };
   }, [load]);
 
   const responseRows = useMemo(() => {

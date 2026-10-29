@@ -1,0 +1,56 @@
+# Route and async-state matrix
+
+The table covers active route families from the user router and admin `App`. Parameters and legacy aliases inherit the same module policy. `Retained` means an existing intentional loading treatment was audited and preserved.
+
+Lifecycle policy for every row: initial pending uses only the listed region; success displays server data; zero results use the module's existing empty action; errors resolve to its existing retry/access/unavailable view. Authorization, plan, and quota failures remain access decisions. Forms keep inputs during saves; mutations use their existing busy/progress feedback and server acknowledgement. Skeletons carry no invented business values. Network wrappers retain their existing 30-second timeout. See the final column for the distinctive refresh/partial-update behavior; no new optimistic mutations were introduced.
+
+| Route / component | Actual async dependency | Initial: before → final | Refresh, partial updates, empty/error/access | Evidence |
+|---|---|---|---|---|
+| `/` landing | public templates/packages, images | Retained scoped marketing placeholders | Static hero immediately visible; independent sections; image fallback | critical routes, project-wide UI |
+| `/templates`, categories and detail | public catalog / template detail | Retained marketing card geometry | Existing filters, empty/retry, server offer data | marketing unit tests, critical routes |
+| `/pricing` | public package catalog | custom blocks → shared pricing composition | Static copy stays visible; retry/empty unchanged | pricing unit tests, packages browser fixtures |
+| Login/register/password routes | session and submit requests | neutral session form outline; usable auth forms retained | Button-only submission, expired session redirect, retry session | auth units, critical routes, auth accessibility |
+| `/app/events` | listMine + existing local draft merge | text → event cards | Ready event cards retained during reload; create-first-event empty action | new loading tests, project-wide UI |
+| `/app/events/new` | catalog, recommendations, entitlements | Retained guided form states | Local form remains available; server eligibility, quota and error handling retained | Phase 7 guide/accessibility |
+| `/app/events/:id` shell | invitation + list + access | spinner → compact dashboard shell | Keyed by subject and event; no protected controls before authorization | new loading tests, event access recovery |
+| Event overview | dashboard, budget, gifts, notifications, check-in summary | table → hero/metric/panel shapes | Ready overview retained during refresh; 401/403/404 removes protected content | dashboard units, delayed dashboard, project-wide UI |
+| Event Invitation Studio | initial invitation + template catalog | text/spinner → toolbar, six-tab sidebar, fields and phone | Saved split preference retained; mobile edit geometry; only catalog chooser refreshes; save/upload never remount form | loading matrix, next Studio UX, Phases 7–12 |
+| Studio template chooser | template catalog | text → template cards | Chooser-only loading; edit state untouched; error retry and entitlement checks retained | catalog loading, Studio suites |
+| Studio live preview | authenticated iframe channel + assets | Retained bounded preview loading | Existing 12-second slow-preview recovery, frame/channel checks, editor and focus retention | next Studio UX, Phase 10 |
+| Event settings / generic editor | event and template capabilities | route form composition + retained guided data flow | Editable fields retained during save; permissions and conflicts authoritative | generic guide, project-wide UI |
+| Event preview | preview + media + catalog | spinner → ceremonial preview shape | Template renderer identity and unavailable behavior retained | template contracts, public/Studio suites |
+| `/w/:slug`, `/i/:slug` | public invitation + media/access | text → quiet ceremonial placeholder | No guest information in fallback; unavailable/password views unchanged; RSVP form retained | delayed 403/404, bilingual/public tests |
+| Template preview renderer | lazy renderer module | text → ceremonial placeholder | Independent renderer boundaries; actual opening/video/template artwork unchanged | renderer contracts, Phase 9 video |
+| Media library | media list + event | text → aspect-ratio gallery | Existing upload progress; image-local 15-second error/retry; library and Studio preserved | new media/image tests, project-wide UI |
+| Premium video editor | entitled media catalog, video upload/playback | Retained scoped controls/progress | Existing entitlement gate, measured upload, skip/error fallback; no full-editor skeleton | Phase 9 video/Studio, next Studio UX |
+| Ticket designer/modal | design, media, ticket data | generic cards/text → ticket aspect-ratio shape | Initial canvas hidden until real render; old canvas retained while rerendering; export requires readiness and saved design | ticket units, Phase 9 tickets |
+| Guests | paginated dashboard + overview | Retained bounded five-column table | Prior page retained with `aria-busy`; stale mutations disabled; generation guards, filters and selection policy unchanged | new loading test, guest workspace, Phase 7 guests |
+| Guest import | lazy modal + preview/import | Retained import-specific status | Actual import progress/failures; no placeholders replacing entered rows | guest import unit/browser suites |
+| RSVP | invitation, RSVPs, summary, guests | existing cards → semantic dashboard composition | Generation guard; existing data retained during refresh; auth failures clear protected records | RSVP units, project-wide UI |
+| QR | purpose-specific QR endpoint | existing card wrapped in one loading region | Purpose validation retained; access errors resolve explicitly; no fake QR image | new QR test, QR units |
+| Check-in | roster, summary, camera | spinner → table composition | Camera and mutations keep actual action/error states; QR-check-in entitlement distinct | Phase 7 team/accessibility, project-wide UI |
+| Seating | plan, summary, assignments | text → stable panel shape | Existing plan/assignment/save states and locks retained; no fabricated seats | seating units, project-wide UI |
+| Gifts | gifts + invitation/guest options | existing cards → semantic dashboard composition | Loaded form retained during refresh; currency logic untouched | gift units, project-wide UI |
+| Budget/expenses | budget/expense records | existing cards → semantic dashboard composition | Loaded expense form preserved; mutations/amounts/currencies unchanged | expense units, project-wide UI |
+| Financial reports | invitation, gifts, budget, guests, RSVP, check-in | cards → dashboard composition | Prior report retained during polling; hide immediately on event change or access loss; export disabled while refreshing | report hook/unit tests, project-wide UI |
+| Attendance analytics | dated analytics | text → chart shape | Valid chart retained during refresh, range effect cancellation retained; no fabricated trends | Phase 7 analytics/accessibility |
+| Delivery | delivery workspace | text → table composition | Existing per-action feedback and resend/error handling retained | delivery units, project-wide UI |
+| Wishes | wishes list | cards → semantic list | Ready messages retained during reload; stale/unmounted read completions ignored; missing ID ends loading | wishes units, project-wide UI |
+| Event team / organizations | access, organizations/members | text/cards → form/list compositions | Server roles and feature gates retained; list/form stays mounted on refresh | team/organization units, Phase 7 teams |
+| Notifications | list + summary | cards → semantic list; no initial fake zero summary | Existing records retained; read generations invalidated on unmount; action busy IDs unchanged | notification units, project-wide UI |
+| Profile/settings | profile fetch/update | text → form composition | Save remains action-specific; password/theme/language state preserved | profile units, project-wide UI |
+| AI assistant | invitation fetch + generation | generic card → form composition | Composer generation button and response feedback retained; no artificial content | AI units, critical routes |
+| Purchased templates | paid template list | spinner → template cards | Genuine ownership only; existing empty marketplace link/error retained | payment units, project-wide UI |
+| Packages | packages + entitlements + order history + optional eligibility | text → pricing cards | Latest load wins; verified current data retained during refresh; failed entitlement disables purchase; pending order resumed | subscription units, new delayed package test |
+| Payment history/receipt | backend payment/receipt records | text → table/form composition | No fabricated amounts or settlement; existing error/empty views retained | payment units, project-wide UI |
+| Payment status/return/cancel | trusted order fetch/poll | spinner → initial form shape | Pending verified status stays visible during checks; no new order/claim logic | new pending-to-PAID test, payment units |
+| Admin dashboard | summary plus eight independent reports | spinner → metrics/chart/table outline | Summary and each report reveal independently; old data retained during refresh; missing report becomes unavailable | admin units, new dark partial-load test |
+| Admin users/detail | users + owned invitation list | spinner → table composition | Latest-request guard; existing records retained; explicit auth failures clear them; retry feedback | resource units, admin table retry |
+| Admin templates/edit | catalog/template detail | spinner → template cards / retained edit load through shared wrapper | Existing editor fields, saving and image uploads retained | admin feature tests |
+| Admin packages | package records | spinner → pricing-card composition | No invented benefits; current records retained during reload; existing mutations retained | admin feature tests |
+| Admin payments | backend order ledger | spinner → table composition | No synthetic revenue/settlement; confirm busy state retained; auth errors clear data | admin/payment units, backend suite |
+| Admin notifications/logs | resource list | spinner → table composition | Shared generation/refresh/error policy; existing empty and role checks retained | admin units |
+| Admin reports/exports | definitions + selected management report | local blocks → semantic dashboard composition | Existing abort controllers, stale report marker, filters, export and print states retained | admin reports units, backend reports tests |
+| Admin API monitor | stream and request diagnostics | Retained stream/connection states | Connection errors, event cleanup and permissions remain authoritative | API monitor unit suite |
+
+Geometry is deterministic and bounded. Tables scroll inside their region, cards collapse responsively, media/tickets reserve aspect ratios, Studio hides desktop side/preview shapes below 1024px. CLS and CPU observations are in [04](04-accessibility-and-performance.md). Tests distinguish existing loaded/empty/error/access views from decorative pending shapes; they do not assert that every screen should show a skeleton.

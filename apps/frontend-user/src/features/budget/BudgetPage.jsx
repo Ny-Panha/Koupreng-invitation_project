@@ -1,3 +1,4 @@
+import { PageSkeleton } from '@/shared/ui/LoadingState';
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import budgetService from "./api/budgetApi";
@@ -6,7 +7,7 @@ import BudgetItemTable from "./components/BudgetItemTable";
 import BudgetSummaryCards from "./components/BudgetSummaryCards";
 import CategoryBreakdown from "./components/CategoryBreakdown";
 import BudgetProgress from "./components/BudgetProgress";
-import { EmptyState, ErrorState, SkeletonCard, toast } from "@/shared/ui";
+import { EmptyState, ErrorState, toast } from "@/shared/ui";
 import "./BudgetPages.css";
 
 export default function BudgetPage() {
@@ -149,14 +150,7 @@ export default function BudgetPage() {
     }
   };
 
-  if (loading) {
-    return (
-      <main className="dash-main report-page budget-page" style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-        <SkeletonCard height="180px" />
-        <SkeletonCard height="240px" />
-      </main>
-    );
-  }
+  if (loading) return <PageSkeleton layout="dashboard" />;
 
   if (error && !budget) {
     return (

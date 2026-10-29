@@ -1,4 +1,4 @@
-import { useUiCopy } from "@/shared/i18n/useUiCopy";
+import RouteLoadingSkeleton from "@/shared/ui/RouteLoadingSkeleton";
 import { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 
@@ -8,14 +8,9 @@ import { builderRoutes } from "./routes/builderRoutes";
 import { hostRoutes } from "./routes/hostRoutes";
 import { marketingRoutes } from "./routes/marketingRoutes";
 
-function RouteLoading() {
-  const uiCopy = useUiCopy();
-  return <main className="app-route-loading" role="status" aria-live="polite">{uiCopy("កំពុងផ្ទុកទំព័រ...", "Loading page...")}</main>;
-}
-
 export default function AppRouter() {
   return (
-    <Suspense fallback={<RouteLoading />}>
+    <Suspense fallback={<RouteLoadingSkeleton />}>
     <Routes>
       {builderRoutes()}
       {marketingRoutes()}

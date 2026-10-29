@@ -1,3 +1,4 @@
+import { CardGridSkeleton } from '@/shared/ui/LoadingState';
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Check, ImageOff, Search } from "lucide-react";
@@ -46,7 +47,7 @@ export default function TemplateChooser({ templates, status, onRetry, currentId,
       <label className="tc-search"><span>{copy("ស្វែងរកគំរូ", "Search designs")}</span><div><Search size={18} aria-hidden="true" /><input type="search" value={query} onChange={event => setQuery(event.target.value)} placeholder={copy("ឈ្មោះ កូដ ឬរចនាបថ", "Name, code or style")} /></div></label>
       <div className="tc-filters" role="group" aria-label={copy("ប្រភេទគំរូ", "Design categories")}>{["ALL", ...categories].map(key => <button type="button" key={key} aria-pressed={category === key} onClick={() => setCategory(key)}>{labels[key] || key}</button>)}</div>
     </div>
-    {status === "loading" && <p role="status" className="tc-state">{copy("កំពុងផ្ទុកគំរូ…", "Loading the invitation collection…")}</p>}
+    {status === "loading" && <CardGridSkeleton variant="template" label={copy("កំពុងផ្ទុកគំរូ…", "Loading the invitation collection…")} />}
     {status === "error" && <div role="status" className="tc-state"><p>{copy("មិនអាចផ្ទុកបញ្ជីគំរូបានទេ។ គំរូខាងក្រោមអាចមើលតែប៉ុណ្ណោះ។", "The catalog is unavailable. These demo designs are preview only.")}</p><button type="button" onClick={onRetry}>{copy("សាកម្តងទៀត", "Try again")}</button></div>}
     {message && <p role="alert">{message}</p>}
     {status !== "loading" && <><p className="tc-count" role="status">{filtered.length} {copy("គំរូ", "designs")}</p><div className="tc-grid">{filtered.map(template => {

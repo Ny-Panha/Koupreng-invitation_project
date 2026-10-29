@@ -16,9 +16,11 @@ it('persists light/dark mode and preserves the controlled form while switching',
   fireEvent.click(screen.getByRole('button',{name:'Switch to light mode'}));expect(document.documentElement).toHaveAttribute('data-color-mode','light');
 });
 it('changes only the interface language from the navbar control',()=>{
-  render(<DisplayPreferences/>);fireEvent.change(screen.getByRole('combobox',{name:'Language'}),{target:{value:'km'}});
+  render(<DisplayPreferences/>);fireEvent.click(screen.getByRole('switch',{name:'English interface'}));
   expect(useLanguageStore.getState().lang).toBe('km');expect(localStorage.getItem('koupreng.lang')).toBe('km');
-  expect(screen.getByRole('combobox',{name:'ភាសា'})).toHaveValue('km');
+  expect(screen.getByRole('switch')).toHaveAttribute('aria-checked','false');
+  fireEvent.click(screen.getByRole('switch'));
+  expect(useLanguageStore.getState().lang).toBe('en');
 });
 it('rejects invalid persisted modes and follows cross-tab preference updates',()=>{
   localStorage.setItem(COLOR_MODE_KEY,'untrusted');expect(storedColorMode()).toBe('light');

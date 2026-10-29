@@ -1,5 +1,6 @@
+import { PageSkeleton, LoadingRegion } from '@/shared/ui/LoadingState';
 import { IoGiftOutline } from "react-icons/io5";
-import { SkeletonCard } from "@/shared/ui";
+
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
 import { useGifts } from "./hooks/useGifts";
 import { GiftStatsCards } from "./components/GiftStatsCards";
@@ -29,16 +30,11 @@ export function GiftsFeature() {
         loading,
     } = useGifts();
 
-    if (loading) {
-        return (
-            <div role="main" className="gifts-page">
-                <SkeletonCard height="140px" /><SkeletonCard height="260px" />
-            </div>
-        );
-    }
+    if (loading && !backendInvitation) return <PageSkeleton layout="dashboard" />;
 
     return (
-        <div role="main" className="wg-page">
+        <div role="main" className="wg-page" aria-busy={loading}>
+            {loading && <LoadingRegion />}
             {/* Hero */}
             <header className="dash-page-header">
                 <div className="wg-hero-content">

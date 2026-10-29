@@ -1,3 +1,4 @@
+import { PageSkeleton } from '@/shared/ui/LoadingState';
 import AccessFailureState from "@/shared/access/AccessFailureState";
 import { useEventWorkspace } from "../events/workspace/EventContext";
 import { useUiCopy } from "@/shared/i18n/useUiCopy";
@@ -135,16 +136,7 @@ export default function InvitationCheckInPage() {
         return Math.round((attended / total) * 100);
     }, [summary, guests.length, checkIns.length]);
 
-    if (loading) {
-        return (
-            <div className="inv-page" role="main">
-                <div className="inv-loading" style={{ padding: "60px 0", textAlign: "center", color: "#64748b" }}>
-                    <RefreshCw className="animate-spin" size={28} style={{ margin: "0 auto 12px" }} />
-                    <p style={{ fontWeight: 600 }}>{copy("កំពុងផ្ទុកវត្តមាន…", "Loading check-in data…")}</p>
-                </div>
-            </div>
-        );
-    }
+    if (loading) return <main className="inv-page"><PageSkeleton layout="table" label={copy("កំពុងផ្ទុកវត្តមាន…", "Loading check-in data…")} /></main>;
 
     return (
         <div className="inv-page" role="main">

@@ -178,7 +178,9 @@ test("guest list filters intersect and reset; invitation and tools remain usable
   await page.keyboard.press("Escape");
   await expect(page.getByRole("button", { name: "Manage Groups" })).toHaveCount(0);
   await expect(page.getByRole("button", { name: "Manage Categories" })).toHaveCount(0);
-  await page.getByRole('checkbox',{ name:'Select all guests on this page' }).check();
+  if (testInfo.project.name === 'mobile-chromium') {
+    for (const checkbox of await page.getByRole('checkbox', { name: /^Select guest:/ }).all()) await checkbox.check();
+  } else await page.getByRole('checkbox', { name: 'Select all guests on this page' }).check();
   const download = page.waitForEvent("download");
   await page.getByRole("button", { name: "Export selected (6)" }).click();
   expect((await download).suggestedFilename()).toBe("selected-guests-42.csv");

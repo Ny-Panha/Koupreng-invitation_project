@@ -1,3 +1,4 @@
+import { PageSkeleton } from '@/shared/ui/LoadingState';
 import { useId, useState, useEffect } from "react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import SocialAuthButtons from "./components/SocialAuthButtons";
@@ -150,13 +151,7 @@ export default function ProfilePage() {
     user?.email?.charAt(0)?.toUpperCase() ||
     "?";
 
-  if (loading) {
-    return (
-      <div style={{ textAlign: "center", padding: "80px 20px", fontFamily: "'Kantumruy Pro', sans-serif", color: "var(--ui-muted)" }}>
-        {t("loading")}
-      </div>
-    );
-  }
+  if (loading) return <PageSkeleton label={t("loading")} />;
 
   return (
     <>
@@ -379,11 +374,7 @@ export default function ProfilePage() {
 
     <div className="profile-page" role="main">
         <h1>{hasProfile ? t("editTitle") : t("createTitle")}</h1>
-        <p className="subtitle">
-          {hasProfile
-            ? t("editSubtitle")
-            : t("createSubtitle")}
-        </p>
+
 
         {/* ── Avatar ── */}
         <div className="profile-avatar-section">

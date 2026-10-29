@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { notificationsApi } from "../api/notificationsApi";
 
 export function useNotifications() {
+  const generation = useRef(0);
   const [notifications, setNotifications] = useState([]);
   const [summary, setSummary] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -9,6 +10,7 @@ export function useNotifications() {
   const [busyId, setBusyId] = useState(null);
 
   const loadData = useCallback(() => {
+    const request = ++generation.current;
     setLoading(true);
     setError("");
     Promise.all([
@@ -16,20 +18,23 @@ export function useNotifications() {
       notificationsApi.summary(),
     ])
       .then(([items, counts]) => {
+        if (request !== generation.current) return;
         setNotifications(items || []);
         setSummary(counts || null);
         setError("");
       })
       .catch((err) => {
+        if (request !== generation.current) return;
         setError(err?.message || "Could not load notifications");
       })
       .finally(() => {
-        setLoading(false);
+        if (request === generation.current) setLoading(false);
       });
   }, []);
 
   useEffect(() => {
     loadData();
+    return () => { generation.current += 1; };
   }, [loadData]);
 
   const markRead = async (notificationId) => {

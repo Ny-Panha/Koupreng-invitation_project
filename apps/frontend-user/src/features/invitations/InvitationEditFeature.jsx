@@ -1,3 +1,4 @@
+import { InvitationStudioSkeleton } from '@/shared/ui/LoadingState';
 import { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import InvitationForm from "./InvitationForm";
@@ -179,13 +180,7 @@ export default function InvitationEditPage() {
         };
     }, [id, eventId, user?.id, user?.userId]);
 
-    if (loading) {
-        return (
-            <div style={{ padding: "48px 24px", textAlign: "center", color: "#64748b" }}>
-                <div>{t("loading") || "កំពុងទាញយក..."}</div>
-            </div>
-        );
-    }
+    if (loading) return <InvitationStudioSkeleton label={t("loading")} />;
 
     // A route without an id is a local, unsaved editor draft.
     if (templateError) return <TemplateUnavailable />;

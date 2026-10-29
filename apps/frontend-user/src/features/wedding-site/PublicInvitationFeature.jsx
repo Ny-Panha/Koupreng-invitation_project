@@ -1,3 +1,4 @@
+import { PageSkeleton } from '@/shared/ui/LoadingState';
 import { guestLocale, localeContent, projectLocale } from '../templates/shared/localizedContent';
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useParams, useSearchParams } from "react-router-dom";
@@ -240,7 +241,7 @@ export default function PublicInvitationPage() {
 
     if (remoteLoading) {
         const effectiveLang = invitation?.languageMode || activeDraft?.languageMode || searchParams.get("lang");
-        return <div className="public-state" role="status">{publicStateCopy(effectiveLang).loading}</div>;
+        return <PageSkeleton layout="public" label={publicStateCopy(effectiveLang).loading} />;
     }
 
     const verifyAccess = async (password) => {

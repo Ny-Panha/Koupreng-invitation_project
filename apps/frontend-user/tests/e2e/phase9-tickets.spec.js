@@ -14,7 +14,7 @@ test('ticket images use independent upload, persist cover/background, transform 
   await page.getByRole('combobox', { name: 'Cover fit', exact: true }).selectOption('CONTAIN');
   await page.getByLabel('Vertical focal point', { exact: true }).fill('75');
   await page.getByRole('button', { name: 'Save design', exact: true }).click();
-  await expect(page.getByText('Ticket design saved for this event', { exact: true })).toBeVisible();
+  await expect(page.locator('.ticket-save-status')).toHaveText('Saved');
   const saved = state.design(); expect(saved.coverMediaId).toBeTruthy(); expect(saved.backgroundMediaId).toBeTruthy(); expect(saved.coverFocusY).toBe(75);
   await page.reload();
   await expect(page.getByRole('combobox', { name: 'Cover fit', exact: true })).toHaveValue('CONTAIN');

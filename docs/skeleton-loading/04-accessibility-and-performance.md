@@ -1,0 +1,9 @@
+# Accessibility and performance evidence
+
+Automated checks cover a single loading status, pending-only `aria-busy`, hidden noninteractive shapes, deterministic/bounded DOM, English/Khmer labels, keyboard/focus retention, actual image retry and reduced-motion CSS. Browser axe checks cover the Studio and event loading regions and admin dark loading; existing accessibility suites cover loaded forms, guests, teams, analytics and authorization. No claim of manual screen-reader certification is made.
+
+All eight requested widths are captured: 320, 375, 390, 430, 768, 1024, 1366 and 1440px. New loading golden images use Windows Chromium at 390/1440px in English/Khmer. Four existing event/overview goldens were intentionally updated after the user's language-switch redesign, following rendered review. Their clock is fixed to the original 402-day countdown to remove date drift. Final comparisons run without updating snapshots.
+
+The reproducible Studio measurement in `skeleton-loading.spec.js` holds a fixture response, profiles one second of visible placeholders with Chromium CDP, releases the request, then observes the reveal. [Measured output](../../output/skeleton-loading/after/performance.json) records CLS, transition latency and browser task time. This measures local fixture/UI cost, not a network-speed guarantee or a physical-phone benchmark. The assertion requires CLS below 0.1 and reveal below 5 seconds; requests are never delayed by production code.
+
+The final sample measured CLS 0.06748, 559ms reveal and 2.664ms browser task time per second. The linked JSON is authoritative. Axe found and helped resolve inherited admin entrance opacity, duplicate page-banner landmarks, theme-transition contrast and ticket-download hover contrast. Animation is transform-only, has no animation dependency, and reduced motion removes the shimmer pseudo-element.

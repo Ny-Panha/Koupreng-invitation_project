@@ -12,12 +12,13 @@ export function useActiveEventReport() {
   const eventId = params.eventId || params.invitationId;
   const generation = useRef(0);
   const [sourceData, setSourceData] = useState(null);
+  const [loadedEventId, setLoadedEventId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [generatedAt, setGeneratedAt] = useState(() => new Date());
   const reload = useCallback(async () => {
     const request = ++generation.current;
-    setLoading(true); setError(""); setSourceData(null);
+    setLoading(true); setError("");
     try {
       if (!/^[1-9]\d*$/.test(String(eventId || ""))) throw new Error("Choose an event to view its report");
       const invitation = await invitationService.get(eventId);
@@ -26,9 +27,15 @@ export function useActiveEventReport() {
         rsvpService.listByInvitation(eventId), guestService.checkInList(eventId),
       ]);
       if (request !== generation.current) return;
+      setLoadedEventId(eventId);
       setSourceData({ invitation, gifts: asList(gifts), expenses: asList(budget?.items || budget?.budgetItems || budget), guests: asList(guests), rsvps: asList(rsvps), checkIns: asList(checkIns) });
       setGeneratedAt(new Date());
-    } catch (err) { if (request === generation.current) setError(err.message); }
+    } catch (err) {
+      if (request === generation.current) {
+        if ([401, 403, 404].includes(err?.status ?? err?.response?.status)) { setSourceData(null); setLoadedEventId(null); }
+        setError(err.message);
+      }
+    }
     finally { if (request === generation.current) setLoading(false); }
   }, [eventId]);
   useEffect(() => {
@@ -37,6 +44,6 @@ export function useActiveEventReport() {
     window.addEventListener("focus", reload);
     return () => { generation.current += 1; window.clearInterval(interval); window.removeEventListener("focus", reload); };
   }, [reload]);
-  return { sourceData, loading, error, generatedAt, reload };
+  return { sourceData: loadedEventId === eventId ? sourceData : null, loading, error, generatedAt, reload };
 }
 export default useActiveEventReport;

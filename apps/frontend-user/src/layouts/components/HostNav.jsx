@@ -2,7 +2,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import {
   CalendarDays as IoCalendarClearOutline,
-  Check as IoCheckmarkOutline,
   ChevronDown as IoChevronDownOutline,
   Palette as IoColorPaletteOutline,
   Gem as IoDiamondOutline,
@@ -60,11 +59,6 @@ const REQUIRED_NAV_LABELS = {
   },
 };
 
-const LANGUAGE_OPTIONS = [
-
-  { code: "en", label: { en: "English", km: "ភាសាអង់គ្លេស" }, flag: "us", htmlLang: "en" },
-  { code: "km", label: { en: "Khmer", km: "ភាសាខ្មែរ" }, flag: "kh", htmlLang: "km" },
-];
 
 function toAppRelativeUploadUrl(value) {
   if (!value) return "";
@@ -84,7 +78,6 @@ export default function HostNav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const language = useLanguageStore((state) => state.lang);
-  const setLanguage = useLanguageStore((state) => state.setLang);
   const profileRef = useRef(null);
   const mobileNavRef = useRef(null);
   const hamburgerRef = useRef(null);
@@ -92,7 +85,6 @@ export default function HostNav() {
   const navigate = useNavigate();
   const { logout, user } = useAuth();
   const { text: navText } = useBackendMessages("hostNav");
-  const selectedLanguage = LANGUAGE_OPTIONS.find((option) => option.code === language) || LANGUAGE_OPTIONS[1];
   const displayName = user?.fullName?.trim()
     || user?.full_name?.trim()
     || user?.name?.trim()
@@ -109,8 +101,8 @@ export default function HostNav() {
   }, []);
 
   useEffect(() => {
-    document.documentElement.lang = selectedLanguage.htmlLang;
-  }, [selectedLanguage.htmlLang]);
+    document.documentElement.lang = language;
+  }, [language]);
 
   useEffect(() => {
     const handlePointerDown = (event) => {
@@ -181,10 +173,6 @@ export default function HostNav() {
     closeMobileMenu();
     logout();
     navigate("/", { replace: true });
-  };
-
-  const handleSelectLanguage = (option) => {
-    setLanguage(option.code);
   };
 
   return (
@@ -871,27 +859,7 @@ export default function HostNav() {
                   </Link>
                   <div style={{ height: "1px", background: "rgba(176, 146, 106, 0.2)", margin: "8px 0" }} />
                   
-                  <div style={{ padding: "4px 12px", fontSize: "12px", fontWeight: "700", color: "#888", textTransform: "uppercase" }}>
-                    {navText("language") || "Language"}
-                  </div>
-                  {LANGUAGE_OPTIONS.map((option) => (
-                    <button
-                      key={option.code}
-                      type="button"
-                      role="menuitem"
-                      className={`host-profile-menu-item${option.code === selectedLanguage.code ? " active" : ""}`}
-                      onClick={() => handleSelectLanguage(option)}
-                      style={{ padding: "8px 12px" }}
-                    >
-                      <span className={`host-language-flag ${option.flag}`} aria-hidden="true" style={{ width: "22px", height: "15px" }} />
-                      <span style={{ flex: 1, textAlign: "left" }}>{option.label[language]}</span>
-                      {option.code === selectedLanguage.code && (
-                        <IoCheckmarkOutline aria-hidden="true" style={{ color: "#B0926A" }} />
-                      )}
-                    </button>
-                  ))}
 
-                  <div style={{ height: "1px", background: "rgba(176, 146, 106, 0.2)", margin: "8px 0" }} />
 
                   <button
                     type="button"

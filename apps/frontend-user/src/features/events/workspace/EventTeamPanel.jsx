@@ -1,3 +1,4 @@
+import { PageSkeleton } from '@/shared/ui/LoadingState';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/features/auth/hooks/useAuth';
@@ -40,7 +41,7 @@ export default function EventTeamPanel() {
   const eligible = state.access?.ownerFeatures?.includes('TEAM_MEMBERS');
   return <main className="workspace-page"><header className="workspace-heading"><h1>{copy('ក្រុមកម្មវិធី', 'Event team')}</h1><p>{copy('ភ្ជាប់ក្រុមដែលអ្នកជាម្ចាស់ ដើម្បីសហការតាមតួនាទី។', 'Link a team you own to collaborate according to each member’s role.')}</p></header>
     <section className="workspace-section"><p>{copy('សមាជិកទទួលសិទ្ធិលើកម្មវិធីទាំងអស់ដែលម្ចាស់ភ្ជាប់ទៅក្រុមនេះ។ ម្ចាស់គ្រប់គ្រងការផ្សព្វផ្សាយ ហិរញ្ញវត្ថុ សិទ្ធិចូល និងសមាជិក។ ការដកសមាជិកបញ្ចប់សិទ្ធិលើកម្មវិធីដែលភ្ជាប់។', 'Members can access all owner events linked to this team. Publishing, finances, access settings and membership stay owner-controlled. Removing a member revokes their access to linked events.')}</p>
-      {state.loading ? <p role="status">{copy('កំពុងផ្ទុក…', 'Loading…')}</p> : <>
+      {state.loading ? <PageSkeleton layout="form" /> : <>
         {!owner && <p>{copy('មានតែម្ចាស់អាចប្ដូរក្រុមកម្មវិធី។', 'Only the event owner can change its team.')}</p>}
         {owner && !eligible && <FeatureAccessCard feature="TEAM_MEMBERS" ownerOnly force />}
         {owner && <form onSubmit={event => { event.preventDefault(); setReview(true); }}><label className="workspace-field">{copy('ក្រុមដែលភ្ជាប់', 'Linked team')}<select className="workspace-input" disabled={busy} value={selection} onChange={event => setSelection(event.target.value)}><option value="">{copy('គ្មានក្រុម', 'No team')}</option>{state.teams.map(team => <option value={team.id} key={team.id} disabled={!eligible}>{team.name}</option>)}</select></label><div className="workspace-actions"><button type="submit" className="workspace-button primary" disabled={busy || state.loading || (Boolean(selection) && !eligible) || selection === String(event.organizationId || '')}>{copy('ពិនិត្យការប្ដូរក្រុម', 'Review team change')}</button><Link className="workspace-button" to="/app/organizations">{copy('គ្រប់គ្រងក្រុម និងការអញ្ជើញ', 'Manage teams and invitations')}</Link></div></form>}

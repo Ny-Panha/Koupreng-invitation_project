@@ -1,3 +1,4 @@
+import { AdminSkeleton } from '../../shared/ui/AdminSkeleton';
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { RefreshCw, CircleAlert } from "lucide-react";
@@ -354,11 +355,7 @@ export default function AdminReportOverview() {
         </div>
       )}
       {loading && !report && !error && (
-        <div className="report-skeleton" aria-label={text("loadingReport")}>
-          <span />
-          <span />
-          <span />
-        </div>
+        <AdminSkeleton layout="dashboard" label={text("loadingReport")} />
       )}
       {report && (
         <>

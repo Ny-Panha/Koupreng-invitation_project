@@ -1,3 +1,4 @@
+import { PageSkeleton } from '@/shared/ui/LoadingState';
 import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -38,7 +39,7 @@ export default function PaymentHistoryPage() {
     }, [load]);
 
     if (loading) {
-        return <main className="enterprise-page"><div className="enterprise-empty">{uiCopy("កំពុងផ្ទុកការទូទាត់...", "Loading payments...")}</div></main>;
+        return <main className="enterprise-page"><PageSkeleton layout="table" /></main>;
     }
 
     return (

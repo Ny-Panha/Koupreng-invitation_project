@@ -1,3 +1,4 @@
+import { RefreshStatus } from '../../shared/ui/AdminSkeleton';
 import { useMemo, useState } from "react";
 import {
   Layers,
@@ -362,7 +363,7 @@ function ToggleSwitch({ checked, onChange, label, sublabel, icon: Icon }) {
 
 export default function AdminPackagesPage() {
   const { lang, t } = useAdminLanguage();
-  const { data, setData, loading, error, reload } = useResource(adminManagementService.packages);
+  const { data, setData, loading, refreshing, error, reload } = useResource(adminManagementService.packages);
   const [form, setForm] = useState(EMPTY_FORM);
   const [editingId, setEditingId] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -520,6 +521,7 @@ export default function AdminPackagesPage() {
 
   return (
     <div className="space-y-6">
+      <RefreshStatus active={refreshing} error={Boolean(error && data)} onRetry={reload} />
       {/* Page Header with Tavola Luxury Styling */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
@@ -648,8 +650,8 @@ export default function AdminPackagesPage() {
 
       {/* Main Content */}
       {loading ? (
-        <Loading />
-      ) : error ? (
+        <Loading layout="pricing" />
+      ) : error && !data ? (
         <ErrorState onRetry={reload} />
       ) : filteredPackages.length === 0 ? (
         <Empty label={t("packages.empty", lang === "en" ? "No packages found" : "រកមិនឃើញកញ្ចប់សេវាកម្មទេ")} />

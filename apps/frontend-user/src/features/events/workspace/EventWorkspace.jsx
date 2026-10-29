@@ -1,9 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { PageSkeleton } from '@/shared/ui/LoadingState';
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { Link, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
-import { Menu, Sparkles } from "lucide-react";
+import { Menu } from "lucide-react";
 import { invitationService } from "@/features/invitations/api/invitationApi";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useLanguageStore } from "@/stores/useLanguageStore";
+import RouteLoadingSkeleton from "@/shared/ui/RouteLoadingSkeleton";
 import Modal from "@/shared/ui/Modal";
 import { EventContext } from "./EventContext";
 import { EVENT_MODULES, eventPath } from "./eventRoutes";
@@ -76,12 +78,7 @@ function VerifiedWorkspace({ eventId }) {
   );
 
   if (state.loading || (state.event && state.subject !== subject)) return (
-    <div className="event-workspace workspace-page" role="status">
-      <div className="event-workspace-loading">
-        <Sparkles className="spin-slow" size={24} style={{ color: "var(--ws-gold, #967037)" }} />
-        <span>{en ? "Loading event workspace…" : "កំពុងទាញយកទិន្នន័យកម្មវិធី…"}</span>
-      </div>
-    </div>
+    <div className="event-workspace workspace-page"><PageSkeleton layout={currentModule === 'invitation' ? 'studio' : 'dashboard'} label={en ? 'Loading event workspace…' : 'កំពុងទាញយកទិន្នន័យកម្មវិធី…'} /></div>
   );
 
   if (state.error) return (
@@ -131,14 +128,14 @@ function VerifiedWorkspace({ eventId }) {
       {!focusedStudio && <a className="event-skip-link" href="#event-module-content">{en ? "Skip to event content" : "ទៅមាតិកាកម្មវិធី"}</a>}
       {!overlay && <aside className="event-workspace-sidebar"><EventNavigation {...navProps} /></aside>}
       <div className="event-workspace-main" ref={mainPanel}>
-        {focusedStudio ? <div id="invitation-studio-toolbar" className="studio-toolbar-mount" /> : <header className="event-workspace-header">
+        {focusedStudio ? <div id="invitation-studio-toolbar" className="studio-toolbar-mount" /> : <header className="event-workspace-header" role="presentation">
           <button type="button" ref={menuTrigger} className="event-mobile-nav-toggle" onClick={() => setMobileDrawerOpen(true)}
             aria-label={en ? "Toggle modules menu" : "បើកម៉ឺនុយមុខងារ"} aria-expanded={mobileDrawerOpen} aria-haspopup="dialog" aria-controls={mobileDrawerOpen ? "event-module-navigation" : undefined}>
             <Menu size={20} aria-hidden="true" /><span className="sr-only">{activeModuleLabel}</span>
           </button>
           <div className="event-header-identity"><p className="event-workspace-title">{state.event.title}</p><span className={`event-status-pill badge-${status.tone}`}>{status.label}</span></div>
         </header>}
-        <div className="event-workspace-content" id="event-module-content" tabIndex={-1}>{!allowed(currentModule) && !studioRecovery ? <div className="workspace-page" role="alert"><p>{en ? 'You do not have permission for this event section.' : 'អ្នកមិនមានសិទ្ធិចូលផ្នែកកម្មវិធីនេះទេ។'}</p><Link className="workspace-button" to={eventPath(eventId)}>{en ? 'Event overview' : 'ទិដ្ឋភាពកម្មវិធី'}</Link></div> : !owner && currentModule === '' ? <main className="workspace-page"><h1>{state.event.title}</h1><p>{en ? 'Shared event. Available tools follow your accepted team role and the owner’s current package.' : 'កម្មវិធីចែករំលែក។ ឧបករណ៍អាស្រ័យលើតួនាទីក្រុម និងកញ្ចប់បច្ចុប្បន្នរបស់ម្ចាស់។'}</p><p>{state.event.eventDate} · {state.event.venueName}</p><div className="workspace-actions">{ALL_EVENT_LINKS.filter(item => item.path && allowed(item.path)).map(item => <Link key={item.path} className="workspace-button" to={eventPath(eventId, item.path)}>{item[en ? 'en' : 'km']}</Link>)}</div></main> : <Outlet />}</div>
+        <div className="event-workspace-content" id="event-module-content" tabIndex={-1}>{!allowed(currentModule) && !studioRecovery ? <div className="workspace-page" role="alert"><p>{en ? 'You do not have permission for this event section.' : 'អ្នកមិនមានសិទ្ធិចូលផ្នែកកម្មវិធីនេះទេ។'}</p><Link className="workspace-button" to={eventPath(eventId)}>{en ? 'Event overview' : 'ទិដ្ឋភាពកម្មវិធី'}</Link></div> : !owner && currentModule === '' ? <main className="workspace-page"><h1>{state.event.title}</h1><p>{en ? 'Shared event. Available tools follow your accepted team role and the owner’s current package.' : 'កម្មវិធីចែករំលែក។ ឧបករណ៍អាស្រ័យលើតួនាទីក្រុម និងកញ្ចប់បច្ចុប្បន្នរបស់ម្ចាស់។'}</p><p>{state.event.eventDate} · {state.event.venueName}</p><div className="workspace-actions">{ALL_EVENT_LINKS.filter(item => item.path && allowed(item.path)).map(item => <Link key={item.path} className="workspace-button" to={eventPath(eventId, item.path)}>{item[en ? 'en' : 'km']}</Link>)}</div></main> : <Suspense fallback={<RouteLoadingSkeleton />}><Outlet /></Suspense>}</div>
       </div>
     </div>
     <Modal isOpen={overlay && mobileDrawerOpen} onClose={closeNavigation} showHeader={false}

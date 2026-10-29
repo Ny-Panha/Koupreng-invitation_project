@@ -1,3 +1,4 @@
+import { RefreshStatus } from '../../shared/ui/AdminSkeleton';
 import { useMemo, useState } from "react";
 import { Loading, ErrorState, Empty } from "../../shared/ui";
 import { useResource } from "../../shared/hooks";
@@ -7,7 +8,7 @@ import adminManagementService from "../../shared/api/adminService";
 
 export default function AdminSystemLogsPage() {
   const { lang, t } = useAdminLanguage();
-  const { data, loading, error, reload } = useResource(adminManagementService.systemLogs);
+  const { data, loading, refreshing, error, reload } = useResource(adminManagementService.systemLogs);
   const [query, setQuery] = useState("");
 
   const logs = useMemo(() => {
@@ -22,6 +23,7 @@ export default function AdminSystemLogsPage() {
 
   return (
     <div>
+      <RefreshStatus active={refreshing} error={Boolean(error && data)} onRetry={reload} />
       <div className="page-head">
         <div>
           <h2 className="page-title">{t("systemLogs.title", "System logs")}</h2>
@@ -43,7 +45,7 @@ export default function AdminSystemLogsPage() {
         </div>
         {loading ? (
           <Loading />
-        ) : error ? (
+        ) : error && !data ? (
           <ErrorState onRetry={reload} />
         ) : logs.length === 0 ? (
           <Empty label={lang === "en" ? "No logs found" : "មិនមានកំណត់ហេតុទេ"} />

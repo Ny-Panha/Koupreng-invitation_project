@@ -260,7 +260,7 @@ export default function GuestsPage() {
 
   return (
     <main className="dash-main pe-guests-page guest-workspace">
-      <header className="guest-page-header">
+      <header className="guest-page-header" role="presentation">
         <div>
           {eventTitle && <p className="guest-event-name"><span aria-hidden="true" />{eventTitle}</p>}
           <h1>{t ? t("title") : "បញ្ជីភ្ញៀវកិត្តិយស"}</h1>
@@ -306,8 +306,15 @@ export default function GuestsPage() {
         <ErrorState message={error || mutationError} onRetry={refreshData} />
       )}
 
-      <div className="guest-results-summary" role="status" aria-live="polite">{loading || queryPending ? t("loadingGuests") : serverMode ? (en ? `Showing ${filteredGuests.length} of ${matchingRecords ?? '—'} matching guest records.` : `បង្ហាញ ${filteredGuests.length} ក្នុង ${matchingRecords ?? '—'} កំណត់ត្រាភ្ញៀវដែលត្រូវនឹងតម្រង។`) : t("resultsCount", { shown: filteredGuests.length, total: guests.length })}{hasFilters && <button type="button" className="guest-text-button" onClick={clearFilters}>{t("clearFilters")}</button>}</div>
-      {serverMode && <div className="guest-page-controls"><label>{en ? 'Records per page' : 'កំណត់ត្រាក្នុងមួយទំព័រ'}<select value={serverQuery.size} onChange={event => changeQuery({ size: Number(event.target.value) })}>{[25,50,100].map(size => <option key={size} value={size}>{size}</option>)}</select></label><button type="button" className="guest-button guest-button-secondary" disabled={loading || queryPending || serverQuery.page === 0} onClick={() => { setSelectedIds([]); setServerQuery(current => ({ ...current, page: current.page - 1 })); }}>{en ? 'Previous page' : 'ទំព័រមុន'}</button><span>{serverQuery.page + 1} / {Math.max(1,pageInfo?.totalPages || 1)}</span><button type="button" className="guest-button guest-button-secondary" disabled={loading || queryPending || !pageInfo || serverQuery.page + 1 >= pageInfo.totalPages} onClick={() => { setSelectedIds([]); setServerQuery(current => ({ ...current, page: current.page + 1 })); }}>{en ? 'Next page' : 'ទំព័របន្ទាប់'}</button><small>{en ? 'Selection resets when you change page or filters. Exports omit contacts and guest tokens.' : 'ការជ្រើសរើសត្រូវលុបពេលប្ដូរទំព័រ ឬតម្រង។ ឯកសារនាំចេញមិនរួមទំនាក់ទំនង ឬកូដភ្ញៀវ។'}</small></div>}
+      <div className="guest-results-summary" role="status" aria-live="polite">{loading || queryPending ? t("loadingGuests") : serverMode ? (en ? `${filteredGuests.length} / ${matchingRecords ?? '—'} guests` : `${filteredGuests.length} / ${matchingRecords ?? '—'} ភ្ញៀវ`) : t("resultsCount", { shown: filteredGuests.length, total: guests.length })}{hasFilters && <button type="button" className="guest-text-button" onClick={clearFilters}>{t("clearFilters")}</button>}</div>
+      {serverMode && pageInfo && (pageInfo.totalElements > 25 || serverQuery.size !== 25 || serverQuery.page > 0) && <nav className="guest-page-controls" aria-label={en ? 'Guest pages' : 'ទំព័រភ្ញៀវ'}>
+        <label>{en ? 'Per page' : 'ក្នុងមួយទំព័រ'}<select aria-label={en ? 'Records per page' : 'កំណត់ត្រាក្នុងមួយទំព័រ'} value={serverQuery.size} onChange={event => changeQuery({ size: Number(event.target.value) })}>{[25, 50, 100].map(size => <option key={size} value={size}>{size}</option>)}</select></label>
+        {(pageInfo.totalPages > 1 || serverQuery.page > 0) && <>
+          <button type="button" aria-label={en ? 'Previous page' : 'ទំព័រមុន'} className="guest-button guest-button-secondary" disabled={loading || queryPending || serverQuery.page === 0} onClick={() => { setSelectedIds([]); setServerQuery(current => ({ ...current, page: current.page - 1 })); }}>{en ? 'Previous' : 'មុន'}</button>
+          <span>{serverQuery.page + 1} / {Math.max(1, pageInfo.totalPages)}</span>
+          <button type="button" aria-label={en ? 'Next page' : 'ទំព័របន្ទាប់'} className="guest-button guest-button-secondary" disabled={loading || queryPending || serverQuery.page + 1 >= pageInfo.totalPages} onClick={() => { setSelectedIds([]); setServerQuery(current => ({ ...current, page: current.page + 1 })); }}>{en ? 'Next' : 'បន្ទាប់'}</button>
+        </>}
+      </nav>}
       {loading && !pageInfo ? (
         <SkeletonTable rows={5} columns={5} />
       ) : (

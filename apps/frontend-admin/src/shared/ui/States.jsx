@@ -1,19 +1,18 @@
-export function Loading({ label = "កំពុងផ្ទុក..." }) {
-    return (
-        <div className="state">
-            <div className="spinner" />
-            {label}
-        </div>
-    );
+import { AdminSkeleton } from './AdminSkeleton';
+import { useAdminLanguage } from '../../app/providers/AdminLanguageProvider';
+
+export function Loading({ label, layout = 'table' }) {
+    return <AdminSkeleton label={label} layout={layout} />;
 }
 
-export function ErrorState({ message = "មានបញ្ហាក្នុងការផ្ទុកទិន្នន័យ", onRetry }) {
+export function ErrorState({ message, onRetry }) {
+    const { lang } = useAdminLanguage();
     return (
-        <div className="state state-error">
-            <p>⚠️ {message}</p>
+        <div className="state state-error" role="alert">
+            <p>⚠️ {message || (lang === 'en' ? 'Could not load records.' : 'មានបញ្ហាក្នុងការផ្ទុកទិន្នន័យ')}</p>
             {onRetry && (
                 <button type="button" className="btn btn-ghost btn-sm" onClick={onRetry} style={{ marginTop: 10 }}>
-                    ព្យាយាមម្តងទៀត
+                    {lang === 'en' ? 'Retry' : 'ព្យាយាមម្តងទៀត'}
                 </button>
             )}
         </div>

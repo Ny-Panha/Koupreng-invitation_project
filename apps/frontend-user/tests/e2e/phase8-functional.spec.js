@@ -3,6 +3,10 @@ import AxeBuilder from '@axe-core/playwright';
 import { phase8Content, phase8Fixtures } from './support/phase8Fixtures';
 import { chooseStudioSection } from './support/studioNavigationActions';
 
+// Functional assertions use the same motion policy and timeout as the Phase 8 config.
+test.use({ reducedMotion: 'reduce' });
+test.describe.configure({ timeout: 60000 });
+
 test('guided multi-day editing, save/reload, advanced settings, public display and ICS', async ({ page }, info) => {
   const { events, writes } = await phase8Fixtures(page);
   await page.goto('/app/events/101/invitation?mode=guided');

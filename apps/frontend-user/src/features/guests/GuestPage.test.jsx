@@ -31,3 +31,12 @@ it('shows server-wide totals, selects only the current page, and clears selectio
   expect(guestService.listByInvitation).not.toHaveBeenCalled();
   expect(guestService.page).toHaveBeenCalledWith(10, expect.objectContaining({ page: 1, size: 25 }));
 });
+
+it('hides redundant pagination and guidance for one small page', async () => {
+  guestService.page.mockResolvedValue({ items: [{ guest: { id: 1, guestName: 'Small list', seatCount: 1 } }], page: 0, size: 25, totalElements: 1, totalPages: 1 });
+  render(<MemoryRouter initialEntries={['/app/events/10/guests']}><Routes><Route path="/app/events/:eventId/guests" element={<GuestsPage />} /></Routes></MemoryRouter>);
+  await screen.findByText('Small list');
+  expect(screen.queryByRole('navigation', { name: 'Guest pages' })).toBeNull();
+  expect(screen.queryByText(/Selection resets|Exports omit/)).toBeNull();
+  expect(screen.getByRole('button', { name: 'Import', exact: true })).toBeEnabled();
+});

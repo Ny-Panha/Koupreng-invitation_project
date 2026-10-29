@@ -1,3 +1,4 @@
+import { CardGridSkeleton } from '@/shared/ui/LoadingState';
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
@@ -123,7 +124,8 @@ export function EventsFeature() {
               </label>
             </div>
 
-            {loading && <p role="status" className="workspace-muted">{en ? "Loading your events…" : "កំពុងទាញយកកម្មវិធី…"}</p>}
+            {loading && drafts.length === 0 && <CardGridSkeleton variant="event" />}
+            {loading && drafts.length > 0 && <p role="status" className="workspace-muted">{en ? "Loading your events…" : "កំពុងទាញយកកម្មវិធី…"}</p>}
 
             {!loading && drafts.length === 0 ? (
                 <div className="events-empty-state">

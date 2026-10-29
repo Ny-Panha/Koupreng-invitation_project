@@ -1,3 +1,4 @@
+import { PageSkeleton } from '@/shared/ui/LoadingState';
 import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -88,14 +89,7 @@ export default function InvitationPreviewPage() {
         postPreviewMessage({ type: "TOGGLE_GATE", open: nextState }, previewChannel);
     };
 
-    if (loading) {
-        return (
-            <div className="inv-preview-loading-screen">
-                <div className="inv-preview-spinner" />
-                <p>{uiCopy("កំពុងរៀបចំការមើលជាមុន...", "Loading preview...")}</p>
-            </div>
-        );
-    }
+    if (loading) return <PageSkeleton layout="preview" label={uiCopy("កំពុងរៀបចំការមើលជាមុន...", "Loading preview...")} />;
 
     if (error) {
         return (

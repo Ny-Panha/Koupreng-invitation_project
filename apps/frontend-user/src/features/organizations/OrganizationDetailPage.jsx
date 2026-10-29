@@ -1,3 +1,4 @@
+import { PageSkeleton } from '@/shared/ui/LoadingState';
 import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
@@ -12,7 +13,7 @@ import {
 } from "react-icons/io5";
 
 
-import { ConfirmDialog, EmptyState, ErrorState, SkeletonTable, toast } from "@/shared/ui";
+import { ConfirmDialog, EmptyState, ErrorState, toast } from "@/shared/ui";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import QuotaProgress from '@/shared/access/QuotaProgress';
 import { useAccountEntitlements } from '@/shared/access/entitlementContext';
@@ -94,16 +95,9 @@ export default function OrganizationDetailPage() {
 
         {error ? (
           <ErrorState message={error} onRetry={loadOrganization} />
-        ) : loading ? (
-          <div className="k-org-detail-card" style={{ padding: "40px" }}>
-            <SkeletonTable rows={4} columns={5} />
-          </div>
-        ) : !organization ? (
-          <EmptyState
-            title={uiCopy("រកមិនឃើញកន្លែងធ្វើការនេះទេ", "Workspace not found")}
-            description={uiCopy("កន្លែងធ្វើការដែលអ្នកបានស្នើសុំមិនមាន ឬអ្នកមិនមានសិទ្ធិចូលមើលទេ។", "This workspace does not exist or you do not have access.")}
-          />
-        ) : (
+        ) : loading && !organization ? (
+        <PageSkeleton layout="list" />
+      ) : (
           <>
             {/* Header Banner */}
             <header className="k-org-header-banner">

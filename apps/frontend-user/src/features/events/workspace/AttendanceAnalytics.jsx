@@ -1,3 +1,4 @@
+import { PageSkeleton, LoadingRegion } from '@/shared/ui/LoadingState';
 import { useEffect, useState } from 'react';
 import AccessFailureState from '@/shared/access/AccessFailureState';
 import { api } from '@/shared/api/httpClient';
@@ -15,7 +16,7 @@ export default function AttendanceAnalytics() {
   const [retry, setRetry] = useState(0), [state, setState] = useState({ loading: true, data: null, error: '' });
   useEffect(() => {
     let active = true;
-    setState({ loading: true, data: null, error: '' });
+    setState(current => ({ ...current, loading: true, error: '' }));
     api.get(`/v1/invitations/${eventId}/analytics`, { params: range }).then(unwrap)
       .then(data => { if (!Array.isArray(data?.days) || !data.current) throw new Error('Invalid analytics response'); if (active) setState({ loading: false, data, error: '' }); })
       .catch(error => { if (active) setState({ loading: false, data: null, error: error.message, failure: error }); });
@@ -33,7 +34,7 @@ export default function AttendanceAnalytics() {
       <label className="workspace-field">{copy('ដល់', 'To')}<input type="date" required value={draft.to} min={draft.from} onChange={event => setDraft(value => ({ ...value, to: event.target.value }))} /></label>
       <button className="workspace-button primary" type="submit" disabled={state.loading}>{copy('មើលរបាយការណ៍', 'Apply dates')}</button><p>{copy('១–៣៦៦ ថ្ងៃ។ កាលបរិច្ឆេទទាំងពីរត្រូវបានរាប់បញ្ចូល តាមម៉ោងកម្ពុជា UTC+07។', '1–366 days, inclusive calendar dates in Asia/Phnom_Penh (UTC+07).')}</p>
     </form>
-    {state.loading && <p role="status">{copy('កំពុងផ្ទុកទិន្នន័យ…', 'Loading attendance facts…')}</p>}
+    {state.loading && (!data ? <PageSkeleton layout="chart" label={copy('កំពុងផ្ទុកទិន្នន័យ…', 'Loading attendance facts…')} /> : <LoadingRegion label={copy('កំពុងធ្វើបច្ចុប្បន្នភាព…', 'Refreshing…')} />)}
     {state.error && <AccessFailureState error={state.failure || state.error} feature="ADVANCED_ANALYTICS" permission="VIEW_REPORTS" onRetry={() => setRetry(value => value + 1)} />}
     {data && <>
       <section className="workspace-section"><h2>{copy('ស្ថានភាពបច្ចុប្បន្នទាំងកម្មវិធី', 'Current event totals')}</h2><p>{copy('ទាំងអស់នៅពេលផ្ទុក មិនត្រូវបានកំណត់ដោយកាលបរិច្ឆេទខាងលើ។', 'All current records when loaded; these totals are independent of the selected dates.')}</p>

@@ -1,8 +1,9 @@
+import { PageSkeleton } from '@/shared/ui/LoadingState';
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { IoArrowBackOutline, IoSparklesOutline } from "react-icons/io5";
-import { ErrorState, SkeletonCard, toast } from "@/shared/ui";
+import { ErrorState, toast } from "@/shared/ui";
 import { invitationService } from "@/features/invitations/api/invitationApi";
 import { useAiAssistant } from "./hooks/useAiAssistant";
 import AssistantComposer from "./components/AssistantComposer";
@@ -124,7 +125,7 @@ export default function AiAssistantPage() {
       {invError ? (
         <ErrorState message={invError} />
       ) : invLoading ? (
-        <SkeletonCard height="240px" />
+        <PageSkeleton />
       ) : (
         <div className={`pe-ai-layout${response ? " has-result" : ""}`}>
           <section className="pe-ai-panel">

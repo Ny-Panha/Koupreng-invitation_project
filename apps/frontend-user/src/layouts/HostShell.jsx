@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+import RouteLoadingSkeleton from "@/shared/ui/RouteLoadingSkeleton";
 import { Outlet, useLocation } from "react-router-dom";
 import HostNav from "./components/HostNav";
 import "@/shared/styles/workspace-ui.css";
@@ -10,14 +12,14 @@ export default function HostShell() {
     const isEventWorkspace = /^\/app\/events\/\d+(?:\/|$)/.test(location.pathname);
 
     if (isPreview) {
-        return <div className="dash-wrapper dash-wrapper--preview"><Outlet /></div>;
+        return <div className="dash-wrapper dash-wrapper--preview"><Suspense fallback={<RouteLoadingSkeleton />}><Outlet /></Suspense></div>;
     }
 
     return (
         <div className={`dash-wrapper${isEventWorkspace ? " dash-wrapper--event" : ""}${isStudio ? " dash-wrapper--studio" : ""}`}>
             {!isStudio && <HostNav />}
             <div className="dash-main-scroll">
-                <Outlet />
+                <Suspense fallback={<RouteLoadingSkeleton />}><Outlet /></Suspense>
             </div>
         </div>
     );

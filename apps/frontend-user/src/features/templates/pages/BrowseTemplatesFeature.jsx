@@ -16,7 +16,7 @@ import {
 import { templateCatalogService } from "@/features/templates/api/templateCatalogApi";
 import { paymentService } from "@/features/payments/paymentService";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
-import { SkeletonTable } from "@/shared/ui";
+import { CardGridSkeleton } from "@/shared/ui/LoadingState";
 import { feedback } from '@/shared/feedback/feedback';
 import { templateIdentity, templatePriceLabel, templateUsePath } from "../model/templateIdentity";
 import "./BrowseTemplates.css";
@@ -256,7 +256,7 @@ export default function BrowseTemplatesFeature() {
 
       {/* Content Grid */}
       {loading ? (
-        <SkeletonTable rows={4} columns={4} />
+        <CardGridSkeleton variant="template" />
       ) : error ? (
         <div className="tb-empty" role="status"><p>{error}</p><button type="button" className="inv-secondary-btn" onClick={() => setRevision(value => value + 1)}>{lang === "en" ? "Try again" : "សាកម្តងទៀត"}</button></div>
       ) : filteredTemplates.length === 0 ? (

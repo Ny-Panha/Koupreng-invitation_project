@@ -51,7 +51,7 @@ test('six groups render without overflow in Khmer/English at phone and desktop w
 test('free video notice leaves ordinary media accessible and permits disabling a retained setting', async ({ page }) => {
   await phase9Fixtures(page, { premium: false });
   await page.goto('/app/events/101/invitation?section=preWeddingVideo');
-  await expect(page.getByText('The event owner needs an active Premium package', { exact: false })).toBeVisible();
+  await expect(page.locator('[data-feature-lock="PRE_WEDDING_VIDEO"]')).toBeVisible();
   await expect(page.getByLabel('Enable pre-wedding video', { exact: true })).toBeDisabled();
   await page.locator('summary').filter({ hasText: /^Music$/ }).click();
   await expect(page.locator('.pe-editor-scroll-body details[open]').filter({ hasText: 'Music' }).first()).toBeVisible();

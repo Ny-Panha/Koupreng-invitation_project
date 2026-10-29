@@ -27,11 +27,11 @@ test('navbar theme and Khmer/English controls persist without changing the Studi
   const draft=page.locator('input[name="groomName"]');await draft.fill('Keep this authored name');
   const frame=page.locator('iframe').first();await frame.evaluate(node=>{node.dataset.themeIdentity='kept';});
   await page.locator('.app-theme-toggle:visible').click();await expect(page.locator('html')).toHaveAttribute('data-color-mode','dark');
-  await page.locator('.app-language-control select:visible').selectOption('km');
+  await page.locator('.app-language-toggle:visible').click();
   await expect(draft).toHaveValue('Keep this authored name');await expect(frame).toHaveAttribute('data-theme-identity','kept');await overflow(page);
   await page.setViewportSize({width:390,height:900});await overflow(page);await expect(draft).toHaveValue('Keep this authored name');
   await page.locator('.studio-action--save').click();await expect(page.locator('.studio-save-status')).toHaveAttribute('data-phase','saved');
-  await page.reload();await expect(page.locator('html')).toHaveAttribute('data-color-mode','dark');await expect(page.locator('.app-language-control select:visible')).toHaveValue('km');
+  await page.reload();await expect(page.locator('html')).toHaveAttribute('data-color-mode','dark');await expect(page.locator('.app-language-toggle:visible')).toHaveAttribute('aria-checked','false');
 });
 
 test('landing light/dark surfaces, keyboard controls and mobile navigation remain usable',async({page},info)=>{
@@ -81,6 +81,8 @@ for(const [name,path,ready,width,lang] of [
   ['overview','/app/events/101','.event-overview',390,'km'],
 ]) for(const mode of ['light','dark']) test(`visual baseline ${name} ${mode} ${lang}`,async({page},info)=>{
   test.skip(info.project.name!=='desktop-chromium','Golden images use one Windows Chromium renderer');
+  // Match the committed golden's 402-day countdown without date-driven pixel drift.
+  await page.clock.setFixedTime(new Date('2026-10-28T12:00:00Z'));
   await fixtures(page,lang);await page.setViewportSize({width,height:960});
   await page.goto(path);await expect(page.locator(ready)).toBeVisible();
   if(await page.locator('html').getAttribute('data-color-mode')!==mode) await page.locator('.app-theme-toggle:visible').click();

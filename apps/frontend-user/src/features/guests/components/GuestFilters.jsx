@@ -1,7 +1,7 @@
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { guestOptionLabel } from "../model/guestLabels";
 import { SearchInput } from "@/shared/ui";
-import { SlidersHorizontal, X } from "lucide-react";
+import { ChevronDown, X } from "lucide-react";
 
 export default function GuestFilters({
   search, setSearch, groupFilter, setGroupFilter, categoryFilter, setCategoryFilter,
@@ -18,20 +18,23 @@ export default function GuestFilters({
         ariaLabel={t("searchPlaceholder")}
       />
       <div className="guest-filter-selects">
-        <SlidersHorizontal size={17} aria-hidden="true" />
         <label className="guest-filter-field">
-          <span className="guest-sr-only">{t("fieldGroup")}</span>
+          <span className="guest-filter-caption">{t("fieldGroup")}</span>
+          <span className="guest-filter-control">
           <select value={groupFilter} onChange={(event) => setGroupFilter(event.target.value)}>
             <option value="">{t("allGroups")}</option>
             {groups.map((group) => <option key={group.id} value={group.name}>{guestOptionLabel(group.name, lang)}</option>)}
           </select>
+          <ChevronDown size={15} aria-hidden="true" /></span>
         </label>
         <label className="guest-filter-field">
-          <span className="guest-sr-only">{t("fieldCategory")}</span>
+          <span className="guest-filter-caption">{t("fieldCategory")}</span>
+          <span className="guest-filter-control">
           <select value={categoryFilter} onChange={(event) => setCategoryFilter(event.target.value)}>
             <option value="">{t("allCategories")}</option>
             {categories.map((category) => <option key={category.id} value={category.name}>{guestOptionLabel(category.name, lang)}</option>)}
           </select>
+          <ChevronDown size={15} aria-hidden="true" /></span>
         </label>
         {(search || groupFilter || categoryFilter) && (
           <button className="guest-text-button" type="button" onClick={onClear}>

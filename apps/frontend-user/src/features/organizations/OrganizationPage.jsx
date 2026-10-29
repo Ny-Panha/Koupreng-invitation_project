@@ -1,3 +1,4 @@
+import { PageSkeleton, LoadingRegion } from '@/shared/ui/LoadingState';
 import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -6,10 +7,8 @@ import {
   IoBriefcaseOutline,
   IoChevronForwardOutline,
   IoHomeOutline,
-  IoPeopleOutline,
-  IoSparkles,
 } from "react-icons/io5";
-import { ErrorState, FormField, LoadingButton, Modal, SkeletonCard, toast } from "@/shared/ui";
+import { ErrorState, FormField, LoadingButton, Modal, toast } from "@/shared/ui";
 import { useOrganizations } from "./hooks/useOrganizations";
 import OrganizationCard from "./components/OrganizationCard";
 import AcceptTeamInvitation from "./components/AcceptTeamInvitation";
@@ -72,9 +71,7 @@ export default function OrganizationPage() {
                 <span className="k-org-count-badge">{organizations.length} {uiCopy("កន្លែងធ្វើការ", "Workspace")}</span>
               )}
             </h1>
-            <p className="k-org-header-desc">
-              {uiCopy("សហការលើធៀប ភ្ញៀវ និងវត្តមាន តាមតួនាទី និងកញ្ចប់របស់ម្ចាស់។ ការផ្សព្វផ្សាយ ហិរញ្ញវត្ថុ និងសមាជិកស្ថិតក្រោមម្ចាស់។", "Collaborate on invitations, guests and attendance using the owner’s eligible plan. Publishing, finances and membership stay owner-controlled.")}
-            </p>
+
           </div>
 
           <div className="k-org-header-actions">
@@ -89,34 +86,14 @@ export default function OrganizationPage() {
           </div>
         </header>
 
+        {loading && organizations.length > 0 && <LoadingRegion />}
         <AcceptTeamInvitation onAccepted={loadOrganizations} />
         {/* Content Section */}
         {error ? (
           <ErrorState message={error} onRetry={loadOrganizations} />
-        ) : loading ? (
-          <div className="k-org-grid">
-            <SkeletonCard height="180px" />
-            <SkeletonCard height="180px" />
-            <SkeletonCard height="180px" />
-          </div>
-        ) : organizations.length === 0 ? (
-          <section className="k-org-empty-state">
-            <div className="k-org-empty-icon">
-              <IoPeopleOutline />
-            </div>
-            <h2 className="k-org-empty-title">{uiCopy("មិនទាន់មានក្រុមការងារនៅឡើយទេ", "No teams yet")}</h2>
-            <p className="k-org-empty-desc">
-              {uiCopy("បង្កើតកន្លែងធ្វើការដំបូង ដើម្បីអញ្ជើញសហការី ដៃគូ ឬបុគ្គលិក និងរៀបចំមង្គលការរួមគ្នា។", "Create your first workspace to invite collaborators, partners or staff and organize weddings together.")}
-            </p>
-            <button
-              type="button"
-              className="k-org-empty-btn"
-              onClick={() => setCreateModalOpen(true)}
-            >
-              <IoSparkles /> {uiCopy("បង្កើតកន្លែងធ្វើការដំបូង", "Create your first workspace")}
-            </button>
-          </section>
-        ) : (
+        ) : loading && !organizations.length ? (
+        <PageSkeleton layout="list" />
+      ) : (
           <div className="k-org-grid">
             {organizations.map((org) => (
               <OrganizationCard key={org.id} organization={org} />

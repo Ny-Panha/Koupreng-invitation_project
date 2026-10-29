@@ -1,3 +1,4 @@
+import { CardGridSkeleton } from '@/shared/ui/LoadingState';
 import { Link } from "react-router-dom";
 import { Check, Minus, ArrowUpRight, Plus } from "lucide-react";
 import { useAuth } from "../auth/hooks/useAuth";
@@ -63,12 +64,7 @@ export default function PricingFeature() {
 
     <section className="kp-page-section" aria-label={copy("កញ្ចប់បច្ចុប្បន្ន", "Current packages")}>
       {catalog.status === "loading" && (
-        <>
-          <p role="status">{copy("កំពុងផ្ទុកកញ្ចប់បច្ចុប្បន្ន…", "Loading current packages…")}</p>
-          <div className="kp-plan-grid" aria-hidden="true">
-            {[1, 2, 3].map(id => <div className="kp-plan-skeleton" key={id} />)}
-          </div>
-        </>
+        <CardGridSkeleton variant="pricing" label={copy("កំពុងផ្ទុកកញ្ចប់បច្ចុប្បន្ន…", "Loading current packages…")} />
       )}
 
       {catalog.status === "error" && (

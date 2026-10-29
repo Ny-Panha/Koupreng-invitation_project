@@ -1,3 +1,4 @@
+import { LoadingRegion } from '@/shared/ui/LoadingState';
 import AccessFailureState from "@/shared/access/AccessFailureState";
 import { useParams } from "react-router-dom";
 import { useQrCode } from "./hooks/useQrCode";
@@ -47,11 +48,7 @@ export default function QrPage({ invitationId: propInvitationId, guestId: propGu
             {en ? "QR Code Management" : "គ្រប់គ្រងកូដ QR"}
           </span>
           <h1>{isGuestQr ? (en ? "Personalized Guest QR" : "QR Code ភ្ញៀវផ្ទាល់ខ្លួន") : (en ? "Event Invitation QR Code" : "QR Code សម្រាប់កម្មវិធី")}</h1>
-          <p>
-            {isGuestQr
-              ? (en ? "Scan or share this personalized QR for individualized RSVP and reception check-in." : "ស្កេន ឬចែករំលែកកូដ QR ផ្ទាល់ខ្លួននេះសម្រាប់ការឆ្លើយតប RSVP និងការកត់ត្រាវត្តមាន Check-in។")
-              : (en ? "Share this QR on invitations or posters. For guest check-in, use a personalized guest ticket." : "ចែករំលែក QR នេះលើធៀប ឬបដា។ សម្រាប់ការកត់ត្រាវត្តមាន សូមប្រើកាតផ្ទាល់ខ្លួនរបស់ភ្ញៀវ។")}
-          </p>
+
         </div>
       </header>
 
@@ -59,7 +56,7 @@ export default function QrPage({ invitationId: propInvitationId, guestId: propGu
         <AccessFailureState error={failure || error} feature="QR_INVITATIONS" permission="MANAGE_INVITATION" onRetry={loadQr} />
       ) : loading ? (
         <div className="qr-skeleton-wrapper">
-          <SkeletonCard height="360px" />
+          <LoadingRegion><SkeletonCard height="360px" /></LoadingRegion>
         </div>
       ) : (
         <div className="qr-page-content">

@@ -1,3 +1,4 @@
+import { PageSkeleton } from '@/shared/ui/LoadingState';
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import TemplateExperience from "../experience/TemplateExperience";
@@ -108,7 +109,7 @@ export default function TemplateDemoPage({ backLink, backLabel, primaryCtaLabel 
     const knownId = DB_TEMPLATE_ID_MAP[targetId] || targetId;
     const knownLocal = TEMPLATES.some((item) => [item.id, item.code, item.slug].includes(knownId));
     if (!remoteTpl && !knownLocal) {
-        if (loading) return <div className="public-state" role="status">កំពុងផ្ទុកគំរូ… / Loading template…</div>;
+        if (loading) return <PageSkeleton layout="public" label="កំពុងផ្ទុកគំរូ… / Loading template…" />;
         return <main className="public-state"><h1>រកគំរូមិនឃើញ / Template unavailable</h1><Link to="/templates">មើលគំរូសន្លឹកការ / Browse templates</Link></main>;
     }
 

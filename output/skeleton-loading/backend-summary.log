@@ -1,0 +1,35 @@
+2026-10-29T07:26:00.830+07:00 DEBUG 33396 --- [backend] [ionShutdownHook] org.hibernate.SQL                        : alter table if exists guest_seat_assignments drop foreign key if exists FKf0hlcpa6j3py8wi7swll6ui9u
+2026-10-29T07:26:00.830+07:00 DEBUG 33396 --- [backend] [ionShutdownHook] org.hibernate.SQL                        : alter table if exists guest_seat_assignments drop foreign key if exists FKiqhq1g2oqvaxmukq48t5whsag
+2026-10-29T07:26:00.830+07:00 DEBUG 33396 --- [backend] [ionShutdownHook] org.hibernate.SQL                        : alter table if exists guests drop foreign key if exists FKg17aagnn5ptuq12ns32j5npy5
+2026-10-29T07:26:00.830+07:00 DEBUG 33396 --- [backend] [ionShutdownHook] org.hibernate.SQL                        : alter table if exists invitation_delivery_events drop foreign key if exists FKq9sls8pfu8lwwup3a5a36bca0
+2026-10-29T07:26:00.830+07:00 DEBUG 33396 --- [backend] [ionShutdownHook] org.hibernate.SQL                        : alter table if exists invitation_delivery_events drop foreign key if exists FK2i2lp5g8bc9hrmsce96skxdtp
+2026-10-29T07:26:00.830+07:00 DEBUG 33396 --- [backend] [ionShutdownHook] org.hibernate.SQL                        : alter table if exists invitation_sections drop foreign key if exists FKg3lmu5838wqsvc02wnn8wd74y
+2026-10-29T07:26:00.830+07:00 DEBUG 33396 --- [backend] [ionShutdownHook] org.hibernate.SQL                        : alter table if exists invitation_ticket_designs drop foreign key if exists FK8f4gn29xeyrarsfkn7ok0olc4
+2026-10-29T07:26:00.830+07:00 DEBUG 33396 --- [backend] [ionShutdownHook] org.hibernate.SQL                        : alter table if exists invitations drop foreign key if exists FKq0jssk151g1kt9cx4vnomojc9
+2026-10-29T07:26:00.830+07:00 DEBUG 33396 --- [backend] [ionShutdownHook] org.hibernate.SQL                        : alter table if exists invitations drop foreign key if exists FKl4cctwomist3he6fb4tc7ynm3
+2026-10-29T07:26:00.830+07:00 DEBUG 33396 --- [backend] [ionShutdownHook] org.hibernate.SQL                        : alter table if exists invitations drop foreign key if exists FK4wvuj0rfixe8dttrqk1o4qdh
+2026-10-29T07:26:00.830+07:00 DEBUG 33396 --- [backend] [ionShutdownHook] org.hibernate.SQL                        : alter table if exists media_files drop foreign key if exists FKm687s9fojlovidoikeuybe260
+2026-10-29T07:26:00.830+07:00 DEBUG 33396 --- [backend] [ionShutdownHook] org.hibernate.SQL                        : alter table if exists notifications drop foreign key if exists FKpffl5wsptlsdp7abycbjpx21k
+2026-10-29T07:26:00.830+07:00 DEBUG 33396 --- [backend] [ionShutdownHook] org.hibernate.SQL                        : alter table if exists notifications drop foreign key if exists FKjno6gt1uc7lm4vql15yoy87hk
+2026-10-29T07:26:00.830+07:00 DEBUG 33396 --- [backend] [ionShutdownHook] org.hibernate.SQL                        : alter table if exists notifications drop foreign key if exists FK6fl8ead69sq74rt7islo2y3aj
+2026-10-29T07:26:00.830+07:00 DEBUG 33396 --- [backend] [ionShutdownHook] org.hibernate.SQL                        : alter table if exists notifications drop foreign key if exists FK6vw0106o6dld31wj2viqppceq
+2026-10-29T07:26:00.831+07:00 DEBUG 33396 --- [backend] [ionShutdownHook] org.hibernate.SQL                        : alter table if exists notifications drop foreign key if exists FK9y21adhxn0ayjhfocscqox7bh
+2026-10-29T07:26:00.831+07:00 DEBUG 33396 --- [backend] [ionShutdownHook] org.hibernate.SQL                        : alter table if exists organization_members drop foreign key if exists FK7vpc2vd3jlfahlombjdc32mhe
+2026-10-29T07:26:00.831+07:00 DEBUG 33396 --- [backend] [ionShutdownHook] org.hibernate.SQL                        : alter table if exists organization_members drop foreign key if exists FK67edx4b35ogkpk3ghbhwand9i
+2026-10-29T07:26:00.831+07:00 DEBUG 33396 --- [backend] [ionShutdownHook] org.hibernate.SQL                        : alter table if exists organizations drop foreign key if exists FK37dv86ymr1mh8lhcosssu5rc6
+2026-10-29T07:26:00.831+07:00 DEBUG 33396 --- [backend] [ionShutdownHook] org.hibernate.SQL                        : alter table if exists organizer_payout_accounts drop foreign key if exists FK526pp6c08598mv2wmhm10vdng
+2026-10-29T07:26:00.831+07:00 DEBUG 33396 --- [backend] [ionShutdownHook] org.hibernate.SQL                        : alter table if exists password_reset_tokens drop foreign key if exists FKk3ndxg5xp6v7wd4gjyusp15gq
+2026-10-29T07:26:00.831+07:00 DEBUG 33396 --- [backend] [ionShutdownHook] org.hibernate.SQL                        : alter table if exists payment_configs drop foreign key if exists FKqj57pxm6s1462euvjc9d3qffe
+2026-10-29T07:26:00.831+07:00 DEBUG 33396 --- [backend] [ionShutdownHook] org.hibernate.SQL                        : alter table if exists payment_transactions drop foreign key if exists FK3gdgv9kgw048pr1sui4o5o9xy
+2026-10-29T07:26:00.831+07:00 DEBUG 33396 --- [backend] [ionShutdownHook] org.hibernate.SQL                        : alter table if exists payment_transactions drop foreign key if exists FK3dwmvjw5qv5qvdy6und0roqbj
+[INFO]
+[INFO] Results:
+[INFO]
+[INFO] Tests run: 649, Failures: 0, Errors: 0, Skipped: 71
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  02:22 min
+[INFO] Finished at: 2026-10-29T07:26:01+07:00
+[INFO] ------------------------------------------------------------------------

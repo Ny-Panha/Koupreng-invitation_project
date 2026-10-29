@@ -1,3 +1,4 @@
+import { PageSkeleton } from '@/shared/ui/LoadingState';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { Check, Copy, RefreshCw, Search, Send, Share2, Users } from 'lucide-react';
@@ -31,7 +32,7 @@ export default function InvitationDeliveryManager() {
     return () => { active = false; };
   }, [id]);
   const act = async action => { setBusy(true); setError(''); try { await action(); } catch (e) { setError(e.message || t('failed')); } finally { setBusy(false); } };
-  if (!data) return <main className="delivery-workspace workspace-page">{error ? <div role="alert">{error}<button className="workspace-button" onClick={() => act(load)}>{t('retry')}</button></div> : <p role="status">{t('loading')}</p>}</main>;
+  if (!data) return <main className="delivery-workspace workspace-page">{error ? <div role="alert">{error}<button className="workspace-button" onClick={() => act(load)}>{t('retry')}</button></div> : <PageSkeleton layout="table" label={t('loading')} />}</main>;
   const { invitation, summary, events } = data;
   const published = invitation.status === 'PUBLISHED';
   const guests = summary?.guests || [];
@@ -69,12 +70,11 @@ export default function InvitationDeliveryManager() {
   const date = value => value ? new Intl.DateTimeFormat(lang === 'en' ? 'en-GB' : 'km-KH', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value)) : '—';
   const status = value => t(({ SENT: 'sent', FAILED: 'failed', OPENED: 'opened', PENDING: 'pending', LINK_GENERATED: 'ready', NOT_READY: 'notReady', READY: 'ready', RESPONDED: 'responded' })[value] || 'pending');
   return <main className="delivery-workspace workspace-page" aria-busy={busy}>
-    <header className="workspace-page-heading"><div><h1>{t('title')}</h1><p>{invitation.title} · {t('subtitle')}</p></div><Link className="workspace-button" to={`/app/events/${id}/guests`}><Users size={18} />{t('guests')}</Link></header>
-    <ol className="delivery-steps">{['prepare', 'select', 'share', 'track'].map((key, i) => <li key={key}><span>{i + 1}</span>{t(key)}</li>)}</ol>
+    <header className="workspace-page-heading"><div><h1>{t('title')}</h1><p>{invitation.title}</p></div><Link className="workspace-button" to={`/app/events/${id}/guests`}><Users size={18} />{t('guests')}</Link></header>
     {error && <div className="workspace-notice" role="alert">{error}<button className="workspace-button" onClick={() => act(load)}>{t('retry')}</button></div>}
     {!published && <div className="workspace-notice"><strong>{t('draftTitle')}</strong><p>{t('draftHint')}</p><Link className="workspace-button primary" to={`/app/events/${id}/invitation`}>{t('publish')}</Link></div>}
     <section className="workspace-summary" aria-label={t('summary')}>{[['total', summary?.totalGuests], ['ready', summary?.ready ?? summary?.linkGenerated], ['sent', summary?.sent], ['failed', summary?.failed]].map(([key, count]) => <article key={key}><span>{t(key)}</span><strong>{count ?? 0}</strong></article>)}</section>
-    <div className="delivery-readiness"><p>{t(published ? 'readyHint' : 'draftHint')}</p><button className="workspace-button" disabled={busy || !published} onClick={() => act(async () => { await deliveryService.prepare(id); await load(); toast(t('prepared')); })}><RefreshCw size={17} />{t('prepareAction')}</button></div>
+    <div className="delivery-readiness"><button className="workspace-button" disabled={busy || !published} onClick={() => act(async () => { await deliveryService.prepare(id); await load(); toast(t('prepared')); })}><RefreshCw size={17} />{t('prepareAction')}</button></div>
     <section className="workspace-section delivery-recipients">
       <div className="workspace-section-heading"><h2>{t('recipients')}</h2><div className="workspace-actions"><span className="workspace-muted">{t('selected', { count: selectedGuests.length })}</span>{selectedGuests.length > 0 && <a className="workspace-button operational" href="#delivery-methods">{t('shareTitle')}</a>}</div></div>
       <div className="delivery-filter-bar"><label className="workspace-search"><Search size={18} aria-hidden="true" /><input type="search" aria-label={t('search')} placeholder={t('search')} value={query} onChange={e => setQuery(e.target.value)} /></label><select aria-label={t('status')} value={filter} onChange={e => setFilter(e.target.value)}><option value="ALL">{t('all')}</option>{['PENDING', 'SENT', 'FAILED', 'OPENED'].map(s => <option key={s} value={s}>{status(s)}</option>)}</select></div>
@@ -86,7 +86,7 @@ export default function InvitationDeliveryManager() {
       </tr>)}</tbody></ResponsiveTable>
       {!visible.length && <div className="workspace-empty"><h2>{t(guests.length ? 'noMatches' : 'empty')}</h2><Link className="workspace-button" to={`/app/events/${id}/guests`}>{t('guests')}</Link></div>}
     </section>
-    <section className="workspace-section delivery-methods" id="delivery-methods" tabIndex={-1}><h2>{t('shareTitle')}</h2><p className="workspace-muted">{t('shareHint')}</p>
+    <section className="workspace-section delivery-methods" id="delivery-methods" tabIndex={-1}><h2>{t('shareTitle')}</h2>
       {selectedGuests.length === 1 && <div className="workspace-actions"><button className="workspace-button operational" disabled={busy || !published} onClick={() => share(selectedGuests[0], 'native')}><Share2 size={17} />{t('share')}</button><a className="workspace-button" target="_blank" rel="noopener noreferrer" aria-disabled={busy || !published} onClick={event => { if (busy || !published) event.preventDefault(); else act(() => recordShare(selectedGuests[0])); }} href={`https://t.me/share/url?url=${encodeURIComponent(selectedGuests[0].invitationUrl)}`}>{t('telegram')}</a><button className="workspace-button" disabled={busy || !published} onClick={() => act(async () => { if (!window.confirm(t('manualConfirm'))) return; await deliveryService.markShared(id, selectedGuests[0].guestId ?? selectedGuests[0].id); await load(); })}><Check size={17} />{t('manual')}</button></div>}
       <details><summary>{t('emailTitle')} · {emailTargets.length}</summary><form className="workspace-form" onSubmit={e => { e.preventDefault(); dispatch(false); }}><p className="workspace-muted">{t('emailHint')}</p><label>{t('subject')}<input value={email.subject} onChange={e => setEmail({ ...email, subject: e.target.value })} /></label><label>{t('message')}<textarea rows="3" value={email.message} onChange={e => setEmail({ ...email, message: e.target.value })} /></label><div className="workspace-actions"><button type="submit" className="workspace-button operational" disabled={busy || !published || !emailTargets.length}><Send size={17} />{t('sendEmail')}</button><button type="button" className="workspace-button" disabled={busy || !published || !emailTargets.some(g => !g.responded)} onClick={() => dispatch(true)}>{t('remind')}</button></div></form></details>
       {result && <p role="status">{t('result', result)}</p>}

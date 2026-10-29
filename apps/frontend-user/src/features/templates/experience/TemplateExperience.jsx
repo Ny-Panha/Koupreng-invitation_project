@@ -1,3 +1,4 @@
+import { PageSkeleton } from '@/shared/ui/LoadingState';
 import { InvitationLocaleContext } from '../shared/invitationLocaleContext';
 import { invitationFeatureFields } from '../shared/invitationFeatures';
 import CinematicOpeningProvider from "../shared/Openings/CinematicOpeningProvider";
@@ -582,7 +583,7 @@ function WeddingTemplateExperience({
     }, [unifiedMode, customSections, content.enabledSections]);
 
     if (DedicatedComponent && !isExplicitSectionsMode) {
-        return <Suspense fallback={<div className="public-state" role="status">កំពុងផ្ទុកសន្លឹកការ… / Loading invitation…</div>}><>{createElement(DedicatedTemplateRenderer, {
+        return <Suspense fallback={<PageSkeleton layout="public" label="កំពុងផ្ទុកសន្លឹកការ… / Loading invitation…" />}><>{createElement(DedicatedTemplateRenderer, {
             component: DedicatedComponent,
             tpl: content,
             content,
@@ -788,7 +789,7 @@ export default function TemplateExperience(props) {
         demoVideo={demoVideo} presentation={videoPresentation} previewChannel={channel}
         english={String(previewContent?.languageMode || props.cinematicLanguage || tpl?.languageMode || tpl?.hostContent?.languageMode || new URLSearchParams(window.location.search).get('lang')).toUpperCase() === "EN"} fallbackCover={coverless} title={tpl?.title || tpl?.hostContent?.title}>{node}</CinematicOpeningProvider>;
     if ([tpl?.code, tpl?.slug, tpl?.templateCode, tpl?.templateId].includes("event-essential")) {
-        return wrap(<TemplateRenderGuard key={renderer.id} id={renderer.id}><Suspense fallback={<p role="status">កំពុងផ្ទុក… / Loading…</p>}><EventEssentialLayout {...props} /></Suspense></TemplateRenderGuard>);
+        return wrap(<TemplateRenderGuard key={renderer.id} id={renderer.id}><Suspense fallback={<PageSkeleton layout="public" label="កំពុងផ្ទុក… / Loading…" />}><EventEssentialLayout {...props} /></Suspense></TemplateRenderGuard>);
     }
     return wrap(<TemplateRenderGuard key={renderer.id} id={renderer.id}><WeddingTemplateExperience {...props} /></TemplateRenderGuard>);
 }

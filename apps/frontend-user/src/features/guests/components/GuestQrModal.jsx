@@ -178,7 +178,6 @@ export default function GuestQrModal({
   return (
     <Modal
       isOpen={Boolean(guest)} onClose={onClose} title={activeGuest.name}
-      subtitle={text("invitationHint", "ចែករំលែកតំណអញ្ជើញ ឬ QR Code របស់ភ្ញៀវ។")}
       size="md" className="guest-qr-dialog guest-form-modal" backdropClassName="guest-qr-backdrop"
     >
       <div className="guest-share-content" aria-busy={busy}>

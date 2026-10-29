@@ -3185,7 +3185,6 @@ export default function InvitationForm({ invitation }) {
                         <section hidden={activeSection !== "ticketsQr"} className="studio-ticket-entry">
                             <FeatureAccessCard feature="QR_INVITATIONS" permission="MANAGE_INVITATION" ownerOnly />
                             <h3>{uiCopy("រចនាកាត និង QR ភ្ញៀវ", "Ticket design & guest QR")}</h3>
-                            <p>{uiCopy("រក្សាទុកពង្រាង មុនបើករចនាកាត ឬកាតភ្ញៀវ។ QR ប្រើសិទ្ធិចូលរួមកម្មវិធីដដែល។", "Save your draft, then customize tickets or open personalized guest tickets. QR admission keeps the existing guest identity.")}</p>
                             <button type="button" className="workspace-button primary" disabled={!workspace?.isOwner || isSaving} onClick={() => openEventTool("tickets/design")}>{uiCopy("រក្សាទុក និងរចនាកាត", "Save & open ticket designer")}</button>
                             <button type="button" className="workspace-button" disabled={!workspace?.can?.("MANAGE_GUESTS") || isSaving} onClick={() => openEventTool("guests")}>{uiCopy("រក្សាទុក និងបើកកាតភ្ញៀវ", "Save & open guest tickets")}</button>
                             {!workspace?.isOwner && <p>{uiCopy("ម្ចាស់កម្មវិធីគ្រប់គ្រងរចនាកាត។", "The event owner manages ticket appearance.")}</p>}

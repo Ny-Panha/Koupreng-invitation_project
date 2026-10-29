@@ -1,3 +1,4 @@
+import { AdminSkeleton } from '../shared/ui/AdminSkeleton';
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AuthProvider, QueryProvider, AdminLanguageProvider } from "./providers";
@@ -28,7 +29,7 @@ export default function App() {
       <QueryProvider>
         <AdminLanguageProvider>
           <BrowserRouter>
-            <Suspense fallback={<main role="status" aria-live="polite">Loading page...</main>}>
+            <Suspense fallback={<AdminSkeleton />}>
             <Routes>
               <Route path={ADMIN_ROUTE_PATHS.login} element={<LoginPage />} />
               {/* Standalone Fullscreen Template Visual Studio */}

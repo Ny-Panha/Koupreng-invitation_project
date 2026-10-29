@@ -1,3 +1,4 @@
+import { PageSkeleton, LoadingRegion } from '@/shared/ui/LoadingState';
 import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
 import { useLanguageStore } from "@/stores/useLanguageStore";
@@ -6,7 +7,7 @@ import { eventPath } from "@/features/events/workspace/eventRoutes";
 import Modal from "@/shared/ui/Modal";
 import { useWishes } from "./hooks/useWishes";
 import { WishList } from "./components/WishList";
-import { ErrorState, SkeletonCard } from "@/shared/ui";
+import { ErrorState } from "@/shared/ui";
 import "./WishesPage.css";
 
 export default function WishesPage({ invitationId: propInvitationId }) {
@@ -22,19 +23,15 @@ export default function WishesPage({ invitationId: propInvitationId }) {
       <header className="dash-page-header wishes-header">
         <div>
           <span className="dash-kicker">{en ? "Guest messages" : "សារពីភ្ញៀវ"}</span>
+          {loading && wishes.length > 0 && <LoadingRegion />}
           <h1>{en ? "Wishes from your guests" : "ពាក្យជូនពរពីភ្ញៀវ"}</h1>
-          <p>{en ? "Keep the kind words and memories from your celebration in one place." : "អាន និងគ្រប់គ្រងសារជូនពរដ៏មានអត្ថន័យពីភ្ញៀវកិត្តិយសទាំងអស់។"}</p>
         </div>
       </header>
 
       {error ? (
         <ErrorState message={error} onRetry={loadWishes} />
-      ) : loading ? (
-        <div className="wishes-skeleton-grid">
-          <SkeletonCard height="140px" />
-          <SkeletonCard height="140px" />
-          <SkeletonCard height="140px" />
-        </div>
+      ) : loading && !wishes.length ? (
+        <PageSkeleton layout="list" />
       ) : (
         <>
           <WishList wishes={wishes} onDelete={setDeleteTarget} deletingId={deletingId} />

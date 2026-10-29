@@ -1,3 +1,4 @@
+import { PageSkeleton, LoadingRegion } from '@/shared/ui/LoadingState';
 import { useEventWorkspace } from "@/features/events/workspace/EventContext";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useSearchParams, useParams } from "react-router-dom";
@@ -15,7 +16,7 @@ import { loadServerDashboard, groupAmounts } from "./dashboardData";
 import { currencyAmounts } from "@/features/budget/currencyTotals";
 import { getDraft, getDraftBySlug, saveDraft } from "../../shared/storage/weddingStorage";
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
-import { ErrorState, SkeletonTable } from "@/shared/ui";
+import { ErrorState } from "@/shared/ui";
 import "./DashboardPage.css";
 import "./EventOverview.css";
 
@@ -128,6 +129,7 @@ export default function DashboardFeature() {
       if (generation !== loadGeneration.current) return;
       setState((prev) => ({
         ...prev,
+        ...([401, 403, 404].includes(err?.status ?? err?.response?.status) ? { selectedInvitation: null } : {}),
         loading: false,
         error: err.message || "Failed to load dashboard data.",
       }));
@@ -331,10 +333,12 @@ export default function DashboardFeature() {
     }
   };
 
-  if (state.loading) return <main className="dash-main pe-dashboard-page"><header className="dash-page-header"><h1>{text("title")}</h1></header><SkeletonTable rows={4} columns={4} /></main>;
-  if (state.error) return <main className="dash-main pe-dashboard-page"><ErrorState message={state.error} onRetry={() => loadData(selectedInvId)} /></main>;
+  if (state.loading && !state.selectedInvitation) return <main className="dash-main pe-dashboard-page"><header className="dash-page-header"><h1>{text("title")}</h1></header><PageSkeleton layout="dashboard" /></main>;
+  if (state.error && !state.selectedInvitation) return <main className="dash-main pe-dashboard-page"><ErrorState message={state.error} onRetry={() => loadData(selectedInvId)} /></main>;
   if (!stats.hasInvitation) return <main className="workspace-page"><h1>{text("title")}</h1><Link className="workspace-button primary" to="/app/events">{text("viewList")}</Link></main>;
-  return <main className="dash-main pe-dashboard-page event-overview">
+  return <main className="dash-main pe-dashboard-page event-overview" aria-busy={state.loading}>
+    {state.loading && <LoadingRegion label={label("Refreshing…", "កំពុងធ្វើបច្ចុប្បន្នភាព…")} />}
+    {state.error && <ErrorState message={state.error} onRetry={() => loadData(selectedInvId)} />}
     <header className="dash-page-header"><div><h1>{label("Event overview", "ទិដ្ឋភាពទូទៅនៃកម្មវិធី")}</h1></div></header>
     {actionError && <p className="workspace-notice" role="alert">{actionError}</p>}
     <section className="overview-hero">
