@@ -10,4 +10,6 @@ Final checks: **1163 user + 128 admin unit/component tests passed; 578 backend t
 
 [Source/test manifest](changed-files.txt) · [Route matrix](01-loading-state-matrix.md) · [Implementation rationale](03-route-and-module-implementation.md) · [Commands, logs and screenshots](05-tests-and-visual-regression.md) · [Limitations](06-known-limitations.md) · [Git receipt](08-git-receipt.md).
 
-Recommendation: code review and staging validation. Physical-device/manual screen-reader checks and the existing gated MySQL integration suite remain unverified. No production deployment or live payment was performed. The exact final commit SHA, normal push result and CI observation are supplied in the final delivery receipt.
+The [verified implementation commit](https://github.com/Ny-Panha/Koupreng-invitation_project/commit/3c948815784a841a5d38d93f571f437b98021bed) was normally pushed to `origin/main` and verified against the remote ref. GitHub returned no commit statuses at inspection; Actions completion is unverified. A documentation-only follow-up records this receipt.
+
+Recommendation: code review and staging validation. Physical-device/manual screen-reader checks and the existing gated MySQL integration suite remain unverified. No production deployment or live payment was performed.

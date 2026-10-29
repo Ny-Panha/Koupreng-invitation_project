@@ -1,0 +1,25 @@
+Koupreng implementation delivery — 2026-10-29
+
+Branch: main
+Starting HEAD: 4f9d1f3d5cf1e811f0aa971a26bf320642cb6493
+Tested implementation: 3c948815784a841a5d38d93f571f437b98021bed
+
+Command: git push origin main
+Exit: 0
+To https://github.com/Ny-Panha/Koupreng-invitation_project.git
+   4f9d1f3d..3c948815  main -> main
+
+Command: git ls-remote origin refs/heads/main
+Result immediately after the implementation push:
+3c948815784a841a5d38d93f571f437b98021bed refs/heads/main
+
+GitHub combined commit status for the implementation: statuses: []
+GitHub Actions completion: unverified
+
+Local gates: user 1163 passed; admin 128 passed; backend 578 passed / 71 skipped;
+worker 74 passed; Playwright 182 passed / 30 duplicate or conditional skips.
+Both frontend builds and lint passed; staged whitespace check passed.
+Original 157 deleted backend test-class files preserved unstaged.
+
+This receipt is committed in a documentation-only follow-up to the tested
+implementation. Read git log -1 --format=%H for the delivery-head SHA.
