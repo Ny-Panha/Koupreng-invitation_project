@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { installUxFixtures, uxEvents } from "./uxFixtures.js";
+import { installGuestDashboardFixtures } from "./guestDashboardFixtures.js";
 
 // Browser-only DTO fixtures. No live guest, payment, or provider data is changed.
 export async function installOverhaulFixtures(page, lang = "en", { empty = false, single = false, published = false, wishes = [] } = {}) {
@@ -22,5 +23,6 @@ export async function installOverhaulFixtures(page, lang = "en", { empty = false
     if (path === "/api/v1/invitations/101/delivery/summary") return reply({ totalGuests: guests.length, readyGuests: published ? guests.length : 0, sent: 0, failed: 0, guests: guests.map(guest => ({ ...guest, invitationUrl: published ? "https://koupreng.example/i/audit-event?token=audit-guest" : null })) });
     return route.fallback();
   });
+  await installGuestDashboardFixtures(page, { guests });
   return context;
 }

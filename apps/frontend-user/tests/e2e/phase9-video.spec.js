@@ -1,3 +1,4 @@
+import { activateOpening } from './support/activateOpening';
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { phase9Fixtures } from './support/phase9Fixtures';
@@ -67,7 +68,7 @@ test('reduced motion bypasses cinematic media entirely', async ({ page }) => {
   state.events.set(101, { ...state.events.get(101), cinematicOpening: { enabled: true, videoMediaId: 400 }, status: 'PUBLISHED' });
   const requests = []; page.on('request', request => { if (request.url().endsWith('cinematic-content')) requests.push(request.url()); });
   await page.goto('/i/review-celestial');
-  await page.getByRole('button', { name: /Open invitation|បើកសំបុត្រ/ }).first().click();
+  await activateOpening(page);
   await expect(page.locator('.kc-invitation')).toBeVisible();
   expect(requests).toEqual([]);
 });

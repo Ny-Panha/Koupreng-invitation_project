@@ -135,19 +135,20 @@ test('RSVP pending guests, confirmed attendee totals, editing and deletion stay 
   expect(state.rsvps).toHaveLength(0);
 });
 
-test('delivery selects recipients, never marks copied shares sent and reports provider failures', async ({ page }) => {
+test('delivery records copied shares without claiming provider acceptance and reports email failures', async ({ page }) => {
   await page.addInitScript(() => Object.defineProperty(navigator, 'clipboard', { value: { writeText: async () => {} } }));
   const state = await installPhase4Fixtures(page, { count: 3 });
   await page.goto('/app/events/101/delivery?guestId=502');
   await expect(page.getByText('1 selected', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Copy message', exact: true }).first().click();
-  expect(state.writes).toHaveLength(0);
+  await expect.poll(() => state.writes.filter(w => w.path.endsWith('mark-shared')).length).toBe(1);
+  expect(state.writes[0]).toMatchObject({ method: 'POST', path: '/api/v1/invitations/101/delivery/guests/501/mark-shared' });
   await page.getByText('Email & reminders', { exact: false }).click();
   page.once('dialog', dialog => dialog.accept());
   await page.getByRole('button', { name: 'Send to selected email recipients', exact: true }).click();
-  await expect(page.getByRole('status')).toContainText('0 accepted by the mail service; 1 failed');
-  expect(state.writes[0].body).toMatchObject({ guestIds: [502], allEligible: false });
-  expect(state.writes.some(w => w.path.endsWith('mark-shared'))).toBe(false);
+  await expect(page.locator('.delivery-methods').getByRole('status')).toContainText('0 accepted by the mail service; 1 failed');
+  expect(state.writes.find(w => w.path.endsWith('/email')).body).toMatchObject({ guestIds: [502], allEligible: false });
+  expect(state.writes.filter(w => w.path.endsWith('mark-shared'))).toHaveLength(1);
 });
 
 test('media validates formats, uploads, replaces, removes and reloads the same library', async ({ page }) => {
@@ -168,8 +169,8 @@ test('media validates formats, uploads, replaces, removes and reloads the same l
   await (await chooser).setFiles({ name: 'replace.png', mimeType: 'image/png', buffer: png });
   await expect(page.getByRole('button', { name: 'Remove', exact: true })).toBeEnabled();
   expect(state.writes.some(w => w.method === 'PUT')).toBe(true);
-  page.once('dialog', dialog => dialog.accept());
   await page.getByRole('button', { name: 'Remove', exact: true }).click();
+  await page.getByRole('dialog').getByRole('button', { name: 'Confirm', exact: true }).click();
   await expect(page.getByText('No uploaded files here yet', { exact: true })).toBeVisible();
   await page.reload(); expect(state.media).toHaveLength(0);
 });

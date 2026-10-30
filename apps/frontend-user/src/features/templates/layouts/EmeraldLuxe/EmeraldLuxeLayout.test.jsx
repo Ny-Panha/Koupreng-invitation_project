@@ -1,4 +1,4 @@
-import { render, screen, act } from "@testing-library/react";
+import { render, screen, act, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import EmeraldLuxeLayout from "./EmeraldLuxeLayout";
@@ -12,6 +12,19 @@ describe("EmeraldLuxeLayout Universal Cover Contract", () => {
 
   afterEach(() => {
     vi.restoreAllMocks();
+  });
+
+  it.each(["Enter", " "])("opens the curtain with the %s key and exposes the invitation", (key) => {
+    const { container } = render(<MemoryRouter><EmeraldLuxeLayout
+      tpl={{ id: "emerald-canva-luxe-wedding", groom: "Fictional groom", bride: "Fictional bride" }}
+    /></MemoryRouter>);
+    const curtain = container.querySelector(".el-curtain-overlay");
+    curtain.focus();
+    expect(curtain).toHaveFocus();
+    fireEvent.keyDown(curtain, { key });
+    expect(curtain).toHaveClass("opened");
+    expect(curtain).toHaveStyle({ visibility: "hidden", pointerEvents: "none" });
+    expect(curtain).not.toHaveAttribute("role", "button");
   });
 
   it("renders closed curtain gate with default styling when no custom cover is set", () => {

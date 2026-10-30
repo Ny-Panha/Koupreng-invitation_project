@@ -148,6 +148,12 @@ class AdminReportingTests {
         }
         var output=new ByteArrayOutputStream(); exports.stream(auth,plan,output);
         verify(audit).logAdminAction(eq(auth),eq("REPORT_EXPORT_COMPLETED"),eq("REPORT"),isNull(),anyString(),isNull(),argThat(values -> values instanceof Map<?,?> data && "CURRENT_PAGE".equals(data.get("scope")) && Long.valueOf(1).equals(data.get("rows"))));
+        // Replay the browser's default sort separately from the explicit id-sort assertion above.
+        var browserQuery=query(); browserQuery.setSize(1); browserQuery.setPage(1);
+        try(var file=writer.generate(auth,exports.plan(auth,"invitations","csv-page",browserQuery))) {
+            assertThat(file.rowCount()).isEqualTo(1);
+            Files.copy(file.path(), evidence().resolve("invitations-page-2.csv"), StandardCopyOption.REPLACE_EXISTING);
+        }
     }
     @Test void effectiveSubscriptionsAndZeroBaselineGrowthAreTruthful() {
         assertThat(row(report("subscriptions",query()),1).get("activeState")).isEqualTo("ACTIVE");

@@ -38,5 +38,8 @@ class OpenApiDisabledIntegrationTests {
 
         mockMvc.perform(get("/swagger-ui/index.html"))
                 .andExpect(status().isNotFound());
+
+        mockMvc.perform(get("/swagger-ui.html"))
+                .andExpect(status().isNotFound());
     }
 }

@@ -16,10 +16,10 @@ async function open(page, { width = 1440, height = 900, module = "guests", lang 
 
 test("expanded desktop has fixed context/footer, readable labels and one active destination", async ({ page }) => {
   await open(page);
-  await expect(page.locator(".event-workspace-sidebar")).toHaveCSS("width", "276px");
-  await expect(nav(page).locator("a")).toHaveCount(17);
+  await expect(page.locator(".event-workspace-sidebar")).toHaveCSS("width", "256px");
+  await expect(nav(page).locator("a")).toHaveCount(19);
   const paths = await nav(page).locator("a").evaluateAll(links => links.map(link => link.getAttribute("href")));
-  expect(new Set(paths).size).toBe(17);
+  expect(new Set(paths).size).toBe(19);
   await expect(current(page)).toHaveAccessibleName("Guests");
   await expect(current(page)).toHaveCount(1);
   const body = page.locator(".event-navigation-body");
@@ -111,7 +111,7 @@ test("event switch preserves the module and reloads verified identity without st
   const engagement = { ...uxEvents[1], title: "Engagement B", eventType: "ENGAGEMENT" };
   await page.route("**/api/v1/invitations/my", route => json(route, [uxEvents[0], engagement]));
   await page.route("**/api/v1/invitations/102", route => json(route, engagement));
-  await page.route("**/api/v1/invitations/102/guests", route => json(route, [{ id: 502, guestName: "Guest B", seatCount: 1 }]));
+  await page.route("**/api/v1/invitations/102/guests/page**", route => json(route, { items: [{ guest: { id: 502, guestName: "Guest B", seatCount: 1 }, rsvpStatus: null, checkedIn: false }], totalElements: 1, totalPages: 1, page: 0, size: 25 }));
   await page.reload();
   await page.getByLabel("Switch event", { exact: true }).selectOption("102");
   await expect(page).toHaveURL(/\/102\/guests$/);
@@ -150,7 +150,7 @@ test("denied owner route never mounts navigation or requests private module data
   await page.goto("/app/events/999/guests");
   await expect(page.getByRole("alert")).toContainText("Access denied");
   await expect(page.locator(".event-workspace-nav")).toHaveCount(0);
-  expect(requests).toEqual(["/api/v1/invitations/999"]);
+  expect(requests.sort()).toEqual(["/api/v1/invitations/999", "/api/v1/invitations/999/access"]);
 });
 
 test("pending event verification fits a narrow viewport before any task mounts", async ({ page }) => {
@@ -160,7 +160,7 @@ test("pending event verification fits a narrow viewport before any task mounts",
   const pending = new Promise(resolve => { release = resolve; });
   await page.route("**/api/v1/invitations/101", async route => { await pending; return route.fallback(); });
   await page.goto("/app/events/101/guests");
-  await expect(page.locator(".event-workspace-loading")).toBeVisible();
+  await expect(page.locator('[data-loading-layout="dashboard"][aria-busy="true"]')).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
   await expect(page.locator(".event-workspace-content")).toHaveCount(0);
   release();
@@ -197,7 +197,8 @@ test("published overview chooses guest, delivery and response actions from serve
   const primary = page.locator(".overview-actions .primary");
   await expect(primary).toHaveText("Share invitations");
   await expect(primary).toHaveAttribute("href", "/app/events/101/delivery");
-  await expect(page.locator(".overview-tool-grid a")).toHaveCount(4);
+  await expect(page.locator(".overview-tool-grid a")).toHaveCount(5);
+  expect(await page.locator(".overview-tool-grid a").evaluateAll(links => links.map(link => link.getAttribute('href')))).toEqual(['delivery', 'tickets/design', 'check-in', 'seating', 'budget'].map(module => `/app/events/101/${module}`));
   await page.route("**/api/v1/invitations/101/dashboard", route => json(route, { totalGuests: 0, deliverySent: 0 }));
   await page.reload();
   await expect(primary).toHaveText("Add your guests");

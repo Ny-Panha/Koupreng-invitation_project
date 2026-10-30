@@ -4,7 +4,7 @@ test("Khmer Celestial unlocks document scrolling after opening", async ({ page }
   const mobile = testInfo.project.name.startsWith("mobile");
   await page.setViewportSize(mobile ? { width: 390, height: 844 } : { width: 1440, height: 900 });
   await page.goto("/templates/khmer-celestial");
-  await expect(page.locator(".kc-opening__brand")).toBeVisible();
+  await expect(page.locator(".kc-opening__brand-wrap")).toBeVisible();
   await expect(page.locator(".kc-main")).toHaveAttribute("inert", "");
   await expect(page.locator(".kc-opening__button")).toHaveCSS("opacity", "1");
   await page.screenshot({ path: testInfo.outputPath("opening.png") });

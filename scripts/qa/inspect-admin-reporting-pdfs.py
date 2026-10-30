@@ -3,13 +3,14 @@ import json
 import csv
 import zipfile
 import sys
+import os
 from decimal import Decimal
 from xml.etree import ElementTree
 from pathlib import Path
 
 root = Path(__file__).resolve().parents[2]
-directory = root / "output/admin-reporting"
-sys.path.insert(0, str(directory / "pdf-tools"))
+directory = Path(os.environ.get("ADMIN_REPORT_OUTPUT", root / "output/admin-reporting"))
+sys.path.insert(0, os.environ.get("ADMIN_REPORT_PDF_TOOLS", str(root / "output/admin-reporting/pdf-tools")))
 import pymupdf as fitz
 
 results = []

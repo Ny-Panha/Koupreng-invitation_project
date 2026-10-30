@@ -77,7 +77,7 @@ test("Khmer Celestial guest banner stays balanced in every required viewport", a
         guestLabel: rect(".kc-opening__guest-label"),
         guestName: rect(".kc-opening__guest-name"),
         eventTime: rect(".kc-opening__time"),
-        brand: rect(".kc-opening__brand"),
+        brand: rect(".kc-opening__brand-wrap"),
         button: rect(".kc-opening__button"),
         contentClientHeight: openingContent?.clientHeight || 0,
         contentScrollHeight: openingContent?.scrollHeight || 0,
@@ -118,7 +118,8 @@ test("Khmer Celestial guest banner stays balanced in every required viewport", a
     expect(metrics.guestNameFontFamily).toContain("Bayon");
     expect(metrics.bayonLoaded).toBe(true);
     expect(metrics.guestName.height).toBeLessThanOrEqual(metrics.guestNameLineHeight * 1.25);
-    expect(metrics.brand.height).toBeGreaterThan(metrics.banner.height);
+    expect(metrics.brand.height).toBeGreaterThan(0);
+    expect(metrics.brand.bottom).toBeLessThanOrEqual(metrics.guestLabel.top);
     expect(metrics.button.bottom).toBeLessThanOrEqual(metrics.viewportHeight + 0.5);
     expect(metrics.contentScrollHeight).toBeLessThanOrEqual(metrics.contentClientHeight + 1);
 

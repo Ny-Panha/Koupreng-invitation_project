@@ -1,16 +1,18 @@
+import { evidencePath } from './support/evidencePath';
 import { expect, test } from '@playwright/test';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { installPhase5Fixtures } from './support/phase5Fixtures.js';
 import { installIdentityFixtures } from './support/templateIdentityFixtures.js';
+import { chooseStudioSection } from './support/studioNavigationActions';
 test.use({ actionTimeout: 10000 });
 
 async function capture(page, name) {
-  await mkdir('D:/Koupreng-UXUI-Phase5/screenshots/after/management', { recursive: true });
+  await mkdir(evidencePath('phase5/screenshots/after/management'), { recursive: true });
   await expect(page.locator('.kp-site-preloader')).toHaveCount(0);
   for (const width of [320, 375, 390, 430, 768, 1024, 1366, 1440, 1920]) {
     await page.setViewportSize({ width, height: width === 1366 ? 700 : width < 500 ? 700 : 900 });
-    await page.screenshot({ path: `D:/Koupreng-UXUI-Phase5/screenshots/after/management/${name}-${width}.png` });
+    await page.screenshot({ path: evidencePath(`phase5/screenshots/after/management/${name}-${width}.png`) });
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
   }
 }
@@ -94,11 +96,12 @@ test('settings preserve address and maps separately through refresh and Studio p
   await page.reload({ waitUntil: 'domcontentloaded' }); await expect(page.getByLabel('Address (optional)', { exact: false })).toHaveValue('Fictional Garden, Phnom Penh');
   const content = JSON.parse(fixture.events.get(101).contentJson); expect(content.event.mapLink).toBe('https://maps.google.com/?q=Phnom+Penh');
   await page.getByRole('link', { name: 'Open invitation Studio' }).click();
-  if (page.viewportSize().width < 1024) await page.locator('.studio-section-select select').selectOption('venue');
-  else await page.getByRole('button', { name: 'Venue & map', exact: true }).click();
+  await chooseStudioSection(page, 'scheduleVenue', 'Venue');
   await expect(page.getByRole('textbox', { name: 'Venue address', exact: true })).toHaveValue('Fictional Garden, Phnom Penh');
   await page.getByRole('button', { name: 'Publish', exact: true }).click();
+  await page.getByRole('button', { name: 'Confirm publication', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Publish', exact: true })).toHaveCount(0);
+  expect(fixture.events.get(101).status).toBe('PUBLISHED');
 });
 
 test('general invitation QR downloads a decodable PNG for the exact public destination', async ({ page }) => {
@@ -106,7 +109,7 @@ test('general invitation QR downloads a decodable PNG for the exact public desti
   await page.goto('/app/events/101/qr', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('.qr-image')).toBeVisible(); await capture(page, 'qr');
   const download = page.waitForEvent('download'); await page.getByRole('button', { name: 'Download QR Code (PNG)' }).click();
-  const file = await download, saved = 'D:/Koupreng-UXUI-Phase5/examples/general-invitation-qr.png'; await file.saveAs(saved);
+  const file = await download, saved = evidencePath('phase5/examples/general-invitation-qr.png'); await file.saveAs(saved);
   const require = createRequire(import.meta.url);
   await page.addScriptTag({ path: require.resolve('jsqr') });
   const png = (await readFile(saved)).toString('base64');
@@ -117,7 +120,7 @@ test('general invitation QR downloads a decodable PNG for the exact public desti
     return window.jsQR(pixels.data,image.width,image.height)?.data;
   },png);
   expect(decoded).toBe('https://koupreng.example/i/audit-event');
-  await writeFile('D:/Koupreng-UXUI-Phase5/metadata/qr-decoder.json',JSON.stringify({ decoder:'jsQR in Chromium canvas',decoded,source:'downloaded PNG; fictional public invitation fixture',physicalScan:false },null,2));
+  await writeFile(evidencePath('phase5/metadata/qr-decoder.json'),JSON.stringify({ decoder:'jsQR in Chromium canvas',decoded,source:'downloaded PNG; fictional public invitation fixture',physicalScan:false },null,2));
 });
 
 test('empty gift and expense workspaces remain compact and offer real creation actions', async ({ page }) => {

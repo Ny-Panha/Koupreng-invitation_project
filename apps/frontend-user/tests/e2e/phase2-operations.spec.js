@@ -1,11 +1,13 @@
 import {expect,test} from '@playwright/test';
 import {installOverhaulFixtures} from './support/overhaulFixtures.js';
 import {phase2EvidencePath} from './support/phase2Evidence.js';
+import {installGuestDashboardFixtures} from './support/guestDashboardFixtures.js';
 test('new inline guest keeps personal actions in its row without marking a share as sent',async({page},info)=>{
  await installOverhaulFixtures(page,'en');
+ const state={guests:[]};await installGuestDashboardFixtures(page,state);
  let guest=null;const writes=[];
  await page.route('**/api/v1/invitations/101/guests',async route=>{
-  if(route.request().method()==='POST') {writes.push('create');guest={...route.request().postDataJSON(),id:503,inviteToken:'phase2-synthetic-link',sendStatus:'PENDING'};}
+  if(route.request().method()==='POST') {writes.push('create');guest={...route.request().postDataJSON(),id:503,inviteToken:'phase2-synthetic-link',sendStatus:'PENDING'};state.guests=[guest];}
   await route.fulfill({contentType:'application/json',body:JSON.stringify({data:route.request().method()==='POST'?guest:guest?[guest]:[]})});
  });
  await page.route('**/api/v1/invitations/101/guests/503/**',route=>{

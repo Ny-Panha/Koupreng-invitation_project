@@ -7,6 +7,9 @@ import {
   evidence,
   directory,
   origin,
+  exportDialog,
+  expect,
+  captureFailure,
 } from "./admin-reporting-harness.mjs";
 import assert from "node:assert/strict";
 import { readFile, writeFile } from "node:fs/promises";
@@ -39,8 +42,8 @@ async function chooseReport(page, code, title) {
   }
 }
 async function exportAction(root, name) {
-  await root.locator(".report-export-menu summary").click();
-  return root.getByRole("button", { name, exact: true });
+  const dialog = await exportDialog(root.page());
+  return dialog.getByRole("button", { name, exact: true });
 }
 try {
   const anonymous = await browser.newPage();
@@ -61,11 +64,12 @@ try {
       await page
         .locator(`.report-ledger[aria-label="${definition.titleEn}"]`)
         .waitFor();
-      await root.locator(".report-export-menu summary").click();
+      const exports = await exportDialog(page);
       await assertEnabled(
-        root.getByRole("button", { name: "Download Excel", exact: true }),
+        exports.getByRole("button", { name: "Download Excel", exact: true }),
       );
-      await root.locator(".report-export-menu summary").click();
+      await page.keyboard.press("Escape");
+      await expect(exports).toBeHidden();
       assert.equal(await page.locator(".report-ledger").count(), 1);
       if (["executive", "payments", "invitations"].includes(definition.code))
         await page.screenshot({
@@ -130,9 +134,14 @@ try {
     ["Download Excel", "xlsx"],
     ["CSV · All filtered records", "csv"],
   ]) {
+    const responsePending = page.waitForResponse(response => new URL(response.url()).pathname.endsWith(`/payments/export/${extension}`));
     const pending = page.waitForEvent("download");
     await (await exportAction(root, label)).click();
     const download = await pending;
+    const response = await responsePending;
+    assert.equal(response.status(), 200);
+    assert.ok(response.headers()["content-type"].startsWith(extension === "xlsx" ? "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" : "text/csv"));
+    assert.equal(download.suggestedFilename(), `koupreng-payments-2026-10-15-2026-10-16.${extension}`);
     const target = resolve(directory, "browser-" + extension + "." + extension);
     await download.saveAs(target);
     const bytes = await readFile(target);
@@ -155,8 +164,11 @@ try {
   }
   const beforePreview = page.url();
   const workbookPending = page.waitForEvent("download");
+  const workbookResponsePending = page.waitForResponse(response => new URL(response.url()).pathname.endsWith("/all/export/xlsx"));
   await (await exportAction(root, "Excel · All reports (period only)")).click();
   const workbook = await workbookPending;
+  assert.equal((await workbookResponsePending).headers()["content-type"], "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+  assert.equal(workbook.suggestedFilename(), "koupreng-all-2026-10-15-2026-10-16.xlsx");
   await workbook.saveAs(resolve(directory, "browser-all-reports.xlsx"));
   const workbookBytes = await readFile(
     resolve(directory, "browser-all-reports.xlsx"),
@@ -217,14 +229,21 @@ try {
     ),
   );
   const pageCsvPending = page.waitForEvent("download");
+  const pageResponsePending = page.waitForResponse(response => new URL(response.url()).pathname.endsWith("/invitations/export/csv-page"));
   await (await exportAction(root, "CSV · Current page")).click();
   const pageCsv = await pageCsvPending;
+  assert.ok((await pageResponsePending).headers()["content-type"].startsWith("text/csv"));
+  assert.equal(pageCsv.suggestedFilename(), "koupreng-invitations-2026-10-15-2026-10-16-page.csv");
   await pageCsv.saveAs(resolve(directory, "browser-current-page.csv"));
   const pageCsvBytes = await readFile(
     resolve(directory, "browser-current-page.csv"),
   );
   assert.ok(pageCsvBytes.subarray(0, 3).equals(Buffer.from([239, 187, 191])));
-  assert.match(pageCsvBytes.toString("utf8"), /CURRENT PAGE 2/);
+  const pageLines = pageCsvBytes.toString("utf8").trim().split(/\r?\n/);
+  assert.equal(pageLines.length, 2, "Current-page CSV must contain exactly the header and one requested row");
+  assert.match(pageLines[0], /^"Row","id",/);
+  assert.ok(pageLines[1].startsWith(`"2","${fixtures.invitations.rows[1].id}",`), "CSV row must match the displayed second record under the server's default sort");
+  assert.ok(evidence.requests.some(({ path, query }) => path.endsWith("/invitations/export/csv-page") && query.page === "1" && query.size === "1"));
   assert.ok(
     pageCsvBytes.toString("utf8").includes(fixtures.invitations.rows[1].title),
   );
@@ -266,12 +285,14 @@ try {
       content: `@page{size:A4 ${orientation}}h2{break-after:avoid}`,
     });
     const name = `${file.replace(".html", "")}-${orientation}.pdf`;
-    await page.pdf({
+    const pdf = await page.pdf({
       path: resolve(directory, name),
       preferCSSPageSize: true,
       printBackground: true,
       tagged: true,
     });
+    assert.equal(pdf.subarray(0, 5).toString(), "%PDF-");
+    assert.ok(pdf.subarray(-32).toString().includes("%%EOF"));
     evidence.pdfs.push({
       name,
       orientation,
@@ -295,19 +316,18 @@ try {
         downloads: evidence.downloads,
         pdfs: evidence.pdfs,
         requests: evidence.requests.length,
-        consoleErrors: evidence.errors.length,
+        pageErrors: evidence.errors.length,
       },
       null,
       2,
     ),
   );
+} catch (error) {
+  await captureFailure(error);
+  throw error;
 } finally {
   await browser.close();
 }
 async function assertEnabled(locator) {
-  for (let i = 0; i < 100; i++) {
-    if (await locator.isEnabled()) return;
-    await new Promise((resolve) => setTimeout(resolve, 100));
-  }
-  assert.fail("Control remained disabled: " + (await locator.textContent()));
+  await expect(locator).toBeEnabled({ timeout: 10_000 });
 }

@@ -23,7 +23,15 @@ export default function GuestRowActions({ guest, saving, onShowQr, onShowTicket,
         {isEditing ? <Check size={17} aria-hidden="true" /> : <Pencil size={16} aria-hidden="true" />}
       </button>
       {isEditing ? <button type="button" className="guest-text-button" onClick={onCancel}>{label("cancel", "បោះបង់")}</button> : (
-        <details className="guest-row-menu" ref={disclosure} onBlur={(event) => {
+        <details className="guest-row-menu" ref={disclosure} onMouseDown={(event) => {
+          const action = event.target.closest('button, a');
+          if (event.button === 0 && action && event.currentTarget.contains(action)) {
+            // Safari does not focus clicked buttons. Keep focus inside the menu
+            // until its action runs, rather than closing it on the preceding blur.
+            event.preventDefault();
+            action.focus({ preventScroll: true });
+          }
+        }} onBlur={(event) => {
           if (!event.currentTarget.contains(event.relatedTarget)) event.currentTarget.removeAttribute("open");
         }} onKeyDown={(event) => {
           if (event.key === "Escape") { event.preventDefault(); act(); }

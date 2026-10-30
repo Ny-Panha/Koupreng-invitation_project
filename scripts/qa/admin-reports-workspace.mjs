@@ -1,11 +1,11 @@
 // Automated task completion and heuristic/accessibility evidence, not human usability testing.
-import { browser, contextFor, definitions, fixtures, evidence, origin } from "./admin-reporting-harness.mjs";
+import { browser, contextFor, definitions, fixtures, evidence, origin, exportDialog, settleMotion, expect, captureFailure } from "./admin-reporting-harness.mjs";
 import assert from "node:assert/strict";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import process from "node:process";
 
-const output = resolve("output/playwright/admin-reports-workspace/after");
+const output = resolve(process.env.ADMIN_REPORT_WORKSPACE_OUTPUT || "output/playwright/admin-reports-workspace/after");
 await mkdir(output, { recursive: true });
 const axePath = process.env.ADMIN_REPORT_AXE_PATH || resolve("output/playwright/cinematic/qa-tools/node_modules/axe-core/axe.min.js");
 const result = { mode: "Synthetic backend fixtures plus explicitly supplemental UI error/review scenarios; no production API or database", matrix: [], journeys: [], states: [], accessibility: [], errors: [] };
@@ -34,6 +34,7 @@ async function choose(page, code, lang = "en") {
   assert.equal(new URL(page.url()).searchParams.get("report"), code);
 }
 async function audit(page, name) {
+  await settleMotion(page);
   const report = await page.evaluate(async () => {
     const scan = await window.axe.run(document.querySelector(".management-reports"), { runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"] } });
     return { version: window.axe.version, violations: scan.violations.map((rule) => ({ id: rule.id, impact: rule.impact, nodes: rule.nodes.map((node) => ({ target: node.target, reason: node.failureSummary })) })), incomplete: scan.incomplete.map((rule) => rule.id) };
@@ -42,8 +43,8 @@ async function audit(page, name) {
   await writeFile(resolve(output, "accessibility.json"), JSON.stringify(result.accessibility, null, 2));
   assert.deepEqual(report.violations, [], `Accessibility violations: ${name}`);
 }
-async function capture(page, name) { await page.evaluate(() => document.fonts.ready); await page.screenshot({ path: resolve(output, `${name}.png`), fullPage: true }); }
-async function exportItem(page, name) { await page.locator(".report-export-menu summary").click(); await page.getByRole("button", { name, exact: true }).click(); }
+async function capture(page, name) { await settleMotion(page); await page.screenshot({ path: resolve(output, `${name}.png`), fullPage: true }); }
+async function exportItem(page, name) { const dialog = await exportDialog(page); await dialog.getByRole("button", { name, exact: true }).click(); }
 function journey(name, start, actions, completion, notes = []) { result.journeys.push({ name, start, actions, interactions: actions.length, completion, confusingStates: notes, accessibilityProblems: [] }); }
 try {
   for (const width of (process.env.ADMIN_REPORT_JOURNEYS_ONLY ? [] : [390, 768, 1280, 1440])) for (const lang of ["km", "en"]) for (const theme of ["light", "dark"]) {
@@ -67,11 +68,12 @@ try {
     await context.close();
   }
   const options = { review: true }, context = await contextFor(1440, "en", "light", options), page = await context.newPage();
+  await page.clock.setFixedTime(new Date("2026-10-16T12:00:00+07:00"));
   page.on("pageerror", (error) => result.errors.push(error.message));
   await page.goto(`${origin}/reports?report=executive&${period}`); await ready(page);
   await page.getByRole("combobox", { name: "Reporting period", exact: true }).selectOption("thisMonth"); await ready(page);
-  assert.ok(await page.getByText("47 USD", { exact: true }).isVisible());
-  assert.ok(await page.getByText("40,000 KHR", { exact: true }).isVisible());
+  await expect(page.getByText("47 USD", { exact: true })).toBeVisible();
+  await expect(page.getByText("40,000 KHR", { exact: true })).toBeVisible();
   journey("A - Find verified receipts", "Reports / Executive summary", ["Select This month"], "Both verified-currency totals are visible immediately", ["Amounts are synthetic fixture totals, not live revenue."]);
 
   await choose(page, "payments");
@@ -146,7 +148,7 @@ try {
   await printPage.close(); await page.bringToFront();
   await page.keyboard.press("Escape"); await dialog.waitFor({ state: "hidden" });
   assert.equal(page.url(), beforePreview);
-  assert.ok(await page.locator('.report-export-menu summary').evaluate((node) => node === document.activeElement));
+  assert.ok(await page.getByRole("button", { name: "Export report", exact: true }).evaluate((node) => node === document.activeElement));
   journey("E - Print a filtered report", "Reports / Payments, USD filter active", ["Open Export report", "Choose Print / Save as PDF", "Choose A4 portrait", "Print / Save as PDF", "Close preview"], "Print dispatch and a real Chromium PDF are verified; report, filters and trigger focus are restored", ["The OS print dialog is not automated. Native print invocation is intercepted, and the captured document is independently rendered to PDF."]);
 
   options.failExport = true;
@@ -155,8 +157,8 @@ try {
   await exportItem(page, "Download Excel"); await page.getByRole("status").filter({ hasText: "Report downloaded" }).waitFor(); result.states.push("export completed");
   options.fail = 503;
   await page.getByRole("button", { name: "Refresh", exact: true }).click(); await page.getByRole("alert").filter({ hasText: "Fixture network failure" }).waitFor();
-  assert.ok(await page.getByText(/Showing the last successful snapshot/).isVisible());
-  await page.locator('.report-export-menu summary').click(); assert.ok(await page.getByRole("button", { name: "Download Excel", exact: true }).isDisabled());
+  await expect(page.getByText(/Showing the last successful snapshot/)).toBeVisible();
+  const staleExports = await exportDialog(page); assert.ok(await staleExports.getByRole("button", { name: "Download Excel", exact: true }).isDisabled());
   await page.keyboard.press("Escape"); result.states.push("stale snapshot, export disabled");
   options.fail = 403;
   await page.getByRole("button", { name: "Refresh", exact: true }).click(); await page.getByText("Administrator report access is required").waitFor();
@@ -167,8 +169,9 @@ try {
   await capture(page, "empty-state");
   await context.close();
   const slowContext = await contextFor(390, "en", "light", { delayMs: 1000 }), slow = await slowContext.newPage();
-  await slow.goto(`${origin}/reports?report=payments&${period}`); await slow.locator('.report-skeleton').waitFor(); await capture(slow, "loading-state"); await ready(slow); result.states.push("initial loading without invented zero metrics"); await slowContext.close();
+  await slow.goto(`${origin}/reports?report=payments&${period}`); await slow.locator('.admin-loading[aria-busy="true"]').waitFor(); await capture(slow, "loading-state"); await ready(slow); result.states.push("initial loading without invented zero metrics"); await slowContext.close();
   assert.deepEqual(result.errors, []);
   await writeFile(resolve(output, "journeys.json"), JSON.stringify(result, null, 2));
   console.log(JSON.stringify({ passed: true, matrix: result.matrix.length, reportVisits: result.matrix.length * 10, accessibilityScans: result.accessibility.length, journeys: result.journeys.map(({ name, interactions }) => ({ name, interactions })), states: result.states, pageErrors: result.errors.length }, null, 2));
-} finally { await browser.close(); }
+} catch (error) { await captureFailure(error); throw error; }
+finally { await browser.close(); }

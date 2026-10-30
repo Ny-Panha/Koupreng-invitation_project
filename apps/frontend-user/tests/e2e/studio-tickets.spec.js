@@ -40,11 +40,16 @@ test("exports exact 2x/3x personalized canvases with decodable QR for every layo
   await mkdir(path.join(evidence, "exports"), { recursive: true });
   await fixtures(page);
   await page.goto("/app/events/101/tickets/design");
+  const mobile = page.viewportSize().width < 900;
+  const panels = page.getByRole('group', { name: 'Ticket workspace', exact: true });
+  if (mobile) await panels.getByRole('button', { name: 'Preview & export', exact: true }).click();
   await page.getByLabel(/Preview recipient/).selectOption("501");
   for (const layout of ["GOLD", "MINIMAL", "FLORAL", "IVORY"]) {
+    if (mobile) await panels.getByRole('button', { name: 'Edit', exact: true }).click();
     await page.getByLabel(/Layout/).selectOption(layout);
     const save = page.getByRole("button", { name: /Save design/ });
     if (await save.isEnabled()) await save.click();
+    if (mobile) await panels.getByRole('button', { name: 'Preview & export', exact: true }).click();
     const download = page.getByRole("button", { name: /ទាញយក PNG|Download PNG/ });
     await expect(download).toBeEnabled();
     for (const scale of [2, 3]) {

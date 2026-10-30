@@ -1,14 +1,14 @@
 import { expect, test } from "@playwright/test";
 import { installOverhaulFixtures } from "./support/overhaulFixtures.js";
 import { fixtures as installStudioFixtures } from "./support/studioFixtures.js";
+import { installPhase4Fixtures } from "./support/phase4Fixtures.js";
 
 test("single event is featured, searchable and has one management action", async ({ page }, info) => {
   await installOverhaulFixtures(page, "en", { single: true });
   await page.goto("/app/events");
   const card = page.locator(".event-card--featured");
   await expect(card).toBeVisible();
-  await expect(card.getByRole("button", { name: 'Continue editing', exact: true })).toHaveCount(1);
-  await expect(card.getByRole("button", { name: 'Event overview', exact: true })).toHaveCount(1);
+  await expect(card.getByRole("button", { name: 'Manage event', exact: true })).toHaveCount(1);
   if (page.viewportSize().width >= 1024) expect((await card.boundingBox()).width).toBeGreaterThan(900);
   await page.screenshot({ path: info.outputPath("featured-event.png"), fullPage: true });
   await page.getByRole("searchbox").fill("no matching event");
@@ -35,45 +35,47 @@ test("event navigation supports collapse, keyboard recovery and explicit switchi
     await expect(page.locator(".event-workspace")).toHaveClass(/is-collapsed/);
     await page.getByRole("button", { name: "Expand navigation" }).click();
   }
-  await expect(page.locator(".event-workspace-nav a")).toHaveCount(17);
+  await expect(page.locator(".event-workspace-nav a")).toHaveCount(19);
   await page.getByLabel("Switch event").selectOption("102");
   await expect(page).toHaveURL(/\/app\/events\/102\/guests$/);
   if (await toggle.isVisible()) await expect(page.locator(".event-workspace-title")).toHaveText("Sokha’s birthday");
   else await expect(page.getByLabel("Switch event").locator("option:checked")).toHaveText("Sokha’s birthday");
 });
 
-test("new event prioritizes preparation without empty metrics", async ({ page }) => {
+test("new event prioritizes preparation and displays the server's zero activity", async ({ page }) => {
   await installOverhaulFixtures(page, "en", { empty: true });
   await page.goto("/app/events/101");
   await expect(page.locator(".overview-checklist li")).toHaveCount(5);
   await expect(page.locator(".overview-checklist .is-done")).toHaveCount(2);
-  await expect(page.locator(".overview-metrics")).toHaveCount(0);
+  await expect(page.locator(".overview-metrics strong")).toHaveText(['0', '0', '0', '0']);
   await expect(page.locator(".overview-actions .primary")).toHaveText("Review and publish");
   await expect(page.locator(".overview-actions .primary")).toHaveAttribute("href", "/app/events/101/invitation");
 });
 
-test("guest empty state keeps a single add action and opens a usable dialog", async ({ page }) => {
-  await installOverhaulFixtures(page, "en", { empty: true });
+test("guest empty state keeps a usable inline add form and persists the new row", async ({ page }) => {
+  const state = await installPhase4Fixtures(page, { count: 0 });
   await page.goto("/app/events/101/guests");
-  const add = page.getByRole("button", { name: /Add Guest/i });
-  await expect(add).toHaveCount(1);
+  const form = page.locator('.guest-inline-form-row');
+  const add = form.getByRole("button", { name: 'Add', exact: true });
+  await expect(add).toBeDisabled();
+  await page.locator('#guestForm-name').fill('New fictional guest');
   await add.click();
-  await expect(page.getByRole("dialog")).toBeVisible();
-  await page.keyboard.press("Escape");
-  await expect(page.getByRole("dialog")).toHaveCount(0);
-  await expect(add).toBeFocused();
+  await expect(page.locator('.guest-record-row')).toContainText('New fictional guest');
+  await expect(page.locator('#guestForm-name')).toHaveValue('');
+  expect(state.guests).toHaveLength(1);
+  await page.reload();
+  await expect(page.locator('.guest-record-row')).toContainText('New fictional guest');
 });
 
 test("unpublished delivery points to the actual publishing workflow", async ({ page }) => {
   await installOverhaulFixtures(page);
   await page.goto("/app/events/101/delivery");
-  await expect(page.getByText("Invitation must be published before delivery can be prepared.")).toBeVisible();
-  await expect(page.getByRole("button", { name: /Prepare.*Delivery|Prepare.*Link/i }).first()).toBeDisabled();
-  await expect(page.locator(".stage-send .delivery-input")).toBeHidden();
-  await page.locator(".stage-send > summary").click();
-  await expect(page.locator(".stage-send .delivery-input")).toBeVisible();
-  await expect(page.getByRole("button", { name: /Send Email|Send email/ })).toBeDisabled();
-  await page.getByRole("button", { name: "Publish Invitation", exact: true }).click();
+  await expect(page.getByText("Publish the invitation before preparing guest links.")).toBeVisible();
+  await expect(page.getByRole("button", { name: 'Prepare delivery', exact: true })).toBeDisabled();
+  await page.getByText('Email & reminders', { exact: false }).click();
+  await expect(page.getByRole("button", { name: 'Send to selected email recipients', exact: true })).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Copy message', exact: true })).toBeDisabled();
+  await page.getByRole("link", { name: "Publish Invitation", exact: true }).click();
   await expect(page).toHaveURL(/\/app\/events\/101\/invitation$/);
 });
 
@@ -143,7 +145,7 @@ test("workspace support stays below content until explicitly opened", async ({ p
   await page.goto("/app/events/101/guests");
   const support = page.locator(".chatbot-wrapper");
   await expect(support).toHaveCSS("position", "static");
-  await page.getByRole("button", { name: "Open support chat", exact: true }).click();
+  await page.getByRole("button", { name: "Help & Support", exact: true }).click();
   await expect(page.getByRole("region", { name: "Help & Support" })).toBeVisible();
   await page.getByRole("region", { name: "Help & Support" }).getByRole("button", { name: "Close support chat" }).click();
   await expect(support).toHaveCSS("position", "static");

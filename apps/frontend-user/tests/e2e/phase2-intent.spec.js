@@ -23,7 +23,7 @@ for (const [key, name, id] of [["khmer-celestial", "Khmer Celestial", 4], ["silk
     await page.locator('[name="eventTime"]').fill("17:30");
     await page.locator('[name="venueName"]').fill("Sample venue");
     await page.getByRole("button", { name: "Create event", exact: true }).click();
-    await expect(page).toHaveURL(/\/app\/events\/301$/);
+    await expect(page).toHaveURL(/\/app\/events\/301\/invitation\?mode=guided$/);
     expect(created).toHaveLength(1);
     expect(created[0]).toMatchObject({ templateId: id, templateCode: key });
     await page.goto("/app/events/301/invitation");

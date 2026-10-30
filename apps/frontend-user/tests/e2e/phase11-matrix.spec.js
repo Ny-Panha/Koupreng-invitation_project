@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 import fs from 'node:fs/promises';
 import { phase9Fixtures } from './support/phase9Fixtures';
+import { activateOpening } from './support/activateOpening';
 const matrix = JSON.parse(readFileSync(new URL('../../../../docs/phase10/01-studio-template-contract-matrix.json', import.meta.url), 'utf8'));
 const km = { title: 'ពិធីអបអរសាទរ', groomName: 'សុវណ្ណ វិសាល សិរីមង្គល', brideName: 'សុភ័ក្រ ស្រីពេជ្រ សិរីមង្គល', hostName: 'ម្ចាស់កម្មវិធី', messageText: 'សូមអញ្ជើញចូលរួមកម្មវិធីរបស់យើងខ្ញុំ។', venueName: 'ទីតាំងកម្មវិធី', venueAddress: 'អាសយដ្ឋានកម្មវិធី' };
 const en = { title: 'Our celebration', groomName: 'Fictional first partner', brideName: 'Fictional second partner', hostName: 'Fictional event host', partnerName: 'Fictional second partner', messageText: 'Please join our celebration.', venueName: 'Fictional venue', venueAddress: 'Fictional address' };
@@ -14,9 +15,13 @@ const features = {
     { id: 'arrow', type: 'arrow', x: .45, y: .4, width: .2, height: .05, rotation: 0, label: { km: '', en: '' } },
   ] },
 };
-async function openPublic(page) {
+async function openPublic(page, code) {
   const buttons = page.getByRole('button', { name: /^(Open invitation|View invitation details|បើកសំបុត្រ|បើកធៀប|ចុចទីនេះ|ចុចដើម្បីបើក|សូមចុច)/i });
-  for (let i = 0; i < await buttons.count(); i++) if (await buttons.nth(i).isVisible()) { await buttons.nth(i).click(); return; }
+  if (['withjoy-modern-portal', 'bliss-editorial-wedding', 'event-essential', 'template-boilerplate'].includes(code)) {
+    await expect(buttons).toHaveCount(0);
+    return;
+  }
+  await activateOpening(page, buttons.first());
 }
 for (const template of matrix.templates) for (const locale of ['km', 'en']) test(`${template.code} approved ${locale} across eight viewport widths`, async ({ page }, info) => {
   test.skip(['garden-royal-khmer-wedding','khmer-royal-lotus'].includes(template.code), 'Retired by V50; inactive exclusion is tested separately');
@@ -29,7 +34,7 @@ for (const template of matrix.templates) for (const locale of ['km', 'en']) test
   events.set(101, { ...events.get(101), title: km.title, groomName: km.groomName, brideName: km.brideName, hostName: km.hostName, eventType: template.code === 'event-essential' ? 'BIRTHDAY' : 'WEDDING', languageMode: 'KH', enabledSections: JSON.stringify({ rsvp: false, gallery: false, gift: false, story: false, countdown: false, map: true, schedule: true }) });
   await page.goto(`/i/review-celestial?lang=${locale}`);
   await expect(page.locator('body')).toContainText(locale === 'en' ? en.title : km.title, { timeout: 15000 });
-  await openPublic(page);
+  await openPublic(page, template.code);
   await expect(page.locator('body')).toContainText(locale === 'en' ? en.venueName : km.venueName, { timeout: 15000 });
   await page.evaluate(() => document.fonts.ready);
   for (const width of [320, 375, 390, 430, 768, 1024, 1440, 1920]) {

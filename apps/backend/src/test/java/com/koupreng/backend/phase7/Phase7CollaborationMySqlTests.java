@@ -83,6 +83,36 @@ class Phase7CollaborationMySqlTests {
         assertEquals("FREE", response.data().path("packagePlan").path("code").asText());
     }
 
+    @Test void publicPackagePolicyMatchesCurrentCatalogWithoutGrantingAdminAuthority() throws Exception {
+        Reply catalog = call("GET", "/api/v1/public/packages", null, null);
+        assertEquals(200, catalog.status);
+        assertTrue(catalog.data().isArray());
+        var observed = json.createArrayNode();
+        for (String code : List.of("FREE", "BASIC", "PRO", "PREMIUM")) {
+            var plan = packages.findAll().stream().filter(value -> code.equals(value.getCode())).findFirst().orElseThrow();
+            JsonNode offer = null;
+            for (JsonNode candidate : catalog.data()) if (code.equals(candidate.path("code").asText())) offer = candidate;
+            assertNotNull(offer, "Public catalog is missing " + code);
+            for (String field : List.of("price", "currency", "maxInvitations", "maxGuests", "maxGuestsPerInvitation", "qrInvitationsEnabled", "qrCheckInEnabled")) {
+                assertTrue(offer.hasNonNull(field), code + " is missing " + field);
+            }
+            assertTrue(offer.path("price").isNumber(), "Price must be an explicit numeric server value");
+            assertEquals(0, plan.getPrice().compareTo(offer.path("price").decimalValue()));
+            assertEquals(plan.getCurrency(), offer.path("currency").asText());
+            assertEquals(plan.getMaxInvitations().intValue(), offer.path("maxInvitations").asInt());
+            assertEquals(plan.getMaxGuests().intValue(), offer.path("maxGuests").asInt());
+            assertEquals(plan.getMaxGuestsPerInvitation().intValue(), offer.path("maxGuestsPerInvitation").asInt());
+            assertEquals(plan.isQrInvitationsEnabled(), offer.path("qrInvitationsEnabled").asBoolean());
+            assertEquals(plan.isQrCheckInEnabled(), offer.path("qrCheckInEnabled").asBoolean());
+            observed.add(offer);
+        }
+        Auth user = register();
+        assertEquals("USER", users.findById(user.id).orElseThrow().getRole().name());
+        assertEquals(403, call("GET", "/api/v1/admin/packages", user, null).status);
+        assertEquals(200, call("GET", "/api/v1/me/entitlements", user, null).status);
+        java.nio.file.Files.writeString(java.nio.file.Path.of("target/package-policy.json"), json.writerWithDefaultPrettyPrinter().writeValueAsString(observed));
+    }
+
     @Test void acceptanceIsExplicitRecipientBoundOneTimeAndRemovalRevokesAccess() throws Exception {
         Fixture f = fixture(3);
         assertEquals(403, call("GET", eventPath(f), f.member, null).status);

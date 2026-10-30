@@ -1,3 +1,4 @@
+import { evidencePath } from './support/evidencePath';
 import { expect, test } from '@playwright/test';
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -6,7 +7,7 @@ import { installPhase5Fixtures } from './support/phase5Fixtures.js';
 
 test('Phase 5 responsive evidence uses isolated fictional browser contracts', async ({ page }) => {
   test.setTimeout(600000);
-  const root = process.env.PHASE5_EVIDENCE || 'D:/Koupreng-UXUI-Phase5';
+  const root = process.env.PHASE5_EVIDENCE || evidencePath('phase5');
   const stage = process.env.PHASE5_STAGE || 'after';
   const folder = path.join(root, 'screenshots', stage);
   await mkdir(folder, { recursive: true });

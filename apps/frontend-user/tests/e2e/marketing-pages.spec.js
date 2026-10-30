@@ -4,7 +4,7 @@ import { expect, test } from "@playwright/test";
 // All endpoints are fixtures. POSTs are intercepted; nothing reaches SMTP/bank.
 const token = fixtureToken;
 const user = { id: 7, fullName: "Fixture Host", email: "host@example.test", role: "USER" };
-const catalog = [{ id: 2, code: "silk-heritage", name: "Silk Heritage", premium: false, price: 0, currency: "USD", category: "TRADITIONAL", thumbnailUrl: "/templates/silk-heritage/preview.svg" }];
+const catalog = [{ id: 2, code: "silk-heritage", status: "ACTIVE", name: "Silk Heritage", premium: false, price: 0, currency: "USD", category: "TRADITIONAL", thumbnailUrl: "/templates/silk-heritage/preview.svg" }];
 const offers = [
   { id: 1, code: "FIXTURE_USD", packageName: "USD fixture", price: "29", currency: "USD", durationDays: 90, maxInvitations: 3, maxGuestsPerInvitation: 300, premiumTemplatesEnabled: true, seatingEnabled: true, qrCheckInEnabled: false, active: true },
   { id: 2, code: "FIXTURE_KHR", packageName: "KHR fixture", price: "160000", currency: "KHR", durationDays: 120, maxInvitations: 5, maxGuestsPerInvitation: 500, premiumTemplatesEnabled: false, seatingEnabled: false, qrCheckInEnabled: true, active: true },
@@ -101,7 +101,7 @@ test("package loading, failure, retry and empty catalog have recoverable states"
   await page.route("**/api/v1/public/packages", async route => { await pending; await route.fallback(); });
   await page.goto("/pricing");
   await expect(page.getByRole("status")).toHaveText(/Loading current packages/);
-  await expect(page.locator(".kp-plan-skeleton")).toHaveCount(3);
+  await expect(page.locator('[data-loading-layout="pricing"][aria-busy="true"] .k-skeleton-card')).toHaveCount(3);
   release();
   await expect(page.getByRole("alert")).toContainText("Packages could not be loaded");
   state.packageStatus = 200; state.packages = [];
@@ -190,7 +190,8 @@ test("home pricing/help and the guest fixture lead to real destinations without 
   await expect(page.locator(".kp-guest-demo-note")).toContainText("demonstration");
   await page.getByRole("button", { name: "Pending", exact: true }).click();
   await expect(page.locator(".kp-guest-demo tbody tr")).toHaveCount(1);
-  await expect(page.locator(".kp-collection img").first()).toHaveAttribute("loading", "lazy");
+  await expect(page.locator(".kp-collection .kp-design-card")).toHaveCount(catalog.length);
+  await expect(page.locator(".kp-collection .kp-design-card a").first()).toHaveAttribute("href", /silk-heritage/);
   await page.locator(".kp-pricing-preview").getByRole("link", { name: "Understand packages & access" }).click();
   await expect(page).toHaveURL(/\/pricing$/);
   await page.goto("/");

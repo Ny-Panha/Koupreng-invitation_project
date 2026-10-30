@@ -10,7 +10,7 @@ const user = { id: 7, fullName: "Fixture Host", email: "host@example.test", role
 const catalog = [
   { id: 2, code: "silk-heritage", slug: "silk-heritage", name: "សូត្រមង្គល", nameEn: "Silk Heritage", category: "TRADITIONAL", premium: false, price: 0, currency: "USD", thumbnailUrl: "/templates/silk-heritage/preview.svg", description: JSON.stringify({ presetId: "SILK_HERITAGE", coverImage: "/templates/silk-heritage/portrait.webp" }) },
   { id: 80, code: "khmer-celestial", name: "ខ្មែរចន្ទតារា", nameEn: "Khmer Celestial", category: "TRADITIONAL", premium: true, price: null, currency: "USD", thumbnailUrl: "/facebook/all/06-card/cover-card.jpg" },
-  { id: 81, code: "emerald-canva-luxe-wedding", name: "Emerald Luxe", category: "MODERN", premium: true, price: 20, currency: "USD", thumbnailUrl: "/templates/canva-luxury/emerald-luxury.jpg" },
+  { id: 81, code: "emerald-canva-luxe-wedding", name: "Emerald Luxe", category: "MODERN", premium: true, price: 20, currency: "USD", checkoutEligible: true, checkoutAmount: 20, checkoutCurrency: "USD", thumbnailUrl: "/templates/canva-luxury/emerald-luxury.jpg" },
 ].map(template => ({ status: "ACTIVE", featured: true, ...template }));
 const json = (route, data, status = 200) => route.fulfill({ status, contentType: "application/json", body: JSON.stringify(status >= 400 ? { message: data } : { data }) });
 
@@ -33,6 +33,7 @@ async function fixture(page, { signedIn = false, paid = [], offline = false } = 
       return design ? json(route, design) : json(route, "Design not found", 404);
     }
     if (url.pathname === "/api/v1/me/templates/paid") return json(route, paid);
+    if (url.pathname === "/api/v1/me/entitlements") return json(route, { packagePlan: { code: "FREE", packageName: "Fixture free" }, features: [], quotas: {} });
     if (url.pathname.endsWith("/access")) return json(route, { hasAccess: paid.length > 0 });
     if (url.pathname === "/api/v1/i18n/messages") return json(route, { messages: {} });
     return json(route, []);
@@ -162,15 +163,19 @@ test("public demo selection survives the login form and reloads into continuous 
   await expect(choice).toHaveAttribute('aria-pressed','true');await expect(page.locator('.event-create form')).toHaveCount(1);
 });
 
-test("locked missing price goes to pricing; valid premium remains checkout gated", async ({ page }) => {
+test("locked missing price explains verified options; valid premium remains checkout gated", async ({ page }) => {
   await fixture(page, { signedIn: true });
   await page.addInitScript(() => localStorage.setItem("koupreng.lang", "en"));
   await page.goto("/templates/browse?template=khmer-celestial");
   await expect(page.getByText(/\$0\.01/)).toHaveCount(0);
   await page.getByRole("button", { name: /View pricing — price unavailable/ }).click();
-  await expect(page).toHaveURL(/\/pricing$/);
+  const unavailable = page.getByRole("dialog", { name: "Explore eligible packages", exact: true });
+  await expect(unavailable).toContainText("No eligible purchasable public package");
+  await expect(unavailable.getByRole("link", { name: /Purchase this template/ })).toHaveCount(0);
+  await expect(page).toHaveURL(/\/templates\/browse\?template=khmer-celestial$/);
   await page.goto("/templates/browse?template=emerald-canva-luxe-wedding");
   await page.getByRole("button", { name: /Buy design.*20/ }).click();
+  await page.getByRole("dialog", { name: "Explore eligible packages", exact: true }).getByRole("link", { name: /Purchase this template/ }).click();
   await expect(page).toHaveURL(/\/templates\/emerald-canva-luxe-wedding\/checkout$/);
   await expect(page.locator("h1")).toBeVisible();
 });
@@ -240,10 +245,13 @@ test("premium designs with invalid amounts or currencies keep the pricing gate",
   await fixture(page, { signedIn: true });
   await page.addInitScript(() => localStorage.setItem("koupreng.lang", "en"));
   for (const invalid of [{ price: "bad", currency: "USD" }, { price: 20, currency: "invalid" }]) {
-    await page.route("**/api/v1/templates", route => json(route, [{ ...catalog[2], ...invalid }]));
+    await page.route("**/api/v1/templates", route => json(route, [{ ...catalog[2], ...invalid, checkoutEligible: false, checkoutAmount: null, checkoutCurrency: null }]));
     await page.goto("/templates/browse?template=emerald-canva-luxe-wedding");
     await page.getByRole("button", { name: /View pricing — price unavailable/ }).click();
-    await expect(page).toHaveURL(/\/pricing$/);
+    const dialog = page.getByRole("dialog", { name: "Explore eligible packages", exact: true });
+    await expect(dialog).toContainText("No eligible purchasable public package");
+    await expect(dialog.getByRole("link", { name: /Purchase this template/ })).toHaveCount(0);
+    await expect(page).toHaveURL(/\/templates\/browse\?template=emerald-canva-luxe-wedding$/);
     await page.unroute("**/api/v1/templates");
   }
 });

@@ -1,3 +1,4 @@
+import { activateOpening } from './support/activateOpening';
 import { test, expect } from '@playwright/test';
 import { phase8Fixtures } from './support/phase8Fixtures';
 import { chooseStudioSection } from './support/studioNavigationActions';
@@ -6,7 +7,7 @@ for (const lang of ['en','kh']) for (const width of [320,375,390,430,768,1024,13
   await page.setViewportSize({ width, height: 950 });
   await phase8Fixtures(page, { lang });
   await page.goto('/app/events/101/preview');
-  await page.getByRole('button', { name: /^(Open invitation|បើកសំបុត្រអញ្ជើញ)$/ }).click();
+  await activateOpening(page);
   await expect(page.locator('.kp-calendar-event')).toBeVisible(); await page.evaluate(() => document.fonts.ready);
   for (const [name, selector] of [['program','.kp-program'],['save-date','.kp-save-date']]) {
     await page.locator(selector).screenshot({ path: info.outputPath(`${name}-${lang}-${width}.png`), animations: 'disabled' });

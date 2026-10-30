@@ -3,11 +3,16 @@ import fs from 'node:fs/promises';
 import { readFileSync } from 'node:fs';
 import { phase9Fixtures } from './support/phase9Fixtures';
 import { phase8Content } from './support/phase8Fixtures';
+import { activateOpening } from './support/activateOpening';
 
 const matrix = JSON.parse(readFileSync(new URL('../../../../docs/phase10/01-studio-template-contract-matrix.json', import.meta.url), 'utf8'));
-async function openPublic(page) {
+async function openPublic(page, code) {
   const buttons = page.getByRole('button', { name: /^(Open invitation|View invitation details|បើកសំបុត្រ|បើកធៀប|ចុចទីនេះ|ចុចដើម្បីបើក|សូមចុច)/i });
-  for (let index = 0; index < await buttons.count(); index++) if (await buttons.nth(index).isVisible()) { await buttons.nth(index).click(); return; }
+  if (['withjoy-modern-portal', 'bliss-editorial-wedding', 'event-essential', 'template-boilerplate'].includes(code)) {
+    await expect(buttons).toHaveCount(0);
+    return;
+  }
+  await activateOpening(page, buttons.first());
 }
 
 for (const template of matrix.templates) test(`${template.code}: edit, actual preview, authoritative save/reload, publish and guest DOM`, async ({ page }, info) => {
@@ -41,7 +46,7 @@ for (const template of matrix.templates) test(`${template.code}: edit, actual pr
   await expect.poll(() => events.get(101).status).toBe('PUBLISHED');
   await page.goto('/i/review-celestial'); await expect(page.locator('body')).toContainText('សុវណ្ណ វិសាល', { timeout: 15000 });
   await expect(page.locator('body')).toContainText(title);
-  await openPublic(page);
+  await openPublic(page, template.code);
   await expect(page.getByText('Review venue', { exact: true }).first()).toBeVisible({ timeout: 15000 });
   await page.evaluate(() => document.fonts.ready);
   await page.evaluate(() => document.fonts.load('16px "Battambang"', 'សិរីសួស្តី'));

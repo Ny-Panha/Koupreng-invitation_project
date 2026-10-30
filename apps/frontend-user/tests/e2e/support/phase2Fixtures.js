@@ -28,7 +28,7 @@ export async function installPhase2Fixtures(page, { anonymous = false } = {}) {
       if (template?.premium) return reply({ message: "Premium access is required" }, 403);
       let event = created.find(e => e.clientRequestId === body.clientRequestId);
       if (!event) {
-        event = { ...body, id: 301 + created.length, templateCode: template?.code, status: "DRAFT", slug: "phase2-fixture-event" };
+        event = { ...body, userId: 7, id: 301 + created.length, templateCode: template?.code, status: "DRAFT", slug: "phase2-fixture-event" };
         created.push(event); identity.events.set(event.id, event);
       }
       return reply(event, 201);
@@ -44,6 +44,7 @@ export async function installPhase2Fixtures(page, { anonymous = false } = {}) {
         identity.events.set(id, event); identity.writes.push({ id, payload });
       }
       if (!eventRoute[2] || eventRoute[2] === "preview") return reply(event);
+      if (eventRoute[2] === "access") return reply({ owner: true, permissions: [], ownerFeatures: ["QR_INVITATIONS"] });
       if (eventRoute[2] === "publish" && request.method() === "POST") {
         event = { ...event, status: "PUBLISHED" }; identity.events.set(id, event); return reply(event);
       }

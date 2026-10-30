@@ -1,11 +1,11 @@
 // Run AdminReportingTests first to generate isolated SQL/export fixtures in output/admin-reporting.
 // Preview the built admin app on ADMIN_REPORT_URL (default http://127.0.0.1:4184).
-import { chromium } from "../../apps/frontend-user/node_modules/@playwright/test/index.mjs";
+import { chromium, expect } from "../../apps/frontend-user/node_modules/@playwright/test/index.mjs";
 import process from "node:process";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { resolve } from "node:path";
 const origin = process.env.ADMIN_REPORT_URL || "http://127.0.0.1:4184";
-const directory = resolve("output/admin-reporting");
+const directory = resolve(process.env.ADMIN_REPORT_OUTPUT || "output/admin-reporting");
 await mkdir(directory, { recursive: true });
 const definitions = JSON.parse(
   await readFile(resolve(directory, "definitions.json"), "utf8"),
@@ -36,12 +36,37 @@ const evidence = {
   pdfs: [],
   requests: [],
   errors: [],
+  console: [],
+  failedRequests: [],
 };
 const token = `${Buffer.from('{"alg":"none"}').toString("base64url")}.${Buffer.from(JSON.stringify({ sub: "1", exp: Math.floor(Date.now() / 1000) + 3600 })).toString("base64url")}.fixture`;
+// Match the current accessible export drawer, including its real action controls.
+async function exportDialog(page) {
+  await page.getByRole("button", { name: "Export report", exact: true }).click();
+  const dialog = page.getByRole("dialog", { name: "Export report", exact: true });
+  await expect(dialog).toBeVisible();
+  return dialog;
+}
+async function settleMotion(page) {
+  // Audit settled colors, not an intermediate opacity frame of the entrance animation.
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    await Promise.all(document.getAnimations().filter(animation =>
+      Number.isFinite(animation.effect?.getComputedTiming().endTime),
+    ).map(animation => animation.finished.catch(() => {})));
+  });
+}
 async function contextFor(width, lang = "en", theme = "light", options = {}) {
   const context = await browser.newContext({
     viewport: { width, height: 960 },
     acceptDownloads: true,
+  });
+  await context.tracing.start({ screenshots: true, snapshots: true });
+  context.on("page", page => {
+    page.on("console", message => {
+      if (message.type() === "error") evidence.console.push(message.text());
+    });
+    page.on("requestfailed", request => evidence.failedRequests.push({ url: request.url(), error: request.failure()?.errorText }));
   });
   await context.addInitScript(
     ({ token, lang, theme }) => {
@@ -73,16 +98,18 @@ async function contextFor(width, lang = "en", theme = "light", options = {}) {
       });
     if (path.endsWith("/management/definitions"))
       return route.fulfill({ json: { success: true, data: definitions } });
-    const match = path.match(/\/management\/([^/]+)\/export\/(xlsx|csv|html)$/);
+    const match = path.match(/\/management\/([^/]+)\/export\/(xlsx|csv|csv-page|html)$/);
     if (match) {
       if (options.failExport) return route.fulfill({ status: 503, json: { message: "Fixture export failure" } });
       const [, code, format] = match;
+      if (format === "csv-page" && (code !== "invitations" || url.searchParams.get("page") !== "1" || url.searchParams.get("size") !== "1"))
+        return route.fulfill({ status: 400, json: { message: "No backend fixture for this page export" } });
       const currencySuffix =
         code === "payments" &&
         ["USD", "KHR"].includes(url.searchParams.get("currency"))
           ? "-" + url.searchParams.get("currency")
           : "";
-      const file = currencySuffix
+      const file = format === "csv-page" ? "invitations-page-2.csv" : currencySuffix
         ? `payments${currencySuffix}.${format}`
         : format === "xlsx"
           ? code === "all"
@@ -95,10 +122,11 @@ async function contextFor(width, lang = "en", theme = "light", options = {}) {
           "Content-Type":
             format === "xlsx"
               ? "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-              : format === "csv"
+              : format === "csv" || format === "csv-page"
                 ? "text/csv;charset=utf-8"
                 : "text/html;charset=utf-8",
           "X-Report-Snapshot-Id": "fixture-snapshot",
+          "Content-Disposition": `attachment; filename="koupreng-${code}${format === "csv-page" ? "-page-2" : ""}.${format === "csv-page" ? "csv" : format}"`,
         },
       });
     }
@@ -146,6 +174,15 @@ async function contextFor(width, lang = "en", theme = "light", options = {}) {
   return context;
 }
 
+async function captureFailure(error) {
+  await writeFile(resolve(directory, "failure.json"), JSON.stringify({ message: error.message, ...evidence }, null, 2));
+  for (const [index, context] of browser.contexts().entries()) {
+    for (const [pageIndex, page] of context.pages().entries())
+      await page.screenshot({ path: resolve(directory, `failure-${index}-${pageIndex}.png`), fullPage: true }).catch(() => {});
+    await context.tracing.stop({ path: resolve(directory, `failure-${index}.zip`) }).catch(() => {});
+  }
+}
+
 export {
   browser,
   contextFor,
@@ -154,4 +191,8 @@ export {
   evidence,
   directory,
   origin,
+  exportDialog,
+  expect,
+  settleMotion,
+  captureFailure,
 };

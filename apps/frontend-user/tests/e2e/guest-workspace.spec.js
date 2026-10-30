@@ -15,7 +15,7 @@ const seedGuests = [
 async function setup(page, { lang = "en", empty = false, rejectFirstSave = false, eventType = "WEDDING" } = {}) {
   const state = { guests: empty ? [] : structuredClone(seedGuests), creates: 0, shares: [] };
   await page.addInitScript(({ user, lang }) => {
-    const auth = JSON.stringify({ accessToken: "eyJhbGciOiJub25lIn0.eyJleHAiOjQxMDIyNjg4MDB9.", tokenType: "Bearer", expiresAt: "2100-01-01T00:00:00Z", user });
+    const auth = JSON.stringify({ accessToken: `${btoa(JSON.stringify({ alg: "none" }))}.${btoa(JSON.stringify({ sub: String(user.id), exp: 4102268800 }))}.`, tokenType: "Bearer", expiresAt: "2100-01-01T00:00:00Z", user });
     sessionStorage.setItem("koupreng.auth", auth);
     localStorage.setItem("koupreng.auth", auth);
     localStorage.setItem("koupreng.lang", lang);
@@ -114,9 +114,11 @@ test("row Telegram and copy-message actions mark their own guests sent", async (
   const state = await setup(page);
   const telegramGuest = page.locator(".guest-record-row").filter({ hasText: "Sok Dara" });
   await telegramGuest.locator(".guest-row-menu > summary").click();
-  const opened = page.waitForEvent("popup");
+  const opened = context.waitForEvent("page");
   await telegramGuest.getByRole("link", { name: "Share invitation for Sok Dara via Telegram" }).click();
   const popup = await opened;
+  await popup.waitForURL(/^https:\/\/t\.me\/share\/url\?/);
+  expect(new URL(popup.url()).searchParams.get("url")).toContain("test-guest-501");
   await popup.close();
   await expect(telegramGuest.locator(".k-status-badge")).toHaveText("Sent");
   const copiedGuest = page.locator(".guest-record-row").filter({ hasText: "សុខ សុភា" });
@@ -208,6 +210,8 @@ test("editing a guest and marking an invitation sent update the list", async ({ 
   await expect(row.locator(".guest-row-menu")).not.toHaveAttribute("open");
   await row.locator(".guest-row-menu > summary").click();
   await row.getByRole("button", { name: "Record manual sharing" }).click();
+  await expect(row.locator(".k-status-badge")).toHaveText("Sent");
+  expect(state.shares).toEqual([501]);
   await page.getByRole("button", { name: /^To invite/ }).click();
   await expect(page.locator(".guest-record-row")).toHaveCount(1);
   await expect(page.locator(".guest-record-row")).not.toContainText("Sok Dara Updated");

@@ -194,11 +194,14 @@ class OpenApiIntegrationTests {
     }
 
     @Test
-    void swaggerUiIsPubliclyExposed() throws Exception {
-        mockMvc.perform(get("/swagger-ui/index.html"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
-                .andExpect(content().string(containsString("Swagger UI")));
+    void legacyDocumentationBookmarksLeadToScalarWithoutExposingTheRetiredBundle() throws Exception {
+        for (String path : java.util.List.of("/swagger-ui.html", "/swagger-ui/index.html")) {
+            mockMvc.perform(get(path))
+                    .andExpect(status().isFound())
+                    .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl("/docs"));
+        }
+        mockMvc.perform(get("/webjars/swagger-ui/5.34.0/swagger-ui-bundle.js"))
+                .andExpect(status().isNotFound());
     }
 
     @Test

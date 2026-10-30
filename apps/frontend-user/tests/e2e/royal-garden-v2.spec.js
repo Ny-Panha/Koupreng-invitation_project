@@ -102,7 +102,7 @@ test('E2E-09 language switching keeps authored names and the guest token', async
   const en = { title: 'Our wedding', groomName: 'Sovann', brideName: 'Sophea', messageText: 'Please join us', venueName: 'Venue', venueAddress: 'Phnom Penh' };
   await setup(page, { ...km, schedule: [], gallery: [], cinematicIntro: { enabled: false }, localizedContentV1: { version: 1, km, en, enabledLocales: ['km','en'], defaultLocale: 'km' } });
   await page.goto('/i/review-celestial?token=fictional-guest&lang=km'); await expect(page.locator('.rg-names')).toContainText('សុវណ្ណ');
-  await page.getByRole('navigation', { name: 'Invitation language' }).getByRole('button', { name: 'English', exact: true }).click(); await expect(page.locator('.rg-names')).toContainText('Sovann');
+  await page.locator('.rg-language select').selectOption('en'); await expect(page.locator('.rg-names')).toContainText('Sovann');
   expect(new URL(page.url()).searchParams.get('token')).toBe('fictional-guest');
 });
 test('E2E-10 save and reload retain intro customization', async ({ page }, info) => {

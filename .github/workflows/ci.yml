@@ -38,7 +38,16 @@ jobs:
           echo "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb  ${RUNNER_TEMP}/${archive}" \
             | sha256sum --check --strict
           tar -xzf "${RUNNER_TEMP}/${archive}" -C "${RUNNER_TEMP}" gitleaks
-          "${RUNNER_TEMP}/gitleaks" dir . --redact --no-banner
+          "${RUNNER_TEMP}/gitleaks" dir . --redact --no-banner \
+            --report-format json --report-path "${RUNNER_TEMP}/gitleaks-redacted.json"
+
+      - name: Upload redacted secret scan evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: gitleaks-redacted
+          path: ${{ runner.temp }}/gitleaks-redacted.json
+          if-no-files-found: error
 
   backend:
     name: Backend Build, Test, Coverage & Static Analysis
@@ -230,7 +239,63 @@ jobs:
         working-directory: apps/backend
         run: |
           chmod +x mvnw
-          ./mvnw --batch-mode -Dtest=FreshDatabaseMigrationTests,MigrationUpgradeMySqlTests,AuthIntegrityMySqlTests,SubscriptionIntegrityMySqlTests,GuestMutationIntegrityMySqlTests,MediaIntegrityMySqlTests,EntitlementIntegrityMySqlTests,ReportingIntegrityMySqlTests,PaymentEvidenceIntegrityMySqlTests test
+          ./mvnw --batch-mode '-Dtest=*MySqlTests,FreshDatabaseMigrationTests' test
+
+      - name: Upload MySQL test reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: mysql-integrity-reports
+          path: apps/backend/target/surefire-reports/
+          if-no-files-found: error
+
+  backend-http-mysql:
+    name: Real HTTP MySQL Ownership, RBAC & Entitlements
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_DATABASE: phase7_disposable
+          MYSQL_ROOT_PASSWORD: ci_only_root_password
+        ports:
+          - 3416:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+    env:
+      RUN_PHASE7_MYSQL: 'true'
+      FLYWAY_TEST_DB_URL: jdbc:mysql://127.0.0.1:3416/phase7_disposable?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      FLYWAY_TEST_DB_USERNAME: root
+      FLYWAY_TEST_DB_PASSWORD: ci_only_root_password
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Java 25
+        uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
+        with:
+          java-version: '25'
+          distribution: temurin
+          cache: maven
+
+      - name: Exercise real HTTP security and owner entitlement contracts
+        working-directory: apps/backend
+        run: |
+          chmod +x mvnw
+          ./mvnw --batch-mode -Dtest=Phase7CollaborationMySqlTests,Phase9MediaMySqlTests test
+
+      - name: Upload HTTP integration reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: http-mysql-security-reports
+          path: |
+            apps/backend/target/surefire-reports/
+            apps/backend/target/package-policy.json
+          if-no-files-found: error
 
   browser-tests:
     name: Browser E2E & Route Smoke
@@ -270,12 +335,43 @@ jobs:
         working-directory: apps/frontend-user
         run: npx playwright test tests/e2e/route-smoke.spec.js
 
+      - name: Verify Studio, template locales, guests and tickets
+        working-directory: apps/frontend-user
+        run: npx playwright test tests/e2e/guest-workspace.spec.js tests/e2e/studio-tickets.spec.js tests/e2e/next-studio-ux.spec.js tests/e2e/phase12-matrix.spec.js
+
+      - name: Verify mobile package purchase and activation contracts
+        working-directory: apps/frontend-user
+        # Desktop pixel comparisons use reviewed Windows baselines locally.
+        run: npx playwright test tests/e2e/package-purchase-ux.spec.js --project=mobile-chromium
+
       - name: Install isolated accessibility QA tool
         run: npm install --prefix "$RUNNER_TEMP/report-a11y" --no-save --ignore-scripts --no-audit axe-core@4.14.0
+
+      - name: Set up Java 25 for current reporting fixtures
+        uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
+        with:
+          java-version: '25'
+          distribution: temurin
+          cache: maven
+
+      - name: Generate reporting fixtures from current backend code
+        working-directory: apps/backend
+        run: |
+          chmod +x mvnw
+          ./mvnw --batch-mode -Dtest=AdminReportingTests test
+
+      - name: Set up Python for independent document validation
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.13'
+
+      - name: Install isolated PDF validation tool
+        run: python -m pip install --target "$RUNNER_TEMP/report-pdf" 'PyMuPDF==1.28.2'
 
       - name: Verify reporting workspace, exports, and PDF journeys
         env:
           ADMIN_REPORT_AXE_PATH: ${{ runner.temp }}/report-a11y/node_modules/axe-core/axe.min.js
+          ADMIN_REPORT_PDF_TOOLS: ${{ runner.temp }}/report-pdf
         shell: bash
         run: |
           set -euo pipefail
@@ -288,6 +384,7 @@ jobs:
           done
           node scripts/qa/admin-reporting-browser.mjs
           node scripts/qa/admin-reports-workspace.mjs
+          python scripts/qa/inspect-admin-reporting-pdfs.py
 
       - name: Upload reporting workspace evidence
         if: always()
@@ -297,6 +394,10 @@ jobs:
           path: |
             output/playwright/admin-reports-workspace/after/
             output/admin-reporting/browser-evidence.json
+            output/admin-reporting/pdf-inspection.json
+            output/admin-reporting/download-inspection.json
+            output/admin-reporting/*.pdf
+            output/admin-reporting/failure*
           if-no-files-found: ignore
 
       - name: Upload Playwright diagnostics
@@ -378,6 +479,14 @@ jobs:
           esac
           # Recheck missing artifacts instead of retaining failures from the restored Maven cache.
           ./mvnw --batch-mode --update-snapshots -Pdependency-security -DskipTests "${audit_args[@]}" verify
+
+      - name: Upload Java dependency audit reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: java-dependency-audit
+          path: apps/backend/target/dependency-check-report.*
+          if-no-files-found: warn
 
   deployment-config:
     name: Deployment Configuration & Docker Applicability

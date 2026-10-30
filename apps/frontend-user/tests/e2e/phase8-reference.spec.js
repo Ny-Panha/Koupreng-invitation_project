@@ -1,3 +1,4 @@
+import { activateOpening } from './support/activateOpening';
 import { test, expect } from '@playwright/test';
 import { phase8Fixtures } from './support/phase8Fixtures';
 
@@ -8,7 +9,7 @@ for (const stage of ['before', 'after']) for (const [lang, width] of [['kh',390]
   test.skip(!process.env.PHASE8_BASELINE_ORIGIN, 'Requires the preserved Phase 7 preview server.');
   await phase8Fixtures(page, { lang }); await page.setViewportSize({ width, height: 950 });
   await page.goto(`${stage === 'before' ? process.env.PHASE8_BASELINE_ORIGIN : 'http://127.0.0.1:4288'}/app/events/101/preview`);
-  await page.getByRole('button', { name: /^(Open invitation|បើកសំបុត្រអញ្ជើញ)$/ }).click();
+  await activateOpening(page);
   await page.evaluate(() => document.fonts.ready);
   for (const [name, selector] of [['program','.kc-schedule'],['save-date','.kc-countdown']]) {
     await expect(page.locator(selector)).toBeVisible();

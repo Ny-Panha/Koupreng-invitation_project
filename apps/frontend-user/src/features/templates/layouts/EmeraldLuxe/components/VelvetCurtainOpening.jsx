@@ -21,6 +21,12 @@ export default function VelvetCurtainOpening({
       className={`el-curtain-overlay ${opened ? "opened" : ""} ${hasCustomCover ? "has-custom-bg" : ""}`}
       style={opened ? { pointerEvents: "none", visibility: "hidden" } : undefined}
       onClick={!opened ? onOpenCurtain : undefined}
+      onKeyDown={(event) => {
+        if (!opened && event.target === event.currentTarget && (event.key === "Enter" || event.key === " ")) {
+          event.preventDefault();
+          onOpenCurtain?.();
+        }
+      }}
       role={!opened ? "button" : undefined}
       tabIndex={!opened ? 0 : undefined}
       aria-label="ចុចដើម្បីបើកវាំងនន"

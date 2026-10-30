@@ -1,3 +1,4 @@
+import { activateOpening } from './support/activateOpening';
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { phase8Content, phase8Fixtures } from './support/phase8Fixtures';
@@ -42,7 +43,7 @@ test('guided multi-day editing, save/reload, advanced settings, public display a
   await expect(frame.locator('.kp-calendar-event')).toHaveAttribute('datetime', '2027-12-05');
   await page.keyboard.press('Escape');
   await page.goto('/i/review-celestial');
-  await page.getByRole('button', { name: /^(Open invitation|បើកសំបុត្រអញ្ជើញ)$/ }).click();
+  await activateOpening(page);
   await expect(page.getByText('Edited ceremony', { exact: true })).toBeVisible();
   await expect(page.locator('.kp-calendar-event')).toHaveAttribute('datetime', '2027-12-05');
   const download = page.waitForEvent('download'); await page.getByRole('button', { name: 'Add to calendar', exact: true }).click();
@@ -53,7 +54,7 @@ test('guided multi-day editing, save/reload, advanced settings, public display a
 test('date/program panels pass axe, keyboard calendar navigation and 400% reflow', async ({ page }, info) => {
   await phase8Fixtures(page);
   await page.goto('/app/events/101/preview'); await expect(page.locator('.kp-save-date')).toBeVisible();
-  await page.getByRole('button', { name: /^(Open invitation|បើកសំបុត្រអញ្ជើញ)$/ }).click();
+  await activateOpening(page);
   await page.getByRole('button', { name: 'Next month', exact: true }).focus(); await page.keyboard.press('Enter');
   await expect(page.getByRole('heading', { name: 'January 2028', exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Return to event month' }).click();
@@ -87,13 +88,13 @@ test('program visibility round trip keeps saved days and ceremonies', async ({ p
   await page.getByLabel('Show program section', { exact: true }).uncheck();
   await page.getByRole('button', { name: 'Save', exact: true }).click(); await expect(page.locator('.studio-save-status')).toHaveAttribute('data-phase', 'saved');
   expect(JSON.parse(events.get(101).contentJson).schedule).toHaveLength(2);
-  await page.goto('/i/review-celestial'); await page.getByRole('button', { name: /^(Open invitation|បើកសំបុត្រអញ្ជើញ)$/ }).click();
+  await page.goto('/i/review-celestial'); await activateOpening(page);
   await expect(page.locator('.kp-program')).toHaveCount(0);
   await page.goto('/app/events/101/invitation?mode=guided');
   await page.getByRole('button', { name: /Design & content/ }).click(); await page.getByRole('button', { name: 'Program', exact: true }).click();
   await page.getByLabel('Show program section', { exact: true }).check();
   await page.getByRole('button', { name: 'Save', exact: true }).click(); await expect(page.locator('.studio-save-status')).toHaveAttribute('data-phase', 'saved');
-  await page.goto('/i/review-celestial'); await page.getByRole('button', { name: /^(Open invitation|បើកសំបុត្រអញ្ជើញ)$/ }).click();
+  await page.goto('/i/review-celestial'); await activateOpening(page);
   await expect(page.locator('.kp-timeline li')).toHaveCount(2);
 });
 

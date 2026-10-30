@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs/promises';
 import { phase9Fixtures } from './support/phase9Fixtures';
+import { activateOpening } from './support/activateOpening';
 
 test('Celestial heritage, loaded fonts and scoped concept comparison', async ({ page }, info) => {
   test.setTimeout(120000);
@@ -17,7 +18,7 @@ test('Celestial heritage, loaded fonts and scoped concept comparison', async ({ 
       if (info.project.name === 'chromium' && [390,1440].includes(width)) {
         await page.screenshot({ path: `../../docs/phase10/evidence/after/celestial-cover-${lang}-${width}.png` });
       }
-      await page.getByRole('button', { name: /Open invitation|បើកសំបុត្រ|បើកធៀប/ }).first().click();
+      await activateOpening(page);
       await expect(page.locator('.kc-main')).toHaveAttribute('aria-hidden','false');
       await page.evaluate(() => document.fonts.ready);
       if (info.project.name === 'chromium' && [390,1440].includes(width)) {
@@ -31,7 +32,7 @@ test('Celestial heritage, loaded fonts and scoped concept comparison', async ({ 
   }
   if (info.project.name === 'chromium') {
     await page.setViewportSize({ width: 390, height: 960 }); await page.goto('/templates/khmer-celestial/preview');
-    await page.getByRole('button', { name: /Open invitation|បើកសំបុត្រ|បើកធៀប/ }).first().click();
+    await activateOpening(page);
     await expect(page.locator('.kc-main')).toHaveAttribute('aria-hidden','false');
     await page.locator('.kc-hero').scrollIntoViewIfNeeded();
     await page.screenshot({ path: '../../docs/phase10/evidence/after/concept-angkor-romduol.png' });

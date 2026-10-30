@@ -33,9 +33,13 @@ test('text size can double and a dirty generic form can cancel navigation withou
   await installUxFixtures(page);
   await page.goto('/app/events/101/invitation');
   await page.addStyleTag({ content:'html { font-size:200% !important; }' });
-  const title=page.getByRole('textbox',{ name:'Event title' }); await title.fill('Preserve these private draft edits');
+  const title=page.getByRole('textbox',{ name:'Event title',exact:true }); await title.fill('Preserve these private draft edits');
+  const menu=page.getByRole('button',{ name:'Toggle modules menu',exact:true });
+  if (await menu.isVisible()) await menu.click();
   page.once('dialog',dialog => dialog.dismiss());
   await page.getByRole('link',{ name:'Back to My Events',exact:true }).click();
+  const navigation=page.getByRole('dialog',{ name:'Event navigation',exact:true });
+  if (await navigation.isVisible()) await page.keyboard.press('Escape');
   await expect(page).toHaveURL(/\/101\/invitation$/); await expect(title).toHaveValue('Preserve these private draft edits');
   expect(await page.evaluate(() => document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);
   await page.screenshot({ path:info.outputPath('double-text-generic.png'),fullPage:true });

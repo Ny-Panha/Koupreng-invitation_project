@@ -22,7 +22,13 @@ describe("GuestTable", () => {
     fireEvent.click(screen.getByLabelText('More actions: Sample guest'));
     const share=screen.getByRole('link',{name:'Share invitation for Sample guest via Telegram'});
     expect(share).toHaveAttribute('target','_blank');
+    const menu = share.closest('details');
+    fireEvent.mouseDown(share, { button: 0 });
+    expect(share).toHaveFocus();
+    expect(menu).toHaveAttribute('open');
     fireEvent.click(share);
+    expect(menu).not.toHaveAttribute('open');
+    expect(screen.getByLabelText('More actions: Sample guest')).toHaveFocus();
     expect(onMarkAsSent).toHaveBeenCalledTimes(1);
     expect(onMarkAsSent).toHaveBeenCalledWith(expect.objectContaining({ id: 501 }));
     useLanguageStore.setState({lang:'km'});

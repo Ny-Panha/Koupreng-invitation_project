@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
-	<suppress>
+	<suppress until="2027-01-29Z">
 		<notes><![CDATA[
 			CVE-2022-31691 applies to Spring Tools 4 IDE and VS Code extensions that
 			used SnakeYAML for editor support. NVD does not identify the
 			org.springframework.boot:spring-boot-devtools Maven artifact as affected.
-			Keep this suppression version-scoped so a dependency upgrade requires review.
+			Verified 2026-10-29 against https://spring.io/security/cve-2022-31691/
+			Keep this suppression version-scoped and expiring so upgrades require review.
 		]]></notes>
-		<packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring-boot-devtools@4\.0\.8$</packageUrl>
+		<packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring-boot-devtools@4\.1\.1$</packageUrl>
 		<cve>CVE-2022-31691</cve>
 	</suppress>
 </suppressions>

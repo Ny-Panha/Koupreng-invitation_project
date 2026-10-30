@@ -1,10 +1,11 @@
+import { evidencePath } from './support/evidencePath';
 import { test, expect } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 import { installPhase5Fixtures } from './support/phase5Fixtures.js';
 
 test.use({ actionTimeout: 10000 });
-const folder = 'D:/Koupreng-UXUI-Phase5/screenshots/after/states';
 async function capture(page, name) {
+  const folder = evidencePath('phase5/states');
   await mkdir(folder, { recursive: true });
   await expect(page.locator('.kp-site-preloader')).toHaveCount(0);
   for (const width of [390, 1440]) {
@@ -52,13 +53,13 @@ test('seating empty, full table, assignment and selected canvas states', async (
   await page.setViewportSize({ width: 390, height: 700 });
   await page.locator('.seating-mobile-tabs button').nth(1).click();
   await expect(page.locator('#seating-assignment-guest')).toBeVisible();
-  await page.screenshot({ path: `${folder}/seating-assignment-mobile-390.png` });
+  await page.screenshot({ path: evidencePath('phase5/states/seating-assignment-mobile-390.png') });
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.getByTestId('tab-floor-plan').click();
   const table = page.getByRole('button', { name: 'Move table Friends table' });
   await table.focus(); await page.keyboard.press('Enter');
   await page.locator('.sfp-canvas-wrapper').scrollIntoViewIfNeeded();
-  await page.screenshot({ path: `${folder}/seating-selected-canvas-1440.png` });
+  await page.screenshot({ path: evidencePath('phase5/states/seating-selected-canvas-1440.png') });
 });
 test('Khmer import source, explicit mapping and validation errors', async ({ page }) => {
   await installPhase5Fixtures(page, { lang: 'km', empty: true });

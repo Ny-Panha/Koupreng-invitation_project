@@ -11,14 +11,16 @@ test("studio allocates useful controls and preview space at nine viewport widths
     await page.setViewportSize({width,height:900});
     await page.goto("/app/events/101/invitation");
     await expect(page.locator(".studio-toolbar")).toHaveCount(1);
-    await expect(page.locator('input[placeholder="សិរីមង្គលអាពាហ៍ពិពាហ៍"]')).toBeVisible();
+    await expect(page.getByRole('textbox', { name: 'Main Title', exact: true })).toBeVisible();
     expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBe(width);
     if(width>=1024) {
       const controls=await page.locator(".pe-editor-column").boundingBox();
       const preview=await page.locator(".pe-preview-column").boundingBox();
       expect(controls.width).toBeGreaterThanOrEqual(340);
-      expect(controls.width).toBeLessThanOrEqual(440);
-      expect(preview.width).toBeGreaterThan(width>=1366?440:280);
+      const split = Number(await page.getByRole('separator', { name: 'Editor and preview size' }).getAttribute('aria-valuenow'));
+      expect(split).toBe(60);
+      expect(100 * controls.width / (controls.width + preview.width)).toBeCloseTo(split, 0);
+      expect(preview.width).toBeGreaterThanOrEqual(280);
       expect(Math.abs(controls.y-preview.y)).toBeLessThan(2);
     } else {
       await expect(page.locator('iframe')).toHaveCount(0);

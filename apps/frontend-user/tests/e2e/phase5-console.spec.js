@@ -1,3 +1,4 @@
+import { evidencePath } from './support/evidencePath';
 import { test, expect } from '@playwright/test';
 import { writeFile } from 'node:fs/promises';
 import { installPhase5Fixtures } from './support/phase5Fixtures.js';
@@ -26,7 +27,7 @@ test('changed routes record console, network and overflow diagnostics in both la
           await page.locator('.event-card').last().scrollIntoViewIfNeeded();
           await expect(page.locator('.event-card').last()).toHaveCSS('opacity', '1');
           await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
-          await page.screenshot({ path: 'D:/Koupreng-UXUI-Phase5/screenshots/after/events-en-320.png', fullPage: true });
+          await page.screenshot({ path: evidencePath('phase5/screenshots/after/events-en-320.png'), fullPage: true });
         }
         const geometry = await page.evaluate(() => ({ viewport: innerWidth, documentWidth: document.documentElement.scrollWidth, language: localStorage.getItem('koupreng.lang') }));
         expect(geometry.documentWidth).toBe(width); expect(geometry.language).toBe(lang);
@@ -35,6 +36,6 @@ test('changed routes record console, network and overflow diagnostics in both la
     }
     await context.close();
   }
-  await writeFile('D:/Koupreng-UXUI-Phase5/metadata/console-network-review.json', JSON.stringify({ provenance: 'Fictional browser contracts; no live data/provider assertion', measurements, diagnostics }, null, 2));
+  await writeFile(evidencePath('phase5/metadata/console-network-review.json'), JSON.stringify({ provenance: 'Fictional browser contracts; no live data/provider assertion', measurements, diagnostics }, null, 2));
   expect(diagnostics.filter(item => item.type === 'page-error')).toEqual([]);
 });

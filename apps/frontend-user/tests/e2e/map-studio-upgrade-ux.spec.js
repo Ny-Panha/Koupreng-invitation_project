@@ -33,7 +33,7 @@ test('refined Map Studio fits mobile/tablet/desktop with readable properties and
   await setup(page);
   for(const[width,height]of[[320,568],[390,844],[768,1024],[1440,900]]){
     await page.setViewportSize({width,height});await open(page);
-    await expect(page.getByRole('heading',{name:'Map Studio',exact:true})).toBeVisible();
+    await expect(page.getByRole('dialog',{name:'Illustrated map designer',exact:true}).getByRole('heading',{name:'Map Studio',exact:true})).toBeVisible();
     await fits(page,'.map-designer-modal');await capture(page,`map-${width}`);
     const audit=await new AxeBuilder({page}).include('.map-designer-modal').withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();expect(audit.violations).toEqual([]);
     if(width<=900)await page.locator('.map-mobile-tabs').getByRole('button',{name:'Elements',exact:true}).click();

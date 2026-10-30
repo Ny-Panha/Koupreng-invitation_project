@@ -49,6 +49,10 @@ for(const lang of['en','km'])test(`package purchase: ${lang} details, pending re
 
 for(const status of['EXPIRED','FAILED'])test(`package purchase: ${status} offers recovery without another payment`,async({page},info)=>{
   const state=await setup(page);await page.goto('/app/packages');await page.locator('.pkg-card button').click();await details(page);await page.getByRole('button',{name:'Continue to ABA PayWay'}).click();
-  await expect(page.locator('.pkg-checkout-status[data-stage=waiting]')).toBeVisible();state.order={...state.order,status,paymentStatus:status};await page.locator('.pkg-refresh-status').click();
+  await expect(page.locator('.pkg-checkout-status[data-stage=waiting]')).toBeVisible();
+  // Polling can remove the refresh control before a click in slower engines.
+  // Observe the actual terminal server response; manual refresh is tested above.
+  const terminal=page.waitForResponse(async response=>response.url().includes('/me/subscriptions/orders/')&&response.status()===200&&(await response.json()).data.status===status);
+  state.order={...state.order,status,paymentStatus:status};await terminal;
   await expect(page.locator(`.pkg-checkout-status[data-stage=${status.toLowerCase()}]`)).toBeVisible();await expect(page.locator('.pkg-checkout-actions a')).toHaveCount(0);await expect(page.getByRole('button',{name:'Back to plans'})).toBeVisible();await audit(page);await capture(page,`${status.toLowerCase()}-${info.project.name}`);expect(state.purchases).toHaveLength(1);
 });
