@@ -383,6 +383,7 @@ const DEFAULT_STATE = {
     groomName: "",
     brideName: "",
     guestName: "",
+    monogramText: "",
     messageTitle: "",
     messageText: "",
     schedule: [],
@@ -472,6 +473,8 @@ export default function InvitationForm({ invitation }) {
         const canonicalEvent = /^[1-9]\d*$/.test(String(invitation?.id || ""));
         const tpl = getTemplateById(activeTplId);
         const preset = getTemplatePreset(tpl) || {};
+        const floral = tpl?.code === 'khmer-floral-gold';
+        const floralCopy = floral ? tpl.localizedContentV1?.[invitation?.languageMode === 'EN' ? 'en' : 'km'] || {} : {};
 
         const isDefaultGold = (customParsed.frontColor === "#f9af59" && customParsed.bottomColor === "#B08E4F") ||
             (invitation?.frontColor === "#f9af59" && invitation?.bottomColor === "#B08E4F");
@@ -482,7 +485,7 @@ export default function InvitationForm({ invitation }) {
         const uploadedCover = invitation?.coverUrl || invitation?.media?.coverImage?.fileUrl || "";
         const templateDefaultCover = preset.coverImage || DEFAULT_STATE.coverImage;
         const templateDefaultCoverBg = preset.coverBackgroundImage || tpl?.coverBackgroundImage || DEFAULT_STATE.coverBackgroundImage;
-        const templateDefaultBackground = preset.backgroundImage || tpl?.backgroundImage || (String(activeTplId).includes("celestial") ? "/invitations/khmer-celestial/botanical-frame.jpg" : "");
+        const templateDefaultBackground = floral ? '' : preset.backgroundImage || tpl?.backgroundImage || (String(activeTplId).includes("celestial") ? "/invitations/khmer-celestial/botanical-frame.jpg" : "");
         const uploadedCoverFromDraft = uploadedCover || ((!isDefaultCover && customParsed.coverImage) ? customParsed.coverImage : "");
         const coverBackgroundImage = customParsed.coverBackgroundImage
             || invitation?.coverBackgroundImage
@@ -528,6 +531,7 @@ export default function InvitationForm({ invitation }) {
         return {
             ...DEFAULT_STATE,
             ...customParsed,
+            ...(floral ? Object.fromEntries(['subtitle', 'messageTitle', 'thankYouTitle', 'thankYouText', 'apologyTitle', 'apologyText'].map(key => [key, customParsed[key] ?? floralCopy[key] ?? ''])) : {}),
             templateId: activeTplId,
             templateCode: tpl?.code || tpl?.slug || "",
             presetId: preset.presetId || tpl?.presetId || invitation?.presetId || "",
@@ -545,7 +549,7 @@ export default function InvitationForm({ invitation }) {
             brideFather: customParsed.brideFather ?? "",
             brideMother: customParsed.brideMother ?? "",
             eventDate: toStandardDate(rawDate),
-            eventDateText: customParsed.eventDateText || tpl?.dateText || DEFAULT_STATE.eventDateText,
+            eventDateText: customParsed.eventDateText || (floral ? '' : tpl?.dateText) || DEFAULT_STATE.eventDateText,
             eventTime: toStandardTime(rawTime),
             venueName,
             venueAddress,
@@ -562,7 +566,7 @@ export default function InvitationForm({ invitation }) {
                 ? invitation.storyText
                 : ((customParsed.messageText && customParsed.messageText !== DEFAULT_INVITATION_TEXT)
                     ? customParsed.messageText
-                    : (preset.messageText || DEFAULT_STATE.messageText)),
+                    : (floral ? floralCopy.messageText || '' : preset.messageText || DEFAULT_STATE.messageText)),
             schedule: Array.isArray(customParsed.schedule)
                 ? normalizeProgram(customParsed.schedule)
                 : (Array.isArray(customParsed.agendaDays) ? legacyProgram(customParsed.agendaDays) : []),
@@ -674,12 +678,13 @@ export default function InvitationForm({ invitation }) {
         void catalogVersion;
         const template = getTemplateById(form.templateId);
         const capabilities = templateCapabilities(template || { id: form.templateId });
-        const config = getLocalizedTemplateFormFlow(capabilities.appearance ? 'khmer-celestial' : template || form.templateId, uiLanguage);
+        const config = getLocalizedTemplateFormFlow(template?.code === 'khmer-floral-gold' ? template : capabilities.appearance ? 'khmer-celestial' : template || form.templateId, uiLanguage);
         config.sectionOrder = config.sectionOrder.filter(key => capabilities[key] !== false && (key !== "story" || !invitation?.eventType || invitation.eventType === "WEDDING"));
         const appearance = capabilities.typography;
-        return { ...config, sectionOrder: ["eventInfo", ...config.sectionOrder.flatMap(key => key === "cover" && appearance ? [key, "appearance"] : [key]), ...(capabilities.cinematicIntro ? ['cinematicIntro'] : []), "music", "preWeddingVideo"] };
+        return { ...config, sectionOrder: ["eventInfo", ...config.sectionOrder.flatMap(key => key === "cover" && appearance ? [key, "appearance"] : [key]), ...(capabilities.cinematicIntro ? ['cinematicIntro'] : []), "music", ...(capabilities.preWeddingVideo === false ? [] : ['preWeddingVideo'])] };
     }, [form.templateId, catalogVersion, invitation?.eventType, uiLanguage]);
     const activeSection = resolveStudioSection(selectedSection, flowConfig.sectionOrder);
+    const floralTemplate = getTemplateById(form.templateId)?.code === 'khmer-floral-gold';
     const activeStudioTab = studioTabForSection(activeSection);
     function editPreviewSection(section) {
         if (!flowConfig.sectionOrder.includes(section)) return;
@@ -1231,6 +1236,7 @@ export default function InvitationForm({ invitation }) {
                 elementFonts: form.elementFonts,
                 backgroundColor: form.backgroundColor,
                 sectionOrder: form.sectionOrder,
+                monogramText: form.monogramText || '',
                 templateId: form.templateId,
                 presetId: form.presetId || "",
                 theme: form.theme || "",
@@ -1277,6 +1283,8 @@ export default function InvitationForm({ invitation }) {
                 ...(form.preWeddingVideo ? { preWeddingVideo: form.preWeddingVideo } : {}),
                 eventDate: finalDate,
                 eventTime: finalTime,
+                monogramText: form.monogramText || '',
+                sketchMapImage: form.sketchMapImage || null,
                 studioStyle: form.studioStyle,
                 fontKhmer: form.fontKhmer,
                 fontLatin: form.fontLatin,
@@ -1289,7 +1297,7 @@ export default function InvitationForm({ invitation }) {
                 fontFamily: form.fontFamily || "",
                 layoutStyles: form.layoutStyles || {},
                 title: finalTitle,
-                subtitle: form.subtitle || "សូមគោរពអញ្ជើញ",
+                subtitle: form.subtitle || (floralTemplate ? '' : "សូមគោរពអញ្ជើញ"),
                 coverImage: form.uploadedCoverUrl || form.coverImage || null,
                 coverBackgroundImage: form.coverBackgroundImage || null,
                 backgroundImage: form.backgroundImage || null,
@@ -1396,6 +1404,7 @@ export default function InvitationForm({ invitation }) {
             let savedCoverUrl = form.uploadedCoverUrl || "";
             let savedInvitationUrl = form.uploadedInvitationUrl || "";
             let savedInvitationUrl2 = "";
+            let savedSketchMapUrl = form.sketchMapImage || '';
             let mediaSyncError = "";
             const backendId = saved?.id || (isEdit && !isNaN(Number(invitationId)) ? invitationId : (invitation?.backendInvitationId || null));
             const coverFile = pendingCoverFile || dataUrlToFile(form.coverImage, "cover.jpg");
@@ -1415,10 +1424,12 @@ export default function InvitationForm({ invitation }) {
                     .filter((item) => item.file);
                 const invitationImageUpload = pendingInvitationFile || dataUrlToFile(form.invitationImage, "invitation.jpg");
                 const invitationImage2Upload = pendingInvitation2File || dataUrlToFile(form.invitationImage2, "invitation-2.jpg");
+                const sketchMapUpload = dataUrlToFile(form.sketchMapImage, 'venue-map.jpg');
                 const galleryUploads = [
                     ...photoUploads.map((item) => ({ ...item, purpose: "photo" })),
                     ...(invitationImageUpload ? [{ file: invitationImageUpload, purpose: "invitation" }] : []),
                     ...(invitationImage2Upload ? [{ file: invitationImage2Upload, purpose: "invitation2" }] : []),
+                    ...(sketchMapUpload ? [{ file: sketchMapUpload, purpose: 'map' }] : []),
                 ];
                 if (galleryUploads.length) {
                     try {
@@ -1437,6 +1448,9 @@ export default function InvitationForm({ invitation }) {
                                 savedInvitationUrl2 = fileUrl;
                                 setPendingInvitation2File(null);
                                 update("invitationImage2", fileUrl);
+                            } else if (upload.purpose === 'map') {
+                                savedSketchMapUrl = fileUrl;
+                                update('sketchMapImage', fileUrl);
                             }
                         }
                     } catch (uploadError) {
@@ -1475,8 +1489,8 @@ export default function InvitationForm({ invitation }) {
 
             const finalDesign = { ...designPayload, coverImage: savedCoverUrl || designPayload.coverImage,
                 photos: savedPhotos, coverBackgroundImage: savedCoverBgUrl || null, backgroundImage: savedBgUrl || null,
-                invitationImage: savedInvitationUrl || designPayload.invitationImage, invitationImage2: savedInvitationUrl2 || designPayload.invitationImage2 };
-            const finalContent = { ...contentPayload, ...Object.fromEntries(["coverImage", "coverBackgroundImage", "backgroundImage", "invitationImage", "invitationImage2"].map(key => [key, finalDesign[key]])),
+                invitationImage: savedInvitationUrl || designPayload.invitationImage, invitationImage2: savedInvitationUrl2 || designPayload.invitationImage2, sketchMapImage: savedSketchMapUrl };
+            const finalContent = { ...contentPayload, ...Object.fromEntries(["coverImage", "coverBackgroundImage", "backgroundImage", "invitationImage", "invitationImage2", 'sketchMapImage'].map(key => [key, finalDesign[key]])),
                 gallery: savedPhotos.filter(photo => photo?.url).map(({ id, url }) => ({ id, preview: url, type: "image" })) };
             let extraMedia = new globalThis.Map();
             if (backendId && !apiSyncFailed) {
@@ -1491,6 +1505,7 @@ export default function InvitationForm({ invitation }) {
                 savedPhotos.some((photo, index) => photo?.url !== form.photos?.[index]?.url) ||
                 savedInvitationUrl ||
                 savedInvitationUrl2 ||
+                (savedSketchMapUrl && savedSketchMapUrl !== form.sketchMapImage) ||
                 (savedCoverBgUrl && savedCoverBgUrl !== form.coverBackgroundImage) ||
                 (savedBgUrl && savedBgUrl !== form.backgroundImage)
             );
@@ -1512,6 +1527,7 @@ export default function InvitationForm({ invitation }) {
                             backgroundImage: savedBgUrl || form.backgroundImage || null,
                             invitationImage: savedInvitationUrl || form.invitationImage || null,
                             invitationImage2: savedInvitationUrl2 || form.invitationImage2 || null,
+                            sketchMapImage: savedSketchMapUrl || null,
                         }, extraMedia))),
                         contentJson: JSON.stringify(stripInlineMedia(replaceMediaReferences({
                             ...contentPayload,
@@ -1521,6 +1537,7 @@ export default function InvitationForm({ invitation }) {
                             backgroundImage: savedBgUrl || form.backgroundImage || null,
                             invitationImage: savedInvitationUrl || form.invitationImage || null,
                             invitationImage2: savedInvitationUrl2 || form.invitationImage2 || null,
+                            sketchMapImage: savedSketchMapUrl || null,
                         }, extraMedia))),
                     }, { suppressAuthRedirect: true });
                 } catch (updateError) {
@@ -1573,7 +1590,7 @@ export default function InvitationForm({ invitation }) {
                 venueName: finalVenueName,
                 venueAddress: finalVenueAddress,
                 googleMapUrl: form.googleMapUrl,
-                sketchMapImage: form.sketchMapImage,
+                sketchMapImage: savedSketchMapUrl,
                 coverImage: savedCoverUrl || form.coverImage,
                 coverUrl: savedCoverUrl || form.coverImage,
                 uploadedCoverUrl: savedCoverUrl,
@@ -1774,6 +1791,7 @@ export default function InvitationForm({ invitation }) {
 
     const renderCoverSection = () => (
         <div className="pe-section-card" key="cover">
+            {floralTemplate && <div className="pe-form-group"><label className="pe-label" htmlFor={`${fieldId}-floral-initials`}>{uiCopy('អក្សរកាត់គូស្នេហ៍', 'Couple initials')}</label><input id={`${fieldId}-floral-initials`} name="monogramText" className="pe-input" value={form.monogramText || ''} maxLength={24} onChange={event => update('monogramText', event.target.value)} /><p className="workspace-muted">{uiCopy('ទុកទំនេរ ដើម្បីប្រើអក្សរដំបូងនៃឈ្មោះ។', 'Leave blank to use the first letters of your names.')}</p></div>}
             <h4 className="pe-section-heading">
                 <span className="pe-sec-icon-badge">
                     <Sparkles size={17} />
@@ -2148,6 +2166,7 @@ export default function InvitationForm({ invitation }) {
 
     const renderCouplePhotoSection = () => (
         <div className="pe-section-card" key="couplePhoto">
+            {floralTemplate && <><StudioUploadField label={uiCopy('រូបកូនកំលោះ', 'Groom portrait')} icon={ImageIcon} image={form.invitationImage} onUpload={event => handleFileUpload(event, (url, file) => { update('invitationImage', url); setPendingInvitationFile(file); })} onRemove={() => { update('invitationImage', ''); setPendingInvitationFile(null); }} /><StudioUploadField label={uiCopy('រូបកូនក្រមុំ', 'Bride portrait')} icon={ImageIcon} image={form.invitationImage2} onUpload={event => handleFileUpload(event, (url, file) => { update('invitationImage2', url); setPendingInvitation2File(file); })} onRemove={() => { update('invitationImage2', ''); setPendingInvitation2File(null); }} /></>}
             <h4 className="pe-section-heading">
                 <span className="pe-sec-icon-badge">
                     <Heart size={17} />
@@ -2156,7 +2175,7 @@ export default function InvitationForm({ invitation }) {
             </h4>
 
             <StudioUploadField
-                label={t("backgroundImage") || uiCopy("រូបថតគូស្នេហ៍ខាងក្នុង", "Couple / inner photo")}
+                label={floralTemplate ? uiCopy("រូបថតគូស្នេហ៍ខាងក្នុង", "Main couple photograph") : t("backgroundImage") || uiCopy("រូបថតគូស្នេហ៍ខាងក្នុង", "Couple / inner photo")}
                 icon={ImageIcon}
                 image={form.backgroundImage}
                 onUpload={(e) => handleFileUpload(e, (url, file) => {
@@ -3178,8 +3197,8 @@ export default function InvitationForm({ invitation }) {
                                     }}>
                                     <div>{["invitation", "closing"].includes(sectionKey) && renderWordingPresets(sectionKey)}{renderer()}
                                     {sectionKey === 'family' && <FamilyDesignEditor form={form} locale={activeLangTab === 'EN' ? 'en' : 'km'} onChange={update} supported={templateCapabilities(getTemplateById(form.templateId) || {}).familyLayout} />}
-                                    {sectionKey === 'cover' && <MonogramEditor value={form.coupleMonogram} onChange={value => update('coupleMonogram', value)} entitled={workspace?.access?.ownerFeatures?.includes('COUPLE_MONOGRAM') === true} supported={templateCapabilities(getTemplateById(form.templateId) || {}).monogram} />}
-                                    {sectionKey === 'venue' && <IllustratedMapEditor value={form.illustratedMap} onChange={value => update('illustratedMap', value)} locale={activeLangTab === 'EN' ? 'en' : 'km'} onUndo={studio.undo} onRedo={studio.redo} canUndo={studio.canUndo} canRedo={studio.canRedo} onSave={() => studio.flush({ deliberate: true })} savedValue={studio.savedValue?.illustratedMap ?? null} savePhase={studio.phase} saveError={studio.error} />}</div>
+                                    {sectionKey === 'cover' && !floralTemplate && <MonogramEditor value={form.coupleMonogram} onChange={value => update('coupleMonogram', value)} entitled={workspace?.access?.ownerFeatures?.includes('COUPLE_MONOGRAM') === true} supported={templateCapabilities(getTemplateById(form.templateId) || {}).monogram} />}
+                                    {sectionKey === 'venue' && !floralTemplate && <IllustratedMapEditor value={form.illustratedMap} onChange={value => update('illustratedMap', value)} locale={activeLangTab === 'EN' ? 'en' : 'km'} onUndo={studio.undo} onRedo={studio.redo} canUndo={studio.canUndo} canRedo={studio.canRedo} onSave={() => studio.flush({ deliberate: true })} savedValue={studio.savedValue?.illustratedMap ?? null} savePhase={studio.phase} saveError={studio.error} />}</div>
                                 </StudioSectionPanel>
                             </div>;
                         })}

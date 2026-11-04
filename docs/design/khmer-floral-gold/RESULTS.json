@@ -1,0 +1,104 @@
+{
+  "date": "2026-11-04",
+  "branch": "main",
+  "checks": [
+    {
+      "name": "user-lint",
+      "command": "npm --prefix apps/frontend-user run lint",
+      "result": "passed",
+      "actualSummary": [
+        "ESLint completed with no findings."
+      ],
+      "logSha256": "52fffd10a27da7ca85657cb07ca8f4c376d8991bb3efbe96d624f017b515ebf8"
+    },
+    {
+      "name": "user-unit",
+      "command": "npm --prefix apps/frontend-user run test -- --maxWorkers=2",
+      "result": "passed",
+      "actualSummary": [
+        " Test Files  164 passed (164)",
+        "      Tests  1224 passed (1224)"
+      ],
+      "logSha256": "f22ff75555f8687b7d1b5ac362230c11e766e3c57671b80006ea6195e58fca69"
+    },
+    {
+      "name": "user-build",
+      "command": "npm --prefix apps/frontend-user run build",
+      "result": "passed",
+      "actualSummary": [
+        "built in 1.47s"
+      ],
+      "logSha256": "96cc7a5fce568eea28ade4f038321420a71dadead19083fd6e0d38ccdeedc86c"
+    },
+    {
+      "name": "browser",
+      "command": "npm --prefix apps/frontend-user run test:e2e -- khmer-floral-gold.spec.js khmer-floral-media.spec.js template-identity.spec.js --workers=2",
+      "result": "passed",
+      "actualSummary": [
+        "  52 passed (1.4m)"
+      ],
+      "logSha256": "65729039db8d444f2638430e067526b182972bbc6e890dbed2fc40192865f003"
+    },
+    {
+      "name": "admin-lint",
+      "command": "npm --prefix apps/frontend-admin run lint",
+      "result": "passed",
+      "actualSummary": [
+        "ESLint completed with no findings."
+      ],
+      "logSha256": "7b0521746442f3a07ba830d3886d680d679002bb88a4358a1cdab4758c0ee841"
+    },
+    {
+      "name": "admin-build",
+      "command": "npm --prefix apps/frontend-admin run build",
+      "result": "passed",
+      "actualSummary": [
+        "built in 6.64s"
+      ],
+      "logSha256": "b7f5cc27172ee91e5fb82b4ca7c002b4ce8bf2ae8acd6d5e2037a5368190257b"
+    },
+    {
+      "name": "backend-focused",
+      "command": "apps/backend/mvnw.cmd test -Dtest=KhmerFloralGoldMigrationMySqlTests,EntitlementServiceTests,InvitationDesignPolicyTests,TemplateCatalogServiceTests,TemplateCheckoutPolicyTests,RsvpServiceTests,PublicRsvpRateLimitFilterTests,ArchitectureRulesTests",
+      "result": "passed",
+      "actualSummary": [
+        "[INFO] Tests run: 24, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.150 s -- in com.koupreng.backend.entitlement.application.EntitlementServiceTests",
+        "[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.274 s -- in com.koupreng.backend.invitation.application.InvitationDesignPolicyTests",
+        "[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.595 s -- in com.koupreng.backend.KhmerFloralGoldMigrationMySqlTests",
+        "[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.019 s -- in com.koupreng.backend.payment.application.TemplateCheckoutPolicyTests",
+        "[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.468 s -- in com.koupreng.backend.rsvp.application.RsvpServiceTests",
+        "[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.150 s -- in com.koupreng.backend.shared.security.PublicRsvpRateLimitFilterTests",
+        "[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.084 s -- in com.koupreng.backend.template.application.TemplateCatalogServiceTests",
+        "[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.983 s -- in com.koupreng.backend.architecture.ArchitectureRulesTests",
+        "[INFO] Tests run: 61, Failures: 0, Errors: 0, Skipped: 0",
+        "[INFO] BUILD SUCCESS"
+      ],
+      "logSha256": "58a85b04299cbf9e19bcc8854b15210e01754e42d6b62e5e0ef38d67d415145e"
+    },
+    {
+      "name": "backend-persistence",
+      "command": "apps/backend/mvnw.cmd test -Dtest=KhmerFloralGoldIntegrationTests",
+      "result": "passed",
+      "actualSummary": [
+        "[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 79.24 s -- in com.koupreng.backend.invitation.application.KhmerFloralGoldIntegrationTests",
+        "[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0",
+        "[INFO] BUILD SUCCESS"
+      ],
+      "logSha256": "c4a12811e662bd53ff767965f6c47ef2985d8f1a3f1e72c42390c34c55120afa"
+    },
+    {
+      "name": "settled-visual-capture",
+      "command": "npm --prefix apps/frontend-user run test:e2e -- khmer-floral-gold.spec.js --grep 'English, calendar' --workers=1",
+      "result": "passed",
+      "actualSummary": [
+        "2 passed (10.2s); captures wait for modal entrance animation to finish"
+      ],
+      "logSha256": "bb2b707362e57456a44a2f231fc02e9b7849348f3b54ca590bb5e31328aa1934"
+    }
+  ],
+  "limitations": [
+    "Browser APIs use controlled contract fixtures; separate backend integration establishes actual JPA persistence.",
+    "No physical Safari or production rollout.",
+    "The repository-wide E2E corpus was not run; template, upload and identity regression specs were selected."
+  ]
+}

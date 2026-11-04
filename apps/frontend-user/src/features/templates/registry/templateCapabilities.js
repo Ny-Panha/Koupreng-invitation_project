@@ -4,6 +4,11 @@ import { getDedicatedTemplateComponent, templateRegistry } from './templateRegis
 export function templateCapabilities(template = {}) {
   const key = String(template.code || template.slug || template.presetId || template.id || '').toLowerCase();
   const renderer = getDedicatedTemplateComponent(template);
+  if (renderer === templateRegistry['khmer-floral-gold']) return {
+    familyLayout: true, monogram: false, illustratedMap: false, preWeddingVideo: false, khqr: false, appearance: true, typography: true,
+    party: false, faq: false, dressCode: false, story: false, couplePhoto: true, schedule: true, programDays: true,
+    countdown: true, saveTheDate: true, calendar: true, sectionOrdering: true,
+  };
   if (renderer === templateRegistry['royal-garden-cinematic']) return {
     cinematicIntro: true, familyLayout: true, monogram: true, illustratedMap: true, appearance: true, typography: true,
     party: false, faq: false, dressCode: true, story: false, couplePhoto: false, schedule: true, programDays: true,

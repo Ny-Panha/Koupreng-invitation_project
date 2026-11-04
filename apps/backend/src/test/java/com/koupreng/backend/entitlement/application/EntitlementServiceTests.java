@@ -25,6 +25,19 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class EntitlementServiceTests {
+    @ParameterizedTest
+    @ValueSource(strings = {"FREE", "BASIC", "PRO", "PREMIUM", "CUSTOM", "EXPIRED", "DOWNGRADED", "UNKNOWN"})
+    void floralGoldNeedsNoPurchaseRegardlessOfSubscriptionState(String code) {
+        var floral = template(); floral.setCode("khmer-floral-gold");
+        floral.setStatus("ACTIVE"); floral.setPremium(false); floral.setPrice(BigDecimal.ZERO);
+        var paid = subscription(); paid.getSubscriptionPackage().setCode(code);
+        if (code.equals("EXPIRED")) paid.setEndDate(Instant.now().minusSeconds(1));
+        if (code.equals("DOWNGRADED")) paid.getSubscriptionPackage().setPremiumTemplatesEnabled(false);
+        when(subscriptions.findActiveForUser(eq(1L), any())).thenReturn(List.of(paid));
+        assertThat(service(true).hasTemplateAccess(user, floral)).as(code).isTrue();
+        verifyNoInteractions(purchases);
+    }
+
     @Test void mapDesignerUsesActivatedServerPackageCodesAndNotOtherPremiumBenefits() {
         for (String code : List.of("FREE", "BASIC", "PRO", "PREMIUM", "custom-expensive-package")) {
             var plan = baseline(); plan.setCode(code); plan.setPrice(new BigDecimal("999"));

@@ -92,6 +92,7 @@ const TEMPLATE_LAYOUT_OPTIONS = [
 
 // Preset Theme Styles
 const THEME_PRESETS = [
+  { id: 'KHMER_FLORAL_GOLD', name: 'សិរីមង្គលផ្កាមាស / Khmer Floral Gold', primary: '#876326', secondary: '#d5b77a', bg: '#fffdf8', badge: 'Khmer Floral Gold', amp: '&', fontKhmer: 'Moul', fontLatin: 'Cormorant Garamond', dressColors: [], backgroundImage: '' },
   {
     id: "SILK_HERITAGE",
     name: "សូត្រមង្គល / Silk Heritage",
@@ -1135,6 +1136,7 @@ export default function AdminTemplateEditPage() {
       ROYAL_KHMER: "khmer-celestial",
       KHMER_GOLDEN: "cover-khmer-golden-wedding",
       SILK_HERITAGE: "silk-heritage",
+      KHMER_FLORAL_GOLD: 'khmer-floral-gold',
       MODERN_MINIMAL: "the-digital-yes-wedding",
     };
     setForm((prev) => ({

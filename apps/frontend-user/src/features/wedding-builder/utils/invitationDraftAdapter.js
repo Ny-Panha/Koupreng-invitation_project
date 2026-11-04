@@ -101,6 +101,8 @@ export function publicInvitationToDraft(invitation, media) {
   const invitationImageUrls = new Set([
     content.invitationImage,
     content.invitationImage2,
+    content.sketchMapImage,
+    design.sketchMapImage,
   ].filter(Boolean));
   const gallery = mediaGallery(media).filter((item) => !invitationImageUrls.has(item.preview));
   const savedGallery = Array.isArray(invitationGallery)
@@ -240,6 +242,7 @@ export function publicInvitationToDraft(invitation, media) {
     apologyTitle: content.apologyTitle || "",
     apologyText: content.apologyText || "",
     guestName: content.guestName || invitation?.guest?.guestName || "",
+    monogramText: content.monogramText ?? design.monogramText ?? '',
     guestLabel: content.guestLabel || "",
     fontKhmer: content.fontKhmer || design.fontKhmer || "",
     studioStyle: content.studioStyle || design.studioStyle || {},

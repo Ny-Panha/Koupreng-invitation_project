@@ -1,0 +1,22 @@
+# Khmer Floral Gold — visual verification
+
+Reference: the user's private `IMG_0309.MP4`. FFmpeg decoded 31 chronological frames, with HDR-to-SDR inspection copies. Comparisons use the approximately 512px-wide reference and actual Playwright captures at 512×896 CSS pixels. Browser chrome and recording overlays are excluded from the implementation. The reference exposure and different licensed photographs make a pixel-difference percentage misleading; no numerical similarity score is claimed.
+
+| Scene | Reference characteristics | Implemented result / evidence | Deliberate difference |
+|---|---|---|---|
+| Opening | Botanical corners, tall gold initial frame, ceremonial heading, framed guest, bottom gold action | [512px cover](screenshots/cover-512.png): original watercolor orchids, original curled gold frame, stacked initials, separate guest panel and capsule action | Original artwork and accessible gold contrast; no copied competitor ornaments |
+| Welcome/calendar | Centered Khmer wording, rounded seven-column month grid, highlighted date | [Full 390px scroll](screenshots/invitation-390.png): saved event calendar and localized numerals | Highlight uses a legible blush accent |
+| Families/portraits | Two family columns, overlapping torn-edge photographs with names beside them | [Families](screenshots/family-512.png): owner-editable family data, individual portrait uploads and irregular paper masks | Licensed demonstration couple, never the people from the video |
+| Date/couple photograph | Tear-off date card, large portrait fading into paper | [Couple photograph](screenshots/couplePhoto-512.png): dynamic date and responsive image | Demo is authentic Khmer attire photographed at Angkor Wat |
+| Countdown | Four individual gold frames, calendar action | [Countdown](screenshots/countdown-512.png): real event instant, gold counter units, ICS action | Expired events display the existing celebration-started message |
+| Program | Gold timeline, ceremony times and descriptions | [Program](screenshots/schedule-512.png): existing normalized multi-day program, gold nodes and connecting line | Original restrained line treatment |
+| Venue | Address, framed warm diagram, Maps action | [Venue](screenshots/map-512.png): uploaded diagram viewer and saved safe Google directions | Demo diagram is explicitly illustrative; hosts upload their real map |
+| Gallery | Centered portrait, peeking neighbors, position count, fullscreen dark viewer | [Gallery](screenshots/gallery-512.png), [lightbox](screenshots/lightbox-desktop-chromium.png): pointer swipe, buttons, arrows, thumbnails, Escape, focus restoration | Existing shared modal supplies focus and scroll management |
+| Closing | Gold thank-you and apology headings with spacious paragraphs | [Closing](screenshots/closing-512.png): both authored messages and bilingual projection | Koupreng text, no copied sponsor branding |
+| RSVP/footer | Two distinct attendance choices, guest name, gold action, platform footer | [RSVP](screenshots/rsvp-512.png): real public form; demo clearly states responses are not saved | Existing guest-capability/duplicate/error policy remains authoritative |
+
+Responsive captures: [360](screenshots/invitation-360.png), [390](screenshots/invitation-390.png), [430](screenshots/invitation-430.png), [768](screenshots/invitation-768.png), [1024](screenshots/invitation-1024.png), [1440](screenshots/invitation-1440.png). The reading canvas remains at most 560px on desktop. Tests check document overflow and visible text clipping at each width. Desktop Chromium and Pixel 7 Chromium exercise the interactions; these are not claims of physical iOS/Safari testing.
+
+The floral layer stays at the viewport edges, so full-page screenshots record it at the capture viewport rather than repeating it down the entire document. Motion uses eight noninteractive CSS petals, a restrained reveal and progressive scroll animation; reduced-motion and slow-update media queries disable animation. No smooth-scroll engine, second carousel library or extra motion runtime was added.
+
+Visual iteration corrected weak floral coverage, the initial frame composition, a section/root class collision, gallery proportions, selected RSVP contrast, inherited demo music, and a floating ticket control that could intercept the opening action on small screens. Axe checks the English rendered invitation against WCAG A/AA tags; it supplements the keyboard, focus, reduced-motion and responsive checks rather than establishing complete WCAG certification.

@@ -1,0 +1,156 @@
+{
+  "reviewed": "2026-11-04",
+  "photography": [
+    {
+      "path": "apps/frontend-user/public/templates/khmer-floral-gold/couple-480.webp",
+      "width": 480,
+      "height": 720,
+      "bytes": 52158,
+      "sha256": "e25e9a22643f341fed73e7e1d56237f77538233cf159ddaa86ce8c8a28044fd6",
+      "source": "https://www.pexels.com/photo/19126456/",
+      "author": "HANUMAN PHOTO STUDIO",
+      "license": "Pexels License",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "changes": "Center crop to portrait; resize and WebP compression",
+      "scope": "Explicitly labeled template demonstration; never a published invitation fallback"
+    },
+    {
+      "path": "apps/frontend-user/public/templates/khmer-floral-gold/couple-960.webp",
+      "width": 960,
+      "height": 1440,
+      "bytes": 183448,
+      "sha256": "474b8985f13ebc3b889269eda9b99acf0607c5447ac98c7f0d7f4d0fd4fd89d2",
+      "source": "https://www.pexels.com/photo/19126456/",
+      "author": "HANUMAN PHOTO STUDIO",
+      "license": "Pexels License",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "changes": "Center crop to portrait; resize and WebP compression",
+      "scope": "Explicitly labeled template demonstration; never a published invitation fallback"
+    },
+    {
+      "path": "apps/frontend-user/public/templates/khmer-floral-gold/couple-1280.webp",
+      "width": 1280,
+      "height": 1920,
+      "bytes": 316656,
+      "sha256": "fb6ed61843e0bdf42c4bf562bbc74cf8002538b9da40df8273c59373d2d9bdfb",
+      "source": "https://www.pexels.com/photo/19126456/",
+      "author": "HANUMAN PHOTO STUDIO",
+      "license": "Pexels License",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "changes": "Center crop to portrait; resize and WebP compression",
+      "scope": "Explicitly labeled template demonstration; never a published invitation fallback"
+    },
+    {
+      "path": "apps/frontend-user/public/templates/khmer-floral-gold/groom.webp",
+      "width": 480,
+      "height": 720,
+      "bytes": 47450,
+      "sha256": "3b2734733a74b19804ddf27781d2eefaf5819715e30daa1689452644aaef927d",
+      "source": "https://www.pexels.com/photo/19126456/",
+      "author": "HANUMAN PHOTO STUDIO",
+      "license": "Pexels License",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "changes": "Individual crop of the licensed couple photograph; resize and WebP compression",
+      "scope": "Explicitly labeled template demonstration; never a published invitation fallback"
+    },
+    {
+      "path": "apps/frontend-user/public/templates/khmer-floral-gold/bride.webp",
+      "width": 480,
+      "height": 720,
+      "bytes": 52564,
+      "sha256": "69c80df1542978bca4150d59c55f1a19bdeb5804eee11352052f1a71d612ab1b",
+      "source": "https://www.pexels.com/photo/19126456/",
+      "author": "HANUMAN PHOTO STUDIO",
+      "license": "Pexels License",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "changes": "Individual crop of the licensed couple photograph; resize and WebP compression",
+      "scope": "Explicitly labeled template demonstration; never a published invitation fallback"
+    },
+    {
+      "path": "apps/frontend-user/public/templates/khmer-floral-gold/together.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 89420,
+      "sha256": "46c4e94905695ba088ae97118424220f3e7e7c446b47edffd3e00baf1fd75eb1",
+      "source": "https://www.pexels.com/photo/19126423/",
+      "author": "HANUMAN PHOTO STUDIO",
+      "license": "Pexels License",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "changes": "Resize and WebP compression; original composition",
+      "scope": "Explicitly labeled template demonstration; never a published invitation fallback"
+    },
+    {
+      "path": "apps/frontend-user/public/templates/khmer-floral-gold/blessing.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 88238,
+      "sha256": "2482a68fe0430ec935f3cb9e0cf2bdde240b7e8b1809397c84fd22aac528237a",
+      "source": "https://www.pexels.com/photo/19126425/",
+      "author": "HANUMAN PHOTO STUDIO",
+      "license": "Pexels License",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "changes": "Resize and WebP compression; original composition",
+      "scope": "Explicitly labeled template demonstration; never a published invitation fallback"
+    },
+    {
+      "path": "apps/frontend-user/public/templates/khmer-floral-gold/memories.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 82588,
+      "sha256": "a3572587a937d697e172ab8b91f970d22ab3615de36c6415d9342b8ccc9d1e05",
+      "source": "https://www.pexels.com/photo/19153799/",
+      "author": "HANUMAN PHOTO STUDIO",
+      "license": "Pexels License",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "changes": "Resize and WebP compression; original composition",
+      "scope": "Explicitly labeled template demonstration; never a published invitation fallback"
+    }
+  ],
+  "officialCatalogEvidence": "https://www.pexels.com/photo/bride-and-groom-in-traditional-cambodian-wedding-clothing-standing-on-the-background-of-angkor-wat-cambodia-19126423/ (linked free downloads for other three photographs)",
+  "decorations": [
+    {
+      "path": "apps/frontend-user/public/templates/khmer-floral-gold/botanical.svg",
+      "origin": "Original project SVG, independently drawn; no reference artwork copied",
+      "width": 600,
+      "height": 430,
+      "bytes": 3372,
+      "sha256": "e44a27dfbc0ecef668b2740b43fbbaf37e5721b23c07f10b11742cd80b24cfdf",
+      "license": "Original project artwork",
+      "role": "Original botanical source for the inlined catalog thumbnail artwork"
+    },
+    {
+      "path": "apps/frontend-user/public/templates/khmer-floral-gold/demo-map.svg",
+      "origin": "Original project SVG, independently drawn; no reference artwork copied",
+      "width": 700,
+      "height": 480,
+      "bytes": 780,
+      "sha256": "18e6e5421e98c38b0814b6646346e11570e10f0358a38eae450a1ed538c0f3f2",
+      "license": "Original project artwork",
+      "role": "Explicit illustrative demo venue diagram"
+    },
+    {
+      "path": "apps/frontend-user/public/templates/khmer-floral-gold/preview.svg",
+      "origin": "Original project SVG, independently drawn; no reference artwork copied",
+      "width": 420,
+      "height": 560,
+      "bytes": 4234,
+      "sha256": "3e3c11d5c8db82bf26e68bed54dced4facc13e9538fe7156680f89f0462b1ee1",
+      "license": "Original project artwork",
+      "role": "Public catalog thumbnail"
+    }
+  ],
+  "fonts": "Existing local Moul, Kantumruy Pro, Battambang and Cormorant Garamond; adjacent SIL OFL notices retained",
+  "music": "No bundled demo soundtrack. Host-provided audio only; existing upload authorization remains required.",
+  "originalGeneratedArtwork": {
+    "path": "apps/frontend-user/public/templates/khmer-floral-gold/floral-watercolor.webp",
+    "source": "Original built-in image_gen output, generated for this project on 2026-11-04",
+    "use": "Decoration only, no generated people",
+    "tool": "Built-in image_gen, transparent_background=true",
+    "prompt": "Create a delicate watercolor botanical arrangement for the top-right corner of a luxury Cambodian wedding invitation, transparent background, blush pink and muted plum orchids, ivory blossoms with gold centers, sage leaves and fine branches. Hand-painted natural botanical realism, translucent pigment, feathered watercolor edges. Leave the lower left two thirds transparent. No lettering, people, logo, border, shadow, flat vector or 3D. Only original artwork.",
+    "changes": "Downscaled to 1200 x 800; WebP compression preserving alpha. Rotated and scaled only through CSS.",
+    "width": 1200,
+    "height": 800,
+    "bytes": 233724,
+    "sha256": "d8551e4a1b93583cb8fcecd511e69a5505f864e06790abc27695e5eae5fc747f"
+  }
+}

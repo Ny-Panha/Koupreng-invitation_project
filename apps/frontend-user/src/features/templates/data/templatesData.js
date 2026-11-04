@@ -2,6 +2,7 @@ import { isPublicCatalogTemplate, requiresTemplateAccess } from "../model/catalo
 import musicWaitingDay from "../../../assets/music/ថ្ងៃដែលរង់ចាំ.mp3";
 import musicInstrumental from "../../../assets/music/Instrumental Wedding Music (VioSounds Cover).m4a";
 import { getMusicTrack } from '../../../shared/data/musicTracks';
+import { KHMER_FLORAL_GOLD_TEMPLATE } from './khmerFloralGoldTemplate';
 
 export const KEEP_TEMPLATE_CODE = "silk-heritage";
 export const KHMER_CELESTIAL_TEMPLATE_CODE = "khmer-celestial";
@@ -649,9 +650,12 @@ export const ROYAL_GARDEN_CINEMATIC_TEMPLATE = {
     design: { presetId: 'ROYAL_GARDEN_CINEMATIC', primaryColor: '#98703a', secondaryColor: '#c7984d', backgroundColor: '#f1ede6', openingStyle: 'royal-garden-oval' },
 };
 
+export { KHMER_FLORAL_GOLD_TEMPLATE } from './khmerFloralGoldTemplate';
+
 export const TEMPLATES = [
     SILK_HERITAGE_TEMPLATE,
     ROYAL_GARDEN_CINEMATIC_TEMPLATE,
+    KHMER_FLORAL_GOLD_TEMPLATE,
     KHMER_CELESTIAL_TEMPLATE,
     THE_DIGITAL_YES_TEMPLATE,
     EMERALD_CANVA_LUXE_TEMPLATE,
@@ -723,6 +727,7 @@ export function getCatalogVersion() {
  * component and theme variant (CSS class, colors, opening gate style, etc.).
  */
 const PRESET_TO_VARIANT = {
+    KHMER_FLORAL_GOLD: 'khmer-floral-gold',
     ROYAL_GARDEN_CINEMATIC: "royal-garden-cinematic",
     SILK_HERITAGE: SILK_HERITAGE_TEMPLATE_CODE,
     KHMER_CELESTIAL: KHMER_CELESTIAL_TEMPLATE_CODE,
@@ -840,7 +845,7 @@ export function templateFromCatalogItem(item) {
             secondaryColor,
             dark: parsedConfig.backgroundColor || baseStatic?.dark || "#1A1A1A",
             bg: parsedConfig.backgroundColor || baseStatic?.bg || "#FFFDF7",
-            music: parsedConfig.bgMusicUrl ? { url: parsedConfig.bgMusicUrl } : (baseStatic?.music || { url: musicWaitingDay }),
+            music: parsedConfig.bgMusicUrl ? { url: parsedConfig.bgMusicUrl } : (item.code === 'khmer-floral-gold' ? null : (baseStatic?.music || { url: musicWaitingDay })),
             groom: parsedConfig.groomName || baseStatic?.groom || "",
             bride: parsedConfig.brideName || baseStatic?.bride || "",
             groomName: parsedConfig.groomName || baseStatic?.groom || "",
@@ -950,6 +955,14 @@ export function getAllTemplates() {
 
 export function getTemplatePreset(tpl) {
     if (!tpl) return null;
+    // Catalogue photography and sample people belong only to the public demo.
+    if ((tpl.code || tpl.slug || tpl.id) === 'khmer-floral-gold') return {
+        templateId: String(tpl.id), presetId: 'KHMER_FLORAL_GOLD', name: tpl.name,
+        title: '', subtitle: '', openingStyle: 'floral-paper', frontColor: '#876326', bottomColor: '#d5b77a', backgroundColor: '#fffdf8',
+        coverImage: '', backgroundImage: '', coverBackgroundImage: '', musicUrl: '', photos: [],
+        groom: '', bride: '', venueName: '', venueAddress: '', messageText: '', schedule: [],
+        storyChapters: [], party: [], faq: [], gift: [], dressColors: [], enabledSections: { ...KHMER_FLORAL_GOLD_TEMPLATE.enabledSections },
+    };
 
     const tplId = String(tpl.code || tpl.slug || tpl.id || "").toLowerCase();
     const presetCandidate = tpl.presetId || tpl.design?.presetId || tpl.design?.theme || "";

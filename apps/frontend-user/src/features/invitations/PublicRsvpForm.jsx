@@ -75,6 +75,7 @@ export default function PublicRsvpForm({
     languageMode,
     showPublicWishes = true,
     khmerLabels: useKhmerLabels = false,
+    appearance,
 }) {
     const language = languageMode ? normalizeInvitationLanguage(languageMode) : useKhmerLabels ? "kh" : "en";
     const labels = language === "kh" ? khmerLabels : language === "both"
@@ -400,7 +401,7 @@ export default function PublicRsvpForm({
                         </div>
                     )}
                     <div className="inv-form-grid">
-                        <label>
+                        {appearance === 'floral' ? <fieldset className="kfg-response-field"><legend>{labels.response}</legend><div className="kfg-attendance">{[['ATTENDING', labels.attending], ['NOT_ATTENDING', labels.notAttending]].map(([value, label]) => <label key={value}><input type="radio" name="responseStatus" value={value} checked={form.responseStatus === value} onChange={() => update('responseStatus', value)} /><span>{label}</span></label>)}</div></fieldset> : <label>
                             {labels.response}
                             <select
                                 value={form.responseStatus}
@@ -410,7 +411,7 @@ export default function PublicRsvpForm({
                                 <option value="NOT_ATTENDING">{labels.notAttending}</option>
                                 <option value="MAYBE">{labels.maybe}</option>
                             </select>
-                        </label>
+                        </label>}
                         <label>
                             {labels.attendeeCount}
                             <input

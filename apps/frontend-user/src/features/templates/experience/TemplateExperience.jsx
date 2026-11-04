@@ -158,9 +158,9 @@ function WeddingTemplateExperience({
             messageTitle: liveData.messageTitle !== undefined ? liveData.messageTitle : baseContent.messageTitle,
             amp: liveData.ampSymbol || baseContent.amp || "♥",
             badge: liveData.badgeText || baseContent.badge,
-            monogramText: liveData.groomName && liveData.brideName
+            monogramText: liveData.monogramText ?? (liveData.groomName && liveData.brideName
                 ? `${liveData.groomName[0]} & ${liveData.brideName[0]}`
-                : baseContent.monogramText,
+                : baseContent.monogramText),
             venue: liveData.venueName !== undefined ? {
                 ...baseContent.venue,
                 name: liveData.venueName,

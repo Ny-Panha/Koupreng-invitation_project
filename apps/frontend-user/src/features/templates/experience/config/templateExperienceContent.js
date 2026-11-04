@@ -666,7 +666,8 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         ? `${effectiveGroom.trim().charAt(0).toUpperCase()} & ${effectiveBride.trim().charAt(0).toUpperCase()}`
         : "";
 
-    const monogramText = sanitizeDisplayText(
+    const floralGold = tpl.code === 'khmer-floral-gold' || variant === 'khmer-floral-gold';
+    const monogramText = floralGold && hasHostContent ? sanitizeDisplayText(host.monogramText || host.design?.monogramText || '', 24) : sanitizeDisplayText(
         tpl.monogramText ||
         tpl.shortName ||
         design.monogramText ||
@@ -705,7 +706,7 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         brideNickname: nonBlank(hostCouple.brideNickname),
         eventTitle: nonBlank(host.eventTitle || tpl.eventTitle) || "WEDDING INVITATION",
         title: nonBlank(host.title || tpl.title) || "សិរីមង្គលអាពាហ៍ពិពាហ៍",
-        subtitle: nonBlank(tpl.subtitle || host.subtitle),
+        subtitle: nonBlank(hasHostContent ? host.subtitle : tpl.subtitle),
         messageTitle: hasHostContent ? (host.messageTitle ?? '') : nonBlank(tpl.messageTitle),
         messageEn: nonBlank(hasHostContent ? host.messageEn : tpl.messageEn),
         thankYouTitleEn: nonBlank(hasHostContent ? host.thankYouTitleEn : tpl.thankYouTitleEn),
@@ -744,6 +745,7 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         videoPoster: host.videoPoster || tpl.videoPoster || "",
         invitationImage: hasHostContent ? nonBlank(host.invitationImage) : nonBlank(tpl.invitationImage),
         invitationImage2: hasHostContent ? nonBlank(host.invitationImage2) : nonBlank(tpl.invitationImage2),
+        sketchMapImage: hasHostContent ? nonBlank(host.sketchMapImage) : nonBlank(tpl.sketchMapImage),
         portraitImage: coverImage,
         backgroundImage,
         message: hasHostContent
@@ -770,8 +772,8 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
             address: venueAddress || (hasHostContent ? "" : tpl.venueAddress || ""),
             mapLink,
             mapEmbedUrl,
-            sketchMapImage: nonBlank(host.sketchMapImage) || nonBlank(tpl.sketchMapImage) || null,
-            image: nonBlank(host.sketchMapImage) || nonBlank(tpl.sketchMapImage) || nonBlank(tpl.venue?.sketchMapImage) || null,
+            sketchMapImage: floralGold && hasHostContent ? nonBlank(host.sketchMapImage) : nonBlank(host.sketchMapImage) || nonBlank(tpl.sketchMapImage) || null,
+            image: floralGold && hasHostContent ? nonBlank(host.sketchMapImage) : nonBlank(host.sketchMapImage) || nonBlank(tpl.sketchMapImage) || nonBlank(tpl.venue?.sketchMapImage) || null,
         },
         gallery: hasHostContent ? (hostGallery || []) : ((hostGallery && hostGallery.length) ? hostGallery : buildGallery(tpl)),
         story: hasHostContent ? (hostStory || []) : ((hostStory && hostStory.length) ? hostStory : buildStory(tpl, variant)),
@@ -801,7 +803,7 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         opening,
         gateStyle: tpl.gateStyle || tpl.design?.gateStyle || tpl.openingStyle || design.openingStyle,
         openingStyle: tpl.openingStyle || tpl.design?.openingStyle || tpl.gateStyle || design.openingStyle,
-        music: (tpl.code === 'royal-garden-cinematic' || tpl.presetId === 'ROYAL_GARDEN_CINEMATIC')
+        music: (['royal-garden-cinematic', 'khmer-floral-gold'].includes(tpl.code) || ['ROYAL_GARDEN_CINEMATIC', 'KHMER_FLORAL_GOLD'].includes(tpl.presetId))
             ? (typeof tpl.music === 'string' ? tpl.music : tpl.music?.url || '') : (typeof tpl.music === "string" && tpl.music)
             ? tpl.music
             : (tpl.music?.url || (hasHostContent ? "" : defaultMusicUrl)),

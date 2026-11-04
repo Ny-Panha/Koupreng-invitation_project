@@ -25,6 +25,12 @@ export const DEFAULT_SECTION_ORDER = [
 ];
 
 export const TEMPLATE_FORM_FLOWS = {
+    'khmer-floral-gold': {
+        hasCoverImage: true, hasCoverBackgroundImage: false, hasBackgroundImage: true, hasGate: false,
+        sectionOrder: DEFAULT_SECTION_ORDER,
+        labels: { backgroundImage: 'រូបគូស្នេហ៍', backgroundImageEn: 'Couple photograph' },
+        hints: { coverImage: 'រូបបម្រុងសម្រាប់រូបគូស្នេហ៍', coverImageEn: 'Used when no inner couple photograph is uploaded', backgroundImageEn: 'Main photograph inside the invitation' },
+    },
     // Khmer Celestial (Flagship Editorial Layout)
     // 1. Cover (Gate & Hero Title/Couple)
     // 2. Family (Together with our families / Parents)
