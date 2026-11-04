@@ -468,29 +468,6 @@
 }
 
 /* Floating Music Player */
-.wj-music-fab {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 90;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: var(--wj-primary);
-  color: #ffffff;
-  border: none;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.wj-music-fab:hover {
-  transform: scale(1.08);
-}
-
 /* Media Queries */
 @media (max-width: 768px) {
   .wj-nav-links {

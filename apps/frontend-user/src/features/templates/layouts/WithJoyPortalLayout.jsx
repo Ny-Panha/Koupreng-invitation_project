@@ -6,14 +6,13 @@ import AuthoredFamilies from '../shared/AuthoredFamilies';
 import { authoredHeadingStyle } from '../shared/templateTypography';
 import ProgramTimeline from '../shared/ProgramTimeline';
 import ProgramDetails from "../shared/ProgramDetails";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
+import FloatingAudioPlayer from "../shared/AudioPlayer/FloatingAudioPlayer";
 import { Link } from "react-router-dom";
 import {
   Heart,
   Clock,
   MapPin,
-  Music,
-  VolumeX,
   Send,
   CheckCircle2,
   QrCode,
@@ -61,23 +60,6 @@ export default function WithJoyPortalLayout({
   };
   const coverImage = effectiveContent.coverImage || "/images/wedding/couple-hero-meadow.webp";
   const musicUrl = effectiveContent.music?.url || effectiveContent.music || defaultMusicUrl;
-
-  // Audio Control
-  const audioRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  const toggleMusic = () => {
-    if (!audioRef.current) return;
-    if (isPlaying) {
-      audioRef.current.pause();
-      setIsPlaying(false);
-    } else {
-      audioRef.current
-        .play()
-        .then(() => setIsPlaying(true))
-        .catch(() => setIsPlaying(false));
-    }
-  };
 
   // Lightbox modal state
   const [activePhoto, setActivePhoto] = useState(null);
@@ -134,18 +116,7 @@ export default function WithJoyPortalLayout({
 
   return (
     <div className="wj-portal">
-      {/* Hidden audio element */}
-      <audio ref={audioRef} src={musicUrl} loop />
-
-      {/* Floating Audio Button */}
-      <button
-        type="button"
-        className="wj-music-fab"
-        onClick={toggleMusic}
-        title={isPlaying ? "បិទសំឡេង" : "ចាក់ភ្លេង"}
-      >
-        {isPlaying ? <Music className="w-5 h-5 animate-spin" /> : <VolumeX className="w-5 h-5" />}
-      </button>
+      <FloatingAudioPlayer src={musicUrl} />
 
       {/* Sticky Glassmorphism Header */}
       <header className="wj-nav">

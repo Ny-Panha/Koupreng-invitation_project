@@ -1,0 +1,159 @@
+{
+  "errors": [],
+  "measurements": [
+    {
+      "lang": "en",
+      "width": 320,
+      "close": {
+        "x": 239,
+        "y": 325.4375,
+        "width": 44,
+        "height": 44
+      },
+      "overflow": false
+    },
+    {
+      "lang": "en",
+      "width": 375,
+      "close": {
+        "x": 294,
+        "y": 332.421875,
+        "width": 44,
+        "height": 44
+      },
+      "overflow": false
+    },
+    {
+      "lang": "en",
+      "width": 390,
+      "close": {
+        "x": 309,
+        "y": 332.421875,
+        "width": 44,
+        "height": 44
+      },
+      "overflow": false
+    },
+    {
+      "lang": "en",
+      "width": 430,
+      "close": {
+        "x": 337.5,
+        "y": 332.421875,
+        "width": 44,
+        "height": 44
+      },
+      "overflow": false
+    },
+    {
+      "lang": "en",
+      "width": 768,
+      "close": {
+        "x": 506.5,
+        "y": 332.421875,
+        "width": 44,
+        "height": 44
+      },
+      "overflow": false
+    },
+    {
+      "lang": "en",
+      "width": 1024,
+      "close": {
+        "x": 634.5,
+        "y": 332.421875,
+        "width": 44,
+        "height": 44
+      },
+      "overflow": false
+    },
+    {
+      "lang": "en",
+      "width": 1440,
+      "close": {
+        "x": 842.5,
+        "y": 332.421875,
+        "width": 44,
+        "height": 44
+      },
+      "overflow": false
+    },
+    {
+      "lang": "km",
+      "width": 320,
+      "close": {
+        "x": 239,
+        "y": 329.625,
+        "width": 44,
+        "height": 44
+      },
+      "overflow": false
+    },
+    {
+      "lang": "km",
+      "width": 375,
+      "close": {
+        "x": 294,
+        "y": 342.875,
+        "width": 44,
+        "height": 44
+      },
+      "overflow": false
+    },
+    {
+      "lang": "km",
+      "width": 390,
+      "close": {
+        "x": 309,
+        "y": 342.875,
+        "width": 44,
+        "height": 44
+      },
+      "overflow": false
+    },
+    {
+      "lang": "km",
+      "width": 430,
+      "close": {
+        "x": 337.5,
+        "y": 342.875,
+        "width": 44,
+        "height": 44
+      },
+      "overflow": false
+    },
+    {
+      "lang": "km",
+      "width": 768,
+      "close": {
+        "x": 506.5,
+        "y": 342.875,
+        "width": 44,
+        "height": 44
+      },
+      "overflow": false
+    },
+    {
+      "lang": "km",
+      "width": 1024,
+      "close": {
+        "x": 634.5,
+        "y": 342.875,
+        "width": 44,
+        "height": 44
+      },
+      "overflow": false
+    },
+    {
+      "lang": "km",
+      "width": 1440,
+      "close": {
+        "x": 842.5,
+        "y": 342.875,
+        "width": 44,
+        "height": 44
+      },
+      "overflow": false
+    }
+  ]
+}

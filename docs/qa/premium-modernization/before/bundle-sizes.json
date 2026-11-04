@@ -1,0 +1,26 @@
+{
+  "frontend-user": [
+    {
+      "name": "index-iaGUKd9h.css",
+      "bytes": 203330,
+      "gzipBytes": 37108
+    },
+    {
+      "name": "index-L3V38EcD.js",
+      "bytes": 432739,
+      "gzipBytes": 128225
+    }
+  ],
+  "frontend-admin": [
+    {
+      "name": "index-0LTDtZW6.js",
+      "bytes": 325817,
+      "gzipBytes": 98889
+    },
+    {
+      "name": "index-CTAY8Wz5.css",
+      "bytes": 182619,
+      "gzipBytes": 25399
+    }
+  ]
+}

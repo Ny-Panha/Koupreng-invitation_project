@@ -46,6 +46,7 @@
   font-size: var(--text-sm, 0.875rem);
   font-weight: var(--weight-semibold, 600);
   padding: 0.5rem 1.125rem;
+  min-height: var(--ui-control-min-height, 44px);
   border-radius: var(--radius-md, 10px);
   background: var(--status-danger-fg, #dc2626);
   color: #ffffff;
@@ -54,9 +55,14 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  transition: background 0.15s ease;
+  transition: background var(--ui-duration-feedback, 160ms) ease;
 }
 
 .k-error-retry-btn:hover {
   background: #b91c1c;
+}
+
+.k-error-retry-btn:focus-visible {
+  outline: 3px solid var(--ui-focus, #0f766e);
+  outline-offset: 3px;
 }

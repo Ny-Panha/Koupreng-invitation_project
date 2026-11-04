@@ -1,0 +1,159 @@
+{
+  "errors": [],
+  "measurements": [
+    {
+      "lang": "en",
+      "width": 320,
+      "close": {
+        "x": 259.8125,
+        "y": 329.625,
+        "width": 23.1875,
+        "height": 23.1875
+      },
+      "overflow": false
+    },
+    {
+      "lang": "en",
+      "width": 375,
+      "close": {
+        "x": 314.8125,
+        "y": 341.515625,
+        "width": 23.1875,
+        "height": 23.1875
+      },
+      "overflow": false
+    },
+    {
+      "lang": "en",
+      "width": 390,
+      "close": {
+        "x": 329.8125,
+        "y": 341.515625,
+        "width": 23.1875,
+        "height": 23.1875
+      },
+      "overflow": false
+    },
+    {
+      "lang": "en",
+      "width": 430,
+      "close": {
+        "x": 358.3125,
+        "y": 341.515625,
+        "width": 23.1875,
+        "height": 23.1875
+      },
+      "overflow": false
+    },
+    {
+      "lang": "en",
+      "width": 768,
+      "close": {
+        "x": 527.3125,
+        "y": 341.515625,
+        "width": 23.1875,
+        "height": 23.1875
+      },
+      "overflow": false
+    },
+    {
+      "lang": "en",
+      "width": 1024,
+      "close": {
+        "x": 655.3125,
+        "y": 341.515625,
+        "width": 23.1875,
+        "height": 23.1875
+      },
+      "overflow": false
+    },
+    {
+      "lang": "en",
+      "width": 1440,
+      "close": {
+        "x": 863.3125,
+        "y": 341.515625,
+        "width": 23.1875,
+        "height": 23.1875
+      },
+      "overflow": false
+    },
+    {
+      "lang": "km",
+      "width": 320,
+      "close": {
+        "x": 259.8125,
+        "y": 329.625,
+        "width": 23.1875,
+        "height": 23.1875
+      },
+      "overflow": false
+    },
+    {
+      "lang": "km",
+      "width": 375,
+      "close": {
+        "x": 314.8125,
+        "y": 351.984375,
+        "width": 23.1875,
+        "height": 23.1875
+      },
+      "overflow": false
+    },
+    {
+      "lang": "km",
+      "width": 390,
+      "close": {
+        "x": 329.8125,
+        "y": 351.984375,
+        "width": 23.1875,
+        "height": 23.1875
+      },
+      "overflow": false
+    },
+    {
+      "lang": "km",
+      "width": 430,
+      "close": {
+        "x": 358.3125,
+        "y": 351.984375,
+        "width": 23.1875,
+        "height": 23.1875
+      },
+      "overflow": false
+    },
+    {
+      "lang": "km",
+      "width": 768,
+      "close": {
+        "x": 527.3125,
+        "y": 351.984375,
+        "width": 23.1875,
+        "height": 23.1875
+      },
+      "overflow": false
+    },
+    {
+      "lang": "km",
+      "width": 1024,
+      "close": {
+        "x": 655.3125,
+        "y": 351.984375,
+        "width": 23.1875,
+        "height": 23.1875
+      },
+      "overflow": false
+    },
+    {
+      "lang": "km",
+      "width": 1440,
+      "close": {
+        "x": 863.3125,
+        "y": 351.984375,
+        "width": 23.1875,
+        "height": 23.1875
+      },
+      "overflow": false
+    }
+  ]
+}

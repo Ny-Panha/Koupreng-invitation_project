@@ -1,0 +1,62 @@
+{
+  "browser": "desktop-chromium",
+  "fixtures": "Intercepted empty summary/analytics; browser-only ADMIN session",
+  "results": [
+    {
+      "lang": "km",
+      "width": 320,
+      "noOverflow": true,
+      "namedControls": true,
+      "min44px": true,
+      "nativeDrawerKeyboard": true
+    },
+    {
+      "lang": "km",
+      "width": 375,
+      "noOverflow": true,
+      "namedControls": true,
+      "min44px": true,
+      "nativeDrawerKeyboard": true
+    },
+    {
+      "lang": "km",
+      "width": 390,
+      "noOverflow": true,
+      "namedControls": true,
+      "min44px": true,
+      "nativeDrawerKeyboard": true
+    },
+    {
+      "lang": "km",
+      "width": 430,
+      "noOverflow": true,
+      "namedControls": true,
+      "min44px": true,
+      "nativeDrawerKeyboard": true
+    },
+    {
+      "lang": "km",
+      "width": 768,
+      "noOverflow": true,
+      "namedControls": true,
+      "min44px": true,
+      "nativeDrawerKeyboard": true
+    },
+    {
+      "lang": "km",
+      "width": 1024,
+      "noOverflow": true,
+      "namedControls": true,
+      "min44px": true,
+      "nativeDrawerKeyboard": false
+    },
+    {
+      "lang": "km",
+      "width": 1440,
+      "noOverflow": true,
+      "namedControls": true,
+      "min44px": true,
+      "nativeDrawerKeyboard": false
+    }
+  ]
+}

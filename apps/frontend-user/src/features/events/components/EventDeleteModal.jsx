@@ -8,7 +8,7 @@ export function EventDeleteModal({ draftToDelete, onCancel, onConfirm, isDeletin
 
     const confirmLabel = isDeleting
         ? ((t && t("deleting")) || "កំពុងលុប...")
-        : ((t && t("confirmBtn")) || "យល់ព្រម");
+        : ((t && t("confirmDeleteBtn")) || "យល់ព្រម");
 
     const cancelLabel = (t && t("cancelBtn")) || "បោះបង់";
 

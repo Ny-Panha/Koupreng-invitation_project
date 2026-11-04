@@ -8,7 +8,8 @@ import ProgramTimeline from '../shared/ProgramTimeline';
 import ProgramDetails from "../shared/ProgramDetails";
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Music, VolumeX, X, CheckCircle2 } from "lucide-react";
+import { X, CheckCircle2 } from "lucide-react";
+import FloatingAudioPlayer from "../shared/AudioPlayer/FloatingAudioPlayer";
 import defaultMusicUrl from "../../../assets/music/Instrumental Wedding Music (VioSounds Cover).m4a";
 import CoverBackground from "../shared/Openings/CoverBackground";
 import { isTrustedPreviewMessage, readEmbeddedPreviewChannel } from "@/shared/preview/previewMessaging";
@@ -53,22 +54,6 @@ export default function BlissEditorialLayout({
   };
   const coverImage = effectiveContent.coverImage || "/images/wedding/couple-hero-meadow.webp";
   const musicUrl = effectiveContent.music?.url || effectiveContent.music || defaultMusicUrl;
-
-  // Audio Control
-  const audioRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const toggleMusic = () => {
-    if (!audioRef.current) return;
-    if (isPlaying) {
-      audioRef.current.pause();
-      setIsPlaying(false);
-    } else {
-      audioRef.current
-        .play()
-        .then(() => setIsPlaying(true))
-        .catch(() => setIsPlaying(false));
-    }
-  };
 
   // RSVP Drawer state
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -129,32 +114,7 @@ export default function BlissEditorialLayout({
 
   return (
     <div className="bliss-container">
-      <audio ref={audioRef} src={musicUrl} loop />
-
-      {/* Floating Audio Button */}
-      <button
-        type="button"
-        onClick={toggleMusic}
-        style={{
-          position: "fixed",
-          bottom: "24px",
-          right: "24px",
-          zIndex: 90,
-          width: "48px",
-          height: "48px",
-          borderRadius: "50%",
-          background: "var(--bliss-charcoal)",
-          color: "#ffffff",
-          border: "none",
-          boxShadow: "0 4px 20px rgba(0, 0, 0, 0.25)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          cursor: "pointer",
-        }}
-      >
-        {isPlaying ? <Music className="w-5 h-5 animate-spin" /> : <VolumeX className="w-5 h-5" />}
-      </button>
+      <FloatingAudioPlayer src={musicUrl} />
 
       {/* Editorial Minimalist Header */}
       <header className="bliss-header">
