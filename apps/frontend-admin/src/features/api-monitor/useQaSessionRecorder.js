@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef } from "react";
 import { sanitizeCsvCell } from "../../shared/utils/csvExport";
-import { sanitizePath } from "../../shared/utils/auditSanitizer";
+import { redactDiagnosticValue, sanitizePath } from "../../shared/utils/auditSanitizer";
 
 export function useQaSessionRecorder() {
   const [isRecording, setIsRecording] = useState(false);
@@ -70,11 +70,11 @@ export function useQaSessionRecorder() {
       timestamp: e.timestamp,
     }));
 
-    const exportPayload = {
+    const exportPayload = redactDiagnosticValue({
       session: activeSession || { id: "adhoc-export", name: "Manual Snapshot", exportedAt: new Date().toISOString() },
       totalEvents: sanitizedEvents.length,
       events: sanitizedEvents,
-    };
+    });
 
     let blob;
     let extension;
@@ -97,7 +97,7 @@ export function useQaSessionRecorder() {
         "timestamp",
       ];
       const headerLine = headers.map(sanitizeCsvCell).join(",");
-      const rows = sanitizedEvents.map((e) =>
+      const rows = exportPayload.events.map((e) =>
         headers.map((h) => sanitizeCsvCell(e[h] ?? "")).join(",")
       );
       const csvContent = "\uFEFF" + [headerLine, ...rows].join("\r\n");

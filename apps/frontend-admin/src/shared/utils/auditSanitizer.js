@@ -1,57 +1,71 @@
-/**
- * Security and privacy sanitization utility for audit logs, API telemetry, and exported diagnostics.
- * Redacts tokens, passwords, authorization headers, private guest tokens, and sensitive query strings.
- */
+/** Privacy filtering for displayed and exported diagnostics, not a general DLP guarantee. */
+const REDACTED = "[REDACTED]";
 
-const SENSITIVE_QUERY_REGEX = /([?&](?:token|password|secret|key|qrToken|auth|access_token|refresh_token|apiKey)=)[^&\s"']*/gi;
-const INLINE_KEY_VALUE_REGEX = /(\b[a-zA-Z0-9_-]*(?:token|password|secret|key|qrToken|credential)[a-zA-Z0-9_-]*\s*[:=]\s*)(?!Bearer\b)[^&\s"',]+/gi;
-const BEARER_AUTH_REGEX = /\bBearer\s+[A-Za-z0-9_\-.]+/gi;
-const SENSITIVE_JSON_KEY_REGEX = /"(password|token|secret|access_token|refresh_token|apiKey|qrToken|authorization|cardNumber|cvv)"\s*:\s*"[^"]*"/gi;
+function decodedKey(key) {
+  let value = String(key);
+  for (let i = 0; i < 3; i++) {
+    try {
+      const decoded = decodeURIComponent(value);
+      if (decoded === value) break;
+      value = decoded;
+    } catch { break; }
+  }
+  return value.replace(/[^a-z0-9]/gi, "").toLowerCase();
+}
 
-/**
- * Redacts secrets from unstructured descriptions, cURL commands, and metadata strings.
- */
+function sensitiveKey(key) {
+  const normalized = decodedKey(key);
+  return /token|password|passwd|secret|credential|authorization|cookie|apikey/.test(normalized)
+    || /^(?:key|auth|apikey|privatekey|clientkey|signature|cvv|cardnumber|paymentref(?:erence)?|providerref(?:erence)?|transactionref(?:erence)?|transactionid|bankref(?:erence)?)$/.test(normalized);
+}
+
+/** Keep useful path/filter context; decode keys before checking mixed or encoded names. */
+export function sanitizePath(path) {
+  if (path == null) return "";
+  const redactUrl = value => value
+    .replace(/(\/public\/invitations\/[^/?#\s"']+\/guests\/)[^/?#\s"']+/gi, `$1${REDACTED}`)
+    .replace(/([?&#])([^?&#=\s"']+)=([^&#\s"']*)/g,
+    (match, separator, key) => sensitiveKey(key) ? `${separator}${key}=${REDACTED}` : match);
+  let value = redactUrl(String(path));
+  let decoded = value;
+  for (let i = 0; i < 3 && /%[0-9a-f]{2}/i.test(decoded); i++) {
+    try { decoded = decodeURIComponent(decoded); } catch { break; }
+    // Encoded whole URLs can occur inside error descriptions. Decode only when filtering a secret.
+    const filtered = redactUrl(decoded);
+    if (filtered !== decoded) value = filtered;
+  }
+  return redactUrl(value);
+}
+
 export function redactSecrets(text) {
   if (text == null) return "";
-  let s = String(text);
-  s = s.replace(BEARER_AUTH_REGEX, "Bearer [REDACTED]");
-  s = s.replace(INLINE_KEY_VALUE_REGEX, "$1[REDACTED]");
-  s = s.replace(SENSITIVE_QUERY_REGEX, "$1[REDACTED]");
-  s = s.replace(SENSITIVE_JSON_KEY_REGEX, '"$1": "[REDACTED]"');
-  return s;
+  let value = sanitizePath(text);
+  value = value.replace(/\bBearer\s+[^\s"',;]+/gi, `Bearer ${REDACTED}`);
+  value = value.replace(/(["']?)([a-zA-Z0-9_%.-]+)\1\s*([:=])\s*("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|[^&\s,;}]+)/g,
+    (match, quote, key, separator, payload) => sensitiveKey(key)
+      ? `${quote}${key}${quote}${separator}${payload.startsWith('"') ? ' "' + REDACTED + '"' : payload.startsWith("'") ? " '" + REDACTED + "'" : REDACTED}`
+      : match);
+  // Header values can contain spaces and punctuation; redact the whole header line.
+  value = value.replace(/\b(Authorization|Proxy-Authorization|Cookie|Set-Cookie|X-Api-Key)\s*:\s*[^\r\n]+/gi,
+    (_, key) => `${key}: ${key.toLowerCase().includes("authorization") ? "Bearer " : ""}${REDACTED}`);
+  return value;
 }
 
-/**
- * Sanitizes URLs or request paths to ensure query secrets are masked.
- */
-export function sanitizePath(path) {
-  if (!path) return "";
-  return String(path).replace(SENSITIVE_QUERY_REGEX, "$1[REDACTED]");
+/** Scrub values at every depth, including array/number/object secrets and free-text notes. */
+export function redactDiagnosticValue(value, key = "") {
+  if (sensitiveKey(key)) return REDACTED;
+  if (typeof value === "string") return redactSecrets(value);
+  if (Array.isArray(value)) return value.map(item => redactDiagnosticValue(item));
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.entries(value).map(([name, item]) => [name, redactDiagnosticValue(item, name)]));
+  }
+  return value;
 }
 
-/**
- * Safely parses and redacts a JSON metadata string for pretty display.
- */
 export function formatAndRedactMetadata(metadataJson) {
-  if (!metadataJson || !metadataJson.trim()) return null;
+  if (metadataJson == null || !String(metadataJson).trim()) return null;
   try {
-    const parsed = JSON.parse(metadataJson);
-    const scrub = (obj) => {
-      if (!obj || typeof obj !== "object") return obj;
-      if (Array.isArray(obj)) return obj.map(scrub);
-      const res = {};
-      for (const [k, v] of Object.entries(obj)) {
-        if (/password|token|secret|auth|qrToken|apiKey|key/i.test(k) && typeof v === "string") {
-          res[k] = "[REDACTED]";
-        } else if (typeof v === "object" && v !== null) {
-          res[k] = scrub(v);
-        } else {
-          res[k] = v;
-        }
-      }
-      return res;
-    };
-    return JSON.stringify(scrub(parsed), null, 2);
+    return JSON.stringify(redactDiagnosticValue(JSON.parse(metadataJson)), null, 2);
   } catch {
     return redactSecrets(metadataJson);
   }

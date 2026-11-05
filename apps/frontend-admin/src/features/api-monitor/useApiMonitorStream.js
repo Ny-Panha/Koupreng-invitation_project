@@ -14,6 +14,7 @@ export function useApiMonitorStream() {
   const abortControllerRef = useRef(null);
   const isPausedRef = useRef(false);
   const lastEventIdRef = useRef(null);
+  const seenEventIdsRef = useRef(new Set());
 
   useEffect(() => {
     isPausedRef.current = isPaused;
@@ -34,13 +35,18 @@ export function useApiMonitorStream() {
             return [...newEvents.reverse(), ...prev].slice(0, MAX_CLIENT_BUFFER);
           });
         } else {
-          setEvents(data.events);
+          setEvents(data.events.slice(0, MAX_CLIENT_BUFFER));
         }
+        for (const event of data.events) seenEventIdsRef.current.add(event.id);
+        while (seenEventIdsRef.current.size > MAX_CLIENT_BUFFER) seenEventIdsRef.current.delete(seenEventIdsRef.current.values().next().value);
       }
       if (data?.stats) {
         setStats(data.stats);
       }
     } else if (eventName === "request") {
+      if (seenEventIdsRef.current.has(data.id)) return;
+      seenEventIdsRef.current.add(data.id);
+      if (seenEventIdsRef.current.size > MAX_CLIENT_BUFFER) seenEventIdsRef.current.delete(seenEventIdsRef.current.values().next().value);
       setEvents((prev) => {
         // Prevent duplicate insertion
         if (prev.some((e) => e.id === data.id)) return prev;
@@ -66,6 +72,8 @@ export function useApiMonitorStream() {
       });
     } else if (eventName === "clear") {
       setEvents([]);
+      setSelectedEvent(null);
+      seenEventIdsRef.current.clear();
       lastEventIdRef.current = null;
       setStats((prev) =>
         prev
@@ -117,6 +125,7 @@ export function useApiMonitorStream() {
       signal: abortController.signal,
     })
       .then(async (response) => {
+        if (abortController.signal.aborted) return;
         if (!response.ok) {
           throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
@@ -135,7 +144,7 @@ export function useApiMonitorStream() {
 
         while (true) {
           const { done, value } = await reader.read();
-          if (done) break;
+          if (done || abortController.signal.aborted) break;
 
           buffer += decoder.decode(value, { stream: true });
           const lines = buffer.split("\n");
@@ -185,7 +194,7 @@ export function useApiMonitorStream() {
         }
       })
       .catch((err) => {
-        if (err.name === "AbortError") {
+        if (err.name === "AbortError" || abortController.signal.aborted) {
           return;
         }
         setStatus("error");
@@ -237,12 +246,16 @@ export function useApiMonitorStream() {
     }
 
     setEvents([]);
+    setSelectedEvent(null);
+    seenEventIdsRef.current.clear();
     lastEventIdRef.current = null;
     return { success: true };
   }, []);
 
   const clearLocalBuffer = useCallback(() => {
     setEvents([]);
+    setSelectedEvent(null);
+    seenEventIdsRef.current.clear();
     lastEventIdRef.current = null;
   }, []);
 
