@@ -55,8 +55,8 @@ export default function LandingStory({ copy }) {
 
       <div className="kp-metrics-ribbon" role="region" aria-label={copy("ស្ថិតិនៃការរចនា", "Design metrics")}>
         <article className="kp-metric-card">
-          <strong className="kp-metric-value"><NumberTicker value={30} suffix="+" /></strong>
-          <span className="kp-metric-label">{copy("គំរូរចនាប្រណីត", "Artisan designs")}</span>
+          <strong className="kp-metric-value"><NumberTicker value={10} suffix="" /></strong>
+          <span className="kp-metric-label">{copy("គំរូរចនាប្រណីត", "Artisan wedding themes")}</span>
         </article>
         <article className="kp-metric-card">
           <strong className="kp-metric-value"><NumberTicker value={100} suffix="%" /></strong>

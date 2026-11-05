@@ -756,6 +756,7 @@ function WeddingTemplateExperience({
                 <TemplateQuickNav
                     enabledSections={effectiveEnabledSections}
                     onNavigate={handleNavigate}
+                    languageMode={content.languageMode}
                 />
             )}
             </div>

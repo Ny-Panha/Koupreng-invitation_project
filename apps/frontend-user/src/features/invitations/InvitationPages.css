@@ -1362,57 +1362,76 @@
     width: 100%;
 }
 
+.pub-rsvp-live {
+    display: grid;
+    gap: 24px;
+    max-width: 680px;
+    margin: 0 auto;
+    width: 100%;
+}
+
 .pub-rsvp-form,
 .pub-rsvp-done {
-    border: 1px solid #eadfcf;
-    border-radius: 8px;
-    padding: 24px;
-    background: #fffaf2;
+    border: 1px solid rgba(197, 160, 89, 0.32);
+    border-radius: 18px;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    background: linear-gradient(180deg, #fffdfa 0%, #fff9f0 100%);
+    box-shadow: 0 10px 30px rgba(58, 37, 20, 0.08), 0 1px 3px rgba(197, 160, 89, 0.12);
+    position: relative;
 }
 
 .pub-rsvp-form {
     display: grid;
-    gap: 16px;
-}
-
-.pub-rsvp-live {
-    display: grid;
-    gap: 22px;
+    gap: 18px;
 }
 
 .pub-wishes-wall {
     display: grid;
-    gap: 14px;
+    gap: 16px;
+    margin-top: 0.5rem;
 }
 
 .pub-wishes-wall h2 {
     margin: 0;
     color: #241733;
-    font-size: 1.25rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
 }
 
 .pub-wishes-list {
     display: grid;
     gap: 12px;
+    max-height: 380px;
+    overflow-y: auto;
+    padding-right: 4px;
 }
 
 .pub-wish-card {
-    border: 1px solid #eadfcf;
-    border-radius: 8px;
-    padding: 16px;
-    background: #fffaf2;
+    border: 1px solid rgba(197, 160, 89, 0.22);
+    border-radius: 14px;
+    padding: 1rem 1.25rem;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(58, 37, 20, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pub-wish-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(197, 160, 89, 0.12);
 }
 
 .pub-wish-card p {
-    margin: 0 0 10px;
-    color: #253041;
-    line-height: 1.65;
+    margin: 0 0 8px;
+    color: #2c2520;
+    line-height: 1.6;
+    font-size: 0.95rem;
 }
 
 .pub-wish-card span {
-    color: #7d6443;
-    font-size: 0.85rem;
-    font-weight: 800;
+    color: #8b6b33;
+    font-size: 0.82rem;
+    font-weight: 700;
 }
 
 .public-state {

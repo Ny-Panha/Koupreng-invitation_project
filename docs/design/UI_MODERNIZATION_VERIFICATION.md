@@ -211,6 +211,41 @@ Admin entry JS is smaller, while scoped accessible-shell CSS grows; combined gzi
 | `npm run build` (customer cwd) | Production build passed in 7.51s with **0 errors**; exit 0 |
 | `npx playwright test tests/e2e/marketing-landing.spec.js tests/e2e/marketing-pages.spec.js --workers=1` (customer cwd) | **72 tests passed** across desktop and mobile Chromium; 2.3m; exit 0 |
 
+## Batch 7 — Premium Public Invitation Experience, Guest Journey & Multi-Template Verification (2026-11-05)
+
+### Implemented source files
+
+| Files (paths relative to repository root) | Change |
+|---|---|
+| `apps/frontend-user/src/features/templates/experience/components/sections/TemplateGallery.jsx` | Adaptive masonry photo gallery with accessible full-screen lightbox, sequential Previous/Next navigation buttons (`IoChevronBack`, `IoChevronForward`), keyboard arrow navigation (`ArrowLeft`, `ArrowRight`, `Escape`), numeric photo counter (`${activeIndex + 1} / ${images.length}`), and automatic body scroll locking/restoration when open |
+| `apps/frontend-user/src/features/templates/experience/components/sections/TemplateGallery.test.jsx` | Dedicated unit test suite verifying gallery rendering, accessible image triggers, lightbox opening, sequential navigation, keyboard arrow controls, counter updates, and body scroll lock lifecycle (4 passed) |
+| `apps/frontend-user/src/features/templates/experience/components/controls/TemplateQuickNav.jsx` | Modernized quick invitation navigation pill with bilingual Khmer/English support, section icons, and dynamic filtering based on `enabledSections` (`schedule`, `venue`, `gallery`, `gift`, `rsvp`, `footer`) |
+| `apps/frontend-user/src/features/templates/experience/components/controls/TemplateQuickNav.test.jsx` | Dedicated unit test suite verifying section visibility filtering, Khmer and English label switching, and navigation callbacks (3 passed) |
+| `apps/frontend-user/src/features/templates/experience/TemplateExperience.jsx` | Explicit `languageMode={content.languageMode}` forwarding to `TemplateQuickNav` and preserved opening gate choreography |
+| `apps/frontend-user/src/features/templates/experience/template-experience.css` | Added base styling for `.tx-quick-nav`, `.tx-quick-nav__list`, `.tx-quick-nav__item` (with active state, hover, focus-visible, and mobile responsiveness), and lightbox navigation buttons (`.tx-lightbox__nav-btn`, `.tx-lightbox__counter`) |
+| `apps/frontend-user/src/features/invitations/InvitationPages.css` | Elevated public RSVP section (`.pub-rsvp-live`, `.pub-rsvp-form`, `.pub-rsvp-done`) and public wishes wall (`.pub-wishes-wall`, `.pub-wish-card`) to luxury parchment styling with 18px rounded borders, gold gradient background, and refined typography |
+| `apps/frontend-user/src/features/marketing/components/LandingStory.jsx` | Corrected homepage metric from unverified `30+` artisan designs to factual `10` artisan wedding themes based on registry truth |
+| `docs/design/THIRD_PARTY_UI_LICENSES.md` | Replaced mutable `@main` references with immutable commit hashes; classified runtime-used vendor components vs installed-but-unused marketing components to maintain zero-vendor output invariants |
+| `docs/design/TEN_LIBRARY_INTEGRATION_MATRIX.md` | Updated integration statuses with immutable source hashes and verified runtime boundaries |
+
+### Executed checks
+
+| Command | Actual result |
+|---|---|
+| `npx vitest run src/features/templates/experience/components/` (customer cwd) | **2 test files passed**, **7 tests passed**; exit 0 |
+| `npx vitest run src/features/templates/experience/TemplateExperience.test.jsx` (customer cwd) | **1 test file passed**, **24 tests passed**; 5.24s; exit 0 |
+| `npx vitest run src/features/templates/ src/features/wedding-site/ src/features/invitations/` (customer cwd) | **75 test files passed**, **741 tests passed**; 13.43s; exit 0 |
+| `npm run lint` (frontend-user) | Pass, **0 errors, 0 warnings**; exit 0 |
+| `npm run build` (frontend-user) | Production build passed in 1.53s with **0 errors**; exit 0 |
+| `npm run lint` (frontend-admin) | Pass, **0 errors, 0 warnings**; exit 0 |
+| `npm run build` (frontend-admin) | Production build passed in 5.30s with **0 errors**; exit 0 |
+| `node scripts/sync-design-tokens.cjs --check` | Verified 2 application token exports; exit 0 |
+| `python scripts/validate-agent-routing.py` | Validated 58 skills, 10 pinned skills, 0 errors/failures; exit 0 |
+| `npm run test:e2e tests/e2e/silk-heritage.spec.js` (frontend-user) | **28 tests passed** across desktop and mobile Chromium; exit 0 on invitation suite |
+| `npm run test:e2e tests/e2e/golden-opening.spec.js` (frontend-user) | **17 tests passed** across desktop and mobile Chromium |
+| `npm run test:e2e tests/e2e/royal-garden-v33.spec.js` (frontend-user) | **13 tests passed**, 2 skipped across desktop and mobile Chromium |
+| `npm run test:e2e tests/e2e/invitation-styles-v2.spec.js` (frontend-user) | **42 tests passed** across desktop and mobile Chromium |
+
 ## Remaining scope
 
 Every canonical route's complete state matrix and end-to-end live-provider behavior remain open. This batch verifies shared foundation contracts, not the entire dashboard, invitations, studios, guest operations, admin tables or financial workflows. Next: customer HostShell/HostNav, event list/cards/workspace navigation; then marketing/catalog, account, builder, all invitation renderers and remaining admin screens in the [roadmap](UI_MODERNIZATION_ROADMAP.md).
