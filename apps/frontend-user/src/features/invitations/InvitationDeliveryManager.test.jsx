@@ -144,13 +144,14 @@ describe("InvitationDeliveryManager", () => {
     expect(screen.getByRole('button', { name: 'Prepare delivery' })).toBeDisabled();
   });
 
-  it.each(["Copy link: Sample guest", "Copy message"])("saves Sent status after %s succeeds", async action => {
+  it.each(["Copy link: Sample guest", "Copy message"])("keeps delivery pending after %s succeeds", async action => {
     const { writeText, row } = await sharingWorkspace();
     fireEvent.click(screen.getByRole("button", { name: action, exact: true }));
-    await waitFor(() => expect(row().getByText("Sent / recorded share")).toBeInTheDocument());
+    await waitFor(() => expect(writeText).toHaveBeenCalledTimes(1));
+    expect(row().getByText("Not sent")).toBeInTheDocument();
     expect(writeText).toHaveBeenCalledTimes(1);
     expect(writeText.mock.calls[0][0]).toContain("personal-501");
-    expect(deliveryService.markShared).toHaveBeenCalledExactlyOnceWith("101", 501);
+    expect(deliveryService.markShared).not.toHaveBeenCalled();
   });
 
   it("saves Sent status when Telegram sharing is clicked", async () => {

@@ -384,6 +384,11 @@
 /* ── Hamburger Button (Mobile) ── */
 .host-hamburger-btn {
   display: none;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: 4px;
+  width: 44px;
+  height: 44px;
   min-height: 44px;
   min-width: 44px;
   background: rgba(255, 255, 255, 0.85);
@@ -407,12 +412,13 @@
 
 .host-hamburger-btn span {
   display: block;
+  flex-shrink: 0;
   width: 22px;
   height: 2.5px;
   background: var(--ui-ink, #1f2421);
   border-radius: 2px;
   transition: all 0.26s cubic-bezier(0.4, 0, 0.2, 1);
-  margin: 4.5px 0;
+  margin: 0;
 }
 
 .host-hamburger-btn.open span:nth-child(1) {

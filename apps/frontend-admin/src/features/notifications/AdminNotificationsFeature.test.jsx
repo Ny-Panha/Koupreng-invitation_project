@@ -122,41 +122,19 @@ describe("AdminNotificationsFeature UX & Broadcast Safety", () => {
     expect(mockAdminService.createNotification).not.toHaveBeenCalled();
   });
 
-  it("rejects dangerous action URLs with javascript: schemes", async () => {
-    render(
-      <AdminLanguageProvider>
-        <MemoryRouter>
-          <AdminNotificationsFeature />
-        </MemoryRouter>
-      </AdminLanguageProvider>
-    );
-
-    await waitFor(() => {
-      expect(screen.getByText("Event Reminder")).toBeInTheDocument();
-    });
-
-    fireEvent.change(screen.getByLabelText(/Recipient User ID/i), {
-      target: { value: "42" },
-    });
-    fireEvent.change(screen.getByLabelText(/Title/i), {
-      target: { value: "Test Title" },
-    });
-    fireEvent.change(screen.getByLabelText(/Message Content/i), {
-      target: { value: "Test Message Content" },
-    });
-    fireEvent.change(screen.getByLabelText(/Action URL/i), {
-      target: { value: "javascript:alert(1)" },
-    });
-
-    const submitBtn = screen.getByRole("button", { name: /^Send Notification$/i });
-    fireEvent.click(submitBtn);
-
-    await waitFor(() => {
-      expect(
-        screen.getByText(/Invalid action URL/i)
-      ).toBeInTheDocument();
-    });
-    expect(mockAdminService.createNotification).not.toHaveBeenCalled();
+  it("disables unsupported action links and reports the returned pending status", async () => {
+    mockAdminService.createNotification.mockResolvedValueOnce({ id: 104, title: "Pending notice", status: "PENDING", channel: "EMAIL" });
+    render(<AdminLanguageProvider><MemoryRouter><AdminNotificationsFeature /></MemoryRouter></AdminLanguageProvider>);
+    await screen.findByText("Event Reminder");
+    expect(screen.getByLabelText(/Action URL/i)).toBeDisabled();
+    expect(screen.getByText(/notification service does not support them/)).toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText(/Recipient User ID/i), { target: { value: "42" } });
+    fireEvent.change(screen.getByLabelText(/Title/i), { target: { value: "Pending notice" } });
+    fireEvent.change(screen.getByLabelText(/Message Content/i), { target: { value: "Fixture message" } });
+    fireEvent.click(screen.getByRole("button", { name: /^Send Notification$/i }));
+    expect(await screen.findByText(/Notification saved. Server status: PENDING/)).toBeInTheDocument();
+    expect(mockAdminService.createNotification).toHaveBeenCalledExactlyOnceWith({ title: "Pending notice", message: "Fixture message", type: "SYSTEM_ALERT", channel: "SYSTEM", userId: 42 });
+    expect(screen.queryByText(/sent successfully/i)).not.toBeInTheDocument();
   });
 
   it("opens broadcast confirmation modal when in Broadcast mode and executes on confirm", async () => {

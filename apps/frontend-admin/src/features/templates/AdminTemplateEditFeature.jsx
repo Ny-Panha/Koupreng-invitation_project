@@ -1521,14 +1521,15 @@ export default function AdminTemplateEditPage() {
   return (
     <div className="fixed inset-0 z-50 flex h-screen w-screen flex-col bg-zinc-950 text-zinc-100 overflow-hidden font-sans">
       {/* 1. TOP STUDIO TOOLBAR */}
-      <header className="flex h-16 shrink-0 items-center justify-between border-b border-zinc-800/80 bg-zinc-900/90 px-6 backdrop-blur-md">
-        <div className="flex items-center gap-4 min-w-0">
+      <header className="flex min-h-16 shrink-0 flex-wrap gap-3 items-center justify-between border-b border-zinc-800/80 bg-zinc-900/90 px-4 py-3 backdrop-blur-md">
+        <div className="flex flex-1 basis-full xl:basis-auto items-center gap-3 min-w-0">
           <Link
             to="/templates"
-            className="flex h-9 shrink-0 items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-800/50 px-3.5 text-xs font-semibold text-zinc-300 transition hover:bg-zinc-800 hover:text-white"
+            aria-label={lang === "en" ? "Back to templates" : "ត្រឡប់ទៅបញ្ជីគំរូ"}
+            className="flex h-11 shrink-0 items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-800/50 px-3.5 text-xs font-semibold text-zinc-300 transition hover:bg-zinc-800 hover:text-white"
           >
             <ArrowLeft className="h-4 w-4" />
-            <span>{t("templateEditor.back", "ត្រឡប់ទៅបញ្ជីគំរូ")}</span>
+            <span className="hidden sm:inline">{t("templateEditor.back", "ត្រឡប់ទៅបញ្ជីគំរូ")}</span>
           </Link>
           <div className="h-6 w-px bg-zinc-800 shrink-0" />
           <div className="min-w-0">
@@ -1539,7 +1540,7 @@ export default function AdminTemplateEditPage() {
                   ? (lang === "en" ? "✨ Create New Template (Studio)" : "✨ បង្កើតគំរូថ្មី (Template Visual Studio)")
                   : (lang === "en" ? `🎨 Edit: ${form.name}` : `🎨 កែសម្រួល: ${form.name}`)}
               </h1>
-              <span className="shrink-0 rounded-full bg-amber-500/10 px-2.5 py-0.5 text-[10px] font-bold text-amber-400 border border-amber-500/20">
+              <span className="hidden sm:inline-flex shrink-0 rounded-full bg-amber-500/10 px-2.5 py-0.5 text-[10px] font-bold text-amber-400 border border-amber-500/20">
                 Studio Editor v2
               </span>
             </div>

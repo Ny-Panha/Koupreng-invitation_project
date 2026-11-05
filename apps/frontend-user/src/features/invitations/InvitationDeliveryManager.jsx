@@ -117,10 +117,9 @@ export default function InvitationDeliveryManager() {
     await load();
   };
 
-  const copy = async (text, guest) => {
+  const copy = async (text) => {
     await navigator.clipboard.writeText(text);
     toast(t('copied'));
-    await recordShare(guest);
   };
 
   const share = (guest, method) =>

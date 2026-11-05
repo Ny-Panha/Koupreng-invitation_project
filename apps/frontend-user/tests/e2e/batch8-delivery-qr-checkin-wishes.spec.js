@@ -243,11 +243,12 @@ test.describe("Batch 8 — Operational Journey Verification", () => {
     await searchInput.clear();
     await expect(page.getByText("Sok Dara")).toBeVisible();
 
-    // Verify copy link action calls markShared
+    // Clipboard preparation does not demonstrate sharing or delivery.
     const copyLinkBtn = page.getByRole("button", { name: "Copy link: Heng Thida" });
     await copyLinkBtn.click();
     await expect(page.locator(".k-toast, [role='status']").first()).toBeVisible();
-    expect(state.shares).toContain(502);
+    expect(state.shares).not.toContain(502);
+    await expect(page.getByRole("row", { name: /Heng Thida/ })).toContainText("Not sent");
 
     // Run Axe accessibility check
     const axe = await new AxeBuilder({ page }).include(".delivery-workspace").withTags(["wcag2a", "wcag2aa"]).analyze();

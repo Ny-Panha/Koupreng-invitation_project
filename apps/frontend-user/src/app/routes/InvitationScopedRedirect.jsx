@@ -9,5 +9,12 @@ export default function InvitationScopedRedirect({ targetSubPath = "" }) {
   const target = /^[1-9]\d*$/.test(String(id || ""))
     ? eventPath(id, targetSubPath)
     : `/app/events${targetSubPath ? `?module=${encodeURIComponent(targetSubPath)}` : ""}`;
-  return <Navigate to={target} replace state={location.state} />;
+  // Only operational context belongs in the host workspace; guest credentials do not.
+  const destination = new URL(target, "https://koupreng.invalid");
+  for (const key of ["guestId", "q", "status", "type", "sort", "page", "tab", "mode"]) {
+    const value = query.get(key);
+    if (value) destination.searchParams.set(key, value);
+  }
+  if (/^#[a-z][a-z0-9_-]*$/i.test(location.hash)) destination.hash = location.hash;
+  return <Navigate to={destination.pathname + destination.search + destination.hash} replace state={location.state} />;
 }

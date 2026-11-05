@@ -28,15 +28,7 @@ const EMPTY_FORM = {
   channel: "SYSTEM",
   title: "",
   message: "",
-  actionUrl: "",
 };
-
-function isValidActionUrl(url) {
-  if (!url || !url.trim()) return true;
-  const trimmed = url.trim();
-  if (/^(javascript|data|vbscript):/i.test(trimmed)) return false;
-  return trimmed.startsWith("/") || /^https:\/\//i.test(trimmed);
-}
 
 export default function AdminNotificationsPage() {
   const { lang, t } = useAdminLanguage();
@@ -92,12 +84,6 @@ export default function AdminNotificationsPage() {
         );
       }
     }
-    if (form.actionUrl && !isValidActionUrl(form.actionUrl)) {
-      errors.actionUrl = t(
-        "notifications.invalidUrl",
-        "Invalid action URL. Only relative paths (/...) or secure https:// URLs are allowed."
-      );
-    }
     setFieldErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -130,7 +116,7 @@ export default function AdminNotificationsPage() {
       setForm(EMPTY_FORM);
       setShowBroadcastModal(false);
       show(
-        t("notifications.toastSuccess", "Notification created and sent successfully")
+        `${lang === "en" ? "Notification saved. Server status:" : "បានរក្សាទុកសារជូនដំណឹង។ ស្ថានភាពពីម៉ាស៊ីនមេ៖"} ${created?.status || "UNKNOWN"}. ${lang === "en" ? "Creation alone does not confirm external delivery." : "ការបង្កើតតែមួយមុខមិនបញ្ជាក់ថាបានបញ្ជូនទៅខាងក្រៅទេ។"}`
       );
     } catch (err) {
       show(
@@ -157,7 +143,7 @@ export default function AdminNotificationsPage() {
             <Bell className="h-5 w-5 text-amber-500" />
             {t("notifications.title", "Notifications")}
           </h2>
-          <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">
+          <p className="text-xs text-slate-600 dark:text-zinc-400 mt-0.5">
             {t(
               "notifications.subtitle",
               "Send system notifications to users and view delivery statuses"
@@ -181,7 +167,7 @@ export default function AdminNotificationsPage() {
             <Send className="h-4 w-4 text-amber-500" />
             {t("notifications.createTitle", "Create System Notification")}
           </h3>
-          <span className="text-[11px] font-medium text-slate-500 dark:text-zinc-400">
+          <span className="text-[11px] font-medium text-slate-600 dark:text-zinc-400">
             {form.audienceMode === "BROADCAST" ? (
               <span className="inline-flex items-center gap-1 text-amber-600 dark:text-amber-400 font-semibold">
                 <Radio className="h-3.5 w-3.5 animate-pulse" />
@@ -217,7 +203,7 @@ export default function AdminNotificationsPage() {
                   <div className="text-xs font-bold">
                     {t("notifications.audienceUser", "Single User")}
                   </div>
-                  <div className="text-[11px] text-slate-500 dark:text-zinc-400 mt-0.5">
+                  <div className="text-[11px] text-slate-600 dark:text-zinc-400 mt-0.5">
                     {lang === "en"
                       ? "Direct dispatch to one specific user account"
                       : "ផ្ញើសារជូនដំណឹងផ្ទាល់ទៅកាន់អ្នកប្រើប្រាស់ម្នាក់"}
@@ -239,7 +225,7 @@ export default function AdminNotificationsPage() {
                   <div className="text-xs font-bold">
                     {t("notifications.audienceBroadcast", "All Users Broadcast")}
                   </div>
-                  <div className="text-[11px] text-slate-500 dark:text-zinc-400 mt-0.5">
+                  <div className="text-[11px] text-slate-600 dark:text-zinc-400 mt-0.5">
                     {lang === "en"
                       ? "System-wide notification visible to all users"
                       : "សេចក្តីប្រកាសទូទាំងប្រព័ន្ធសម្រាប់អ្នកប្រើទាំងអស់"}
@@ -382,22 +368,17 @@ export default function AdminNotificationsPage() {
               </label>
               <input
                 id="notif-action-url"
-                className={`text-input w-full ${
-                  fieldErrors.actionUrl ? "border-rose-500" : ""
-                }`}
-                value={form.actionUrl}
-                disabled={busy}
-                onChange={(e) => setField("actionUrl", e.target.value)}
-                placeholder={t(
-                  "notifications.actionUrlPlaceholder",
-                  "/dashboard or https://..."
-                )}
+                className="text-input w-full"
+                value=""
+                disabled
+                aria-describedby="notif-action-url-help"
+                readOnly
               />
-              {fieldErrors.actionUrl && (
-                <p className="text-[11px] text-rose-500 mt-1">
-                  {fieldErrors.actionUrl}
-                </p>
-              )}
+              <p id="notif-action-url-help" className="text-xs text-slate-600 mt-1">
+                {lang === "en"
+                  ? "Action links are unavailable: the notification service does not support them."
+                  : "តំណសកម្មភាពមិនទាន់អាចប្រើបាន៖ សេវាជូនដំណឹងមិនគាំទ្រតំណនេះទេ។"}
+              </p>
             </div>
 
             <div className="md:col-span-2 lg:col-span-3">
@@ -431,7 +412,7 @@ export default function AdminNotificationsPage() {
           </div>
 
           <div className="pt-2 flex items-center justify-between">
-            <div className="text-[11px] text-slate-500 dark:text-zinc-400 flex items-center gap-1.5">
+            <div className="text-[11px] text-slate-600 dark:text-zinc-400 flex items-center gap-1.5">
               <ShieldAlert className="h-3.5 w-3.5 text-amber-500" />
               <span>
                 {t(
@@ -484,7 +465,7 @@ export default function AdminNotificationsPage() {
                     "Confirm Broadcast Announcement"
                   )}
                 </h4>
-                <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">
+                <p className="text-xs text-slate-600 dark:text-zinc-400 mt-0.5">
                   {lang === "en" ? "System-wide publishing" : "ការផ្សាយទូទាំងប្រព័ន្ធ"}
                 </p>
               </div>
@@ -592,7 +573,7 @@ export default function AdminNotificationsPage() {
                   className={`px-2.5 py-1 rounded-lg font-medium transition-all ${
                     statusFilter === st
                       ? "bg-white dark:bg-zinc-900 text-slate-900 dark:text-zinc-100 shadow-xs font-bold"
-                      : "text-slate-500 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-zinc-200"
+                      : "text-slate-600 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-zinc-200"
                   }`}
                 >
                   {st === "ALL"
@@ -651,7 +632,7 @@ export default function AdminNotificationsPage() {
                       key={item.id}
                       className="hover:bg-slate-50/80 dark:hover:bg-zinc-800/40 transition-colors"
                     >
-                      <td className="font-mono text-slate-500 font-semibold">
+                      <td className="font-mono text-slate-600 font-semibold">
                         #{item.id}
                       </td>
                       <td>
@@ -668,7 +649,7 @@ export default function AdminNotificationsPage() {
                         <strong className="text-slate-900 dark:text-zinc-100">
                           {item.title}
                         </strong>
-                        <div className="text-slate-500 dark:text-zinc-400 line-clamp-1 max-w-sm mt-0.5">
+                        <div className="text-slate-600 dark:text-zinc-400 line-clamp-1 max-w-sm mt-0.5">
                           {item.message}
                         </div>
                         {item.actionUrl && (
@@ -724,7 +705,7 @@ export default function AdminNotificationsPage() {
                           )}
                         </div>
                       </td>
-                      <td className="text-slate-500 dark:text-zinc-400 whitespace-nowrap">
+                      <td className="text-slate-600 dark:text-zinc-400 whitespace-nowrap">
                         {formatDateTime(item.createdAt)}
                       </td>
                     </tr>
