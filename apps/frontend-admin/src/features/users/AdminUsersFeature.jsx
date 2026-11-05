@@ -60,20 +60,20 @@ export default function AdminUsersPage() {
 
   const isProtectedAdminUser = (user) => {
     if (!user) return false;
-    return isMasterAdmin(user) || Number(user.id) === 2 || isCurrentAccount(user);
+    return isMasterAdmin(user) || isCurrentAccount(user);
   };
-
-  const isAdminRole = (user) => user.role === "ADMIN" || user.role === "STAFF";
 
   const getRoleLabel = (user) => {
     if (isMasterAdmin(user)) return t("users.masterAdmin", "Master Admin");
-    if (isAdminRole(user)) return t("users.admin", "Admin");
+    if (user.role === "ADMIN") return t("users.admin", "Admin");
+    if (user.role === "STAFF") return t("users.staff", "Staff");
     return t("users.regularUser", "Regular User");
   };
 
   const getRoleBadgeClass = (user) => {
     if (isMasterAdmin(user)) return "badge-gold";
-    if (isAdminRole(user)) return "badge-amber";
+    if (user.role === "ADMIN") return "badge-amber";
+    if (user.role === "STAFF") return "badge-cyan";
     return "badge-gray";
   };
 
@@ -84,8 +84,9 @@ export default function AdminUsersPage() {
     return (data || []).filter((user) => {
       const matchesRole =
         roleFilter === "ALL" ||
-        (roleFilter === "ADMIN" && isAdminRole(user)) ||
-        (roleFilter === "USER" && !isAdminRole(user));
+        (roleFilter === "ADMIN" && user.role === "ADMIN") ||
+        (roleFilter === "STAFF" && user.role === "STAFF") ||
+        (roleFilter === "USER" && user.role === "USER");
       if (!matchesRole) return false;
       if (!q) return true;
       return [user.fullName, user.email, user.phone, user.role, user.status]
@@ -241,6 +242,7 @@ export default function AdminUsersPage() {
           {[
             ["ALL", t("users.filterAll", "All")],
             ["ADMIN", t("users.filterAdmins", "Admins")],
+            ["STAFF", t("users.filterStaff", "Staff")],
             ["USER", t("users.filterUsers", "Users")],
           ].map(([value, label]) => (
             <button

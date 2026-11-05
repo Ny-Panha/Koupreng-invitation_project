@@ -1,7 +1,8 @@
 import { RefreshStatus } from '../../shared/ui/AdminSkeleton';
 import { useMemo, useState } from "react";
-import { Loading, ErrorState, Empty } from "../../shared/ui";
-import { useResource } from "../../shared/hooks";
+import { ShieldAlert } from "lucide-react";
+import { Loading, ErrorState, Empty, Toast } from "../../shared/ui";
+import { useResource, useToast } from "../../shared/hooks";
 import { formatDate } from "../../shared/utils";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 import adminManagementService from "../../shared/api/adminService";
@@ -19,43 +20,55 @@ export default function AdminPaymentsPage() {
   const { lang, t } = useAdminLanguage();
   const { data, loading, refreshing, error, reload } = useResource(adminManagementService.payments);
   const [query, setQuery] = useState("");
-  const [confirmingCode, setConfirmingCode] = useState(null);
-  const [actionMessage, setActionMessage] = useState("");
+  const [verifyingPayment, setVerifyingPayment] = useState(null);
+  const [transactionReference, setTransactionReference] = useState("");
+  const [modalError, setModalError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast, show, clear } = useToast();
 
-  const handleConfirm = async (payment) => {
-    const confirmPrompt = t(
-      "payments.confirmPrompt",
-      `Are you sure you want to confirm payment for Order ${payment.orderCode}?`,
-      { code: payment.orderCode }
-    );
-    if (!window.confirm(confirmPrompt)) {
+  const handleOpenVerifyModal = (payment) => {
+    setVerifyingPayment(payment);
+    setTransactionReference(payment.paywayTransactionId || "");
+    setModalError("");
+  };
+
+  const handleManualVerifySubmit = async (e) => {
+    e.preventDefault();
+    if (!verifyingPayment) return;
+    const trimmedTx = transactionReference.trim();
+    if (!trimmedTx) {
+      setModalError(lang === "en" ? "Transaction reference is required" : "សូមបញ្ចូលលេខប្រតិបត្តិការ");
       return;
     }
-    const paywayTransactionId = payment.paywayTransactionId || window.prompt(
-      lang === "en" ? "Real ABA transaction ID from the recorded merchant alert:"
-        : "លេខប្រតិបត្តិការ ABA ពិតប្រាកដពីសារធនាគារដែលបានកត់ត្រា៖"
-    );
-    if (!paywayTransactionId?.trim()) return;
-    setConfirmingCode(payment.orderCode);
-    setActionMessage("");
+
+    setIsSubmitting(true);
+    setModalError("");
     try {
-      await adminManagementService.confirmPayment({
-        orderCode: payment.orderCode,
-        amount: payment.amount || 0.01,
+      // Invariant: Server-authoritative amount, never fabricate 0.01
+      const payload = {
+        orderCode: verifyingPayment.orderCode,
         confirmedBy: "admin",
-        itemType: payment.itemType || "TEMPLATE",
-        paywayTransactionId: paywayTransactionId.trim(),
-      });
-      setActionMessage(
-        t("payments.confirmSuccess", `Order ${payment.orderCode} confirmed successfully!`, {
-          code: payment.orderCode,
+        itemType: verifyingPayment.itemType || (verifyingPayment.orderCode?.startsWith("SUB") ? "SUBSCRIPTION" : "TEMPLATE"),
+        paywayTransactionId: trimmedTx,
+      };
+      if (verifyingPayment.amount != null) {
+        payload.amount = Number(verifyingPayment.amount);
+      }
+
+      await adminManagementService.confirmPayment(payload);
+
+      show(
+        t("payments.confirmSuccess", `Order ${verifyingPayment.orderCode} confirmed successfully!`, {
+          code: verifyingPayment.orderCode,
         })
       );
+      setVerifyingPayment(null);
+      setTransactionReference("");
       await reload();
     } catch (err) {
-      alert(err.message || (lang === "en" ? "Failed to confirm payment" : "បរាជ័យក្នុងការបញ្ជាក់ការទូទាត់"));
+      setModalError(err?.message || (lang === "en" ? "Failed to confirm payment" : "បរាជ័យក្នុងការបញ្ជាក់ការទូទាត់"));
     } finally {
-      setConfirmingCode(null);
+      setIsSubmitting(false);
     }
   };
 
@@ -78,7 +91,7 @@ export default function AdminPaymentsPage() {
     const rows = data || [];
     return {
       total: rows.length,
-      pending: rows.filter((row) => String(row.status || "").includes("PENDING")).length,
+      pending: rows.filter((row) => String(row.status || "").includes("PENDING") || row.status === "REVIEW_REQUIRED").length,
       paid: rows.filter((row) => String(row.status || "") === "PAID").length,
       failed: rows.filter((row) => ["FAILED", "REJECTED", "CANCELLED", "EXPIRED"].includes(String(row.status || ""))).length,
     };
@@ -107,12 +120,6 @@ export default function AdminPaymentsPage() {
           </button>
         </div>
       </div>
-
-      {actionMessage && (
-        <div style={{ marginBottom: "16px", padding: "10px 16px", background: "rgba(16, 185, 129, 0.15)", color: "#10b981", borderRadius: "8px", fontWeight: "600" }}>
-          {actionMessage}
-        </div>
-      )}
 
       <section className="admin-feature-grid">
         <article className="admin-feature-card">
@@ -150,7 +157,7 @@ export default function AdminPaymentsPage() {
         ) : payments.length === 0 ? (
           <Empty label={t("payments.empty", "រកមិនឃើញទិន្នន័យការទូទាត់ទេ")} />
         ) : (
-          <div className="table-wrap">
+          <div className="table-wrap" tabIndex={0} role="region" aria-label={t("payments.title", "Payments")}>
             <table className="data">
               <thead>
                 <tr>
@@ -168,12 +175,12 @@ export default function AdminPaymentsPage() {
               <tbody>
                 {payments.map((payment) => (
                   <tr key={payment.orderCode}>
-                    <td><strong>{payment.orderCode || "—"}</strong></td>
+                    <td><strong className="font-mono">{payment.orderCode || "—"}</strong></td>
                     <td>{payment.templateName || payment.packageName || "—"}</td>
                     <td>{payment.itemType || (payment.orderCode?.startsWith("SUB") ? "SUBSCRIPTION" : "TEMPLATE")}</td>
                     <td>{money(payment.amount, payment.currency)}</td>
                     <td>
-                      <span className={`badge ${payment.status === "PAID" ? "badge-green" : String(payment.status || "").includes("PENDING") ? "badge-amber" : "badge-gray"}`}>
+                      <span className={`badge ${payment.status === "PAID" ? "badge-green" : String(payment.status || "").includes("PENDING") || payment.status === "REVIEW_REQUIRED" ? "badge-amber" : "badge-gray"}`}>
                         {payment.status || "—"}
                       </span>
                     </td>
@@ -185,11 +192,10 @@ export default function AdminPaymentsPage() {
                         <button
                           type="button"
                           className="btn btn-primary btn-sm"
-                          disabled={confirmingCode === payment.orderCode}
-                          onClick={() => handleConfirm(payment)}
+                          onClick={() => handleOpenVerifyModal(payment)}
                           style={{ padding: "4px 10px", fontSize: "0.8rem", cursor: "pointer" }}
                         >
-                          {confirmingCode === payment.orderCode ? "..." : t("payments.confirmBtn", "Confirm")}
+                          {t("payments.confirmBtn", "Confirm")}
                         </button>
                       ) : (
                         <span style={{ color: "#888", fontSize: "0.8rem" }}>—</span>
@@ -202,6 +208,123 @@ export default function AdminPaymentsPage() {
           </div>
         )}
       </section>
+
+      {/* Manual Payment Verification Modal */}
+      {verifyingPayment && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="verify-modal-title"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-xs"
+          onClick={() => !isSubmitting && setVerifyingPayment(null)}
+        >
+          <div
+            className="w-full max-w-lg rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl dark:border-zinc-800 dark:bg-[#151518]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start gap-4">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-amber-500/10 text-amber-600 border border-amber-500/20 dark:bg-amber-500/20 dark:text-amber-400">
+                <ShieldAlert size={22} />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-2">
+                  <h3 id="verify-modal-title" className="text-base font-bold text-slate-900 dark:text-zinc-100">
+                    {lang === "en" ? "Manual Payment Verification" : "ផ្ទៀងផ្ទាត់ការទូទាត់ដោយដៃ"}
+                  </h3>
+                  <span className="text-[10px] font-bold text-amber-800 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
+                    Privileged
+                  </span>
+                </div>
+                <p className="mt-1 text-xs text-slate-500 dark:text-zinc-400">
+                  {lang === "en"
+                    ? "Verify bank evidence before settling this order manually."
+                    : "សូមពិនិត្យមើលភស្តុតាងធនាគារមុននឹងបញ្ជាក់ការទូទាត់ដោយដៃ។"}
+                </p>
+              </div>
+            </div>
+
+            {modalError && (
+              <div role="alert" className="mt-4 rounded-xl bg-rose-500/10 border border-rose-500/20 p-3 text-xs font-semibold text-rose-500">
+                {modalError}
+              </div>
+            )}
+
+            {/* Order Details Grid */}
+            <div className="mt-4 rounded-xl bg-slate-50 p-3.5 border border-slate-200/80 dark:bg-zinc-900/60 dark:border-zinc-800 space-y-2 text-xs">
+              <div className="flex justify-between">
+                <span className="text-slate-500 dark:text-zinc-400">Order Code:</span>
+                <strong className="font-mono text-slate-900 dark:text-white">{verifyingPayment.orderCode}</strong>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-500 dark:text-zinc-400">Item / Package:</span>
+                <span className="font-medium text-slate-800 dark:text-zinc-200">{verifyingPayment.templateName || verifyingPayment.packageName || "—"}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-500 dark:text-zinc-400">Order Type:</span>
+                <span className="font-mono text-slate-800 dark:text-zinc-300">{verifyingPayment.itemType || (verifyingPayment.orderCode?.startsWith("SUB") ? "SUBSCRIPTION" : "TEMPLATE")}</span>
+              </div>
+              <div className="flex justify-between border-t border-slate-200/60 pt-2 dark:border-zinc-800">
+                <span className="text-slate-500 dark:text-zinc-400 font-semibold">Authoritative Amount:</span>
+                <strong className="text-sm font-extrabold text-emerald-800 dark:text-emerald-400 font-mono">
+                  {money(verifyingPayment.amount, verifyingPayment.currency)}
+                </strong>
+              </div>
+            </div>
+
+            <form onSubmit={handleManualVerifySubmit} className="mt-4 space-y-4">
+              <div>
+                <label htmlFor="tx-ref" className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1.5">
+                  {lang === "en" ? "ABA PayWay Transaction Reference / Merchant Alert ID" : "លេខកូដប្រតិបត្តិការ ABA PayWay / សារធនាគារ"} *
+                </label>
+                <input
+                  id="tx-ref"
+                  type="text"
+                  required
+                  disabled={isSubmitting}
+                  value={transactionReference}
+                  onChange={(e) => setTransactionReference(e.target.value)}
+                  placeholder="e.g. 2026110598765432"
+                  className="text-input w-full font-mono text-xs"
+                />
+                <span className="text-[11px] text-slate-500 dark:text-zinc-400 mt-1 block">
+                  {lang === "en"
+                    ? "Must match the official ABA Bank notification received in merchant alert channel."
+                    : "ត្រូវតែត្រូវគ្នានឹងសារផ្លូវការរបស់ធនាគារ ABA ដែលទទួលបានក្នុង Telegram Channel។"}
+                </span>
+              </div>
+
+              <div className="rounded-lg bg-amber-500/10 border border-amber-500/20 p-2.5 text-[11px] text-amber-700 dark:text-amber-400 leading-relaxed">
+                ⚠️ <strong>{lang === "en" ? "Audit Invariant:" : "គោលការណ៍សវនកម្ម៖"}</strong>{" "}
+                {lang === "en"
+                  ? "Manual verification activates access entitlements immediately. The action is audited with your admin ID."
+                  : "ការផ្ទៀងផ្ទាត់ដោយដៃនឹងបើកសិទ្ធិប្រើប្រាស់ភ្លាមៗ។ សកម្មភាពនេះត្រូវបានកត់ត្រាក្នុងប្រព័ន្ធសវនកម្ម។"}
+              </div>
+
+              <div className="flex justify-end gap-2.5 pt-2">
+                <button
+                  type="button"
+                  className="btn btn-ghost btn-sm"
+                  disabled={isSubmitting}
+                  onClick={() => setVerifyingPayment(null)}
+                >
+                  {t("common.cancel", "Cancel")}
+                </button>
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-sm"
+                  disabled={isSubmitting || !transactionReference.trim()}
+                >
+                  {isSubmitting
+                    ? (lang === "en" ? "Verifying..." : "កំពុងផ្ទៀងផ្ទាត់...")
+                    : (lang === "en" ? "Confirm & Settle Order" : "បញ្ជាក់ការទូទាត់")}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      <Toast toast={toast} onClose={clear} />
     </div>
   );
 }

@@ -32,6 +32,24 @@ const mockUsers = [
     active: true,
     createdAt: "2026-08-03T00:00:00Z",
   },
+  {
+    id: 4,
+    fullName: "Bora Staff",
+    email: "bora@koupreng.com",
+    role: "STAFF",
+    status: "ACTIVE",
+    active: true,
+    createdAt: "2026-08-04T00:00:00Z",
+  },
+  {
+    id: 5,
+    fullName: "Demo Master Admin",
+    email: "admin.demo@koupreng.local",
+    role: "ADMIN",
+    status: "ACTIVE",
+    active: true,
+    createdAt: "2026-08-01T00:00:00Z",
+  },
 ];
 
 const mockAdminService = vi.hoisted(() => ({
@@ -88,6 +106,7 @@ describe("AdminUsersFeature i18n & safety", () => {
     // Check filter pills
     expect(screen.getByRole("tab", { name: "All" })).toBeInTheDocument();
     expect(screen.getByRole("tab", { name: "Admins" })).toBeInTheDocument();
+    expect(screen.getByRole("tab", { name: "Staff" })).toBeInTheDocument();
     expect(screen.getByRole("tab", { name: "Users" })).toBeInTheDocument();
 
     // Check create admin form
@@ -106,6 +125,7 @@ describe("AdminUsersFeature i18n & safety", () => {
     // Check table headers and role badges
     expect(screen.getByText("Account (Email / Phone)")).toBeInTheDocument();
     expect(screen.getAllByText("Admin").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("Staff").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText("Regular User").length).toBeGreaterThanOrEqual(1);
   });
 
@@ -129,6 +149,7 @@ describe("AdminUsersFeature i18n & safety", () => {
     // Check filter pills in Khmer
     expect(screen.getByRole("tab", { name: "ទាំងអស់" })).toBeInTheDocument();
     expect(screen.getByRole("tab", { name: "អ្នកគ្រប់គ្រង" })).toBeInTheDocument();
+    expect(screen.getByRole("tab", { name: "បុគ្គលិក" })).toBeInTheDocument();
     expect(screen.getByRole("tab", { name: "អ្នកប្រើប្រាស់" })).toBeInTheDocument();
 
     // Check create admin form in Khmer
@@ -146,6 +167,7 @@ describe("AdminUsersFeature i18n & safety", () => {
 
     // Check role badges in Khmer
     expect(screen.getAllByText("អ្នកគ្រប់គ្រង").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("បុគ្គលិក").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText("អ្នកប្រើប្រាស់ទូទៅ").length).toBeGreaterThanOrEqual(1);
   });
 
@@ -174,6 +196,28 @@ describe("AdminUsersFeature i18n & safety", () => {
     // Current user has You badge
     expect(screen.getAllByText("You").length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText("You (Protected)")).toBeInTheDocument();
+  });
+
+  it("protects Master Admin account with Protected status and badge", async () => {
+    localStorage.setItem("koupreng.admin.lang", "en");
+
+    render(
+      <AdminLanguageProvider>
+        <MemoryRouter initialEntries={["/users"]}>
+          <Routes>
+            <Route path="/users" element={<AdminUsersFeature />} />
+          </Routes>
+        </MemoryRouter>
+      </AdminLanguageProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText("Demo Master Admin")).toBeInTheDocument();
+    });
+
+    // Master Admin has Master Admin label and Protected badge
+    expect(screen.getByText("Master Admin")).toBeInTheDocument();
+    expect(screen.getByTitle("Protected master admin account")).toBeInTheDocument();
   });
 
   it("opens confirmation modal when deactivating user and allows canceling or confirming", async () => {

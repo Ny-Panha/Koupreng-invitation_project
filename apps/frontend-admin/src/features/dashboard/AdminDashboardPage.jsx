@@ -1,6 +1,6 @@
 import { RefreshStatus } from '../../shared/ui/AdminSkeleton';
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import {
   AdminPageHeader,
   StatusBadge,
@@ -28,18 +28,43 @@ import {
   Clock,
 } from "lucide-react";
 
-export default function AdminDashboardPage() {
-  const { lang, t } = useAdminLanguage();
-  const { data, loading, refreshing, error, reload } = useResource(dashboardService.summary);
-  const [analytics, setAnalytics] = useState({});
-  const [analyticsRefresh, setAnalyticsRefresh] = useState(0);
-  const refresh = () => { setAnalyticsRefresh(value => value + 1); return reload(); };
+/**
+ * Isolated Live Service Clock Capsule:
+ * Isolates 1-second timer state so the parent dashboard does not trigger full tree re-renders every second.
+ */
+function LiveClockCapsule({ lang }) {
   const [currentTime, setCurrentTime] = useState(() => new Date());
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
+
+  const formattedTime = currentTime.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+
+  return (
+    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-200/80 bg-white/80 dark:border-zinc-800 dark:bg-zinc-900/80 shadow-xs text-xs font-semibold text-slate-700 dark:text-zinc-300 backdrop-blur-md">
+      <span className="live-radar-dot" aria-hidden="true" />
+      <Clock className="h-3.5 w-3.5 text-amber-500" />
+      <span className="font-mono tracking-tight">{formattedTime}</span>
+      <span className="text-slate-300 dark:text-zinc-700">|</span>
+      <span className="text-[10px] text-emerald-800 dark:text-emerald-300 font-extrabold uppercase tracking-wider">
+        {lang === "en" ? "LOCAL CLOCK" : "ម៉ោងមូលដ្ឋាន"}
+      </span>
+    </div>
+  );
+}
+
+export default function AdminDashboardPage() {
+  const { lang, t } = useAdminLanguage();
+  const { data, loading, refreshing, error, reload } = useResource(dashboardService.summary);
+  const [analytics, setAnalytics] = useState({});
+  const [analyticsRefresh, setAnalyticsRefresh] = useState(0);
+  const refresh = () => { setAnalyticsRefresh(value => value + 1); return reload(); };
 
   useEffect(() => {
     let active = true;
@@ -59,6 +84,10 @@ export default function AdminDashboardPage() {
     };
   }, [analyticsRefresh]);
 
+  const isAnalyticsLoading = useMemo(() => {
+    return refreshing || Object.keys(analytics).length === 0;
+  }, [refreshing, analytics]);
+
   if (loading) {
     return <LoadingState layout="dashboard" label={t("dashboard.loading", "កំពុងទាញយកទិន្នន័យផ្ទាំងគ្រប់គ្រង...")} />;
   }
@@ -71,13 +100,6 @@ export default function AdminDashboardPage() {
     );
   }
 
-  const formattedTime = currentTime.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
-
-
   return (
     <div className="relative space-y-6">
       {/* 1. Page Header with Realtime Service Clock (Cascade Delay: 0s) */}
@@ -89,16 +111,8 @@ export default function AdminDashboardPage() {
           subtitle={t("dashboard.subtitle", "ការវិភាគទិន្នន័យទូទៅ សកម្មភាពអ្នកប្រើប្រាស់ និងសុខភាពប្រព័ន្ធ")}
           actions={
             <div className="flex items-center gap-2.5 flex-wrap">
-              {/* Live Service Clock Capsule */}
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-200/80 bg-white/80 dark:border-zinc-800 dark:bg-zinc-900/80 shadow-xs text-xs font-semibold text-slate-700 dark:text-zinc-300 backdrop-blur-md">
-                <span className="live-radar-dot" aria-hidden="true" />
-                <Clock className="h-3.5 w-3.5 text-amber-500" />
-                <span className="font-mono tracking-tight">{formattedTime}</span>
-                <span className="text-slate-300 dark:text-zinc-700">|</span>
-                <span className="text-[10px] text-emerald-800 dark:text-emerald-300 font-extrabold uppercase tracking-wider">
-                  {lang === "en" ? "LOCAL CLOCK" : "ម៉ោងមូលដ្ឋាន"}
-                </span>
-              </div>
+              {/* Isolated Live Service Clock Capsule */}
+              <LiveClockCapsule lang={lang} />
 
               <ActionButton variant="ghost" size="sm" onClick={refresh}>
                 <RefreshCw className="h-3.5 w-3.5" />
@@ -232,7 +246,7 @@ export default function AdminDashboardPage() {
             </div>
             <div className="animate-cascade" style={{ animationDelay: "0.32s" }}>
               <ConversionHealthBox
-                loading
+                loading={isAnalyticsLoading}
                 analytics={analytics}
                 lang={lang}
                 t={t}
@@ -241,7 +255,6 @@ export default function AdminDashboardPage() {
           </div>
         </div>
       </section>
-
 
       {/* Tables Grid with Tavola Glass & Hover Polish */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -340,7 +353,7 @@ export default function AdminDashboardPage() {
             </Link>
           </div>
 
-          <div className="overflow-x-auto rounded-xl border border-slate-100 dark:border-zinc-800/80">
+          <div className="overflow-x-auto rounded-xl border border-slate-100 dark:border-zinc-800/80" tabIndex={0} role="region" aria-label={t('dashboard.recentPayments', 'Recent payments')}>
             <table className="w-full text-left text-xs">
               <thead className="border-b border-slate-100 dark:border-zinc-800 bg-slate-50/80 dark:bg-zinc-900/60">
                 <tr>

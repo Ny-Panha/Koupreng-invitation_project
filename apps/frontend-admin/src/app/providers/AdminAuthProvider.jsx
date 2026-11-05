@@ -48,13 +48,13 @@ export function AuthProvider({ children }) {
     }, []);
 
     const logout = useCallback(async () => {
+        clearAuth();
+        setAuth(null);
         try {
             await authService.logout();
         } catch {
-            // ignore network/logout errors; clear locally regardless
+            // ignore network/logout errors
         }
-        clearAuth();
-        setAuth(null);
     }, []);
 
     const value = useMemo(

@@ -296,6 +296,76 @@ pm run test:e2e tests/e2e/phase9-tickets.spec.js (frontend-user) | **4 tests pas
 - checkin-desktop-1440.png, checkin-768.png, checkin-390.png, checkin-375.png
 - wishes-desktop-1440.png, wishes-768.png, wishes-390.png, wishes-375.png
 
+## Batch 9 Verification: Admin Dashboard, User Management, Template CMS, Package Operations & Payment Audit
+
+### Verified Scope & Security Invariants
+
+1. **Workstream A — Admin Authentication & Privileged Role Security:**
+   - Evaluated backend `Role.java` (`USER`, `STAFF`, `ADMIN`). Removed unsupported client allowlist strings (`SUPER_ADMIN`, `ADMIN_MANAGER`) that trigger 403 Forbidden on backend controllers.
+   - Enforced strict `ADMIN` (and `ROLE_ADMIN`) role normalization in `RequireAdmin.jsx`.
+   - Accessible `RoleDeniedState` alert displayed when a non-admin session accesses privileged routes with an instant "Sign Out & Switch Account" action.
+   - Modernized `LoginPage.jsx` with bilingual Khmer/English switcher, show/hide password toggle, accessible validation, safe redirect sanitization (open redirect prevention), and session expired alert banners.
+   - Updated `RequireAdmin.test.jsx` (8/8 passed), added `LoginPage.test.jsx` (7/7 passed) and `AdminAuthProvider.test.jsx` (6/6 passed).
+
+2. **Workstream B — Admin Dashboard Performance & Data Integrity:**
+   - Isolated the 1-second ticking live clock into a dedicated `LiveClockCapsule` subcomponent, eliminating the continuous 1-second re-rendering of `AnimatedTrendChart`, `RecentInvitationsCard`, and table components.
+   - Fixed `<ConversionHealthBox loading ... />` to pass dynamic loading state (`isAnalyticsLoading`) rather than hardcoded boolean `true`.
+   - Enforced accessible table regions with `tabIndex={0}`, `role="region"`, and bilingual `aria-label` landmarks on Recent Users and Recent Payments cards for WCAG keyboard accessibility.
+
+3. **Workstream C — Admin User Management & Privileged Safety:**
+   - Removed hardcoded seed ID protection (`Number(user.id) === 2`) in `AdminUsersFeature.jsx`.
+   - Preserved server-side security invariants: protected current admin account from self-deactivation (`isCurrentAccount`), protected master admin email (`MASTER_ADMIN_EMAIL`), and surfaced backend constraint error messages clearly in toasts.
+   - Added explicit `Staff` role separation (`ADMIN`, `STAFF`, `USER`) across badges, labels, and filter tabs in both Khmer and English dictionaries.
+
+4. **Workstream F — Financial Audit & Manual Payment Verification:**
+   - Eliminated hazardous frontend fallbacks (`amount: payment.amount || 0.01` and `itemType: payment.itemType || "TEMPLATE"`), ensuring only server-authoritative amounts and accurate order types are submitted to prevent `ApiException("Amount mismatch")`.
+   - Replaced browser `window.confirm` and `window.prompt` dialogs with a fully accessible **Manual Payment Verification Modal** featuring order details, exact currency/price, required transaction reference input with audit invariant warnings, and inline error handling.
+   - Added `AdminPaymentsFeature.test.jsx` (5/5 passed) verifying table presentation, search filtering, modal interactions, server amount enforcement, and error resilience.
+
+### Files Modified & Created
+
+| Path | Summary of changes |
+|---|---|
+| `apps/frontend-admin/src/app/guards/RequireAdmin.jsx` | Strict `ADMIN` authorization guard, removed unsupported roles, accessible role-denied view |
+| `apps/frontend-admin/src/app/guards/RequireAdmin.test.jsx` | Unit tests for anonymous redirect, admin authorization, staff/user rejection, and sign out |
+| `apps/frontend-admin/src/app/providers/AdminAuthProvider.jsx` | Immediate token clearing on logout, role normalization |
+| `apps/frontend-admin/src/app/providers/AdminAuthProvider.test.jsx` | Unit test suite for auth state, token expiration detection, login, and logout (6/6 passed) |
+| `apps/frontend-admin/src/app/providers/AdminLanguageProvider.jsx` | Added `filterStaff` and `staff` keys in both Khmer and English dictionaries |
+| `apps/frontend-admin/src/pages/auth/LoginPage.jsx` | Bilingual login view, language toggle, password visibility toggle, expired session alert |
+| `apps/frontend-admin/src/pages/auth/LoginPage.test.jsx` | Unit test suite for login rendering, language switch, password toggle, role rejection, redirect security (7/7 passed) |
+| `apps/frontend-admin/src/features/dashboard/AdminDashboardPage.jsx` | Extracted `LiveClockCapsule`, dynamic health loading, accessible table regions |
+| `apps/frontend-admin/src/features/users/AdminUsersFeature.jsx` | Removed magic ID `2`, separated `STAFF` role, updated filters, protected account badges |
+| `apps/frontend-admin/src/features/users/AdminUsersFeature.test.jsx` | Unit tests for role filtering (including Staff), master admin protection, password strength (6/6 passed) |
+| `apps/frontend-admin/src/features/payments/AdminPaymentsFeature.jsx` | Removed `0.01` fallback, manual payment verification modal, server authoritative settlement |
+| `apps/frontend-admin/src/features/payments/AdminPaymentsFeature.test.jsx` | Unit test suite for payments list, search, verification modal, amount precision, error handling (5/5 passed) |
+| `apps/frontend-user/tests/e2e/batch9-admin-modernization.spec.js` | Comprehensive Playwright E2E suite covering login, dashboard, users, and payments with Axe accessibility audits across 7 responsive widths (8/8 passed) |
+| `docs/design/FULL_ROUTE_COVERAGE_MATRIX.md` | Updated coverage status for admin login, dashboard, users, detail, payments, packages, and templates to `VERIFIED COMPLETE` |
+| `docs/design/UI_MODERNIZATION_ROADMAP.md` | Marked Batch 9 as verified with detailed scope and evidence summary |
+
+### Executed Checks & Results
+
+| Command | Actual Result |
+|---|---|
+| `npm --prefix apps/frontend-admin test` | **26 test files passed**, **156 tests passed**; 6.08s; exit 0 |
+| `npm --prefix apps/frontend-admin run lint` | Pass, **0 errors, 0 warnings**; exit 0 |
+| `npm --prefix apps/frontend-admin run build` | Production build passed in 707ms with **0 errors**; exit 0 |
+| `npm --prefix apps/frontend-user run lint` | Pass, **0 errors, 0 warnings**; exit 0 |
+| `npm --prefix apps/frontend-user run build` | Production build passed in 7.87s with **0 errors**; exit 0 |
+| `npm --prefix apps/frontend-user run test:e2e -- tests/e2e/batch9-admin-modernization.spec.js` | **8 tests passed (100%)** across desktop and mobile Chromium; 19.0s; exit 0; Axe 0 critical/serious violations |
+
+### Visual Evidence Captured (`docs/design/evidence/batch9/`)
+
+- `admin-login-en-1440.png`: Bilingual admin login card with language toggle, password show/hide, and security badge.
+- `admin-dashboard-320.png`: Dashboard layout on 320px mobile viewport without horizontal overflow.
+- `admin-dashboard-375.png`: Dashboard layout on 375px mobile viewport with isolated live clock capsule.
+- `admin-dashboard-390.png`: Dashboard layout on 390px mobile viewport (Pixel 7 / iPhone standard).
+- `admin-dashboard-430.png`: Dashboard layout on 430px mobile viewport (iPhone Max).
+- `admin-dashboard-768.png`: Dashboard layout on 768px tablet viewport.
+- `admin-dashboard-1024.png`: Dashboard layout on 1024px desktop viewport.
+- `admin-dashboard-1440.png`: Dashboard layout on 1440px wide desktop viewport with full metrics grid.
+- `admin-users-list-1440.png`: User management page with All/Admins/Staff/Users filter tabs and protected account badges.
+- `admin-payment-verify-modal-1440.png`: Manual Payment Verification Modal showing authoritative amount, transaction reference input, and audit warning.
+
 ## Remaining scope
 
 Every canonical route's complete state matrix and end-to-end live-provider behavior remain open. This batch verifies shared foundation contracts, not the entire dashboard, invitations, studios, guest operations, admin tables or financial workflows. Next: customer HostShell/HostNav, event list/cards/workspace navigation; then marketing/catalog, account, builder, all invitation renderers and remaining admin screens in the [roadmap](UI_MODERNIZATION_ROADMAP.md).
